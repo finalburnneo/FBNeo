@@ -1,8 +1,9 @@
 // FB Alpha Arabian driver module
-// Based on MAME driver by Jarek Burczynski and various others
+// Based on MAME driver by Jarek Burczynski, Phil Bennett and various others
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
+#include "mb88xx_intf.h"
 #include "ay8910.h"
 
 static UINT8 *AllMem;
@@ -10,6 +11,7 @@ static UINT8 *RamEnd;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *DrvZ80ROM;
+static UINT8 *DrvMCUROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
@@ -22,8 +24,9 @@ static UINT8 DrvRecalc;
 static UINT8 *arabian_color;
 static UINT8 *flipscreen;
 
-static INT32 custom_cpu_reset;
-static INT32 custom_cpu_busy;
+static UINT8 *mcu_port_o;
+static UINT16 *mcu_port_p;
+static UINT8 *mcu_port_r;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy3[8];
@@ -34,6 +37,8 @@ static UINT8 DrvJoy7[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
+
+static INT32 nExtraCycles;
 
 static struct BurnInputInfo ArabianInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -62,142 +67,117 @@ STDINPUTINFO(Arabian)
 
 static struct BurnDIPInfo ArabianDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x06, NULL			},
-	{0x11, 0xff, 0xff, 0x0d, NULL			},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0x06, NULL				},
+	{0x01, 0xff, 0xff, 0x0c, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x10, 0x01, 0x01, 0x00, "3"			},
-	{0x10, 0x01, 0x01, 0x01, "5"			},
+	{0   , 0xfe, 0   ,    2, "Lives"			},
+	{0x00, 0x01, 0x01, 0x00, "3"				},
+	{0x00, 0x01, 0x01, 0x01, "5"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x10, 0x01, 0x02, 0x02, "Upright"		},
-	{0x10, 0x01, 0x02, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x00, 0x01, 0x02, 0x02, "Upright"			},
+	{0x00, 0x01, 0x02, 0x00, "Cocktail"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x10, 0x01, 0x04, 0x04, "Off"			},
-	{0x10, 0x01, 0x04, 0x00, "On"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"				},
+	{0x00, 0x01, 0x04, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x10, 0x01, 0x08, 0x00, "Easy"			},
-	{0x10, 0x01, 0x08, 0x08, "Hard"			},
+	{0x00, 0x01, 0x08, 0x00, "Easy"				},
+	{0x00, 0x01, 0x08, 0x08, "Hard"				},
 
-	{0   , 0xfe, 0   ,    16, "Coinage"		},
-	{0x10, 0x01, 0xf0, 0x10, "A 2/1 B 2/1"		},
-	{0x10, 0x01, 0xf0, 0x20, "A 2/1 B 1/3"		},
-	{0x10, 0x01, 0xf0, 0x00, "A 1/1 B 1/1"		},
-	{0x10, 0x01, 0xf0, 0x30, "A 1/1 B 1/2"		},
-	{0x10, 0x01, 0xf0, 0x40, "A 1/1 B 1/3"		},
-	{0x10, 0x01, 0xf0, 0x50, "A 1/1 B 1/4"		},
-	{0x10, 0x01, 0xf0, 0x60, "A 1/1 B 1/5"		},
-	{0x10, 0x01, 0xf0, 0x70, "A 1/1 B 1/6"		},
-	{0x10, 0x01, 0xf0, 0x80, "A 1/2 B 1/2"		},
-	{0x10, 0x01, 0xf0, 0x90, "A 1/2 B 1/4"		},
-	{0x10, 0x01, 0xf0, 0xa0, "A 1/2 B 1/5"		},
-	{0x10, 0x01, 0xf0, 0xe0, "A 1/2 B 1/6"		},
-	{0x10, 0x01, 0xf0, 0xb0, "A 1/2 B 1/10"		},
-	{0x10, 0x01, 0xf0, 0xc0, "A 1/2 B 1/11"		},
-	{0x10, 0x01, 0xf0, 0xd0, "A 1/2 B 1/12"		},
-	{0x10, 0x01, 0xf0, 0xf0, "Free Play"		},
+	{0   , 0xfe, 0   ,    16, "Coinage"			},
+	{0x00, 0x01, 0xf0, 0x10, "A 2/1 B 2/1"		},
+	{0x00, 0x01, 0xf0, 0x20, "A 2/1 B 1/3"		},
+	{0x00, 0x01, 0xf0, 0x00, "A 1/1 B 1/1"		},
+	{0x00, 0x01, 0xf0, 0x30, "A 1/1 B 1/2"		},
+	{0x00, 0x01, 0xf0, 0x40, "A 1/1 B 1/3"		},
+	{0x00, 0x01, 0xf0, 0x50, "A 1/1 B 1/4"		},
+	{0x00, 0x01, 0xf0, 0x60, "A 1/1 B 1/5"		},
+	{0x00, 0x01, 0xf0, 0x70, "A 1/1 B 1/6"		},
+	{0x00, 0x01, 0xf0, 0x80, "A 1/2 B 1/2"		},
+	{0x00, 0x01, 0xf0, 0x90, "A 1/2 B 1/4"		},
+	{0x00, 0x01, 0xf0, 0xa0, "A 1/2 B 1/5"		},
+	{0x00, 0x01, 0xf0, 0xe0, "A 1/2 B 1/6"		},
+	{0x00, 0x01, 0xf0, 0xb0, "A 1/2 B 1/10"		},
+	{0x00, 0x01, 0xf0, 0xc0, "A 1/2 B 1/11"		},
+	{0x00, 0x01, 0xf0, 0xd0, "A 1/2 B 1/12"		},
+	{0x00, 0x01, 0xf0, 0xf0, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Counters"	},
-	{0x11, 0x01, 0x01, 0x01, "1"			},
-	{0x11, 0x01, 0x01, 0x00, "2"			},
+	{0x01, 0x01, 0x01, 0x01, "1"				},
+	{0x01, 0x01, 0x01, 0x00, "2"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
+	{0x01, 0x01, 0x02, 0x02, "Off"				},
+	{0x01, 0x01, 0x02, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x11, 0x01, 0x0c, 0x0c, "30k 70k 40k+"		},
-	{0x11, 0x01, 0x0c, 0x04, "20k only"		},
-	{0x11, 0x01, 0x0c, 0x08, "40k only"		},
-	{0x11, 0x01, 0x0c, 0x00, "None"			},
+	{0x01, 0x01, 0x0c, 0x0c, "30k 70k 40k+"		},
+	{0x01, 0x01, 0x0c, 0x04, "20k only"			},
+	{0x01, 0x01, 0x0c, 0x08, "40k only"			},
+	{0x01, 0x01, 0x0c, 0x00, "None"				},
 };
 
 STDDIPINFO(Arabian)
 
 static struct BurnDIPInfo ArabianaDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x06, NULL			},
-	{0x11, 0xff, 0xff, 0x0d, NULL			},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0x06, NULL				},
+	{0x01, 0xff, 0xff, 0x0d, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x10, 0x01, 0x01, 0x00, "3"			},
-	{0x10, 0x01, 0x01, 0x01, "5"			},
+	{0   , 0xfe, 0   ,    2, "Lives"			},
+	{0x00, 0x01, 0x01, 0x00, "3"				},
+	{0x00, 0x01, 0x01, 0x01, "5"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x10, 0x01, 0x02, 0x02, "Upright"		},
-	{0x10, 0x01, 0x02, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x00, 0x01, 0x02, 0x02, "Upright"			},
+	{0x00, 0x01, 0x02, 0x00, "Cocktail"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x10, 0x01, 0x04, 0x04, "Off"			},
-	{0x10, 0x01, 0x04, 0x00, "On"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"				},
+	{0x00, 0x01, 0x04, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x10, 0x01, 0x08, 0x00, "Easy"			},
-	{0x10, 0x01, 0x08, 0x08, "Hard"			},
+	{0x00, 0x01, 0x08, 0x00, "Easy"				},
+	{0x00, 0x01, 0x08, 0x08, "Hard"				},
 
-	{0   , 0xfe, 0   ,    16, "Coinage"		},
-	{0x10, 0x01, 0xf0, 0x10, "A 2/1 B 2/1"		},
-	{0x10, 0x01, 0xf0, 0x20, "A 2/1 B 1/3"		},
-	{0x10, 0x01, 0xf0, 0x00, "A 1/1 B 1/1"		},
-	{0x10, 0x01, 0xf0, 0x30, "A 1/1 B 1/2"		},
-	{0x10, 0x01, 0xf0, 0x40, "A 1/1 B 1/3"		},
-	{0x10, 0x01, 0xf0, 0x50, "A 1/1 B 1/4"		},
-	{0x10, 0x01, 0xf0, 0x60, "A 1/1 B 1/5"		},
-	{0x10, 0x01, 0xf0, 0x70, "A 1/1 B 1/6"		},
-	{0x10, 0x01, 0xf0, 0x80, "A 1/2 B 1/2"		},
-	{0x10, 0x01, 0xf0, 0x90, "A 1/2 B 1/4"		},
-	{0x10, 0x01, 0xf0, 0xa0, "A 1/2 B 1/5"		},
-	{0x10, 0x01, 0xf0, 0xe0, "A 1/2 B 1/6"		},
-	{0x10, 0x01, 0xf0, 0xb0, "A 1/2 B 1/10"		},
-	{0x10, 0x01, 0xf0, 0xc0, "A 1/2 B 1/11"		},
-	{0x10, 0x01, 0xf0, 0xd0, "A 1/2 B 1/12"		},
-	{0x10, 0x01, 0xf0, 0xf0, "Free Play"		},
+	{0   , 0xfe, 0   ,    16, "Coinage"			},
+	{0x00, 0x01, 0xf0, 0x10, "A 2/1 B 2/1"		},
+	{0x00, 0x01, 0xf0, 0x20, "A 2/1 B 1/3"		},
+	{0x00, 0x01, 0xf0, 0x00, "A 1/1 B 1/1"		},
+	{0x00, 0x01, 0xf0, 0x30, "A 1/1 B 1/2"		},
+	{0x00, 0x01, 0xf0, 0x40, "A 1/1 B 1/3"		},
+	{0x00, 0x01, 0xf0, 0x50, "A 1/1 B 1/4"		},
+	{0x00, 0x01, 0xf0, 0x60, "A 1/1 B 1/5"		},
+	{0x00, 0x01, 0xf0, 0x70, "A 1/1 B 1/6"		},
+	{0x00, 0x01, 0xf0, 0x80, "A 1/2 B 1/2"		},
+	{0x00, 0x01, 0xf0, 0x90, "A 1/2 B 1/4"		},
+	{0x00, 0x01, 0xf0, 0xa0, "A 1/2 B 1/5"		},
+	{0x00, 0x01, 0xf0, 0xe0, "A 1/2 B 1/6"		},
+	{0x00, 0x01, 0xf0, 0xb0, "A 1/2 B 1/10"		},
+	{0x00, 0x01, 0xf0, 0xc0, "A 1/2 B 1/11"		},
+	{0x00, 0x01, 0xf0, 0xd0, "A 1/2 B 1/12"		},
+	{0x00, 0x01, 0xf0, 0xf0, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Counters"	},
-	{0x11, 0x01, 0x01, 0x01, "1"			},
-	{0x11, 0x01, 0x01, 0x00, "2"			},
+	{0x01, 0x01, 0x01, 0x01, "1"				},
+	{0x01, 0x01, 0x01, 0x00, "2"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
+	{0x01, 0x01, 0x02, 0x02, "Off"				},
+	{0x01, 0x01, 0x02, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x11, 0x01, 0x0c, 0x0c, "20k 50k 150k 100k+"	},
-	{0x11, 0x01, 0x0c, 0x04, "20k only"		},
-	{0x11, 0x01, 0x0c, 0x08, "40k only"		},
-	{0x11, 0x01, 0x0c, 0x00, "None"			},
+	{0x01, 0x01, 0x0c, 0x0c, "20k 50k 150k 100k+" },
+	{0x01, 0x01, 0x0c, 0x04, "20k only"			},
+	{0x01, 0x01, 0x0c, 0x08, "40k only"			},
+	{0x01, 0x01, 0x0c, 0x00, "None"				},
 };
 
 STDDIPINFO(Arabiana)
-
-static UINT8 custom_cpu_r(UINT16 offset)
-{
-	if (custom_cpu_reset || offset < 0x7f0)
-		return DrvZ80RAM[offset];
-
-	switch (offset & 0x0f)
-	{
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			return DrvInputs[(offset & 0x0f)+2];
-
-		case 6:
-			return custom_cpu_busy ^= 1;
-
-		case 8:
-			return DrvZ80RAM[offset - 1];
-
-		default:
-			return 0;
-	}
-	return 0;
-}
 
 static void blit_area(UINT8 plane, UINT16 src, UINT8 x, UINT8 y, UINT8 sx, UINT8 sy)
 {
@@ -294,6 +274,15 @@ static void __fastcall arabian_videoram_w(UINT16 offset, UINT8 data)
 	}
 }
 
+static void sync_mcu()
+{
+	INT32 cyc = ((INT64)ZetTotalCycles(0) * (2000000 / 6) / 3000000) - mb88xxTotalCycles();
+
+	if (cyc > 0) {
+		mb88xxRun(cyc);
+	}
+}
+
 static void __fastcall arabian_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xc000) == 0x8000) {
@@ -317,10 +306,6 @@ static UINT8 __fastcall arabian_read(UINT16 address)
 		return DrvDips[0];
 	}
 
-	if ((address & 0xff00) == 0xd700) {
-		return custom_cpu_r(address & 0x7ff);
-	}
-
 	return 0;
 }
 
@@ -330,12 +315,83 @@ static void __fastcall arabian_out(UINT16 port, UINT8 data)
 	{
 		case 0xc800:
 			AY8910Write(0, 0, data);
-		break;
+		return;
 
 		case 0xca00:
 			AY8910Write(0, 1, data);
-		break;
+		return;
 	}
+}
+
+static UINT8 mcu_port_r0_read()
+{
+	return mcu_port_r[0] | 0x04;
+}
+
+static UINT8 mcu_port_r1_read()
+{
+	return mcu_port_r[1];
+}
+
+static UINT8 mcu_port_r2_read()
+{
+	return mcu_port_r[2];
+}
+
+static UINT8 mcu_port_r3_read()
+{
+	return mcu_port_r[3];
+}
+
+static void mcu_port_r0_write(UINT8 data)
+{
+	if (~data & 2) {
+		DrvZ80RAM[*mcu_port_p | *mcu_port_o] = 0xf0 | mcu_port_r[3];
+	}
+
+	*flipscreen = data & 8;
+
+	mcu_port_r[0] = data & 0x0f;
+}
+
+static void mcu_port_r1_write(UINT8 data)
+{
+	mcu_port_r[1] = data & 0x0f;
+}
+
+static void mcu_port_r2_write(UINT8 data)
+{
+	mcu_port_r[2] = data & 0x0f;
+}
+
+static void mcu_port_r3_write(UINT8 data)
+{
+	mcu_port_r[3] = data & 0x0f;
+}
+
+static UINT8 mcu_port_k_read()
+{
+	if (~mcu_port_r[0] & 1) {
+		return DrvZ80RAM[*mcu_port_p | *mcu_port_o] & 0x0f;
+	} else {
+		for (INT32 i = 0; i < 6; i++) {
+			if (~(((mcu_port_r[2] << 4) | mcu_port_r[1]) & 0x3f) & (1 << i)) {
+				return DrvInputs[(i & 7)+2] & 0x0f;
+			}
+		}
+	}
+
+	return 0x0f;
+}
+
+static void mcu_port_o_write(UINT8 data)
+{
+	*mcu_port_o = (*mcu_port_o & (0x0f << ((~data & 0x10) >> 2))) | ((data & 0x0f) << ((data & 0x10) >> 2));
+}
+
+static void mcu_port_p_write(UINT8 data)
+{
+	*mcu_port_p = (data & 0x07) << 8;
 }
 
 static void ay8910_porta_w(UINT32, UINT32 data)
@@ -345,25 +401,26 @@ static void ay8910_porta_w(UINT32, UINT32 data)
 
 static void ay8910_portb_w(UINT32, UINT32 data)
 {
-	custom_cpu_reset = ~data & 0x10;
+	sync_mcu();
+	mb88xxSetRESETLine(~data & 0x10);
+	mb88xxSetIRQLine(0, (data & 0x20) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
 
+	mb88xxReset();
+
 	AY8910Reset(0);
 
-	HiscoreReset();
+	nExtraCycles = 0;
 
-	custom_cpu_reset = 0;
-	custom_cpu_busy = 0;
+	HiscoreReset();
 
 	return 0;
 }
@@ -373,6 +430,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM		= Next; Next += 0x008000;
+	DrvMCUROM		= Next; Next += 0x000800;
 
 	DrvGfxROM		= Next; Next += 0x010000;
 
@@ -388,6 +446,9 @@ static INT32 MemIndex()
 
 	flipscreen		= Next; Next += 0x000001;
 	arabian_color	= Next; Next += 0x000001;
+	mcu_port_o		= Next; Next += 0x000001;
+	mcu_port_p		= (UINT16*)Next; Next += 0x000002;
+	mcu_port_r		= Next; Next += 0x000004;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -474,6 +535,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM + 0x4000, 6, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0x6000, 7, 1)) return 1;
 
+		if (BurnLoadRom(DrvMCUROM + 0x0000, 8, 1)) return 1;
+
 		DrvPaletteInit();
 		DrvGfxDecode();
 	}
@@ -481,12 +544,21 @@ static INT32 DrvInit()
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,		0xd000, 0xd7ff, MAP_WRITE);
-	ZetMapMemory(DrvZ80RAM,		0xd000, 0xd6ff, MAP_ROM); // d700-d7ff read through handler
+	ZetMapMemory(DrvZ80RAM,		0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM,		0xd800, 0xdfff, MAP_RAM);
 	ZetSetWriteHandler(arabian_write);
 	ZetSetReadHandler(arabian_read);
 	ZetSetOutHandler(arabian_out);
 	ZetClose();
+
+	mb88xxInit(0, 8841, DrvMCUROM);
+	mb88xxSetReadWriteFunction(mcu_port_r0_write, mcu_port_r0_read, 'r', 0);
+	mb88xxSetReadWriteFunction(mcu_port_r1_write, mcu_port_r1_read, 'r', 1);
+	mb88xxSetReadWriteFunction(mcu_port_r2_write, mcu_port_r2_read, 'r', 2);
+	mb88xxSetReadWriteFunction(mcu_port_r3_write, mcu_port_r3_read, 'r', 3);
+	mb88xxSetReadWriteFunction(NULL, mcu_port_k_read, 'k', 0);
+	mb88xxSetReadWriteFunction(mcu_port_o_write, NULL, 'o', 0);
+	mb88xxSetReadWriteFunction(mcu_port_p_write, NULL, 'p', 0);
 
 	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, NULL, NULL, ay8910_porta_w, ay8910_portb_w);
@@ -505,19 +577,13 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
+	mb88xxExit();
+
 	AY8910Exit(0);
 
 	BurnFreeMemIndex();
 
 	return 0;
-}
-
-static inline void update_flip_state()
-{
-	*flipscreen = DrvZ80RAM[0x034b];
-
-	if (DrvZ80RAM[0x0400] != 0 && !(DrvZ80RAM[0x0401] & 0x02))
-		*flipscreen = !*flipscreen;
 }
 
 static INT32 DrvDraw()
@@ -527,10 +593,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	update_flip_state();
-
 	UINT16 *pDst = pTransDraw;
 	UINT8 *pSrc = DrvTempBmp + (11 * 256);
+
+	*flipscreen = 0; // don't flip coctail, for 2p / 2joy
 
 	if (*flipscreen) {
 		pDst += nScreenWidth * (nScreenHeight - 1);
@@ -563,6 +629,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetNewFrame();
+	mb88xxNewFrame();
 
 	{
 		memset (DrvInputs, 0, 8);
@@ -579,17 +646,30 @@ static INT32 DrvFrame()
 		DrvInputs[7] = DrvDips[1];
 	}
 
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 2000000 / 6 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
+
 	ZetOpen(0);
-	ZetRun(3000000 / 60);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		CPU_RUN(0, Zet);
+		sync_mcu();
+
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+	}
+
 	ZetClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -612,10 +692,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
+		mb88xxScan(nAction);
+
 		AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(custom_cpu_reset);
-		SCAN_VAR(custom_cpu_busy);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -635,7 +716,7 @@ static struct BurnRomInfo arabianRomDesc[] = {
 	{ "tvg-93.ic86",0x2000, 0x71acd48d, BRF_GRA },		 //  6
 	{ "tvg-94.ic87",0x2000, 0x82160b9a, BRF_GRA },		 //  7
 	
-	{ "sun-8212.ic3",0x0800, 0x8869611e, BRF_OPT },		 //  8 MCU
+	{ "sun-8212.ic3",0x0800, 0x8869611e, BRF_ESS | BRF_PRG },		 //  8 MCU
 };
 
 STD_ROM_PICK(arabian)
@@ -664,7 +745,7 @@ static struct BurnRomInfo arabianaRomDesc[] = {
 	{ "tvg-93.ic86",0x2000, 0x71acd48d, BRF_GRA },		 //  6
 	{ "tvg-94.ic87",0x2000, 0x82160b9a, BRF_GRA },		 //  7
 	
-	{ "sun-8212.ic3",0x0800, 0x8869611e, BRF_OPT },		 //  8 MCU
+	{ "sun-8212.ic3",0x0800, 0x8869611e, BRF_ESS | BRF_PRG },		 //  8 MCU
 };
 
 STD_ROM_PICK(arabiana)

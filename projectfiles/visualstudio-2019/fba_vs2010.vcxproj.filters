@@ -3538,6 +3538,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech8.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp">
+      <Filter>cpus\mb88xx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -3794,6 +3797,12 @@
     </Filter>
     <Filter Include="cpus\f8">
       <UniqueIdentifier>{689473a5-9a30-489b-be12-edaa60375c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\mb88xx">
+      <UniqueIdentifier>{0a56ddcb-1397-4ddb-aa78-0188e61a0da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\libspng">
+      <UniqueIdentifier>{688e8e7c-7d25-4fb2-8b08-99830cf36885}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

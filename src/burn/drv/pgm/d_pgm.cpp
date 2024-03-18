@@ -9102,24 +9102,23 @@ struct BurnDriver BurnDrvKovptstd = {
 };
 
 
+#define KOVPLUS_COMPONENTS											\
+	{ "pgm_t0600.u11",		0x0800000, 0x4acc1ad6, 2 | BRF_GRA },	\
+	{ "pgm_a0600.u2",		0x0800000, 0xd8167834, 3 | BRF_GRA },	\
+	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },	\
+	{ "pgm_a0602.u6",		0x0800000, 0xe7a32959, 3 | BRF_GRA },	\
+	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },	\
+	{ "pgm_b0600.u5",		0x0800000, 0x7d3cd059, 4 | BRF_GRA },	\
+	{ "pgm_b0601.u7",		0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },	\
+	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },	\
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },
+
 // San Guo Zhan Ji - Xiao Bing Zheng Ba (Ver.A, Hack)
 
 static struct BurnRomInfo kovpxbaRomDesc[] = {
 	{ "xba_p0603_v119.u1",	0x0400000, 0xf8cd3baa, 1 | BRF_PRG | BRF_ESS },
 
-	{ "pgm_t0600.u11",		0x0800000, 0x4acc1ad6, 2 | BRF_GRA },
-
-	{ "pgm_a0600.u2",		0x0800000, 0xd8167834, 3 | BRF_GRA },
-	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },
-	{ "pgm_a0602.u6",		0x0800000, 0xe7a32959, 3 | BRF_GRA },
-	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },
-
-	{ "pgm_b0600.u5",		0x0800000, 0x7d3cd059, 4 | BRF_GRA },
-	{ "pgm_b0601.u7",		0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },
-
-	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },
-
-	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },
+	KOVPLUS_COMPONENTS
 };
 
 STDROMPICKEXT(kovpxba, kovpxba, pgm)
@@ -9141,19 +9140,7 @@ struct BurnDriver BurnDrvKovpxba = {
 static struct BurnRomInfo kovpxbbRomDesc[] = {
 	{ "xbb_p0603_v119.u1",	0x0400000, 0xc94d20b9, 1 | BRF_PRG | BRF_ESS },
 
-	{ "pgm_t0600.u11",		0x0800000, 0x4acc1ad6, 2 | BRF_GRA },
-
-	{ "pgm_a0600.u2",		0x0800000, 0xd8167834, 3 | BRF_GRA },
-	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },
-	{ "pgm_a0602.u6",		0x0800000, 0xe7a32959, 3 | BRF_GRA },
-	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },
-
-	{ "pgm_b0600.u5",		0x0800000, 0x7d3cd059, 4 | BRF_GRA },
-	{ "pgm_b0601.u7",		0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },
-
-	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },
-
-	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },
+	KOVPLUS_COMPONENTS
 };
 
 STDROMPICKEXT(kovpxbb, kovpxbb, pgm)
@@ -9168,3 +9155,214 @@ struct BurnDriver BurnDrvKovpxbb = {
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+#undef KOVPLUS_COMPONENTS
+
+
+// Knights of Valour Superheroes / Sangoku Senki Superheroes - Dungeons & Warriors (Hack)
+// Modified by IGHT
+// 20091227
+
+static struct BurnRomInfo kovshdfRomDesc[] = {
+	{ "df_p0604_v103.u1",			0x0400000, 0x589ea23f, 1 | BRF_PRG | BRF_ESS },
+
+	{ "pgm_t0600.u11",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },
+
+	{ "pgm_a0600.u1",	   			0x0800000, 0xd8167834, 3 | BRF_GRA },
+	{ "pgm_a0601.u3",	   			0x0800000, 0xff7a4373, 3 | BRF_GRA },
+	{ "pgm_a0602.u5",	   			0x0800000, 0xe7a32959, 3 | BRF_GRA },
+	{ "pgm_a0613.u7",	   			0x0400000, 0xec31abda, 3 | BRF_GRA },
+	{ "df_a0604_v200.u9",			0x0800000, 0x6445078b, 3 | BRF_GRA },
+
+	{ "pgm_b0600.u6",	   			0x0800000, 0x7d3cd059, 4 | BRF_GRA },
+	{ "pgm_b0601.u8",	   			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },
+	{ "df_b0602_v200.u10",			0x0400000, 0xb0cf55f2, 4 | BRF_GRA },
+
+	{ "pgm_m0600.u4",	   			0x0400000, 0x3ada4fd6, 5 | BRF_SND },
+
+	{ "kovshdf_v100_china.asic",	0x0004000, 0x70e33f5e, 7 | BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(kovshdf, kovshdf, pgm)
+STD_ROM_FN(kovshdf)
+
+struct BurnDriver BurnDrvKovshdf = {
+	"kovshdf", "kovsh", "pgm", NULL, "2009",
+	"Knights of Valour Superheroes / Sangoku Senki Superheroes - Dungeons & Warriors (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour Superheroes\0\u4e09\u570b\u6230\u7d00\0\u98a8\u96f2\u518d\u8d77 - \u5730\u4e0b\u57ce\u8207\u52c7\u58eb (Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshdfRomInfo, kovshdfRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Knights of Valour Superheroes / Sangoku Senki Superheroes - The Road Beyond the Gods (Hack)
+// 20210312
+
+static struct BurnRomInfo kovshszlRomDesc[] = {
+	{ "szl_p0604_v103.u1",		0x0400000, 0x5d6b0ebd, 1 | BRF_PRG | BRF_ESS },
+
+	{ "pgm_t0600.u11",			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },
+
+	{ "pgm_a0600.u1",			0x0800000, 0xd8167834, 3 | BRF_GRA },
+	{ "pgm_a0601.u3",			0x0800000, 0xff7a4373, 3 | BRF_GRA },
+	{ "pgm_a0602.u5",			0x0800000, 0xe7a32959, 3 | BRF_GRA },
+	{ "pgm_a0613.u7",			0x0400000, 0xec31abda, 3 | BRF_GRA },
+	{ "szl_a0604_v200.u9",		0x0400000, 0x410f3a5e, 3 | BRF_GRA },
+
+	{ "pgm_b0600.u6",			0x0800000, 0x7d3cd059, 4 | BRF_GRA },
+	{ "pgm_b0601.u8",			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },
+	{ "szl_b0602_v200.u10",		0x0400000, 0x62f67ca3, 4 | BRF_GRA },
+
+	{ "pgm_m0600.u4",			0x0400000, 0x3ada4fd6, 5 | BRF_SND },
+
+	{ "kovsh_v100_china.asic",	0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(kovshszl, kovshszl, pgm)
+STD_ROM_FN(kovshszl)
+
+struct BurnDriver BurnDrvKovshszl = {
+	"kovshszl", "kovsh", "pgm", NULL, "2021",
+	"Knights of Valour Superheroes / Sangoku Senki Superheroes - The Road Beyond the Gods (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour Superheroes\0\u4e09\u570b\u6230\u7d00\0\u98a8\u96f2\u518d\u8d77 - \u8d85\u795e\u4e4b\u8def (Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshszlRomInfo, kovshszlRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Knights of Valour Superheroes / Sangoku Senki Superheroes - Evil & Darkness Plus (Hack)
+
+static struct BurnRomInfo kovshxshRomDesc[] = {
+	{ "xs_p0604_v103.u1",		0x0400000, 0x4a20baa5, 1 | BRF_PRG | BRF_ESS },
+
+	{ "xs_t0600.u11",     		0x0800000, 0x36442749, 2 | BRF_GRA },
+
+	{ "xs_a0600.u1",	   		0x0800000, 0xee091a4f, 3 | BRF_GRA },
+	{ "pgm_a0601.u3",	   		0x0800000, 0xff7a4373, 3 | BRF_GRA },
+	{ "xs_a0602.u5",	   		0x0800000, 0xefb30f14, 3 | BRF_GRA },
+	{ "xs_a0613.u7",	   		0x0200000, 0x5ce4b5fa, 3 | BRF_GRA },
+	{ "xs_a0604_v200.u9",		0x0800000, 0xcea605ec, 3 | BRF_GRA },
+
+	{ "xs_b0600.u6",	   		0x0800000, 0xfbb494e5, 4 | BRF_GRA },
+	{ "xs_b0601.u8",	   		0x0400000, 0xf43e4276, 4 | BRF_GRA },
+	{ "xs_b0602_v200.u10",		0x0400000, 0x16844847, 4 | BRF_GRA },
+
+	{ "xs_m0600.u4",	   		0x0400000, 0x968a15b9, 5 | BRF_SND },
+
+	{ "kovxs_v100_china.asic",	0x0004000, 0xf6b6b4e8, 7 | BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(kovshxsh, kovshxsh, pgm)
+STD_ROM_FN(kovshxsh)
+
+struct BurnDriver BurnDrvKovshxsh = {
+	"kovshxsh", "kovsh", "pgm", NULL, "2021",
+	"Knights of Valour Superheroes / Sangoku Senki Superheroes - Evil & Darkness Plus (Hack)\0", "Sound incomplete", "hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshxshRomInfo, kovshxshRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Knights of Valour Superheroes / Sangoku Senki Superheroes - Muggle Legend (Hack)
+// 20200624
+
+static struct BurnRomInfo kovshmgRomDesc[] = {
+	{ "mg_p0604_v103.u1",			0x0400000, 0xd0bbd6c9, 1 | BRF_PRG | BRF_ESS },
+
+	{ "mg_t0600.u11",     			0x0800000, 0xa919ec0f, 2 | BRF_GRA },
+
+	{ "pgm_a0600.u1",	   			0x0800000, 0xd8167834, 3 | BRF_GRA },
+	{ "pgm_a0601.u3",	   			0x0800000, 0xff7a4373, 3 | BRF_GRA },
+	{ "pgm_a0602.u5",	   			0x0800000, 0xe7a32959, 3 | BRF_GRA },
+	{ "pgm_a0613.u7",	   			0x0400000, 0xec31abda, 3 | BRF_GRA },
+	{ "pgm_a0604_v200.u9",			0x0400000, 0x26b59fd3, 3 | BRF_GRA },
+
+	{ "pgm_b0600.u6",	   			0x0800000, 0x7d3cd059, 4 | BRF_GRA },
+	{ "pgm_b0601.u8",	   			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },
+	{ "mg_b0602_v200.u10",			0x0100000, 0x834afabe, 4 | BRF_GRA },
+
+	{ "pgm_m0600.u4",	   			0x0400000, 0x3ada4fd6, 5 | BRF_SND },
+
+	{ "kovshmg_v100_china.asic",	0x0004000, 0x12470e2a, 7 | BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(kovshmg, kovshmg, pgm)
+STD_ROM_FN(kovshmg)
+
+struct BurnDriver BurnDrvKovshmg = {
+	"kovshmg", "kovsh", "pgm", NULL, "2020",
+	"Knights of Valour Superheroes / Sangoku Senki Superheroes - Muggle Legend (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour Superheroes\0\u4e09\u570b\u6230\u7d00\0\u98a8\u96f2\u518d\u8d77 - \u9ebb\u74dc\u50b3\u8aaa (Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshmgRomInfo, kovshmgRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+#define KILLBLD_COMPONENTS										\
+	{ "pgm_t0300.u14",	0x0400000, 0x0922f7d9, 2 | BRF_GRA },	\
+	{ "pgm_a0300.u9",	0x0400000, 0x3f9455d3, 3 | BRF_GRA },	\
+	{ "pgm_a0301.u10",	0x0400000, 0x92776889, 3 | BRF_GRA },	\
+	{ "pgm_a0303.u11",	0x0400000, 0x33f5cc69, 3 | BRF_GRA },	\
+	{ "pgm_a0306.u12",	0x0400000, 0xcc018a8e, 3 | BRF_GRA },	\
+	{ "pgm_a0307.u2",	0x0400000, 0xbc772e39, 3 | BRF_GRA },	\
+	{ "pgm_b0300.u13",	0x0400000, 0x7f876981, 4 | BRF_GRA },	\
+	{ "pgm_b0302.u14",	0x0400000, 0xeea9c502, 4 | BRF_GRA },	\
+	{ "pgm_b0303.u15",	0x0200000, 0x77a9652e, 4 | BRF_GRA },	\
+	{ "pgm_m0300.u1",	0x0400000, 0x93159695, 5 | BRF_SND },	\
+	{ "kb_u2_v109.u2",	0x0010000, 0xde3eae63, 9 | BRF_PRG | BRF_ESS },
+
+// The Killing Blade - Heroes (Hack)
+// GOTVG 20180622
+
+static struct BurnRomInfo killbldqyRomDesc[] = {
+	{ "kbqy_v109.u9",	0x0200000, 0x98c85d0e, 1 | BRF_PRG | BRF_ESS },
+
+	KILLBLD_COMPONENTS
+};
+
+STDROMPICKEXT(killbldqy, killbldqy, pgm)
+STD_ROM_FN(killbldqy)
+
+struct BurnDriver BurnDrvKillbldqy = {
+	"killbldqy", "killbld", "pgm", NULL, "2018",
+	"The Killing Blade - Heroes (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"The Killing Blade - Heroes\0\u50b2\u528d\u72c2\u5200 - \u7fa4\u82f1 (Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
+	NULL, killbldqyRomInfo, killbldqyRomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbldDIPInfo,
+	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// The Killing Blade - Infinite Energy (Hack)
+// GOTVG 20230527
+
+static struct BurnRomInfo killbldjqRomDesc[] = {
+	{ "kbjq_v109.u9",	0x0200000, 0x612ce0f1, 1 | BRF_PRG | BRF_ESS },
+
+	KILLBLD_COMPONENTS
+};
+
+STDROMPICKEXT(killbldjq, killbldjq, pgm)
+STD_ROM_FN(killbldjq)
+
+struct BurnDriver BurnDrvKillbldjq = {
+	"killbldjq", "killbld", "pgm", NULL, "2023",
+	"The Killing Blade - Infinite Energy (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"The Killing Blade - Infinite Energy\0\u50b2\u528d\u72c2\u5200 - \u7121\u9650\u6c23 (Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
+	NULL, killbldjqRomInfo, killbldjqRomName, NULL, NULL, NULL, NULL, pgmInputInfo, killbldDIPInfo,
+	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+#undef KILLBLD_COMPONENTS

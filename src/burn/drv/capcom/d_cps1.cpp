@@ -1840,42 +1840,43 @@ STDINPUTINFO(Wofchp)
 
 static struct BurnInputInfo WofhfhInputList[] =
 {
- 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
- 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
- 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
- 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
- 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
- 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
- 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
- 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
- 	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018 + 0, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp018 + 4, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001 + 3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001 + 2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001 + 1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001 + 0, "p1 right"  },
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001 + 4, "p1 fire 1" },
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001 + 5, "p1 fire 2" },
+	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001 + 6, "p1 fire 3" },
 
- 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
- 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
- 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
- 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
- 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
- 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
- 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
- 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
- 	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018 + 1, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp018 + 5, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000 + 3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000 + 2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000 + 1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000 + 0, "p2 right"  },
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000 + 4, "p2 fire 1" },
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000 + 5, "p2 fire 2" },
+	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000 + 6, "p2 fire 3" },
 
- 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   },
- 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
- 	{"P3 Up"            , BIT_DIGITAL  , CpsInp177+3, "p3 up"     },
- 	{"P3 Down"          , BIT_DIGITAL  , CpsInp177+2, "p3 down"   },
- 	{"P3 Left"          , BIT_DIGITAL  , CpsInp177+1, "p3 left"   },
- 	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
- 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
- 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
- 	{"P3 Fire 3"        , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177 + 6, "p3 coin"   },
+	{"P3 Start"         , BIT_DIGITAL  , CpsInp177 + 7, "p3 start"  },
+	{"P3 Up"            , BIT_DIGITAL  , CpsInp177 + 3, "p3 up"     },
+	{"P3 Down"          , BIT_DIGITAL  , CpsInp177 + 2, "p3 down"   },
+	{"P3 Left"          , BIT_DIGITAL  , CpsInp177 + 1, "p3 left"   },
+	{"P3 Right"         , BIT_DIGITAL  , CpsInp177 + 0, "p3 right"  },
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177 + 4, "p3 fire 1" },
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177 + 5, "p3 fire 2" },
+	{"P3 Fire 3"        , BIT_DIGITAL  , CpsInp177 + 6, "p3 fire 3" },
 
- 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
- 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
- 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
- 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
- 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Reset"            , BIT_DIGITAL  , &CpsReset    , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018 + 6, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp018 + 2, "service"   },
+	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A      , "dip"       },
+	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C      , "dip"       },
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E      , "dip"       },
+	{"Dip Ex"           , BIT_DIPSWITCH, &VerSwitcher , "dip"       },
 };
 
 STDINPUTINFO(Wofhfh)
@@ -2102,8 +2103,8 @@ STDINPUTINFOEXT(DinohQS,      Dinoh,    QSoundPatch)
 STDINPUTINFOEXT(PunisherQS,   Punisher, QSoundPatch)
 STDINPUTINFOEXT(SlammastQS,   Slammast, QSoundPatch)
 STDINPUTINFOEXT(WofQS,        Wof,      QSoundPatch)
-STDINPUTINFOEXT(DinoVersw,    Dino,     VerSwitch  )
-STDINPUTINFOEXT(FfightVersw,  Ffight,   VerSwitch  )
+STDINPUTINFOEXT(DinoVS,       Dino,     VerSwitch  )
+STDINPUTINFOEXT(FfightVS,     Ffight,   VerSwitch  )
 
 
 // Dip Switch Definitions
@@ -5084,6 +5085,7 @@ static struct BurnDIPInfo WofhfhDIPList[]=
 	{0x00, 0xff, 0xff, 0x00, NULL                     },
 	{0x01, 0xff, 0xff, 0x13, NULL                     },
 	{0x02, 0xff, 0xff, 0x00, NULL                     },
+	{0x03, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip A
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
@@ -5118,6 +5120,11 @@ static struct BurnDIPInfo WofhfhDIPList[]=
 	{0x02, 0x01, 0x03, 0x02, "2 Players 1 Shooter"    },
 	{0x02, 0x01, 0x03, 0x01, "3 Players 1 Shooter"    },
 	{0x02, 0x01, 0x03, 0x00, "3 Players 3 Shooters"   },
+
+	// Dip Ex
+	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)" },
+	{0x03, 0x01, 0x01, 0x00, "Original"               },
+	{0x03, 0x01, 0x01, 0x01, "Wof"                    },
 };
 
 STDDIPINFO(Wofhfh)
@@ -5497,6 +5504,17 @@ static struct BurnDIPInfo DinofwDIPList[] =
 	{0x1c, 0x01, 0x01, 0x01, "2022q"                        },
 };
 
+static struct BurnDIPInfo DinoScenarioDIPList[] =
+{
+	// Defaults
+	{0x1c, 0xff, 0xff, 0x00, NULL                      },
+
+	// Dip Ex
+	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)"  },
+	{0x1c, 0x01, 0x01, 0x00, "Original"                },
+	{0x1c, 0x01, 0x01, 0x01, "Dino"                    },
+};
+
 static struct BurnDIPInfo ffightdwDIPList[] =
 {
 	// Fake DIPs
@@ -5514,6 +5532,7 @@ STDDIPINFOEXT(PunisherQS, Punisher, PunisherQSound)
 STDDIPINFOEXT(SlammastQS, Slammast, SlammastQSound)
 STDDIPINFOEXT(Captcm3p,   Captcomm, Captcm3p      )
 STDDIPINFOEXT(Dinofw,     Dino,     Dinofw        )
+STDDIPINFOEXT(DinoScen,   Dino,     DinoScenario  )
 STDDIPINFOEXT(ffightdw,   Ffight,   ffightdw      )
 
 // Rom Definitions
@@ -17898,12 +17917,28 @@ static INT32 DinotpicInit()
 	return nRet;
 }
 
+static void DinohuntPatchCallback()
+{
+	// Scenario: Same as dino
+	*((UINT16*)(CpsRom + 0xa9a2)) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*((UINT16*)(CpsRom + 0xa9a4)) = BURN_ENDIAN_SWAP_INT16(0x08ce);
+	*((UINT16*)(CpsRom + 0xabe8)) = BURN_ENDIAN_SWAP_INT16(0x522d);
+	*((UINT16*)(CpsRom + 0xabea)) = BURN_ENDIAN_SWAP_INT16(0x04d9);
+	*((UINT16*)(CpsRom + 0xabec)) = BURN_ENDIAN_SWAP_INT16(0x022d);
+	*((UINT16*)(CpsRom + 0xabee)) = BURN_ENDIAN_SWAP_INT16(0x0007);
+	*((UINT16*)(CpsRom + 0xabf0)) = BURN_ENDIAN_SWAP_INT16(0x04d9);
+}
+
 static INT32 DinohuntInit()
 {
 	INT32 nRet = 0;
 	
 	Dinohunt = 1;
 	CpsBootlegEEPROM = 1;
+
+	if (VerSwitcher & 1) {
+		AmendProgRomCallback = DinohuntPatchCallback;
+	}
 	
 	nRet = TwelveMhzInit();
 	if (nRet) return nRet;
@@ -21064,6 +21099,26 @@ static INT32 WofchInit()
 	return nRet;
 }
 
+static void WofhfhPatchCallback()
+{
+	// Scenario: Same as wof
+	CpsRom[0xb214] = 0x00;
+	*((UINT16*)(CpsRom + 0xb3ea)) = BURN_ENDIAN_SWAP_INT16(0x522d);
+	*((UINT16*)(CpsRom + 0xb3ec)) = BURN_ENDIAN_SWAP_INT16(0xff88);
+	*((UINT16*)(CpsRom + 0xb3ee)) = BURN_ENDIAN_SWAP_INT16(0x0c2d);
+	*((UINT16*)(CpsRom + 0xb3f0)) = BURN_ENDIAN_SWAP_INT16(0x000d);
+	*((UINT16*)(CpsRom + 0xb3f2)) = BURN_ENDIAN_SWAP_INT16(0xff88);
+}
+
+static INT32 WofhfhInit()
+{
+	if (VerSwitcher & 1) {
+		AmendProgRomCallback = WofhfhPatchCallback;
+	}
+
+	return TwelveMhzInit();
+}
+
 static UINT8 WofhProtValue;
 
 UINT8 __fastcall Wofh135ReadByte(UINT32)
@@ -22285,7 +22340,7 @@ struct BurnDriver BurnDrvCpsDinohunt = {
 	"Dinosaur Hunter (Chinese bootleg of Cadillacs and Dinosaurs)\0", NULL, "bootleg", "CPS1",
 	L"Dinosaur Hunter \u6050\u9F8D\u7375\u4EBA (Chinese bootleg of Cadillacs and Dinosaurs)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, DinohuntRomInfo, DinohuntRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	NULL, DinohuntRomInfo, DinohuntRomName, NULL, NULL, NULL, NULL, DinoVSInputInfo, DinoScenDIPInfo,
 	DinohuntInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -25002,11 +25057,11 @@ struct BurnDriver BurnDrvCpsWofch = {
 
 struct BurnDriver BurnDrvCpsWofhfh = {
 	"wofhfh", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Huo Fenghuang (Chinese bootleg of Sangokushi II)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7 II: \u706B\u9CF3\u51F0\0Sangokushi II: Huo Feng Huang (Chinese bootleg of Sangokushi II)\0", NULL, NULL, NULL,
+	"Huo Feng Huang (Chinese bootleg of Sangokushi II)\0", NULL, "bootleg", "CPS1",
+	L"\u706B\u9CF3\u51F0\0Huo Feng Huang (Chinese bootleg of Sangokushi II)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhfhRomInfo, WofhfhRomName, NULL, NULL, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	WofhfhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -26415,7 +26470,7 @@ struct BurnDriver BurnDrvCpsdinofw = {
 	"Cadillacs and Dinosaurs (Framework 2022 Series, Hack)\0", "Other versions are selected in the dipswitch", "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, dinofwRomInfo, dinofwRomName, NULL, NULL, NULL, NULL, DinoVerswInputInfo, DinofwDIPInfo,
+	NULL, dinofwRomInfo, dinofwRomName, NULL, NULL, NULL, NULL, DinoVSInputInfo, DinofwDIPInfo,
 	DinofwInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -27236,7 +27291,7 @@ struct BurnDriver BurnDrvCpsffightdw = {
 	"Final Fight (Warriors, Hack)\0", "Other versions are selected in the dipswitch", "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, ffightdwRomInfo, ffightdwRomName, NULL, NULL, NULL, NULL, FfightVerswInputInfo, ffightdwDIPInfo,
+	NULL, ffightdwRomInfo, ffightdwRomName, NULL, NULL, NULL, NULL, FfightVSInputInfo, ffightdwDIPInfo,
 	ffightdwInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -27370,6 +27425,12 @@ struct BurnDriver BurnDrvCpsknightsc = {
 	{ "kdu_35.9f",		0x020000, 0x4ca6a48a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
 	{ "kdu_29.10e",		0x020000, 0x0360fa72, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
 	{ "kdu_36a.10f",	0x020000, 0x95a3cef8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+#define KODU_PRG																				\
+	{ "kdu_30b.11e",	0x020000, 0x825817f9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
+	{ "kdu_37b.11f",	0x020000, 0xd2422dfb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
+	{ "kdu_31b.12e",	0x020000, 0x9af36039, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
+	{ "kdu_38b.12f",	0x020000, 0xbe8405a1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	\
+	KODU_PRG2
 #define KOD_COMPONENTS																			\
 	{ "kd-5m.4a",		0x080000, 0xe45b8701, BRF_GRA | CPS1_TILES },							\
 	{ "kd-7m.6a",		0x080000, 0xa7750322, BRF_GRA | CPS1_TILES },							\
@@ -27572,21 +27633,11 @@ struct BurnDriver BurnDrvCpskodyh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-#undef KOD_COMPONENTS
-#undef KODU_PRG2
-
 // The King of Dragons (Remix Special, Hack)
 // Modified by Bonusjz
 
 static struct BurnRomInfo KodsrRomDesc[] = {
-	{ "kde_30.11e",		0x020000, 0xc7414fd4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_37.11f",		0x020000, 0xa5bf40d2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_31.12e",		0x020000, 0x1fffc7bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_38.12f",		0x020000, 0x89e57a82, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_28.9e",		0x020000, 0x9367bcd9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_35.9f",		0x020000, 0x4ca6a48a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_29.10e",		0x020000, 0x6a0ba878, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kde_36.10f",		0x020000, 0xb509b39d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	KODU_PRG
 
 	{ "kdsr-5m.4a",		0x080000, 0x0aaa04b7, BRF_GRA | CPS1_TILES },
 	{ "kdsr-7m.6a",		0x080000, 0x28d6b2ff, BRF_GRA | CPS1_TILES },
@@ -27597,16 +27648,16 @@ static struct BurnRomInfo KodsrRomDesc[] = {
 	{ "kdsr-2m.3c",		0x080000, 0x34b917e8, BRF_GRA | CPS1_TILES },
 	{ "kdsr-4m.5c",		0x080000, 0x8faba58f, BRF_GRA | CPS1_TILES },
 
-	{ "kd_9.12a",		0x010000, 0xf5514510, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "kd_9.12a",		0x010000, 0xbac6ec26, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "kd_18.11c",		0x020000, 0x69ecb2c8, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "kd_19.12c",		0x020000, 0x02d851c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "kd_18.11c",		0x020000, 0x4c63181d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "kd_19.12c",		0x020000, 0x92941b80, BRF_SND | CPS1_OKIM6295_SAMPLES },
 
 	A_BOARD_PLDS
 
-	{ "kd29b.1a",		0x000117, 0x6b892f82, BRF_OPT }, // b-board PLDs
+	{ "kd29b.1a",		0x000117, 0x6b892f82, BRF_OPT },
 	{ "iob1.11d",		0x000117, 0x3abc0700, BRF_OPT },
-	{ "ioc1.ic7",		0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "ioc1.ic7",		0x000104, 0xa399772d, BRF_OPT },
 	{ "c632.ic1",		0x000117, 0x0fbd9270, BRF_OPT },
 };
 
@@ -27622,6 +27673,10 @@ struct BurnDriver BurnDrvCpsKodsr = {
 	KodInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+#undef KOD_COMPONENTS
+#undef KODU_PRG2
+#undef KODU_PRG
 
 
 // -----------------------------------------------------------------------------
@@ -27852,12 +27907,12 @@ struct BurnDriver BurnDrvCpswofdr = {
 
 
 // Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)
-// GOTVG 20240307
+// GOTVG 20240314
 
 static struct BurnRomInfo wofdr20RomDesc[] = {
-	{ "tk2dr20_23c.8f",	0x080000, 0x4f61f0f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr20_23c.8f",	0x080000, 0xa1e080bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "tk2dr_22c.7f",	0x080000, 0x16405A96, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr20_21c.6f",	0x080000, 0xb7c882f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr20_21c.6f",	0x080000, 0x6597c4e6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "tk2dr20_20c.5f",	0x080000, 0x3a9c0284, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	WOFJ_TILE1

@@ -160,7 +160,7 @@ static struct BurnInputInfo p3CommonInputList[] = {
 STDINPUTINFO(p3Common)
 
 static struct BurnInputInfo p4CommonInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	}, //  0
 	{"P1 Start",		BIT_DIGITAL,	DrvButton + 0,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
@@ -169,7 +169,7 @@ static struct BurnInputInfo p4CommonInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	}, //  8
 	{"P2 Start",		BIT_DIGITAL,	DrvButton + 1,	"p2 start"	},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
@@ -178,7 +178,7 @@ static struct BurnInputInfo p4CommonInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 
-	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p3 coin"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p3 coin"	}, // 10
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
@@ -188,17 +188,17 @@ static struct BurnInputInfo p4CommonInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 fire 2"	},
 
 	{"P4 Coin",			BIT_DIGITAL,	DrvJoy4 + 5,	"p4 coin"	},
-	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 start"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 start"	}, // 19
 	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 3,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 2,	"p4 down"	},
 	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 1,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 fire 1"	},
-	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 2"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 2"	}, // 1f
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		}, // 20
 	{"Service",			BIT_DIGITAL,	DrvButton + 4,	"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvInput + 5,	"dip"		}, // 22
 	{"Dip B",			BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
 };
@@ -917,67 +917,69 @@ STDDIPINFO(Uccops)
 
 static struct BurnDIPInfo HookDIPList[]=
 {
-	{0x22, 0xff, 0xff, 0xbf, NULL					},
-	{0x23, 0xff, 0xff, 0xff, NULL					},
-	{0x24, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x22)
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x22, 0x01, 0x03, 0x00, "1"					},
-	{0x22, 0x01, 0x03, 0x03, "2"					},
-	{0x22, 0x01, 0x03, 0x02, "3"					},
-	{0x22, 0x01, 0x03, 0x01, "4"					},
+	{0x00, 0xff, 0xff, 0xbf, NULL                             },
+	{0x01, 0xff, 0xff, 0xff, NULL                             },
+	{0x02, 0xff, 0xff, 0xff, NULL                             },
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x22, 0x01, 0x0c, 0x00, "Very Easy"				},
-	{0x22, 0x01, 0x0c, 0x08, "Easy"					},
-	{0x22, 0x01, 0x0c, 0x0c, "Normal"				},
-	{0x22, 0x01, 0x0c, 0x04, "Hard"					},
+	{0   , 0xfe, 0   ,    4, "Lives"                          },
+	{0x00, 0x01, 0x03, 0x00, "1"                              },
+	{0x00, 0x01, 0x03, 0x03, "2"                              },
+	{0x00, 0x01, 0x03, 0x02, "3"                              },
+	{0x00, 0x01, 0x03, 0x01, "4"                              },
 
-	{0   , 0xfe, 0   ,    2, "Any Button to Start"			},
-	{0x22, 0x01, 0x20, 0x00, "No"					},
-	{0x22, 0x01, 0x20, 0x20, "Yes"					},
+	{0   , 0xfe, 0   ,    4, "Difficulty"                     },
+	{0x00, 0x01, 0x0c, 0x00, "Very Easy"                      },
+	{0x00, 0x01, 0x0c, 0x08, "Easy"                           },
+	{0x00, 0x01, 0x0c, 0x0c, "Normal"                         },
+	{0x00, 0x01, 0x0c, 0x04, "Hard"                           },
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x22, 0x01, 0x40, 0x40, "Off"					},
-	{0x22, 0x01, 0x40, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Any Button to Start"            },
+	{0x00, 0x01, 0x20, 0x00, "No"                             },
+	{0x00, 0x01, 0x20, 0x20, "Yes"                            },
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x22, 0x01, 0x80, 0x80, "Off"					},
-	{0x22, 0x01, 0x80, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"                    },
+	{0x00, 0x01, 0x40, 0x40, "Off"                            },
+	{0x00, 0x01, 0x40, 0x00, "On"                             },
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
-	{0x23, 0x01, 0x01, 0x01, "Off"					},
-	{0x23, 0x01, 0x01, 0x00, "On"					},
+	{0   , 0xfe, 0   ,    2, "Service Mode"                   },
+	{0x00, 0x01, 0x80, 0x80, "Off"                            },
+	{0x00, 0x01, 0x80, 0x00, "On"                             },
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x23, 0x01, 0x02, 0x02, "2 Players"				},
-	{0x23, 0x01, 0x02, 0x00, "4 Players"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"                    },
+	{0x01, 0x01, 0x01, 0x01, "Off"                            },
+	{0x01, 0x01, 0x01, 0x00, "On"                             },
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"				},
-	{0x23, 0x01, 0x04, 0x04, "Common"				},
-	{0x23, 0x01, 0x04, 0x00, "Separate"				},
+	{0   , 0xfe, 0   ,    2, "Cabinet"                        },
+	{0x01, 0x01, 0x02, 0x02, "2 Players"                      },
+	{0x01, 0x01, 0x02, 0x00, "4 Players"                      },
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"				},
-	{0x23, 0x01, 0x08, 0x08, "1"					},
-	{0x23, 0x01, 0x08, 0x00, "2"					},
+	{0   , 0xfe, 0   ,    2, "Coin Slots"                     },
+	{0x01, 0x01, 0x04, 0x04, "Common"                         },
+	{0x01, 0x01, 0x04, 0x00, "Separate"                       },
 
-	{0   , 0xfe, 0   ,   16, "Coinage"				},
-	{0x23, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"			},
-	{0x23, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"			},
-	{0x23, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"			},
-	{0x23, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"			},
-	{0x23, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"			},
-	{0x23, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue"	},
-	{0x23, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"			},
-	{0x23, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"			},
-	{0x23, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"			},
-	{0x23, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"			},
-	{0x23, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"			},
-	{0x23, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"			},
-	{0x23, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"			},
-	{0x23, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
-	{0x23, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
-	{0x23, 0x01, 0xf0, 0x00, "Free Play"				},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"                      },
+	{0x01, 0x01, 0x08, 0x08, "1"                              },
+	{0x01, 0x01, 0x08, 0x00, "2"                              },
+
+	{0   , 0xfe, 0   ,   16, "Coinage"                        },
+	{0x01, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"              },
+	{0x01, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"              },
+	{0x01, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"              },
+	{0x01, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"              },
+	{0x01, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"              },
+	{0x01, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Continue" },
+	{0x01, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"              },
+	{0x01, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"              },
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"              },
+	{0x01, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"              },
+	{0x01, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"              },
+	{0x01, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"              },
+	{0x01, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"              },
+	{0x01, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"              },
+	{0x01, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"              },
+	{0x01, 0x01, 0xf0, 0x00, "Free Play"                      },
 };
 
 STDDIPINFO(Hook)
@@ -1269,6 +1271,13 @@ static struct BurnDIPInfo PsoldierDIPList[]=
 };
 
 STDDIPINFO(Psoldier)
+
+static struct BurnDIPInfo Hook4pDIPList[] =
+{
+	{0x01, 0xff, 0xff, 0xfd, NULL},
+};
+
+STDDIPINFOEXT(Hook4p, Hook, Hook4p)
 
 inline static UINT32 CalcCol(INT32 offs)
 {
@@ -1838,6 +1847,13 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 	GenericTilesInit();
 
 	DrvDoReset();
+
+	FILE* f = fopen("m92_v33", "wb");
+	fwrite(DrvV33ROM, 0x0c0000, 1, f);
+	fclose(f);
+	f = fopen("m92_v30", "wb");
+	fwrite(DrvV30ROM, 0x020000, 1, f);
+	fclose(f);
 
 	return 0;
 }
@@ -4253,41 +4269,47 @@ struct BurnDriver BurnDrvSkingame2 = {
 };
 
 
+// -----------------------------------------------------------------------------
+// Ninja Baseball Batman Series
+// -----------------------------------------------------------------------------
+
+#define NBBATMAN_COMPONENTS													\
+	{ "a1_-h1-.ic33",		0x040000, 0x3ce2aab5, 1 | BRF_PRG | BRF_ESS },	\
+	{ "a1_-l1-.ic32",		0x040000, 0x116d9bcc, 1 | BRF_PRG | BRF_ESS },	\
+	{ "a1_-sh0-.ic14",		0x010000, 0xb7fae3e6, 2 | BRF_PRG | BRF_ESS },	\
+	{ "a1_-sl0-.ic17",		0x010000, 0xb26d54fc, 2 | BRF_PRG | BRF_ESS },	\
+	{ "lh534k0c.ic9",		0x080000, 0x314a0c6d, 3 | BRF_GRA },			\
+	{ "lh534k0e.ic10",		0x080000, 0xdc31675b, 3 | BRF_GRA },			\
+	{ "lh534k0f.ic11",		0x080000, 0xe15d8bfb, 3 | BRF_GRA },			\
+	{ "lh534k0g.ic12",		0x080000, 0x888d71a3, 3 | BRF_GRA },			\
+	{ "lh538393.ic42",		0x100000, 0x26cdd224, 4 | BRF_GRA },			\
+	{ "lh538394.ic43",		0x100000, 0x4bbe94fa, 4 | BRF_GRA },			\
+	{ "lh538395.ic44",		0x100000, 0x2a533b5e, 4 | BRF_GRA },			\
+	{ "lh538396.ic45",		0x100000, 0x863a66fa, 4 | BRF_GRA },			\
+	{ "lh534k0k.ic8",		0x080000, 0x735e6380, 5 | BRF_SND },			\
+	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },			\
+	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },			\
+	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },			\
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },			\
+	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },
+
 // Ninja Baseball Batman (One Key Edition, Hack)
 // Modified by 哆啦A梦
+// 20200906
 
 static struct BurnRomInfo nbbatmanoRomDesc[] = {
-	{ "a1_-h0o-c.ic34",		0x040000, 0xad7e9c69, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "a1_-l0o-c.ic31",		0x040000, 0x17da7b70, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a1_-h1-.ic33",		0x040000, 0x3ce2aab5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "a1_-l1-.ic32",		0x040000, 0x116d9bcc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a1_-h0o-c.ic34",		0x040000, 0xad7e9c69, 1 | BRF_PRG | BRF_ESS },
+	{ "a1_-l0o-c.ic31",		0x040000, 0x17da7b70, 1 | BRF_PRG | BRF_ESS },
 
-	{ "a1_-sh0-.ic14",		0x010000, 0xb7fae3e6, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "a1_-sl0-.ic17",		0x010000, 0xb26d54fc, 2 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "lh534k0c.ic9",		0x080000, 0x314a0c6d, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "lh534k0e.ic10",		0x080000, 0xdc31675b, 3 | BRF_GRA },           //  7
-	{ "lh534k0f.ic11",		0x080000, 0xe15d8bfb, 3 | BRF_GRA },           //  8
-	{ "lh534k0g.ic12",		0x080000, 0x888d71a3, 3 | BRF_GRA },           //  9
-
-	{ "lh538393.ic42",		0x100000, 0x26cdd224, 4 | BRF_GRA },           // 10 Sprites
-	{ "lh538394.ic43",		0x100000, 0x4bbe94fa, 4 | BRF_GRA },           // 11
-	{ "lh538395.ic44",		0x100000, 0x2a533b5e, 4 | BRF_GRA },           // 12
-	{ "lh538396.ic45",		0x100000, 0x863a66fa, 4 | BRF_GRA },           // 13
-
-	{ "lh534k0k.ic8",		0x080000, 0x735e6380, 5 | BRF_SND },           // 14 Irem GA20 Samples
-
-	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
-	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
-	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
+	NBBATMAN_COMPONENTS
 };
 
 STD_ROM_PICK(nbbatmano)
 STD_ROM_FN(nbbatmano)
 
 struct BurnDriver BurnDrvNbbatmano = {
-	"nbbatmano", "nbbatman", NULL, NULL, "2020-09-06",
-	"Ninja Baseball Batman (One Key Edition, Hack)\0", NULL, "Hack", "Irem M92",
+	"nbbatmano", "nbbatman", NULL, NULL, "2020",
+	"Ninja Baseball Batman (One Key Edition, Hack)\0", NULL, "hack", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanoRomInfo, nbbatmanoRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
@@ -4295,3 +4317,602 @@ struct BurnDriver BurnDrvNbbatmano = {
 	320, 240, 4, 3
 };
 
+
+// Ninja Baseball Batman (X2, Hack)
+// GOTVG 20180505
+
+static struct BurnRomInfo nbbatmx2RomDesc[] = {
+	{ "nbx2_-h0-c.ic34",	0x040000, 0x81e706e6, 1 | BRF_PRG | BRF_ESS },
+	{ "nbx2_-l0-c.ic31",	0x040000, 0x353c90e9, 1 | BRF_PRG | BRF_ESS },
+
+	NBBATMAN_COMPONENTS
+};
+
+STD_ROM_PICK(nbbatmx2)
+STD_ROM_FN(nbbatmx2)
+
+struct BurnDriver BurnDrvNbbatmx2 = {
+	"nbbatmx2", "nbbatman", NULL, NULL, "2018",
+	"Ninja Baseball Batman (X2, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbatmx2RomInfo, nbbatmx2RomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Ninja Baseball Batman (Transform, Hack)
+// GOTVG 20161203
+
+static struct BurnRomInfo nbbatmbhRomDesc[] = {
+	{ "nbbh_-h0-a.ic34",	0x040000, 0xb49f2163, 1 | BRF_PRG | BRF_ESS },
+	{ "nbbh_-l0-a.ic31",	0x040000, 0x0183e06b, 1 | BRF_PRG | BRF_ESS },
+
+	NBBATMAN_COMPONENTS
+};
+
+STD_ROM_PICK(nbbatmbh)
+STD_ROM_FN(nbbatmbh)
+
+struct BurnDriver BurnDrvNbbatmbh = {
+	"nbbatmbh", "nbbatman", NULL, NULL, "2016",
+	"Ninja Baseball Batman (Transform, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbatmbhRomInfo, nbbatmbhRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Ninja Baseball Batman (1v2, Hack)
+// GOTVG 20200418
+
+static struct BurnRomInfo nbbat1v2RomDesc[] = {
+	{ "nb1v2_-h0-c.ic34",	0x040000, 0x331c5d1d, 1 | BRF_PRG | BRF_ESS },
+	{ "nb1v2_-l0-c.ic31",	0x040000, 0x7ac5c39e, 1 | BRF_PRG | BRF_ESS },
+
+	NBBATMAN_COMPONENTS
+};
+
+STD_ROM_PICK(nbbat1v2)
+STD_ROM_FN(nbbat1v2)
+
+struct BurnDriver BurnDrvNbbat1v2 = {
+	"nbbat1v2", "nbbatman", NULL, NULL, "2020",
+	"Ninja Baseball Batman (1v2, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbat1v2RomInfo, nbbat1v2RomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Ninja Baseball Batman (1v4, Hack)
+// GOTVG 20200418
+
+static struct BurnRomInfo nbbat1v4RomDesc[] = {
+	{ "nb1v4_-h0-c.ic34",	0x040000, 0x7c17d59a, 1 | BRF_PRG | BRF_ESS },
+	{ "nb1v4_-l0-c.ic31",	0x040000, 0xe54a6e81, 1 | BRF_PRG | BRF_ESS },
+
+	NBBATMAN_COMPONENTS
+};
+
+STD_ROM_PICK(nbbat1v4)
+STD_ROM_FN(nbbat1v4)
+
+struct BurnDriver BurnDrvNbbat1v4 = {
+	"nbbat1v4", "nbbatman", NULL, NULL, "2020",
+	"Ninja Baseball Batman (1v4, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbat1v4RomInfo, nbbat1v4RomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Ninja Baseball Batman (1v8, Hack)
+// GOTVG 20200108
+
+static struct BurnRomInfo nbbat1v8RomDesc[] = {
+	{ "nb1v8_-h0-c.ic34",	0x040000, 0x6b0d4c4a, 1 | BRF_PRG | BRF_ESS },
+	{ "nb1v8_-l0-c.ic31",	0x040000, 0xae7bafa9, 1 | BRF_PRG | BRF_ESS },
+
+	NBBATMAN_COMPONENTS
+};
+
+STD_ROM_PICK(nbbat1v8)
+STD_ROM_FN(nbbat1v8)
+
+struct BurnDriver BurnDrvNbbat1v8 = {
+	"nbbat1v8", "nbbatman", NULL, NULL, "2020",
+	"Ninja Baseball Batman (1v8, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, nbbat1v8RomInfo, nbbat1v8RomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
+	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+#undef NBBATMAN_COMPONENTS
+
+
+// -----------------------------------------------------------------------------
+// Hook Series
+// -----------------------------------------------------------------------------
+
+#define HOOK_V33PRG2														\
+	{ "hook_-h1-.ic24",		0x020000, 0x264ba1f0, 1 | BRF_PRG | BRF_ESS },	\
+	{ "hook_-l1-.ic37",		0x020000, 0xf9913731, 1 | BRF_PRG | BRF_ESS },
+#define HOOKJ_V30PRG														\
+	{ "hook_-sh0-a.ic27",	0x010000, 0xbd3d1f61, 2 | BRF_PRG | BRF_ESS },	\
+	{ "hook_-sl0-a.ic28",	0x010000, 0x76371def, 2 | BRF_PRG | BRF_ESS },
+#define HOOK_MISC															\
+	{ "hook_-c0-.ic4",		0x040000, 0xdec63dcf, 3 | BRF_GRA },			\
+	{ "hook_-c1-.ic3",		0x040000, 0xe4eb0b92, 3 | BRF_GRA },			\
+	{ "hook_-c2-.ic2",		0x040000, 0xa52b320b, 3 | BRF_GRA },			\
+	{ "hook_-c3-.ic1",		0x040000, 0x7ef67731, 3 | BRF_GRA },			\
+	{ "hook_-000-.ic33",	0x100000, 0xccceac30, 4 | BRF_GRA },			\
+	{ "hook_-010-.ic34",	0x100000, 0x8ac8da67, 4 | BRF_GRA },			\
+	{ "hook_-020-.ic35",	0x100000, 0x8847af9a, 4 | BRF_GRA },			\
+	{ "hook_-030-.ic36",	0x100000, 0x239e877e, 4 | BRF_GRA },			\
+	{ "hook_-da-.ic11",		0x080000, 0x88cd0212, 5 | BRF_SND },			\
+	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },			\
+	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },			\
+	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },			\
+	{ "m92_d-3j-c.ic26",	0x000117, 0x9ec35216, 0 | BRF_OPT },			\
+	{ "m92_d-3p-.ic29",		0x000117, 0x3f336904, 0 | BRF_OPT },
+#define HOOK_COMPONENTS														\
+	HOOK_V33PRG2															\
+	{ "hook_-sh0-.ic27",	0x010000, 0x86a4e56e, 2 | BRF_PRG | BRF_ESS },	\
+	{ "hook_-sl0-.ic28",	0x010000, 0x10fd9676, 2 | BRF_PRG | BRF_ESS },	\
+	HOOK_MISC
+#define HOOKJ_COMPONENTS													\
+	HOOK_V33PRG2															\
+	HOOKJ_V30PRG															\
+	HOOK_MISC
+
+// Hook (Xin Er, Hack)
+// GOTVG 20180914
+
+static struct BurnRomInfo hookxrRomDesc[] = {
+	{ "hkxr_-h0-c.ic25",	0x040000, 0xa603d006, 1 | BRF_PRG | BRF_ESS },
+	{ "hkxr_-l0-c.ic38",	0x040000, 0x8a1e8688, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookxr)
+STD_ROM_FN(hookxr)
+
+struct BurnDriver BurnDrvHookxr = {
+	"hookxr", "hook", NULL, NULL, "2018",
+	"Hook (Xin Er, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookxrRomInfo, hookxrRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Warriors, Hack)
+// GOTVG 20160818
+
+static struct BurnRomInfo hookdwRomDesc[] = {
+	{ "hkdw_-h0-c.ic25",	0x040000, 0x9124994c, 1 | BRF_PRG | BRF_ESS },
+	{ "hkdw_-l0-c.ic38",	0x040000, 0xcaae5586, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookdw)
+STD_ROM_FN(hookdw)
+
+struct BurnDriver BurnDrvHookdw = {
+	"hookdw", "hook", NULL, NULL, "2016",
+	"Hook (Warriors, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookdwRomInfo, hookdwRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (1v4, Hack)
+// GOTVG 20160625
+
+static struct BurnRomInfo hook1v4RomDesc[] = {
+	{ "hk1v4_-h0-g.ic25",	0x040000, 0x13fa1eca, 1 | BRF_PRG | BRF_ESS },
+	{ "hk1v4_-l0-g.ic38",	0x040000, 0xf3efc301, 1 | BRF_PRG | BRF_ESS },
+
+	HOOKJ_COMPONENTS
+};
+
+STD_ROM_PICK(hook1v4)
+STD_ROM_FN(hook1v4)
+
+struct BurnDriver BurnDrvHook1v4 = {
+	"hook1v4", "hook", NULL, NULL, "2016",
+	"Hook (1v4, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hook1v4RomInfo, hook1v4RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (X2, Hack)
+// GOTVG 20180505
+
+static struct BurnRomInfo hookx2RomDesc[] = {
+	{ "hkx2_-h0-d.ic25",	0x040000, 0x637f7d17, 1 | BRF_PRG | BRF_ESS },
+	{ "hkx2_-l0-d.ic38",	0x040000, 0x180e4bbb, 1 | BRF_PRG | BRF_ESS },
+	{ "hox2_-h1-.ic24",		0x040000, 0x9573d8b3, 1 | BRF_PRG | BRF_ESS },
+	{ "hox2_-l1-.ic37",		0x040000, 0xeb5cd51c, 1 | BRF_PRG | BRF_ESS },
+
+	{ "hook_-sh0-.ic27",	0x010000, 0x86a4e56e, 2 | BRF_PRG | BRF_ESS },
+	{ "hook_-sl0-.ic28",	0x010000, 0x10fd9676, 2 | BRF_PRG | BRF_ESS },
+
+	HOOK_MISC
+};
+
+STD_ROM_PICK(hookx2)
+STD_ROM_FN(hookx2)
+
+struct BurnDriver BurnDrvHookx2 = {
+	"hookx2", "hook", NULL, NULL, "2018",
+	"Hook (X2, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookx2RomInfo, hookx2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Pirate Wars, Hack)
+// GOTVG 20240226
+
+static struct BurnRomInfo hookhdRomDesc[] = {
+	{ "hkhd_-h0-d.ic25",	0x040000, 0x9132b3a8, 1 | BRF_PRG | BRF_ESS },
+	{ "hkhd_-l0-d.ic38",	0x040000, 0x2ef8ec74, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookhd)
+STD_ROM_FN(hookhd)
+
+struct BurnDriver BurnDrvHookhd = {
+	"hookhd", "hook", NULL, NULL, "2024",
+	"Hook (Pirate Wars, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookhdRomInfo, hookhdRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Pirate Wars II, Hack)
+// GOTVG 20240227
+
+static struct BurnRomInfo hookhd2RomDesc[] = {
+	{ "hkhd2_-h0-d.ic25",	0x040000, 0xf7d949a5, 1 | BRF_PRG | BRF_ESS },
+	{ "hkhd2_-l0-d.ic38",	0x040000, 0xf3fede71, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookhd2)
+STD_ROM_FN(hookhd2)
+
+struct BurnDriver BurnDrvHookhd2 = {
+	"hookhd2", "hook", NULL, NULL, "2024",
+	"Hook (Pirate Wars II, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookhd2RomInfo, hookhd2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (POK KAI, Hack)
+// GOTVG 20240110
+
+static struct BurnRomInfo hookpjRomDesc[] = {
+	{ "hkpj_-h0-d.ic25",	0x040000, 0x9e0b8314, 1 | BRF_PRG | BRF_ESS },
+	{ "hkpj_-l0-d.ic38",	0x040000, 0xbbb93f53, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookpj)
+STD_ROM_FN(hookpj)
+
+struct BurnDriver BurnDrvHookpj = {
+	"hookpj", "hook", NULL, NULL, "2024",
+	"Hook (POK KAI, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookpjRomInfo, hookpjRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Plus, Hack)
+// GOTVG 20240313
+
+static struct BurnRomInfo hookplsRomDesc[] = {
+	{ "hkpls_-h0-d.ic25",	0x040000, 0x811c7971, 1 | BRF_PRG | BRF_ESS },
+	{ "hkpls_-l0-d.ic38",	0x040000, 0x8d6ad3c2, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookpls)
+STD_ROM_FN(hookpls)
+
+struct BurnDriver BurnDrvHookpls = {
+	"hookpls", "hook", NULL, NULL, "2024",
+	"Hook (Plus, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookplsRomInfo, hookplsRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Gai Gai, Hack)
+// GOTVG 20240226
+
+static struct BurnRomInfo hookboRomDesc[] = {
+	{ "hkbo_-h0-d.ic25",	0x040000, 0xac8e5749, 1 | BRF_PRG | BRF_ESS },
+	{ "hkbo_-l0-d.ic38",	0x040000, 0x1c29754f, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookbo)
+STD_ROM_FN(hookbo)
+
+struct BurnDriver BurnDrvHookbo = {
+	"hookbo", "hook", NULL, NULL, "2024",
+	"Hook (Gai Gai, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookboRomInfo, hookboRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Summit War, Hack)
+// GOTVG 20230313
+
+static struct BurnRomInfo hookdszzRomDesc[] = {
+	{ "hkdszz_-h0-d.ic25",	0x040000, 0x2fd40639, 1 | BRF_PRG | BRF_ESS },
+	{ "hkdszz_-l0-d.ic38",	0x040000, 0x517fff64, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookdszz)
+STD_ROM_FN(hookdszz)
+
+struct BurnDriver BurnDrvHookdszz = {
+	"hookdszz", "hook", NULL, NULL, "2023",
+	"Hook (Summit War, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookdszzRomInfo, hookdszzRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (6th Emperor, Hack)
+// GOTVG 20221204
+
+static struct BurnRomInfo hook6hRomDesc[] = {
+	{ "hk6h_-h0-d.ic25",	0x040000, 0x2bcab5ac, 1 | BRF_PRG | BRF_ESS },
+	{ "hk6h_-l0-d.ic38",	0x040000, 0x5ea41729, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hook6h)
+STD_ROM_FN(hook6h)
+
+struct BurnDriver BurnDrvHook6h = {
+	"hook6h", "hook", NULL, NULL, "2022",
+	"Hook (6th Emperor, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hook6hRomInfo, hook6hRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (The Expendables, Hack)
+// GOTVG 20220721
+
+static struct BurnRomInfo hookgsRomDesc[] = {
+	{ "hkgs_-h0-d.ic25",	0x040000, 0x07f870fd, 1 | BRF_PRG | BRF_ESS },
+	{ "hkgs_-l0-d.ic38",	0x040000, 0x94b65fc4, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookgs)
+STD_ROM_FN(hookgs)
+
+struct BurnDriver BurnDrvHookgs = {
+	"hookgs", "hook", NULL, NULL, "2022",
+	"Hook (The Expendables, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookgsRomInfo, hookgsRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (The Expendables II, Hack)
+// GOTVG 20230705
+
+static struct BurnRomInfo hookgs2RomDesc[] = {
+	{ "hkgs2_-h0-d.ic25",	0x040000, 0x054bd1e6, 1 | BRF_PRG | BRF_ESS },
+	{ "hkgs2_-l0-d.ic38",	0x040000, 0x2a77b0a6, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookgs2)
+STD_ROM_FN(hookgs2)
+
+struct BurnDriver BurnDrvHookgs2 = {
+	"hookgs2", "hook", NULL, NULL, "2023",
+	"Hook (The Expendables II, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookgs2RomInfo, hookgs2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Hook's Reversal, Hack)
+// GOTVG 20220721
+
+static struct BurnRomInfo hooknxRomDesc[] = {
+	{ "hknx_-h0-d.ic25",	0x040000, 0xf2cf3627, 1 | BRF_PRG | BRF_ESS },
+	{ "hknx_-l0-d.ic38",	0x040000, 0x3aa4f997, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hooknx)
+STD_ROM_FN(hooknx)
+
+struct BurnDriver BurnDrvHooknx = {
+	"hooknx", "hook", NULL, NULL, "2022",
+	"Hook (Hook's Reversal, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hooknxRomInfo, hooknxRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Hook's Reversal II, Hack)
+// GOTVG 20220807
+
+static struct BurnRomInfo hooknx2RomDesc[] = {
+	{ "hknx2_-h0-d.ic25",	0x040000, 0x885124b3, 1 | BRF_PRG | BRF_ESS },
+	{ "hknx2_-l0-d.ic38",	0x040000, 0x28bb5acf, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hooknx2)
+STD_ROM_FN(hooknx2)
+
+struct BurnDriver BurnDrvHooknx2 = {
+	"hooknx2", "hook", NULL, NULL, "2022",
+	"Hook (Hook's Reversal II, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hooknx2RomInfo, hooknx2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (XX, Hack)
+// GOTVG 20240116
+
+static struct BurnRomInfo hookxxRomDesc[] = {
+	{ "hkxx_-h0-d.ic25",	0x040000, 0x2e43825c, 1 | BRF_PRG | BRF_ESS },
+	{ "hkxx_-l0-d.ic38",	0x040000, 0x2f1d9d10, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookxx)
+STD_ROM_FN(hookxx)
+
+struct BurnDriver BurnDrvHookxx = {
+	"hookxx", "hook", NULL, NULL, "2024",
+	"Hook (XX, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookxxRomInfo, hookxxRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (SW, Hack)
+// GOTVG 20220111
+
+static struct BurnRomInfo hookswRomDesc[] = {
+	{ "hksw_-h0-d.ic25",	0x040000, 0x50acf650, 1 | BRF_PRG | BRF_ESS },
+	{ "hksw_-l0-d.ic38",	0x040000, 0x56446fb8, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hooksw)
+STD_ROM_FN(hooksw)
+
+struct BurnDriver BurnDrvHooksw = {
+	"hooksw", "hook", NULL, NULL, "2022",
+	"Hook (SW, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookswRomInfo, hookswRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Hook (Elite, Hack)
+// GOTVG 20240214
+
+static struct BurnRomInfo hookjyRomDesc[] = {
+	{ "hkjy_-h0-d.ic25",	0x040000, 0xceba9539, 1 | BRF_PRG | BRF_ESS },
+	{ "hkjy_-l0-d.ic38",	0x040000, 0x99e8ffda, 1 | BRF_PRG | BRF_ESS },
+
+	HOOK_COMPONENTS
+};
+
+STD_ROM_PICK(hookjy)
+STD_ROM_FN(hookjy)
+
+struct BurnDriver BurnDrvHookjy = {
+	"hookjy", "hook", NULL, NULL, "2024",
+	"Hook (Elite, Hack)\0", NULL, "hack", "Irem M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	NULL, hookjyRomInfo, hookjyRomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Hook4pDIPInfo,
+	hookInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+#undef HOOK_V33PRG2
+#undef HOOKJ_V30PRG
+#undef HOOK_MISC
+#undef HOOK_COMPONENTS
+#undef HOOKJ_COMPONENTS

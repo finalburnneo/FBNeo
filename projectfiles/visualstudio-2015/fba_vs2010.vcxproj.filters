@@ -3541,6 +3541,9 @@
     <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp">
       <Filter>cpus\mb88xx</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\pit8253.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

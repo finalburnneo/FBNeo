@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\src\burn\devices\nmk112.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pandora.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pic8259.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\pit8253.cpp" />
     <ClCompile Include="..\..\src\burn\devices\poly.cpp" />
     <ClCompile Include="..\..\src\burn\devices\qs1000.cpp" />
     <ClCompile Include="..\..\src\burn\devices\resnet.cpp" />

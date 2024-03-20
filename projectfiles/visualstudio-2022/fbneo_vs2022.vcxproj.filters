@@ -3544,6 +3544,9 @@
     <ClCompile Include="..\..\src\burn\devices\pit8253.cpp">
       <Filter>burn\devices</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_vampire.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="cpus">

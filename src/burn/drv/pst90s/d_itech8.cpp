@@ -3246,7 +3246,7 @@ struct BurnDriver BurnDrvGpgolfa = {
 };
 
 
-// Golden Tee Golf II (Trackball, V1.1)
+// Golden Tee Golf II (Trackball, V2.2)
 
 static struct BurnRomInfo gtg2RomDesc[] = {
 	{ "gtg2_v2_2.u5",						0x10000, 0x4a61580f, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
@@ -3270,7 +3270,7 @@ STD_ROM_FN(gtg2)
 
 struct BurnDriver BurnDrvGtg2 = {
 	"gtg2", NULL, NULL, NULL, "1989",
-	"Golden Tee Golf II (Trackball, V1.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf II (Trackball, V2.2)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtg2RomInfo, gtg2RomName, NULL, NULL, NULL, NULL, Gtg2InputInfo, Gtg2DIPInfo,

@@ -978,7 +978,7 @@ struct BurnDriver BurnDrvSkullxbo = {
 	"skullxbo", NULL, NULL, NULL, "1989",
 	"Skull & Crossbones (rev 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, skullxboRomInfo, skullxboRomName, NULL, NULL, NULL, NULL, SkullxboInputInfo, SkullxboDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	672, 240, 4, 3

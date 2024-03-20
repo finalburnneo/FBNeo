@@ -3481,7 +3481,7 @@ struct BurnDriver BurnDrvWildplt = {
 	"wildplt", NULL, NULL, NULL, "1992",
 	"Wild Pilot\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, wildpltRomInfo, wildpltRomName, NULL, NULL, NULL, NULL, WildpltInputInfo, WildpltDIPInfo,
 	WildpltInit, DrvExit, BigrunFrame, F1gpstarDraw, DrvScan, &DrvRecalc, 0x4000,
 	256, 224, 4, 3

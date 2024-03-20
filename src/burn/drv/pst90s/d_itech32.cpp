@@ -5077,7 +5077,7 @@ struct BurnDriver BurnDrvSftm = {
 	"sftm", NULL, NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_SF,
 	NULL, sftmRomInfo, sftmRomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5124,7 +5124,7 @@ struct BurnDriver BurnDrvSftm111 = {
 	"sftm111", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.11)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_SF,
 	NULL, sftm111RomInfo, sftm111RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	Sftm110Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5208,7 +5208,7 @@ struct BurnDriver BurnDrvSftmj114 = {
 	"sftmj114", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.14N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_SF,
 	NULL, sftmj114RomInfo, sftmj114RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5250,7 +5250,7 @@ struct BurnDriver BurnDrvSftmj112 = {
 	"sftmj112", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_SF,
 	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5292,7 +5292,7 @@ struct BurnDriver BurnDrvSftmk112 = {
 	"sftmk112", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12K, Korea)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_SF,
 	NULL, sftmk112RomInfo, sftmk112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3

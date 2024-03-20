@@ -17153,7 +17153,7 @@ STDROMPICKEXT(ffury2es, ffury2es, neogeo)
 STD_ROM_FN(ffury2es)
 
 struct BurnDriver BurnDrvFfury2es = {
-	"ffury2es", NULL, "neogeo", NULL, "1992",
+	"ffury2es", "fatfury2", "neogeo", NULL, "1992",
 	"Fatal Fury 2 / Garou Densetsu 2 - Arata-naru Tatakai (Easy Special Attacks, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	L"Fatal Fury 2\0\u9913\u72FC\u4F1D\u8AAC\uFF12 - \u65B0\u305F\u306A\u308B\u95D8 (Easy Special Attacks, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, FBF_FATFURY,
@@ -23910,11 +23910,11 @@ struct BurnDriver BurnDrvkof99t = {
 
 
 // The King of Fighters '99 - Millennium Battle (LC+SK, Hack)
-// GOTVG 20240126
+// GOTVG 20240303
 
 static struct BurnRomInfo kof99skRomDesc[] = {
-	{ "152-p1sk.p1",	0x100000, 0xf26536af, 1 | BRF_ESS | BRF_PRG },
-	{ "152-p2sk.sp2",	0x400000, 0x0c419a48, 1 | BRF_ESS | BRF_PRG },
+	{ "152-p1sk.p1",	0x100000, 0x83839e76, 1 | BRF_ESS | BRF_PRG },
+	{ "152-p2sk.sp2",	0x400000, 0xc4b9aa9c, 1 | BRF_ESS | BRF_PRG },
 
 	KOF99_DECRYPTED_COMPONENTS
 };
@@ -26986,10 +26986,10 @@ STDROMPICKEXT(timesupd, timesupd, neogeo)
 STD_ROM_FN(timesupd)
 
 struct BurnDriver BurnDrvtimesupd = {
-	"timesupd", NULL, "neogeo", NULL, "2012",
+	"timesupd", "timesup", "neogeo", NULL, "2012",
 	"Time's UP! (Demo)\0", NULL, "NGF Dev. Inc.", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
 	NULL, timesupdRomInfo, timesupdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

@@ -616,7 +616,7 @@ static INT32 SuperchsInit()
 
 	TaitoF3SoundInit(2);
 	TaitoF3SoundIRQConfig(1);
-	TaitoF3VolumeOffset = 0.40;
+	TaitoF3VolumeOffset = 2.40;
 
 	EEPROMInit(&superchs_eeprom_interface);
 	if (!EEPROMAvailable()) EEPROMFill(TaitoDefaultEEProm, 0, 128);

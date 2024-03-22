@@ -568,9 +568,11 @@ struct LatchyJibjab {
 	INT32 verbose;
 	INT32 id;
 
-	void (*cb)(int) = NULL;
+	void (*cb)(int);
 
 	void init() {
+		cb = NULL;
+
 		ackonread = 1;
 		id = 0;
 		reset();
@@ -578,7 +580,10 @@ struct LatchyJibjab {
 
 	void init(void (*cb_param)(int)) {
 		cb = cb_param;
-		init();
+
+		ackonread = 1;
+		id = 0;
+		reset();
 	}
 
 	void set_id(int id_) {

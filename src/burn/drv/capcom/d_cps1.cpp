@@ -25959,7 +25959,7 @@ struct BurnDriverX BurnDrvCpsSfzhch = {
 };
 
 // Street Fighter II' - Hyper Fighting Sr. SF Champion Edition v1.4 - 2024-03-21
-// Modified by Mr. Street Fighter (luizaoooobr)
+// Modified by Sr. Street Fighter (luizaoooobr)
 
 static struct BurnRomInfo Sf2hfsceRomDesc[] = {
 	{ "s2tsce_23.8f", 	0x080000, 0xee74bae8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },

@@ -48,6 +48,8 @@ bool bAutoLoadGameList = false;
 
 bool bQuietLoading = false;
 
+bool bShonkyProfileMode = false;
+
 bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 
@@ -1021,6 +1023,9 @@ int ProcessCmdLine()
 			}
 		} else if (_tcscmp(szOpt2, _T("-a")) == 0) {
 			bVidArcaderes = 1;
+		} else if (_tcscmp(szOpt2, _T("-p")) == 0) {
+			bShonkyProfileMode = true;
+			bFullscreen = 0;
 		} else if (_tcscmp(szOpt2, _T("-w")) == 0) {
 			nCmdOptUsed = 2;
 			bFullscreen = 0;

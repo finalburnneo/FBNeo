@@ -115,6 +115,7 @@ extern bool bAlwaysCreateSupportFolders;
 extern bool bAutoLoadGameList;
 
 extern bool bQuietLoading;
+extern bool bShonkyProfileMode;
 
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;

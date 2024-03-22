@@ -189,6 +189,27 @@ void ToggleLayer(unsigned char thisLayer)
 	VidPaint(0);
 }
 
+#ifdef FBNEO_DEBUG
+void do_shonky_profile()
+{
+	bShonkyProfileMode = false; // run once!
+
+	const int total_frames = 5000;
+	unsigned int start_time = timeGetTime();
+
+	for (int i = 0; i < total_frames; i++) {
+		BurnDrvFrame();
+	}
+	unsigned int end_time = timeGetTime();
+
+	unsigned int total_time = end_time - start_time;
+	int total_seconds = total_time / 1000;
+
+	bprintf(0, _T("shonky profile mode %d\n"), total_frames);
+	bprintf(0, _T("shonky profile:  %d frames,  %dms,  %dfps\n"), total_frames, total_time, total_frames / total_seconds);
+}
+#endif
+
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
 int RunFrame(int bDraw, int bPause)
@@ -258,6 +279,9 @@ int RunFrame(int bDraw, int bPause)
 				nFramesRendered++;
 
 			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED) || bAppDoFast) {
+#ifdef FBNEO_DEBUG
+				if (bShonkyProfileMode) do_shonky_profile();
+#endif
 				if (VidFrame()) {				// Do one normal frame (w/o RunAhead)
 
 					// VidFrame() failed, but we must run a driver frame because we have

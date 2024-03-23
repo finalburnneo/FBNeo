@@ -69,9 +69,9 @@ void __fastcall Sf2mdtZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xe000: {
-			MSM5205SetRoute(0, (d & 0x20) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
-			MSM5205SetRoute(1, (d & 0x10) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
-			
+			MSM5205ResetWrite(0, (d & 0x20));
+			MSM5205ResetWrite(1, (d & 0x10));
+
 			Sf2mdtZ80BankAddress = (d & Sf2mdtNumZ80Banks) * 0x4000;
 			ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + Sf2mdtZ80BankAddress);
 			ZetMapArea(0x8000, 0xbfff, 2, CpsZRom + Sf2mdtZ80BankAddress);
@@ -101,8 +101,8 @@ inline static INT32 Sf2mdtSynchroniseStream(INT32 nSoundRate)
 
 static void Sf2mdtMSM5205Vck0()
 {
-	MSM5205DataWrite(0, Sf2mdtSampleBuffer1 & 0x0f);
-	Sf2mdtSampleBuffer1 >>= 4;
+	MSM5205DataWrite(0, (Sf2mdtSampleBuffer1 >> 4) & 0x0f);
+	Sf2mdtSampleBuffer1 <<= 4;
 	Sf2mdtSampleSelect1 ^= 1;
 	if (Sf2mdtSampleSelect1 == 0) {
 		ZetNmi();
@@ -111,8 +111,8 @@ static void Sf2mdtMSM5205Vck0()
 
 static void Sf2mdtMSM5205Vck1()
 {
-	MSM5205DataWrite(1, Sf2mdtSampleBuffer2 & 0x0f);
-	Sf2mdtSampleBuffer2 >>= 4;
+	MSM5205DataWrite(1, (Sf2mdtSampleBuffer2 >> 4) & 0x0f);
+	Sf2mdtSampleBuffer2 <<= 4;
 	Sf2mdtSampleSelect2 ^= 1;
 }
 

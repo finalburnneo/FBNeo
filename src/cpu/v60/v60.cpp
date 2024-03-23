@@ -138,11 +138,11 @@ static UINT16 cpu_readop16(UINT32 a)
 	UINT8 *p = mem[2][a / page_size];
 
 	if (p) {
-		UINT16 *z = (UINT16*)(p + (a & page_mask));
+		UINT16 z = BURN_UNALIGNED_READ16(p + (a & page_mask));
 #ifdef LOG_MEM
-//		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, *z);
+//		bprintf (0, _T("OP16: %6.6x %4.4x\n"), a, z);
 #endif
-		return BURN_ENDIAN_SWAP_INT16(*z);
+		return z;
 	}
 
 	if (v60_read16) {
@@ -163,13 +163,13 @@ static UINT32 cpu_readop32(UINT32 a)
 	UINT8 *p = mem[2][a / page_size];
 
 	if (p) {
-		UINT32 *z = (UINT32*)(p + (a & page_mask));
+		UINT32 z = BURN_UNALIGNED_READ32(p + (a & page_mask));
 
 #ifdef LOG_MEM
-//		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, *z);
+//		bprintf (0, _T("OP32: %6.6x %8.8x\n"), a, z);
 #endif
 
-		return BURN_ENDIAN_SWAP_INT32(*z);
+		return z;
 	}
 
 	if (v60_read32) {

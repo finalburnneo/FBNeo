@@ -4914,7 +4914,7 @@ struct BurnDriver BurnDrvtheglada = {
 };
 
 
-// Photo Y2K 2 (3-in-1, V102, China)
+// Flash 3-in-1 / Shanliang San He Yi (V102, China)
 
 /* IGS PCB 0487-00 GX-1 MADE IN TAIWAN
    IGS PCB-0484-01 GX-A MADE IN TAIWAN
@@ -4958,8 +4958,8 @@ static INT32 pgm3in1Init()
 
 struct BurnDriver BurnDrvPgm3in1 = {
 	"pgm3in1", NULL, "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1, V102, China)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	"Flash 3-in-1 / Shanliang San He Yi (V102, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Flash 3-in-1\0\u95ea\u4eae\u4e09\u5408\u4e00 (V102, China)\0", NULL, NULL, NULL,
     BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4967,7 +4967,7 @@ struct BurnDriver BurnDrvPgm3in1 = {
 };
 
 
-// Photo Y2K 2 (3-in-1, V100, China)
+// Flash 3-in-1 / Shanliang San He Yi (V100, China)
 
 static struct BurnRomInfo pgm3in1c100RomDesc[] = {
 	{ "v-100cn.u3",					0x0200000, 0xa39f59b4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -4995,8 +4995,8 @@ STD_ROM_FN(pgm3in1c100)
 
 struct BurnDriver BurnDrvPgm3in1c100 = {
 	"pgm3in1c100", "pgm3in1", "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1, V100, China)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	"Flash 3-in-1 / Shanliang San He Yi (V100, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Flash 3-in-1\0\u95ea\u4eae\u4e09\u5408\u4e00 (V100, China)\0", NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -5004,7 +5004,7 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
 };
 
 
-// Happy 6-in-1 (V102 - V101MK, China)
+// Happy 6-in-1 / Huanle Liu He Yi (V102 - V101MK, China)
 // All ROMs labels are on stickers
 
 /* TEST OK F0089535 BY IGS
@@ -5071,7 +5071,7 @@ static INT32 happy6in1Init()
 
 struct BurnDriver BurnDrvhappy6 = {
 	"happy6", NULL, "pgm", NULL, "2004",
-	"Happy 6-in-1 (V102 - V101MK, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Happy 6-in-1 / Huanle Liu He Yi (V102 - V101MK, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V102 - V101MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6RomInfo, happy6RomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
@@ -5080,7 +5080,7 @@ struct BurnDriver BurnDrvhappy6 = {
 };
 
 
-// Happy 6-in-1 (V101 - V100MK, China)
+// Happy 6-in-1 / Huanle Liu He Yi (V101 - V100MK, China)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-010 -GT MADE IN TAIWAN
@@ -5113,7 +5113,7 @@ STD_ROM_FN(happy6101)
 
 struct BurnDriver BurnDrvhappy6101 = {
 	"happy6101", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Happy 6-in-1 / Huanle Liu He Yi (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V101 - V100MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
@@ -5122,7 +5122,7 @@ struct BurnDriver BurnDrvhappy6101 = {
 };
 
 
-// Happy 6-in-1 (V100 - V100MK, Hong Kong)
+// Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, Hong Kong)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-01-GT MADE IN TAIWAN
@@ -5155,8 +5155,8 @@ STD_ROM_FN(happy6100hk)
 
 struct BurnDriver BurnDrvhappy6100hk = {
 	"happy6100hk", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 (V100 - V100MK, Hong Kong)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100 - V100MK, Hong Kong)\0", NULL, NULL, NULL,
+	"Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, Hong Kong)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"Happy 6-in-1\0\u6b61\u6a02\u516d\u5408\u4e00 (V100 - V100MK, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6100hkRomInfo, happy6100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6hkDIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -5164,7 +5164,7 @@ struct BurnDriver BurnDrvhappy6100hk = {
 };
 
 
-// Happy 6-in-1 (V100 - V100MK, China)
+// Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, China)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-01-GT MADE IN TAIWAN
@@ -5197,7 +5197,7 @@ STD_ROM_FN(happy6100cn)
 
 struct BurnDriver BurnDrvhappy6100cn = {
 	"happy6100cn", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 (V100 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100 - V100MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6100cnRomInfo, happy6100cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,

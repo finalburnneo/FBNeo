@@ -413,6 +413,7 @@ void RomDataExit()
 		}
 
 		memset(&RDI, 0, sizeof(RomDataInfo));
+		memset(szRomdataName, '\0', sizeof(szRomdataName));
 
 		RDI.nDescCount = -1;
 	}

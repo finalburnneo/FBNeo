@@ -8496,6 +8496,8 @@ static struct BurnRomInfo bjtwinRomDesc[] = {
 
 	{ "8.bpr",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
 	{ "9.bpr",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(bjtwin)
@@ -8558,6 +8560,8 @@ static struct BurnRomInfo bjtwinaRomDesc[] = {
 
 	{ "8.bpr",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
 	{ "9.bpr",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(bjtwina)
@@ -8662,6 +8666,8 @@ static struct BurnRomInfo bjtwinpaRomDesc[] = {
 
 	{ "top.ic27",		0x080000, 0xadb2f256, 7 | BRF_SND },           // 10 OKI2 Samples
 	{ "bottom.ic27",	0x080000, 0x6ebeb9e4, 7 | BRF_SND },           // 11 
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 12 MCU
 };
 
 STD_ROM_PICK(bjtwinpa)
@@ -8725,6 +8731,8 @@ static struct BurnRomInfo nouryokuRomDesc[] = {
 	{ "ic30.6",		0x100000, 0xfeea34f4, 6 | BRF_SND },           //  5 OKI1 Samples
 
 	{ "ic27.7",		0x100000, 0x8a69fded, 7 | BRF_SND },           //  6 OKI2 Samples
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },       //  7 MCU
 };
 
 STD_ROM_PICK(nouryoku)
@@ -9463,6 +9471,8 @@ static struct BurnRomInfo macrossRomDesc[] = {
 	{ "921a08",		0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  7 Unused proms
 	{ "921a09",		0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
 	{ "921a10",		0x000020, 0x8371e42d, 0 | BRF_OPT },           //  9
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },       // 10 MCU
 };
 
 STDROMPICKEXT(macross, macross, nmk004)
@@ -9547,6 +9557,8 @@ static struct BurnRomInfo gunnailRomDesc[] = {
 	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  8 Unused proms
 	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  9
 	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           // 10
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 11 MCU
 };
 
 STDROMPICKEXT(gunnail, gunnail, nmk004)
@@ -9654,6 +9666,8 @@ static struct BurnRomInfo gunnailpRomDesc[] = {
 	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  7 Proms
 	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
 	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           //  9
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 10 MCU
 };
 
 STDROMPICKEXT(gunnailp, gunnailp, nmk004)

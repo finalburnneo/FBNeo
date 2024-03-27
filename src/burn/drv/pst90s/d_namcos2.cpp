@@ -4253,6 +4253,8 @@ static struct BurnRomInfo cosmogngRomDesc[] = {
 
 	{ "co2voi1.bin",	0x80000, 0x5a301349, 0x0a | BRF_SND },           // 19 C140 Samples
 	{ "co2voi2.bin",	0x80000, 0xa27cb45a, 0x0a | BRF_SND },           // 20
+
+	{ "04544191.6n",	0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // 21 Zoom table
 };
 
 STD_ROM_PICK(cosmogng)

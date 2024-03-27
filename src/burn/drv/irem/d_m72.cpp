@@ -4089,7 +4089,7 @@ static struct BurnRomInfo cosmccopRomDesc[] = {
 	{ "cc_d-g20-.ic66",		0x20000, 0xa4b558eb, 0x03 | BRF_GRA },           //  9
 	{ "cc_d-g30-.ic64",		0x20000, 0xf64a3166, 0x03 | BRF_GRA },           // 10
 
-	{ cc_d-v0-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
+	{ "cc_d-v0-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
 
 	{ "ken_b-4n-.ic23",		0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
 	{ "ken_b-4p-.ic24",		0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13

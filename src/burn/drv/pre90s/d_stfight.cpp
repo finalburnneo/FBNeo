@@ -1177,7 +1177,7 @@ static struct BurnRomInfo stfightRomDesc[] = {
 
 	{ "sf03.bin",		    0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
 
-	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+	{ "_68705.3j",	        0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
 	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
@@ -1239,7 +1239,7 @@ static struct BurnRomInfo stfightaRomDesc[] = {
 
 	{ "sf03.bin",		    0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
 
-	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+	{ "_68705.3j",	        0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
 	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 

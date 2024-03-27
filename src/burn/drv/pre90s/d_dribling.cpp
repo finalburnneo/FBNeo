@@ -451,11 +451,11 @@ static struct BurnRomInfo driblingaRomDesc[] = {
 	{ "3p.bin",							0x1000, 0x208971b8, 2 | BRF_GRA },           //  5 Graphics
 	{ "3n.bin",							0x1000, 0x356c9803, 2 | BRF_GRA },           //  6
 
-	{ "93453-d9.3c",					0x0400, 0xb045d005, 3 | BRF_GRA },           //  7 Graphics PROM
+	{ "93453pc-d9.3c",					0x0400, 0xb045d005, 3 | BRF_GRA },           //  7 Graphics PROM
 
-	{ "63s140-d8.3e",					0x0100, 0x8f1a9908, 4 | BRF_GRA },           //  8 Color PROM
+	{ "63s140n-d8.3e",					0x0100, 0x8f1a9908, 4 | BRF_GRA },           //  8 Color PROM
 
-	{ "tbp24s10.2d",					0x0100, 0xa17d6956, 0 | BRF_OPT },           //  9 Unknown PROM
+	{ "tbp24s10n.2d",					0x0100, 0xa17d6956, 0 | BRF_OPT },           //  9 Unknown PROM
 };
 
 STD_ROM_PICK(driblinga)
@@ -531,7 +531,7 @@ struct BurnDriver BurnDrvDriblingam = {
 	"driblingam", "dribling", NULL, NULL, "1983",
 	"Dribbling (Automave)\0", "No sound", "Model Racing (Automave license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, driblingamRomInfo, driblingamRomName, NULL, NULL, NULL, NULL, DriblingInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 216, 4, 3

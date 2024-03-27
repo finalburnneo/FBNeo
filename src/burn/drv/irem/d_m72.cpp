@@ -2579,7 +2579,7 @@ static struct BurnRomInfo xmultiplRomDesc[] = {
 	{ "t50.30.ic14",		0x20000, 0xe322543e, 0x02 | BRF_GRA },           // 11
 	{ "t51.31.ic13",		0x20000, 0x229bf7b1, 0x02 | BRF_GRA },           // 12
 
-	{ "t53.a0,ic50",		0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 13 Foreground Tiles
+	{ "t53.a0.ic50",		0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 13 Foreground Tiles
 	{ "t54.a1.ic49",		0x20000, 0x076c16c5, 0x03 | BRF_GRA },           // 14
 	{ "t55.a2.ic51",		0x20000, 0x25d877a5, 0x03 | BRF_GRA },           // 15
 	{ "t56.a3.ic52",		0x20000, 0x5b1213f5, 0x03 | BRF_GRA },           // 16
@@ -4089,7 +4089,7 @@ static struct BurnRomInfo cosmccopRomDesc[] = {
 	{ "cc_d-g20-.ic66",		0x20000, 0xa4b558eb, 0x03 | BRF_GRA },           //  9
 	{ "cc_d-g30-.ic64",		0x20000, 0xf64a3166, 0x03 | BRF_GRA },           // 10
 
-	{ "cc_d-vo-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
+	{ cc_d-v0-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
 
 	{ "ken_b-4n-.ic23",		0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
 	{ "ken_b-4p-.ic24",		0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13
@@ -4201,7 +4201,7 @@ static struct BurnRomInfo gallopRomDesc[] = {
 	{ "cc_d-g20-.ic66",		0x20000, 0xa4b558eb, 0x03 | BRF_GRA },           //  9
 	{ "cc_d-g30-.ic64",		0x20000, 0xf64a3166, 0x03 | BRF_GRA },           // 10
 
-	{ "cc_d-vo-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
+	{ "cc_d-v0-.ic14",		0x20000, 0x6247bade, 0x05 | BRF_SND },           // 11 DAC Samples
 
 	{ "ken_b-4n-.ic23",		0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
 	{ "ken_b-4p-.ic24",		0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13

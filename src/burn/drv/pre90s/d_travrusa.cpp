@@ -636,6 +636,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
+#define TRAVRUSA_PROMS \
+	{ "mmi6349.ij",		0x0200, 0xc9724350, 5 | BRF_GRA }, \
+	{ "tbp18s.2",		0x0020, 0xa1130007, 5 | BRF_GRA }, \
+	{ "tbp24s10.3",		0x0100, 0x76062638, 5 | BRF_GRA }, \
+	{ "prom.h1",		0x0100, 0x2f98ddf0, 0 | BRF_OPT }, \
+	{ "prom.f1",		0x0100, 0xadea1297, 0 | BRF_OPT }, \
+	{ "prom1.f1",		0x0020, 0xa1130007, 0 | BRF_OPT }, \
+	{ "prom2.h2",		0x0100, 0x76062638, 0 | BRF_OPT },
 
 // Traverse USA / Zippy Race
 
@@ -655,9 +663,7 @@ static struct BurnRomInfo travrusaRomDesc[] = {
 	{ "zr1-9.l3",		0x2000, 0x13be6a14, 4 | BRF_GRA },           //  9
 	{ "zr1-10.k3",		0x2000, 0x6fcc9fdb, 4 | BRF_GRA },           // 10
 
-	{ "mmi6349.ij",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
-	{ "tbp18s.2",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
-	{ "tbp24s10.3",		0x0100, 0x76062638, 5 | BRF_GRA },           // 13
+	TRAVRUSA_PROMS
 };
 
 STD_ROM_PICK(travrusa)
@@ -766,9 +772,7 @@ static struct BurnRomInfo motoraceRomDesc[] = {
 	{ "mr5.3m",			0x2000, 0xf75f2aad, 4 | BRF_GRA },           //  9
 	{ "mr6.3k",			0x2000, 0x518889a0, 4 | BRF_GRA },           // 10
 
-	{ "mmi6349.ij",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
-	{ "tbp18s.2",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
-	{ "tbp24s10.3",		0x0100, 0x76062638, 5 | BRF_GRA },           // 13
+	TRAVRUSA_PROMS
 };
 
 STD_ROM_PICK(motorace)
@@ -803,9 +807,7 @@ static struct BurnRomInfo mototourRomDesc[] = {
 	{ "mt1-9.m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
 	{ "mt1-10.k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
 
-	{ "mmi6349.k2",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
-	{ "prom1.f1",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
-	{ "prom2.h2",		0x0100, 0x76062638, 5 | BRF_GRA },           // 13
+	TRAVRUSA_PROMS
 };
 
 STD_ROM_PICK(mototour)

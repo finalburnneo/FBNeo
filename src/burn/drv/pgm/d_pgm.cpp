@@ -1367,7 +1367,7 @@ struct BurnDriver BurnDrvOrlegend105t = {
 };
 
 
-// Dragon World II (V110X, World)
+// Dragon World II (ver. 110X, Export)
 
 /* IGS PCB N0- 0162 MADE IN TAIWAN
    IGS PCB N0- 0135 MADE IN TAIWAN
@@ -1417,7 +1417,7 @@ static INT32 drgw2Init()
 
 struct BurnDriver BurnDrvDrgw2 = {
 	"drgw2", NULL, "pgm", NULL, "1997",
-	"Dragon World II (V110X, World)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World II (ver. 110X, Export)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2RomInfo, drgw2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1426,7 +1426,7 @@ struct BurnDriver BurnDrvDrgw2 = {
 };
 
 
-// Zhong Guo Long II (V101, China)
+// Zhongguo Long II (ver. 101C, China)
 
 /* IGS PCB N0- 0162 MADE IN TAIWAN
    IGS PCB N0- 0135 MADE IN TAIWAN
@@ -1449,7 +1449,7 @@ STD_ROM_FN(drgw2101c)
 
 struct BurnDriver BurnDrvDrgw2101c = {
 	"drgw2101c", "drgw2", "pgm", NULL, "1997",
-	"Zhong Guo Long II (V101, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Zhongguo Long II (ver. 101C, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u4E2D\u570B\u9F8D II (V101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2101cRomInfo, drgw2101cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1493,7 +1493,7 @@ struct BurnDriver BurnDrvDrgw2101j = {
 };
 
 
-// Zhong Guo Long II (V100, China)
+// Zhongguo Long II (ver. 100C, China)
 
 /* IGS PCB N0- 0162 MADE IN TAIWAN
    IGS PCB N0- 0135 MADE IN TAIWAN
@@ -1516,7 +1516,7 @@ STD_ROM_FN(drgw2100c)
 
 struct BurnDriver BurnDrvDrgw2100c = {
 	"drgw2100c", "drgw2", "pgm", NULL, "1997",
-	"Zhong Guo Long II (V100, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Zhongguo Long II (ver. 100C, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u4E2D\u570B\u9F8D II (V100, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2100cRomInfo, drgw2100cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1525,7 +1525,7 @@ struct BurnDriver BurnDrvDrgw2100c = {
 };
 
 
-// Chuugokuryuu II (V100, Japan)
+// Chuugokuryuu II (ver. 100J, Japan)
 
 /* IGS PCB N0- 0162 MADE IN TAIWAN
    IGS PCB N0- 0135 MADE IN TAIWAN
@@ -1548,7 +1548,7 @@ STD_ROM_FN(drgw2100j)
 
 struct BurnDriver BurnDrvDrgw2100j = {
 	"drgw2100j", "drgw2", "pgm", NULL, "1997",
-	"Chuugokuryuu II (V100, Japan)\0", NULL, "IGS (Alta license)", "PolyGameMaster",
+	"Chuugokuryuu II (ver. 100J, Japan)\0", NULL, "IGS (Alta license)", "PolyGameMaster",
 	L"\u4E2D\u570B\u9F8D II (V100, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2100jRomInfo, drgw2100jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1557,7 +1557,7 @@ struct BurnDriver BurnDrvDrgw2100j = {
 };
 
 
-// Dragon World II (V100X, World)
+// Dragon World II (ver. 100X, Export)
 
 static struct BurnRomInfo drgw2100xRomDesc[] = {
 	{ "dragon_ii_v-100x.u2",		0x0080000, 0x5e71851d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1574,7 +1574,7 @@ STD_ROM_FN(drgw2100x)
 
 struct BurnDriver BurnDrvDrgw2100x = {
 	"drgw2100x", "drgw2", "pgm", NULL, "1997",
-	"Dragon World II (V100X, World)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World II (ver. 100X, Export)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2100xRomInfo, drgw2100xRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1583,7 +1583,7 @@ struct BurnDriver BurnDrvDrgw2100x = {
 };
 
 
-// Dragon World II (V100, Hong Kong)
+// Dungfong Zi Zyu II (ver. 100H, Hong Kong)
 
 static struct BurnRomInfo drgw2100hkRomDesc[] = {
 	{ "dragon_ii_v-100-h.u2",		0x0080000, 0xc6e2e6ec, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -1600,7 +1600,7 @@ STD_ROM_FN(drgw2100hk)
 
 struct BurnDriver BurnDrvDrgw2100hk = {
 	"drgw2100hk", "drgw2", "pgm", NULL, "1997",
-	"Dragon World II (V100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	"Dungfong Zi Zyu II (ver. 100H, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2100hkRomInfo, drgw2100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1823,7 +1823,7 @@ struct BurnDriver BurnDrvKillbld100 = {
 };
 
 
-// Dragon World 3 (V106, China)
+// Dragon World 3 / Zhongguo Long 3 / Dungfong Zi Zyu 3 / Chuugokuryuu 3 Special (ver. 106)
 
 /* IGS PCB N0-0189-1 MADE IN TAIWAN
    IGS PCN N0-0178 MADE ON TAIWAN
@@ -1861,7 +1861,7 @@ static INT32 drgw3Init()
 
 struct BurnDriver BurnDrvDrgw3 = {
 	"drgw3", NULL, "pgm", NULL, "1998",
-	"Dragon World 3 (V106, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 / Zhongguo Long 3 / Dungfong Zi Zyu 3 / Chuugokuryuu 3 Special (ver. 106)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3RomInfo, drgw3RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3106cnDIPInfo,
@@ -1870,7 +1870,7 @@ struct BurnDriver BurnDrvDrgw3 = {
 };
 
 
-// Dragon World 3 (V105)
+// Dragon World 3 / Zhongguo Long 3 / Dungfong Zi Zyu 3 / Chuugokuryuu 3 Special (ver. 105)
 
 static struct BurnRomInfo drgw3105RomDesc[] = {
 	{ "dw3_v105_u12.u12",  			0x0080000, 0xc5e24318, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1893,7 +1893,7 @@ STD_ROM_FN(drgw3105)
 
 struct BurnDriver BurnDrvDrgw3105 = {
 	"drgw3105", "drgw3", "pgm", NULL, "1998",
-	"Dragon World 3 (V105)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 / Zhongguo Long 3 / Dungfong Zi Zyu 3 / Chuugokuryuu 3 Special (ver. 105)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3105RomInfo, drgw3105RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3DIPInfo,
@@ -1902,7 +1902,7 @@ struct BurnDriver BurnDrvDrgw3105 = {
 };
 
 
-// Chuugokuryuu 3 Special (ver. 103, Japan)
+// Chuugokuryuu 3 Special (Japan, ver. 103)
 // Japan only, has an extra game mode option!
 
 /* IGS PCB N0-0189 MADE IN TAIWAN
@@ -1930,7 +1930,7 @@ STD_ROM_FN(drgw3103)
 
 struct BurnDriver BurnDrvDrgw3103 = {
 	"drgw3103", "drgw3", "pgm", NULL, "1998",
-	"Chuugokuryuu 3 Special (ver. 103, japan)\0", NULL, "IGS", "PolyGameMaster",
+	"Chuugokuryuu 3 Special (Japan, ver. 103)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3103RomInfo, drgw3103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3101jaDIPInfo,
@@ -1939,7 +1939,7 @@ struct BurnDriver BurnDrvDrgw3103 = {
 };
 
 
-// Chuugokuryuu 3 Special (ver. 100, Japan)
+// Chuugokuryuu 3 Special (Japan, ver. 100)
 // Japan only, has an extra game mode option!
 
 /* IGS PCB N0-0189 MADE IN TAIWAN
@@ -1970,7 +1970,7 @@ STD_ROM_FN(drgw3100)
 
 struct BurnDriver BurnDrvDrgw3100 = {
 	"drgw3100", "drgw3", "pgm", NULL, "1998",
-	"Chuugokuryuu 3 Special (ver. 100, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	"Chuugokuryuu 3 Special (Japan, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3100RomInfo, drgw3100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, drgw3101jaDIPInfo,
@@ -1979,7 +1979,7 @@ struct BurnDriver BurnDrvDrgw3100 = {
 };
 
 
-// Dragon World 3 EX (V100, World)
+// Dragon World 3 EX / Zhongguo Long 3 EX / Dungfong Zi Zyu 3 EX / Chuugokuryuu 3 EX (ver. 100)
 
 /* IGS PCB N0-0189-1 MADE IN TAIWAN
    IGS PCB N0-0178 MADE IN TAIWAN
@@ -2010,7 +2010,7 @@ STD_ROM_FN(dwex)
 
 struct BurnDriver BurnDrvDwex = {
 	"dwex", NULL, "pgm", NULL, "2000",
-	"Dragon World 3 EX (V100, World)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 EX / Zhongguo Long 3 EX / Dungfong Zi Zyu 3 EX / Chuugokuryuu 3 EX (ver. 100)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, dwexRomInfo, dwexRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dwexDIPInfo,
@@ -2019,7 +2019,7 @@ struct BurnDriver BurnDrvDwex = {
 };
 
 
-// Dragon World 3 EX (V101, China)
+// Dragon World 3 EX / Zhongguo Long 3 EX / Dungfong Zi Zyu 3 EX / Chuugokuryuu 3 EX (ver. 101CN)
 
 /* IGS PCB N0-0189-1 MADE IN TAIWAN
    IGS PCB N0-0178 MADE IN TAIWAN
@@ -2050,7 +2050,7 @@ STD_ROM_FN(dwex101cn)
 
 struct BurnDriver BurnDrvDwex101cn = {
 	"dwex101cn", "dwex", "pgm", NULL, "2001",
-	"Dragon World 3 EX (V101, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Dragon World 3 EX / Zhongguo Long 3 EX / Dungfong Zi Zyu 3 EX / Chuugokuryuu 3 EX (ver. 101CN)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, dwex101cnRomInfo, dwex101cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dwex101cnDIPInfo,
@@ -3906,7 +3906,7 @@ struct BurnDriver BurnDrvKov2p200 = {
 #define DDP2_ASIC027_HONG_KONG 	{ "ddp2_igs027a_hong_kong.bin",	0x0004000, 0xa7d1cace, 7 | BRF_PRG | BRF_ESS },
 #define DDP2_ASIC027_WORLD 		{ "ddp2_igs027a_world.bin",		0x0004000, 0x3654e20b, 7 | BRF_PRG | BRF_ESS },
 
-// Bee Storm - DoDonPachi II (V102, World)
+// DoDonPachi II - Bee Storm (World, ver. 102)
 
 static struct BurnRomInfo ddp2RomDesc[] = {
 	DDP2_PROGRAM_102
@@ -3935,8 +3935,8 @@ static INT32 ddp2Init()
 
 struct BurnDriver BurnDrvDdp2 = {
 	"ddp2", NULL, "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, World)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, World)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (World, ver. 102)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (World, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2RomInfo, ddp2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3944,7 +3944,7 @@ struct BurnDriver BurnDrvDdp2 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, World)
+// DoDonPachi II - Bee Storm (World, ver. 101)
 
 static struct BurnRomInfo ddp2101RomDesc[] = {
 	DDP2_PROGRAM_101
@@ -3957,8 +3957,8 @@ STD_ROM_FN(ddp2101)
 
 struct BurnDriver BurnDrvDdp2101 = {
 	"ddp2101", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, World)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, World)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (World, ver. 101)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (World, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101RomInfo, ddp2101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3966,7 +3966,7 @@ struct BurnDriver BurnDrvDdp2101 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, World)
+// DoDonPachi II - Bee Storm (World, ver. 100)
 
 static struct BurnRomInfo ddp2100RomDesc[] = {
 	DDP2_PROGRAM_100
@@ -3979,8 +3979,8 @@ STD_ROM_FN(ddp2100)
 
 struct BurnDriver BurnDrvDdp2100 = {
 	"ddp2100", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, World)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, World)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (World, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (World, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100RomInfo, ddp2100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3988,7 +3988,7 @@ struct BurnDriver BurnDrvDdp2100 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102, Hong Kong)
+// DoDonPachi II - Fung Bou (Hong Kong, ver. 102)
 
 static struct BurnRomInfo ddp2hkRomDesc[] = {
 	DDP2_PROGRAM_102
@@ -4001,8 +4001,8 @@ STD_ROM_FN(ddp2hk)
 
 struct BurnDriver BurnDrvDdp2hk = {
 	"ddp2hk", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Hong Kong)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Fung Bou (Hong Kong, ver. 102)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Fung Bou\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Hong Kong, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2hkRomInfo, ddp2hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4010,7 +4010,7 @@ struct BurnDriver BurnDrvDdp2hk = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, Hong Kong)
+// DoDonPachi II - Fung Bou (Hong Kong, ver. 101)
 
 static struct BurnRomInfo ddp2101hkRomDesc[] = {
 	DDP2_PROGRAM_101
@@ -4023,8 +4023,8 @@ STD_ROM_FN(ddp2101hk)
 
 struct BurnDriver BurnDrvDdp2101hk = {
 	"ddp2101hk", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Hong Kong)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Fung Bou (Hong Kong, ver. 101)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Fung Bou\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Hong Kong, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101hkRomInfo, ddp2101hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4032,7 +4032,7 @@ struct BurnDriver BurnDrvDdp2101hk = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, Hong Kong)
+// DoDonPachi II - Fung Bou (Hong Kong, ver. 100)
 
 static struct BurnRomInfo ddp2100hkRomDesc[] = {
 	DDP2_PROGRAM_100
@@ -4045,8 +4045,8 @@ STD_ROM_FN(ddp2100hk)
 
 struct BurnDriver BurnDrvDdp2100hk = {
 	"ddp2100hk", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Hong Kong)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Fung Bou (Hong Kong, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Fung Bou\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Hong Kong, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100hkRomInfo, ddp2100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4054,7 +4054,7 @@ struct BurnDriver BurnDrvDdp2100hk = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102, Korea)
+// DoDonPachi II - Bee Storm (Korea, ver. 102)
 
 static struct BurnRomInfo ddp2kRomDesc[] = {
 	DDP2_PROGRAM_102
@@ -4067,8 +4067,8 @@ STD_ROM_FN(ddp2k)
 
 struct BurnDriver BurnDrvDdp2k = {
 	"ddp2k", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, Korea)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Korea)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (Korea, ver. 102)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Korea, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2kRomInfo, ddp2kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4076,7 +4076,7 @@ struct BurnDriver BurnDrvDdp2k = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, Korea)
+// DoDonPachi II - Bee Storm (Korea, ver. 101)
 
 static struct BurnRomInfo ddp2101kRomDesc[] = {
 	DDP2_PROGRAM_101 
@@ -4089,8 +4089,8 @@ STD_ROM_FN(ddp2101k)
 
 struct BurnDriver BurnDrvDdp2101k = {
 	"ddp2101k", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, Korea)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Korea)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (Korea, ver. 101)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Korea, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101kRomInfo, ddp2101kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4098,7 +4098,7 @@ struct BurnDriver BurnDrvDdp2101k = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, Korea)
+// DoDonPachi II - Bee Storm (Korea, ver. 100)
 
 static struct BurnRomInfo ddp2100kRomDesc[] = {
 	DDP2_PROGRAM_100
@@ -4111,8 +4111,8 @@ STD_ROM_FN(ddp2100k)
 
 struct BurnDriver BurnDrvDdp2100k = {
 	"ddp2100k", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, Korea)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Korea)\0", NULL, NULL, NULL,
+	"DoDonPachi II - Bee Storm (Korea, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi II - Bee Storm\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Korea, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100kRomInfo, ddp2100kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4120,7 +4120,7 @@ struct BurnDriver BurnDrvDdp2100k = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102, Japan)
+// DoDonPachi II (Japan, ver. 102)
 
 static struct BurnRomInfo ddp2jRomDesc[] = {
 	DDP2_PROGRAM_102
@@ -4133,8 +4133,8 @@ STD_ROM_FN(ddp2j)
 
 struct BurnDriver BurnDrvDdp2j = {
 	"ddp2j", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, Japan)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Japan)\0", NULL, NULL, NULL,
+	"DoDonPachi II (Japan, ver. 102)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
+	L"DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Japan, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2jRomInfo, ddp2jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4142,7 +4142,7 @@ struct BurnDriver BurnDrvDdp2j = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, Japan)
+// DoDonPachi II (Japan, ver. 101)
 
 static struct BurnRomInfo ddp2101jRomDesc[] = {
 	DDP2_PROGRAM_101
@@ -4155,8 +4155,8 @@ STD_ROM_FN(ddp2101j)
 
 struct BurnDriver BurnDrvDdp2101j = {
 	"ddp2101j", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, Japan)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Japan)\0", NULL, NULL, NULL,
+	"DoDonPachi II (Japan, ver. 101)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
+	L"DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Japan, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101jRomInfo, ddp2101jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4164,7 +4164,7 @@ struct BurnDriver BurnDrvDdp2101j = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, Japan)
+// DoDonPachi II (Japan, ver. 100)
 
 static struct BurnRomInfo ddp2100jRomDesc[] = {
 	DDP2_PROGRAM_100
@@ -4177,8 +4177,8 @@ STD_ROM_FN(ddp2100j)
 
 struct BurnDriver BurnDrvDdp2100j = {
 	"ddp2100j", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, Japan)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Japan)\0", NULL, NULL, NULL,
+	"DoDonPachi II (Japan, ver. 100)\0", NULL, "IGS (Cave license)", "PolyGameMaster",
+	L"DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Japan, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100jRomInfo, ddp2100jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4186,7 +4186,7 @@ struct BurnDriver BurnDrvDdp2100j = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102, Taiwan)
+// DoDonPachi - Feng Bao (Taiwan, ver. 102)
 
 static struct BurnRomInfo ddp2tRomDesc[] = {
 	DDP2_PROGRAM_102
@@ -4199,8 +4199,8 @@ STD_ROM_FN(ddp2t)
 
 struct BurnDriver BurnDrvDdp2t = {
 	"ddp2t", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Taiwan)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (Taiwan, ver. 102)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Taiwan, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2tRomInfo, ddp2tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4208,7 +4208,7 @@ struct BurnDriver BurnDrvDdp2t = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, Taiwan)
+// DoDonPachi - Feng Bao (Taiwan, ver. 101)
 
 static struct BurnRomInfo ddp2101tRomDesc[] = {
 	DDP2_PROGRAM_101
@@ -4221,8 +4221,8 @@ STD_ROM_FN(ddp2101t)
 
 struct BurnDriver BurnDrvDdp2101t = {
 	"ddp2101t", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Taiwan)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (Taiwan, ver. 101)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Taiwan, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101tRomInfo, ddp2101tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4230,7 +4230,7 @@ struct BurnDriver BurnDrvDdp2101t = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, Taiwan)
+// DoDonPachi - Feng Bao (Taiwan, ver. 100)
 
 static struct BurnRomInfo ddp2100tRomDesc[] = {
 	DDP2_PROGRAM_100
@@ -4243,8 +4243,8 @@ STD_ROM_FN(ddp2100t)
 
 struct BurnDriver BurnDrvDdp2100t = {
 	"ddp2100t", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Taiwan)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (Taiwan, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (Taiwan, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100tRomInfo, ddp2100tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4252,7 +4252,7 @@ struct BurnDriver BurnDrvDdp2100t = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102, China)
+// DoDonPachi - Feng Bao (China, ver. 102)
 
 static struct BurnRomInfo ddp2cRomDesc[] = {
 	DDP2_PROGRAM_102
@@ -4265,8 +4265,8 @@ STD_ROM_FN(ddp2c)
 
 struct BurnDriver BurnDrvDdp2c = {
 	"ddp2c", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, China)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (China, ver. 102)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (China, ver. 102)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2cRomInfo, ddp2cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4274,7 +4274,7 @@ struct BurnDriver BurnDrvDdp2c = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101, China)
+// DoDonPachi - Feng Bao (China, ver. 101)
 
 static struct BurnRomInfo ddp2101cRomDesc[] = {
 	DDP2_PROGRAM_101
@@ -4287,8 +4287,8 @@ STD_ROM_FN(ddp2101c)
 
 struct BurnDriver BurnDrvDdp2101c = {
 	"ddp2101c", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, China)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (China, ver. 101)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (China, ver. 101)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2101cRomInfo, ddp2101cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4296,7 +4296,7 @@ struct BurnDriver BurnDrvDdp2101c = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100, Taiwan)
+// DoDonPachi - Feng Bao (China, ver. 100)
 
 static struct BurnRomInfo ddp2100cRomDesc[] = {
 	DDP2_PROGRAM_100
@@ -4309,8 +4309,8 @@ STD_ROM_FN(ddp2100c)
 
 struct BurnDriver BurnDrvDdp2100c = {
 	"ddp2100c", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPachi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, China)\0", NULL, NULL, NULL,
+	"DoDonPachi - Feng Bao (China, ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	L"DoDonPachi - Feng Bao\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (China, ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp2100cRomInfo, ddp2100cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -4318,7 +4318,7 @@ struct BurnDriver BurnDrvDdp2100c = {
 };
 
 
-// Dragon World 2001 (V100, Japan)
+// Chuugokuryuu 2001 [Dragon World 2001] (V100 02/21/01 16:05:16, Japan)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0349-01-FL MADE ON TAIWAN
@@ -4369,7 +4369,7 @@ static INT32 dw2001Init()
 
 struct BurnDriver BurnDrvDw2001 = {
 	"dw2001", NULL, "pgm", NULL, "2001",
-	"Dragon World 2001 (V100, Japan)\0", "Bad sound?", "IGS", "PolyGameMaster",
+	"Chuugokuryuu 2001 [Dragon World 2001] (V100 02/21/01 16:05:16, Japan)\0", "Bad sound?", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, dw2001RomInfo, dw2001RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -4378,7 +4378,7 @@ struct BurnDriver BurnDrvDw2001 = {
 };
 
 
-// Dragon World Pretty Chance (V110, China)
+// Zhongguo Long Pretty Chance [Dragon World Pretty Chance] (V110 03/19/02 11:13:16, China)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0349-01-FL MADE IN TAIWAN
@@ -4425,7 +4425,7 @@ static INT32 dwpcInit()
 
 struct BurnDriver BurnDrvdwpc = {
 	"dwpc", NULL, "pgm", NULL, "2001",
-	"Dragon World Pretty Chance (V110, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
+	"Zhongguo Long Pretty Chance [Dragon World Pretty Chance] (V110 03/19/02 11:13:16, China)\0", "Bad sound?", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -4434,7 +4434,7 @@ struct BurnDriver BurnDrvdwpc = {
 };
 
 
-// Dragon World Pretty Chance (V101, Japan)
+// Chuugokuryuu Pretty Chance [Dragon World Pretty Chance] (V101 09/26/01 10:23:26, Japan)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0349-01-FL MADE IN TAIWAN
@@ -4466,7 +4466,7 @@ STD_ROM_FN(dwpc101j)
 
 struct BurnDriver BurnDrvdwpc101j = {
 	"dwpc101j", "dwpc", "pgm", NULL, "2001",
-	"Dragon World Pretty Chance (V101, Japan)\0", "Bad sound?", "IGS", "PolyGameMaster",
+	"Chuugokuryuu Pretty Chance [Dragon World Pretty Chance] (V101 09/26/01 10:23:26, Japan)\0", "Bad sound?", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, dwpc101jRomInfo, dwpc101jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -4475,7 +4475,7 @@ struct BurnDriver BurnDrvdwpc101j = {
 };
 
 
-// Demon Front (M105XX, S105XX)
+// Demon Front / Moyu Zhanxian (68k label V105, ROM M105XX 08/05/02) (ARM label V105, ROM 08/05/02 S105XX)
 
 /* DEMON FRONT "D12" VERSION (CART)
    IGS PCB-0387-03-FV MADE IN TAIWAN
@@ -4554,7 +4554,7 @@ static INT32 dmnfrntInit()
 
 struct BurnDriver BurnDrvDmnfrnt = {
 	"dmnfrnt", NULL, "pgm", NULL, "2002",
-	"Demon Front (M105XX, S105XX)\0", NULL, "IGS", "PolyGameMaster",
+	"Demon Front / Moyu Zhanxian (68k label V105, ROM M105XX 08/05/02) (ARM label V105, ROM 08/05/02 S105XX)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (M105XX, S105XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrntRomInfo, dmnfrntRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov115DIPInfo,
@@ -4563,7 +4563,7 @@ struct BurnDriver BurnDrvDmnfrnt = {
 };
 
 
-// Demon Front (M103XX, S103XX)
+// Demon Front / Moyu Zhanxian (68k label V103, ROM M103XX 07/05/02) (ARM label V103, ROM 07/05/02 S103XX)
 
 static struct BurnRomInfo dmnfrnt103RomDesc[] = {
 	{ "v103_16m.u5",   				0x0200000, 0x2ddafb3d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -4589,7 +4589,7 @@ STD_ROM_FN(dmnfrnt103)
 
 struct BurnDriver BurnDrvdmnfrnt103 = {
 	"dmnfrnt103", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (M103XX, S103XX)\0", NULL, "IGS", "PolyGameMaster",
+	"Demon Front / Moyu Zhanxian (68k label V103, ROM M103XX 07/05/02) (ARM label V103, ROM 07/05/02 S103XX)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (M103XX, S103XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrnt103RomInfo, dmnfrnt103RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov115DIPInfo,
@@ -4598,7 +4598,7 @@ struct BurnDriver BurnDrvdmnfrnt103 = {
 };
 
 
-// Demon Front (M102XX, S101XX)
+// Demon Front / Moyu Zhanxian (68k label V102, ROM M102XX 06/19/02) (ARM label V102, ROM 05/24/02 S101XX)
 
 /* IGS PCB-0387-02-FV MADE IN TAIWAN
    IGS PCB-0390-00-FV-A MADE IN TAIWAN
@@ -4632,7 +4632,7 @@ STD_ROM_FN(dmnfrnt102)
 
 struct BurnDriver BurnDrvdmnfrnta = {
 	"dmnfrnt102", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (M102XX, S101XX)\0", NULL, "IGS", "PolyGameMaster",
+	"Demon Front / Moyu Zhanxian (68k label V102, ROM M102XX 06/19/02) (ARM label V102, ROM 05/24/02 S101XX)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (M102XX, S101XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrnt102RomInfo, dmnfrnt102RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov115DIPInfo,
@@ -5004,7 +5004,7 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
 };
 
 
-// Happy 6-in-1 / Huanle Liu He Yi (V102 - V101MK, China)
+// Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V101, ARM ver. V102CN)
 // All ROMs labels are on stickers
 
 /* TEST OK F0089535 BY IGS
@@ -5071,7 +5071,7 @@ static INT32 happy6in1Init()
 
 struct BurnDriver BurnDrvhappy6 = {
 	"happy6", NULL, "pgm", NULL, "2004",
-	"Happy 6-in-1 / Huanle Liu He Yi (V102 - V101MK, China)\0", NULL, "IGS", "PolyGameMaster",
+	"Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V101, ARM ver. V102CN)\0", NULL, "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V102 - V101MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6RomInfo, happy6RomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
@@ -5080,7 +5080,7 @@ struct BurnDriver BurnDrvhappy6 = {
 };
 
 
-// Happy 6-in-1 / Huanle Liu He Yi (V101 - V100MK, China)
+// Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100, ARM ver. V101CN)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-010 -GT MADE IN TAIWAN
@@ -5113,7 +5113,7 @@ STD_ROM_FN(happy6101)
 
 struct BurnDriver BurnDrvhappy6101 = {
 	"happy6101", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 / Huanle Liu He Yi (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100, ARM ver. V101CN)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V101 - V100MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
@@ -5122,7 +5122,7 @@ struct BurnDriver BurnDrvhappy6101 = {
 };
 
 
-// Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, Hong Kong)
+// Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100HK, ARM ver. V100HK)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-01-GT MADE IN TAIWAN
@@ -5155,7 +5155,7 @@ STD_ROM_FN(happy6100hk)
 
 struct BurnDriver BurnDrvhappy6100hk = {
 	"happy6100hk", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, Hong Kong)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100HK, ARM ver. V100HK)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6b61\u6a02\u516d\u5408\u4e00 (V100 - V100MK, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6100hkRomInfo, happy6100hkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6hkDIPInfo,
@@ -5164,7 +5164,7 @@ struct BurnDriver BurnDrvhappy6100hk = {
 };
 
 
-// Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, China)
+// Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100, ARM ver. V100CN)
 // All ROMs labels are on stickers
 
 /* IGS PCB-0464-01-GT MADE IN TAIWAN
@@ -5197,7 +5197,7 @@ STD_ROM_FN(happy6100cn)
 
 struct BurnDriver BurnDrvhappy6100cn = {
 	"happy6100cn", "happy6", "pgm", NULL, "2004",
-	"Happy 6-in-1 / Huanle Liu He Yi (V100 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Huanle Liuhe Yi (Happy 6-in-1) (M68K ver. V100, ARM ver. V100CN)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Happy 6-in-1\0\u6B22\u4E50\u516D\u5408\u4E00 (V100 - V100MK, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_CASINO, 0,
 	NULL, happy6100cnRomInfo, happy6100cnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, happy6DIPInfo,
@@ -5868,7 +5868,7 @@ struct BurnDriver BurnDrvDdp3 = {
 };
 
 
-// DoDonPachi Dai-Ou-Jou (V101, Japan, 2002.04.05.Master Ver)
+// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05.Master Ver, 68k Label V101)
 
 static struct BurnRomInfo ddp3aRomDesc[] = {
 	{ "ddp3_v101.u36",				0x0200000, 0x195b5c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -5892,7 +5892,7 @@ STD_ROM_FN(ddp3a)
 
 struct BurnDriver BurnDrvDdp3a = {
 	"ddpdoj", "ddp3", NULL,  NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou (V101, Japan, 2002.04.05.Master Ver)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
+	"DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05.Master Ver, 68k Label V101)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp3aRomInfo, ddp3aRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -5950,7 +5950,7 @@ struct BurnDriver BurnDrvDdpdojp = {
 };
 
 
-// DoDonPachi Dai-Ou-Jou (V100, Japan, 2002.04.05.Master Ver)
+// DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05.Master Ver, 68k Label V100)
 
 static struct BurnRomInfo ddp3bRomDesc[] = {
 	{ "ddp3_d_d_1_0.u36",			0x0200000, 0x5d3f85ba, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -5974,7 +5974,7 @@ STD_ROM_FN(ddp3b)
 
 struct BurnDriver BurnDrvDdp3b = {
 	"ddpdoja", "ddp3", NULL,  NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou (V100, Japan, 2002.04.05.Master Ver)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
+	"DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05.Master Ver, 68k Label V100)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddp3bRomInfo, ddp3bRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -6540,7 +6540,7 @@ struct BurnDriver BurnDrvketarrf = {
 };
 
 
-// Espgaluda (Japan, 2003/10/15 Master Ver)
+// Espgaluda (2003/10/15 Master Ver)
 
 static struct BurnRomInfo espgalRomDesc[] = {
 	{ "espgaluda_v100.u38",			0x0200000, 0x08ecec34, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -6570,7 +6570,7 @@ static INT32 espgalInit()
 
 struct BurnDriver BurnDrvEspgal = {
 	"espgal", NULL, NULL, NULL, "2003",
-	"Espgaluda (Japan, 2003/10/15 Master Ver)\0", NULL, "Cave (AMI license)", "PolyGameMaster based",
+	"Espgaluda (2003/10/15 Master Ver)\0", NULL, "Cave (AMI license)", "PolyGameMaster based",
 	L"Espgaluda\0\u30A8\u30B9\u30D7\u30AC\u30EB\u30FC\u30C0 (Japan, 2003/10/15 Master Ver)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, espgalRomInfo, espgalRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -6669,7 +6669,7 @@ struct BurnDriver BurnDrvThegladpcba = {
 };
 
 
-// Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)
+// Demon Front V1.1 / Moyu Zhanxian V1.1 (68k label V107KR, ROM M107KR 11/03/03) (ARM label V106KR, ROM 10/16/03 S106KR) (JAMMA PCB)
 
 static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 	{ "demon_front_v107kr_u43.u43",	0x0200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -6695,7 +6695,7 @@ STD_ROM_FN(dmnfrntpcb)
 
 struct BurnDriver BurnDrvDmnfrntpcb = {
 	"dmnfrntpcb", "dmnfrnt", "pgm", NULL, "2002",
-	"Demon Front (VM107KR, S106KR, S101KR, Korea, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
+	"Demon Front V1.1 / Moyu Zhanxian V1.1 (68k label V107KR, ROM M107KR 11/03/03) (ARM label V106KR, ROM 10/16/03 S106KR) (JAMMA PCB)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (VM107KR, S106KR, Korea, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_RUNGUN, 0,
 	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, dmnfrntpcbDIPInfo,
@@ -7768,7 +7768,8 @@ struct BurnDriver BurnDrvKovshb = {
 };
 
 
-// DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
+// DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
+// 68k: SANGO EX V100 12/06/99 13:36:04, ARM: China internal ROM
 
 static struct BurnRomInfo ddpdojblkblRomDesc[] = {
 	// bootleg on a converted KOVSH cart
@@ -7790,9 +7791,9 @@ STDROMPICKEXT(ddpdojblkbl, ddpdojblkbl, pgm) // custom bios
 STD_ROM_FN(ddpdojblkbl)
 
 struct BurnDriver BurnDrvDdpdojblkbl = {
-	"ddpdojblkbl", "ddp3", NULL, NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "bootleg", "PolyGameMaster",
-	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, NULL, NULL,
+	"ddpdojblkbl", "ddp3", NULL, NULL, "2012",
+	"DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "bootleg", "PolyGameMaster",
+	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (Japan, 2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpdojblkblRomInfo, ddpdojblkblRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

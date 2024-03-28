@@ -21327,11 +21327,11 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Legendary, Hack) - 2024-03-08
+// Metal Slug 3 (Legendary, Hack) - 2024-03-09
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug3cqRomDesc[] = {
-	{ "256-ph1cq.p1",    0x100000, 0x745d11d3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph1cq.p1",    0x100000, 0x1f652fac, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2cq.sp2",   0x400000, 0x4d1ffa19, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "256-c1d.c1",      0x800000, 0x3540398c, 3 | BRF_GRA },           //  2 Sprite data

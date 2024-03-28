@@ -921,7 +921,7 @@ static INT32 lordgunLoadRoms()
 
 	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 24, 1)) return 1;
 
-	if (BurnLoadRom(EEPROM                 , 25, 1)) return 1;
+	if (BurnLoadRomExt(EEPROM, 25, 1, LD_BYTESWAP)) return 1;
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
@@ -957,7 +957,7 @@ static INT32 lordgunuLoadRoms()
 
 	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 15, 1)) return 1;
 
-	if (BurnLoadRom(EEPROM                 , 16, 1)) return 1;
+	if (BurnLoadRomExt(EEPROM, 16, 1, LD_BYTESWAP)) return 1;
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 

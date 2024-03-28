@@ -1607,74 +1607,6 @@ static struct BurnRomInfo sailormnohRomDesc[] = {
 STD_ROM_PICK(sailormnoh)
 STD_ROM_FN(sailormnoh)
 
-// Pretty Soldier Sailor Moon (Fighting For Justice, Hack), hacked by ZombieMaster with the PSSME Editor
-// Edtior Link: https://gamehackfan.github.io/pssme
-
-static struct BurnRomInfo sailormnffjRomDesc[] = {
-	{ "bpsmffj.u45",  0x100000, 0xf11bd75a, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
-
-	{ "bpsm945a.u9",  0x080000, 0x438de548, BRF_ESS | BRF_PRG }, //  2 Z80 code
-
-	{ "bpsm.u76",     0x200000, 0xa243a5ba, BRF_GRA },			 //  3 Sprite data
-	{ "bpsm.u77",     0x200000, 0x5179a4ac, BRF_GRA },			 //  4
-
-	{ "bpsm.u53",     0x200000, 0xb9b15f83, BRF_GRA },			 //  5 Layer 0 Tile data
-	{ "bpsm.u54",     0x200000, 0x8f00679d, BRF_GRA },			 //  6 Layer 1 Tile data
-
-	{ "bpsm.u57",     0x200000, 0x86be7b63, BRF_GRA },			 //  7 Layer 2 Tile data
-	{ "bpsm.u58",     0x200000, 0xe0bba83b, BRF_GRA },			 //  8
-	{ "bpsm.u62",     0x200000, 0xa1e3bfac, BRF_GRA },			 //  9
-	{ "bpsm.u61",     0x200000, 0x6a014b52, BRF_GRA },			 // 10
-	{ "bpsm.u60",     0x200000, 0x992468c0, BRF_GRA },			 // 11
-
-	{ "bpsm.u65",     0x200000, 0xf60fb7b5, BRF_GRA },			 // 12
-	{ "bpsm.u64",     0x200000, 0x6559d31c, BRF_GRA },			 // 13
-	{ "bpsm.u63",     0x200000, 0xd57a56b4, BRF_GRA },			 // 14
-
-	{ "bpsm.u48",     0x200000, 0x498e4ed1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
-	{ "bpsm.u47",     0x080000, 0x0f2901b9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
-	
-	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(sailormnffj)
-STD_ROM_FN(sailormnffj)
-
-// Pretty Soldier Sailor Moon (Reign of Terror, Hack), hacked by ZombieMaster with the PSSME Editor
-// Edtior Link: https://gamehackfan.github.io/pssme
-
-static struct BurnRomInfo sailormnrotRomDesc[] = {
-	{ "bpsmrot.u45",  0x080000, 0xdaf0db76, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
-
-	{ "bpsm945a.u9",  0x080000, 0x438de548, BRF_ESS | BRF_PRG }, //  2 Z80 code
-
-	{ "bpsm.u76",     0x200000, 0xa243a5ba, BRF_GRA },			 //  3 Sprite data
-	{ "bpsm.u77",     0x200000, 0x5179a4ac, BRF_GRA },			 //  4
-
-	{ "bpsm.u53",     0x200000, 0xb9b15f83, BRF_GRA },			 //  5 Layer 0 Tile data
-	{ "bpsm.u54",     0x200000, 0x8f00679d, BRF_GRA },			 //  6 Layer 1 Tile data
-
-	{ "bpsm.u57",     0x200000, 0x86be7b63, BRF_GRA },			 //  7 Layer 2 Tile data
-	{ "bpsm.u58",     0x200000, 0xe0bba83b, BRF_GRA },			 //  8
-	{ "bpsm.u62",     0x200000, 0xa1e3bfac, BRF_GRA },			 //  9
-	{ "bpsm.u61",     0x200000, 0x6a014b52, BRF_GRA },			 // 10
-	{ "bpsm.u60",     0x200000, 0x992468c0, BRF_GRA },			 // 11
-
-	{ "bpsm.u65",     0x200000, 0xf60fb7b5, BRF_GRA },			 // 12
-	{ "bpsm.u64",     0x200000, 0x6559d31c, BRF_GRA },			 // 13
-	{ "bpsm.u63",     0x200000, 0xd57a56b4, BRF_GRA },			 // 14
-
-	{ "bpsm.u48",     0x200000, 0x498e4ed1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
-	{ "bpsm.u47",     0x080000, 0x0f2901b9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
-	
-	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(sailormnrot)
-STD_ROM_FN(sailormnrot)
-
 
 #define SAILORMN_COMPONENTS											\
 	{ "bpsm.u46",		0x200000, 0x32084e80, BRF_ESS | BRF_PRG },	\
@@ -1705,6 +1637,30 @@ STD_ROM_FN(sailormnrot)
 #define SAILORMN_REGIONS_COMPONENTS	\
 	SAILORMN_COMPONENTS				\
 	SAILORMN_REGIONS
+
+// Pretty Soldier Sailor Moon (Fighting For Justice, Hack)
+// Modified by ZombieMaster with the PSSME Editor
+// Editor Link: https://gamehackfan.github.io/pssme
+
+static struct BurnRomInfo sailormnffjRomDesc[] = {
+	{ "bpsmffj.u45",	0x100000, 0xf11bd75a, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	SAILORMN_REGIONS_COMPONENTS
+};
+
+STD_ROM_PICK(sailormnffj)
+STD_ROM_FN(sailormnffj)
+
+// Pretty Soldier Sailor Moon (Reign of Terror, Hack)
+// Modified by ZombieMaster with the PSSME Editor
+// Editor Link: https://gamehackfan.github.io/pssme
+
+static struct BurnRomInfo sailormnrotRomDesc[] = {
+	{ "bpsmrot.u45",	0x080000, 0xdaf0db76, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	SAILORMN_REGIONS_COMPONENTS
+};
+
+STD_ROM_PICK(sailormnrot)
+STD_ROM_FN(sailormnrot)
 
 // Pretty Soldier Sailor Moon (Black Moon, Hack)
 // Modified by Jane Eyre
@@ -2250,8 +2206,8 @@ struct BurnDriver BurnDrvSailorMoonffj = {
 	"Pretty Soldier Sailor Moon (Fighting For Justice, Hack)\0", NULL, "Zombie Master", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnffjRomInfo, sailormnffjRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
-	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, sailormnffjRomInfo, sailormnffjRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
+	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2260,8 +2216,8 @@ struct BurnDriver BurnDrvSailorMoonrot = {
 	"Pretty Soldier Sailor Moon (Reign of Terror, Hack)\0", NULL, "Zombie Master", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnrotRomInfo, sailormnrotRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
-	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, sailormnrotRomInfo, sailormnrotRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
+	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 

@@ -12,52 +12,61 @@
 ****************************************************************************/
 
 #include "burnint.h"
+#include "bitswap.h"
 #include "upd7725.h"
 
 static INT32 program_address_mask;
 static INT32 data_address_mask;
+static INT32 ram_address_mask;
 static UINT8 *upd96050Opcodes = NULL;
 static UINT8 *upd96050Data = NULL;
 static UINT16 *dataRAM;
 static void (*out_p0_cb)(INT32) = NULL;
 static void (*out_p1_cb)(INT32) = NULL;
 
-static inline UINT32 read_op(UINT16 a)
+static UINT32 read_op(UINT16 a)
 {
-	UINT32 *opcode = (UINT32*)upd96050Opcodes;
+	if (a < program_address_mask) {
+		const UINT32 *opcode = (UINT32*)upd96050Opcodes;
+		return BURN_ENDIAN_SWAP_INT32(opcode[a & program_address_mask]);
+	}
 
-	return BURN_ENDIAN_SWAP_INT32(opcode[a & program_address_mask]);
+	return 0;
 }
 
-static inline UINT16 data_read_word(UINT16 a)
+static UINT16 data_read_word(UINT16 a)
 {
-	UINT16 *data = (UINT16*)upd96050Data;
+	if (a < data_address_mask) {
+		const UINT16 *data = (UINT16*)upd96050Data;
 
-	return BURN_ENDIAN_SWAP_INT16(data[a & data_address_mask]);
+		return BURN_ENDIAN_SWAP_INT16(data[a & data_address_mask]);
+	}
+
+	return 0;
 }
 
-static inline void dataRAMWrite(INT32 offset, UINT16 data)
+static void dataRAMWrite(INT32 offset, UINT16 data)
 {
-	dataRAM[offset & 0x7ff] = BURN_ENDIAN_SWAP_INT16(data);
+	dataRAM[offset & ram_address_mask] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static inline UINT16 dataRAMRead(INT32 offset)
 {
-	return BURN_ENDIAN_SWAP_INT16(dataRAM[offset & 0x7ff]);
+	return BURN_ENDIAN_SWAP_INT16(dataRAM[offset & ram_address_mask]);
 }
 
 struct Flag
 {
-	bool s1, s0, c, z, ov1, ov0, ov0p, ov0pp;
+	bool s1, s0, c, z, ov1, ov0;
 
 	inline operator UINT8() const
 	{
-		return (s1 << 7) + (s0 << 6) + (c << 5) + (z << 4) + (ov1 << 3) + (ov0 << 2) + (ov0p << 1) + (ov0pp << 0);
+		return (s1 << 5) + (s0 << 4) + (c << 3) + (z << 2) + (ov1 << 1) + (ov0 << 0);
 	}
 
-	inline unsigned operator=(UINT8 d)
+	inline UINT8 operator=(UINT8 d)
 	{
-		s1 = d & 0x80; s0 = d & 0x40; c = d & 0x20; z = d & 0x10; ov1 = d & 0x08; ov0 = d & 0x04; ov0p = d & 0x02; ov0pp = d & 0x01;
+		s1 = d & 0x20; s0 = d & 0x10; c = d & 0x08; z = d & 0x04; ov1 = d & 0x02; ov0 = d & 0x01;
 		return d;
 	}
 };
@@ -66,14 +75,14 @@ struct Status
 {
 	bool rqm, usf1, usf0, drs, dma, drc, soc, sic, ei, p1, p0;
 
-	inline operator UINT8() const
+	inline operator UINT16() const
 	{
 		return (rqm << 15) + (usf1 << 14) + (usf0 << 13) + (drs << 12)
 			+ (dma << 11) + (drc  << 10) + (soc  <<  9) + (sic <<  8)
 			+ (ei  <<  7) + (p1   <<  1) + (p0   <<  0);
 	}
 
-	inline unsigned operator=(UINT8 d)
+	inline UINT16 operator=(UINT16 d)
 	{
 		rqm = d & 0x8000; usf1 = d & 0x4000; usf0 = d & 0x2000; drs = d & 0x1000;
 		dma = d & 0x0800; drc  = d & 0x0400; soc  = d & 0x0200; sic = d & 0x0100;
@@ -104,38 +113,18 @@ struct Regs
 	UINT16 si;
 	UINT16 so;
 	UINT16 idb;
+	bool siack;         // Serial in ACK
+	bool soack;         // Serial out ACK
+	bool irq; // old irq line state, for detecting rising edges.
+	// m_irq_firing: if an irq has fired; 0 = not fired or has already finished firing
+	// 1 = next opcode is the first half of int firing 'NOP'
+	// 2 = next opcode is the second half of int firing 'CALL 0100'
+	int irq_firing;
 } regs;
 
 static INT32 m_icount = 0;
 
-static void exec_ld(UINT32 opcode) {
-	UINT16 id = opcode >> 6;  //immediate data
-	UINT8 dst = (opcode >> 0) & 0xf;  //destination
-
-	regs.idb = id;
-
-	switch(dst) {
-	case  0: break;
-	case  1: regs.a = id; break;
-	case  2: regs.b = id; break;
-	case  3: regs.tr = id; break;
-	case  4: regs.dp = id; break;
-	case  5: regs.rp = id; break;
-	case  6: regs.dr = id; regs.sr.rqm = 1; break;
-	case  7: regs.sr = (regs.sr & 0x907c) | (id & ~0x907c);
-				out_p0_cb(regs.sr&0x1);
-				out_p1_cb((regs.sr&0x2)>>1);
-				break;
-	case  8: regs.so = id; break;  //LSB
-	case  9: regs.so = id; break;  //MSB
-	case 10: regs.k = id; break;
-	case 11: regs.k = id; regs.l = data_read_word(regs.rp); break;
-	case 12: regs.l = id; regs.k = dataRAMRead(regs.dp | 0x40); break;
-	case 13: regs.l = id; break;
-	case 14: regs.trb = id; break;
-	case 15: dataRAMWrite(regs.dp, id); break;
-	}
-}
+static void exec_ld(UINT32 opcode); //forward
 
 static void exec_op(UINT32 opcode) {
 	UINT8 pselect = (opcode >> 20)&0x3;  //P select
@@ -159,8 +148,8 @@ static void exec_op(UINT32 opcode) {
 	case  8: regs.idb = regs.dr; regs.sr.rqm = 1; break;
 	case  9: regs.idb = regs.dr; break;
 	case 10: regs.idb = regs.sr; break;
-	case 11: regs.idb = regs.si; break;  //MSB
-	case 12: regs.idb = regs.si; break;  //LSB
+	case 11: regs.idb = regs.si; break;  //MSB = first bit in from serial, 'natural' SI register order
+	case 12: regs.idb = BITSWAP16(regs.si, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB = first bit in from serial, 'reversed' SI register order
 	case 13: regs.idb = regs.k; break;
 	case 14: regs.idb = regs.l; break;
 	case 15: regs.idb = dataRAMRead(regs.dp); break;
@@ -175,8 +164,6 @@ static void exec_op(UINT32 opcode) {
 	flag.s1 = 0;
 	flag.ov0 = 0;
 	flag.ov1 = 0;
-	flag.ov0p = 0;
-	flag.ov0pp = 0;
 
 	switch(pselect) {
 		case 0: p = dataRAMRead(regs.dp); break;
@@ -202,7 +189,7 @@ static void exec_op(UINT32 opcode) {
 		case  9: r = q + 1; p = 1; break;             //INC
 		case 10: r = ~q; break;                       //CMP
 		case 11: r = (q >> 1) | (q & 0x8000); break;  //SHR1 (ASR)
-		case 12: r = (q << 1) | (c ? 1 : 0); break;             //SHL1 (ROL)
+		case 12: r = (q << 1) | (c ? 1 : 0); break;   //SHL1 (ROL)
 		case 13: r = (q << 2) | 3; break;             //SHL2
 		case 14: r = (q << 4) | 15; break;            //SHL4
 		case 15: r = (q << 8) | (q >> 8); break;      //XCHG
@@ -210,13 +197,12 @@ static void exec_op(UINT32 opcode) {
 
 	flag.s0 = (r & 0x8000);
 	flag.z = (r == 0);
-	flag.ov0pp = flag.ov0p;
-	flag.ov0p = flag.ov0;
+	if (!flag.ov1) flag.s1 = flag.s0;
 
 	switch(alu) {
 		case  1: case  2: case  3: case 10: case 13: case 14: case 15: {
 		flag.c = 0;
-		flag.ov0 = flag.ov0p = flag.ov0pp = 0; // ASSUMPTION: previous ov0 values are nulled here to make ov1 zero
+		flag.ov0 = flag.ov1 = 0; // OV0 and OV1 are cleared by any non-add/sub/nop operation
 		break;
 		}
 		case  4: case  5: case  6: case  7: case  8: case  9: {
@@ -229,23 +215,20 @@ static void exec_op(UINT32 opcode) {
 			flag.ov0 = (q ^ r) &  (q ^ p) & 0x8000;
 			flag.c = (r > q);
 		}
+		flag.ov1 = (flag.ov0 & flag.ov1) ? (flag.s1 == flag.s0) : (flag.ov0 | flag.ov1);
 		break;
 		}
 		case 11: {
 		flag.c = q & 1;
-		flag.ov0 = flag.ov0p = flag.ov0pp = 0; // ASSUMPTION: previous ov0 values are nulled here to make ov1 zero
+		flag.ov0 = flag.ov1 = 0; // OV0 and OV1 are cleared by any non-add/sub/nop operation
 		break;
 		}
 		case 12: {
 		flag.c = q >> 15;
-		flag.ov0 = flag.ov0p = flag.ov0pp = 0; // ASSUMPTION: previous ov0 values are nulled here to make ov1 zero
+		flag.ov0 = flag.ov1 = 0; // OV0 and OV1 are cleared by any non-add/sub/nop operation
 		break;
 		}
 	}
-	// flag.ov1 is only set if the number of overflows of the past 3 opcodes (of type 4,5,6,7,8,9) is odd
-	flag.ov1 = (flag.ov0 + flag.ov0p + flag.ov0pp) & 1;
-	// flag.s1 is based on ov1: s1 = ov1 ^ s0;
-	flag.s1 = flag.ov1 ^ flag.s0;
 
 	switch(asl) {
 		case 0: regs.a = r; regs.flaga = flag; break;
@@ -255,15 +238,17 @@ static void exec_op(UINT32 opcode) {
 
 	exec_ld((regs.idb << 6) + dst);
 
-	switch(dpl) {
-	case 1: regs.dp = (regs.dp & 0xf0) + ((regs.dp + 1) & 0x0f); break;  //DPINC
-	case 2: regs.dp = (regs.dp & 0xf0) + ((regs.dp - 1) & 0x0f); break;  //DPDEC
-	case 3: regs.dp = (regs.dp & 0xf0); break;  //DPCLR
+	if (dst != 4) {
+		switch(dpl) {
+		case 1: regs.dp = (regs.dp & 0xf0) + ((regs.dp + 1) & 0x0f); break;  //DPINC
+		case 2: regs.dp = (regs.dp & 0xf0) + ((regs.dp - 1) & 0x0f); break;  //DPDEC
+		case 3: regs.dp = (regs.dp & 0xf0); break;  //DPCLR
+		}
+
+		regs.dp ^= dphm << 4;
 	}
 
-	regs.dp ^= dphm << 4;
-
-	if(rpdcr) regs.rp--;
+	if(rpdcr && (dst != 5)) regs.rp--;
 }
 
 static void exec_rt(UINT32 opcode) {
@@ -318,6 +303,11 @@ static void exec_jp(UINT32 opcode) {
 		case 0x0b2: if((regs.dp & 0x0f) == 0x0f) regs.pc = jps; return;  //JDPLF
 		case 0x0b3: if((regs.dp & 0x0f) != 0x0f) regs.pc = jps; return;  //JDPLNF
 
+		case 0x0b4: if(regs.siack == 0) regs.pc = jps; return;  //JNSIAK
+		case 0x0b6: if(regs.siack == 1) regs.pc = jps; return;  //JSIAK
+		case 0x0b8: if(regs.soack == 0) regs.pc = jps; return;  //JNSOAK
+		case 0x0ba: if(regs.soack == 1) regs.pc = jps; return;  //JSOAK
+
 		case 0x0bc: if(regs.sr.rqm == 0) regs.pc = jps; return;  //JNRQM
 		case 0x0be: if(regs.sr.rqm == 1) regs.pc = jps; return;  //JRQM
 
@@ -326,6 +316,35 @@ static void exec_jp(UINT32 opcode) {
 
 		case 0x140: regs.stack[regs.sp++] = regs.pc; regs.pc = 0x0000 | jpl; regs.sp &= 0xf; return;  //LCALL
 		case 0x141: regs.stack[regs.sp++] = regs.pc; regs.pc = 0x2000 | jpl; regs.sp &= 0xf; return;  //HCALL
+	}
+}
+
+static void exec_ld(UINT32 opcode) {
+	UINT16 id = opcode >> 6;  //immediate data
+	UINT8 dst = (opcode >> 0) & 0xf;  //destination
+
+	regs.idb = id;
+
+	switch(dst) {
+	case  0: break;
+	case  1: regs.a = id; break;
+	case  2: regs.b = id; break;
+	case  3: regs.tr = id; break;
+	case  4: regs.dp = id; break;
+	case  5: regs.rp = id; break;
+	case  6: regs.dr = id; regs.sr.rqm = 1; break;
+	case  7: regs.sr = (regs.sr & 0x907c) | (id & ~0x907c);
+				out_p0_cb(regs.sr.p0);
+				out_p1_cb(regs.sr.p1);
+				break;
+	case  8: regs.so = BITSWAP16(id, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB first output, output tapped at bit 15 shifting left
+	case  9: regs.so = id; break;  //MSB first output, output tapped at bit 15 shifting left
+	case 10: regs.k = id; break;
+	case 11: regs.k = id; regs.l = data_read_word(regs.rp); break;
+	case 12: regs.l = id; regs.k = dataRAMRead(regs.dp | 0x40); break;
+	case 13: regs.l = id; break;
+	case 14: regs.trb = id; break;
+	case 15: dataRAMWrite(regs.dp, id); break;
 	}
 }
 
@@ -344,47 +363,62 @@ void upd96050Init(INT32 type, UINT8 *opcode, UINT8 *data, UINT8 *ram, void (*p0_
 	out_p0_cb = (p0_cb == NULL) ? dummy_cb :  p0_cb;
 	out_p1_cb = (p1_cb == NULL) ? dummy_cb :  p1_cb;
 
-	if (type == 96050)
-	{
-		program_address_mask = ((1 << 14) - 1) >> 2;
-		data_address_mask = ((1 << 12) - 1) >> 1;
-	}
-
-	if (type == 7725)
-	{
-		program_address_mask = ((1 << 11) - 1) >> 2;
-		data_address_mask = ((1 << 11) - 1) >> 1;
+	switch (type) {
+		case 96050:
+			program_address_mask = ((1 << 14) - 1) >> 2;
+			data_address_mask = ((1 << 12) - 1) >> 1;
+			ram_address_mask = (1 << 11) - 1; // 0x800 words
+			break;
+		case 7725:
+			program_address_mask = 0x7ff; // 0x800 dwords (0x2000 bytes)
+			data_address_mask = 0x7ff; // 0x800 words (0x1000 bytes)
+			ram_address_mask = 0xff; // 0x100 words (0x200 bytes)
+			break;
+		default:
+			bprintf(0, _T("upd96050Init() (also upd7725) failure: invalid cputype specified: %d.\n"), type);
+			break;
 	}
 }
 
 void upd96050Reset()
 {
-	for (INT32 i = 0; i < 2048; i++)
+	for (INT32 i = 0; i < ram_address_mask+1; i++)
 	{
-		dataRAM[i] = 0x0000;
+		// externally allocated, therefore we do not clear or scan it.
+	   // dataRAM[i] = 0x0000;
 	}
 
-	regs.pc = 0x0000;
-	regs.rp = 0x0000;
-	regs.dp = 0x0000;
-	regs.sp = 0x0;
-	regs.k = 0x0000;
-	regs.l = 0x0000;
-	regs.m = 0x0000;
-	regs.n = 0x0000;
-	regs.a = 0x0000;
-	regs.b = 0x0000;
-	regs.flaga = 0x00;
-	regs.flagb = 0x00;
-	regs.tr = 0x0000;
-	regs.trb = 0x0000;
-	regs.sr = 0x0000;
-	regs.dr = 0x0000;
-	regs.si = 0x0000;
-	regs.so = 0x0000;
-	regs.idb = 0x0000;
+	// reset registers not reset by the /RESET line (according to section 3.6.1 on the upd7725 advanced production datasheet)
+
+	memset(&regs, 0, sizeof(regs));
 
 	m_icount = 0;
+}
+
+#define CLEAR_LINE 0
+#define ASSERT_LINE 1
+
+void upd96050SetIRQLine(int inputnum, int state)
+{
+	switch (inputnum)
+	{
+		case 0: //NECDSP_INPUT_LINE_INT:
+		if ((!regs.irq && (CLEAR_LINE != state)) && regs.sr.ei) // detect rising edge AND if EI == 1;
+		{
+			regs.irq_firing = 1;
+			regs.sr.ei = 0;
+		}
+		regs.irq = (ASSERT_LINE == state); // set old state to current state
+		break;
+	// add more when needed
+	}
+}
+
+INT32 upd96050ExportRegs(void **data)
+{
+	*data = (void *)&regs;
+
+	return sizeof(regs);
 }
 
 INT32 upd96050Scan(INT32 /*nAction*/)
@@ -408,8 +442,27 @@ INT32 upd96050Run(INT32 cycles)
 
 	do
 	{
-		opcode = read_op(regs.pc)>>8;
-		regs.pc++;
+	 //   bprintf(0, _T("read_op(%x)  %x, "), regs.pc, read_op(regs.pc));
+		if (regs.irq_firing == 0) // normal opcode
+		{
+			opcode = read_op(regs.pc) >> 8;
+			regs.pc++;
+		}
+		else if (regs.irq_firing == 1) // if we're in an interrupt cycle, execute a op 'nop' first...
+		{
+			// NOP: OP  PSEL ALU  ASL DPL DPHM   RPDCR SRC  DST
+			//      00  00   0000 0   00  000(0) 0     0000 0000
+			opcode = 0x000000;
+			regs.irq_firing = 2;
+		}
+		else // m_irq_firing == 2 // ...then a call to 100
+		{
+			// LCALL: JP BRCH      NA          BNK(all 0s on 7725)
+			//        10 101000000 00100000000 00
+			opcode = 0xA80400;
+			regs.irq_firing = 0;
+		}
+
 		switch(opcode >> 22)
 		{
 			case 0: exec_op(opcode); break;

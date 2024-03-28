@@ -904,6 +904,51 @@ static INT32 lordgunLoadRoms()
 	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  8, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM[3] + 0x000000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x200000, 10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x200001, 11, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x300000, 12, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x300001, 13, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x400000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x600000, 15, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x600001, 16, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x700000, 17, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x700001, 18, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x800000, 19, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xa00000, 20, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xa00001, 21, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xb00000, 22, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xb00001, 23, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 24, 1)) return 1;
+
+	if (BurnLoadRom(EEPROM                 , 25, 1)) return 1;
+
+	UINT16 *rom = (UINT16*)Drv68KROM;
+
+	for (INT32 i = 0; i < 0x100000/2; i++) {
+		if ((i & 0x0120) == 0x0100 || (i & 0x0a00) == 0x0800)
+			rom[i] ^= BURN_ENDIAN_SWAP_INT16(0x0010);
+	}
+
+	return 0;
+}
+
+static INT32 lordgunuLoadRoms()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x100000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x200000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[2] + 0x000000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x200000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  8, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[3] + 0x000000,  9, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM[3] + 0x200000, 10, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM[3] + 0x400000, 11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM[3] + 0x600000, 12, 1)) return 1;
@@ -1394,32 +1439,41 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Lord of Gun (USA)
+// Lord of Gun (World)
 
 static struct BurnRomInfo lordgunRomDesc[] = {
-	{ "lordgun.10",		0x080000, 0xacda77ef, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "lordgun.4",		0x080000, 0xa1a61254, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "lord_gun_u144-ch.u144",	0x080000, 0xea54ee18, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "lord_gun_u122-ch.u122",	0x080000, 0x969a0348, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "lordgun.90",		0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+	{ "lord_gun_160.u160",		0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
 
-	{ "igst001.108",	0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
-	{ "igst002.114",	0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
-	{ "igst003.119",	0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
+	{ "igs_t001.u8",			0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
+	{ "igs_t002.u18",			0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
+	{ "igs_t003.u19",			0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
 
-	{ "igsb001.82",		0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
-	{ "igsb002.91",		0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
-	{ "igsb003.97",		0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
+	{ "igs_b001.u1",			0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
+	{ "igs_b002.u2",			0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
+	{ "igs_b003.u9",			0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
 
-	{ "igsa001.14",		0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
-	{ "igsa004.13",		0x200000, 0x52687264, 5 | BRF_GRA },           // 10
-	{ "igsa002.9",		0x200000, 0xa4810e38, 5 | BRF_GRA },           // 11
-	{ "igsa005.8",		0x200000, 0xe32e79e3, 5 | BRF_GRA },           // 12
-	{ "igsa003.3",		0x200000, 0x649e48d9, 5 | BRF_GRA },           // 13
-	{ "igsa006.2",		0x200000, 0x39288eb6, 5 | BRF_GRA },           // 14
+	{ "igs_a001.u22",			0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
+	{ "lord_gun_u24.u24",		0x080000, 0x454a5b11, 5 | BRF_GRA },           // 10
+	{ "lord_gun_u23.u23",		0x080000, 0xa0d7aada, 5 | BRF_GRA },           // 11
+	{ "lord_gun_u7.u7",			0x080000, 0x95ef3894, 5 | BRF_GRA },           // 12
+	{ "lord_gun_u14.u14",		0x080000, 0xdc8a77a1, 5 | BRF_GRA },           // 13
+	{ "igs_a002.u21",			0x200000, 0xa4810e38, 5 | BRF_GRA },           // 14
+	{ "lord_gun_u5.u5",			0x080000, 0x63aa10c3, 5 | BRF_GRA },           // 15
+	{ "lord_gun_u13.u13",		0x080000, 0x478e248c, 5 | BRF_GRA },           // 16
+	{ "lord_gun_u4.u4",			0x080000, 0xd203c24e, 5 | BRF_GRA },           // 17
+	{ "lord_gun_u11.u11",		0x080000, 0x72277dcd, 5 | BRF_GRA },           // 18
+	{ "igs_a003.u20",			0x200000, 0x649e48d9, 5 | BRF_GRA },           // 19
+	{ "lord_gun_u12.u12",		0x080000, 0xa2a55d65, 5 | BRF_GRA },           // 20
+	{ "lord_gun_u6.u6",			0x080000, 0xfe649605, 5 | BRF_GRA },           // 21
+	{ "lord_gun_u10.u10",		0x080000, 0xeea39e5e, 5 | BRF_GRA },           // 22
+	{ "lord_gun_u3.u3",			0x080000, 0x233782f8, 5 | BRF_GRA },           // 23
 
-	{ "lordgun.100",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 15 OKI #0 Samples
+	{ "lord_gun_u161-3.u161",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 24 OKI #0 Samples
 
-	{ "eeprom",			0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 16 eeprom
+	{ "eeprom",					0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 25 eeprom
 };
 
 STD_ROM_PICK(lordgun)
@@ -1432,11 +1486,58 @@ static INT32 lordgunInit()
 
 struct BurnDriver BurnDrvLordgun = {
 	"lordgun", NULL, NULL, NULL, "1994",
-	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
+	"Lord of Gun (World)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, lordgunRomInfo, lordgunRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
 	lordgunInit, DrvExit, lordgunFrame, lordgunDraw, DrvScan, &DrvRecalc, 0x800,
+	448, 224, 4, 3
+};
+
+
+// Lord of Gun (USA)
+
+static struct BurnRomInfo lordgunuRomDesc[] = {
+	{ "lord_gun_u10.u10",	0x080000, 0xacda77ef, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "lord_gun_u4.u4",		0x080000, 0xa1a61254, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "lord_gun_u90.u90",	0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "igs_t001.u108",		0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
+	{ "igs_t002.u114",		0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
+	{ "igs_t003.u119",		0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
+
+	{ "igs_b001.u82",		0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
+	{ "igs_b002.u91",		0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
+	{ "igs_b003.u97",		0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
+
+	{ "igs_a001.u14",		0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
+	{ "igs_a004.u13",		0x200000, 0x52687264, 5 | BRF_GRA },           // 10
+	{ "igs_a002.u9",		0x200000, 0xa4810e38, 5 | BRF_GRA },           // 11
+	{ "igs_a005.u8",		0x200000, 0xe32e79e3, 5 | BRF_GRA },           // 12
+	{ "igs_a003.u3",		0x200000, 0x649e48d9, 5 | BRF_GRA },           // 13
+	{ "igs_a006.u2",		0x200000, 0x39288eb6, 5 | BRF_GRA },           // 14
+
+	{ "lord_gun_u100.u100",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 15 OKI #0 Samples
+
+	{ "eeprom",				0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 16 eeprom
+};
+
+STD_ROM_PICK(lordgunu)
+STD_ROM_FN(lordgunu)
+
+static INT32 lordgunuInit()
+{
+	return DrvInit(lordgunuLoadRoms, 1);
+}
+
+struct BurnDriver BurnDrvLordgunu = {
+	"lordgunu", "lordgun", NULL, NULL, "1994",
+	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, lordgunuRomInfo, lordgunuRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
+	lordgunuInit, DrvExit, lordgunFrame, lordgunDraw, DrvScan, &DrvRecalc, 0x800,
 	448, 224, 4, 3
 };
 

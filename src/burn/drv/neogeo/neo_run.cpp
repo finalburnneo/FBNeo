@@ -256,7 +256,9 @@ UINT8 *Neo68KBIOS, *NeoZ80BIOS;
 static UINT8 *Neo68KRAM, *NeoZ80RAM, *NeoNVRAM, *NeoNVRAM2, *NeoMemoryCard;
 
 static UINT32 nSpriteSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-static UINT32 nCodeSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 }, nAllCodeSize = 0;
+static UINT32 nCodeSize[MAX_SLOT]   = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+UINT32 nAllCodeSize = 0;
 
 UINT8* NeoGraphicsRAM;
 

@@ -87,6 +87,8 @@ extern UINT8* Neo68KFix[MAX_SLOT];
 
 extern UINT32 nNeo68KROMBank;
 
+extern UINT32 nAllCodeSize;
+
 extern UINT8 *NeoSpriteRAM, *NeoTextRAM;
 
 extern bool bNeoEnableGraphics;

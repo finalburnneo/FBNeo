@@ -24,6 +24,7 @@ extern UINT8 GenericTilesPRIMASK;
 
 INT32 GenericTilesInit();
 INT32 GenericTilesExit();
+INT32 BurnTransferFindSpill();
 
 // Tile decoding macros
 #define RGN_FRAC(length, numerator, denominator) ((((length) * 8) * (numerator)) / (denominator))

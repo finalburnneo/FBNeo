@@ -281,17 +281,12 @@ void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight)
 	nTransWidth = nWidth;
 }
 
-void BurnTransferExit()
+INT32 BurnTransferFindSpill()
 {
-#if defined FBNEO_DEBUG
-	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
-#endif
+	INT32 uhoh_spill = 0;
 
 	if (Debug_BurnTransferInitted)
 	{ // pTransDraw spill detector v.0001.01 - handy for driver development!
-
-		INT32 uhoh_spill = 0;
-
 		for (INT32 y = nTransHeight; y < nTransHeight + nTransOverflow; y++) {
 			for (INT32 x = 0; x < nTransWidth; x++) {
 				if (pTransDraw[y * nTransWidth + x]) uhoh_spill = 1;
@@ -299,8 +294,20 @@ void BurnTransferExit()
 		}
 		if (uhoh_spill) {
 			bprintf(PRINT_ERROR, _T("!!! BurnTransferExit(): Game wrote past pTransDraw's allocated dimensions!\n"));
+			bprintf(PRINT_ERROR, _T("... Frame  %d.  Transfer dimensions  %d x %d\n"), nCurrentFrame, nTransWidth, nTransHeight);
 		}
 	}
+
+	return uhoh_spill;
+}
+
+void BurnTransferExit()
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
+#endif
+
+	BurnTransferFindSpill();
 
 	BurnBitmapExit();
 	pTransDraw = NULL;

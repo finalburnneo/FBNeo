@@ -570,18 +570,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Vampire (prototype?)
 
 static struct BurnRomInfo vampireRomDesc[] = {
-	{ "h1.bin",			0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "h2.bin",			0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "h3.bin",			0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "h4.bin",			0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "h1.1f",		0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "h2.2f",		0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h3.3f",		0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "h4.4f",		0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "s9d.bin",		0x1000, 0xe13a7aef, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
+	{ "9d",			0x1000, 0xe13a7aef, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
 
-	{ "p1.bin",			0x2000, 0x042661a4, 3 | BRF_GRA },           //  5 Blitter Data
-	{ "p2.bin",			0x2000, 0xe9dd9dff, 3 | BRF_GRA },           //  6
+	{ "cg_p1.6e",	0x2000, 0x042661a4, 3 | BRF_GRA },           //  5 Blitter Data
+	{ "cg_p2.7e",	0x2000, 0xe9dd9dff, 3 | BRF_GRA },           //  6
 
-	{ "16a.bin",		0x0100, 0xbc60a2eb, 4 | BRF_GRA },           //  7 Color Data
-	{ "16b.bin",		0x0100, 0xaa6b627b, 4 | BRF_GRA },           //  8
+	{ "16a",		0x0100, 0xbc60a2eb, 4 | BRF_GRA },           //  7 Color Data
+	{ "16b",		0x0100, 0xaa6b627b, 4 | BRF_GRA },           //  8
 };
 
 STD_ROM_PICK(vampire)
@@ -589,9 +589,9 @@ STD_ROM_FN(vampire)
 
 struct BurnDriver BurnDrvVampire = {
 	"vampire", NULL, NULL, NULL, "1983",
-	"Vampire (prototype?)\0", "imperfect sound & gfx", "Entertainment Enterprises Ltd.", "Miscellaneous",
+	"Vampire (prototype?)\0", "imperfect sound & gfx", "Entertainment Enterprises, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, vampireRomInfo, vampireRomName, NULL, NULL, NULL, NULL, VampireInputInfo, VampireDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 256, 3, 4

@@ -1,4 +1,4 @@
-// FB Alpha Puckman module
+// FB Neo Puckman module
 // Based on MAME driver by Nicola Salmoria and many others
 
 // Fix Shoot the Bull inputs
@@ -5056,7 +5056,7 @@ struct BurnDriver BurnDrvmspacmanbgd = {
 static struct BurnRomInfo mspacmanbgfRomDesc[] = {
 	{ "ic11.bin",     0x8000, 0x6573a470, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 
-	{ "ic13.bin",     0x8000, 0x8ee4a3b0, 2 | BRF_GRA },			//  1 Graphics
+	{ "ic13.bin",     0x4000, 0x8ee4a3b0, 2 | BRF_GRA },			//  1 Graphics
 
 	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
 	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3

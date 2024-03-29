@@ -1983,7 +1983,7 @@ static INT32 snowboaraInit()
 }
 
 struct BurnDriver BurnDrvSnowboara = {
-	"snowboara", "snowboar", NULL, NULL, "1994",
+	"snowboara", "snowboar", NULL, NULL, "1996",
 	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
@@ -2034,7 +2034,7 @@ static INT32 snowboarInit()
 }
 
 struct BurnDriver BurnDrvSnowboar = {
-	"snowboar", NULL, NULL, NULL, "1994",
+	"snowboar", NULL, NULL, NULL, "1996",
 	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,

@@ -427,7 +427,7 @@ struct BurnDriver BurnDrvXorworld = {
 	"xorworld", NULL, NULL, NULL, "1990",
 	"Xor World (prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, xorworldRomInfo, xorworldRomName, NULL, NULL, NULL, NULL, XorworldInputInfo, XorworldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

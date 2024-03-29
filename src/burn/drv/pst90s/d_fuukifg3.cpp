@@ -1432,7 +1432,7 @@ STD_ROM_PICK(asurabus)
 STD_ROM_FN(asurabus)
 
 struct BurnDriver BurnDrvAsurabus = {
-	"asurabus", NULL, NULL, NULL, "2000",
+	"asurabus", NULL, NULL, NULL, "2001",
 	"Asura Buster - Eternal Warriors (USA)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,

@@ -704,7 +704,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBlmbycar = {
 	"blmbycar", NULL, NULL, NULL, "1994",
-	"Blomby Car\0", NULL, "ABM & Gecas", "Miscellaneous",
+	"Blomby Car (Version 1P0)\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -714,7 +714,7 @@ struct BurnDriver BurnDrvBlmbycar = {
 
 struct BurnDriver BurnDrvBlmbycaru = {
 	"blmbycaru", "blmbycar", NULL, NULL, "1994",
-	"Blomby Car (not encrypted)\0", NULL, "ABM & Gecas", "Miscellaneous",
+	"Blomby Car (Version 1P0, not encrypted)\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

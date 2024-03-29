@@ -1359,10 +1359,10 @@ STD_ROM_PICK(maniacsp)
 STD_ROM_FN(maniacsp)
 
 struct BurnDriver BurnDrvManiacsp = {
-	"maniacsp", NULL, NULL, NULL, "1996",
+	"maniacsp", NULL, NULL, NULL, "1992",
 	"Maniac Square (ver 1.0, checksum b602, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacspRomInfo, maniacspRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ManiacsqDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1495,7 +1495,7 @@ STD_ROM_PICK(biomtoyc)
 STD_ROM_FN(biomtoyc)
 
 struct BurnDriver BurnDrvBiomtoyc = {
-	"biomtoyc", "biomtoy", NULL, NULL, "1995",
+	"biomtoyc", "biomtoy", NULL, NULL, "1994",
 	"Biomechanical Toy (ver. 1.0.1870, checksum ba682195)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
@@ -1530,7 +1530,7 @@ STD_ROM_PICK(bioplayc)
 STD_ROM_FN(bioplayc)
 
 struct BurnDriver BurnDrvBioplayc = {
-	"bioplayc", "biomtoy", NULL, NULL, "1995",
+	"bioplayc", "biomtoy", NULL, NULL, "1994",
 	"Bioplaything Cop (ver. 1.0.1823, checksum cd960fc9, prototype)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
@@ -1645,7 +1645,7 @@ struct BurnDriver BurnDrvLastkm = {
 	"lastkm", NULL, NULL, NULL, "1995",
 	"Last KM (ver 1.0.0275, checksum 13bff751, prototype)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

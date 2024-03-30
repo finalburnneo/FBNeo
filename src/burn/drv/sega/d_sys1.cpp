@@ -668,9 +668,9 @@ static struct BurnDIPInfo FlickyDIPList[]=
 	{0x0e, 0x01, 0x01, 0x01, "Cocktail"               },
 
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x0e, 0x01, 0x0c, 0x0c, "2"                      },
-	{0x0e, 0x01, 0x0c, 0x08, "3"                      },
-	{0x0e, 0x01, 0x0c, 0x04, "4"                      },
+	{0x0e, 0x01, 0x0c, 0x0c, "3"                      },
+	{0x0e, 0x01, 0x0c, 0x08, "4"                      },
+	{0x0e, 0x01, 0x0c, 0x04, "5"                      },
 	{0x0e, 0x01, 0x0c, 0x00, "Infinite"               },
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
@@ -685,6 +685,39 @@ static struct BurnDIPInfo FlickyDIPList[]=
 };
 
 STDDIPINFO(Flicky)
+
+static struct BurnDIPInfo FlickybDIPList[]=
+{
+	// Default Values
+	{0x0d, 0xff, 0xff, 0xff, NULL                     },
+	{0x0e, 0xff, 0xff, 0xfe, NULL                     },
+
+	// Dip 1
+	SYSTEM1_COINAGE(0x0d)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0e, 0x01, 0x01, 0x00, "Upright"                },
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"               },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x0e, 0x01, 0x0c, 0x0c, "1"                      },
+	{0x0e, 0x01, 0x0c, 0x08, "2"                      },
+	{0x0e, 0x01, 0x0c, 0x04, "3"                      },
+	{0x0e, 0x01, 0x0c, 0x00, "Infinite"               },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0e, 0x01, 0x30, 0x30, "30k  80k 160k"          },
+	{0x0e, 0x01, 0x30, 0x20, "30k 100k 200k"          },
+	{0x0e, 0x01, 0x30, 0x10, "40k 120k 240k"          },
+	{0x0e, 0x01, 0x30, 0x00, "40k 140k 280k"          },
+
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x0e, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x0e, 0x01, 0x40, 0x00, "Hard"                   },
+};
+
+STDDIPINFO(Flickyb)
 
 static struct BurnDIPInfo Flickys1DIPList[]=
 {
@@ -2040,6 +2073,25 @@ static struct BurnRomInfo FlickyaRomDesc[] = {
 
 STD_ROM_PICK(Flickya)
 STD_ROM_FN(Flickya)
+
+static struct BurnRomInfo FlickybRomDesc[] = {
+	{ "e-2_0.116",         0x004000, 0xec94fdbb, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "109",               0x004000, 0xaa11b394, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+
+	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
+
+	{ "epr-6001.62",       0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
+	{ "epr-6000.64",       0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-5999.66",       0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
+
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  //  8 Timing PROM
+};
+
+STD_ROM_PICK(Flickyb)
+STD_ROM_FN(Flickyb)
 
 static struct BurnRomInfo FlickygRomDesc[] = {
 	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -7114,10 +7166,20 @@ struct BurnDriver BurnDrvFlicky = {
 
 struct BurnDriver BurnDrvFlickya = {
 	"flickya", "flicky", NULL, NULL, "1984",
-	"Flicky (128k Version, 315-5051, larger roms)\0", NULL, "Sega", "System 1",
+	"Flicky (128k Version, 315-5051, larger ROMs)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyaRomInfo, FlickyaRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
+	FlickygInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFlickyb = {
+	"flickyb", "flicky", NULL, NULL, "1984",
+	"Flicky (128k Version, 315-5051, larger ROMs, newer)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, FlickybRomInfo, FlickybRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickybDIPInfo,
 	FlickygInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };

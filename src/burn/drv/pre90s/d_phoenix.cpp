@@ -1997,7 +1997,6 @@ struct BurnDriver BurnDrvNextfase = {
 };
 
 
-
 // Phoenix (Sonic, Spanish bootleg)
 
 static struct BurnRomInfo phoenixsRomDesc[] = {
@@ -2029,6 +2028,42 @@ struct BurnDriver BurnDrvPhoenixs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, phoenixsRomInfo, phoenixsRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Phoenix (bootleg)
+
+static struct BurnRomInfo phoenixblRomDesc[] = {
+	{ "pn1-2716.a1",	0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "14-2716.a2",		0x0800, 0xd00ba009, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3-2716.a3",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4-2716.a4",		0x0800, 0x95534db2, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5-2716.a5",		0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6-2716.a6",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7-2716.a7",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8-2716.a8",		0x0800, 0x89690582, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "11-2716.d3",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "12-2716.d4",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "9-2716.b3",		0x0800, 0x14ccdf63, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "10-2716.b4",		0x0800, 0xeba42f0f, 3 | BRF_GRA },           // 11
+
+	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(phoenixbl)
+STD_ROM_FN(phoenixbl)
+
+struct BurnDriver BurnDrvPhoenixbl = {
+	"phoenixbl", "phoenix", NULL, NULL, "1981",
+	"Phoenix (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, phoenixblRomInfo, phoenixblRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
 	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };

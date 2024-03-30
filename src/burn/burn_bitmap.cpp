@@ -27,14 +27,20 @@ void BurnBitmapAllocate(INT32 nBitmapNumber, INT32 nWidth, INT32 nHeight, bool u
 
 	bitmap_struct *ptr = &bitmaps[nBitmapNumber];
 
-#if defined FBNEO_DEBUG
-	// verify this entry in the struct hasn't been initialized already!
+	// check to see if it was already initialized
 	if (ptr->nFlags & FLAG_INITIALIZED)
 	{
-		bprintf (0, _T("BurnBitmapAllocate(UINT16 **, INT32, INT32) attempting to allocate bitmap number that is already allocated (%d)!\n"), nBitmapNumber);
-		return;
+		bprintf (0, _T("BurnBitmapAllocate(UINT16 **, INT32, INT32) (%d) Re-allocating bitmap with %d x %d.\n"), nBitmapNumber, nWidth, nHeight);
+		BurnFree(ptr->pBitmap); // free bitmap
+
+		// check to see if priority map is present and free if it is
+		if (ptr->nFlags & FLAG_HAS_PRIMAP) {
+			BurnFree(ptr->pPrimap);
+		}
+
+		// zero-out all configured data
+		memset (ptr, 0, sizeof(bitmap_struct));
 	}
-#endif
 
 	// allocate bitmap
 	ptr->pBitmap = (UINT16 *)BurnMalloc(nWidth * nHeight * sizeof(UINT16));

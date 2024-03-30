@@ -4181,9 +4181,9 @@ static INT32 SingleScreenModeChangeCheck()
 	{
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
-//		GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
-		Reinitialise();
+		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		BurnTransferRealloc(); // re-inits pTransDraw
 
 		if (is_slipstrm || is_radr) {
 			BurnShiftScreenSizeChanged();
@@ -4230,7 +4230,6 @@ static INT32 MultiScreenCheck()
 	{
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
-		//GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
 		if (screensize == 320) {
 			BurnDrvSetAspect(4, 3);
@@ -4239,8 +4238,8 @@ static INT32 MultiScreenCheck()
 			BurnDrvSetAspect(8, 3);
 			MultiPCMSetMono(0);
 		}
-		//GenericTilesInit();
-		Reinitialise();
+		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		BurnTransferRealloc(); // re-inits pTransDraw
 
 		return 1; // don't draw this time around
 	}

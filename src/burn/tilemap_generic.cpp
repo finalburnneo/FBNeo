@@ -1,6 +1,6 @@
 #include "tiles_generic.h"
 
-#define MAX_TILEMAPS	32	// number of tile maps allowed
+#define MAX_TILEMAPS	64	// number of tile maps allowed
 #define MAX_GFXNUM
 #define MAX_SPLIT_CATEGORY 16
 

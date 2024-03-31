@@ -475,7 +475,7 @@ STD_ROM_FN(diverboy)
 
 struct BurnDriver BurnDrvDiverboy = {
 	"diverboy", NULL, NULL, NULL, "1992",
-	"Diver Boy\0", NULL, "Electronic Devices Italy", "Miscellaneous",
+	"Diver Boy\0", NULL, "Gamart (Electronic Devices Italy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_ACTION, 0,
 	NULL, diverboyRomInfo, diverboyRomName, NULL, NULL, NULL, NULL, DiverboyInputInfo, DiverboyDIPInfo,

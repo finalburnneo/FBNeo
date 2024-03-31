@@ -1109,6 +1109,61 @@ struct BurnDriver BurnDrvGalaxygn = {
 };
 
 
+// Galaxy Gunners (1990 year hack)
+
+static struct BurnRomInfo galaxygnhRomDesc[] = {
+	{ "3_en_a.bin",		0x10000, 0x9e469189, 1 | BRF_PRG | BRF_ESS }, //  0 I8086 code
+	{ "2_eo_a.bin",		0x10000, 0x9d893ea5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1_eq_a.bin",		0x10000, 0xad0e5b29, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "31_u10_b.bin",	0x10000, 0xf5c65a85, 2 | BRF_PRG | BRF_ESS }, //  3 I8088 code
+
+	{ "4_ck0_b.bin",		0x10000, 0xb3621119, 3 | BRF_GRA },           //  4 Sprites
+	{ "13_cj0_b.bin",		0x10000, 0x52b70f3e, 3 | BRF_GRA },           //  5
+	{ "22_ci0_b.bin",		0x10000, 0xea49fee4, 3 | BRF_GRA },           //  6
+	{ "5_ck1_b.bin",		0x10000, 0xbffe278f, 3 | BRF_GRA },           //  7
+	{ "14_cj1_b.bin",		0x10000, 0x3f7df1e6, 3 | BRF_GRA },           //  8
+	{ "23_ci1_b.bin",		0x10000, 0x4dcbbc99, 3 | BRF_GRA },           //  9
+	{ "6_ck2_b.bin",		0x10000, 0x0306069e, 3 | BRF_GRA },           // 10
+	{ "15_cj2_b.bin",		0x10000, 0xf635aa7e, 3 | BRF_GRA },           // 11
+	{ "24_ci2_b.bin",		0x10000, 0x733f5dcf, 3 | BRF_GRA },           // 12
+	{ "7_ck3_b.bin",		0x10000, 0xc3919bef, 3 | BRF_GRA },           // 13
+	{ "16_cj3_b.bin",		0x10000, 0xff9a3872, 3 | BRF_GRA },           // 14
+	{ "25_ci3_b.bin",		0x10000, 0x1d094f95, 3 | BRF_GRA },           // 15
+	{ "8_ck4_b.bin",		0x10000, 0x4a459cb8, 3 | BRF_GRA },           // 16
+	{ "17_cj4_b.bin",		0x10000, 0xae7a8e1e, 3 | BRF_GRA },           // 17
+	{ "26_ci4_b.bin",		0x10000, 0xc2f310b4, 3 | BRF_GRA },           // 18
+	{ "9_ck5_b.bin",		0x10000, 0xc8d4fbc2, 3 | BRF_GRA },           // 19
+	{ "18_cj5_b.bin",		0x10000, 0x74d3a0df, 3 | BRF_GRA },           // 20
+	{ "27_ci5_b.bin",		0x10000, 0xc2cfd3f9, 3 | BRF_GRA },           // 21
+	{ "10_ck6_b.bin",		0x10000, 0x6e32b549, 3 | BRF_GRA },           // 22
+	{ "19_cj6_b.bin",		0x10000, 0xfcda6efa, 3 | BRF_GRA },           // 23
+	{ "28_ci6_b.bin",		0x10000, 0x4d4fc01c, 3 | BRF_GRA },           // 24
+	{ "11_ck7_b.bin",		0x10000, 0x177a767a, 3 | BRF_GRA },           // 25
+	{ "20_cj7_b.bin",		0x10000, 0x2ba49d47, 3 | BRF_GRA },           // 26
+	{ "29_ci7_b.bin",		0x10000, 0xc1c68148, 3 | BRF_GRA },           // 27
+	{ "12_ck8_b.bin",		0x10000, 0x0fb2d41a, 3 | BRF_GRA },           // 28
+	{ "21_cj8_b.bin",		0x10000, 0x5f1bf8ad, 3 | BRF_GRA },           // 29
+	{ "30_ci8_b.bin",		0x10000, 0xded7cacf, 3 | BRF_GRA },           // 30
+
+	{ "pal4_u7_b_palce16v8h-25pc.bin",	0x117, 0x3472975d, 4 | BRF_OPT }, // 31 plds
+	{ "pal17_b_a_palce16v8h-25pc.bin",	0x117, 0x4793ed97, 4 | BRF_OPT }, // 32
+};
+
+STD_ROM_PICK(galaxygnh)
+STD_ROM_FN(galaxygnh)
+
+struct BurnDriver BurnDrvGalaxygnh = {
+	"galaxygnh", "galaxygn", NULL, NULL, "1990",
+	"Galaxy Gunners (1990 year hack)\0", "Imperfect sound", "Electronic Devices Italy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, galaxygnhRomInfo, galaxygnhRomName, NULL, NULL, NULL, NULL, FantlandInputInfo, GalaxygnDIPInfo,
+	GalaxygnInit, DrvExit, FantlandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 352, 3, 4
+};
+
+
 // Wheels Runner
 
 static struct BurnRomInfo wheelrunRomDesc[] = {

@@ -1082,7 +1082,7 @@ static INT32 DrvScan(int nAction,int *pnMin)
 }
 
 
-// Mighty Warriors
+// Mighty Warriors (24/1)
 
 static struct BurnRomInfo mwarrRomDesc[] = {
 	{ "prg_ev",		0x80000, 0xd1d5e0a6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1129,7 +1129,7 @@ STD_ROM_FN(mwarr)
 
 struct BurnDriver BurnDrvMwarr = {
 	"mwarr", NULL, NULL, NULL, "199?",
-	"Mighty Warriors\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	"Mighty Warriors (24/1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, mwarrRomInfo, mwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MwarrDIPInfo,

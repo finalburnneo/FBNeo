@@ -40,8 +40,8 @@ jobs:
 
       - name: Downgrade pthread
         run: |
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2
@@ -89,8 +89,8 @@ jobs:
 
       - name: Downgrade pthread
         run: |
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/barbudreadmon/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - uses: actions/checkout@v2

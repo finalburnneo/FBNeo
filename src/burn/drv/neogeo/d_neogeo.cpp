@@ -21589,11 +21589,11 @@ struct BurnDriver BurnDrvmslug5es = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Stone Turtle, Hack)
+// Metal Slug 5 (Stone Turtle, Hack) - 2024-03-29
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5sgRomDesc[] = {
-	{ "268-p1sg.p1",    0x600000, 0x1b6a6163, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1sg.p1",    0x600000, 0xceada390, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",     0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21780,11 +21780,11 @@ struct BurnDriver BurnDrvmslug5f = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Boss Battle, Hack) - 2024-03-22
+// Metal Slug 5 (Boss Battle, Hack) - 2024-03-28
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5bossRomDesc[] = {
-	{ "268-p1boss.p1",    0x600000, 0x469e3cd8, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1boss.p1",    0x600000, 0x0e3615dc, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",       0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21894,11 +21894,11 @@ struct BurnDriver BurnDrvmslug5esr = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Legendary, Hack) - 2024-03-27
+// Metal Slug 5 (Legendary, Hack) - 2024-03-30
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
-	{ "268-p1cq.p1",	0xa00000, 0xb40727bd, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1cq.p1",	0xa00000, 0x9a08884a, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",		0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21908,8 +21908,8 @@ static struct BurnRomInfo mslug5cqRomDesc[] = {
 	{ "268-c4d.c4",		0x800000, 0x9c00160d, 3 | BRF_GRA },            //  5
 	{ "268-c5d.c5",		0x800000, 0x38754256, 3 | BRF_GRA },            //  6
 	{ "268-c6d.c6",		0x800000, 0x59d33e9c, 3 | BRF_GRA },            //  7
-	{ "268-c7cq.c7",	0x800000, 0x0b287889, 3 | BRF_GRA },            //  8
-	{ "268-c8cq.c8",	0x800000, 0xdb89d860, 3 | BRF_GRA },            //  9
+	{ "268-c7cq.c7",	0x800000, 0xe5ebe937, 3 | BRF_GRA },            //  8
+	{ "268-c8cq.c8",	0x800000, 0x43995e2b, 3 | BRF_GRA },            //  9
 
 	{ "268-m1d.m1",		0x080000, 0x39f3cbba, 4 | BRF_ESS | BRF_PRG },  // 10 Z80 code
 

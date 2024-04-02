@@ -636,7 +636,6 @@ static void __fastcall PgmZ80PortWrite(UINT16 port, UINT8 data)
 
 static void OrlegendRegionHack()
 {
-	enum ol_region { tw, cn, jp, kr, hk, etc } ol_reg;
 	const char* ol_name[] = {
 		"orlegend",
 		"orlegende",
@@ -662,7 +661,6 @@ static void OrlegendRegionHack()
 		{ 0x0468a8, 0x0d12bd, 0x000000, 0x000000, 0x000000 },	// orlegend111k
 		{ 0x0468a8, 0x0d1287, 0x000000, 0x000000, 0x000000 },	// orlegend111t
 	};
-
 
 	for (INT32 nGame = 0; nGame < sizeof(ol_name) / sizeof(char*); nGame++) {
 		if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), ol_name[nGame])) {

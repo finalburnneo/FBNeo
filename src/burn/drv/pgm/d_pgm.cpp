@@ -270,6 +270,16 @@ static struct BurnDIPInfo killbld100DIPList[] = {
 	{0x2E,	0x01, 0xFF,	0x21, "World"							},
 };
 
+static struct BurnDIPInfo pgm3in1DIPList[] = {
+	{0x2e,	0xFF, 0xFF,	0x03, NULL								}, // World
+
+	{0,		0xFE, 0,	4,    "Region (Fake)"					},
+	{0x2e,	0x01, 0x03,	0x00, "China"							},
+	{0x2e,	0x01, 0x03,	0x01, "Taiwan"							},
+	{0x2e,	0x01, 0x03,	0x02, "Hong Kong"						},
+	{0x2e,	0x01, 0x03,	0x03, "World"							},
+};
+
 static struct BurnDIPInfo photoy2kDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x01, NULL								},
 
@@ -787,6 +797,7 @@ STDDIPINFOEXT(kovassg,		pgm,		kovassg		)
 STDDIPINFOEXT(killbld,		pgm,		killbld		)
 STDDIPINFOEXT(killbld104,	pgm,		killbld104	)
 STDDIPINFOEXT(killbld100,	pgm,		killbld100	)
+STDDIPINFOEXT(pgm3in1,		pgm,		pgm3in1		)
 STDDIPINFOEXT(photoy2k,		pgm,		photoy2k	)
 STDDIPINFOEXT(py2k104,		pgm,		py2k104		)
 STDDIPINFOEXT(py2k103,		pgm,		py2k103		)
@@ -4977,7 +4988,7 @@ struct BurnDriver BurnDrvPgm3in1 = {
 	"Shanliang San He Yi (Flash 3-in-1) (V102 08/23/04 13:03:26)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u95ea\u4eae\u4e09\u5408\u4e00\0\u9583\u4eae\u4e09\u5408\u4e00 (Flash 3-in-1) (V102 08/23/04 13:03:26)\0", NULL, NULL, NULL,
     BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
-	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgm3in1DIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -5014,7 +5025,7 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
 	"Shanliang San He Yi (Flash 3-in-1) (V100 07/13/04 12:09:20)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u95ea\u4eae\u4e09\u5408\u4e00\0\u9583\u4eae\u4e09\u5408\u4e00 (Flash 3-in-1) (V100 07/13/04 12:09:20)\0", NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
-	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, pgm3in1c100RomInfo, pgm3in1c100RomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgm3in1DIPInfo,
 	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

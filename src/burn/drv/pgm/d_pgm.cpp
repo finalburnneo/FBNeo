@@ -174,45 +174,64 @@ static struct BurnDIPInfo jammahDIPList[] = {
 };
 
 static struct BurnDIPInfo orlegendDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
+
+	DIP_OFFSET(0x2d)
+	
+	{0x00,	0xFF, 0xFF,	0x00, NULL								},
+	{0x01,	0xFF, 0xFF,	0x05, NULL								}, // World
+	{0x02,  0xFF, 0x01, 0x01, NULL								},
+
+	{0,		0xFE, 0,	2,    "Test mode"						},
+	{0x00,	0x01, 0x01,	0x00, "Off"								},
+	{0x00,	0x01, 0x01,	0x01, "On"								},
+
+	{0,		0xFE, 0,	2,    "Music"							},
+	{0x00,	0x01, 0x02,	0x02, "Off"								},
+	{0x00,	0x01, 0x02,	0x00, "On"								},
+
+	{0,		0xFE, 0,	2,    "Voice"							},
+	{0x00,	0x01, 0x04,	0x04, "Off"								},
+	{0x00,	0x01, 0x04,	0x00, "On"								},
+
+	{0,		0xFE, 0,	2,    "Free play"						},
+	{0x00,	0x01, 0x08,	0x00, "Off"								},
+	{0x00,	0x01, 0x08,	0x08, "On"								},
+
+	{0,		0xFE, 0,	2,    "Stop mode"						},
+	{0x00,	0x01, 0x10,	0x00, "Off"								},
+	{0x00,	0x01, 0x10,	0x10, "On"								},
 
 	{0,		0xFE, 0,	2,    "Disable Ba-Chieh"				},
-	{0x2E,	0x02, 0x01,	0x00, "Off"								},
-	{0x2E,	0x02, 0x01,	0x01, "On"								},
+	{0x01,	0x02, 0x01,	0x00, "Off"								},
+	{0x01,	0x02, 0x01,	0x01, "On"								},
 
-	{0,		0xFE, 0,	3,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x03,	0x00, "World"							},
-	{0x2E,	0x01, 0x03,	0x02, "Korea"							},
-	{0x2E,	0x01, 0x03,	0x03, "China"							},
+	{0,		0xFE, 0,	6,    "Region (Fake)"					},
+	{0x01,	0x01, 0x07,	0x00, "Taiwan"							},
+	{0x01,	0x01, 0x07,	0x01, "China"							},
+	{0x01,	0x01, 0x07,	0x02, "Japan"							},
+	{0x01,	0x01, 0x07,	0x03, "Korea"							},
+	{0x01,	0x01, 0x07,	0x04, "Hong Kong"						},
+	{0x01,	0x01, 0x07,	0x05, "World"							},
+
+	{0,     0xFE, 0,	4,    "Bios select (Fake)"				},
+	{0x02,  0x01, 0x0f,	0x00, "Older"							},
+	{0x02,  0x01, 0x0f,	0x01, "Newer"							},
+	{0x02,  0x01, 0x0f,	0x02, "Newer (no intro, calendar)"		},
+	{0x02,  0x01, 0x0f,	0x03, "Newer (no intro)"				},
 };
 
-static struct BurnDIPInfo orld111cDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x02, NULL								},
+STDDIPINFO(orlegend)
 
-	{0,		0xFE, 0,	2,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x03,	0x00, "Hong Kong"						},
-	{0x2E,	0x01, 0x03,	0x02, "China"							},
+static struct BurnDIPInfo orlegendcnDIPList[] = {
+	{0x01,	0xFF, 0xFF,	0x01, NULL								}, // China
 };
 
-static struct BurnDIPInfo orld111tDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
+static struct BurnDIPInfo orlegendtwDIPList[] = {
+	{0x01,	0xFF, 0xFF,	0x00, NULL								}, // Taiwan
 };
 
-static struct BurnDIPInfo orld105kDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x02, NULL								},
-};
-
-static struct BurnDIPInfo orld105tDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
-};
-
-static struct BurnDIPInfo orld112cDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x03, NULL								},
-
-	{0,		0xFE, 0,	3,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x03,	0x00, "World"							},
-	{0x2E,	0x01, 0x03,	0x02, "Korea"							},
-	{0x2E,	0x01, 0x03,	0x03, "China"							},
+static struct BurnDIPInfo orlegendkrDIPList[] = {
+	{0x01,	0xFF, 0xFF,	0x03, NULL								}, // Korea
 };
 
 static struct BurnDIPInfo killbldDIPList[] = {
@@ -752,12 +771,9 @@ static struct BurnDIPInfo kov2dzxxDIPList[] = {
 	{0x2D,	0x01, 0x10,	0x10, "On"								},
 };
 
-STDDIPINFOEXT(orlegend,		pgm,		orlegend	)
-STDDIPINFOEXT(orld111c,		pgm,		orld111c	)
-STDDIPINFOEXT(orld111t,		pgm,		orld111t	)
-STDDIPINFOEXT(orld105k,		pgm,		orld105k	)
-STDDIPINFOEXT(orld105t,		pgm,		orld105t	)
-STDDIPINFOEXT(orld112c,		pgm,		orld112c	)
+STDDIPINFOEXT(orlegendcn,	orlegend,	orlegendcn	)
+STDDIPINFOEXT(orlegendtw,	orlegend,	orlegendtw	)
+STDDIPINFOEXT(orlegendkr,	orlegend,	orlegendkr	)
 STDDIPINFOEXT(kov,			pgm,		kov			)
 STDDIPINFOEXT(kov111,		pgm,		kov111		)
 STDDIPINFOEXT(kov114,		pgm,		kov114		)
@@ -991,7 +1007,7 @@ static INT32 orlegendInit()
 struct BurnDriver BurnDrvOrlegend = {
 	"orlegend", NULL, "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 126)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (ver. 126)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 126)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, orlegendRomInfo, orlegendRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -1029,7 +1045,7 @@ STD_ROM_FN(orlegend112e)
 struct BurnDriver BurnDrvOrlegend112e = {
 	"orlegende", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 112, set 1)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 112, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, orlegend112eRomInfo, orlegend112eRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -1067,7 +1083,7 @@ STD_ROM_FN(orlegend112ea)
 struct BurnDriver BurnDrvOrlegend112ea = {
 	"orlegendea", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 112, set 2)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (ver. 112, set 2)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 112, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, orlegend112eaRomInfo, orlegend112eaRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -1106,9 +1122,9 @@ STD_ROM_FN(orlegend112c)
 struct BurnDriver BurnDrvOrlegend112c = {
 	"orlegendc", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 112, Chinese Board)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (ver. 112, Chinese Board)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 112, Chinese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend112cRomInfo, orlegend112cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld112cDIPInfo,
+	NULL, orlegend112cRomInfo, orlegend112cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendcnDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1144,9 +1160,9 @@ STD_ROM_FN(orlegend112ca)
 struct BurnDriver BurnDrvOrlegend112ca = {
 	"orlegendca", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. ???, Chinese Board)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (ver. ???, Chinese Board)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. ???, Chinese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend112caRomInfo, orlegend112caRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld111cDIPInfo,
+	NULL, orlegend112caRomInfo, orlegend112caRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendcnDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1185,9 +1201,9 @@ STD_ROM_FN(orlegend111c)
 struct BurnDriver BurnDrvOrlegend111c = {
 	"orlegend111c", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 111, Chinese Board)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (ver. 111, Chinese Board)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 111, Chinese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend111cRomInfo, orlegend111cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld111cDIPInfo,
+	NULL, orlegend111cRomInfo, orlegend111cRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendcnDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1227,9 +1243,9 @@ STD_ROM_FN(orlegend111t)
 struct BurnDriver BurnDrvOrlegend111t = {
 	"orlegend111t", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 111, Taiwanese Board)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 111, Taiwanese Board)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 111, Taiwanese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend111tRomInfo, orlegend111tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld111tDIPInfo,
+	NULL, orlegend111tRomInfo, orlegend111tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendtwDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1272,9 +1288,9 @@ STD_ROM_FN(orlegend111k)
 struct BurnDriver BurnDrvOrlegend111k = {
 	"orlegend111k", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 111, Korean Board)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 111, Korean Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend111kRomInfo, orlegend111kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld105kDIPInfo,
+	NULL, orlegend111kRomInfo, orlegend111kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendkrDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1313,9 +1329,9 @@ STD_ROM_FN(orlegend105k)
 struct BurnDriver BurnDrvOrlegend105k = {
 	"orlegend105k", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 105, Korean Board)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 105, Korean Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend105kRomInfo, orlegend105kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld105kDIPInfo,
+	NULL, orlegend105kRomInfo, orlegend105kRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendkrDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1359,9 +1375,9 @@ STD_ROM_FN(orlegend105t)
 struct BurnDriver BurnDrvOrlegend105t = {
 	"orlegend105t", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend / Xiyou Shi E Zhuan (ver. 105, Taiwanese Board)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 105, Taiwanese Board)\0", NULL, NULL, NULL,
+	L"Oriental Legend\0\u897f\u6e38\u91ca\u5384\u4f20\0\u897f\u904a\u91cb\u5384\u4f1d (ver. 105, Taiwanese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend105tRomInfo, orlegend105tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orld105tDIPInfo,
+	NULL, orlegend105tRomInfo, orlegend105tRomName, NULL, NULL, NULL, NULL, pgmInputInfo, orlegendtwDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

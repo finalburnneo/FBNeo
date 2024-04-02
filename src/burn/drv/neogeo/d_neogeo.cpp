@@ -20117,10 +20117,10 @@ struct BurnDriver BurnDrvmslug5f = {
 
 // Metal Slug 5 (Stone Turtle, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240327
+// 20240329
 
 static struct BurnRomInfo mslug5sgRomDesc[] = {
-	{ "268-p1sg.p1",	0x600000, 0x30834216, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1sg.p1",	0x600000, 0xceada390, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };
@@ -20175,18 +20175,18 @@ struct BurnDriver BurnDrvmslug5sc = {
 
 // Metal Slug 5 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// 20240327
+// 20240330
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
-	{ "268-p1cq.p1",	0xa00000, 0xb40727bd, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1cq.p1",	0xa00000, 0x9a08884a, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_TEXT
 
 	MSLUG5_DECRYPTED_SPR1
 	MSLUG5_DECRYPTED_SPR2
 	MSLUG5_DECRYPTED_SPR3
-	{ "268-c7cq.c7",	0x800000, 0x0b287889, 3 | BRF_GRA },
-	{ "268-c8cq.c8",	0x800000, 0xdb89d860, 3 | BRF_GRA },
+	{ "268-c7cq.c7",	0x800000, 0xe5ebe937, 3 | BRF_GRA },
+	{ "268-c8cq.c8",	0x800000, 0x43995e2b, 3 | BRF_GRA },
 
 	MSLUG5_DECRYPTED_Z80
 
@@ -20209,10 +20209,10 @@ struct BurnDriver BurnDrvMslug5cq = {
 
 // Metal Slug 5 (Boss Battles, Hack)
 // Modified by 合金弹头爱克斯
-// 20240327
+// 20240328
 
 static struct BurnRomInfo mslug5bsRomDesc[] = {
-	{ "268-p1bs.p1",	0x600000, 0xc83346b3, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1bs.p1",	0x600000, 0x0e3615dc, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };

@@ -72,42 +72,40 @@ static INT32 watchdog_disable = 0;
 //------------------------------------------------------------------------------------------------------
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 
-	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
-	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
-	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
-	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 
-	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
-	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
-	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
-	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 7,	"diag"		},
 
-	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 7,	"diag"},
-
-	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
-	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo AlienresInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, 	"p1 up"		},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, 	"p1 left"	},
 	{"P1 Right",	  BIT_DIGITAL,	DrvJoy1 + 2, 	"p1 right"	},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, 	"p1 down"	},
 	{"P1 Fire",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",	  BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
@@ -126,26 +124,25 @@ static struct BurnInputInfo AlienresInputList[] = {
 STDINPUTINFO(Alienres)
 
 static struct BurnInputInfo lizwizInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4, "p1 fire 1"},
 
-	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
-	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
-	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
-	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
-	{"P1 Button 1",	  BIT_DIGITAL,	DrvJoy2 + 4, "p1 fire 1"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7, "p2 fire 1"},
 
-	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
-	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
-	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
-	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
-	{"P2 Button 1",	  BIT_DIGITAL,	DrvJoy2 + 7, "p2 fire 1"},
-
-	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 4,	"diag"},
-	{"Tilt",	 	 BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"},
+	{"Reset",		 	BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 4,	"diag"},
+	{"Tilt",		  	BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"},
 
 	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},

@@ -8397,9 +8397,9 @@ struct BurnDriver BurnDrvkovytzywscw = {
 };
 
 
-// Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)
-// Hacked by XIAOFAN
-// GOTVG 2021-05-10
+// Sanguo Zhan Ji 2 Fengwu Longyin (ver. 205S, , Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)
+// Modified by XIAOFAN
+// GOTVG 20210510
 
 static struct BurnRomInfo kov2pfwllRomDesc[] = {
 	{ "kov2pfwll_32m.u8",			0x0400000, 0x92de1852, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -8440,13 +8440,50 @@ static INT32 kov2pfwllInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvkov2pfwll = {
-	"kov2pfwll", "kov2p", "pgm", NULL, "2021-05-10",
-	"Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)\0", NULL, "Hack", "PolyGameMaster",
-	L"Knights of Valour 2 Plus - Feng Wu Long Yin (Ver. 205S, Hack)\0\u4e09\u570b\u6230\u7d00 2 - \u9cf3\u821e\u9f8d\u541f (\u7248\u672c 205S, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvKov2pfwll = {
+	"kov2pfwll", "kov2p", "pgm", NULL, "2021",
+	"Sanguo Zhan Ji 2 Fengwu Longyin (ver. 205S, , Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)\0", NULL, "Hack", "PolyGameMaster",
+	L"\u4e09\u570b\u6230\u7d00 2 - \u51e4\u821e\u9f99\u541f (ver. 205S, , Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2pfwllRomInfo, kov2pfwllRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kov2pfwllInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Sanguo Zhan Ji 2 Fengwu Longyin (ver. S0709, Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)
+
+static struct BurnRomInfo kov2pfwlysRomDesc[] = {
+	{ "fwlys_32m.u8",					0x0400000, 0x05bb05bd, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "fwlys_t1200.u21",				0x0800000, 0x279a2f9e, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a1200.u1",					0x0800000, 0xceeb81d8, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a1201.u4",					0x0800000, 0x21063ca7, 3 | BRF_GRA },			//  3
+	{ "pgm_a1202.u6",					0x0800000, 0x4bb92fae, 3 | BRF_GRA },			//  4
+	{ "pgm_a1203.u8",					0x0800000, 0xe73cb627, 3 | BRF_GRA },			//  5
+	{ "pgm_a1204.u10",					0x0200000, 0x14b4b5bb, 3 | BRF_GRA },			//  6
+
+	{ "pgm_b1200.u5",					0x0800000, 0xbed7d994, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "pgm_b1201.u7",					0x0800000, 0xf251eb57, 4 | BRF_GRA },			//  8
+
+	{ "pgm_m1200.u3",					0x0800000, 0xb0d88720, 5 | BRF_SND },			//  9 Samples
+
+	{ "kov2pfwlys_igs027a_china.bin",	0x0004000, 0x06214503, 7 | BRF_PRG | BRF_ESS },	// 10 Internal ARM7 Rom
+
+	{ "fwlys_16m.u23",					0x0200000, 0x5a090a75, 8 | BRF_PRG | BRF_ESS },	// 11 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov2pfwlys, kov2pfwlys, pgm)
+STD_ROM_FN(kov2pfwlys)
+
+struct BurnDriver BurnDrvkov2pfwlys = {
+	"kov2pfwlys", "kov2p", "pgm", NULL, "2021",
+	"Sanguo Zhan Ji 2 Fengwu Longyin (ver. S0709, Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)\0", NULL, "Hack", "PolyGameMaster",
+	L"\u4e09\u570b\u6230\u7d00 2 - \u51e4\u821e\u9f99\u541f (ver. S0709, Hack of Sanguo Zhan Ji 2 Qunxiong Zhengba)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2pfwlysRomInfo, kov2pfwlysRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

@@ -25255,10 +25255,10 @@ struct BurnDriver BurnDrvCpsWofahb = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpswofsgzb = {
+struct BurnDriver BurnDrvCpsWofsgzb = {
 	"wofsgzb", "wof", NULL, NULL, "2005",
-	"Sangokushi II: San Guo Zheng Ba (Chinese bootleg of Sangokushi II)\0", "Hack", "bootleg", "CPS1",
-	NULL, NULL, NULL, NULL,
+	"Sanguo Zhengba (Chinese bootleg of Sangokushi II)\0", "hack", "bootleg", "CPS1",
+	L"\u4e09\u570b\u722d\u9738\0 (Chinese bootleg of Sangokushi II)\0", L"\u864e\u862d\u738b", NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, wofsgzbRomInfo, wofsgzbRomName, NULL, NULL, NULL, NULL, WofsgzbInputInfo, WofsgzbDIPInfo,
 	WofsgzbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -26580,12 +26580,12 @@ struct BurnDriver BurnDrvCpsdinojd = {
 
 
 // Cadillacs and Dinosaurs (Crazy BBQ, Hack)
-// GOTVG 20240308
+// GOTVG 20240402
 
 static struct BurnRomInfo dinokrRomDesc[] = {
-	{ "cdkr_23a.8f",	0x080000, 0x4e4501a6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdkr_22a.7f",	0x080000, 0xe9450be0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdkr_21a.6f",	0x080000, 0xc59745c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_23a.8f",	0x080000, 0xe8e29b2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_22a.7f",	0x080000, 0xe3092ed2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_21a.6f",	0x080000, 0x11e2b75f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26593,7 +26593,7 @@ static struct BurnRomInfo dinokrRomDesc[] = {
 STD_ROM_PICK(dinokr)
 STD_ROM_FN(dinokr)
 
-struct BurnDriver BurnDrvCpsdinokr = {
+struct BurnDriver BurnDrvCpsDinokr = {
 	"dinokr", "dino", NULL, NULL, "2024",
 	"Cadillacs and Dinosaurs (Crazy BBQ, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -27907,19 +27907,17 @@ struct BurnDriver BurnDrvCpswofdr = {
 
 
 // Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)
-// GOTVG 20240314
+// GOTVG 20240401
 
 static struct BurnRomInfo wofdr20RomDesc[] = {
-	{ "tk2dr20_23c.8f",	0x080000, 0xa1e080bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr_22c.7f",	0x080000, 0x16405A96, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr20_21c.6f",	0x080000, 0x6597c4e6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr20_20c.5f",	0x080000, 0x3a9c0284, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_23c.8f",	0x080000, 0xcc947ee1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_22c.7f",	0x180000, 0x78eac820, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	WOFJ_TILE1
-	{ "tk2dr20_05.7a",	0x080000, 0x134da2bb, BRF_GRA | CPS1_TILES },
-	{ "tk2dr20_06.8a",	0x080000, 0x424a8c5d, BRF_GRA | CPS1_TILES },
-	{ "tk2dr20_07.9a",	0x080000, 0x0dfd0c6e, BRF_GRA | CPS1_TILES },
-	{ "tk2dr20_08.10a",	0x080000, 0xab7400f8, BRF_GRA | CPS1_TILES },
+	{ "tk2dr2_05.7a",	0x080000, 0x134da2bb, BRF_GRA | CPS1_TILES },
+	{ "tk2dr2_06.8a",	0x080000, 0x424a8c5d, BRF_GRA | CPS1_TILES },
+	{ "tk2dr2_07.9a",	0x080000, 0x0dfd0c6e, BRF_GRA | CPS1_TILES },
+	{ "tk2dr2_08.10a",	0x080000, 0xab7400f8, BRF_GRA | CPS1_TILES },
 
 	WOF_QSOUND
 
@@ -27932,7 +27930,7 @@ static struct BurnRomInfo wofdr20RomDesc[] = {
 STD_ROM_PICK(wofdr20)
 STD_ROM_FN(wofdr20)
 
-struct BurnDriver BurnDrvCpswofdr20 = {
+struct BurnDriver BurnDrvCpsWofdr20 = {
 	"wofdr20", "wof", NULL, NULL, "2024",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)\0", NULL, NULL, NULL,

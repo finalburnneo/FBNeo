@@ -44,6 +44,7 @@ static UINT32 TaitoF3SoundIRQhz;
 static INT32 TaitoF3CpuNum = 2;
 
 static INT32 nCyclesExtra;
+static INT32 nCyclesDone;
 
 static INT32 __fastcall TaitoF3SoundIRQCallback(INT32 /*irq*/)
 {
@@ -163,38 +164,43 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 					}
 
 					case 0x01: {
+						bprintf(0, _T("f3snd_t01\n"));
 						return;
 					}
 
 					case 0x02: {
+						bprintf(0, _T("f3snd_t02\n"));
 						return;
 					}
 
 					case 0x03: {
-						//bprintf(PRINT_NORMAL, _T("counter is %04x (/16), so interrupt once in %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter * 16);
+						//bprintf(PRINT_NORMAL, _T("counter is %04x (/16), so interrupt once in %f cycles\n"), TaitoF3Counter, (double)((double)16000000 / 2000000) * TaitoF3Counter * 16);
 						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_ONCE;
 						TaitoF3SoundTriggerIRQCycleCounter = 0;
-						TaitoF3SoundTriggerIRQCycles = (TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter * 16;
+						TaitoF3SoundTriggerIRQCycles = (double)((double)TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter * 16;
 						return;
 					}
 
 					case 0x04: {
+						bprintf(0, _T("f3snd_t04\n"));
 						return;
 					}
 
 					case 0x05: {
+						bprintf(0, _T("f3snd_t05\n"));
 						return;
 					}
 
 					case 0x06: {
-						//bprintf(PRINT_NORMAL, _T("counter is %04x, so interrupt every %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter);
+						//bprintf(PRINT_NORMAL, _T("counter is %04x, so interrupt every %f cycles\n"), TaitoF3Counter, (double)((double)16000000 / 2000000) * TaitoF3Counter);
 						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_PULSE;
 						TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
-						TaitoF3SoundTriggerIRQPulseCycles = (TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter;
+						TaitoF3SoundTriggerIRQPulseCycles = (double)((double)TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter;
 						return;
 					}
 
 					case 0x07: {
+						bprintf(0, _T("f3snd_t07\n"));
 						return;
 					}
 				}
@@ -313,6 +319,7 @@ void TaitoF3SoundReset()
 	TaitoF3SoundTriggerIRQCyclesMode = 0;
 	mb87078_reset();
 
+	nCyclesDone = 0;
 	nCyclesExtra = 0;
 }
 
@@ -375,23 +382,22 @@ void TaitoF3SoundIRQConfig(INT32 bAlternateHz)
 
 void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
 {
-	static INT32 nCyclesDone = 0;
-
 	if (nCurrentSlice == 0) {
 		nCyclesDone = nCyclesExtra;
 	}
 
-	INT32 nTotalCycles = (30476100 / 2) / (nBurnFPS / 100);
+	const INT32 nTotalCycles = (30476100 / 2) / (nBurnFPS / 100);
 
 	SekOpen(TaitoF3CpuNum);
 
 	INT32 nNext = (nCurrentSlice + 1) * nTotalCycles / nInterleave;
 	INT32 nSegment = nNext - nCyclesDone;
 
-	nCyclesDone += SekRun(nSegment);
+	INT32 nRan = SekRun(nSegment);
+	nCyclesDone += nRan;
 
 	if (TaitoF3SoundTriggerIRQCyclesMode == IRQ_TRIGGER_ONCE) {
-		TaitoF3SoundTriggerIRQCycleCounter += nSegment;
+		TaitoF3SoundTriggerIRQCycleCounter += nRan;
 		if (TaitoF3SoundTriggerIRQCycleCounter >= TaitoF3SoundTriggerIRQCycles) {
 			TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_OFF;
 			if (M68681IMR & 0x08) {
@@ -402,13 +408,13 @@ void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
 	}
 
 	if (TaitoF3SoundTriggerIRQCyclesMode == IRQ_TRIGGER_PULSE) {
-		TaitoF3SoundTriggerIRQPulseCycleCounter += nSegment;
+		TaitoF3SoundTriggerIRQPulseCycleCounter += nRan;
 		if (TaitoF3SoundTriggerIRQPulseCycleCounter >= TaitoF3SoundTriggerIRQPulseCycles) {
 			if (M68681IMR & 0x08) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 				IMRStatus |= 0x08;
 			}
-			TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
+			TaitoF3SoundTriggerIRQPulseCycleCounter -= TaitoF3SoundTriggerIRQPulseCycles;
 		}
 	}
 

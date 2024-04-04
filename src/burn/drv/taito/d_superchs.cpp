@@ -14,6 +14,7 @@
 #include "taito_ic.h"
 #include "eeprom.h"
 #include "burn_shift.h"
+#include "dtimer.h"
 
 struct SpriteEntry {
 	INT32 Code;
@@ -30,7 +31,8 @@ struct SpriteEntry {
 static struct SpriteEntry *SpriteList;
 
 static UINT8 SuperchsCoinWord;
-static UINT16 SuperchsCpuACtrl;
+static INT32 nExtraCycles[2];
+static dtimer adc_timer;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SuperchsInputList[] =
@@ -265,16 +267,24 @@ static INT32 SuperchsDoReset()
 
 	TaitoDoReset();
 
+	timerReset();
+
 	SuperchsCoinWord = 0;
-	SuperchsCpuACtrl = 0;
 
 	BurnShiftReset();
 
 	TaitoF3SoundReset();
 
+	nExtraCycles[0] = nExtraCycles[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
+}
+
+static void adc_timer_cb(INT32 param)
+{
+	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 }
 
 static UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
@@ -352,13 +362,9 @@ static void __fastcall Superchs68K1WriteByte(UINT32 a, UINT8 d)
 
 		case 0x340000:
 		case 0x340001:
-		case 0x340002: {
-			SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-			return;
-		}
-
-		case 0x340003: {
-			// irq ack?
+		case 0x340002:
+		case 0x340003: { // adc "done" irq (supposed?) to be 64 cycles @ 500000hz later?
+			adc_timer.start(20000000 * ((1/500000)*64), -1, 1, 0); // @cycle, default param, start now, re-occuring
 			return;
 		}
 
@@ -385,24 +391,13 @@ static UINT16 __fastcall Superchs68K1ReadWord(UINT32 a)
 
 static void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 {
-	if (a >= 0x140000 && a <= 0x141fff) {
-		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
-		INT32 Offset = (a & 0x1fff) >> 1;
-
-		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);
-		return;
-	}
-
 	TC0480SCPCtrlWordWrite_Map(0x1b0000)
 
 	if ((a & 0xfff000) == 0x17f000) return; // unknown writes (lots)
 
 	switch (a) {
 		case 0x240002: {
-			SuperchsCpuACtrl = d;
-			if (!(SuperchsCpuACtrl & 0x200)) {
-				SekReset(1);
-			}
+			SekSetRESETLine(1, (~d & 0x200));
 			return;
 		}
 
@@ -425,15 +420,6 @@ static UINT32 __fastcall Superchs68K1ReadLong(UINT32 a)
 
 static void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
 {
-	if (a >= 0x140000 && a <= 0x141fff) {
-		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
-		INT32 Offset = (a & 0x1fff) >> 1;
-
-		Ram[Offset + 0] = BURN_ENDIAN_SWAP_INT16(d & 0xffff);
-		Ram[Offset + 1] = BURN_ENDIAN_SWAP_INT16(d >> 16);
-		return;
-	}
-
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("68K #1 Write long => %06X, %08X\n"), a, d);
@@ -576,6 +562,7 @@ static INT32 SuperchsInit()
 	if (TaitoLoadRoms(1)) return 1;
 
 	TC0480SCPInit(TaitoNumChar, 0, 0x20, 8, -1, 0, 0);
+	TC0480SCPSetPriMap(pPrioDraw);
 
 	TaitoES5505RomSize = 0x2000000;
 	TaitoF3ES5506RomSize = TaitoES5505RomSize;
@@ -590,6 +577,7 @@ static INT32 SuperchsInit()
 	SekOpen(0);
 	SekMapMemory(Taito68KRom1             , 0x000000, 0x0fffff, MAP_ROM);
 	SekMapMemory(Taito68KRam1             , 0x100000, 0x11ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam			  , 0x140000, 0x141fff, MAP_RAM);
 	SekMapMemory(TC0480SCPRam             , 0x180000, 0x18ffff, MAP_RAM);
 	SekMapMemory(TaitoSharedRam           , 0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(TaitoF3SharedRam         , 0x2c0000, 0x2c07ff, MAP_RAM);
@@ -623,6 +611,9 @@ static INT32 SuperchsInit()
 
 	BurnShiftInitDefault();
 
+	timerInit();
+	timerAdd(adc_timer, 0, adc_timer_cb);
+
 	SuperchsDoReset();
 
 	return 0;
@@ -633,9 +624,9 @@ static INT32 SuperchsExit()
 	TaitoExit();
 	TaitoF3SoundExit();
 	BurnShiftExit();
+	timerExit();
 
 	SuperchsCoinWord = 0;
-	SuperchsCpuACtrl = 0;
 
 	return 0;
 }
@@ -662,6 +653,11 @@ static void SuperchsCalcPalette()
 	}
 }
 
+static UINT32 swap_u32(UINT32 u)
+{
+	return ((u >> 16) & 0xffff) | ((u << 16) & 0xffff0000);
+}
+
 static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 {
 	UINT32 *SpriteRam = (UINT32*)TaitoSpriteRam;
@@ -675,20 +671,22 @@ static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 
 	struct SpriteEntry *SpritePtr = SpriteList;
 
+	const UINT32 prio_mask[4] = { 0xfffc, 0xfff0, 0xff00, 0x0000 };
+
 	memset(SpriteList, 0, 0x4000 * sizeof(SpriteEntry));
 
 	for (Offset = ((0x2000 / 4) - 4); Offset >= 0; Offset -= 4) {
-		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 0]);
+		Data     = BURN_ENDIAN_SWAP_INT32(swap_u32(SpriteRam[Offset + 0]));
 		xFlip    = (Data & 0x00800000) >> 23;
 		xZoom    = (Data & 0x007f0000) >> 16;
 		TileNum  = (Data & 0x00007fff);
 
-		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 2]);
+		Data     = BURN_ENDIAN_SWAP_INT32(swap_u32(SpriteRam[Offset + 2]));
 		Priority = (Data & 0x000c0000) >> 18;
 		Colour   = (Data & 0x0003fc00) >> 10;
 		x        = (Data & 0x000003ff);
 
-		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 3]);
+		Data     = BURN_ENDIAN_SWAP_INT32(swap_u32(SpriteRam[Offset + 3]));
 		DblSize  = (Data & 0x00040000) >> 18;
 		yFlip    = (Data & 0x00020000) >> 17;
 		yZoom    = (Data & 0x0001fc00) >> 10;
@@ -752,19 +750,17 @@ static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 			SpritePtr->y = yCur;
 			SpritePtr->xZoom = zx << 12;
 			SpritePtr->yZoom = zy << 12;
-			SpritePtr->Priority = Priority;
+			SpritePtr->Priority = prio_mask[Priority & 0x3];
 
 			SpritePtr++;
 		}
 	}
 }
 
-static void SuperchsRenderSpriteList(INT32 SpritePriorityLevel)
+static void SuperchsRenderSpriteList()
 {
-	for (INT32 i = 0; i < 0x4000; i++) {
-		if (SpriteList[i].Priority == SpritePriorityLevel) {
-			RenderZoomedTile(pTransDraw, TaitoSpritesA, SpriteList[i].Code % TaitoNumSpriteA, 0x10 * (SpriteList[i].Colour & 0x1ff), 0, SpriteList[i].x, SpriteList[i].y, SpriteList[i].xFlip, SpriteList[i].yFlip, TaitoSpriteAWidth, TaitoSpriteAHeight, SpriteList[i].xZoom, SpriteList[i].yZoom);
-		}
+	for (INT32 i = 0x4000-1; i > -1; i--) {
+		RenderZoomedPrioSprite(pTransDraw, TaitoSpritesA, SpriteList[i].Code % TaitoNumSpriteA, 0x10 * (SpriteList[i].Colour & 0x1ff), 0, SpriteList[i].x, SpriteList[i].y, SpriteList[i].xFlip, SpriteList[i].yFlip, TaitoSpriteAWidth, TaitoSpriteAHeight, SpriteList[i].xZoom, SpriteList[i].yZoom, SpriteList[i].Priority);
 	}
 }
 
@@ -783,15 +779,12 @@ static INT32 SuperchsDraw()
 
 	SuperchsMakeSpriteList(48, -116 - 16);
 
-	if (nBurnLayer & 1) TC0480SCPTilemapRender(Layer[0], 1, TaitoChars);
-	if (nBurnLayer & 2) TC0480SCPTilemapRender(Layer[1], 0, TaitoChars);
-	if (nSpriteEnable & 1) SuperchsRenderSpriteList(0);
-	if (nBurnLayer & 4) TC0480SCPTilemapRender(Layer[2], 0, TaitoChars);
-	if (nBurnLayer & 8) TC0480SCPTilemapRender(Layer[3], 0, TaitoChars);
-	if (nSpriteEnable & 2) SuperchsRenderSpriteList(1);
-	if (nSpriteEnable & 4) SuperchsRenderSpriteList(2);
+	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(Layer[0], 1, 0, TaitoChars);
+	if (nBurnLayer & 2) TC0480SCPTilemapRenderPrio(Layer[1], 0, 1, TaitoChars);
+	if (nBurnLayer & 4) TC0480SCPTilemapRenderPrio(Layer[2], 0, 2, TaitoChars);
+	if (nBurnLayer & 8) TC0480SCPTilemapRenderPrio(Layer[3], 0, 4, TaitoChars);
+	if (nSpriteEnable & 1) SuperchsRenderSpriteList();
 	TC0480SCPRenderCharLayer();
-	if (nSpriteEnable & 8) SuperchsRenderSpriteList(3);
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
 
@@ -806,34 +799,28 @@ static INT32 SuperchsFrame()
 
 	SuperchsMakeInputs();
 
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = nTaitoCyclesDone[2] = 0;
+	INT32 nCyclesTotal[3] =  { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], nTaitoCyclesTotal[0] }; // [3] = timer!
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	SekNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (nInterleave - 3)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
+		CPU_RUN(2, timer); // irq timer for adc
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		if (SuperchsCpuACtrl & 0x200) {
-			nCurrentCPU = 1;
-			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-			SekClose();
-		}
+		SekOpen(1);
+		CPU_RUN(1, Sek);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		SekClose();
 
 		TaitoF3CpuUpdate(nInterleave, i);
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	TaitoF3SoundUpdate(pBurnSoundOut, nBurnSoundLen);
 
@@ -864,13 +851,14 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		TaitoF3SoundScan(nAction, pnMin);
 		BurnShiftScan(nAction);
+		timerScan();
 
 		EEPROMScan(nAction, pnMin);
 
 		SCAN_VAR(SuperchsCoinWord);
-		SCAN_VAR(SuperchsCpuACtrl);
 		SCAN_VAR(analog_adder);
 		SCAN_VAR(analog_target);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

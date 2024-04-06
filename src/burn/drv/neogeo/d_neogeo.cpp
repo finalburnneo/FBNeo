@@ -27899,18 +27899,18 @@ struct BurnDriver BurnDrvmslug3x = {
 // https://www.neobyteforce.com/
 
 static struct BurnRomInfo cyborgforceRomDesc[] = {
-	{ "cyborg-p1.p1",	0x0100000, 0x89e1c728, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
-	{ "cyborg-p2.p2",	0x0300000, 0xe4a8b27a, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "cyborg-p1.bin",	0x0100000, 0x89e1c728, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "cyborg-p2.bin",	0x0300000, 0xe4a8b27a, 1 | BRF_ESS | BRF_PRG }, 	//  1
 
-	{ "cyborg-s1.s1",	0x0020000, 0x5bd29810, 2 | BRF_GRA },           	//  2 Text layer tiles
+	{ "cyborg-s1.bin",	0x0020000, 0x5bd29810, 2 | BRF_GRA },           	//  2 Text layer tiles
 
-	{ "cyborg-c1.c1",	0x1000000, 0x77078687, 3 | BRF_GRA },           	//  3 Sprite data
-	{ "cyborg-c2.c2",	0x1000000, 0xa5abdb83, 3 | BRF_GRA },           	//  4
+	{ "cyborg-c1.bin",	0x1000000, 0x77078687, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "cyborg-c2.bin",	0x1000000, 0xa5abdb83, 3 | BRF_GRA },           	//  4
 
-	{ "cyborg-m1.m1",	0x0010000, 0x06da3cec, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+	{ "cyborg-m1.bin",	0x0010000, 0x06da3cec, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
 
-	{ "cyborg-v1.v1",	0x0800000, 0xdc50718c, 5 | BRF_SND },           	//  6 Sound data
-	{ "cyborg-v2.v2",	0x0800000, 0x8135d5a8, 5 | BRF_SND },           	//  6 Sound data
+	{ "cyborg-v1.bin",	0x0800000, 0xdc50718c, 5 | BRF_SND },           	//  6 Sound data
+	{ "cyborg-v2.bin",	0x0800000, 0x8135d5a8, 5 | BRF_SND },           	//  6 Sound data
 };
 
 STDROMPICKEXT(cyborgforce, cyborgforce, neogeo)

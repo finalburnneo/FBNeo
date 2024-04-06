@@ -8086,7 +8086,7 @@ struct BurnDriver BurnDrvmslug3b6 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3b6RomInfo, mslug3b6RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3b6Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug3b6Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -18946,7 +18946,7 @@ struct BurnDriver BurnDrvmslug3eb = {
 
 
 #define MSLUG3_DECRYPTED_TEXT								\
-	{ "256-s1d.s1",	0x020000, 0x8458fff9, 2 | BRF_GRA },
+	{ "256-s1d.s1",	0x020000, 0x8458fff9, 2 | BRF_GRA },	// Data segment (0x020000~0x03ffff) in s1 (512KB) from mslug3.
 #define MSLUG3_DECRYPTED_SPR1								\
 	{ "256-c1d.c1",	0x800000, 0x3540398c, 3 | BRF_GRA },	\
 	{ "256-c2d.c2",	0x800000, 0xbdd220f0, 3 | BRF_GRA },
@@ -19473,7 +19473,7 @@ struct BurnDriver BurnDrvmslug4unity = {
 
 
 #define MSLUG4_DECRYPTED_TEXT								\
-	{ "263-s1d.s1",	0x020000, 0xa9446774, 2 | BRF_GRA },
+	{ "263-s1d.s1",	0x020000, 0xa9446774, 2 | BRF_GRA },	// Data segment (0x040000~0x05ffff) in s1 (512KB) from mslug4.
 #define MSLUG4_DECRYPTED_SPR1								\
 	{ "263-c1d.c1",	0x800000, 0xa75ffcde, 3 | BRF_GRA },	\
 	{ "263-c2d.c2",	0x800000, 0x5ab0d12b, 3 | BRF_GRA },
@@ -19602,7 +19602,7 @@ struct BurnDriver BurnDrvmslug4lq = {
 
 static struct BurnRomInfo mslug4arRomDesc[] = {
 	{ "263-p1ar.p1",	0x100000, 0x21b68d31, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2lq.sp2",	0x500000, 0x7deba8eb, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2lw.sp2",	0x500000, 0x7deba8eb, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_COMPONENTS
 };
@@ -19673,7 +19673,7 @@ struct BurnDriver BurnDrvmslug4q = {
 
 // Metal Slug 4 (Starlight, Hack)
 // Modified by 浅蹊m~
-// GOTVG 20220511
+// GOTVG 20221005
 
 static struct BurnRomInfo mslug4ddRomDesc[] = {
 	{ "263-p1dd.p1",	0x100000, 0x02ce0fcd, 1 | BRF_ESS | BRF_PRG },
@@ -19707,7 +19707,7 @@ struct BurnDriver BurnDrvmslug4dd = {
 
 // Metal Slug 4 (Komorebi, Hack)
 // Modified by 浅蹊m~
-// GOTVG 20220511
+// GOTVG 20220520
 
 static struct BurnRomInfo mslug4kiRomDesc[] = {
 	{ "263-p1ki.p1",	0x100000, 0x4e2363d3, 1 | BRF_ESS | BRF_PRG },
@@ -19791,10 +19791,10 @@ struct BurnDriver BurnDrvms41v2 = {
 
 // Metal Slug 4 (Enemy Remix, Hack)
 // Modified by Tuhr123
-// GOTVG 20191117
+// GOTVG 20200210
 
 static struct BurnRomInfo mslug4cRomDesc[] = {
-	{ "263-p1c.p1",		0x100000, 0x81fd4ae9, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p1c.p1",		0x100000, 0xf8145f8d, 1 | BRF_ESS | BRF_PRG },
 	{ "263-p2.sp2",		0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_COMPONENTS
@@ -19804,7 +19804,7 @@ STDROMPICKEXT(mslug4c, mslug4c, neogeo)
 STD_ROM_FN(mslug4c)
 
 struct BurnDriver BurnDrvmslug4c = {
-	"mslug4c", "mslug4", "neogeo", NULL, "2019",
+	"mslug4c", "mslug4", "neogeo", NULL, "2020",
 	"Metal Slug 4 (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

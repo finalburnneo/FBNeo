@@ -27891,3 +27891,37 @@ struct BurnDriver BurnDrvmslug3x = {
 	mslug3xInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+
+// Cyborg Force
+// Neo Byte Force Ltd
+// 20230409
+// https://www.neobyteforce.com/
+
+static struct BurnRomInfo cyborgforceRomDesc[] = {
+	{ "cyborg-p1.p1",	0x0100000, 0x89e1c728, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "cyborg-p2.p2",	0x0300000, 0xe4a8b27a, 1 | BRF_ESS | BRF_PRG }, 	//  1
+
+	{ "cyborg-s1.s1",	0x0020000, 0x5bd29810, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "cyborg-c1.c1",	0x1000000, 0x77078687, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "cyborg-c2.c2",	0x1000000, 0xa5abdb83, 3 | BRF_GRA },           	//  4
+
+	{ "cyborg-m1.m1",	0x0010000, 0x06da3cec, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "cyborg-v1.v1",	0x0800000, 0xdc50718c, 5 | BRF_SND },           	//  6 Sound data
+	{ "cyborg-v2.v2",	0x0800000, 0x8135d5a8, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(cyborgforce, cyborgforce, neogeo)
+STD_ROM_FN(cyborgforce)
+
+struct BurnDriver BurnDrvCyborgForce = {
+	"cyborgforce", NULL, "neogeo", NULL, "2023",
+	"Cyborg Force\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_SHOOT, 0,
+	NULL, cyborgforceRomInfo, cyborgforceRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};

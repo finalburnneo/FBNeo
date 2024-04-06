@@ -65,10 +65,23 @@ STDINPUTINFO(Ngp)
 
 static struct BurnDIPInfo NgpDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x00, NULL		},
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x00, NULL		},
 };
 
 STDDIPINFO(Ngp)
+
+static struct BurnDIPInfo NgpcDIPList[]=
+{
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Pocket Color"			},
+	{0x00, 0x01, 0x10, 0x10, "Force B&W"			},
+	{0x00, 0x01, 0x10, 0x00, "Normal"			    },
+};
+
+STDDIPINFO(Ngpc)
 
 static UINT8 ngp_io_r(UINT8 offset)
 {
@@ -641,6 +654,8 @@ static INT32 DrvInit()
 	BurnAllocMemIndex();
 
 	color_mode = (BurnDrvGetHardwareCode() & HARDWARE_SNK_NGPC) == HARDWARE_SNK_NGPC;
+	if (DrvDips[0] & 0x10) color_mode = 0; // ngpc - force b&w
+
 	memset (DrvCartROM, 0xff, 0x400000);
 
 	{
@@ -1863,7 +1878,7 @@ struct BurnDriver BurnDrvngpc_kofpara = {
 	"The King of Fighters - Battle de Paradise (Jpn)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
-	NgpGetZipName, ngpc_kofparaRomInfo, ngpc_kofparaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	NgpGetZipName, ngpc_kofparaRomInfo, ngpc_kofparaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpcDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };

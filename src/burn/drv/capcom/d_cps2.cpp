@@ -7779,22 +7779,22 @@ STD_ROM_PICK(Ssf2th)
 STD_ROM_FN(Ssf2th)
 
 static struct BurnRomInfo Ssf2tnlRomDesc[] = {
-	{ "sfnl.03",       0x080000, 0x09b53b58, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.04",       0x080000, 0x71202594, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.05",       0x080000, 0xbbbd5ef6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.06",       0x080000, 0xddb5dee6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.07",       0x080000, 0x7c228198, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.08",       0x080000, 0xcbbd989b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfnl.09",       0x080000, 0xbb18adff, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.03",       0x080000, 0x4beda7d5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.04",       0x080000, 0xd00594d8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.05",       0x080000, 0xc7e8ded4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.06",       0x080000, 0x16b305b7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.07",       0x080000, 0x43ad0333, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.08",       0x080000, 0x1c1696e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfnl.09",       0x080000, 0x6b2068bc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sfnl.13m",      0x200000, 0x63e77950, CPS2_GFX | BRF_GRA },
-	{ "sfnl.15m",      0x200000, 0xdd35a143, CPS2_GFX | BRF_GRA },
-	{ "sfnl.17m",      0x200000, 0xf4ac22f3, CPS2_GFX | BRF_GRA },
-	{ "sfnl.19m",      0x200000, 0x71cf7604, CPS2_GFX | BRF_GRA },
-	{ "sfnl.14m",      0x100000, 0x08c6976b, CPS2_GFX | BRF_GRA },
-	{ "sfnl.16m",      0x100000, 0x4d94aee3, CPS2_GFX | BRF_GRA },
-	{ "sfnl.18m",      0x100000, 0xfab6dfd6, CPS2_GFX | BRF_GRA },
-	{ "sfnl.20m",      0x100000, 0x5080bc5c, CPS2_GFX | BRF_GRA },
+	{ "sfnl.13m",      0x200000, 0xc1df58ed, CPS2_GFX | BRF_GRA },
+	{ "sfnl.15m",      0x200000, 0x0f1bdf35, CPS2_GFX | BRF_GRA },
+	{ "sfnl.17m",      0x200000, 0x13acf82f, CPS2_GFX | BRF_GRA },
+	{ "sfnl.19m",      0x200000, 0x7a7e1bba, CPS2_GFX | BRF_GRA },
+	{ "sfnl.14m",      0x100000, 0xd24d002b, CPS2_GFX | BRF_GRA },
+	{ "sfnl.16m",      0x100000, 0x8e81e9c4, CPS2_GFX | BRF_GRA },
+	{ "sfnl.18m",      0x100000, 0x261285bc, CPS2_GFX | BRF_GRA },
+	{ "sfnl.20m",      0x100000, 0xffa37375, CPS2_GFX | BRF_GRA },
 	{ "sfnl.21m",      0x100000, 0x648519f7, CPS2_GFX | BRF_GRA },
 	{ "sfnl.23m",      0x100000, 0xefd2eb24, CPS2_GFX | BRF_GRA },
 	{ "sfnl.25m",      0x100000, 0x3294c78b, CPS2_GFX | BRF_GRA },
@@ -11703,8 +11703,8 @@ struct BurnDriver BurnDrvCpsSsf2ta = {
 };
 
 struct BurnDriver BurnDrvCpsSsf2tnl = {
-	"ssf2tnl", "ssf2t", NULL, NULL, "2023",
-	"Super Street Fighter II Turbo New Legacy v0.8 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
+	"ssf2tnl", "ssf2t", NULL, NULL, "2024",
+	"Super Street Fighter II Turbo New Legacy v0.9 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tnlRomInfo, Ssf2tnlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

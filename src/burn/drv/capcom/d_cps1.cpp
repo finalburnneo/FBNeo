@@ -26580,11 +26580,11 @@ struct BurnDriver BurnDrvCpsdinojd = {
 
 
 // Cadillacs and Dinosaurs (Crazy BBQ, Hack)
-// GOTVG 20240402
+// GOTVG 20240404
 
 static struct BurnRomInfo dinokrRomDesc[] = {
-	{ "cdkr_23a.8f",	0x080000, 0xe8e29b2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdkr_22a.7f",	0x080000, 0xe3092ed2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_23a.8f",	0x080000, 0x63934d1f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_22a.7f",	0x080000, 0xf7145191, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdkr_21a.6f",	0x080000, 0x11e2b75f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
@@ -27898,7 +27898,7 @@ STD_ROM_FN(wofdr)
 struct BurnDriver BurnDrvCpswofdr = {
 	"wofdr", "wof", NULL, NULL, "2022",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Master, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Master, Hack)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55b0\u3089\u3046\u2161: \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba, Hack of Tenchi wo Kurau II: Sekiheki no Tatakai)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, wofdrRomInfo, wofdrRomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	wofInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -27907,11 +27907,11 @@ struct BurnDriver BurnDrvCpswofdr = {
 
 
 // Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)
-// GOTVG 20240401
+// GOTVG 20240404
 
 static struct BurnRomInfo wofdr20RomDesc[] = {
-	{ "tk2dr2_23c.8f",	0x080000, 0xcc947ee1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr2_22c.7f",	0x180000, 0x78eac820, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_23c.8f",	0x080000, 0x390fef56, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_22c.7f",	0x180000, 0x64534ca7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	WOFJ_TILE1
 	{ "tk2dr2_05.7a",	0x080000, 0x134da2bb, BRF_GRA | CPS1_TILES },
@@ -27933,7 +27933,7 @@ STD_ROM_FN(wofdr20)
 struct BurnDriver BurnDrvCpsWofdr20 = {
 	"wofdr20", "wof", NULL, NULL, "2024",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55b0\u3089\u3046\u2161: \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba 2020, Hack of Tenchi wo Kurau II: Sekiheki no Tatakai)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, wofdr20RomInfo, wofdr20RomName, NULL, NULL, NULL, NULL, WofInputInfo, WofDIPInfo,
 	wofInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

@@ -1870,16 +1870,12 @@ static INT32 grdiansaInit()
 		nRet = BurnLoadRom(Rom68K + 0x000000, 0, 1); if (nRet != 0) return 1;
 
 		// Load Gfx
-		UINT8* tmp = (UINT8*)BurnMalloc(0x400000);
-
 		for (INT32 i = 0; i < 4; i++) {
-			BurnLoadRom(tmp, i + 1, 1);
-			memcpy(tmpGfx + 0x200000, tmp + 0x200000, 0x200000);
-			memcpy(tmpGfx + 0x400000, tmp + 0x000000, 0x200000);
+			BurnLoadRom(tmpGfx, i + 1, 1);
+			memmove(tmpGfx + 0x400000, tmpGfx, 0x200000);
+			memset(tmpGfx, 0, 0x200000);
 			loadDecodeGfx(tmpGfx, 0x0600000 / 2, i * 2);
 		}
-
-		BurnFree(tmp);
 	} else {
 		// Load and byte-swap 68000 Program roms
 		nRet = BurnLoadRom(Rom68K + 0x000001, 0, 2); if (nRet != 0) return 1;

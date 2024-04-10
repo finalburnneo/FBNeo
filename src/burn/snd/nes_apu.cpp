@@ -711,7 +711,6 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
 	   if (_4017hack && mode4017 & 0x80) { // clock the frame counter (used by Sam's Journey)
 		   // this core doesn't have a proper frame counter, it's simulated, but this game expects
 		   // to be able to do this to get the correct pitch.
-		   bprintf(0, _T("4017: %x\n"), value);
 		   clock_square_sweep(info);
 	   }
 

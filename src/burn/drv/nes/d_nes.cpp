@@ -65,6 +65,7 @@ static UINT32 NESMode = 0;
 #define VS_ZAPPER		0x0010 // VS. UniSystem Zapper
 #define VS_REVERSED     0x0020 // VS. p1/p2 -> p2/p1 (inputs swapped)
 #define RAM_RANDOM      0x0040 // Init. ram w/random bytes (Go! Dizzy Go!)
+#define APU_HACKERY    0x10000 // Sam's Journey likes to clock the apu sweep gen via writes to 2017
 
 // Usually for Multi-Cart mappers
 static UINT32 RESETMode = 0;
@@ -924,6 +925,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x552a903a) ? BUS_CONFLICTS : 0; // Huge Insect
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
+	NESMode |= (ROMCRC == 0xc00c4ea5) ? APU_HACKERY : 0; // Sam's Journey
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0x273aeace) ? ALT_TIMING : 0; // full_nes_palette
@@ -995,6 +997,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 				case ALT_TIMING2:
 					bprintf(0, _T("*  Enabling ALT-TIMING2.\n"));
+					break;
+
+				case APU_HACKERY:
+					bprintf(0, _T("*  Enabling APU_HACKERY.\n"));
 					break;
 
 				case IS_PAL:
@@ -3658,17 +3664,17 @@ static void mapper04_scanline()
 
 	INT32 cnt = mapper4_irqcount;
 	if (mapper4_irqcount == 0 || mapper4_irqreload) {
-		mapper4_irqreload = 0;
 		mapper4_irqcount = mapper4_irqlatch;
 	} else {
 		mapper4_irqcount--;
 	}
 
-	if (cnt && mapper4_irqenable && mapper4_irqcount == 0) {
+	if ((cnt || mapper4_irqreload) && mapper4_irqenable && mapper4_irqcount == 0) {
 		if ((~NESMode & ALT_MMC3 && mmc5_mask[0] & 0x18) || NESMode & ALT_MMC3) { // aka if (RENDERING)
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 	}
+	mapper4_irqreload = 0;
 }
 
 //#undef mapper4_mirror // used in mapper_init()
@@ -11086,6 +11092,9 @@ static INT32 NESInit()
 		nesapuInitPal(0, 1798773, 0);
 	} else {
 		nesapuInit(0, 1798773, 0);
+	}
+	if (NESMode & APU_HACKERY) {
+		nesapu4017hack(1);
 	}
 	nesapuSetAllRoutes(0, 2.40, BURN_SND_ROUTE_BOTH);
 
@@ -27776,6 +27785,24 @@ struct BurnDriver BurnDrvnes_roniustale = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_roniustaleRomInfo, nes_roniustaleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sam's Journey (HB)
+static struct BurnRomInfo nes_samsjourneyRomDesc[] = {
+	{ "Sam's Journey (2024)(Knights of Bytes).nes",          524304, 0xc00c4ea5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_samsjourney)
+STD_ROM_FN(nes_samsjourney)
+
+struct BurnDriver BurnDrvnes_samsjourney = {
+	"nes_samsjourney", NULL, NULL, NULL, "2024",
+	"Sam's Journey (HB)\0", NULL, "Knights of Bytes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_samsjourneyRomInfo, nes_samsjourneyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

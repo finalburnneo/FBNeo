@@ -5259,6 +5259,50 @@ struct BurnDriver BurnDrvZeroteamd = {
 };
 
 
+// Zero Team (Japan?, earlier?, set 2)
+// shares chars ROMs with zeroteama
+
+static struct BurnRomInfo zeroteameRomDesc[] = {
+	{ "seibu_1_u024.5k",				0x040000, 0x76e69af5, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu_3_u023.6k",				0x040000, 0x4a904880, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu_2_u025.6l",				0x040000, 0xb97ab448, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "seibu_4_u026.5l",				0x040000, 0x1d43b9c1, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "copx-d2.u0313.6n",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+
+	{ "seibu_5_u1110.5b",				0x010000, 0xefc484ca, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "seibu_7_u072.5s",				0x010000, 0xeb10467f, 4 | BRF_GRA },           //  6 Characters
+	{ "seibu_8_u077.5r",				0x010000, 0xa0b2a09a, 4 | BRF_GRA },           //  7
+
+	{ "musha_back-1.u075.4s",			0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",			0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+
+	{ "musha_obj-1.u0811.6f",			0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",			0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+
+	{ "seibu_6_u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
+
+	{ "v3c001.pal.u0310",				0x000288, 0x00000000, 0 | BRF_NODUMP },        // 13 Pals
+	{ "v3c002.tibpal16l8-25.u0322",		0x000288, 0x00000000, 0 | BRF_NODUMP },        // 14
+	{ "v3c003.ami18cv8p-15.u0619",		0x000288, 0x00000000, 0 | BRF_NODUMP },        // 15
+	{ "v3c004x.ami18cv8pc-25.u0310",	0x000288, 0x00000000, 0 | BRF_NODUMP },        // 16
+};
+
+STD_ROM_PICK(zeroteame)
+STD_ROM_FN(zeroteame)
+
+struct BurnDriver BurnDrvZeroteame = {
+	"zeroteame", "zeroteam", NULL, NULL, "1993",
+	"Zero Team (Japan?, earlier?, set 2)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zeroteameRomInfo, zeroteameRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
 // Zero Team Selection
 // No license, displays 'Selection' under logo
 

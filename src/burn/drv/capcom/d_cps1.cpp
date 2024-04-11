@@ -26045,7 +26045,7 @@ static struct BurnRomInfo sf2mixRomDesc[] = {
 STD_ROM_PICK(sf2mix)
 STD_ROM_FN(sf2mix)
 
-struct BurnDriver BurnDrvCpssf2mix = {
+struct BurnDriver BurnDrvCpsSf2mix = {
 	"sf2mix", "sf2ce", NULL, NULL, "2023",
 	"Street Fighter II Mix (v1.3)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26185,14 +26185,13 @@ struct BurnDriver BurnDrvCpsDinore = {
 };
 
 
-// Cadillacs and Dinosaurs (Heavenly King, Hack)
+// Cadillacs and Dinosaurs (King, Hack)
 // GOTVG 20221027
 
 static struct BurnRomInfo dinotwRomDesc[] = {
 	{ "cdtw_23a.8f",	0x080000, 0x8c43cd07, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdtw_22a.7f",	0x080000, 0x69ff9e0b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdtw_21a.6f",	0x080000, 0x30f0041b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdtw_20a.5f",	0x080000, 0x418ced7e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdtw_21a.6f",	0x100000, 0xe005d793, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26207,9 +26206,9 @@ static INT32 DinoInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpsdinotw = {
+struct BurnDriver BurnDrvCpsDinotw = {
 	"dinotw", "dino", NULL, NULL, "2022",
-	"Cadillacs and Dinosaurs (Heavenly King, Hack)\0", NULL, "hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs (King, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinotwRomInfo, dinotwRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -26218,14 +26217,13 @@ struct BurnDriver BurnDrvCpsdinotw = {
 };
 
 
-// Cadillacs and Dinosaurs (Heavenly General, Hack)
+// Cadillacs and Dinosaurs (General, Hack)
 // GOTVG 20220710
 
 static struct BurnRomInfo dinotjRomDesc[] = {
 	{ "cdtj_23a.8f",	0x080000, 0xc4a2bc60, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdtj_22a.7f",	0x080000, 0x44f28f0d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdtj_21a.6f",	0x080000, 0x26769e22, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdtj_20a.5f",	0x080000, 0x4e655871, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdtj_21a.6f",	0x100000, 0xb69f4c8f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26233,9 +26231,9 @@ static struct BurnRomInfo dinotjRomDesc[] = {
 STD_ROM_PICK(dinotj)
 STD_ROM_FN(dinotj)
 
-struct BurnDriver BurnDrvCpsdinotj = {
+struct BurnDriver BurnDrvCpsDinotj = {
 	"dinotj", "dino", NULL, NULL, "2022",
-	"Cadillacs and Dinosaurs (Heavenly General, Hack)\0", NULL, "hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs (General, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinotjRomInfo, dinotjRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -26250,8 +26248,7 @@ struct BurnDriver BurnDrvCpsdinotj = {
 static struct BurnRomInfo dinodsRomDesc[] = {
 	{ "cdds_23a.8f",	0x080000, 0x3c5c564d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdds_22a.7f",	0x080000, 0xb0a03ae3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdds_21a.6f",	0x080000, 0xe361ee8d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdds_20a.5f",	0x080000, 0x10b83994, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdds_21a.6f",	0x100000, 0x463dbeed, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26259,7 +26256,7 @@ static struct BurnRomInfo dinodsRomDesc[] = {
 STD_ROM_PICK(dinods)
 STD_ROM_FN(dinods)
 
-struct BurnDriver BurnDrvCpsdinods = {
+struct BurnDriver BurnDrvCpsDinods = {
 	"dinods", "dino", NULL, NULL, "2021",
 	"Cadillacs and Dinosaurs (God of War, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26284,7 +26281,7 @@ static struct BurnRomInfo dino1v3RomDesc[] = {
 STD_ROM_PICK(dino1v3)
 STD_ROM_FN(dino1v3)
 
-struct BurnDriver BurnDrvCpsdino1v3 = {
+struct BurnDriver BurnDrvCpsDino1v3 = {
 	"dino1v3", "dino", NULL, NULL, "2010",
 	"Cadillacs and Dinosaurs (1v3, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26309,7 +26306,7 @@ static struct BurnRomInfo dinodwRomDesc[] = {
 STD_ROM_PICK(dinodw)
 STD_ROM_FN(dinodw)
 
-struct BurnDriver BurnDrvCpsdinodw = {
+struct BurnDriver BurnDrvCpsDinodw = {
 	"dinodw", "dino", NULL, NULL, "2022",
 	"Cadillacs and Dinosaurs (Warriors, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26326,8 +26323,7 @@ struct BurnDriver BurnDrvCpsdinodw = {
 static struct BurnRomInfo dinoyzRomDesc[] = {
 	{ "cdyz_23a.8f",	0x080000, 0xc0296a45, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdyz_22a.7f",	0x080000, 0x8390b36d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdyz_21a.6f",	0x080000, 0xc6fb361b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdyz_20a.5f",	0x080000, 0x27b19848, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdyz_21a.6f",	0x100000, 0x2fced599, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26335,7 +26331,7 @@ static struct BurnRomInfo dinoyzRomDesc[] = {
 STD_ROM_PICK(dinoyz)
 STD_ROM_FN(dinoyz)
 
-struct BurnDriver BurnDrvCpsdinoyz = {
+struct BurnDriver BurnDrvCpsDinoyz = {
 	"dinoyz", "dino", NULL, NULL, "2022",
 	"Cadillacs and Dinosaurs (Dragon, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26360,7 +26356,7 @@ static struct BurnRomInfo dinosjRomDesc[] = {
 STD_ROM_PICK(dinosj)
 STD_ROM_FN(dinosj)
 
-struct BurnDriver BurnDrvCpsdinosj = {
+struct BurnDriver BurnDrvCpsDinosj = {
 	"dinosj", "dino", NULL, NULL, "2022",
 	"Cadillacs and Dinosaurs (Century, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26385,7 +26381,7 @@ static struct BurnRomInfo dinolyRomDesc[] = {
 STD_ROM_PICK(dinoly)
 STD_ROM_FN(dinoly)
 
-struct BurnDriver BurnDrvCpsdinoly = {
+struct BurnDriver BurnDrvCpsDinoly = {
 	"dinoly", "dino", NULL, NULL, "2019",
 	"Cadillacs and Dinosaurs (Purgatory, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26410,7 +26406,7 @@ static struct BurnRomInfo dinowjRomDesc[] = {
 STD_ROM_PICK(dinowj)
 STD_ROM_FN(dinowj)
 
-struct BurnDriver BurnDrvCpsdinowj = {
+struct BurnDriver BurnDrvCpsDinowj = {
 	"dinowj", "dino", NULL, NULL, "2020",
 	"Cadillacs and Dinosaurs (Random Enemies, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26465,7 +26461,7 @@ static INT32 DinofwInit()
 	return DinoInit();
 }
 
-struct BurnDriver BurnDrvCpsdinofw = {
+struct BurnDriver BurnDrvCpsDinofw = {
 	"dinofw", "dino", NULL, NULL, "2021",
 	"Cadillacs and Dinosaurs (Framework 2022 Series, Hack)\0", "Other versions are selected in the dipswitch", "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26477,13 +26473,12 @@ struct BurnDriver BurnDrvCpsdinofw = {
 
 
 // Cadillacs and Dinosaurs (Competition, Hack)
-// GOTVG 20230903
+// GOTVG 20240406
 
 static struct BurnRomInfo dinossRomDesc[] = {
-	{ "cdss_23a.8f",	0x080000, 0x3e9ce404, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdss_22a.7f",	0x080000, 0xcb7a7ef5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdss_21a.6f",	0x080000, 0xda80ce35, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdss_20a.5f",	0x080000, 0x99019506, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdss_23a.8f",	0x080000, 0x024d117a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdss_22a.7f",	0x080000, 0x91aecd9f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdss_21a.6f",	0x100000, 0x15f53d35, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26491,8 +26486,8 @@ static struct BurnRomInfo dinossRomDesc[] = {
 STD_ROM_PICK(dinoss)
 STD_ROM_FN(dinoss)
 
-struct BurnDriver BurnDrvCpsdinoss = {
-	"dinoss", "dino", NULL, NULL, "2023",
+struct BurnDriver BurnDrvCpsDinoss = {
+	"dinoss", "dino", NULL, NULL, "2024",
 	"Cadillacs and Dinosaurs (Competition, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
@@ -26516,7 +26511,7 @@ static struct BurnRomInfo dinojjRomDesc[] = {
 STD_ROM_PICK(dinojj)
 STD_ROM_FN(dinojj)
 
-struct BurnDriver BurnDrvCpsdinojj = {
+struct BurnDriver BurnDrvCpsDinojj = {
 	"dinojj", "dino", NULL, NULL, "2019",
 	"Cadillacs and Dinosaurs (Contest, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26533,8 +26528,7 @@ struct BurnDriver BurnDrvCpsdinojj = {
 static struct BurnRomInfo dinoplusRomDesc[] = {
 	{ "cdp_23a.8f",		0x080000, 0xe2c64cad, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdp_22a.7f",		0x080000, 0xeda38c1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdp_21a.6f",		0x080000, 0xb2fcb323, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdp_20a.5f",		0x080000, 0xfa4cf986, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdp_21a.6f",		0x100000, 0x7e544d28, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26542,7 +26536,7 @@ static struct BurnRomInfo dinoplusRomDesc[] = {
 STD_ROM_PICK(dinoplus)
 STD_ROM_FN(dinoplus)
 
-struct BurnDriver BurnDrvCpsdinoplus = {
+struct BurnDriver BurnDrvCpsDinoplus = {
 	"dinoplus", "dino", NULL, NULL, "2023",
 	"Cadillacs and Dinosaurs (Judgement Day, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26559,8 +26553,7 @@ struct BurnDriver BurnDrvCpsdinoplus = {
 static struct BurnRomInfo dinojdRomDesc[] = {
 	{ "cdjd_23a.8f",	0x080000, 0x70047fd1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdjd_22a.7f",	0x080000, 0xa24529f3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdjd_21a.6f",	0x080000, 0x5685924e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdjd_20a.5f",	0x080000, 0x7c5d66ef, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdjd_21a.6f",	0x100000, 0x3a9b2070, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -26568,7 +26561,7 @@ static struct BurnRomInfo dinojdRomDesc[] = {
 STD_ROM_PICK(dinojd)
 STD_ROM_FN(dinojd)
 
-struct BurnDriver BurnDrvCpsdinojd = {
+struct BurnDriver BurnDrvCpsDinojd = {
 	"dinojd", "dino", NULL, NULL, "2022",
 	"Cadillacs and Dinosaurs (GOTVG 10th Anniversary, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -26605,13 +26598,12 @@ struct BurnDriver BurnDrvCpsDinokr = {
 
 
 // Cadillacs and Dinosaurs (Triassic, Hack)
-// GOTVG 20231029
+// GOTVG 20240408
 
 static struct BurnRomInfo dinosdjRomDesc[] = {
-	{ "cdsdj_23a.8f",	0x080000, 0xc17f95e4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsdj_22a.7f",	0x080000, 0xec85a17f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsdj_21a.6f",	0x080000, 0xebdd5897, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsdj_20a.5f",	0x080000, 0x7432d4c7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdsdj_23a.8f",	0x080000, 0x5343db8e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdsdj_22a.7f",	0x080000, 0xf5f77f8e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdsdj_21a.6f",	0x100000, 0x019bff03, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINOJ_COMPONENTS
 };
@@ -26619,10 +26611,10 @@ static struct BurnRomInfo dinosdjRomDesc[] = {
 STD_ROM_PICK(dinosdj)
 STD_ROM_FN(dinosdj)
 
-struct BurnDriver BurnDrvCpsdinosdj = {
-	"dinosdj", "dino", NULL, NULL, "2023",
+struct BurnDriver BurnDrvCpsDinosdj = {
+	"dinosdj", "dino", NULL, NULL, "2024",
 	"Cadillacs and Dinosaurs (Triassic, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs: Kyouryuu Shin Seiki (Triassic, Hack)\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinosdjRomInfo, dinosdjRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -26630,7 +26622,7 @@ struct BurnDriver BurnDrvCpsdinosdj = {
 };
 
 
-// Cadillacs and Dinosaurs (Three Prohibitions, Hack)
+// Cadillacs: Kyouryuu Shin Seiki (Three Prohibitions, Hack)
 // GOTVG 20210321
 
 static struct BurnRomInfo dino3jRomDesc[] = {
@@ -26644,10 +26636,10 @@ static struct BurnRomInfo dino3jRomDesc[] = {
 STD_ROM_PICK(dino3j)
 STD_ROM_FN(dino3j)
 
-struct BurnDriver BurnDrvCpsdino3j = {
+struct BurnDriver BurnDrvCpsDino3j = {
 	"dino3j", "dino", NULL, NULL, "2021",
-	"Cadillacs and Dinosaurs (Three Prohibitions, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs: Kyouryuu Shin Seiki (Three Prohibitions, Hack)\0", NULL, NULL, NULL,
+	"Cadillacs: Kyouryuu Shin Seiki (Three Prohibitions, Hack)\0", NULL, "hack", "CPS1 / QSound",
+	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00 (Three Prohibitions, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dino3jRomInfo, dino3jRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -26655,14 +26647,13 @@ struct BurnDriver BurnDrvCpsdino3j = {
 };
 
 
-// Cadillacs and Dinosaurs (Scream, Hack)
-// GOTVG 20221023
+// Cadillacs: Kyouryuu Shin Seiki (Scream, Hack)
+// GOTVG 20240406
 
 static struct BurnRomInfo dinoxzRomDesc[] = {
-	{ "cdxz_23a.8f",	0x080000, 0x94a5e1ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdxz_23a.8f",	0x080000, 0xec878b57, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdxz_22a.7f",	0x080000, 0xaa2c872b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdxz_21a.6f",	0x080000, 0x3d0354e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdxz_20a.5f",	0x080000, 0xcebe10f7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdxz_21a.6f",	0x100000, 0x9ae81148, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINOJ_COMPONENTS
 };
@@ -26670,10 +26661,10 @@ static struct BurnRomInfo dinoxzRomDesc[] = {
 STD_ROM_PICK(dinoxz)
 STD_ROM_FN(dinoxz)
 
-struct BurnDriver BurnDrvCpsdinoxz = {
-	"dinoxz", "dino", NULL, NULL, "2022",
+struct BurnDriver BurnDrvCpsDinoxz = {
+	"dinoxz", "dino", NULL, NULL, "2024",
 	"Cadillacs and Dinosaurs (Scream, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs: Kyouryuu Shin Seiki (Scream, Hack)\0", NULL, NULL, NULL,
+	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00 (Scream, Hack)\0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinoxzRomInfo, dinoxzRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -26681,14 +26672,13 @@ struct BurnDriver BurnDrvCpsdinoxz = {
 };
 
 
-// Cadillacs and Dinosaurs (2020 Commemorative, Hack)
-// GOTVG 20230111
+// Cadillacs: Kyouryuu Shin Seiki (2020 Commemorative, Hack)
+// GOTVG 20240406
 
 static struct BurnRomInfo dinosynRomDesc[] = {
-	{ "cdsyn_23a.8f",	0x080000, 0x01b08a54, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdsyn_23a.8f",	0x080000, 0x326cb331, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdsyn_22a.7f",	0x080000, 0xe4776f9f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsyn_21a.6f",	0x080000, 0xeb9517f3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsyn_20a.5f",	0x080000, 0xc641233a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdsyn_21a.6f",	0x100000, 0xfa5d74c9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINOJ_COMPONENTS
 };
@@ -26696,10 +26686,10 @@ static struct BurnRomInfo dinosynRomDesc[] = {
 STD_ROM_PICK(dinosyn)
 STD_ROM_FN(dinosyn)
 
-struct BurnDriver BurnDrvCpsdinosyn = {
-	"dinosyn", "dino", NULL, NULL, "2023",
+struct BurnDriver BurnDrvCpsDinosyn = {
+	"dinosyn", "dino", NULL, NULL, "2024",
 	"Cadillacs and Dinosaurs (2020 Commemorative, Hack)\0", NULL, "hack", "CPS1 / QSound",
-	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00\0Cadillacs: Kyouryuu Shin Seiki (2020 Commemorative, Hack)\0", NULL, NULL, NULL,
+	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00 (2020 Commemorative, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinosynRomInfo, dinosynRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -26792,7 +26782,7 @@ static INT32 CaptcommInit()
 	return Cps1RasterInit();
 }
 
-struct BurnDriver BurnDrvCpscaptcmzs = {
+struct BurnDriver BurnDrvCpsCaptcmzs = {
 	"captcmzs", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (God of War, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26819,7 +26809,7 @@ static struct BurnRomInfo captcmjyRomDesc[] = {
 STD_ROM_PICK(captcmjy)
 STD_ROM_FN(captcmjy)
 
-struct BurnDriver BurnDrvCpscaptcmjy = {
+struct BurnDriver BurnDrvCpsCaptcmjy = {
 	"captcmjy", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (Elite Competition, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26846,7 +26836,7 @@ static struct BurnRomInfo captcmmyRomDesc[] = {
 STD_ROM_PICK(captcmmy)
 STD_ROM_FN(captcmmy)
 
-struct BurnDriver BurnDrvCpscaptcmmy = {
+struct BurnDriver BurnDrvCpsCaptcmmy = {
 	"captcmmy", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (Incubus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26873,7 +26863,7 @@ static struct BurnRomInfo captcmwxRomDesc[] = {
 STD_ROM_PICK(captcmwx)
 STD_ROM_FN(captcmwx)
 
-struct BurnDriver BurnDrvCpscaptcmwx = {
+struct BurnDriver BurnDrvCpsCaptcmwx = {
 	"captcmwx", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (Infinite Bullets, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26900,7 +26890,7 @@ static struct BurnRomInfo captcmztRomDesc[] = {
 STD_ROM_PICK(captcmzt)
 STD_ROM_FN(captcmzt)
 
-struct BurnDriver BurnDrvCpscaptcmzt = {
+struct BurnDriver BurnDrvCpsCaptcmzt = {
 	"captcmzt", "captcomm", NULL, NULL, "2020",
 	"Captain Commando (Journey, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26927,7 +26917,7 @@ static struct BurnRomInfo captcmdwRomDesc[] = {
 STD_ROM_PICK(captcmdw)
 STD_ROM_FN(captcmdw)
 
-struct BurnDriver BurnDrvCpscaptcmdw = {
+struct BurnDriver BurnDrvCpsCaptcmdw = {
 	"captcmdw", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (Warriors, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26954,7 +26944,7 @@ static struct BurnRomInfo captcm2yRomDesc[] = {
 STD_ROM_PICK(captcm2y)
 STD_ROM_FN(captcm2y)
 
-struct BurnDriver BurnDrvCpscaptcm2y = {
+struct BurnDriver BurnDrvCpsCaptcm2y = {
 	"captcm2y", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (Master, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -26981,7 +26971,7 @@ static struct BurnRomInfo captcmscRomDesc[] = {
 STD_ROM_PICK(captcmsc)
 STD_ROM_FN(captcmsc)
 
-struct BurnDriver BurnDrvCpscaptcmsc = {
+struct BurnDriver BurnDrvCpsCaptcmsc = {
 	"captcmsc", "captcomm", NULL, NULL, "2020",
 	"Captain Commando (Switchable Character, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27008,7 +26998,7 @@ static struct BurnRomInfo captcmcrRomDesc[] = {
 STD_ROM_PICK(captcmcr)
 STD_ROM_FN(captcmcr)
 
-struct BurnDriver BurnDrvCpscaptcmcr = {
+struct BurnDriver BurnDrvCpsCaptcmcr = {
 	"captcmcr", "captcomm", NULL, NULL, "2023",
 	"Captain Commando (CR7 Elite, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27035,7 +27025,7 @@ static struct BurnRomInfo captc1v4RomDesc[] = {
 STD_ROM_PICK(captc1v4)
 STD_ROM_FN(captc1v4)
 
-struct BurnDriver BurnDrvCpscaptc1v4 = {
+struct BurnDriver BurnDrvCpsCaptc1v4 = {
 	"captc1v4", "captcomm", NULL, NULL, "2017",
 	"Captain Commando (1v4, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27062,7 +27052,7 @@ static struct BurnRomInfo captcmshRomDesc[] = {
 STD_ROM_PICK(captcmsh)
 STD_ROM_FN(captcmsh)
 
-struct BurnDriver BurnDrvCpscaptcmsh = {
+struct BurnDriver BurnDrvCpsCaptcmsh = {
 	"captcmsh", "captcomm", NULL, NULL, "2020",
 	"Captain Commando (Contest, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27153,7 +27143,7 @@ static INT32 FfightInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpsffightfw = {
+struct BurnDriver BurnDrvCpsFfightfw = {
 	"ffightfw", "ffight", NULL, NULL, "2022",
 	"Final Fight (Framework, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27218,7 +27208,7 @@ static INT32 Ffightj1Init()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpsffigh1v2 = {
+struct BurnDriver BurnDrvCpsFfigh1v2 = {
 	"ffigh1v2", "ffight", NULL, NULL, "2017",
 	"Final Fight (1v2, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27286,7 +27276,7 @@ static INT32 ffightdwInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpsffightdw = {
+struct BurnDriver BurnDrvCpsFfightdw = {
 	"ffightdw", "ffight", NULL, NULL, "2016-2020",
 	"Final Fight (Warriors, Hack)\0", "Other versions are selected in the dipswitch", "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27344,7 +27334,7 @@ static INT32 KnightsInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpsknightsp = {
+struct BurnDriver BurnDrvCpsKnightsp = {
 	"knightsp", "knights", NULL, NULL, "2016",
 	"Knights of the Round (Plus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27368,7 +27358,7 @@ static struct BurnRomInfo knightctRomDesc[] = {
 STD_ROM_PICK(knightct)
 STD_ROM_FN(knightct)
 
-struct BurnDriver BurnDrvCpsknightct = {
+struct BurnDriver BurnDrvCpsKnightct = {
 	"knightct", "knights", NULL, NULL, "2016",
 	"Knights of the Round (Count, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27402,7 +27392,7 @@ static struct BurnRomInfo knightscRomDesc[] = {
 STD_ROM_PICK(knightsc)
 STD_ROM_FN(knightsc)
 
-struct BurnDriver BurnDrvCpsknightsc = {
+struct BurnDriver BurnDrvCpsKnightsc = {
 	"knightsc", "knights", NULL, NULL, "2006",
 	"Knights of the Round (T-Chi)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27473,7 +27463,7 @@ static INT32 KodInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpskod1v3 = {
+struct BurnDriver BurnDrvCpsKod1v3 = {
 	"kod1v3", "kod", NULL, NULL, "2015",
 	"The King of Dragons (1v3, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27500,7 +27490,7 @@ static struct BurnRomInfo kodbsRomDesc[] = {
 STD_ROM_PICK(kodbs)
 STD_ROM_FN(kodbs)
 
-struct BurnDriver BurnDrvCpskodbs = {
+struct BurnDriver BurnDrvCpsKodbs = {
 	"kodbs", "kod", NULL, NULL, "2015",
 	"The King of Dragons (Boss Battle, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27527,7 +27517,7 @@ static struct BurnRomInfo koddwRomDesc[] = {
 STD_ROM_PICK(koddw)
 STD_ROM_FN(koddw)
 
-struct BurnDriver BurnDrvCpskoddw = {
+struct BurnDriver BurnDrvCpsKoddw = {
 	"koddw", "kod", NULL, NULL, "2015",
 	"The King of Dragons (Warriors, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27554,7 +27544,7 @@ static struct BurnRomInfo kodlyRomDesc[] = {
 STD_ROM_PICK(kodly)
 STD_ROM_FN(kodly)
 
-struct BurnDriver BurnDrvCpskodly = {
+struct BurnDriver BurnDrvCpsKodly = {
 	"kodly", "kod", NULL, NULL, "2021",
 	"The King of Dragons (Tough Plus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27593,7 +27583,7 @@ static INT32 KodOcInit()
 	return KodInit();
 }
 
-struct BurnDriver BurnDrvCpskodlys = {
+struct BurnDriver BurnDrvCpsKodlys = {
 	"kodlys", "kod", NULL, NULL, "2023",
 	"The King of Dragons (Dragonslayer, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27623,7 +27613,7 @@ static struct BurnRomInfo kodyhRomDesc[] = {
 STD_ROM_PICK(kodyh)
 STD_ROM_FN(kodyh)
 
-struct BurnDriver BurnDrvCpskodyh = {
+struct BurnDriver BurnDrvCpsKodyh = {
 	"kodyh", "kod", NULL, NULL, "2022",
 	"The King of Dragons (Fireworks, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -27739,7 +27729,7 @@ static INT32 wofInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpswofsm = {
+struct BurnDriver BurnDrvCpsWofsm = {
 	"wofsm", "wof", NULL, NULL, "2014",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (3M, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (3M, Hack)\0", NULL, NULL, NULL,
@@ -27763,7 +27753,7 @@ static struct BurnRomInfo wofmwsRomDesc[] = {
 STD_ROM_PICK(wofmws)
 STD_ROM_FN(wofmws)
 
-struct BurnDriver BurnDrvCpswofmws = {
+struct BurnDriver BurnDrvCpsWofmws = {
 	"wofmws", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (3M Warriors, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (3M Warriors, Hack)\0", NULL, NULL, NULL,
@@ -27787,7 +27777,7 @@ static struct BurnRomInfo wofscRomDesc[] = {
 STD_ROM_PICK(wofsc)
 STD_ROM_FN(wofsc)
 
-struct BurnDriver BurnDrvCpswofsc = {
+struct BurnDriver BurnDrvCpsWofsc = {
 	"wofsc", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Switchable Character, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Switchable characters, Hack)\0", NULL, NULL, NULL,
@@ -27811,7 +27801,7 @@ static struct BurnRomInfo wofzlRomDesc[] = {
 STD_ROM_PICK(wofzl)
 STD_ROM_FN(wofzl)
 
-struct BurnDriver BurnDrvCpswofzl = {
+struct BurnDriver BurnDrvCpsWofzl = {
 	"wofzl", "wof", NULL, NULL, "2022",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Wolf Warriors, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Wolf Warriors, Hack)\0", NULL, NULL, NULL,
@@ -27835,7 +27825,7 @@ static struct BurnRomInfo wofwpRomDesc[] = {
 STD_ROM_PICK(wofwp)
 STD_ROM_FN(wofwp)
 
-struct BurnDriver BurnDrvCpswofwp = {
+struct BurnDriver BurnDrvCpsWofwp = {
 	"wofwp", "wof", NULL, NULL, "2014",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Warriors Plus, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Warriors Plus, Hack)\0", NULL, NULL, NULL,
@@ -27859,7 +27849,7 @@ static struct BurnRomInfo wofjwpRomDesc[] = {
 STD_ROM_PICK(wofjwp)
 STD_ROM_FN(wofjwp)
 
-struct BurnDriver BurnDrvCpswofjwp = {
+struct BurnDriver BurnDrvCpsWofjwp = {
 	"wofwjq", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Warriors Enhanced, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Warriors Enhanced, Hack)\0", NULL, NULL, NULL,
@@ -27895,7 +27885,7 @@ static struct BurnRomInfo wofdrRomDesc[] = {
 STD_ROM_PICK(wofdr)
 STD_ROM_FN(wofdr)
 
-struct BurnDriver BurnDrvCpswofdr = {
+struct BurnDriver BurnDrvCpsWofdr = {
 	"wofdr", "wof", NULL, NULL, "2022",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Master, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55b0\u3089\u3046\u2161: \u8d64\u58c1\u306e\u6226\u3044 (\u9054\u4eba, Hack of Tenchi wo Kurau II: Sekiheki no Tatakai)\0", NULL, NULL, NULL,
@@ -27907,11 +27897,11 @@ struct BurnDriver BurnDrvCpswofdr = {
 
 
 // Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)
-// GOTVG 20240404
+// GOTVG 20240409
 
 static struct BurnRomInfo wofdr20RomDesc[] = {
-	{ "tk2dr2_23c.8f",	0x080000, 0x390fef56, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr2_22c.7f",	0x180000, 0x64534ca7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_23c.8f",	0x080000, 0xcadf381c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_22c.7f",	0x180000, 0x26896d4a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	WOFJ_TILE1
 	{ "tk2dr2_05.7a",	0x080000, 0x134da2bb, BRF_GRA | CPS1_TILES },
@@ -27954,7 +27944,7 @@ static struct BurnRomInfo wof1v3RomDesc[] = {
 STD_ROM_PICK(wof1v3)
 STD_ROM_FN(wof1v3)
 
-struct BurnDriver BurnDrvCpswof1v3 = {
+struct BurnDriver BurnDrvCpsWof1v3 = {
 	"wof1v3", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (1v3, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (1v3, Hack)\0", NULL, NULL, NULL,
@@ -27978,7 +27968,7 @@ static struct BurnRomInfo wof1v3pRomDesc[] = {
 STD_ROM_PICK(wof1v3p)
 STD_ROM_FN(wof1v3p)
 
-struct BurnDriver BurnDrvCpswof1v3p = {
+struct BurnDriver BurnDrvCpsWof1v3p = {
 	"wof1v3p", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (1v3 Plus, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (1v3 Plus, Hack)\0", NULL, NULL, NULL,
@@ -28002,7 +27992,7 @@ static struct BurnRomInfo wofmz1v3RomDesc[] = {
 STD_ROM_PICK(wofmz1v3)
 STD_ROM_FN(wofmz1v3)
 
-struct BurnDriver BurnDrvCpswofmz1v3 = {
+struct BurnDriver BurnDrvCpsWofmz1v3 = {
 	"wofmz1v3", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Cavalry 1v3, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Cavalry 1v3, Hack)\0", NULL, NULL, NULL,
@@ -28026,7 +28016,7 @@ static struct BurnRomInfo wofkm3RomDesc[] = {
 STD_ROM_PICK(wofkm3)
 STD_ROM_FN(wofkm3)
 
-struct BurnDriver BurnDrvCpswofkm3 = {
+struct BurnDriver BurnDrvCpsWofkm3 = {
 	"wofkm3", "wof", NULL, NULL, "2023",
 	"Tenchi wo Kurau II: Sekiheki no Tatakai (Subject 3, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (Subject 3, Hack)\0", NULL, NULL, NULL,
@@ -28070,7 +28060,7 @@ static INT32 wofaInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpswofc = {
+struct BurnDriver BurnDrvCpsWofc = {
 	"wofc", "wof", NULL, NULL, "2013",
 	"Sangokushi II (T-Chi)\0", NULL, "hack", "CPS1 / QSound",
 	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (T-Chi)\0", NULL, NULL, NULL,
@@ -28115,7 +28105,7 @@ static INT32 WofchpInit()
 	return WofchInit();
 }
 
-struct BurnDriver BurnDrvCpswofchp = {
+struct BurnDriver BurnDrvCpsWofchp = {
 	"wofchp", "wofch", NULL, NULL, "2019",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version, Hack)\0", NULL, "hack", "CPS Changer",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (PS/SS Version, Hack)\0", NULL, NULL, NULL,
@@ -28228,7 +28218,7 @@ static INT32 PunisherInit()
 	return TwelveMhzInit();
 }
 
-struct BurnDriver BurnDrvCpspunishhr = {
+struct BurnDriver BurnDrvCpsPunishhr = {
 	"punishhr", "punisher", NULL, NULL, "2018",
 	"The Punisher (1vs2 Invincible, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -28265,7 +28255,7 @@ static struct BurnRomInfo punishlyRomDesc[] = {
 STD_ROM_PICK(punishly)
 STD_ROM_FN(punishly)
 
-struct BurnDriver BurnDrvCpspunishly = {
+struct BurnDriver BurnDrvCpsPunishly = {
 	"punishly", "punisher", NULL, NULL, "2018",
 	"The Punisher (1vs2 Flame, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -28302,7 +28292,7 @@ static struct BurnRomInfo punishbsRomDesc[] = {
 STD_ROM_PICK(punishbs)
 STD_ROM_FN(punishbs)
 
-struct BurnDriver BurnDrvCpspunishbs = {
+struct BurnDriver BurnDrvCpsPunishbs = {
 	"punishbs", "punisher", NULL, NULL, "2018",
 	"The Punisher (1vs2 Match, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -28339,7 +28329,7 @@ static struct BurnRomInfo punishpfRomDesc[] = {
 STD_ROM_PICK(punishpf)
 STD_ROM_FN(punishpf)
 
-struct BurnDriver BurnDrvCpspunishpf = {
+struct BurnDriver BurnDrvCpsPunishpf = {
 	"punishpf", "punisher", NULL, NULL, "2018",
 	"The Punisher (1vs2 Perfect, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -28370,7 +28360,7 @@ static struct BurnRomInfo punishfwRomDesc[] = {
 STD_ROM_PICK(punishfw)
 STD_ROM_FN(punishfw)
 
-struct BurnDriver BurnDrvCpspunishfw = {
+struct BurnDriver BurnDrvCpsPunishfw = {
 	"punishfw", "punisher", NULL, NULL, "2020",
 	"The Punisher (Framework 2020, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
@@ -28396,7 +28386,7 @@ STD_ROM_PICK(punishdw)
 STD_ROM_FN(punishdw)
 
 
-struct BurnDriver BurnDrvCpspunishdw = {
+struct BurnDriver BurnDrvCpsPunishdw = {
 	"punishdw", "punisher", NULL, NULL, "2009",
 	"The Punisher (Warriors, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,

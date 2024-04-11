@@ -912,7 +912,6 @@ static struct BurnRomInfo grdiansRomDesc[] = {
 	{ "u21.bin",	  0x400000, 0x6f95e466,	BRF_GRA },
 
 	{ "u32.bin",      0x100000, 0xcf0f3017, BRF_SND },				// PCM
-
 };
 
 STD_ROM_PICK(grdians)
@@ -934,7 +933,6 @@ static struct BurnRomInfo grdiansaRomDesc[] = {
 	{ "ka2-001-017.u2",		  0x200000, 0x60ad7a2b,	BRF_GRA },
 
 	{ "ka2-001-015.u28",      0x200000, 0xfa97cc54, BRF_SND },				// PCM
-
 };
 
 STD_ROM_PICK(grdiansa)
@@ -952,7 +950,6 @@ static struct BurnRomInfo grdiansblRomDesc[] = {
 	{ "u32.u32",	0x200000, 0xfa97cc54, BRF_SND },               // PCM
 
 	{ "ke-001.u38",	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },  // PLDs
-
 };
 
 STD_ROM_PICK(grdiansbl)
@@ -972,7 +969,6 @@ static struct BurnRomInfo mj4simaiRomDesc[] = {
 	{ "cha-02.u22",	  0x400000, 0xf6346860,	BRF_GRA },
 
 	{ "cha-07.u32",	  0x400000, 0x817519ee, BRF_SND },				// PCM
-
 };
 
 STD_ROM_PICK(mj4simai)
@@ -994,7 +990,6 @@ static struct BurnRomInfo myangelRomDesc[] = {
 	{ "kq1-cg5.u17",  0x200000, 0xa4bc4516,	BRF_GRA },
 
 	{ "kq1-snd.u32",  0x200000, 0x8ca1b449, BRF_SND },				// PCM
-
 };
 
 STD_ROM_PICK(myangel)
@@ -1031,7 +1026,6 @@ static struct BurnRomInfo pzlbowlRomDesc[] = {
 	{ "kuc-u41-i00.u41", 0x400000, 0x2febf19b,	BRF_GRA },
 
 	{ "kus-u18-i00.u18", 0x400000, 0xe2b1dfcf, BRF_SND },				// PCM
-
 };
 
 STD_ROM_PICK(pzlbowl)

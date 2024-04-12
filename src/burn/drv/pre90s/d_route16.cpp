@@ -1,4 +1,4 @@
-// FB Alpha Route 16 driver module
+// FB Neo Route 16 driver module
 // Based on MAME driver by Zsolt Vasvari
 
 // Todo: revise route16 protection
@@ -1505,5 +1505,5 @@ struct BurnDriver BurnDrvttmahjng = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, ttmahjngRomInfo, ttmahjngRomName, NULL, NULL, NULL, NULL, TtmahjngInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TtmahjngDraw, DrvScan, &DrvRecalc, 0x8,
-	256, 256, 3, 4
+	256, 256, 4, 3
 };

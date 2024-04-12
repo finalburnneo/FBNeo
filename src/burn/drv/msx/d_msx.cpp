@@ -29973,6 +29973,25 @@ struct BurnDriver BurnDrvMSX_goblin = {
 	272, 228, 4, 3
 };
 
+// Godzilla Balls (HB)
+
+static struct BurnRomInfo MSX_godzillaballsRomDesc[] = {
+	{ "Godzilla Balls (2024)(Paxanga Software).rom",	65536, 0x8c3e2b27, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_godzillaballs, MSX_godzillaballs, msx_msx)
+STD_ROM_FN(MSX_godzillaballs)
+
+struct BurnDriver BurnDrvMSX_godzillaballs = {
+	"msx_godzillaballs", NULL, "msx_msx", NULL, "2024",
+	"Godzilla Balls (HB)\0", NULL, "Paxanga Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_godzillaballsRomInfo, MSX_godzillaballsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Gommy (Deluxe Version) (HB)
 
 static struct BurnRomInfo MSX_gommydxRomDesc[] = {
@@ -30003,7 +30022,7 @@ STD_ROM_FN(MSX_gommyen)
 
 struct BurnDriver BurnDrvMSX_gommyen = {
 	"msx_gommyen", "msx_gommydx", "msx_msx", NULL, "2013",
-	"Gommy - Medieval Defender (English) (HB)\0", NULL, "Retroworks/Dimension Z/Nenefranz", "MSX",
+	"Gommy - Medieval Defender (English) (HB)\0", NULL, "Retroworks, Dimension Z, Nenefranz", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_gommyenRomInfo, MSX_gommyenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -30022,7 +30041,7 @@ STD_ROM_FN(MSX_gommyes)
 
 struct BurnDriver BurnDrvMSX_gommyes = {
 	"msx_gommyes", "msx_gommydx", "msx_msx", NULL, "2013",
-	"Gommy - Medieval Defender (Spanish) (HB)\0", NULL, "Retroworks/Dimension Z/Nenefranz", "MSX",
+	"Gommy - Medieval Defender (Spanish) (HB)\0", NULL, "Retroworks, Dimension Z, Nenefranz", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_gommyesRomInfo, MSX_gommyesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

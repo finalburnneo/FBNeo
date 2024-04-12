@@ -9291,6 +9291,25 @@ struct BurnDriver BurnDrvcv_rollerball = {
     272, 228, 4, 3
 };
 
+// Runaway Train (SGM) (HB)
+
+static struct BurnRomInfo cv_runawayRomDesc[] = {
+    { "Runaway Train SGM (2023)(8 bit Milli Games).rom",	20218, 0x08fef448, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_runaway, cv_runaway, cv_coleco)
+STD_ROM_FN(cv_runaway)
+
+struct BurnDriver BurnDrvcv_runaway = {
+    "cv_runaway", NULL, "cv_coleco", NULL, "2023",
+    "Runaway Train (SGM) (HB)\0", "SGM - Super Game Module", "8 bit Milli Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_runawayRomInfo, cv_runawayRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Saguaro City (HB)
 
 static struct BurnRomInfo cv_saguaroRomDesc[] = {

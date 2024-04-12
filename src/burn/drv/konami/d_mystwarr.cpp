@@ -1,4 +1,4 @@
-// FB Alpha Pre-Gx driver module
+// FB Neo Pre-Gx driver module
 // based on MAME driver by R. Belmont, Phil Stroffolino, Acho A. Tang, Nicola Salmoria
 
 /*
@@ -95,7 +95,8 @@ static UINT16 control_data = 0;
 static UINT8 mw_irq_control = 0;
 static INT32 z80_bank;
 
-static INT32 nGame = 0;
+static INT32 nGame        = 0;
+static INT32 viostormubbl = 0;
 
 static struct BurnInputInfo MystwarrInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
@@ -1895,25 +1896,25 @@ static INT32 MemIndex()
 	DrvGfxROM2		= Next; Next += 0x500000;
 	DrvGfxROM3		= Next; Next += 0x100000;
 
-	DrvGfxROMExp0		= Next; Next += 0xc00000;
-	DrvGfxROMExp1		= Next; Next += 0x1000000;
-	DrvGfxROMExp2		= Next; Next += 0x800000;
+	DrvGfxROMExp0	= Next; Next += 0xc00000;
+	DrvGfxROMExp1	= Next; Next += 0x1000000;
+	DrvGfxROMExp2	= Next; Next += 0x800000;
 
 	DrvSndROM		= Next; Next += 0x400000;
 
 	DrvEeprom		= Next; Next += 0x000080;
 
-	konami_palette32	= (UINT32*)Next;
+	konami_palette32= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	AllRam			= Next;
 
 	Drv68KRAM		= Next; Next += 0x010000;
-	DrvSpriteRam		= Next; Next += 0x010000;
+	DrvSpriteRam	= Next; Next += 0x010000;
 	DrvPalRAM		= Next; Next += 0x002000;
 
-	DrvK053936Ctrl		= Next; Next += 0x000400;
-	DrvK053936RAM		= Next; Next += 0x001000;
+	DrvK053936Ctrl	= Next; Next += 0x000400;
+	DrvK053936RAM	= Next; Next += 0x001000;
 
 	DrvZ80RAM		= Next; Next += 0x002800;
 
@@ -1960,7 +1961,7 @@ static void decode_gfx1(UINT8 *src, UINT8 *d, INT32 len)
 
 	GfxDecode(((nLen * 8) / 5) / 0x40, 5, 8, 8, Plane, XOffs, YOffs, 8*8*5, tmp, DrvGfxROMExp0);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static void DecodeSprites(UINT8 *rom, UINT8 *exprom, INT32 len)
@@ -1990,7 +1991,7 @@ static void DecodeSprites(UINT8 *rom, UINT8 *exprom, INT32 len)
 
 	GfxDecode(size4 / 128, 5, 16, 16, Plane, XOffs, YOffs, 16*16*5, tmp, exprom);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static void Metamrph_sprite_decode()
@@ -2021,13 +2022,7 @@ static INT32 MystwarrInit()
 	nGame = 1;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -2134,13 +2129,7 @@ static INT32 MetamrphInit()
 	nGame = 2;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 2)) return 1;
@@ -2251,32 +2240,44 @@ static INT32 ViostormInit()
 	nGame = 3;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
-		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x000000, 0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x000001, 1, 2)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x000000, 2, 1)) return 1;
 
-		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 5, LD_GROUP(2) | LD_REVERSE)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 5, LD_GROUP(2) | LD_REVERSE)) return 1;
+		if (1 == viostormubbl) {
+/*			DrvGfxROM0: nGap = 5;
+--------------------------------------------------------------------------------------
+//			00	01	02	03	04	05	06	07	08	09	0A	0B	0C	0D	0E	0F			//
+//	0000	a[0]b[0]c[0]d[0]00	a[1]b[1]c[1]d[1]00	a[2]b[2]c[2]d[2]00	a[3] ...	//	
+--------------------------------------------------------------------------------------	
+*/
+			INT32 nIndex = 3;
+			for (INT32 i = 0; i < 8; i++, nIndex++) {
+				if (i < 4) {
+					if (BurnLoadRom(DrvGfxROM0        + i, nIndex +  0, 5)) return 1;
+				}
+				if (BurnLoadRom(DrvGfxROM1 + 0x000000 + i, nIndex +  4, 8)) return 1;
+				if (BurnLoadRom(DrvGfxROM1 + 0x400000 + i, nIndex + 12, 8)) return 1;
+				if (BurnLoadRom(DrvSndROM  + 0x080000 * i, nIndex + 20, 1)) return 1;
+			}
+		} else {
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000000, 3, 5, LD_GROUP(2) | LD_REVERSE)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000002, 4, 5, LD_GROUP(2) | LD_REVERSE)) return 1;
 
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  6, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  7, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006,  8, 8, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000000, 5, 8, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000002, 6, 8, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000004, 7, 8, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 8, 8, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x000000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x200000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM + 0x000000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM + 0x200000, 10, 1)) return 1;
+		}
 
-		if (BurnLoadRom(DrvEeprom  + 0x000000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvEeprom + 0x000000, (1 == viostormubbl) ? 31 : 11, 1)) return 1;
 
 		decode_gfx1(DrvGfxROM0, DrvGfxROMExp0, 0x600000);
 
@@ -2354,13 +2355,7 @@ static INT32 MartchmpInit()
 	nGame = 4;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -2509,13 +2504,7 @@ static INT32 GaiapolisInit()
 	nGame = 5;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -2671,13 +2660,7 @@ static INT32 DadandrnInit()
 	nGame = 6;
 
 	GenericTilesInit();
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -2811,11 +2794,14 @@ static INT32 DrvExit()
 
 	K054539Exit();
 
-	BurnFree (AllMem);
+	BurnFree(AllMem);
 	if (pMystwarrRozBitmap) {
-		BurnFree (pMystwarrRozBitmap);
+		BurnFree(pMystwarrRozBitmap);
 		pMystwarrRozBitmap = NULL;
 	}
+
+	viostormubbl = 0;
+
 	return 0;
 }
 
@@ -3473,6 +3459,70 @@ struct BurnDriver BurnDrvViostormub = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, viostormubRomInfo, viostormubRomName, NULL, NULL, NULL, NULL, ViostormInputInfo, ViostormDIPInfo,
 	ViostormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	384, 224, 4, 3
+};
+
+
+// Violent Storm (ver UAB, bootleg)
+
+static struct BurnRomInfo viostormubblRomDesc[] = {
+	{ "168_ua7_01.bin",		0x080000, 0x97d3df09, 1 }, //  0 maincpu
+	{ "168_ua7_02.bin",		0x080000, 0x2c591f92, 1 }, //  1
+
+	{ "168_a_05.bin",		0x020000, 0x507fb3eb, 2 }, //  2 soundcpu
+
+	{ "168_a_09_h.bin",		0x080000, 0x4ffd6e92, 3 }, //  3 gfx1
+	{ "168_a_09_l.bin",		0x080000, 0xf657bddd, 3 }, //  4
+	{ "168_a_08_h.bin",		0x080000, 0x143ce52e, 3 }, //  5
+	{ "168_a_08_l.bin",		0x080000, 0x4f656594, 3 }, //  6
+
+	{ "168_a_10_al.bin",	0x080000, 0xe6570da5, 4 }, //  7 gfx2
+	{ "168_a_10_ah.bin",	0x080000, 0xe8ce69b1, 4 }, //  8
+	{ "168_a_11_al.bin",	0x080000, 0x252cc0bc, 4 }, //  9
+	{ "168_a_11_ah.bin",	0x080000, 0xc2db121c, 4 }, // 10
+	{ "168_a_12_al.bin",	0x080000, 0xe86258c1, 4 }, // 11
+	{ "168_a_12_ah.bin",	0x080000, 0x92180725, 4 }, // 12
+	{ "168_a_13_al.bin",	0x080000, 0xaef49217, 4 }, // 13
+	{ "168_a_13_ah.bin",	0x080000, 0x9694f82b, 4 }, // 14
+	{ "168_a_10_bl.bin",	0x080000, 0x90bfdf5c, 4 }, // 15
+	{ "168_a_10_bh.bin",	0x080000, 0x1699d50e, 4 }, // 16
+	{ "168_a_11_bl.bin",	0x080000, 0x9b85594e, 4 }, // 17
+	{ "168_a_11_bh.bin",	0x080000, 0x57efd95f, 4 }, // 18
+	{ "168_a_12_bl.bin",	0x080000, 0x3c7fde2c, 4 }, // 19
+	{ "168_a_12_bh.bin",	0x080000, 0x77dbd7b0, 4 }, // 20
+	{ "168_a_13_bl.bin",	0x080000, 0x26326a3c, 4 }, // 21
+	{ "168_a_13_bh.bin",	0x080000, 0x3cc402fb, 4 }, // 22
+
+	{ "168_a_06_a.bin",		0x080000, 0xbf42efc1, 5 }, // 23 shared
+	{ "168_a_06_b.bin",		0x080000, 0x97c3e6d2, 5 }, // 24
+	{ "168_a_06_c.bin",		0x080000, 0xb5a67bf0, 5 }, // 25
+	{ "168_a_06_d.bin",		0x080000, 0x58c407f1, 5 }, // 26
+	{ "168_a_07_a.bin",		0x080000, 0x39af77b8, 5 }, // 27
+	{ "168_a_07_b.bin",		0x080000, 0x0ad59b02, 5 }, // 28
+	{ "168_a_07_c.bin",		0x080000, 0x31f2a927, 5 }, // 29
+	{ "168_a_07_d.bin",		0x080000, 0x4a2ea6f6, 5 }, // 30
+
+	// default eeprom to prevent game booting upside down with error
+	{ "viostormub.nv",		0x000080, 0xb6937413, 6 }, // 31 eeprom
+};
+
+STD_ROM_PICK(viostormubbl)
+STD_ROM_FN(viostormubbl)
+
+static INT32 ViostormubblInit()
+{
+	viostormubbl = 1;
+
+	return ViostormInit();
+}
+
+struct BurnDriver BurnDrvViostormubbl = {
+	"viostormubbl", "viostorm", NULL, NULL, "1993",
+	"Violent Storm (ver UAB, bootleg)\0", NULL, "bootleg (Eye Pro)", "GX168",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 3, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, viostormubblRomInfo, viostormubblRomName, NULL, NULL, NULL, NULL, ViostormInputInfo, ViostormDIPInfo,
+	ViostormubblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
 

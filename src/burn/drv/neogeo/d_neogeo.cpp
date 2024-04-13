@@ -20117,10 +20117,10 @@ struct BurnDriver BurnDrvMslug5f = {
 
 // Metal Slug 5 (Stone Turtle, Hack)
 // Modified by 合金弹头爱克斯
-// 20240329
+// 20240411
 
 static struct BurnRomInfo mslug5sgRomDesc[] = {
-	{ "268-p1sg.p1",	0x600000, 0xceada390, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1sg.p1",	0x600000, 0xb6cb640e, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };
@@ -20209,10 +20209,10 @@ struct BurnDriver BurnDrvMslug5cq = {
 
 // Metal Slug 5 (Boss Battles, Hack)
 // Modified by 合金弹头爱克斯
-// 20240328
+// 20240411
 
 static struct BurnRomInfo mslug5bsRomDesc[] = {
-	{ "268-p1bs.p1",	0x600000, 0x0e3615dc, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1bs.p1",	0x600000, 0x6ec9bb7e, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };
@@ -24823,11 +24823,11 @@ struct BurnDriver BurnDrvKf2k1pkz = {
 
 
 // The King of Fighters 2001 (Ultimate, Hack)
-// GOTVG 20240302
+// GOTVG 20240411
 
 static struct BurnRomInfo kf2k1ultRomDesc[] = {
-	{ "262-p1ult.p1",		0x100000, 0x30a082d1, 1 | BRF_ESS | BRF_PRG },
-	{ "262-p2ult.sp2",		0x500000, 0x569e8cee, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p1ult.p1",		0x100000, 0x3ca57684, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p2ult.sp2",		0x500000, 0xa2466d70, 1 | BRF_ESS | BRF_PRG },
 
 	{ "262-s1ult.s1",		0x020000, 0xe8cb20be, 2 | BRF_GRA },
 
@@ -24843,8 +24843,8 @@ static struct BurnRomInfo kf2k1ultRomDesc[] = {
 	{ "262-c10ult.c10",		0x800000, 0x457c7faf, 3 | BRF_GRA },
 	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 3 | BRF_GRA },
 	{ "265-c8d.c8",			0x800000, 0xbef667a3, 3 | BRF_GRA },
-	{ "262-c13ult.c13",		0x800000, 0x40f7bd65, 3 | BRF_GRA },
-	{ "262-c14ult.c14",		0x800000, 0x2471c450, 3 | BRF_GRA },
+	{ "262-c13ult.c13",		0x800000, 0x0b316a58, 3 | BRF_GRA },
+	{ "262-c14ult.c14",		0x800000, 0x648e620b, 3 | BRF_GRA },
 
 	{ "262-m1ult.m1",		0x020000, 0xe5dbafad, 4 | BRF_ESS | BRF_PRG },
 
@@ -27894,7 +27894,7 @@ struct BurnDriver BurnDrvMslug3x = {
 
 
 // Cyborg Force
-// Neo Byte Force Ltd
+// NEO.BYTE.FORCE
 // 20230409
 // https://www.neobyteforce.com/
 
@@ -27918,7 +27918,7 @@ STD_ROM_FN(cyborgforce)
 
 struct BurnDriver BurnDrvCyborgForce = {
 	"cyborgforce", NULL, "neogeo", NULL, "2023",
-	"Cyborg Force\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
+	"Cyborg Force!\0", NULL, "NEO.BYTE.FORCE", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_SHOOT, 0,
 	NULL, cyborgforceRomInfo, cyborgforceRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

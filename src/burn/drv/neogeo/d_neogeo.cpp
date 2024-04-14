@@ -16492,10 +16492,10 @@ struct BurnDriver BurnDrvCakefght = {
 // Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack)
 // Modified by jlima
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=724160
-// 20240321
+// 20240411
 
 static struct BurnRomInfo gowcaietRomDesc[] = {
-	{ "094-p1et.p1",	0x200000, 0x6d7bd206, 1 | BRF_ESS | BRF_PRG },
+	{ "094-p1et.p1",	0x200000, 0xfe5df757, 1 | BRF_ESS | BRF_PRG },
 
 	{ "094-s1.s1",		0x020000, 0x2f8748a2, 2 | BRF_GRA },
 
@@ -17915,10 +17915,10 @@ struct BurnDriver BurnDrvMslug1v2 = {
 
 // Metal Slug - Super Vehicle-001 (Origins, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240127
+// Bug fixed by Alice - 20240409
 
 static struct BurnRomInfo mslugqyRomDesc[] = {
-	{ "201-p1qy.p1",	0x100000, 0xa054f7ba, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1qy.p1",	0x100000, 0x16068dc1, 1 | BRF_ESS | BRF_PRG },
 	{ "201-p2dg.sp2",	0x100000, 0xc3cb544c, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS

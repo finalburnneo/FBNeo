@@ -293,7 +293,10 @@ static void FillListBox()
 						nPatchIndex++;
 					}
 
-					Tokens = _tcstok(NULL, _T("/"));
+					// Only one file path can be bound to a DAT file.
+					// A maximum of root and secondary nodes are required.
+					// The use of '/' here will potentially create useless multi-level nodes.
+					Tokens = _tcstok(NULL, _T("\0"));
 					nNumTokens++;
 				}
 

@@ -20147,7 +20147,7 @@ struct BurnDriver BurnDrvTeot = {
 };
 
 // Cyborg Force
-// Neo Byte Force Ltd
+// NEO.BYTE.FORCE
 // 20230409
 // https://www.neobyteforce.com/
 
@@ -20171,7 +20171,7 @@ STD_ROM_FN(cyborgforce)
 
 struct BurnDriver BurnDrvCyborgForce = {
 	"cyborgforce", NULL, "neogeo", NULL, "2023",
-	"Cyborg Force\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
+	"Cyborg Force!\0", NULL, "NEO.BYTE.FORCE", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_SHOOT, 0,
 	NULL, cyborgforceRomInfo, cyborgforceRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -20700,11 +20700,11 @@ struct BurnDriver BurnDrvmslug1v2 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug (Origins, Hack) - 2024-01-27
+// Metal Slug (Origins, Hack) - 2024-04-09
 // Modified by 合金弹头爱克斯 / CardCaptorSakura
 
 static struct BurnRomInfo mslugdqyRomDesc[] = {
-	{ "201-p1dqy.p1",	0x200000, 0xd541dbe4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1dqy.p1",	0x200000, 0x6313a19f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -21622,11 +21622,11 @@ struct BurnDriver BurnDrvmslug5es = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Stone Turtle, Hack) - 2024-03-29
+// Metal Slug 5 (Stone Turtle, Hack) - 2024-04-11
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5sgRomDesc[] = {
-	{ "268-p1sg.p1",    0x600000, 0xceada390, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1sg.p1",    0x600000, 0xb6cb640e, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",     0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21813,11 +21813,11 @@ struct BurnDriver BurnDrvmslug5f = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Boss Battle, Hack) - 2024-03-28
+// Metal Slug 5 (Boss Battle, Hack) - 2024-04-11
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5bossRomDesc[] = {
-	{ "268-p1boss.p1",    0x600000, 0x0e3615dc, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1boss.p1",    0x600000, 0x6ec9bb7e, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",       0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 

@@ -1757,7 +1757,7 @@ static INT32 RomLoad(INT32 v33off, INT32 gfxlen0, INT32 gfxlen1, INT32 gfxtype1,
 		if (BurnLoadRom(DrvEEPROM + 0x000000, eep, 1)) return 1;
 	}
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 
 	return 0;
 }
@@ -2495,7 +2495,7 @@ static INT32 ppanRomLoad()
 	if (BurnLoadRom(DrvSndROM + 0x100000, 14, 1)) return 1;
 	memcpy(DrvSndROM, DrvSndROM + 0x100000, 0x40000);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 
 	DrvSprBuf = DrvSprRAM; // no sprite buffer!!
 
@@ -4625,11 +4625,11 @@ struct BurnDriver BurnDrvHookpj = {
 
 
 // Hook (Plus, Hack)
-// GOTVG 20240313
+// GOTVG 20240327
 
 static struct BurnRomInfo hookplsRomDesc[] = {
-	{ "hkpls_-h0-d.ic25",	0x040000, 0x811c7971, 1 | BRF_PRG | BRF_ESS },
-	{ "hkpls_-l0-d.ic38",	0x040000, 0x8d6ad3c2, 1 | BRF_PRG | BRF_ESS },
+	{ "hkpls_-h0-d.ic25",	0x040000, 0x3403ba10, 1 | BRF_PRG | BRF_ESS },
+	{ "hkpls_-l0-d.ic38",	0x040000, 0x5d6cf1af, 1 | BRF_PRG | BRF_ESS },
 
 	HOOK_COMPONENTS
 };
@@ -4865,11 +4865,11 @@ struct BurnDriver BurnDrvHooksw = {
 
 
 // Hook (Elite, Hack)
-// GOTVG 20240214
+// GOTVG 20240319
 
 static struct BurnRomInfo hookjyRomDesc[] = {
-	{ "hkjy_-h0-d.ic25",	0x040000, 0xceba9539, 1 | BRF_PRG | BRF_ESS },
-	{ "hkjy_-l0-d.ic38",	0x040000, 0x99e8ffda, 1 | BRF_PRG | BRF_ESS },
+	{ "hkjy_-h0-d.ic25",	0x040000, 0x671e59e8, 1 | BRF_PRG | BRF_ESS },
+	{ "hkjy_-l0-d.ic38",	0x040000, 0x221772b7, 1 | BRF_PRG | BRF_ESS },
 
 	HOOK_COMPONENTS
 };

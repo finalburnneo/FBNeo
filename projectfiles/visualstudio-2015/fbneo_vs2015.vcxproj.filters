@@ -3839,15 +3839,6 @@
     <None Include="..\..\src\intf\video\scalers\superscale.asm">
       <Filter>interfaces\video\scalers</Filter>
     </None>
-    <None Include="..\..\src\dep\libs\zlib\zconf.h.in">
-      <Filter>libs\zlib</Filter>
-    </None>
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt">
-      <Filter>libs\libpng</Filter>
-    </None>
-    <None Include="..\..\src\cpu\e132xs\e132xsop.inc">
-      <Filter>cpus\e132xs</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">

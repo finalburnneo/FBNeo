@@ -9323,7 +9323,7 @@ static INT32 DrvExit()
 // Driver Definitions
 
 struct BurnDriver BurnDrvCps19xx = {
-	"19xx", NULL, NULL, NULL, "1995",
+	"19xx", NULL, NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Euro 960104)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9333,7 +9333,7 @@ struct BurnDriver BurnDrvCps19xx = {
 };
 
 struct BurnDriver BurnDrvCps19xxu = {
-	"19xxu", "19xx", NULL, NULL, "1995",
+	"19xxu", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (USA 951207)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9343,7 +9343,7 @@ struct BurnDriver BurnDrvCps19xxu = {
 };
 
 struct BurnDriver BurnDrvCps19xxa = {
-	"19xxa", "19xx", NULL, NULL, "1995",
+	"19xxa", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Asia 960104)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9353,7 +9353,7 @@ struct BurnDriver BurnDrvCps19xxa = {
 };
 
 struct BurnDriver BurnDrvCps19xxar1 = {
-	"19xxar1", "19xx", NULL, NULL, "1995",
+	"19xxar1", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Asia 951207)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9363,7 +9363,7 @@ struct BurnDriver BurnDrvCps19xxar1 = {
 };
 
 struct BurnDriver BurnDrvCps19xxb = {
-	"19xxb", "19xx", NULL, NULL, "1995",
+	"19xxb", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Brazil 951218)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9373,7 +9373,7 @@ struct BurnDriver BurnDrvCps19xxb = {
 };
 
 struct BurnDriver BurnDrvCps19xxh = {
-	"19xxh", "19xx", NULL, NULL, "1995",
+	"19xxh", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Hispanic 951218)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9393,7 +9393,7 @@ struct BurnDriver BurnDrvCps19xxj = {
 };
 
 struct BurnDriver BurnDrvCps19xxjr1 = {
-	"19xxjr1", "19xx", NULL, NULL, "1995",
+	"19xxjr1", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Japan 951225)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9403,7 +9403,7 @@ struct BurnDriver BurnDrvCps19xxjr1 = {
 };
 
 struct BurnDriver BurnDrvCps19xxjr2 = {
-	"19xxjr2", "19xx", NULL, NULL, "1995",
+	"19xxjr2", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (Japan 951207)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -9444,7 +9444,7 @@ struct BurnDriver BurnDrvCps1944j = {
 
 struct BurnDriver BurnDrvCpsArmwar = {
 	"armwar", NULL, NULL, NULL, "1994",
-	"Armored Warriors (Europe 941024)\0", NULL, "Capcom", "CPS2",
+	"Armored Warriors (Euro 941024)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, ArmwarRomInfo, ArmwarRomName, NULL, NULL, NULL, NULL, ArmwarInputInfo, NULL,
@@ -9464,7 +9464,7 @@ struct BurnDriver BurnDrvCpsArmwarb = {
 
 struct BurnDriver BurnDrvCpsArmwarr1 = {
 	"armwarr1", "armwar", NULL, NULL, "1994",
-	"Armored Warriors (Europe 941011)\0", NULL, "Capcom", "CPS2",
+	"Armored Warriors (Euro 941011)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Armwarr1RomInfo, Armwarr1RomName, NULL, NULL, NULL, NULL, ArmwarInputInfo, NULL,
@@ -9853,7 +9853,7 @@ struct BurnDriver BurnDrvCpsDdsomur1 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtod = {
-	"ddtod", NULL, NULL, NULL, "1994",
+	"ddtod", NULL, NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Euro 940412)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9863,7 +9863,7 @@ struct BurnDriver BurnDrvCpsDdtod = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodr1 = {
-	"ddtodr1", "ddtod", NULL, NULL, "1994",
+	"ddtodr1", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Euro 940113)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9873,7 +9873,7 @@ struct BurnDriver BurnDrvCpsDdtodr1 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtoda = {
-	"ddtoda", "ddtod", NULL, NULL, "1994",
+	"ddtoda", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Asia 940412)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9883,7 +9883,7 @@ struct BurnDriver BurnDrvCpsDdtoda = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodar1 = {
-	"ddtodar1", "ddtod", NULL, NULL, "1994",
+	"ddtodar1", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Asia 940113)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9893,7 +9893,7 @@ struct BurnDriver BurnDrvCpsDdtodar1 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodh = {
-	"ddtodh", "ddtod", NULL, NULL, "1994",
+	"ddtodh", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Hispanic 940412)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9903,7 +9903,7 @@ struct BurnDriver BurnDrvCpsDdtodh = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodhr1 = {
-	"ddtodhr1", "ddtod", NULL, NULL, "1994",
+	"ddtodhr1", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Hispanic 940125)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9913,7 +9913,7 @@ struct BurnDriver BurnDrvCpsDdtodhr1 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodhr2 = {
-	"ddtodhr2", "ddtod", NULL, NULL, "1994",
+	"ddtodhr2", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Hispanic 940113)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9923,7 +9923,7 @@ struct BurnDriver BurnDrvCpsDdtodhr2 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodj = {
-	"ddtodj", "ddtod", NULL, NULL, "1994",
+	"ddtodj", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Japan 940412)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9933,7 +9933,7 @@ struct BurnDriver BurnDrvCpsDdtodj = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodjr1 = {
-	"ddtodjr1", "ddtod", NULL, NULL, "1994",
+	"ddtodjr1", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Japan 940125)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9943,7 +9943,7 @@ struct BurnDriver BurnDrvCpsDdtodjr1 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodjr2 = {
-	"ddtodjr2", "ddtod", NULL, NULL, "1994",
+	"ddtodjr2", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Japan 940113)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9953,7 +9953,7 @@ struct BurnDriver BurnDrvCpsDdtodjr2 = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodu = {
-	"ddtodu", "ddtod", NULL, NULL, "1994",
+	"ddtodu", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (USA 940125)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -9963,7 +9963,7 @@ struct BurnDriver BurnDrvCpsDdtodu = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodur1 = {
-	"ddtodur1", "ddtod", NULL, NULL, "1994",
+	"ddtodur1", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (USA 940113)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -10234,7 +10234,7 @@ struct BurnDriver BurnDrvCpsHsf2j1 = {
 
 struct BurnDriver BurnDrvCpsJyangoku = {
 	"jyangoku", NULL, NULL, NULL, "1999",
-	"Jyangokushi: Haoh no Saihai (Japan 990527)\0", NULL, "Mitchell (Capcom license)", "CPS2",
+	"Jyangokushi: Haoh no Saihai (Japan 990527)\0", NULL, "Capcom", "CPS2",
 	L"\u96C0\u570B\u5FD7: \u8987\u738B\u306E\u91C7\u724C (Japan 990527)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_MAHJONG, 0,
 	NULL, JyangokuRomInfo, JyangokuRomName, NULL, NULL, NULL, NULL, JyangokuInputInfo, NULL,
@@ -10313,8 +10313,8 @@ struct BurnDriver BurnDrvCpsMmancp2ur2 = {
 };
 
 struct BurnDriver BurnDrvCpsRmancp2j = {
-	"rmancp2j", "megaman", NULL, NULL, "1999",
-	"Rockman: The Power Battle (Japan 950922)\0", NULL, "Capcom", "CPS2",
+	"rmancp2j", "megaman", NULL, NULL, "1995",
+	"Rockman: The Power Battle (CPS2, Japan 950922)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, Rmancp2jRomInfo, Rmancp2jRomName, NULL, NULL, NULL, NULL, Mmancp2uInputInfo, NULL,
@@ -11863,7 +11863,7 @@ struct BurnDriver BurnDrvCpsVsav2 = {
 };
 
 struct BurnDriver BurnDrvCpsXmcota = {
-	"xmcota", NULL, NULL, NULL, "1995",
+	"xmcota", NULL, NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Euro 950331)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11873,7 +11873,7 @@ struct BurnDriver BurnDrvCpsXmcota = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotar1 = {
-	"xmcotar1", "xmcota", NULL, NULL, "1995",
+	"xmcotar1", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Euro 950105)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11883,7 +11883,7 @@ struct BurnDriver BurnDrvCpsXmcotar1 = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotaa = {
-	"xmcotaa", "xmcota", NULL, NULL, "1995",
+	"xmcotaa", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Asia 950105)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11893,7 +11893,7 @@ struct BurnDriver BurnDrvCpsXmcotaa = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotaar1 = {
-	"xmcotaar1", "xmcota", NULL, NULL, "1995",
+	"xmcotaar1", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Asia 941219)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11903,7 +11903,7 @@ struct BurnDriver BurnDrvCpsXmcotaar1 = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotaar2 = {
-	"xmcotaar2", "xmcota", NULL, NULL, "1995",
+	"xmcotaar2", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Asia 941217)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11913,7 +11913,7 @@ struct BurnDriver BurnDrvCpsXmcotaar2 = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotab = {
-	"xmcotab", "xmcota", NULL, NULL, "1995",
+	"xmcotab", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Brazil 950331)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11923,7 +11923,7 @@ struct BurnDriver BurnDrvCpsXmcotab = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotah = {
-	"xmcotah", "xmcota", NULL, NULL, "1995",
+	"xmcotah", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Hispanic 950331)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2,HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11933,7 +11933,7 @@ struct BurnDriver BurnDrvCpsXmcotah = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotahr1 = {
-	"xmcotahr1", "xmcota", NULL, NULL, "1995",
+	"xmcotahr1", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Hispanic 950105)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2,HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -11984,7 +11984,7 @@ struct BurnDriver BurnDrvCpsXmcotaj3 = {
 
 struct BurnDriver BurnDrvCpsXmcotajr = {
 	"xmcotajr", "xmcota", NULL, NULL, "1994",
-	"X-Men: Children of the Atom (Japan, rent version 941208)\0", NULL, "Capcom", "CPS2",
+	"X-Men: Children of the Atom (Japan 941208 rent version)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, XmcotajrRomInfo, XmcotajrRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -11993,7 +11993,7 @@ struct BurnDriver BurnDrvCpsXmcotajr = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotau = {
-	"xmcotau", "xmcota", NULL, NULL, "1995",
+	"xmcotau", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (USA 950105)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
@@ -13953,7 +13953,7 @@ static INT32 Ssf2tPhoenixInit()
 }
 
 struct BurnDriver BurnDrvCps19xxd = {
-	"19xxd", "19xx", NULL, NULL, "1995",
+	"19xxd", "19xx", NULL, NULL, "1996",
 	"19XX: The War Against Destiny (USA 951207 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
@@ -13984,7 +13984,7 @@ struct BurnDriver BurnDrvCps1944ad = {
 
 struct BurnDriver BurnDrvCpsArmwar1d = {
 	"armwar1d", "armwar", NULL, NULL, "1994",
-	"Armored Warriors (Europe 941011 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
+	"Armored Warriors (Euro 941011 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Armwar1dRomInfo, Armwar1dRomName, NULL, NULL, NULL, NULL, ArmwarInputInfo, NULL,
@@ -14053,7 +14053,7 @@ struct BurnDriver BurnDrvCpsDdsomud = {
 };
 
 struct BurnDriver BurnDrvCpsDdtodd = {
-	"ddtodd", "ddtod", NULL, NULL, "1994",
+	"ddtodd", "ddtod", NULL, NULL, "1993",
 	"Dungeons & Dragons: Tower of Doom (Euro 940412 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
@@ -14504,7 +14504,7 @@ struct BurnDriver BurnDrvCpsVsav2d = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotar1d = {
-	"xmcotar1d", "xmcota", NULL, NULL, "1995",
+	"xmcotar1d", "xmcota", NULL, NULL, "1994",
 	"X-Men: Children of the Atom (Euro 950105 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,

@@ -1728,7 +1728,8 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		else if ((*code & 0xff00) + (*color) == 0xFC05) superblend++; // part 5.
 		else if ((*code & 0xff00) + (*color) == 0xD001) superblend++; // Title Screen
 		else if ((*code & 0xff00) + (*color) == 0xC700) superblendoff++; // End Boss death scene (anti superblend)
-
+		else if ((*code & 0xff00) + (*color) == 0x8910) superblendoff++; // Skull Boss, pink background layer
+		//extern int counter;
 		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
@@ -2867,7 +2868,7 @@ static INT32 DrvDraw()
 
 			superblendoff = 0; // frame-based.
 		}
-
+//		bprintf(0, _T("blend  %x\n"), blendmode);
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
 	}
 

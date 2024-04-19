@@ -20114,6 +20114,44 @@ struct BurnDriver BurnDrvrbffspbh = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack) - 2024-04-11
+// Modified by jlima
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=724160
+
+static struct BurnRomInfo gowcaietRomDesc[] = {
+	{ "094-p1et.p1",	0x200000, 0xfe5df757, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "094-s1.s1",		0x020000, 0x2f8748a2, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "094-c1.c1",		0x200000, 0x042f6af5, 3 | BRF_GRA },           //  2 Sprite data
+	{ "094-c2.c2",		0x200000, 0x0fbcd046, 3 | BRF_GRA },           //  3
+	{ "094-c3.c3",		0x200000, 0x58bfbaa1, 3 | BRF_GRA },           //  4
+	{ "094-c4.c4",		0x200000, 0x9451ee73, 3 | BRF_GRA },           //  5
+	{ "094-c5.c5",		0x200000, 0xff9cf48c, 3 | BRF_GRA },           //  6
+	{ "094-c6.c6",		0x200000, 0x31bbd918, 3 | BRF_GRA },           //  7
+	{ "094-c7.c7",		0x200000, 0x2091ec04, 3 | BRF_GRA },           //  8
+	{ "094-c8.c8",		0x200000, 0xd80dd241, 3 | BRF_GRA },           //  9
+
+	{ "094-m1.m1",		0x020000, 0x78c851cb, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "094-v1.v1",		0x200000, 0x6c31223c, 5 | BRF_SND },           // 11 Sound data
+	{ "094-v2.v2",		0x200000, 0x8edb776c, 5 | BRF_SND },           // 12
+	{ "094-v3.v3",		0x100000, 0xc63b9285, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(gowcaiet, gowcaiet, neogeo)
+STD_ROM_FN(gowcaiet)
+
+struct BurnDriver BurnDrvGowcaiet = {
+	"gowcaiet", "gowcaizr", "neogeo", NULL, "2024",
+	"Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	L"Voltage Fighter - Gowcaizer\0\u8D85\u4EBA\u5B66\u5712\u30B4\u30A6\u30AB\u30A4\u30B6\u30FC (Eternal, Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, gowcaietRomInfo, gowcaietRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 
 // The Eye of Typhoon (Beta 7 Version)
 // https://ozzyouzo.itch.io/teot
@@ -20734,7 +20772,7 @@ static INT32 ngOc400osInit()
 }
 
 struct BurnDriver BurnDrvmslugdqy = {
-	"mslugdqy", "mslug", "neogeo", NULL, "2023",
+	"mslugdqy", "mslug", "neogeo", NULL, "2024",
 	"Metal Slug (Origins, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
@@ -21391,12 +21429,12 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Legendary, Hack) - 2024-03-09
+// Metal Slug 3 (Legendary, Hack) - 2024-03-14
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug3cqRomDesc[] = {
-	{ "256-ph1cq.p1",    0x100000, 0x1f652fac, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2cq.sp2",   0x400000, 0x4d1ffa19, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1cq.p1",    0x100000, 0x745d11d3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cq.sp2",   0x400000, 0xc44fc9ca, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "256-c1d.c1",      0x800000, 0x3540398c, 3 | BRF_GRA },           //  2 Sprite data
 	{ "256-c2d.c2",      0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  3
@@ -21682,7 +21720,7 @@ STDROMPICKEXT(mslug5sg, mslug5sg, neogeo)
 STD_ROM_FN(mslug5sg)
 
 struct BurnDriver BurnDrvmslug5sg = {
-	"mslug5sg", "mslug5", "neogeo", NULL, "2023",
+	"mslug5sg", "mslug5", "neogeo", NULL, "2024",
 	"Metal Slug 5 (Stone Turtle, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -21873,7 +21911,7 @@ STDROMPICKEXT(mslug5boss, mslug5boss, neogeo)
 STD_ROM_FN(mslug5boss)
 
 struct BurnDriver BurnDrvmslug5boss = {
-	"mslug5boss", "mslug5", "neogeo", NULL, "2023",
+	"mslug5boss", "mslug5", "neogeo", NULL, "2024",
 	"Metal Slug 5 (Boss Battle, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

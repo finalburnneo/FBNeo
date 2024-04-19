@@ -1762,7 +1762,7 @@ static void mystwarr_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 {
 	INT32 c = *color;
 	*color = sprite_colorbase | (c & 0x001f);
-	*priority = c & 0x00f0;
+	*priority = c & 0x00e0; // was 0xf0, but that broke tv's @ endboss
 }
 
 static void metamrph_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)

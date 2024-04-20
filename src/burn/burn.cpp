@@ -498,7 +498,7 @@ static void BurnDrvSetFullNameA(char* szName)
 	pDriver[nBurnDrvActive]->szFullNameA = szName;
 }
 
-INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i)
+INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
 {
 	if ((-1 == i) || (NULL == szName)) return -1;
 
@@ -904,12 +904,13 @@ extern "C" INT32 BurnDrvExit()
 		BurnDrvSetFullNameA(szBackupNameA);
 		pszCustomNameA = NULL;
 
-//		UINT32 nIndex = BurnDrvGetIndex(BurnDrvGetTextA(DRV_NAME));
+#if defined (_UNICODE)
 		const wchar_t* _str1 = L"", * _str2 = BurnDrvGetFullNameW(nBurnDrvActive);
 
 		if (0 != _tcscmp(_str1, _str2)) {
 			BurnDrvSetFullNameW(szBackupNameW, nBurnDrvActive);
 		}
+#endif
 	}
 
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function

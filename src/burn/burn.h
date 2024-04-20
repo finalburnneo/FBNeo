@@ -413,7 +413,6 @@ char* BurnDrvGetTextA(UINT32 i);
 wchar_t* BurnDrvGetFullNameW(UINT32 i);
 
 INT32 BurnDrvGetIndex(char* szName);
-INT32 BurnDrvSetFullNameW(TCHAR * szName, INT32 i);
 INT32 BurnDrvGetZipName(char** pszName, UINT32 i);
 INT32 BurnDrvSetZipName(char* szName, INT32 i);
 INT32 BurnDrvGetRomInfo(struct BurnRomInfo *pri, UINT32 i);

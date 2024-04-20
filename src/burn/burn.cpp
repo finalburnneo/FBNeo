@@ -498,7 +498,7 @@ static void BurnDrvSetFullNameA(char* szName)
 	pDriver[nBurnDrvActive]->szFullNameA = szName;
 }
 
-INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
+INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i)
 {
 	if ((-1 == i) || (NULL == szName)) return -1;
 

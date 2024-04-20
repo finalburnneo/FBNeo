@@ -516,6 +516,8 @@ static TCHAR* MangleGamename(const TCHAR* szOldName, bool /*bRemoveArticle*/)
 
 static TCHAR* RemoveSpace(const TCHAR* szOldName)
 {
+	if (NULL == szOldName) return NULL;
+
 	static TCHAR szNewName[256] = _T("");
 	int j = 0;
 	int i = 0;

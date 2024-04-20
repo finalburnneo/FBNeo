@@ -9276,6 +9276,25 @@ struct BurnDriver BurnDrvpce_huzero = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// Mai Nurse (HB)
+
+static struct BurnRomInfo pce_mainurseRomDesc[] = {
+	{ "Mai Nurse (2024)(lunoka).pce", 262144, 0xc94e2bc6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_mainurse)
+STD_ROM_FN(pce_mainurse)
+
+struct BurnDriver BurnDrvpce_mainurse = {
+	"pce_mainurse", NULL, NULL, NULL, "2024",
+	"Mai Nurse (HB)\0", NULL, "lunoka", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PUZZLE, 0,
+	PceGetZipName, pce_mainurseRomInfo, pce_mainurseRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 224, 4, 3
+};
+
 // Nantettatte Engine (HB)
 
 static struct BurnRomInfo pce_nantetRomDesc[] = {

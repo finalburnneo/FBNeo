@@ -5122,7 +5122,7 @@ static struct BurnDIPInfo WofhfhDIPList[]=
 	{0x02, 0x01, 0x03, 0x00, "3 Players 3 Shooters"   },
 
 	// Dip Ex
-	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)" },
+	{0   , 0xfe, 0   , 2   , "Scenario Selection"     },
 	{0x03, 0x01, 0x01, 0x00, "Original"               },
 	{0x03, 0x01, 0x01, 0x01, "Wof"                    },
 };
@@ -5186,7 +5186,7 @@ static struct BurnDIPInfo WofsgzbDIPList[] =
 	{0x03, 0x01, 0x01, 0x01, "Q Sound"                 },
 
 	// Dip Ex
-	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)"  },
+	{0   , 0xfe, 0   , 2   , "Scenario Selection"      },
 	{0x04, 0x01, 0x01, 0x00, "Original"                },
 	{0x04, 0x01, 0x01, 0x01, "Wof"                     },
 };
@@ -5506,13 +5506,14 @@ static struct BurnDIPInfo DinofwDIPList[] =
 
 static struct BurnDIPInfo DinoScenarioDIPList[] =
 {
+	DIP_OFFSET(0x1c)
 	// Defaults
-	{0x1c, 0xff, 0xff, 0x00, NULL                      },
+	{0x00, 0xff, 0xff, 0x00, NULL                      },
 
 	// Dip Ex
-	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)"  },
-	{0x1c, 0x01, 0x01, 0x00, "Original"                },
-	{0x1c, 0x01, 0x01, 0x01, "Dino"                    },
+	{0   , 0xfe, 0   , 2   , "Scenario Selection"      },
+	{0x00, 0x01, 0x01, 0x00, "Original"                },
+	{0x00, 0x01, 0x01, 0x01, "Dino"                    },
 };
 
 static struct BurnDIPInfo ffightdwDIPList[] =
@@ -17275,6 +17276,10 @@ static INT32 DrvInit()
 	if (Cps1LoadRoms(1)) return 1;
 	
 	if (AmendProgRomCallback) AmendProgRomCallback();
+
+	FILE* f = fopen("cps_prg", "wb");
+	fwrite(CpsRom, nCpsRomLen, 1, f);
+	fclose(f);
 	
 	SetGameConfig();
 	
@@ -17917,16 +17922,20 @@ static INT32 DinotpicInit()
 	return nRet;
 }
 
-static void DinohuntPatchCallback()
+static INT32 DinohuntScenarioPatch()
 {
+	INT32 nRet = VerSwitcher & 1;
+
 	// Scenario: Same as dino
-	*((UINT16*)(CpsRom + 0xa9a2)) = BURN_ENDIAN_SWAP_INT16(0x0000);
-	*((UINT16*)(CpsRom + 0xa9a4)) = BURN_ENDIAN_SWAP_INT16(0x08ce);
-	*((UINT16*)(CpsRom + 0xabe8)) = BURN_ENDIAN_SWAP_INT16(0x522d);
-	*((UINT16*)(CpsRom + 0xabea)) = BURN_ENDIAN_SWAP_INT16(0x04d9);
-	*((UINT16*)(CpsRom + 0xabec)) = BURN_ENDIAN_SWAP_INT16(0x022d);
-	*((UINT16*)(CpsRom + 0xabee)) = BURN_ENDIAN_SWAP_INT16(0x0007);
-	*((UINT16*)(CpsRom + 0xabf0)) = BURN_ENDIAN_SWAP_INT16(0x04d9);
+	*((UINT16*)(CpsRom + 0xa9a2)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x0000) : BURN_ENDIAN_SWAP_INT16(0x0018);
+	*((UINT16*)(CpsRom + 0xa9a4)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x08ce) : BURN_ENDIAN_SWAP_INT16(0x838a);
+	*((UINT16*)(CpsRom + 0xabe8)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x522d) : BURN_ENDIAN_SWAP_INT16(0x4eb9);
+	*((UINT16*)(CpsRom + 0xabea)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x04d9) : BURN_ENDIAN_SWAP_INT16(0x0018);
+	*((UINT16*)(CpsRom + 0xabec)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x022d) : BURN_ENDIAN_SWAP_INT16(0x83a8);
+	*((UINT16*)(CpsRom + 0xabee)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x0007) : BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(CpsRom + 0xabf0)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x04d9) : BURN_ENDIAN_SWAP_INT16(0x4e71);
+
+	return nRet;
 }
 
 static INT32 DinohuntInit()
@@ -17936,8 +17945,8 @@ static INT32 DinohuntInit()
 	Dinohunt = 1;
 	CpsBootlegEEPROM = 1;
 
-	if (VerSwitcher & 1) {
-		AmendProgRomCallback = DinohuntPatchCallback;
+	if (!bDoIpsPatch) {
+		CpsRunResetCallbackFunction = DinohuntScenarioPatch;
 	}
 	
 	nRet = TwelveMhzInit();
@@ -21099,21 +21108,25 @@ static INT32 WofchInit()
 	return nRet;
 }
 
-static void WofhfhPatchCallback()
+static INT32 WofhfhScenarioPatch()
 {
+	INT32 nRet = VerSwitcher & 1;
+
 	// Scenario: Same as wof
-	CpsRom[0xb214] = 0x00;
-	*((UINT16*)(CpsRom + 0xb3ea)) = BURN_ENDIAN_SWAP_INT16(0x522d);
-	*((UINT16*)(CpsRom + 0xb3ec)) = BURN_ENDIAN_SWAP_INT16(0xff88);
-	*((UINT16*)(CpsRom + 0xb3ee)) = BURN_ENDIAN_SWAP_INT16(0x0c2d);
-	*((UINT16*)(CpsRom + 0xb3f0)) = BURN_ENDIAN_SWAP_INT16(0x000d);
-	*((UINT16*)(CpsRom + 0xb3f2)) = BURN_ENDIAN_SWAP_INT16(0xff88);
+	CpsRom[0xb214] = (1 == nRet) ? 0x00 : 0x0b;
+	*((UINT16*)(CpsRom + 0xb3ea)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x522d) : BURN_ENDIAN_SWAP_INT16(0x4eb9);
+	*((UINT16*)(CpsRom + 0xb3ec)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0xff88) : BURN_ENDIAN_SWAP_INT16(0x000e);
+	*((UINT16*)(CpsRom + 0xb3ee)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x0c2d) : BURN_ENDIAN_SWAP_INT16(0xa586);
+	*((UINT16*)(CpsRom + 0xb3f0)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x000d) : BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(CpsRom + 0xb3f2)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0xff88) : BURN_ENDIAN_SWAP_INT16(0x4e71);
+
+	return nRet;
 }
 
 static INT32 WofhfhInit()
 {
-	if (VerSwitcher & 1) {
-		AmendProgRomCallback = WofhfhPatchCallback;
+	if (!bDoIpsPatch) {
+		CpsRunResetCallbackFunction = WofhfhScenarioPatch;
 	}
 
 	return TwelveMhzInit();
@@ -21856,7 +21869,7 @@ static INT32 WofablInit()
 	return nRet;
 }
 
-static void WofsgzbPatchCallback()
+static void WofsgzbQsoundPatch()
 {
 	// QSound
 	if (Cps1Qs) {
@@ -21886,6 +21899,19 @@ static void WofsgzbPatchCallback()
 	}
 }
 
+static INT32 WofsgzbScenarioPatch()
+{
+	INT32 nRet = VerSwitcher & 1;
+
+	// Scenario: Same as wof
+	CpsRom[0xb1b0] = (1 == nRet) ? 0x00 : 0x05;
+	*((UINT16*)(CpsRom + 0xb380)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x2020) : BURN_ENDIAN_SWAP_INT16(0x4eb9);
+	*((UINT16*)(CpsRom + 0xb382)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0x522d) : BURN_ENDIAN_SWAP_INT16(0x0012);
+	*((UINT16*)(CpsRom + 0xb384)) = (1 == nRet) ? BURN_ENDIAN_SWAP_INT16(0xff88) : BURN_ENDIAN_SWAP_INT16(0x26f2);
+
+	return nRet;
+}
+
 static INT32 WofsgzbInit()
 {
 	Cps1DrawAtVblank = 1;
@@ -21898,7 +21924,11 @@ static INT32 WofsgzbInit()
 		CRI.nCpsQSamLen = 0x200000;
 	}
 
-	AmendProgRomCallback = WofsgzbPatchCallback;
+	AmendProgRomCallback = WofsgzbQsoundPatch;
+
+	if (!bDoIpsPatch) {
+		CpsRunResetCallbackFunction = WofsgzbScenarioPatch;
+	}
 
 	return TwelveMhzInit();
 }

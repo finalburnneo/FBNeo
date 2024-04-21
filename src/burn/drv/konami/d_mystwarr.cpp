@@ -1713,6 +1713,7 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 static INT32 superblend = 0;
 static INT32 oldsuperblend = 0;
 static INT32 superblendoff = 0;
+static INT32 superblendl0 = 0;
 
 static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
@@ -1729,8 +1730,14 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		else if ((*code & 0xff00) + (*color) == 0xD001) superblend++; // Title Screen
 		else if ((*code & 0xff00) + (*color) == 0xC700) superblendoff++; // End Boss death scene (anti superblend)
 		else if ((*code & 0xff00) + (*color) == 0x8910) superblendoff++; // Skull Boss, pink background layer
-		//extern int counter;
-		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
+	}
+	if (layer == 0) {
+		/**/ if ((*code & 0xff00) + (*color) == 0xf00d) {superblend++,superblendl0=1;} // ending matt damon
+		else if ((*code & 0xff00) + (*color) == 0xfd0d) {superblend++,superblendl0=1;} // ending voodoo homie
+		else if ((*code & 0xff00) + (*color) == 0xf611) {superblend++,superblendl0=1;} // ending ass&titties
+		else if ((*code & 0xff00) + (*color) == 0xf501) {superblend++,superblendl0=1;} // ending clown-furry
+//		extern int counter;
+//		if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
@@ -1875,6 +1882,7 @@ static INT32 DrvDoReset()
 	oinprion = 0;
 
 	superblend = 0; // for mystwarr alpha tile count
+	superblendl0 = 0;
 	oldsuperblend = 0;
 	superblendoff = 0;
 
@@ -2857,18 +2865,22 @@ static INT32 DrvDraw()
 			}
 
 			if ((superblend || oldsuperblend) && !superblendoff) {
-				blendmode = (1 << 16 | GXMIX_BLEND_FORCE) << 2; // using "|| oldsuperblend" for 1 frame latency, to avoid flickers on the water level when he gets "flushed" into the boss part
+				blendmode = ((1 << 16 | GXMIX_BLEND_FORCE) << (superblendl0 ? 0 : 2)); // using "|| oldsuperblend" for 1 frame latency, to avoid flickers on the water level when he gets "flushed" into the boss part
 			}
 
 			if (DrvDips[1] & 1) // debug alpha
-				bprintf(0, _T("%X %X (%X), "), superblend, oldsuperblend, Drv68KRAM[0x2335]);
+				bprintf(0, _T("%X %X [off?%x] (%X), "), superblend, oldsuperblend, superblendoff, Drv68KRAM[0x2335]);
 
 			oldsuperblend = superblend;
 			if (superblend) superblend = 1;
 
+			superblendl0 = 0;
+
 			superblendoff = 0; // frame-based.
 		}
-//		bprintf(0, _T("blend  %x\n"), blendmode);
+		if (DrvDips[1] & 1) {
+			bprintf(0, _T("blend  %x\n"), blendmode);
+		}
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
 	}
 
@@ -3097,6 +3109,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(superblend);
 		SCAN_VAR(oldsuperblend);
 		SCAN_VAR(superblendoff);
+		SCAN_VAR(superblendl0);
 
 		SCAN_VAR(nExtraCycles);
 

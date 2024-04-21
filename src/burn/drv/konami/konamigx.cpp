@@ -183,8 +183,9 @@ static void gx_draw_basic_tilemaps(INT32 mixerflags, INT32 code)
 		*/
 		if (temp1!=0xff && temp2 /*&& temp3==3*/)
 		{
+			if (konamigx_mystwarr_kludge) temp2 = 1; // mixlev only on this layer via '338 for mystwarr
 			temp4 = K054338_set_alpha_level(temp2);
-
+//			bprintf(0, _T("%x layer, temp4 %x  temp2 %x\n"), code, temp4, temp2);
 			if (temp4 <= 0 && !konamigx_mystwarr_kludge) return; // alpha level so high that layer is completely invisible. mystwarr needs this disabled for tile-based alpha tile counting.
 			if (temp4 < 255) k = K056832_SET_ALPHA(temp4);
 		}

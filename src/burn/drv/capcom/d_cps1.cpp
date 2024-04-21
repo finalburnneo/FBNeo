@@ -17276,10 +17276,6 @@ static INT32 DrvInit()
 	if (Cps1LoadRoms(1)) return 1;
 	
 	if (AmendProgRomCallback) AmendProgRomCallback();
-
-	FILE* f = fopen("cps_prg", "wb");
-	fwrite(CpsRom, nCpsRomLen, 1, f);
-	fclose(f);
 	
 	SetGameConfig();
 	

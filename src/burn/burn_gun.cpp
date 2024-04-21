@@ -12,6 +12,8 @@ bool bBurnGunAutoHide = 1;
 static bool bBurnGunDrawTargets = true; // game-configured
 bool bBurnGunDrawReticles = true; // UI-configured
 
+bool bBurnGunPositionalMode = false;
+
 static INT32 Using_Trackball = 0;
 
 static INT32 nBurnGunMaxX = 0;
@@ -538,6 +540,19 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	if (num > MAX_GUNS - 1) return;
 
 	if (bBurnRunAheadFrame) return; // remove jitter w/runahead
+
+	if (bBurnGunPositionalMode) {
+		x = ProcessAnalog(x, 0, INPUT_DEADZONE, 0x00, 0xff);
+		y = ProcessAnalog(y, 0, INPUT_DEADZONE, 0x00, 0xff);
+
+		BurnGunX[num] = ((x * nBurnGunMaxX / 0xff) - 8) << 8;
+		BurnGunY[num] = ((y * nBurnGunMaxY / 0xff) - 8) << 8;
+
+		for (INT32 i = 0; i < nBurnGunNumPlayers; i++)
+			GunTargetUpdate(i);
+
+		return;
+	}
 
 	if (y == 1 || y == -1) y = 0;
 	if (x == 1 || x == -1) x = 0; // prevent walking crosshair

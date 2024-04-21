@@ -7,6 +7,8 @@
 
 int nIniVersion = 0;
 
+extern bool bBurnGunPositionalMode;
+
 struct VidPresetData VidPreset[4] = {
 	{ 640, 480},
 	{ 1024, 768},
@@ -270,6 +272,7 @@ int ConfigAppLoad()
 		VAR(bBurnUseBlend);
 		VAR(BurnShiftEnabled);
 		VAR(bBurnGunDrawReticles);
+		VAR(bBurnGunPositionalMode);
 		VAR(bSkipStartupCheck);
 
 		VAR(nSlowMo);
@@ -708,6 +711,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, enable lightgun reticle display support.\n"));
 	VAR(bBurnGunDrawReticles);
+
+	_ftprintf(h, _T("\n// If non-zero, enable lightgun positional mode (Sinden or real lightgun HW).\n"));
+	VAR(bBurnGunPositionalMode);
 
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);

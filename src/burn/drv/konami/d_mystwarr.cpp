@@ -1732,12 +1732,13 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		else if ((*code & 0xff00) + (*color) == 0x8910) superblendoff++; // Skull Boss, pink background layer
 	}
 	if (layer == 0) {
-		/**/ if ((*code & 0xff00) + (*color) == 0xf00d) {superblend++,superblendl0=1;} // ending matt damon
-		else if ((*code & 0xff00) + (*color) == 0xfd0d) {superblend++,superblendl0=1;} // ending voodoo homie
-		else if ((*code & 0xff00) + (*color) == 0xf611) {superblend++,superblendl0=1;} // ending ass&titties
-		else if ((*code & 0xff00) + (*color) == 0xf501) {superblend++,superblendl0=1;} // ending clown-furry
-//		extern int counter;
-//		if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
+		/**/ if ((*code & 0xff00) + (*color) == 0xf00d) {superblend++,superblendl0=1;} // ending Spyros (matt damon)
+		else if ((*code & 0xff00) + (*color) == 0xfd0d) {superblend++,superblendl0=1;} // ending Brad (voodoo homie)
+		else if ((*code & 0xff00) + (*color) == 0xf611) {superblend++,superblendl0=1;} // ending Yuri (ass&titties)
+		else if ((*code & 0xff00) + (*color) == 0xf501) {superblend++,superblendl0=1;} // ending Keima (clown-furry)
+		else if ((*code & 0xff00) + (*color) == 0xf801) {superblend++,superblendl0=1;} // ending Kojiro (regular guy)
+		//extern int counter;
+		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }

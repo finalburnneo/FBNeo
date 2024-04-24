@@ -33792,6 +33792,25 @@ struct BurnDriver BurnDrvMSX_transball = {
 	272, 228, 4, 3
 };
 
+// Trucho (HB)
+
+static struct BurnRomInfo MSX_truchoRomDesc[] = {
+	{ "Trucho (2024)(Kamino).rom",	49152, 0xfc5a0042, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_trucho, MSX_trucho, msx_msx)
+STD_ROM_FN(MSX_trucho)
+
+struct BurnDriver BurnDrvMSX_trucho = {
+	"msx_trucho", NULL, "msx_msx", NULL, "2024",
+	"Trucho (HB)\0", NULL, "Kamino", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_truchoRomInfo, MSX_truchoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Tut Tut (HB)
 
 static struct BurnRomInfo MSX_tuttutRomDesc[] = {

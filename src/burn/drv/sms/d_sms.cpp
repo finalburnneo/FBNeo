@@ -28402,10 +28402,10 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	256, 224, 4, 3
 };
 
-// Goblin Kart Rescue (HB, v0.9.8)
+// Goblin Kart Rescue (HB, v1.0.3)
 
 static struct BurnRomInfo sms_gkrescueRomDesc[] = {
-	{ "Goblin Kart Rescue v0.9.8 (2024)(raphnet).sms",	458752, 0xcc782e28, BRF_PRG | BRF_ESS },
+	{ "Goblin Kart Rescue v1.0.3 (2024)(raphnet).sms",	393216, 0xdb7b9954, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_gkrescue)
@@ -28413,7 +28413,7 @@ STD_ROM_FN(sms_gkrescue)
 
 struct BurnDriver BurnDrvsms_gkrescue = {
 	"sms_gkrescue", NULL, NULL, NULL, "2024",
-	"Goblin Kart Rescue (HB, v0.9.8)\0", NULL, "raphnet", "Sega Master System",
+	"Goblin Kart Rescue (HB, v1.0.3)\0", NULL, "raphnet", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_RACING, 0,
 	SMSGetZipName, sms_gkrescueRomInfo, sms_gkrescueRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29238,10 +29238,10 @@ struct BurnDriver BurnDrvsms_speccies2 = {
 	256, 224, 4, 3
 };
 
-// Stygian Quest (HB)
+// Stygian Quest (HB, v1.2)
 
 static struct BurnRomInfo sms_stygianquestRomDesc[] = {
-	{ "Stygian Quest (2024)(Naarshakta).sms",	573440, 0x3ac7a0c4, BRF_PRG | BRF_ESS },
+	{ "Stygian Quest v1.2 (2024)(Naarshakta).sms",	573440, 0xb6c9a3c5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_stygianquest)
@@ -29249,7 +29249,7 @@ STD_ROM_FN(sms_stygianquest)
 
 struct BurnDriver BurnDrvsms_stygianquest = {
 	"sms_stygianquest", NULL, NULL, NULL, "2024",
-	"Stygian Quest (HB)\0", NULL, "Naarshakta", "Sega Master System",
+	"Stygian Quest (HB, v1.2)\0", NULL, "Naarshakta", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_stygianquestRomInfo, sms_stygianquestRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29352,10 +29352,10 @@ struct BurnDriver BurnDrvsms_sww22e = {
 	256, 224, 4, 3
 };
 
-// Sushi Nights (HB, v1.03)
+// Sushi Nights (HB, v1.04)
 
 static struct BurnRomInfo sms_sushinightsRomDesc[] = {
-	{ "Sushi Nights v1.03 (2021-24)(MONIS GAMES).sms",	131072, 0x2c03bb6e, BRF_PRG | BRF_ESS },
+	{ "Sushi Nights v1.04 (2021-24)(MONIS GAMES).sms",	131072, 0x723d4880, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_sushinights)
@@ -29363,7 +29363,7 @@ STD_ROM_FN(sms_sushinights)
 
 struct BurnDriver BurnDrvsms_sushinights = {
 	"sms_sushinights", NULL, NULL, NULL, "2021-24",
-	"Sushi Nights (HB, v1.03)\0", NULL, "MONIS GAMES", "Sega Master System",
+	"Sushi Nights (HB, v1.04)\0", NULL, "MONIS GAMES", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_sushinightsRomInfo, sms_sushinightsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29985,10 +29985,10 @@ struct BurnDriver BurnDrvgg_prgarden = {
 	256, 192, 4, 3
 };
 
-// Sushi Nights (HB, v1.01)
+// Sushi Nights GG (HB, v1.04)
 
 static struct BurnRomInfo gg_sushinightsggRomDesc[] = {
-	{ "Sushi Nights v1.01 (2021-24)(MONIS GAMES).gg",	131072, 0xbdc4c3c9, BRF_PRG | BRF_ESS },
+	{ "Sushi Nights v1.04 (2021-24)(MONIS GAMES).gg",	131072, 0x934523bb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sushinightsgg)
@@ -29996,7 +29996,7 @@ STD_ROM_FN(gg_sushinightsgg)
 
 struct BurnDriver BurnDrvgg_sushinightsgg = {
 	"gg_sushinightsgg", NULL, NULL, NULL, "2021-24",
-	"Sushi Nights (HB, v1.01)\0", NULL, "MONIS GAMES", "Sega Game Gear",
+	"Sushi Nights GG (HB, v1.04)\0", NULL, "MONIS GAMES", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
 	GGGetZipName, gg_sushinightsggRomInfo, gg_sushinightsggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

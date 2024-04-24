@@ -3654,6 +3654,10 @@ static UINT8 __fastcall neogeoCDReadByte68KProgram(UINT32 sekAddress)
 
 static INT32 neogeoReset()
 {
+	if (NeoCallbackActive && NeoCallbackActive->pResetCallback) {
+		NeoCallbackActive->pResetCallback();
+	}
+
 	if (nNeoSystemType & NEO_SYS_CART) {
 		NeoLoad68KBIOS(NeoSystem & 0x3f);
 

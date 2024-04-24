@@ -1362,7 +1362,7 @@ static struct BurnDIPInfo lastbladDIPList[] = {
 	// Fake DIPs
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Off
 
-	{0,    0xFE, 0,    2,    "Mini Game (Must reload & AES)"},
+	{0,    0xFE, 0,    2,    "Mini Game"                    },
 	{0x06, 0x01, 0x01, 0x00, "Off"                          },
 	{0x06, 0x01, 0x01, 0x01, "On"                           },
 };
@@ -6230,29 +6230,55 @@ STD_ROM_FN(lastblad)
 
 static void LastbladPatchCallback()
 {
-	UINT32 patch_fix[] = {
-		// Mini Game Revealed
-		0x064cb6, 0x3c, 0x064cb7, 0x30, 0x064cb8, 0x1a, 0x064cde, 0xb9, 0x064cdf, 0x4e, 0x064ce0, 0x07, 0x064ce1, 0x00, 0x064ce2, 0xe4,
-		0x064ce3, 0xff, 0x065160, 0xb9, 0x065161, 0x4e, 0x065162, 0x07, 0x065163, 0x00, 0x065164, 0xc2, 0x065165, 0xff, 0x07ffc2, 0x0a,
-		0x07ffc3, 0x2c, 0x07ffc4, 0x86, 0x07ffc5, 0x0c, 0x07ffc6, 0x22, 0x07ffc7, 0x00, 0x07ffc8, 0x14, 0x07ffc9, 0x9a, 0x07ffca, 0x00,
-		0x07ffcb, 0x67, 0x07ffcc, 0x08, 0x07ffcd, 0x00, 0x07ffce, 0x1a, 0x07ffcf, 0x30, 0x07ffd0, 0x00, 0x07ffd1, 0x60, 0x07ffd2, 0x0c,
-		0x07ffd3, 0x00, 0x07ffd4, 0x3c, 0x07ffd5, 0x30, 0x07ffd6, 0x1b, 0x07ffd7, 0x15, 0x07ffd8, 0xfc, 0x07ffd9, 0xd5, 0x07ffda, 0x00,
-		0x07ffdb, 0x00, 0x07ffdc, 0x02, 0x07ffdd, 0x00, 0x07ffde, 0x40, 0x07ffdf, 0x02, 0x07ffe0, 0xff, 0x07ffe1, 0x00, 0x07ffe2, 0x75,
-		0x07ffe3, 0x4e, 0x07ffe4, 0x00, 0x07ffe5, 0x70, 0x07ffe6, 0x0a, 0x07ffe7, 0x2c, 0x07ffe8, 0x86, 0x07ffe9, 0x0c, 0x07ffea, 0x22,
-		0x07ffeb, 0x00, 0x07ffec, 0x14, 0x07ffed, 0x9a, 0x07ffee, 0x00, 0x07ffef, 0x67, 0x07fff0, 0x08, 0x07fff1, 0x00, 0x07fff2, 0x12,
-		0x07fff3, 0x30, 0x07fff4, 0x00, 0x07fff5, 0x60, 0x07fff6, 0x06, 0x07fff7, 0x00, 0x07fff8, 0x3c, 0x07fff9, 0x30, 0x07fffa, 0x1b,
-		0x07fffb, 0x15, 0x07fffc, 0x48, 0x07fffd, 0xe0, 0x07fffe, 0x75, 0x07ffff, 0x4e,
+	UINT32 patch_fix[3][76] = {
+		{
+			0x064cb6, 0x064cb8, 0x064cde, 0x064cdf, 0x064ce0, 0x064ce1, 0x064ce2, 0x064ce3, 0x065160, 0x065161, 0x065162, 0x065163, 0x065164, 0x065165, 0x07ffc2, 0x07ffc3,
+			0x07ffc4, 0x07ffc5, 0x07ffc6, 0x07ffc7, 0x07ffc8, 0x07ffc9, 0x07ffca, 0x07ffcb, 0x07ffcc, 0x07ffcd, 0x07ffce, 0x07ffcf, 0x07ffd0, 0x07ffd1, 0x07ffd2, 0x07ffd3,
+			0x07ffd4, 0x07ffd5, 0x07ffd6, 0x07ffd7, 0x07ffd8, 0x07ffd9, 0x07ffda, 0x07ffdb, 0x07ffdc, 0x07ffdd, 0x07ffde, 0x07ffdf, 0x07ffe0, 0x07ffe1, 0x07ffe2, 0x07ffe3,
+			0x07ffe4, 0x07ffe5, 0x07ffe6, 0x07ffe7, 0x07ffe8, 0x07ffe9, 0x07ffea, 0x07ffeb, 0x07ffec, 0x07ffed, 0x07ffee, 0x07ffef, 0x07fff0, 0x07fff1, 0x07fff2, 0x07fff3,
+			0x07fff4, 0x07fff5, 0x07fff6, 0x07fff7, 0x07fff8, 0x07fff9, 0x07fffa, 0x07fffb, 0x07fffc, 0x07fffd, 0x07fffe, 0x07ffff
+		},	// Address
+		{
+			0x2c, 0xf0, 0x00, 0x70, 0x12, 0x30, 0x48, 0xe0, 0x1a, 0x30, 0x40, 0x02, 0xff, 0x00, 0x00, 0x20,
+			0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+			0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x20,
+			0x8e, 0x55, 0x8f, 0x55, 0x90, 0x55, 0x91, 0x55, 0x92, 0x55, 0x93, 0x55, 0x94, 0x55, 0x95, 0x55,
+			0x96, 0x55, 0x22, 0x2a, 0x97, 0x55, 0x22, 0x2a, 0x98, 0x55, 0x99, 0x55
+		},	// Original
+		{
+			0x3c, 0x1a, 0xb9, 0x4e, 0x07, 0x00, 0xe4, 0xff, 0xb9, 0x4e, 0x07, 0x00, 0xc2, 0xff, 0x0a, 0x2c,
+			0x86, 0x0c, 0x22, 0x00, 0x14, 0x9a, 0x00, 0x67, 0x08, 0x00, 0x1a, 0x30, 0x00, 0x60, 0x0c, 0x00,
+			0x3c, 0x30, 0x1b, 0x15, 0xfc, 0xd5, 0x00, 0x00, 0x02, 0x00, 0x40, 0x02, 0xff, 0x00, 0x75, 0x4e,
+			0x00, 0x70, 0x0a, 0x2c, 0x86, 0x0c, 0x22, 0x00, 0x14, 0x9a, 0x00, 0x67, 0x08, 0x00, 0x12, 0x30,
+			0x00, 0x60, 0x06, 0x00, 0x3c, 0x30, 0x1b, 0x15, 0x48, 0xe0, 0x75, 0x4e
+		},	// Mini Game
 	};
 
-	for (INT32 i = 0; i < (sizeof(patch_fix) / sizeof(UINT32)) >> 1; i++) {
-		Neo68KROMActive[patch_fix[(i << 1) + 0]] = (UINT8)patch_fix[(i << 1) + 1];
+	INT32 nIndex = 1;	// Original
+
+	// to AES
+	if (VerSwitcher & 0x01) {
+		nIndex = 2;		// Mini Game
+
+		UINT8 nRegion = NeoSystem & 0x3f;
+
+		// AES Japan (0x0f) / AES Asia (0x10)
+		if ((0x0f != nRegion) && (0x10 != nRegion)) {
+			NeoSystem &= ~nRegion;
+//			NeoSystem |= 0x0f;	// AES Japan
+			NeoSystem |= 0x10;	// AES Asia
+		}
+	}
+
+	for (INT32 i = 0; i < 76; i++) {
+		Neo68KROMActive[patch_fix[0][i]] = (UINT8)patch_fix[nIndex][i];
 	}
 }
 
 static INT32 LastbladInit()
 {
-	if (VerSwitcher & 0x01) {
-		NeoCallbackActive->pInitialise = LastbladPatchCallback; // Mini Game Revealed (AES Mode)
+	if (!bDoIpsPatch) {
+		NeoCallbackActive->pResetCallback = LastbladPatchCallback; // Mini Game Revealed (AES Mode)
 	}
 
 	return NeoInit();
@@ -20266,10 +20292,10 @@ struct BurnDriver BurnDrvMslug5cq = {
 
 // Metal Slug 5 (Boss Battles, Hack)
 // Modified by 合金弹头爱克斯
-// 20240411
+// 20240420
 
 static struct BurnRomInfo mslug5bsRomDesc[] = {
-	{ "268-p1bs.p1",	0x600000, 0x6ec9bb7e, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1bs.p1",	0x600000, 0x8bb8c097, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };
@@ -23685,7 +23711,7 @@ static struct BurnRomInfo kof98eckRomDesc[] = {
 	{ "242-v3eck.v3",	0x400000, 0x59c53922, 5 | BRF_SND },
 	{ "242-v4eck.v4",	0x400000, 0x46ca6f5e, 5 | BRF_SND },
 
-	/* GOTVG Version - 20190217 */
+	/* GOTVG - 20190217 */
 	{ "242-p1eg.dif",	0x100000, 0x545818c9, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
 	{ "242-p2eg.dif",	0x400000, 0x1bd2a98c, 0 | BRF_ESS | BRF_PRG },
 
@@ -23707,14 +23733,14 @@ static struct BurnRomInfo kof98eckRomDesc[] = {
 	{ "242-v3eg.dif",	0x400000, 0x78097adb, 0 | BRF_SND },
 	{ "242-v4eg.dif",	0x400000, 0x57aa42a5, 0 | BRF_SND },
 
-	/* Extend Version - 20240218 */
-	{ "242-p1ex.dif",	0x100000, 0x8da31321, 0 | BRF_ESS | BRF_PRG }, // 32 68K code
-	{ "242-p2ex.dif",	0x400000, 0xf6bc5fd2, 0 | BRF_ESS | BRF_PRG },
+	/* Extend Version - 20240403 */
+	{ "242-p1ex.dif",	0x100000, 0x0d90487a, 0 | BRF_ESS | BRF_PRG }, // 32 68K code
+	{ "242-p2ex.dif",	0x400000, 0x07dc1fdc, 0 | BRF_ESS | BRF_PRG },
 
 	{ "242-s1ex.dif",	0x020000, 0xc1adc149, 0 | BRF_GRA },           // 34 Text layer tiles
 
-	{ "242-c1ex.dif",	0x800000, 0xe98b5c8a, 0 | BRF_GRA },           // 35 Sprite data
-	{ "242-c2ex.dif",	0x800000, 0xa779434e, 0 | BRF_GRA },
+	{ "242-c1ex.dif",	0x800000, 0xb612232a, 0 | BRF_GRA },           // 35 Sprite data
+	{ "242-c2ex.dif",	0x800000, 0xc444d7a0, 0 | BRF_GRA },
 	{ "242-c3ex.dif",	0x800000, 0xa747eb36, 0 | BRF_GRA },
 	{ "242-c4ex.dif",	0x800000, 0x0d7c33c9, 0 | BRF_GRA },
 	{ "242-c7ex.dif",	0x800000, 0x7deedae9, 0 | BRF_GRA },
@@ -23724,7 +23750,7 @@ static struct BurnRomInfo kof98eckRomDesc[] = {
 
 	{ "242-m1ex.dif",	0x040000, 0x0e1b3ef0, 0 | BRF_ESS | BRF_PRG }, // 43 Z80 code
 
-	{ "242-v1ex.dif",	0x400000, 0xda8f39fe, 0 | BRF_SND },           // 44 Sound data
+	{ "242-v1ex.dif",	0x400000, 0xc0c9ff22, 0 | BRF_SND },           // 44 Sound data
 	{ "242-v2ex.dif",	0x400000, 0xd2d03f2a, 0 | BRF_SND },
 	{ "242-v3ex.dif",	0x400000, 0x7b339d40, 0 | BRF_SND },
 	{ "242-v4ex.dif",	0x400000, 0x07450c5d, 0 | BRF_SND },
@@ -23765,16 +23791,16 @@ static INT32 kof98eckInit()
 
 	switch (nBurnDrvSubActive) {
 	case 0x00:
-		pszCustomNameA = "The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (wo1wan Easy Combo King, Hack)\0";
+		pszCustomNameA = "The King of Fighters '98 - Easy Combo King (wo1wan, Hack)\0";
 		break;
 
 	case 0x01:
-		pszCustomNameA = "The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (GOTVG Easy Combo King, Hack)\0";
+		pszCustomNameA = "The King of Fighters '98 - Easy Combo King (GOTVG, Hack)\0";
 		break;
 
 	case 0x02:
 		pNRI->nSpriteSize = 0x1000000;
-		pszCustomNameA = "The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Easy Combo King Extend, Hack)\0";
+		pszCustomNameA = "The King of Fighters '98 - Easy Combo King (Extend, Hack)\0";
 		break;
 	}
 
@@ -23797,7 +23823,7 @@ static INT32 kof98eckInit()
 
 struct BurnDriver BurnDrvKof98eckg = {
 	"kof98eck", "kof98", "neogeo", NULL, "2019-2024",
-	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Easy Combo King, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
+	"The King of Fighters '98 - Easy Combo King (Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98eckRomInfo, kof98eckRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, kof98eckDIPInfo,
@@ -27877,11 +27903,11 @@ static void mslug3xCallback()
 
 	// Select a version other than the release version.
 	switch (VerSwitcher & 0x1f) {
-		case 0x01: nIndex[0] =  6; nIndex[1] =  7; break; // Public Beta
-		case 0x02: nIndex[0] =  9; nIndex[1] = 11; break; // Development 0
-		case 0x04: nIndex[0] = 15; nIndex[1] = 16; break; // Development 1
-		case 0x08: nIndex[0] = 20; nIndex[1] = 21; break; // Development 2
-		case 0x10: nIndex[0] = 25; nIndex[1] = 26; break; // Development 3
+	case 0x01: nIndex[0] =  6; nIndex[1] =  7; break;	// Public Beta
+	case 0x02: nIndex[0] =  9; nIndex[1] = 11; break;	// Development 0
+	case 0x04: nIndex[0] = 15; nIndex[1] = 16; break;	// Development 1
+	case 0x08: nIndex[0] = 20; nIndex[1] = 21; break;	// Development 2
+	case 0x10: nIndex[0] = 25; nIndex[1] = 26; break;	// Development 3
 	}
 
 	RomDiffPatch(Neo68KROMActive, nIndex[0], 0, 1);
@@ -27897,29 +27923,29 @@ static INT32 mslug3xInit()
 	nBurnDrvSubActive = (VerSwitcher & 0x1f);
 
 	switch (nBurnDrvSubActive) {
-		case 0x00:
-			pszCustomNameA = "Metal Slug 3X (Release)\0";
-			break;
+	case 0x00:
+		pszCustomNameA = "Metal Slug 3X (Release)\0";
+		break;
 
-		case 0x01:
-			pszCustomNameA = "Metal Slug 3X (Public Beta)\0";
-			break;
+	case 0x01:
+		pszCustomNameA = "Metal Slug 3X (Public Beta)\0";
+		break;
 
-		case 0x02:
-			pszCustomNameA = "Metal Slug 3X (Development 0)\0";
-			break;
+	case 0x02:
+		pszCustomNameA = "Metal Slug 3X (Development 0)\0";
+		break;
 
-		case 0x04:
-			pszCustomNameA = "Metal Slug 3X (Development 1)\0";
-			break;
+	case 0x04:
+		pszCustomNameA = "Metal Slug 3X (Development 1)\0";
+		break;
 
-		case 0x08:
-			pszCustomNameA = "Metal Slug 3X (Development 2)\0";
-			break;
+	case 0x08:
+		pszCustomNameA = "Metal Slug 3X (Development 2)\0";
+		break;
 
-		case 0x10:
-			pszCustomNameA = "Metal Slug 3X (Development 3)\0";
-			break;
+	case 0x10:
+		pszCustomNameA = "Metal Slug 3X (Development 3)\0";
+		break;
 	}
 
 	if (nBurnDrvSubActive) {

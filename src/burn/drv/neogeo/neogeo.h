@@ -38,6 +38,7 @@ struct NeoReallocInfo {
 
 struct NEO_CALLBACK {
 	void (*pInitialise)();
+	void (*pResetCallback)();
 	void (*pInstallHandlers)();
 	void (*pRemoveHandlers)();
 	void (*pBankswitch)();

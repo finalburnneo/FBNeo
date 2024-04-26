@@ -9310,6 +9310,25 @@ struct BurnDriver BurnDrvcv_runaway = {
     272, 228, 4, 3
 };
 
+// Desolator (SGM) (HB)
+
+static struct BurnRomInfo cv_desolatorRomDesc[] = {
+    { "Desolator SGM (2023)(8 bit Milli Games).rom",	29287, 0xad01c8b1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_desolator, cv_desolator, cv_coleco)
+STD_ROM_FN(cv_desolator)
+
+struct BurnDriver BurnDrvcv_desolator = {
+    "cv_desolator", NULL, "cv_coleco", NULL, "2023",
+    "Desolator (SGM) (HB)\0", "SGM - Super Game Module", "8 bit Milli Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_desolatorRomInfo, cv_desolatorRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Saguaro City (HB)
 
 static struct BurnRomInfo cv_saguaroRomDesc[] = {

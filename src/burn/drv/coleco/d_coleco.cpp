@@ -9329,6 +9329,64 @@ struct BurnDriver BurnDrvcv_desolator = {
     272, 228, 4, 3
 };
 
+// Arkadion
+
+static struct BurnRomInfo cv_ArkadionRomDesc[] = {
+	{ "Arkadion (2022)(8 bit Milli Games).rom", 32768, 0xd876a9b6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Arkadion, cv_Arkadion, cv_coleco)
+STD_ROM_FN(cv_Arkadion)
+
+struct BurnDriver BurnDrvcv_Arkadion = {
+	"cv_arkadion", NULL, "cv_coleco", NULL, "2022",
+	"Arkadion (HB)\0", NULL, "8 bit Milli Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_ArkadionRomInfo, cv_ArkadionRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Crazy Chicky Junior
+
+static struct BurnRomInfo cv_CrazychickyjrRomDesc[] = {
+	{ "Crazy Chicky Junior (2023)(8 bit Milli Games).rom", 32768, 0x1bdca585, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Crazychickyjr, cv_Crazychickyjr, cv_coleco)
+STD_ROM_FN(cv_Crazychickyjr)
+
+struct BurnDriver BurnDrvcv_Crazychickyjr = {
+	"cv_crazychickyjr", NULL, "cv_coleco", NULL, "2023",
+	"Crazy Chicky Junior (HB)\0", NULL, "8 bit Milli Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_CrazychickyjrRomInfo, cv_CrazychickyjrRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Demon Attack - New Atlantis
+
+static struct BurnRomInfo cv_DemoattacknaRomDesc[] = {
+	{ "Demon Attack - New Atlantis (2022)(Cote Gamers).rom", 32768, 0xe86fcfe5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Demoattackna, cv_Demoattackna, cv_coleco)
+STD_ROM_FN(cv_Demoattackna)
+
+struct BurnDriver BurnDrvcv_Demoattackna = {
+	"cv_demoattackna", NULL, "cv_coleco", NULL, "2022",
+	"Demon Attack - New Atlantis (HB)\0", NULL, "Cote Gamers", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_DemoattacknaRomInfo, cv_DemoattacknaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+
 // Saguaro City (HB)
 
 static struct BurnRomInfo cv_saguaroRomDesc[] = {

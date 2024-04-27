@@ -149,7 +149,7 @@ static void exec_op(UINT32 opcode) {
 	case  9: regs.idb = regs.dr; break;
 	case 10: regs.idb = regs.sr; break;
 	case 11: regs.idb = regs.si; break;  //MSB = first bit in from serial, 'natural' SI register order
-	case 12: regs.idb = BITSWAP16(regs.si, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB = first bit in from serial, 'reversed' SI register order
+	case 12: regs.idb = regs.si; break; //BITSWAP16(regs.si, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB = first bit in from serial, 'reversed' SI register order
 	case 13: regs.idb = regs.k; break;
 	case 14: regs.idb = regs.l; break;
 	case 15: regs.idb = dataRAMRead(regs.dp); break;
@@ -337,7 +337,7 @@ static void exec_ld(UINT32 opcode) {
 				out_p0_cb(regs.sr.p0);
 				out_p1_cb(regs.sr.p1);
 				break;
-	case  8: regs.so = BITSWAP16(id, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB first output, output tapped at bit 15 shifting left
+	case  8: regs.so = id; break; //BITSWAP16(id, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15); break;  //LSB first output, output tapped at bit 15 shifting left
 	case  9: regs.so = id; break;  //MSB first output, output tapped at bit 15 shifting left
 	case 10: regs.k = id; break;
 	case 11: regs.k = id; regs.l = data_read_word(regs.rp); break;
@@ -365,8 +365,8 @@ void upd96050Init(INT32 type, UINT8 *opcode, UINT8 *data, UINT8 *ram, void (*p0_
 
 	switch (type) {
 		case 96050:
-			program_address_mask = ((1 << 14) - 1) >> 2;
-			data_address_mask = ((1 << 12) - 1) >> 1;
+			program_address_mask = (1 << 14) - 1; // 0x4000 dwords (0x10000 bytes)
+			data_address_mask = (1 << 11) - 1; // 0x800 words (0x1000 bytes)
 			ram_address_mask = (1 << 11) - 1; // 0x800 words
 			break;
 		case 7725:

@@ -22072,7 +22072,7 @@ struct BurnDriver BurnDrvmslug5esr = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Legendary, Hack) - 2024-04-27
+// Metal Slug 5 (The Ultimate Legend, Hack) - 2024-04-27
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
@@ -22100,7 +22100,7 @@ STD_ROM_FN(mslug5cq)
 
 struct BurnDriver BurnDrvmslug5cq = {
 	"mslug5cq", "mslug5", "neogeo", NULL, "2024",
-	"Metal Slug 5 (Legendary, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 5 (The Ultimate Legend, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5cqRomInfo, mslug5cqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

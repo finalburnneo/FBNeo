@@ -29085,6 +29085,28 @@ struct BurnDriver BurnDrvnes_smbtwopla = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Mario Bros. Two Players & World Select (Hack)
+// Modified by NesDraug
+// base: Super Mario Bros. Two Players (Hack) by Corpse Grinder and Ti
+// https://www.romhacking.net/hacks/5900/
+
+static struct BurnRomInfo nes_smbtwoplawsRomDesc[] = {
+	{ "Super Mario Bros. - Two Players & World Select (2021)(NesDraug).nes",          73744, 0xb8a41967, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbtwoplaws)
+STD_ROM_FN(nes_smbtwoplaws)
+
+struct BurnDriver BurnDrvnes_smbtwoplaws = {
+	"nes_smbtwoplaws", "nes_smb", NULL, NULL, "2021",
+	"Super Mario Bros. Two Players & World Select (Hack)\0", NULL, "hack (NesDraug)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbtwoplawsRomInfo, nes_smbtwoplawsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_superpangRomDesc[] = {
 	{ "Super Pang (Taiwan).nes",          65552, 0xf7c73ecc, BRF_ESS | BRF_PRG },
 };

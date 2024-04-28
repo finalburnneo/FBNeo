@@ -15644,6 +15644,82 @@ struct BurnDriver BurnDrvKof95sp = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters '95 (Infinite Energy, Hack)
+// GOTVG 20231101, original layout
+
+static struct BurnRomInfo kof95jqRomDesc[] = {
+	{ "084-p1jq.p1",	0x200000, 0x70ece9b0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "084-s1.s1",		0x020000, 0xde716f8a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "084-c1.c1",		0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data
+	{ "084-c2.c2",		0x400000, 0x07864e09, 3 | BRF_GRA },           //  3
+	{ "084-c3.c3",		0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4
+	{ "084-c4.c4",		0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5
+	{ "084-c5.c5",		0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6
+	{ "084-c6.c6",		0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7
+	{ "084-c7.c7",		0x100000, 0x9904025f, 3 | BRF_GRA },           //  8
+	{ "084-c8.c8",		0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9
+
+	{ "084-m1.m1",		0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "084-v1.v1",		0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data
+	{ "084-v2.v2",		0x200000, 0xb38a2803, 5 | BRF_SND },           // 12
+	{ "084-v3.v3",		0x100000, 0xd683a338, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(kof95jq, kof95jq, neogeo)
+STD_ROM_FN(kof95jq)
+
+struct BurnDriver BurnDrvKof95jq = {
+	"kof95jq", "kof95", "neogeo", NULL, "2023",
+	"The King of Fighters '95 (Infinite Energy, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof95jqRomInfo, kof95jqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '95 Plus (Optimized, Hack)
+// GOTVG 20240401
+
+static struct BurnRomInfo kof95tRomDesc[] = {
+	{ "084-p1t.p1",		0x100000, 0xad2454dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "084-p2sp.p2",	0x100000, 0x5cb1af9e, 1 | BRF_ESS | BRF_PRG }, //  1			
+	{ "084-p3t.p3",		0x020000, 0x10e83d84, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+
+	{ "084-s1sp.s1",	0x020000, 0x83cbae60, 2 | BRF_GRA },           //  3 Text layer tiles
+
+	{ "084-c1.c1",		0x400000, 0xfe087e32, 3 | BRF_GRA },           //  4 Sprite data
+	{ "084-c2.c2",		0x400000, 0x07864e09, 3 | BRF_GRA },           //  5
+	{ "084-c3.c3",		0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  6
+	{ "084-c4.c4",		0x400000, 0xc1ace468, 3 | BRF_GRA },           //  7
+	{ "084-c5.c5",		0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  8
+	{ "084-c6.c6",		0x200000, 0xf593ac35, 3 | BRF_GRA },           //  9
+	{ "084-c7.c7",		0x100000, 0x9904025f, 3 | BRF_GRA },           // 10
+	{ "084-c8.c8",		0x100000, 0x78eb0f9b, 3 | BRF_GRA },           // 11
+
+	{ "084-m1.m1",		0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
+
+	{ "084-v1.v1",		0x400000, 0x84861b56, 5 | BRF_SND },           // 13 Sound data
+	{ "084-v2.v2",		0x200000, 0xb38a2803, 5 | BRF_SND },           // 14
+	{ "084-v3.v3",		0x100000, 0xd683a338, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof95t, kof95t, neogeo)
+STD_ROM_FN(kof95t)
+
+struct BurnDriver BurnDrvKof95t = {
+	"kof95t", "kof95", "neogeo", NULL, "1995",
+	"The King of Fighters '95 Plus (Optimized, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof95tRomInfo, kof95tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	Kof95spInit, Kof95spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // Kof2002 (hack omg)
 
 static struct BurnRomInfo kof2k2omgRomDesc[] = {
@@ -21996,11 +22072,11 @@ struct BurnDriver BurnDrvmslug5esr = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Legendary, Hack) - 2024-03-30
+// Metal Slug 5 (Legendary, Hack) - 2024-04-27
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
-	{ "268-p1cq.p1",	0xa00000, 0x9a08884a, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1cq.p1",	0xa00000, 0x9fc88985, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",		0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 

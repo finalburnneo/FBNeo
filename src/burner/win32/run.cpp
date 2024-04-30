@@ -27,6 +27,7 @@ static bool bAppDoFasttoggled = 0;
 static bool bAppDoRewind = 0;
 
 static int nFastSpeed = 6;
+static void DisplayFPSInit(); // forward
 
 // in FFWD, the avi-writer still needs to write all frames (skipped or not)
 #define FFWD_GHOST_FRAME 0x8000
@@ -77,10 +78,13 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 
 	if (!kNetGame) {
 		// FFWD
+		int bPrevAppDoFast = bAppDoFast;
 		if (macroSystemFFWD) {
 			bAppDoFast = 1; prevFFWD = 1;
+			if (!bPrevAppDoFast) DisplayFPSInit(); // resync fps display
 		} else if (prevFFWD) {
 			bAppDoFast = 0; prevFFWD = 0;
+			if (bPrevAppDoFast) DisplayFPSInit(); // resync fps display
 		}
 
 		// Frame
@@ -168,7 +172,7 @@ static void DisplayFPS()
 {
 	const int nFPSTotal = (bAppDoFast) ? nFramesEmulated : nFramesRendered;
 
-	TCHAR fpsstring[8];
+	TCHAR fpsstring[20];
 	time_t temptime = clock();
 	double fps = (double)(nFPSTotal - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 
@@ -193,6 +197,7 @@ void ToggleLayer(unsigned char thisLayer)
 void do_shonky_profile()
 {
 	bShonkyProfileMode = false; // run once!
+	pBurnDraw = NULL; //pVidImage;
 
 	const int total_frames = 5000;
 	unsigned int start_time = timeGetTime();

@@ -3533,7 +3533,7 @@ static INT32 LottofunInit()
 
 struct BurnDriver BurnDrvLottofun = {
 	"lottofun", NULL, NULL, NULL, "1987",
-	"Lotto Fun\0", NULL, "H.A.R. Management", "6809 System",
+	"Lotto Fun\0", NULL, "HAR Management", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, NULL, NULL, LottofunInputInfo, NULL,

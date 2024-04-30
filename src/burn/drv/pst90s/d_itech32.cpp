@@ -3516,7 +3516,7 @@ STD_ROM_FN(timekill)
 
 struct BurnDriver BurnDrvTimekill = {
 	"timekill", NULL, NULL, NULL, "1992",
-	"Time Killers (v1.32)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.32)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekillRomInfo, timekillRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3552,7 +3552,7 @@ STD_ROM_FN(timekill132i)
 
 struct BurnDriver BurnDrvTimekill132i = {
 	"timekill132i", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.32I)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.32I)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill132iRomInfo, timekill132iRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3588,7 +3588,7 @@ STD_ROM_FN(timekill131)
 
 struct BurnDriver BurnDrvTimekill131 = {
 	"timekill131", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.31)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.31)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill131RomInfo, timekill131RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3624,7 +3624,7 @@ STD_ROM_FN(timekill121)
 
 struct BurnDriver BurnDrvTimekill121 = {
 	"timekill121", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.21)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.21)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill121RomInfo, timekill121RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3672,7 +3672,7 @@ STD_ROM_FN(timekill121a)
 
 struct BurnDriver BurnDrvTimekill121a = {
 	"timekill121a", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.21, alternate ROM board)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.21, alternate ROM board)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill121aRomInfo, timekill121aRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3709,7 +3709,7 @@ STD_ROM_FN(timekill120)
 
 struct BurnDriver BurnDrvTimekill120 = {
 	"timekill120", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.20, alternate ROM board)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.20, alternate ROM board)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill120RomInfo, timekill120RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3758,7 +3758,7 @@ STD_ROM_FN(timekill100)
 
 struct BurnDriver BurnDrvTimekill100 = {
 	"timekill100", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.00)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill100RomInfo, timekill100RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -3804,7 +3804,7 @@ STD_ROM_FN(bloodstm)
 
 struct BurnDriver BurnDrvBloodstm = {
 	"bloodstm", NULL, NULL, NULL, "1994",
-	"Blood Storm (v2.22)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v2.22)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstmRomInfo, bloodstmRomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -3850,7 +3850,7 @@ STD_ROM_FN(bloodstm221)
 
 struct BurnDriver BurnDrvBloodstm221 = {
 	"bloodstm221", "bloodstm", NULL, NULL, "1994",
-	"Blood Storm (v2.21)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v2.21)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm221RomInfo, bloodstm221RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -3896,7 +3896,7 @@ STD_ROM_FN(bloodstm220)
 
 struct BurnDriver BurnDrvBloodstm220 = {
 	"bloodstm220", "bloodstm", NULL, NULL, "1994",
-	"Blood Storm (v2.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v2.20)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm220RomInfo, bloodstm220RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -3942,7 +3942,7 @@ STD_ROM_FN(bloodstm210)
 
 struct BurnDriver BurnDrvBloodstm210 = {
 	"bloodstm210", "bloodstm", NULL, NULL, "1994",
-	"Blood Storm (v2.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v2.10)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm210RomInfo, bloodstm210RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -3988,7 +3988,7 @@ STD_ROM_FN(bloodstm110)
 
 struct BurnDriver BurnDrvBloodstm110 = {
 	"bloodstm110", "bloodstm", NULL, NULL, "1994",
-	"Blood Storm (v1.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v1.10)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm110RomInfo, bloodstm110RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -4034,7 +4034,7 @@ STD_ROM_FN(bloodstm104)
 
 struct BurnDriver BurnDrvBloodstm104 = {
 	"bloodstm104", "bloodstm", NULL, NULL, "1994",
-	"Blood Storm (v1.04)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Blood Storm (v1.04)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm104RomInfo, bloodstm104RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
@@ -4075,7 +4075,7 @@ STD_ROM_FN(hardyard)
 
 struct BurnDriver BurnDrvHardyard = {
 	"hardyard", NULL, NULL, NULL, "1993",
-	"Hard Yardage (v1.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Hard Yardage (v1.20)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyardRomInfo, hardyardRomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
@@ -4116,7 +4116,7 @@ STD_ROM_FN(hardyard11)
 
 struct BurnDriver BurnDrvHardyard11 = {
 	"hardyard11", "hardyard", NULL, NULL, "1993",
-	"Hard Yardage (v1.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Hard Yardage (v1.10)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyard11RomInfo, hardyard11RomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
@@ -4157,7 +4157,7 @@ STD_ROM_FN(hardyard10)
 
 struct BurnDriver BurnDrvHardyard10 = {
 	"hardyard10", "hardyard", NULL, NULL, "1993",
-	"Hard Yardage (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Hard Yardage (v1.00)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyard10RomInfo, hardyard10RomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
@@ -4193,7 +4193,7 @@ STD_ROM_FN(pairs)
 
 struct BurnDriver BurnDrvPairs = {
 	"pairs", NULL, NULL, NULL, "1994",
-	"Pairs (V1.2, 09/30/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Pairs (V1.2, 09/30/94)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsRomInfo, pairsRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
@@ -4229,7 +4229,7 @@ STD_ROM_FN(pairsa)
 
 struct BurnDriver BurnDrvPairsa = {
 	"pairsa", "pairs", NULL, NULL, "1994",
-	"Pairs (V1, 09/07/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Pairs (V1, 09/07/94)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsaRomInfo, pairsaRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
@@ -4262,7 +4262,7 @@ STD_ROM_FN(pairsred)
 
 struct BurnDriver BurnDrvPairsred = {
 	"pairsred", NULL, NULL, NULL, "1994",
-	"Pairs Redemption (V1.0, 10/25/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Pairs Redemption (V1.0, 10/25/94)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsredRomInfo, pairsredRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
@@ -4841,7 +4841,7 @@ STD_ROM_FN(wcbowl13j)
 
 struct BurnDriver BurnDrvWcbowl13j = {
 	"wcbowl13j", "wcbowl", NULL, NULL, "1995",
-	"World Class Bowling (v1.3J, Japan)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	"World Class Bowling (v1.3J, Japan)\0", NULL, "Incredible Technologies (Excellent System Ltd. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl13jRomInfo, wcbowl13jRomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowljDIPInfo,
@@ -5028,7 +5028,7 @@ static INT32 DrivedgeExit()
 
 struct BurnDriverX BurnDrvDrivedge = {
 	"drivedge", NULL, NULL, NULL, "1994",
-	"Driver's Edge (v1.6)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Driver's Edge (v1.6)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, drivedgeRomInfo, drivedgeRomName, NULL, NULL, NULL, NULL, NULL, NULL, //DrivedgeInputInfo, DrivedgeDIPInfo,
@@ -5444,7 +5444,7 @@ static INT32 ShufshotInit()
 
 struct BurnDriver BurnDrvShufshot = {
 	"shufshot", NULL, NULL, NULL, "1997",
-	"Shuffleshot (v1.40)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Shuffleshot (v1.40)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshotRomInfo, shufshotRomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
@@ -5490,7 +5490,7 @@ STD_ROM_FN(shufshot139)
 
 struct BurnDriver BurnDrvShufshot139 = {
 	"shufshot139", "shufshot", NULL, NULL, "1997",
-	"Shuffleshot (v1.39)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Shuffleshot (v1.39)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot139RomInfo, shufshot139RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
@@ -5536,7 +5536,7 @@ STD_ROM_FN(shufshot138)
 
 struct BurnDriver BurnDrvShufshot138 = {
 	"shufshot138", "shufshot", NULL, NULL, "1997",
-	"Shuffleshot (v1.38)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Shuffleshot (v1.38)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot138RomInfo, shufshot138RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
@@ -5582,7 +5582,7 @@ STD_ROM_FN(shufshot137)
 
 struct BurnDriver BurnDrvShufshot137 = {
 	"shufshot137", "shufshot", NULL, NULL, "1997",
-	"Shuffleshot (v1.37)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Shuffleshot (v1.37)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot137RomInfo, shufshot137RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshtoDIPInfo,
@@ -5628,7 +5628,7 @@ STD_ROM_FN(shufshot135)
 
 struct BurnDriver BurnDrvShufshot135 = {
 	"shufshot135", "shufshot", NULL, NULL, "1997",
-	"Shuffleshot (v1.35)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Shuffleshot (v1.35)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot135RomInfo, shufshot135RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshtoDIPInfo,

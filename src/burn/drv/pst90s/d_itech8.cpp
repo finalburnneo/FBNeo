@@ -2427,7 +2427,7 @@ static INT32 StratabInit()
 
 struct BurnDriver BurnDrvStratab = {
 	"stratab", NULL, NULL, NULL, "1990",
-	"Strata Bowling (V3)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Strata Bowling (V3)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, stratabRomInfo, stratabRomName, NULL, NULL, NULL, NULL, StratabInputInfo, StratabDIPInfo,
@@ -2455,7 +2455,7 @@ STD_ROM_FN(stratab1)
 
 struct BurnDriver BurnDrvStratab1 = {
 	"stratab1", "stratab", NULL, NULL, "1990",
-	"Strata Bowling (V1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Strata Bowling (V1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, stratab1RomInfo, stratab1RomName, NULL, NULL, NULL, NULL, StratabInputInfo, StratabDIPInfo,
@@ -2486,7 +2486,7 @@ STD_ROM_FN(gtg)
 
 struct BurnDriver BurnDrvGtg = {
 	"gtg", NULL, NULL, NULL, "1990",
-	"Golden Tee Golf (Joystick, v3.3)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf (Joystick, v3.3)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gtgRomInfo, gtgRomName, NULL, NULL, NULL, NULL, GtgInputInfo, GtgDIPInfo,
@@ -2517,7 +2517,7 @@ STD_ROM_FN(gtgj31)
 
 struct BurnDriver BurnDrvGtgj31 = {
 	"gtgj31", "gtg", NULL, NULL, "1990",
-	"Golden Tee Golf (Joystick, v3.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf (Joystick, v3.1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gtgj31RomInfo, gtgj31RomName, NULL, NULL, NULL, NULL, GtgInputInfo, GtgDIPInfo,
@@ -2548,7 +2548,7 @@ STD_ROM_FN(gtgt21)
 
 struct BurnDriver BurnDrvGtgt21 = {
 	"gtgt21", "gtg", NULL, NULL, "1989",
-	"Golden Tee Golf (Trackball, v2.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf (Trackball, v2.1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtgt21RomInfo, gtgt21RomName, NULL, NULL, NULL, NULL, GtgtInputInfo, GtgtDIPInfo,
@@ -2579,7 +2579,7 @@ STD_ROM_FN(gtgt20)
 
 struct BurnDriver BurnDrvGtgt20 = {
 	"gtgt20", "gtg", NULL, NULL, "1989",
-	"Golden Tee Golf (Trackball, v2.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf (Trackball, v2.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtgt20RomInfo, gtgt20RomName, NULL, NULL, NULL, NULL, GtgtInputInfo, GtgtDIPInfo,
@@ -2610,7 +2610,7 @@ STD_ROM_FN(gtgt10)
 
 struct BurnDriver BurnDrvGtgt10 = {
 	"gtgt10", "gtg", NULL, NULL, "1989",
-	"Golden Tee Golf (Trackball, v1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf (Trackball, v1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtgt10RomInfo, gtgt10RomName, NULL, NULL, NULL, NULL, GtgtInputInfo, GtgtDIPInfo,
@@ -2648,7 +2648,7 @@ static INT32 Gtg2tInit()
 
 struct BurnDriver BurnDrvGtg2t = {
 	"gtg2t", "gtg2", NULL, NULL, "1989",
-	"Golden Tee Golf II (Trackball, V1.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf II (Trackball, V1.1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtg2tRomInfo, gtg2tRomName, NULL, NULL, NULL, NULL, Gtg2tInputInfo, Gtg2tDIPInfo,
@@ -2686,7 +2686,7 @@ static INT32 Gtg2jInit()
 
 struct BurnDriver BurnDrvGtg2j = {
 	"gtg2j", "gtg2", NULL, NULL, "1991",
-	"Golden Tee Golf II (Joystick, V1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf II (Joystick, V1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gtg2jRomInfo, gtg2jRomName, NULL, NULL, NULL, NULL, GtgInputInfo, GtgDIPInfo,
@@ -2718,7 +2718,7 @@ static INT32 PokrdiceInit()
 
 struct BurnDriver BurnDrvPokrdice = {
 	"pokrdice", NULL, NULL, NULL, "1991",
-	"Poker Dice (V1.7)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Poker Dice (V1.7)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, pokrdiceRomInfo, pokrdiceRomName, NULL, NULL, NULL, NULL, PokrdiceInputInfo, PokrdiceDIPInfo,
@@ -2755,7 +2755,7 @@ static INT32 HstennisInit()
 
 struct BurnDriver BurnDrvHstennis = {
 	"hstennis", NULL, NULL, NULL, "1990",
-	"Hot Shots Tennis (V1.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Hot Shots Tennis (V1.1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, hstennisRomInfo, hstennisRomName, NULL, NULL, NULL, NULL, HstennisInputInfo, HstennisDIPInfo,
@@ -2787,7 +2787,7 @@ STD_ROM_FN(hstennis10)
 
 struct BurnDriver BurnDrvHstennis10 = {
 	"hstennis10", "hstennis", NULL, NULL, "1990",
-	"Hot Shots Tennis (V1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Hot Shots Tennis (V1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, hstennis10RomInfo, hstennis10RomName, NULL, NULL, NULL, NULL, HstennisInputInfo, HstennisDIPInfo,
@@ -2820,7 +2820,7 @@ static INT32 ArlingtnInit()
 
 struct BurnDriver BurnDrvArlingtn = {
 	"arlingtn", NULL, NULL, NULL, "1991",
-	"Arlington Horse Racing (v1.40-D)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Arlington Horse Racing (v1.40-D)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, arlingtnRomInfo, arlingtnRomName, NULL, NULL, NULL, NULL, ArlingtnInputInfo, ArlingtnDIPInfo,
@@ -2848,7 +2848,7 @@ STD_ROM_FN(arlingtna)
 
 struct BurnDriver BurnDrvArlingtna = {
 	"arlingtna", "arlingtn", NULL, NULL, "1991",
-	"Arlington Horse Racing (v1.21-D)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Arlington Horse Racing (v1.21-D)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, arlingtnaRomInfo, arlingtnaRomName, NULL, NULL, NULL, NULL, ArlingtnInputInfo, ArlingtnDIPInfo,
@@ -2881,7 +2881,7 @@ static INT32 PeggleInit()
 
 struct BurnDriver BurnDrvPeggle = {
 	"peggle", NULL, NULL, NULL, "1991",
-	"Peggle (Joystick, v1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Peggle (Joystick, v1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, peggleRomInfo, peggleRomName, NULL, NULL, NULL, NULL, PeggleInputInfo, PeggleDIPInfo,
@@ -2909,7 +2909,7 @@ STD_ROM_FN(pegglet)
 
 struct BurnDriver BurnDrvPegglet = {
 	"pegglet", "peggle", NULL, NULL, "1991",
-	"Peggle (Trackball, v1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Peggle (Trackball, v1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, peggletRomInfo, peggletRomName, NULL, NULL, NULL, NULL, PeggletInputInfo, PeggletDIPInfo,
@@ -2938,7 +2938,7 @@ STD_ROM_FN(neckneck)
 
 struct BurnDriver BurnDrvNeckneck = {
 	"neckneck", NULL, NULL, NULL, "1992",
-	"Neck-n-Neck (v1.2)\0", NULL, "Bundra Games/Incredible Technologies", "Miscellaneous",
+	"Neck-n-Neck (v1.2)\0", NULL, "Bundra Games / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, neckneckRomInfo, neckneckRomName, NULL, NULL, NULL, NULL, NeckneckInputInfo, NeckneckDIPInfo,
@@ -2983,7 +2983,7 @@ static INT32 RimrocknInit()
 
 struct BurnDriver BurnDrvRimrockn = {
 	"rimrockn", NULL, NULL, NULL, "1991",
-	"Rim Rockin' Basketball (V2.2)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Rim Rockin' Basketball (V2.2)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rimrocknRomInfo, rimrocknRomName, NULL, NULL, NULL, NULL, RimrocknInputInfo, RimrocknDIPInfo,
@@ -3012,7 +3012,7 @@ STD_ROM_FN(rimrockn20)
 
 struct BurnDriver BurnDrvRimrockn20 = {
 	"rimrockn20", "rimrockn", NULL, NULL, "1991",
-	"Rim Rockin' Basketball (V2.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Rim Rockin' Basketball (V2.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rimrockn20RomInfo, rimrockn20RomName, NULL, NULL, NULL, NULL, RimrocknInputInfo, RimrocknDIPInfo,
@@ -3041,7 +3041,7 @@ STD_ROM_FN(rimrockn16)
 
 struct BurnDriver BurnDrvRimrockn16 = {
 	"rimrockn16", "rimrockn", NULL, NULL, "1991",
-	"Rim Rockin' Basketball (V1.6)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Rim Rockin' Basketball (V1.6)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rimrockn16RomInfo, rimrockn16RomName, NULL, NULL, NULL, NULL, RimrocknInputInfo, RimrocknDIPInfo,
@@ -3070,7 +3070,7 @@ STD_ROM_FN(rimrockn15)
 
 struct BurnDriver BurnDrvRimrockn15 = {
 	"rimrockn15", "rimrockn", NULL, NULL, "1991",
-	"Rim Rockin' Basketball (V1.5)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Rim Rockin' Basketball (V1.5)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rimrockn15RomInfo, rimrockn15RomName, NULL, NULL, NULL, NULL, RimrocknInputInfo, RimrocknDIPInfo,
@@ -3099,7 +3099,7 @@ STD_ROM_FN(rimrockn12)
 
 struct BurnDriver BurnDrvRimrockn12 = {
 	"rimrockn12", "rimrockn", NULL, NULL, "1991",
-	"Rim Rockin' Basketball (V1.2)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Rim Rockin' Basketball (V1.2)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rimrockn12RomInfo, rimrockn12RomName, NULL, NULL, NULL, NULL, RimrocknInputInfo, RimrocknDIPInfo,
@@ -3175,7 +3175,7 @@ static INT32 NinclownInit()
 
 struct BurnDriver BurnDrvNinclown = {
 	"ninclown", NULL, NULL, NULL, "1991",
-	"Ninja Clowns (27 oct 91)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Ninja Clowns (27 oct 91)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, ninclownRomInfo, ninclownRomName, NULL, NULL, NULL, NULL, NinclownInputInfo, NinclownDIPInfo,
@@ -3217,7 +3217,7 @@ static INT32 GpgolfInit()
 
 struct BurnDriver BurnDrvGpgolf = {
 	"gpgolf", NULL, NULL, NULL, "1992",
-	"Golden Par Golf (Joystick, V1.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Par Golf (Joystick, V1.1)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gpgolfRomInfo, gpgolfRomName, NULL, NULL, NULL, NULL, GpgolfInputInfo, GpgolfDIPInfo,
@@ -3245,7 +3245,7 @@ STD_ROM_FN(gpgolfa)
 
 struct BurnDriver BurnDrvGpgolfa = {
 	"gpgolfa", "gpgolf", NULL, NULL, "1991",
-	"Golden Par Golf (Joystick, V1.0)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Par Golf (Joystick, V1.0)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gpgolfaRomInfo, gpgolfaRomName, NULL, NULL, NULL, NULL, GpgolfInputInfo, GpgolfDIPInfo,
@@ -3283,7 +3283,7 @@ STD_ROM_FN(gtg2)
 
 struct BurnDriver BurnDrvGtg2 = {
 	"gtg2", NULL, NULL, NULL, "1992",
-	"Golden Tee Golf II (Trackball, V2.2)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Golden Tee Golf II (Trackball, V2.2)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtg2RomInfo, gtg2RomName, NULL, NULL, NULL, NULL, Gtg2InputInfo, Gtg2DIPInfo,

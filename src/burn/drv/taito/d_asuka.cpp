@@ -2095,6 +2095,34 @@ struct BurnDriver BurnDrvEto = {
 };
 
 
+// Kokontouzai Eto Monogatari (Japan, prototype?)
+
+static struct BurnRomInfo etoaRomDesc[] = {
+	{ "pe.ic23",			0x20000, 0x36a6a742, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "po.ic8",				0x20000, 0xbc86f328, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "pd.ic30",			0x80000, 0x39e6a0f3, BRF_PRG | BRF_ESS | TAITO_68KROM1 },			//  2
+
+	{ "sd.ic27",			0x10000, 0xb3689da0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },			//  3 Z80 Code
+
+	{ "sc.ic3",				0x80000, 0xa8768939, BRF_GRA | TAITO_CHARS },						//  4 Characters
+
+	{ "ob.ic6",				0x80000, 0xdd247397, BRF_GRA | TAITO_SPRITESA },					//  5 Sprites
+};
+
+STD_ROM_PICK(etoa)
+STD_ROM_FN(etoa)
+
+struct BurnDriver BurnDrvEtoa = {
+	"etoa", "eto", NULL, NULL, "1994",
+	"Kokontouzai Eto Monogatari (Japan, prototype?)\0", NULL, "Visco", "Taito Misc",
+	L"\u53E4\u4ECA\u6771\u897F\u5E72\u652F\u7269\u8A9E\0Kokontouzai Eto Monogatari (Japan, prototype?)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, etoaRomInfo, etoaRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, EtoDIPInfo,
+	EtoInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 240, 4, 3
+};
+
+
 // Asuka & Asuka (World)
 
 static struct BurnRomInfo asukaRomDesc[] = {

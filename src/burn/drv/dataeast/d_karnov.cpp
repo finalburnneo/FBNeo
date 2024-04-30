@@ -1140,14 +1140,14 @@ struct BurnDriver BurnDrvKarnova = {
 /* DE-0248-3 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo karnovjRomDesc[] = {
-	{ "kar8.j15",		0x10000, 0x3e17e268, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "kar11.j20",		0x10000, 0x417c936d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dn08-.j15",		0x10000, 0x3e17e268, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dn11-.j20",		0x10000, 0x417c936d, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dn07-.j14",		0x10000, 0xfc14291b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "dn10-.j18",		0x10000, 0xa4a34e37, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "kar6.j13",		0x10000, 0xc641e195, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "kar9.j17",		0x10000, 0xd420658d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "dn06-.j13",		0x10000, 0xc641e195, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "dn09-.j17",		0x10000, 0xd420658d, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "kar5.f3",		0x08000, 0x7c9158f1, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
+	{ "dn05-.f3",		0x08000, 0x7c9158f1, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
 
 	{ "dn00-.c5",		0x08000, 0x0ed77c6d, 3 | BRF_GRA },           //  7 Characters
 
@@ -1168,7 +1168,7 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 
-	{ "karnovj_i8751.k14",  0x01000, 0x5a8c4d28,  7 | BRF_PRG }, 	  // 22 i8751 microcontroller
+	{ "dn-3.k14",  0x01000, 0x5a8c4d28,  7 | BRF_PRG }, 	  // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnovj)

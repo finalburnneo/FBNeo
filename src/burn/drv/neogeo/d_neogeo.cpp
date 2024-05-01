@@ -19260,7 +19260,7 @@ struct BurnDriver BurnDrvMslug3ps = {
 // GOTVG 20230506
 
 static struct BurnRomInfo mslug3lwRomDesc[] = {
-	{ "256-plw.p1",		0x100000, 0x94527837, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1lw.p1",	0x100000, 0x94527837, 1 | BRF_ESS | BRF_PRG },
 	{ "256-p2ps.sp2",	0x400000, 0x08ee1fe3, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_COMPONENTS
@@ -28020,7 +28020,7 @@ static struct BurnRomInfo abyssaliRomDesc[] = {
 	{ "aby-s1.s1",	0x020000, 0x1ebbb83e, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "aby-c1.c1",	0x200000, 0x24dabe27, 3 | BRF_GRA },           //  2 Sprite data
-	{ "aby-c2.c1",	0x200000, 0xbbdacc24, 3 | BRF_GRA },           //  3
+	{ "aby-c2.c2",	0x200000, 0xbbdacc24, 3 | BRF_GRA },           //  3
 
 	{ "aby-m1.m1",	0x020000, 0x3ddf772b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 

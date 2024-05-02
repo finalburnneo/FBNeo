@@ -17387,18 +17387,18 @@ struct BurnDriver BurnDrvmd_lastbtle = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Fist of the North Star (Hack, English)
+// Fist of the North Star 'Revisited' (Hack, English v1.2)
 // https://www.romhacking.net/translations/7272/
 static struct BurnRomInfo md_fistnstarRomDesc[] = {
-	{ "Fist of the North Star T-Eng (2017)(Ermani S. Costa).bin", 537838, 0x9ec420cc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Fist of the North Star Revisited T-Eng v1.2 (2024)(Ermani S. Costa).bin", 537694, 0x7d424a16, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fistnstar)
 STD_ROM_FN(md_fistnstar)
 
 struct BurnDriver BurnDrvmd_fistnstar = {
-	"md_fistnstar", "md_lastbtle", NULL, NULL, "2017",
-	"Fist of the North Star (Hack, English)\0", NULL, "Ermani S. Costa", "Sega Megadrive",
+	"md_fistnstar", "md_lastbtle", NULL, NULL, "2024",
+	"Fist of the North Star 'Revisited' (Hack, English v1.2)\0", NULL, "Ermani S. Costa", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_ADV, 0,
 	MegadriveGetZipName, md_fistnstarRomInfo, md_fistnstarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -22452,10 +22452,10 @@ struct BurnDriver BurnDrvmd_nhl2023 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// NHL '94: 2024 Edition (Hack, v2.5)
+// NHL '94: 2024 Edition (Hack, v3.0)
 // https://www.romhacking.net/hacks/8267/
 static struct BurnRomInfo md_nhl2024RomDesc[] = {
-	{ "NHL '94 - 2024 Edition v2.5 (2024)(Adam Catalyst).bin", 2097152, 0x479e7006, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "NHL '94 - 2024 Edition v3.0 (2024)(Adam Catalyst).bin", 2097152, 0xe27ea125, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_nhl2024)
@@ -22463,7 +22463,7 @@ STD_ROM_FN(md_nhl2024)
 
 struct BurnDriver BurnDrvmd_nhl2024 = {
 	"md_nhl2024", "md_nhl94", NULL, NULL, "2024",
-	"NHL '94: 2024 Edition (Hack, v2.5)\0", NULL, "Adam Catalyst", "Sega Megadrive",
+	"NHL '94: 2024 Edition (Hack, v3.0)\0", NULL, "Adam Catalyst", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_nhl2024RomInfo, md_nhl2024RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

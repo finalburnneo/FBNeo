@@ -120,6 +120,7 @@ static INT32 is_radm = 0;
 static INT32 is_radr = 0;
 static INT32 is_sonic = 0;
 static INT32 is_slipstrm = 0;
+static INT32 is_ga2_spidman = 0;
 
 static INT32 can_modechange = 0;
 static INT32 fake_wide_screen = 0;
@@ -158,6 +159,7 @@ static UINT8 DrvJoyX1[16];
 static UINT8 DrvJoyX2[16];
 static UINT8 DrvJoyX3[16];
 static UINT8 DrvJoyX4[16];
+static UINT8 DrvJoyF[16]; // fake inputs
 static UINT16 DrvInputs[16];
 static UINT16 DrvExtra[4];
 static UINT8 DrvDips[2];
@@ -327,6 +329,7 @@ static struct BurnInputInfo Ga2InputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 3"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoyX3 + 0,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoyX1 + 5,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoyX1 + 4,	"p3 down"	},
@@ -336,6 +339,7 @@ static struct BurnInputInfo Ga2InputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoyX1 + 1,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoyX1 + 2,	"p3 fire 3"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoyF + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoyX3 + 1,	"p4 start"	},
 	{"P4 Up",			BIT_DIGITAL,	DrvJoyX2 + 5,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoyX2 + 4,	"p4 down"	},
@@ -460,6 +464,7 @@ static struct BurnInputInfo SpidmanInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoyX3 + 0,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoyX1 + 5,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoyX1 + 4,	"p3 down"	},
@@ -468,6 +473,7 @@ static struct BurnInputInfo SpidmanInputList[] = {
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoyX1 + 0,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoyX1 + 1,	"p3 fire 2"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoyF + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoyX3 + 1,	"p4 start"	},
 	{"P4 Up",			BIT_DIGITAL,	DrvJoyX2 + 5,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoyX2 + 4,	"p4 down"	},
@@ -1096,10 +1102,10 @@ STDDIPINFO(setname)
 DEFAULT_UNUSED_DIPS(Arabfgt, 0x23)
 DEFAULT_UNUSED_DIPS(Arabfgtu, 0x25)
 DEFAULT_UNUSED_DIPS(Brival, 0x1d)
-DEFAULT_UNUSED_DIPS(Ga2, 0x27)
+DEFAULT_UNUSED_DIPS(Ga2, 0x29)
 DEFAULT_UNUSED_DIPS(Ga2u, 0x29)
 DEFAULT_UNUSED_DIPS(Darkedge, 0x1b)
-DEFAULT_UNUSED_DIPS(Spidman, 0x23)
+DEFAULT_UNUSED_DIPS(Spidman, 0x25)
 DEFAULT_UNUSED_DIPS(Alien3, 0x0f)
 DEFAULT_UNUSED_DIPS(Jpark, 0x10)
 DEFAULT_UNUSED_DIPS(Arescue, 0x09)
@@ -2633,6 +2639,7 @@ static INT32 DrvExit()
 	is_scross = 0;
 	is_sonic = 0;
 	is_slipstrm = 0;
+	is_ga2_spidman = 0;
 	has_gun = 0;
 	fake_wide_screen = 0;
 	can_modechange = 0;
@@ -4341,7 +4348,10 @@ static INT32 DrvFrame()
 			DrvInputs[0] = 0xfd;
 			DrvInputs[8] = 0xfd;
 		}
-
+		if (is_ga2_spidman) { // fake p3,p4 coin slots
+			if (DrvJoyF[2]) DrvJoy5[2] = 1;
+			if (DrvJoyF[3]) DrvJoy5[3] = 1;
+		}
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[ 0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[ 1] ^= (DrvJoy2[i] & 1) << i;
@@ -5049,6 +5059,7 @@ static UINT8 ga2_opcode_table[256] = {
 
 static INT32 Ga2Init()
 {
+	is_ga2_spidman = 1;
 	sprite_length = 0;
 	DrvLoadRoms(false);
 	BurnAllocMemIndex();
@@ -5307,6 +5318,7 @@ STD_ROM_FN(spidman)
 
 static INT32 SpidmanInit()
 {
+	is_ga2_spidman = 1;
 	sprite_length = 0;
 	DrvLoadRoms(false);
 	BurnAllocMemIndex();

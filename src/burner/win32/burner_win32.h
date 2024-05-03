@@ -122,7 +122,6 @@ extern bool bMonitorAutoCheck;
 
 // Used for the load/save dialog in commdlg.h
 extern TCHAR szChoice[MAX_PATH];					// File chosen by the user
-extern TCHAR szRomdataName[MAX_PATH];
 extern OPENFILENAME ofn;
 
 // Used to convert strings when possibly needed

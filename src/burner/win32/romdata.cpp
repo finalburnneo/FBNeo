@@ -1,7 +1,7 @@
 #include "burner.h"
 
 #ifndef UINT32_MAX
-#define UINT32_MAX	(UINT32)4294967295
+#define UINT32_MAX	(UINT32)4294967295U
 #endif
 
 static struct RomDataInfo RDI = { 0 };

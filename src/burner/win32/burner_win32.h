@@ -506,7 +506,6 @@ INT32 GetIpsNumPatches();
 void LoadIpsActivePatches();
 INT32 GetIpsNumActivePatches();
 INT32 IpsManagerCreate(HWND hParentWND);
-void IpsPatchExit();
 
 // localise_download.cpp
 int LocaliseDownloadCreate(HWND hParentWND);

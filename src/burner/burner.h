@@ -12,7 +12,6 @@
 
 #include "tchar.h"
 
-
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s
 #define MAKE_STRING(s) MAKE_STRING_2(s)
@@ -258,6 +257,7 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 // romdata.cpp
 
 extern TCHAR szRomdataName[MAX_PATH];
+void IpsPatchExit();
 
 // bzip.cpp
 

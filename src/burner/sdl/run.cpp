@@ -170,9 +170,7 @@ static int RunFrame(int bDraw, int bPause)
 
 				AudBlankSound();
 			}
-		}
-		else
-		{
+		} else {
 				pBurnDraw = (BurnDrvGetFlags() & BDF_RUNAHEAD_DRAWSYNC) ? pVidImage : NULL;
 				BurnDrvFrame();
 				StateRunAheadSave();
@@ -195,9 +193,7 @@ static int RunFrame(int bDraw, int bPause)
 		}
 
 		VidPaint(0);                                              // paint the screen (no need to validate)
-	}
-	else
-	{                                       // frame skipping
+	} else {                                       // frame skipping
 		pBurnDraw = NULL;                    // Make sure no image is drawn
 		BurnDrvFrame();
 	}

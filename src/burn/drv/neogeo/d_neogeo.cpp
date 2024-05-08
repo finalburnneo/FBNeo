@@ -25176,13 +25176,27 @@ static struct BurnRomInfo kof2002mRomDesc[] = {
 STDROMPICKEXT(kof2002m, kof2002m, neogeo)
 STD_ROM_FN(kof2002m)
 
+static void kof2002TimePatch()
+{
+	Neo68KROMActive[0x012511] = 0x65;
+}
+
+static INT32 kof2002mInit()
+{
+	if (!bDoIpsPatch) {
+		NeoCallbackActive->pInitialise = kof2002TimePatch;
+	}
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvKof2002m = {
 	"kof2002m", "kof2002", "neogeo", NULL, "2023",
 	"The King of Fighters 2002 (Mugen, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2002mRomInfo, kof2002mRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof2002mInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

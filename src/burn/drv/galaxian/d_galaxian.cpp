@@ -15534,7 +15534,7 @@ void __fastcall KingballZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xb004: {
-			GalStarsEnable = d & 0x01;
+			GalStarsEnable = 0; // game doesn't use stars
 			if (!GalStarsEnable) GalStarsScrollPos = -1;
 			return;
 		}

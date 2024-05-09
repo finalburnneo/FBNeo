@@ -28053,3 +28053,32 @@ struct BurnDriver BurnDrvAbyssali = {
 	fatfury2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+
+// GladMort (Demo)
+
+static struct BurnRomInfo gladmortRomDesc[] = {
+	{ "gladmort-p1.bin",	0x0080000, 0xE0CEAFEC, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "gladmort-s1.bin",    0x0020000, 0x8304BE52, 2 | BRF_GRA },           //  1 Text layer tiles / MB831000
+
+	{ "gladmort-c1.bin",	0x1000000, 0x2C4FE4C3, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "gladmort-c2.bin",	0x1000000, 0x1BDD21BD, 3 | BRF_GRA },           	//  3
+
+	{ "gladmort-m1.bin",    0x0010000, 0xFB945087, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code 		/ MB832000
+
+	{ "gladmort-v1.bin",  	0x1000000, 0x49D60C52, 5 | BRF_SND },           //  5 Sound data 		/ MB834200
+};
+
+STDROMPICKEXT(gladmort, gladmort, neogeo)
+STD_ROM_FN(gladmort)
+
+struct BurnDriver BurnDrvgladmort = {
+	"gladmort", NULL, "neogeo", NULL, "2024",
+	"GladMort (Demo)\0", NULL, "PixelHeart", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
+	NULL, gladmortRomInfo, gladmortRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};

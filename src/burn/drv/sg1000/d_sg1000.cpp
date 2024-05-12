@@ -4603,7 +4603,7 @@ struct BurnDriver BurnDrvsg1k_foryster = {
 // Guntus (HB)
 
 static struct BurnRomInfo sg1k_guntusRomDesc[] = {
-	{ " Guntus (2022)(Inufuto).sg",	11885, 0xc23f2f57, BRF_PRG | BRF_ESS },
+	{ "Guntus (2022)(Inufuto).sg",	11885, 0xc23f2f57, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_guntus)

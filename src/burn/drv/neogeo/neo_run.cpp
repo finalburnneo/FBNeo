@@ -133,7 +133,8 @@ UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 UINT8 NeoCDBios = 0;
-static ClearOpposite<2, UINT8> clear_opposite;
+UINT8 NeoInput_previous[32]   = { 0, };	// modded
+// static ClearOpposite<2, UINT8> clear_opposite;	// Temporary regression modification
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
 
@@ -1542,7 +1543,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nInputSelect);
 
 		SCAN_OFF(NeoInputBank, NeoInput, nAction);
-		clear_opposite.scan();
+		// clear_opposite.scan(); // Temporary regression modification
 
 		SCAN_VAR(nAnalogAxis);
 
@@ -3771,7 +3772,7 @@ static INT32 neogeoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
-	clear_opposite.reset();
+	//clear_opposite.reset(); // Temporary regression modification
 
 	{
 		SekOpen(0);
@@ -4509,42 +4510,77 @@ INT32 NeoRender()
 	return 0;
 }
 
+inline static void NeoClearOpposites(UINT8* nJoystickInputs,UINT8* nJoystickInputs_previous,UINT8* nJoystickInputs_previous_lr,UINT8* nJoystickInputs_previous_ud)        // modded
+{
+                if((*nJoystickInputs & 0x0C) == 0x0C)
+                {
+                         *nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_lr;//press left+right,remove the interference in *nJoystickInputs_previous_lr to obtain the actual required corrective input
+                } 
+                else if(*nJoystickInputs & 0x0C)
+                {
+                        *nJoystickInputs_previous_lr = *nJoystickInputs & 0x0C;        //Only record the input when left and right are NOT pressed simultaneously
+                }
+                if((*nJoystickInputs & 0x03) == 0x03)
+                {
+                        *nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_ud;        //See above
+                }
+                else if(*nJoystickInputs & 0x03)
+                {
+                        *nJoystickInputs_previous_ud = *nJoystickInputs & 0x03;        //See above
+                }
+                
+//When switching Opposites, the first frame is mutually exclusive
+                if ((*nJoystickInputs & 0x03) == 0x03)                
+                        *nJoystickInputs &= ~0x03;
+                if ((*nJoystickInputs & 0x0C) == 0x0C)
+                        *nJoystickInputs &= ~0x0C;        
+//When switching Opposites, the first frame is mutually exclusive
+                if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x0C) == 0x0C)
+                        *nJoystickInputs &= ~0x0C;        //When switching left and right, the first frame is mutually exclusive
+                if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x03) == 0x03)
+                        *nJoystickInputs &= ~0x03;        //When switching up and down, the first frame is mutually exclusive
+}
+
 static void NeoStandardInputs(INT32 nBank)
 {
-	if (nBank) {
-		NeoInput[ 8] = 0x00;					   					// Player 1
-		NeoInput[ 9] = 0x00;				   						// Player 2
-		NeoInput[10] = 0x00;				   						// Buttons
-		NeoInput[11] = 0x00;				   						//
-		for (INT32 i = 0; i < 8; i++) {
-			NeoInput[ 8] |= (NeoJoy3[i] & 1) << i;
-			NeoInput[ 9] |= (NeoJoy4[i] & 1) << i;
-			NeoInput[10] |= (NeoButton3[i] & 1) << i;
-			NeoInput[11] |= (NeoButton4[i] & 1) << i;
-		}
-		clear_opposite.check(0, NeoInput[ 8], 0x0c, 0x03);
-		clear_opposite.check(1, NeoInput[ 9], 0x0c, 0x03);
+        if (nBank) {
+                NeoInput_previous[ 0] = NeoInput[ 8];                                                   // modded
+                NeoInput_previous[ 3] = NeoInput[ 9];                                                   // modded
+                NeoInput[ 8] = 0x00;                                                                                   // Player 1
+                NeoInput[ 9] = 0x00;                                                                                   // Player 2
+                NeoInput[10] = 0x00;                                                                                   // Buttons
+                NeoInput[11] = 0x00;                                                                                   //
+                for (INT32 i = 0; i < 8; i++) {
+                        NeoInput[ 8] |= (NeoJoy3[i] & 1) << i;
+                        NeoInput[ 9] |= (NeoJoy4[i] & 1) << i;
+                        NeoInput[10] |= (NeoButton3[i] & 1) << i;
+                        NeoInput[11] |= (NeoButton4[i] & 1) << i;
+                }
+                NeoClearOpposites(&NeoInput[ 8],&NeoInput_previous[ 0],&NeoInput_previous[ 1],&NeoInput_previous[ 2]);// modded
+                NeoClearOpposites(&NeoInput[ 9],&NeoInput_previous[ 3],&NeoInput_previous[ 4],&NeoInput_previous[ 5]);// modded
+                if (NeoDiag[1]) {
+                        NeoInput[13] |= 0x80;
+                }
+        } else {
+                NeoInput_previous[ 6] = NeoInput[ 0];                                                   // modded
+                NeoInput_previous[ 9] = NeoInput[ 1];                                                   // modded
+                NeoInput[ 0] = 0x00;                                                                                   // Player 1
+                NeoInput[ 1] = 0x00;                                                                                   // Player 2
+                NeoInput[ 2] = 0x00;                                                                                   // Buttons
+                NeoInput[ 3] = 0x00;                                                                                   //
+                for (INT32 i = 0; i < 8; i++) {
+                        NeoInput[ 0] |= (NeoJoy1[i] & 1) << i;
+                        NeoInput[ 1] |= (NeoJoy2[i] & 1) << i;
+                        NeoInput[ 2] |= (NeoButton1[i] & 1) << i;
+                        NeoInput[ 3] |= (NeoButton2[i] & 1) << i;
+                }
+                NeoClearOpposites(&NeoInput[ 0],&NeoInput_previous[ 6],&NeoInput_previous[ 7],&NeoInput_previous[ 8]);// modded
+                NeoClearOpposites(&NeoInput[ 1],&NeoInput_previous[ 9],&NeoInput_previous[ 10],&NeoInput_previous[ 11]);// modded
 
-		if (NeoDiag[1]) {
-			NeoInput[13] |= 0x80;
-		}
-	} else {
-		NeoInput[ 0] = 0x00;					   					// Player 1
-		NeoInput[ 1] = 0x00;					   					// Player 2
-		NeoInput[ 2] = 0x00;					   					// Buttons
-		NeoInput[ 3] = 0x00;					   					//
-		for (INT32 i = 0; i < 8; i++) {
-			NeoInput[ 0] |= (NeoJoy1[i] & 1) << i;
-			NeoInput[ 1] |= (NeoJoy2[i] & 1) << i;
-			NeoInput[ 2] |= (NeoButton1[i] & 1) << i;
-			NeoInput[ 3] |= (NeoButton2[i] & 1) << i;
-		}
-		clear_opposite.check(2, NeoInput[ 0], 0x0c, 0x03);
-		clear_opposite.check(3, NeoInput[ 1], 0x0c, 0x03);
-		if (NeoDiag[0]) {
-			NeoInput[ 5] |= 0x80;
-		}
-	}
+                if (NeoDiag[0]) {
+                        NeoInput[ 5] |= 0x80;
+                }
+        }
 }
 
 static INT32 NeoSekRun(const INT32 nCycles)

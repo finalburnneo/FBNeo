@@ -14782,21 +14782,21 @@ static struct BurnRomInfo doubledrspRomDesc[] = {
 	{ "082-p2sp.p2",  0x100000, 0x0e2616ab, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "082-p3sp.p3",  0x020000, 0x8b4839c4, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
+	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  4 Sprite data		/ TC5316200
-	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  5 					/ TC5316200
-	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  6 					/ TC5316200
-	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  7 					/ TC5316200
-	{ "082-c5sp.c5",  0x200000, 0xb9c799fe, 3 | BRF_GRA },           //  8 					/ TC5316200
-	{ "082-c6sp.c6",  0x200000, 0x11569bc9, 3 | BRF_GRA },           //  9 					/ TC5316200
-	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           // 10 					/ TC538200
-	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           // 11 					/ TC538200
+	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  4 Sprite data
+	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  5
+	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  6
+	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  7
+	{ "082-c5sp.c5",  0x200000, 0xb9c799fe, 3 | BRF_GRA },           //  8
+	{ "082-c6sp.c6",  0x200000, 0x11569bc9, 3 | BRF_GRA },           //  9
+	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           // 10
+	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           // 11
 
-	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code			/ TC531001
+	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
 
-	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 13 Sound data		/ TC5316200
-	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 14 					/ TC5316200
+	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 13 Sound data
+	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 14
 };
 
 STDROMPICKEXT(doubledrsp, doubledrsp, neogeo)
@@ -14847,12 +14847,120 @@ static INT32 DoubledrspExit()
 }
 
 struct BurnDriver BurnDrvdoubledrsp = {
-	"doubledrsp", "doubledr", "neogeo", NULL, "2017",
+	"doubledrsp", "doubledr", "neogeo", NULL, "2023",
 	"Double Dragon (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, doubledrspRomInfo, doubledrspRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	DoubledrspInit, DoubledrspExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Double Dragon Plus (Enhanced, Hack)
+// GOTVG 20150311 - original layout
+
+static struct BurnRomInfo doubledrpRomDesc[] = {
+	{ "082-p1pl.p1",	0x200000, 0x37223431, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "082-s1.s1",		0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "082-c1.c1",		0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data
+	{ "082-c2.c2",		0x200000, 0x2857da32, 3 | BRF_GRA },           //  3
+	{ "082-c3.c3",		0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4
+	{ "082-c4.c4",		0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5
+	{ "082-c5.c5",		0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6
+	{ "082-c6.c6",		0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7
+	{ "082-c7.c7",		0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8
+	{ "082-c8.c8",		0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9
+
+	{ "082-m1.m1",		0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "082-v1.v1",		0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data
+	{ "082-v2.v2",		0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(doubledrp, doubledrp, neogeo)
+STD_ROM_FN(doubledrp)
+
+struct BurnDriver BurnDrvDoubledrp = {
+	"doubledrp", "doubledr", "neogeo", NULL, "2015",
+	"Double Dragon Plus (Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, doubledrpRomInfo, doubledrpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Double Dragon (Unlimited Power, Hack)
+// GOTVG 20230830
+
+static struct BurnRomInfo doubledrpisRomDesc[] = {
+	{ "082-p1pis.p1",	0x200000, 0x6e0ae5b1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "082-s1.s1",		0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "082-c1.c1",		0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data
+	{ "082-c2.c2",		0x200000, 0x2857da32, 3 | BRF_GRA },           //  3
+	{ "082-c3.c3",		0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4
+	{ "082-c4.c4",		0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5
+	{ "082-c5.c5",		0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6
+	{ "082-c6.c6",		0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7
+	{ "082-c7.c7",		0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8
+	{ "082-c8.c8",		0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9
+
+	{ "082-m1.m1",		0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "082-v1.v1",		0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data
+	{ "082-v2.v2",		0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(doubledrpis, doubledrpis, neogeo)
+STD_ROM_FN(doubledrpis)
+
+struct BurnDriver BurnDrvDoubledrpis = {
+	"doubledrpis", "doubledr", "neogeo", NULL, "2023",
+	"Double Dragon (Unlimited Power, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, doubledrpisRomInfo, doubledrpisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+// Double Dragon (Optimized, Hack)
+// GOTVG 20140917 - 2mb layout
+
+static struct BurnRomInfo doubledrtRomDesc[] = {
+	{ "082-p1t.p1",		0x200000, 0xcf12222e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "082-s1.s1",		0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "082-c1.c1",		0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data
+	{ "082-c2.c2",		0x200000, 0x2857da32, 3 | BRF_GRA },           //  3
+	{ "082-c3.c3",		0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4
+	{ "082-c4.c4",		0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5
+	{ "082-c5.c5",		0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6
+	{ "082-c6.c6",		0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7
+	{ "082-c7.c7",		0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8
+	{ "082-c8.c8",		0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9
+
+	{ "082-m1.m1",		0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "082-v1.v1",		0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data
+	{ "082-v2.v2",		0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(doubledrt, doubledrt, neogeo)
+STD_ROM_FN(doubledrt)
+
+struct BurnDriver BurnDrvDoubledrt = {
+	"doubledrt", "doubledr", "neogeo", NULL, "2023",
+	"Double Dragon (Optimized, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, doubledrtRomInfo, doubledrtRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
 
@@ -15644,7 +15752,7 @@ struct BurnDriver BurnDrvKof95sp = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '95 (Infinite Energy, Hack)
+// The King of Fighters '95 (Unlimited Power, Hack)
 // GOTVG 20231101, original layout
 
 static struct BurnRomInfo kof95jqRomDesc[] = {
@@ -15673,7 +15781,7 @@ STD_ROM_FN(kof95jq)
 
 struct BurnDriver BurnDrvKof95jq = {
 	"kof95jq", "kof95", "neogeo", NULL, "2023",
-	"The King of Fighters '95 (Infinite Energy, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"The King of Fighters '95 (Unlimited Power, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof95jqRomInfo, kof95jqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

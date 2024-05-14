@@ -29,9 +29,9 @@ int StatedAuto(int bSave)
 	int nRet;
 
 	if (NeoCDInfo_ID() && bDrvSaveAll != 0) {
-		_stprintf(szName, _T("config/games/ngcd_%s.fs"), NeoCDInfo_Text(DRV_NAME));
+		_stprintf(szName, _T("%sngcd_%s.fs"), szAppEEPROMPath, NeoCDInfo_Text(DRV_NAME));
 	} else {
-		_stprintf(szName, _T("config/games/%s.fs"), BurnDrvGetText(DRV_NAME));
+		_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 	}
 
 	if (bSave == 0) {

@@ -1091,10 +1091,13 @@ INT32 pgmDraw()
 
 //	if ((pgm_video_control & 0x1000) == 0 && (nBurnLayer & 1)) draw_background();
 	if (nBurnLayer & 1) {
+		draw_background();
+#if 0
 		if (!OldCodeMode) {
 			if ((pgm_video_control & 0x1000) == 0)
 				draw_background();
 		} else {draw_background();}
+#endif
 	}
 
 //	if ((pgm_video_control & 0x2000) == 0 && (nSpriteEnable & 2)) copy_sprite_priority(0);

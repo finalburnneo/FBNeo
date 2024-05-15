@@ -1958,6 +1958,40 @@ static struct BurnRomInfo CybotsamRomDesc[] = {
 STD_ROM_PICK(Cybotsam)
 STD_ROM_FN(Cybotsam)
 
+// Cyberbots - Fullmetal Madness Boss Hack
+// Modified by Yoshin
+
+static struct BurnRomInfo CybotsbhRomDesc[] = {
+	{ "cybebh.03",     0x080000, 0x74f967d2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cybe.04",       0x080000, 0x80691061, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.05",        0x080000, 0xec40408e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.06",        0x080000, 0x1ad0bed2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.07",        0x080000, 0x6245a39a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.08",        0x080000, 0x4b48e223, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.09",        0x080000, 0xe15238f6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.10",        0x080000, 0x75f4003b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "cyb.13m",       0x400000, 0xf0dce192, CPS2_GFX | BRF_GRA },
+	{ "cyb.15m",       0x400000, 0x187aa39c, CPS2_GFX | BRF_GRA },
+	{ "cyb.17m",       0x400000, 0x8a0e4b12, CPS2_GFX | BRF_GRA },
+	{ "cyb.19m",       0x400000, 0x34b62612, CPS2_GFX | BRF_GRA },
+	{ "cyb.14m",       0x400000, 0xc1537957, CPS2_GFX | BRF_GRA },
+	{ "cyb.16m",       0x400000, 0x15349e86, CPS2_GFX | BRF_GRA },
+	{ "cyb.18m",       0x400000, 0xd83e977d, CPS2_GFX | BRF_GRA },
+	{ "cyb.20m",       0x400000, 0x77cdad5c, CPS2_GFX | BRF_GRA },
+
+	{ "cyb.01",        0x020000, 0x9c0fb079, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "cyb.02",        0x020000, 0x51cb0c4e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
+	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+
+	{ "cybots.key",    0x000014, 0x9bbcbef3, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Cybotsbh)
+STD_ROM_FN(Cybotsbh)
+
 static struct BurnRomInfo DdsomRomDesc[] = {
 	{ "dd2e.03e",      0x080000, 0x449361AF, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2e.04e",      0x080000, 0x5B7052B6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -5878,6 +5912,37 @@ static struct BurnRomInfo Sfz2adlRomDesc[] = {
 STD_ROM_PICK(Sfz2adl)
 STD_ROM_FN(Sfz2adl)
 
+// Street Fighter Zero 2 Alpha Plus (Hack)
+
+static struct BurnRomInfo Sfz2aplRomDesc[] = {
+	{ "szapls.03a",		0x080000, 0x3be1d522, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.04a",		0x080000, 0xe7ca87c7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.05a",		0x080000, 0xc88ebf88, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.06a",		0x080000, 0x35ed5b7a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.07a",		0x080000, 0x975dcb3e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaj.08a",		0x080000, 0xdc73f2d7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sza.13m",		0x400000, 0x4d1f1f22, CPS2_GFX | BRF_GRA },
+	{ "sza.15m", 		0x400000, 0x19cea680, CPS2_GFX | BRF_GRA },
+	{ "sza.17m",		0x400000, 0xe01b4588, CPS2_GFX | BRF_GRA },
+	{ "sza.19m",		0x400000, 0x0feeda64, CPS2_GFX | BRF_GRA },
+	{ "sza.14m",		0x100000, 0x0560c6aa, CPS2_GFX | BRF_GRA },
+	{ "sza.16m",		0x100000, 0xae940f87, CPS2_GFX | BRF_GRA },
+	{ "sza.18m",		0x100000, 0x4bc3c8bc, CPS2_GFX | BRF_GRA },
+	{ "sza.20m",		0x100000, 0x39e674c0, CPS2_GFX | BRF_GRA },
+
+	{ "sza.01",			0x020000, 0x1bc323cf, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sza.02",			0x020000, 0xba6a5013, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sza.11m",		0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
+	{ "sza.12m",		0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+
+	{ "sfz2alj.key",	0x000014, 0x4c42320f, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz2apl)
+STD_ROM_FN(Sfz2apl)
+
 static struct BurnRomInfo Sfz2aRomDesc[] = {
 	{ "sz2a.03a",      0x080000, 0x30d2099f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2a.04a",      0x080000, 0x1cc94db1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9447,6 +9512,16 @@ struct BurnDriver BurnDrvCpsCybotsam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, CybotsamRomInfo, CybotsamRomName, NULL, NULL, NULL, NULL, CybotsInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCybotsbh = {
+	"cybotsbh", "cybots", NULL, NULL, "2023",
+	"Cyberbots - fullmetal madness (Boss Hack)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, CybotsbhRomInfo, CybotsbhRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -13971,6 +14046,16 @@ struct BurnDriver BurnDrvCpsSfz2adl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2adlRomInfo, Sfz2adlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz2apl = {
+	"sfz2apl", "sfz2al", "sfz2alj", NULL, "201?",
+	"Street Fighter Zero 2 Alpha Plus (Hack)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz2aplRomInfo, Sfz2aplRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

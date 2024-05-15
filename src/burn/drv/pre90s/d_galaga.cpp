@@ -2641,6 +2641,41 @@ static struct BurnRomInfo digdugRomDesc[] = {
 STD_ROM_PICK(digdug)
 STD_ROM_FN(digdug)
 
+// Dig Dug (rev 1)
+
+static struct BurnRomInfo digdug1RomDesc[] = {
+	{ "dd1.1",	      0x1000, 0xb9198079, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "dd1.2",	      0x1000, 0xb2acbe49, BRF_ESS | BRF_PRG  }, //  1
+	{ "dd1.3",	      0x1000, 0xd6407b49, BRF_ESS | BRF_PRG  }, //  2
+	{ "dd1.4b",	      0x1000, 0xf4cebc16, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "dd1.5b",	      0x1000, 0x370ef9b4, BRF_ESS | BRF_PRG  }, //  4	Z80 #2 Program Code
+	{ "dd1.6b",	      0x1000, 0x361eeb71, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "dd1.7",	      0x1000, 0xa41bce72, BRF_ESS | BRF_PRG  }, //  6	Z80 #3 Program Code
+
+	{ "dd1.9",	      0x0800, 0xf14a6fe1, BRF_GRA            }, //  7	Characters
+
+	{ "dd1.15",	      0x1000, 0xe22957c8, BRF_GRA            }, //  8	Sprites
+	{ "dd1.14",	      0x1000, 0x2829ec99, BRF_GRA            }, //  9
+	{ "dd1.13",	      0x1000, 0x458499e9, BRF_GRA            }, // 10
+	{ "dd1.12",	      0x1000, 0xc58252a0, BRF_GRA            }, // 11
+
+	{ "dd1.11",	      0x1000, 0x7b383983, BRF_GRA            }, // 12	Characters 8x8 2bpp
+
+	{ "dd1.10b",      0x1000, 0x2cf399c2, BRF_GRA            }, // 13 Playfield Data
+
+	{ "136007.113",   0x0020, 0x4cb9da99, BRF_GRA            }, // 14 Palette Prom
+	{ "136007.111",   0x0100, 0x00c7c419, BRF_GRA            }, // 15 Sprite Color Prom
+	{ "136007.112",   0x0100, 0xe9b3e08e, BRF_GRA            }, // 16 Character Color Prom
+
+	{ "136007.110",   0x0100, 0x7a2815b4, BRF_GRA            }, // 17 Namco Sound Proms
+	{ "136007.109",   0x0100, 0x77245b66, BRF_GRA            }, // 18
+};
+
+STD_ROM_PICK(digdug1)
+STD_ROM_FN(digdug1)
+
 // Dig Dug (Atari, rev 2)
 
 static struct BurnRomInfo digdugatRomDesc[] = {
@@ -3186,6 +3221,16 @@ struct BurnDriver BurnDrvDigdug = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, digdugRomInfo, digdugRomName, NULL, NULL, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
+	digdugInit, DrvExit, DrvFrame, DrvDraw, digdugScan, NULL,
+	DIGDUG_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvDigdug1 = {
+	"digdug1", "digdug", NULL, NULL, "1982",
+	"Dig Dug (rev 1)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, digdug1RomInfo, digdug1RomName, NULL, NULL, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
 	digdugInit, DrvExit, DrvFrame, DrvDraw, digdugScan, NULL,
 	DIGDUG_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };

@@ -493,7 +493,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		int fmt = SPNG_FMT_RGB8;
 
 		ret = spng_decoded_image_size(ctx, fmt, &image_size);
-		ret = spng_decode_image(ctx, NULL, 0, fmt, SPNG_DECODE_PROGRESSIVE);
+		ret = spng_decode_image(ctx, NULL, 0, fmt, SPNG_DECODE_PROGRESSIVE | SPNG_DECODE_TRNS );
 
 		image_width_bytes = image_size / ihdr.height; // it's the width * 3 (1 for each RGB)
 
@@ -508,6 +508,16 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 
 		struct spng_row_info row_info = {0};
 
+		// deal with transparency that decodes to non-black
+		int trans_to_black = 0;
+		struct spng_plte plte;
+		struct spng_trns trns;
+
+		trans_to_black =
+			(ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) &&
+			(spng_get_plte(ctx, &plte) == 0) &&
+			(spng_get_trns(ctx, &trns) == 0);
+
 		do {
 			if ((ret = spng_get_row_info(ctx, &row_info)) != 0) break;
 
@@ -517,6 +527,21 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 				int r = temp_img.rowptr[row_info.row_num][i + 0];
 				int g = temp_img.rowptr[row_info.row_num][i + 1];
 				int b = temp_img.rowptr[row_info.row_num][i + 2];
+
+				if (trans_to_black) {
+					for(int j = 0; j < trns.n_type3_entries; j++)
+					{
+						if(trns.type3_alpha[j] < 20 &&
+						   plte.entries[trns.type3_alpha[j]].red == r &&
+						   plte.entries[trns.type3_alpha[j]].green == g &&
+						   plte.entries[trns.type3_alpha[j]].blue == b)
+						{
+							r = 0;
+							g = 0;
+							b = 0;
+						}
+					}
+				}
 
 				temp_img.rowptr[row_info.row_num][i + 0] = b;
 				temp_img.rowptr[row_info.row_num][i + 1] = g;

@@ -9,3 +9,4 @@ void  upd96050NewFrame();
 UINT8 snesdsp_read(bool mode);
 void  snesdsp_write(bool mode, UINT8 data);
 INT32 upd96050Scan(INT32 /*nAction*/);
+INT32 upd96050ExportRegs(void **data);

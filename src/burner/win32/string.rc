@@ -83,6 +83,7 @@ BEGIN
 	IDS_DISK_ALL_CARD			"All Memory Card Files"
 	IDS_DISK_ALL_DAT			"All Dat Files"
 	IDS_DISK_TEXT				"Text Files"
+	IDS_DISK_FILE_ROMDATA		"%s Romdata Files"
 
 	IDS_DISK_SAVEREPORT			"Save system information report"
 
@@ -241,6 +242,8 @@ BEGIN
     IDS_GENRE_RPG               "RPG"
     IDS_GENRE_SIM               "Simulator"
     IDS_GENRE_ADV               "Adventure"
+    IDS_GENRE_CARD              "Card Game"
+    IDS_GENRE_BOARD             "Board Game"
 
 	IDS_FAMILY					"Family"
 	IDS_FAMILY_MSLUG			"Metal Slug"

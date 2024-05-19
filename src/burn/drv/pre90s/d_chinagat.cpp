@@ -909,7 +909,7 @@ STD_ROM_FN(chinagat)
 
 struct BurnDriver BurnDrvChinagat = {
 	"chinagat", NULL, NULL, NULL, "1988",
-	"China Gate (US)\0", NULL, "Technos Japan (Taito Romstar license)", "Miscellaneous",
+	"China Gate (US)\0", NULL, "Technos Japan (Taito / Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, chinagatRomInfo, chinagatRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

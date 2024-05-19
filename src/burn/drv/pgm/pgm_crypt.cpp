@@ -1057,6 +1057,35 @@ static void pgm_decrypt_kovassgplus_program()
 		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]), 13, 9, 10, 11, 2, 0, 12, 5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05);
 	}
 
+	memcpy (src, dst, 0x400000);
+
+	// this region is further encrypted
+	for (INT32 i = 0x300000/2; i < 0x3f0000/2; i++)
+	{
+		INT32 j = (i & ~0xffff) | (BURN_ENDIAN_SWAP_INT16(BITSWAP16(i, 15, 14, 13, 12, 11, 10, 0, 8, 7, 6, 5, 9, 2, 4, 1, 3) ^ 0x00c5));
+		
+		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0xffd1), 5, 11, 3, 7, 15, 10, 2, 12, 14, 1, 4, 8, 6, 0, 13, 9));
+	}
+
+	memcpy (src + (0x300000/2), dst + (0x300000/2), 0xf0000);
+
+	BurnFree (dst);
+}
+
+#if 0
+// old
+static void pgm_decrypt_kovassgplus_program()
+{
+	UINT16 *src = (UINT16 *)PGM68KROM;
+	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
+
+	for (INT32 i = 0; i < 0x400000/2; i++)
+	{
+		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12,  11, 10, 7, 3,  1, 9, 4, 8,  6, 0, 2, 5) ^ 0x019c);
+
+		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]), 13, 9, 10, 11, 2, 0, 12, 5, 4, 1, 14, 8, 15, 6, 3, 7) ^ 0x9d05);
+	}
+
 	// unknown encryption for 300000-3fffff region
 
 	memcpy (src, dst, 0x400000);
@@ -1067,6 +1096,7 @@ static void pgm_decrypt_kovassgplus_program()
 
 	BurnFree (dst);
 }
+#endif
 
 void pgm_decrypt_kovassgplus()
 {
@@ -1169,3 +1199,4 @@ void pgm_decrypt_kovgsyx()
 	
 	// graphics when dumped?
 }
+

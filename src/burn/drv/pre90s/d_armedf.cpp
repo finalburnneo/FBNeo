@@ -1,4 +1,4 @@
-// FB Alpha Armed Formation driver module
+// FB Neo Armed Formation driver module
 // Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
 //
 // nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
@@ -1083,7 +1083,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	}
 
 	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 6000000);
@@ -1374,7 +1374,7 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
@@ -1391,17 +1391,15 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-
 	SekSetIRQLine(irqline, (usemcu) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_AUTO);
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1450,7 +1448,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Armed Formation
+// Armed F (Japan)
 
 static struct BurnRomInfo armedfRomDesc[] = {
 	{ "06.3d",		0x10000, 0x0f9015e2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1476,31 +1474,6 @@ static struct BurnRomInfo armedfRomDesc[] = {
 
 STD_ROM_PICK(armedf)
 STD_ROM_FN(armedf)
-
-static struct BurnRomInfo armedffRomDesc[] = {
-	{ "af_06.rom",	0x10000, 0xc5326603, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "af_01.rom",	0x10000, 0x458e9542, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "af_07.rom",	0x10000, 0xcc8517f5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "af_02.rom",	0x10000, 0x214ef220, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "af_08.rom",	0x10000, 0xd1d43600, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "af_03.rom",	0x10000, 0xbbe1fe2d, 1 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "af_10.rom",	0x10000, 0xc5eacb87, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
-
-	{ "af_09.rom",	0x08000, 0x7025e92d, 3 | BRF_GRA },           //  7 Characters
-
-	{ "af_04.rom",	0x10000, 0x44d3af4f, 4 | BRF_GRA },           //  8 Foreground Tiles
-	{ "af_05.rom",	0x10000, 0x92076cab, 4 | BRF_GRA },           //  9
-
-	{ "af_14.rom",	0x10000, 0x8c5dc5a7, 5 | BRF_GRA },           // 10 Background Tiles
-	{ "af_13.rom",	0x10000, 0x136a58a3, 5 | BRF_GRA },           // 11
-
-	{ "af_11.rom",	0x20000, 0xb46c473c, 6 | BRF_GRA },           // 12 Sprites
-	{ "af_12.rom",	0x20000, 0x23cb6bfe, 6 | BRF_GRA },           // 13
-};
-
-STD_ROM_PICK(armedff)
-STD_ROM_FN(armedff)
 
 static INT32 ArmedfLoadRoms()
 {
@@ -1540,7 +1513,7 @@ static INT32 ArmedfInit()
 
 struct BurnDriver BurnDrvArmedf = {
 	"armedf", NULL, NULL, NULL, "1988",
-	"Armed Formation\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Armed F (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, armedfRomInfo, armedfRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
@@ -1548,9 +1521,37 @@ struct BurnDriver BurnDrvArmedf = {
 	240, 320, 3, 4
 };
 
+
+// Armed F (Fillmore license)
+
+static struct BurnRomInfo armedffRomDesc[] = {
+	{ "af_06.rom",	0x10000, 0xc5326603, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "af_01.rom",	0x10000, 0x458e9542, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "af_07.rom",	0x10000, 0xcc8517f5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "af_02.rom",	0x10000, 0x214ef220, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "af_08.rom",	0x10000, 0xd1d43600, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "af_03.rom",	0x10000, 0xbbe1fe2d, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "af_10.rom",	0x10000, 0xc5eacb87, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+
+	{ "af_09.rom",	0x08000, 0x7025e92d, 3 | BRF_GRA },           //  7 Characters
+
+	{ "af_04.rom",	0x10000, 0x44d3af4f, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "af_05.rom",	0x10000, 0x92076cab, 4 | BRF_GRA },           //  9
+
+	{ "af_14.rom",	0x10000, 0x8c5dc5a7, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "af_13.rom",	0x10000, 0x136a58a3, 5 | BRF_GRA },           // 11
+
+	{ "af_11.rom",	0x20000, 0xb46c473c, 6 | BRF_GRA },           // 12 Sprites
+	{ "af_12.rom",	0x20000, 0x23cb6bfe, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(armedff)
+STD_ROM_FN(armedff)
+
 struct BurnDriver BurnDrvArmedff = {
 	"armedff", "armedf", NULL, NULL, "1988",
-	"Armed Formation (Fillmore license)\0", NULL, "Nichibutsu (Fillmore license)", "Miscellaneous",
+	"Armed F (Fillmore license)\0", NULL, "Nichibutsu (Fillmore license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, armedffRomInfo, armedffRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
@@ -1923,7 +1924,7 @@ struct BurnDriver BurnDrvLegionj2 = {
 };
 
 
-// Chouji Meikyuu Legion (Japan ver 1.05, bootleg)
+// Chouji Meikyuu Legion (Japan ver 1.05, bootleg set 1)
 /* blitter protection removed */
 
 static struct BurnRomInfo legionjbRomDesc[] = {
@@ -1990,9 +1991,9 @@ static INT32 LegionjbInit()
 
 struct BurnDriver BurnDrvLegionjb = {
 	"legionjb", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionjbRomInfo, legionjbRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
 	LegionjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
@@ -2104,6 +2105,48 @@ struct BurnDriver BurnDrvTerrafu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafuRomInfo, terrafuRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Terra Force (US, alternate sound)
+
+static struct BurnRomInfo terrafuaRomDesc[] = {
+	{ "8.6e",		0x10000, 0xfea6dd64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.6h",		0x10000, 0x02f9d05a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "7.4e",		0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.4h",		0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6.3e",		0x10000, 0x962585bf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.3h",		0x10000, 0x3f060451, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "11.17k",		0x10000, 0xd4d60a51, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+
+	{ "9.11e",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
+
+	{ "5.15h",		0x10000, 0x25d23dfd, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "4.13h",		0x10000, 0xb9b0fe27, 4 | BRF_GRA },           //  9
+
+	{ "15.8a",		0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "14.6a",		0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
+
+	{ "12.7d",		0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
+	{ "13.9d",		0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
+
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA },           // 14 MCU data
+
+	{ "0302.11j",	0x00100, 0x0dc8cb70, 8 | BRF_OPT },           // 15 Proms
+};
+
+STD_ROM_PICK(terrafua)
+STD_ROM_FN(terrafua)
+
+struct BurnDriver BurnDrvterrafua = {
+	"terrafua", "terraf", NULL, NULL, "1987",
+	"Terra Force (US, alternate sound)\0", NULL, "Nichibutsu USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, terrafuaRomInfo, terrafuaRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2226,7 +2269,7 @@ struct BurnDriver BurnDrvTerrafjb = {
 	"terrafjb", "terraf", NULL, NULL, "1987",
 	"Terra Force (Japan, bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

@@ -686,7 +686,7 @@ STD_ROM_FN(kncljoe)
 
 struct BurnDriver BurnDrvKncljoe = {
 	"kncljoe", NULL, NULL, NULL, "1985",
-	"Knuckle Joe (set 1)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
+	"Knuckle Joe (set 1)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeRomInfo, kncljoeRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
@@ -727,7 +727,7 @@ STD_ROM_FN(kncljoea)
 
 struct BurnDriver BurnDrvKncljoea = {
 	"kncljoea", "kncljoe", NULL, NULL, "1985",
-	"Knuckle Joe (set 2)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
+	"Knuckle Joe (set 2)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeaRomInfo, kncljoeaRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,

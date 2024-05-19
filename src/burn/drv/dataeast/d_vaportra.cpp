@@ -39,28 +39,30 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo VaportraInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Vaportra)
@@ -272,6 +274,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -323,12 +327,7 @@ static INT32 DrvInit(INT32 type)
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -425,10 +424,10 @@ static INT32 DrvExit()
 	deco16Exit();
 
 	SekExit();
-	
+
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -501,19 +500,7 @@ static void draw_sprites(INT32 pri)
 
 		while (multi >= 0)
 		{
-			if (fy) {
-				if (fx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite - multi * inc, x, (y + mult * multi) - 8, colour, 4, 0, 0x100, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite - multi * inc, x, (y + mult * multi) - 8, colour, 4, 0, 0x100, DrvGfxROM3);
-				}
-			} else {
-				if (fx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite - multi * inc, x, (y + mult * multi) - 8, colour, 4, 0, 0x100, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sprite - multi * inc, x, (y + mult * multi) - 8, colour, 4, 0, 0x100, DrvGfxROM3);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, sprite - multi * inc, x, (y + mult * multi) - 8, fx, fy, colour, 4, 0, 0x100, DrvGfxROM3);
 
 			multi--;
 		}
@@ -560,9 +547,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 232;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
 
@@ -573,37 +559,23 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
 		if (i == 206) {
 			deco16_vblank = 0x08;
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -634,6 +606,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -690,7 +664,7 @@ struct BurnDriver BurnDrvVaportra = {
 };
 
 
-// Vapor Trail - Hyper Offence Formation (World revision 3)
+// Vapor Trail - Hyper Offence Formation (World revision 3?)
 
 static struct BurnRomInfo vaportraw3RomDesc[] = {
 	{ "fl02-3.bin",		0x20000, 0x6c59be54, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -734,7 +708,7 @@ static INT32 Vaportraw3Init()
 
 struct BurnDriver BurnDrvVaportraw3 = {
 	"vaportra3", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Vapor Trail - Hyper Offence Formation (World revision 3?)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraw3RomInfo, vaportraw3RomName, NULL, NULL, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,

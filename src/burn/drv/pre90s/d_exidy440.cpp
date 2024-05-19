@@ -1844,7 +1844,7 @@ struct BurnDriver BurnDrvTopsecex = {
 	"topsecex", NULL, NULL, NULL, "1986",
 	"Top Secret (Exidy) (version 1.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, topsecexRomInfo, topsecexRomName, NULL, NULL, NULL, NULL, TopsecexInputInfo, TopsecexDIPInfo,
 	TopsecexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 238, 4, 3

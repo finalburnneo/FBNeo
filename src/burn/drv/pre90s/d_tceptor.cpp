@@ -1171,14 +1171,14 @@ struct BurnDriver BurnDrvTceptor = {
 	"tceptor", NULL, NULL, NULL, "1986",
 	"Thunder Ceptor\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tceptorRomInfo, tceptorRomName, NULL, NULL, NULL, NULL, TceptorInputInfo, TceptorDIPInfo,
 	TceptorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	272, 224, 4, 3
 };
 
 
-// Thunder Ceptor II
+// 3-D Thunder Ceptor II
 
 static struct BurnRomInfo tceptor2RomDesc[] = {
 	{ "tc2-1.10f",		0x08000, 0xf953f153,  1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -1231,9 +1231,9 @@ static INT32 Tceptor2Init()
 
 struct BurnDriver BurnDrvTceptor2 = {
 	"tceptor2", "tceptor", NULL, NULL, "1986",
-	"Thunder Ceptor II\0", NULL, "Namco", "Miscellaneous",
+	"3-D Thunder Ceptor II\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, tceptor2RomInfo, tceptor2RomName, NULL, NULL, NULL, NULL, TceptorInputInfo, TceptorDIPInfo,
 	Tceptor2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	272, 224, 4, 3

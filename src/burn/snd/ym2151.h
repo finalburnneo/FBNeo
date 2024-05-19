@@ -50,7 +50,7 @@
 ** 'rate' is sampling rate
 */
 //int YM2151Init(int num, int clock, int rate);
-int YM2151Init(int num, int clock, int rate, void (*timer_cb)(INT32, INT32, double));
+int YM2151Init(int num, int chipbase, int clock, int rate, void (*timer_cb)(INT32, INT32, double));
 
 int ym2151_timer_over(int num, int timer); // for fm timer
 

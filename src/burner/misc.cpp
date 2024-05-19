@@ -167,7 +167,7 @@ char* GameDecoration(UINT32 nBurnDrv)
 		}
 	}
 
-	sprintf(szGameDecoration, "%s%s%s%s%s%s%s%s%s%s%s", s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11);
+	snprintf(szGameDecoration, sizeof(szGameDecoration), "%s%s%s%s%s%s%s%s%s%s%s", s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11);
 
 	nBurnDrvActive = nOldBurnDrv;
 	return szGameDecoration;
@@ -193,7 +193,7 @@ char* DecorateGameName(UINT32 nBurnDrv)
 		s4 = "]";
 	}
 
-	sprintf(szDecoratedName, "%s%s%s%s", s1, s2, s3, s4);
+	snprintf(szDecoratedName, sizeof(szDecoratedName), "%s%s%s%s", s1, s2, s3, s4);
 
 	nBurnDrvActive = nOldBurnDrv;
 	return szDecoratedName;
@@ -341,6 +341,16 @@ TCHAR* DecorateGenreInfo()
 
 		if (nGenre & GBF_ADV) {
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_ADV, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
+		if (nGenre & GBF_CARD) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_CARD, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
+		if (nGenre & GBF_BOARD) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_BOARD, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 

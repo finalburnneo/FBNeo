@@ -975,7 +975,7 @@ static INT32 BaryonInit()
 
 struct BurnDriver BurnDrvBaryon = {
 	"baryon", NULL, NULL, NULL, "1997",
-	"Baryon - Future Assault (set 1)\0", NULL, "SemiCom", "Miscellaneous",
+	"Baryon - Future Assault (set 1)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, baryonRomInfo, baryonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BaryonDIPInfo,
@@ -1011,7 +1011,7 @@ STD_ROM_PICK(baryona)
 STD_ROM_FN(baryona)
 struct BurnDriver BurnDrvBaryona = {
 	"baryona", "baryon", NULL, NULL, "1997",
-	"Baryon - Future Assault (set 2)\0", NULL, "SemiCom", "Miscellaneous",
+	"Baryon - Future Assault (set 2)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, baryonaRomInfo, baryonaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BaryonDIPInfo,

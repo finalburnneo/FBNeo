@@ -1599,6 +1599,9 @@ struct BurnDriver BurnDrvHyperspc = {
 	640, 480, 4, 3
 };
 
+// note: the astdelux entry in hiscore.dat breaks the game and seems wrong (the 3rd area is saving game timers ?),
+//       for that reason and also because it is unnecessary (the hiscores are persisted through nvram anyway),
+//       we prefer keeping the BDF_HISCORE_SUPPORTED flag disabled
 
 // Asteroids Deluxe (rev 3)
 
@@ -1621,7 +1624,7 @@ struct BurnDriver BurnDrvAstdelux = {
 	"astdelux", NULL, NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING /* | BDF_HISCORE_SUPPORTED */, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdeluxRomInfo, astdeluxRomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1648,7 +1651,7 @@ struct BurnDriver BurnDrvAstdelux2 = {
 	"astdelux2", "astdelux", NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE /* | BDF_HISCORE_SUPPORTED */, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdelux2RomInfo, astdelux2RomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1676,7 +1679,7 @@ struct BurnDriver BurnDrvAstdelux1 = {
 	"astdelux1", "astdelux", NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE /* | BDF_HISCORE_SUPPORTED */, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdelux1RomInfo, astdelux1RomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1705,7 +1708,7 @@ struct BurnDriver BurnDrvLlander = {
 	"llander", NULL, NULL, NULL, "1979",
 	"Lunar Lander (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, llanderRomInfo, llanderRomName, NULL, NULL, NULL, NULL, LlanderInputInfo, LlanderDIPInfo,
 	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1734,7 +1737,7 @@ struct BurnDriver BurnDrvLlander1 = {
 	"llander1", "llander", NULL, NULL, "1979",
 	"Lunar Lander (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, llander1RomInfo, llander1RomName, NULL, NULL, NULL, NULL, LlanderInputInfo, Llander1DIPInfo,
 	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1762,7 +1765,7 @@ struct BurnDriverD BurnDrvLlandert = {
 	"llandert", "llander", NULL, NULL, "1979",
 	"Lunar Lander (screen test)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, llandertRomInfo, llandertRomName, NULL, NULL, NULL, NULL, LlandertInputInfo, LlandertDIPInfo,
 	LlanderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3

@@ -1808,8 +1808,8 @@ struct BurnDriver BurnDrvNova2001 = {
 static struct BurnRomInfo nova2001hRomDesc[] = {
 	// roms 1 and 2 had green stickers, but looks like an unofficial mod, bytes have been added in empty space to fix game checksum after mods were made to code.
 	// one of the mods fixes the game resetting if the coin input is held down for too short / long of a period, the purpose of the other is unknown.
-	{ "1,green.6c",		0x2000, 0x1a8731b3, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
-	{ "2,green.6d",		0x2000, 0xbc4e442b, 1 | BRF_PRG | BRF_ESS}, //  1
+	{ "1_green.6c",		0x2000, 0x1a8731b3, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{ "2_green.6d",		0x2000, 0xbc4e442b, 1 | BRF_PRG | BRF_ESS}, //  1
 	{ "3.6f",			0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
 	{ "4.6g",	        0x1000, 0x6b5bb12d, 1 | BRF_PRG | BRF_ESS}, //  3
 
@@ -1978,7 +1978,7 @@ struct BurnDriver BurnDrvRaidrs5ta = {
 	"raiders5ta", "raiders5", NULL, NULL, "1985",
 	"Raiders5 (Japan, set 2, bootleg?)\0", NULL, "UPL (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, raiders5taRomInfo, raiders5taRomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5taDIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3

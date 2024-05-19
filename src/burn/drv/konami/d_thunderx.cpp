@@ -573,7 +573,21 @@ static INT32 DrvInit(INT32 type)
 	BurnAllocMemIndex();
 
 	{
-		if (type) {
+		if (type == 2) {
+			if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvKonROM  + 0x020000,  1, 1)) return 1;
+			memcpy (DrvKonROM + 0x08000, DrvKonROM + 0x18000, 0x8000);
+
+			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, 2)) return 1;
+
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 4, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  6, 4, 2)) return 1;
+
+			if (BurnLoadRom(DrvSndROM  + 0x000000,  7, 1)) return 1;
+		} else if (type == 1) {
 			if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvKonROM  + 0x020000,  1, 1)) return 1;
 			memcpy (DrvKonROM + 0x08000, DrvKonROM + 0x18000, 0x8000);
@@ -834,7 +848,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Super Contra
+// Super Contra (set 1)
 
 static struct BurnRomInfo scontraRomDesc[] = {
 	{ "775-e02.k11",	0x10000, 0xa61c0ead, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -842,44 +856,44 @@ static struct BurnRomInfo scontraRomDesc[] = {
 
 	{ "775-c01.bin",	0x08000, 0x0ced785a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "775-a07a.bin",	0x20000, 0xe716bdf3, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "775-a07e.bin",	0x20000, 0x0986e3a5, 3 | BRF_GRA },           //  4
-	{ "775-a08a.bin",	0x20000, 0x3ddd11a4, 3 | BRF_GRA },           //  5
-	{ "775-a08e.bin",	0x20000, 0x1007d963, 3 | BRF_GRA },           //  6
-	{ "775-f07c.bin",	0x10000, 0xb0b30915, 3 | BRF_GRA },           //  7
-	{ "775-f07g.bin",	0x10000, 0xfbed827d, 3 | BRF_GRA },           //  8
-	{ "775-f08c.bin",	0x10000, 0x53abdaec, 3 | BRF_GRA },           //  9
-	{ "775-f08g.bin",	0x10000, 0x3df85a6e, 3 | BRF_GRA },           // 10
-	{ "775-f07d.bin",	0x10000, 0xf184be8e, 3 | BRF_GRA },           // 11
-	{ "775-f07h.bin",	0x10000, 0x7b56c348, 3 | BRF_GRA },           // 12
-	{ "775-f08d.bin",	0x10000, 0x102dcace, 3 | BRF_GRA },           // 13
-	{ "775-f08h.bin",	0x10000, 0xad9d7016, 3 | BRF_GRA },           // 14
+	{ "775-a07a.6f",	0x20000, 0xe716bdf3, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "775-a07e.5f",	0x20000, 0x0986e3a5, 3 | BRF_GRA },           //  4
+	{ "775-a08a.4f",	0x20000, 0x3ddd11a4, 3 | BRF_GRA },           //  5
+	{ "775-a08e.3f",	0x20000, 0x1007d963, 3 | BRF_GRA },           //  6
+	{ "775-f07c.6d",	0x10000, 0xb0b30915, 3 | BRF_GRA },           //  7
+	{ "775-f07g.5d",	0x10000, 0xfbed827d, 3 | BRF_GRA },           //  8
+	{ "775-f08c.4d",	0x10000, 0x53abdaec, 3 | BRF_GRA },           //  9
+	{ "775-f08g.3d",	0x10000, 0x3df85a6e, 3 | BRF_GRA },           // 10
+	{ "775-f07d.7f",	0x10000, 0xf184be8e, 3 | BRF_GRA },           // 11
+	{ "775-f07h.7e",	0x10000, 0x7b56c348, 3 | BRF_GRA },           // 12
+	{ "775-f08d.7d",	0x10000, 0x102dcace, 3 | BRF_GRA },           // 13
+	{ "775-f08h.7c",	0x10000, 0xad9d7016, 3 | BRF_GRA },           // 14
 
-	{ "775-a05a.bin",	0x10000, 0xa0767045, 4 | BRF_GRA },           // 15 Sprites
-	{ "775-a05e.bin",	0x10000, 0x2f656f08, 4 | BRF_GRA },           // 16
-	{ "775-a06a.bin",	0x10000, 0x77a34ad0, 4 | BRF_GRA },           // 17
-	{ "775-a06e.bin",	0x10000, 0x8a910c94, 4 | BRF_GRA },           // 18
-	{ "775-a05b.bin",	0x10000, 0xab8ad4fd, 4 | BRF_GRA },           // 19
-	{ "775-a05f.bin",	0x10000, 0x1c0eb1b6, 4 | BRF_GRA },           // 20
-	{ "775-a06b.bin",	0x10000, 0x563fb565, 4 | BRF_GRA },           // 21
-	{ "775-a06f.bin",	0x10000, 0xe14995c0, 4 | BRF_GRA },           // 22
-	{ "775-f05c.bin",	0x10000, 0x5647761e, 4 | BRF_GRA },           // 23
-	{ "775-f05g.bin",	0x10000, 0xa1692cca, 4 | BRF_GRA },           // 24
-	{ "775-f06c.bin",	0x10000, 0x5ee6f3c1, 4 | BRF_GRA },           // 25
-	{ "775-f06g.bin",	0x10000, 0x2645274d, 4 | BRF_GRA },           // 26
-	{ "775-f05d.bin",	0x10000, 0xad676a6f, 4 | BRF_GRA },           // 27
-	{ "775-f05h.bin",	0x10000, 0x3f925bcf, 4 | BRF_GRA },           // 28
-	{ "775-f06d.bin",	0x10000, 0xc8b764fa, 4 | BRF_GRA },           // 29
-	{ "775-f06h.bin",	0x10000, 0xd6595f59, 4 | BRF_GRA },           // 30
+	{ "775-a05a.11f",	0x10000, 0xa0767045, 4 | BRF_GRA },           // 15 Sprites
+	{ "775-a05e.10f",	0x10000, 0x2f656f08, 4 | BRF_GRA },           // 16
+	{ "775-a06a.9f",	0x10000, 0x77a34ad0, 4 | BRF_GRA },           // 17
+	{ "775-a06e.8f",	0x10000, 0x8a910c94, 4 | BRF_GRA },           // 18
+	{ "775-a05b.11e",	0x10000, 0xab8ad4fd, 4 | BRF_GRA },           // 19
+	{ "775-a05f.10e",	0x10000, 0x1c0eb1b6, 4 | BRF_GRA },           // 20
+	{ "775-a06b.9e",	0x10000, 0x563fb565, 4 | BRF_GRA },           // 21
+	{ "775-a06f.8e",	0x10000, 0xe14995c0, 4 | BRF_GRA },           // 22
+	{ "775-f05c.11d",	0x10000, 0x5647761e, 4 | BRF_GRA },           // 23
+	{ "775-f05g.10d",	0x10000, 0xa1692cca, 4 | BRF_GRA },           // 24
+	{ "775-f06c.9d",	0x10000, 0x5ee6f3c1, 4 | BRF_GRA },           // 25
+	{ "775-f06g.8d",	0x10000, 0x2645274d, 4 | BRF_GRA },           // 26
+	{ "775-f05d.11c",	0x10000, 0xad676a6f, 4 | BRF_GRA },           // 27
+	{ "775-f05h.10c",	0x10000, 0x3f925bcf, 4 | BRF_GRA },           // 28
+	{ "775-f06d.9c",	0x10000, 0xc8b764fa, 4 | BRF_GRA },           // 29
+	{ "775-f06h.8c",	0x10000, 0xd6595f59, 4 | BRF_GRA },           // 30
 
-	{ "775-a04a.bin",	0x10000, 0x7efb2e0f, 5 | BRF_SND },           // 31 K007232 Samples
-	{ "775-a04b.bin",	0x10000, 0xf41a2b33, 5 | BRF_SND },           // 32
-	{ "775-a04c.bin",	0x10000, 0xe4e58f14, 5 | BRF_SND },           // 33
-	{ "775-a04d.bin",	0x10000, 0xd46736f6, 5 | BRF_SND },           // 34
-	{ "775-f04e.bin",	0x10000, 0xfbf7e363, 5 | BRF_SND },           // 35
-	{ "775-f04f.bin",	0x10000, 0xb031ef2d, 5 | BRF_SND },           // 36
-	{ "775-f04g.bin",	0x10000, 0xee107bbb, 5 | BRF_SND },           // 37
-	{ "775-f04h.bin",	0x10000, 0xfb0fab46, 5 | BRF_SND },           // 38
+	{ "775-a04a.11b",	0x10000, 0x7efb2e0f, 5 | BRF_SND },           // 31 K007232 Samples
+	{ "775-a04b.10b",	0x10000, 0xf41a2b33, 5 | BRF_SND },           // 32
+	{ "775-a04c.9b",	0x10000, 0xe4e58f14, 5 | BRF_SND },           // 33
+	{ "775-a04d.8b",	0x10000, 0xd46736f6, 5 | BRF_SND },           // 34
+	{ "775-f04e.11a",	0x10000, 0xfbf7e363, 5 | BRF_SND },           // 35
+	{ "775-f04f.10a",	0x10000, 0xb031ef2d, 5 | BRF_SND },           // 36
+	{ "775-f04g.9a",	0x10000, 0xee107bbb, 5 | BRF_SND },           // 37
+	{ "775-f04h.8a",	0x10000, 0xfb0fab46, 5 | BRF_SND },           // 38
 
 	{ "775a09.b19",		0x00100, 0x46d1e0df, 6 | BRF_OPT },           // 39 Proms
 };
@@ -894,11 +908,49 @@ static INT32 scontraInit()
 
 struct BurnDriver BurnDrvScontra = {
 	"scontra", NULL, NULL, NULL, "1988",
-	"Super Contra\0", NULL, "Konami", "GX775",
+	"Super Contra (set 1)\0", NULL, "Konami", "GX775",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, scontraRomInfo, scontraRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 304, 3, 4
+};
+
+
+// Super Contra (set 2)
+
+static struct BurnRomInfo scontraaRomDesc[] = {
+	{ "cpu 27c512.k11",		0x10000, 0x7f2b8001, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "cpu 27c512.k13",		0x10000, 0x2d65c313, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sound_27c256.f9",	0x08000, 0x0ced785a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "775f07.h22",			0x80000, 0x0e75d2e1, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "775f08.k22",			0x80000, 0xd4f2ed1e, 3 | BRF_GRA },           //  4
+
+	{ "775f05.h4",			0x80000, 0xd1c788b0, 4 | BRF_GRA },           //  5 Sprites
+	{ "775f06.k4",			0x80000, 0x623a9c9b, 4 | BRF_GRA },           //  6
+
+	{ "sound-775f04.d4",	0x80000, 0x0447dbae, 5 | BRF_SND },           //  7 K007232 Samples
+
+	{ "775a09.b19",			0x00100, 0x46d1e0df, 6 | BRF_OPT },           //  8 Proms
+};
+
+STD_ROM_PICK(scontraa)
+STD_ROM_FN(scontraa)
+
+static INT32 scontraaInit()
+{
+	return DrvInit(2);
+}
+
+struct BurnDriver BurnDrvScontraa = {
+	"scontraa", "scontra", NULL, NULL, "1988",
+	"Super Contra (set 2)\0", NULL, "Konami", "GX775",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	NULL, scontraaRomInfo, scontraaRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
+	scontraaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
 };
 
@@ -958,7 +1010,7 @@ STD_ROM_FN(scontraj)
 
 struct BurnDriver BurnDrvScontraj = {
 	"scontraj", "scontra", NULL, NULL, "1988",
-	"Super Contra (Japan)\0", NULL, "Konami", "GX775",
+	"Super Contra - Alien no Gyakushuu (Japan)\0", NULL, "Konami", "GX775",
 	L"Super \u9B42\u6597\u7F85 \u30A8\u30A4\u30EA\u30A2\u30F3 \u306E\u9006\u8972 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, scontrajRomInfo, scontrajRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,

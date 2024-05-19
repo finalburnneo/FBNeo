@@ -188,7 +188,7 @@ STD_ROM_FN(minivadr)
 
 struct BurnDriver BurnDrvminivadr = {
 	"minivadr", NULL, NULL, NULL, "1990",
-	"Minivader\0", NULL, "Taito Corporation", "Minivader",
+	"Mini Vaders\0", NULL, "Taito Corporation", "Minivader",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, minivadrRomInfo, minivadrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,

@@ -12,6 +12,7 @@ void TaitoF3SoundReset();
 void TaitoF3SoundExit();
 void TaitoF3SoundInit(INT32 cpunum); // which cpu?
 void TaitoF3SoundIRQConfig(INT32 bAlternateHz); // for ridingf (faster music)
+void TaitoF3SetBankKirameki(INT32 bank);
 
 void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice);
 void TaitoF3SoundUpdate(INT16 *pDest, INT32 nLen);

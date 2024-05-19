@@ -1284,6 +1284,52 @@ struct BurnDriver BurnDrvUndrfire = {
 };
 
 
+// Under Fire (US)
+
+static struct BurnRomInfo undrfireuRomDesc[] = {
+	{ "d67-19",					0x080000, 0x1d88fa5a, TAITO_68KROM1_BYTESWAP32 },	//  0 M68EC020 Code
+	{ "d67-18",					0x080000, 0xf41ae7fd, TAITO_68KROM1_BYTESWAP32 },	//  1
+	{ "d67-17",					0x080000, 0x34e030b7, TAITO_68KROM1_BYTESWAP32 },	//  2
+	{ "d67-22",					0x080000, 0x5fef7e9c, TAITO_68KROM1_BYTESWAP32 },	//  3
+
+	{ "d67-20",					0x020000, 0x974ebf69, TAITO_68KROM2_BYTESWAP },		//  4 Sound 68K Code
+	{ "d67-21",					0x020000, 0x8fc6046f, TAITO_68KROM2_BYTESWAP },		//  5
+
+	{ "d67-08",					0x200000, 0x56730d44, TAITO_CHARS_BYTESWAP },		//  6 Background Tiles
+	{ "d67-09",					0x200000, 0x3c19f9e3, TAITO_CHARS_BYTESWAP },		//  7
+
+	{ "d67-03",					0x200000, 0x3b6e99a9, TAITO_SPRITESA_BYTESWAP32 },	//  8 Sprites
+	{ "d67-04",					0x200000, 0x8f2934c9, TAITO_SPRITESA_BYTESWAP32 },	//  9
+	{ "d67-05",					0x200000, 0xe2e7dcf3, TAITO_SPRITESA_BYTESWAP32 },	// 10
+	{ "d67-06",					0x200000, 0xa2a63488, TAITO_SPRITESA_BYTESWAP32 },	// 11
+	{ "d67-07",					0x200000, 0x189c0ee5, TAITO_SPRITESA },				// 12
+
+	{ "d67-10",					0x100000, 0xd79e6ce9, TAITO_CHARS_PIVOT },			// 13 PIV Tiles
+	{ "d67-11",					0x100000, 0x7a401bb3, TAITO_CHARS_PIVOT },			// 14
+	{ "d67-12",					0x100000, 0x67b16fec, TAITO_CHARS_PIVOT },			// 15
+
+	{ "d67-13",					0x080000, 0x42e7690d, TAITO_SPRITEMAP },			// 16 Sprite Map
+
+	{ "d67-01",					0x200000, 0xa2f18122, TAITO_ES5505_BYTESWAP },		// 17 Ensoniq Samples/Data
+	{ "d67-02",					0x200000, 0xfceb715e, TAITO_ES5505_BYTESWAP },		// 18
+
+	{ "eeprom-undrfire.bin",	0x000080, 0x9f7368f4, TAITO_DEFAULT_EEPROM },		// 19 Default EEPROM
+};
+
+STD_ROM_PICK(undrfireu)
+STD_ROM_FN(undrfireu)
+
+struct BurnDriver BurnDrvUndrfireu = {
+	"undrfireu", "undrfire", NULL, NULL, "1993",
+	"Under Fire (US)\0", NULL, "Taito America Corporation", "K1100744A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, undrfireuRomInfo, undrfireuRomName, NULL, NULL, NULL, NULL, UndrfireInputInfo, NULL,
+	UndrfireInit, DrvExit, DrvFrame, UndrfireDraw, DrvScan, &DrvRecalc, 0x4000,
+	320, 232, 4, 3
+};
+
+
 // Under Fire (Japan)
 
 static struct BurnRomInfo undrfirejRomDesc[] = {

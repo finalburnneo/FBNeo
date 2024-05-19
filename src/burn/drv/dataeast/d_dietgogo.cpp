@@ -6,6 +6,7 @@
 #include "deco16ic.h"
 #include "deco146.h"
 #include "msm6295.h"
+#include "burn_ym2151.h"
 #include "h6280_intf.h"
 
 static UINT8 *AllMem;
@@ -36,31 +37,33 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo DietgoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Dietgo)
@@ -189,6 +192,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -232,12 +237,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00000,  0, 2)) return 1;
@@ -311,7 +311,7 @@ static INT32 DrvExit()
 
 	SekExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -369,19 +369,7 @@ static void draw_sprites()
 
 		while (multi >= 0)
 		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code - multi * inc, sx, (sy + mult * multi) - 8, color, 4, 0, 0x200, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code - multi * inc, sx, (sy + mult * multi) - 8, color, 4, 0, 0x200, DrvGfxROM2);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code - multi * inc, sx, (sy + mult * multi) - 8, color, 4, 0, 0x200, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code - multi * inc, sx, (sy + mult * multi) - 8, color, 4, 0, 0x200, DrvGfxROM2);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, code - multi * inc, sx, (sy + mult * multi) - 8, flipx, flipy, color, 4, 0, 0x200, DrvGfxROM2);
 
 			multi--;
 		}
@@ -397,9 +385,7 @@ static INT32 DrvDraw()
 
 	deco16_pf12_update();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x100;
-	}
+	BurnTransferClear(0x100);
 
 	if (nBurnLayer & 1) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_OPAQUE);
 
@@ -421,7 +407,7 @@ static INT32 DrvFrame()
 	h6280NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(UINT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(UINT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -429,9 +415,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 232; //256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	h6280Open(0);
@@ -440,32 +425,22 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
 		if (i == 208) deco16_vblank = 0x08;
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-	}
-
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -477,7 +452,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029722;
 	}
@@ -496,13 +471,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
 }
 
 
-// Diet Go Go (Euro v1.1 1992.09.26 V3)
+// Diet Go Go (Euro v1.1 1992.09.26 v3)
 
 static struct BurnRomInfo dietgoRomDesc[] = {
 	{ "jy_00-3.4h",			0x040000, 0xa863ad0c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -527,7 +504,7 @@ STD_ROM_FN(dietgo)
 
 struct BurnDriver BurnDrvDietgo = {
 	"dietgo", NULL, NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26 V3)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Diet Go Go (Euro v1.1 1992.09.26 v3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
@@ -536,7 +513,7 @@ struct BurnDriver BurnDrvDietgo = {
 };
 
 
-// Diet Go Go (Euro v1.1 1992.09.26 V2)
+// Diet Go Go (Euro v1.1 1992.09.26 v2)
 
 static struct BurnRomInfo dietgoeRomDesc[] = {
 	{ "jy_00-2.4h",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -561,7 +538,7 @@ STD_ROM_FN(dietgoe)
 
 struct BurnDriver BurnDrvDietgoe = {
 	"dietgoe", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26 V2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Diet Go Go (Euro v1.1 1992.09.26 v2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,

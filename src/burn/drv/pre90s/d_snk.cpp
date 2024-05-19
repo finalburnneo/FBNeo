@@ -80,16 +80,17 @@ static UINT8  DrvDips[4];
 static UINT8  DrvInputs[6];
 static UINT8  DrvReset;
 
-static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
-static INT32  nRotate[2]      = {0, 0};
-static INT32  nRotateTarget[2]      = {0, 0};
-static INT32  nRotateTry[2]      = {0, 0};
-static UINT32 nRotateTime[2]  = {0, 0};
+static UINT8  DrvFakeInput[14]		= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
+static INT32  nRotate[2]			= {0, 0};
+static INT32  nRotateTarget[2]		= {0, 0};
+static INT32  nRotateTry[2]			= {0, 0};
+static UINT32 nRotateTime[2]		= {0, 0};
 static UINT8  game_rotates = 0;
-static UINT8  gwar_rot_last[2] = {0, 0};
-static UINT8  gwar_rot_cnt[2] = {0, 0};
-static UINT8  nAutoFireCounter[2] 	= {0, 0};
+static UINT8  gwar_rot_last[2]		= {0, 0};
+static UINT8  gwar_rot_cnt[2]		= {0, 0};
+static UINT8  nAutoFireCounter[2]	= {0, 0};
 
+static INT32 nExtraCycles[3];
 
 static struct BurnInputInfo PsychosInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
@@ -2118,16 +2119,17 @@ STDDIPINFO(Bermudat)
 
 // SNKWAVE code
 
+#include "stream.h"
+static Stream stream;
 #define CLOCK_SHIFT 8
 #define SNKWAVE_WAVEFORM_LENGTH 16
 
 // data about the sound system
-UINT32 snkwave_frequency;
-UINT32 snkwave_counter;
-INT32 snkwave_waveform_position;
+static UINT32 snkwave_frequency;
+static UINT32 snkwave_counter;
+static INT32 snkwave_waveform_position;
 // decoded waveform table
-INT16 snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH];
-double snkwave_volume = 1.00;
+static INT16 snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH];
 
 static void snkwave_reset()
 {
@@ -2138,8 +2140,20 @@ static void snkwave_reset()
 	memset(&snkwave_waveform, 0, sizeof(snkwave_waveform));
 }
 
-static void snkwave_render(INT16 *buffer, INT32 samples)
+static void snkwave_scan()
 {
+	SCAN_VAR(snkwave_frequency);
+	SCAN_VAR(snkwave_counter);
+	SCAN_VAR(snkwave_waveform_position);
+	SCAN_VAR(snkwave_waveform);
+}
+
+static void snkwave_update(INT16 **streams, INT32 samples)
+{
+	INT16 *buffer = streams[0];
+
+	memset(buffer, 0, samples * sizeof(INT16));
+
 	/* if no sound, we're done */
 	if (snkwave_frequency == 0xfff)
 		return;
@@ -2170,11 +2184,29 @@ static void snkwave_render(INT16 *buffer, INT32 samples)
 			}
 		}
 
-		*buffer = BURN_SND_CLIP(*buffer + (INT16)(out * snkwave_volume));
-		buffer++;
-		*buffer = BURN_SND_CLIP(*buffer + (INT16)(out * snkwave_volume));
-		buffer++;
+		*buffer++ = out;
 	}
+}
+
+static void snkwave_render(INT16 *output, INT32 samples_len)
+{
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("snkwave_render(): once per frame, please!\n"));
+		return;
+	}
+
+	stream.render(output, samples_len);
+}
+
+static void snkwave_init(double volume)
+{
+	stream.init(8000000>>CLOCK_SHIFT, nBurnSoundRate, 1, 1, snkwave_update);
+	stream.set_volume(volume);
+}
+
+static void snkwave_exit()
+{
+	stream.exit();
 }
 
 static void snkwave_update_waveform(UINT32 offset, UINT8 data)
@@ -2187,6 +2219,8 @@ static void snkwave_update_waveform(UINT32 offset, UINT8 data)
 
 static void snkwave_w(UINT32 offset, UINT8 data)
 {
+	stream.update();
+
 	data &= 0x3f; // all registers are 6-bit
 
 	if (offset == 0)
@@ -3985,11 +4019,6 @@ static void DrvFMIRQHandler_CB2(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles(2) * nSoundRate / 4000000;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -4020,8 +4049,6 @@ static INT32 DrvDoReset()
 
 	snkwave_reset(); // can be run on reset for all games, no big deal.
 
-	HiscoreReset();
-
 	sound_status = 0;
 	soundlatch = 0;
 	flipscreen = 0;
@@ -4044,6 +4071,10 @@ static INT32 DrvDoReset()
 	tc32_posx = 0;
 
 	RotateReset();
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -4273,12 +4304,11 @@ static INT32 PsychosInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4328,12 +4358,11 @@ static INT32 BermudatInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4395,12 +4424,11 @@ static INT32 GwarInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4461,12 +4489,11 @@ static INT32 GwaraInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4517,8 +4544,8 @@ static INT32 Tnk3Init()
 	ZetSetReadHandler(ym3526_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4588,8 +4615,8 @@ static INT32 AsoInit()
 	ZetSetReadHandler(aso_ym3526_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4646,12 +4673,11 @@ static INT32 AthenaInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 3350000);
+	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4711,7 +4737,7 @@ static INT32 MarvinsInit()
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
-	snkwave_volume = 0.50;
+	snkwave_init(0.50);
 
 	GenericTilesInit();
 
@@ -4770,7 +4796,7 @@ static INT32 MadcrashInit()
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
-	snkwave_volume = 0.30; // for vangrd2
+	snkwave_init(0.30); // for vangrd2
 
 	GenericTilesInit();
 
@@ -4829,6 +4855,8 @@ static INT32 MadcrushInit()
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
+	snkwave_init(0.30);
+
 	GenericTilesInit();
 
 	game_select = 5;
@@ -4880,6 +4908,8 @@ static INT32 JcrossInit()
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
+
+	snkwave_init(0.30); // not this hw
 
 	GenericTilesInit();
 
@@ -4934,6 +4964,8 @@ static INT32 SgladiatInit()
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
+	snkwave_init(0.30); // not this hw
+
 	GenericTilesInit();
 
 	video_sprite_number = 25;
@@ -4986,6 +5018,8 @@ static INT32 Hal21Init()
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
+	snkwave_init(0.30); // not this hw
+
 	GenericTilesInit();
 
 	video_sprite_number = 50;
@@ -5034,8 +5068,8 @@ static INT32 FitegolfInit()
 	ZetSetReadHandler(ym3812_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5084,12 +5118,11 @@ static INT32 IkariCommonInit(INT32 game)
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 3350000);
+	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5157,12 +5190,11 @@ static INT32 VictroadInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 3350000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5214,12 +5246,11 @@ static INT32 Chopper1Init()
 	ZetSetReadHandler(ym3812_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5268,12 +5299,11 @@ static INT32 ChopperaInit()
 	ZetSetReadHandler(ym3812_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5322,12 +5352,11 @@ static INT32 TdfeverInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&ZetConfig, 4000000);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5349,6 +5378,7 @@ static INT32 DrvExit()
 
 	if (game_select == 5)
 	{
+		snkwave_exit();
 		AY8910Exit(0);
 		AY8910Exit(1);
 	} else if (game_select == 7) {
@@ -6108,7 +6138,7 @@ static INT32 MarvinsFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3360000 / 60, 3360000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6128,6 +6158,10 @@ static INT32 MarvinsFrame()
 			ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		ZetClose();
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -6161,7 +6195,7 @@ static INT32 JcrossFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6186,6 +6220,10 @@ static INT32 JcrossFrame()
 		}
 		ZetClose();
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -6261,7 +6299,7 @@ static INT32 GwarFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6271,31 +6309,21 @@ static INT32 GwarFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameY8950(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-			
-		ZetOpen(2);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6352,7 +6380,7 @@ static INT32 AthenaFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6362,34 +6390,24 @@ static INT32 AthenaFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if ((i&7)==7) // update 100x per frame
 		{
 			ZetOpen(2);
-			BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
+			CPU_RUN_TIMER(2);
 			ZetClose();
 		}
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameY8950(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-			
-		ZetOpen(2);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6445,7 +6463,7 @@ static INT32 Tnk3Frame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6460,19 +6478,16 @@ static INT32 Tnk3Frame()
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 		ZetClose();
 	}
 
-	ZetOpen(2);
-
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -6502,7 +6517,7 @@ static INT32 FitegolfFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6518,20 +6533,17 @@ static INT32 FitegolfFrame()
 
 		if ((i&7)==7) { // update 100x per frame
 			ZetOpen(2);
-			BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
+			CPU_RUN_TIMER(2);
 			ZetClose();
 		}
 	}
 
-	ZetOpen(2);
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -6561,7 +6573,7 @@ static INT32 ChopperFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6571,31 +6583,21 @@ static INT32 ChopperFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameY8950(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
-		ZetOpen(2);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-
-		ZetOpen(1);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6632,8 +6634,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 7 || game_select == 9)
 			BurnYM3812Scan(nAction, pnMin);
 
-		if (game_select == 5)
+		if (game_select == 5) {
 			AY8910Scan(nAction, pnMin);
+			snkwave_scan();
+		}
 
 		SCAN_VAR(sound_status);
 		SCAN_VAR(soundlatch);
@@ -6665,6 +6669,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotateTime);
 		SCAN_VAR(gwar_rot_last);
 		SCAN_VAR(gwar_rot_cnt);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
 			nRotateTime[0] = nRotateTime[1] = 0;
@@ -7013,7 +7019,7 @@ STD_ROM_PICK(hal21)
 STD_ROM_FN(hal21)
 
 struct BurnDriver BurnDrvHal21 = {
-	"hal21", NULL, NULL, NULL, "1984",
+	"hal21", NULL, NULL, NULL, "1985",
 	"HAL21\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
@@ -7308,7 +7314,7 @@ static struct BurnRomInfo worldwarRomDesc[] = {
 	{ "1.1k",			0x00400, 0xb88e95f0, 14 | BRF_GRA },	      //  3 Color Data
 	{ "2.1l",			0x00400, 0x5e1616b2, 14 | BRF_GRA },	      //  4
 	{ "3.2l",			0x00400, 0xe9770796, 14 | BRF_GRA },	      //  5
-	{ "horinzon.5h",	0x00400, 0xc20b197b, 0 | BRF_OPT },	      	  //  6
+	{ "horizon.5h",		0x00400, 0xc20b197b, 0 | BRF_OPT },	      	  //  6
 	{ "vertical.7h", 	0x00400, 0x5d0c617f, 0 | BRF_OPT },	      	  //  7
 
 	// The two MB7134 LS30 rotary joystick decode PROMs 1.1d and 1.2d on the CPU board are missing in action.
@@ -7567,7 +7573,7 @@ STD_ROM_FN(gwara)
 
 struct BurnDriver BurnDrvGwara = {
 	"gwara", "gwar", NULL, NULL, "1987",
-	"Guerrilla War (Version 1)\0", NULL, "SNK", "Miscellaneous",
+	"Guerrilla War (Version 1, set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwaraRomInfo, gwaraRomName, NULL, NULL, NULL, NULL, GwarInputInfo, GwarDIPInfo,
@@ -7676,7 +7682,7 @@ struct BurnDriver BurnDrvGwarb = {
 	"gwarb", "gwar", NULL, NULL, "1987",
 	"Guerrilla War (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwarbRomInfo, gwarbRomName, NULL, NULL, NULL, NULL, GwarbInputInfo, GwarbDIPInfo,
 	GwarbInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7766,7 +7772,7 @@ struct BurnDriver BurnDrvTnk3j = {
 	224, 288, 3, 4
 };
 
-// T.A.N.K (Bootleg, 8-way Joystick)
+// T.A.N.K (bootleg, 8-way joystick)
 
 static struct BurnRomInfo tnk3bRomDesc[] = {
 	{ "p1a.4e",     0x04000, 0x26c45b82, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -7799,9 +7805,9 @@ STD_ROM_FN(tnk3b)
 
 struct BurnDriver BurnDrvTnk3b = {
 	"tnk3b", "tnk3", NULL, NULL, "1985",
-	"T.A.N.K (Bootleg, 8-way Joystick)\0", NULL, "bootleg", "Miscellaneous",
+	"T.A.N.K (bootleg, 8-way joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tnk3bRomInfo, tnk3bRomName, NULL, NULL, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
 	Tnk3bInit, DrvExit, Tnk3Frame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
@@ -7879,7 +7885,7 @@ struct BurnDriver BurnDrvAthenab = {
 	"athenab", "athena", NULL, NULL, "1986",
 	"Athena (bootleg)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, athenabRomInfo, athenabRomName, NULL, NULL, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
 	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -7918,7 +7924,7 @@ struct BurnDriver BurnDrvSathena = {
 	"sathena", "athena", NULL, NULL, "1987",
 	"Super Athena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sathenaRomInfo, sathenaRomName, NULL, NULL, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
 	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -7928,9 +7934,9 @@ struct BurnDriver BurnDrvSathena = {
 // ASO - Armored Scrum Object
 
 static struct BurnRomInfo asoRomDesc[] = {
-	{ "p1.d8",			0x04000, 0x84981f3c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "p2.d7",			0x04000, 0xcfe912a6, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "p3.d5",			0x04000, 0x39a666d2, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "p1.8d",			0x04000, 0x84981f3c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.7d",			0x04000, 0xcfe912a6, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p3.5d",			0x04000, 0x39a666d2, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	{ "p4.3d",			0x04000, 0xa4122355, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
 	{ "p5.2d",			0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
@@ -8767,7 +8773,7 @@ struct BurnDriver BurnDrvDogosokb = {
 };
 
 
-// Chopper I (US ver 2)
+// Chopper I (US Ver 2)
 
 static struct BurnRomInfo chopperRomDesc[] = {
 	{ "kk_a_ver2_1.8g",	0x10000, 0xdc325860, 1 | BRF_ESS | BRF_PRG }, 	 //  0 Z80 #0 code
@@ -8815,7 +8821,7 @@ STD_ROM_FN(chopper)
 
 struct BurnDriver BurnDrvChopper = {
 	"chopper", NULL,  NULL, NULL, "1988",
-	"Chopper I (US ver 2)\0", NULL, "SNK", "Miscellaneous",
+	"Chopper I (US Ver 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, chopperRomInfo, chopperRomName, NULL, NULL, NULL, NULL, ChopperaInputInfo, ChopperaDIPInfo,
@@ -8824,7 +8830,7 @@ struct BurnDriver BurnDrvChopper = {
 };
 
 
-// Chopper I (US ver 1?)
+// Chopper I (US Ver 1?)
 
 static struct BurnRomInfo chopperaRomDesc[] = {
 	{ "chpri-1.8g",		0x10000, 0xa4e6e978, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
@@ -8872,7 +8878,7 @@ STD_ROM_FN(choppera)
 
 struct BurnDriver BurnDrvChoppera = {
 	"choppera", "chopper", NULL, NULL, "1988",
-	"Chopper I (US ver 1?)\0", NULL, "SNK", "Miscellaneous",
+	"Chopper I (US Ver 1?)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, chopperaRomInfo, chopperaRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo,
@@ -9019,7 +9025,7 @@ static struct BurnRomInfo tdfeverRomDesc[] = {
 	{ "td13.2t",		0x10000, 0x88e2e819, 8 | BRF_GRA },           // 12 32x32 Sprites
 	{ "td12-1.2s",		0x10000, 0xf6f83d63, 8 | BRF_GRA },           // 13
 	{ "td11.2r",		0x10000, 0xa0d53fbd, 8 | BRF_GRA },           // 14
-	{ "td10-1.20",		0x10000, 0xc8c71c7b, 8 | BRF_GRA },           // 15
+	{ "td10-1.2p",		0x10000, 0xc8c71c7b, 8 | BRF_GRA },           // 15
 	{ "td9.2n",			0x10000, 0xa8979657, 8 | BRF_GRA },           // 16
 	{ "td8-1.2l",		0x10000, 0x28f49182, 8 | BRF_GRA },           // 17
 	{ "td7.2k",			0x10000, 0x72a5590d, 8 | BRF_GRA },           // 18
@@ -9190,9 +9196,9 @@ STD_ROM_FN(tdfever2b)
 
 struct BurnDriver BurnDrvTdfever2b = {
 	"tdfever2b", "tdfever", NULL, NULL, "1988",
-	"TouchDown Fever 2 (bootleg)\0", NULL, "SNK", "Miscellaneous",
+	"TouchDown Fever 2 (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	/*BDF_GAME_WORKING |*/0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tdfever2bRomInfo, tdfever2bRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //TdfeverInputInfo, TdfeverDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, TdfeverDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -9324,7 +9330,7 @@ struct BurnDriver BurnDrvFsoccerb = {
 	"fsoccerb", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbRomInfo, fsoccerbRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -9368,7 +9374,7 @@ struct BurnDriver BurnDrvFsoccerba = {
 	"fsoccerba", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg, alt)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbaRomInfo, fsoccerbaRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3

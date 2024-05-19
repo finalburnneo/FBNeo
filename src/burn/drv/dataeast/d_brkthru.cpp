@@ -503,12 +503,11 @@ static INT32 DrvInit()
 	M6809Close();
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachM6809(1500000*2);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.10);
+	BurnTimerAttach(&M6809Config, 1500000*2);
 
 	BurnYM3526Init(3000000, &DrvFMIRQHandler, 1);
-	BurnTimerAttachYM3526(&M6809Config, 1500000*2);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.75, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -684,37 +683,26 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[2] = { 1500000*2 / 60, 1500000*2 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		BurnTimerUpdate((i+1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, M6809);
 		if (i == (248-2)) vblank = 1;
 		if (i == (248-2) && nmi_mask) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
 		M6809Open(1);
-		BurnTimerUpdateYM3526((i+1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		M6809Close();
 	}
 
-	M6809Open(0);
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	M6809Close();
-	
-	M6809Open(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	M6809Close();
-
 	if (pBurnSoundOut) {
-		M6809Open(0);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		M6809Close();
-		M6809Open(1);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		M6809Close();
 	}
 
 	if (pBurnDraw) {

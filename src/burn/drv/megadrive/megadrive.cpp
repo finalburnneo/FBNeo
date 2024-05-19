@@ -1880,26 +1880,30 @@ static void __fastcall LK3WriteWord(UINT32 address, UINT16 data)
 	SEK_DEF_WRITE_WORD(7, address, data);
 }
 
-static UINT8 __fastcall RedclifProtReadByte(UINT32 /*sekAddress*/)
+static UINT8 __fastcall RedclifProtReadByte(UINT32 sekAddress)
 {
+	//bprintf(PRINT_NORMAL, _T("RedclifeProt Read byte %x  pc %x\n"), sekAddress, SekGetPC(-1));
+
 	return (UINT8)-0x56;
 }
 
 static UINT16 __fastcall RedclifProtReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("RedclifeProt Read Word %x\n"), sekAddress);
+	bprintf(PRINT_NORMAL, _T("RedclifeProt Read word %x  pc %x\n"), sekAddress, SekGetPC(-1));
 
 	return 0;
 }
 
-static UINT8 __fastcall RedclifProt2ReadByte(UINT32 /*sekAddress*/)
+static UINT8 __fastcall RedclifProt2ReadByte(UINT32 sekAddress)
 {
+	//bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read byte %x  pc %x\n"), sekAddress, SekGetPC(-1));
+
 	return 0x55;
 }
 
 static UINT16 __fastcall RedclifProt2ReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read Word %x\n"), sekAddress);
+	bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read word %x  pc %x\n"), sekAddress, SekGetPC(-1));
 
 	return 0;
 }
@@ -2243,6 +2247,30 @@ static UINT16 __fastcall RockmanX3ExtraReadWord(UINT32 /*sekAddress*/)
 	return 0x0c;
 }
 
+static UINT8 __fastcall ChaoJiMjReadByte(UINT32 sekAddress)
+{
+	switch (sekAddress) {
+		case 0x400000: return 0x90;
+		case 0x400002: return 0xd3;
+	}
+
+	bprintf(PRINT_NORMAL, _T("ChaoJiMj Read Byte %x\n"), sekAddress);
+
+	return 0;
+}
+
+static UINT16 __fastcall ChaoJiMjReadWord(UINT32 sekAddress)
+{
+	switch (sekAddress) {
+		case 0x400000: return 0x9000;
+		case 0x400002: return 0xd300;
+	}
+
+	bprintf(PRINT_NORMAL, _T("ChaoJiMj Read Word %x\n"), sekAddress);
+
+	return 0;
+}
+
 static UINT8 __fastcall SbubExtraReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
@@ -2491,13 +2519,16 @@ static void SetupCustomCartridgeMappers()
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_REDCL_EN) {
-		OriginalRom = (UINT8*)BurnMalloc(0x200005);
-		memcpy(OriginalRom, RomMain, 0x200005);
-		for (UINT32 i = 0; i < RomSize; i++) {
-			OriginalRom[i] ^= 0x40;
-		}
+		if (RomSize == 0x200005) {
+			bprintf(0, _T("Redcliff - decrypting rom\n"));
+			OriginalRom = (UINT8*)BurnMalloc(0x200005);
+			memcpy(OriginalRom, RomMain, 0x200005);
+			for (UINT32 i = 0; i < RomSize; i++) {
+				OriginalRom[i] ^= 0x40;
+			}
 
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000004, 0x200000);
+			memcpy(RomMain + 0x000000, OriginalRom + 0x000004, 0x200000);
+		}
 
 		SekOpen(0);
 		SekMapHandler(7, 0x400000, 0x400001, MAP_READ);
@@ -2561,6 +2592,14 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteWordHandler(7, SquirrelKingExtraWriteWord);
 		SekClose();
 		bNoDebug = 1; // Games make a lot of unmapped word-writes
+	}
+
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ) {
+		SekOpen(0);
+		SekMapHandler(7, 0x400000, 0x400007, MAP_READ);
+		SekSetReadByteHandler(7, ChaoJiMjReadByte);
+		SekSetReadWordHandler(7, ChaoJiMjReadWord);
+		SekClose();
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE) {
@@ -3177,6 +3216,16 @@ static void MegadriveSetupSRAM()
 static INT32 __fastcall MegadriveTAScallback(void)
 {
 	return 0; // disable
+}
+
+
+INT32 MegadriveInitNoDebug()
+{
+	INT32 rc = MegadriveInit();
+
+	bNoDebug = 1;
+
+	return rc;
 }
 
 INT32 MegadriveInit()
@@ -4626,6 +4675,9 @@ INT32 MegadriveFrame()
 	SekRunM68k(CYCLES_M68K_ASD);
 
 	for (INT32 y=0; y<lines; y++) {
+
+		if (y > lines_vis && nBurnCPUSpeedAdjust > 0x100)
+			SekRunM68k((INT32)((INT64)CYCLES_M68K_LINE * (nBurnCPUSpeedAdjust - 0x100) / 0x0100));
 
 		Scanline = y;
 

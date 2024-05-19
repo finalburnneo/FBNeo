@@ -1,6 +1,10 @@
 // FB Alpha Backfire! driver module
 // Based on MAME driver by David Haywood
 
+// note: shifter is very buggy, disabled for now.
+// shift maps to joy-up when analog (pot. wheel) is used
+// on set 2.
+
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "ymz280b.h"
@@ -33,55 +37,67 @@ static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoy4[16];
+static UINT8 DrvJoyF[16];
+
+static ButtonToggle shifter[2];
+
 static UINT8 DrvDips[1];
-static UINT16 DrvInputs[3];
+static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
+
+static INT32 analog_select;
+static UINT32 analog_ready;
+static INT16 Analog[2];
+
+static INT32 set_num;
 
 static UINT32 *priority;
 static INT32 single_screen = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo BackfireInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	A("P1 Wheel",       BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy3 + 9,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy3 + 10,	"p1 fire 6"	},
+//	{"P1 Shift",        BIT_DIGITAL,    DrvJoyF + 0,    "p1 fire 4" },
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 5"	},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 6"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
+	A("P2 Wheel",       BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
+//	{"P2 Shift",        BIT_DIGITAL,    DrvJoyF + 1,    "p2 fire 4" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy3 + 3,	"diag"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 3,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Backfire)
 
 static struct BurnDIPInfo BackfireDIPList[]=
 {
-	{0x1b, 0xff, 0xff, 0x00, NULL			},
+	DIP_OFFSET(0x18)
+	{0x00, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Screen Width"		},
-	{0x1b, 0x01, 0x01, 0x00, "Single"			},
-	{0x1b, 0x01, 0x01, 0x01, "Double"			},
+	{0x00, 0x01, 0x01, 0x00, "Single"			},
+	{0x00, 0x01, 0x01, 0x01, "Double"			},
 };
 
 STDDIPINFO(Backfire)
@@ -148,6 +164,8 @@ static void backfire_write_long(UINT32 address, UINT32 data)
 	}
 }
 
+static UINT32 backfire_read_long(UINT32 address); // forward
+
 static UINT8 backfire_read_byte(UINT32 address)
 {
 	Read16Byte(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
@@ -161,14 +179,27 @@ static UINT8 backfire_read_byte(UINT32 address)
 	Read16Byte(deco16_pf_rowscroll[2],	0x150000, 0x150fff) // 16-bit
 	Read16Byte(deco16_pf_rowscroll[3],	0x154000, 0x154fff) // 16-bit
 
+	if ((address & ~7) == 0x1e8000) {
+		analog_select = (address & 7) >> 2;
+		analog_ready = 64;
+	}
+
 	switch (address)
 	{
-		case 0x190000: return DrvInputs[0];
-		case 0x190002: return DrvInputs[2];
-		case 0x194002: return DrvInputs[1];
+		case 0x190000:
+		case 0x190001:
+		case 0x190002:
+		case 0x190003:
+		case 0x194000:
+		case 0x194001:
+		case 0x194002:
+		case 0x194003:
+			return backfire_read_long(address & ~3) >> ((address & 3) * 8);
 
 		case 0x1c0000: return YMZ280BRead(0);
 		case 0x1c0004: return YMZ280BRead(1);
+		case 0x1e4000:
+			return ProcessAnalog(Analog[analog_select], 1, INPUT_DEADZONE, 0x20, 0xe0);
 	}
 
 	return 0;
@@ -187,26 +218,29 @@ static UINT32 backfire_read_long(UINT32 address)
 	Read16Long(deco16_pf_rowscroll[2],	0x150000, 0x150fff) // 16-bit
 	Read16Long(deco16_pf_rowscroll[3],	0x154000, 0x154fff) // 16-bit
 
+	if ((address & ~7) == 0x1e8000) {
+		analog_select = (address & 7) >> 2;
+		analog_ready = 64;
+	}
+
 	switch (address)
 	{
 		case 0x190000: {
-			UINT32 vblnk=0;
-			vblnk ^= 1 << 16;
+			if (analog_ready > 0) analog_ready--;
 
-			UINT32 ret = 0;
+			UINT32 ret = 0xfa00ff00;
 			ret |= EEPROMRead() << 24;
-			ret |= (DrvInputs[2] & 0xbf) << 16;
-			ret |= deco16_vblank;
-			ret |= DrvInputs[0];
-			ret |= vblnk;
+			ret |= (analog_ready == 0) << 26;
+			ret |= (DrvInputs[1] & 0xaf) << 16;
+			ret |= ((deco16_vblank) ? 0x50 : 0x00) << 16;
+			ret |= DrvInputs[0] & 0xff;
 			return ret;
 		}
 
 		case 0x194000: {
-			UINT32 ret = 0;
-			ret |= EEPROMRead() << 24;
-			ret |= DrvInputs[1] << 16;
-			ret |= DrvInputs[1] <<  0;
+			UINT32 ret = 0xfff8ff00;
+			ret |= (DrvInputs[3] & 0x07) << 16;
+			ret |= (DrvInputs[2] & 0xff) <<  0;
 			return ret;
 		}
 
@@ -215,6 +249,9 @@ static UINT32 backfire_read_long(UINT32 address)
 
 		case 0x1c0004:
 			return YMZ280BRead(1);
+
+		case 0x1e4000:
+			return ProcessAnalog(Analog[analog_select], 1, INPUT_DEADZONE, 0x20, 0xe0);
 	}
 
 	return 0;
@@ -237,9 +274,9 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
-	DrvTmpBitmap_p		= (UINT16*)Next;
-	DrvTmpBitmap0		= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
-	DrvTmpBitmap1		= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
+	DrvTmpBitmap_p	= (UINT16*)Next;
+	DrvTmpBitmap0	= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
+	DrvTmpBitmap1	= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
 
 	AllRam			= Next;
 
@@ -260,19 +297,33 @@ static INT32 MemIndex()
 static void backfire_check_eeprominit()
 {
 	// eeprom settings: defaults & set to single screen mode
-	UINT8 BackfireNV[0x80] = {
-		0x49,0x46,0x45,0x52,0xb0,0x60,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x07,0x9d,
-		0x0f,0x1a,0x24,0x15,0x00,0x00,0x22,0x71,0x01,0x05,0x14,0x13,0x00,0x00,0x23,0x32,
-		0x04,0x01,0x10,0x01,0x00,0x00,0x22,0x43,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
-		0x01,0x04,0x01,0x14,0x00,0x00,0x24,0x25,0x09,0x17,0x0c,0x0c,0x00,0x00,0x22,0x76,
-		0x0f,0x1a,0x24,0x15,0x00,0x00,0x03,0x60,0x01,0x05,0x14,0x13,0x00,0x00,0x11,0x60,
-		0x04,0x01,0x10,0x01,0x00,0x00,0x11,0x20,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
-		0x01,0x04,0x01,0x14,0x00,0x00,0x05,0x50,0x09,0x17,0x0c,0x0c,0x00,0x00,0x11,0x30,
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	// second set ([1]): analog inputs
+	// both sets have analog inputs calibrated
+	UINT8 BackfireNV[2][0x80] = {
+		{
+			0x49,0x46,0x45,0x52,0xb0,0x60,0x00,0x20,0x80,0x80,0x00,0x00,0x00,0x00,0x08,0xbd,
+			0x0f,0x1a,0x24,0x15,0x00,0x00,0x22,0x71,0x01,0x05,0x14,0x13,0x00,0x00,0x23,0x32,
+			0x04,0x01,0x10,0x01,0x00,0x00,0x22,0x43,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
+			0x01,0x04,0x01,0x14,0x00,0x00,0x24,0x25,0x09,0x17,0x0c,0x0c,0x00,0x00,0x22,0x76,
+			0x0f,0x1a,0x24,0x15,0x00,0x00,0x03,0x60,0x01,0x05,0x14,0x13,0x00,0x00,0x11,0x60,
+			0x04,0x01,0x10,0x01,0x00,0x00,0x11,0x20,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
+			0x01,0x04,0x01,0x14,0x00,0x00,0x05,0x50,0x09,0x17,0x0c,0x0c,0x00,0x00,0x11,0x30,
+			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+		},
+		{
+			0x49,0x46,0x45,0x52,0xb0,0x60,0x00,0x22,0x80,0x80,0x00,0x00,0x00,0x00,0x07,0xae,
+			0x0f,0x1a,0x00,0x15,0x00,0x00,0x22,0x71,0x01,0x05,0x00,0x13,0x00,0x00,0x23,0x32,
+			0x04,0x01,0x00,0x01,0x00,0x00,0x22,0x43,0x09,0x0d,0x00,0x14,0x00,0x00,0x20,0x54,
+			0x01,0x04,0x00,0x14,0x00,0x00,0x24,0x25,0x09,0x17,0x00,0x0c,0x00,0x00,0x22,0x76,
+			0x0f,0x1a,0x00,0x15,0x00,0x00,0x03,0x60,0x01,0x05,0x00,0x13,0x00,0x00,0x11,0x60,
+			0x04,0x01,0x00,0x01,0x00,0x00,0x11,0x20,0x09,0x0d,0x00,0x14,0x00,0x00,0x20,0x54,
+			0x01,0x04,0x00,0x14,0x00,0x00,0x05,0x50,0x09,0x17,0x00,0x0c,0x00,0x00,0x11,0x30,
+			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+		}
 	};
 
 	if (!EEPROMAvailable())
-		EEPROMFill(BackfireNV, 0, 128);
+		EEPROMFill(BackfireNV[set_num&1], 0, 128);
 }
 
 static INT32 DrvDoReset()
@@ -324,11 +375,7 @@ static void pCommonSpeedhackCallback()
 
 static INT32 DrvInit(UINT32 speedhack)
 {
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvArmROM  + 0x000001,  0, 2)) return 1;
@@ -447,7 +494,7 @@ static INT32 DrvExit()
 
 	deco16Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	single_screen = 0;
 
@@ -620,26 +667,29 @@ static INT32 DrvFrame()
 	}
 
 	{
-		DrvInputs[0] = 0x00ff;
-		DrvInputs[1] = 0x00ff;
-		DrvInputs[2] = 0xffe7;
+		DrvInputs[0] = 0xff;
+		DrvInputs[1] = 0xff;
+		DrvInputs[2] = 0xff;
+		DrvInputs[3] = 0xff;
 
-		for (INT32 i = 0; i < 16; i++) {
+		shifter[0].Toggle(DrvJoyF[0]);
+		shifter[1].Toggle(DrvJoyF[1]);
+
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
-
-		DrvInputs[2] = (DrvInputs[2] & ~0x8) | ((DrvJoy3[3]^1) << 3);
 	}
 
 	INT32 nTotalCycles = 28000000 / 60;
 
 	ArmOpen(0);
-	deco16_vblank = 0x10;
+	deco16_vblank = 1;
 	ArmRun(nTotalCycles - 2240);
 	ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-	deco16_vblank = 0x00;
+	deco16_vblank = 0;
 	ArmRun(2240);
 	ArmClose();
 
@@ -657,7 +707,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029707;
 	}
@@ -676,13 +726,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		YMZ280BScan(nAction, pnMin);
 
 		deco16Scan();
+
+		shifter[0].Scan();
+		shifter[1].Scan();
+
+		EEPROMScan(nAction, pnMin);
 	}
 
 	return 0;
 }
 
 
-// Backfire! (set 1)
+// Backfire! (Japan, set 1)
 
 static struct BurnRomInfo backfireRomDesc[] = {
 	{ "ra00-0.2j",		0x080000, 0x790da069, 1 | BRF_PRG | BRF_ESS }, //  0 Arm code (Encrypted)
@@ -712,12 +767,13 @@ STD_ROM_FN(backfire)
 
 static INT32 backfireInit()
 {
+	set_num = 0;
 	return DrvInit(0xce44);
 }
 
 struct BurnDriver BurnDrvBackfire = {
 	"backfire", NULL, NULL, NULL, "1995",
-	"Backfire! (set 1)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Backfire! (Japan, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
 	NULL, backfireRomInfo, backfireRomName, NULL, NULL, NULL, NULL, BackfireInputInfo, BackfireDIPInfo,
@@ -726,7 +782,7 @@ struct BurnDriver BurnDrvBackfire = {
 };
 
 
-// Backfire! (set 2)
+// Backfire! (Japan, set 2)
 
 static struct BurnRomInfo backfireaRomDesc[] = {
 	{ "rb-00h.h2",		0x080000, 0x60973046, 1 | BRF_PRG | BRF_ESS }, //  0 Arm code (Encrypted)
@@ -752,14 +808,15 @@ STD_ROM_FN(backfirea)
 
 static INT32 backfireaInit()
 {
+	set_num = 1;
 	return DrvInit(0xcee4);
 }
 
-struct BurnDriverD BurnDrvBackfirea = {
+struct BurnDriver BurnDrvBackfirea = {
 	"backfirea", "backfire", NULL, NULL, "1995",
-	"Backfire! (set 2)\0", "Set inputs to \"Joystick\" in test mode", "Data East Corporation", "DECO IC16",
+	"Backfire! (Japan, set 2)\0", "uses analog wheel by default", "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
 	NULL, backfireaRomInfo, backfireaRomName, NULL, NULL, NULL, NULL, BackfireInputInfo, BackfireDIPInfo,
 	backfireaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	640, 240, 8, 3

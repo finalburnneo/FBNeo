@@ -2883,7 +2883,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Big Run (11th Rallye version)
+// Big Run (11th Rallye version, Europe?)
 
 static struct BurnRomInfo bigrunRomDesc[] = {
 	{ "br8950b.e1",				0x40000, 0xbfb54a62, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -2929,6 +2929,20 @@ static struct BurnRomInfo bigrunRomDesc[] = {
 	{ "br8951b.21",				0x20000, 0x59b9c26b, 0 | BRF_OPT },           // 27 Unknown ROMS
 	{ "br8951b.22",				0x20000, 0xc112a803, 0 | BRF_OPT },           // 28
 	{ "br8951b.23",				0x10000, 0xb9474fec, 0 | BRF_OPT },           // 29
+
+	{ "pr88004p.10.12e",		0x00800, 0xf178bcce, 0 | BRF_OPT },           // 30 Main pcb proms
+	{ "pr88004q.11.8m",			0x00200, 0x9327dc37, 0 | BRF_OPT },           // 31
+
+	{ "pr88004r.24.8l",			0x00800, 0x354fc081, 0 | BRF_OPT },           // 32 Object pcb proms
+	{ "pr88004s.25.8k",			0x00800, 0x2a4f9241, 0 | BRF_OPT },           // 33
+	{ "pr88004t.26.2x",			0x00200, 0x1aad16b2, 0 | BRF_OPT },           // 34
+	{ "pr88004u.27.3y",			0x00200, 0x213874b2, 0 | BRF_OPT },           // 35
+	{ "pr88004w.28.9v",			0x00100, 0x3d648467, 0 | BRF_OPT },           // 36
+
+	{ "pr88004x.21.3j",			0x00100, 0x19976c09, 0 | BRF_OPT },           // 37
+
+	{ "pr88004y.9.9l",			0x00100, 0xbaf5e02c, 0 | BRF_OPT },           // 38
+	{ "pr88004z.10.10l",		0x00100, 0x3103c792, 0 | BRF_OPT },           // 39
 };
 
 STD_ROM_PICK(bigrun)
@@ -2936,10 +2950,86 @@ STD_ROM_FN(bigrun)
 
 struct BurnDriver BurnDrvBigrun = {
 	"bigrun", NULL, NULL, NULL, "1989",
-	"Big Run (11th Rallye version)\0", NULL, "Jaleco", "Miscellaneous",
+	"Big Run (11th Rallye version, Europe?)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, bigrunRomInfo, bigrunRomName, NULL, NULL, NULL, NULL, BigrunInputInfo, BigrunDIPInfo,
+	BigrunInit, DrvExit, BigrunFrame, BigrunDraw, DrvScan, &DrvRecalc, 0x2000,
+	256, 224, 4, 3
+};
+
+
+// Big Run (11th Rallye version, US?)
+
+static struct BurnRomInfo bigrunuRomDesc[] = {
+	{ "br8950b.1",				0x40000, 0x748d1525, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "br8950b.2",				0x40000, 0x4164a542, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "br8952a.19",				0x20000, 0xfcf6b70c, 2 | BRF_PRG | BRF_ESS }, //  2 68K #1 Code
+	{ "br8952a.20",				0x20000, 0xc43d367b, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "br8952a.9",				0x20000, 0xf803f0d9, 3 | BRF_PRG | BRF_ESS }, //  4 68K #2 Code
+	{ "br8952a.10",				0x20000, 0x8c0df287, 3 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "br8953c.2",				0x20000, 0xb690d8d9, 4 | BRF_PRG | BRF_ESS }, //  6 68K #3 Code
+	{ "br8953c.1",				0x20000, 0x79fc7bc0, 4 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "br8950b.3",				0x20000, 0x864cebf7, 1 | BRF_PRG | BRF_ESS }, //  8 Extra 68K #0 Code
+	{ "br8950b.4",				0x20000, 0x702c2a6e, 1 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "br8950b.5",				0x20000, 0x0530764e, 1 | BRF_GRA },           // 10 Background Layer 0 Tiles
+	{ "br8950b.6",				0x20000, 0xcf40ecfa, 1 | BRF_GRA },           // 11
+
+	{ "br8950b.7",				0x20000, 0xbd5fd061, 2 | BRF_GRA },           // 12 Background Layer 1 Tiles
+	{ "br8950b.8",				0x20000, 0x7d66f418, 2 | BRF_GRA },           // 13
+
+	{ "br8950b.9",				0x20000, 0xbe0864c4, 3 | BRF_GRA },           // 14 Background Layer 2 Tiles
+
+	{ "mr88004a.t41",			0x80000, 0xc781d8c5, 4 | BRF_GRA },           // 15 Sprites
+	{ "mr88004d.t43",			0x80000, 0xe4041208, 4 | BRF_GRA },           // 16
+	{ "mr88004b.t42",			0x80000, 0x2df2e7b9, 4 | BRF_GRA },           // 17
+	{ "mr88004e.t44",			0x80000, 0x7af7fbf6, 4 | BRF_GRA },           // 18
+	{ "mb88004c.t48",			0x40000, 0x02e2931d, 4 | BRF_GRA },           // 19
+	{ "mb88004f.t49",			0x40000, 0x4f012dab, 4 | BRF_GRA },           // 20
+
+	{ "mr88004g.t45",			0x80000, 0xbb397bae, 5 | BRF_GRA },           // 21 Road Layer 0 Tiles
+	{ "mb88004h.t46",			0x80000, 0x6b31a1ba, 5 | BRF_GRA },           // 22
+
+	{ "mr88004g.t45",			0x80000, 0xbb397bae, 6 | BRF_GRA },           // 23 Road Layer 1 Tiles
+	{ "mb88004h.t46",			0x80000, 0x6b31a1ba, 6 | BRF_GRA },           // 24
+
+	{ "mb88004l.t50",			0x80000, 0x6b11fb10, 9 | BRF_SND },           // 25 MSM #0 Samples
+
+	{ "mb88004m.t51",			0x80000, 0xee52f04d, 10 | BRF_SND },           // 26 MSM #1 Samples
+
+	{ "br8951b.21",				0x20000, 0x59b9c26b, 0 | BRF_OPT },           // 27 Unknown ROMS
+	{ "br8951b.22",				0x20000, 0xc112a803, 0 | BRF_OPT },           // 28
+	{ "br8951b.23",				0x10000, 0xb9474fec, 0 | BRF_OPT },           // 29
+
+	{ "pr88004p.10.12e",		0x00800, 0xf178bcce, 0 | BRF_OPT },           // 30 Main pcb proms
+	{ "pr88004q.11.8m",			0x00200, 0x9327dc37, 0 | BRF_OPT },           // 31
+
+	{ "pr88004r.24.8l",			0x00800, 0x354fc081, 0 | BRF_OPT },           // 32 Object pcb proms
+	{ "pr88004s.25.8k",			0x00800, 0x2a4f9241, 0 | BRF_OPT },           // 33
+	{ "pr88004t.26.2x",			0x00200, 0x1aad16b2, 0 | BRF_OPT },           // 34
+	{ "pr88004u.27.3y",			0x00200, 0x213874b2, 0 | BRF_OPT },           // 35
+	{ "pr88004w.28.9v",			0x00100, 0x3d648467, 0 | BRF_OPT },           // 36
+
+	{ "pr88004x.21.3j",			0x00100, 0x19976c09, 0 | BRF_OPT },           // 37
+
+	{ "pr88004y.9.9l",			0x00100, 0xbaf5e02c, 0 | BRF_OPT },           // 38
+	{ "pr88004z.10.10l",		0x00100, 0x3103c792, 0 | BRF_OPT },           // 39
+};
+
+STD_ROM_PICK(bigrunu)
+STD_ROM_FN(bigrunu)
+
+struct BurnDriver BurnDrvBigrunu = {
+	"bigrunu", "bigrun", NULL, NULL, "1989",
+	"Big Run (11th Rallye version, US?)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, bigrunuRomInfo, bigrunuRomName, NULL, NULL, NULL, NULL, BigrunInputInfo, BigrunDIPInfo,
 	BigrunInit, DrvExit, BigrunFrame, BigrunDraw, DrvScan, &DrvRecalc, 0x2000,
 	256, 224, 4, 3
 };
@@ -3391,7 +3481,7 @@ struct BurnDriver BurnDrvWildplt = {
 	"wildplt", NULL, NULL, NULL, "1992",
 	"Wild Pilot\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, wildpltRomInfo, wildpltRomName, NULL, NULL, NULL, NULL, WildpltInputInfo, WildpltDIPInfo,
 	WildpltInit, DrvExit, BigrunFrame, F1gpstarDraw, DrvScan, &DrvRecalc, 0x4000,
 	256, 224, 4, 3
@@ -3482,7 +3572,7 @@ struct BurnDriver BurnDrvScudhamma = {
 };
 
 
-// Arm Champs II v2.7
+// Arm Champs II (ver 2.7)
 
 static struct BurnRomInfo armchmp2RomDesc[] = {
 	{ "4_ver_2.7.ic63",			0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3519,7 +3609,7 @@ STD_ROM_FN(armchmp2)
 
 struct BurnDriver BurnDrvArmchmp2 = {
 	"armchmp2", NULL, NULL, NULL, "1992",
-	"Arm Champs II v2.7\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 2.7)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2RomInfo, armchmp2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
@@ -3528,7 +3618,7 @@ struct BurnDriver BurnDrvArmchmp2 = {
 };
 
 
-// Arm Champs II v2.6
+// Arm Champs II (ver 2.6)
 
 static struct BurnRomInfo armchmp2o2RomDesc[] = {
 	{ "ac-91106v2.6_4.ic63",	0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3565,7 +3655,7 @@ STD_ROM_FN(armchmp2o2)
 
 struct BurnDriver BurnDrvArmchmp2o2 = {
 	"armchmp2o2", "armchmp2", NULL, NULL, "1992",
-	"Arm Champs II v2.6\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 2.6)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2o2RomInfo, armchmp2o2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
@@ -3574,7 +3664,7 @@ struct BurnDriver BurnDrvArmchmp2o2 = {
 };
 
 
-// Arm Champs II v1.7
+// Arm Champs II (ver 1.7)
 
 static struct BurnRomInfo armchmp2oRomDesc[] = {
 	{ "ac91106_ver1.7_4.ic63",	0x20000, 0xaaa11bc7, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3611,7 +3701,7 @@ STD_ROM_FN(armchmp2o)
 
 struct BurnDriver BurnDrvArmchmp2o = {
 	"armchmp2o", "armchmp2", NULL, NULL, "1992",
-	"Arm Champs II v1.7\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 1.7)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2oRomInfo, armchmp2oRomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,

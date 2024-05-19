@@ -39,6 +39,8 @@ static INT32 spritelag_disable = 0;
 
 static INT32 LastScrollX = 0; // hitice
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p1 start"	},
@@ -1780,6 +1782,8 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	TaitoZ80Bank = 0;
 	LastScrollX = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	frame_counter = 0;
@@ -2093,25 +2097,22 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
-	INT32 SekSpeed = (INT32)((INT64)cpu_speed[0] * nBurnCPUSpeedAdjust / 0x100);
-	INT32 ZetSpeed = (INT32)((INT64)cpu_speed[1] * nBurnCPUSpeedAdjust / 0x100);
-
 	INT32 nInterleave = 200;	// high so that ym2203 sounds are good, 200 is perfect for irq #0
-	INT32 nCyclesTotal[2] = { SekSpeed / 60, ZetSpeed / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nNext[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { BurnSpeedAdjust(cpu_speed[0]) / 60, BurnSpeedAdjust(cpu_speed[1]) / 60 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nNext[0] += nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext[0] - nCyclesDone[0]);
-		if (i == 4)                     SekSetIRQLine(irq_config[0], CPU_IRQSTATUS_AUTO); // Start of frame + 5000 cycles
-		if (i == (nInterleave / 1) - 1) SekSetIRQLine(irq_config[1], CPU_IRQSTATUS_AUTO); // End of frame
-		nNext[1] += nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdate(nNext[1]);
-		nCyclesDone[1] += nNext[1];
+		CPU_RUN(0, Sek);
+		if (i == 4)               SekSetIRQLine(irq_config[0], CPU_IRQSTATUS_AUTO); // Start of frame + 5000 cycles
+		if (i == nInterleave - 1) SekSetIRQLine(irq_config[1], CPU_IRQSTATUS_AUTO); // End of frame
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		if (sound_config == 0) {
@@ -2122,9 +2123,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetClose();
-	SekClose();
-	
 	if (spritelag_disable) TC0180VCUBufferSprites();
 
 	if (pBurnDraw) {
@@ -2162,9 +2160,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (sound_config == 0) {
 			BurnYM2610Scan(nAction, pnMin);
 		} else {
-			ZetOpen(0); // because of bankswitch() port callback.
 			BurnYM2203Scan(nAction, pnMin);
-			ZetClose();
 			MSM6295Scan(nAction, pnMin);
 		}
 
@@ -2172,6 +2168,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoWatchdog);
 		if (has_trackball) BurnTrackballScan();
 		SCAN_VAR(frame_counter);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3198,19 +3196,19 @@ struct BurnDriver BurnDrvYukiwo = {
 // Nastar (World)
 
 static struct BurnRomInfo nastarRomDesc[] = {
-	{ "b81-08.50",			0x020000, 0xd6da9169, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "b81-13.31",			0x020000, 0x60d176fb, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "b81-10.49",			0x020000, 0x53f34344, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "b81-09.30",			0x020000, 0x630d34af, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "b81-08.50",				0x020000, 0xd6da9169, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "b81-13.31",				0x020000, 0x60d176fb, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "b81-10.49",				0x020000, 0x53f34344, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "b81-09.30",				0x020000, 0x630d34af, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b81-11.37",			0x010000, 0x3704bf09, TAITO_Z80ROM1 },			//  4 Z80 Code
+	{ "b81-11.37",				0x010000, 0x3704bf09, TAITO_Z80ROM1 },			//  4 Z80 Code
 
-	{ "b81-03.14",			0x080000, 0x551b75e6, TAITO_CHARS },			//  5 Graphics Tiles
-	{ "b81-04.15",			0x080000, 0xcf734e12, TAITO_CHARS },			//  6
+	{ "b81-03.14",				0x080000, 0x551b75e6, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "b81-04.15",				0x080000, 0xcf734e12, TAITO_CHARS },			//  6
 
-	{ "b81-02.2",			0x080000, 0x20ec3b86, TAITO_YM2610A },			//  7 YM2610 A Samples
+	{ "b81-02.2",				0x080000, 0x20ec3b86, TAITO_YM2610A },			//  7 YM2610 A Samples
 
-	{ "b81-01.1",			0x080000, 0xb33f796b, TAITO_YM2610B },			//  8 YM2610 B Samples
+	{ "b81-01.1",				0x080000, 0xb33f796b, TAITO_YM2610B },			//  8 YM2610 B Samples
 
 	{ "ampal16l8-b81-05.21",	0x000104, 0x922fd368, BRF_OPT },			//  9 PLDs
 	{ "ampal16l8-b81-06a.22",	0x000104, 0xbb1cec84, BRF_OPT },	        // 10
@@ -3367,7 +3365,7 @@ STD_ROM_FN(rambo3u)
 
 struct BurnDriver BurnDrvRambo3u = {
 	"rambo3u", "rambo3", NULL, NULL, "1989",
-	"Rambo III (US)\0", NULL, "Taito Europe Corporation", "Taito B System",
+	"Rambo III (US)\0", NULL, "Taito America Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
 	NULL, rambo3uRomInfo, rambo3uRomName, NULL, NULL, NULL, NULL, Rambo3InputInfo, Rambo3DIPInfo,
@@ -3557,8 +3555,8 @@ static INT32 TetristInit()
 }
 
 struct BurnDriver BurnDrvTetrist = {
-	"tetrist", "tetris", NULL, NULL, "1989",
-	"Tetris (Japan, B-System, YM2610)\0", "buggy - use parent!", "Sega", "Taito B System",
+	"tetrist", "tetris", NULL, NULL, "1988",
+	"Tetris (Japan, Taito B-System, Nastar Conversion Kit)\0", "buggy - use parent!", "Sega", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, tetristRomInfo, tetristRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TetristDIPInfo,
@@ -3590,8 +3588,8 @@ static INT32 TetristaInit()
 }
 
 struct BurnDriver BurnDrvTetrista = {
-	"tetrista", "tetris", NULL, NULL, "1989",
-	"Tetris (Japan, B-System, YM2203)\0", NULL, "Sega", "Taito B System",
+	"tetrista", "tetris", NULL, NULL, "1988",
+	"Tetris (Japan, Taito B-System, Master of Weapon Conversion Kit)\0", NULL, "Sega", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, tetristaRomInfo, tetristaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TetristDIPInfo,
@@ -3603,19 +3601,19 @@ struct BurnDriver BurnDrvTetrista = {
 // Violence Fight (World)
 
 static struct BurnRomInfo viofightRomDesc[] = {
-	{ "c16-11.42",			0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c16-14.23",			0x010000, 0xdc934f6a, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c16-07.41",			0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c16-06.22",			0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c16-11.42",				0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c16-14.23",				0x010000, 0xdc934f6a, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c16-07.41",				0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c16-06.22",				0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c16-12.32",			0x010000, 0x6fb028c7, TAITO_Z80ROM1 },          //  4 Z80 Code
+	{ "c16-12.32",				0x010000, 0x6fb028c7, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "c16-01.1",			0x080000, 0x7059ce83, TAITO_CHARS },            //  5 Graphics Tiles
-	{ "c16-02.2",			0x080000, 0xb458e905, TAITO_CHARS },            //  6
-	{ "c16-03.3",			0x080000, 0x515a9431, TAITO_CHARS },            //  7
-	{ "c16-04.4",			0x080000, 0xebf285e2, TAITO_CHARS },            //  8
+	{ "c16-01.1",				0x080000, 0x7059ce83, TAITO_CHARS },            //  5 Graphics Tiles
+	{ "c16-02.2",				0x080000, 0xb458e905, TAITO_CHARS },            //  6
+	{ "c16-03.3",				0x080000, 0x515a9431, TAITO_CHARS },            //  7
+	{ "c16-04.4",				0x080000, 0xebf285e2, TAITO_CHARS },            //  8
 
-	{ "c16-05.47",			0x080000, 0xa49d064a, TAITO_MSM6295 },          //  9 MSM6295 Samples
+	{ "c16-05.47",				0x080000, 0xa49d064a, TAITO_MSM6295 },          //  9 MSM6295 Samples
 
 	{ "pal16l8b-c16-08.ic34",	0x000104, 0x9456d278, BRF_OPT },		// 10 PLDs
 	{ "pal16l8b-c16-09.ic35",	0x000104, 0x0965baab, BRF_OPT },		// 11
@@ -3643,19 +3641,19 @@ struct BurnDriver BurnDrvViofight = {
 // Violence Fight (US)
 
 static struct BurnRomInfo viofightuRomDesc[] = {
-	{ "c16-11.42",			0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c16-13.23",			0x010000, 0xab947ffc, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c16-07.41",			0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c16-06.22",			0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c16-11.42",				0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c16-13.23",				0x010000, 0xab947ffc, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c16-07.41",				0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c16-06.22",				0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c16-12.32",			0x010000, 0x6fb028c7, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c16-12.32",				0x010000, 0x6fb028c7, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c16-01.1",			0x080000, 0x7059ce83, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c16-02.2",			0x080000, 0xb458e905, TAITO_CHARS },		//  6
-	{ "c16-03.3",			0x080000, 0x515a9431, TAITO_CHARS },		//  7
-	{ "c16-04.4",			0x080000, 0xebf285e2, TAITO_CHARS }, 		//  8
+	{ "c16-01.1",				0x080000, 0x7059ce83, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c16-02.2",				0x080000, 0xb458e905, TAITO_CHARS },		//  6
+	{ "c16-03.3",				0x080000, 0x515a9431, TAITO_CHARS },		//  7
+	{ "c16-04.4",				0x080000, 0xebf285e2, TAITO_CHARS }, 		//  8
 
-	{ "c16-05.47",			0x080000, 0xa49d064a, TAITO_MSM6295 },		//  9 MSM6295 Samples
+	{ "c16-05.47",				0x080000, 0xa49d064a, TAITO_MSM6295 },		//  9 MSM6295 Samples
 
 	{ "pal16l8b-c16-08.ic34",	0x000104, 0x9456d278, BRF_OPT },		// 10 PLDs
 	{ "pal16l8b-c16-09.ic35",	0x000104, 0x0965baab, BRF_OPT },		// 11
@@ -3678,19 +3676,19 @@ struct BurnDriver BurnDrvViofightu = {
 // Violence Fight (Japan)
 
 static struct BurnRomInfo viofightjRomDesc[] = {
-	{ "c16-11.42",			0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c16-10.23",			0x010000, 0x329d2e46, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c16-07.41",			0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c16-06.22",			0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c16-11.42",				0x010000, 0x23dbd388, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c16-10.23",				0x010000, 0x329d2e46, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c16-07.41",				0x020000, 0x64d1d059, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c16-06.22",				0x020000, 0x043761d8, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c16-12.32",			0x010000, 0x6fb028c7, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c16-12.32",				0x010000, 0x6fb028c7, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c16-01.1",			0x080000, 0x7059ce83, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c16-02.2",			0x080000, 0xb458e905, TAITO_CHARS },		//  6
-	{ "c16-03.3",			0x080000, 0x515a9431, TAITO_CHARS },		//  7
-	{ "c16-04.4",			0x080000, 0xebf285e2, TAITO_CHARS },		//  8
+	{ "c16-01.1",				0x080000, 0x7059ce83, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c16-02.2",				0x080000, 0xb458e905, TAITO_CHARS },		//  6
+	{ "c16-03.3",				0x080000, 0x515a9431, TAITO_CHARS },		//  7
+	{ "c16-04.4",				0x080000, 0xebf285e2, TAITO_CHARS },		//  8
 
-	{ "c16-05.47",			0x080000, 0xa49d064a, TAITO_MSM6295 },          //  9 MSM6295 Samples
+	{ "c16-05.47",				0x080000, 0xa49d064a, TAITO_MSM6295 },          //  9 MSM6295 Samples
 
 	{ "pal16l8b-c16-08.ic34",	0x000104, 0x9456d278, BRF_OPT },		// 10 PLDs
 	{ "pal16l8b-c16-09.ic35",	0x000104, 0x0965baab, BRF_OPT },		// 11
@@ -3803,17 +3801,17 @@ struct BurnDriver BurnDrvAshurau = {
 // Hit the Ice (US)
 
 static struct BurnRomInfo hiticeRomDesc[] = {
-	{ "c59-10.42",			0x020000, 0xe4ffad15, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c59-12.64",			0x020000, 0xa080d7af, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c59-09.41",			0x010000, 0xe243e3b0, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c59-11.63",			0x010000, 0x4d4dfa52, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c59-10.42",				0x020000, 0xe4ffad15, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c59-12.64",				0x020000, 0xa080d7af, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c59-09.41",				0x010000, 0xe243e3b0, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c59-11.63",				0x010000, 0x4d4dfa52, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c59-08.50",			0x010000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c59-08.50",				0x010000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c59-03.12",			0x080000, 0x9e513048, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c59-02.13",			0x080000, 0xaffb5e07, TAITO_CHARS },		//  6
+	{ "c59-03.12",				0x080000, 0x9e513048, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c59-02.13",				0x080000, 0xaffb5e07, TAITO_CHARS },		//  6
 
-	{ "c59-01.30",			0x020000, 0x46ae291d, TAITO_MSM6295 },		//  7 MSM6295 Samples
+	{ "c59-01.30",				0x020000, 0x46ae291d, TAITO_MSM6295 },		//  7 MSM6295 Samples
 
 	{ "pal20l8b-c59-04.25",		0x000144, 0x2ebcf07c, BRF_OPT }, 		//  8 PLDs
 	{ "pal16l8b-c59-05.26",		0x000104, 0x37b67c5c, BRF_OPT }, 		//  9
@@ -3831,7 +3829,7 @@ static INT32 HiticeInit()
 
 struct BurnDriver BurnDrvHitice = {
 	"hitice", NULL, NULL, NULL, "1990",
-	"Hit the Ice (US)\0", NULL, "Taito Corporation (Williams licence)", "Taito B System",
+	"Hit the Ice (US)\0", NULL, "Taito Corporation (Williams license)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticeRomInfo, hiticeRomName, NULL, NULL, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
@@ -3840,20 +3838,61 @@ struct BurnDriver BurnDrvHitice = {
 };
 
 
+// Hit the Ice (US, with riser board)
+
+static struct BurnRomInfo hiticerbRomDesc[] = {
+	{ "c59-10.42",				0x20000, 0xe4ffad15, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c59-12.64",				0x20000, 0xa080d7af, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c59-09.41",				0x10000, 0xe243e3b0, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c59-11.63",				0x10000, 0x4d4dfa52, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "c59-08.50",				0x10000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
+
+	{ "ic5.bin",				0x20000, 0x55698bbc, TAITO_CHARS_BYTESWAP },		//  5 Graphics Tiles
+	{ "ic6.bin",				0x20000, 0xa7cb863f, TAITO_CHARS_BYTESWAP },		//  6
+	{ "ic1.bin",				0x20000, 0xfca01c22, TAITO_CHARS_BYTESWAP },		//  7
+	{ "ic2.bin",				0x20000, 0xf1c09244, TAITO_CHARS_BYTESWAP },		//  8
+	{ "ic8.bin",				0x20000, 0x7cd3aa29, TAITO_CHARS_BYTESWAP },		//  9
+	{ "ic7.bin",				0x20000, 0x6b2979c7, TAITO_CHARS_BYTESWAP },		// 10
+	{ "ic4.bin",				0x20000, 0xd0f2fd35, TAITO_CHARS_BYTESWAP },		// 11
+	{ "ic3.bin",				0x20000, 0x51621004, TAITO_CHARS_BYTESWAP },		// 12
+
+	{ "ic30.bin",				0x20000, 0x46ae291d, TAITO_MSM6295 },		// 13 MSM6295 Samples
+
+	{ "pal20l8b-c59-04.25",		0x000144, 0x2ebcf07c, BRF_OPT }, 		// 14 PLDs
+	{ "pal16l8b-c59-05.26",		0x000104, 0x37b67c5c, BRF_OPT }, 		// 15
+	{ "pal20l8b-c59-06.53",		0x000144, 0xbf176875, BRF_OPT }, 		// 16
+	{ "pal16r4b-c59-07.61",		0x000104, 0xcf64bd95, BRF_OPT }, 		// 17
+};
+
+STD_ROM_PICK(hiticerb)
+STD_ROM_FN(hiticerb)
+
+struct BurnDriver BurnDrvHiticerb = {
+	"hiticerb", "hitice", NULL, NULL, "1990",
+	"Hit the Ice (US, with riser board)\0", NULL, "Taito Corporation (Williams license)", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
+	NULL, hiticerbRomInfo, hiticerbRomName, NULL, NULL, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
+	HiticeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
+
 // Hit the Ice (Japan)
 
 static struct BurnRomInfo hiticejRomDesc[] = {
-	{ "c59-23.42",			0x020000, 0x01958fcc, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c59-25.64",			0x020000, 0x71984c76, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c59-22.41",			0x010000, 0xc2c86140, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c59-24.63",			0x010000, 0x26c8f409, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c59-23.42",				0x020000, 0x01958fcc, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c59-25.64",				0x020000, 0x71984c76, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c59-22.41",				0x010000, 0xc2c86140, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c59-24.63",				0x010000, 0x26c8f409, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c59-08.50",			0x010000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c59-08.50",				0x010000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c59-03.12",			0x080000, 0x9e513048, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c59-02.13",			0x080000, 0xaffb5e07, TAITO_CHARS },		//  6
+	{ "c59-03.12",				0x080000, 0x9e513048, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c59-02.13",				0x080000, 0xaffb5e07, TAITO_CHARS },		//  6
 
-	{ "c59-01.30",			0x020000, 0x46ae291d, TAITO_MSM6295 },		//  7 MSM6295 Samples
+	{ "c59-01.30",				0x020000, 0x46ae291d, TAITO_MSM6295 },		//  7 MSM6295 Samples
 
 	{ "pal20l8b-c59-04.25",		0x000144, 0x2ebcf07c, BRF_OPT }, 		//  8 PLDs
 	{ "pal16l8b-c59-05.26",		0x000104, 0x37b67c5c, BRF_OPT }, 		//  9
@@ -4024,20 +4063,20 @@ struct BurnDriver BurnDrvSilentdu = {
 // Ryu Jin (Japan, ET910000B PCB)
 
 static struct BurnRomInfo ryujinRomDesc[] = {
-	{ "rjn_02.ic32",		0x020000, 0x5fd353d5, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "rjn_01.ic10",		0x020000, 0xf775e4b6, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "ruj_04.ic31",		0x020000, 0x0c153cab, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "ruj_03.ic9",			0x020000, 0x7695f89c, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "rjn_02.ic32",			0x020000, 0x5fd353d5, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "rjn_01.ic10",			0x020000, 0xf775e4b6, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "ruj_04.ic31",			0x020000, 0x0c153cab, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "ruj_03.ic9",				0x020000, 0x7695f89c, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "ruj_05.ic15",		0x010000, 0x95270b16, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "ruj_05.ic15",			0x010000, 0x95270b16, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "ryujin-07.ic28",		0x100000, 0x34f50980, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "ryujin-06.ic39",		0x100000, 0x1b85ff34, TAITO_CHARS },		//  6
+	{ "ryujin-07.ic28",			0x100000, 0x34f50980, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "ryujin-06.ic39",			0x100000, 0x1b85ff34, TAITO_CHARS },		//  6
 
-	{ "ryujin-08.ic1",		0x080000, 0x480d040d, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "ryujin-08.ic1",			0x080000, 0x480d040d, TAITO_YM2610A },		//  7 YM2610 A Samples
 	
-	{ "pal1618b-east-07.ic46", 0x0104, 0x0cb80f64, BRF_OPT },			//  8 plds
-	{ "pal1618b-east-08.ic47", 0x0104, 0xbdce045f, BRF_OPT },			//  9
+	{ "pal16l8b-east-07.ic46",	0x000104, 0x0cb80f64, BRF_OPT },			//  8 plds
+	{ "pal16l8b-east-08.ic47",	0x000104, 0xbdce045f, BRF_OPT },			//  9
 };
 
 STD_ROM_PICK(ryujin)
@@ -4157,10 +4196,10 @@ static INT32 PbobbleInit()
 }
 
 struct BurnDriver BurnDrvBublbust = {
-	"bublbust", NULL, NULL, NULL, "1994",
+	"bublbust", "pbobble", NULL, NULL, "1994",
 	"Bubble Buster (USA, B-System)\0", NULL, "Taito America Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, bublbustRomInfo, bublbustRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, NULL,
 	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
@@ -4170,25 +4209,25 @@ struct BurnDriver BurnDrvBublbust = {
 // Puzzle Bobble (Japan, B-System)
 
 static struct BurnRomInfo pbobbleRomDesc[] = {
-	{ "pb-1c18.bin",		0x040000, 0x5de14f49, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "pb-ic2.bin",			0x040000, 0x2abe07d1, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "pb-ic18.ic18",		0x040000, 0x5de14f49, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "pb-ic2.ic2",			0x040000, 0x2abe07d1, TAITO_68KROM1_BYTESWAP }, //  1
 
-	{ "pb-ic27.bin",		0x020000, 0x26efa4c4, TAITO_Z80ROM1 },		//  2 Z80 Code
+	{ "pb-ic27.ic27",		0x020000, 0x26efa4c4, TAITO_Z80ROM1 },		//  2 Z80 Code
 
-	{ "pb-ic14.bin",		0x080000, 0x55f90ea4, TAITO_CHARS },		//  3 Graphics Tiles
-	{ "pb-ic9.bin",			0x080000, 0x3253aac9, TAITO_CHARS },		//  4
+	{ "pb-ic14.ic14",		0x080000, 0x55f90ea4, TAITO_CHARS },		//  3 Graphics Tiles
+	{ "pb-ic9.ic9",			0x080000, 0x3253aac9, TAITO_CHARS },		//  4
 
-	{ "pb-ic15.bin",		0x100000, 0x0840cbc4, TAITO_YM2610A },		//  5 YM2610 A Samples
+	{ "pb-ic15.ic15",		0x100000, 0x0840cbc4, TAITO_YM2610A },		//  5 YM2610 A Samples
 };
 
 STD_ROM_PICK(pbobble)
 STD_ROM_FN(pbobble)
 
 struct BurnDriver BurnDrvPbobble = {
-	"pbobble", "bublbust", NULL, NULL, "1994",
+	"pbobble", NULL, NULL, NULL, "1994",
 	"Puzzle Bobble (Japan, B-System)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, pbobbleRomInfo, pbobbleRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, NULL,
 	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
@@ -4198,22 +4237,22 @@ struct BurnDriver BurnDrvPbobble = {
 // Space Invaders DX (US, v2.1)
 
 static struct BurnRomInfo spacedxRomDesc[] = {
-	{ "d89-06",				0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "d89-xx.ic2",			0x040000, 0x56b0be6c, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "d89-06.ic18",			0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "d89-xx.ic2",				0x040000, 0x56b0be6c, TAITO_68KROM1_BYTESWAP }, //  1
 
-	{ "d89-07.27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
+	{ "d89-07.ic27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
 
-	{ "d89-02.14",			0x080000, 0xc36544b9, TAITO_CHARS },		//  3 Graphics Tiles
-	{ "d89-01.9",			0x080000, 0xfffa0660, TAITO_CHARS },		//  4
+	{ "d89-02.ic14",			0x080000, 0xc36544b9, TAITO_CHARS },		//  3 Graphics Tiles
+	{ "d89-01.ic9",				0x080000, 0xfffa0660, TAITO_CHARS },		//  4
 
-	{ "d89-03.15",			0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
+	{ "d89-03.ic15",			0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
 
-	{ "pal16l8-d72-05.ic37",	  0x0104, 0xc3d4cb7e, BRF_OPT },		//  6 PLDs
-	{ "pal16l8-d72-06.ic50",	  0x0104, 0xe96b7f37, BRF_OPT }, 		//  7
-	{ "palce20v8-d72-07.ic28",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
-	{ "palce20v8-d72-09.ic47",	  0x0157, 0xde1760fd, BRF_OPT }, 		//  9
-	{ "palce16v8-d72-10.ic12",    0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
-	{ "pal20l8b-d89-04.ic40",	  0x0144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
+	{ "pal16l8-d72-05.ic37",	0x000104, 0xc3d4cb7e, BRF_OPT },		//  6 PLDs
+	{ "pal16l8-d72-06.ic50",	0x000104, 0xe96b7f37, BRF_OPT }, 		//  7
+	{ "palce20v8-d72-07.ic28",	0x000157, 0x6359e64c, BRF_OPT }, 		//  8
+	{ "palce20v8-d72-09.ic47",	0x000157, 0xde1760fd, BRF_OPT }, 		//  9
+	{ "palce16v8-d72-10.ic12",	0x000117, 0xa5181ba2, BRF_OPT }, 		// 10
+	{ "pal20l8b-d89-04.ic40",	0x000144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
 };
 
 STD_ROM_PICK(spacedx)
@@ -4233,22 +4272,22 @@ struct BurnDriver BurnDrvSpacedx = {
 // Space Invaders DX (Japan, v2.1)
 
 static struct BurnRomInfo spacedxjRomDesc[] = {
-	{ "d89-06",				0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "d89-05",				0x040000, 0xbe1638af, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "d89-06.ic18",			0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "d89-05.ic2",				0x040000, 0xbe1638af, TAITO_68KROM1_BYTESWAP }, //  1
 
-	{ "d89-07.27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
+	{ "d89-07.ic27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
 
-	{ "d89-02.14",			0x080000, 0xc36544b9, TAITO_CHARS },		//  3 Graphics Tiles
-	{ "d89-01.9",			0x080000, 0xfffa0660, TAITO_CHARS },		//  4
+	{ "d89-02.ic14",			0x080000, 0xc36544b9, TAITO_CHARS },		//  3 Graphics Tiles
+	{ "d89-01.ic9",				0x080000, 0xfffa0660, TAITO_CHARS },		//  4
 
-	{ "d89-03.15",			0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
+	{ "d89-03.ic15",			0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
 
-	{ "pal16l8-d72-05.ic37",	  0x0104, 0xc3d4cb7e, BRF_OPT },		//  6 PLDs
-	{ "pal16l8-d72-06.ic50",	  0x0104, 0xe96b7f37, BRF_OPT }, 		//  7
-	{ "palce20v8-d72-07.ic28",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
-	{ "palce20v8-d72-09.ic47",	  0x0157, 0xde1760fd, BRF_OPT }, 		//  9
-	{ "palce16v8-d72-10.ic12",    0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
-	{ "pal20l8b-d89-04.ic40",	  0x0144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
+	{ "pal16l8-d72-05.ic37",	0x000104, 0xc3d4cb7e, BRF_OPT },		//  6 PLDs
+	{ "pal16l8-d72-06.ic50",	0x000104, 0xe96b7f37, BRF_OPT }, 		//  7
+	{ "palce20v8-d72-07.ic28",	0x000157, 0x6359e64c, BRF_OPT }, 		//  8
+	{ "palce20v8-d72-09.ic47",	0x000157, 0xde1760fd, BRF_OPT }, 		//  9
+	{ "palce16v8-d72-10.ic12",	0x000117, 0xa5181ba2, BRF_OPT }, 		// 10
+	{ "pal20l8b-d89-04.ic40",	0x000144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
 };
 
 STD_ROM_PICK(spacedxj)
@@ -4271,12 +4310,12 @@ static struct BurnRomInfo spacedxoRomDesc[] = {
 	{ "d89-08.bin",			0x020000, 0x0c2fe7f9, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
 	{ "d89-09.bin",			0x020000, 0x7f0a0ba4, TAITO_68KROM1_BYTESWAP }, //  1
 
-	{ "d89-07.27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
+	{ "d89-07.ic27",		0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
 
 	{ "d89-12.bin",			0x080000, 0x53df86f1, TAITO_CHARS },		//  3 Graphics Tiles
 	{ "d89-13.bin",			0x080000, 0xc44c1352, TAITO_CHARS },		//  4
 
-	{ "d89-03.15",			0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
+	{ "d89-03.ic15",		0x080000, 0x218f31a4, TAITO_YM2610A },		//  5 YM2610 A Samples
 };
 
 STD_ROM_PICK(spacedxo)

@@ -73,6 +73,8 @@ UINT8 Cps3But3[16];
 
 static UINT16 Cps3Input[4] = {0, 0, 0, 0};
 
+static ClearOpposite<2, UINT16> clear_opposite;
+
 static UINT32 ss_bank_base = 0;
 static UINT32 ss_pal_base = 0;
 
@@ -219,25 +221,6 @@ void cps3_flash_write(flash_chip * chip, UINT32 addr, UINT32 data)
 			chip->flash_mode = FM_NORMAL;
 		}
 		break;				
-	}
-}
-
-// ------------------------------------------------------------------------
-
-inline static void Cps3ClearOpposites(UINT16* nJoystickInputs)
-{
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
-	}
-
-	if ((*nJoystickInputs & 0x0300) == 0x0300) {
-		*nJoystickInputs &= ~0x0300;
-	}
-	if ((*nJoystickInputs & 0x0c00) == 0x0c00) {
-		*nJoystickInputs &= ~0x0c00;
 	}
 }
 
@@ -1154,6 +1137,8 @@ static INT32 Cps3Reset()
 	cps3_reset = 0;
 
 	nExtraCycles = 0;
+
+	clear_opposite.reset();
 
 	HiscoreReset();
 
@@ -2142,12 +2127,13 @@ INT32 cps3Frame()
 	}
 
 	// Clear Opposites
-	Cps3ClearOpposites(&Cps3Input[0]);
+	clear_opposite.check(0, Cps3Input[0], 0x0003, 0x000c);
+	clear_opposite.check(1, Cps3Input[0], 0x0300, 0x0c00);
 
 	Sh2NewFrame();
 
 	INT32 nInterleave = 4;
-	INT32 nCyclesTotal[1] = { 25000000 / 60 };
+	INT32 nCyclesTotal[1] = { (INT32)((double)25000000 * 100 / nBurnFPS) };
 	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	Sh2Idle(nExtraCycles);
@@ -2281,7 +2267,7 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cram_bank);
 		SCAN_VAR(cps3_current_eeprom_read);
 		SCAN_VAR(gfxflash_bank);
-		
+
 		SCAN_VAR(paldma_source);
 		SCAN_VAR(paldma_dest);
 		SCAN_VAR(paldma_fade);
@@ -2308,6 +2294,8 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cps3_gfx_height); // ""
 
 		SCAN_VAR(nExtraCycles);
+
+		clear_opposite.scan();
 
 		if (nAction & ACB_WRITE) {
 			

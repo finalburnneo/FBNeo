@@ -441,7 +441,7 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -562,7 +562,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		if ((i & 0x1f) == 0x1f) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 8x / frame
 		ZetClose();
 	}

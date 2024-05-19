@@ -6,8 +6,15 @@
 #define CHEAT_MAXCPU	8 // enough?
 
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
-extern void nes_add_cheat(char *code); // from drv/nes/d_nes.cpp
-extern void nes_remove_cheat(char *code);
+
+void (*nes_add_cheat)(char *) = NULL;
+void (*nes_remove_cheat)(char *) = NULL;
+
+void nes_init_cheat_functions(void (*func1)(char*), void (*func2)(char*))
+{
+	nes_add_cheat = func1;
+	nes_remove_cheat = func2;
+}
 
 bool bCheatsAllowed;
 CheatInfo* pCheatInfo = NULL;
@@ -122,7 +129,7 @@ static void NESCheatDisable(CheatInfo* pCurrentCheat, INT32 nCheat)
 		if (HW_NES) {
 			// Disable Game Genie code
 			bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, pCurrentCheat->nCurrent);
-			nes_remove_cheat(pAddressInfo->szGenieCode);
+			if (nes_remove_cheat) nes_remove_cheat(pAddressInfo->szGenieCode);
 		}
 		pAddressInfo++;
 	}
@@ -215,7 +222,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 
 					if (HW_NES) {
 						bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, nOption);
-						nes_add_cheat(pAddressInfo->szGenieCode);
+						if (nes_add_cheat) nes_add_cheat(pAddressInfo->szGenieCode);
 					} else {
 						// Prefill data
 						if (pCurrentCheat->nPrefillMode) {
@@ -390,10 +397,8 @@ INT32 CheatApply()
 							if (cheat_subptr->nAddressFlags & MB_CHEAT_ENDI_SWAP) {
 								// LE CPU's Require address swaps with multi-byte writes (tms34xxx, v60)
 								// (because cheat loader (burner/conc.cpp) stores everything in BE format)
-								switch (pAddressInfo->nTotalByte) {
-									case 2: addressXor = 1; break;
-									case 3:
-									case 4: addressXor = 3; break;
+								if (pAddressInfo->nTotalByte > 1) {
+									addressXor = ((cheat_subptr->nAddressFlags & 0x30) == 32) ? 3 : 1;
 								}
 							}
 
@@ -441,7 +446,6 @@ INT32 CheatApply()
 
 INT32 CheatInit()
 {
-	CheatExit();
 	CpuCheatRegisterInit();
 
 	bCheatsEnabled = false;
@@ -473,6 +477,8 @@ void CheatExit()
 	pCheatInfo = NULL;
 	
 	CheatSearchInitCallbackFunction = NULL;
+
+	nes_init_cheat_functions(NULL, NULL);
 }
 
 // Cheat search

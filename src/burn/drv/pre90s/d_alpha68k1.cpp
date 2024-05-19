@@ -553,7 +553,7 @@ static INT32 PaddlemaInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -641,7 +641,7 @@ static INT32 TnextspcInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -769,17 +769,15 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 		if (i == 248) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
-	}
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	ZetClose();
 	SekClose();
+
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -848,7 +846,7 @@ static struct BurnRomInfo paddlemaRomDesc[] = {
 	{ "padlem.17j",		0x00400, 0x86170069, 6 | BRF_GRA },           // 17 Palette Look-up Data
 	{ "padlem.16j",		0x00400, 0x8da58e2c, 6 | BRF_GRA },           // 18
 
-	{ "padlem.18n",		0x08000, 0x06506200, 7 | BRF_GRA },           // 19 Color Look-up Data
+	{ "padlem.18n",		0x08000, 0x488df971, 7 | BRF_GRA },           // 19 Color Look-up Data
 };
 
 STD_ROM_PICK(paddlema)
@@ -869,7 +867,7 @@ struct BurnDriver BurnDrvPaddlema = {
 
 static struct BurnRomInfo tnextspcRomDesc[] = {
 	{ "ns_4.4",			0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ns_3.4",			0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_3.3",			0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ns_1.1",			0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 

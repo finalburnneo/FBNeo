@@ -1,4 +1,4 @@
-// FB Alpha Lord of Gun driver module
+// FB Neo Lord of Gun driver module
 // Based on MAME driver by Luca Elia, XingXing, and David Haywood
 
 #include "tiles_generic.h"
@@ -29,6 +29,7 @@ static UINT8 *DrvVidRAM3;
 static UINT8 *DrvScrRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *EEPROM;
 
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
@@ -648,7 +649,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
 	SekReset();
@@ -676,14 +677,8 @@ static INT32 DrvDoReset()
 		*((UINT16*)(Drv68KROM + 0x00a3c)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 2) & 1); // title
 	} else {
 
-		UINT8 lordgun_eepromdata[48] = {
-			0xFF, 0x83, 0x5F, 0xFF, 0xFF, 0xBF, 0x14, 0xB7, 0xA3, 0xA4, 0x80, 0x29, 0x37, 0xA6, 0x32, 0x39, 
-			0x37, 0x90, 0x10, 0x33, 0xBA, 0xA3, 0x00, 0x37, 0x01, 0x00, 0xFF, 0xFF, 0x03, 0x42, 0xFF, 0xFF, 
-			0xFF, 0x83, 0xFF, 0xFF, 0xFF, 0x87, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
-		};
-
 		if (EEPROMAvailable() == 0) {
-			EEPROMFill(lordgun_eepromdata, 0, 48);
+			EEPROMFill(EEPROM, 0, 0x80);
 		}
 	}
 
@@ -711,6 +706,8 @@ static INT32 MemIndex()
 	DrvSndROM[0]	= Next; Next += 0x100000;
 	DrvSndROM[1]	= Next; Next += 0x100000;
 	DrvSndROM[2]	= Next; Next += 0x200000;
+
+	EEPROM			= Next; Next += 0x000080;
 
 	DrvPalette	= (UINT32*)Next; Next += (0x0800 + 1) * sizeof(UINT32);
 
@@ -781,21 +778,16 @@ static void DrvGfxDecode(UINT8 *gfxsrc, UINT8 *gfxdest, INT32 len, INT32 size)
 		return;
 	}
 
-	memcpy (tmp, gfxsrc, len);
+	memcpy(tmp, gfxsrc, len);
 
 	GfxDecode(((len * 8) / 6) / (size*size), 6, size, size, Planes, (size == 32) ? XOffs2 : XOffs1, YOffs, (size*size*2), tmp, gfxdest);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pInitCallback) {
 		if (pInitCallback()) return 1;
@@ -840,11 +832,10 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	// aliencha
 	BurnYMF278BInit(33868800, DrvSndROM[2], 0x200000, &DrvFMIRQHandler);
 	BurnYMF278BSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
-	BurnTimerAttachZet(6000000);
+	BurnTimerAttachZet((lordgun) ? 5000000 : 6000000);
 
 	// lordgun
 	BurnYM3812Init(1, 3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 5000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
@@ -892,12 +883,57 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
-	BurnFree (AllMem);
+	BurnFree(AllMem);
 
 	return 0;
 }
 
 static INT32 lordgunLoadRoms()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x100000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x200000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[2] + 0x000000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x200000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[2] + 0x400000,  8, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM[3] + 0x000000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x200000, 10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x200001, 11, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x300000, 12, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x300001, 13, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x400000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x600000, 15, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x600001, 16, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x700000, 17, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x700001, 18, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0x800000, 19, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xa00000, 20, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xa00001, 21, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xb00000, 22, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[3] + 0xb00001, 23, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 24, 1)) return 1;
+
+	if (BurnLoadRomExt(EEPROM, 25, 1, LD_BYTESWAP)) return 1;
+
+	UINT16 *rom = (UINT16*)Drv68KROM;
+
+	for (INT32 i = 0; i < 0x100000/2; i++) {
+		if ((i & 0x0120) == 0x0100 || (i & 0x0a00) == 0x0800)
+			rom[i] ^= BURN_ENDIAN_SWAP_INT16(0x0010);
+	}
+
+	return 0;
+}
+
+static INT32 lordgunuLoadRoms()
 {
 	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
@@ -920,6 +956,8 @@ static INT32 lordgunLoadRoms()
 	if (BurnLoadRom(DrvGfxROM[3] + 0xa00000, 14, 1)) return 1;
 
 	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 15, 1)) return 1;
+
+	if (BurnLoadRomExt(EEPROM, 16, 1, LD_BYTESWAP)) return 1;
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
@@ -961,10 +999,16 @@ static INT32 alienchaLoadRoms()
 
 static INT32 alienchacLoadRoms()
 {
+/*
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
 	BurnByteswap(Drv68KROM, 0x200000);
 	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  2, 2)) return 1;
+*/
+	if (BurnLoadRom(Drv68KROM + 0x000001, 0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x000000, 1, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x100000, 2, 1)) return 1;
+	BurnByteswap(Drv68KROM + 0x100000, 0x200000);
 
 	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  3, 1)) return 1;
 
@@ -1245,7 +1289,7 @@ static INT32 lordgunDraw()
 
 static inline void compile_inputs()
 {
-	memset (DrvInputs, 0xff, 5 * sizeof(INT16));
+	memset(DrvInputs, 0xff, 5 * sizeof(INT16));
 
 	for (INT32 i = 0; i < 16; i++) {
 		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1292,18 +1336,16 @@ static INT32 lordgunFrame()
 
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		lordgunDraw();
@@ -1335,19 +1377,17 @@ static INT32 alienchaFrame()
 		CPU_RUN(0, Sek);
 
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1399,30 +1439,41 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Lord of Gun (USA)
+// Lord of Gun (World)
 
 static struct BurnRomInfo lordgunRomDesc[] = {
-	{ "lordgun.10",		0x080000, 0xacda77ef, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "lordgun.4",		0x080000, 0xa1a61254, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "lord_gun_u144-ch.u144",	0x080000, 0xea54ee18, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "lord_gun_u122-ch.u122",	0x080000, 0x969a0348, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "lordgun.90",		0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+	{ "lord_gun_160.u160",		0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
 
-	{ "igst001.108",	0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
-	{ "igst002.114",	0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
-	{ "igst003.119",	0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
+	{ "igs_t001.u8",			0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
+	{ "igs_t002.u18",			0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
+	{ "igs_t003.u19",			0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
 
-	{ "igsb001.82",		0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
-	{ "igsb002.91",		0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
-	{ "igsb003.97",		0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
+	{ "igs_b001.u1",			0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
+	{ "igs_b002.u2",			0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
+	{ "igs_b003.u9",			0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
 
-	{ "igsa001.14",		0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
-	{ "igsa004.13",		0x200000, 0x52687264, 5 | BRF_GRA },           // 10
-	{ "igsa002.9",		0x200000, 0xa4810e38, 5 | BRF_GRA },           // 11
-	{ "igsa005.8",		0x200000, 0xe32e79e3, 5 | BRF_GRA },           // 12
-	{ "igsa003.3",		0x200000, 0x649e48d9, 5 | BRF_GRA },           // 13
-	{ "igsa006.2",		0x200000, 0x39288eb6, 5 | BRF_GRA },           // 14
+	{ "igs_a001.u22",			0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
+	{ "lord_gun_u24.u24",		0x080000, 0x454a5b11, 5 | BRF_GRA },           // 10
+	{ "lord_gun_u23.u23",		0x080000, 0xa0d7aada, 5 | BRF_GRA },           // 11
+	{ "lord_gun_u7.u7",			0x080000, 0x95ef3894, 5 | BRF_GRA },           // 12
+	{ "lord_gun_u14.u14",		0x080000, 0xdc8a77a1, 5 | BRF_GRA },           // 13
+	{ "igs_a002.u21",			0x200000, 0xa4810e38, 5 | BRF_GRA },           // 14
+	{ "lord_gun_u5.u5",			0x080000, 0x63aa10c3, 5 | BRF_GRA },           // 15
+	{ "lord_gun_u13.u13",		0x080000, 0x478e248c, 5 | BRF_GRA },           // 16
+	{ "lord_gun_u4.u4",			0x080000, 0xd203c24e, 5 | BRF_GRA },           // 17
+	{ "lord_gun_u11.u11",		0x080000, 0x72277dcd, 5 | BRF_GRA },           // 18
+	{ "igs_a003.u20",			0x200000, 0x649e48d9, 5 | BRF_GRA },           // 19
+	{ "lord_gun_u12.u12",		0x080000, 0xa2a55d65, 5 | BRF_GRA },           // 20
+	{ "lord_gun_u6.u6",			0x080000, 0xfe649605, 5 | BRF_GRA },           // 21
+	{ "lord_gun_u10.u10",		0x080000, 0xeea39e5e, 5 | BRF_GRA },           // 22
+	{ "lord_gun_u3.u3",			0x080000, 0x233782f8, 5 | BRF_GRA },           // 23
 
-	{ "lordgun.100",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 15 OKI #0 Samples
+	{ "lord_gun_u161-3.u161",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 24 OKI #0 Samples
+
+	{ "eeprom",					0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 25 eeprom
 };
 
 STD_ROM_PICK(lordgun)
@@ -1435,11 +1486,58 @@ static INT32 lordgunInit()
 
 struct BurnDriver BurnDrvLordgun = {
 	"lordgun", NULL, NULL, NULL, "1994",
-	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
+	"Lord of Gun (World)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, lordgunRomInfo, lordgunRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
 	lordgunInit, DrvExit, lordgunFrame, lordgunDraw, DrvScan, &DrvRecalc, 0x800,
+	448, 224, 4, 3
+};
+
+
+// Lord of Gun (USA)
+
+static struct BurnRomInfo lordgunuRomDesc[] = {
+	{ "lord_gun_u10.u10",	0x080000, 0xacda77ef, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "lord_gun_u4.u4",		0x080000, 0xa1a61254, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "lord_gun_u90.u90",	0x010000, 0xd59b5e28, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "igs_t001.u108",		0x100000, 0x36dd96f3, 3 | BRF_GRA },           //  3 8x8 tiles
+	{ "igs_t002.u114",		0x100000, 0x816a7665, 3 | BRF_GRA },           //  4
+	{ "igs_t003.u119",		0x100000, 0xcbfee543, 3 | BRF_GRA },           //  5
+
+	{ "igs_b001.u82",		0x200000, 0x3096de1c, 4 | BRF_GRA },           //  6 16x16 and 32x32 tiles
+	{ "igs_b002.u91",		0x200000, 0x2234531e, 4 | BRF_GRA },           //  7
+	{ "igs_b003.u97",		0x200000, 0x6cbf21ac, 4 | BRF_GRA },           //  8
+
+	{ "igs_a001.u14",		0x200000, 0x400abe33, 5 | BRF_GRA },           //  9 Sprites
+	{ "igs_a004.u13",		0x200000, 0x52687264, 5 | BRF_GRA },           // 10
+	{ "igs_a002.u9",		0x200000, 0xa4810e38, 5 | BRF_GRA },           // 11
+	{ "igs_a005.u8",		0x200000, 0xe32e79e3, 5 | BRF_GRA },           // 12
+	{ "igs_a003.u3",		0x200000, 0x649e48d9, 5 | BRF_GRA },           // 13
+	{ "igs_a006.u2",		0x200000, 0x39288eb6, 5 | BRF_GRA },           // 14
+
+	{ "lord_gun_u100.u100",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 15 OKI #0 Samples
+
+	{ "eeprom",				0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 16 eeprom
+};
+
+STD_ROM_PICK(lordgunu)
+STD_ROM_FN(lordgunu)
+
+static INT32 lordgunuInit()
+{
+	return DrvInit(lordgunuLoadRoms, 1);
+}
+
+struct BurnDriver BurnDrvLordgunu = {
+	"lordgunu", "lordgun", NULL, NULL, "1994",
+	"Lord of Gun (USA)\0", NULL, "IGS", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, lordgunuRomInfo, lordgunuRomName, NULL, NULL, NULL, NULL, LordgunInputInfo, LordgunDIPInfo,
+	lordgunuInit, DrvExit, lordgunFrame, lordgunDraw, DrvScan, &DrvRecalc, 0x800,
 	448, 224, 4, 3
 };
 
@@ -1491,11 +1589,11 @@ struct BurnDriver BurnDrvAliencha = {
 // Alien Challenge (China)
 
 static struct BurnRomInfo alienchacRomDesc[] = {
-	{ "igsc0102.u81",	0x200000, 0xe3432be3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "hfh_p.u80",		0x080000, 0x5175ebdc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "hfh_p.u79",		0x080000, 0x42ad978c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "hfh_p.u80",		0x080000, 0x5175ebdc, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "hfh_p.u79",		0x080000, 0x42ad978c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "igsc0101.u81",	0x200000, 0x704c48cf, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "hfh_s.u86",		0x010000, 0x5728a9ed, 2 | BRF_PRG | BRF_ESS }, //  3 z80 code
+	{ "alien_u-86.u86",	0x010000, 0x5728a9ed, 2 | BRF_PRG | BRF_ESS }, //  3 z80 code
 
 	{ "igst0101.u9",	0x100000, 0x2ce12d7b, 3 | BRF_GRA },           //  4 8x8 tiles
 	{ "igst0102.u10",	0x100000, 0x542a76a0, 3 | BRF_GRA },           //  5
@@ -1509,9 +1607,9 @@ static struct BurnRomInfo alienchacRomDesc[] = {
 	{ "igsa0102.u2",	0x400000, 0xdbeee7ac, 5 | BRF_GRA },           // 11
 	{ "igsa0103.u1",	0x400000, 0xe5f19041, 5 | BRF_GRA },           // 12
 
-	{ "hfh_g.u65",		0x040000, 0xec469b57, 6 | BRF_SND },           // 11 OKI #0 Samples
+	{ "alien_u65.u65",	0x040000, 0xec469b57, 6 | BRF_SND },           // 11 OKI #0 Samples
 
-	{ "hfh_g.u66",		0x040000, 0x7cfcd98e, 7 | BRF_SND },           // 12 OKI #1 Samples
+	{ "alien_u66.u66",	0x040000, 0x7cfcd98e, 7 | BRF_SND },           // 12 OKI #1 Samples
 
 	{ "yrw801-m",		0x200000, 0x2a9d8d43, 8 | BRF_SND },           // 13 YMF278b Samples
 };

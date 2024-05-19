@@ -535,7 +535,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// IQ-Block
+// IQ-Block (V100U)
 
 static struct BurnRomInfo iqblockRomDesc[] = {
 	{ "u7.v5",		0x10000, 0x811f306e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -568,7 +568,7 @@ static INT32 iqblockInit()
 
 struct BurnDriver BurnDrvIqblock = {
 	"iqblock", NULL, NULL, NULL, "1993",
-	"IQ-Block\0", NULL, "IGS", "Miscellaneous",
+	"IQ-Block (V100U)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, iqblockRomInfo, iqblockRomName, NULL, NULL, NULL, NULL, IqblockInputInfo, IqblockDIPInfo,
@@ -577,7 +577,7 @@ struct BurnDriver BurnDrvIqblock = {
 };
 
 
-// Grand Tour
+// Grand Tour (V100U)
 
 static struct BurnRomInfo grndtourRomDesc[] = {
 	{ "grand7.u7",	0x10000, 0x95cac31e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -610,7 +610,7 @@ static INT32 grndtourInit()
 
 struct BurnDriver BurnDrvGrndtour = {
 	"grndtour", NULL, NULL, NULL, "1993",
-	"Grand Tour\0", NULL, "IGS", "Miscellaneous",
+	"Grand Tour (V100U)\0", NULL, "IGS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, grndtourRomInfo, grndtourRomName, NULL, NULL, NULL, NULL, IqblockInputInfo, GrndtourDIPInfo,

@@ -1430,6 +1430,59 @@ static struct BurnRomInfo RchasejRomDesc[] = {
 STD_ROM_PICK(Rchasej)
 STD_ROM_FN(Rchasej)
 
+static struct BurnRomInfo RchasejbRomDesc[] = {
+	{ "epr-13986.25",     0x20000, 0x388b2365, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13985.24",     0x20000, 0x14dba5d4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13988.27",     0x20000, 0xdc1cd5a4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13987.26",     0x20000, 0x43be9e60, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13992a.81",    0x20000, 0xc5d525b6, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13991a.80",    0x20000, 0x299e3c7c, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-13990b.54",	  0x20000, 0xeeffbeeb, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+	{ "epr-13989b.53",	  0x20000, 0xfea9f1e9, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13997.14",     0x40000, 0x1fdf1b87, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13999.16",     0x40000, 0x9a1dd53c, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "mpr-14021.67",     0x80000, 0x9fa88781, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14022.75",     0x80000, 0x49e824bb, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14009.63",     0x80000, 0x35b5187e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14010.71",     0x80000, 0x9a538b9b, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14023.86",     0x80000, 0xe11c6c67, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14024.114",    0x80000, 0x16344535, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14011.82",     0x80000, 0x78e9983b, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14012.110",    0x80000, 0xe9daa1a4, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "mpr-14017.66",     0x80000, 0xb83df159, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14018.74",     0x80000, 0x76dbe9ce, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14005.62",     0x80000, 0x9e998209, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14006.70",     0x80000, 0x2caddf1a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14019.85",     0x80000, 0xb15e19ff, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14020.113",    0x80000, 0x84c7008f, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14007.81",     0x80000, 0xc3cf5faa, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14008.109",    0x80000, 0x7e91beb2, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "mpr-14013.65",     0x80000, 0x31dbb2c3, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14014.73",     0x80000, 0x7e68257d, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14001.61",     0x80000, 0x71031ad0, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14002.69",     0x80000, 0x27e70a5e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14015.84",     0x80000, 0x7540bf85, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14016.112",    0x80000, 0x7d87b94d, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14003.80",     0x80000, 0x87725d74, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-14004.108",    0x80000, 0x73477291, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "epr-13993.102",    0x10000, 0x7cc3b543, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13996.107",    0x80000, 0x345f5a41, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-13995.106",    0x80000, 0xf604c270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-13994.105",    0x80000, 0x76095538, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Rchasejb)
+STD_ROM_FN(Rchasejb)
+
 static struct BurnRomInfo StrkfgtrRomDesc[] = {
 	{ "epr-13889.25",     0x20000, 0xf4173114, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13888.24",     0x20000, 0x65e2b226, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2252,6 +2305,16 @@ struct BurnDriver BurnDrvRchasej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, RchasejRomInfo, RchasejRomName, NULL, NULL, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
+	RchaseInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvRchasejb = {
+	"rchasejb", "rchase", NULL, NULL, "1991",
+	"Rail Chase (Japan, Rev B)\0", NULL, "Sega", "Y-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	NULL, RchasejbRomInfo, RchasejbRomName, NULL, NULL, NULL, NULL, RchaseInputInfo, RchaseDIPInfo,
 	RchaseInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

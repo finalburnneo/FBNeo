@@ -532,9 +532,9 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void expand_graphics(UINT8 *gfx, INT32 len)
+static void expand_graphics(UINT8 *gfx, INT32 len, INT32 mirror_enable)
 {
-	memcpy (gfx + 0x60000, gfx + 0x40000, 0x20000); // mirror top bank
+	if (mirror_enable) memcpy (gfx + 0x60000, gfx + 0x40000, 0x20000); // mirror top bank
 
 	for (INT32 i = (len - 1) * 2; i >= 0; i-= 2)
 	{
@@ -548,6 +548,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 {
 	BurnAllocMemIndex();
 
+	game_select = game; // 0 rpunch/rabiolep, 1 svolley, 2 svolleyua
+
 	if (pRomLoadCallback) {
 		memset (DrvGfxROM0, 0xff, 0x80000);
 		memset (DrvGfxROM1, 0xff, 0x80000);
@@ -555,12 +557,10 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 
 		if (pRomLoadCallback()) return 1;
 
-		expand_graphics(DrvGfxROM0, 0x80000);
-		expand_graphics(DrvGfxROM1, 0x80000);
-		expand_graphics(DrvGfxROM2, 0x80000);
+		expand_graphics(DrvGfxROM0, 0x80000, 1);
+		expand_graphics(DrvGfxROM1, 0x80000, 1);
+		expand_graphics(DrvGfxROM2, 0x80000, (game_select == 2 ? 0 : 1));
 	}
-
-	game_select = game; // 0 rpunch/rabiolep, 1 svolley
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1109,7 +1109,7 @@ struct BurnDriver BurnDrvSvolleyk = {
 };
 
 
-// Super Volleyball (US)
+// Super Volleyball (US, Data East license)
 
 static struct BurnRomInfo svolleyuRomDesc[] = {
 	{ "svb-du8.137",	0x10000, 0xffd5d261, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1147,10 +1147,83 @@ STD_ROM_FN(svolleyu)
 
 struct BurnDriver BurnDrvSvolleyu = {
 	"svolleyu", "svolley", NULL, NULL, "1989",
-	"Super Volleyball (US)\0", NULL, "V-System Co. (Data East license)", "Miscellaneous",
+	"Super Volleyball (US, Data East license)\0", NULL, "V-System Co. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, svolleyuRomInfo, svolleyuRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	288, 216, 4, 3
+};
+
+
+// Super Volleyball (US)
+
+static struct BurnRomInfo svolleyuaRomDesc[] = {
+	{ "h0.ic137",		0x10000, 0x58cfa5d7, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "l0.ic136",		0x10000, 0xb1f5a54c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h1.ic127",		0x08000, 0x3c9721ff, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "l1.ic126",		0x08000, 0x55cfabce, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "1.ic112",		0x10000, 0x48b89688, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "lh532099.ic46",	0x40000, 0x9428cc36, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "7.ic35",			0x10000, 0x83b20b91, 3 | BRF_GRA },           //  6
+
+	{ "lh53200a.ic47",	0x40000, 0x75930468, 4 | BRF_GRA },           //  7 Foreground Tiles
+	{ "10.ic36",		0x10000, 0x414a6278, 4 | BRF_GRA },           //  8
+
+	{ "lh5320h7.ic51",	0x40000, 0x152ff5b6, 5 | BRF_GRA },           //  9 Sprite Tiles
+	{ "s0.ic18",		0x08000, 0x4d6c8f0c, 5 | BRF_GRA },           // 10
+	{ "s1.ic43",		0x08000, 0x9dd28b42, 5 | BRF_GRA },           // 11
+
+	{ "4.ic114",		0x10000, 0xc4effee6, 6 | BRF_SND },           // 12 UPD Samples
+	{ "3.ic123",		0x10000, 0x5a818eb4, 6 | BRF_SND },           // 13
+	{ "2.ic133",		0x10000, 0xf33f415f, 6 | BRF_SND },           // 14
+};
+
+STD_ROM_PICK(svolleyua)
+STD_ROM_FN(svolleyua)
+
+static INT32 svolleyuaRomLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x020001,  2, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x020000,  3, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 1)) return 1;
+	BurnByteswap(DrvGfxROM0, 0x40000);
+	if (BurnLoadRom(DrvGfxROM0 + 0x040000,  6, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  7, 1)) return 1;
+	BurnByteswap(DrvGfxROM1, 0x40000);
+	if (BurnLoadRom(DrvGfxROM1 + 0x040000,  8, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  9, 1)) return 1;
+	BurnByteswap(DrvGfxROM2, 0x40000);
+	if (BurnLoadRom(DrvGfxROM2 + 0x060001, 10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x060000, 11, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM  + 0x020000, 12, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x030000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x040000, 13, 1)) return 1;
+
+	return 0;
+}
+
+static INT32 svolleyuaInit()
+{
+	return DrvInit(svolleyuaRomLoadCallback, 2);
+}
+
+struct BurnDriver BurnDrvSvolleyua = {
+	"svolleyua", "svolley", NULL, NULL, "1989",
+	"Super Volleyball (US)\0", NULL, "V-System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, svolleyuaRomInfo, svolleyuaRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
+	svolleyuaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };

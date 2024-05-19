@@ -1001,7 +1001,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Dragonball Z (rev B)
+// Dragon Ball Z (rev B)
 
 static struct BurnRomInfo dbzRomDesc[] = {
 	{ "222b11.9e",	0x080000, 0x4c6b75e9, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1029,7 +1029,7 @@ STD_ROM_FN(dbz)
 
 struct BurnDriver BurnDrvDbz = {
 	"dbz", NULL, NULL, NULL, "1993",
-	"Dragonball Z (rev B)\0", NULL, "Banpresto", "Miscellaneous",
+	"Dragon Ball Z (rev B)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbzRomInfo, dbzRomName, NULL, NULL, NULL, NULL, DbzInputInfo, DbzDIPInfo,
@@ -1037,7 +1037,7 @@ struct BurnDriver BurnDrvDbz = {
 	384, 256, 4, 3
 };
 
-// Dragonball Z (rev A)
+// Dragon Ball Z (rev A)
 
 static struct BurnRomInfo dbzaRomDesc[] = {
 	{ "222a11.9e",	0x080000, 0x60c7d9b2, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1065,7 +1065,7 @@ STD_ROM_FN(dbza)
 
 struct BurnDriver BurnDrvDbza = {
 	"dbza", "dbz", NULL, NULL, "1993",
-	"Dragonball Z (rev A)\0", NULL, "Banpresto", "Miscellaneous",
+	"Dragon Ball Z (rev A)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbzaRomInfo, dbzaRomName, NULL, NULL, NULL, NULL, DbzInputInfo, DbzDIPInfo,
@@ -1074,7 +1074,7 @@ struct BurnDriver BurnDrvDbza = {
 };
 
 
-// Dragonball Z 2 - Super Battle
+// Dragon Ball Z 2 - Super Battle
 
 static struct BurnRomInfo dbz2RomDesc[] = {
 	{ "a9e.9e",	0x080000, 0xe6a142c9, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1104,7 +1104,7 @@ STD_ROM_FN(dbz2)
 
 struct BurnDriver BurnDrvDbz2 = {
 	"dbz2", NULL, NULL, NULL, "1994",
-	"Dragonball Z 2 - Super Battle\0", NULL, "Banpresto", "Miscellaneous",
+	"Dragon Ball Z 2 - Super Battle\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbz2RomInfo, dbz2RomName, NULL, NULL, NULL, NULL, DbzInputInfo, Dbz2DIPInfo,

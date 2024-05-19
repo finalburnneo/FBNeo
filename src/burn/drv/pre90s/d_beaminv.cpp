@@ -334,7 +334,7 @@ struct BurnDriverD BurnDrvBeaminv = {
 };
 
 
-// Pacom Invader
+// Pacom Invader (set 1)
 
 static struct BurnRomInfo pacominvRomDesc[] = {
 	{ "rom_0",	0x0400, 0x67e100dd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -350,7 +350,7 @@ STD_ROM_FN(pacominv)
 
 struct BurnDriverD BurnDrvPacominv = {
 	"pacominv", "beaminv", NULL, NULL, "1979",
-	"Pacom Invader\0", "No sound", "Pacom Corporation", "Miscellaneous",
+	"Pacom Invader (set 1)\0", "No sound", "Pacom Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, pacominvRomInfo, pacominvRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, PacominvDIPInfo,

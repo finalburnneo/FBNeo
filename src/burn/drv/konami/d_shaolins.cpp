@@ -35,6 +35,8 @@ static UINT8 DrvReset;
 
 static INT32 watchdog;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo ShaolinsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -214,6 +216,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	watchdog = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -322,12 +326,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x2000,  0, 1)) return 1;
@@ -384,7 +383,7 @@ static INT32 DrvExit()
 	M6809Exit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -475,7 +474,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	M6809Open(0);
 
@@ -489,11 +488,13 @@ static INT32 DrvFrame()
 		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
-    if (pBurnSoundOut) {
+	M6809Close();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
     }
-
-	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -520,6 +521,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 
 		SN76496Scan(nAction, pnMin);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -529,15 +532,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Kicker
 
 static struct BurnRomInfo kickerRomDesc[] = {
-	{ "477-l03.d9",		0x2000, 0x2598dfdd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "477-l04.d10",	0x4000, 0x0cf0351a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "477-l05.d11",	0x4000, 0x654037f8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "477l03.d9",		0x2000, 0x2598dfdd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "477l04.d10",		0x4000, 0x0cf0351a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "477l05.d11",		0x4000, 0x654037f8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "477-k06.a10",	0x2000, 0x4d156afc, 2 | BRF_GRA | BRF_ESS }, //  3 Characters
-	{ "477-k07.a11",	0x2000, 0xff6ca5df, 2 | BRF_GRA | BRF_ESS }, //  4
+	{ "477k06.a10",		0x2000, 0x4d156afc, 2 | BRF_GRA | BRF_ESS }, //  3 Characters
+	{ "477k07.a11",		0x2000, 0xff6ca5df, 2 | BRF_GRA | BRF_ESS }, //  4
 
-	{ "477-k02.h15",	0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
-	{ "477-k01.h14",	0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
+	{ "477k02.h15",		0x4000, 0xb94e645b, 3 | BRF_GRA | BRF_ESS }, //  5 Sprites
+	{ "477k01.h14",		0x4000, 0x61bbf797, 3 | BRF_GRA | BRF_ESS }, //  6
 
 	{ "477j10.a12",		0x0100, 0xb09db4b4, 4 | BRF_GRA | BRF_ESS }, //  7 Color PROMs
 	{ "477j11.a13",		0x0100, 0x270a2bf3, 4 | BRF_GRA | BRF_ESS }, //  8

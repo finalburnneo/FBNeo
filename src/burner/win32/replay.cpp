@@ -2,6 +2,7 @@
 #include "burner.h"
 #include <commdlg.h>
 #include "inputbuf.h"
+#include "neocdlist.h"
 
 #include <io.h>
 
@@ -25,6 +26,7 @@ TCHAR szFilter[1024];
 INT32 movieFlags = 0;
 bool bStartFromReset = true;
 bool bWithNVRAM = false;
+extern bool bWithEEPROM;
 TCHAR szCurrentMovieFilename[MAX_PATH] = _T("");
 UINT32 nTotalFrames = 0;
 UINT32 nReplayCurrentFrame;
@@ -380,7 +382,6 @@ INT32 StartRecord()
 
 	if (bStartFromReset) {
 		movieFlags |= MOVIE_FLAG_FROM_POWERON;
-
 		if (bWithNVRAM) { // only applies w/FROM_POWERON
 			movieFlags |= MOVIE_FLAG_WITH_NVRAM;
 		}
@@ -411,7 +412,9 @@ INT32 StartRecord()
 			fwrite(&movieFlags, 1, 4, fp);
 			if (bStartFromReset) {
 				if (movieFlags & MOVIE_FLAG_WITH_NVRAM) {
+					bWithEEPROM = true;
 					nRet = BurnStateSaveEmbed(fp, -1, 0); // Embed contents of NVRAM
+					bWithEEPROM = false;
 					if (nRet == -1) {
 						// game doesn't have NVRAM
 						fseek(fp, flags_offset, SEEK_SET);
@@ -425,7 +428,9 @@ INT32 StartRecord()
 			}
 			else
 			{
+				bWithEEPROM = true;
 				nRet = BurnStateSaveEmbed(fp, -1, 1);	// Embed Save-State + NVRAM
+				bWithEEPROM = false;
 			}
 			if (nRet >= 0) {
 				const char szChunkHeader[] = "FR1 ";	// Chunk identifier
@@ -555,14 +560,18 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 						return 0;
 					}
 				if (movieFlags & MOVIE_FLAG_WITH_NVRAM) { // Get NVRAM
+					bWithEEPROM = true;
 					nRet = BurnStateLoadEmbed(fp, -1, 0, &DrvInitCallback);
+					bWithEEPROM = false;
 				} else {
 					nRet = 0;
 				}
 			}
 			else {// Load the savestate associated with the recording
 				bStartFromReset = 0;
+				bWithEEPROM = true;
 				nRet = BurnStateLoadEmbed(fp, -1, 1, &DrvInitCallback);
+				bWithEEPROM = false;
 			}
 			if (nRet == 0) {
 				const char szChunkHeader[] = "FR1 ";		// Chunk identifier
@@ -927,6 +936,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 
 		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
 
+		// hide neocdz warning for now
+		ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_HIDE);
+
 		if(bClear) {
 			return;
 		}
@@ -1146,7 +1158,26 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		SetDlgItemTextW(hDlg, IDC_METADATA, wszAuthorInfo);
 		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, szRecordedFrom);
 		SetDlgItemTextA(hDlg, IDC_REPLAYTIME, szRecordedTime);
+
+		if (!_tcsncmp(wszStartupGame, _T("neocdz"), 6) || !_tcsncmp(wszStartupGame, _T("ngcd_"), 5) ||
+		    _tcsstr(szChoice, _T("ngcd_")) ) {
+			// Neo Geo CD game, show nice warning :)
+			ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_SHOW);
+		}
 	}
+}
+
+static TCHAR *GetDrvName() // for both arcade & neocd
+{
+	static TCHAR szName[MAX_PATH] = _T("");
+
+	if (NeoCDInfo_ID()) {
+		_stprintf(szName, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
+	} else {
+		_stprintf(szName, _T("%s"), BurnDrvGetText(DRV_NAME));
+	}
+
+	return szName;
 }
 
 static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
@@ -1161,7 +1192,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 		memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
 		if (bDrvOkay) {
-			_stprintf(szFindPath, _T("recordings\\%s*.fr"), BurnDrvGetText(DRV_NAME));
+			_stprintf(szFindPath, _T("recordings\\%s*.fr"), GetDrvName());
 		}
 
 		hFind = FindFirstFile(szFindPath, &wfd);
@@ -1174,6 +1205,9 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		}
 		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_INSERTSTRING, i, (LPARAM)_T("Browse..."));
 		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, i, 0);
+
+		// hide neocdz warning for now
+		ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_HIDE);
 
 		if (i>=1) {
 			DisplayReplayProperties(hDlg, false);
@@ -1309,10 +1343,10 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		wchar_t szFilename[MAX_PATH];
 
 		INT32 i = 0;
-		_stprintf(szFilename, _T("%s.fr"), BurnDrvGetText(DRV_NAME));
+		_stprintf(szFilename, _T("%s.fr"), GetDrvName());
 		wcscpy(szPath, szFilename);
 		while(VerifyRecordingAccessMode(szPath, 0) == 1) {
-			_stprintf(szFilename, _T("%s-%d.fr"), BurnDrvGetText(DRV_NAME), ++i);
+			_stprintf(szFilename, _T("%s-%d.fr"), GetDrvName(), ++i);
 			wcscpy(szPath, szFilename);
 		}
 
@@ -1347,7 +1381,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					return TRUE;
 				case IDC_BROWSE:
 					{
-						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
+						_stprintf(szChoice, _T("%s"), GetDrvName());
 						MakeOfn(szFilter);
 						ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
 						ofn.Flags |= OFN_OVERWRITEPROMPT;

@@ -3,6 +3,7 @@
 // updated 11/2003 by LvR -- essentially a rewrite
 
 #include "burner.h"
+#include "samples.h"
 
 // If "Generate dat" crashes or hangs, uncomment this next line to find the guilty driver.
 //#define DAT_DEBUG
@@ -119,7 +120,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_GAMEGEAR_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Game Gear Games</name>\n");
 	if (bType == DAT_MSX_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - MSX 1 Games</name>\n");
 	if (bType == DAT_SPECTRUM_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - ZX Spectrum Games</name>\n");
-	if (bType == DAT_NEOGEO_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Neogeo Games</name>\n");
+	if (bType == DAT_NEOGEO_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Neo Geo Games</name>\n");
 	if (bType == DAT_NES_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - NES Games</name>\n");
 	if (bType == DAT_FDS_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - FDS Games</name>\n");
 	if (bType == DAT_NGP_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Neo Geo Pocket Games</name>\n");
@@ -136,7 +137,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_GAMEGEAR_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Game Gear Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_MSX_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" MSX 1 Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_SPECTRUM_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" ZX Spectrum Games</description>\n"), szAppBurnVer);
-	if (bType == DAT_NEOGEO_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Neogeo Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_NEOGEO_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Neo Geo Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_NES_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" NES Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_FDS_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" FDS Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_NGP_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Neo Geo Pocket Games</description>\n"), szAppBurnVer);
@@ -159,6 +160,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		char spbName[32];
 		char sbName[32];
 		char ssName[32];
+		char sfName[32];
 		UINT32 i, j=0;
 		INT32 nPass=0;
 
@@ -247,6 +249,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		strcpy(sgName, BurnDrvGetTextA(DRV_NAME));
+		strcpy(sfName, BurnDrvGetSourcefile());
 		strcpy(spName, "");											// make sure this string is empty before we start
 		strcpy(sbName, "");											// make sure this string is empty before we start
 		strcpy(ssName, "");											// make sure this string is empty before we start
@@ -344,9 +347,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		if (nParentSelect!=nGameSelect && nParentSelect!=-1U)
 		{
 			if (!strcmp(ssName, "") || !strcmp(ssName, sgName)) {
-				fprintf(fDat, "\t<game name=\"%s\" cloneof=\"%s\" romof=\"%s\">\n", sgName, spName, spName);
+				fprintf(fDat, "\t<game name=\"%s\" cloneof=\"%s\" romof=\"%s\" sourcefile=\"%s\">\n", sgName, spName, spName, sfName);
 			} else {
-				fprintf(fDat, "\t<game name=\"%s\" cloneof=\"%s\" romof=\"%s\" sampleof=\"%s\">\n", sgName, spName, spName, ssName);
+				fprintf(fDat, "\t<game name=\"%s\" cloneof=\"%s\" romof=\"%s\" sampleof=\"%s\" sourcefile=\"%s\">\n", sgName, spName, spName, ssName, sfName);
 			}
 		}
 		else
@@ -354,12 +357,12 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			// Add "romof" (but not 'cloneof') line for games that have boardROMs
 			if (nBoardROMSelect!=nGameSelect && nBoardROMSelect!=-1U)
 			{
-				fprintf(fDat, "\t<game name=\"%s\" romof=\"%s\">\n", sgName, sbName);
+				fprintf(fDat, "\t<game name=\"%s\" romof=\"%s\" sourcefile=\"%s\">\n", sgName, sbName, sfName);
 			} else {
 				if (!strcmp(ssName, "") || !strcmp(ssName, sgName)) {
-					fprintf(fDat, "\t<game name=\"%s\">\n", sgName);
+					fprintf(fDat, "\t<game name=\"%s\" sourcefile=\"%s\">\n", sgName, sfName);
 				} else {
-					fprintf(fDat, "\t<game name=\"%s\" sampleof=\"%s\">\n", sgName, ssName);
+					fprintf(fDat, "\t<game name=\"%s\" sampleof=\"%s\" sourcefile=\"%s\">\n", sgName, ssName, sfName);
 				}
 			}
 		}
@@ -573,7 +576,13 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					nRet=BurnDrvGetSampleInfo(&si,i);
 					nRet+=BurnDrvGetSampleName(&szPossibleName,i,0);
 
-					if (si.nFlags==0) continue;
+					if (si.nFlags == 0 || szPossibleName == NULL) { // "end of samples" list marker
+						continue;
+					}
+
+					if (si.nFlags & SAMPLE_NODUMP) {
+						continue;
+					}
 
 					if (nPass == 1) {
 						char szPossibleNameBuffer[255];
@@ -612,6 +621,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		char sgName[32];
 		char spName[32];
 		char sbName[32];
+		char sfName[32];
 		INT32 i, nPass;
 
 		if (!(BurnDrvGetFlags() & BDF_BOARDROM)) {
@@ -697,6 +707,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		strcpy(sgName, BurnDrvGetTextA(DRV_NAME));
+		strcpy(sfName, BurnDrvGetSourcefile());
 
 #ifdef DAT_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("DAT(BOARDROMS): Processing %S.\n"), sgName);
@@ -717,7 +728,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		remove_driver_leader(HARDWARE_SNK_NGP, 4, 0)
 		remove_driver_leader(HARDWARE_CHANNELF, 4, 0)
 
-		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\">\n", sgName);
+		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\" sourcefile=\"%s\">\n", sgName, sfName);
 		char szGameDecoration[255];
 		memset(szGameDecoration, 0, 255);
 		strcpy(szGameDecoration, GameDecoration(nBurnDrvActive));

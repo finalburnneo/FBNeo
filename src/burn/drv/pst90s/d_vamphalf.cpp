@@ -1429,10 +1429,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	if (nAction & ACB_NVRAM)
-	{
-		EEPROMScan(nAction, pnMin);
-	}
+	EEPROMScan(nAction, pnMin);
 
 	return 0;
 }
@@ -2138,7 +2135,7 @@ struct BurnDriver BurnDrvMisncrft = {
 	"misncrft", NULL, NULL, NULL, "2000",
 	"Mission Craft (version 2.7)\0", NULL, "Sun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, misncrftRomInfo, misncrftRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MisncrftInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2182,7 +2179,7 @@ struct BurnDriver BurnDrvMisncrfta = {
 	"misncrfta", "misncrft", NULL, NULL, "2000",
 	"Mission Craft (version 2.4)\0", NULL, "Sun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, misncrftaRomInfo, misncrftaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MisncrftaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2323,7 +2320,7 @@ struct BurnDriver BurnDrvMrkicker = {
 	"mrkicker", NULL, NULL, NULL, "2001",
 	"Mr. Kicker (F-E1-16-010 PCB)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mrkickerRomInfo, mrkickerRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MrkickerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2361,7 +2358,7 @@ struct BurnDriverD BurnDrvMrkickera = {
 	"mrkickera", "mrkicker", NULL, NULL, "2001",
 	"Mr. Kicker (SEMICOM-003b PCB)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mrkickeraRomInfo, mrkickeraRomName, NULL, NULL, NULL, NULL, FinalgdrInputInfo, NULL,
 	MrkickeraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2639,7 +2636,7 @@ struct BurnDriver BurnDrvBoonggab = {
 	"boonggab", NULL, NULL, NULL, "2001",
 	"Boong-Ga Boong-Ga (Spank'em!)\0", NULL, "Taff System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, boonggabRomInfo, boonggabRomName, NULL, NULL, NULL, NULL, BoonggabInputInfo, NULL,
 	BoonggabInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2671,7 +2668,7 @@ static INT32 YorijoriInit()
 }
 
 struct BurnDriverD BurnDrvYorijori = {
-	"yorijori", NULL, NULL, NULL, "199?",
+	"yorijori", NULL, NULL, NULL, "2002",
 	"Yori Jori Kuk Kuk\0", NULL, "Golden Bell Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,

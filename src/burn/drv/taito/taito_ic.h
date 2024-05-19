@@ -51,7 +51,9 @@ void PC090OJDrawSprites(UINT8 *pSrc);
 void PC090OJBufferSprites();
 void PC090OJReset();
 void PC090OJInit(INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 UseBuffer);
+void PC090OJSetDisableFlipping(INT32 val);
 void PC090OJSetPaletteOffset(INT32 Offset);
+INT32 PC090OJGetFlipped();
 void PC090OJExit();
 void PC090OJScan(INT32 nAction);
 
@@ -78,6 +80,8 @@ void TC0100SCNSetGfxMask(INT32 Chip, INT32 Mask);
 void TC0100SCNSetGfxBank(INT32 Chip, INT32 Bank);
 void TC0100SCNSetCharLayerGranularity(INT32 nGranularity);
 void TC0100SCNSetClipArea(INT32 Chip, INT32 ClipWidth, INT32 ClipHeight, INT32 ClipStartX);
+void TC0100SCNSetFlippedOffsets(INT32 XOffs, INT32 YOffs); // see note in tc0100scn.cpp
+INT32 TC0100SCNGetFlipped(INT32 Chip);
 void TC0100SCNSetPaletteOffset(INT32 Chip, INT32 PaletteOffset);
 void TC0100SCNExit();
 void TC0100SCNScan(INT32 nAction);

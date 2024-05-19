@@ -894,7 +894,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		M6809Close();
 
 		BurnYM3812Init(1, 4000000, NULL, 0);
-		BurnTimerAttachYM3812(&M6809Config, 2216750);
+		BurnTimerAttach(&M6809Config, 2216750);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -1250,7 +1250,7 @@ static INT32 BigkarnkFrame()
 		}
 
 		CPU_RUN(0, Sek);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekClose();
@@ -1323,8 +1323,8 @@ static struct BurnRomInfo bigkarnkRomDesc[] = {
 
 	{ "d5",			0x10000, 0x3b73b9c5, 4 | BRF_PRG | BRF_ESS }, //  7 M6809 Code
 	
-	{ "bigkarnak_gal16v8.d6", 0x00117, 0x587fe895, 5 | BRF_OPT }, //  8 plds
-	{ "bigkarnak_gal20v8.d6", 0x00157, 0x0dcb286e, 5 | BRF_OPT }, //  9
+	{ "bigkarnak_gal16v8.d6",  0x00117, 0x587fe895, 5 | BRF_OPT }, //  8 plds
+	{ "bigkarnak_gal20v8.d21", 0x00157, 0x0dcb286e, 5 | BRF_OPT }, //  9
 };
 
 STD_ROM_PICK(bigkarnk)
@@ -1359,10 +1359,10 @@ STD_ROM_PICK(maniacsp)
 STD_ROM_FN(maniacsp)
 
 struct BurnDriver BurnDrvManiacsp = {
-	"maniacsp", "maniacsq", NULL, NULL, "1996",
+	"maniacsp", NULL, NULL, NULL, "1992",
 	"Maniac Square (ver 1.0, checksum b602, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacspRomInfo, maniacspRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ManiacsqDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1495,7 +1495,7 @@ STD_ROM_PICK(biomtoyc)
 STD_ROM_FN(biomtoyc)
 
 struct BurnDriver BurnDrvBiomtoyc = {
-	"biomtoyc", "biomtoy", NULL, NULL, "1995",
+	"biomtoyc", "biomtoy", NULL, NULL, "1994",
 	"Biomechanical Toy (ver. 1.0.1870, checksum ba682195)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
@@ -1530,7 +1530,7 @@ STD_ROM_PICK(bioplayc)
 STD_ROM_FN(bioplayc)
 
 struct BurnDriver BurnDrvBioplayc = {
-	"bioplayc", "biomtoy", NULL, NULL, "1995",
+	"bioplayc", "biomtoy", NULL, NULL, "1994",
 	"Bioplaything Cop (ver. 1.0.1823, checksum cd960fc9, prototype)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
@@ -1557,7 +1557,7 @@ static struct BurnRomInfo squashRomDesc[] = {
 	{ "squashv1_gal16v8.f2",	0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
 	{ "squashv1_gal16v8.j16",	0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
 	{ "squashv1_gal20v8.d21",	0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
-	{ "squashv1_gal16v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
+	{ "squashv1_gal20v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
 };
 
 STD_ROM_PICK(squash)
@@ -1607,7 +1607,7 @@ static struct BurnRomInfo thoopRomDesc[] = {
 	{ "thunderhoop_gal16v8.f2",	 0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
 	{ "thunderhoop_gal16v8.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
 	{ "thunderhoop_gal20v8.d21", 0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
-	{ "thunderhoop_gal16v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
+	{ "thunderhoop_gal20v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
 };
 
 STD_ROM_PICK(thoop)
@@ -1645,7 +1645,7 @@ struct BurnDriver BurnDrvLastkm = {
 	"lastkm", NULL, NULL, NULL, "1995",
 	"Last KM (ver 1.0.0275, checksum 13bff751, prototype)\0", NULL, "Gaelco / Zeus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

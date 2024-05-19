@@ -1284,9 +1284,9 @@ static INT32 AvengrgsInit()
 
 struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
-	"Avengers In Galactic Storm (US/Europe 1.0\0", NULL, "Data East Corporation", "DECO MLC",
+	"Avengers In Galactic Storm (US/Europe 1.0)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvAvengrgsj = {
 	"avengrgsj", "avengrgs", NULL, NULL, "1995",
 	"Avengers In Galactic Storm (Japan 1.2)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, avengrgsjRomInfo, avengrgsjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1516,7 +1516,7 @@ static INT32 Stadhr96Init()
 
 struct BurnDriver BurnDrvStadhr96 = {
 	"stadhr96", NULL, NULL, NULL, "1996",
-	"Stadium Hero '96 (Europe, EAJ)\0", NULL, "Data East Corporation", "DECO MLC",
+	"Stadium Hero '96 (Europe, EAJ, Tuning license)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96RomInfo, stadhr96RomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
@@ -1624,6 +1624,38 @@ struct BurnDriver BurnDrvStadhr96j2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96j2RomInfo, stadhr96j2RomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
+	Stadhr96Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Stadium Hero '96 (Korea, Dream Island license)
+
+static struct BurnRomInfo stadhr96kRomDesc[] = {
+	{ "sh_kr.2a",		0x080000, 0x5731a89c, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
+	{ "sh_kr.2b",		0x080000, 0x9f43d85a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mcm-00.2e",		0x400000, 0xc1919c3c, 2 | BRF_GRA },           //  2 Sprites
+	{ "mcm-01.8m",		0x400000, 0x2255d47d, 2 | BRF_GRA },           //  3
+	{ "mcm-02.4e",		0x400000, 0x38c39822, 2 | BRF_GRA },           //  4
+	{ "mcm-03.10m",		0x400000, 0x4bd84ca7, 2 | BRF_GRA },           //  5
+	{ "mcm-04.6e",		0x400000, 0x7c0bd84c, 2 | BRF_GRA },           //  6
+	{ "mcm-05.11m",		0x400000, 0x476f03d7, 2 | BRF_GRA },           //  7
+
+	{ "eae02-0.6h",		0x080000, 0x57c30ca8, 3 | BRF_GRA },           //  8 Sprite Look-up Table
+
+	{ "mcm-06.6a",		0x400000, 0xfbc178f3, 4 | BRF_GRA },           //  9 YMZ280b Samples
+};
+
+STD_ROM_PICK(stadhr96k)
+STD_ROM_FN(stadhr96k)
+
+struct BurnDriver BurnDrvStadhr96k = {
+	"stadhr96k", "stadhr96", NULL, NULL, "1996",
+	"Stadium Hero '96 (Korea, Dream Island license)\0", NULL, "Data East Corporation", "DECO MLC",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, stadhr96kRomInfo, stadhr96kRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	Stadhr96Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

@@ -4857,31 +4857,6 @@ struct BurnDriver BurnDrvSonicfgtj = {
 };
 
 
-// SegaSonic Cosmo Fighter (US)
-
-static struct BurnRomInfo sonicfgtuRomDesc[] = {
-	{ "epr-17778.ic32",			0x40000, 0xe05b7388, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "epr-17177.ic31",			0x40000, 0x7c2ec4eb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "epr-17180.ic34",			0x40000, 0x8933e91c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "epr-17179.ic33",			0x40000, 0x0ae979cd, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "epr-17176.ic4",			0x40000, 0x4211745d, 2 | BRF_SND },           //  4 UPD Samples
-};
-
-STD_ROM_PICK(sonicfgtu)
-STD_ROM_FN(sonicfgtu)
-
-struct BurnDriver BurnDrvSonicfgtu = {
-	"sonicfgtu", "sonicfgt", NULL, NULL, "1993",
-	"SegaSonic Cosmo Fighter (US)\0", NULL, "Sega", "C2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
-	NULL, sonicfgtuRomInfo, sonicfgtuRomName, NULL, NULL, NULL, NULL, SonicfgtInputInfo, SonicfgtDIPInfo,
-	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
-	320, 224, 4, 3
-};
-
-
 // Poto Poto (Japan, Rev A)
 
 static struct BurnRomInfo potopotoRomDesc[] = {
@@ -5115,7 +5090,7 @@ struct BurnDriver BurnDrvIchirbl = {
 	"ichirbl", "ichir", NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (World) (bootleg)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirblRomInfo, ichirblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3

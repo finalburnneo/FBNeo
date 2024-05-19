@@ -654,7 +654,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Aka Zukin (Japan)
+// Akazukin (Japan)
 
 static struct BurnRomInfo akazukinRomDesc[] = {
 	{ "1.j2",	0x2000, 0x8987f1e0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -686,7 +686,7 @@ STD_ROM_FN(akazukin)
 
 struct BurnDriver BurnDrvAkazukin = {
 	"akazukin", NULL, NULL, NULL, "1983",
-	"Aka Zukin (Japan)\0", NULL, "Sigma", "Miscellaneous",
+	"Akazukin (Japan)\0", NULL, "Sigma", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, akazukinRomInfo, akazukinRomName, NULL, NULL, NULL, NULL, AkazukinInputInfo, AkazukinDIPInfo,

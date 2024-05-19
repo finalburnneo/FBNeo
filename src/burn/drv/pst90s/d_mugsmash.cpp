@@ -170,7 +170,7 @@ static void palette_write(INT32 offset)
 	DrvPalette[offset >> 1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall mugsmash_write_byte(UINT32 address, UINT8 data)
+static void __fastcall mugsmash_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x100000 && address <= 0x1005ff) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -199,7 +199,7 @@ void __fastcall mugsmash_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
+static void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x100000 && address <= 0x1005ff) {
 		*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = data;
@@ -239,7 +239,7 @@ void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall mugsmash_sound_write(UINT16 address, UINT8 data)
+static void __fastcall mugsmash_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -254,7 +254,7 @@ void __fastcall mugsmash_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mugsmash_sound_read(UINT16 address)
+static UINT8 __fastcall mugsmash_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -341,8 +341,6 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -368,12 +366,7 @@ static void MugsmashYM2151IrqHandler(INT32 nStatus)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -425,10 +418,11 @@ static INT32 DrvInit()
 
 	soundlatch = DrvSndRegs + 2;
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&MugsmashYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	MSM6295Init(0, 1122000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -448,7 +442,7 @@ static INT32 DrvExit()
 	MSM6295Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -500,7 +494,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x300; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 
@@ -522,6 +516,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		for (INT32 i = 0; i < 4; i++) {
 			DrvInputs[i] = (DrvDips[i] << 8) | 0xff;
@@ -536,32 +532,21 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegment = nBurnSoundLen / nInterleave;
-			BurnYM2151Render(pBurnSoundOut + ((nSegment * i) << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + ((nSegment * i) << 1), nSegment);
-			nSoundBufferPos += nSegment;
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

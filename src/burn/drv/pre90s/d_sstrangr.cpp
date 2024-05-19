@@ -224,12 +224,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (game == 0) // sstrangr
 	{
@@ -278,7 +273,7 @@ static INT32 DrvExit()
 
 	BurnSampleExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -376,8 +371,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 16;
-	INT32 nCyclesTotal = 1996800 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 1996800 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
@@ -385,9 +380,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (i == 7 || i == 12) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if (i == 12) vblank = 1; // ??
@@ -478,7 +471,7 @@ struct BurnDriver BurnDrvSstrangr = {
 	"sstrangr", NULL, NULL, "invaders", "1978",
 	"Space Stranger\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sstrangrRomInfo, sstrangrRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, SstrangrInputInfo, SstrangrDIPInfo,
 	SstrangrInit, DrvExit, DrvFrame, SstrangrDraw, DrvScan, &DrvRecalc, 2,
 	224, 262, 3, 4
@@ -506,7 +499,7 @@ struct BurnDriver BurnDrvSstrangr2 = {
 	"sstrangr2", "sstrangr", NULL, "invaders", "1979",
 	"Space Stranger 2\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sstrangr2RomInfo, sstrangr2RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, Sstrngr2InputInfo, Sstrngr2DIPInfo,
 	Sstrangr2Init, DrvExit, DrvFrame, Sstrangr2Draw, DrvScan, &DrvRecalc, 8,
 	224, 262, 3, 4

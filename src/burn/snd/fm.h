@@ -135,7 +135,7 @@ typedef void (*FM_IRQHANDLER)(int n,int irq);
 ** 'IRQHandler'    IRQ callback handler when changed IRQ level
 ** return      0 = success
 */
-int YM2203Init(int num, int baseclock, int rate,
+int YM2203Init(int num, int chipbase, int baseclock, int rate,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 
 /*
@@ -174,7 +174,7 @@ int YM2203TimerOver(int n, int c);
 
 #if BUILD_YM2608
 /* -------------------- YM2608(OPNA) Interface -------------------- */
-int YM2608Init(int num, int baseclock, int rate,
+int YM2608Init(int num, int chipbase, int baseclock, int rate,
                void **pcmroma,int *pcmsizea, UINT8 *irom,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2608Shutdown(void);
@@ -188,7 +188,7 @@ int YM2608TimerOver(int n, int c );
 
 #if (BUILD_YM2610||BUILD_YM2610B)
 /* -------------------- YM2610(OPNB) Interface -------------------- */
-int YM2610Init(int num, int baseclock, int rate,
+int YM2610Init(int num, int chipbase, int baseclock, int rate,
                void **pcmroma,int *pcmasize,void **pcmromb,int *pcmbsize,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2610SetRom(int num,
@@ -206,7 +206,7 @@ int YM2610TimerOver(int n, int c );
 #endif /* BUILD_YM2610 */
 
 #if BUILD_YM2612
-int YM2612Init(int num, int baseclock, int rate,
+int YM2612Init(int num, int chipbase, int baseclock, int rate,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2612Shutdown(void);
 void YM2612ResetChip(int num);

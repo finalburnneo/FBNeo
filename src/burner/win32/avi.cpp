@@ -687,7 +687,7 @@ INT32 AviRecordFrame(INT32 bDraw)
 
 	FBAvi.nFrameNum++;
 
-	if (FBAvi.nAviSize >= 0x79000000) {
+	if (FBAvi.nAviSize >= 2000000000 && (FBAvi.nFrameNum % 60) == 0) {
 		nAviSplit++;
 		bprintf(0, _T("    AVI Writer Split-Point 0x%X reached, creating new file.\n"), nAviSplit);
 		AviStop_INT();
@@ -743,7 +743,7 @@ void AviStop_INT()
 #ifdef AVI_DEBUG
 		if (nAviStatus) {
 			bprintf(0, _T(" ** AVI recording finished.\n"));
-			bprintf(0, _T("    total frames recorded = %u\n"), FBAvi.nFrameNum+1);
+			bprintf(0, _T("    total frames recorded = %u\n"), FBAvi.nFrameNum);
 		}
 #endif
 		nAviStatus = 0;

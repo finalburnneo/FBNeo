@@ -151,12 +151,6 @@ static int DisplayHistory()
 	return 0;
 }
 
-// make gcc 8.x happy about sprintf() usage below...
-#if __GNUC__ == 8
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-overflow="
-#endif
-
 #define ASCIIONLY				(1 << 31)
 
 static int GameInfoInit()
@@ -373,24 +367,24 @@ static int GameInfoInit()
 		LvItem.pszText = ANSIToTCHAR(szRomName, NULL, 0);
 		SendMessage(hList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
 
-		sprintf(nLen, "%d", ri.nLen);
+		snprintf(nLen, sizeof(nLen), "%d", ri.nLen);
 		LvItem.iSubItem = 1;
 		LvItem.pszText = ANSIToTCHAR(nLen, NULL, 0);
 		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-		sprintf(nCrc, "%08X", ri.nCrc);
+		snprintf(nCrc, sizeof(nCrc), "%08X", ri.nCrc);
 		if (!(ri.nType & BRF_NODUMP)) {
 			LvItem.iSubItem = 2;
 			LvItem.pszText = ANSIToTCHAR(nCrc, NULL, 0);
 			SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 		}
 
-		if (ri.nType & BRF_ESS) sprintf(Type, "%s, Essential", Type);
-		if (ri.nType & BRF_OPT) sprintf(Type, "%s, Optional", Type);
-		if (ri.nType & BRF_PRG)	sprintf(Type, "%s, Program", Type);
-		if (ri.nType & BRF_GRA) sprintf(Type, "%s, Graphics", Type);
-		if (ri.nType & BRF_SND) sprintf(Type, "%s, Sound", Type);
-		if (ri.nType & BRF_BIOS) sprintf(Type, "%s, BIOS", Type);
+		if (ri.nType & BRF_ESS) snprintf(Type, sizeof(Type), "%s, Essential", Type);
+		if (ri.nType & BRF_OPT) snprintf(Type, sizeof(Type), "%s, Optional", Type);
+		if (ri.nType & BRF_PRG)	snprintf(Type, sizeof(Type), "%s, Program", Type);
+		if (ri.nType & BRF_GRA) snprintf(Type, sizeof(Type), "%s, Graphics", Type);
+		if (ri.nType & BRF_SND) snprintf(Type, sizeof(Type), "%s, Sound", Type);
+		if (ri.nType & BRF_BIOS) snprintf(Type, sizeof(Type), "%s, BIOS", Type);
 
 		for (int j = 0; j < 98; j++) {
 			FormatType[j] = Type[j + 2];
@@ -410,7 +404,9 @@ static int GameInfoInit()
 
 	// Check for board roms
 	if (BurnDrvGetTextA(DRV_BOARDROM)) {
-		char szBoardName[12] = "";
+		// spec_spectrum (14 characters)
+		// spec_spec128  (13 characters)
+		char szBoardName[14] = "";
 		unsigned int nOldDrvSelect = nBurnDrvActive;
 		strcpy(szBoardName, BurnDrvGetTextA(DRV_BOARDROM));
 
@@ -440,24 +436,24 @@ static int GameInfoInit()
 			LvItem.pszText = ANSIToTCHAR(szBoardRomName, NULL, 0);
 			SendMessage(hList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
 
-			sprintf(nLenBoard, "%d", riBoard.nLen);
+			snprintf(nLenBoard, sizeof(nLenBoard), "%d", riBoard.nLen);
 			LvItem.iSubItem = 1;
 			LvItem.pszText = ANSIToTCHAR(nLenBoard, NULL, 0);
 			SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-			sprintf(nCrcBoard, "%08X", riBoard.nCrc);
+			snprintf(nCrcBoard, sizeof(nCrcBoard), "%08X", riBoard.nCrc);
 			if (!(riBoard.nType & BRF_NODUMP)) {
 				LvItem.iSubItem = 2;
 				LvItem.pszText = ANSIToTCHAR(nCrcBoard, NULL, 0);
 				SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 			}
 
-			if (riBoard.nType & BRF_ESS) sprintf(BoardType, "%s, Essential", BoardType);
-			if (riBoard.nType & BRF_OPT) sprintf(BoardType, "%s, Optional", BoardType);
-			if (riBoard.nType & BRF_PRG) sprintf(BoardType, "%s, Program", BoardType);
-			if (riBoard.nType & BRF_GRA) sprintf(BoardType, "%s, Graphics", BoardType);
-			if (riBoard.nType & BRF_SND) sprintf(BoardType, "%s, Sound", BoardType);
-			if (riBoard.nType & BRF_BIOS) sprintf(BoardType, "%s, BIOS", BoardType);
+			if (riBoard.nType & BRF_ESS) snprintf(BoardType, sizeof(BoardType), "%s, Essential", BoardType);
+			if (riBoard.nType & BRF_OPT) snprintf(BoardType, sizeof(BoardType), "%s, Optional", BoardType);
+			if (riBoard.nType & BRF_PRG) snprintf(BoardType, sizeof(BoardType), "%s, Program", BoardType);
+			if (riBoard.nType & BRF_GRA) snprintf(BoardType, sizeof(BoardType), "%s, Graphics", BoardType);
+			if (riBoard.nType & BRF_SND) snprintf(BoardType, sizeof(BoardType), "%s, Sound", BoardType);
+			if (riBoard.nType & BRF_BIOS) snprintf(BoardType, sizeof(BoardType), "%s, BIOS", BoardType);
 
 			for (int k = 0; k < 98; k++) {
 				BoardFormatType[k] = BoardType[k + 2];
@@ -556,12 +552,12 @@ static int GameInfoInit()
 		LvItem.pszText = ANSIToTCHAR(szHDDName, NULL, 0);
 		SendMessage(hList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
 
-		sprintf(nLen, "%d", hddi.nLen);
+		snprintf(nLen, sizeof(nLen), "%d", hddi.nLen);
 		LvItem.iSubItem = 1;
 		LvItem.pszText = ANSIToTCHAR(nLen, NULL, 0);
 		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-		sprintf(nCrc, "%08X", hddi.nCrc);
+		snprintf(nCrc, sizeof(nCrc), "%08X", hddi.nCrc);
 		LvItem.iSubItem = 2;
 		LvItem.pszText = ANSIToTCHAR(nCrc, NULL, 0);
 		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
@@ -571,49 +567,60 @@ static int GameInfoInit()
 
 	// Get the history info
 	CHAR szFileName[MAX_PATH] = "";
-	sprintf(szFileName, "%shistory.dat", TCHARToANSI(szAppHistoryPath, NULL, 0));
+	snprintf(szFileName, sizeof(szFileName), "%shistory.xml", TCHARToANSI(szAppHistoryPath, NULL, 0));
 
 	FILE *fp = fopen(szFileName, "rt");
 	char Temp[10000];
 	char rom_token[255];
 	char DRIVER_NAME[255];
+	char to_find[255*2];
 	int inGame = 0;
 
-	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
+	TCHAR szBuffer[0x10000*2] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
 
 	GetHistoryDatHardwareToken(&rom_token[0]);
 	strcpy(DRIVER_NAME, BurnDrvGetTextA(DRV_NAME));
 
-	if (strncmp("$info=", rom_token, 6)) { // non-arcade game detected. (token not "$info=" !)
+	if (strncmp("\t\t\t<system name=\"", rom_token, 17)) { // non-arcade game detected. (token not "$info=" !)
+		bprintf(0, _T("not arcade\n"));
 		char *p = strchr(DRIVER_NAME, '_');
 		if (p) strcpy(DRIVER_NAME, p + 1); // change "nes_smb" -> "smb"
 	}
 
+	sprintf(to_find, "%s%s\"", rom_token, DRIVER_NAME);
+
 	if (fp) {
 		while (!feof(fp)) {
-			char *Tokens;
-
 			fgets(Temp, 10000, fp);
-			if (!strncmp(rom_token, Temp, strlen(rom_token))) {
-				Tokens = strtok(Temp, "=,");
-				while (Tokens != NULL) {
-					if (!strcmp(Tokens, DRIVER_NAME)) {
-						inGame = 1;
-						break;
-					}
+			if (!strncmp(to_find, Temp, strlen(to_find))) {
+				inGame = 1;
+				continue;
+			}
 
-					Tokens = strtok(NULL, "=,");
+			if (inGame == 1) {
+				if (strstr(Temp, "<text>")) {
+					inGame = 2;
+					continue;
 				}
 			}
 
-			if (inGame) {
+			if (inGame == 2) {
 				int nTitleWrote = 0;
-				while (strncmp("$end", Temp, 4)) {
+				while (!feof(fp)) {
+					// at this point, the "game was released XX years ago.." string is thrown out
 					fgets(Temp, 10000, fp);
 
-					if (!strncmp("$", Temp, 1)) continue;
+					if (strstr(Temp, "</text>")) {
+						break;
+					}
 
 					TCHAR *cnvTemp = wstring_from_utf8(Temp);
+
+					tcharstrreplace(cnvTemp, _T("&quot;"), _T("\""));
+					tcharstrreplace(cnvTemp, _T("&amp;"), _T("&"));
+					tcharstrreplace(cnvTemp, _T("&apos;"), _T("'"));
+					tcharstrreplace(cnvTemp, _T("&gt;"), _T(">"));
+					tcharstrreplace(cnvTemp, _T("&lt;"), _T("<"));
 
 					if (!nTitleWrote) {
 						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1\\f0 %s}"), szBuffer, cnvTemp);
@@ -652,16 +659,6 @@ static int GameInfoInit()
 
 	return 0;
 }
-
-#if __GNUC__ == 8
-#pragma GCC diagnostic pop
-#endif
-
-// make gcc 8.x happy about strncpy() usage below...
-#if __GNUC__ == 8
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstringop-truncation"
-#endif
 
 #define MAXFAVORITES 2000
 char szFavorites[MAXFAVORITES][68];
@@ -757,10 +754,6 @@ void AddFavorite_Ext(UINT8 addf)
 	nGiDriverSelected = nBurnDrvActive;
 	AddFavorite(addf);
 }
-
-#if __GNUC__ == 8
-#pragma GCC diagnostic pop
-#endif
 
 static void MyEndDialog()
 {

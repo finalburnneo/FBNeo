@@ -1109,7 +1109,7 @@ struct BurnDriver BurnDrvBgareggat = {
 	"bgareggat", "bgaregga", NULL, NULL, "1996",
 	"Battle Garegga (location test) (Wed Jan 17 1996)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggatRomInfo, bgareggatRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1186,20 +1186,20 @@ struct BurnDriver BurnDrvBgaregtw = {
 };
 
 struct BurnDriver BurnDrvBgareggabl = {
-	"bgareggabl", "bgaregga", NULL, NULL, "1996",
-	"1945 Part 2 (Chinese hack of Battle Garegga)\0", NULL, "bootleg", "Toaplan GP9001 based",
+	"bgareggabl", "bgaregga", NULL, NULL, "1998",
+	"1945 Er Dai / 1945 Part-2 (Chinese hack of Battle Garegga)\0", NULL, "bootleg (Melody)", "Toaplan GP9001 based",
 	L"1945 Part 2\0\uFF11\uFF19\uFF14\uFF15\u4E8C\u4EE3 (Chinese hack of Battle Garegga)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablRomInfo, bgareggablRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
 
 struct BurnDriver BurnDrvBgareggabla = {
-	"bgareggabla", "bgaregga", NULL, NULL, "1996",
-	"Lei Shen Zhuan Thunder Deity Biography (Chinese hack of Battle Garegga)\0", NULL, "bootleg", "Toaplan GP9001 based",
+	"bgareggabla", "bgaregga", NULL, NULL, "1997",
+	"Leishen Chuan / Thunder Deity Biography (Chinese hack of Battle Garegga)\0", NULL, "bootleg (Melody)", "Toaplan GP9001 based",
 	L"\u96F7\u795E\u50B3\0Lei Shen Zhuan Thunder Deity Biography (Chinese hack of Battle Garegga)\0" , NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablaRomInfo, bgareggablaRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggablaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1209,7 +1209,7 @@ struct BurnDriver BurnDrvBgareggablj = {
 	"bgareggablj", "bgaregga", NULL, NULL, "1996",
 	"Battle Garegga (Japan, bootleg) (Sat Feb 3 1996)\0", NULL, "bootleg", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggabljRomInfo, bgareggabljRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4

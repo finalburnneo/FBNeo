@@ -596,7 +596,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// The Big Pro Wrestling!
+// The Big Pro Wrestling! (set 1)
 
 static struct BurnRomInfo bigprowrRomDesc[] = {
 	{ "bf00-1.20",		0x2000, 0x8aba32c9, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
@@ -631,10 +631,54 @@ STD_ROM_FN(bigprowr)
 
 struct BurnDriver BurnDrvBigprowr = {
 	"bigprowr", NULL, NULL, NULL, "1983",
-	"The Big Pro Wrestling!\0", NULL, "Technos Japan", "Miscellaneous",
+	"The Big Pro Wrestling! (set 1)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, bigprowrRomInfo, bigprowrRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, BigprowrDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
+	240, 256, 3, 4
+};
+
+
+// The Big Pro Wrestling! (set 2)
+
+static struct BurnRomInfo bigprowraRomDesc[] = {
+	{ "xa-0.ic20",		0x2000, 0x4f711b0a, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{ "xa-1.ic33",		0x2000, 0x5471efc3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "xa-2.ic34",		0x2000, 0x353ed84f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "xa-3.ic46",		0x2000, 0x4f1b7203, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bf04-.ic8",		0x2000, 0x0558e1d8, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 #1 Code
+	{ "bf05-.ic7",		0x2000, 0xc1073f24, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "bf06-.ic6",		0x2000, 0x208cd081, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "bf07-.ic3",		0x2000, 0x34a033dc, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "bf08-.ic2",		0x2000, 0xeafe8056, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "bf09-.ic1",		0x2000, 0xd589ce1b, 2 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "x-1.ic89",		0x2000, 0x48165902, 3 | BRF_GRA },           // 10 Graphics
+	{ "bf11-.ic94",		0x2000, 0xc3fe99c1, 3 | BRF_GRA },           // 11
+	{ "bf12-.ic103",	0x2000, 0xc8717a46, 3 | BRF_GRA },           // 12
+	{ "x-2.ic91",		0x2000, 0xecfa581d, 3 | BRF_GRA },           // 13
+	{ "bf14-.ic95",		0x2000, 0xa6721142, 3 | BRF_GRA },           // 14
+	{ "bf15-.ic105",	0x2000, 0x60ae1078, 3 | BRF_GRA },           // 15
+	{ "x-3.ic93",		0x2000, 0x75ee5705, 3 | BRF_GRA },           // 16
+	{ "bf17-.ic96",		0x2000, 0xccf42380, 3 | BRF_GRA },           // 17
+	{ "bf18-.ic107",	0x2000, 0xfd6f006d, 3 | BRF_GRA },           // 18
+
+	{ "fko.ic8",		0x0020, 0xb6ee1483, 4 | BRF_GRA },           // 19 Color Data
+
+	{ "fjo.ic25",		0x0020, 0x24da2b63, 0 | BRF_OPT },           // 20 Timing PROM
+};
+
+STD_ROM_PICK(bigprowra)
+STD_ROM_FN(bigprowra)
+
+struct BurnDriver BurnDrvBigprowra = {
+	"bigprowra", "bigprowr", NULL, NULL, "1983",
+	"The Big Pro Wrestling! (set 2)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	NULL, bigprowraRomInfo, bigprowraRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, TagteamDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4
 };

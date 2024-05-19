@@ -540,8 +540,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		fclose(test);
 	}
 #endif
-	
-	if (!nEnableSamples) return;
 
 	soundbuf = (INT16*)BurnMalloc(0x1000 * 2 * 2); // mixing buffer
 
@@ -555,7 +553,12 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 	samples = (sample_format*)BurnMalloc(sizeof(sample_format) * nTotalSamples);
 	memset (samples, 0, sizeof(sample_format) * nTotalSamples);
 
+	BurnSetProgressRange(0.99); // Expand Progress bar
+	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
+
 	for (INT32 i = 0; i < nTotalSamples; i++) {
+		BurnUpdateProgress(1.0 / nTotalSamples, NULL, 0);
+
 		BurnDrvGetSampleInfo(&si, i);
 		char *szSampleNameTmp = NULL;
 		BurnDrvGetSampleName(&szSampleNameTmp, i, 0);
@@ -580,8 +583,11 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 		destination = NULL;
 		length = 0;
-		ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-		
+
+		if (nEnableSamples) {
+			ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
+		}
+
 		if (length) {
 			sample_ptr->flags = si.nFlags;
 			bprintf(0, _T("Loading \"%S\": "), szSampleName);
@@ -600,9 +606,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
-
-		BurnSetProgressRange(1.0 / nTotalSamples);
-		BurnUpdateProgress((double)1.0 / i * nTotalSamples, _T("Loading samples..."), 0);
 	}
 }
 

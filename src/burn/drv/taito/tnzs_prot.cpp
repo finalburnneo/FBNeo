@@ -18,6 +18,7 @@ static UINT8 mcu_coinsA;
 static UINT8 mcu_coinsB;
 static UINT8 mcu_credits;
 static UINT8 mcu_coin_lockout;
+static INT32 mcu_last_coin;
 
 UINT8 *tnzs_mcu_inputs;
 
@@ -35,6 +36,7 @@ void tnzs_mcu_reset()
 	mcu_reportcoin = 0;
 	mcu_command = 0;
 	mcu_coin_lockout = LOCK;
+	mcu_last_coin = 0;
 }
 
 void tnzs_mcu_init(INT32 type)
@@ -45,11 +47,9 @@ void tnzs_mcu_init(INT32 type)
 
 static void mcu_handle_coins(INT32 coin)
 {
-	static INT32 insertcoin;
-
 	if (coin & 0x08)
 		mcu_reportcoin = coin;
-	else if (coin && coin != insertcoin)
+	else if (coin && coin != mcu_last_coin)
 	{
 		if (coin & 0x01)
 		{
@@ -99,7 +99,7 @@ static void mcu_handle_coins(INT32 coin)
 			mcu_coin_lockout = UNLOCK;
 		mcu_reportcoin = 0;
 	}
-	insertcoin = coin;
+	mcu_last_coin = coin;
 }
 
 static UINT8 mcu_arknoid2_r(INT32 offset)
@@ -462,4 +462,5 @@ void tnzs_mcu_scan()
 	SCAN_VAR(mcu_reportcoin);
 	SCAN_VAR(mcu_command);
 	SCAN_VAR(mcu_coin_lockout);
+	SCAN_VAR(mcu_last_coin);
 }

@@ -180,6 +180,7 @@ System16CustomDecryptOpCode System16CustomDecryptOpCodeDo;
 System16ProcessAnalogControls System16ProcessAnalogControlsDo;
 System16MakeAnalogInputs System16MakeAnalogInputsDo;
 System16MakeAnalogInputs System16MakeInputsDo;
+System16ResetCallback System16ResetCallbackDo;
 
 /*====================================================
 Inputs
@@ -412,6 +413,10 @@ static INT32 System16DoReset()
 	System18Startup = 10;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
+
+	if (System16ResetCallbackDo) {
+		System16ResetCallbackDo();
+	}
 
 	HiscoreReset(1 /*disable inversion pattern: see notes in hiscore.cpp's HiscoreReset()*/);
 
@@ -1088,6 +1093,10 @@ INT32 System16LoadRoms(bool bLoad)
 				System16RomSize += ri.nLen;
 				System16RomNum++;
 			}
+			if ((ri.nType & 0xff) == SYS16_ROM_PROG_FLAT) {
+				System16RomSize += ri.nLen;
+				System16RomNum++;
+			}
 			if ((ri.nType & 0xff) == SYS16_ROM_PROG2) {
 				System16Rom2Size += ri.nLen;
 				System16Rom2Num++;
@@ -1221,14 +1230,19 @@ INT32 System16LoadRoms(bool bLoad)
 		
 		// 68000 Program Roms
 		Offset = 0;
-		for (i = 0; i < System16RomNum; i += 2) {
-			nRet = BurnLoadRom(System16Rom + Offset + 1, i + 0, 2); if (nRet) return 1;
-			nRet = BurnLoadRom(System16Rom + Offset + 0, i + 1, 2); if (nRet) return 1;
-			
-			BurnDrvGetRomInfo(&ri, i + 0);
-			Offset += ri.nLen;
-			BurnDrvGetRomInfo(&ri, i + 1);
-			Offset += ri.nLen;
+		if (System16RomNum == 1) { // flat rom!
+			bprintf(0, _T("Loading FLAT 68k rom\n"));
+			nRet = BurnLoadRom(System16Rom + Offset, 0, 1); if (nRet) return 1;
+		} else {
+			for (i = 0; i < System16RomNum; i += 2) {
+				nRet = BurnLoadRom(System16Rom + Offset + 1, i + 0, 2); if (nRet) return 1;
+				nRet = BurnLoadRom(System16Rom + Offset + 0, i + 1, 2); if (nRet) return 1;
+
+				BurnDrvGetRomInfo(&ri, i + 0);
+				Offset += ri.nLen;
+				BurnDrvGetRomInfo(&ri, i + 1);
+				Offset += ri.nLen;
+			}
 		}
 		
 		// 68000 #2 Program Roms
@@ -2673,6 +2687,7 @@ INT32 System16Exit()
 	System16ScreenFlipYoffs = 0;
 	System16SpriteShadow = 0;
 	System16SpriteXOffset = 0;
+	System16SpriteYOffset = 0;
 	System16VideoControl = 0;
 	System16SoundLatch = 0;
 	System16SoundMute = 0;
@@ -2786,6 +2801,7 @@ INT32 System16Exit()
  	System16ProcessAnalogControlsDo = NULL;
 	System16MakeAnalogInputsDo = NULL;
 	System16MakeInputsDo = NULL;
+	System16ResetCallbackDo = NULL;
 	System16I8751InitialConfig = NULL;
  	
  	memset(multiply, 0, sizeof(multiply));

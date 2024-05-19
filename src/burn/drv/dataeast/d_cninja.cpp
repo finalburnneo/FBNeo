@@ -1,8 +1,6 @@
 // FB Neo Caveman Ninja driver module
 // Based on MAME driver by Bryan McPhail
 
-// TOFIX: cninjabl backgrounds won't display
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -48,6 +46,8 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
+
+static INT32 nExtraCycles[2];
 
 static INT32 scanline;
 static INT32 irq_mask;
@@ -1010,6 +1010,8 @@ static INT32 DrvDoReset()
 	irq_mask = 0;
 	irq_timer = -1;
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -1093,7 +1095,7 @@ static UINT16 deco_104_port_c_cb()
 
 static INT32 CninjaInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1178,7 +1180,6 @@ static INT32 CninjaInit()
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.65, 2013750, 0.35);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
-	BurnYM2151SetInterleave(117); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1189,7 +1190,7 @@ static INT32 CninjaInit()
 
 static INT32 EdrandyInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1291,7 +1292,7 @@ static INT32 EdrandyInit()
 
 static INT32 MutantfInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(57.79965);
 
 	BurnAllocMemIndex();
 
@@ -1405,7 +1406,7 @@ static INT32 MutantfInit()
 
 static INT32 CninjablInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1483,9 +1484,10 @@ static INT32 CninjablInit()
 	ZetSetReadHandler(stoneage_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3580000);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
 	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnTimerAttachZet(3579545);
 
 	MSM6295Init(0, 1006875 / 132, 1);
 	MSM6295Init(1, 2013750 / 132, 1);
@@ -1501,7 +1503,7 @@ static INT32 CninjablInit()
 
 static INT32 StoneageInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1600,14 +1602,15 @@ static INT32 StoneageInit()
 	ZetSetReadHandler(stoneage_sound_read);
 	ZetClose();
 
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
+	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnTimerAttachZet(3579545);
+
 	MSM6295Init(0, 1006875 / 132, 1);
 	MSM6295Init(1, 2013750 / 132, 1);
 	MSM6295SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
-
-	BurnYM2151Init(3580000);
-	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 
 	GenericTilesInit();
 
@@ -1618,7 +1621,7 @@ static INT32 StoneageInit()
 
 static INT32 Robocop2Init()
 {
-	BurnSetRefreshRate(57.80);
+ 	BurnSetRefreshRate(57.79); //57.79965
 
 	BurnAllocMemIndex();
 
@@ -1717,10 +1720,15 @@ static INT32 Robocop2Init()
 	SekSetReadByteHandler(0,		robocop2_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.50);
+	// re: weird huc6280 cpu speed math below in deco16SoundInit()
+	// it makes the music line up properly at 57.79965hz. I think this is a bug
+	// in the ym2151 core (timing?), because when MAME changed to Giles's ymfm
+	// it stopped being a problem there.
+
+	deco16SoundInit(DrvHucROM, DrvHucRAM, (INT32)((double)4027500 * 57.79 / 60), 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.50);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2225,9 +2233,8 @@ static INT32 CninjaFrame()
 	}
 
 	INT32 nInterleave = 232; //58 * 4
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)12000000 * 100 / nBurnFPS), (INT32)((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 
@@ -2239,38 +2246,27 @@ static INT32 CninjaFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		if (irq_timer == i) {
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, CPU_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
+
 		if (i == 206) deco16_vblank = 0x08;
-		
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	}
 
 	h6280Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -2295,12 +2291,11 @@ static INT32 EdrandyFrame()
 	}
 
 	INT32 nInterleave = 256; // scanlines
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)12000000 * 100 / nBurnFPS), (INT32)((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -2316,7 +2311,7 @@ static INT32 EdrandyFrame()
 		}
 
 		CPU_RUN(0, Sek);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		if (i == 248) {
 			EdrandyDrawScanline(i-8);
@@ -2324,29 +2319,17 @@ static INT32 EdrandyFrame()
 			deco16_vblank = 0x08;
 		}
 
-		if (pBurnSoundOut && i%4 == 3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -2371,9 +2354,8 @@ static INT32 Robocop2Frame()
 	}
 
 	INT32 nInterleave = 256;	// scanlines
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)14000000 / 57.79965), (INT32)((double)4027500 / 57.79965) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 	
@@ -2387,7 +2369,7 @@ static INT32 Robocop2Frame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER(1);
 
 		if (irq_timer == i) {
 			if (i >= 8 && i < 248) Robocop2DrawScanline(i-8);
@@ -2403,31 +2385,19 @@ static INT32 Robocop2Frame()
 			Robocop2DrawScanline(i-8);
 			deco16_vblank = 0x08;
 		}
-
-		if (pBurnSoundOut && i%8 == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
+
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	}
 
 	h6280Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -2452,9 +2422,8 @@ static INT32 MutantfFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)12000000 * 100 / nBurnFPS), (INT32)((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 
@@ -2466,31 +2435,22 @@ static INT32 MutantfFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		CPU_RUN(1, h6280);
+		CPU_RUN_TIMER(1);
 
 		if (i == 240) deco16_vblank = 0x08;
-		
-		if (pBurnSoundOut && i%4 == 3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-	}
-	
 	h6280Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		MutantfDraw();
@@ -2505,6 +2465,8 @@ static INT32 StoneageFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
@@ -2515,9 +2477,8 @@ static INT32 StoneageFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 3579545 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)12000000 * 100 / nBurnFPS), (INT32)((double)3579545 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -2527,32 +2488,23 @@ static INT32 StoneageFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 
 		if (irq_timer == i) {
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, CPU_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
 		if (i == 248) deco16_vblank = 0x08;
-		
-		if (pBurnSoundOut && i%4 == 3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -2593,6 +2545,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irq_timer);
 
 		SCAN_VAR(DrvOkiBank);
+
+		SCAN_VAR(nExtraCycles);
+	}
+
+	if (nAction & ACB_WRITE) {
 		DrvYM2151WritePort(0, DrvOkiBank);
 	}
 
@@ -2628,6 +2585,8 @@ static INT32 StoneageScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irq_timer);
 
 		SCAN_VAR(DrvOkiBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -2680,7 +2639,7 @@ struct BurnDriver BurnDrvCninja = {
 	"cninja", NULL, NULL, NULL, "1991",
 	"Caveman Ninja (World ver 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, cninjaRomInfo, cninjaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2733,7 +2692,7 @@ struct BurnDriver BurnDrvCninja1 = {
 	"cninja1", "cninja", NULL, NULL, "1991",
 	"Caveman Ninja (World ver 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, cninja1RomInfo, cninja1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2786,7 +2745,7 @@ struct BurnDriver BurnDrvCninjau = {
 	"cninjau", "cninja", NULL, NULL, "1991",
 	"Caveman Ninja (US ver 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, cninjauRomInfo, cninjauRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjauDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2839,7 +2798,7 @@ struct BurnDriver BurnDrvJoemac = {
 	"joemac", "cninja", NULL, NULL, "1991",
 	"Tatakae Genshizin Joe & Mac (Japan ver 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, joemacRomInfo, joemacRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2881,7 +2840,7 @@ struct BurnDriver BurnDrvStoneage = {
 	"stoneage", "cninja", NULL, NULL, "1991",
 	"Stoneage (bootleg of Caveman Ninja)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, stoneageRomInfo, stoneageRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	StoneageInit, DrvExit, StoneageFrame, CninjaDraw, StoneageScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2909,7 +2868,7 @@ struct BurnDriver BurnDrvCninjabl = {
 	"cninjabl", "cninja", NULL, NULL, "1991",
 	"Caveman Ninja (bootleg)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, cninjablRomInfo, cninjablRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjablInit, DrvExit, StoneageFrame, CninjablDraw, StoneageScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -3138,9 +3097,9 @@ static struct BurnRomInfo mutantf1RomDesc[] = {
 	{ "maf-08.21d",		0x080000, 0xe41cf1e7, 6 | BRF_GRA }, 	       // 15
 
 	{ "hd-08-s.15a",	0x010000, 0x93b7279f, 7 | BRF_GRA }, 	       // 16 Sprite Bank B
-	{ "hf-09-s.17a",	0x010000, 0x05e2c074, 7 | BRF_GRA }, 	       // 17
-	{ "hf-10-s.15c",	0x010000, 0x9b06f418, 7 | BRF_GRA }, 	       // 18
-	{ "hf-11-s.17c",	0x010000, 0x3859a531, 7 | BRF_GRA }, 	       // 19
+	{ "hd-09-s.17a",	0x010000, 0x05e2c074, 7 | BRF_GRA }, 	       // 17
+	{ "hd-10-s.15c",	0x010000, 0x9b06f418, 7 | BRF_GRA }, 	       // 18
+	{ "hd-11-s.17c",	0x010000, 0x3859a531, 7 | BRF_GRA }, 	       // 19
 
 	{ "maf-10.20l",		0x040000, 0x7c57f48b, 8 | BRF_SND }, 	       // 20 OKI M6295 Samples 0
 

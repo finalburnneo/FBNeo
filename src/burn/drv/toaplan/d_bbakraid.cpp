@@ -1069,7 +1069,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBattleBkraidu = {
 	"bbakraid", NULL, NULL, NULL, "1999",
-	"Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
+	"Battle Bakraid - Unlimited Version (USA) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraiduRomInfo, bkraiduRomName, NULL, NULL, NULL, NULL, bbakraidInputInfo, bkraiduDIPInfo,

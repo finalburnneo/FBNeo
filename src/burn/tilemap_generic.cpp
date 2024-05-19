@@ -1,6 +1,6 @@
 #include "tiles_generic.h"
 
-#define MAX_TILEMAPS	32	// number of tile maps allowed
+#define MAX_TILEMAPS	64	// number of tile maps allowed
 #define MAX_GFXNUM
 #define MAX_SPLIT_CATEGORY 16
 
@@ -902,6 +902,23 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		if (maxy >= nScreenHeight) maxy = nScreenHeight;
 	}
 
+	// where should we start drawing from?
+	// only used by "scrollx and scrolly" at this time
+	INT32 start_x = minx;
+	INT32 start_y = miny;
+	INT32 end_x = maxx;
+	INT32 end_y = maxy;
+
+	if (cur_map->flags & TMAP_FLIPX) {
+		start_x = nScreenWidth - maxx;
+		end_x = nScreenWidth - minx;
+	}
+
+	if (cur_map->flags & TMAP_FLIPY) {
+		start_y = nScreenHeight - maxy;
+		end_y = nScreenHeight - miny;
+	}
+
 	GenericTilesPRIMASK = priority_mask;
 
 	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 1 : 0;
@@ -1050,7 +1067,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 			INT32 sy = y;
 			if (cur_map->flags & TMAP_FLIPY) {
-				sy = ((maxy - miny) - cur_map->theight) - sy;
+				sy = ((maxy - miny) - 1) - sy;
 			}
 
 			dest = Bitmap + sy * nScreenWidth;
@@ -1182,26 +1199,19 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 		INT32 scrollx = ((cur_map->scrollx - x_offset) / cur_map->twidth) * cur_map->twidth;
 
 		// start drawing at tile-border, and let RenderCustomTile..Clip() take care of the sub-tile clipping.
-		INT32 starty = miny - (miny % cur_map->theight);
-		INT32 startx = minx - (minx % cur_map->twidth);
-		INT32 endx = maxx + cur_map->twidth;
-		INT32 endy = maxy + cur_map->theight;
+		INT32 starty = start_y - (start_y % cur_map->theight);
+		INT32 startx = start_x - (start_x % cur_map->twidth);
+		INT32 endx = end_x + cur_map->twidth;
+		INT32 endy = end_y + cur_map->theight;
+
 #if 0
-		// akka arrh buggy (clip) fix
-		// after reimpl, test:
+		// if anything changes, be sure to test:
+		// akka arrh (zoom screen)
 		// bwings, zaviga, squaitsa, botanicf, bagman
 		// if they are weirdly-offset, something is wrong.
-		if (cur_map->flags & TMAP_FLIPX) {
-			INT32 tmp = ((cur_map->mwidth - 1) * cur_map->twidth) - (endx - cur_map->twidth);
-			endx = (((cur_map->mwidth - 1) * cur_map->twidth) - startx) + cur_map->twidth;
-			startx = tmp;
-		}
-
-		if (cur_map->flags & TMAP_FLIPY) {
-			INT32 tmp = ((cur_map->mheight - 1) * cur_map->theight) - (endy - cur_map->theight);
-			endy = (((cur_map->mheight - 1) * cur_map->theight) - starty) + cur_map->theight;
-			starty = tmp;
-		}
+		bprintf(0, _T("start/end x/y:  %d-%d  %d-%d\n"), startx, endx, starty, endy);
+		bprintf(0, _T("clipp     x/y:  %d-%d  %d-%d\n"), minx, maxx, miny, maxy);
+		bprintf(0, _T("theight/width %d %d\n"), cur_map->theight, cur_map->twidth);
 #endif
 		for (INT32 y = starty; y < endy; y += cur_map->theight)
 		{
@@ -1277,16 +1287,12 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 				INT32 flipy = sTileData.flags & TILE_FLIPY;
 
 				if (cur_map->flags & TMAP_FLIPY) {
-					// part of clip fix (save for reimpl)
-					//sy = ((cur_map->mheight - 1) * cur_map->theight) - sy;
-					sy = ((maxy - miny) - cur_map->theight) - sy;
+					sy = (nScreenHeight - cur_map->theight) - sy;
 					flipy ^= TILE_FLIPY;
 				}
 
 				if (cur_map->flags & TMAP_FLIPX) {
-					// part of clipc fix (save for reimpl)
-					//sx = ((cur_map->mwidth - 1) * cur_map->twidth) - sx;
-					sx = ((maxx - minx) - cur_map->twidth) - sx;
+					sx = (nScreenWidth - cur_map->twidth) - sx;
 					flipx ^= TILE_FLIPX;
 				}
 

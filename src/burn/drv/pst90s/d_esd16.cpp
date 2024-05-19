@@ -54,9 +54,7 @@ static INT32 game_select;
 static INT32 weird_offsets = 0;
 
 static struct BurnInputInfo MultchmpInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy2 + 2,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -65,6 +63,7 @@ static struct BurnInputInfo MultchmpInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 3,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy1 + 8,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy1 + 9,    "p2 down"  },
@@ -75,17 +74,15 @@ static struct BurnInputInfo MultchmpInputList[] = {
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy3 + 0,    "service"  },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	 "reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	 "dip"	    },
-	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	 "dip"	    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,	         "reset"    },
+	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	     "dip"	    },
+	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	     "dip"	    },
 };
 
 STDINPUTINFO(Multchmp)
 
 static struct BurnInputInfo HedpanicInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
-
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy2 + 2,	 "p1 start" },
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0,    "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,    "p1 down"  },
@@ -94,6 +91,7 @@ static struct BurnInputInfo HedpanicInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	 "p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 5,	 "p1 fire 2"},
 
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 1,	 "p2 coin"  },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 3,	 "p2 start" },
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy1 + 8,    "p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy1 + 9,    "p2 down"  },
@@ -103,8 +101,9 @@ static struct BurnInputInfo HedpanicInputList[] = {
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 13,	 "p2 fire 2"},
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy2 + 4,    "service"  },
+	{"Diagnostic"   , BIT_DIGITAL  , DrvJoy2 + 6,    "diag"     },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	 "reset"    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,	         "reset"    },
 };
 
 STDINPUTINFO(Hedpanic)
@@ -132,16 +131,21 @@ static struct BurnInputInfo SwatpolcInputList[] = {
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 14,	 "p2 fire 3"},
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy2 + 4,    "service"  },
+	{"Diagnostic"   , BIT_DIGITAL  , DrvJoy2 + 6,    "diag"     },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	 "reset"    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,	         "reset"    },
 };
 
 STDINPUTINFO(Swatpolc)
 
 static struct BurnDIPInfo MultchmpDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL},
-	{0x13, 0xff, 0xff, 0xff, NULL},
+	{0x12, 0xff, 0xff, 0xff, NULL		},
+	{0x13, 0xff, 0xff, 0xff, NULL		},
+
+	{0x12, 0xfe, 0, 2, "Service Mode"	},
+	{0x12, 0x01, 0x01, 0x01, "Off" 		},
+	{0x12, 0x01, 0x01, 0x00, "On" 		},
 
 	{0x12, 0xfe, 0, 2, "Coinage Type"	},
 	{0x12, 0x01, 0x02, 0x02, "1" 		},
@@ -216,12 +220,12 @@ static inline void esd_sound_command_w(UINT8 data)
 
 //----------------------------------------------------------------------------------------------------------
 
-void __fastcall multchmp_write_byte(UINT32, UINT8)
+static void __fastcall multchmp_write_byte(UINT32, UINT8)
 {
 	return;
 }
 
-void __fastcall multchmp_write_word(UINT32 address, UINT16 data)
+static void __fastcall multchmp_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0x200000) {
 		palette_write(address & 0x7ff, data);
@@ -252,7 +256,7 @@ void __fastcall multchmp_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall multchmp_read_byte(UINT32 address)
+static UINT8 __fastcall multchmp_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -268,7 +272,7 @@ UINT8 __fastcall multchmp_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall multchmp_read_word(UINT32 address)
+static UINT16 __fastcall multchmp_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -283,7 +287,7 @@ UINT16 __fastcall multchmp_read_word(UINT32 address)
 
 //----------------------------------------------------------------------------------------------------------
 
-void __fastcall hedpanic_write_byte(UINT32 address, UINT8 data)
+static void __fastcall hedpanic_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -295,7 +299,7 @@ void __fastcall hedpanic_write_byte(UINT32 address, UINT8 data)
 	return;
 }
 
-void __fastcall hedpanic_write_word(UINT32 address, UINT16 data)
+static void __fastcall hedpanic_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff000) == 0x800000) {
 		palette_write(address & 0xfff, data);
@@ -344,7 +348,7 @@ void __fastcall hedpanic_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall hedpanic_read_byte(UINT32 address)
+static UINT8 __fastcall hedpanic_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -361,7 +365,7 @@ UINT8 __fastcall hedpanic_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall hedpanic_read_word(UINT32 /*address*/)
+static UINT16 __fastcall hedpanic_read_word(UINT32 /*address*/)
 {
 	//bprintf(0, _T("rw %X.\n"), address);
 	return 0;
@@ -369,19 +373,19 @@ UINT16 __fastcall hedpanic_read_word(UINT32 /*address*/)
 
 //----------------------------------------------------------------------------------------------------------
 
-void __fastcall mchampdx_write_byte(UINT32 address, UINT8 data)
+static void __fastcall mchampdx_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0x50000e:
-			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 6);
+			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 2);
 		return;
 	}
 
 	return;
 }
 
-void __fastcall mchampdx_write_word(UINT32 address, UINT16 data)
+static void __fastcall mchampdx_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff000) == 0x400000) {
 		palette_write(address & 0xfff, data);
@@ -430,7 +434,7 @@ void __fastcall mchampdx_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall mchampdx_read_byte(UINT32 address)
+static UINT8 __fastcall mchampdx_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -448,7 +452,7 @@ UINT8 __fastcall mchampdx_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall mchampdx_read_word(UINT32 address)
+static UINT16 __fastcall mchampdx_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -462,18 +466,19 @@ UINT16 __fastcall mchampdx_read_word(UINT32 address)
 
 //----------------------------------------------------------------------------------------------------------
 
-void __fastcall tangtang_write_byte(UINT32 address, UINT8 data)
+static void __fastcall tangtang_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0x50000e:
-			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 6);
+			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 2);
 		return;
 	}
-	return;
+
+	bprintf(0, _T("wb %x %x\n"), address, data);
 }
 
-void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
+static void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff000) == 0x100000) {
 		palette_write(address & 0xfff, data);
@@ -504,6 +509,10 @@ void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 			head_layersize = data;
 		return;
 
+		case 0x500000:
+			// nop
+		return;
+
 		case 0x500008:
 			esd16_tilemap0_color = data & 3;
 			flipscreen = data & 0x80;
@@ -519,10 +528,12 @@ void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 			*((UINT16*)(DrvVidRAM1 + ofst)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
-	return;
+
+	bprintf(0, _T("ww %x %x\n"), address, data);
+
 }
 
-UINT8 __fastcall tangtang_read_byte(UINT32 address)
+static UINT8 __fastcall tangtang_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -536,10 +547,11 @@ UINT8 __fastcall tangtang_read_byte(UINT32 address)
 			return (EEPROMRead() & 1) << 7;
 	}
 
+	bprintf(0, _T("rb %x\n"), address);
 	return 0;
 }
 
-UINT16 __fastcall tangtang_read_word(UINT32 address)
+static UINT16 __fastcall tangtang_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -547,6 +559,7 @@ UINT16 __fastcall tangtang_read_word(UINT32 address)
 		case 0x500004:
 			return DrvInputs[(address - 0x500002) >> 1];
 	}
+	bprintf(0, _T("rw %x\n"), address);
 
 	return 0;
 }
@@ -557,29 +570,25 @@ static void esd16_sound_rombank_w(INT32 data)
 {
 	esd16_z80_bank = data & 0xf;
 
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM + 0x4000 * esd16_z80_bank);
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + 0x4000 * esd16_z80_bank);
+	ZetMapMemory(DrvZ80ROM + 0x4000 * esd16_z80_bank, 0x8000, 0xbfff, MAP_ROM);
 }
 
-void __fastcall esd16_sound_write(UINT16, UINT8)
+static void __fastcall esd16_sound_write(UINT16, UINT8)
 {
 }
 
-UINT8 __fastcall esd16_sound_read(UINT16)
+static UINT8 __fastcall esd16_sound_read(UINT16)
 {
 	return 0;
 }
 
-void __fastcall esd16_sound_out(UINT16 port, UINT8 data)
+static void __fastcall esd16_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x00:
-			BurnYM3812Write(0, 0, data);
-		return;
-
 		case 0x01:
-			BurnYM3812Write(0, 1, data);
+			BurnYM3812Write(0, port & 1, data);
 		return;
 
 		case 0x02:
@@ -592,7 +601,7 @@ void __fastcall esd16_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall esd16_sound_in(UINT16 port)
+static UINT8 __fastcall esd16_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -614,8 +623,6 @@ UINT8 __fastcall esd16_sound_in(UINT16 port)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	EEPROMReset();
@@ -631,10 +638,10 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	esd16_sound_rombank_w(0);
+	BurnYM3812Reset();
 	ZetClose();
 
 	MSM6295Reset(0);
-	BurnYM3812Reset();
 
 	soundlatch = 0;
 	flipscreen = 0;
@@ -829,7 +836,7 @@ static INT32 MemIndex()
 	DrvEepROM   = Next; Next += 0x0000100; // from romset
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
-	
+
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x0010000;
@@ -854,21 +861,9 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
 static INT32 DrvInit(INT32 (*pInitCallback)())
 {
-	INT32 nLen;
-
-	AllMem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pInitCallback()) return 1;
 
@@ -876,19 +871,16 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xf800, 0xffff, 0, DrvZ80RAM);
-	ZetMapArea(0xf800, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xf800, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(esd16_sound_write);
 	ZetSetReadHandler(esd16_sound_read);
 	ZetSetInHandler(esd16_sound_in);
 	ZetSetOutHandler(esd16_sound_out);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnYM3812Init(1, 4000000, NULL, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);
@@ -912,7 +904,7 @@ static INT32 DrvExit()
 	ZetExit();
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	weird_offsets = 0;
 
@@ -992,7 +984,7 @@ static void draw_layer_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrol
 {
 	UINT16 *vram = (UINT16*)vidram;
 
-	//scrollx &= 0x3ff; breaks a few frames of scrolling in hedpanic
+	scrollx &= 0x3ff;
 	scrolly &= 0x1ff;
 
 	if (weird_offsets && fg == 0) scrollx += -3; //hedpanic
@@ -1082,7 +1074,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x800; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16&0xff, rgb >> 8&0xff, rgb&0xff, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 
@@ -1141,7 +1133,6 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 64;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1151,26 +1142,21 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
-		nCyclesDone[0] += SekRun(nCyclesSegment);
-
-		nCyclesSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 		if (i & 1) ZetNmi();
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-	
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1200,8 +1186,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		EEPROMScan(nAction, pnMin);
-
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
 
@@ -1213,7 +1197,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(headpanic_platform_y);
 		SCAN_VAR(game_select);
 		SCAN_VAR(esd16_z80_bank);
+	}
 
+	EEPROMScan(nAction, pnMin);
+
+	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
 		esd16_sound_rombank_w(esd16_z80_bank);
 		ZetClose();
@@ -1224,7 +1212,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 //----------------------------------------------------------------------------------------------------------
 
-// Multi Champ (World)
+// Multi Champ (World, ver. 2.5)
 
 static struct BurnRomInfo multchmpRomDesc[] = {
 	{ "esd2.cu02",		0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
@@ -1302,7 +1290,7 @@ static INT32 MultchmpInit()
 
 struct BurnDriver BurnDrvMultchmp = {
 	"multchmp", NULL, NULL, NULL, "1999",
-	"Multi Champ (World)\0", NULL, "ESD", "Miscellaneous",
+	"Multi Champ (World, ver. 2.5)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, multchmpRomInfo, multchmpRomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
@@ -1341,7 +1329,7 @@ STD_ROM_PICK(multchmk)
 STD_ROM_FN(multchmk)
 
 struct BurnDriver BurnDrvMultchmk = {
-	"multchmpk", "multchmp", NULL, NULL, "1999",
+	"multchmpk", "multchmp", NULL, NULL, "1998",
 	"Multi Champ (Korea, older)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -1381,7 +1369,7 @@ STD_ROM_PICK(multchma)
 STD_ROM_FN(multchma)
 
 struct BurnDriver BurnDrvMultchma = {
-	"multchmpa", "multchmp", NULL, NULL, "1999",
+	"multchmpa", "multchmp", NULL, NULL, "1998",
 	"Multi Champ (World, older)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -1499,7 +1487,7 @@ STD_ROM_FN(hedpanica)
 
 struct BurnDriver BurnDrvHedpanica = {
 	"hedpanica", "hedpanic", NULL, NULL, "1999",
-	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD / Fuuki", "Miscellaneous",
+	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, hedpanicaRomInfo, hedpanicaRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
@@ -1651,6 +1639,40 @@ struct BurnDriver BurnDrvMchampda = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, mchampdaRomInfo, mchampdaRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
+	MchampdxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Multi Champ Deluxe (ver. 1114, 14/11/1999)
+
+static struct BurnRomInfo mchampdbRomDesc[] = {
+	{ "ver1114_esd2.cu02",	0x040000, 0xd17b2616, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "ver1114_esd1.cu03",	0x040000, 0x11ff2e94, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "ver1114_esd3.su06",	0x040000, 0xb87a1e85, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "ver1114_ju01",		0x200000, 0x0048e687, 3 | BRF_GRA },		//  3 - Sprites
+	{ "ver1114_ju02",		0x200000, 0x2f9ccff8, 3 | BRF_GRA },		//  4
+	{ "ver1114_esd5.ju07",	0x040000, 0x8175939f, 3 | BRF_GRA },		//  5
+
+	{ "ver1114_fu35",		0x200000, 0xc515c704, 4 | BRF_GRA },		//  6 - Tiles
+	{ "ver1114_fu34",		0x200000, 0x39d448bb, 4 | BRF_GRA },		//  7
+
+	{ "esd4.su10",			0x040000, 0x2fbe94ab, 5 | BRF_SND },		//  8 - OKI Samples
+	
+	{ "eeprom1114",			0x000080, 0x427d90d2, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(mchampdb)
+STD_ROM_FN(mchampdb)
+
+struct BurnDriver BurnDrvMchampdb = {
+	"mchampdxb", "mchampdx", NULL, NULL, "1999",
+	"Multi Champ Deluxe (ver. 1114, 14/11/1999)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, mchampdbRomInfo, mchampdbRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
 	MchampdxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

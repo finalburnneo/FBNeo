@@ -174,12 +174,16 @@ struct cheat_core {
 	INT32 nCPU;			// which cpu
 };
 
+// cpu_core_config -> nAddressFlags
 #define MB_CHEAT_ENDI_SWAP 0x8000 // multibyte cheat needs swap on cheat-write
+// when MB_CHEAT_ENDI_SWAP is set, lsb can contain data bit-width of processor
 
 void CpuCheatRegister(INT32 type, cpu_core_config *config);
 
 cheat_core *GetCpuCheatRegister(INT32 nCPU);
 cpu_core_config *GetCpuCoreConfig(INT32 nCPU);
+
+void nes_init_cheat_functions(void (*func1)(char*), void (*func2)(char*)); // callback for d_nes
 
 // burn_memory.cpp
 void BurnInitMemoryManager();
@@ -193,6 +197,7 @@ void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------
 // sound routes
+#define BURN_SND_ROUTE_NONE			0
 #define BURN_SND_ROUTE_LEFT			1
 #define BURN_SND_ROUTE_RIGHT		2
 #define BURN_SND_ROUTE_BOTH			(BURN_SND_ROUTE_LEFT | BURN_SND_ROUTE_RIGHT)

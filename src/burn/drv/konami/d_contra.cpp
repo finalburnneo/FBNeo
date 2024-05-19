@@ -1068,7 +1068,7 @@ struct BurnDriver BurnDrvContraj1 = {
 };
 
 
-// Gryzor (Set 1)
+// Gryzor (set 1)
 
 static struct BurnRomInfo gryzorRomDesc[] = {
 	{ "633j03.18a",		0x10000, 0x20919162, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
@@ -1095,7 +1095,7 @@ STD_ROM_FN(gryzor)
 
 struct BurnDriver BurnDrvGryzor = {
 	"gryzor", "contra", NULL, NULL, "1987",
-	"Gryzor (Set 1)\0", NULL, "Konami", "GX633",
+	"Gryzor (set 1)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gryzorRomInfo, gryzorRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
@@ -1104,7 +1104,7 @@ struct BurnDriver BurnDrvGryzor = {
 };
 
 
-// Gryzor (Set 2)
+// Gryzor (set 2)
 
 static struct BurnRomInfo gryzor1RomDesc[] = {
 	{ "633g2.18a",		0x10000, 0x92ca77bd, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
@@ -1131,7 +1131,7 @@ STD_ROM_FN(gryzor1)
 
 struct BurnDriver BurnDrvGryzor1 = {
 	"gryzor1", "contra", NULL, NULL, "1987",
-	"Gryzor (Set 2)\0", NULL, "Konami", "GX633",
+	"Gryzor (set 2)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gryzor1RomInfo, gryzor1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, GryzorDIPInfo,

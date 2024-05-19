@@ -905,7 +905,7 @@ struct BurnDriver BurnDrvHydra = {
 	"hydra", NULL, NULL, NULL, "1990",
 	"Hydra\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING | GBF_SHOOT, 0,
 	NULL, hydraRomInfo, hydraRomName, NULL, NULL, NULL, NULL, HydraInputInfo, HydraDIPInfo,
 	HydraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
@@ -977,7 +977,7 @@ struct BurnDriver BurnDrvHydrap = {
 	"hydrap", "hydra", NULL, NULL, "1990",
 	"Hydra (prototype 5/14/90)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_RACING | GBF_SHOOT, 0,
 	NULL, hydrapRomInfo, hydrapRomName, NULL, NULL, NULL, NULL, HydraInputInfo, HydraDIPInfo,
 	HydrapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
@@ -1053,7 +1053,7 @@ struct BurnDriver BurnDrvPitfight = {
 	"pitfight", NULL, NULL, NULL, "1990",
 	"Pit Fighter (rev 9)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, pitfightRomInfo, pitfightRomName, NULL, NULL, NULL, NULL, PitfightInputInfo, PitfightDIPInfo,
 	PitfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3
@@ -1129,7 +1129,7 @@ struct BurnDriver BurnDrvPitfight3 = {
 	"pitfight3", "pitfight", NULL, NULL, "1990",
 	"Pit Fighter (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, pitfight3RomInfo, pitfight3RomName, NULL, NULL, NULL, NULL, PitfightInputInfo, PitfightDIPInfo,
 	Pitfight111Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	336, 240, 4, 3

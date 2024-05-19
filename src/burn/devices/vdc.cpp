@@ -635,7 +635,7 @@ void vdc_check_hblank_raster_irq(INT32 which)
 	if ( vdc_raster_count[which] == (vdc_data[which][RCR] & 0x3ff) && vdc_data[which][CR] & CR_RC )
 	{
 #if DINK_DEBUG
-		bprintf(0, _T("raster @ %d\tscanline %d\n"),vdc_raster_count[which], vce_current_line);
+		bprintf(0, _T("raster @ %d\traw scanline %d\n"),vdc_raster_count[which] - 0x40, vce_current_line);
 #endif
 		vdc_status[which] |= VDC_RR;
 		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -653,7 +653,7 @@ static void do_vblank(INT32 which)
 	if ( vdc_data[which][CR] & CR_VR )
 	{
 #if DINK_DEBUG
-		bprintf(0, _T("vbl @ scanline %d\n"), vce_current_line);
+		bprintf(0, _T("vbl @ %d\traw scanline %d\n"), vdc_raster_count[which] - 0x40, vce_current_line);
 #endif
 		h6280Run(30/3); // 30 m-cycles past start of line
 		vdc_status[which] |= VDC_VD;
@@ -706,12 +706,9 @@ static void vdc_advance_line(INT32 which)
 		vdc_current_segment[which] = STATE_VSW;
 		vdc_current_segment_line[which] = 0;
 		vdc_vblank_triggered[which] = 0;
-		if (vce_current_line != 0) {
-			bprintf(0, _T("vdc_advance_line(): vce_current_line == %d - desynch.\n"), vce_current_line);
-		}
+
 #if DINK_DEBUG
-		bprintf(0, _T("vsw @ %d\tvds @ %d\n"), ((vdc_data[which][VPR]&0xff) & 0x1F), (vdc_data[which][VPR] >> 8));
-		bprintf(0, _T("vdw length is %d\n"), ( vdc_data[which][VDW] & 0x01FF ));
+		bprintf(0, _T("-frame start- VSW @ %d\tVDS @ %d\tVDW %d\n"), ((vdc_data[which][VPR]&0xff) & 0x1F), (vdc_data[which][VPR] >> 8), (vdc_data[which][VDW] & 0x01FF));
 #endif
 	}
 
@@ -733,11 +730,14 @@ static void vdc_advance_line(INT32 which)
 	{
 		vdc_current_segment[which] = STATE_VCR;
 		vdc_current_segment_line[which] = 0;
+	}
 
+	if ( STATE_VCR == vdc_current_segment[which] && vdc_current_segment_line[which] == 1 ) {
 		do_vblank(which);
 #if DINK_DEBUG
-		bprintf(0, _T("end vdw vblank, line %d, vdc_vblank_triggered[which] == %x\n"),vce_current_line, vdc_vblank_triggered[which]);
+		bprintf(0, _T("end vdw(vsw+1) vblank, line %d, vdc_vblank_triggered[which] == %x\n"),vce_current_line, vdc_vblank_triggered[which]);
 #endif
+
 	}
 
 	if ( STATE_VCR == vdc_current_segment[which] && vdc_current_segment_line[which] > (vdc_data[which][VCR]&0xff) ) {
@@ -747,7 +747,7 @@ static void vdc_advance_line(INT32 which)
 		vdc_current_segment_line[which] = 0;
 	}
 
-	if ( vce_current_line == vce_linecount() - 1 && !vdc_vblank_triggered[which] )
+	if ( vce_current_line == vce_linecount() - 2 && !vdc_vblank_triggered[which] )
 	{
 #if DINK_DEBUG
 		bprintf(0, _T("forced vblank :: line %d, vdc_vblank_triggered[which] == %x\n"),vce_current_line, vdc_vblank_triggered[which]);

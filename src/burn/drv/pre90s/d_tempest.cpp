@@ -10,6 +10,7 @@
 #include "pokey.h"
 #include "watchdog.h"
 #include "earom.h"
+#include "dtimer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -34,32 +35,35 @@ static UINT8 DrvDips[6] =   { 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvInputs[3] = { 0, 0, 0 };
 static UINT8 DrvReset;
 
-static INT16 DrvAnalogPort0 = 0;
-static INT16 DrvAnalogPort1 = 0;
+static INT16 Analog[2];
+
+static dtimer irq_timer;
 
 static UINT8 player = 0;
 
 static UINT32 load_type = 0;
 
+static INT32 scanline;
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TempestInputList[] = {
-	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
-	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4f+ 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
-	A("P1 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"		},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"		},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4f+ 0,	"p1 left"		},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4f+ 1,	"p1 right"		},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"		},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"		},
+	A("P1 Spinner",     BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"		),
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 start"	},
-	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4f+ 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4f+ 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4f+ 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4f+ 5,	"p2 fire 2"	},
-	A("P2 Spinner",     BIT_ANALOG_REL, &DrvAnalogPort1,"p2 x-axis"),
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"		},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 start"		},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4f+ 2,	"p2 left"		},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy4f+ 3,	"p2 right"		},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4f+ 4,	"p2 fire 1"		},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4f+ 5,	"p2 fire 2"		},
+	A("P2 Spinner",     BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"		),
 
-	{"Reset",		        BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",		        BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Diagnostic Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Tilt",		        BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
 	{"Dip A",		        BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -283,6 +287,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6502Reset();
 	M6502Close();
 
+	timerReset();
+
+	irq_timer.start(1512000 / (12096000/4096/12), -1, 1, 1); // @cycle, default param, start now, re-occuring
+
 	PokeyReset();
 
 	BurnWatchdogReset();
@@ -303,6 +311,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 static INT32 port1_read(INT32 offset)
 {
+	DrvInputs[1] = (DrvDips[0] & 0x10) | (BurnTrackballReadInterpolated(0, player, scanline) & 0x0f);
+
 	return (DrvInputs[1] & (1 << (offset & 7))) ? 0 : 228;
 }
 
@@ -334,6 +344,11 @@ static INT32 MemIndex()
 	MemEnd			= Next;
 
 	return 0;
+}
+
+static void irq_timer_cb(INT32 param)
+{
+	M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 static INT32 DrvInit()
@@ -427,6 +442,9 @@ static INT32 DrvInit()
 
 	BurnTrackballInit(2);
 
+	timerInit();
+	timerAdd(irq_timer, 0, irq_timer_cb);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -438,6 +456,7 @@ static INT32 DrvExit()
 
 	PokeyExit();
 	M6502Exit();
+	timerExit();
 
 	load_type = 0;
 
@@ -485,13 +504,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void update_dial()
-{ // half of the dial value added at the beginning of the frame, half in the middle of the frame.
-	BurnTrackballUpdate(0);
-
-	DrvInputs[1] = (DrvDips[0] & 0x10) | (BurnTrackballRead(0, player) & 0x0f);
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -513,26 +525,27 @@ static INT32 DrvFrame()
 		}
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x02, 0x07);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x0f, 20);
 		BurnTrackballUDLR(0, DrvJoy4f[2], DrvJoy4f[3], DrvJoy4f[0], DrvJoy4f[1]);
-		update_dial();
+		BurnTrackballUpdate(0);
 
 		DrvInputs[0] = (DrvInputs[0] & 0x2f) | (DrvDips[4] & 0x10); // service mode
 		DrvInputs[2] = (DrvInputs[2] & 0xf8) | (DrvDips[1] & 0x07);
 	}
 
 	INT32 nInterleave = 20;
-	INT32 nCyclesTotal[1] = { 1512000 / 60 };
-	INT32 nCyclesDone[1] = { nExtraCycles };
+	INT32 nCyclesTotal[2] = { 1512000 / 60, 1512000 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles };
 	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
+
 		CPU_RUN(0, M6502);
-		if (i == 9) update_dial();
-		if ((i % 5) == 4) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		CPU_RUN(1, timer);
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {
@@ -578,6 +591,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		M6502Scan(nAction);
+		timerScan();
 
 		avgdvg_scan(nAction, pnMin);
 		mathbox_scan(nAction, pnMin);

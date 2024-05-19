@@ -310,7 +310,7 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	
 	if (num > MAX_YM2612) num = MAX_YM2612;
 
-	BurnTimerInit(&YM2612TimerOver, GetTimeCallback);
+	INT32 timer_chipbase = BurnTimerInit(&YM2612TimerOver, GetTimeCallback, num);
 
 	BurnYM2612StreamCallback = StreamCallback;
 
@@ -333,7 +333,7 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 	if (!nBurnYM2612SoundRate) nBurnYM2612SoundRate = 44100;
 
-	YM2612Init(num, nClockFrequency, nBurnYM2612SoundRate, &BurnOPNTimerCallback, IRQCallback);
+	YM2612Init(num, timer_chipbase, nClockFrequency, nBurnYM2612SoundRate, &BurnOPNTimerCallback, IRQCallback);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * num * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 2 * num * sizeof(INT16));

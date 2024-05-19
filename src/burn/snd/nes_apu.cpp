@@ -123,6 +123,7 @@ static INT32 frame_irq_flag;
 static INT32 mode4017;
 static INT32 step4017;
 static INT32 clocky;
+static INT32 _4017hack = 0;
 
 static UINT8 *dmc_buffer;
 INT16 *nes_ext_buffer;
@@ -231,6 +232,30 @@ const UINT8 pulse_dty[4][8] = {
 	{ 0, 0, 0, 0, 1, 1, 1, 1 },
 	{ 1, 1, 1, 1, 1, 1, 0, 0 }
 };
+
+static void clock_square_sweep_single(struct nesapu_info *info, square_t *chan, int first_channel)
+{
+   /* freqsweeps */
+   if ((chan->regs[1] & 0x80) && (chan->regs[1] & 7))
+   {
+      INT32 sweep_delay = info->sync_times1[((chan->regs[1] >> 4) & 7) + 1];
+      chan->sweep_phase -= info->sync_times1[1];
+	  while (chan->sweep_phase <= 0)
+      {
+         chan->sweep_phase += sweep_delay;
+         if (chan->regs[1] & 8)
+            chan->freq -= (chan->freq >> (chan->regs[1] & 7)) + (first_channel << 16);
+         else
+            chan->freq += chan->freq >> (chan->regs[1] & 7);
+      }
+   }
+}
+
+static void clock_square_sweep(struct nesapu_info *info)
+{
+	clock_square_sweep_single(info, &info->APU.squ[0], 1);
+	clock_square_sweep_single(info, &info->APU.squ[1], 0);
+}
 
 /* OUTPUT SQUARE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_square(struct nesapu_info *info, square_t *chan, INT32 first_channel)
@@ -683,6 +708,12 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
 	   step4017 = 1;
 	   clocky = 14915;
 
+	   if (_4017hack && mode4017 & 0x80) { // clock the frame counter (used by Sam's Journey)
+		   // this core doesn't have a proper frame counter, it's simulated, but this game expects
+		   // to be able to do this to get the correct pitch.
+		   clock_square_sweep(info);
+	   }
+
 	   M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 	   frame_irq_flag = 0;
 
@@ -939,6 +970,11 @@ void nesapuSetMode4017(UINT8 val)
 	mode4017 = val;
 }
 
+void nesapu4017hack(INT32 enable)
+{
+	_4017hack = enable;
+}
+
 void nesapuReset()
 {
 #if defined FBNEO_DEBUG
@@ -1023,6 +1059,8 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 		nes_ext_sound_cb = NULL;
 	}
 	nesapu_mixermode = 0xff; // enable all
+
+	_4017hack = 0;
 
 	info->stream = NULL;
 	info->stream = (INT16*)BurnMalloc(info->samples_per_frame * 2 * sizeof(INT16) + (0x10 * 2));

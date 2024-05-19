@@ -382,6 +382,11 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(reset_delay);
 	}
 
+	if (nAction & ACB_EEPROM) {
+		bprintf(0, _T("*** eeprom.cpp: scanning EEPROM data (recording/playback only!)\n"));
+		ScanVar(eeprom_data, MEMORY_SIZE, "eeprom_data");
+	}
+
 //	if (nAction & ACB_NVRAM) {
 //
 //		if (pnMin && (nAction & ACB_TYPEMASK) == ACB_NVRAM) {

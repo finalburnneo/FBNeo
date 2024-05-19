@@ -1,4 +1,4 @@
-// FB Alpha Data East 8-bit driver module
+// FB Neo Data East 8-bit driver module
 // Based on MAME driver by Bryan McPhail and Stephane Humbert
 
 #include "tiles_generic.h"
@@ -10,6 +10,7 @@
 #include "burn_ym3812.h"
 #include "burn_ym3526.h"
 #include "msm5205.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -1620,12 +1621,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	INT32 is_ghostb = 0;
 
@@ -1661,6 +1657,42 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvMCURom    + 0x00000, 21, 1)) return 1;
 
 			is_ghostb = 1; // ghostb* uses deco222 cpu for audio
+		} else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "meikyuhbl", 9)) {
+			// meikyuhbl - Meikyuu Hunter G bootleg
+			if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x10000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x20000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x30000,  3, 1)) return 1;
+
+			if (BurnLoadRom(DrvM6502ROM  + 0x08000,  4, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0   + 0x00000,  5, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1   + 0x00000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x10000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x20000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x30000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x40000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x50000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x60000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x70000, 13, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM2   + 0x00000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x10000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x20000, 16, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x30000, 17, 1)) return 1;
+
+			if (BurnLoadRom(DrvColPROM   + 0x00000, 18, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM   + 0x00400, 19, 1)) return 1;
+			for (UINT32 i = 0; i < 0x400; i++) {
+				DrvColPROM[i] = (DrvColPROM[i] & 0xf) + (DrvColPROM[i + 0x400] << 4);
+				DrvColPROM[i] = BITSWAP08(DrvColPROM[i],4,5,6,7,3,2,1,0);
+			}
+			if (BurnLoadRom(DrvColPROM   + 0x00400, 20, 1)) return 1;
+
+			if (BurnLoadRom(DrvMCURom    + 0x00000, 21, 1)) return 1;
+
+			// meikyuhbl uses M6502 for audio
 		} else { // meikyuh - Meikyuu Hunter G
 			if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM   + 0x10000,  1, 1)) return 1;
@@ -1721,11 +1753,10 @@ static INT32 DrvInit()
 	DrvMCUInit(0);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -1748,7 +1779,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1986,7 +2017,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 12000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
 	HD6309Open(0);
@@ -2001,25 +2032,22 @@ static INT32 DrvFrame()
 			if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, HD6309);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	HD6309Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -2274,7 +2302,7 @@ struct BurnDriverD BurnDrvGhostb3a = {
 };
 
 
-// Meikyuu Hunter G (Japan, set 1)
+// Meikyuu Hunter G (Japan)
 
 static struct BurnRomInfo meikyuhRomDesc[] = {
 	{ "dw01-5.1d",	0x08000, 0x87610c39, 1 }, //  0 maincpu
@@ -2311,7 +2339,7 @@ STD_ROM_FN(meikyuh)
 
 struct BurnDriver BurnDrvMeikyuh = {
 	"meikyuh", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 1)\0", NULL, "Data East Corporation", "DEC8",
+	"Meikyuu Hunter G (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
@@ -2320,9 +2348,9 @@ struct BurnDriver BurnDrvMeikyuh = {
 };
 
 
-// Meikyuu Hunter G (Japan, set 2)
+// Meikyuu Hunter G (Japan, bootleg)
 
-static struct BurnRomInfo meikyuhaRomDesc[] = {
+static struct BurnRomInfo meikyuhblRomDesc[] = {
 	{ "27256.1d",	0x08000, 0xd5b5e8a2, 1 }, //  0 maincpu
 	{ "24512.3d",	0x10000, 0x40c9b0b8, 1 }, //  1
 	{ "24512.4d",	0x10000, 0x5606a8f4, 1 }, //  2
@@ -2343,24 +2371,25 @@ static struct BurnRomInfo meikyuhaRomDesc[] = {
 
 	{ "27512.12f",	0x10000, 0xb65e029d, 5 }, // 14 gfx3
 	{ "27512.14f",	0x10000, 0x668d995d, 5 }, // 15
-	{ "27512.15f",	0x10000, 0x547fe4e2, 5 }, // 16
+	{ "27512.15f",	0x10000, 0xbb2cf4a0, 5 }, // 16
 	{ "27512.17f",	0x10000, 0x6a528d13, 5 }, // 17
 
-	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
-	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
+	{ "82s137.12d",	0x00400, 0xbf922733, 6 }, // 18 proms
+	{ "82s137.13d",	0x00400, 0x4ccc328e, 6 }, // 19
+	{ "82s137.10d",	0x00400, 0xcc16f3fa, 6 }, // 20
 
-	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 i8751 microcontroller
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 21 i8751 microcontroller
 };
 
-STD_ROM_PICK(meikyuha)
-STD_ROM_FN(meikyuha)
+STD_ROM_PICK(meikyuhbl)
+STD_ROM_FN(meikyuhbl)
 
-struct BurnDriver BurnDrvMeikyuha = {
-	"meikyuha", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 2)\0", NULL, "Data East Corporation", "DEC8",
+struct BurnDriver BurnDrvMeikyuhbl = {
+	"meikyuhbl", "ghostb", NULL, NULL, "1987",
+	"Meikyuu Hunter G (Japan, bootleg)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, meikyuhblRomInfo, meikyuhblRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2485,12 +2514,7 @@ static INT32 CobraInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "cobracomib") ||
@@ -2569,14 +2593,13 @@ static INT32 CobraInit()
 	M6502Close();
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachM6809(2000000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.53, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -2724,7 +2747,7 @@ static INT32 CobraFrame()
 
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 2000000 / 58, 1500000 / 58 };
-	//INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6502Open(0);
 	M6809Open(0);
@@ -2738,21 +2761,18 @@ static INT32 CobraFrame()
 			vblank = 0;
 			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
+		CPU_RUN(0, M6809);
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6809Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		CobraDraw();
@@ -3032,7 +3052,7 @@ struct BurnDriver BurnDrvCobracomib = {
 	"cobracomib", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Italian bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomibRomInfo, cobracomibRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -3083,7 +3103,7 @@ struct BurnDriver BurnDrvCobracomjb = {
 	"cobracomjb", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Japan, bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomjbRomInfo, cobracomjbRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -3192,12 +3212,7 @@ static INT32 SrdarwinInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x20000,  0, 1)) return 1;
@@ -3257,14 +3272,13 @@ static INT32 SrdarwinInit()
 	DrvMCUInit(1); // srdarwin
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttach(&M6502Config, 1500000);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -3445,7 +3459,7 @@ static INT32 SrdarwinFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 2000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
 	M6809Open(0);
@@ -3460,25 +3474,22 @@ static INT32 SrdarwinFrame()
 			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, M6809);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6809Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		SrdarwinDraw();
@@ -3960,12 +3971,7 @@ static INT32 GondoInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "garyoret")) {
 		if (BurnLoadRom(DrvMainROM + 0x08000,  0, 1)) return 1;
@@ -4088,11 +4094,10 @@ static INT32 GondoInit()
 	}
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -4296,7 +4301,7 @@ static INT32 GondoFrame()
 
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { 12000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6502Open(0);
 	HD6309Open(0);
@@ -4318,25 +4323,22 @@ static INT32 GondoFrame()
 			if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, HD6309);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
+	HD6309Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
-	M6502Close();
 
 	return 0;
 }
@@ -4408,7 +4410,7 @@ STD_ROM_FN(gondo)
 
 struct BurnDriver BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (World)\0", NULL, "Data East USA", "DEC8",
+	"Gondomania (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
@@ -4709,12 +4711,7 @@ static INT32 OscarInit()
 {
 	BurnSetRefreshRate(57.44);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
@@ -4770,11 +4767,10 @@ static INT32 OscarInit()
 	M6502Close();
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
@@ -4879,23 +4875,18 @@ static INT32 OscarFrame()
 		HD6309Close();
 
 		HD6309Open(1);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN(1, HD6309);
 		HD6309Close();
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
+
+		CPU_RUN_TIMER(2);
 	}
 
-	HD6309Open(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	HD6309Close();
 
 	if (pBurnDraw) {
 		OscarDraw();
@@ -4932,7 +4923,7 @@ STD_ROM_PICK(oscar)
 STD_ROM_FN(oscar)
 
 struct BurnDriver BurnDrvOscar = {
-	"oscar", NULL, NULL, NULL, "1988",
+	"oscar", NULL, NULL, NULL, "1987",
 	"Psycho-Nics Oscar (World revision 0)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
@@ -4971,7 +4962,7 @@ STD_ROM_PICK(oscaru)
 STD_ROM_FN(oscaru)
 
 struct BurnDriver BurnDrvOscaru = {
-	"oscaru", "oscar", NULL, NULL, "1987",
+	"oscaru", "oscar", NULL, NULL, "1988",
 	"Psycho-Nics Oscar (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
@@ -5207,12 +5198,7 @@ static INT32 LastmissInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (!strncmp(BurnDrvGetTextA(DRV_NAME), "lastm", 5)) {
@@ -5314,11 +5300,10 @@ static INT32 LastmissInit()
 	DrvMCUInit(2);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -5505,8 +5490,8 @@ static INT32 LastmissFrame()
 		}
 
 		M6809Open(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to 6809
+		CPU_RUN(0, M6809);
+		CPU_RUN_TIMER(2); // why here?
 		M6809Close();
 
 		M6809Open(1);
@@ -5521,17 +5506,12 @@ static INT32 LastmissFrame()
 		M6809Close();
 	}
 
-	M6809Open(0);
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	M6809Close();
 
 	return 0;
 }
@@ -5750,7 +5730,7 @@ static struct BurnRomInfo shackledRomDesc[] = {
 	{ "dk-09.15k",		0x10000, 0xc1557fac, 7 }, // 18
 	{ "dk-08.17k",		0x10000, 0x5e54e9f5, 7 }, // 19
 
-	{ "dk.18a",			0x01000, 0x1af06149, 4 | BRF_ESS }, // 20 mcu
+	{ "dk-e.18a",		0x01000, 0x1af06149, 4 | BRF_ESS }, // 20 mcu
 
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };
@@ -5762,7 +5742,7 @@ struct BurnDriver BurnDrvShackled = {
 	"shackled", NULL, NULL, NULL, "1986",
 	"Shackled (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, shackledRomInfo, shackledRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -5810,7 +5790,7 @@ struct BurnDriver BurnDrvBreywood = {
 	"breywood", "shackled", NULL, NULL, "1986",
 	"Breywood (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, BreywoodDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -5969,12 +5949,7 @@ static INT32 CsilverInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x08000,  0, 1)) return 1;
@@ -6045,11 +6020,10 @@ static INT32 CsilverInit()
 	}
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -6100,8 +6074,8 @@ static INT32 CsilverFrame()
 		if (i == 8) vblank = 0x00;
 
 		M6809Open(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to M6809
+		CPU_RUN(0, M6809);
+		CPU_RUN_TIMER(2); // M6502, but sound syncs to M6809
 		M6809Close();
 
 		M6809Open(1);
@@ -6117,18 +6091,13 @@ static INT32 CsilverFrame()
 		M6809Close();
 	}
 
-	M6809Open(0);
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	M6809Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -6189,6 +6158,9 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "dx-8.19a",		0x01000, 0xc0266263, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",		0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilver)
@@ -6215,31 +6187,34 @@ struct BurnDriver BurnDrvCsilver = {
 };
 
 
-// Captain Silver (Japan revision 3)
+// Captain Silver (Japan, revision 2)
 
 static struct BurnRomInfo csilverjRomDesc[] = {
-	{ "dx03-3.a4",		0x08000, 0x02dd8cfc, 1 }, //  0 maincpu
-	{ "dx01.a2",		0x10000, 0x570fb50c, 1 }, //  1
-	{ "dx02.a3",		0x10000, 0x58625890, 1 }, //  2
+	{ "dx03-2.18d",			0x08000, 0x02dd8cfc, 1 }, //  0 maincpu
+	{ "dx01.12d",			0x10000, 0x570fb50c, 1 }, //  1
+	{ "dx02.13d",			0x10000, 0x58625890, 1 }, //  2
 
-	{ "dx04-1.a5",		0x10000, 0x29432691, 2 }, //  3 sub
+	{ "dx04-1.19d",			0x10000, 0x29432691, 2 }, //  3 sub
 
-	{ "dx05.a6",		0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
+	{ "dx05.3f",			0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
 
-	{ "dx00.a1",		0x08000, 0xf01ef985, 4 }, //  5 gfx1
+	{ "dx00.3d",			0x08000, 0xf01ef985, 4 }, //  5 gfx1
 
-	{ "dx14.b5",		0x10000, 0x80f07915, 5 }, //  6 gfx2
-	{ "dx13.b4",		0x10000, 0xd32c02e7, 5 }, //  7
-	{ "dx12.b3",		0x10000, 0xac78b76b, 5 }, //  8
+	{ "dx14.15k",			0x10000, 0x80f07915, 5 }, //  6 gfx2
+	{ "dx13.13k",			0x10000, 0xd32c02e7, 5 }, //  7
+	{ "dx12.10k",			0x10000, 0xac78b76b, 5 }, //  8
 
-	{ "dx06.a7",		0x10000, 0xb6fb208c, 6 }, //  9 gfx3
-	{ "dx07.a8",		0x10000, 0xee3e1817, 6 }, // 10
-	{ "dx08.a9",		0x10000, 0x705900fe, 6 }, // 11
-	{ "dx09.a10",		0x10000, 0x3192571d, 6 }, // 12
-	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
-	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
+	{ "dx06.5f",			0x10000, 0xb6fb208c, 6 }, //  9 gfx3
+	{ "dx07.7f",			0x10000, 0xee3e1817, 6 }, // 10
+	{ "dx08.8f",			0x10000, 0x705900fe, 6 }, // 11
+	{ "dx09.10f",			0x10000, 0x3192571d, 6 }, // 12
+	{ "dx10.12f",			0x10000, 0x3ef77a32, 6 }, // 13
+	{ "dx11.13f",			0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",			0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilverj)
@@ -6247,7 +6222,7 @@ STD_ROM_FN(csilverj)
 
 struct BurnDriver BurnDrvCsilverj = {
 	"csilverj", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan revision 3)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (Japan, revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
@@ -6256,32 +6231,35 @@ struct BurnDriver BurnDrvCsilverj = {
 };
 
 
-// Captain Silver (Japan revision 1)
+// Captain Silver (Japan, revision 1)
 /* Same IC positions to World set */
 
 static struct BurnRomInfo csilverjaRomDesc[] = {
-	{ "dx03-1.18d",		0x08000, 0xd42905be, 1 }, //  0 maincpu
-	{ "dx01.12d",		0x10000, 0x570fb50c, 1 }, //  1
-	{ "dx02.13d",		0x10000, 0x58625890, 1 }, //  2
+	{ "dx03-1.18d",			0x08000, 0xd42905be, 1 }, //  0 maincpu
+	{ "dx01.12d",			0x10000, 0x570fb50c, 1 }, //  1
+	{ "dx02.13d",			0x10000, 0x58625890, 1 }, //  2
 
-	{ "dx04-1.19d",		0x10000, 0x29432691, 2 }, //  3 sub
+	{ "dx04-1.19d",			0x10000, 0x29432691, 2 }, //  3 sub
 
-	{ "dx05.3f",		0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
+	{ "dx05.3f",			0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
 
-	{ "dx00.3d",		0x08000, 0xf01ef985, 4 }, //  5 gfx1
+	{ "dx00.3d",			0x08000, 0xf01ef985, 4 }, //  5 gfx1
 
-	{ "dx14.15k",		0x10000, 0x80f07915, 5 }, //  6 gfx2
-	{ "dx13.13k",		0x10000, 0xd32c02e7, 5 }, //  7
-	{ "dx12.10k",		0x10000, 0xac78b76b, 5 }, //  8
+	{ "dx14.15k",			0x10000, 0x80f07915, 5 }, //  6 gfx2
+	{ "dx13.13k",			0x10000, 0xd32c02e7, 5 }, //  7
+	{ "dx12.10k",			0x10000, 0xac78b76b, 5 }, //  8
 
-	{ "dx06.5f",		0x10000, 0xb6fb208c, 6 }, //  9 gfx3
-	{ "dx07.7f",		0x10000, 0xee3e1817, 6 }, // 10
-	{ "dx08.8f",		0x10000, 0x705900fe, 6 }, // 11
-	{ "dx09.10f",		0x10000, 0x3192571d, 6 }, // 12
-	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
-	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
+	{ "dx06.5f",			0x10000, 0xb6fb208c, 6 }, //  9 gfx3
+	{ "dx07.7f",			0x10000, 0xee3e1817, 6 }, // 10
+	{ "dx08.8f",			0x10000, 0x705900fe, 6 }, // 11
+	{ "dx09.10f",			0x10000, 0x3192571d, 6 }, // 12
+	{ "dx10.12f",			0x10000, 0x3ef77a32, 6 }, // 13
+	{ "dx11.13f",			0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",			0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilverja)
@@ -6289,7 +6267,7 @@ STD_ROM_FN(csilverja)
 
 struct BurnDriver BurnDrvCsilverja = {
 	"csilverja", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan revision 1)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (Japan, revision 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjaRomInfo, csilverjaRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,

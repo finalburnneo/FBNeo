@@ -666,10 +666,10 @@ STD_ROM_PICK(punchkid)
 STD_ROM_FN(punchkid)
 
 struct BurnDriver BurnDrvPunchkid = {
-	"punchkid", NULL, NULL, NULL, "1981",
+	"punchkid", "olibochu", NULL, NULL, "1981",
 	"Punching Kid (Japan)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, punchkidRomInfo, punchkidRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, PunchkidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4
@@ -711,10 +711,10 @@ STD_ROM_PICK(olibochu)
 STD_ROM_FN(olibochu)
 
 struct BurnDriver BurnDrvOlibochu = {
-	"olibochu", "punchkid", NULL, NULL, "1981",
+	"olibochu", NULL, NULL, NULL, "1981",
 	"Oli-Boo-Chu (USA)\0", NULL, "Irem (GDI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4

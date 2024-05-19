@@ -50,7 +50,7 @@ srcdir	= src/
 include makefile.burn_rules
 
 # Platform stuff
-alldir	+= 	burner burner/sdl burner/sdl dep/libs/lib7z dep/libs/zlib intf intf/video \
+alldir	+= 	burner burner/sdl burner/sdl dep/libs/libspng dep/libs/lib7z dep/libs/zlib intf intf/video \
 			intf/video/scalers 	intf/video/sdl intf/audio intf/audio/sdl intf/input intf/input/sdl intf/cd intf/cd/sdl \
 			intf/perfcount intf/perfcount/sdl dep/generated
 
@@ -61,21 +61,14 @@ depobj	+= 	neocdlist.o \
 			adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o gzread.o gzwrite.o infback.o inffast.o inflate.o inftrees.o \
 			trees.o uncompr.o zutil.o \
 			\
+			spng.o \
+			\
 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_support.o \
 			\
-			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
+			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o romdata.o \
 			cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o sdl2_gui_ingame.o sdl2_gui_common.o \
 			inpdipsw.o vid_sdl2opengl.o vid_sdl2.o inputbuf.o replay.o sdl2_gui.o sdl2_inprint.o input_sdl2.o stated.o
-
-ifndef FORCE_SYSTEM_LIBPNG
-alldir	+= 	dep/libs/libpng
-
-depobj	+= 	png.o \
-			\
-			pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
-			pngwrite.o pngwtran.o pngwutil.o
-endif
 
 ifdef FORCE_PULSE_AUDIO
 alldir	+= 	intf/audio/linux
@@ -108,10 +101,6 @@ else ifdef DARWIN
 lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm -lpthread
 else
 lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm -lpthread
-endif
-
-ifdef FORCE_SYSTEM_LIBPNG
-lib += -lpng
 endif
 
 ifdef FORCE_PULSE_AUDIO

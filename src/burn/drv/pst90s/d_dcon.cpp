@@ -37,6 +37,8 @@ static UINT8 DrvReset;
 
 static INT32 is_sdgndmps = 0;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo DconInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
@@ -270,6 +272,8 @@ static INT32 DrvDoReset()
 
 	gfx_bank = 0;
 	gfx_enable = 0;
+
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -552,7 +556,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -563,20 +567,18 @@ static INT32 DrvFrame()
 
 		if (i == 255) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		if (is_sdgndmps) {
-			CPU_RUN_TIMER(1);
-		} else {
-			CPU_RUN_TIMER_YM3812(1);
-		}
+		CPU_RUN_TIMER(1);
 	}
+
+	ZetClose();
+	SekClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -608,6 +610,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(gfx_bank);
 		SCAN_VAR(gfx_enable);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

@@ -631,7 +631,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 
 	INT32 highlight_enable = (drawmode >> 4) && (K053247Flags & 2);// for fba
 	if (highlight_enable) highlight_enable = (drawmode >> 4) & 0x7;
-	//INT32 highlight_enable = drawmode >> 4;// for fba
+	INT32 shadow_bank = (drawmode >> 4) & 0x7;
 	drawmode &= 0xf;
 
 	// cull illegal and transparent objects
@@ -887,7 +887,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							if (highlight_enable) {
 								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
 							} else {
-								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], highlight_enable); //shd_base[pix.as_rgb15()];
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], shadow_bank); //shd_base[pix.as_rgb15()];
 							}
 							//dst_ptr[ecx] =(eax>>3&0x001f);lend_r32( eax, 0x00000000, 128);
 						}
@@ -1028,7 +1028,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							if (highlight_enable) {
 								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
 							} else {
-								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], highlight_enable); //shd_base[pix.as_rgb15()];
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], shadow_bank); //shd_base[pix.as_rgb15()];
 							}
 						}
 						while (++ecx);

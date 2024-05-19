@@ -39,42 +39,44 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[2];
+
 static struct BurnInputInfo Thoop2InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Thoop2)
 
 static struct BurnDIPInfo Thoop2DIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xff, NULL			},
-	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL					},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
 	{0x15, 0x01, 0x07, 0x02, "6 Coins 1 Credits"	},
 	{0x15, 0x01, 0x07, 0x03, "5 Coins 1 Credits"	},
 	{0x15, 0x01, 0x07, 0x04, "4 Coins 1 Credits"	},
@@ -84,7 +86,7 @@ static struct BurnDIPInfo Thoop2DIPList[]=
 	{0x15, 0x01, 0x07, 0x00, "4 Coins 3 Credits"	},
 	{0x15, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
 	{0x15, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
 	{0x15, 0x01, 0x38, 0x00, "3 Coins 4 Credits"	},
 	{0x15, 0x01, 0x38, 0x08, "2 Coins 3 Credits"	},
@@ -98,33 +100,33 @@ static struct BurnDIPInfo Thoop2DIPList[]=
 	{0x15, 0x01, 0x40, 0x40, "Start 1C/Continue 1C"	},
 	{0x15, 0x01, 0x40, 0x00, "Start 2C/Continue 1C"	},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x15, 0x01, 0x80, 0x80, "Off"			},
-	{0x15, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
+	{0x15, 0x01, 0x80, 0x80, "Off"					},
+	{0x15, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x16, 0x01, 0x03, 0x03, "Normal"		},
-	{0x16, 0x01, 0x03, 0x02, "Easy"			},
-	{0x16, 0x01, 0x03, 0x01, "Hard"			},
-	{0x16, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x16, 0x01, 0x03, 0x03, "Normal"				},
+	{0x16, 0x01, 0x03, 0x02, "Easy"					},
+	{0x16, 0x01, 0x03, 0x01, "Hard"					},
+	{0x16, 0x01, 0x03, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x16, 0x01, 0x04, 0x04, "Off"			},
-	{0x16, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Unknown"				},
+	{0x16, 0x01, 0x04, 0x04, "Off"					},
+	{0x16, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x16, 0x01, 0x18, 0x18, "2"			},
-	{0x16, 0x01, 0x18, 0x10, "3"			},
-	{0x16, 0x01, 0x18, 0x08, "4"			},
-	{0x16, 0x01, 0x18, 0x00, "1"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x16, 0x01, 0x18, 0x18, "2"					},
+	{0x16, 0x01, 0x18, 0x10, "3"					},
+	{0x16, 0x01, 0x18, 0x08, "4"					},
+	{0x16, 0x01, 0x18, 0x00, "1"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x16, 0x01, 0x20, 0x00, "Off"			},
-	{0x16, 0x01, 0x20, 0x20, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x16, 0x01, 0x20, 0x00, "Off"					},
+	{0x16, 0x01, 0x20, 0x20, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x16, 0x01, 0x80, 0x80, "Off"			},
-	{0x16, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x16, 0x01, 0x80, 0x80, "Off"					},
+	{0x16, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Thoop2)
@@ -292,6 +294,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	set_oki_bank(3);
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -376,12 +380,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
@@ -421,7 +420,7 @@ static INT32 DrvInit()
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 
-	MSM6295Init(0, 1056000 / 132, 0);
+	MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnWatchdogInit(DrvDoReset, 180);
@@ -481,8 +480,8 @@ static void draw_sprites(int pri)
 {
 	UINT16 *spriteram = (UINT16*)DrvSprRAM;
 
-	static const INT32 x_offset[2] = {0x0,0x2};
-	static const INT32 y_offset[2] = {0x0,0x1};
+	static const INT32 x_offset[2] = { 0x0, 0x2 };
+	static const INT32 y_offset[2] = { 0x0, 0x1 };
 
 	for (INT32 j = 0; j < sprite_count[pri]; j++)
 	{
@@ -520,19 +519,7 @@ static void draw_sprites(int pri)
 
 				if (sxx < -15 || sxx >= nScreenWidth || syy < -15 || syy >= nScreenHeight) continue;
 
-				if (yflip) {
-					if (xflip) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
-					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
-					}
-				} else {
-					if (xflip) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
-					}
-				}
+				Draw8x8MaskTile(pTransDraw, code, sxx, syy, xflip, yflip, color, 4, 0, 0, DrvGfxROM);
 			}
 		}
 	}
@@ -602,21 +589,23 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 12000000 / 12 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		if (i == 232) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += mcs51Run((SekTotalCycles() / 12) - nCyclesDone[1]);
+		CPU_RUN(1, mcs51);
 	}
 
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -632,7 +621,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
@@ -663,6 +652,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(oki_bank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

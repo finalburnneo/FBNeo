@@ -4120,18 +4120,10 @@ INT32 z80TstateCounter() // for spectrum ula
 	return m_tstate_counter;
 }
 
-#if 0
 void Z80Burn(int cycles)
 {
-	if( cycles > 0 )
-	{
-		/* NOP takes 4 cycles per instruction */
-		int n = (cycles + 3) / 4;
-		R += n;
-		Z80.ICount -= 4 * n;
-	}
+	Z80.ICount -= cycles;
 }
-#endif
 
 void Z80SetIrqLine(int irqline, int state)
 {

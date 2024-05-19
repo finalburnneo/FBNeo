@@ -45,6 +45,8 @@ static UINT8  DrvReset;
 static INT32 game_select;
 static INT32 watchdog;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo TimepltInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -342,6 +344,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	watchdog = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -408,12 +412,7 @@ static INT32 DrvInit(INT32 game)
 {
 	game_select = game;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (game_select == 1) // timeplt
 	{
@@ -551,7 +550,7 @@ static INT32 DrvExit()
 
 //	tc8830fInit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -624,19 +623,7 @@ static void draw_layer(INT32 priority)
 
 		if (priority != category) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 2, 0, DrvGfxROM0);
 	}
 }
 
@@ -722,7 +709,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789772 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 	INT32 scanline = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -743,6 +730,9 @@ static INT32 DrvFrame()
 		CPU_RUN(1, Zet);
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -779,6 +769,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(last_sound_irq);
 		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -919,7 +911,7 @@ struct BurnDriver BurnDrvSpaceplt = {
 	"spaceplt", "timeplt", NULL, NULL, "1982",
 	"Space Pilot (set 1)\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
@@ -953,7 +945,7 @@ struct BurnDriver BurnDrvSpaceplta = {
 	"spaceplta", "timeplt", NULL, NULL, "1982",
 	"Space Pilot (set 2)\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltaRomInfo, spacepltaRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
@@ -1034,7 +1026,7 @@ static INT32 chkunInit()
 
 struct BurnDriver BurnDrvChkun = {
 	"chkun", NULL, NULL, NULL, "1988",
-	"Chance Kun (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
+	"Chance Kun (Japan)\0", NULL, "Peni", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
 	NULL, chkunRomInfo, chkunRomName, NULL, NULL, NULL, NULL, ChkunInputInfo, ChkunDIPInfo,
@@ -1074,7 +1066,7 @@ static INT32 bikkuricInit()
 
 struct BurnDriver BurnDrvBikkuric = {
 	"bikkuric", NULL, NULL, NULL, "1987",
-	"Bikkuri Card (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
+	"Bikkuri Card (Japan)\0", NULL, "Peni", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
 	NULL, bikkuricRomInfo, bikkuricRomName, NULL, NULL, NULL, NULL, BikkuricInputInfo, BikkuricDIPInfo,

@@ -6,8 +6,9 @@
 #include "z80_intf.h"
 #include "burn_ym2151.h"
 #include "msm5205.h"
+#include "dtimer.h"
 
-static UINT8 *Mem;
+static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
@@ -48,6 +49,8 @@ static INT32 flipscreen;
 
 static INT32 sf_active;
 static INT32 sound2_bank;
+
+static dtimer sndtimer;
 
 static struct BurnInputInfo SfInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
@@ -424,7 +427,7 @@ static inline void palette_update(INT32 offset)
 	DrvPalette[(offset & 0x7fe)/2] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 }
 
-void __fastcall sf_write_word(UINT32 address, UINT16 data)
+static void __fastcall sf_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff800) == 0xb00000) {
 		UINT16 *pal = (UINT16*)(Drv68kPalRam + (address & 0x7ff));
@@ -465,7 +468,7 @@ void __fastcall sf_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall sf_write_byte(UINT32 address, UINT8 data)
+static void __fastcall sf_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -478,7 +481,7 @@ void __fastcall sf_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall sf_read_word(UINT32 address)
+static UINT16 __fastcall sf_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -510,7 +513,7 @@ UINT16 __fastcall sf_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall sf_read_byte(UINT32 address)
+static UINT8 __fastcall sf_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -550,21 +553,18 @@ UINT8 __fastcall sf_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall sf_sound_write(UINT16 address, UINT8 data)
+static void __fastcall sf_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0xe000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0xe001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 	}
 }
 
-UINT8 __fastcall sf_sound_read(UINT16 address)
+static UINT8 __fastcall sf_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -586,7 +586,7 @@ static void sound2_bank_w(INT32 data)
 	ZetMapArea(0x8000, 0xffff, 2, DrvZ80Rom1 + sound2_bank);
 }
 
-void __fastcall sf_sound2_out(UINT16 port, UINT8 data)
+static void __fastcall sf_sound2_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -610,12 +610,11 @@ void __fastcall sf_sound2_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall sf_sound2_in(UINT16 port)
+static UINT8 __fastcall sf_sound2_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
 		case 0x01:
-			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -676,8 +675,6 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	sf_fg_scroll_x = 0;
@@ -697,6 +694,8 @@ static INT32 DrvDoReset()
 	ZetReset(0);
 	ZetReset(1);
 
+	timerReset();
+
 	BurnYM2151Reset();
 	MSM5205Reset();
 
@@ -707,7 +706,7 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68kRom	= Next; Next += 0x060000;
 	DrvZ80Rom0	= Next; Next += 0x008000;
@@ -740,23 +739,17 @@ static INT32 MemIndex()
 
 void sfYM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0xff, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+void msm_irq_cb(int param)
+{
+	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 }
 
 static INT32 DrvInit(INT32 initver)
 {
-	INT32 nLen;
-
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (initver == 4)
 	{
@@ -847,16 +840,22 @@ static INT32 DrvInit(INT32 initver)
 	ZetSetInHandler(sf_sound2_in);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&sfYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3579545);
+
+	timerInit();
+	timerAdd(sndtimer, 0, msm_irq_cb);
+	sndtimer.start(3579545 / 8000, -1, 1, 1);
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
 	MSM5205Init(1, DrvSynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	MSM5205SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
-
+//	MSM5205LPFilter(0, 1);
+//	MSM5205LPFilter(1, 1);
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -872,13 +871,15 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
+	timerExit();
+
 	MSM5205Exit();
 
 	version = 0;
 
 	GenericTilesExit();
 
-	BurnFree (Mem);
+	BurnFreeMemIndex();
 
 	sf_fg_scroll_x = 0;
 	sf_bg_scroll_x = 0;
@@ -920,19 +921,7 @@ static void draw_background()
 		sx -= 64;
 		sy -= 16;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, Gfx0);
-			} else {
-				Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, Gfx0);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, Gfx0);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, Gfx0);
-			}
-		}
+		Draw16x16Tile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, Gfx0);
 	}
 }
 
@@ -966,19 +955,7 @@ static void draw_foreground()
 		sx -= 64;
 		sy -= 16;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, Gfx1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, Gfx1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, Gfx1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, Gfx1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 15, 0x100, Gfx1);
 	}
 }
 
@@ -1012,19 +989,7 @@ static void draw_characters()
 		sx -= 64;
 		sy -= 16;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 2, 3, 0x300, Gfx3);
-			} else {
-				Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 2, 3, 0x300, Gfx3);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 2, 3, 0x300, Gfx3);
-			} else {
-				Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 2, 3, 0x300, Gfx3);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 3, 0x300, Gfx3);
 	}
 }
 
@@ -1122,19 +1087,7 @@ static void draw_sprites()
 			sx -= 64;
 			sy -= 16;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sf_invert(c), sx, sy, color, 4, 15, 0x200, Gfx2);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sf_invert(c), sx, sy, color, 4, 15, 0x200, Gfx2);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sf_invert(c), sx, sy, color, 4, 15, 0x200, Gfx2);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sf_invert(c), sx, sy, color, 4, 15, 0x200, Gfx2);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, sf_invert(c), sx, sy, flipx, flipy, color, 4, 15, 0x200, Gfx2);
 		}
 	}
 }
@@ -1153,10 +1106,9 @@ static INT32 DrvDraw()
 		if (sf_active & 0x20)
 			draw_background();
 		else
-			memset (pTransDraw, 0, nScreenWidth * nScreenHeight * sizeof(INT16));
+			BurnTransferClear();
 	} else {
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
-			pTransDraw[i] = 0x0400; // point to magenta
+			BurnTransferClear(0x0400); // magenta
 	}
 
 	if (sf_active & 0x40 && nBurnLayer & 4)
@@ -1228,40 +1180,27 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = (133 * 2) / 3; // sample cpu irqs
-	INT32 nCyclesTotal[3];
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nNext[3] = { 0, 0, 0 };
+	INT32 nInterleave = 256 * 2;
+	INT32 nCyclesTotal[4];
+	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	nCyclesTotal[0] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = (INT32)((INT64)3579545 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesTotal[2] = 3579545 / 60; //(INT32)((INT64)3579545 * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	nCyclesTotal[2] = 3579545 / 60; // must be fixed
+	nCyclesTotal[3] = 3579545 / 60; // ""
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nNext[0] += nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext[0] - nCyclesDone[0]);
+		CPU_RUN(0, Sek);
 
 		ZetOpen(0);
-		nNext[1] += nCyclesTotal[1] / nInterleave;
-		nCyclesDone[1] += ZetRun(nNext[1] - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			
-			nSoundBufferPos += nSegmentLength;
-		}
-
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
-		nNext[2] += nCyclesTotal[2] / nInterleave;
-		nCyclesDone[2] += ZetRun(nNext[2] - nCyclesDone[2]);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		CPU_RUN(2, Zet);
+		CPU_RUN(3, timer);
 		ZetClose();
 	}
 
@@ -1270,23 +1209,9 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
-
-		ZetOpen(1);
-		if ((nCyclesTotal[2] - nCyclesDone[2]) > 0) {
-			ZetRun(nCyclesTotal[2] - nCyclesDone[2]);
-		}
-
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -1320,9 +1245,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		MSM5205Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
+		timerScan();
+
 		SCAN_VAR(sf_fg_scroll_x);
 		SCAN_VAR(sf_bg_scroll_x);
-		SCAN_VAR(soundlatch);		
+		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(sf_active);
 		SCAN_VAR(sound2_bank);
@@ -1559,7 +1486,7 @@ static INT32 SfuaInit()
 
 struct BurnDriver BurnDrvsfua = {
 	"sfua", "sf", NULL, NULL, "1987",
-	"Street Fighter (US set 2) (protected)\0", NULL, "Capcom", "Miscellaneous",
+	"Street Fighter (US, set 2) (protected)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
 	NULL, sfuaRomInfo, sfuaRomName, NULL, NULL, NULL, NULL, SfjInputInfo, SfusDIPInfo,
@@ -1722,7 +1649,7 @@ struct BurnDriver BurnDrvsfjan = {
 };
 
 
-// Street Fighter (Prototype)
+// Street Fighter (prototype)
 
 static struct BurnRomInfo sfpRomDesc[] = {
 	{ "prg8.2a",     	0x20000, 0xd48d06a3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1782,7 +1709,7 @@ static INT32 SfpInit()
 
 struct BurnDriver BurnDrvsfp = {
 	"sfp", "sf", NULL, NULL, "1987",
-	"Street Fighter (Prototype)\0", NULL, "Capcom", "Miscellaneous",
+	"Street Fighter (prototype)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
 	NULL, sfpRomInfo, sfpRomName, NULL, NULL, NULL, NULL, SfInputInfo, SfDIPInfo,

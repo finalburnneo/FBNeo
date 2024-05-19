@@ -534,8 +534,8 @@ static INT32 DrvInit()
 
 // Rom information
 static struct BurnRomInfo uopokoRomDesc[] = {
-	{ "u26.int",      0x080000, 0xb445c9ac, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "u25.int",      0x080000, 0xa1258482, BRF_ESS | BRF_PRG }, //  1
+	{ "u26.u26",      0x080000, 0xb445c9ac, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "u25.u25",      0x080000, 0xa1258482, BRF_ESS | BRF_PRG }, //  1
 
 	{ "cave_cv-02_u33.u33", 	0x400000, 0x5d142ad2, BRF_GRA }, //  2 Sprite data
 
@@ -551,8 +551,8 @@ STD_ROM_PICK(uopoko)
 STD_ROM_FN(uopoko)
 
 static struct BurnRomInfo uopokojRomDesc[] = {
-	{ "u26.bin",      0x080000, 0xE7EEC050, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "u25.bin",      0x080000, 0x68CB6211, BRF_ESS | BRF_PRG }, //  1
+	{ "u26j.u26",      0x080000, 0xE7EEC050, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "u25j.u25",      0x080000, 0x68CB6211, BRF_ESS | BRF_PRG }, //  1
 
 	{ "cave_cv-02_u33.u33", 	0x400000, 0x5d142ad2, BRF_GRA }, //  2 Sprite data
 

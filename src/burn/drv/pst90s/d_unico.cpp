@@ -1103,7 +1103,7 @@ static INT32 BurglarxInit()
 	SekClose();
 	
 	BurnYM3812Init(1, 3579545, NULL, &BurglarxSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&SekConfig, 16000000);
+	BurnTimerAttach(&SekConfig, 16000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
@@ -1186,7 +1186,7 @@ static INT32 ZeropntInit()
 	SekClose();
 	
 	BurnYM3812Init(1, 3579545, NULL, &BurglarxSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&SekConfig, 16000000);
+	BurnTimerAttach(&SekConfig, 16000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
@@ -1632,7 +1632,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	
 	SekOpen(0);
-	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
+	BurnTimerEndFrame(nCyclesTotal[0]);
 	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

@@ -947,7 +947,7 @@ struct BurnDriver BurnDrvMarioe = {
 };
 
 
-// Mario Bros. (Japan)
+// Mario Bros. (Japan, Revision C)
 
 static struct BurnRomInfo mariojRomDesc[] = {
 	{ "tma1c-a1.7f",	0x2000, 0xb64b6330, 1 }, //  0 maincpu
@@ -977,7 +977,7 @@ STD_ROM_FN(marioj)
 
 struct BurnDriver BurnDrvMarioj = {
 	"marioj", "mario", NULL, "mario", "1983",
-	"Mario Bros. (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Mario Bros. (Japan, Revision C)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, mariojRomInfo, mariojRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MariojDIPInfo,

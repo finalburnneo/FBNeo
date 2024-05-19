@@ -1,4 +1,5 @@
-// FB Alpha Sand Scorpion driver module based on MAME driver by Luca Elia
+// FinalBurn Neo Sand Scorpion driver module
+// Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -6,7 +7,10 @@
 #include "msm6295.h"
 #include "burn_ym2203.h"
 #include "kaneko_tmap.h"
+#include "kaneko_hit.h"
+#include "watchdog.h"
 #include "pandora.h"
+#include "burn_pal.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -21,32 +25,17 @@ static UINT8 *Drv68KRAM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvPandoraRAM;
 static UINT8 *DrvSprRAM;
-static UINT8 *DrvPalRAM;
 static UINT8 *DrvVideoRAM;
 static UINT8 *DrvVidRegs;
-
-static UINT32 *DrvPalette;
-static UINT8 DrvRecalc;
 
 static UINT8 nDrvZ80Bank;
 static UINT8 soundlatch;
 static UINT8 soundlatch2;
-static INT32 watchdog;
 static INT32 vblank_irq;
 static INT32 sprite_irq;
 static INT32 unknown_irq;
 static INT32 latch1_full;
 static INT32 latch2_full;
-
-typedef struct
-{
-	UINT16 x1p, y1p, x1s, y1s;
-	UINT16 x2p, y2p, x2s, y2s;
-	INT16 x12, y12, x21, y21;
-	UINT16 mult_a, mult_b;
-} calc1_hit_t;
-
-static calc1_hit_t m_hit;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -55,7 +44,7 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles;
 
 static struct BurnInputInfo SandscrpInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
@@ -151,90 +140,6 @@ static struct BurnDIPInfo SandscrpDIPList[]=
 
 STDDIPINFO(Sandscrp)
 
-static inline void palette_update(UINT16 offset)
-{
-	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
-
-	INT32 r = (p >>  5) & 0x1f;
-	INT32 g = (p >> 10) & 0x1f;
-	INT32 b = (p >>  0) & 0x1f;
-
-	r = (r << 3) | (r >> 2);
-	g = (g << 3) | (g >> 2);
-	b = (b << 3) | (b >> 2);
-
-	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
-}
-
-static UINT16 galpanib_calc_read(UINT32 offset) // Simulation of the CALC1 MCU
-{
-	calc1_hit_t &hit = m_hit;
-
-	switch (offset)
-	{
-		case 0x00/2: // watchdog
-			watchdog = 0;
-			return 0;
-
-		case 0x04/2: // similar to the hit detection from SuperNova, but much simpler
-		{
-			UINT16 data = 0;
-
-			// X Absolute Collision
-			if      (hit.x1p >  hit.x2p)	data |= 0x0200;
-			else if (hit.x1p == hit.x2p)	data |= 0x0400;
-			else if (hit.x1p <  hit.x2p)	data |= 0x0800;
-
-			// Y Absolute Collision
-			if      (hit.y1p >  hit.y2p)	data |= 0x2000;
-			else if (hit.y1p == hit.y2p)	data |= 0x4000;
-			else if (hit.y1p <  hit.y2p)	data |= 0x8000;
-
-			// XY Overlap Collision
-			hit.x12 = (hit.x1p) - (hit.x2p + hit.x2s);
-			hit.y12 = (hit.y1p) - (hit.y2p + hit.y2s);
-			hit.x21 = (hit.x1p + hit.x1s) - (hit.x2p);
-			hit.y21 = (hit.y1p + hit.y1s) - (hit.y2p);
-
-			if ((hit.x12 < 0) && (hit.y12 < 0) && (hit.x21 >= 0) && (hit.y21 >= 0))
-				data |= 0x0001;
-
-			return data;
-		}
-
-		case 0x10/2:
-			return (((UINT32)hit.mult_a * (UINT32)hit.mult_b) >> 16);
-
-		case 0x12/2:
-			return (((UINT32)hit.mult_a * (UINT32)hit.mult_b) & 0xffff);
-
-
-		case 0x14/2:
-			return BurnRandom(); // really rand
-	}
-
-	return 0;
-}
-
-static void galpanib_calc_write(INT32 offset, UINT16 data)
-{
-	calc1_hit_t &hit = m_hit;
-
-	switch (offset)
-	{
-		case 0x00/2: hit.x1p    = data; break;
-		case 0x02/2: hit.x1s    = data; break;
-		case 0x04/2: hit.y1p    = data; break;
-		case 0x06/2: hit.y1s    = data; break;
-		case 0x08/2: hit.x2p    = data; break;
-		case 0x0a/2: hit.x2s    = data; break;
-		case 0x0c/2: hit.y2p    = data; break;
-		case 0x0e/2: hit.y2s    = data; break;
-		case 0x10/2: hit.mult_a = data; break;
-		case 0x12/2: hit.mult_b = data; break;
-	}
-}
-
 static void update_irq_state()
 {
 	INT32 irq = (vblank_irq || sprite_irq || unknown_irq) ? 1 : 0;
@@ -249,11 +154,6 @@ static void sound_sync()
 
 static void __fastcall sandscrp_main_write_word(UINT32 address, UINT16 data)
 {
-	if ((address & 0xffffe0) == 0x200000) {
-		galpanib_calc_write((address & 0x1f) >> 1, data);
-		return;
-	}
-
 	switch (address)
 	{
 		case 0x100000:
@@ -289,10 +189,6 @@ static void __fastcall sandscrp_main_write_byte(UINT32 address, UINT8 data)
 
 static UINT16 __fastcall sandscrp_main_read_word(UINT32 address)
 {
-	if ((address & 0xffffe0) == 0x200000) {
-		return galpanib_calc_read((address & 0x1f) >> 1);
-	}
-
 	switch (address)
 	{
 		case 0x800000:
@@ -320,7 +216,7 @@ static UINT16 __fastcall sandscrp_main_read_word(UINT32 address)
 			return (latch1_full ? 0x80 : 0) | (latch2_full ? 0x40 : 0);
 
 		case 0xec0000:
-			watchdog = 0;
+			BurnWatchdogRead();
 			return 0;
 	}
 
@@ -358,14 +254,14 @@ static void __fastcall sandscrp_pandora_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall sandscrp_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
-	palette_update(address & 0xffe);
+	*((UINT16*)(BurnPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
+	BurnPaletteWrite_xGGGGGRRRRRBBBBB(address & 0xffe);
 }
 
 static void __fastcall sandscrp_palette_write_byte(UINT32 address, UINT8 data)
 {
-	DrvPalRAM[(address & 0xfff) ^ 1] = data;
-	palette_update(address & 0xffe);
+	BurnPalRAM[(address & 0xfff) ^ 1] = data;
+	BurnPaletteWrite_xGGGGGRRRRRBBBBB(address & 0xffe);
 }
 
 static void bankswitch(INT32 bank)
@@ -384,11 +280,8 @@ static void __fastcall sandscrp_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
-			BurnYM2203Write(0, 0, data);
-		return;
-
 		case 0x03:
-			BurnYM2203Write(0, 1, data);
+			BurnYM2203Write(0, port & 1, data);
 		return;
 
 		case 0x04:
@@ -407,10 +300,8 @@ static UINT8 __fastcall sandscrp_sound_read_port(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x02:
-			return BurnYM2203Read(0, 0);
-
 		case 0x03:
-			return BurnYM2203Read(0, 1);
+			return BurnYM2203Read(0, port & 1);
 
 		case 0x07:
 			latch1_full = 0;
@@ -455,6 +346,9 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	MSM6295Reset(0);
 
+	kaneko_hit_calc_reset();
+	BurnWatchdogResetEnable();
+
 	nDrvZ80Bank = 0;
 	vblank_irq = 0;
 	sprite_irq = 0;
@@ -463,9 +357,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	soundlatch2 = 0;
 	latch1_full = 0;
 	latch2_full = 0;
-	watchdog = 0;
 
-	nExtraCycles[0] = nExtraCycles[1] = 0;
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -491,16 +384,16 @@ static INT32 MemIndex()
 	DrvZ80RAM		= Next; Next += 0x002000;
 
 	Drv68KRAM		= Next; Next += 0x010000;
-	DrvPandoraRAM		= Next; Next += 0x002000;
+	DrvPandoraRAM	= Next; Next += 0x002000;
 	DrvSprRAM		= Next; Next += 0x002000;
-	DrvPalRAM		= Next; Next += 0x001000;
+	BurnPalRAM		= Next; Next += 0x001000;
 
 	DrvVideoRAM		= Next; Next += 0x004000;
 	DrvVidRegs		= Next; Next += 0x000400;
 
 	RamEnd			= Next;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
+	BurnPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	MemEnd			= Next;
 
@@ -550,12 +443,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 type)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -590,23 +478,25 @@ static INT32 DrvInit(INT32 type)
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvVidRegs,	0x300000, 0x30000f|0x3ff, MAP_RAM);
+	SekMapMemory(DrvVidRegs,	0x300000, 0x30000f | 0x3ff, MAP_RAM);
 	SekMapMemory(DrvVideoRAM,	0x400000, 0x403fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,		0x500000, 0x501fff, MAP_ROM);
-	SekMapMemory(DrvPalRAM,		0x600000, 0x600fff, MAP_ROM);
+	SekMapMemory(BurnPalRAM,	0x600000, 0x600fff, MAP_ROM);
 	SekMapMemory(Drv68KRAM,		0x700000, 0x70ffff, MAP_RAM);
 	SekSetWriteWordHandler(0,	sandscrp_main_write_word);
 	SekSetWriteByteHandler(0,	sandscrp_main_write_byte);
 	SekSetReadWordHandler(0,	sandscrp_main_read_word);
 	SekSetReadByteHandler(0,	sandscrp_main_read_byte);
 
-	SekMapHandler(1,		0x500000, 0x501fff, MAP_WRITE);
+	SekMapHandler(1,			0x500000, 0x501fff, MAP_WRITE);
 	SekSetWriteWordHandler(1,	sandscrp_pandora_write_word);
 	SekSetWriteByteHandler(1,	sandscrp_pandora_write_byte);
 
-	SekMapHandler(2,		0x600000, 0x600fff, MAP_WRITE);
+	SekMapHandler(2,			0x600000, 0x600fff, MAP_WRITE);
 	SekSetWriteWordHandler(2,	sandscrp_palette_write_word);
 	SekSetWriteByteHandler(2,	sandscrp_palette_write_byte);
+
+	kaneko_hit_calc_init(3, 	0x200000);
 	SekClose();
 
 	ZetInit(0);
@@ -616,6 +506,8 @@ static INT32 DrvInit(INT32 type)
 	ZetSetOutHandler(sandscrp_sound_write_port);
 	ZetSetInHandler(sandscrp_sound_read_port);
 	ZetClose();
+
+	BurnWatchdogInit(DrvDoReset, 180);
 
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203PortA, &DrvYM2203PortB, NULL, NULL);
@@ -653,20 +545,16 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc)
-	{
-		for (INT32 i = 0; i < 0x1000; i+=2) {
-			palette_update(i);
-		}
-
-		DrvRecalc = 0;
+	if (BurnRecalc) {
+		BurnPaletteUpdate_xGGGGGRRRRRBBBBB();
+		BurnRecalc = 0;
 	}
 
 	BurnTransferClear();
@@ -683,17 +571,14 @@ static INT32 DrvDraw()
 		kaneko_view2_draw_layer(0, 1, i);
 	}
 
-	BurnTransferCopy(DrvPalette);
+	BurnTransferCopy(BurnPalette);
 
 	return 0;
 }
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (watchdog > 180) {
-		DrvDoReset(0);
-	}
+	BurnWatchdogUpdate();
 
 	if (DrvReset) {
 		DrvDoReset(1);
@@ -704,6 +589,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(UINT16));
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -713,11 +599,10 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 20000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
@@ -736,8 +621,7 @@ static INT32 DrvFrame()
 		CPU_RUN_TIMER(1);
 	}
 
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	ZetClose();
 	SekClose();
@@ -747,9 +631,8 @@ static INT32 DrvFrame()
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	pandora_buffer_sprites();
@@ -773,16 +656,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		ba.Data	  = &m_hit;
-		ba.nLen	  = sizeof(calc1_hit_t);
-		ba.szName = "hit calculation";
-		BurnAcb(&ba);
-
 		SekScan(nAction);
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
+
+		kaneko_hit_calc_scan(nAction);
 
 		SCAN_VAR(vblank_irq);
 		SCAN_VAR(sprite_irq);
@@ -792,8 +672,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(latch1_full);
 		SCAN_VAR(latch2_full);
 		SCAN_VAR(nDrvZ80Bank);
-
-		BurnRandomScan(nAction);
 
 		SCAN_VAR(nExtraCycles);
 	}
@@ -811,18 +689,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Sand Scorpion
 
 static struct BurnRomInfo sandscrpRomDesc[] = {
-	{ "11.bin",	0x40000, 0x9b24ab40, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "12.bin",	0x40000, 0xad12caee, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "11.bin",		0x040000, 0x9b24ab40, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "12.bin",		0x040000, 0xad12caee, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "8.ic51",	0x20000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "8.ic51",		0x020000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "4.ic32",	0x80000, 0xb9222ff2, 3 | BRF_GRA },           //  3 Tiles
-	{ "3.ic33",	0x80000, 0xadf20fa0, 3 | BRF_GRA },           //  4
+	{ "4.ic32",		0x080000, 0xb9222ff2, 3 | BRF_GRA },           //  3 Tiles
+	{ "3.ic33",		0x080000, 0xadf20fa0, 3 | BRF_GRA },           //  4
 
-	{ "5.ic16",	0x80000, 0x9bb675f6, 4 | BRF_GRA },           //  5 Sprites
-	{ "6.ic17",	0x80000, 0x7df2f219, 4 | BRF_GRA },           //  6
+	{ "5.ic16",		0x080000, 0x9bb675f6, 4 | BRF_GRA },           //  5 Sprites
+	{ "6.ic17",		0x080000, 0x7df2f219, 4 | BRF_GRA },           //  6
 
-	{ "7.ic55",	0x40000, 0x9870ab12, 5 | BRF_SND },           //  7 Samples
+	{ "7.ic55",		0x040000, 0x9870ab12, 5 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(sandscrp)
@@ -839,7 +717,7 @@ struct BurnDriver BurnDrvSandscrp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpRomInfo, sandscrpRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
-	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -847,18 +725,18 @@ struct BurnDriver BurnDrvSandscrp = {
 // Sand Scorpion (Earlier)
 
 static struct BurnRomInfo sandscrpaRomDesc[] = {
-	{ "1.ic4",	0x40000, 0xc0943ae2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "2.ic5",	0x40000, 0x6a8e0012, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.ic4",		0x040000, 0xc0943ae2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.ic5",		0x040000, 0x6a8e0012, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "8.ic51",	0x20000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "8.ic51",		0x020000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "4.ic32",	0x80000, 0xb9222ff2, 3 | BRF_GRA },           //  3 Tiles
-	{ "3.ic33",	0x80000, 0xadf20fa0, 3 | BRF_GRA },           //  4
+	{ "4.ic32",		0x080000, 0xb9222ff2, 3 | BRF_GRA },           //  3 Tiles
+	{ "3.ic33",		0x080000, 0xadf20fa0, 3 | BRF_GRA },           //  4
 
-	{ "5.ic16",	0x80000, 0x9bb675f6, 4 | BRF_GRA },           //  5 Sprites
-	{ "6.ic17",	0x80000, 0x7df2f219, 4 | BRF_GRA },           //  6
+	{ "5.ic16",		0x080000, 0x9bb675f6, 4 | BRF_GRA },           //  5 Sprites
+	{ "6.ic17",		0x080000, 0x7df2f219, 4 | BRF_GRA },           //  6
 
-	{ "7.ic55",	0x40000, 0x9870ab12, 5 | BRF_SND },           //  7 Samples
+	{ "7.ic55",		0x040000, 0x9870ab12, 5 | BRF_SND },           //  7 Samples
 };
 
 STD_ROM_PICK(sandscrpa)
@@ -870,24 +748,24 @@ struct BurnDriver BurnDrvSandscrpa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpaRomInfo, sandscrpaRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
-	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
 
-// Sand Scorpion (Chinese Title Screen, Revised Hardware)
+// Kuai Da Shizi Huangdi (China?, Revised Hardware)
 
 static struct BurnRomInfo sandscrpbRomDesc[] = {
-	{ "11.ic4",	0x040000, 0x80020cab, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "12.ic5",	0x040000, 0x8df1d42f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "11.ic4",		0x040000, 0x80020cab, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "12.ic5",		0x040000, 0x8df1d42f, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "8.ic51",	0x020000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "8.ic51",		0x020000, 0x6f3e9db1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "ss501.ic30",	0x100000, 0x0cf9f99d, 3 | BRF_GRA },           //  3 Tiles
+	{ "ss501.ic30",	0x100000, 0x0cf9f99d, 3 | BRF_GRA },       	   //  3 Tiles
 
 	{ "ss502.ic16",	0x100000, 0xd8012ebb, 4 | BRF_GRA },           //  4 Sprites
 
-	{ "7.ic55",	0x040000, 0x9870ab12, 5 | BRF_SND },           //  5 Samples
+	{ "7.ic55",		0x040000, 0x9870ab12, 5 | BRF_SND },           //  5 Samples
 };
 
 STD_ROM_PICK(sandscrpb)
@@ -900,10 +778,10 @@ static INT32 sandscrpbInit()
 
 struct BurnDriver BurnDrvSandscrpb = {
 	"sandscrpb", "sandscrp", NULL, NULL, "1992",
-	"Sand Scorpion (Chinese Title Screen, Revised Hardware)\0", NULL, "Face", "Miscellaneous",
+	"Kuai Da Shizi Huangdi (China?, Revised Hardware)\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpbRomInfo, sandscrpbRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
-	sandscrpbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	sandscrpbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };

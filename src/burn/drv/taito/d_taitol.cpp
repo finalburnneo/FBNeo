@@ -1,4 +1,4 @@
-// FB Alpha Taito System-L driver module
+// FB Neo Taito System-L driver module
 // Based on MAME driver by Oliver Galibert
 
 #include "tiles_generic.h"
@@ -77,6 +77,8 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static INT32 nCyclesExtra[2];
 
 static struct BurnInputInfo FhawkInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
@@ -2328,6 +2330,8 @@ static INT32 DrvDoReset()
 	adpcm_pos = 0;
 	adpcm_data = -1;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3202,7 +3206,7 @@ static INT32 Z80x3Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, ((fhawkmode) ? 6665280 : 4000000) / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
 
 	if (has_adpcm)
 		MSM5205NewFrame(0, 4000000, nInterleave);
@@ -3226,7 +3230,9 @@ static INT32 Z80x3Frame()
 		ZetClose();
 	}
 
-	ZetOpen(2);
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	// 2 - timer (BurnTimer keeps track)
 
 	if (pBurnSoundOut) {
 		if (has_ym2610) {
@@ -3238,8 +3244,6 @@ static INT32 Z80x3Frame()
 			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		}
 	}
-
-	ZetClose();
 
 	return 0;
 }
@@ -3264,7 +3268,7 @@ static INT32 Z80x2Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, 0, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3279,15 +3283,16 @@ static INT32 Z80x2Frame()
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
-	
-	ZetOpen(2);
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// 1 - no cpu here
+	// 2 - timer (BurnTimer keeps track)
+
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3328,14 +3333,10 @@ static INT32 Z80x1Frame()
 		scanline_update(i*4);
 		ZetClose();
 	}
-	
-	ZetOpen(0);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3388,6 +3389,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(track_y);
 		SCAN_VAR(track_x_last);
 		SCAN_VAR(track_y_last);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)
@@ -3427,17 +3430,20 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Raimais (World)
 
 static struct BurnRomInfo raimaisRomDesc[] = {
-	{ "b36-11-1.bin",	0x20000, 0xf19fb0d5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_11-1.ic7",	0x20000, 0xf19fb0d5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimais)
@@ -3457,17 +3463,20 @@ struct BurnDriver BurnDrvRaimais = {
 // Raimais (Japan)
 
 static struct BurnRomInfo raimaisjRomDesc[] = {
-	{ "b36-08-1.bin",	0x20000, 0x6cc8f79f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_08-1.ic7",	0x20000, 0x6cc8f79f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimaisj)
@@ -3487,17 +3496,20 @@ struct BurnDriver BurnDrvRaimaisj = {
 // Raimais (Japan, first revision)
 
 static struct BurnRomInfo raimaisjoRomDesc[] = {
-	{ "b36-08.bin",		0x20000, 0xf40b9178, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_08.ic7",		0x20000, 0xf40b9178, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimaisjo)
@@ -3804,7 +3816,7 @@ struct BurnDriver BurnDrvKurikinta = {
 	"kurikinta", "kurikint", NULL, NULL, "1988",
 	"Kuri Kinton (World, prototype?)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintaRomInfo, kurikintaRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, KurikintaDIPInfo,
 	KurikintaInit, DrvExit, Z80x2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
@@ -4178,7 +4190,7 @@ struct BurnDriver BurnDrvCubybop = {
 	"cubybop", NULL, NULL, NULL, "199?",
 	"Cuby Bop (location test)\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, cubybopRomInfo, cubybopRomName, NULL, NULL, NULL, NULL, CubybopInputInfo, CubybopDIPInfo,
 	CubybopInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
@@ -4274,7 +4286,7 @@ struct BurnDriver BurnDrvPlgirls2 = {
 	"plgirls2", NULL, NULL, NULL, "1993",
 	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, plgirls2RomInfo, plgirls2RomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
 	PalamedInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
@@ -4299,7 +4311,7 @@ struct BurnDriver BurnDrvPlgirls2b = {
 	"plgirls2b", "plgirls2", NULL, NULL, "1993",
 	"Play Girls 2 (bootleg)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, plgirls2bRomInfo, plgirls2bRomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
 	Plgirls2bInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4

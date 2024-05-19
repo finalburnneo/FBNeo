@@ -2811,7 +2811,7 @@ struct BurnDriver BurnDrvSkysoldrbl = {
 };
 
 
-// Gold Medalist (set 1)
+// Gold Medalist (set 1, Alpha68k II PCB)
 
 static struct BurnRomInfo goldmedlRomDesc[] = {
 	{ "gm.3",		0x10000, 0xddf0113c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -2875,7 +2875,7 @@ static INT32 GoldmedlInit()
 
 struct BurnDriver BurnDrvGoldmedl = {
 	"goldmedl", NULL, NULL, NULL, "1988",
-	"Gold Medalist (set 1)\0", NULL, "SNK", "Alpha 68k",
+	"Gold Medalist (set 1, Alpha68k II PCB)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlRomInfo, goldmedlRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
@@ -2884,7 +2884,7 @@ struct BurnDriver BurnDrvGoldmedl = {
 };
 
 
-// Gold Medalist (set 2)
+// Gold Medalist (set 2, Alpha68k III PCB)
 
 static struct BurnRomInfo goldmedlaRomDesc[] = {
 	{ "gm3-7.bin",		0x10000, 0x11a63f4c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -2947,7 +2947,7 @@ static INT32 GoldmedlaInit()
 
 struct BurnDriver BurnDrvGoldmedla = {
 	"goldmedla", "goldmedl", NULL, NULL, "1988",
-	"Gold Medalist (set 2)\0", NULL, "SNK", "Alpha 68k",
+	"Gold Medalist (set 2, Alpha68k III PCB)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlaRomInfo, goldmedlaRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,
@@ -2956,7 +2956,7 @@ struct BurnDriver BurnDrvGoldmedla = {
 };
 
 
-// Gold Medalist (bootleg)
+// Gold Medalist (bootleg, Alpha68k III PCB)
 
 static struct BurnRomInfo goldmedlbRomDesc[] = {
 	{ "l_3.bin",		0x10000, 0x5e106bcf, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -2985,7 +2985,7 @@ STD_ROM_FN(goldmedlb)
 
 struct BurnDriver BurnDrvGoldmedlb = {
 	"goldmedlb", "goldmedl", NULL, NULL, "1988",
-	"Gold Medalist (bootleg)\0", NULL, "bootleg", "Alpha 68k",
+	"Gold Medalist (bootleg, Alpha68k III PCB)\0", NULL, "bootleg", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, goldmedlbRomInfo, goldmedlbRomName, NULL, NULL, NULL, NULL, GoldmedlInputInfo, GoldmedlDIPInfo,

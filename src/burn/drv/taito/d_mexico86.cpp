@@ -28,20 +28,20 @@ static UINT8 *DrvPrtRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 nExtraCycles;
+static INT32 nExtraCycles[4];
 
 static INT32 nBankData;
 static INT32 nCharBank;
-static INT32 nSoundCPUHalted;
 static INT32 nSubCPUHalted;
 static INT32 mcu_running;
-static INT32 mcu_initialised;
-static bool coin_last[2];
-static INT32 coin_fract;
 static INT32 mcu_address;
 static INT32 mcu_latch;
 
-static INT32 has_mcu = 0; // 1 = taito-style 68705 (bootleg mcu), 2 = 6801u4 (real mcu)
+// 1 = taito-style 68705 (bootleg mcu)
+// 2 = 6801u4 (real / dumped from PCB mcu)
+static const INT32 MCU_BOOT = 1;
+static const INT32 MCU_REAL = 2;
+static INT32 has_mcu = 0;
 static INT32 has_sub = 0;
 
 static void (*screen_update)();
@@ -58,7 +58,7 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
-// 6801u4 mcu: kicknrun, kicknrunu, kikikai (when dumped)
+// 6801u4 mcu: kicknrun, kicknrunu, kikikai
 static UINT8 ddr1, ddr2, ddr3, ddr4;
 static UINT8 port1_in, port2_in, port3_in, port4_in;
 static UINT8 port1_out, port2_out, port3_out, port4_out;
@@ -139,126 +139,128 @@ STDINPUTINFO(Mexico86)
 
 static struct BurnDIPInfo KikikaiDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL							},
-	{0x14, 0xff, 0xff, 0x7f, NULL							},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xfe, NULL							},
+	{0x01, 0xff, 0xff, 0x7f, NULL							},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"						},
-	{0x13, 0x01, 0x01, 0x00, "Upright"						},
-	{0x13, 0x01, 0x01, 0x01, "Cocktail"						},
+	{0x00, 0x01, 0x01, 0x00, "Upright"						},
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"						},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x13, 0x01, 0x02, 0x02, "Off"							},
-	{0x13, 0x01, 0x02, 0x00, "On"							},
+	{0x00, 0x01, 0x02, 0x02, "Off"							},
+	{0x00, 0x01, 0x02, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x13, 0x01, 0x04, 0x04, "Off"							},
-	{0x13, 0x01, 0x04, 0x00, "On"							},
+	{0x00, 0x01, 0x04, 0x04, "Off"							},
+	{0x00, 0x01, 0x04, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Unused"						},
-	{0x13, 0x01, 0x08, 0x08, "Off"							},
-	{0x13, 0x01, 0x08, 0x00, "On"							},
+	{0x00, 0x01, 0x08, 0x08, "Off"							},
+	{0x00, 0x01, 0x08, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"						},
-	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
-	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
-	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"						},
-	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
-	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
-	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
-	{0x14, 0x01, 0x03, 0x02, "Easy"							},
-	{0x14, 0x01, 0x03, 0x03, "Normal"						},
-	{0x14, 0x01, 0x03, 0x01, "Hard"							},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"						},
+	{0x01, 0x01, 0x03, 0x02, "Easy"							},
+	{0x01, 0x01, 0x03, 0x03, "Normal"						},
+	{0x01, 0x01, 0x03, 0x01, "Hard"							},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"						},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"					},
-	{0x14, 0x01, 0x0c, 0x00, "50000 100000"					},
-	{0x14, 0x01, 0x0c, 0x0c, "70000 150000"					},
-	{0x14, 0x01, 0x0c, 0x08, "70000 200000"					},
-	{0x14, 0x01, 0x0c, 0x04, "100000 300000"				},
+	{0x01, 0x01, 0x0c, 0x00, "50000 100000"					},
+	{0x01, 0x01, 0x0c, 0x0c, "70000 150000"					},
+	{0x01, 0x01, 0x0c, 0x08, "70000 200000"					},
+	{0x01, 0x01, 0x0c, 0x04, "100000 300000"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"						},
-	{0x14, 0x01, 0x30, 0x00, "2"							},
-	{0x14, 0x01, 0x30, 0x30, "3"							},
-	{0x14, 0x01, 0x30, 0x20, "4"							},
-	{0x14, 0x01, 0x30, 0x10, "5"							},
+	{0x01, 0x01, 0x30, 0x00, "2"							},
+	{0x01, 0x01, 0x30, 0x30, "3"							},
+	{0x01, 0x01, 0x30, 0x20, "4"							},
+	{0x01, 0x01, 0x30, 0x10, "5"							},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"						},
-	{0x14, 0x01, 0x40, 0x40, "A"							},
-	{0x14, 0x01, 0x40, 0x00, "B"							},
+	{0x01, 0x01, 0x40, 0x40, "A"							},
+	{0x01, 0x01, 0x40, 0x00, "B"							},
 
 	{0   , 0xfe, 0   ,    2, "Number Match"					},
-	{0x14, 0x01, 0x80, 0x80, "Off"							},
-	{0x14, 0x01, 0x80, 0x00, "On"							},
+	{0x01, 0x01, 0x80, 0x80, "Off"							},
+	{0x01, 0x01, 0x80, 0x00, "On"							},
 };
 
 STDDIPINFO(Kikikai)
 
 static struct BurnDIPInfo Mexico86DIPList[]=
 {
-	{0x23, 0xff, 0xff, 0xff, NULL							},
-	{0x24, 0xff, 0xff, 0xfb, NULL							},
+	DIP_OFFSET(0x23)
+	{0x00, 0xff, 0xff, 0xff, NULL							},
+	{0x01, 0xff, 0xff, 0xfb, NULL							},
 
 	{0   , 0xfe, 0   ,    2, "Master/Slave Mode"			},
-	{0x23, 0x01, 0x01, 0x01, "Off"							},
-	{0x23, 0x01, 0x01, 0x00, "On"							},
+	{0x00, 0x01, 0x01, 0x01, "Off"							},
+	{0x00, 0x01, 0x01, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"						},
-	{0x23, 0x01, 0x02, 0x02, "Off"							},
-	{0x23, 0x01, 0x02, 0x00, "On"							},
+	{0x00, 0x01, 0x02, 0x02, "Off"							},
+	{0x00, 0x01, 0x02, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x23, 0x01, 0x04, 0x04, "Off"							},
-	{0x23, 0x01, 0x04, 0x00, "On"							},
+	{0x00, 0x01, 0x04, 0x04, "Off"							},
+	{0x00, 0x01, 0x04, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x23, 0x01, 0x08, 0x00, "Off"							},
-	{0x23, 0x01, 0x08, 0x08, "On"							},
+	{0x00, 0x01, 0x08, 0x00, "Off"							},
+	{0x00, 0x01, 0x08, 0x08, "On"							},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"						},
-	{0x23, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
-	{0x23, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
-	{0x23, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
-	{0x23, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"						},
-	{0x23, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
-	{0x23, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
-	{0x23, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
-	{0x23, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
-	{0x24, 0x01, 0x03, 0x03, "Easy"							},
-	{0x24, 0x01, 0x03, 0x02, "Normal"						},
-	{0x24, 0x01, 0x03, 0x01, "Hard"							},
-	{0x24, 0x01, 0x03, 0x00, "Hardest"						},
+	{0x01, 0x01, 0x03, 0x03, "Easy"							},
+	{0x01, 0x01, 0x03, 0x02, "Normal"						},
+	{0x01, 0x01, 0x03, 0x01, "Hard"							},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"						},
 
 	{0   , 0xfe, 0   ,    4, "Playing Time"					},
-	{0x24, 0x01, 0x0c, 0x00, "40 Seconds"					},
-	{0x24, 0x01, 0x0c, 0x0c, "One Minute"					},
-	{0x24, 0x01, 0x0c, 0x08, "One Minute and 20 Sec."		},
-	{0x24, 0x01, 0x0c, 0x04, "One Minute and 40 Sec."		},
+	{0x01, 0x01, 0x0c, 0x00, "40 Seconds"					},
+	{0x01, 0x01, 0x0c, 0x0c, "One Minute"					},
+	{0x01, 0x01, 0x0c, 0x08, "One Minute and 20 Sec."		},
+	{0x01, 0x01, 0x0c, 0x04, "One Minute and 40 Sec."		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"						},
-	{0x24, 0x01, 0x10, 0x10, "Off"							},
-	{0x24, 0x01, 0x10, 0x00, "On"							},
+	{0x01, 0x01, 0x10, 0x10, "Off"							},
+	{0x01, 0x01, 0x10, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Board ID"						},
-	{0x24, 0x01, 0x20, 0x20, "Master"						},
-	{0x24, 0x01, 0x20, 0x00, "Slave"						},
+	{0x01, 0x01, 0x20, 0x20, "Master"						},
+	{0x01, 0x01, 0x20, 0x00, "Slave"						},
 
 	{0   , 0xfe, 0   ,    2, "Number of Matches"			},
-	{0x24, 0x01, 0x40, 0x00, "2"							},
-	{0x24, 0x01, 0x40, 0x40, "6"							},
+	{0x01, 0x01, 0x40, 0x00, "2"							},
+	{0x01, 0x01, 0x40, 0x40, "6"							},
 
 	{0   , 0xfe, 0   ,    2, "Single board 4 Players Mode"	},
-	{0x24, 0x01, 0x80, 0x80, "Off"							},
-	{0x24, 0x01, 0x80, 0x00, "On"							},
+	{0x01, 0x01, 0x80, 0x80, "Off"							},
+	{0x01, 0x01, 0x80, 0x00, "On"							},
 };
 
 STDDIPINFO(Mexico86)
@@ -283,19 +285,14 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 
 		case 0xf008:
 			{
-				mcu_running = data & 2;
-
-				if (!mcu_running)
-					mcu_initialised = 0;
-
-				if (!mcu_running) {
+				if (data & 2 && !mcu_running) {
 					switch (has_mcu) {
-						case 1:
+						case MCU_BOOT:
 							m6805Open(0);
 							m6805Reset();
 							m6805Close();
 							break;
-						case 2:
+						case MCU_REAL:
 							M6801Open(0);
 							M6801Reset();
 							M6801Close();
@@ -303,10 +300,9 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 					}
 				}
 
-				nSoundCPUHalted = ~data & 0x04;
-				if (nSoundCPUHalted) {
-					ZetReset(1);
-				}
+				mcu_running = data & 2;
+
+				ZetSetRESETLine(1, ~data & 0x04);
 			}
 			return;
 
@@ -584,10 +580,10 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	switch (has_mcu) {
-		case 1:
+		case MCU_BOOT:
 			m67805_taito_reset();
 			break;
-		case 2:
+		case MCU_REAL:
 			M6801Open(0);
 			M6801Reset();
 			M6801Close();
@@ -605,17 +601,13 @@ static INT32 DrvDoReset()
 			ddr4 = 0x00;
 	}
 
-	nExtraCycles = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
+
 	nBankData = 0;
 	nCharBank = 0;
-	nSoundCPUHalted = 0;
 	nSubCPUHalted = (has_sub && (DrvDips[1] & 0x80)); // 4-player board
 
 	mcu_running = 0;
-	mcu_initialised = 0;
-	coin_last[0] = false;
-	coin_last[1] = false;
-	coin_fract = 0;
 
 	mcu_address = 0;
 	mcu_latch = 0;
@@ -685,6 +677,8 @@ static INT32 DrvInit(INT32 game)
 {
 	BurnAllocMemIndex();
 
+	BurnSetRefreshRate(59.18);
+
 	if (game == 0) // kiki
 	{
 		INT32 k = 0;
@@ -695,8 +689,7 @@ static INT32 DrvInit(INT32 game)
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
 
-//		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1; // un-comment and remove next line when dump available!
-		k++;
+		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM  + 0x00000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM  + 0x10000, k++, 1)) return 1;
@@ -709,7 +702,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 0; // set "has_mcu = 2" when mcu dump is available
+		has_mcu = MCU_REAL;
 		has_sub = 0;
 	}
 	else if (game == 1) // knightb
@@ -735,7 +728,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 1;
+		has_mcu = MCU_BOOT;
 		has_sub = 0;
 	}
 	else if (game == 2 || game == 3) // mexico86 & kicknrun
@@ -776,8 +769,8 @@ static INT32 DrvInit(INT32 game)
 		DrvGfxDecode(0);
 
 		switch (game) {
-			case 2: has_mcu = 2; break; // M68001u4 real MCU / kicknrun
-			case 3: has_mcu = 1; break; // m68705 (bootleg) / mexico86
+			case 2: has_mcu = MCU_REAL; break; // M68001u4 real MCU / kicknrun
+			case 3: has_mcu = MCU_BOOT; break; // m68705 (bootleg) / mexico86
 		}
 		has_sub = 1; // cpu for 4player mode
 	}
@@ -817,10 +810,10 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	switch (has_mcu) {
-		case 1:
+		case MCU_BOOT:
 			m67805_taito_init(DrvMCUROM, DrvMCURAM, &mexico86_m68705_interface); // not on kiki
 			break;
-		case 2:
+		case MCU_REAL:
 			M6801Init(0);
 			M6801Open(0);
 			M6801MapMemory(DrvMCUROM, 0xf000, 0xffff, MAP_ROM);
@@ -852,8 +845,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	switch (has_mcu) {
-		case 1: m67805_taito_exit(); break;
-		case 2: M6801Exit(); break;
+		case MCU_BOOT: m67805_taito_exit(); break;
+		case MCU_REAL: M6801Exit(); break;
 	}
 
 	BurnYM2203Exit();
@@ -890,8 +883,6 @@ static void DrvPaletteInit()
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
-
-//	DrvPalette[0x100] = 0x100; // ??????
 }
 
 static void screen_update_mexico86()
@@ -1019,139 +1010,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void mcu_simulate() // kikikai
-{
-	UINT8 *protection_ram = DrvPrtRAM;
-
-	if (!mcu_initialised)
-	{
-		if (protection_ram[0x01] == 0x00)
-		{
-			protection_ram[0x04] = 0xfc;   // coin inputs
-			protection_ram[0x02] = 0xff;   // player 1
-			protection_ram[0x03] = 0xff;   // player 2
-			protection_ram[0x1b] = 0xff;   // active player
-			protection_ram[0x06] = 0xff;   // must be FF otherwise PS4 ERROR
-			protection_ram[0x07] = 0x03;   // must be 03 otherwise PS4 ERROR
-			protection_ram[0x00] = 0x00;
-			mcu_initialised = 1;
-		}
-	}
-
-	if (mcu_initialised)
-	{
-		int i;
-		bool coin_curr;
-		UINT8 coin_in_read = DrvInputs[0] & 3;
-
-		for (INT32 coin_idx = 0; coin_idx < 2; coin_idx++)
-		{
-			coin_curr = (coin_in_read & (1 << coin_idx)) == 0;
-			if (coin_curr && coin_last[coin_idx] == false)
-			{
-				UINT8 coinage_setting = (DrvDips[0] >> (coin_idx*2 + 4)) & 3;
-
-				// increase credits counter
-				switch(coinage_setting)
-				{
-					case 0: // 2c / 3c
-					case 1: // 2c / 1c
-						if(coin_fract == 1)
-						{
-							protection_ram[0x01]+= (coinage_setting == 0) ? 3 : 1;
-							coin_fract = 0;
-						}
-						else
-							coin_fract ++;
-
-						break;
-					case 2: // 1c / 2c
-					case 3: // 1c / 1c
-						protection_ram[0x01]+= (coinage_setting == 2) ? 2 : 1;
-						break;
-
-				}
-
-				protection_ram[0x0a] = 0x01;   // set flag (coin inserted sound is not played otherwise)
-			}
-			coin_last[coin_idx] = coin_curr;
-		}
-		// Purge any coin counter higher than 9 TODO: is this limit correct?
-		if(protection_ram[0x01] > 9)
-			protection_ram[0x01] = 9;
-
-		protection_ram[0x04] = 0x3c | (coin_in_read ^ 3);   // coin inputs
-
-		protection_ram[0x02] = BITSWAP08(DrvInputs[1], 7,6,5,4,2,3,1,0); // player 1
-		protection_ram[0x03] = BITSWAP08(DrvInputs[2], 7,6,5,4,2,3,1,0); // player 2
-
-		if (protection_ram[0x19] == 0xaa)  // player 2 active
-			protection_ram[0x1b] = protection_ram[0x03];
-		else
-			protection_ram[0x1b] = protection_ram[0x02];
-
-		for (i = 0; i < 0x10; i += 2)
-			protection_ram[i + 0xb1] = protection_ram[i + 0xb0];
-
-		for (i = 0; i < 0x0a; i++)
-			protection_ram[i + 0xc0] = protection_ram[i + 0x90] + 1;
-
-		if (protection_ram[0xd1] == 0xff)
-		{
-			if (protection_ram[0xd0] > 0 && protection_ram[0xd0] < 4)
-			{
-				protection_ram[0xd2] = 0x81;
-				protection_ram[0xd0] = 0xff;
-			}
-		}
-
-		if (protection_ram[0xe0] > 0 && protection_ram[0xe0] < 4)
-		{
-			static const UINT8 answers[3][16] =
-			{
-				{ 0x00,0x40,0x48,0x50,0x58,0x60,0x68,0x70,0x78,0x80,0x88,0x00,0x00,0x00,0x00,0x00 },
-				{ 0x00,0x04,0x08,0x0C,0x10,0x14,0x18,0x1C,0x20,0x31,0x2B,0x35,0x00,0x00,0x00,0x00 },
-				{ 0x00,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x03,0x0A,0x0B,0x14,0x00,0x00,0x00,0x00 },
-			};
-			int table = protection_ram[0xe0] - 1;
-
-			for (i = 1; i < 0x10; i++)
-				protection_ram[0xe0 + i] = answers[table][i];
-			protection_ram[0xe0] = 0xff;
-		}
-
-		if (protection_ram[0xf0] > 0 && protection_ram[0xf0] < 4)
-		{
-			protection_ram[0xf1] = 0xb3;
-			protection_ram[0xf0] = 0xff;
-		}
-
-		// The following is missing from Knight Boy
-		// this should be equivalent to the obfuscated kiki_clogic() below
-		{
-			static const UINT8 db[16]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x08,0x00,0x10,0x18,0x00,0x00,0x00,0x00};
-			UINT16 sy = protection_ram[0xa0] + ((0x18) >> 1);
-			UINT16 sx = protection_ram[0xa1] + ((0x18) >> 1);
-
-			for (i = 0; i < 0x38; i += 8)
-			{
-				UINT8 hw = db[protection_ram[0x20 + i] & 0xf];
-
-				if (hw)
-				{
-					UINT16 xdiff = sx - ((UINT16)(protection_ram[0x20 + i + 6]) << 8 | protection_ram[0x20 + i + 7]);
-					if (xdiff < hw)
-					{
-						UINT16 ydiff = sy - ((UINT16)(protection_ram[0x20 + i + 4]) << 8 | protection_ram[0x20 + i + 5]);
-						if (ydiff < hw)
-							protection_ram[0xa2] = 1; // we have a collision
-					}
-				}
-			}
-		}
-	}
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1161,7 +1019,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		DrvInputs[0] = (has_mcu == 2) ? 0x00 : 0xff; // 6801u4 mcu - active high coins!
+		DrvInputs[0] = (has_mcu == MCU_REAL) ? 0x00 : 0xff; // 6801u4 mcu - active high coins!
 		DrvInputs[1] = 0xff;
 		DrvInputs[2] = 0xff;
 		DrvInputs[3] = 0xff;
@@ -1182,55 +1040,52 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 4000000 / 60, 1000000 / 60 };
-	INT32 nCyclesDone[4] = { nExtraCycles, 0, 0, 0 };
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[4] = { (INT32)(6000000 / 59.185606), (INT32)(6000000 / 59.185606), (INT32)(4000000 / 59.185606), (INT32)(1000000 / 59.185606) };
+	INT32 nCyclesDone[4] = { nExtraCycles[0], 0, nExtraCycles[2], nExtraCycles[3] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
 
-		if (i == 255 && (has_mcu == 0 || has_mcu == 2)) {
-			if (mcu_running && has_mcu == 0) mcu_simulate(); // kikikai mcu sim
+		if (i == (nInterleave - 1) && has_mcu == MCU_REAL) {
 		    ZetSetVector(DrvPrtRAM[0]);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		if (nSoundCPUHalted) {
-			CPU_IDLE_SYNCINT(1, Zet);
-		} else {
-			CPU_RUN_TIMER(1);
-		}
-		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		CPU_RUN_TIMER(1);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if (has_sub && !nSubCPUHalted)
 		{
 			ZetOpen(2);
 			CPU_RUN(2, Zet);
-			if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
+		} else {
+			CPU_IDLE_NULL(2);
 		}
 
-		if (!mcu_running || !has_mcu)
+		if (!mcu_running)
 		{
 			CPU_IDLE_NULL(3);
 		}
-		else if (has_mcu == 1)
+		else if (has_mcu == MCU_BOOT)
 		{
 			m6805Open(0);
 			CPU_RUN(3, m6805);
-			if (i == 255) m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1)) m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			m6805Close();
 		}
-		else if (has_mcu == 2)
+		else if (has_mcu == MCU_REAL)
 		{
 			M6801Open(0);
 			CPU_RUN(3, M6801);
-			if (i == 255) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			M6801Close();
 		}
 	}
@@ -1240,10 +1095,14 @@ static INT32 DrvFrame()
 		BurnSoundDCFilter(); // kicknrun intro, dc offset from ay
 	}
 
-	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// [1] is timer driven sound, no need to tally
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nExtraCycles[3] = nCyclesDone[3] - nCyclesTotal[3];
 
-	if (pBurnDraw)
+	if (pBurnDraw) {
 		DrvDraw();
+	}
 
 	return 0;
 }
@@ -1268,10 +1127,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		switch (has_mcu) {
-			case 1:
+			case MCU_BOOT:
 				m68705_taito_scan(nAction);
 				break;
-			case 2:
+			case MCU_REAL:
 				M6801Scan(nAction);
 				break;
 		}
@@ -1294,15 +1153,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(port3_out);
 		SCAN_VAR(port4_out);
 
-		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(nBankData);
 		SCAN_VAR(nCharBank);
-		SCAN_VAR(nSoundCPUHalted);
 		SCAN_VAR(nSubCPUHalted);
 		SCAN_VAR(mcu_running);
-		SCAN_VAR(mcu_initialised);
-		SCAN_VAR(coin_last);
-		SCAN_VAR(coin_fract);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1323,7 +1179,7 @@ static struct BurnRomInfo kikikaiRomDesc[] = {
 
 	{ "a85-11.f6",			0x08000, 0xcc3539db, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a85-01.g8",			0x00800, 0x00000000, 3 | BRF_NODUMP | BRF_PRG }, //  3 MCU Code (undumped)
+	{ "a85-01_jph1020p.h8",	0x01000, 0x01771197, 3 | BRF_PRG | BRF_ESS }, //  3 M6801u4 Code
 
 	{ "a85-15.a1",			0x10000, 0xaebc8c32, 4 | BRF_GRA },           //  4 Graphics
 	{ "a85-14.a3",			0x10000, 0xa9df0453, 4 | BRF_GRA },           //  5
@@ -1347,14 +1203,14 @@ struct BurnDriver BurnDrvKikikai = {
 	"kikikai", NULL, NULL, NULL, "1986",
 	"KiKi KaiKai\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, kikikaiRomInfo, kikikaiRomName, NULL, NULL, NULL, NULL, KikikaiInputInfo, KikikaiDIPInfo,
 	KikikaiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	224, 256, 3, 4
 };
 
 
-// Knight Boy
+// Knight Boy (bootleg of KiKi KaiKai, set 1)
 
 static struct BurnRomInfo knightbRomDesc[] = {
 	{ "a85-17.h16",			0x10000, 0xc141d5ab, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1384,9 +1240,9 @@ static INT32 KnightbInit()
 
 struct BurnDriver BurnDrvKnightb = {
 	"knightb", "kikikai", NULL, NULL, "1986",
-	"Knight Boy\0", NULL, "bootleg", "Miscellaneous",
+	"Knight Boy (bootleg of KiKi KaiKai, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, knightbRomInfo, knightbRomName, NULL, NULL, NULL, NULL, KikikaiInputInfo, KikikaiDIPInfo,
 	KnightbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	224, 256, 3, 4
@@ -1427,7 +1283,7 @@ struct BurnDriver BurnDrvKicknrun = {
 	"kicknrun", NULL, NULL, NULL, "1986",
 	"Kick and Run (World)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, kicknrunRomInfo, kicknrunRomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
 	KicknrunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3
@@ -1463,14 +1319,14 @@ struct BurnDriver BurnDrvKicknrunu = {
 	"kicknrunu", "kicknrun", NULL, NULL, "1986",
 	"Kick and Run (US)\0", NULL, "Taito America Corp", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, kicknrunuRomInfo, kicknrunuRomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
 	KicknrunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3
 };
 
 
-// Mexico 86 (bootleg of Kick and Run) (set 1)
+// Mexico 86 (bootleg of Kick and Run, set 1)
 
 static struct BurnRomInfo mexico86RomDesc[] = {
 	{ "2_g.bin",			0x10000, 0x2bbfe0fb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1502,16 +1358,16 @@ static INT32 Mexico86Init()
 
 struct BurnDriver BurnDrvMexico86 = {
 	"mexico86", "kicknrun", NULL, NULL, "1986",
-	"Mexico 86 (bootleg of Kick and Run) (set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Mexico 86 (bootleg of Kick and Run, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, mexico86RomInfo, mexico86RomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
 	Mexico86Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3
 };
 
 
-// Mexico 86 (bootleg of Kick and Run) (set 2)
+// Mexico 86 (bootleg of Kick and Run, set 2)
 
 static struct BurnRomInfo mexico86aRomDesc[] = {
 	{ "2.bin",				0x10000, 0x397c93ad, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1547,9 +1403,9 @@ STD_ROM_FN(mexico86a)
 
 struct BurnDriverD BurnDrvMexico86a = {
 	"mexico86a", "kicknrun", NULL, NULL, "1986",
-	"Mexico 86 (bootleg of Kick and Run) (set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Mexico 86 (bootleg of Kick and Run, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, mexico86aRomInfo, mexico86aRomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
 	Mexico86Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x101,
 	256, 224, 4, 3

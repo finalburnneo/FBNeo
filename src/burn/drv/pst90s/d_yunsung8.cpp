@@ -458,7 +458,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, DrvMSM5205SynchroniseStream, 400000, DrvMSM5205Int, MSM5205_S96_4B, 1);
@@ -552,7 +552,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		MSM5205Update();
 		ZetClose();
 	}
@@ -752,7 +752,7 @@ STD_ROM_PICK(rocktris)
 STD_ROM_FN(rocktris)
 
 struct BurnDriver BurnDrvRocktris = {
-	"rocktris", NULL, NULL, NULL, "1994",
+	"rocktris", NULL, NULL, NULL, "1994?",
 	"Rock Tris\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,

@@ -39,146 +39,149 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo DairesyaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Dairesya)
 
 
 static struct BurnInputInfo IronhorsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Ironhors)
 
 static struct BurnDIPInfo IronhorsDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xff, NULL			},
-	{0x15, 0xff, 0xff, 0x5a, NULL			},
-	{0x16, 0xff, 0xff, 0xfe, NULL			},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x5a, NULL					},
+	{0x02, 0xff, 0xff, 0xfe, NULL					},
 
-	{0   , 0xfe, 0   ,   16, "Free Play"		},
-	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x14, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x14, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x14, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x14, 0x01, 0x0f, 0x00, ":1,2,3,4"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"				},
+	{0x00, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"		},
-	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
-	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
-	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
-	{0x14, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x14, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x14, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
-	{0x14, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x14, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x14, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x14, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x14, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x14, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x14, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x14, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x14, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x14, 0x01, 0xf0, 0x00, "No Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"				},
+	{0x00, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0xf0, 0x00, "No Coin B"			},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x15, 0x01, 0x03, 0x03, "2"			},
-	{0x15, 0x01, 0x03, 0x02, "3"			},
-	{0x15, 0x01, 0x03, 0x01, "5"			},
-	{0x15, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "2"					},
+	{0x01, 0x01, 0x03, 0x02, "3"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-//	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-//	{0x15, 0x01, 0x04, 0x00, "Upright"		},
-//	{0x15, 0x01, 0x04, 0x04, "Cocktail"		},
+//	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+//	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+//	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x15, 0x01, 0x18, 0x18, "30K 70K+"		},
-	{0x15, 0x01, 0x18, 0x10, "40K 80K+"		},
-	{0x15, 0x01, 0x18, 0x08, "40K"			},
-	{0x15, 0x01, 0x18, 0x00, "50K"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "30K 70K+"				},
+	{0x01, 0x01, 0x18, 0x10, "40K 80K+"				},
+	{0x01, 0x01, 0x18, 0x08, "40K"					},
+	{0x01, 0x01, 0x18, 0x00, "50K"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x15, 0x01, 0x60, 0x60, "Easy"			},
-	{0x15, 0x01, 0x60, 0x40, "Normal"		},
-	{0x15, 0x01, 0x60, 0x20, "Hard"			},
-	{0x15, 0x01, 0x60, 0x00, "Very Hard"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x60, "Easy"					},
+	{0x01, 0x01, 0x60, 0x40, "Normal"				},
+	{0x01, 0x01, 0x60, 0x20, "Hard"					},
+	{0x01, 0x01, 0x60, 0x00, "Very Hard"			},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x80, 0x80, "Off"			},
-	{0x15, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x16, 0x01, 0x01, 0x00, "Off"			},
-//	{0x16, 0x01, 0x01, 0x01, "On"			},
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+//	{0x02, 0x01, 0x01, 0x00, "Off"					},
+//	{0x02, 0x01, 0x01, 0x01, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Upright Controls"	},
-	{0x16, 0x01, 0x02, 0x02, "Single"		},
-	{0x16, 0x01, 0x02, 0x00, "Dual"			},
+	{0   , 0xfe, 0   ,    2, "Upright Controls"		},
+	{0x02, 0x01, 0x02, 0x02, "Single"				},
+	{0x02, 0x01, 0x02, 0x00, "Dual"					},
 
-	{0   , 0xfe, 0   ,    2, "Button Layout"	},
-	{0x16, 0x01, 0x04, 0x04, "Power Attack Squat"	},
-	{0x16, 0x01, 0x04, 0x00, "Squat Attack Power"	},
+	{0   , 0xfe, 0   ,    2, "Button Layout"		},
+	{0x02, 0x01, 0x04, 0x04, "Power Attack Squat"	},
+	{0x02, 0x01, 0x04, 0x00, "Squat Attack Power"	},
 };
 
 STDDIPINFO(Ironhors)
@@ -196,8 +199,7 @@ static void ironhors_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x0900:
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0x0a00:
@@ -241,7 +243,6 @@ static UINT8 __fastcall ironhors_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8000:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -287,6 +288,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	palettebank = 0;
 
+	nExtraCycles = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -308,10 +311,10 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvM6809RAM0		= Next; Next += 0x000100;
+	DrvM6809RAM0	= Next; Next += 0x000100;
 	DrvColRAM		= Next; Next += 0x000400;
 	DrvVidRAM		= Next; Next += 0x000400;
-	DrvM6809RAM1		= Next; Next += 0x000800;
+	DrvM6809RAM1	= Next; Next += 0x000800;
 	DrvSprRAM0		= Next; Next += 0x000800;
 	DrvSprRAM1		= Next; Next += 0x000800;
 
@@ -320,8 +323,8 @@ static INT32 MemIndex()
 	RamEnd			= Next;
 
 	DrvCharBank		= DrvM6809RAM0 + 0x00003; 
-	DrvIRQEnable		= DrvM6809RAM0 + 0x00004;
-	DrvScrollRAM		= DrvM6809RAM0 + 0x00020;
+	DrvIRQEnable	= DrvM6809RAM0 + 0x00004;
+	DrvScrollRAM	= DrvM6809RAM0 + 0x00020;
 
 	MemEnd			= Next;
 
@@ -375,14 +378,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-	BurnSetRefreshRate(30.0);
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x00000,  0, 1)) return 1;
@@ -407,10 +403,10 @@ static INT32 DrvInit()
 
 	M6809Init(0);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM0,		0x0000, 0x00ff, MAP_RAM);
+	M6809MapMemory(DrvM6809RAM0,	0x0000, 0x00ff, MAP_RAM);
 	M6809MapMemory(DrvColRAM,		0x2000, 0x23ff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM,		0x2400, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM1,		0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvM6809RAM1,	0x2800, 0x2fff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM1,		0x3000, 0x37ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM0,		0x3800, 0x3fff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM,		0x4000, 0xffff, MAP_RAM);
@@ -448,7 +444,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -471,19 +467,7 @@ static void draw_layer()
 		INT32 flipx = (attr & 0x10);
 		INT32 flipy = (attr & 0x20);
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, DrvGfxROM);
 	}
 }
 
@@ -494,26 +478,14 @@ static inline void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 s
 
 	if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) return;
 
-	if (flipy) {
-		if (flipx) {
-			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x800, DrvGfxROM);
-		} else {
-			Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x800, DrvGfxROM);
-		}
-	} else {
-		if (flipx) {
-			Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x800, DrvGfxROM);
-		} else {
-			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x800, DrvGfxROM);
-		}
-	}
+	Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0, 0x800, DrvGfxROM);
 }
 
 static void draw_sprites()
 {
 	UINT8 *spriteram = ((DrvCharBank[0] & 8) ? DrvSprRAM0 : DrvSprRAM1);
 
-	for (INT32 offs = 0; offs < 0x100; offs += 5)
+	for (INT32 offs = 0; offs < 0x100-5; offs += 5)
 	{
 		INT32 sx    = spriteram[offs + 3];
 		INT32 sy    = spriteram[offs + 2];
@@ -587,8 +559,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 3072000 / 30, 3072000 / 30 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	M6809Open(0);
 	ZetOpen(0);
@@ -597,20 +569,20 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, M6809);
 
-		if (i == 240 && (DrvIRQEnable[0] & 0x04)) M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
+		if (i == 240 && (~nCurrentFrame & 1) && (DrvIRQEnable[0] & 0x04)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD); // firq
 		if ((i&0x3f)==0 && (DrvIRQEnable[0] & 0x01)) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 
-		BurnTimerUpdate((i+1) * (nCyclesTotal[1] / nInterleave));
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	ZetClose();
 	M6809Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -639,19 +611,19 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		M6809Scan(nAction);
 		ZetScan(nAction);
 
-		ZetOpen(0);
 		BurnYM2203Scan(nAction, pnMin);
-		ZetClose();
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(palettebank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
 }
 
 
-// Iron Horse
+// Iron Horse (version K)
 
 static struct BurnRomInfo ironhorsRomDesc[] = {
 	{ "560_k03.13c",	0x8000, 0x395351b4, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -676,7 +648,7 @@ STD_ROM_FN(ironhors)
 
 struct BurnDriver BurnDrvIronhors = {
 	"ironhors", NULL, NULL, NULL, "1986",
-	"Iron Horse\0", NULL, "Konami", "GX560",
+	"Iron Horse (version K)\0", NULL, "Konami", "GX560",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, ironhorsRomInfo, ironhorsRomName, NULL, NULL, NULL, NULL, IronhorsInputInfo, IronhorsDIPInfo,
@@ -685,7 +657,41 @@ struct BurnDriver BurnDrvIronhors = {
 };
 
 
-// Dai Ressya Goutou (Japan)
+// Iron Horse (version H)
+
+static struct BurnRomInfo ironhorshRomDesc[] = {
+	{ "13c_h03.bin",	0x8000, 0x24539af1, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "12c_h02.bin",	0x4000, 0xfab07f86, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "10c_h01.bin",	0x4000, 0x2b17930f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "08f_h06.bin",	0x8000, 0xf21d8c93, 3 | BRF_GRA },           //  3 Graphics Tiles
+	{ "07f_h05.bin",	0x8000, 0x60107859, 3 | BRF_GRA },           //  4
+	{ "09f_h07.bin",	0x8000, 0xc761ec73, 3 | BRF_GRA },           //  5
+	{ "06f_h04.bin",	0x8000, 0xc1486f61, 3 | BRF_GRA },           //  6
+
+	{ "03f_h08.bin",	0x0100, 0x9f6ddf83, 4 | BRF_GRA },           //  7 Color PROMs
+	{ "04f_h09.bin",	0x0100, 0xe6773825, 4 | BRF_GRA },           //  8
+	{ "05f_h10.bin",	0x0100, 0x30a57860, 4 | BRF_GRA },           //  9
+	{ "10f_h12.bin",	0x0100, 0x5eb33e73, 4 | BRF_GRA },           // 10
+	{ "10f_h11.bin",	0x0100, 0xa63e37d8, 4 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(ironhorsh)
+STD_ROM_FN(ironhorsh)
+
+struct BurnDriver BurnDrvIronhorsh = {
+	"ironhorsh", "ironhors", NULL, NULL, "1986",
+	"Iron Horse (version H)\0", NULL, "Konami", "GX560",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	NULL, ironhorshRomInfo, ironhorshRomName, NULL, NULL, NULL, NULL, IronhorsInputInfo, IronhorsDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	240, 224, 4, 3
+};
+
+
+// Dai Ressya Goutou (Japan, version K)
 
 static struct BurnRomInfo dairesyaRomDesc[] = {
 	{ "560-k03.13c",	0x8000, 0x2ac6103b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -710,7 +716,7 @@ STD_ROM_FN(dairesya)
 
 struct BurnDriver BurnDrvDairesya = {
 	"dairesya", "ironhors", NULL, NULL, "1986",
-	"Dai Ressya Goutou (Japan)\0", NULL, "Konami (Kawakusu license)", "GX560",
+	"Dai Ressya Goutou (Japan, version K)\0", NULL, "Konami (Kawakusu license)", "GX560",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, dairesyaRomInfo, dairesyaRomName, NULL, NULL, NULL, NULL, DairesyaInputInfo, IronhorsDIPInfo,

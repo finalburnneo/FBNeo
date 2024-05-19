@@ -121,8 +121,8 @@ void konamigx_mixer_exit()
 void konamigx_scan(INT32 nAction)
 {
 	if (nAction & ACB_MEMORY_RAM) {
-		ScanVar(gx_shdzbuf, 512 * 256 * 2, "gx shd z buf");
-		ScanVar(gx_objzbuf, 512 * 256 * 2, "gx obj z buf");
+//		ScanVar(gx_shdzbuf, 512 * 256 * 2, "gx shd z buf");    UNNECESSARY
+//		ScanVar(gx_objzbuf, 512 * 256 * 2, "gx obj z buf");    "" -dink
 		if (m_gx_objdma && gx_spriteram) {
 			ScanVar(gx_spriteram, 0x1000, "gx spriteram");
 		}
@@ -183,8 +183,9 @@ static void gx_draw_basic_tilemaps(INT32 mixerflags, INT32 code)
 		*/
 		if (temp1!=0xff && temp2 /*&& temp3==3*/)
 		{
+			if (konamigx_mystwarr_kludge) temp2 = 1; // mixlev only on this layer via '338 for mystwarr
 			temp4 = K054338_set_alpha_level(temp2);
-
+//			bprintf(0, _T("%x layer, temp4 %x  temp2 %x\n"), code, temp4, temp2);
 			if (temp4 <= 0 && !konamigx_mystwarr_kludge) return; // alpha level so high that layer is completely invisible. mystwarr needs this disabled for tile-based alpha tile counting.
 			if (temp4 < 255) k = K056832_SET_ALPHA(temp4);
 		}
@@ -651,6 +652,15 @@ void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 
 
 		switch (m_gx_primode & 0xf)
 		{
+			case 0xf:
+				// viostorm bad shadow grid st.2 fireworks (right side of screen)
+				if (code == 0xe140 && shdpri[0x02] == 0x28) continue;
+
+				// move shadows 1-pri behind sprites (first mid-boss, boss, throwing multiple enemies on train platform)
+				// note: this doesn't affect the fireworks
+				spri++;
+			break;
+
 			// Dadandarn zcode suppression
 			case  1:
 				zcode = 0;

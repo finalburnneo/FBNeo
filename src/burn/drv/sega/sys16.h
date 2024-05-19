@@ -15,6 +15,7 @@
 #include "resnet.h"
 #include "msm6295.h"
 
+#define SYS16_ROM_PROG_FLAT     25
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2
 #define SYS16_ROM_SPRITES		3
@@ -158,6 +159,9 @@ typedef void (*System16MakeAnalogInputs)();
 extern System16MakeAnalogInputs System16MakeAnalogInputsDo;
 extern System16MakeAnalogInputs System16MakeInputsDo;
 
+typedef void (*System16ResetCallback)();
+extern System16ResetCallback System16ResetCallbackDo;
+
 UINT8 __fastcall System16PPIZ80PortRead(UINT16 a);
 void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d);
 
@@ -261,6 +265,7 @@ extern INT32 System16ScreenFlipXoffs;
 extern INT32 System16ScreenFlipYoffs;
 extern INT32 System16SpriteShadow;
 extern INT32 System16SpriteXOffset;
+extern INT32 System16SpriteYOffset;
 extern INT32 System16SpriteBanks[16];
 extern INT32 System16TileBanks[8];
 extern INT32 System16OldTileBanks[8];

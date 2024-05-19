@@ -376,7 +376,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Mogura Desse
+// Mogura Desse (Japan)
 
 static struct BurnRomInfo moguraRomDesc[] = {
 	{ "gx141.5n",	0x8000, 0x98e6120d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -389,7 +389,7 @@ STD_ROM_FN(mogura)
 
 struct BurnDriver BurnDrvMogura = {
 	"mogura", NULL, NULL, NULL, "1991",
-	"Mogura Desse\0", "Konami test board", "Konami", "Miscellaneous",
+	"Mogura Desse (Japan)\0", "Konami test board", "Konami", "Miscellaneous",
 	L"\u30E2\u30B0\u30E9\u30C7\u30C3\u30BB\0Mogura Desse\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
 	NULL, moguraRomInfo, moguraRomName, NULL, NULL, NULL, NULL, MoguraInputInfo, NULL,

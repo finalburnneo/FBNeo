@@ -42,19 +42,24 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r = (nColour & 0x0F00) >> 4;	// Red
 	r |= (nColour >> 11) & 8;
-	INT32 g = (nColour & 0x00F0);			// Green
+	r |= (nColour >> 13) & 4;			// Red: add "dark" bit
+	INT32 g = (nColour & 0x00F0);		// Green
 	g |= (nColour >> 10) & 8;
+	g |= (nColour >> 13) & 4;
 	INT32 b = (nColour & 0x000F) << 4;	// Blue
 	b |= (nColour >> 9) & 8;
+	b |= (nColour >> 13) & 4;
 
-	r |= r >> 5;
-	g |= g >> 5;
-	b |= b >> 5;
+	// our current color mask is 0xfc (6 bits)
+	// shift down and OR to fill in the low 2 bits
+	r |= r >> 6;
+	g |= g >> 6;
+	b |= b >> 6;
 
 	if (bNeoDarkenPalette) {
-		r /= 2;
-		g /= 2;
-		b /= 2;
+		r >>= 1;
+		g >>= 1;
+		b >>= 1;
 	}
 
 	return BurnHighCol(r, g, b, 0);

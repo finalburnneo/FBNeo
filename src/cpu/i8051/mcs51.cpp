@@ -283,7 +283,7 @@ struct _mcs51_state_t
 
 	/* Internal Ram */
 	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
-	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
+	UINT8	sfr_ram[0xff+1];		/* 128 SFR - these are in 0x80 - 0xFF */
 	INT32	total_cycles;
 
 	UINT8	forced_inputs[4];
@@ -395,6 +395,11 @@ static void io_write_byte(INT32 offset, UINT8 data)
 		mcs51_state->mcs51_write_port(offset,data);
 		return;
 	}
+}
+
+UINT8 *mcs51_get_iram()
+{
+	return &mcs51_state->internal_ram[0];
 }
 
 
@@ -2289,6 +2294,8 @@ void mcs51_reset (void)
 	mcs51_state->forced_inputs[3] = 0;
 
 	/* these are all defined reset states */
+	RWM = 0;
+	PPC = PC;
 	PC = 0;
 	SP = 0x7;
 	SET_PSW(0);

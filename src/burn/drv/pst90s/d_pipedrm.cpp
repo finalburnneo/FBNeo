@@ -1,4 +1,4 @@
-// FB Alpha Pipe Dream & Hatris driver module
+// FB Neo Pipe Dream & Hatris driver module
 // Based on MAME driver by Bryan McPhail and Aaron Giles
 
 #include "tiles_generic.h"
@@ -509,12 +509,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (game_select)
 	{   // pipedrm
@@ -629,7 +624,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1058,15 +1053,15 @@ struct BurnDriver BurnDrvPipedrmt = {
 static struct BurnRomInfo hatrisRomDesc[] = {
 	{ "2.ic79",		0x08000, 0x4ab50b54, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "1-ic81.bin",		0x08000, 0xdb25e166, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "1.ic81",		0x08000, 0xdb25e166, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b0-ic56.bin",	0x20000, 0x34f337a4, 3 | BRF_GRA },           //  2 Background tiles
-	{ "b1-ic73.bin",	0x08000, 0x6351d0ba, 3 | BRF_GRA },           //  3
+	{ "b0.ic56",	0x20000, 0x34f337a4, 3 | BRF_GRA },           //  2 Background tiles
+	{ "b1.ic73",	0x08000, 0x6351d0ba, 3 | BRF_GRA },           //  3
 
-	{ "a0-ic55.bin",	0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
-	{ "a1-ic60.bin",	0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5
+	{ "a0.ic55",	0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
+	{ "a1.ic60",	0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5
 
-	{ "pc-ic53.bin",	0x20000, 0x07147712, 5 | BRF_SND },           //  6 YM2608 Samples
+	{ "pc.ic53",	0x20000, 0x07147712, 5 | BRF_SND },           //  6 YM2608 Samples
 };
 
 STDROMPICKEXT(hatris, hatris, Ym2608)
@@ -1093,15 +1088,15 @@ struct BurnDriver BurnDrvHatris = {
 static struct BurnRomInfo hatrisjRomDesc[] = {
 	{ "2-ic79.bin",		0x08000, 0xbbcaddbf, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "1-ic81.bin",		0x08000, 0xdb25e166, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "1.ic81",			0x08000, 0xdb25e166, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b0-ic56.bin",	0x20000, 0x34f337a4, 3 | BRF_GRA },           //  2 Background tiles
-	{ "b1-ic73.bin",	0x08000, 0x6351d0ba, 3 | BRF_GRA },           //  3
+	{ "b0.ic56",		0x20000, 0x34f337a4, 3 | BRF_GRA },           //  2 Background tiles
+	{ "b1.ic73",		0x08000, 0x6351d0ba, 3 | BRF_GRA },           //  3
 
-	{ "a0-ic55.bin",	0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
-	{ "a1-ic60.bin",	0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5
+	{ "a0.ic55",		0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
+	{ "a1.ic60",		0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5
 
-	{ "pc-ic53.bin",	0x20000, 0x07147712, 5 | BRF_SND },           //  6 YM2608 Samples
+	{ "pc.ic53",		0x20000, 0x07147712, 5 | BRF_SND },           //  6 YM2608 Samples
 };
 
 STDROMPICKEXT(hatrisj, hatrisj, Ym2608)
@@ -1113,6 +1108,36 @@ struct BurnDriver BurnDrvHatrisj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hatrisjRomInfo, hatrisjRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
+	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
+	352, 240, 4, 3
+};
+
+
+// Hatris (show version)
+
+static struct BurnRomInfo hatrispRomDesc[] = {
+	{ "3-6show.ic8",	0x08000, 0xe1cf7403, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "3-6.ic94",		0x08000, 0xe0b05b71, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "b0.ic76+",		0x20000, 0x60346041, 3 | BRF_GRA },           //  2 Background tiles
+	{ "b1.ic76",		0x20000, 0xe8e2db07, 3 | BRF_GRA },           //  3
+
+	{ "a0.ic51+",		0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
+	{ "a1.ic51",		0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5
+
+	{ "pc.ic107",		0x20000, 0x07147712, 5 | BRF_SND },           //  6 YM2608 Samples
+};
+
+STDROMPICKEXT(hatrisp, hatrisp, Ym2608)
+STD_ROM_FN(hatrisp)
+
+struct BurnDriver BurnDrvhatrisp = {
+	"hatrisp", "hatris", "ym2608", NULL, "1990",
+	"Hatris (show version)\0", NULL, "Video System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, hatrispRomInfo, hatrispRomName, NULL, NULL, NULL, NULL, HatrisInputInfo, HatrisDIPInfo,
 	hatrisInit, DrvExit, DrvFrame, FromanceDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
 };

@@ -4427,7 +4427,7 @@ struct BurnDriver BurnDrvPastelis = {
 	"pastelis", NULL, NULL, NULL, "1993",
 	"Pastel Island (Japan, prototype)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_MAZE, 0,
 	NULL, pastelisRomInfo, pastelisRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PastelisDIPInfo,
 	PastelisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	352, 240, 4, 3
@@ -4712,7 +4712,7 @@ static INT32 UltraxInit()
 
 struct BurnDriver BurnDrvUltrax = {
 	"ultrax", NULL, NULL, NULL, "1995",
-	"Ultra X Weapons / Ultra Keibitai\0", NULL, "Banpresto / Tsuburaya Productions", "SSV",
+	"Ultra X Weapons / Ultra Keibitai\0", NULL, "Banpresto / Tsuburaya Productions / Seta", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, ultraxRomInfo, ultraxRomName, NULL, NULL, NULL, NULL, DrvInputInfo, UltraxDIPInfo,
@@ -4721,7 +4721,7 @@ struct BurnDriver BurnDrvUltrax = {
 };
 
 
-// Ultra X Weapons / Ultra Keibitai (GAMEST review build)
+// Ultra X Weapons / Ultra Keibitai (Gamest review build)
 
 static struct BurnRomInfo ultraxgRomDesc[] = {
 	{ "sx010-11.5h",	0x080000, 0x58554bdd, 2 | BRF_PRG | BRF_ESS }, //  0 V60 Code
@@ -4746,7 +4746,7 @@ STD_ROM_FN(ultraxg)
 
 struct BurnDriver BurnDrvUltraxg = {
 	"ultraxg", "ultrax", NULL, NULL, "1995",
-	"Ultra X Weapons / Ultra Keibitai (GAMEST review build)\0", NULL, "Banpresto / Tsuburaya Productions", "SSV",
+	"Ultra X Weapons / Ultra Keibitai (Gamest review build)\0", NULL, "Banpresto / Tsuburaya Productions / Seta", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_VERSHOOT, 0,
 	NULL, ultraxgRomInfo, ultraxgRomName, NULL, NULL, NULL, NULL, DrvInputInfo, UltraxDIPInfo,
@@ -4869,6 +4869,9 @@ static struct BurnRomInfo ryoriohRomDesc[] = {
 	{ "ryorioh.d1",		0x400000, 0xae6055e8, 3 | BRF_GRA },           // 10
 
 	{ "ryorioh.snd",	0x200000, 0x7bd38b76, 0 | BRF_SND },           // 11 Ensoniq samples 0
+	
+	{ "gal16v8b.u25",	0x000117, 0x9f9066be, 0 | BRF_OPT },
+	{ "gal16v8b.u36",	0x000117, 0x971d6f4d, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(ryorioh)
@@ -4942,7 +4945,7 @@ struct BurnDriver BurnDrvMslider = {
 };
 
 
-// Mobil Suit Gundam Final Shooting (Japan)
+// Mobile Suit Gundam Final Shooting (Japan)
 
 static struct BurnRomInfo gdfsRomDesc[] = {
 	{ "vg004-14.u3",	0x100000, 0xd88254df, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
@@ -5021,7 +5024,7 @@ static INT32 GdfsInit()
 
 struct BurnDriver BurnDrvGdfs = {
 	"gdfs", NULL, NULL, NULL, "1995",
-	"Mobil Suit Gundam Final Shooting (Japan)\0", NULL, "Banpresto", "SSV",
+	"Mobile Suit Gundam Final Shooting (Japan)\0", NULL, "Banpresto", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_SHOOT, 0,
 	NULL, gdfsRomInfo, gdfsRomName, NULL, NULL, NULL, NULL, GdfsInputInfo, GdfsDIPInfo,
@@ -5522,18 +5525,20 @@ struct BurnDriver BurnDrvSxyreact = {
 // Pachinko Sexy Reaction 2 (Japan)
 
 static struct BurnRomInfo sxyreac2RomDesc[] = {
-	{ "ac1714e00.u32",	0x200000, 0x78075d70, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
+	{ "ac1714e00.u32",			0x200000, 0x78075d70, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
 
-	{ "ac1701t00.u6",	0x400000, 0xe14611c2, 3 | BRF_GRA },           //  1 Graphics
-	{ "ac1702t00.u9",	0x400000, 0x2c8b07f8, 3 | BRF_GRA },           //  2
-	{ "ac1703t00.u7",	0x400000, 0xd6c7e861, 3 | BRF_GRA },           //  3
-	{ "ac1704t00.u10",	0x400000, 0x5fa7ccf0, 3 | BRF_GRA },           //  4
-	{ "ac1705t00.u8",	0x400000, 0x2dff0652, 3 | BRF_GRA },           //  5
-	{ "ac1706t00.u11",	0x400000, 0xe7a168e0, 3 | BRF_GRA },           //  6
+	{ "ac1701t00.u6",			0x400000, 0xe14611c2, 3 | BRF_GRA },           //  1 Graphics
+	{ "ac1702t00.u9",			0x400000, 0x2c8b07f8, 3 | BRF_GRA },           //  2
+	{ "ac1703t00.u7",			0x400000, 0xd6c7e861, 3 | BRF_GRA },           //  3
+	{ "ac1704t00.u10",			0x400000, 0x5fa7ccf0, 3 | BRF_GRA },           //  4
+	{ "ac1705t00.u8",			0x400000, 0x2dff0652, 3 | BRF_GRA },           //  5
+	{ "ac1706t00.u11",			0x400000, 0xe7a168e0, 3 | BRF_GRA },           //  6
 
-	{ "ac1707t00.u41",	0x400000, 0x28999bc4, 4 | BRF_SND },           //  7 Ensoniq samples 0
+	{ "ac1707t00.u41",			0x400000, 0x28999bc4, 4 | BRF_SND },           //  7 Ensoniq samples 0
 
-	{ "ac1708t00.u42",	0x400000, 0x7001eec0, 5 | BRF_SND },           //  8 Ensoniq samples 1
+	{ "ac1708t00.u42",			0x400000, 0x7001eec0, 5 | BRF_SND },           //  8 Ensoniq samples 1
+	
+	{ "gal16v8d.ac1709g00.u34",	0x000117, 0x65c4db12, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(sxyreac2)
@@ -5671,7 +5676,7 @@ struct BurnDriver BurnDrvEaglshotj = {
 	"eaglshotj", "eaglshot", NULL, NULL, "1994",
 	"Eagle Shot Golf (Japan, bootleg?)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA_SSV, GBF_SPORTSMISC, 0,
 	NULL, eaglshotjRomInfo, eaglshotjRomName, NULL, NULL, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
 	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3

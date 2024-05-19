@@ -35,12 +35,12 @@ static INT32 CpstOne()
     {
       // Return if not visible at all
       if (nCpstX <= -nSize) return 0;
-      if (nCpstX >= 384) return 0;
+      if (nCpstX >= nCpsScreenWidth) return 0;
       if (nCpstY <= -nSize) return 0;
-      if (nCpstY >= 224) return 0;
+      if (nCpstY >= nCpsScreenHeight) return 0;
     }
-    nCtvRollX=0x4000017f + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
   // Clip to loaded graphics data (we have a gap of 0x200 at the end)
@@ -76,12 +76,12 @@ static INT32 CpstOneBgHi()
     {
       // Return if not visible at all
       if (nCpstX<=-nSize) return 0;
-      if (nCpstX>=384)   return 0;
+      if (nCpstX>=nCpsScreenWidth)   return 0;
       if (nCpstY<=-nSize) return 0;
-      if (nCpstY>=224)   return 0;
+      if (nCpstY>=nCpsScreenHeight)   return 0;
     }
-    nCtvRollX=0x4000017f + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
   // Clip to loaded graphics data (we have a gap of 0x200 at the end)
@@ -112,17 +112,20 @@ static INT32 Cps2tOne()
   INT32 nFun; INT32 nSize;
   nSize=(nCpstType&24)+8;
 
+  if (nCpstY + nSize >= nEndline) nCpstType |= CTT_CARE;
+
   if (nCpstType&CTT_CARE)
   {
     if ((nCpstType&CTT_ROWS)==0)
     {
      // Return if not visible at all
      if (nCpstX <= -nSize) return 0;
-     if (nCpstX >= 384)    return 0;
+     if (nCpstX >= nCpsScreenWidth)    return 0;
      if (nCpstY <= -nStartline - nSize) return 0;
      if (nCpstY >= nEndline)    return 0;
     }
-    nCtvRollX=0x4000017f + nCpstX * 0x7fff;
+	//
+	nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
     nCtvRollY=0x40000000 + nEndline - nStartline - 1 + (nCpstY - nStartline) * 0x7fff;
   }
 
@@ -160,12 +163,12 @@ static INT32 CpstOneObjZ()
     {
       // Return if not visible at all
 		if (nCpstX <= -nSize) return 0;
-		if (nCpstX >= 384)    return 0;
+		if (nCpstX >= nCpsScreenWidth)    return 0;
 		if (nCpstY <= -nSize) return 0;
-		if (nCpstY >= 224)    return 0;
+		if (nCpstY >= nCpsScreenHeight)    return 0;
     }
-    nCtvRollX=0x4000017f + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
 
@@ -175,7 +178,7 @@ static INT32 CpstOneObjZ()
 
   // Find pLine (pointer to first pixel)
   pCtvLine=pBurnDraw + nCpstY*nBurnPitch + nCpstX*nBurnBpp;
-  pZVal=ZBuf + nCpstY*384 + nCpstX;
+  pZVal=ZBuf + nCpstY*nCpsScreenWidth + nCpstX;
 
   if (nSize==32) nCtvTileAdd=16; else nCtvTileAdd=8;
 

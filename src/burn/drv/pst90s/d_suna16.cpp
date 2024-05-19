@@ -52,6 +52,7 @@ static UINT8 flipscreen;
 static UINT8 color_bank;
 
 static UINT8 bestofbest_prot = 0;
+static UINT8 Bssoccera = 0;
 
 static UINT8 z80bankdata[2];
 
@@ -1208,8 +1209,6 @@ static UINT8 __fastcall bssoccer_sound2_in(UINT16 port)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -1352,10 +1351,16 @@ static INT32 DrvLoadRoms()
 
 		if ((ri.nType & 7) == 1) {
 
-			if (BurnLoadRom(Load68K + 1, i + 0, 2)) return 1;
-			if (BurnLoadRom(Load68K + 0, i + 1, 2)) return 1;
+			if (Bssoccera) {
+				if (BurnLoadRom(Load68K + 0, i + 0, 0)) return 1;
 
-			Load68K += 0x100000;
+				Load68K += 0x200000;
+			} else {
+				if (BurnLoadRom(Load68K + 1, i + 0, 2)) return 1;
+				if (BurnLoadRom(Load68K + 0, i + 1, 2)) return 1;
+
+				Load68K += 0x100000;
+			}
 
 			i++;
 
@@ -1396,6 +1401,18 @@ static INT32 DrvLoadRoms()
 		}
 	}
 
+	if (Bssoccera) {
+		UINT8* Temp = (UINT8*)BurnMalloc(0x300000);
+		for (INT32 i = 0; i < 0x180000; i++) {
+			Temp[i] = DrvGfxROM0[i*2];
+		}
+		for (INT32 i = 0x180000; i < 0x300000; i++) {
+			Temp[i] = DrvGfxROM0[((i-0x180000)*2)+1];
+		}
+		memcpy (DrvGfxROM0, Temp, 0x300000);
+		BurnFree(Temp);
+	}
+
 	nGfxROM0Len = gfx0_len >> 5;
 
 	if (gfx0_len) DrvGfxDecode(DrvGfxROM0, gfx0_len);
@@ -1411,11 +1428,6 @@ static void bestbest_ay8910_write_a(UINT32,UINT32)
 static void bestbestFMIRQHandler(INT32, INT32 nStatus)
 {
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-}
-
-static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
 }
 
 static INT32 BestbestInit()
@@ -1459,8 +1471,8 @@ static INT32 BestbestInit()
 	ZetSetOutHandler(bestbest_sound1_out);
 	ZetClose();
 
-	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 6000000);
+	BurnYM3526Init(3000000, &bestbestFMIRQHandler, 1);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 0);
@@ -1672,6 +1684,8 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
+	Bssoccera = 0;
+
 	return 0;
 }
 
@@ -1782,7 +1796,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x1000; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 
@@ -1867,7 +1881,7 @@ static INT32 BestbestFrame()
 		if (i == (nInterleave    )-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
@@ -1876,14 +1890,11 @@ static INT32 BestbestFrame()
 	}
 	SekClose();
 
-	ZetOpen(0);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -2189,7 +2200,7 @@ STD_ROM_FN(uballoon)
 
 struct BurnDriver BurnDrvUballoon = {
 	"uballoon", NULL, NULL, NULL, "1996",
-	"Ultra Balloon\0", NULL, "SunA", "Miscellaneous",
+	"Ultra Balloon\0", NULL, "SunA (Unico license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, uballoonRomInfo, uballoonRomName, NULL, NULL, NULL, NULL, UballoonInputInfo, uballoonDIPInfo,
@@ -2198,7 +2209,7 @@ struct BurnDriver BurnDrvUballoon = {
 };
 
 
-// Back Street Soccer
+// Back Street Soccer (KRB-0031 PCB)
 
 static struct BurnRomInfo bssoccerRomDesc[] = {
 	{ "02",		0x080000, 0x32871005, 1 | BRF_ESS | BRF_PRG },   //  0 - 68K Code
@@ -2225,10 +2236,46 @@ STD_ROM_FN(bssoccer)
 
 struct BurnDriver BurnDrvBssoccer = {
 	"bssoccer", NULL, NULL, NULL, "1996",
-	"Back Street Soccer\0", NULL, "SunA", "Miscellaneous",
+	"Back Street Soccer (KRB-0031 PCB)\0", NULL, "SunA (Unico license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bssoccerRomInfo, bssoccerRomName, NULL, NULL, NULL, NULL, BssoccerInputInfo, bssoccerDIPInfo,
 	BssoccerInit, DrvExit, BssoccerFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	256, 224, 4, 3
+};
+
+
+// Back Street Soccer (KRB-0032A PCB)
+
+static struct BurnRomInfo bssocceraRomDesc[] = {
+	{ "uc16001",	0x200000, 0x82fa613a, 1 | BRF_ESS | BRF_PRG },   //  0 - 68K Code
+
+	{ "unico5",		0x010000, 0xdf7ae9bc, 2 | BRF_ESS | BRF_PRG },   //  1 - Z80 #0 Code
+
+	{ "uc04005",	0x080000, 0x2b273dca, 3 | BRF_ESS | BRF_PRG },   //  2 - Z80 #1 Code
+
+	{ "uc04004",	0x080000, 0x6b73b87b, 4 | BRF_ESS | BRF_PRG },   //  3 - Z80 #0 Code
+
+	{ "uc16002",	0x200000, 0x884f3ecf, 5 | BRF_GRA },		 //  4 - Sprites
+	{ "uc08003",	0x100000, 0xd17c23f5, 5 | BRF_GRA },		 //  5
+};
+
+STD_ROM_PICK(bssoccera)
+STD_ROM_FN(bssoccera)
+
+static INT32 BssocceraInit()
+{
+	Bssoccera = 1;
+
+	return BssoccerInit();
+}
+
+struct BurnDriver BurnDrvBssoccera = {
+	"bssoccera", "bssoccer", NULL, NULL, "1996",
+	"Back Street Soccer (KRB-0032A PCB)\0", NULL, "SunA (Unico license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	NULL, bssocceraRomInfo, bssocceraRomName, NULL, NULL, NULL, NULL, BssoccerInputInfo, bssoccerDIPInfo,
+	BssocceraInit, DrvExit, BssoccerFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

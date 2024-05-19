@@ -45,6 +45,8 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static UINT8 (*colorram1_read)(UINT16) = NULL;
+
 static UINT8 Wizmode = 0;
 static UINT8 Scionmodeoffset = 0;
 
@@ -450,6 +452,44 @@ static struct BurnDIPInfo WizDIPList[]=
 
 STDDIPINFO(Wiz)
 
+static UINT8 wiz_colorram1_read(UINT16 offset)
+{
+	offset &= 0x3ff;
+
+	if (offset == 0)
+	{
+		switch (DrvColRAM1[0])
+		{
+			case 0x35: return 0x25;
+			case 0x8f: return 0x1f;
+			case 0xa0: return 0x00;
+		}
+	}
+
+	return DrvColRAM1[offset];
+}
+
+static UINT8 kungfuta_colorram1_read(UINT16 offset)
+{
+	offset &= 0x3ff;
+
+	if (offset == 0)
+	{
+		switch (DrvColRAM1[0])
+		{
+			case 0x3a: return 0x0a;
+			case 0x5a: return 0xda; // after bonus round, prevents infinite loop
+			case 0x7a: return 0xfa; // maybe not, condition is inverted
+			case 0xaa: return 0x0a; // all the time during gameplay, unknown purpose
+			case 0xba: return 0x0a; 
+			case 0xca: return 0xca; // game over, unknown purpose
+			case 0xff: return 0xff; // done before other checks, although code at 0xacc8 will skip 2nd check like this
+		}
+	}
+
+	return DrvColRAM1[offset];
+}
+
 static void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -550,19 +590,8 @@ static UINT8 __fastcall wiz_main_read(UINT16 address)
 	// Wiz protection
 	if ((address & 0xfc00) == 0xd400)
 	{
-		if ((address & 0xff) == 0)
-		{
-			switch (DrvColRAM1[0])
-			{
-				case 0x35:
-					return 0x25;
-
-				case 0x8f:
-					return 0x1f;
-
-				case 0xa0:
-					return 0x00;
-			}
+		if (colorram1_read) {
+			return colorram1_read(address);
 		}
 
 		return DrvColRAM1[address & 0x3ff];
@@ -894,6 +923,7 @@ static INT32 DrvExit()
 
 	Wizmode = 0;
 	Scionmodeoffset = 0;
+	colorram1_read = NULL;
 
 	return 0;
 }
@@ -1172,13 +1202,14 @@ STD_ROM_FN(wiz)
 static INT32 WizInit()
 {
 	Wizmode = 1;
+	colorram1_read = wiz_colorram1_read;
 
 	return DrvInit(WizLoadRoms);
 }
 
 struct BurnDriver BurnDrvWiz = {
 	"wiz", NULL, NULL, NULL, "1985",
-	"Wiz\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Wiz\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wizRomInfo, wizRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1213,7 +1244,7 @@ STD_ROM_FN(wizt)
 
 struct BurnDriver BurnDrvWizt = {
 	"wizt", "wiz", NULL, NULL, "1985",
-	"Wiz (Taito, set 1)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
+	"Wiz (Taito, set 1)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztRomInfo, wiztRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1249,7 +1280,7 @@ STD_ROM_FN(wizta)
 
 struct BurnDriver BurnDrvWizta = {
 	"wizta", "wiz", NULL, NULL, "1985",
-	"Wiz (Taito, set 2)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
+	"Wiz (Taito, set 2)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztaRomInfo, wiztaRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1257,7 +1288,7 @@ struct BurnDriver BurnDrvWizta = {
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
-// Kung-Fu Taikun
+// Kung-Fu Taikun (set 1)
 
 static struct BurnRomInfo kungfutRomDesc[] = {
 	{ "p1.bin",	0x4000, 0xb1e56960, 1 }, //  0 maincpu
@@ -1285,12 +1316,13 @@ STD_ROM_FN(kungfut)
 static INT32 KungfutInit()
 {
 	Wizmode = 1;
+
 	return DrvInit(KungfutLoadRoms);
 }
 
 struct BurnDriver BurnDrvKungfut = {
 	"kungfut", NULL, NULL, NULL, "1984",
-	"Kung-Fu Taikun\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Kung-Fu Taikun (set 1)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutRomInfo, kungfutRomName, NULL, NULL, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
@@ -1298,7 +1330,7 @@ struct BurnDriver BurnDrvKungfut = {
 	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
 
-// Kung-Fu Taikun (alt)
+// Kung-Fu Taikun (set 2)
 
 static struct BurnRomInfo kungfutaRomDesc[] = {
 	{ "kungfu.01",	0x4000, 0x48dada70, 1 }, //  0 maincpu
@@ -1323,15 +1355,25 @@ static struct BurnRomInfo kungfutaRomDesc[] = {
 STD_ROM_PICK(kungfuta)
 STD_ROM_FN(kungfuta)
 
+static INT32 KungfutaInit()
+{
+	Wizmode = 1;
+	colorram1_read = kungfuta_colorram1_read;
+
+	return DrvInit(KungfutLoadRoms);
+}
+
+
 struct BurnDriver BurnDrvKungfuta = {
 	"kungfuta", "kungfut", NULL, NULL, "1984",
-	"Kung-Fu Taikun (alt)\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Kung-Fu Taikun (set 2)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutaRomInfo, kungfutaRomName, NULL, NULL, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
-	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
+	KungfutaInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
 	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
+
 
 // Stinger
 
@@ -1404,7 +1446,7 @@ struct BurnDriver BurnDrvStinger = {
 	"stinger", NULL, NULL, "stinger", "1983",
 	"Stinger\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stingerRomInfo, stingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, StingerDIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1441,7 +1483,7 @@ struct BurnDriver BurnDrvStinger2 = {
 	"stinger2", "stinger", NULL, "stinger", "1983",
 	"Stinger (prototype?)\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stinger2RomInfo, stinger2RomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1480,7 +1522,7 @@ struct BurnDriver BurnDrvFinger = {
 	"finger", "stinger", NULL, "stinger", "1983",
 	"Finger (bootleg of Stinger)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, fingerRomInfo, fingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1568,7 +1610,7 @@ struct BurnDriver BurnDrvScion = {
 	"scion", NULL, NULL, "stinger", "1984",
 	"Scion\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, scionRomInfo, scionRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3
@@ -1605,7 +1647,7 @@ struct BurnDriver BurnDrvScionc = {
 	"scionc", "scion", NULL, "stinger", "1984",
 	"Scion (Cinematronics)\0", NULL, "Seibu Denshi (Cinematronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, scioncRomInfo, scioncRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3

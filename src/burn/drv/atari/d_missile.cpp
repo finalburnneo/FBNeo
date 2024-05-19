@@ -702,7 +702,7 @@ struct BurnDriver BurnDrvMissile = {
 	"missile", NULL, NULL, NULL, "1980",
 	"Missile Command (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missileRomInfo, missileRomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -729,7 +729,7 @@ struct BurnDriver BurnDrvMissile2 = {
 	"missile2", "missile", NULL, NULL, "1980",
 	"Missile Command (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missile2RomInfo, missile2RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -756,7 +756,7 @@ struct BurnDriver BurnDrvMissile1 = {
 	"missile1", "missile", NULL, NULL, "1980",
 	"Missile Command (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missile1RomInfo, missile1RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -811,7 +811,7 @@ struct BurnDriver BurnDrvSuprmatk = {
 	"suprmatk", "missile", NULL, NULL, "1981",
 	"Super Missile Attack (for rev 1)\0", NULL, "Atari / General Computer Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, suprmatkRomInfo, suprmatkRomName, NULL, NULL, NULL, NULL, MissileInputInfo, SuprmatkDIPInfo,
 	SuprmatkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -838,7 +838,7 @@ struct BurnDriver BurnDrvSuprmatkd = {
 	"suprmatkd", "missile", NULL, NULL, "1981",
 	"Super Missile Attack (not encrypted)\0", NULL, "Atari / General Computer Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, suprmatkdRomInfo, suprmatkdRomName, NULL, NULL, NULL, NULL, MissileInputInfo, SuprmatkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3

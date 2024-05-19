@@ -155,6 +155,30 @@ struct BurnHDDInfo {
 	UINT32 nCrc;
 };
 
+// ---------------------------------------------------------------------------
+
+// Rom Data
+
+struct RomDataInfo {
+	char szZipName[MAX_PATH];
+	char szDrvName[MAX_PATH];
+	char szExtraRom[MAX_PATH];
+	wchar_t szOldName[MAX_PATH];
+	wchar_t szFullName[MAX_PATH];
+	INT32 nDriverId;
+	INT32 nDescCount;
+};
+
+extern RomDataInfo* pRDI;
+extern BurnRomInfo* pDataRomDesc;
+
+char* RomdataGetDrvName();
+void RomDataSetFullName();
+void RomDataInit();
+void RomDataExit();
+
+// ---------------------------------------------------------------------------
+
 // Inputs
 
 #define BIT_DIGITAL			(1)
@@ -203,6 +227,7 @@ struct BurnDIPInfo {
 #define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3812(num) do { BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3812(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3526(num) do { BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3526(nCyclesTotal[num]); } while (0)
+#define CPU_RUN_TIMER_Y8950(num) do { BurnTimerUpdateY8950((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameY8950(nCyclesTotal[num]); } while (0)
 // speed adjuster
 INT32 BurnSpeedAdjust(INT32 cyc);
 
@@ -256,6 +281,9 @@ extern UINT32 nFramesRendered;
 extern clock_t starttime;					// system time when emulation started and after roms loaded
 
 extern bool bForce60Hz;
+extern bool bSpeedLimit60hz;
+extern double dForcedFrameRate;
+
 extern bool bBurnUseBlend;
 
 extern INT32 nBurnFPS;
@@ -263,7 +291,16 @@ extern INT32 nBurnCPUSpeedAdjust;
 
 extern UINT32 nBurnDrvCount;			// Count of game drivers
 extern UINT32 nBurnDrvActive;			// Which game driver is selected
+extern INT32 nBurnDrvSubActive;			// Which sub-game driver is selected
 extern UINT32 nBurnDrvSelect[8];		// Which games are selected (i.e. loaded but not necessarily active)
+
+extern char* pszCustomNameA;
+extern char szBackupNameA[MAX_PATH];
+extern TCHAR szBackupNameW[MAX_PATH];
+
+extern char** szShortNamesExArray;
+extern TCHAR** szLongNamesExArray;
+extern UINT32 nNamesExArray;
 
 extern INT32 nMaxPlayers;
 
@@ -373,8 +410,11 @@ void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
 
 TCHAR* BurnDrvGetText(UINT32 i);
 char* BurnDrvGetTextA(UINT32 i);
+wchar_t* BurnDrvGetFullNameW(UINT32 i);
 
+INT32 BurnDrvGetIndex(char* szName);
 INT32 BurnDrvGetZipName(char** pszName, UINT32 i);
+INT32 BurnDrvSetZipName(char* szName, INT32 i);
 INT32 BurnDrvGetRomInfo(struct BurnRomInfo *pri, UINT32 i);
 INT32 BurnDrvGetRomName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetInputInfo(struct BurnInputInfo* pii, UINT32 i);
@@ -395,6 +435,7 @@ INT32 BurnDrvGetSampleInfo(struct BurnSampleInfo *pri, UINT32 i);
 INT32 BurnDrvGetSampleName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
 INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
+char* BurnDrvGetSourcefile();
 
 void Reinitialise();
 
@@ -450,7 +491,7 @@ void GetIpsDrvDefine();
 
 #define HARDWARE_PUBLIC_MASK							(0x7FFF0000)
 
-#define HARDWARE_PREFIX_CARTRIDGE						((INT32)0x80000000)
+#define HARDWARE_PREFIX_CARTRIDGE				 ((INT32)0x80000000)
 
 #define HARDWARE_PREFIX_MISC_PRE90S						(0x00000000)
 #define HARDWARE_PREFIX_CAPCOM							(0x01000000)
@@ -681,6 +722,7 @@ void GetIpsDrvDefine();
 #define HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2			(41)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_MULAN				(42)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG             (43)
+#define HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ            (44)
 #define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (0x40)
 #define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (0x80)
 #define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (0xc0)
@@ -755,6 +797,8 @@ void GetIpsDrvDefine();
 #define GBF_RPG                                         (1 << 24)
 #define GBF_SIM                                         (1 << 25)
 #define GBF_ADV                                         (1 << 26)
+#define GBF_CARD                                        (1 << 27)
+#define GBF_BOARD                                       (1 << 28)
 
 // flags for the family member
 #define FBF_MSLUG										(1 << 0)

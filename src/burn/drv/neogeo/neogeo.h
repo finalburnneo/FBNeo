@@ -28,8 +28,17 @@ struct NeoGameInfo {
 	INT32 nNeoSRAMProtection;
 };
 
+struct NeoReallocInfo {
+	INT32 nCodeSize;
+	INT32 nTextSize;
+	INT32 nSpriteSize;
+	INT32 nADPCMASize;
+	INT32 nADPCMBSize;
+};
+
 struct NEO_CALLBACK {
 	void (*pInitialise)();
+	void (*pResetCallback)();
 	void (*pInstallHandlers)();
 	void (*pRemoveHandlers)();
 	void (*pBankswitch)();
@@ -49,6 +58,8 @@ void NeoDecodeSprites(UINT8* pDest, INT32 nSize);
 void NeoDecodeSpritesCD(UINT8* pData, UINT8* pDest, INT32 nSize);
 
 // neo_run.cpp
+extern NeoReallocInfo* pNRI;
+
 extern UINT8* NeoGraphicsRAM;
 
 extern UINT8 nNeoNumSlots;
@@ -66,7 +77,7 @@ extern UINT16 NeoAxis[];
 extern UINT8 NeoInput[];
 extern UINT8 NeoDiag[];
 extern UINT8 NeoDebugDip[];
-extern UINT8 NeoReset, NeoSystem;
+extern UINT8 NeoReset, NeoSystem, NeoCDBios;
 
 extern UINT8* Neo68KROMActive;
 extern UINT8* NeoVectorActive;
@@ -76,6 +87,8 @@ extern UINT8* YM2610ADPCMAROM[MAX_SLOT];
 extern UINT8* Neo68KFix[MAX_SLOT];
 
 extern UINT32 nNeo68KROMBank;
+
+extern UINT32 nAllCodeSize;
 
 extern UINT8 *NeoSpriteRAM, *NeoTextRAM;
 

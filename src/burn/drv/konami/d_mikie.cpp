@@ -39,6 +39,8 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo MikieInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -70,11 +72,11 @@ STDINPUTINFO(Mikie)
 static struct BurnDIPInfo MikieDIPList[]=
 {
 	DIP_OFFSET(0x12)
-	{0x00, 0xff, 0xff, 0xff, NULL			},
-	{0x01, 0xff, 0xff, 0x7b, NULL			},
-	{0x02, 0xff, 0xff, 0xfc, NULL			},
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x7b, NULL					},
+	{0x02, 0xff, 0xff, 0xfc, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
 	{0x00, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x00, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x00, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -90,9 +92,9 @@ static struct BurnDIPInfo MikieDIPList[]=
 	{0x00, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
 	{0x00, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
 	{0x00, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x00, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x00, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
 	{0x00, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x00, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x00, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -108,42 +110,42 @@ static struct BurnDIPInfo MikieDIPList[]=
 	{0x00, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
 	{0x00, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
 	{0x00, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x00, 0x01, 0xf0, 0x00, "No Coin B"		},
+	{0x00, 0x01, 0xf0, 0x00, "No Coin B"			},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x01, 0x01, 0x03, 0x03, "3"			},
-	{0x01, 0x01, 0x03, 0x02, "4"			},
-	{0x01, 0x01, 0x03, 0x01, "5"			},
-	{0x01, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
 //	flipscreen not implimented
-//	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-//	{0x01, 0x01, 0x04, 0x00, "Upright"		},
-//	{0x01, 0x01, 0x04, 0x04, "Cocktail"		},
+//	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+//	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+//	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x01, 0x01, 0x18, 0x18, "20k 70k 50k+"		},
-	{0x01, 0x01, 0x18, 0x10, "30K 90k 60k+"		},
-	{0x01, 0x01, 0x18, 0x08, "30k only"		},
-	{0x01, 0x01, 0x18, 0x00, "40K only"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "20k 70k 50k+"			},
+	{0x01, 0x01, 0x18, 0x10, "30K 90k 60k+"			},
+	{0x01, 0x01, 0x18, 0x08, "30k only"				},
+	{0x01, 0x01, 0x18, 0x00, "40K only"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x01, 0x01, 0x60, 0x60, "Easy"			},
-	{0x01, 0x01, 0x60, 0x40, "Medium"		},
-	{0x01, 0x01, 0x60, 0x20, "Hard"			},
-	{0x01, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x60, "Easy"					},
+	{0x01, 0x01, 0x60, 0x40, "Medium"				},
+	{0x01, 0x01, 0x60, 0x20, "Hard"					},
+	{0x01, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x01, 0x01, 0x80, 0x80, "Off"			},
-	{0x01, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x02, 0x01, 0x01, 0x00, "Off"			},
-	{0x02, 0x01, 0x01, 0x01, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x02, 0x01, 0x01, 0x00, "Off"					},
+	{0x02, 0x01, 0x01, 0x01, "On"					},
 	
-	{0   , 0xfe, 0   ,    2, "Upright Controls"	},
-	{0x02, 0x01, 0x02, 0x02, "Single"		},
-	{0x02, 0x01, 0x02, 0x00, "Dual"			},
+	{0   , 0xfe, 0   ,    2, "Upright Controls"		},
+	{0x02, 0x01, 0x02, 0x02, "Single"				},
+	{0x02, 0x01, 0x02, 0x00, "Dual"					},
 };
 
 STDDIPINFO(Mikie)
@@ -259,6 +261,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetClose();
 
 	watchdog = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
 	HiscoreReset();
 
@@ -520,7 +524,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
     M6809NewFrame();
     ZetNewFrame();
@@ -545,6 +549,9 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	M6809Close();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
     if (pBurnSoundOut) {
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
@@ -574,6 +581,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -586,20 +595,20 @@ static struct BurnRomInfo mikieRomDesc[] = {
 	{ "o13.12a",	0x4000, 0x826e7035, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "o17.12d",	0x4000, 0x161c25c8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "n10.6e",	0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "n10.6e",		0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "o11.8i",	0x4000, 0x3c82aaf3, 3 | BRF_GRA },           //  4 Characters
+	{ "o11.8i",		0x4000, 0x3c82aaf3, 3 | BRF_GRA },           //  4 Characters
 
-	{ "001.f1",	0x4000, 0xa2ba0df5, 4 | BRF_GRA },           //  5 Sprites
-	{ "003.f3",	0x4000, 0x9775ab32, 4 | BRF_GRA },           //  6
-	{ "005.h1",	0x4000, 0xba44aeef, 4 | BRF_GRA },           //  7
-	{ "007.h3",	0x4000, 0x31afc153, 4 | BRF_GRA },           //  8
+	{ "001.f1",		0x4000, 0xa2ba0df5, 4 | BRF_GRA },           //  5 Sprites
+	{ "003.f3",		0x4000, 0x9775ab32, 4 | BRF_GRA },           //  6
+	{ "005.h1",		0x4000, 0xba44aeef, 4 | BRF_GRA },           //  7
+	{ "007.h3",		0x4000, 0x31afc153, 4 | BRF_GRA },           //  8
 
-	{ "d19.1i",	0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
-	{ "d21.3i",	0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
-	{ "d20.2i",	0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
+	{ "d19.1i",		0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
+	{ "d21.3i",		0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
+	{ "d20.2i",		0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
 	{ "d22.12h",	0x0100, 0x872be05c, 5 | BRF_GRA },           // 12
-	{ "d18.f9",	0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
+	{ "d18.f9",		0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(mikie)
@@ -623,20 +632,20 @@ static struct BurnRomInfo mikiejRomDesc[] = {
 	{ "o13.12a",	0x4000, 0x826e7035, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "o17.12d",	0x4000, 0x161c25c8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "n10.6e",	0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "n10.6e",		0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "q11.8i",	0x4000, 0xc48b269b, 3 | BRF_GRA },           //  4 Characters
+	{ "q11.8i",		0x4000, 0xc48b269b, 3 | BRF_GRA },           //  4 Characters
 
-	{ "q01.f1",	0x4000, 0x31551987, 4 | BRF_GRA },           //  5 Sprites
-	{ "q03.f3",	0x4000, 0x34414df0, 4 | BRF_GRA },           //  6
-	{ "q05.h1",	0x4000, 0xf9e1ebb1, 4 | BRF_GRA },           //  7
-	{ "q07.h3",	0x4000, 0x15dc093b, 4 | BRF_GRA },           //  8
+	{ "q01.f1",		0x4000, 0x31551987, 4 | BRF_GRA },           //  5 Sprites
+	{ "q03.f3",		0x4000, 0x34414df0, 4 | BRF_GRA },           //  6
+	{ "q05.h1",		0x4000, 0xf9e1ebb1, 4 | BRF_GRA },           //  7
+	{ "q07.h3",		0x4000, 0x15dc093b, 4 | BRF_GRA },           //  8
 
-	{ "d19.1i",	0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
-	{ "d21.3i",	0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
-	{ "d20.2i",	0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
+	{ "d19.1i",		0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
+	{ "d21.3i",		0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
+	{ "d20.2i",		0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
 	{ "d22.12h",	0x0100, 0x872be05c, 5 | BRF_GRA },           // 12
-	{ "d18.f9",	0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
+	{ "d18.f9",		0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(mikiej)
@@ -653,6 +662,43 @@ struct BurnDriver BurnDrvMikiej = {
 };
 
 
+// Shin-ip Sawon - Seok Dol-i
+
+static struct BurnRomInfo mikiekRomDesc[] = {
+	{ "n14.11c",	0x2000, 0xf698e6dd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "o13.12a",	0x4000, 0x826e7035, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "o17.12d",	0x4000, 0x161c25c8, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "n10.6e",		0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "q11.8i",		0x4000, 0x29286fce, 3 | BRF_GRA },           //  4 Characters
+
+	{ "q01.f1",		0x4000, 0x31551987, 4 | BRF_GRA },           //  5 Sprites
+	{ "q03.f3",		0x4000, 0x707cc98e, 4 | BRF_GRA },           //  6
+	{ "q05.h1",		0x4000, 0xf9e1ebb1, 4 | BRF_GRA },           //  7
+	{ "q07.h3",		0x4000, 0x44502ca9, 4 | BRF_GRA },           //  8
+
+	{ "d19.1i",		0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
+	{ "d21.3i",		0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
+	{ "d20.2i",		0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
+	{ "d22.12h",	0x0100, 0x872be05c, 5 | BRF_GRA },           // 12
+	{ "d18.f9",		0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(mikiek)
+STD_ROM_FN(mikiek)
+
+struct BurnDriver BurnDrvMikiek = {
+	"mikiek", "mikie", NULL, NULL, "1984",
+	"Shin-ip Sawon - Seok Dol-i\0", NULL, "bootleg", "GX469",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
+	NULL, mikiekRomInfo, mikiekRomName, NULL, NULL, NULL, NULL, MikieInputInfo, MikieDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 256, 3, 4
+};
+
+
 // Mikie (High School Graffiti)
 
 static struct BurnRomInfo mikiehsRomDesc[] = {
@@ -660,20 +706,20 @@ static struct BurnRomInfo mikiehsRomDesc[] = {
 	{ "m13.12a",	0x4000, 0x9c42d715, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "m17.12d",	0x4000, 0xcb5c03c9, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "h10.6e",	0x2000, 0x4ed887d2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "h10.6e",		0x2000, 0x4ed887d2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "l11.8i",	0x4000, 0x5ba9d86b, 3 | BRF_GRA },           //  4 Characters
+	{ "l11.8i",		0x4000, 0x5ba9d86b, 3 | BRF_GRA },           //  4 Characters
 
-	{ "i01.f1",	0x4000, 0x0c0cab5f, 4 | BRF_GRA },           //  5 Sprites
-	{ "i03.f3",	0x4000, 0x694da32f, 4 | BRF_GRA },           //  6
-	{ "i05.h1",	0x4000, 0x00e357e1, 4 | BRF_GRA },           //  7
-	{ "i07.h3",	0x4000, 0xceeba6ac, 4 | BRF_GRA },           //  8
+	{ "i01.f1",		0x4000, 0x0c0cab5f, 4 | BRF_GRA },           //  5 Sprites
+	{ "i03.f3",		0x4000, 0x694da32f, 4 | BRF_GRA },           //  6
+	{ "i05.h1",		0x4000, 0x00e357e1, 4 | BRF_GRA },           //  7
+	{ "i07.h3",		0x4000, 0xceeba6ac, 4 | BRF_GRA },           //  8
 
-	{ "d19.1i",	0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
-	{ "d21.3i",	0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
-	{ "d20.2i",	0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
+	{ "d19.1i",		0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
+	{ "d21.3i",		0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
+	{ "d20.2i",		0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
 	{ "d22.12h",	0x0100, 0x872be05c, 5 | BRF_GRA },           // 12
-	{ "d18.f9",	0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
+	{ "d18.f9",		0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(mikiehs)

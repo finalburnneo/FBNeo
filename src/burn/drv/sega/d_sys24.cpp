@@ -3291,7 +3291,7 @@ struct BurnDriver BurnDrvBnzabros = {
 	"bnzabros", NULL, NULL, NULL, "1990",
 	"Bonanza Bros (US, Floppy DS3-5000-07d? Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM, 0,
 	NULL, bnzabrosRomInfo, bnzabrosRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BnzabrosDIPInfo,
 	BnzabrosInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3319,7 +3319,7 @@ struct BurnDriver BurnDrvBnzabrosj = {
 	"bnzabrosj", "bnzabros", NULL, NULL, "1990",
 	"Bonanza Bros (Japan, Floppy DS3-5000-07b Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_PLATFORM, 0,
 	NULL, bnzabrosjRomInfo, bnzabrosjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BnzabrosDIPInfo,
 	BnzabrosInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3712,7 +3712,7 @@ struct BurnDriver BurnDrvGground = {
 	"gground", NULL, NULL, NULL, "1988",
 	"Gain Ground (World, 3 Players, Floppy Based, FD1094 317-0058-03d Rev A)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_SYSTEM24, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, ggroundRomInfo, ggroundRomName, NULL, NULL, NULL, NULL, GgroundInputInfo, GgroundDIPInfo,
 	GgroundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384,496, 3, 4
@@ -3737,7 +3737,7 @@ struct BurnDriver BurnDrvGgroundj = {
 	"ggroundj", "gground", NULL, NULL, "1988",
 	"Gain Ground (Japan, 2 Players, Floppy Based, FD1094 317-0058-03b)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, ggroundjRomInfo, ggroundjRomName, NULL, NULL, NULL, NULL, GgroundjInputInfo, GgroundjDIPInfo,
 	GgroundInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	384,496, 3, 4
@@ -3770,7 +3770,7 @@ struct BurnDriver BurnDrvCrkdown = {
 	"crkdown", NULL, NULL, NULL, "1989",
 	"Crack Down (World, Floppy Based, FD1094 317-0058-04c)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, crkdownRomInfo, crkdownRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3795,7 +3795,7 @@ struct BurnDriver BurnDrvCrkdownu = {
 	"crkdownu", "crkdown", NULL, NULL, "1989",
 	"Crack Down (US, Floppy Based, FD1094 317-0058-04d)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, crkdownuRomInfo, crkdownuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
@@ -3820,7 +3820,7 @@ struct BurnDriver BurnDrvCrkdownj = {
 	"crkdownj", "crkdown", NULL, NULL, "1989",
 	"Crack Down (Japan, Floppy Based, FD1094 317-0058-04b Rev A)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, crkdownjRomInfo, crkdownjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CrkdownDIPInfo,
 	CrkdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3

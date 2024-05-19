@@ -4,27 +4,45 @@
 #define STD_ROM_PICK(Name)												\
 static struct BurnRomInfo* Name##PickRom(UINT32 i)						\
 {																		\
-	if (i >= sizeof(Name##RomDesc) / sizeof(Name##RomDesc[0])) {		\
-		return NULL;													\
-	}																	\
-	return Name##RomDesc + i;											\
-}
-
-#define STDROMPICKEXT(Name, Info1, Info2)								\
-static struct BurnRomInfo* Name##PickRom(UINT32 i)						\
-{																		\
-	if (i >= 0x80) {													\
-		i &= 0x7F;														\
-		if (i >= sizeof(Info2##RomDesc) / sizeof(Info2##RomDesc[0])) {	\
+	if ((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) {			\
+		/* Replace with the contents of Romdata */						\
+		/* Differences in array pointers */								\
+		if (i > pRDI->nDescCount) {										\
 			return NULL;												\
 		}																\
-		return Info2##RomDesc + i;										\
+		return pDataRomDesc + i;										\
 	} else {															\
-		if (i >= sizeof(Info1##RomDesc) / sizeof(Info1##RomDesc[0])) {	\
-			return emptyRomDesc + 0;									\
+		if (i >= sizeof(Name##RomDesc) / sizeof(Name##RomDesc[0])) {	\
+			return NULL;												\
 		}																\
-		return Info1##RomDesc + i;										\
+		return Name##RomDesc + i;										\
 	}																	\
+}
+
+#define STDROMPICKEXT(Name, Info1, Info2)									\
+static struct BurnRomInfo* Name##PickRom(UINT32 i)							\
+{																			\
+	if (i >= 0x80) {														\
+		i &= 0x7F;															\
+		if (i >= sizeof(Info2##RomDesc) / sizeof(Info2##RomDesc[0])) {		\
+			return NULL;													\
+		}																	\
+		return Info2##RomDesc + i;											\
+	} else {																\
+		if ((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) {			\
+			/* Replace with the contents of Romdata */						\
+			/* Differences in array pointers */								\
+			if (i > pRDI->nDescCount) {										\
+				return emptyRomDesc + 0;									\
+			}																\
+			return pDataRomDesc + i;										\
+		} else {															\
+			if (i >= sizeof(Info1##RomDesc) / sizeof(Info1##RomDesc[0])) {	\
+				return emptyRomDesc + 0;									\
+			}																\
+			return Info1##RomDesc + i;										\
+		}																	\
+	}																		\
 }
 
 // Standard rom functions for returning Length, Crc, Type and one one Name

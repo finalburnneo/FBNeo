@@ -44,6 +44,8 @@ static INT32 watchdog;
 static UINT16 *DrvScrollx;
 static UINT16 *DrvScrolly;
 
+static INT32 nCyclesExtra[3];
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -432,6 +434,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	watchdog = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -474,12 +478,7 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		for (INT32 i = 0; i < 5; i++) {
@@ -560,7 +559,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	use_mcu = 0;
 
@@ -748,16 +747,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 6000000 / 60, 3579545 / 60, 6000000 / 12 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
 
-		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
 		if (i == 240) {
 			if (pBurnDraw) { // draw here gets rid of artefacts when starting game
 				DrvDraw();
@@ -767,23 +761,20 @@ static INT32 DrvFrame()
 		}
 		ZetClose();
 
-		// Run Z80 #2
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		ZetOpen(1);
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		if (use_mcu) {
-			nCurrentCPU = 2;
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesDone[nCurrentCPU] += mcs51Run(nNext - nCyclesDone[nCurrentCPU]);
+			CPU_RUN(2, mcs51);
 		}
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// [1] = timer, not needed
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	ZetClose();
 
 	return 0;
 }
@@ -811,6 +802,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			mcs51_scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -862,7 +855,7 @@ struct BurnDriver BurnDrvBlktiger = {
 	"blktiger", NULL, NULL, NULL, "1987",
 	"Black Tiger\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerRomInfo, blktigerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -907,7 +900,7 @@ struct BurnDriver BurnDrvBlktigera = {
 	"blktigera", "blktiger", NULL, NULL, "1987",
 	"Black Tiger (older)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigeraRomInfo, blktigeraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -950,7 +943,7 @@ struct BurnDriver BurnDrvBlktigerb1 = {
 	"blktigerb1", "blktiger", NULL, NULL, "1987",
 	"Black Tiger (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb1RomInfo, blktigerb1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -993,7 +986,7 @@ struct BurnDriver BurnDrvblktigerb2 = {
 	"blktigerb2", "blktiger", NULL, NULL, "1987",
 	"Black Tiger (bootleg set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb2RomInfo, blktigerb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1062,7 +1055,7 @@ struct BurnDriver BurnDrvBlktigerb3 = {
 	"blktigerb3", "blktiger", NULL, NULL, "1987",
 	"Black Tiger / Black Dragon (mixed bootleg?)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb3RomInfo, blktigerb3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	blktigerb3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1107,7 +1100,7 @@ struct BurnDriver BurnDrvBlkdrgon = {
 	"blkdrgon", "blktiger", NULL, NULL, "1987",
 	"Black Dragon (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blkdrgonRomInfo, blkdrgonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1150,7 +1143,7 @@ struct BurnDriver BurnDrvBlkdrgonb = {
 	"blkdrgonb", "blktiger", NULL, NULL, "1987",
 	"Black Dragon (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blkdrgonbRomInfo, blkdrgonbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

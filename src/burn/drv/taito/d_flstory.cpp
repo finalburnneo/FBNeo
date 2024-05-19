@@ -1458,7 +1458,7 @@ static INT32 onna34roInit()
 
 struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
+	"Onna Sanshirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
@@ -1503,7 +1503,7 @@ static INT32 onna34roaInit()
 
 struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
+	"Onna Sanshirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,

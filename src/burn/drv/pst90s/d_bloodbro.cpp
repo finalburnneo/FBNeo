@@ -839,9 +839,8 @@ static INT32 DrvFrame()
 		seibu_coin_input = (DrvJoy1[1] << 1) | DrvJoy1[0];
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 1000;
-	INT32 nTotalCycles[2] = { 10000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -849,24 +848,21 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nTotalCycles[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((nTotalCycles[1] / nInterleave) * (i+1));
+		CPU_RUN_TIMER(1);
 	}
 
 	if (nGameSelect == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // bloodbro
 	if (nGameSelect == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // skysmash
 	if (nGameSelect == 2) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // weststry
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1121,7 +1117,7 @@ STD_ROM_PICK(weststry)
 STD_ROM_FN(weststry)
 
 struct BurnDriverD BurnDrvWeststry = {
-	"weststry", "bloodbro", NULL, NULL, "1991",
+	"weststry", "bloodbro", NULL, NULL, "1990",
 	"West Story (bootleg of Blood Bros., set 1)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
@@ -1171,7 +1167,7 @@ STD_ROM_PICK(weststrya)
 STD_ROM_FN(weststrya)
 
 struct BurnDriverD BurnDrvWeststrya = {
-	"weststrya", "bloodbro", NULL, NULL, "1991",
+	"weststrya", "bloodbro", NULL, NULL, "1990",
 	"West Story (bootleg of Blood Bros., set 2)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
@@ -1200,7 +1196,7 @@ static struct BurnRomInfo skysmashRomDesc[] = {
 
 	{ "rom1",	0x020000, 0xe69986f6, 6 | BRF_SND },           //  9 Samples
 	
-	{ "ss006.u083.4j",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "ss006.u083.4j",	0x00100, 0x8b2ae4a0, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(skysmash)

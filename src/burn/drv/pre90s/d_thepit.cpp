@@ -47,6 +47,7 @@ static INT32 intrepid = 0;
 static INT32 rtriv = 0;
 static INT32 desertdn = 0;
 static INT32 thepit = 0;
+static INT32 dockmanb = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -743,7 +744,6 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvZ80RAM0,	0x8000, 0x87ff, MAP_RAM);
 	ZetMapMemory(DrvColRAM,		0x8800, 0x8bff, MAP_RAM);
-	ZetMapMemory(DrvColRAM,		0x8c00, 0x8fff, MAP_RAM); // mirror
 	ZetMapMemory(DrvVidRAM,		0x9000, 0x93ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM,		0x9400, 0x97ff, MAP_RAM); // mirror
 	for (INT32 i = 0; i < 0x800; i+=0x100) {
@@ -755,7 +755,13 @@ static INT32 DrvInit()
 
 	if (intrepid)
 	{
+		ZetMapMemory(DrvColRAM,		0x8c00, 0x8fff, MAP_RAM); // mirror
 		ZetMapMemory(DrvColRAM,		0x9400, 0x97ff, MAP_RAM);
+	}
+
+	if (dockmanb)
+	{
+		ZetMapMemory(DrvColRAM,		0x8800, 0x8bff, MAP_RAM);
 	}
 
 	if (rtriv)
@@ -810,6 +816,7 @@ static INT32 DrvExit()
 	rtriv = 0;
 	desertdn = 0;
 	thepit = 0;
+	dockmanb = 0;
 
 	return 0;
 }
@@ -1255,6 +1262,37 @@ struct BurnDriver BurnDrvThepitj = {
 };
 
 
+// The Hole (bootleg of The Pit)
+
+static struct BurnRomInfo theholeRomDesc[] = {
+	{ "1.6e",		0x1000, 0x71affecc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.8e",		0x1000, 0x894063cd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.9e",		0x1000, 0x5b2a28dd, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.10e",		0x1000, 0x61af8a42, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.10d",		0x1000, 0xbc03f14d, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "6.6d",		0x0800, 0x1b79dfb6, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "8.3l",		0x0800, 0x2ff010ca, 3 | BRF_GRA },           //  6 Graphics
+	{ "7.1l",		0x0800, 0xd901b353, 3 | BRF_GRA },           //  7
+
+	{ "74s288.5a",	0x0020, 0xa758b567, 4 | BRF_GRA },           //  8 Color data
+};
+
+STD_ROM_PICK(thehole)
+STD_ROM_FN(thehole)
+
+struct BurnDriver BurnDrvThehole = {
+	"thehole", "thepit", NULL, NULL, "1982",
+	"The Hole (bootleg of The Pit)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, theholeRomInfo, theholeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	224, 256, 3, 4
+};
+
+
 // Round-Up
 
 static struct BurnRomInfo roundupRomDesc[] = {
@@ -1344,7 +1382,7 @@ struct BurnDriver BurnDrvFitterbl = {
 	"fitterbl", "roundup", NULL, NULL, "1981",
 	"Fitter (bootleg of Round-Up)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, fitterblRomInfo, fitterblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FitterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1478,7 +1516,7 @@ struct BurnDriver BurnDrvIntrepidb = {
 	"intrepidb", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Elsys bootleg, set 1)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1510,7 +1548,7 @@ struct BurnDriver BurnDrvIntrepidb2 = {
 	"intrepidb2", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Loris bootleg)\0", NULL, "bootleg (Loris)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1542,7 +1580,7 @@ struct BurnDriver BurnDrvIntrepidb3 = {
 	"intrepidb3", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Elsys bootleg, set 2)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1584,7 +1622,7 @@ struct BurnDriverD BurnDrvZaryavos = {
 };
 
 
-// Dock Man
+// Dock Man (set 1)
 
 static struct BurnRomInfo dockmanRomDesc[] = {
 	{ "pe1.19",		0x1000, 0xeef2ec54, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1599,7 +1637,7 @@ static struct BurnRomInfo dockmanRomDesc[] = {
 	{ "pe8.9",		0x1000, 0x4d8c2974, 3 | BRF_GRA },           //  7 Graphics
 	{ "pe9.8",		0x1000, 0x4e4ea162, 3 | BRF_GRA },           //  8
 
-	{ "mb7051.3",		0x0020, 0x6440dc61, 4 | BRF_GRA },           //  9 Color data
+	{ "mb7051.3",	0x0020, 0x6440dc61, 4 | BRF_GRA },           //  9 Color data
 };
 
 STD_ROM_PICK(dockman)
@@ -1607,11 +1645,81 @@ STD_ROM_FN(dockman)
 
 struct BurnDriver BurnDrvDockman = {
 	"dockman", NULL, NULL, NULL, "1982",
-	"Dock Man\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Dock Man (set 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, dockmanRomInfo, dockmanRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	224, 256, 3, 4
+};
+
+
+// Dock Man (set 2)
+
+static struct BurnRomInfo dockmanbRomDesc[] = {
+	{ "dm1.38",			0x1000, 0xe8078549, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "dm2.39",			0x1000, 0xf38fd1f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dm3.40",			0x1000, 0x759b3937, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dm4.41",			0x1000, 0x23af1cba, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dm5.33",			0x1000, 0x04ef6324, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "dm7.30",			0x0800, 0xd2094e4a, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "dm6.31",			0x0800, 0x1cf447f4, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "dm8.ic9",		0x1000, 0x4d8c2974, 3 | BRF_GRA },           //  7 Graphics
+	{ "dm9.ic8",		0x1000, 0x4e4ea162, 3 | BRF_GRA },           //  8
+
+	{ "colprom.ic4",	0x0020, 0x6440dc61, 4 | BRF_GRA },           //  9 Color data
+};
+
+STD_ROM_PICK(dockmanb)
+STD_ROM_FN(dockmanb)
+
+static INT32 DockmanbInit()
+{
+	dockmanb = 1;
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvDockmanb = {
+	"dockmanb", "dockman", NULL, NULL, "1982",
+	"Dock Man (set 2)\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, dockmanbRomInfo, dockmanbRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
+	DockmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	224, 256, 3, 4
+};
+
+
+// Dock Man (set 3)
+
+static struct BurnRomInfo dockmancRomDesc[] = {
+	{ "dm1.38",				0x1000, 0xe8078549, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "dockman-ii-2.39",	0x1000, 0x3e3ecb55, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dockman-ii-3.39",	0x1000, 0x5f84a2c0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dockman-ii-4.41",	0x1000, 0x5bcec819, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dockman-ii-5.33",	0x1000, 0xae03f9ae, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "dm7.30",				0x0800, 0xd2094e4a, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "dm6.31",				0x0800, 0x1cf447f4, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "dm8.ic9",			0x1000, 0x4d8c2974, 3 | BRF_GRA },           //  7 Graphics
+	{ "dm9.ic8",			0x1000, 0xe8572572, 3 | BRF_GRA },           //  8
+
+	{ "colprom.ic4",		0x0020, 0x6440dc61, 4 | BRF_GRA },           //  9 Color data
+};
+
+STD_ROM_PICK(dockmanc)
+STD_ROM_FN(dockmanc)
+
+struct BurnDriver BurnDrvDockmanc = {
+	"dockmanc", "dockman", NULL, NULL, "1982",
+	"Dock Man (set 3)\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, dockmancRomInfo, dockmancRomName, NULL, NULL, NULL, NULL, DockmanInputInfo, DockmanDIPInfo,
+	DockmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
 
@@ -1860,7 +1968,7 @@ static INT32 DesertdnInit()
 
 struct BurnDriver BurnDrvDesertdn = {
 	"desertdn", NULL, NULL, NULL, "1982",
-	"Desert Dan\0", NULL, "Video Optics", "Miscellaneous",
+	"Desert Dan\0", NULL, "Kawakusu (Video Optics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, desertdnRomInfo, desertdnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DesertdnDIPInfo,

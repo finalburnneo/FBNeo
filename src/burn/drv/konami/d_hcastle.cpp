@@ -478,7 +478,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3579545, NULL, DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3579545);
+	BurnTimerAttach(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000); // no idea...
@@ -747,7 +747,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, konami);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
@@ -756,7 +756,6 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
-	bprintf(0, _T("extra %d\n"), nExtraCycles);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -811,7 +810,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Haunted Castle (ver. M)
+// Haunted Castle (version M)
 
 static struct BurnRomInfo hcastleRomDesc[] = {
 	{ "m03.k12",	0x08000, 0xd85e743d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -840,7 +839,7 @@ STD_ROM_FN(hcastle)
 
 struct BurnDriver BurnDrvHcastle = {
 	"hcastle", NULL, NULL, NULL, "1988",
-	"Haunted Castle (ver. M)\0", NULL, "Konami", "GX768",
+	"Haunted Castle (version M)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleRomInfo, hcastleRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -849,7 +848,7 @@ struct BurnDriver BurnDrvHcastle = {
 };
 
 
-// Haunted Castle (ver. K)
+// Haunted Castle (version K)
 
 static struct BurnRomInfo hcastlekRomDesc[] = {
 	{ "768k03.k12",	0x08000, 0x40ce4f38, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -878,7 +877,7 @@ STD_ROM_FN(hcastlek)
 
 struct BurnDriver BurnDrvHcastlek = {
 	"hcastlek", "hcastle", NULL, NULL, "1988",
-	"Haunted Castle (ver. K)\0", NULL, "Konami", "GX768",
+	"Haunted Castle (version K)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -887,7 +886,7 @@ struct BurnDriver BurnDrvHcastlek = {
 };
 
 
-// Haunted Castle (ver. E)
+// Haunted Castle (version E)
 
 static struct BurnRomInfo hcastleeRomDesc[] = {
 	{ "768e03.k12",	0x08000, 0x0b32619c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -916,7 +915,7 @@ STD_ROM_FN(hcastlee)
 
 struct BurnDriver BurnDrvHcastlee = {
 	"hcastlee", "hcastle", NULL, NULL, "1988",
-	"Haunted Castle (ver. E)\0", NULL, "Konami", "GX768",
+	"Haunted Castle (version E)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -925,7 +924,7 @@ struct BurnDriver BurnDrvHcastlee = {
 };
 
 
-// Akuma-Jou Dracula (Japan ver. P)
+// Akuma-Jou Dracula (Japan version P)
 
 static struct BurnRomInfo akumajouRomDesc[] = {
 	{ "768p03.k12",	0x08000, 0xd509e340, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -954,7 +953,7 @@ STD_ROM_FN(akumajou)
 
 struct BurnDriver BurnDrvAkumajou = {
 	"akumajou", "hcastle", NULL, NULL, "1988",
-	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "GX768",
+	"Akuma-Jou Dracula (Japan version P)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. P)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -963,7 +962,7 @@ struct BurnDriver BurnDrvAkumajou = {
 };
 
 
-// Akuma-Jou Dracula (Japan ver. N)
+// Akuma-Jou Dracula (Japan version N)
 
 static struct BurnRomInfo akumajounRomDesc[] = {
 	{ "768n03.k12",	0x08000, 0x3e4dca2a, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -992,7 +991,7 @@ STD_ROM_FN(akumajoun)
 
 struct BurnDriver BurnDrvAkumajoun = {
 	"akumajoun", "hcastle", NULL, NULL, "1988",
-	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "GX768",
+	"Akuma-Jou Dracula (Japan version N)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. N)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,

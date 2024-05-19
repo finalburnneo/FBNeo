@@ -1228,7 +1228,7 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &powFMIRQHandler, &powSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
@@ -1554,14 +1554,15 @@ static INT32 DrvFrame()
 	SekRun(nTotalCycles[0]);
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	BurnTimerEndFrame(nTotalCycles[1]);
+
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1672,7 +1673,7 @@ struct BurnDriver BurnDrvpow = {
 };
 
 
-// P.O.W. - Prisoners of War (US version 1, mask ROM sprites )
+// P.O.W. - Prisoners of War (US version 1, mask ROM sprites)
 
 static struct BurnRomInfo powaRomDesc[] = {
 	{ "dg1ver1.j14", 	0x20000, 0x8e71a8af, 1 | BRF_PRG }, //  0 68k Code
@@ -1698,7 +1699,7 @@ STD_ROM_FN(powa)
 
 struct BurnDriver BurnDrvpowa = {
 	"powa", "pow", NULL, NULL, "1988",
-	"P.O.W. - Prisoners of War (US version 1, mask ROM sprites )\0", NULL, "SNK", "Miscellaneous",
+	"P.O.W. - Prisoners of War (US version 1, mask ROM sprites)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, powaRomInfo, powaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PowDIPInfo,
@@ -1861,7 +1862,7 @@ STD_ROM_FN(sercharj)
 
 struct BurnDriver BurnDrvsercharj = {
 	"searcharj", "searchar", NULL, NULL, "1989",
-	"SAR - Search And Rescue (Japan)\0", NULL, "SNK", "Miscellaneous",
+	"SAR - Search And Rescue (Japan version 3)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, sercharjRomInfo, sercharjRomName, NULL, NULL, NULL, NULL, IkariInputInfo, SarDIPInfo,
@@ -2017,7 +2018,7 @@ struct BurnDriver BurnDrvstreetsj = {
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
 
-// Ikari III - The Rescue (8-Way Joystick)
+// Ikari III - The Rescue (World version 1, 8-Way Joystick)
 
 static struct BurnRomInfo ikari3RomDesc[] = {
 	{ "ik3-2-ver1.c10", 0x20000, 0x1bae8023, 1 | BRF_PRG }, //  0 68k Code
@@ -2064,9 +2065,9 @@ static INT32 ikari3Init()
 
 struct BurnDriver BurnDrvikari3 = {
 	"ikari3", NULL, NULL, NULL, "1989",
-	"Ikari III - The Rescue (8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
+	"Ikari III - The Rescue (World version 1, 8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikari3RomInfo, ikari3RomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
@@ -2116,13 +2117,13 @@ struct BurnDriver BurnDrvikari3u = {
 	"ikari3u", "ikari3", NULL, NULL, "1989",
 	"Ikari III - The Rescue (US, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikari3uRomInfo, ikari3uRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
 
-// Ikari Three - The Rescue (Japan, Rotary Joystick)
+// Ikari Three (Japan, Rotary Joystick)
 
 static struct BurnRomInfo ikari3jRomDesc[] = {
 	{ "ik3-2-j.c10",  0x20000, 0x7b1b4be4, 1 | BRF_PRG }, //  0 68k Code
@@ -2164,15 +2165,15 @@ STD_ROM_FN(ikari3j)
 
 struct BurnDriver BurnDrvikari3j = {
 	"ikari3j", "ikari3", NULL, NULL, "1989",
-	"Ikari Three - The Rescue (Japan, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
+	"Ikari Three (Japan, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikari3jRomInfo, ikari3jRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
 
-// Ikari III - The Rescue (Korea, 8-Way Joystick)
+// Ikari Three (Korea, 8-Way Joystick)
 
 static struct BurnRomInfo ikari3kRomDesc[] = {
 	{ "ik3-2k.c10", 		0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
@@ -2202,9 +2203,9 @@ STD_ROM_FN(ikari3k)
 
 struct BurnDriver BurnDrvikari3k = {
 	"ikari3k", "ikari3", NULL, NULL, "1989",
-	"Ikari III - The Rescue (Korea, 8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
+	"Ikari Three (Korea, 8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikari3kRomInfo, ikari3kRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
@@ -2247,7 +2248,7 @@ struct BurnDriver BurnDrvikari3w = {
 	"ikari3w", "ikari3", NULL, NULL, "1989",
 	"Ikari III - The Rescue (World, Rotary Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikari3wRomInfo, ikari3wRomName, NULL, NULL, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3

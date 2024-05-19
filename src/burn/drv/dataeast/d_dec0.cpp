@@ -1252,7 +1252,7 @@ static struct BurnRomInfo HbarrelRomDesc[] = {
 	{ "ec23.15f",           0x10000, 0xbbdaf771, BRF_GRA },				// 16
 	
 	{ "ec29.8h",           	0x10000, 0x5514b296, BRF_GRA },				// 17	Tiles 2
-	{ "ec30.9j",            0x10000, 0x5855e8ef, BRF_GRA },				// 18
+	{ "ec30.9h",            0x10000, 0x5855e8ef, BRF_GRA },				// 18
 	{ "ec27.8f",           	0x10000, 0x99db7b9c, BRF_GRA },				// 19
 	{ "ec28.9f",            0x10000, 0x33ce2b1a, BRF_GRA },				// 20
 	
@@ -1552,39 +1552,39 @@ STD_ROM_FN(Ffantasyb)
 // Midnight Resistance (World, set 1)
 
 static struct BurnRomInfo MidresRomDesc[] = {
-	{ "fk_14.rom",          0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "fk_12.rom",          0x20000, 0x3494b8c9, BRF_ESS | BRF_PRG },	//  1
-	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
-	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	{ "fk14.17k",           0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fk12.13k",           0x20000, 0x3494b8c9, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15.18k",           0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13.15k",           0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
 	
-	{ "fl16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	{ "fl16.5f",            0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
 	
-	{ "fk_05.rom",          0x10000, 0x3cdb7453, BRF_GRA },				//  5	Characters
-	{ "fk_04.rom",          0x10000, 0x325ba20c, BRF_GRA },				//  6
+	{ "fk05.11a",           0x10000, 0x3cdb7453, BRF_GRA },				//  5	Characters
+	{ "fk04.10a",           0x10000, 0x325ba20c, BRF_GRA },				//  6
 
-	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
-	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },				//  8
-	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },				//  9
-	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },				// 10
+	{ "fl-09.18a",          0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
+	{ "fl-08.16a",          0x20000, 0xa936c03c, BRF_GRA },				//  8
+	{ "fl-07.15a",          0x20000, 0x2068c45c, BRF_GRA },				//  9
+	{ "fl-06.13a",          0x20000, 0xb7241ab9, BRF_GRA },				// 10
 	
-	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
-	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },				// 12
+	{ "fl-11.21a",          0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
+	{ "fl-10.20a",          0x20000, 0x92245b29, BRF_GRA },				// 12
 	
-	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
-	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },				// 14
-	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },				// 15
-	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },				// 16
+	{ "fl-01.4a",           0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
+	{ "fl-03.8a",           0x20000, 0x1eefed3c, BRF_GRA },				// 14
+	{ "fl-00.2a",           0x20000, 0x756fb801, BRF_GRA },				// 15
+	{ "fl-02.6a",           0x20000, 0x54d2c120, BRF_GRA },				// 16
 	
-	{ "fl17",               0x20000, 0x9029965d, BRF_SND },				// 17	Samples
+	{ "fl17.1h",            0x20000, 0x9029965d, BRF_SND },				// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
+	{ "tb-7.22f",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },				// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },				// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },				// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },				// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },				// 24
+	{ "tb-1-1.19h",         0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
+	{ "tb-2.10h",           0x00104, 0xbcb591e3, BRF_OPT },				// 20
+	{ "tb-3.9h",            0x00104, 0xe12972ac, BRF_OPT },				// 21
+	{ "tb-4.8h",            0x00104, 0xc6437e49, BRF_OPT },				// 22
+	{ "tb-5.14h",           0x00104, 0xe9ee3a67, BRF_OPT },				// 23
+	{ "tb-6.20h",           0x00104, 0x23b17abe, BRF_OPT },				// 24
 };
 
 STD_ROM_PICK(Midres)
@@ -1595,39 +1595,39 @@ STD_ROM_FN(Midres)
 // DE-0323-4 PCB, only the first 2 main CPU ROMs differ, ROM labels weren't original so unfortunately not possible to determine version
 
 static struct BurnRomInfo Midres2RomDesc[] = {
-	{ "mr14",          		0x20000, 0xad4617a9, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "mr12",          		0x20000, 0xc9ed677b, BRF_ESS | BRF_PRG },	//  1
-	{ "mr15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
-	{ "mr13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	{ "mr14.17k",           0x20000, 0xad4617a9, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "mr12.13k",           0x20000, 0xc9ed677b, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15.18k",           0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13.15k",           0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
 	
-	{ "mr16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	{ "fl16.5f",            0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
 	
-	{ "mr05",          		0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
-	{ "mr04",          		0x10000, 0x8f5bbb79, BRF_GRA },				//  6
+	{ "fl05.11a",           0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
+	{ "fl04.10a",           0x10000, 0x8f5bbb79, BRF_GRA },				//  6
 
-	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
-	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },				//  8
-	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },				//  9
-	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },				// 10
+	{ "fl-09.18a",          0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
+	{ "fl-08.16a",          0x20000, 0xa936c03c, BRF_GRA },				//  8
+	{ "fl-07.15a",          0x20000, 0x2068c45c, BRF_GRA },				//  9
+	{ "fl-06.13a",          0x20000, 0xb7241ab9, BRF_GRA },				// 10
 	
-	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
-	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },				// 12
+	{ "fl-11.21a",          0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
+	{ "fl-10.20a",          0x20000, 0x92245b29, BRF_GRA },				// 12
 	
-	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
-	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },				// 14
-	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },				// 15
-	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },				// 16
+	{ "fl-01.4a",           0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
+	{ "fl-03.8a",           0x20000, 0x1eefed3c, BRF_GRA },				// 14
+	{ "fl-00.2a",           0x20000, 0x756fb801, BRF_GRA },				// 15
+	{ "fl-02.6a",           0x20000, 0x54d2c120, BRF_GRA },				// 16
 	
-	{ "mr17",               0x20000, 0x9029965d, BRF_SND },				// 17	Samples
+	{ "fl17.1h",            0x20000, 0x9029965d, BRF_SND },				// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
+	{ "tb-7.22f",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },				// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },				// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },				// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },				// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },				// 24
+	{ "tb-1-1.19h",         0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
+	{ "tb-2.10h",           0x00104, 0xbcb591e3, BRF_OPT },				// 20
+	{ "tb-3.9h",            0x00104, 0xe12972ac, BRF_OPT },				// 21
+	{ "tb-4.8h",            0x00104, 0xc6437e49, BRF_OPT },				// 22
+	{ "tb-5.14h",           0x00104, 0xe9ee3a67, BRF_OPT },				// 23
+	{ "tb-6.20h",           0x00104, 0x23b17abe, BRF_OPT },				// 24
 };
 
 STD_ROM_PICK(Midres2)
@@ -1637,39 +1637,39 @@ STD_ROM_FN(Midres2)
 // Midnight Resistance (US)
 
 static struct BurnRomInfo MidresuRomDesc[] = {
-	{ "fl14",               0x20000, 0x2f9507a2, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "fl12",               0x20000, 0x3815ad9f, BRF_ESS | BRF_PRG },	//  1
-	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
-	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	{ "fl14.17k",           0x20000, 0x2f9507a2, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fl12.13k",           0x20000, 0x3815ad9f, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15.18k",           0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13.15k",           0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
 	
-	{ "fl16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	{ "fl16.5f",            0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
 	
-	{ "fl05",               0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
-	{ "fl04",               0x10000, 0x8f5bbb79, BRF_GRA },				//  6
+	{ "fl05.11a",           0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
+	{ "fl04.10a",           0x10000, 0x8f5bbb79, BRF_GRA },				//  6
 
-	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
-	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },				//  8
-	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },				//  9
-	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },				// 10
+	{ "fl-09.18a",          0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
+	{ "fl-08.16a",          0x20000, 0xa936c03c, BRF_GRA },				//  8
+	{ "fl-07.15a",          0x20000, 0x2068c45c, BRF_GRA },				//  9
+	{ "fl-06.13a",          0x20000, 0xb7241ab9, BRF_GRA },				// 10
 	
-	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
-	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },				// 12
+	{ "fl-11.21a",          0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
+	{ "fl-10.20a",          0x20000, 0x92245b29, BRF_GRA },				// 12
 	
-	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
-	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },				// 14
-	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },				// 15
-	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },				// 16
+	{ "fl-01.4a",           0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
+	{ "fl-03.8a",           0x20000, 0x1eefed3c, BRF_GRA },				// 14
+	{ "fl-00.2a",           0x20000, 0x756fb801, BRF_GRA },				// 15
+	{ "fl-02.6a",           0x20000, 0x54d2c120, BRF_GRA },				// 16
 	
-	{ "fl17",               0x20000, 0x9029965d, BRF_SND },				// 17	Samples
+	{ "fl17.1h",            0x20000, 0x9029965d, BRF_SND },				// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
+	{ "tb-7.22f",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },				// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },				// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },				// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },				// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },				// 24
+	{ "tb-1-1.19h",         0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
+	{ "tb-2.10h",           0x00104, 0xbcb591e3, BRF_OPT },				// 20
+	{ "tb-3.9h",            0x00104, 0xe12972ac, BRF_OPT },				// 21
+	{ "tb-4.8h",            0x00104, 0xc6437e49, BRF_OPT },				// 22
+	{ "tb-5.14h",           0x00104, 0xe9ee3a67, BRF_OPT },				// 23
+	{ "tb-6.20h",           0x00104, 0x23b17abe, BRF_OPT },				// 24
 };
 
 STD_ROM_PICK(Midresu)
@@ -1679,39 +1679,39 @@ STD_ROM_FN(Midresu)
 // Midnight Resistance (Japan)
 
 static struct BurnRomInfo MidresjRomDesc[] = {
-	{ "fh14",               0x20000, 0x6d632a51, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "fh12",               0x20000, 0x45143384, BRF_ESS | BRF_PRG },	//  1
-	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
-	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	{ "fh14.17k",           0x20000, 0x6d632a51, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fh12.13k",           0x20000, 0x45143384, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15.18k",           0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13.15k",           0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
 	
-	{ "fh16",               0x10000, 0x00736f32, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	{ "fh16.5f",            0x10000, 0x00736f32, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
 	
-	{ "fk_05.rom",          0x10000, 0x3cdb7453, BRF_GRA },				//  5	Characters
-	{ "fk_04.rom",          0x10000, 0x325ba20c, BRF_GRA },				//  6
+	{ "fl05.11a",           0x10000, 0xd75aba06, BRF_GRA },				//  5	Characters
+	{ "fl04.10a",           0x10000, 0x8f5bbb79, BRF_GRA },				//  6
 
-	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
-	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },				//  8
-	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },				//  9
-	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },				// 10
+	{ "fl-09.18a",          0x20000, 0x907d5910, BRF_GRA },				//  7	Tiles 1
+	{ "fl-08.16a",          0x20000, 0xa936c03c, BRF_GRA },				//  8
+	{ "fl-07.15a",          0x20000, 0x2068c45c, BRF_GRA },				//  9
+	{ "fl-06.13a",          0x20000, 0xb7241ab9, BRF_GRA },				// 10
 	
-	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
-	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },				// 12
+	{ "fl-11.21a",          0x20000, 0xb86b73b4, BRF_GRA },				// 11	Tiles 2
+	{ "fl-10.20a",          0x20000, 0x92245b29, BRF_GRA },				// 12
 	
-	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
-	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },				// 14
-	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },				// 15
-	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },				// 16
+	{ "fl-01.4a",           0x20000, 0x2c8b35a7, BRF_GRA },				// 13	Sprites
+	{ "fl-03.8a",           0x20000, 0x1eefed3c, BRF_GRA },				// 14
+	{ "fl-00.2a",           0x20000, 0x756fb801, BRF_GRA },				// 15
+	{ "fl-02.6a",           0x20000, 0x54d2c120, BRF_GRA },				// 16
 	
-	{ "fh17",               0x20000, 0xc7b0a24e, BRF_SND },				// 17	Samples
+	{ "fh17.1h",            0x20000, 0xc7b0a24e, BRF_SND },				// 17	Samples
 	
-	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
+	{ "tb-7.22f",           0x00100, 0xeb539ffb, BRF_OPT },				// 18	PROMs
 	
-	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
-	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT },				// 20
-	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT },				// 21
-	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT },				// 22
-	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT },				// 23
-	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT },				// 24
+	{ "tb-1-1.19h",         0x00104, 0xd28fb8e0, BRF_OPT },				// 19	PLDs
+	{ "tb-2.10h",           0x00104, 0xbcb591e3, BRF_OPT },				// 20
+	{ "tb-3.9h",            0x00104, 0xe12972ac, BRF_OPT },				// 21
+	{ "tb-4.8h",            0x00104, 0xc6437e49, BRF_OPT },				// 22
+	{ "tb-5.14h",           0x00104, 0xe9ee3a67, BRF_OPT },				// 23
+	{ "tb-6.20h",           0x00104, 0x23b17abe, BRF_OPT },				// 24
 };
 
 STD_ROM_PICK(Midresj)
@@ -4148,11 +4148,10 @@ static INT32 Dec0MachineInit()
 	GenericTilesInit();
 	
 	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, 1);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
@@ -4380,9 +4379,6 @@ static INT32 HbarrelInit()
 	realMCU = 1;
 	nRet = BurnLoadRom(DrvMCURom + 0x00000, 30, 1); if (nRet != 0) return 1;
 	DrvMCUInit();
-
-	BurnTimerAttachNull(10000000); // YM2203 timer, not attached to Sek
-	bTimerNullCPU = 1;
 
 	BurnFree(DrvTempRom);
 
@@ -4638,11 +4634,10 @@ static INT32 SlyspyDrvInit()
 	GenericTilesInit();
 	
 	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
-	BurnTimerAttachYM3812(&H6280Config, 3000000);
+	BurnTimerAttach(&H6280Config, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
-	
+
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.90, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.90, BURN_SND_ROUTE_BOTH);
@@ -4854,11 +4849,10 @@ static INT32 MidresInit()
 	GenericTilesInit();
 	
 	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
-	BurnTimerAttachYM3812(&H6280Config, 2000000);
+	BurnTimerAttach(&H6280Config, 2000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.75, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 1.75, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 1.75, BURN_SND_ROUTE_BOTH);
@@ -5433,7 +5427,7 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 		else
 			mult = -16;
 
-		if ((spriteram[offs] & 0x8000) == 0) {
+		if ((BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x8000) == 0) {
 			offs+=4;
 			continue;
 		}
@@ -5444,7 +5438,7 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 			{
 				INT32 code = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x1fff) & ~(h - 1);
 
-				if (spriteram[offs] & 0x4000) {
+				if (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x4000) {
 					incy = -1;
 				} else {
 					code += h - 1;
@@ -5476,26 +5470,26 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 static INT32 BaddudesDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
 	if ((DrvPriority & 0x01) == 0x00) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-		DrvRenderSprites(0, 0);
-		if (DrvPriority & 0x04) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 4) if (DrvPriority & 0x02) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+		if (nSpriteEnable & 1) DrvRenderSprites(0, 0);
+		if (nBurnLayer & 8) if (DrvPriority & 0x04) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
-		DrvRenderSprites(0, 0);
-		if (DrvPriority & 0x04) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-	}	
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 4) if (DrvPriority & 0x02) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
+		if (nSpriteEnable & 1) DrvRenderSprites(0, 0);
+		if (nBurnLayer & 8) if (DrvPriority & 0x04) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+	}
 	
-	DrvRenderCharLayer();
+	if (nSpriteEnable & 2) DrvRenderCharLayer(); // not sprite layer, but ran out of layer bits
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5504,17 +5498,17 @@ static INT32 BaddudesDraw()
 static INT32 BirdtryDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 1) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 		
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5523,17 +5517,17 @@ static INT32 BirdtryDraw()
 static INT32 HbarrelDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x08, 0x08);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x08, 0x00);
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 1) DrvRenderSprites(0x08, 0x08);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x08, 0x00);
 		
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5542,21 +5536,21 @@ static INT32 HbarrelDraw()
 static INT32 HippodrmDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
-	DrvRenderSprites(0x00, 0x00);
-	DrvRenderCharLayer();
+	if (nSpriteEnable & 1) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5566,7 +5560,7 @@ static INT32 MidresDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	if (DrvPriority & 0x04) {
 		Trans = 0x00;
@@ -5578,22 +5572,22 @@ static INT32 MidresDraw()
 	Dec1CalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
 	if (DrvPriority & 0x02) {
-		DrvRenderSprites(0x08, Trans ^ 0x08);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x08, Trans ^ 0x08);
 	} else {
-		DrvRenderSprites(0x00, 0x00);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 	}
 	
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5603,7 +5597,7 @@ static INT32 RobocopDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	if (DrvPriority & 0x04) {
 		Trans = 0x08;
@@ -5615,22 +5609,22 @@ static INT32 RobocopDraw()
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_LAYER1);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_LAYER1);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
 	if (DrvPriority & 0x02) {
-		DrvRenderSprites(0x08, Trans ^ 0x08);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x08, Trans ^ 0x08);
 	} else {
-		DrvRenderSprites(0x00, 0x00);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 	}
 	
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5639,16 +5633,16 @@ static INT32 RobocopDraw()
 static INT32 SlyspyDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	Dec1CalcPalette();
 	
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-	if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-	DrvRenderCharLayer();
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 4) if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+	if (nBurnLayer & 8) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5690,20 +5684,17 @@ static INT32 DrvFrame()
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, Sek);
 
-		if (bTimerNullCPU)
-			CPU_RUN(0, Sek);
-
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (realMCU) {
 			CPU_RUN(2, DrvMCU);
 		}
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	SekClose();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -5714,9 +5705,6 @@ static INT32 DrvFrame()
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = 0; // sound cpu, not needed
 	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
-
-	SekClose();
-	M6502Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5746,31 +5734,28 @@ static INT32 RobocopFrame()
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, Sek);
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
 
-		CPU_RUN(2, h6280);
+		CPU_RUN_TIMER(1);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN(2, h6280);
 	}
-	
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	
+
+	SekClose();
+	M6502Close();
+	h6280Close();
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	SekClose();
-	M6502Close();
-	h6280Close();
-	
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -5795,7 +5780,6 @@ static INT32 Dec1Frame()
 		nCyclesTotal[0] = (INT32)((INT64)10000000.0 * 100 * nBurnCPUSpeedAdjust / (0x100 * nBurnFPS));
 		INT32 adj_mhz = (INT32)(10000000.0 * nBurnCPUSpeedAdjust / 0x100);
 		bprintf(0, _T("adjusted mhz / cycles per frame:  %d  /  %d\n"), adj_mhz, nCyclesTotal[0]);
-		BurnTimerAttachSek(adj_mhz);
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
 	}
 
@@ -5811,29 +5795,25 @@ static INT32 Dec1Frame()
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU = 0;
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		CPU_RUN(0, Sek);
+
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
-		nCurrentCPU = 1;
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	SekClose();
+	h6280Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	SekClose();
-	h6280Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5918,7 +5898,7 @@ static INT32 SlyspyScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBaddudes = {
 	"baddudes", NULL, NULL, NULL, "1988",
-	"Bad Dudes vs. Dragonninja (US)\0", NULL, "Data East USA", "DEC0",
+	"Bad Dudes vs. Dragonninja (US, revision 1)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
@@ -5928,7 +5908,7 @@ struct BurnDriver BurnDrvBaddudes = {
 
 struct BurnDriver BurnDrvBirdtry = {
 	"birdtry", NULL, NULL, NULL, "1988",
-	"Birdie Try (Japan revision 2, revision 1 MCU)\0", NULL, "Data East Corporation", "DEC0",
+	"Birdie Try (Japan, revision 2, revision 1 MCU)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
@@ -5938,7 +5918,7 @@ struct BurnDriver BurnDrvBirdtry = {
 
 struct BurnDriver BurnDrvBirdtrya = {
 	"birdtrya", "birdtry", NULL, NULL, "1988",
-	"Birdie Try (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
+	"Birdie Try (Japan, revision 2)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, birdtryaRomInfo, birdtryaRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
@@ -5948,7 +5928,7 @@ struct BurnDriver BurnDrvBirdtrya = {
 
 struct BurnDriver BurnDrvBirdtryb = {
 	"birdtryb", "birdtry", NULL, NULL, "1988",
-	"Birdie Try (Japan revision S)\0", NULL, "Data East Corporation", "DEC0",
+	"Birdie Try (Japan, sample version)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, birdtrybRomInfo, birdtrybRomName, NULL, NULL, NULL, NULL, BirdtryInputInfo, BirdtryDIPInfo,
@@ -5958,7 +5938,7 @@ struct BurnDriver BurnDrvBirdtryb = {
 
 struct BurnDriver BurnDrvDrgninja = {
 	"drgninja", "baddudes", NULL, NULL, "1988",
-	"Dragonninja (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	"Dragonninja (Japan, revision 1)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
@@ -6038,7 +6018,7 @@ struct BurnDriver BurnDrvHippodrm = {
 
 struct BurnDriver BurnDrvFfantasy = {
 	"ffantasy", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (Japan revision 3)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (Japan, revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
@@ -6048,7 +6028,7 @@ struct BurnDriver BurnDrvFfantasy = {
 
 struct BurnDriver BurnDrvFfantasyj = {
 	"ffantasyj", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (Japan revision 2)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (Japan, revision 2)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyjRomInfo, FfantasyjRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
@@ -6058,7 +6038,7 @@ struct BurnDriver BurnDrvFfantasyj = {
 
 struct BurnDriver BurnDrvFfantasya = {
 	"ffantasya", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (Japan)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
@@ -6068,7 +6048,7 @@ struct BurnDriver BurnDrvFfantasya = {
 
 struct BurnDriver BurnDrvFfantasyb = {
 	"ffantasyb", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (Japan revision ?)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (Japan revision ?)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasybRomInfo, FfantasybRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
@@ -6118,7 +6098,7 @@ struct BurnDriver BurnDrvMidresj = {
 
 struct BurnDriver BurnDrvRobocop = {
 	"robocop", NULL, NULL, NULL, "1988",
-	"Robocop (World revision 4)\0", NULL, "Data East Corporation", "DEC0",
+	"Robocop (World, revision 4)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
@@ -6128,7 +6108,7 @@ struct BurnDriver BurnDrvRobocop = {
 
 struct BurnDriver BurnDrvRobocopw = {
 	"robocopw", "robocop", NULL, NULL, "1988",
-	"Robocop (World revision 3)\0", NULL, "Data East Corporation", "DEC0",
+	"Robocop (World, revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, RobocopwRomInfo, RobocopwRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
@@ -6148,7 +6128,7 @@ struct BurnDriver BurnDrvRobocopj = {
 
 struct BurnDriver BurnDrvRobocopu = {
 	"robocopu", "robocop", NULL, NULL, "1988",
-	"Robocop (US revision 1)\0", NULL, "Data East USA", "DEC0",
+	"Robocop (US, revision 1)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, RobocopuRomInfo, RobocopuRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
@@ -6158,7 +6138,7 @@ struct BurnDriver BurnDrvRobocopu = {
 
 struct BurnDriver BurnDrvRobocopu0 = {
 	"robocopu0", "robocop", NULL, NULL, "1988",
-	"Robocop (US revision 0)\0", NULL, "Data East USA", "DEC0",
+	"Robocop (US, revision 0)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, Robocopu0RomInfo, Robocopu0RomName, NULL, NULL, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
@@ -6188,7 +6168,7 @@ struct BurnDriver BurnDrvRobocopb2 = {
 
 struct BurnDriver BurnDrvSecretag = {
 	"secretag", NULL, NULL, NULL, "1989",
-	"Secret Agent (World revision 3)\0", NULL, "Data East Corporation", "DEC0",
+	"Secret Agent (World, revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
@@ -6198,7 +6178,7 @@ struct BurnDriver BurnDrvSecretag = {
 
 struct BurnDriver BurnDrvSecretagj = {
 	"secretagj", "secretag", NULL, NULL, "1989",
-	"Secret Agent (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
+	"Secret Agent (Japan, revision 2)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, SecretagjRomInfo, SecretagjRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
@@ -6208,7 +6188,7 @@ struct BurnDriver BurnDrvSecretagj = {
 
 struct BurnDriver BurnDrvSlyspy = {
 	"slyspy", "secretag", NULL, NULL, "1989",
-	"Sly Spy (US revision 4)\0", NULL, "Data East USA", "DEC0",
+	"Sly Spy (US, revision 4)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
@@ -6218,7 +6198,7 @@ struct BurnDriver BurnDrvSlyspy = {
 
 struct BurnDriver BurnDrvSlyspy2 = {
 	"slyspy2", "secretag", NULL, NULL, "1989",
-	"Sly Spy (US revision 2)\0", NULL, "Data East USA", "DEC0",
+	"Sly Spy (US, revision 2)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
@@ -6228,7 +6208,7 @@ struct BurnDriver BurnDrvSlyspy2 = {
 
 struct BurnDriver BurnDrvSlyspy3 = {
 	"slyspy3", "secretag", NULL, NULL, "1989",
-	"Sly Spy (US revision 3)\0", NULL, "Data East USA", "DEC0",
+	"Sly Spy (US, revision 3)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, Slyspy3RomInfo, Slyspy3RomName, NULL, NULL, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,

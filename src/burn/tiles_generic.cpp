@@ -220,6 +220,59 @@ INT32 BurnTransferCopy(UINT32* pPalette)
 	return 0;
 }
 
+INT32 BurnTransferPartial(UINT32* pPalette, INT32 nStart, INT32 nEnd)
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferPartial called without init\n"));
+#endif
+
+	// Sanity checks
+	if (nStart < 0) nStart = 0;
+	if (nStart > nTransHeight) nStart = nTransHeight;
+	if (nEnd < 0) nEnd = 0;
+	if (nEnd > nTransHeight) nEnd = nTransHeight;
+	if (nEnd < nStart) return 1;
+	if (!pBurnDraw) return 1;
+
+	UINT16* pSrc = pTransDraw + nStart * nTransWidth;
+	UINT8* pDest = pBurnDraw + nStart * nBurnPitch;
+
+	pBurnDrvPalette = pPalette;
+
+	switch (nBurnBpp) {
+		case 2: {
+			for (INT32 y = nStart; y < nEnd; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x ++) {
+					((UINT16*)pDest)[x] = pPalette[pSrc[x]];
+				}
+			}
+			break;
+		}
+		case 3: {
+			for (INT32 y = nStart; y < nEnd; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x++) {
+					UINT32 c = pPalette[pSrc[x]];
+					*(pDest + (x * 3) + 0) = c & 0xFF;
+					*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
+					*(pDest + (x * 3) + 2) = c >> 16;
+
+				}
+			}
+			break;
+		}
+		case 4: {
+			for (INT32 y = nStart; y < nEnd; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x++) {
+					((UINT32*)pDest)[x] = pPalette[pSrc[x]];
+				}
+			}
+			break;
+		}
+	}
+
+	return 0;
+}
+
 #define nTransOverflow 16 // 16 lines of overflow, some games spill past the end of the allocated height causing heap corruption.
 
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight)
@@ -228,17 +281,12 @@ void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight)
 	nTransWidth = nWidth;
 }
 
-void BurnTransferExit()
+INT32 BurnTransferFindSpill()
 {
-#if defined FBNEO_DEBUG
-	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
-#endif
+	INT32 uhoh_spill = 0;
 
 	if (Debug_BurnTransferInitted)
 	{ // pTransDraw spill detector v.0001.01 - handy for driver development!
-
-		INT32 uhoh_spill = 0;
-
 		for (INT32 y = nTransHeight; y < nTransHeight + nTransOverflow; y++) {
 			for (INT32 x = 0; x < nTransWidth; x++) {
 				if (pTransDraw[y * nTransWidth + x]) uhoh_spill = 1;
@@ -246,8 +294,20 @@ void BurnTransferExit()
 		}
 		if (uhoh_spill) {
 			bprintf(PRINT_ERROR, _T("!!! BurnTransferExit(): Game wrote past pTransDraw's allocated dimensions!\n"));
+			bprintf(PRINT_ERROR, _T("... Frame  %d.  Transfer dimensions  %d x %d\n"), nCurrentFrame, nTransWidth, nTransHeight);
 		}
 	}
+
+	return uhoh_spill;
+}
+
+void BurnTransferExit()
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
+#endif
+
+	BurnTransferFindSpill();
 
 	BurnBitmapExit();
 	pTransDraw = NULL;
@@ -305,6 +365,16 @@ void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY)
 			src2 -= nScreenWidth;
 		}
 	}
+}
+
+void BurnTransferRealloc()
+{
+	BurnBitmapAllocate(0, nTransWidth, nTransHeight + nTransOverflow, true);
+
+	pTransDraw = BurnBitmapGetBitmap(0);
+	pPrioDraw = BurnBitmapGetPriomap(0);
+
+	BurnTransferClear();
 }
 
 /*================================================================================================

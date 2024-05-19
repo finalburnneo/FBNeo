@@ -120,6 +120,7 @@ static INT32 is_radm = 0;
 static INT32 is_radr = 0;
 static INT32 is_sonic = 0;
 static INT32 is_slipstrm = 0;
+static INT32 is_ga2_spidman = 0;
 
 static INT32 can_modechange = 0;
 static INT32 fake_wide_screen = 0;
@@ -130,6 +131,7 @@ struct cache_entry
 	INT32			tmap;
 	UINT8			page;
 	UINT8			bank;
+	UINT8			dirty;
 };
 
 static cache_entry tmap_cache[32];
@@ -157,6 +159,7 @@ static UINT8 DrvJoyX1[16];
 static UINT8 DrvJoyX2[16];
 static UINT8 DrvJoyX3[16];
 static UINT8 DrvJoyX4[16];
+static UINT8 DrvJoyF[16]; // fake inputs
 static UINT16 DrvInputs[16];
 static UINT16 DrvExtra[4];
 static UINT8 DrvDips[2];
@@ -174,6 +177,7 @@ static INT32 SingleScreenModeChangeCheck();
 
 static INT32 has_gun = 0;
 static INT32 clr_opposites = 0;
+static INT32 opaquey_hack = 0;
 
 static struct BurnInputInfo ArabfgtInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p1 coin"	},
@@ -325,6 +329,7 @@ static struct BurnInputInfo Ga2InputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 3"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoyX3 + 0,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoyX1 + 5,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoyX1 + 4,	"p3 down"	},
@@ -334,6 +339,7 @@ static struct BurnInputInfo Ga2InputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoyX1 + 1,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoyX1 + 2,	"p3 fire 3"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoyF + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoyX3 + 1,	"p4 start"	},
 	{"P4 Up",			BIT_DIGITAL,	DrvJoyX2 + 5,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoyX2 + 4,	"p4 down"	},
@@ -458,6 +464,7 @@ static struct BurnInputInfo SpidmanInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 2,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoyX3 + 0,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoyX1 + 5,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoyX1 + 4,	"p3 down"	},
@@ -466,6 +473,7 @@ static struct BurnInputInfo SpidmanInputList[] = {
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoyX1 + 0,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoyX1 + 1,	"p3 fire 2"	},
 
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoyF + 3,	"p4 coin"	},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoyX3 + 1,	"p4 start"	},
 	{"P4 Up",			BIT_DIGITAL,	DrvJoyX2 + 5,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoyX2 + 4,	"p4 down"	},
@@ -936,8 +944,8 @@ static struct BurnInputInfo ScrossInputList[] = {
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
 	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy5 + 3,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 5,	"p2 start"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy13 + 2,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy13 + 4,	"p2 start"	},
 	{"P2 Attack",		BIT_DIGITAL,	DrvJoy9 + 0,	"p2 fire 1"	},
 	{"P2 Wheelie",		BIT_DIGITAL,	DrvJoy9 + 1,	"p2 fire 2"	},
 	{"P2 Brake",		BIT_DIGITAL,	DrvJoy9 + 2,	"p2 fire 3"	},
@@ -967,16 +975,19 @@ static struct BurnInputInfo TitlefInputList[] = {
 	{"P1 Right Stick Left",	BIT_DIGITAL,	DrvJoy2 + 7,	"p3 left"	},
 	{"P1 Right Stick Right",BIT_DIGITAL,	DrvJoy2 + 6,	"p3 right"	},
 
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy5 + 3,	"p2 coin"	},
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy13 + 2,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy5 + 5,	"p2 start"	},
-	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy7 + 5,	"p2 up"		},
-	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy7 + 4,	"p2 down"	},
-	{"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy7 + 7,	"p2 left"	},
-	{"P2 Left Stick Right",	BIT_DIGITAL,	DrvJoy7 + 6,	"p2 right"	},
-	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy8 + 5,	"p4 up"		},
-	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy8 + 4,	"p4 down"	},
-	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy8 + 7,	"p4 left"	},
-	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy8 + 6,	"p4 right"	},
+	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy9 + 5,	"p2 up"		},
+	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy9 + 4,	"p2 down"	},
+	{"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy9 + 7,	"p2 left"	},
+	{"P2 Left Stick Right",	BIT_DIGITAL,	DrvJoy9 + 6,	"p2 right"	},
+	{"P2 Right Stick Up",	BIT_DIGITAL,	DrvJoy10 + 5,	"p4 up"		},
+	{"P2 Right Stick Down",	BIT_DIGITAL,	DrvJoy10 + 4,	"p4 down"	},
+	{"P2 Right Stick Left",	BIT_DIGITAL,	DrvJoy10 + 7,	"p4 left"	},
+	{"P2 Right Stick Right",BIT_DIGITAL,	DrvJoy10 + 6,	"p4 right"	},
+
+	{"P3 Start",			BIT_DIGITAL,	DrvJoy13 + 4,	"p3 start"	},
+	{"P4 Start",			BIT_DIGITAL,	DrvJoy13 + 5,	"p4 start"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",		BIT_DIGITAL,	DrvJoy5 + 1,	"diag"		},
@@ -1091,10 +1102,10 @@ STDDIPINFO(setname)
 DEFAULT_UNUSED_DIPS(Arabfgt, 0x23)
 DEFAULT_UNUSED_DIPS(Arabfgtu, 0x25)
 DEFAULT_UNUSED_DIPS(Brival, 0x1d)
-DEFAULT_UNUSED_DIPS(Ga2, 0x27)
+DEFAULT_UNUSED_DIPS(Ga2, 0x29)
 DEFAULT_UNUSED_DIPS(Ga2u, 0x29)
 DEFAULT_UNUSED_DIPS(Darkedge, 0x1b)
-DEFAULT_UNUSED_DIPS(Spidman, 0x23)
+DEFAULT_UNUSED_DIPS(Spidman, 0x25)
 DEFAULT_UNUSED_DIPS(Alien3, 0x0f)
 DEFAULT_UNUSED_DIPS(Jpark, 0x10)
 DEFAULT_UNUSED_DIPS(Arescue, 0x09)
@@ -1109,7 +1120,7 @@ DEFAULT_UNUSED_DIPS_WHEEL(F1lap, 0x0d)
 DEFAULT_UNUSED_DIPS_MS_WHEEL(Orunners, 0x19)
 DEFAULT_UNUSED_DIPS_MS(Harddunk, 0x3d)
 DEFAULT_UNUSED_DIPS_MS(Scross, 0x13)
-DEFAULT_UNUSED_DIPS_MS(Titlef, 0x19)
+DEFAULT_UNUSED_DIPS_MS(Titlef, 0x1b)
 
 static INT32 irq_callback(INT32 /*state*/)
 {
@@ -1426,6 +1437,18 @@ static UINT16 io_chip_read(INT32 which, UINT32 offset)
 	return 0xffff;
 }
 
+static inline void mark_dirty(UINT32 offset)
+{
+	if (offset < (0x1ff00 >> 1)) {
+		for (cache_entry *entry = cache_head; entry != NULL; entry = entry->next) {
+			if (entry->page == (offset >> 9)) {
+				entry->dirty = 1;
+				GenericTilemapSetTileDirty(entry->tmap, offset & 0x1ff);
+			}
+		}
+	}
+}
+
 static void system32_main_write_word(UINT32 address, UINT16 data)
 {
 #ifdef LOG_RW
@@ -1439,6 +1462,13 @@ static void system32_main_write_word(UINT32 address, UINT16 data)
 		if (memory_protection_write) {
 			memory_protection_write(offset, data, 0xffff);
 		}
+		return;
+	}
+
+	if ((address & 0xf00000) == 0x300000) {
+		UINT16 *ram = (UINT16*)DrvVidRAM;
+		ram[(address & 0x1ffff) >> 1] = BURN_ENDIAN_SWAP_INT16(data);
+		mark_dirty((address & 0x1ffff) >> 1);
 		return;
 	}
 
@@ -1554,6 +1584,12 @@ static void system32_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
+	if ((address & 0xf00000) == 0x300000) {
+		DrvVidRAM[address & 0x1ffff] = data;
+		mark_dirty((address & 0x1ffff) >> 1);
+		return;
+	}
+
 	if ((address & 0xfe0000) == 0x400000) {
 		INT32 offset = address & 0x1ffff;
 		DrvSprRAM[offset] = data;
@@ -1660,6 +1696,11 @@ static UINT16 system32_main_read_word(UINT32 address)
 			return memory_protection_read(offset, 0xffff);
 		}
 		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
+	}
+
+	if ((address & 0xf00000) == 0x300000) {
+		UINT16 *ram = (UINT16*)DrvVidRAM;
+		return BURN_ENDIAN_SWAP_INT16(ram[(address & 0x1ffff) >> 1]);
 	}
 
 	if ((address & 0xf00000) == 0x500000) {
@@ -1896,7 +1937,6 @@ static tilemap_callback( layer )
 static void tilemap_configure_allocate()
 {
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer_map_callback, 16, 16, 32, 16);
 	GenericTilemapSetGfx(0, DrvGfxROM[0], 4, 16, 16, graphics_length[0], 0, 0x3ff);
 
 	if (has_gun) {
@@ -1917,6 +1957,12 @@ static void tilemap_configure_allocate()
 		entry->bank = 0;
 		entry->next = cache_head;
 		entry->tmap = tmap;
+		entry->dirty = 1;
+
+		GenericTilemapInit(tmap, TILEMAP_SCAN_ROWS, layer_map_callback, 16, 16, 32, 16);
+		GenericTilemapUseDirtyTiles(tmap);
+
+		BurnBitmapAllocate(32 + tmap, 512, 256, true); // each tmap gets a draw-buffer (speedup)
 
 		cache_head = entry;
 	}
@@ -2438,8 +2484,8 @@ static void system32_v60_map()
 	for (INT32 i = 0; i < 0x100000; i+=0x10000) {
 		v60MapMemory(DrvV60RAM,			0x200000 + i, 0x20ffff + i, MAP_RAM);
 	}
-	for (INT32 i = 0; i < 0x100000; i+=0x20000) {
-		v60MapMemory(DrvVidRAM,			0x300000 + i, 0x31ffff + i, MAP_RAM);
+	for (INT32 i = 0; i < 0x100000; i+=0x20000) { // mapped in handler
+//		v60MapMemory(DrvVidRAM,			0x300000 + i, 0x31ffff + i, MAP_RAM);
 	}
 	for (INT32 i = 0; i < 0x100000; i+=0x20000) {
 		v60MapMemory(DrvSprRAM,			0x400000 + i, 0x41ffff + i, MAP_ROM); // writes in handler
@@ -2465,8 +2511,8 @@ static void system32_v70_map()
 	for (INT32 i = 0; i < 0x100000; i+=0x20000) {
 		v60MapMemory(DrvV60RAM,			0x200000 + i, 0x21ffff + i, MAP_RAM);
 	}
-	for (INT32 i = 0; i < 0x100000; i+=0x20000) {
-		v60MapMemory(DrvVidRAM,			0x300000 + i, 0x31ffff + i, MAP_RAM);
+	for (INT32 i = 0; i < 0x100000; i+=0x20000) { // mapped in handler
+//		v60MapMemory(DrvVidRAM,			0x300000 + i, 0x31ffff + i, MAP_RAM);
 	}
 	for (INT32 i = 0; i < 0x100000; i+=0x20000) {
 		v60MapMemory(DrvSprRAM,			0x400000 + i, 0x41ffff + i, MAP_ROM); // writes in handler
@@ -2593,10 +2639,13 @@ static INT32 DrvExit()
 	is_scross = 0;
 	is_sonic = 0;
 	is_slipstrm = 0;
+	is_ga2_spidman = 0;
 	has_gun = 0;
 	fake_wide_screen = 0;
 	can_modechange = 0;
 	clr_opposites = 0;
+
+	opaquey_hack = 0;
 
 	CURVE = NULL;
 
@@ -2755,6 +2804,8 @@ static INT32 find_cache_entry(INT32 page, INT32 bank)
 
 	entry->page = page;
 	entry->bank = bank;
+	entry->dirty = 1;
+	GenericTilemapAllTilesDirty(entry->tmap);
 
 	prev->next = entry->next;
 	entry->next = cache_head;
@@ -2814,7 +2865,11 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 
 	for (INT32 i = 0; i < 4; i++) {
 		tilemap_cache = &tmap_cache[tilemaps[i]];
-		GenericTilemapDraw(0, 1 + i, 0);
+
+		if (tilemap_cache->dirty) {
+			tilemap_cache->dirty = 0;
+			GenericTilemapDraw(tilemap_cache->tmap, 32 + tilemap_cache->tmap, 0);
+		}
 	}
 
 	INT32 opaque = 0;
@@ -2882,8 +2937,8 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 		{
 			INT32 transparent = 0;
 
-			UINT16 const *tm0 = BurnBitmapGetBitmap((((srcy >> 27) & 2) + 0)+1);
-			UINT16 const *tm1 = BurnBitmapGetBitmap((((srcy >> 27) & 2) + 1)+1);
+			UINT16 const *tm0 = BurnBitmapGetBitmap(tmap_cache[tilemaps[(((srcy >> 27) & 2) + 0)]].tmap + 32 );
+			UINT16 const *tm1 = BurnBitmapGetBitmap(tmap_cache[tilemaps[(((srcy >> 27) & 2) + 1)]].tmap + 32 );
 			UINT16 const *src[2] = { &tm0[((srcy >> 20) & 0xff) * 512], &tm1[((srcy >> 20) & 0xff) * 512] };
 
 			UINT32 srcx = srcx_start;
@@ -2930,10 +2985,14 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 
 	for (INT32 i = 0; i < 4; i++) {
 		tilemap_cache = &tmap_cache[tilemaps[i]];
-		GenericTilemapDraw(0, 1 + i, 0);
+
+		if (tilemap_cache->dirty) {
+			tilemap_cache->dirty = 0;
+			GenericTilemapDraw(tilemap_cache->tmap, 32 + tilemap_cache->tmap, 0);
+		}
 	}
 
-	INT32 opaque = 0;
+	INT32 opaque = (opaquey_hack) ? ((m_videoram[0x1ff8e/2] >> (8 + bgnum)) & 1) : 0;
 	INT32 flipx, flipy;
 
 	compute_tilemap_flips(bgnum, flipx, flipy);
@@ -2996,8 +3055,8 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 				srcy = (yscroll + BURN_ENDIAN_SWAP_INT16(table[0x200 + 0x100 * (bgnum - 2) + y])) & 0x1ff;
 
 			/* look up the pages and get their source pixmaps */
-			UINT16 const *tm0 = BurnBitmapGetBitmap(((srcy >> 7) & 2) + 0 + 1);
-			UINT16 const *tm1 = BurnBitmapGetBitmap(((srcy >> 7) & 2) + 1 + 1);
+			UINT16 const *tm0 = BurnBitmapGetBitmap(tmap_cache[tilemaps[((srcy >> 7) & 2) + 0]].tmap + 32 );
+			UINT16 const *tm1 = BurnBitmapGetBitmap(tmap_cache[tilemaps[((srcy >> 7) & 2) + 1]].tmap + 32 );
 			UINT16 const *src[2] = { &tm0[(srcy & 0xff) * 512], &tm1[(srcy & 0xff) * 512] };
 
 			/* loop over extents */
@@ -3713,8 +3772,9 @@ static void update_sprites()
 		}
 	}
 
-	if (sprite_control[0] & 2)
+	if (sprite_control[0] & 2) {
 		sprite_erase_buffer();
+	}
 
 	if (sprite_control[0] & 1)
 	{
@@ -4128,9 +4188,9 @@ static INT32 SingleScreenModeChangeCheck()
 	{
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
-//		GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
-		Reinitialise();
+		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		BurnTransferRealloc(); // re-inits pTransDraw
 
 		if (is_slipstrm || is_radr) {
 			BurnShiftScreenSizeChanged();
@@ -4177,7 +4237,6 @@ static INT32 MultiScreenCheck()
 	{
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
-		//GenericTilesExit();
 		BurnDrvSetVisibleSize(screensize, 224);
 		if (screensize == 320) {
 			BurnDrvSetAspect(4, 3);
@@ -4186,8 +4245,8 @@ static INT32 MultiScreenCheck()
 			BurnDrvSetAspect(8, 3);
 			MultiPCMSetMono(0);
 		}
-		//GenericTilesInit();
-		Reinitialise();
+		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		BurnTransferRealloc(); // re-inits pTransDraw
 
 		return 1; // don't draw this time around
 	}
@@ -4287,9 +4346,12 @@ static INT32 DrvFrame()
 
 		if (is_scross) { // button 2 (wheelie) is active high
 			DrvInputs[0] = 0xfd;
-			DrvInputs[1] = 0xfd;
+			DrvInputs[8] = 0xfd;
 		}
-
+		if (is_ga2_spidman) { // fake p3,p4 coin slots
+			if (DrvJoyF[2]) DrvJoy5[2] = 1;
+			if (DrvJoyF[3]) DrvJoy5[3] = 1;
+		}
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[ 0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[ 1] ^= (DrvJoy2[i] & 1) << i;
@@ -4358,23 +4420,22 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		INT32 scanline = (i + 224) % 262;
+
 		INT32 cyc = v60TotalCycles();
 
-		if (i == 224) {
-			if (pBurnDraw) {
-				BurnDrvRedraw();
-			}
+		if (scanline == 224) {
 			signal_v60_irq(MAIN_IRQ_VBSTART);
 
 			if (system32_prot_vblank)
 				system32_prot_vblank();
 		}
 
-		if (i == 0) {
+		if (scanline == 0) {
 			signal_v60_irq(MAIN_IRQ_VBSTOP);
 		}
 
-		if (i == 1) {
+		if (scanline == 1) {
 			update_sprites();
 		}
 
@@ -4405,10 +4466,12 @@ static INT32 DrvFrame()
 
 		if (use_v25) CPU_RUN(1, Vez);
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[2]);
+	ZetClose();
+	if (use_v25) VezClose();
+	v60Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3438Update(pBurnSoundOut, nBurnSoundLen);
@@ -4419,9 +4482,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetClose();
-	if (use_v25) VezClose();
-	v60Close();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = (use_v25) ? (nCyclesDone[1] - nCyclesTotal[1]) : 0;
@@ -4500,6 +4563,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetOpen(0);
 		ZetMapMemory(DrvZ80ROM + sound_bank * 0x2000, 0xa000, 0xbfff, MAP_ROM);
 		ZetClose();
+
+		// force sprite update
+		sprite_erase_buffer();
+		sprite_swap_buffers();
+		sprite_render_list();
 
 		if (is_multi32) {
 			pcm_bankswitch(pcm_bankdata);
@@ -4846,7 +4914,7 @@ static INT32 ArabfgtInit()
 
 struct BurnDriver BurnDrvArabfgt = {
 	"arabfgt", NULL, NULL, NULL, "1991",
-	"Arabian Fight (World)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (World)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtRomInfo, arabfgtRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,
@@ -4887,7 +4955,7 @@ STD_ROM_FN(arabfgtu)
 
 struct BurnDriver BurnDrvArabfgtu = {
 	"arabfgtu", "arabfgt", NULL, NULL, "1991",
-	"Arabian Fight (US)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (US)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtuRomInfo, arabfgtuRomName, NULL, NULL, NULL, NULL, ArabfgtuInputInfo, ArabfgtuDIPInfo,
@@ -4928,7 +4996,7 @@ STD_ROM_FN(arabfgtj)
 
 struct BurnDriver BurnDrvArabfgtj = {
 	"arabfgtj", "arabfgt", NULL, NULL, "1991",
-	"Arabian Fight (Japan)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (Japan)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtjRomInfo, arabfgtjRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,
@@ -4991,6 +5059,7 @@ static UINT8 ga2_opcode_table[256] = {
 
 static INT32 Ga2Init()
 {
+	is_ga2_spidman = 1;
 	sprite_length = 0;
 	DrvLoadRoms(false);
 	BurnAllocMemIndex();
@@ -5161,6 +5230,8 @@ static INT32 DarkedgeInit()
 
 	clr_opposites = 2;
 
+	opaquey_hack = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -5247,6 +5318,7 @@ STD_ROM_FN(spidman)
 
 static INT32 SpidmanInit()
 {
+	is_ga2_spidman = 1;
 	sprite_length = 0;
 	DrvLoadRoms(false);
 	BurnAllocMemIndex();
@@ -5414,7 +5486,7 @@ static INT32 DbzvrvsInit()
 
 struct BurnDriver BurnDrvDbzvrvs = {
 	"dbzvrvs", NULL, NULL, NULL, "1994",
-	"Dragon Ball Z V.R.V.S. (Japan, Rev A)\0", NULL, "Sega / Banpresto", "System 32",
+	"Dragon Ball Z: V.R. V.S. (Japan, Rev A)\0", NULL, "Sega / Banpresto", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM32, GBF_VSFIGHT, 0,
 	NULL, dbzvrvsRomInfo, dbzvrvsRomName, NULL, NULL, NULL, NULL, DbzvrvsInputInfo, DbzvrvsDIPInfo,
@@ -5980,17 +6052,17 @@ static struct BurnRomInfo brivaljRomDesc[] = {
 	{ "mpr-15626.ic34",				0x100000, 0x83306d1e, 3 | BRF_PRG | BRF_ESS }, //  5
 	{ "mpr-15625.ic24",				0x100000, 0x3ce82932, 3 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "mpr-14599f.ic14",			0x200000, 0x1de17e83, 1 | BRF_GRA },           //  7 Main Layer Tiles
-	{ "mpr-14598f.ic5",				0x200000, 0xcafb0de9, 1 | BRF_GRA },           //  8
+	{ "mpr-15629.ic14",				0x200000, 0x2c8dd96d, 1 | BRF_GRA },           //  7 Main Layer Tiles
+	{ "mpr-15628.ic5",				0x200000, 0x58d4ca40, 1 | BRF_GRA },           //  8
 
-	{ "brivalj_mp15637.32",			0x200000, 0xf39844c0, 2 | BRF_GRA },           //  9 Main Sprites
-	{ "brivalj_mp15635.30",			0x200000, 0x263cf6d1, 2 | BRF_GRA },           // 10
-	{ "brivalj_mp15633.28",			0x200000, 0x44e9a88b, 2 | BRF_GRA },           // 11
-	{ "brivalj_mp15631.26",			0x200000, 0xe93cf9c9, 2 | BRF_GRA },           // 12
-	{ "brivalj_mp15636.31",			0x200000, 0x079ff77f, 2 | BRF_GRA },           // 13
-	{ "brivalj_mp15634.29",			0x200000, 0x1edc14cd, 2 | BRF_GRA },           // 14
-	{ "brivalj_mp15632.27",			0x200000, 0x796215f2, 2 | BRF_GRA },           // 15
-	{ "brivalj_mp15630.25",			0x200000, 0x8dabb501, 2 | BRF_GRA },           // 16
+	{ "mpr-15637.ic32",				0x200000, 0xb6cf2f05, 2 | BRF_GRA },           //  9 Main Sprites
+	{ "mpr-15635.ic30",				0x200000, 0x70f2eb2b, 2 | BRF_GRA },           // 10
+	{ "mpr-15633.ic28",				0x200000, 0x005dfed5, 2 | BRF_GRA },           // 11
+	{ "mpr-15631.ic26",				0x200000, 0xc35e2f21, 2 | BRF_GRA },           // 12
+	{ "mpr-15636.ic31",				0x200000, 0xd81ca97b, 2 | BRF_GRA },           // 13
+	{ "mpr-15634.ic29",				0x200000, 0xb0c6c52a, 2 | BRF_GRA },           // 14
+	{ "mpr-15632.ic27",				0x200000, 0x8476e52b, 2 | BRF_GRA },           // 15
+	{ "mpr-15630.ic25",				0x200000, 0xbf7dd2f6, 2 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(brivalj)
@@ -6727,6 +6799,8 @@ static INT32 RadrInit()
 
 	custom_io_write_0  = f1en_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
+
+	opaquey_hack = 1;
 
 	DrvDoReset();
 

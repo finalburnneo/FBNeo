@@ -828,8 +828,8 @@ static void draw_background()
 	UINT16 *vram = (UINT16*)PGMBgRAM;
 
 	UINT16 *rowscroll = PGMRowRAM;
-	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16((OldCodeMode) ? PGMVidReg[0x2000 / 2] : pgm_bg_scrolly);
-    INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16((OldCodeMode) ? PGMVidReg[0x3000 / 2] : pgm_bg_scrollx);
+	INT32 yscroll = ((OldCodeMode) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x2000 / 2])) : pgm_bg_scrolly);
+	INT32 xscroll = ((OldCodeMode) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x3000 / 2])) : pgm_bg_scrollx);
 
 	// check to see if we need to do line scroll
 	INT32 t = 0;
@@ -1091,10 +1091,13 @@ INT32 pgmDraw()
 
 //	if ((pgm_video_control & 0x1000) == 0 && (nBurnLayer & 1)) draw_background();
 	if (nBurnLayer & 1) {
+		draw_background();
+#if 0
 		if (!OldCodeMode) {
 			if ((pgm_video_control & 0x1000) == 0)
 				draw_background();
 		} else {draw_background();}
+#endif
 	}
 
 //	if ((pgm_video_control & 0x2000) == 0 && (nSpriteEnable & 2)) copy_sprite_priority(0);

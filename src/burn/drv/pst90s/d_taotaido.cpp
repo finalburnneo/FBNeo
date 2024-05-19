@@ -344,6 +344,123 @@ static struct BurnDIPInfo TaotaidoaDIPList[]=
 
 STDDIPINFO(Taotaidoa)
 
+static struct BurnDIPInfo Taotaido3DIPList[]=
+{
+	// Default Values
+	{0x15, 0xff, 0xff, 0xff, NULL					},
+	{0x16, 0xff, 0xff, 0xff, NULL					},
+	{0x17, 0xff, 0xff, 0xff, NULL					},
+	{0x18, 0xff, 0xff, 0x08, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Coin Slot"	},
+	{0x15, 0x01, 0x01, 0x01, "Same"				},
+	{0x15, 0x01, 0x01, 0x00, "Individual"	},
+
+	// Coinage condition: Coin Slot Individual
+	{0   , 0xfe, 0   ,    8, "Coinage"				},
+	{0x15, 0x02, 0x0e, 0x0a, "3 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x0c, "2 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x0e, "1 Coin 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x08, "1 Coin 2 Credits"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x06, "1 Coin 3 Credits"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x04, "1 Coin 4 Credits"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x02, "1 Coin 5 Credits"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+	{0x15, 0x02, 0x0e, 0x00, "1 Coin 6 Credits"			},
+	{0x15, 0x00, 0x01, 0x00, NULL},
+
+	// Coin 1 condition: Coin Slot Same
+	{0   , 0xfe, 0   ,    8, "Coin 1"				},
+	{0x15, 0x02, 0x0e, 0x0a, "3 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x0c, "2 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x0e, "1 Coin 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x08, "1 Coin 2 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x06, "1 Coin 3 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x04, "1 Coin 4 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x02, "1 Coin 5 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x0e, 0x00, "1 Coin 6 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+
+	// Coin 2 condition: Coin Slot Same
+	{0   , 0xfe, 0   ,    8, "Coin 2"				},
+	{0x15, 0x02, 0x70, 0x50, "3 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x60, "2 Coins 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x70, "1 Coin 1 Credit"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x40, "1 Coin 2 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x30, "1 Coin 3 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x20, "1 Coin 4 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x10, "1 Coin 5 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+	{0x15, 0x02, 0x70, 0x00, "1 Coin 6 Credits"			},
+	{0x15, 0x00, 0x01, 0x01, NULL},
+
+	{0   , 0xfe, 0   ,    2, "2 Coins to Start, 1 to Continue"	},
+	{0x15, 0x01, 0x80, 0x80, "Off"				},
+	{0x15, 0x01, 0x80, 0x00, "On"					},
+
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+//	{0x16, 0x01, 0x01, 0x01, "Off"				},
+//	{0x16, 0x01, 0x01, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"	},
+	{0x16, 0x01, 0x02, 0x00, "Off"				},
+	{0x16, 0x01, 0x02, 0x02, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"	},
+	{0x16, 0x01, 0x04, 0x04, "Off"				},
+	{0x16, 0x01, 0x04, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x16, 0x01, 0x18, 0x10, "Easy"					},
+	{0x16, 0x01, 0x18, 0x18, "Normal"				},
+	{0x16, 0x01, 0x18, 0x08, "Hard"					},
+	{0x16, 0x01, 0x18, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x20, 0x20, "Off"					},
+	{0x16, 0x01, 0x20, 0x00, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "Join In (1 Credit)"	},
+	{0x17, 0x01, 0x01, 0x00, "Off"					},
+	{0x17, 0x01, 0x01, 0x01, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "Buy In"				},
+	{0x17, 0x01, 0x02, 0x00, "No"					  },
+	{0x17, 0x01, 0x02, 0x02, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Number of Buttons"	},
+	{0x17, 0x01, 0x04, 0x00, "2"					},
+	{0x17, 0x01, 0x04, 0x04, "3"					},
+
+	{0   , 0xfe, 0   ,    5, "Country"			},
+	{0x18, 0x01, 0x0f, 0x00, "US"					  },
+	{0x18, 0x01, 0x0f, 0x01, "Japan"				},
+	{0x18, 0x01, 0x0f, 0x02, "Hong-Kong/Taiwan"	},
+	{0x18, 0x01, 0x0f, 0x04, "Korea"				},
+	{0x18, 0x01, 0x0f, 0x08, "World"				},
+};
+
+STDDIPINFO(Taotaido3)
+
 static void palette_write(INT32 offset)
 {
 	UINT8 r, g, b;
@@ -958,7 +1075,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Tao Taido (set 1)
+// Tao Taido (2 button version)
 
 static struct BurnRomInfo taotaidoRomDesc[] = {
 	{ "1-u90.bin",	0x080000, 0xa3ee30da, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -981,7 +1098,7 @@ STD_ROM_FN(taotaido)
 
 struct BurnDriver BurnDrvTaotaido = {
 	"taotaido", NULL, NULL, NULL, "1993",
-	"Tao Taido (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Tao Taido (2 button version)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, taotaidoRomInfo, taotaidoRomName, NULL, NULL, NULL, NULL, TaotaidoInputInfo, TaotaidoDIPInfo,
@@ -990,7 +1107,7 @@ struct BurnDriver BurnDrvTaotaido = {
 };
 
 
-// Tao Taido (set 2)
+// Tao Taido (6 button version)
 
 static struct BurnRomInfo taotaidoaRomDesc[] = {
 	{ "tt0-u90.bin",	0x080000, 0x69d4cca7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1013,10 +1130,42 @@ STD_ROM_FN(taotaidoa)
 
 struct BurnDriver BurnDrvTaotaidoa = {
 	"taotaidoa", "taotaido", NULL, NULL, "1993",
-	"Tao Taido (set 2)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Tao Taido (6 button version)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, taotaidoaRomInfo, taotaidoaRomName, NULL, NULL, NULL, NULL, TaotaidoaInputInfo, TaotaidoaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 224, 4, 3
+};
+
+
+// Tao Taido (2/3 button version)
+
+static struct BurnRomInfo taotaido3RomDesc[] = {
+	{ "1.u90",			0x080000, 0x27c5c626, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.u91",			0x080000, 0x71a4e538, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "3-u113.bin",		0x020000, 0xa167c4e4, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "u86.bin",		0x200000, 0x908e251e, 3 | BRF_GRA },           //  3 Sprites
+	{ "u87.bin",		0x200000, 0xc4290ba6, 3 | BRF_GRA },           //  4
+	{ "u88.bin",		0x200000, 0x407d9aeb, 3 | BRF_GRA },           //  5
+
+	{ "u15.bin",		0x200000, 0xe95823e9, 4 | BRF_GRA },           //  6 Background Tiles
+
+	{ "u104.bin",		0x100000, 0xe89387a9, 5 | BRF_SND },           //  7 Samples
+	{ "u127.bin",		0x200000, 0x0cf0cb23, 6 | BRF_SND },           //  8
+};
+
+STD_ROM_PICK(taotaido3)
+STD_ROM_FN(taotaido3)
+
+struct BurnDriver BurnDrvTaotaido3 = {
+	"taotaido3", "taotaido", NULL, NULL, "1993",
+	"Tao Taido (2/3 button version)\0", NULL, "Video System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	NULL, taotaido3RomInfo, taotaido3RomName, NULL, NULL, NULL, NULL, TaotaidoInputInfo, Taotaido3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

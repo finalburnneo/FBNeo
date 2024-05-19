@@ -85,6 +85,8 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
 static UINT8 kikstart_gears[2];
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo TwoButtonInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
@@ -208,11 +210,8 @@ static struct BurnInputInfo TimetunlInputList[] = {
 STDINPUTINFO(Timetunl)
 
 static struct BurnInputInfo DualStickInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-
 	{"P1 Leftstick Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
 	{"P1 Leftstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Leftstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
@@ -224,6 +223,7 @@ static struct BurnInputInfo DualStickInputList[] = {
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
 	{"P2 Leftstick Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
 	{"P2 Leftstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
@@ -235,6 +235,8 @@ static struct BurnInputInfo DualStickInputList[] = {
 	{"P2 Rightstick Right",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right 2"},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
@@ -1222,7 +1224,9 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
-	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
+	if ((address & 0xf800) == 0x8800 && is_kikstart == 0) address &= ~0x07fe; // kikstart has no mirror
+
+	if (address >= 0xd400 && address <= 0xd40d) return; // nop
 
 	switch (address)
 	{
@@ -1315,7 +1319,7 @@ static UINT8 __fastcall taitosj_main_read(UINT16 address)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
-	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
+	if ((address & 0xf800) == 0x8800 && is_kikstart == 0) address &= ~0x07fe; // kikstart has no mirror
 
 	switch (address)
 	{
@@ -1616,6 +1620,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	sound_irq_timer = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
 
 	HiscoreReset();
 
@@ -2457,9 +2463,10 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 3000000 / 60, 3000000 / 4 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	m6805Open(0);
+	m6805Idle(nCyclesExtra[2]); // _SYNCINT & outside-frame syncing used
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2486,14 +2493,14 @@ static INT32 DrvFrame()
 
 	m6805Close();
 
-	ZetOpen(1);
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = m6805TotalCycles() - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -2548,6 +2555,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(zaccept);
 		SCAN_VAR(busreq);
 		SCAN_VAR(kikstart_gears);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2600,7 +2609,7 @@ struct BurnDriver BurnDrvSpaceskr = {
 	"spaceskr", NULL, NULL, NULL, "1981",
 	"Space Seeker\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spaceskrRomInfo, spaceskrRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, SpaceskrDIPInfo,
 	spaceskrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2647,7 +2656,7 @@ struct BurnDriver BurnDrvSpacecr = {
 	"spacecr", NULL, NULL, NULL, "1981",
 	"Space Cruiser\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, NULL, NULL, SpacecrInputInfo, SpacecrDIPInfo,
 	spacecrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -3215,7 +3224,7 @@ struct BurnDriver BurnDrvWwestern1 = {
 };
 
 
-// Front Line (set 1)
+// Front Line (AA1, 4 PCB version)
 
 static struct BurnRomInfo frontlinRomDesc[] = {
 	{ "aa1_05.ic1",			0x2000, 0x4b7c0d81, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
@@ -3235,7 +3244,7 @@ static struct BurnRomInfo frontlinRomDesc[] = {
 	
 	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 21 Layer Priority
 
-	{ "aa1.13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
+	{ "aa1_13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
 };
 
 STD_ROM_PICK(frontlin)
@@ -3249,7 +3258,7 @@ static INT32 frontlinInit()
 
 struct BurnDriver BurnDrvFrontlin = {
 	"frontlin", NULL, NULL, NULL, "1982",
-	"Front Line (set 1)\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Front Line (AA1, 4 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, frontlinRomInfo, frontlinRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, FrontlinDIPInfo,
@@ -3258,7 +3267,7 @@ struct BurnDriver BurnDrvFrontlin = {
 };
 
 
-// Front Line (set 2)
+// Front Line (FL, 5 PCB version)
 
 static struct BurnRomInfo frontlinaRomDesc[] = {
 	{ "fl69.u69",			0x1000, 0x93b64599, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
@@ -3295,7 +3304,7 @@ STD_ROM_FN(frontlina)
 
 struct BurnDriver BurnDrvFrontlina = {
 	"frontlina", "frontlin", NULL, NULL, "1982",
-	"Front Line (set 2)\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Front Line (FL, 5 PCB version)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, frontlinaRomInfo, frontlinaRomName, NULL, NULL, NULL, NULL, DualStickInputInfo, FrontlinDIPInfo,
@@ -3304,7 +3313,7 @@ struct BurnDriver BurnDrvFrontlina = {
 };
 
 
-// Elevator Action (BA3, 4 pcb version, 1.1)
+// Elevator Action (BA3, 4 PCB version, 1.1)
 // later 4 board set, with rom data on 2764s, split between gfx and cpu data.
 
 static struct BurnRomInfo elevatorRomDesc[] = {
@@ -3338,7 +3347,7 @@ static INT32 elevatorInit()
 
 struct BurnDriver BurnDrvElevator = {
 	"elevator", NULL, NULL, NULL, "1983",
-	"Elevator Action (BA3, 4 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Elevator Action (BA3, 4 PCB version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elevatorRomInfo, elevatorRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
@@ -3347,7 +3356,7 @@ struct BurnDriver BurnDrvElevator = {
 };
 
 
-// Elevator Action (EA, 5 pcb version, 1.1)
+// Elevator Action (EA, 5 PCB version, 1.1)
 // 5 board set, using 2732s on both mainboard and square rom board, and 68705 on daughterboard at bottom of stack, upside down
 
 static struct BurnRomInfo elevatoraRomDesc[] = {
@@ -3384,7 +3393,7 @@ STD_ROM_FN(elevatora)
 
 struct BurnDriver BurnDrvElevatora = {
 	"elevatora", "elevator", NULL, NULL, "1983",
-	"Elevator Action (EA, 5 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Elevator Action (EA, 5 PCB version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elevatoraRomInfo, elevatoraRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
@@ -3608,7 +3617,7 @@ static INT32 bioatackInit()
 
 struct BurnDriver BurnDrvBioatack = {
 	"bioatack", NULL, NULL, NULL, "1983",
-	"Bio Attack\0", NULL, "Taito Corporation (Fox Video Games license)", "Taito SJ System",
+	"Bio Attack\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, bioatackRomInfo, bioatackRomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, BioatackDIPInfo,
@@ -3704,7 +3713,7 @@ struct BurnDriver BurnDrvHwrace = {
 };
 
 
-// Kick Start - Wheelie King
+// Kick Start: Wheelie King
 
 static struct BurnRomInfo kikstartRomDesc[] = {
 	{ "a20-01",				0x2000, 0x5810be97, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
@@ -3742,7 +3751,7 @@ static INT32 kikstartInit()
 
 struct BurnDriver BurnDrvKikstart = {
 	"kikstart", NULL, NULL, NULL, "1984",
-	"Kick Start - Wheelie King\0", NULL, "Taito Corporation", "Taito SJ System",
+	"Kick Start: Wheelie King\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, kikstartRomInfo, kikstartRomName, NULL, NULL, NULL, NULL, KikstartInputInfo, KikstartDIPInfo,

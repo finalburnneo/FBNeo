@@ -1,197 +1,6 @@
 #include "burnint.h"
 #include "burn_y8950.h"
 
-// Timer Related
-
-#define MAX_TIMER_VALUE ((1 << 30) - 65536)
-
-static double dTimeY8950;									// Time elapsed since the emulated machine was started
-
-static INT32 nTimerCount[2], nTimerStart[2];
-
-// Callbacks
-static INT32 (*pTimerOverCallback)(INT32, INT32);
-static double (*pTimerTimeCallback)();
-
-static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
-static INT32 (*pCPURun)(INT32) = NULL;
-static void (*pCPURunEnd)() = NULL;
-
-// ---------------------------------------------------------------------------
-// Running time
-
-static double BurnTimerTimeCallbackDummy()
-{
-	return 0.0;
-}
-
-extern "C" double BurnTimerGetTimeY8950()
-{
-	return dTimeY8950 + pTimerTimeCallback();
-}
-
-// ---------------------------------------------------------------------------
-// Update timers
-
-static INT32 nTicksTotal, nTicksDone, nTicksExtra;
-
-INT32 BurnTimerUpdateY8950(INT32 nCycles)
-{
-	INT32 nIRQStatus = 0;
-
-	nTicksTotal = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
-
-	while (nTicksDone < nTicksTotal) {
-		INT32 nTimer, nCyclesSegment, nTicksSegment;
-
-		// Determine which timer fires first
-		if (nTimerCount[0] <= nTimerCount[1]) {
-			nTicksSegment = nTimerCount[0];
-		} else {
-			nTicksSegment = nTimerCount[1];
-		}
-		if (nTicksSegment > nTicksTotal) {
-			nTicksSegment = nTicksTotal;
-		}
-
-		nCyclesSegment = MAKE_CPU_CYLES(nTicksSegment + nTicksExtra, nCPUClockspeed);
-
-		pCPURun(nCyclesSegment - pCPUTotalCycles());
-
-		nTicksDone = MAKE_TIMER_TICKS(pCPUTotalCycles() + 1, nCPUClockspeed) - 1;
-
-		nTimer = 0;
-		if (nTicksDone >= nTimerCount[0]) {
-			if (nTimerStart[0] == MAX_TIMER_VALUE) {
-				nTimerCount[0] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[0] += nTimerStart[0];
-			}
-			nTimer |= 1;
-		}
-		if (nTicksDone >= nTimerCount[1]) {
-			if (nTimerStart[1] == MAX_TIMER_VALUE) {
-				nTimerCount[1] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[1] += nTimerStart[1];
-			}
-			nTimer |= 2;
-		}
-		if (nTimer & 1) {
-			nIRQStatus |= pTimerOverCallback(0, 0);
-		}
-		if (nTimer & 2) {
-			nIRQStatus |= pTimerOverCallback(0, 1);
-		}
-	}
-
-	return nIRQStatus;
-}
-
-void BurnTimerEndFrameY8950(INT32 nCycles)
-{
-	INT32 nTicks = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
-
-	BurnTimerUpdateY8950(nCycles);
-
-	if (nTimerCount[0] < MAX_TIMER_VALUE) {
-		nTimerCount[0] -= nTicks;
-	}
-	if (nTimerCount[1] < MAX_TIMER_VALUE) {
-		nTimerCount[1] -= nTicks;
-	}
-
-	nTicksDone -= nTicks;
-	if (nTicksDone < 0) {
-		nTicksDone = 0;
-	}
-}
-
-void BurnTimerUpdateEndY8950()
-{
-	pCPURunEnd();
-
-	nTicksTotal = 0;
-}
-
-void BurnOPLTimerCallbackY8950(INT32 c, double period)
-{
-	pCPURunEnd();
-
-	if (period == 0.0) {
-		nTimerCount[c] = MAX_TIMER_VALUE;
-		return;
-	}
-
-	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
-}
-
-void BurnTimerScanY8950(INT32 nAction, INT32* pnMin)
-{
-	if (pnMin && *pnMin < 0x029521) {
-		*pnMin = 0x029521;
-	}
-
-	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(nTimerCount);
-		SCAN_VAR(nTimerStart);
-		SCAN_VAR(dTimeY8950);
-
-		SCAN_VAR(nTicksDone);
-	}
-}
-
-void BurnTimerExitY8950()
-{
-	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
-	pCPURun = NULL;
-	pCPURunEnd = NULL;
-
-	return;
-}
-
-void BurnTimerResetY8950()
-{
-	nTimerCount[0] = nTimerCount[1] = MAX_TIMER_VALUE;
-	nTimerStart[0] = nTimerStart[1] = MAX_TIMER_VALUE;
-
-	dTimeY8950 = 0.0;
-
-	nTicksDone = 0;
-}
-
-INT32 BurnTimerInitY8950(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback)())
-{
-	BurnTimerExitY8950();
-
-	pTimerOverCallback = pOverCallback;
-	pTimerTimeCallback = pTimeCallback ? pTimeCallback : BurnTimerTimeCallbackDummy;
-
-	BurnTimerResetY8950();
-
-	return 0;
-}
-
-
-INT32 BurnTimerAttachY8950(cpu_core_config *ptr, INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = ptr->totalcycles;
-	pCPURun = ptr->run;
-	pCPURunEnd = ptr->runend;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
-
-	return 0;
-}
-
-// Sound Related
-
 #define MAX_Y8950	2
 
 void (*BurnY8950Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
@@ -430,7 +239,7 @@ void BurnY8950Reset()
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Reset called without init\n"));
 #endif
 
-	BurnTimerResetY8950();
+	BurnTimerReset();
 
 	for (INT32 i = 0; i < nNumChips; i++) {
 		Y8950ResetChip(i);
@@ -448,7 +257,7 @@ void BurnY8950Exit()
 
 	Y8950Shutdown();
 
-	BurnTimerExitY8950();
+	BurnTimerExit();
 
 	BurnFree(pBuffer);
 	
@@ -458,9 +267,14 @@ void BurnY8950Exit()
 	DebugSnd_Y8950Initted = 0;
 }
 
+INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnY8950Init(num, nClockFrequency, Y8950ADPCM0ROM, nY8950ADPCM0Size, Y8950ADPCM1ROM, nY8950ADPCM1Size, IRQCallback, BurnSynchroniseStream, bAddSignal);
+}
+
 INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
-	BurnTimerInitY8950(&Y8950TimerOver, NULL);
+	INT32 timer_chipbase = BurnTimerInit(&Y8950TimerOver, NULL, num);
 
 	BurnY8950StreamCallback = StreamCallback;
 
@@ -486,12 +300,12 @@ INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT
 
 	Y8950Init(num, nClockFrequency, nBurnY8950SoundRate);
 	Y8950SetIRQHandler(0, IRQCallback, 0);
-	Y8950SetTimerHandler(0, &BurnOPLTimerCallbackY8950, 0);
+	Y8950SetTimerHandler(0, &BurnOPLTimerCallback, timer_chipbase + 0);
 	Y8950SetUpdateHandler(0, &BurnY8950UpdateRequest, 0);
 	Y8950SetDeltaTMemory(0, Y8950ADPCM0ROM, nY8950ADPCM0Size);
 	if (num > 1) {
 //		Y8950SetIRQHandler(1, IRQCallback, 0); // ??
-		Y8950SetTimerHandler(1, &BurnOPLTimerCallbackY8950, 0);
+		Y8950SetTimerHandler(1, &BurnOPLTimerCallback, timer_chipbase + 1);
 		Y8950SetUpdateHandler(1, &BurnY8950UpdateRequest, 0);
 		Y8950SetDeltaTMemory(1, Y8950ADPCM1ROM, nY8950ADPCM1Size);
 	}
@@ -543,10 +357,10 @@ void BurnY8950Scan(INT32 nAction, INT32* pnMin)
 	#if defined FBNEO_DEBUG
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Scan called without init\n"));
 #endif
-	
-	BurnTimerScanY8950(nAction, pnMin);
+
+	BurnTimerScan(nAction, pnMin);
 	FMOPLScan(FM_OPL_SAVESTATE_Y8950, 0, nAction, pnMin);
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nY8950Position);
 	}

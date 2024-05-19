@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvCombatsc = {
 	"combatsc", NULL, NULL, NULL, "1988",
 	"Combat School (joystick)\0", NULL, "Konami", "GX611",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, combatscRomInfo, combatscRomName, NULL, NULL, NULL, NULL, CombatscInputInfo, CombatscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x800,
 	256, 224, 4, 3

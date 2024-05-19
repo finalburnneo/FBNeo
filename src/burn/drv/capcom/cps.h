@@ -6,6 +6,7 @@
 #include "msm6295.h"
 #include "eeprom.h"
 #include "timer.h"
+#include "samples.h"
 
 // Maximum number of beam-synchronized interrupts to check
 #define MAX_RASTER 10
@@ -168,6 +169,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_CP1B1F		45
 #define mapper_CP1B1F_boot	46
 #define mapper_pang3b4		47
+#define mapper_TKSGZB		48
 extern void SetGfxMapper(INT32 MapperId);
 extern INT32 GfxRomBankMapper(INT32 Type, INT32 Code);
 extern void SetCpsBId(INT32 CpsBId, INT32 bStars);
@@ -279,6 +281,9 @@ extern INT32 Ssf2tb;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
+extern INT32 Cps2Turbo;
+
+extern ClearOpposite<4, UINT8> clear_opposite;
 
 extern UINT8* CpsEncZRom;
 
@@ -313,6 +318,10 @@ extern INT32 CpsDisableRowScroll;
 extern INT32 Cps1OverrideLayers;
 extern INT32 nCps1Layers[4];
 extern INT32 nCps1LayerOffs[3];
+extern INT32 nCpsScreenWidth;
+extern INT32 nCpsScreenHeight;
+extern INT32 nCpsGlobalXOffset;
+extern INT32 nCpsGlobalYOffset;
 void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();
@@ -443,7 +452,7 @@ struct CpsrLineInfo {
 	INT16 Rows[16];									// 16 row scroll values for this line
 	INT32 nMaxLeft, nMaxRight;						// Maximum row shifts left and right
 };
-extern struct CpsrLineInfo CpsrLineInfo[15];
+extern struct CpsrLineInfo CpsrLineInfo[32];
 INT32 Cps1rPrepare();
 INT32 Cps2rPrepare();
 
@@ -524,3 +533,4 @@ extern UINT16 Cps2VolumeStates[40];
 extern INT32 Cps2DisableDigitalVolume;
 extern UINT8 Cps2VolUp;
 extern UINT8 Cps2VolDwn;
+extern UINT8 AspectDIP;

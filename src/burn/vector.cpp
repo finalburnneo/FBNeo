@@ -77,13 +77,17 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
-	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		GenericTilesSetClipRaw(0, y, 0, x);
+		BurnTransferSetDimensions(y, x);
 		BurnDrvSetVisibleSize(y, x);
-	else
+	} else {
+		GenericTilesSetClipRaw(0, x, 0, y);
+		BurnTransferSetDimensions(x, y);
 		BurnDrvSetVisibleSize(x, y);
+	}
 	Reinitialise();
-	GenericTilesExit();
-	GenericTilesInit(); // create pTransDraw w/ new size
+	BurnTransferRealloc();
 	BurnFree(pBitmap);
 	pBitmap = (UINT32*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(INT32));
 

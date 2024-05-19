@@ -648,7 +648,7 @@ struct BurnDriver BurnDrvDdayjlc = {
 	"ddayjlc", NULL, NULL, NULL, "1984",
 	"D-Day (Jaleco set 1)\0", "buggy game due to unemulated protection MCU", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ddayjlcRomInfo, ddayjlcRomName, NULL, NULL, NULL, NULL, DdayjlcInputInfo, DdayjlcDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -697,7 +697,7 @@ struct BurnDriver BurnDrvDdayjlca = {
 	"ddayjlca", "ddayjlc", NULL, NULL, "1984",
 	"D-Day (Jaleco set 2)\0", "buggy game due to unemulated protection MCU", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ddayjlcaRomInfo, ddayjlcaRomName, NULL, NULL, NULL, NULL, DdayjlcInputInfo, DdayjlcDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

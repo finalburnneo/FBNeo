@@ -1832,8 +1832,8 @@ static struct BurnRomInfo quizf1RomDesc[] = {
 
 	{ "qf1-v0-.ic30",	0x40000, 0xb8d16e7c, 4 | BRF_SND },           //  7 Samples
 
-	{ "qf1-h1-.78",		0x80000, 0xc6c2eb2b, 5 | BRF_PRG | BRF_ESS }, //  8 V30 banked code
-	{ "qf1-l1-.80",		0x80000, 0x3132c144, 5 | BRF_PRG | BRF_ESS }, //  9
+	{ "qf1-h1-.ic78",	0x80000, 0xc6c2eb2b, 5 | BRF_PRG | BRF_ESS }, //  8 V30 banked code
+	{ "qf1-l1-.ic80",	0x80000, 0x3132c144, 5 | BRF_PRG | BRF_ESS }, //  9
 };
 
 STD_ROM_PICK(quizf1)
@@ -2015,10 +2015,10 @@ static INT32 DicegameInit()
 }
 
 struct BurnDriver BurnDrvDicegame = {
-	"dicegame", NULL, NULL, NULL, "199?",
+	"dicegame", NULL, NULL, NULL, "1991",
 	"Dice - The Dice Game!\0", NULL, "bootleg (Tuning)", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, dicegameRomInfo, dicegameRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, DicegameDIPInfo,
 	DicegameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3

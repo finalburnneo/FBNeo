@@ -43,6 +43,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[2];
+
 static INT32 is_game; // 0 mpatrol/mranger, 1 alpha1v
 
 static struct BurnInputInfo MpatrolInputList[] = {
@@ -362,6 +364,8 @@ static INT32 DrvDoReset()
 	bg2ypos = 0;
 	flipscreen = 0;
 	scrollx = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -791,7 +795,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 894886 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	M6803Open(0);
@@ -814,6 +818,9 @@ static INT32 DrvFrame()
 
 	M6803Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -848,6 +855,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bg2ypos);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scrollx);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -1033,7 +1042,7 @@ struct BurnDriver BurnDrvAlpha1v = {
 	"alpha1v", NULL, NULL, NULL, "1988",
 	"Alpha One (Vision Electronics)\0", NULL, "Vision Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, alpha1vRomInfo, alpha1vRomName, NULL, NULL, NULL, NULL, Alpha1vInputInfo, Alpha1vDIPInfo,
 	alpha1vInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 256, 4, 3

@@ -617,7 +617,7 @@ struct BurnDriver BurnDrvLadyfrog = {
 	"ladyfrog", NULL, NULL, NULL, "1990",
 	"Lady Frog\0", NULL, "Mondial Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_ACTION, 0,
 	NULL, ladyfrogRomInfo, ladyfrogRomName, NULL, NULL, NULL, NULL, LadyfrogInputInfo, LadyfrogDIPInfo,
 	LadyfrogInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	208, 256, 3, 4
@@ -651,7 +651,7 @@ struct BurnDriver BurnDrvToucheme = {
 	"toucheme", NULL, NULL, NULL, "19??",
 	"Touche Me (set 1)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, touchemeRomInfo, touchemeRomName, NULL, NULL, NULL, NULL, LadyfrogInputInfo, TouchemeDIPInfo,
 	TouchemeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	208, 256, 3, 4
@@ -680,7 +680,7 @@ struct BurnDriver BurnDrvTouchemea = {
 	"touchemea", "toucheme", NULL, NULL, "19??",
 	"Touche Me (set 2, harder)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, touchemeaRomInfo, touchemeaRomName, NULL, NULL, NULL, NULL, LadyfrogInputInfo, TouchemeDIPInfo,
 	TouchemeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	208, 256, 3, 4

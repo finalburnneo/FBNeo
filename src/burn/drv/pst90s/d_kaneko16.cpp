@@ -111,6 +111,7 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s);
 static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s);
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
+static INT32 nCyclesExtra;
 
 static INT32 Kaneko16Watchdog;
 
@@ -1032,29 +1033,52 @@ static struct BurnRomInfo BerlwallkRomDesc[] = {
 STD_ROM_PICK(Berlwallk)
 STD_ROM_FN(Berlwallk)
 
-static struct BurnRomInfo PackbangRomDesc[] = {
+/* Final/retail version */
+static struct BurnRomInfo PackbangRomDesc[] = { 
 	/* same PCB as Berlin Wall - BW-002 */
-	{ "bbp0x3.u23",     	0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
-	{ "bbp1x3.u39",     	0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
+	{ "bbp0x3_u23.u23",     	0x020000, 0x8f879c9d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* labeled BBP0X3/U23 */
+	{ "bbp1x3_u39.u39",     	0x020000, 0x3a90ad84, BRF_ESS | BRF_PRG }, //  1 					/* labeled BBP1X3/U39 */
 
-   	{ "bb.u84",         		 0x080000, 0x97837aaa, BRF_GRA }, 	   //  2 Sprites
-	{ "pb_spr_ext_9_20_ver.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+   	{ "bb-u84-007__w22.u84",    0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites            /* mask rom */
+	{ "bbs0x1_u83.u83",         0x040000, 0x3d95b1e5, BRF_GRA },  	       //  3					/* labeled BBS0X1/U83 */
 
-	{ "bbbox1.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
+	{ "bbb0x1_u77.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
 
-	{ "bb.u73",         	0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
-	{ "bb.u65",         	0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
-	{ "bb.u74",         	0x080000, 0xb01e77b9, BRF_GRA },		   //  7
-	{ "bb.u66",         	0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
-	{ "bb.u75",         	0x080000, 0x5cb4669f, BRF_GRA },		   //  9
-	{ "bb.u67",         	0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
+	{ "bb-u73-004__w19.u73",    0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background /* these are all mask roms */
+	{ "bb-u65-001__w16.u65",    0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb-u74-005__w20.u74",    0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb-u66-002__w17.u66",    0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb-u75-006__w21.u75",    0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb-u67-003__w18.u67",    0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",      	0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
+	{ "bw_u46.u46",      	    0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
 };
-
 
 STD_ROM_PICK(Packbang)
 STD_ROM_FN(Packbang)
+
+static struct BurnRomInfo PackbangpRomDesc[] = {
+	/* same PCB as Berlin Wall - BW-002 */
+	{ "bbp0x3_527b.u23",              0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
+	{ "bbp1x3_c5c8.u39",              0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
+
+   	{ "bb.u84",                       0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
+	{ "pb_spr_ext_9_20_ver_ba63.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+
+	{ "bbb0x1.u77",                   0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
+
+	{ "bb.u73",                       0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
+	{ "bb.u65",                       0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb.u74",                       0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb.u66",                       0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb.u75",                       0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb.u67",                       0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
+
+	{ "bw000.u46",                    0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
+};
+
+STD_ROM_PICK(Packbangp)
+STD_ROM_FN(Packbangp)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
 	{ "bz-prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -3265,6 +3289,8 @@ static INT32 Kaneko16DoReset()
 	memset(Kaneko16Layer0Regs, 0, 0x10 * sizeof(UINT16));
 	memset(Kaneko16Layer1Regs, 0, 0x10 * sizeof(UINT16));
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3389,6 +3415,8 @@ static INT32 ShogwarrDoReset()
 
 	Kaneko16Watchdog = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3398,7 +3426,7 @@ static INT32 ShogwarrDoReset()
 Memory Handlers
 ===============================================================================================*/
 
-UINT8 __fastcall BerlwallReadByte(UINT32 a)
+static UINT8 __fastcall BerlwallReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x500000:
@@ -3437,7 +3465,7 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
+static void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x500000:
@@ -3479,7 +3507,7 @@ void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall BerlwallReadWord(UINT32 a)
+static UINT16 __fastcall BerlwallReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x500000: {
@@ -3520,7 +3548,7 @@ UINT16 __fastcall BerlwallReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
+static void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x480000: {
@@ -3593,7 +3621,7 @@ void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall BlazeonReadByte(UINT32 a)
+static UINT8 __fastcall BlazeonReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc00000: {
@@ -3633,7 +3661,7 @@ UINT8 __fastcall BlazeonReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
+static void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xd00000: {
@@ -3655,7 +3683,7 @@ void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall BlazeonReadWord(UINT32 a)
+static UINT16 __fastcall BlazeonReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0xc00000: {
@@ -3685,7 +3713,7 @@ UINT16 __fastcall BlazeonReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
+static void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
 {
 	switch (a) {
 		case 0xd00000: {
@@ -3699,7 +3727,7 @@ void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
 	}
 }
 
-UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
+static UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x400001: {
@@ -3744,7 +3772,7 @@ UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
+static void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x40000f:
@@ -3785,7 +3813,7 @@ void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
+static UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0xa00000: {
@@ -3806,7 +3834,7 @@ UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
+static void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x400000:
@@ -3881,7 +3909,7 @@ void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall MgcrystlReadByte(UINT32 a)
+static UINT8 __fastcall MgcrystlReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x400001: {
@@ -3922,7 +3950,7 @@ UINT8 __fastcall MgcrystlReadByte(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall GtmrReadByte(UINT32 a)
+static UINT8 __fastcall GtmrReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x900014: {
@@ -3959,7 +3987,7 @@ UINT8 __fastcall GtmrReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
+static void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x600000:
@@ -4064,7 +4092,7 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall GtmrReadWord(UINT32 a)
+static UINT16 __fastcall GtmrReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x800000: {
@@ -4143,7 +4171,7 @@ UINT16 __fastcall GtmrReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
+static void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x2a0000: {
@@ -4257,7 +4285,7 @@ void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
+static UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -4278,7 +4306,7 @@ UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -4856,9 +4884,9 @@ static INT32 BlazeonInit()
 static INT32 WingforcInit()
 {
 	INT32 nRet = 0, nLen;
-	
-	//BurnSetRefreshRate(59.1854); // hmm, this causes clicks in audio. let's just give it the cycles/per frame it wants instead. (see WingforcFrame())
-	
+
+	BurnSetRefreshRate(59.1854);
+
 	Kaneko16NumSprites = 0x4000;
 	Kaneko16NumTiles = 0x4000;
 	Kaneko16NumTiles2 = 0;
@@ -6900,7 +6928,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-INT32 Kaneko16CalcPalette(INT32 num)
+static INT32 Kaneko16CalcPalette(INT32 num)
 {
 	INT32 i;
 	UINT16* ps;
@@ -7359,24 +7387,26 @@ static INT32 ExplbrkrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = 12000000 / 60;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
 		CPU_RUN(0, Sek);
 		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == 224) {
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			if (pBurnDraw) BurnDrvRedraw();
+		}
 		SekClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -7392,7 +7422,8 @@ static INT32 BlazeonFrame()
 	INT32 nInterleave = 10;
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+	nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7407,10 +7438,10 @@ static INT32 BlazeonFrame()
 		ZetClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		ZetOpen(0);
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();
@@ -7430,7 +7461,8 @@ static INT32 WingforcFrame()
 	nCyclesTotal[0] = (INT32)(16000000 / 59.1854);
 	nCyclesTotal[1] = (INT32)(4000000 / 59.1854);
 
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+	nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7445,10 +7477,10 @@ static INT32 WingforcFrame()
 		ZetClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		ZetOpen(0);
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -7467,7 +7499,7 @@ static INT32 GtmrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = 16000000 / 60;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
 
 	SekOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -7477,6 +7509,8 @@ static INT32 GtmrFrame()
 		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	}
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -7502,7 +7536,8 @@ static INT32 ShogwarrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = (12000000 * 100) / 5918;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -7520,6 +7555,8 @@ static INT32 ShogwarrFrame()
 	}
 
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnSoundClear();
@@ -7575,6 +7612,8 @@ static INT32 Kaneko16Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Kaneko16Brightness);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (Kaneko16Bg15) {
 			SCAN_VAR(Kaneko16Bg15Reg);
@@ -7718,7 +7757,7 @@ struct BurnDriver BurnDrvBerlwall = {
 
 struct BurnDriver BurnDrvBerlwallt = {
 	"berlwallt", "berlwall", NULL, NULL, "1991",
-	"The Berlin Wall (bootleg ?)\0", NULL, "Kaneko", "Kaneko16",
+	"The Berlin Wall (bootleg?)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BerlwalltRomInfo, BerlwalltRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, BerlwalltDIPInfo,
@@ -7738,10 +7777,20 @@ struct BurnDriver BurnDrvBerlwallk = {
 
 struct BurnDriver BurnDrvPackbang = {
 	"packbang", NULL, NULL, NULL, "1994",
-	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	"Pack'n Bang Bang\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
 	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
+	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
+	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvPackbangp = {
+	"packbangp", "packbang", NULL, NULL, "1994",
+	"Pack'n Bang Bang (prototype)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
+	NULL, PackbangpRomInfo, PackbangpRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
 };
@@ -7770,7 +7819,7 @@ struct BurnDriver BurnDrvWingforc = {
 	"wingforc", NULL, NULL, NULL, "1993",
 	"Wing Force (Japan, prototype)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	WingforcInit, WingforcExit, WingforcFrame, BlazeonFrameRender, WingforcScan,
 	NULL, 0x1000, 224, 320, 3, 4

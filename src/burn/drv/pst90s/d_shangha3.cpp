@@ -1063,7 +1063,7 @@ struct BurnDriver BurnDrvShangha3up = {
 	"shangha3up", "shangha3", NULL, NULL, "1993",
 	"Shanghai III (US, prototype)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, shangha3upRomInfo, shangha3upRomName, NULL, NULL, NULL, NULL, Shangha3InputInfo, Shangha3DIPInfo,
 	Shangha3upInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3

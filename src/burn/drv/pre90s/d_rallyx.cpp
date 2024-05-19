@@ -87,6 +87,33 @@ static struct BurnInputInfo DrvInputList[] =
 
 STDINPUTINFO(Drv)
 
+static struct BurnInputInfo RallyxegInputList[] =
+{
+	{ "Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 coin"   },
+	{ "Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
+	{ "Coin 2"            , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 coin"   },
+	{ "Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
+
+	{ "Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 up"     },
+	{ "Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 down"   },
+	{ "Down"              , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 left"   },
+	{ "Up"                , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 right"  },
+	{ "Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 fire 1" },
+	
+	{ "Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 up"     },
+	{ "Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 down"   },
+	{ "Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 left"   },
+	{ "Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 right"  },
+	{ "Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 fire 1" },
+
+	{ "Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{ "Service"           , BIT_DIGITAL  , DrvInputPort0 + 0, "service"   },
+	{ "Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{ "Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Rallyxeg)
+
 static struct BurnInputInfo JunglerInputList[] =
 {
 	{ "Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 coin"   },
@@ -628,6 +655,33 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 
 STD_ROM_PICK(Rallyxmr)
 STD_ROM_FN(Rallyxmr)
+
+static struct BurnRomInfo RallyxegRomDesc[] = {
+	{ "6101_2716.1b",  0x00800, 0x921699dc, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "6102_2716.1c",  0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
+	{ "6103_2716.1e",  0x00800, 0x36e9918f, BRF_ESS | BRF_PRG }, //	 2
+	{ "6104_2716.1f",  0x00800, 0xb986fcf8, BRF_ESS | BRF_PRG }, //	 3
+	{ "6105_2716.1h",  0x00800, 0x1fb0ced8, BRF_ESS | BRF_PRG }, //	 4
+	{ "6106_2716.1j",  0x00800, 0xd72ee519, BRF_ESS | BRF_PRG }, //	 5
+	{ "6107_2716.1k",  0x00800, 0x843109f2, BRF_ESS | BRF_PRG }, //	 6
+	{ "6108_2716.1m",  0x00800, 0x8ab078ef, BRF_ESS | BRF_PRG }, //	 7
+	
+	{ "10_2716.8e",    0x00800, 0x836fb24f, BRF_GRA },	     //  8	Characters & Sprites
+	{ "9_2716.8d",     0x00800, 0x22d7113b, BRF_GRA },	     //  9
+	
+	{ "r6_82s129.8m",  0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
+	
+	{ "r1_82s123.1n",  0x00020, 0xc7865434, BRF_GRA },	     //  11	Palette PROM
+	{ "r7_82s129.8p",  0x00100, 0x834d4fda, BRF_GRA },	     //  12	Lookup PROM
+	{ "r2_82s123.4n",  0x00020, 0x659c3f5d, BRF_GRA },	     //  13	Video Layout PROM
+	{ "r3_82s123.7k",  0x00020, 0xbdef006f, BRF_GRA },	     //  14	Video Timing PROM
+	
+	{ "r5_82s129.3p",  0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
+	{ "r4_82s129.2m",  0x00100, 0x77245b66, BRF_SND },	     //  16
+};
+
+STD_ROM_PICK(Rallyxeg)
+STD_ROM_FN(Rallyxeg)
 
 static struct BurnRomInfo DngrtrckRomDesc[] = {
 	{ "1b-2716.bin",   0x00800, 0xb6180a12, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
@@ -2040,7 +2094,7 @@ struct BurnDriver BurnDrvRallyxa = {
 
 struct BurnDriver BurnDrvRallyxm = {
 	"rallyxm", "rallyx", NULL, "rallyx", "1980",
-	"Rally X (Midway)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	"Rally X (Midway)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmRomInfo, RallyxmRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
@@ -2050,19 +2104,29 @@ struct BurnDriver BurnDrvRallyxm = {
 
 struct BurnDriver BurnDrvRallyxmr = {
 	"rallyxmr", "rallyx", NULL, "rallyx", "1980",
-	"Rally X (Model Racing)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
+	"Rally X (Model Racing bootleg)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmrRomInfo, RallyxmrRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvRallyxeg = {
+	"rallyxeg", "rallyx", NULL, "rallyx", "1981",
+	"Rally X (Video Game bootleg)\0", NULL, "bootleg (Video Game / Electrogame)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, RallyxegRomInfo, RallyxegRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 260, 224, 288, 3, 4
+};
+
 struct BurnDriver BurnDrvDngrtrck = {
 	"dngrtrck", "rallyx", NULL, "rallyx", "1980",
-	"Danger Track (Rally X bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Danger Track (bootleg of Rally X)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, DngrtrckRomInfo, DngrtrckRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
@@ -2281,7 +2345,7 @@ struct BurnDriver BurnDrvCottong = {
 	"cottong", "locomotn", NULL, NULL, "1982",
 	"Cotocoto Cottong\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, cottongRomInfo, cottongRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	CottongDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
@@ -2321,7 +2385,7 @@ struct BurnDriver BurnDrvLocoboot = {
 	"locoboot", "locomotn", NULL, NULL, "1982",
 	"Loco-Motion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, locobootRomInfo, locobootRomName, NULL, NULL, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	LocobootDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4

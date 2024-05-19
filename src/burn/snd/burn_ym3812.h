@@ -4,11 +4,6 @@ extern "C" {
 }
 #include "timer.h"
 
-INT32 BurnTimerUpdateYM3812(INT32 nCycles);
-void BurnTimerEndFrameYM3812(INT32 nCycles);
-void BurnTimerUpdateEndYM3812();
-INT32 BurnTimerAttachYM3812(cpu_core_config *ptr, INT32 nClockspeed);
-
 extern "C" void BurnYM3812UpdateRequest();
 
 INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal);

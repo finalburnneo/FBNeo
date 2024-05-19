@@ -25,8 +25,13 @@ INT32 QsndInit()
 		nCpsZ80Cycles = 8000000 * 100 / nBurnFPS;
 		BurnTimerAttachZet(8000000);
 	} else {
-		nCpsZ80Cycles = 8000000 * 100 / nBurnFPS;
-		BurnTimerAttachZet(8000000);
+		if (Cps2Turbo) {
+			nCpsZ80Cycles = 16000000 * 100 / nBurnFPS;
+			BurnTimerAttachZet(16000000);
+		} else {
+			nCpsZ80Cycles = 8000000 * 100 / nBurnFPS;
+			BurnTimerAttachZet(8000000);
+		}
 	}
 
 	if (nBurnSoundRate >= 0) {
@@ -88,6 +93,9 @@ void QsndEndFrame()
 {
 	BurnTimerEndFrame(nCpsZ80Cycles);
 	if (pBurnSoundOut) QscUpdate(nBurnSoundLen);
+	if (Cps2Turbo && pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	nQsndCyclesExtra = ZetTotalCycles() - nCpsZ80Cycles;
 	ZetClose();

@@ -908,7 +908,7 @@ struct BurnDriver BurnDrvMoguchan = {
 	"moguchan", NULL, NULL, NULL, "1982",
 	"Mogu Chan (bootleg?)\0", NULL, "Orca (Eastern Commerce Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, moguchanRomInfo, moguchanRomName, NULL, NULL, NULL, NULL, MoguchanInputInfo, MoguchanDIPInfo,
 	moguchanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x31,
 	224, 256, 3, 4
@@ -956,7 +956,7 @@ struct BurnDriver BurnDrvPercuss = {
 };
 
 
-// The Bounty
+// The Bounty (set 1)
 
 static struct BurnRomInfo bountyRomDesc[] = {
 	{ "1.4f",			0x1000, 0xf495b19d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -980,7 +980,7 @@ STD_ROM_FN(bounty)
 
 struct BurnDriver BurnDrvBounty = {
 	"bounty", NULL, NULL, NULL, "1982",
-	"The Bounty\0", NULL, "Orca", "Miscellaneous",
+	"The Bounty (set 1)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bountyRomInfo, bountyRomName, NULL, NULL, NULL, NULL, BountyInputInfo, BountyDIPInfo,

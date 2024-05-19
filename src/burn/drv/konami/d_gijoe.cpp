@@ -842,7 +842,7 @@ struct BurnDriver BurnDrvGijoeea = {
 	"gijoeea", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (World, EB8, prototype?)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeeaRomInfo, gijoeeaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3

@@ -428,7 +428,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		cbuster_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 6000000, 1, NULL, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	deco16_music_tempofix = 1;
@@ -580,7 +580,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -588,8 +588,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 232;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 6000000 / 58 };
 	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
@@ -605,26 +604,12 @@ static INT32 DrvFrame()
 		CPU_RUN_TIMER(1);
 
 		if (i == 206) deco16_vblank = 0x08;
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();

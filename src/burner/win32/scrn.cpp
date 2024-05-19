@@ -1,5 +1,6 @@
 // Screen Window
 #include "burner.h"
+#include <process.h>
 #include <shlobj.h>
 
 #define		HORIZONTAL_ORIENTED_RES		0
@@ -92,6 +93,35 @@ void SetPauseMode(bool bPause)
 	}
 }
 
+char* DecorateKailleraGameName(UINT32 nBurnDrv)
+{
+	static char szDecoratedName[256];
+	UINT32 nOldBurnDrv = nBurnDrvActive;
+
+	nBurnDrvActive = nBurnDrv;
+
+	const char* s1 = "";
+	const char* s2 = "";
+	const char* s3 = "";
+	const char* s4 = "";
+	const char* s5 = "";
+
+	s1 = BurnDrvGetTextA(DRV_FULLNAME);
+
+	s3 = GameDecoration(nBurnDrv);
+	if (strlen(s3) > 0) {
+		s2 = " [";
+		s4 = "]";
+	}
+
+	s5 = BurnDrvGetTextA(DRV_NAME);
+
+	snprintf(szDecoratedName, sizeof(szDecoratedName), "%s%s%s%s - %s", s1, s2, s3, s4, s5);
+
+	nBurnDrvActive = nOldBurnDrv;
+	return szDecoratedName;
+}
+
 static char* CreateKailleraList()
 {
 	unsigned int nOldDrvSelect = nBurnDrvActive;
@@ -113,7 +143,7 @@ static char* CreateKailleraList()
 
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) {
-				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+				char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
 					char* pNewList;
@@ -136,7 +166,7 @@ static char* CreateKailleraList()
 		// Add all the driver names to the list
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if(BurnDrvGetFlags() & BDF_GAME_WORKING && gameAv[nBurnDrvActive]) {
-				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+				char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
 					char* pNewList;
@@ -202,59 +232,29 @@ INT32 is_netgame_or_recording() // returns: 1 = netgame, 2 = recording/playback
 
 static int WINAPI gameCallback(char* game, int player, int numplayers)
 {
-	bool bFound = false;
-	HWND hActive;
+#if 0
+	// we can't run emu-stuffs from new thread, especially while a game might
+	// be running.  or else -- trust.  explosions be lurking!
+#endif
 
-	for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
+	strncpy(k_game_str, game, sizeof(k_game_str)-1);
 
-		char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+	k_player_id = player;
+	k_numplayers = numplayers;
+//	bprintf(0, _T("end GameCallback() -> trigger kaillera game in main loop!\n"));
+	k_bLoadNetgame = 1;
 
-		if (!strcmp(szDecoratedName, game)) {
-			bFound = true;
-			break;
-		}
+	while (kNetGame == 0) {
+		// wait for message loop to pick up and initiate netplay loading
+		Sleep(1);
 	}
 
-	if (!bFound) {
-		Kaillera_End_Game();
-		return 1;
+	while (kNetGame) {
+		// now we wait here, to give kaillera client a thread to kill
+		// or we exit if the game is dropped or ends naturally.
+		Sleep(1000);
 	}
 
-	kNetGame = 1;
-	hActive = GetActiveWindow();
-
-	bCheatsAllowed = false;								// Disable cheats during netplay
-	AudSoundStop();										// Stop while we load roms
-	DrvInit(nBurnDrvActive, false);						// Init the game driver
-
-	// w/Kaillera: DrvInit() can't post it's restart message because we're not in the message loop yet.
-	// so we must MediaExit() / MediaInit() here.  -dink
-	MediaExit();
-	MediaInit();
-	AudSoundPlay();										// Restart sound
-	SetFocus(hScrnWnd);
-
-//	dprintf(_T(" ** OSD startnet text sent.\n"));
-
-	TCHAR szTemp1[256];
-	TCHAR szTemp2[256];
-	VidSAddChatMsg(FBALoadStringEx(hAppInst, IDS_NETPLAY_START, true), 0xFFFFFF, BurnDrvGetText(DRV_FULLNAME), 0xFFBFBF);
-	_sntprintf(szTemp1, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_YOU, true), player);
-	_sntprintf(szTemp2, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_TOTAL, true), numplayers);
-	VidSAddChatMsg(szTemp1, 0xFFFFFF, szTemp2, 0xFFBFBF);
-
-	RunMessageLoop();
-
-	DrvExit();
-	if (kNetGame) {
-		kNetGame = 0;
-		Kaillera_End_Game();
-	}
-	DeActivateChat();
-
-	bCheatsAllowed = true;								// reenable cheats netplay has ended
-
-	SetFocus(hActive);
 	return 0;
 }
 
@@ -272,11 +272,47 @@ static void WINAPI kDropCallback(char *nick, int playernb)
 	VidSAddChatMsg(szTemp, 0xFFFFFF, NULL, 0);
 }
 
+static int bServerDialogActive = 0;
+static char* kaillera_gameList = NULL;
+
+static unsigned __stdcall DoKailleraServerSelectThread(void *arg)
+{
+	bServerDialogActive = 1;
+	Kaillera_Select_Server_Dialog(NULL);
+	bServerDialogActive = 0;
+
+	// clean up
+	if (kaillera_gameList) {
+		free(kaillera_gameList);
+		kaillera_gameList = NULL;
+	}
+
+	End_Network();
+
+	k_bLoadNetgame = 2; // signal menu update
+
+	return 0;
+}
+
+static void KailleraServerSelect()
+{
+	HANDLE hThread = NULL;
+	unsigned ThreadID = 0;
+
+	bServerDialogActive = 0;
+
+	hThread = (HANDLE)_beginthreadex(NULL, 0, DoKailleraServerSelectThread, (void*)NULL, 0, &ThreadID);
+
+	while (bServerDialogActive == 0) { // wait for thread to start :)
+		Sleep(1);
+	}
+}
+
+
 static void DoNetGame()
 {
 	kailleraInfos ki;
 	char tmpver[128];
-	char* gameList;
 
 	if(bDrvOkay) {
 		DrvExit();
@@ -290,10 +326,10 @@ static void DoNetGame()
 	_snprintf(tmpver, 128, APP_TITLE " v%.20s", szAppBurnVer);
 #endif
 
-	gameList = CreateKailleraList();
+	kaillera_gameList = CreateKailleraList();
 
 	ki.appName = tmpver;
-	ki.gameList = gameList;
+	ki.gameList = kaillera_gameList;
 	ki.gameCallback = &gameCallback;
 	ki.chatReceivedCallback = &kChatCallback;
 	ki.clientDroppedCallback = &kDropCallback;
@@ -301,16 +337,7 @@ static void DoNetGame()
 
 	Kaillera_Set_Infos(&ki);
 
-	Kaillera_Select_Server_Dialog(NULL);
-
-	if (gameList) {
-		free(gameList);
-		gameList = NULL;
-	}
-
-	End_Network();
-
-	POST_INITIALISE_MESSAGE;
+	KailleraServerSelect();
 }
 
 int CreateDatfileWindows(int bType)
@@ -320,6 +347,7 @@ int CreateDatfileWindows(int bType)
 
 	TCHAR szConsoleString[64];
 	_sntprintf(szConsoleString, 64, _T(""));
+	if (bType == DAT_NEOGEO_ONLY) _sntprintf(szConsoleString, 64, _T(", Neo Geo only"));
 	if (bType == DAT_MEGADRIVE_ONLY) _sntprintf(szConsoleString, 64, _T(", Megadrive only"));
 	if (bType == DAT_PCENGINE_ONLY) _sntprintf(szConsoleString, 64, _T(", PC-Engine only"));
 	if (bType == DAT_TG16_ONLY) _sntprintf(szConsoleString, 64, _T(", TurboGrafx16 only"));
@@ -409,6 +437,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Neo Geo only"));
+	create_datfile(szFilename, DAT_NEOGEO_ONLY);
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Megadrive only"));
 	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
@@ -592,8 +623,22 @@ static int OnRButtonUp(HWND hwnd, int, int, UINT)
 }
 /*************************************************************************/
 
+static int mousex, mousey;
+
+int ScrnGetMouseX()
+{
+	return mousex;
+}
+
+int ScrnGetMouseY()
+{
+	return mousey;
+}
+
 static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
 {
+	mousex = x;
+	mousey = y;
 	if (bDrag && hwnd == hScrnWnd && keyIndicators == MK_LBUTTON && !nVidFullscreen && !bMenuEnabled) {
 		RECT clientRect;
 
@@ -733,7 +778,7 @@ static void OnPaint(HWND hWnd)
 
 		// draw menu
 		if (!nVidFullscreen) {
-			RedrawWindow(hRebar, NULL, NULL, RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
+			RedrawWindow(hRebar, NULL, NULL, RDW_FRAME /*| RDW_UPDATENOW*/ | RDW_ALLCHILDREN);
 		}
 	}
 }
@@ -1041,6 +1086,53 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 		}
 
+		case MENU_LOAD_ROMDATA: {
+			if (NULL == pDataRomDesc) {
+				TCHAR szFilter[100] = { 0 };
+				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
+				memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
+
+				memset(&ofn, 0, sizeof(OPENFILENAME));
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = hScrnWnd;
+				ofn.lpstrFilter = szFilter;
+				ofn.lpstrFile = szRomdataName;
+				ofn.nMaxFile = sizeof(szRomdataName) / sizeof(TCHAR);
+				ofn.lpstrInitialDir = _T(".\\config\\romdata\\");
+				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+				ofn.lpstrDefExt = _T("dat");
+
+				BOOL nOpenDlg = GetOpenFileName(&ofn);
+
+				if (0 == nOpenDlg) break;
+
+				bLoading = 1;
+
+				char* szDrvName = RomdataGetDrvName();
+				INT32 nGame = BurnDrvGetIndex(szDrvName);
+
+				if ((NULL == szDrvName) || (-1 == nGame)) {
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
+					FBAPopupDisplay(PUF_TYPE_WARNING);
+
+					bLoading = 0;
+					break;
+				}
+
+				DrvInit(nGame, true);	// Init the game driver
+				MenuEnableItems();
+				bAltPause = 0;
+				bLoading = 0;
+				if (bVidAutoSwitchFull) {
+					nVidFullscreen = 1;
+					POST_INITIALISE_MESSAGE;
+				}
+
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		}
+
 		case MENU_PREVIOUSGAMES1:
 		case MENU_PREVIOUSGAMES2:
 		case MENU_PREVIOUSGAMES3:
@@ -1188,7 +1280,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					kNetGame = 0;
 					Kaillera_End_Game();
 					DeActivateChat();
-					PostQuitMessage(0);
 				}
 				bCheatsAllowed = true;						// reenable cheats netplay has ended
 
@@ -2320,6 +2411,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_CLRMAME_PRO_XML_NEOGEO_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_NEOGEO_ONLY);
+			}
+			break;
+
 		case MENU_CLRMAME_PRO_XML_MD_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_MEGADRIVE_ONLY);
@@ -3434,17 +3531,6 @@ int ScrnSize()
 	// Find out how much space is taken up by the borders
 	ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;
 	eh = GetSystemMetrics(SM_CYSIZEFRAME) << 1;
-
-	// Visual Studio 2012 (seems to have an issue with these, other reports on the web about it too
-#if defined _MSC_VER
-	#if _MSC_VER >= 1700
-		// using the old XP supporting SDK we don't need to alter anything
-		#if !defined BUILD_VS_XP_TARGET
-			ew <<= 1;
-			eh <<= 1;
-		#endif
-	#endif
-#endif
 
 	if (bMenuEnabled) {
 		eh += GetSystemMetrics(SM_CYCAPTION);

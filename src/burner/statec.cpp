@@ -3,6 +3,8 @@
 
 #include "burnint.h"
 
+extern bool bWithEEPROM; // from state.cpp, win32/replay.cpp
+
 static UINT8* Comp = NULL;		// Compressed data buffer
 static INT32 nCompLen = 0;
 static INT32 nCompFill = 0;				// How much of the buffer has been filled so far
@@ -123,6 +125,8 @@ static INT32 __cdecl UncompLoadAcb(struct BurnArea* pba)
 // Compress a state using deflate
 INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 {
+	UINT32 nAddEEPROM = (bWithEEPROM) ? ACB_EEPROM : 0;
+
 	if ((BurnDrvGetHardwareCode() & 0xffff0000) == HARDWARE_CAVE_CV1000) {
 		// Systems with a huge amount of data can be defined here to
 		// use this raw state handler.
@@ -131,7 +135,7 @@ INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 		BurnAcb = UncompLenAcb; // Get length of state buffer
 
 		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);		// scan all ram, read (from driver <- decompress)
-		else      BurnAreaScan(ACB_NVRAM    | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM | nAddEEPROM | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
 
 		BufferUncomp = (UINT8*)malloc (nTotalLenUncomp);
 
@@ -139,7 +143,7 @@ INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 		BurnAcb = UncompSaveAcb;
 
 		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);		// scan all ram, read (from driver <- decompress)
-		else      BurnAreaScan(ACB_NVRAM    | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM | nAddEEPROM | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
 
 		// Return the buffer
 		if (pDef) {
@@ -167,7 +171,7 @@ INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll)
 	BurnAcb = StateCompressAcb;									// callback our function with each area
 
 	if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);		// scan all ram, read (from driver <- decompress)
-	else      BurnAreaScan(ACB_NVRAM    | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
+	else      BurnAreaScan(ACB_NVRAM | nAddEEPROM | ACB_READ, NULL);		// scan nvram,   read (from driver <- decompress)
 
 	// Finish off
 	CompGo(1);
@@ -210,6 +214,8 @@ static INT32 __cdecl StateDecompressAcb(struct BurnArea* pba)
 
 INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll)
 {
+	UINT32 nAddEEPROM = (bWithEEPROM) ? ACB_EEPROM : 0;
+
 	if ((BurnDrvGetHardwareCode() & 0xffff0000) == HARDWARE_CAVE_CV1000) {
 		// Systems with a huge amount of data can be defined here to
 		// use this raw state handler.
@@ -217,7 +223,7 @@ INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll)
 		BurnAcb = UncompLoadAcb;
 
 		if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, NULL);		// scan all ram, write (to driver <- decompress)
-		else      BurnAreaScan(ACB_NVRAM    | ACB_WRITE, NULL);		// scan nvram,   write (to driver <- decompress)
+		else      BurnAreaScan(ACB_NVRAM | nAddEEPROM | ACB_WRITE, NULL);		// scan nvram,   write (to driver <- decompress)
 
 		return 0;
 	}
@@ -233,7 +239,7 @@ INT32 BurnStateDecompress(UINT8* Def, INT32 nDefLen, INT32 bAll)
 	BurnAcb = StateDecompressAcb;								// callback our function with each area
 
 	if (bAll) BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, NULL);		// scan all ram, write (to driver <- decompress)
-	else      BurnAreaScan(ACB_NVRAM    | ACB_WRITE, NULL);		// scan nvram,   write (to driver <- decompress)
+	else      BurnAreaScan(ACB_NVRAM | nAddEEPROM | ACB_WRITE, NULL);		// scan nvram,   write (to driver <- decompress)
 
 	inflateEnd(&Zstr);
 	memset(&Zstr, 0, sizeof(Zstr));

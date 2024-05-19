@@ -6,6 +6,7 @@
 #include "burn_ym2151.h"
 #include "m6809_intf.h"
 #include "msm6295.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -39,92 +40,88 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+static UINT8 DrvDiag;
 static UINT16 DrvInputs[2];
+static ButtonToggle Diag;
 
-static UINT8 FakeAnInp[8];
-static UINT8 FakeTrackBallX[2];
-static UINT8 FakeTrackBallY[2];
+static INT16 Analog[4];
+static INT32 scanline;
 
+static INT32 vblank;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo LemmingsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	FakeAnInp + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	FakeAnInp + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	FakeAnInp + 2,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	FakeAnInp + 3,	"p1 right"},
+	A("P1 Trackball X", BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	FakeAnInp + 4,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	FakeAnInp + 5,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	FakeAnInp + 6,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	FakeAnInp + 7,	"p2 right"},
+	A("P2 Trackball X", BIT_ANALOG_REL, &Analog[2],		"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog[3],		"p2 y-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	&DrvDiag,		"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Lemmings)
 
 static struct BurnDIPInfo LemmingsDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x04, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x11, 0x01, 0x04, 0x04, "Off"			},
-	{0x11, 0x01, 0x04, 0x00, "On"			},
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
+	{0x01, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for 1 Player"	},
-	{0x12, 0x01, 0x03, 0x03, "1"			},
-	{0x12, 0x01, 0x03, 0x02, "2"			},
-	{0x12, 0x01, 0x03, 0x01, "3"			},
-	{0x12, 0x01, 0x03, 0x00, "4"			},
+	{0x00, 0x01, 0x03, 0x03, "1"			},
+	{0x00, 0x01, 0x03, 0x02, "2"			},
+	{0x00, 0x01, 0x03, 0x01, "3"			},
+	{0x00, 0x01, 0x03, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for 2 Player"	},
-	{0x12, 0x01, 0x0c, 0x0c, "1"			},
-	{0x12, 0x01, 0x0c, 0x08, "2"			},
-	{0x12, 0x01, 0x0c, 0x04, "3"			},
-	{0x12, 0x01, 0x0c, 0x00, "4"			},
+	{0x00, 0x01, 0x0c, 0x0c, "1"			},
+	{0x00, 0x01, 0x0c, 0x08, "2"			},
+	{0x00, 0x01, 0x0c, 0x04, "3"			},
+	{0x00, 0x01, 0x0c, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for Continue"	},
-	{0x12, 0x01, 0x30, 0x30, "1"			},
-	{0x12, 0x01, 0x30, 0x20, "2"			},
-	{0x12, 0x01, 0x30, 0x10, "3"			},
-	{0x12, 0x01, 0x30, 0x00, "4"			},
+	{0x00, 0x01, 0x30, 0x30, "1"			},
+	{0x00, 0x01, 0x30, 0x20, "2"			},
+	{0x00, 0x01, 0x30, 0x10, "3"			},
+	{0x00, 0x01, 0x30, 0x00, "4"			},
 	
 	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x12, 0x01, 0x80, 0x80, "Off"			},
-	{0x12, 0x01, 0x80, 0x00, "On"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"			},
+	{0x00, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
-	{0x13, 0x01, 0x07, 0x01, "1 Coin  7 Credits"	},
-	{0x13, 0x01, 0x07, 0x00, "1 Coin  8 Credits"	},
+	{0x01, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x07, 0x00, "1 Coin  8 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
-	{0x13, 0x01, 0x38, 0x08, "1 Coin  7 Credits"	},
-	{0x13, 0x01, 0x38, 0x00, "1 Coin  8 Credits"	},
+	{0x01, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x38, 0x08, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x38, 0x00, "1 Coin  8 Credits"	},
 };
 
 STDDIPINFO(Lemmings)
@@ -188,7 +185,7 @@ static void __fastcall lemmings_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x1a0064:
 			*soundlatch = data & 0xff;
-			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
+			M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0x1c0000:
@@ -221,19 +218,19 @@ static UINT16 __fastcall lemmings_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x190000:
-			return FakeTrackBallX[0];
+			return BurnTrackballRead(0, 0);
 
 		case 0x190002:
-			return FakeTrackBallY[0];
+			return BurnTrackballRead(0, 1);
 
 		case 0x190008:
-			return FakeTrackBallX[1];
+			return BurnTrackballRead(1, 0);
 
 		case 0x19000a:
-			return FakeTrackBallY[1];
+			return BurnTrackballRead(1, 1);
 
 		case 0x1a0320:
-			return (DrvInputs[1] & 0xfffb) | (DrvDips[0] & 0x04);
+			return (DrvInputs[1] & 0xfffb) | (DrvDiag ? 0x04 : 0x00);
 
 		case 0x1a041a:
 			return DrvInputs[0];
@@ -246,16 +243,14 @@ static UINT8 __fastcall lemmings_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
-		case 0x1a0321: // Flipper seems to work better than proper vblank status
-			static INT32 vblank;
-			vblank ^= 8;
-			return (DrvInputs[1] & 0xf3) | (DrvDips[0] & 0x04) | vblank;
+		case 0x1a0321:
+			return (DrvInputs[1] & 0xf3) | (DrvDiag ? 0x04 : 0x00) | ((vblank) ? 8 : 0);
 
 		case 0x1a04e6:
-			return DrvDips[2];
+			return DrvDips[1];
 
 		case 0x1a04e7:
-			return DrvDips[1];
+			return DrvDips[0];
 	}
 	
 	return 0;
@@ -266,11 +261,8 @@ static void lemmings_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x0800:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x0801:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 
 		case 0x1000:
@@ -278,7 +270,7 @@ static void lemmings_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1800:
-			M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
+//			M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -303,8 +295,7 @@ static UINT8 lemmings_sound_read(UINT16 address)
 
 static void lemmingsYM2151IrqHandler(INT32 irq)
 {
-	M6809SetIRQLine(0, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-	M6809Run(1000); // fix music tempo
+	M6809SetIRQLine(0, 0, (irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -321,9 +312,6 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 	BurnYM2151Reset();
-	
-	FakeTrackBallX[0] = FakeTrackBallX[1] = 0xff;
-	FakeTrackBallY[0] = FakeTrackBallY[1] = 0x00;
 
 	HiscoreReset();
 
@@ -401,12 +389,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
@@ -457,15 +440,18 @@ static INT32 DrvInit()
 	M6809SetReadHandler(lemmings_sound_read);
 	M6809Close();
 
-	BurnYM2151Init(3580000);
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&lemmingsYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachM6809(4027500);
 
 	MSM6295Init(0, 1023924 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+
+	BurnTrackballInit(2);
 
 	DrvDoReset();
 
@@ -476,6 +462,8 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	BurnTrackballExit();
+
 	BurnYM2151Exit();
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
@@ -483,7 +471,7 @@ static INT32 DrvExit()
 	SekExit();
 	M6809Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -528,19 +516,7 @@ static void draw_sprites(UINT8 *ram, UINT8 *rom, INT32 color_offset, INT32 pri)
 
 		while (multi >= 0)
 		{
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, (code - multi * inc) & 0x7ff, sx, sy + -16 * multi, color, 4, 0, color_offset, rom);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, (code - multi * inc) & 0x7ff, sx, sy + -16 * multi, color, 4, 0, color_offset, rom);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, (code - multi * inc) & 0x7ff, sx, sy + -16 * multi, color, 4, 0, color_offset, rom);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, (code - multi * inc) & 0x7ff, sx, sy + -16 * multi, color, 4, 0, color_offset, rom);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, (code - multi * inc) & 0x7ff, sx, sy + -16 * multi, flipx, flipy, color, 4, 0, color_offset, rom);
 
 			multi--;
 		}
@@ -616,9 +592,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x400;
-	}
+	BurnTransferClear(0x400);
 
 	if (nSpriteEnable & 1) draw_sprites(DrvSprTBuf1, DrvGfxROM1, 0x300, 0x0000);
 
@@ -650,20 +624,19 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
-		
-		if (FakeAnInp[0]) FakeTrackBallY[0] -= 0x04;
-		if (FakeAnInp[1]) FakeTrackBallY[0] += 0x04;
-		if (FakeAnInp[2]) FakeTrackBallX[0] += 0x04;
-		if (FakeAnInp[3]) FakeTrackBallX[0] -= 0x04;
-		if (FakeAnInp[4]) FakeTrackBallY[1] -= 0x04;
-		if (FakeAnInp[5]) FakeTrackBallY[1] += 0x04;
-		if (FakeAnInp[6]) FakeTrackBallX[1] += 0x04;
-		if (FakeAnInp[7]) FakeTrackBallX[1] -= 0x04;
+
+		Diag.Toggle(DrvDiag);
+
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_NORMAL);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x0a, 256);
+		BurnTrackballUpdate(0);
+
+		BurnTrackballConfig(1, AXIS_REVERSED, AXIS_NORMAL);
+		BurnTrackballFrame(1, Analog[2], Analog[3], 0x01, 0x0a, 256);
+		BurnTrackballUpdate(1);
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 60, 4027500 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -672,34 +645,23 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nCyclesTotal[0] - nCyclesDone[0];
-		nCyclesDone[0] += SekRun(nSegment);
+		scanline = i;
 
-		nSegment = nCyclesTotal[1] - nCyclesDone[1];
-		nCyclesDone[1] += M6809Run(nSegment);
+		vblank = (i >= 240 && i <= 248);
 
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
-
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-
-			nSoundBufferPos += nSegment;
-		}
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
-	}
-
 	M6809Close();
 	SekClose();
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -714,7 +676,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029722;
 	}
@@ -732,9 +694,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-		
-		SCAN_VAR(FakeTrackBallX);
-		SCAN_VAR(FakeTrackBallY);
+
+		BurnTrackballScan();
+		Diag.Scan();
 	}
 
 	return 0;
@@ -773,7 +735,7 @@ struct BurnDriver BurnDrvLemmings = {
 	"lemmings", NULL, NULL, NULL, "1991",
 	"Lemmings (US prototype)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, lemmingsRomInfo, lemmingsRomName, NULL, NULL, NULL, NULL, LemmingsInputInfo, LemmingsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3

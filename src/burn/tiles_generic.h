@@ -24,6 +24,7 @@ extern UINT8 GenericTilesPRIMASK;
 
 INT32 GenericTilesInit();
 INT32 GenericTilesExit();
+INT32 BurnTransferFindSpill();
 
 // Tile decoding macros
 #define RGN_FRAC(length, numerator, denominator) ((((length) * 8) * (numerator)) / (denominator))
@@ -256,7 +257,9 @@ void BurnTransferClear();
 void BurnTransferClear(UINT16 nFillPattern);
 void BurnPrioClear();
 INT32 BurnTransferCopy(UINT32* pPalette);
+INT32 BurnTransferPartial(UINT32* pPalette, INT32 nStart, INT32 nEnd);
 void BurnTransferExit();
 INT32 BurnTransferInit();
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight); // Use extreme caution!
 void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY);
+void BurnTransferRealloc();

@@ -83,6 +83,7 @@
 #define IDS_DISK_ALL_DAT				(IDS_STRING +  322)
 #define IDS_DISK_TEXT					(IDS_STRING +  324)
 #define IDS_DISK_FILE_PATCH				(IDS_STRING +  326)
+#define IDS_DISK_FILE_ROMDATA			(IDS_STRING +  328)
 
 #define IDS_DISK_SAVEREPORT				(IDS_STRING +  340)
 
@@ -240,6 +241,8 @@
 #define IDS_GENRE_RPG                   (IDS_STRING +  698)
 #define IDS_GENRE_SIM                   (IDS_STRING +  700)
 #define IDS_GENRE_ADV                   (IDS_STRING +  702)
+#define IDS_GENRE_CARD                  (IDS_STRING +  704)
+#define IDS_GENRE_BOARD                 (IDS_STRING +  706)
 
 #define IDS_FAMILY						(IDS_STRING +  740)
 #define IDS_FAMILY_MSLUG				(IDS_STRING +  742)

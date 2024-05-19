@@ -45,6 +45,7 @@ static INT32 DrvSoundLatch;
 static INT32 Tumbleb2MusicCommand;
 static INT32 Tumbleb2MusicBank;
 static INT32 Tumbleb2MusicIsPlaying;
+static UINT8 SuprtrioProt;
 
 static INT32 DrvSpriteXOffset;
 static INT32 DrvSpriteYOffset;
@@ -81,6 +82,7 @@ typedef void (*MapZ80)();
 static MapZ80 DrvMapZ80;
 
 static INT32 nCyclesTotal[2];
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo TumblebInputList[] =
 {
@@ -1450,16 +1452,16 @@ STD_ROM_PICK(Fncywld)
 STD_ROM_FN(Fncywld)
 
 static struct BurnRomInfo magipurRomDesc[] = {
-	{ "2-27c040.bin",	0x80000, 0x135c5de7, 1 | BRF_PRG | BRF_ESS }, //  0	68000 Program Code
-	{ "3-27c040.bin",	0x80000, 0xee4b16da, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "unico_2-27c040.bin", 0x80000, 0x135c5de7, 1 | BRF_PRG | BRF_ESS }, //  0	68000 Program Code
+	{ "unico_3-27c040.bin", 0x80000, 0xee4b16da, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "4-27c040.bin",	0x80000, 0xe460a77d, 2 | BRF_GRA },           //  2	Tiles
-	{ "5-27c040.bin",	0x80000, 0x79c53627, 2 | BRF_GRA },           //  3
+	{ "unico_4-27c040.bin", 0x80000, 0xe460a77d, 2 | BRF_GRA },           //  2	Tiles
+	{ "unico_5-27c040.bin", 0x80000, 0x79c53627, 2 | BRF_GRA },           //  3
 
-	{ "6-27c040.bin",	0x80000, 0xb25b5872, 3 | BRF_GRA },           //  4	Sprites
-	{ "7-27c040.bin",	0x80000, 0xd3c3a672, 3 | BRF_GRA },           //  5
+	{ "unico_6-27c040.bin", 0x80000, 0xb25b5872, 3 | BRF_GRA },           //  4	Sprites
+	{ "unico_7-27c040.bin", 0x80000, 0xd3c3a672, 3 | BRF_GRA },           //  5
 
-	{ "1-27c020.bin",	0x40000, 0x84dcf771, 4 | BRF_SND },           //  6 Samples
+	{ "unico_1-27c020.bin", 0x40000, 0x84dcf771, 4 | BRF_SND },           //  6 Samples
 };
 
 STD_ROM_PICK(magipur)
@@ -1723,11 +1725,11 @@ static INT32 DrvDoReset()
 	if (DrvHasZ80) {
 		ZetOpen(0);
 		ZetReset();
+		if (DrvHasYM3812) BurnYM3812Reset();
 		ZetClose();
 	}
 
 	if (DrvHasYM2151) BurnYM2151Reset();
-	if (DrvHasYM3812) BurnYM3812Reset();
 
 	MSM6295Reset(0);
 
@@ -1739,6 +1741,7 @@ static INT32 DrvDoReset()
 	Tumbleb2MusicBank = 0;
 	Tumbleb2MusicIsPlaying = 0;
 	memset(DrvControl, 0, 8);
+	SuprtrioProt = 0;
 
 	HiscoreReset();
 
@@ -2108,7 +2111,7 @@ static UINT16 __fastcall Suprtrio68KReadWord(UINT32 a)
 		}
 
 		case 0xe40000: {
-			return 0xffff - DrvInput[2];
+			return ((DrvInput[2] ^ 0xffff) & 0xff0f) | (SuprtrioProt << 4);
 		}
 
 		case 0xe80002: {
@@ -2131,6 +2134,10 @@ static void __fastcall Suprtrio68KWriteWord(UINT32 a, UINT16 d)
 	}
 
 	switch (a) {
+		case 0xee0000: {
+			SuprtrioProt = d & 0x0f;
+			return;
+		}
 		case 0xe00000: {
 			DrvTileBank = d << 14;
 			return;
@@ -3444,7 +3451,7 @@ static INT32 SuprtrioInit()
 	DrvMap68k = SuprtrioMap68k;
 	DrvMapZ80 = SemicomMapZ80;
 
-	nCyclesTotal[0] = 14000000 / 60;
+	nCyclesTotal[0] = 16000000 / 60; // + 2mhz fixes inputs, flicker on level 10
 	nCyclesTotal[1] = 8000000;
 
 	nRet = DrvInit(1, 0x800, 0x7fff, 0, 0, 0x2000, 0x8000, 0x2000, 60.0, 875000);
@@ -3859,7 +3866,7 @@ static INT32 JumppopInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3500000, NULL, JumppopSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3500000);
+	BurnTimerAttach(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
@@ -4653,7 +4660,7 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	if (DrvHasZ80) ZetNewFrame();
@@ -4683,6 +4690,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		if (DrvHasYM2151) {
 			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -4702,7 +4711,7 @@ static INT32 JumppopFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 1953 / 60;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -4716,10 +4725,12 @@ static INT32 JumppopFrame()
 		SekClose();
 
 		ZetOpen(0);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		ZetNmi();
 		ZetClose();
 	}
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -4762,8 +4773,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Tumbleb2MusicCommand);
 		SCAN_VAR(Tumbleb2MusicBank);
 		SCAN_VAR(Tumbleb2MusicIsPlaying);
+		SCAN_VAR(SuprtrioProt);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -4789,7 +4803,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvTumbleb = {
 	"tumbleb", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (bootleg set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, TumblebRomInfo, TumblebRomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
@@ -4799,7 +4813,7 @@ struct BurnDriver BurnDrvTumbleb = {
 
 struct BurnDriver BurnDrvTumbleb2 = {
 	"tumbleb2", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (bootleg set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (bootleg with PIC)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, Tumbleb2RomInfo, Tumbleb2RomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
@@ -4918,7 +4932,7 @@ struct BurnDriver BurnDrvWlstar = {
 };
 
 struct BurnDriver BurnDrvWondl96 = {
-	"wondl96", NULL, NULL, NULL, "1995",
+	"wondl96", NULL, NULL, NULL, "1996",
 	"Wonder League '96 (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -4949,7 +4963,7 @@ struct BurnDriver BurnDrvMagipur = {
 
 struct BurnDriver BurnDrvSdfight = {
 	"sdfight", NULL, NULL, NULL, "1996",
-	"SD Fighters (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"SD Fighters (Korea)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	L"\uFF33\uFF24 \uD30C\uC774\uD130\uC988 (Korea)\0SD Fighters\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, SdfightRomInfo, SdfightRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, SdfightDIPInfo,
@@ -4959,7 +4973,7 @@ struct BurnDriver BurnDrvSdfight = {
 
 struct BurnDriver BurnDrvBcstry = {
 	"bcstry", NULL, NULL, NULL, "1997",
-	"B.C. Story (set 1)\0", NULL, "SemiCom", "Miscellaneous",
+	"B.C. Story (set 1)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, BcstryRomInfo, BcstryRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
@@ -4969,7 +4983,7 @@ struct BurnDriver BurnDrvBcstry = {
 
 struct BurnDriver BurnDrvBcstrya = {
 	"bcstrya", "bcstry", NULL, NULL, "1997",
-	"B.C. Story (set 2)\0", NULL, "SemiCom", "Miscellaneous",
+	"B.C. Story (set 2)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, BcstryaRomInfo, BcstryaRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
@@ -4979,7 +4993,7 @@ struct BurnDriver BurnDrvBcstrya = {
 
 struct BurnDriver BurnDrvSemibase = {
 	"semibase", NULL, NULL, NULL, "1997",
-	"MuHanSeungBu (SemiCom Baseball) (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"MuHanSeungBu (SemiCom Baseball) (Korea)\0", NULL, "SemiCom / DMD", "Miscellaneous",
 	L"\u7121\u9650\u52DD\u8CA0\0\uC804\uC6D0 \uAD6D\uC81C\uB9AC\uADF8 \uC804 (SemiCom Baseball) (Korea)\0MuHanSeungBu\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, SemibaseRomInfo, SemibaseRomName, NULL, NULL, NULL, NULL, SemibaseInputInfo, SemibaseDIPInfo,
@@ -4989,7 +5003,7 @@ struct BurnDriver BurnDrvSemibase = {
 
 struct BurnDriver BurnDrvDquizgo = {
 	"dquizgo", NULL, NULL, NULL, "1998",
-	"Date Quiz Go Go (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"Date Quiz Go Go (Korea)\0", NULL, "SemiCom / AceVer", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, DquizgoRomInfo, DquizgoRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, DquizgoDIPInfo,

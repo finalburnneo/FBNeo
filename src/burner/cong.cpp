@@ -35,7 +35,18 @@ INT32 ConfigGameLoad(bool bOverWrite)
 
 	FILE* h = _tfopen(GameConfigName(), _T("rt"));
 	if (h == NULL) {
-		return 1;
+		// Not command line start, always -1
+		if (-1 == nSubDrvSelected) return 1;
+
+		// Command line to start a subgame - game configuration not found
+		h = _tfopen(GameConfigName(), _T("wt"));	// Create
+		if (h == NULL) return 1;
+
+		ConfigGameSave(true);						// Write default configuration and save
+		fclose(h);
+
+		h = _tfopen(GameConfigName(), _T("rt"));	// Reopen
+		if (h == NULL) return 1;
 	}
 
 	if (bOverWrite) {
@@ -44,7 +55,7 @@ INT32 ConfigGameLoad(bool bOverWrite)
 	}
 
 	// Go through each line of the config file and process inputs
-	while (_fgetts(szLine, sizeof(szLine), h)) {
+	while (_fgetts(szLine, 256, h)) {
 		TCHAR *szValue;
 		INT32 nLen = _tcslen(szLine);
 

@@ -39,6 +39,8 @@ static INT32 spritebank = 0;
 static INT32 charbank = 0;
 static INT32 scrolly = 0;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo JrpacmanInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
@@ -57,7 +59,7 @@ static struct BurnInputInfo JrpacmanInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip c",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Jrpacman)
@@ -270,6 +272,7 @@ static INT32 DrvDoReset()
 	spritebank = 0;
 	charbank = 0;
 	scrolly = 0;
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -340,12 +343,7 @@ static void jrpacman_decode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM + 0x0000,	0, 1)) return 1;
@@ -404,7 +402,7 @@ static INT32 DrvExit()
 
 	NamcoSoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -501,7 +499,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x200; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 		DrvRecalc = 0;
 	}
@@ -543,7 +541,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[1] = { 3072000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -554,6 +552,8 @@ static INT32 DrvFrame()
 		}
 	}
 	ZetClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -593,6 +593,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(spritebank);
 		SCAN_VAR(charbank);
 		SCAN_VAR(scrolly);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -625,7 +627,7 @@ struct BurnDriver BurnDrvJrpacman = {
 	"jrpacman", NULL, NULL, NULL, "1983",
 	"Jr. Pac-Man (11/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, jrpacmanRomInfo, jrpacmanRomName, NULL, NULL, NULL, NULL, JrpacmanInputInfo, JrpacmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -659,7 +661,7 @@ struct BurnDriver BurnDrvJrpacmanf = {
 	"jrpacmanf", "jrpacman", NULL, NULL, "1983",
 	"Jr. Pac-Man (speedup hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, jrpacmanfRomInfo, jrpacmanfRomName, NULL, NULL, NULL, NULL, JrpacmanInputInfo, JrpacmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

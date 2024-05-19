@@ -49,6 +49,8 @@ static INT32 is_bootleg = 0;
 static UINT8 TokibMSM5205Next = 0;
 static UINT8 TokibMSM5205Toggle = 0;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo TokiInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
@@ -110,7 +112,7 @@ static struct BurnDIPInfo TokiDIPList[]=
 	{0x12, 0xff, 0xff, 0xdf, NULL			},
 	{0x13, 0xff, 0xff, 0xff, NULL			},
 	{0x14, 0xff, 0xff, 0x00, NULL			},
-	
+
 	{0   , 0xfe, 0   ,    20, "Coinage"		},
 	{0x12, 0x01, 0x1f, 0x15, "6 Coins 1 Credits "	},
 	{0x12, 0x01, 0x1f, 0x17, "5 Coins 1 Credits "	},
@@ -132,7 +134,7 @@ static struct BurnDIPInfo TokiDIPList[]=
 	{0x12, 0x01, 0x1f, 0x0a, "A 3/1 B 1/5"		},
 	{0x12, 0x01, 0x1f, 0x00, "A 5/1 B 1/6"		},
 	{0x12, 0x01, 0x1f, 0x01, "Free Play"		},
-	
+
 	{0   , 0xfe, 0   ,    2, "Joysticks"		},
 	{0x12, 0x01, 0x20, 0x20, "1"			},
 	{0x12, 0x01, 0x20, 0x00, "2"			},
@@ -464,10 +466,10 @@ static void toki_adpcm_int()
 {
 	MSM5205DataWrite(0, TokibMSM5205Next);
 	TokibMSM5205Next >>= 4;
-	
+
 	TokibMSM5205Toggle ^= 1;
 	if (TokibMSM5205Toggle) ZetNmi();
-}	
+}
 
 static INT32 DrvDoReset()
 {
@@ -492,6 +494,8 @@ static INT32 DrvDoReset()
 		seibu_sound_reset();
 	}
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -501,9 +505,9 @@ static INT32 TokibDoReset()
 {
 	TokibMSM5205Next = 0;
 	TokibMSM5205Toggle = 0;
-	
+
 	MSM5205Reset();
-	
+
 	return DrvDoReset();
 }
 
@@ -636,7 +640,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x200000;
 	DrvGfxROM2		= Next; Next += 0x100000;
 	DrvGfxROM3		= Next; Next += 0x100000;
-	
+
 	MSM6295ROM		= Next;
 	DrvSndROM       = Next; Next += 0x040000;
 
@@ -669,13 +673,8 @@ static INT32 DrvInit()
 {
 	is_bootleg = 0;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-	
+	BurnAllocMemIndex();
+
 	if (BurnLoadRom(Drv68KROM + 0x00001,	 0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x00000,	 1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x40001,	 2, 2)) return 1;
@@ -691,7 +690,7 @@ static INT32 DrvInit()
 	if (BurnLoadRom(DrvGfxROM1 + 0x80000,    9, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x00000,   10, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x00000,   11, 1)) return 1;
-		
+
 	if (BurnLoadRom(DrvSndROM  + 0x00000,   12, 1)) return 1;
 
 	DrvGfxDecode();
@@ -732,13 +731,8 @@ static INT32 TokipInit()
 {
 	is_bootleg = 0;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-	
+	BurnAllocMemIndex();
+
 	if (BurnLoadRom(Drv68KROM + 0x00001,	 0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x00000,	 1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x40001,	 2, 2)) return 1;
@@ -758,17 +752,17 @@ static INT32 TokipInit()
 	if (BurnLoadRom(DrvGfxROM1 + 0x80001,   13, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0xc0000,   14, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0xc0001,   15, 2)) return 1;
-	
+
 	if (BurnLoadRom(DrvGfxROM2 + 0x00000,   16, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x00001,   17, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x40000,   18, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x40001,   19, 2)) return 1;
-	
+
 	if (BurnLoadRom(DrvGfxROM3 + 0x00000,   20, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x00001,   21, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x40000,   22, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x40001,   23, 2)) return 1;
-		
+
 	if (BurnLoadRom(DrvSndROM  + 0x00000,   24, 1)) return 1;
 
 	DrvGfxDecode();
@@ -809,27 +803,22 @@ static INT32 JujubaInit()
 {
 	is_bootleg = 0;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-	
+	BurnAllocMemIndex();
+
 	if (BurnLoadRom(Drv68KROM + 0x20001,	 0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x20000,	 1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x00001,	 2, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x00000,	 3, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x40001,	 4, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x40000,	 5, 2)) return 1;
-	
+
 	if (BurnLoadRom(DrvZ80ROM + 0x00000,     6, 1)) return 1;
 	if (BurnLoadRom(DrvZ80ROM + 0x10000,     7, 1)) return 1;
 	memcpy(DrvZ80ROM, DrvZ80ROM + 0x2000, 0x2000);
-		
+
 	if (BurnLoadRom(DrvGfxROM0 + 0x00000,    8, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM0 + 0x10000,    9, 1)) return 1;
-		
+
 	if (BurnLoadRom(DrvGfxROM1 + 0x00000,   10, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x00001,   11, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x40000,   12, 2)) return 1;
@@ -838,7 +827,7 @@ static INT32 JujubaInit()
 	if (BurnLoadRom(DrvGfxROM1 + 0x80001,   15, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0xc0000,   16, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0xc0001,   17, 2)) return 1;
-		
+
 	if (BurnLoadRom(DrvGfxROM2 + 0x00001,   18, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x20001,   19, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x40001,   20, 2)) return 1;
@@ -847,7 +836,7 @@ static INT32 JujubaInit()
 	if (BurnLoadRom(DrvGfxROM2 + 0x20000,   23, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x40000,   24, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM2 + 0x60000,   25, 2)) return 1;
-		
+
 	if (BurnLoadRom(DrvGfxROM3 + 0x00001,   26, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x20001,   27, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x40001,   28, 2)) return 1;
@@ -856,15 +845,15 @@ static INT32 JujubaInit()
 	if (BurnLoadRom(DrvGfxROM3 + 0x20000,   31, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x40000,   32, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x60000,   33, 2)) return 1;
-	
+
 	if (BurnLoadRom(DrvSndROM  + 0x00000,   34, 1)) return 1;
 	if (BurnLoadRom(DrvSndROM  + 0x10000,   35, 1)) return 1;
-	
+
 	UINT16 *PrgRom = (UINT16*)Drv68KROM;
 	for (INT32 i = 0; i < 0x30000; i++) {
 		PrgRom[i] = BITSWAP16(PrgRom[i], 15, 12, 13, 14, 11, 10, 9, 8, 7, 6, 5, 3, 4, 2, 1, 0);
 	}
-	
+
 	UINT8 *Decrypt = DrvZ80DecROM;
 	UINT8 *Rom = DrvZ80ROM;
 	memcpy(Decrypt, Rom, 0x2000);
@@ -874,7 +863,7 @@ static INT32 JujubaInit()
 	}
 
 	DrvGfxDecode();
-	
+
 	UINT8 *Temp = (UINT8*)BurnMalloc(0x20000);
 	memcpy(Temp, DrvSndROM, 0x20000);
 	for (INT32 i = 0; i < 0x20000; i++ ) {
@@ -915,12 +904,7 @@ static INT32 TokibInit()
 {
 	is_bootleg = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x00001,	 0, 2)) return 1;
@@ -936,7 +920,7 @@ static INT32 TokibInit()
 			if (BurnLoadRom(DrvGfxROM2 + i * 0x10000, 17 + i, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM3 + i * 0x10000, 25 + i, 1)) return 1;
 		}
-		
+
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000,   4, 1)) return 1;
 
 		tokib_rom_decode();
@@ -973,9 +957,9 @@ static INT32 TokibInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3579545, NULL, &TokibSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3579545);
+	BurnTimerAttach(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-	
+
 	MSM5205Init(0, TokibSynchroniseStream, 384000, toki_adpcm_int, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
@@ -1000,8 +984,8 @@ static INT32 DrvExit()
 
 	SekExit();
 
-	BurnFree (AllMem);
-	
+	BurnFreeMemIndex();
+
 	TokibMSM5205Next = 0;
 	TokibMSM5205Toggle = 0;
 	is_bootleg = 0;
@@ -1320,7 +1304,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (10000000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -1329,7 +1313,7 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (pTransDraw && i >= 16 && i < 240) {
 			DrawByLine(i - 16);
@@ -1338,15 +1322,15 @@ static INT32 DrvFrame()
 		// when the line clears, the timer starts counting for the scroll regs to be written!
 		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	}
-	
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		toki_draw_sprites();
@@ -1364,17 +1348,17 @@ static INT32 TokibFrame()
 	if (DrvReset) {
 		TokibDoReset();
 	}
-	
+
 	INT32 nInterleave = MSM5205CalcInterleave(0, 4000000);
 
 	SekNewFrame();
 	ZetNewFrame();
 
 	assemble_inputs(0x3f3f, 0xff1f);
-	
+
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
 		CPU_RUN(0, Sek);
@@ -1382,20 +1366,18 @@ static INT32 TokibFrame()
 		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		MSM5205Update();
 		ZetClose();
 	}
-	
-	ZetOpen(0);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	ZetClose();	
-	
 	if (pBurnDraw) {
 		TokibDraw();
 	}
@@ -1408,7 +1390,7 @@ static INT32 TokibFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
@@ -1420,7 +1402,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 
 		SekScan(nAction);
@@ -1436,7 +1418,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TokibMSM5205Next);
 		SCAN_VAR(TokibMSM5205Toggle);
 
-		DrvRecalc = 1;
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -1465,7 +1447,7 @@ static struct BurnRomInfo tokiRomDesc[] = {
 	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1506,7 +1488,7 @@ static struct BurnRomInfo tokiaRomDesc[] = {
 	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1547,7 +1529,7 @@ static struct BurnRomInfo tokiuRomDesc[] = {
 	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1588,7 +1570,7 @@ static struct BurnRomInfo tokiuaRomDesc[] = {
 	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1641,7 +1623,7 @@ static struct BurnRomInfo tokipRomDesc[] = {
 	{ "back 2-3.rom4",		0x20000, 0x6759571f, 6 | BRF_GRA },           // 23
 
 	{ "9 1-m",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 24 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1653,7 +1635,7 @@ struct BurnDriver BurnDrvTokip = {
 	"tokip", "toki", NULL, NULL, "1989",
 	"Toki (US, prototype?)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokipRomInfo, tokipRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	TokipInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1682,7 +1664,7 @@ static struct BurnRomInfo jujuRomDesc[] = {
 	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
-	
+
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
@@ -1748,10 +1730,10 @@ STD_ROM_PICK(jujub)
 STD_ROM_FN(jujub)
 
 struct BurnDriver BurnDrvJujub = {
-	"jujub", "toki", NULL, NULL, "1989",
+	"jujub", "toki", NULL, NULL, "1990",
 	"JuJu Densetsu (Playmark bootleg)\0", NULL, "bootleg (Playmark)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujubRomInfo, jujubRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1812,7 +1794,7 @@ struct BurnDriverD BurnDrvJujuba = {
 	"jujuba", "toki", NULL, NULL, "1989",
 	"JuJu Densetsu (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujubaRomInfo, jujubaRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	JujubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1865,10 +1847,10 @@ STD_ROM_PICK(tokib)
 STD_ROM_FN(tokib)
 
 struct BurnDriver BurnDrvTokib = {
-	"tokib", "toki", NULL, NULL, "1989",
-	"Toki (bootleg)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
+	"tokib", "toki", NULL, NULL, "1990",
+	"Toki (Datsu bootleg)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokibRomInfo, tokibRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

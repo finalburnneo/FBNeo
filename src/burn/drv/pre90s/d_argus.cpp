@@ -1636,7 +1636,7 @@ struct BurnDriver BurnDrvArgus = {
 	"argus", NULL, NULL, NULL, "1986",
 	"Argus\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, argusRomInfo, argusRomName, NULL, NULL, NULL, NULL, ArgusInputInfo, ArgusDIPInfo,
 	ArgusInit, DrvExit, DrvFrame, ArgusDraw, DrvScan, &DrvRecalc, 0x380,
 	224, 256, 3, 4
@@ -1672,7 +1672,7 @@ struct BurnDriver BurnDrvValtric = {
 	"valtric", NULL, NULL, NULL, "1986",
 	"Valtric\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, valtricRomInfo, valtricRomName, NULL, NULL, NULL, NULL, ValtricInputInfo, ValtricDIPInfo,
 	ValtricInit, DrvExit, DrvFrame, ValtricDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
@@ -1715,7 +1715,7 @@ struct BurnDriver BurnDrvButasan = {
 	"butasan", NULL, NULL, NULL, "1987",
 	"Butasan - Pig's & Bomber's (Japan, English)\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, butasanRomInfo, butasanRomName, NULL, NULL, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
 	ButasanInit, DrvExit, DrvFrame, ButasanDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
@@ -1758,7 +1758,7 @@ struct BurnDriver BurnDrvButasanj = {
 	"butasanj", "butasan", NULL, NULL, "1987",
 	"Butasan (Japan, Japanese)\0", NULL, "NMK (Jaleco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, butasanjRomInfo, butasanjRomName, NULL, NULL, NULL, NULL, ButasanInputInfo, ButasanDIPInfo,
 	ButasanInit, DrvExit, DrvFrame, ButasanDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3

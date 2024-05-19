@@ -1338,7 +1338,7 @@ struct BurnDriver BurnDrvF1gpa = {
 
 // F-1 Grand Prix (Playmark bootleg)
 
-static struct BurnRomInfo f1gpbRomDesc[] = {
+static struct BurnRomInfo f1gpblRomDesc[] = {
 	{ "1.ic38",		0x020000, 0x046dd83a, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 code
 	{ "7.ic39",		0x020000, 0x960f5db4, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "2.ic48",		0x080000, 0xb3b315c3, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1366,21 +1366,21 @@ static struct BurnRomInfo f1gpbRomDesc[] = {
 	{ "6.ic13",		0x080000, 0x6e83ffd8, 5 | BRF_SND }, 	       // 20 OKI MSM6295 Samples
 };
 
-STD_ROM_PICK(f1gpb)
-STD_ROM_FN(f1gpb)
+STD_ROM_PICK(f1gpbl)
+STD_ROM_FN(f1gpbl)
 
-static INT32 F1gpbInit()
+static INT32 F1gpblInit()
 {
 	return 1;
 }
 
-struct BurnDriverD BurnDrvF1gpb = {
-	"f1gpb", "f1gp", NULL, NULL, "1991",
-	"F-1 Grand Prix (Playmark bootleg)\0", NULL, "[Video System Co.] (Playmark bootleg)", "Miscellaneous",
+struct BurnDriverD BurnDrvF1gpbl = {
+	"f1gpbl", "f1gp", NULL, NULL, "1991",
+	"F-1 Grand Prix (Playmark bootleg)\0", NULL, "bootleg (Playmark)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, f1gpbRomInfo, f1gpbRomName, NULL, NULL, NULL, NULL, F1gpInputInfo, F1gpDIPInfo,
-	F1gpbInit, DrvExit, DrvFrame, F1gpbDraw, DrvScan, &DrvRecalc, 0x401,
+	NULL, f1gpblRomInfo, f1gpblRomName, NULL, NULL, NULL, NULL, F1gpInputInfo, F1gpDIPInfo,
+	F1gpblInit, DrvExit, DrvFrame, F1gpbDraw, DrvScan, &DrvRecalc, 0x401,
 	240, 320, 3, 4
 };
 

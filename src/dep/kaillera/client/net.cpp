@@ -6,7 +6,7 @@
 #include <windows.h>
 #include "net.h"
 
-HINSTANCE Kaillera_HDLL;
+HMODULE Kaillera_HDLL;
 int Kaillera_Initialised;
 
 int (WINAPI *Kaillera_Get_Version) (char *version);

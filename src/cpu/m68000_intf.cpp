@@ -2017,6 +2017,7 @@ INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekMapMemory called without init\n"));
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekMapMemory called when no CPU open\n"));
+	if (pMemory == NULL) bprintf(0, _T("SekMapMemory() mapped NULL block!  start, end, type:  %x - %x  0x%x\n"), nStart, nEnd, nType);
 #endif
 
 	UINT8* Ptr = pMemory - nStart;

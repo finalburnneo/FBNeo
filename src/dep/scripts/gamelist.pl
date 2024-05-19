@@ -146,7 +146,13 @@ foreach my $filename ( @Filelist ) {
 			} else {
 				$Drivers{$name}[8] = "";
 			}
-			$Drivers{$name}[9] = "$filename";								# Filename
+
+			my @parts = split /\//, $filename;
+			my $size_of_parts = @parts;
+			my $sourcefile = "$parts[$size_of_parts-2]/$parts[$size_of_parts-1]";
+			# we still want to remove burn/ from burn/d_parent.cpp
+			$sourcefile =~ s/drv\///;
+			$Drivers{$name}[9] = $sourcefile;				# Filename
 
 			# Convert NULL/null/0 to empty string or remove quotes
 			foreach $line ( @{$Drivers{$name}} ) {
@@ -317,6 +323,30 @@ if ( $Debug == 1 ) {
 }
 
 print OUTFILE "};\n";
+
+print OUTFILE << "CPPEND";
+
+// Lookup table containing sourcefiles of all drivers
+struct game_sourcefile_entry {
+	char game_name[32];
+	char sourcefile[32];
+};
+
+static game_sourcefile_entry sourcefile_table[] = {
+CPPEND
+
+
+foreach my $name ( @Driverlist ) {
+	if ( $Drivers{$name}[1] ne "" ) {
+		print OUTFILE "	{ \"$Drivers{$name}[1]\", \"$Drivers{$name}[9]\"},\n";
+	}
+}
+
+print OUTFILE << "CPPEND";
+	{ "\\0", "\\0"}
+};
+CPPEND
+
 
 close( OUTFILE );
 

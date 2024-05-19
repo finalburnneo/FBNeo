@@ -27,9 +27,13 @@ static UINT8 flipscreen;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static INT32 last_dip;
+
+static INT32 nExtraCycles[2];
 
 static struct BurnInputInfo TroangelInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
@@ -50,70 +54,78 @@ static struct BurnInputInfo TroangelInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Troangel)
 
 static struct BurnDIPInfo TroangelDIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0xff, NULL						},
-	{0x0f, 0xff, 0xff, 0xfc, NULL						},
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0xff, NULL						},
+	{0x01, 0xff, 0xff, 0xfe, NULL						},
+	{0x02, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    4, "Time"						},
-	{0x0e, 0x01, 0x03, 0x03, "B:180/A:160/M:140/BG:120"	},
-	{0x0e, 0x01, 0x03, 0x02, "B:160/A:140/M:120/BG:100"	},
-	{0x0e, 0x01, 0x03, 0x01, "B:140/A:120/M:100/BG:80"	},
-	{0x0e, 0x01, 0x03, 0x00, "B:120/A:100/M:100/BG:80"	},
+	{0x00, 0x01, 0x03, 0x03, "B:180/A:160/M:140/BG:120"	},
+	{0x00, 0x01, 0x03, 0x02, "B:160/A:140/M:120/BG:100"	},
+	{0x00, 0x01, 0x03, 0x01, "B:140/A:120/M:100/BG:80"	},
+	{0x00, 0x01, 0x03, 0x00, "B:120/A:100/M:100/BG:80"	},
 
 	{0   , 0xfe, 0   ,    2, "Crash Loss Time"			},
-	{0x0e, 0x01, 0x04, 0x04, "5"						},
-	{0x0e, 0x01, 0x04, 0x00, "10"						},
+	{0x00, 0x01, 0x04, 0x04, "5"						},
+	{0x00, 0x01, 0x04, 0x00, "10"						},
 
 	{0   , 0xfe, 0   ,    2, "Background Sound"			},
-	{0x0e, 0x01, 0x08, 0x08, "Boat Motor"				},
-	{0x0e, 0x01, 0x08, 0x00, "Music"					},
+	{0x00, 0x01, 0x08, 0x08, "Boat Motor"				},
+	{0x00, 0x01, 0x08, 0x00, "Music"					},
 
 	{0   , 0xfe, 0   ,    12, "Coinage"					},
-	{0x0e, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x60, "1 Coin  3 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x50, "1 Coin  4 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x40, "1 Coin  5 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x30, "1 Coin  6 Credits"		},
-	{0x0e, 0x01, 0xf0, 0x00, "Free Play"				},
+	{0x00, 0x01, 0xf0, 0xa0, "6 Coins 1 Credits"		},
+	{0x00, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"		},
+	{0x00, 0x01, 0xf0, 0xc0, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0xf0, 0xd0, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0xf0, 0xe0, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0xf0, 0x60, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0xf0, 0x50, "1 Coin  4 Credits"		},
+	{0x00, 0x01, 0xf0, 0x40, "1 Coin  5 Credits"		},
+	{0x00, 0x01, 0xf0, 0x30, "1 Coin  6 Credits"		},
+	{0x00, 0x01, 0xf0, 0x00, "Free Play"				},
 
 	{0   , 0xfe, 0   ,    1, "Flip Screen"				},
-	{0x0f, 0x01, 0x01, 0x00, "Off"						},
-//	{0x0f, 0x01, 0x01, 0x01, "On"						},
+	{0x01, 0x01, 0x01, 0x00, "Off"						},
+//	{0x01, 0x01, 0x01, 0x01, "On"						},
 
-	{0   , 0xfe, 0   ,    1, "Cabinet"					},
-	{0x0f, 0x01, 0x02, 0x00, "Upright"					},
-//	{0x0f, 0x01, 0x02, 0x02, "Cocktail"					},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x02, 0x00, "Upright"					},
+	{0x01, 0x01, 0x02, 0x02, "Cocktail"					},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mode"				},
-	{0x0f, 0x01, 0x04, 0x04, "Mode 1"					},
-	{0x0f, 0x01, 0x04, 0x00, "Mode 2"					},
+	{0x01, 0x01, 0x04, 0x04, "Mode 1"					},
+	{0x01, 0x01, 0x04, 0x00, "Mode 2"					},
 
 	{0   , 0xfe, 0   ,    2, "Analog Accelarator"		},
-	{0x0f, 0x01, 0x08, 0x08, "No"						},
-	{0x0f, 0x01, 0x08, 0x00, "Yes"						},
+	{0x01, 0x01, 0x08, 0x08, "No"						},
+	{0x01, 0x01, 0x08, 0x00, "Yes"						},
 
 	{0   , 0xfe, 0   ,    2, "Stop Mode (Cheat)"		},
-	{0x0f, 0x01, 0x10, 0x10, "Off"						},
-	{0x0f, 0x01, 0x10, 0x00, "On"						},
+	{0x01, 0x01, 0x10, 0x10, "Off"						},
+	{0x01, 0x01, 0x10, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"	},
-	{0x0f, 0x01, 0x40, 0x40, "Off"						},
-	{0x0f, 0x01, 0x40, 0x00, "On"						},
+	{0x01, 0x01, 0x40, 0x40, "Off"						},
+	{0x01, 0x01, 0x40, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x0f, 0x01, 0x80, 0x80, "Off"						},
-	{0x0f, 0x01, 0x80, 0x00, "On"						},
+	{0x01, 0x01, 0x80, 0x80, "Off"						},
+	{0x01, 0x01, 0x80, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    3, "Water Color"				},
+	{0x02, 0x01, 0x03, 0x00, "Blue"						},
+	{0x02, 0x01, 0x03, 0x01, "Blue, Weird mountains"	},
+	{0x02, 0x01, 0x03, 0x02, "Purple"					},
 };
 
 STDDIPINFO(Troangel)
@@ -168,6 +180,10 @@ static INT32 DrvDoReset()
 	IremSoundReset();
 
 	flipscreen = 0;
+
+	last_dip = DrvDips[2];
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -233,12 +249,9 @@ static INT32 DrvGfxDecode() // 0, 100
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	BurnSetRefreshRate(57.00);
 
 	{
 		if (BurnLoadRom(DrvZ80ROM   + 0x0000,  0, 1)) return 1;
@@ -304,18 +317,25 @@ static INT32 DrvExit()
 	ZetExit();
 	IremSoundExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
-static void DrvPaletteInitOne(UINT8 *prom, UINT32 *dst, INT32 len)
+static void DrvPaletteInitOne(UINT8 *prom, UINT32 *dst, INT32 len, INT32 tiles)
 {
 	for (INT32 i = 0; i < len; i++)
 	{
 		INT32 bit0 = 0;
 		INT32 bit1 = (*prom >> 6) & 0x01;
 		INT32 bit2 = (*prom >> 7) & 0x01;
+
+		if ((~DrvDips[2] & 2) && tiles) {
+			if ((DrvDips[2] & 1) || (i > 0x1f && i < 0x6a)) {
+				bit1 = (*prom >> 7) & 0x01;
+				bit2 = (*prom >> 6) & 0x01;
+			}
+		}
 		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
 		bit0 = (*prom >> 3) & 0x01;
@@ -337,8 +357,8 @@ static void DrvPaletteInit()
 {
 	UINT32 tmp[16];
 
-	DrvPaletteInitOne(DrvColPROM + 0x000, DrvPalette, 0x100);
-	DrvPaletteInitOne(DrvColPROM + 0x100, tmp, 0x10);
+	DrvPaletteInitOne(DrvColPROM + 0x000, DrvPalette, 0x100, 1);
+	DrvPaletteInitOne(DrvColPROM + 0x100, tmp, 0x10, 0);
 
 	for (INT32 i = 0; i < 256; i++) {
 		DrvPalette[0x100 + i] = tmp[(DrvColPROM[0x110 + i] & 0xf) ^ 0xf];
@@ -408,6 +428,7 @@ static void draw_sprites()
 
 		code = (code & 0x3f) | ((code & 0x80) >> 1) | ((attr & 0x20) << 2);
 
+#if 0
 		if (flipscreen)
 		{
 			sx = 240 - sx;
@@ -415,6 +436,7 @@ static void draw_sprites()
 			flipx = !flipx;
 			flipy = !flipy;
 		}
+#endif
 
 		DrawCustomMaskTile(pTransDraw, 16, 32, code, sx - 8, sy - 8, flipx, flipy, color, 3, 0, 0x100, DrvGfxROM1);
 	}
@@ -455,11 +477,18 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		if ((last_dip ^ DrvDips[2]) & 3) {
+			// water color DIP changed, update palette!
+			DrvRecalc = 1;
+
+			last_dip = DrvDips[2];
+		}
 	}
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
-	INT32 nCyclesTotal[2] = { 3072000 / 57, 894886 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { 3072000 / 57, 894886 / 57 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	M6803Open(0);
@@ -484,6 +513,9 @@ static INT32 DrvFrame()
 
 	M6803Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -512,6 +544,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		IremSoundScan(nAction, pnMin);
 
 		SCAN_VAR(flipscreen);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -552,7 +586,7 @@ struct BurnDriver BurnDrvTroangel = {
 	"troangel", NULL, NULL, NULL, "1983",
 	"Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC | GBF_ACTION, 0,
 	NULL, troangelRomInfo, troangelRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
@@ -593,7 +627,7 @@ struct BurnDriver BurnDrvNewtangl = {
 	"newtangl", "troangel", NULL, NULL, "1983",
 	"New Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SPORTSMISC | GBF_ACTION, 0,
 	NULL, newtanglRomInfo, newtanglRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3

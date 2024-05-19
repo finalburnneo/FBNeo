@@ -2606,13 +2606,13 @@ struct BurnDriver BurnDrvTapperg = {
 };
 
 
-// Tapper (Budweiser, 12/9/83)
+// Tapper (Budweiser, 1/12/84)
 
 static struct BurnRomInfo tapperaRomDesc[] = {
-	{ "tapper_c.p.u._pg_0_1c_12-9-83.1c",	0x4000, 0x496a8e04, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "tapper_c.p.u._pg_1_2c_12-9-83.2c",	0x4000, 0xe79c4b0c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tapper_c.p.u._pg_2_3c_12-9-83.3c",	0x4000, 0x3034ccf0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tapper_c.p.u._pg_3_4c_12-9-83.4c",	0x2000, 0x2dc99e05, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tapper_c.p.u._pg_0_1c_1-12-84.1c",	0x4000, 0x127171d1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tapper_c.p.u._pg_1_2c_1-12-84.1c",	0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tapper_c.p.u._pg_2_3c_1-12-84.3c",	0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tapper_c.p.u._pg_3_4c_1-12-84.4c",	0x2000, 0xe8dcdaa4, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "tapper_sound_snd_0_a7_12-7-83.a7",	0x1000, 0x0e8bb9d5, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "tapper_sound_snd_1_a8_12-7-83.a8",	0x1000, 0x0cf0e29b, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -2637,7 +2637,7 @@ STD_ROM_FN(tappera)
 
 struct BurnDriver BurnDrvTappera = {
 	"tappera", "tapper", "midssio", NULL, "1983",
-	"Tapper (Budweiser, 12/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
+	"Tapper (Budweiser, 1/12/84)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tapperaRomInfo, tapperaRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
@@ -2646,13 +2646,13 @@ struct BurnDriver BurnDrvTappera = {
 };
 
 
-// Tapper (Budweiser, Date Unknown)
+// Tapper (Budweiser, 12/9/83)
 
 static struct BurnRomInfo tapperbRomDesc[] = {
-	{ "tapper_c.p.u._pg_0_1c.1c",			0x4000, 0x127171d1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "tapper_c.p.u._pg_1_2c.1c",			0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tapper_c.p.u._pg_2_3c.3c",			0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tapper_c.p.u._pg_3_4c.4c",			0x2000, 0xe8dcdaa4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tapper_c.p.u._pg_0_1c_12-9-83.1c",	0x4000, 0x496a8e04, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tapper_c.p.u._pg_1_2c_12-9-83.2c",	0x4000, 0xe79c4b0c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tapper_c.p.u._pg_2_3c_12-9-83.3c",	0x4000, 0x3034ccf0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tapper_c.p.u._pg_3_4c_12-9-83.4c",	0x2000, 0x2dc99e05, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "tapper_sound_snd_0_a7_12-7-83.a7",	0x1000, 0x0e8bb9d5, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "tapper_sound_snd_1_a8_12-7-83.a8",	0x1000, 0x0cf0e29b, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -2677,7 +2677,7 @@ STD_ROM_FN(tapperb)
 
 struct BurnDriver BurnDrvTapperb = {
 	"tapperb", "tapper", "midssio", NULL, "1983",
-	"Tapper (Budweiser, Date Unknown)\0", NULL, "Bally Midway", "Miscellaneous",
+	"Tapper (Budweiser, 12/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tapperbRomInfo, tapperbRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,

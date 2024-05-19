@@ -352,7 +352,7 @@ static INT32 DrvInit()
 	DrvCpuMap(1);
 
 	BurnYM3526Init(3000000, DrvYM3526IRQHandler, &DrvYM3526SynchroniseStream, 0);
-	BurnTimerAttachYM3526(&M6809Config, 1500000);
+	BurnTimerAttach(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -516,7 +516,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN_TIMER(0);
 		if (i == 240 && (~cpu_ctrl & 0x08)) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
@@ -534,15 +534,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	M6809Open(0);
-
-	BurnTimerEndFrameYM3526(nCyclesTotal[0]);
-
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
 
 	return 0;
 }

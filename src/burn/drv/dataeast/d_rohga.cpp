@@ -39,6 +39,7 @@ static UINT8 *flipscreen;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoyFS[4]; // fake start button(s) for input symmetry
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
@@ -49,6 +50,8 @@ static INT32 DrvOkiBank;
 
 static INT32 WizdfireEnglish = 0;
 static INT32 DrvHangzo = 0;
+
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo RohgaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -127,6 +130,7 @@ static struct BurnInputInfo NitrobalInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
 	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoyFS + 0,	"p3 start"	}, // when game is set to 3p mode via dips, all start buttons are disabled.  This entry just added for symmetry to keep kaillera happy
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
 	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
@@ -320,64 +324,65 @@ STDDIPINFO(Wizdfire)
 
 static struct BurnDIPInfo NitrobalDIPList[]=
 {
-	{0x19, 0xff, 0xff, 0xff, NULL							},
-	{0x1a, 0xff, 0xff, 0x7f, NULL							},
+	DIP_OFFSET(0x1a)
+	{0x00, 0xff, 0xff, 0xff, NULL							},
+	{0x01, 0xff, 0xff, 0x7f, NULL							},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"						},
-	{0x19, 0x01, 0x07, 0x00, "3 Coins 1 Credits"			},
-	{0x19, 0x01, 0x07, 0x01, "2 Coins 1 Credits"			},
-	{0x19, 0x01, 0x07, 0x07, "1 Coin  1 Credits"			},
-	{0x19, 0x01, 0x07, 0x06, "1 Coin  2 Credits"			},
-	{0x19, 0x01, 0x07, 0x05, "1 Coin  3 Credits"			},
-	{0x19, 0x01, 0x07, 0x04, "1 Coin  4 Credits"			},
-	{0x19, 0x01, 0x07, 0x03, "1 Coin  5 Credits"			},
-	{0x19, 0x01, 0x07, 0x02, "1 Coin  6 Credits"			},
+	{0x00, 0x01, 0x07, 0x00, "3 Coins 1 Credits"			},
+	{0x00, 0x01, 0x07, 0x01, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Credits"			},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"			},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  5 Credits"			},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  6 Credits"			},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"						},
-	{0x19, 0x01, 0x38, 0x00, "3 Coins 1 Credits"			},
-	{0x19, 0x01, 0x38, 0x08, "2 Coins 1 Credits"			},
-	{0x19, 0x01, 0x38, 0x38, "1 Coin  1 Credits"			},
-	{0x19, 0x01, 0x38, 0x30, "1 Coin  2 Credits"			},
-	{0x19, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
-	{0x19, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
-	{0x19, 0x01, 0x38, 0x18, "1 Coin  5 Credits"			},
-	{0x19, 0x01, 0x38, 0x10, "1 Coin  6 Credits"			},
+	{0x00, 0x01, 0x38, 0x00, "3 Coins 1 Credits"			},
+	{0x00, 0x01, 0x38, 0x08, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin  5 Credits"			},
+	{0x00, 0x01, 0x38, 0x10, "1 Coin  6 Credits"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x19, 0x01, 0x40, 0x40, "Off"							},
-	{0x19, 0x01, 0x40, 0x00, "On"							},
+	{0x00, 0x01, 0x40, 0x40, "Off"							},
+	{0x00, 0x01, 0x40, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "2 Credits Start, 1 Continue"	},
-	{0x19, 0x01, 0x80, 0x80, "Off"							},
-	{0x19, 0x01, 0x80, 0x00, "On"							},
+	{0x00, 0x01, 0x80, 0x80, "Off"							},
+	{0x00, 0x01, 0x80, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    4, "Lives"						},
-	{0x1a, 0x01, 0x03, 0x01, "1"							},
-	{0x1a, 0x01, 0x03, 0x00, "2"							},
-	{0x1a, 0x01, 0x03, 0x03, "3"							},
-	{0x1a, 0x01, 0x03, 0x02, "4"							},
+	{0x01, 0x01, 0x03, 0x01, "1"							},
+	{0x01, 0x01, 0x03, 0x00, "2"							},
+	{0x01, 0x01, 0x03, 0x03, "3"							},
+	{0x01, 0x01, 0x03, 0x02, "4"							},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty?"					},
-	{0x1a, 0x01, 0x0c, 0x08, "Easy"							},
-	{0x1a, 0x01, 0x0c, 0x0c, "Normal"						},
-	{0x1a, 0x01, 0x0c, 0x04, "Hard"							},
-	{0x1a, 0x01, 0x0c, 0x00, "Hardest"						},
+	{0x01, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x01, 0x01, 0x0c, 0x04, "Hard"							},
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"						},
 
 	{0   , 0xfe, 0   ,    2, "Split Coin Chutes"			},
-	{0x1a, 0x01, 0x10, 0x10, "Off"							},
-	{0x1a, 0x01, 0x10, 0x00, "On"							},
+	{0x01, 0x01, 0x10, 0x10, "Off"							},
+	{0x01, 0x01, 0x10, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Players"						},
-	{0x1a, 0x01, 0x20, 0x20, "2"							},
-	{0x1a, 0x01, 0x20, 0x00, "3"							},
+	{0x01, 0x01, 0x20, 0x20, "2"							},
+	{0x01, 0x01, 0x20, 0x00, "3"							},
 
 	{0   , 0xfe, 0   ,    2, "Shot Button to Start"			},
-	{0x1a, 0x01, 0x40, 0x40, "Off"							},
-	{0x1a, 0x01, 0x40, 0x00, "On"							},
+	{0x01, 0x01, 0x40, 0x40, "Off"							},
+	{0x01, 0x01, 0x40, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x1a, 0x01, 0x80, 0x80, "Off"							},
-	{0x1a, 0x01, 0x80, 0x00, "On"							},
+	{0x01, 0x01, 0x80, 0x80, "Off"							},
+	{0x01, 0x01, 0x80, 0x00, "On"							},
 };
 
 STDDIPINFO(Nitrobal)
@@ -635,7 +640,7 @@ static void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 
 static UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
 {
-	if (address == 0x320000) return DrvInputs[2];
+	if (address == 0x320000) return DrvInputs[3];
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
@@ -647,7 +652,7 @@ static UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
 
 static UINT8 __fastcall wizdfire_main_read_byte(UINT32 address)
 {
-	if (address == 0x320000 || address == 0x320001) return DrvInputs[2] >> ((~address & 1) << 3);
+	if (address == 0x320000 || address == 0x320001) return DrvInputs[3] >> ((~address & 1) << 3);
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
@@ -684,6 +689,8 @@ static INT32 DrvDoReset()
 	deco16Reset();
 
 	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
+
+	nCyclesExtra = 0;
 
 	HiscoreReset();
 
@@ -778,12 +785,7 @@ static INT32 RohgaInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -864,7 +866,6 @@ static INT32 RohgaInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.48, 1006875, 0.70, 2013750, 0.30);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -877,12 +878,7 @@ static INT32 WizdfireInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -966,7 +962,6 @@ static INT32 WizdfireInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 2.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -986,12 +981,7 @@ static INT32 SchmeisrInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1069,7 +1059,6 @@ static INT32 SchmeisrInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 1.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1082,12 +1071,7 @@ static INT32 HangzoInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1166,7 +1150,6 @@ static INT32 HangzoInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.55, 1006875, 0.65, 2013750, 0.20);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	DrvHangzo = 1;
 
@@ -1181,12 +1164,7 @@ static INT32 NitrobalInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1281,7 +1259,6 @@ static INT32 NitrobalInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.50, 1006875, 0.50, 2013750, 0.30);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1299,7 +1276,7 @@ static INT32 DrvExit()
 
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	WizdfireEnglish = 0;
 	DrvHangzo = 0;
@@ -1825,12 +1802,11 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -1839,35 +1815,26 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		CPU_RUN(1, h6280);
+		CPU_RUN_TIMER(1);
 
 		if (i == 248) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			deco16_vblank = 0x08;
+
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
 		}
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-	}
-	
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	return 0;
 }
@@ -1896,6 +1863,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16Scan();
 
 		SCAN_VAR(DrvOkiBank);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1953,7 +1921,7 @@ struct BurnDriver BurnDrvRohga = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 Set 1)
+// Rohga Armor Force (Asia/Europe v3.0 set 1)
 
 static struct BurnRomInfo rohga1RomDesc[] = {
 	{ "jd00.bin",		0x040000, 0xe046c77a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1991,7 +1959,7 @@ STD_ROM_FN(rohga1)
 
 struct BurnDriver BurnDrvRohga1 = {
 	"rohga1", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 1)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga Armor Force (Asia/Europe v3.0 set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga1RomInfo, rohga1RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -2000,7 +1968,7 @@ struct BurnDriver BurnDrvRohga1 = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 Set 2)
+// Rohga Armor Force (Asia/Europe v3.0 set 2)
 
 static struct BurnRomInfo rohga2RomDesc[] = {
 	{ "hts-00-3.2a",	0x040000, 0x154f02ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2038,7 +2006,7 @@ STD_ROM_FN(rohga2)
 
 struct BurnDriver BurnDrvRohga2 = {
 	"rohga2", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga Armor Force (Asia/Europe v3.0 set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga2RomInfo, rohga2RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,

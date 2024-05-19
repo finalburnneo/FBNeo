@@ -1154,7 +1154,7 @@ struct BurnDriver BurnDrvLiberate = {
 	"liberate", NULL, NULL, NULL, "1984",
 	"Liberation\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, liberateRomInfo, liberateRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, LiberateDIPInfo,
 	LiberateInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1193,7 +1193,7 @@ struct BurnDriver BurnDrvDualaslt = {
 	"dualaslt", "liberate", NULL, NULL, "1984",
 	"Dual Assault\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, dualasltRomInfo, dualasltRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, DualasltDIPInfo,
 	DualasltInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1227,7 +1227,7 @@ struct BurnDriver BurnDrvBoomrang = {
 	"boomrang", NULL, NULL, NULL, "1983",
 	"Boomer Rang'r / Genesis (set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, boomrangRomInfo, boomrangRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, BoomrangDIPInfo,
 	BoomrangInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1268,7 +1268,7 @@ struct BurnDriver BurnDrvBoomranga = {
 	"boomranga", "boomrang", NULL, NULL, "1983",
 	"Boomer Rang'r / Genesis (set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, boomrangaRomInfo, boomrangaRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, BoomrangDIPInfo,
 	BoomrangaInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1301,7 +1301,7 @@ struct BurnDriver BurnDrvKamikcab = {
 	"kamikcab", NULL, NULL, NULL, "1984",
 	"Kamikaze Cabbie\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, kamikcabRomInfo, kamikcabRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	KamikcabInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1339,7 +1339,7 @@ struct BurnDriver BurnDrvYellowcbj = {
 	"yellowcbj", "kamikcab", NULL, NULL, "1984",
 	"Yellow Cab (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, yellowcbjRomInfo, yellowcbjRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	YellowcbInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1377,7 +1377,7 @@ struct BurnDriver BurnDrvYellowcbb = {
 	"yellowcbb", "kamikcab", NULL, NULL, "1984",
 	"Yellow Cab (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, yellowcbbRomInfo, yellowcbbRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	YellowcbInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4

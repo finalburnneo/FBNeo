@@ -791,7 +791,7 @@ static INT32 flagrallInit()
 
 struct BurnDriver BurnDrvFlagrall = {
 	"flagrall", NULL, NULL, NULL, "1996",
-	"'96 Flag Rally\0", NULL, "unknown", "Miscellaneous",
+	"'96 Flag Rally\0", NULL, "Promat?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, flagrallRomInfo, flagrallRomName, NULL, NULL, NULL, NULL, FlagrallInputInfo, FlagrallDIPInfo,

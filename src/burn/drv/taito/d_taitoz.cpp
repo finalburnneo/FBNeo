@@ -1,3 +1,4 @@
+// FB Neo Taito Z Driver
 // Based on MAME driver by David Graves
 
 #include "tiles_generic.h"
@@ -16,8 +17,10 @@ static INT32 TaitoZINT6timer = 0;
 static INT32 bUseShifter = 0;
 static INT32 bUseGun = 0;
 
-static double TaitoZYM2610Route1MasterVol;
-static double TaitoZYM2610Route2MasterVol;
+static double TaitoZYM2610RouteMasterVol;
+static UINT8 routes[4];
+
+static INT32 nCyclesExtra[2];
 
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
@@ -27,20 +30,20 @@ static bool bUseAsm68KCoreOldValue = false;
 
 static struct BurnInputInfo AquajackInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "p1 right"  },
+	{"P1 Button 1"		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 1" },
+	{"P1 Button 2"		 , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 fire 2" },
+	{"P1 Button 3"		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 6, "p1 fire 3" },
+	{"P1 Button 4"		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4" },
 
-	{"Up"                , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 up"     },
-	{"Down"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 down"   },
-	{"Left"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "p1 left"   },
-	{"Right"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "p1 right"  },
-	{"Jump"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 fire 2" },
-	{"Vulcan"            , BIT_DIGITAL   , TC0220IOCInputPort1 + 6, "p1 fire 3" },
-	{"Missile"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -51,17 +54,17 @@ STDINPUTINFO(Aquajack)
 
 static struct BurnInputInfo BsharkInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
+	A("P1 Crosshair X"   , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	A("P1 Crosshair Y"   , BIT_ANALOG_REL, &TaitoAnalogPort1      , "p1 y-axis" ),
+	{"P1 Button 1"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
+	{"P1 Button 2"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
 
-	A("Crosshair X"      , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	A("Crosshair Y"      , BIT_ANALOG_REL, &TaitoAnalogPort1     , "p1 y-axis" ),
-	{"Fire 1"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -72,19 +75,19 @@ STDINPUTINFO(Bshark)
 
 static struct BurnInputInfo BsharkjjsInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL   , TC0220IOCInputPort2 + 2, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 3, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 5, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 4, "p1 right"  },
+	{"P1 Button 1"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
+	{"P1 Button 2"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
 
-	{"Up"                , BIT_DIGITAL   , TC0220IOCInputPort2 + 2, "p1 up"     },
-	{"Down"              , BIT_DIGITAL   , TC0220IOCInputPort2 + 3, "p1 down"   },
-	{"Left"              , BIT_DIGITAL   , TC0220IOCInputPort2 + 5, "p1 left"   },
-	{"Right"             , BIT_DIGITAL   , TC0220IOCInputPort2 + 4, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -95,17 +98,17 @@ STDINPUTINFO(Bsharkjjs)
 
 static struct BurnInputInfo ChasehqInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	{"P1 Brake" 		 , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 fire 1" },
+	{"P1 Accelerator"	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 2" },
+	{"P1 Turbo"   	 	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 3" },
+	{"P1 Gear Shift"  	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4" },
 
-	A("Steering"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	{"Brake"             , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 2" },
-	{"Turbo"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 3" },
-	{"Gear"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -116,20 +119,16 @@ STDINPUTINFO(Chasehq)
 
 static struct BurnInputInfo ContcircInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	A("P1 Brake"		 , BIT_ANALOG_REL, &TaitoAnalogPort1	  , "p1 fire 1" ),
+	A("P1 Accelerator"	 , BIT_ANALOG_REL, &TaitoAnalogPort2	  , "p1 fire 2" ),
+	{"P1 Gear Shift"	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 3" },
 
-	A("Steering"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	{"Brake"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 7, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "p1 fire 2" },
-	{"Gear"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 3" },
-	{"Brake 2"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 4" },
-	{"Brake 3"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 6, "p1 fire 5" },
-	{"Accelerate 2"      , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 fire 6" },
-	{"Accelerate 3"      , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "p1 fire 7" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -140,19 +139,19 @@ STDINPUTINFO(Contcirc)
 
 static struct BurnInputInfo DblaxleInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0510NIOInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0510NIOInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0510NIOInputPort0 + 3, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0510NIOInputPort1 + 3, "p1 start"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	{"P1 Brake" 		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 5, "p1 fire 1" },
+	{"P1 Accelerator"	 , BIT_DIGITAL   , TC0510NIOInputPort1 + 5, "p1 fire 2" },
+	{"P1 Nitro" 		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 0, "p1 fire 3" },
+	{"P1 Gear Shift"  	 , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
+	{"P1 Reverse"		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 7, "p1 fire 5" },
+	{"P1 Centre"		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 2, "p1 fire 6" },
 
-	A("Steering"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	{"Brake"             , BIT_DIGITAL   , TC0510NIOInputPort0 + 5, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0510NIOInputPort1 + 5, "p1 fire 2" },
-	{"Nitro"             , BIT_DIGITAL   , TC0510NIOInputPort1 + 0, "p1 fire 3" },
-	{"Gear"              , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
-	{"Reverse"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 7, "p1 fire 5" },
-	{"Centre"            , BIT_DIGITAL   , TC0510NIOInputPort1 + 2, "p1 fire 6" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 3, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0510NIOInputPort1 + 1, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0510NIODip + 0       , "dip"       },
@@ -163,18 +162,18 @@ STDINPUTINFO(Dblaxle)
 
 static struct BurnInputInfo EnforceInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 7, "p1 right"  },
+	{"P1 Button 1" 		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 1" },
+	{"P1 Button 2"  	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "p1 fire 2" },
 
-	{"Up"                , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 up"     },
-	{"Down"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "p1 down"   },
-	{"Left"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "p1 left"   },
-	{"Right"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 7, "p1 right"  },
-	{"Laser"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 1" },
-	{"Bomb"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "p1 fire 2" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -185,17 +184,17 @@ STDINPUTINFO(Enforce)
 
 static struct BurnInputInfo NightstrInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "p1 start"  },
+	A("P1 Stick X"       , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	A("P1 Stick Y"       , BIT_ANALOG_REL, &TaitoAnalogPort1      , "p1 y-axis" ),
+	{"P1 Fire 1"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
 
-	A("Stick X"          , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	A("Stick Y"          , BIT_ANALOG_REL, &TaitoAnalogPort1     , "p1 y-axis" ),
-	{"Fire 1"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 6, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL   , TC0220IOCInputPort2 + 7, "p1 fire 2" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 start"  },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -206,18 +205,18 @@ STDINPUTINFO(Nightstr)
 
 static struct BurnInputInfo RacingbInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0510NIOInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0510NIOInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0510NIOInputPort0 + 3, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0510NIOInputPort1 + 3, "p1 start"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	{"P1 Brake" 		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 5, "p1 fire 1" },
+	{"P1 Accelerator"	 , BIT_DIGITAL   , TC0510NIOInputPort1 + 5, "p1 fire 2" },
+	{"P1 Pit In"		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 0, "p1 fire 3" },
+	{"P1 Gear"  		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
+	{"P1 Centre"		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 2, "p1 fire 5" },
 
-	A("Steering"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	{"Brake"             , BIT_DIGITAL   , TC0510NIOInputPort0 + 5, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0510NIOInputPort1 + 5, "p1 fire 2" },
-	{"Pit In"            , BIT_DIGITAL   , TC0510NIOInputPort1 + 0, "p1 fire 3" },
-	{"Gear"              , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
-	{"Centre"            , BIT_DIGITAL   , TC0510NIOInputPort1 + 2, "p1 fire 5" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 3, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 4, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0510NIODip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , TC0510NIODip + 1       , "dip"       },
@@ -227,19 +226,19 @@ STDINPUTINFO(Racingb)
 
 static struct BurnInputInfo SciInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis" ),
+	{"P1 Brake" 		 , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 fire 1" },
+	{"P1 Accelerator"	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 2" },
+	{"P1 Fire"   		 , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 fire 3" },
+	{"P1 Turbo" 		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 4" },
+	{"P1 Gear Shift"  	 , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 5" },
+	{"P1 Centre"		 , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "p1 fire 6" },
 
-	A("Steering"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "p1 x-axis" ),
-	{"Brake"             , BIT_DIGITAL   , TC0220IOCInputPort0 + 5, "p1 fire 1" },
-	{"Accelerate"        , BIT_DIGITAL   , TC0220IOCInputPort1 + 5, "p1 fire 2" },
-	{"Fire"              , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p1 fire 3" },
-	{"Turbo"             , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 4" },
-	{"Gear"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 5" },
-	{"Centre"            , BIT_DIGITAL   , TC0220IOCInputPort1 + 2, "p1 fire 6" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p2 coin"   },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Tilt"              , BIT_DIGITAL   , TC0220IOCInputPort1 + 1, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
@@ -250,24 +249,23 @@ STDINPUTINFO(Sci)
 
 static struct BurnInputInfo SpacegunInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort0 + 6, "p1 start"  },
+	A("P1 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort0      , "mouse x-axis" ),
+	A("P1 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort1      , "mouse y-axis" ),
+	{"P1 Button 1"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "mouse button 1" },
+	{"P1 Button 2"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 2, "mouse button 2" },
+	{"P1 Button 3"       , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p1 fire 1" },
 
-	A("P1 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort0     , "mouse x-axis" ),
-	A("P1 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort1     , "mouse y-axis" ),
-	{"P1 Fire 1"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 0, "mouse button 1" },
-	{"P1 Fire 2"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 2, "mouse button 2" },
-	{"P1 Fire 3"         , BIT_DIGITAL   , TC0220IOCInputPort0 + 0, "p1 fire 1" },
-	
-	A("P2 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort2     , "p2 x-axis" ),
-	A("P2 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort3     , "p2 y-axis" ),
-	{"P2 Fire 1"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL   , TC0220IOCInputPort2 + 3, "p2 fire 2" },
-	{"P2 Fire 3"         , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p2 fire 3" },
-	
-	{"Reset"             , BIT_DIGITAL   , &TaitoReset           , "reset"     },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TC0220IOCInputPort0 + 7, "p2 start"  },
+	A("P2 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort2      , "p2 x-axis" ),
+	A("P2 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort3      , "p2 y-axis" ),
+	{"P2 Button 1"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 1, "p2 fire 1" },
+	{"P2 Button 2"       , BIT_DIGITAL   , TC0220IOCInputPort2 + 3, "p2 fire 2" },
+	{"P2 Button 3"       , BIT_DIGITAL   , TC0220IOCInputPort0 + 1, "p2 fire 3" },
+
+	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH , TC0220IOCDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , TC0220IOCDip + 1       , "dip"       },
@@ -279,237 +277,90 @@ STDINPUTINFO(Spacegun)
 
 static void AquajackMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xff;
-	TC0220IOCInput[1] = 0xff;
-	TC0220IOCInput[2] = 0xff;
-
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] -= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] -= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	if (TC0220IOCInputPort1[4]) TC0220IOCInput[1] -= 0x10;
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 }
 
 static void BsharkMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xff;
-	TC0220IOCInput[1] = 0xff;
-	TC0220IOCInput[2] = 0xff;
-
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] -= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] -= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort2[0]) TC0220IOCInput[2] -= 0x01;
-	if (TC0220IOCInputPort2[1]) TC0220IOCInput[2] -= 0x02;
-	if (TC0220IOCInputPort2[2]) TC0220IOCInput[2] -= 0x04;
-	if (TC0220IOCInputPort2[3]) TC0220IOCInput[2] -= 0x08;
-	if (TC0220IOCInputPort2[4]) TC0220IOCInput[2] -= 0x10;
-	if (TC0220IOCInputPort2[5]) TC0220IOCInput[2] -= 0x20;
-	if (TC0220IOCInputPort2[6]) TC0220IOCInput[2] -= 0x40;
-	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 }
 
 static void ChasehqMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xf3;
-	TC0220IOCInput[1] = 0xef;
-	TC0220IOCInput[2] = 0xff;
+	UINT32 DrvJoyInit[3] = { 0xf3, 0xef, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] |= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] |= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
+	TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0x10) | (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 }
 
 static void ContcircMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0x13;
-	TC0220IOCInput[1] = 0x0f;
-	TC0220IOCInput[2] = 0xff;
+	UINT8 accel = ProcessAnalog(TaitoAnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff) / 32; // analog (accel)
+	UINT8 brake = ProcessAnalog(TaitoAnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff) / 32; // analog (brake)
 
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] |= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] |= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] |= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] |= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] |= 0x80;
-	
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
+	if (~TC0220IOCDip[0] & 1) { // digital (upright cabinet)
+		// set inputs before we compile them below..
+		TC0220IOCInputPort1[7] = (brake) ? 1 : 0;
+		TC0220IOCInputPort0[7] = (accel) ? 1 : 0;
+	}
+
+	UINT32 DrvJoyInit[3] = { 0xf3, 0x0f, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
+
+	if (TC0220IOCDip[0] & 1) { // analogue (cockpit cabinet)
+		// add analog value to compiled inputs
+		UINT8 key[8] = { 0x00, 0x20, 0x60, 0x40, 0xc0, 0xe0, 0xa0, 0x80 };
+		TC0220IOCInput[0] = (TC0220IOCInput[0] & ~0xe0) | key[accel & 7];
+		TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0xe0) | key[brake & 7];
+	}
+
+	TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0x10) | (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 }
 
 static void DblaxleMakeInputs() // and racingb
 {
-	// Reset Inputs
-	TC0510NIOInput[0] = 0xff;
-	TC0510NIOInput[1] = 0xff;
-	TC0510NIOInput[2] = 0xff;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0510NIOInputPort0, TC0510NIOInputPort1, TC0510NIOInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0510NIOInput, 3, 8, DrvJoyInit);
 
-	if (TC0510NIOInputPort0[0]) TC0510NIOInput[0] -= 0x01;
-	TC0510NIOInput[0] -= (BurnShiftInputCheckToggle(TC0510NIOInputPort0[1]) ? 0x00 : 0x02);
-	if (TC0510NIOInputPort0[2]) TC0510NIOInput[0] -= 0x04;
-	if (TC0510NIOInputPort0[3]) TC0510NIOInput[0] -= 0x08;
-	if (TC0510NIOInputPort0[4]) TC0510NIOInput[0] -= 0x10;
-	if (TC0510NIOInputPort0[5]) TC0510NIOInput[0] -= 0x20;
-	if (TC0510NIOInputPort0[6]) TC0510NIOInput[0] -= 0x40;
-	if (TC0510NIOInputPort0[7]) TC0510NIOInput[0] -= 0x80;
-	
-	if (TC0510NIOInputPort1[0]) TC0510NIOInput[1] -= 0x01;
-	if (TC0510NIOInputPort1[1]) TC0510NIOInput[1] -= 0x02;
-	if (TC0510NIOInputPort1[2]) TC0510NIOInput[1] -= 0x04;
-	if (TC0510NIOInputPort1[3]) TC0510NIOInput[1] -= 0x08;
-	if (TC0510NIOInputPort1[4]) TC0510NIOInput[1] -= 0x10;
-	if (TC0510NIOInputPort1[5]) TC0510NIOInput[1] -= 0x20;
-	if (TC0510NIOInputPort1[6]) TC0510NIOInput[1] -= 0x40;
-	if (TC0510NIOInputPort1[7]) TC0510NIOInput[1] -= 0x80;
+	TC0510NIOInput[0] = (TC0510NIOInput[0] & ~0x02) | (BurnShiftInputCheckToggle(TC0510NIOInputPort0[1]) ? 0x02 : 0x00);
 }
 
 static void EnforceMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xf3;
-	TC0220IOCInput[1] = 0xff;
-	TC0220IOCInput[2] = 0xff;
-
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] |= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] |= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	if (TC0220IOCInputPort1[4]) TC0220IOCInput[1] -= 0x10;
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
+	UINT32 DrvJoyInit[3] = { 0xf3, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 }
 
 static void NightstrMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xff;
-	TC0220IOCInput[1] = 0xff;
-	TC0220IOCInput[2] = 0xff;
-
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] -= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] -= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort2[0]) TC0220IOCInput[2] -= 0x01;
-	if (TC0220IOCInputPort2[1]) TC0220IOCInput[2] -= 0x02;
-	if (TC0220IOCInputPort2[2]) TC0220IOCInput[2] -= 0x04;
-	if (TC0220IOCInputPort2[3]) TC0220IOCInput[2] -= 0x08;
-	if (TC0220IOCInputPort2[4]) TC0220IOCInput[2] -= 0x10;
-	if (TC0220IOCInputPort2[5]) TC0220IOCInput[2] -= 0x20;
-	if (TC0220IOCInputPort2[6]) TC0220IOCInput[2] -= 0x40;
-	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 }
 
 static void SciMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xff;
-	TC0220IOCInput[1] = 0xef;
-	TC0220IOCInput[2] = 0xff;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xef, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] -= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] -= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
+	TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0x10) | (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 }
 
 static void SpacegunMakeInputs()
 {
-	// Reset Inputs
-	TC0220IOCInput[0] = 0xff;
-	TC0220IOCInput[1] = 0xff;
-	TC0220IOCInput[2] = 0xff;
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] -= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] -= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] -= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] -= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] -= 0x80;
-	
-	if (TC0220IOCInputPort2[0]) TC0220IOCInput[2] -= 0x01;
-	if (TC0220IOCInputPort2[1]) TC0220IOCInput[2] -= 0x02;
-	if (TC0220IOCInputPort2[2]) TC0220IOCInput[2] -= 0x04;
-	if (TC0220IOCInputPort2[3]) TC0220IOCInput[2] -= 0x08;
-	if (TC0220IOCInputPort2[4]) TC0220IOCInput[2] -= 0x10;
-	if (TC0220IOCInputPort2[5]) TC0220IOCInput[2] -= 0x20;
-	if (TC0220IOCInputPort2[6]) TC0220IOCInput[2] -= 0x40;
-	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
-	
 	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
 	BurnGunMakeInputs(1, (INT16)TaitoAnalogPort2, (INT16)TaitoAnalogPort3);
 }
@@ -940,161 +791,164 @@ STDDIPINFO(Chasehqj)
 
 static struct BurnDIPInfo ContcircDIPList[]=
 {
+	DIP_OFFSET(0x0a)
 	// Default Values
-	{0x0e, 0xff, 0xff, 0xff, NULL                             },
-	{0x0f, 0xff, 0xff, 0xdf, NULL                             },
+	{0x00, 0xff, 0xff, 0xff, NULL                             },
+	{0x01, 0xff, 0xff, 0xdf, NULL                             },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                        },
-	{0x0e, 0x01, 0x01, 0x01, "Upright"                        },
-	{0x0e, 0x01, 0x01, 0x00, "Cockpit"                        },
+	{0x00, 0x01, 0x01, 0x00, "Upright"                        },
+	{0x00, 0x01, 0x01, 0x01, "Cockpit"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
-	{0x0e, 0x01, 0x04, 0x04, "Off"                            },
-	{0x0e, 0x01, 0x04, 0x00, "On"                             },
+	{0x00, 0x01, 0x04, 0x04, "Off"                            },
+	{0x00, 0x01, 0x04, 0x00, "On"                             },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
-	{0x0e, 0x01, 0x08, 0x00, "Off"                            },
-	{0x0e, 0x01, 0x08, 0x08, "On"                             },
+	{0x00, 0x01, 0x08, 0x00, "Off"                            },
+	{0x00, 0x01, 0x08, 0x08, "On"                             },
 	
 	{0   , 0xfe, 0   , 4   , "Coin A"                         },
-	{0x0e, 0x01, 0x30, 0x00, "4 Coins 1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x10, "3 Coins 1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x20, "2 Coins 1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credit"               },
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credit"               },
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credit"               },
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                         },
-	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin 2 Credits"               },
-	{0x0e, 0x01, 0xc0, 0x80, "1 Coin 3 Credits"               },
-	{0x0e, 0x01, 0xc0, 0x40, "1 Coin 4 Credits"               },
-	{0x0e, 0x01, 0xc0, 0x00, "1 Coin 6 Credits"               },
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin 2 Credits"               },
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin 3 Credits"               },
+	{0x00, 0x01, 0xc0, 0x40, "1 Coin 4 Credits"               },
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin 6 Credits"               },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
-	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
-	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
-	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
-	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x01, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x01, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x01, 0x01, 0x03, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
-	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
-	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
-	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
-	{0x0f, 0x01, 0x0c, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x0c, 0x08, "Easy"                           },
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"                         },
+	{0x01, 0x01, 0x0c, 0x04, "Hard"                           },
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Steering Wheel"                 },
-	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
-	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
+	{0x01, 0x01, 0x10, 0x10, "Free"                           },
+	{0x01, 0x01, 0x10, 0x00, "Locked"                         },
 	
 	{0   , 0xfe, 0   , 2   , "3D Effects"     				  },
-	{0x0f, 0x01, 0x20, 0x00, "Off"                            },
-	{0x0f, 0x01, 0x20, 0x20, "On"                             },
+	{0x01, 0x01, 0x20, 0x00, "Off"                            },
+	{0x01, 0x01, 0x20, 0x20, "On"                             },
 };
 
 STDDIPINFO(Contcirc)
 
 static struct BurnDIPInfo ContcircuDIPList[]=
 {
+	DIP_OFFSET(0x0a)
 	// Default Values
-	{0x0e, 0xff, 0xff, 0xff, NULL                             },
-	{0x0f, 0xff, 0xff, 0xdf, NULL                             },
+	{0x00, 0xff, 0xff, 0xff, NULL                             },
+	{0x01, 0xff, 0xff, 0xdf, NULL                             },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                        },
-	{0x0e, 0x01, 0x01, 0x01, "Upright"                        },
-	{0x0e, 0x01, 0x01, 0x00, "Cockpit"                        },
+	{0x00, 0x01, 0x01, 0x01, "Upright"                        },
+	{0x00, 0x01, 0x01, 0x00, "Cockpit"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
-	{0x0e, 0x01, 0x04, 0x04, "Off"                            },
-	{0x0e, 0x01, 0x04, 0x00, "On"                             },
+	{0x00, 0x01, 0x04, 0x04, "Off"                            },
+	{0x00, 0x01, 0x04, 0x00, "On"                             },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
-	{0x0e, 0x01, 0x08, 0x00, "Off"                            },
-	{0x0e, 0x01, 0x08, 0x08, "On"                             },
+	{0x00, 0x01, 0x08, 0x00, "Off"                            },
+	{0x00, 0x01, 0x08, 0x08, "On"                             },
 	
 	{0   , 0xfe, 0   , 4   , "Coin A"                         },
-	{0x0e, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
-	{0x0e, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                         },
-	{0x0e, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
-	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
-	{0x0e, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
-	{0x0e, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
-	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
-	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
-	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
-	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x01, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x01, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x01, 0x01, 0x03, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
-	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
-	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
-	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
-	{0x0f, 0x01, 0x0c, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x0c, 0x08, "Easy"                           },
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"                         },
+	{0x01, 0x01, 0x0c, 0x04, "Hard"                           },
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Steering Wheel"                 },
-	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
-	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
+	{0x01, 0x01, 0x10, 0x10, "Free"                           },
+	{0x01, 0x01, 0x10, 0x00, "Locked"                         },
 	
 	{0   , 0xfe, 0   , 2   , "3D Effects"     				  },
-	{0x0f, 0x01, 0x20, 0x00, "Off"                            },
-	{0x0f, 0x01, 0x20, 0x20, "On"                             },
+	{0x01, 0x01, 0x20, 0x00, "Off"                            },
+	{0x01, 0x01, 0x20, 0x20, "On"                             },
 };
 
 STDDIPINFO(Contcircu)
 
 static struct BurnDIPInfo ContcircjDIPList[]=
 {
+	DIP_OFFSET(0x0a)
 	// Default Values
-	{0x0e, 0xff, 0xff, 0xff, NULL                             },
-	{0x0f, 0xff, 0xff, 0xdf, NULL                             },
+	{0x00, 0xff, 0xff, 0xff, NULL                             },
+	{0x01, 0xff, 0xff, 0xdf, NULL                             },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                        },
-	{0x0e, 0x01, 0x01, 0x01, "Upright"                        },
-	{0x0e, 0x01, 0x01, 0x00, "Cockpit"                        },
+	{0x00, 0x01, 0x01, 0x01, "Upright"                        },
+	{0x00, 0x01, 0x01, 0x00, "Cockpit"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
-	{0x0e, 0x01, 0x04, 0x04, "Off"                            },
-	{0x0e, 0x01, 0x04, 0x00, "On"                             },
+	{0x00, 0x01, 0x04, 0x04, "Off"                            },
+	{0x00, 0x01, 0x04, 0x00, "On"                             },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
-	{0x0e, 0x01, 0x08, 0x00, "Off"                            },
-	{0x0e, 0x01, 0x08, 0x08, "On"                             },
+	{0x00, 0x01, 0x08, 0x00, "Off"                            },
+	{0x00, 0x01, 0x08, 0x08, "On"                             },
 	
 	{0   , 0xfe, 0   , 4   , "Coin A"                         },
-	{0x0e, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
-	{0x0e, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
-	{0x0e, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
 	
 	{0   , 0xfe, 0   , 4   , "Coin B"                         },
-	{0x0e, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
-	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
-	{0x0e, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
-	{0x0e, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
-	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
-	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
-	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
-	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x01, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x01, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x01, 0x01, 0x03, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
-	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
-	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
-	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
-	{0x0f, 0x01, 0x0c, 0x00, "Hardest"                        },
+	{0x01, 0x01, 0x0c, 0x08, "Easy"                           },
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"                         },
+	{0x01, 0x01, 0x0c, 0x04, "Hard"                           },
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"                        },
 	
 	{0   , 0xfe, 0   , 2   , "Steering Wheel"                 },
-	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
-	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
+	{0x01, 0x01, 0x10, 0x10, "Free"                           },
+	{0x01, 0x01, 0x10, 0x00, "Locked"                         },
 };
 
 STDDIPINFO(Contcircj)
@@ -3099,8 +2953,8 @@ static struct BurnRomInfo SciRomDesc[] = {
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
 	{ "c09-04.52",     0x80000, 0x2cbb3c9b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-02.53",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-03.54",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-02.54",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-03.53",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c09-01.55",     0x80000, 0x64bfea10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "c09-07.15",     0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
@@ -3144,8 +2998,8 @@ static struct BurnRomInfo SciaRomDesc[] = {
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
 	{ "c09-04.52",     0x80000, 0x2cbb3c9b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-02.53",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-03.54",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-02.54",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-03.53",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c09-01.55",     0x80000, 0x64bfea10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "c09-07.15",     0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
@@ -3189,8 +3043,8 @@ static struct BurnRomInfo ScijRomDesc[] = {
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
 	{ "c09-04.52",     0x80000, 0x2cbb3c9b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-02.53",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-03.54",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-02.54",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-03.53",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c09-01.55",     0x80000, 0x64bfea10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "c09-07.15",     0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
@@ -3234,8 +3088,8 @@ static struct BurnRomInfo SciuRomDesc[] = {
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
 	{ "c09-04.52",     0x80000, 0x2cbb3c9b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-02.53",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-03.54",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-02.54",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-03.53",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c09-01.55",     0x80000, 0x64bfea10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "c09-07.15",     0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
@@ -3279,8 +3133,8 @@ static struct BurnRomInfo ScinRomDesc[] = {
 	{ "c09-05.16",     0x80000, 0x890b38f0, BRF_GRA | TAITO_CHARS },
 	
 	{ "c09-04.52",     0x80000, 0x2cbb3c9b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-02.53",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "c09-03.54",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-02.54",     0x80000, 0xa83a0389, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c09-03.53",     0x80000, 0xa31d0e80, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c09-01.55",     0x80000, 0x64bfea10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "c09-07.15",     0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
@@ -3460,15 +3314,18 @@ static INT32 TaitoZDoReset()
 
 	SciSpriteFrame = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 
 static void TaitoZCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
-	if (!(TaitoCpuACtrl & 1)) {
-		SekReset(1);
-	}
+
+	SekSetRESETLine(1, ~TaitoCpuACtrl & 1);
 }
 
 static void __fastcall Aquajack68K1WriteByte(UINT32 a, UINT8 d)
@@ -3678,35 +3535,49 @@ static UINT16 __fastcall Bshark68K2ReadWord(UINT32 a)
 	return 0;
 }
 
+static void vol_mod(INT32 num, UINT8 d)
+{
+	routes[num & 3] = d;
+
+	switch (num & 3) {
+		case 0:
+			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_1, TaitoZYM2610RouteMasterVol * d / 255.0);
+			return;
+
+		case 1:
+			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_1, TaitoZYM2610RouteMasterVol * d / 255.0);
+			return;
+
+		case 2:
+			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_2, TaitoZYM2610RouteMasterVol * d / 255.0);
+			return;
+
+		case 3:
+			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_2, TaitoZYM2610RouteMasterVol * d / 255.0);
+			return;
+	}
+}
+
+
 static void __fastcall Bshark68K2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x400000:
 		case 0x400002:
 		case 0x400004:
-		case 0x400006:
-		case 0x400008: {
-			// nop
+		case 0x400006: {
+			vol_mod((a&6) >> 1, d & 0xff);
 			return;
 		}
-		
-		case 0x600000: {
-			BurnYM2610Write(0, d & 0xff);
-			return;
-		}
-		
-		case 0x600002: {
-			BurnYM2610Write(1, d & 0xff);
-			return;
-		}
-		
-		case 0x600004: {
-			BurnYM2610Write(2, d & 0xff);
-			return;
-		}
-		
+
+		case 0x400008:
+			return; // nop
+
+		case 0x600000:
+		case 0x600002:
+		case 0x600004:
 		case 0x600006: {
-			BurnYM2610Write(3, d & 0xff);
+			BurnYM2610Write((a & 6) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -4711,23 +4582,11 @@ static void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 		
-		case 0xc00000: {
-			BurnYM2610Write(0, d & 0xff);
-			return;
-		}
-		
-		case 0xc00002: {
-			BurnYM2610Write(1, d & 0xff);
-			return;
-		}
-		
-		case 0xc00004: {
-			BurnYM2610Write(2, d & 0xff);
-			return;
-		}
-		
+		case 0xc00000:
+		case 0xc00002:
+		case 0xc00004:
 		case 0xc00006: {
-			BurnYM2610Write(3, d & 0xff);
+			BurnYM2610Write((a & 6) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -4735,7 +4594,7 @@ static void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 		case 0xc20002:
 		case 0xc20004:
 		case 0xc20006: {
-			// ???
+			vol_mod((a&6) >> 1, d & 0xff);
 			return;
 		}
 		
@@ -4753,19 +4612,18 @@ static void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+static void bank_switch()
+{
+	ZetMapMemory(TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+}
+
 static UINT8 __fastcall TaitoZZ80Read(UINT16 a)
 {
 	switch (a) {
-		case 0xe000: {
-			return BurnYM2610Read(0);
-		}
-		
-		case 0xe001: {
-			return BurnYM2610Read(1);
-		}
-		
+		case 0xe000:
+		case 0xe001:
 		case 0xe002: {
-			return BurnYM2610Read(2);
+			return BurnYM2610Read(a & 3);
 		}
 		
 		case 0xe200: {
@@ -4793,23 +4651,11 @@ static UINT8 __fastcall TaitoZZ80Read(UINT16 a)
 static void __fastcall TaitoZZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0xe000: {
-			BurnYM2610Write(0, d);
-			return;
-		}
-		
-		case 0xe001: {
-			BurnYM2610Write(1, d);
-			return;
-		}
-		
-		case 0xe002: {
-			BurnYM2610Write(2, d);
-			return;
-		}
-		
+		case 0xe000:
+		case 0xe001:
+		case 0xe002:
 		case 0xe003: {
-			BurnYM2610Write(3, d);
+			BurnYM2610Write(a & 3, d);
 			return;
 		}
 		
@@ -4823,23 +4669,11 @@ static void __fastcall TaitoZZ80Write(UINT16 a, UINT8 d)
 			return;
 		}
 		
-		case 0xe400: {
-			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_1, TaitoZYM2610Route1MasterVol * d / 255.0);
-			return;
-		}
-		
-		case 0xe401: {
-			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_1, TaitoZYM2610Route1MasterVol * d / 255.0);
-			return;
-		}
-		
-		case 0xe402: {
-			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_2, TaitoZYM2610Route1MasterVol * d / 255.0);
-			return;
-		}
-		
+		case 0xe400:
+		case 0xe401:
+		case 0xe402:
 		case 0xe403: {
-			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_2, TaitoZYM2610Route1MasterVol * d / 255.0);
+			vol_mod(a&3, d);
 			return;
 		}
 		
@@ -4857,8 +4691,7 @@ static void __fastcall TaitoZZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xf200: {
 			TaitoZ80Bank = (d - 1) & 7;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch();
 			return;
 		}
 		
@@ -4995,8 +4828,7 @@ static INT32 AquajackInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
-	TaitoZYM2610Route1MasterVol = 2.00;
-	TaitoZYM2610Route2MasterVol = 2.00;
+	TaitoZYM2610RouteMasterVol = 2.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = AquajackMakeInputs;
@@ -5051,8 +4883,8 @@ static INT32 BsharkInit()
 	MemIndex();
 	
 	GenericTilesInit();
-	
-	TC0100SCNInit(0, TaitoNumChar, 0, 8, 1, NULL);
+
+	TC0100SCNInit(0, TaitoNumChar, 8, 8, 1, NULL);
 	TC0150RODInit(TaitoRoadRomSize, 1);
 	TC0220IOCInit();
 	
@@ -5088,9 +4920,10 @@ static INT32 BsharkInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, NULL, 0);
 	BurnTimerAttachSek(12000000);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	TaitoZYM2610RouteMasterVol = 28.00;
+	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = BsharkMakeInputs;
 	TaitoIrqLine = 4;
@@ -5099,7 +4932,7 @@ static INT32 BsharkInit()
 
 	nTaitoCyclesTotal[0] = 12000000 / 60;
 	nTaitoCyclesTotal[1] = 12000000 / 60;
-	
+
 	// Reset the driver
 	TaitoZDoReset();
 
@@ -5201,8 +5034,7 @@ static INT32 ChasehqInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
-	TaitoZYM2610Route1MasterVol = 1.00;
-	TaitoZYM2610Route2MasterVol = 1.00;
+	TaitoZYM2610RouteMasterVol = 1.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = ChasehqMakeInputs;
@@ -5301,8 +5133,7 @@ static INT32 ContcircInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.05);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.05);
-	TaitoZYM2610Route1MasterVol = 2.00;
-	TaitoZYM2610Route2MasterVol = 2.00;
+	TaitoZYM2610RouteMasterVol = 2.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = ContcircMakeInputs;
@@ -5398,8 +5229,7 @@ static INT32 DblaxleInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
-	TaitoZYM2610Route1MasterVol = 8.00;
-	TaitoZYM2610Route2MasterVol = 8.00;
+	TaitoZYM2610RouteMasterVol = 8.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = DblaxleMakeInputs;
@@ -5501,8 +5331,7 @@ static INT32 EnforceInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
-	TaitoZYM2610Route1MasterVol = 20.00;
-	TaitoZYM2610Route2MasterVol = 20.00;
+	TaitoZYM2610RouteMasterVol = 20.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = EnforceMakeInputs;
@@ -5607,8 +5436,7 @@ static INT32 NightstrInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
-	TaitoZYM2610Route1MasterVol = 1.00;
-	TaitoZYM2610Route2MasterVol = 1.00;
+	TaitoZYM2610RouteMasterVol = 2.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = NightstrMakeInputs;
@@ -5703,8 +5531,7 @@ static INT32 RacingbInit()
 	BurnTimerAttachZet(32000000 / 8);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
-	TaitoZYM2610Route1MasterVol = 8.00;
-	TaitoZYM2610Route2MasterVol = 8.00;
+	TaitoZYM2610RouteMasterVol = 8.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = DblaxleMakeInputs;
@@ -5805,8 +5632,7 @@ static INT32 SciInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
-	TaitoZYM2610Route1MasterVol = 1.00;
-	TaitoZYM2610Route2MasterVol = 1.00;
+	TaitoZYM2610RouteMasterVol = 2.00;
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = SciMakeInputs;
@@ -5898,9 +5724,10 @@ static INT32 SpacegunInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, NULL, 0);
 	BurnTimerAttachSek(16000000);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	TaitoZYM2610RouteMasterVol = 8.00;
+	bYM2610UseSeperateVolumes = 1;
 	
 	EEPROMInit(&spacegun_eeprom_intf);
 	if (!EEPROMAvailable()) EEPROMFill(spacegun_default_eeprom, 0, 128);
@@ -6925,29 +6752,23 @@ static INT32 SpacegunDraw()
 static INT32 TaitoZFrame()
 {
 	INT32 nInterleave = TaitoFrameInterleave;
+	INT32 nCyclesTotal[3] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], nTaitoCyclesTotal[2] };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
 	INT32 nVBlankIRQFire = (INT32)(((double)270 / 271) * TaitoFrameInterleave);
 
 	if (TaitoReset) TaitoZDoReset();
 
 	TaitoMakeInputsFunction();
-	
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = nTaitoCyclesDone[2] = 0;
 
 	SekNewFrame();
 	if (TaitoNumZ80s) ZetNewFrame();
-		
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
 
-		// Run 68000 #1
-		nCurrentCPU = 0;
+	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
 		if (TaitoNumZ80s) {
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+			CPU_RUN(0, Sek);
 		} else {
-			BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[nCurrentCPU] / nInterleave));
+			CPU_RUN_TIMER(0);
 		}
 		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		if (TaitoZINT6timer && (SekTotalCycles() >= (TaitoZINT6timer + 10000))) {
@@ -6956,37 +6777,27 @@ static INT32 TaitoZFrame()
 		}
 		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
-		
-		// Run 68000 #2
-		if (TaitoCpuACtrl & 0x01) {
-			nCurrentCPU = 1;
-			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
-			SekClose();
-		}
-		
+
+		SekOpen(1);
+		CPU_RUN(1, Sek);
+		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+		SekClose();
+
 		if (TaitoNumZ80s) {
 			ZetOpen(0);
-			BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[2] / nInterleave));
+			CPU_RUN_TIMER(2);
 			ZetClose();
 		}
 	}
-	
-	if (TaitoNumZ80s) {
-		ZetOpen(0);
-		BurnTimerEndFrame(nTaitoCyclesTotal[2]);
-		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-	} else {
-		SekOpen(0);
-		BurnTimerEndFrame(nTaitoCyclesTotal[0]);
-		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
-		SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	// 0(maybe), 2 - timer (BurnTimer keeps track)
+
+	if (pBurnSoundOut) {
+		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
@@ -7026,26 +6837,27 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		if (bUseShifter)
 			BurnShiftScan(nAction);
 
-		SCAN_VAR(TaitoAnalogPort0);
-		SCAN_VAR(TaitoAnalogPort1);
-		SCAN_VAR(TaitoAnalogPort2);
-		SCAN_VAR(TaitoAnalogPort3);
-		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoCpuACtrl);
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(SciSpriteFrame);
 		SCAN_VAR(TaitoRoadPalBank);
-		SCAN_VAR(nTaitoCyclesDone);
-		SCAN_VAR(nTaitoCyclesSegment);
+
+		SCAN_VAR(routes);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 	
 	if (nAction & ACB_WRITE) {
 		if (TaitoNumZ80s) {
 			ZetOpen(0);
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch();
 			ZetClose();
 		}
+
+		vol_mod(0, routes[0]);
+		vol_mod(1, routes[1]);
+		vol_mod(2, routes[2]);
+		vol_mod(3, routes[3]);
 	}
 
 	return 0;
@@ -7053,7 +6865,7 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvAquajack = {
 	"aquajack", NULL, NULL, NULL, "1990",
-	"Aquajack (World)\0", NULL, "Taito Corporation Japan", "Taito Z",
+	"Aqua Jack (World)\0", NULL, "Taito Corporation Japan", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackRomInfo, AquajackRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackDIPInfo,
@@ -7063,7 +6875,7 @@ struct BurnDriver BurnDrvAquajack = {
 
 struct BurnDriver BurnDrvAquajackj = {
 	"aquajackj", "aquajack", NULL, NULL, "1990",
-	"Aquajack (Japan)\0", NULL, "Taito Corporation", "Taito Z",
+	"Aqua Jack (Japan)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackjRomInfo, AquajackjRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
@@ -7073,7 +6885,7 @@ struct BurnDriver BurnDrvAquajackj = {
 
 struct BurnDriver BurnDrvAquajacku = {
 	"aquajacku", "aquajack", NULL, NULL, "1990",
-	"Aquajack (US)\0", NULL, "Taito Corporation", "Taito Z",
+	"Aqua Jack (US)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackuRomInfo, AquajackuRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
@@ -7143,7 +6955,7 @@ struct BurnDriver BurnDrvChasehqj = {
 
 struct BurnDriver BurnDrvChasehqju = {
 	"chasehqju", "chasehq", NULL, NULL, "1988",
-	"Chase H.Q. (Japan UP)\0", NULL, "Taito Corporation", "Taito Z",
+	"Chase H.Q. (Japan, upright?)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqjuRomInfo, ChasehqjuRomName, NULL, NULL, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
@@ -7233,7 +7045,7 @@ struct BurnDriver BurnDrvDblaxleul = {
 
 struct BurnDriver BurnDrvPwheelsj = {
 	"pwheelsj", "dblaxle", NULL, NULL, "1991",
-	"Power Wheels (Japan)\0", NULL, "Taito Corporation", "Taito Z",
+	"Power Wheels (Japan, Rev 2, Linkable)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, PwheelsjRomInfo, PwheelsjRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, PwheelsjDIPInfo,
@@ -7362,10 +7174,10 @@ struct BurnDriver BurnDrvSciu = {
 };
 
 struct BurnDriver BurnDrvScin = {
-	"scin", "sci", NULL, NULL, "1989",
+	"scin", "sci", NULL, NULL, "1991",
 	"Super Special Criminal Investigation (Negro Torino hack)\0", NULL, "hack (Negro Torino)", "Taito Z",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ScinRomInfo, ScinRomName, NULL, NULL, NULL, NULL, SciInputInfo, SciDIPInfo,
 	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3

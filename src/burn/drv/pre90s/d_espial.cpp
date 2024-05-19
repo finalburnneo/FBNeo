@@ -1,4 +1,4 @@
-// FB Alpha Espial / Netwars driver module
+// FB Neo Espial / Netwars driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"
@@ -698,6 +698,76 @@ struct BurnDriver BurnDrvEspial = {
 };
 
 
+// Espial (Japan)
+
+static struct BurnRomInfo espialjRomDesc[] = {
+	{ "espial3.4f",		0x2000, 0x10f1da30, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "espial4.4h",		0x2000, 0xd2adbe39, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "espial.6",		0x1000, 0xbaa60bc1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "espial.5",		0x1000, 0x6d7bbfc1, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "esp1.4n",		0x1000, 0xfc7729e9, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "esp2.4r",		0x1000, 0xe4e256da, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "espial8.4b",		0x2000, 0x2f43036f, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "espial7.4a",		0x1000, 0xebfef046, 3 | BRF_GRA },           //  7
+
+	{ "espial10.4e",	0x1000, 0xde80fbc1, 4 | BRF_GRA },           //  8 Sprites
+	{ "espial9.4d",		0x1000, 0x48c258a0, 4 | BRF_GRA },           //  9
+
+	{ "mmi6301.1f",		0x0100, 0xd12de557, 5 | BRF_GRA },           // 10 Color data
+	{ "mmi6301.1h",		0x0100, 0x4c84fe70, 5 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(espialj)
+STD_ROM_FN(espialj)
+
+struct BurnDriver BurnDrvEspialj = {
+	"espialj", "espial", NULL, NULL, "1983",
+	"Espial (Japan)\0", NULL, "Orca / Thunderbolt", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, espialjRomInfo, espialjRomName, NULL, NULL, NULL, NULL, EspialInputInfo, EspialDIPInfo,
+	EspialInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
+// Espial (Nova Apparate license)
+
+static struct BurnRomInfo espialnRomDesc[] = {
+	{ "espial3.4f",		0x2000, 0x10f1da30, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "espial4.4h",		0x2000, 0xd2adbe39, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "espial.6",		0x1000, 0xbaa60bc1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "espialn.5",		0x1000, 0x314792b0, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "esp1.4n",		0x1000, 0xfc7729e9, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "esp2.4r",		0x1000, 0xe4e256da, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "espial8.4b",		0x2000, 0x2f43036f, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "espial7.4a",		0x1000, 0xebfef046, 3 | BRF_GRA },           //  7
+
+	{ "espial10.4e",	0x1000, 0xde80fbc1, 4 | BRF_GRA },           //  8 Sprites
+	{ "espial9.4d",		0x1000, 0x48c258a0, 4 | BRF_GRA },           //  9
+
+	{ "mmi6301.1f",		0x0100, 0xd12de557, 5 | BRF_GRA },           // 10 Color data
+	{ "mmi6301.1h",		0x0100, 0x4c84fe70, 5 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(espialn)
+STD_ROM_FN(espialn)
+
+struct BurnDriver BurnDrvEspialn = {
+	"espialn", "espial", NULL, NULL, "1983",
+	"Espial (Nova Apparate license)\0", NULL, "Orca / Thunderbolt", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, espialnRomInfo, espialnRomName, NULL, NULL, NULL, NULL, EspialInputInfo, EspialDIPInfo,
+	EspialInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
 // Espial (US?)
 
 static struct BurnRomInfo espialuRomDesc[] = {
@@ -759,7 +829,7 @@ struct BurnDriver BurnDrvNetwars = {
 	"netwars", NULL, NULL, NULL, "1983",
 	"Net Wars\0", NULL, "Orca (Esco Trading Co license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, netwarsRomInfo, netwarsRomName, NULL, NULL, NULL, NULL, NetwarsInputInfo, NetwarsDIPInfo,
 	NetwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

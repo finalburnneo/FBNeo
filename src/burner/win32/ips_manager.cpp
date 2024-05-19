@@ -293,7 +293,10 @@ static void FillListBox()
 						nPatchIndex++;
 					}
 
-					Tokens = _tcstok(NULL, _T("/"));
+					// Only one file path can be bound to a DAT file.
+					// A maximum of root and secondary nodes are required.
+					// The use of '/' here will potentially create useless multi-level nodes.
+					Tokens = _tcstok(NULL, _T("\0"));
 					nNumTokens++;
 				}
 
@@ -339,7 +342,7 @@ void LoadIpsActivePatches()
 	INT32 nActivePatches = 0;
 
     if (fp) {
-		while (_fgetts(szLine, sizeof(szLine), fp)) {
+		while (_fgetts(szLine, MAX_PATH, fp)) {
 			INT32 nLen = _tcslen(szLine);
 
 			// Get rid of the linefeed at the end
@@ -809,7 +812,6 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 	// Avoid memory out-of-bounds due to ips offset greater than rom length.
 	if (readonly && (0 == nIpsMemExpLen[EXP_FLAG])) {	// Unspecified length.
-		nIpsMemExpLen[LOAD_ROM] = 0;					// Must be reset to 0 before getting the next ips offset.
 		nIpsMemExpLen[LOAD_ROM] = Offset;
 	}
 
@@ -912,6 +914,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
     if ((fp = fopen(patch_name, "rb")) != NULL) {
+		bool bTarget = false;
+
 		// get ips size
 		fseek(fp, 0, SEEK_END);
 		nIpsSize = ftell(fp);
@@ -931,15 +935,17 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
                 // Can support linetypes: (space or tab)
                 // "rom name.bin" "patch file.ips" CRC(abcd1234)
                 // romname.bin patchfile CRC(abcd1234)
+				#define DELIM_TOKENS_NAME " \t\r\n"
 				#define DELIM_TOKENS " \t\r\n()"
-				rom_name = strqtoken(p, DELIM_TOKENS);
+
+				rom_name = strqtoken(p, DELIM_TOKENS_NAME);
 
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')
 					continue;
 
-				ips_name = strqtoken(NULL, DELIM_TOKENS);
+				ips_name = strqtoken(NULL, DELIM_TOKENS_NAME);
 				if (!ips_name) {
 					continue;
 				}
@@ -975,6 +981,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					if (nIps_crc != crc)			// crc don't match?
 						continue;					// not our file. next!
 
+				bTarget = true;
+
 				if (!readonly) {
 					bprintf(0, _T("ips name:[%S]\n"), ips_name);
 					bprintf(0, _T("rom name:[%S]\n"), rom_name);
@@ -996,17 +1004,22 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 			}
 		}
 		fclose(fp);
+
+		if (!bTarget && (0 == nIpsMemExpLen[EXP_FLAG])) {
+			// Must be reset to 0!
+			nIpsMemExpLen[LOAD_ROM] = 0;
+		}
 	}
 }
 
 static UINT32 GetIpsDefineExpValue(char* szTmp)
 {
 	if (NULL == (szTmp = strtok(NULL, " \t\r\n")))
-		return 0;
+		return 0U;
 
 	INT32 nRet = 0;
 
-	if (     0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
+	if      (0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_002")) nRet = 0x0020000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_003")) nRet = 0x0030000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_004")) nRet = 0x0040000;
@@ -1030,6 +1043,7 @@ static UINT32 GetIpsDefineExpValue(char* szTmp)
 	else if (0 == strcmp(szTmp, "EXP_VALUE_600")) nRet = 0x6000000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_700")) nRet = 0x7000000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_800")) nRet = 0x8000000;
+	else if (EOF != (sscanf(szTmp, "%x", &nRet))) return nRet;
 
 	return nRet;
 }

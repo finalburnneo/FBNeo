@@ -50,23 +50,23 @@ static INT32 mdarcblInit()
 	return rc;
 }
 
-// Super Bubble Bobble (Sun Mixing, Megadrive clone hardware)
+// Super Bubble Bobble (Sun Mixing, Mega Drive clone hardware)
 
 static struct BurnRomInfo sbubsmRomDesc[] = {
 	{ "u11.bin", 				0x080000, 0x4f9337ea, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000001 },
 	{ "u12.bin", 				0x080000, 0xf5374835, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000000 },
 
-	{ "89c51.bin", 				0x001000, 0x00000000, BRF_PRG | BRF_NODUMP },
+	{ "89c51.bin", 				0x001000, 0x00000000, BRF_PRG | BRF_NODUMP  },
 };
 
 STD_ROM_PICK(sbubsm)
 STD_ROM_FN(sbubsm)
 
 struct BurnDriver BurnDrvSbubsm = {
-	"sbubsm", NULL, NULL, NULL, "199?",
-	"Super Bubble Bobble (Sun Mixing, Megadrive clone hardware)\0", NULL, "Sun Mixing", "Sega Megadrive",
+	"sbubsm", NULL, NULL, NULL, "1996",
+	"Super Bubble Bobble (Sun Mixing, Mega Drive clone hardware)\0", NULL, "Sun Mixing", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_PCB_SBUBBOB | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_PCB_SBUBBOB | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_PLATFORM, 0,
 	NULL, sbubsmRomInfo, sbubsmRomName, NULL, NULL, NULL, NULL, SbubsmInputInfo, NULL,
 	mdarcblInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -79,17 +79,17 @@ static struct BurnRomInfo topshootRomDesc[] = {
 	{ "tc574000ad_u11_2.bin", 0x080000, 0xb235c4d9, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000001  },
 	{ "tc574000ad_u12_1.bin", 0x080000, 0xe826f6ad, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000000  },
 
-	{ "89c51.bin", 			  0x001000, 0x7e41c8fe, BRF_PRG | BRF_NODUMP  },
+	{ "89c51.bin",            0x001000, 0x595475c8, BRF_PRG | BRF_OPT },
 };
 
 STD_ROM_PICK(topshoot)
 STD_ROM_FN(topshoot)
 
 struct BurnDriver BurnDrvTopshoot = {
-	"topshoot", NULL, NULL, NULL, "1993",
+	"topshoot", NULL, NULL, NULL, "1995",
 	"Top Shooter\0", NULL, "Sun Mixing", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S | HARDWARE_SEGA_MEGADRIVE_SRAM_04000 | SEGA_MD_ARCADE_SUNMIXING, GBF_SPORTSMISC, 0,
 	NULL, topshootRomInfo, topshootRomName, NULL, NULL, NULL, NULL, TopshootInputInfo, NULL,
 	mdarcblInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

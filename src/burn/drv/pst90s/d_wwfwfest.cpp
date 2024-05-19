@@ -1148,7 +1148,7 @@ struct BurnDriver BurnDrvWwfwfestub = {
 
 struct BurnDriver BurnDrvWwfwfestj = {
 	"wwfwfestj", "wwfwfest", NULL, NULL, "1991",
-	"WWF WrestleFest (Japan)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
+	"WWF WrestleFest (Japan)\0", NULL, "Technos Japan (Tecmo license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1158,7 +1158,7 @@ struct BurnDriver BurnDrvWwfwfestj = {
 
 struct BurnDriver BurnDrvWwfwfestk = {
 	"wwfwfestk", "wwfwfest", NULL, NULL, "1991",
-	"WWF WrestleFest (Korea)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
+	"WWF WrestleFest (Korea)\0", NULL, "Technos Japan (Tecmo license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvkRomInfo, DrvkRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -52,10 +52,6 @@ typedef struct tagIMAGE {
  #include "burner_qt.h"
 #endif
 
-#if defined (INCLUDE_LIB_PNGH)
- #include "png.h"
-#endif
-
 // ---------------------------------------------------------------------------
 // OS independent functionality
 
@@ -100,6 +96,8 @@ extern UINT32 nMaxMacro;
 extern INT32 nAnalogSpeed;
 
 extern INT32 nFireButtons;
+
+extern INT32 nSubDrvSelected;
 
 extern bool bStreetFighterLayout;
 extern bool bLeftAltkeyMapped;
@@ -255,6 +253,11 @@ INT32 ZipClose();
 INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount);
 INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry);
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
+
+// romdata.cpp
+
+extern TCHAR szRomdataName[MAX_PATH];
+void IpsPatchExit();
 
 // bzip.cpp
 

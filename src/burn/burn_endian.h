@@ -9,6 +9,14 @@ typedef union
 	UINT32 d;
 } PAIR;
 
+typedef union
+{
+	struct { UINT8 l,h; } b;
+	struct { INT8 l,h; } sb;
+	UINT16 w;
+	INT16 sw;
+} PAIR16;
+
 #define BURN_ENDIAN_SWAP_INT8(x)				x
 #define BURN_ENDIAN_SWAP_INT16(x)				x
 #define BURN_ENDIAN_SWAP_INT32(x)				x
@@ -20,6 +28,14 @@ typedef union {
   struct { UINT16 h,l; } w;
   UINT32 d;
 } PAIR;
+
+typedef union
+{
+	struct { UINT8 h,l; } b;
+	struct { INT8 h,l; } sb;
+	UINT16 w;
+	INT16 sw;
+} PAIR16;
 
 // Libogc doesn't have intrinsics or ASM macros defined for this
 //#if defined(HW_RVL) || defined(GEKKO)

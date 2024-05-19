@@ -682,7 +682,7 @@ static INT32 OhmygodScan(INT32 nAction,INT32 *pnMin)
 
 struct BurnDriver BurnDrvOhmygod = {
 	"ohmygod", NULL, NULL, NULL, "1993",
-	"Oh My God!\0", NULL, "Atlus", "Miscellaneous",
+	"Oh My God! (Japan)\0", NULL, "Atlus", "Miscellaneous",
 	L"Oh my God! (Japan)\0Oh my god! \u30AA\u30FC\u30DE\u30A4\u30AC\u30A1\u30FC\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, OhmygodRomInfo, OhmygodRomName, NULL, NULL, NULL, NULL, OhmygodInputInfo, OhmygodDIPInfo,
@@ -692,7 +692,7 @@ struct BurnDriver BurnDrvOhmygod = {
 
 struct BurnDriver BurnDrvNaname = {
 	"naname", NULL, NULL, NULL, "1994",
-	"Naname de Magic!\0", NULL, "Atlus", "Miscellaneous",
+	"Naname de Magic! (Japan)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NanameRomInfo, NanameRomName, NULL, NULL, NULL, NULL, OhmygodInputInfo, NanameDIPInfo,

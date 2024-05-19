@@ -2161,7 +2161,6 @@ static INT32 MachineInit()
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3526Init(3000000, NULL, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	if (BublboblCallbackFunction()) return 1;
@@ -2886,7 +2885,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 j = (i+224) % nInterleave;
 		ZetOpen(0);
-		CPU_RUN_TIMER_YM3526(0);
+		CPU_RUN(0, Zet);
 		if (j == 224 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
@@ -3098,7 +3097,7 @@ struct BurnDriver BurnDrvBoblbobl = {
 
 struct BurnDriver BurnDrvBbredux = {
 	"bbredux", "bublbobl", NULL, NULL, "2013",
-	"Bobble Bobble ('bootleg redux' hack for Bobble Bobble PCB)\0", NULL, "bootleg (Punji)", "Taito Misc",
+	"Bubble Bobble ('bootleg redux' hack for Bobble Bobble PCB)\0", NULL, "bootleg (Punji)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BbreduxRomInfo, BbreduxRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
@@ -3148,7 +3147,7 @@ struct BurnDriver BurnDrvSboblboblb = {
 
 struct BurnDriver BurnDrvSboblboblc = {
 	"sboblboblc", "bublbobl", NULL, NULL, "1986",
-	"Super Bobble Bobble (bootleg)\0", NULL, "bootleg", "Taito Misc",
+	"Super Bubble Bobble (bootleg)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, SboblboblcRomInfo, SboblboblcRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
@@ -3188,7 +3187,7 @@ struct BurnDriver BurnDrvSboblboblf = {
 
 struct BurnDriver BurnDrvBub68705 = {
 	"bub68705", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble (boolteg with 68705, set 1)\0", NULL, "bootleg", "Taito Misc",
+	"Bubble Bobble (bootleg with 68705)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bub68705RomInfo, Bub68705RomName, NULL, NULL, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
@@ -3220,7 +3219,7 @@ struct BurnDriver BurnDrvBublcave = {
 	"bublcave", "bublbobl", NULL, NULL, "2013",
 	"Bubble Bobble: Lost Cave V1.2\0", NULL, "hack (Bisboch and Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BublcaveRomInfo, BublcaveRomName, NULL, NULL, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	BublboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
@@ -3230,27 +3229,27 @@ struct BurnDriver BurnDrvBoblcave = {
 	"boblcave", "bublbobl", NULL, NULL, "2013",
 	"Bubble Bobble: Lost Cave V1.2 (for Bobble Bobble PCB)\0", NULL, "hack (Bisboch and Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BoblcaveRomInfo, BoblcaveRomName, NULL, NULL, NULL, NULL, BoblboblInputInfo, BoblcaveDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvBublcave11 = {
-	"bublcave11", "bublbobl", NULL, NULL, "2013",
+	"bublcave11", "bublbobl", NULL, NULL, "2012",
 	"Bubble Bobble: Lost Cave V1.1\0", NULL, "hack (Bisboch and Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bublcave11RomInfo, Bublcave11RomName, NULL, NULL, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	BublboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvBublcave10 = {
-	"bublcave10", "bublbobl", NULL, NULL, "2013",
+	"bublcave10", "bublbobl", NULL, NULL, "2012",
 	"Bubble Bobble: Lost Cave V1.0\0", NULL, "hack (Bisboch and Aladar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bublcave10RomInfo, Bublcave10RomName, NULL, NULL, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	BublboblInit, BublboblExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3

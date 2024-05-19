@@ -211,6 +211,76 @@ static struct BurnDIPInfo DorunrunDIPList[]=
 
 STDDIPINFO(Dorunrun)
 
+static struct BurnDIPInfo RunrunDIPList[]=
+{
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+	{0x02, 0xff, 0xff, 0xff, NULL						},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"					},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x01, 0x01, 0x03, 0x03, "1 (Beginner)"				},
+	{0x01, 0x01, 0x03, 0x02, "2"						},
+	{0x01, 0x01, 0x03, 0x01, "3"						},
+	{0x01, 0x01, 0x03, 0x00, "4 (Advanced)"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x01, 0x01, 0x04, 0x00, "Off"						},
+	{0x01, 0x01, 0x04, 0x04, "On"						},
+#if 0
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x01, 0x01, 0x08, 0x08, "Off"						},
+	{0x01, 0x01, 0x08, 0x00, "On"						},
+#endif
+	{0   , 0xfe, 0   ,    2, "Difficulty of EXTRA"		},
+	{0x01, 0x01, 0x10, 0x10, "Easy"						},
+	{0x01, 0x01, 0x10, 0x00, "Difficult"				},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x01, 0x01, 0x20, 0x00, "Upright"					},
+	{0x01, 0x01, 0x20, 0x20, "Cocktail"					},
+
+	{0   , 0xfe, 0   ,    2, "Special"					},
+	{0x01, 0x01, 0x40, 0x40, "Given"					},
+	{0x01, 0x01, 0x40, 0x00, "Not Given"				},
+
+	{0   , 0xfe, 0   ,    2, "Lives"					},
+	{0x01, 0x01, 0x80, 0x80, "1"						},
+	{0x01, 0x01, 0x80, 0x00, "2"						},
+
+	{0   , 0xfe, 0   ,    11, "Coin B"					},
+	{0x02, 0x01, 0x0f, 0x06, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x08, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x07, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0x0f, 0x00, "Free Play"				},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"					},
+	{0x02, 0x01, 0xf0, 0x60, "4 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x80, "3 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0xa0, "2 Coins 1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x70, "3 Coins 2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x02, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x02, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x02, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x02, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x02, 0x01, 0xf0, 0x00, "Free Play"				},
+};
+
+STDDIPINFO(Runrun)
+
 static struct BurnDIPInfo DowildDIPList[]=
 {
 	DIP_OFFSET(0x14)
@@ -1198,6 +1268,42 @@ struct BurnDriver BurnDrvDorunrunca = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorunruncaRomInfo, dorunruncaRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DorunrunDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 192, 4, 3
+};
+
+
+// Run Run (Do! Run Run bootleg)
+
+static struct BurnRomInfo runrunRomDesc[] = {
+	{ "electric_1.bin",		0x2000, 0x9f23896b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "electric_2.bin",		0x2000, 0xdbe3e7db, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "electric_3.bin",		0x2000, 0xe9b8181a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "electric_4.bin",		0x2000, 0xa63d0b89, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "electric_10.bin",	0x4000, 0x6dac2fa3, 2 | BRF_GRA },           //  4 slave
+
+	{ "bprom2.bin",			0x0200, 0x2747ca77, 3 | BRF_PRG | BRF_ESS }, //  5 cpu3
+
+	{ "electric_5.bin",		0x4000, 0xe20795b7, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "electric_6.bin",		0x2000, 0x4bb231a0, 5 | BRF_GRA },           //  7 gfx2
+	{ "electric_7.bin",		0x2000, 0x0c08508a, 5 | BRF_GRA },           //  8
+	{ "electric_8.bin",		0x2000, 0x79287039, 5 | BRF_GRA },           //  9
+	{ "electric_9.bin",		0x2000, 0x523aa999, 5 | BRF_GRA },           // 10
+
+	{ "dorunrun.clr",		0x0100, 0xd5bab5d5, 6 | BRF_GRA },           // 11 proms
+};
+
+STD_ROM_PICK(runrun)
+STD_ROM_FN(runrun)
+
+struct BurnDriver BurnDrvRunrun = {
+	"runrun", "dorunrun", NULL, NULL, "1984",
+	"Run Run (Do! Run Run bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, runrunRomInfo, runrunRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, RunrunDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 192, 4, 3
 };

@@ -146,7 +146,7 @@ static UINT8 DrvJoy9[8];
 static UINT8 DrvJoy10[8];
 static UINT8 DrvJoy11[8];
 static UINT8 DrvInputs[11];
-static UINT8 DrvDips[3]; // #2 is bios dip
+static UINT8 DrvDips[4]; // #2 is bios dip, #3 is the fast-loading speed
 static UINT8 DrvReset;
 
 static INT32 fourway_mode = 0;
@@ -176,6 +176,7 @@ static struct BurnInputInfo DecocassInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Decocass)
@@ -185,6 +186,7 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x11, 0xff, 0xff, 0xff, NULL			},
 	{0x12, 0xff, 0xff, 0xff, NULL			},
 	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x14, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -225,6 +227,10 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x13, 0x01, 0x07, 0x05, "UK C, Older"		},
 	{0x13, 0x01, 0x07, 0x06, "Europe D, Newer"	},
 	{0x13, 0x01, 0x07, 0x07, "Europe D, Older"	},
+
+	{0   , 0xfe, 0   ,    2, "Fast Loader"		},
+	{0x14, 0x01, 0x01, 0x00, "On"				},
+	{0x14, 0x01, 0x01, 0x01, "Off"				},
 };
 
 STDDIPINFO(Decocass)
@@ -414,6 +420,7 @@ static struct BurnInputInfo CtowerInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Ctower)
@@ -424,6 +431,7 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x81, NULL			},
 	{0x02, 0xff, 0xff, 0x06, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -459,13 +467,19 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	{0x01, 0x01, 0xe0, 0x60, "E"			},
 	{0x01, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    6, "Bios Version"		},
+	{0   , 0xfe, 0   ,    8, "Bios Version"		},
 	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x02, 0x01, 0x07, 0x03, "USA B, Older"		},
+	{0x02, 0x01, 0x07, 0x04, "UK C, Newer"		},
+	{0x02, 0x01, 0x07, 0x05, "UK C, Older"		},
 	{0x02, 0x01, 0x07, 0x06, "Europe D, Newer"	},
 	{0x02, 0x01, 0x07, 0x07, "Europe D, Older"	},
+
+	{0   , 0xfe, 0   ,    2, "Fast Loader"		},
+	{0x03, 0x01, 0x01, 0x00, "On"				},
+	{0x03, 0x01, 0x01, 0x01, "Off"				},
 };
 
 STDDIPINFO(Ctower)
@@ -475,6 +489,7 @@ static struct BurnDIPInfo Cocean1aDIPList[]=
 	{0x11, 0xff, 0xff, 0x3f, NULL			},
 	{0x12, 0xff, 0xff, 0xff, NULL			},
 	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x14, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
 	{0x11, 0x01, 0x07, 0x07, "1"			},
@@ -531,6 +546,10 @@ static struct BurnDIPInfo Cocean1aDIPList[]=
 	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"	},
 	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"		},
 	{0x13, 0x01, 0x03, 0x03, "USA B, Older"		},
+
+	{0   , 0xfe, 0   ,    2, "Fast Loader"		},
+	{0x14, 0x01, 0x01, 0x00, "On"				},
+	{0x14, 0x01, 0x01, 0x01, "Off"				},
 };
 
 STDDIPINFO(Cocean1a)
@@ -540,6 +559,7 @@ static struct BurnDIPInfo Cocean6bDIPList[]=
 	{0x11, 0xff, 0xff, 0x3f, NULL			},
 	{0x12, 0xff, 0xff, 0xff, NULL			},
 	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x14, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
 	{0x11, 0x01, 0x07, 0x07, "1"			},
@@ -596,6 +616,10 @@ static struct BurnDIPInfo Cocean6bDIPList[]=
 	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"	},
 	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"		},
 	{0x13, 0x01, 0x03, 0x03, "USA B, Older"		},
+
+	{0   , 0xfe, 0   ,    2, "Fast Loader"		},
+	{0x14, 0x01, 0x01, 0x00, "On"				},
+	{0x14, 0x01, 0x01, 0x01, "Off"				},
 };
 
 STDDIPINFO(Cocean6b)
@@ -1396,6 +1420,7 @@ static struct BurnDIPInfo CdsteljnDIPList[]=
 	{0x37, 0xff, 0xff, 0xff, NULL			},
 	{0x38, 0xff, 0xff, 0xff, NULL			},
 	{0x39, 0xff, 0xff, 0x00, NULL			},
+	{0x3a, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x37, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -1432,6 +1457,10 @@ static struct BurnDIPInfo CdsteljnDIPList[]=
 	{0x39, 0x01, 0x03, 0x01, "Japan A, Older"	},
 	{0x39, 0x01, 0x03, 0x02, "USA B, Newer"		},
 	{0x39, 0x01, 0x03, 0x03, "USA B, Older"		},
+
+	{0   , 0xfe, 0   ,    2, "Fast Loader"		},
+	{0x3a, 0x01, 0x01, 0x00, "On"				},
+	{0x3a, 0x01, 0x01, 0x01, "Off"				},
 };
 
 STDDIPINFO(Cdsteljn)
@@ -3329,6 +3358,8 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static INT32 in_tape_ffwd = 0;
+
 static INT32 DrvFrame()
 {
 	if ((watchdog_flip & 0x04) == 0)
@@ -3443,6 +3474,22 @@ static INT32 DrvFrame()
         AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	if ((~DrvDips[3] & 1) && in_tape_ffwd == 0 && tape_timer) {
+		in_tape_ffwd = 1;
+		INT32 cnt = 50;
+		UINT8 *draw_temp = pBurnDraw;
+		INT16 *sound_temp = pBurnSoundOut;
+		pBurnDraw = NULL;
+		pBurnSoundOut = NULL;
+		while (cnt) {
+			DrvFrame();
+			if (!tape_timer) cnt--;
+		}
+		pBurnSoundOut = sound_temp;
+		pBurnDraw = draw_temp;
+		in_tape_ffwd = 0;
+	}
+
 	return 0;
 }
 
@@ -3519,6 +3566,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
+		SCAN_VAR(e900_gfxbank);
 
 		if (burgertime_mode) {
 			SCAN_VAR(last01);
@@ -4006,7 +4054,7 @@ struct BurnDriver BurnDrvClocknchj = {
 };
 
 
-// Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)
+// Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)
 
 static struct BurnRomInfo cfboy0a1RomDesc[] = {
 	{ "dp-1120-a.rom",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
@@ -4030,7 +4078,7 @@ static INT32 Cfboy0a1Init()
 
 struct BurnDriver BurnDrvCfboy0a1 = {
 	"cfboy0a1", NULL, "decocass", NULL, "1981",
-	"Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
+	"Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cfboy0a1RomInfo, cfboy0a1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cfboy0a1DIPInfo,
@@ -4291,6 +4339,8 @@ struct BurnDriver BurnDrvCtisland3 = {
 	240, 256, 3, 4
 };
 
+// The Tower (DECO Cassette) (Europe)
+
 static struct BurnRomInfo ctowerRomDesc[] = {
 	{ "ctower.pro",	0x0020, 0x32e9dcd7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
 
@@ -4302,7 +4352,7 @@ STD_ROM_FN(ctower)
 
 struct BurnDriver BurnDrvCtower = {
 	"ctower", NULL, "decocass", NULL, "1981",
-	"The Tower (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
+	"The Tower (DECO Cassette) (Europe)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctowerRomInfo, ctowerRomName, NULL, NULL, NULL, NULL, CtowerInputInfo, CtowerDIPInfo,
@@ -4715,7 +4765,7 @@ struct BurnDriver BurnDrvCgraplop = {
 };
 
 
-// Graplop (no title screen) (DECO Cassette) (US)
+// Graplop (DECO Cassette) (US) (Prototype?)
 
 static struct BurnRomInfo cgraplop2RomDesc[] = {
 	{ "cgraplop.pro",	0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
@@ -4735,9 +4785,9 @@ static INT32 Cgraplop2Init()
 
 struct BurnDriver BurnDrvCgraplop2 = {
 	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
-	"Graplop (no title screen) (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
+	"Graplop (DECO Cassette) (US) (Prototype?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
 	Cgraplop2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5296,7 +5346,7 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 }
 
 
-// Deco Cassette System Multigame (ROM based)
+// DECO Cassette System ROM Multigame (David Widel)
 
 static struct BurnRomInfo decomultRomDesc[] = {
 	{ "widldeco.low",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
@@ -5323,7 +5373,7 @@ static INT32 DecomultInit()
 
 struct BurnDriver BurnDrvDecomult = {
 	"decomult", NULL, "decocass", NULL, "2008",
-	"Deco Cassette System Multigame (ROM based)\0", NULL, "bootleg (David Widel)", "Cassette System",
+	"DECO Cassette System ROM Multigame (David Widel)\0", NULL, "bootleg (David Widel)", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, decomultRomInfo, decomultRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, DecomultDIPInfo,

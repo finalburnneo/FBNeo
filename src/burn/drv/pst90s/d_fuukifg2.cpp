@@ -46,52 +46,54 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo GogomileInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 1,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Gogomile)
 
 static struct BurnInputInfo PbanchoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up	"	},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up	"	},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 8,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 8,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Pbancho)
@@ -480,9 +482,11 @@ static int DrvDoReset()
 
 	oki_bankswitch(0);
 	MSM6295Reset(0);
-	
+
+	nCyclesExtra = 0;
+
 	HiscoreReset();
-	
+
 	return 0;
 }
 
@@ -555,12 +559,7 @@ static void expand_8bpp_pixels(UINT8 *src, INT32 len)
 
 static INT32 DrvInit(INT32 nGame)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x0000001,  0, 2)) return 1;
@@ -626,11 +625,10 @@ static INT32 DrvInit(INT32 nGame)
 	ZetClose();
 
 	BurnYM3812Init(1, 3580000, &DrvFMIRQHandler, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 3580000, NULL, 1);
-	BurnTimerAttach(&SekConfig, 16000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
@@ -669,7 +667,7 @@ static INT32 DrvExit()
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -830,7 +828,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 6000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -847,7 +845,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdate((nCyclesTotal[0] / nInterleave) * (i + 1));
+		CPU_RUN(0, Sek);
 
 		if (i == 239+3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank - +3 for occasional coin-up issues in gogomile in demo mode
 		if (i == 0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1 - start at line 0, fixes glitches during bootup/huge tilemap animations
@@ -861,20 +859,19 @@ static INT32 DrvFrame()
 			raster_timer = nInterleave - 2; // fix glitch in middle of pink x+y scroll "mile smile" screen
 		}
 
-		nCyclesDone[1] += BurnTimerUpdateYM3812((nCyclesTotal[1] / nInterleave) * (i + 1));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw)
 	{
@@ -932,6 +929,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(raster_timer);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -1023,11 +1022,11 @@ struct BurnDriver BurnDrvGogomileo = {
 };
 
 
-// Gyakuten!! Puzzle Bancho (Japan)
+// Gyakuten!! Puzzle Bancho (Japan, set 1)
 
 static struct BurnRomInfo pbanchoRomDesc[] = {
-	{ "no1.rom2",		0x080000, 0x1b4fd178, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "no2,rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "no1..rom2",		0x080000, 0xe607eca6, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "no2..rom1",		0x080000, 0xee15b423, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "no4.rom23",		0x020000, 0xdfbfdb81, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
 
@@ -1053,10 +1052,44 @@ static INT32 PbanchoInit()
 
 struct BurnDriver BurnDrvPbancho = {
 	"pbancho", NULL, NULL, NULL, "1996",
-	"Gyakuten!! Puzzle Bancho (Japan)\0", NULL, "Fuuki", "Miscellaneous",
+	"Gyakuten!! Puzzle Bancho (Japan, set 1)\0", NULL, "Fuuki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pbanchoRomInfo, pbanchoRomName, NULL, NULL, NULL, NULL, PbanchoInputInfo, PbanchoDIPInfo,
+	PbanchoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	320, 240, 4, 3
+};
+
+
+// Gyakuten!! Puzzle Bancho (Japan, set 2)
+
+static struct BurnRomInfo pbanchoaRomDesc[] = {
+	{ "no1.rom2",		0x080000, 0x1b4fd178, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "no2.rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "no4.rom23",		0x020000, 0xdfbfdb81, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "58.rom20",		0x200000, 0x4dad0a2e, 3 | BRF_GRA },           //  3 sprites
+
+	{ "60.rom3",		0x200000, 0xa50a3c1b, 4 | BRF_GRA },           //  4 16 x 16 x 4bpp (layer 0) tiles
+
+	{ "61.rom11",		0x200000, 0x7f1213b9, 5 | BRF_GRA },           //  5 16 x 16 x 8bpp (layer 1) tiles
+	{ "59.rom15",		0x200000, 0xb83dcb70, 5 | BRF_GRA },           //  6
+
+	{ "60.rom3",		0x200000, 0xa50a3c1b, 6 | BRF_GRA },           //  7 8 x 8 x 4bpp (layer 2) tiles
+
+	{ "n03.rom25",		0x040000, 0xa7bfb5ea, 7 | BRF_SND },           //  8 oki samples
+};
+
+STD_ROM_PICK(pbanchoa)
+STD_ROM_FN(pbanchoa)
+
+struct BurnDriver BurnDrvPbanchoa = {
+	"pbanchoa", "pbancho", NULL, NULL, "1996",
+	"Gyakuten!! Puzzle Bancho (Japan, set 2)\0", NULL, "Fuuki", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pbanchoaRomInfo, pbanchoaRomName, NULL, NULL, NULL, NULL, PbanchoInputInfo, PbanchoDIPInfo,
 	PbanchoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
 };

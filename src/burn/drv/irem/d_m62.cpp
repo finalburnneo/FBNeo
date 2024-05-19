@@ -71,6 +71,8 @@ static INT32 M62CharxTileDim = 0;
 static INT32 M62CharyTileDim = 0;
 static UINT32 bHasSamples = 0;
 
+static INT32 nExtraCycles[2];
+
 typedef void (*M62ExtendTileInfo)(INT32*, INT32*, INT32*, INT32*);
 static M62ExtendTileInfo M62ExtendTileInfoFunction;
 static void BattroadExtendTile(INT32* Code, INT32* Colour, INT32* Priority, INT32* xFlip);
@@ -1866,6 +1868,8 @@ static INT32 M62DoReset()
 	KidnikiBackgroundBank = 0;
 	SpelunkrPaletteBank = 0;
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -3261,7 +3265,9 @@ static INT32 HorizonLoadRoms()
 
 static void M62MachineInit()
 {
-//	BurnSetRefreshRate(55.0);
+	INT32 Width, Height;
+	BurnDrvGetVisibleSize(&Width, &Height);
+	BurnSetRefreshRate((Width == 384 ? 55.017606 : 56.338028));
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -4632,8 +4638,8 @@ static INT32 M62Frame()
 	M62MakeInputs();
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, M62Z80Clock);
-	INT32 nCyclesTotal[2] = { M62Z80Clock / 60, M62M6803Clock / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)M62Z80Clock * 100 / nBurnFPS), (INT32)((double)M62M6803Clock * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetNewFrame();
 	M6803NewFrame();
@@ -4666,6 +4672,9 @@ static INT32 M62Frame()
 
 	M6803Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -4712,6 +4721,8 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Ldrun3TopBottomMask);
 		SCAN_VAR(KidnikiBackgroundBank);
 		SCAN_VAR(SpelunkrPaletteBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -4860,7 +4871,7 @@ struct BurnDriver BurnDrvBattroad = {
 	"battroad", NULL, NULL, "tr606drumkit", "1984",
 	"The Battle-Road\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, BattroadRomInfo, BattroadRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, BattroadDIPInfo,
 	BattroadInit, M62Exit, M62Frame, BattroadDraw, M62Scan,
 	NULL, 0x220, 256, 256, 3, 4
@@ -4878,7 +4889,7 @@ struct BurnDriver BurnDrvLdrun = {
 
 struct BurnDriver BurnDrvLdruna = {
 	"ldruna", "ldrun", NULL, NULL, "1984",
-	"Lode Runner (set 2)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner (set 2)\0", NULL, "Irem (licensed from Broderbund, Digital Controls Inc. license)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, LdrunaRomInfo, LdrunaRomName, NULL, NULL, NULL, NULL, M62InputInfo, LdrunDIPInfo,
@@ -4908,7 +4919,7 @@ struct BurnDriver BurnDrvLdrun3 = {
 
 struct BurnDriver BurnDrvLdrun3j = {
 	"ldrun3j", "ldrun3", NULL, NULL, "1985",
-	"Lode Runner III - Majin No Fukkatsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner III - Majin no Fukkatsu (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun3jRomInfo, Ldrun3jRomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun2DIPInfo,
@@ -4918,7 +4929,7 @@ struct BurnDriver BurnDrvLdrun3j = {
 
 struct BurnDriver BurnDrvLdrun4 = {
 	"ldrun4", NULL, NULL, NULL, "1986",
-	"Lode Runner IV - Teikoku Karano Dasshutsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner IV - Teikoku Karano Dasshutsu (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun4RomInfo, Ldrun4RomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun4DIPInfo,
@@ -5018,7 +5029,7 @@ struct BurnDriver BurnDrvYoujyudn = {
 
 struct BurnDriver BurnDrvHorizon = {
 	"horizon", NULL, NULL, "tr606drumkit", "1985",
-	"Horizon\0", NULL, "Irem", "Irem M62",
+	"Horizon (Irem)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, HorizonRomInfo, HorizonRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, HorizonDIPInfo,

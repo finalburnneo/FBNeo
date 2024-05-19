@@ -52,7 +52,7 @@ struct ButtonToggle {
 
 	INT32 Toggle(UINT8 &input) {
 		INT32 toggled = 0;
-		if (!last_state && input) {
+		if (!last_state && input && !bBurnRunAheadFrame) {
 			state ^= 1;
 			toggled = 1;
 		}
@@ -110,6 +110,34 @@ struct HoldCoin {
 		if (!counter[num]) {
 			inp |= bit;
 		}
+	}
+};
+
+template <int N, typename T>
+struct ClearOpposite {
+	T prev[N<<2];
+
+	void reset() {
+		memset(&prev, 0, sizeof(prev));
+	}
+
+	void scan() {
+		SCAN_VAR(prev);
+	}
+
+	void checkval(UINT8 n, T &inp, T val_a, T val_b) {
+		// When opposites become pressed simultaneously, and a 3rd direction isn't pressed
+		// remove the previously stored direction if it exists, cancel both otherwise
+		if ((inp & val_a) == val_a)
+			inp &= (prev[n] && (inp & val_b) == 0 ? (inp ^ prev[n]) : ~val_a);
+		// Store direction anytime it's pressed without its opposite
+		else if (inp & val_a)
+			prev[n] = inp & val_a;
+	}
+
+	void check(UINT8 num, T &inp, T val1, T val2) {
+		checkval((num<<1)  , inp, val1, val2);
+		checkval((num<<1)+1, inp, val2, val1);
 	}
 };
 

@@ -780,7 +780,7 @@ static INT32 DrvInit(INT32 game)
 
 	// dac0 -> dac1 -> dc-offset removal -> ym3526 -> OUT
 	BurnYM3526Init(4000000, NULL, &DrvYM3526SynchroniseStream, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, ZetTotalCycles, 4000000);
@@ -967,7 +967,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3526(1);
+		CPU_RUN_TIMER(1);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
@@ -1072,7 +1072,7 @@ struct BurnDriver BurnDrvGalivan = {
 	"galivan", NULL, NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/26/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, galivanRomInfo, galivanRomName, NULL, NULL, NULL, NULL, GalivanInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
@@ -1117,7 +1117,7 @@ struct BurnDriver BurnDrvGalivan2 = {
 	"galivan2", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/16/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, galivan2RomInfo, galivan2RomName, NULL, NULL, NULL, NULL, GalivanInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
@@ -1162,14 +1162,14 @@ struct BurnDriver BurnDrvGalivan3 = {
 	"galivan3", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/11/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, galivan3RomInfo, galivan3RomName, NULL, NULL, NULL, NULL, GalivanInputInfo, GalivanDIPInfo,
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
 
 
-// Ufo Robo Dangar (4/07/1987)
+// Ufo Robo Dangar (4/09/1987)
 
 static struct BurnRomInfo dangarRomDesc[] = {
 	{ "8.1b",			0x8000, 0xfe4a3fd6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1205,7 +1205,7 @@ STD_ROM_FN(dangar)
 
 struct BurnDriver BurnDrvDangar = {
 	"dangar", NULL, NULL, NULL, "1986",
-	"Ufo Robo Dangar (4/07/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (4/09/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarRomInfo, dangarRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarDIPInfo,
@@ -1259,7 +1259,7 @@ struct BurnDriver BurnDrvDangara = {
 };
 
 
-// Ufo Robo Dangar (9/26/1986)
+// Ufo Robo Dangar (9/26/1986, bootleg set 1)
 
 static struct BurnRomInfo dangarbRomDesc[] = {
 	{ "16.1b",			0x8000, 0x743fa2d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1295,9 +1295,9 @@ STD_ROM_FN(dangarb)
 
 struct BurnDriver BurnDrvDangarb = {
 	"dangarb", "dangar", NULL, NULL, "1986",
-	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (9/26/1986, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarbDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
@@ -1352,7 +1352,7 @@ struct BurnDriver BurnDrvDangarj = {
 };
 
 
-// Ufo Robo Dangar (bootleg)
+// Ufo Robo Dangar (9/26/1986, bootleg set 2)
 
 static struct BurnRomInfo dangarbtRomDesc[] = {
 	{ "8",				0x8000, 0x8136fd10, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1388,7 +1388,7 @@ STD_ROM_FN(dangarbt)
 
 struct BurnDriver BurnDrvDangarbt = {
 	"dangarbt", "dangar", NULL, NULL, "1986",
-	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (9/26/1986, bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarbDIPInfo, // Dangar2

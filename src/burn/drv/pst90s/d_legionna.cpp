@@ -1683,19 +1683,19 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		if (seibu_fm_type == 0) {
-			CPU_RUN_TIMER_YM3812(1);
-		} else {
-			CPU_RUN_TIMER(1);
-		}
+		CPU_RUN_TIMER(1);
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1704,12 +1704,6 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
-
-	ZetClose();
-	SekClose();
 
 	return 0;
 }

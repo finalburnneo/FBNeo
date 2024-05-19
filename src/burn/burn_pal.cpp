@@ -18,7 +18,7 @@ static inline UINT32 PaletteWrite4Bit(INT32 offset, INT32 rshift, INT32 gshift, 
 	UINT8 g = (p >> gshift) & 0xf;
 	UINT8 b = (p >> bshift) & 0xf;
 
-	return BurnHighCol(r+(r*16), b+(b*16), g+(g*16), 0);	
+	return BurnHighCol(r+(r*16), g+(g*16), b+(b*16), 0);
 }
 
 static inline void PaletteUpdate4Bit(INT32 rshift, INT32 gshift, INT32 bshift)

@@ -1511,7 +1511,7 @@ STD_ROM_FN(Transfrm)
 
 struct BurnDriver BurnDrvHangonjr = {
 	"hangonjr", NULL, NULL, NULL, "1985",
-	"Hang-On Jr. Rev.B\0", NULL, "Sega", "System E",
+	"Hang-On Jr. (Rev. B)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,
@@ -1584,7 +1584,7 @@ struct BurnDriver BurnDrvOpaopa = {
 	"opaopa", NULL, NULL, NULL, "1987",
 	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
 	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvOpaopapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	248, 192, 4, 3
@@ -1608,7 +1608,7 @@ struct BurnDriver BurnDrvOpaopan = {
 	"opaopan", "opaopa", NULL, NULL, "1987",
 	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
 	NULL, opaopanRomInfo, opaopanRomName, NULL, NULL, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvOpaopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	248, 192, 4, 3
@@ -1689,11 +1689,11 @@ struct BurnDriver BurnDrvRidleOfp = {
 // Megumi Rescue
 
 static struct BurnRomInfo megrescuRomDesc[] = {
-	{ "v10_30ic.7",	0x8000, 0x490d0059, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "v10_30ic.5",	0x8000, 0x278caba8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "v10_30ic.4",	0x8000, 0xbda242d1, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "v10_30ic.3",	0x8000, 0x56e36f85, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "v10_30ic.2",	0x8000, 0x5b74c767, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "megumi_rescue_version_10.30_final_version_ic-7.ic7",	0x8000, 0x490d0059, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "megumi_rescue_version_10.30_final_version_ic-5.ic5",	0x8000, 0x278caba8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "megumi_rescue_version_10.30_final_version_ic-4.ic4",	0x8000, 0xbda242d1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "megumi_rescue_version_10.30_final_version_ic-3.ic3",	0x8000, 0x56e36f85, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "megumi_rescue_version_10.30_final_version_ic-2.ic2",	0x8000, 0x5b74c767, 1 | BRF_PRG | BRF_ESS }, //  4
 };
 
 STD_ROM_PICK(megrescu)

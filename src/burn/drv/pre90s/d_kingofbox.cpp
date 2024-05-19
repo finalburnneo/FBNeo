@@ -29,7 +29,7 @@ static INT32 nmi_enable;
 static INT32 palette_bank;
 static INT32 soundlatch;
 static INT32 flipscreen;
-static INT32 extra_cycles[4];
+static INT32 nCyclesExtra[4];
 static INT32 vblank;
 
 static UINT8 input_state = 0;
@@ -222,36 +222,23 @@ static void __fastcall kingobox_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf803: // kingobox
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 			scrolly = data; // ??
+		return;
 
 		case 0xd801: // ringking
-			ZetClose();
-			ZetOpen(2);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xd802: // ringking
 		case 0xf804: // kingobox
-			ZetClose();
-			ZetOpen(1);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xd803: // ringking
 		case 0xf807: // kingobox
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(3);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(3, 0, CPU_IRQSTATUS_HOLD);
 		return;
 	}
 }
@@ -371,13 +358,14 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
-	HiscoreReset();
-
 	scrolly = 0;
 	nmi_enable = 0;
 	palette_bank = 0;
 	flipscreen = 0;
-	memset (extra_cycles, 0, sizeof(extra_cycles));
+
+	memset (nCyclesExtra, 0, sizeof(nCyclesExtra));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -615,12 +603,7 @@ static void RingkingColpromFix()
 
 static INT32 RingkingInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -726,7 +709,7 @@ static INT32 DrvExit()
 
 	input_state = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -839,7 +822,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[4] = { 4000000 / 60, 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nCyclesDone[4] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2], nCyclesExtra[3] };
 
 	vblank = 1;
 
@@ -866,6 +849,11 @@ static INT32 DrvFrame()
 		ZetNmi(); // 100x per frame
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nCyclesExtra[3] = nCyclesDone[3] - nCyclesTotal[3];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -902,7 +890,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(palette_bank);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(extra_cycles);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -951,7 +940,7 @@ STD_ROM_FN(kingofb)
 
 struct BurnDriver BurnDrvKingofb = {
 	"kingofb", NULL, NULL, NULL, "1985",
-	"King of Boxer (World)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"King of Boxer (World)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbRomInfo, kingofbRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1002,7 +991,7 @@ STD_ROM_FN(kingofbj)
 
 struct BurnDriver BurnDrvKingofbj = {
 	"kingofbj", "kingofb", NULL, NULL, "1985",
-	"King of Boxer (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"King of Boxer (Japan)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbjRomInfo, kingofbjRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1011,7 +1000,7 @@ struct BurnDriver BurnDrvKingofbj = {
 };
 
 
-// Ring King (US, Wood Place Inc.)
+// Ring King (US, Woodplace Inc.)
 
 static struct BurnRomInfo ringkingwRomDesc[] = {
 	{ "15.d9",				0x4000, 0x8263f517, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1084,7 +1073,7 @@ static INT32 RingkingwInit()
 
 struct BurnDriver BurnDrvRingkingw = {
 	"ringkingw", "kingofb", NULL, NULL, "1985",
-	"Ring King (US, Wood Place Inc.)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"Ring King (US, Woodplace Inc.)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingwRomInfo, ringkingwRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1144,7 +1133,7 @@ static INT32 Ringking3Init()
 
 struct BurnDriver BurnDrvRingking3 = {
 	"ringking3", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 3)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 3)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking3RomInfo, ringking3RomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1187,7 +1176,7 @@ STD_ROM_FN(ringking)
 
 struct BurnDriver BurnDrvRingking = {
 	"ringking", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 1)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
@@ -1230,7 +1219,7 @@ STD_ROM_FN(ringking2)
 
 struct BurnDriver BurnDrvRingking2 = {
 	"ringking2", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 2)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 2)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking2RomInfo, ringking2RomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,

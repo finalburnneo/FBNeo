@@ -43,7 +43,8 @@ static INT32 DrvRearHorizScrollLo;
 static INT32 DrvRearHorizScrollHi;
 static INT32 DrvSampleAddress;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
+static INT32 nCyclesTotal[2];
+static INT32 nExtraCycles[2];
 
 static UINT8 DrvHasYM2203 = 0;
 static UINT8 DrvKikcubicDraw = 0;
@@ -958,6 +959,8 @@ static INT32 DrvDoReset()
 	DrvRearHorizScrollLo = 0;
 	DrvRearHorizScrollHi = 0;
 	DrvSampleAddress = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -2283,7 +2286,7 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetNewFrame();
 
@@ -2310,6 +2313,9 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		if (DrvKikcubicDraw) {
@@ -2358,6 +2364,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvRearHorizScrollLo);
 		SCAN_VAR(DrvRearHorizScrollHi);
 		SCAN_VAR(DrvSampleAddress);
+
+		SCAN_VAR(nExtraCycles);
 	}
 	
 	if (nAction & ACB_WRITE) {
@@ -2397,7 +2405,7 @@ struct BurnDriver BurnDrvVigilanta = {
 
 struct BurnDriver BurnDrvVigilantb = {
 	"vigilantb", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US, Rev B)\0", NULL, "Irem (Data East License)", "Miscellaneous",
+	"Vigilante (US, Rev B)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, VigilantbRomInfo, VigilantbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2417,7 +2425,7 @@ struct BurnDriver BurnDrvVigilantc = {
 
 struct BurnDriver BurnDrvVigilanto = {
 	"vigilanto", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
+	"Vigilante (US)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2427,7 +2435,7 @@ struct BurnDriver BurnDrvVigilanto = {
 
 struct BurnDriver BurnDrvVigilantg = {
 	"vigilantg", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US, Rev G)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
+	"Vigilante (US, Rev G)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2449,7 +2457,7 @@ struct BurnDriver BurnDrvVigilantbl = {
 	"vigilantbl", "vigilant", NULL, NULL, "1988",
 	"Vigilante (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3

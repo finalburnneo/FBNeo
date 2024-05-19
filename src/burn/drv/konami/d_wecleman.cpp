@@ -1,6 +1,10 @@
 // FinalBurn Neo Konami Hot Chase and WEC Le Mans 24 driver module
 // Based on MAME driver by Luca Elia
 
+// TOFIX -TODINK-
+// weird clicks when song changes.  if k007232Reset() isn't called on soundlatch==0,
+// game repeats sounds like madness.  uhoh.
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -86,6 +90,8 @@ static INT16 Analog0;
 static INT16 Analog1;
 
 static INT32 scanline;
+
+static INT32 nCyclesExtra[2];
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d} // A - for analog happytime
 static struct BurnInputInfo WeclemanInputList[] = {
@@ -311,10 +317,6 @@ static void __fastcall wecleman_main_write_word(UINT32 address, UINT16 data)
 		case 0x140005:
 			{
 				if ((irq_control & 1) && (~data & 1)) {
-					INT32 cyc = (SekTotalCycles(0) - SekTotalCycles(1));
-					if (cyc > 0) {
-						SekRun(1, cyc);
-					}
 					SekSetIRQLine(1, 4, CPU_IRQSTATUS_AUTO);
 				}
 				if ((irq_control & 4) && (~data & 4)) {
@@ -748,6 +750,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	sound_status = 0;
 	irq_timer = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
 	HiscoreReset();
 
@@ -1783,7 +1787,7 @@ static INT32 DrvFrame()
 	INT32 MULT = 8;
 	INT32 nInterleave = 262*MULT;
 	INT32 nCyclesTotal[3] = { 10000000 / 60, 10000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
 
 	if (game_select == 1) nCyclesTotal[2] /= 2; // hotchase
 
@@ -1815,12 +1819,15 @@ static INT32 DrvFrame()
 		{
 			M6809Open(0);
 			CPU_RUN(2, M6809);
-			if ((i & ((0x20 * MULT) - 1)) == 0) { // @ 256*8 interleave!
+			if ((i & ((0x20 * MULT) - 1)) == 0) { // @ 262*8 interleave!
 				M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 			}
 			M6809Close();
 		}
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		if (game_select == 0)
@@ -1882,6 +1889,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(sound_status);
 		SCAN_VAR(irq_timer);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2057,7 +2066,7 @@ struct BurnDriver BurnDrvWeclemanb = {
 	"weclemanb", "wecleman", NULL, NULL, "1988",
 	"WEC Le Mans 24 (v2.00, hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemanbRomInfo, weclemanbRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

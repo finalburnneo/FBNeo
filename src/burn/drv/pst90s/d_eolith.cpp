@@ -1210,7 +1210,7 @@ struct BurnDriver BurnDrvIronfort = {
 	"ironfort", NULL, NULL, NULL, "1998",
 	"Iron Fortress\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, ironfortRomInfo, ironfortRomName, NULL, NULL, NULL, NULL, IronfortInputInfo, IronfortDIPInfo,
 	IronfortInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1250,7 +1250,7 @@ struct BurnDriver BurnDrvIronfortc = {
 	"ironfortc", "ironfort", NULL, NULL, "1998",
 	"Gongtit Jiucoi Iron Fortress (Hong Kong)\0", NULL, "Eolith (Excellent Competence Ltd. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, ironfortcRomInfo, ironfortcRomName, NULL, NULL, NULL, NULL, IronfortcInputInfo, IronfortcDIPInfo,
 	IronfortcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3

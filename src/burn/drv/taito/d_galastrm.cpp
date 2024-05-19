@@ -986,6 +986,16 @@ static struct BurnRomInfo galastrmRomDesc[] = {
 	{ "c99-07.ic2",				0x100000, 0x4cc3136f, TAITO_ES5505_BYTESWAP },		// 16
 
 	{ "eeprom-galastrm.bin",	0x000080, 0x94efa7a6, TAITO_DEFAULT_EEPROM },		// 17 Default EEPROM
+
+	{ "c99-16.bin",				0x000104, 0x9340e376, BRF_OPT },					// 18 PLDs
+	{ "c99-17.bin",				0x000144, 0x81d55be5, BRF_OPT },					// 19
+	{ "c99-18.bin",				0x000149, 0xeca1501d, BRF_OPT },					// 20
+	{ "c99-19.bin",				0x000104, 0x6310ef1d, BRF_OPT },					// 21
+	{ "c99-20.bin",				0x000144, 0x5d527b8b, BRF_OPT },					// 22
+	{ "c99-21.bin",				0x000104, 0xeb2407a1, BRF_OPT },					// 23
+	{ "c99-24.bin",				0x000144, 0xa0ec9b49, BRF_OPT },					// 24
+	{ "c99-25.bin",				0x000144, 0xd7cbb8be, BRF_OPT },					// 25
+	{ "c99-26.bin",				0x000144, 0xd65cbcb9, BRF_OPT },					// 26
 };
 
 STD_ROM_PICK(galastrm)
@@ -995,7 +1005,7 @@ struct BurnDriver BurnDrvGalastrm = {
 	"galastrm", NULL, NULL, NULL, "1992",
 	"Galactic Storm (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, galastrmRomInfo, galastrmRomName, NULL, NULL, NULL, NULL, GalastrmInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 232, 4, 3

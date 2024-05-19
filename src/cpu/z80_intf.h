@@ -8,6 +8,8 @@
 #include "z80/z80.h"
 
 extern INT32 nHasZet;
+extern INT32 ZetInFetch;
+
 void ZetWriteByte(UINT16 address, UINT8 data);
 UINT8 ZetReadByte(UINT16 address);
 void ZetWriteRom(UINT16 address, UINT8 data);

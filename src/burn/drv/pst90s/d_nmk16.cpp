@@ -5904,7 +5904,7 @@ static INT32 SeibuSoundFrame()
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -6556,7 +6556,7 @@ struct BurnDriver BurnDrvMacross2 = {
 	384, 224, 4, 3
 };
 
-// Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (GAMEST review build)
+// Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (Gamest review build)
 
 static struct BurnRomInfo macross2gRomDesc[] = {
 	{ "3.u11",			0x080000, 0x151f9d39, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6583,7 +6583,7 @@ STD_ROM_FN(macross2g)
 
 struct BurnDriver BurnDrvMacross2g = {
 	"macross2g", "macross2", NULL, NULL, "1993",
-	"Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (GAMEST review build)\0", NULL, "Banpresto", "NMK16",
+	"Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (Gamest review build)\0", NULL, "Banpresto", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, macross2gRomInfo, macross2gRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Macross2DIPInfo,
@@ -6819,7 +6819,7 @@ struct BurnDriver BurnDrvTdragon3h = {
 	"tdragon3h", "tdragon2", NULL, NULL, "1996",
 	"Thunder Dragon 3 (bootleg of Thunder Dragon 2)\0", NULL, "bootleg (Conny Co Ltd.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragon3hRomInfo, tdragon3hRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
 	Tdragon3Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -6989,7 +6989,7 @@ STD_ROM_FN(redhawkk)
 
 struct BurnDriver BurnDrvRedhawkk = {
 	"redhawkk", "stagger1", NULL, NULL, "1997",
-	"Red Hawk (Korea)\0", NULL, "Afega Co.", "NMK16",
+	"Red Hawk (Korea)\0", NULL, "Afega", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkkRomInfo, redhawkkRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
@@ -7230,7 +7230,7 @@ struct BurnDriver BurnDrvRedhawkb = {
 	"redhawkb", "stagger1", NULL, NULL, "1997",
 	"Red Hawk (horizontal, bootleg)\0", NULL, "bootleg (Vince)", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkbRomInfo, redhawkbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RedhawkbDIPInfo,
 	RedhawkbInit, AfegaExit, AfegaFrame, RedhawkbDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
@@ -8334,6 +8334,8 @@ static struct BurnRomInfo sabotenbRomDesc[] = {
 	
 	{ "8.ic37",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
 	{ "9.ic51",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(sabotenb)
@@ -8381,21 +8383,23 @@ struct BurnDriver BurnDrvSabotenb = {
 // Saboten Bombers (set 2)
 
 static struct BurnRomInfo sabotenbaRomDesc[] = {
-	{ "sb1.76",		0x040000, 0xdf6f65e2, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "sb2.75",		0x040000, 0x0d2c1ab8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sb1.76",			0x040000, 0xdf6f65e2, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "sb2.75",			0x040000, 0x0d2c1ab8, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ic35.sb3",	0x010000, 0xeb7bc99d, 3 | BRF_GRA },           //  2 Characters
+	{ "ic35.sb3",		0x010000, 0xeb7bc99d, 3 | BRF_GRA },           //  2 Characters
 
-	{ "ic32.sb4",	0x200000, 0x24c62205, 4 | BRF_GRA },           //  3 Tiles
+	{ "ic32.sb4",		0x200000, 0x24c62205, 4 | BRF_GRA },           //  3 Tiles
 
-	{ "ic100.sb5",	0x200000, 0xb20f166e, 5 | BRF_GRA },           //  4 Sprites
+	{ "ic100.sb5",		0x200000, 0xb20f166e, 5 | BRF_GRA },           //  4 Sprites
 
-	{ "ic30.sb6",	0x100000, 0x288407af, 6 | BRF_SND },           //  5 OKI1 Samples
+	{ "ic30.sb6",		0x100000, 0x288407af, 6 | BRF_SND },           //  5 OKI1 Samples
 
-	{ "ic27.sb7",	0x100000, 0x43e33a7e, 7 | BRF_SND },           //  6 OKI2 Samples
+	{ "ic27.sb7",		0x100000, 0x43e33a7e, 7 | BRF_SND },           //  6 OKI2 Samples
 	
-	{ "8.ic37",		0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
-	{ "9.ic51",		0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+	{ "8.ic37",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
+	{ "9.ic51",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(sabotenba)
@@ -8467,7 +8471,7 @@ struct BurnDriver BurnDrvCactus = {
 	"cactus", "sabotenb", NULL, NULL, "1992",
 	"Cactus (bootleg of Saboten Bombers)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, cactusRomInfo, cactusRomName, NULL, NULL, NULL, NULL, CommonInputInfo, SabotenbDIPInfo,
 	CactusInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	384, 224, 4, 3
@@ -8492,6 +8496,8 @@ static struct BurnRomInfo bjtwinRomDesc[] = {
 
 	{ "8.bpr",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
 	{ "9.bpr",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(bjtwin)
@@ -8554,6 +8560,8 @@ static struct BurnRomInfo bjtwinaRomDesc[] = {
 
 	{ "8.bpr",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
 	{ "9.bpr",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           //  9 MCU
 };
 
 STD_ROM_PICK(bjtwina)
@@ -8630,7 +8638,7 @@ struct BurnDriver BurnDrvBjtwinp = {
 	"bjtwinp", "bjtwin", NULL, NULL, "1993",
 	"Bombjack Twin (prototype? with adult pictures, set 1)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinpRomInfo, bjtwinpRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinpInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -8658,6 +8666,8 @@ static struct BurnRomInfo bjtwinpaRomDesc[] = {
 
 	{ "top.ic27",		0x080000, 0xadb2f256, 7 | BRF_SND },           // 10 OKI2 Samples
 	{ "bottom.ic27",	0x080000, 0x6ebeb9e4, 7 | BRF_SND },           // 11 
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 12 MCU
 };
 
 STD_ROM_PICK(bjtwinpa)
@@ -8699,7 +8709,7 @@ struct BurnDriver BurnDrvBjtwinpa = {
 	"bjtwinpa", "bjtwin", NULL, NULL, "1993",
 	"Bombjack Twin (prototype? with adult pictures, set 2)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bjtwinpaRomInfo, bjtwinpaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BjtwinDIPInfo,
 	BjtwinpaInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -8721,6 +8731,8 @@ static struct BurnRomInfo nouryokuRomDesc[] = {
 	{ "ic30.6",		0x100000, 0xfeea34f4, 6 | BRF_SND },           //  5 OKI1 Samples
 
 	{ "ic27.7",		0x100000, 0x8a69fded, 7 | BRF_SND },           //  6 OKI2 Samples
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },       //  7 MCU
 };
 
 STD_ROM_PICK(nouryoku)
@@ -8830,7 +8842,7 @@ struct BurnDriver BurnDrvNouryokup = {
 	"nouryokup", "nouryoku", NULL, NULL, "1995",
 	"Nouryoku Koujou Iinkai (prototype)\0", NULL, "Tecmo", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, nouryokupRomInfo, nouryokupRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NouryokuDIPInfo,
 	NouryokupInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	384, 224, 4, 3
@@ -8957,7 +8969,7 @@ struct BurnDriver BurnDrvMustangs = {
 };
 
 
-// US AAF Mustang (bootleg)
+// US AAF Mustang (bootleg, set 1)
 
 static struct BurnRomInfo mustangbRomDesc[] = {
 	{ "mustang.14",		0x020000, 0x13c6363b, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9008,9 +9020,9 @@ static INT32 MustangbInit()
 
 struct BurnDriver BurnDrvMustangb = {
 	"mustangb", "mustang", NULL, NULL, "1990",
-	"US AAF Mustang (bootleg)\0", NULL, "bootleg", "NMK16",
+	"US AAF Mustang (bootleg, set 1)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangbRomInfo, mustangbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, MustangDIPInfo,
 	MustangbInit, SeibuSoundExit, SeibuSoundFrame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
@@ -9088,7 +9100,7 @@ struct BurnDriver BurnDrvMustangb2 = {
 	"mustangb2", "mustang", NULL, NULL, "1990",
 	"US AAF Mustang (TAB Austria bootleg)\0", NULL, "bootleg (TAB Austria)", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangb2RomInfo, mustangb2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, MustangDIPInfo,
 	Mustangb2Init, SeibuSoundExit, SeibuSoundFrame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
@@ -9187,23 +9199,25 @@ struct BurnDriver BurnDrvTdragon = {
 // Thunder Dragon (4th Jun. 1991, protected)
 
 static struct BurnRomInfo tdragon1RomDesc[] = {
-	{ "thund.8",		0x020000, 0xedd02831, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "thund.7",		0x020000, 0x52192fe5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "thund.8",				0x020000, 0xedd02831, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "thund.7",				0x020000, 0x52192fe5, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "91070.1",		0x010000, 0xbf493d74, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
+	{ "91070.1",				0x010000, 0xbf493d74, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
 
-	{ "91070.6",		0x020000, 0xfe365920, 3 | BRF_GRA },           //  3 Characters
+	{ "91070.6",				0x020000, 0xfe365920, 3 | BRF_GRA },           //  3 Characters
 
-	{ "91070.5",		0x100000, 0xd0bde826, 4 | BRF_GRA },           //  4 Tiles
+	{ "91070.5",				0x100000, 0xd0bde826, 4 | BRF_GRA },           //  4 Tiles
 
-	{ "91070.4",		0x100000, 0x3eedc2fe, 5 | BRF_GRA },           //  5 Sprites
+	{ "91070.4",				0x100000, 0x3eedc2fe, 5 | BRF_GRA },           //  5 Sprites
 
-	{ "91070.3",		0x080000, 0xae6875a8, 6 | BRF_SND },           //  6 OKI1 Samples
+	{ "91070.3",				0x080000, 0xae6875a8, 6 | BRF_SND },           //  6 OKI1 Samples
 
-	{ "91070.2",		0x080000, 0xecfea43e, 7 | BRF_SND },           //  7 OKI2 Samples
+	{ "91070.2",				0x080000, 0xecfea43e, 7 | BRF_SND },           //  7 OKI2 Samples
 
-	{ "91070.9",		0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  8 Unused proms
-	{ "91070.10",		0x000100, 0xe6ead349, 0 | BRF_OPT },           //  9
+	{ "91070.9",				0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  8 Unused proms
+	{ "91070.10",				0x000100, 0xe6ead349, 0 | BRF_OPT },           //  9
+
+	{ "nmk-110-tdragon.bin",	0x004000, 0xcf66a660, 0 | BRF_OPT },           //  10 MCU
 };
 
 STDROMPICKEXT(tdragon1, tdragon1, nmk004)
@@ -9276,7 +9290,7 @@ struct BurnDriver BurnDrvTdragonb = {
 	"tdragonb", "tdragon", NULL, NULL, "1991",
 	"Thunder Dragon (bootleg with Raiden sounds, encrypted)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonbRomInfo, tdragonbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,
 	TdragonbInit, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
@@ -9340,7 +9354,7 @@ struct BurnDriver BurnDrvTdragonb3 = {
 	"tdragonb3", "tdragon", NULL, NULL, "1991",
 	"Thunder Dragon (bootleg with Raiden sounds, unencrypted)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonb3RomInfo, tdragonb3RomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,
 	Tdragonb3Init, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
@@ -9457,6 +9471,8 @@ static struct BurnRomInfo macrossRomDesc[] = {
 	{ "921a08",		0x000100, 0xcfdbb86c, 0 | BRF_OPT },           //  7 Unused proms
 	{ "921a09",		0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
 	{ "921a10",		0x000020, 0x8371e42d, 0 | BRF_OPT },           //  9
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },       // 10 MCU
 };
 
 STDROMPICKEXT(macross, macross, nmk004)
@@ -9541,6 +9557,8 @@ static struct BurnRomInfo gunnailRomDesc[] = {
 	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  8 Unused proms
 	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  9
 	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           // 10
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 11 MCU
 };
 
 STDROMPICKEXT(gunnail, gunnail, nmk004)
@@ -9648,6 +9666,8 @@ static struct BurnRomInfo gunnailpRomDesc[] = {
 	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  7 Proms
 	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  8
 	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           //  9
+
+	{ "nmk-215.bin",	0x002000, 0xd355a06f, 0 | BRF_OPT },           // 10 MCU
 };
 
 STDROMPICKEXT(gunnailp, gunnailp, nmk004)
@@ -9705,7 +9725,7 @@ struct BurnDriver BurnDrvGunnailp = {
 	"gunnailp", "gunnail", "nmk004", NULL, "1992",
 	"GunNail (location test)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gunnailpRomInfo, gunnailpRomName, NULL, NULL, NULL, NULL, GunnailInputInfo, GunnailDIPInfo,
 	GunnailpInit, NMK004Exit, NMK004Frame, GunnailDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
@@ -9919,7 +9939,7 @@ struct BurnDriver BurnDrvVandyke = {
 };
 
 
-// Vandyke (Jaleco, Set 1)
+// Vandyke (Jaleco, set 1)
 
 static struct BurnRomInfo vandykejalRomDesc[] = {
 	{ "vdk-1.16",		0x020000, 0xc1d01c59, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9949,7 +9969,7 @@ STD_ROM_FN(vandykejal)
 
 struct BurnDriver BurnDrvVandykejal = {
 	"vandykejal", "vandyke", "nmk004", NULL, "1990",
-	"Vandyke (Jaleco, Set 1)\0", NULL, "UPL (Jaleco license)", "NMK16",
+	"Vandyke (Jaleco, set 1)\0", NULL, "UPL (Jaleco license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vandykejalRomInfo, vandykejalRomName, NULL, NULL, NULL, NULL, CommonInputInfo, VandykeDIPInfo,
@@ -9958,7 +9978,7 @@ struct BurnDriver BurnDrvVandykejal = {
 };
 
 
-// Vandyke (Jaleco, Set 2)
+// Vandyke (Jaleco, set 2)
 
 static struct BurnRomInfo vandykejal2RomDesc[] = {
 	{ "vdk-even.16",	0x020000, 0xcde05a84, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -9988,7 +10008,7 @@ STD_ROM_FN(vandykejal2)
 
 struct BurnDriver BurnDrvVandykejal2 = {
 	"vandykejal2", "vandyke", "nmk004", NULL, "1990",
-	"Vandyke (Jaleco, Set 2)\0", NULL, "UPL (Jaleco license)", "NMK16",
+	"Vandyke (Jaleco, set 2)\0", NULL, "UPL (Jaleco license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vandykejal2RomInfo, vandykejal2RomName, NULL, NULL, NULL, NULL, CommonInputInfo, VandykeDIPInfo,
@@ -10086,7 +10106,7 @@ struct BurnDriver BurnDrvVandykeb = {
 	"vandykeb", "vandyke", NULL, NULL, "1990",
 	"Vandyke (bootleg with PIC16c57)\0", "No sound", "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vandykebRomInfo, vandykebRomName, NULL, NULL, NULL, NULL, CommonInputInfo, VandykeDIPInfo,
 	VandykebInit, NMK004Exit, NMK004Frame, VandykeDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
@@ -10110,6 +10130,8 @@ static struct BurnRomInfo hachamfRomDesc[] = {
 	{ "91076-2.46",		0x080000, 0x3f1e67f2, 6 | BRF_SND },           //  6 OKI1 Samples
 
 	{ "91076-3.45",		0x080000, 0xb25ed93b, 7 | BRF_SND },           //  7 OKI2 Samples
+
+	{ "nmk-113.bin",	0x004000, 0xf3072715, 0 | BRF_OPT },           //  8 MCU
 };
 
 STDROMPICKEXT(hachamf, hachamf, nmk004)
@@ -10196,6 +10218,8 @@ static struct BurnRomInfo hachamfaRomDesc[] = {
 	{ "91076-2.46",		0x080000, 0x3f1e67f2, 6 | BRF_SND },           //  6 OKI1 Samples
 
 	{ "91076-3.45",		0x080000, 0xb25ed93b, 7 | BRF_SND },           //  7 OKI2 Samples
+
+	{ "nmk-113.bin",	0x004000, 0xf3072715, 0 | BRF_OPT },           //  8 MCU
 };
 
 STDROMPICKEXT(hachamfa, hachamfa, nmk004)
@@ -10369,7 +10393,7 @@ struct BurnDriver BurnDrvHachamfp = {
 	"hachamfp", "hachamf", "nmk004", NULL, "1991",
 	"Hacha Mecha Fighter (Location Test Prototype, 19th Sep. 1991)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hachamfpRomInfo, hachamfpRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HachamfpDIPInfo,
 	HachamfpInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
@@ -11096,7 +11120,7 @@ struct BurnDriver BurnDrvRaphero = {
 
 struct BurnDriver BurnDrvRapheroa = {
 	"rapheroa", "arcadian", NULL, NULL, "1994",
-	"Rapid Hero (Media Trading)\0", NULL, "Media Trading Corp", "NMK16",
+	"Rapid Hero (Media Trading)\0", NULL, "NMK (Media Trading license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroaRomInfo, rapheroaRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
@@ -11203,7 +11227,7 @@ static INT32 TomagicFrame()
 			NMK16BufferSpriteRam();
 		}
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -11274,7 +11298,7 @@ static INT32 TomagicInit()
 	BurnSetRefreshRate(56.18);
 
 	BurnYM3812Init(1, 3000000, &DrvYM2203IrqHandler, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3000000);
+	BurnTimerAttach(&ZetConfig, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 3000000 / MSM6295_PIN7_LOW, 1);

@@ -42,10 +42,18 @@ static void CpsBlendInit()
 	TCHAR filename[MAX_PATH];
 
 	_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
-	
+
 	FILE *fa = _tfopen(filename, _T("rt"));
 
+	INT32 is_sfz3mix = strstr("sfz3mix", BurnDrvGetTextA(DRV_NAME)) != NULL;
+
 	if (fa == NULL) {
+		if (is_sfz3mix) {
+			// for sfz3mix, don't use parent's blend table. sfz3mix uses different
+			// sprite indexing
+			return;
+		}
+
 		_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
 
 		fa = _tfopen(filename, _T("rt"));
@@ -123,7 +131,7 @@ INT32 CpsObjInit()
 	nGetNext=0;
 
 	if (Cps == 2) {
-		memset(ZBuf, 0, 384 * 224 * 2);
+		memset(ZBuf, 0, nCpsScreenWidth * nCpsScreenHeight * 2);
 		nMaxZMask = nZOffset = 0;
 		nMaxZValue = 1;
 	}
@@ -178,8 +186,9 @@ INT32 CpsObjGet()
 		Get = CpsRam708 + ((nCpsObjectBank ^ 1) << 15);		// Select CPS2 sprite buffer
 //		Get = CpsRam708 + ((GetCurrentFrame() & 1) << 15);	// Select CPS2 sprite buffer
 
-		pof->nShiftX = -CpsSaveFrg[0][0x9];
-		pof->nShiftY = -CpsSaveFrg[0][0xB];
+		pof->nShiftX = (-CpsSaveFrg[0][0x9]) + nCpsGlobalXOffset;
+//		bprintf(0, _T("shift-x  %d\n"), pof->nShiftX);
+		pof->nShiftY = (-CpsSaveFrg[0][0xB]) + nCpsGlobalYOffset;
 	} else {
 		INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x00))) << 8;
 		nOff &= 0xfff800;
@@ -188,6 +197,8 @@ INT32 CpsObjGet()
 		if (Cps1LockSpriteList910000) {
 			Get = CpsFindGfxRam(0x910000, 0x800);
 		}
+		pof->nShiftX += nCpsGlobalXOffset;
+		pof->nShiftY += nCpsGlobalYOffset;
 	}
 	
 	if (Get==NULL) return 1;
@@ -239,7 +250,7 @@ void CpsObjDrawInit()
 
 	if (nZOffset >= 0xFC00) {
 		// The Z buffer might moverflow the next fram, so initialise it
-		memset(ZBuf, 0, 384 * 224 * 2);
+		memset(ZBuf, 0, nCpsScreenWidth * nCpsScreenHeight * 2);
 		nZOffset = 0;
 	}
 
@@ -299,7 +310,7 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(bx<<4)>384 || y+(by<<4)>224) {
+		if (x<0 || y<0 || x+(bx<<4)>(nCpsScreenWidth-1) || y+(by<<4)>(nCpsScreenHeight-1)) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;
@@ -415,7 +426,12 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 //		y -= CpsSaveFrg[0][0xB];
 
 #endif
-		n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
+		if (Cps2Turbo) {
+			if (ps[1] & 0x1000) ps[1] |= 0x8000;
+			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0xe000) << 3;	// high bits of address
+		} else {
+			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
+		}
 		
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsPal + ((a & 0x1F) << 4);
@@ -426,7 +442,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		by = ((a >> 12) & 15) + 1;
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x < 0 || y < 0 || x + (bx << 4) > 383 || y + (by << 4) > 223) {
+		if (x < 0 || y < 0 || x + (bx << 4) > (nCpsScreenWidth-1) || y + (by << 4) > (nCpsScreenHeight-1)) {
 			nCpstType = CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType = CTT_16X16;
@@ -851,7 +867,7 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(1<<4)>384 || y+(1<<4)>224) {
+		if (x<0 || y<0 || x+(1<<4)>(nCpsScreenWidth-1) || y+(1<<4)>(nCpsScreenHeight-1)) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;

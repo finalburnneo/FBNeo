@@ -485,7 +485,28 @@ cpu_core_config v60Config =
 	v60Scan,
 	v60Exit,
 	0x1000000,
-	MB_CHEAT_ENDI_SWAP // 0x8000 - LE but needs address swap when writing multibyte cheats
+	MB_CHEAT_ENDI_SWAP | 16 // LE (16bit databus) but needs address swap when writing multibyte cheats
+};
+
+cpu_core_config v70Config =
+{
+	"nec v70",
+	v60Open,
+	v60Close,
+	v60CheatRead,
+	v60WriteROM,
+	v60GetActive,
+	v60TotalCycles,
+	v60NewFrame,
+	v60Idle,
+	core_set_irq,
+	v60Run,
+	v60RunEnd,
+	v60Reset,
+	v60Scan,
+	v60Exit,
+	0x1000000,
+	MB_CHEAT_ENDI_SWAP | 32 // LE (32bit databus) but needs address swap when writing multibyte cheats
 };
 
 struct cpu_info {
@@ -889,7 +910,7 @@ void v70Init()
 	PIR = 0x00007000;
 	v60.info = v70_i;
 
-	CpuCheatRegister(0, &v60Config);
+	CpuCheatRegister(0, &v70Config);
 }
 
 INT32 v60Scan(INT32 nAction)

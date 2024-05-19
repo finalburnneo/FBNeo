@@ -8,7 +8,7 @@ TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("") },
 	{ _T("") },
 	{ _T("") },
-	{ _T("") },
+	{ _T("roms/romdata/") },
 	{ _T("roms/channelf/") },
 	{ _T("roms/ngp/") },
 	{ _T("roms/nes/") },
@@ -70,15 +70,24 @@ static int DoLibInit()					// Do Init of Burn library driver
 {
 	int nRet = 0;
 
+	RomDataInit();
+
 	if (DrvBzipOpen()) {
 		return 1;
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_MVS) {
-		if (!bQuietLoading) ProgressCreate();
+		if (!bQuietLoading) {
+			ProgressCreate();
+			if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) { // has samples
+				BurnSetProgressRange(0.99); // Increase range for samples
+			}
+		}
 	}
 
 	nRet = BurnDrvInit();
+
+	RomDataSetFullName();
 
 	BzipClose();
 
@@ -123,7 +132,12 @@ int __cdecl DrvCartridgeAccess(BurnCartrigeCommand nCommand)
 {
 	switch (nCommand) {
 		case CART_INIT_START:
-			if (!bQuietLoading) ProgressCreate();
+			if (!bQuietLoading) {
+				ProgressCreate();
+				if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) { // has samples
+					BurnSetProgressRange(0.99); // Increase range for samples
+				}
+			}
 			if (DrvBzipOpen()) {
 				return 1;
 			}
@@ -226,6 +240,12 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_BURN_INIT), BurnDrvGetText(DRV_FULLNAME));
 			FBAPopupDisplay(PUF_TYPE_WARNING);
+
+			// When romdata loading fails, the data within the structure must be emptied to restore the original data content.
+			// The time to quit must be after the correct name of the game corresponding to Romdata has been displayed.
+			if (NULL != pDataRomDesc) {
+				RomDataExit();
+			}
 		}
 
 		NeoCDZRateChangeback();
@@ -325,6 +345,8 @@ int DrvExit()
 	CDEmuExit();
 
 	BurnExtCartridgeSetupCallback = NULL;
+
+	RomDataExit();
 
 	nBurnDrvActive = ~0U;			// no driver selected
 

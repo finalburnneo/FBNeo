@@ -21,6 +21,8 @@ static INT32 nColCount = 0x0800;
 
 static UINT8 DrvReset = 0;
 
+static HoldCoin<2> hold_coin;
+
 static struct BurnInputInfo snowbro2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
 	{"P1 Start",	BIT_DIGITAL,	DrvButton + 5,	"p1 start"},
@@ -339,6 +341,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	BurnYM2151Reset();
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -381,6 +385,9 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInput[1]);
 	ToaClearOpposites(&DrvInput[6]);
 	ToaClearOpposites(&DrvInput[7]);
+
+	hold_coin.check(0, DrvInput[2], 1 << 3, 1);
+	hold_coin.check(1, DrvInput[2], 1 << 4, 1);
 
 	SekNewFrame();
 
@@ -498,6 +505,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ToaScanGP9001(nAction, pnMin);
 
 		SCAN_VAR(DrvInput);
+
+		hold_coin.scan();
 	}
 	return 0;
 }
@@ -605,7 +614,7 @@ static INT32 Snowbro2Init()
 
 struct BurnDriver BurnDrvSnowbro2 = {
 	"snowbro2", NULL, NULL, NULL, "1994",
-	"Snow Bros. 2 - with new elves (Hanafram)\0", NULL, "[Toaplan] Hanafram", "Toaplan GP9001 based",
+	"Snow Bros. 2 - With New Elves / Otenki Paradise (Hanafram)\0", NULL, "Hanafram", "Toaplan GP9001 based",
 	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Hanafram)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
 	NULL, snowbro2RomInfo, snowbro2RomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
@@ -638,7 +647,7 @@ STD_ROM_FN(snowbro2ny)
 
 struct BurnDriver BurnDrvSnowbro2ny = {
 	"snowbro2ny", "snowbro2", NULL, NULL, "1994",
-	"Snow Bros. 2 - with new elves (Nyanko)\0", NULL, "[Toaplan] Nyanko", "Toaplan GP9001 based",
+	"Snow Bros. 2 - With New Elves / Otenki Paradise (Nyanko)\0", NULL, "Nyanko", "Toaplan GP9001 based",
 	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Nyanko)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
 	NULL, snowbro2nyRomInfo, snowbro2nyRomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,

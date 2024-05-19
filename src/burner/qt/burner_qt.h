@@ -16,7 +16,7 @@ extern int nAppVirtualFps;
 extern bool AppProcessKeyboardInput();
 extern void InpDIPSWResetDIPs (void);
 extern void IpsApplyPatches(UINT8 *, char *, bool);
-extern void GetIpsDrvDefine()
+extern void IpsPatchInit()
 extern void Reinitialise(void);
 extern TCHAR *GetIsoPath();
 extern int VidRecalcPal();

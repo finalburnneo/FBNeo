@@ -22,7 +22,7 @@ void IpsApplyPatches(UINT8 *, char *, bool)
 
 }
 
-void GetIpsDrvDefine()
+void IpsPatchInit()
 {
 
 }

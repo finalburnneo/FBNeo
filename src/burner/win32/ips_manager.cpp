@@ -31,16 +31,17 @@ static TCHAR szDriverName[32];
 static INT32 nRomOffset		= 0;
 UINT32 nIpsDrvDefine		= 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 
-TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
+static TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
 
 // GCC doesn't seem to define these correctly.....
-#define _TreeView_SetItemState(hwndTV, hti, data, _mask) \
-{ TVITEM _ms_TVi;\
-  _ms_TVi.mask = TVIF_STATE; \
-  _ms_TVi.hItem = hti; \
-  _ms_TVi.stateMask = _mask;\
-  _ms_TVi.state = data;\
-  SNDMSG((hwndTV), TVM_SETITEM, 0, (LPARAM)(TV_ITEM *)&_ms_TVi);\
+#define _TreeView_SetItemState(hwndTV, hti, data, _mask)			\
+{																	\
+	TVITEM _ms_TVi;													\
+	_ms_TVi.mask      = TVIF_STATE;									\
+	_ms_TVi.hItem     = hti;										\
+	_ms_TVi.stateMask = _mask;										\
+	_ms_TVi.state     = data;										\
+	SNDMSG((hwndTV), TVM_SETITEM, 0, (LPARAM)(TV_ITEM *)&_ms_TVi);	\
 }
 
 #define _TreeView_SetCheckState(hwndTV, hti, fCheck) \
@@ -86,7 +87,7 @@ INT32 GetIpsNumPatches()
 static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 {
 	TCHAR* result = NULL;
-	char* desc = NULL;
+	char* desc    = NULL;
 	char langtag[10];
 
 	sprintf(langtag, "[%s]", _TtoA(szLanguageCodes[nLang]));
@@ -180,7 +181,7 @@ static void FillListBox()
 	TV_INSERTSTRUCT TvItem;
 
 	memset(&TvItem, 0, sizeof(TvItem));
-	TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
+	TvItem.item.mask    = TVIF_TEXT | TVIF_PARAM;
 	TvItem.hInsertAfter = TVI_LAST;
 
 	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, szDriverName);
@@ -196,8 +197,8 @@ static void FillListBox()
 			_stprintf(szFileName, _T("%s%s"), szFilePath, wfd.cFileName);
 
 			FILE *fp = _tfopen(szFileName, _T("r"));
-            if (fp) {
-                bool AllocDesc = false;
+			if (fp) {
+				bool AllocDesc = false;
 				PatchDesc = NULL;
 				memset(PatchName, '\0', 256 * sizeof(TCHAR));
 
@@ -209,21 +210,21 @@ static void FillListBox()
 
 				bprintf(0, _T("PatchDesc [%s]\n"), PatchDesc);
 
-                if (PatchDesc == NULL) {
-                    PatchDesc = (TCHAR*)malloc(1024);
-                    memset(PatchDesc, 0, 1024);
-                    AllocDesc = true;
-                    _stprintf(PatchDesc, _T("%s"), wfd.cFileName);
-                }
+				if (PatchDesc == NULL) {
+					PatchDesc = (TCHAR*)malloc(1024);
+					memset(PatchDesc, 0, 1024);
+					AllocDesc = true;
+					_stprintf(PatchDesc, _T("%s"), wfd.cFileName);
+				}
 
 				for (UINT32 i = 0; i < _tcslen(PatchDesc); i++) {
 					if (PatchDesc[i] == '\r' || PatchDesc[i] == '\n') break;
 					PatchName[i] = PatchDesc[i];
 				}
 
-                if (AllocDesc) {
-                    free(PatchDesc);
-                }
+				if (AllocDesc) {
+					free(PatchDesc);
+				}
 
 				// Check for categories
 				TCHAR *Tokens;
@@ -241,9 +242,9 @@ static void FillListBox()
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
-							Tvi.hItem = hItemHandles[i];
-							Tvi.mask = TVIF_TEXT | TVIF_HANDLE;
-							Tvi.pszText = Temp;
+							Tvi.hItem      = hItemHandles[i];
+							Tvi.mask       = TVIF_TEXT | TVIF_HANDLE;
+							Tvi.pszText    = Temp;
 							Tvi.cchTextMax = 256;
 							SendMessage(hIpsList, TVM_GETITEM, (WPARAM)0, (LPARAM)&Tvi);
 
@@ -251,8 +252,8 @@ static void FillListBox()
 						}
 
 						if (bAddItem) {
-							TvItem.hParent = TVI_ROOT;
-							TvItem.item.pszText = Tokens;
+							TvItem.hParent           = TVI_ROOT;
+							TvItem.item.pszText      = Tokens;
 							hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 							nHandlePos++;
 						}
@@ -331,7 +332,7 @@ INT32 GetIpsNumActivePatches()
 
 void LoadIpsActivePatches()
 {
-    _tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
+	_tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
 
 	for (INT32 i = 0; i < MAX_ACTIVE_PATCHES; i++) {
 		_stprintf(szIpsActivePatches[i], _T(""));
@@ -341,7 +342,7 @@ void LoadIpsActivePatches()
 	TCHAR szLine[MAX_PATH];
 	INT32 nActivePatches = 0;
 
-    if (fp) {
+	if (fp) {
 		while (_fgetts(szLine, MAX_PATH, fp)) {
 			INT32 nLen = _tcslen(szLine);
 
@@ -359,7 +360,7 @@ void LoadIpsActivePatches()
 		}
 
 		fclose(fp);
-    }
+	}
 }
 
 static void CheckActivePatches()
@@ -382,7 +383,7 @@ static INT32 IpsManagerInit()
 	// Get the games full name
 	TCHAR szText[1024] = _T("");
 	TCHAR* pszPosition = szText;
-	TCHAR* pszName = BurnDrvGetText(DRV_FULLNAME);
+	TCHAR* pszName     = BurnDrvGetText(DRV_FULLNAME);
 
 	pszPosition += _sntprintf(szText, 1024, pszName);
 
@@ -402,29 +403,29 @@ static INT32 IpsManagerInit()
 	SetWindowText(hIpsDlg, szText);
 
 	// Fill the combo box
-	_stprintf(szLanguages[0], FBALoadStringEx(hAppInst, IDS_LANG_ENGLISH_US, true));
-	_stprintf(szLanguages[1], FBALoadStringEx(hAppInst, IDS_LANG_SIMP_CHINESE, true));
-	_stprintf(szLanguages[2], FBALoadStringEx(hAppInst, IDS_LANG_TRAD_CHINESE, true));
-	_stprintf(szLanguages[3], FBALoadStringEx(hAppInst, IDS_LANG_JAPANESE, true));
-	_stprintf(szLanguages[4], FBALoadStringEx(hAppInst, IDS_LANG_KOREAN, true));
-	_stprintf(szLanguages[5], FBALoadStringEx(hAppInst, IDS_LANG_FRENCH, true));
-	_stprintf(szLanguages[6], FBALoadStringEx(hAppInst, IDS_LANG_SPANISH, true));
-	_stprintf(szLanguages[7], FBALoadStringEx(hAppInst, IDS_LANG_ITALIAN, true));
-	_stprintf(szLanguages[8], FBALoadStringEx(hAppInst, IDS_LANG_GERMAN, true));
-	_stprintf(szLanguages[9], FBALoadStringEx(hAppInst, IDS_LANG_PORTUGUESE, true));
+	_stprintf(szLanguages[ 0], FBALoadStringEx(hAppInst, IDS_LANG_ENGLISH_US, true));
+	_stprintf(szLanguages[ 1], FBALoadStringEx(hAppInst, IDS_LANG_SIMP_CHINESE, true));
+	_stprintf(szLanguages[ 2], FBALoadStringEx(hAppInst, IDS_LANG_TRAD_CHINESE, true));
+	_stprintf(szLanguages[ 3], FBALoadStringEx(hAppInst, IDS_LANG_JAPANESE, true));
+	_stprintf(szLanguages[ 4], FBALoadStringEx(hAppInst, IDS_LANG_KOREAN, true));
+	_stprintf(szLanguages[ 5], FBALoadStringEx(hAppInst, IDS_LANG_FRENCH, true));
+	_stprintf(szLanguages[ 6], FBALoadStringEx(hAppInst, IDS_LANG_SPANISH, true));
+	_stprintf(szLanguages[ 7], FBALoadStringEx(hAppInst, IDS_LANG_ITALIAN, true));
+	_stprintf(szLanguages[ 8], FBALoadStringEx(hAppInst, IDS_LANG_GERMAN, true));
+	_stprintf(szLanguages[ 9], FBALoadStringEx(hAppInst, IDS_LANG_PORTUGUESE, true));
 	_stprintf(szLanguages[10], FBALoadStringEx(hAppInst, IDS_LANG_POLISH, true));
 	_stprintf(szLanguages[11], FBALoadStringEx(hAppInst, IDS_LANG_HUNGARIAN, true));
 
-	_stprintf(szLanguageCodes[0], _T("en_US"));
-	_stprintf(szLanguageCodes[1], _T("zh_CN"));
-	_stprintf(szLanguageCodes[2], _T("zh_TW"));
-	_stprintf(szLanguageCodes[3], _T("ja_JP"));
-	_stprintf(szLanguageCodes[4], _T("ko_KR"));
-	_stprintf(szLanguageCodes[5], _T("fr_FR"));
-	_stprintf(szLanguageCodes[6], _T("es_ES"));
-	_stprintf(szLanguageCodes[7], _T("it_IT"));
-	_stprintf(szLanguageCodes[8], _T("de_DE"));
-	_stprintf(szLanguageCodes[9], _T("pt_BR"));
+	_stprintf(szLanguageCodes[ 0], _T("en_US"));
+	_stprintf(szLanguageCodes[ 1], _T("zh_CN"));
+	_stprintf(szLanguageCodes[ 2], _T("zh_TW"));
+	_stprintf(szLanguageCodes[ 3], _T("ja_JP"));
+	_stprintf(szLanguageCodes[ 4], _T("ko_KR"));
+	_stprintf(szLanguageCodes[ 5], _T("fr_FR"));
+	_stprintf(szLanguageCodes[ 6], _T("es_ES"));
+	_stprintf(szLanguageCodes[ 7], _T("it_IT"));
+	_stprintf(szLanguageCodes[ 8], _T("de_DE"));
+	_stprintf(szLanguageCodes[ 9], _T("pt_BR"));
 	_stprintf(szLanguageCodes[10], _T("pl_PL"));
 	_stprintf(szLanguageCodes[11], _T("hu_HU"));
 
@@ -621,11 +622,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						fclose(fp);
 						ShellExecute(  // Open the image with the associated program
 							GetDlgItem(hIpsDlg, IDC_SCREENSHOT_H),
-							NULL,
-							szPngName,
-							NULL,
-							NULL,
-							SW_SHOWNORMAL);
+							NULL, szPngName, NULL, NULL, SW_SHOWNORMAL
+						);
 					}
 				}
 			}
@@ -737,19 +735,19 @@ INT32 IpsManagerCreate(HWND hParentWND)
 
 // Game patching
 
-#define UTF8_SIGNATURE	"\xef\xbb\xbf"
-#define IPS_SIGNATURE	"PATCH"
-#define IPS_TAG_EOF	"EOF"
-#define IPS_EXT		".ips"
+#define UTF8_SIGNATURE "\xef\xbb\xbf"
+#define IPS_SIGNATURE  "PATCH"
+#define IPS_TAG_EOF    "EOF"
+#define IPS_EXT        ".ips"
 
 #define BYTE3_TO_UINT(bp) \
-     (((UINT32)(bp)[0] << 16) & 0x00FF0000) | \
-     (((UINT32)(bp)[1] << 8) & 0x0000FF00) | \
-     (( UINT32)(bp)[2] & 0x000000FF)
+	 (((UINT32)(bp)[0] << 16) & 0x00FF0000) | \
+	 (((UINT32)(bp)[1] <<  8) & 0x0000FF00) | \
+	 (( UINT32)(bp)[2]        & 0x000000FF)
 
 #define BYTE2_TO_UINT(bp) \
-    (((UINT32)(bp)[0] << 8) & 0xFF00) | \
-    (( UINT32)(bp)[1] & 0x00FF)
+	(((UINT32)(bp)[0] << 8) & 0xFF00) | \
+	(( UINT32)(bp)[1]       & 0x00FF)
 
 bool bDoIpsPatch = false;
 
@@ -800,12 +798,12 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 			while (Size--) {
 				if (!readonly) mem8 = base + Offset + nRomOffset;
-                Offset++;
-                if (readonly) {
-                    if (!bRLE) fgetc(f);
-                } else {
+				Offset++;
+				if (readonly) {
+					if (!bRLE) fgetc(f);
+				} else {
 					*mem8 = bRLE ? ch : fgetc(f);
-                }
+				}
 			}
 		}
 	}
@@ -820,35 +818,35 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 static char* stristr_int(const char* str1, const char* str2)
 {
-    const char* p1 = str1;
-    const char* p2 = str2;
-    const char* r = (!*p2) ? str1 : NULL;
+	const char* p1 = str1;
+	const char* p2 = str2;
+	const char* r = (!*p2) ? str1 : NULL;
 
-    while (*p1 && *p2) {
-        if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
-            if (!r) {
-                r = p1;
-            }
+	while (*p1 && *p2) {
+		if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
+			if (!r) {
+				r = p1;
+			}
 
-            p2++;
-        } else {
-            p2 = str2;
-            if (r) {
-                p1 = r + 1;
-            }
+			p2++;
+		} else {
+			p2 = str2;
+			if (r) {
+				p1 = r + 1;
+			}
 
-            if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
-                r = p1;
-                p2++;
-            } else {
-                r = NULL;
-            }
-        }
+			if (tolower((unsigned char)*p1) == tolower((unsigned char)*p2)) {
+				r = p1;
+				p2++;
+			} else {
+				r = NULL;
+			}
+		}
 
-        p1++;
-    }
+		p1++;
+	}
 
-    return (*p2) ? NULL : (char*)r;
+	return (*p2) ? NULL : (char*)r;
 }
 
 static UINT32 hexto32(const char *s)
@@ -859,7 +857,7 @@ static UINT32 hexto32(const char *s)
 	while ((c = *s++)) {
 		UINT8 v = ((c & 0xf) + (c >> 6)) | ((c >> 3) & 0x8);
 		val = (val << 4) | (UINT32)v;
-    }
+	}
 
 	return val;
 }
@@ -902,7 +900,7 @@ char *strqtoken(char *s, const char *delims)
 static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UINT8* base, bool readonly)
 {
 	char s[MAX_PATH];
-    char* p = NULL;
+	char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
 	char* ips_offs = NULL;
@@ -913,15 +911,10 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
 	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
-    if ((fp = fopen(patch_name, "rb")) != NULL) {
+	if ((fp = fopen(patch_name, "rb")) != NULL) {
 		bool bTarget = false;
 
-		// get ips size
-		fseek(fp, 0, SEEK_END);
-		nIpsSize = ftell(fp);
-		fseek(fp, 0, SEEK_SET);
-
-        while (!feof(fp)) {
+		while (!feof(fp)) {
 			if (fgets(s, sizeof(s), fp) != NULL) {
 				p = s;
 
@@ -932,9 +925,9 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 				if (p[0] == '[')	// reached info-section of .dat file, time to leave.
 					break;
 
-                // Can support linetypes: (space or tab)
-                // "rom name.bin" "patch file.ips" CRC(abcd1234)
-                // romname.bin patchfile CRC(abcd1234)
+				// Can support linetypes: (space or tab)
+				// "rom name.bin" "patch file.ips" CRC(abcd1234)
+				// romname.bin patchfile CRC(abcd1234)
 				#define DELIM_TOKENS_NAME " \t\r\n"
 				#define DELIM_TOKENS " \t\r\n()"
 
@@ -946,9 +939,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					continue;
 
 				ips_name = strqtoken(NULL, DELIM_TOKENS_NAME);
-				if (!ips_name) {
+				if (!ips_name)
 					continue;
-				}
 
 				nIps_crc = 0;
 				nRomOffset = 0; // Reset to 0
@@ -975,7 +967,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					}
 				}
 
-                char *has_ext = stristr_int(ips_name, ".ips");
+				char *has_ext = stristr_int(ips_name, ".ips");
 
 				if (_stricmp(rom_name, game_name))	// name don't match?
 					if (nIps_crc != crc)			// crc don't match?
@@ -995,7 +987,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
 				if (strchr(ips_name, '\\')) {
 					// ips in parent's folder
-                    sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
+					sprintf(ips_path, "%s\\%s%s", ips_dir, ips_name, (has_ext) ? "" : IPS_EXT);
 				} else {
 					sprintf(ips_path, "%s%s\\%s%s", ips_dir, BurnDrvGetTextA(DRV_NAME), ips_name, (has_ext) ? "" : IPS_EXT);
 				}
@@ -1051,7 +1043,7 @@ static UINT32 GetIpsDefineExpValue(char* szTmp)
 // Run once to get the definition & definition values of the DAT files.
 // Suppress CPU usage caused by multiple runs.
 // Two entry points: cmdline Launch & SelOkay.
-void GetIpsDrvDefine()
+static void GetIpsDrvDefine()
 {
 	if (!bDoIpsPatch)
 		return;
@@ -1187,10 +1179,16 @@ void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly)
 	}
 }
 
+void IpsPatchInit()
+{
+	bDoIpsPatch = true;
+	GetIpsDrvDefine();
+}
+
 void IpsPatchExit()
 {
 	memset(nIpsMemExpLen, 0, sizeof(nIpsMemExpLen));
 
-	nIpsDrvDefine	= 0;
-	bDoIpsPatch		= false;
+	nIpsDrvDefine = 0;
+	bDoIpsPatch   = false;
 }

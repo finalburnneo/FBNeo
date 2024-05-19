@@ -65,7 +65,6 @@ struct Stream {
 		nSampleRateFrom = rate_from;
 		nSampleSize = (UINT64)nSampleRateFrom * (1 << 16) / ((nSampleRateTo == 0) ? 44100 : nSampleRateTo);
 		nSampleSize_Otherway = (UINT64)((nSampleRateTo == 0) ? 44100 : nSampleRateTo) * (1 << 16) / ((nSampleRateFrom == 0) ? 44100 : nSampleRateFrom);
-		nPosition = 0; // re-start the frame
 	}
 	void exit() {
 		nSampleSize = nFractionalPosition = 0;

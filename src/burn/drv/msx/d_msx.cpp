@@ -27620,7 +27620,7 @@ struct BurnDriver BurnDrvMSX_acegun = {
 // Aerial (HB)
 
 static struct BurnRomInfo MSX_aerialRomDesc[] = {
-	{ "Aerial (2021)(Inufuto).cas",	10508, 0x09BF64C9, BRF_PRG | BRF_ESS },
+	{ "Aerial (2021)(Inufuto).cas",	10508, 0x09bf64c9, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_aerial, MSX_aerial, msx_msx)
@@ -27708,6 +27708,25 @@ struct BurnDriver BurnDrvmsx_alienescape = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_PLATFORM, 0,
 	MSXGetZipName, msx_aliescapesRomInfo, msx_aliescapesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Alien MSX (HB, v1.3)
+
+static struct BurnRomInfo MSX_alienmsxRomDesc[] = {
+	{ "Alien MSX v1.3 (2024)(Rodrigo Siqueira).rom",	32768, 0x75990cb4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_alienmsx, MSX_alienmsx, msx_msx)
+STD_ROM_FN(MSX_alienmsx)
+
+struct BurnDriver BurnDrvMSX_alienmsx = {
+	"msx_alienmsx", NULL, "msx_msx", NULL, "2024",
+	"Alien MSX (HB, v1.3)\0", NULL, "Rodrigo Siqueira", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_alienmsxRomInfo, MSX_alienmsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -27823,6 +27842,25 @@ struct BurnDriver BurnDrvMSX_anexoes = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_anexoesRomInfo, MSX_anexoesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// AntiAir (HB)
+
+static struct BurnRomInfo MSX_antiairRomDesc[] = {
+	{ "AntiAir (2024)(Inufuto).cas",	7948, 0xf7092fb6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_antiair, MSX_antiair, msx_msx)
+STD_ROM_FN(MSX_antiair)
+
+struct BurnDriver BurnDrvMSX_antiair = {
+	"msx_antiair", NULL, "msx_msx", NULL, "2024",
+	"AntiAir (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_antiairRomInfo, MSX_antiairRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -28031,6 +28069,25 @@ struct BurnDriver BurnDrvMSX_ballbuster = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_BREAKOUT, 0,
 	MSXGetZipName, MSX_ballbusterRomInfo, MSX_ballbusterRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Balloon Pop EX (HB)
+
+static struct BurnRomInfo MSX_ballpopexRomDesc[] = {
+	{ "Balloon Pop EX (2022)(Chien Loco).rom",	753664, 0x1c49611c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ballpopex, MSX_ballpopex, msx_msx)
+STD_ROM_FN(MSX_ballpopex)
+
+struct BurnDriver BurnDrvMSX_ballpopex = {
+	"msx_ballpopex", NULL, "msx_msx", NULL, "2022",
+	"Balloon Pop EX (HB)\0", NULL, "Chien Loco", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ACTION, 0,
+	MSXGetZipName, MSX_ballpopexRomInfo, MSX_ballpopexRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

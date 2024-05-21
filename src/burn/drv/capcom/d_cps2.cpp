@@ -88,7 +88,7 @@ static struct BurnInputInfo Sfz3mixInputList[] = {
 
 STDINPUTINFO(Sfz3mix)
 
-// sfz3miz 0.20+ only!
+// sfz3mix 0.20+ only!
 static struct BurnDIPInfo Sfz3mixDIPList[] =
 {
 	DIP_OFFSET(0x1d)
@@ -13244,7 +13244,7 @@ static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 STD_ROM_PICK(Sfz3jr2d)
 STD_ROM_FN(Sfz3jr2d)
 
-// Street Fighter Zero 3 Mix v0.29 (hacked by Zero800)
+// Street Fighter Zero 3 Mix v0.30 (hacked by Zero800)
 // https://sfz3mix.github.io/
 
 static struct BurnSampleInfo Sfz3mixSampleDesc[] = {
@@ -14365,7 +14365,7 @@ static INT32 Cps2TurboInit()
 
 struct BurnDriver BurnDrvCpsSfz3mix = {
 	"sfz3mix", "sfa3", NULL, "sfz3mix", "2024",
-	"Street Fighter Zero 3 Mix v0.29\0", NULL, "hack (zero800)", "CPS2",
+	"Street Fighter Zero 3 Mix v0.30\0", NULL, "hack (zero800)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,

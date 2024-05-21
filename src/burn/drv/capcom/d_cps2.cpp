@@ -13383,7 +13383,7 @@ STD_SAMPLE_PICK(Sfz3mix)
 STD_SAMPLE_FN(Sfz3mix)
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sz3mx.03",		0x0600000, 0xac780a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx.03",		0x0600000, 0xeb635d04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "sz3mx.13m",		0x2000000, 0xaf3980f7, CPS2_GFX | BRF_GRA },
 	{ "sz3mx.21m",		0x2000000, 0x1d9ae703, CPS2_GFX | BRF_GRA },

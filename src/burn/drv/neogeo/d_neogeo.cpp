@@ -21618,11 +21618,11 @@ struct BurnDriver BurnDrvKof94rz = {
 	0x1000, 304, 224, 4, 3
 };
 
-// King of Fighters '94 (Team Edit Edition v1.1.3, Hack)
+// King of Fighters '94 (Team Edit Edition v1.1.9, Hack)
 // https://neorh.mattgreer.dev/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x01ea9c0d, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1te.p1",	0x200000, 0xc7733b52, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 
@@ -21643,7 +21643,7 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition v1.1.3, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition v1.1.9, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

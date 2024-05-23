@@ -110,7 +110,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			burn_ym3526.o burn_ym3812.o burn_ymf262.o burn_ymf271.o burn_ymf278b.o bzone.o c6280.o dac.o digitalk.o es5506.o es8712.o exidy440_snd.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o \
 			i5000.o ics2115.o iremga20.o k005289.o k007232.o k051649.o k053260.o k054539.o llander.o mpeg_audio.o msm5205.o msm5232.o msm6295.o multipcm.o namco_snd.o c140.o c352.o nes_apu.o \
 			t6w28.o tiamc1_snd.o tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o s14001a.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
-			upd7759.o vlm5030.o wiping.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf262.o ymf271.o ymf278b.o ymz280b.o ymz770.o snk6502_sound.o sp0250.o sp0256.o \
+			upd7759.o vlm5030.o votrax.o wiping.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf262.o ymf271.o ymf278b.o ymz280b.o ymz770.o snk6502_sound.o sp0250.o sp0256.o \
 			\
 			adsp2100.o adsp2100_intf.o arm7_intf.o arm_intf.o f8.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \
 			m68000_intf.o mips3_intf.o nec_intf.o pic16c5x_intf.o s2650_intf.o tlcs90_intf.o tms34010.o tms34_intf.o z80_intf.o \

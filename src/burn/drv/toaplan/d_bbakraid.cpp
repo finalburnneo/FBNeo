@@ -19,6 +19,8 @@ static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvRegion = 0;
 
+static HoldCoin<2> hold_coin;
+
 static UINT8 DrvReset = 0;
 
 static UINT8 nIRQPending;
@@ -754,6 +756,8 @@ static INT32 DrvDoReset()
 	BurnTimerSetRetrig(0, 1.0 / 445.0);
 	ZetClose();
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -934,6 +938,9 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInput[0]);
 	ToaClearOpposites(&DrvInput[1]);
 
+	hold_coin.check(0, DrvInput[2], 1 << 3, 1);
+	hold_coin.check(1, DrvInput[2], 1 << 4, 1);
+
 	SekNewFrame();
 	ZetNewFrame();
 
@@ -1054,6 +1061,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Z80BusRQ);
 		SCAN_VAR(nIRQPending);
 		SCAN_VAR(nTextROMStatus);
+
+		hold_coin.scan();
 
 		if (nAction & ACB_WRITE) {
 			INT32 n = nTextROMStatus;

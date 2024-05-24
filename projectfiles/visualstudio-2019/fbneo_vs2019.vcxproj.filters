@@ -3550,6 +3550,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_splash.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\votrax.cpp">
+      <Filter>burn\snd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

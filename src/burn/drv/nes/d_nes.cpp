@@ -657,6 +657,10 @@ struct OAMBUF
 };
 
 struct cartridge {
+	UINT8   *Cart;
+	UINT8   *CartOrig; // for mapper 30 ips saves
+	INT32    CartSize;
+
 	UINT8	*PRGRom;
 	INT32	 PRGRomSize;
 	INT32	 PRGRomMask;
@@ -714,6 +718,10 @@ static void (*mapper_ppu_clockall)(UINT16 busaddr) = NULL; // called during ever
 static void (*mapper_scan_cb)() = NULL;                 // state scanning
 static void (*mapper_scan_cb_nvram)() = NULL;           // state scanning (nvram)
 
+// loading & saving FDS Disk & Mapper 30 (flash eeprom) Carts
+static void LoadIPSPatch(TCHAR *desc, UINT8 *rom_, INT32 rom_size);
+static void SaveIPSPatch(TCHAR *desc, UINT8 *rom_orig, UINT8 *rom_, INT32 rom_size);
+
 static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 {
 	if (ROMData == NULL || ROMSize < 16384 ) {
@@ -731,6 +739,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	INT32 nes20 = (ROMData[7] & 0xc) == 0x8;
 
 	memset(&Cart, 0, sizeof(Cart));
+
+	Cart.Cart = ROMData;
+	Cart.CartSize = ROMSize;
+	Cart.CartOrig = BurnMalloc(ROMSize);
+	memcpy(Cart.CartOrig, Cart.Cart, ROMSize);
 
 	Cart.Crc = ROMCRC;
 	Cart.PRGRomSize = ROMData[4] * 0x4000;
@@ -796,6 +809,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 	// Mapper EXT-hardware inits
 	// Initted here, because mapper_init() is called on reset
+	if (Cart.Mapper == 30) { // UNIROM-512 ips patch
+		// Load IPS patch (aka: flasheeprom-saves @ exit)
+		LoadIPSPatch(_T("Mapper 30"), Cart.Cart, Cart.CartSize);
+	}
+
 	if (Cart.Mapper == 69) { // SunSoft fme-7 (5b) audio expansion - ay8910
 		AY8910Init(0, 1789773 / 2, 1);
 		AY8910SetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);
@@ -1272,6 +1290,27 @@ static INT32 ips_patch(UINT8 *data, INT32 size_data, TCHAR *ips_fn)
 	return 0;
 }
 
+static void SaveIPSPatch(TCHAR *desc, UINT8 *rom_orig, UINT8 *rom_, INT32 rom_size)
+{
+	TCHAR patch_fn[MAX_PATH];
+	_stprintf(patch_fn, _T("%s.ips"), BurnDrvGetText(DRV_NAME));
+	INT32 ips = ips_make(rom_orig, rom_, rom_size, szAppEEPROMPath, patch_fn);
+	bprintf(0, _T("* %s patch: "), desc);
+	switch (ips) {
+		case  0: bprintf(0, _T("Saved.\n")); break;
+		case -1: bprintf(0, _T("Can't Save (File I/O Error).\n")); break;
+		case -2: bprintf(0, _T("No Change.\n")); break;
+	}
+}
+
+static void LoadIPSPatch(TCHAR *desc, UINT8 *rom_, INT32 rom_size)
+{
+	TCHAR szFilename[MAX_PATH];
+	_stprintf(szFilename, _T("%s%s.ips"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+	INT32 ips = ips_patch(rom_, rom_size, szFilename);
+	bprintf(0, _T("* %s ips patch: %s\n"), desc, (ips == 0) ? _T("Loaded") : _T("Can't Load/Not Found."));
+}
+
 static INT32 fds_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 {
 	bprintf(0, _T("FDS Loader\n"));
@@ -1300,10 +1339,7 @@ static INT32 fds_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	if (BurnLoadRom(Cart.FDSDiskRawOrig, 0, 1)) return 1; // load FDS Disk Image
 
 	// Load IPS patch (aka: disk-saves @ exit)
-	TCHAR szFilename[MAX_PATH];
-	_stprintf(szFilename, _T("%s%s.ips"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
-	INT32 ips = ips_patch(Cart.FDSDiskRaw, Cart.FDSDiskRawSize, szFilename);
-	bprintf(0, _T("* FDS DISK patch: %s\n"), (ips == 0) ? _T("Loaded") : _T("Can't Load/Not Found."));
+	LoadIPSPatch(_T("FDS Disk"), Cart.FDSDiskRaw, Cart.FDSDiskRawSize);
 
 	if (!memcmp("FDS\x1a", &Cart.FDSDiskRaw[0], 4) && ROMSize > 0x10) {
 		Cart.FDSDisk += 0x10;
@@ -2655,6 +2691,135 @@ static void mapper132_map()
 #undef mapper132_reg
 #undef mapper132_reghi
 
+
+// flashrom simulator
+#define flashrom_cmd            (mapper_regs[0x1f - 0x9]) // must not conflict with mmc3 for 406 (Haradius Zero)
+#define flashrom_busy           (mapper_regs16[0x00])
+#define flashrom_chiptype       (mapper_regs[0x1f - 0xa])
+enum { AMIC = 0, MXIC = 1, MC_SST = 2 };
+
+static UINT8 flashrom_read(UINT16 address)
+{
+	if (flashrom_cmd == 0x90) { // flash chip identification
+		//bprintf(0, _T("flashrom chip ID\n"));
+		if (flashrom_chiptype == AMIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0x37; // manufacturer ID
+				case 0x01: return 0x86; // device ID
+				case 0x03: return 0x7f; // Continuation ID
+			}
+		} else if (flashrom_chiptype == MXIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0xc2; // manufacturer ID
+				case 0x01: return 0xa4; // device ID
+			}
+		} else if (flashrom_chiptype == MC_SST) {
+			switch (address & 0x03) {
+				case 0x00: return 0xbf; // manufacturer ID
+				case 0x01: return 0xb7; // device ID
+			}
+		}
+	}
+
+	if (flashrom_busy > 0) { // flash chip program or "erasing sector or chip" mode (it takes time..)
+		flashrom_busy--;
+
+		UINT8 status = (flashrom_busy & 0x01) << 6; // toggle bit I
+		switch (flashrom_cmd) {
+			case 0x82: // embedded erase sector/chip
+				status |= (flashrom_busy & 0x01) << 2; // toggle bit II
+				status |= 1 << 3; // "erasing" status bit
+				if (flashrom_busy < 2) {
+					//MXIC MX29F040.pdf, bottom pg. 7
+					//"SET-UP AUTOMATIC CHIP/SECTOR ERASE" (last paragraph)
+					//...and terminates when the data on Q7 is "1" and
+					//the data on Q6 stops toggling for two consecutive read
+					//cycles, at which time the device returns to the Read mode
+					status = (1 << 7); // Courier doesn't like when the other status bits are set.
+				}
+				break;
+			case 0xa0: // embedded program
+				status |= ~mapper_prg_read_int(address) & 0x80;
+				break;
+		}
+		//bprintf(0, _T("erase/pgm status  %x\n"), status);
+		if (flashrom_busy == 0) {
+			flashrom_cmd = 0; // done! (req: Courier doesn't write 0xf0 (return to read array))
+		}
+		return status;
+	}
+
+	return mapper_prg_read_int(address);
+}
+
+static void flashrom_prg_write(UINT16 address, UINT8 data)
+{
+	//bprintf(0, _T("write byte %x (map/addr: %x  %x)  ->  %x\n"), PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff), PRGMap[(address & ~0x8000) / 0x2000], address & 0x1fff, data);
+	Cart.PRGRom[PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff)] = data;
+}
+
+static void flashrom_write(UINT16 address, UINT8 data)
+{
+	if (data == 0xf0) {
+		// read array / reset
+		flashrom_cmd = 0;
+		flashrom_busy = 0;
+		return;
+	}
+
+	switch (flashrom_cmd) {
+		case 0x00:
+		case 0x80:
+			if ((address & 0xfff) == 0x555 && data == 0xaa)
+				flashrom_cmd++;
+			break;
+		case 0x01:
+		case 0x81:
+			if (((address & 0xfff) == 0x2aa ||
+				 (address & 0xfff) == 0xaaa) && data == 0x55)
+				flashrom_cmd++;
+
+			break;
+		case 0x02:
+			if ((address & 0xfff) == 0x555) {
+				flashrom_cmd = data;
+			}
+			break;
+		case 0x82: {
+			switch (data) {
+				case 0x10:
+					bprintf(0, _T("mapper %d: flashrom - full flash erase not impl. (will break game!)\n"), Cart.Mapper);
+					flashrom_busy = Cart.PRGRomSize / 0x100; // fake it
+					break;
+				case 0x30:
+					bprintf(0, _T("mapper %d: flashrom - sector erase.  addr %x [%x]\n"), Cart.Mapper, address, (PRGMap[(address & ~0x8000) / 0x2000] & 0x7ff000));
+
+					if (flashrom_chiptype == MC_SST) {
+						for (INT32 i = 0; i < 0x1000; i++) {
+							Cart.PRGRom[PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1000) + i] = data;
+						}
+						flashrom_busy = 0xfff;
+					} else {
+						for (INT32 i = 0; i < 0x10000; i++) {
+							Cart.PRGRom[(PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000) + i] = 0xff;
+						}
+						flashrom_busy = 0xffff;
+					}
+					break;
+			}
+			break;
+		}
+		case 0xa0:
+			//bprintf(0, _T("write byte %x  ->  %x\n"), address, data);
+			flashrom_prg_write(address, data);
+			flashrom_busy = 8;
+			flashrom_cmd = 0;
+			break;
+	}
+}
+
+
+
 // ---[ mapper 30 (UNROM-512)
 #define mapper30_mirroring_en   (mapper_regs[1])
 static void mapper30_write(UINT16 address, UINT8 data)
@@ -2662,6 +2827,8 @@ static void mapper30_write(UINT16 address, UINT8 data)
 	if (address >= 0xc000) {
 		mapper_regs[0] = data;
 		mapper_map();
+	} else {
+		flashrom_write(address, data);
 	}
 }
 
@@ -3478,104 +3645,6 @@ static void mapper262_write(UINT16 address, UINT8 data)
 
 // ---[ mapper 451: Haratyler HG (AMIC flashrom)
 #define mapper451_bank          (mapper_regs[0])
-
-// flashrom simulator
-#define flashrom_cmd            (mapper_regs[0x1f - 0x9]) // must not conflict with mmc3 for 406 (Haradius Zero)
-#define flashrom_busy           (mapper_regs16[0x00])
-#define flashrom_chiptype       (mapper_regs[0x1f - 0xa])
-enum { AMIC = 0, MXIC };
-
-static UINT8 flashrom_read(UINT16 address)
-{
-	if (flashrom_cmd == 0x90) { // flash chip identification
-		//bprintf(0, _T("flashrom chip ID\n"));
-		if (flashrom_chiptype == AMIC) {
-			switch (address & 0x03) {
-				case 0x00: return 0x37; // manufacturer ID
-				case 0x01: return 0x86; // device ID
-				case 0x03: return 0x7f; // Continuation ID
-			}
-		} else if (flashrom_chiptype == MXIC) {
-			switch (address & 0x03) {
-				case 0x00: return 0xc2; // manufacturer ID
-				case 0x01: return 0xa4; // device ID
-			}
-		}
-	}
-
-	if (flashrom_busy > 0) { // flash chip program or "erasing sector or chip" mode (it takes time..)
-		flashrom_busy--;
-
-		UINT8 status = (flashrom_busy & 0x01) << 6; // toggle bit I
-		switch (flashrom_cmd) {
-			case 0x82: // embedded erase sector/chip
-				status |= (flashrom_busy & 0x01) << 2; // toggle bit II
-				status |= 1 << 3; // "erasing" status bit
-				break;
-			case 0xa0: // embedded program
-				status |= ~mapper_prg_read_int(address) & 0x80;
-				break;
-		}
-		//bprintf(0, _T("erase/pgm status  %x\n"), status);
-		return status;
-	}
-
-	return mapper_prg_read_int(address);
-}
-
-static void flashrom_prg_write(UINT16 address, UINT8 data)
-{
-	Cart.PRGRom[PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff)] = data;
-}
-
-static void flashrom_write(UINT16 address, UINT8 data)
-{
-	if (data == 0xf0) {
-		// read array / reset
-		flashrom_cmd = 0;
-		flashrom_busy = 0;
-		return;
-	}
-
-	switch (flashrom_cmd) {
-		case 0x00:
-		case 0x80:
-			if ((address & 0xfff) == 0x555 && data == 0xaa)
-				flashrom_cmd++;
-			break;
-		case 0x01:
-		case 0x81:
-			if (((address & 0xfff) == 0x2aa ||
-				 (address & 0xfff) == 0xaaa) && data == 0x55)
-				flashrom_cmd++;
-			break;
-		case 0x02:
-			if ((address & 0xfff) == 0x555)
-				flashrom_cmd = data;
-			break;
-		case 0x82: {
-			switch (data) {
-				case 0x10:
-					bprintf(0, _T("mapper %d: flashrom - full flash erase not impl. (will break game!)\n"), Cart.Mapper);
-					flashrom_busy = Cart.PRGRomSize / 0x100; // fake it
-					break;
-				case 0x30:
-					bprintf(0, _T("mapper %d: flashrom - sector erase.  addr %x [%x]\n"), Cart.Mapper, address, (PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000));
-					for (INT32 i = 0; i < 0x10000; i++) {
-						Cart.PRGRom[(PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000) + i] = 0xff;
-					}
-					flashrom_busy = 0xffff;
-					break;
-			}
-			break;
-		}
-		case 0xa0:
-			flashrom_prg_write(address, data);
-			flashrom_busy = 8;
-			flashrom_cmd = 0;
-			break;
-	}
-}
 
 static void mapper451_scan()
 {
@@ -8870,6 +8939,9 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 30: { // UNROM-512
+			flashrom_chiptype = MC_SST;
+
+			mapper_prg_read = flashrom_read;
 			mapper_write = mapper30_write;
 			mapper_map   = mapper30_map;
 			switch (rom[6] & (1|8)) {
@@ -11237,17 +11309,13 @@ static INT32 NESExit()
 		BurnYM2413Exit();
 	}
 
+	if (Cart.Mapper == 30) {
+		SaveIPSPatch(_T("Mapper 30"), Cart.CartOrig, Cart.Cart, Cart.CartSize);
+	}
+
 	if (Cart.FDSMode) {
 		// exit saver:
-		TCHAR fds_saves_patch[MAX_PATH];
-		_stprintf(fds_saves_patch, _T("%s.ips"), BurnDrvGetText(DRV_NAME));
-		INT32 ips = ips_make(Cart.FDSDiskRawOrig, Cart.FDSDiskRaw, Cart.FDSDiskRawSize, szAppEEPROMPath, fds_saves_patch);
-		bprintf(0, _T("* FDS DISK patch: "));
-		switch (ips) {
-			case  0: bprintf(0, _T("Saved.\n")); break;
-			case -1: bprintf(0, _T("Can't Save (File I/O Error).\n")); break;
-			case -2: bprintf(0, _T("No Change.\n")); break;
-		}
+		SaveIPSPatch(_T("FDS DISK"), Cart.FDSDiskRawOrig, Cart.FDSDiskRaw, Cart.FDSDiskRawSize);
 
 		BurnFree(Cart.FDSDiskRaw);
 		BurnFree(Cart.FDSDiskRawOrig);
@@ -11258,6 +11326,7 @@ static INT32 NESExit()
 	if (NESMode & (USE_ZAPPER | VS_ZAPPER))
 		BurnGunExit();
 
+	BurnFree(Cart.CartOrig);
 	BurnFree(rom);
 	BurnFree(NES_CPU_RAM);
 	BurnFree(Cart.WorkRAM);

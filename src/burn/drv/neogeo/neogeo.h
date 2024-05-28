@@ -162,11 +162,11 @@ INT32 NeoRenderSprites();
 void NeoSpriteCalcLimit();
 
 // neo_decrypt.cpp
-extern UINT8 nNeoProtectionXor;
+extern INT32 nNeoProtectionXor;
 
 void NeoCMC42Init();
 void NeoCMC50Init();
-void NeoCMCDecrypt(INT32 extra_xor, UINT8* rom, UINT8* buf, INT32 offset, INT32 block_size, INT32 rom_size);
+void NeoCMCDecrypt(UINT8 extra_xor, UINT8* rom, UINT8* buf, INT32 offset, INT32 block_size, INT32 rom_size);
 void NeoCMCExtractSData(UINT8* rom, UINT8* sdata, INT32 rom_size, INT32 sdata_size);
 
 void neogeo_cmc50_m1_decrypt();

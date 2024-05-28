@@ -548,7 +548,7 @@ void NeoCMCDecrypt(UINT8 extra_xor, UINT8* rom, UINT8* buf, INT32 offset, INT32 
 	}
 }
 
-static UINT8 NeoCMDGetXorData(UINT8 *src, UINT8 address_bits, UINT8 address_xor)
+static UINT8 NeoCMCGetXorData(UINT8 *src, UINT8 address_bits, UINT8 address_xor)
 {
 	UINT16 address;
 	
@@ -598,10 +598,10 @@ static void NeoCMCGetExtraXor()
 	// unknown1: must be 4d (CMC42) or 2b (CMC50)
 	// unknown2: must be 68 (CMC42) or a9 (CMC50)
 
-//	nFlags 				= NeoCMDGetXorData(NeoZ80ROMActive,0x16,0x0a) ^ NeoCMDGetXorData(NeoZ80ROMActive,0x1e,0x1c);
-	nNeoProtectionXor	= NeoCMDGetXorData(NeoZ80ROMActive,0x10,0x04) ^ NeoCMDGetXorData(NeoZ80ROMActive,0x1a,0x18);
-//	nUnknown1			= NeoCMDGetXorData(NeoZ80ROMActive,0x0c,0x00) ^ NeoCMDGetXorData(NeoZ80ROMActive,0x0e,0x06);
-//	nUnknown2			= NeoCMDGetXorData(NeoZ80ROMActive,0x12,0x02) ^ NeoCMDGetXorData(NeoZ80ROMActive,0x14,0x08);
+//	nFlags 				= NeoCMCGetXorData(NeoZ80ROMActive,0x16,0x0a) ^ NeoCMCGetXorData(NeoZ80ROMActive,0x1e,0x1c);
+	nNeoProtectionXor	= NeoCMCGetXorData(NeoZ80ROMActive,0x10,0x04) ^ NeoCMCGetXorData(NeoZ80ROMActive,0x1a,0x18);
+//	nUnknown1			= NeoCMCGetXorData(NeoZ80ROMActive,0x0c,0x00) ^ NeoCMCGetXorData(NeoZ80ROMActive,0x0e,0x06);
+//	nUnknown2			= NeoCMCGetXorData(NeoZ80ROMActive,0x12,0x02) ^ NeoCMCGetXorData(NeoZ80ROMActive,0x14,0x08);
 }
 
 /* CMC42 protection chip */

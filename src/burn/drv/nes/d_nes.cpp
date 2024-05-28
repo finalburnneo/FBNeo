@@ -66,6 +66,7 @@ static UINT32 NESMode = 0;
 #define VS_REVERSED     0x0020 // VS. p1/p2 -> p2/p1 (inputs swapped)
 #define RAM_RANDOM      0x0040 // Init. ram w/random bytes (Go! Dizzy Go!)
 #define APU_HACKERY    0x10000 // Sam's Journey likes to clock the apu sweep gen via writes to 2017
+#define FLASH_EEPROM   0x20000 // Flash eeprom (flashrom), loads / saves .ips file
 
 // Usually for Multi-Cart mappers
 static UINT32 RESETMode = 0;
@@ -807,11 +808,23 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 			bprintf(0, _T("NES 2.0 Extended Mapper: %d\tSub: %d\n"), Cart.Mapper, Cart.SubMapper);
 	}
 
+	Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
+
 	// Mapper EXT-hardware inits
 	// Initted here, because mapper_init() is called on reset
-	if (Cart.Mapper == 30) { // UNIROM-512 ips patch
+	if (Cart.Mapper == 30 || Cart.Mapper == 406 || Cart.Mapper == 451) { // UNIROM-512 (30), Haradius Zero (406), Haratyler (451) ips patch
+		if (Cart.BatteryBackedSRAM) {
+			NESMode |= FLASH_EEPROM; // enable IPS loads/saves
+			Cart.BatteryBackedSRAM = 0; // disable sram
+		}
+	}
+
+	if (NESMode & FLASH_EEPROM) {
+		TCHAR desc[64];
+		_stprintf(desc, _T("Mapper %d"), Cart.Mapper);
+
 		// Load IPS patch (aka: flasheeprom-saves @ exit)
-		LoadIPSPatch(_T("Mapper 30"), Cart.Cart, Cart.CartSize);
+		LoadIPSPatch(desc, Cart.Cart, Cart.CartSize);
 	}
 
 	if (Cart.Mapper == 69) { // SunSoft fme-7 (5b) audio expansion - ay8910
@@ -826,8 +839,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	}
 
 	Cart.Trainer = (ROMData[6] & 0x4) >> 2;
-	Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
-
 	Cart.PRGRom = ROMData + 0x10 + (Cart.Trainer ? 0x200 : 0);
 
 	// Default CHR-Ram size (8k), always set-up (for advanced mappers, etc)
@@ -999,7 +1010,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	if (NESMode) {
 		bprintf(0, _T("Game-specific configuration:\n"));
 
-		for (UINT16 i = 1; i != 0x0000; i <<= 1) {
+		for (UINT32 i = 1; i != 0x0000; i <<= 1) {
 			switch (NESMode & i) {
 				case NO_WORKRAM:
 					bprintf(0, _T("*  Disabling cart. work-ram (6000-7fff)\n"));
@@ -1027,6 +1038,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 				case RAM_RANDOM:
 					bprintf(0, _T("*  Init RAM w/random bytes.\n"));
+					break;
+
+				case FLASH_EEPROM:
+					bprintf(0, _T("*  Flash EEPROM loads/saves.\n"));
 					break;
 			}
 		}
@@ -2692,7 +2707,7 @@ static void mapper132_map()
 #undef mapper132_reghi
 
 
-// flashrom simulator
+// flashrom simulator (flash eeprom)
 #define flashrom_cmd            (mapper_regs[0x1f - 0x9]) // must not conflict with mmc3 for 406 (Haradius Zero)
 #define flashrom_busy           (mapper_regs16[0x00])
 #define flashrom_chiptype       (mapper_regs[0x1f - 0xa])
@@ -3646,11 +3661,6 @@ static void mapper262_write(UINT16 address, UINT8 data)
 // ---[ mapper 451: Haratyler HG (AMIC flashrom)
 #define mapper451_bank          (mapper_regs[0])
 
-static void mapper451_scan()
-{
-	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper451 HighScore Sector");
-}
-
 static void mapper451_write(UINT16 address, UINT8 data)
 {
 	flashrom_write(address, data);
@@ -3701,11 +3711,6 @@ static void mapper406_write(UINT16 address, UINT8 data)
 {
 	flashrom_write(address, data);
 	mapper04_write((address & 0xfffe) | ((address >> 1) & 1), data);
-}
-
-static void mapper406_scan()
-{
-	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper406 HighScore Sector");
 }
 
 #undef flashrom_cmd
@@ -8466,7 +8471,7 @@ static INT32 mapper_init(INT32 mappernum)
 	mapper_ppu_clock = NULL; // called after busaddress change (see mapper09) (only in visible & prerender!)
 	mapper_ppu_clockall = NULL; // called every ppu clock
 	mapper_scan_cb = NULL; // savestate cb (see vrc6)
-	mapper_scan_cb_nvram = NULL; // savestate cb (nvram, mapper 406, 451)
+	mapper_scan_cb_nvram = NULL; // savestate cb (nvram)
 
 	mapper_prg_read = mapper_prg_read_int; // 8000-ffff (read)
 
@@ -9498,7 +9503,6 @@ static INT32 mapper_init(INT32 mappernum)
 
 			mapper_prg_read = flashrom_read;
 			mapper_write    = mapper406_write;
-			mapper_scan_cb_nvram = mapper406_scan;
 
 			mapper_map      = mapper04_map;
 			mapper_scanline = mapper04_scanline;
@@ -9515,7 +9519,6 @@ static INT32 mapper_init(INT32 mappernum)
 
 			mapper_prg_read = flashrom_read;
 			mapper_write    = mapper451_write;
-			mapper_scan_cb_nvram = mapper451_scan;
 
 			mapper_map      = mapper451_map;
 			mapper_scanline = mapper04_scanline;
@@ -11309,8 +11312,12 @@ static INT32 NESExit()
 		BurnYM2413Exit();
 	}
 
-	if (Cart.Mapper == 30) {
-		SaveIPSPatch(_T("Mapper 30"), Cart.CartOrig, Cart.Cart, Cart.CartSize);
+	if (NESMode & FLASH_EEPROM) {
+		TCHAR desc[64];
+		_stprintf(desc, _T("Mapper %d"), Cart.Mapper);
+
+		// Save IPS patch (aka: flasheeprom-saves @ exit)
+		SaveIPSPatch(desc, Cart.CartOrig, Cart.Cart, Cart.CartSize);
 	}
 
 	if (Cart.FDSMode) {
@@ -11333,6 +11340,8 @@ static INT32 NESExit()
 	BurnFree(Cart.CHRRam);
 
 	ms_delay.exit();
+
+	NESMode = 0;
 
 	return 0;
 }

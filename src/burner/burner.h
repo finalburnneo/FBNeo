@@ -149,6 +149,8 @@ extern UINT8 macroSystemFFWD;
 extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
+extern UINT8 macroSystemNextState;
+extern UINT8 macroSystemPreviousState;
 extern UINT8 macroSystemUNDOState;
 extern UINT8 macroSystemRewind;
 extern UINT8 macroSystemRewindCancel;

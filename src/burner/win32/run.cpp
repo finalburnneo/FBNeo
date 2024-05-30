@@ -37,7 +37,7 @@ int nSlowMo = 0;
 static int flippy = 0; // free running RunFrame() counter
 
 // For System Macros (below)
-static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevUState = 0;
+static int prevPause = 0, prevFFWD = 0, prevFrame = 0, prevSState = 0, prevLState = 0, prevNState = 0, prevPState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
 
 struct lua_hotkey_handler {
@@ -134,6 +134,16 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F10, 0);
 	}
 	prevSState = macroSystemSaveState;
+	// Next State
+	if (macroSystemNextState && macroSystemNextState != prevNState) {
+		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F11, 0);
+	}
+	prevNState = macroSystemNextState;
+	// Previous State
+	if (macroSystemPreviousState && macroSystemPreviousState != prevPState) {
+		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F8, 0);
+	}
+	prevPState = macroSystemPreviousState;
 	// UNDO State
 	if (macroSystemUNDOState && macroSystemUNDOState != prevUState) {
 		scrnSSUndo();

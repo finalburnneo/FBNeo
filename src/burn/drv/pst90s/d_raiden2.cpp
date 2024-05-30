@@ -1202,59 +1202,59 @@ struct cop_sortstr {
 };
 
 static void merge(cop_sortstr arr[], cop_sortstr left[], int left_size, cop_sortstr right[], int right_size, int ascending) {
-    int i = 0, j = 0, k = 0;
-    int comparison;
+	int i = 0, j = 0, k = 0;
+	int comparison;
 
-    while (i < left_size && j < right_size) {
-        if (ascending) {
-            comparison = (left[i].sortby <= right[j].sortby);
-        } else {
-            comparison = (left[i].sortby >= right[j].sortby);
-        }
+	while (i < left_size && j < right_size) {
+		if (ascending) {
+			comparison = (left[i].sortby <= right[j].sortby);
+		} else {
+			comparison = (left[i].sortby >= right[j].sortby);
+		}
 
-        if (comparison) {
-            arr[k] = left[i];
-            i++;
-        } else {
-            arr[k] = right[j];
-            j++;
-        }
-        k++;
-    }
+		if (comparison) {
+			arr[k] = left[i];
+			i++;
+		} else {
+			arr[k] = right[j];
+			j++;
+		}
+		k++;
+	}
 
-    while (i < left_size) {
-        arr[k] = left[i];
-        i++;
-        k++;
-    }
+	while (i < left_size) {
+		arr[k] = left[i];
+		i++;
+		k++;
+	}
 
-    while (j < right_size) {
-        arr[k] = right[j];
-        j++;
-        k++;
-    }
+	while (j < right_size) {
+		arr[k] = right[j];
+		j++;
+		k++;
+	}
 }
 
 static void mergeSort(cop_sortstr arr[], int size, int ascending) {
-    if (size <= 1)
-        return;
+	if (size <= 1)
+		return;
 
-    int mid = size / 2;
-    cop_sortstr* left = (cop_sortstr*)BurnMalloc(mid * sizeof(cop_sortstr));
-    cop_sortstr* right = (cop_sortstr*)BurnMalloc((size - mid) * sizeof(cop_sortstr));
+	int mid = size / 2;
+	cop_sortstr* left  = (cop_sortstr*)BurnMalloc(mid          * sizeof(cop_sortstr));
+	cop_sortstr* right = (cop_sortstr*)BurnMalloc((size - mid) * sizeof(cop_sortstr));
 
-    for (int i = 0; i < mid; i++)
-        left[i] = arr[i];
+	for (int i = 0; i < mid; i++)
+		left[i] = arr[i];
 
-    for (int i = mid; i < size; i++)
-        right[i - mid] = arr[i];
+	for (int i = mid; i < size; i++)
+		right[i - mid] = arr[i];
 
-    mergeSort(left, mid, ascending);
-    mergeSort(right, size - mid, ascending);
-    merge(arr, left, mid, right, size - mid, ascending);
+	mergeSort(left,  mid,        ascending);
+	mergeSort(right, size - mid, ascending);
+	merge(arr, left, mid, right, size - mid, ascending);
 
-    BurnFree(left);
-    BurnFree(right);
+	BurnFree(left);
+	BurnFree(right);
 }
 
 static void cop_sort_dma_trig_write(UINT16 data)
@@ -5862,13 +5862,13 @@ struct BurnDriver BurnDrvZteamym = {
 
 // Zero Team USA (God, Hack)
 // Modified by YanYan
-// GOTVG 20240227
+// GOTVG 20240413
 
 static struct BurnRomInfo zteamysRomDesc[] = {
-	{ "ztys__1.u024.5k",	0x040000, 0xb18507f8, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ztys__3.u023.6k",	0x040000, 0x085be47f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ztys__2.u025.6l",	0x040000, 0x40483d13, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ztys__4.u026.5l",	0x040000, 0x28237717, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ztys__1.u024.5k",	0x040000, 0x472e93cd, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztys__3.u023.6k",	0x040000, 0x60f0cc00, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztys__2.u025.6l",	0x040000, 0x14fd9f50, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztys__4.u026.5l",	0x040000, 0x65bc51a6, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	ZEROTEAM_COMPONENTS
 };

@@ -13,12 +13,17 @@ struct M6809Ext {
 	pWriteByteHandler WriteByte;
 
 	INT32 nCyclesTotal;
+	UINT32 bResetLine;
 };
 
 extern INT32 nM6809Count;
 
 void M6809Reset();
 void M6809Reset(INT32 nCPU);
+void M6809SetRESETLine(INT32 nStatus);
+void M6809SetRESETLine(INT32 nCPU, INT32 nStatus);
+INT32 M6809GetRESETLine();
+INT32 M6809GetRESETLine(INT32 nCPU);
 void M6809NewFrame();
 INT32 M6809Init(INT32 cpu);
 void M6809Exit();

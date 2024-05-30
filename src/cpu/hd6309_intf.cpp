@@ -9,6 +9,7 @@ static INT32 nActiveCPU = 0;
 static HD6309Ext *HD6309CPUContext = NULL;
 
 static INT32 nHD6309CyclesDone[MAX_CPU];
+static UINT32 bHD6309ResetLine[MAX_CPU];
 INT32 nHD6309CyclesTotal;
 
 cpu_core_config HD6309Config =
@@ -111,6 +112,60 @@ void HD6309Reset(INT32 nCPU)
 	HD6309CPUPop();
 }
 
+void HD6309SetRESETLine(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetRESETLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetRESETLine called when no CPU open\n"));
+#endif
+
+	if (nActiveCPU < 0) return;
+
+	if (bHD6309ResetLine[nActiveCPU] && nStatus == 0) {
+		HD6309Reset();
+	}
+
+	bHD6309ResetLine[nActiveCPU] = nStatus;
+}
+
+void HD6309SetRESETLine(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetRESETLine called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	HD6309SetRESETLine(nStatus);
+
+	HD6309CPUPop();
+}
+
+INT32 HD6309GetRESETLine()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetRESETLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309GetRESETLine called when no CPU open\n"));
+#endif
+
+	return bHD6309ResetLine[nActiveCPU];
+}
+
+INT32 HD6309GetRESETLine(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetRESETLine called without init\n"));
+#endif
+
+	HD6309CPUPush(nCPU);
+
+	INT32 nRet = HD6309GetRESETLine();
+
+	HD6309CPUPop();
+
+	return nRet;
+}
+
 INT32 HD6309TotalCycles()
 {
 #if defined FBNEO_DEBUG
@@ -209,7 +264,8 @@ INT32 HD6309Init(INT32 nCPU)
 	HD6309CPUContext[nCPU].ReadOpArg = HD6309ReadOpArgDummyHandler;
 
 	nHD6309CyclesDone[nCPU] = 0;
-	
+	bHD6309ResetLine[nCPU] = 0;
+
 	for (INT32 j = 0; j < (0x0100 * 3); j++) {
 		HD6309CPUContext[nCPU].pMemMap[j] = NULL;
 	}
@@ -324,10 +380,12 @@ INT32 HD6309Run(INT32 cycles)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309Run called when no CPU open\n"));
 #endif
 
-	cycles = hd6309_execute(cycles);
-	
+	if (!bHD6309ResetLine[nActiveCPU]) {
+		cycles = hd6309_execute(cycles);
+	}
+
 	nHD6309CyclesTotal += cycles;
-	
+
 	return cycles;
 }
 
@@ -574,6 +632,7 @@ INT32 HD6309Scan(INT32 nAction)
 		BurnAcb(&ba);
 		
 		SCAN_VAR(nHD6309CyclesDone[i]);
+		SCAN_VAR(bHD6309ResetLine[i]);
 	}
 	
 	SCAN_VAR(nHD6309CyclesTotal);

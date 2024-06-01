@@ -523,7 +523,9 @@ INT32 M6800Run(INT32 cycles)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800Run called when no CPU open\n"));
 #endif
 
-	cycles = cpu_execute[nActiveCPU](cycles);
+	if (!M6800CPUContext[nActiveCPU].bResetLine) {
+		cycles = cpu_execute[nActiveCPU](cycles);
+	}
 
 	nM6800CyclesTotal += cycles;
 

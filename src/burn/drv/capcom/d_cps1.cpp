@@ -26599,10 +26599,10 @@ struct BurnDriver BurnDrvCpsDinojd = {
 
 
 // Cadillacs and Dinosaurs (Crazy BBQ, Hack)
-// GOTVG 20240404
+// GOTVG 20240529
 
 static struct BurnRomInfo dinokrRomDesc[] = {
-	{ "cdkr_23a.8f",	0x080000, 0x63934d1f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdkr_23a.8f",	0x080000, 0xfdf62879, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdkr_22a.7f",	0x080000, 0xf7145191, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cdkr_21a.6f",	0x080000, 0x11e2b75f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 

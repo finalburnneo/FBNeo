@@ -95,7 +95,7 @@ void SetPauseMode(bool bPause)
 
 char* DecorateKailleraGameName(UINT32 nBurnDrv)
 {
-	static char szDecoratedName[256];
+	static char szDecoratedName[256], szKailleraName[256];
 	UINT32 nOldBurnDrv = nBurnDrvActive;
 
 	nBurnDrvActive = nBurnDrv;
@@ -115,6 +115,11 @@ char* DecorateKailleraGameName(UINT32 nBurnDrv)
 	}
 
 	s5 = BurnDrvGetTextA(DRV_NAME);
+
+	// Kaillera servers are limited to a maximum of 127 characters ...
+	UINT32 nLen = 127 - (strlen(s2) + strlen(s3) + strlen(s4) + strlen(s5)) - 1;
+	strncpy(szKailleraName, s1, nLen);
+	s1 = szKailleraName;
 
 	snprintf(szDecoratedName, sizeof(szDecoratedName), "%s%s%s%s - %s", s1, s2, s3, s4, s5);
 

@@ -274,17 +274,17 @@ static void FillListBox()
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
-							Tvi.hItem = hItemHandles[i];
-							Tvi.mask = TVIF_TEXT | TVIF_HANDLE;
-							Tvi.pszText = Temp;
+							Tvi.hItem      = hItemHandles[i];
+							Tvi.mask       = TVIF_TEXT | TVIF_HANDLE;
+							Tvi.pszText    = Temp;
 							Tvi.cchTextMax = 256;
 							SendMessage(hIpsList, TVM_GETITEM, (WPARAM)0, (LPARAM)&Tvi);
 
 							if (!_tcsicmp(Tvi.pszText, szCategory)) hNode = Tvi.hItem;
 						}
 
-						TvItem.hParent = hNode;
-						TvItem.item.pszText = Tokens;
+						TvItem.hParent           = hNode;
+						TvItem.item.pszText      = Tokens;
 						hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 
 						hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos];
@@ -907,7 +907,6 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 	char* ips_crc  = NULL;
 	UINT32 nIps_crc = 0;
 	FILE* fp = NULL;
-	unsigned long nIpsSize;
 
 	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
@@ -1006,7 +1005,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
 static UINT32 GetIpsDefineExpValue(char* szTmp)
 {
-	if (NULL == (szTmp = strtok(NULL, " \t\r\n")))
+	if (NULL == (szTmp = strqtoken(NULL, " \t\r\n")))
 		return 0U;
 
 	INT32 nRet = 0;
@@ -1070,11 +1069,11 @@ static void GetIpsDrvDefine()
 					if (0 == strncmp(ptr, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)))
 						ptr += strlen(UTF8_SIGNATURE);
 
-					if (NULL == (tmp = strtok(ptr, " \t\r\n")))
+					if (NULL == (tmp = strqtoken(ptr, " \t\r\n")))
 						continue;
 					if (0 != strcmp(tmp, "#define"))
 						break;
-					if (NULL == (tmp = strtok(NULL, " \t\r\n")))
+					if (NULL == (tmp = strqtoken(NULL, " \t\r\n")))
 						break;
 
 					UINT32 nNewValue = 0;

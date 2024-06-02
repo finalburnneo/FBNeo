@@ -174,7 +174,7 @@ void BurnerExitGameListLocalisation();
 int FBALocaliseGamelistLoadTemplate();
 int FBALocaliseGamelistCreateTemplate();
 
-INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i);
+INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i = nBurnDrvActive);
 
 // popup_win32.cpp
 enum FBAPopupType { MT_NONE = 0, MT_ERROR, MT_WARNING, MT_INFO };

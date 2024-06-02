@@ -1298,7 +1298,7 @@ static void mcu_write_port(UINT16 port, UINT8 data)
 	switch (port & 0x1ff)
 	{
 		case HD63701_PORT1:
-			coin_lockout = (data & 1) ? 0 : 0x18;
+			coin_lockout = 0;//(data & 1) ? 0 : 0x18; causes problems with 4p games
 		return;
 
 		case HD63701_PORT2:
@@ -1960,7 +1960,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 640; // mame interleave
-	INT32 S1VBL = ((nInterleave * 240) / 256);//264);
+	INT32 S1VBL = ((nInterleave * 240) / 264);
 	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60) }; // run dac cpu @ 60hz for better dac sound quality
 	if (sixtyhz) {
 		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
@@ -1998,6 +1998,10 @@ static INT32 DrvFrame()
 				}
 				buffer_sprites = 0;
 			}
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 	}
 
@@ -2010,10 +2014,6 @@ static INT32 DrvFrame()
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;

@@ -1298,7 +1298,7 @@ static void mcu_write_port(UINT16 port, UINT8 data)
 	switch (port & 0x1ff)
 	{
 		case HD63701_PORT1:
-			coin_lockout = (data & 1) ? 0 : 0x18;
+			coin_lockout = 0;//(data & 1) ? 0 : 0x18; causes problems with 4p games
 		return;
 
 		case HD63701_PORT2:

@@ -117,7 +117,7 @@ char* DecorateKailleraGameName(UINT32 nBurnDrv)
 	s5 = BurnDrvGetTextA(DRV_NAME);
 
 	// Kaillera servers are limited to a maximum of 127 characters ...
-	UINT32 nLen = 127 - (strlen(s2) + strlen(s3) + strlen(s4) + strlen(s5)) - 1;
+	UINT32 nLen = 127 - (strlen(s2) + strlen(s3) + strlen(s4) + strlen(" - ") + strlen(s5)) - 1;
 	strncpy(szKailleraName, s1, nLen);
 	s1 = szKailleraName;
 

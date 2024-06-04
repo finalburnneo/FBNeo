@@ -20767,22 +20767,22 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 	0x1000,	304, 224, 4, 3
 };
 
-// King of Fighters '94 (Team Edit Edition v1.1.9, Hack)
+// King of Fighters '94 (Team Edit Edition v1.2.4, Hack)
 // https://neorh.mattgreer.dev/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0xc7733b52, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "055-p1te.p1",	0x200000, 0x18cefb28, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "055-c1te.c1",	0x200000, 0xffd97c22, 3 | BRF_GRA },           //  2 Sprite data
-	{ "055-c2te.c2",	0x200000, 0xc6f5fc9e, 3 | BRF_GRA },           //  3
+	{ "055-c1te.c1",	0x200000, 0x9fc6044e, 3 | BRF_GRA },           //  2 Sprite data
+	{ "055-c2te.c2",	0x200000, 0xc5e4a59e, 3 | BRF_GRA },           //  3
 	{ "055-c3.c3",		0x200000, 0x54f66254, 3 | BRF_GRA },           //  4
 	{ "055-c4.c4",		0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5
 	{ "055-c5.c5",		0x200000, 0xee759363, 3 | BRF_GRA },           //  6
 	{ "055-c6.c6",		0x200000, 0x498da52c, 3 | BRF_GRA },           //  7
-	{ "055-c7te.c7",	0x200000, 0xeacb38a8, 3 | BRF_GRA },           //  8
-	{ "055-c8te.c8",	0x200000, 0x698d0d92, 3 | BRF_GRA },           //  9
+	{ "055-c7te.c7",	0x200000, 0xb3d868d0, 3 | BRF_GRA },           //  8
+	{ "055-c8te.c8",	0x200000, 0xb296127c, 3 | BRF_GRA },           //  9
 
 	{ "055-m1.m1",		0x020000, 0xf6e77cf5, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
@@ -20796,7 +20796,7 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition v1.1.9, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition v1.2.4, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

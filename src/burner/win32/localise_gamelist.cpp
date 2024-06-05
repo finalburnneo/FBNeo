@@ -30,6 +30,7 @@ static void BurnerDoGameListExLocalisation()
 	if (NULL == gl) return;
 
 	INT32 nArrayPos = 0;
+	INT32 nTokenPos = 0;
 	char szTemp[MAX_LST_LINE_LEN] = { '\0' };
 
 	while (fgets(szTemp, sizeof(szTemp), gl)) {
@@ -83,7 +84,7 @@ static void BurnerDoGameListExLocalisation()
 			szShortNamesExArray[i] = (char* )malloc(100);
 			szLongNamesExArray[i]  = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
 			memset(szShortNamesExArray[i], '\0', 100);
-			memset(szLongNamesExArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szLongNamesExArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
 		}
 		while (NULL != fgets(szTemp, sizeof(szTemp), gl)) {
 			if (szTemp[0] == '/' && szTemp[1] == '/') {
@@ -102,7 +103,6 @@ static void BurnerDoGameListExLocalisation()
 			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 
 			// Read the file into arrays
-			INT32 nTokenPos = 0;
 			TCHAR* Tokens = _tcstok(szLine, _T("\t"));
 			while (NULL != Tokens) {
 				if (nTokenPos == 0) {
@@ -111,9 +111,9 @@ static void BurnerDoGameListExLocalisation()
 					strcpy(szShortNamesExArray[nArrayPos], TCHARToANSI(Tokens, NULL, 0));
 				}
 
-				if (nTokenPos == 1); {
+				if (nTokenPos == 1) {
 					szLongNamesExArray[nArrayPos] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-					memset(szLongNamesExArray[nArrayPos], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+					memset(szLongNamesExArray[nArrayPos], '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
 					wcscpy(szLongNamesExArray[nArrayPos], Tokens);
 				}
 
@@ -144,8 +144,8 @@ void BurnerDoGameListLocalisation()
 		for (int i = 0; i < MAX_LST_GAMES; i++) {
 			szLongNamesArray[i]  = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
 			szShortNamesArray[i] = (TCHAR*)malloc( 100              * sizeof(TCHAR));
-			memset(szLongNamesArray[i],  _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i], _T('\0'), 100              * sizeof(TCHAR));
+			memset(szLongNamesArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szShortNamesArray[i], '\0', 100              * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];

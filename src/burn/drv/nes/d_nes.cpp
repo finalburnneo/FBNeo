@@ -23824,6 +23824,24 @@ struct BurnDriver BurnDrvnes_biocats = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bio Hazard 8bit (HB)
+static struct BurnRomInfo nes_biohaz8bitRomDesc[] = {
+	{ "Bio Hazard 8bit (2022)(Zitz).nes",          524304, 0xdcc12cac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_biohaz8bit)
+STD_ROM_FN(nes_biohaz8bit)
+
+struct BurnDriver BurnDrvnes_biohaz8bit = {
+	"nes_biohaz8bit", NULL, NULL, NULL, "2022",
+	"Bio Hazard 8bit (HB)\0", NULL, "Zitz", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_biohaz8bitRomInfo, nes_biohaz8bitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Black Box Challenge (HB)
 static struct BurnRomInfo nes_blackboxchaRomDesc[] = {
 	{ "Black Box Challenge (2017)(Sly Dog Studios).nes",          524304, 0x6b30c83b, BRF_ESS | BRF_PRG },
@@ -24470,6 +24488,24 @@ struct BurnDriver BurnDrvnes_chknight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_chknightRomInfo, nes_chknightRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// ChuChu Rocket! (HB, v. alpha)
+static struct BurnRomInfo nes_chuchuaRomDesc[] = {
+	{ "ChuChu Rocket! (v.alpha)(2010)(Dwedit).nes",          163856, 0xac44ecdc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chuchua)
+STD_ROM_FN(nes_chuchua)
+
+struct BurnDriver BurnDrvnes_chuchua = {
+	"nes_chuchua", NULL, NULL, NULL, "2010",
+	"ChuChu Rocket! (HB, v. alpha)\0", NULL, "Dwedit", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_chuchuaRomInfo, nes_chuchuaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -25193,6 +25229,24 @@ struct BurnDriver BurnDrvnes_espitene = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_espiteneRomInfo, nes_espiteneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Espitenen und herr Pimponen (HB)
+static struct BurnRomInfo nes_espitundherpimRomDesc[] = {
+	{ "Espitenen und herr Pimponen (2019)(The Mojon Twins).nes",          65552, 0xea5fa8a8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_espitundherpim)
+STD_ROM_FN(nes_espitundherpim)
+
+struct BurnDriver BurnDrvnes_espitundherpim = {
+	"nes_espitundherpim", NULL, NULL, NULL, "2019",
+	"Espitenen und herr Pimponen (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_espitundherpimRomInfo, nes_espitundherpimRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -26369,6 +26423,24 @@ struct BurnDriver BurnDrvnes_kamimariodx = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kosmity Atakujo (HB, v10.07.2020)
+static struct BurnRomInfo nes_kosatakRomDesc[] = {
+	{ "Kosmity Atakujo (HB, v10.07.2020).nes",          131088, 0x0570865c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kosatak)
+STD_ROM_FN(nes_kosatak)
+
+struct BurnDriver BurnDrvnes_kosatak = {
+	"nes_kosatak", NULL, NULL, NULL, "2020",
+	"Kosmity Atakujo (HB, v10.07.2020)\0", NULL, "sdm2", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // L'Abbaye des Morts (HB)
 static struct BurnRomInfo nes_labbayeRomDesc[] = {
 	{ "L'Abbaye des Morts (2021)(Broke Studios).nes",          131088, 0xa032a1f6, BRF_ESS | BRF_PRG },
@@ -27273,9 +27345,9 @@ struct BurnDriver BurnDrvnes_mogmines = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Montezuma's Revenge (HB)
+// Montezuma's Revenge (HB, v1.1)
 static struct BurnRomInfo nes_monterevRomDesc[] = {
-	{ "Montezuma's Revenge (2022)(Second Dimension).nes",          40976, 0x02cfc8a7, BRF_ESS | BRF_PRG },
+	{ "Montezuma's Revenge v1.1 (2022)(Second Dimension).nes",          40976, 0x161baad2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_monterev)
@@ -27283,7 +27355,7 @@ STD_ROM_FN(nes_monterev)
 
 struct BurnDriver BurnDrvnes_monterev = {
 	"nes_monterev", NULL, NULL, NULL, "2022",
-	"Montezuma's Revenge (HB)\0", NULL, "Second Dimension", "Miscellaneous",
+	"Montezuma's Revenge (HB, v1.1)\0", NULL, "Second Dimension", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_monterevRomInfo, nes_monterevRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -27454,6 +27526,24 @@ struct BurnDriver BurnDrvnes_nalleland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nebs and Debs (HB)
+static struct BurnRomInfo nes_nebsanddebsRomDesc[] = {
+	{ "Nebs and Debs (2018)(Dullahan).nes",          40976, 0x570383a9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nebsanddebs)
+STD_ROM_FN(nes_nebsanddebs)
+
+struct BurnDriver BurnDrvnes_nebsanddebs = {
+	"nes_nebsanddebs", NULL, NULL, NULL, "2018",
+	"Nebs and Debs (HB)\0", NULL, "Dullahan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_nebsanddebsRomInfo, nes_nebsanddebsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // neMULEsis (HB, v2.25.23)
 static struct BurnRomInfo nes_nemulesisRomDesc[] = {
 	{ "neMULEsis v2.25.23 (2023)(John Vanderhoef).nes",          524304, 0x9982f1b7, BRF_ESS | BRF_PRG },
@@ -27472,9 +27562,27 @@ struct BurnDriver BurnDrvnes_nemulesis = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// NEO Heiankyo Alien (HB)
+static struct BurnRomInfo nes_neoheialiRomDesc[] = {
+	{ "NEO Heiankyo Alien (2017)(Hyperware Co.).nes",          655376, 0xf9450fc9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_neoheiali)
+STD_ROM_FN(nes_neoheiali)
+
+struct BurnDriver BurnDrvnes_neoheiali = {
+	"nes_neoheiali", NULL, NULL, NULL, "2017",
+	"NEO Heiankyo Alien (HB)\0", NULL, "Hyperware Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE, 0,
+	NESGetZipName, nes_neoheialiRomInfo, nes_neoheialiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // NEScape (HB)
 static struct BurnRomInfo nes_nescapeRomDesc[] = {
-	{ "NEScape (HB).nes",          524304, 0x60b6ad99, BRF_ESS | BRF_PRG },
+	{ "NEScape (2019)(Khan Games).nes",          524304, 0x60b6ad99, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nescape)
@@ -27582,7 +27690,7 @@ struct BurnDriver BurnDrvnes_nightelmstreetdmk = {
 
 // Nim & Nom (HB, v1.2)
 static struct BurnRomInfo nes_nimnomRomDesc[] = {
-	{ "nim and nom (2018)(metakrill) v1.2.nes",          40976, 0xe0096736, BRF_ESS | BRF_PRG },
+	{ "Nim and Nom v1.2 (2018)(Metakrill).nes",          40976, 0xe0096736, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nimnom)
@@ -27636,7 +27744,7 @@ struct BurnDriver BurnDrvnes_ninnin = {
 
 // Nix: the Paradox Relic (HB, v1.9)
 static struct BurnRomInfo nes_nixrelicRomDesc[] = {
-	{ "Nix Paradox Relic v1.9(2020)(Dustin Huddleston).nes",          524304, 0xc85e7bcd, BRF_ESS | BRF_PRG },
+	{ "Nix Paradox Relic v1.9 (2020)(Dustin Huddleston).nes",          524304, 0xc85e7bcd, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nixrelic)
@@ -28124,7 +28232,7 @@ struct BurnDriver BurnDrvnes_purplecapeman = {
 
 // Pyramids of Ra (HB)
 static struct BurnRomInfo nes_pyramidsraRomDesc[] = {
-	{ "Pyramids of Ra (2019)(Piko Int.).nes",          393232, 0x0bcee664, BRF_ESS | BRF_PRG },
+	{ "Pyramids of Ra (2019)(Piko Interactive).nes",          393232, 0x0bcee664, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_pyramidsra)
@@ -28306,7 +28414,7 @@ struct BurnDriver BurnDrvnes_ravensgatemmc1 = {
 
 // Reknum - The Awakening (HB)
 static struct BurnRomInfo nes_reknum1RomDesc[] = {
-	{ "Reknum - The Awakening (2019).nes",          524304, 0xe2e0ea31, BRF_ESS | BRF_PRG },
+	{ "Reknum - The Awakening (2019)(NAPE Games).nes",          524304, 0xe2e0ea31, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_reknum1)
@@ -28324,7 +28432,7 @@ struct BurnDriver BurnDrvnes_reknum1 = {
 
 // Reknum - Souls Adventure (HB)
 static struct BurnRomInfo nes_reknum2RomDesc[] = {
-	{ "Reknum - Souls Adventure (2021).nes",          524304, 0xccdc9c66, BRF_ESS | BRF_PRG },
+	{ "Reknum - Souls Adventure (2021)(NAPE Games).nes",          524304, 0xccdc9c66, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_reknum2)
@@ -28360,7 +28468,7 @@ struct BurnDriver BurnDrvnes_revgems = {
 
 // Rick Rolled! (HB, Tech-Demo)
 static struct BurnRomInfo nes_rickrolledRomDesc[] = {
-	{ "Rick Rolled! Tech-Demo (2009) (Frantik).nes",          262160, 0xc1be91f9, BRF_ESS | BRF_PRG },
+	{ "Rick Rolled! Tech-Demo (2009)(Frantik).nes",          262160, 0xc1be91f9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_rickrolled)
@@ -28396,7 +28504,7 @@ struct BurnDriver BurnDrvnes_ramondus = {
 
 // Rise of Amondus, The (HB)
 static struct BurnRomInfo nes_riseamoRomDesc[] = {
-	{ "The Rise of Amondus (HB).nes",          131088, 0xb15ac0fe, BRF_ESS | BRF_PRG },
+	{ "Rise of Amondus, The (2015)(Robert L. Bryant).nes",          131088, 0xb15ac0fe, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_riseamo)
@@ -28470,7 +28578,7 @@ struct BurnDriver BurnDrvnes_roshambo = {
 
 // Rollie (HB)
 static struct BurnRomInfo nes_rollieRomDesc[] = {
-	{ "Rollie (HB).nes",          40976, 0x8165c356, BRF_ESS | BRF_PRG },
+	{ "Rollie (2019)(Optovania).nes",          40976, 0x8165c356, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_rollie)
@@ -28632,7 +28740,7 @@ struct BurnDriver BurnDrvnes_shera = {
 
 // Shoot UFO (GlobalHack)
 static struct BurnRomInfo nes_shootufoRomDesc[] = {
-	{ "Shoot UFO (2015)(GlobHack).nes",          40976, 0xb5c91a2a, BRF_ESS | BRF_PRG },
+	{ "Shoot UFO GlobalHack (2015).nes",          40976, 0xb5c91a2a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_shootufo)
@@ -28669,7 +28777,7 @@ struct BurnDriver BurnDrvnes_shovelknight = {
 
 // Sinking Feeling (HB)
 static struct BurnRomInfo nes_sinkingfeelingRomDesc[] = {
-	{ "Sinking Feeling (HB).nes",          49168, 0xb2f79ee2, BRF_ESS | BRF_PRG },
+	{ "Sinking Feeling (2017)(Mega Cat Studios).nes",          49168, 0xb2f79ee2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_sinkingfeeling)
@@ -28699,6 +28807,24 @@ struct BurnDriver BurnDrvnes_sirababol = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sirababolRomInfo, nes_sirababolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sir Ababol Remastered Edition (HB)
+static struct BurnRomInfo nes_sirababolrRomDesc[] = {
+	{ "Sir Ababol Remastered Edition (2016)(The Mojon Twins).nes",          40976, 0x36d8ca2b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sirababolr)
+STD_ROM_FN(nes_sirababolr)
+
+struct BurnDriver BurnDrvnes_sirababolr = {
+	"nes_sirababolr", "nes_sirababol", NULL, NULL, "2016",
+	"Sir Ababol Remastered Edition (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_sirababolrRomInfo, nes_sirababolrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28832,7 +28958,7 @@ struct BurnDriver BurnDrvnes_spacecat = {
 
 // Spacegulls (HB, v1.1)
 static struct BurnRomInfo nes_spacegullsRomDesc[] = {
-	{ "Spacegulls (HB)(2021)(Morphcat Games).nes",          65552, 0x539f87d4, BRF_ESS | BRF_PRG },
+	{ "Spacegulls (2021)(Morphcat Games).nes",          65552, 0x539f87d4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spacegulls)
@@ -29176,7 +29302,7 @@ struct BurnDriver BurnDrvnes_sudoku23 = {
 
 // Super Homebrew War (HB)
 static struct BurnRomInfo nes_superhomwarRomDesc[] = {
-	{ "Super Homebrew War (HB).nes",          65552, 0x16b8d50a, BRF_ESS | BRF_PRG },
+	{ "Super Homebrew War (2019)(gauauu).nes",          65552, 0x16b8d50a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_superhomwar)
@@ -30461,23 +30587,6 @@ struct BurnDriver BurnDrvnes_zoomisec = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_kosatakRomDesc[] = {
-	{ "Kosmity Atakujo (HB, v10.07.2020).nes",          131088, 0x0570865c, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_kosatak)
-STD_ROM_FN(nes_kosatak)
-
-struct BurnDriver BurnDrvnes_kosatak = {
-	"nes_kosatak", NULL, NULL, NULL, "2020",
-	"Kosmity Atakujo (HB, v10.07.2020)\0", NULL, "sdm2", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_badappleRomDesc[] = {
 	{ "bad_apple (2015 v2.5)(Little Limit).nes",          786448, 0xf96a5a8b, BRF_ESS | BRF_PRG },
 };
@@ -30525,23 +30634,6 @@ struct BurnDriver BurnDrvnes_dushlan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_dushlanRomInfo, nes_dushlanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_sirababolrRomDesc[] = {
-	{ "Sir Ababol Remastered Edition (2016)(Mojon Twins).nes",          40976, 0x36d8ca2b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_sirababolr)
-STD_ROM_FN(nes_sirababolr)
-
-struct BurnDriver BurnDrvnes_sirababolr = {
-	"nes_sirababolr", "nes_sirababol", NULL, NULL, "2016",
-	"Sir Ababol Remastered Edition (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_sirababolrRomInfo, nes_sirababolrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30785,23 +30877,6 @@ struct BurnDriver BurnDrvnes_actio53vol3retw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_espitundherpimRomDesc[] = {
-	{ "Espitenen und herr pimponen (HB).nes",          65552, 0xea5fa8a8, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_espitundherpim)
-STD_ROM_FN(nes_espitundherpim)
-
-struct BurnDriver BurnDrvnes_espitundherpim = {
-	"nes_espitundherpim", NULL, NULL, NULL, "2019",
-	"Espitenen und herr pimponen (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_espitundherpimRomInfo, nes_espitundherpimRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_almostheroRomDesc[] = {
 	{ "Almost Hero (HB).nes",          262160, 0x2419f370, BRF_ESS | BRF_PRG },
 };
@@ -30917,40 +30992,6 @@ struct BurnDriver BurnDrvnes_kirakirstaniggo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_kirakirstaniggoRomInfo, nes_kirakirstaniggoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_nebsanddebsRomDesc[] = {
-	{ "Nebs and Debs (HB).nes",          40976, 0x570383a9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_nebsanddebs)
-STD_ROM_FN(nes_nebsanddebs)
-
-struct BurnDriver BurnDrvnes_nebsanddebs = {
-	"nes_nebsanddebs", NULL, NULL, NULL, "2018",
-	"Nebs and Debs (HB)\0", NULL, "Dullahan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_nebsanddebsRomInfo, nes_nebsanddebsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_neoheialiRomDesc[] = {
-	{ "NEO Heiankyo Alien (HB).nes",          655376, 0xf9450fc9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_neoheiali)
-STD_ROM_FN(nes_neoheiali)
-
-struct BurnDriver BurnDrvnes_neoheiali = {
-	"nes_neoheiali", NULL, NULL, NULL, "2017",
-	"NEO Heiankyo Alien (HB)\0", NULL, "Hyperware Co.", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE, 0,
-	NESGetZipName, nes_neoheialiRomInfo, nes_neoheialiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

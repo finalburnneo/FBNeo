@@ -5510,6 +5510,25 @@ struct BurnDriver BurnDrvcv_alpharoid = {
     272, 228, 4, 3
 };
 
+// AntiAir (HB)
+
+static struct BurnRomInfo cv_antiairRomDesc[] = {
+	{ "AntiAir (2024)(Inufuto).rom",	7941, 0x8fabe383, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_antiair, cv_antiair, cv_coleco)
+STD_ROM_FN(cv_antiair)
+
+struct BurnDriver BurnDrvcv_antiair = {
+	"cv_antiair", NULL, "cv_coleco", NULL, "2024",
+	"AntiAir (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
+	CVGetZipName, cv_antiairRomInfo, cv_antiairRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Arabian (HB)
 
 static struct BurnRomInfo cv_arabianRomDesc[] = {
@@ -6078,6 +6097,25 @@ struct BurnDriver BurnDrvcv_cacorm = {
 	CVGetZipName, cv_cacormRomInfo, cv_cacormRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Camelot Knights (HB)
+
+static struct BurnRomInfo cv_camknightsRomDesc[] = {
+    { "Camelot Knights (2024)(Nanochess).rom",	22589, 0xb551402c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_camknights, cv_camknights, cv_coleco)
+STD_ROM_FN(cv_camknights)
+
+struct BurnDriver BurnDrvcv_camknights = {
+    "cv_camknights", NULL, "cv_coleco", NULL, "2024",
+    "Camelot Knights (HB)\0", NULL, "Nanochess", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_camknightsRomInfo, cv_camknightsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Canadian Minigames (HB)
@@ -10672,6 +10710,25 @@ struct BurnDriver BurnDrvcv_explodingfoot = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VSFIGHT, 0,
     CVGetZipName, cv_explodingfootRomInfo, cv_explodingfootRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Whack 'Em Smack 'Em Byrons (HB)
+
+static struct BurnRomInfo cv_wsbyronsRomDesc[] = {
+    { "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations).rom",	29800, 0xa7bb34df, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_wsbyrons, cv_wsbyrons, cv_coleco)
+STD_ROM_FN(cv_wsbyrons)
+
+struct BurnDriver BurnDrvcv_wsbyrons = {
+    "cv_wsbyrons", NULL, "cv_coleco", NULL, "2024",
+    "Whack 'Em Smack 'Em Byrons (HB)\0", NULL, "Jess Creations", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_wsbyronsRomInfo, cv_wsbyronsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

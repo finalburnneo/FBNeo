@@ -15,6 +15,31 @@ int OnInitMenuPopup(HWND, HMENU, UINT, BOOL);
 int OnUnInitMenuPopup(HWND, HMENU, UINT, BOOL);
 void DisplayPopupMenu(int nMenu);
 
+// experimental bezel, -dink 2024
+// problems to overcome:
+// 1: when screen is manually resized, bezel doesn't line-up properly
+// 2: when screen is maximized, sometimes doesn't line-up properly
+// possible fix: aspect-locking of the window size, kinda like how mame does
+// it.
+// 3: only compatible with "side" bezels with nothing on top/bottom.
+// note: only works with "Video -> Stretch -> Correct Aspect Ratio"!
+//
+// on sizing of window
+//~
+// There are 2 ways a window can be sized
+//
+// ScrnSize(); autosizes the window when emulation begins, based on
+// the setting: "Video -> Window Size"
+//
+// OnSize() is called when window is manually sized. In order to fix
+// bezel line-up with OnSize, we must aspect-lock the window sizing.  This
+// means if we size (pull) the window horizontally, it needs to also grow
+// in the vertical position.
+// Double-clicking the titlebar, or clicking the Maximize button on titlebar
+// can also be problematic, sometimes creating a window that is too wide.
+
+static HBITMAP hBezelBitmap = NULL;
+
 RECT SystemWorkArea = { 0, 0, 640, 480 };				// Work area on the desktop
 int nWindowPosX = -1, nWindowPosY = -1;					// Window position
 
@@ -95,7 +120,8 @@ void SetPauseMode(bool bPause)
 
 char* DecorateKailleraGameName(UINT32 nBurnDrv)
 {
-	static char szFullName[256], szKailleraName[256];
+	char szFullName[256];
+	static char szKailleraName[256];
 	UINT32 nOldBurnDrv = nBurnDrvActive;
 
 	nBurnDrvActive = nBurnDrv;
@@ -758,6 +784,55 @@ void PausedRedraw(void)
     }
 }
 
+static INT32 ScrnHasBezel()
+{
+	if (!nVidFullscreen && hBezelBitmap != NULL) {
+		return 1;
+	}
+
+	return 0;
+}
+
+static void HandleBezelLoading(HWND hWnd, int cx, int cy)
+{
+	// handle bezel loading
+	hBezelBitmap = NULL;
+
+	if (bDrvOkay && !(hScrnWnd == NULL || nVidFullscreen)) {
+		char* pszName = BurnDrvGetTextA(DRV_NAME);
+		char szName[MAX_PATH];
+
+		sprintf(szName, "support/bezel/%s.png", pszName);
+
+		FILE *fp = fopen(szName, "rb");
+		if (fp) {
+			bprintf(0, _T("Loading bezel \"%S\"\n"), szName);
+			hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);
+			fclose(fp);
+		}
+	}
+}
+static void HandleBezelDraw(HWND hWnd)
+{
+	if (hBezelBitmap != NULL) {
+		PAINTSTRUCT		ps;
+		BITMAP			bitmap;
+
+		HDC hdc = BeginPaint(hWnd, &ps);
+		HDC hdcMem = CreateCompatibleDC(hdc);
+		HGDIOBJ oldBitmap = SelectObject(hdcMem, hBezelBitmap);
+
+		GetObject(hBezelBitmap, sizeof(bitmap), &bitmap);
+		BitBlt(hdc, 0, nMenuHeight, bitmap.bmWidth, bitmap.bmHeight, hdcMem, 0, 0, SRCCOPY);
+
+		SelectObject(hdcMem, oldBitmap);
+		DeleteDC(hdcMem);
+
+		EndPaint(hWnd, &ps);
+		//bprintf(0, _T("we repaint the bitmap here\n"));
+	}
+}
+
 static void OnPaint(HWND hWnd)
 {
 	if (hWnd == hScrnWnd)
@@ -769,9 +844,10 @@ static void OnPaint(HWND hWnd)
 			bBackFromHibernation = 0;
 		}
 
-		// draw menu
+		// draw menu, bezel
 		if (!nVidFullscreen) {
 			RedrawWindow(hRebar, NULL, NULL, RDW_FRAME /*| RDW_UPDATENOW*/ | RDW_ALLCHILDREN);
+			HandleBezelDraw(hWnd);
 		}
 	}
 }
@@ -3312,7 +3388,7 @@ static int OnSysCommand(HWND, UINT sysCommand, int, int)
 	return 0;
 }
 
-static void OnSize(HWND, UINT state, int cx, int cy)
+static void OnSize(HWND hWnd, UINT state, int cx, int cy)
 {
 	if (state == SIZE_MINIMIZED) {
 		bMaximized = false;
@@ -3332,11 +3408,13 @@ static void OnSize(HWND, UINT state, int cx, int cy)
 			bMaximized = true;
 		}
 		if (state == SIZE_RESTORED) {
-			if (bMaximized) {
+			if (VidInitNeeded() || bMaximized) { // experimental blitter must have re-init when going from maximized to restored.
 				bSizeChanged = true;
 			}
 			bMaximized = false;
 		}
+
+		HandleBezelLoading(hWnd, cx, cy);
 
 		if (bSizeChanged) {
 			RefreshWindow(true);
@@ -3605,7 +3683,29 @@ int ScrnSize()
 		// -but- since the game window was maximized, it should stay that way.
 		PostMessage(hScrnWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
 	}
+	if (hBezelBitmap && bDrvOkay) {
+		//bprintf(0, _T("We have bezel bitmap in ScrnSize()!  x/y/w/h %d,%d  %d,%d\n"),x,y,w,h);
 
+#if 0
+		// get dx video window positi
+		RECT derp = { 0, 0, 0, 0 };
+		GetClientScreenRect(hVidWnd, &derp);
+		derp.top += nMenuHeight;
+		VidImageSize(&derp, nVidImageWidth, nVidImageHeight);
+		POINT c = { 0, 0 };
+		ClientToScreen(hVidWnd, &c);
+		RECT dst = { derp.left - c.x, derp.top - c.y, derp.right - c.x, derp.bottom - c.y };
+		bprintf(0, _T("ScrnSize dst.left / right:  %d  %d    w h  %d  %d\n"), dst.left, dst.right, w, h);
+#endif
+
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+			// vertical game
+			w = w + (w * 1.069);
+		} else {
+			// horiz game
+			w = w + (w / 3);
+		}
+	}
 	MoveWindow(hScrnWnd, x, y, w, h, true);
 
 //	SetWindowPos(hScrnWnd, NULL, x, y, w, h, SWP_NOREDRAW | SWP_NOACTIVATE | SWP_NOSENDCHANGING | SWP_NOZORDER);

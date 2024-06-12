@@ -466,20 +466,8 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generat
 	@echo Compiling Musashi MC680x0 core \(m68kops.c\)...
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
-$(objdir)cpu/m68k/m68kopac.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopac.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
-	@echo Compiling Musashi MC680x0 core \(m68kopac.c\)...
-	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kopac.c -o $(objdir)cpu/m68k/m68kopac.o
-
-$(objdir)cpu/m68k/m68kopdm.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopdm.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
-	@echo Compiling Musashi MC680x0 core \(m68kopdm.c\)...
-	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kopdm.c -o $(objdir)cpu/m68k/m68kopdm.o
-
-$(objdir)cpu/m68k/m68kopnz.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopnz.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
-	@echo Compiling Musashi MC680x0 core \(m68kopnz.c\)...
-	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kopnz.c -o $(objdir)cpu/m68k/m68kopnz.o
-
-$(objdir)dep/generated/m68kops.h: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
-	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+$(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
+	$(objdir)/cpu/m68k/m68kmake.exe $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
 
 $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...

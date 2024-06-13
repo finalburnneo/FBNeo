@@ -194,6 +194,7 @@ void _BurnFree(void *ptr); // internal use only :)
 #define BurnMalloc(x) _BurnMalloc(x, __FILE__, __LINE__)
 void BurnSwapMemBlock(UINT8 *src, UINT8 *dst, INT32 size); // swap contents of src with dst
 void BurnExitMemoryManager();
+UINT32 BurnRoundPowerOf2(UINT32 in);
 
 // ---------------------------------------------------------------------------
 // sound routes

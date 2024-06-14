@@ -171,6 +171,7 @@ static struct BurnInputInfo MetamrphInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
@@ -180,6 +181,7 @@ static struct BurnInputInfo MetamrphInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -219,6 +221,7 @@ static struct BurnInputInfo ViostormInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
@@ -228,6 +231,7 @@ static struct BurnInputInfo ViostormInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -247,7 +251,7 @@ static struct BurnInputInfo ViostormInputList[] = {
 
 STDINPUTINFO(Viostorm)
 
-static struct BurnInputInfo DadandrnInputList[] = {
+static struct BurnInputInfo DadandrnInputList[] = { // and gaiapolis
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
 	{"P1 Up",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
@@ -267,24 +271,6 @@ static struct BurnInputInfo DadandrnInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"},
-
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
-	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
-	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
-	{"P3 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
-
-	{"P4 Start",		BIT_DIGITAL,	DrvJoy5 + 7,	"p4 start"},
-	{"P4 Up",		    BIT_DIGITAL,	DrvJoy5 + 2,	"p4 up"},
-	{"P4 Down",		    BIT_DIGITAL,	DrvJoy5 + 3,	"p4 down"},
-	{"P4 Left",		    BIT_DIGITAL,	DrvJoy5 + 0,	"p4 left"},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p4 right"},
-	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"p4 fire 1"},
-	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"p4 fire 2"},
-	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"p4 fire 3"},
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
 	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
@@ -316,6 +302,7 @@ static struct BurnInputInfo MartchmpInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
@@ -325,6 +312,7 @@ static struct BurnInputInfo MartchmpInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -371,7 +359,7 @@ STDDIPINFO(Mystwarr)
 
 static struct BurnDIPInfo MetamrphDIPList[]=
 {
-	DIP_OFFSET(0x26)
+	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0xe0, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"			},
@@ -396,7 +384,7 @@ STDDIPINFO(Metamrph)
 
 static struct BurnDIPInfo ViostormDIPList[]=
 {
-	DIP_OFFSET(0x26)
+	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0xe0, NULL				},
 	{0x01, 0xff, 0xff, 0x00, NULL				},
 
@@ -423,9 +411,9 @@ static struct BurnDIPInfo ViostormDIPList[]=
 
 STDDIPINFO(Viostorm)
 
-static struct BurnDIPInfo DadandrnDIPList[]=
+static struct BurnDIPInfo DadandrnDIPList[]= // and gaiapolis
 {
-	DIP_OFFSET(0x26)
+	DIP_OFFSET(0x16)
 	{0x00, 0xff, 0xff, 0xe0, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
@@ -441,7 +429,7 @@ STDDIPINFO(Dadandrn)
 
 static struct BurnDIPInfo MartchmpDIPList[]=
 {
-	DIP_OFFSET(0x26)
+	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0xe0, NULL				},
 	{0x01, 0xff, 0xff, 0x00, NULL				},
 
@@ -2994,6 +2982,11 @@ static INT32 DrvFrame()
 	}
 
 	{
+		if (nGame == 3 || nGame == 2 || nGame == 4) { // viostorm, metamrph, martchmp
+			DrvJoy1[0] |= DrvJoy1[2]; // mirror coin inputs for kaillera
+			DrvJoy1[1] |= DrvJoy1[3];
+		}
+
 		memset (DrvInputs, 0xff, 5 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

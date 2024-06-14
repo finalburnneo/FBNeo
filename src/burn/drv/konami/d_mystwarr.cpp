@@ -2830,13 +2830,13 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static UINT8 *gamma = NULL;
+static UINT8 *gamma_lut = NULL;
 static UINT8 last_gamma_dip = ~0;
 
 static void gamma_init()
 {
-	if (gamma == NULL) {
-		gamma = (UINT8*)BurnMalloc(0x100);
+	if (gamma_lut == NULL) {
+		gamma_lut = (UINT8*)BurnMalloc(0x100);
 		last_gamma_dip = ~0;
 	}
 
@@ -2845,21 +2845,21 @@ static void gamma_init()
 	if (nGame == 3 && DrvDips[1] & 0x40) { // only applied to viostorm, gamma 0.650 (expressed as 1/0.650)
 		bprintf(0, _T("viostorm: apply gamma 1.0 / 0.650\n"));
 		for (INT32 i = 0; i < 0x100; i++) {
-			gamma[i] = (UINT8)(pow((double)i / 255.0, 1.0 / 0.650) * 255.0);
+			gamma_lut[i] = (UINT8)(pow((double)i / 255.0, 1.0 / 0.650) * 255.0);
 		}
 	} else {
 		bprintf(0, _T("no gamma\n"));
 		for (INT32 i = 0; i < 0x100; i++) {
-			gamma[i] = i;
+			gamma_lut[i] = i;
 		}
 	}
 	last_gamma_dip = DrvDips[1] & 0x40;
 }
 
 static void gamma_exit() {
-	BurnFree(gamma);
+	BurnFree(gamma_lut);
 
-	gamma = NULL;
+	gamma_lut = NULL;
 }
 
 static void DrvPaletteRecalc()
@@ -2870,9 +2870,9 @@ static void DrvPaletteRecalc()
 
 	for (INT32 i = 0; i < 0x2000/2; i+=2)
 	{
-		INT32 r = gamma[BURN_ENDIAN_SWAP_INT16(pal[i+0]) & 0xff];
-		INT32 g = gamma[BURN_ENDIAN_SWAP_INT16(pal[i+1]) >> 8];
-		INT32 b = gamma[BURN_ENDIAN_SWAP_INT16(pal[i+1]) & 0xff];
+		INT32 r = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+0]) & 0xff];
+		INT32 g = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+1]) >> 8];
+		INT32 b = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+1]) & 0xff];
 
 		DrvPalette[i/2] = (r << 16) + (g << 8) + b;
 	}

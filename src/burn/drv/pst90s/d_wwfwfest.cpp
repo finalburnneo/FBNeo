@@ -12,6 +12,7 @@ static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort3[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort4[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvInputPort4f[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvDip[2]        = {0, 0};
 static UINT8 DrvInput[5]      = {0, 0, 0, 0, 0};
 static UINT8 DrvReset         = 0;
@@ -52,12 +53,8 @@ static INT32 DrvBg1XOffset[2];
 
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort4 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
-	{"Start 3"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p3 start"  },
-	{"Start 4"           , BIT_DIGITAL  , DrvInputPort3 + 7, "p4 start"  },
-	
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort4 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 left"   },
@@ -65,6 +62,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort4f + 1, "p2 coin"  },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 left"   },
@@ -72,6 +71,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
 	
+	{"P3 Coin"           , BIT_DIGITAL  , DrvInputPort4f + 2, "p3 coin"  },
+	{"P3 Start"          , BIT_DIGITAL  , DrvInputPort2 + 7, "p3 start"  },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p3 down"   },
 	{"P3 Left"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p3 left"   },
@@ -79,6 +80,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P3 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 4, "p3 fire 1" },
 	{"P3 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p3 fire 2" },
 	
+	{"P4 Coin"           , BIT_DIGITAL  , DrvInputPort4f + 3, "p4 coin"  },
+	{"P4 Start"          , BIT_DIGITAL  , DrvInputPort3 + 7, "p4 start"  },
 	{"P4 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p4 up"     },
 	{"P4 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p4 down"   },
 	{"P4 Left"           , BIT_DIGITAL  , DrvInputPort3 + 1, "p4 left"   },
@@ -88,8 +91,8 @@ static struct BurnInputInfo DrvInputList[] =
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort4 + 1, "service"   },
-	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
-	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+	{"Dip A"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip B"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
 };
 
 STDINPUTINFO(Drv)
@@ -109,6 +112,10 @@ static inline void DrvMakeInputs()
 	// Reset Inputs
 	DrvInput[0] = DrvInput[1] = DrvInput[2] = DrvInput[3] = DrvInput[4] = 0x00;
 
+	DrvInputPort4[0] |= DrvInputPort4f[1]; // p2, p3, p4 coin (mirrors) for kaillera
+	DrvInputPort4[0] |= DrvInputPort4f[2];
+	DrvInputPort4[0] |= DrvInputPort4f[3];
+
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] |= (DrvInputPort0[i] & 1) << i;
@@ -127,62 +134,63 @@ static inline void DrvMakeInputs()
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
+	DIP_OFFSET(0x22)
 	// Default Values
-	{0x1f, 0xff, 0xff, 0xef, NULL                     },
-	{0x20, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0xef, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x1f, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
-	{0x1f, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
-	{0x1f, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
-	{0x1f, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
 	
 	{0   , 0xfe, 0   , 2   , "Buy In Price"           },
-	{0x1f, 0x01, 0x04, 0x04, "1 Coin"                 },
-	{0x1f, 0x01, 0x04, 0x00, "As Start Price"         },
+	{0x00, 0x01, 0x04, 0x04, "1 Coin"                 },
+	{0x00, 0x01, 0x04, 0x00, "As Start Price"         },
 	
 	{0   , 0xfe, 0   , 2   , "Regain Power Price"     },
-	{0x1f, 0x01, 0x08, 0x08, "1 Coin"                 },
-	{0x1f, 0x01, 0x08, 0x00, "As Start Price"         },
+	{0x00, 0x01, 0x08, 0x08, "1 Coin"                 },
+	{0x00, 0x01, 0x08, 0x00, "As Start Price"         },
 	
 	{0   , 0xfe, 0   , 2   , "Continue Price"         },
-	{0x1f, 0x01, 0x10, 0x10, "1 Coin"                 },
-	{0x1f, 0x01, 0x10, 0x00, "As Start Price"         },
+	{0x00, 0x01, 0x10, 0x10, "1 Coin"                 },
+	{0x00, 0x01, 0x10, 0x00, "As Start Price"         },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x1f, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1f, 0x01, 0x20, 0x20, "On"                     },
+	{0x00, 0x01, 0x20, 0x00, "Off"                    },
+	{0x00, 0x01, 0x20, 0x20, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1f, 0x01, 0x40, 0x40, "Off"                    },
-	{0x1f, 0x01, 0x40, 0x00, "On"                     },
+	{0x00, 0x01, 0x40, 0x40, "Off"                    },
+	{0x00, 0x01, 0x40, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "FBI Logo"               },
-	{0x1f, 0x01, 0x80, 0x00, "Off"                    },
-	{0x1f, 0x01, 0x80, 0x80, "On"                     },
+	{0x00, 0x01, 0x80, 0x00, "Off"                    },
+	{0x00, 0x01, 0x80, 0x80, "On"                     },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x20, 0x01, 0x03, 0x02, "Easy"                   },
-	{0x20, 0x01, 0x03, 0x03, "Normal"                 },
-	{0x20, 0x01, 0x03, 0x01, "Hard"                   },
-	{0x20, 0x01, 0x03, 0x00, "Hardest"                },
+	{0x01, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x01, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x01, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x01, 0x01, 0x03, 0x00, "Hardest"                },
 	
 	{0   , 0xfe, 0   , 3   , "Number of Players"      },
-	{0x20, 0x01, 0x0c, 0x04, "2"                      },
-	{0x20, 0x01, 0x0c, 0x08, "3"                      },
-	{0x20, 0x01, 0x0c, 0x0c, "4"                      },
+	{0x01, 0x01, 0x0c, 0x04, "2"                      },
+	{0x01, 0x01, 0x0c, 0x08, "3"                      },
+	{0x01, 0x01, 0x0c, 0x0c, "4"                      },
 	
 	{0   , 0xfe, 0   , 4   , "Clear Stage Power Up"   },
-	{0x20, 0x01, 0x60, 0x00, "0"                      },
-	{0x20, 0x01, 0x60, 0x20, "12"                     },
-	{0x20, 0x01, 0x60, 0x60, "24"                     },
-	{0x20, 0x01, 0x60, 0x40, "32"                     },
+	{0x01, 0x01, 0x60, 0x00, "0"                      },
+	{0x01, 0x01, 0x60, 0x20, "12"                     },
+	{0x01, 0x01, 0x60, 0x60, "24"                     },
+	{0x01, 0x01, 0x60, 0x40, "32"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Championship Game"      },
-	{0x20, 0x01, 0x80, 0x00, "4th"                    },
-	{0x20, 0x01, 0x80, 0x80, "5th"                    },
+	{0x01, 0x01, 0x80, 0x00, "4th"                    },
+	{0x01, 0x01, 0x80, 0x80, "5th"                    },
 };
 
 STDDIPINFO(Drv)
@@ -1089,7 +1097,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(DrvVBlank);
 		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBg0ScrollX);

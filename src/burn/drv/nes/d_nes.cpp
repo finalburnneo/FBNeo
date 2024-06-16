@@ -53067,7 +53067,7 @@ struct BurnDriver BurnDrvnes_seiredenlic = {
 // Seiryaku Simulation - Planet of Conspiracy - Shancara (Hack, English v1.01)
 // https://www.romhacking.net/translations/7239/
 static struct BurnRomInfo nes_shancaraRomDesc[] = {
-	{ "Seiryaku Simulation - Planet of Conspiracy - Shancara T-Eng v1.01 (2024)(BlackPaladin).nes",          262160, 0xbd7aa7f9, BRF_ESS | BRF_PRG },
+	{ "Seiryaku Simulation - Planet of Conspiracy - Shancara T-Eng v1.01 (2024)(BlackPaladin).nes",          262160, 0x7ea7e5df, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_shancara)
@@ -57459,7 +57459,7 @@ STD_ROM_PICK(nes_transformers)
 STD_ROM_FN(nes_transformers)
 
 struct BurnDriver BurnDrvnes_transformers = {
-	"nes_transformers", "nes_transformers", NULL, NULL, "2024",
+	"nes_transformers", NULL, NULL, NULL, "2024",
 	"Transformers - The Mystery of Optimus Prime (Hack, English)\0", NULL, "BlackPaladin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,

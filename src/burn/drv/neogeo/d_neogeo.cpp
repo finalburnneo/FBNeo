@@ -21882,6 +21882,42 @@ struct BurnDriver BurnDrvmslugxdg = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug X (Legendary Unlimited Fire, Hack) - 2024-06-13
+// Modified by ?
+
+static struct BurnRomInfo mslugxcqiRomDesc[] = {
+	{ "250-p1cqi.p1",	0x100000, 0x0e879edd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2cqi.ep1",	0x400000, 0xdd2c13fc, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",		0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",		0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",		0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5cqi.c5",	0x800000, 0x743cd68d, 3 | BRF_GRA },           //  7
+	{ "250-c6cqi.c6",	0x800000, 0xb1146061, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",		0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",		0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",		0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",		0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugxcqi, mslugxcqi, neogeo)
+STD_ROM_FN(mslugxcqi)
+
+struct BurnDriver BurnDrvMslugxcqi = {
+	"mslugxcqi", "mslugx", "neogeo", NULL, "2024",
+	"Metal Slug X (Legendary Unlimited Fire, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxcqiRomInfo, mslugxcqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 
 // Metal Slug 3 (Onimusha Samanosuke, Hack)
 // Modified by 磁暴线圈
@@ -22104,6 +22140,43 @@ struct BurnDriver BurnDrvmslug3cq = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cqRomInfo, mslug3cqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	ngOc400osInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Legendary Unlimited Fire, Hack) - 2024-06-12
+// Modified by ?
+
+static struct BurnRomInfo mslug3cqiRomDesc[] = {
+	{ "256-ph1cqi.p1",	0x100000, 0x52d92edf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cqi.sp2",	0x400000, 0x0873848c, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "256-c1d.c1",		0x800000, 0x3540398c, 3 | BRF_GRA },           //  2 Sprite data
+	{ "256-c2d.c2",		0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  3
+	{ "256-c3d.c3",		0x800000, 0xbfaade82, 3 | BRF_GRA },           //  4
+	{ "256-c4d.c4",		0x800000, 0x1463add6, 3 | BRF_GRA },           //  5
+	{ "256-c5d.c5",		0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  6
+	{ "256-c6d.c6",		0x800000, 0x806eb36f, 3 | BRF_GRA },           //  7
+	{ "256-c7cqi.c7",	0x800000, 0xa5f46605, 3 | BRF_GRA },           //  8
+	{ "256-c8cqi.c8",	0x800000, 0x03bbcf95, 3 | BRF_GRA },           //  9
+
+	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
+	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
+	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
+	{ "256-v4.v4",		0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(mslug3cqi, mslug3cqi, neogeo)
+STD_ROM_FN(mslug3cqi)
+
+struct BurnDriver BurnDrvMslug3cqi = {
+	"mslug3cqi", "mslug3", "neogeo", NULL, "2024",
+	"Metal Slug 3 (Legendary Unlimited Fire, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3cqiRomInfo, mslug3cqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	ngOc400osInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

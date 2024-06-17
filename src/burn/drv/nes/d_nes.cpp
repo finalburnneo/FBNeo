@@ -32417,3 +32417,23 @@ struct BurnDriver BurnDrvnes_smbroop = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Contra - Fun Together Version 2.0.0N
+// Modified by CZXInc
+
+static struct BurnRomInfo nes_contrafntgRomDesc[] = {
+	{ "Contra Fun Together Version v2.0.0n (2024)(CZXInc).nes",          131088, 0x5cb8269d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contrafntg)
+STD_ROM_FN(nes_contrafntg)
+
+struct BurnDriver BurnDrvnes_contrafntg = {
+	"nes_contrafntg", "nes_contra", NULL, NULL, "2024",
+	"Contra - Fun Together Version (Hack, v2.0.0N)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_contrafntgRomInfo, nes_contrafntgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

@@ -47,6 +47,7 @@ int bAutoPause = 1;
 
 bool bMenuEnabled = true;
 bool bHasFocus = false;
+int bKailleraServerDialogActive = 0;
 
 int nSavestateSlot = 1;
 
@@ -292,14 +293,13 @@ static void WINAPI kDropCallback(char *nick, int playernb)
 	VidSAddChatMsg(szTemp, 0xFFFFFF, NULL, 0);
 }
 
-static int bServerDialogActive = 0;
 static char* kaillera_gameList = NULL;
 
 static unsigned __stdcall DoKailleraServerSelectThread(void *arg)
 {
-	bServerDialogActive = 1;
+	bKailleraServerDialogActive = 1;
 	Kaillera_Select_Server_Dialog(NULL);
-	bServerDialogActive = 0;
+	bKailleraServerDialogActive = 0;
 
 	// clean up
 	if (kaillera_gameList) {
@@ -319,11 +319,11 @@ static void KailleraServerSelect()
 	HANDLE hThread = NULL;
 	unsigned ThreadID = 0;
 
-	bServerDialogActive = 0;
+	bKailleraServerDialogActive = 0;
 
 	hThread = (HANDLE)_beginthreadex(NULL, 0, DoKailleraServerSelectThread, (void*)NULL, 0, &ThreadID);
 
-	while (bServerDialogActive == 0) { // wait for thread to start :)
+	while (bKailleraServerDialogActive == 0) { // wait for thread to start :)
 		Sleep(1);
 	}
 }
@@ -1260,6 +1260,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		}
 
 		case MENU_STARTNET:
+			if (bKailleraServerDialogActive) {
+				// Kaillera server dialog already open!
+				break;
+			}
 			if (Init_Network()) {
 				MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_NO_NETPLAYDLL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				break;

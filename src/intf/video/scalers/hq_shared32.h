@@ -17,8 +17,8 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 
-#define abs32(value) (value & 0x7FFFFFFF)
-#define abs16(value) (value & 0x7FFF)
+#define abs32(value) ((value) & 0x7FFFFFFF)
+#define abs16(value) ((value) & 0x7FFF)
 
 const  int	Ymask = 0x00FF0000;
 const  int	Umask = 0x0000FF00;

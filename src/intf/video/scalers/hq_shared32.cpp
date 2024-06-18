@@ -16,16 +16,20 @@
 // along with this program; if not, write to the Free Software Foundation,
 // Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+
+#define USE_C_CODE 1
+#include "burnint.h"
 #include "hq_shared32.h"
 
-const unsigned __int64 reg_blank = 0x0000000000000000;
-const unsigned __int64 const7    = 0x0000000700070007;
-const unsigned __int64 treshold  = 0x0000000000300706;
+const UINT64 reg_blank = 0x0000000000000000;
+const UINT64 const7    = 0x0000000700070007;
+const UINT64 treshold  = 0x0000000000300706;
 
 void Interp1(unsigned char * pc, unsigned int c1, unsigned int c2)
 {
-	//*((int*)pc) = (c1*3+c2)/4;
-
+#ifdef USE_C_CODE
+	*((int*)pc) = (c1*3+c2)/4;
+#else
 #ifdef MMX
 	__asm
 	{
@@ -52,12 +56,14 @@ void Interp1(unsigned char * pc, unsigned int c1, unsigned int c2)
 		mov        [eax], edx
 	}
 #endif
+#endif
 }
 
 void Interp2(unsigned char * pc, unsigned int c1, unsigned int c2, unsigned int c3)
 {
-	//*((int*)pc) = (c1*2+c2+c3)/4;
-
+#ifdef USE_C_CODE
+	*((int*)pc) = (c1*2+c2+c3)/4;
+#else
 #ifdef MMX
 	__asm
 	{
@@ -84,14 +90,16 @@ void Interp2(unsigned char * pc, unsigned int c1, unsigned int c2, unsigned int 
 		mov        [eax], edx
 	}
 #endif
+#endif
 }
 
 void Interp3(unsigned char * pc, unsigned int c1, unsigned int c2)
 {
-	//*((int*)pc) = (c1*7+c2)/8;
-	//*((int*)pc) = ((((c1 & 0x00FF00)*7 + (c2 & 0x00FF00) ) & 0x0007F800) +
-	//	            (((c1 & 0xFF00FF)*7 + (c2 & 0xFF00FF) ) & 0x07F807F8)) >> 3;
-
+#ifdef USE_C_CODE
+	*((int*)pc) = (c1*7+c2)/8;
+	*((int*)pc) = ((((c1 & 0x00FF00)*7 + (c2 & 0x00FF00) ) & 0x0007F800) +
+		           (((c1 & 0xFF00FF)*7 + (c2 & 0xFF00FF) ) & 0x07F807F8)) >> 3;
+#else
 #ifdef MMX
 	__asm
 	{
@@ -121,14 +129,16 @@ void Interp3(unsigned char * pc, unsigned int c1, unsigned int c2)
 		mov		[eax], ecx
 	}
 #endif
+#endif
 }
 
 void Interp4(unsigned char * pc, unsigned int c1, unsigned int c2, unsigned int c3)
 {
-	//*((int*)pc) = (c1*2+(c2+c3)*7)/16;
-	//*((int*)pc) = ((((c1 & 0x00FF00)*2 + ((c2 & 0x00FF00) + (c3 & 0x00FF00))*7 ) & 0x000FF000) +
-	//              (((c1 & 0xFF00FF)*2 + ((c2 & 0xFF00FF) + (c3 & 0xFF00FF))*7 ) & 0x0FF00FF0)) >> 4;
-
+#ifdef USE_C_CODE
+	*((int*)pc) = (c1*2+(c2+c3)*7)/16;
+	*((int*)pc) = ((((c1 & 0x00FF00)*2 + ((c2 & 0x00FF00) + (c3 & 0x00FF00))*7 ) & 0x000FF000) +
+	              (((c1 & 0xFF00FF)*2 + ((c2 & 0xFF00FF) + (c3 & 0xFF00FF))*7 ) & 0x0FF00FF0)) >> 4;
+#else
 #ifdef MMX	
 	__asm
 	{
@@ -183,12 +193,14 @@ void Interp4(unsigned char * pc, unsigned int c1, unsigned int c2, unsigned int 
 		mov		[ebx], eax
 	}
 #endif
+#endif
 }
 
 void Interp5(unsigned char * pc, unsigned int c1, unsigned int c2)
 {
-	//*((int*)pc) = (c1+c2)/2;
-
+#ifdef USE_C_CODE
+	*((int*)pc) = (c1+c2)/2;
+#else
 #ifdef MMX
 	__asm
 	{
@@ -209,6 +221,7 @@ void Interp5(unsigned char * pc, unsigned int c1, unsigned int c2)
 		shr        edx, 1
 		mov        [eax], edx
 	}
+#endif
 #endif
 }
 
@@ -259,6 +272,12 @@ bool Diff(unsigned int c1, unsigned int c2)
 
 	if (YUV1 == YUV2) return false; // Save some processing power
 
+#ifdef USE_C_CODE
+	return
+		( abs32((YUV1 & Ymask) - (YUV2 & Ymask)) > trY ) ||
+		( abs32((YUV1 & Umask) - (YUV2 & Umask)) > trU ) ||
+		( abs32((YUV1 & Vmask) - (YUV2 & Vmask)) > trV );
+#else
 #ifdef MMX
 	unsigned int retval;
 	__asm
@@ -328,11 +347,22 @@ bool Diff(unsigned int c1, unsigned int c2)
 		( abs32((YUV1 & Umask) - (YUV2 & Umask)) > trU ) ||
 		( abs32((YUV1 & Vmask) - (YUV2 & Vmask)) > trV );
 #endif
+#endif
 }
 
 
 unsigned int RGBtoYUV(unsigned int c)
 {	// Division through 3 slows down the emulation about 10% !!!
+#ifdef USE_C_CODE
+	unsigned char r, g, b, Y, u, v;
+	r = (c & 0x000000FF);
+	g = (c & 0x0000FF00) >> 8;
+	b = (c & 0x00FF0000) >> 16;
+	Y = (r + g + b) >> 2;
+	u = 128 + ((r - b) >> 2);
+	v = 128 + ((-r + 2*g -b)>>3);
+	return (Y<<16) + (u<<8) + v;
+#else
 #ifdef MMX
 	unsigned int retval;
 	__asm
@@ -409,5 +439,6 @@ unsigned int RGBtoYUV(unsigned int c)
 	//u = (-0.148223 * r  -  0.290993 * g  +  0.439216 * b) + 128;
 	//v = (0.439216 * r  -  0.367788 * g  -  0.071427 * b) + 128;
 	//return (y << 16) + (u << 8) + v;
+#endif
 #endif
 }

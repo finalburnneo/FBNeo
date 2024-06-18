@@ -1303,7 +1303,7 @@ void MenuEnableItems()
 
 	EnableMenuItem(hMenu, MENU_MODELESS,				MF_ENABLED | MF_BYCOMMAND);
 
-#if defined _MSC_VER && defined BUILD_X86_ASM
+#if defined BUILD_X86_ASM
 	EnableMenuItem(hBlitterMenu[1], MENU_ENHANCED_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);
 	EnableMenuItem(hBlitterMenu[2], MENU_SOFTFX_SOFT_HQ3XS_VBA,		MF_ENABLED | MF_BYCOMMAND);
 	EnableMenuItem(hBlitterMenu[4], MENU_DX9_ALT_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);

@@ -25,7 +25,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
+			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o hq3xs.o hq_shared32.o xbr.o xbr32.o \
 			\
 			aud_dsound3.o aud_xaudio2.o cd_img.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
 			inp_dinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_effect.o vid_directx9.o vid_directx_support.o

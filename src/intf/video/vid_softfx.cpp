@@ -25,7 +25,7 @@ void _2xpm_hq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long 
 extern void hq2xS_init(unsigned bits_per_pixel);
 extern void hq2xS(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
 extern void hq2xS32(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
-#if defined _MSC_VER && defined BUILD_X86_ASM
+#if defined BUILD_X86_ASM
 extern void hq3xS(unsigned char*,unsigned int,unsigned char*,unsigned char*,unsigned int,int,int);
 extern void hq3xS32(unsigned char*,unsigned int,unsigned char*,unsigned char*,unsigned int,int,int);
 #endif
@@ -881,7 +881,7 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			break;
 		}
 		case FILTER_HQ3XS_VBA: {                                                                                      // hq3xS filter (16/32BPP only)
-#if defined _MSC_VER && defined BUILD_X86_ASM
+#if defined BUILD_X86_ASM
 			if (nVidImageDepth == 16) {
 				hq3xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			} else if (nVidImageDepth == 32) {

@@ -37,6 +37,8 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
+
 static INT32 vblank = 0;
 
 static struct BurnInputInfo WwfsstarInputList[] = {
@@ -270,6 +272,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset();
 
 	vblank = 1;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -670,7 +674,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -692,6 +696,8 @@ static INT32 DrvFrame()
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	ZetClose();
 	SekClose();
@@ -722,7 +728,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
 
-		SCAN_VAR(vblank);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

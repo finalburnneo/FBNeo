@@ -49241,3 +49241,40 @@ struct BurnDriver BurnSpecZxwordle = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Carlos Michelis (EN/ES/RU) (128K)
+
+static struct BurnRomInfo Spec_CarlosMRomDesc[] = {
+	{ "Carlos Michelis - All in One 128K (2012)(World XXI Soft Inc.).tap", 316868, 0xdf7cf901, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_CarlosM, Spec_CarlosM, Spec128)
+STD_ROM_FN(Spec_CarlosM)
+
+struct BurnDriver BurnSpec_CarlosM = {
+	"spec_carlosm", NULL, "spec_spec128", NULL, "2012",
+	"Carlos Michelis (EN/ES/RU)(128K)\0", "Expansion: In Load Menu choose 4, in Main Menu again 4", "World XXI Soft Inc.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_RUNGUN, 0,
+	SpectrumGetZipName, Spec_CarlosMRomInfo, Spec_CarlosMRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Thieves School/Escuela de Ladrones EN/ES (128K)
+
+static struct BurnRomInfo Spec_thievesschoolRomDesc[] = {
+	{ "Thieves School - All in One 128K (2008)(World XXI Soft Inc.).tap", 339068, 0x621a5647, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_thievesschool, Spec_thievesschool, Spec128)
+STD_ROM_FN(Spec_thievesschool)
+
+struct BurnDriver BurnSpec_thievesschool = {
+	"spec_thievesschool", NULL, "spec_spec128", NULL, "2008",
+	"Thieves School - Escuela de Ladrones (EN/ES) (128K)\0", "Expansion:In Load Menu choose 2 or 3, in Main Menu go to Expansion with 6/7", "World XXI Soft Inc.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, Spec_thievesschoolRomInfo, Spec_thievesschoolRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

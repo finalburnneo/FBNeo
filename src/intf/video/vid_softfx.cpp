@@ -165,8 +165,12 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 		case FILTER_ADVMAME_SCALE_2X:
 		case FILTER_ADVMAME_SCALE_3X:
 		case FILTER_HQ2XS_VBA:
-		case FILTER_HQ3XS_VBA:
 			if (nDepth == 16 || nDepth == 32) {
+				return nDepth;
+			}
+			break;
+		case FILTER_HQ3XS_VBA:
+			if (nDepth == 16) {
 				return nDepth;
 			}
 			break;

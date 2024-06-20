@@ -485,7 +485,7 @@ static INT32 DrvExit()
 	MSM6295Exit(0);
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -692,15 +692,15 @@ static INT32 DrvFrame()
 		CPU_RUN_TIMER(1);
 	}
 
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
-
-	ZetClose();
-	SekClose();
 
 	return 0;
 }

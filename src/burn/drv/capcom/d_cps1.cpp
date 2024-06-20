@@ -26787,13 +26787,13 @@ struct BurnDriver BurnDrvCpsCaptre = {
 
 // Captain Commando (God of War, Hack)
 // Modified by Jinggai
-// GOTVG 20230309
+// GOTVG 20240519
 
 static struct BurnRomInfo captcmzsRomDesc[] = {
-	{ "cczs_23d.8f",	0x080000, 0x71d5611d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_22d.7f",	0x080000, 0xe46fc899, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_24d.9e",	0x100000, 0xf3ee95be, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cczs_28d.9f",	0x100000, 0x996e7663, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_23d.8f",	0x080000, 0x28c002cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_22d.7f",	0x080000, 0x5c37d15e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_24d.9e",	0x100000, 0x15f65b4f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_28d.9f",	0x100000, 0xbbd7c5a6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -26809,7 +26809,7 @@ static INT32 CaptcommInit()
 }
 
 struct BurnDriver BurnDrvCpsCaptcmzs = {
-	"captcmzs", "captcomm", NULL, NULL, "2023",
+	"captcmzs", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (God of War, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -26848,13 +26848,13 @@ struct BurnDriver BurnDrvCpsCaptcmjy = {
 
 // Captain Commando (Incubus, Hack)
 // Modified by Jinggai
-// GOTVG 20230930
+// GOTVG 20240522
 
 static struct BurnRomInfo captcmmyRomDesc[] = {
-	{ "ccmy_23d.8f",	0x080000, 0xfde1676b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_22d.7f",	0x080000, 0xe610b61c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_24d.9e",	0x100000, 0x73a2c165, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ccmy_28d.9f",	0x100000, 0x87ebfc35, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_23d.8f",	0x080000, 0x90526683, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_22d.7f",	0x080000, 0x3d9d11f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_24d.9e",	0x100000, 0xc44af9c3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_28d.9f",	0x100000, 0x74140bfb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -26863,7 +26863,7 @@ STD_ROM_PICK(captcmmy)
 STD_ROM_FN(captcmmy)
 
 struct BurnDriver BurnDrvCpsCaptcmmy = {
-	"captcmmy", "captcomm", NULL, NULL, "2023",
+	"captcmmy", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (Incubus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -27010,13 +27010,13 @@ struct BurnDriver BurnDrvCpsCaptcmsc = {
 
 // Captain Commando (CR7 Elite, Hack)
 // Modified by Jinggai
-// GOTVG 20230924
+// GOTVG 20240520
 
 static struct BurnRomInfo captcmcrRomDesc[] = {
-	{ "cccr_23d.8f",	0x080000, 0x20659d63, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_22d.7f",	0x080000, 0x40cafb24, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_24d.9e",	0x100000, 0x236ab891, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cccr_28d.9f",	0x100000, 0x3cf7dcc7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_23d.8f",	0x080000, 0xdffb6a54, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_22d.7f",	0x080000, 0xafb2e2ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_24d.9e",	0x100000, 0xd5615e42, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_28d.9f",	0x100000, 0x52d54c2e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27025,7 +27025,7 @@ STD_ROM_PICK(captcmcr)
 STD_ROM_FN(captcmcr)
 
 struct BurnDriver BurnDrvCpsCaptcmcr = {
-	"captcmcr", "captcomm", NULL, NULL, "2023",
+	"captcmcr", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (CR7 Elite, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,

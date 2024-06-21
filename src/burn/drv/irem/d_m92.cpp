@@ -2130,12 +2130,12 @@ static INT32 DrvFrame()
 		}
 		else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "uccops", 6)) {
 			DrvInput[5] = 0xae;
-			DrvInput[6] = 0x0f;
+			DrvInput[6] = 0xff;
 			DrvInput[7] = 0x00;
 		}
 		else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "hook", 4)) {
 			DrvInput[5] = 0xbf;
-			DrvInput[6] = 0x0f;
+			DrvInput[6] = 0xff;
 			DrvInput[7] = 0xff;
 		}
 	}

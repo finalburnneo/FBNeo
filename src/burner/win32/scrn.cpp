@@ -23,6 +23,9 @@ void DisplayPopupMenu(int nMenu);
 // it.
 // 3: only compatible with "side" bezels with nothing on top/bottom.
 // note: only works with "Video -> Stretch -> Correct Aspect Ratio"!
+// 4: problems with the "Enhanced" blitter: not showing bezel or parts
+// go missing
+//
 //
 // on sizing of window
 //~
@@ -806,6 +809,14 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 		sprintf(szName, "support/bezel/%s.png", pszName);
 
 		FILE *fp = fopen(szName, "rb");
+
+		if (!fp && BurnDrvGetTextA(DRV_PARENT)) {
+			// File doesn't exist, so try parent name
+			pszName = BurnDrvGetTextA(DRV_PARENT);
+			sprintf(szName, "support/bezel/%s.png", pszName);
+			fp = fopen(szName, "rb");
+		}
+
 		if (fp) {
 			bprintf(0, _T("Loading bezel \"%S\"\n"), szName);
 			hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);

@@ -2746,7 +2746,7 @@ struct BurnDriver BurnDrvAvengersa = {
 
 // Avengers (US, rev. A)
 
-static struct BurnRomInfo avengerbRomDesc[] = {
+static struct BurnRomInfo avengersbRomDesc[] = {
 	{ "av_04a.10n",		0x8000, 0x0fea7ac5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06a.13n",		0x8000, 0x491a712c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2786,15 +2786,15 @@ static struct BurnRomInfo avengerbRomDesc[] = {
 	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
 };
 
-STD_ROM_PICK(avengerb)
-STD_ROM_FN(avengerb)
+STD_ROM_PICK(avengersb)
+STD_ROM_FN(avengersb)
 
-struct BurnDriver BurnDrvAvengerb = {
+struct BurnDriver BurnDrvAvengersb = {
 	"avengersb", "avengers", NULL, NULL, "1987",
 	"Avengers (US, rev. A)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avengerbRomInfo, avengerbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	NULL, avengersbRomInfo, avengersbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
 	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -2802,7 +2802,7 @@ struct BurnDriver BurnDrvAvengerb = {
 
 // Avengers (US)
 
-static struct BurnRomInfo avengercRomDesc[] = {
+static struct BurnRomInfo avengerscRomDesc[] = {
 	{ "av_04.10n",		0x8000, 0xc785e1f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06.13n",		0x8000, 0xc6f84a5f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0xf9a9a92f, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2842,15 +2842,15 @@ static struct BurnRomInfo avengercRomDesc[] = {
 	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
 };
 
-STD_ROM_PICK(avengerc)
-STD_ROM_FN(avengerc)
+STD_ROM_PICK(avengersc)
+STD_ROM_FN(avengersc)
 
-struct BurnDriver BurnDrvAvengerc = {
+struct BurnDriver BurnDrvAvengersc = {
 	"avengersc", "avengers", NULL, NULL, "1987",
 	"Avengers (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avengercRomInfo, avengercRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	NULL, avengerscRomInfo, avengerscRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
 	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };

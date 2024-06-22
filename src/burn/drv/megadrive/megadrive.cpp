@@ -595,7 +595,7 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 static void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	if (sekAddress >= 0xa00000 && sekAddress <= 0xafffff) {
+	if (sekAddress == 0xA11100 || sekAddress == 0xA11200) {
 		MegadriveWriteByte(sekAddress, wordValue >> 8);
 		return;
 	}

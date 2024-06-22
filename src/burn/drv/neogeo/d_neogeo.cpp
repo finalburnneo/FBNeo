@@ -18601,11 +18601,11 @@ struct BurnDriver BurnDrvMslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Firepower Showdown, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240613
+// GOTVG 20240621
 
 static struct BurnRomInfo mslugxfsRomDesc[] = {
-	{ "250-p1fs.p1",	0x100000, 0x0e879edd, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2fs.ep1",	0x400000, 0xdd2c13fc, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p1fs.p1",	0x100000, 0xcb971d43, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2fs.ep1",	0x400000, 0x756b4ddd, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
@@ -19246,11 +19246,11 @@ struct BurnDriver BurnDrvMslug3cq = {
 
 // Metal Slug 3 (Firepower Showdown, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240613
+// GOTVG 20240620
 
 static struct BurnRomInfo mslug3fsRomDesc[] = {
-	{ "256-p1fs.p1",	0x100000, 0x52d92edf, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2fs.sp2",	0x400000, 0x0873848c, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1fs.p1",	0x100000, 0x1874bf57, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2fs.sp2",	0x400000, 0xe62fc84c, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_TEXT
 

@@ -1014,6 +1014,7 @@ BEGIN
         MENUITEM "&Rotate vertically aligned games",			MENU_ROTATEVERTICAL
         MENUITEM "Force 60Hz refresh rate",						MENU_FORCE60HZ
         MENUITEM "Enable &Triple Buffering (Fullscreen)",			MENU_TRIPLE
+        MENUITEM "Enable Windowed Fullscreen (DX9 Blitters)",	MENU_WINFS
 		MENUITEM "Enable VSync (Windowed)",						MENU_VIDEOVSYNC
 		MENUITEM "Enable DWM Sync (Windowed)",				MENU_DWMFIX
 		MENUITEM "Auto Frameskip",								MENU_AUTOFRAMESKIP

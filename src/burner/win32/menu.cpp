@@ -679,6 +679,8 @@ void MenuUpdate()
 
 	CheckMenuItem(hMenu, MENU_TRIPLE, bVidTripleBuffer ? MF_CHECKED : MF_UNCHECKED);
 
+	CheckMenuItem(hMenu, MENU_WINFS, bVidDX9WinFullscreen ? MF_CHECKED : MF_UNCHECKED);
+
 	CheckMenuItem(hMenu, MENU_DWMFIX, bVidDWMSync ? MF_CHECKED : MF_UNCHECKED);
 
 	var = nVidSelect + MENU_BLITTER_1;

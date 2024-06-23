@@ -1569,6 +1569,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_WINFS:
+			bVidDX9WinFullscreen = !bVidDX9WinFullscreen;
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_DWMFIX:
 			bVidDWMSync = !bVidDWMSync;
 			if (bVidDWMSync && bVidVSync)

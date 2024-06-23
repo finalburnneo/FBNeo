@@ -191,6 +191,7 @@ extern INT32 nVidVerWidth, nVidVerHeight;
 extern INT32 nVidFullscreen;
 extern INT32 bVidBilinear;
 extern INT32 bVidScanlines;
+extern INT32 bVidDX9WinFullscreen;
 extern INT32 bVidScanRotate;
 extern INT32 bVidScanBilinear;
 extern INT32 nVidScanIntensity;

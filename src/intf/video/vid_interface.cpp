@@ -86,6 +86,7 @@ INT32 bVidVSync = 0;								// 1 = sync blits/pageflips/presents to the screen
 INT32 bVidTripleBuffer = 0;						// 1 = use triple buffering
 INT32 bVidBilinear = 1;							// 1 = enable bi-linear filtering (D3D blitter)
 INT32 bVidScanlines = 0;							// 1 = draw scanlines
+INT32 bVidDX9WinFullscreen = 0;					// 1 = borderless windowed for fullscreen
 INT32 bVidScanRotate = 1;							// 1 = rotate scanlines and RGB effects for rotated games
 INT32 bVidScanBilinear = 1;						// 1 = use bi-linear filtering for scanlines (D3D blitter, debug variable)
 INT32 nVidScanIntensity = 0x00BFBFBF;				// The maximum colour-value for the scanlines (D3D blitter)

@@ -46546,7 +46546,7 @@ struct BurnDriver BurnSpecSd2mipanic = {
 // Shovel Duck II - A Mousive Panic! (48K) (HB)
 
 static struct BurnRomInfo SpecSd2mopanicRomDesc[] = {
-	{ "Shovel Duck II - A Mousive Panic! 48K (2024)(KTB Productions).tap", 45499, 0x53879012, BRF_ESS | BRF_PRG },
+	{ "Shovel Duck II - A Mousive Panic! 48K (2024)(KTB Productions).tap", 43232, 0xfbcc3a8c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSd2mopanic, SpecSd2mopanic, Spectrum)

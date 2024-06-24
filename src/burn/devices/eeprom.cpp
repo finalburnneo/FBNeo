@@ -385,3 +385,20 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 //		BurnAcb(&ba);
 //	}
 }
+
+void EEPROMScanData(INT32 nAction, INT32* pnMin)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMScanData called without init\n"));
+#endif
+
+	struct BurnArea ba;
+
+	if (nAction & ACB_NVRAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= eeprom_data;
+		ba.nLen		= MEMORY_SIZE;
+		ba.szName	= "EEPROM Data";
+		BurnAcb(&ba);
+	}
+}

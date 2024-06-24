@@ -754,7 +754,7 @@ static struct BurnDIPInfo neogeoDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,     0xFD, 0,	33,   "BIOS"									},
+	{0,     0xFD, 0,	35,   "BIOS"									},
 	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
@@ -862,7 +862,7 @@ static struct BurnDIPInfo neoFakeDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,		0xFD, 0,	33,   "BIOS"									},
+	{0,		0xFD, 0,	35,   "BIOS"									},
 	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
@@ -1045,6 +1045,87 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 
 STDDIPINFO(neoForceAES)
 
+static struct BurnDIPInfo neoForceMVSDIPList[] = {
+	DIP_OFFSET(0x19)
+
+	// Defaults
+	{0x00,	0xFF, 0xFF,	0x00, NULL										},
+	{0x01,	0xFF, 0x7F,	0x00, NULL										},
+	{0x02,	0xFF, 0xFF,	0x80, NULL										},
+	{0x03,	0xFF, 0xFF,	0x01, NULL										},
+
+	{0,		0xFE, 0,	2,	  "Autofire"								},
+	{0x00,	0x01, 0x04,	0x00, "Off"										},
+	{0x00,	0x01, 0x04,	0x04, "On"										},
+	// DIP 1
+	{0,		0xFE, 0,	2,	  "Setting mode"							},
+	{0x00,	0x01, 0x01,	0x00, "Off"										},
+	{0x00,	0x01, 0x01,	0x01, "On"										},
+
+	// 1 or 2 coin slots
+	{0,		0xFE, 0,	2,	  "Coin chutes"								},
+	{0x00,	0x02, 0x02,	0x00, "1"										},
+	{0x02,	0x00, 0x3F,	0x06, NULL										},
+	{0x00,	0x02, 0x02,	0x02, "2"										},
+	{0x02,	0x00, 0x3F,	0x06, NULL										},
+	// 2 or 4 coin slots
+	{0,		0xFE, 0,	2,	  "Coin chutes"								},
+	{0x00,	0x82, 0x02,	0x00, "2"										},
+	{0x02,	0x00, 0x3F,	0x06, NULL										},
+	{0x00,	0x82, 0x02,	0x02, "4"										},
+	{0x02,	0x00, 0x3F,	0x06, NULL										},
+
+	{0,		0xFE, 0,	5,	  "Commmunicaton"							},
+	{0x00,	0x01, 0x38,	0x00, "Disabled"								},
+	{0x00,	0x01, 0x38,	0x08, "Setting 1"								},
+	{0x00,	0x01, 0x38,	0x10, "Setting 2"								},
+	{0x00,	0x01, 0x38,	0x18, "Setting 3"								},
+	{0x00,	0x01, 0x38,	0x20, "Setting 4"								},
+	{0x00,	0x01, 0x38,	0x28, "Setting 5"								},
+	{0x00,	0x01, 0x38,	0x30, "Setting 6"								},
+	{0x00,	0x01, 0x38,	0x38, "Setting 7"								},
+
+	{0,		0xFE, 0,	2,	  "Free play"								},
+	{0x00,	0x01, 0x40,	0x00, "Off"										},
+	{0x00,	0x01, 0x40,	0x40, "On"										},
+	{0,		0xFE, 0,	2,	  "Stop mode"								},
+	{0x00,	0x01, 0x80,	0x00, "Off"										},
+	{0x00,	0x01, 0x80,	0x80, "On"										},
+
+	// Fake DIPs
+	// BIOS
+	{0,     0xFD, 0,	19,   "BIOS"									},
+	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
+	{0x02,	0x01, 0x3f,	0x03, "MVS USA ver. 5 (2 slot)"					},
+	{0x02,	0x01, 0x3f,	0x04, "MVS USA ver. 5 (4 slot)"					},
+	{0x02,	0x01, 0x3f,	0x05, "MVS USA ver. 5 (6 slot)"					},
+	{0x02,	0x01, 0x3f,	0x06, "MVS USA (U4)"							},
+	{0x02,	0x01, 0x3f,	0x07, "MVS USA (U3)"							},
+	{0x02,	0x01, 0x3f,	0x08, "MVS Japan ver. 6 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x09, "MVS Japan ver. 5 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x0a, "MVS Japan ver. 3 (4 slot)"				},
+	{0x02,	0x01, 0x3f,	0x0b, "NEO-MVH MV1C (Asia)"						},
+	{0x02,	0x01, 0x3f,	0x0c, "NEO-MVH MV1C (Japan)"					},
+	{0x02,	0x01, 0x3f,	0x0d, "MVS Japan (J3)"							},
+	{0x02,	0x01, 0x3f,	0x0e, "MVS Japan (J3, alt)"						},
+	{0x02,	0x01, 0x3f,	0x11, "Development Kit"							},
+	{0x02,	0x01, 0x3f,	0x12, "Deck ver. 6 (Git Ver 1.3)"				},
+	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS (Hack, Ver. 4.0)"			},
+	{0x02,	0x01, 0x3f,	0x22, "NeoOpen BIOS v0.1 beta"					},
+
+	// Memory card
+	{0,		0xFD, 0,	2,	  "Memory card"								},
+	{0x02,	0x01, 0x80,	0x80, "Writable"								},
+	{0x02,	0x01, 0x80,	0x00, "Write-protected"							},
+	{0,		0xFD, 0,	2,	  "New card type"							},
+	{0x02,	0x01, 0x40,	0x40, "1 Megabit"								},
+	{0x02,	0x01, 0x40,	0x00, "Normal"									},
+};
+
+STDDIPINFO(neoForceMVS)
+
 static struct BurnDIPInfo ngdefaultDIPList[] = {
 	DIP_OFFSET(0x19)
 
@@ -1094,7 +1175,7 @@ static struct BurnDIPInfo ngdefaultDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,     0xFD, 0,	33,   "BIOS"									},
+	{0,     0xFD, 0,	35,   "BIOS"									},
 	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
@@ -1189,7 +1270,7 @@ static struct BurnDIPInfo aesdefaultDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,     0xFD, 0,	33,   "BIOS"									},
+	{0,     0xFD, 0,	35,   "BIOS"									},
 	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
 	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
@@ -20615,12 +20696,12 @@ struct BurnDriver BurnDrvSamsh2jq = {
 };
 
 
-// Samurai Shodown II Perfect Hack v. 2.0 - 2024-05-01
+// Samurai Shodown II Perfect Hack v. 2.0 - 2024-06-24
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0x7af0612c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0x5fb8a564, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "063-p3pe.p3",	0x020000, 0x74c7e103, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "063-p1pe.p1",	0x100000, 0x46956c33, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0xd4d86aa5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p3pe.p3",	0x020000, 0x291dd6de, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	SAMSHO2_COMPONENTS
 };
@@ -20633,7 +20714,7 @@ struct BurnDriver BurnDrvSamsho2pe = {
 	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Perfect V. 2.0, Hack)\0", NULL, "Bear", "Neo Geo MVS",
 	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 2.0, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
-	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoForceMVSDIPInfo,
 	samsh2spInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };

@@ -223,7 +223,7 @@ BEGIN
     CONTROL         BMP_ABOUT,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,3,3,100,50
     CONTROL         "version",IDC_FBA_VER,"Static",SS_OWNERDRAW | WS_GROUP,83,65,269,10
     CONTROL         "specialbuild",IDC_SPECIALSTRING,"Static",SS_OWNERDRAW | WS_GROUP,83,73,269,10
-    LTEXT           "FightcadeFBNeo is a fork of FB Neo, based on parts of MAME && Final Burn.\n© 2004-2020, Team Fightcade.",IDC_STATIC,6,88,235,16,WS_DISABLED
+    LTEXT           "FightcadeFBNeo is a fork of FB Neo, based on parts of MAME && Final Burn.\nï¿½ 2004-2020, Team Fightcade.",IDC_STATIC,6,88,235,16,WS_DISABLED
     DEFPUSHBUTTON   "OK",IDOK,305,90,50,14
     PUSHBUTTON      "License",IDC_SHOWLICENSE,251,90,50,14
     CONTROL         "",IDC_LICENSE,"RICHEDIT20A",ES_MULTILINE | ES_READONLY | WS_VSCROLL | ES_NOIME,3,109,353,77, WS_EX_STATICEDGE | ES_EX_NOCALLOLEINIT
@@ -1144,6 +1144,7 @@ BEGIN
                 MENUITEM "Disabled",					MENU_DISABLE_SOCD
                 MENUITEM "Regular SOCD\t(U+D=N, L+R=N)",					MENU_ENABLE_SOCD
                 MENUITEM "HitBox SOCD\t(U+D=U, L+R=N)",					MENU_HITBOX_SOCD
+                MENUITEM "4 way SOCD, no diagonals",					MENU_4WAY_SOCD
         END
     END
     POPUP "Misc"

@@ -733,6 +733,7 @@
 #define MENU_HITBOX_SOCD					10753
 #define MENU_ENABLE_SOCD					10754
 #define MENU_DISABLE_SOCD					10755
+#define MENU_4WAY_SOCD					    10756
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

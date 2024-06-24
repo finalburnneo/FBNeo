@@ -29,6 +29,7 @@ enum {
 static INT32 InpDirections[2][COUNT] = {};
 static INT32 InpDataPrev[2][COUNT] = {};
 static INT32 InpDataNext[2][COUNT] = {};
+static INT32 bInpIsLocked[2] = { 0 }; //necessary for 4 way joystick mode
 static bool bClearOpposites = false;
 
 static int GetInpFrame(INT32 player, INT32 dir)
@@ -901,6 +902,7 @@ INT32 GameInpInit()
 	const char* clearOppositesGameList[] = {
 		"umk3", "umk3p", "umk3uc", "umk3uk", "umk3te",
 		"mk2", "mk2p", "mk2ute",
+		"mk", 
 		"dbz2", "jojo", "jchan", "jchan2", "dankuga", "kaiserkn",
 		NULL
 	};
@@ -2031,6 +2033,78 @@ void GameInpUpdateNext(bool bCopy)
 void GameInpClearOpposites(bool bCopy)
 {
 	if (kNetVersion >= NET_VERSION_SOCD && (bClearOpposites || nEnableSOCD > 0)) {
+		if (nEnableSOCD == 3) {
+			for (INT32 i = 0; i < 2; i++) {
+				//4 way direction forced, "last wins", for tetris
+				// first we need neutral socd cleaning
+			fourway:
+				if (GetInpFrame(i, UP) && GetInpFrame(i, DOWN)) {
+					SetInpFrame(i, UP, 0, bCopy);
+					SetInpFrame(i, DOWN, 0, bCopy);
+				}
+
+				if (GetInpFrame(i, LEFT) && GetInpFrame(i, RIGHT)) {
+					SetInpFrame(i, LEFT, 0, bCopy);
+					SetInpFrame(i, RIGHT, 0, bCopy);
+				}
+				//on unlocked input, perform last wins cleaning between axes
+				if (!bInpIsLocked[i]) {
+					if (GetInpFrame(i, DOWN) && GetInpFrame(i, LEFT)) { //D+L
+						if (GetInpPrev(i, DOWN) || GetInpPrev(i, RIGHT)) {
+							SetInpFrame(i, DOWN, 0, bCopy);
+							bInpIsLocked[i] = 1; //lock inputs to prevent oscillating
+						} else {
+							SetInpFrame(i, LEFT, 0, bCopy);
+							bInpIsLocked[i] = 1; //same deal
+						}
+					}
+
+					if (GetInpFrame(i, UP) && GetInpFrame(i, LEFT)) { //U+L
+						if (GetInpPrev(i, UP) || GetInpPrev(i, RIGHT)) {
+							SetInpFrame(i, UP, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						} else {
+							SetInpFrame(i, LEFT, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						}
+					}
+
+					if (GetInpFrame(i, DOWN) && GetInpFrame(i, RIGHT)) { //D+R
+						if (GetInpPrev(i, DOWN) || GetInpPrev(i, LEFT)) {
+							SetInpFrame(i, DOWN, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						} else {
+							SetInpFrame(i, RIGHT, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						}
+					}
+
+					if (GetInpFrame(i, UP) && GetInpFrame(i, RIGHT)) { //U+R
+						if (GetInpPrev(i, UP) || GetInpPrev(i, LEFT)) {
+							SetInpFrame(i, UP, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						} else {
+							SetInpFrame(i, RIGHT, 0, bCopy);
+							bInpIsLocked[i] = 1;
+						}
+					}
+
+					//when locked:
+				} else {
+					if ((GetInpFrame(i, UP) + GetInpFrame(i, DOWN) + GetInpFrame(i, LEFT) + GetInpFrame(i, RIGHT)) <= 1) {
+						bInpIsLocked[i] = 0; //unlock if there's zero or one directions pressed: the situation must be correct without cleaning
+					} else if (((GetInpPrev(i, UP) + GetInpFrame(i, DOWN)) >= 2) || ((GetInpFrame(i, UP) + GetInpPrev(i, DOWN)) >= 2) || ((GetInpPrev(i, LEFT) + GetInpFrame(i, RIGHT)) >= 2) || ((GetInpFrame(i, LEFT) + GetInpPrev(i, RIGHT)) >= 2)) {
+						bInpIsLocked[i] = 0; //something changed, but still 2 directions held down => unlock and clean
+						goto	 fourway;
+					} else {
+						for (INT32 j = 0; j < COUNT; j++) {
+							SetInpFrame(i, j, GetInpPrev(i, j), bCopy);//else the situation must be the same as before so copy the input
+						}
+					}
+				}
+			}
+		}
+
 		if (nEnableSOCD == 2) {
 			// Hitbox SOCD cleaner
 			for (INT32 i = 0; i < 2; i++) {

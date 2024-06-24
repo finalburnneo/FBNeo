@@ -1923,6 +1923,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			nEnableSOCD = 2;
 			break;
 
+		case MENU_4WAY_SOCD:
+			nEnableSOCD = 3;
+			break;
+
 		case MENU_SAVEHISCORES:
 			EnableHiscores = !EnableHiscores;
 			break;

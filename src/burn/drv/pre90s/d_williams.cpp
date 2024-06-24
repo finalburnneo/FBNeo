@@ -3512,6 +3512,47 @@ struct BurnDriver BurnDrvSinistarsm = {
 };
 
 
+// Sinistar (SynaMax difficulty/titlescreen hack, revision 3, upright)
+
+static struct BurnRomInfo sinistarcsmRomDesc[] = {
+	{ "sinistar_rom_10-b_16-3004-62.4c",	0x1000, 0x3d670417, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "sinistar_rom_11-b_16-3004-63.4a.mod",0x1000, 0xfe83bce2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sinistar_rom_1-b_16-3004-53.1d",		0x1000, 0xf6f3a22c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sinistar_rom_2-b_16-3004-54.1c",		0x1000, 0xcab3185c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sinistar_rom_3-b_16-3004-55.1a",		0x1000, 0x1ce1b3cc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sinistar_rom_4-b_16-3004-56.2d",		0x1000, 0x6da632ba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sinistar_rom_5-b_16-3004-57.2c",		0x1000, 0xb662e8fc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sinistar_rom_6-b_16-3004-58.2a",		0x1000, 0x2306183d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sinistar_rom_7-b_16-3004-59.3d",		0x1000, 0xe5dd918e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sinistar_rom_8-b_16-3004-60.3c.mod",	0x1000, 0x9b693243, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sinistar_rom_9-b_16-3004-61.3a.mod",	0x1000, 0x5ed44beb, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "3004_speech_ic7_r1_16-3004-52.ic7",	0x1000, 0xe1019568, 2 | BRF_PRG | BRF_ESS }, // 11 M6800 Code
+	{ "3004_speech_ic5_r1_16-3004-50.ic5",	0x1000, 0xcf3b5ffd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "3004_speech_ic6_r1_16-3004-51.ic6",	0x1000, 0xff8d2645, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "3004_speech_ic4_r1_16-3004-49.ic4",	0x1000, 0x4b56a626, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "video_sound_rom_9_std.808.ic12",		0x1000, 0xb82f4ddb, 2 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "video_sound_rom_10_std.ic12",		0x1000, 0xb5c70082, 3 | BRF_PRG | BRF_ESS }, // 16 soundcpu_b
+
+	{ "decoder_rom_4.3g",					0x0200, 0xe6631c23, 0 | BRF_OPT },           // 16 Address Decoder
+	{ "decoder_rom_6.3c",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(sinistarcsm)
+STD_ROM_FN(sinistarcsm)
+
+struct BurnDriver BurnDrvSinistarcsm = {
+	"sinistarcsm", "sinistar", NULL, NULL, "2023",
+	"Sinistar (Cockpit, SynaMax difficulty/titlescreen hack)\0", "initial boot will black screen, hit reset to fix", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sinistarcsmRomInfo, sinistarcsmRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
+	SinistarCockpitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
 // Sinistar (revision 2, upright)
 // solid RED labels with final production part numbers
 

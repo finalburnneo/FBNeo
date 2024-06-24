@@ -1700,7 +1700,7 @@ void VidOverlaySaveChatHistory(const wchar_t *text)
 		if (text) {
 			FILE *f = fopen("fightcade/chat_history.txt", "at");
 			if (f) {
-				fwprintf(f, text);
+				fwprintf(f, L"%ls", text);
 				fclose(f);
 			}
 		}

@@ -42,6 +42,8 @@ void DisplayPopupMenu(int nMenu);
 // can also be problematic, sometimes creating a window that is too wide.
 
 static HBITMAP hBezelBitmap = NULL;
+static int nBezelCacheX = 0;
+static int nBezelCacheY = 0;
 
 RECT SystemWorkArea = { 0, 0, 640, 480 };				// Work area on the desktop
 int nWindowPosX = -1, nWindowPosY = -1;					// Window position
@@ -516,10 +518,12 @@ static bool VidInitNeeded()
 	if (nVidSelect == 1 && (nVidBlitterOpt[nVidSelect] & 0x00030000) == 0x00030000) {
 		return true;
 	}
+#if 0
+	// why?? (seems to cause trouble) -dink june 2024
 	if (nVidSelect == 3) {
 		return true;
 	}
-
+#endif
 	return false;
 }
 
@@ -800,7 +804,18 @@ static INT32 ScrnHasBezel()
 static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 {
 	// handle bezel loading
-	hBezelBitmap = NULL;
+	if (!bDrvOkay) {
+		// clear cache
+		hBezelBitmap = NULL;
+		nBezelCacheX = 0;
+		nBezelCacheY = 0;
+		return;
+	}
+	// check cache
+	if (hBezelBitmap && (nBezelCacheX == cx && nBezelCacheY == cy - nMenuHeight)) {
+		// cached, nothing to do here
+		return;
+	}
 
 	if (bDrvOkay && !(hScrnWnd == NULL || nVidFullscreen)) {
 		char* pszName = BurnDrvGetTextA(DRV_NAME);
@@ -820,6 +835,8 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 		if (fp) {
 			bprintf(0, _T("Loading bezel \"%S\"\n"), szName);
 			hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);
+			nBezelCacheX = cx;
+			nBezelCacheY = cy - nMenuHeight;
 			fclose(fp);
 		}
 	}
@@ -877,9 +894,6 @@ static void OnDestroy(HWND)
     VidExit();							// Stop using video with the Window
     hScrnWnd = NULL;					// Make sure handle is not used again
 }
-
-OPENFILENAME	bgFn;
-TCHAR			szFile[MAX_PATH];
 
 static void UpdatePreviousGameList()
 {

@@ -26459,9 +26459,9 @@ struct BurnDriver BurnDrvnes_jester = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Jester (HB, v2)
+// Jester (HB, Alt)
 static struct BurnRomInfo nes_jesterv2RomDesc[] = {
-	{ "Jester v2 (2023)(Acclaim - CollectorVision).nes",          40976, 0xcc1762b6, BRF_ESS | BRF_PRG },
+	{ "Jester (Alt)(2023)(Acclaim - Mega Cat Studios).nes",          40976, 0xcc1762b6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_jesterv2)
@@ -26469,7 +26469,7 @@ STD_ROM_FN(nes_jesterv2)
 
 struct BurnDriver BurnDrvnes_jesterv2 = {
 	"nes_jesterv2", "nes_jester", NULL, NULL, "2023",
-	"Jester (HB, v2)\0", NULL, "Acclaim - CollectorVision", "Miscellaneous",
+	"Jester (HB, Alt)\0", NULL, "Acclaim - Mega Cat Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_jesterv2RomInfo, nes_jesterv2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -58731,24 +58731,6 @@ struct BurnDriver BurnDrvnes_wallybeanogan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wallybeanoganRomInfo, nes_wallybeanoganRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Wanpaku Kokkun no Gourmet World (Japan)
-static struct BurnRomInfo nes_wanpakoknogouwoRomDesc[] = {
-	{ "Wanpaku Kokkun no Gourmet World (Japan).nes",          262160, 0xfffb5ead, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_wanpakoknogouwo)
-STD_ROM_FN(nes_wanpakoknogouwo)
-
-struct BurnDriver BurnDrvnes_wanpakoknogouwo = {
-	"nes_wanpakoknogouwo", NULL, NULL, NULL, "1992",
-	"Wanpaku Kokkun no Gourmet World (Japan)\0", NULL, "Taito", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_wanpakoknogouwoRomInfo, nes_wanpakoknogouwoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

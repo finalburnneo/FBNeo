@@ -910,7 +910,9 @@ static void CallRegisteredLuaMemHook_LuaMatch(unsigned int address, int size, un
 						//RefreshScriptSpeedStatus();
 						lua_pushinteger(LUA, address);
 						lua_pushinteger(LUA, size);
-						int errorcode = lua_pcall(LUA, 2, 0, 0);
+						lua_pushinteger(LUA, value);
+
+						int errorcode = lua_pcall(LUA, 3, 0, 0);
 						luaRunning /*info.running*/ = wasRunning;
 						//RefreshScriptSpeedStatus();
 						if (errorcode)
@@ -1541,6 +1543,9 @@ void luasav_save(const char *filename) {
 			unlink(luaSaveFilename);
 		}
 	}
+	else {
+		CallRegisteredLuaSaveFunctions(filename, saveData);
+	}
 }
 
 void luasav_load(const char *filename) {
@@ -1567,6 +1572,9 @@ void luasav_load(const char *filename) {
 			fclose(luaSaveFile);
 		}
 		CallRegisteredLuaLoadFunctions(slotnum, saveData);
+	}
+	else {
+		CallRegisteredLuaLoadFunctions(filename, saveData);
 	}
 }
 

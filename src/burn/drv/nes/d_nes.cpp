@@ -551,6 +551,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x4df9d7c8) ? ALT_TIMING : 0; // overlord
 	NESMode |= (ROMCRC == 0x85784e11) ? ALT_TIMING : 0; // blargg full palette
 	NESMode |= (ROMCRC == 0x5da28b4f) ? ALT_TIMING : 0; // cmc! wall demo
+	NESMode |= (ROMCRC == 0xcbde707e) ? IS_PAL : 0; // International Cricket
 	NESMode |= (ROMCRC == 0xe2685bbf) ? IS_PAL : 0; // Kick Off
 	NESMode |= (ROMCRC == 0xab21ab5f) ? IS_PAL : 0; // Noah's Ark
 	NESMode |= (ROMCRC == 0xab29ab28) ? IS_PAL : 0; // Dropzone
@@ -29084,6 +29085,28 @@ struct BurnDriver BurnDrvnes_smbtwopla = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Mario Bros. Two Players & World Select (Hack)
+// Modified by NesDraug
+// base: Super Mario Bros. Two Players (Hack) by Corpse Grinder and Ti
+// https://www.romhacking.net/hacks/5900/
+
+static struct BurnRomInfo nes_smbtwoplawsRomDesc[] = {
+	{ "Super Mario Bros. - Two Players & World Select (2021)(NesDraug).nes",          73744, 0xb8a41967, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbtwoplaws)
+STD_ROM_FN(nes_smbtwoplaws)
+
+struct BurnDriver BurnDrvnes_smbtwoplaws = {
+	"nes_smbtwoplaws", "nes_smb", NULL, NULL, "2021",
+	"Super Mario Bros. Two Players & World Select (Hack)\0", NULL, "hack (NesDraug)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbtwoplawsRomInfo, nes_smbtwoplawsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_superpangRomDesc[] = {
 	{ "Super Pang (Taiwan).nes",          65552, 0xf7c73ecc, BRF_ESS | BRF_PRG },
 };
@@ -30698,8 +30721,8 @@ struct BurnDriver BurnDrvnes_trackfieldii = {
 	"Track & Field II (USA) (Rev A)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_trackfieldiiRomInfo, nes_trackfieldiiRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
-	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	NESGetZipName, nes_trackfieldiiRomInfo, nes_trackfieldiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -32336,6 +32359,80 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_pentablocatRomDesc[] = {
+	{ "Pentablocat (2023)(Pineberry fox).nes",          24592, 0x27a14751, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pentablocat)
+STD_ROM_FN(nes_pentablocat)
+
+struct BurnDriver BurnDrvnes_pentablocat = {
+	"nes_pentablocat", NULL, NULL, NULL, "2023",
+	"Pentablocat (HB)\0", NULL, "Pineberry fox", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_pentablocatRomInfo, nes_pentablocatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tecmo Super Bowl Tapmeter - Modified by: Bruddog
+
+static struct BurnRomInfo nes_tsbtapmeterRomDesc[] = {
+	{ "Tecmo Super Bowl Tapmeter v1.0.0 (2016)(Bruddog).nes",          393232, 0x18f884f0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsbtapmeter)
+STD_ROM_FN(nes_tsbtapmeter)
+
+struct BurnDriver BurnDrvnes_tsbtapmeter = {
+	"nes_tsbtapmeter", "nes_tecmosuperbowl", NULL, NULL, "2016",
+	"Tecmo Super Bowl Tapmeter (v1.0.0, hack)\0", NULL, "Bruddog", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_tsbtapmeterRomInfo, nes_tsbtapmeterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7615/
+static struct BurnRomInfo nes_smbroopRomDesc[] = {
+	{ "Super Mario Bro-Op v1.1 (2023)(NesDraug).nes",          73744, 0x1ce829ca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbroop)
+STD_ROM_FN(nes_smbroop)
+
+struct BurnDriver BurnDrvnes_smbroop = {
+	"nes_smbroop", "nes_smb", NULL, NULL, "2023",
+	"Super Mario Bro-Op (Hack, v1.1)\0", NULL, "NesDraug, Valo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbroopRomInfo, nes_smbroopRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Contra - Fun Together Version 2.0.0N
+// Modified by CZXInc
+
+static struct BurnRomInfo nes_contrafntgRomDesc[] = {
+	{ "Contra Fun Together Version v2.0.0n (2024)(CZXInc).nes",          131088, 0x5cb8269d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contrafntg)
+STD_ROM_FN(nes_contrafntg)
+
+struct BurnDriver BurnDrvnes_contrafntg = {
+	"nes_contrafntg", "nes_contra", NULL, NULL, "2024",
+	"Contra - Fun Together Version (Hack, v2.0.0N)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_contrafntgRomInfo, nes_contrafntgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -4995,33 +4995,33 @@ static struct BurnRomInfo Captcommb2RomDesc[] = {
 STD_ROM_PICK(Captcommb2)
 STD_ROM_FN(Captcommb2)
 
-// Captain Commando Readjusted, hacked by GameHackFan 
+// Captain Commando Readjusted v1.2, hacked by GameHackFan 
 // source: https://gamehackfan.github.io/captre/
 
 static struct BurnRomInfo CaptreRomDesc[] = {
-	{ "cce_re.10f",    0x200000, 0x591ea997, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cce_re.10f",		0x200000, 0x7d7463a1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "cc-5re.3a",     0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
-	{ "cc-7re.5a",     0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
-	{ "cc-1re.4a",     0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
-	{ "cc-3re.6a",     0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
-	{ "cc-6re.7a",     0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
-	{ "cc-8re.9a",     0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
-	{ "cc-2re.8a",     0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
-	{ "cc-4re.10a",    0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
+	{ "cc-5re.3a",		0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
+	{ "cc-7re.5a",		0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
+	{ "cc-1re.4a",		0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
+	{ "cc-3re.6a",		0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
+	{ "cc-6re.7a",		0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
+	{ "cc-8re.9a",		0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
+	{ "cc-2re.8a",		0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
+	{ "cc-4re.10a",		0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
 
-	{ "cc_09.11a",     0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "cc_09.11a",		0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "cc_18.11c",     0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "cc_19.12c",     0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_18.11c",		0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_19.12c",		0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
 
 	A_BOARD_PLDS
 
-{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
-{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
-{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
-{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+{ "cc63b.1a",			0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
+{ "iob1.12d",			0x000117, 0x3abc0700, BRF_OPT },
+{ "ccprg1.11d",			0x000117, 0xe1c225c4, BRF_OPT },
+{ "ioc1.ic7",			0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+{ "c632b.ic1",			0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Captre)
@@ -5755,7 +5755,7 @@ STD_ROM_FN(Dinohc)
 // source: https://gamehackfan.github.io/dinore/
 
 static struct BurnRomInfo DinoreRomDesc[] = {
-	{ "cde_re.10f",    0x200000, 0x9e75c12c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_re.10f",    0x200000, 0x7dd12d69, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -10784,6 +10784,41 @@ static struct BurnRomInfo Sf2ceeaRomDesc[] = {
 STD_ROM_PICK(Sf2ceea)
 STD_ROM_FN(Sf2ceea)
 
+static struct BurnRomInfo Sf2ceecRomDesc[] = {
+	{ "s92e_23c.8f",   0x080000, 0x994b408d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_22c.7f",    0x080000, 0x5fd8630b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_21a.6f",    0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",     0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",     0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92-5m.7a",     0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92-7m.9a",     0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92-6m.8a",     0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92-8m.10a",    0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92-10m.3c",    0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92-12m.5c",    0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92-11m.4c",    0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92-13m.6c",    0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",     0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2ceec)
+STD_ROM_FN(Sf2ceec)
+
 static struct BurnRomInfo Sf2cejaRomDesc[] = {
 	{ "s92j_23a.8f",   0x080000, 0x4f42bb5a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "s92j_22a.7f",   0x080000, 0xc4f64bcd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -15106,6 +15141,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2bhh"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceea"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceec"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceua"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceub"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuc"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -15126,6 +15162,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2v004"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0042"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0043"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2gm"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dongb"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acc"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acca"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -15185,6 +15222,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2hfub"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfjb"     , HACK_B_4    , mapper_S9263B, 0, NULL                },
 	{ "sf2hfjb2"    , HACK_B_4    , mapper_S9263B, 0, NULL                },
+	{ "sf2hfsce"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "slammast"    , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
 	{ "slammastu"   , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
 	{ "mbomberj"    , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
@@ -18639,9 +18677,9 @@ static INT32 Sf2bhhInit()
 static INT32 Sf2hfInit()
 {
 	// game runs too fast - RN compared MAME/FBA to PCB
-	// RN October 2018 research: adjust excessive speed to 65.83% of 12Mhz as per: https://www.youtube.com/watch?v=HyL87eswe8M
+	// RN January 2021 research: 0 frame diff https://youtu.be/nuobplWeBTI?t=88
 	
-	nCPS68KClockspeed = 7900000;
+	nCPS68KClockspeed = 8500000;
 	
 	return DrvInit();
 }
@@ -19811,8 +19849,8 @@ struct BurnDriver BurnDrvCpsCaptcommb2 = {
 };
 
 struct BurnDriver BurnDrvCpsCaptre = {
-	"captre", "captcomm", NULL, NULL, "2022",
-	"Captain Commando Readjusted (Hack, v1.0)\0", NULL, "GameHackFan", "CPS1",
+	"captre", "captcomm", NULL, NULL, "2023",
+	"Captain Commando Readjusted (Hack, v1.2)\0", NULL, "GameHackFan", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptreRomInfo, CaptreRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
@@ -20071,8 +20109,8 @@ struct BurnDriver BurnDrvCpsDinohc = {
 };
 
 struct BurnDriver BurnDrvCpsDinore = {
-	"dinore", "dino", NULL, NULL, "2022",
-	"Cadillacs & Dinosaurs Readjusted (Hack, v1.2)\0", NULL, "GameHackFan", "CPS1 / QSound",
+	"dinore", "dino", NULL, NULL, "2023",
+	"Cadillacs & Dinosaurs Readjusted (Hack, v1.4)\0", NULL, "GameHackFan", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoreRomInfo, DinoreRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20082,7 +20120,7 @@ struct BurnDriver BurnDrvCpsDinore = {
 
 struct BurnDriver BurnDrvCpsDinox5 = {
 	"dinox5", "dino", NULL, NULL, "2016",
-	"Cadillacs and Dinosaurs X5 Enemies (Hack, Ver.2016-01-10)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs X5 Enemies (Hack, Ver.2016-01-10)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinox5RomInfo, dinox5RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20092,7 +20130,7 @@ struct BurnDriver BurnDrvCpsDinox5 = {
 
 struct BurnDriver BurnDrvCpsDinoares = {
 	"dinoares", "dino", NULL, NULL, "2020",
-	"Cadillacs and Dinosaurs - Ares Edition (Hack, Ver.2020-08-06)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Ares Edition (Hack, Ver.2020-08-06)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinoaresRomInfo, dinoaresRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20102,7 +20140,7 @@ struct BurnDriver BurnDrvCpsDinoares = {
 
 struct BurnDriver BurnDrvCpsDinocx3 = {
 	"dinocx3", "dino", NULL, NULL, "20??",
-	"Cadillacs and Dinosaurs Chaos X3 (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs Chaos X3 (Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinocx3RomInfo, dinocx3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20112,7 +20150,7 @@ struct BurnDriver BurnDrvCpsDinocx3 = {
 
 struct BurnDriver BurnDrvCpsDinocunp = {
 	"dinocunp", "dino", NULL, NULL, "20??",
-	"Cadillacs and Dinosaurs Chaos Unparalleled (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs Chaos Unparalleled (Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinocunpRomInfo, dinocunpRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20122,7 +20160,7 @@ struct BurnDriver BurnDrvCpsDinocunp = {
 
 struct BurnDriver BurnDrvCpsDinopuni = {
 	"dinopuni", "dino", NULL, NULL, "2018",
-	"Cadillacs and Dinosaurs - Punishment Edition (Hack, Ver.2018-08-23)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Punishment Edition (Hack, Ver.2018-08-23)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinopuniRomInfo, dinopuniRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20132,7 +20170,7 @@ struct BurnDriver BurnDrvCpsDinopuni = {
 
 struct BurnDriver BurnDrvCpsJurass99p = {
 	"jurass99p", "dino", NULL, NULL, "2017",
-	"Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack, Ver.2017-11-13)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack, Ver.2017-11-13)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, jurass99pRomInfo, jurass99pRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20142,7 +20180,7 @@ struct BurnDriver BurnDrvCpsJurass99p = {
 
 struct BurnDriver BurnDrvCpsDinombull = {
 	"dinombull", "dino", NULL, NULL, "2017",
-	"Cadillacs and Dinosaurs - Matchless Bullets (Hack, Ver.2017-09-02)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Matchless Bullets (Hack, Ver.2017-09-02)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinombullRomInfo, dinombullRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20152,7 +20190,7 @@ struct BurnDriver BurnDrvCpsDinombull = {
 
 struct BurnDriver BurnDrvCpsDinohced = {
 	"dinohced", "dino", NULL, NULL, "2017",
-	"Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)\0", NULL, "Hack", "CPS1 / QSound",
+	"Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinohcedRomInfo, dinohcedRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -21546,6 +21584,16 @@ struct BurnDriver BurnDrvCpsSf2ceea = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeaRomInfo, Sf2ceeaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceec = {
+	"sf2ceec", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920803 World)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ceecRomInfo, Sf2ceecRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23678,14 +23726,14 @@ struct BurnDriver BurnDrvCpsFfightaemgc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II Mix (Ver 1.2)
+// Street Fighter II Mix (Ver 1.3)
 // Hacked by ZERO800 - BRAZIL
 // For more infomation, please visit: https://sf2mix.github.io/
 
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0x997f551e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0x414ab00b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0x1221db31, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0x478d09c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x23212fb2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0xd3d77d12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa8f70643, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0xf73f1913, BRF_GRA | CPS1_TILES },
@@ -23718,11 +23766,99 @@ STD_ROM_PICK(sf2mix)
 STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpssf2mix = {
-	"sf2mix", "sf2ce", NULL, NULL, "2022",
-	"Street Fighter II Mix (v1.2)\0", NULL, "Hack", "CPS1",
+	"sf2mix", "sf2ce", NULL, NULL, "2023",
+	"Street Fighter II Mix (v1.3)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter II' - Hyper Fighting Sr. SF Champion Edition v1.4 - 2024-03-21
+// Modified by Sr. Street Fighter (gamesbks)
+
+static struct BurnRomInfo Sf2hfsceRomDesc[] = {
+	{ "s2tsce_23.8f",   0x080000, 0xee74bae8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_22.7f",   0x080000, 0xeea9b9c0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_21.6f",   0x080000, 0xd6246802, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",       0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",       0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",       0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",       0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92sce-5m.7a",    0x080000, 0x75e20f8c, BRF_GRA | CPS1_TILES },
+	{ "s92sce-7m.9a",    0x080000, 0xee803831, BRF_GRA | CPS1_TILES },
+	{ "s92sce-6m.8a",    0x080000, 0x779c37ed, BRF_GRA | CPS1_TILES },
+	{ "s92sce-8m.10a",   0x080000, 0x005867b6, BRF_GRA | CPS1_TILES },
+	{ "s92sce-10m.3c",   0x080000, 0xd374589b, BRF_GRA | CPS1_TILES },
+	{ "s92sce-12m.5c",   0x080000, 0xd43d5f31, BRF_GRA | CPS1_TILES },
+	{ "s92sce-11m.4c",   0x080000, 0x09e7ea4b, BRF_GRA | CPS1_TILES },
+	{ "s92sce-13m.6c",   0x080000, 0x136d9999, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",      0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",      0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",      0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",       0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",        0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",       0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",        0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",        0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2hfsce)
+STD_ROM_FN(Sf2hfsce)
+
+struct BurnDriver BurnDrvCpsSf2hfsce = {
+	"sf2hfsce", "sf2hf", NULL, NULL, "2024",
+	"Street Fighter II' - Hyper Fighting (Sr. SF Champion Edition v1.4, Hack)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2hfsceRomInfo, Sf2hfsceRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2hfInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter II' - Champion Edition Golden Magic Hack
+// Author Unknown, files date: 2020-Oct-13
+
+static struct BurnRomInfo Sf2gmRomDesc[] = {
+	{ "sf2gm.23",		0x080000, 0x9028b8b7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2gm.22",		0x080000, 0xd275da79, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2gm.21",		0x080000, 0x2f8a194f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92_01.bin",		0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",		0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",		0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",		0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",		0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",		0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",		0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",		0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",		0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",		0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",		0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",		0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.bin",		0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.bin",		0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.bin",		0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sf2gm)
+STD_ROM_FN(Sf2gm)
+
+struct BurnDriver BurnDrvCpsSf2gm = {
+	"sf2gm", "sf2ce", NULL, NULL, "2020",
+	"Street Fighter II' - Champion Edition (Golden Magic, Hack)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2gmRomInfo, Sf2gmRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

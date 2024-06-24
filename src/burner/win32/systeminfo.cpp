@@ -637,7 +637,7 @@ int PrintFBAInfo()
 		}
 		AddLine(_T("%s"), szName);
 		AddLine(_T("    Vertical refresh is %.2lf Hz."), (double)nBurnFPS / 100);
-		AddLine(_T("    CPU running at %i%% of normal frequency."), nBurnCPUSpeedAdjust * 100 / 256);
+		AddLine(_T("    CPU running at %i%% of normal frequency."), (int)((double)nBurnCPUSpeedAdjust * 100 / 256 + 0.5));
 		AddLine(_T(""));
 	} else {
 		AddLine(_T("Not emulating any game."));

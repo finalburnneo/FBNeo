@@ -1,4 +1,4 @@
-// FB Alpha World Cup 90 (bootleg) driver module
+// FB Neo World Cup 90 (bootleg) driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -12,7 +12,7 @@ static UINT8 Wc90b1Dip[2]        = {0, 0};
 static UINT8 Wc90b1Input[2]      = {0x00, 0x00};
 static UINT8 Wc90b1Reset         = 0;
 
-static UINT8 *Mem                = NULL;
+static UINT8 *AllMem             = NULL;
 static UINT8 *MemEnd             = NULL;
 static UINT8 *RamStart           = NULL;
 static UINT8 *RamEnd             = NULL;
@@ -377,7 +377,7 @@ STD_ROM_FN(Wc90bb)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Wc90b1Z80Rom1            = Next; Next += 0x20000;
 	Wc90b1Z80Rom2            = Next; Next += 0x20000;
@@ -637,15 +637,10 @@ static INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80,
 
 static INT32 Wc90b1Init()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
 	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	Wc90b1TempGfx = (UINT8*)BurnMalloc(0x80000);
 	if (Wc90b1TempGfx == NULL) return 1;
@@ -799,7 +794,7 @@ static INT32 Wc90b1Exit()
 	BurnYM2203Exit();
 	MSM5205Exit();
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	
 	Wc90b1Scroll0X = Wc90b1Scroll0Y = 0;
 	Wc90b1Scroll1X = Wc90b1Scroll1Y = 0;

@@ -1,4 +1,4 @@
-// FB Alpha Boogie Wing / Great Ragtime Show driver module
+// FB Neo Boogie Wing / Great Ragtime Show driver module
 // Based on MAME driver by Bryan McPhail and David Haywood
 
 #include "tiles_generic.h"
@@ -766,7 +766,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Boogie Wings (Euro v1.5, 92.12.07)
+// Boogie Wings (Europe v1.5, 92.12.07)
 
 static struct BurnRomInfo boogwingRomDesc[] = {
 	{ "kn_00-2.2b",		0x040000, 0xe38892b9,  1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -803,7 +803,7 @@ STD_ROM_FN(boogwing)
 
 struct BurnDriver BurnDrvBoogwing = {
 	"boogwing", NULL, NULL, NULL, "1992",
-	"Boogie Wings (Euro v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Boogie Wings (Europe v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, boogwingRomInfo, boogwingRomName, NULL, NULL, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,

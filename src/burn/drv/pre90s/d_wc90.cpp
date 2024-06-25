@@ -13,7 +13,7 @@ static UINT8 Wc90Input[3]      = {0x00, 0x00, 0x00};
 static UINT8 Wc90Reset         = 0;
 static HoldCoin<2> hold_coin;
 
-static UINT8 *Mem              = NULL;
+static UINT8 *AllMem           = NULL;
 static UINT8 *MemEnd           = NULL;
 static UINT8 *RamStart         = NULL;
 static UINT8 *RamEnd           = NULL;
@@ -508,7 +508,7 @@ static void __fastcall Wc90Write3(UINT16 a, UINT8 d)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Wc90Z80Rom1            = Next; Next += 0x20000;
 	Wc90Z80Rom2            = Next; Next += 0x20000;
@@ -1040,14 +1040,9 @@ static void GfxDecodeX(INT32 num, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 static INT32 Wc90Init()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	Wc90TempGfx = (UINT8*)BurnMalloc(0x80000);
 	if (Wc90TempGfx == NULL) return 1;
@@ -1180,7 +1175,7 @@ static INT32 Wc90Exit()
 	GenericTilesExit();
 	BurnYM2608Exit();
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	
 	Wc90Scroll0YLo = 0;
 	Wc90Scroll0YHi = 0;
@@ -1274,7 +1269,7 @@ struct BurnDriver BurnDrvWc90 = {
 
 struct BurnDriver BurnDrvWc90a = {
 	"twcup90a", "twcup90", "ym2608", NULL, "1989",
-	"Tecmo World Cup '90 (Euro set 1)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Europe set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90aRomInfo, Wc90aRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1284,7 +1279,7 @@ struct BurnDriver BurnDrvWc90a = {
 
 struct BurnDriver BurnDrvWc90b = {
 	"twcup90b", "twcup90", "ym2608", NULL, "1989",
-	"Tecmo World Cup '90 (Euro set 2)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Europe set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90bRomInfo, Wc90bRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1294,7 +1289,7 @@ struct BurnDriver BurnDrvWc90b = {
 
 struct BurnDriver BurnDrvWc90c = {
 	"twcup90c", "twcup90", "ym2608", NULL, "1989",
-	"Tecmo World Cup '90 (Euro set 3)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Europe set 3)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90cRomInfo, Wc90cRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,

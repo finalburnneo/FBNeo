@@ -801,6 +801,50 @@ static INT32 ScrnHasBezel()
 	return 0;
 }
 
+struct t_hw_Struct {
+	char system[80];
+	UINT32 hw[8];
+};
+
+static t_hw_Struct scrn_gamehw_cfg[] = {
+	{ "megadrive",	{ HARDWARE_SEGA_MEGADRIVE, 0 } },
+	{ "pce",		{ HARDWARE_PCENGINE_PCENGINE, 0 } },
+	{ "tg16",		{ HARDWARE_PCENGINE_TG16, 0 } },
+	{ "sgx",		{ HARDWARE_PCENGINE_SGX, 0 } },
+	{ "sg1000",		{ HARDWARE_SEGA_SG1000, 0 } },
+	{ "coleco",		{ HARDWARE_COLECO, 0 } },
+	{ "sms",		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 } },
+	{ "gamegear",	{ HARDWARE_SEGA_GAME_GEAR, 0 } },
+	{ "msx",		{ HARDWARE_MSX, 0 } },
+	{ "spectrum",	{ HARDWARE_SPECTRUM, 0 } },
+	{ "nes",		{ HARDWARE_NES, 0 } },
+	{ "fds",		{ HARDWARE_FDS, 0 } },
+	{ "ngp",		{ HARDWARE_SNK_NGP, HARDWARE_SNK_NGPC, 0 } },
+	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
+	{ "cps1",		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, 0 } },
+	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
+	{ "cps3",		{ HARDWARE_CAPCOM_CPS3, 0 } },
+	{ "pgm",		{ HARDWARE_IGS_PGM, 0 } },
+	{ "neogeo",		{ HARDWARE_SNK_NEOGEO, HARDWARE_SNK_MVS, HARDWARE_SNK_DEDICATED_PCB, 0 } },
+	{ "neogeocd",	{ HARDWARE_SNK_NEOCD, 0 } },
+	{ "arcade",		{ ~0, 0 } }, // default, if not found above
+	{ "\0", { 0 } } // end
+};
+
+static char *ScrnGetHWString(UINT32 nHWCode)
+{
+	// See if nHWCode belongs to any systems in scrn_gamehw_cfg
+	for (INT32 i = 0; scrn_gamehw_cfg[i].system[0] != '\0'; i++) {
+		for (INT32 hw = 0; scrn_gamehw_cfg[i].hw[hw] != 0; hw++) {
+			if (scrn_gamehw_cfg[i].hw[hw] == nHWCode || scrn_gamehw_cfg[i].hw[hw] == ~0)
+			{
+				return scrn_gamehw_cfg[i].system;
+			}
+		}
+	}
+	return NULL;
+}
+
 static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 {
 	// handle bezel loading
@@ -835,105 +879,14 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 		if (!fp) {
 			// File doesn't exist, try to use system bezel
 			szName[0] = 0;
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
-				sprintf(szName, "support/bezel/megadrive.png");
-			}
 
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE) {
-				sprintf(szName, "support/bezel/pce.png");
-			}
+			pszName = ScrnGetHWString(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
 
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16) {
-				sprintf(szName, "support/bezel/tg16.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX) {
-				sprintf(szName, "support/bezel/sgx.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
-				sprintf(szName, "support/bezel/sg1000.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
-				sprintf(szName, "support/bezel/coleco.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM) {
-				sprintf(szName, "support/bezel/sms.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR) {
-				sprintf(szName, "support/bezel/gamegear.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
-				sprintf(szName, "support/bezel/msx.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
-				sprintf(szName, "support/bezel/spectrum.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) {
-				sprintf(szName, "support/bezel/nes.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
-				sprintf(szName, "support/bezel/fds.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP) {
-				sprintf(szName, "support/bezel/ngp.png");
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
-				sprintf(szName, "support/bezel/channelf.png");
-			}
-
-			// arcade
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1 ||
-				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_QSOUND ||
-				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_GENERIC ||
-				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPSCHANGER
-			   ) {
+			if (pszName != NULL) {
 				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					sprintf(szName, "support/bezel/cps1_v.png");
+					sprintf(szName, "support/bezel/%s_v.png", pszName);
 				} else {
-					sprintf(szName, "support/bezel/cps1.png");
-				}
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) {
-				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					sprintf(szName, "support/bezel/cps2_v.png");
-				} else {
-					sprintf(szName, "support/bezel/cps2.png");
-				}
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS3) {
-				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					sprintf(szName, "support/bezel/cps3_v.png");
-				} else {
-					sprintf(szName, "support/bezel/cps3.png");
-				}
-			}
-
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_IGS_PGM) {
-				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					sprintf(szName, "support/bezel/pgm_v.png");
-				} else {
-					sprintf(szName, "support/bezel/pgm.png");
-				}
-			}
-
-			// At this point, if szName is empty, default to:
-			if (szName[0] == '\0') {
-				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-					sprintf(szName, "support/bezel/arcade_v.png");
-				} else {
-					sprintf(szName, "support/bezel/arcade.png");
+					sprintf(szName, "support/bezel/%s.png", pszName);
 				}
 			}
 

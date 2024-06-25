@@ -1,4 +1,4 @@
-// FB Alpha Coors Light Bowling/Bowl-O-Rama driver module
+// FB Neo Coors Light Bowling/Bowl-O-Rama driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"
@@ -674,7 +674,7 @@ static INT32 BowlramaInit()
 
 struct BurnDriver BurnDrvBowlrama = {
 	"bowlrama", NULL, NULL, NULL, "1991",
-	"Bowl-O-Rama Rev 1.0\0", NULL, "P&P Marketing", "Miscellaneous",
+	"Bowl-O-Rama (Rev 1.0)\0", NULL, "P&P Marketing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, bowlramaRomInfo, bowlramaRomName, NULL, NULL, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,

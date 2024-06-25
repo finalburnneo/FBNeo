@@ -15266,9 +15266,9 @@ struct BurnDriver BurnDrvCpsHsf2df = {
 
 // Street Fighter Alpha 2 Ultra (Beta)
 // Modified by bankbank
-// 20230304
+// 20230708
 static struct BurnRomInfo Sfa2ultraRomDesc[] = {
-	{ "sz2uult.03a",	0x080000, 0xe0481264, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2uult.03a",	0x080000, 0x1c7fcea1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.04a",		0x080000, 0xfae0e9c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.05a",		0x080000, 0xd02dd758, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.06",		0x080000, 0xc5c8eb63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

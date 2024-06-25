@@ -1,4 +1,4 @@
-// FB Alpha Samurai Nihon-Ichi driver module
+// FB Neo Samurai Nihon-Ichi driver module
 // Based on MAME driver by Phil Stroffolino
 
 // vsgongf - player is black (normal!)
@@ -810,12 +810,7 @@ static INT32 DrvInit(INT32 game)
 {
 	game_select = 1;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0) {
@@ -951,12 +946,7 @@ static INT32 m660CommonInit(INT32 game)
 {
 	game_select = 2;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0)
@@ -1173,7 +1163,7 @@ static INT32 DrvExit()
 
 	the26thz = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1951,7 +1941,7 @@ static INT32 the26thzInit()
 }
 
 struct BurnDriver BurnDrvThe26thz = {
-	"the26thz", "m660", NULL, NULL, "1986",
+	"the26thz", "alphaxz", NULL, NULL, "1986",
 	"The 26th Z (Japan, location test)\0", NULL, "Ed Co., Ltd. (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

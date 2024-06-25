@@ -7595,7 +7595,7 @@ static struct BurnRomInfo CatacombRomDesc[] = {
 	{ "cat-gfx1",      0x00800, 0xe871e65c, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "cat-gfx2",      0x00800, 0xb14dafaa, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+	{ "74s288.bin",    0x00020, 0x7e0b79cb, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Catacomb)

@@ -832,6 +832,116 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 			fp = fopen(szName, "rb");
 		}
 
+		if (!fp) {
+			// File doesn't exist, try to use system bezel
+			szName[0] = 0;
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
+				sprintf(szName, "support/bezel/megadrive.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE) {
+				sprintf(szName, "support/bezel/pce.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16) {
+				sprintf(szName, "support/bezel/tg16.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX) {
+				sprintf(szName, "support/bezel/sgx.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
+				sprintf(szName, "support/bezel/sg1000.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
+				sprintf(szName, "support/bezel/coleco.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM) {
+				sprintf(szName, "support/bezel/sms.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR) {
+				sprintf(szName, "support/bezel/gamegear.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
+				sprintf(szName, "support/bezel/msx.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
+				sprintf(szName, "support/bezel/spectrum.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) {
+				sprintf(szName, "support/bezel/nes.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
+				sprintf(szName, "support/bezel/fds.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP) {
+				sprintf(szName, "support/bezel/ngp.png");
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
+				sprintf(szName, "support/bezel/channelf.png");
+			}
+
+			// arcade
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1 ||
+				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_QSOUND ||
+				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_GENERIC ||
+				(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPSCHANGER
+			   ) {
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+					sprintf(szName, "support/bezel/cps1_v.png");
+				} else {
+					sprintf(szName, "support/bezel/cps1.png");
+				}
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) {
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+					sprintf(szName, "support/bezel/cps2_v.png");
+				} else {
+					sprintf(szName, "support/bezel/cps2.png");
+				}
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS3) {
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+					sprintf(szName, "support/bezel/cps3_v.png");
+				} else {
+					sprintf(szName, "support/bezel/cps3.png");
+				}
+			}
+
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_IGS_PGM) {
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+					sprintf(szName, "support/bezel/pgm_v.png");
+				} else {
+					sprintf(szName, "support/bezel/pgm.png");
+				}
+			}
+
+			// At this point, if szName is empty, default to:
+			if (szName[0] == '\0') {
+				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+					sprintf(szName, "support/bezel/arcade_v.png");
+				} else {
+					sprintf(szName, "support/bezel/arcade.png");
+				}
+			}
+
+			if (szName[0] != '\0') {
+				fp = fopen(szName, "rb");
+			}
+		}
+
 		if (fp) {
 			bprintf(0, _T("Loading bezel \"%S\"\n"), szName);
 			hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);

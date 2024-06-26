@@ -1,4 +1,4 @@
-// FB Alpha asteroids driver module
+// FB Neo asteroids driver module
 // Based on MAME driver by Brad Oliver, Bernd Wiebelt, Allard van der Bas
 
 #include "tiles_generic.h"
@@ -890,12 +890,7 @@ static INT32 DrvLoadRoms(INT32 pOffset, INT32 vOffset)
 
 static INT32 AsteroidInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms(0x6800, 0x0800)) return 1;
 
@@ -924,12 +919,7 @@ static INT32 AsteroidInit()
 
 static INT32 AstdeluxInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms(0x6000, 0)) return 1;
 
@@ -966,12 +956,7 @@ static INT32 AstdeluxInit()
 
 static INT32 LlanderInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvLoadRoms(0x6000, 0)) return 1;
 
@@ -1008,7 +993,7 @@ static INT32 DrvExit()
 	asteroid_sound_exit();
 	llander_sound_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	if (astdelux) {
 		earom_exit();
@@ -1380,6 +1365,33 @@ struct BurnDriver BurnDrvAerolitos = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, aerolitosRomInfo, aerolitosRomName, NULL, NULL, NULL, NULL, AsteroidInputInfo, AerolitosDIPInfo,
+	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	640, 480, 4, 3
+};
+
+
+// Aerolitos Espaciales (Spanish bootleg of Asteroids)
+// Pasatiempos Laguna bootleg on Rodmar PCB
+
+static struct BurnRomInfo aerolitolRomDesc[] = {
+	{ "aerolito.1e",		0x0800, 0x0cc75459, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "aerolito.1d",		0x0800, 0x096ed35c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "aerolito.1c",		0x0800, 0xb912754d, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "aerolito.3n",		0x0800, 0x541e8ad4, 2 | BRF_PRG | BRF_ESS }, //  3 Vector ROM
+
+	{ "034602-01.c8",		0x0100, 0x97953db8, 3 | BRF_GRA },           //  4 DVG PROM
+};
+
+STD_ROM_PICK(aerolitol)
+STD_ROM_FN(aerolitol)
+
+struct BurnDriver BurnDrvAerolitol = {
+	"aerolitol", "asteroid", NULL, NULL, "1980",
+	"Aerolitos Espaciales (Spanish bootleg of Asteroids)\0", NULL, "bootleg (Pasatiempos Laguna)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	NULL, aerolitolRomInfo, aerolitolRomName, NULL, NULL, NULL, NULL, AsteroidInputInfo, AerolitosDIPInfo,
 	AsteroidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
 };

@@ -787,7 +787,7 @@ static struct BurnRomInfo pitnrunRomDesc[] = {
 	{ "pr_10-1.5b",		0x2000, 0x69b3a864, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "pr_9-1.5a",		0x2000, 0xba0c4093, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "pr-13",		0x1000, 0x32a18d3b, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "pr-13",			0x1000, 0x32a18d3b, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
 
 	{ "a11_17.3a",		0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
 
@@ -803,9 +803,9 @@ static struct BurnRomInfo pitnrunRomDesc[] = {
 
 	{ "pr-8.4j",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
 
-	{ "clr.1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
-	{ "clr.2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
-	{ "clr.3",		0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
+	{ "clr.1",			0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
+	{ "clr.2",			0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
+	{ "clr.3",			0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(pitnrun)
@@ -839,17 +839,17 @@ static struct BurnRomInfo pitnrunaRomDesc[] = {
 
 	{ "a11_17.3a",	0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
 
-	{ "pr1",		0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
-	{ "pr2",		0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
-	{ "pr3",		0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
+	{ "pr-1.1k",	0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
+	{ "pr-2.1m",	0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
+	{ "pr-3.1n",	0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
 
-	{ "pr4",		0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
-	{ "pr5",		0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
+	{ "pr-4.6d",	0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "pr-5.6f",	0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
 
-	{ "pr6",		0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
-	{ "pr7",		0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
+	{ "pr-6.3m",	0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
+	{ "pr-7.3p",	0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
 
-	{ "pr8",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
+	{ "pr-8.4j",	0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
 
 	{ "clr.1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
 	{ "clr.2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15

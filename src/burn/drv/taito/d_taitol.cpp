@@ -3017,7 +3017,7 @@ static INT32 DrvExit()
 
 	TaitoICExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -3427,7 +3427,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Raimais (World)
+// Raimais (World, rev 1)
 
 static struct BurnRomInfo raimaisRomDesc[] = {
 	{ "b36_11-1.ic7",	0x20000, 0xf19fb0d5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
@@ -3451,7 +3451,7 @@ STD_ROM_FN(raimais)
 
 struct BurnDriver BurnDrvRaimais = {
 	"raimais", NULL, NULL, NULL, "1988",
-	"Raimais (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
+	"Raimais (World, rev 1)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisRomInfo, raimaisRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, RaimaisDIPInfo,
@@ -3460,7 +3460,7 @@ struct BurnDriver BurnDrvRaimais = {
 };
 
 
-// Raimais (Japan)
+// Raimais (Japan, rev 1)
 
 static struct BurnRomInfo raimaisjRomDesc[] = {
 	{ "b36_08-1.ic7",	0x20000, 0x6cc8f79f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
@@ -3484,7 +3484,7 @@ STD_ROM_FN(raimaisj)
 
 struct BurnDriver BurnDrvRaimaisj = {
 	"raimaisj", "raimais", NULL, NULL, "1988",
-	"Raimais (Japan)\0", NULL, "Taito Corporation", "Taito L System",
+	"Raimais (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisjRomInfo, raimaisjRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,
@@ -3493,7 +3493,7 @@ struct BurnDriver BurnDrvRaimaisj = {
 };
 
 
-// Raimais (Japan, first revision)
+// Raimais (Japan)
 
 static struct BurnRomInfo raimaisjoRomDesc[] = {
 	{ "b36_08.ic7",		0x20000, 0xf40b9178, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
@@ -3517,7 +3517,7 @@ STD_ROM_FN(raimaisjo)
 
 struct BurnDriver BurnDrvRaimaisjo = {
 	"raimaisjo", "raimais", NULL, NULL, "1988",
-	"Raimais (Japan, first revision)\0", NULL, "Taito Corporation", "Taito L System",
+	"Raimais (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisjoRomInfo, raimaisjoRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,

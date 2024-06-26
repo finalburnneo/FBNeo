@@ -1,4 +1,4 @@
-// FB Alpha Taito System H driver module
+// FB Neo Taito System H driver module
 // Based on MAME driver by Yochizo and Nicola Salmoria
 
 // Weirdness:
@@ -2131,7 +2131,7 @@ struct BurnDriver BurnDrvGogold = {
 };
 
 
-// Tetris (Japan, Taito H-System)
+// Tetris (Japan, rev 1, Taito H-System)
 
 static struct BurnRomInfo tetristhRomDesc[] = {
 	{ "c26-12-1.ic36",	0x20000, 0x77e80c82, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
@@ -2160,7 +2160,7 @@ STD_ROM_FN(tetristh)
 
 struct BurnDriver BurnDrvTetristh = {
 	"tetristh", "tetris", NULL, NULL, "1988",
-	"Tetris (Japan, Taito H-System)\0", NULL, "Sega", "Taito H System",
+	"Tetris (Japan, rev 1, Taito H-System)\0", NULL, "Sega", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, tetristhRomInfo, tetristhRomName, NULL, NULL, NULL, NULL, TetristhInputInfo, TetristhDIPInfo,

@@ -1,4 +1,4 @@
-// FB Alpha Taito Qix driver module
+// FB Neo Taito Qix driver module
 // Based on MAME driver by Aaron Giles and Zsolt Vasvari
 
 #include "tiles_generic.h"
@@ -1620,7 +1620,7 @@ struct BurnDriver BurnDrvSdungeona = {
 };
 
 
-// Electric Yo-Yo, The (set 1)
+// Electric Yo-Yo, The (rev 1)
 
 static struct BurnRomInfo elecyoyoRomDesc[] = {
 	{ "yy14",			0x1000, 0x0d2edcb9, 1 | BRF_PRG | BRF_ESS }, //  0 Main M6809 Code
@@ -1647,7 +1647,7 @@ STD_ROM_FN(elecyoyo)
 
 struct BurnDriver BurnDrvElecyoyo = {
 	"elecyoyo", NULL, NULL, NULL, "1982",
-	"The Electric Yo-Yo (set 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"The Electric Yo-Yo (rev 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, elecyoyoRomInfo, elecyoyoRomName, NULL, NULL, NULL, NULL, ElecyoyoInputInfo, NULL,
@@ -1656,9 +1656,9 @@ struct BurnDriver BurnDrvElecyoyo = {
 };
 
 
-// Electric Yo-Yo, The (set 2)
+// The Electric Yo-Yo
 
-static struct BurnRomInfo elecyoyo2RomDesc[] = {
+static struct BurnRomInfo elecyoyoaRomDesc[] = {
 	{ "yy14",			0x1000, 0x0d2edcb9, 1 | BRF_PRG | BRF_ESS }, //  0 Main M6809 Code
 	{ "yy15",			0x1000, 0xa91f01e3, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "yy16",			0x1000, 0xcab19f3a, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1678,21 +1678,21 @@ static struct BurnRomInfo elecyoyo2RomDesc[] = {
 	{ "yy101",			0x0800, 0x3cf13038, 4 | BRF_PRG | BRF_ESS }, // 13 MCU (M68705) Code
 };
 
-STD_ROM_PICK(elecyoyo2)
-STD_ROM_FN(elecyoyo2)
+STD_ROM_PICK(elecyoyoa)
+STD_ROM_FN(elecyoyoa)
 
-struct BurnDriver BurnDrvElecyoyo2 = {
-	"elecyoyo2", "elecyoyo", NULL, NULL, "1982",
-	"The Electric Yo-Yo (set 2)\0", NULL, "Taito America Corporation", "Miscellaneous",
+struct BurnDriver BurnDrvElecyoyoa = {
+	"elecyoyoa", "elecyoyo", NULL, NULL, "1982",
+	"The Electric Yo-Yo\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
-	NULL, elecyoyo2RomInfo, elecyoyo2RomName, NULL, NULL, NULL, NULL, ElecyoyoInputInfo, NULL,
+	NULL, elecyoyoaRomInfo, elecyoyoaRomName, NULL, NULL, NULL, NULL, ElecyoyoInputInfo, NULL,
 	FourWayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
 
-// Kram (set 1)
+// Kram (rev 1)
 
 static struct BurnRomInfo kramRomDesc[] = {
 	{ "ks14-1",			0x1000, 0xfe69ac79, 1 | BRF_PRG | BRF_ESS }, //  0 Main M6809 Code
@@ -1719,7 +1719,7 @@ STD_ROM_FN(kram)
 
 struct BurnDriver BurnDrvKram = {
 	"kram", NULL, NULL, NULL, "1982",
-	"Kram (set 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"Kram (rev 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, kramRomInfo, kramRomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
@@ -1728,9 +1728,9 @@ struct BurnDriver BurnDrvKram = {
 };
 
 
-// Kram (set 2)
+// Kram
 
-static struct BurnRomInfo kram2RomDesc[] = {
+static struct BurnRomInfo kramaRomDesc[] = {
 	{ "ks14",			0x1000, 0xa2eac1ff, 1 | BRF_PRG | BRF_ESS }, //  0 Main M6809 Code
 	{ "ks15",			0x1000, 0x4b2c175e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ks16",			0x1000, 0x9500a05d, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1750,15 +1750,15 @@ static struct BurnRomInfo kram2RomDesc[] = {
 	{ "ks101.dat",		0x0800, 0xe53d97b7, 4 | BRF_PRG | BRF_ESS }, // 13 MCU (M68705) Code
 };
 
-STD_ROM_PICK(kram2)
-STD_ROM_FN(kram2)
+STD_ROM_PICK(krama)
+STD_ROM_FN(krama)
 
-struct BurnDriver BurnDrvKram2 = {
-	"kram2", "kram", NULL, NULL, "1982",
-	"Kram (set 2)\0", NULL, "Taito America Corporation", "Miscellaneous",
+struct BurnDriver BurnDrvKrama = {
+	"krama", "kram", NULL, NULL, "1982",
+	"Kram\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
-	NULL, kram2RomInfo, kram2RomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
+	NULL, kramaRomInfo, kramaRomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -1766,7 +1766,7 @@ struct BurnDriver BurnDrvKram2 = {
 
 // Kram (encrypted)
 
-static struct BurnRomInfo kram3RomDesc[] = {
+static struct BurnRomInfo krameRomDesc[] = {
 	{ "kr-u14",			0x1000, 0x02c1bd1e, 1 | BRF_PRG | BRF_ESS }, //  0 Main M6809 Code
 	{ "kr-u15",			0x1000, 0x46b3ff33, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "kr-u16",			0x1000, 0xf202b9cf, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1784,15 +1784,15 @@ static struct BurnRomInfo kram3RomDesc[] = {
 	{ "ks27",			0x0800, 0xc46530c8, 3 | BRF_PRG | BRF_ESS }, // 12 Sound M6802 Code
 };
 
-STD_ROM_PICK(kram3)
-STD_ROM_FN(kram3)
+STD_ROM_PICK(krame)
+STD_ROM_FN(krame)
 
-struct BurnDriverX BurnDrvKram3 = {
-	"kram3", "kram", NULL, NULL, "1982",
+struct BurnDriverX BurnDrvKrame = {
+	"krame", "kram", NULL, NULL, "1982",
 	"Kram (encrypted)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
-	NULL, kram3RomInfo, kram3RomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
+	NULL, krameRomInfo, krameRomName, NULL, NULL, NULL, NULL, KramInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

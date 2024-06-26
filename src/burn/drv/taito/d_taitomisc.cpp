@@ -6118,7 +6118,7 @@ struct BurnDriver BurnDrvDariuse = {
 
 struct BurnDriver BurnDrvOpwolf = {
 	"opwolf", NULL, "cchip", NULL, "1987",
-	"Operation Wolf (World, set 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Operation Wolf (World, rev 2, set 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OpwolfRomInfo, OpwolfRomName, NULL, NULL, NULL, NULL, OpwolfInputInfo, OpwolfDIPInfo,
@@ -6128,7 +6128,7 @@ struct BurnDriver BurnDrvOpwolf = {
 
 struct BurnDriver BurnDrvOpwolfa = {
 	"opwolfa", "opwolf", "cchip", NULL, "1987",
-	"Operation Wolf (World, set 2)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Operation Wolf (World, rev 2, set 2)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OpwolfaRomInfo, OpwolfaRomName, NULL, NULL, NULL, NULL, OpwolfInputInfo, OpwolfDIPInfo,
@@ -6138,7 +6138,7 @@ struct BurnDriver BurnDrvOpwolfa = {
 
 struct BurnDriver BurnDrvOpwolfj = {
 	"opwolfj", "opwolf", "cchip", NULL, "1987",
-	"Operation Wolf (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Operation Wolf (Japan, rev 2)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OpwolfjRomInfo, OpwolfjRomName, NULL, NULL, NULL, NULL, OpwolfInputInfo, OpwolfDIPInfo,
@@ -6158,7 +6158,7 @@ struct BurnDriver BurnDrvOpwolfjsc = {
 
 struct BurnDriver BurnDrvOpwolfu = {
 	"opwolfu", "opwolf", "cchip", NULL, "1987",
-	"Operation Wolf (US)\0", NULL, "Taito America Corporation", "Taito Misc",
+	"Operation Wolf (US, rev 2)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OpwolfuRomInfo, OpwolfuRomName, NULL, NULL, NULL, NULL, OpwolfInputInfo, OpwolfuDIPInfo,
@@ -6178,7 +6178,7 @@ struct BurnDriver BurnDrvOpwolfb = {
 
 struct BurnDriver BurnDrvRbisland = {
 	"rbisland", NULL, "cchip", NULL, "1987",
-	"Rainbow Islands (new version)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Rainbow Islands (rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandRomInfo, RbislandRomName, NULL, NULL, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
@@ -6188,7 +6188,7 @@ struct BurnDriver BurnDrvRbisland = {
 
 struct BurnDriver BurnDrvRbislando = {
 	"rbislando", "rbisland", "cchip", NULL, "1987",
-	"Rainbow Islands (old version)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Rainbow Islands\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandoRomInfo, RbislandoRomName, NULL, NULL, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
@@ -6338,7 +6338,7 @@ struct BurnDriver BurnDrvRastsagab = {
 
 struct BurnDriver BurnDrvTopspeed = {
 	"topspeed", NULL, NULL, NULL, "1987",
-	"Top Speed (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Top Speed (World, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, TopspeedRomInfo, TopspeedRomName, NULL, NULL, NULL, NULL, TopspeedInputInfo, TopspeedDIPInfo,
@@ -6368,7 +6368,7 @@ struct BurnDriver BurnDrvFullthrl = {
 
 struct BurnDriver BurnDrvVolfied = {
 	"volfied", NULL, "cchip", NULL, "1989",
-	"Volfied (World, revision 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Volfied (World, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, VolfiedRomInfo, VolfiedRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfiedDIPInfo,
@@ -6378,7 +6378,7 @@ struct BurnDriver BurnDrvVolfied = {
 
 struct BurnDriver BurnDrvVolfiedj = {
 	"volfiedj", "volfied", "cchip", NULL, "1989",
-	"Volfied (Japan, revision 1)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Volfied (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, VolfiedjRomInfo, VolfiedjRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfiedjDIPInfo,
@@ -6398,7 +6398,7 @@ struct BurnDriver BurnDrvVolfiedjo = {
 
 struct BurnDriver BurnDrvVolfiedu = {
 	"volfiedu", "volfied", "cchip", NULL, "1989",
-	"Volfied (US, revision 1)\0", NULL, "Taito America Corporation", "Taito Misc",
+	"Volfied (US, rev 1)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, VolfieduRomInfo, VolfieduRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfieduDIPInfo,

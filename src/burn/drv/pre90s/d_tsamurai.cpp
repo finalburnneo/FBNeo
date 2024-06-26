@@ -1067,12 +1067,7 @@ static INT32 VsgongfCommonInit(INT32 game)
 {
 	game_select = 3;
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0)
@@ -1996,7 +1991,7 @@ struct BurnDriver BurnDrvVsgongf = {
 };
 
 
-// Ring Fighter (set 1)
+// Ring Fighter (rev 1)
 
 static struct BurnRomInfo ringfgtRomDesc[] = {
 	{ "rft_04-1.5a",	0x2000, 0x11030866, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2030,7 +2025,7 @@ static INT32 RingfgtInit()
 
 struct BurnDriver BurnDrvRingfgt = {
 	"ringfgt", "vsgongf", NULL, NULL, "1984",
-	"Ring Fighter (set 1)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
+	"Ring Fighter (rev 1)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, ringfgtRomInfo, ringfgtRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
@@ -2039,9 +2034,9 @@ struct BurnDriver BurnDrvRingfgt = {
 };
 
 
-// Ring Fighter (set 2)
+// Ring Fighter
 
-static struct BurnRomInfo ringfgt2RomDesc[] = {
+static struct BurnRomInfo ringfgtaRomDesc[] = {
 	{ "rft_04.5a",		0x2000, 0x6b9b3f3d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "rft_03.5c",		0x2000, 0x1821974b, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -2061,22 +2056,22 @@ static struct BurnRomInfo ringfgt2RomDesc[] = {
 	{ "rft-13.6p",		0x0100, 0x0e4fd17a, 5 | BRF_GRA },           // 12
 };
 
-STD_ROM_PICK(ringfgt2)
-STD_ROM_FN(ringfgt2)
+STD_ROM_PICK(ringfgta)
+STD_ROM_FN(ringfgta)
 
-static INT32 Ringfgt2Init()
+static INT32 RingfgtaInit()
 {
 	vsgongf_protval = 0x6ac0;
 
 	return VsgongfCommonInit(1);
 }
 
-struct BurnDriver BurnDrvRingfgt2 = {
-	"ringfgt2", "vsgongf", NULL, NULL, "1984",
-	"Ring Fighter (set 2)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
+struct BurnDriver BurnDrvRingfgta = {
+	"ringfgta", "vsgongf", NULL, NULL, "1984",
+	"Ring Fighter\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, ringfgt2RomInfo, ringfgt2RomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
-	Ringfgt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	NULL, ringfgtaRomInfo, ringfgtaRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
+	RingfgtaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

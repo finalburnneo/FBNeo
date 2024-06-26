@@ -984,7 +984,7 @@ struct BurnDriver BurnDrvStorminga = {
 };
 
 
-// Daikaiju no Gyakushu
+// Daikaiju no Gyakushu (rev 1)
 
 static struct BurnRomInfo daikaijuRomDesc[] = {
 	{ "a74_01-1.ic4",	0x8000, 0x89c13d7f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1022,7 +1022,7 @@ static INT32 DaikaijuInit()
 
 struct BurnDriver BurnDrvDaikaiju = {
 	"daikaiju", NULL, NULL, NULL, "1986",
-	"Daikaiju no Gyakushu\0", NULL, "Taito", "Miscellaneous",
+	"Daikaiju no Gyakushu (rev 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, daikaijuRomInfo, daikaijuRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, DaikaijuDIPInfo,

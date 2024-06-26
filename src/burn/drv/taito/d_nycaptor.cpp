@@ -1065,7 +1065,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// N.Y. Captor
+// N.Y. Captor (rev 2)
 
 static struct BurnRomInfo nycaptorRomDesc[] = {
 	{ "a50_04",			0x4000, 0x33d971a3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1101,7 +1101,7 @@ static INT32 NycaptorInit()
 
 struct BurnDriver BurnDrvNycaptor = {
 	"nycaptor", NULL, NULL, NULL, "1985",
-	"N.Y. Captor\0", NULL, "Taito", "Miscellaneous",
+	"N.Y. Captor (rev 2)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, nycaptorRomInfo, nycaptorRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, NycaptorDIPInfo,

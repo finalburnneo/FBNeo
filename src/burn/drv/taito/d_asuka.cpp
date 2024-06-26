@@ -2713,7 +2713,7 @@ STD_ROM_FN(jigkmgri)
 
 struct BurnDriver BurnDrvJigkmgri = {
 	"jigkmgri", "bonzeadv", "cchip", NULL, "1988",
-	"Jigoku Meguri (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Jigoku Meguri (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan, rev 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, jigkmgriRomInfo, jigkmgriRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,

@@ -20782,14 +20782,16 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 };
 
 // King of Fighters '94 (Team Edit Edition v1.4.0, Hack)
-// https://neorh.mattgreer.dev/
+// https://neorh.mattgreer.dev/kof94
+// 95' Style portraits, Clean font, Cheat sheet
+// Also includes an rugal's palette bugfix by AliceMSU
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0xc597d83c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "055-p1te.p1",	0x200000, 0x873b4c4a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "055-c1te.c1",	0x200000, 0xab83690c, 3 | BRF_GRA },           //  2 Sprite data
+	{ "055-c1te.c1",	0x200000, 0xfdb75046, 3 | BRF_GRA },           //  2 Sprite data
 	{ "055-c2te.c2",	0x200000, 0x849bdfba, 3 | BRF_GRA },           //  3
 	{ "055-c3.c3",		0x200000, 0x54f66254, 3 | BRF_GRA },           //  4
 	{ "055-c4.c4",		0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5

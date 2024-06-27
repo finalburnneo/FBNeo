@@ -509,6 +509,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		struct spng_row_info row_info = {0};
 
 		// deal with transparency that decodes to non-black
+		// testcases: dacholer, dowild, ...
 		int trans_to_black = 0;
 		struct spng_plte plte;
 		struct spng_trns trns;
@@ -531,14 +532,14 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 				if (trans_to_black) {
 					for(int j = 0; j < trns.n_type3_entries; j++)
 					{
-						if(trns.type3_alpha[j] < 10 && // 50% and lower opacity (19 is 99%..?)
+						if(trns.type3_alpha[j] < 20 &&
 						   plte.entries[trns.type3_alpha[j]].red == r &&
 						   plte.entries[trns.type3_alpha[j]].green == g &&
 						   plte.entries[trns.type3_alpha[j]].blue == b)
 						{
-							r = 0;
-							g = 0;
-							b = 0;
+							r = r * trns.type3_alpha[j] / 20;
+							g = g * trns.type3_alpha[j] / 20;
+							b = b * trns.type3_alpha[j] / 20;
 						}
 					}
 				}

@@ -531,7 +531,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 				if (trans_to_black) {
 					for(int j = 0; j < trns.n_type3_entries; j++)
 					{
-						if(trns.type3_alpha[j] < 20 &&
+						if(trns.type3_alpha[j] < 10 && // 50% and lower opacity (19 is 99%..?)
 						   plte.entries[trns.type3_alpha[j]].red == r &&
 						   plte.entries[trns.type3_alpha[j]].green == g &&
 						   plte.entries[trns.type3_alpha[j]].blue == b)

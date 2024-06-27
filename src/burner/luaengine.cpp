@@ -1705,6 +1705,54 @@ static int savestate_load(lua_State *L) {
 	return 0;
 }
 
+// Memory savestates
+//
+struct SavestateSlot {
+	INT32 frame = 0;
+	INT32 size = 0;
+	UINT8 *buffer = NULL;
+};
+
+#define MAX_SLOTS 4096
+
+extern INT32 bRunaheadFrame;
+static INT32 nSavestateSize = 0;
+static INT32 nSavestateSlot = 0;
+static SavestateSlot pSavestateSlots[MAX_SLOTS];
+
+// savestate.save_mem(int frame)
+//
+//   Saves current state to memory (fast mode)
+static int savestate_savemem(lua_State *L) {
+	bRunaheadFrame = 1; \
+		int frame = luaL_checkinteger(L, 1);
+	if (pSavestateSlots[nSavestateSlot].size != 0) {
+		free(pSavestateSlots[nSavestateSlot].buffer);
+	}
+	BurnStateCompress(&pSavestateSlots[nSavestateSlot].buffer, &pSavestateSlots[nSavestateSlot].size, true);
+	pSavestateSlots[nSavestateSlot].frame = frame;
+	nSavestateSlot = (nSavestateSlot + 1) % MAX_SLOTS;
+	bRunaheadFrame = 0;
+	return 0;
+}
+
+// savestate.load_mem(int frame)
+//
+//   Loads the given state
+static int savestate_loadmem(lua_State *L) {
+	bRunaheadFrame = 1;
+	int frame = luaL_checkinteger(L, 1);
+	for (INT32 i = 0; i < MAX_SLOTS; i++) {
+		INT32 idx = ((nSavestateSlot - i + MAX_SLOTS) % MAX_SLOTS);
+		if (pSavestateSlots[idx].frame == frame) {
+			BurnStateDecompress(pSavestateSlots[idx].buffer, pSavestateSlots[idx].size, true);
+			break;
+		}
+	}
+	bRunaheadFrame = 0;
+	return 0;
+}
+
 static int savestate_registersave(lua_State *L) {
 	lua_settop(L,1);
 	if (!lua_isnil(L,1))
@@ -3860,6 +3908,8 @@ static const struct luaL_reg savestatelib[] = {
 	{"create", savestate_create},
 	{"save", savestate_save},
 	{"load", savestate_load},
+	{"save_mem", savestate_savemem},
+	{"load_mem", savestate_loadmem},
 
 	{"registersave", savestate_registersave},
 	{"registerload", savestate_registerload},

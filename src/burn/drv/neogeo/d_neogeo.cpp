@@ -20787,7 +20787,7 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 // Also includes an rugal's palette bugfix by AliceMSU
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x873b4c4a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "055-p1te.p1",	0x200000, 0x55c38af8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
 

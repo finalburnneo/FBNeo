@@ -1573,7 +1573,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		set_oki_bank(nOKIBank);
 	}
 
- 	return 0;
+	return 0;
 }
 
 
@@ -2400,19 +2400,19 @@ struct BurnDriver BurnDrvSupmodl2 = {
 };
 
 
-// WOW New Fantasia
+// WOW New Fantasia (Explicit)
 
 static struct BurnRomInfo wownfantRomDesc[] = {
-	{ "ep-4001 42750001 u81.bin",	0x080000, 0x9942d200, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ep-4001 42750001 u80.bin",	0x080000, 0x17359eeb, 0x1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ep-4001 42750001 u81.u81",	0x080000, 0x9942d200, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "ep-4001 42750001 u80.u80",	0x080000, 0x17359eeb, 0x1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ep-061 43750002 - 1.bin",	0x200000, 0xc318e841, 0x2 | BRF_PRG | BRF_ESS }, //  2
 	{ "ep-061 43750002 - 2.bin",	0x200000, 0x8871dc3a, 0x2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ep-4001 42750001 u113.bin",	0x080000, 0x3e77ca1f, 0x2 | BRF_GRA },           //  4 Sprites
-	{ "ep-4001 42750001 u112.bin",	0x080000, 0x51f4b604, 0x2 | BRF_GRA },           //  5
+	{ "ep-4001 42750001 u113.u113",	0x080000, 0x3e77ca1f, 0x2 | BRF_GRA },           //  4 Sprites
+	{ "ep-4001 42750001 u112.u112",	0x080000, 0x51f4b604, 0x2 | BRF_GRA },           //  5
 
-	{ "ep-4001 42750001 u4.bin",	0x080000, 0x06dc889e, 0x2 | BRF_SND },           //  6 Samples
-	{ "ep-4001 42750001 u1.bin",	0x080000, 0x864167c2, 0x2 | BRF_SND },           //  7
+	{ "ep-4001 42750001 u4.u4",		0x080000, 0x06dc889e, 0x2 | BRF_SND },           //  6 Samples
+	{ "ep-4001 42750001 u1.u1",		0x080000, 0x864167c2, 0x2 | BRF_SND },           //  7
 };
 
 STD_ROM_PICK(wownfant)
@@ -2420,7 +2420,7 @@ STD_ROM_FN(wownfant)
 
 struct BurnDriver BurnDrvWownfant = {
 	"wownfant", NULL, NULL, NULL, "2002",
-	"WOW New Fantasia\0", NULL, "Comad", "EXPRO-02",
+	"WOW New Fantasia (Explicit)\0", NULL, "Comad", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, wownfantRomInfo, wownfantRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
@@ -2429,9 +2429,67 @@ struct BurnDriver BurnDrvWownfant = {
 };
 
 
+// WOW New Fantasia
+
+static struct BurnRomInfo wownfantaRomDesc[] = {
+	{ "2.u81",						0x080000, 0x159178f8, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "1.u80",						0x080000, 0x509bc2d2, 0x1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",						0x200000, 0x4d082ec1, 0x2 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",						0x200000, 0xaee91094, 0x2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5.u113",						0x080000, 0x3e77ca1f, 0x2 | BRF_GRA },           //  4 Sprites
+	{ "6.u112",						0x080000, 0x0013473e, 0x2 | BRF_GRA },           //  5
+
+	{ "8.u4",						0x080000, 0x06dc889e, 0x2 | BRF_SND },           //  6 Samples
+	{ "7.u1",						0x080000, 0x864167c2, 0x2 | BRF_SND },           //  7
+};
+
+STD_ROM_PICK(wownfanta)
+STD_ROM_FN(wownfanta)
+
+struct BurnDriver BurnDrvWownfanta = {
+	"wownfanta", "wownfant", NULL, NULL, "2002",
+	"WOW New Fantasia\0", NULL, "Comad", "EXPRO-02",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, wownfantaRomInfo, wownfantaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
+	Fantsia2Init, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
 // Miss World 2002
 
 static struct BurnRomInfo missw02RomDesc[] = {
+	{ "u81",						0x080000, 0x86ca4d5f, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "u80",						0x080000, 0x96d40592, 0x1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gfx1",						0x200000, 0xfdfe36ba, 0x2 | BRF_PRG | BRF_ESS }, //  2
+	{ "gfx2",						0x200000, 0xaa769a81, 0x2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "u113",						0x080000, 0x3e77ca1f, 0x2 | BRF_GRA },           //  4 Sprites
+	{ "u112",						0x080000, 0x51f4b604, 0x2 | BRF_GRA },           //  5
+
+	{ "u4",							0x080000, 0x06dc889e, 0x2 | BRF_SND },           //  6 Samples
+	{ "u1",							0x080000, 0x864167c2, 0x2 | BRF_SND },           //  7
+};
+
+STD_ROM_PICK(missw02)
+STD_ROM_FN(missw02)
+
+struct BurnDriver BurnDrvMissw02 = {
+	"missw02", NULL, NULL, NULL, "2002",
+	"Miss World 2002\0", NULL, "Comad", "EXPRO-02",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, missw02RomInfo, missw02RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
+	Fantsia2Init, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// Miss World 2002 (Daigom license)
+
+static struct BurnRomInfo missw02dRomDesc[] = {
 	{ "8.u81",						0x080000, 0x316666d0, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "7.u80",						0x080000, 0xd61f4d18, 0x1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.bin",						0x200000, 0xfdfe36ba, 0x2 | BRF_PRG | BRF_ESS }, //  2
@@ -2444,15 +2502,15 @@ static struct BurnRomInfo missw02RomDesc[] = {
 	{ "1.u1",						0x080000, 0x864167c2, 0x2 | BRF_SND },           //  7
 };
 
-STD_ROM_PICK(missw02)
-STD_ROM_FN(missw02)
+STD_ROM_PICK(missw02d)
+STD_ROM_FN(missw02d)
 
-struct BurnDriver BurnDrvMissw02 = {
-	"missw02", NULL, NULL, NULL, "2002",
-	"Miss World 2002\0", NULL, "Daigom", "EXPRO-02",
+struct BurnDriver BurnDrvMissw02d = {
+	"missw02d", "missw02", NULL, NULL, "2002",
+	"Miss World 2002 (Daigom license)\0", NULL, "Daigom", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, missw02RomInfo, missw02RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, missw02dRomInfo, missw02dRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
 	Fantsia2Init, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };

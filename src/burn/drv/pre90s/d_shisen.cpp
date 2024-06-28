@@ -1,4 +1,4 @@
-// FB Alpha Shinsen / Match-It driver module
+// FB Neo Shinsen / Match-It driver module
 // Based on MAME driver by Nicola Salmoria
 
 // sound hardware copied from m72 driver
@@ -352,12 +352,7 @@ static INT32 DrvInit(INT32 game)
 {
 	BurnSetRefreshRate(55.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0 || game == 1)
@@ -441,7 +436,7 @@ static INT32 DrvExit()
 	BurnYM2151Exit();
 	DACExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -620,7 +615,7 @@ struct BurnDriver BurnDrvMatchit = {
 };
 
 
-// Sichuan II (hack, set 1)
+// Sichuan II (bootlet, set 1)
 
 static struct BurnRomInfo sichuan2RomDesc[] = {
 	{ "6.11d",		0x10000, 0x98a2459b, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
@@ -665,19 +660,19 @@ static INT32 Sichuan2Init()
 
 struct BurnDriver BurnDrvSichuan2 = {
 	"sichuan2", "matchit", NULL, NULL, "1989",
-	"Sichuan II (hack, set 1)\0", NULL, "hack", "Miscellaneous",
+	"Sichuan II (bootlet, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
 
 
-// Sichuan II (hack, set 2)
+// Sichuan II (bootlet, set 2)
 
 static struct BurnRomInfo sichuan2aRomDesc[] = {
-	{ "sichuan.a6",	0x10000, 0xf8ac05ef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "ic06.a6",	0x10000, 0xf8ac05ef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "ic07.03",	0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ic01.01",	0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
@@ -710,10 +705,55 @@ STD_ROM_FN(sichuan2a)
 
 struct BurnDriver BurnDrvSichuan2a = {
 	"sichuan2a", "matchit", NULL, NULL, "1989",
-	"Sichuan II (hack, set 2)\0", NULL, "hack", "Miscellaneous",
+	"Sichuan II (bootlet, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	512, 256, 4, 3
+};
+
+
+// Match It (bootleg)
+
+static struct BurnRomInfo matchitbRomDesc[] = {
+	{ "2.11d",		0x10000, 0x299815f7, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
+	{ "3.11c",		0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, 	 //  1
+
+	{ "1.2c",		0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, 	 //  2 Z80 #1 Code
+
+	{ "4.3j",		0x10000, 0x1c0e221c, 3 | BRF_GRA },           	 //  3 Graphics
+	{ "5.4j",		0x10000, 0x8a7d8284, 3 | BRF_GRA },           	 //  4
+	{ "8.1l",		0x10000, 0x48e1d043, 3 | BRF_GRA },           	 //  5
+	{ "9.2l",		0x10000, 0x3feff3f2, 3 | BRF_GRA },           	 //  6
+	{ "10.3l",		0x10000, 0xb76a517d, 3 | BRF_GRA },           	 //  7
+	{ "11.5l",		0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           	 //  8
+	{ "12.6l",		0x10000, 0x64e5d837, 3 | BRF_GRA },           	 //  9
+	{ "13.7l",		0x10000, 0x02c1b2c4, 3 | BRF_GRA },           	 // 10
+	{ "14.8l",		0x10000, 0xf5a8370e, 3 | BRF_GRA },           	 // 11
+	{ "15.10l",		0x10000, 0x7a9b7671, 3 | BRF_GRA },           	 // 12
+	{ "16.11l",		0x10000, 0x7fb396ad, 3 | BRF_GRA },           	 // 13
+	{ "17.12l",		0x10000, 0xfb83c652, 3 | BRF_GRA },           	 // 14
+	{ "18.13l",		0x10000, 0xd8b689e9, 3 | BRF_GRA },           	 // 15
+	{ "19.14l",		0x10000, 0xe6611947, 3 | BRF_GRA },           	 // 16
+	{ "6.6j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
+	{ "5.5j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
+
+	{ "2.7b",		0x10000, 0x92f0093d, 4 | BRF_SND },           	 // 19 Samples
+	{ "3.6c",		0x10000, 0x116a049c, 4 | BRF_SND },           	 // 20
+	{ "4.7c",		0x10000, 0x6840692b, 4 | BRF_SND },           	 // 21
+	{ "5.9c",		0x10000, 0x92ffe22a, 4 | BRF_SND },           	 // 22
+};
+
+STD_ROM_PICK(matchitb)
+STD_ROM_FN(matchitb)
+
+struct BurnDriver BurnDrvMatchitb = {
+	"matchitb", "matchit", NULL, NULL, "1989",
+	"Match It (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, matchitbRomInfo, matchitbRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };

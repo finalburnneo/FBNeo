@@ -160,7 +160,7 @@ int KailleraGetInput()
 		if (nSyncFrame) {
 			nSyncFrame--;
 			nKailleraFrameNum = 0;
-			return 0;
+			return 1;
 		}
 	}
 

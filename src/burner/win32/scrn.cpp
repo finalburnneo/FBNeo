@@ -820,7 +820,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "nes",		{ HARDWARE_NES, 0 } },
 	{ "fds",		{ HARDWARE_FDS, 0 } },
 	{ "ngp",		{ HARDWARE_SNK_NGP, 0 } },
-	{ "ngpc",		{ HARDWARE_SNK_NGPC, 0 } },
+	{ "ngpc",		{ HARDWARE_SNK_NGP | 0x10000, 0 } },
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
 	{ "cps1",		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, 0 } },
 	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
@@ -834,6 +834,14 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 
 static char *ScrnGetHWString(UINT32 nHWCode)
 {
+	UINT32 nHWOrig = nHWCode;
+	nHWCode &= HARDWARE_PUBLIC_MASK;
+
+	if (nHWOrig == HARDWARE_SNK_NGPC) {
+		// _NGPC is not part of the public mask, (its the same as _NGP at this point)
+		nHWCode = HARDWARE_SNK_NGP | 0x10000;
+	}
+
 	// See if nHWCode belongs to any systems in scrn_gamehw_cfg
 	for (INT32 i = 0; scrn_gamehw_cfg[i].system[0] != '\0'; i++) {
 		for (INT32 hw = 0; scrn_gamehw_cfg[i].hw[hw] != 0; hw++) {
@@ -881,7 +889,7 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 			// File doesn't exist, try to use system bezel
 			szName[0] = 0;
 
-			pszName = ScrnGetHWString(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
+			pszName = ScrnGetHWString(BurnDrvGetHardwareCode());
 
 			if (pszName != NULL) {
 				if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {

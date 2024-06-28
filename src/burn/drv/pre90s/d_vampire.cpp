@@ -447,7 +447,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	pit8253_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -570,18 +570,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Vampire (prototype?)
 
 static struct BurnRomInfo vampireRomDesc[] = {
-	{ "h1.1f",		0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "h2.2f",		0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "h3.3f",		0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "h4.4f",		0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "h1.1h",			0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "h2.2h",			0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h3.3h",			0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "h4.4h",			0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "9d",			0x1000, 0xe13a7aef, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
+	{ "s_9d.9d",		0x1000, 0xe13a7aef, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
 
-	{ "cg_p1.6e",	0x2000, 0x042661a4, 3 | BRF_GRA },           //  5 Blitter Data
-	{ "cg_p2.7e",	0x2000, 0xe9dd9dff, 3 | BRF_GRA },           //  6
+	{ "cg_p1.6e",		0x2000, 0x042661a4, 3 | BRF_GRA },           //  5 Blitter Data
+	{ "cg_p2.7e",		0x2000, 0xe9dd9dff, 3 | BRF_GRA },           //  6
 
-	{ "16a",		0x0100, 0xbc60a2eb, 4 | BRF_GRA },           //  7 Color Data
-	{ "16b",		0x0100, 0xaa6b627b, 4 | BRF_GRA },           //  8
+	{ "tb24s10.16a",	0x0100, 0xbc60a2eb, 4 | BRF_GRA },           //  7 Color Data
+	{ "tb24s10.16b",	0x0100, 0xaa6b627b, 4 | BRF_GRA },           //  8
 };
 
 STD_ROM_PICK(vampire)

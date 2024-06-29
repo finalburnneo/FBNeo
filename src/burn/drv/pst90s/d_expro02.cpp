@@ -39,6 +39,8 @@ static tempsprite_t sprites[1024];
 
 static INT32 scanline;
 
+static INT32 nCyclesExtra;
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
@@ -717,6 +719,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	kaneko_hit_calc_reset();
 	BurnWatchdogResetEnable();
+
+	nCyclesExtra = 0;
 
 	return 0;
 }
@@ -1441,6 +1445,16 @@ static INT32 ZipzapDraw()
 	return 0;
 }
 
+static void clear_oppo(UINT16 &inp)
+{
+	if ((inp & 0x0300) == 0x0000) {
+		inp |= 0x0300;
+	}
+	if ((inp & 0x0c00) == 0x0000) {
+		inp |= 0x0c00;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
@@ -1457,11 +1471,14 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		clear_oppo(DrvInputs[0]);
+		clear_oppo(DrvInputs[1]);
 	}
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] =  { 12000000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	SekOpen(0);
 
@@ -1471,12 +1488,14 @@ static INT32 DrvFrame()
 
 		CPU_RUN(0, Sek);
 
-		if (scanline ==   0) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-		if (scanline == 112) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (scanline == 224) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (scanline ==  32) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (scanline == 144) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (scanline == 256-1) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -1489,7 +1508,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1560,12 +1579,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		SekScan(nAction);
+
 		MSM6295Scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 		kaneko_hit_calc_scan(nAction);
 
 		SCAN_VAR(tilebank);
 		SCAN_VAR(nOKIBank);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)

@@ -740,6 +740,35 @@ bool IsHardwareAddressValid(HWAddressType address)
 		return false;
 }
 
+unsigned int ReadValueAtHardwareAddress_audio(HWAddressType address, unsigned int size, int isLittleEndian)
+{
+	unsigned int value = 0;
+
+	if (!bDrvOkay)
+		return 0;
+
+	cheat_ptr = &cpus[1]; // first cpu only (ok?)
+
+	INT32 nActiveCPU = cheat_ptr->cpuconfig->active();
+	if (nActiveCPU >= 0) cheat_ptr->cpuconfig->close();
+	cheat_ptr->cpuconfig->open(cheat_ptr->nCPU);
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		value <<= 8;
+		value |= cheat_ptr->cpuconfig->read(address);
+		if (isLittleEndian)
+			address--;
+		else
+			address++;
+	}
+
+	cheat_ptr->cpuconfig->close();
+	if (nActiveCPU >= 0) cheat_ptr->cpuconfig->open(nActiveCPU);
+
+	return value;
+}
+
 unsigned int ReadValueAtHardwareAddress(HWAddressType address, unsigned int size, int isLittleEndian)
 {
 	unsigned int value = 0;
@@ -758,6 +787,29 @@ unsigned int ReadValueAtHardwareAddress(HWAddressType address, unsigned int size
 		value <<= 8;
 		value |= cheat_ptr->cpuconfig->read(address);
 		if(isLittleEndian)
+			address--;
+		else
+			address++;
+	}
+
+	cheat_ptr->cpuconfig->close();
+	if (nActiveCPU >= 0) cheat_ptr->cpuconfig->open(nActiveCPU);
+
+	return value;
+}
+bool WriteValueAtHardwareAddress_audio(HWAddressType address, unsigned int value, unsigned int size, int isLittleEndian)
+{
+	cheat_ptr = &cpus[1]; // first cpu only (ok?)
+
+	INT32 nActiveCPU = cheat_ptr->cpuconfig->active();
+	if (nActiveCPU >= 0) cheat_ptr->cpuconfig->close();
+	cheat_ptr->cpuconfig->open(cheat_ptr->nCPU);
+
+	for (int i = (int)size - 1; i >= 0; i--) {
+		unsigned char memByte = (value >> (8 * i)) & 0xFF;
+		cheat_ptr->cpuconfig->write(address, memByte);
+
+		if (isLittleEndian)
 			address--;
 		else
 			address++;

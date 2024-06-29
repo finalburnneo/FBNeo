@@ -72,5 +72,9 @@ void CheatSearchExcludeAddressRange(UINT32 nStart, UINT32 nEnd);
 typedef UINT32 HWAddressType;
 
 unsigned int ReadValueAtHardwareAddress(HWAddressType address, unsigned int size, int isLittleEndian);
+unsigned int ReadValueAtHardwareAddress_audio(HWAddressType address, unsigned int size, int isLittleEndian);
+
 bool WriteValueAtHardwareAddress(HWAddressType address, unsigned int value, unsigned int size, int isLittleEndian);
+bool WriteValueAtHardwareAddress_audio(HWAddressType address, unsigned int value, unsigned int size, int isLittleEndian);
+
 bool IsHardwareAddressValid(HWAddressType address);

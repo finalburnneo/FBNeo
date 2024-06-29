@@ -41622,7 +41622,7 @@ struct BurnDriver BurnDrvnes_ghostbustersii = {
 
 // Ghosts'n Goblins (USA)(Hack, Easy Mode v2.0)
 static struct BurnRomInfo nes_ghostsngoblinshRomDesc[] = {
-	{ "Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0).nes",          131088, 0x66751cad, BRF_ESS | BRF_PRG },
+	{ "Ghosts'n Goblins (USA)(Hack, Very Easy Mode v2.0).nes",          131088, 0x79a599d9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ghostsngoblinsh)
@@ -41640,7 +41640,7 @@ struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
 
 // Ghosts'n Goblins (USA)
 static struct BurnRomInfo nes_ghostsngoblinsRomDesc[] = {
-	{ "Ghosts'n Goblins (USA).nes",          131088, 0x983dd1de, BRF_ESS | BRF_PRG },
+	{ "Ghosts'n Goblins (USA).nes",          131088, 0x87ed54aa, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ghostsngoblins)

@@ -4970,7 +4970,7 @@ static struct BurnRomInfo mspacmane2RomDesc[] = {
 	{ "mpe3.6h", 	0x1000, 0x1821ee0b, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "mpe4.6j", 	0x1000, 0xd5e5d2aa, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "mpe5.6l", 	0x1000, 0x8c3e6de6, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "mpe6.6m", 	0x0800, 0x375f0693, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "mpe6.6m", 	0x1000, 0x375f0693, 1 | BRF_ESS | BRF_PRG },	//  5
 
 	{ "mpe7.5e",   	0x0800, 0x93933d1d, 2 | BRF_GRA },				//  6 Graphics
 	{ "mpe9.5h",   	0x0800, 0x7409fbec, 2 | BRF_GRA },				//  7 / BAD DUMP

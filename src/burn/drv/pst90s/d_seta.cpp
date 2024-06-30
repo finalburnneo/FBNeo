@@ -4005,8 +4005,8 @@ void __fastcall setaSoundRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	reg		= offset % sizeof(X1_010_CHANNEL);
 
 	if( channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset]&1) == 0 && (wordValue&1) != 0 ) {
-	 	x1_010_chip->smp_offset[channel] = 0;
-	 	x1_010_chip->env_offset[channel] = 0;
+		x1_010_chip->smp_offset[channel] = 0;
+		x1_010_chip->env_offset[channel] = 0;
 	}
 	x1_010_chip->reg[offset] = wordValue & 0xff;
 }
@@ -4039,8 +4039,8 @@ static void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		reg      = offset % sizeof(X1_010_CHANNEL);
 
 		if (channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset] & 1) == 0 && (byteValue&1) != 0) {
-	 		x1_010_chip->smp_offset[channel] = 0;
-	 		x1_010_chip->env_offset[channel] = 0;
+			x1_010_chip->smp_offset[channel] = 0;
+			x1_010_chip->env_offset[channel] = 0;
 		}
 		x1_010_chip->reg[offset] = byteValue;
 	}
@@ -5308,7 +5308,7 @@ static void RotateReset() {
 }
 
 static UINT32 RotationTimer(void) {
-    return nCurrentFrame;
+	return nCurrentFrame;
 }
 
 static void RotateRight(INT32 *v) {
@@ -5347,32 +5347,32 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 }
 
 static int dialRotation(INT32 playernum) {
-    // p1 = 0, p2 = 1
+	// p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
 	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
 
-    if ((playernum != 0) && (playernum != 1)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
-        return 0;
-    }
-    if (playernum == 0) {
-        player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
-    }
-    if (playernum == 1) {
-        player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
-    }
+	if ((playernum != 0) && (playernum != 1)) {
+		bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+		return 0;
+	}
+	if (playernum == 0) {
+		player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
+	}
+	if (playernum == 1) {
+		player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
+	}
 
-    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+	if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
 		bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
-    }
+	}
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
-        RotateRight(&nRotate[playernum]);
-        bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
-        nRotateTime[playernum] = RotationTimer();
+		RotateRight(&nRotate[playernum]);
+		bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
 	}
 
@@ -8202,7 +8202,7 @@ static void Drv68kZ80M6295FrameCallback()
 
 static INT32 DrvZ80M6295Frame()
 {
- 	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
+	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
 }
 
 
@@ -10380,7 +10380,7 @@ static INT32 pairloveInit()
 
 struct BurnDriver BurnDrvPairlove = {
 	"pairlove", NULL, NULL, NULL, "1991",
-	"Pairs Love\0", NULL, "Athena", "Seta",
+	"Pairs Love\0", NULL, "Athena / Nihon System", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_PUZZLE, 0,
 	NULL, pairloveRomInfo, pairloveRomName, NULL, NULL, NULL, NULL, PairloveInputInfo, PairloveDIPInfo,

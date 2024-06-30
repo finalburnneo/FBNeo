@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvClbowl = {
 };
 
 
-// Bowl-O-Rama
+// Bowl-O-Rama (Rev 1.0)
 
 static struct BurnRomInfo bowlramaRomDesc[] = {
 	{ "bowl-o-rama_rev_1.0_u6.u6",		0x08000, 0x7103ad55, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code

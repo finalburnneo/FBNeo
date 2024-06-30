@@ -541,7 +541,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Chanbara
+// Chanbara (Japan)
 
 static struct BurnRomInfo ChanbaraRomDesc[] = {
 	{ "cp01.16c",     0x4000, 0xa0c3c24c, 0 | BRF_ESS | BRF_PRG }, //  0 M6809 Code
@@ -573,7 +573,7 @@ STD_ROM_FN(Chanbara)
 
 struct BurnDriver BurnDrvChanbara = {
 	"chanbara", NULL, NULL, NULL, "1985",
-	"Chan Bara (Japan)\0", NULL, "Data East", "Miscellaneous",
+	"Chanbara (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, ChanbaraRomInfo, ChanbaraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -351,7 +351,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -504,7 +504,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Competition Golf Final Round (revision 3)
+// Competition Golf Final Round (World?, revision 3)
 
 static struct BurnRomInfo compgolfRomDesc[] = {
 	{ "cv05-3.bin",	0x8000, 0xaf9805bf, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -527,7 +527,7 @@ STD_ROM_FN(compgolf)
 
 struct BurnDriver BurnDrvCompgolf = {
 	"compgolf", NULL, NULL, NULL, "1986",
-	"Competition Golf Final Round (revision 3)\0", NULL, "Data East", "Miscellaneous",
+	"Competition Golf Final Round (World?, revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, compgolfRomInfo, compgolfRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -559,7 +559,7 @@ STD_ROM_FN(compgolfo)
 
 struct BurnDriver BurnDrvCompgolfo = {
 	"compgolfo", "compgolf", NULL, NULL, "1985",
-	"Competition Golf Final Round (Japan, old version)\0", NULL, "Data East", "Miscellaneous",
+	"Competition Golf Final Round (Japan, old version)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, compgolfoRomInfo, compgolfoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -24534,7 +24534,7 @@ struct BurnDriver BurnDrvCpsSf2cejab2 = {
 
 struct BurnDriver BurnDrvCpsSf2ceupl = {
 	"sf2ceupl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II': Champion Edition (UPL bootleg)\0", NULL, "bootleg (UPL)", "CPS1",
+	"Street Fighter II': Champion Edition (Japan 920322, UPL bootleg?)\0", NULL, "bootleg (UPL?)", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuplRomInfo, Sf2ceuplRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,

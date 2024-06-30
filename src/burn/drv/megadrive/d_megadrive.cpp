@@ -55511,6 +55511,66 @@ struct BurnDriver BurnDrvmd_sor2fnr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// River City Girls... of Rage (Hack, v0.9.82)
+// https://www.romhacking.net/hacks/4691/
+
+static struct BurnRomInfo md_sor2rcgorRomDesc[] = {
+	{ "River City Girls... of Rage v0.9.82 (2021)(savok).bin", 2889204, 0xbea16706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2rcgor)
+STD_ROM_FN(md_sor2rcgor)
+
+struct BurnDriver BurnDrvmd_sor2rcgor = {
+	"md_sor2rcgor", "md_sor2", NULL, NULL, "2021",
+	"River City Girls... of Rage (Hack, v0.9.82)\0", NULL, "hack (savok)", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2rcgorRomInfo, md_sor2rcgorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// SoR 2 - Cadillacs and Dinosaurs edition (Hack, v1.0)
+// https://www.romhacking.net/hacks/8646/
+
+static struct BurnRomInfo md_sor2dinoRomDesc[] = {
+	{ "Streets of Rage 2 - Cadillacs and Dinosaurs edition v1.0 (2024)(FengLao).bin", 2603092, 0x279ee8a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2dino)
+STD_ROM_FN(md_sor2dino)
+
+struct BurnDriver BurnDrvmd_sor2dino = {
+	"md_sor2dino", "md_sor2", NULL, NULL, "2024",
+	"Streets of Rage 2 - Cadillacs and Dinosaurs edition (Hack, v1.0)\0", NULL, "hack (FengLao)", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2dinoRomInfo, md_sor2dinoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// X-Men of Rage (Hack, v1.1)
+// https://www.romhacking.net/hacks/8605/
+
+static struct BurnRomInfo md_sor2xmorRomDesc[] = {
+	{ "X-Men of Rage v1.1 (2024)(NoMoneyRanger).bin", 3595434, 0x94781576, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2xmor)
+STD_ROM_FN(md_sor2xmor)
+
+struct BurnDriver BurnDrvmd_sor2xmor = {
+	"md_sor2xmor", "md_sor2", NULL, NULL, "2024",
+	"X-Men of Rage (Hack, v1.1)\0", NULL, "hack (NoMoneyRanger)", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2xmorRomInfo, md_sor2xmorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Road Rash Improvement (Hack)
 static struct BurnRomInfo md_roadrashimpRomDesc[] = {
 	{ "Road Rash Improvement (2022)(Ti).bin", 1048576, 0x39ad4dc0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

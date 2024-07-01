@@ -13244,7 +13244,7 @@ static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 STD_ROM_PICK(Sfz3jr2d)
 STD_ROM_FN(Sfz3jr2d)
 
-// Street Fighter Zero 3 Mix v0.30 (hacked by Zero800)
+// Street Fighter Zero 3 Mix v0.31 (hacked by Zero800)
 // https://sfz3mix.github.io/
 
 static struct BurnSampleInfo Sfz3mixSampleDesc[] = {
@@ -13383,14 +13383,14 @@ STD_SAMPLE_PICK(Sfz3mix)
 STD_SAMPLE_FN(Sfz3mix)
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sz3mx.03",		0x0600000, 0xeb635d04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx.03",		0x0600000, 0x94c8f969, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3mx.13m",		0x2000000, 0xaf3980f7, CPS2_GFX | BRF_GRA },
-	{ "sz3mx.21m",		0x2000000, 0x1d9ae703, CPS2_GFX | BRF_GRA },
+	{ "sz3mx.13m",		0x2000000, 0x59025f91, CPS2_GFX | BRF_GRA },
+	{ "sz3mx.21m",		0x2000000, 0x914c7031, CPS2_GFX | BRF_GRA },
 
-	{ "sz3mx.01",		0x0080000, 0x727fd776, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3mx.01",		0x0080000, 0x52f98a5c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3mx.11m",		0x1000000, 0x5d4fe046, CPS2_QSND | BRF_SND },
+	{ "sz3mx.11m",		0x1000000, 0x395edce2, CPS2_QSND | BRF_SND },
 
 	{ "phoenix.key",	0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
@@ -14365,7 +14365,7 @@ static INT32 Cps2TurboInit()
 
 struct BurnDriver BurnDrvCpsSfz3mix = {
 	"sfz3mix", "sfa3", NULL, "sfz3mix", "2024",
-	"Street Fighter Zero 3 Mix v0.30\0", NULL, "hack (zero800)", "CPS2",
+	"Street Fighter Zero 3 Mix v0.31\0", NULL, "hack (zero800)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,

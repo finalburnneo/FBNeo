@@ -4132,6 +4132,10 @@ static INT32 SmissinDoReset()
 
 	HiscoreReset();
 
+	if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "dolmenk")) && (0 == Dolmenk)) {
+		Dolmenk = 1;
+	}
+
 	return 0;
 }
 

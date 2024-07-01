@@ -20029,7 +20029,7 @@ static struct BurnRomInfo kof2002mRomDesc[] = {
 	{ "265-p1m.p1",		0x100000, 0xa49937ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2m.sp2",	0x400000, 0x046a1232, 1 | BRF_ESS | BRF_PRG }, //  1
 	
-	{ "265-s1m.bin",	0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265-s1m.s1",		0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
 	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
@@ -20044,8 +20044,8 @@ static struct BurnRomInfo kof2002mRomDesc[] = {
 
 	{ "265-m1m.m1",		0x020000, 0xce706bc7, 4 | BRF_ESS | BRF_PRG }, //  13 Z80 code
 
-	{ "265-v1nd.v1",	0x800000, 0x0fc9a58d, 5 | BRF_SND },           //  14 Sound data
-	{ "265-v2nd.v2",	0x800000, 0xb8c475a4, 5 | BRF_SND },           //  15
+	{ "265-v1d.v1",		0x800000, 0x0fc9a58d, 5 | BRF_SND },           //  14 Sound data
+	{ "265-v2d.v2",		0x800000, 0xb8c475a4, 5 | BRF_SND },           //  15
     { "265-v3m.v3",		0x400000, 0x86ce1fd1, 5 | BRF_SND },           //  16
 };
 

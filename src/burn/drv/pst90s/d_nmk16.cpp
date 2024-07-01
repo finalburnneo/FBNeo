@@ -2854,9 +2854,7 @@ static UINT16 __fastcall afega_main_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x080002:
-			if (1 == Dolmenk) {	// spoofed boot
-				Dolmenk = 0; break; 
-			} else return DrvInputs[1];
+			return (Dolmenk) ? (DrvInputs[1] & ~0x8080) : DrvInputs[1];
 
 		case 0x080004:
 			return ((DrvDips[0] << 8) | DrvDips[1]);
@@ -4131,10 +4129,6 @@ static INT32 SmissinDoReset()
 	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
-
-	if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "dolmenk")) && (0 == Dolmenk)) {
-		Dolmenk = 1;
-	}
 
 	return 0;
 }

@@ -1719,6 +1719,31 @@ static void NeoMapExtraRom(INT32 rom_len, INT32 exrom_len)
 }
 
 // ----------------------------------------------------------------------------
+// Overclock Inits
+
+static INT32 ngOc180taInit()
+{
+ 	INT32 nRet = NeoInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x01cd) {
+		nBurnCPUSpeedAdjust = 0x01cd;
+	}
+	
+	return nRet;
+}
+
+static INT32 ngOc400osInit()
+{
+ 	INT32 nRet = NeoInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x0400) {
+		nBurnCPUSpeedAdjust = 0x0400;
+	}
+	
+	return nRet;
+}
+
+// ----------------------------------------------------------------------------
 // Game drivers (games in MAME)
 
 /* ID range from 100 - 199 is used for Korean (some) and Neo Print carts */
@@ -5866,17 +5891,6 @@ static struct BurnRomInfo mslug2ctRomDesc[] = {
 
 STDROMPICKEXT(mslug2ct, mslug2ct, neogeo)
 STD_ROM_FN(mslug2ct)
-
-static INT32 ngOc180taInit()
-{
- 	INT32 nRet = NeoInit();
-	
-	if(nBurnCPUSpeedAdjust < 0x01cd) {
-		nBurnCPUSpeedAdjust = 0x01cd;
-	}
-	
-	return nRet;
-}
 
 struct BurnDriver BurnDrvMSlug2ct = {
 	"mslug2ct", "mslug2", "neogeo", NULL, "2015",
@@ -17369,11 +17383,11 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack v. 2.0 - 2024-06-24
+// Samurai Shodown II Perfect Hack v. 2.1 - 2024-06-26
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0x46956c33, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0xd4d86aa5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p1pe.p1",	0x100000, 0x82ef7872, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x48cba9cb, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "063-p3pe.p3",	0x020000, 0x291dd6de, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "063-s1.s1",		0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  3 Text layer tiles
@@ -17400,8 +17414,8 @@ STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2024",
-	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 2.0, hack)\0", NULL, "Bear", "Neo Geo MVS",
-	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 2.0, hack)\0", NULL, NULL, NULL,
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 2.1, hack)\0", NULL, "Bear", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 2.1, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	Samsho2spInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -17579,7 +17593,7 @@ struct BurnDriver BurnDrvSengoku3fs = {
 	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11 (Feng Shen, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, sengoku3fsRomInfo, sengoku3fsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc400osInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 
@@ -20015,7 +20029,7 @@ static struct BurnRomInfo kof2002mRomDesc[] = {
 	{ "265-p1m.p1",		0x100000, 0xa49937ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2m.sp2",	0x400000, 0x046a1232, 1 | BRF_ESS | BRF_PRG }, //  1
 	
-	{ "265-s1m.bin",	0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265-s1m.s1",		0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
 	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
@@ -20030,8 +20044,8 @@ static struct BurnRomInfo kof2002mRomDesc[] = {
 
 	{ "265-m1m.m1",		0x020000, 0xce706bc7, 4 | BRF_ESS | BRF_PRG }, //  13 Z80 code
 
-	{ "265-v1nd.v1",	0x800000, 0x0fc9a58d, 5 | BRF_SND },           //  14 Sound data
-	{ "265-v2nd.v2",	0x800000, 0xb8c475a4, 5 | BRF_SND },           //  15
+	{ "265-v1d.v1",		0x800000, 0x0fc9a58d, 5 | BRF_SND },           //  14 Sound data
+	{ "265-v2d.v2",		0x800000, 0xb8c475a4, 5 | BRF_SND },           //  15
     { "265-v3m.v3",		0x400000, 0x86ce1fd1, 5 | BRF_SND },           //  16
 };
 
@@ -20767,22 +20781,24 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 	0x1000,	304, 224, 4, 3
 };
 
-// King of Fighters '94 (Team Edit Edition v1.3.0, Hack)
-// https://neorh.mattgreer.dev/
+// King of Fighters '94 (Team Edit Edition v1.4.0, Hack)
+// https://neorh.mattgreer.dev/kof94
+// 95' Style portraits, Clean font, Cheat sheet
+// Also includes an rugal's palette bugfix by AliceMSU
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0xf3fea336, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "055-p1te.p1",	0x200000, 0x55c38af8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "055-c1te.c1",	0x200000, 0x34758352, 3 | BRF_GRA },           //  2 Sprite data
-	{ "055-c2te.c2",	0x200000, 0x90466a40, 3 | BRF_GRA },           //  3
+	{ "055-c1te.c1",	0x200000, 0xfdb75046, 3 | BRF_GRA },           //  2 Sprite data
+	{ "055-c2te.c2",	0x200000, 0x849bdfba, 3 | BRF_GRA },           //  3
 	{ "055-c3.c3",		0x200000, 0x54f66254, 3 | BRF_GRA },           //  4
 	{ "055-c4.c4",		0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5
 	{ "055-c5.c5",		0x200000, 0xee759363, 3 | BRF_GRA },           //  6
 	{ "055-c6.c6",		0x200000, 0x498da52c, 3 | BRF_GRA },           //  7
-	{ "055-c7te.c7",	0x200000, 0xb3d868d0, 3 | BRF_GRA },           //  8
-	{ "055-c8te.c8",	0x200000, 0xb296127c, 3 | BRF_GRA },           //  9
+	{ "055-c7te.c7",	0x200000, 0x78bf6367, 3 | BRF_GRA },           //  8
+	{ "055-c8te.c8",	0x200000, 0x7f680a75, 3 | BRF_GRA },           //  9
 
 	{ "055-m1.m1",		0x020000, 0xf6e77cf5, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
@@ -20796,7 +20812,7 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition v1.3.0, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition v1.4.0, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21401,17 +21417,6 @@ static struct BurnRomInfo mslugdqyRomDesc[] = {
 
 STDROMPICKEXT(mslugdqy, mslugdqy, neogeo)
 STD_ROM_FN(mslugdqy)
-
-static INT32 ngOc400osInit()
-{
- 	INT32 nRet = NeoInit();
-	
-	if(nBurnCPUSpeedAdjust < 0x0400) {
-		nBurnCPUSpeedAdjust = 0x0400;
-	}
-	
-	return nRet;
-}
 
 struct BurnDriver BurnDrvmslugdqy = {
 	"mslugdqy", "mslug", "neogeo", NULL, "2024",

@@ -17469,6 +17469,7 @@ static INT32 DrvExit()
 	Wofhfh = 0;
 	Wofsgzb = 0;
 	Wof3js = 0;
+	Knightsh = 0;
 	
 	Cps1QsHack = 0;
 	

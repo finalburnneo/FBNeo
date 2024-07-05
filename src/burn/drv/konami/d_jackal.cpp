@@ -1,4 +1,4 @@
-// FB Alpha Jackal driver module
+// FB Neo Jackal driver module
 // Based on MAME driver by Kenneth Lin
 
 #include "tiles_generic.h"
@@ -44,6 +44,7 @@ static INT32 layer_offset_x = 8;
 static INT32 layer_offset_y = 16;
 
 static INT32 bootleg = 0;
+static INT32 jackalr = 0;
 
 //static INT32 nRotate[2] = { 0, 0 };
 //static UINT32 nRotateTime[2] = { 0, 0 };
@@ -307,17 +308,17 @@ static void RotateReset() {
 }
 
 static UINT32 RotationTimer(void) {
-    return nCurrentFrame;
+	return nCurrentFrame;
 }
 
 static void RotateRight(INT32 *v) {
-    (*v)++;
-    if (*v > 7) *v = 0;
+	(*v)++;
+	if (*v > 7) *v = 0;
 }
 
 static void RotateLeft(INT32 *v) {
-    (*v)--;
-    if (*v < 0) *v = 7;
+	(*v)--;
+	if (*v < 0) *v = 7;
 }
 
 static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -dink
@@ -336,32 +337,32 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 }
 
 static int dialRotation(INT32 playernum) {
-    // p1 = 0, p2 = 1
+	// p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
 	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
 
-    if ((playernum != 0) && (playernum != 1)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
-        return 0;
-    }
-    if (playernum == 0) {
-        player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
-    }
-    if (playernum == 1) {
-        player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
-    }
+	if ((playernum != 0) && (playernum != 1)) {
+		bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+		return 0;
+	}
+	if (playernum == 0) {
+		player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
+	}
+	if (playernum == 1) {
+		player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
+	}
 
-    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+	if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
+		//bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
-    }
+	}
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
-        RotateRight(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
-        nRotateTime[playernum] = RotationTimer();
+		RotateRight(&nRotate[playernum]);
+		//bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
 	}
 
@@ -713,27 +714,27 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (!bootleg) {
 		// Jackal
-		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,   0, 1)) return 1;
-		if (BurnLoadRom(DrvM6809ROM0 + 0x0c000,   1, 1)) return 1;
 
-		if (BurnLoadRom(DrvM6809ROM1 + 0x08000,   2, 1)) return 1;
+		INT32 nIndex = 0;
+		INT32 nLen  = (jackalr) ? 0x20000 : 0x40000;
+		INT32 nLoop = (jackalr) ? 4 : 2;
 
-		if (BurnLoadRom(DrvGfxROM2   + 0x00000,   3, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM2   + 0x00001,   4, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM2   + 0x40000,   5, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM2   + 0x40001,   6, 2)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x10000, nIndex++, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x0c000, nIndex++, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM   + 0x00000,   7, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM   + 0x00100,   8, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM1 + 0x08000, nIndex++, 1)) return 1;
+
+		for (INT32 i = 0; i < nLoop; i++) {
+			if (BurnLoadRom(DrvGfxROM2 + 0x00000 + i * nLen, nIndex++, 2)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x00001 + i * nLen, nIndex++, 2)) return 1;
+		}
+
+		if (BurnLoadRom(DrvColPROM   + 0x00000, nIndex++, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM   + 0x00100, nIndex++, 1)) return 1;
 	} else {
 		// Bootleg
 		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,   0, 1)) return 1;
@@ -807,9 +808,10 @@ static INT32 DrvExit()
 	
 	GenericTilesExit();
 	
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	bootleg = 0;
+	jackalr = 0;
 	game_rotates = 1;
 
 	return 0;
@@ -1114,18 +1116,22 @@ STD_ROM_FN(jackal)
 // Jackal (World, Rotary Joystick)
 
 static struct BurnRomInfo jackalrRomDesc[] = {
-	{ "631_q02.15d",	0x10000, 0xed2a7d66, 0 | BRF_PRG | BRF_ESS }, // 0 - M6809 #0 Code
-	{ "631_q03.16d",	0x04000, 0xb9d34836, 0 | BRF_PRG | BRF_ESS }, // 1
+	{ "631_q02.15d",	0x10000, 0xed2a7d66, 0 | BRF_PRG | BRF_ESS }, //  0 - M6809 #0 Code
+	{ "631_q03.16d",	0x04000, 0xb9d34836, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "631_q01.11d",	0x08000, 0x54aa2d29, 1 | BRF_PRG | BRF_ESS }, // 2 - M6809 #1 Code
+	{ "631_q01.11d",	0x08000, 0x54aa2d29, 1 | BRF_PRG | BRF_ESS }, //  2 - M6809 #1 Code
 
-	{ "631t04.7h",		0x20000, 0x457f42f0, 2 | BRF_GRA },           // 3 - Graphics Tiles
-	{ "631t05.8h",		0x20000, 0x732b3fc1, 2 | BRF_GRA },           // 4
-	{ "631t06.12h",		0x20000, 0x2d10e56e, 2 | BRF_GRA },           // 5
-	{ "631t07.13h",		0x20000, 0x4961c397, 2 | BRF_GRA },           // 6
+	{ "631_q05.7h",		0x10000, 0xbcf5d0a8, 2 | BRF_GRA },           //  3 - Graphics Tiles
+	{ "631_q06.8h",		0x10000, 0x4cb5df22, 2 | BRF_GRA },           //  4
+	{ "631_q04.7h",		0x10000, 0xe1e9aa42, 2 | BRF_GRA },           //  5
+	{ "631_q07.8h",		0x10000, 0xcc68c5b8, 2 | BRF_GRA },           //  6
+	{ "631_q09.12h",	0x10000, 0x55ea6852, 2 | BRF_GRA },           //  7
+	{ "631_q10.13h",	0x10000, 0xfe93e217, 2 | BRF_GRA },           //  8
+	{ "631_q08.12h",	0x10000, 0xd2492b8b, 2 | BRF_GRA },           //  9
+	{ "631_q11.13h",	0x10000, 0x563ae24c, 2 | BRF_GRA },           // 10
 
-	{ "631r08.9h",		0x00100, 0x7553a172, 3 | BRF_GRA },           // 7 - Color PROMs
-	{ "631r09.14h",		0x00100, 0xa74dd86c, 3 | BRF_GRA },           // 7 - Color PROMs
+	{ "631r08.9h",		0x00100, 0x7553a172, 3 | BRF_GRA },           // 11 - Color PROMs
+	{ "631r09.14h",		0x00100, 0xa74dd86c, 3 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(jackalr)
@@ -1256,9 +1262,10 @@ INT32 DrvInitbl()
 	return DrvInit();
 }
 
-INT32 DrvInitRo()
+INT32 JackalrInit()
 {
 	game_rotates = 1;
+	jackalr = 1;
 
 	return DrvInit();
 }
@@ -1279,7 +1286,7 @@ struct BurnDriver BurnDrvJackalr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, jackalrRomInfo, jackalrRomName, NULL, NULL, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
-	DrvInitRo, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	JackalrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
 

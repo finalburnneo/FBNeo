@@ -1180,7 +1180,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly)
 
 void IpsPatchInit()
 {
-	bDoIpsPatch = true;
 	GetIpsDrvDefine();
 }
 

@@ -38,7 +38,6 @@ INT32 Forgottn = 0;
 INT32 Cps1QsHack = 0;
 INT32 Kodh = 0;
 INT32 Cawingb = 0;
-INT32 Wofh = 0;
 INT32 Sf2thndr = 0;
 INT32 Pzloop2 = 0;
 INT32 Hkittymp = 0;
@@ -47,6 +46,12 @@ INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
 INT32 CpsBootlegEEPROM = 0;
 INT32 Cps2Turbo = 0;
+INT32 Jurassic99 = 0;
+INT32 Dinoh = 0;
+INT32 Wofhfh = 0;
+INT32 Wofsgzb = 0;
+INT32 Wof3js = 0;
+INT32 Knightsh = 0;
 
 ClearOpposite<4, UINT8> clear_opposite;
 
@@ -578,6 +583,15 @@ INT32 CpsRwGetInp()
     for (i = 0; i < 8; i++) { Inp##nnnn |= (CpsInp##nnnn[i] & 1) << i; }  }
 	CPSINPEX
 #undef INP
+
+	if (Jurassic99)
+		Inpc001 |= (CpsInp179[0] & 1) << 7;
+	if (Wofsgzb)
+		Inpc001 |= (CpsInp179[0] & 1) << 6;
+	if (Dinoh)
+		Inp177  |= (CpsInp179[0] & 1) << 7;
+	if (Wofhfh || Wof3js || Knightsh)
+		Inp177  |= (CpsInp179[0] & 1) << 6;
 
 	if (Forgottn) {
 		// Handle analog controls

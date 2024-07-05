@@ -21566,15 +21566,27 @@ struct BurnDriver BurnDrvKof94rz = {
 	0x1000, 304, 224, 4, 3
 };
 
-// King of Fighters '94 (Team Edit Edition v1.4.1, Hack)
-// https://neorh.mattgreer.dev/
+
+/*************************************************************************************
+	Title: King of Fighters '94: Team Edit Edition
+	Acronym: kof94te
+
+	- More information: https://kof94te.mattgreer.dev/#build-the-rom
+	- Build ROM and other options: https://neorh.mattgreer.dev/kof94
+
+	Acknowledgements:
+	These people helped make the hack possible:
+	SieKensou, PsychoRFG, Ge Os, Jay Bee, leonardofmatheus, Alice愛麗絲, Bunny-Head
+
+	Hack created by Matt Greer.
+ *************************************************************************************/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x0fea9cd0, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1te.p1",	0x200000, 0x9fbece14, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 
-	{ "055-c1te.c1",	0x200000, 0xe99676e7, 3 | BRF_GRA },
+	{ "055-c1te.c1",	0x200000, 0xbfa24fad, 3 | BRF_GRA },
 	{ "055-c2te.c2",	0x200000, 0x849bdfba, 3 | BRF_GRA },
 	KOF94_SPR2
 	KOF94_SPR3
@@ -21591,10 +21603,41 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition: KOF95 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+static struct BurnRomInfo kof94teaRomDesc[] = {
+	{ "055-p1tea.p1",	0x200000, 0x6619cc92, 1 | BRF_ESS | BRF_PRG },
+
+	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
+
+	{ "055-c1tea.c1",	0x200000, 0xea6d4238, 3 | BRF_GRA },
+	{ "055-c2tea.c2",	0x200000, 0xf45d317d, 3 | BRF_GRA },
+	KOF94_SPR2
+	KOF94_SPR3
+	{ "055-c7tea.c7",	0x200000, 0x9421909c, 3 | BRF_GRA },
+	{ "055-c8tea.c8",	0x200000, 0x7e872d03, 3 | BRF_GRA },
+
+	KOF94_Z80
+
+	KOF94_SND
+};
+
+STDROMPICKEXT(kof94tea, kof94tea, neogeo)
+STD_ROM_FN(kof94tea)
+
+struct BurnDriver BurnDrvkof94tea = {
+	"kof94tea", "kof94", "neogeo", NULL, "2024",
+	"The King of Fighters '94 (Team Edit Edition: KOF94 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof94teaRomInfo, kof94teaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

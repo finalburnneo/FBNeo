@@ -6119,79 +6119,226 @@ struct BurnDriver BurnSpeclivipres22 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Lode Runner (Part 1 of 2) (48K)
-
-static struct BurnRomInfo Specloderunn_48RomDesc[] = {
-	{ "Lode Runner (1984)(Software Projects)(Part 1 of 2).z80", 0x07db5, 0x60fd844e, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specloderunn_48, Specloderunn_48, Spectrum)
-STD_ROM_FN(Specloderunn_48)
-
-struct BurnDriver BurnSpecloderunn_48 = {
-	"spec_loderunn_48", "spec_loderunn", "spec_spectrum", NULL, "1984",
-	"Lode Runner (Part 1 of 2) (48K)\0", NULL, "Software Projects", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, Specloderunn_48RomInfo, Specloderunn_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Lode Runner (Part 2 of 2) (48K)
-
-static struct BurnRomInfo Specloderunn2_48RomDesc[] = {
-	{ "Lode Runner (1984)(Software Projects)(Part 2 of 2).z80", 0x07c15, 0x94d3a6c5, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specloderunn2_48, Specloderunn2_48, Spectrum)
-STD_ROM_FN(Specloderunn2_48)
-
-struct BurnDriver BurnSpecloderunn2_48 = {
-	"spec_loderunn2_48", "spec_loderunn", "spec_spectrum", NULL, "1984",
-	"Lode Runner (Part 2 of 2) (48K)\0", NULL, "Software Projects", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, Specloderunn2_48RomInfo, Specloderunn2_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // Lode Runner (128K)
 
-static struct BurnRomInfo SpecloderunnRomDesc[] = {
-	{ "Lode Runner (1984)(Software Projects)[128K].z80", 0x0fab1, 0x937fee1b, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Spec_loderunnerRomDesc[] = {
+	{ "Lode Runner 128K (1984)(Software Projects Ltd).tap", 72752, 0x26929396, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specloderunn, Specloderunn, Spec128)
-STD_ROM_FN(Specloderunn)
+STDROMPICKEXT(Spec_loderunner, Spec_loderunner, Spec128)
+STD_ROM_FN(Spec_loderunner)
 
-struct BurnDriver BurnSpecloderunn = {
-	"spec_loderunn", NULL, "spec_spec128", NULL, "1984",
-	"Lode Runner (128K)\0", NULL, "Software Projects", "ZX Spectrum",
+struct BurnDriver BurnSpec_loderunner = {
+	"spec_loderunner", NULL, "spec_spec128", NULL, "1984",
+	"Lode Runner (128K)\0", "Level 1-150 | SHIFT+L +Level | SHIFT+M +Lives | SHIFT+A abort | SHIFT+R restart", "Software Projects Ltd", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecloderunnRomInfo, SpecloderunnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, Spec_loderunnerRomInfo, Spec_loderunnerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Lode Runner v2 (48K)
+// Lode Runner (Side A) (48K)
 
-static struct BurnRomInfo Specloderun2RomDesc[] = {
-	{ "Lode Runner v2 (1984)(Software Projects).z80", 0x07bf5, 0x4a3ca5b1, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo Spec_loderun48aRomDesc[] = {
+	{ "Lode Runner - Side A 48K (1984)(Software Projects Ltd).tap", 48037, 0x7e7e4ec7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specloderun2, Specloderun2, Spectrum)
-STD_ROM_FN(Specloderun2)
+STDROMPICKEXT(Spec_loderun48a, Spec_loderun48a, Spectrum)
+STD_ROM_FN(Spec_loderun48a)
 
-struct BurnDriver BurnSpecloderun2 = {
-	"spec_loderun2", "spec_loderunn", "spec_spectrum", NULL, "1984",
-	"Lode Runner v2 (48K)\0", NULL, "Software Projects", "ZX Spectrum",
+struct BurnDriver BurnSpec_loderun48a = {
+	"spec_loderun48a", "spec_loderunner", "spec_spectrum", NULL, "1984",
+	"Lode Runner - Side A (48K)\0", "Level 1-75 | SHIFT+L +Level | SHIFT+M +Lives | SHIFT+A abort | SHIFT+R restart", "Software Projects Ltd", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, Specloderun2RomInfo, Specloderun2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, Spec_loderun48aRomInfo, Spec_loderun48aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner (Side B) (48K)
+
+static struct BurnRomInfo Spec_loderun48bRomDesc[] = {
+	{ "Lode Runner - Side B 48K (1984)(Software Projects).tap", 48037, 0x1a98c993, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun48b, Spec_loderun48b, Spectrum)
+STD_ROM_FN(Spec_loderun48b)
+
+struct BurnDriver BurnSpec_loderun48b = {
+	"spec_loderun48b", "spec_loderunner", "spec_spectrum", NULL, "1984",
+	"Lode Runner - Side B, aka Lode Runner 2 (48K)\0", "Level 76-150 | SHIFT+L +Level | SHIFT+M +Lives | SHIFT+A abort | SHIFT+R restart", "Software Projects Ltd", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun48bRomInfo, Spec_loderun48bRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Ranger 48K (Fantadrom, Hack)
+static struct BurnRomInfo Spec_loderangerRomDesc[] = {
+	{ "Lode Ranger 48K (1992)(Fantadrom)(Hack).tap", 48038, 0x4e990388, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderanger, Spec_loderanger, Spectrum)
+STD_ROM_FN(Spec_loderanger)
+
+struct BurnDriver BurnSpec_loderanger = {
+	"spec_loderanger", "spec_loderunner", "spec_spectrum", NULL, "1992",
+	"Lode Ranger (48K)(Hack)\0", NULL, "Fantadrom", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderangerRomInfo, Spec_loderangerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 48K (Image, Hack)
+static struct BurnRomInfo Spec_loderun3imRomDesc[] = {
+	{ "Lode Runner 3 48K (1999)(Image)(Hack).tap", 48038, 0x699aa740, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3im, Spec_loderun3im, Spectrum)
+STD_ROM_FN(Spec_loderun3im)
+
+struct BurnDriver BurnSpec_loderun3im = {
+	"spec_loderun3im", "spec_loderunner", "spec_spectrum", NULL, "1996",
+	"Lode Runner 3 (48K)(Hack)\0", NULL, "Image", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3imRomInfo, Spec_loderun3imRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 48K (Ma$ter, Hack)
+static struct BurnRomInfo Spec_loderun3maRomDesc[] = {
+	{ "Lode Runner 3 48K (1999)(Ma$ter)(Hack).tap", 48038, 0xdbf95098, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3ma, Spec_loderun3ma, Spectrum)
+STD_ROM_FN(Spec_loderun3ma)
+
+struct BurnDriver BurnSpec_loderun3ma = {
+	"spec_loderun3ma", "spec_loderunner", "spec_spectrum", NULL, "1999",
+	"Lode Runner 3 (48K)(Hack)\0", NULL, "Ma$ter", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3maRomInfo, Spec_loderun3maRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 48K (Biotech, Russian, Hack)
+static struct BurnRomInfo Spec_loderun3biRomDesc[] = {
+	{ "Lode Runner 3 48K (RU)(1995)(Biotech Software Inc.)(Hack).tap", 48038, 0x18cb6710, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3bi, Spec_loderun3bi, Spectrum)
+STD_ROM_FN(Spec_loderun3bi)
+
+struct BurnDriver BurnSpec_loderun3bi = {
+	"spec_loderun3bi", "spec_loderunner", "spec_spectrum", NULL, "1995",
+	"Lode Runner 3 (48K)(Russian)(Hack)\0", NULL, "Biotech Software Inc.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3biRomInfo, Spec_loderun3biRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 - At Hell to Paradise 48K (Hungry Software, Hack)
+static struct BurnRomInfo Spec_loderun3heRomDesc[] = {
+	{ "Lode Runner 3 - At Hell to Paradise 48K (2013)(Hungry Software)(Hack).tap", 48038, 0x5f5af05d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3he, Spec_loderun3he, Spectrum)
+STD_ROM_FN(Spec_loderun3he)
+
+struct BurnDriver BurnSpec_loderun3he = {
+	"spec_loderun3he", "spec_loderunner", "spec_spectrum", NULL, "2013",
+	"Lode Runner 3 - At Hell to Paradise (48K)(Hack)\0", NULL, "Hungry Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3heRomInfo, Spec_loderun3heRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 48K (RASOFT, Hack)
+
+static struct BurnRomInfo Spec_loderun3raRomDesc[] = {
+	{ "Lode Runner 3 48K (2015)(Rasoft)(Hack).tap", 48038, 0xcc4c8f4b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3ra, Spec_loderun3ra, Spectrum)
+STD_ROM_FN(Spec_loderun3ra)
+
+struct BurnDriver BurnSpec_loderun3ra = {
+	"spec_loderun3ra", "spec_loderunner", "spec_spectrum", NULL, "2015",
+	"Lode Runner 3 (48K)(Hack)\0", NULL, "Rasoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3raRomInfo, Spec_loderun3raRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 3 48K (Russian)(Fikus-Pikus, Hack)
+
+static struct BurnRomInfo Spec_loderun3fiRomDesc[] = {
+	{ "Lode Runner 3 48K (RU)(1995)(Fikus-Pikus)(Hack).tap", 48038, 0xd5b5852e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun3fi, Spec_loderun3fi, Spectrum)
+STD_ROM_FN(Spec_loderun3fi)
+
+struct BurnDriver BurnSpec_loderun3fi = {
+	"spec_loderun3fi", "spec_loderunner", "spec_spectrum", NULL, "1995",
+	"Lode Runner 3 (48K)(Russian)(Hack)\0", "After 'Start Game' press 2x Space.", "Fikus-Pikus", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun3fiRomInfo, Spec_loderun3fiRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 4 48K (Technospace Software, Hack)
+
+static struct BurnRomInfo Spec_loderun4tsRomDesc[] = {
+	{ "Lode Runner 4 48K (1997)(Technospace Software)(Hack).tap", 48038, 0x31d1cafc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun4ts, Spec_loderun4ts, Spectrum)
+STD_ROM_FN(Spec_loderun4ts)
+
+struct BurnDriver BurnSpec_loderun4ts = {
+	"spec_loderun4ts", "spec_loderunner", "spec_spectrum", NULL, "1997",
+	"Lode Runner 4 (48K)(Hack)\0", NULL, "Technospace Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun4tsRomInfo, Spec_loderun4tsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lode Runner 4 (128K)(DPS Group, Hack)
+
+static struct BurnRomInfo Spec_loderun4dgRomDesc[] = {
+	{ "Lode Runner 4 128K (1998)(DPS Group)(Hack).tap", 64508, 0x0ee8a641, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec_loderun4dg, Spec_loderun4dg, Spec128)
+STD_ROM_FN(Spec_loderun4dg)
+
+struct BurnDriver BurnSpec_loderun4dg = {
+	"spec_loderun4dg", "spec_loderunner", "spec_spec128", NULL, "1998",
+	"Lode Runner 4 (128K)(Hack)\0", NULL, "DPS Group", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec_loderun4dgRomInfo, Spec_loderun4dgRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

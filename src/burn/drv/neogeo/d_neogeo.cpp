@@ -1719,28 +1719,29 @@ static void NeoMapExtraRom(INT32 rom_len, INT32 exrom_len)
 }
 
 // ----------------------------------------------------------------------------
+// @FC - Overclocker Function
+
+static void ngOverclocker(INT32 value) {
+	if (value > nBurnCPUSpeedAdjust) {
+		nBurnCPUSpeedAdjust = value;
+	}
+}
+
+// ----------------------------------------------------------------------------
 // Overclock Inits
 
 static INT32 ngOc180taInit()
 {
- 	INT32 nRet = NeoInit();
+	ngOverclocker(0x01cd);
 	
-	if(nBurnCPUSpeedAdjust < 0x01cd) {
-		nBurnCPUSpeedAdjust = 0x01cd;
-	}
-	
-	return nRet;
+	return NeoInit();
 }
 
 static INT32 ngOc400osInit()
 {
- 	INT32 nRet = NeoInit();
+	ngOverclocker(0x0400);
 	
-	if(nBurnCPUSpeedAdjust < 0x0400) {
-		nBurnCPUSpeedAdjust = 0x0400;
-	}
-	
-	return nRet;
+	return NeoInit();
 }
 
 // ----------------------------------------------------------------------------

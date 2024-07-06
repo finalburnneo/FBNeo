@@ -987,7 +987,7 @@ static INT32 agalletaInit()
 // ----------------------------------------------------------------------------
 // @FC - Overclocker Function
 
-static void caveOverclocker(INT32 value) {
+static void sailorOverclocker(INT32 value) {
 	if (value > nBurnCPUSpeedAdjust) {
 		nBurnCPUSpeedAdjust = value;
 	}
@@ -2077,7 +2077,7 @@ static INT32 sailormnrotInit()
 		//default speed
 	}
 	else {
-		caveOverclocker(0x0180);
+		sailorOverclocker(0x0180);
 	}
 	
 	return sailormnInit();

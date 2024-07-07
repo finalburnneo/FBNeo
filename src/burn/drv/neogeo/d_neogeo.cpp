@@ -16535,11 +16535,11 @@ struct BurnDriver BurnDrvGowcaiet = {
 };
 
 
-// Karnov's Revenge / Fighter's History Dynamite - Revolution
+// Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2)
 // https://gamehackfan.github.io/karnovre/
 
 static struct BurnRomInfo karnovreRomDesc[] = {
-	{ "066-p1kre.p1",	0x100000, 0x06b066a0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "066-p1kre.p1",	0x100000, 0x07af175f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "066-s1.s1",		0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -16559,8 +16559,8 @@ STDROMPICKEXT(karnovre, karnovre, neogeo)
 STD_ROM_FN(karnovre)
 
 struct BurnDriver BurnDrvKarnovre = {
-	"karnovre", "karnovr", "neogeo", NULL, "2023",
-	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.1, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	"karnovre", "karnovr", "neogeo", NULL, "2024",
+	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

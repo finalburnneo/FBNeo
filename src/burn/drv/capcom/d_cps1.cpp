@@ -18676,10 +18676,17 @@ static INT32 Sf2bhhInit()
 
 static INT32 Sf2hfInit()
 {
-	// game runs too fast - RN compared MAME/FBA to PCB
-	// RN January 2021 research: 0 frame diff https://youtu.be/nuobplWeBTI?t=88
-	
-	nCPS68KClockspeed = 8500000;
+	// @FC
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion <= NET_VERSION_ONLINE_DIPS && (kNetGame || kNetSpectator)) {
+		// Old speed
+		nCPS68KClockspeed = 7900000;
+	}
+	else {
+		// game runs too fast - RN compared MAME/FBA to PCB
+		// RN January 2021 research: 0 frame diff https://youtu.be/nuobplWeBTI?t=88
+		nCPS68KClockspeed = 8500000;
+	}
 	
 	return DrvInit();
 }

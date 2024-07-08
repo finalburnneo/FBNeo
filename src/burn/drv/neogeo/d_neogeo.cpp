@@ -1719,28 +1719,29 @@ static void NeoMapExtraRom(INT32 rom_len, INT32 exrom_len)
 }
 
 // ----------------------------------------------------------------------------
+// @FC - Overclocker Function
+
+static void ngOverclocker(INT32 value) {
+	if (value > nBurnCPUSpeedAdjust) {
+		nBurnCPUSpeedAdjust = value;
+	}
+}
+
+// ----------------------------------------------------------------------------
 // Overclock Inits
 
 static INT32 ngOc180taInit()
 {
- 	INT32 nRet = NeoInit();
+	ngOverclocker(0x01cd);
 	
-	if(nBurnCPUSpeedAdjust < 0x01cd) {
-		nBurnCPUSpeedAdjust = 0x01cd;
-	}
-	
-	return nRet;
+	return NeoInit();
 }
 
 static INT32 ngOc400osInit()
 {
- 	INT32 nRet = NeoInit();
+	ngOverclocker(0x0400);
 	
-	if(nBurnCPUSpeedAdjust < 0x0400) {
-		nBurnCPUSpeedAdjust = 0x0400;
-	}
-	
-	return nRet;
+	return NeoInit();
 }
 
 // ----------------------------------------------------------------------------
@@ -11821,11 +11822,11 @@ struct BurnDriver BurnDrvkarnovr = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Karnov's Revenge / Fighter's History Dynamite - Revolution
+// Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2)
 // https://gamehackfan.github.io/karnovre/
 
 static struct BurnRomInfo karnovreRomDesc[] = {
-	{ "066-p1kre.p1",	0x100000, 0x06b066a0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "066-p1kre.p1",	0x100000, 0x07af175f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "066-s1.s1",		0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -11845,8 +11846,8 @@ STDROMPICKEXT(karnovre, karnovre, neogeo)
 STD_ROM_FN(karnovre)
 
 struct BurnDriver BurnDrvkarnovre = {
-	"karnovre", "karnovr", "neogeo", NULL, "2023",
-	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.1, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	"karnovre", "karnovr", "neogeo", NULL, "2024",
+	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -20749,23 +20750,23 @@ struct BurnDriver BurnDrvkof2kxxx = {
 // Hack By 0 Day-S,Eddids,Hiker
 
 static struct BurnRomInfo kf2k3ps2spRomDesc[] = {
-	{ "271-p1ps2sp.p1",		0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "271-p2ps2sp.p2",		0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "271-p3ps2sp.p3",		0x100000, 0x48af7f48, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "271-p1p2s.p1",	0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "271-p2p2s.p2",	0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "271-p3p2s.p3",	0x100000, 0x48af7f48, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "271-c1ps2sp.c1",		0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
-	{ "271-c2ps2sp.c2",		0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4
-	{ "271-c3ps2sp.c3",		0x800000, 0xd818be4e, 3 | BRF_GRA },           //  5
-	{ "271-c4ps2sp.c4",		0x800000, 0xeb8bd6d6, 3 | BRF_GRA },           //  6
-	{ "271-c5ps2sp.c5",		0x800000, 0x53bb6706, 3 | BRF_GRA },           //  7
-	{ "271-c6ps2sp.c6",		0x800000, 0x993254d5, 3 | BRF_GRA },           //  8
-	{ "271-c7ps2sp.c7",		0x800000, 0x51db8ffe, 3 | BRF_GRA },           //  9
-	{ "271-c8ps2sp.c8",		0x800000, 0x7dad01ab, 3 | BRF_GRA },           // 10
+	{ "271-c1p2s.c1",	0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
+	{ "271-c2p2s.c2",	0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4
+	{ "271-c3p2s.c3",	0x800000, 0xd818be4e, 3 | BRF_GRA },           //  5
+	{ "271-c4p2s.c4",	0x800000, 0xeb8bd6d6, 3 | BRF_GRA },           //  6
+	{ "271-c5p2s.c5",	0x800000, 0x53bb6706, 3 | BRF_GRA },           //  7
+	{ "271-c6p2s.c6",	0x800000, 0x993254d5, 3 | BRF_GRA },           //  8
+	{ "271-c7p2s.c7",	0x800000, 0x51db8ffe, 3 | BRF_GRA },           //  9
+	{ "271-c8p2s.c8",	0x800000, 0x7dad01ab, 3 | BRF_GRA },           // 10
 
-	{ "271-m1c.m1",			0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "271-m1c.m1",		0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "271-v1c.v1",			0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
-	{ "271-v2c.v2",			0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13
+	{ "271-v1c.v1",		0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
+	{ "271-v2c.v2",		0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(kf2k3ps2sp, kf2k3ps2sp, neogeo)
@@ -20781,17 +20782,26 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 	0x1000,	304, 224, 4, 3
 };
 
-// King of Fighters '94 (Team Edit Edition v1.4.0, Hack)
-// https://neorh.mattgreer.dev/kof94
-// 95' Style portraits, Clean font, Cheat sheet
-// Also includes an rugal's palette bugfix by AliceMSU
+/*************************************************************************************
+	Title: King of Fighters '94: Team Edit Edition
+	zipfileName: kof94te and kof94tea
+
+	- More information: https://kof94te.mattgreer.dev/#build-the-rom
+	- Build ROM and other options: https://neorh.mattgreer.dev/kof94
+
+	Acknowledgements:
+	These people helped make the hack possible:
+	SieKensou, PsychoRFG, Ge Os, Jay Bee, leonardofmatheus, Alice???, Bunny-Head
+
+	Hack created by Matt Greer.
+ *************************************************************************************/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x55c38af8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "055-p1te.p1",	0x200000, 0x9fbece14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "055-c1te.c1",	0x200000, 0xfdb75046, 3 | BRF_GRA },           //  2 Sprite data
+	{ "055-c1te.c1",	0x200000, 0xbfa24fad, 3 | BRF_GRA },           //  2 Sprite data
 	{ "055-c2te.c2",	0x200000, 0x849bdfba, 3 | BRF_GRA },           //  3
 	{ "055-c3.c3",		0x200000, 0x54f66254, 3 | BRF_GRA },           //  4
 	{ "055-c4.c4",		0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5
@@ -20812,10 +20822,44 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition v1.4.0, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition: KOF95 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+static struct BurnRomInfo kof94teaRomDesc[] = {
+	{ "055-p1tea.p1",	0x200000, 0x6619cc92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "055-c1tea.c1",	0x200000, 0xea6d4238, 3 | BRF_GRA },           //  2 Sprite data
+	{ "055-c2tea.c2",	0x200000, 0xf45d317d, 3 | BRF_GRA },           //  3
+	{ "055-c3.c3",		0x200000, 0x54f66254, 3 | BRF_GRA },           //  4
+	{ "055-c4.c4",		0x200000, 0x0b01765f, 3 | BRF_GRA },           //  5
+	{ "055-c5.c5",		0x200000, 0xee759363, 3 | BRF_GRA },           //  6
+	{ "055-c6.c6",		0x200000, 0x498da52c, 3 | BRF_GRA },           //  7
+	{ "055-c7tea.c7",	0x200000, 0x9421909c, 3 | BRF_GRA },           //  8
+	{ "055-c8tea.c8",	0x200000, 0x7e872d03, 3 | BRF_GRA },           //  9
+
+	{ "055-m1.m1",		0x020000, 0xf6e77cf5, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "055-v1.v1",		0x200000, 0x8889596d, 5 | BRF_SND },           // 11 Sound data
+	{ "055-v2.v2",		0x200000, 0x25022b27, 5 | BRF_SND },           // 12
+	{ "055-v3.v3",		0x200000, 0x83cf32c0, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(kof94tea, kof94tea, neogeo)
+STD_ROM_FN(kof94tea)
+
+struct BurnDriver BurnDrvKof94tea = {
+	"kof94tea", "kof94", "neogeo", NULL, "2024",
+	"The King of Fighters '94 (Team Edit Edition: KOF94 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof94teaRomInfo, kof94teaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

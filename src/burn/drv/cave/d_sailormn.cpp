@@ -984,6 +984,16 @@ static INT32 agalletaInit()
 	return gameInit();
 }
 
+// ----------------------------------------------------------------------------
+// @FC - Overclocker Function
+
+static void sailorOverclocker(INT32 value) {
+	if (value > nBurnCPUSpeedAdjust) {
+		nBurnCPUSpeedAdjust = value;
+	}
+}
+
+// ----------------------------------------------------------------------------
 // Rom information
 
 static struct BurnRomInfo sailormnRomDesc[] = {
@@ -2062,13 +2072,15 @@ struct BurnDriver BurnDrvSailorMoonOh = {
 
 static INT32 sailormnrotInit()
 {
-	INT32 nRet = sailormnInit();
-	
-	if(nBurnCPUSpeedAdjust < 0x0180) {
-		nBurnCPUSpeedAdjust = 0x0180;
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion <= NET_VERSION_ONLINE_DIPS && (kNetGame || kNetSpectator)) {
+		//default speed
+	}
+	else {
+		sailorOverclocker(0x0180);
 	}
 	
-	return nRet;
+	return sailormnInit();
 }
 
 struct BurnDriver BurnDrvSailorMoonrot = {

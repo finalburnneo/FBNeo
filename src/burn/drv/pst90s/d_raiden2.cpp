@@ -2701,12 +2701,7 @@ static INT32 Raiden2Init()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 2)) return 1;
@@ -2762,12 +2757,7 @@ static INT32 Raiden2aInit() // alternate rom layout
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 4)) return 1;
@@ -2825,12 +2815,7 @@ static INT32 RaidendxInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 4)) return 1;
@@ -2923,12 +2908,7 @@ static INT32 ZeroteamInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 4)) return 1;
@@ -2982,12 +2962,7 @@ static INT32 XsedaeInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 4)) return 1;
@@ -3043,12 +3018,7 @@ static INT32 R2dxInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 1)) return 1;
@@ -3108,12 +3078,7 @@ static INT32 NzeroteamInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 2)) return 1;
@@ -3191,12 +3156,7 @@ static INT32 Zerotm2kInit()
 
 	BurnSetRefreshRate(55.47);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 1)) return 1;
@@ -3269,7 +3229,7 @@ static INT32 DrvExit()
 		EEPROMExit();
 	}
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	game_select = 0;
 
@@ -5835,13 +5795,13 @@ struct BurnDriver BurnDrvZteamwxp = {
 
 // Zero Team USA (Devil, Hack)
 // Modified by YanYan
-// GOTVG 20231118
+// GOTVG 20240705
 
 static struct BurnRomInfo zteamymRomDesc[] = {
-	{ "ztym__1.u024.5k",	0x040000, 0xbcf0c74f, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ztym__3.u023.6k",	0x040000, 0x0e97523a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ztym__2.u025.6l",	0x040000, 0x01c5f0f4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ztym__4.u026.5l",	0x040000, 0xd5a90262, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ztym__1.u024.5k",	0x040000, 0x472e93cd, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztym__3.u023.6k",	0x040000, 0x60f0cc00, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztym__2.u025.6l",	0x040000, 0x14fd9f50, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztym__4.u026.5l",	0x040000, 0x0be83793, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	ZEROTEAM_COMPONENTS
 };
@@ -5850,7 +5810,7 @@ STD_ROM_PICK(zteamym)
 STD_ROM_FN(zteamym)
 
 struct BurnDriver BurnDrvZteamym = {
-	"zteamym", "zeroteam", NULL, NULL, "2023",
+	"zteamym", "zeroteam", NULL, NULL, "2024",
 	"Zero Team USA (Devil, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,

@@ -28096,11 +28096,11 @@ struct BurnDriver BurnDrvCpsWofdr = {
 
 
 // Tenchi wo Kurau II: Sekiheki no Tatakai (Master 2020, Hack)
-// GOTVG 20240409
+// GOTVG 20240711
 
 static struct BurnRomInfo wofdr20RomDesc[] = {
-	{ "tk2dr2_23c.8f",	0x080000, 0xcadf381c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "tk2dr2_22c.7f",	0x180000, 0x26896d4a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_23c.8f",	0x080000, 0x299a6add, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2dr2_22c.7f",	0x180000, 0x041c5378, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	WOFJ_TILE1
 	{ "tk2dr2_05.7a",	0x080000, 0x134da2bb, BRF_GRA | CPS1_TILES },

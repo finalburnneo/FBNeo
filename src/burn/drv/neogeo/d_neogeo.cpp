@@ -21582,7 +21582,7 @@ struct BurnDriver BurnDrvKof94rz = {
  *************************************************************************************/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x9fbece14, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1te.p1",	0x200000, 0x457d9cf7, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 
@@ -21613,7 +21613,7 @@ struct BurnDriver BurnDrvKof94te = {
 
 
 static struct BurnRomInfo kof94teaRomDesc[] = {
-	{ "055-p1tea.p1",	0x200000, 0x6619cc92, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1tea.p1",	0x200000, 0xbcda9e71, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 

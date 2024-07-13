@@ -17821,7 +17821,7 @@ STD_ROM_FN(magdrop3te)
 
 struct BurnDriver BurnDrvMagdrop3te = {
 	"magdrop3te", "magdrop3", "neogeo", NULL, "2022",
-	"Magical Drop III Tournament Edition\0", NULL, "hack", "Neo Geo MVS",
+	"Magical Drop III Tournament Edition\0", NULL, "hack (bankbank)", "Neo Geo MVS",
 	L"Magical Drop III\0\u30DE\u30B8\u30AB\u30EB\u30C9\u30ED\u30C3\u30D7III Tournament Edition\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, magdrop3teRomInfo, magdrop3teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -18680,35 +18680,35 @@ struct BurnDriver BurnDrvMslugxcq = {
 };
 
 
-// Metal Slug X - Super Vehicle-001 (Firepower Showdown, Hack)
+// Metal Slug X - Super Vehicle-001 (Legendary Unlimited Fire, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240621
+// GOTVG 20240711
 
-static struct BurnRomInfo mslugxfsRomDesc[] = {
-	{ "250-p1fs.p1",	0x100000, 0xcb971d43, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2fs.ep1",	0x400000, 0x756b4ddd, 1 | BRF_ESS | BRF_PRG },
+static struct BurnRomInfo mslugxcqiRomDesc[] = {
+	{ "250-p1cqi.p1",	0x100000, 0xf8f95ffa, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2cqi.ep1",	0x400000, 0x2c36b1a5, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
 	MSLUGX_SPR1
 	MSLUGX_SPR2
-	{ "250-c5fs.c5",	0x800000, 0x743cd68d, 3 | BRF_GRA },
-	{ "250-c6fs.c6",	0x800000, 0xb1146061, 3 | BRF_GRA },
+	{ "250-c5cqi.c5",	0x800000, 0x743cd68d, 3 | BRF_GRA },
+	{ "250-c6cqi.c6",	0x800000, 0xb1146061, 3 | BRF_GRA },
 
 	MSLUGX_Z80
 
 	MSLUGX_SND
 };
 
-STDROMPICKEXT(mslugxfs, mslugxfs, neogeo)
-STD_ROM_FN(mslugxfs)
+STDROMPICKEXT(mslugxcqi, mslugxcqi, neogeo)
+STD_ROM_FN(mslugxcqi)
 
 struct BurnDriver BurnDrvMslugxfs = {
-	"mslugxfs", "mslugx", "neogeo", NULL, "2024",
-	"Metal Slug X - Super Vehicle-001 (Firepower Showdown, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslugxcqi", "mslugx", "neogeo", NULL, "2024",
+	"Metal Slug X - Super Vehicle-001 (Legendary Unlimited Fire, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslugxfsRomInfo, mslugxfsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslugxcqiRomInfo, mslugxcqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -19325,36 +19325,34 @@ struct BurnDriver BurnDrvMslug3cq = {
 };
 
 
-// Metal Slug 3 (Firepower Showdown, Hack)
+// Metal Slug 3 (Legendary Unlimited Fire, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20240620
+// GOTVG 20240711
 
-static struct BurnRomInfo mslug3fsRomDesc[] = {
-	{ "256-p1fs.p1",	0x100000, 0x1874bf57, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2fs.sp2",	0x400000, 0xe62fc84c, 1 | BRF_ESS | BRF_PRG },
-
-	MSLUG3_DECRYPTED_TEXT
+static struct BurnRomInfo mslug3cqiRomDesc[] = {
+	{ "256-p1cqi.p1",	0x100000, 0x18b951c2, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqi.sp2",	0x400000, 0xd60f631d, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
 	MSLUG3_DECRYPTED_SPR3
-	{ "256-c7fs.c7",	0x800000, 0xa5f46605, 3 | BRF_GRA },
-	{ "256-c8fs.c8",	0x800000, 0x03bbcf95, 3 | BRF_GRA },
+	{ "256-c7cqi.c7",	0x800000, 0xa5f46605, 3 | BRF_GRA },
+	{ "256-c8cqi.c8",	0x800000, 0x03bbcf95, 3 | BRF_GRA },
 
 	MSLUG3_Z80
 
 	MSLUG3_SND
 };
 
-STDROMPICKEXT(mslug3fs, mslug3fs, neogeo)
-STD_ROM_FN(mslug3fs)
+STDROMPICKEXT(mslug3cqi, mslug3cqi, neogeo)
+STD_ROM_FN(mslug3cqi)
 
-struct BurnDriver BurnDrvMslug3fs = {
-	"mslug3fs", "mslug3", "neogeo", NULL, "2024",
-	"Metal Slug 3 (Firepower Showdown, Hack)\0", NULL, "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvMslug3cqi = {
+	"mslug3cqi", "mslug3", "neogeo", NULL, "2024",
+	"Metal Slug 3 (Legendary Unlimited Fire, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug3fsRomInfo, mslug3fsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslug3cqiRomInfo, mslug3cqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -20711,7 +20709,7 @@ STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2024",
-	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Perfect V. 2.2, Hack)\0", NULL, "Bear", "Neo Geo MVS",
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Perfect V. 2.2, Hack)\0", NULL, "hack (Bear)", "Neo Geo MVS",
 	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 2.2, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoForceMVSDIPInfo,
@@ -21582,11 +21580,11 @@ struct BurnDriver BurnDrvKof94rz = {
  *************************************************************************************/
 
 static struct BurnRomInfo kof94teRomDesc[] = {
-	{ "055-p1te.p1",	0x200000, 0x457d9cf7, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1te.p1",	0x200000, 0xe4d3e394, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 
-	{ "055-c1te.c1",	0x200000, 0xbfa24fad, 3 | BRF_GRA },
+	{ "055-c1te.c1",	0x200000, 0xdaf4f5d5, 3 | BRF_GRA },
 	{ "055-c2te.c2",	0x200000, 0x849bdfba, 3 | BRF_GRA },
 	KOF94_SPR2
 	KOF94_SPR3
@@ -21603,7 +21601,7 @@ STD_ROM_FN(kof94te)
 
 struct BurnDriver BurnDrvKof94te = {
 	"kof94te", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition: KOF95 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition: KOF95 style portraits v1.4.2, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teRomInfo, kof94teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21613,11 +21611,11 @@ struct BurnDriver BurnDrvKof94te = {
 
 
 static struct BurnRomInfo kof94teaRomDesc[] = {
-	{ "055-p1tea.p1",	0x200000, 0xbcda9e71, 1 | BRF_ESS | BRF_PRG },
+	{ "055-p1tea.p1",	0x200000, 0x26650715, 1 | BRF_ESS | BRF_PRG },
 
 	{ "055-s1te.s1",	0x020000, 0xdcd024d2, 2 | BRF_GRA },
 
-	{ "055-c1tea.c1",	0x200000, 0xea6d4238, 3 | BRF_GRA },
+	{ "055-c1tea.c1",	0x200000, 0x8f3bf840, 3 | BRF_GRA },
 	{ "055-c2tea.c2",	0x200000, 0xf45d317d, 3 | BRF_GRA },
 	KOF94_SPR2
 	KOF94_SPR3
@@ -21634,7 +21632,7 @@ STD_ROM_FN(kof94tea)
 
 struct BurnDriver BurnDrvkof94tea = {
 	"kof94tea", "kof94", "neogeo", NULL, "2024",
-	"The King of Fighters '94 (Team Edit Edition: KOF94 style portraits v1.4.1, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
+	"The King of Fighters '94 (Team Edit Edition: KOF94 style portraits v1.4.2, Hack)\0", NULL, "hack (Matt Greer)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof94teaRomInfo, kof94teaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23799,7 +23797,7 @@ STD_ROM_FN(kof98rat)
 
 struct BurnDriver BurnDrvKof98rat = {
 	"kof98rat", "kof98", "neogeo", NULL, "2021",
-	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Ratio, Hack)\0", NULL, "bankbank", "Neo Geo MVS",
+	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Ratio, Hack)\0", NULL, "hack (bankbank)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98ratRomInfo, kof98ratRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

@@ -2103,7 +2103,7 @@ static INT32 streetsmwblInit()
 
 struct BurnDriver BurnDrvStreetsmwbl = {
 	"streetsmwbl", "streetsm", NULL, NULL, "1989",
-	"Street Smart (bootleg of World version 1)\0", NULL, "SNK", "Miscellaneous",
+	"Street Smart (bootleg of World version 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, streetsmwblRomInfo, streetsmwblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmjDIPInfo,

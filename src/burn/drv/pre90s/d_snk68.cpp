@@ -1921,22 +1921,26 @@ struct BurnDriver BurnDrvstreetsm = {
 // Street Smart (US version 1)
 
 static struct BurnRomInfo streetsm1RomDesc[] = {
-	{ "s2-1ver1.9c",  0x20000, 0xb59354c5, 1 | BRF_PRG }, //  0 68k Code
-	{ "s2-2ver1.10c", 0x20000, 0xe448b68b, 1 | BRF_PRG }, //  1
+	{ "s2-1ver1.9c",	0x20000, 0xb59354c5, 1 | BRF_PRG }, //  0 68k Code
+	{ "s2-2ver1.10c",	0x20000, 0xe448b68b, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
 STD_ROM_PICK(streetsm1)
@@ -1956,22 +1960,26 @@ struct BurnDriver BurnDrvstreetsm1 = {
 // Street Smart (World version 1)
 
 static struct BurnRomInfo streetsmwRomDesc[] = {
-	{ "s-smart1.bin", 0x20000, 0xa1f5ceab, 1 | BRF_PRG }, //  0 68k Code
-	{ "s-smart2.bin", 0x20000, 0x263f615d, 1 | BRF_PRG }, //  1
+	{ "s-smart1.bin",	0x20000, 0xa1f5ceab, 1 | BRF_PRG }, //  0 68k Code
+	{ "s-smart2.bin",	0x20000, 0x263f615d, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
 STD_ROM_PICK(streetsmw)
@@ -1991,22 +1999,26 @@ struct BurnDriver BurnDrvstreetsmw = {
 // Street Smart (Japan version 1)
 
 static struct BurnRomInfo streetsmjRomDesc[] = {
-	{ "s2v1j_01.bin", 0x20000, 0xf031413c, 1 | BRF_PRG }, //  0 68k Code
-	{ "s2v1j_02.bin", 0x20000, 0xe403a40b, 1 | BRF_PRG }, //  1
+	{ "s2v1j_01.bin",	0x20000, 0xf031413c, 1 | BRF_PRG }, //  0 68k Code
+	{ "s2v1j_02.bin",	0x20000, 0xe403a40b, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
 STD_ROM_PICK(streetsmj)
@@ -2088,7 +2100,7 @@ static struct BurnRomInfo streetsmwblRomDesc[] = {
 	{ "pal20l8acns.pal1",	0x00144, 0xf31415c9, 0 | BRF_OPT }, // 54 PLDs
 	{ "pal20l10acns.pal2",	0x000cc, 0x1cadf26d, 0 | BRF_OPT }, // 55
 	{ "pal20l10acns.pal3",	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 56
-	{ "pal16p8acn.pal4",	0x10000, 0xe258b8d6, 0 | BRF_OPT }, // 57
+	{ "pal16p8acn.pal4",	0x00104, 0xe258b8d6, 0 | BRF_OPT }, // 57
 };
 
 STD_ROM_PICK(streetsmwbl)

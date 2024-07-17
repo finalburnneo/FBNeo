@@ -1691,14 +1691,14 @@ static struct BurnRomInfo galsnewjRomDesc[] = {
 	{ "pm003e.u75",					0x080000, 0x6bb060fd, 0x5 | BRF_PRG | BRF_ESS }, //  6
 	{ "pm002e.u76",					0x080000, 0x713ee898, 0x5 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pm006e.u83",					0x080000, 0xa7555d9a, 0xa | BRF_PRG | BRF_ESS }, //  8 Sprites
-	{ "pm206e.u82",					0x080000, 0xcc978baa, 0xa | BRF_PRG | BRF_ESS }, //  9
-	{ "pm018e.u94",					0x080000, 0xf542d708, 0xa | BRF_PRG | BRF_ESS }, // 10
+	{ "pm006e.u83",					0x080000, 0xa7555d9a, 0x2 | BRF_GRA }, 			 //  8 Sprites
+	{ "pm206e.u82",					0x080000, 0xcc978baa, 0x2 | BRF_GRA }, 			 //  9
+	{ "pm018e.u94",					0x080000, 0xf542d708, 0x2 | BRF_GRA }, 			 // 10
 
-	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x2 | BRF_GRA },           // 11 View2 Tiles
-	{ "pm014e.u90",					0x080000, 0x2f367106, 0x2 | BRF_GRA },           // 12
-	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x2 | BRF_GRA },           // 13
-	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x2 | BRF_GRA },           // 14
+	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x6 | BRF_GRA },           // 11 View2 Tiles
+	{ "pm014e.u90",					0x080000, 0x2f367106, 0x6 | BRF_GRA },           // 12
+	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x6 | BRF_GRA },           // 13
+	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x6 | BRF_GRA },           // 14
 
 	{ "pm008j.u46",					0x080000, 0xf394670e, 0x2 | BRF_SND },           // 15 Samples
 	{ "pm007j.u47",					0x080000, 0x06780287, 0x2 | BRF_SND },           // 16
@@ -1736,10 +1736,10 @@ static struct BurnRomInfo galsnewkRomDesc[] = {
 	{ "pm018e.u94",					0x080000, 0xf542d708, 0x2 | BRF_GRA },           // 11
 	{ "pm19k.u93",					0x010000, 0xc17d2989, 0x2 | BRF_GRA },           // 12
 
-	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x5 | BRF_GRA },           // 13 View2 Tiles
-	{ "pm014e.u90",					0x080000, 0x2f367106, 0x5 | BRF_GRA },           // 14
-	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x5 | BRF_GRA },           // 15
-	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x5 | BRF_GRA },           // 16
+	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x6 | BRF_GRA },           // 13 View2 Tiles
+	{ "pm014e.u90",					0x080000, 0x2f367106, 0x6 | BRF_GRA },           // 14
+	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x6 | BRF_GRA },           // 15
+	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x6 | BRF_GRA },           // 16
 
 	{ "pm008k.u46",					0x080000, 0x7498483f, 0x2 | BRF_SND },           // 17 Samples
 	{ "pm007k.u47",					0x080000, 0xa8dc1fd5, 0x2 | BRF_SND },           // 18

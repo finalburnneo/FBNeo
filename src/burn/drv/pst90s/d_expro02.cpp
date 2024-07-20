@@ -1776,10 +1776,10 @@ static struct BurnRomInfo galsnewtRomDesc[] = {
 	{ "pm206e.u82",					0x080000, 0xcc978baa, 0x2 | BRF_GRA },           // 10
 	{ "pm018e.u94",					0x080000, 0xf542d708, 0x2 | BRF_GRA },           // 11
 
-	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x5 | BRF_GRA },           // 12 View2 Tiles
-	{ "pm014e.u90",					0x080000, 0x2f367106, 0x5 | BRF_GRA },           // 13
-	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x5 | BRF_GRA },           // 14
-	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x5 | BRF_GRA },           // 15
+	{ "pm013e.u89",					0x080000, 0x10f27b05, 0x6 | BRF_GRA },           // 12 View2 Tiles
+	{ "pm014e.u90",					0x080000, 0x2f367106, 0x6 | BRF_GRA },           // 13
+	{ "pm015e.u91",					0x080000, 0xa563f8ef, 0x6 | BRF_GRA },           // 14
+	{ "pm016e.u92",					0x080000, 0xc0b9494c, 0x6 | BRF_GRA },           // 15
 
 	{ "pm008j.u46",					0x080000, 0xf394670e, 0x2 | BRF_SND },           // 16 Samples
 	{ "pm007j.u47",					0x080000, 0x06780287, 0x2 | BRF_SND },           // 17

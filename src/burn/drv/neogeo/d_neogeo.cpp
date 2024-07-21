@@ -15149,7 +15149,7 @@ static INT32 sbpInit()
 	return NeoInit();
 }
 
-struct BurnDriverD BurnDrvsbp = {
+struct BurnDriver BurnDrvsbp = {
 	"sbp", NULL, "neogeo", NULL, "2004",
 	"Super Bubble Pop\0", NULL, "Vektorlogic", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,

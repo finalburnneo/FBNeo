@@ -1138,7 +1138,7 @@ static struct BurnRomInfo AmazontRomDesc[] = {
 
 	{ "13.15f",        0x08000, 0x415ff4d9, 4 | BRF_GRA },				//  8 Tiles
 	{ "14.17f",        0x08000, 0x492b5c48, 4 | BRF_GRA },				//  9
-	{ "15.18f",        0x08000, 0xb1ac0b9d, 5 | BRF_GRA },				// 10
+	{ "15.18f",        0x08000, 0xb1ac0b9d, 4 | BRF_GRA },				// 10
 
 	{ "4.6e",          0x04000, 0xf77ced7a, 5 | BRF_GRA },				// 11 Sprites
 	{ "6.6g",          0x04000, 0x936ec941, 5 | BRF_GRA },				// 12

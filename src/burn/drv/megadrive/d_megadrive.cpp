@@ -55744,3 +55744,21 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Fatal Fury One (v1.5)
+static struct BurnRomInfo md_fatfuryoneRomDesc[] = {
+	{ "Fatal Fury One (v.1.5) (Brazil) (Unl).bin", 4194304, 0x004a99e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fatfuryone)
+STD_ROM_FN(md_fatfuryone)
+
+struct BurnDriver BurnDrvmd_fatfuryone = {
+	"md_fatfuryone", NULL, NULL, NULL, "2022",
+	"Fatal Fury One (HB)\0", NULL, "Master Linkuei / GameDevBoss", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_fatfuryoneRomInfo, md_fatfuryoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

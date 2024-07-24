@@ -28081,3 +28081,33 @@ struct BurnDriver BurnDrvYoyoshkn = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// Soldier Girl Amazon (HB, IQ_132 port)
+
+static struct BurnRomInfo amazoneoRomDesc[] = {
+	{ "amazon-p1.p1",    0x020000, 0xF52D1C73, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "amazon-s1.s1",    0x020000, 0x128166BB, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "amazon-c1.c1",    0x020000, 0x901C6AE1, 3 | BRF_GRA },           //  2 Sprite data
+	{ "amazon-c2.c2",    0x020000, 0xA02A8679, 3 | BRF_GRA },           //  3
+
+	{ "amazon-m1.m1",    0x010000, 0x681D2398, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "amazon-v1.v1",    0x200000, 0x1A1A886C, 5 | BRF_SND },           //  5 Sound data
+	{ "amazon-v2.v2",    0x200000, 0x86CADE60, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(amazoneo, amazoneo, neogeo)
+STD_ROM_FN(amazoneo)
+
+struct BurnDriver BurnDrvamazoneo = {
+	"amazoneo", NULL, "neogeo", NULL, "2023",
+	"Soldier Girl Amazon Neo\0", NULL, "IQ_132", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, amazoneoRomInfo, amazoneoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 224, 304, 3, 4
+};

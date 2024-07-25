@@ -197,12 +197,12 @@ UINT8 Arm946esReadByte(UINT32 addr)
 #endif
     UINT8* ptr = membase[READ][addr >> PAGE_SHIFT];
     if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
-        return *((UINT16*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+        return membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND];
     }
 
-    if (ReadWord[(uintptr_t)ptr])
+    if (ReadByte[(uintptr_t)ptr])
     {
-        return ReadWord[(uintptr_t)ptr](addr);
+        return ReadByte[(uintptr_t)ptr](addr);
     }
     return 0;
 }
@@ -217,12 +217,12 @@ UINT16 Arm946esReadWord(UINT32 addr)
 
     UINT8* ptr = membase[READ][addr >> PAGE_SHIFT];
     if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
-        return *((UINT32*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
+        return *((UINT16*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
     }
 
-    if (ReadLong[(uintptr_t)ptr])
+    if (ReadWord[(uintptr_t)ptr])
     {
-        return ReadLong[(uintptr_t)ptr](addr);
+        return ReadWord[(uintptr_t)ptr](addr);
     }
 
     return 0;

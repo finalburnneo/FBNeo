@@ -19,20 +19,21 @@ static INT32 m_level_stack[9];
 
 static void (*ArmAicIrqCcallback)(INT32) = NULL;
 
-void ArmAicSetIrqCallback(void (*irqcallback)(INT32)) {
+void ArmAicSetIrqCallback(void (*irqcallback)(INT32)) 
+{
     ArmAicIrqCcallback = irqcallback;
 }
 
 static void push_level(int lvl) 
 {
     m_level_stack[++m_lvlidx] = lvl;
-};
+}
 
 static void pop_level()
 {
     if (m_lvlidx) 
         --m_lvlidx;
-};
+}
 
 static void set_lines() {
     if (ArmAicIrqCcallback) {

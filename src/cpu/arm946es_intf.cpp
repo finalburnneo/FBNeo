@@ -3,7 +3,7 @@
 
 //#define DEBUG_LOG
 
-#define MAX_MEMORY	0x100000000 // more than good enough for pgm
+#define MAX_MEMORY	0x100000000 // more than good enough for pgm2
 #define MAX_MEMORY_AND	(MAX_MEMORY - 1)
 #define PAGE_SIZE	0x00010000 // 65536 would be better...
 #define PAGE_COUNT	(MAX_MEMORY/PAGE_SIZE)
@@ -311,6 +311,11 @@ void Arm946esSetReadLongHandler(UINT32 (*read)(UINT32))
     pReadLongHandler = read;
 }
 
+
+INT32 Arm946esRun(INT32 cycles) {
+	return Arm7Run(cycles);
+}
+
 void Arm946esSetIRQLine(INT32 line, INT32 state)
 {
 	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK) {
@@ -327,10 +332,6 @@ void Arm946esSetIRQLine(INT32 line, INT32 state)
 void Arm946esSetIdleLoopAddress(UINT32 address)
 {
     Arm946esIdleLoop = address;
-}
-
-INT32 Arm946esRun(INT32 cycles) {
-	return Arm7Run(cycles);
 }
 
 // For cheats/etc
@@ -371,9 +372,9 @@ static cpu_core_config Arm946esCheatCpuConfig =
     Arm946esRun,
     Arm946esRunEnd,
     Arm946esReset,
+	Arm946esScan,
+	Arm946esExit,
     MAX_MEMORY,
-    Arm946esScan,
-    Arm946esExit,
     0
 };
 

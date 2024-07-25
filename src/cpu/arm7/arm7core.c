@@ -438,13 +438,13 @@ ARM7_INLINE void arm946es_cpu_write32(UINT32 addr, UINT32 data)
     addr &= ~3;
     if ((addr >= cp15_itcm_base) && (addr <= cp15_itcm_end))
     {
-        UINT32 *wp = (uint32_t *)&ITCM[addr&0x7fff];
+        UINT32 *wp = (UINT32*)&ITCM[addr&0x7fff];
         *wp = data;
         return;
     }
     else if ((addr >= cp15_dtcm_base) && (addr <= cp15_dtcm_end))
     {
-        UINT32 *wp = (uint32_t *)&DTCM[addr&0x3fff];
+        UINT32 *wp = (UINT32 *)&DTCM[addr&0x3fff];
         *wp = data;
         return;
     }
@@ -495,7 +495,7 @@ ARM7_INLINE UINT32 arm946es_cpu_read32(UINT32 addr)
     {
         if (addr & 3)
         {
-            UINT32 *wp = (uint32_t *)&ITCM[(addr & ~3)&0x7fff];
+            UINT32 *wp = (UINT32 *)&ITCM[(addr & ~3)&0x7fff];
             result = *wp;
             result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
         }

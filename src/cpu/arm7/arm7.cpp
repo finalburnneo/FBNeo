@@ -37,7 +37,7 @@
 #include "burnint.h"
 #include "arm7core.h"
 #include "arm7_intf.h"
-#include "arm9_intf.h"
+#include "arm946es_intf.h"
 
 /* Example for showing how Co-Proc functions work */
 #define TEST_COPROC_FUNCS 0

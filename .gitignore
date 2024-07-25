@@ -1,10 +1,13 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /.vs
 .vscode
 /projectfiles/visualstudio-2019/enc_temp_folder
+/projectfiles/visualstudio-2019/fbneo_vs2019.vcxproj.user
+/projectfiles/visualstudio-2022/enc_temp_folder
+/projectfiles/visualstudio-2022/fbneo_vs2022.vcxproj.user
 .DS_Store
 obj/
 ._*

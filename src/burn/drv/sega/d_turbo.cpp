@@ -2158,18 +2158,6 @@ static UINT32 buckrog_get_sprite_bits(sprite_info *sprinfo, UINT8 *plb)
 	return sprdata;
 }
 
-static inline UINT8 count_leading_zeros_32(UINT32 val)
-{
-	if (0 == val)
-		return 32U;
-
-	UINT8 count;
-	for (count = 0; INT32(val) >= 0; count++)
-		val <<= 1;
-
-	return count;
-}
-
 static void screen_update_buckrog()
 {
 	const UINT8 *pr5194 = &DrvColPROM[0x000];

@@ -1,0 +1,11 @@
+// license:BSD-3-Clause
+// copyright-holders:David Haywood, MetalliC
+
+#define COMBINE_DATA(varptr)    (*(varptr) = (*(varptr) & ~mem_mask) | (data & mem_mask))
+
+UINT32 ArmAicRead(UINT32 sekAddress);
+void ArmAicWrite(UINT32 sekAddress, UINT32 data);
+void ArmAicSetIrq(INT32 line, INT32 state);
+void ArmAicReset();
+INT32 ArmAicScan();
+void ArmAicSetIrqCallback(void (*irqcallback)(INT32));

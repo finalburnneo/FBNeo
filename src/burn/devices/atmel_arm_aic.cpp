@@ -1,3 +1,19 @@
+// license:BSD-3-Clause
+// copyright-holders:David Haywood, MetalliC
+
+/*
+   ARM AIC (Advanced Interrupt Controller) from Atmel
+   typically integrated into the AM91SAM series of chips
+
+   current implementation was tested in pgm2 (pgm2.cpp) only, there might be mistakes if more advanced usage.
+   if this peripheral is not available as a standalone chip it could also be moved to
+   the CPU folder alongside the ARM instead
+   TODO:
+    low/high input source types
+    check if level/edge input source types logic correct
+    FIQ output
+*/
+
 #include "burnint.h"
 #include "driver.h"
 #include "atmel_arm_aic.h"

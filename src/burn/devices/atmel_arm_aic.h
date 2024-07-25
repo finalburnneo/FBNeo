@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:David Haywood, MetalliC
 
 #define COMBINE_DATA(varptr)    (*(varptr) = (*(varptr) & ~mem_mask) | (data & mem_mask))
 

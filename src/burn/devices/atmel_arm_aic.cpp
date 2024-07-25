@@ -51,7 +51,7 @@ static UINT32 irq_vector_r()
         INT32 midx = -1;
         do
         {
-            UINT8 idx = 31 - count_leading_zeros(mask);
+            UINT8 idx = 31 - count_leading_zeros_32(mask);
             if ((INT32)(m_aic_smr[idx] & 7) >= pri)
             {
                 midx = idx;
@@ -93,7 +93,7 @@ static void check_irqs()
         int pri = m_level_stack[m_lvlidx];
         do
         {
-            UINT8 idx = 31 - count_leading_zeros(mask);
+            UINT8 idx = 31 - count_leading_zeros_32(mask);
             if ((int)(m_aic_smr[idx] & 7) > pri)
             {
                 m_core_status |= 2;

@@ -3550,6 +3550,12 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_splash.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\arm946es_intf.cpp">
+      <Filter>cpus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\atmel_arm_aic.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -3839,6 +3845,9 @@
     <None Include="..\..\src\intf\video\scalers\superscale.asm">
       <Filter>interfaces\video\scalers</Filter>
     </None>
+    <None Include="..\..\src\cpu\e132xs\e132xsop.inc" />
+    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt" />
+    <None Include="..\..\src\dep\libs\zlib\zconf.h.in" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">

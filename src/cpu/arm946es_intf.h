@@ -4,6 +4,20 @@
 #define ARM946ES_IRQ_LINE		0
 #define ARM946ES_FIRQ_LINE		1
 
+typedef void(__fastcall* pArm946esWriteLongHandler)(UINT32 a, UINT32 d, UINT32 m);
+typedef void(__fastcall* pArm946esWriteWordHandler)(UINT32 a, UINT16 d, UINT32 m);
+typedef void(__fastcall* pArm946esWriteByteHandler)(UINT32 a, UINT8 d, UINT32 m);
+
+typedef UINT16(__fastcall* pArm946esReadWordHandler)(UINT32 a);
+typedef UINT32(__fastcall* pArm946esReadLongHandler)(UINT32 a);
+typedef UINT8(__fastcall* pArm946esReadByteHandler)(UINT32 a);
+
+void Arm946esSetWriteByteHandler(INT32 i, pArm946esWriteByteHandler handle);
+void Arm946esSetWriteWordHandler(INT32 i, pArm946esWriteWordHandler handle);
+void Arm946esSetWriteLongHandler(INT32 i, pArm946esWriteLongHandler handle);
+void Arm946esSetReadByteHandler(INT32 i, pArm946esReadByteHandler handle);
+void Arm946esSetReadWordHandler(INT32 i, pArm946esReadWordHandler handle);
+void Arm946esSetReadLongHandler(INT32 i, pArm946esReadLongHandler handle);
 
 void Arm946esWriteByte(UINT32 addr, UINT8 data);
 void Arm946esWriteWord(UINT32 addr, UINT16 data);
@@ -33,13 +47,7 @@ INT32 Arm946esScan(INT32 nAction);
 void Arm946esSetIRQLine(INT32 line, INT32 state);
 
 void Arm946esMapMemory(UINT8* src, UINT32 start, UINT32 finish, INT32 type);
-
-void Arm946esSetWriteByteHandler(void (*write)(UINT32, UINT8));
-void Arm946esSetWriteWordHandler(void (*write)(UINT32, UINT16));
-void Arm946esSetWriteLongHandler(void (*write)(UINT32, UINT32));
-void Arm946esSetReadByteHandler(UINT8 (*read)(UINT32));
-void Arm946esSetReadWordHandler(UINT16 (*read)(UINT32));
-void Arm946esSetReadLongHandler(UINT32 (*read)(UINT32));
+void Arm946esMapHandler(uintptr_t nHandler, UINT32 start, UINT32 finish, INT32 type);
 
 // speed hack function
 void Arm946esSetIdleLoopAddress(UINT32 address);

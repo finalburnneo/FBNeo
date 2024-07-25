@@ -18,13 +18,14 @@
 
 static UINT8 **membase[3]; // 0 read, 1, write, 2 opcode
 
-static void (*pWriteLongHandler)(UINT32, UINT32) = NULL;
-static void (*pWriteWordHandler)(UINT32, UINT16) = NULL;
-static void (*pWriteByteHandler)(UINT32, UINT8 ) = NULL;
+#define    ARM946ES_MAXHANDLER    (10)
 
-static UINT16 (*pReadWordHandler)(UINT32) = NULL;
-static UINT32 (*pReadLongHandler)(UINT32) = NULL;
-static UINT8  (*pReadByteHandler)(UINT32) = NULL;
+static pArm946esReadByteHandler ReadByte[ARM946ES_MAXHANDLER];
+static pArm946esWriteByteHandler WriteByte[ARM946ES_MAXHANDLER];
+static pArm946esReadWordHandler ReadWord[ARM946ES_MAXHANDLER];
+static pArm946esWriteWordHandler WriteWord[ARM946ES_MAXHANDLER];
+static pArm946esReadLongHandler ReadLong[ARM946ES_MAXHANDLER];
+static pArm946esWriteLongHandler WriteLong[ARM946ES_MAXHANDLER];
 
 static UINT32 Arm946esIdleLoop = ~0;
 
@@ -84,17 +85,66 @@ void Arm946esMapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
     }
 }
 
+void Arm946esMapHandler(uintptr_t nHandler, UINT32 start, UINT32 finish, INT32 type)
+{
+    UINT32 len = (finish - start) >> PAGE_SHIFT;
+
+    for (UINT32 i = 0; i < len + 1; i++)
+    {
+        UINT32 offset = i + (start >> PAGE_SHIFT);
+        if (type & (1 << READ)) membase[READ][offset] = (UINT8*)nHandler;
+        if (type & (1 << WRITE)) membase[WRITE][offset] = (UINT8*)nHandler;
+        if (type & (1 << FETCH)) membase[FETCH][offset] = (UINT8*)nHandler;
+    }
+}
+
+void Arm946esSetWriteByteHandler(INT32 i, pArm946esWriteByteHandler handle)
+{
+    WriteByte[i] = handle;
+}
+
+void Arm946esSetWriteWordHandler(INT32 i, pArm946esWriteWordHandler handle)
+{
+    WriteWord[i] = handle;
+}
+
+void Arm946esSetWriteLongHandler(INT32 i, pArm946esWriteLongHandler handle)
+{
+    WriteLong[i] = handle;
+}
+
+void Arm946esSetReadByteHandler(INT32 i, pArm946esReadByteHandler handle)
+{
+    ReadByte[i] = handle;
+}
+
+void Arm946esSetReadWordHandler(INT32 i, pArm946esReadWordHandler handle)
+{
+    ReadWord[i] = handle;
+}
+
+void Arm946esSetReadLongHandler(INT32 i, pArm946esReadLongHandler handle)
+{
+    ReadLong[i] = handle;
+}
+
 void Arm946esWriteByte(UINT32 addr, UINT8 data)
 {
     addr &= MAX_MEMORY_AND;
 
-    if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, %2.2x wb\n"), addr, data);
+#endif
+
+    UINT8* ptr = membase[WRITE][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
         membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
         return;
     }
 
-    if (pWriteByteHandler) {
-        pWriteByteHandler(addr, data);
+    if (WriteByte[(uintptr_t)ptr])
+    {
+        WriteByte[(uintptr_t)ptr](addr, data, 0xff);
     }
 }
 
@@ -102,13 +152,19 @@ void Arm946esWriteWord(UINT32 addr, UINT16 data)
 {
     addr &= MAX_MEMORY_AND;
 
-    if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-        *((UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND))) = BURN_ENDIAN_SWAP_INT16(data);
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
+#endif
+
+    UINT8* ptr = membase[WRITE][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
+        *((UINT16*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND))) = data;
         return;
     }
 
-    if (pWriteWordHandler) {
-        pWriteWordHandler(addr, data);
+    if (WriteWord[(uintptr_t)ptr])
+    {
+        WriteWord[(uintptr_t)ptr](addr, data, 0xffff);
     }
 }
 
@@ -116,13 +172,18 @@ void Arm946esWriteLong(UINT32 addr, UINT32 data)
 {
     addr &= MAX_MEMORY_AND;
 
-    if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
-        *((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = BURN_ENDIAN_SWAP_INT32(data);
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
+#endif
+    UINT8* ptr = membase[WRITE][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
+        *((UINT32*)(membase[WRITE][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND))) = data;
         return;
     }
 
-    if (pWriteLongHandler) {
-        pWriteLongHandler(addr, data);
+    if (WriteLong[(uintptr_t)ptr])
+    {
+        WriteLong[(uintptr_t)ptr](addr, data, 0xffffffff);
     }
 }
 
@@ -131,28 +192,37 @@ UINT8 Arm946esReadByte(UINT32 addr)
 {
     addr &= MAX_MEMORY_AND;
 
-    if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-        return membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND];
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
+#endif
+    UINT8* ptr = membase[READ][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
+        return *((UINT16*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
     }
 
-    if (pReadByteHandler) {
-        return pReadByteHandler(addr);
+    if (ReadWord[(uintptr_t)ptr])
+    {
+        return ReadWord[(uintptr_t)ptr](addr);
     }
-
     return 0;
 }
 
 UINT16 Arm946esReadWord(UINT32 addr)
 {
-
     addr &= MAX_MEMORY_AND;
 
-    if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
-        return *((UINT16*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
+#endif
+
+    UINT8* ptr = membase[READ][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
+        return *((UINT32*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
     }
 
-    if (pReadWordHandler) {
-        return pReadWordHandler(addr);
+    if (ReadLong[(uintptr_t)ptr])
+    {
+        return ReadLong[(uintptr_t)ptr](addr);
     }
 
     return 0;
@@ -162,12 +232,18 @@ UINT32 Arm946esReadLong(UINT32 addr)
 {
     addr &= MAX_MEMORY_AND;
 
-    if (membase[ READ][addr >> PAGE_SHIFT] != NULL) {
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
+#endif
+
+    UINT8* ptr = membase[READ][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
         return *((UINT32*)(membase[READ][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
     }
 
-    if (pReadLongHandler) {
-        return pReadLongHandler(addr);
+    if (ReadLong[(uintptr_t)ptr])
+    {
+        return ReadLong[(uintptr_t)ptr](addr);
     }
 
     return 0;
@@ -177,42 +253,49 @@ UINT16 Arm946esFetchWord(UINT32 addr)
 {
     addr &= MAX_MEMORY_AND;
 
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, rwo\n"), addr);
+#endif
+
     // speed hack -- skip idle loop...
     if (addr == Arm946esIdleLoop) {
-        Arm7RunEnd();
+        Arm7RunEndEatCycles();
     }
 
-    if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
+    UINT8* ptr = membase[FETCH][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
         return *((UINT16*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_WORD_AND)));
     }
 
-    // good enough for now...
-    if (pReadWordHandler) {
-        return pReadWordHandler(addr);
+    if (ReadWord[(uintptr_t)ptr])
+    {
+        return ReadWord[(uintptr_t)ptr](addr);
     }
-
     return 0;
 }
 
 UINT32 Arm946esFetchLong(UINT32 addr)
 {
-
     addr &= MAX_MEMORY_AND;
+
+#ifdef DEBUG_LOG
+    bprintf(PRINT_NORMAL, _T("%5.5x, rlo\n"), addr);
+#endif
 
     // speed hack - skip idle loop...
     if (addr == Arm946esIdleLoop) {
-        Arm7RunEnd();
+        Arm7RunEndEatCycles();
     }
 
-    if (membase[FETCH][addr >> PAGE_SHIFT] != NULL) {
+    UINT8* ptr = membase[FETCH][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ptr >= ARM946ES_MAXHANDLER) {
         return *((UINT32*)(membase[FETCH][addr >> PAGE_SHIFT] + (addr & PAGE_LONG_AND)));
     }
 
-    // good enough for now...
-    if (pReadLongHandler) {
-        return pReadLongHandler(addr);
+    if (ReadLong[(uintptr_t)ptr])
+    {
+        return ReadLong[(uintptr_t)ptr](addr);
     }
-
     return 0;
 }
 
@@ -281,41 +364,6 @@ void Arm946esNewFrame()
 	Arm7NewFrame();
 }
 
-void Arm946esSetWriteByteHandler(void (*write)(UINT32, UINT8))
-{
-    pWriteByteHandler = write;
-}
-
-void Arm946esSetWriteWordHandler(void (*write)(UINT32, UINT16))
-{
-    pWriteWordHandler = write;
-}
-
-void Arm946esSetWriteLongHandler(void (*write)(UINT32, UINT32))
-{
-    pWriteLongHandler = write;
-}
-
-void Arm946esSetReadByteHandler(UINT8 (*read)(UINT32))
-{
-    pReadByteHandler = read;
-}
-
-void Arm946esSetReadWordHandler(UINT16 (*read)(UINT32))
-{
-    pReadWordHandler = read;
-}
-
-void Arm946esSetReadLongHandler(UINT32 (*read)(UINT32))
-{
-    pReadLongHandler = read;
-}
-
-
-INT32 Arm946esRun(INT32 cycles) {
-	return Arm7Run(cycles);
-}
-
 void Arm946esSetIRQLine(INT32 line, INT32 state)
 {
 	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK) {
@@ -334,6 +382,10 @@ void Arm946esSetIdleLoopAddress(UINT32 address)
     Arm946esIdleLoop = address;
 }
 
+INT32 Arm946esRun(INT32 cycles) {
+	return Arm7Run(cycles);
+}
+
 // For cheats/etc
 
 static void Arm946es_write_rom_byte(UINT32 addr, UINT8 data)
@@ -344,16 +396,19 @@ static void Arm946es_write_rom_byte(UINT32 addr, UINT8 data)
     addr &= MAX_MEMORY_AND;
 
     // write to rom & ram
-    if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
+    UINT8* WritePtr = membase[WRITE][addr >> PAGE_SHIFT];
+    if ((uintptr_t)WritePtr >= ARM946ES_MAXHANDLER) {
         membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
     }
 
-    if (membase[READ][addr >> PAGE_SHIFT] != NULL) {
+    UINT8* ReadPtr = membase[READ][addr >> PAGE_SHIFT];
+    if ((uintptr_t)ReadPtr >= ARM946ES_MAXHANDLER) {
         membase[READ][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;
     }
 
-    if (pWriteByteHandler) {
-        pWriteByteHandler(addr, data);
+    if (WriteByte[(uintptr_t)WritePtr])
+    {
+        WriteByte[(uintptr_t)WritePtr](addr, data, 0xff);
     }
 }
 

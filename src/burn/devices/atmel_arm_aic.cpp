@@ -151,7 +151,7 @@ UINT32 ArmAicRead(UINT32 sekAddress)
     return 0;
 }
 
-void ArmAicWrite(UINT32 sekAddress, UINT32 data)
+void ArmAicWrite(UINT32 sekAddress, UINT32 data, UINT32 mem_mask)
 {
     sekAddress &= 0xfff;
     if (sekAddress < 0x80) {
@@ -163,19 +163,19 @@ void ArmAicWrite(UINT32 sekAddress, UINT32 data)
     } else {
         switch (sekAddress) {
             case 0x120:
-                m_irqs_enabled |= data & 0xffffffff;
+                m_irqs_enabled |= (data & mem_mask);
                 check_irqs();
                 break;
             case 0x124:
-                m_irqs_enabled &= ~(data & 0xffffffff);
+                m_irqs_enabled &= ~(data & mem_mask);
                 check_irqs();
                 break;
             case 0x128:
-                m_irqs_pending &= ~(data & 0xffffffff);
+                m_irqs_pending &= ~(data & mem_mask);
                 check_irqs();
                 break;
             case 0x12c:
-                m_irqs_pending |= data & 0xffffffff;
+                m_irqs_pending |= (data & mem_mask);
                 check_irqs();
                 break;
             case 0x130:
@@ -184,18 +184,18 @@ void ArmAicWrite(UINT32 sekAddress, UINT32 data)
                 check_irqs();
                 break;
             case 0x134:
-                COMBINE_DATA(&m_spurious_vector, 0xffffffff);
+                COMBINE_DATA(&m_spurious_vector);
                 break;
             case 0x138:
-                COMBINE_DATA(&m_debug, 0xffffffff);
+                COMBINE_DATA(&m_debug);
                 check_irqs();
                 break;
             case 0x140:
-                m_fast_irqs |= data & 0xffffffff;
+                m_fast_irqs |= (data & mem_mask);
                 check_irqs();
                 break;
             case 0x144:
-                m_fast_irqs &= ~(data & 0xffffffff) | 1;
+                m_fast_irqs &= ~(data & mem_mask) | 1;
                 check_irqs();
                 break;
         }

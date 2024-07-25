@@ -449,7 +449,7 @@ ARM7_INLINE void arm946es_cpu_write32(UINT32 addr, UINT32 data)
         return;
     }
     
-    Arm9WriteLong(addr, data);
+    Arm946esWriteLong(addr, data);
 }
 
 
@@ -469,7 +469,7 @@ ARM7_INLINE void arm946es_cpu_write16(UINT32 addr, UINT16 data)
         return;
     }
     
-    Arm9WriteWord(addr, data);
+    Arm946esWriteWord(addr, data);
 }
 
 ARM7_INLINE void arm946es_cpu_write8(UINT32 addr, UINT8 data)
@@ -485,7 +485,7 @@ ARM7_INLINE void arm946es_cpu_write8(UINT32 addr, UINT8 data)
         return;
     }
     
-    Arm9WriteByte(addr, data);
+    Arm946esWriteByte(addr, data);
 }
 
 ARM7_INLINE UINT32 arm946es_cpu_read32(UINT32 addr)
@@ -521,12 +521,12 @@ ARM7_INLINE UINT32 arm946es_cpu_read32(UINT32 addr)
     } else {
         if (addr & 3)
         {
-            result = Arm9ReadLong(addr & ~3);
+            result = Arm946esReadLong(addr & ~3);
             result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
         }
         else
         {
-            result = Arm9ReadLong(addr);
+            result = Arm946esReadLong(addr);
         }
     }
     return result;
@@ -547,7 +547,7 @@ ARM7_INLINE UINT16 arm946es_cpu_read16(UINT32 addr)
         return *wp;
     }
 
-    return Arm9ReadWord(addr);
+    return Arm946esReadWord(addr);
 }
 
 ARM7_INLINE UINT8 arm946es_cpu_read8(UINT32 addr)
@@ -560,7 +560,7 @@ ARM7_INLINE UINT8 arm946es_cpu_read8(UINT32 addr)
     {
         return DTCM[addr & 0x3fff];
     }
-    UINT8 result = Arm9ReadByte(addr);
+    UINT8 result = Arm946esReadByte(addr);
     // Handle through normal 8 bit handler (for 32 bit cpu)
     return result;
 }
@@ -571,12 +571,12 @@ ARM7_INLINE UINT32 arm946es_cpu_readop32(UINT32 addr)
 
     if (addr & 3)
     {
-        result = Arm9FetchLong(addr & ~3);
+        result = Arm946esFetchLong(addr & ~3);
         result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
     }
     else
     {
-        result = Arm9FetchLong(addr);
+        result = Arm946esFetchLong(addr);
     }
 
     return result;
@@ -586,7 +586,7 @@ ARM7_INLINE UINT32 arm946es_cpu_readop16(UINT32 addr)
 {
     UINT16 result;
 
-    result = Arm9FetchWord(addr & ~1);
+    result = Arm946esFetchWord(addr & ~1);
 
     if (addr & 1)
     {

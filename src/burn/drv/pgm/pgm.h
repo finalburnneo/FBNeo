@@ -69,6 +69,7 @@ extern UINT32 nPgmAsicRegionHackAddress;
 extern INT32 pgm_cave_refresh;
 extern INT32 nPGMSpriteBufferHack;
 extern INT32 nPGMMapperHack;
+extern INT32 OldCodeMode;
 
 INT32 pgmInit();
 INT32 pgmExit();

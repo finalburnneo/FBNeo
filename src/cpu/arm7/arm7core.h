@@ -540,23 +540,23 @@ void tg0f_1(UINT32 pc, UINT32 insn);
 typedef void (* arm7thumb_ophandler) (UINT32, UINT32);
 extern const arm7thumb_ophandler thumb_handler[0x40 * 0x10];
 
-void arm7ops_0123(uint32_t insn);
-void arm7ops_4567(uint32_t insn);
-void arm7ops_89(uint32_t insn);
-void arm7ops_ab(uint32_t insn);
-void arm7ops_cd(uint32_t insn);
-void arm7ops_e(uint32_t insn);
-void arm7ops_f(uint32_t insn);
+void arm7ops_0123(UINT32 insn);
+void arm7ops_4567(UINT32 insn);
+void arm7ops_89(UINT32 insn);
+void arm7ops_ab(UINT32 insn);
+void arm7ops_cd(UINT32 insn);
+void arm7ops_e(UINT32 insn);
+void arm7ops_f(UINT32 insn);
 
-void arm9ops_undef(uint32_t insn);
-void arm9ops_1(uint32_t insn);
-void arm9ops_57(uint32_t insn);
-void arm9ops_89(uint32_t insn);
-void arm9ops_ab(uint32_t insn);
-void arm9ops_c(uint32_t insn);
-void arm9ops_e(uint32_t insn);
+void arm9ops_undef(UINT32 insn);
+void arm9ops_1(UINT32 insn);
+void arm9ops_57(UINT32 insn);
+void arm9ops_89(UINT32 insn);
+void arm9ops_ab(UINT32 insn);
+void arm9ops_c(UINT32 insn);
+void arm9ops_e(UINT32 insn);
 
-typedef void (* arm7ops_ophandler)(uint32_t);
+typedef void (* arm7ops_ophandler)(UINT32);
 extern const arm7ops_ophandler ops_handler[0x20];
 
 /***************

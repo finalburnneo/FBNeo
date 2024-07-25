@@ -1,4 +1,4 @@
-// FB Alpha Kaneko 16-bit driver module
+// FB Neo Kaneko 16-bit driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
@@ -1039,7 +1039,7 @@ static struct BurnRomInfo PackbangRomDesc[] = {
 	{ "bbp0x3_u23.u23",     	0x020000, 0x8f879c9d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* labeled BBP0X3/U23 */
 	{ "bbp1x3_u39.u39",     	0x020000, 0x3a90ad84, BRF_ESS | BRF_PRG }, //  1 					/* labeled BBP1X3/U39 */
 
-   	{ "bb-u84-007__w22.u84",    0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites            /* mask rom */
+	{ "bb-u84-007__w22.u84",    0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites            /* mask rom */
 	{ "bbs0x1_u83.u83",         0x040000, 0x3d95b1e5, BRF_GRA },  	       //  3					/* labeled BBS0X1/U83 */
 
 	{ "bbb0x1_u77.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
@@ -1062,7 +1062,7 @@ static struct BurnRomInfo PackbangpRomDesc[] = {
 	{ "bbp0x3_527b.u23",              0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
 	{ "bbp1x3_c5c8.u39",              0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
 
-   	{ "bb.u84",                       0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
+	{ "bb.u84",                       0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
 	{ "pb_spr_ext_9_20_ver_ba63.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
 
 	{ "bbb0x1.u77",                   0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
@@ -1552,8 +1552,8 @@ STD_ROM_PICK(Gtmr2a)
 STD_ROM_FN(Gtmr2a)
 
 static struct BurnRomInfo Gtmr2uRomDesc[] = {
-	{ "m2p0a1.u8",         	0x080000, 0x813e1d5e, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "m2p1a1.u7",         	0x080000, 0xbee63666, BRF_ESS | BRF_PRG }, //  1
+	{ "m2p0a2.u8",         	0x080000, 0x1a008ea4, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "m2p1a2.u7",         	0x080000, 0xbbf8b43e, BRF_ESS | BRF_PRG }, //  1
 
 	{ "m2d0x0.u31",        	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
@@ -1576,6 +1576,32 @@ static struct BurnRomInfo Gtmr2uRomDesc[] = {
 
 STD_ROM_PICK(Gtmr2u)
 STD_ROM_FN(Gtmr2u)
+
+static struct BurnRomInfo Gtmr2uaRomDesc[] = {
+	{ "m2p0a1.u8",         	0x080000, 0x813e1d5e, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "m2p1a1.u7",         	0x080000, 0xbee63666, BRF_ESS | BRF_PRG }, //  1
+
+	{ "m2d0x0.u31",        	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
+
+	{ "m2-200-0.u49",      	0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
+	{ "m2-201-0.u50",      	0x200000, 0x39b60a83, BRF_GRA },	 	   //  4
+	{ "m2-202-0.u51",      	0x200000, 0xfd06b339, BRF_GRA },		   //  5
+	{ "m2s0a1.u32",        	0x080000, 0x98977171, BRF_GRA },		   //  6
+	{ "m2s1a1.u33",        	0x080000, 0xc69a732e, BRF_GRA },		   //  7
+
+	{ "m2-300-0.u89",      	0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles
+	{ "m2-301-0.u90",      	0x200000, 0xf4e894f2, BRF_GRA },		   //  9
+	{ "m2b0x0.u93",        	0x020000, 0xe023d51b, BRF_GRA },		   // 10
+	{ "m2b1x0.u94",        	0x020000, 0x03c48bdb, BRF_GRA },		   // 11
+
+	{ "m2-100-0.u48",      	0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples, plus room for expansion
+
+	{ "m2w1a1.u47",        	0x080000, 0x15f25342, BRF_SND },		   // 13 Samples
+};
+
+
+STD_ROM_PICK(Gtmr2ua)
+STD_ROM_FN(Gtmr2ua)
 
 static struct BurnRomInfo MgcrystlRomDesc[] = {
 	{ "mc100e02.u18",      	0x020000, 0x246a1335, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100E/U18-02 */
@@ -2186,7 +2212,7 @@ static INT16 calc_compute_x(void)
 	else if ((hit.x1p >= hit.x2p) && (hit.x1p < (hit.x2p + hit.x2s)))	// x1p inside x2
 		x_coll = (hit.x2s - (hit.x1p - hit.x2p));
 	else																// normal/no overlap
-	 	x_coll = ((hit.x1s + hit.x2s)/2) - abs((hit.x1p + hit.x1s/2) - (hit.x2p + hit.x2s/2));
+		x_coll = ((hit.x1s + hit.x2s)/2) - abs((hit.x1p + hit.x1s/2) - (hit.x2p + hit.x2s/2));
 
 	return x_coll;
 }
@@ -6996,7 +7022,7 @@ static INT32 BerlwallFrameRender()
 				Kaneko16Palette[i + 2048] = 0;
 			}
 		} else {
-		 	for (i = 0; i < 32768; i++) {
+			for (i = 0; i < 32768; i++) {
 				INT32 r = (pal5bit(i >> 5) * nBrightness) / 100;
 				INT32 g = (pal5bit(i >> 10) * nBrightness) / 100;
 				INT32 b = (pal5bit(i >> 0) * nBrightness) / 100;
@@ -7977,10 +8003,20 @@ struct BurnDriver BurnDrvGtmr2a = {
 
 struct BurnDriver BurnDrvGtmr2u = {
 	"gtmr2u", "gtmr2", NULL, NULL, "1995",
-	"Great 1000 Miles Rally 2 USA (95/05/18)\0", NULL, "Kaneko", "Kaneko16",
+	"Great 1000 Miles Rally 2 USA (95/07/11)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, Gtmr2uRomInfo, Gtmr2uRomName, NULL, NULL, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
+	Gtmr2uInit, GtmrMachineExit, GtmrFrame, GtmrFrameRender, GtmrScan,
+	NULL, 0x10000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvGtmr2ua = {
+	"gtmr2ua", "gtmr2", NULL, NULL, "1995",
+	"Great 1000 Miles Rally 2 USA (95/05/18)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
+	NULL, Gtmr2uaRomInfo, Gtmr2uaRomName, NULL, NULL, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
 	Gtmr2uInit, GtmrMachineExit, GtmrFrame, GtmrFrameRender, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };

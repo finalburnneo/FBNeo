@@ -31,11 +31,6 @@
 
 // -- input samplerate change
 //   stream.set_rate(new_rate);
-//   doing this live (during a frame) causes the buffer to restart!
-//   * berzerk, (atari) games with tms5220/tms5110 write silence before
-//   rate changes, so this is not a problem.
-//   should we encounter something that needs to rate change several times
-//   per frame, while outputting non-silence then a little re-write is in-order..
 
 struct Stream {
 	// the re-sampler section
@@ -65,7 +60,8 @@ struct Stream {
 		nSampleRateFrom = rate_from;
 		nSampleSize = (UINT64)nSampleRateFrom * (1 << 16) / ((nSampleRateTo == 0) ? 44100 : nSampleRateTo);
 		nSampleSize_Otherway = (UINT64)((nSampleRateTo == 0) ? 44100 : nSampleRateTo) * (1 << 16) / ((nSampleRateFrom == 0) ? 44100 : nSampleRateFrom);
-		nPosition = 0; // re-start the frame
+		// origially this restarted the frame (nPosition = 0), but this breaks
+		// qbert, as the game writes rate changes several times per frame.
 	}
 	void exit() {
 		nSampleSize = nFractionalPosition = 0;

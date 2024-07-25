@@ -1095,7 +1095,7 @@ struct BurnDriver BurnDrvOthunderu = {
 	320, 240, 4, 3
 };
 
-static struct BurnRomInfo OthunderuoRomDesc[] = {
+static struct BurnRomInfo OthunderuaRomDesc[] = {
 	{ "b67-20.ic63",           0x20000, 0x21439ea2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b67-22.ic64",           0x20000, 0x0f99ad3c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b67-14.ic61",           0x20000, 0x7f3dd724, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -1124,15 +1124,15 @@ static struct BurnRomInfo OthunderuoRomDesc[] = {
 	{ "pal20l8b-b67-10.ic33",  0x00144, 0x4ced09c7, BRF_OPT },
 };
 
-STD_ROM_PICK(Othunderuo)
-STD_ROM_FN(Othunderuo)
+STD_ROM_PICK(Othunderua)
+STD_ROM_FN(Othunderua)
 
-struct BurnDriver BurnDrvOthunderuo = {
-	"othunderuo", "othunder", NULL, NULL, "1988",
+struct BurnDriver BurnDrvOthunderua = {
+	"othunderua", "othunder", NULL, NULL, "1988",
 	"Operation Thunderbolt (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, OthunderuoRomInfo, OthunderuoRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
+	NULL, OthunderuaRomInfo, OthunderuaRomName, NULL, NULL, NULL, NULL, OthunderInputInfo, OthunderuDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, OthunderDraw, OthunderScan, NULL, 0x1000,
 	320, 240, 4, 3
 };

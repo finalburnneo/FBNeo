@@ -272,7 +272,6 @@ extern INT32 Forgottn;
 extern INT32 Cps1QsHack;
 extern INT32 Kodh;
 extern INT32 Cawingb;
-extern INT32 Wofh;
 extern INT32 Sf2thndr;
 extern INT32 Pzloop2;
 extern INT32 Hkittymp;
@@ -282,6 +281,12 @@ extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
 extern INT32 Cps2Turbo;
+extern INT32 Jurassic99;
+extern INT32 Dinoh;
+extern INT32 Wofhfh;
+extern INT32 Wofsgzb;
+extern INT32 Wof3js;
+extern INT32 Knightsh;
 
 extern ClearOpposite<4, UINT8> clear_opposite;
 

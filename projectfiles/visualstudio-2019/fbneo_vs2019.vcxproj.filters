@@ -3555,6 +3555,8 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\devices\atmel_arm_aic.cpp">
       <Filter>burn\devices</Filter>
+    <ClCompile Include="..\..\src\burn\snd\votrax.cpp">
+      <Filter>burn\snd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

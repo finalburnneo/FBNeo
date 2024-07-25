@@ -1,4 +1,4 @@
-// FB Alpha Pocket Gal deluxe driver module
+// FB Neo Pocket Gal deluxe driver module
 // Based on MAME driver by David Haywood and Bryan McPhail
 
 #include "tiles_generic.h"
@@ -286,12 +286,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
@@ -360,7 +355,7 @@ static INT32 DrvExit()
 
 	SekExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	MSM6295ROM = NULL;
 
@@ -534,7 +529,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Pocket Gal Deluxe (Euro v3.00)
+// Pocket Gal Deluxe (Europe v3.00)
 
 static struct BurnRomInfo pktgaldxRomDesc[] = {
 	{ "ke00-2.12a",		0x080000, 0xb04baf3a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -554,7 +549,7 @@ STD_ROM_FN(pktgaldx)
 
 struct BurnDriver BurnDrvPktgaldx = {
 	"pktgaldx", NULL, NULL, NULL, "1992",
-	"Pocket Gal Deluxe (Euro v3.00)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Pocket Gal Deluxe (Europe v3.00)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pktgaldxRomInfo, pktgaldxRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
@@ -621,7 +616,7 @@ struct BurnDriver BurnDrvPktgaldxa = {
 };
 
 
-// Pocket Gal Deluxe (Euro v3.00, bootleg)
+// Pocket Gal Deluxe (Europe v3.00, bootleg)
 
 static struct BurnRomInfo pktgaldxbRomDesc[] = {
 	{ "4.bin",		0x80000, 0x67ce30aa, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -650,7 +645,7 @@ static INT32 pkgaldxbInit()
 
 struct BurnDriverD BurnDrvPktgaldxb = {
 	"pktgaldxb", "pktgaldx", NULL, NULL, "1992",
-	"Pocket Gal Deluxe (Euro v3.00, bootleg)\0", NULL, "bootleg", "DECO IC16",
+	"Pocket Gal Deluxe (Europe v3.00, bootleg)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pktgaldxbRomInfo, pktgaldxbRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,

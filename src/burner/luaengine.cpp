@@ -879,7 +879,9 @@ static void CallRegisteredLuaMemHook_LuaMatch(unsigned int address, int size, un
 						//RefreshScriptSpeedStatus();
 						lua_pushinteger(LUA, address);
 						lua_pushinteger(LUA, size);
-						int errorcode = lua_pcall(LUA, 2, 0, 0);
+						lua_pushinteger(LUA, value);
+
+						int errorcode = lua_pcall(LUA, 3, 0, 0);
 						luaRunning /*info.running*/ = wasRunning;
 						//RefreshScriptSpeedStatus();
 						if (errorcode)
@@ -961,6 +963,11 @@ static int memory_readbyte(lua_State *L)
 	lua_pushinteger(L, ReadValueAtHardwareAddress(luaL_checkinteger(L,1),1,0));
 	return 1;
 }
+static int memory_readbyte_audio(lua_State* L)
+{
+	lua_pushinteger(L, ReadValueAtHardwareAddress_audio(luaL_checkinteger(L, 1), 1, 0));
+	return 1;
+}
 
 static int memory_readbytesigned(lua_State *L) {
 	signed char c = (signed char)ReadValueAtHardwareAddress(luaL_checkinteger(L,1),1,0);
@@ -973,10 +980,27 @@ static int memory_readword(lua_State *L)
 	lua_pushinteger(L, ReadValueAtHardwareAddress(luaL_checkinteger(L,1),2,is_little_endian(L,2)));
 	return 1;
 }
+static int memory_readword_audio(lua_State* L)
+{
+	lua_pushinteger(L, ReadValueAtHardwareAddress_audio(luaL_checkinteger(L, 1), 2, is_little_endian(L, 2)));
+	return 1;
+}
 
 static int memory_readwordsigned(lua_State *L) {
 	signed short c = (signed short)ReadValueAtHardwareAddress(luaL_checkinteger(L,1),2,is_little_endian(L,2));
 	lua_pushinteger(L, c);
+	return 1;
+}
+static int memory_readdword_audio(lua_State* L)
+{
+	UINT32 addr = luaL_checkinteger(L, 1);
+	UINT32 val = ReadValueAtHardwareAddress_audio(addr, 4, is_little_endian(L, 2));
+
+	// lua_pushinteger doesn't work properly for 32bit system, does it?
+	if (val >= 0x80000000 && sizeof(int) <= 4)
+		lua_pushnumber(L, val);
+	else
+		lua_pushinteger(L, val);
 	return 1;
 }
 
@@ -1031,6 +1055,11 @@ static int memory_writebyte(lua_State *L)
 	WriteValueAtHardwareAddress(luaL_checkinteger(L,1), luaL_checkinteger(L,2),1,0);
 	return 0;
 }
+static int memory_writebyte_audio(lua_State* L)
+{
+	WriteValueAtHardwareAddress_audio(luaL_checkinteger(L, 1), luaL_checkinteger(L, 2), 1, 0);
+	return 0;
+}
 
 static int memory_writeword(lua_State *L)
 {
@@ -1038,9 +1067,20 @@ static int memory_writeword(lua_State *L)
 	return 0;
 }
 
+static int memory_writeword_audio(lua_State* L)
+{
+	WriteValueAtHardwareAddress_audio(luaL_checkinteger(L, 1), luaL_checkinteger(L, 2), 2, is_little_endian(L, 3));
+	return 0;
+}
+
 static int memory_writedword(lua_State *L)
 {
 	WriteValueAtHardwareAddress(luaL_checkinteger(L,1), luaL_checkinteger(L,2),4,is_little_endian(L,3));
+	return 0;
+}
+static int memory_writedword_audio(lua_State* L)
+{
+	WriteValueAtHardwareAddress_audio(luaL_checkinteger(L, 1), luaL_checkinteger(L, 2), 4, is_little_endian(L, 3));
 	return 0;
 }
 
@@ -1479,6 +1519,9 @@ void luasav_save(const char *filename) {
 			unlink(luaSaveFilename);
 		}
 	}
+	else {
+		CallRegisteredLuaSaveFunctions(filename, saveData);
+	}
 }
 
 void luasav_load(const char *filename) {
@@ -1505,6 +1548,9 @@ void luasav_load(const char *filename) {
 			fclose(luaSaveFile);
 		}
 		CallRegisteredLuaLoadFunctions(slotnum, saveData);
+	}
+	else {
+		CallRegisteredLuaLoadFunctions(filename, saveData);
 	}
 }
 
@@ -3733,14 +3779,20 @@ static const struct luaL_reg fbalib [] = {
 static const struct luaL_reg memorylib [] = {
 	{"readbyte", memory_readbyte},
 	{"readbytesigned", memory_readbytesigned},
+	{"readbyte_audio", memory_readbyte_audio},
 	{"readword", memory_readword},
+	{"readword_audio", memory_readword_audio},
 	{"readwordsigned", memory_readwordsigned},
 	{"readdword", memory_readdword},
 	{"readdwordsigned", memory_readdwordsigned},
+	{"readdword_audio", memory_readdword_audio},
 	{"readbyterange", memory_readbyterange},
 	{"writebyte", memory_writebyte},
+	{"writebyte_audio", memory_writebyte_audio},
 	{"writeword", memory_writeword},
+	{"writeword_audio", memory_writeword_audio},
 	{"writedword", memory_writedword},
+	{"writedword_audio", memory_writedword_audio},
 	// alternate naming scheme for word and double-word and unsigned
 	{"readbyteunsigned", memory_readbyte},
 	{"readwordunsigned", memory_readword},

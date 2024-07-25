@@ -1,4 +1,4 @@
-// FB Alpha NMK16 driver module
+// FB Neo NMK16 driver module
 // Based on MAME driver by Mirko Buffoni, Richard Bush, Nicola Salmoria, Bryan McPhail, David Haywood, and R. Belmont
 // Also, a huge "thank you!" to JacKc for helping bug test
 
@@ -84,6 +84,8 @@ static INT32 TharrierShakey = 0; // kludge for shakey-ship on the end of level c
 static INT32 HachamfTdragonMCU = 0; // mcu active for hachamf, tdragon?
 static INT32 Macross2Sound = 0;
 static INT32 SeibuSound = 0;
+
+static INT32 Dolmenk = 0;
 
 static INT32 nExtraCycles[2];
 
@@ -2143,7 +2145,7 @@ static UINT8 tharrier_mcu_r()
 
 	INT32 res;
 
-	     if (SekGetPC(-1)==0x08aa) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9064/2]))|0x20;
+		 if (SekGetPC(-1)==0x08aa) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9064/2]))|0x20;
 	else if (SekGetPC(-1)==0x08ce) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9064/2]))|0x60;
 	else if (SekGetPC(-1)==0x0332) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x90f6/2]))|0x00;
 	else if (SekGetPC(-1)==0x64f4) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x90f6/2]))|0x00;
@@ -2167,7 +2169,7 @@ static void HachaRAMProt(INT32 offset)
 		case 0xe51e/2: PROT_INPUT(0xe51e/2,0x0f82,0xe008/2,0x00080008); break;
 		case 0xe6b4/2: PROT_INPUT(0xe6b4/2,0x79be,0xe00c/2,0x0008000a); break;
 		case 0xe10e/2: PROT_JSR(0xe10e,0x8007,0x870a); //870a not 9d66
-			          PROT_JSR(0xe10e,0x8000,0xd9c6); break;
+					  PROT_JSR(0xe10e,0x8000,0xd9c6); break;
 		case 0xe11e/2: PROT_JSR(0xe11e,0x8038,0x7b9c); // 972a
 					  PROT_JSR(0xe11e,0x8031,0x7a54); break;
 		case 0xe12e/2: PROT_JSR(0xe12e,0x8019,0x9642); // OK-9642
@@ -2179,7 +2181,7 @@ static void HachaRAMProt(INT32 offset)
 		case 0xe15e/2: PROT_JSR(0xe15e,0x803c,0xb59e); // b59e - OK
 					  PROT_JSR(0xe15e,0x8035,0x8c36); break;
 		case 0xe16e/2: PROT_JSR(0xe16e,0x801d,0x9ac2); // 9ac2 - OK
-				 	  PROT_JSR(0xe16e,0x8026,0x8d0c); break;
+					  PROT_JSR(0xe16e,0x8026,0x8d0c); break;
 		case 0xe17e/2: PROT_JSR(0xe17e,0x802e,0xc366); // c366 - OK
 					  PROT_JSR(0xe17e,0x8017,0x870a); break;
 		case 0xe18e/2: PROT_JSR(0xe18e,0x8004,0x7b9c);       		 // unused
@@ -2234,7 +2236,7 @@ static void tdragon_mainram_w(INT32 offset)
 		case 0xe75e/2: PROT_JSR(0xe75e,0x803c,0xbb4c);
 					  PROT_JSR(0xe75e,0x8035,0xa154); break;
 		case 0xe76e/2: PROT_JSR(0xe76e,0x801d,0xafa6);
-				 	  PROT_JSR(0xe76e,0x8026,0xa57a); break;
+					  PROT_JSR(0xe76e,0x8026,0xa57a); break;
 		case 0xe77e/2: PROT_JSR(0xe77e,0x802e,0xc6a4);
 					  PROT_JSR(0xe77e,0x8017,0x9e22); break;
 		case 0xe78e/2: PROT_JSR(0xe78e,0x8004,0xaa0a);
@@ -2852,7 +2854,7 @@ static UINT16 __fastcall afega_main_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x080002:
-			return DrvInputs[1];
+			return (Dolmenk) ? (DrvInputs[1] & ~0x8080) : DrvInputs[1];
 
 		case 0x080004:
 			return ((DrvDips[0] << 8) | DrvDips[1]);
@@ -3908,10 +3910,10 @@ static void __fastcall firehawk_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xfff2:
-		 	if (data == 0xfe)
-		 		memcpy (DrvSndROM1, DrvSndROM1 + 0x40000, 0x40000);
-		 	else if(data == 0xff)
-		 		memcpy (DrvSndROM1, DrvSndROM1 + 0x80000, 0x40000);
+			if (data == 0xfe)
+				memcpy (DrvSndROM1, DrvSndROM1 + 0x40000, 0x40000);
+			else if(data == 0xff)
+				memcpy (DrvSndROM1, DrvSndROM1 + 0x80000, 0x40000);
 		return;
 
 		case 0xfff8:
@@ -4764,6 +4766,8 @@ static INT32 CommonExit()
 	GunnailMode = 0;
 	Macross2Sound = 0;
 	SeibuSound = 0;
+
+	Dolmenk = 0;
 
 	return 0;
 }
@@ -6116,7 +6120,7 @@ static struct BurnRomInfo emptyRomDesc[] = {
 
 static struct BurnRomInfo nmk004RomDesc[] = {
 #if !defined (ROM_VERIFY)
-	{ "nmk004.bin", 		0x002000, 0x83b6f611, BRF_PRG | BRF_BIOS },	// 0x80 tlcs90 internal rom
+	{ "nmk004.bin", 		0x002000, 0x8ae61a09, BRF_PRG | BRF_BIOS },	// 0x80 tlcs90 internal rom
 #else
 	{ "", 		0x000000, 0x00000000, BRF_PRG | BRF_BIOS },	// 0x80 tlcs90 internal rom
 #endif
@@ -7422,7 +7426,7 @@ struct BurnDriver BurnDrvGrdnstrmv = {
 
 static struct BurnRomInfo grdnstrmgRomDesc[] = {
 	{ "gs6_c2.uc9",         0x040000, 0xea363e4d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-    { "gs5_c1.uc1",         0x040000, 0xc0263e4a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gs5_c1.uc1",         0x040000, 0xc0263e4a, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gs1_s1.uc14",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -8312,6 +8316,47 @@ struct BurnDriver BurnDrvDolmen = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, dolmenRomInfo, dolmenRomName, NULL, NULL, NULL, NULL, DolmenInputInfo, DolmenDIPInfo,
 	DolmenInit, DrvExit, SsmissinFrame, MacrossDraw, DrvScan, NULL, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Goindol (Afega)
+
+static struct BurnRomInfo dolmenkRomDesc[] = {
+	{ "afega_6.uj3",	0x20000, 0x834cc396, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega_5.uj2",	0x20000, 0x38491cad, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	// 1ST AND 2ND HALF IDENTICAL, identical to the World version if split
+	{ "afega_1.su6",	0x10000, 0x3d52d5f4, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "afega_4.uj11",	0x20000, 0x13fa4415, 3 | BRF_GRA },           //  3 Characters
+
+	{ "afega_9.ui20",	0x80000, 0xb3fa7be6, 4 | BRF_GRA },           //  4 Tiles
+
+	{ "afega_7.ub11",	0x80000, 0xf32554d4, 5 | BRF_GRA },           //  5 Sprites
+	{ "afega_8.ub13",	0x80000, 0x65f85cfe, 6 | BRF_GRA },           //  6
+
+	{ "afega_2.su12",	0x20000, 0x1a2ce1c2, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "afega_3.su13",	0x40000, 0xd3531018, 6 | BRF_SND },           //  8
+};
+
+STD_ROM_PICK(dolmenk)
+STD_ROM_FN(dolmenk)
+
+static INT32 DolmenkInit()
+{
+	Dolmenk = 1;
+
+	return DolmenInit();
+}
+
+struct BurnDriver BurnDrvDolmenk = {
+	"dolmenk", "dolmen", NULL, NULL, "1995",
+	"Goindol (Afega)\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, dolmenkRomInfo, dolmenkRomName, NULL, NULL, NULL, NULL, DolmenInputInfo, DolmenDIPInfo,
+	DolmenkInit, DrvExit, SsmissinFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 

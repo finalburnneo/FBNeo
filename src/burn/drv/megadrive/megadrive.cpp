@@ -424,7 +424,7 @@ static void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d); // forward
 
 static void __fastcall Megadrive68K_Z80WriteByte(UINT32 address, UINT8 data)
 { // a00000 - a0ffff: 68k -> z80 bus interface
-	if (Z80HasBus && MegadriveZ80Reset) {
+	if (Z80HasBus && !MegadriveZ80Reset) {
 		bprintf(0, _T("Megadrive68K_Z80WriteByte(%x, %x): w/o bus!\n"), address, data);
 		return;
 	}
@@ -446,7 +446,7 @@ static void __fastcall Megadrive68K_Z80WriteByte(UINT32 address, UINT8 data)
 
 static UINT8 __fastcall Megadrive68K_Z80ReadByte(UINT32 address)
 { // a00000 - a0ffff: 68k -> z80 bus interface
-	if (Z80HasBus && MegadriveZ80Reset) {
+	if (Z80HasBus && !MegadriveZ80Reset) {
 		bprintf(0, _T("Megadrive68K_Z80ReadByte(%x): w/o bus!\n"), address);
 		return 0;
 	}

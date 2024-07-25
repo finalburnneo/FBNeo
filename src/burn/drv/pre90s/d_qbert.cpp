@@ -10,6 +10,7 @@
 #include "samples.h"
 #include "ay8910.h"
 #include "sp0250.h"
+#include "votrax.h"
 #include "timer.h"
 
 //#define QBERT_SOUND_DEBUG
@@ -37,16 +38,13 @@ static UINT8 DummyRegion[2];
 
 static UINT8 *riot_regs;
 static UINT8 *riot_ram;
+static UINT8 *riot_has_irq;
 
 static UINT8 *background_prio;
 static UINT8 *spritebank;
 static UINT8 *soundlatch;
-static UINT8 *soundcpu_do_nmi;
 
-static UINT8  *vtqueue;
-static UINT8  *vtqueuepos;
-static UINT32 *vtqueuetime;
-static UINT8  *knocker_prev;
+static UINT8 *knocker_prev;
 
 static UINT8 flipscreenx;
 static UINT8 flipscreeny;
@@ -61,9 +59,6 @@ static UINT8 soundlatch2 = 0;
 static UINT8 speech_control = 0;
 static UINT8 last_command = 0;
 static UINT8 dac_data[2] = { 0xff, 0xff };
-
-static INT32 qbert_random;
-static INT32 reactor_score;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -84,11 +79,12 @@ static UINT8 DrvReset;
 static INT32 nExtraCycles;
 
 static INT16 Analog[2];
-static INT16 analog_last[2];
 
 static UINT8 game_type = 0; // 0 = qbert, 6 = qbertcub, 4 = mplanets, 7 = curvebal, 8 = insector, 9 - argusg/krull, 10 - reactor
 static INT32 type2_sound = 0;
 static INT32 has_tball = 0; // wizwars, reactor, argusg
+
+static INT32 scanline;
 
 static UINT32 nRotateTime[2]  = { 0, 0 };
 
@@ -987,9 +983,19 @@ static void palette_write(UINT16 offset, UINT8 data)
 static void qbert_knocker(UINT8 knock)
 {
 	if (knock & ~*knocker_prev && game_type == 0)
-		BurnSamplePlay(44);
+		BurnSamplePlay(0);
 
 	*knocker_prev = knock;
+}
+
+static void sync_sound()
+{
+	INT32 cyc = (UINT64)VezTotalCycles() * (3579545 / 4) / 5000000;
+	cyc -= M6502TotalCycles();
+
+	if (cyc > 0) {
+		M6502Run(0, cyc);
+	}
 }
 
 static void soundlatch_r1(UINT16 /*offset*/, UINT8 data)
@@ -997,63 +1003,14 @@ static void soundlatch_r1(UINT16 /*offset*/, UINT8 data)
 	data &= 0x3f;
 
 	if ((data & 0x0f) != 0xf) {
+		sync_sound(); // or else!
 #ifdef QBERT_SOUND_DEBUG
-		bprintf(0, _T("data %X.."), data ^ 0x3f);
+		bprintf(0, _T("data %X..\n"), data ^ 0xff);
 #endif
-		switch (game_type) {
-			case 0: { // qbert
-				switch (data ^ 0x3f) { // qbert sample player
-					case 17:
-					case 18:
-					case 19:
-					case 20:
-					case 21:
-						BurnSamplePlay(((data ^ 0x3f) - 17) * 8 + qbert_random);
-						qbert_random = (qbert_random + 1) & 7;
-						break;
-					case 22:
-						BurnSamplePlay(40);
-						break;
-					case 23:
-						BurnSamplePlay(41);
-						break;
-					case 28:
-						BurnSamplePlay(42); // Hello, I'm turned on.
-						break;
-					case 36:
-						BurnSamplePlay(43); // Bye-Bye
-						break;
-				}
-			}
-			break;
-
-			case 10: { // reactor
-				switch (data ^ 0x3f) {
-					case 31:
-						BurnSamplePlay(7);
-						reactor_score = 0;
-						break;
-					case 39:
-						if (++reactor_score < 13)
-							BurnSamplePlay(reactor_score + 7);
-						break;
-					case 53:
-					case 54:
-					case 55:
-					case 56:
-					case 57:
-					case 58:
-					case 59:
-						BurnSamplePlay((data ^ 0x3f) - 53);
-						break;
-				}
-			}
-			break;
-		}
-
 		*soundlatch = data;
+		*riot_has_irq = 1;
 
-		M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 }
 
@@ -1115,8 +1072,7 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 		case 0x5801:
 			//	analog reset
 			if (has_tball) {
-				analog_last[0] = BurnTrackballRead(0, 0);
-				analog_last[1] = BurnTrackballRead(0, 1);
+				BurnTrackballReadReset();
 			}
 		return;
 
@@ -1161,8 +1117,8 @@ static UINT8 __fastcall main_read(UINT32 address)
 	{
 		case 0x5800: return DrvDip[0];
 		case 0x5801: return DrvInput[0]; // DrvDip[1] (fake-dip) for service mode.
-		case 0x5802: return (has_tball) ? (BurnTrackballRead(0, 0) - analog_last[0]) : 0xff;
-		case 0x5803: return (has_tball) ? (BurnTrackballRead(0, 1) - analog_last[1]) : dialRotation(0);
+		case 0x5802: return (has_tball) ? (BurnTrackballReadInterpolated(0, 0, scanline)) : 0xff;
+		case 0x5803: return (has_tball) ? (BurnTrackballReadInterpolated(0, 1, scanline)) : dialRotation(0);
 		case 0x5804: {
 			if (game_type == 14) {
 				return (DrvInput[1] & 0xf0) | (DrvInput[(joystick_select & 3) + 2] & 0xf);
@@ -1204,8 +1160,7 @@ static void __fastcall reactor_write(UINT32 address, UINT8 data)
 
 		case 0x7001:
 			//	analog reset
-			analog_last[0] = BurnTrackballRead(0, 0);
-			analog_last[1] = BurnTrackballRead(0, 1);
+			BurnTrackballReadReset();
 		return;
 
 		case 0x7002:
@@ -1236,8 +1191,8 @@ static UINT8 __fastcall reactor_read(UINT32 address)
 	{
 		case 0x7000: return DrvDip[0];
 		case 0x7001: return DrvInput[0]; // DrvDip[1] (fake-dip) for service mode.
-		case 0x7002: return BurnTrackballRead(0, 0) - analog_last[0];
-		case 0x7003: return BurnTrackballRead(0, 1) - analog_last[1];
+		case 0x7002: return BurnTrackballReadInterpolated(0, 0, 256);
+		case 0x7003: return BurnTrackballReadInterpolated(0, 1, 256);
 		case 0x7004: return DrvInput[3];
 	}
 
@@ -1248,109 +1203,84 @@ static UINT8 __fastcall reactor_read(UINT32 address)
 	return 0;
 }
 
-static UINT8 gottlieb_riot_r(UINT16 offset)
-{
-	switch (offset & 0x1f)
-	{
-		case 0: /* port A */
-			return *soundlatch ^ 0xff; /* invert command */
-
-		case 2: /* port B */
-			return 0x40; /* say that PB6 is 1 (test SW1 not pressed) */
-
-		case 5: /* interrupt register */
-			return 0x40; /* say that edge detected on PA7 */
-
-		default:
-			return riot_regs[offset & 0x1f];
-	}
-}
-
-static void blank_queue()
-{
-#ifdef QBERT_SOUND_DEBUG
-	bprintf(0, _T("BLANK!{%X}.."), *vtqueuetime);
-#endif
-	*vtqueuepos = 0;
-	memset(vtqueue, 0, 0x20);
-	*vtqueuetime = GetCurrentFrame();
-}
-
-static void add_to_queue(UINT8 data)
-{
-	if (*vtqueuepos > 0x20-1 || (UINT32)GetCurrentFrame() > *vtqueuetime+2)
-		blank_queue();
-	vtqueue[(*vtqueuepos)++] = data;
-}
-
-static UINT8 check_queue()
-{
-	if (*vtqueuepos == 24 && !strncmp("\xC1\xE4\xFF\xE7\xE8\xD2\xFC\xFC\xFC\xFC\xFC\xEA\xFF\xF6\xD6\xF3\xD5\xC5\xF5\xF2\xE1\xDB\xF2\xC0", (char *)vtqueue, 24)) {
-		blank_queue(); // "Hello, I'm turned on."
-		return 1;
-	}
-	if (*vtqueuepos == 26 && !strncmp("\x00\xFF\xD5\xFE\xD5\xC0\xD2\xCB\xD4\xF2\xD6\xEB\xC1\xE6\xCB\xD4\xC1\xCD\xF2\xE0\xFB\xDF\xF1\xCD\xE7\xC0", (char *)vtqueue, 26)) {
-		blank_queue(); // "Warning, Core Unstable." (reactor)
-		return 11;
-	}
-
-
-	return 0;
-}
-
 static void audio_write(UINT16 address, UINT8 data)
 {
-	address &= 0x7fff; // 15bit addressing
-
 	if (address >= 0x7000 && address <= 0x7fff) {
-		bprintf(0, _T("write to audio ROM @ %X."), address);
-		Drv6502ROM[address - 0x7000] = data;
+		bprintf(0, _T("write to audio ROM @ %X?"), address);
+//	    Drv6502ROM[address - 0x7000] = data;
+		return;
 	}
 
-	if (/*address >= 0x0000 &&*/ address <= 0x01ff) {
+	if ((address & ~0xd80) <= 0x7f) {
 		riot_ram[address & 0x7f] = data;
+		return;
 	}
 
-	if (address >= 0x0200 && address <= 0x03ff) {
+	if ((address & ~0xde0) >= 0x200 && (address & ~0xde0) <= 0x21f) {
+		address &= 0x1f;
+		if ((address & ~0x18) <= 3) address &= 3; // 0,1,2,3
+		else if ((address & ~0x12) == 4) address = 4;
+		else if ((address & ~0x12) == 0xc) address = 0xc;
+		else if ((address & ~0x1a) == 5) address = 5;
 		riot_regs[address & 0x1f] = data;
+		return;
 	}
 
-	switch (address)
+	switch (address & ~0xfff)
 	{
-		case 0x1fff:
 		case 0x1000: {
 			DACWrite(0, data);
 			return;
 		}
+		case 0x3000: {
+			sc01_set_clock(950000 + (data - 0xa0) * 5500);
+			return;
+		}
 		case 0x2000: {
-			add_to_queue(data);
-#ifdef QBERT_SOUND_DEBUG
-			bprintf(0, _T("\\x%02X"), data); //save
-#endif
-			switch (check_queue()) {
-				case 1: BurnSamplePlay(42);	break; // Say Hello
-				case 11: BurnSamplePlay(5);	break; // Warning Core Unstable
-			}
-			*soundcpu_do_nmi = 1;
-			M6502RunEnd();
+			sc01_inflection_write((data >> 6) & 3);
+			sc01_write(~data & 0x3f);
 			return;
 		}
 	}
+
+	bprintf(0, _T("aw  %x  %x\n"), address, data);
 }
 
 static UINT8 audio_read(UINT16 address)
 {
-	address &= 0x7fff; // 15bit addressing
-
-	if (/*address >= 0x0000 &&*/ address <= 0x01ff) {
-		return riot_ram[address&0x7f];
+	if ((address & ~0xd80) <= 0x7f) {
+		return riot_ram[address & 0x7f];
 	}
 
-	if (address >= 0x0200 && address <= 0x03ff) {
-		return gottlieb_riot_r(address - 0x200);
+	if ((address & ~0xde0) >= 0x200 && (address & ~0xde0) <= 0x21f) {
+		address &= 0x1f;
+		if ((address & ~0x18) <= 3) address &= 3; // 0,1,2,3
+		else if ((address & ~0x12) == 4) address = 4;
+		else if ((address & ~0x12) == 0xc) address = 4;
+		else if ((address & ~0x1a) == 5) address = 5;
+
+		switch (address & 0x1f) {
+			case 0: {
+				M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+				return *soundlatch ^ 0xff;
+			}
+			case 2: {
+				return 0x7f | ((sc01_read_request() ? 0x00 : 0x80));
+			}
+			case 4: {
+				riot_regs[4]++;
+				break; // yes
+			}
+			case 5: {
+				UINT8 ret = *riot_has_irq;
+				*riot_has_irq = 0;
+				return (ret) ? 0x40 : 0x00;
+			}
+		}
+		return riot_regs[address & 0x1f];
 	}
 
-	return 0;
+	return 0xff;
 }
 
 static void sound_r2_write(UINT16 address, UINT8 data)
@@ -1382,8 +1312,7 @@ static void speech_control_write(UINT8 data)
 	UINT8 previous = speech_control;
 	speech_control = data;
 
-	if ((previous & 0x04) && (~data & 0x04))
-	{
+	if ((previous & 0x04) && (~data & 0x04)) {
 		AY8910Write((data & 8) >> 3, (~data & 0x10) >> 4, psg_latch);
 	}
 
@@ -1501,8 +1430,7 @@ static INT32 DrvDoReset()
 	else
 	{
 		BurnSampleReset();
-		qbert_random = BurnRandom() & 7;
-		reactor_score = 0;
+		sc01_reset();
 	}
 
 	DACReset();
@@ -1548,17 +1476,14 @@ static INT32 MemIndex()
 	DrvPaletteRAM	= Next; Next += 0x00020;
 
 	riot_regs       = Next; Next += 0x00020;
-	riot_ram        = Next; Next += 0x00200;
+	riot_ram        = Next; Next += 0x00080;
+	riot_has_irq    = Next; Next += 0x00001;
 
-	vtqueuepos      = Next; Next += 0x00001;
-	vtqueuetime     = (UINT32 *)Next; Next += 0x00004;
-	vtqueue         = (UINT8 *)Next;  Next += 0x00020;
 	knocker_prev    = Next; Next += 0x00001;
 
 	background_prio = Next; Next += 0x00001;
 	spritebank      = Next; Next += 0x00001;
 	soundlatch      = Next; Next += 0x00001;
-	soundcpu_do_nmi = Next; Next += 0x00001;
 
 	RamEnd			= Next;
 
@@ -1765,18 +1690,26 @@ static void type2_sound_init()
 	sp0250_volume(1.00);
 }
 
+static void qbert_ar_cb(INT32 line)
+{
+	M6502SetIRQLine(0, 0x20, line);
+}
+
 static void type1_sound_init()
 {
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
+	M6502SetAddressMask(0x7fff);
 	M6502MapMemory(Drv6502ROM,		0x6000, 0x7fff, MAP_ROM);
-	M6502MapMemory(Drv6502ROM,		0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(audio_write);
 	M6502SetReadHandler(audio_read);
 	M6502Close();
 
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
+
+	sc01_init(950000, qbert_ar_cb, (game_type == 10) ? 0 : 1); // reactor: sc01, qbert: sc01a
+	sc01_set_buffered(M6502TotalCycles, 3579545 / 4);
 
 	DACInit(0, 0, 1, M6502TotalCycles, 3579545 / 4);
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
@@ -1858,6 +1791,7 @@ static INT32 DrvExit()
 	if (type2_sound == 0)
 	{
 		BurnSampleExit();
+		sc01_exit();
 	}
 	else
 	{
@@ -1964,7 +1898,7 @@ static void DrvMakeInputs()
 
 	if (has_tball) { // reactor, argusg, wizwarz
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x04);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x04, 256);
 		BurnTrackballUpdate(0);
 	}
 
@@ -1978,6 +1912,7 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 	M6502NewFrame();
+	VezNewFrame();
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 5000000 / 60, (3579545 / 4) / 60 };
@@ -1988,20 +1923,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
+
 		CPU_RUN(0, Vez);
 		if (i == (nInterleave - 1))
 			VezSetIRQLineAndVector(0x20, 0xff, CPU_IRQSTATUS_AUTO);
 
-		CPU_RUN_SYNCINT(1, M6502);
-		if (*soundcpu_do_nmi) {
-			M6502Run(44); // 50usec later..
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-			*soundcpu_do_nmi = 0;
-		}
-
-		if ((i%64) == 63 && has_tball && game_type != 9) { // reactor, wizwarz, not argus
-			BurnTrackballUpdate(0);
-		}
+		CPU_RUN_SYNCINT(1, M6502); // _SYNCINT needed for sync_sound()
 	}
 
 	VezClose();
@@ -2012,6 +1940,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		sc01_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -2107,6 +2036,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			BurnTimerScan(nAction, pnMin);
 		} else {
 			BurnSampleScan(nAction, pnMin);
+			sc01_scan(nAction, pnMin);
 		}
 
 		DACScan(nAction, pnMin);
@@ -2128,9 +2058,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(speech_control);
 		SCAN_VAR(last_command);
 		SCAN_VAR(dac_data);
-		SCAN_VAR(analog_last);
-		SCAN_VAR(qbert_random);
-		SCAN_VAR(reactor_score);
 
 		SCAN_VAR(nRotateTime);
 
@@ -2155,84 +2082,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo qbertSampleDesc[] = {
-	{"fx_17a", SAMPLE_NOLOOP },
-	{"fx_17b", SAMPLE_NOLOOP },
-	{"fx_17c", SAMPLE_NOLOOP },
-	{"fx_17d", SAMPLE_NOLOOP },
-	{"fx_17e", SAMPLE_NOLOOP },
-	{"fx_17f", SAMPLE_NOLOOP },
-	{"fx_17g", SAMPLE_NOLOOP },
-	{"fx_17h", SAMPLE_NOLOOP },
-	{"fx_18a", SAMPLE_NOLOOP },
-	{"fx_18b", SAMPLE_NOLOOP },
-	{"fx_18c", SAMPLE_NOLOOP },
-	{"fx_18d", SAMPLE_NOLOOP },
-	{"fx_18e", SAMPLE_NOLOOP },
-	{"fx_18f", SAMPLE_NOLOOP },
-	{"fx_18g", SAMPLE_NOLOOP },
-	{"fx_18h", SAMPLE_NOLOOP },
-	{"fx_19a", SAMPLE_NOLOOP },
-	{"fx_19b", SAMPLE_NOLOOP },
-	{"fx_19c", SAMPLE_NOLOOP },
-	{"fx_19d", SAMPLE_NOLOOP },
-	{"fx_19e", SAMPLE_NOLOOP },
-	{"fx_19f", SAMPLE_NOLOOP },
-	{"fx_19g", SAMPLE_NOLOOP },
-	{"fx_19h", SAMPLE_NOLOOP },
-	{"fx_20a", SAMPLE_NOLOOP },
-	{"fx_20b", SAMPLE_NOLOOP },
-	{"fx_20c", SAMPLE_NOLOOP },
-	{"fx_20d", SAMPLE_NOLOOP },
-	{"fx_20e", SAMPLE_NOLOOP },
-	{"fx_20f", SAMPLE_NOLOOP },
-	{"fx_20g", SAMPLE_NOLOOP },
-	{"fx_20h", SAMPLE_NOLOOP },
-	{"fx_21a", SAMPLE_NOLOOP },
-	{"fx_21b", SAMPLE_NOLOOP },
-	{"fx_21c", SAMPLE_NOLOOP },
-	{"fx_21d", SAMPLE_NOLOOP },
-	{"fx_21e", SAMPLE_NOLOOP },
-	{"fx_21f", SAMPLE_NOLOOP },
-	{"fx_21g", SAMPLE_NOLOOP },
-	{"fx_21h", SAMPLE_NOLOOP },
-	{"fx_22",  SAMPLE_NOLOOP },
-	{"fx_23",  SAMPLE_NOLOOP },
-	{"fx_28",  SAMPLE_NOLOOP },
-	{"fx_36",  SAMPLE_NOLOOP },
 	{"knocker", SAMPLE_NOLOOP },
 	{"", 0 }
 };
 
 STD_SAMPLE_PICK(qbert)
 STD_SAMPLE_FN(qbert)
-
-static struct BurnSampleInfo reactorSampleDesc[] = {
-	{"fx_53", SAMPLE_NOLOOP },
-	{"fx_54", SAMPLE_NOLOOP },
-	{"fx_55", SAMPLE_NOLOOP },
-	{"fx_56", SAMPLE_NOLOOP },
-	{"fx_57", SAMPLE_NOLOOP },
-	{"fx_58", SAMPLE_NOLOOP },
-	{"fx_59", SAMPLE_NOLOOP },
-	{"fx_31", SAMPLE_NOLOOP },
-	{"fx_39a", SAMPLE_NOLOOP },
-	{"fx_39b", SAMPLE_NOLOOP },
-	{"fx_39c", SAMPLE_NOLOOP },
-	{"fx_39d", SAMPLE_NOLOOP },
-	{"fx_39e", SAMPLE_NOLOOP },
-	{"fx_39f", SAMPLE_NOLOOP },
-	{"fx_39g", SAMPLE_NOLOOP },
-	{"fx_39h", SAMPLE_NOLOOP },
-	{"fx_39i", SAMPLE_NOLOOP },
-	{"fx_39j", SAMPLE_NOLOOP },
-	{"fx_39k", SAMPLE_NOLOOP },
-	{"fx_39l", SAMPLE_NOLOOP },
-	{"", 0 }
-};
-
-STD_SAMPLE_PICK(reactor)
-STD_SAMPLE_FN(reactor)
-
 
 // Q*bert (US set 1)
 
@@ -2851,11 +2706,11 @@ static INT32 DrvInitReactor()
 }
 
 struct BurnDriver BurnDrvReactor = {
-	"reactor", NULL, NULL, "reactor", "1982",
+	"reactor", NULL, NULL, NULL, "1982",
 	"Reactor\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, reactorRomInfo, reactorRomName, NULL, NULL, reactorSampleInfo, reactorSampleName, ReactorInputInfo, ReactorDIPInfo,
+	NULL, reactorRomInfo, reactorRomName, NULL, NULL, NULL, NULL, ReactorInputInfo, ReactorDIPInfo,
 	DrvInitReactor, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
 };

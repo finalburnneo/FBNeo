@@ -1,4 +1,4 @@
-// FB Alpha SNK 68k-based (pre-Neo-Geo) driver module
+// FB Neo SNK 68k-based (pre-Neo-Geo) driver module
 // Based on MAME driver by Bryan McPhail, Acho A. Tang, Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -22,7 +22,7 @@ static INT32 Rotary1OldVal = 0;
 static INT32 Rotary2 = 0;
 static INT32 Rotary2OldVal = 0;
 
-static UINT8 *Mem;
+static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
@@ -43,6 +43,7 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 game_select;
+static INT32 streetsmwbl;
 
 static INT32 invert_controls;
 static INT32 soundlatch;
@@ -319,7 +320,7 @@ static struct BurnDIPInfo StreetsmDIPList[]=
 
 STDDIPINFO(Streetsm)
 
-static struct BurnDIPInfo StreetsjDIPList[]=
+static struct BurnDIPInfo StreetsmjDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
 	{0x15, 0xff, 0xff, 0x00, NULL                     },
@@ -371,7 +372,7 @@ static struct BurnDIPInfo StreetsjDIPList[]=
 	{0x15, 0x01, 0xc0, 0xc0, "Hardest"                },
 };
 
-STDDIPINFO(Streetsj)
+STDDIPINFO(Streetsmj)
 
 static struct BurnDIPInfo SarDIPList[]=
 {
@@ -524,17 +525,17 @@ static void RotateStateload() {
 }
 
 static UINT32 RotationTimer(void) {
-    return nCurrentFrame;
+	return nCurrentFrame;
 }
 
 static void RotateRight(INT32 *v) {
-    (*v)--;
-    if (*v < 0) *v = 11;
+	(*v)--;
+	if (*v < 0) *v = 11;
 }
 
 static void RotateLeft(INT32 *v) {
-    (*v)++;
-    if (*v > 11) *v = 0;
+	(*v)++;
+	if (*v > 11) *v = 0;
 }
 
 static UINT8 Joy2RotateInvert(UINT8 *joy) {
@@ -571,32 +572,32 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 }
 
 static int dialRotation(INT32 playernum) {
-    // p1 = 0, p2 = 1
+	// p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
 	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
 
-    if ((playernum != 0) && (playernum != 1)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
-        return 0;
-    }
-    if (playernum == 0) {
-        player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
-    }
-    if (playernum == 1) {
-        player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
-    }
+	if ((playernum != 0) && (playernum != 1)) {
+		bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+		return 0;
+	}
+	if (playernum == 0) {
+		player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
+	}
+	if (playernum == 1) {
+		player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
+	}
 
-    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+	if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
+		//bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
-    }
+	}
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
-        RotateRight(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
-        nRotateTime[playernum] = RotationTimer();
+		RotateRight(&nRotate[playernum]);
+		//bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
 	}
 
@@ -835,9 +836,9 @@ static void __fastcall pow_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x0c0001:
-	   		flipscreen   = data & 8;
-	    		sprite_flip  = data & 4;
-	    		pow_charbase = (data & 0x70) << 4;
+			flipscreen   = data & 8;
+			sprite_flip  = data & 4;
+			pow_charbase = (data & 0x70) << 4;
 		return;
 	}
 }
@@ -1026,9 +1027,9 @@ static INT32 PowGfxDecode()
 {
 	static INT32 spriPlanes[4] = { 0x000000, 0x400000, 0x800000, 0xc00000 };
 	static INT32 spriXOffs[16] = { 0x87, 0x86, 0x85, 0x84, 0x83, 0x82, 0x81, 0x80,
-				     0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 };
+					 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 };
 	static INT32 spriYOffs[16] = { 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
-				     0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78 };
+					 0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78 };
 
 	return DrvGfxDecode(spriPlanes, spriXOffs, spriYOffs, 0x100);
 }
@@ -1037,9 +1038,9 @@ static INT32 SarGfxDecode()
 {
 	static INT32 spriPlanes[4] = { 0x000000, 0x000008,0xc00000, 0xc00008 };
 	static INT32 spriXOffs[16] = { 0x107, 0x106, 0x105, 0x104, 0x103, 0x102, 0x101, 0x100, 
-				     0x007, 0x006, 0x005, 0x004, 0x003, 0x002, 0x001, 0x000 };
+					 0x007, 0x006, 0x005, 0x004, 0x003, 0x002, 0x001, 0x000 };
 	static INT32 spriYOffs[16] = { 0x000, 0x010, 0x020, 0x030, 0x040, 0x050, 0x060, 0x070,
-				     0x080, 0x090, 0x0a0, 0x0b0, 0x0c0, 0x0d0, 0x0e0, 0x0f0 };
+					 0x080, 0x090, 0x0a0, 0x0b0, 0x0c0, 0x0d0, 0x0e0, 0x0f0 };
 
 	return DrvGfxDecode(spriPlanes, spriXOffs, spriYOffs, 0x200);
 }
@@ -1048,16 +1049,16 @@ static INT32 IkariGfxDecode()
 {
 	static INT32 spriPlanes[4] = { 0xa00000, 0x000000, 0x500000, 0xf00000 };
 	static INT32 spriXOffs[16] = { 0x87, 0x86, 0x85, 0x84, 0x83, 0x82, 0x81, 0x80,
-				     0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 };
+					 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00 };
 	static INT32 spriYOffs[16] = { 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
-				     0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78 };
+					 0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78 };
 
 	return DrvGfxDecode(spriPlanes, spriXOffs, spriYOffs, 0x100);
 }
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68KRom	= Next; Next += 0x040000;
 	Drv68KRomBank	= Next; Next += 0x040000;
@@ -1158,8 +1159,15 @@ static INT32 DrvGetRoms()
 		}
 
 		if ((ri.nType & 7) == 4) {
-			if (BurnLoadRom(LoadG1, i, 1)) return 1;
-			LoadG1 += ri.nLen;
+			if (streetsmwbl) {
+				if (BurnLoadRom(LoadG1 + 0, i + 0, 2)) return 1;
+				if (BurnLoadRom(LoadG1 + 1, i + 1, 2)) return 1;
+				LoadG1 += ri.nLen * 2;
+				i++;
+			} else {
+				if (BurnLoadRom(LoadG1, i, 1)) return 1;
+				LoadG1 += ri.nLen;
+			}
 			continue;
 		}
 
@@ -1177,12 +1185,7 @@ static INT32 DrvInit(INT32 game)
 {
 	game_select = game;
 
-	Mem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (DrvGetRoms()) return 1;
 
@@ -1251,11 +1254,12 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (Mem);
+	BurnFreeMemIndex();
 
 	game_select = 0;
 	game_rotates = 0;
 	game_rotates_inverted = 0;
+	streetsmwbl = 0;
 
 	return 0;
 }
@@ -1916,34 +1920,38 @@ struct BurnDriver BurnDrvstreetsm = {
 
 // Street Smart (US version 1)
 
-static struct BurnRomInfo streets1RomDesc[] = {
-	{ "s2-1ver1.9c",  0x20000, 0xb59354c5, 1 | BRF_PRG }, //  0 68k Code
-	{ "s2-2ver1.10c", 0x20000, 0xe448b68b, 1 | BRF_PRG }, //  1
+static struct BurnRomInfo streetsm1RomDesc[] = {
+	{ "s2-1ver1.9c",	0x20000, 0xb59354c5, 1 | BRF_PRG }, //  0 68k Code
+	{ "s2-2ver1.10c",	0x20000, 0xe448b68b, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
-STD_ROM_PICK(streets1)
-STD_ROM_FN(streets1)
+STD_ROM_PICK(streetsm1)
+STD_ROM_FN(streetsm1)
 
-struct BurnDriver BurnDrvstreets1 = {
+struct BurnDriver BurnDrvstreetsm1 = {
 	"streetsm1", "streetsm", NULL, NULL, "1989",
 	"Street Smart (US version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streets1RomInfo, streets1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
+	NULL, streetsm1RomInfo, streetsm1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1951,34 +1959,38 @@ struct BurnDriver BurnDrvstreets1 = {
 
 // Street Smart (World version 1)
 
-static struct BurnRomInfo streetswRomDesc[] = {
-	{ "s-smart1.bin", 0x20000, 0xa1f5ceab, 1 | BRF_PRG }, //  0 68k Code
-	{ "s-smart2.bin", 0x20000, 0x263f615d, 1 | BRF_PRG }, //  1
+static struct BurnRomInfo streetsmwRomDesc[] = {
+	{ "s-smart1.bin",	0x20000, 0xa1f5ceab, 1 | BRF_PRG }, //  0 68k Code
+	{ "s-smart2.bin",	0x20000, 0x263f615d, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
-STD_ROM_PICK(streetsw)
-STD_ROM_FN(streetsw)
+STD_ROM_PICK(streetsmw)
+STD_ROM_FN(streetsmw)
 
-struct BurnDriver BurnDrvstreetsw = {
+struct BurnDriver BurnDrvstreetsmw = {
 	"streetsmw", "streetsm", NULL, NULL, "1989",
 	"Street Smart (World version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streetswRomInfo, streetswRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
+	NULL, streetsmwRomInfo, streetsmwRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmjDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
@@ -1986,37 +1998,131 @@ struct BurnDriver BurnDrvstreetsw = {
 
 // Street Smart (Japan version 1)
 
-static struct BurnRomInfo streetsjRomDesc[] = {
-	{ "s2v1j_01.bin", 0x20000, 0xf031413c, 1 | BRF_PRG }, //  0 68k Code
-	{ "s2v1j_02.bin", 0x20000, 0xe403a40b, 1 | BRF_PRG }, //  1
+static struct BurnRomInfo streetsmjRomDesc[] = {
+	{ "s2v1j_01.bin",	0x20000, 0xf031413c, 1 | BRF_PRG }, //  0 68k Code
+	{ "s2v1j_02.bin",	0x20000, 0xe403a40b, 1 | BRF_PRG }, //  1
 
-	{ "s2-5.16c",     0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+	{ "s2-5.16c",		0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
 
-	{ "s2-7.15l",     0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
-	{ "s2-8.15m",     0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+	{ "s2-7.15l",		0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "s2-8.15m",		0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
 
-	{ "stsmart.900",  0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
-	{ "stsmart.902",  0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
-	{ "stsmart.904",  0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
-	{ "stsmart.901",  0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
-	{ "stsmart.903",  0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
-	{ "stsmart.905",  0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
+	{ "stsmart.900",	0x80000, 0xa8279a7e, 4 | BRF_GRA }, //  5 Sprites
+	{ "stsmart.902",	0x80000, 0x2f021aa1, 4 | BRF_GRA }, //  6
+	{ "stsmart.904",	0x80000, 0x167346f7, 4 | BRF_GRA }, //  7
+	{ "stsmart.901",	0x80000, 0xc305af12, 4 | BRF_GRA }, //  8
+	{ "stsmart.903",	0x80000, 0x73c16d35, 4 | BRF_GRA }, //  9
+	{ "stsmart.905",	0x80000, 0xa5beb4e2, 4 | BRF_GRA }, // 10
 
-	{ "s2-6.18d",     0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+	{ "s2-6.18d",		0x20000, 0x47db1605, 5 | BRF_SND }, // 11 upd7759 samples
+
+	{ "a6.1n",			0x002dd, 0x5869332c, 0 | BRF_OPT }, // 12 PLDs
+	{ "p-a7.11d",		0x002dd, 0xe46f6fcd, 0 | BRF_OPT }, // 13
+	{ "p-a8.20m",		0x00117, 0x6cd7beac, 0 | BRF_OPT }, // 14
 };
 
-STD_ROM_PICK(streetsj)
-STD_ROM_FN(streetsj)
+STD_ROM_PICK(streetsmj)
+STD_ROM_FN(streetsmj)
 
-struct BurnDriver BurnDrvstreetsj = {
+struct BurnDriver BurnDrvstreetsmj = {
 	"streetsmj", "streetsm", NULL, NULL, "1989",
 	"Street Smart (Japan version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
-	NULL, streetsjRomInfo, streetsjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsjDIPInfo,
+	NULL, streetsmjRomInfo, streetsmjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmjDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };
+
+
+// Street Smart (bootleg of World version 1)
+
+static struct BurnRomInfo streetsmwblRomDesc[] = {
+	{ "1p.1",				0x20000, 0xa1f5ceab, 1 | BRF_PRG }, //  0 68k Code
+	{ "2p.2",				0x20000, 0x263f615d, 1 | BRF_PRG }, //  1
+
+	{ "3s.3",				0x10000, 0xca4b171e, 2 | BRF_PRG }, //  2 Z80 Code
+
+	{ "5c.5",				0x08000, 0x22bedfe5, 3 | BRF_GRA }, //  3 Characters
+	{ "6c.6",				0x08000, 0x6a1c70ab, 3 | BRF_GRA }, //  4
+
+	{ "24l.24",				0x10000, 0x01cd7ae0, 4 | BRF_GRA }, //  5 Sprites
+	{ "15l.15",				0x10000, 0x9c81fcbe, 4 | BRF_GRA }, //  6
+	{ "23l.23",				0x10000, 0x441cd7a2, 4 | BRF_GRA }, //  7
+	{ "14l.14",				0x10000, 0x4741c5ad, 4 | BRF_GRA }, //  8
+	{ "22l.22",				0x10000, 0xe1da555c, 4 | BRF_GRA }, //  9
+	{ "13l.13",				0x10000, 0x00861423, 4 | BRF_GRA }, // 10
+	{ "21l.21",				0x10000, 0xf36b4997, 4 | BRF_GRA }, // 11
+	{ "12l.12",				0x10000, 0xccaed9aa, 4 | BRF_GRA }, // 12
+	{ "20l.20",				0x10000, 0x12bc66ee, 4 | BRF_GRA }, // 13
+	{ "11l.11",				0x10000, 0x49e545a2, 4 | BRF_GRA }, // 14
+	{ "19l.19",				0x10000, 0x8f2f601d, 4 | BRF_GRA }, // 15
+	{ "10l.10",				0x10000, 0xfe486cbf, 4 | BRF_GRA }, // 16
+	{ "18l.18",				0x10000, 0x6ac354cb, 4 | BRF_GRA }, // 17
+	{ "9l.9",				0x10000, 0xcf6f140d, 4 | BRF_GRA }, // 18
+	{ "17l.17",				0x10000, 0x34aa51b1, 4 | BRF_GRA }, // 19
+	{ "8l.8",				0x10000, 0x28f1bdc4, 4 | BRF_GRA }, // 20
+	{ "6l.6",				0x10000, 0x56ebc520, 4 | BRF_GRA }, // 21
+	{ "4l.4",				0x10000, 0x54dc8dae, 4 | BRF_GRA }, // 22
+	{ "5l.5",				0x10000, 0x9943ce65, 4 | BRF_GRA }, // 23
+	{ "3l.3",				0x10000, 0x596e388e, 4 | BRF_GRA }, // 24
+	{ "16l.16",				0x10000, 0x7599dbb5, 4 | BRF_GRA }, // 25
+	{ "24r.24",				0x10000, 0x58099ef5, 4 | BRF_GRA }, // 26
+	{ "7l.7",				0x10000, 0xb36db591, 4 | BRF_GRA }, // 27
+	{ "15r.15",				0x10000, 0x2e9b47c5, 4 | BRF_GRA }, // 28
+	{ "32r.32",				0x10000, 0x376f0976, 4 | BRF_GRA }, // 29
+	{ "23r.23",				0x10000, 0xf5edc139, 4 | BRF_GRA }, // 30
+	{ "31r.31",				0x10000, 0x72901ea3, 4 | BRF_GRA }, // 31
+	{ "22r.22",				0x10000, 0xf1cda176, 4 | BRF_GRA }, // 32
+	{ "30r.30",				0x10000, 0x7084e2e2, 4 | BRF_GRA }, // 33
+	{ "21r.21",				0x10000, 0x19a6ad20, 4 | BRF_GRA }, // 34
+	{ "29r.29",				0x10000, 0x9a498dab, 4 | BRF_GRA }, // 35
+	{ "20r.20",				0x10000, 0xea28d8e5, 4 | BRF_GRA }, // 36
+	{ "28r.28",				0x10000, 0x3ca47063, 4 | BRF_GRA }, // 37
+	{ "19r.19",				0x10000, 0xc108820f, 4 | BRF_GRA }, // 38
+	{ "27r.27",				0x10000, 0x6986db59, 4 | BRF_GRA }, // 39
+	{ "18r.18",				0x10000, 0xa078895c, 4 | BRF_GRA }, // 40
+	{ "26r.26",				0x10000, 0x886a57ee, 4 | BRF_GRA }, // 41
+	{ "17r.17",				0x10000, 0xaf1e58e4, 4 | BRF_GRA }, // 42
+	{ "25r.25",				0x10000, 0x9fe6e970, 4 | BRF_GRA }, // 43
+	{ "16r.16",				0x10000, 0x466b39b7, 4 | BRF_GRA }, // 44
+	{ "14r.14",				0x10000, 0xe9697bd1, 4 | BRF_GRA }, // 45
+	{ "12r.12",				0x10000, 0x8307f243, 4 | BRF_GRA }, // 46
+	{ "13r.13",				0x10000, 0x3255af03, 4 | BRF_GRA }, // 47
+	{ "11r.11",				0x10000, 0x5bad15c1, 4 | BRF_GRA }, // 48
+	{ "8r.8",				0x10000, 0x9c52f1ea, 4 | BRF_GRA }, // 49
+	{ "9r.9",				0x10000, 0x380dcee5, 4 | BRF_GRA }, // 50
+	{ "7r.7",				0x10000, 0x0c474722, 4 | BRF_GRA }, // 51
+	{ "10r.10",				0x10000, 0x9d617689, 4 | BRF_GRA }, // 52
+
+	{ "4s.4",				0x20000, 0x47db1605, 5 | BRF_SND }, // 53 upd7759 samples
+
+	{ "pal20l8acns.pal1",	0x00144, 0xf31415c9, 0 | BRF_OPT }, // 54 PLDs
+	{ "pal20l10acns.pal2",	0x000cc, 0x1cadf26d, 0 | BRF_OPT }, // 55
+	{ "pal20l10acns.pal3",	0x000cc, 0xc3d9e729, 0 | BRF_OPT }, // 56
+	{ "pal16p8acn.pal4",	0x00104, 0xe258b8d6, 0 | BRF_OPT }, // 57
+};
+
+STD_ROM_PICK(streetsmwbl)
+STD_ROM_FN(streetsmwbl)
+
+static INT32 streetsmwblInit()
+{
+	streetsmwbl = 1;
+
+	return searcharInit();
+}
+
+struct BurnDriver BurnDrvStreetsmwbl = {
+	"streetsmwbl", "streetsm", NULL, NULL, "1989",
+	"Street Smart (bootleg of World version 1)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	NULL, streetsmwblRomInfo, streetsmwblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StreetsmjDIPInfo,
+	streetsmwblInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 256, 224, 4, 3
+};
+
 
 // Ikari III - The Rescue (World version 1, 8-Way Joystick)
 

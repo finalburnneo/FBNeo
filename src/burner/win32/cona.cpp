@@ -120,6 +120,7 @@ int ConfigAppLoad()
 		STR(VerScreen);
 
 		VAR(bVidTripleBuffer);
+		VAR(bVidDX9WinFullscreen);
 		VAR(bVidVSync);
 		VAR(bVidDWMSync);
 
@@ -443,6 +444,8 @@ int ConfigAppSave()
 	VAR(bVidCorrectAspect);
 	_ftprintf(h, _T("\n// If non-zero, try to use a triple buffer in fullscreen\n"));
 	VAR(bVidTripleBuffer);
+	_ftprintf(h, _T("\n// If non-zero, use a windowed fullscreen mode in DX9\n"));
+	VAR(bVidDX9WinFullscreen);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise blits with the display\n"));
 	VAR(bVidVSync);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));

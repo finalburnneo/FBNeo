@@ -959,7 +959,7 @@ static void SelOkay()
 	}
 #endif
 	nDialogSelect = nSelect;
-	GetIpsDrvDefine();	// Entry point : SelOkay
+	IpsPatchInit();	// Entry point : SelOkay
 
 	bDialogCancel = false;
 	MyEndDialog();

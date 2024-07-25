@@ -30,6 +30,7 @@ static void BurnerDoGameListExLocalisation()
 	if (NULL == gl) return;
 
 	INT32 nArrayPos = 0;
+	INT32 nTokenPos = 0;
 	char szTemp[MAX_LST_LINE_LEN] = { '\0' };
 
 	while (fgets(szTemp, sizeof(szTemp), gl)) {
@@ -74,16 +75,16 @@ static void BurnerDoGameListExLocalisation()
 	rewind(gl);
 	memset(szTemp, 0, sizeof(szTemp));
 
-	szShortNamesExArray = (char**)malloc(nNamesExArray * sizeof(char*));
+	szShortNamesExArray = (char** )malloc(nNamesExArray * sizeof(char*));
 	szLongNamesExArray  = (TCHAR**)malloc(nNamesExArray * sizeof(TCHAR*));
 
 	if ((NULL != szShortNamesExArray) && (NULL != szLongNamesExArray)) {
 		// Allocate arrays to read the file into
 		for (INT32 i = 0; i < nNamesExArray; i++) {
-			szShortNamesExArray[i] = (char*)malloc(100);
-			szLongNamesExArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
+			szShortNamesExArray[i] = (char* )malloc(100);
+			szLongNamesExArray[i]  = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
 			memset(szShortNamesExArray[i], '\0', 100);
-			memset(szLongNamesExArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szLongNamesExArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
 		}
 		while (NULL != fgets(szTemp, sizeof(szTemp), gl)) {
 			if (szTemp[0] == '/' && szTemp[1] == '/') {
@@ -102,7 +103,6 @@ static void BurnerDoGameListExLocalisation()
 			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 
 			// Read the file into arrays
-			INT32 nTokenPos = 0;
 			TCHAR* Tokens = _tcstok(szLine, _T("\t"));
 			while (NULL != Tokens) {
 				if (nTokenPos == 0) {
@@ -111,9 +111,9 @@ static void BurnerDoGameListExLocalisation()
 					strcpy(szShortNamesExArray[nArrayPos], TCHARToANSI(Tokens, NULL, 0));
 				}
 
-				if (nTokenPos == 1); {
+				if (nTokenPos == 1) {
 					szLongNamesExArray[nArrayPos] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-					memset(szLongNamesExArray[nArrayPos], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+					memset(szLongNamesExArray[nArrayPos], '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
 					wcscpy(szLongNamesExArray[nArrayPos], Tokens);
 				}
 
@@ -142,10 +142,10 @@ void BurnerDoGameListLocalisation()
 
 		// Allocate arrays to read the file into
 		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			szLongNamesArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i] = (TCHAR*)malloc(100 * sizeof(TCHAR));
-			memset(szLongNamesArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i], _T('\0'), 100 * sizeof(TCHAR));
+			szLongNamesArray[i]  = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
+			szShortNamesArray[i] = (TCHAR*)malloc( 100              * sizeof(TCHAR));
+			memset(szLongNamesArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szShortNamesArray[i], '\0', 100              * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];
@@ -157,13 +157,13 @@ void BurnerDoGameListLocalisation()
 
 			if (!strncmp(szTemp, "codepage=", 9)) {
 				if ((strlen(szTemp) - 10) == 4) {
-					nCodePage  = (szTemp[9] - '0') * 1000;
+					nCodePage  = (szTemp[ 9] - '0') * 1000;
 					nCodePage += (szTemp[10] - '0') * 100;
 					nCodePage += (szTemp[11] - '0') * 10;
 					nCodePage += (szTemp[12] - '0');
 				}
 				if ((strlen(szTemp) - 10) == 3) {
-					nCodePage  = (szTemp[9] - '0') * 100;
+					nCodePage  = (szTemp[ 9] - '0') * 100;
 					nCodePage += (szTemp[10] - '0') * 10;
 					nCodePage += (szTemp[11] - '0');
 				}
@@ -250,8 +250,8 @@ void BurnerExitGameListLocalisation()
 		}
 		if (i < nNamesExArray) {
 			if (NULL != szShortNamesExArray[i]) {
-				free(szLongNamesExArray[i]);
-				szLongNamesExArray[i] = NULL;
+				free(szShortNamesExArray[i]);
+				szShortNamesExArray[i] = NULL;
 			}
 			if (NULL != szLongNamesExArray[i]) {
 				free(szLongNamesExArray[i]);
@@ -260,8 +260,8 @@ void BurnerExitGameListLocalisation()
 		}
 	}
 	if (NULL != szShortNamesExArray) {
-		free(szLongNamesExArray);
-		szLongNamesExArray = NULL;
+		free(szShortNamesExArray);
+		szShortNamesExArray = NULL;
 	}
 	if (NULL != szLongNamesExArray) {
 		free(szLongNamesExArray);

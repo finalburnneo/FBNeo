@@ -1,4 +1,4 @@
-// FB Alpha Jaleco Mega System 1 driver module
+// FB Neo Jaleco Mega System 1 driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
@@ -988,7 +988,7 @@ STDDIPINFO(Hayaosi1)
 static struct BurnDIPInfo Street64DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL				},
-	{0x13, 0xff, 0xff, 0xbd, NULL				},
+	{0x13, 0xff, 0xff, 0xfd, NULL				},
 
 	{0   , 0xfe, 0   ,   11, "Coin A"			},
 	{0x12, 0x01, 0x0f, 0x07, "4 Coins 1 Credits"		},

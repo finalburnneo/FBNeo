@@ -73,6 +73,7 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 	{"P2 Fire 3"         , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 fire 3" },
 	
+	{"P3 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p3 coin"   }, // actually service coin, put here for kaillera fix
 	{"P3 Start"          , BIT_DIGITAL  , DrvInputPort3 + 7, "p3 start"  },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p3 down"   },
@@ -83,7 +84,6 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P3 Fire 3"         , BIT_DIGITAL  , DrvInputPort3 + 6, "p3 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL  , DrvInputPort1 + 2, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
 	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
@@ -123,179 +123,182 @@ static inline void DrvMakeInputs()
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
+	DIP_OFFSET(0x1c)
 	// Default Values
-	{0x1c, 0xff, 0xff, 0xff, NULL                     },
-	{0x1d, 0xff, 0xff, 0xff, NULL                     },
-	{0x1e, 0xff, 0xff, 0xff, NULL                     },
-	{0x1f, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0xff, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0xff, NULL                     },
+	{0x03, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x1c, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
-	{0x1c, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
-	{0x1c, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
-	{0x1c, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
 	
 	{0   , 0xfe, 0   , 2   , "Continue Discount"      },
-	{0x1c, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1c, 0x01, 0x10, 0x00, "On"                     },
+	{0x00, 0x01, 0x10, 0x10, "Off"                    },
+	{0x00, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x1c, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1c, 0x01, 0x20, 0x20, "On"                     },
+	{0x00, 0x01, 0x20, 0x00, "Off"                    },
+	{0x00, 0x01, 0x20, 0x20, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1c, 0x01, 0x40, 0x40, "Off"                    },
-	{0x1c, 0x01, 0x40, 0x00, "On"                     },
+	{0x00, 0x01, 0x40, 0x40, "Off"                    },
+	{0x00, 0x01, 0x40, 0x00, "On"                     },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1d, 0x01, 0x03, 0x02, "Easy"                   },
-	{0x1d, 0x01, 0x03, 0x03, "Normal"                 },
-	{0x1d, 0x01, 0x03, 0x01, "Hard"                   },
-	{0x1d, 0x01, 0x03, 0x00, "Hardest"                },
+	{0x01, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x01, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x01, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x01, 0x01, 0x03, 0x00, "Hardest"                },
 	
 	{0   , 0xfe, 0   , 2   , "Player vs Player Damage"},
-	{0x1d, 0x01, 0x04, 0x04, "Off"                    },
-	{0x1d, 0x01, 0x04, 0x00, "On"                     },
+	{0x01, 0x01, 0x04, 0x04, "Off"                    },
+	{0x01, 0x01, 0x04, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Test Mode"              },
-	{0x1d, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1d, 0x01, 0x10, 0x00, "On"                     },
+	{0x01, 0x01, 0x10, 0x10, "Off"                    },
+	{0x01, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Stage Clear Energy"     },
-	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x20, 0x20, "50"                     },
+	{0x01, 0x01, 0x20, 0x00, "Off"                    },
+	{0x01, 0x01, 0x20, 0x20, "50"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Starting Energy"        },
-	{0x1d, 0x01, 0x40, 0x00, "200"                    },
-	{0x1d, 0x01, 0x40, 0x40, "230"                    },
+	{0x01, 0x01, 0x40, 0x00, "200"                    },
+	{0x01, 0x01, 0x40, 0x40, "230"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Number of Players"      },
-	{0x1d, 0x01, 0x80, 0x80, "2"                      },
-	{0x1d, 0x01, 0x80, 0x00, "3"                      },
+	{0x01, 0x01, 0x80, 0x80, "2"                      },
+	{0x01, 0x01, 0x80, 0x00, "3"                      },
 };
 
 STDDIPINFO(Drv)
 
 static struct BurnDIPInfo DrvbDIPList[]=
 {
+	DIP_OFFSET(0x1c)
 	// Default Values
-	{0x1c, 0xff, 0xff, 0x10, NULL                     },
-	{0x1d, 0xff, 0xff, 0xff, NULL                     },
-	{0x1e, 0xff, 0xff, 0xff, NULL                     },
-	{0x1f, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0x10, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0xff, NULL                     },
+	{0x03, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1c, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1c, 0x01, 0x10, 0x00, "On"                     },
+	{0x00, 0x01, 0x10, 0x10, "Off"                    },
+	{0x00, 0x01, 0x10, 0x00, "On"                     },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x1d, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
+	{0x01, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
+	{0x01, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
+	{0x01, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
 	
 	{0   , 0xfe, 0   , 2   , "Continue Discount"      },
-	{0x1d, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1d, 0x01, 0x10, 0x00, "On"                     },
+	{0x01, 0x01, 0x10, 0x10, "Off"                    },
+	{0x01, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x01, 0x01, 0x20, 0x00, "Off"                    },
+	{0x01, 0x01, 0x20, 0x20, "On"                     },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1e, 0x01, 0x03, 0x02, "Easy"                   },
-	{0x1e, 0x01, 0x03, 0x03, "Normal"                 },
-	{0x1e, 0x01, 0x03, 0x01, "Hard"                   },
-	{0x1e, 0x01, 0x03, 0x00, "Hardest"                },
+	{0x02, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x02, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x02, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x02, 0x01, 0x03, 0x00, "Hardest"                },
 	
 	{0   , 0xfe, 0   , 2   , "Player vs Player Damage"},
-	{0x1e, 0x01, 0x04, 0x04, "Off"                    },
-	{0x1e, 0x01, 0x04, 0x00, "On"                     },
+	{0x02, 0x01, 0x04, 0x04, "Off"                    },
+	{0x02, 0x01, 0x04, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Test Mode"              },
-	{0x1e, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1e, 0x01, 0x10, 0x00, "On"                     },
+	{0x02, 0x01, 0x10, 0x10, "Off"                    },
+	{0x02, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Stage Clear Energy"     },
-	{0x1e, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1e, 0x01, 0x20, 0x20, "50"                     },
+	{0x02, 0x01, 0x20, 0x00, "Off"                    },
+	{0x02, 0x01, 0x20, 0x20, "50"                     },
 	
 	// Dip 4
 	{0   , 0xfe, 0   , 2   , "Starting Energy"        },
-	{0x1f, 0x01, 0x01, 0x00, "200"                    },
-	{0x1f, 0x01, 0x01, 0x01, "230"                    },
+	{0x03, 0x01, 0x01, 0x00, "200"                    },
+	{0x03, 0x01, 0x01, 0x01, "230"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Number of Players"      },
-	{0x1f, 0x01, 0x02, 0x02, "2"                      },
-	{0x1f, 0x01, 0x02, 0x00, "3"                      },
+	{0x03, 0x01, 0x02, 0x02, "2"                      },
+	{0x03, 0x01, 0x02, 0x00, "3"                      },
 };
 
 STDDIPINFO(Drvb)
 
 static struct BurnDIPInfo CtribeDIPList[]=
 {
+	DIP_OFFSET(0x1c)
 	// Default Values
-	{0x1c, 0xff, 0xff, 0x10, NULL                     },
-	{0x1d, 0xff, 0xff, 0xff, NULL                     },
-	{0x1e, 0xff, 0xff, 0xff, NULL                     },
-	{0x1f, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0x10, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0xff, NULL                     },
+	{0x03, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x1c, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1c, 0x01, 0x10, 0x00, "On"                     },
+	{0x00, 0x01, 0x10, 0x10, "Off"                    },
+	{0x00, 0x01, 0x10, 0x00, "On"                     },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x1d, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
-	{0x1d, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
+	{0x01, 0x01, 0x03, 0x00, "3 Coins 1 Credit"       },
+	{0x01, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credit"       },
+	{0x01, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
 	
 	{0   , 0xfe, 0   , 2   , "Continue Discount"      },
-	{0x1d, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1d, 0x01, 0x10, 0x00, "On"                     },
+	{0x01, 0x01, 0x10, 0x10, "Off"                    },
+	{0x01, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
-	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x01, 0x01, 0x20, 0x00, "Off"                    },
+	{0x01, 0x01, 0x20, 0x20, "On"                     },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x1e, 0x01, 0x03, 0x02, "Easy"                   },
-	{0x1e, 0x01, 0x03, 0x03, "Normal"                 },
-	{0x1e, 0x01, 0x03, 0x01, "Hard"                   },
-	{0x1e, 0x01, 0x03, 0x00, "Hardest"                },
+	{0x02, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x02, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x02, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x02, 0x01, 0x03, 0x00, "Hardest"                },
 	
 	{0   , 0xfe, 0   , 2   , "Timer Speed"            },
-	{0x1e, 0x01, 0x04, 0x04, "Normal"                 },
-	{0x1e, 0x01, 0x04, 0x00, "Fast"                   },
+	{0x02, 0x01, 0x04, 0x04, "Normal"                 },
+	{0x02, 0x01, 0x04, 0x00, "Fast"                   },
 	
 	{0   , 0xfe, 0   , 2   , "FBI Logo"               },
-	{0x1e, 0x01, 0x08, 0x00, "Off"                    },
-	{0x1e, 0x01, 0x08, 0x08, "On"                     },
+	{0x02, 0x01, 0x08, 0x00, "Off"                    },
+	{0x02, 0x01, 0x08, 0x08, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Test Mode"              },
-	{0x1e, 0x01, 0x10, 0x10, "Off"                    },
-	{0x1e, 0x01, 0x10, 0x00, "On"                     },
+	{0x02, 0x01, 0x10, 0x10, "Off"                    },
+	{0x02, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Stage Clear Energy"     },
-	{0x1e, 0x01, 0x20, 0x20, "0"                      },
-	{0x1e, 0x01, 0x20, 0x00, "50"                     },
+	{0x02, 0x01, 0x20, 0x20, "0"                      },
+	{0x02, 0x01, 0x20, 0x00, "50"                     },
 	
 	// Dip 4
 	{0   , 0xfe, 0   , 2   , "More Stage Clear Energy"},
-	{0x1f, 0x01, 0x01, 0x01, "Off"                    },
-	{0x1f, 0x01, 0x01, 0x00, "On"                     },
+	{0x03, 0x01, 0x01, 0x01, "Off"                    },
+	{0x03, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Number of Players"      },
-	{0x1f, 0x01, 0x02, 0x02, "2"                      },
-	{0x1f, 0x01, 0x02, 0x00, "3"                      },
+	{0x03, 0x01, 0x02, 0x02, "2"                      },
+	{0x03, 0x01, 0x02, 0x00, "3"                      },
 };
 
 STDDIPINFO(Ctribe)
@@ -690,7 +693,7 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-UINT8 __fastcall Ddragon368KReadByte(UINT32 a)
+static UINT8 __fastcall Ddragon368KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x100000: {
@@ -717,7 +720,7 @@ UINT8 __fastcall Ddragon368KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ddragon368KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Ddragon368KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x100003: {
@@ -735,7 +738,7 @@ void __fastcall Ddragon368KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Ddragon368KReadWord(UINT32 a)
+static UINT16 __fastcall Ddragon368KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x100002: {
@@ -754,7 +757,7 @@ UINT16 __fastcall Ddragon368KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ddragon368KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Ddragon368KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x000004:
@@ -819,7 +822,7 @@ void __fastcall Ddragon368KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Ddragon3b68KReadByte(UINT32 a)
+static UINT8 __fastcall Ddragon3b68KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x180000: {
@@ -850,7 +853,7 @@ UINT8 __fastcall Ddragon3b68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ddragon3b68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Ddragon3b68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x140003: {
@@ -868,7 +871,7 @@ void __fastcall Ddragon3b68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Ddragon3b68KReadWord(UINT32 a)
+static UINT16 __fastcall Ddragon3b68KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x180000: {
@@ -891,7 +894,7 @@ UINT16 __fastcall Ddragon3b68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ddragon3b68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Ddragon3b68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x000004:
@@ -956,7 +959,7 @@ void __fastcall Ddragon3b68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Ddragon3Z80Read(UINT16 a)
+static UINT8 __fastcall Ddragon3Z80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xc801: {
@@ -979,7 +982,7 @@ UINT8 __fastcall Ddragon3Z80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall Ddragon3Z80Write(UINT16 a, UINT8 d)
+static void __fastcall Ddragon3Z80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc800: {
@@ -1009,7 +1012,7 @@ void __fastcall Ddragon3Z80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Ctribeb68KReadByte(UINT32 a)
+static UINT8 __fastcall Ctribeb68KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x180000: {
@@ -1041,7 +1044,7 @@ UINT8 __fastcall Ctribeb68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ctribeb68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Ctribeb68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x0c000d: {
@@ -1060,7 +1063,7 @@ void __fastcall Ctribeb68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Ctribeb68KReadWord(UINT32 a)
+static UINT16 __fastcall Ctribeb68KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x180000: {
@@ -1088,7 +1091,7 @@ UINT16 __fastcall Ctribeb68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Ctribeb68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Ctribeb68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x0c0000: {
@@ -1147,7 +1150,7 @@ void __fastcall Ctribeb68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall CtribeZ80Read(UINT16 a)
+static UINT8 __fastcall CtribeZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x8801: {
@@ -1170,7 +1173,7 @@ UINT8 __fastcall CtribeZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall CtribeZ80Write(UINT16 a, UINT8 d)
+static void __fastcall CtribeZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x8800: {
@@ -1203,11 +1206,7 @@ static INT32 SpriteYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 8
 
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvInit()

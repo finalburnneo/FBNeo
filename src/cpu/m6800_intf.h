@@ -24,6 +24,7 @@ struct M6800Ext {
 	INT32 nCyclesTotal;
 	INT32 nCyclesSegment;
 	INT32 nCyclesLeft;
+	UINT32 bResetLine;
 };
 
 
@@ -65,6 +66,20 @@ void M6800ResetSoft();
 #define M6803ResetSoft		M6800ResetSoft
 #define M6801ResetSoft		M6800ResetSoft
 #define NSC8105ResetSoft    M6800ResetSoft
+
+void M6800SetRESETLine(INT32 nStatus);
+void M6800SetRESETLine(INT32 nCPU, INT32 nStatus);
+#define HD63701SetRESETLine	M6800SetRESETLine
+#define M6803SetRESETLine	M6800SetRESETLine
+#define M6801SetRESETLine	M6800SetRESETLine
+#define NSC8105SetRESETLine	M6800SetRESETLine
+
+INT32 M6800GetRESETLine();
+INT32 M6800GetRESETLine(INT32 nCPU);
+#define HD63701GetRESETLine	M6800GetRESETLine
+#define M6803GetRESETLine	M6800GetRESETLine
+#define M6801GetRESETLine	M6800GetRESETLine
+#define NSC8105GetRESETLine	M6800GetRESETLine
 
 void M6800NewFrame();
 #define HD63701NewFrame		M6800NewFrame

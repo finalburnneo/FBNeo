@@ -81,8 +81,8 @@ static INT32 PrepareRows()
         if (r>=0 && r<nEndline)
         {
           INT32 v;
-          v =(pli->nTileStart<<4)-nCpsrScrX;
-          v -= BURN_ENDIAN_SWAP_INT16(CpsrRows[(nCpsrRowStart+r)&0x3ff]);
+		  v =(pli->nTileStart<<4)-nCpsrScrX;
+          v -= BURN_ENDIAN_SWAP_INT16(CpsrRows[(nCpsrRowStart+r-nCpsGlobalYOffset)&0x3ff]);
           // clip to 10-bit signed
           v+=0x200; v&=0x3ff; v-=0x200;
           *pr=(INT16)v;

@@ -1420,7 +1420,7 @@ struct BurnDriver BurnDrvFlstoryo = {
 };
 
 
-// Onna Sansirou - Typhoon Gal (set 1)
+// Onna Sansirou - Typhoon Gal (rev 1)
 
 static struct BurnRomInfo onna34roRomDesc[] = {
 	{ "a52-01-1.40c",	0x4000, 0xffddcb02, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1458,7 +1458,7 @@ static INT32 onna34roInit()
 
 struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
-	"Onna Sanshirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
+	"Onna Sanshirou - Typhoon Gal (rev 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
@@ -1467,9 +1467,9 @@ struct BurnDriver BurnDrvOnna34ro = {
 };
 
 
-// Onna Sansirou - Typhoon Gal (set 2)
+// Onna Sanshirou - Typhoon Gal (bootleg)
 
-static struct BurnRomInfo onna34raRomDesc[] = {
+static struct BurnRomInfo onna34roaRomDesc[] = {
 	{ "ry-08.rom",		0x4000, 0xe4587b85, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "ry-07.rom",		0x4000, 0x6ffda515, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ry-06.rom",		0x4000, 0x6fefcda8, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1490,8 +1490,8 @@ static struct BurnRomInfo onna34raRomDesc[] = {
 	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 | BRF_GRA }, // 15
 };
 
-STD_ROM_PICK(onna34ra)
-STD_ROM_FN(onna34ra)
+STD_ROM_PICK(onna34roa)
+STD_ROM_FN(onna34roa)
 
 static INT32 onna34roaInit()
 {
@@ -1501,12 +1501,12 @@ static INT32 onna34roaInit()
 	return DrvInit();
 }
 
-struct BurnDriver BurnDrvOnna34ra = {
+struct BurnDriver BurnDrvOnna34roa = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
 	"Onna Sanshirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
-	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
+	NULL, onna34roaRomInfo, onna34roaRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1577,7 +1577,7 @@ static INT32 rumbaInit()
 	return nRet;
 }
 
-// Rumba Lumber
+// Rumba Lumber (rev 1)
 
 static struct BurnRomInfo rumbaRomDesc[] = {
 	{ "a23_01-1.bin",	0x4000, 0x4bea6e18, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1601,7 +1601,7 @@ STD_ROM_FN(rumba)
 
 struct BurnDriver BurnDrvRumba = {
 	"rumba", NULL, NULL, NULL, "1984",
-	"Rumba Lumber\0", NULL, "Taito", "Miscellaneous",
+	"Rumba Lumber (rev 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, rumbaRomInfo, rumbaRomName, NULL, NULL, NULL, NULL, RumbaInputInfo, RumbaDIPInfo,

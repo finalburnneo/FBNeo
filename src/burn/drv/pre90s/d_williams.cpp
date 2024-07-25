@@ -100,6 +100,7 @@ static INT32 defender = 0;
 static INT32 mayday = 0;
 static INT32 splat = 0;
 static INT32 blaster = 0;
+static INT32 sinistarc = 0;
 static INT32 playball = 0;
 static INT32 spdball = 0;
 static INT32 lottofun = 0;
@@ -1030,16 +1031,15 @@ static void pia0_out_b(UINT16 , UINT8 data)
 
 static void pia1_out_b(UINT16 , UINT8 data)
 {
-	if (!blaster) { // defender, williams HW
-		M6800Open(0);
-		sync_sound(0);
-		if (!playball) data |= 0xc0;
-		pia_set_input_b(2, data);
-		pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
-		M6800Close();
-	} else {        // Blaster HW
+	if (blaster || sinistarc) {
+		// Blaster HW & Sinistar Cockpit
 		UINT8 l_data = data | 0x80;
 		UINT8 r_data = (data >> 1 & 0x40) | (data & 0x3f) | 0x80;
+
+		if (sinistarc) {
+			l_data = data | 0xc0;
+			r_data = data | 0xc0;
+		}
 
 		M6800Open(0);
 		sync_sound(0);
@@ -1051,6 +1051,14 @@ static void pia1_out_b(UINT16 , UINT8 data)
 		sync_sound(1);
 		pia_set_input_b(4, r_data);
 		pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
+		M6800Close();
+	} else {
+		// defender, williams HW (everything else)
+		M6800Open(0);
+		sync_sound(0);
+		if (!playball) data |= 0xc0;
+		pia_set_input_b(2, data);
+		pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
 		M6800Close();
 	}
 }
@@ -1170,7 +1178,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6800Reset();
 	M6800Close();
 
-	if (blaster) {
+	if (blaster || sinistarc) {
 		M6800Open(1);
 		M6800Reset();
 		M6800Close();
@@ -1286,6 +1294,7 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 		}
 
 		if ((ri.nType & 7) == 3) {
+			bprintf(0, _T("loading second sound rom %x\n"), ri.nLen);
 			memmove (DrvM6800ROM1, DrvM6800ROM1 + ri.nLen, 0x10000 - ri.nLen); // move back
 			if (BurnLoadRom(DrvM6800ROM1 + 0x10000 - ri.nLen, i, 1)) return 1;
 			continue;
@@ -1452,6 +1461,7 @@ static INT32 DrvExit()
 	mayday = 0;
 	splat = 0;
 	blaster = 0;
+	sinistarc = 0;
 	defender_control_hack = 0;
 	defender = 0;
 	spdball = 0;
@@ -1725,7 +1735,7 @@ static INT32 DrvFrame()
 		CPU_RUN_SYNCINT(1, M6800);
 		M6800Close();
 
-		if (blaster) {
+		if (blaster || sinistarc) {
 			M6800Open(1);
 			CPU_RUN_SYNCINT(2, M6800);
 			M6800Close();
@@ -1746,7 +1756,7 @@ static INT32 DrvFrame()
 	M6800Open(0);
 	nExtraCycles[1] = M6800TotalCycles() - nCyclesTotal[1];
 	M6800Close();
-	if (blaster) {
+	if (blaster || sinistarc) {
 		M6800Open(1);
 		nExtraCycles[2] = M6800TotalCycles() - nCyclesTotal[2];
 		M6800Close();
@@ -3352,6 +3362,193 @@ struct BurnDriver BurnDrvSinistar = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sinistarRomInfo, sinistarRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
+// Sinistar (revision 3, cockpit)
+
+static struct BurnRomInfo sinistarcRomDesc[] = {
+	{ "sinistar_rom_10-b_16-3004-62.4c",	0x1000, 0x3d670417, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sinistar_rom_11-b_16-3004-63.4a",	0x1000, 0x3162bc50, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sinistar_rom_1-b_16-3004-53.1d",		0x1000, 0xf6f3a22c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sinistar_rom_2-b_16-3004-54.1c",		0x1000, 0xcab3185c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sinistar_rom_3-b_16-3004-55.1a",		0x1000, 0x1ce1b3cc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sinistar_rom_4-b_16-3004-56.2d",		0x1000, 0x6da632ba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sinistar_rom_5-b_16-3004-57.2c",		0x1000, 0xb662e8fc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sinistar_rom_6-b_16-3004-58.2a",		0x1000, 0x2306183d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sinistar_rom_7-b_16-3004-59.3d",		0x1000, 0xe5dd918e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sinistar_rom_8-b_16-3004-60.3c",		0x1000, 0x4785a787, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sinistar_rom_9-b_16-3004-61.3a",		0x1000, 0x50cb63ad, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "3004_speech_ic7_r1_16-3004-52.ic7",	0x1000, 0xe1019568, 2 | BRF_PRG | BRF_ESS }, // 11 soundcpu
+	{ "3004_speech_ic5_r1_16-3004-50.ic5",	0x1000, 0xcf3b5ffd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "3004_speech_ic6_r1_16-3004-51.ic6",	0x1000, 0xff8d2645, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "3004_speech_ic4_r1_16-3004-49.ic4",	0x1000, 0x4b56a626, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "video_sound_rom_9_std.808.ic12",		0x1000, 0xb82f4ddb, 2 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "video_sound_rom_10_std.ic12",		0x1000, 0xb5c70082, 3 | BRF_PRG | BRF_ESS }, // 16 soundcpu_b
+
+	{ "decoder_rom_4.3g",					0x0200, 0xe6631c23, 0 | BRF_OPT },           // 17 proms
+	{ "decoder_rom_6.3c",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 18
+};
+
+STD_ROM_PICK(sinistarc)
+STD_ROM_FN(sinistarc)
+
+static INT32 SinistarCockpitInit()
+{
+	INT32 nRet = SinistarInit();
+
+	if (nRet == 0) {
+		M6800Init(1);
+		M6800Open(1);
+		M6800MapMemory(DrvM6800RAM1,				0x0000, 0x00ff, MAP_RAM);
+		M6800MapMemory(DrvM6800ROM1 + 0xb000,		0xb000, 0xffff, MAP_ROM);
+		M6800SetWriteHandler(blaster_sound_write);
+		M6800SetReadHandler(blaster_sound_read);
+		M6800Close();
+
+		pia_config(4, 0, &pia_4); // 2nd soundboard
+
+		DACSetRoute(0, 0.35, BURN_SND_ROUTE_LEFT);
+
+		DACInit(1, 0, 0, M6800TotalCycles, 894886);
+		DACSetRoute(1, 0.35, BURN_SND_ROUTE_RIGHT);
+
+		sinistarc = 1;
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvSinistarc = {
+	"sinistarc", "sinistar", NULL, NULL, "1982",
+	"Sinistar (revision 3, cockpit)\0", NULL, "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sinistarcRomInfo, sinistarcRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
+	SinistarCockpitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
+// Sinistar (revision 2, cockpit)
+
+static struct BurnRomInfo sinistarc2RomDesc[] = {
+	{ "sinistar_rom_10-b_16-3004-47.4c",	0x1000, 0x3d670417, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sinistar_rom_11-b_16-3004-48.4a",	0x1000, 0x792c8b00, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sinistar_rom_1-b_16-3004-38.1d",		0x1000, 0xf6f3a22c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sinistar_rom_2-b_16-3004-39.1c",		0x1000, 0xcab3185c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sinistar_rom_3-b_16-3004-40.1a",		0x1000, 0x1ce1b3cc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sinistar_rom_4-b_16-3004-41.2d",		0x1000, 0x6da632ba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sinistar_rom_5-b_16-3004-42.2c",		0x1000, 0xb662e8fc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sinistar_rom_6-b_16-3004-43.2a",		0x1000, 0x2306183d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sinistar_rom_7-b_16-3004-44.3d",		0x1000, 0xe5dd918e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sinistar_rom_8-b_16-3004-45.3c",		0x1000, 0xd7ecee45, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sinistar_rom_9-b_16-3004-46.3a",		0x1000, 0x50cb63ad, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "3004_speech_ic7_r1_16-3004-52.ic7",	0x1000, 0xe1019568, 2 | BRF_PRG | BRF_ESS }, // 11 soundcpu
+	{ "3004_speech_ic5_r1_16-3004-50.ic5",	0x1000, 0xcf3b5ffd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "3004_speech_ic6_r1_16-3004-51.ic6",	0x1000, 0xff8d2645, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "3004_speech_ic4_r1_16-3004-49.ic4",	0x1000, 0x4b56a626, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "video_sound_rom_9_std.808.ic12",		0x1000, 0xb82f4ddb, 2 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "video_sound_rom_10_std.ic12",		0x1000, 0xb5c70082, 3 | BRF_PRG | BRF_ESS }, // 16 soundcpu_b
+
+	{ "decoder_rom_4.3g",					0x0200, 0xe6631c23, 0 | BRF_OPT },           // 17 proms
+	{ "decoder_rom_6.3c",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 18
+};
+
+STD_ROM_PICK(sinistarc2)
+STD_ROM_FN(sinistarc2)
+
+struct BurnDriver BurnDrvSinistarc2 = {
+	"sinistarc2", "sinistar", NULL, NULL, "1982",
+	"Sinistar (revision 2, cockpit)\0", NULL, "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sinistarc2RomInfo, sinistarc2RomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
+	SinistarCockpitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+// Sinistar (SynaMax difficulty/titlescreen hack, revision 3, upright)
+
+static struct BurnRomInfo sinistarsmRomDesc[] = {
+	{ "sinistar_rom_10-b_16-3004-62.4c",	0x1000, 0x3d670417, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "sinistar_rom_11-b_16-3004-63.4a.mod",0x1000, 0xfe83bce2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sinistar_rom_1-b_16-3004-53.1d",		0x1000, 0xf6f3a22c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sinistar_rom_2-b_16-3004-54.1c",		0x1000, 0xcab3185c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sinistar_rom_3-b_16-3004-55.1a",		0x1000, 0x1ce1b3cc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sinistar_rom_4-b_16-3004-56.2d",		0x1000, 0x6da632ba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sinistar_rom_5-b_16-3004-57.2c",		0x1000, 0xb662e8fc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sinistar_rom_6-b_16-3004-58.2a",		0x1000, 0x2306183d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sinistar_rom_7-b_16-3004-59.3d",		0x1000, 0xe5dd918e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sinistar_rom_8-b_16-3004-60.3c.mod",	0x1000, 0x9b693243, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sinistar_rom_9-b_16-3004-61.3a.mod",	0x1000, 0x5ed44beb, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "3004_speech_ic7_r1_16-3004-52.ic7",	0x1000, 0xe1019568, 2 | BRF_PRG | BRF_ESS }, // 11 M6800 Code
+	{ "3004_speech_ic5_r1_16-3004-50.ic5",	0x1000, 0xcf3b5ffd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "3004_speech_ic6_r1_16-3004-51.ic6",	0x1000, 0xff8d2645, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "3004_speech_ic4_r1_16-3004-49.ic4",	0x1000, 0x4b56a626, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "video_sound_rom_9_std.808.ic12",		0x1000, 0xb82f4ddb, 2 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "decoder_rom_4.3g",					0x0200, 0xe6631c23, 0 | BRF_OPT },           // 16 Address Decoder
+	{ "decoder_rom_6.3c",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(sinistarsm)
+STD_ROM_FN(sinistarsm)
+
+struct BurnDriver BurnDrvSinistarsm = {
+	"sinistarsm", "sinistar", NULL, NULL, "2023",
+	"Sinistar (SynaMax difficulty/titlescreen hack)\0", "initial boot will black screen, hit reset to fix", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sinistarsmRomInfo, sinistarsmRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
+	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
+// Sinistar (SynaMax difficulty/titlescreen hack, revision 3, upright)
+
+static struct BurnRomInfo sinistarcsmRomDesc[] = {
+	{ "sinistar_rom_10-b_16-3004-62.4c",	0x1000, 0x3d670417, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "sinistar_rom_11-b_16-3004-63.4a.mod",0x1000, 0xfe83bce2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sinistar_rom_1-b_16-3004-53.1d",		0x1000, 0xf6f3a22c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sinistar_rom_2-b_16-3004-54.1c",		0x1000, 0xcab3185c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sinistar_rom_3-b_16-3004-55.1a",		0x1000, 0x1ce1b3cc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sinistar_rom_4-b_16-3004-56.2d",		0x1000, 0x6da632ba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sinistar_rom_5-b_16-3004-57.2c",		0x1000, 0xb662e8fc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sinistar_rom_6-b_16-3004-58.2a",		0x1000, 0x2306183d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sinistar_rom_7-b_16-3004-59.3d",		0x1000, 0xe5dd918e, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sinistar_rom_8-b_16-3004-60.3c.mod",	0x1000, 0x9b693243, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "sinistar_rom_9-b_16-3004-61.3a.mod",	0x1000, 0x5ed44beb, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "3004_speech_ic7_r1_16-3004-52.ic7",	0x1000, 0xe1019568, 2 | BRF_PRG | BRF_ESS }, // 11 M6800 Code
+	{ "3004_speech_ic5_r1_16-3004-50.ic5",	0x1000, 0xcf3b5ffd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{ "3004_speech_ic6_r1_16-3004-51.ic6",	0x1000, 0xff8d2645, 2 | BRF_PRG | BRF_ESS }, // 13
+	{ "3004_speech_ic4_r1_16-3004-49.ic4",	0x1000, 0x4b56a626, 2 | BRF_PRG | BRF_ESS }, // 14
+	{ "video_sound_rom_9_std.808.ic12",		0x1000, 0xb82f4ddb, 2 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "video_sound_rom_10_std.ic12",		0x1000, 0xb5c70082, 3 | BRF_PRG | BRF_ESS }, // 16 soundcpu_b
+
+	{ "decoder_rom_4.3g",					0x0200, 0xe6631c23, 0 | BRF_OPT },           // 16 Address Decoder
+	{ "decoder_rom_6.3c",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(sinistarcsm)
+STD_ROM_FN(sinistarcsm)
+
+struct BurnDriver BurnDrvSinistarcsm = {
+	"sinistarcsm", "sinistar", NULL, NULL, "2023",
+	"Sinistar (Cockpit, SynaMax difficulty/titlescreen hack)\0", "initial boot will black screen, hit reset to fix", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sinistarcsmRomInfo, sinistarcsmRomName, NULL, NULL, NULL, NULL, SinistarInputInfo, NULL,
+	SinistarCockpitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
 };
 

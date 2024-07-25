@@ -1,4 +1,4 @@
-// FB Alpha Renegade driver module
+// FB Neo Renegade driver module
 // Based on MAME driver by Phil Stroffolino, Carlos A. Lozano, Rob Rosenbrock
 
 // todo: clean up this mess. -dink
@@ -17,7 +17,7 @@ static UINT8 DrvDip[2]        = {0, 0};
 static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
 static UINT8 DrvReset         = 0;
 
-static UINT8 *Mem                 = NULL;
+static UINT8 *AllMem              = NULL;
 static UINT8 *MemEnd              = NULL;
 static UINT8 *RamStart            = NULL;
 static UINT8 *RamEnd              = NULL;
@@ -235,8 +235,8 @@ STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
 static struct BurnRomInfo DrvubRomDesc[] = {
-	{ "na-5.ic52",     0x08000, 0xde7e7df4, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
-	{ "40.ic51",       0x08000, 0x3dbaac11, BRF_ESS | BRF_PRG }, //	 1  bootleg
+	{ "40.ic51",       0x08000, 0x3dbaac11, BRF_ESS | BRF_PRG }, //	 0	M6502 Program Code / bootleg
+	{ "na-5.ic52",     0x08000, 0xde7e7df4, BRF_ESS | BRF_PRG }, //  1
 	
 	{ "n0-5.ic13",     0x08000, 0x3587de3b, BRF_ESS | BRF_PRG }, //  2	M6809 Program Code
 	
@@ -271,7 +271,7 @@ STD_ROM_PICK(Drvub)
 STD_ROM_FN(Drvub)
 
 static struct BurnRomInfo DrvbRomDesc[] = {
-	{ "ta18-10.bin",   0x08000, 0xa90cf44a, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code
+	{ "ta18-10.bin",   0x08000, 0xa90cf44a, BRF_ESS | BRF_PRG }, //  0	M6502 Program Code / bootleg
 	{ "ta18-11.bin",   0x08000, 0xf240f5cd, BRF_ESS | BRF_PRG }, //	 1
 	
 	{ "n0-5.bin",      0x08000, 0x3587de3b, BRF_ESS | BRF_PRG }, //  2	M6809 Program Code
@@ -308,7 +308,7 @@ STD_ROM_FN(Drvb)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	DrvM6502Rom            = Next; Next += 0x10000;
 	DrvM6809Rom            = Next; Next += 0x08000;
@@ -701,14 +701,9 @@ static void DrvMSM5205Int()
 
 static INT32 DrvInit(INT32 nMcuType)
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x60000);
 
@@ -845,7 +840,7 @@ static INT32 DrvExit()
 	
 	GenericTilesExit();
 	
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	
 	DisableMCUEmulation = 0;
 	
@@ -1141,7 +1136,7 @@ struct BurnDriver BurnDrvRenegade = {
 struct BurnDriver BurnDrvKuniokun = {
 	"kuniokun", "renegade", NULL, NULL, "1986",
 	"Nekketsu Kouha Kunio-kun (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	L"\u71b1\u8840\u786c\u6d3e\u304f\u306b\u304a\u304f\u3093\0Nekketsu Kouha Kunio-kun (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	RenegadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -1161,7 +1156,7 @@ struct BurnDriver BurnDrvRenegadeb = {
 struct BurnDriver BurnDrvKuniokunb = {
 	"kuniokunb", "renegade", NULL, NULL, "1986",
 	"Nekketsu Kouha Kunio-kun (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	L"\u71b1\u8840\u786c\u6d3e\u304f\u306b\u304a\u304f\u3093\0Nekketsu Kouha Kunio-kun (Japan bootleg)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	KuniokunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

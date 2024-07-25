@@ -1569,8 +1569,8 @@ static void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		reg		= offset % sizeof(X1_010_CHANNEL);
 
 		if( channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset]&1) == 0 && (byteValue&1) != 0 ) {
-	 		x1_010_chip->smp_offset[channel] = 0;
-	 		x1_010_chip->env_offset[channel] = 0;
+			x1_010_chip->smp_offset[channel] = 0;
+			x1_010_chip->env_offset[channel] = 0;
 		}
 		x1_010_chip->reg[offset] = byteValue;
 
@@ -1787,7 +1787,7 @@ static INT32 grdiansInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -1891,7 +1891,7 @@ static INT32 grdiansaInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -2064,7 +2064,7 @@ static INT32 mj4simaiInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -2213,7 +2213,7 @@ static INT32 myangelInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -2360,7 +2360,7 @@ static INT32 myangel2Init()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -2445,10 +2445,10 @@ UINT16 __fastcall pzlbowlReadWord(UINT32 sekAddress)
 			return 0xffff;
 		case 0x700000: {
 			/*  The game checks for a specific value read from the ROM region.
-    			The offset to use is stored in RAM at address 0x20BA16 */
+				The offset to use is stored in RAM at address 0x20BA16 */
 			UINT32 address = (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(Ram68K + 0x00ba16)) << 16) | BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(Ram68K + 0x00ba18));
 			bprintf(PRINT_NORMAL, _T("pzlbowl Protection read address %08x [%02x %02x %02x %02x]\n"), address,
-			        Rom68K[ address - 2 ], Rom68K[ address - 1 ], Rom68K[ address - 0 ], Rom68K[ address + 1 ]);
+					Rom68K[ address - 2 ], Rom68K[ address - 1 ], Rom68K[ address - 0 ], Rom68K[ address + 1 ]);
 			return Rom68K[ address - 2 ]; }
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
@@ -2515,7 +2515,7 @@ static INT32 pzlbowlInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -2658,7 +2658,7 @@ static INT32 penbrosInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
@@ -3930,7 +3930,7 @@ struct BurnDriver BurnDrvMyangel2 = {
 
 struct BurnDriver BurnDrvPzlbowl = {
 	"pzlbowl", NULL, NULL, NULL, "1999",
-	"Puzzle De Bowling (Japan)\0", NULL, "MOSS / Nihon System", "Newer Seta",
+	"Puzzle De Bowling (Japan)\0", NULL, "Nihon System / MOSS", "Newer Seta",
 	L"Puzzle De Bowling (Japan)\0\u30D1\u30BA\u30EB \uFF24\uFF25 \u30DC\u30FC\u30EA\u30F3\u30B0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
 	NULL, pzlbowlRomInfo, pzlbowlRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, pzlbowlDIPInfo,

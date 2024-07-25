@@ -1970,7 +1970,7 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvDarius2 = {
 	"darius2", NULL, NULL, NULL, "1989",
-	"Darius II (triple screen) (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Darius II (triple screen) (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, Darius2RomInfo, Darius2RomName, NULL, NULL, NULL, NULL, Darius2InputInfo, Darius2DIPInfo,

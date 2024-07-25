@@ -98,6 +98,9 @@ static INT32 z80_bank;
 static INT32 nGame        = 0;
 static INT32 viostormubbl = 0;
 
+static void gamma_init();
+static void gamma_exit();
+
 static struct BurnInputInfo MystwarrInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"},
@@ -168,6 +171,7 @@ static struct BurnInputInfo MetamrphInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
@@ -177,6 +181,7 @@ static struct BurnInputInfo MetamrphInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -216,6 +221,7 @@ static struct BurnInputInfo ViostormInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
@@ -225,6 +231,7 @@ static struct BurnInputInfo ViostormInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -239,11 +246,12 @@ static struct BurnInputInfo ViostormInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
 	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Viostorm)
 
-static struct BurnInputInfo DadandrnInputList[] = {
+static struct BurnInputInfo DadandrnInputList[] = { // and gaiapolis
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
 	{"P1 Up",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
@@ -263,24 +271,6 @@ static struct BurnInputInfo DadandrnInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"},
-
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
-	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
-	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
-	{"P3 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
-
-	{"P4 Start",		BIT_DIGITAL,	DrvJoy5 + 7,	"p4 start"},
-	{"P4 Up",		    BIT_DIGITAL,	DrvJoy5 + 2,	"p4 up"},
-	{"P4 Down",		    BIT_DIGITAL,	DrvJoy5 + 3,	"p4 down"},
-	{"P4 Left",		    BIT_DIGITAL,	DrvJoy5 + 0,	"p4 left"},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p4 right"},
-	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"p4 fire 1"},
-	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"p4 fire 2"},
-	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"p4 fire 3"},
 
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
 	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
@@ -312,6 +302,7 @@ static struct BurnInputInfo MartchmpInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
 	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
 	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
@@ -321,6 +312,7 @@ static struct BurnInputInfo MartchmpInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
 	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
 	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
@@ -342,47 +334,49 @@ STDINPUTINFO(Martchmp)
 
 static struct BurnDIPInfo MystwarrDIPList[]=
 {
-	{0x26, 0xff, 0xff, 0xe0, NULL			},
-	{0x27, 0xff, 0xff, 0x00, NULL			},
+	DIP_OFFSET(0x26)
+	{0x00, 0xff, 0xff, 0xe0, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x26, 0x01, 0x10, 0x10, "Mono"			},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x00, 0x01, 0x10, 0x10, "Mono"			},
+	{0x00, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x26, 0x01, 0x20, 0x20, "Common"		},
-	{0x26, 0x01, 0x20, 0x00, "Independent"		},
+	{0x00, 0x01, 0x20, 0x20, "Common"		},
+	{0x00, 0x01, 0x20, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    2, "Number of Players"	},
-	{0x26, 0x01, 0x40, 0x00, "4"			},
-	{0x26, 0x01, 0x40, 0x40, "2"			},
+	{0x00, 0x01, 0x40, 0x00, "4"			},
+	{0x00, 0x01, 0x40, 0x40, "2"			},
 
 	{0   , 0xfe, 0   ,    2, "Debug Alpha Mode (debug console/logfile)"		},
-	{0x27, 0x01, 0x01, 0x00, "Off"			},
-	{0x27, 0x01, 0x01, 0x01, "On"			},
+	{0x01, 0x01, 0x01, 0x00, "Off"			},
+	{0x01, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Mystwarr)
 
 static struct BurnDIPInfo MetamrphDIPList[]=
 {
-	{0x26, 0xff, 0xff, 0xe0, NULL				},
+	DIP_OFFSET(0x28)
+	{0x00, 0xff, 0xff, 0xe0, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"			},
-	{0x26, 0x01, 0x10, 0x10, "Mono"				},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"			},
+	{0x00, 0x01, 0x10, 0x10, "Mono"				},
+	{0x00, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"		},
-	{0x26, 0x01, 0x20, 0x20, "Common"			},
-	{0x26, 0x01, 0x20, 0x00, "Independent"			},
+	{0x00, 0x01, 0x20, 0x20, "Common"			},
+	{0x00, 0x01, 0x20, 0x00, "Independent"			},
 
 	{0   , 0xfe, 0   ,    2, "Number of Players"		},
-	{0x26, 0x01, 0x40, 0x00, "4"				},
-	{0x26, 0x01, 0x40, 0x40, "2"				},
+	{0x00, 0x01, 0x40, 0x00, "4"				},
+	{0x00, 0x01, 0x40, 0x40, "2"				},
 
 	{0   , 0xfe, 0   ,    2, "Continuous Energy Increment"	},
-	{0x26, 0x01, 0x80, 0x80, "No"				},
-	{0x26, 0x01, 0x80, 0x00, "Yes"				},
+	{0x00, 0x01, 0x80, 0x80, "No"				},
+	{0x00, 0x01, 0x80, 0x00, "Yes"				},
 };
 
 STDDIPINFO(Metamrph)
@@ -390,45 +384,52 @@ STDDIPINFO(Metamrph)
 
 static struct BurnDIPInfo ViostormDIPList[]=
 {
-	{0x26, 0xff, 0xff, 0xe0, NULL			},
+	DIP_OFFSET(0x28)
+	{0x00, 0xff, 0xff, 0xe0, NULL				},
+	{0x01, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x26, 0x01, 0x10, 0x10, "Mono"			},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x00, 0x01, 0x10, 0x10, "Mono"				},
+	{0x00, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x26, 0x01, 0x20, 0x20, "Off"			},
-	{0x26, 0x01, 0x20, 0x00, "On"			},
+	{0x00, 0x01, 0x20, 0x20, "Off"				},
+	{0x00, 0x01, 0x20, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x26, 0x01, 0x40, 0x40, "Common"		},
-	{0x26, 0x01, 0x40, 0x00, "Independent"		},
+	{0x00, 0x01, 0x40, 0x40, "Common"			},
+	{0x00, 0x01, 0x40, 0x00, "Independent"		},
 
-	{0   , 0xfe, 0   ,    2, "Number of Players"	},
-	{0x26, 0x01, 0x80, 0x00, "3"			},
-	{0x26, 0x01, 0x80, 0x80, "2"			},
+	{0   , 0xfe, 0   ,    2, "Number of Players"},
+	{0x00, 0x01, 0x80, 0x00, "3"				},
+	{0x00, 0x01, 0x80, 0x80, "2"				},
+
+	{0   , 0xfe, 0   ,    2, "Color Improvement"},
+	{0x01, 0x01, 0x40, 0x40, "On"				},
+	{0x01, 0x01, 0x40, 0x00, "Off"				},
 };
 
 STDDIPINFO(Viostorm)
 
-static struct BurnDIPInfo DadandrnDIPList[]=
+static struct BurnDIPInfo DadandrnDIPList[]= // and gaiapolis
 {
-	{0x26, 0xff, 0xff, 0xe0, NULL			},
+	DIP_OFFSET(0x16)
+	{0x00, 0xff, 0xff, 0xe0, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x26, 0x01, 0x10, 0x10, "Mono"			},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x00, 0x01, 0x10, 0x10, "Mono"				},
+	{0x00, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x26, 0x01, 0x20, 0x20, "Off"			},
-	{0x26, 0x01, 0x20, 0x00, "On"			},
+	{0x00, 0x01, 0x20, 0x20, "Off"				},
+	{0x00, 0x01, 0x20, 0x00, "On"				},
 };
 
 STDDIPINFO(Dadandrn)
 
 static struct BurnDIPInfo MartchmpDIPList[]=
 {
-	DIP_OFFSET(0x26)
+	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0xe0, NULL				},
 	{0x01, 0xff, 0xff, 0x00, NULL				},
 
@@ -2793,6 +2794,8 @@ static INT32 DadandrnInit()
 
 static INT32 DrvExit()
 {
+	gamma_exit();
+
 	GenericTilesExit();
 
 	KonamiICExit();
@@ -2815,15 +2818,49 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static UINT8 *gamma_lut = NULL;
+static UINT8 last_gamma_dip = ~0;
+
+static void gamma_init()
+{
+	if (gamma_lut == NULL) {
+		gamma_lut = (UINT8*)BurnMalloc(0x100);
+		last_gamma_dip = ~0;
+	}
+
+	if (last_gamma_dip == (DrvDips[1] & 0x40)) return;
+
+	if (nGame == 3 && DrvDips[1] & 0x40) { // only applied to viostorm, gamma 0.650 (expressed as 1/0.650)
+		bprintf(0, _T("viostorm: apply gamma 1.0 / 0.650\n"));
+		for (INT32 i = 0; i < 0x100; i++) {
+			gamma_lut[i] = (UINT8)(pow((double)i / 255.0, 1.0 / 0.650) * 255.0);
+		}
+	} else {
+		bprintf(0, _T("no gamma\n"));
+		for (INT32 i = 0; i < 0x100; i++) {
+			gamma_lut[i] = i;
+		}
+	}
+	last_gamma_dip = DrvDips[1] & 0x40;
+}
+
+static void gamma_exit() {
+	BurnFree(gamma_lut);
+
+	gamma_lut = NULL;
+}
+
 static void DrvPaletteRecalc()
 {
+	gamma_init();
+
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x2000/2; i+=2)
 	{
-		INT32 r = BURN_ENDIAN_SWAP_INT16(pal[i+0]) & 0xff;
-		INT32 g = BURN_ENDIAN_SWAP_INT16(pal[i+1]) >> 8;
-		INT32 b = BURN_ENDIAN_SWAP_INT16(pal[i+1]) & 0xff;
+		INT32 r = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+0]) & 0xff];
+		INT32 g = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+1]) >> 8];
+		INT32 b = gamma_lut[BURN_ENDIAN_SWAP_INT16(pal[i+1]) & 0xff];
 
 		DrvPalette[i/2] = (r << 16) + (g << 8) + b;
 	}
@@ -2945,6 +2982,11 @@ static INT32 DrvFrame()
 	}
 
 	{
+		if (nGame == 3 || nGame == 2 || nGame == 4) { // viostorm, metamrph, martchmp
+			DrvJoy1[0] |= DrvJoy1[2]; // mirror coin inputs for kaillera
+			DrvJoy1[1] |= DrvJoy1[3];
+		}
+
 		memset (DrvInputs, 0xff, 5 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

@@ -3,7 +3,7 @@
 #include "neogeo.h"
 #include "bitswap.h"
 
-UINT8 nNeoProtectionXor;
+INT32 nNeoProtectionXor = -1;
 
 // This function loads the 68K ROMs
 INT32 NeoLoadCode(INT32 nOffset, INT32 nNum, UINT8* pDest)

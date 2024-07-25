@@ -820,7 +820,7 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
 		sample_ptr = &samples[i];
-		if (sample_ptr->playing == 0) continue;
+		if (sample_ptr->playing == 0 || sample_ptr->length == 0) continue;
 
 		INT32 playlen = pLen;
 		INT32 length = sample_ptr->length;

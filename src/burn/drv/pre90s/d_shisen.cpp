@@ -1,4 +1,4 @@
-// FB Alpha Shinsen / Match-It driver module
+// FB Neo Shinsen / Match-It driver module
 // Based on MAME driver by Nicola Salmoria
 
 // sound hardware copied from m72 driver
@@ -352,12 +352,7 @@ static INT32 DrvInit(INT32 game)
 {
 	BurnSetRefreshRate(55.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0 || game == 1)
@@ -379,20 +374,25 @@ static INT32 DrvInit(INT32 game)
 				if (BurnLoadRom(DrvSndROM + 0x30000, 22, 1)) return 1;
 			}
 		}
-		else if (game == 2)
+		else if (game == 2 || game == 3)
 		{
-			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+			INT32 j = 0;
+			INT32 nNum = (game == 2) ? 16 : 3;
+			INT32 nLen = (game == 2) ? 0x10000 : 0x40000;
 
-			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x00000, j++, 1)) return 1;
 
-			for (INT32 i = 0; i < 16; i++) {
-				if (BurnLoadRom(DrvGfxROM + 0x10000 * i,  2 + i, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000, j++, 1)) return 1;
+
+			for (INT32 i = 0; i < nNum; i++) {
+				if (BurnLoadRom(DrvGfxROM + nLen * i, j++, 1)) return 1;
 			}
 
-			if (BurnLoadRom(DrvSndROM + 0x00000, 18, 1)) return 1;
-			if (BurnLoadRom(DrvSndROM + 0x10000, 19, 1)) return 1;
-			if (BurnLoadRom(DrvSndROM + 0x20000, 20, 1)) return 1;
-			if (BurnLoadRom(DrvSndROM + 0x30000, 21, 1)) return 1;
+			nNum = (game == 2) ? 4 : 1;
+
+			for (INT32 i = 0; i < nNum; i++) {
+				if (BurnLoadRom(DrvSndROM + nLen * i, j++, 1)) return 1;
+			}
 		}
 
 		DrvGfxDecode();
@@ -441,7 +441,7 @@ static INT32 DrvExit()
 	BurnYM2151Exit();
 	DACExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -578,49 +578,105 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Match It
 
 static struct BurnRomInfo matchitRomDesc[] = {
-	{ "2.11d",		0x10000, 0x299815f7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "ic07.03",	0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sis_a-27-i.ic27",		0x20000, 0xc7190125, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "ic01.01",	0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "sis_a-22-.ic22",			0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "ic08.04",	0x10000, 0x1c0e221c, 3 | BRF_GRA },           //  3 Graphics
-	{ "ic09.05",	0x10000, 0x8a7d8284, 3 | BRF_GRA },           //  4
-	{ "ic12.08",	0x10000, 0x48e1d043, 3 | BRF_GRA },           //  5
-	{ "ic13.09",	0x10000, 0x3feff3f2, 3 | BRF_GRA },           //  6
-	{ "ic14.10",	0x10000, 0xb76a517d, 3 | BRF_GRA },           //  7
-	{ "ic15.11",	0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           //  8
-	{ "ic16.12",	0x10000, 0x64e5d837, 3 | BRF_GRA },           //  9
-	{ "ic17.13",	0x10000, 0x02c1b2c4, 3 | BRF_GRA },           // 10
-	{ "ic18.14",	0x10000, 0xf5a8370e, 3 | BRF_GRA },           // 11
-	{ "ic19.15",	0x10000, 0x7a9b7671, 3 | BRF_GRA },           // 12
-	{ "ic20.16",	0x10000, 0x7fb396ad, 3 | BRF_GRA },           // 13
-	{ "ic21.17",	0x10000, 0xfb83c652, 3 | BRF_GRA },           // 14
-	{ "ic22.18",	0x10000, 0xd8b689e9, 3 | BRF_GRA },           // 15
-	{ "ic23.19",	0x10000, 0xe6611947, 3 | BRF_GRA },           // 16
-	{ "ic10.06",	0x10000, 0x473b349a, 3 | BRF_GRA },           // 17
-	{ "ic11.07",	0x10000, 0xd9a60285, 3 | BRF_GRA },           // 18
+	{ "c2l.ic51",				0x40000, 0xe19276a9, 3 | BRF_GRA },           //  2 Graphics
+	{ "c2h.ic50",				0x40000, 0xe1dc099e, 3 | BRF_GRA },           //  3
+	{ "c0l.ic53",				0x80000, 0x10fde9fb, 3 | BRF_GRA },           //  4
+
+	{ "sd.ic14",				0x40000, 0x80448f72, 4 | BRF_SND },           //  5 Samples
+
+	{ "tibpal16l8-25cn.ic30",	0x00104, 0x7cf017b3, 0 | BRF_OPT },           //  6 plds
+	{ "tibpal16l8-25cn.ic37",	0x00104, 0x6121d077, 0 | BRF_OPT },           //  7
+	{ "pal16r4acn.ic48",		0x00104, 0x09c6c744, 0 | BRF_OPT },           //  8
 };
 
 STD_ROM_PICK(matchit)
 STD_ROM_FN(matchit)
 
-static INT32 MatchitInit()
+static INT32 matchitInit()
 {
-	return DrvInit(1);
+	return DrvInit(3);
 }
 
 struct BurnDriver BurnDrvMatchit = {
 	"matchit", NULL, NULL, NULL, "1989",
-	"Match It\0", NULL, "Tamtex", "Miscellaneous",
+	"Match It\0", NULL, "Tamtex", "Irem M80",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, matchitRomInfo, matchitRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
-	MatchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	matchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
 
 
-// Sichuan II (hack, set 1)
+// Shisensho - Joshiryo-Hen (Japan, set 1)
+
+static struct BurnRomInfo shisenRomDesc[] = {
+	{ "sis_a-27-d.ic27",		0x20000, 0xfeaf8b13, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "sis_a-22-.ic22",			0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "c2l.ic51",				0x40000, 0xe19276a9, 3 | BRF_GRA },           //  2 Graphics
+	{ "c2h.ic50",				0x40000, 0xe1dc099e, 3 | BRF_GRA },           //  3
+	{ "c0l.ic53",				0x80000, 0x10fde9fb, 3 | BRF_GRA },           //  4
+
+	{ "sd.ic14",				0x40000, 0x80448f72, 4 | BRF_SND },           //  5 Samples
+
+	{ "tibpal16l8-25cn.ic30",	0x00104, 0x7cf017b3, 0 | BRF_OPT },           //  6 plds
+	{ "tibpal16l8-25cn.ic37",	0x00104, 0x6121d077, 0 | BRF_OPT },           //  7
+	{ "pal16r4acn.ic48",		0x00104, 0x09c6c744, 0 | BRF_OPT },           //  8
+};
+
+STD_ROM_PICK(shisen)
+STD_ROM_FN(shisen)
+
+struct BurnDriver BurnDrvShisen = {
+	"shisen", "matchit", NULL, NULL, "1989",
+	"Shisensho - Joshiryo-Hen (Japan, set 1)\0", NULL, "Tamtex", "Irem M80",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, shisenRomInfo, shisenRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	matchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	512, 256, 4, 3
+};
+
+
+// Shisensho - Joshiryo-Hen (Japan, set 2)
+
+static struct BurnRomInfo shisenaRomDesc[] = {
+	{ "sis_a-27-a.ic27",		0x20000, 0xde2ecf05, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "sis_a-22-.ic22",			0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "c2l.ic51",				0x40000, 0xe19276a9, 3 | BRF_GRA },           //  2 Graphics
+	{ "c2h.ic50",				0x40000, 0xe1dc099e, 3 | BRF_GRA },           //  3
+	{ "c0l.ic53",				0x80000, 0x10fde9fb, 3 | BRF_GRA },           //  4
+
+	{ "sd.ic14",				0x40000, 0x80448f72, 4 | BRF_SND },           //  5 Samples
+
+	{ "tibpal16l8-25cn.ic30",	0x00104, 0x7cf017b3, 0 | BRF_OPT },           //  6 plds
+	{ "tibpal16l8-25cn.ic37",	0x00104, 0x6121d077, 0 | BRF_OPT },           //  7
+	{ "pal16r4acn.ic48",		0x00104, 0x09c6c744, 0 | BRF_OPT },           //  8
+};
+
+STD_ROM_PICK(shisena)
+STD_ROM_FN(shisena)
+
+struct BurnDriver BurnDrvShisena = {
+	"shisena", "matchit", NULL, NULL, "1989",
+	"Shisensho - Joshiryo-Hen (Japan, set 2)\0", NULL, "Tamtex", "Irem M80",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, shisenaRomInfo, shisenaRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	matchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	512, 256, 4, 3
+};
+
+
+// Sichuan II (bootlet, set 1)
 
 static struct BurnRomInfo sichuan2RomDesc[] = {
 	{ "6.11d",		0x10000, 0x98a2459b, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
@@ -665,19 +721,19 @@ static INT32 Sichuan2Init()
 
 struct BurnDriver BurnDrvSichuan2 = {
 	"sichuan2", "matchit", NULL, NULL, "1989",
-	"Sichuan II (hack, set 1)\0", NULL, "hack", "Miscellaneous",
+	"Sichuan II (bootlet, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
 
 
-// Sichuan II (hack, set 2)
+// Sichuan II (bootlet, set 2)
 
 static struct BurnRomInfo sichuan2aRomDesc[] = {
-	{ "sichuan.a6",	0x10000, 0xf8ac05ef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "ic06.a6",	0x10000, 0xf8ac05ef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "ic07.03",	0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ic01.01",	0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
@@ -710,59 +766,55 @@ STD_ROM_FN(sichuan2a)
 
 struct BurnDriver BurnDrvSichuan2a = {
 	"sichuan2a", "matchit", NULL, NULL, "1989",
-	"Sichuan II (hack, set 2)\0", NULL, "hack", "Miscellaneous",
+	"Sichuan II (bootlet, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };
 
 
-// Shisensho - Joshiryo-Hen (Japan)
+// Match It (bootleg)
 
-static struct BurnRomInfo shisenRomDesc[] = {
-	{ "a-27-a.rom",	0x20000, 0xde2ecf05, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+static struct BurnRomInfo matchitbRomDesc[] = {
+	{ "2.11d",		0x10000, 0x299815f7, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
+	{ "3.11c",		0x10000, 0x0350f6e2, 1 | BRF_PRG | BRF_ESS }, 	 //  1
 
-	{ "ic01.01",	0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "1.2c",		0x10000, 0x51b0a26c, 2 | BRF_PRG | BRF_ESS }, 	 //  2 Z80 #1 Code
 
-	{ "ic08.04",	0x10000, 0x1c0e221c, 3 | BRF_GRA },           //  2 Graphics
-	{ "ic09.05",	0x10000, 0x8a7d8284, 3 | BRF_GRA },           //  3
-	{ "ic12.08",	0x10000, 0x48e1d043, 3 | BRF_GRA },           //  4
-	{ "ic13.09",	0x10000, 0x3feff3f2, 3 | BRF_GRA },           //  5
-	{ "ic14.10",	0x10000, 0xb76a517d, 3 | BRF_GRA },           //  6
-	{ "ic15.11",	0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           //  7
-	{ "ic16.12",	0x10000, 0x64e5d837, 3 | BRF_GRA },           //  8
-	{ "ic17.13",	0x10000, 0x02c1b2c4, 3 | BRF_GRA },           //  9
-	{ "ic18.14",	0x10000, 0xf5a8370e, 3 | BRF_GRA },           // 10
-	{ "ic19.15",	0x10000, 0x7a9b7671, 3 | BRF_GRA },           // 11
-	{ "ic20.16",	0x10000, 0x7fb396ad, 3 | BRF_GRA },           // 12
-	{ "ic21.17",	0x10000, 0xfb83c652, 3 | BRF_GRA },           // 13
-	{ "ic22.18",	0x10000, 0xd8b689e9, 3 | BRF_GRA },           // 14
-	{ "ic23.19",	0x10000, 0xe6611947, 3 | BRF_GRA },           // 15
-	{ "ic10.06",	0x10000, 0x473b349a, 3 | BRF_GRA },           // 16
-	{ "ic11.07",	0x10000, 0xd9a60285, 3 | BRF_GRA },           // 17
+	{ "4.3j",		0x10000, 0x1c0e221c, 3 | BRF_GRA },           	 //  3 Graphics
+	{ "5.4j",		0x10000, 0x8a7d8284, 3 | BRF_GRA },           	 //  4
+	{ "8.1l",		0x10000, 0x48e1d043, 3 | BRF_GRA },           	 //  5
+	{ "9.2l",		0x10000, 0x3feff3f2, 3 | BRF_GRA },           	 //  6
+	{ "10.3l",		0x10000, 0xb76a517d, 3 | BRF_GRA },           	 //  7
+	{ "11.5l",		0x10000, 0x8ff5ee7a, 3 | BRF_GRA },           	 //  8
+	{ "12.6l",		0x10000, 0x64e5d837, 3 | BRF_GRA },           	 //  9
+	{ "13.7l",		0x10000, 0x02c1b2c4, 3 | BRF_GRA },           	 // 10
+	{ "14.8l",		0x10000, 0xf5a8370e, 3 | BRF_GRA },           	 // 11
+	{ "15.10l",		0x10000, 0x7a9b7671, 3 | BRF_GRA },           	 // 12
+	{ "16.11l",		0x10000, 0x7fb396ad, 3 | BRF_GRA },           	 // 13
+	{ "17.12l",		0x10000, 0xfb83c652, 3 | BRF_GRA },           	 // 14
+	{ "18.13l",		0x10000, 0xd8b689e9, 3 | BRF_GRA },           	 // 15
+	{ "19.14l",		0x10000, 0xe6611947, 3 | BRF_GRA },           	 // 16
+	{ "6.6j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
+	{ "5.5j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
 
-	{ "ic02.02",	0x10000, 0x92f0093d, 4 | BRF_SND },           // 18 Samples
-	{ "ic03.03",	0x10000, 0x116a049c, 4 | BRF_SND },           // 19
-	{ "ic04.04",	0x10000, 0x6840692b, 4 | BRF_SND },           // 20
-	{ "ic05.05",	0x10000, 0x92ffe22a, 4 | BRF_SND },           // 21
+	{ "2.7b",		0x10000, 0x92f0093d, 4 | BRF_SND },           	 // 19 Samples
+	{ "3.6c",		0x10000, 0x116a049c, 4 | BRF_SND },           	 // 20
+	{ "4.7c",		0x10000, 0x6840692b, 4 | BRF_SND },           	 // 21
+	{ "5.9c",		0x10000, 0x92ffe22a, 4 | BRF_SND },           	 // 22
 };
 
-STD_ROM_PICK(shisen)
-STD_ROM_FN(shisen)
+STD_ROM_PICK(matchitb)
+STD_ROM_FN(matchitb)
 
-static INT32 ShisenInit()
-{
-	return DrvInit(2);
-}
-
-struct BurnDriver BurnDrvShisen = {
-	"shisen", "matchit", NULL, NULL, "1989",
-	"Shisensho - Joshiryo-Hen (Japan)\0", NULL, "Tamtex", "Miscellaneous",
+struct BurnDriver BurnDrvMatchitb = {
+	"matchitb", "matchit", NULL, NULL, "1989",
+	"Match It (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
-	NULL, shisenRomInfo, shisenRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
-	ShisenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, matchitbRomInfo, matchitbRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
+	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };

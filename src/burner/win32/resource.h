@@ -481,8 +481,9 @@
 #define MENU_STATE_PREVSLOT             	10034
 #define MENU_STATE_NEXTSLOT             	10035
 #define MENU_ALLRAM                     	10036
-#define MENU_STATE_UNDO                         10037
+#define MENU_STATE_UNDO                     10037
 #define MENU_TRIPLE                     	10100
+#define MENU_WINFS                          10101
 #define MENU_FULL                       	10102
 #define MENU_DWMFIX							10103
 #define MENU_NOSTRETCH                  	10110

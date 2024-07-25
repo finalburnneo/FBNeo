@@ -23,6 +23,10 @@ extern INT32 nHD6309CyclesTotal;
 
 void HD6309Reset();
 void HD6309Reset(INT32 nCPU);
+void HD6309SetRESETLine(INT32 nStatus);
+void HD6309SetRESETLine(INT32 nCPU, INT32 nStatus);
+INT32 HD6309GetRESETLine();
+INT32 HD6309GetRESETLine(INT32 nCPU);
 INT32 HD6309TotalCycles();
 INT32 HD6309TotalCycles(INT32 nCPU);
 void HD6309NewFrame();

@@ -13,6 +13,8 @@ static UINT8 DrvInput[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 static UINT8 DrvReset = 0;
 
+static HoldCoin<2> hold_coin;
+
 static INT32 v25_reset = 0;
 
 // Rom information
@@ -313,6 +315,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ToaScanGP9001(nAction, pnMin);
 
 		SCAN_VAR(v25_reset);
+
+		hold_coin.scan();
 	}
 
 	return 0;
@@ -577,6 +581,8 @@ static INT32 DrvDoReset()
 
 	v25_reset = 1;
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -714,6 +720,9 @@ static INT32 DrvFrame()
 	}
 	ToaClearOpposites(&DrvInput[0]);
 	ToaClearOpposites(&DrvInput[1]);
+
+	hold_coin.check(0, DrvInput[2], 1 << 3, 1);
+	hold_coin.check(1, DrvInput[2], 1 << 4, 1);
 
 	SekNewFrame();
 	VezNewFrame();

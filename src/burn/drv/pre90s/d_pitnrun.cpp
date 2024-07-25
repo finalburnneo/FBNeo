@@ -1,4 +1,4 @@
-// FBAlpha Pit 'n Run driver, based on MAME driver by Tomasz Slanina, Pierpaolo Prazzoli
+// FB Neo Pit 'n Run driver, based on MAME driver by Tomasz Slanina, Pierpaolo Prazzoli
 
 // Jump Kun fully working.
 //
@@ -462,12 +462,7 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	game_select = game;
 
@@ -577,7 +572,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -784,63 +779,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Pit & Run - F-1 Race (set 1)
+// Pit & Run - F-1 Race (rev 1)
 
 static struct BurnRomInfo pitnrunRomDesc[] = {
-	{ "pr12",		0x2000, 0x587a7b85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "pr11",		0x2000, 0x270cd6dd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pr10",		0x2000, 0x65d92d89, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pr9",		0x2000, 0x3155286d, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "pr13",		0x1000, 0xfc8fd05c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
-
-	{ "a11_17.3a",		0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
-
-	{ "pr1",		0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
-	{ "pr2",		0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
-	{ "pr3",		0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
-
-	{ "pr4",		0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
-	{ "pr5",		0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
-
-	{ "pr6",		0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
-	{ "pr7",		0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
-
-	{ "pr8",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
-
-	{ "clr.1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
-	{ "clr.2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
-	{ "clr.3",		0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
-};
-
-STD_ROM_PICK(pitnrun)
-STD_ROM_FN(pitnrun)
-
-static INT32 PitnrunInit()
-{
-	return DrvInit(0);
-}
-
-struct BurnDriver BurnDrvPitnrun = {
-	"pitnrun", NULL, NULL, NULL, "1984",
-	"Pit & Run - F-1 Race (set 1)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
-	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
-	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
-	224, 256, 3, 4
-};
-
-
-// Pit & Run - F-1 Race (set 2)
-
-static struct BurnRomInfo pitnrunaRomDesc[] = {
 	{ "pr_12-1.5d",		0x2000, 0x2539aec3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "pr_11-1.5c",		0x2000, 0x818a49f8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "pr_10-1.5b",		0x2000, 0x69b3a864, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "pr_9-1.5a",		0x2000, 0xba0c4093, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "pr-13",		0x1000, 0x32a18d3b, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "pr-13",			0x1000, 0x32a18d3b, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
 
 	{ "a11_17.3a",		0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
 
@@ -856,6 +803,54 @@ static struct BurnRomInfo pitnrunaRomDesc[] = {
 
 	{ "pr-8.4j",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
 
+	{ "clr.1",			0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
+	{ "clr.2",			0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
+	{ "clr.3",			0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(pitnrun)
+STD_ROM_FN(pitnrun)
+
+static INT32 PitnrunInit()
+{
+	return DrvInit(0);
+}
+
+struct BurnDriver BurnDrvPitnrun = {
+	"pitnrun", NULL, NULL, NULL, "1984",
+	"Pit & Run - F-1 Race (rev 1)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
+	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
+	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
+	224, 256, 3, 4
+};
+
+
+// Pit & Run - F-1 Race
+
+static struct BurnRomInfo pitnrunaRomDesc[] = {
+	{ "pr_12.5d",	0x2000, 0x587a7b85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pr_11.5c",	0x2000, 0x270cd6dd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pr_10.5b",	0x2000, 0x65d92d89, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pr_9.5a",	0x2000, 0x3155286d, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "pr13",		0x1000, 0xfc8fd05c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+
+	{ "a11_17.3a",	0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
+
+	{ "pr-1.1k",	0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
+	{ "pr-2.1m",	0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
+	{ "pr-3.1n",	0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
+
+	{ "pr-4.6d",	0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "pr-5.6f",	0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
+
+	{ "pr-6.3m",	0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
+	{ "pr-7.3p",	0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
+
+	{ "pr-8.4j",	0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
+
 	{ "clr.1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
 	{ "clr.2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
 	{ "clr.3",		0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
@@ -866,7 +861,7 @@ STD_ROM_FN(pitnruna)
 
 struct BurnDriver BurnDrvPitnruna = {
 	"pitnruna", "pitnrun", NULL, NULL, "1984",
-	"Pit & Run - F-1 Race (set 2)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
+	"Pit & Run - F-1 Race\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
 	NULL, pitnrunaRomInfo, pitnrunaRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
@@ -875,29 +870,29 @@ struct BurnDriver BurnDrvPitnruna = {
 };
 
 
-// Pit & Run - F-1 Race (set 3)
+// Pit & Run - F-1 Race (location test?)
 
 static struct BurnRomInfo pitnrunbRomDesc[] = {
-	{ "test.a1",		0x2000, 0x395b5514, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "test.a2",		0x2000, 0x09ffb063, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "test.a3",		0x2000, 0x4f96e346, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "test.a4",		0x2000, 0x3d04ef80, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "test.a1",	0x2000, 0x395b5514, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "test.a2",	0x2000, 0x09ffb063, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "test.a3",	0x2000, 0x4f96e346, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "test.a4",	0x2000, 0x3d04ef80, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sound",		0x1000, 0xfbd63042, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
 
-	{ "a11_17.3a",		0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
+	{ "a11_17.3a",	0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
 
-	{ "obj3",			0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
-	{ "obj2",			0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
-	{ "obj1",			0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
+	{ "obj3",		0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
+	{ "obj2",		0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
+	{ "obj1",		0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
 
-	{ "chr1",			0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
-	{ "chr2",			0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
+	{ "chr1",		0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "chr2",		0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
 
-	{ "bsc1",			0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
-	{ "bsc2",			0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
+	{ "bsc1",		0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
+	{ "bsc2",		0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
 
-	{ "lightdata",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
+	{ "lightdata",	0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
 
 	{ "bp1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
 	{ "bp2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
@@ -909,7 +904,7 @@ STD_ROM_FN(pitnrunb)
 
 struct BurnDriver BurnDrvPitnrunb = {
 	"pitnrunb", "pitnrun", NULL, NULL, "1984",
-	"Pit & Run - F-1 Race (set 3)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
+	"Pit & Run - F-1 Race (location test?)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
 	NULL, pitnrunbRomInfo, pitnrunbRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,

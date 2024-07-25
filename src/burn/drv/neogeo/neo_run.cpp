@@ -696,6 +696,17 @@ static INT32 LoadRoms()
 
 //	bprintf(PRINT_NORMAL, _T("%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 
+	NeoZ80ROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(0x080000);	// Z80 cartridge ROM
+	if (NeoZ80ROM[nNeoActiveSlot] == NULL) {
+		return 1;
+	}
+	NeoZ80ROMActive = NeoZ80ROM[nNeoActiveSlot];
+
+	BurnLoadRom(NeoZ80ROMActive, pInfo->nSoundOffset, 1);
+	if (BurnDrvGetHardwareCode() & HARDWARE_SNK_ENCRYPTED_M1) {
+		neogeo_cmc50_m1_decrypt();
+	}
+
 	// The kof2k3 PCB has 96MB of graphics ROM, however the last 16MB are unused, and the protection/decryption hardware does not see them
 //	if (nSpriteSize[nNeoActiveSlot] > 0x4000000) {
 //		nSpriteSize[nNeoActiveSlot] = 0x5000000;
@@ -788,17 +799,6 @@ static INT32 LoadRoms()
 		NeoLoadCode(pInfo->nCodeOffset + 1, pInfo->nCodeNum - 1, Neo68KROMActive + 0x100000);
 	} else {
 		NeoLoadCode(pInfo->nCodeOffset, pInfo->nCodeNum, Neo68KROMActive);
-	}
-
-	NeoZ80ROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(0x080000);	// Z80 cartridge ROM
-	if (NeoZ80ROM[nNeoActiveSlot] == NULL) {
-		return 1;
-	}
-	NeoZ80ROMActive = NeoZ80ROM[nNeoActiveSlot];
-
-	BurnLoadRom(NeoZ80ROMActive, pInfo->nSoundOffset, 1);
-	if (BurnDrvGetHardwareCode() & HARDWARE_SNK_ENCRYPTED_M1) {
-		neogeo_cmc50_m1_decrypt();
 	}
 
 	if (NeoCallbackActive && NeoCallbackActive->pInitialise) {
@@ -4482,6 +4482,7 @@ INT32 NeoExit()
 	fatfury2mode = 0;
 	vlinermode = 0;
 
+	nNeoProtectionXor = -1;
 	nNeoSystemType = 0;
 
 	return 0;

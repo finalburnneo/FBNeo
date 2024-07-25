@@ -329,7 +329,7 @@ STDDIPINFOEXT(sfiiiwideeuro, sfiiiwide, euroRegion)
 	{ "sfiii-simm5.1",			0x200000, 0xc6f1c066, BRF_GRA },
 
 // -----------------------------------------------
-// Street Fighter III: New Generation (Euro 970204)
+// Street Fighter III: New Generation (Europe 970204)
 // -----------------------------------------------
 static struct BurnRomInfo sfiiiRomDesc[] = {
 
@@ -572,7 +572,7 @@ STD_ROM_FN(sfiii2n)
 	{ "sfiii3-simm6.7",			0x200000, 0xcc5f4187, BRF_GRA },
 
 // -----------------------------------------------------------------
-// Street Fighter III 3rd Strike: Fight for the Future (Euro 990608)
+// Street Fighter III 3rd Strike: Fight for the Future (Europe 990608)
 // -----------------------------------------------------------------
 static struct BurnRomInfo sfiii3RomDesc[] = {
 
@@ -676,7 +676,7 @@ STD_ROM_FN(sfiii3n)
 	{ "sfiii3-simm6.7",			0x200000, 0xcc5f4187, BRF_GRA },
 
 // -----------------------------------------------------------------
-// Street Fighter III 3rd Strike: Fight for the Future (Euro 990512)
+// Street Fighter III 3rd Strike: Fight for the Future (Europe 990512)
 // -----------------------------------------------------------------
 static struct BurnRomInfo sfiii3r1RomDesc[] = {
 
@@ -766,7 +766,7 @@ STD_ROM_FN(sfiii3nr1)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 	
 // ----------------------------
-// JoJo's Venture (Euro 990128)
+// JoJo's Venture (Europe 990128)
 // ----------------------------
 static struct BurnRomInfo jojoRomDesc[] = {
 
@@ -871,7 +871,7 @@ STD_ROM_FN(jojon)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 
 // ----------------------------
-// JoJo's Venture (Euro 990108)
+// JoJo's Venture (Europe 990108)
 // ----------------------------
 static struct BurnRomInfo jojor1RomDesc[] = {
 
@@ -976,7 +976,7 @@ STD_ROM_FN(jojonr1)
 	{ "jojo-simm5.1",			0x200000, 0x734fd162, BRF_GRA },
 
 // ----------------------------
-// JoJo's Venture (Euro 981202)
+// JoJo's Venture (Europe 981202)
 // ----------------------------
 static struct BurnRomInfo jojor2RomDesc[] = {
 
@@ -1087,7 +1087,7 @@ STD_ROM_FN(jojonr2)
 	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA },
 
 // ---------------------------------------------
-// JoJo's Bizarre Adventure (Euro 991015, NO CD)
+// JoJo's Bizarre Adventure (Europe 991015, NO CD)
 // ---------------------------------------------
 static struct BurnRomInfo jojobaRomDesc[] = {
 
@@ -1155,7 +1155,7 @@ STD_ROM_FN(jojoban)
 	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA },
 
 // --------------------------------------
-// JoJo's Bizarre Adventure (Euro 990927)
+// JoJo's Bizarre Adventure (Europe 990927)
 // --------------------------------------
 static struct BurnRomInfo jojobar1RomDesc[] = {
 
@@ -1198,7 +1198,7 @@ STD_ROM_PICK(jojobanr1)
 STD_ROM_FN(jojobanr1)
 
 // ---------------------------------------------
-// JoJo's Bizarre Adventure (Euro 990927, NO CD)
+// JoJo's Bizarre Adventure (Europe 990927, NO CD)
 // ---------------------------------------------
 static struct BurnRomInfo jojobaner1RomDesc[] = {
 
@@ -1249,7 +1249,7 @@ STD_ROM_FN(jojobaner1)
 	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA },
 
 // --------------------------------------
-// JoJo's Bizarre Adventure (Euro 990913)
+// JoJo's Bizarre Adventure (Europe 990913)
 // --------------------------------------
 static struct BurnRomInfo jojobar2RomDesc[] = {
 
@@ -1292,7 +1292,7 @@ STD_ROM_PICK(jojobanr2)
 STD_ROM_FN(jojobanr2)
 
 // ---------------------------------------------
-// JoJo's Bizarre Adventure (Euro 990913, NO CD)
+// JoJo's Bizarre Adventure (Europe 990913, NO CD)
 // ---------------------------------------------
 static struct BurnRomInfo jojobaner2RomDesc[] = {
 
@@ -1333,7 +1333,7 @@ STD_ROM_FN(jojobaner2)
 	{ "redearth-simm5.1",		0x200000, 0x9b8cb56b, BRF_GRA },
 
 // -----------------------
-// Red Earth (Euro 961121)
+// Red Earth (Europe 961121)
 // -----------------------
 static struct BurnRomInfo redearthRomDesc[] = {
 
@@ -1406,7 +1406,7 @@ STD_ROM_FN(redearthn)
 	{ "redearth-simm5.1",		0x200000, 0x9b8cb56b, BRF_GRA },
 
 // -----------------------
-// Red Earth (Euro 961023)
+// Red Earth (Europe 961023)
 // -----------------------
 static struct BurnRomInfo redearthr1RomDesc[] = {
 
@@ -1600,7 +1600,7 @@ static INT32 redearthInit()
 
 struct BurnDriver BurnDrvSfiii = {
 	"sfiii", NULL, NULL, NULL, "1997",
-	"Street Fighter III: New Generation (Euro 970204)\0", NULL, "Capcom", "CPS-3",
+	"Street Fighter III: New Generation (Europe 970204)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiiiRomInfo, sfiiiRomName, NULL, NULL, NULL, NULL, cps3InputInfo, sfiiiwideeuroDIPInfo,
@@ -1710,7 +1710,7 @@ struct BurnDriver BurnDrvSfiii2n = {
 
 struct BurnDriver BurnDrvSfiii3 = {
 	"sfiii3", NULL, NULL, NULL, "1999",
-	"Street Fighter III 3rd Strike: Fight for the Future (Euro 990608)\0", NULL, "Capcom", "CPS-3",
+	"Street Fighter III 3rd Strike: Fight for the Future (Europe 990608)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii3RomInfo, sfiii3RomName, NULL, NULL, NULL, NULL, cps3InputInfo, euroDIPInfo,
@@ -1750,7 +1750,7 @@ struct BurnDriver BurnDrvSfiii3n = {
 
 struct BurnDriver BurnDrvSfiii3r1 = {
 	"sfiii3r1", "sfiii3", NULL, NULL, "1999",
-	"Street Fighter III 3rd Strike: Fight for the Future (Euro 990512)\0", NULL, "Capcom", "CPS-3",
+	"Street Fighter III 3rd Strike: Fight for the Future (Europe 990512)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii3r1RomInfo, sfiii3r1RomName, NULL, NULL, NULL, NULL, cps3InputInfo, euroDIPInfo,
@@ -1790,7 +1790,7 @@ struct BurnDriver BurnDrvSfiii3nr1 = {
 
 struct BurnDriver BurnDrvJojo = {
 	"jojo", NULL, NULL, NULL, "1998",
-	"JoJo's Venture (Euro 990128)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture (Europe 990128)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojoRomInfo, jojoRomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
@@ -1840,7 +1840,7 @@ struct BurnDriver BurnDrvJojon = {
 
 struct BurnDriver BurnDrvJojor1 = {
 	"jojor1", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture (Euro 990108)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture (Europe 990108)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojor1RomInfo, jojor1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
@@ -1890,7 +1890,7 @@ struct BurnDriver BurnDrvJojonr1 = {
 
 struct BurnDriver BurnDrvJojor2 = {
 	"jojor2", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture (Euro 981202)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture (Europe 981202)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojor2RomInfo, jojor2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, euroDIPInfo,
@@ -1940,7 +1940,7 @@ struct BurnDriver BurnDrvJojonr2 = {
 
 struct BurnDriver BurnDrvJojoba = {
 	"jojoba", NULL, NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure (Euro 991015, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure (Europe 991015, NO CD)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobaRomInfo, jojobaRomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
@@ -1960,7 +1960,7 @@ struct BurnDriver BurnDrvJojoban = {
 
 struct BurnDriver BurnDrvJojobar1 = {
 	"jojobar1", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure (Euro 990927)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure (Europe 990927)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojobar1RomInfo, jojobar1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
@@ -1990,7 +1990,7 @@ struct BurnDriver BurnDrvJojobanr1 = {
 
 struct BurnDriver BurnDrvJojobaner1 = {
 	"jojobaner1", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure (Euro 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure (Europe 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobaner1RomInfo, jojobaner1RomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
@@ -2000,7 +2000,7 @@ struct BurnDriver BurnDrvJojobaner1 = {
 
 struct BurnDriver BurnDrvJojobar2 = {
 	"jojobar2", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure (Euro 990913)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure (Europe 990913)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojobar2RomInfo, jojobar2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
@@ -2030,7 +2030,7 @@ struct BurnDriver BurnDrvJojobanr2 = {
 
 struct BurnDriver BurnDrvJojobaner2 = {
 	"jojobaner2", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure (Euro 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure (Europe 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobaner2RomInfo, jojobaner2RomName, NULL, NULL, NULL, NULL, jojoInputInfo, jojobaneDIPInfo,
@@ -2040,7 +2040,7 @@ struct BurnDriver BurnDrvJojobaner2 = {
 
 struct BurnDriver BurnDrvRedearth = {
 	"redearth", NULL, NULL, NULL, "1996",
-	"Red Earth (Euro 961121)\0", NULL, "Capcom", "CPS-3",
+	"Red Earth (Europe 961121)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, redearthRomInfo, redearthRomName, NULL, NULL, NULL, NULL, cps3InputInfo, redearthDIPInfo,
@@ -2070,7 +2070,7 @@ struct BurnDriver BurnDrvRedearthn = {
 
 struct BurnDriver BurnDrvRedearthr1 = {
 	"redearthr1", "redearth", NULL, NULL, "1996",
-	"Red Earth (Euro 961023)\0", NULL, "Capcom", "CPS-3",
+	"Red Earth (Europe 961023)\0", NULL, "Capcom", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, redearthr1RomInfo, redearthr1RomName, NULL, NULL, NULL, NULL, cps3InputInfo, redearthDIPInfo,

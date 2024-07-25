@@ -8,6 +8,8 @@ static UINT8 DrvJoy1[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy2[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT16 DrvInput[2] = {0x0000, 0x0000};
 
+static HoldCoin<2, UINT16> hold_coin;
+
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
@@ -275,6 +277,8 @@ static INT32 DrvDoReset()
 	nIRQPending = 0;
 	nCyclesExtra = 0;
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -308,6 +312,9 @@ static INT32 DrvFrame()
 	}
 	CaveClearOpposites(&DrvInput[0]);
 	CaveClearOpposites(&DrvInput[1]);
+
+	hold_coin.check(0, DrvInput[0], 1 << 8, 1);
+	hold_coin.check(1, DrvInput[1], 1 << 8, 1);
 
 	SekNewFrame();
 
@@ -483,6 +490,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nCyclesExtra);
 
 		CaveScanGraphics();
+
+		hold_coin.scan();
 	}
 
 	return 0;

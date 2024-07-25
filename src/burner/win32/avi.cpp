@@ -573,14 +573,21 @@ static INT32 AviCreateAudStream()
 	//   audio data ahead of the video frames in interleaved
 	//   files (typically 0.75 sec).
 	//
+
+	bprintf(0,_T("audio FBAvi.wfx.nBlockAlign %x\n"), FBAvi.wfx.nBlockAlign);
+	bprintf(0,_T("audio FBAvi.wfx.nAvgBytesPerSec %x\n"), FBAvi.wfx.nAvgBytesPerSec);
+	bprintf(0,_T("audio nBurnSOundLen<<2 %x\n"), nBurnSoundLen<<2);
+
 	memset(&FBAvi.audh, 0, sizeof(FBAvi.audh));
 	FBAvi.audh.fccType                = streamtypeAUDIO;    // stream type
 	FBAvi.audh.dwScale                = FBAvi.wfx.nBlockAlign;
-	FBAvi.audh.dwRate                 = FBAvi.wfx.nAvgBytesPerSec;
+//	FBAvi.audh.dwRate                 = FBAvi.wfx.nAvgBytesPerSec;
+	FBAvi.audh.dwRate                 = (nBurnSoundLen<<2) * (double)((double)nBurnFPS / 100);
 	FBAvi.audh.dwInitialFrames        = 1;                  // audio skew
 	FBAvi.audh.dwSuggestedBufferSize  = nBurnSoundLen<<2;
 	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;
 
+	bprintf(0,_T("audio FBAvi.audh.dwRate %x\n"), FBAvi.audh.dwRate);
 	// create the audio stream
 	hRet = AVIFileCreateStream(
 		FBAvi.pFile,  // file pointer

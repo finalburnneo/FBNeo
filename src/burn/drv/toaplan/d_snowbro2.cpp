@@ -6,6 +6,7 @@
 // Snow Bros. 2
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvButtonF[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // fake inputs to make symmetric coin
 static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy3[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -26,7 +27,6 @@ static HoldCoin<2> hold_coin;
 static struct BurnInputInfo snowbro2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
 	{"P1 Start",	BIT_DIGITAL,	DrvButton + 5,	"p1 start"},
-
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
@@ -36,7 +36,6 @@ static struct BurnInputInfo snowbro2InputList[] = {
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 4,	"p2 coin"},
 	{"P2 Start",	BIT_DIGITAL,	DrvButton + 6,	"p2 start"},
-
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
@@ -44,8 +43,8 @@ static struct BurnInputInfo snowbro2InputList[] = {
 	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 
+	{"P3 Coin",		BIT_DIGITAL,	DrvButtonF + 3,	"p3 coin"},
 	{"P3 Start",	BIT_DIGITAL,	DrvJoy3 + 6,	"p3 start"},
-
 	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"},
 	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"},
 	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"},
@@ -53,8 +52,8 @@ static struct BurnInputInfo snowbro2InputList[] = {
 	{"P3 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"},
 	{"P3 Button 2",	BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"},
 
+	{"P4 Coin",		BIT_DIGITAL,	DrvButtonF + 4,	"p4 coin"},
 	{"P4 Start",	BIT_DIGITAL,	DrvJoy4 + 6,	"p4 start"},
-
 	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 up"},
 	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 down"},
 	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 left"},
@@ -73,7 +72,7 @@ STDINPUTINFO(snowbro2)
 
 static struct BurnDIPInfo snowbro2DIPList[] = 
 {
-	DIP_OFFSET(0x20)
+	DIP_OFFSET(0x22)
 
 	// Defaults
 	{0x00,	0xFF, 0xFF,	0x00, NULL},
@@ -374,6 +373,10 @@ static INT32 DrvFrame()
 	DrvInput[2] = 0x00;													// Player 2
 	DrvInput[6] = 0x00;
 	DrvInput[7] = 0x00;
+
+	DrvButton[3] |= DrvButtonF[3]; // p3,p4 coin clone buttons
+	DrvButton[4] |= DrvButtonF[4];
+
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
 		DrvInput[1] |= (DrvJoy2[i] & 1) << i;

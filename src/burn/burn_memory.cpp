@@ -159,3 +159,12 @@ void BurnExitMemoryManager()
 
 	mem_allocated = 0;
 }
+
+UINT32 BurnRoundPowerOf2(UINT32 in)
+{ // bonus feature: even rounds 0 up to 1! -dink
+	unsigned int t = 1;
+	while (in > t) {
+		t <<= 1;
+	}
+	return t;
+}

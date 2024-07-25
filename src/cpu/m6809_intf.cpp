@@ -100,6 +100,60 @@ void M6809Reset(INT32 nCPU)
 	M6809CPUPop();
 }
 
+void M6809SetRESETLine(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetRESETLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetRESETLine called when no CPU open\n"));
+#endif
+
+	if (nActiveCPU < 0) return;
+
+	if (m6809CPUContext[nActiveCPU].bResetLine && nStatus == 0) {
+		M6809Reset();
+	}
+
+	m6809CPUContext[nActiveCPU].bResetLine = nStatus;
+}
+
+void M6809SetRESETLine(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetRESETLine called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	M6809SetRESETLine(nStatus);
+
+	M6809CPUPop();
+}
+
+INT32 M6809GetRESETLine()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809GetRESETLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809GetRESETLine called when no CPU open\n"));
+#endif
+
+	return m6809CPUContext[nActiveCPU].bResetLine;
+}
+
+INT32 M6809GetRESETLine(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809GetRESETLine called without init\n"));
+#endif
+
+	M6809CPUPush(nCPU);
+
+	INT32 nRet = M6809GetRESETLine();
+
+	M6809CPUPop();
+
+	return nRet;
+}
+
 UINT16 M6809GetPC()
 {
 #if defined FBNEO_DEBUG
@@ -217,6 +271,7 @@ INT32 M6809Init(INT32 cpu)
 			m6809CPUContext[i].ReadByte = M6809ReadByteDummyHandler;
 			m6809CPUContext[i].WriteByte = M6809WriteByteDummyHandler;
 			m6809CPUContext[i].nCyclesTotal = 0;
+			m6809CPUContext[i].bResetLine = 0;
 
 			for (INT32 j = 0; j < (0x0100 * 3); j++) {
 				m6809CPUContext[i].pMemMap[j] = NULL;
@@ -332,10 +387,12 @@ INT32 M6809Run(INT32 cycles)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Run called when no CPU open\n"));
 #endif
 
-	cycles = m6809_execute(cycles);
-	
+	if (!m6809CPUContext[nActiveCPU].bResetLine) {
+		cycles = m6809_execute(cycles);
+	}
+
 	m6809CPUContext[nActiveCPU].nCyclesTotal += cycles;
-	
+
 	return cycles;
 }
 
@@ -565,6 +622,7 @@ INT32 M6809Scan(INT32 nAction)
 		BurnAcb(&ba);
 
 		SCAN_VAR(ptr->nCyclesTotal);
+		SCAN_VAR(ptr->bResetLine);
 	}
 	
 	return 0;

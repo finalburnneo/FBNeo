@@ -4,7 +4,6 @@
 // Note:
 // Dip values are bitswapped compared to latest mame
 
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
@@ -104,6 +103,8 @@ static UINT8 quester = 0; // use paddle?
 static INT16 Analog[2];
 
 static UINT8 sixtyhz = 0; // some games only like 60hz
+
+static INT32 nCyclesExtra[4];
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -988,34 +989,6 @@ static void virtual_write(UINT32 address, UINT8 data)
 	}
 }
 
-static void subres_callback(INT32 state)
-{
-	if (state != sub_cpu_in_reset)
-	{
-		mcu_patch_data = 0;
-		sub_cpu_in_reset = state;
-	}
-
-	if (state == CPU_IRQSTATUS_ACK)
-	{
-		M6809Close();
-
-		M6809Open(1);
-		M6809Reset();
-		M6809Close();
-
-		M6809Open(2);
-		M6809Reset();
-		M6809Close();
-
-		M6809Open(0);
-
-		HD63701Open(0);
-		HD63701ResetSoft();
-		HD63701Close();
-	}
-}
-
 static void bankswitch(int whichcpu, int whichbank, int a0, UINT8 data)
 {
 	UINT32 &bank = bank_offsets[whichcpu][whichbank];
@@ -1051,7 +1024,7 @@ static void kick_watchdog(int whichcpu)
 
 	shared_watchdog |= (1 << whichcpu);
 
-	if (shared_watchdog == ALL_CPU_MASK || !sub_cpu_reset)
+	if (shared_watchdog == ALL_CPU_MASK || sub_cpu_reset)
 	{
 		shared_watchdog = 0;
 		watchdog = 0;
@@ -1076,10 +1049,17 @@ static void register_write(int whichcpu, UINT16 offset, UINT8 data)
 		break;
 
 		case 8:  // F000 - SUBRES (halt/reset everything but main CPU)
-			if (whichcpu == 0)
-			{
-				sub_cpu_reset = data & 1;
-				subres_callback(sub_cpu_reset ? CLEAR_LINE : ASSERT_LINE);
+			if (whichcpu == 0) {
+				sub_cpu_reset = ~data & 1;
+
+				if (sub_cpu_reset != sub_cpu_in_reset) {
+					mcu_patch_data = 0;
+					sub_cpu_in_reset = sub_cpu_reset;
+				}
+
+				M6809SetRESETLine(1, sub_cpu_reset);
+				M6809SetRESETLine(2, sub_cpu_reset);
+				HD63701SetRESETLine(0, sub_cpu_reset);
 			}
 		break;
 
@@ -1096,26 +1076,18 @@ static void register_write(int whichcpu, UINT16 offset, UINT8 data)
 		break;
 
 		case 13: // FA00 - assert FIRQ on sub CPU
-			if (whichcpu == 0)
-			{
-				M6809Close();
-				M6809Open(1);
-				M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
-				M6809Close();
-				M6809Open(0);
+			if (whichcpu == 0) {
+				M6809SetIRQLine(1, 1, CPU_IRQSTATUS_ACK);
 			}
 		break;
 
 		case 14: // FC00 - set initial ROM bank for sub CPU
-			if (whichcpu == 0)
-			{
+			if (whichcpu == 0) {
 				bank_offsets[1][7] = 0x600000 | (data * 0x2000);
 
-				M6809Close();
-				M6809Open(1);
+				M6809CPUPush(1);
 				M6809MapMemory(DrvMainROM + (bank_offsets[1][7] & 0x3fffff), 0xe000, 0xffff, MAP_ROM);
-				M6809Close();
-				M6809Open(0);
+				M6809CPUPop();
 			}
 		break;
 	}
@@ -1326,7 +1298,7 @@ static void mcu_write_port(UINT16 port, UINT8 data)
 	switch (port & 0x1ff)
 	{
 		case HD63701_PORT1:
-			coin_lockout = (data & 1) ? 0 : 0x18;
+			coin_lockout = 0;//(data & 1) ? 0 : 0x18; causes problems with 4p games
 		return;
 
 		case HD63701_PORT2:
@@ -1398,7 +1370,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	if (clear_mem) set_initial_map_banks();  // this fixes rompers boot. (relies on wdt after warning screen)
+	set_initial_map_banks();
 
 	M6809Open(0);
 	M6809Reset();
@@ -1408,6 +1380,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6809Open(1);
 	M6809Reset();
 	if (clear_mem) m6809_reset_hard(); // this gets shadowld to reboot
+	M6809SetRESETLine(1, 1); // all subs get latched up until signal from SUBRES
 	M6809Close();
 
 	M6809Open(2);
@@ -1416,6 +1389,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		M6809MapMemory(NULL, 0x0000, 0x3fff, MAP_ROM);
 		m6809_reset_hard();
 	}
+	M6809SetRESETLine(2, 1);
 	NamcoSoundReset();
 	BurnYM2151Reset();
 	DACReset();
@@ -1428,6 +1402,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		HD63701MapMemory(NULL, 0x4000, 0xbfff, MAP_ROM);
 		HD63701Reset();
 	}
+	HD63701SetRESETLine(0, 1);
 	HD63701Close();
 
 	HiscoreReset();
@@ -1448,6 +1423,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	input_count = 0;
 	strobe_count = 0;
 	stored_input[0] = stored_input[1] = 0;
+
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
 	return 0;
 }
@@ -1621,12 +1598,7 @@ static INT32 DrvInit()
 {
 	// above 60hz is a no-go, causes clicky audio on some systems.
 	//BurnSetRefreshRate((sixtyhz) ? 60.00 : 60.6060);
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (Namcos1GetRoms()) return 1;
 
@@ -1705,7 +1677,7 @@ static INT32 DrvExit()
 
 	if (quester) BurnTrackballExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	sixtyhz = 0;
 	quester = 0;
@@ -1988,12 +1960,12 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 640; // mame interleave
-	INT32 S1VBL = ((nInterleave * 240) / 256);
-	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.00/*6060*/) }; // run dac cpu @ 60hz for better dac sound quality
+	INT32 S1VBL = ((nInterleave * 240) / 264);
+	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60) }; // run dac cpu @ 60hz for better dac sound quality
 	if (sixtyhz) {
 		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
 	}
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nCyclesDone[4] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2], nCyclesExtra[3] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2002,37 +1974,20 @@ static INT32 DrvFrame()
 		if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
-		if (sub_cpu_in_reset == 0)
-		{
-			M6809Open(1);
-			CPU_RUN(1, M6809);
-			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
+		M6809Open(1);
+		CPU_RUN(1, M6809);
+		if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		M6809Close();
 
-			M6809Open(2);
-			CPU_RUN_TIMER(2);
-			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
+		M6809Open(2);
+		CPU_RUN_TIMER(2);
+		if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		M6809Close();
 
-			HD63701Open(0);
-			CPU_RUN(3, HD63701);
-			if (i == S1VBL) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			HD63701Close();
-		}
-		else
-		{
-			M6809Open(1);
-			CPU_IDLE(1, M6809);
-			M6809Close();
-
-			M6809Open(2);
-			CPU_IDLE(2, M6809);
-			M6809Close();
-
-			HD63701Open(0);
-			CPU_IDLE(3, HD63701);
-			HD63701Close();
-		}
+		HD63701Open(0);
+		CPU_RUN(3, HD63701);
+		if (i == S1VBL) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		HD63701Close();
 
 		if (i == S1VBL) {
 			if (buffer_sprites) {
@@ -2043,17 +1998,22 @@ static INT32 DrvFrame()
 				}
 				buffer_sprites = 0;
 			}
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nCyclesExtra[3] = nCyclesDone[3] - nCyclesTotal[3];
 
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;
@@ -2126,6 +2086,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (quester) BurnTrackballScan();
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

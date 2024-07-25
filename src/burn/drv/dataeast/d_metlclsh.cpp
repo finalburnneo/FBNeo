@@ -1,4 +1,4 @@
-// FB Alpha Metal Clash driver module
+// FB Neo Metal Clash driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
@@ -645,7 +645,7 @@ STD_ROM_FN(metlclsh)
 
 struct BurnDriver BurnDrvMetlclsh = {
 	"metlclsh", NULL, NULL, NULL, "1985",
-	"Metal Clash (Japan)\0", NULL, "Data East", "Miscellaneous",
+	"Metal Clash (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, metlclshRomInfo, metlclshRomName, NULL, NULL, NULL, NULL, MetlclshInputInfo, MetlclshDIPInfo,

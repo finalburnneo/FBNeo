@@ -1892,12 +1892,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Section Z (set 1)
+// Section Z (US)
 
 static struct BurnRomInfo sectionzRomDesc[] = {
-	{ "6c_sz01.bin",	0x8000, 0x69585125, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sz_01.6c",		0x8000, 0x69585125, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "sz_02.7c",		0x8000, 0x22f161b8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "9c_sz03.bin",	0x8000, 0x4c7111ed, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sz_03.9c",		0x8000, 0x4c7111ed, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "sz_04.11e",		0x8000, 0xa6073566, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
@@ -1925,7 +1925,7 @@ STD_ROM_FN(sectionz)
 
 struct BurnDriver BurnDrvSectionz = {
 	"sectionz", NULL, NULL, NULL, "1985",
-	"Section Z (set 1)\0", NULL, "Capcom", "Miscellaneous",
+	"Section Z (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_HORSHOOT, 0,
 	NULL, sectionzRomInfo, sectionzRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SectionzDIPInfo,
@@ -1934,12 +1934,12 @@ struct BurnDriver BurnDrvSectionz = {
 };
 
 
-// Section Z (set 2)
+// Section Z (Japan, rev. A)
 
 static struct BurnRomInfo sectionzaRomDesc[] = {
 	{ "sz_01a.6c",		0x8000, 0x98df49fd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "sz_02.7c",		0x8000, 0x22f161b8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sz_03.9c",		0x8000, 0x94547abf, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "szj_03.9c",		0x8000, 0x94547abf, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "sz_04.11e",		0x8000, 0xa6073566, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
@@ -1967,7 +1967,7 @@ STD_ROM_FN(sectionza)
 
 struct BurnDriver BurnDrvSectionza = {
 	"sectionza", "sectionz", NULL, NULL, "1985",
-	"Section Z (set 2 rev. A)\0", NULL, "Capcom", "Miscellaneous",
+	"Section Z (Japan, rev. A)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_HORSHOOT, 0,
 	NULL, sectionzaRomInfo, sectionzaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SectionzDIPInfo,
@@ -1976,32 +1976,32 @@ struct BurnDriver BurnDrvSectionza = {
 };
 
 
-// Legendary Wings (US set 1)
+// Legendary Wings (US, rev. C)
 
 static struct BurnRomInfo lwingsRomDesc[] = {
-	{ "6c_lw01.bin",	0x8000, 0xb55a7f60, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "7c_lw02.bin",	0x8000, 0xa5efbb1b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "9c_lw03.bin",	0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "lwu_01c.6c",		0x8000, 0xb55a7f60, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "lwu_02c.7c",		0x8000, 0xa5efbb1b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "lw_03.9c",		0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "11e_lw04.bin",	0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "lw_04.11e",		0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "9h_lw05.bin",	0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
+	{ "lw_05.9h",		0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
 
-	{ "3e_lw14.bin",	0x8000, 0x5436392c, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
-	{ "1e_lw08.bin",	0x8000, 0xb491bbbb, 5 | BRF_GRA },           //  6
-	{ "3d_lw13.bin",	0x8000, 0xfdd1908a, 5 | BRF_GRA },           //  7
-	{ "1d_lw07.bin",	0x8000, 0x5c73d406, 5 | BRF_GRA },           //  8
-	{ "3b_lw12.bin",	0x8000, 0x32e17b3c, 5 | BRF_GRA },           //  9
-	{ "1b_lw06.bin",	0x8000, 0x52e533c1, 5 | BRF_GRA },           // 10
-	{ "3f_lw15.bin",	0x8000, 0x99e134ba, 5 | BRF_GRA },           // 11
-	{ "1f_lw09.bin",	0x8000, 0xc8f28777, 5 | BRF_GRA },           // 12
+	{ "lw_14.3e",		0x8000, 0x5436392c, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
+	{ "lw_08.1e",		0x8000, 0xb491bbbb, 5 | BRF_GRA },           //  6
+	{ "lw_13.3d",		0x8000, 0xfdd1908a, 5 | BRF_GRA },           //  7
+	{ "lw_07.1d",		0x8000, 0x5c73d406, 5 | BRF_GRA },           //  8
+	{ "lw_12.3b",		0x8000, 0x32e17b3c, 5 | BRF_GRA },           //  9
+	{ "lw_06.1b",		0x8000, 0x52e533c1, 5 | BRF_GRA },           // 10
+	{ "lw_15.3f",		0x8000, 0x99e134ba, 5 | BRF_GRA },           // 11
+	{ "lw_09.1f",		0x8000, 0xc8f28777, 5 | BRF_GRA },           // 12
 
-	{ "3j_lw17.bin",	0x8000, 0x5ed1bc9b, 6 | BRF_GRA },           // 13 Sprites
-	{ "1j_lw11.bin",	0x8000, 0x2a0790d6, 6 | BRF_GRA },           // 14
-	{ "3h_lw16.bin",	0x8000, 0xe8834006, 6 | BRF_GRA },           // 15
-	{ "1h_lw10.bin",	0x8000, 0xb693f5a5, 6 | BRF_GRA },           // 16
+	{ "lw_17.3j",		0x8000, 0x5ed1bc9b, 6 | BRF_GRA },           // 13 Sprites
+	{ "lw_11.1j",		0x8000, 0x2a0790d6, 6 | BRF_GRA },           // 14
+	{ "lw_16.3h",		0x8000, 0xe8834006, 6 | BRF_GRA },           // 15
+	{ "lw_10.1h",		0x8000, 0xb693f5a5, 6 | BRF_GRA },           // 16
 
-	{ "63s141.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
+	{ "szb01.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
 };
 
 STD_ROM_PICK(lwings)
@@ -2009,7 +2009,7 @@ STD_ROM_FN(lwings)
 
 struct BurnDriver BurnDrvLwings = {
 	"lwings", NULL, NULL, NULL, "1986",
-	"Legendary Wings (US set 1)\0", NULL, "Capcom", "Miscellaneous",
+	"Legendary Wings (US, rev. C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, lwingsRomInfo, lwingsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
@@ -2018,43 +2018,43 @@ struct BurnDriver BurnDrvLwings = {
 };
 
 
-// Legendary Wings (US set 2)
+// Legendary Wings (US)
 
-static struct BurnRomInfo lwings2RomDesc[] = {
+static struct BurnRomInfo lwingsaRomDesc[] = {
 	{ "u13-l",			0x8000, 0x3069c01c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "u14-k",			0x8000, 0x5d91c828, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "9c_lw03.bin",	0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "lw_03.9c",		0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "11e_lw04.bin",	0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "lw_04.11e",		0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "9h_lw05.bin",	0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
+	{ "lw_05.9h",		0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
 
-	{ "b_03e.rom",		0x8000, 0x176e3027, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
-	{ "b_01e.rom",		0x8000, 0xf5d25623, 5 | BRF_GRA },           //  6
-	{ "b_03d.rom",		0x8000, 0x001caa35, 5 | BRF_GRA },           //  7
-	{ "b_01d.rom",		0x8000, 0x0ba008c3, 5 | BRF_GRA },           //  8
-	{ "b_03b.rom",		0x8000, 0x4f8182e9, 5 | BRF_GRA },           //  9
-	{ "b_01b.rom",		0x8000, 0xf1617374, 5 | BRF_GRA },           // 10
-	{ "b_03f.rom",		0x8000, 0x9b374dcc, 5 | BRF_GRA },           // 11
-	{ "b_01f.rom",		0x8000, 0x23654e0a, 5 | BRF_GRA },           // 12
+	{ "lw_14.3e",		0x8000, 0x5436392c, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
+	{ "lw_08.1e",		0x8000, 0xb491bbbb, 5 | BRF_GRA },           //  6
+	{ "lw_13.3d",		0x8000, 0xfdd1908a, 5 | BRF_GRA },           //  7
+	{ "lw_07.1d",		0x8000, 0x5c73d406, 5 | BRF_GRA },           //  8
+	{ "lw_12.3b",		0x8000, 0x32e17b3c, 5 | BRF_GRA },           //  9
+	{ "lw_06.1b",		0x8000, 0x52e533c1, 5 | BRF_GRA },           // 10
+	{ "lw_15.3f",		0x8000, 0x99e134ba, 5 | BRF_GRA },           // 11
+	{ "lw_09.1f",		0x8000, 0xc8f28777, 5 | BRF_GRA },           // 12
 
-	{ "b_03j.rom",		0x8000, 0x8f3c763a, 6 | BRF_GRA },           // 13 Sprites
-	{ "b_01j.rom",		0x8000, 0x7cc90a1d, 6 | BRF_GRA },           // 14
-	{ "b_03h.rom",		0x8000, 0x7d58f532, 6 | BRF_GRA },           // 15
-	{ "b_01h.rom",		0x8000, 0x3e396eda, 6 | BRF_GRA },           // 16
+	{ "lw_17.3j",		0x8000, 0x5ed1bc9b, 6 | BRF_GRA },           // 13 Sprites
+	{ "lw_11.1j",		0x8000, 0x2a0790d6, 6 | BRF_GRA },           // 14
+	{ "lw_16.3h",		0x8000, 0xe8834006, 6 | BRF_GRA },           // 15
+	{ "lw_10.1h",		0x8000, 0xb693f5a5, 6 | BRF_GRA },           // 16
 
-	{ "63s141.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
+	{ "szb01.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
 };
 
-STD_ROM_PICK(lwings2)
-STD_ROM_FN(lwings2)
+STD_ROM_PICK(lwingsa)
+STD_ROM_FN(lwingsa)
 
-struct BurnDriver BurnDrvLwings2 = {
-	"lwings2", "lwings", NULL, NULL, "1986",
-	"Legendary Wings (US set 2)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvLwingsa = {
+	"lwingsa", "lwings", NULL, NULL, "1986",
+	"Legendary Wings (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, lwings2RomInfo, lwings2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
+	NULL, lwingsaRomInfo, lwingsaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -2189,8 +2189,8 @@ struct BurnDriver BurnDrvLwingsb = {
 // Trojan (US set 1)
 
 static struct BurnRomInfo trojanRomDesc[] = {
-	{ "t4.10n",			0x8000, 0xc1bbeb4e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "t6.13n",			0x8000, 0xd49592ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb_04.10n",		0x8000, 0xc1bbeb4e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb_06.13n",		0x8000, 0xd49592ef, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tb_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -2243,8 +2243,8 @@ struct BurnDriver BurnDrvTrojan = {
 // Trojan (US set 2)
 
 static struct BurnRomInfo trojanaRomDesc[] = {
-	{ "tb4.10n",		0x8000, 0x0113a551, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "tb6.13n",		0x8000, 0xaa127a5b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb_04.10n",		0x8000, 0x0113a551, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb_06.13n",		0x8000, 0xaa127a5b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tb_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -2294,12 +2294,12 @@ struct BurnDriver BurnDrvTrojana = {
 };
 
 
-// Trojan (Romstar)
+// Trojan (Romstar, set 1)
 
 static struct BurnRomInfo trojanrRomDesc[] = {
-	{ "tb04.10n",		0x8000, 0x92670f27, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "tb06.13n",		0x8000, 0xa4951173, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tb_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tbu_04.10n",		0x8000, 0x92670f27, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tbu_06.13n",		0x8000, 0xa4951173, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tbu_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
@@ -2339,10 +2339,64 @@ STD_ROM_FN(trojanr)
 
 struct BurnDriver BurnDrvTrojanr = {
 	"trojanr", "trojan", NULL, NULL, "1986",
-	"Trojan (Romstar)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	"Trojan (Romstar, set 1)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanrRomInfo, trojanrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
+
+// Trojan (Romstar, set 2)
+
+static struct BurnRomInfo trojanraRomDesc[] = {
+	{ "tbu_04.10n",		0x8000, 0x0e003b0f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tbu_06.13n",		0x8000, 0xa5a3d848, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tbu_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "tb_01.6d",		0x4000, 0x1c0f91b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "tb_03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "tb_13.6b",		0x8000, 0x285a052b, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "tb_09.6a",		0x8000, 0xaeb693f7, 5 | BRF_GRA },           //  7
+	{ "tb_12.4b",		0x8000, 0xdfb0fe5c, 5 | BRF_GRA },           //  8
+	{ "tb_08.4a",		0x8000, 0xd3a4c9d1, 5 | BRF_GRA },           //  9
+	{ "tb_11.3b",		0x8000, 0x00f0f4fd, 5 | BRF_GRA },           // 10
+	{ "tb_07.3a",		0x8000, 0xdff2ee02, 5 | BRF_GRA },           // 11
+	{ "tb_14.8b",		0x8000, 0x14bfac18, 5 | BRF_GRA },           // 12
+	{ "tb_10.8a",		0x8000, 0x71ba8a6d, 5 | BRF_GRA },           // 13
+
+	{ "tb_18.7l",		0x8000, 0x862c4713, 6 | BRF_GRA },           // 14 Sprites
+	{ "tb_16.3l",		0x8000, 0xd86f8cbd, 6 | BRF_GRA },           // 15
+	{ "tb_17.5l",		0x8000, 0x12a73b3f, 6 | BRF_GRA },           // 16
+	{ "tb_15.2l",		0x8000, 0xbb1a2769, 6 | BRF_GRA },           // 17
+	{ "tb_22.7n",		0x8000, 0x39daafd4, 6 | BRF_GRA },           // 18
+	{ "tb_20.3n",		0x8000, 0x94615d2a, 6 | BRF_GRA },           // 19
+	{ "tb_21.5n",		0x8000, 0x66c642bd, 6 | BRF_GRA },           // 20
+	{ "tb_19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
+
+	{ "tb_25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "tb_24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+
+	{ "tb_23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbb-2.7j",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "tbb-1.1e",		0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(trojanra)
+STD_ROM_FN(trojanra)
+
+struct BurnDriver BurnDrvTrojanra = {
+	"trojanra", "trojan", NULL, NULL, "1986",
+	"Trojan (Romstar, set 2)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, trojanraRomInfo, trojanraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -2513,8 +2567,8 @@ struct BurnDriver BurnDrvTrojanjo = {
 // Trojan (location test)
 
 static struct BurnRomInfo trojanltRomDesc[] = {
-	{ "tb04.10n",		0x8000, 0x52a4f8a1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "tb06.13n",		0x8000, 0xef182e53, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb_04.10n",		0x8000, 0x52a4f8a1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb_06.13n",		0x8000, 0xef182e53, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tb_05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -2571,12 +2625,12 @@ It was common for Capcom to use the same ROM label across regional sets but add 
   region, BLUE stripe for Europe and no stripe for the Japanese region.
 */
 
-// Avengers (US, revision C)
+// Avengers (US, rev. D)
 
 static struct BurnRomInfo avengersRomDesc[] = {
-	{ "avu_04c.10n",	0x8000, 0x4555b925, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "avu_06c.13n",	0x8000, 0xea202879, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "avu_04d.10n",	0x8000, 0xa94aadcc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "avu_06d.13n",	0x8000, 0x39cd80bd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "avu_05d.12n",	0x8000, 0x06b1cec9, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
@@ -2625,7 +2679,7 @@ static INT32 AvengersInit()
 
 struct BurnDriver BurnDrvAvengers = {
 	"avengers", NULL, NULL, NULL, "1987",
-	"Avengers (US, revision C)\0", NULL, "Capcom", "Miscellaneous",
+	"Avengers (US, rev. D)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, avengersRomInfo, avengersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
@@ -2634,9 +2688,65 @@ struct BurnDriver BurnDrvAvengers = {
 };
 
 
-// Avengers (US, revision A)
+// Avengers (US, rev. C)
 
-static struct BurnRomInfo avengeraRomDesc[] = {
+static struct BurnRomInfo avengersaRomDesc[] = {
+	{ "avu_04c.10n",	0x8000, 0x4555b925, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "avu_06c.13n",	0x8000, 0xea202879, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+
+	{ "avu_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "avu_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+
+	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
+};
+
+STD_ROM_PICK(avengersa)
+STD_ROM_FN(avengersa)
+
+struct BurnDriver BurnDrvAvengersa = {
+	"avengersa", "avengers", NULL, NULL, "1987",
+	"Avengers (US, rev. C)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
+	NULL, avengersaRomInfo, avengersaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Avengers (US, rev. A)
+
+static struct BurnRomInfo avengersbRomDesc[] = {
 	{ "av_04a.10n",		0x8000, 0x0fea7ac5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06a.13n",		0x8000, 0x491a712c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2676,15 +2786,15 @@ static struct BurnRomInfo avengeraRomDesc[] = {
 	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
 };
 
-STD_ROM_PICK(avengera)
-STD_ROM_FN(avengera)
+STD_ROM_PICK(avengersb)
+STD_ROM_FN(avengersb)
 
-struct BurnDriver BurnDrvAvengera = {
-	"avengersa", "avengers", NULL, NULL, "1987",
-	"Avengers (US, revision A)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvAvengersb = {
+	"avengersb", "avengers", NULL, NULL, "1987",
+	"Avengers (US, rev. A)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avengeraRomInfo, avengeraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	NULL, avengersbRomInfo, avengersbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
 	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -2692,7 +2802,7 @@ struct BurnDriver BurnDrvAvengera = {
 
 // Avengers (US)
 
-static struct BurnRomInfo avengerbRomDesc[] = {
+static struct BurnRomInfo avengerscRomDesc[] = {
 	{ "av_04.10n",		0x8000, 0xc785e1f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06.13n",		0x8000, 0xc6f84a5f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0xf9a9a92f, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2732,77 +2842,21 @@ static struct BurnRomInfo avengerbRomDesc[] = {
 	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
 };
 
-STD_ROM_PICK(avengerb)
-STD_ROM_FN(avengerb)
+STD_ROM_PICK(avengersc)
+STD_ROM_FN(avengersc)
 
-struct BurnDriver BurnDrvAvengerb = {
-	"avengersb", "avengers", NULL, NULL, "1987",
+struct BurnDriver BurnDrvAvengersc = {
+	"avengersc", "avengers", NULL, NULL, "1987",
 	"Avengers (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avengerbRomInfo, avengerbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	NULL, avengerscRomInfo, avengerscRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
 	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
 
-// Avengers (US, unknown revision)
-
-static struct BurnRomInfo avengercRomDesc[] = {
-	{ "04.10n",			0x8000, 0xa94aadcc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "06.13n",			0x8000, 0x39cd80bd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "05.12n",			0x8000, 0x06b1cec9, 1 | BRF_PRG | BRF_ESS }, //  2
-
-	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-
-	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
-
-	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
-
-	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
-	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
-	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
-	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
-	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
-	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
-	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
-	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
-
-	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
-	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
-	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
-	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
-	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
-	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
-	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
-	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
-
-	{ "avu_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "avu_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
-
-	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
-
-	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
-	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
-
-	{ "av.13k",			0x1000, 0x505a0987, 0 | BRF_PRG | BRF_ESS }, // 27 MCU
-};
-
-STD_ROM_PICK(avengerc)
-STD_ROM_FN(avengerc)
-
-struct BurnDriver BurnDrvAvengerc = {
-	"avengersc", "avengers", NULL, NULL, "1987",
-	"Avengers (US, unknown revision)\0", NULL, "Capcom", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avengercRomInfo, avengercRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
-	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	240, 256, 3, 4
-};
-
-
-// Hissatsu Buraiken (Japan, revision A)
+// Hissatsu Buraiken (Japan, rev. A)
 
 static struct BurnRomInfo buraikenRomDesc[] = {
 	{ "av_04a.10n",		0x8000, 0x361fc614, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code

@@ -1,4 +1,4 @@
-// FB Alpha Seta driver module
+// FB Neo Seta driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
@@ -4005,8 +4005,8 @@ void __fastcall setaSoundRegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	reg		= offset % sizeof(X1_010_CHANNEL);
 
 	if( channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset]&1) == 0 && (wordValue&1) != 0 ) {
-	 	x1_010_chip->smp_offset[channel] = 0;
-	 	x1_010_chip->env_offset[channel] = 0;
+		x1_010_chip->smp_offset[channel] = 0;
+		x1_010_chip->env_offset[channel] = 0;
 	}
 	x1_010_chip->reg[offset] = wordValue & 0xff;
 }
@@ -4039,8 +4039,8 @@ static void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		reg      = offset % sizeof(X1_010_CHANNEL);
 
 		if (channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset] & 1) == 0 && (byteValue&1) != 0) {
-	 		x1_010_chip->smp_offset[channel] = 0;
-	 		x1_010_chip->env_offset[channel] = 0;
+			x1_010_chip->smp_offset[channel] = 0;
+			x1_010_chip->env_offset[channel] = 0;
 		}
 		x1_010_chip->reg[offset] = byteValue;
 	}
@@ -5308,7 +5308,7 @@ static void RotateReset() {
 }
 
 static UINT32 RotationTimer(void) {
-    return nCurrentFrame;
+	return nCurrentFrame;
 }
 
 static void RotateRight(INT32 *v) {
@@ -5347,32 +5347,32 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 }
 
 static int dialRotation(INT32 playernum) {
-    // p1 = 0, p2 = 1
+	// p1 = 0, p2 = 1
 	UINT8 player[2] = { 0, 0 };
 	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
 
-    if ((playernum != 0) && (playernum != 1)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
-        return 0;
-    }
-    if (playernum == 0) {
-        player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
-    }
-    if (playernum == 1) {
-        player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
-    }
+	if ((playernum != 0) && (playernum != 1)) {
+		bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+		return 0;
+	}
+	if (playernum == 0) {
+		player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
+	}
+	if (playernum == 1) {
+		player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
+	}
 
-    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+	if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
 		bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
-    }
+	}
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
-        RotateRight(&nRotate[playernum]);
-        bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
-        nRotateTime[playernum] = RotationTimer();
+		RotateRight(&nRotate[playernum]);
+		bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
 	}
 
@@ -8202,7 +8202,7 @@ static void Drv68kZ80M6295FrameCallback()
 
 static INT32 DrvZ80M6295Frame()
 {
- 	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
+	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
 }
 
 
@@ -9363,7 +9363,7 @@ static INT32 umanclubInit()
 
 struct BurnDriver BurnDrvNeobattl = {
 	"neobattl", NULL, NULL, NULL, "1992",
-	"SD Gundam Neo Battling (Japan)\0", NULL, "Banpresto / Sotsu Agency. Sunrise", "Seta",
+	"SD Gundam Neo Battling (Japan)\0", NULL, "Banpresto", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, neobattlRomInfo, neobattlRomName, NULL, NULL, NULL, NULL, NeobattlInputInfo, NeobattlDIPInfo,
@@ -9389,7 +9389,7 @@ STD_ROM_FN(umanclub)
 
 struct BurnDriver BurnDrvUmanclub = {
 	"umanclub", NULL, NULL, NULL, "1992",
-	"Ultraman Club - Tatakae! Ultraman Kyoudai!!\0", NULL, "Banpresto / Tsuburaya Productions", "Seta",
+	"Ultraman Club - Tatakae! Ultraman Kyoudai!!\0", NULL, "Banpresto", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, umanclubRomInfo, umanclubRomName, NULL, NULL, NULL, NULL, UmanclubInputInfo, UmanclubDIPInfo,
@@ -9424,7 +9424,7 @@ static INT32 kamenridInit()
 
 struct BurnDriver BurnDrvKamenrid = {
 	"kamenrid", NULL, NULL, NULL, "1993",
-	"Masked Riders Club Battle Race / Kamen Rider Club Battle Racer\0", NULL, "Banpresto / Toei", "Seta",
+	"Masked Riders Club Battle Race / Kamen Rider Club Battle Racer\0", NULL, "Banpresto", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_RACING, 0,
 	NULL, kamenridRomInfo, kamenridRomName, NULL, NULL, NULL, NULL, KamenridInputInfo, KamenridDIPInfo,
@@ -9886,7 +9886,7 @@ STD_ROM_FN(zombraidpj)
 
 struct BurnDriver BurnDrvZombraidpj = {
 	"zombraidpj", "zombraid", NULL, NULL, "1995",
-	"Zombie Raid (9/28/95, Japan, prototype PCB)\0", NULL, "Sammy Industries Co.,Ltd.", "Seta",
+	"Zombie Raid (9/28/95, Japan, prototype PCB)\0", NULL, "Sammy Industries", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, zombraidpjRomInfo, zombraidpjRomName, NULL, NULL, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
@@ -10380,7 +10380,7 @@ static INT32 pairloveInit()
 
 struct BurnDriver BurnDrvPairlove = {
 	"pairlove", NULL, NULL, NULL, "1991",
-	"Pairs Love\0", NULL, "Athena", "Seta",
+	"Pairs Love\0", NULL, "Athena / Nihon System", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_PUZZLE, 0,
 	NULL, pairloveRomInfo, pairloveRomName, NULL, NULL, NULL, NULL, PairloveInputInfo, PairloveDIPInfo,
@@ -11004,7 +11004,7 @@ static INT32 utoukondInit()
 
 struct BurnDriver BurnDrvUtoukond = {
 	"utoukond", NULL, NULL, NULL, "1993",
-	"Ultra Toukon Densetsu (Japan)\0", NULL, "Banpresto / Tsuburaya Productions", "Seta",
+	"Ultra Toukon Densetsu (Japan)\0", NULL, "Banpresto", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA1, GBF_VSFIGHT, 0,
 	NULL, utoukondRomInfo, utoukondRomName, NULL, NULL, NULL, NULL, UtoukondInputInfo, UtoukondDIPInfo,

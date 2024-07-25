@@ -16,8 +16,10 @@
 static UINT8 HyperpacInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 HyperpacInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 HyperpacInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 HyperpacInputPort2f[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // fake coin for 3p..
+static UINT8 HyperpacInputPort3[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 HyperpacDip[2]        = {0, 0};
-static UINT8 HyperpacInput[3]      = {0x00, 0x00, 0x00};
+static UINT8 HyperpacInput[4]      = {0x00, 0x00, 0x00, 0x00};
 static UINT8 HyperpacReset         = 0;
 
 static UINT8 *Mem                  = NULL;
@@ -47,6 +49,7 @@ static INT32 Honeydol = 0;
 static INT32 Wintbob = 0;
 static INT32 Snowbro3 = 0;
 static INT32 Toto = 0;
+static INT32 ballboy3p = 0;
 
 static INT32 HyperpacNumTiles = 0;
 static INT32 HyperpacNumTiles8bpp = 0;
@@ -115,6 +118,46 @@ static struct BurnInputInfo SnowbrosInputList[] = {
 
 STDINPUTINFO(Snowbros)
 
+static struct BurnInputInfo Ballboy3pInputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 2, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 0, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , HyperpacInputPort0 + 0, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , HyperpacInputPort0 + 1, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , HyperpacInputPort0 + 2, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , HyperpacInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , HyperpacInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , HyperpacInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3"         , BIT_DIGITAL  , HyperpacInputPort0 + 6, "p1 fire 3" },
+
+	{"P2 Coin"           , BIT_DIGITAL  , HyperpacInputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 1, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , HyperpacInputPort1 + 0, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , HyperpacInputPort1 + 1, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , HyperpacInputPort1 + 2, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , HyperpacInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , HyperpacInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , HyperpacInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3"         , BIT_DIGITAL  , HyperpacInputPort1 + 6, "p2 fire 3" },
+
+	{"P3 Coin"           , BIT_DIGITAL  , HyperpacInputPort2f+ 2, "p3 coin"   },
+	{"P3 Start"          , BIT_DIGITAL  , HyperpacInputPort2 + 4, "p3 start"  },
+	{"P3 Up"             , BIT_DIGITAL  , HyperpacInputPort3 + 0, "p3 up"     },
+	{"P3 Down"           , BIT_DIGITAL  , HyperpacInputPort3 + 1, "p3 down"   },
+	{"P3 Left"           , BIT_DIGITAL  , HyperpacInputPort3 + 2, "p3 left"   },
+	{"P3 Right"          , BIT_DIGITAL  , HyperpacInputPort3 + 3, "p3 right"  },
+	{"P3 Fire 1"         , BIT_DIGITAL  , HyperpacInputPort3 + 4, "p3 fire 1" },
+	{"P3 Fire 2"         , BIT_DIGITAL  , HyperpacInputPort3 + 5, "p3 fire 2" },
+	{"P3 Fire 3"         , BIT_DIGITAL  , HyperpacInputPort3 + 6, "p3 fire 3" },
+
+	{"Reset"             , BIT_DIGITAL  , &HyperpacReset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , HyperpacInputPort2 + 6, "service"   },
+	{"Tilt"              , BIT_DIGITAL  , HyperpacInputPort2 + 5, "tilt"      },
+	{"Dip 1"             , BIT_DIPSWITCH, HyperpacDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, HyperpacDip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Ballboy3p)
+
 static inline void HyperpacClearOpposites(UINT8* nJoystickInputs)
 {
 	if ((*nJoystickInputs & 0x03) == 0x03) {
@@ -128,13 +171,23 @@ static inline void HyperpacClearOpposites(UINT8* nJoystickInputs)
 static inline void HyperpacMakeInputs()
 {
 	// Reset Inputs
-	HyperpacInput[0] = HyperpacInput[1] = HyperpacInput[2] = 0x00;
+	HyperpacInput[0] = HyperpacInput[1] = HyperpacInput[2] = HyperpacInput[3] = 0x00;
+
+	if (ballboy3p) {
+		HyperpacInputPort2[2] |= HyperpacInputPort2f[2]; // 3p coin
+	}
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
 		HyperpacInput[0] |= (HyperpacInputPort0[i] & 1) << i;
 		HyperpacInput[1] |= (HyperpacInputPort1[i] & 1) << i;
 		HyperpacInput[2] |= (HyperpacInputPort2[i] & 1) << i;
+		HyperpacInput[3] |= (HyperpacInputPort3[i] & 1) << i;
+	}
+
+	if (ballboy3p) {
+		HyperpacClearOpposites(&HyperpacInput[3]);
+		HyperpacDip[0] = HyperpacInput[3]; // 3p inputs are loaded into dip
 	}
 
 	// Clear Opposites
@@ -716,6 +769,18 @@ static struct BurnDIPInfo SnowbrojDIPList[]=
 };
 
 STDDIPINFO(Snowbroj)
+
+static struct BurnDIPInfo Ballboy3pDIPList[]=
+{
+	DIP_OFFSET(0x1e)
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+	{0x01, 0xff, 0xff, 0x00, NULL                     },
+
+	// Dip 1 - N/A ballboy3p
+	// Dip 2 - N/A
+};
+
+STDDIPINFO(Ballboy3p)
 
 static struct BurnRomInfo HyperpacRomDesc[] = {
 	{ "hyperpac.h12",  0x20000, 0x2cf0531a, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -1331,6 +1396,22 @@ static struct BurnRomInfo BallboyRomDesc[] = {
 
 STD_ROM_PICK(Ballboy)
 STD_ROM_FN(Ballboy)
+
+static struct BurnRomInfo Ballboy3pRomDesc[] = {
+	{ "ur4",		0x020000, 0x32153d8f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "ur3",		0x020000, 0x4d462a75, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ua5",		0x080000, 0xfc72011f, 3 | BRF_GRA },           //  3 gfx1
+
+	{ "un7",		0x400000, 0xfe427e9d, 4 | BRF_GRA },           //  4 gfx2
+
+	{ "us5",		0x080000, 0x7c6368ef, 5 | BRF_SND },           //  5 oki
+
+	{ "sound.mcu",	0x010000, 0x00000000, 2 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  2 cpu2
+};
+
+STD_ROM_PICK(Ballboy3p)
+STD_ROM_FN(Ballboy3p)
 
 static INT32 HyperpacDoReset()
 {
@@ -3003,9 +3084,10 @@ static INT32 Snowbro3Init()
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x400000);
 
+	INT32 k = 0;
 	// Load and byte-swap 68000 Program roms
-	nRet = BurnLoadRom(HyperpacRom + 0x00001, 0, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(HyperpacRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacRom + 0x00001, k++, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacRom + 0x00000, k++, 2); if (nRet != 0) return 1;
 
 	// Decode 68000 Program Rom
 	UINT8 *buffer;
@@ -3017,18 +3099,20 @@ static INT32 Snowbro3Init()
 	BurnFree(buffer);
 
 	// Load and Decode Sprite Roms
-	nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, 2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, k++, 1); if (nRet != 0) return 1;
 	GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
 
 	// Load and Decode 8bpp Sprite Roms
 	memset(HyperpacTempGfx, 0, 0x400000);
-	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(HyperpacTempGfx + 0x200000, 4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, k++, 1); if (nRet != 0) return 1;
+	if (ballboy3p == 0) {
+		nRet = BurnLoadRom(HyperpacTempGfx + 0x200000, k++, 1); if (nRet != 0) return 1;
+	}
 	GfxDecode(HyperpacNumTiles8bpp, 8, 16, 16, Snowbro38BppPlaneOffsets, Snowbro38BppXOffsets, Snowbro38BppYOffsets, 0x800, HyperpacTempGfx, HyperpacSprites8bpp);
 
 	// Load Sample Roms
 	memset(HyperpacTempGfx, 0, 0x400000);
-	nRet = BurnLoadRom(HyperpacTempGfx, 5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacTempGfx, k++, 1); if (nRet != 0) return 1;
 	memcpy(MSM6295ROM + 0x00000, HyperpacTempGfx + 0x00000, 0x20000);
 	memcpy(MSM6295ROM + 0x80000, HyperpacTempGfx + 0x20000, 0x60000);
 	BurnFree(HyperpacTempGfx);
@@ -3083,6 +3167,7 @@ static INT32 HyperpacExit()
 	Twinadv = 0;
 	Honeydol = 0;
 	Snowbro3 = 0;
+	ballboy3p = 0;
 
 	return 0;
 }
@@ -4487,6 +4572,23 @@ struct BurnDriver BurnDrvBallboy = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, BallboyRomInfo, BallboyRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	Snowbro3Init, SnowbrosExit, Snowbro3Frame, Snowbro3Render, Snowbro3Scan,
+	NULL, 0x400, 256, 224, 4, 3
+};
+
+static INT32 Ballboy3pInit()
+{
+	ballboy3p = 1;
+
+	return Snowbro3Init();
+}
+
+struct BurnDriver BurnDrvBallboy3p = {
+	"ballboy3p", "snowbro3", NULL, NULL, "2003",
+	"Ball Boy (3 players)\0", NULL, "bootleg", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, Ballboy3pRomInfo, Ballboy3pRomName, NULL, NULL, NULL, NULL, Ballboy3pInputInfo, Ballboy3pDIPInfo,
+	Ballboy3pInit, SnowbrosExit, Snowbro3Frame, Snowbro3Render, Snowbro3Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
 

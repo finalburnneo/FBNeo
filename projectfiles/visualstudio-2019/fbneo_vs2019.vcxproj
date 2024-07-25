@@ -104,6 +104,7 @@
     <ClCompile Include="..\..\src\burn\devices\atarimo.cpp" />
     <ClCompile Include="..\..\src\burn\devices\atarirle.cpp" />
     <ClCompile Include="..\..\src\burn\devices\atarivad.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\atmel_arm_aic.cpp" />
     <ClCompile Include="..\..\src\burn\devices\avgdvg.cpp" />
     <ClCompile Include="..\..\src\burn\devices\bsmt2000.cpp" />
     <ClCompile Include="..\..\src\burn\devices\c169.cpp" />
@@ -297,6 +298,7 @@
     <ClCompile Include="..\..\src\burn\snd\tiamc1_snd.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf271.cpp" />
+    <ClCompile Include="..\..\src\cpu\arm946es_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
     <ClCompile Include="..\..\src\cpu\f8\f8.cpp" />
     <ClCompile Include="..\..\src\cpu\i386\i386.cpp" />

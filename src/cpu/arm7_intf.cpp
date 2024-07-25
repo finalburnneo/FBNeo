@@ -28,6 +28,7 @@ static UINT8  (*pReadByteHandler)(UINT32) = NULL;
 
 static UINT32 Arm7IdleLoop = ~0;
 
+extern UINT8 m_archRev;
 extern void arm7_set_irq_line(INT32 irqline, INT32 state);
 
 static void core_set_irq(INT32 /*cpu*/, INT32 irqline, INT32 state)
@@ -73,7 +74,8 @@ void Arm7Exit() // only one cpu supported
 			membase[i] = NULL;
 		}
 	}
-
+    
+    m_archRev = 0;
 	Arm7IdleLoop = ~0;
 	
 	DebugCPU_ARM7Initted = 0;
@@ -403,6 +405,6 @@ void Arm7Init( INT32 nCPU ) // only one cpu supported
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
 		memset(membase[i], 0, PAGE_COUNT * sizeof(UINT8*));
 	}
-
+    m_archRev = 4;
 	CpuCheatRegister(nCPU, &Arm7Config);
 }

@@ -191,6 +191,7 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define Z_BIT   30
 #define C_BIT   29
 #define V_BIT   28
+#define Q_BIT   27
 #define I_BIT   7
 #define F_BIT   6
 #define T_BIT   5   // Thumb mode
@@ -199,6 +200,7 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define Z_MASK  ((UINT32)(1 << Z_BIT)) /* Zero flag */
 #define C_MASK  ((UINT32)(1 << C_BIT)) /* Carry flag */
 #define V_MASK  ((UINT32)(1 << V_BIT)) /* oVerflow flag */
+#define Q_MASK  ((UINT32)(1 << Q_BIT)) /* signed overflow for QADD, MAC */
 #define I_MASK  ((UINT32)(1 << I_BIT)) /* Interrupt request disable */
 #define F_MASK  ((UINT32)(1 << F_BIT)) /* Fast interrupt request disable */
 #define T_MASK  ((UINT32)(1 << T_BIT)) /* Thumb Mode flag */
@@ -207,6 +209,7 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define Z_IS_SET(pc)    ((pc) & Z_MASK)
 #define C_IS_SET(pc)    ((pc) & C_MASK)
 #define V_IS_SET(pc)    ((pc) & V_MASK)
+#define Q_IS_SET(pc)    ((pc) & Q_MASK)
 #define I_IS_SET(pc)    ((pc) & I_MASK)
 #define F_IS_SET(pc)    ((pc) & F_MASK)
 #define T_IS_SET(pc)    ((pc) & T_MASK)
@@ -215,6 +218,7 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define Z_IS_CLEAR(pc)  (!Z_IS_SET(pc))
 #define C_IS_CLEAR(pc)  (!C_IS_SET(pc))
 #define V_IS_CLEAR(pc)  (!V_IS_SET(pc))
+#define Q_IS_CLEAR(pc)  (!Q_IS_SET(pc))
 #define I_IS_CLEAR(pc)  (!I_IS_SET(pc))
 #define F_IS_CLEAR(pc)  (!F_IS_SET(pc))
 #define T_IS_CLEAR(pc)  (!T_IS_SET(pc))
@@ -264,6 +268,18 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define INSN_RD_SHIFT               12
 #define INSN_COND_SHIFT             28
 
+#define INSN_COPRO_N        ((UINT32) 0x00100000u)
+#define INSN_COPRO_CREG     ((UINT32) 0x000f0000u)
+#define INSN_COPRO_AREG     ((UINT32) 0x0000f000u)
+#define INSN_COPRO_CPNUM    ((UINT32) 0x00000f00u)
+#define INSN_COPRO_OP2      ((UINT32) 0x000000e0u)
+#define INSN_COPRO_OP3      ((UINT32) 0x0000000fu)
+#define INSN_COPRO_N_SHIFT          20
+#define INSN_COPRO_CREG_SHIFT       16
+#define INSN_COPRO_AREG_SHIFT       12
+#define INSN_COPRO_CPNUM_SHIFT      8
+#define INSN_COPRO_OP2_SHIFT        5
+
 #define THUMB_INSN_TYPE     ((UINT16)0xf000)
 #define THUMB_COND_TYPE     ((UINT16)0x0f00)
 #define THUMB_GROUP4_TYPE   ((UINT16)0x0c00)
@@ -274,12 +290,12 @@ static const int sRegisterTable[ARM7_NUM_MODES][18] =
 #define THUMB_ADDSUB_RNIMM  ((UINT16)0x01c0)
 #define THUMB_ADDSUB_RS     ((UINT16)0x0038)
 #define THUMB_ADDSUB_RD     ((UINT16)0x0007)
-#define THUMB_INSN_ADDSUB   ((UINT16)0x0800)
 #define THUMB_INSN_CMP      ((UINT16)0x0800)
 #define THUMB_INSN_SUB      ((UINT16)0x0800)
 #define THUMB_INSN_IMM_RD   ((UINT16)0x0700)
 #define THUMB_INSN_IMM_S    ((UINT16)0x0080)
 #define THUMB_INSN_IMM      ((UINT16)0x00ff)
+#define THUMB_INSN_ADDSUB   ((UINT16)0x0800)
 #define THUMB_ADDSUB_TYPE   ((UINT16)0x0600)
 #define THUMB_HIREG_OP      ((UINT16)0x0300)
 #define THUMB_HIREG_H       ((UINT16)0x00c0)
@@ -371,11 +387,15 @@ enum
 #define ROL(v, s) (LSL((v), (s)) | (LSR((v), 32u - (s))))
 #define ROR(v, s) (LSR((v), (s)) | (LSL((v), 32u - (s))))
 
+#define UNEXECUTED() \
+	R15 += 4; \
+	ARM7_ICOUNT +=2; /* Any unexecuted instruction only takes 1 cycle (page 193) */
+
 /* Convenience Macros */
 #define R15                     ARM7REG(eR15)
 #define SPSR                    17                     // SPSR is always the 18th register in our 0 based array sRegisterTable[][18]
 #define GET_CPSR                ARM7REG(eCPSR)
-#define SET_CPSR(v)             (GET_CPSR = (v))
+#define SET_CPSR(v)             (set_cpsr(v))
 #define MODE_FLAG               0xF                    // Mode bits are 4:0 of CPSR, but we ignore bit 4.
 #define GET_MODE                (GET_CPSR & MODE_FLAG)
 #define SIGN_BIT                ((UINT32)(1 << 31))
@@ -384,15 +404,223 @@ enum
 #define THUMB_SIGN_BIT               ((UINT32)(1 << 31))
 #define THUMB_SIGN_BITS_DIFFER(a, b) (((a)^(b)) >> 31)
 
+#define SR_MODE32               0x10
+#define MODE32                  (GET_CPSR & SR_MODE32)
+#define MODE26                  (!(GET_CPSR & SR_MODE32))
+#define GET_PC                  (MODE32 ? R15 : R15 & 0x03FFFFFC)
+
+#define ARM7_TLB_ABORT_D (1 << 0)
+#define ARM7_TLB_ABORT_P (1 << 1)
+#define ARM7_TLB_READ    (1 << 2)
+#define ARM7_TLB_WRITE   (1 << 3)
+
 /* At one point I thought these needed to be cpu implementation specific, but they don't.. */
 #define GET_REGISTER(reg)       GetRegister(reg)
 #define SET_REGISTER(reg, val)  SetRegister(reg, val)
+#define GET_MODE_REGISTER(mode, val)  GetModeRegister(mode, val)
+#define SET_MODE_REGISTER(mode, index, val)  SetModeRegister(mode, index, val)
 #define ARM7_CHECKIRQ           arm7_check_irq_state()
+
+extern INT64 saturate_qbit_overflow(INT64 res);
 
 extern void((*arm7_coproc_do_callback)(unsigned int, unsigned int));
 extern unsigned int((*arm7_coproc_rt_r_callback)(unsigned int));
 extern void((*arm7_coproc_rt_w_callback)(unsigned int, unsigned int));
 extern void (*arm7_coproc_dt_r_callback)(UINT32 insn, UINT32* prn, UINT32 (*read32)(UINT32 addr));
 extern void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32* prn, void (*write32)(UINT32 addr, UINT32 data));
+
+extern UINT8 (*arm7_cpu_read8_func_t)(UINT32 addr);
+extern void (*arm7_cpu_write8_func_t)(UINT32 addr, UINT8 data);
+extern UINT16 (*arm7_cpu_read16_func_t)(UINT32 addr);
+extern void (*arm7_cpu_write16_func_t)(UINT32 addr, UINT16 data);
+extern UINT32 (*arm7_cpu_read32_func_t)(UINT32 addr);
+extern void (*arm7_cpu_write32_func_t)(UINT32 addr, UINT32 data);
+
+void tg00_0(UINT32 pc, UINT32 insn);
+void tg00_1(UINT32 pc, UINT32 insn);
+void tg01_0(UINT32 pc, UINT32 insn);
+void tg01_10(UINT32 pc, UINT32 insn);
+void tg01_11(UINT32 pc, UINT32 insn);
+void tg01_12(UINT32 pc, UINT32 insn);
+void tg01_13(UINT32 pc, UINT32 insn);
+void tg02_0(UINT32 pc, UINT32 insn);
+void tg02_1(UINT32 pc, UINT32 insn);
+void tg03_0(UINT32 pc, UINT32 insn);
+void tg03_1(UINT32 pc, UINT32 insn);
+void tg04_00_00(UINT32 pc, UINT32 insn);
+void tg04_00_01(UINT32 pc, UINT32 insn);
+void tg04_00_02(UINT32 pc, UINT32 insn);
+void tg04_00_03(UINT32 pc, UINT32 insn);
+void tg04_00_04(UINT32 pc, UINT32 insn);
+void tg04_00_05(UINT32 pc, UINT32 insn);
+void tg04_00_06(UINT32 pc, UINT32 insn);
+void tg04_00_07(UINT32 pc, UINT32 insn);
+void tg04_00_08(UINT32 pc, UINT32 insn);
+void tg04_00_09(UINT32 pc, UINT32 insn);
+void tg04_00_0a(UINT32 pc, UINT32 insn);
+void tg04_00_0b(UINT32 pc, UINT32 insn);
+void tg04_00_0c(UINT32 pc, UINT32 insn);
+void tg04_00_0d(UINT32 pc, UINT32 insn);
+void tg04_00_0e(UINT32 pc, UINT32 insn);
+void tg04_00_0f(UINT32 pc, UINT32 insn);
+void tg04_01_00(UINT32 pc, UINT32 insn);
+void tg04_01_01(UINT32 pc, UINT32 insn);
+void tg04_01_02(UINT32 pc, UINT32 insn);
+void tg04_01_03(UINT32 pc, UINT32 insn);
+void tg04_01_10(UINT32 pc, UINT32 insn);
+void tg04_01_11(UINT32 pc, UINT32 insn);
+void tg04_01_12(UINT32 pc, UINT32 insn);
+void tg04_01_13(UINT32 pc, UINT32 insn);
+void tg04_01_20(UINT32 pc, UINT32 insn);
+void tg04_01_21(UINT32 pc, UINT32 insn);
+void tg04_01_22(UINT32 pc, UINT32 insn);
+void tg04_01_23(UINT32 pc, UINT32 insn);
+void tg04_01_30(UINT32 pc, UINT32 insn);
+void tg04_01_31(UINT32 pc, UINT32 insn);
+void tg04_01_32(UINT32 pc, UINT32 insn);
+void tg04_01_33(UINT32 pc, UINT32 insn);
+void tg04_0203(UINT32 pc, UINT32 insn);
+void tg05_0(UINT32 pc, UINT32 insn);
+void tg05_1(UINT32 pc, UINT32 insn);
+void tg05_2(UINT32 pc, UINT32 insn);
+void tg05_3(UINT32 pc, UINT32 insn);
+void tg05_4(UINT32 pc, UINT32 insn);
+void tg05_5(UINT32 pc, UINT32 insn);
+void tg05_6(UINT32 pc, UINT32 insn);
+void tg05_7(UINT32 pc, UINT32 insn);
+void tg06_0(UINT32 pc, UINT32 insn);
+void tg06_1(UINT32 pc, UINT32 insn);
+void tg07_0(UINT32 pc, UINT32 insn);
+void tg07_1(UINT32 pc, UINT32 insn);
+void tg08_0(UINT32 pc, UINT32 insn);
+void tg08_1(UINT32 pc, UINT32 insn);
+void tg09_0(UINT32 pc, UINT32 insn);
+void tg09_1(UINT32 pc, UINT32 insn);
+void tg0a_0(UINT32 pc, UINT32 insn);
+void tg0a_1(UINT32 pc, UINT32 insn);
+void tg0b_0(UINT32 pc, UINT32 insn);
+void tg0b_1(UINT32 pc, UINT32 insn);
+void tg0b_2(UINT32 pc, UINT32 insn);
+void tg0b_3(UINT32 pc, UINT32 insn);
+void tg0b_4(UINT32 pc, UINT32 insn);
+void tg0b_5(UINT32 pc, UINT32 insn);
+void tg0b_6(UINT32 pc, UINT32 insn);
+void tg0b_7(UINT32 pc, UINT32 insn);
+void tg0b_8(UINT32 pc, UINT32 insn);
+void tg0b_9(UINT32 pc, UINT32 insn);
+void tg0b_a(UINT32 pc, UINT32 insn);
+void tg0b_b(UINT32 pc, UINT32 insn);
+void tg0b_c(UINT32 pc, UINT32 insn);
+void tg0b_d(UINT32 pc, UINT32 insn);
+void tg0b_e(UINT32 pc, UINT32 insn);
+void tg0b_f(UINT32 pc, UINT32 insn);
+void tg0c_0(UINT32 pc, UINT32 insn);
+void tg0c_1(UINT32 pc, UINT32 insn);
+void tg0d_0(UINT32 pc, UINT32 insn);
+void tg0d_1(UINT32 pc, UINT32 insn);
+void tg0d_2(UINT32 pc, UINT32 insn);
+void tg0d_3(UINT32 pc, UINT32 insn);
+void tg0d_4(UINT32 pc, UINT32 insn);
+void tg0d_5(UINT32 pc, UINT32 insn);
+void tg0d_6(UINT32 pc, UINT32 insn);
+void tg0d_7(UINT32 pc, UINT32 insn);
+void tg0d_8(UINT32 pc, UINT32 insn);
+void tg0d_9(UINT32 pc, UINT32 insn);
+void tg0d_a(UINT32 pc, UINT32 insn);
+void tg0d_b(UINT32 pc, UINT32 insn);
+void tg0d_c(UINT32 pc, UINT32 insn);
+void tg0d_d(UINT32 pc, UINT32 insn);
+void tg0d_e(UINT32 pc, UINT32 insn);
+void tg0d_f(UINT32 pc, UINT32 insn);
+void tg0e_0(UINT32 pc, UINT32 insn);
+void tg0e_1(UINT32 pc, UINT32 insn);
+void tg0f_0(UINT32 pc, UINT32 insn);
+void tg0f_1(UINT32 pc, UINT32 insn);
+
+typedef void (* arm7thumb_ophandler) (UINT32, UINT32);
+extern const arm7thumb_ophandler thumb_handler[0x40 * 0x10];
+
+void arm7ops_0123(UINT32 insn);
+void arm7ops_4567(UINT32 insn);
+void arm7ops_89(UINT32 insn);
+void arm7ops_ab(UINT32 insn);
+void arm7ops_cd(UINT32 insn);
+void arm7ops_e(UINT32 insn);
+void arm7ops_f(UINT32 insn);
+
+void arm9ops_undef(UINT32 insn);
+void arm9ops_1(UINT32 insn);
+void arm9ops_57(UINT32 insn);
+void arm9ops_89(UINT32 insn);
+void arm9ops_ab(UINT32 insn);
+void arm9ops_c(UINT32 insn);
+void arm9ops_e(UINT32 insn);
+
+typedef void (* arm7ops_ophandler)(UINT32);
+extern const arm7ops_ophandler ops_handler[0x20];
+
+/***************
+ * helper funcs
+ ***************/
+
+ // TODO LD:
+ //  - SIGN_BITS_DIFFER = THUMB_SIGN_BITS_DIFFER
+ //  - do while (0)
+ //  - HandleALUAddFlags = HandleThumbALUAddFlags except for PC incr
+ //  - HandleALUSubFlags = HandleThumbALUSubFlags except for PC incr
+
+ /* Set NZCV flags for ADDS / SUBS */
+#define HandleALUAddFlags(rd, rn, op2)                                                \
+  if (insn & INSN_S)                                                                  \
+    SET_CPSR(((GET_CPSR & ~(N_MASK | Z_MASK | V_MASK | C_MASK))                       \
+              | (((!SIGN_BITS_DIFFER(rn, op2)) && SIGN_BITS_DIFFER(rn, rd)) << V_BIT) \
+              | (((~(rn)) < (op2)) << C_BIT)                                          \
+              | HandleALUNZFlags(rd)));                                               \
+  R15 += 4;
+
+#define HandleThumbALUAddFlags(rd, rn, op2)                                                       \
+    SET_CPSR(((GET_CPSR & ~(N_MASK | Z_MASK | V_MASK | C_MASK))                                   \
+              | (((!THUMB_SIGN_BITS_DIFFER(rn, op2)) && THUMB_SIGN_BITS_DIFFER(rn, rd)) << V_BIT) \
+              | (((~(rn)) < (op2)) << C_BIT)                                                      \
+              | HandleALUNZFlags(rd)));                                                           \
+  R15 += 2;
+
+#define IsNeg(i) ((i) >> 31)
+#define IsPos(i) ((~(i)) >> 31)
+
+#define HandleALUSubFlags(rd, rn, op2)                                                                         \
+  if (insn & INSN_S)                                                                                           \
+    SET_CPSR(((GET_CPSR & ~(N_MASK | Z_MASK | V_MASK | C_MASK))                                                \
+              | ((SIGN_BITS_DIFFER(rn, op2) && SIGN_BITS_DIFFER(rn, rd)) << V_BIT)                             \
+              | (((IsNeg(rn) & IsPos(op2)) | (IsNeg(rn) & IsPos(rd)) | (IsPos(op2) & IsPos(rd))) ? C_MASK : 0) \
+              | HandleALUNZFlags(rd)));                                                                        \
+  R15 += 4;
+
+#define HandleThumbALUSubFlags(rd, rn, op2)                                                                    \
+    SET_CPSR(((GET_CPSR & ~(N_MASK | Z_MASK | V_MASK | C_MASK))                                                \
+              | ((THUMB_SIGN_BITS_DIFFER(rn, op2) && THUMB_SIGN_BITS_DIFFER(rn, rd)) << V_BIT)                 \
+              | (((IsNeg(rn) & IsPos(op2)) | (IsNeg(rn) & IsPos(rd)) | (IsPos(op2) & IsPos(rd))) ? C_MASK : 0) \
+              | HandleALUNZFlags(rd)));                                                                        \
+  R15 += 2;
+
+/* Set NZC flags for logical operations. */
+
+// This macro (which I didn't write) - doesn't make it obvious that the SIGN BIT = 31, just as the N Bit does,
+// therefore, N is set by default
+#define HandleALUNZFlags(rd)               \
+  (((rd) & SIGN_BIT) | ((!(rd)) << Z_BIT))
+
+
+// Long ALU Functions use bit 63
+#define HandleLongALUNZFlags(rd)                            \
+  ((((rd) & ((UINT64)1 << 63)) >> 32) | ((!(rd)) << Z_BIT))
+
+#define HandleALULogicalFlags(rd, sc)                  \
+  if (insn & INSN_S)                                   \
+    SET_CPSR(((GET_CPSR & ~(N_MASK | Z_MASK | C_MASK)) \
+              | HandleALUNZFlags(rd)                   \
+              | (((sc) != 0) << C_BIT)));              \
+  R15 += 4;
+
 
 #endif /* __ARM7CORE_H__ */

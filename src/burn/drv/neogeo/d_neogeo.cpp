@@ -28086,7 +28086,7 @@ struct BurnDriver BurnDrvYoyoshkn = {
 // Soldier Girl Amazon (HB, IQ_132 port)
 
 static struct BurnRomInfo amazoneoRomDesc[] = {
-	{ "amazon-p1.p1",    0x020000, 0xF52D1C73, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "amazon-p1.p1",    0x020000, 0xF5F57B9D, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "amazon-s1.s1",    0x020000, 0x128166BB, 2 | BRF_GRA },           //  1 Text layer tiles
 

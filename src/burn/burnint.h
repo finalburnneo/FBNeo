@@ -141,6 +141,38 @@ inline static void PutPix(UINT8* pPix, UINT32 c)
 	}
 }
 
+// ------------------------------------------------------------------
+// Count leading ones
+static inline UINT8 count_leading_ones(UINT32 val)
+{
+    UINT8 count;
+    for (count = 0; INT32(val) < 0; count++) val <<= 1;
+    return count;
+}
+
+static inline UINT8 count_leading_zeros_32(UINT32 val)
+{
+    UINT8 count;
+
+    if (!val) return 32U;
+
+    for (count = 0; (INT32)val >= 0; count++) val <<= 1;
+    return count;
+}
+
+static inline unsigned population_count_32(uint32_t val)
+{
+    // optimal Hamming weight assuing fast 32*32->32
+    constexpr uint32_t m1(0x55555555);
+    constexpr uint32_t m2(0x33333333);
+    constexpr uint32_t m4(0x0f0f0f0f);
+    constexpr uint32_t h01(0x01010101);
+    val -= (val >> 1) & m1;
+    val = (val & m2) + ((val >> 2) & m2);
+    val = (val + (val >> 4)) & m4;
+    return unsigned((val * h01) >> 24);
+}
+
 // ---------------------------------------------------------------------------
 // Setting up cpus for cheats
 

@@ -37,6 +37,7 @@
 #include "burnint.h"
 #include "arm7core.h"
 #include "arm7_intf.h"
+#include "arm9_intf.h"
 
 /* Example for showing how Co-Proc functions work */
 #define TEST_COPROC_FUNCS 0
@@ -56,12 +57,19 @@ static char *Spec_DO(char *pBuf, UINT32 opcode, char *pConditionCode, char *pBuf
 /* Macros that can be re-defined for custom cpu implementations - The core expects these to be defined */
 /* In this case, we are using the default arm7 handlers (supplied by the core)
    - but simply changes these and define your own if needed for cpu implementation specific needs */
-#define READ8(addr)         arm7_cpu_read8(addr)
-#define WRITE8(addr,data)   arm7_cpu_write8(addr,data)
-#define READ16(addr)        arm7_cpu_read16(addr)
-#define WRITE16(addr,data)  arm7_cpu_write16(addr,data)
-#define READ32(addr)        arm7_cpu_read32(addr)
-#define WRITE32(addr,data)  arm7_cpu_write32(addr,data)
+//#define READ8(addr)         arm7_cpu_read8(addr)
+//#define WRITE8(addr,data)   arm7_cpu_write8(addr,data)
+//#define READ16(addr)        arm7_cpu_read16(addr)
+//#define WRITE16(addr,data)  arm7_cpu_write16(addr,data)
+//#define READ32(addr)        arm7_cpu_read32(addr)
+//#define WRITE32(addr,data)  arm7_cpu_write32(addr,data)
+
+#define READ8(addr) arm7_read8_func(addr)
+#define WRITE8(addr, data) arm7_write8_func(addr, data)
+#define READ16(addr) arm7_read16_func(addr)
+#define WRITE16(addr, data) arm7_write16_func(addr, data)
+#define READ32(addr) arm7_read32_func(addr)
+#define WRITE32(addr, data) arm7_write32_func(addr, data)
 #define PTR_READ32          &arm7_cpu_read32
 #define PTR_WRITE32         &arm7_cpu_write32
 
@@ -81,6 +89,13 @@ static int ARM7_ICOUNT;
 static int total_cycles = 0;
 static int curr_cycles = 0;
 static int end_run = 0;
+
+UINT8 m_archRev;
+
+//ARM946ES MMU
+UINT32 cp15_control, cp15_itcm_base, cp15_dtcm_base, cp15_itcm_size, cp15_dtcm_size;
+UINT32 cp15_itcm_end, cp15_dtcm_end, cp15_itcm_reg, cp15_dtcm_reg;
+UINT8 ITCM[0x8000], DTCM[0x4000];
 
 void Arm7Open(int ) 
 {
@@ -218,3 +233,76 @@ int Arm7Scan(int nAction)
 
 	return 0;
 }
+
+int Arm946esScan(int nAction)
+{
+#if defined FBNEO_DEBUG
+    if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Scan called without init\n"));
+#endif
+    struct BurnArea ba;
+    if (nAction & ACB_DRIVER_DATA) {
+        memset(&ba, 0, sizeof(ba));
+        ba.Data      = (unsigned char*)&ARM7;
+        ba.nLen      = sizeof(ARM7);
+        ba.szName = "All  Registers";
+        BurnAcb(&ba);
+
+        SCAN_VAR(ARM7_ICOUNT);
+        SCAN_VAR(total_cycles);
+        SCAN_VAR(curr_cycles);
+        
+        SCAN_VAR(cp15_control);
+        SCAN_VAR(cp15_itcm_base);
+        SCAN_VAR(cp15_dtcm_base);
+        SCAN_VAR(cp15_itcm_size);
+        SCAN_VAR(cp15_dtcm_size);
+        SCAN_VAR(cp15_itcm_end);
+        SCAN_VAR(cp15_dtcm_end);
+        SCAN_VAR(cp15_itcm_reg);
+        SCAN_VAR(cp15_dtcm_reg);
+        SCAN_VAR(ITCM);
+        SCAN_VAR(DTCM);
+    }
+
+    return 0;
+}
+
+void init_arm9_calllback()
+{
+    arm7_cpu_read8_func_t = arm946es_cpu_read8;
+    arm7_cpu_read16_func_t = arm946es_cpu_read16;
+    arm7_cpu_read32_func_t = arm946es_cpu_read32;
+    arm7_cpu_write8_func_t = arm946es_cpu_write8;
+    arm7_cpu_write16_func_t = arm946es_cpu_write16;
+    arm7_cpu_write32_func_t = arm946es_cpu_write32;
+    arm7_cpu_readop16_func_t = arm946es_cpu_readop16;
+    arm7_cpu_readop32_func_t = arm946es_cpu_readop32;
+}
+
+void exit_arm9_calllback()
+{
+    arm7_cpu_read8_func_t = NULL;
+    arm7_cpu_read16_func_t = NULL;
+    arm7_cpu_read32_func_t = NULL;
+    arm7_cpu_write8_func_t = NULL;
+    arm7_cpu_write16_func_t = NULL;
+    arm7_cpu_write32_func_t = NULL;
+    arm7_cpu_readop16_func_t = NULL;
+    arm7_cpu_readop32_func_t = NULL;
+}
+
+void init_arm946es_calllback()
+{
+    arm7_coproc_rt_r_callback = arm946es_rt_r_callback;
+    arm7_coproc_rt_w_callback = arm946es_rt_w_callback;
+    
+    init_arm9_calllback();
+}
+
+void exit_arm946es_calllback()
+{
+    arm7_coproc_rt_r_callback = NULL;
+    arm7_coproc_rt_w_callback = NULL;
+    exit_arm9_calllback();
+}
+

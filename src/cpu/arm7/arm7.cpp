@@ -267,8 +267,11 @@ int Arm946esScan(int nAction)
     return 0;
 }
 
-void init_arm9_calllback()
+void init_arm946es_calllback()
 {
+    arm7_coproc_rt_r_callback = arm946es_rt_r_callback;
+    arm7_coproc_rt_w_callback = arm946es_rt_w_callback;
+    
     arm7_cpu_read8_func_t = arm946es_cpu_read8;
     arm7_cpu_read16_func_t = arm946es_cpu_read16;
     arm7_cpu_read32_func_t = arm946es_cpu_read32;
@@ -279,8 +282,11 @@ void init_arm9_calllback()
     arm7_cpu_readop32_func_t = arm946es_cpu_readop32;
 }
 
-void exit_arm9_calllback()
+void exit_arm946es_calllback()
 {
+    arm7_coproc_rt_r_callback = NULL;
+    arm7_coproc_rt_w_callback = NULL;
+    
     arm7_cpu_read8_func_t = NULL;
     arm7_cpu_read16_func_t = NULL;
     arm7_cpu_read32_func_t = NULL;
@@ -289,20 +295,5 @@ void exit_arm9_calllback()
     arm7_cpu_write32_func_t = NULL;
     arm7_cpu_readop16_func_t = NULL;
     arm7_cpu_readop32_func_t = NULL;
-}
-
-void init_arm946es_calllback()
-{
-    arm7_coproc_rt_r_callback = arm946es_rt_r_callback;
-    arm7_coproc_rt_w_callback = arm946es_rt_w_callback;
-    
-    init_arm9_calllback();
-}
-
-void exit_arm946es_calllback()
-{
-    arm7_coproc_rt_r_callback = NULL;
-    arm7_coproc_rt_w_callback = NULL;
-    exit_arm9_calllback();
 }
 

@@ -55762,3 +55762,22 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+
+//Hayato's Journey
+//https://master-linkuei.itch.io/hayatos-journey
+static struct BurnRomInfo md_hayatosjRomDesc[] = {
+	{ "Hayato's Journey v1_0.bin", 4194304, 0x7f54be40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hayatosj)
+STD_ROM_FN(md_hayatosj)
+
+struct BurnDriver BurnDrvmd_hayatosj = {
+	"md_hayatosj", NULL, NULL, NULL, "2024",
+	"Hayato's Journey (HB)\0", NULL, "Master Linkuei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_hayatosjRomInfo, md_hayatosjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

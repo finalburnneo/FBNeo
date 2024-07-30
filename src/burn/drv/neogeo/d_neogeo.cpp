@@ -26731,7 +26731,7 @@ static INT32 CphdInit()
 
 struct BurnDriver BurnDrvCphd = {
 	"cphd", NULL, "neogeo", NULL, "2013",
-	"Crouching Poney Hidden Dragon (DEMO)\0", NULL, "Le Cortex", "Neo Geo",
+	"Crouching Poney Hidden Dragon (DEMO)\0", "Not compatible with UniBIOS!", "Le Cortex", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_ACTION, 0,
 	NULL, cphdRomInfo, cphdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

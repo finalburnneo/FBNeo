@@ -50172,3 +50172,139 @@ struct BurnDriver BurnSpecZxwordle = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Renenzaiter (128K)
+
+static struct BurnRomInfo SpecRenzait128RomDesc[] = {
+	{ "Renenzaiter 128K (2024)(BTCO).tap", 53343, 0x875304f3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRenzait128, SpecRenzait128, Spec128)
+STD_ROM_FN(SpecRenzait128)
+
+struct BurnDriver BurnSpecRenzait128 = {
+	"spec_renzait128", NULL, "spec_spec128", NULL, "2024",
+	"Renenzaiter (128K)\0", NULL, "BTCO", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRenzait128RomInfo, SpecRenzait128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Renenzaiter (48K)
+
+static struct BurnRomInfo SpecRenzait48RomDesc[] = {
+	{ "Renenzaiter 48K (2024)(BTCO).tap", 53058, 0xaaf6ef2d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRenzait48, SpecRenzait48, Spectrum)
+STD_ROM_FN(SpecRenzait48)
+
+struct BurnDriver BurnSpecRenzait48 = {
+	"spec_renzait48", "spec_renzait128", "spec_spectrum", NULL, "2024",
+	"Renenzaiter (48K)\0", NULL, "BTCO", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRenzait48RomInfo, SpecRenzait48RomName,
+	NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Winter Olympiad '88 (48K)
+
+static struct BurnRomInfo SpecWinterolp88RomDesc[] = {
+	{ "Winter Olympiad '88 48K (1987)(Tynesoft).tap", 226895, 0xa50b4143, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWinterolp88, SpecWinterolp88, Spectrum)
+STD_ROM_FN(SpecWinterolp88)
+
+struct BurnDriver BurnSpecWinterolp88 = {
+	"spec_winterolp88", NULL, "spec_spectrum", NULL, "1987",
+	"Winter Olympiad '88 (48K)\0", NULL, "Tynesoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 9, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
+	SpectrumGetZipName, SpecWinterolp88RomInfo, SpecWinterolp88RomName,
+	NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Winter Sports (128K)
+
+static struct BurnRomInfo SpecWintersp128RomDesc[] = {
+	{ "Winter Sports 128K (1985)(Electric Dreams Software).tap", 117057, 0x4b785e14, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWintersp128, SpecWintersp128, Spec128)
+STD_ROM_FN(SpecWintersp128)
+
+struct BurnDriver BurnSpecWintersp128 = {
+	"spec_wintersp128", NULL, "spec_spec128", NULL, "1985",
+	"Winter Sports (128K)\0", "Play events in random order", "Electric Dreams Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
+	SpectrumGetZipName, SpecWintersp128RomInfo, SpecWintersp128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Winter Sports (48K)
+
+static struct BurnRomInfo SpecWintersp48RomDesc[] = {
+	{ "Winter Sports 48K (1985)(Electric Dreams Software).tap", 245160, 0xb539f2c6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWintersp48, SpecWintersp48, Spectrum)
+STD_ROM_FN(SpecWintersp48)
+
+struct BurnDriver BurnSpecWintersp48 = {
+	"spec_wintersp48", "spec_wintersp128", "spec_spectrum", NULL, "1985",
+	"Winter Sports (48K)\0", "Play events in ascending order", "Electric Dreams Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
+	SpectrumGetZipName, SpecWintersp48RomInfo, SpecWintersp48RomName,
+	NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Shadow of the Unicorn (128K)
+
+static struct BurnRomInfo SpecShadowotuRomDesc[] = {
+	{ "Shadow of the Unicorn 128K (1985)(Mikro-Gen Ltd).tap", 64656, 0xe88639c9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecShadowotu, SpecShadowotu, Spec1282a)
+STD_ROM_FN(SpecShadowotu)
+
+struct BurnDriver BurnSpecShadowotu = {
+	"spec_shadowotu", NULL, "spec_spec1282a", NULL, "1985",
+	"Shadow of the Unicorn (128K)\0", "Don't go back to ROM menu/loader", "Mikro-Gen Ltd", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecShadowotuRomInfo, SpecShadowotuRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Amazing Rocketeer, The (48K)
+
+static struct BurnRomInfo SpecAmazRockRomDesc[] = {
+	{ "Amazing Rocketeer, The 48K (2007)(John Fotou).tap", 91791, 0x246b37d3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAmazRock, SpecAmazRock, Spectrum)
+STD_ROM_FN(SpecAmazRock)
+
+struct BurnDriver BurnSpecAmazRock = {
+	"spec_amazrock", NULL, "spec_spectrum", NULL, "2007",
+	"Amazing Rocketeer, The (48K)\0", "Kempston only | Y=Fire | X=Exit Game | ,=Next Lvl | CTRL=Map", "John Fotou", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAmazRockRomInfo, SpecAmazRockRomName,
+	NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

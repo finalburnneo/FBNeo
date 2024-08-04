@@ -55855,7 +55855,7 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-/ Out of the Vortex (Prototype)
+// Out of the Vortex (Prototype)
 // https://hiddenpalace.org/Out_of_the_Vortex_(Prototype)
 
 static struct BurnRomInfo md_oovortexRomDesc[] = {

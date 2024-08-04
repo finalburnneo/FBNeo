@@ -55855,3 +55855,58 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+/ Out of the Vortex (Prototype)
+// https://hiddenpalace.org/Out_of_the_Vortex_(Prototype)
+
+static struct BurnRomInfo md_oovortexRomDesc[] = {
+	{ "Out of the Vortex (Prototype)(2019).md", 0x200000, 0x3eaab03e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_oovortex)
+STD_ROM_FN(md_oovortex)
+
+struct BurnDriver BurnDrvmd_oovortex = {
+	"md_oovortex", NULL, NULL, NULL, "2019",
+	"Out of the Vortex (Prototype)\0", "Unreleased Prototype: hiddenpalace.org", "Pipozor", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+  BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_oovortexRomInfo, md_oovortexRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Maxidrive (Hack By Speems)
+static struct BurnRomInfo md_sonicmaxiRomDesc[] = {
+	{ "Sonic Maxidrive (Hack)(2024)(Speems).bin", 852474, 0x2fbcb6ae, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicmaxi)
+STD_ROM_FN(md_sonicmaxi)
+
+struct BurnDriver BurnDrvmd_sonicmaxi = {
+	"md_sonicmaxi", "md_sonic", NULL, NULL, "2024",
+	"Sonic Maxidrive (Hack)\0", NULL, "Speems", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonicmaxiRomInfo, md_sonicmaxiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Swift (Hack By Speems)
+static struct BurnRomInfo md_sonicswiftRomDesc[] = {
+	{ "Sonic Swift (HACK)(2024)(Timaeus).bin", 879814, 0xc558dfe7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicswift)
+STD_ROM_FN(md_sonicswift)
+
+struct BurnDriver BurnDrvmd_md_sonicswift = {
+	"md_sonicswift", "md_sonic", NULL, NULL, "2024",
+	"Sonic Swift (Hack)\0", NULL, "Timaeus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonicswiftRomInfo, md_sonicswiftRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

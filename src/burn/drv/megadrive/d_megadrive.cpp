@@ -55859,17 +55859,17 @@ struct BurnDriver BurnDrvmd_tkzs = {
 // https://hiddenpalace.org/Out_of_the_Vortex_(Prototype)
 
 static struct BurnRomInfo md_oovortexRomDesc[] = {
-	{ "Out of the Vortex (Prototype)(2019).md", 0x200000, 0x3eaab03e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Out of the Vortex (Prototype)(2022).md", 0x1fcd14, 0xf069238c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_oovortex)
 STD_ROM_FN(md_oovortex)
 
 struct BurnDriver BurnDrvmd_oovortex = {
-	"md_oovortex", NULL, NULL, NULL, "2019",
+	"md_oovortex", NULL, NULL, NULL, "2022",
 	"Out of the Vortex (Prototype)\0", "Unreleased Prototype: hiddenpalace.org", "Pipozor", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-  BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_oovortexRomInfo, md_oovortexRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -55893,7 +55893,7 @@ struct BurnDriver BurnDrvmd_sonicmaxi = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sonic Swift (Hack By Speems)
+// Sonic Swift (Hack By Timaeus)
 static struct BurnRomInfo md_sonicswiftRomDesc[] = {
 	{ "Sonic Swift (HACK)(2024)(Timaeus).bin", 879814, 0xc558dfe7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };

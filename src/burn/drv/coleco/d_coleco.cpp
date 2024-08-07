@@ -334,7 +334,8 @@ static UINT8 controller_read(INT32 port)
 
 static void __fastcall coleco_write_port(UINT16 port, UINT8 data)
 {
-//	bprintf(0, _T("wp  %x  %x\n"), port, data);
+//	if ((port&0xff) != 0xbe && (port&0xff) != 0xbf) bprintf(0, _T("wp  %x  %x\n"), port, data);
+
 	if (use_SGM) {
         switch (port & 0xff) // SGM
         {
@@ -608,10 +609,10 @@ static UINT8 __fastcall main_read(UINT16 address)
 			return EEP_STATUS_OK;
 		}
 		if (/*OCMBanks[2] == 0xf*/ O_EEPROM_ReadTimer > 0) {// && (address & 0x1fff) < 0x3ff) {
-			//bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
+//			bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvEEPROM[address & 0x3ff];
 		} else {
-			//bprintf(0, _T("rom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
+//			bprintf(0, _T("rom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvCartROM[(OCMBanks[2] * 0x2000) + (address & 0x1fff)];
 		}
 	}
@@ -11146,3 +11147,59 @@ struct BurnDriver BurnDrvcv_zoom909 = {
 	272, 228, 4, 3
 };
 
+// Yie Ar Kung Fu II (SGM) (HB)
+
+static struct BurnRomInfo cv_yieariiRomDesc[] = {
+    { "Yie Ar Kung Fu II SGM (2018)(Opcode Games).rom",	131072, 0x3143c6dd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_yiearii, cv_yiearii, cv_coleco)
+STD_ROM_FN(cv_yiearii)
+
+struct BurnDriver BurnDrvcv_yiearii = {
+    "cv_yiearii", NULL, "cv_coleco", NULL, "1985-2018",
+    "Yie Ar Kung Fu II (SGM)(HB)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+    CVGetZipName, cv_yieariiRomInfo, cv_yieariiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Ghost (SGM) (HB)
+
+static struct BurnRomInfo cv_ghostRomDesc[] = {
+    { "Ghost SGM (2019)(Unepic Fran).rom",	131072, 0xd55bbb66, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_ghost, cv_ghost, cv_coleco)
+STD_ROM_FN(cv_ghost)
+
+struct BurnDriver BurnDrvcv_ghost= {
+    "cv_ghost", NULL, "cv_coleco", NULL, "2019",
+    "Ghost (SGM)(HB)\0", "SGM - Super Game Module", "Unepic Fran", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_ghostRomInfo, cv_ghostRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Lode Runner 2013 (HB)
+
+static struct BurnRomInfo cv_loder2013RomDesc[] = {
+	{ "Lode Runner (2013)(Collectorvision).rom",	32438, 0xd679ac52, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_loder2013, cv_loder2013, cv_coleco)
+STD_ROM_FN(cv_loder2013)
+
+struct BurnDriver BurnDrvcv_loder2013 = {
+	"cv_loder2013", NULL, "cv_coleco", NULL, "2013",
+	"Lode Runner 2013 (HB)\0", NULL, "Collectorvision", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_loder2013RomInfo, cv_loder2013RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

@@ -5879,7 +5879,6 @@ static INT32 ddp3Init()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_ddp3; // simulation
-	pgm_cave_refresh = 1;
 
 	return pgmInit();
 }
@@ -5958,8 +5957,6 @@ static INT32 ddpdojpInit()
 	INT32 nRet = pgmInit();
 
 	if (!nRet) {
-		pgm_cave_refresh = 1;
-
 		BurnLoadRom(PGM68KBIOS, 0, 1);	// load custom 68k bios
 	}
 
@@ -6081,7 +6078,6 @@ static INT32 ddp3blkInit()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_ddp3; // simulation
-	pgm_cave_refresh = 1;
 
 	INT32 nRet = pgmInit();
 
@@ -6140,7 +6136,6 @@ static INT32 ddp3blkaInit()
 {
 	pPgmInitCallback = pgm_decrypt_py2k2;
 	pPgmProtCallback = install_protection_asic27a_ddp3; // simulation
-	pgm_cave_refresh = 1;
 
 	INT32 nRet = pgmInit();
 

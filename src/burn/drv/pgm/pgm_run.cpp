@@ -72,8 +72,7 @@ INT32 nPGMSpriteBufferHack = 0;
 INT32 nPGMMapperHack = 0;
 INT32 OldCodeMode = 0;
 
-INT32 pgm_cave_refresh = 0;
-#define Z80_FREQ	8468000
+#define Z80_FREQ	8467200
 
 #define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
@@ -845,7 +844,7 @@ static void ics2115_sound_irq(INT32 nState)
 
 INT32 pgmInit()
 {
-	BurnSetRefreshRate(((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) || pgm_cave_refresh) ? 59.17 : 60.00);
+	BurnSetRefreshRate(59.185606);
 
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
 	OldCodeMode = ((HackCodeDip & 1) || (bDoIpsPatch) || (NULL != pDataRomDesc)) ? 1 : 0;
@@ -1049,7 +1048,6 @@ INT32 pgmExit()
 
 	nPgmCurrentBios = -1;
 
-	pgm_cave_refresh = 0;
 	nPGMSpriteBufferHack = 0;
 	nPGMMapperHack = 0;
 

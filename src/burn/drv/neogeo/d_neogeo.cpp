@@ -28115,7 +28115,7 @@ struct BurnDriver BurnDrvamazoneo = {
 // Knight's Chance
 // Neobitz https://www.facebook.com/neobitz
 
-static struct BurnRomInfo knightscRomDesc[] = {
+static struct BurnRomInfo knightschRomDesc[] = {
 	{ "kc_p1.rom",    0x100000, 0xd7ac5077, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "kc_s1.rom",    0x020000, 0xd007e769, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -28128,15 +28128,15 @@ static struct BurnRomInfo knightscRomDesc[] = {
 	{ "kc_v1.rom",    0x800000, 0xb8e55619, 5 | BRF_SND },           //  5 Sound data
 };
 
-STDROMPICKEXT(knightsc, knightsc, neogeo)
-STD_ROM_FN(knightsc)
+STDROMPICKEXT(knightsch, knightsch, neogeo)
+STD_ROM_FN(knightsch)
 
-struct BurnDriver BurnDrvKnightsc = {
-	"knightsc", NULL, "neogeo", NULL, "2014",
+struct BurnDriver BurnDrvKnightsch = {
+	"knightsch", NULL, "neogeo", NULL, "2014",
 	"Knight's Chance\0", NULL, "Neobitz", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_CASINO, 0,
-	NULL, knightscRomInfo, knightscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, knightschRomInfo, knightschRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

@@ -30144,6 +30144,25 @@ struct BurnDriver BurnDrvMSX_gravitica = {
 	272, 228, 4, 3
 };
 
+// Grazers (HB, v1.2)
+
+static struct BurnRomInfo MSX_grazersRomDesc[] = {
+	{ "Grazers v1.2 (2024)(Arturs Grebstelis).rom",	32768, 0x5670651f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_grazers, MSX_grazers, msx_msx)
+STD_ROM_FN(MSX_grazers)
+
+struct BurnDriver BurnDrvMSX_grazers = {
+	"msx_grazers", NULL, "msx_msx", NULL, "2024",
+	"Grazers (HB, v1.2)\0", NULL, "Arturs Grebstelis", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_grazersRomInfo, MSX_grazersRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Grid Wars (HB)
 
 static struct BurnRomInfo MSX_gridwarsRomDesc[] = {
@@ -32880,6 +32899,25 @@ struct BurnDriver BurnDrvMSX_smzoom = {
 	272, 228, 4, 3
 };
 
+// Sam.Pr (HB, v1.1)
+
+static struct BurnRomInfo MSX_samprRomDesc[] = {
+	{ "Sam.Pr v1.1 (2024)(Fausto Pracek).rom",	32768, 0x2b06bad8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sampr, MSX_sampr, msx_msx)
+STD_ROM_FN(MSX_sampr)
+
+struct BurnDriver BurnDrvMSX_sampr = {
+	"msx_sampr", NULL, "msx_msx", NULL, "2024",
+	"Sam.Pr (HB, v1.1)\0", NULL, "Fausto Pracek", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	MSXGetZipName, MSX_samprRomInfo, MSX_samprRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // SDSniper (HB)
 
 static struct BurnRomInfo MSX_sdsniperRomDesc[] = {
@@ -33868,6 +33906,25 @@ struct BurnDriver BurnDrvMSX_trucho = {
 	272, 228, 4, 3
 };
 
+// TRUN (HB)
+
+static struct BurnRomInfo MSX_trunRomDesc[] = {
+	{ "TRUN (2016)(The Pets Mode).rom",	49152, 0x7c48ae05, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_trun, MSX_trun, msx_msx)
+STD_ROM_FN(MSX_trun)
+
+struct BurnDriver BurnDrvMSX_trun = {
+	"msx_trun", NULL, "msx_msx", NULL, "2016",
+	"TRUN (HB)\0", NULL, "The Pets Mode", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_trunRomInfo, MSX_trunRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Tut Tut (HB)
 
 static struct BurnRomInfo MSX_tuttutRomDesc[] = {
@@ -34187,6 +34244,25 @@ struct BurnDriver BurnDrvMSX_viruslqp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
 	MSXGetZipName, MSX_viruslqpRomInfo, MSX_viruslqpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Whack 'Em Smack 'Em Byrons (HB)
+
+static struct BurnRomInfo MSX_wsbyronsRomDesc[] = {
+	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations).rom",	32768, 0xcd5534d3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_wsbyrons, MSX_wsbyrons, msx_msx)
+STD_ROM_FN(MSX_wsbyrons)
+
+struct BurnDriver BurnDrvMSX_wsbyrons = {
+	"msx_wsbyrons", NULL, "msx_msx", NULL, "2024",
+	"Whack 'Em Smack 'Em Byrons (HB)\0", NULL, "Jess Creations", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_wsbyronsRomInfo, MSX_wsbyronsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

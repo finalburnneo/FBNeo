@@ -22,7 +22,8 @@ static UINT8 bankdata;
 static INT32 vblank;
 
 static UINT8 DrvJoy1[8];
-static UINT8 DrvInputs[1];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvInputs[2];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
@@ -33,6 +34,9 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
+
+	{"P1 Play",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 6"	},
+	{"P1 Cancel",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 7"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -107,7 +111,7 @@ static UINT8 usgames_read(UINT16 address)
 	switch (address & ~0x0400)
 	{
 		case 0x2000:
-			return (DrvDips[0] & 0x7f) | (vblank ? 0x80 : 0);
+			return (DrvDips[0] & 0x7f) | DrvInputs[1] | (vblank ? 0x80 : 0);
 
 		case 0x2010:
 			return DrvInputs[0];
@@ -310,9 +314,11 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = 0xff;
+		DrvInputs[1] = 0xff;
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 

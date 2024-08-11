@@ -334,8 +334,11 @@ static UINT8 controller_read(INT32 port)
 
 static void __fastcall coleco_write_port(UINT16 port, UINT8 data)
 {
-//	if ((port&0xff) != 0xbe && (port&0xff) != 0xbf) bprintf(0, _T("wp  %x  %x\n"), port, data);
-
+#if 0
+	// debug: ignore video/joy/ay8910 writes
+	if ((port&0xfe) != 0xbe && (port&0xfe) != 0x80 &&
+	    (port&0xfe) != 0x50 && (port&0xfe) != 0xc0) bprintf(0, _T("wp  %x  %x\n"), port, data);
+#endif
 	if (use_SGM) {
         switch (port & 0xff) // SGM
         {
@@ -493,10 +496,11 @@ static INT32 DrvDoReset()
 	if (use_OCM) {
 		// Penguin Adventure expects this to be mapped-in by default
 		SGM_map_24k = 1;
-		ZetOpen(0);
-		update_map();
-		ZetClose();
 	}
+
+	ZetOpen(0);
+	update_map();
+	ZetClose();
 
 	return 0;
 }
@@ -11215,9 +11219,9 @@ STD_ROM_FN(cv_yiearii)
 
 struct BurnDriver BurnDrvcv_yiearii = {
     "cv_yiearii", NULL, "cv_coleco", NULL, "1985-2018",
-    "Yie Ar Kung Fu II (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
+    "Yie Ar Kung Fu II (SGM) (HB)\0", "Resets randomly, SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+    BDF_GAME_NOT_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
     CVGetZipName, cv_yieariiRomInfo, cv_yieariiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3

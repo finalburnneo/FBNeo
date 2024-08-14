@@ -28147,10 +28147,10 @@ STD_ROM_FN(sms_darc)
 
 struct BurnDriver BurnDrvsms_darc = {
 	"sms_darc10", NULL, NULL, NULL, "2015",
-	"DARC (HB, v1.0)\0", "Turn ON 'FM Emulation' in Dips for music/sfx!", "Zipper", "Sega Master System",
+	"DARC (HB, v1.0)\0", "YM2413 FM sound chip supported", "Zipper", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
-	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -28512,6 +28512,25 @@ struct BurnDriver BurnDrvsms_gravbeam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_gravbeamRomInfo, sms_gravbeamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Grazers (HB, v1.2)
+
+static struct BurnRomInfo sms_grazersRomDesc[] = {
+	{ "Grazers v1.2 (2024)(Snauts).sms",	32768, 0xd59d25a5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_grazers)
+STD_ROM_FN(sms_grazers)
+
+struct BurnDriver BurnDrvsms_grazers = {
+	"sms_grazers", NULL, NULL, NULL, "2024",
+	"Grazers (HB, v1.2)\0", NULL, "Snauts", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_grazersRomInfo, sms_grazersRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -29236,6 +29255,25 @@ struct BurnDriver BurnDrvsms_speccies2 = {
 	SMSGetZipName, sms_speccies2RomInfo, sms_speccies2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
+};
+
+// Space Tonbow (HB, v1.1)
+
+static struct BurnRomInfo sms_sptonbowRomDesc[] = {
+	{ "Space Tonbow v1.1 (2024)(SteelFinger Studios).sms",	131072, 0x4c3d2616, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sptonbow)
+STD_ROM_FN(sms_sptonbow)
+
+struct BurnDriver BurnDrvsms_sptonbow = {
+	"sms_sptonbow", NULL, NULL, NULL, "2024",
+	"Space Tonbow (HB, v1.1)\0", "YM2413 FM sound chip supported", "SteelFinger Studios", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_HORSHOOT, 0,
+	SMSGetZipName, sms_sptonbowRomInfo, sms_sptonbowRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
 };
 
 // Stygian Quest (HB, v1.2)

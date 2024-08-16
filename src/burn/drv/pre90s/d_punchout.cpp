@@ -757,7 +757,7 @@ static void draw_layer(UINT8 *ram, UINT8 *rom, INT32 wide, INT32 paloff, INT32 s
 		}
 
 		sy -= 16;
-
+		if (sx >= nScreenWidth || sy >= 224) continue;
 		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, 0, color, 2, paloff, rom);
 	}
 }

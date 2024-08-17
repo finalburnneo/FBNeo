@@ -105,10 +105,16 @@ struct nesapu_info
 static nesapu_info nesapu_chips[CHIP_NUM];
 
 static INT32 cycles_per_frame;
+static UINT32 arcade_mode = 0; // not cycle accurate dpcm/dmc (needed for arcade)
 
 #if 0
 INT32 nes_scanline();
 #endif
+
+void nesapuSetArcade(INT32 mode)
+{
+	arcade_mode = mode;
+}
 
 static UINT32 nes_nesapu_sync(INT32 samples_rate)
 {
@@ -847,6 +853,8 @@ static void apu_update(struct nesapu_info *info)
 		INT32 dmcoffs = (cycles_per_frame * (startpos + i)) / info->samps_per_sync;
 		INT32 dmc = dmc_buffer[dmcoffs];
 		INT32 ext = nes_ext_buffer[dmcoffs];
+
+		if (arcade_mode) dmc = apu_dpcm(info, &info->APU.dpcm);
 
 		INT32 out = (INT32)(((float)info->tnd_table[3*triangle + 2*noise + dmc] +
 							  info->square_table[square1 + square2] + info->square_table[square3 + square4]) * 0x3fff);

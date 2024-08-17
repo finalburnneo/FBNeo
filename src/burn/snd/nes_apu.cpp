@@ -1111,6 +1111,8 @@ void nesapuExit()
 	BurnFree(nes_ext_buffer);
 	nes_ext_sound_cb = NULL;
 
+	nesapuSetArcade(0);
+
 	DebugSnd_NESAPUSndInitted = 0;
 }
 

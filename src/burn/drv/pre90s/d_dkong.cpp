@@ -2003,6 +2003,7 @@ static INT32 Dkong3Init()
 
 	nesapuInit(0, 1789773, 0, dkong3_nesapu_sync, 0);
 	nesapuSetAllRoutes(0, 0.95, BURN_SND_ROUTE_BOTH);
+	nesapuSetArcade(1);
 
 	nesapuInit(1, 1789773, 0, dkong3_nesapu_sync, 1);
 	nesapuSetAllRoutes(1, 0.95, BURN_SND_ROUTE_BOTH);

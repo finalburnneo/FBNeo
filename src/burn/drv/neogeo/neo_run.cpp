@@ -431,7 +431,7 @@ static void NeoSetSystemType()
 	}
 
 	// See if we're emulating MVS or AES hardware
-	if (nBIOS == -1 || nBIOS == 15 || nBIOS == 16 || nBIOS == 17 || ((NeoSystem & 0x74) == 0x20)) {
+	if (nBIOS == -1 || nBIOS == 15 || nBIOS == 16 || nBIOS == 17 || nBIOS == 19 || ((NeoSystem & 0x74) == 0x20)) {
 		nNeoSystemType = NEO_SYS_CART | NEO_SYS_AES;
 		return;
 	}
@@ -1128,7 +1128,7 @@ static UINT8 __fastcall vliner_timing(UINT32 sekAddress)
 
 		case 0x320001: {
 //			if (!bAESBIOS) {
-			if (nBIOS != 14 && nBIOS != 16 && nBIOS != 17) {
+			if (nBIOS != 14 && nBIOS != 16 && nBIOS != 17 && nBIOS != 19) {
 				return 0x3F | (uPD4990ARead() << 6);
 			}
 
@@ -2018,6 +2018,11 @@ static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 	}
 
 	return ~0;
+}
+
+static UINT16 __fastcall neogeoUnmappedReadWord(UINT32)
+{
+	return neogeoReadWord(SekGetPC(-1));
 }
 
 static void WriteIO1(INT32 nOffset, UINT8 byteValue)
@@ -3783,7 +3788,8 @@ static INT32 neogeoReset()
 			}
 			SekMapHandler(1,			0xD00000, 0xDFFFFF, MAP_WRITE);	//
 		} else {
-			SekMapHandler(0,			0xD00000, 0xDFFFFF, MAP_RAM);	// AES/NeoCD don't have the SRAM
+			// AES/NeoCD don't have the SRAM
+			SekMapHandler(8,			0xD00000, 0xDFFFFF, MAP_READ);
 		}
 
 		if (nNeoSystemType & NEO_SYS_CART) {
@@ -4014,7 +4020,11 @@ static INT32 NeoInitCommon()
 			SekSetReadByteHandler(2, neoCDReadByteMemoryCard);
 			SekSetWriteByteHandler(2, neoCDWriteByteMemoryCard);
 
+			SekSetReadWordHandler(8, neogeoUnmappedReadWord);
 		}
+
+		if (nNeoSystemType & NEO_SYS_AES)
+			SekSetReadWordHandler(8, neogeoUnmappedReadWord);
 	}
 
 	{

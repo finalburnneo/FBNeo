@@ -218,10 +218,10 @@ void do_shonky_profile()
 	unsigned int end_time = timeGetTime();
 
 	unsigned int total_time = end_time - start_time;
-	int total_seconds = total_time / 1000;
+	float total_seconds = (float)total_time / 1000.0;
 
 	bprintf(0, _T("shonky profile mode %d\n"), total_frames);
-	bprintf(0, _T("shonky profile:  %d frames,  %dms,  %dfps\n"), total_frames, total_time, total_frames / total_seconds);
+	bprintf(0, _T("shonky profile:  %d frames,  %dms,  %dfps\n"), total_frames, total_time, (int)(total_frames / total_seconds));
 }
 #endif
 

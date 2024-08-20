@@ -27486,6 +27486,36 @@ struct BurnDriver BurnDrvProneon = {
 };
 
 
+// Bonus Stage
+
+static struct BurnRomInfo bonusstageRomDesc[] = {
+	{ "bonusstage-p1.bin",    0x0080000, 0xde637e0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "bonusstage-s1.bin",    0x0020000, 0xa12d8990, 2 | BRF_GRA },           //  1 Text data
+
+	{ "bonusstage-c1.bin",    0x0400000, 0xbfe4eb8d, 3 | BRF_GRA },           //  2 Sprite data
+	{ "bonusstage-c2.bin",    0x0400000, 0x41fab784, 3 | BRF_GRA },           //  3
+
+	{ "bonusstage-m1.bin",    0x0010000, 0xdee563b2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "bonusstage-v1.bin",    0x0400000, 0x87bdd5fa, 5 | BRF_SND },           //  5 Sound data
+};
+
+
+STDROMPICKEXT(bonusstage, bonusstage, neogeo)
+STD_ROM_FN(bonusstage)
+
+struct BurnDriver BurnDrvBonusstage = {
+	"bonusstage", NULL, "neogeo", NULL, "2020",
+	"Bonus Stage\0", NULL, "Totologic", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, bonusstageRomInfo, bonusstageRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // NeoTRIS (Free beta 2 Ver. 202009)
 // https://www.chipsonsteroids.com/
 // 3 & 4 players not working (needs Multitap)
@@ -27612,6 +27642,36 @@ struct BurnDriver BurnDrvCabalng = {
 	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+
+// Kid no Hore Hore Daisakusen (Neo-Geo Conversion)
+
+static struct BurnRomInfo horekidb3RomDesc[] = {
+	{ "horekidb3-p1.p1",    0x080000, 0xf0b31d22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "horekidb3-s1.s1",    0x020000, 0xb88013e2, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "horekidb3-c1.c1",    0x040000, 0x18b0b56b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "horekidb3-c2.c2",    0x040000, 0x9ccea1d5, 3 | BRF_GRA },           //  3
+
+	{ "horekidb3-m1.m1",    0x010000, 0xd82c2064, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "horekidb3-v1.v1",    0x800000, 0xfccb11f4, 5 | BRF_SND },           //  5 Sound data
+	{ "horekidb3-v2.v2",    0x800000, 0xc65a5900, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(horekidb3, horekidb3, neogeo)
+STD_ROM_FN(horekidb3)
+
+struct BurnDriver BurnDrvHorekidb3 = {
+	"horekidb3", NULL, "neogeo", NULL, "2022",
+	"Kid no Hore Hore Daisakusen (Neo-Geo Conversion)\0", NULL, "Nichibutsu", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, horekidb3RomInfo, horekidb3RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	224, 304, 3, 4
 };
 
 

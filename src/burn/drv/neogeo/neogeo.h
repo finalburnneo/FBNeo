@@ -77,7 +77,7 @@ extern UINT16 NeoAxis[];
 extern UINT8 NeoInput[];
 extern UINT8 NeoDiag[];
 extern UINT8 NeoDebugDip[];
-extern UINT8 NeoReset, NeoSystem, NeoCDBios;
+extern UINT8 NeoReset, NeoSystem, NeoCDBios, NeoUniHW;
 
 extern UINT8* Neo68KROMActive;
 extern UINT8* NeoVectorActive;

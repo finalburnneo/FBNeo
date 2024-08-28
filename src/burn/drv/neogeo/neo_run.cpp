@@ -141,6 +141,8 @@ static UINT8 OldDebugDip[2] = { 0, 0 };
 // Which 68K BIOS to use
 INT32 nBIOS;
 
+#define AES_BIOS (nBIOS == 15 || nBIOS == 16 || nBIOS == 17 || ((NeoUniHW & 1) && (nBIOS == 19 || nBIOS == 20 || nBIOS == 21 || nBIOS == 22 || nBIOS == 23 || nBIOS == 24 || nBIOS == 25 || nBIOS == 26 || nBIOS == 27)))
+
 #if defined CYCLE_LOG
 // for debugging -dink (will be removed later)
 static INT32 cycderp[16384+1];
@@ -432,9 +434,7 @@ static void NeoSetSystemType()
 	}
 
 	// See if we're emulating MVS or AES hardware
-	if (nBIOS == -1 || nBIOS == 15 || nBIOS == 16 || nBIOS == 17
-	 || ((NeoUniHW & 1) && (nBIOS == 19 || nBIOS == 20 || nBIOS == 21 || nBIOS == 22 || nBIOS == 23 || nBIOS == 24 || nBIOS == 25 || nBIOS == 26 || nBIOS == 27))
-	 || ((NeoSystem & 0x74) == 0x20)) {
+	if (nBIOS == -1 || AES_BIOS || ((NeoSystem & 0x74) == 0x20)) {
 		nNeoSystemType = NEO_SYS_CART | NEO_SYS_AES;
 		return;
 	}
@@ -1131,7 +1131,7 @@ static UINT8 __fastcall vliner_timing(UINT32 sekAddress)
 
 		case 0x320001: {
 //			if (!bAESBIOS) {
-			if (nBIOS != 14 && nBIOS != 16 && nBIOS != 17) {
+			if (!AES_BIOS) {
 				return 0x3F | (uPD4990ARead() << 6);
 			}
 

@@ -374,7 +374,10 @@ static struct BurnInputInfo neopaddleInputList[] = {
 	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"},				// 1E
 
 	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"},				// 1F
-	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},				// 1G
+	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},				// 20
+
+	{"Fake Dip 1",	BIT_DIPSWITCH,  &VerSwitcher,	"dip"},				// 21
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"},				// 22
 };
 
 STDINPUTINFO(neopaddle)
@@ -408,6 +411,9 @@ static struct BurnInputInfo neotrackballInputList[] = {
 
 	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"			},	// 13
 	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"			},	// 14
+
+	{"Fake Dip 1",	BIT_DIPSWITCH,  &VerSwitcher,	"dip"			},	// 15
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"			},	// 16
 };
 
 STDINPUTINFO(neotrackball)
@@ -482,6 +488,9 @@ static struct BurnInputInfo neodualInputList[] = {
 
 	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"},				// 35
 	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},				// 36
+
+	{"Fake Dip 1",	BIT_DIPSWITCH,  &VerSwitcher,	"dip"},				// 37
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"},				// 38
 };
 
 STDINPUTINFO(neodual)
@@ -544,6 +553,9 @@ static struct BurnInputInfo neomahjongInputList[] = {
 
 	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"},				// 30
 	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},				// 31
+
+	{"Fake Dip 1",	BIT_DIPSWITCH,  &VerSwitcher,	"dip"},				// 32
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"},				// 33
 };
 
 STDINPUTINFO(neomahjong)
@@ -587,6 +599,9 @@ static struct BurnInputInfo vlinerInputList[] = {
 
 	{"Debug Dip 1",	BIT_DIPSWITCH,	NeoDebugDip + 0,"dip"},
 	{"Debug Dip 2",	BIT_DIPSWITCH,	NeoDebugDip + 1,"dip"},
+
+	{"Fake Dip 1",	BIT_DIPSWITCH,  &VerSwitcher,	"dip"},
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"},
 };
 
 STDINPUTINFO(vliner)

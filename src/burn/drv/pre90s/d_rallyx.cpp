@@ -2043,9 +2043,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (rallyx) {
 			NamcoSoundScan(nAction, pnMin);
+			BurnSampleScan(nAction, pnMin);
 		}
-
-		BurnSampleScan(nAction, pnMin);
 
 		SCAN_VAR(DrvCPUFireIRQ);
 		SCAN_VAR(last_sound_irq);

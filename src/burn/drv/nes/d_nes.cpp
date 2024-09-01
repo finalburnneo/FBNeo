@@ -43816,6 +43816,24 @@ struct BurnDriver BurnDrvnes_hook = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hoops (USA)
+static struct BurnRomInfo nes_hoopsRomDesc[] = {
+	{ "Hoops (USA)(1989)(Jaleco).nes",          262160, 0x08f89bb0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoops)
+STD_ROM_FN(nes_hoops)
+
+struct BurnDriver BurnDrvnes_hoops = {
+	"nes_hoops", NULL, NULL, NULL, "1989",
+	"Hoops (USA)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_hoopsRomInfo, nes_hoopsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Hoppin' Mad (Prototype)
 static struct BurnRomInfo nes_hoppinmadRomDesc[] = {
 	{ "Hoppin' Mad (Proto)(1989)(Nowhere Prod.).nes",          40976, 0xac45ada9, BRF_ESS | BRF_PRG },
@@ -49090,6 +49108,24 @@ struct BurnDriver BurnDrvnes_moerotwi = {
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_moerotwiRomInfo, nes_moerotwiRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Moero!! Junior Basket: Two on Two (Japan)
+static struct BurnRomInfo nes_moerojrbasRomDesc[] = {
+	{ "Moero!! Junior Basket - Two on Two (Japan)(1989)(Jaleco).nes",          262160, 0x6ed22c25, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_moerojrbas)
+STD_ROM_FN(nes_moerojrbas)
+
+struct BurnDriver BurnDrvnes_moerojrbas = {
+	"nes_moerojrbas", "nes_hoops", NULL, NULL, "1988",
+	"Moero!! Junior Basket: Two on Two (Japan)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_moerojrbasRomInfo, nes_moerojrbasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

@@ -49113,7 +49113,7 @@ struct BurnDriver BurnDrvnes_moerotwi = {
 
 // Moero!! Junior Basket: Two on Two (Japan)
 static struct BurnRomInfo nes_moerojrbasRomDesc[] = {
-	{ "Moero!! Junior Basket - Two on Two (Japan)(1989)(Jaleco).nes",          262160, 0x6ed22c25, BRF_ESS | BRF_PRG },
+	{ "Moero!! Junior Basket - Two on Two (Japan)(1988)(Jaleco).nes",          262160, 0x6ed22c25, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_moerojrbas)

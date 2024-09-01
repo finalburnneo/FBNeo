@@ -60309,3 +60309,20 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_littleleagueRomDesc[] = {
+	{ "Little League Baseball - Championship Series (1990)(SNK)(USA).nes",          262160, 0x7905ae67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_littleleague)
+STD_ROM_FN(nes_littleleague)
+
+struct BurnDriver BurnDrvnes_littleleague = {
+	"nes_littleleague", NULL, NULL, NULL, "1990",
+	"Little League Baseball - Championship Series (USA)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_littleleagueRomInfo, nes_littleleagueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

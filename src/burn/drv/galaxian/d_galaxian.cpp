@@ -18652,7 +18652,11 @@ static INT32 MarsInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	filter_rc_set_src_gain(3, 0.45);
+	filter_rc_set_src_gain(4, 0.45);
+	filter_rc_set_src_gain(5, 0.45);
+
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	

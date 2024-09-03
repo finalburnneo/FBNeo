@@ -1,5 +1,9 @@
 # FinalBurn Neo for Raspberry Pi
 
+## Important notice
+This port is meant for usage with the old closed-source gpu driver, which has been deprecated since 2019. Anybody using the modern open-source mesa driver should be using the [sdl2 port](README-SDL.md) instead.
+Either way, this port is outdated, unmaintained and currently fails building, so anybody wanting to use this nonetheless will have to fix it first.
+
 ## Compiling
 To compile the emulator, run `make pi`. You will need SDL 1.2 libraries for
 sound and input:

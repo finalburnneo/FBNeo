@@ -14,8 +14,6 @@ You can download the latest builds by clicking on the badge below. Please note t
 
 # Ports
 
-Raspberry Pi [build instructions](README-PI.md).
-
 macOS [build instructions](README-macOS.md) and [releases](https://github.com/fbn-mac/FBNeo/releases).
 
 [LibRetro port](https://github.com/libretro/FBNeo) with builds availble via [RetroArch](https://www.retroarch.com/) for a lot of cool platforms.
@@ -23,6 +21,8 @@ macOS [build instructions](README-macOS.md) and [releases](https://github.com/fb
 For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm) [instructions](README-SDL.md)
 
 For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm) [instructions](README-SDL.md)
+
+~~Raspberry Pi [build instructions](README-PI.md).~~
 
 # Reporting Issues
 

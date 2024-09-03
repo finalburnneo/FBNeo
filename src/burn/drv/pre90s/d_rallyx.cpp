@@ -411,7 +411,7 @@ static struct BurnDIPInfo CommsegaDIPList[]=
 
 STDDIPINFO(Commsega)
 
-static inline void DrvMakeInputs()
+static inline void DrvMakeInputs() // rallyx
 {
 	// Reset Inputs
 	DrvInput[0] = 0xff;
@@ -422,6 +422,9 @@ static inline void DrvMakeInputs()
 		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
 		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
 	}
+
+	ProcessJoystick(&DrvInput[0], 0, 5,4,2,3, INPUT_4WAY | INPUT_ISACTIVELOW);
+	ProcessJoystick(&DrvInput[1], 1, 5,4,2,3, INPUT_4WAY | INPUT_ISACTIVELOW);
 }
 
 static inline void JunglerMakeInputs()

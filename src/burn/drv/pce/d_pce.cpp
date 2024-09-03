@@ -9139,6 +9139,26 @@ struct BurnDriver BurnDrvsgx_daimakaid = {
 	&PCEPaletteRecalc, 0x400, 320, 240, 4, 3
 };
 
+// Dai Makaimura (Improvement Hack)
+// https://romhackplaza.org/romhacks/daimakaimura-improvement-hack-pc-engine-supergrafx/
+
+static struct BurnRomInfo sgx_daimakaiiRomDesc[] = {
+	{ "Daimakaimura Improvement Hack (PC Engine SuperGrafx).pce", 0x100000, 0x460d8892, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sgx_daimakaii)
+STD_ROM_FN(sgx_daimakaii)
+
+struct BurnDriver BurnDrvsgx_daimakaii = {
+	"sgx_daimakaii", "sgx_daimakai", NULL, NULL, "2024",
+	"Dai Makaimura (Improvement Hack, v1.0)\0", NULL, "Upsilandre", "SuperGrafx",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_SGX, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SgxGetZipName, sgx_daimakaiiRomInfo, sgx_daimakaiiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 352, 240, 4, 3
+};
+
 // Madou Ou Granzort (Japan, SGX)
 
 static struct BurnRomInfo sgx_granzortRomDesc[] = {

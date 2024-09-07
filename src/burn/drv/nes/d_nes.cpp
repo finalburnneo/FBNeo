@@ -27479,10 +27479,10 @@ struct BurnDriver BurnDrvnes_mariokart = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Mario The Tank (Hack)
+// Mario The Tank (Hack, v1.0.2a)
 // https://romhackplaza.org/romhacks/mario-the-tank-nes/
 static struct BurnRomInfo nes_mariotankRomDesc[] = {
-	{ "Mario The Tank (2024)(AleFunky).nes",          131088, 0x22fb626d, BRF_ESS | BRF_PRG },
+	{ "Mario The Tank v1.0.2a (2024)(AleFunky).nes",          131088, 0x0ed256e4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_mariotank)
@@ -27490,7 +27490,7 @@ STD_ROM_FN(nes_mariotank)
 
 struct BurnDriver BurnDrvnes_mariotank = {
 	"nes_mariotank", "nes_smb", NULL, NULL, "2024",
-	"Mario The Tank (Hack)\0", NULL, "AleFunky", "Miscellaneous",
+	"Mario The Tank (Hack, v1.0.2a)\0", NULL, "AleFunky", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mariotankRomInfo, nes_mariotankRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -45529,6 +45529,26 @@ struct BurnDriver BurnDrvmd_jtoblivion = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Kunio no Nekketsu School Fighters Beta (HB, Beta v.05b)
+// https://usagiru-orochi.itch.io/kunio-no-nekketsu-school-fighters
+
+static struct BurnRomInfo md_knnsfRomDesc[] = {
+	{ "Kunio no Nekketsu School Fighters Beta v.05b (2023)(UsagiRu).bin", 4194304, 0x1054a215, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_knnsf)
+STD_ROM_FN(md_knnsf)
+
+struct BurnDriver BurnDrvmd_knnsf = {
+	"md_knnsf", NULL, NULL, NULL, "2024",
+	"Kunio no Nekketsu School Fighters (HB, Beta v.05b)\0", NULL, "UsagiRu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_knnsfRomInfo, md_knnsfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Kromasphere (HB)
 static struct BurnRomInfo md_kromasphereRomDesc[] = {
 	{ "Kromasphere (2019)(2nd Dimension).bin", 944886, 0x9dab89e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -47545,14 +47565,14 @@ struct BurnDriver BurnDrvmd_s3comp = {
 // Sonic the Hedgehog 3 Complete - Emerald Safari (Hack, v1.0a)
 // https://www.romhacking.net/hacks/8242/
 static struct BurnRomInfo md_s3compesRomDesc[] = {
-	{ "Sonic 3 Complete - Emerald Safari v1.0a (2023)(BillyTime! Games).bin", 3932160, 0x9df80fed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sonic 3 Complete - Emerald Safari v1.0a (2024)(BillyTime! Games).bin", 3932160, 0x9df80fed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_s3compes)
 STD_ROM_FN(md_s3compes)
 
 struct BurnDriver BurnDrvmd_s3compes = {
-	"md_s3compes", "md_sks3", NULL, NULL, "2023",
+	"md_s3compes", "md_sks3", NULL, NULL, "2024",
 	"Sonic the Hedgehog 3 Complete - Emerald Safari (Hack, v1.0a)\0", NULL, "BillyTime! Games", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,

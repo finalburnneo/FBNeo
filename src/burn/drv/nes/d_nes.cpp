@@ -24828,7 +24828,7 @@ struct BurnDriver BurnDrvnes_cratersong = {
 
 // Crater Song - Definitive Edition (HB)
 static struct BurnRomInfo nes_cratersongdeRomDesc[] = {
-	{ "Crater Song - Definitive Edition (2024)(John Vanderhoef).nes",          524304, 0xeafae073, BRF_ESS | BRF_PRG },
+	{ "Crater Song - Definitive Edition (2024)(John Vanderhoef).nes",          524304, 0x29d4b290, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_cratersongde)

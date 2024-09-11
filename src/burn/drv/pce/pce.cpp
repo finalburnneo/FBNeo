@@ -387,7 +387,7 @@ static INT32 MemIndex(UINT32 cart_size, INT32 type)
 
 	RamEnd		= Next;
 
-	vdc_tmp_draw	= (UINT16*)Next; Next += 684 * 263 * sizeof(UINT16);
+	vdc_tmp_draw	= (UINT16*)Next; Next += PCE_LINE * 263 * sizeof(UINT16);
 
 	MemEnd		= Next;
 
@@ -539,19 +539,16 @@ static INT32 CommonInit(int type)
 
 INT32 PCEInit()
 {
-//	bprintf (0, _T("booting PCE!\n"));
 	return CommonInit(0);
 }
 
 INT32 TG16Init()
 {
-//	bprintf (0, _T("booting TG16!\n"));
 	return CommonInit(1);
 }
 
 INT32 SGXInit()
 {
-//	bprintf (0, _T("booting SGX!\n"));
 	return CommonInit(2);
 }
 
@@ -599,15 +596,12 @@ INT32 PCEDraw()
 	}
 
 	{
-		UINT16 *src = vdc_tmp_draw + 86;
 		UINT16 *dst = pTransDraw;
-
 		for (INT32 y = 0; y < nScreenHeight; y++) {
-			for (INT32 x = 0; x < nScreenWidth; x++) {
-				dst[x] = src[x];
-			}
+
+			memcpy(dst, vdc_get_line(y), nScreenWidth * sizeof(UINT16));
+
 			dst += nScreenWidth;
-			src += 684;
 		}
 	}
 

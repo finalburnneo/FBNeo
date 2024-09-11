@@ -32,6 +32,10 @@ void vpc_write(UINT8 offset, UINT8 data);
 UINT8 vpc_read(UINT8 offset);
 
 // palette
+#define PCE_LINE 1368
+extern UINT8 vce_clock_list[263]; // clock rate for each line
+
+UINT16 *vdc_get_line(UINT32 y);
 INT32 vce_linecount();
 void vce_reset();
 void vce_palette_init(UINT32 *Palette);

@@ -35,9 +35,9 @@ static INT32	vdc_raster_count[2];
 static INT32	vdc_satb_countdown[2];
 
 UINT16 *vdc_tmp_draw;			// allocate externally!
-UINT16 *vdc_linebuf; // allocated here, a single line
-UINT8 vce_clock_list[263];
-UINT16 vce_width_list[263];
+static UINT16 *vdc_linebuf; // allocated here, a single line
+static UINT8 vce_clock_list[263];
+static UINT16 vce_width_list[263];
 
 static UINT16 vpc_priority;
 static UINT16 vpc_window1;
@@ -1079,14 +1079,14 @@ void sgx_interrupt()
 	vdc_advance_line( 1 );
 }
 
-UINT16 get_overscan(UINT16 &clock, UINT32 width)
+static UINT16 get_overscan(UINT16 &clock, UINT32 width)
 {
 	// if the clockscaled screen doesn't fit, center it
-	if (nScreenWidth < 1024) clock = 1; // custom resolution, default clock
+	if (nScreenWidth < 1024) clock = 1; // custom resolution, default clock to 1
 	UINT32 w = clock * width;
 	if (w < nScreenWidth) {
 		w = nScreenWidth - w;
-		w = (w / 2)
+		w = (w / 2);
 	} else {
 		w = 0;
 	}

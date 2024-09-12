@@ -37,6 +37,7 @@ static INT32	vdc_satb_countdown[2];
 UINT16 *vdc_tmp_draw;			// allocate externally!
 UINT16 *vdc_linebuf; // allocated here, a single line
 UINT8 vce_clock_list[263];
+UINT16 vce_width_list[263];
 
 static UINT16 vpc_priority;
 static UINT16 vpc_window1;
@@ -171,9 +172,13 @@ void vpc_reset()
 	vpc_priority = 0;
 
 	vce_clock = 4;
-	for (int i = 0; i < sizeof(vce_clock_list); i++) {
+	for (int i = 0; i < (sizeof(vce_clock_list) / sizeof(vce_clock_list[0])); i++) {
 		vce_clock_list[i] = vce_clock;
 	}
+	for (int i = 0; i < (sizeof(vce_width_list) / sizeof(vce_width_list[0])); i++) {
+		vce_width_list[i] = 256;
+	}
+
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -753,6 +758,7 @@ static void vdc_advance_line(INT32 which)
 
 	if ( STATE_VDW == vdc_current_segment[which]) {
 		vce_clock_list[vdc_current_segment_line[which]] = vce_clock;
+		vce_width_list[vdc_current_segment_line[which]] = vdc_width[which];
 	}
 
 	if ( STATE_VDW == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VDW] & 0x01ff) + 1 )
@@ -1073,34 +1079,43 @@ void sgx_interrupt()
 	vdc_advance_line( 1 );
 }
 
+UINT16 get_overscan(UINT16 &clock, UINT32 width)
+{
+	// if the clockscaled screen doesn't fit, center it
+	if (nScreenWidth < 1024) clock = 1; // custom resolution, default clock
+	UINT32 w = clock * width;
+	if (w < nScreenWidth) {
+		w = nScreenWidth - w;
+		w = (w / 2)
+	} else {
+		w = 0;
+	}
+	return w;
+}
+
 UINT16 *vdc_get_line(UINT32 y)
 {
+	UINT16 line_clock = vce_clock_list[y];
+	UINT16 oversc = get_overscan(line_clock, vce_width_list[y]);
 	UINT16 *src = (vdc_tmp_draw + 86) + (684 * y);
 	UINT16 *dst = vdc_linebuf;
 
-	if (nScreenWidth < 1024) {
-		// custom (1:1) resolution, no clockstretching
-		// some games will look better this way - for example:
-		// Dai Makai Mura
-		// - less pixel shimmer when the game scrolls
-
-		for (INT32 x = 0; x < nScreenWidth; x++) {
-			dst[x] = src[x];
-		}
-	} else {
-		// game sets resolution
-		INT32 src_clock = 0;
-		INT32 src_pix = 0;
-		INT32 src_x = 0;
-		INT32 x = 0;
-		while (x < nScreenWidth) {
+	// game sets resolution
+	INT32 src_clock = 0;
+	INT32 src_pix = 0;
+	INT32 src_x = 0;
+	INT32 x = 0;
+	while (x < nScreenWidth) {
+		if (oversc) {
+			src_pix = 0;
+			oversc--;
+		} else
 			if (src_clock == 0) {
 				src_pix = src[src_x++];
 			}
-			dst[x] = src_pix;
-			x++;
-			src_clock = (src_clock + 1) % vce_clock_list[y];
-		}
+		dst[x] = src_pix;
+		x++;
+		src_clock = (src_clock + 1) % line_clock;
 	}
 	return vdc_linebuf;
 }

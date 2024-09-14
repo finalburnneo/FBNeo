@@ -264,7 +264,7 @@ void vce_write(UINT8 offset, UINT8 data)
 	}
 }
 
-void vce_palette_init(UINT32 *Palette)
+void vce_palette_init(UINT32 *Palette, UINT32 *Alt_Palette)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_palette_init called without init\n"));
@@ -275,6 +275,12 @@ void vce_palette_init(UINT32 *Palette)
 		INT32 r = ((i >> 3) & 7) << 5;
 		INT32 g = ((i >> 6) & 7) << 5;
 		INT32 b = ((i >> 0) & 7) << 5;
+
+		if (Alt_Palette != NULL) {
+			r = (Alt_Palette[i] >> 16) & 0xff;
+			g = (Alt_Palette[i] >> 8) & 0xff;
+			b = (Alt_Palette[i] >> 0) & 0xff;
+		}
 
 		INT32 y = ((66 * r + 129 * g +  25 * b + 128) >> 8) +  16;
 

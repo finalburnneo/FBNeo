@@ -36,7 +36,7 @@ UINT8 vpc_read(UINT8 offset);
 UINT16 *vdc_get_line(UINT32 y);
 INT32 vce_linecount();
 void vce_reset();
-void vce_palette_init(UINT32 *Palette);
+void vce_palette_init(UINT32 *Palette, UINT32 *Alt_Palette);
 void vce_write(UINT8 offset, UINT8 data);
 UINT8 vce_read(UINT8 offset);
 extern UINT16 *vce_data;

@@ -543,7 +543,7 @@ struct BurnDriver BurnDrvMk3 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3RomInfo, mk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -594,7 +594,7 @@ struct BurnDriver BurnDrvMk3r20 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3r20RomInfo, mk3r20RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -645,7 +645,7 @@ struct BurnDriver BurnDrvMk3r10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3r10RomInfo, mk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -696,7 +696,7 @@ struct BurnDriver BurnDrvMk3p40 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3p40RomInfo, mk3p40RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvUmk3 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3RomInfo, umk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -802,7 +802,7 @@ struct BurnDriver BurnDrvUmk3r11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3r11RomInfo, umk3r11RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -855,7 +855,7 @@ struct BurnDriver BurnDrvUmk3r10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3r10RomInfo, umk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 // Ultimate Mortal Kombat 3 Tournament Edition 2.0.042 (August 2018)
@@ -907,7 +907,7 @@ struct BurnDriver BurnDrvUmk3te = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3teRomInfo, umk3teRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -967,7 +967,7 @@ struct BurnDriver BurnDrvUmk3uk = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3ukRomInfo, umk3ukRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
 	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1026,7 +1026,7 @@ struct BurnDriver BurnDrvUmk3p = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1072,7 +1072,7 @@ struct BurnDriver BurnDrvOpenice = {
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceRomInfo, openiceRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1119,7 +1119,7 @@ struct BurnDriver BurnDrvOpenicea = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceaRomInfo, openiceaRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1172,7 +1172,7 @@ struct BurnDriver BurnDrvNbahangt = {
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtRomInfo, nbahangtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1225,7 +1225,7 @@ struct BurnDriver BurnDrvNbahangtm13 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm13RomInfo, nbahangtm13RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1278,7 +1278,7 @@ struct BurnDriver BurnDrvNbahangtl12 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtl12RomInfo, nbahangtl12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1331,7 +1331,7 @@ struct BurnDriver BurnDrvNbahangtm12 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm12RomInfo, nbahangtm12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1384,7 +1384,7 @@ struct BurnDriver BurnDrvNbahangtl11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtl11RomInfo, nbahangtl11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1437,7 +1437,7 @@ struct BurnDriver BurnDrvNbahangtm11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm11RomInfo, nbahangtm11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1497,7 +1497,7 @@ struct BurnDriver BurnDrvNbamht = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1550,7 +1550,7 @@ struct BurnDriver BurnDrvNbamhtl10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtl10RomInfo, nbamhtl10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1603,7 +1603,7 @@ struct BurnDriver BurnDrvNbamhtm10 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtm10RomInfo, nbamhtm10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1656,7 +1656,7 @@ struct BurnDriver BurnDrvNbamhtp = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtpRomInfo, nbamhtpRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1704,7 +1704,7 @@ struct BurnDriver BurnDrvRmpgwt = {
 	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_WUNIT, GBF_ACTION, 0,
 	NULL, rmpgwtRomInfo, rmpgwtRomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1752,7 +1752,7 @@ struct BurnDriver BurnDrvRmpgwt11 = {
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_WUNIT, GBF_ACTION, 0,
 	NULL, rmpgwt11RomInfo, rmpgwt11RomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1798,7 +1798,7 @@ struct BurnDriver BurnDrvWwfmania = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniaRomInfo, wwfmaniaRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1844,7 +1844,7 @@ struct BurnDriver BurnDrvWwfmaniab = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniabRomInfo, wwfmaniabRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1890,7 +1890,7 @@ struct BurnDriver BurnDrvWwfmaniac = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniacRomInfo, wwfmaniacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 
@@ -1937,7 +1937,7 @@ struct BurnDriver BurnDrvWwfmaniap = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniapRomInfo, wwfmaniapRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 // WWF: Wrestlemania (Acid Clown Edition)
@@ -1982,5 +1982,5 @@ struct BurnDriver BurnDrvWwfmanac = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmanacRomInfo, wwfmanacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
 	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };

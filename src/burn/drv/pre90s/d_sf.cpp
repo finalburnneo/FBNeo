@@ -53,9 +53,7 @@ static INT32 sound2_bank;
 static dtimer sndtimer;
 
 static struct BurnInputInfo SfInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -68,6 +66,7 @@ static struct BurnInputInfo SfInputList[] = {
 	{"P1 Medium Kick"  , BIT_DIGITAL  , DrvJoy4 + 9,	"p1 fire 5"},
 	{"P1 Strong Kick"  , BIT_DIGITAL  , DrvJoy4 + 10,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 11,  "p2 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 10,  "p2 down", },
@@ -92,9 +91,7 @@ static struct BurnInputInfo SfInputList[] = {
 STDINPUTINFO(Sf)
 
 static struct BurnInputInfo SfjInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -107,6 +104,7 @@ static struct BurnInputInfo SfjInputList[] = {
 	{"P1 Medium Kick"  , BIT_DIGITAL  , DrvJoy3 + 13,	"p1 fire 5"},
 	{"P1 Strong Kick"  , BIT_DIGITAL  , DrvJoy3 + 14,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy4 + 3,   "p1 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy4 + 2,   "p2 down", },
@@ -131,9 +129,7 @@ static struct BurnInputInfo SfjInputList[] = {
 STDINPUTINFO(Sfj)
 
 static struct BurnInputInfo SfusInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy3 + 3,   "p1 up",   },
 	{"P1 Down",	  BIT_DIGITAL,   DrvJoy3 + 2,   "p1 down", },
@@ -146,6 +142,7 @@ static struct BurnInputInfo SfusInputList[] = {
 	{"P1 Medium Kick"  , BIT_DIGITAL  , DrvJoy3 + 7,	"p1 fire 5"},
 	{"P1 Strong Kick"  , BIT_DIGITAL  , DrvJoy2 + 2,	"p1 fire 6"},
 
+	{"P2 Coin"       , BIT_DIGITAL  , DrvJoy2 + 1,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
 	{"P2 Up",	  BIT_DIGITAL,   DrvJoy3 + 11,  "p1 up",   },
 	{"P2 Down",	  BIT_DIGITAL,   DrvJoy3 + 10,  "p2 down", },
@@ -580,10 +577,11 @@ static UINT8 __fastcall sf_sound_read(UINT16 address)
 
 static void sound2_bank_w(INT32 data)
 {
-	sound2_bank = (data + 1) << 15;
+	sound2_bank = data;
 
-	ZetMapArea(0x8000, 0xffff, 0, DrvZ80Rom1 + sound2_bank);
-	ZetMapArea(0x8000, 0xffff, 2, DrvZ80Rom1 + sound2_bank);
+	data = (data * 0x8000) & (0x40000-1);
+
+	ZetMapMemory(DrvZ80Rom1 + 0x8000 + data, 0x8000, 0xffff, MAP_ROM);
 }
 
 static void __fastcall sf_sound2_out(UINT16 port, UINT8 data)

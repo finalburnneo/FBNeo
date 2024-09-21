@@ -357,7 +357,7 @@ static struct BurnDIPInfo BaddudesDIPList[]=
 	{0x01, 0x01, 0x0c, 0x04, "Hard"                   },
 	{0x01, 0x01, 0x0c, 0x00, "Hardest"                },
 	
-	{0   , 0xfe, 0   , 2   , "Allow continue"         },
+	{0   , 0xfe, 0   , 2   , "Show Continue Message"  },
 	{0x01, 0x01, 0x10, 0x10, "Yes"                    },
 	{0x01, 0x01, 0x10, 0x00, "No"                     },
 };

@@ -2274,10 +2274,10 @@ struct BurnDriver BurnDrvSupmodel = {
 	"supmodel", NULL, NULL, NULL, "1994",
 	"Super Model\0", NULL, "Comad & New Japan System", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, supmodelRomInfo, supmodelRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
 	SupmodelInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };
 
 

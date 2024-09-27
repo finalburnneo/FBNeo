@@ -1328,6 +1328,8 @@ static int dx9Scale(RECT* pRect, int nWidth, int nHeight)
 // Copy BlitFXsMem to pddsBlitFX
 static int dx9MemToSurf()
 {
+	if (pVidImage == NULL) return 1; // prevent crash w/ sfiii2 screen resizer
+
 	GetClientRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {
@@ -2372,6 +2374,8 @@ static void VidSCpyImg16(unsigned char* dst, unsigned int dstPitch, unsigned cha
 // Copy BlitFXsMem to pddsBlitFX
 static int dx9AltRender()  // MemToSurf
 {
+	if (pVidImage == NULL) return 1;
+
 	GetClientRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {

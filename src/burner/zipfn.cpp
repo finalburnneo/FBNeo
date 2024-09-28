@@ -31,7 +31,10 @@ INT32 ZipOpen(char* szZip)
 	Zip = unzOpen(szFileName);
 	if (Zip != NULL) {
 		nFileType = ZIPFN_FILETYPE_ZIP;
-		unzGoToFirstFile(Zip);
+		if (unzGoToFirstFile(Zip) != UNZ_OK) {
+			unzClose(Zip);
+			return 1;
+		}
 		nCurrFile = 0;
 
 		return 0;

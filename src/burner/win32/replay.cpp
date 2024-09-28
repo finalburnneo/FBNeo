@@ -824,6 +824,11 @@ static inline UINT16 Read16(const UINT8*& ptr)
 	return v;
 }
 
+INT32 FreezeInputSize()
+{
+	return 4 + 2*nGameInpCount;
+}
+
 INT32 FreezeInput(UINT8** buf, INT32* size)
 {
 	*size = 4 + 2*nGameInpCount;

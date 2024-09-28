@@ -8,4 +8,5 @@ UINT8 inputbuf_getbuffer();
 
 INT32 inputbuf_freeze(UINT8 **buf, INT32 *size);
 INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size);
+INT32 inputbuf_freezer_size();
 

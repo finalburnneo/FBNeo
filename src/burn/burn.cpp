@@ -1296,7 +1296,7 @@ enum {
 };
 
 struct RewindIndex {
-	INT32 pos;			// data position in RewindBuffer
+	UINT32 pos;			// data position in RewindBuffer
 	INT32 len;			// total buffer length (state + extra data)
 	INT32 state_len;	// buffer length of just state data
 	INT32 this_frame;	// frame # (for input recording sync)
@@ -1308,7 +1308,7 @@ struct RewindIndex {
 
 INT32 bRewindEnabled	= 0;		// for UI Integration
 INT32 nRewindMemory		= 1024;		// for UI
-static INT32 nRewindTotalAllocated;
+static UINT32 nRewindTotalAllocated;
 static INT32 bRewindStatus;			  // ref. enum above
 static INT32 bRewindCancelLatch;
 static INT32 bRewindSingleStepping;
@@ -1397,8 +1397,9 @@ static INT32 StateRewindGetSize()
 extern int nReplayStatus;
 extern UINT32 nStartFrame;
 extern INT32 nReplayUndoCount;
-int FreezeInput(unsigned char** buf, int* size);
-int UnfreezeInput(const unsigned char* buf, int size);
+INT32 FreezeInputSize();
+INT32 FreezeInput(UINT8** buf, INT32* size);
+INT32 UnfreezeInput(const UINT8* buf, INT32 size);
 #include "inputbuf.h"
 
 // interface.h
@@ -1505,15 +1506,20 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 		}
 	}
 
-	if (nRewindFrames > 0 && (pRewindIndex[nRewindFrames-1].pos + pRewindIndex[nRewindFrames-1].len*2) >=
-		nRewindTotalAllocated) {
+	INT32 nStateSize = StateRewindGetSize();
 
-		thready.notify(); // runs StateRewind_Repack() in a thread
+	if (nRewindFrames > 0 && (pRewindIndex[nRewindFrames-1].pos + pRewindIndex[nRewindFrames-1].len + nStateSize + 1024 + // the 1024 is a safety net
+		((nReplayStatus != 0) ? (4 + inputbuf_freezer_size() + 4 + FreezeInputSize()) : 0) ) >=	nRewindTotalAllocated) {
+
+		// if we've run out of rewind memory, it's time for a culling. We do this in a thread,
+		// so emulation can continue.
+
+		thready.notify(); // (trigger StateRewind_Repack() via thread)
 
 	} else {
 		// Add this frame to rewind
 		pRewindIndex[nRewindFrames].len =
-		pRewindIndex[nRewindFrames].state_len =	StateRewindGetSize();
+		pRewindIndex[nRewindFrames].state_len = nStateSize;
 
 		pRewindIndex[nRewindFrames].pos = (nRewindFrames == 0) ? 0 :
 			(pRewindIndex[nRewindFrames-1].pos + pRewindIndex[nRewindFrames-1].len);
@@ -1603,7 +1609,7 @@ static void StateRewindLoad()
 			// huh?  When we run out of rewind memory, the entries get packed
 			// by deleting every other entry thus freeing up space for future
 			// rewind entries.  If we don't do this, they will play back way
-			// too fast!
+			// too fast! (compared to freshly added rewind entries)
 			if (pRewindIndex[nRewindFrames].gran_counter >= (pRewindIndex[nRewindFrames].granulated)) {
 				pRewindIndex[nRewindFrames].gran_counter = 0;
 				nRewindFrames--;

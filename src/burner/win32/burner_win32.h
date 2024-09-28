@@ -460,6 +460,7 @@ int ReplayInput();
 int StartRecord();
 int StartReplay(const TCHAR* szFileName = NULL);
 void StopReplay();
+INT32 FreezeInputSize();
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 void DisplayReplayProperties(HWND hDlg, bool bClear);

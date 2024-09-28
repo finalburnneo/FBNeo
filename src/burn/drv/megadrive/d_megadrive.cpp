@@ -45540,7 +45540,7 @@ STD_ROM_PICK(md_knnsf)
 STD_ROM_FN(md_knnsf)
 
 struct BurnDriver BurnDrvmd_knnsf = {
-	"md_knnsf", NULL, NULL, NULL, "2024",
+	"md_knnsf", NULL, NULL, NULL, "2023",
 	"Kunio no Nekketsu School Fighters (HB, Beta v.05b)\0", NULL, "UsagiRu", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,

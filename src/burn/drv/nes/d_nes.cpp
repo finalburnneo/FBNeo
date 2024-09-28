@@ -27567,10 +27567,10 @@ struct BurnDriver BurnDrvnes_marioadventure = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Mario Adventure 3 (Hack, v1.3.1)
+// Mario Adventure 3 (Hack, v1.5.2)
 // https://marioadventure3.com/
 static struct BurnRomInfo nes_marioadventure3RomDesc[] = {
-	{ "Mario Adventure 3 v1.3.1 (2024)(ScarlettVixen).nes",          786448, 0x1e1a4997, BRF_ESS | BRF_PRG },
+	{ "Mario Adventure 3 v1.5.2 (2024)(ScarlettVixen).nes",          786448, 0xb92cde3f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_marioadventure3)
@@ -27578,7 +27578,7 @@ STD_ROM_FN(nes_marioadventure3)
 
 struct BurnDriver BurnDrvnes_marioadventure3 = {
 	"nes_marioadventure3", "nes_smb3", NULL, NULL, "2024",
-	"Mario Adventure 3 (Hack, v1.3.1)\0", NULL, "ScarlettVixen", "Miscellaneous",
+	"Mario Adventure 3 (Hack, v1.5.2)\0", NULL, "ScarlettVixen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_marioadventure3RomInfo, nes_marioadventure3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

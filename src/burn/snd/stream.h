@@ -56,7 +56,11 @@ struct Stream {
 
 		stream_init(update_stream);
 	}
-	void set_rate(INT32 rate_from) {
+	void set_rate(INT32 rate_from, INT32 reposit_last_rate = 0) {
+		if (reposit_last_rate) {
+			// hack: if rate changes multiple times/frame, approximate new stream position
+			nPosition = nPosition * rate_from / nSampleRateFrom;
+		}
 		nSampleRateFrom = rate_from;
 		nSampleSize = (UINT64)nSampleRateFrom * (1 << 16) / ((nSampleRateTo == 0) ? 44100 : nSampleRateTo);
 		nSampleSize_Otherway = (UINT64)((nSampleRateTo == 0) ? 44100 : nSampleRateTo) * (1 << 16) / ((nSampleRateFrom == 0) ? 44100 : nSampleRateFrom);

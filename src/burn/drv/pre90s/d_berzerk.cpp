@@ -957,7 +957,7 @@ static UINT8 __fastcall berzerk_read_port(UINT16 address)
 
 	switch (address & 0xff)
 	{
-		case 0x44: bprintf(0, _T("is busy? %x\n"), s14001a_busy_read());
+		case 0x44:
 			return (s14001a_busy_read()) ? 0x00 : 0x40;
 
 		case 0x48: // p1

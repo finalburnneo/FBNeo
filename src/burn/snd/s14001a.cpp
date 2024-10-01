@@ -386,7 +386,7 @@ void s14001a_start_write(INT32 state)
 void s14001a_set_clock(INT32 clock)
 {
 	chip.clock = clock;
-	stream.set_rate(clock, 1);
+	stream.set_rate(clock);
 }
 
 void s14001a_set_volume(double volume)

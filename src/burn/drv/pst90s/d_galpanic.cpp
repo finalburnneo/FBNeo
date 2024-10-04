@@ -481,7 +481,7 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(UINT16));
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;

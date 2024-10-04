@@ -401,7 +401,7 @@ static INT32 DrvInit(INT32 nLoadType)
 
 	BurnWatchdogInit(DrvDoReset, (nLoadType) ? -1 : 180);
 
-	MSM6295Init(0, 2000000 / 132, 0);
+	MSM6295Init(0, 2000000 / MSM6295_PIN7_LOW, 0);
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

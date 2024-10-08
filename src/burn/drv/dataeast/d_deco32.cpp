@@ -1577,6 +1577,8 @@ static INT32 FghthistCommonInit(INT32 z80_sound, UINT32 speedhack)
 	game_select = 1;
 	speedhack_address = speedhack;
 
+	BurnSetRefreshRate(57.79965);
+
 	gfxlen[0] = 0x200000;
 	gfxlen[1] = 0x200000;
 	gfxlen[2] = 0x200000;
@@ -1711,6 +1713,8 @@ static INT32 CaptavenCommonInit(INT32 has_z80, UINT32 speedhack)
 	game_select = 0;
 	speedhack_address = speedhack;
 
+	BurnSetRefreshRate(57.79965);
+
 	gfxlen[0] = 0x100000;
 	gfxlen[1] = 0x100000;
 	gfxlen[2] = 0x500000;
@@ -1840,6 +1844,9 @@ static INT32 NslasherCommonInit(INT32 has_z80, UINT32 speedhack)
 	game_select = 2;
 	has_ace = 1;
 	speedhack_address = speedhack;
+
+	BurnSetRefreshRate(58.464346);
+
 	GenericTilesInit(); // for allocating memory for pTempDraw;
 
 	gfxlen[0] = 0x400000;
@@ -2157,6 +2164,8 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 {
 	game_select = 4;
 	speedhack_address = speedhack;
+
+	BurnSetRefreshRate(57.79965);
 
 	GenericTilesInit(); // for allocating memory for pTempSprite
 
@@ -3578,7 +3587,10 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
-	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
+	if (game_select == 2) { // nslasher
+		nCyclesTotal[0] = (INT32)((double)7080500 / 58.464346);
+		nCyclesTotal[1] = (INT32)((double)deco16_sound_cpuclock / 58.464346);
+	}
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);

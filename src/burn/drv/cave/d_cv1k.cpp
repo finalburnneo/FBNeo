@@ -1307,7 +1307,7 @@ struct BurnDriver BurnDrvDdpdfk = {
 	"ddpdfk", NULL, NULL, NULL, "2008",
 	"DoDonPachi Dai-Fukkatsu Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, "Cave (AMI license)", "CA019",
 	L"DoDonPachi Dai-Fukkatsu Ver 1.5\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpdfkRomInfo, ddpdfkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1332,7 +1332,7 @@ struct BurnDriver BurnDrvDdpdfk10 = {
 	"ddpdfk10", "ddpdfk", NULL, NULL, "2008",
 	"DoDonPachi Dai-Fukkatsu Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, "Cave (AMI license)", "CA019",
 	L"DoDonPachi Dai-Fukkatsu Ver 1.0\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpdfk10RomInfo, ddpdfk10RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1382,7 +1382,7 @@ struct BurnDriver BurnDrvDfkbl = {
 	"dfkbl", NULL, NULL, NULL, "2010",
 	"DoDonPachi Dai-Fukkatsu Black Label (2010/1/18 BLACK LABEL)\0", NULL, "Cave", "CA019B",
 	L"DoDonPachi Dai-Fukkatsu Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2010/1/18 BLACK LABEL)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, dfkblRomInfo, dfkblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1407,7 +1407,7 @@ struct BurnDriver BurnDrvDdpsdoj = {
 	"ddpsdoj", NULL, NULL, NULL, "2012",
 	"DoDonPachi SaiDaiOuJou (2012/ 4/20)\0", NULL, "Cave", "CA???",
 	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f (2012/4/20)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1432,7 +1432,7 @@ struct BurnDriver BurnDrvsdojak = {
 	"sdojak", "ddpsdoj", NULL, NULL, "2021",
 	"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0", NULL, "hack", "CA???",
 	L"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f & \u30ca\u30c3\u30af\u30eb\u30ba (CaveDwellers, 2021/12/01)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, sdojakRomInfo, sdojakRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4

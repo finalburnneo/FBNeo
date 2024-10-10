@@ -47620,7 +47620,7 @@ struct BurnDriver BurnDrvmd_s3compes = {
 };
 
 // Sonic Delta Next (Hack, v0.79)
-// https://shc.zone/entries/contest2024/1021
+// https://www.neto-games.com.br/rom_hack/sonic_delta_40_mb.php
 static struct BurnRomInfo md_sonicdeltanRomDesc[] = {
 	{ "Sonic Delta Next v0.79 (2024)(Esrael Neto).bin", 5242880, 0x9376cfb0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -47634,26 +47634,6 @@ struct BurnDriver BurnDrvmd_sonicdeltan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM, FBF_SONIC,
 	MegadriveGetZipName, md_sonicdeltanRomInfo, md_sonicdeltanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Sonic Delta Reloaded (Hack, v0.78)
-// https://info.sonicretro.org/Sonic_Delta
-// https://www.neto-games.com.br/rom_hack/sonic_delta_40_mb.php
-static struct BurnRomInfo md_sonicdeltarRomDesc[] = {
-	{ "Sonic Delta Reloaded v0.78 (2023)(Esrael Neto).bin", 0x500000, 0x4e896915, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sonicdeltar)
-STD_ROM_FN(md_sonicdeltar)
-
-struct BurnDriver BurnDrvmd_sonicdeltar = {
-	"md_sonicdeltar", "md_sonic3", NULL, NULL, "2023",
-	"Sonic Delta Reloaded (Hack, v0.78)\0", "40Mbit ROM", "Esrael Neto", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM, FBF_SONIC,
-	MegadriveGetZipName, md_sonicdeltarRomInfo, md_sonicdeltarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

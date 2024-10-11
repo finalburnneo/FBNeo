@@ -57,7 +57,7 @@ static UINT32 lightgun_port;
 
 static UINT16 color_base[3];
 
-static INT32 nExtraCycles;
+static INT32 nExtraCycles[3];
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -1476,7 +1476,7 @@ static INT32 DrvDoReset()
 	raster_irq_scanline = 0;
 	lightgun_latch = 0;
 
-	nExtraCycles = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	HiscoreReset();
 
@@ -3591,7 +3591,7 @@ static INT32 DrvFrame()
 		nCyclesTotal[0] = (INT32)((double)7080500 / 58.464346);
 		nCyclesTotal[1] = (INT32)((double)deco16_sound_cpuclock / 58.464346);
 	}
-	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ArmOpen(0);
 	h6280Open(0);
@@ -3632,7 +3632,8 @@ static INT32 DrvFrame()
 	h6280Close();
 	ArmClose();
 
-	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw && pDrawScanline == NULL) {
 		BurnDrvRedraw();
@@ -3674,7 +3675,7 @@ static INT32 DrvZ80Frame()
 		nCyclesTotal[0] = (INT32)((double)7080500 / 58.464346);
 		nCyclesTotal[1] = (INT32)((double)3580000 / 58.464346);
 	}
-	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ArmOpen(0);
 	ZetOpen(0);
@@ -3699,7 +3700,8 @@ static INT32 DrvZ80Frame()
 	ZetClose();
 	ArmClose();
 
-	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		deco32_z80_sound_update(pBurnSoundOut, nBurnSoundLen);
@@ -3734,7 +3736,7 @@ static INT32 DrvBSMTFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
-	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ArmOpen(0);
 	deco16_vblank = 1;
@@ -3772,7 +3774,9 @@ static INT32 DrvBSMTFrame()
 
 	ArmClose();
 
-	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

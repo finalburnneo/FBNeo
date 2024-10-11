@@ -51123,3 +51123,326 @@ struct BurnDriver BurnSpecZxwordle = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Cursed Castle DX - Archer (128K)
+
+static struct BurnRomInfo SpecCursedCastDXARomDesc[] = {
+	{ "Cursed Castle DX - Archer 128K (2024)(Fransouls).tap", 52302, 0x1601fcd2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCastDXA, SpecCursedCastDXA, Spec128)
+STD_ROM_FN(SpecCursedCastDXA)
+
+struct BurnDriver BurnSpecCursedCastDXA = {
+	"spec_cursedcastdxa", "spec_cursedcastle", "spec_spec128", NULL, "2024",
+	"Cursed Castle DX - Archer (128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCastDXARomInfo, SpecCursedCastDXARomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle DX - Black & White (128K)
+
+static struct BurnRomInfo SpecCursedCastDXBWRomDesc[] = {
+	{ "Cursed Castle DX - Black & White 128K (2024)(Fransouls).tap", 52288, 0x10d6936e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCastDXBW, SpecCursedCastDXBW, Spec128)
+STD_ROM_FN(SpecCursedCastDXBW)
+
+struct BurnDriver BurnSpecCursedCastDXBW = {
+	"spec_cursedcastdxbw", "spec_cursedcastle", "spec_spec128", NULL, "2024",
+	"Cursed Castle DX - Black & White (128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCastDXBWRomInfo, SpecCursedCastDXBWRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle DX - Executer (128K)
+
+static struct BurnRomInfo SpecCursedCastDXERomDesc[] = {
+	{ "Cursed Castle DX - Executer 128K (2024)(Fransouls).tap", 52440, 0xf03a5b6c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCastDXE, SpecCursedCastDXE, Spec128)
+STD_ROM_FN(SpecCursedCastDXE)
+
+struct BurnDriver BurnSpecCursedCastDXE = {
+	"spec_cursedcastdxe", "spec_cursedcastle", "spec_spec128", NULL, "2024",
+	"Cursed Castle DX - Executer (128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCastDXERomInfo, SpecCursedCastDXERomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle DX - Maaad (128K)
+
+static struct BurnRomInfo SpecCursedCastDXMRomDesc[] = {
+	{ "Cursed Castle DX - Maaad 128K (2024)(Fransouls).tap", 52302, 0xd5630cec, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCastDXM, SpecCursedCastDXM, Spec128)
+STD_ROM_FN(SpecCursedCastDXM)
+
+struct BurnDriver BurnSpecCursedCastDXM = {
+	"spec_cursedcastdxm", "spec_cursedcastle", "spec_spec128", NULL, "2024",
+	"Cursed Castle DX - Maaad (128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCastDXMRomInfo, SpecCursedCastDXMRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle DX - Skeleton (128K)
+
+static struct BurnRomInfo SpecCursedCastDXSRomDesc[] = {
+	{ "Cursed Castle DX - Skeleton 128K (2024)(Fransouls).tap", 52440, 0x888645ca, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCastDXS, SpecCursedCastDXS, Spec128)
+STD_ROM_FN(SpecCursedCastDXS)
+
+struct BurnDriver BurnSpecCursedCastDXS = {
+	"spec_cursedcastdxs", "spec_cursedcastle", "spec_spec128", NULL, "2024",
+	"Cursed Castle DX - Skeleton (128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCastDXSRomInfo, SpecCursedCastDXSRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle 2 - Part 1 (English) (128K)
+
+static struct BurnRomInfo SpecCursedCa2p1enRomDesc[] = {
+	{ "Cursed Castle 2 - Part 1 v1.1 128K EN (2024)(Fransouls).tap", 110644, 0x4d5ad0a4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCa2p1en, SpecCursedCa2p1en, Spec128)
+STD_ROM_FN(SpecCursedCa2p1en)
+
+struct BurnDriver BurnSpecCursedCa2p1en = {
+	"spec_cursedca2p1en", NULL, "spec_spec128", NULL, "2024",
+	"Cursed Castle 2 - Part 1 (English)(128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCa2p1enRomInfo, SpecCursedCa2p1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle 2 - Part 2 (English) (128K)
+
+static struct BurnRomInfo SpecCursedCa2p2enRomDesc[] = {
+	{ "Cursed Castle 2 - Part 2 v1.1 128K EN (2024)(Fransouls).tap", 104803, 0x36244e1a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCa2p2en, SpecCursedCa2p2en, Spec128)
+STD_ROM_FN(SpecCursedCa2p2en)
+
+struct BurnDriver BurnSpecCursedCa2p2en = {
+	"spec_cursedca2p2en", "spec_cursedca2p1en", "spec_spec128", NULL, "2024",
+	"Cursed Castle 2 - Part 2 (English)(128K)\0", "Pass: AXE777", "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCa2p2enRomInfo, SpecCursedCa2p2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle 2 - Part 1 (Spanish) (128K)
+
+static struct BurnRomInfo SpecCursedCa2p1esRomDesc[] = {
+	{ "Cursed Castle 2 - Part 1 v1.1 128K ES (2024)(Fransouls).tap", 110708, 0x993ba4a1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCa2p1es, SpecCursedCa2p1es, Spec128)
+STD_ROM_FN(SpecCursedCa2p1es)
+
+struct BurnDriver BurnSpecCursedCa2p1es = {
+	"spec_cursedca2p1es", "spec_cursedca2p1en", "spec_spec128", NULL, "2024",
+	"Cursed Castle 1 - Part 1 (Spanish)(128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCa2p1esRomInfo, SpecCursedCa2p1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cursed Castle 2 - Part 2 (Spanish) (128K)
+
+static struct BurnRomInfo SpecCursedCa2p2esRomDesc[] = {
+	{ "Cursed Castle 2 - Part 2 v1.1 128K ES (2024)(Fransouls).tap", 104809, 0xef7fb1ef, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursedCa2p2es, SpecCursedCa2p2es, Spec128)
+STD_ROM_FN(SpecCursedCa2p2es)
+
+struct BurnDriver BurnSpecCursedCa2p2es = {
+	"spec_cursedca2p2es", "spec_cursedca2p1en", "spec_spec128", NULL, "2024",
+	"Cursed Castle 2 - Part 2 (Spanish)(128K)\0", "Pass: AXE777", "Fransouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCursedCa2p2esRomInfo, SpecCursedCa2p2esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hunchback - The Adventure (48K)
+
+static struct BurnRomInfo SpecHunchadvRomDesc[] = {
+	{ "Hunchback - The Adventure 48K (1986)(Ocean Software Ltd).tap", 116193, 0x63a4ccc9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHunchadv, SpecHunchadv, Spectrum)
+STD_ROM_FN(SpecHunchadv)
+
+struct BurnDriver BurnSpecHunchadv = {
+	"spec_hunchadv", NULL, "spec_spectrum", NULL, "1986",
+	"Hunchback - The Adventure (48K)\0", "Collect all items for next part, there is no way back!", "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHunchadvRomInfo, SpecHunchadvRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hunchback - The Adventure - Part 1 (48K)
+
+static struct BurnRomInfo SpecHunchadvp1RomDesc[] = {
+	{ "Hunchback - The Adventure - Part 1 48K (1986)(Ocean Software Ltd).tap", 40956, 0x812dc41b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHunchadvp1, SpecHunchadvp1, Spectrum)
+STD_ROM_FN(SpecHunchadvp1)
+
+struct BurnDriver BurnSpecHunchadvp1 = {
+	"spec_hunchadvp1", "spec_hunchadv", "spec_spectrum", NULL, "1986",
+	"Hunchback - The Adventure - Part 1 (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHunchadvp1RomInfo, SpecHunchadvp1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hunchback - The Adventure - Part 2 (48K)
+
+static struct BurnRomInfo SpecHunchadvp2RomDesc[] = {
+	{ "Hunchback - The Adventure - Part 2 48K (1986)(Ocean Software Ltd).tap", 42701, 0x00d6dd37, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHunchadvp2, SpecHunchadvp2, Spectrum)
+STD_ROM_FN(SpecHunchadvp2)
+
+struct BurnDriver BurnSpecHunchadvp2 = {
+	"spec_hunchadvp2", "spec_hunchadv", "spec_spectrum", NULL, "1986",
+	"Hunchback - The Adventure - Part 2 (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHunchadvp2RomInfo, SpecHunchadvp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hunchback - The Adventure - Part 3 (48K)
+
+static struct BurnRomInfo SpecHunchadvp3RomDesc[] = {
+	{ "Hunchback - The Adventure - Part 3 48K (1986)(Ocean Software Ltd).tap", 44533, 0x27c39c33, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHunchadvp3, SpecHunchadvp3, Spectrum)
+STD_ROM_FN(SpecHunchadvp3)
+
+struct BurnDriver BurnSpecHunchadvp3 = {
+	"spec_hunchadvp3", "spec_hunchadv", "spec_spectrum", NULL, "1986",
+	"Hunchback - The Adventure - Part 3 (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHunchadvp3RomInfo, SpecHunchadvp3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Marlow ZX - Episode 1 (128K)
+
+static struct BurnRomInfo SpecMarlowep1RomDesc[] = {
+	{ "Marlow ZX - Episode 1 128K (2024)(Amaweks).tap", 65745, 0x703e655b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMarlowep1, SpecMarlowep1, Spec128)
+STD_ROM_FN(SpecMarlowep1)
+
+struct BurnDriver BurnSpecMarlowep1 = {
+	"spec_marlowep1", NULL, "spec_spec128", NULL, "2024",
+	"Marlow ZX - Episode 1 (128K)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMarlowep1RomInfo, SpecMarlowep1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Marlow ZX - Episode 2 (128K)
+
+static struct BurnRomInfo SpecMarlowep2RomDesc[] = {
+	{ "Marlow ZX - Episode 2 128K (2024)(Amaweks).tap", 68373, 0xdd7f7681, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMarlowep2, SpecMarlowep2, Spec128)
+STD_ROM_FN(SpecMarlowep2)
+
+struct BurnDriver BurnSpecMarlowep2 = {
+	"spec_marlowep2", "spec_marlowep1", "spec_spec128", NULL, "2024",
+	"Marlow ZX - Episode 2 (128K)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMarlowep2RomInfo, SpecMarlowep2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Wiking (128K)
+
+static struct BurnRomInfo SpecWiking128RomDesc[] = {
+	{ "Wiking 128K (1987-2024)(Slider'15, tiboh'24).tap", 80986, 0xaeae7e18, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWiking128, SpecWiking128, Spec128)
+STD_ROM_FN(SpecWiking128)
+
+struct BurnDriver BurnSpecWiking128 = {
+	"spec_wiking128", NULL, "spec_spec128", NULL, "1987-2024",
+	"Wiking - Improvement Hack (128K)\0", "No SounDrive/Covox SFX available in FBN", "Slider, Tiboh", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWiking128RomInfo, SpecWiking128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Wiking (48K)
+
+static struct BurnRomInfo SpecWiking48RomDesc[] = {
+	{ "Wiking 48K (1987)(M.K.).tap", 16191, 0xb53a2ba2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWiking48, SpecWiking48, Spectrum)
+STD_ROM_FN(SpecWiking48)
+
+struct BurnDriver BurnSpecWiking48 = {
+	"spec_wiking48", "spec_wiking128", "spec_spectrum", NULL, "1987",
+	"Wiking (48K)\0", NULL, "M.K.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWiking48RomInfo, SpecWiking48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+

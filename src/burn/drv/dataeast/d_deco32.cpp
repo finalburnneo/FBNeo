@@ -3669,8 +3669,11 @@ static INT32 DrvZ80Frame()
 	}
 
 	INT32 nInterleave = 274;
-	INT32 nCyclesTotal[2] = { 7000000 / 60, 3580000 / 60 };
-	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
+	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)3580000 / 57.799650) };
+	if (game_select == 2) { // nslasher
+		nCyclesTotal[0] = (INT32)((double)7080500 / 58.464346);
+		nCyclesTotal[1] = (INT32)((double)3580000 / 58.464346);
+	}
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);

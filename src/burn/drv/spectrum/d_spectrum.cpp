@@ -51267,7 +51267,7 @@ STD_ROM_FN(SpecCursedCa2p1es)
 
 struct BurnDriver BurnSpecCursedCa2p1es = {
 	"spec_cursedca2p1es", "spec_cursedca2p1en", "spec_spec128", NULL, "2024",
-	"Cursed Castle 1 - Part 1 (Spanish)(128K)\0", NULL, "Fransouls", "ZX Spectrum",
+	"Cursed Castle 2 - Part 1 (Spanish)(128K)\0", NULL, "Fransouls", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCursedCa2p1esRomInfo, SpecCursedCa2p1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

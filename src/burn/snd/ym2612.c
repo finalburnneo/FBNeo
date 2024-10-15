@@ -2199,6 +2199,7 @@ static void scan_ym2612_internal()
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &ym2612.CH[i].SLOT[j];
 			ba.nLen	  = STRUCT_SIZE_HELPER(FM_SLOT, AMmask);
+			ba.szName = szName;
 			BurnAcb(&ba);
 		}
 	}

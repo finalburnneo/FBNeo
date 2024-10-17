@@ -25799,6 +25799,25 @@ struct BurnDriver BurnDrvMSX_polacad2 = {
 	272, 228, 4, 3
 };
 
+// Police Dog (Japan)
+
+static struct BurnRomInfo MSX_policedogRomDesc[] = {
+	{ "Police Dog (Japan)(1983)(Hudson Soft)[BLOAD'CAS-',R].cas",	12646, 0xc03d100b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_policedog, MSX_policedog, msx_msx)
+STD_ROM_FN(MSX_policedog)
+
+struct BurnDriver BurnDrvMSX_policedog = {
+	"msx_policedog", NULL, "msx_msx", NULL, "1983",
+	"Police Dog (Japan)\0", NULL, "Hudson Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
+	MSXGetZipName, MSX_policedogRomInfo, MSX_policedogRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Poogaboo (Euro, Spanish)
 
 static struct BurnRomInfo MSX_poogabooRomDesc[] = {
@@ -25810,7 +25829,7 @@ STD_ROM_FN(MSX_poogaboo)
 
 struct BurnDriver BurnDrvMSX_poogaboo = {
 	"msx_poogaboo", NULL, "msx_msx", NULL, "1991",
-	"Poogaboo (Euro, Spanish)\0", "Use Cursor Keys and SPACE in the options menu" , "Opera Soft", "MSX",
+	"Poogaboo (Euro, Spanish)\0", "Use Cursor Keys and SPACE in the options menu", "Opera Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_poogabooRomInfo, MSX_poogabooRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
@@ -27601,7 +27620,7 @@ struct BurnDriver BurnDrvMSX_1937es = {
 // Ace Gun (HB)
 
 static struct BurnRomInfo MSX_acegunRomDesc[] = {
-	{ "ace gun (2020)(cobinee).rom",	0x08000, 0xd9bbb093, BRF_PRG | BRF_ESS },
+	{ "Ace Gun (2020)(Cobinee).rom",	0x08000, 0xd9bbb093, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_acegun, MSX_acegun, msx_msx)
@@ -28757,6 +28776,25 @@ struct BurnDriver BurnDrvMSX_cotn = {
 	272, 228, 4, 3
 };
 
+// ChimneyMan (HB, v1.5)
+
+static struct BurnRomInfo MSX_chimneymanRomDesc[] = {
+	{ "ChimneyMan v1.5 (2024)(Gamecast Ent.).rom",	753664, 0x3a36ef6a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chimneyman, MSX_chimneyman, msx_msx)
+STD_ROM_FN(MSX_chimneyman)
+
+struct BurnDriver BurnDrvMSX_chimneyman = {
+	"msx_chimneyman", NULL, "msx_msx", NULL, "2024",
+	"ChimneyMan (HB, v1.5)\0", NULL, "Gamecast Entertainment", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_chimneymanRomInfo, MSX_chimneymanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Circus Mystery, The (HB, v1.4)
 
 static struct BurnRomInfo MSX_circusmystRomDesc[] = {
@@ -28779,7 +28817,7 @@ struct BurnDriver BurnDrvMSX_circusmyst = {
 // Cocoa and the Time Machine (HB)
 
 static struct BurnRomInfo MSX_cocoamsxRomDesc[] = {
-	{ "cocoa and the time machine (2020)(minilop).rom",	753664, 0x22d55a91, BRF_PRG | BRF_ESS },
+	{ "Cocoa and the Time Machine (2020)(Minilop).rom",	753664, 0x22d55a91, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_cocoamsx, MSX_cocoamsx, msx_msx)
@@ -29140,7 +29178,7 @@ struct BurnDriver BurnDrvMSX_deepdun = {
 // Defence (HB, v1.2)
 
 static struct BurnRomInfo MSX_defenceRomDesc[] = {
-	{ "Defence v1.2 (2022)(GameCast Ent.).rom",	32768, 0xc39b5168, BRF_PRG | BRF_ESS },
+	{ "Defence v1.2 (2022)(Gamecast Ent.).rom",	32768, 0xc39b5168, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_defence, MSX_defence, msx_msx)
@@ -29148,7 +29186,7 @@ STD_ROM_FN(MSX_defence)
 
 struct BurnDriver BurnDrvMSX_defence = {
 	"msx_defence", NULL, "msx_msx", NULL, "2022",
-	"Defence (HB, v1.2)\0", NULL, "GameCast Entertainment", "MSX",
+	"Defence (HB, v1.2)\0", NULL, "Gamecast Entertainment", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_defenceRomInfo, MSX_defenceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -30372,6 +30410,25 @@ struct BurnDriver BurnDrvMSX_hopperboy = {
 	272, 228, 4, 3
 };
 
+// I-Logic (HB)
+
+static struct BurnRomInfo MSX_ilogicRomDesc[] = {
+	{ "I-Logic (2024)(Platty Soft).rom",	49152, 0x142db92f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ilogic, MSX_ilogic, msx_msx)
+STD_ROM_FN(MSX_ilogic)
+
+struct BurnDriver BurnDrvMSX_ilogic = {
+	"msx_ilogic", NULL, "msx_msx", NULL, "2024",
+	"I-Logic (HB)\0", NULL, "Platty Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_ilogicRomInfo, MSX_ilogicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Impetus (HB)
 
 static struct BurnRomInfo MSX_impetusRomDesc[] = {
@@ -30622,7 +30679,7 @@ struct BurnDriver BurnDrvMSX_jumpllama = {
 // Kill Mice (HB)
 
 static struct BurnRomInfo MSX_killmiceRomDesc[] = {
-	{ "Kill Mice (2011)(GameCast Ent.).rom",	0x10000, 0x783afacb, BRF_PRG | BRF_ESS },
+	{ "Kill Mice (2011)(Gamecast Ent.).rom",	0x10000, 0x783afacb, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_killmice, MSX_killmice, msx_msx)
@@ -30630,7 +30687,7 @@ STD_ROM_FN(MSX_killmice)
 
 struct BurnDriver BurnDrvMSX_killmice = {
 	"msx_killmice", NULL, "msx_msx", NULL, "2011",
-	"Kill Mice (HB)\0", NULL, "GameCast Entertainment", "MSX",
+	"Kill Mice (HB)\0", NULL, "Gamecast Entertainment", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_killmiceRomInfo, MSX_killmiceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -31762,7 +31819,7 @@ struct BurnDriver BurnDrvMSX_nightdriver = {
 // Night Knight (HB)
 
 static struct BurnRomInfo MSX_nightknightRomDesc[] = {
-	{ "nightk.rom",	0x08000, 0x3a7965de, BRF_PRG | BRF_ESS },
+	{ "Night Knight v1.0.3 (2019)(usebox.net).rom",	0x08000, 0x3a7965de, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_nightknight, MSX_nightknight, msx_msx)
@@ -31770,7 +31827,7 @@ STD_ROM_FN(MSX_nightknight)
 
 struct BurnDriver BurnDrvMSX_nightknight = {
 	"msx_nightknight", NULL, "msx_msx", NULL, "2019",
-	"Night Knight (HB, v1.0.3)\0", NULL, "Juan J. Martinez / usebox.net", "MSX",
+	"Night Knight (HB, v1.0.3)\0", NULL, "Juan J. Martinez - usebox.net", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_nightknightRomInfo, MSX_nightknightRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -31857,7 +31914,7 @@ struct BurnDriver BurnDrvMSX_nogals = {
 // Nogalious Demo (HB)
 
 static struct BurnRomInfo MSX_nogalsdemoRomDesc[] = {
-	{ "nogalious demo (2018)(luegolu3go).rom",	524288, 0x8728e3e9, BRF_PRG | BRF_ESS },
+	{ "Nogalious Demo (2018)(LuegoLu3go).rom",	524288, 0x8728e3e9, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_nogalsdemo, MSX_nogalsdemo, msx_msx)
@@ -32370,7 +32427,7 @@ struct BurnDriver BurnDrvMSX_picpuzzle2 = {
 // Pippo La Scopa Ficcanaso (HB)
 
 static struct BurnRomInfo MSX_pippoRomDesc[] = {
-	{ "Pippo La Scopa Ficcanaso (2021)(Gamecast).rom",	16384, 0xee9b213d, BRF_PRG | BRF_ESS },
+	{ "Pippo La Scopa Ficcanaso (2021)(Gamecast Ent.).rom",	16384, 0xee9b213d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_pippo, MSX_pippo, msx_msx)
@@ -32378,7 +32435,7 @@ STD_ROM_FN(MSX_pippo)
 
 struct BurnDriver BurnDrvMSX_pippo = {
 	"msx_pippo", NULL, "msx_msx", NULL, "2021",
-	"Pippo La Scopa Ficcanaso (HB)\0", NULL, "GameCast Entertainment", "MSX",
+	"Pippo La Scopa Ficcanaso (HB)\0", NULL, "Gamecast Entertainment", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_pippoRomInfo, MSX_pippoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
@@ -32427,7 +32484,7 @@ struct BurnDriver BurnDrvMSX_ponpon = {
 // Pretty Kingdom (HB)
 
 static struct BurnRomInfo MSX_prettykngdmRomDesc[] = {
-	{ "NLKMSX006EN_PRETTYKINGDOM.rom",	0x08000, 0xcb2d148c, BRF_PRG | BRF_ESS },
+	{ "Pretty Kingdom (2014)(Nerlaska Studio).rom",	0x08000, 0xcb2d148c, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_prettykngdm, MSX_prettykngdm, msx_msx)
@@ -32446,7 +32503,7 @@ struct BurnDriver BurnDrvMSX_prettykngdm = {
 // Princess Quest (HB)
 
 static struct BurnRomInfo MSX_princessquestRomDesc[] = {
-	{ "princess_quest_msx.rom",	0x10000, 0xaa31ac36, BRF_PRG | BRF_ESS },
+	{ "Princess Quest (2012)(Oscar Toledo G.).rom",	0x10000, 0xaa31ac36, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_princessquest, MSX_princessquest, msx_msx)
@@ -32492,7 +32549,7 @@ STD_ROM_FN(MSX_puzzybox)
 
 struct BurnDriver BurnDrvMSX_puzzybox = {
 	"msx_puzzybox", NULL, "msx_msx", NULL, "2021",
-	"PuzzyBox (HB)\0", NULL, "GameCast Entertainment", "MSX",
+	"PuzzyBox (HB)\0", NULL, "Gamecast Entertainment", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_puzzyboxRomInfo, MSX_puzzyboxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
@@ -32519,6 +32576,25 @@ struct BurnDriver BurnDrvMSX_pwnd = {
 	272, 228, 4, 3
 };
 
+// Pyjamarama (HB)
+
+static struct BurnRomInfo MSX_pyjamaramaRomDesc[] = {
+	{ "Pyjamarama (2024)(Fregarni).rom",	131072, 0xb6ec9180, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pyjamarama, MSX_pyjamarama, msx_msx)
+STD_ROM_FN(MSX_pyjamarama)
+
+struct BurnDriver BurnDrvMSX_pyjamarama = {
+	"msx_pyjamarama", NULL, "msx_msx", NULL, "2024",
+	"Pyjamarama (HB)\0", NULL, "Fregarni", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, MSX_pyjamaramaRomInfo, MSX_pyjamaramaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Pyramid Warp Enhanced (HB)
 
 static struct BurnRomInfo MSX_pyramidwexRomDesc[] = {
@@ -32541,7 +32617,7 @@ struct BurnDriver BurnDrvMSX_pyramidwex = {
 // QBIQS (HB, v1.2)
 
 static struct BurnRomInfo MSX_qbiqsRomDesc[] = {
-	{ "qbiqs (2010)(z80st-software).rom",	49152, 0x11d4e90e, BRF_PRG | BRF_ESS },
+	{ "QBIQS (2010)(Z80st Software).rom",	49152, 0x11d4e90e, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_qbiqs, MSX_qbiqs, msx_msx)
@@ -32579,7 +32655,7 @@ struct BurnDriver BurnDrvMSX_quartetx = {
 // Quartet (HB, v1.2)
 
 static struct BurnRomInfo MSX_quartetRomDesc[] = {
-	{ "quartet v12.rom",	0x08000, 0xeeb24910, BRF_PRG | BRF_ESS },
+	{ "Quartet v1.2 (2019)(Ilkke and bitsofbas).rom",	0x08000, 0xeeb24910, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_quartet, MSX_quartet, msx_msx)
@@ -32636,7 +32712,7 @@ struct BurnDriver BurnDrvMSX_reflexion = {
 // Relic, The (English) (HB)
 
 static struct BurnRomInfo MSX_relicRomDesc[] = {
-	{ "the relic (2020)(roolandoo).rom",	32768, 0x4ff53c97, BRF_PRG | BRF_ESS },
+	{ "Relic, The (2020)(Roolandoo).rom",	32768, 0x4ff53c97, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_relic, MSX_relic, msx_msx)
@@ -32655,7 +32731,7 @@ struct BurnDriver BurnDrvMSX_relic = {
 // Reliquia, La (Spanish) (HB)
 
 static struct BurnRomInfo MSX_reliquiaRomDesc[] = {
-	{ "la reliquia (2020)(roolando).rom",	32768, 0x8a251dba, BRF_PRG | BRF_ESS },
+	{ "Reliquia, La (2020)(Roolando).rom",	32768, 0x8a251dba, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_reliquia, MSX_reliquia, msx_msx)
@@ -32674,7 +32750,7 @@ struct BurnDriver BurnDrvMSX_reliquia = {
 // Retaliot (HB)
 
 static struct BurnRomInfo MSX_retaliotRomDesc[] = {
-	{ "Retaliot (2009)(video Hazard).rom",	131072, 0xe63a6c39, BRF_PRG | BRF_ESS },
+	{ "Retaliot (2009)(Video Hazard).rom",	131072, 0xe63a6c39, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_retaliot, MSX_retaliot, msx_msx)

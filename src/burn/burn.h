@@ -138,19 +138,19 @@ inline static void SetCurrentFrame(const UINT32 n) {
 #define BRF_NODUMP			(1 << 28)
 
 struct BurnRomInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nLen;
 	UINT32 nCrc;
 	UINT32 nType;
 };
 
 struct BurnSampleInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nFlags;
 };
 
 struct BurnHDDInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nLen;
 	UINT32 nCrc;
 };

@@ -2563,6 +2563,38 @@ static void mapper193_map()
 #undef mapper193_chr
 #undef mapper193_mirror
 
+// ---[ mapper 72: Jaleco JF-17 (JF-19?), Pinball Quest Japan
+#define mapper72_prg		(mapper_regs[0])
+#define mapper72_prglatch	(mapper_regs[1])
+#define mapper72_chr		(mapper_regs[2])
+#define mapper72_chrlatch	(mapper_regs[3])
+
+static void mapper72_write(UINT16 address, UINT8 data)
+{
+	if (mapper72_prglatch == 0 && data & 0x80) {
+		mapper72_prg = data & 0x0f;
+	}
+	if (mapper72_chrlatch == 0 && data & 0x40) {
+		mapper72_chr = data & 0x0f;
+	}
+	mapper72_prglatch = data & 0x80;
+	mapper72_chrlatch = data & 0x40;
+
+	mapper_map();
+}
+
+static void mapper72_map()
+{
+	mapper_map_prg(16, 0, mapper72_prg);
+	mapper_map_prg(16, 1, -1);
+
+	mapper_map_chr( 8, 0, mapper72_chr);
+}
+
+#undef mapper72_prg
+#undef mapper72_chr
+#undef mapper72_mirror
+
 // ---[ mapper 15 Contra 168-in-1 Multicart
 #define mapper15_prg		(mapper_regs[0])
 #define mapper15_prgbit		(mapper_regs[1])
@@ -8580,6 +8612,14 @@ static INT32 mapper_init(INT32 mappernum)
 		case 193: { // NTDEC TC-112 (War in the Gulf, Fighting Hero, ..)
 			cart_exp_write = mapper193_write;
 			mapper_map   = mapper193_map;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 72: { // Jaleco JF-17, Pinball Quest Japan
+			mapper_write = mapper72_write;
+			mapper_map   = mapper72_map;
 			mapper_map();
 			retval = 0;
 			break;

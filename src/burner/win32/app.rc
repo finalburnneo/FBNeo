@@ -1453,6 +1453,7 @@ BEGIN
             MENUITEM "CRT Easy Mode",           				MENU_DX9_ALT_HARD_FX_CRT_EASY_MODE
 			MENUITEM "CRT Standard",            				MENU_DX9_ALT_HARD_FX_CRT_STANDARD
 			MENUITEM "CRT Bicubic",								MENU_DX9_ALT_HARD_FX_CRT_BICUBIC
+			MENUITEM "CRT Retro Scanlines",						MENU_DX9_ALT_HARD_FX_CRT_RETROSL
 			MENUITEM "CRT CGA",									MENU_DX9_ALT_HARD_FX_CRT_CGA
         END        
 		POPUP "SoftFX algorithm"

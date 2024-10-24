@@ -1797,6 +1797,7 @@ char *HardFXFilenames[] = {
 	"support/shaders/crt_easymode.fx",
 	"support/shaders/crt_standard.fx",
 	"support/shaders/crt_bicubic.fx",
+	"support/shaders/crt_retrosl.fx",
 	"support/shaders/crt_cga.fx"
 };
 
@@ -2077,6 +2078,7 @@ static int dx9AltSetHardFX(int nHardFX)
 		// common parameters
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
 		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
+		pVidEffect->SetParamFloat2("video_time", nCurrentFrame / 5, nCurrentFrame / 5);
 	}
 	else
 	{
@@ -2420,8 +2422,9 @@ static int dx9AltRender()  // MemToSurf
 				dx9AltSetVertex(0, 0, nWidth, nHeight, nTextureWidth, nTextureHeight, 0, 0, nImageWidth, nImageHeight);
 			}
 
-			if (pVidEffect && pVidEffect->IsValid())
+			if (pVidEffect && pVidEffect->IsValid()) {
 				pVidEffect->SetParamFloat2("output_size", nImageWidth, nImageHeight);
+			}
 
 			D3DVIEWPORT9 vp;
 
@@ -2444,6 +2447,11 @@ static int dx9AltRender()  // MemToSurf
 
 			pD3DDevice->SetViewport(&vp);
 		}
+	}
+
+	if (pVidEffect && pVidEffect->IsValid()) {
+		pVidEffect->SetParamFloat2("video_time", nCurrentFrame / 5, nCurrentFrame / 5);
+//		pVidEffect->SetParamFloat2("user_settings", fDX9ShaderSettings[0], fDX9ShaderSettings[1]); // at some point!
 	}
 
 	pD3DDevice->BeginScene();

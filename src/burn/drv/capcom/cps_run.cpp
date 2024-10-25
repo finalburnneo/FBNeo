@@ -436,8 +436,8 @@ INT32 Cps2Frame()
 		if (Cps2Volume > 39) Cps2Volume = 39;
 		if (Cps2Volume < 0) Cps2Volume = 0;
 		
-		QscSetRoute(BURN_SND_QSND_OUTPUT_1, Cps2Volume / 39.0, BURN_SND_ROUTE_LEFT);
-		QscSetRoute(BURN_SND_QSND_OUTPUT_2, Cps2Volume / 39.0, BURN_SND_ROUTE_RIGHT);
+		QscSetRoute(BURN_SND_QSND_OUTPUT_1, (Cps2Volume / 39.0)*2, BURN_SND_ROUTE_LEFT);
+		QscSetRoute(BURN_SND_QSND_OUTPUT_2, (Cps2Volume / 39.0)*2, BURN_SND_ROUTE_RIGHT);
 	}
 	
 	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank

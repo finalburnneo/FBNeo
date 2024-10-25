@@ -2118,6 +2118,26 @@ struct BurnDriver BurnDrvsms_bombraid = {
 };
 
 
+// Battle Wings [Prototype]
+
+static struct BurnRomInfo sms_battlewingspRomDesc[] = {
+	{ "Battle Wings [Proto].sms",	0x40000, 0xfae0ade7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_battlewingsp)
+STD_ROM_FN(sms_battlewingsp)
+
+struct BurnDriver BurnDrvsms_battlewingsp = {
+	"sms_battlewingsp", "sms_bombraid", NULL, NULL, "1989",
+	"Battle Wings (Prototype)\0", NULL, "Sega", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_battlewingspRomInfo, sms_battlewingspRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
 // Bonanza Bros. (Euro, Brazil)
 
 static struct BurnRomInfo sms_bnzabrosRomDesc[] = {

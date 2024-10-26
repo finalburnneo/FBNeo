@@ -406,7 +406,7 @@ void RomDataExit()
 	if (NULL != pDataRomDesc) {
 
 		for (int i = 0; i < RDI.nDescCount + 1; i++) {
-			free(pDataRomDesc[RDI.nDescCount].szName);
+			free(pDataRomDesc[i].szName);
 		}
 
 		free(pDataRomDesc);

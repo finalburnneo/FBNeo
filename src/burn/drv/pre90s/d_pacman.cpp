@@ -4055,7 +4055,7 @@ STD_ROM_FN(pacmanmr)
 
 struct BurnDriver BurnDrvPacmanmr = {
 	"pacmanmr", "puckman", NULL, NULL, "1981",
-	"bootleg (Model Racing)\0", NULL, "Pac-Man (Model Racing bootleg)", "Pac-man",
+	"Pac-Man (Model Racing bootleg)\0", NULL, "bootleg (Model Racing)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacmanmrRomInfo, pacmanmrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -4981,7 +4981,7 @@ static struct BurnRomInfo mspacmane2RomDesc[] = {
 	{ "4a", 		0x0100, 0x4c8e83a4, 3 | BRF_GRA },				// 11 / BAD DUMP
 
 	{ "1m", 		0x0100, 0x7b1f9b71, 4 | BRF_SND },				// 12 Sound Prom / BAD DUMP
-	{ "3m", 		0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used) / BAD DUMP
+	{ "3m", 		0x0100, 0x05197026, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
 };
 
 STD_ROM_PICK(mspacmane2)
@@ -7035,7 +7035,7 @@ struct BurnDriver BurnDrvponpokov = {
 };
 
 
-// The Glob (Pac-Man hardware)
+// The Glob (Pac-Man hardware, set 1)
 // Distributed by:  Eagle Conversions, 25 Eagle St., Bldg #5, Providence, RI 02908
 // Pac-Man PCB conversion kit. Includes a small daughtercard (2 roms + 4 PLDs, plugs in through the Z80 socket), 2 roms + 2 BPROMs
 
@@ -7073,10 +7073,50 @@ static INT32 theglobpInit()
 
 struct BurnDriver BurnDrvtheglobp = {
 	"theglobp", "suprglob", NULL, NULL, "1983",
-	"The Glob (Pac-Man hardware)\0", NULL, "Epos Corporation", "Pac-man",
+	"The Glob (Pac-Man hardware, set 1)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
 	NULL, theglobpRomInfo, theglobpRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
+	theglobpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// The Glob (Pac-Man hardware, set 2)
+
+static struct BurnRomInfo theglobpaRomDesc[] = {
+	{ "1-2516.bin",      0x0800, 0x760f4764, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "2-2516.bin",      0x0800, 0x7d556bc6, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "3-2516.bin",      0x0800, 0xca9dafca, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "4-2516.bin",      0x0800, 0xfff64f47, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "5-2716.bin",      0x0800, 0x3c352e0f, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "6-2716.bin",      0x0800, 0x5a7ba8b0, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "7-2716.bin",      0x0800, 0x09f6b061, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "8-2716.bin",      0x0800, 0x192b6d61, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "9-2716.bin",      0x0800, 0x36408c76, 2 | BRF_GRA },				//  8 Graphics
+	{ "11-2716.bin",     0x0800, 0xb8ba069c, 2 | BRF_GRA },				//  9
+	{ "10-2716.bin",     0x0800, 0xe0478b4e, 2 | BRF_GRA },				// 10
+	{ "12-2716.bin",     0x0800, 0xffb30caf, 2 | BRF_GRA },				// 11
+
+	{ "tbp18s030.8h",    0x0020, 0x1f617527, 3 | BRF_GRA },				// 12 Color Proms
+	{ "82s129.4a",       0x0100, 0x28faa769, 3 | BRF_GRA },				// 13
+
+	{ "63s141.1m",       0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 14 Sound Prom
+	{ "63s141.3m",       0x0100, 0x2ee34ade, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+
+	{ "top-2716.bin",    0x0800, 0x25e74cd5, 0 | BRF_OPT },				// 16 EPROM on a subboard configured to replace a BPROM
+};
+
+STD_ROM_PICK(theglobpa)
+STD_ROM_FN(theglobpa)
+
+struct BurnDriver BurnDrvtheglobpa = {
+	"theglobpa", "suprglob", NULL, NULL, "1983",
+	"The Glob (Pac-Man hardware, set 2)\0", NULL, "Epos Corporation", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
+	NULL, theglobpaRomInfo, theglobpaRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
 	theglobpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -7150,7 +7190,7 @@ struct BurnDriver BurnDrvsprglobp = {
 };
 
 
-// Super Glob (Pac-Man hardware) (German bootleg)
+// Super Glob (Pac-Man hardware, German bootleg)
 
 static struct BurnRomInfo sprglbpgRomDesc[] = {
 	{ "ic8.1",        0x1000, 0xa2df2073, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -7172,7 +7212,7 @@ STD_ROM_FN(sprglbpg)
 
 struct BurnDriver BurnDrvsprglbpg = {
 	"sprglbpg", "suprglob", NULL, NULL, "1984",
-	"Super Glob (Pac-Man hardware) (German bootleg)\0", NULL, "bootleg (Software Labor)", "Pac-man",
+	"Super Glob (Pac-Man hardware, German bootleg)\0", NULL, "bootleg (Software Labor)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
 	NULL, sprglbpgRomInfo, sprglbpgRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,

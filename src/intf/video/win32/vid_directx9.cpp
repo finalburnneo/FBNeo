@@ -1790,15 +1790,27 @@ struct transp_vertex {
 	float u, v;
 };
 
-char *HardFXFilenames[] = {
-	"support/shaders/crt_aperture.fx",
-	"support/shaders/crt_caligari.fx",
-	"support/shaders/crt_cgwg_fast.fx",
-	"support/shaders/crt_easymode.fx",
-	"support/shaders/crt_standard.fx",
-	"support/shaders/crt_bicubic.fx",
-	"support/shaders/crt_retrosl.fx",
-	"support/shaders/crt_cga.fx"
+/*
+// in interface.h! for reference only.
+struct hardfx_config {
+	char *szFileName;
+	int nOptions;
+	const float fDefaults[4];
+	float fOptions[4];
+	char *szOptions[4];
+};
+*/
+
+hardfx_config HardFXConfigs[] = {
+	{ "n/a", 0, }, // 0 (note: zero entry is "None")
+	{ "support/shaders/crt_aperture.fx",	0, }, // 1
+	{ "support/shaders/crt_caligari.fx",	0, }, // 2
+	{ "support/shaders/crt_cgwg_fast.fx",	0, }, // 3
+	{ "support/shaders/crt_easymode.fx",	0, }, // 4
+	{ "support/shaders/crt_standard.fx",	0, }, // 5
+	{ "support/shaders/crt_bicubic.fx",		0, }, // 6
+	{ "support/shaders/crt_retrosl.fx",		1, { 0.0, 0.0, 0.0, 0.0 }, { 0, 0, 0, 0 }, "Animation (0 = disabled)", NULL, NULL, NULL }, // 7
+	{ "support/shaders/crt_cga.fx",			0, }, // 8
 };
 
 #undef D3DFVF_LVERTEX2
@@ -2045,17 +2057,26 @@ static int dx9AltSetVertex(unsigned int px, unsigned int py, unsigned int pw, un
 	return 0;
 }
 
+static void UpdateShaderVariables()
+{
+	if (pVidEffect && pVidEffect->IsValid()) {
+		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
+		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
+		pVidEffect->SetParamFloat2("video_time", nCurrentFrame, (float)nCurrentFrame / 60);
+		pVidEffect->SetParamFloat4("user_settings", HardFXConfigs[nDX9HardFX].fOptions[0], HardFXConfigs[nDX9HardFX].fOptions[1], HardFXConfigs[nDX9HardFX].fOptions[2], HardFXConfigs[nDX9HardFX].fOptions[3]);
+	}
+}
+
 static int dx9AltSetHardFX(int nHardFX)
 {
 	// cutre reload
 	//static bool reload = true; if (GetAsyncKeyState(VK_CONTROL)) { if (reload) { nDX9HardFX = 0; reload = false; } } else reload = true;
-	
+
 	if (nHardFX == nDX9HardFX)
 	{
 		return 0;
 	}
 	
-
 	nDX9HardFX = nHardFX;
 
 	if (pVidEffect) {
@@ -2070,19 +2091,16 @@ static int dx9AltSetHardFX(int nHardFX)
 
 	// HardFX
 	pVidEffect = new VidEffect(pD3DDevice);
-	int r = pVidEffect->Load(HardFXFilenames[nHardFX - 1]);
+	int r = pVidEffect->Load(HardFXConfigs[nHardFX].szFileName);
 
 	if (r == 0)
 	{
-		bprintf(0, _T("HardFX ""%S"" loaded OK!\n"), HardFXFilenames[nHardFX - 1]);
-		// common parameters
-		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
-		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
-		pVidEffect->SetParamFloat2("video_time", nCurrentFrame / 5, nCurrentFrame / 5);
+		bprintf(0, _T("HardFX ""%S"" loaded OK!\n"), HardFXConfigs[nHardFX].szFileName);
+		UpdateShaderVariables();
 	}
 	else
 	{
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_HARDFX_MODULE), HardFXFilenames[nHardFX - 1]);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_HARDFX_MODULE), HardFXConfigs[nHardFX].szFileName);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 	}
 
@@ -2449,10 +2467,7 @@ static int dx9AltRender()  // MemToSurf
 		}
 	}
 
-	if (pVidEffect && pVidEffect->IsValid()) {
-		pVidEffect->SetParamFloat2("video_time", nCurrentFrame / 5, nCurrentFrame / 5);
-//		pVidEffect->SetParamFloat2("user_settings", fDX9ShaderSettings[0], fDX9ShaderSettings[1]); // at some point!
-	}
+	UpdateShaderVariables(); // once per frame
 
 	pD3DDevice->BeginScene();
 

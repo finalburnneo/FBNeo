@@ -1976,6 +1976,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_DX9_ALT_HARD_FX_SETTINGS: {
+			if (UseDialogs()) {
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+				AudBlankSound();
+				HardFXShaderSettingsDialog();
+				GameInpCheckMouse(); //? dink?
+			}
+			break;
+		}
+
 		case MENU_GAMMA_OTHER: {
 			if (UseDialogs()) {
 				double nOldGamma = nGamma;

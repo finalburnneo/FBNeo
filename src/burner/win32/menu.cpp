@@ -789,6 +789,11 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_DX9_ALT_HARDWAREVERTEX, (bVidHardwareVertex) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_MOTIONBLUR, (bVidMotionBlur) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_HARD_FX_NONE, MENU_DX9_ALT_HARD_FX_LAST, MENU_DX9_ALT_HARD_FX_NONE + nVidDX9HardFX, MF_BYCOMMAND);
+
+			// Enable HardFX Settings if we have options!
+			bool hFXDisabled = (nVidDX9HardFX == 0) || (HardFXConfigs[nVidDX9HardFX].nOptions == 0);
+			EnableMenuItem(hMenu, MENU_DX9_ALT_HARD_FX_SETTINGS, hFXDisabled ? (MF_GRAYED | MF_BYCOMMAND) : (MF_ENABLED | MF_BYCOMMAND));
+
 			CheckMenuItem(hMenu, MENU_DX9_ALT_FORCE_16BIT, bVidForce16bitDx9Alt ? MF_CHECKED : MF_UNCHECKED);
 			break;
 	}

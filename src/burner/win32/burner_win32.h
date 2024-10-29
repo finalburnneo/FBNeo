@@ -422,6 +422,7 @@ int StatedSave(int nSlot);
 // numdial.cpp
 int NumDialCreate(int bDial);
 void GammaDialog();
+void HardFXShaderSettingsDialog();
 void ScanlineDialog();
 void PhosphorDialog();
 void ScreenAngleDialog();

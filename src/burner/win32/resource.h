@@ -49,6 +49,7 @@
 #define IDD_GAMEINFO						81
 #define IDD_DOWNLOAD_LOCAL					82
 #define IDD_CHOOSEMONITOR					83
+#define IDD_HARDFXSETTINGS                  84
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -203,6 +204,16 @@
 #define IDC_CHOOSE_MONITOR_VER_LIST			20144
 #define IDC_CHOOSE_MONITOR_TEXT				20145
 #define IDC_LIST3							20146
+#define IDC_HARDFX_SLIDER1                  20147
+#define IDC_HARDFX_SLIDER2                  20148
+#define IDC_HARDFX_SLIDER3                  20149
+#define IDC_HARDFX_SLIDER4                  20150
+#define IDC_HARDFX_SLIDER5                  20151
+#define IDC_HARDFX_SLIDER_EDIT1             20152
+#define IDC_HARDFX_SLIDER_EDIT2             20153
+#define IDC_HARDFX_SLIDER_EDIT3             20154
+#define IDC_HARDFX_SLIDER_EDIT4             20155
+#define IDC_HARDFX_SLIDER_EDIT5             20156
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201
@@ -897,7 +908,8 @@
 #define MENU_DX9_ALT_HARD_FX_CRT_BICUBIC	11456
 #define MENU_DX9_ALT_HARD_FX_CRT_RETROSL	11457
 #define MENU_DX9_ALT_HARD_FX_CRT_CGA		11458
-#define MENU_DX9_ALT_HARD_FX_LAST           11458 // last one
+#define MENU_DX9_ALT_HARD_FX_LAST           11458 // last one (same id as previous line!)
+#define MENU_DX9_ALT_HARD_FX_SETTINGS       11470
 #define MENU_DX9_ALT_SOFT_AUTOSIZE			11490
 #define MENU_DX9_ALT_FORCE_16BIT			11491
 

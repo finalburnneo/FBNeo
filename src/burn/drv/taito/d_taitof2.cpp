@@ -11554,7 +11554,7 @@ struct BurnDriver BurnDrvNinjaku = {
 
 struct BurnDriver BurnDrvPulirula = {
 	"pulirula", NULL, NULL, NULL, "1991",
-	"PuLiRuLa (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	"PuLiRuLa (World, dual PCB)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulaRomInfo, PulirulaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
@@ -11564,7 +11564,7 @@ struct BurnDriver BurnDrvPulirula = {
 
 struct BurnDriver BurnDrvPulirulaa = {
 	"pulirulaa", "pulirula", NULL, NULL, "1991",
-	"PuLiRuLa (World, earlier?)\0", NULL, "Taito Corporation", "Taito F2",
+	"PuLiRuLa (World, single PCB)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulaaRomInfo, PulirulaaRomName, NULL, NULL, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,

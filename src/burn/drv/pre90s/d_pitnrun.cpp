@@ -906,7 +906,7 @@ struct BurnDriver BurnDrvPitnrunb = {
 	"pitnrunb", "pitnrun", NULL, NULL, "1984",
 	"Pit & Run - F-1 Race (location test?)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
 	NULL, pitnrunbRomInfo, pitnrunbRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
 	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	224, 256, 3, 4

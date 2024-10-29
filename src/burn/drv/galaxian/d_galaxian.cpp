@@ -6872,7 +6872,7 @@ static struct BurnRomInfo ZerotimemcRomDesc[] = {
 STD_ROM_PICK(Zerotimemc)
 STD_ROM_FN(Zerotimemc)
 
-static struct BurnRomInfo ZerotimeuRomDesc[] = {
+static struct BurnRomInfo ZerotimeaRomDesc[] = {
 	// Unknown manufacturer / bootleger
 	{ "1.bin",         0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.bin",         0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6886,8 +6886,25 @@ static struct BurnRomInfo ZerotimeuRomDesc[] = {
 	{ "82s123.bin",    0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Zerotimeu)
-STD_ROM_FN(Zerotimeu)
+STD_ROM_PICK(Zerotimea)
+STD_ROM_FN(Zerotimea)
+
+static struct BurnRomInfo ZerotimebRomDesc[] = {
+	// Unknown manufacturer / bootleger
+	{ "p01-6b52-2716.bin",  0x00800, 0x90a2bc61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p02-f499-2716.bin",  0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p03a-eh61-2716.bin", 0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p04-17c7-2716.bin",  0x00800, 0x786d690a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p05-07fe-2716.bin",  0x00800, 0xaf9260d7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "7-2716.bin",         0x00800, 0x39546539, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "6-2716.bin",         0x00800, 0xd10337c3, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mb7051.6l",          0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Zerotimeb)
+STD_ROM_FN(Zerotimeb)
 
 static struct BurnRomInfo GalaxcirsaRomDesc[] = {
 	{ "cirsagal.1",    0x00800, 0xac64aabe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7346,12 +7363,22 @@ struct BurnDriver BurnDrvZerotimemc = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvZerotimeu = {
-	"zerotimeu", "galaxian", NULL, NULL, "1979",
-	"Zero Time (Spanish bootleg)\0", NULL, "bootleg", "Galaxian",
+struct BurnDriver BurnDrvZerotimea = {
+	"zerotimea", "galaxian", NULL, NULL, "1979",
+	"Zero Time (Spanish bootleg, set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, ZerotimeuRomInfo, ZerotimeuRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	NULL, ZerotimeaRomInfo, ZerotimeaRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvZerotimeb = {
+	"zerotimeb", "galaxian", NULL, NULL, "1979",
+	"Zero Time (Spanish bootleg, set 2)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, ZerotimebRomInfo, ZerotimebRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -10088,7 +10115,7 @@ struct BurnDriver BurnDrvPacmanblc = {
 
 struct BurnDriver BurnDrvPacmanblv = {
 	"pacmanblv", "puckman", NULL, NULL, "1981",
-	"Pac-Man (Video Dens, Spanish bootleg on Galaxian hardware)\0", NULL, "bootleg (Video Dens)", "Galaxian",
+	"Pac-Man (Video Dens, Spanish bootleg on Galaxian hardware, set 1)\0", NULL, "bootleg (Video Dens)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED  | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, PacmanblvRomInfo, PacmanblvRomName, NULL, NULL, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
@@ -14320,7 +14347,7 @@ struct BurnDriver BurnDrvJumpbug = {
 
 struct BurnDriver BurnDrvJumpbugb = {
 	"jumpbugb", "jumpbug", NULL, NULL, "1981",
-	"Jump Bug (bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Jump Bug (bootleg, set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, JumpbugbRomInfo, JumpbugbRomName, NULL, NULL, NULL, NULL, JumpbugInputInfo, JumpbugDIPInfo,

@@ -1389,7 +1389,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Samurai Nihon-Ichi (set 1)
+// Samurai Nihon-Ichi (rev 1)
 // there's a protection device labeled B5 at location l3 on the main board
 
 static struct BurnRomInfo tsamuraiRomDesc[] = {
@@ -1429,7 +1429,7 @@ static INT32 tsamuraiInit()
 
 struct BurnDriver BurnDrvTsamurai = {
 	"tsamurai", NULL, NULL, NULL, "1985",
-	"Samurai Nihon-Ichi (set 1)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+	"Samurai Nihon-Ichi (rev 1)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tsamuraiRomInfo, tsamuraiRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
@@ -1438,9 +1438,9 @@ struct BurnDriver BurnDrvTsamurai = {
 };
 
 
-// Samurai Nihon-Ichi (set 2)
+// Samurai Nihon-Ichi
 
-static struct BurnRomInfo tsamurai2RomDesc[] = {
+static struct BurnRomInfo tsamuraiaRomDesc[] = {
 	{ "a35-01.3r",		0x4000, 0x282d96ad, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "a35-02.3t",		0x4000, 0xe3fa0cfa, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a35-03.3v",		0x4000, 0x2fff1e0a, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1467,15 +1467,15 @@ static struct BurnRomInfo tsamurai2RomDesc[] = {
 	{ "a35-18.2m",		0x0100, 0x918e4732, 7 | BRF_GRA },           // 17
 };
 
-STD_ROM_PICK(tsamurai2)
-STD_ROM_FN(tsamurai2)
+STD_ROM_PICK(tsamuraia)
+STD_ROM_FN(tsamuraia)
 
-struct BurnDriver BurnDrvTsamurai2 = {
-	"tsamurai2", "tsamurai", NULL, NULL, "1985",
-	"Samurai Nihon-Ichi (set 2)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+struct BurnDriver BurnDrvTsamuraia = {
+	"tsamuraia", "tsamurai", NULL, NULL, "1985",
+	"Samurai Nihon-Ichi\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, tsamurai2RomInfo, tsamurai2RomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
+	NULL, tsamuraiaRomInfo, tsamuraiaRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1524,7 +1524,7 @@ struct BurnDriver BurnDrvTsamuraih = {
 };
 
 
-// Lady Master of Kung Fu (set 1, newer)
+// Lady Master of Kung Fu (rev 1)
 // there's a protection device labeled 6 at location l3 on the main board
 
 static struct BurnRomInfo ladymstrRomDesc[] = {
@@ -1559,7 +1559,7 @@ STD_ROM_FN(ladymstr)
 
 struct BurnDriver BurnDrvLadymstr = {
 	"ladymstr", NULL, NULL, NULL, "1985",
-	"Lady Master of Kung Fu (set 1, newer)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+	"Lady Master of Kung Fu (rev 1)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ladymstrRomInfo, ladymstrRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
@@ -1568,10 +1568,10 @@ struct BurnDriver BurnDrvLadymstr = {
 };
 
 
-// Lady Master of Kung Fu (set 2, older)
+// Lady Master of Kung Fu
 // there's a protection device labeled 6 at location l3 on the main board
 
-static struct BurnRomInfo ladymstr2RomDesc[] = {
+static struct BurnRomInfo ladymstraRomDesc[] = {
 	{ "a49-01.3r",		0x4000, 0x8729e50e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code // believed to be newer because of the -01 suffix
 	{ "a49-02.3t",		0x4000, 0xb0a9020b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a49-03.3v",		0x4000, 0x641c94ed, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1598,15 +1598,15 @@ static struct BurnRomInfo ladymstr2RomDesc[] = {
 	{ "a49-18.2m",		0x0100, 0xf5ce3c45, 7 | BRF_GRA },           // 17
 };
 
-STD_ROM_PICK(ladymstr2)
-STD_ROM_FN(ladymstr2)
+STD_ROM_PICK(ladymstra)
+STD_ROM_FN(ladymstra)
 
-struct BurnDriver BurnDrvLadymstr2 = {
-	"ladymstr2", "ladymstr", NULL, NULL, "1985",
-	"Lady Master of Kung Fu (set 2, older)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+struct BurnDriver BurnDrvLadymstra = {
+	"ladymstra", "ladymstr", NULL, NULL, "1985",
+	"Lady Master of Kung Fu\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
-	NULL, ladymstr2RomInfo, ladymstr2RomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
+	NULL, ladymstraRomInfo, ladymstraRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

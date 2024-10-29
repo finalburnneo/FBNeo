@@ -939,14 +939,6 @@ static const UINT8 loht_crc[18] = {
 	0x39,0x00,0x82,0xae, 0x2c,0x9d,0x4b,0x73,0xfb,0xac,0xd4,0x6d, 0x6d,0x5b,0x77,0xc0, 0x00,0x00
 };
 
-/* Gallop - Armed police Unit */
-static const INT32 gallop_sample_offsets[32] = {
-	31,
-	0x00000, 0x00020, 0x00040, 0x01360, 0x02580, 0x04f20, 0x06240, 0x076e0,
-	0x08660, 0x092a0, 0x09ba0, 0x0a560, 0x0cee0, 0x0de20, 0x0e620, 0x0f1c0,
-	0x10200, 0x10220, 0x10240, 0x11380, 0x12760, 0x12780, 0x127a0, 0x13c40,
-	0x140a0, 0x16760, 0x17e40, 0x18ee0, 0x19f60, 0x1bbc0, 0x1cee0 };
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -4151,7 +4143,7 @@ static struct BurnRomInfo gallopm72RomDesc[] = {
 
 	{ "cc_c-v0.ic44",	0x20000, 0x6247bade, 0x05 | BRF_SND },              // 16 DAC Samples
 	
-	{ "cc_c-pr-.ic1", 	0x01000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "cc_c-pr-.ic1",	0x01000, 0xac4421b1, 0x07 | BRF_PRG },              // 17 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",	0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
 	{ "m72_a-9l-.ic75",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19
@@ -4166,7 +4158,6 @@ STD_ROM_FN(gallopm72)
 
 static INT32 gallopm72Init()
 {
-	protection_sample_offsets = gallop_sample_offsets;
 	Clock_16mhz = 1;
 
 	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);

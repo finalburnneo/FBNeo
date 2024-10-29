@@ -172,8 +172,8 @@ INT32 CpsRunInit()
 		if (QsndInit()) {
 			return 1;
 		}
-		QsndSetRoute(BURN_SND_QSND_OUTPUT_1, 1.00, BURN_SND_ROUTE_LEFT);
-		QsndSetRoute(BURN_SND_QSND_OUTPUT_2, 1.00, BURN_SND_ROUTE_RIGHT);
+		QsndSetRoute(BURN_SND_QSND_OUTPUT_1, 2.00, BURN_SND_ROUTE_LEFT);
+		QsndSetRoute(BURN_SND_QSND_OUTPUT_2, 2.00, BURN_SND_ROUTE_RIGHT);
 	}
 
 	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();

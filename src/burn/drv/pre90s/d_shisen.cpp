@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvShisena = {
 };
 
 
-// Sichuan II (bootlet, set 1)
+// Sichuan II (bootleg, set 1)
 
 static struct BurnRomInfo sichuan2RomDesc[] = {
 	{ "6.11d",		0x10000, 0x98a2459b, 1 | BRF_PRG | BRF_ESS }, 	 //  0 Z80 #0 Code
@@ -698,8 +698,8 @@ static struct BurnRomInfo sichuan2RomDesc[] = {
 	{ "21.12l",		0x10000, 0xfb83c652, 3 | BRF_GRA },           	 // 14
 	{ "22.13l",		0x10000, 0xd8b689e9, 3 | BRF_GRA },           	 // 15
 	{ "23.14l",		0x10000, 0xe6611947, 3 | BRF_GRA },           	 // 16
-	{ "11.6j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
-	{ "10.5j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
+	{ "11.5j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
+	{ "10.6j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
 
 	{ "2.7b",		0x10000, 0x92f0093d, 4 | BRF_SND },           	 // 19 Samples
 	{ "3.6c",		0x10000, 0x116a049c, 4 | BRF_SND },           	 // 20
@@ -721,7 +721,7 @@ static INT32 Sichuan2Init()
 
 struct BurnDriver BurnDrvSichuan2 = {
 	"sichuan2", "matchit", NULL, NULL, "1989",
-	"Sichuan II (bootlet, set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Sichuan II (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
@@ -730,7 +730,7 @@ struct BurnDriver BurnDrvSichuan2 = {
 };
 
 
-// Sichuan II (bootlet, set 2)
+// Sichuan II (bootleg, set 2)
 
 static struct BurnRomInfo sichuan2aRomDesc[] = {
 	{ "ic06.a6",	0x10000, 0xf8ac05ef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -766,7 +766,7 @@ STD_ROM_FN(sichuan2a)
 
 struct BurnDriver BurnDrvSichuan2a = {
 	"sichuan2a", "matchit", NULL, NULL, "1989",
-	"Sichuan II (bootlet, set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Sichuan II (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
@@ -797,8 +797,8 @@ static struct BurnRomInfo matchitbRomDesc[] = {
 	{ "17.12l",		0x10000, 0xfb83c652, 3 | BRF_GRA },           	 // 14
 	{ "18.13l",		0x10000, 0xd8b689e9, 3 | BRF_GRA },           	 // 15
 	{ "19.14l",		0x10000, 0xe6611947, 3 | BRF_GRA },           	 // 16
-	{ "6.6j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
-	{ "5.5j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
+	{ "6.5j",		0x10000, 0x473b349a, 3 | BRF_GRA },           	 // 17
+	{ "7.6j",		0x10000, 0xd9a60285, 3 | BRF_GRA },           	 // 18
 
 	{ "2.7b",		0x10000, 0x92f0093d, 4 | BRF_SND },           	 // 19 Samples
 	{ "3.6c",		0x10000, 0x116a049c, 4 | BRF_SND },           	 // 20

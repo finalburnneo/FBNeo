@@ -3330,23 +3330,23 @@ struct BurnDriver BurnDrvTruxton = {
 // Hellfire (2P set)
 
 static struct BurnRomInfo hellfireRomDesc[] = {
-	{ "b90_14.0",			0x20000, 0x101df9f5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "b90_15.1",			0x20000, 0xe67fd452, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b90_14.10m",			0x20000, 0x101df9f5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "b90_15.9m",			0x20000, 0xe67fd452, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b90_03.2",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "b90_03.11e",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b90_04.3",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "b90_05.4",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
-	{ "b90_06.5",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
-	{ "b90_07.6",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
+	{ "b90_04.7x",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "b90_05.7v",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
+	{ "b90_06.7t",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
+	{ "b90_07.7r",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
 
-	{ "b90_11.10",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
-	{ "b90_10.9",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
-	{ "b90_09.8",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
-	{ "b90_08.7",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
+	{ "b90_11.3a",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
+	{ "b90_10.3c",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
+	{ "b90_09.3d",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
+	{ "b90_08.3f",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
 
-	{ "13.3w",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
-	{ "12.6b",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
+	{ "13.rom13.3w",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
+	{ "12.rom12.6b",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(hellfire)
@@ -3369,20 +3369,20 @@ static struct BurnRomInfo hellfire1RomDesc[] = {
 	{ "b90_01.10m",			0x20000, 0x034966d3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "b90_02.9m",			0x20000, 0x06dd24c7, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b90_03.2",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "b90_03.11e",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b90_04.3",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "b90_05.4",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
-	{ "b90_06.5",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
-	{ "b90_07.6",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
+	{ "b90_04.7x",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "b90_05.7v",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
+	{ "b90_06.7t",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
+	{ "b90_07.7r",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
 
-	{ "b90_11.10",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
-	{ "b90_10.9",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
-	{ "b90_09.8",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
-	{ "b90_08.7",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
+	{ "b90_11.3a",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
+	{ "b90_10.3c",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
+	{ "b90_09.3d",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
+	{ "b90_08.3f",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
 
-	{ "13.3w",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
-	{ "12.6b",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
+	{ "13.rom13.3w",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
+	{ "12.rom12.6b",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(hellfire1)
@@ -3402,23 +3402,23 @@ struct BurnDriver BurnDrvHellfire1 = {
 // Hellfire (2P set, older)
 
 static struct BurnRomInfo hellfire2aRomDesc[] = {
-	{ "b90_01.0",			0x20000, 0xc94acf53, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "b90_02.1",			0x20000, 0xd17f03c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b90_01.10m",			0x20000, 0xc94acf53, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "b90_02.9m",			0x20000, 0xd17f03c3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b90_03.2",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "b90_03.11e",			0x08000, 0x4058fa67, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b90_04.3",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "b90_05.4",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
-	{ "b90_06.5",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
-	{ "b90_07.6",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
+	{ "b90_04.7x",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "b90_05.7v",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
+	{ "b90_06.7t",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
+	{ "b90_07.7r",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
 
-	{ "b90_11.10",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
-	{ "b90_10.9",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
-	{ "b90_09.8",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
-	{ "b90_08.7",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
+	{ "b90_11.3a",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
+	{ "b90_10.3c",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
+	{ "b90_09.3d",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
+	{ "b90_08.3f",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
 
-	{ "13.3w",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
-	{ "12.6b",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
+	{ "13.rom13.3w",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
+	{ "12.rom12.6b",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(hellfire2a)
@@ -3438,23 +3438,23 @@ struct BurnDriver BurnDrvHellfire2a = {
 // Hellfire (1P set, older)
 
 static struct BurnRomInfo hellfire1aRomDesc[] = {
-	{ "b90_14x.0",			0x20000, 0xa3141ea5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "b90_15x.1",			0x20000, 0xe864daf4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b90_14x.10m",		0x20000, 0xa3141ea5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "b90_15x.9m",			0x20000, 0xe864daf4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b90_03x.2",			0x08000, 0xf58c368f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "b90_03x.11e",		0x08000, 0xf58c368f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "b90_04.3",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "b90_05.4",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
-	{ "b90_06.5",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
-	{ "b90_07.6",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
+	{ "b90_04.7x",			0x20000, 0xea6150fc, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "b90_05.7v",			0x20000, 0xbb52c507, 3 | BRF_GRA },           //  4
+	{ "b90_06.7t",			0x20000, 0xcf5b0252, 3 | BRF_GRA },           //  5
+	{ "b90_07.7r",			0x20000, 0xb98af263, 3 | BRF_GRA },           //  6
 
-	{ "b90_11.10",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
-	{ "b90_10.9",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
-	{ "b90_09.8",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
-	{ "b90_08.7",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
+	{ "b90_11.3a",			0x20000, 0xc33e543c, 5 | BRF_GRA },           //  7 Sprites
+	{ "b90_10.3c",			0x20000, 0x35fd1092, 5 | BRF_GRA },           //  8
+	{ "b90_09.3d",			0x20000, 0xcf01009e, 5 | BRF_GRA },           //  9
+	{ "b90_08.3f",			0x20000, 0x3404a5e3, 5 | BRF_GRA },           // 10
 
-	{ "13.3w",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
-	{ "12.6b",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
+	{ "13.rom13.3w",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 11 PROMs
+	{ "12.rom12.6b",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(hellfire1a)
@@ -3491,8 +3491,8 @@ static struct BurnRomInfo zerowingRomDesc[] = {
 	{ "o15-01.rom",			0x20000, 0x70570e43, 5 | BRF_GRA },           // 11
 	{ "o15-02.rom",			0x20000, 0x724b487f, 5 | BRF_GRA },           // 12
 
-	{ "tp015_14.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
-	{ "tp015_15.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
+	{ "tp015_14.prom14.3d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
+	{ "tp015_15.prom15.2c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(zerowing)
@@ -3529,8 +3529,8 @@ static struct BurnRomInfo zerowing1RomDesc[] = {
 	{ "o15-01.rom",			0x20000, 0x70570e43, 5 | BRF_GRA },           // 11
 	{ "o15-02.rom",			0x20000, 0x724b487f, 5 | BRF_GRA },           // 12
 
-	{ "tp015_14.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
-	{ "tp015_15.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
+	{ "tp015_14.prom14.3d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
+	{ "tp015_15.prom15.2c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(zerowing1)
@@ -3567,8 +3567,8 @@ static struct BurnRomInfo zerowingwRomDesc[] = {
 	{ "o15-01.rom",			0x20000, 0x70570e43, 5 | BRF_GRA },           // 11
 	{ "o15-02.rom",			0x20000, 0x724b487f, 5 | BRF_GRA },           // 12
 
-	{ "tp015_14.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
-	{ "tp015_15.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
+	{ "tp015_14.prom14.3d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
+	{ "tp015_15.prom15.2c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(zerowingw)
@@ -3827,7 +3827,7 @@ static struct BurnRomInfo samesameRomDesc[] = {
 	{ "o17_11.7j",			0x20000, 0xbe07d101, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12.7l",			0x20000, 0xef698811, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -3865,7 +3865,7 @@ static struct BurnRomInfo samesame2RomDesc[] = {
 	{ "o17_11ii.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12ii.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -3899,11 +3899,11 @@ struct BurnDriver BurnDrvSamesame2 = {
 
 static struct BurnRomInfo samesamecnRomDesc[] = {
 	{ "o17-09-h2.8j",		0x08000, 0xfc8c2420, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "o17_10-h2.8l",		0x08000, 0xcc0ffbeb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "o17-10-h2.8l",		0x08000, 0xcc0ffbeb, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "o17-11-2.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17-12-2.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -3941,7 +3941,7 @@ static struct BurnRomInfo samesamenhRomDesc[] = {
 	{ "o17_11.7j",			0x20000, 0xbe07d101, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12.7l",			0x20000, 0xef698811, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -3979,7 +3979,7 @@ static struct BurnRomInfo fireshrkRomDesc[] = {
 	{ "o17_11ii.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12ii.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -4017,7 +4017,7 @@ static struct BurnRomInfo fireshrkaRomDesc[] = {
 	{ "o17_11ii.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12ii.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -4055,7 +4055,7 @@ static struct BurnRomInfo fireshrkdRomDesc[] = {
 	{ "o17_11ii.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12ii.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -4093,7 +4093,7 @@ static struct BurnRomInfo fireshrkdhRomDesc[] = {
 	{ "o17_11ii.7j",		0x20000, 0x6beac378, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "o17_12ii.7l",		0x20000, 0x6adb6eb5, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "hd647180.017",		0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
+	{ "hd647180_tp-017.8m",	0x08000, 0x43523032, 2 | BRF_PRG | BRF_ESS }, //  4 Z180 Code
 
 	{ "o17_05.12j",			0x20000, 0x565315f8, 3 | BRF_GRA },           //  5 Layer Tiles
 	{ "o17_06.13j",			0x20000, 0x95262d4c, 3 | BRF_GRA },           //  6
@@ -4126,21 +4126,21 @@ struct BurnDriver BurnDrvFireshrkdh = {
 // Out Zone
 
 static struct BurnRomInfo outzoneRomDesc[] = {
-	{ "tp_018_08.bin",		0x20000, 0x127a38d7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp_018_07.bin",		0x20000, 0x9704db16, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp_018_08.6f",		0x20000, 0x127a38d7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp_018_07.6f",		0x20000, 0x9704db16, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp_018_09.bin",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp_018_09.3j",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
-	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
+	{ "tp-018_rom5.19h",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-018_rom6.22h",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.1c",		0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.1e",		0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.1d",		0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.1b",		0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp018_10.rom10.18a",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp018_11.rom11.22c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzone)
@@ -4160,21 +4160,21 @@ struct BurnDriver BurnDrvOutzone = {
 // Out Zone (harder)
 
 static struct BurnRomInfo outzonehRomDesc[] = {
-	{ "tp_018_07h.bin",		0x20000, 0x0c2ac02d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp_018_08h.bin",		0x20000, 0xca7e48aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp_018_07h.6h",		0x20000, 0x0c2ac02d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp_018_08h.6f",		0x20000, 0xca7e48aa, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp_018_09.bin",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp_018_09.3j",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
-	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
+	{ "tp-018_rom5.19h",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-018_rom6.22h",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.1c",		0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.1e",		0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.1d",		0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.1b",		0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp018_10.rom10.18a",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp018_11.rom11.22c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzoneh)
@@ -4194,21 +4194,21 @@ struct BurnDriver BurnDrvOutzoneh = {
 // Out Zone (old set)
 
 static struct BurnRomInfo outzoneaRomDesc[] = {
-	{ "18.bin",			0x20000, 0x31a171bb, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "19.bin",			0x20000, 0x804ecfd1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.6h",				0x20000, 0x31a171bb, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "19.6f",				0x20000, 0x804ecfd1, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp_018_09.bin",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp_018_09.3j",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
-	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
+	{ "tp-018_rom5.19h",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-018_rom6.22h",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.1c",		0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.1e",		0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.1d",		0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.1b",		0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp018_10.rom10.18a",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp018_11.rom11.22c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzonea)
@@ -4228,21 +4228,21 @@ struct BurnDriver BurnDrvOutzonea = {
 // Out Zone (older set)
 
 static struct BurnRomInfo outzonebRomDesc[] = {
-	{ "tp07.bin",			0x20000, 0xa85a1d48, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp08.bin",			0x20000, 0xd8cc44af, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp07.6h",			0x20000, 0xa85a1d48, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp08.6f",			0x20000, 0xd8cc44af, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp09.bin",			0x08000, 0xdd56041f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp09.3j",			0x08000, 0xdd56041f, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
-	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
+	{ "tp-018_rom5.19h",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-018_rom6.22h",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.1c",		0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.1e",		0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.1d",		0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.1b",		0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp018_10.rom10.18a",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp018_11.rom11.22c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzoneb)
@@ -4262,21 +4262,21 @@ struct BurnDriver BurnDrvOutzoneb = {
 // Out Zone (oldest set)
 
 static struct BurnRomInfo outzonecRomDesc[] = {
-	{ "rom7.bin",			0x20000, 0x936e25d8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "rom8.bin",			0x20000, 0xd19b3ecf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom7.6h",			0x20000, 0x936e25d8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "rom8.6f",			0x20000, 0xd19b3ecf, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp_018_09.bin",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp_018_09.3j",		0x08000, 0x73d8e235, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
-	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
+	{ "tp-018_rom5.19h",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-018_rom6.22h",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.1c",		0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.1e",		0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.1d",		0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.1b",		0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp018_10.rom10.18a",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp018_11.rom11.22c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzonec)
@@ -4296,21 +4296,21 @@ struct BurnDriver BurnDrvOutzonec = {
 // Out Zone (Zero Wing TP-015 PCB conversion)
 
 static struct BurnRomInfo outzonecvRomDesc[] = {
-	{ "tp_018_07+.bin",		0x20000, 0x8768d843, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp_018_08+.bin",		0x20000, 0xaf238f71, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp_018_07+.6f",		0x20000, 0x8768d843, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp_018_08+.6j",		0x20000, 0xaf238f71, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tp_018_09+.bin",		0x08000, 0xb7201606, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "tp_018_09+.9l",		0x08000, 0xb7201606, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "tp-018_rom5.bin",	0x80000, 0xc64ec7b6, 4 | BRF_GRA },           //  3 Layer Tiles
 	{ "tp-018_rom6.bin",	0x80000, 0x64b6c5ac, 4 | BRF_GRA },           //  4
 
-	{ "tp-018_rom2.bin",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
-	{ "tp-018_rom1.bin",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
-	{ "tp-018_rom3.bin",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
-	{ "tp-018_rom4.bin",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
+	{ "tp-018_rom2.22a",	0x20000, 0x6bb72d16, 5 | BRF_GRA },           //  5 Sprites
+	{ "tp-018_rom1.20a",	0x20000, 0x0934782d, 5 | BRF_GRA },           //  6
+	{ "tp-018_rom3.25a",	0x20000, 0xec903c07, 5 | BRF_GRA },           //  7
+	{ "tp-018_rom4.24a",	0x20000, 0x50cbf1a8, 5 | BRF_GRA },           //  8
 
-	{ "tp018_10.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp018_11.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "tp015_14.prom14.3d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "tp015_15.prom15.2c",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(outzonecv)
@@ -4327,24 +4327,24 @@ struct BurnDriver BurnDrvOutzonecv = {
 };
 
 
-// Vimana (World, set 1)
+// Vimana (World, rev A)
 
 static struct BurnRomInfo vimanaRomDesc[] = {
-	{ "tp019-7a.bin",		0x20000, 0x5a4bf73e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp019-8a.bin",		0x20000, 0x03ba27e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp-019_07a.12h",		0x20000, 0x5a4bf73e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp-019-08a.12k",		0x20000, 0x03ba27e8, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "hd647180.019",		0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
+	{ "hd647180_tp-019.4m",	0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
 
-	{ "vim6.bin",			0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "vim5.bin",			0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
-	{ "vim4.bin",			0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
-	{ "vim3.bin",			0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
+	{ "tp-019_rom6.24f",	0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-019_rom5.22f",	0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
+	{ "tp-019_rom4.20f",	0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
+	{ "tp-019_rom3.18f",	0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
 
-	{ "vim1.bin",			0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
-	{ "vim2.bin",			0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
+	{ "tp-019_rom1.20a",	0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
+	{ "tp-019_rom2.20b",	0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
 
-	{ "tp019-09.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp019-10.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "019rom9.prom9.4d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "019rom10.prom10.4h",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(vimana)
@@ -4352,7 +4352,7 @@ STD_ROM_FN(vimana)
 
 struct BurnDriver BurnDrvVimana = {
 	"vimana", NULL, NULL, NULL, "1991",
-	"Vimana (World, set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World, rev A)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, VimanaDIPInfo,
@@ -4361,24 +4361,24 @@ struct BurnDriver BurnDrvVimana = {
 };
 
 
-// Vimana (World, set 2)
+// Vimana (World)
 
 static struct BurnRomInfo vimananRomDesc[] = {
-	{ "tp019-07.rom",		0x20000, 0x78888ff2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tp019-08.rom",		0x20000, 0x6cd2dc3c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp-019_07.12h",		0x20000, 0x78888ff2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp-019_08.12k",		0x20000, 0x6cd2dc3c, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "hd647180.019",		0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
+	{ "hd647180_tp-019.4m",	0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
 
-	{ "vim6.bin",			0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "vim5.bin",			0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
-	{ "vim4.bin",			0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
-	{ "vim3.bin",			0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
+	{ "tp-019_rom6.24f",	0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-019_rom5.22f",	0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
+	{ "tp-019_rom4.20f",	0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
+	{ "tp-019_rom3.18f",	0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
 
-	{ "vim1.bin",			0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
-	{ "vim2.bin",			0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
+	{ "tp-019_rom1.20a",	0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
+	{ "tp-019_rom2.20b",	0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
 
-	{ "tp019-09.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp019-10.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "019rom9.prom9.4d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "019rom10.prom10.4h",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(vimanan)
@@ -4386,7 +4386,7 @@ STD_ROM_FN(vimanan)
 
 struct BurnDriver BurnDrvVimanan = {
 	"vimanan", "vimana", NULL, NULL, "1991",
-	"Vimana (World, set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, vimananRomInfo, vimananRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, VimananDIPInfo,
@@ -4398,21 +4398,21 @@ struct BurnDriver BurnDrvVimanan = {
 // Vimana (Japan)
 
 static struct BurnRomInfo vimanajRomDesc[] = {
-	{ "vim07.bin",			0x20000, 0x1efaea84, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "vim08.bin",			0x20000, 0xe45b7def, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tp-019_07.12h",		0x20000, 0x1efaea84, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tp-019_08.12k",		0x20000, 0xe45b7def, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "hd647180.019",		0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
+	{ "hd647180_tp-019.4m",	0x08000, 0x41a97ebe, 2 | BRF_PRG | BRF_ESS }, //  2 Z180 Code
 
-	{ "vim6.bin",			0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
-	{ "vim5.bin",			0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
-	{ "vim4.bin",			0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
-	{ "vim3.bin",			0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
+	{ "tp-019_rom6.24f",	0x20000, 0x2886878d, 3 | BRF_GRA },           //  3 Layer Tiles
+	{ "tp-019_rom5.22f",	0x20000, 0x61a63d7a, 3 | BRF_GRA },           //  4
+	{ "tp-019_rom4.20f",	0x20000, 0xb0515768, 3 | BRF_GRA },           //  5
+	{ "tp-019_rom3.18f",	0x20000, 0x0b539131, 3 | BRF_GRA },           //  6
 
-	{ "vim1.bin",			0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
-	{ "vim2.bin",			0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
+	{ "tp-019_rom1.20a",	0x80000, 0xcdde26cd, 8 | BRF_GRA },           //  7 Sprites
+	{ "tp-019_rom2.20b",	0x80000, 0x1dbfc118, 8 | BRF_GRA },           //  8
 
-	{ "tp019-09.bpr",		0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
-	{ "tp019-10.bpr",		0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
+	{ "019rom9.prom9.4d",	0x00020, 0xbc88cced, 0 | BRF_OPT },           //  9 PROMs
+	{ "019rom10.prom10.4h",	0x00020, 0xa1e17492, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(vimanaj)

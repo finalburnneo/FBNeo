@@ -4924,7 +4924,7 @@ STD_ROM_FN(pspikesc)
 
 struct BurnDriver BurnDrvPspikesc = {
 	"pspikesc", "pspikes", NULL, NULL, "1991",
-	"Power Spikes (China)\0", NULL, "bootleg", "Miscellaneous",
+	"Power Spikes (China, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pspikescRomInfo, pspikescRomName, NULL, NULL, NULL, NULL, PspikesInputInfo, PspikescDIPInfo,

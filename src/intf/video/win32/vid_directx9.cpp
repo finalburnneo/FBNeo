@@ -628,7 +628,12 @@ int dx9GeometryInit()
 #endif
 				return 1;
 			}
-			memcpy(pVertexData, &vScreen, 4 * sizeof(D3DLVERTEX2));
+			//memcpy(pVertexData, &vScreen, 4 * sizeof(D3DLVERTEX2));
+			pVertexData[0] = vScreen[0];
+			pVertexData[1] = vScreen[1];
+			pVertexData[2] = vScreen[2];
+			pVertexData[3] = vScreen[3];
+
 			pVB[y]->Unlock();
 		}
 	}
@@ -663,7 +668,14 @@ int dx9GeometryInit()
 			return 1;
 		}
 
-		memcpy(pVertexData, &vTemp, 4 * sizeof(D3DLVERTEX2));
+		// with the memcpy() below, gcc complains about copying a non-trivial type
+		//memcpy(pVertexData, &vTemp, 4 * sizeof(D3DLVERTEX2));
+		// try this instead:
+		pVertexData[0] = vTemp[0];
+		pVertexData[1] = vTemp[1];
+		pVertexData[2] = vTemp[2];
+		pVertexData[3] = vTemp[3];
+
 		pIntermediateVB->Unlock();
 	}
 
@@ -1802,15 +1814,15 @@ struct hardfx_config {
 */
 
 hardfx_config HardFXConfigs[] = {
-	{ "n/a", 0, }, // 0 (note: zero entry is "None")
-	{ "support/shaders/crt_aperture.fx",	0, }, // 1
-	{ "support/shaders/crt_caligari.fx",	0, }, // 2
-	{ "support/shaders/crt_cgwg_fast.fx",	0, }, // 3
-	{ "support/shaders/crt_easymode.fx",	0, }, // 4
-	{ "support/shaders/crt_standard.fx",	0, }, // 5
-	{ "support/shaders/crt_bicubic.fx",		0, }, // 6
+	{ "n/a", 0, { 0.0, 0.0, 0.0, 0.0 } }, // 0 (note: zero entry is "None")
+	{ "support/shaders/crt_aperture.fx",	0, { 0.0, 0.0, 0.0, 0.0 } }, // 1
+	{ "support/shaders/crt_caligari.fx",	0, { 0.0, 0.0, 0.0, 0.0 } }, // 2
+	{ "support/shaders/crt_cgwg_fast.fx",	0, { 0.0, 0.0, 0.0, 0.0 } }, // 3
+	{ "support/shaders/crt_easymode.fx",	0, { 0.0, 0.0, 0.0, 0.0 } }, // 4
+	{ "support/shaders/crt_standard.fx",	0, { 0.0, 0.0, 0.0, 0.0 } }, // 5
+	{ "support/shaders/crt_bicubic.fx",		0, { 0.0, 0.0, 0.0, 0.0 } }, // 6
 	{ "support/shaders/crt_retrosl.fx",		1, { 0.0, 0.0, 0.0, 0.0 }, { 0, 0, 0, 0 }, "Animation (0 = disabled)", NULL, NULL, NULL }, // 7
-	{ "support/shaders/crt_cga.fx",			0, }, // 8
+	{ "support/shaders/crt_cga.fx",			0, { 0.0, 0.0, 0.0, 0.0 } }, // 8
 };
 
 #undef D3DFVF_LVERTEX2

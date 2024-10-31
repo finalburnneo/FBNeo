@@ -10,11 +10,6 @@ unexport
 #	Flags. Uncomment any of these declarations to enable their function.
 #
 
-# Check for changes in header files, but not if we want to skip the depend step
-ifndef	SKIPDEPEND
-DEPEND = 1
-endif
-
 #
 #	Declare variables
 #
@@ -184,6 +179,10 @@ CXXFLAGS = -pipe \
 	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
 	   -Wno-unused-but-set-variable -Wno-sequence-point -Wno-narrowing -Wno-extra \
 	   $(DEF) $(incdir)
+
+#return back to msvcrt-style swprintf
+	CFLAGS += -D__USE_MINGW_ANSI_STDIO=0
+	CXXFLAGS += -D__USE_MINGW_ANSI_STDIO=0
 
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64

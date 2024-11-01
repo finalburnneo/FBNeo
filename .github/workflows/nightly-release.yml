@@ -48,7 +48,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -97,7 +97,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw SKIPDEPEND=1
+          make -j$(nproc) mingw SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -140,7 +140,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -183,7 +183,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

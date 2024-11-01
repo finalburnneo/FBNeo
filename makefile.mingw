@@ -433,7 +433,7 @@ vpath %.d 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
 #
 #
 
-.PHONY:	all .WAIT init cleandep touch clean
+.PHONY:	all init cleandep touch clean
 
 ifeq ($(MAKELEVEL),1)
 ifdef DEPEND
@@ -454,17 +454,20 @@ endif
 
 else
 
-all:	init $(autobj) $(autdrv)
 ifdef GCC345
+all:	init $(autobj) $(autdrv)
 	@$(MAKE) -f makefile.mingw -s GCC345=1
 endif
 ifdef GCC452
+all:	init $(autobj) $(autdrv)
 	@$(MAKE) -f makefile.mingw -s GCC452=1
 endif
 ifdef GCC471
+all:	init $(autobj) $(autdrv)
 	@$(MAKE) -f makefile.mingw -s GCC471=1
 endif
 ifdef GCC510
+all:	init .WAIT $(autobj) $(autdrv)
 	@$(MAKE) -f makefile.mingw -s GCC510=1
 endif
 

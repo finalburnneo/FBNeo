@@ -4456,6 +4456,26 @@ static struct BurnRomInfo MetalbRomDesc[] = {
 STD_ROM_PICK(Metalb)
 STD_ROM_FN(Metalb)
 
+static struct BurnRomInfo MetalbaRomDesc[] = {
+	{ "ic48",               0x040000, 0x556f82b2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic37",               0x040000, 0x419083a1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "d12-07.ic47",        0x020000, 0xe07f5136, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "d12-06.ic36",        0x020000, 0x131df731, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "ic57",               0x020000, 0xbcca2649, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "d12-03.ic55",        0x080000, 0x46b498c0, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "d12-04.ic54",        0x080000, 0xab66d141, BRF_GRA | TAITO_CHARS_BYTESWAP },
+
+	{ "d12-01.ic19",        0x100000, 0xb81523b9, BRF_GRA | TAITO_SPRITESA },
+
+	{ "d12-02.ic29",        0x100000, 0x79263e74, BRF_SND | TAITO_YM2610A },
+	{ "d12-05.ic30",        0x080000, 0x7fd036c5, BRF_SND | TAITO_YM2610B },
+};
+
+STD_ROM_PICK(Metalba)
+STD_ROM_FN(Metalba)
+
 static struct BurnRomInfo MetalbjRomDesc[] = {
 	{ "d12-12.8",           0x040000, 0x556f82b2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "d12-11.7",           0x040000, 0xaf9ee28d, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -11488,6 +11508,16 @@ struct BurnDriver BurnDrvMetalb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MetalbRomInfo, MetalbRomName, NULL, NULL, NULL, NULL, MetalbInputInfo, MetalbDIPInfo,
+	MetalbInit, TaitoF2Exit, TaitoF2Frame, MetalbDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMetalba = {
+	"metalba", "metalb", NULL, NULL, "1991",
+	"Metal Black (World, single PCB)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
+	NULL, MetalbaRomInfo, MetalbaRomName, NULL, NULL, NULL, NULL, MetalbInputInfo, MetalbDIPInfo,
 	MetalbInit, TaitoF2Exit, TaitoF2Frame, MetalbDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

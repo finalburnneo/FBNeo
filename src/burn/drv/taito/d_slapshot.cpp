@@ -202,6 +202,11 @@ static struct BurnRomInfo Opwolf3RomDesc[] = {
 	{ "d74_02.23",             0x200000, 0xaab86332, BRF_GRA },
 	{ "d74_03.24",             0x200000, 0x3f398916, BRF_GRA },
 	{ "d74_04.25",             0x200000, 0x2f385638, BRF_GRA },
+
+	{ "d74-09.8",              0x000117, 0xf1bf65c3, BRF_OPT },
+	{ "d74-10.40",             0x000157, 0xc9ce583a, BRF_OPT },
+	{ "d74-12.1",              0x000157, 0x6965e38a, BRF_OPT },
+	{ "d74-13.2",              0x000157, 0xc52df77c, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolf3)
@@ -224,6 +229,11 @@ static struct BurnRomInfo Opwolf3uRomDesc[] = {
 	{ "d74_02.23",             0x200000, 0xaab86332, BRF_GRA },
 	{ "d74_03.24",             0x200000, 0x3f398916, BRF_GRA },
 	{ "d74_04.25",             0x200000, 0x2f385638, BRF_GRA },
+
+	{ "d74-09.8",              0x000117, 0xf1bf65c3, BRF_OPT },
+	{ "d74-10.40",             0x000157, 0xc9ce583a, BRF_OPT },
+	{ "d74-12.1",              0x000157, 0x6965e38a, BRF_OPT },
+	{ "d74-13.2",              0x000157, 0xc52df77c, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolf3u)
@@ -246,6 +256,11 @@ static struct BurnRomInfo Opwolf3jRomDesc[] = {
 	{ "d74_02.23",             0x200000, 0xaab86332, BRF_GRA },
 	{ "d74_03.24",             0x200000, 0x3f398916, BRF_GRA },
 	{ "d74_04.25",             0x200000, 0x2f385638, BRF_GRA },
+
+	{ "d74-09.8",              0x000117, 0xf1bf65c3, BRF_OPT },
+	{ "d74-10.40",             0x000157, 0xc9ce583a, BRF_OPT },
+	{ "d74-12.1",              0x000157, 0x6965e38a, BRF_OPT },
+	{ "d74-13.2",              0x000157, 0xc52df77c, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolf3j)

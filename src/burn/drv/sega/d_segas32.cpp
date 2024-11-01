@@ -7734,7 +7734,7 @@ struct BurnDriver BurnDrvScross = {
 };
 
 
-// Stadium Cross (World, alt)
+// Stadium Cross (World, linkable)
 
 static struct BurnRomInfo scrossaRomDesc[] = {
 	{ "ic37",						0x040000, 0x240a7655, 5 | BRF_PRG | BRF_ESS }, //  0 V70 #0 Code
@@ -7767,7 +7767,7 @@ STD_ROM_FN(scrossa)
 
 struct BurnDriver BurnDrvScrossa = {
 	"scrossa", "scross", NULL, NULL, "1992",
-	"Stadium Cross (World, alt)\0", NULL, "Sega", "System 32",
+	"Stadium Cross (World, linkable)\0", NULL, "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, scrossaRomInfo, scrossaRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
@@ -7800,6 +7800,8 @@ static struct BurnRomInfo scrossuRomDesc[] = {
 
 	{ "mpr-15031.ic1",				0x100000, 0x6af139dc, 1 | BRF_SND },           // 15 PCM Samples
 	{ "mpr-15032.ic2",				0x100000, 0x915d6096, 1 | BRF_SND },           // 16
+
+	{ "epr-15033.ic17",				0x020000, 0xdc19ac00, 0 | BRF_PRG | BRF_ESS }, // 17 Comms Board ROM
 };
 
 STD_ROM_PICK(scrossu)

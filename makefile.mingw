@@ -433,6 +433,9 @@ vpath %.d 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
 #
 #
 
+# backward compatibility (make less than 4.4 doesn't support .WAIT)
+.WAIT:
+
 .PHONY:	all init cleandep touch clean
 
 ifeq ($(MAKELEVEL),1)

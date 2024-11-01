@@ -433,7 +433,7 @@ vpath %.d 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
 #
 #
 
-.PHONY:	all init cleandep touch clean
+.PHONY:	all .WAIT init cleandep touch clean
 
 ifeq ($(MAKELEVEL),1)
 ifdef DEPEND

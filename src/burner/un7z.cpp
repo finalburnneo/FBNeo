@@ -148,7 +148,7 @@ WRes File_GetLength(CSzFile *p, UInt64 *length)
 
 static SRes FileSeqInStream_Read(const ISeqInStream *pp, void *buf, size_t *size)
 {
-	CFileSeqInStream *p = CONTAINER_FROM_VTBL(pp, CFileSeqInStream, vt);
+	CFileSeqInStream *p = Z7_CONTAINER_FROM_VTBL(pp, CFileSeqInStream, vt);
 	return File_Read(&p->file, buf, size) == 0 ? SZ_OK : SZ_ERROR_READ;
 }
 
@@ -162,13 +162,13 @@ void FileSeqInStream_CreateVTable(CFileSeqInStream *p)
 
 static SRes FileInStream_Read(const ISeekInStream *pp, void *buf, size_t *size)
 {
-	CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+	CFileInStream *p = Z7_CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
 	return (File_Read(&p->file, buf, size) == 0) ? SZ_OK : SZ_ERROR_READ;
 }
 
 static SRes FileInStream_Seek(const ISeekInStream *pp, Int64 *pos, ESzSeek origin)
 {
-	CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+	CFileInStream *p = Z7_CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
 	return File_Seek(&p->file, pos, origin);
 }
 
@@ -379,7 +379,7 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 		new_7z->lookStream.bufSize = 0;
 
 	new_7z->lookStream.realStream = &new_7z->archiveStream.vt;
-	LookToRead2_Init(&new_7z->lookStream);
+	LookToRead2_INIT(&new_7z->lookStream);
 
 	CrcGenerateTable();
 

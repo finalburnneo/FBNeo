@@ -11564,7 +11564,7 @@ static INT32 calibr50Init()
 
 struct BurnDriver BurnDrvCalibr50 = {
 	"calibr50", NULL, NULL, NULL, "1989",
-	"Caliber 50 (Ver. 1.01)\0", NULL, "Athena / Seta", "Seta",
+	"Caliber 50 (Ver. 1.01)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_RUNGUN, 0,
 	NULL, calibr50RomInfo, calibr50RomName, NULL, NULL, NULL, NULL, Calibr50InputInfo, Calibr50DIPInfo,

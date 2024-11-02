@@ -3890,7 +3890,7 @@ struct BurnDriver BurnDrvGrdiansa = {
 
 struct BurnDriver BurnDrvGrdiansbl = {
 	"grdiansbl", "grdians", NULL, NULL, "1998",
-	"Guardians / Denjin Makai II - Cho Kyoka Ban (bootleg)\0", NULL, "bootleg (Intac Japan)", "Newer Seta",
+	"Guardians / Denjin Makai II (bootleg)\0", NULL, "bootleg (Intac Japan)", "Newer Seta",
 	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 - \u8d85\u7d1a\u52a0\u5f37\u7248 (bootleg)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiansblRomInfo, grdiansblRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,

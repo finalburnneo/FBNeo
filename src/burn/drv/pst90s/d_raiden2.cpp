@@ -3751,6 +3751,48 @@ struct BurnDriver BurnDrvRaiden2g = {
 };
 
 
+// Raiden II (Great Britain)
+
+static struct BurnRomInfo raiden2gbRomDesc[] = {
+	{ "prg0.u0211",					0x080000, 0x09475ec4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "prg1.u0212",				0x080000, 0x4b9e3024, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  2 COPX MCU data
+
+	{ "snd.u1110",  				0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "seibu7.u0724",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811", 0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082", 	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837", 0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836", 0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "seibu6.u1017",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342", 		0x000155, 0x057a9cdc, 0 | BRF_OPT },	   // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },	   // 14
+};
+
+STD_ROM_PICK(raiden2gb)
+STD_ROM_FN(raiden2gb)
+
+struct BurnDriver BurnDrvRaiden2gb = {
+	"raiden2gb", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Great Britain)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2gbRomInfo, raiden2gbRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
 // Raiden II (Hong Kong)
 
 static struct BurnRomInfo raiden2hkRomDesc[] = {

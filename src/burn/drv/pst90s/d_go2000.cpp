@@ -555,7 +555,7 @@ STD_ROM_FN(go2000)
 
 struct BurnDriver BurnDrvGo2000 = {
 	"go2000", NULL, NULL, NULL, "2000",
-	"Go 2000\0", NULL, "SunA?", "Miscellaneous",
+	"Go 2000\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, go2000RomInfo, go2000RomName, NULL, NULL, NULL, NULL, Go2000InputInfo, Go2000DIPInfo,

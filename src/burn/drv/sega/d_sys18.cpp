@@ -4147,7 +4147,7 @@ struct BurnDriver BurnDrvWwallyja3p = {
 
 struct BurnDriver BurnDrvAquario = {
 	"aquario", NULL, NULL, NULL, "2021",
-	"Clockwork Aquario (prototype)\0", "No sound", "Sega / Westone", "System 18",
+	"Clockwork Aquario (prototype)\0", NULL, "Sega / Westone", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_PLATFORM, 0,
 	NULL, AquarioRomInfo, AquarioRomName, NULL, NULL, NULL, NULL, System18InputInfo, AquarioDIPInfo,

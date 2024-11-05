@@ -21,9 +21,9 @@
 #include "burnint.h"
 #include "hq_shared32.h"
 
-const UINT64 reg_blank = 0x0000000000000000;
-const UINT64 const7    = 0x0000000700070007;
-const UINT64 treshold  = 0x0000000000300706;
+const UINT64 reg_blank = 0x0000000000000000ULL;
+const UINT64 const7    = 0x0000000700070007ULL;
+const UINT64 treshold  = 0x0000000000300706ULL;
 
 void Interp1(unsigned char * pc, unsigned int c1, unsigned int c2)
 {

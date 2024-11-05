@@ -2744,6 +2744,40 @@ struct BurnDriver BurnDrvLnc = {
 	240, 242, 3, 4
 };
 
+// Pac'n'Chase (HACK)
+
+static struct BurnRomInfo pncRomDesc[] = {
+	{ "s3-3d",	0x1000, 0x1ab4f2c2, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "s2-3c",	0x1000, 0x5e46b789, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "s1-3b",	0x1000, 0x1308a32e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "s0-3a",	0x1000, 0xbeb4b1fc, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "sa-1h",	0x1000, 0x379387ec, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "pnc-s4-11l",	0x1000, 0x38a40f50, 3 | BRF_GRA },           //  5 gfx1
+	{ "pnc-s5-11m",	0x1000, 0xc6c7236a, 3 | BRF_GRA },           //  6
+	{ "pnc-s6-13l",	0x1000, 0x20779144, 3 | BRF_GRA },           //  7
+	{ "pnc-s7-13m",	0x1000, 0x8911a546, 3 | BRF_GRA },           //  8
+	{ "pnc-s8-15l",	0x1000, 0x1c8f5112, 3 | BRF_GRA },           //  9
+	{ "pnc-s9-15m",	0x1000, 0xb919e43b, 3 | BRF_GRA },           // 10
+
+	{ "sc-5m",	0x0020, 0x2a976ebe, 4 | BRF_GRA },           // 11 proms
+	{ "sb-4c",	0x0020, 0xa29b4204, 4 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(pnc)
+STD_ROM_FN(pnc)
+
+struct BurnDriver BurnDrvPnc = {
+	"pnc", "lnc", NULL, NULL, "1981",
+	"Pac'n'Chase (Hack)\0", NULL, "Data East Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, pncRomInfo, pncRomName, NULL, NULL, NULL, NULL, LncInputInfo, LncDIPInfo,
+	LncInit, DrvExit, BtimeFrame, LncDraw, DrvScan, &DrvRecalc, 16,
+	240, 242, 3, 4
+};
+
 // Zoar
 
 static struct BurnRomInfo zoarRomDesc[] = {

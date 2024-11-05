@@ -28802,7 +28802,7 @@ struct BurnDriver BurnDrvnes_multidudee = {
 
 // Murder in the Maze (HB)
 static struct BurnRomInfo nes_murdmazeRomDesc[] = {
-	{ "Murder in the Maze (2024)(T1LT).nes",          524304, 0xfc86e8e1, BRF_ESS | BRF_PRG },
+	{ "Murder in the Maze (2024)(T1LT).nes",          524304, 0xbaac5e32, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_murdmaze)

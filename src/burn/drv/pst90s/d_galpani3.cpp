@@ -163,6 +163,7 @@ static void do_rle(INT32 which, INT32 data)
 		case 0x3000:
 			// data = framebuffer destination address "x" offset
 			// c1c  = framebuffer destination address "y" offset  -dink Nov, 2024
+			//bprintf(0, _T("do_rle, data/c1c:  %x  %x\n"), data, c1c[which]);
 			dstaddress += (data & 0x1ff) | ((c1c[which] & 0x1ff) * 0x200);
 			break;
 	}
@@ -785,6 +786,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fbbright1);
 		SCAN_VAR(fbbright2);
 		SCAN_VAR(regs1_address);
+		SCAN_VAR(c1c);
 		SCAN_VAR(prio_scrollx);
 		SCAN_VAR(prio_scrolly);
 		SCAN_VAR(regs1);

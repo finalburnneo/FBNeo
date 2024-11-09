@@ -976,6 +976,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfosnesonly")) == 0) {
+			write_datfile(DAT_SNES_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listinfongponly")) == 0) {
 			write_datfile(DAT_NGP_ONLY, stdout);
 			return 1;
@@ -1251,6 +1256,7 @@ static void CreateSupportFolders()
 		{_T("roms/spectrum/")},
 		{_T("roms/nes/")},
 		{_T("roms/fds/")},
+		{_T("roms/snes/")},
 		{_T("roms/ngp/")},
 		{_T("roms/channelf/")},
 		{_T("roms/romdata/")},

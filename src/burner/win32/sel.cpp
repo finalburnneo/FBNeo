@@ -128,6 +128,7 @@ HTREEITEM hFilterPce				= NULL;
 HTREEITEM hFilterMsx				= NULL;
 HTREEITEM hFilterNes				= NULL;
 HTREEITEM hFilterFds				= NULL;
+HTREEITEM hFilterSnes				= NULL;
 HTREEITEM hFilterNgp				= NULL;
 HTREEITEM hFilterChannelF			= NULL;
 HTREEITEM hFilterSms				= NULL;
@@ -274,17 +275,17 @@ static UINT64 MASKMIDWAY			= 1 << MidwayValue;
 static UINT64 NesValue				= HARDWARE_PREFIX_NES >> 24;
 static UINT64 MASKNES				= 1 << NesValue;
 
+// this is where things start going above the 32bit-zone. *solved w/64bit UINT?*
 static UINT64 FdsValue				= (UINT64)HARDWARE_PREFIX_FDS >> 24;
 static UINT64 MASKFDS				= (UINT64)1 << FdsValue;            // 1 << 0x1f - needs casting or.. bonkers!
-
-// this is where things start going above the 32bit-zone. *solved w/64bit UINT?*
+static UINT64 SnesValue				= (UINT64)HARDWARE_PREFIX_SNES >> 24;
+static UINT64 MASKSNES				= (UINT64)1 << SnesValue;
 static UINT64 NgpValue				= (UINT64)HARDWARE_PREFIX_NGP >> 24;
 static UINT64 MASKNGP				= (UINT64)1 << NgpValue;
-
 static UINT64 ChannelFValue			= (UINT64)HARDWARE_PREFIX_CHANNELF >> 24;
 static UINT64 MASKCHANNELF			= (UINT64)1 << ChannelFValue;
 
-static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKNGP | MASKCHANNELF );
+static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
 
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -998,7 +999,7 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-    CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowY & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
@@ -1479,6 +1480,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NES			, hFilterNes			, nLoadMenuShowX & MASKNES							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_FDS			, hFilterFds			, nLoadMenuShowX & MASKFDS							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NGP			, hFilterNgp			, nLoadMenuShowX & MASKNGP							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CHANNELF		, hFilterChannelF		, nLoadMenuShowX & MASKCHANNELF						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
@@ -1496,7 +1498,7 @@ static void CreateFilters()
 	TreeView_SelectSetFirstVisible(hFilterList, hFavorites);
 }
 
-#define ICON_MAXCONSOLES 12
+#define ICON_MAXCONSOLES 13
 
 enum {
 	ICON_MEGADRIVE = 0,
@@ -1509,8 +1511,9 @@ enum {
 	ICON_SPECTRUM = 7,
 	ICON_NES = 8,
 	ICON_FDS = 9,
-	ICON_NGP = 10,
-	ICON_CHANNELF = 11
+	ICON_SNES = 10,
+	ICON_NGP = 11,
+	ICON_CHANNELF = 12
 };
 
 static HICON hConsDrvIcon[ICON_MAXCONSOLES];
@@ -1565,6 +1568,9 @@ void LoadDrvIcons()
 		_stprintf(szIcon, _T("%sfds_icon.ico"), szAppIconsPath);
 		hConsDrvIcon[ICON_FDS] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 
+		_stprintf(szIcon, _T("%ssnes_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_SNES] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
 		_stprintf(szIcon, _T("%sngp_icon.ico"), szAppIconsPath);
 		hConsDrvIcon[ICON_NGP] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 
@@ -1590,6 +1596,7 @@ void LoadDrvIcons()
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS)
+			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF)
 			)) {
@@ -1645,6 +1652,11 @@ void LoadDrvIcons()
 
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
 			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_FDS];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SNES];
 			continue;
 		}
 
@@ -1855,6 +1867,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterNes, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterFds, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterSnes, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterNgp, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterChannelF, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMidway, FALSE);
@@ -1896,6 +1909,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterNes, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterFds, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterSnes, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterNgp, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterChannelF, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMidway, TRUE);
@@ -2141,6 +2155,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterSpectrum)		_ToggleGameListing(nLoadMenuShowX, MASKSPECTRUM);
 		if (hItemChanged == hFilterNes)				_ToggleGameListing(nLoadMenuShowX, MASKNES);
 		if (hItemChanged == hFilterFds)				_ToggleGameListing(nLoadMenuShowX, MASKFDS);
+		if (hItemChanged == hFilterSnes)			_ToggleGameListing(nLoadMenuShowX, MASKSNES);
 		if (hItemChanged == hFilterNgp)				_ToggleGameListing(nLoadMenuShowX, MASKNGP);
 		if (hItemChanged == hFilterChannelF)		_ToggleGameListing(nLoadMenuShowX, MASKCHANNELF);
 		if (hItemChanged == hFilterMidway)			_ToggleGameListing(nLoadMenuShowX, MASKMIDWAY);
@@ -2257,17 +2272,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 					break;
 				case IDC_SEL_IPSMANAGER:
-                    if (bDrvSelected) {
-                        int nOldnBurnDrvActive = nBurnDrvActive;
+					if (bDrvSelected) {
+						int nOldnBurnDrvActive = nBurnDrvActive;
 						IpsManagerCreate(hSelDlg);
-                        nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
+						nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
 						LoadIpsActivePatches();
 						if (GetIpsNumActivePatches()) {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
 						} else {
 							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 						}
-                        SetFocus(hSelList);
+						SetFocus(hSelList);
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
@@ -2451,8 +2466,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			{
 				nLoadMenuExpand &= ~TvhFilterToBitmask(curItem.hItem);
 			}
-            else if (pnmtv->action == TVE_EXPAND)
-            {
+			else if (pnmtv->action == TVE_EXPAND)
+			{
 				nLoadMenuExpand |= TvhFilterToBitmask(curItem.hItem);
 			}
 		}
@@ -2488,7 +2503,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TreeView_HitTest(pNmHdr->hwndFrom, &thi);
 
 			HTREEITEM hSelectHandle = thi.hItem;
-         		if(hSelectHandle == NULL) return 1;
+				if(hSelectHandle == NULL) return 1;
 
 			TreeView_SelectItem(hSelList, hSelectHandle);
 
@@ -2536,7 +2551,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					TvItem.mask = TVIF_PARAM | TVIF_STATE | TVIF_CHILDREN;
 					SendMessage(hSelList, TVM_GETITEM, 0, (LPARAM)&TvItem);
 
-//					dprintf(_T("  - Item (%i×%i) - (%i×%i) %hs\n"), lplvcd->nmcd.rc.left, lplvcd->nmcd.rc.top, lplvcd->nmcd.rc.right, lplvcd->nmcd.rc.bottom, ((NODEINFO*)TvItem.lParam)->pszROMName);
+//					dprintf(_T("  - Item (%i?i) - (%i?i) %hs\n"), lplvcd->nmcd.rc.left, lplvcd->nmcd.rc.top, lplvcd->nmcd.rc.right, lplvcd->nmcd.rc.bottom, ((NODEINFO*)TvItem.lParam)->pszROMName);
 
 					// Set the foreground and background colours unless the item is highlighted
 					if (!(TvItem.state & (TVIS_SELECTED | TVIS_DROPHILITED))) {
@@ -2704,9 +2719,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				}
 			}
 
-            CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
+			CheckDlgButton(hDlg, IDC_SEL_APPLYIPS, BST_UNCHECKED);
 
-            if (GetIpsNumPatches()) {
+			if (GetIpsNumPatches()) {
 				if (!nShowMVSCartsOnly) {
 					EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
 					LoadIpsActivePatches();
@@ -2869,7 +2884,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TreeView_HitTest(pNmHdr->hwndFrom, &thi);
 
 			HTREEITEM hSelectHandle = thi.hItem;
-         	if(hSelectHandle == NULL) return 1;
+			if(hSelectHandle == NULL) return 1;
 
 			TreeView_SelectItem(hSelList, hSelectHandle);
 

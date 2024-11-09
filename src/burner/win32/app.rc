@@ -1168,6 +1168,7 @@ BEGIN
 			MENUITEM "Generate dat (ZX Spectrum Games only)...",MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY
 			MENUITEM "Generate dat (NES Games only)...",		MENU_CLRMAME_PRO_XML_NES_ONLY
 			MENUITEM "Generate dat (FDS Games only)...",		MENU_CLRMAME_PRO_XML_FDS_ONLY
+			MENUITEM "Generate dat (SNES Games only)...",		MENU_CLRMAME_PRO_XML_SNES_ONLY
 			MENUITEM "Generate dat (Neo Geo Pocket Games only)...",	MENU_CLRMAME_PRO_XML_NGP_ONLY
 			MENUITEM "Generate dat (Fairchild Channel F Games only)...",	MENU_CLRMAME_PRO_XML_CHANNELF_ONLY
 			MENUITEM SEPARATOR

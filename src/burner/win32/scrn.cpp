@@ -385,6 +385,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_SPECTRUM_ONLY) _sntprintf(szConsoleString, 64, _T(", ZX Spectrum Games only"));
 	if (bType == DAT_NES_ONLY) _sntprintf(szConsoleString, 64, _T(", NES Games only"));
 	if (bType == DAT_FDS_ONLY) _sntprintf(szConsoleString, 64, _T(", FDS Games only"));
+	if (bType == DAT_SNES_ONLY) _sntprintf(szConsoleString, 64, _T(", SNES Games only"));
 	if (bType == DAT_NGP_ONLY) _sntprintf(szConsoleString, 64, _T(", NeoGeo Pocket Games only"));
 	if (bType == DAT_CHANNELF_ONLY) _sntprintf(szConsoleString, 64, _T(", Fairchild Channel F Games only"));
 
@@ -501,6 +502,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", FDS Games only"));
 	create_datfile(szFilename, DAT_FDS_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", SNES Games only"));
+	create_datfile(szFilename, DAT_SNES_ONLY);
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Neo Geo Pocket Games only"));
 	create_datfile(szFilename, DAT_NGP_ONLY);
@@ -2675,6 +2679,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_CLRMAME_PRO_XML_SNES_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_SNES_ONLY);
+			}
+			break;
+
 		case MENU_CLRMAME_PRO_XML_NGP_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_NGP_ONLY);
@@ -3675,10 +3685,10 @@ int ScrnSize()
 	} else {
 		if (nWindowSize) {
 			nMaxSize = nWindowSize;
-			if (bDrvOkay && nWindowSize == 2 && nBmapWidth >= 400 && nBmapHeight >= 400) {
+			if (bDrvOkay && nWindowSize > 1 && nBmapWidth >= 400 && nBmapHeight >= 400) {
 				// For Popeye, Hole Land and Syvalion, MCR..etc. when running Windowed: Double Size
 				bprintf(PRINT_NORMAL, _T("  * Game is double-sized to begin with.\n"));
-				nMaxSize = 1;
+				nMaxSize--;
 			}
 		} else {
 			if (nBmapWidth < nBmapHeight) {

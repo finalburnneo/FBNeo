@@ -30152,7 +30152,7 @@ struct BurnDriver BurnDrvsnes_Ff5rte = {
 	512, 448, 4, 3
 };
 
-// Final Fantasy VI Reimagined (Hack)
+// Final Fantasy VI Reimagined (Hack) 2024-10-30
 // https://www.ff6hacking.com/forums/thread-4416.html
 static struct BurnRomInfo snes_Ff6rmdRomDesc[] = {
 	{ "Final Fantasy VI Reimagined (2024)(DrakeyC).sfc", 4194304, 0x60aff03d, BRF_ESS | BRF_PRG },
@@ -30524,7 +30524,7 @@ STD_ROM_FN(snes_Legendofzelda18hp)
 
 struct BurnDriver BurnDrvsnes_Legendofzelda18hp = {
 	"snes_legendofzelda18hp", "snes_legendofzelda", NULL, NULL, "2024",
-	"Legend of Zelda, The - 18 Hours Past (Hack, v1.11)\0", NULL, "Letterbomb", "Nintendo",
+	"Legend of Zelda, The - 18 Hours Past (Hack, v1.12)\0", NULL, "Letterbomb", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_Legendofzelda18hpRomInfo, snes_Legendofzelda18hpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

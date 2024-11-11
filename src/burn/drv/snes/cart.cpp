@@ -213,7 +213,7 @@ static void dsp_bios_reform(uint8_t *ori_bios, uint8_t *new_bios, int is_seta) {
 	int bios_size = bios_sizes[is_seta];
 	int data_size = data_sizes[is_seta];
 	bprintf(0, _T("bios size / data size:  %x  %x\n"), bios_size, data_size);
-	UINT32 *newbios = (UINT32*)new_bios;
+	uint32_t *newbios = (uint32_t*)new_bios;
 	for (int i = 0; i < bios_size; i += 4) {
 		*newbios = (ori_bios[i + 0] << 24) | (ori_bios[i + 1] << 16) | (ori_bios[i + 2] << 8); // only uses 24bits!
 		newbios++;

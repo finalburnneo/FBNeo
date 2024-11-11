@@ -615,7 +615,7 @@ static int snes_getAccessTime(Snes* snes, uint32_t adr) {
 }
 #endif
 
-static inline int snes_getAccessTime(Snes* snes, UINT32 adr)
+static inline int snes_getAccessTime(Snes* snes, uint32_t adr)
 {
 	if ((adr & 0x408000) == 0)
 	{

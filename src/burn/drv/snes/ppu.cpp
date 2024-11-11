@@ -510,7 +510,7 @@ static inline void ppu_handlePixel(int x, int y) {
       r2 = r; g2 = g; b2 = b;
     }
   }
-  UINT32 *dest = (UINT32*)&pixelBuffer[((y - 1) + (evenFrame ? 0 : 239)) * 2048 + x * 8];
+  uint32_t *dest = (uint32_t*)&pixelBuffer[((y - 1) + (evenFrame ? 0 : 239)) * 2048 + x * 8];
 
   dest[0] = (UINT8)((((b2 << 3) | (b2 >> 2)) * bright_lut[brightness]) >> 16) << 0 |
             (UINT8)((((g2 << 3) | (g2 >> 2)) * bright_lut[brightness]) >> 16) << 8 |

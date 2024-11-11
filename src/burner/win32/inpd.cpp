@@ -658,7 +658,7 @@ static void SaveHardwarePreset()
 	TCHAR *szFileName = _T("config\\presets\\preset.ini");
 	TCHAR *szHardwareString = _T("Generic hardware");
 
-	int nHardwareFlag = (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
+	int nHardwareFlag = GameInputGetHWFlag();
 
 	// See if nHardwareFlag belongs to any systems (nes.ini, neogeo.ini, etc) in gamehw_config (see: burner/gami.cpp)
 	for (INT32 i = 0; gamehw_cfg[i].ini[0] != '\0'; i++) {

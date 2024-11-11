@@ -1821,6 +1821,31 @@ static struct BurnRomInfo NebulbeeRomDesc[] = {
 STD_ROM_PICK(Nebulbee)
 STD_ROM_FN(Nebulbee)
 
+static struct BurnRomInfo GalagawmRomDesc[] = {
+	{ "wmgg1_1b.3p",   0x01000, 0xd7dffd9c, BRF_ESS | BRF_PRG   }, //  0	Z80 #1 Program Code
+	{ "wmgg1_2b.3m",   0x01000, 0xab7cbd28, BRF_ESS | BRF_PRG   }, //	 1
+	{ "wmgg1_3.2m",    0x01000, 0x75bcd999, BRF_ESS | BRF_PRG   }, //	 2
+	{ "wmgg1_4b.2l",   0x01000, 0x114f2ae5, BRF_ESS | BRF_PRG   }, //	 3
+
+	{ "gg1_5b.3f",     0x01000, 0xbb5caae3, BRF_ESS | BRF_PRG   }, //  4	Z80 #2 Program Code
+
+	{ "gg1_7b.2c",     0x01000, 0xd016686b, BRF_ESS | BRF_PRG   }, //  5	Z80 #3 Program Code
+
+	{ "gg1_9.4l",      0x01000, 0x58b2f47c, BRF_GRA             },	//  6	Characters
+
+	{ "gg1_11.4d",     0x01000, 0xad447c80, BRF_GRA             },	//  7	Sprites
+	{ "gg1_10.4f",     0x01000, 0xdd6f1afc, BRF_GRA             },	//  8
+
+	{ "prom-5.5n",     0x00020, 0x54603c6b, BRF_GRA             },	//  9	PROMs
+	{ "prom-4.2n",     0x00100, 0x59b6edab, BRF_GRA             },	// 10
+	{ "prom-3.1c",     0x00100, 0x4a04bb6b, BRF_GRA             },	// 11
+	{ "prom-1.1d",     0x00100, 0x7a2815b4, BRF_GRA             },	// 12
+	{ "prom-2.5c",     0x00100, 0x77245b66, BRF_GRA             },	// 13
+};
+
+STD_ROM_PICK(Galagawm)
+STD_ROM_FN(Galagawm)
+
 static struct BurnSampleInfo GalagaSampleDesc[] = {
 #if !defined (ROM_VERIFY)
 	{ "bang", SAMPLE_NOLOOP },
@@ -2487,6 +2512,17 @@ struct BurnDriver BurnDrvNebulbee = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, NebulbeeRomInfo, NebulbeeRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
 	gallagInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+// https://www.donkeykonghacks.net/page_other.html
+struct BurnDriver BurnDrvGalagawm = {
+	"galagawm", "galaga", NULL, "galaga", "2024",
+	"Galaga Wave Mixer (Hack)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagawmRomInfo, GalagawmRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
 	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 

@@ -33,6 +33,7 @@ static UINT8 *DealerInputMultiplex;
 
 static UINT8 dealer_hw = 0;
 static UINT8 game_prot;
+static INT32 is_theglob = 0;
 
 static int watchdog;
 
@@ -539,6 +540,7 @@ static void init_prot()
 			if (!strcmp(BurnDrvGetTextA(DRV_NAME), gamelist[i].set[setnum])) {
 				bprintf(0, _T("*** found prot for %S\n"), gamelist[i].set[setnum]);
 				game_prot = gamelist[i].prot;
+				is_theglob = (game_prot == 0x80);
 				break;
 			}
 		}
@@ -643,7 +645,7 @@ static INT32 DrvInit()
 	ZetSetOutHandler(epos_write_port);
 	ZetClose();
 
-	AY8910Init(0, 687500, 0);
+	AY8910Init(0, (is_theglob) ? 2750000 : 687500, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 2750000);
 
@@ -718,6 +720,7 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	dealer_hw = 0;
+	is_theglob = 0;
 
 	return 0;
 }

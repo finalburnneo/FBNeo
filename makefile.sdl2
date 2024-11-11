@@ -198,7 +198,7 @@ CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   $(PLATFLAGS) $(DEF) $(incdir)
 
 CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
-	   -Wall -W -Wno-long-long \
+	   -Wall -W -Wno-long-long -Wno-sign-compare \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   -Wno-conversion -Wno-attributes \

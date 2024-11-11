@@ -1,5 +1,5 @@
 alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom burn/drv/cave burn/drv/channelf burn/drv/coleco burn/drv/cps3 burn/drv/dataeast \
-			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/midway burn/drv/pce burn/drv/pst90s burn/drv/pre90s burn/drv/neogeo burn/drv/nes \
+			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/midway burn/drv/pce burn/drv/pst90s burn/drv/pre90s burn/drv/neogeo burn/drv/nes burn/drv/snes \
 			burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/msx burn/drv/spectrum burn/drv/taito \
 			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/e132xs cpu/f8 cpu/h6280 cpu/hd6309 cpu/i386 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/adsp2100 cpu/konami cpu/m377 cpu/mips3 cpu/m68k \
 			cpu/mb88xx cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/tlcs900 cpu/sh2 cpu/sh4 cpu/tms32010 cpu/tms34 cpu/upd7725 cpu/upd7810 \
@@ -39,6 +39,9 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_neogeo.o \
 			\
 			d_nes.o \
+			\
+			d_snes.o apu.o cart.o cpu.o cx4.o dma.o dsp.o input.o ppu.o snes.o \
+			snes_other.o spc.o sa1.o sdd1.o cpu_sa1.o statehandler.o \
 			\
 			d_pgm.o \
 			\

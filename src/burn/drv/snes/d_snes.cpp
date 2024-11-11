@@ -30155,7 +30155,7 @@ struct BurnDriver BurnDrvsnes_Ff5rte = {
 // Final Fantasy VI Reimagined (Hack)
 // https://www.ff6hacking.com/forums/thread-4416.html
 static struct BurnRomInfo snes_Ff6rmdRomDesc[] = {
-	{ "Final Fantasy VI Reimagined (2024)(DrakeyC).sfc", 4194304, 0xb1148ddf, BRF_ESS | BRF_PRG },
+	{ "Final Fantasy VI Reimagined (2024)(DrakeyC).sfc", 4194304, 0x60aff03d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Ff6rmd)
@@ -30513,10 +30513,10 @@ struct BurnDriver BurnDrvsnes_Jimpoweree = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - 18 Hours Past (Hack, v1.11)
+// Legend of Zelda, The - 18 Hours Past (Hack, v1.12)
 // https://www.romhacking.net/hacks/7732/
 static struct BurnRomInfo snes_Legendofzelda18hpRomDesc[] = {
-	{ "Legend of Zelda, The - 18 Hours Past v1.11 (2024)(Letterbomb).sfc", 2097152, 0x45d6950f, BRF_ESS | BRF_PRG },
+	{ "Legend of Zelda, The - 18 Hours Past v1.12 (2024)(Letterbomb).sfc", 2097152, 0xc2dc7b83, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Legendofzelda18hp)

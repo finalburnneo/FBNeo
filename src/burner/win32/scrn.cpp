@@ -823,6 +823,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "spectrum",	{ HARDWARE_SPECTRUM, 0 } },
 	{ "nes",		{ HARDWARE_NES, 0 } },
 	{ "fds",		{ HARDWARE_FDS, 0 } },
+	{ "snes",		{ HARDWARE_SNES, 0 } },
 	{ "ngp",		{ HARDWARE_SNK_NGP, 0 } },
 	{ "ngpc",		{ HARDWARE_SNK_NGP | 0x10000, 0 } },
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },

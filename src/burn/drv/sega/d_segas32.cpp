@@ -4164,7 +4164,7 @@ static void draw_screen(INT32 which)
 
 	BurnTransferClear(0);
 
-	if (!system32_displayenable[0]) {
+	if (!system32_displayenable[which]) {
 		return;
 	}
 

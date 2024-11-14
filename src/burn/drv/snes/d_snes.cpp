@@ -30135,7 +30135,7 @@ struct BurnDriver BurnDrvsnes_Ff5rte = {
 	512, 448, 4, 3
 };
 
-// Final Fantasy VI Reimagined (Hack) 2024-10-30
+// Final Fantasy VI Reimagined (Hack) (2024-10-30)
 // https://www.ff6hacking.com/forums/thread-4416.html
 static struct BurnRomInfo snes_Ff6rmdRomDesc[] = {
 	{ "Final Fantasy VI Reimagined (2024)(DrakeyC).sfc", 4194304, 0x60aff03d, BRF_ESS | BRF_PRG },
@@ -30993,7 +30993,7 @@ struct BurnDriver BurnDrvsnes_Racedrivinsa1o = {
 // Ranma 1/2 - Chougi Ranbu Hen (Japan)
 // https://romhackplaza.org/romhacks/ranma-1-2-chougi-ranbu-hen-big-framerate-improvement-snes/
 static struct BurnRomInfo snes_Ranmahb2jfrRomDesc[] = {
-	{ "Ranma 1-2 - Chougi Ranbu Hen frameratehack v1.3 (2024)(Upsilandre).sfc", 4194304, 0x71aaff40, BRF_ESS | BRF_PRG },
+	{ "Ranma 1-2 - Chougi Ranbu Hen frameratehack v1.4 (2024)(Upsilandre).sfc", 4194304, 0x1705415f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Ranmahb2jfr)
@@ -31001,7 +31001,7 @@ STD_ROM_FN(snes_Ranmahb2jfr)
 
 struct BurnDriver BurnDrvsnes_Ranmahb2jfr = {
 	"snes_ranmahb2jfr", "snes_ranmahb2te", NULL, NULL, "2024",
-	"Ranma 1/2 - Chougi Ranbu Hen (Hack, Framerate Imp. v1.3)\0", NULL, "Upsilandre", "Nintendo",
+	"Ranma 1/2 - Chougi Ranbu Hen (Hack, Framerate Imp. v1.4)\0", NULL, "Upsilandre", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ranmahb2jfrRomInfo, snes_Ranmahb2jfrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31013,7 +31013,7 @@ struct BurnDriver BurnDrvsnes_Ranmahb2jfr = {
 // https://www.romhacking.net/translations/3516/
 // https://romhackplaza.org/romhacks/ranma-1-2-chougi-ranbu-hen-big-framerate-improvement-snes/
 static struct BurnRomInfo snes_Ranmahb2tefrRomDesc[] = {
-	{ "Ranma 1-2 - Hard Battle II - Super Move Hustle T-Eng + frameratehack v1.3 (2024)(Upsilandre).sfc", 4194304, 0x4401b68c, BRF_ESS | BRF_PRG },
+	{ "Ranma 1-2 - Hard Battle II - Super Move Hustle T-Eng + frameratehack v1.4 (2024)(Upsilandre).sfc", 4194304, 0x22ae0893, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Ranmahb2tefr)
@@ -31021,7 +31021,7 @@ STD_ROM_FN(snes_Ranmahb2tefr)
 
 struct BurnDriver BurnDrvsnes_Ranmahb2tefr = {
 	"snes_ranmahb2tefr", "snes_ranmahb2te", NULL, NULL, "2024",
-	"Ranma 1/2 - Hard Battle II - Super Move Hustle (Hack, English v1.10 + Framerate Imp. v1.3)\0", NULL, "Dynamic-Designs - Upsilandre", "Nintendo",
+	"Ranma 1/2 - Hard Battle II - Super Move Hustle (Hack, English v1.10 + Framerate Imp. v1.4)\0", NULL, "Dynamic-Designs - Upsilandre", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ranmahb2tefrRomInfo, snes_Ranmahb2tefrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

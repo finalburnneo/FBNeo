@@ -47830,6 +47830,26 @@ struct BurnDriver BurnDrvmd_btomatog = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Bishoujo Super Street Fighter II: Glamor Queen (Hack, v1.6)
+// https://romhackplaza.org/romhacks/bishoujo-super-street-fighter-ii-glamor-queen-genesis/
+
+static struct BurnRomInfo md_bssf2gqRomDesc[] = {
+	{ "Bishoujo Super Street Fighter II - Glamor Queen v1.6 (2024)(Yoni Arousement).bin", 0x500000, 0x87a6c750, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bssf2gq)
+STD_ROM_FN(md_bssf2gq)
+
+struct BurnDriver BurnDrvmd_bssf2gq = {
+	"md_bssf2gq", "md_ssf2", NULL, NULL, "2024",
+	"Bishoujo Super Street Fighter II: Glamor Queen (Hack, v1.6)\0", NULL, "hack (Yoni Arousement)", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_bssf2gqRomInfo, md_bssf2gqRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Cadash (Hack, Arcade Colors)
 // http://www.romhacking.net/hacks/3905/
 static struct BurnRomInfo md_cadashacRomDesc[] = {
@@ -52547,18 +52567,18 @@ struct BurnDriver BurnDrvmd_mkae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Arcade Edition (Hack)
-// https://www.romhacking.net/reviews/9714/
+// Mortal Kombat Arcade Edition (Hack, v2.1)
+// https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-genesis-2/
 static struct BurnRomInfo md_mkaeeRomDesc[] = {
-	{ "Mortal Kombat Arcade Edition Enhanced v1.5 (2022)(Rael G.C.).bin", 4194304, 0xb884890b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat Arcade Edition Enhanced v2.1 (2024)(Rael G.C.).bin", 4194304, 0x486979c5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mkaee)
 STD_ROM_FN(md_mkaee)
 
 struct BurnDriver BurnDrvmd_mkaee = {
-	"md_mkaee", "md_mk", NULL, NULL, "2022",
-	"Mortal Kombat Arcade Edition Enhanced (Hack, v1.5)\0", NULL, "Rael G.C.", "Sega Megadrive",
+	"md_mkaee", "md_mk", NULL, NULL, "2024",
+	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.1)\0", NULL, "Rael G.C.", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkaeeRomInfo, md_mkaeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

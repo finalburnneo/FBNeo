@@ -753,6 +753,7 @@ static void snes_remove_cheat(char *code)
 
 static void snes_init_fbn_cheat_subsys()
 {
+	cheats_active = 0;
 	nes_init_cheat_functions(snes_add_cheat, snes_remove_cheat);
 }
 

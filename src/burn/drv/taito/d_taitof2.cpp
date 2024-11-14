@@ -10971,6 +10971,11 @@ static INT32 TaitoF2Frame()
 		if (i == (nInterleave - 1)) nTaitoCyclesSegment -= 500;
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == (nInterleave - 1)) {
+			// draw @ vblank
+			TaitoF2HandleSpriteBuffering();
+			if (pBurnDraw) BurnDrvRedraw();
+			TaitoF2SpriteBufferFunction();
+
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(500);
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
@@ -10996,12 +11001,6 @@ static INT32 TaitoF2Frame()
 		if (TaitoNumMSM6295) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
-
-	TaitoF2HandleSpriteBuffering();
-
-	if (pBurnDraw) BurnDrvRedraw();
-
-	TaitoF2SpriteBufferFunction();
 
 	return 0;
 }

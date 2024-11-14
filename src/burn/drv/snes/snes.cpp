@@ -27,6 +27,7 @@ static uint8_t snes_rread(Snes* snes, uint32_t adr); // wrapped by read, to set 
 static int snes_getAccessTime(Snes* snes, uint32_t adr);
 static void build_accesstime(Snes* snes);
 static void free_accesstime();
+static void snes_init_fbn_cheat_subsys();
 
 static uint8_t *access_time;
 
@@ -40,6 +41,8 @@ Snes* snes_init(void) {
   snes->input1 = input_init(snes, 1);
   snes->input2 = input_init(snes, 2);
   snes->palTiming = false;
+
+  snes_init_fbn_cheat_subsys();
 
   return snes;
 }
@@ -649,9 +652,126 @@ static void free_accesstime() {
   BurnFree(access_time);
 }
 
+// game genie/par cheat system
+static UINT8 gg_nibble(UINT8 g)
+{
+	const UINT8 gg_str[] = "DF4709156BC8A23E";
+
+	for (UINT8 i = 0; i < 0x10; i++) {
+		if (g == gg_str[i]) {
+			return i;
+		}
+	}
+	return 0;
+}
+
+static INT32 gg_decode(char *gg_code, UINT32 &address, UINT8 &value)
+{
+	UINT32 type = strlen(gg_code);
+	UINT32 temp = 0;
+
+	if (type != 8 && type != 9) {
+		// bad code!
+		return 1;
+	}
+
+	switch (type) {
+		case 8: { // Pro Action Replay (PAR)
+			temp = (UINT32)strtoul(gg_code, NULL, 16);
+			address = (temp >> 8) & 0xffffff;
+			value = temp & 0xff;
+			break;
+		}
+		case 9: { // Game Genie
+			for (int i = 0; i < 9; i++) {
+				if (i != 4) temp = (temp << 4) | gg_nibble(gg_code[i]);
+			}
+
+			value = (temp >> 24) & 0xff;
+			address = (temp >> 10) & 0xf;
+			address = (address << 4) | ((temp >> 2) & 0xf);
+			address = (address << 4) | ((temp >> 20) & 0xf);
+			address = (address << 4) | ((temp << 2) & 0xc) | ((temp >> 14) & 0x3);
+			address = (address << 4) | ((temp >> 16) & 0xf);
+			address = (address << 4) | ((temp >> 6) & 0xf);
+			break;
+		}
+	}
+
+	return 0;
+}
+
+static const INT32 cheat_MAX = 0x100;
+static INT32 cheats_active = 0;
+
+struct cheat_struct {
+	char code[0x10]; // gamegenie, par code
+	UINT32 address;
+	UINT8 value;
+};
+
+static cheat_struct cheats[cheat_MAX];
+
+static void snes_add_cheat(char *code)
+{
+	UINT32 address;
+	UINT8 value;
+
+	if (!gg_decode(code, address, value) && cheats_active < (cheat_MAX-1)) {
+		strncpy(cheats[cheats_active].code, code, 9);
+		cheats[cheats_active].code[9] = '\0';
+		cheats[cheats_active].address = address;
+		cheats[cheats_active].value = value;
+		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x)\n"), cheats_active, cheats[cheats_active].code, address, value);
+		cheats_active++;
+	} else {
+		if (cheats_active < (cheat_MAX-1)) {
+			bprintf(0, _T("snes cheat engine: bad GameGenie code %S\n"), code);
+		} else {
+			bprintf(0, _T("snes cheat engine: too many active!\n"));
+		}
+	}
+}
+
+static void snes_remove_cheat(char *code)
+{
+	cheat_struct cheat_temp[cheat_MAX];
+	INT32 temp_num = 0;
+
+	for (INT32 i = 0; i < cheats_active; i++) {
+		if (strcmp(code, cheats[i].code) != 0) {
+			memcpy(&cheat_temp[temp_num], &cheats[i], sizeof(cheat_struct));
+			temp_num++;
+		} else {
+			bprintf(0, _T("cheat %S disabled.\n"), cheats[i].code);
+		}
+	}
+
+	memcpy(cheats, cheat_temp, sizeof(cheats));
+	cheats_active = temp_num;
+}
+
+static void snes_init_fbn_cheat_subsys()
+{
+	cheats_active = 0;
+	nes_init_cheat_functions(snes_add_cheat, snes_remove_cheat);
+}
+
+static inline UINT8 cheat_check(UINT32 address, UINT8 value)
+{
+	for (INT32 i = 0; i < cheats_active; i++) {
+		if (cheats[i].address == address) {
+			//bprintf(0, _T("."));
+			return cheats[i].value;
+		}
+	}
+
+	return value;
+}
+
 uint8_t snes_read(Snes* snes, uint32_t adr) {
   snes->adrBus = adr;
-  uint8_t val = snes_rread(snes, adr);
+  const uint8_t val = cheat_check(adr, snes_rread(snes, adr));
   snes->openBus = val;
   return val;
 }

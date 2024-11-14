@@ -525,7 +525,7 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = diamrun
 {
 	BurnAllocMemIndex();
 
-	BurnSetRefreshRate(59.59);
+	BurnSetRefreshRate(59.64);
 
 	{
 		if (game == 0 || game == 1) {
@@ -755,7 +755,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (INT32)(1500000 / 59.59), (INT32)(3000000 / 59.59) };
+	INT32 nCyclesTotal[2] = { (INT32)(1500000 / 59.637405), (INT32)(3000000 / 59.637405) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	M6809Open(0);

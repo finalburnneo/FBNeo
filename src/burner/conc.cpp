@@ -1,6 +1,6 @@
 #include "burner.h"
 
-#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
+#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
 
 static bool SkipComma(TCHAR** s)
 {
@@ -237,7 +237,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 							for (INT32 z = 0; z < strlen(t); z++) {
 #endif
 								char c = toupper((char)*s);
-								if (c >= 'A' && c <= 'Z' && newlen < 10)
+								if ( ((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (c == '-' || c == ':')) && newlen < 10)
 									pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode[newlen++] = c;
 								s++;
 								if (*s == _T(',')) break;

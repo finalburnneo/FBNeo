@@ -719,6 +719,7 @@ static void snes_add_cheat(char *code)
 
 	if (!gg_decode(code, address, value) && cheats_active < (cheat_MAX-1)) {
 		strncpy(cheats[cheats_active].code, code, 9);
+		cheats[cheats_active].code[9] = '\0';
 		cheats[cheats_active].address = address;
 		cheats[cheats_active].value = value;
 		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x)\n"), cheats_active, cheats[cheats_active].code, address, value);

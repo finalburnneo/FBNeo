@@ -181,11 +181,13 @@ static struct BurnDIPInfo SNESMouseP1MouseP2GamepadDIPList[] =
 	{0x01, 0xff, 0xff, 0x01, NULL					},
 };
 
+#if 0
 static struct BurnDIPInfo SNESMouseP1GamepadP2MouseDIPList[] =
 {
 	{0x00, 0xff, 0xff, 0x00, NULL					},
 	{0x01, 0xff, 0xff, 0x02, NULL					},
 };
+#endif
 
 static struct BurnDIPInfo SNESMouseP1MouseP2MouseDIPList[] =
 {
@@ -195,7 +197,7 @@ static struct BurnDIPInfo SNESMouseP1MouseP2MouseDIPList[] =
 
 STDDIPINFOEXT(SNESMouse, SNESMouseP1GamepadP2Gamepad, SNESMouseBase) // zoop
 STDDIPINFOEXT(SNESMouseP1, SNESMouseP1MouseP2Gamepad, SNESMouseBase) // zoop
-STDDIPINFOEXT(SNESMouseP2, SNESMouseP1GamepadP2Mouse, SNESMouseBase) // zoop
+//STDDIPINFOEXT(SNESMouseP2, SNESMouseP1GamepadP2Mouse, SNESMouseBase) // zoop
 STDDIPINFOEXT(SNESMouseP1P2, SNESMouseP1MouseP2Mouse, SNESMouseBase) // zoop
 
 static UINT32 CheckControllerPlug()
@@ -29676,25 +29678,6 @@ struct BurnDriver BurnDrvsnes_2048 = {
 	512, 448, 4, 3
 };
 
-// 4096 (HB)
-
-static struct BurnRomInfo snes_4096RomDesc[] = {
-	{ "4096 (2015)(e-nost).sfc", 262144, 0xdd073c4b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_4096)
-STD_ROM_FN(snes_4096)
-
-struct BurnDriver BurnDrvsnes_4096 = {
-	"snes_4096", NULL, NULL, NULL, "2015",
-	"4096 (HB)\0", NULL, "e-nost", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
-	SNESGetZipName, snes_4096RomInfo, snes_4096RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Alien Cat 2 Enhanced Edition (HB, v1.1)
 
 static struct BurnRomInfo snes_Aliencat2RomDesc[] = {
@@ -31217,25 +31200,6 @@ struct BurnDriver BurnDrvsnes_Spacegulls = {
 	512, 448, 4, 3
 };
 
-// Star Keeper (HB)
-
-static struct BurnRomInfo snes_StarkeeperRomDesc[] = {
-	{ "Star Keeper (2018)(87Arts).sfc", 524288, 0xd925182f, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Starkeeper)
-STD_ROM_FN(snes_Starkeeper)
-
-struct BurnDriver BurnDrvsnes_Starkeeper = {
-	"snes_starkeeper", NULL, NULL, NULL, "2018",
-	"Star Keeper (HB)\0", NULL, "87Arts", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
-	SNESGetZipName, snes_StarkeeperRomInfo, snes_StarkeeperRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Steel Talons - Fastrom fix (Hack)
 // https://www.patreon.com/posts/steel-talons-fix-79800713
 static struct BurnRomInfo snes_SteeltalonsffRomDesc[] = {
@@ -31555,25 +31519,6 @@ struct BurnDriver BurnDrvsnes_Supsudoku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SupsudokuRomInfo, snes_SupsudokuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Super Xoxol vs. Pigdog (HB)
-
-static struct BurnRomInfo snes_SupxoxolRomDesc[] = {
-	{ "Super Xoxol vs. Pigdog (2023)(Sergey Cyka).sfc", 1048576, 0xed786ffe, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Supxoxol)
-STD_ROM_FN(snes_Supxoxol)
-
-struct BurnDriver BurnDrvsnes_Supxoxol = {
-	"snes_supxoxol", NULL, NULL, NULL, "2023",
-	"Super Xoxol vs. Pigdog (HB)\0", NULL, "Sergey Cyka", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
-	SNESGetZipName, snes_SupxoxolRomInfo, snes_SupxoxolRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -14132,7 +14132,7 @@ struct BurnDriver BurnDrvMSX_gundamk = {
 // Mokari Makka? Bochibochi Denna! (Japan)
 
 static struct BurnRomInfo MSX_mokarimaRomDesc[] = {
-	{ "Mokari Makka? Bochibochi Denna! (Japan)(1986)(Leben Pro).rom",	0x08000, 0xd40f481d, BRF_PRG | BRF_ESS },
+	{ "Mokari Makka Bochibochi Denna! (Japan)(1986)(Leben Pro).rom",	0x08000, 0xd40f481d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mokarima, MSX_mokarima, msx_msx)

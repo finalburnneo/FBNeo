@@ -465,6 +465,11 @@ extern bool bDoIpsPatch;
 void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly = false);
 
 // ---------------------------------------------------------------------------
+// MISC Helper / utility functions, etc
+int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
+//int BurnComputeSHA1(const char *filename, char *hash_str);
+
+// ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure
 
 // Flags for the flags member

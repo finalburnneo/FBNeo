@@ -10975,7 +10975,7 @@ static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &comp
 	return 0;
 }
 
-const INT32 cheat_MAX = 0x100;
+static const INT32 cheat_MAX = 0x100;
 static INT32 cheats_active = 0;
 
 struct cheat_struct {
@@ -10987,7 +10987,7 @@ struct cheat_struct {
 
 static cheat_struct cheats[cheat_MAX];
 
-void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
+static void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 {
 	UINT16 address;
 	UINT8 value;
@@ -11009,7 +11009,7 @@ void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 	}
 }
 
-void nes_remove_cheat(char *code)
+static void nes_remove_cheat(char *code)
 {
 	cheat_struct cheat_temp[cheat_MAX];
 	INT32 temp_num = 0;
@@ -11192,6 +11192,12 @@ static INT32 NESInit()
 		if (fds_load(rom, ri.nLen, ri.nCrc)) return 1;
 	} else {
 		if (BurnLoadRom(rom, 0, 1)) return 1;
+
+		// sha1 hash
+		char hash_potato[128] = { 0, };
+		BurnComputeSHA1(rom + 0x10, ri.nLen - 0x10, hash_potato);
+		bprintf(0, _T("sha1 hash: [%S]\n"), hash_potato);
+
 		if (cartridge_load(rom, ri.nLen, ri.nCrc)) return 1;
 	}
 

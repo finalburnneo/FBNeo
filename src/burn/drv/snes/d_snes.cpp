@@ -6475,7 +6475,7 @@ struct BurnDriver BurnDrvsnes_Dezaemonj = {
 // Dezaemon (Hack, English)
 // https://www.romhacking.net/translations/3749/
 static struct BurnRomInfo snes_DezaemonteRomDesc[] = {
-	{ "Dezaemon T-Eng (2018)(Aeon Genesis)..sfc", 524288, 0x32f9c958, BRF_ESS | BRF_PRG },
+	{ "Dezaemon T-Eng (2018)(Aeon Genesis).sfc", 524288, 0x32f9c958, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dezaemonte)

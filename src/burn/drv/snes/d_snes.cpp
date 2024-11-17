@@ -30154,10 +30154,10 @@ struct BurnDriver BurnDrvsnes_Ff6rmd = {
 	512, 448, 4, 3
 };
 
-// Final Fantasy VI: A Soldier's Contingency (Hack, v2.01)
+// Final Fantasy VI: A Soldier's Contingency (Hack, v2.02)
 // https://romhackplaza.org/romhacks/final-fantasy-vi-a-soldiers-contingency-extended-bestiary-edition-snes/
 static struct BurnRomInfo snes_Ff6scRomDesc[] = {
-	{ "Final Fantasy VI - A Soldier's Contingency (Extended Bestiary Edition) v2.01 (2024)(Lightning Hunter).sfc", 6291456, 0xfd1a4f8b, BRF_ESS | BRF_PRG },
+	{ "Final Fantasy VI - A Soldier's Contingency (Extended Bestiary Edition) v2.02 (2024)(Lightning Hunter).sfc", 6291456, 0x7d309e30, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Ff6sc)
@@ -30165,7 +30165,7 @@ STD_ROM_FN(snes_Ff6sc)
 
 struct BurnDriver BurnDrvsnes_Ff6sc = {
 	"snes_ff6sc", "snes_finalfantiii", NULL, NULL, "2024",
-	"Final Fantasy VI: A Soldier's Contingency (Hack, v2.01)\0", "(Extended Bestiary Edition)", "Lightning Hunter", "Nintendo",
+	"Final Fantasy VI: A Soldier's Contingency (Hack, v2.02)\0", "(Extended Bestiary Edition)", "Lightning Hunter", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_Ff6scRomInfo, snes_Ff6scRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

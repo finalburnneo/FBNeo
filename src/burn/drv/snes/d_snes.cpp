@@ -29463,6 +29463,44 @@ struct BurnDriver BurnDrvsnes_Ys4te = {
 	512, 448, 4, 3
 };
 
+// Yuu Yuu Hakusho
+
+static struct BurnRomInfo snes_YuuyuuhakushoRomDesc[] = {
+	{ "Yuu Yuu Hakusho (1993)(Namcot).sfc", 2097152, 0xec96d517, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Yuuyuuhakusho)
+STD_ROM_FN(snes_Yuuyuuhakusho)
+
+struct BurnDriver BurnDrvsnes_Yuuyuuhakusho = {
+	"snes_yuuyuuhakusho", NULL, NULL, NULL, "1993",
+	"Yuu Yuu Hakusho (Japan)\0", NULL, "Namcot", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_YuuyuuhakushoRomInfo, snes_YuuyuuhakushoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 480, 4, 3
+};
+
+// Yuu Yuu Hakusho Final - Makai Saikyou Retsuden
+
+static struct BurnRomInfo snes_YuuyuuhakushofinalRomDesc[] = {
+	{ "Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (1995)(Namcot).sfc", 3145728, 0x5617a42e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Yuuyuuhakushofinal)
+STD_ROM_FN(snes_Yuuyuuhakushofinal)
+
+struct BurnDriver BurnDrvsnes_Yuuyuuhakushofinal = {
+	"snes_yuuyuuhakushofinal", NULL, NULL, NULL, "1995",
+	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "Namcot", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_YuuyuuhakushofinalRomInfo, snes_YuuyuuhakushofinalRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 480, 4, 3
+};
+
 // Yuu Yuu Hakusho 2 - Kakutou no Shou (Japan)
 
 static struct BurnRomInfo snes_Yuuyuuhak2jRomDesc[] = {

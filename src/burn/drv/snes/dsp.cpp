@@ -135,6 +135,7 @@ void dsp_reset(Dsp* dsp) {
   memset(dsp->firBufferR, 0, sizeof(dsp->firBufferR));
   memset(dsp->sampleBuffer, 0, sizeof(dsp->sampleBuffer));
   dsp->sampleOffset = 0;
+  dsp->sampleCount = 0;
   dsp->lastFrameBoundary = 0;
 }
 
@@ -186,6 +187,7 @@ void dsp_handleState(Dsp* dsp, StateHandler* sh) {
   }
   sh_handleByteArray(sh, dsp->ram, 0x80);
 //  sh_handleByteArray(sh, (UINT8*)&dsp->sampleBuffer[0], 0x800*2*2);
+//  sh_handleInts(sh, dsp->sampleCount, NULL);
 }
 
 void dsp_cycle(Dsp* dsp) {
@@ -207,8 +209,9 @@ void dsp_cycle(Dsp* dsp) {
   }
   if (bBurnRunAheadFrame == 0) {
     // put final sample in the samplebuffer
-    dsp->sampleBuffer[(dsp->sampleOffset & 0x7ff) * 2] = dsp->sampleOutL;
+    dsp->sampleBuffer[(dsp->sampleOffset   & 0x7ff) * 2 + 0] = dsp->sampleOutL;
     dsp->sampleBuffer[(dsp->sampleOffset++ & 0x7ff) * 2 + 1] = dsp->sampleOutR;
+	dsp->sampleCount++;
   }
 }
 static int clamp16(int val) {
@@ -590,11 +593,12 @@ void dsp_write(Dsp* dsp, uint8_t adr, uint8_t val) {
 
 void dsp_getSamples(Dsp* dsp, int16_t* sampleData, int samplesPerFrame) {
   // resample from 534 / 641 samples per frame to wanted value
-  float wantedSamples = (dsp->apu->snes->palTiming ? 641.0 : 534.0);
+  float wantedSamples = dsp->sampleCount; // (dsp->apu->snes->palTiming ? 641.0 : 534.0);
+  dsp->sampleCount = 0;
   double adder = wantedSamples / samplesPerFrame;
   double location = dsp->lastFrameBoundary - wantedSamples;
   for(int i = 0; i < samplesPerFrame; i++) {
-    sampleData[i * 2] = dsp->sampleBuffer[(((int) location) & 0x7ff) * 2];
+    sampleData[i * 2 + 0] = dsp->sampleBuffer[(((int) location) & 0x7ff) * 2 + 0];
     sampleData[i * 2 + 1] = dsp->sampleBuffer[(((int) location) & 0x7ff) * 2 + 1];
     location += adder;
   }

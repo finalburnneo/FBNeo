@@ -29479,7 +29479,7 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhakusho = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuuhakushoRomInfo, snes_YuuyuuhakushoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 480, 4, 3
+	512, 448, 4, 3
 };
 
 // Yuu Yuu Hakusho Final - Makai Saikyou Retsuden

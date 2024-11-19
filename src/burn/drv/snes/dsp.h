@@ -83,6 +83,7 @@ struct Dsp {
   // sample ring buffer (2048 samples, *2 for stereo)
   int16_t sampleBuffer[0x800 * 2];
   uint16_t sampleOffset; // current offset in samplebuffer
+  uint32_t sampleCount; // samples generated since last render
   uint16_t lastFrameBoundary;
 };
 

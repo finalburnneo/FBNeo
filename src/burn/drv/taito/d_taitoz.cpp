@@ -7097,7 +7097,7 @@ struct BurnDriver BurnDrvNightstrj = {
 	"nightstrj", "nightstr", NULL, NULL, "1989",
 	"Night Striker (Japan)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, NightstrjRomInfo, NightstrjRomName, NULL, NULL, NULL, NULL, NightstrInputInfo, NightstrjDIPInfo,
 	NightstrInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
@@ -7107,7 +7107,7 @@ struct BurnDriver BurnDrvNightstru = {
 	"nightstru", "nightstr", NULL, NULL, "1989",
 	"Night Striker (US)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, NightstruRomInfo, NightstruRomName, NULL, NULL, NULL, NULL, NightstrInputInfo, NightstruDIPInfo,
 	NightstrInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3

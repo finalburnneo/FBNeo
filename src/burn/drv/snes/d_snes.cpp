@@ -31808,3 +31808,21 @@ struct BurnDriver BurnDrvsnes_Zombies2h = {
 	512, 448, 4, 3
 };
 
+// Quinty
+
+static struct BurnRomInfo snes_QuintyRomDesc[] = {
+	{ "Quinty (1999)(Game Freak).sfc", 2097152, 0x1225927b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Quinty)
+STD_ROM_FN(snes_Quinty)
+
+struct BurnDriver BurnDrvsnes_Quinty = {
+	"snes_quinty", NULL, NULL, NULL, "1999",
+	"Quinty (Japan, Prototype)\0", NULL, "Game Freak", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_QuintyRomInfo, snes_QuintyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};

@@ -16695,27 +16695,27 @@ struct BurnDriver BurnDrvNinjamasha = {
 	0x1000,	320, 224, 4, 3
 };
 
-// Rage of the Dragons (Portuguese Edition, Hack)
+// Rage of the Dragons (Portuguese Edition v2.0, Hack)
 // Modified by BisonSAS
 
  static struct BurnRomInfo rotdbrRomDesc[] = {
-	{ "264-p1br.p1",	0x800000, 0x8a973ecf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "264-p1br.p1",	0x800000, 0x8a973ecf, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
 	
-	{ "264-s1br.s1",	0x020000, 0x28b387d6, 2 | BRF_GRA | BRF_PRG }, //  1 Text layer tile
+	{ "264-s1br.s1",	0x020000, 0x28b387d6, 2 | BRF_GRA },			//  1 Text layer tile
 
-	{ "264-c1d.c1",		0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  1 Sprite data
-	{ "264-c2d.c2",		0x800000, 0xb1069066, 3 | BRF_GRA },           //  2
-	{ "264-c3d.c3",		0x800000, 0x7e636d49, 3 | BRF_GRA },           //  3
-	{ "264-c4d.c4",		0x800000, 0x76892fda, 3 | BRF_GRA },           //  4
-	{ "264-c5d.c5",		0x800000, 0x469061bc, 3 | BRF_GRA },           //  5
-	{ "264-c6d.c6",		0x800000, 0x2200220a, 3 | BRF_GRA },           //  6
-	{ "264-c7d.c7",		0x800000, 0xedda4baf, 3 | BRF_GRA },           //  7
-	{ "264-c8d.c8",		0x800000, 0x82b1ba22, 3 | BRF_GRA },           //  8
+	{ "264-c1d.c1",		0x800000, 0xec9d18c0, 3 | BRF_GRA },			//  2 Sprite data
+	{ "264-c2d.c2",		0x800000, 0xb1069066, 3 | BRF_GRA },			//  3
+	{ "264-c3d.c3",		0x800000, 0x7e636d49, 3 | BRF_GRA },			//  4
+	{ "264-c4d.c4",		0x800000, 0x76892fda, 3 | BRF_GRA },			//  5
+	{ "264-c5d.c5",		0x800000, 0x469061bc, 3 | BRF_GRA },			//  6
+	{ "264-c6d.c6",		0x800000, 0x2200220a, 3 | BRF_GRA },			//  7
+	{ "264-c7d.c7",		0x800000, 0xedda4baf, 3 | BRF_GRA },			//  8
+	{ "264-c8d.c8",		0x800000, 0x82b1ba22, 3 | BRF_GRA },			//  9
 
-	{ "264-m1d.m1",		0x020000, 0xc5d36af9, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "264-m1d.m1",		0x020000, 0xc5d36af9, 4 | BRF_ESS | BRF_PRG },	// 10 Z80 code
 
-	{ "264-v1d.v1",		0x800000, 0x2c49f3fa, 5 | BRF_SND },           // 10 Sound data
-	{ "264-v2d.v2",		0x800000, 0x967279da, 5 | BRF_SND },           // 11
+	{ "264-v1d.v1",		0x800000, 0x2c49f3fa, 5 | BRF_SND },			// 11 Sound data
+	{ "264-v2d.v2",		0x800000, 0x967279da, 5 | BRF_SND },			// 12
 };
 
 STDROMPICKEXT(rotdbr, rotdbr, neogeo)
@@ -16723,7 +16723,7 @@ STD_ROM_FN(rotdbr)
 
 struct BurnDriver BurnDrvRotdbr = {
 	"rotdbr", "rotd", "neogeo", NULL, "2005",
-	"Rage of the Dragons (Portuguese edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	"Rage of the Dragons (Portuguese edition v2.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, rotdbrRomInfo, rotdbrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -16768,7 +16768,7 @@ struct BurnDriver BurnDrvSdodgebh = {
 // Art of Fighting / Art of Fighting Series
 // -----------------------------------------------------------------------------
 
-// Art of Fighting / Ryuuko no Ken (Portuguese Edition v1.0, Hack)
+// Art of Fighting / Ryuuko no Ken (Portuguese edition v1.0, Hack)
 // Modified by Mr.Fox (aka devilfox) & BisonSAS
 
 static struct BurnRomInfo aofbrRomDesc[] = {
@@ -25793,7 +25793,7 @@ struct BurnDriver BurnDrvKof2k2omg9 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2002 (Portuguese Edition, Hack)
+// The King of Fighters 2002 (Portuguese edition v2.0, Hack)
 // Modified by KyoX
 
 static struct BurnRomInfo kof2k2brRomDesc[] = {
@@ -25808,7 +25808,7 @@ STD_ROM_FN(kof2k2br)
 
 struct BurnDriver BurnDrvKof2k2br = {
 	"kof2k2br", "kof2002", "neogeo", NULL, "2005",
-	"The King of Fighters 2002 (Portuguese Edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	"The King of Fighters 2002 (Portuguese edition v2.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2k2brRomInfo, kof2k2brRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -26080,7 +26080,7 @@ struct BurnDriver BurnDrvKf2k3p2s = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2003 (Portuguese Edition, Hack)
+// The King of Fighters 2003 (Portuguese edition v1.0, Hack)
 // Modified by Mr.Fox (aka devilfox) & BisonSAS
 
 static struct BurnRomInfo kof2k3brRomDesc[] = {
@@ -26104,7 +26104,7 @@ STD_ROM_FN(kof2k3br)
 
 struct BurnDriver BurnDrvKof2k3br = {
 	"kof2k3br", "kof2003", "neogeo", NULL, "2005",
-	"The King of Fighters 2003 (Portuguese Edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	"The King of Fighters 2003 (Portuguese edition v1.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2k3brRomInfo, kof2k3brRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

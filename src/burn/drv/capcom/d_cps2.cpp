@@ -15378,7 +15378,7 @@ STD_ROM_FN(Sfa3br)
 
 struct BurnDriver BurnDrvCpsSfa3br = {
 	"sfa3br", "sfa3", NULL, NULL, "2005",
-	"Street Fighter Alpha 3 (050513 Brasil, v2.0, Hack)\0", "Portuguese translation", "hack (NeoGeo BR Team)", "CPS2",
+	"Street Fighter Alpha 3 (050513 Brasil, v2.0, Hack)\0", "Portuguese translation", "hack (Alan Web Page)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3brRomInfo, Sfa3brRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

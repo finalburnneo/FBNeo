@@ -26329,7 +26329,7 @@ struct BurnDriver BurnDrvCpsMercsc = {
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
-//  (Portuguese-BR Translation v1.06, Hack)
+// Willow (Portuguese-BR Translation v1.06, Hack)
 // Modified by Antígeno
 
 static struct BurnRomInfo WillowbrRomDesc[] = {

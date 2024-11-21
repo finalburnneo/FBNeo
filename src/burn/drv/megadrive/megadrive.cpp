@@ -113,8 +113,6 @@ struct PicoVideo {
     INT32 rendstatus;	// status of vdp renderer
 };
 
-#define CPU_LE2 BURN_ENDIAN_SWAP_INT32
-#define u32 UINT32
 
 #define LF_PLANE   (1 << 0) // must be = 1
 #define LF_SH      (1 << 1) // must be = 2
@@ -3602,7 +3600,7 @@ static void DrawStrip(struct TileStrip *ts, INT32 lflags, INT32 cellskip)
       continue;
     }
 
-	if (~nBurnLayer & 4) return;
+//	if (~nBurnLayer & 4) return;
 
     if (code & 0x0800) TileFlip(pd + dx, pack, pal);
     else               TileNorm(pd + dx, pack, pal);
@@ -3613,7 +3611,7 @@ static void DrawStrip(struct TileStrip *ts, INT32 lflags, INT32 cellskip)
   // if oldcode wasn't changed, it means all layer is hi priority
   if (oldcode == -1) RamVReg->rendstatus |= PDRAW_PLANE_HI_PRIO;
 }
-
+#if 0
 static void DrawStripVSRam(struct TileStrip *ts, INT32 plane_sh, INT32 cellskip)
 {
   UINT8 *pd = HighCol;
@@ -3675,7 +3673,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane_sh, INT32 cellskip)
       continue;
     }
 
-	if (~nBurnLayer & 2) return;
+//	if (~nBurnLayer & 2) return;
 
     if (code & 0x0800) TileFlip(pd + dx, pack, pal);
     else               TileNorm(pd + dx, pack, pal);
@@ -3685,7 +3683,91 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane_sh, INT32 cellskip)
   *ts->hc = 0;
   if (oldcode == -1) RamVReg->rendstatus |= PDRAW_PLANE_HI_PRIO;
 }
+#endif
+static void DrawStripVSRam(struct TileStrip *ts, int plane_sh, int cellskip)
+{
+  unsigned char *pd = HighCol;
+  int *hc = ts->hc;
+  int tilex, dx, ty = 0, addr = 0, cell = 0, nametabadd = 0;
+  int oldcode = -1, blank = -1; // The tile we know is blank
+  unsigned int pal = 0, scan = Scanline, sh, plane;
 
+  // Draw tiles across screen:
+  sh = (plane_sh & LF_SH) << 6; // shadow
+  plane = (plane_sh & LF_PLANE); // plane to draw
+  tilex=(-ts->hscroll)>>3;
+  dx=((ts->hscroll-1)&7)+1;
+  if (ts->hscroll & 0x0f) {
+    int adj = ((ts->hscroll ^ dx) >> 3) & 1;
+    cell -= adj + 1;
+    ts->cells -= adj;
+    RamSVid[0x3e] = RamSVid[0x3f] = plane_sh >> 16;
+  }
+  cell+=cellskip;
+  tilex+=cellskip;
+  dx+=cellskip<<3;
+
+//  int force = (plane_sh&LF_FORCE) << 13;
+  if ((cell&1)==1)
+  {
+    int line,vscroll;
+    vscroll = RamSVid[plane + (cell&0x3e)];
+
+    // Find the line in the name table
+    line=(vscroll+scan)&ts->line&0xffff; // ts->line is really ymask ..
+    nametabadd=(line>>3)<<(ts->line>>24);    // .. and shift[width]
+    ty=(line&7)<<1; // Y-Offset into tile
+  }
+  for (; cell < ts->cells; dx+=8,tilex++,cell++)
+  {
+    UINT32 code, pack;
+
+    if ((cell&1)==0)
+    {
+      int line,vscroll;
+      vscroll = RamSVid[plane + (cell&0x3e)];
+
+      // Find the line in the name table
+      line=(vscroll+scan)&ts->line&0xffff; // ts->line is really ymask ..
+      nametabadd=(line>>3)<<(ts->line>>24);    // .. and shift[width]
+      ty=(line&7)<<1; // Y-Offset into tile
+    }
+
+    code= RamVid[ts->nametab + nametabadd + (tilex & ts->xmask)];
+//    code &= ~force; // forced always draw everything
+    code |= ty<<16; // add ty since that can change pixel row for every 2nd tile
+
+    if (code == blank && !((code & 0x8000) && sh))
+      continue;
+
+    if (code!=oldcode) {
+      oldcode = code;
+      // Get tile address/2:
+      addr = (code&0x7ff)<<4;
+
+      pal = ((code>>9)&0x30) | sh; // shadow
+    }
+
+    pack = (code & 0x1000 ? ty^0xe : ty); // Y-flip
+    pack = *(unsigned int *)(RamVid + addr+pack);
+    if (!pack)
+      blank = code;
+
+    if (code & 0x8000) { // (un-forced) high priority tile
+      int cval = (UINT16)code | (dx<<16) | (ty<<25);
+      if (code & 0x1000) cval ^= 0x7<<26;
+      *hc++ = cval;//, *hc++ = pack; // cache it
+    } else if (code != blank) {
+      if (code & 0x0800) TileFlip(pd + dx, pack, pal);
+      else               TileNorm(pd + dx, pack, pal);
+    }
+  }
+
+  // terminate the cache list
+  *hc = 0;
+
+  if (oldcode == -1) RamVReg->rendstatus |= PDRAW_PLANE_HI_PRIO;
+}
 static void DrawStripInterlace(struct TileStrip *ts, INT32 plane_sh)
 {
   UINT8 *pd = HighCol;
@@ -3693,7 +3775,7 @@ static void DrawStripInterlace(struct TileStrip *ts, INT32 plane_sh)
   INT32 oldcode=-1,blank=-1; // The tile we know is blank
   INT32 pal=0, sh;
 
-  if (~nBurnLayer & 1) return;
+//  if (~nBurnLayer & 1) return;
 
   // Draw tiles across screen:
   sh = (plane_sh & LF_SH) << 6; // shadow
@@ -3790,12 +3872,12 @@ static void DrawLayer(INT32 plane_sh, UINT32 *hcache, INT32 cellskip, INT32 maxc
     ts.line=(vscroll+(Scanline<<1)+RamVReg->field)&((ymask<<1)|1);
     ts.nametab+=(ts.line>>4)<<shift[width];
 
-    DrawStripInterlace(&ts, plane_sh);
+    if (nBurnLayer & 1) DrawStripInterlace(&ts, plane_sh);
   } else if( RamVReg->reg[11]&4) {
     // shit, we have 2-cell column based vscroll
     // luckily this doesn't happen too often
     ts.line=ymask|(shift[width]<<24); // save some stuff instead of line
-    DrawStripVSRam(&ts, plane_sh, cellskip);
+    if (nBurnLayer & 2) DrawStripVSRam(&ts, plane_sh, cellskip);
   } else {
     vscroll = RamSVid[plane_sh & 1]; // Get vertical scroll value
 
@@ -3803,7 +3885,7 @@ static void DrawLayer(INT32 plane_sh, UINT32 *hcache, INT32 cellskip, INT32 maxc
     ts.line=(vscroll+Scanline)&ymask;
     ts.nametab+=(ts.line>>3)<<shift[width];
 
-    DrawStrip(&ts, plane_sh, cellskip);
+    if (nBurnLayer & 4) DrawStrip(&ts, plane_sh, cellskip);
   }
 }
 
@@ -3816,7 +3898,8 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
   INT32 tilex,ty,nametab,code=0;
   INT32 blank=-1; // The tile we know is blank
 
-  if (~nSpriteEnable & 0x10) return;
+  if (~nSpriteEnable & 0x10 && prio == 0) return;
+  if (~nSpriteEnable & 0x20 && prio == 1) return;
 
   // Find name table line:
   if (RamVReg->reg[12]&1)
@@ -3832,7 +3915,8 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 
   tilex=tstart<<1;
 
-  if (!(RamVReg->rendstatus & PDRAW_WND_DIFF_PRIO)) {
+  if (prio && !(RamVReg->rendstatus & PDRAW_WND_DIFF_PRIO)) {
+	  return; // derptest
     // check the first tile code
     code = RamVid[nametab + tilex];
     // if the whole window uses same priority (what is often the case), we may be able to skip this field
@@ -3852,7 +3936,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
       INT32 pal;
 
       code = RamVid[nametab + tilex];
-      if (code==blank) continue;
+//      if (code==blank) continue;
       if ((code>>15) != prio) {
         RamVReg->rendstatus |= PDRAW_WND_DIFF_PRIO;
         continue;
@@ -3884,7 +3968,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
       INT32 pal;
 
       code = RamVid[nametab + tilex];
-      if(code==blank) continue;
+//      if(code==blank) continue;
       if((code>>15) != prio) {
         RamVReg->rendstatus |= PDRAW_WND_DIFF_PRIO;
         continue;
@@ -3936,7 +4020,7 @@ static void DrawTilesFromCacheShPrep(void)
 static void DrawTilesFromCache(UINT32 *hc, INT32 sh, INT32 rlim)
 {
   UINT8 *pd = HighCol;
-  UINT32 code, addr, dx;
+  INT32 code, addr, dx;
   UINT32 pack;
   INT32 pal;
 
@@ -3956,11 +4040,11 @@ static void DrawTilesFromCache(UINT32 *hc, INT32 sh, INT32 rlim)
     if (~nSpriteEnable & 0x40) return;
     INT16 blank=-1; // The tile we know is blank
     while ((code=*hc++)) {
-      if (!(code & 0x8000) || (INT16)code == blank)
+      if (!(code & 0x8000)) // || (INT16)code == blank)
         continue;
       // Get tile address/2:
       addr = (code & 0x7ff) << 4;
-      addr += (UINT32)code >> 25; // y offset into tile
+      addr += code >> 25; // y offset into tile
 
       pack = *(UINT32 *)(RamVid + addr);
       if (!pack) {
@@ -4291,7 +4375,7 @@ static void DrawSpritesSHi(UINT8 *sprited)
       if(sx>=328) break; // Offscreen
 
       pack = *(UINT32 *)(RamVid + (tile & 0x7fff));
-      fTileFunc(pd + sx, pack, pal|0x8000);
+      fTileFunc(pd + sx, pack, pal);
     }
   }
 }
@@ -4371,7 +4455,7 @@ static void DrawSpritesHiAS(UINT8 *sprited, INT32 sh)
       if(sx>=328) break; // Offscreen
 
       pack = *(UINT32 *)(RamVid + (tile & 0x7fff));
-      fTileFunc(pd + sx, mb + sx, pack, pal|0x8000);
+      fTileFunc(pd + sx, mb + sx, pack, pal);
     }
   }
 }

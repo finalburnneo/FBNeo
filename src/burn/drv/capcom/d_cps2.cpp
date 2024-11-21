@@ -15342,6 +15342,50 @@ struct BurnDriver BurnDrvCpsSfa2ultra = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Street Fighter Alpha 3 (050513 Brasil) Portuguese translation version v2.0
+// Modified by Alan Yagami & BisonSAS
+
+static struct BurnRomInfo Sfa3brRomDesc[] = {
+	{ "sz3br.03c",		0x080000, 0xb2a99137, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3br.04c",		0x080000, 0x3e5cefe6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",		0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",		0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",		0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",		0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09c",		0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",		0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3br.13m",		0x400000, 0xf18ffe2d, CPS2_GFX | BRF_GRA },
+	{ "sz3br.15m",		0x400000, 0x3283878c, CPS2_GFX | BRF_GRA },
+	{ "sz3br.17m",		0x400000, 0x869e0ae2, CPS2_GFX | BRF_GRA },
+	{ "sz3br.19m",		0x400000, 0x81e0ebfa, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",		0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",		0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",		0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",		0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",			0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",			0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",		0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",		0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3u.key",		0x000014, 0x4a8f98c1, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfa3br)
+STD_ROM_FN(Sfa3br)
+
+struct BurnDriver BurnDrvCpsSfa3br = {
+	"sfa3br", "sfa3", NULL, NULL, "2005",
+	"Street Fighter Alpha 3 (050513 Brasil, v2.0, Hack)\0", "Portuguese translation", "hack (NeoGeo BR Team)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa3brRomInfo, Sfa3brRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // X-Men Vs. Street Fighter (Coop, Hack)
 // Modified by bankbank
 // 202205

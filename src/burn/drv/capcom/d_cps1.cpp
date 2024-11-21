@@ -16996,6 +16996,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "willowu"       , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowuo"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowj"       , CPS_B_03    , mapper_WL24B , 0, NULL                },
+	{ "willowbr"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "wof"           , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofr1"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofu"          , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
@@ -25785,43 +25786,6 @@ struct BurnDriverX BurnDrvCpsMbombrdu = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-static struct BurnRomInfo Sf2cebrRomDesc[] = {
-	{ "sf2cebr.23",    0x080000, 0x74e848ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "sf2cebr.22",    0x080000, 0xc3c49626, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "s92_21a.bin",   0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-
-	{ "s92_01.bin",    0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
-	{ "s92_02.bin",    0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
-	{ "s92_03.bin",    0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
-	{ "s92_04.bin",    0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
-	{ "s92_05.bin",    0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
-	{ "s92_06.bin",    0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
-	{ "s92_07.bin",    0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
-	{ "s92_08.bin",    0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
-	{ "s92br_10.bin",  0x080000, 0xb3e1dd5f, BRF_GRA | CPS1_TILES },
-	{ "s92br_11.bin",  0x080000, 0xf13af812, BRF_GRA | CPS1_TILES },
-	{ "s92br_12.bin",  0x080000, 0x10ce42af, BRF_GRA | CPS1_TILES },
-	{ "s92br_13.bin",  0x080000, 0x32cf5af3, BRF_GRA | CPS1_TILES },
-
-	{ "s92_09.bin",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "s92_18.bin",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "s92_19.bin",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-};
-
-STD_ROM_PICK(Sf2cebr)
-STD_ROM_FN(Sf2cebr)
-
-struct BurnDriverX BurnDrvCpsSf2cebr = {
-	"sf2cebr", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II': Champion Edition (bootleg, Brazil)\0", NULL, "Capcom", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2cebrRomInfo, Sf2cebrRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 static struct BurnRomInfo Sf2cehRomDesc[] = {
 	{ "sf2ceh.23",     0x080000, 0x25dc14c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sf2ceh.22",     0x080000, 0x1c9dd91c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -26214,6 +26178,54 @@ struct BurnDriver BurnDrvCpsSf2mix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Street Fighter II' - Champion Edition (920313 Brasil, v1.0, Hack)
+// Modified by Alan Yagami & BisonSAS
+
+static struct BurnRomInfo Sf2cebrRomDesc[] = {
+	{ "sf2cebr.23",		0x080000, 0x74e848ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2cebr.22",		0x080000, 0xc3c49626, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_21a.6f",		0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",		0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",		0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",		0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",		0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92-5m.7a",		0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92-7m.9a",		0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92-6m.8a",		0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92-8m.10a",		0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92br_10.bin",	0x080000, 0xb3e1dd5f, BRF_GRA | CPS1_TILES },
+	{ "s92br_11.bin",	0x080000, 0xf13af812, BRF_GRA | CPS1_TILES },
+	{ "s92br_12.bin",	0x080000, 0x10ce42af, BRF_GRA | CPS1_TILES },
+	{ "s92br_13.bin",	0x080000, 0x32cf5af3, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",		0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",		0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",		0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",		0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",		0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",		0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",		0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",		0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2cebr)
+STD_ROM_FN(Sf2cebr)
+
+struct BurnDriver BurnDrvCpsSf2cebr = {
+	"sf2cebr", "sf2ce", NULL, NULL, "2005",
+	"Street Fighter II' - Champion Edition (920313 Brasil, v1.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2cebrRomInfo, Sf2cebrRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Street Fighter II' - Champion Edition Golden Magic Hack
 // Files date: 2020-Oct-13
 
@@ -26315,6 +26327,53 @@ struct BurnDriver BurnDrvCpsMercsc = {
 	NULL, MercscRomInfo, MercscRomName, NULL, NULL, NULL, NULL, MercsInputInfo, MercsDIPInfo,
 	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+//  (Portuguese-BR Translation v1.06, Hack)
+// Modified by Antígeno
+
+static struct BurnRomInfo WillowbrRomDesc[] = {
+	{ "wlbr_30.11f",	0x020000, 0x05814ce1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "wlbr_35.11h",	0x020000, 0x48bdd898, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "wlbr_31.12f",	0x020000, 0xb188553b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "wlbr_36.12h",	0x020000, 0x8bba3252, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "wlbr_32.8h",		0x080000, 0xa64d6469, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "wlbr-7m.7a",		0x080000, 0x0264d809, BRF_GRA | CPS1_TILES },
+	{ "wlbr-5m.9a",		0x080000, 0x44da08d9, BRF_GRA | CPS1_TILES },
+	{ "wlbr-3m.3a",		0x080000, 0x3f54884c, BRF_GRA | CPS1_TILES },
+	{ "wlbr-1m.5a",		0x080000, 0x8fd41c4e, BRF_GRA | CPS1_TILES },
+	{ "wlbr_24.7d",		0x020000, 0xc4d86fb2, BRF_GRA | CPS1_TILES },
+	{ "wlbr_14.7c",		0x020000, 0xfa45c4d4, BRF_GRA | CPS1_TILES },
+	{ "wlbr_26.9d",		0x020000, 0x282f95b0, BRF_GRA | CPS1_TILES },
+	{ "wlbr_16.9c",		0x020000, 0xbf6a9d5c, BRF_GRA | CPS1_TILES },
+	{ "wlbr_20.3d",		0x020000, 0x08cfa420, BRF_GRA | CPS1_TILES },
+	{ "wlbr_10.3c",		0x020000, 0x3cb28fed, BRF_GRA | CPS1_TILES },
+	{ "wlbr_22.5d",		0x020000, 0xccebdbe6, BRF_GRA | CPS1_TILES },
+	{ "wlbr_12.5c",		0x020000, 0x332ecf17, BRF_GRA | CPS1_TILES },
+
+	{ "wl_09.12b",		0x010000, 0xf6b3d060, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "wl_18.11c",		0x020000, 0xbde23d4d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "wl_19.12c",		0x020000, 0x683898f5, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "wl24b.1a",		0x000117, 0x7101cdf1, BRF_OPT },	// b-board PLDs
+	{ "lwio.11e",		0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Willowbr)
+STD_ROM_FN(Willowbr)
+
+struct BurnDriver BurnDrvCpsWillowbr = {
+	"willowbr", "willow", NULL, NULL, "2019",
+	"Willow (Portuguese-BR Translation v1.06, Hack)\0", NULL, "hack (Ant\u00EDgeno)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	NULL, WillowbrRomInfo, WillowbrRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 

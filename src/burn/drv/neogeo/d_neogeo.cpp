@@ -16695,6 +16695,42 @@ struct BurnDriver BurnDrvNinjamasha = {
 	0x1000,	320, 224, 4, 3
 };
 
+// Rage of the Dragons (Portuguese Edition, Hack)
+// Modified by BisonSAS
+
+ static struct BurnRomInfo rotdbrRomDesc[] = {
+	{ "264-p1br.p1",	0x800000, 0x8a973ecf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
+	{ "264-s1br.s1",	0x020000, 0x28b387d6, 2 | BRF_GRA | BRF_PRG }, //  1 Text layer tile
+
+	{ "264-c1d.c1",		0x800000, 0xec9d18c0, 3 | BRF_GRA },           //  1 Sprite data
+	{ "264-c2d.c2",		0x800000, 0xb1069066, 3 | BRF_GRA },           //  2
+	{ "264-c3d.c3",		0x800000, 0x7e636d49, 3 | BRF_GRA },           //  3
+	{ "264-c4d.c4",		0x800000, 0x76892fda, 3 | BRF_GRA },           //  4
+	{ "264-c5d.c5",		0x800000, 0x469061bc, 3 | BRF_GRA },           //  5
+	{ "264-c6d.c6",		0x800000, 0x2200220a, 3 | BRF_GRA },           //  6
+	{ "264-c7d.c7",		0x800000, 0xedda4baf, 3 | BRF_GRA },           //  7
+	{ "264-c8d.c8",		0x800000, 0x82b1ba22, 3 | BRF_GRA },           //  8
+
+	{ "264-m1d.m1",		0x020000, 0xc5d36af9, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "264-v1d.v1",		0x800000, 0x2c49f3fa, 5 | BRF_SND },           // 10 Sound data
+	{ "264-v2d.v2",		0x800000, 0x967279da, 5 | BRF_SND },           // 11
+};
+
+STDROMPICKEXT(rotdbr, rotdbr, neogeo)
+STD_ROM_FN(rotdbr)
+
+struct BurnDriver BurnDrvRotdbr = {
+	"rotdbr", "rotd", "neogeo", NULL, "2005",
+	"Rage of the Dragons (Portuguese edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, rotdbrRomInfo, rotdbrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 
 // Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)
 // Unlock MAOU TEAM - hack by PlayerX
@@ -16731,6 +16767,39 @@ struct BurnDriver BurnDrvSdodgebh = {
 // -----------------------------------------------------------------------------
 // Art of Fighting / Art of Fighting Series
 // -----------------------------------------------------------------------------
+
+// Art of Fighting / Ryuuko no Ken (Portuguese Edition v1.0, Hack)
+// Modified by Mr.Fox (aka devilfox) & BisonSAS
+
+static struct BurnRomInfo aofbrRomDesc[] = {
+	{ "044-p1br.p1",	0x080000, 0xea8577a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+
+	{ "044-s1br.s1",	0x020000, 0xa6d76be7, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "044-c1.c1",		0x200000, 0xddab98a7, 3 | BRF_GRA },           //  2 Sprite data
+	{ "044-c2.c2",		0x200000, 0xd8ccd575, 3 | BRF_GRA },           //  3
+	{ "044-c3br.c3",	0x200000, 0x7b312e56, 3 | BRF_GRA },	          //  4
+	{ "044-c4br.c4",	0x200000, 0x4d31b52b, 3 | BRF_GRA },	          //  5
+
+	{ "044-m1.m1",		0x020000, 0x0987e4bb, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "044-v2.v2",		0x200000, 0x3ec632ea, 5 | BRF_SND },           //  7 Sound data
+	{ "044-v4.v4",		0x200000, 0x4b0f8e23, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(aofbr, aofbr, neogeo)
+STD_ROM_FN(aofbr)
+
+struct BurnDriver BurnDrvAofbr = {
+	"aofbr", "aof", "neogeo", NULL, "2016",
+	"Art of Fighting / Ryuuko no Ken (Portuguese edition v1.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	L"Art of Fighting\0\u9F8D\u864E\u306E\u62F3 (Portuguese Edition)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, 0,
+	NULL, aofbrRomInfo, aofbrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 
 #define AOF2_COMPONENTS													\
 	{ "056-s1.s1",    0x020000, 0x8b02638e, 2 | BRF_GRA },				\
@@ -25724,6 +25793,29 @@ struct BurnDriver BurnDrvKof2k2omg9 = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters 2002 (Portuguese Edition, Hack)
+// Modified by KyoX
+
+static struct BurnRomInfo kof2k2brRomDesc[] = {
+	{ "265-p1br.p1",	0x100000, 0x95986d7a, 1 | BRF_ESS | BRF_PRG },
+	{ "265-p2br.sp2",	0x400000, 0x9b4d2ba4, 1 | BRF_ESS | BRF_PRG },
+
+	KOF2002_DECRYPTED_COMPONENTS
+};
+
+STDROMPICKEXT(kof2k2br, kof2k2br, neogeo)
+STD_ROM_FN(kof2k2br)
+
+struct BurnDriver BurnDrvKof2k2br = {
+	"kof2k2br", "kof2002", "neogeo", NULL, "2005",
+	"The King of Fighters 2002 (Portuguese Edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2brRomInfo, kof2k2brRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 #define KOF10TH_DECRYPTED_SOUND											\
 	{ "kf10-m1.bin",	0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG },	\
 	{ "kf10-v1.bin",	0x800000, 0x0fc9a58d, 5 | BRF_SND },			\
@@ -25986,6 +26078,38 @@ struct BurnDriver BurnDrvKf2k3p2s = {
 	NULL, kf2k3p2sRomInfo, kf2k3p2sRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof2003Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters 2003 (Portuguese Edition, Hack)
+// Modified by Mr.Fox (aka devilfox) & BisonSAS
+
+static struct BurnRomInfo kof2k3brRomDesc[] = {
+	{ "271-p1br.p1",	0x800000, 0xa131786e, 1 | BRF_ESS | BRF_PRG },
+	
+	KOF2003_DECRYPTED_TEXT
+	
+	KOF2003_DECRYPTED_SPR1
+	KOF2003_DECRYPTED_SPR2
+	KOF2003_DECRYPTED_SPR3
+	{ "271-c7br.c7",	0x800000, 0xf3d81b6e, 3 | BRF_GRA },
+	{ "271-c8br.c8",	0x800000, 0x5310c6dc, 3 | BRF_GRA },
+
+	KOF2003_DECRYPTED_Z80
+	
+	KOF2003_DECRYPTED_SND
+};
+
+STDROMPICKEXT(kof2k3br, kof2k3br, neogeo)
+STD_ROM_FN(kof2k3br)
+
+struct BurnDriver BurnDrvKof2k3br = {
+	"kof2k3br", "kof2003", "neogeo", NULL, "2005",
+	"The King of Fighters 2003 (Portuguese Edition, Hack)\0", NULL, "hack (NeoGeo BR Team)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k3brRomInfo, kof2k3brRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };
 
 

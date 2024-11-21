@@ -1855,3 +1855,48 @@ struct BurnDriver BurnDrvTokib = {
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
+
+// -----------------------------------------------------------------------------
+// Hacks and Translations
+// -----------------------------------------------------------------------------
+
+// Toki (Portuguese-BR Translation v1.07, Hack)
+// Modified by Antígeno
+
+static struct BurnRomInfo tokibrRomDesc[] = {
+	{ "tokibr_6e.m10",		0x20000, 0xbac99bd8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tokibr_4e.k10",		0x20000, 0x18318c36, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tokibr_5.m12",		0x10000, 0x01dde064, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tokibr_3.k12",		0x10000, 0xe443c83f, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "tokibr_1.c5",		0x10000, 0x6c15674d, 3 | BRF_GRA },           //  6 Characters
+	{ "tokibr_2.c3",		0x10000, 0x72b52e63, 3 | BRF_GRA },           //  7
+
+	{ "tokibr_obj1.c20",	0x80000, 0x9233d8bf, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "tokibr_obj2.c22",	0x80000, 0x483cc50a, 4 | BRF_GRA },           //  9
+
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+
+	{ "tokibr_bk2.ef8",		0x80000, 0x5a18182b, 6 | BRF_GRA },           // 11 Sprites
+
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	
+	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
+	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(tokibr)
+STD_ROM_FN(tokibr)
+
+struct BurnDriver BurnDrvTokibr = {
+	"tokibr", "toki", NULL, NULL, "2019",
+	"Toki (Portuguese-BR Translation v1.07, Hack)\0", NULL, "hack (Ant\u00EDgeno)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, tokibrRomInfo, tokibrRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};

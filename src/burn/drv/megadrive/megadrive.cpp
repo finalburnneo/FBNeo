@@ -3611,86 +3611,14 @@ static void DrawStrip(struct TileStrip *ts, INT32 lflags, INT32 cellskip)
   // if oldcode wasn't changed, it means all layer is hi priority
   if (oldcode == -1) RamVReg->rendstatus |= PDRAW_PLANE_HI_PRIO;
 }
-#if 0
+
 static void DrawStripVSRam(struct TileStrip *ts, INT32 plane_sh, INT32 cellskip)
 {
   UINT8 *pd = HighCol;
-  INT32 tilex,dx,code=0,addr=0,cell=0;
-  INT32 oldcode=-1,blank=-1; // The tile we know is blank
-  INT32 pal=0,scan=Scanline;
-
-//  if (~nBurnLayer & 1) return;
-
-  // Draw tiles across screen:
-  tilex=(-ts->hscroll)>>3;
-  dx=((ts->hscroll-1)&7)+1;
-  if (ts->hscroll & 0x0f) {
-    INT32 adj = ((ts->hscroll ^ dx) >> 3) & 1;
-    cell -= adj + 1;
-    ts->cells -= adj;
-  }
-  cell+=cellskip;
-  tilex+=cellskip;
-  dx+=cellskip<<3;
-
-  for (; cell < ts->cells; dx+=8,tilex++,cell++)
-  {
-    INT32 nametabadd, ty;
-    UINT32 pack;
-
-    //if((cell&1)==0)
-    {
-      INT32 line,vscroll;
-      vscroll=RamSVid[(plane_sh&1)+(cell&~1)];
-
-      // Find the line in the name table
-      line=(vscroll+scan)&ts->line&0xffff; // ts->line is really ymask ..
-      nametabadd=(line>>3)<<(ts->line>>24);    // .. and shift[width]
-      ty=(line&7)<<1; // Y-Offset into tile
-    }
-
-    code=RamVid[ts->nametab+nametabadd+(tilex&ts->xmask)];
-    if (code==blank) continue;
-    if (code>>15) { // high priority tile
-      INT32 cval = code | (dx<<16) | (ty<<25);
-      if(code&0x1000) cval^=7<<26;
-      *ts->hc++ = cval; // cache it
-      continue;
-    }
-
-    if (code!=oldcode) {
-      oldcode = code;
-      // Get tile address/2:
-      addr=(code&0x7ff)<<4;
-      if (code&0x1000) addr+=14-ty; else addr+=ty; // Y-flip
-
-      pal=((code>>9)&0x30)|((plane_sh<<5)&0x40);
-    }
-
-    pack = *(UINT32 *)(RamVid + addr);
-    if (!pack) {
-      blank = code;
-      continue;
-    }
-
-//	if (~nBurnLayer & 2) return;
-
-    if (code & 0x0800) TileFlip(pd + dx, pack, pal);
-    else               TileNorm(pd + dx, pack, pal);
-  }
-
-  // terminate the cache list
-  *ts->hc = 0;
-  if (oldcode == -1) RamVReg->rendstatus |= PDRAW_PLANE_HI_PRIO;
-}
-#endif
-static void DrawStripVSRam(struct TileStrip *ts, int plane_sh, int cellskip)
-{
-  unsigned char *pd = HighCol;
-  int *hc = (int*)ts->hc;
-  int tilex, dx, ty = 0, addr = 0, cell = 0, nametabadd = 0;
-  int oldcode = -1, blank = -1; // The tile we know is blank
-  unsigned int pal = 0, scan = Scanline, sh, plane;
+  UINT32 *hc = ts->hc;
+  INT32 tilex, dx, ty = 0, addr = 0, cell = 0, nametabadd = 0;
+  INT32 oldcode = -1, blank = -1; // The tile we know is blank
+  UINT32 pal = 0, scan = Scanline, sh, plane;
 
   // Draw tiles across screen:
   sh = (plane_sh & LF_SH) << 6; // shadow
@@ -3710,7 +3638,7 @@ static void DrawStripVSRam(struct TileStrip *ts, int plane_sh, int cellskip)
 //  int force = (plane_sh&LF_FORCE) << 13;
   if ((cell&1)==1)
   {
-    int line,vscroll;
+    INT32 line,vscroll;
     vscroll = RamSVid[plane + (cell&0x3e)];
 
     // Find the line in the name table
@@ -3724,7 +3652,7 @@ static void DrawStripVSRam(struct TileStrip *ts, int plane_sh, int cellskip)
 
     if ((cell&1)==0)
     {
-      int line,vscroll;
+      INT32 line,vscroll;
       vscroll = RamSVid[plane + (cell&0x3e)];
 
       // Find the line in the name table

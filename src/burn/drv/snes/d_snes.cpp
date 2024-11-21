@@ -3527,6 +3527,25 @@ struct BurnDriver BurnDrvsnes_Blackthornej = {
 	512, 448, 4, 3
 };
 
+// Blackthorne (Hack, Portuguese v1.02)
+// https://www.romhacking.net/translations/7196/
+static struct BurnRomInfo snes_BlackthornetpRomDesc[] = {
+	{ "Blackthorne T-Por v1.02 (2024)(Dindo, Rod Merida).sfc", 1048576, 0x03cc4c7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Blackthornetp)
+STD_ROM_FN(snes_Blackthornetp)
+
+struct BurnDriver BurnDrvsnes_Blackthornetp = {
+	"snes_blackthornetp", "snes_blackthorne", NULL, NULL, "2024",
+	"Blackthorne (Hack, Portuguese v1.02)\0", NULL, "Dindo, Rod Merida", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_BlackthornetpRomInfo, snes_BlackthornetpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Blazing Skies (Euro)
 
 static struct BurnRomInfo snes_BlazingskiesRomDesc[] = {
@@ -4511,6 +4530,44 @@ struct BurnDriver BurnDrvsnes_Captsubasa3ts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL | GBF_RPG, 0,
 	SNESGetZipName, snes_Captsubasa3tsRomInfo, snes_Captsubasa3tsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Captain Tsubasa IV - Pro no Rival Tachi (Japan)
+
+static struct BurnRomInfo snes_Captsubasa4jRomDesc[] = {
+	{ "Captain Tsubasa IV - Pro no Rival Tachi (Japan)(1993)(Tecmo).sfc", 1572864, 0x3e04b246, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Captsubasa4j)
+STD_ROM_FN(snes_Captsubasa4j)
+
+struct BurnDriver BurnDrvsnes_Captsubasa4j = {
+	"snes_captsubasa4j", NULL, NULL, NULL, "1993",
+	"Captain Tsubasa IV - Pro no Rival Tachi (Japan)\0", NULL, "Tecmo", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL | GBF_RPG, 0,
+	SNESGetZipName, snes_Captsubasa4jRomInfo, snes_Captsubasa4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Captain Tsubasa V - Hasha no Shougou Campione (Japan)
+
+static struct BurnRomInfo snes_Captsubasa5jRomDesc[] = {
+	{ "Captain Tsubasa V - Hasha no Shougou Canpione (Japan)(1994)(Tecmo).sfc", 2097152, 0xe2b26d99, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Captsubasa5j)
+STD_ROM_FN(snes_Captsubasa5j)
+
+struct BurnDriver BurnDrvsnes_Captsubasa5j = {
+	"snes_captsubasa5j", NULL, NULL, NULL, "1994",
+	"Captain Tsubasa V - Hasha no Shougou Campione (Japan)\0", NULL, "Tecmo", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL | GBF_RPG, 0,
+	SNESGetZipName, snes_Captsubasa5jRomInfo, snes_Captsubasa5jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19354,6 +19411,25 @@ struct BurnDriver BurnDrvsnes_Qbert3j = {
 	512, 448, 4, 3
 };
 
+// Quinty
+
+static struct BurnRomInfo snes_QuintyRomDesc[] = {
+	{ "Quinty (1999)(Game Freak).sfc", 2097152, 0x1225927b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Quinty)
+STD_ROM_FN(snes_Quinty)
+
+struct BurnDriver BurnDrvsnes_Quinty = {
+	"snes_quinty", NULL, NULL, NULL, "1999",
+	"Quinty (Japan, Prototype)\0", NULL, "Game Freak", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_QuintyRomInfo, snes_QuintyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Race Drivin' (USA)
 
 static struct BurnRomInfo snes_RacedrivinRomDesc[] = {
@@ -20965,6 +21041,44 @@ struct BurnDriver BurnDrvsnes_Seikdens2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Seikdens2RomInfo, snes_Seikdens2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Seiken Densetsu 3 (Japan)
+
+static struct BurnRomInfo snes_Seikdens3jRomDesc[] = {
+	{ "Seiken Densetsu 3 (Japan)(1995)(Squaresoft).sfc", 4194304, 0x863ed0b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Seikdens3j)
+STD_ROM_FN(snes_Seikdens3j)
+
+struct BurnDriver BurnDrvsnes_Seikdens3j = {
+	"snes_seikdens3j", "snes_seikdens3te", NULL, NULL, "1993",
+	"Seiken Densetsu 3 (Japan)\0", NULL, "Squaresoft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_Seikdens3jRomInfo, snes_Seikdens3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Seiken Densetsu 3 (Hack, English v1.01)
+// https://www.romhacking.net/translations/440/
+static struct BurnRomInfo snes_Seikdens3teRomDesc[] = {
+	{ "Seiken Densetsu 3 T-Eng v1.01 (2000)(LNF Translations, Neill Corlett, SoM2Freak).sfc", 4194304, 0x7dbde871, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Seikdens3te)
+STD_ROM_FN(snes_Seikdens3te)
+
+struct BurnDriver BurnDrvsnes_Seikdens3te = {
+	"snes_seikdens3te", NULL, NULL, NULL, "2000",
+	"Seiken Densetsu 3 (Hack, English v1.01)\0", NULL, "LNF Translations, Neill Corlett, SoM2Freak", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_Seikdens3teRomInfo, snes_Seikdens3teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -24333,6 +24447,25 @@ struct BurnDriver BurnDrvsnes_Supchiworldte = {
 	512, 478, 4, 3
 };
 
+// Super Conflict (USA)
+
+static struct BurnRomInfo snes_SconflictRomDesc[] = {
+	{ "Super Conflict (USA)(1993)(Vic Tokai).sfc", 1048576, 0xf254d5cf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sconflict)
+STD_ROM_FN(snes_Sconflict)
+
+struct BurnDriver BurnDrvsnes_Sconflict = {
+	"snes_sconflict", NULL, NULL, NULL, "1993",
+	"Super Conflict (USA)\0", NULL, "Vic Tokai", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_SconflictRomInfo, snes_SconflictRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Cup Soccer (Japan)
 
 static struct BurnRomInfo snes_SupcupsoccerRomDesc[] = {
@@ -25697,6 +25830,25 @@ struct BurnDriver BurnDrvsnes_Supervalisj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupervalisjRomInfo, snes_SupervalisjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Variable Geo (Japan)
+
+static struct BurnRomInfo snes_SvgeoRomDesc[] = {
+	{ "Super Variable Geo (Japan)(1995)(TGL).sfc", 3145728, 0xde3262e7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Svgeo)
+STD_ROM_FN(snes_Svgeo)
+
+struct BurnDriver BurnDrvsnes_Svgeo = {
+	"snes_svgeo", NULL, NULL, NULL, "1995",
+	"Super Variable Geo (Japan)\0", NULL, "TGL", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SvgeoRomInfo, snes_SvgeoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -29465,40 +29617,40 @@ struct BurnDriver BurnDrvsnes_Ys4te = {
 
 // Yuu Yuu Hakusho
 
-static struct BurnRomInfo snes_YuuyuuhakushoRomDesc[] = {
+static struct BurnRomInfo snes_YuuyuuhakRomDesc[] = {
 	{ "Yuu Yuu Hakusho (1993)(Namcot).sfc", 2097152, 0xec96d517, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Yuuyuuhakusho)
-STD_ROM_FN(snes_Yuuyuuhakusho)
+STD_ROM_PICK(snes_Yuuyuuhak)
+STD_ROM_FN(snes_Yuuyuuhak)
 
-struct BurnDriver BurnDrvsnes_Yuuyuuhakusho = {
-	"snes_yuuyuuhakusho", NULL, NULL, NULL, "1993",
+struct BurnDriver BurnDrvsnes_Yuuyuuhak = {
+	"snes_yuuyuuhak", NULL, NULL, NULL, "1993",
 	"Yuu Yuu Hakusho (Japan)\0", NULL, "Namcot", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_YuuyuuhakushoRomInfo, snes_YuuyuuhakushoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_YuuyuuhakRomInfo, snes_YuuyuuhakRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
 // Yuu Yuu Hakusho Final - Makai Saikyou Retsuden
 
-static struct BurnRomInfo snes_YuuyuuhakushofinalRomDesc[] = {
+static struct BurnRomInfo snes_YuuyuufinRomDesc[] = {
 	{ "Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (1995)(Namcot).sfc", 3145728, 0x5617a42e, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Yuuyuuhakushofinal)
-STD_ROM_FN(snes_Yuuyuuhakushofinal)
+STD_ROM_PICK(snes_Yuuyuufin)
+STD_ROM_FN(snes_Yuuyuufin)
 
-struct BurnDriver BurnDrvsnes_Yuuyuuhakushofinal = {
-	"snes_yuuyuuhakushofinal", NULL, NULL, NULL, "1995",
+struct BurnDriver BurnDrvsnes_Yuuyuufin = {
+	"snes_yuuyuufin", NULL, NULL, NULL, "1995",
 	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "Namcot", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_YuuyuuhakushofinalRomInfo, snes_YuuyuuhakushofinalRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_YuuyuufinRomInfo, snes_YuuyuufinRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 480, 4, 3
+	512, 448, 4, 3
 };
 
 // Yuu Yuu Hakusho 2 - Kakutou no Shou (Japan)
@@ -29520,21 +29672,40 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhak2j = {
 	512, 448, 4, 3
 };
 
+// Yu Yu Hakusho 2 - The Fighting Chapter (Hack, Portuguese v1.0)
+// https://www.romhacking.net/translations/7223/
+static struct BurnRomInfo snes_Yuuyuuhak2tpRomDesc[] = {
+	{ "Yu Yu Hakusho 2 - The Fighting Chapter T-Por v1.0 (2024)(Hextinkers).sfc", 2097152, 0x52ac1195, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Yuuyuuhak2tp)
+STD_ROM_FN(snes_Yuuyuuhak2tp)
+
+struct BurnDriver BurnDrvsnes_Yuuyuuhak2tp = {
+	"snes_yuuyuuhak2tp", "snes_yuuyuuhak2j", NULL, NULL, "2024",
+	"Yu Yu Hakusho 2 - The Fighting Chapter (Hack, Portuguese v1.0)\0", NULL, "Hextinkers", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Yuuyuuhak2tpRomInfo, snes_Yuuyuuhak2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Yuu Yuu Hakusho - Tokubetsu Hen (Japan)
 
-static struct BurnRomInfo snes_YuuyuuhakjRomDesc[] = {
+static struct BurnRomInfo snes_YuuyuutokuRomDesc[] = {
 	{ "Yuu Yuu Hakusho - Tokubetsu Hen (J)(1994)(Namco).sfc", 2097152, 0x535cccac, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Yuuyuuhakj)
-STD_ROM_FN(snes_Yuuyuuhakj)
+STD_ROM_PICK(snes_Yuuyuutoku)
+STD_ROM_FN(snes_Yuuyuutoku)
 
-struct BurnDriver BurnDrvsnes_Yuuyuuhakj = {
-	"snes_yuuyuuhakj", NULL, NULL, NULL, "1994",
+struct BurnDriver BurnDrvsnes_Yuuyuutoku = {
+	"snes_yuuyuutoku", NULL, NULL, NULL, "1994",
 	"Yuu Yuu Hakusho - Tokubetsu Hen (Japan)\0", NULL, "Namco", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_ADV, 0,
-	SNESGetZipName, snes_YuuyuuhakjRomInfo, snes_YuuyuuhakjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_YuuyuutokuRomInfo, snes_YuuyuutokuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -31804,25 +31975,6 @@ struct BurnDriver BurnDrvsnes_Zombies2h = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_Zombies2hRomInfo, snes_Zombies2hRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Quinty
-
-static struct BurnRomInfo snes_QuintyRomDesc[] = {
-	{ "Quinty (1999)(Game Freak).sfc", 2097152, 0x1225927b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Quinty)
-STD_ROM_FN(snes_Quinty)
-
-struct BurnDriver BurnDrvsnes_Quinty = {
-	"snes_quinty", NULL, NULL, NULL, "1999",
-	"Quinty (Japan, Prototype)\0", NULL, "Game Freak", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_MISC, 0,
-	SNESGetZipName, snes_QuintyRomInfo, snes_QuintyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -3687,7 +3687,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane_sh, INT32 cellskip)
 static void DrawStripVSRam(struct TileStrip *ts, int plane_sh, int cellskip)
 {
   unsigned char *pd = HighCol;
-  int *hc = ts->hc;
+  int *hc = (int*)ts->hc;
   int tilex, dx, ty = 0, addr = 0, cell = 0, nametabadd = 0;
   int oldcode = -1, blank = -1; // The tile we know is blank
   unsigned int pal = 0, scan = Scanline, sh, plane;

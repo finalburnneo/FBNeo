@@ -1605,7 +1605,7 @@ STD_ROM_FN(powernbr)
 
 struct BurnDriver BurnDrvPowernbr = {
 	"powernbr", "powerins", NULL, NULL, "2006",
-	"Power Instinct (Brasil)(Hack, v1.0)\0", "Portuguese translation", "hack (NeoGeo BR Team)", "Miscellaneous",
+	"Power Instinct (Brasil, v1.0, Hack)\0", "Portuguese translation", "hack (NeoGeo BR Team)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powernbrRomInfo, powernbrRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,

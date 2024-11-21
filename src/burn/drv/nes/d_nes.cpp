@@ -12556,18 +12556,37 @@ struct BurnDriver BurnDrvfds_drcha = {
 };
 
 // Dracula II - Noroi no Fuuin (Japan)
-static struct BurnRomInfo fds_dracuiiRomDesc[] = {
+static struct BurnRomInfo fds_dracuiijRomDesc[] = {
 	{ "Dracula II - Noroi no Fuuin (Japan)(1987)(Konami).fds",          131016, 0x2d1ec77c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_dracuiij, fds_dracuiij, fds_fdsbios)
+STD_ROM_FN(fds_dracuiij)
+
+struct BurnDriver BurnDrvfds_dracuiij = {
+	"fds_dracuiij", "fds_dracuii", "fds_fdsbios", NULL, "1987",
+	"Dracula II - Noroi no Fuuin (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, fds_dracuiijRomInfo, fds_dracuiijRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dracula II - The Cursed Seal (Hack, English v1.0)
+// https://romhackplaza.org/translations/dracula-ii-noroi-no-fuuin-english-translation-fds/
+static struct BurnRomInfo fds_dracuiiRomDesc[] = {
+	{ "Dracula II - The Cursed Seal T-Eng v1.0 (2024)(BlackPaladin).fds",          131016, 0x3251423f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_dracuii, fds_dracuii, fds_fdsbios)
 STD_ROM_FN(fds_dracuii)
 
 struct BurnDriver BurnDrvfds_dracuii = {
-	"fds_dracuii", NULL, "fds_fdsbios", NULL, "1987",
-	"Dracula II - Noroi no Fuuin (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"fds_dracuii", NULL, "fds_fdsbios", NULL, "2024",
+	"Dracula II - The Cursed Seal (Hack, English v1.0)\0", NULL, "BlackPaladin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, fds_dracuiiRomInfo, fds_dracuiiRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

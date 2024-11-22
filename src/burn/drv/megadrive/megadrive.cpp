@@ -4803,18 +4803,18 @@ static INT32 res_check()
 	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
 		BurnDrvGetVisibleSize(&screen_width, &screen_height);
 
-		if (screen_width != 256 || screen_height != v_res[v_idx]) {
-			bprintf(0, _T("switching to 256 x %d mode\n"), v_res[v_idx]);
-			BurnDrvSetVisibleSize(256, v_res[v_idx]);
+		if (screen_width != 256 || screen_height != 224) {
+			bprintf(0, _T("switching to 256 x 224 mode\n"));
+			BurnDrvSetVisibleSize(256, 224);
 			Reinitialise();
 			return 1;
 		}
 	} else {
 		BurnDrvGetVisibleSize(&screen_width, &screen_height);
 
-		if (screen_width != 320 || screen_height != v_res[v_idx]) {
-			bprintf(0, _T("switching to 320 x %d mode\n"), v_res[v_idx]);
-			BurnDrvSetVisibleSize(320, v_res[v_idx]);
+		if (screen_width != 320 || screen_height != 224) {
+			bprintf(0, _T("switching to 320 x 224 mode\n"));
+			BurnDrvSetVisibleSize(320, 224);
 			Reinitialise();
 			return 1;
 		}

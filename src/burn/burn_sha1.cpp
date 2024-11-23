@@ -1,5 +1,4 @@
 #include "burnint.h"
-#include <stdint.h>
 
 #define SHA1_BLOCK_SIZE 64
 #define SHA1_HASH_SIZE 20
@@ -16,7 +15,7 @@ struct sha1_state {
 #define F2(b, c, d) ((b & c) | (b & d) | (c & d))
 #define F3(b, c, d) (b ^ c ^ d)
 
-void SHA1_Transform(sha1_state *ctx, const UINT8 *data) {
+static void SHA1_Transform(sha1_state *ctx, const UINT8 *data) {
     UINT32 a, b, c, d, e, i, t;
     UINT32 m[80];
 
@@ -58,7 +57,13 @@ void SHA1_Transform(sha1_state *ctx, const UINT8 *data) {
     ctx->state[4] += e;
 }
 
-void SHA1_Init(sha1_state *ctx) {
+#undef ROTLEFT
+#undef F0
+#undef F1
+#undef F2
+#undef F3
+
+static void SHA1_Init(sha1_state *ctx) {
     ctx->state[0] = 0x67452301;
     ctx->state[1] = 0xEFCDAB89;
     ctx->state[2] = 0x98BADCFE;
@@ -68,7 +73,7 @@ void SHA1_Init(sha1_state *ctx) {
     memset(ctx->buffer, 0, SHA1_BLOCK_SIZE);
 }
 
-void SHA1_Update(sha1_state *ctx, const UINT8 *data, INT32 len) {
+static void SHA1_Update(sha1_state *ctx, const UINT8 *data, INT32 len) {
     INT32 i;
 
     for (i = 0; i < len; i++) {
@@ -80,7 +85,7 @@ void SHA1_Update(sha1_state *ctx, const UINT8 *data, INT32 len) {
     }
 }
 
-void SHA1_Final(UINT8 *hash, sha1_state *ctx) {
+static void SHA1_Final(UINT8 *hash, sha1_state *ctx) {
     INT32 i = ctx->bitcount / 8 % SHA1_BLOCK_SIZE;
 
     ctx->buffer[i++] = 0x80;

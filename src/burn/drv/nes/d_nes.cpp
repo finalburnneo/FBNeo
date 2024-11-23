@@ -11193,10 +11193,9 @@ static INT32 NESInit()
 	} else {
 		if (BurnLoadRom(rom, 0, 1)) return 1;
 
-		// sha1 hash
-		char hash_potato[128] = { 0, };
-		BurnComputeSHA1(rom + 0x10, ri.nLen - 0x10, hash_potato);
-		bprintf(0, _T("sha1 hash: [%S]\n"), hash_potato);
+#if 0
+#include <nes_sha1db.cpp>
+#endif
 
 		if (cartridge_load(rom, ri.nLen, ri.nCrc)) return 1;
 	}

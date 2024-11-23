@@ -244,6 +244,10 @@ static INT32 DrvInit()
 		return 1;
 	}
 
+#if 0
+#include <snes_sha1db.cpp>
+#endif
+
 	char *bios = BurnDrvGetTextA(BDF_BOARDROM);
 	UINT32 bios_len = 0;
 	rom_bios = NULL;

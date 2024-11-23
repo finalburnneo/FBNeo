@@ -30,7 +30,7 @@ int nScreenSize = 0;
 int nScreenSizeHor = 0;
 int nScreenSizeVer = 0;
 
-TCHAR szPrevGames[SHOW_PREV_GAMES][32];
+TCHAR szPrevGames[SHOW_PREV_GAMES][64];
 
 static HHOOK hMenuHook;
 

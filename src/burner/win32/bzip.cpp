@@ -327,8 +327,10 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 
 #if defined (BUILD_WIN32)
 	// Check for messages:
-	while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
-		DispatchMessage(&Msg);
+	if (bNoPopups == false) {
+		while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
+			DispatchMessage(&Msg);
+		}
 	}
 #endif
 

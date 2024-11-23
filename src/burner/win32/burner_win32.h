@@ -115,6 +115,7 @@ extern bool bAlwaysCreateSupportFolders;
 extern bool bAutoLoadGameList;
 
 extern bool bQuietLoading;
+extern bool bNoPopups;
 extern bool bShonkyProfileMode;
 
 extern bool bNoChangeNumLock;
@@ -303,7 +304,7 @@ extern int nScreenSizeVer;	// For vertical orientation
 extern int nWindowSize;
 
 #define SHOW_PREV_GAMES		10
-extern TCHAR szPrevGames[SHOW_PREV_GAMES][32];
+extern TCHAR szPrevGames[SHOW_PREV_GAMES][64];
 
 extern bool bModelessMenu;
 

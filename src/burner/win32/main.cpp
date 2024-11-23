@@ -47,6 +47,7 @@ bool bAlwaysCreateSupportFolders = true;
 bool bAutoLoadGameList = false;
 
 bool bQuietLoading = false;
+bool bNoPopups = false;
 
 bool bShonkyProfileMode = false;
 
@@ -873,6 +874,29 @@ bool AppProcessKeyboardInput()
 	return true;
 }
 
+void make_sha1_database(bool snes)
+{
+	UINT32 nGameSelect = 0;
+
+	bNoPopups = true;
+
+	for (nGameSelect = 0; nGameSelect < nBurnDrvCount; nGameSelect++) {
+
+		#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)  )
+		#define HW_SNES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES)  )
+
+		nBurnDrvActive=nGameSelect;
+
+		if ((!snes && HW_NES) || (snes && HW_SNES)) {
+			bprintf(0, _T("generating for %S\n"), BurnDrvGetTextA(DRV_NAME));
+			DrvInit(nGameSelect, true);
+			DrvExit();
+		}
+	}
+
+	return;
+}
+
 int ProcessCmdLine()
 {
 	unsigned int i;
@@ -905,6 +929,16 @@ int ProcessCmdLine()
 	}
 
 	if (_tcslen(szName)) {
+		if (_tcscmp(szName, _T("-nessha1")) == 0) {
+			make_sha1_database(0);
+			return 1;
+		}
+
+		if (_tcscmp(szName, _T("-snessha1")) == 0) {
+			make_sha1_database(1);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listinfo")) == 0 ||
 			_tcscmp(szName, _T("-listxml")) == 0) {
 			write_datfile(DAT_ARCADE_ONLY, stdout);

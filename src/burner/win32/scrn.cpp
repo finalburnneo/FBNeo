@@ -984,7 +984,7 @@ static void UpdatePreviousGameList()
 	}
 
 	// Declare temporary array
-	TCHAR szTmp[SHOW_PREV_GAMES][32];
+	TCHAR szTmp[SHOW_PREV_GAMES][64];
 
 	// Backup info for later use
 	for(int x = 0; x < SHOW_PREV_GAMES; x++) {

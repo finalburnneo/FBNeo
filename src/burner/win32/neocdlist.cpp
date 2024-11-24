@@ -139,6 +139,7 @@ struct NGCDGAME games[] =
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
 	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//
 	{ _T("karnov")		, _T("Karnov")												, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0283 },		//
+	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0062 },		//
 };
 
 static char szVolumeID[64];

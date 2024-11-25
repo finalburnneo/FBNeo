@@ -10592,6 +10592,7 @@ static void ppu_scan(INT32 nAction)
 	SCAN_VAR(bgtable_start);
 	SCAN_VAR(sprtable_start);
 	SCAN_VAR(ppu_pal_mask);
+	SCAN_VAR(ppu_pal_emphasis);
 
 	SCAN_VAR(ppu_no_nmi_this_frame);
 	SCAN_VAR(ppu_odd);

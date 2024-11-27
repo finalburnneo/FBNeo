@@ -2951,7 +2951,7 @@ static struct BurnRomInfo nspiritRomDesc[] = {
 
 	{ "nin-v0.ic44",		0x10000, 0xa32e8caf, 0x05 | BRF_SND },              // 20 DAC Samples
 
-	{ "nin_c-pr-b.ic1",		0x01000, 0x00000000, 0x07 | BRF_PRG | BRF_ESS },	// 21 i8751 microcontroller
+	{ "nin_c-pr-b.ic1",		0x01000, 0x0f7b2713, 0x07 | BRF_PRG | BRF_ESS },	// 21 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",		0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 22 Proms
 	{ "m72_a-9l-.ic75",		0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 23

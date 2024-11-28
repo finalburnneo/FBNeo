@@ -2348,10 +2348,10 @@ STD_ROM_PICK(Ddsomj)
 STD_ROM_FN(Ddsomj)
 
 static struct BurnRomInfo Ddsomjr1RomDesc[] = {
-	{ "dd2j.03b",      0x080000, 0x965d74e5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2j.04b",      0x080000, 0x958eb8f3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2.05b",       0x080000, 0xd38571ca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2.06b",       0x080000, 0x6d5a3bbb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2j.03e",      0x080000, 0xb2fd4a24, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2j.04e",      0x080000, 0x3a68c310, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.05e",       0x080000, 0xaa56f42f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.06e",       0x080000, 0x2f8cd040, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.07",        0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.08",        0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.09",        0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -2379,10 +2379,10 @@ STD_ROM_PICK(Ddsomjr1)
 STD_ROM_FN(Ddsomjr1)
 
 static struct BurnRomInfo Ddsomjr2RomDesc[] = {
-	{ "dd2j.03b",      0x080000, 0xb2fd4a24, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2j.04b",      0x080000, 0x3a68c310, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2.05b",       0x080000, 0xaa56f42f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2.06b",       0x080000, 0x2f8cd040, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2j.03b",      0x080000, 0x965d74e5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2j.04b",      0x080000, 0x958eb8f3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.05b",       0x080000, 0xd38571ca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.06b",       0x080000, 0x6d5a3bbb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.07",        0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.08",        0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.09",        0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9840,7 +9840,7 @@ struct BurnDriver BurnDrvCpsDdsomj = {
 
 struct BurnDriver BurnDrvCpsDdsomjr1 = {
 	"ddsomjr1", "ddsom", NULL, NULL, "1996",
-	"Dungeons & Dragons: Shadow over Mystara (Japan 960206)\0", NULL, "Capcom", "CPS2",
+	"Dungeons & Dragons: Shadow over Mystara (Japan 960223)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ddsomjr1RomInfo, Ddsomjr1RomName, NULL, NULL, NULL, NULL, DdsomInputInfo, NULL,
@@ -9850,7 +9850,7 @@ struct BurnDriver BurnDrvCpsDdsomjr1 = {
 
 struct BurnDriver BurnDrvCpsDdsomjr2 = {
 	"ddsomjr2", "ddsom", NULL, NULL, "1996",
-	"Dungeons & Dragons: Shadow over Mystara (Japan 960223)\0", NULL, "Capcom", "CPS2",
+	"Dungeons & Dragons: Shadow over Mystara (Japan 960206)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ddsomjr2RomInfo, Ddsomjr2RomName, NULL, NULL, NULL, NULL, DdsomInputInfo, NULL,

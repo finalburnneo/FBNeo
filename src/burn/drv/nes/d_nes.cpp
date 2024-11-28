@@ -22945,24 +22945,6 @@ struct BurnDriver BurnDrvnes_vanguard = {
 // Aftermarket/Hack/Homebrew Games
 // -------------------------------
 
-// https://retrobro85.itch.io/hobo-albos-big-adventure
-static struct BurnRomInfo nes_hoboalboRomDesc[] = {
-	{ "Hobo Albo's Big Adventure (2024)(retrobro85).nes",          524304, 0xd276c4db, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_hoboalbo)
-STD_ROM_FN(nes_hoboalbo)
-
-struct BurnDriver BurnDrvnes_hoboalbo = {
-	"nes_hoboalbo", NULL, NULL, NULL, "2024",
-	"Hobo Albo's Big Adventure (HB)\0", NULL, "Nintendo", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_hoboalboRomInfo, nes_hoboalboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {
@@ -26547,6 +26529,24 @@ struct BurnDriver BurnDrvnes_ghostbrm = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ghosts'n Goblins - Easy Mode (Hack, v2.0)
+static struct BurnRomInfo nes_ghostsngoblinshRomDesc[] = {
+	{ "Ghosts'n Goblins - Easy Mode v2.0 (2019)(chronix).nes",          131088, 0x79a599d9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ghostsngoblinsh)
+STD_ROM_FN(nes_ghostsngoblinsh)
+
+struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
+	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "2019",
+	"Ghosts'n Goblins - Easy Mode (Hack, v2.0)\0", NULL, "chronix", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_ghostsngoblinshRomInfo, nes_ghostsngoblinshRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Ghoul Grind Night of the Necromancer (HB)
 static struct BurnRomInfo nes_ghoulgrindRomDesc[] = {
 	{ "Ghoul Grind Night of the Necromancer (2021)(WoogWorx).nes",          524304, 0x3557252e, BRF_ESS | BRF_PRG },
@@ -26994,6 +26994,24 @@ struct BurnDriver BurnDrvnes_heohdemo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_heohdemoRomInfo, nes_heohdemoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hobo Albo's Big Adventure (HB)
+static struct BurnRomInfo nes_hoboalboRomDesc[] = {
+	{ "Hobo Albo's Big Adventure (2024)(RetroBro85).nes",          524304, 0xd276c4db, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoboalbo)
+STD_ROM_FN(nes_hoboalbo)
+
+struct BurnDriver BurnDrvnes_hoboalbo = {
+	"nes_hoboalbo", NULL, NULL, NULL, "2024",
+	"Hobo Albo's Big Adventure (HB)\0", NULL, "RetroBro85", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hoboalboRomInfo, nes_hoboalboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27789,6 +27807,25 @@ struct BurnDriver BurnDrvnes_legendsofowlia = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_legendsofowliaRomInfo, nes_legendsofowliaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Legend of Super Mario, The - Save Mushroom Kingdom (GlobalHack, v1.2)
+// https://www.romhacking.net/hacks/8050/
+static struct BurnRomInfo nes_legendsmRomDesc[] = {
+	{ "Legend of Super Mario, The - Save Mushroom Kingdom v1.2 (2023)(NesDraug).nes",          262160, 0xb1d13af1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legendsm)
+STD_ROM_FN(nes_legendsm)
+
+struct BurnDriver BurnDrvnes_legendsm = {
+	"nes_legendsm", "nes_legenzel", NULL, NULL, "2023",
+	"Legend of Super Mario, The - Save Mushroom Kingdom (GlobalHack, v1.2)\0", NULL, "NesDraug", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legendsmRomInfo, nes_legendsmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43125,7 +43162,7 @@ struct BurnDriver BurnDrvnes_georgforskobo = {
 
 // Getsu Fuuma Den (Japan)
 static struct BurnRomInfo nes_getsufuumadenRomDesc[] = {
-	{ "Getsu Fuuma Den (Japan).nes",          262160, 0x71ff1e76, BRF_ESS | BRF_PRG },
+	{ "Getsu Fuuma Den (Japan)(1987)(Konami).nes",          262160, 0x71ff1e76, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_getsufuumaden)
@@ -43143,7 +43180,7 @@ struct BurnDriver BurnDrvnes_getsufuumaden = {
 
 // Ghost Lion, Legend of the (USA)
 static struct BurnRomInfo nes_ghostlionRomDesc[] = {
-	{ "Ghost Lion (USA).nes",          262160, 0x5d83c1e5, BRF_ESS | BRF_PRG },
+	{ "Ghost Lion (USA)(1992)(Kemco).nes",          262160, 0x5d83c1e5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ghostlion)
@@ -43161,7 +43198,7 @@ struct BurnDriver BurnDrvnes_ghostlion = {
 
 // Ghostbusters (USA)
 static struct BurnRomInfo nes_ghostbustersRomDesc[] = {
-	{ "Ghostbusters (USA).nes",          65552, 0xb30a3e39, BRF_ESS | BRF_PRG },
+	{ "Ghostbusters (USA)(1988)(Activision).nes",          65552, 0xb30a3e39, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ghostbusters)
@@ -43179,7 +43216,7 @@ struct BurnDriver BurnDrvnes_ghostbusters = {
 
 // Ghostbusters II (USA)
 static struct BurnRomInfo nes_ghostbustersiiRomDesc[] = {
-	{ "Ghostbusters II (USA).nes",          262160, 0x8d4e6fa3, BRF_ESS | BRF_PRG },
+	{ "Ghostbusters II (USA)(1989)(Activision).nes",          262160, 0x8d4e6fa3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ghostbustersii)
@@ -43191,24 +43228,6 @@ struct BurnDriver BurnDrvnes_ghostbustersii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_ghostbustersiiRomInfo, nes_ghostbustersiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ghosts'n Goblins - Easy Mode (Hack, v2.0)
-static struct BurnRomInfo nes_ghostsngoblinshRomDesc[] = {
-	{ "Ghosts'n Goblins - Easy Mode v2.0 (2019)(chronix).nes",          131088, 0x79a599d9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ghostsngoblinsh)
-STD_ROM_FN(nes_ghostsngoblinsh)
-
-struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
-	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "2019",
-	"Ghosts'n Goblins - Easy Mode (Hack, v2.0)\0", NULL, "chronix", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_ghostsngoblinshRomInfo, nes_ghostsngoblinshRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -47958,7 +47977,7 @@ STD_ROM_FN(nes_lawestj)
 
 // Layla (Japan)
 static struct BurnRomInfo nes_laylajRomDesc[] = {
-	{ "Layla (Japan).nes",          131088, 0xd9381fe7, BRF_ESS | BRF_PRG },
+	{ "Layla (Japan)(1986)(dB-SOFT).nes",          131088, 0xd9381fe7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_laylaj)
@@ -47975,8 +47994,9 @@ struct BurnDriver BurnDrvnes_laylaj = {
 };
 
 // Layla (Hack, English)
+// https://www.romhacking.net/reviews/5909/
 static struct BurnRomInfo nes_laylaRomDesc[] = {
-	{ "Layla (T-Eng).nes",          262160, 0x3f4f9465, BRF_ESS | BRF_PRG },
+	{ "Layla T-Eng (2017)(Supper).nes",          262160, 0x3f4f9465, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_layla)
@@ -47994,7 +48014,7 @@ struct BurnDriver BurnDrvnes_layla = {
 
 // Lee Trevino's Fighting Golf (USA)
 static struct BurnRomInfo nes_leetresfiggoRomDesc[] = {
-	{ "Lee Trevino's Fighting Golf (USA).nes",          262160, 0xe55284da, BRF_ESS | BRF_PRG },
+	{ "Lee Trevino's Fighting Golf (USA)(1988)(SNK).nes",          262160, 0xe55284da, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_leetresfiggo)
@@ -48012,7 +48032,7 @@ struct BurnDriver BurnDrvnes_leetresfiggo = {
 
 // Legacy of the Wizard (USA)
 static struct BurnRomInfo nes_legacwizRomDesc[] = {
-	{ "Legacy of the Wizard (USA).nes",          196624, 0xb534eb48, BRF_ESS | BRF_PRG },
+	{ "Legacy of the Wizard (USA)(1989)(Broderbund).nes",          196624, 0xb534eb48, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legacwiz)
@@ -48028,9 +48048,9 @@ struct BurnDriver BurnDrvnes_legacwiz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Legend of Balubalouk (Japan)
+// Legend of Balubalouk, The (Japan)
 static struct BurnRomInfo nes_legenbaljRomDesc[] = {
-	{ "Legend of Balubalouk (Japan).nes",          131088, 0x04fc4764, BRF_ESS | BRF_PRG },
+	{ "Legend of Balubalouk, The (Japan)(1986)(Vic Tokai).nes",          131088, 0x04fc4764, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legenbalj)
@@ -48038,7 +48058,7 @@ STD_ROM_FN(nes_legenbalj)
 
 struct BurnDriver BurnDrvnes_legenbalj = {
 	"nes_legenbalj", "nes_legenbal", NULL, NULL, "1986",
-	"Legend of Balubalouk (Japan)\0", NULL, "Vic Tokai", "Miscellaneous",
+	"Legend of Balubalouk, The (Japan)\0", NULL, "Vic Tokai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenbaljRomInfo, nes_legenbaljRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -48046,9 +48066,10 @@ struct BurnDriver BurnDrvnes_legenbalj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Legend of Balubalouk (Hack, English)
+// Legend of Balubalouk, The (Hack, English v1.1)
+// https://www.romhacking.net/translations/3102/
 static struct BurnRomInfo nes_legenbalRomDesc[] = {
-	{ "Legend of Balubalouk (T-Eng).nes",          131088, 0x661c0a1b, BRF_ESS | BRF_PRG },
+	{ "Legend of Balubalouk, The T-Eng v1.1 (2017)(Psyklax).nes",          131088, 0x661c0a1b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legenbal)
@@ -48056,7 +48077,7 @@ STD_ROM_FN(nes_legenbal)
 
 struct BurnDriver BurnDrvnes_legenbal = {
 	"nes_legenbal", NULL, NULL, NULL, "2017",
-	"Legend of Balubalouk (Hack, English)\0", NULL, "Psyklax", "Miscellaneous",
+	"Legend of Balubalouk, The (Hack, English v1.1)\0", NULL, "Psyklax", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenbalRomInfo, nes_legenbalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -48082,9 +48103,9 @@ struct BurnDriver BurnDrvnes_legenkag = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Legend of Zelda, The (USA) (Rev A)
+// Legend of Zelda, The (USA, Rev A)
 static struct BurnRomInfo nes_legenzelRomDesc[] = {
-	{ "Legend of Zelda, The (USA) (Rev A).nes",          131088, 0x02bb0c56, BRF_ESS | BRF_PRG },
+	{ "Legend of Zelda, The (USA, Rev A)(1987)(Nintendo).nes",          131088, 0x02bb0c56, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legenzel)
@@ -48092,7 +48113,7 @@ STD_ROM_FN(nes_legenzel)
 
 struct BurnDriver BurnDrvnes_legenzel = {
 	"nes_legenzel", NULL, NULL, NULL, "1987",
-	"Legend of Zelda, The (USA) (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
+	"Legend of Zelda, The (USA, Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenzelRomInfo, nes_legenzelRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -48100,28 +48121,9 @@ struct BurnDriver BurnDrvnes_legenzel = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Legend of Super Mario, The - Save Mushroom Kingdom (GlobalHack)
-// https://www.romhacking.net/hacks/8050/
-static struct BurnRomInfo nes_legendsmRomDesc[] = {
-	{ "Legend of Super Mario, The - Save Mushroom Kingdom (2023)(NesDraug).nes",          262160, 0xb1d13af1, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_legendsm)
-STD_ROM_FN(nes_legendsm)
-
-struct BurnDriver BurnDrvnes_legendsm = {
-	"nes_legendsm", "nes_legenzel", NULL, NULL, "2023",
-	"Legend of Super Mario, The - Save Mushroom Kingdom (GlobalHack)\0", NULL, "NesDraug", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_legendsmRomInfo, nes_legendsmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Legendary Wings (USA)
 static struct BurnRomInfo nes_legendarywingsRomDesc[] = {
-	{ "Legendary Wings (USA).nes",          131088, 0x689de607, BRF_ESS | BRF_PRG },
+	{ "Legendary Wings (USA)(1988)(Capcom).nes",          131088, 0x689de607, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legendarywings)
@@ -48140,7 +48142,7 @@ struct BurnDriver BurnDrvnes_legendarywings = {
 // Legend of Fuma, The (Hack, English)
 // https://www.romhacking.net/translations/3482/
 static struct BurnRomInfo nes_legenfumRomDesc[] = {
-	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
+	{ "The Legend of Fuma T-Eng (2018)(Nebulous Translations).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legenfum)

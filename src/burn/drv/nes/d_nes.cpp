@@ -22945,6 +22945,24 @@ struct BurnDriver BurnDrvnes_vanguard = {
 // Aftermarket/Hack/Homebrew Games
 // -------------------------------
 
+// https://retrobro85.itch.io/hobo-albos-big-adventure
+static struct BurnRomInfo nes_hoboalboRomDesc[] = {
+	{ "Hobo Albo's Big Adventure (2024)(retrobro85).nes",          524304, 0xd276c4db, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoboalbo)
+STD_ROM_FN(nes_hoboalbo)
+
+struct BurnDriver BurnDrvnes_hoboalbo = {
+	"nes_hoboalbo", NULL, NULL, NULL, "2024",
+	"Hobo Albo's Big Adventure (HB)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hoboalboRomInfo, nes_hoboalboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {

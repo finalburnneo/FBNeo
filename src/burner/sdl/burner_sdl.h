@@ -43,6 +43,7 @@ extern bool  bAlwaysProcessKeyboardInput;
 extern TCHAR szAppBurnVer[16];
 extern bool  bAppFullscreen;
 extern bool bIntegerScale;
+extern int  nWindowScale;
 extern bool bAlwaysMenu;
 extern int 	nGameSelect;
 extern int 	nFilterSelect;

@@ -78,19 +78,19 @@ void AdjustImageSize()
 {
 	screenFlags = SDL_GetWindowFlags(sdlWindow);
 
-	// Scale forced to "*2"
+	// Scale governed by -windowscale command line option.
 	// Screen center fix thanks to Woises
 	if (nRotateGame) {
 		if (screenFlags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_FULLSCREEN_DESKTOP)) {
 			int w;
 			int h;
 			SDL_GetWindowSize(sdlWindow, &w, &h);
-			SDL_SetWindowSize(sdlWindow, (display_w * w / h) * 2, display_w * 2);
+			SDL_SetWindowSize(sdlWindow, (display_w * w / h) * nWindowScale, display_w * nWindowScale);
 			SDL_RenderSetLogicalSize(sdlRenderer, (display_w * w / h), display_w);
 			dstrect.x = ((display_w * w / h) - display_w) / 2;
 		} else {
 			SDL_RestoreWindow(sdlWindow);		// If started fullscreen, switching to window can get maximized
-			SDL_SetWindowSize(sdlWindow, display_h * 2, display_w * 2);
+			SDL_SetWindowSize(sdlWindow, display_h * nWindowScale, display_w * nWindowScale);
 			SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
 			dstrect.x = (display_h - display_w) / 2;
 		}
@@ -101,7 +101,7 @@ void AdjustImageSize()
 			int w;
 			int h;
 			SDL_GetWindowSize(sdlWindow, &w, &h);
-			SDL_SetWindowSize(sdlWindow, (display_h * w / h) * 2, display_h * 2);
+			SDL_SetWindowSize(sdlWindow, (display_h * w / h) * nWindowScale, display_h * nWindowScale);
 
 			if (display_w < (display_h * w / h)) {
 				SDL_RenderSetLogicalSize(sdlRenderer, (display_h * w / h), display_h);
@@ -114,7 +114,7 @@ void AdjustImageSize()
 			}
 		} else {
 			SDL_RestoreWindow(sdlWindow);
-			SDL_SetWindowSize(sdlWindow, display_w * 2, display_h * 2);
+			SDL_SetWindowSize(sdlWindow, display_w * nWindowScale, display_h * nWindowScale);
 			SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
 			dstrect.x = 0;
 			dstrect.y = 0;

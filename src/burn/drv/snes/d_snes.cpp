@@ -9934,6 +9934,25 @@ struct BurnDriver BurnDrvsnes_Ganbgoemon4j = {
 	512, 448, 4, 3
 };
 
+// https://www.romhacking.net/hacks/7066/
+// Ganbare Goemon 4 - Time Pilot (Hack, Standalone)
+static struct BurnRomInfo snes_Ganbgoemon4tpRomDesc[] = {
+   { "Go for it! Goemon 4 - Time Pilot (2022)(Svambo, Nokia3310).smc", 2097152, 0xeef6d15a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ganbgoemon4tp)
+STD_ROM_FN(snes_Ganbgoemon4tp)
+
+struct BurnDriver BurnDrvsnes_Ganbgoemon4tp = {
+   "snes_ganbgoemon4tp", "snes_ganbgoemon4te", NULL, NULL, "2022",
+   "Ganbare Goemon 4 - Time Pilot\0", "Mini Game-in-Game Time Pilot standalone", "Svambo, Nokia3310", "Nintendo",
+   NULL, NULL, NULL, NULL,
+   BDF_GAME_WORKING | BDF_HACK | BDF_CLONE, 2, HARDWARE_SNES, GBF_SHOOT, 0,
+   SNESGetZipName, snes_Ganbgoemon4tpRomInfo, snes_Ganbgoemon4tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+   DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+   512, 448, 4, 3
+};
+
 // Go for it! Goemon 4: The Twinkling Journey (Hack, English v3.0)
 // https://www.romhacking.net/translations/5665/
 static struct BurnRomInfo snes_Ganbgoemon4teRomDesc[] = {
@@ -31308,10 +31327,10 @@ STD_ROM_PICK(snes_Pitfallvcs)
 STD_ROM_FN(snes_Pitfallvcs)
 
 struct BurnDriver BurnDrvsnes_Pitfallvcs = {
-	"snes_pitfallvcs", NULL, NULL, NULL, "2022",
+	"snes_pitfallvcs", "snes_pitfallmaya", NULL, NULL, "2022",
 	"Pitfall - Atari VCS 2600 (Hack)\0",  "Included as hidden game in 'Pitfall - The Mayan Adventure'", "Nokia3310", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_PitfallvcsRomInfo, snes_PitfallvcsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

@@ -914,7 +914,7 @@ static INT32 radradInit()
 
 struct BurnDriver BurnDrvRadrad = {
 	"radrad", NULL, NULL, NULL, "1982",
-	"Radical Radial (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
+	"Radical Radial (US)\0", NULL, "Logitec Corp. (Nichibutsu USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, radradRomInfo, radradRomName, NULL, NULL, NULL, NULL, RadradInputInfo, RadradDIPInfo,
@@ -1044,14 +1044,14 @@ struct BurnDriver BurnDrvSeicrossa = {
 // Sector Zone (set 1)
 
 static struct BurnRomInfo sectrzonRomDesc[] = {
-	{ "sz1.3a",		0x1000, 0xf0a45cb4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
-	{ "sz2.3c",		0x1000, 0xfea68ddb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sz3.3d",		0x1000, 0xbaad4294, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sz4.3e",		0x1000, 0x75f2ca75, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sz5.3fg",	0x1000, 0xdc14f2c8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sz6.3h",		0x1000, 0x397a38c5, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "sz7.3i",		0x1000, 0x7b34dc1c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "sz8.3j",		0x0800, 0x9933526a, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sz1.3a",		0x1000, 0xf6c3aeca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
+	{ "sz2.3c",		0x1000, 0xf167f10e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sz3.3d",		0x1000, 0xceb3c8f4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sz4.3e",		0x1000, 0x3112af59, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sz5.3fg",	0x1000, 0xb494a993, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sz6.3h",		0x1000, 0x09d5b9da, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sz7.3i",		0x1000, 0x13052b03, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sz8.3j",		0x0800, 0x019f9651, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "sz11.7k",	0x1000, 0xfbd9b91d, 2 | BRF_GRA },           //  8 Graphics
 	{ "sz12.7m",	0x1000, 0x2bdef9ad, 2 | BRF_GRA },           //  9
@@ -1078,7 +1078,7 @@ struct BurnDriver BurnDrvSectrzon = {
 };
 
 
-// Sector Zone (set 2, Tecfri hardware)
+// Sector Zone (bootleg)
 
 static struct BurnRomInfo sectrzontRomDesc[] = {
 	{ "czt_1.bin",	0x1000, 0xf0a45cb4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
@@ -1106,27 +1106,26 @@ STD_ROM_FN(sectrzont)
 
 struct BurnDriver BurnDrvSectrzont = {
 	"sectrzont", "seicross", NULL, NULL, "1984",
-	"Sector Zone (set 2, Tecfri hardware)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
+	"Sector Zone (bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzontRomInfo, sectrzontRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
 
 
-// Sector Zone (set 3)
-// This and set seicross seem bug-fixed versions, where the attract mode works. In the other sets during attract the player only goes straight until he crashes
+// Sector Zone (set 2)
 
 static struct BurnRomInfo sectrzonaRomDesc[] = {
-	{ "sz1.3a",		0x1000, 0xf6c3aeca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
-	{ "sz2.3c",		0x1000, 0xf167f10e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sz3.3d",		0x1000, 0xceb3c8f4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sz4.3e",		0x1000, 0x3112af59, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sz5.3fg",	0x1000, 0xb494a993, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sz6.3h",		0x1000, 0x09d5b9da, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "sz7.3i",		0x1000, 0x13052b03, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "sz8.3j",		0x0800, 0x019f9651, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sz1.3a",		0x1000, 0xf0a45cb4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
+	{ "sz2.3c",		0x1000, 0xfea68ddb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sz3.3d",		0x1000, 0xbaad4294, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sz4.3e",		0x1000, 0x75f2ca75, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sz5.3fg",	0x1000, 0xdc14f2c8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sz6.3h",		0x1000, 0x397a38c5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sz7.3i",		0x1000, 0x7b34dc1c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sz8.3j",		0x0800, 0x9933526a, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "sz11.7k",	0x1000, 0xfbd9b91d, 2 | BRF_GRA },           //  8 Graphics
 	{ "sz12.7m",	0x1000, 0x2bdef9ad, 2 | BRF_GRA },           //  9
@@ -1146,7 +1145,7 @@ STD_ROM_FN(sectrzona)
 
 struct BurnDriver BurnDrvSectrzona = {
 	"sectrzona", "seicross", NULL, NULL, "1984",
-	"Sector Zone (set 3)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
+	"Sector Zone (set 2)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzonaRomInfo, sectrzonaRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,

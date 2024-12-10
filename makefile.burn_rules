@@ -38,7 +38,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_neogeo.o \
 			\
-			d_nes.o \
+			d_nes.o nes.o \
 			\
 			d_snes.o apu.o cart.o cpu.o cx4.o dma.o dsp.o input.o ppu.o snes.o \
 			snes_other.o spc.o sa1.o sdd1.o cpu_sa1.o statehandler.o \

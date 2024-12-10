@@ -203,7 +203,7 @@ CXXFLAGS = -pipe \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
 	   -fcheck-new \
-	   -Wall -W -pedantic -Wno-long-long \
+	   -Wall -W -pedantic -Wno-long-long -Wno-sign-compare \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   $(DEF) $(incdir)

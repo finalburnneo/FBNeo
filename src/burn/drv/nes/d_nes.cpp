@@ -15442,7 +15442,7 @@ struct BurnDriver BurnDrvnes_gunhawk = {
 
 // GunTneR (HB)
 static struct BurnRomInfo nes_guntnerRomDesc[] = {
-	{ "GunTneR (2022)(langel).nes",          24592, 0x170e5f53, BRF_ESS | BRF_PRG },
+	{ "GunTneR (2022)(langel).nes",          24592, 0xabdac206, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_guntner)

@@ -16,7 +16,7 @@ static UINT8 DrvRecalc = 1;
 static UINT8 LastControllerDip = 0;
 static UINT8 LastControllerTimer = 0;
 
-static INT32 has_gun = 0;
+static INT32 has_gun = 0; // 1 Zapper (SuperScope), 2 Justifier
 static ButtonToggle scope_turbo;
 static ButtonToggle scope_pause;
 
@@ -139,6 +139,38 @@ static struct BurnInputInfo SNESZapperInputList[] = {
 
 STDINPUTINFO(SNESZapper)
 
+static struct BurnInputInfo SNESJustifierInputList[] = {
+	{"P1 Up",		BIT_DIGITAL,	snesInputPort0 + 4,		"p1 up"     },
+	{"P1 Down",		BIT_DIGITAL,	snesInputPort0 + 5,		"p1 down"   },
+	{"P1 Left",		BIT_DIGITAL,	snesInputPort0 + 6,		"p1 left"   },
+	{"P1 Right",	BIT_DIGITAL,	snesInputPort0 + 7,		"p1 right"  },
+	{"P1 Button Y",	BIT_DIGITAL,	snesInputPort0 + 1,		"p1 fire 1" },
+	{"P1 Button X",	BIT_DIGITAL,	snesInputPort0 + 9,		"p1 fire 2" },
+	{"P1 Button B",	BIT_DIGITAL,	snesInputPort0 + 0,		"p1 fire 3" },
+	{"P1 Button A",	BIT_DIGITAL,	snesInputPort0 + 8,		"p1 fire 4" },
+	{"P1 Button L",	BIT_DIGITAL,	snesInputPort0 + 10,	"p1 fire 5" },
+	{"P1 Button R",	BIT_DIGITAL,	snesInputPort0 + 11,	"p1 fire 6" },
+	{"P1 Select",	BIT_DIGITAL,	snesInputPort0 + 2,		"p1 select" },
+	{"P1 Start",	BIT_DIGITAL,	snesInputPort0 + 3,		"p1 start"  },
+
+	A("P2 Gun X",	BIT_ANALOG_REL, &Analog[0],				"p2 x-axis" ),
+	A("P2 Gun Y",	BIT_ANALOG_REL, &Analog[1],				"p2 y-axis" ),
+	{"P2 Fire",		BIT_DIGITAL,	snesInputPort1 + 7,		"p2 fire 1" },
+	{"P2 Start",	BIT_DIGITAL,	snesInputPort1 + 5,		"p2 fire 2" },
+
+	A("P3 Gun X",	BIT_ANALOG_REL, &Analog[2],				"p3 x-axis" ),
+	A("P3 Gun Y",	BIT_ANALOG_REL, &Analog[3],				"p3 y-axis" ),
+	{"P3 Fire",		BIT_DIGITAL,	snesInputPort1 + 6,		"p3 fire 1" },
+	{"P3 Start",	BIT_DIGITAL,	snesInputPort1 + 4,		"p3 fire 2" },
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,				"reset"		},
+
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,			"dip"       },
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,			"dip"       },
+};
+
+STDINPUTINFO(SNESJustifier)
+
 static struct BurnDIPInfo SNESDIPList[] =
 {
 	DIP_OFFSET(0x19)
@@ -156,6 +188,15 @@ static struct BurnDIPInfo SNESZapperDIPList[] =
 };
 
 STDDIPINFO(SNESZapper)
+
+static struct BurnDIPInfo SNESJustifierDIPList[] =
+{
+	DIP_OFFSET(0x15)
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+};
+
+STDDIPINFO(SNESJustifier)
 
 static struct BurnDIPInfo SNESMouseBaseDIPList[] =
 {
@@ -287,6 +328,12 @@ static INT32 DrvInit()
 		BurnGunInit(1, true);
 	}
 
+	if (BurnDrvGetHardwareCode() == HARDWARE_SNES_JUSTIFIER) {
+		bprintf(0, _T("*** SNES: With Justifier\n"));
+		has_gun = 2;
+		BurnGunInit(2, true);
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -358,8 +405,10 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 		if (has_gun) {
 			BurnGunScan();
-			scope_turbo.Scan();
-			scope_pause.Scan();
+			if (has_gun == 1) {
+				scope_turbo.Scan();
+				scope_pause.Scan();
+			}
 		}
 	}
 
@@ -386,20 +435,36 @@ static INT32 DrvFrame()
 		if (has_gun) {
 			BurnGunMakeInputs(0, Analog[0], Analog[1]);
 
-			snesInputPort1[8] = BurnGunReturnX(0);
-			snesInputPort1[9] = BurnGunReturnY(0);
-			scope_turbo.Toggle(snesInputPort1[2]);
+			if (has_gun == 2) { // justifier - 2 guns
+				BurnGunMakeInputs(1, Analog[2], Analog[3]); // 2nd gun
+			}
+
+			if (has_gun == 1) { // superscope
+				scope_turbo.Toggle(snesInputPort1[2]);
+			}
 		}
 
 		if (CheckControllerPlug() == 0) {
+			INT32 p2_type = 0;
+			switch (has_gun) {
+				case 0: p2_type = DEVICE_GAMEPAD; break;
+				case 1: p2_type = DEVICE_SUPERSCOPE; break;
+				case 2: p2_type = DEVICE_JUSTIFIER; break;
+			}
+
 			for (INT32 i = 0; i < 12; i++) {
 				if ((DrvDips[1] & 0x01) == 0) {
 					snes_setButtonState(snes, 1, i, snesInputPort0[i], DEVICE_GAMEPAD);
 				}
-				if ((DrvDips[1] & 0x02) == 0) { // p2 controller or lightgun
-					snes_setButtonState(snes, 2, i, snesInputPort1[i], has_gun ? DEVICE_SUPERSCOPE : DEVICE_GAMEPAD);
+				if ((DrvDips[1] & 0x02) == 0) { // p2 controller or lightgun (SuperScope, Justifier)
+					snes_setButtonState(snes, 2, i, snesInputPort1[i], p2_type);
 				}
 			}
+
+			if (has_gun) {
+				snes_setGunState(snes, BurnGunReturnX(0), BurnGunReturnY(0), (p2_type == DEVICE_JUSTIFIER) ? BurnGunReturnX(1) : 0, (p2_type == DEVICE_JUSTIFIER) ? BurnGunReturnY(1) : 0);
+			}
+
 			if (DrvDips[1] & 0x01) {
 				snes_setMouseState(snes, 1, Analog[0], Analog[1], snesMouseButtons[0], snesMouseButtons[1]);
 			}
@@ -14393,8 +14458,8 @@ struct BurnDriver BurnDrvsnes_Lethalenf = {
 	"snes_lethalenf", NULL, NULL, NULL, "1993",
 	"Lethal Enforcers (USA)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SHOOT, 0,
-	SNESGetZipName, snes_LethalenfRomInfo, snes_LethalenfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES_JUSTIFIER, GBF_SHOOT, 0,
+	SNESGetZipName, snes_LethalenfRomInfo, snes_LethalenfRomName, NULL, NULL, NULL, NULL, SNESJustifierInputInfo, SNESJustifierDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

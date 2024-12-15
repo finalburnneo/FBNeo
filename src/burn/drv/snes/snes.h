@@ -91,6 +91,7 @@ void snes_runSpcCycle(Snes* snes);
 bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata, int bioslength);
 void snes_setButtonState(Snes* snes, int player, int button, int pressed, int device);
 void snes_setMouseState(Snes* snes, int player, int16_t x, int16_t y, uint8_t buttonA, uint8_t buttonB);
+void snes_setGunState(Snes* snes, int x1, int y1, int x2, int y2);
 void snes_setPixels(Snes* snes, uint8_t* pixelData, int height);
 void snes_setSamples(Snes* snes, int16_t* sampleData, int samplesPerFrame);
 int snes_saveBattery(Snes* snes, uint8_t* data);

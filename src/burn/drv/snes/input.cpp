@@ -16,7 +16,6 @@ Input* input_init(Snes* snes, int8_t tag) {
   input->portTag = tag; // 1, 2, ...
   input->type = DEVICE_GAMEPAD;
   input->currentState = 0;
-  // TODO: handle I/O line (and latching of PPU)
   return input;
 }
 
@@ -30,11 +29,11 @@ void input_reset(Input* input) {
   input->currentState = 0;
   input->lastX = 0;
   input->lastY = 0;
-  input->mouseSens = 0;
+  input->devParam = 0;
 }
 
 void input_handleState(Input* input, StateHandler* sh) {
-  sh_handleBytes(sh, &input->type, &input->lastX, &input->lastY, &input->mouseSens, NULL);
+  sh_handleBytes(sh, &input->type, &input->lastX, &input->lastY, &input->devParam, NULL);
   sh_handleBools(sh, &input->latchLine, NULL);
   sh_handleInts(sh, &input->currentState, &input->latchedState, NULL);
 }
@@ -54,22 +53,27 @@ void input_setMouse(Input* input, int16_t x, int16_t y, uint8_t buttonA, uint8_t
   x = d_min(d_abs(x), 0x7f);
   y = d_min(d_abs(y), 0x7f);
   input->currentState  = 0;
-  input->currentState |= (0x01 | (input->mouseSens % 3) << 4 | (buttonA) << 6 | (buttonB) << 7) << 16;
+  input->currentState |= (0x01 | (input->devParam % 3) << 4 | (buttonA) << 6 | (buttonB) << 7) << 16;
   input->currentState |= (y | input->lastY) << 8;
   input->currentState |= (x | input->lastX) << 0;
 }
 
 static void update_mouse_sensitivity(Input* input) {
-  input->currentState = (input->currentState & ~0x300000) | ((input->mouseSens % 3) << (4 + 16));
+  input->currentState = (input->currentState & ~0x300000) | ((input->devParam % 3) << (4 + 16));
 }
 
 void input_latch(Input* input, bool value) {
-//  if(input->latchLine && !value) {
   if(value) {
     input->latchedState = input->currentState;
-	if (input->type == DEVICE_MOUSE) {
+    if (input->type == DEVICE_MOUSE) {
       update_mouse_sensitivity(input);
-	}
+    } else
+    if (input->type == DEVICE_JUSTIFIER) {
+      // every other read selects between p1/p2's gun. they're daisy-chained,
+      // and plugged into port 2 on the snes/sfc
+      input->devParam ^= 1;
+      input->latchedState |= (input->devParam & 1) << 3;
+    }
   }
   input->latchLine = value;
 }
@@ -88,9 +92,10 @@ uint8_t input_read(Input* input) {
       if (input->latchLine) {
         // fun feature: reading the mouse while latched changes the sensitivty
         // setting
-	    update_mouse_sensitivity(input);
-        input->mouseSens++;
-      }
+        update_mouse_sensitivity(input);
+        input->devParam++;
+      } // fallthrough!
+    case DEVICE_JUSTIFIER: // below is shared w/DEVICE_MOUSE
       ret = (input->latchedState >> 31) & 1;
       input->latchedState <<= 1;
       input->latchedState |= 1;

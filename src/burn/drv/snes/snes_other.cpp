@@ -73,7 +73,7 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
       max = headers[i].score;
       used = i;
     }
-  }            
+  }
   bprintf(0, _T("header used %d\n"), used);
   if(used & 1) {
     // odd-numbered ones are for headered roms
@@ -197,34 +197,50 @@ bool snes_isPal(Snes* snes) {
 }
 
 void snes_setButtonState(Snes* snes, int player, int button, int pressed, int device) {
-	// set key in controller
-    Input* input = (player == 1) ? snes->input1 : snes->input2;
-	uint32_t *c_state = &input->currentState;
+  // set key in controller
+  Input* input = (player == 1) ? snes->input1 : snes->input2;
+  uint32_t *c_state = &input->currentState;
 
-	input_setType(input, device);
+  input_setType(input, device);
 
-	if(pressed) {
-      *c_state |= 1 << button;
-    } else {
-      *c_state &= ~(1 << button);
+  if(pressed) {
+    *c_state |= 1 << button;
+  } else {
+    *c_state &= ~(1 << button);
+  }
+}
+
+#define is_gun_offscreen(x,y) (!(x == 0 || x == 255 || y == 0 || y == 255) )
+
+void snes_setGunState(Snes* snes, int x1, int y1, int x2, int y2) {
+  // set gun coords
+  Input* input = snes->input2; // gun always in input 2
+  uint32_t *c_state = &input->currentState;
+
+  switch (input->type) {
+    case DEVICE_SUPERSCOPE:
+      *c_state |= 0xff00;
+      if (*c_state & SCOPE_FIRE || *c_state & SCOPE_CURSOR) {
+        ppu_latchScope(x1, y1);
+      }
+      break;
+    case DEVICE_JUSTIFIER:
+      *c_state |= 0xe5500; // Justifier serial bit stream "header"
+
+      switch (input->devParam & 1) {
+        case 0:
+          if (is_gun_offscreen(x2, y2)) {
+            ppu_latchScope(x2, y2);
+          }
+        break;
+        case 1:
+          if (is_gun_offscreen(x1, y1)) {
+            ppu_latchScope(x1, y1);
+        }
+        break;
     }
-
-	if (device == DEVICE_SUPERSCOPE) {
-		static uint8_t button8_9[2] = { 0, 0 };
-
-		switch (button) {
-			case 8:
-			case 9:
-				button8_9[button & 1] = pressed;
-				break;
-			case 11: // last button
-				*c_state |= 0xff00;
-				if (*c_state & SCOPE_FIRE || *c_state & SCOPE_CURSOR) {
-					ppu_latchScope(button8_9[0], button8_9[1]);
-				}
-				break;
-		}
-	}
+    break;
+  }
 }
 
 void snes_setMouseState(Snes* snes, int player, int16_t x, int16_t y, uint8_t buttonA, uint8_t buttonB) {

@@ -2243,24 +2243,23 @@ static struct BurnRomInfo yamatoRomDesc[] = {
 	{ "2.5de",	0x2000, 0xe796fbce, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "3.5f",	0x2000, 0xde50e4e8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "4.5jh",	0x2000, 0x4f831d4b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "11.5a",	0x1000, 0x3aad9e3c, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "1.5v",	0x0800, 0x3aad9e3c, 7 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+	{ "1.5v",	0x0800, 0x3aad9e3c, 7 | BRF_PRG | BRF_ESS }, //  3 audiocpu
 
-	{ "10.11k",	0x2000, 0x161121f5, 2 | BRF_GRA }, //  5 gfx1
-	{ "9.11h",	0x2000, 0x56e84cc4, 2 | BRF_GRA }, //  6
+	{ "10.11k",	0x2000, 0x161121f5, 2 | BRF_GRA }, //  4 gfx1
+	{ "9.11h",	0x2000, 0x56e84cc4, 2 | BRF_GRA }, //  5
 
-	{ "8.11c",	0x1000, 0x28024d9a, 3 | BRF_GRA }, //  7 gfx2
-	{ "7.11a",	0x1000, 0x4a179790, 3 | BRF_GRA }, //  8
+	{ "8.11c",	0x1000, 0x28024d9a, 3 | BRF_GRA }, //  6 gfx2
+	{ "7.11a",	0x1000, 0x4a179790, 3 | BRF_GRA }, //  7
 
-	{ "5.5lm",	0x1000, 0x7761ad24, 4 | BRF_GRA }, //  9 user1
-	{ "6.5n",	0x1000, 0xda48444c, 4 | BRF_GRA }, // 10
+	{ "5.5lm",	0x1000, 0x7761ad24, 4 | BRF_GRA }, //  8 user1
+	{ "6.5n",	0x1000, 0xda48444c, 4 | BRF_GRA }, //  9
 
-	{ "1.bpr",	0x0020, 0xef2053ab, 6 | BRF_GRA }, // 11 proms
-	{ "2.bpr",	0x0020, 0x2281d39f, 6 | BRF_GRA }, // 12
-	{ "3.bpr",	0x0020, 0x9e6341e3, 6 | BRF_GRA }, // 13
-	{ "4.bpr",	0x0020, 0x1c97dc0b, 6 | BRF_GRA }, // 14
-	{ "5.bpr",	0x0020, 0xedd6c05f, 6 | BRF_GRA }, // 15
+	{ "1.bpr",	0x0020, 0xef2053ab, 6 | BRF_GRA }, // 10 proms
+	{ "2.bpr",	0x0020, 0x2281d39f, 6 | BRF_GRA }, // 11
+	{ "3.bpr",	0x0020, 0x9e6341e3, 6 | BRF_GRA }, // 12
+	{ "4.bpr",	0x0020, 0x1c97dc0b, 6 | BRF_GRA }, // 13
+	{ "5.bpr",	0x0020, 0xedd6c05f, 6 | BRF_GRA }, // 14
 };
 
 STD_ROM_PICK(yamato)

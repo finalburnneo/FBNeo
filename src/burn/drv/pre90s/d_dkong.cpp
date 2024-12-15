@@ -4374,6 +4374,46 @@ struct BurnDriver BurnDrvDkspkyrmx = {
 };
 
 
+// Donkey Kong Spooky Tournament Edition (Hack)
+
+static struct BurnRomInfo dkspkyteRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "d2k11.spte",		0x08000, 0x2bb8d91e, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "v_5h_b.spte",	0x00800, 0xebc5d9cc, 4 }, //  7 gfx1
+	{ "v_3pt.spte",		0x00800, 0x9d881b5f, 4 }, //  8
+
+	{ "l_4m_b.sp",		0x00800, 0x1d0b3b77, 5 }, //  9 gfx2
+	{ "l_4n_b.sp",		0x00800, 0xcd717e7c, 5 }, // 10
+	{ "l_4r_b.sp",		0x00800, 0xd019732b, 5 }, // 11
+	{ "l_4s_b.sp",		0x00800, 0x04272273, 5 }, // 12
+
+	{ "c-2k.sp",		0x00100, 0xa837a227, 6 }, // 13 proms
+	{ "c-2j.sp",		0x00100, 0x244a89f9, 6 }, // 14
+	{ "v-5e.sp",		0x00100, 0xc70b6f9b, 6 }, // 15
+};
+
+STD_ROM_PICK(dkspkyte)
+STD_ROM_FN(dkspkyte)
+
+struct BurnDriver BurnDrvDkspkyte = {
+	"dkspkyte", "dkong", NULL, "dkong", "2022",
+	"Donkey Kong Spooky Tournament Edition (Hack)\0", NULL, "Sock Master", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkspkyteRomInfo, dkspkyteRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong (Patch) by Don Hodges
 // Patched Kill Screen - see http://donhodges.com/how_high_can_you_get.htm
 

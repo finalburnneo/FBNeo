@@ -30336,6 +30336,25 @@ struct BurnDriver BurnDrvsnes_Atkpetscii = {
 	512, 448, 4, 3
 };
 
+// Axelay - FastROM Fix (Hack)
+
+static struct BurnRomInfo snes_AxelayffRomDesc[] = {
+	{ "Axelay - FastROM Fix (2021)(Vitor Vilela).sfc", 1048576, 0x4bb73534, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Axelayff)
+STD_ROM_FN(snes_Axelayff)
+
+struct BurnDriver BurnDrvsnes_Axelayff = {
+	"snes_axelayff", "snes_axelay", NULL, NULL, "2021",
+	"Axelay - FastROM Fix (Hack)\0", NULL, "Vitor Vilela", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_VERSHOOT, 0,
+	SNESGetZipName, snes_AxelayffRomInfo, snes_AxelayffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Battletoads in Battlemaniacs - Easier (Hack)
 // https://romhackplaza.org/romhacks/battletoads-in-battlemaniacs-easier-snes/
 static struct BurnRomInfo snes_BattletoadseasyRomDesc[] = {
@@ -31496,10 +31515,10 @@ struct BurnDriver BurnDrvsnes_Onegaimma = {
 	512, 448, 4, 3
 };
 
-// Parodius: Non-Sense Fantasy - Fastrom Fix (Euro, Hack, v1.04)
+// Parodius: Non-Sense Fantasy - FastROM Fix (Euro, Hack, v1.04)
 
 static struct BurnRomInfo snes_ParodiuseffRomDesc[] = {
-	{ "Parodius - Non-Sense Fantasy - Fastrom Fix v1.04 (E)(2023)(kandowontu).sfc", 1048576, 0x7fa02b26, BRF_ESS | BRF_PRG },
+	{ "Parodius - Non-Sense Fantasy - FastROM Fix v1.04 (E)(2023)(kandowontu).sfc", 1048576, 0x7fa02b26, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Parodiuseff)
@@ -31507,7 +31526,7 @@ STD_ROM_FN(snes_Parodiuseff)
 
 struct BurnDriver BurnDrvsnes_Parodiuseff = {
 	"snes_parodiuseff", "snes_parodiuse", NULL, NULL, "2023",
-	"Parodius: Non-Sense Fantasy - Fastrom Fix (Euro, Hack, v1.04)\0", NULL, "kandowontu", "Nintendo",
+	"Parodius: Non-Sense Fantasy - FastROM Fix (Euro, Hack, v1.04)\0", NULL, "kandowontu", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_ParodiuseffRomInfo, snes_ParodiuseffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31515,10 +31534,10 @@ struct BurnDriver BurnDrvsnes_Parodiuseff = {
 	512, 448, 4, 3
 };
 
-// Parodius Da!: Shinwa kara Owarai e - Fastrom Fix (Japan, Hack)
+// Parodius Da!: Shinwa kara Owarai e - FastROM Fix (Japan, Hack)
 
 static struct BurnRomInfo snes_ParodiusjffRomDesc[] = {
-	{ "Parodius Da! - Shinwa kara Owarai e - Fastrom Fix (J)(2021)(MaxwelOlinda).sfc", 1048576, 0x9554dd02, BRF_ESS | BRF_PRG },
+	{ "Parodius Da! - Shinwa kara Owarai e - FastROM Fix (J)(2021)(MaxwelOlinda).sfc", 1048576, 0x9554dd02, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Parodiusjff)
@@ -31526,7 +31545,7 @@ STD_ROM_FN(snes_Parodiusjff)
 
 struct BurnDriver BurnDrvsnes_Parodiusjff = {
 	"snes_parodiusjff", "snes_parodiuse", NULL, NULL, "2021",
-	"Parodius Da!: Shinwa kara Owarai e - Fastrom Fix (Japan, Hack)\0", NULL, "MaxwelOlinda", "Nintendo",
+	"Parodius Da!: Shinwa kara Owarai e - FastROM Fix (Japan, Hack)\0", NULL, "MaxwelOlinda", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_ParodiusjffRomInfo, snes_ParodiusjffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31877,10 +31896,10 @@ struct BurnDriver BurnDrvsnes_Spacegulls = {
 	512, 448, 4, 3
 };
 
-// Steel Talons - Fastrom fix (Hack)
+// Steel Talons - FastROM Fix (Hack)
 // https://www.patreon.com/posts/steel-talons-fix-79800713
 static struct BurnRomInfo snes_SteeltalonsffRomDesc[] = {
-	{ "Steel Talons - Fastrom fix (2023)(ANONYMOUS).sfc", 524288, 0xdc40be22, BRF_ESS | BRF_PRG },
+	{ "Steel Talons - FastROM Fix (2023)(ANONYMOUS).sfc", 524288, 0xdc40be22, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Steeltalonsff)
@@ -31888,7 +31907,7 @@ STD_ROM_FN(snes_Steeltalonsff)
 
 struct BurnDriver BurnDrvsnes_Steeltalonsff = {
 	"snes_steeltalonsff", "snes_steeltalons", NULL, NULL, "2023",
-	"Steel Talons - Fastrom fix (Hack)\0", NULL, "ANONYMOUS", "Nintendo",
+	"Steel Talons - FastROM Fix (Hack)\0", NULL, "ANONYMOUS", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SIM | GBF_SHOOT, 0,
 	SNESGetZipName, snes_SteeltalonsffRomInfo, snes_SteeltalonsffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -32352,10 +32371,10 @@ struct BurnDriver BurnDrvsnes_Witchnwiz = {
 	512, 478, 4, 3
 };
 
-// Wolfchild - Fastrom Fix (Hack)
+// Wolfchild - FastROM Fix (Hack)
 
 static struct BurnRomInfo snes_WolfchildffRomDesc[] = {
-	{ "Wolfchild - Fastrom Fix (2024)(kandowontu).sfc", 1048576, 0xfe9deb64, BRF_ESS | BRF_PRG },
+	{ "Wolfchild - FastROM Fix (2024)(kandowontu).sfc", 1048576, 0xfe9deb64, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Wolfchildff)
@@ -32363,7 +32382,7 @@ STD_ROM_FN(snes_Wolfchildff)
 
 struct BurnDriver BurnDrvsnes_Wolfchildff = {
 	"snes_wolfchildff", "snes_wolfchild", NULL, NULL, "2024",
-	"Wolfchild - Fastrom Fix (Hack)\0", NULL, "kandowontu", "Nintendo",
+	"Wolfchild - FastROM Fix (Hack)\0", NULL, "kandowontu", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_WolfchildffRomInfo, snes_WolfchildffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

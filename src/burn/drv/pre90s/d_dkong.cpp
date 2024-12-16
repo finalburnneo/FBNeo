@@ -4382,7 +4382,7 @@ static struct BurnRomInfo dkspkyteRomDesc[] = {
 	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
 	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
 
-	{ "d2k11.spte",		0x08000, 0x2bb8d91e, 2 }, //  4 braze
+	{ "d2k11.spte",		0x10000, 0x2bb8d91e, 2 }, //  4 braze
 
 	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
 	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6

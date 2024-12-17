@@ -4,6 +4,7 @@ bool didReinitialise = false;
 
 void Reinitialise()
 {
+	pVidImage = NULL;
 	didReinitialise = true;
 	VidReInitialise();
 }

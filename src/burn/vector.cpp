@@ -2,6 +2,8 @@
 #include "tiles_generic.h"
 #include "math.h"
 
+extern UINT8* pVidImage;
+
 #define TABLE_SIZE  0x10000 // excessive?
 
 struct vector_line {
@@ -305,6 +307,7 @@ void draw_vector(UINT32 *palette)
 
 	// copy to the screen, only draw pixels that aren't black
 	// should be safe for any bit depth with putpix
+	if (pVidImage != NULL)
 	{
 		memset (pBurnDraw, 0, nScreenWidth * nScreenHeight * nBurnBpp);
 

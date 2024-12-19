@@ -11227,3 +11227,22 @@ struct BurnDriver BurnDrvcv_yiearii = {
     272, 228, 4, 3
 };
 
+// Time Pilot (SGM)
+
+static struct BurnRomInfo cv_TimePilotRomDesc[] = {
+	{ "TimePilot - SGM (2024)(Opcode Games).rom", 131072, 0xCF803DDC, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_TimePilot, cv_TimePilot, cv_coleco)
+STD_ROM_FN(cv_TimePilot)
+
+struct BurnDriver BurnDrvcv_TimePilot = {
+	"cv_timepilot", NULL, "cv_coleco", NULL, "1980-2024",
+	"TimePilot (SGM) (Konami)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_TimePilotRomInfo, cv_TimePilotRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitOCM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+

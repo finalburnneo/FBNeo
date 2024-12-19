@@ -472,7 +472,15 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	}
 
 	Cart.PRGRomMask = Cart.PRGRomSize - 1;
+
 	Cart.WorkRAMMask = Cart.WorkRAMSize - 1;
+	if (Cart.WorkRAMSize > 0x2000) {
+		// we need to mask addr 6000-7fff, any thing larger than 0x2000
+		// will need the default mask of 0x1fff for this to work properly.
+		// note: the extra ram still can be used by mappers, etc.
+		// note2: VS. System uses 0x800 bytes wram, mirrored across 6000-7fff
+		Cart.WorkRAMMask = 0x1fff;
+	}
 
 	// Game-specific stuff:
 	// Mapper 7 or 4-way mirroring usually gets no workram (6000-7fff)
@@ -1051,6 +1059,11 @@ static void mapper_map_chr(INT32 pagesz, INT32 slot, INT32 bank)
 
 #define MAP_CHR_RAMROM_DEBUG 0
 
+#if MAP_CHR_RAMROM_DEBUG
+static INT32 debug_chr_slots[8] = { -1, };
+static INT32 debug_chr_types[8] = { -1, };
+#endif
+
 static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 type)
 {
 	if (type > MEM_ROM) {
@@ -1058,7 +1071,13 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 	}
 
 #if MAP_CHR_RAMROM_DEBUG
-	bprintf(0, _T("mapper_map_chr_ramrom(%x, %x, %x, %x)\n"), pagesz, slot, bank, type);
+	INT32 debug_spew = (debug_chr_slots[slot & 0x7] != bank) ||
+		(debug_chr_types[slot & 0x7] != type);
+	if (debug_spew) {
+		debug_chr_slots[slot & 0x07] = bank;
+		debug_chr_types[slot & 0x07] = type;
+		bprintf(0, _T("mapper_map_chr_ramrom(%x, %x, %x, %S) - scanline %d\n"), pagesz, slot, bank, (type == MEM_ROM) ? "ROM" : "RAM", scanline);
+	}
 #endif
 
 	for (UINT32 i = 0; i < pagesz; i++) {
@@ -1067,7 +1086,8 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRomSize;
 				CHRType[pagesz * slot + i] = MEM_ROM;
 #if MAP_CHR_RAMROM_DEBUG
-				bprintf(0, _T("ROM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRomSize);
+				if (debug_spew)
+					bprintf(0, _T("ROM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRomSize);
 #endif
 				break;
 
@@ -1076,7 +1096,8 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 				CHRMap[pagesz * slot + i] = (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize;
 				CHRType[pagesz * slot + i] = type;
 #if MAP_CHR_RAMROM_DEBUG
-				bprintf(0, _T("RAM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize);
+				if (debug_spew)
+					bprintf(0, _T("RAM: CHRMap[%x] = %x\n"),pagesz * slot + i, (pagesz * 1024 * bank + 1024 * i) % Cart.CHRRamSize);
 #endif
 				break;
 		}
@@ -2553,7 +2574,7 @@ static void mapper04_write(UINT16 address, UINT8 data)
             case 0x8000: mapper4_banksel = data; break;
             case 0x8001: mapper_regs[(mapper4_banksel & 0x7)] = data; break;
 			case 0xA000: mapper4_mirror = ~data & 1; break;
-			case 0xA001: mapper4_writeprotect = ~data & 1; break;
+			case 0xA001: mapper4_writeprotect = data; break;
             case 0xC000: mapper4_irqlatch = data; break;
             case 0xC001: mapper4_irqreload = 1; break;
             case 0xE000: mapper4_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
@@ -2595,6 +2616,112 @@ static void mapper04_map()
 
 	if (Cart.Mirroring != 4)
 		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+// mapper 555: Nintendo Campus Challenge 1991
+// note: extension to mmc3
+static INT32 *mapper555_timer = (INT32*)&mapper_regs16[0];
+
+#define mapper555_reg               (mapper_regs[0x1f - 7])
+#define mapper555_prgbase           (mapper_regs[0x1f - 8])
+#define mapper555_prgmask           (mapper_regs[0x1f - 9])
+#define mapper555_chrbase           (mapper_regs[0x1f - 10])
+#define mapper555_chrmode           (mapper_regs[0x1f - 11])
+
+static void mapper555_map_prg(INT32 pagesz, INT32 slot, INT32 bank)
+{
+	mapper_map_prg(8, slot, mapper555_prgbase | (bank & mapper555_prgmask));
+}
+
+static void mapper555_map_chr(INT32 pagesz, INT32 slot, INT32 bank)
+{
+	const UINT8 masks[] = { 0x7f, 0x3f, 0x07, 0x07 };
+	const UINT8 mask = masks[(mapper555_chrmode) ? (((bank & 0x40) >> 5) + mapper555_chrmode) : 0];
+
+	mapper_map_chr_ramrom(1, slot, mapper555_chrbase + (bank & mask), (mask == 0x07) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper555_map()
+{
+	mapper555_map_prg(8, 1, mapper_regs[7]);
+
+	const INT32 prg_rev = (mapper4_banksel & 0x40) ? 2 : 0;
+	mapper555_map_prg(8, 0 ^ prg_rev, mapper_regs[6]);
+	mapper555_map_prg(8, 2 ^ prg_rev, -2);
+
+	mapper555_map_prg( 8, 3, -1);
+
+	const INT32 chr_rev = (mapper4_banksel & 0x80) ? 4 : 0;
+	mapper555_map_chr(1, 0 ^ chr_rev, mapper_regs[0] & ~1);
+	mapper555_map_chr(1, 1 ^ chr_rev, mapper_regs[0] | 1);
+	mapper555_map_chr(1, 2 ^ chr_rev, mapper_regs[1] & ~1);
+	mapper555_map_chr(1, 3 ^ chr_rev, mapper_regs[1] | 1);
+
+	mapper555_map_chr(1, 4 ^ chr_rev, mapper_regs[2]);
+	mapper555_map_chr(1, 5 ^ chr_rev, mapper_regs[3]);
+	mapper555_map_chr(1, 6 ^ chr_rev, mapper_regs[4]);
+	mapper555_map_chr(1, 7 ^ chr_rev, mapper_regs[5]);
+
+	if (Cart.Mirroring != 4) { // MMC3: 4 (FOUR_SCREEN) keeps it locked!
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+	}
+}
+
+// callbacks for read/writing WRAM
+static void mapper555_prgwrite(UINT16 address, UINT8 data)
+{
+	cart_exp_write_abort = (mapper4_writeprotect & 0xc0) != 0x80;
+}
+
+static UINT8 mapper555_prgread(UINT16 address)
+{
+	return (mapper4_writeprotect & 0x80) ? Cart.WorkRAM[address & Cart.WorkRAMMask] : cpu_open_bus;
+}
+
+static UINT8 mapper555_read(UINT16 address)
+{
+	if (address < 0x5000) {
+		return cpu_open_bus;
+	}
+	if (address >= 0x5000 && address <= 0x57ff) {
+		return Cart.WorkRAM[0x2000 | (address & 0x7ff)];
+	} else {
+		return (mapper555_timer[0] > ((0x10 | (NESDips[2] >> 4)) << 25)) ? 0x80 : 0x00;
+	}
+	return cpu_open_bus;
+}
+
+static void mapper555_write(UINT16 address, UINT8 data)
+{
+	if (address < 0x5000) return;
+
+	if (address >= 0x5000 && address <= 0x57ff) {
+		Cart.WorkRAM[0x2000 | (address & 0x7ff)] = data;
+		return;
+	}
+
+	if (address >= 0x5800 && address <= 0x5bff) {
+		mapper555_reg = data;
+
+		mapper555_prgbase = (data << 3) & 0x20;
+		mapper555_prgmask =((data & 0x03) << 3) | 0x07;
+		mapper555_chrbase = (data & 0x04) << 5;
+		mapper555_chrmode = (data & 0x06) == 0x02; // 2 = "tqrom, aka mapper119" mode. normal mmc3 otherwise
+
+		if (~mapper555_reg & 8) { // timer disabled, reset timer
+			mapper555_timer[0] = 0;
+		}
+
+		mapper_map();
+		return;
+	}
+}
+
+static void mapper555_cycle()
+{
+	if (mapper555_reg & 8) {
+		mapper555_timer[0]++;
+	}
 }
 
 static void mapper258_map()
@@ -3314,7 +3441,7 @@ static void mapper406_write(UINT16 address, UINT8 data)
 
 static void mapper04_scanline()
 {
-	if (NESMode & ALT_MMC3 && RENDERING) {
+	if (NESMode & ALT_MMC3 && !RENDERING) {
 		return;
 	}
 
@@ -9104,6 +9231,41 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[7] = 1;
 
 			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 555: { // NCC
+			// mmc3 stuff
+			mapper_write = mapper04_write;        // 8000-ffff, write only
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror = Cart.Mirroring;// inherit mirror from cart header
+
+			mapper_map   = mapper555_map;
+
+			psg_area_write = mapper555_write;     // 4000-5fff
+			psg_area_read = mapper555_read;       // 4000-5fff
+
+			cart_exp_write = mapper555_prgwrite;  // 6000-6fff
+			cart_exp_read = mapper555_prgread;    // 6000-6fff
+
+			mapper_cycle = mapper555_cycle; // for timer
+
+			// default mmc3 regs:
+			// chr
+			mapper555_prgmask = 0x07;
+
+			mapper_regs[0] = 0;
+			mapper_regs[1] = 2;
+			mapper_regs[2] = 4;
+			mapper_regs[3] = 5;
+			mapper_regs[4] = 6;
+			mapper_regs[5] = 7;
+			// prg
+			mapper_regs[6] = 0;
+			mapper_regs[7] = 1;
+
 		    mapper_map();
 			retval = 0;
 			break;

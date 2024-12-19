@@ -209,6 +209,29 @@ static struct BurnDIPInfo NESDIPList[] =
 
 STDDIPINFO(NES)
 
+static struct BurnDIPInfo NCC1991DIPList[] =
+{
+	{0   , 0xfe, 0   ,   16, "Timer"		},
+	{0x02, 0x01, 0xf0, 0x00, "5:00"			},
+	{0x02, 0x01, 0xf0, 0x10, "5:19"			},
+	{0x02, 0x01, 0xf0, 0x20, "5:38"			},
+	{0x02, 0x01, 0xf0, 0x30, "5:56"			},
+	{0x02, 0x01, 0xf0, 0x40, "6:15 (Official)"},
+	{0x02, 0x01, 0xf0, 0x50, "6:34"			},
+	{0x02, 0x01, 0xf0, 0x60, "6:53"			},
+	{0x02, 0x01, 0xf0, 0x70, "7:11"			},
+	{0x02, 0x01, 0xf0, 0x80, "7:30"			},
+	{0x02, 0x01, 0xf0, 0x90, "7:49"			},
+	{0x02, 0x01, 0xf0, 0xa0, "8:08"			},
+	{0x02, 0x01, 0xf0, 0xb0, "8:27"			},
+	{0x02, 0x01, 0xf0, 0xc0, "8:45"			},
+	{0x02, 0x01, 0xf0, 0xd0, "9:04"			},
+	{0x02, 0x01, 0xf0, 0xe0, "9:23"			},
+	{0x02, 0x01, 0xf0, 0xf0, "9:42"			},
+};
+
+STDDIPINFOEXT(NESNCC1991, NCC1991, NES)
+
 static struct BurnDIPInfo NESZapperDIPList[] =
 {
 	DIP_OFFSET(0x0d)
@@ -50590,6 +50613,23 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_zunousengalRomInfo, nes_zunousengalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nccRomDesc[] = {
+	{ "Nintendo Campus Challenge (1991)(Nintendo).nes",          786448, 0x15c73c66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ncc)
+STD_ROM_FN(nes_ncc)
+
+struct BurnDriver BurnDrvnes_ncc = {
+	"nes_ncc", NULL, NULL, NULL, "1991",
+	"Nintendo Campus Challenge 1991\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nccRomInfo, nes_nccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESNCC1991DIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -50634,3 +50634,20 @@ struct BurnDriver BurnDrvnes_ncc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_nwcRomDesc[] = {
+	{ "Nintendo World Championships (1990)(Nintendo).nes",          262160, 0xf12f16a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nwc)
+STD_ROM_FN(nes_nwc)
+
+struct BurnDriver BurnDrvnes_nwc = {
+	"nes_nwc", NULL, NULL, NULL, "1990",
+	"Nintendo World Championships 1990\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nwcRomInfo, nes_nwcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESNCC1991DIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

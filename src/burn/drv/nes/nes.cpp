@@ -1854,6 +1854,7 @@ static void mapperFDS_write(UINT16 address, UINT8 data)
 #define mapper01_exbits		(mapper_regs[0x1f - 3])
 #define mapper01_prg2x		(mapper_regs[0x1f - 4])
 static INT32 *mapper01_last_cyc = (INT32*)&mapper_regs16[0];
+static INT32 *mapper105_timer = (INT32*)&mapper_regs16[2];
 
 static void mapper01_write(UINT16 address, UINT8 data)
 {
@@ -1889,6 +1890,52 @@ static void mapper01_write(UINT16 address, UINT8 data)
 		}
 		mapper01_last_cyc[0] = mega_cyc_counter;
     }
+}
+
+static void mapper105_map()
+{
+	if (mapper_regs[1] & 0x8) {
+		// mmc1-mode, can only swap into the second 128k chip ( | 0x8)
+		if (mapper_regs[0] & 0x8) {
+			if (mapper_regs[0] & 0x4) {
+				mapper_map_prg(16, 0, (mapper_regs[3] & 0x7) | 0x8);
+				mapper_map_prg(16, 1, 0x7 | 0x8);
+			} else {
+				mapper_map_prg(16, 0, 0x0 | 0x8);
+				mapper_map_prg(16, 1, (mapper_regs[3] & 0x7) | 0x8);
+			}
+		} else {
+			mapper_map_prg(32, 0, ((mapper_regs[3] & 0x7) | 0x8) >> 1);
+		}
+	} else {
+		// non-mmc1 prg mode, swaps in the first 128k
+		mapper_map_prg(32, 0, ((mapper_regs[1] & 0x6)) >> 1);
+	}
+
+	if (mapper_regs[1] & 0x10) {
+		mapper105_timer[0] = 0;
+		M6502SetIRQLine(0, 0, CPU_IRQSTATUS_NONE);
+	}
+
+	mapper_map_chr( 8, 0, 0 );
+
+	switch (mapper_regs[0] & 3) {
+		case 0: set_mirroring(SINGLE_LOW); break;
+		case 1: set_mirroring(SINGLE_HIGH); break;
+		case 2: set_mirroring(VERTICAL); break;
+		case 3: set_mirroring(HORIZONTAL); break;
+	}
+}
+
+static void mapper105_cycle()
+{
+	if (~mapper_regs[1] & 0x10) {
+		mapper105_timer[0]++;
+		if (mapper105_timer[0] > ((0x10 | (NESDips[2] >> 4)) << 25)) {
+			mapper105_timer[0] = 0;
+			mapper_irq(0);
+		}
+	}
 }
 
 static void mapper01_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
@@ -8275,6 +8322,16 @@ static INT32 mapper_init(INT32 mappernum)
 			}
 			mapper_write = mapper01_write;
 			mapper_map   = mapper01_map;
+			mapper_regs[0] = 0xc;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 105: { // mmc1 + nwc (Nintendo World Championship 1990)
+			mapper_write = mapper01_write;
+			mapper_map   = mapper105_map;
+			mapper_cycle = mapper105_cycle; // for timer
 			mapper_regs[0] = 0xc;
 			mapper_map();
 			retval = 0;

@@ -305,6 +305,7 @@ void draw_vector(UINT32 *palette)
 
 	// copy to the screen, only draw pixels that aren't black
 	// should be safe for any bit depth with putpix
+	if (pBurnDraw != NULL)
 	{
 		memset (pBurnDraw, 0, nScreenWidth * nScreenHeight * nBurnBpp);
 

@@ -11405,6 +11405,25 @@ struct BurnDriver BurnDrvsnes_Hayazashi = {
 	512, 462, 4, 3
 };
 
+// Heartthrob Memorial: Under the Tree of Legends (Hack, English v3)
+// https://www.translated.games/snes/heartthrob
+static struct BurnRomInfo snes_HeartmemoRomDesc[] = {
+	{ "Heartthrob Memorial - Under the Tree of Legends T-Eng v3 (2022)(Translated.Games).sfc", 8388608, 0x09392b73, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Heartmemo)
+STD_ROM_FN(snes_Heartmemo)
+
+struct BurnDriver BurnDrvsnes_Heartmemo = {
+	"snes_heartmemo", NULL, NULL, NULL, "2022",
+	"Heartthrob Memorial: Under the Tree of Legends (Hack, English v3)\0", NULL, "Translated.Games", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_HeartmemoRomInfo, snes_HeartmemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Hebereke's Popoon (Euro)
 
 static struct BurnRomInfo snes_HebepopooneRomDesc[] = {
@@ -15870,6 +15889,26 @@ struct BurnDriver BurnDrvsnes_Megaman7 = {
 	512, 448, 4, 3
 };
 
+// Mega Man & Bass (Hack, English v1.1)
+// https://www.romhacking.net/translations/621/
+// https://www.romhacking.net/translations/6128/
+static struct BurnRomInfo snes_MegamanbassRomDesc[] = {
+	{ "Mega Man & Bass T-Eng v1.1 (2002-2023)(Aeon Genesis, Blade133bo).sfc", 4194304, 0xbb319f69, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanbass)
+STD_ROM_FN(snes_Megamanbass)
+
+struct BurnDriver BurnDrvsnes_Megamanbass = {
+	"snes_megamanbass", NULL, NULL, NULL, "2002-2023",
+	"Mega Man & Bass (Hack, English v1.1)\0", NULL, "Aeon Genesis, Blade133bo", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MegamanbassRomInfo, snes_MegamanbassRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mega Man X (USA)
 
 static struct BurnRomInfo snes_MegamanxRomDesc[] = {
@@ -20288,10 +20327,10 @@ STD_ROM_PICK(snes_Rockmanforte)
 STD_ROM_FN(snes_Rockmanforte)
 
 struct BurnDriver BurnDrvsnes_Rockmanforte = {
-	"snes_rockmanforte", NULL, NULL, NULL, "1998",
+	"snes_rockmanforte", "snes_megamanbass", NULL, NULL, "1998",
 	"Rockman & Forte (Japan)\0", NULL, "Capcom", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_RockmanforteRomInfo, snes_RockmanforteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -20692,6 +20731,44 @@ struct BurnDriver BurnDrvsnes_Rtypeiiij = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_RtypeiiijRomInfo, snes_RtypeiiijRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rudra no Hihou (Japan)
+
+static struct BurnRomInfo snes_RudrajRomDesc[] = {
+	{ "Rudra no Hihou (J)(1996)(Squaresoft).sfc", 4194304, 0x5d8cb7ac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rudraj)
+STD_ROM_FN(snes_Rudraj)
+
+struct BurnDriver BurnDrvsnes_Rudraj = {
+	"snes_rudraj", "snes_rudrate", NULL, NULL, "1996",
+	"Rudra no Hihou (Japan)\0", NULL, "Squaresoft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_RudrajRomInfo, snes_RudrajRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Treasure of the Rudras (Hack, English v2.10)
+// https://www.romhacking.net/translations/669/
+static struct BurnRomInfo snes_RudrateRomDesc[] = {
+	{ "Treasure of the Rudras T-Eng v2.10 (2018)(Aeon Genesis).sfc", 4194304, 0x2d7bd150, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rudrate)
+STD_ROM_FN(snes_Rudrate)
+
+struct BurnDriver BurnDrvsnes_Rudrate = {
+	"snes_rudrate", NULL, NULL, NULL, "2018",
+	"Treasure of the Rudras (Hack, English v2.10)\0", NULL, "Aeon Genesis", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_RudrateRomInfo, snes_RudrateRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -21148,6 +21225,25 @@ struct BurnDriver BurnDrvsnes_Sdgundamgx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
 	SNESGetZipName, snes_SdgundamgxRomInfo, snes_SdgundamgxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Seifuku Densetsu - Pretty Fighter (Japan)
+
+static struct BurnRomInfo snes_SdprettyjRomDesc[] = {
+	{ "Seifuku Densetsu - Pretty Fighter (J)(1994)(Imagineer).sfc", 2097152, 0xa638bef1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sdprettyj)
+STD_ROM_FN(snes_Sdprettyj)
+
+struct BurnDriver BurnDrvsnes_Sdprettyj = {
+	"snes_sdprettyj", NULL, NULL, NULL, "1994",
+	"Seifuku Densetsu - Pretty Fighter (Japan)\0", NULL, "Imagineer", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SdprettyjRomInfo, snes_SdprettyjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -27856,6 +27952,25 @@ struct BurnDriver BurnDrvsnes_Tmsksoccer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_TmsksoccerRomInfo, snes_TmsksoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev 1)
+
+static struct BurnRomInfo snes_TokimemoRomDesc[] = {
+	{ "Tokimeki Memorial - Densetsu no Ki no Shita de (J, Rev 1)(1996)(Konami).sfc", 4194304, 0xae9f3602, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tokimemo)
+STD_ROM_FN(snes_Tokimemo)
+
+struct BurnDriver BurnDrvsnes_Tokimemo = {
+	"snes_tokimemo", "snes_heartmemo", NULL, NULL, "1996",
+	"Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev 1)\0", NULL, "Konami", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_TokimemoRomInfo, snes_TokimemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

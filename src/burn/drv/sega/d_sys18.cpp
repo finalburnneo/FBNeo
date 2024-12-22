@@ -1,4 +1,5 @@
 #include "sys16.h"
+#include <math.h> // round()
 
 /*====================================================
 Input defs

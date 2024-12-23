@@ -28738,6 +28738,25 @@ struct BurnDriver BurnDrvMSX_cat = {
 	272, 228, 4, 3
 };
 
+// Catbox (HB, v1.3)
+
+static struct BurnRomInfo MSX_catboxRomDesc[] = {
+	{ "Catbox v1.3 (2024)(Gamecast Ent.).rom",	753664, 0x11e3133a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_catbox, MSX_catbox, msx_msx)
+STD_ROM_FN(MSX_catbox)
+
+struct BurnDriver BurnDrvMSX_catbox = {
+	"msx_catbox", NULL, "msx_msx", NULL, "2024",
+	"Catbox (HB, v1.3)\0", NULL, "Gamecast Entertainment", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION | GBF_MAZE, 0,
+	MSXGetZipName, MSX_catboxRomInfo, MSX_catboxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // CatsPots (HB, v1.2)
 
 static struct BurnRomInfo MSX_catspotsRomDesc[] = {
@@ -29612,6 +29631,25 @@ struct BurnDriver BurnDrvMSX_drinkit = {
 	272, 228, 4, 3
 };
 
+// Drop of Abu-Cymbel, The (English) (HB)
+
+static struct BurnRomInfo MSX_dropabucymbelRomDesc[] = {
+	{ "Drop of Abu-Cymbel, The (2024)(joesg).rom",	32768, 0x1b20ae22, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dropabucymbel, MSX_dropabucymbel, msx_msx)
+STD_ROM_FN(MSX_dropabucymbel)
+
+struct BurnDriver BurnDrvMSX_dropabucymbel = {
+	"msx_dropabucymbel", NULL, "msx_msx", NULL, "2024",
+	"Drop of Abu-Cymbel, The (English) (HB)\0", "Redefine Keys to use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_dropabucymbelRomInfo, MSX_dropabucymbelRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Duckstroma (HB, v1.03)
 
 static struct BurnRomInfo MSX_duckstromaRomDesc[] = {
@@ -29969,6 +30007,25 @@ struct BurnDriver BurnDrvMSX_frogadvs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
 	MSXGetZipName, MSX_frogadvsRomInfo, MSX_frogadvsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gota de Abu-Cymbel, La (Spanish) (HB)
+
+static struct BurnRomInfo MSX_gotaabucymbelRomDesc[] = {
+	{ "Gota de Abu-Cymbel, La (2024)(joesg).rom",	32768, 0x51c192e6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gotaabucymbel, MSX_gotaabucymbel, msx_msx)
+STD_ROM_FN(MSX_gotaabucymbel)
+
+struct BurnDriver BurnDrvMSX_gotaabucymbel = {
+	"msx_gotaabucymbel", "msx_dropabucymbel", "msx_msx", NULL, "2024",
+	"Gota de Abu-Cymbel, La (Spanish) (HB)\0", "Redefine Keys to use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gotaabucymbelRomInfo, MSX_gotaabucymbelRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -33427,6 +33484,25 @@ struct BurnDriver BurnDrvMSX_snowboard = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_snowboardRomInfo, MSX_snowboardRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sorcerer Kid Adventure (HB, v1.02)
+
+static struct BurnRomInfo MSX_sorkidadvRomDesc[] = {
+	{ "Sorcerer Kid Adventure v1.02 (2024)(VidaExtraRetro).rom",	49152, 0x52747abb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sorkidadv, MSX_sorkidadv, msx_msx)
+STD_ROM_FN(MSX_sorkidadv)
+
+struct BurnDriver BurnDrvMSX_sorkidadv = {
+	"msx_sorkidadv", NULL, "msx_msx", NULL, "2024",
+	"Sorcerer Kid Adventure (HB, v1.02)\0", NULL, "VidaExtraRetro", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_sorkidadvRomInfo, MSX_sorkidadvRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

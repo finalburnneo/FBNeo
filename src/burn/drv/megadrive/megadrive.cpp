@@ -45,6 +45,7 @@
 
 // PicoDrive Sek interface
 static UINT64 SekCycleCnt, SekCycleAim, SekCycleCntDELTA, line_base_cycles;
+static INT32 lines_vis;
 
 #define SekCyclesReset()        { SekCycleCnt = SekCycleAim = SekCycleCntDELTA = 0; }
 #define SekCyclesNewFrame()     { SekCycleCntDELTA = line_base_cycles = SekCycleCnt; }
@@ -1066,7 +1067,8 @@ static UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	case 0x04:	// command
 		{
 			UINT16 d = RamVReg->status; //xxxxxxxxxxx
-			if (SekCyclesLine() >= (488-88))
+
+			if (SekCyclesLine() >= (488-(0xd8)))
 				d|=0x0004; // H-Blank (Sonic3 vs)
 
 			d |= ((RamVReg->reg[1]&0x40)^0x40) >> 3;  // set V-Blank if display is disabled
@@ -1129,15 +1131,14 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 			// FIFO
 			// preliminary FIFO emulation for Chaos Engine, The (E)
 			if (!(RamVReg->status&8) && (RamVReg->reg[1]&0x40)) // active display?
-			{
-				RamVReg->status&=~0x200; // FIFO no longer empty
-				RamVReg->lwrite_cnt++;
-				if (RamVReg->lwrite_cnt >= 4) RamVReg->status|=0x100; // FIFO full
-				if (RamVReg->lwrite_cnt >  4) {
-					//SekRunAdjust(0-80);
-					//SekIdle(80);
-					SekCyclesBurnRun(32);
-				}
+				if (Scanline <= lines_vis)
+				{
+					int use = RamVReg->type == 1 ? 2 : 1;
+					RamVReg->lwrite_cnt -= use;
+					if (RamVReg->lwrite_cnt < 0) {
+						m68k_ICount = 0;
+					}
+
 				//elprintf(EL_ASVDP, "VDP data write: %04x [%06x] {%i} #%i @ %06x", d, Pico.video.addr,
 				//		 Pico.video.type, pvid->lwrite_cnt, SekPc);
 			}
@@ -4892,6 +4893,17 @@ INT32 MegadriveDraw()
 #define CYCLES_M68K_VINT_LAG  68
 #define CYCLES_M68K_ASD      148
 
+static void do_timing_hacks_as(int vdp_slots)
+{
+  RamVReg->lwrite_cnt += vdp_slots - dma_xfers * 2; // wrong *2
+  if (RamVReg->lwrite_cnt > vdp_slots)
+    RamVReg->lwrite_cnt = vdp_slots;
+  else if (RamVReg->lwrite_cnt < 0)
+    RamVReg->lwrite_cnt = 0;
+  if (dma_xfers)
+	  SekCyclesBurn(CheckDMA());
+}
+
 INT32 MegadriveFrame()
 {
 	if (MegadriveReset) {
@@ -4927,7 +4939,10 @@ INT32 MegadriveFrame()
 
 	PicoFrameStart();
 
-	INT32 lines, lines_vis = 224, line_sample;
+	INT32 lines, line_sample;
+	lines_vis = 224;
+	INT32 vdp_slots = (RamVReg->reg[12] & 1) ? 18 : 16;
+
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 vcnt_wrap = 0;
 	INT32 zirq_skipped = 0;
@@ -4957,12 +4972,6 @@ INT32 MegadriveFrame()
 		Scanline = y;
 
 		if (y < lines_vis) {
-			// VDP FIFO
-			RamVReg->lwrite_cnt -= 12;
-			if (RamVReg->lwrite_cnt <= 0) {
-				RamVReg->lwrite_cnt=0;
-				RamVReg->status|=0x200;
-			}
 			RamVReg->v_counter = y;
 			if ((RamVReg->reg[12]&6) == 6) { // interlace mode 2
 				RamVReg->v_counter <<= 1;
@@ -5060,9 +5069,11 @@ INT32 MegadriveFrame()
 
 		// Run scanline
 		if (y == lines_vis) {
+			do_timing_hacks_as(vdp_slots);
 			SekRunM68k(CYCLES_M68K_LINE - CYCLES_M68K_VINT_LAG - CYCLES_M68K_ASD);
 		} else {
 			line_base_cycles = SekCyclesDone();
+#if 0
 #ifdef CYCDBUG
 			burny = DMABURN();
 			SekCyclesBurn(burny);
@@ -5070,6 +5081,13 @@ INT32 MegadriveFrame()
 #else
 			SekCyclesBurn(DMABURN());
 #endif
+#endif
+
+			if (y < lines_vis) {
+				do_timing_hacks_as(vdp_slots);
+			} else {
+				SekCyclesBurn(DMABURN());
+			}
 			SekRunM68k(CYCLES_M68K_LINE);
 		}
 

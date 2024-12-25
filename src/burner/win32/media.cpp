@@ -26,6 +26,13 @@ int MediaInit()
 		nBurnSoundLen = nAudSegLen;
 	}
 
+	if (nBurnSoundRate == 0) {
+		// Sound disabled, but fake these numbers for sound cores which must
+		// stay synched (f.ex. burn_md2612)
+		nBurnSoundRate = 44100;
+		nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;
+	}
+
 	if (!bVidOkay) {
 
 		// Reinit the video plugin

@@ -70,20 +70,16 @@ static void SekRunM68k(INT32 cyc)
 	m68k_ICount = 0;
 }
 
-static UINT64 z80_cycle_cnt, z80_cycle_aim, last_z80_sync;
+static UINT64 z80_cycle_cnt;
 
-#define z80CyclesReset()        { last_z80_sync = z80_cycle_cnt = z80_cycle_aim = 0; }
-#define cycles_68k_to_z80(x)    ( (x)*957 >> 11 )
+#define z80CyclesReset()        { z80_cycle_cnt = 0; }
+#define cycles_68k_to_z80(x)    ((UINT64) (x)*957 >> 11 )
 
 /* sync z80 to 68k */
 static void z80CyclesSync(INT32 bRun)
 {
-	INT64 m68k_cycles_done = SekCyclesDone();
-
-	INT32 m68k_cnt = m68k_cycles_done - last_z80_sync;
-	z80_cycle_aim += cycles_68k_to_z80(m68k_cnt);
-	INT32 cnt = z80_cycle_aim - z80_cycle_cnt;
-	last_z80_sync = m68k_cycles_done;
+	INT64 z80_total = cycles_68k_to_z80(SekCyclesDone());
+	INT32 cnt = z80_total - z80_cycle_cnt;
 
 	if (cnt > 0) {
 		if (bRun) {
@@ -261,21 +257,17 @@ static UINT32 RomNum = 0;
 static UINT32 RomSize = 0;
 static UINT32 SRamSize = 0;
 
-static INT32 SpriteBlocks;
-
 static INT32 Scanline = 0;
 
 static INT32 Z80HasBus = 0;
 static INT32 MegadriveZ80Reset = 0;
-static INT32 RomNoByteswap;
 
 static INT32 dma_xfers = 0; // vdp dma
-//static INT32 rendstatus = 0; // status of vdp renderer
+
 static INT32 BlankedLine = 0;
 static INT32 interlacemode2 = 0;
 
 static UINT8 Hardware;
-static UINT8 DrvSECAM = 0;	// NTSC
 static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
@@ -727,12 +719,6 @@ static UINT32 CheckDMA(void)
   return burn;
 }
 
-static INT32 DMABURN() { // add cycles to the 68k cpu
-    if (dma_xfers) {
-        return CheckDMA();
-    } else return 0;
-}
-
 static void DmaSlow(INT32 len)
 {
 	UINT16 *pd=0, *pdend, *r;
@@ -750,12 +736,12 @@ static void DmaSlow(INT32 len)
 
 	dma_xfers += len;
 
-	INT32 dmab = CheckDMA();
+//	INT32 dmab = CheckDMA();
 
 #ifdef CYCDBUG
 //	bprintf(0, _T("dma @ ln %d cyc %d, burnt: %d.\n"), Scanline, SekCyclesLine(), dmab);
 #endif
-	SekCyclesBurnRun(dmab);
+	SekCyclesBurnRun(CheckDMA());
 
 	if ((source & 0xe00000) == 0xe00000) { // RAM
 		pd    = (UINT16 *)(Ram68K + (source & 0xfffe));
@@ -1198,6 +1184,8 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 
 				UINT8 oldreg = RamVReg->reg[num];
 				RamVReg->reg[num] = wordValue & 0xff;
+
+//				if (num < 2) bprintf(0, _T("sl %d, reg[%02x]  %02x\n"),Scanline, num, wordValue&0xff);
 
 				// update IRQ level (Lemmings, Wiz 'n' Liz intro, ... )
 				// may break if done improperly:
@@ -3362,7 +3350,6 @@ INT32 MegadriveInit()
 	BurnSetRefreshRate(60.0);
 
 	bNoDebug = 0;
-	DrvSECAM = 0;
 	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 1);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
@@ -3409,7 +3396,6 @@ INT32 MegadriveExit()
 	}
 
 	MegadriveCallback = NULL;
-	RomNoByteswap = 0;
 	MegadriveReset = 0;
 	RomSize = 0;
 	RomNum = 0;
@@ -3418,7 +3404,6 @@ INT32 MegadriveExit()
 	Z80HasBus = 0;
 	MegadriveZ80Reset = 0;
 	Hardware = 0;
-	DrvSECAM = 0;
 	HighCol = NULL;
 	bNoDebug = 0;
 	bForce3Button = 0;
@@ -4718,9 +4703,7 @@ static void SetHighCol(INT32 line)
 
 static void PicoFrameStart()
 {
-//	rendstatus = 0x80 >> 5;							// accurate sprites
 	RamVReg->status &= ~0x0020;                     // mask collision bit
-//	if((RamVReg->reg[12]&6) == 6) rendstatus |= 8;	// interlace mode
 
 // prepare to do this frame
 	RamVReg->rendstatus = 0;
@@ -5024,6 +5007,7 @@ INT32 MegadriveFrame()
 
 			line_base_cycles = SekCyclesDone();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
+#if 0
 #ifdef CYCDBUG
 			burny = DMABURN();
 			SekCyclesBurn(burny);
@@ -5031,6 +5015,9 @@ INT32 MegadriveFrame()
 #else
 			SekCyclesBurn(DMABURN());
 #endif
+#endif
+			SekCyclesBurnRun(CheckDMA());
+
 			SekRunM68k(CYCLES_M68K_VINT_LAG);
 
 			if(RamVReg->reg[1] & 0x20) {
@@ -5073,20 +5060,11 @@ INT32 MegadriveFrame()
 			SekRunM68k(CYCLES_M68K_LINE - CYCLES_M68K_VINT_LAG - CYCLES_M68K_ASD);
 		} else {
 			line_base_cycles = SekCyclesDone();
-#if 0
-#ifdef CYCDBUG
-			burny = DMABURN();
-			SekCyclesBurn(burny);
-			if (burny) {bprintf(0, _T("[%d] burny %d, cyclesdone %d. "), Scanline, burny, SekCyclesLine()); }
-#else
-			SekCyclesBurn(DMABURN());
-#endif
-#endif
 
 			if (y < lines_vis) {
 				do_timing_hacks_as(vdp_slots);
 			} else {
-				SekCyclesBurn(DMABURN());
+				SekCyclesBurnRun(CheckDMA());
 			}
 			SekRunM68k(CYCLES_M68K_LINE);
 		}
@@ -5101,14 +5079,19 @@ INT32 MegadriveFrame()
 
 	if (pBurnDraw) MegadriveDraw();
 
+#if 0
+	// this makes no sense
 	if (Z80HasBus && !MegadriveZ80Reset) {
 		z80CyclesSync(1);
 	}
+#endif
 
 	if (pBurnSoundOut) {
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		BurnMD2612Update(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	// ym2612 needs to be updated even if pBurnSoundOut is NULL.
+	BurnMD2612Update(pBurnSoundOut, nBurnSoundLen);
 
 	SekClose();
 	ZetClose();
@@ -5145,15 +5128,11 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Scanline);
 		SCAN_VAR(Z80HasBus);
 		SCAN_VAR(MegadriveZ80Reset);
-		SCAN_VAR(SpriteBlocks);
-//		SCAN_VAR(rendstatus);
 		SCAN_VAR(SekCycleCnt);
 		SCAN_VAR(SekCycleAim);
 		SCAN_VAR(dma_xfers);
 
 		SCAN_VAR(z80_cycle_cnt);
-		SCAN_VAR(z80_cycle_aim);
-		SCAN_VAR(last_z80_sync);
 
 		BurnRandomScan(nAction);
 	}

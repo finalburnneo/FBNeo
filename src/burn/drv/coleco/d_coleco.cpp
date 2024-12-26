@@ -11246,3 +11246,22 @@ struct BurnDriver BurnDrvcv_TimePilot = {
 	272, 228, 4, 3
 };
 
+// Aztec Challenge
+
+static struct BurnRomInfo cv_AztecchalRomDesc[] = {
+	{ "Aztec Challenge (2024)(Dragonfly Amusement).rom", 32768, 0xb931416a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Aztecchal, cv_Aztecchal, cv_coleco)
+STD_ROM_FN(cv_Aztecchal)
+
+struct BurnDriver BurnDrvcv_Aztecchal = {
+	"cv_aztecchal", NULL, "cv_coleco", NULL, "2024",
+	"Aztec Challenge (HB)\0", NULL, "Dragonfly Amusement", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_AztecchalRomInfo, cv_AztecchalRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+

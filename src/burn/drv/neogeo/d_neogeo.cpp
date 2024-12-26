@@ -2404,6 +2404,8 @@ static struct BurnRomInfo nam1975RomDesc[] = {
 STDROMPICKEXT(nam1975, nam1975, neogeo)
 STD_ROM_FN(nam1975)
 
+// Note: Even though the titlescreen is cropped, the ending scene requires 320x224!
+
 struct BurnDriver BurnDrvNam1975 = {
 	"nam1975", NULL, "neogeo", NULL, "1990",
 	"NAM-1975 (NGM-001 ~ NGH-001)\0", NULL, "SNK", "Neo Geo MVS",
@@ -2411,7 +2413,7 @@ struct BurnDriver BurnDrvNam1975 = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
 	NULL, nam1975RomInfo, nam1975RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
+	0x1000, 320, 224, 4, 3
 };
 
 

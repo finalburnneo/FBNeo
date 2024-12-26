@@ -374,10 +374,10 @@ static int RunGetNextSound(int bDraw)
 		if (bAppDoStep) {
 			bAppDoStep = 0;									// done one step
 			RunFrame(bDraw, 0);
-			memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
 		} else {
 			RunFrame(bDraw, 1);
 		}
+		memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
 
 		return 0;
 	}
@@ -385,7 +385,7 @@ static int RunGetNextSound(int bDraw)
 	int bBrokeOutOfFFWD = 0;
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
-			if (!bAppDoFast) {
+			if (!bAppDoFast || bRunPause) {
 				bBrokeOutOfFFWD = 1; // recording ended, etc.
 				break;
 			}                     // break out if no longer in ffwd

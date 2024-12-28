@@ -56160,3 +56160,21 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Captain Barrel (HB)
+
+static struct BurnRomInfo md_captainbarrelRomDesc[] = {
+	{ "Captain Barrel (2024)(Ozzy Ouzo).bin", 4063232, 0xefc68ae6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_captainbarrel)
+STD_ROM_FN(md_captainbarrel)
+
+struct BurnDriver BurnDrvmd_captainbarrel = {
+	"md_captainbarrel", NULL, NULL, NULL, "2024",
+	"Captain Barrel (HB)\0", NULL, "Ozzy Ouzo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_captainbarrelRomInfo, md_captainbarrelRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

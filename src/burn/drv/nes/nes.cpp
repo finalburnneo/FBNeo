@@ -1104,6 +1104,14 @@ static void mapper_map_chr_ramrom(INT32 pagesz, INT32 slot, INT32 bank, INT32 ty
 	}
 }
 
+// FIND_CHEAT_ROMOFFSET helps to find the rom offset of gamegenie cheats
+// when an address hits :)
+#define FIND_CHEAT_ROMOFFSET 0
+
+#if FIND_CHEAT_ROMOFFSET
+static int l_address, l_offset;
+#endif
+
 static UINT8 mapper_prg_read_int(UINT16 address) // mapper_prg_read points here
 {
 #if 0
@@ -1112,6 +1120,12 @@ static UINT8 mapper_prg_read_int(UINT16 address) // mapper_prg_read points here
 		bprintf(0, _T("mapper_prg_read_int(): address %x, bad PRGType[%x]!\n"), address, PRGType[(address & ~0x8000) / 0x2000]);
 	}
 #endif
+
+#if FIND_CHEAT_ROMOFFSET
+	l_address = address;
+	l_offset = PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff);
+#endif
+
 	return prg_maps[PRGType[(address & ~0x8000) / 0x2000]] [PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff)];
 #if 0
 	// the old version, more "readable", but slower.  save to keep sane.
@@ -10837,7 +10851,9 @@ static inline UINT8 cheat_check(UINT16 address, UINT8 value)
 {
 	for (INT32 i = 0; i < cheats_active; i++) {
 		if (cheats[i].address == address && (cheats[i].compare == -1 || cheats[i].compare == value)) {
-		 //   bprintf(0, _T("."));
+#if FIND_CHEAT_ROMOFFSET
+			bprintf(0, _T("%x %x -> %x, prg addy/offset: %x  %x\n"), address, cheats[i].compare, cheats[i].value, l_address, l_offset);
+#endif
 			return cheats[i].value;
 		}
 	}

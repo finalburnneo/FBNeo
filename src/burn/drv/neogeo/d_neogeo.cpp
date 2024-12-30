@@ -28383,10 +28383,10 @@ struct BurnDriver BurnDrvKnightsch = {
 // https://www.neobyteforce.com/
 
 static struct BurnRomInfo captainbarrelRomDesc[] = {
-	{ "captain-p1.bin", 0x100000", 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
-	{ "captain-p2.bin",	0x100000", 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "captain-p1.bin", 0x100000, 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "captain-p2.bin",	0x100000, 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
 
-	{ "captain-s1.bin",	0x020000,  0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
+	{ "captain-s1.bin",	0x020000, 0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
 
 	{ "captain-c1.bin",	0x200000, 0xbce671cd, 3 | BRF_GRA },           	//  3 Sprite data
 	{ "captain-c2.bin",	0x200000, 0x843e16ac, 3 | BRF_GRA },           	//  4

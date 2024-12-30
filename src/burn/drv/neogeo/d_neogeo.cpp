@@ -28383,18 +28383,18 @@ struct BurnDriver BurnDrvKnightsch = {
 // https://www.neobyteforce.com/
 
 static struct BurnRomInfo captainbarrelRomDesc[] = {
-	{ "captain-p1.bin",	0x0100000, 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
-	{ "captain-p2.bin",	0x0300000, 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "captain-p1.bin", 0x100000", 0x6da1737d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "captain-p2.bin",	0x100000", 0xf6f90237, 1 | BRF_ESS | BRF_PRG }, 	//  1
 
-	{ "captain-s1.bin",	0x0020000, 0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
+	{ "captain-s1.bin",	0x020000,  0x9785df9c, 2 | BRF_GRA },           	//  2 Text layer tiles
 
-	{ "captain-c1.bin",	0x1000000, 0xbce671cd, 3 | BRF_GRA },           	//  3 Sprite data
-	{ "captain-c2.bin",	0x1000000, 0x843e16ac, 3 | BRF_GRA },           	//  4
+	{ "captain-c1.bin",	0x200000, 0xbce671cd, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "captain-c2.bin",	0x200000, 0x843e16ac, 3 | BRF_GRA },           	//  4
 
-	{ "captain-m1.bin",	0x0010000, 0xed6260d2, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+	{ "captain-m1.bin",	0x010000, 0xed6260d2, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
 
-	{ "captain-v1.bin",	0x0800000, 0x8cfcceb7, 5 | BRF_SND },           	//  6 Sound data
-	{ "captain-v2.bin",	0x0800000, 0xd1080962, 5 | BRF_SND },           	//  6 Sound data
+	{ "captain-v1.bin",	0x800000, 0x8cfcceb7, 5 | BRF_SND },           	//  6 Sound data
+	{ "captain-v2.bin",	0x800000, 0xd1080962, 5 | BRF_SND },           	//  6 Sound data
 };
 
 STDROMPICKEXT(captainbarrel, captainbarrel, neogeo)

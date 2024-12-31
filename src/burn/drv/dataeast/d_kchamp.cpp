@@ -1072,7 +1072,7 @@ struct BurnDriver BurnDrvKchamptec = {
 };
 
 
-// Karate Champ (US VS version, set 1)
+// Karate Champ: Player Vs Player (US, set 1)
 
 static struct BurnRomInfo kchampvsRomDesc[] = {
 	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
@@ -1142,17 +1142,17 @@ static INT32 KchampvsInit1()
 }
 
 struct BurnDriver BurnDrvKchampvs = {
-	"kchampvs", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 1)\0", NULL, "Data East USA", "Miscellaneous",
+	"kchampvs", NULL, NULL, NULL, "1984",
+	"Karate Champ: Player Vs Player (US, set 1)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvsRomInfo, kchampvsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 
 
-// Karate Champ (US VS version, set 2)
+// Karate Champ: Player Vs Player (US, set 2)
 
 static struct BurnRomInfo kchampvs2RomDesc[] = {
 	{ "lt.d13",	0x2000, 0xeef41aa8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
@@ -1193,8 +1193,8 @@ STD_ROM_PICK(kchampvs2)
 STD_ROM_FN(kchampvs2)
 
 struct BurnDriver BurnDrvKchampvs2 = {
-	"kchampvs2", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 2)\0", NULL, "Data East USA", "Miscellaneous",
+	"kchampvs2", "kchampvs", NULL, NULL, "1984",
+	"Karate Champ: Player Vs Player (US, set 2)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs2RomInfo, kchampvs2RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
@@ -1203,7 +1203,7 @@ struct BurnDriver BurnDrvKchampvs2 = {
 };
 
 
-// Karate Champ (US VS version, set 3)
+// Karate Champ: Player Vs Player (US, set 3)
 // This version has a mix of the "Karate Champ (US VS version, set 1)" ROMs and a few ROMs unique to "Taisen Karate Dou (Japan VS version)" along with 1 completely unique program ROM.
 // The only difference is instead of "My hero" as found in the later US sets it says "My hero deserves the fair".
 
@@ -1247,8 +1247,8 @@ STD_ROM_PICK(kchampvs3)
 STD_ROM_FN(kchampvs3)
 
 struct BurnDriver BurnDrvKchampvs3 = {
-	"kchampvs3", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 3)\0", NULL, "Data East USA", "Miscellaneous",
+	"kchampvs3", "kchampvs", NULL, NULL, "1984",
+	"Karate Champ: Player Vs Player (US, set 3)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs3RomInfo, kchampvs3RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
@@ -1257,7 +1257,7 @@ struct BurnDriver BurnDrvKchampvs3 = {
 };
 
 
-// Karate Champ (US VS version, set 4)
+// Karate Champ: Player Vs Player (US, set 4)
 // This version has a mix of the "Karate Champ (US VS version, set 1)" ROMs and a few ROMs unique to "Taisen Karate Dou (Japan VS version)".
 // It displays the dialog balloon in red with a boat below it.
 
@@ -1301,8 +1301,8 @@ STD_ROM_PICK(kchampvs4)
 STD_ROM_FN(kchampvs4)
 
 struct BurnDriver BurnDrvKchampvs4 = {
-	"kchampvs4", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 4)\0", NULL, "Data East USA", "Miscellaneous",
+	"kchampvs4", "kchampvs", NULL, NULL, "1984",
+	"Karate Champ: Player Vs Player (US, set 4)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs4RomInfo, kchampvs4RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
@@ -1311,7 +1311,7 @@ struct BurnDriver BurnDrvKchampvs4 = {
 };
 
 
-// Taisen Karate Dou (Japan VS version)
+// Taisen Karate Dou (Japan)
 
 static struct BurnRomInfo karatevsRomDesc[] = {
 	{ "br24.d13",	0x2000, 0xea9cda49, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
@@ -1352,8 +1352,8 @@ STD_ROM_PICK(karatevs)
 STD_ROM_FN(karatevs)
 
 struct BurnDriver BurnDrvKaratevs = {
-	"karatevs", "kchamp", NULL, NULL, "1984",
-	"Taisen Karate Dou (Japan VS version)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"karatevs", "kchampvs", NULL, NULL, "1984",
+	"Taisen Karate Dou (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatevsRomInfo, karatevsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,

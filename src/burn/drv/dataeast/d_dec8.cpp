@@ -2338,10 +2338,10 @@ STD_ROM_PICK(meikyuh)
 STD_ROM_FN(meikyuh)
 
 struct BurnDriver BurnDrvMeikyuh = {
-	"meikyuh", "ghostb", NULL, NULL, "1987",
+	"meikyuh", NULL, NULL, NULL, "1987",
 	"Meikyuu Hunter G (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -2385,8 +2385,8 @@ STD_ROM_PICK(meikyuhbl)
 STD_ROM_FN(meikyuhbl)
 
 struct BurnDriver BurnDrvMeikyuhbl = {
-	"meikyuhbl", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, bootleg)\0", NULL, "Data East Corporation", "DEC8",
+	"meikyuhbl", "meikyuh", NULL, NULL, "1987",
+	"Meikyuu Hunter G (Japan, bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, meikyuhblRomInfo, meikyuhblRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
@@ -3499,7 +3499,7 @@ static INT32 SrdarwinFrame()
 }
 
 
-// Super Real Darwin (World)
+// SRD: Super Real Darwin (World)
 
 static struct BurnRomInfo srdarwinRomDesc[] = {
 	{ "dy_01-e.b14",	0x10000, 0x176e9299, 1 }, //  0 maincpu
@@ -3529,7 +3529,7 @@ STD_ROM_FN(srdarwin)
 
 struct BurnDriver BurnDrvSrdarwin = {
 	"srdarwin", NULL, NULL, NULL, "1987",
-	"Super Real Darwin (World)\0", NULL, "Data East Corporation", "DEC8",
+	"SRD: Super Real Darwin (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, srdarwinRomInfo, srdarwinRomName, NULL, NULL, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
@@ -3538,7 +3538,7 @@ struct BurnDriver BurnDrvSrdarwin = {
 };
 
 
-// Super Real Darwin (Japan)
+// SRD: Super Real Darwin (Japan)
 
 static struct BurnRomInfo srdarwnjRomDesc[] = {
 	{ "dy_01.b14",			0x10000, 0x1eeee4ff, 1 }, //  0 maincpu
@@ -3568,7 +3568,7 @@ STD_ROM_FN(srdarwnj)
 
 struct BurnDriver BurnDrvSrdarwnj = {
 	"srdarwinj", "srdarwin", NULL, NULL, "1987",
-	"Super Real Darwin (Japan)\0", NULL, "Data East Corporation", "DEC8",
+	"SRD: Super Real Darwin (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, srdarwnjRomInfo, srdarwnjRomName, NULL, NULL, NULL, NULL, SrdarwinInputInfo, SrdarwinjDIPInfo,
@@ -5706,7 +5706,7 @@ struct BurnDriver BurnDrvLastmsnj = {
 static struct BurnRomInfo shackledRomDesc[] = {
 	{ "dk-02.13h",		0x08000, 0x87f8fa85, 1 }, //  0 maincpu
 	{ "dk-06.7h",		0x10000, 0x69ad62d1, 1 }, //  1
-	{ "dk-05.8h",		0x10000, 0x598dd128, 1 }, //  2
+	{ "dk-05.9h",		0x10000, 0x598dd128, 1 }, //  2
 	{ "dk-04.10h",		0x10000, 0x36d305d4, 1 }, //  3
 	{ "dk-03.11h",		0x08000, 0x6fd90fd1, 1 }, //  4
 
@@ -5754,7 +5754,7 @@ struct BurnDriver BurnDrvShackled = {
 static struct BurnRomInfo breywoodRomDesc[] = {
 	{ "dj02-2.13h",		0x08000, 0xc19856b9, 1 }, //  0 maincpu
 	{ "dj06-2.7h",		0x10000, 0x2860ea02, 1 }, //  1
-	{ "dj05-2.8h",		0x10000, 0x0fdd915e, 1 }, //  2
+	{ "dj05-2.9h",		0x10000, 0x0fdd915e, 1 }, //  2
 	{ "dj04-2.10h",		0x10000, 0x71036579, 1 }, //  3
 	{ "dj03-2.11h",		0x08000, 0x308f4893, 1 }, //  4
 

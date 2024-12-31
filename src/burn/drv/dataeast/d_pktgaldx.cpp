@@ -644,8 +644,8 @@ static INT32 pkgaldxbInit()
 }
 
 struct BurnDriverD BurnDrvPktgaldxb = {
-	"pktgaldxb", "pktgaldx", NULL, NULL, "1992",
-	"Pocket Gal Deluxe (Europe v3.00, bootleg)\0", NULL, "bootleg", "DECO IC16",
+	"pktgaldxb", "pktgaldx", NULL, NULL, "1993",
+	"Pocket Gal Deluxe (Europe v3.00, bootleg)\0", NULL, "bootleg (Data West)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pktgaldxbRomInfo, pktgaldxbRomName, NULL, NULL, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,

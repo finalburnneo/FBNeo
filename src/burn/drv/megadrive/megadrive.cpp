@@ -3017,8 +3017,7 @@ static void __fastcall x200000EEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue
 static void __fastcall x200000EEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
-//		bprintf(0, _T("WW  %x  %x\n"), sekAddress, wordValue);
-//		i2c_write_bus16(wordValue);
+		i2c_write_bus16(wordValue);
 		return;
 	}
 }

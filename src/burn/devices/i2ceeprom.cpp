@@ -37,7 +37,7 @@ enum {
 static UINT16 i2c_device = 0;
 static UINT16 i2c_mask;
 static UINT16 i2c_page_mask;
-static bool uses_bus;
+static bool uses_bus = false;
 
 // e2prom internals
 static UINT8 *i2c_memory;
@@ -54,7 +54,7 @@ static UINT8 sda_bit, scl_bit, sda_read_bit;
 static UINT8 bus_buffer[2];
 
 #define bus_debug 0
-#define device_debug 1
+#define device_debug 0
 
 void i2c_write_bus16(UINT32 data) {
 	const UINT8 scl = (data >> scl_bit) & 1;

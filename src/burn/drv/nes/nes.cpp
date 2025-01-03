@@ -9267,7 +9267,7 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
-		case 206: // mmc3 w/no irq (Tengen mimic-1, Namcot 118)
+		case 206: // mmc3 w/no irq (Tengen mimic-1, Namcot 118, 106)
 		case 4: { // mmc3
 			mapper_write = mapper04_write;
 			mapper_map   = mapper04_map;

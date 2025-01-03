@@ -36481,6 +36481,23 @@ struct BurnDriver BurnDrvnes_kungfuheroes = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_superchineseRomDesc[] = {
+	{ "Super Chinese (Japan)(1986)(Culture Brain).nes",          49168, 0x1ddceb54, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superchinese)
+STD_ROM_FN(nes_superchinese)
+
+struct BurnDriver BurnDrvnes_superchinese = {
+	"nes_superchinese", "nes_kungfuheroes", NULL, NULL, "1986",
+	"Super Chinese (Japan)\0", NULL, "Namco / Culture Brain", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_superchineseRomInfo, nes_superchineseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Kunio-kun no Nekketsu Soccer League (Japan)
 static struct BurnRomInfo nes_kuniokunnoneksoleRomDesc[] = {
 	{ "Kunio-kun no Nekketsu Soccer League (Japan).nes",          262160, 0x9659bca6, BRF_ESS | BRF_PRG },

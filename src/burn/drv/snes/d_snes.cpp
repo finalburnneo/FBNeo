@@ -4014,6 +4014,25 @@ struct BurnDriver BurnDrvsnes_Brandish = {
 	512, 448, 4, 3
 };
 
+// Brandish 2: Expert (Japan)
+
+static struct BurnRomInfo snes_Brandish2expjRomDesc[] = {
+	{ "Brandish 2 - Expert (J)(1996)(Koei).sfc", 3145728, 0xab43e910, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Brandish2expj)
+STD_ROM_FN(snes_Brandish2expj)
+
+struct BurnDriver BurnDrvsnes_Brandish2expj = {
+	"snes_brandish2expj", NULL, NULL, NULL, "1996",
+	"Brandish 2: Expert (Japan)\0", NULL, "Koei", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_Brandish2expjRomInfo, snes_Brandish2expjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Brandish 2: The Planet Buster (Japan)
 
 static struct BurnRomInfo snes_Brandish2jRomDesc[] = {
@@ -6560,6 +6579,44 @@ struct BurnDriver BurnDrvsnes_Dennis = {
 	512, 448, 4, 3
 };
 
+// Der Langrisser (Japan, Rev. 1)
+
+static struct BurnRomInfo snes_DerlangjRomDesc[] = {
+	{ "Der Langrisser (J, Rev 1)(1995)(NCS - Masaya).sfc", 2097152, 0x35f9eecc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Derlangj)
+STD_ROM_FN(snes_Derlangj)
+
+struct BurnDriver BurnDrvsnes_Derlangj = {
+	"snes_derlangj", "snes_derlangte", NULL, NULL, "1995",
+	"Der Langrisser (Japan, Rev. 1)\0", NULL, "NCS - Masaya", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
+	SNESGetZipName, snes_DerlangjRomInfo, snes_DerlangjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Der Langrisser (Hack, English v1.3.1)
+// https://voidfox.com/blog/der_langrisser_lost_final_fan_translation/
+static struct BurnRomInfo snes_DerlangteRomDesc[] = {
+	{ "Der Langrisser T-Eng v1.3.1 (2022)(Near, D).sfc", 4194304, 0xa55f6086, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Derlangte)
+STD_ROM_FN(snes_Derlangte)
+
+struct BurnDriver BurnDrvsnes_Derlangte = {
+	"snes_derlangte", NULL, NULL, NULL, "2022",
+	"Der Langrisser (Hack, English v1.3.1)\0", NULL, "Near, D", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
+	SNESGetZipName, snes_DerlangteRomInfo, snes_DerlangteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Desert Fighter (Euro)
 
 static struct BurnRomInfo snes_DesertfighteRomDesc[] = {
@@ -7449,6 +7506,82 @@ struct BurnDriver BurnDrvsnes_Dquest3ts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_Dquest3tsRomInfo, snes_Dquest3tsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dragon Quest V - Tenkuu no Hanayome (Japan)
+
+static struct BurnRomInfo snes_Dquest5jRomDesc[] = {
+	{ "Dragon Quest V - Tenkuu no Hanayome (J)(1992)(Enix).sfc", 1572864, 0xbc955f3b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dquest5j)
+STD_ROM_FN(snes_Dquest5j)
+
+struct BurnDriver BurnDrvsnes_Dquest5j = {
+	"snes_dquest5j", "snes_dquest5te", NULL, NULL, "1992",
+	"Dragon Quest V - Tenkuu no Hanayome (Japan)\0", NULL, "Enix", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Dquest5jRomInfo, snes_Dquest5jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dragon Quest V (Hack, Enflish v2.01 Final)
+// https://www.romhacking.net/translations/341/
+static struct BurnRomInfo snes_Dquest5teRomDesc[] = {
+	{ "Dragon Quest V - Tenkuu no Hanayome T-Eng v2.01 Final (2002)(DeJap Translations).sfc", 2097152, 0x9400cb3c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dquest5te)
+STD_ROM_FN(snes_Dquest5te)
+
+struct BurnDriver BurnDrvsnes_Dquest5te = {
+	"snes_dquest5te", NULL, NULL, NULL, "2002",
+	"Dragon Quest V (Hack, Enflish v2.01 Final)\0", NULL, "DeJap Translations, Partial Translations", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Dquest5teRomInfo, snes_Dquest5teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dragon Quest VI - Maboroshi no Daichi (Japan)
+
+static struct BurnRomInfo snes_Dquest6jRomDesc[] = {
+	{ "Dragon Quest VI - Maboroshi no Daichi (J)(1995)(Enix).sfc", 4194304, 0x33304519, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dquest6j)
+STD_ROM_FN(snes_Dquest6j)
+
+struct BurnDriver BurnDrvsnes_Dquest6j = {
+	"snes_dquest6j", "snes_dquest6te", NULL, NULL, "1995",
+	"Dragon Quest VI - Maboroshi no Daichi (Japan)\0", NULL, "Enix", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Dquest6jRomInfo, snes_Dquest6jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dragon Quest VI (Hack, English v0.90)
+// https://www.romhacking.net/translations/344/
+static struct BurnRomInfo snes_Dquest6teRomDesc[] = {
+	{ "Dragon Quest VI - Maboroshi no Daichi T-Eng v0.90 (2001)(NoPrgress).sfc", 4194304, 0x276d9893, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dquest6te)
+STD_ROM_FN(snes_Dquest6te)
+
+struct BurnDriver BurnDrvsnes_Dquest6te = {
+	"snes_dquest6te", NULL, NULL, NULL, "2001",
+	"Dragon Quest VI (Hack, English v0.90)\0", NULL, "NoPrgress", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Dquest6teRomInfo, snes_Dquest6teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -9239,7 +9372,7 @@ struct BurnDriver BurnDrvsnes_Fireemblem776te = {
 	512, 448, 4, 3
 };
 
-// Fire Emblem - Monshou no Nazo (Japan)
+// Fire Emblem - Monshou no Nazo (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_FireemblemjRomDesc[] = {
 	{ "Fire Emblem - Monshou no Nazo (J, Rev 1)(1993)(Nintendo).sfc", 3145728, 0xa427b7e6, BRF_ESS | BRF_PRG },
@@ -9250,7 +9383,7 @@ STD_ROM_FN(snes_Fireemblemj)
 
 struct BurnDriver BurnDrvsnes_Fireemblemj = {
 	"snes_fireemblemj", "snes_fireemblemte", NULL, NULL, "1993",
-	"Fire Emblem - Monshou no Nazo (Japan)\0", NULL, "Nintendo", "Nintendo",
+	"Fire Emblem - Monshou no Nazo (Japan, Rev. 1)\0", NULL, "Nintendo", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
 	SNESGetZipName, snes_FireemblemjRomInfo, snes_FireemblemjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -12441,11 +12574,30 @@ STD_ROM_PICK(snes_Jellyboy2j)
 STD_ROM_FN(snes_Jellyboy2j)
 
 struct BurnDriver BurnDrvsnes_Jellyboy2j = {
-	"snes_jellyboy2j", NULL, NULL, NULL, "1994",
+	"snes_jellyboy2j", "snes_jellyboy2te", NULL, NULL, "1994",
 	"Jelly Boy 2 (Japan)\0", NULL, "Epic/Sony Records", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Jellyboy2jRomInfo, snes_Jellyboy2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Jelly Boy 2 (Hack, English)
+// https://romhackplaza.org/translations/jelly-boy-2-english-translation-snes/
+static struct BurnRomInfo snes_Jellyboy2teRomDesc[] = {
+	{ "Jelly Boy 2 T-Eng (2006)(KingMike's Translations).sfc", 1572864, 0xa42d70a8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Jellyboy2te)
+STD_ROM_FN(snes_Jellyboy2te)
+
+struct BurnDriver BurnDrvsnes_Jellyboy2te = {
+	"snes_jellyboy2te", NULL, NULL, NULL, "2006",
+	"Jelly Boy 2 (Hack, English)\0", NULL, "KingMike's Translations", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Jellyboy2teRomInfo, snes_Jellyboy2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -22920,6 +23072,44 @@ struct BurnDriver BurnDrvsnes_Smtensei2ts = {
 	512, 448, 4, 3
 };
 
+// Shin Megami Tensei if... (Japan)
+
+static struct BurnRomInfo snes_SmtenseiifjRomDesc[] = {
+	{ "Shin Megami Tensei if... (J)(1994)(Atlus).sfc", 2097152, 0x4dd73cba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smtenseiifj)
+STD_ROM_FN(snes_Smtenseiifj)
+
+struct BurnDriver BurnDrvsnes_Smtenseiifj = {
+	"snes_smtenseiifj", "snes_smtenseiifte", NULL, NULL, "1994",
+	"Shin Megami Tensei if... (Japan)\0", NULL, "Atlus Co.", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_SmtenseiifjRomInfo, snes_SmtenseiifjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Shin Megami Tensei if... (Hack, English)
+// https://www.romhacking.net/translations/3951/
+static struct BurnRomInfo snes_SmtenseiifteRomDesc[] = {
+	{ "Shin Megami Tensei if... T-Eng (2018)(Aeon Genesis).sfc", 2621440, 0x031f11b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smtenseiifte)
+STD_ROM_FN(snes_Smtenseiifte)
+
+struct BurnDriver BurnDrvsnes_Smtenseiifte = {
+	"snes_smtenseiifte", NULL, NULL, NULL, "2018",
+	"Shin Megami Tensei if... (Hack, English)\0", NULL, "Aeon Genesis", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_SmtenseiifteRomInfo, snes_SmtenseiifteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Shin Megami Tensei (Japan)
 
 static struct BurnRomInfo snes_SmtenseijRomDesc[] = {
@@ -27956,7 +28146,7 @@ struct BurnDriver BurnDrvsnes_Tmsksoccer = {
 	512, 448, 4, 3
 };
 
-// Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev 1)
+// Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_TokimemoRomDesc[] = {
 	{ "Tokimeki Memorial - Densetsu no Ki no Shita de (J, Rev 1)(1996)(Konami).sfc", 4194304, 0xae9f3602, BRF_ESS | BRF_PRG },
@@ -27967,7 +28157,7 @@ STD_ROM_FN(snes_Tokimemo)
 
 struct BurnDriver BurnDrvsnes_Tokimemo = {
 	"snes_tokimemo", "snes_heartmemo", NULL, NULL, "1996",
-	"Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev 1)\0", NULL, "Konami", "Nintendo",
+	"Tokimeki Memorial: Densetsu no Ki no Shita de (Japan, Rev. 1)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_TokimemoRomInfo, snes_TokimemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

@@ -3986,7 +3986,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 
 void z80_set_spectrum_tape_callback(int (*tape_cb)())
 {
-	Z80.spectrum_mode = 1;
+	Z80.spectrum_mode = (tape_cb != NULL) ? 1 : 0;
 	Z80.spectrum_tape_cb = tape_cb;
 }
 

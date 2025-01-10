@@ -28313,7 +28313,7 @@ struct BurnDriver BurnDrvYoyoshkn = {
 	"yoyoshkn", NULL, "neogeo", NULL, "2023",
 	"Yo-Yo Shuriken (HB)\0", NULL, "LudoSience", "Neo Geo MVS",
 	L"\u30e8\u30fc\u30e8\u30fc\u624b\u88cf\u5263\0YoYo-Shuriken (HB)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
 	NULL, yoyoshknRomInfo, yoyoshknRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -28341,7 +28341,7 @@ STD_ROM_FN(amazoneo)
 
 struct BurnDriver BurnDrvamazoneo = {
 	"amazoneo", NULL, "neogeo", NULL, "2023",
-	"Soldier Girl Amazon Neo\0", NULL, "IQ_132", "Neo Geo MVS",
+	"Soldier Girl Amazon Neo (HB)\0", NULL, "IQ_132", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, amazoneoRomInfo, amazoneoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -28349,7 +28349,8 @@ struct BurnDriver BurnDrvamazoneo = {
 	0x1000, 224, 304, 3, 4
 };
 
-// Knight's Chance
+
+// Knight's Chance (HB)
 // Neobitz https://www.facebook.com/neobitz
 
 static struct BurnRomInfo knightschRomDesc[] = {
@@ -28370,15 +28371,16 @@ STD_ROM_FN(knightsch)
 
 struct BurnDriver BurnDrvKnightsch = {
 	"knightsch", NULL, "neogeo", NULL, "2014",
-	"Knight's Chance\0", NULL, "Neobitz", "Neo Geo MVS",
+	"Knight's Chance (HB)\0", NULL, "Neobitz", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_CARD | GBF_RPG, 0,
 	NULL, knightschRomInfo, knightschRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
-// Captain Barrel
+
+// Captain Barrel (HB)
 // Neo Byte Force Ltd
 // https://www.neobyteforce.com/
 
@@ -28402,10 +28404,42 @@ STD_ROM_FN(captainbarrel)
 
 struct BurnDriver BurnDrvCaptainBarrel = {
 	"captainbarrel", NULL, "neogeo", NULL, "2024",
-	"Captain Barrel\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
+	"Captain Barrel (HB)\0", NULL, "Neo Byte Force Ltd.", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, captainbarrelRomInfo, captainbarrelRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
+
+
+// Shinobi Neo Geo (HB)
+// https://h0ffman.itch.io/shinobi-neogeo
+
+static struct BurnRomInfo shinobingRomDesc[] = {
+	{ "1337-p1.p1", 0x080000, 0x3bf8e303, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "1337-s1.s1",	0x020000, 0x6b8c8124, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "1337-c1.c1",	0x080000, 0x74227c08, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "1337-c2.c2",	0x080000, 0xdf4104e6, 3 | BRF_GRA },           	//  4
+
+	{ "1337-m1.m1",	0x010000, 0x6b52f62d, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "1337-v1.v1",	0x400000, 0x67480d87, 5 | BRF_SND },           	//  6 Sound data
+	{ "1337-v2.v2",	0x400000, 0xb335aa46, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(shinobing, shinobing, neogeo)
+STD_ROM_FN(shinobing)
+
+struct BurnDriver BurnDrvShinobing = {
+	"shinobing", NULL, "neogeo", NULL, "2024",
+	"Shinobi Neo Geo (HB)\0", "Unofficial port", "Hoffman", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, shinobingRomInfo, shinobingRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+

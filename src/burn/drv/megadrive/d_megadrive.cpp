@@ -10431,7 +10431,7 @@ struct BurnDriver BurnDrvmd_dynabr2sp = {
 
 // Dynamite Duke (World, Rev. A)
 static struct BurnRomInfo md_dyndukeRomDesc[] = {
-	{ "mpr-13438a.bin", 0x080000, 0x246f0bda, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Duke (World, Rev A)(1990)(Sega).bin", 0x080000, 0x246f0bda, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dynduke)
@@ -10449,7 +10449,7 @@ struct BurnDriver BurnDrvmd_dynduke = {
 
 // Dynamite Duke (World)
 static struct BurnRomInfo md_dynduke1RomDesc[] = {
-	{ "mpr-13438.bin", 0x080000, 0x39d01c8c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Duke (World)(1990)(Sega).bin", 0x080000, 0x39d01c8c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dynduke1)
@@ -10467,7 +10467,7 @@ struct BurnDriver BurnDrvmd_dynduke1 = {
 
 // Dynamite Headdy (Euro, USA)
 static struct BurnRomInfo md_dheadRomDesc[] = {
-	{ "mpr-16990.bin", 0x200000, 0x3dfeeb77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Euro, USA)(1994)(Sega).bin", 0x200000, 0x3dfeeb77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dhead)
@@ -10485,7 +10485,7 @@ struct BurnDriver BurnDrvmd_dhead = {
 
 // Dynamite Headdy (Japan)
 static struct BurnRomInfo md_dheadjRomDesc[] = {
-	{ "dynamite headdy (jpn).bin", 0x200000, 0xd03cdb53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Japan)(1994)(Sega).bin", 0x200000, 0xd03cdb53, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheadj)
@@ -10503,7 +10503,7 @@ struct BurnDriver BurnDrvmd_dheadj = {
 
 // Dynamite Headdy (Japan, Prototype)
 static struct BurnRomInfo md_dheadjpRomDesc[] = {
-	{ "dynamite headdy (jpn) (beta).bin", 0x200000, 0x5c25e934, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Japan, Proto)(1994)(Sega).bin", 0x200000, 0x5c25e934, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheadjp)
@@ -10521,7 +10521,7 @@ struct BurnDriver BurnDrvmd_dheadjp = {
 
 // Dynamite Headdy (Prototype, 19940614-CABEZA)
 static struct BurnRomInfo md_dheadp3RomDesc[] = {
-	{ "dynamite headdy (prototype - jun 14, 1994 - cabeza).bin", 0x200000, 0x971ef24c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Proto, 19940614-CABEZA)(Sega).bin", 0x200000, 0x971ef24c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheadp3)
@@ -10539,7 +10539,7 @@ struct BurnDriver BurnDrvmd_dheadp3 = {
 
 // Dynamite Headdy (Prototype, 19940616)
 static struct BurnRomInfo md_dheadp2RomDesc[] = {
-	{ "dynamite headdy (prototype - jun 16, 1994).bin", 0x200000, 0xf8a96719, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Proto, 19940616)(Sega).bin", 0x200000, 0xf8a96719, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheadp2)
@@ -10557,7 +10557,7 @@ struct BurnDriver BurnDrvmd_dheadp2 = {
 
 // Dynamite Headdy (Prototype, 19940622)
 static struct BurnRomInfo md_dheadp1RomDesc[] = {
-	{ "dynamite headdy (prototype - jun 22, 1994).bin", 0x200000, 0x61001ec8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy (Proto, 19940622)(Sega).bin", 0x200000, 0x61001ec8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheadp1)
@@ -10576,7 +10576,7 @@ struct BurnDriver BurnDrvmd_dheadp1 = {
 // Dynamite Headdy (Hack, English)
 // Source : http://www.romhacking.net/translations/1113/
 static struct BurnRomInfo md_dheadeRomDesc[] = {
-	{ "dynamite headdy (english translation).bin", 0x200000, 0x003e54e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dynamite Headdy T-Eng (2007)(Jon Najar).bin", 0x200000, 0x003e54e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dheade)
@@ -10594,7 +10594,7 @@ struct BurnDriver BurnDrvmd_dheade = {
 
 // EA Hockey (Euro)
 static struct BurnRomInfo md_eahockeyRomDesc[] = {
-	{ "ea hockey (euro).bin", 0x080000, 0x9bfc279c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "EA Hockey (Euro)(1991)(.bin", 0x080000, 0x9bfc279c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eahockey)
@@ -10612,7 +10612,7 @@ struct BurnDriver BurnDrvmd_eahockey = {
 
 // EA Hockey (Japan)
 static struct BurnRomInfo md_eahockeyjRomDesc[] = {
-	{ "ea hockey (jpn).bin", 0x080000, 0x9dcdc894, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "EA Hockey (Japan)(1992)(Electronic Arts - Victor).bin", 0x080000, 0x9dcdc894, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eahockeyj)
@@ -10620,7 +10620,7 @@ STD_ROM_FN(md_eahockeyj)
 
 struct BurnDriver BurnDrvmd_eahockeyj = {
 	"md_eahockeyj", "md_eahockey", NULL, NULL, "1992",
-	"EA Hockey (Japan)\0", NULL, "Electronic Arts Victor", "Sega Megadrive",
+	"EA Hockey (Japan)\0", NULL, "Electronic Arts - Victor", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_eahockeyjRomInfo, md_eahockeyjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -10630,7 +10630,7 @@ struct BurnDriver BurnDrvmd_eahockeyj = {
 
 // NHL Hockey (USA)
 static struct BurnRomInfo md_nhlRomDesc[] = {
-	{ "nhl hockey (usa).bin", 0x080000, 0x2641653f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "NHL Hockey (USA)(1991)(Electronic Arts).bin", 0x080000, 0x2641653f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_nhl)
@@ -10648,7 +10648,7 @@ struct BurnDriver BurnDrvmd_nhl = {
 
 // EA Sports Double Header (Euro)
 static struct BurnRomInfo md_easportsRomDesc[] = {
-	{ "ea304.bin", 0x100000, 0xa0b54cbc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "EA Sports Double Header (Euro)(1993)(Electronic Arts).bin", 0x100000, 0xa0b54cbc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_easports)
@@ -10666,7 +10666,7 @@ struct BurnDriver BurnDrvmd_easports = {
 
 // Earnest Evans (USA)
 static struct BurnRomInfo md_earnestRomDesc[] = {
-	{ "earnest evans (usa).bin", 0x100000, 0xa243816d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earnest Evans (USA)(1992)(Wolf Team).bin", 0x100000, 0xa243816d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earnest)
@@ -10674,7 +10674,7 @@ STD_ROM_FN(md_earnest)
 
 struct BurnDriver BurnDrvmd_earnest = {
 	"md_earnest", NULL, NULL, NULL, "1992",
-	"Earnest Evans (USA)\0", NULL, "Renovation", "Sega Megadrive",
+	"Earnest Evans (USA)\0", NULL, "Wolf Team", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_earnestRomInfo, md_earnestRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -10684,7 +10684,7 @@ struct BurnDriver BurnDrvmd_earnest = {
 
 // Earthworm Jim (Euro)
 static struct BurnRomInfo md_ejimRomDesc[] = {
-	{ "earthworm jim (euro).bin", 0x300000, 0x1c07b337, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim (Euro)(1994)(Virgin Interactive).bin", 0x300000, 0x1c07b337, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejim)
@@ -10702,7 +10702,7 @@ struct BurnDriver BurnDrvmd_ejim = {
 
 // Earthworm Jim (USA)
 static struct BurnRomInfo md_ejimuRomDesc[] = {
-	{ "earthworm jim (usa).bin", 0x300000, 0xdf3acf59, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim (USA)(1994)(Playmates Interactive).bin", 0x300000, 0xdf3acf59, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejimu)
@@ -10720,7 +10720,7 @@ struct BurnDriver BurnDrvmd_ejimu = {
 
 // Earthworm Jim (Prototype, 19940728)
 static struct BurnRomInfo md_ejimpRomDesc[] = {
-	{ "earthworm jim (prototype- jul 28,1994).bin", 0x300000, 0x24aa391b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim (Proto, 19940728)(Virgin Interactive).bin", 0x300000, 0x24aa391b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejimp)
@@ -10738,7 +10738,7 @@ struct BurnDriver BurnDrvmd_ejimp = {
 
 // Earthworm Jim 2 (Euro)
 static struct BurnRomInfo md_ejim2RomDesc[] = {
-	{ "earthworm jim 2 (euro).bin", 0x300000, 0xaf235fdf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim 2 (Euro)(1995)(Virgin Interactive).bin", 0x300000, 0xaf235fdf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejim2)
@@ -10756,7 +10756,7 @@ struct BurnDriver BurnDrvmd_ejim2 = {
 
 // Earthworm Jim 2 (prototype, 19950824)
 static struct BurnRomInfo md_ejim2pRomDesc[] = {
-	{ "earthworm jim 2 (prototype - aug 24, 1995).bin", 0x300000, 0xf92a931d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim 2 (Proto, 19950824)(Virgin Interactive).bin", 0x300000, 0xf92a931d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejim2p)
@@ -10774,14 +10774,14 @@ struct BurnDriver BurnDrvmd_ejim2p = {
 
 // Earthworm Jim 2 (USA)
 static struct BurnRomInfo md_ejim2uRomDesc[] = {
-	{ "earthworm jim 2 (usa).bin", 0x300000, 0xd57f8ba7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthworm Jim 2 (USA)(1995)(Playmates Interactive).bin", 0x300000, 0xd57f8ba7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ejim2u)
 STD_ROM_FN(md_ejim2u)
 
 struct BurnDriver BurnDrvmd_ejim2u = {
-	"md_ejim2u", "md_ejim2", NULL, NULL, "1996",
+	"md_ejim2u", "md_ejim2", NULL, NULL, "1995",
 	"Earthworm Jim 2 (USA)\0", NULL, "Playmates Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
@@ -10792,7 +10792,7 @@ struct BurnDriver BurnDrvmd_ejim2u = {
 
 // Ecco the Dolphin (Euro, USA, Korea)
 static struct BurnRomInfo md_eccoRomDesc[] = {
-	{ "mpr-15265.bin", 0x100000, 0x45547390, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco the Dolphin (Euro, USA, Korea)(1993)(Sega).bin", 0x100000, 0x45547390, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco)
@@ -10810,7 +10810,7 @@ struct BurnDriver BurnDrvmd_ecco = {
 
 // Ecco the Dolphin (Japan)
 static struct BurnRomInfo md_eccojRomDesc[] = {
-	{ "mpr-15702.bin", 0x100000, 0x6520304d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco the Dolphin (Japan)(1993)(Sega).bin", 0x100000, 0x6520304d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eccoj)
@@ -10828,7 +10828,7 @@ struct BurnDriver BurnDrvmd_eccoj = {
 
 // Ecco the Dolphin (Prototype, 19930421)
 static struct BurnRomInfo md_eccopRomDesc[] = {
-	{ "ecco the dolphin (prototype - apr 21, 1993).bin", 0x100000, 0x17e24509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco the Dolphin (Proto, 19930421)(Sega).bin", 0x100000, 0x17e24509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eccop)
@@ -10846,7 +10846,7 @@ struct BurnDriver BurnDrvmd_eccop = {
 
 // Ecco - The Tides of Time (Euro)
 static struct BurnRomInfo md_ecco2RomDesc[] = {
-	{ "ecco - the tides of time (euro).bin", 0x200000, 0x7b1bf89c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (Euro)(1994)(Sega).bin", 0x200000, 0x7b1bf89c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2)
@@ -10864,7 +10864,7 @@ struct BurnDriver BurnDrvmd_ecco2 = {
 
 // Ecco - The Tides of Time (USA, Prototype)
 static struct BurnRomInfo md_ecco2pRomDesc[] = {
-	{ "ecco - the tides of time (beta).bin", 0x200000, 0x8db60749, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (USA, Proto)(1994)(Sega).bin", 0x200000, 0x8db60749, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2p)
@@ -10882,7 +10882,7 @@ struct BurnDriver BurnDrvmd_ecco2p = {
 
 // Ecco - The Tides of Time (USA, Prototype, Alt)
 static struct BurnRomInfo md_ecco2p1RomDesc[] = {
-	{ "ecco - the tides of time (beta, alt).bin", 0x200000, 0x1d1470ea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (USA, Proto)(Alt)(1994)(Sega).bin", 0x200000, 0x1d1470ea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2p1)
@@ -10900,7 +10900,7 @@ struct BurnDriver BurnDrvmd_ecco2p1 = {
 
 // Ecco - The Tides of Time (USA, Prototype, 19940429)
 static struct BurnRomInfo md_ecco2p2RomDesc[] = {
-	{ "ecco ii - the tides of time (prototype - apr 29, 1994).bin", 0x200000, 0x5af83ecb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (USA, Proto 19940429)(Sega).bin", 0x200000, 0x5af83ecb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2p2)
@@ -10918,7 +10918,7 @@ struct BurnDriver BurnDrvmd_ecco2p2 = {
 
 // Ecco the Dolphin II (Japan)
 static struct BurnRomInfo md_ecco2jRomDesc[] = {
-	{ "mpr-16996.bin", 0x200000, 0x062d439c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco the Dolphin II (Japan)(1994)(Sega).bin", 0x200000, 0x062d439c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2j)
@@ -10936,7 +10936,7 @@ struct BurnDriver BurnDrvmd_ecco2j = {
 
 // Ecco - The Tides of Time (USA, Prototype X11, 19940413)
 static struct BurnRomInfo md_ecco2px11RomDesc[] = {
-	{ "ecco - the tides of time (prototype x11 - apr 13, 1994).bin", 0x200000, 0xb5d64817, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (Proto X11 19940413)(Sega).bin", 0x200000, 0xb5d64817, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2px11)
@@ -10954,7 +10954,7 @@ struct BurnDriver BurnDrvmd_ecco2px11 = {
 
 // Ecco - The Tides of Time (USA)
 static struct BurnRomInfo md_ecco2uRomDesc[] = {
-	{ "ecco - the tides of time (usa).bin", 0x200000, 0xccb21f98, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco - The Tides of Time (USA)(1994)(Sega).bin", 0x200000, 0xccb21f98, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ecco2u)
@@ -10972,7 +10972,7 @@ struct BurnDriver BurnDrvmd_ecco2u = {
 
 // Ecco Jr. (USA, Oceania, 199502)
 static struct BurnRomInfo md_eccojrRomDesc[] = {
-	{ "ecco jr. (usa, aus) (february 1995).bin", 0x100000, 0x6c6f4b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco Jr. (USA, Oceania, 199502)(Sega).bin", 0x100000, 0x6c6f4b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eccojr)
@@ -10990,7 +10990,7 @@ struct BurnDriver BurnDrvmd_eccojr = {
 
 // Ecco Jr. (USA, Oceania, 199503)
 static struct BurnRomInfo md_eccojr1RomDesc[] = {
-	{ "ecco jr. (usa, aus) (march 1995).bin", 0x100000, 0x3c517975, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ecco Jr. (USA, Oceania, 199503)(Sega).bin", 0x100000, 0x3c517975, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_eccojr1)
@@ -11008,7 +11008,7 @@ struct BurnDriver BurnDrvmd_eccojr1 = {
 
 // El Viento (USA)
 static struct BurnRomInfo md_elvientoRomDesc[] = {
-	{ "mpr-14336.bin", 0x100000, 0x070a1ceb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "El Viento (USA)(1991)(Wolf Team).bin", 0x100000, 0x070a1ceb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elviento)
@@ -11016,7 +11016,7 @@ STD_ROM_FN(md_elviento)
 
 struct BurnDriver BurnDrvmd_elviento = {
 	"md_elviento", NULL, NULL, NULL, "1991",
-	"El Viento (USA)\0", NULL, "Renovation", "Sega Megadrive",
+	"El Viento (USA)\0", NULL, "Wolf Team", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_elvientoRomInfo, md_elvientoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -11026,7 +11026,7 @@ struct BurnDriver BurnDrvmd_elviento = {
 
 // El Viento (Japan)
 static struct BurnRomInfo md_elvientojRomDesc[] = {
-	{ "el viento (jpn).bin", 0x100000, 0x6091c36e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "El Viento (Japan)(1991)(Wolf Team).bin", 0x100000, 0x6091c36e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elvientoj)
@@ -11044,7 +11044,7 @@ struct BurnDriver BurnDrvmd_elvientoj = {
 
 // Elemental Master (USA)
 static struct BurnRomInfo md_elemastRomDesc[] = {
-	{ "elemental master (usa).bin", 0x080000, 0x390918c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Elemental Master (USA)(1993)(Renovation).bin", 0x080000, 0x390918c6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elemast)
@@ -11062,7 +11062,7 @@ struct BurnDriver BurnDrvmd_elemast = {
 
 // Elemental Master (Japan)
 static struct BurnRomInfo md_elemastjRomDesc[] = {
-	{ "elemental master (jpn).bin", 0x080000, 0x5f553e29, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Elemental Master (Japan)(1990)(Technosoft).bin", 0x080000, 0x5f553e29, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elemastj)
@@ -11080,7 +11080,7 @@ struct BurnDriver BurnDrvmd_elemastj = {
 
 // Eliminate Down (Japan)
 static struct BurnRomInfo md_elimdownRomDesc[] = {
-	{ "eliminate down (jpn).bin", 0x100000, 0x48467542, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Eliminate Down (Japan)(1993)(Soft Vision).bin", 0x100000, 0x48467542, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elimdown)
@@ -11098,7 +11098,7 @@ struct BurnDriver BurnDrvmd_elimdown = {
 
 // Elitserien 95 (Sweden)
 static struct BurnRomInfo md_elit95RomDesc[] = {
-	{ "swed9584.bin", 0x200000, 0xe10a25c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Elitserien 95 (Sweden)(1994)(Electronic Arts).bin", 0x200000, 0xe10a25c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elit95)
@@ -11116,7 +11116,7 @@ struct BurnDriver BurnDrvmd_elit95 = {
 
 // Elitserien 96 (Sweden)
 static struct BurnRomInfo md_elit96RomDesc[] = {
-	{ "elitserien 96 (sweden).bin", 0x200000, 0x9821d0a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Elitserien 96 (Sweden)(1995)(Electronic Arts).bin", 0x200000, 0x9821d0a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_elit96)
@@ -11134,7 +11134,7 @@ struct BurnDriver BurnDrvmd_elit96 = {
 
 // Empire of Steel (Euro)
 static struct BurnRomInfo md_empsteelRomDesc[] = {
-	{ "empire of steel (euro).bin", 0x100000, 0xe5517b77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Empire of Steel (Euro)(1992)(Flying Edge).bin", 0x100000, 0xe5517b77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_empsteel)
@@ -11152,7 +11152,7 @@ struct BurnDriver BurnDrvmd_empsteel = {
 
 // Steel Empire, The (USA)
 static struct BurnRomInfo md_steelempRomDesc[] = {
-	{ "steel empire (usa).bin", 0x100000, 0xd0e7a0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Steel Empire, The (USA)(1992)(Flying Edge).bin", 0x100000, 0xd0e7a0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_steelemp)
@@ -44299,6 +44299,24 @@ struct BurnDriver BurnDrvmd_barbarianrk = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Batman Returns MD (HB, v1.1)
+static struct BurnRomInfo md_batmanrnmdRomDesc[] = {
+	{ "Batman Returns MD v1.1 (2024)(Pyrons Lair).bin", 2097152, 0xf6c4eca5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_batmanrnmd)
+STD_ROM_FN(md_batmanrnmd)
+
+struct BurnDriver BurnDrvmd_batmanrnmd = {
+	"md_batmanrnmd", NULL, NULL, NULL, "2024",
+	"Batman Returns MD (HB, v1.1)\0", "Transposition and improvement of SNES version", "Pyrons Lair", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_batmanrnmdRomInfo, md_batmanrnmdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // BCD Verifier by Flamewing (HB, Test)
 static struct BurnRomInfo md_bcdverifierRomDesc[] = {
 	{ "bcd-verifier-u1.bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -45201,20 +45219,38 @@ struct BurnDriver BurnDrvmd_fightveng = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Final Fight MD (HB, v24.01.20b)
+static struct BurnRomInfo md_ffightmdRomDesc[] = {
+	{ "Final Fight MD v24.01.20b (2024)(MXRetroDev).bin", 3670016, 0x2d5321a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ffightmd)
+STD_ROM_FN(md_ffightmd)
+
+struct BurnDriver BurnDrvmd_ffightmd = {
+	"md_ffightmd", NULL, NULL, NULL, "2024",
+	"Final Fight MD (HB, v24.01.20b)\0", NULL, "MXRetroDev", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_ffightmdRomInfo, md_ffightmdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Fix It Felix Jr. (HB)
-static struct BurnRomInfo md_fixitfelixRomDesc[] = {
+static struct BurnRomInfo md_fixitfelixjrRomDesc[] = {
 	{ "Fix It Felix Jr. (2014)(AirwalkStudios).bin", 0x92f0e, 0x424ff451, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_fixitfelix)
-STD_ROM_FN(md_fixitfelix)
+STD_ROM_PICK(md_fixitfelixjr)
+STD_ROM_FN(md_fixitfelixjr)
 
-struct BurnDriver BurnDrvmd_fixitfelix = {
+struct BurnDriver BurnDrvmd_fixitfelixjr = {
 	"md_fixitfelixjr", NULL, NULL, NULL, "2014",
 	"Fix It Felix Jr. (HB)\0", NULL, "TOBIKOMI - AirwalkStudios", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ACTION, 0,
-	MegadriveGetZipName, md_fixitfelixRomInfo, md_fixitfelixRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_fixitfelixjrRomInfo, md_fixitfelixjrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46723,6 +46759,24 @@ struct BurnDriver BurnDrvmd_smoverkill = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_smoverkillRomInfo, md_smoverkillRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Star Wars Holiday Special (HB, v1.1)
+static struct BurnRomInfo md_superstarwarsmdRomDesc[] = {
+	{ "Super Star Wars Holiday Special v1.1 (2024)(Master Linkuei).bin", 2097152, 0x55db6351, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_superstarwarsmd)
+STD_ROM_FN(md_superstarwarsmd)
+
+struct BurnDriver BurnDrvmd_superstarwarsmd = {
+	"md_superstarwarsmd", NULL, NULL, NULL, "2024",
+	"Super Star Wars Holiday Special (HB, v1.1)\0", NULL, "Master Linkuei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_superstarwarsmdRomInfo, md_superstarwarsmdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

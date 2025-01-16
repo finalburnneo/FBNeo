@@ -140,7 +140,11 @@ struct NGCDGAME games[] =
 	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//
 	{ _T("karnov")		, _T("Karnov")												, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0283 },		//
 	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0062 },		//
-	{ _T("cbarrel")		, _T("Captain Barrel")											, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
+	{ _T("chelnov")		, _T("Atomic Runner Chelnov")								, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x1320 },		//
+	{ _T("eightman")	, _T("Eight Man")											, _T("2024")	, _T("SNK / Pallas (iq_132 conversion)")	, 0x0025 },		//
+	{ _T("gururin")		, _T("Gururin")												, _T("2024")	, _T("Face (iq_132 conversion)")	, 0x0067 },		//
+	{ _T("kotm")		, _T("King of the Monsters")								, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0016 },		//
+	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
 };
 
 static char szVolumeID[64];

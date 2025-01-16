@@ -298,6 +298,67 @@ static INT32 LoadRomdata()
 								ri.nType |= 15;
 								continue;
 							}
+							// megadrive
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_LOAD_NORMAL"))) {
+								ri.nType |= 0x10;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_LOAD16_WORD_SWAP"))) {
+								ri.nType |= 0x20;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_LOAD16_BYTE"))) {
+								ri.nType |= 0x30;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_040000_100000"))) {
+								ri.nType |= 0x40;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_LOAD_NORMAL_CONTINUE_020000_080000"))) {
+								ri.nType |= 0x50;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_000000"))) {
+								ri.nType |= 0x01;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_000001"))) {
+								ri.nType |= 0x02;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_020000"))) {
+								ri.nType |= 0x03;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_080000"))) {
+								ri.nType |= 0x04;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_100000"))) {
+								ri.nType |= 0x05;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_100001"))) {
+								ri.nType |= 0x06;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_200000"))) {
+								ri.nType |= 0x07;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_OFFS_300000"))) {
+								ri.nType |= 0x08;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_RELOAD_200000_200000"))) {
+								ri.nType |= 0x09;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("SEGA_MD_ROM_RELOAD_100000_300000"))) {
+								ri.nType |= 0x0a;
+								continue;
+							}
 							_stscanf(pszInfo, _T("%x"), &nValue);
 							if (-1 != nValue) {
 								ri.nType |= (UINT32)nValue;

@@ -144,6 +144,12 @@ struct NGCDGAME games[] =
 	{ _T("eightman")	, _T("Eight Man")											, _T("2024")	, _T("SNK / Pallas (iq_132 conversion)")	, 0x0025 },		//
 	{ _T("gururin")		, _T("Gururin")												, _T("2024")	, _T("Face (iq_132 conversion)")	, 0x0067 },		//
 	{ _T("kotm")		, _T("King of the Monsters")								, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0016 },		//
+	{ _T("legendos")	, _T("Legend of Success Joe")								, _T("2024")	, _T("SNK / Wave (iq_132 conversion)")	, 0x0029 },		//
+	{ _T("neomrdo")		, _T("Neo Mr. Do!")											, _T("2024")	, _T("Visco (iq_132 conversion)")	, 0x0207 },		//
+	{ _T("pnyaa")		, _T("Pochi and Nyaa")										, _T("2024")	, _T("Aiky / Taito (iq_132 conversion)")	, 0x0267 },		//
+	{ _T("sbp")			, _T("Super Bubble Pop")									, _T("2024")	, _T("Vektorlogic (iq_132 conversion)")	, 0xfedc },		//
+	{ _T("zupapa")		, _T("Zupapa!")												, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0070 },		//
+	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
 	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
 };
 

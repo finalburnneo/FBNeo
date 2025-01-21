@@ -1,5 +1,10 @@
+// idea?
+// support dma-tap + slowtap, but disable dma tap once slowtap takes over
+// testcase: benny hill's madcap chase - uses turbo load for everything except
+// the last file.  if we use dma for this last file, game level will be corrupt.
+
 // FinalBurn NEO ZX Spectrum driver.  NEO edition!
-// media: .tap, .z80 snapshots
+// media: .tap, .tzx, .z80 snapshots
 // input: kbd, kempston: joy1, sinclair intf.2: joy1 & joy2
 
 #include "tiles_generic.h"
@@ -13,12 +18,14 @@
 #endif
 
 static INT32 SpecMode = 0;
-#define SPEC_TAP	(1 << 0)
-#define SPEC_Z80	(1 << 1)
-#define SPEC_128K   (1 << 2)
-#define SPEC_PLUS2  (1 << 3) // +2a (Amstrad model)
-#define SPEC_INVES	(1 << 4) // Spanish clone (non-contended ula)
-#define SPEC_AY8910	(1 << 5)
+#define SPEC_TAP		(1 << 0)
+#define SPEC_Z80		(1 << 1)
+#define SPEC_128K		(1 << 2)
+#define SPEC_PLUS2		(1 << 3) // +2a (Amstrad model)
+#define SPEC_INVES		(1 << 4) // Spanish clone (non-contended ula)
+#define SPEC_AY8910		(1 << 5)
+#define SPEC_SLOWTAP	(1 << 6) // Slow-TAP mode, for games with custom loaders
+#define SPEC_TZX        (1 << 7)
 
 static UINT8 SpecInputKbd[0x10][0x05] = {
 	{ 0, 0, 0, 0, 0 }, // Shift, Z, X, C, V
@@ -41,7 +48,7 @@ static UINT8 SpecInputKbd[0x10][0x05] = {
 	{ 0, 0, 0, 0, 0 }  // Period, Comma
 };
 
-static UINT8 SpecDips[1];
+static UINT8 SpecDips[2];
 static UINT8 SpecInput[0x10];
 static UINT8 SpecReset;
 
@@ -67,6 +74,8 @@ static UINT8 ula_border;
 static UINT8 ula_flash;
 static INT32 ula_last_cyc;
 static INT32 nExtraCycles;
+
+static INT32 in_tape_ffwd = 0;
 
 static INT16 *Buzzer;
 
@@ -162,6 +171,7 @@ static struct BurnInputInfo SpecInputList[] =
 
 	{"Reset",			BIT_DIGITAL,	&SpecReset,				"reset"				},
 	{"Dip A",			BIT_DIPSWITCH,	SpecDips + 0,			"dip"				},
+	{"Dip B",			BIT_DIPSWITCH,	SpecDips + 1,			"dip"				},
 };
 
 STDINPUTINFO(Spec)
@@ -186,46 +196,62 @@ static struct BurnDIPInfo SpecDIPList[]=
 	{0, 0xfe, 0   , 2   , "Interface 2 Joyport"		},
 	{0, 0x01, 0x20, 0x00, "Normal"					},
 	{0, 0x01, 0x20, 0x20, "Swapped: Joy1 <-> Joy2"	},
+
+	{1, 0xfe, 0   , 2   , "TZX/Slow TAP Fastload"	},
+	{1, 0x01, 0x01, 0x00, "On"						},
+	{1, 0x01, 0x01, 0x01, "Off"						},
+
+	{1, 0xfe, 0   , 2   , "TZX/Slow TAP Noise"		},
+	{1, 0x01, 0x02, 0x00, "Off"						},
+	{1, 0x01, 0x02, 0x02, "On"						},
 };
 
 static struct BurnDIPInfo SpecDefaultDIPList[]=
 {
 	{0, 0xff, 0xff, 0x80, NULL						}, // Issue 3 + Kempston (Blinky's Scary School requires issue 3)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecIssue2DIPList[]=
 {
 	{0, 0xff, 0xff, 0x00, NULL						}, // Issue 2 + Kempston (Abu Simbel (English/Gremlin) requires issue 2)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecIntf2DIPList[]=
 {
 	{0, 0xff, 0xff, 0x81, NULL						}, // Sinclair Interface 2 (2 Joysticks)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecIntf2SwappedDIPList[]=
 {
 	{0, 0xff, 0xff, 0xa1, NULL						}, // Sinclair Interface 2 (2 Joysticks), Swapped (Joy1 <-> Joy2)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecQAOPMDIPList[]=
 {
 	{0, 0xff, 0xff, 0x82, NULL						}, // Kempston mapped to QAOPM (moon ranger)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecQAOPSpaceDIPList[]=
 {
 	{0, 0xff, 0xff, 0x84, NULL						}, // Kempston mapped to QAOPSpace (jet pack bob)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecJJackDIPList[]=
 {
 	{0, 0xff, 0xff, 0xc0, NULL						}, // Kempston mapped to space, symbol shift, caps shift (jumping jack)
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 static struct BurnDIPInfo SpecCursorKeysDIPList[]=
 {
 	{0, 0xff, 0xff, 0x88, NULL						}, // Kempston mapped to Cursor Keys
+	{1, 0xff, 0xff, 0x00, NULL						}, // TAP/TZX loading opts
 };
 
 STDDIPINFOEXT(Spec, SpecDefault, Spec)
@@ -324,7 +350,7 @@ static INT32 buzzer_data_len;
 static INT32 buzzer_data_frame;
 static INT32 buzzer_data_frame_minute;
 
-static const INT32 buzzer_oversample = 3000;
+static const INT32 buzzer_oversample = 1000;
 
 static BIQ biquad[2]; // snd/biquad.h
 
@@ -347,7 +373,7 @@ static void BuzzerAdd(INT16 data)
 {
 	data *= (1 << 12);
 
-	if (data != buzzer_last_data) {
+	if (pBurnSoundOut && data != buzzer_last_data) {
 		INT32 len = ((double)(ZetTotalCycles() - buzzer_last_update) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
 		if (len > 0)
 		{
@@ -382,6 +408,7 @@ static void BuzzerRender(INT16 *dest)
 			sample += Buzzer[buzzer_data_pos++];
 		}
 		sample = (INT32)(biquad[1].filter(biquad[0].filter((double)sample / buzzer_oversample)));
+//		sample = (INT32)((double)sample / buzzer_oversample);
 		dest[0] = BURN_SND_CLIP(sample);
 		dest[1] = BURN_SND_CLIP(sample);
 		dest += 2;
@@ -564,10 +591,12 @@ static UINT8 read_keyboard(UINT16 address)
 	return keytmp;
 }
 
+static UINT8 pulse_synth();
+static UINT8 last_pulse;
 static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 {
 	if (~address & 0x0001) { // keyboard
-		return read_keyboard(address);
+		return (read_keyboard(address) & ~0x40) | (pulse_synth() & 0x40);
 	}
 
 	if ((address & 0x1f) == 0x1f && (address & 0x20) == 0) {
@@ -587,7 +616,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
-		BuzzerAdd((data & 0x10) >> 4);
+		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 4) | ((SpecDips[1] & 2) ? last_pulse : 0));
 
 		ula_border = data;
 		return;
@@ -679,7 +708,7 @@ static void __fastcall SpecSpec128Z80Write(UINT16 address, UINT8 data)
 static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 {
 	if (~address & 0x0001) { // keyboard
-		return read_keyboard(address);
+		return (read_keyboard(address) & ~0x40) | (pulse_synth() & 0x40);
 	}
 
 	if ((address & 0x1f) == 0x1f && (address & 0x20) == 0) {
@@ -704,7 +733,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
-		BuzzerAdd((data & 0x10) >> 4);
+		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 4) | ((SpecDips[1] & 2) ? last_pulse : 0));
 
 		ula_border = data;
 		// needs to fall through!!
@@ -760,13 +789,793 @@ static INT32 SpecTAPBlockLen[BLKNUM];
 static INT32 SpecTAPBlocks = 0; // 1-based
 static INT32 SpecTAPBlocknum = 0; // 0-based
 static INT32 SpecTAPPos = 0; // 0-based
-static INT32 SpecTAPLoading = 0;
+
+enum {
+	PULSE_KICKOFF = 0,
+	PULSE_LEADER,
+	PULSE_SEQ,
+	PULSE_DATA,
+	PULSE_RAWDATA,  // .wav, tzx "direct recording", ...
+	PULSE_PAUSE,
+	PULSE_DONE,
+	PULSE_WAIT_EMIT
+};
+
+static const char *pulse_mdescr[] = {
+	"PULSE_KICKOFF", "PULSE_LEADER", "PULSE_SEQ", "PULSE_DATA",
+	"PULSE_RAWDATA", "PULSE_PAUSE", "PULSE_DONE", "PULSE_WAIT_EMIT"
+};
+
+static INT32 pulse_status = 0;
+
+enum {
+	TAPE_STOPPED = 0,
+	TAPE_PLAYING
+};
+
+static INT32 pulse_mode = 0;
+static INT32 pulse_length = 0;
+static INT32 pulse_index = 0;
+static UINT8 pulse_startup = 0;
+static INT32 pulse_count = 0;
+static INT32 pulse_pulse = 0;
+
+static UINT64 super_tstate = 0;
+static UINT64 start_tstate = 0;
+static UINT64 target_tstate = 0;
+
+static UINT64 total_tstates()
+{
+	return ZetTotalCycles() + super_tstate;
+}
+
+static INT32 load_check = 0;
+static INT64 last_cycle = 0;
+static INT32 last_bc = 0;
+
+#define TAPERAW 0
+#if TAPERAW
+// Note:
+//  TAPERAW is for debugging loader with a .wav tape stream, and nothing else
+static UINT8 *rawtap;
+static INT16 *rawtap16;
+static UINT16 rawtap_channels;
+static UINT16 rawtap_samplerate;
+
+static void taperaw_init()
+{
+	BurnFree(rawtap);
+	rawtap = (UINT8*)BurnMalloc(16000000);
+	BurnDumpLoad("testioso.wav", rawtap, 8396370);
+	rawtap16 = (INT16*)rawtap + 0x2c;
+	rawtap_channels = *((UINT16*)&rawtap[0x16]);
+	rawtap_samplerate = *((UINT16*)&rawtap[0x18]);
+	bprintf(0, _T("rawtape channels/samplerate %d, %d\n"),rawtap_channels,rawtap_samplerate);
+}
+
+static INT32 taperaw_index()
+{
+	const INT32 total_cyc = SpecScanlines*SpecCylesPerScanline*50;
+
+	INT64 t = total_tstates() - start_tstate;
+	t = t*rawtap_samplerate / total_cyc;
+
+	return t;
+}
+
+static UINT8 taperaw_pulse()
+{
+	pulse_pulse = (rawtap16[taperaw_index() * rawtap_channels + 0] > 1024) ? 0x40 : 0x00;
+	last_pulse = (pulse_pulse >> 6) & 1;
+
+	return pulse_pulse;
+}
+#endif
+
+// .tzx & SlowTAP zxtape handling consumers
+
+static INT32 tap_pos = 0;
+static INT32 tap_op = 0;
+static INT32 tap_op_num = 0;
+
+static inline UINT8 tapbyte() {
+	return SpecTAP[tap_pos++];
+}
+static inline UINT16 tapword() {
+	const UINT8 b = tapbyte();
+	return b | tapbyte() << 8;
+}
+static inline UINT16 tapdword() {
+	const UINT8 a = tapbyte();
+	const UINT8 b = tapbyte();
+	const UINT8 c = tapbyte();
+	const UINT8 d = tapbyte();
+	return a | b << 8 | c << 16 | d << 24;
+}
+static inline UINT8 *tapptr() {
+	return &SpecTAP[tap_pos];
+}
+static inline UINT8 *tapptr(INT32 i) {
+	return &SpecTAP[tap_pos + i];
+}
+static inline UINT8 tapdata(INT32 i) {
+	return SpecTAP[tap_pos + i];
+}
+
+static UINT16 pause_len;
+static UINT32 block_len;
+static UINT32 block_len_pulses;
+static UINT16 leader_pulse_len;
+
+static UINT16 seq_pulses[0x100] = { 0, };
+static UINT16 seq_pulsecount;
+
+static UINT16 raw_t_per_sample;
+
+static UINT16 zero_bit_len;
+static UINT16 one_bit_len;
+static UINT16 leader_pulse_count;
+static UINT8 last8;
+static INT32 loop_start = 0;
+static INT32 loop_count = 0;
+static bool got_emit = false;
+
+static void SpecTZXReset()
+{
+	tap_pos = (SpecMode & SPEC_TZX) ? 10 : 0; // skip ZXTape!\x1a,ver,ver header
+	tap_op = -1;
+	tap_op_num = 0;
+
+	loop_count = 0;
+	loop_start = 0;
+
+	got_emit = false;
+}
+
+static void emit_leader(INT32 pulselen, INT32 pulsecount) {
+	pulse_mode = PULSE_LEADER;
+	pulse_startup = 0;
+
+	if (DEBUG_TAP) bprintf(0, _T("emit_leader: %d, %d\n"), pulselen, pulsecount);
+
+	leader_pulse_len = pulselen;
+	leader_pulse_count = pulsecount;
+	got_emit = true;
+}
+
+static void emit_sync(INT32 pulses_count) {
+	pulse_mode = PULSE_SEQ;
+	pulse_startup = 0;
+
+	seq_pulsecount = pulses_count;
+	if (DEBUG_TAP) bprintf(0, _T("emit_sync: %d sync's\n"), pulses_count);
+	for (int i = 0; i < pulses_count; i++) {
+		if (DEBUG_TAP) bprintf(0, _T("sync[%x]:  %d\n"), i, seq_pulses[i]);
+	}
+
+	got_emit = true;
+}
+
+static void emit_block(INT32 blocklen, INT32 zerobitlen, INT32 onebitlen, INT32 lasteight) {
+	pulse_mode = PULSE_DATA;
+	pulse_startup = 0;
+
+	if (DEBUG_TAP) bprintf(0, _T("emit_block: %x size, %d %d last8: %x\n"), blocklen, zerobitlen, onebitlen, lasteight);
+
+	block_len = blocklen;
+	zero_bit_len = zerobitlen;
+	one_bit_len = onebitlen;
+	last8 = lasteight;
+
+	block_len_pulses = (block_len - 1) * 8 + last8;
+
+	got_emit = true;
+}
+
+static void emit_rawblock(INT32 blocklen, INT32 tstatespersample, INT32 lasteight) {
+	pulse_mode = PULSE_RAWDATA;
+	pulse_startup = 0;
+
+	if (DEBUG_TAP) bprintf(0, _T("emit_rawblock: %x size, %d t-per-sample, last8: %x\n"), blocklen, tstatespersample, lasteight);
+
+	block_len = blocklen;
+	raw_t_per_sample = tstatespersample;
+	last8 = lasteight;
+
+	block_len_pulses = (block_len - 1) * 8 + last8;
+
+	got_emit = true;
+}
+
+static void emit_pause(INT32 pausems) {
+	pulse_mode = PULSE_PAUSE;
+	pulse_startup = 0;
+
+	if (DEBUG_TAP) bprintf(0, _T("emit_pause: %d\n"), pausems);
+	pause_len = pausems;
+
+	got_emit = true;
+}
+
+static void emit_pause_or_stop(INT32 pausems) {
+	pulse_mode = PULSE_PAUSE;
+	pulse_startup = 0;
+
+	if (DEBUG_TAP) bprintf(0, _T("emit_pause_or_stop: %d\n"), pausems);
+	pause_len = (pausems == 0) ? 0xffff : pausems;
+
+	got_emit = true;
+}
+
+static void SpecTZXOperation()
+{
+	if (tap_op == -1) {
+		tap_op = tapbyte();
+		tap_op_num = 0;
+		if (DEBUG_TAP) bprintf(0, _T("--- tzx op:  %x  @  %x ---\n"), tap_op, tap_pos);
+	}
+
+	switch (tap_op) {
+		case 0x10: // normal speed data
+			switch (tap_op_num) {
+				case 0:
+					pause_len = tapword();
+					block_len = tapword();
+					emit_leader(2168, (block_len == 19) ? 8063 : 3223);
+					tap_op_num++;
+					break;
+				case 1:
+					seq_pulses[0] = 667;
+					seq_pulses[1] = 735;
+					seq_pulsecount = 2;
+					emit_sync(seq_pulsecount);
+					tap_op_num++;
+					break;
+				case 2:
+					emit_block(block_len, 855, 1710, 8);
+					tap_op_num++;
+					break;
+				case 3:
+					emit_pause(pause_len);
+					tap_pos += block_len;
+					tap_op = -1; // next!
+					break;
+			}
+			break;
+		case 0x11: // turbo data
+			switch (tap_op_num) {
+				case 0:
+					leader_pulse_len = tapword();
+					seq_pulses[0] = tapword();
+					seq_pulses[1] = tapword();
+					zero_bit_len = tapword();
+					one_bit_len = tapword();
+					leader_pulse_count = tapword();
+					last8 = tapbyte();
+					pause_len = tapword();
+					block_len = tapword() | (tapbyte() << 16);
+					emit_leader(leader_pulse_len, leader_pulse_count);
+					tap_op_num++;
+					break;
+				case 1:
+					seq_pulsecount = 2;
+					emit_sync(seq_pulsecount);
+					tap_op_num++;
+					break;
+				case 2:
+					emit_block(block_len, zero_bit_len, one_bit_len, last8);
+					tap_op_num++;
+					break;
+				case 3:
+					emit_pause(pause_len);
+					tap_pos += block_len;
+					tap_op = -1;  // next!
+					break;
+			}
+			break;
+
+		case 0x12: // tone (leader)
+			leader_pulse_len = tapword();
+			leader_pulse_count = tapword();
+			emit_leader(leader_pulse_len, leader_pulse_count);
+			tap_op = -1;
+			break;
+
+		case 0x13: // pulse sequences
+			seq_pulsecount = tapbyte();
+
+			for (int i = 0; i < seq_pulsecount; i++) {
+				seq_pulses[i] = tapword();
+			}
+			emit_sync(seq_pulsecount);
+			tap_op = -1;
+			break;
+
+		case 0x14: // data block
+			switch (tap_op_num) {
+				case 0:
+					zero_bit_len = tapword();
+					one_bit_len = tapword();
+					last8 = tapbyte();
+					pause_len = tapword();
+					block_len = tapword() | tapbyte() << 16;
+					emit_block(block_len, zero_bit_len, one_bit_len, last8);
+					tap_op_num++;
+					break;
+				case 1:
+					emit_pause(pause_len);
+					tap_pos += block_len;
+					tap_op = -1;
+					break;
+			}
+			break;
+
+		case 0x15: // raw data block (Direct Recording)
+			switch (tap_op_num) {
+				case 0:
+					raw_t_per_sample = tapword();
+					pause_len = tapword();
+					last8 = tapbyte();
+					block_len = tapword() | tapbyte() << 16;
+
+					emit_rawblock(block_len, raw_t_per_sample, last8);
+					tap_op_num++;
+					break;
+				case 1:
+					emit_pause(pause_len);
+					tap_pos += block_len;
+					tap_op = -1;
+					break;
+			}
+			break;
+
+		case 0x20: // pause or stop
+			pause_len = tapword();
+			emit_pause_or_stop(pause_len);
+			tap_op = -1;
+			break;
+
+		case 0x21: { // skip over group name
+			UINT8 skip = tapbyte();
+			UINT8 *textdescr = (UINT8*)BurnMalloc(skip + 1);
+
+			memcpy(textdescr, tapptr(), skip);
+			bprintf(0, _T("Group Name: [%S]\n"), textdescr);
+			BurnFree(textdescr);
+			tap_pos += skip;
+
+			tap_op = -1;
+			break;
+		}
+
+		case 0x22: // end group name
+			bprintf(0, _T("End Group\n"));
+			tap_op = -1;
+			break;
+
+		case 0x24: // loop start
+			loop_count = tapword();
+			loop_start = tap_pos;
+			tap_op = -1;
+			break;
+
+		case 0x25: // loop end
+			if (loop_count > 0) {
+				loop_count--;
+				tap_pos = loop_start;
+			}
+			tap_op = -1;
+			break;
+
+		case 0x26: // call seq
+			bprintf(0, _T(".txz: call seq unimpl!\n"));
+			tap_op = -1;
+			break;
+
+		case 0x27: // call seq-RETURN
+			bprintf(0, _T(".tzx: call seq-RETURN unimpl!\n"));
+			tap_op = -1;
+			break;
+
+		case 0x28: // select block
+			bprintf(0, _T(".tzx: select block unimpl!\n"));
+			tap_op = -1;
+			break;
+
+		case 0x2a: // stop if 48k spectrum
+			tapdword(); // eat the reserved dword
+			if (~SpecMode & SPEC_128K) {
+				if (DEBUG_TAP) bprintf(0, _T(".tzx: we should stop if 48k speccy\n"));
+				pulse_mode = PULSE_DONE;
+				// done!
+			}
+			tap_op = -1;
+			break;
+
+		case 0x2b: // set signal level
+			tapdword(); // eat the reserved dword
+			pulse_pulse = tapbyte() ? 0x40 : 0x00;
+			if (DEBUG_TAP) bprintf(0, _T(".tzx 0x2b: set signal level: %x\n"), pulse_pulse);
+			tap_op = -1;
+			break;
+
+		case 0x30: { // tzx description (text)
+			UINT8 skip = tapbyte();
+			UINT8 *textdescr = (UINT8*)BurnMalloc(skip + 1);
+
+			memcpy(textdescr, tapptr(), skip);
+			bprintf(0, _T("TZX Description: [%S]\n"), textdescr);
+			BurnFree(textdescr);
+
+			tap_pos += skip;
+			tap_op = -1;
+			break;
+		}
+
+		case 0x32: { // archive description
+			const char *archivetypes[] = { "Title", "Publisher", "Author",
+			"Year", "Language", "Type", "Price", "Loader", "Origin"	};
+			char a_line[0x200] = "\0";
+			char b_line[0x200] = "\0";
+
+			bprintf(0, _T("TZX Archival Info\n"));
+
+			UINT16 skip = tapword();
+			int pos = 0;
+			UINT8 entries = tapdata(pos++);
+			for (int i = 0; i < entries; i++) {
+				UINT8 entrytype = tapdata(pos++);
+				if (entrytype < 9) {
+					sprintf(a_line, "%s:", archivetypes[entrytype]);
+				} else {
+					sprintf(a_line, "Comment:");
+				}
+				UINT8 s_len = tapdata(pos++);
+				strncpy(b_line, (char*)tapptr(pos), s_len);
+				b_line[s_len] = '\0';
+				bprintf(0, _T("%S %S\n"), a_line, b_line);
+				pos += s_len;
+				if (pos >= skip) break;
+			}
+
+			tap_pos += skip;
+			tap_op = -1;
+			break;
+		}
+
+		case 0x33: { // hardware description
+			UINT16 skip = tapbyte() * 3;
+			UINT8 *textdescr = (UINT8*)BurnMalloc(skip + 1);
+
+			memcpy(textdescr, tapptr(), skip);
+			bprintf(0, _T("TZX HW Description: [%S]\n"), textdescr);
+			BurnFree(textdescr);
+
+			tap_pos += skip;
+			tap_op = -1;
+			break;
+		}
+
+		case 0x35: { // custom info block
+			tap_pos += 10; // skip char[10] ascii string
+			UINT16 skip = tapdword();
+			tap_pos += skip;
+			tap_op = -1;
+			break;
+		}
+
+		case 0x5a: // glue block, to detect spliced tzx files
+			tap_pos += 9;
+			tap_op = -1;
+			break;
+
+		default:
+			bprintf(0, _T(".tzx: UNIMPL operation %x\n"), tap_op);
+			pulse_mode = PULSE_DONE;
+			tap_op = -1;
+			break;
+	}
+}
+
+static void SpecTZXGetEmit() {
+	got_emit = false;
+
+	if (tap_pos == 10) {
+		// start playback!
+		pulse_pulse = 0;
+		start_tstate = total_tstates();
+		target_tstate = total_tstates();
+	}
+
+	if (tap_pos >= SpecTAPLen) {
+		bprintf(0, _T(".tzx: end of tape reached!\n"));
+		pulse_mode = PULSE_DONE;
+	} else {
+		do {
+			SpecTZXOperation();
+		} while (got_emit == false && tap_pos < SpecTAPLen);
+	}
+}
+
+static void pulse_reset()
+{
+#if TAPERAW
+	taperaw_init();
+#endif
+	SpecTZXReset();
+
+	pulse_mode = PULSE_DONE;
+	pulse_status = TAPE_STOPPED;
+	pulse_length = 0;
+	pulse_index = 0;
+	pulse_startup = 0;
+	pulse_count = 0;
+	pulse_pulse = 0;
+
+	load_check = 0;
+	last_cycle = 0;
+	last_bc = 0;
+
+	if (SpecMode & SPEC_TZX || SpecMode & SPEC_SLOWTAP) {
+		pulse_mode = PULSE_WAIT_EMIT;
+	}
+}
+
+#define d_abs(z) (((z) < 0) ? -(z) : (z))
+
+static INT32 check_loading()
+{
+	INT32 cycles = total_tstates() - last_cycle;
+	INT32 bc = d_abs(last_bc - ZetBc(-1)) & 0xff00;
+	last_bc = ZetBc(-1) & 0xff00;
+	last_cycle = total_tstates();
+
+	if (pulse_status == TAPE_STOPPED) {
+		load_check = (cycles < 600 && (bc == 0x100 || bc == 0xfe00|| bc == 0xff00 || bc == 0xfd00 )) ? load_check+1 : 0;
+		if (load_check > 0x1000) {
+			bprintf(0, _T("Tape: auto hit play\n"));
+			pulse_status = TAPE_PLAYING;
+			load_check = 0;
+
+			// rawtap hack
+			start_tstate = total_tstates();
+			if (SpecMode & SPEC_SLOWTAP) {
+				tap_op = -1;
+			}
+		}
+	} else {
+		load_check = (cycles > 1000 && (bc != 0x100 && bc != 0x0000 && bc!=0x6200 && bc != 0xfe00 && bc != 0xfd00)) ? load_check+1 : 0;
+		if (load_check > 2) {
+			bprintf(0, _T("Tape: auto hit STOP\n"));
+		    pulse_status = TAPE_STOPPED;
+			load_check = 0;
+		}
+	}
+#if 0
+	// debug detector
+	extern int counter;
+	if (counter)
+		bprintf(0, _T(">lc %x  bc %x,%x cyc %d\n"), load_check, ZetBc(-1),bc,cycles);
+#endif
+	return 0;
+}
+
+static void SpecSlowTAPGetEmit() {
+	got_emit = false;
+
+	if (tap_pos == 0) {
+		// start playback!
+		pulse_pulse = 0;
+		start_tstate = total_tstates();
+		target_tstate = total_tstates();
+		tap_op_num = 0;
+		tap_op = 0;
+	}
+
+	if (tap_pos >= SpecTAPLen) {
+		bprintf(0, _T(".tap: end of .tap reached!\n"));
+		pulse_mode = PULSE_DONE;
+	} else {
+		switch (tap_op_num) {
+			case 0:
+				block_len = tapword();
+				pause_len = 1000;
+				emit_leader(2168, (tapdata(0) & 0x80) ? 3223 : 8063);
+				tap_op_num++;
+				break;
+			case 1:
+				seq_pulses[0] = 667;
+				seq_pulses[1] = 735;
+				seq_pulsecount = 2;
+				emit_sync(seq_pulsecount);
+				tap_op_num++;
+				break;
+			case 2:
+				emit_block(block_len, 855, 1710, 8);
+				tap_op_num++;
+				break;
+			case 3:
+				emit_pause(pause_len);
+				tap_pos += block_len;
+				tap_op_num = 0;
+				break;
+		}
+	}
+}
+
+static UINT8 pulse_synth()
+{
+	if (!(SpecMode & SPEC_SLOWTAP || SpecMode & SPEC_TZX)) return 0;
+
+	check_loading();
+
+    if (pulse_status == TAPE_STOPPED) return pulse_pulse;
+
+#if TAPERAW
+	return taperaw_pulse();
+#endif
+
+	if (pulse_mode == PULSE_WAIT_EMIT) {
+		if (SpecMode & SPEC_TZX) {
+			SpecTZXGetEmit();
+		} else {
+			SpecSlowTAPGetEmit();
+		}
+		if (DEBUG_TAP) bprintf(0, _T("Got emit.  pulse_mode %x / %S\n"), pulse_mode, pulse_mdescr[pulse_mode]);
+	}
+
+	switch (pulse_mode) {
+		case PULSE_LEADER:
+			if (pulse_startup == 0) {
+				pulse_startup = 1;
+				pulse_index = 0;
+				pulse_count = 0;
+				pulse_pulse = 0;
+				pulse_length = leader_pulse_len;
+				if (DEBUG_TAP) bprintf(0, _T("pulse LEADER:  %I64x\n"), start_tstate);
+			}
+			if (total_tstates() >= target_tstate) {
+				int accu = 0;
+				while (total_tstates() >= target_tstate+accu) {
+					// when ZX starts listening for leader, it checks every
+					// few frames - we need to fastforward to the correct pulse
+					// when this gap happens.
+					accu += pulse_length;
+					pulse_pulse ^= 0x40;
+					pulse_count++;
+				}
+				start_tstate = total_tstates();
+				target_tstate += accu;
+				if (pulse_count >= leader_pulse_count) {
+					pulse_mode = PULSE_WAIT_EMIT;
+					pulse_startup = 0;
+					if (DEBUG_TAP) bprintf(0, _T("..leader END. %I64x next @ %I64x  time now: %I64x   (difference %I64x)\n"), target_tstate, total_tstates(), target_tstate - total_tstates());
+				}
+			}
+			break;
+
+		case PULSE_SEQ:
+			if (pulse_startup == 0) {
+				pulse_startup = 1;
+				pulse_index = 0;
+			}
+			if (total_tstates() >= target_tstate) {
+				if (DEBUG_TAP) bprintf(0, _T("..SEQ hits @ %I64x  time now: %I64x   (difference %I64x)\n"), target_tstate, total_tstates(), total_tstates() - target_tstate);
+				pulse_length = seq_pulses[pulse_index];
+				pulse_index++;
+				pulse_pulse ^= 0x40;
+				target_tstate += pulse_length;
+				if (pulse_index == seq_pulsecount) {
+					pulse_length = 0;
+					pulse_mode = PULSE_WAIT_EMIT;
+					pulse_count = 0;
+					pulse_index = 0;
+					pulse_startup = 0;
+					if (DEBUG_TAP) bprintf(0, _T("seq ends\n"));
+				}
+			}
+			break;
+		case PULSE_DATA:
+			if (pulse_startup == 0) {
+				pulse_startup = 1;
+
+				pulse_index = 0;
+				pulse_length = 0;
+				pulse_count = 0;
+			}
+			if (total_tstates() >= target_tstate) {
+				UINT8 data = tapdata(pulse_count >> 3);
+
+				data &= (1 << (7 - (pulse_count & 7)));
+				//bprintf(0, _T("byte %x-%d:  %x\n"), pulse_count>>3, pulse_count&7, data ? 1 : 0);
+				pulse_length = ((data) ? one_bit_len : zero_bit_len);
+
+				target_tstate += pulse_length;
+				pulse_pulse ^= 0x40;
+
+				pulse_index++;
+				if (pulse_index == 2) {
+					pulse_index = 0;
+					pulse_count++;
+
+					if (pulse_count == block_len_pulses) {
+						pulse_mode = PULSE_WAIT_EMIT;
+						pulse_startup = 0;
+						if (DEBUG_TAP) bprintf(0, _T("block-EOF HIT.\n"));
+					}
+				}
+			}
+			break;
+		case PULSE_RAWDATA:
+			if (pulse_startup == 0) {
+				pulse_startup = 1;
+
+				pulse_index = 0;
+				pulse_length = 0;
+				pulse_count = 0;
+			}
+			if (total_tstates() >= target_tstate) {
+				UINT8 data = tapdata(pulse_count >> 3);
+
+				data &= (1 << (7 - (pulse_count & 7)));
+				//bprintf(0, _T("byte %x-%d:  %x\n"), pulse_count>>3, pulse_count&7, data ? 1 : 0);
+
+				pulse_pulse = ((data) ? 0x40 : 0x00);
+				pulse_length = raw_t_per_sample;
+				target_tstate += pulse_length;
+
+				pulse_count++;
+
+				if (pulse_count == block_len_pulses) {
+					pulse_mode = PULSE_WAIT_EMIT;
+					pulse_startup = 0;
+					if (DEBUG_TAP) bprintf(0, _T("rawdata_block-EOF HIT.\n"));
+				}
+			}
+			break;
+		case PULSE_PAUSE:
+			if (pulse_startup == 0) {
+				pulse_startup = 1;
+				pulse_index = 0;
+			}
+			if (total_tstates() >= target_tstate) {
+				if (DEBUG_TAP) bprintf(0, _T("pause index %x  @  %I64x\n"), pulse_index, total_tstates());
+				if (pulse_index == 0) {
+					if (pause_len == 0xffff) {
+						if (DEBUG_TAP) bprintf(0, _T("pause-stop mode (0), tape stopped!\n"));
+						pulse_mode = PULSE_DONE;
+						pause_len = 0;
+					}
+					if (pause_len != 0) pulse_pulse ^= 0x40; // 0-length pauses don't get an edge
+					target_tstate += pause_len * 3500;
+				}
+				pulse_index++;
+				if (pulse_index == 2) {
+					pulse_mode = PULSE_WAIT_EMIT;
+					pulse_index = 0;
+					if (DEBUG_TAP) bprintf(0, _T("done PAUSE.\n"));
+				}
+			}
+			break;
+
+		case PULSE_DONE:
+			if (DEBUG_TAP) bprintf(0, _T("pulse_DONE hits.\n"));
+			pulse_status = TAPE_STOPPED;
+			pulse_pulse ^= 0x40; // end of tape edge
+			break;
+	}
+
+	last_pulse = (pulse_pulse >> 6) & 1;
+
+	return pulse_pulse;
+}
 
 static void SpecTAPReset()
 {
 	SpecTAPBlocknum = 0;
 	SpecTAPPos = 0;
-	SpecTAPLoading = 0;
+
+	pulse_reset();
 }
 
 static void SpecTAPInit()
@@ -777,6 +1586,12 @@ static void SpecTAPInit()
 	}
 	SpecTAPBlocks = 0;
 	SpecTAPBlocknum = 0;
+
+	if (SpecMode & SPEC_TZX) {
+		bprintf(0, _T("**  - TZX Loader\n"));
+		return;
+	}
+
 	if (DEBUG_TAP) {
 		bprintf(0, _T("**  - Spectrum TAP Loader -\n"));
 		bprintf(0, _T("Block#\tLength\tOffset\n"));
@@ -1055,13 +1870,25 @@ static INT32 BurnGetLength(INT32 rom_index)
 	return ri.nLen;
 }
 
+#if 0
+static char *BurnGetName(INT32 rom_index)
+{
+	char *szName = NULL;
+	BurnDrvGetRomName(&szName, rom_index, 0);
+
+	return szName;
+}
+#endif
+
 struct s_modes {
 	INT32 mode;
 	TCHAR text[40];
 };
 
 static s_modes speccy_modes[] = {
-	{ SPEC_TAP,		_T(".tap file")						},
+	{ SPEC_TAP,		_T("tape file")						},
+	{ SPEC_TZX,		_T("(.tzx format)")					},
+	{ SPEC_SLOWTAP,	_T("(.tap format, slow load)")		},
 	{ SPEC_Z80,		_T(".z80 file")						},
 	{ SPEC_128K,	_T("128K")							},
 	{ SPEC_PLUS2,	_T("+2a")							},
@@ -1122,7 +1949,7 @@ static INT32 SpectrumInit(INT32 Mode)
 	ZetSetWriteHandler(SpecZ80Write);
 	ZetSetInHandler(SpecZ80PortRead);
 	ZetSetOutHandler(SpecZ80PortWrite);
-	if (SpecMode & SPEC_TAP) {
+	if (SpecMode & SPEC_TAP && !(SpecMode & SPEC_SLOWTAP || SpecMode & SPEC_TZX)) {
 		bprintf(0, _T("**  Spectrum: Using TAP file (len 0x%x) - DMA Loader\n"), SpecTAPLen);
 		z80_set_spectrum_tape_callback(SpecTAPDMACallback);
 	}
@@ -1199,7 +2026,7 @@ static INT32 Spectrum128Init(INT32 Mode)
 	ZetSetWriteHandler(SpecSpec128Z80Write);
 	ZetSetInHandler(SpecSpec128Z80PortRead);
 	ZetSetOutHandler(SpecSpec128Z80PortWrite);
-	if (SpecMode & SPEC_TAP) {
+	if (SpecMode & SPEC_TAP && !(SpecMode & SPEC_SLOWTAP || SpecMode & SPEC_TZX)) {
 		bprintf(0, _T("**  Spectrum 128k: Using TAP file (len 0x%x) - DMA Loader\n"), SpecTAPLen);
 		z80_set_spectrum_tape_callback(SpecTAPDMACallback);
 	}
@@ -1238,6 +2065,9 @@ static INT32 get_type()
 			if (!strcasecmp(".tap", rn + (len-4))) {
 				return SPEC_TAP;
 			}
+			if (!strcasecmp(".tzx", rn + (len-4))) {
+				return SPEC_TAP | SPEC_TZX;
+			}
 		}
 	}
 
@@ -1249,9 +2079,19 @@ static INT32 SpecInit()
 	return SpectrumInit(get_type());
 }
 
+static INT32 SpecSlowTAPInit()
+{
+	return SpectrumInit(get_type() | SPEC_SLOWTAP);
+}
+
 static INT32 Spec128KInit()
 {
 	return Spectrum128Init(SPEC_128K | get_type());
+}
+
+static INT32 Spec128KSlowTAPInit()
+{
+	return Spectrum128Init(SPEC_128K | get_type() | SPEC_SLOWTAP);
 }
 
 static INT32 Spec128KPlus2Init()
@@ -1541,6 +2381,8 @@ static INT32 SpecFrame()
 
 	INT32 nCyclesDo = 0;
 
+	super_tstate += ZetTotalCycles(0);
+
 	ZetNewFrame();
 	ZetOpen(0);
 	ZetIdle(nExtraCycles);
@@ -1585,6 +2427,22 @@ static INT32 SpecFrame()
 	nExtraCycles = ZetTotalCycles() - tot_frame;
 
 	ZetClose();
+
+	if ((~SpecDips[1] & 1) && (SpecMode & SPEC_SLOWTAP || SpecMode & SPEC_TZX) && in_tape_ffwd == 0 && pulse_status == TAPE_PLAYING) {
+		in_tape_ffwd = 1;
+		INT32 cnt = 50;
+		UINT8 *draw_temp = pBurnDraw;
+		INT16 *sound_temp = pBurnSoundOut;
+		pBurnDraw = NULL;
+		pBurnSoundOut = NULL;
+		while (cnt && pulse_status == TAPE_PLAYING) {
+			SpecFrame();
+			cnt--;
+		}
+		pBurnSoundOut = sound_temp;
+		pBurnDraw = draw_temp;
+		in_tape_ffwd = 0;
+	}
 
 	return 0;
 }
@@ -2113,7 +2971,7 @@ struct BurnDriver BurnSpecapb = {
 // Arkanoid (48K)
 
 static struct BurnRomInfo SpecarkanoidRomDesc[] = {
-	{ "Arkanoid (1987)(Imagine Software).z80", 0x08ad3, 0x6fa4f00f, BRF_ESS | BRF_PRG },
+	{ "Arkanoid 48K (1987)(Imagine).tzx", 55771, 0x52a34d2d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specarkanoid, Specarkanoid, Spectrum)
@@ -11578,16 +12436,16 @@ static struct BurnRomInfo SpecHundraRomDesc[] = {
 	{ "Hundra (1988)(Dinamic Software).tap", 48229, 0xeeb32b33, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecHundra, SpecHundra, Spec128)
+STDROMPICKEXT(SpecHundra, SpecHundra, Spectrum)
 STD_ROM_FN(SpecHundra)
 
 struct BurnDriver BurnSpecHundra = {
-	"spec_hundra", NULL, "spec_spec128", NULL, "1988",
+	"spec_hundra", NULL, "spec_spectrum", NULL, "1988",
 	"Hundra (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecHundraRomInfo, SpecHundraRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -15090,7 +15948,7 @@ struct BurnDriver BurnSpecbarbarian = {
 // Barbarian II: The Dungeon of Drax (128K)
 
 static struct BurnRomInfo Specbarbarn2RomDesc[] = {
-	{ "Barbarian II - The Dungeon of Drax 128K (1988)(Palace Software).z80", 0x1ac6c, 0x2215c3b7, BRF_ESS | BRF_PRG },
+	{ "Barbarian II - The Dungeon of Drax 128K (1988)(Palace Software).tzx", 132716, 0x3e9d9b6c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specbarbarn2, Specbarbarn2, Spec128)
@@ -29309,7 +30167,7 @@ struct BurnDriver BurnSpecAstrocop = {
 };
 
 // Herbert the Turbot (128K) (HB)
-
+// Note: game distributed as .z80 by Author
 static struct BurnRomInfo SpecHerberttbRomDesc[] = {
 	{ "Herbert the Turbot (2010)(Bob Smith).z80", 81123, 0x0a9c0799, BRF_ESS | BRF_PRG },
 };
@@ -30622,7 +31480,7 @@ struct BurnDriver BurnSpecBulletstorm = {
 // Captain Gofer (Russian) (128K) (HB)
 
 static struct BurnRomInfo SpecCaptaingoferRomDesc[] = {
-	{ "Captain Gofer (2020)(Dwa83).z80", 27917, 0xf843ec65, BRF_ESS | BRF_PRG },
+	{ "Captain Gofer (2020)(Dwa83).tap", 28711, 0xae298c30, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCaptaingofer, SpecCaptaingofer, Spec128)
@@ -30634,7 +31492,7 @@ struct BurnDriver BurnSpecCaptaingofer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecCaptaingoferRomInfo, SpecCaptaingoferRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -30679,7 +31537,7 @@ struct BurnDriver BurnSpecCosmicpayback = {
 // Cygnus - Alpha (128K) (HB)
 
 static struct BurnRomInfo SpecCygnusalphaRomDesc[] = {
-	{ "Cygnus - Alpha (2020)(ILFORD).z80", 50933, 0x2096d6d4, BRF_ESS | BRF_PRG },
+	{ "Cygnus - Alpha (2020)(ILFORD).tap", 52324, 0x830a0b99, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCygnusalpha, SpecCygnusalpha, Spec128)
@@ -30691,7 +31549,7 @@ struct BurnDriver BurnSpecCygnusalpha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT | GBF_SIM, 0,
 	SpectrumGetZipName, SpecCygnusalphaRomInfo, SpecCygnusalphaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -30962,9 +31820,9 @@ struct BurnDriver BurnSpecRedraidsink2 = {
 };
 
 // Sea Dragon (48K-128K) (HB)
-
+// 2024 update
 static struct BurnRomInfo SpecseadragonRomDesc[] = {
-	{ "Sea Dragon (2010)(Andrew Zhiglov)(128k).z80", 0x13b53, 0xf9fe097c, BRF_ESS | BRF_PRG },
+	{ "Sea Dragon (2010)(Andrew Zhiglov)(128k).tap", 89250, 0x665b8a87, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specseadragon, Specseadragon, Spec128)
@@ -30980,8 +31838,8 @@ struct BurnDriver BurnSpecseadragon = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Dark Transit (48K) (HB)
-
+// Dark Transit (128K) (HB)
+// Note: this 128k version is only released by author as .z80(!)
 static struct BurnRomInfo SpecDarktransitRomDesc[] = {
 	{ "Dark Transit (2021)(Goliat eXperience Games).z80", 131151, 0x6dd4e36d, BRF_ESS | BRF_PRG },
 };
@@ -30991,7 +31849,7 @@ STD_ROM_FN(SpecDarktransit)
 
 struct BurnDriver BurnSpecDarktransit = {
 	"spec_darktransit", NULL, "spec_spec128", NULL, "2021",
-	"Dark Transit (48K) (HB)\0", NULL, "Goliat eXperience Games", "ZX Spectrum",
+	"Dark Transit (128K) (HB)\0", NULL, "Goliat eXperience Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecDarktransitRomInfo, SpecDarktransitRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
@@ -31192,7 +32050,7 @@ struct BurnDriver BurnSpecFasebonus = {
 // Dungeons of Gomilandia (128K) (HB)
 
 static struct BurnRomInfo SpecGomilandiaRomDesc[] = {
-	{ "Dungeons of Gomilandia (2020)(RetroWorks).z80", 38766, 0x39d5e947, BRF_ESS | BRF_PRG },
+	{ "Dungeons of Gomilandia (2020)(RetroWorks).tap", 24443, 0x643f0674, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecGomilandia, SpecGomilandia, Spec128)
@@ -31401,7 +32259,7 @@ struct BurnDriver BurnSpecYumikohm = {
 // Astro Phobos (128K) (HB, v1.3)
 
 static struct BurnRomInfo SpecAstrophobosRomDesc[] = {
-	{ "Astro Phobos v1.3 (2021)(goliat).z80", 131151, 0x1acd61a3, BRF_ESS | BRF_PRG },
+	{ "Astro Phobos v1.3 128K (2021)(goliat).tap", 38473, 0xfb2ff0e9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAstrophobos, SpecAstrophobos, Spec128)
@@ -31477,7 +32335,7 @@ struct BurnDriver BurnSpecCodg = {
 // Charm, The (128K) (HB)
 
 static struct BurnRomInfo SpecCharmRomDesc[] = {
-	{ "The Charm (2014)(RetroWorks).z80", 100884, 0xe56ecd56, BRF_ESS | BRF_PRG },
+	{ "The Charm (2014)(RetroWorks).tzx", 81573, 0xa6317752, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCharm, SpecCharm, Spec128)
@@ -31610,7 +32468,7 @@ struct BurnDriver BurnSpecNohzdyve = {
 // Oddi The Viking (128K) (HB)
 
 static struct BurnRomInfo SpecOddi128kRomDesc[] = {
-	{ "Oddi The Viking 128K (2010)(Digital Brains).z80", 39355, 0x9a22b6ef, BRF_ESS | BRF_PRG },
+	{ "Oddi The Viking 128K (2010)(Digital Brains).tzx", 40224, 0x095f0aaf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecOddi128k, SpecOddi128k, Spec128)
@@ -31629,7 +32487,7 @@ struct BurnDriver BurnSpecOddi128k = {
 // Oddi The Viking (48K) (HB)
 
 static struct BurnRomInfo SpecOddi48kRomDesc[] = {
-	{ "Oddi The Viking 48K (2010)(Digital Brains).z80", 31576, 0xc436d54c, BRF_ESS | BRF_PRG },
+	{ "Oddi The Viking 48K (2010)(Digital Brains).tzx", 33267, 0xa9b440bd, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecOddi48k, SpecOddi48k, Spectrum)
@@ -31686,7 +32544,7 @@ struct BurnDriver BurnSpecRabbitinw48k = {
 // Ragnablock (128K) (HB)
 
 static struct BurnRomInfo SpecRagnablockRomDesc[] = {
-	{ "Ragnablock (2006)(Computer Emuzone).z80", 31321, 0xd23221ec, BRF_ESS | BRF_PRG },
+	{ "Ragnablock (2006)(Computer Emuzone).tap", 22209, 0xfc22a3a0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRagnablock, SpecRagnablock, Spec128)
@@ -31698,14 +32556,14 @@ struct BurnDriver BurnSpecRagnablock = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_BREAKOUT, 0,
 	SpectrumGetZipName, SpecRagnablockRomInfo, SpecRagnablockRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
 // Zombo (48K) (HB)
 
 static struct BurnRomInfo SpecZomboRomDesc[] = {
-	{ "Zombo (2015)(Monsterbytes).z80", 38721, 0xa6ff8b75, BRF_ESS | BRF_PRG },
+	{ "Zombo (2015)(Monsterbytes).tap", 48937, 0xe5d51108, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecZombo, SpecZombo, Spectrum)
@@ -32161,7 +33019,7 @@ struct BurnDriver BurnSpecZabijdk = {
 // Azzurro 8bit Jam (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecA8bitjamRomDesc[] = {
-	{ "Azzurro 8bit Jam v1.1 (2011)(Relevo).z80", 40029, 0x2a477e2f, BRF_ESS | BRF_PRG },
+	{ "Azzurro 8bit Jam v1.1 (2011)(Relevo).tap", 39507, 0x11c55f90, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecA8bitjam, SpecA8bitjam, Spec128)
@@ -32199,7 +33057,7 @@ struct BurnDriver BurnSpecBbredux = {
 // Black Horse (128K) (HB)
 
 static struct BurnRomInfo SpecBlackhorseRomDesc[] = {
-	{ "Black Horse (2009)(Digital Brains).z80", 34122, 0x9e72c587, BRF_ESS | BRF_PRG },
+	{ "Black Horse (2009)(Digital Brains).tzx", 31400, 0x71452670, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBlackhorse, SpecBlackhorse, Spec128)
@@ -32218,7 +33076,7 @@ struct BurnDriver BurnSpecBlackhorse = {
 // Box Reloaded (48K) (HB)
 
 static struct BurnRomInfo SpecBoxreloadRomDesc[] = {
-	{ "Box Reloaded (2010)(Beiker Soft).z80", 43830, 0x2c4eda33, BRF_ESS | BRF_PRG },
+	{ "Box Reloaded (2010)(Beiker Soft).tzx", 47177, 0x9b73ecfc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBoxreload, SpecBoxreload, Spectrum)
@@ -32237,7 +33095,7 @@ struct BurnDriver BurnSpecBoxreload = {
 // Dominetris (48K) (HB)
 
 static struct BurnRomInfo SpecDominetrisRomDesc[] = {
-	{ "Dominetris (2005)(Cronosoft).z80", 19842, 0x0c6a56e9, BRF_ESS | BRF_PRG },
+	{ "Dominetris (2005)(Cronosoft).tzx", 9402, 0x54c7fcd5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDominetris, SpecDominetris, Spectrum)
@@ -32256,7 +33114,7 @@ struct BurnDriver BurnSpecDominetris = {
 // Invasion of the Zombie Monsters (128K) (HB)
 
 static struct BurnRomInfo SpecInvzombieRomDesc[] = {
-	{ "Invasion of the Zombie Monsters (2010)(Relevo).z80", 40094, 0x98e45a93, BRF_ESS | BRF_PRG },
+	{ "Invasion of the Zombie Monsters (2010)(Relevo).tzx", 38977, 0x32a661ae, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecInvzombie, SpecInvzombie, Spec128)
@@ -32465,7 +33323,7 @@ struct BurnDriver BurnSpecSafecracker = {
 // Sector (128K) (HB)
 
 static struct BurnRomInfo SpecSectorRomDesc[] = {
-	{ "Sector (2013)(RetroSouls).z80", 27939, 0x103cfccf, BRF_ESS | BRF_PRG },
+	{ "Sector (2013)(RetroSouls).tzx", 23618, 0x85c07192, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSector, SpecSector, Spec128)
@@ -32617,7 +33475,7 @@ struct BurnDriver BurnSpecJoeblob = {
 // Nanako in Classic Japanese Monster Castle (48K) (HB)
 
 static struct BurnRomInfo SpecNanakoRomDesc[] = {
-	{ "Nanako in Classic Japanese Monster Castle 48K (2007)(Computer Emuzone).z80", 34742, 0x89eca399, BRF_ESS | BRF_PRG },
+	{ "Nanako in Classic Japanese Monster Castle 48K (2007)(Computer Emuzone).tzx", 13964, 0x339f47f0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecNanako, SpecNanako, Spectrum)
@@ -33282,7 +34140,7 @@ struct BurnDriver BurnSpecAkenesp = {
 // Alien Astro Frenzy (48K) (HB)
 
 static struct BurnRomInfo SpecAafRomDesc[] = {
-	{ "Alien Astro Frenzy 48K (2021)(Vintage Software).z80", 27028, 0x4c32aff8, BRF_ESS | BRF_PRG },
+	{ "Alien Astro Frenzy 48K (2021)(Vintage Software).tap", 26103, 0x69e07d46, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAaf, SpecAaf, Spectrum)
@@ -33294,7 +34152,7 @@ struct BurnDriver BurnSpecAaf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecAafRomInfo, SpecAafRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -33624,7 +34482,7 @@ struct BurnDriver BurnSpecAmidar = {
 // Angelita - Battle Mocita (48K) (HB)
 
 static struct BurnRomInfo SpecAngelitaRomDesc[] = {
-	{ "Angelita - Battle Mocita 48K (2020)(Nekokapi).tap", 38495, 0x5ccd938b, BRF_ESS | BRF_PRG },
+	{ "Angelita - Battle Mocita 48K (2020)(Nekokapi).tap", 38495, 0x634a4281, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAngelita, SpecAngelita, Spectrum)
@@ -34403,7 +35261,7 @@ struct BurnDriver BurnSpecBeethrev48 = {
 // Benny Hill's Madcap Chase! (128K) (Hack)
 
 static struct BurnRomInfo SpecBennyhil128RomDesc[] = {
-	{ "Benny Hill's Madcap Chase! 128K (2017)(AGDLabs).z80", 36822, 0x0c432e6c, BRF_ESS | BRF_PRG },
+	{ "Benny Hill's Madcap Chase! 128K (2017)(AGDLabs).tzx", 42723, 0x909fed56, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBennyhil128, SpecBennyhil128, Spec128)
@@ -34498,7 +35356,7 @@ struct BurnDriver BurnSpecBinbattle = {
 // Binary Land (128K) (HB, v1.7)
 
 static struct BurnRomInfo SpecBinlandRomDesc[] = {
-	{ "Binary Land v1.7 128K (2020)(Joflof).z80", 45797, 0x1ce4134e, BRF_ESS | BRF_PRG },
+	{ "Binary Land v1.7 128K (2020)(Joflof).tap", 46777, 0x3f061588, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBinland, SpecBinland, Spec128)
@@ -34517,7 +35375,7 @@ struct BurnDriver BurnSpecBinland = {
 // Binary Land (16K) (HB, v1.7)
 
 static struct BurnRomInfo SpecBinland16RomDesc[] = {
-	{ "Binary Land v1.7 16K (2020)(Joflof).z80", 14855, 0xb4523bc7, BRF_ESS | BRF_PRG },
+	{ "Binary Land v1.7 16K (2020)(Joflof).tap", 15646, 0xc61150c1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBinland16, SpecBinland16, Spectrum)
@@ -35506,7 +36364,7 @@ struct BurnDriver BurnSpecChemichaos = {
 // Cherils Perils (48K) (HB)
 
 static struct BurnRomInfo SpecCherilsRomDesc[] = {
-	{ "Cherils Perils 48K (2010)(The Mojon Twins).z80", 38505, 0xbf144935, BRF_ESS | BRF_PRG },
+	{ "Cherils Perils 48K (2010)(The Mojon Twins).tzx", 43031, 0xdc7c8339, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCherils, SpecCherils, Spectrum)
@@ -36228,7 +37086,7 @@ struct BurnDriver BurnSpecCosmiclan = {
 // Cosmic Space Attack (48K) (HB)
 
 static struct BurnRomInfo SpecCsaRomDesc[] = {
-	{ "Cosmic Space Attack (2021)(Vintage Software).z80", 26629, 0x90ba6366, BRF_ESS | BRF_PRG },
+	{ "Cosmic Space Attack 48K (2021)(Vintage Software).tap", 26111, 0xbf843068, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCsa, SpecCsa, Spectrum)
@@ -36240,7 +37098,7 @@ struct BurnDriver BurnSpecCsa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecCsaRomInfo, SpecCsaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -38223,7 +39081,7 @@ struct BurnDriver BurnSpecDbubble48k = {
 // Double Tennis (English) (48K) (HB)
 
 static struct BurnRomInfo SpecDtennisenRomDesc[] = {
-	{ "Double Tennis EN 48K (2024)(Team Siglo XXI).tap", 46303, 0xee49f858, BRF_ESS | BRF_PRG },
+	{ "Double Tennis EN 48K (2024)(Team Siglo XXI).tzx", 46322, 0x8890f728, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDtennisen, SpecDtennisen, Spectrum)
@@ -38242,7 +39100,7 @@ struct BurnDriver BurnSpecDtennisen = {
 // Double Tennis (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecDtennisesRomDesc[] = {
-	{ "Double Tennis ES 48K (2024)(Team Siglo XXI).tap", 46447, 0x95ae7c8e, BRF_ESS | BRF_PRG },
+	{ "Double Tennis ES 48K (2024)(Team Siglo XXI).tzx", 46466, 0xc07a593a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDtennises, SpecDtennises, Spectrum)
@@ -38261,7 +39119,7 @@ struct BurnDriver BurnSpecDtennises = {
 // Double Tennis (Portuguese) (48K) (HB)
 
 static struct BurnRomInfo SpecDtennisptRomDesc[] = {
-	{ "Double Tennis PT 48K (2024)(Team Siglo XXI).tap", 46313, 0x39f20a99, BRF_ESS | BRF_PRG },
+	{ "Double Tennis PT 48K (2024)(Team Siglo XXI).tzx", 46332, 0x21240143, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDtennispt, SpecDtennispt, Spectrum)
@@ -39040,7 +39898,7 @@ struct BurnDriver BurnSpecEstacaja = {
 // Eugene - Lord of the Bathroom (48K) (HB)
 
 static struct BurnRomInfo SpecmminrelbRomDesc[] = {
-	{ "Manic Miner - Eugene - Lord of the Bathroom (1999)(Manic Miner Technologies).z80", 0x07792, 0x3062e7d8, BRF_ESS | BRF_PRG },
+	{ "Manic Miner - Eugene - Lord of the Bathroom (1999)(Manic Miner Technologies).tap", 33095, 0x0ffcbea2, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmminrelb, Specmminrelb, Spectrum)
@@ -40427,7 +41285,7 @@ struct BurnDriver BurnSpecgoodyrecolour = {
 // GraviBots (RetroSouls) (128K) (HB)
 
 static struct BurnRomInfo SpecgravibotsRomDesc[] = {
-	{ "GraviBots 128K (2014)(RetroSouls).z80",  29436, 0x375bfa1c, BRF_ESS | BRF_PRG },
+	{ "GraviBots 128K (2014)(RetroSouls).tap",  31249, 0x3b5604e1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specgravibots, Specgravibots, Spec128)
@@ -40439,7 +41297,7 @@ struct BurnDriver BurnSpecgravibots = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecgravibotsRomInfo, SpecgravibotsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -41207,7 +42065,7 @@ struct BurnDriver BurnSpecIceslidz = {
 // iLogicAll (English) (128K) (HB)
 
 static struct BurnRomInfo SpecIlogicenRomDesc[] = {
-	{ "iLogicAll EN 128K (2008)(Computer Emuzone).z80", 61966, 0x58d2502a, BRF_ESS | BRF_PRG },
+	{ "iLogicAll EN 128K (2008)(Computer Emuzone).tzx", 74098, 0x0c49be2e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecIlogicen, SpecIlogicen, Spec128)
@@ -41226,7 +42084,7 @@ struct BurnDriver BurnSpecIlogicen = {
 // iLogicAll (Spanish) (128K) (HB)
 
 static struct BurnRomInfo SpecIlogicesRomDesc[] = {
-	{ "iLogicAll ES 128K (2008)(Computer Emuzone).z80", 62023, 0x2568e7ea, BRF_ESS | BRF_PRG },
+	{ "iLogicAll ES 128K (2008)(Computer Emuzone).tzx", 74133, 0x3f261f7a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecIlogices, SpecIlogices, Spec128)
@@ -42005,7 +42863,7 @@ struct BurnDriver BurnSpecJetsetsw = {
 // Jinj (128K) (HB)
 
 static struct BurnRomInfo SpecJinjRomDesc[] = {
-	{ "JinJ 128K (2008)(Computer Emuzone).z80", 35854, 0xcab3bfaf, BRF_ESS | BRF_PRG },
+	{ "JinJ 128K (2008)(Computer Emuzone).tzx", 46328, 0x0497259a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJinj, SpecJinj, Spec128)
@@ -42309,7 +43167,7 @@ struct BurnDriver BurnSpecKydcadet3 = {
 // L'Abbaye des Morts (128K) (HB)
 
 static struct BurnRomInfo SpeclabbayeRomDesc[] = {
-	{ "L'Abbaye des Morts 128K (2014)(Darkhorace).z80", 58110, 0xdec96ae7, BRF_ESS | BRF_PRG },
+	{ "L'Abbaye des Morts 128K (2014)(Darkhorace).tzx", 35533, 0x2bdb3db6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speclabbaye, Speclabbaye, Spec128)
@@ -44892,7 +45750,7 @@ struct BurnDriver BurnSpecMoreteavicar = {
 };
 
 // Moritz (48K) (HB)
-
+// Note: only available as .z80 (from author)
 static struct BurnRomInfo SpecMoritzRomDesc[] = {
 	{ "Moritz 48K (2017)(Sebastian Braunert).z80", 39114, 0xf0f22000, BRF_ESS | BRF_PRG },
 };
@@ -51449,7 +52307,7 @@ struct BurnDriver BurnSpecVallation = {
 // Valley of Rains (128K) (HB)
 
 static struct BurnRomInfo SpecvalleyofrainsRomDesc[] = {
-	{ "Valley of Rains 128K (2019)(Zosya Entertainment).z80", 0x0b647, 0x7a79ca09, BRF_ESS | BRF_PRG },
+	{ "Valley of Rains 128K (2019)(Zosya Entertainment).tap", 53713, 0x204d6392, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specvalleyofrains, Specvalleyofrains, Spec128)
@@ -52533,7 +53391,7 @@ struct BurnDriver BurnSpecZombmalls = {
 // Zombo's Christmas Capers (48K) (HB)
 
 static struct BurnRomInfo SpecZomboccRomDesc[] = {
-	{ "Zombo's Christmas Capers 48K (2016)(Monsterbytes).z80", 39448, 0xc3992bbe, BRF_ESS | BRF_PRG },
+	{ "Zombo's Christmas Capers 48K (2016)(Monsterbytes).tzx", 1776786, 0xa1a62a17, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecZombocc, SpecZombocc, Spectrum)
@@ -52776,4 +53634,3 @@ struct BurnDriver BurnSpecZxwordle = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
-

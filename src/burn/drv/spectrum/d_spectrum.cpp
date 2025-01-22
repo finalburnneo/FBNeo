@@ -31781,7 +31781,7 @@ struct BurnDriver BurnSpecAkenesp = {
 // Alien Astro Frenzy (48K) (HB)
 
 static struct BurnRomInfo SpecAafRomDesc[] = {
-	{ "Alien Astro Frenzy 48K (2024)(ACMT Retro Games).tap", 26103, 0x43092bbb, BRF_ESS | BRF_PRG },
+	{ "Alien Astro Frenzy 48K (2024)(ACMT Retro Games).tap", 30962, 0x43092bbb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAaf, SpecAaf, Spectrum)

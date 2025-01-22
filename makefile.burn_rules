@@ -99,7 +99,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_sg1000.o \
 			\
-			d_spectrum.o
+			d_spectrum.o spectrum.o
 			
 depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o \
 			load.o burn_sha1.o tilemap_generic.o tiles_generic.o timer.o vector.o \

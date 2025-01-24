@@ -1040,14 +1040,17 @@ static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 
 	if (nSlot >= MAXSLOTS) return 0;
 
-	if (cartsize > 0x2000 && cartsize < 0x4000) {
-		// fix for Snake by under4mhz (oddly sized rom)
-		cartsize = 0x4000;
-	}
-
 	Len = cartsize >> 13; // Len, in 8k pages
 
 	for (Pages = 1; Pages < Len; Pages <<= 1); // Calculate nearest power of 2 of len
+
+	if ((cartsize > 0x2000 && cartsize < 0x4000) || (cartsize > 0x8000 && cartsize < 0xc000)) {
+		bprintf(0, _T("weirdly sized ROM, no mirroring!\n"));
+		// fix for Snake by under4mhz (oddly sized rom)
+		// fix for robo race by ???
+		// aka don't mirror these
+		Len = Pages;
+	}
 
 	ROMData[nSlot] = cartbuf;
 	SRAMData[nSlot] = game_sram;
@@ -28263,6 +28266,25 @@ struct BurnDriver BurnDrvMSX_betiled = {
 	272, 228, 4, 3
 };
 
+// Binary Battle (HB)
+
+static struct BurnRomInfo MSX_binarybattleRomDesc[] = {
+	{ "Binary Battle (2025)(Haplo).rom",	32768, 0x92be4f86, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_binarybattle, MSX_binarybattle, msx_msx)
+STD_ROM_FN(MSX_binarybattle)
+
+struct BurnDriver BurnDrvMSX_binarybattle = {
+	"msx_binarybattle", NULL, "msx_msx", NULL, "2025",
+	"Binary Battle (HB)\0", NULL, "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_binarybattleRomInfo, MSX_binarybattleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Bird & Chairs (HB)
 
 static struct BurnRomInfo MSX_birdchairsRomDesc[] = {
@@ -31664,6 +31686,44 @@ struct BurnDriver BurnDrvMSX_mix = {
 	272, 228, 4, 3
 };
 
+// Molotov (English) (HB)
+
+static struct BurnRomInfo MSX_molotovenRomDesc[] = {
+	{ "Molotov EN (2025)(joesg).rom",	32768, 0x7a1e30ec, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_molotoven, MSX_molotoven, msx_msx)
+STD_ROM_FN(MSX_molotoven)
+
+struct BurnDriver BurnDrvMSX_molotoven = {
+	"msx_molotoven", NULL, "msx_msx", NULL, "2025",
+	"Molotov (English) (HB)\0", "Select '2.Redefine' to set and use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_molotovenRomInfo, MSX_molotovenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Molotov (Spanish) (HB)
+
+static struct BurnRomInfo MSX_molotovesRomDesc[] = {
+	{ "Molotov ES (2025)(joesg).rom",	32768, 0xfc4d1d90, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_molotoves, MSX_molotoves, msx_msx)
+STD_ROM_FN(MSX_molotoves)
+
+struct BurnDriver BurnDrvMSX_molotoves = {
+	"msx_molotoves", "msx_molotoven", "msx_msx", NULL, "2025",
+	"Molotov (Spanish) (HB)\0", "Select '2.Redefine' to set and use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_molotovesRomInfo, MSX_molotovesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Monster Hunter (HB)
 
 static struct BurnRomInfo MSX_monsterhunterRomDesc[] = {
@@ -32990,6 +33050,25 @@ struct BurnDriver BurnDrvMSX_riyadh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_riyadhRomInfo, MSX_riyadhRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Robo Race (HB)
+
+static struct BurnRomInfo MSX_roboraceRomDesc[] = {
+	{ "Robo Race (2024)(Maximilian Wohrl).rom",	45583, 0xa3bf7688, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_roborace, MSX_roborace, msx_msx)
+STD_ROM_FN(MSX_roborace)
+
+struct BurnDriver BurnDrvMSX_roborace = {
+	"msx_roborace", NULL, "msx_msx", NULL, "2024-25",
+	"Robo Race (HB)\0", NULL, "Maximilian Wohrl", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 3, HARDWARE_MSX, GBF_BOARD, 0,
+	MSXGetZipName, MSX_roboraceRomInfo, MSX_roboraceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

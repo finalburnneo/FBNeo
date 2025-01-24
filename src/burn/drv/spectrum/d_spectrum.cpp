@@ -48542,7 +48542,7 @@ struct BurnDriver BurnSpecSup48kbro = {
 // Super Alien Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupalienblRomDesc[] = {
-	{ "Super Alien Blast 48K (2024)(ACMT Retro Games).tap", 26097, 0x74e2ef50, BRF_ESS | BRF_PRG },
+	{ "Super Alien Blast 48K (2024)(ACMT Retro Games).tzx", 26122, 0x4babfefb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupalienbl, SpecSupalienbl, Spectrum)
@@ -48618,7 +48618,7 @@ struct BurnDriver BurnSpecSuperhair48 = {
 // Super Meteor Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupmeteorblRomDesc[] = {
-	{ "Super Meteor Blast 48K (2024)(ACMT Retro Games).tap", 26098, 0xb8463979, BRF_ESS | BRF_PRG },
+	{ "Super Meteor Blast 48K (2024)(ACMT Retro Games).tzx", 26123, 0xceda7fec, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupmeteorbl, SpecSupmeteorbl, Spectrum)

@@ -48550,7 +48550,7 @@ STD_ROM_FN(SpecSupalienbl)
 
 struct BurnDriver BurnSpecSupalienbl = {
 	"spec_supalienbl", NULL, "spec_spectrum", NULL, "2024",
-	"Super Alien Blast (48K) (HB)\0", NULL, "ACMT Retro Games Systems", "ZX Spectrum",
+	"Super Alien Blast (48K) (HB)\0", NULL, "ACMT Retro Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecSupalienblRomInfo, SpecSupalienblRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

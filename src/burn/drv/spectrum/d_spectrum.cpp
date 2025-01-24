@@ -31788,8 +31788,8 @@ STDROMPICKEXT(SpecAaf, SpecAaf, Spectrum)
 STD_ROM_FN(SpecAaf)
 
 struct BurnDriver BurnSpecAaf = {
-	"spec_aaf", NULL, "spec_spectrum", NULL, "2021",
-	"Alien Astro Frenzy (48K) (HB)\0", NULL, "Vintage Software Systems", "ZX Spectrum",
+	"spec_aaf", NULL, "spec_spectrum", NULL, "2024",
+	"Alien Astro Frenzy (48K) (HB)\0", NULL, "ACMT Retro Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecAafRomInfo, SpecAafRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34727,15 +34727,15 @@ struct BurnDriver BurnSpecCosmiclan = {
 // Cosmic Space Attack (48K) (HB)
 
 static struct BurnRomInfo SpecCsaRomDesc[] = {
-	{ "Cosmic Space Attack 48K (2021)(Vintage Software).tap", 26111, 0xbf843068, BRF_ESS | BRF_PRG },
+	{ "Cosmic Space Attack 48K (2024)(ACMT Retro Games).tap", 26099, 0xdbb36166, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCsa, SpecCsa, Spectrum)
 STD_ROM_FN(SpecCsa)
 
 struct BurnDriver BurnSpecCsa = {
-	"spec_csa", NULL, "spec_spectrum", NULL, "2021",
-	"Cosmic Space Attack (48K) (HB)\0", NULL, "Vintage Software Systems", "ZX Spectrum",
+	"spec_csa", NULL, "spec_spectrum", NULL, "2024",
+	"Cosmic Space Attack (48K) (HB)\0", NULL, "ACMT Retro Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecCsaRomInfo, SpecCsaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -48542,15 +48542,15 @@ struct BurnDriver BurnSpecSup48kbro = {
 // Super Alien Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupalienblRomDesc[] = {
-	{ "Super Alien Blast 48K (2021)(Vintage Software Systems).z80", 26442, 0xa4b43504, BRF_ESS | BRF_PRG },
+	{ "Super Alien Blast 48K (2024)(ACMT Retro Games).tap", 26097, 0x74e2ef50, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupalienbl, SpecSupalienbl, Spectrum)
 STD_ROM_FN(SpecSupalienbl)
 
 struct BurnDriver BurnSpecSupalienbl = {
-	"spec_supalienbl", NULL, "spec_spectrum", NULL, "2021",
-	"Super Alien Blast (48K) (HB)\0", NULL, "Vintage Software Systems", "ZX Spectrum",
+	"spec_supalienbl", NULL, "spec_spectrum", NULL, "2024",
+	"Super Alien Blast (48K) (HB)\0", NULL, "ACMT Retro Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecSupalienblRomInfo, SpecSupalienblRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -48618,15 +48618,15 @@ struct BurnDriver BurnSpecSuperhair48 = {
 // Super Meteor Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupmeteorblRomDesc[] = {
-	{ "Super Meteor Blast 48K (2021)(Vintage Software Systems).z80", 26792, 0x9198c2de, BRF_ESS | BRF_PRG },
+	{ "Super Meteor Blast 48K (2024)(ACMT Retro Games).tap", 26098, 0xb8463979, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupmeteorbl, SpecSupmeteorbl, Spectrum)
 STD_ROM_FN(SpecSupmeteorbl)
 
 struct BurnDriver BurnSpecSupmeteorbl = {
-	"spec_supmeteorbl", NULL, "spec_spectrum", NULL, "2021",
-	"Super Meteor Blast (48K) (HB)\0", NULL, "Vintage Software Systems", "ZX Spectrum",
+	"spec_supmeteorbl", NULL, "spec_spectrum", NULL, "2024",
+	"Super Meteor Blast (48K) (HB)\0", NULL, "ACMT Retro Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecSupmeteorblRomInfo, SpecSupmeteorblRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

@@ -31781,7 +31781,7 @@ struct BurnDriver BurnSpecAkenesp = {
 // Alien Astro Frenzy (48K) (HB)
 
 static struct BurnRomInfo SpecAafRomDesc[] = {
-	{ "Alien Astro Frenzy 48K (2024)(ACMT Retro Games).tap", 30962, 0x43092bbb, BRF_ESS | BRF_PRG },
+	{ "Alien Astro Frenzy 48K (2024)(ACMT Retro Games).tzx", 30987, 0xf83ee7e7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAaf, SpecAaf, Spectrum)
@@ -31793,7 +31793,7 @@ struct BurnDriver BurnSpecAaf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecAafRomInfo, SpecAafRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -34727,7 +34727,7 @@ struct BurnDriver BurnSpecCosmiclan = {
 // Cosmic Space Attack (48K) (HB)
 
 static struct BurnRomInfo SpecCsaRomDesc[] = {
-	{ "Cosmic Space Attack 48K (2024)(ACMT Retro Games).tap", 26099, 0xdbb36166, BRF_ESS | BRF_PRG },
+	{ "Cosmic Space Attack 48K (2024)(ACMT Retro Games).tzx", 26124, 0xa03c3a58, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCsa, SpecCsa, Spectrum)
@@ -34739,7 +34739,7 @@ struct BurnDriver BurnSpecCsa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecCsaRomInfo, SpecCsaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -48542,7 +48542,7 @@ struct BurnDriver BurnSpecSup48kbro = {
 // Super Alien Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupalienblRomDesc[] = {
-	{ "Super Alien Blast 48K (2024)(ACMT Retro Games).tap", 26097, 0x74e2ef50, BRF_ESS | BRF_PRG },
+	{ "Super Alien Blast 48K (2024)(ACMT Retro Games).tzx", 26122, 0x4babfefb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupalienbl, SpecSupalienbl, Spectrum)
@@ -48554,7 +48554,7 @@ struct BurnDriver BurnSpecSupalienbl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecSupalienblRomInfo, SpecSupalienblRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -48618,7 +48618,7 @@ struct BurnDriver BurnSpecSuperhair48 = {
 // Super Meteor Blast (48K) (HB)
 
 static struct BurnRomInfo SpecSupmeteorblRomDesc[] = {
-	{ "Super Meteor Blast 48K (2024)(ACMT Retro Games).tap", 26098, 0xb8463979, BRF_ESS | BRF_PRG },
+	{ "Super Meteor Blast 48K (2024)(ACMT Retro Games).tzx", 26123, 0xceda7fec, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupmeteorbl, SpecSupmeteorbl, Spectrum)
@@ -48630,7 +48630,7 @@ struct BurnDriver BurnSpecSupmeteorbl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecSupmeteorblRomInfo, SpecSupmeteorblRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

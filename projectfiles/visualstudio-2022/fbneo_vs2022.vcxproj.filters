@@ -3079,9 +3079,6 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\megadrive\mdeeprom.cpp">
-      <Filter>burn\drv\megadrive</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
@@ -3553,6 +3550,84 @@
     <ClCompile Include="..\..\src\burn\snd\votrax.cpp">
       <Filter>burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\LzFindOpt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd7aDec.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256Opt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1Opt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Xxh64.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\ZstdDec.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\nes\nes.cpp">
+      <Filter>burn\drv\nes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\spectrum\spectrum.cpp">
+      <Filter>burn\drv\spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\i2ceeprom.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\burn_sha1.cpp">
+      <Filter>burn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\apu.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\cart.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\cpu.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\cpu_sa1.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\cx4.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\dma.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\dsp.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\input.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\ppu.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\sa1.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\sdd1.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\snes.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\snes_other.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\spc.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\statehandler.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -3816,6 +3891,9 @@
     <Filter Include="libs\libspng">
       <UniqueIdentifier>{688e8e7c-7d25-4fb2-8b08-99830cf36885}</UniqueIdentifier>
     </Filter>
+    <Filter Include="burn\drv\snes">
+      <UniqueIdentifier>{de563016-fc13-46ea-8db4-9281899087b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <NASM Include="..\..\src\burn\burn_sound_a.asm">
@@ -3850,11 +3928,6 @@
     <ResourceCompile Include="..\..\src\burner\win32\resource.rc">
       <Filter>burner\win32</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\src\dep\libs\lib7z\_fba_lzmasdk_v16.04.txt">
-      <Filter>libs\7z</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\cpu\m68k\m68kmake.c">

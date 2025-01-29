@@ -4119,8 +4119,6 @@ struct BurnDriverD BurnDrvFuncube4 = {
 // -----------------------------------------------------------------------------
 
 #define GRDIANS_COMPONENT										\
-	{ "u4.bin",		0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },	\
-	{ "u5.bin",		0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },	\
 	{ "u16.bin",	0x400000, 0x6a65f265, BRF_GRA },			\
 	{ "u20.bin",	0x400000, 0xa7226ab7, BRF_GRA },			\
 	{ "u15.bin",	0x400000, 0x01672dcd, BRF_GRA },			\
@@ -4132,11 +4130,13 @@ struct BurnDriverD BurnDrvFuncube4 = {
 	{ "u32.bin",	0x100000, 0xcf0f3017, BRF_SND },
 
 // Guardians / Denjin Makai II (Pro, Hack)
-// GOTVG 20240204
+// GOTVG 20241211
 
 static struct BurnRomInfo grdiandsRomDesc[] = {
-	{ "u2_ds.bin",	0x080000, 0x3e62b0f2, BRF_ESS | BRF_PRG },
-	{ "u3_ds.bin",	0x080000, 0x46111562, BRF_ESS | BRF_PRG },
+	{ "u2_ds.bin",	0x080000, 0x5ebd22dd, BRF_ESS | BRF_PRG },
+	{ "u3_ds.bin",	0x080000, 0xe3ab366d, BRF_ESS | BRF_PRG },
+	{ "u4.bin",		0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",		0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4155,11 +4155,13 @@ struct BurnDriver BurnDrvGrdiands = {
 
 
 // Guardians / Denjin Makai II (Evil, Hack)
-// GOTVG 20240204
+// GOTVG 20250125
 
 static struct BurnRomInfo grdiansyRomDesc[] = {
-	{ "u2_ds.bin",	0x080000, 0x3e62b0f2, BRF_ESS | BRF_PRG },
-	{ "u3_sy.bin",	0x080000, 0x28ae495d, BRF_ESS | BRF_PRG },
+	{ "u2_sy.bin",	0x080000, 0x99f7c528, BRF_ESS | BRF_PRG },
+	{ "u3_sy.bin",	0x080000, 0xd725c494, BRF_ESS | BRF_PRG },
+	{ "u4_sy.bin",	0x080000, 0xea9ee175, BRF_ESS | BRF_PRG },
+	{ "u5_sy.bin",	0x080000, 0x7ac54dbc, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4167,7 +4169,7 @@ STD_ROM_PICK(grdiansy)
 STD_ROM_FN(grdiansy)
 
 struct BurnDriver BurnDrvGrdiansy = {
-	"grdiansy", "grdians", NULL, NULL, "2024",
+	"grdiansy", "grdians", NULL, NULL, "2025",
 	"Guardians / Denjin Makai II (Evil, Hack)\0", NULL, "hack", "Newer Seta",
 	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (Evil, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -4183,6 +4185,8 @@ struct BurnDriver BurnDrvGrdiansy = {
 static struct BurnRomInfo grdianspRomDesc[] = {
 	{ "u2_pls.bin",	0x080000, 0xa920eea9, BRF_ESS | BRF_PRG },
 	{ "u3_pls.bin",	0x080000, 0x4b98155f, BRF_ESS | BRF_PRG },
+	{ "u4.bin",		0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",		0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4201,11 +4205,13 @@ struct BurnDriver BurnDrvGrdiansp = {
 
 
 // Guardians / Denjin Makai II (LBS, Hack)
-// GOTVG 20231030
+// GOTVG 20241011
 
 static struct BurnRomInfo grdianslRomDesc[] = {
-	{ "u2_lbs.bin",	0x080000, 0xaf77f6dd, BRF_ESS | BRF_PRG },
-	{ "u3_lbs.bin",	0x080000, 0x9f6433df, BRF_ESS | BRF_PRG },
+	{ "u2_lbs.bin",	0x080000, 0xe40763c2, BRF_ESS | BRF_PRG },
+	{ "u3_lbs.bin",	0x080000, 0x1ea83c99, BRF_ESS | BRF_PRG },
+	{ "u4.bin",		0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",		0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4213,7 +4219,7 @@ STD_ROM_PICK(grdiansl)
 STD_ROM_FN(grdiansl)
 
 struct BurnDriver BurnDrvGrdiansl = {
-	"grdiansl", "grdians", NULL, NULL, "2023",
+	"grdiansl", "grdians", NULL, NULL, "2024",
 	"Guardians / Denjin Makai II (LBS, Hack)\0", NULL, "hack", "Newer Seta",
 	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (LBS, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
@@ -4229,6 +4235,8 @@ struct BurnDriver BurnDrvGrdiansl = {
 static struct BurnRomInfo grdianlsRomDesc[] = {
 	{ "u2_lbss.bin",	0x080000, 0xe8c9fb0f, BRF_ESS | BRF_PRG },
 	{ "u3_lbss.bin",	0x080000, 0xd4dac047, BRF_ESS | BRF_PRG },
+	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4252,6 +4260,8 @@ struct BurnDriver BurnDrvGrdianls = {
 static struct BurnRomInfo grdiankeRomDesc[] = {
 	{ "u2_ke.bin",	0x080000, 0xba4a9452, BRF_ESS | BRF_PRG },
 	{ "u3_ke.bin",	0x080000, 0xd1713d73, BRF_ESS | BRF_PRG },
+	{ "u4.bin",		0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",		0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 

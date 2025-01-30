@@ -1,5 +1,8 @@
-// idea?
-// support dma-tap + slowtap, but disable dma tap once slowtap takes over
+// ideas:
+// x. detect SlowTAP / custom loaders via their block layout.  If it doesn't have
+// a header before each file, its probably most certainly a custom loader.
+//
+// x. support dma-tap + slowtap, but disable dma tap once slowtap takes over
 // testcase: benny hill's madcap chase - uses turbo load for everything except
 // the last file.  if we use dma for this last file, game level will be corrupt.
 
@@ -12,7 +15,6 @@
 #include "z80_intf.h"
 #include "ay8910.h"
 #include <math.h>
-#include "biquad.h"
 
 #if defined (_MSC_VER)
 #define strcasecmp stricmp
@@ -79,6 +81,7 @@ static INT32 nExtraCycles;
 static INT32 in_tape_ffwd = 0;
 
 static INT16 *Buzzer;
+static INT16 *BuzzerD8;
 
 static INT32 SpecRamPage; // calculated from Spec128kMapper*
 static INT32 SpecRomPage; // calculated from Spec128kMapper*
@@ -89,7 +92,6 @@ static INT32 SpecScanlines;
 static INT32 SpecCylesPerScanline;
 static INT32 SpecContention;
 
-static INT16 *dacbuf; // for dc offset filter
 static INT16 dac_lastin;
 static INT16 dac_lastout;
 
@@ -178,38 +180,92 @@ static INT32 buzzer_last_update;
 static INT32 buzzer_last_data;
 static INT32 buzzer_data_len;
 static INT32 buzzer_data_frame;
-static INT32 buzzer_data_frame_minute;
+static INT32 buzzer_data_frame_second;
+static UINT32 buzzer_d8_fract;
+static UINT32 buzzer_d8_accu;
 
-static const INT32 buzzer_oversample = 1000;
+// Filter section, for "ox8"x oversampling
+#define ox8 (4)
+#define FIR_TAPS (100 + 1)
+static float filt_coeffs[FIR_TAPS];
+static float c_buffer[FIR_TAPS];
+static INT32 c_position;
 
-static BIQ biquad[2]; // snd/biquad.h
+static float sinc(float x)
+{
+	return (x == 0.0) ? 1.0 : sin(M_PI * x) / (M_PI * x);
+}
+
+static void generate_filter_coeffs(float *coeffs, int taps, float cutoff, float sample_rate)
+{
+    int mid = taps / 2;
+    float normalized_cutoff = cutoff / (sample_rate / 2.0);
+
+    for (int i = 0; i < taps; i++) {
+        float sinc_value = sinc((i - mid) * normalized_cutoff);
+		float hamming_window = 0.54 - 0.46 * cos(2.0 * M_PI * i / (taps - 1));
+		float blackman_window = 0.42 - 0.5 * cos(2.0 * M_PI * i / (taps - 1)) + 0.08 * cos(4.0 * M_PI * i / (taps - 1));
+//		coeffs[i] = sinc_value * hamming_window;
+//		coeffs[i] = sinc_value * blackman_window;
+		coeffs[i] = sinc_value;
+    }
+
+	float sum = 0.0;
+    for (int i = 0; i < taps; i++) {
+        sum += coeffs[i];
+	}
+//	bprintf(0, _T("sum before normalization: %f\n"), sum);
+    for (int i = 0; i < taps; i++) {
+        coeffs[i] /= sum;
+    }
+//	bprintf(0, _T("sum after normalization: %f\n"), sum);
+}
+
+static float update_filter(float sample) {
+    c_buffer[c_position] = sample;
+	c_position = (c_position == FIR_TAPS - 1) ? 0 : c_position + 1; // avoid modulus
+
+	float result = 0.0; // its faster to use a float here, as long as the filter coefficients are floats as well
+    int idx = c_position;
+    for (int i = 0; i < FIR_TAPS; i++) {
+		idx = (idx == 0) ? (FIR_TAPS - 1) : idx - 1; // avoid modulus, pt.2
+        result += c_buffer[idx] * filt_coeffs[i];
+    }
+    return result;
+}
 
 static void BuzzerInit() // keep in DoReset()!
 {
-	biquad[0].init(FILT_LOWPASS, nBurnSoundRate, 7000, 0.554, 0.0);
-	biquad[1].init(FILT_LOWPASS, nBurnSoundRate, 8000, 0.554, 0.0);
+	// init the coefficients for an "ox8"x oversampling windowed-sinc filter
+	generate_filter_coeffs(filt_coeffs, FIR_TAPS, nBurnSoundRate/4, nBurnSoundRate*ox8);
+	// init our filter's ring-buffer
+    memset(c_buffer, 0, sizeof(c_buffer));
+    c_position = 0;
 
-	buzzer_data_frame_minute = (SpecCylesPerScanline * SpecScanlines * 50.00);
-	buzzer_data_frame = ((double)(SpecCylesPerScanline * SpecScanlines) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+	buzzer_data_frame_second = (SpecCylesPerScanline * SpecScanlines * 50.00);
+	buzzer_data_frame = SpecCylesPerScanline * SpecScanlines;
+
+//	bprintf(0, _T("buzzer_data_frame & _second:  %d  %d\n"), buzzer_data_frame, buzzer_data_frame_second);
+
+	buzzer_d8_fract = (INT64)((INT64)buzzer_data_frame_second * (1 << 16)) / (nBurnSoundRate * ox8);
+	buzzer_d8_accu = 0;
 }
 
 static void BuzzerExit()
 {
-	biquad[0].exit();
-	biquad[1].exit();
 }
 
 static void BuzzerAdd(INT16 data)
 {
-	data *= (1 << 12);
+	const INT16 bips[4] = { 0, 0x2000, 0x3000, 0x3000 }; // !, tape, buzzer, tape+buzzer
+	data = bips[data & 3];
 
-	if (pBurnSoundOut && data != buzzer_last_data) {
-		INT32 len = ((double)(ZetTotalCycles() - buzzer_last_update) * nBurnSoundRate * buzzer_oversample) / buzzer_data_frame_minute;
+	if (data != buzzer_last_data) {
+		INT32 len = ZetTotalCycles() - buzzer_last_update;
 		if (len > 0)
 		{
 			for (INT32 i = buzzer_data_len; i < buzzer_data_len+len; i++) {
-				// if len goes over buzzer_data_frame, wrap around to the beginning.
-				Buzzer[i % buzzer_data_frame] = buzzer_last_data;
+				Buzzer[i] = buzzer_last_data;
 			}
 			buzzer_data_len += len;
 		}
@@ -221,31 +277,84 @@ static void BuzzerAdd(INT16 data)
 
 static void BuzzerRender(INT16 *dest)
 {
-	INT32 buzzer_data_pos = 0;
+	bool wentover = false;
 
-	// fill buffer (if needed)
+	if (buzzer_data_len == 0) return;
+
+	// Step 0: if we don't have enough data, fill it up.  If we have too much:
+	// note it for later..
 	if (buzzer_data_len < buzzer_data_frame) {
 		for (INT32 i = buzzer_data_len; i < buzzer_data_frame; i++) {
 			Buzzer[i] = buzzer_last_data;
 		}
 		buzzer_data_len = buzzer_data_frame;
 	}
-
-	// average + mixdown
-	for (INT32 i = 0; i < nBurnSoundLen; i++) {
-		INT32 sample = 0;
-		for (INT32 j = 0; j < buzzer_oversample; j++) {
-			sample += Buzzer[buzzer_data_pos++];
-		}
-		sample = (INT32)(biquad[1].filter(biquad[0].filter((double)sample / buzzer_oversample)));
-//		sample = (INT32)((double)sample / buzzer_oversample);
-		dest[0] = BURN_SND_CLIP(sample);
-		dest[1] = BURN_SND_CLIP(sample);
-		dest += 2;
+	else if (buzzer_data_len > buzzer_data_frame) {
+		// we went over!
+		wentover = true;
 	}
 
-	buzzer_data_len = 0;
-	buzzer_last_update = 0;
+	// Step 1: convert (downsample) from approx 3500000hz to 48000*"ox8" hz (or native rate * "ox8")
+	int sams = 0;
+
+	INT32 totalsam = 0;
+	INT32 totalsams = 0;
+	INT32 buzzerpos = 0;
+    for (int i = 0; i < nBurnSoundLen*ox8; i++, buzzer_d8_accu+=buzzer_d8_fract) {
+		while (buzzer_d8_accu >= (1 << 16) ) {
+			totalsam += Buzzer[buzzerpos++];
+			totalsams++;
+			buzzer_d8_accu -= (1 << 16);
+		}
+		BuzzerD8[sams++] = totalsam / ((totalsams > 0) ? totalsams : 1);
+
+		totalsam = 0;
+		totalsams = 0;
+	}
+	//bprintf(0, _T("total sams  %d, buzzer sams/frame  %d  %d, nburnsoundlen*8  %d\n"), sams, buzzerpos, buzzer_data_frame, nBurnSoundLen*8);
+
+	// Step 0.a: if we ran too many cycles in this frame, save them for the next!
+	// Note: has to be after Step 1!
+	if (wentover) {
+		int sams_ov = buzzer_data_len - buzzer_data_frame;
+		int cycs_ov = ZetTotalCycles() - buzzer_data_frame;
+		//bprintf(0, _T("went over cycs/sams:  %d  %d\n"), cycs_ov, sams_ov);
+
+		memcpy(&Buzzer[0], &Buzzer[buzzer_data_frame], sams_ov * sizeof(INT16));
+		buzzer_data_len = sams_ov;
+		buzzer_last_update = cycs_ov;
+	} else {
+		buzzer_data_len = 0;
+		buzzer_last_update = 0;
+	}
+
+	INT32 foopos = 0;
+
+	// Step 2&3:
+	// With the "ox8"x stream, filter it to remove aliasing, downsample to native rate,
+	// run it through a dc blocking filter then render it to our sound buffer.
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		int sample = 0;
+		for (INT32 j = 0; j < ox8; j++) {
+			sample += update_filter(BuzzerD8[foopos++]);
+		}
+		sample /= ox8;
+
+		// dc block
+		INT16 out = sample - dac_lastin + 0.999 * dac_lastout;
+		dac_lastin = sample, dac_lastout = out;
+
+		// add to stream (+include ay if Spec128)
+		if (SpecMode & SPEC_AY8910) {
+			dest[0] = BURN_SND_CLIP(dest[0] + out);
+			dest[1] = BURN_SND_CLIP(dest[1] + out);
+			dest += 2;
+		} else {
+			dest[0] = BURN_SND_CLIP(out);
+			dest[1] = BURN_SND_CLIP(out);
+			dest += 2;
+		}
+	}
 }
 
 // end Oversampling Buzzer-DAC
@@ -263,9 +372,9 @@ static INT32 MemIndex()
 	RamEnd                  = Next;
 
 	SpecPalette             = (UINT32*)Next; Next += 0x00010 * sizeof(UINT32);
-	dacbuf                  = (INT16*)Next; Next += 0x800 * 2 * sizeof(INT16);
 
-	Buzzer                  = (INT16*)Next; Next += 1000 * buzzer_oversample * sizeof(INT16);
+	Buzzer                  = (INT16*)Next; Next += 0x20000 * sizeof(INT16);
+	BuzzerD8                = (INT16*)Next; Next += 0x20000 * sizeof(INT16);
 
 	MemEnd                  = Next;
 
@@ -446,7 +555,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
-		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 4) | ((SpecDips[1] & 2) ? last_pulse : 0));
+		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 3) | ((SpecDips[1] & 2) ? last_pulse : 0));
 
 		ula_border = data;
 		return;
@@ -563,7 +672,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
-		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 4) | ((SpecDips[1] & 2) ? last_pulse : 0));
+		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 3) | ((SpecDips[1] & 2) ? last_pulse : 0));
 
 		ula_border = data;
 		// needs to fall through!!
@@ -2100,32 +2209,6 @@ static void update_ula(INT32 cycle)
 	ula_last_cyc = cycle;
 }
 
-static void mix_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
-{
-	INT16 out;
-
-	for (INT32 sample = 0; sample < sample_nums; sample++)
-	{
-		INT16 result = inbuf[sample * 2 + 0]; // source sample
-
-		// dc block
-		out = result - dac_lastin + 0.998 * dac_lastout;
-		dac_lastin = result;
-		dac_lastout = out;
-
-		out *= 2.5;
-
-		// add to stream (+include ay if Spec128)
-		if (SpecMode & SPEC_AY8910) {
-			outbuf[sample * 2 + 0] = BURN_SND_CLIP(outbuf[sample * 2 + 0] + out);
-			outbuf[sample * 2 + 1] = BURN_SND_CLIP(outbuf[sample * 2 + 1] + out);
-		} else {
-			outbuf[sample * 2 + 0] = BURN_SND_CLIP(out);
-			outbuf[sample * 2 + 1] = BURN_SND_CLIP(out);
-		}
-	}
-}
-
 static void SwapByte(UINT8 &a, UINT8 &b)
 { // a <-> b, using xor
 	a = a ^ b;
@@ -2249,8 +2332,7 @@ INT32 SpecFrame()
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		}
 
-		BuzzerRender(dacbuf);
-	    mix_dcblock(dacbuf, pBurnSoundOut, nBurnSoundLen);
+		BuzzerRender(pBurnSoundOut);
 	}
 
 	INT32 tot_frame = SpecScanlines * SpecCylesPerScanline;

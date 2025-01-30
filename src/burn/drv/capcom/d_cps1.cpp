@@ -27019,13 +27019,13 @@ struct BurnDriver BurnDrvCpsCaptre = {
 
 // Captain Commando (God of War, Hack)
 // Modified by Jinggai
-// GOTVG 20240622
+// GOTVG 20241218
 
 static struct BurnRomInfo captcmzsRomDesc[] = {
-	{ "cczs_23d.8f",	0x080000, 0x28c002cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_22d.7f",	0x080000, 0xa018f93a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczs_24d.9e",	0x100000, 0x5fd8c35e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cczs_28d.9f",	0x100000, 0x32d38c83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_23d.8f",	0x080000, 0x5babbeab, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_22d.7f",	0x080000, 0x1aab3d44, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczs_24d.9e",	0x100000, 0x657992eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczs_28d.9f",	0x100000, 0x2bf4f2ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27080,13 +27080,13 @@ struct BurnDriver BurnDrvCpsCaptcmjy = {
 
 // Captain Commando (Incubus, Hack)
 // Modified by Jinggai
-// GOTVG 20240705
+// GOTVG 20241031
 
 static struct BurnRomInfo captcmmyRomDesc[] = {
-	{ "ccmy_23d.8f",	0x080000, 0x90526683, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_23d.8f",	0x080000, 0xa4d8f588, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "ccmy_22d.7f",	0x080000, 0xe610b61c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_24d.9e",	0x100000, 0xb3e611ac, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ccmy_28d.9f",	0x100000, 0x6f158e7b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_24d.9e",	0x100000, 0xf9907214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_28d.9f",	0x100000, 0xa96ec966, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27134,13 +27134,13 @@ struct BurnDriver BurnDrvCpsCaptcmwx = {
 
 // Captain Commando (Journey, Hack)
 // Modified by Jinggai
-// GOTVG 20201211
+// GOTVG 20241114
 
 static struct BurnRomInfo captcmztRomDesc[] = {
-	{ "cczt_23d.8f",	0x080000, 0x0031b5c7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczt_22d.7f",	0x080000, 0xdcd46662, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cczt_24d.9e",	0x100000, 0x85d0f5a0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cczt_28d.9f",	0x100000, 0x03dd2c5a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczt_23d.8f",	0x080000, 0xb3d65124, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczt_22d.7f",	0x080000, 0x37564c1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cczt_24d.9e",	0x100000, 0x191b364b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cczt_28d.9f",	0x100000, 0x0780bf5e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27149,7 +27149,7 @@ STD_ROM_PICK(captcmzt)
 STD_ROM_FN(captcmzt)
 
 struct BurnDriver BurnDrvCpsCaptcmzt = {
-	"captcmzt", "captcomm", NULL, NULL, "2020",
+	"captcmzt", "captcomm", NULL, NULL, "2024",
 	"Captain Commando (Journey, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -27242,13 +27242,13 @@ struct BurnDriver BurnDrvCpsCaptcmsc = {
 
 // Captain Commando (CR7 Elite, Hack)
 // Modified by Jinggai
-// GOTVG 20240520
+// GOTVG 20241213
 
 static struct BurnRomInfo captcmcrRomDesc[] = {
-	{ "cccr_23d.8f",	0x080000, 0xdffb6a54, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_22d.7f",	0x080000, 0xafb2e2ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cccr_24d.9e",	0x100000, 0xd5615e42, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cccr_28d.9f",	0x100000, 0x52d54c2e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_23d.8f",	0x080000, 0x55434473, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_22d.7f",	0x080000, 0xa17480c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cccr_24d.9e",	0x100000, 0x51ae41e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cccr_28d.9f",	0x100000, 0xe1d19a06, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };

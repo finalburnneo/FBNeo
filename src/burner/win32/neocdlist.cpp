@@ -86,6 +86,7 @@ struct NGCDGAME games[] =
 	{ _T("kof95r1")		, _T("The King of Fighters '95 (JP-US)(Rev 1)")				, _T("1995")	, _T("SNK")					, 0x1084 },		//
 	{ _T("ssrpg")		, _T("Samurai Shodown RPG / Shinsetsu Samurai Spirits - Bushidohretsuden")		, _T("1997")	, _T("SNK")					, 0x0085 },		//
 	{ _T("ssrpgen")		, _T("Samurai Shodown RPG (English Translation)")			, _T("1997")	, _T("SNK")					, 0x1085 },		//
+	{ _T("ssrpgen11")	, _T("Samurai Shodown RPG (English Translation v1.1)")		, _T("1997")	, _T("SNK")					, 0x3085 },		//
 	{ _T("ssrpgfr")		, _T("Samurai Shodown RPG (French Translation)")			, _T("1997")	, _T("SNK")					, 0x2085 },		//
 	{ _T("samsho3")		, _T("Samurai Shodown 3 / Samurai Spirits 3")				, _T("1995")	, _T("SNK")					, 0x0087 },		//
 	{ _T("stakwin")		, _T("Stakes Winner - GI Kanzen Seiha Heno Machi")			, _T("1995")	, _T("Saurus")				, 0x0088 },		//
@@ -357,6 +358,11 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 				// Samurai Shodown RPG (English Translation)
 				if (nID == 0x0085 && nDate[0]==123 && nDate[1]==11 && nDate[2]==29) {
 					nID |= 0x1000;
+				}
+
+				// Samurai Shodown RPG (English Translation v1.1)
+				if (nID == 0x0085 && nDate[0]==124 && nDate[1]==1 && nDate[2]==26) {
+					nID |= 0x3000;
 				}
 
 				// Double Dragon Rev 1

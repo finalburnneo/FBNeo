@@ -262,7 +262,7 @@ static void BuzzerAdd(INT16 data)
 
 	if (data != buzzer_last_data) {
 		INT32 len = ZetTotalCycles() - buzzer_last_update;
-		if (len > 0)
+		if (len > 0 && ((buzzer_data_len + len) < (buzzer_data_frame + 100)))
 		{
 			for (INT32 i = buzzer_data_len; i < buzzer_data_len+len; i++) {
 				Buzzer[i] = buzzer_last_data;

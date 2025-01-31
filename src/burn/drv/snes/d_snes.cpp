@@ -9410,6 +9410,25 @@ struct BurnDriver BurnDrvsnes_Fireemblemte = {
 	512, 448, 4, 3
 };
 
+// Fire Emblem - Seisen no Keifu (Japan)
+
+static struct BurnRomInfo snes_Fireemblem4jRomDesc[] = {
+	{ "Fire Emblem - Seisen no Keifu (Japan)(1996)(Nintendo).sfc", 4194304, 0xdc0d8cf9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fireemblem4j)
+STD_ROM_FN(snes_Fireemblem4j)
+
+struct BurnDriver BurnDrvsnes_Fireemblem4j = {
+	"snes_fireemblem4j", NULL, NULL, NULL, "1996",
+	"Fire Emblem - Seisen no Keifu (Japan)\0", NULL, "Nintendo", "Nintendo",
+	L"\u30d5\u30a1\u30a4\u30a2\u30fc\u30a8\u30e0\u30d6\u30ec\u30e0 - \u8056\u6226\u306e\u7cfb\u8b5c (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Fireemblem4jRomInfo, snes_Fireemblem4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Fire Fighting (Japan)
 
 static struct BurnRomInfo snes_FirefightRomDesc[] = {

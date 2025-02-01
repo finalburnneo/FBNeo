@@ -20262,7 +20262,7 @@ STDROMPICKEXT(mslug5ae, mslug5ae, neogeo)
 STD_ROM_FN(mslug5ae)
 
 struct BurnDriver BurnDrvMslug5ae = {
-	"mslug5ae", "mslug5", "neogeo", NULL, "2022",
+	"mslug5ae", "mslug5", "neogeo", NULL, "2024",
 	"Metal Slug 5 (20th Anniversary, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

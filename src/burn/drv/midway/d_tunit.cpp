@@ -1776,7 +1776,7 @@ STD_ROM_PICK(nbajamre)
 STD_ROM_FN(nbajamre)
 
 struct BurnDriver BurnDrvNbajamre = {
-	"nbajamre", "nbajamte2", NULL, NULL, "2022",
+	"nbajamre", "nbajamte", NULL, NULL, "2022",
 	"NBA Jam Rewind (Hack, v1.1)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,

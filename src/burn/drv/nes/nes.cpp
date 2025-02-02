@@ -484,14 +484,16 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 
 	// Game-specific stuff:
 	// Mapper 7 or 4-way mirroring usually gets no workram (6000-7fff)
-	if (Cart.Mapper == 7 || (Cart.Mirroring == 4 && !(PPUType > RP2C02)))
+	if (Cart.Mapper == 7 || (Cart.Mirroring == 4 && ((PPUType == RP2C02) && !Cart.BatteryBackedSRAM ) )) {
 		NESMode |= NO_WORKRAM; // VS. is exempt from this limitation.
+	}
 
 	NESMode |= (ROMCRC == 0xab29ab28) ? BUS_CONFLICTS : 0; // Dropzone
 	NESMode |= (ROMCRC == 0xe3a6d7f6) ? BUS_CONFLICTS : 0; // Cybernoid
 	NESMode |= (ROMCRC == 0x552a903a) ? BUS_CONFLICTS : 0; // Huge Insect
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
+	NESMode |= (ROMCRC == 0x9cc0ee5b) ? APU_HACKERY : 0; // famidash
 	NESMode |= (ROMCRC == 0xc00c4ea5) ? APU_HACKERY : 0; // Sam's Journey
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)

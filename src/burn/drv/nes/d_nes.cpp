@@ -14760,10 +14760,10 @@ struct BurnDriver BurnDrvnes_fallingtiles = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Famidash feb.02.2025-git build
+// Famidash (feb.02.2025-git build)
 // if gets updated, make sure to change crc in nes.cpp! (search: famidash)
 static struct BurnRomInfo nes_famidashRomDesc[] = {
-	{ "Famidash (2024)(tfdsoft).nes",          786448, 0x9cc0ee5b, BRF_ESS | BRF_PRG },
+	{ "Famidash Demo v1.1-git (2024)(TFDSoft).nes",          786448, 0x9cc0ee5b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_famidash)
@@ -14771,9 +14771,9 @@ STD_ROM_FN(nes_famidash)
 
 struct BurnDriver BurnDrvnes_famidash = {
 	"nes_famidash", NULL, NULL, NULL, "2024",
-	"Famidash (HB)\0", NULL, "Nintendo", "Miscellaneous",
+	"Famidash (HB, Demo v1.1-git)\0", NULL, "TFDSoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_famidashRomInfo, nes_famidashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

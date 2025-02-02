@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "burn_ym2149.h"
 #include "msm5205.h"
 #include "dtimer.h"
 #include "burn_gun.h"
@@ -11,11 +12,18 @@
 #include "timer.h"
 
 // CPU clock definitions
-#define MAIN_CPU_CLOCK    (18432000 / 4)
+#define MAIN_CPU_CLOCK    (18432000 / 4)    // 4,608,000
 #define SUB_CPU_CLOCK     (18432000 / 4)
-#define AUDIO_CPU_CLOCK   (18432000 / 4)
-#define AY_CLOCK          (18432000 / 12)
+#define SOUND_CPU_CLOCK   (18432000 / 4)
+#define SCREEN_CLOCK	  (18432000 / 3)    // 6,144,000
+#define SCREEN_TOTAL_H		384
+#define SCREEN_TOTAL_V		264
+#define SCREEN_REFRESH	  (SCREEN_CLOCK / SCREEN_TOTAL_H / SCREEN_TOTAL_V)
+#define CPU_CYCLES_PER_FRAME	(3 * SCREEN_TOTAL_H * SCREEN_TOTAL_V / 4)
+#define AY_CLOCK          (18432000 / 12)   // 1,536,000
 #define MSM5205_CLOCK     384000
+
+#define SLICES_PER_FRAME	600
 
 // CPU Ids
 #define CPU_MAIN 0
@@ -30,7 +38,6 @@ static UINT8 TWCDip[3]        = {0, 0, 0};
 static UINT8 TWCInput[3]      = {0x00, 0x00, 0x00};
 static INT32 TballPrev[4];
 static INT16 TWCAnalog[4]     = {0, 0, 0, 0};
-static INT32 last_track[4];
 static UINT8 TWCReset         = 0;
 static HoldCoin<2> hold_coin;
 
@@ -45,7 +52,7 @@ static UINT8 *TWCSndRom       = NULL;
 static UINT8 *TWCZ80Ram1      = NULL;
 static UINT8 *TWCZ80Ram2      = NULL;
 static UINT8 *TWCZ80Ram3      = NULL;
-static UINT8 *TWCTextVideoRam = NULL;
+static UINT8 *TWCFgVideoRam = NULL;
 static UINT8 *TWCBgVideoRam    = NULL;
 static UINT8 *TWCColorRam     = NULL;
 static UINT8 *TWCSpriteRam    = NULL;
@@ -53,7 +60,8 @@ static UINT8 *TWCPalRam       = NULL;
 static UINT8 *TWCPalRam2      = NULL;
 static UINT8 *TWCSharedRam    = NULL;
 static UINT32 *TWCPalette     = NULL;
-static UINT8 *TWCCharTiles    = NULL;
+static UINT8 TWCRecalc;
+static UINT8 *TWCFgTiles    = NULL;
 static UINT8 *TWCBgTiles      = NULL;
 static UINT8 *TWCSprites      = NULL;
 static UINT8 *TWCTempGfx      = NULL;
@@ -66,17 +74,13 @@ static UINT8 TWCSoundLatch         = 0;
 static UINT8 TWCSoundLatch2         = 0;
 static int   msm_data_offs    = 0;
 static INT32 msm_toggle       = 0;
-static INT32 TWCMSM5205Next;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
-static INT32 nCyclesSegment;
 
 static UINT8 TWCFlipScreenX;
 static UINT8 TWCFlipScreenY;
 
 static INT32 TWCWatchdog;
-
-static dtimer sndtimer;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TWCInputList[] = {
@@ -258,7 +262,7 @@ static INT32 MemIndex()
 	TWCZ80Rom3            = Next; Next += 0x04000;
 	TWCSndRom             = Next; Next += 0x04000;
 
-	RamStart               = Next;
+	RamStart              = Next;
 
 	TWCZ80Ram1            = Next; Next += 0x00800;
 	TWCZ80Ram2            = Next; Next += 0x04800;
@@ -266,17 +270,17 @@ static INT32 MemIndex()
 
 	TWCSharedRam          = Next; Next += 0x00800;
 
-	TWCTextVideoRam           = Next; Next += 0x00400;
+	TWCFgVideoRam         = Next; Next += 0x00400;
 	TWCColorRam           = Next; Next += 0x00400;
 	TWCPalRam             = Next; Next += 0x00600;
 	TWCPalRam2            = Next; Next += 0x00200;
-	TWCBgVideoRam          = Next; Next += 0x00800;
+	TWCBgVideoRam         = Next; Next += 0x00800;
 	TWCSpriteRam          = Next; Next += 0x00400;
 
-	RamEnd                     = Next;
+	RamEnd                = Next;
 
 	// Char Layout: 512 chars, 8x8 pixels, 4 bits/pixel
-	TWCCharTiles          = Next; Next += (512 * 8 * 8 * 4);
+	TWCFgTiles          = Next; Next += (512 * 8 * 8 * 4);
 	// Tile Layout: 1024 tiles, 16x8 pixels, 4 bits/pixel
 	TWCBgTiles            = Next; Next += (1024 * 16 * 8 * 4);
 	// Sprite Layout: 512 sprites, 16x16 pixels, 4 bits/pixel
@@ -290,43 +294,10 @@ static INT32 MemIndex()
 	return 0;
 }
 
-// Taken from d_TWC.cpp
-inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
-{
-	INT32 r, g, b;
-
-	// xBGR_444, xxxxBBBBGGGGRRRR
-	b = (nColour >> 8) & 0x0f;
-	g = (nColour >> 4) & 0x0f;
-	r = (nColour >> 0) & 0x0f;
-
-	b = (b << 4) | b;
-	g = (g << 4) | g;
-	r = (r << 4) | r;
-
-	return BurnHighCol(r, g, b, 0);
-}
-
-static INT32 TWCCalcPalette()
-{
-	INT32 i;
-
-	for (i = 0; i < 0x600; i++) {
-		TWCPalette[i / 2] = xBGR_444_CalcCol(
-									TWCPalRam[i | 1] |
-		 							(TWCPalRam[i & ~1] << 8)
-								);
-	}
-
-	return 0;
-}
-
-
 static UINT8 trackball_read(UINT16 offset)
 {
 	return (BurnTrackballRead(offset>>1, offset&1) - TballPrev[offset]) & 0xff;
 }
-
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
@@ -504,6 +475,149 @@ static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
 	}
 }
 
+// Taken from d_TWC.cpp
+inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
+{
+	INT32 r, g, b;
+
+	// xBGR_444, xxxxBBBBGGGGRRRR
+	b = (nColour >> 8) & 0x0f;
+	g = (nColour >> 4) & 0x0f;
+	r = (nColour >> 0) & 0x0f;
+
+	b = (b << 4) | b;
+	g = (g << 4) | g;
+	r = (r << 4) | r;
+
+	return BurnHighCol(r, g, b, 0);
+}
+
+static INT32 TWCCalcPalette()
+{
+	INT32 i;
+
+	for (i = 0; i < 0x600; i++) {
+		TWCPalette[i / 2] = xBGR_444_CalcCol(
+									TWCPalRam[i | 1] |
+		 							(TWCPalRam[i & ~1] << 8)
+								);
+	}
+
+	return 0;
+}
+
+static void TWCRenderBgLayer()
+{
+	INT32 mx, my, Attr, Code, Colour, x, y, fx, fy, offs, TileIndex = 0;
+
+	for (my = 0; my < 32; my++) {
+		for (mx = 0; mx < 32; mx++) {
+			offs = TileIndex * 2;
+			Attr = TWCBgVideoRam[offs + 1];
+			Code = TWCBgVideoRam[offs] + ((Attr & 0x30) << 4);
+			Colour = Attr & 0x0f;
+			fx = Attr & 0x40;
+			fy = Attr & 0x80;
+
+			x = 16 * mx;
+			y = 8 * my;
+
+			// Visible grid: 256x240
+			// Tile map:     512x256   (0x200 x 0x100)
+			// x, y are tile map coordinates
+			x -= TWCScrollXLo + 256 * TWCScrollXHi;
+			y -= TWCScrollY;
+
+			x &= 0x1ff;
+			y &= 0xff;
+
+			// y -= 16;
+			// if (x > 968) x -= 1024;
+
+			DrawCustomTile(pTransDraw, 16, 8, Code, x, y, fx, fy, Colour, 4, 512, TWCBgTiles);
+
+			TileIndex++;
+		}
+	}
+}
+
+static void TWCRenderFgLayer()
+{
+	INT32 mx, my, Attr, Code, Colour, x, y, fx, fy, TileIndex = 0;
+
+	for (my = 0; my < 32; my++) {
+		for (mx = 0; mx < 32; mx++) {
+			Attr = TWCFgVideoRam[TileIndex];
+			Code = TWCFgVideoRam[TileIndex] + (Attr & 0x10) << 4);
+			Colour = Attr & 0x0f;
+			fx = Attr & 0x40;
+			fy = Attr & 0x80;
+
+			x = 8 * mx;
+			y = 8 * my;
+
+			x -= TWCScrollXLo + 256 * TWCScrollXHi;
+			y -= TWCScrollY;
+
+			x &= 0x1ff;
+			y &= 0xff;
+
+			// y -= 16;
+			// if (x > 968) x -= 1024;
+
+			Draw16x16Tile(pTransDraw, Code, x, y, fx, fy, Colour, 4, 0, TWCFgTiles);
+
+			TileIndex++;
+		}
+	}
+}
+
+static void TWCRenderSprites()
+{
+	INT32 Code, Attr, Color, x, y, fx, fy, sx, sy;
+
+	for (INT32 Offs = 0; Offs < 0x400; Offs += 4)
+	{
+		Attr = TWCSpriteRam[Offs + 1];
+		Code = TWCSpriteRam[Offs] + ((Attr & 0x80) << 5);
+		Color = Attr & 0x07;
+		fx = Attr & 0x40;
+		fy = Attr & 0x80;
+		sx = TWCSpriteRam[Offs + 2] + ((Attr & 0x20) << 3) - 128;
+		sy = TWCSpriteRam[Offs + 3];
+
+		if (TWCFlipScreenX)
+		{
+			sx = 240 - sx;
+			fx = !fx;
+		}
+
+		if (TWCFlipScreenY)
+		{
+			sy = 240 -sy;
+			fy = !fy;
+		}
+
+		Draw16x16Tile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 256, TWCSprites);
+	}
+}
+
+static INT32 TWCDraw()
+{
+	if (TWCRecalc) {
+		TWCCalcPalette();
+		TWCRecalc = 0;
+	}
+	
+	TWCRenderBgLayer();
+	TWCRenderFgLayer();
+	TWCRenderSprites();
+
+	BurnTransferCopy(TWCPalette);
+
+	return 0;
+}
+
 static INT32 TWCFrame()
 {
 	TWCWatchdog++;
@@ -514,13 +628,13 @@ static INT32 TWCFrame()
     ZetNewFrame(); // Reset CPU cycle counters
 
 	// Number of interrupt slices per frame
-    INT32 nInterleave = MSM5205CalcInterleave(0, AUDIO_CPU_CLOCK);
+    INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
 
     // Total cycles each CPU should run per frame
     INT32 nCyclesTotal[3] = {
-        (INT32)((INT64)18432000 / 4 / 59.17), // Main CPU
-        (INT32)((INT64)18432000 / 4 / 59.17), // Sub CPU
-        (INT32)((INT64)18432000 / 4 / 59.17)  // Audio CPU
+        (INT32)((INT64)MAIN_CPU_CLOCK * nBurnCPUSpeedAdjust / (0x0100 * SCREEN_REFRESH)), // Main CPU
+        (INT32)((INT64)SUB_CPU_CLOCK * nBurnCPUSpeedAdjust / (0x0100 * SCREEN_REFRESH)), // Sub CPU
+        (INT32)((INT64)SOUND_CPU_CLOCK * nBurnCPUSpeedAdjust / (0x0100 * SCREEN_REFRESH))  // Audio CPU
     };
 
     INT32 nCyclesDone[3] = { 0, 0, 0 }; // Cycles executed so far
@@ -531,31 +645,35 @@ static INT32 TWCFrame()
         // Main CPU
         ZetOpen(CPU_MAIN);
         CPU_RUN(CPU_MAIN, Zet); // Run the main CPU
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
         ZetClose();
 
         // Sub CPU
         ZetOpen(CPU_GRAPHICS);
         CPU_RUN(CPU_GRAPHICS, Zet); // Run the sub CPU
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
         ZetClose();
 
         // Audio CPU
         ZetOpen(CPU_SOUND);
+
         CPU_RUN_TIMER(CPU_SOUND); // Run the audio CPU (with timer synchronization)
-        ZetClose();
-    }
-
-	// Trigger interrupt at end of frame
-	ZetSetIRQLine(CPU_MAIN, 0, CPU_IRQSTATUS_HOLD);
-	ZetSetIRQLine(CPU_GRAPHICS, 0, CPU_IRQSTATUS_HOLD);
-
-    // Update sound
-	if (pBurnSoundOut) {
-		// Update AY-8910 sound chip
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		// Update MSM5205 sound chip
 		MSM5205Update();
+
+        ZetClose();
+    }
+
+    // Update sound
+    ZetOpen(CPU_SOUND);
+	if (pBurnSoundOut) {
+		// Update AY-8910 sound chips
+		BurnYM2149Update(pBurnSoundOut, nBurnSoundLen);
+		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
+	ZetClose();
 
 	// Render frame
     if (pBurnDraw) BurnDrvRedraw();
@@ -581,12 +699,7 @@ static INT32 TileYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(double)ZetTotalCycles() * nSoundRate * 12 / 18432000;
-}
-
-void msm_irq_cb(int param)
-{
-	ZetSetIRQLine(CPU_SOUND, CPU_IRQSTATUS_HOLD);
+	return (INT64)(double)ZetTotalCycles() * nSoundRate * MAIN_CPU_CLOCK;
 }
 
 static UINT8 portA_r(UINT32)
@@ -700,7 +813,7 @@ static INT32 TWCInit()
 
 	memset(TWCTempGfx, 0, 0x4000);
 	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
-	GfxDecodeX(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCCharTiles);
+	GfxDecodeX(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCFgTiles);
 
 	memset(TWCTempGfx, 0, 0x10000);
 	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
@@ -729,9 +842,9 @@ static INT32 TWCInit()
 	ZetMapArea(0xc800, 0xcfff, 0, TWCSharedRam       );
 	ZetMapArea(0xc800, 0xcfff, 1, TWCSharedRam       );
 	ZetMapArea(0xc800, 0xcfff, 2, TWCSharedRam       );
-	ZetMapArea(0xd000, 0xd3ff, 0, TWCTextVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 1, TWCTextVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 2, TWCTextVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 0, TWCFgVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 1, TWCFgVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 2, TWCFgVideoRam        );
 	ZetMapArea(0xd400, 0xd7ff, 0, TWCColorRam        );
 	ZetMapArea(0xd400, 0xd7ff, 1, TWCColorRam        );
 	ZetMapArea(0xd400, 0xd7ff, 2, TWCColorRam        );
@@ -762,9 +875,9 @@ static INT32 TWCInit()
 	ZetMapArea(0xc800, 0xcfff, 0, TWCSharedRam       );
 	ZetMapArea(0xc800, 0xcfff, 1, TWCSharedRam       );
 	ZetMapArea(0xc800, 0xcfff, 2, TWCSharedRam       );
-	ZetMapArea(0xd000, 0xd3ff, 0, TWCTextVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 1, TWCTextVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 2, TWCTextVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 0, TWCFgVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 1, TWCFgVideoRam        );
+	ZetMapArea(0xd000, 0xd3ff, 2, TWCFgVideoRam        );
 	ZetMapArea(0xd400, 0xd7ff, 0, TWCColorRam        );
 	ZetMapArea(0xd400, 0xd7ff, 1, TWCColorRam        );
 	ZetMapArea(0xd400, 0xd7ff, 2, TWCColorRam        );
@@ -799,24 +912,21 @@ static INT32 TWCInit()
 
 	GenericTilesInit();
 
-	BurnSetRefreshRate(59.17);
+	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
     // Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
     // WATCHDOG_TIMER(config, "watchdog");
 
-	AY8910Init(0, AUDIO_CPU_CLOCK, 0);
-	AY8910Init(1, AUDIO_CPU_CLOCK, 1);
+    // Initialize sound chips
+	AY8910Init(0, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
 	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
 	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH); // Plane Noise/Bass/Shot
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH); // Whistle/Snare
-	AY8910SetBuffered(ZetTotalCycles, AUDIO_CPU_CLOCK);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles(CPU_SOUND), SOUND_CPU_CLOCK);
 
-	timerInit();
-	timerAdd(sndtimer, 0, msm_irq_cb);
-	sndtimer.start(3579545 / 8000, -1, 1, 1);
-
-	MSM5205Init(0, DrvSynchroniseStream, 384000, adpcm_int, MSM5205_S48_4B, 0);
+	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
 
 	// Initialize analog controls for player 1 and player 2
@@ -832,11 +942,15 @@ static INT32 TWCExit()
 {
 	ZetExit();
 	GenericTilesExit();
+	AY8910Exit(0);
+	AY8910Exit(1);
+	MSM5205Exit();
+	BurnGunExit();
 
 	BurnFree(Mem);
 	
 	TWCScrollXLo = 0;
-	TWCScrollXHi = 0;
+	TWCScrollXLo = 0;
 	TWCScrollY = 0;
 	TWCSoundLatch  = 0;
 	TWCSoundLatch2 = 0;
@@ -852,8 +966,35 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029721;
 	}
 
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
 
+		ba.Data	  = RamStart;
+		ba.nLen	  = RamEnd - RamStart;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
 
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+		AY8910Scan(nAction, pnMin);
+		MSM5205Scan(nAction, pnMin);
+
+		SCAN_VAR(TWCScrollXLo);
+		SCAN_VAR(TWCScrollXLo);
+		SCAN_VAR(TWCScrollY);
+		SCAN_VAR(TWCSoundLatch);
+		SCAN_VAR(TWCSoundLatch2);
+		SCAN_VAR(TWCFlipScreenX);
+		SCAN_VAR(TWCFlipScreenY);
+		SCAN_VAR(msm_data_offs);
+		SCAN_VAR(msm_toggle);
+		SCAN_VAR(TWCWatchdog);
+
+		hold_coin.scan();
+	}
+
+	return 0;
 }
 
 static struct BurnRomInfo TWCRomDesc[] = {
@@ -881,23 +1022,34 @@ STD_ROM_FN(TWC)
 
 static INT32 TWCDoReset()
 {
-	TWCScrollXHi = 0;
-	TWCScrollXLo = 0;
-	TWCScrollY = 0;
-
-	TWCSoundLatch = 0;
-	TWCSoundLatch2 = 0;
-
-	TWCWatchdog = 0;
+	memset(RamStart, 0, RamEnd - RamStart);
 
 	ZetReset(0);
 	ZetReset(1);
 
 	ZetOpen(2);
 	ZetReset();
+	MSM5205Reset();
 	ZetClose();
 
+	AY8910Reset(0);
+	AY8910Reset(1);
+
 	hold_coin.reset();
+
+	TWCScrollXHi   = 0;
+	TWCScrollXLo   = 0;
+	TWCScrollY     = 0;
+	TWCFlipScreenX = 0;
+	TWCFlipScreenY = 0;
+
+	TWCSoundLatch  = 0;
+	TWCSoundLatch2 = 0;
+
+	msm_data_offs  = 0;
+	msm_toggle     = 0;
+
+	TWCWatchdog    = 0;
 
 	HiscoreReset();
 
@@ -935,12 +1087,12 @@ struct BurnDriver BurnDrvTWC = {
 	TWCInputInfo,		// Function to get the input info for the game
 	TWCDIPInfo,		// Function to get the input info for the game
 	TWCInit,				// Init
-	DrvExit,				// Exit
+	TWCExit,				// Exit
 	TWCFrame,				// Frame
-	DrvDraw,				// Redraw
+	TWCDraw,				// Redraw
 	TWCScan,				// Area Scan
-	&DrvRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
-	0x120,					// Number of Palette Entries
+	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	0x300,					// Number of Palette Entries
 	224,					// Screen width
 	256,					// Screen height
 	3,						// Screen x aspect

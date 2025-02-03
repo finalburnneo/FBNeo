@@ -61,6 +61,7 @@ struct Snes {
   bool fastMem;
   uint32_t adrBus;
   uint8_t openBus;
+  uint8_t vramhack;
 };
 
 Snes* snes_init(void);

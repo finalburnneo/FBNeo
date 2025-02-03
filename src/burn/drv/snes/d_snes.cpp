@@ -281,6 +281,7 @@ static void DrvDoReset()
 {
 	snes_reset(snes, true);
 
+	snes->vramhack = DrvDips[0];
 	LastControllerDip = DrvDips[1];
 	LastControllerTimer = 0;
 }
@@ -320,6 +321,7 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 	snes = snes_init();
+	snes->vramhack = DrvDips[0];
 	snes_loadRom(snes, rom, length, rom_bios, bios_len);
 
 	BurnSetRefreshRate(snes_isPal(snes) ? 50.00 : 60.00);

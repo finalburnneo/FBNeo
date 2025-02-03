@@ -1187,7 +1187,7 @@ void ppu_write(uint8_t adr, uint8_t val) {
     }
     case 0x18: {
       uint16_t vramAdr = ppu_getVramRemap();
-	  if (forcedBlank || snes->inVblank) { // TODO: also cgram and oam?
+	  if (forcedBlank || snes->inVblank || (DrvDips[0] & 1)) { // TODO: also cgram and oam?
 		  vram[vramAdr & 0x7fff] = (vram[vramAdr & 0x7fff] & 0xff00) | val;
 	  }
       if(!vramIncrementOnHigh) vramPointer += vramIncrement;
@@ -1195,7 +1195,7 @@ void ppu_write(uint8_t adr, uint8_t val) {
     }
     case 0x19: {
       uint16_t vramAdr = ppu_getVramRemap();
-	  if (forcedBlank || snes->inVblank) {
+	  if (forcedBlank || snes->inVblank || (DrvDips[0] & 1)) { // DrvDips[0] & 1 == Allow invalid vram writes, some hack games need this
 		  vram[vramAdr & 0x7fff] = (vram[vramAdr & 0x7fff] & 0x00ff) | (val << 8);
 	  }
       if(vramIncrementOnHigh) vramPointer += vramIncrement;

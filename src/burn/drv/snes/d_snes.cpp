@@ -180,6 +180,19 @@ static struct BurnDIPInfo SNESDIPList[] =
 
 STDDIPINFO(SNES)
 
+static struct BurnDIPInfo SNESVRAMHackDIPList[] =
+{
+	DIP_OFFSET(0x19)
+	{0x00, 0xff, 0xff, 0x01, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Allow vram writes outside blanking (hack)" },
+	{0x00, 0x01, 0x01, 0x00, "Off"				},
+	{0x00, 0x01, 0x01, 0x01, "On"				},
+};
+
+STDDIPINFO(SNESVRAMHack)
+
 static struct BurnDIPInfo SNESZapperDIPList[] =
 {
 	DIP_OFFSET(0x14)
@@ -9424,7 +9437,7 @@ struct BurnDriver BurnDrvsnes_Fireemblem4j = {
 	"Fire Emblem - Seisen no Keifu (Japan)\0", NULL, "Nintendo", "Nintendo",
 	L"\u30d5\u30a1\u30a4\u30a2\u30fc\u30a8\u30e0\u30d6\u30ec\u30e0 - \u8056\u6226\u306e\u7cfb\u8b5c (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
-	SNESGetZipName, snes_Fireemblem4jRomInfo, snes_Fireemblem4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_Fireemblem4jRomInfo, snes_Fireemblem4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESVRAMHackDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

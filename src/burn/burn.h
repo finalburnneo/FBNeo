@@ -456,6 +456,7 @@ void Reinitialise();
 #define IPS_ACPU_EXPAND		(1 << 11)	// Additional request for audio cpu length.
 #define IPS_SND1_EXPAND		(1 << 12)	// Additional request for snd length.
 #define IPS_SND2_EXPAND		(1 << 13)	// Id.
+#define IPS_SNES_VRAMHK		(1 << 14)	// Allow invalid vram writes.
 
 enum IpsRomTypes { EXP_FLAG, LOAD_ROM, EXTR_ROM, PRG1_ROM, PRG2_ROM, GRA1_ROM, GRA2_ROM, GRA3_ROM, ACPU_ROM, SND1_ROM, SND2_ROM };
 extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];

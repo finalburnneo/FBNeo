@@ -281,6 +281,9 @@ static void DrvDoReset()
 {
 	snes_reset(snes, true);
 
+	if ((nIpsDrvDefine & IPS_SNES_VRAMHK) || (NULL != pDataRomDesc))
+		DrvDips[0] = 1;
+
 	snes->vramhack = DrvDips[0];
 	LastControllerDip = DrvDips[1];
 	LastControllerTimer = 0;
@@ -291,6 +294,8 @@ static INT32 DrvInit()
 	struct BurnRomInfo ri;
 	BurnDrvGetRomInfo(&ri, 0);
 	UINT32 length = ri.nLen;
+	if (bDoIpsPatch)
+		length += nIpsMemExpLen[PRG1_ROM];
 
 	rom = BurnMalloc(BurnRoundPowerOf2(length));
 //	bprintf(0, _T("snes rom size:  %x  rounded:  %x\n"), length, BurnRoundPowerOf2(length));
@@ -321,7 +326,6 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 	snes = snes_init();
-	snes->vramhack = DrvDips[0];
 	snes_loadRom(snes, rom, length, rom_bios, bios_len);
 
 	BurnSetRefreshRate(snes_isPal(snes) ? 50.00 : 60.00);
@@ -9437,10 +9441,56 @@ STD_ROM_FN(snes_Fireemblem4j)
 struct BurnDriver BurnDrvsnes_Fireemblem4j = {
 	"snes_fireemblem4j", NULL, NULL, NULL, "1996",
 	"Fire Emblem - Seisen no Keifu (Japan)\0", NULL, "Nintendo", "Nintendo",
-	L"\u30d5\u30a1\u30a4\u30a2\u30fc\u30a8\u30e0\u30d6\u30ec\u30e0 - \u8056\u6226\u306e\u7cfb\u8b5c (Japan)\0", NULL, NULL, NULL,
+	L"Fire Emblem - Seisen no Keifu\0\u30d5\u30a1\u30a4\u30a2\u30fc\u30a8\u30e0\u30d6\u30ec\u30e0 - \u8056\u6226\u306e\u7cfb\u8b5c (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
-	SNESGetZipName, snes_Fireemblem4jRomInfo, snes_Fireemblem4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESVRAMHackDIPInfo,
+	SNESGetZipName, snes_Fireemblem4jRomInfo, snes_Fireemblem4jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Fire Emblem - Seisen no Keifu (Hack, Simplified Chinese v1.1)
+
+static struct BurnRomInfo snes_Fireemblem4tscRomDesc[] = {
+	{ "Fire Emblem - Seisen no Keifu T-Chs v1.1 (2008)(FIREEMBLEM.NET).sfc", 4194304, 0x58a9a697, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fireemblem4tsc)
+STD_ROM_FN(snes_Fireemblem4tsc)
+
+static INT32 VRAMHackInit()
+{
+	if (!bDoIpsPatch && (NULL == pDataRomDesc))
+		DrvDips[0] = 1;
+
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvsnes_Fireemblem4tsc = {
+	"snes_fireemblem4tsc", "snes_fireemblem4j", NULL, NULL, "2008",
+	"Fire Emblem - Seisen no Keifu (Hack, Simplified Chinese v1.1)\0", NULL, "FIREEMBLEM.NET", "Nintendo",
+	L"Fire Emblem - Seisen no Keifu\0\u706b\u7130\u4e4b\u7eb9\u7ae0 - \u5723\u6218\u4e4b\u7cfb\u8c31 (Hack, Simplified Chinese v1.1)\0", NULL, L"\u706b\u82b1\u5929\u9f99\u5251", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Fireemblem4tscRomInfo, snes_Fireemblem4tscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESVRAMHackDIPInfo,
+	VRAMHackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Fire Emblem - Seisen no Keifu (Hack, Traditional Chinese v1.1)
+
+static struct BurnRomInfo snes_Fireemblem4ttcRomDesc[] = {
+	{ "Fire Emblem - Seisen no Keifu T-Cht v1.1 (2008)(FIREEMBLEM.NET).sfc", 4194304, 0x8ed60773, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fireemblem4ttc)
+STD_ROM_FN(snes_Fireemblem4ttc)
+
+struct BurnDriver BurnDrvsnes_Fireemblem4ttc = {
+	"snes_fireemblem4ttc", "snes_fireemblem4j", NULL, NULL, "2008",
+	"Fire Emblem - Seisen no Keifu (Hack, Traditional Chinese v1.1)\0", NULL, "FIREEMBLEM.NET", "Nintendo",
+	L"Fire Emblem - Seisen no Keifu\0\u706b\u7130\u4e4b\u7d0b\u7ae0 - \u8056\u6230\u4e4b\u7cfb\u8b5c (Hack, Traditional Chinese v1.1)\0", NULL, L"\u706b\u82b1\u5929\u9f99\u5251", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Fireemblem4ttcRomInfo, snes_Fireemblem4ttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESVRAMHackDIPInfo,
+	VRAMHackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 

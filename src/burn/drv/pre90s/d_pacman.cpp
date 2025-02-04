@@ -4266,6 +4266,43 @@ struct BurnDriver BurnDrvpacmansp = {
 };
 
 
+// Pacman (Patched)
+// This set has the fixes proposed by Don Hodges at the pages:
+// http://donhodges.com/how_high_can_you_get2.htm
+// http://donhodges.com/pacman_pinky_explanation.htm
+// These are: AI fixes for Pinky and Inky; fix for the kill screen on level 256.
+// Patches invented by Don Hodges; coded into a ROM by Krick.
+
+static struct BurnRomInfo pacmanpRomDesc[] = {
+	{ "pacman.6e",    0x1000, 0xc1e6ab10, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x1a6fb2d4, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacmanp.6h",   0x1000, 0x65625778, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacman.6j",    0x1000, 0x817d94e3, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacmanp)
+STD_ROM_FN(pacmanp)
+
+struct BurnDriver BurnDrvpacmanp = {
+	"pacmanp", "puckman", NULL, NULL, "2007",
+	"Pacman (Patched)\0", NULL, "Hack (Don Hodges)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pacmanpRomInfo, pacmanpRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Pac-Man Plus
 
 static struct BurnRomInfo pacplusRomDesc[] = {

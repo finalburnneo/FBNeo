@@ -395,7 +395,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 			return;     // placeholder for future adding of gridiron_led1
 
 		case 0xf820:
-			sound_sync();
+			//sound_sync();
 			TWCSoundLatch = data;
 			ZetNmi(CPU_SOUND);
 			return;

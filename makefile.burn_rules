@@ -87,7 +87,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_parent.o \
 			\
-			d_megadrive.o d_mdarcbl.cpp \
+			d_megadrive.o d_mdarcbl.o \
 			\
 			d_pce.o \
 			\

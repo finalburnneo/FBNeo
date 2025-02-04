@@ -5967,7 +5967,7 @@ struct BurnDriver BurnDrvDdpdojp = {
 	"ddpdojp", "ddp3", NULL, NULL, "2002",
 	"DoDonPachi Dai-Ou-Jou (Japan, 2002.04.05 Master Ver, location test)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	L"DoDonPachi Dai-Ou-Jou\0\u6012\u9996\u9818\u8702 \u5927\u5f80\u751f (Japan, 2002.04.05 Master Ver, location test)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IGS_PGM, GBF_VERSHOOT, 0,
 	NULL, ddpdojpRomInfo, ddpdojpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ddpdojpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4

@@ -28622,7 +28622,7 @@ STD_ROM_FN(snes_Treashuntgj)
 struct BurnDriver BurnDrvsnes_Treashuntgj = {
 	"snes_treashuntgj", "snes_treashuntgte", NULL, NULL, "1996",
 	"Treasure Hunter G (Japan)\0", NULL, "Squaresoft", "Nintendo",
-	L"Treasure Hunter G (Japan)\0トレジャーハンターG\0", NULL, NULL, NULL,
+	L"Treasure Hunter G (Japan)\0\u30c8\u30ec\u30b8\u30e3\u30fc\u30cf\u30f3\u30bf\u30fcG\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
 	SNESGetZipName, snes_TreashuntgjRomInfo, snes_TreashuntgjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,

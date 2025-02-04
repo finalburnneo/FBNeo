@@ -24016,29 +24016,28 @@ struct BurnDriver BurnDrvKof98pfe = {
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Easy Combo Edition, Hack)
 // Modified by gunloc941
-// 20240517
+// 20241202
 
 static struct BurnRomInfo kof98eckRomDesc[] = {
-	/* wo1wan - 20230725 */
-	{ "242-p1eck.p1",	0x100000, 0xeb0fd146, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2eck.sp2",	0x400000, 0xc784d2c9, 1 | BRF_ESS | BRF_PRG },
+	{ "242-p1eck.p1",	0x100000, 0xaef99d50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2eck.sp2",	0x400000, 0x3abd98eb, 1 | BRF_ESS | BRF_PRG },
 
 	{ "242-s1eck.s1",	0x020000, 0xe50c8256, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1eck.c1",	0x800000, 0x03963c99, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2eck.c2",	0x800000, 0xf2bce143, 3 | BRF_GRA },
+	{ "242-c1eck.c1",	0x800000, 0xb977ce78, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2eck.c2",	0x800000, 0x0fce3203, 3 | BRF_GRA },
 	{ "242-c3eck.c3",	0x800000, 0xfd04ebd3, 3 | BRF_GRA },
 	{ "242-c4eck.c4",	0x800000, 0x413f0427, 3 | BRF_GRA },
 	{ "242-c5eck.c5",	0x800000, 0x76252bdc, 3 | BRF_GRA },
 	{ "242-c6eck.c6",	0x800000, 0x13d5b9b7, 3 | BRF_GRA },
 	{ "242-c7eck.c7",	0x800000, 0xc3dda442, 3 | BRF_GRA },
 	{ "242-c8eck.c8",	0x800000, 0xf8e2c321, 3 | BRF_GRA },
-	{ "242-c9eck.c9",	0x800000, 0x5a8f8d88, 3 | BRF_GRA },
-	{ "242-c10eck.c10",	0x800000, 0xdc7a6504, 3 | BRF_GRA },
+	{ "242-c9eck.c9",	0x800000, 0x32a32160, 3 | BRF_GRA },
+	{ "242-c10eck.c10",	0x800000, 0x3fa53db9, 3 | BRF_GRA },
 
 	{ "242-m1eck.m1",	0x040000, 0xa416260e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "242-v1eck.v1",	0x400000, 0x64ebb03e, 5 | BRF_SND },           // 12 Sound data
+	{ "242-v1eck.v1",	0x400000, 0x93804bfe, 5 | BRF_SND },           // 12 Sound data
 	{ "242-v2eck.v2",	0x400000, 0x77acfcae, 5 | BRF_SND },
 	{ "242-v3eck.v3",	0x400000, 0x33b1e408, 5 | BRF_SND },
 	{ "242-v4eck.v4",	0x400000, 0x50c82369, 5 | BRF_SND },

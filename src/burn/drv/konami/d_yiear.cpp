@@ -503,7 +503,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Yie Ar Kung-Fu (program code I)
+// Yie Ar Kung-Fu (version I)
 
 static struct BurnRomInfo yiearRomDesc[] = {
 	{ "407_i08.10d",	0x4000, 0xe2d7458b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -527,7 +527,7 @@ STD_ROM_FN(yiear)
 
 struct BurnDriver BurnDrvYiear = {
 	"yiear", NULL, NULL, NULL, "1985",
-	"Yie Ar Kung-Fu (program code I)\0", NULL, "Konami", "GX407",
+	"Yie Ar Kung-Fu (version I)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiearRomInfo, yiearRomName, NULL, NULL, NULL, NULL, YiearInputInfo, YiearDIPInfo,
@@ -536,7 +536,7 @@ struct BurnDriver BurnDrvYiear = {
 };
 
 
-// Yie Ar Kung-Fu (program code G)
+// Yie Ar Kung-Fu (version G)
 
 static struct BurnRomInfo yiear2RomDesc[] = {
 	{ "407_g08.10d",	0x4000, 0x49ecd9dd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -560,7 +560,7 @@ STD_ROM_FN(yiear2)
 
 struct BurnDriver BurnDrvYiear2 = {
 	"yiear2", "yiear", NULL, NULL, "1985",
-	"Yie Ar Kung-Fu (program code G)\0", NULL, "Konami", "GX407",
+	"Yie Ar Kung-Fu (version G)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiear2RomInfo, yiear2RomName, NULL, NULL, NULL, NULL, YiearInputInfo, YiearDIPInfo,

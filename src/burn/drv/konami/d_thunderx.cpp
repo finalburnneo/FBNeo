@@ -955,7 +955,7 @@ struct BurnDriver BurnDrvScontraa = {
 };
 
 
-// Super Contra (Japan)
+// Super Contra: Alien no Gyakushuu (Japan)
 
 static struct BurnRomInfo scontrajRomDesc[] = {
 	{ "775-f02.bin",	0x10000, 0x8d5933a7, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1010,7 +1010,7 @@ STD_ROM_FN(scontraj)
 
 struct BurnDriver BurnDrvScontraj = {
 	"scontraj", "scontra", NULL, NULL, "1988",
-	"Super Contra - Alien no Gyakushuu (Japan)\0", NULL, "Konami", "GX775",
+	"Super Contra: Alien no Gyakushuu (Japan)\0", NULL, "Konami", "GX775",
 	L"Super \u9B42\u6597\u7F85 \u30A8\u30A4\u30EA\u30A2\u30F3 \u306E\u9006\u8972 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, scontrajRomInfo, scontrajRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,

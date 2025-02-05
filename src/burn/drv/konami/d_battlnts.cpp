@@ -614,7 +614,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Battlantis (program code G)
+// Battlantis (version G)
 
 static struct BurnRomInfo battlntsRomDesc[] = {
 	{ "777_g02.7e",		0x08000, 0xdbd8e17e, 1 }, //  0 HD6309 Code
@@ -632,7 +632,7 @@ STD_ROM_FN(battlnts)
 
 struct BurnDriver BurnDrvBattlnts = {
 	"battlnts", NULL, NULL, NULL, "1987",
-	"Battlantis (program code G)\0", NULL, "Konami", "GX777",
+	"Battlantis (version G)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsRomInfo, battlntsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
@@ -641,7 +641,7 @@ struct BurnDriver BurnDrvBattlnts = {
 };
 
 
-// Battlantis (program code F)
+// Battlantis (version F)
 
 static struct BurnRomInfo battlntsaRomDesc[] = {
 	{ "777_f02.7e",		0x08000, 0x9f1dc5c1, 1 }, //  0 HD6309 Code
@@ -659,7 +659,7 @@ STD_ROM_FN(battlntsa)
 
 struct BurnDriver BurnDrvBattlntsa = {
 	"battlntsa", "battlnts", NULL, NULL, "1987",
-	"Battlantis (program code F)\0", NULL, "Konami", "GX777",
+	"Battlantis (version F)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsaRomInfo, battlntsaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
@@ -668,7 +668,7 @@ struct BurnDriver BurnDrvBattlntsa = {
 };
 
 
-// Battlantis (Japan, program code E)
+// Battlantis (Japan, version E)
 
 static struct BurnRomInfo battlntsjRomDesc[] = {
 	{ "777_e02.7e",		0x08000, 0xd631cfcb, 1 }, //  0 HD6309 Code
@@ -686,7 +686,7 @@ STD_ROM_FN(battlntsj)
 
 struct BurnDriver BurnDrvBattlntsj = {
 	"battlntsj", "battlnts", NULL, NULL, "1987",
-	"Battlantis (Japan, program code E)\0", NULL, "Konami", "GX777",
+	"Battlantis (Japan, version E)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsjRomInfo, battlntsjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
@@ -695,7 +695,7 @@ struct BurnDriver BurnDrvBattlntsj = {
 };
 
 
-// Rack 'em Up (program code L)
+// Rack 'em Up (version L)
 
 static struct BurnRomInfo rackemupRomDesc[] = {
 	{ "765_l02.7e",		0x08000, 0x3dfc48bd, 1 }, //  0 HD6309 Code
@@ -713,7 +713,7 @@ STD_ROM_FN(rackemup)
 
 struct BurnDriver BurnDrvRackemup = {
 	"rackemup", NULL, NULL, NULL, "1987",
-	"Rack 'em Up (program code L)\0", NULL, "Konami", "GX765",
+	"Rack 'em Up (version L)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, rackemupRomInfo, rackemupRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
@@ -722,7 +722,7 @@ struct BurnDriver BurnDrvRackemup = {
 };
 
 
-// The Hustler (Japan, program code M)
+// The Hustler (Japan, version M)
 
 static struct BurnRomInfo thehustlRomDesc[] = {
 	{ "765_m02.7e",		0x08000, 0x934807b9, 1 }, //  0 HD6309 Code
@@ -740,7 +740,7 @@ STD_ROM_FN(thehustl)
 
 struct BurnDriver BurnDrvThehustl = {
 	"thehustl", "rackemup", NULL, NULL, "1987",
-	"The Hustler (Japan, program code M)\0", NULL, "Konami", "GX765",
+	"The Hustler (Japan, version M)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, thehustlRomInfo, thehustlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvThehustl = {
 };
 
 
-// The Hustler (Japan, program code J)
+// The Hustler (Japan, version J)
 
 static struct BurnRomInfo thehustljRomDesc[] = {
 	{ "765_j02.7e",		0x08000, 0x2ac14c75, 1 }, //  0 HD6309 Code
@@ -767,7 +767,7 @@ STD_ROM_FN(thehustlj)
 
 struct BurnDriver BurnDrvThehustlj = {
 	"thehustlj", "rackemup", NULL, NULL, "1987",
-	"The Hustler (Japan, program code J)\0", NULL, "Konami", "GX765",
+	"The Hustler (Japan, version J)\0", NULL, "Konami", "GX765",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, thehustljRomInfo, thehustljRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RackemupDIPInfo,

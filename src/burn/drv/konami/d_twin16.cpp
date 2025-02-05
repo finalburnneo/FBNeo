@@ -1681,7 +1681,7 @@ struct BurnDriver BurnDrvDarkadv = {
 };
 
 
-// Vulcan Venture (New)
+// Vulcan Venture (new)
 
 static struct BurnRomInfo vulcanRomDesc[] = {
 	{ "785_w05.6n",		0x10000, 0x6e0e99cd, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1741,7 +1741,7 @@ static INT32 vulcanInit()
 
 struct BurnDriver BurnDrvVulcan = {
 	"vulcan", NULL, NULL, NULL, "1988",
-	"Vulcan Venture (New)\0", NULL, "Konami", "GX785",
+	"Vulcan Venture (new)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, vulcanRomInfo, vulcanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
@@ -1750,7 +1750,7 @@ struct BurnDriver BurnDrvVulcan = {
 };
 
 
-// Vulcan Venture (Old)
+// Vulcan Venture (old)
 
 static struct BurnRomInfo vulcanaRomDesc[] = {
 	{ "785_r05.6n",		0x10000, 0x1777a57b, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1782,7 +1782,7 @@ STD_ROM_FN(vulcana)
 
 struct BurnDriver BurnDrvVulcana = {
 	"vulcana", "vulcan", NULL, NULL, "1988",
-	"Vulcan Venture (Old)\0", NULL, "Konami", "GX785",
+	"Vulcan Venture (old)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, vulcanaRomInfo, vulcanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
@@ -1791,7 +1791,7 @@ struct BurnDriver BurnDrvVulcana = {
 };
 
 
-// Vulcan Venture (Oldest)
+// Vulcan Venture (older)
 
 static struct BurnRomInfo vulcanbRomDesc[] = {
 	{ "785_n05.6n",		0x10000, 0x6371d475, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1823,7 +1823,7 @@ STD_ROM_FN(vulcanb)
 
 struct BurnDriver BurnDrvVulcanb = {
 	"vulcanb", "vulcan", NULL, NULL, "1988",
-	"Vulcan Venture (Oldest)\0", NULL, "Konami", "GX785",
+	"Vulcan Venture (older)\0", NULL, "Konami", "GX785",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, vulcanbRomInfo, vulcanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
@@ -1832,7 +1832,7 @@ struct BurnDriver BurnDrvVulcanb = {
 };
 
 
-// Gradius II - GOFER no Yabou (Japan New Ver.)
+// Gradius II: GOFER no Yabou (Japan, new)
 
 static struct BurnRomInfo gradius2RomDesc[] = {
 	{ "785_x05.6n",		0x10000, 0x8a23a7b8, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1864,8 +1864,8 @@ STD_ROM_FN(gradius2)
 
 struct BurnDriver BurnDrvGradius2 = {
 	"gradius2", "vulcan", NULL, NULL, "1988",
-	"Gradius II - GOFER no Yabou (Japan New Ver.)\0", NULL, "Konami", "GX785",
-	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan New Ver.)\0", NULL, NULL, NULL,
+	"Gradius II: GOFER no Yabou (Japan, new)\0", NULL, "Konami", "GX785",
+	L"Gradius II: GOFER \u306E\u91CE\u671B GOFER no Yabou (Japan, new)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, gradius2RomInfo, gradius2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Gradius2DIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
@@ -1873,7 +1873,7 @@ struct BurnDriver BurnDrvGradius2 = {
 };
 
 
-// Gradius II - GOFER no Yabou (Japan Old Ver.)
+// Gradius II: GOFER no Yabou (Japan, old)
 
 static struct BurnRomInfo gradius2aRomDesc[] = {
 	{ "785_p05.6n",		0x10000, 0x4db0e736, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1905,8 +1905,8 @@ STD_ROM_FN(gradius2a)
 
 struct BurnDriver BurnDrvGradius2a = {
 	"gradius2a", "vulcan", NULL, NULL, "1988",
-	"Gradius II - GOFER no Yabou (Japan Old Ver.)\0", NULL, "Konami", "GX785",
-	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan Old Ver.)\0", NULL, NULL, NULL,
+	"Gradius II: GOFER no Yabou (Japan, old)\0", NULL, "Konami", "GX785",
+	L"Gradius II: GOFER \u306E\u91CE\u671B (Japan, old)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, gradius2aRomInfo, gradius2aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
@@ -1914,7 +1914,7 @@ struct BurnDriver BurnDrvGradius2a = {
 };
 
 
-// Gradius II - GOFER no Yabou (Japan Older Ver.)
+// Gradius II: GOFER no Yabou (Japan, older)
 
 static struct BurnRomInfo gradius2bRomDesc[] = {
 	{ "785_p05.6n",		0x10000, 0x4db0e736, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -1946,8 +1946,8 @@ STD_ROM_FN(gradius2b)
 
 struct BurnDriver BurnDrvGradius2b = {
 	"gradius2b", "vulcan", NULL, NULL, "1988",
-	"Gradius II - GOFER no Yabou (Japan Older Ver.)\0", NULL, "Konami", "GX785",
-	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan Older Ver.)\0", NULL, NULL, NULL,
+	"Gradius II: GOFER no Yabou (Japan, older)\0", NULL, "Konami", "GX785",
+	L"Gradius II: GOFER \u306E\u91CE\u671B (Japan, older)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, gradius2bRomInfo, gradius2bRomName, NULL, NULL, NULL, NULL, DrvInputInfo, VulcanDIPInfo,
 	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
@@ -2124,7 +2124,7 @@ struct BurnDriver BurnDrvHpuncher = {
 };
 
 
-// M.I.A. - Missing in Action (version R) (Japan)
+// M.I.A.: Missing in Action (Japan, version R)
 
 static struct BurnRomInfo miajRomDesc[] = {
 	{ "808_r05.6n",		0x10000, 0x91fd83f4, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -2176,7 +2176,7 @@ static INT32 miajInit()
 
 struct BurnDriver BurnDrvMiaj = {
 	"miaj", "mia", NULL, NULL, "1989",
-	"M.I.A. - Missing in Action (version R) (Japan)\0", NULL, "Konami", "GX808",
+	"M.I.A.: Missing in Action (Japan, version R)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, miajRomInfo, miajRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MiajDIPInfo,

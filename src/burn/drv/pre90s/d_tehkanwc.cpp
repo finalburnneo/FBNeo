@@ -494,13 +494,22 @@ static INT32 TWCCalcPalette()
 	INT32 i;   
 
 	for (i = 0; i < 0x600; i++) {
-		TWCPalette[i / 2] = xBGR_444_CalcCol(
-									TWCPalRam[i | 1] |
-		 							(TWCPalRam[i & ~1] << 8)
-								);
+		TWCPalette[i / 2] = xBGR_444_CalcCol(TWCPalRam[i | 1] | (TWCPalRam[i & ~1] << 8));
 	}
 
 	return 0;
+}
+
+static tilemap_callback( twc_bg )
+{
+	offs *= 2; // ??
+
+	INT32 attr  = TWCBgVideoRam[offs + 1];
+	INT32 code  = TWCBgVideoRam[offs] + ((attr & 0x30) << 4);
+	INT32 color = attr & 0x0f;
+	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6);
+
+	TILE_SET_INFO(2, code, color, flags);
 }
 
 static void TWCRenderBgLayer()
@@ -536,6 +545,16 @@ static void TWCRenderBgLayer()
 			TileIndex++;
 		}
 	}
+}
+
+static tilemap_callback( twc_fg )
+{
+	INT32 attr  = TWCColorRam[offs];
+	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
+	INT32 color = attr & 0x0f;
+	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6) | TILE_GROUP((attr & 0x20) >> 5);
+
+	TILE_SET_INFO(0, code, color, flags);
 }
 
 static void TWCRenderFgLayer()
@@ -595,7 +614,7 @@ static void TWCRenderSprites()
 			fy = !fy;
 		}
 
-		Draw16x16Tile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 256, TWCSprites);
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 7, 256, TWCSprites);
 	}
 }
 
@@ -606,9 +625,20 @@ static INT32 TWCDraw()
 		TWCRecalc = 1;
 	}
 	
-	TWCRenderBgLayer();
-	TWCRenderFgLayer();
-	TWCRenderSprites();
+	GenericTilemapSetFlip(TMAP_GLOBAL, TWCFlipScreenX * TMAP_FLIPX | TWCFlipScreenY * TMAP_FLIPY);
+
+	GenericTilemapSetScrollY(2, TWCScrollY);
+	GenericTilemapSetScrollX(2, TWCScrollXLo + 256 * TWCScrollXHi);
+
+	BurnTransferClear();
+
+//	TWCRenderBgLayer();
+//	TWCRenderFgLayer();
+
+	if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+	if (nSpriteEnable & 1) TWCRenderSprites();
+	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
 
 	BurnTransferCopy(TWCPalette);
 
@@ -950,6 +980,14 @@ static INT32 TWCInit()
 	ZetClose();
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
+	GenericTilemapSetGfx(0, TWCFgTiles, 4,  8,  8, 0x04000, 0x000, 0xf);
+	GenericTilemapSetGfx(1, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
+	GenericTilemapSetGfx(2, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
+	//GenericTilemapSetOffsets(0, -1, -8); // -1 ??
+	//GenericTilemapSetOffsets(1,  0, -8);
+	GenericTilemapSetTransparent(0,0);
 
 	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 

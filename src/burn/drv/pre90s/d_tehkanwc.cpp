@@ -972,11 +972,8 @@ static INT32 TWCInit()
 	ZetSetWriteHandler(TWCSoundWrite);
 	ZetSetOutHandler(TWCSoundWritePort);
 	ZetSetInHandler(TWCSoundReadPort);
-	ZetMapArea(0x0000, 0x3fff, 0, TWCZ80Rom3);
-	ZetMapArea(0x0000, 0x3fff, 1, TWCZ80Rom3);
-	ZetMapArea(0x4000, 0x47ff, 0, TWCZ80Ram3);
-	ZetMapArea(0x4000, 0x47ff, 1, TWCZ80Ram3);
-	ZetMapArea(0x4000, 0x47ff, 2, TWCZ80Ram3);
+	ZetMapMemory(TWCZ80Rom3, 0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(TWCZ80Ram3, 0x4000, 0x47ff, MAP_RAM);
 	ZetClose();
 
 	GenericTilesInit();

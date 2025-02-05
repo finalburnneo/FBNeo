@@ -1,4 +1,4 @@
-// FB Neo - Tehkan Wolrd Cup '90 driver
+// FB Neo - Tehkan Wolrd Cup driver
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -491,7 +491,7 @@ inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
 
 static INT32 TWCCalcPalette()
 {
-	INT32 i;
+	INT32 i;   
 
 	for (i = 0; i < 0x600; i++) {
 		TWCPalette[i / 2] = xBGR_444_CalcCol(

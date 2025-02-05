@@ -2551,7 +2551,9 @@ struct BurnDriver BurnDrvGalagawm = {
 	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-// http://donhodges.com/galaga_stage_256_fix.htm
+// This set has the fix proposed by Don Hodges at the page:
+//   http://donhodges.com/galaga_stage_256_fix.htm
+// note: unlike HBMAME, the roms here were hard-patched
 struct BurnDriver BurnDrvGalagap = {
 	"galagap", "galaga", NULL, "galaga", "2007",
 	"Galaga (Patched)\0", NULL, "Hack (Don Hodges)", "Miscellaneous",

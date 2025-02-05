@@ -4494,8 +4494,9 @@ struct BurnDriver BurnDrvDkspkyte = {
 };
 
 
-// Donkey Kong (Patch) by Don Hodges
-// Patched Kill Screen - see http://donhodges.com/how_high_can_you_get.htm
+// Donkey Kong (Patched)
+// This set has the fix proposed by Don Hodges at the page:
+//   http://donhodges.com/how_high_can_you_get.htm
 
 static struct BurnRomInfo dkongpRomDesc[] = {
 	{ "dkongp_c_5et",	0x1000, 0x2066139d, 1 }, //  0 maincpu

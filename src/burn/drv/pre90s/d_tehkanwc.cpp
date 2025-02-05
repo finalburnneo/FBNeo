@@ -9,6 +9,8 @@
 #include "burn_gun.h"
 #include "burnint.h"
 #include "timer.h"
+#include "watchdog.h"
+
 
 // CPU clock definitions
 #define MAIN_CPU_CLOCK    (18432000 / 4)    // 4,608,000
@@ -20,7 +22,7 @@
 #define SCREEN_REFRESH	  (SCREEN_CLOCK / SCREEN_TOTAL_H / SCREEN_TOTAL_V)
 #define CPU_CYCLES_PER_FRAME	(3 * SCREEN_TOTAL_H * SCREEN_TOTAL_V / 4)
 #define AY_CLOCK          (18432000 / 12)   // 1,536,000
-#define MSM5205_CLOCK     384000
+#define MSM5205_CLOCK 	384000
 
 #define SLICES_PER_FRAME	600
 
@@ -77,27 +79,25 @@ static INT32 msm_toggle       = 0;
 static UINT8 TWCFlipScreenX;
 static UINT8 TWCFlipScreenY;
 
-static INT32 TWCWatchdog;
-
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TWCInputList[] = {
-	{"P1 Coin",	    BIT_DIGITAL,	TWCInputPort2 + 0,	"p1 coin"	},
-	{"P2 Coin",	    BIT_DIGITAL,	TWCInputPort2 + 1,	"p2 coin"	},
-	{"P1 Start",	    BIT_DIGITAL,	TWCInputPort2 + 2,	"p1 start"	},
-	{"P2 Start",	    BIT_DIGITAL,	TWCInputPort2 + 3,	"p2 start"	},
+	{"P1 Coin",			BIT_DIGITAL,		TWCInputPort2 + 0,	"p1 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	"p2 coin"	},
+	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	"p1 start"	},
+	{"P2 Start",		BIT_DIGITAL,		TWCInputPort2 + 3,	"p2 start"	},
 
-	{"P1 Button",       BIT_DIGITAL,	TWCInputPort0 + 5,	"p1 shot"	},
-	A("P1 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[0],          "p1 x-axis"     ),
-	A("P1 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[1],          "p1 y-axis"     ),
+	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 shot"	},
+	A("P1 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[0],		"p1 x-axis"     ),
+	A("P1 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[1],		"p1 y-axis"     ),
 
-	{"P2 Button",	    BIT_DIGITAL,	TWCInputPort1 + 5,	"p2 shot"	},
-	A("P2 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[2],          "p2 x-axis"     ),
-	A("P2 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[3],          "p2 y-axis"     ),
+	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	"p2 shot"	},
+	A("P2 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[2],      "p2 x-axis"     ),
+	A("P2 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[3],      "p2 y-axis"     ),
 
-	{"Reset",	    BIT_DIGITAL,	&TWCReset,	        "reset"		},
-	{"Dip A",	    BIT_DIPSWITCH,	TWCDip + 0,             "dip"		},
-	{"Dip B",	    BIT_DIPSWITCH,	TWCDip + 1,             "dip"		},
-	{"Dip C",	    BIT_DIPSWITCH,	TWCDip + 1,             "dip"		},
+	{"Reset",			BIT_DIGITAL,		&TWCReset,	        "reset"		},
+	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,         "dip"		},
+	{"Dip B",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
+	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
 };
 #undef A
 STDINPUTINFO(TWC)
@@ -327,7 +327,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 			return TWCDip[1];	// DSW2
 
 		case 0xf860:
-			TWCWatchdog = 0;
+			BurnWatchdogReset();
 			return 0;
 
 		case 0xf850:
@@ -395,7 +395,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 			return;     // placeholder for future adding of gridiron_led1
 
 		case 0xf820:
-			sound_sync();
+			//sound_sync();
 			TWCSoundLatch = data;
 			ZetNmi(CPU_SOUND);
 			return;
@@ -425,7 +425,7 @@ static UINT8 __fastcall TWCSubRead(UINT16 address)
 {
 	switch (address) {
 		case 0xf860:
-			TWCWatchdog = 0;
+			BurnWatchdogReset();
 			return 0;
 	}
 
@@ -520,7 +520,7 @@ static void TWCRenderBgLayer()
 			y = 8 * my;
 
 			// Visible grid: 256x240
-			// Tile map:     512x256   (0x200 x 0x100)
+			// Tile map: 	512x256   (0x200 x 0x100)
 			// x, y are tile map coordinates
 			x -= TWCScrollXLo + 256 * TWCScrollXHi;
 			y -= TWCScrollY;
@@ -603,7 +603,7 @@ static INT32 TWCDraw()
 {
 	if (TWCRecalc) {
 		TWCCalcPalette();
-		TWCRecalc = 0;
+		TWCRecalc = 1;
 	}
 	
 	TWCRenderBgLayer();
@@ -615,9 +615,11 @@ static INT32 TWCDraw()
 	return 0;
 }
 
-static INT32 TWCDoReset()
+static INT32 TWCDoReset(INT32 clear_mem)
 {
-	memset(RamStart, 0, RamEnd - RamStart);
+	if (clear_mem) {
+		memset(RamStart, 0, RamEnd - RamStart);
+	}
 
 	ZetReset(0);
 	ZetReset(1);
@@ -644,8 +646,6 @@ static INT32 TWCDoReset()
 	msm_data_offs  = 0;
 	msm_toggle     = 0;
 
-	TWCWatchdog    = 0;
-
 	HiscoreReset();
 
 	return 0;
@@ -653,66 +653,71 @@ static INT32 TWCDoReset()
 
 static INT32 TWCFrame()
 {
-	TWCWatchdog++;
-    if (TWCReset || TWCWatchdog >= 180) TWCDoReset(); // Handle reset
+	BurnWatchdogUpdate();
 
-    TWCMakeInputs(); // Update inputs
+	if (TWCReset) TWCDoReset(1); // Handle reset
 
-    ZetNewFrame(); // Reset CPU cycle counters
+	TWCMakeInputs(); // Update inputs
+
+	ZetNewFrame(); // Reset CPU cycle counters
 
 	// Number of interrupt slices per frame
-    INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
+	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
 
-    // Total cycles each CPU should run per frame
-    INT32 nCyclesTotal[3] = {
-      76800, // Main CPU
-      76800, // Sub CPU
-      76800  // Audio CPU
-    };
+	#if defined FBNEO_DEBUG
+	bprintf(PRINT_NORMAL, _T("d_tehkanwc, Frame: Interleave value: %d\n"), nInterleave);
+	#endif
 
-    INT32 nCyclesDone[3] = { 0, 0, 0 }; // Cycles executed so far
+	// Total cycles each CPU should run per frame
+	INT32 nCyclesTotal[3] = {
+	  76800, // Main CPU
+	  76800, // Sub CPU
+	  76800  // Audio CPU
+	};
+
+	INT32 nCyclesDone[3] = { 0, 0, 0 }; // Cycles executed so far
 
 
-    // Run CPUs in sync
-    for (INT32 i = 0; i < nInterleave; i++) {
-        // Main CPU
-        ZetOpen(CPU_MAIN);
-        CPU_RUN(CPU_MAIN, Zet); // Run the main CPU
+	// Run CPUs in sync
+	for (INT32 i = 0; i < nInterleave; i++) {
+	    // Main CPU
+		ZetOpen(CPU_MAIN);
+		CPU_RUN(CPU_MAIN, Zet); // Run the main CPU
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-        ZetClose();
+		ZetClose();
 
-        // Sub CPU
-        ZetOpen(CPU_GRAPHICS);
-        CPU_RUN(CPU_GRAPHICS, Zet); // Run the sub CPU
+	    // Sub CPU
+		ZetOpen(CPU_GRAPHICS);
+		CPU_RUN(CPU_GRAPHICS, Zet); // Run the sub CPU
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-        ZetClose();
+		ZetClose();
 
-        // Audio CPU
-        ZetOpen(CPU_SOUND);
+	    // Audio CPU
+		ZetOpen(CPU_SOUND);
 
 	// src/burn/burn.h:227:#define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
-        CPU_RUN(CPU_SOUND,Zet); // Run the audio CPU (with timer synchronization)
+		CPU_RUN(CPU_SOUND,Zet); // Run the audio CPU (with timer synchronization)
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		// Update MSM5205 sound chip
 		MSM5205Update();
 
-        ZetClose();
-    }
+		ZetClose();
+	}
 
-    // Update sound
-    ZetOpen(CPU_SOUND);
+	// Update sound
+	ZetOpen(CPU_SOUND);
 	if (pBurnSoundOut) {
 		// Update AY-8910 sound chips
-	  AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 
 	// Render frame
-    if (pBurnDraw) BurnDrvRedraw();
+	if (pBurnDraw) BurnDrvRedraw();
 
-    return 0;
+	return 0;
 }
 
 
@@ -721,19 +726,19 @@ static INT32 CharXOffsets[8]       = { 4, 0, 12, 8, 20, 16, 28, 24 };
 static INT32 CharYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
 
 static INT32 SpritePlaneOffsets[4] = { 0, 1, 2, 3 };
-static INT32 SpriteXOffsets[16]    = {     4,     0,     12,     8,     20,     16,     28,     24,
-                                       256+4, 256+0, 256+12, 256+8, 256+20, 256+16, 256+28, 256+24 };
-static INT32 SpriteYOffsets[16]    = {     0,     32,     64,     96,     128,     160,     192,     224,
-                                       512+0, 512+32, 512+64, 512+96, 512+128, 512+160, 512+192, 512+224 };
+static INT32 SpriteXOffsets[16]    = { 	4, 	0, 	12, 	8, 	20, 	16, 	28, 	24,
+	                               	256+4, 256+0, 256+12, 256+8, 256+20, 256+16, 256+28, 256+24 };
+static INT32 SpriteYOffsets[16]    = { 	0, 	32, 	64, 	96, 	128, 	160, 	192, 	224,
+	                               	512+0, 512+32, 512+64, 512+96, 512+128, 512+160, 512+192, 512+224 };
 
 static INT32 TilePlaneOffsets[4]   = { 0, 1, 2, 3 };
-static INT32 TileXOffsets[16]      = {     4,     0,     12,     8,     20,     16,     28,     24,
-                                       256+4, 256+0, 256+12, 256+8, 256+20, 256+16, 256+28, 256+24 };
+static INT32 TileXOffsets[16]      = { 	4, 	0, 	12, 	8, 	20, 	16, 	28, 	24,
+	                               	256+4, 256+0, 256+12, 256+8, 256+20, 256+16, 256+28, 256+24 };
 static INT32 TileYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(double)ZetTotalCycles() * nSoundRate * MAIN_CPU_CLOCK;
+	return (INT64)(double)ZetTotalCycles() * nSoundRate / MAIN_CPU_CLOCK;
 }
 
 static UINT8 portA_r(UINT32)
@@ -948,10 +953,11 @@ static INT32 TWCInit()
 
 	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
-    // Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
-    // WATCHDOG_TIMER(config, "watchdog");
+	// Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
+	// WATCHDOG_TIMER(config, "watchdog");
+	BurnWatchdogInit(TWCDoReset, 180);
 
-    // Initialize sound chips
+	// Initialize sound chips
 	AY8910Init(0, AY_CLOCK, 0);
 	AY8910Init(1, AY_CLOCK, 1);
 	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
@@ -966,7 +972,7 @@ static INT32 TWCInit()
 	// Initialize analog controls for player 1 and player 2
 	BurnGunInit(2, true);
 
-	TWCDoReset();
+	TWCDoReset(1);
 
 	return 0;
 }
@@ -1023,7 +1029,8 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(TWCFlipScreenY);
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
-		SCAN_VAR(TWCWatchdog);
+
+		BurnWatchdogScan(nAction);
 
 		hold_coin.scan();
 	}
@@ -1032,23 +1039,23 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 }
 
 static struct BurnRomInfo TWCRomDesc[] = {
-	{ "twc-1.bin",      0x04000, 0x34d6d5ff, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "twc-2.bin",      0x04000, 0x7017a221, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "twc-3.bin",      0x04000, 0x8b662902, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "twc-1.bin",  	0x04000, 0x34d6d5ff, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "twc-2.bin",  	0x04000, 0x7017a221, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "twc-3.bin",  	0x04000, 0x8b662902, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
-	{ "twc-4.bin",      0x08000, 0x70a9f883, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	{ "twc-4.bin",  	0x08000, 0x70a9f883, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
-	{ "twc-6.bin",      0x04000, 0xe3112be2, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program Code
+	{ "twc-6.bin",  	0x04000, 0xe3112be2, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program Code
 
-	{ "twc-12.bin",     0x04000, 0xa9e274f8, BRF_GRA },           //  5 Fg Tiles
+	{ "twc-12.bin", 	0x04000, 0xa9e274f8, BRF_GRA },           //  5 Fg Tiles
 
-	{ "twc-8.bin",	    0x08000, 0x055a5264, BRF_GRA },           //  6 Sprites
-	{ "twc-7.bin",	    0x08000, 0x59faebe7, BRF_GRA },           //  7 Sprites
+	{ "twc-8.bin",		0x08000, 0x055a5264, BRF_GRA },           //  6 Sprites
+	{ "twc-7.bin",		0x08000, 0x59faebe7, BRF_GRA },           //  7 Sprites
 
-	{ "twc-11.bin",     0x08000, 0x669389fc, BRF_GRA },           //  8 Bg Tiles
-	{ "twc-9.bin",	    0x08000, 0x347ef108, BRF_GRA },           //  9 Bg Tiles
+	{ "twc-11.bin", 	0x08000, 0x669389fc, BRF_GRA },           //  8 Bg Tiles
+	{ "twc-9.bin",		0x08000, 0x347ef108, BRF_GRA },           //  9 Bg Tiles
 
-	{ "twc-5.bin",	    0x04000, 0x444b5544, BRF_SND },           //  10 ADPCM Samples
+	{ "twc-5.bin",		0x04000, 0x444b5544, BRF_SND },           //  10 ADPCM Samples
 };
 
 STD_ROM_PICK(TWC)

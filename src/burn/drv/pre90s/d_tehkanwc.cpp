@@ -627,15 +627,15 @@ static INT32 TWCDraw()
 	
 	GenericTilemapSetFlip(TMAP_GLOBAL, TWCFlipScreenX * TMAP_FLIPX | TWCFlipScreenY * TMAP_FLIPY);
 
-	GenericTilemapSetScrollY(2, TWCScrollY);
-	GenericTilemapSetScrollX(2, TWCScrollXLo + 256 * TWCScrollXHi);
+	GenericTilemapSetScrollY(1, TWCScrollY);
+	GenericTilemapSetScrollX(1, TWCScrollXLo + 256 * TWCScrollXHi);
 
 	BurnTransferClear();
 
 //	TWCRenderBgLayer();
 //	TWCRenderFgLayer();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 	if (nSpriteEnable & 1) TWCRenderSprites();
 	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
@@ -903,32 +903,15 @@ static INT32 TWCInit()
 	ZetOpen(CPU_MAIN);
 	ZetSetReadHandler(TWCMainRead);
 	ZetSetWriteHandler(TWCMainWrite);
-	ZetMapArea(0x0000, 0xbfff, 0, TWCZ80Rom1         );
-	ZetMapArea(0x0000, 0xbfff, 2, TWCZ80Rom1         );
-	ZetMapArea(0xc000, 0xc7ff, 0, TWCZ80Ram1         );
-	ZetMapArea(0xc000, 0xc7ff, 1, TWCZ80Ram1         );
-	ZetMapArea(0xc000, 0xc7ff, 2, TWCZ80Ram1         );
-	ZetMapArea(0xc800, 0xcfff, 0, TWCSharedRam       );
-	ZetMapArea(0xc800, 0xcfff, 1, TWCSharedRam       );
-	ZetMapArea(0xc800, 0xcfff, 2, TWCSharedRam       );
-	ZetMapArea(0xd000, 0xd3ff, 0, TWCFgVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 1, TWCFgVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 2, TWCFgVideoRam        );
-	ZetMapArea(0xd400, 0xd7ff, 0, TWCColorRam        );
-	ZetMapArea(0xd400, 0xd7ff, 1, TWCColorRam        );
-	ZetMapArea(0xd400, 0xd7ff, 2, TWCColorRam        );
-	ZetMapArea(0xd800, 0xddff, 0, TWCPalRam          );
-	ZetMapArea(0xd800, 0xddff, 1, TWCPalRam          );
-	ZetMapArea(0xd800, 0xddff, 2, TWCPalRam          );
-	ZetMapArea(0xde00, 0xdfff, 0, TWCPalRam2         );
-	ZetMapArea(0xde00, 0xdfff, 1, TWCPalRam2         );
-	ZetMapArea(0xde00, 0xdfff, 2, TWCPalRam2         );
-	ZetMapArea(0xe000, 0xe7ff, 0, TWCBgVideoRam       );
-	ZetMapArea(0xe000, 0xe7ff, 1, TWCBgVideoRam       );
-	ZetMapArea(0xe000, 0xe7ff, 2, TWCBgVideoRam       );
-	ZetMapArea(0xe800, 0xebff, 0, TWCSpriteRam       );
-	ZetMapArea(0xe800, 0xebff, 1, TWCSpriteRam       );
-	ZetMapArea(0xe800, 0xebff, 2, TWCSpriteRam       );
+	ZetMapMemory(TWCZ80Rom1,    0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(TWCZ80Ram1,    0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(TWCFgVideoRam, 0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(TWCColorRam,   0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(TWCPalRam,     0xd800, 0xddff, MAP_RAM);
+	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
+	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
 	ZetClose();
 
 	// Graphics "sub" CPU
@@ -936,32 +919,15 @@ static INT32 TWCInit()
 	ZetOpen(CPU_GRAPHICS);
 	ZetSetReadHandler(TWCSubRead);
 	ZetSetWriteHandler(TWCSubWrite);
-	ZetMapArea(0x0000, 0x7fff, 0, TWCZ80Rom2         );
-	ZetMapArea(0x0000, 0x7fff, 1, TWCZ80Rom2         );
-	ZetMapArea(0x8000, 0xc7ff, 0, TWCZ80Ram2         );
-	ZetMapArea(0x8000, 0xc7ff, 1, TWCZ80Ram2         );
-	ZetMapArea(0x8000, 0xc7ff, 2, TWCZ80Ram2         );
-	ZetMapArea(0xc800, 0xcfff, 0, TWCSharedRam       );
-	ZetMapArea(0xc800, 0xcfff, 1, TWCSharedRam       );
-	ZetMapArea(0xc800, 0xcfff, 2, TWCSharedRam       );
-	ZetMapArea(0xd000, 0xd3ff, 0, TWCFgVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 1, TWCFgVideoRam        );
-	ZetMapArea(0xd000, 0xd3ff, 2, TWCFgVideoRam        );
-	ZetMapArea(0xd400, 0xd7ff, 0, TWCColorRam        );
-	ZetMapArea(0xd400, 0xd7ff, 1, TWCColorRam        );
-	ZetMapArea(0xd400, 0xd7ff, 2, TWCColorRam        );
-	ZetMapArea(0xd800, 0xddff, 0, TWCPalRam          );
-	ZetMapArea(0xd800, 0xddff, 1, TWCPalRam          );
-	ZetMapArea(0xd800, 0xddff, 2, TWCPalRam          );
-	ZetMapArea(0xde00, 0xdfff, 0, TWCPalRam2         );
-	ZetMapArea(0xde00, 0xdfff, 1, TWCPalRam2         );
-	ZetMapArea(0xde00, 0xdfff, 2, TWCPalRam2         );
-	ZetMapArea(0xe000, 0xe7ff, 0, TWCBgVideoRam       );
-	ZetMapArea(0xe000, 0xe7ff, 1, TWCBgVideoRam       );
-	ZetMapArea(0xe000, 0xe7ff, 2, TWCBgVideoRam       );
-	ZetMapArea(0xe800, 0xebff, 0, TWCSpriteRam       );
-	ZetMapArea(0xe800, 0xebff, 1, TWCSpriteRam       );
-	ZetMapArea(0xe800, 0xebff, 2, TWCSpriteRam       );
+	ZetMapMemory(TWCZ80Rom2,    0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(TWCZ80Ram2,    0x8000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(TWCFgVideoRam, 0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(TWCColorRam,   0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(TWCPalRam,     0xd800, 0xddff, MAP_RAM);
+	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
+	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
 	ZetClose();
 
 
@@ -980,8 +946,8 @@ static INT32 TWCInit()
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
 	GenericTilemapSetGfx(0, TWCFgTiles, 4,  8,  8, 0x04000, 0x000, 0xf);
-	GenericTilemapSetGfx(1, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
-	GenericTilemapSetGfx(2, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
+	GenericTilemapSetGfx(1, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
+	GenericTilemapSetGfx(2, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
 	//GenericTilemapSetOffsets(0, -1, -8); // -1 ??
 	//GenericTilemapSetOffsets(1,  0, -8);
 	GenericTilemapSetTransparent(0,0);

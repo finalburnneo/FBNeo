@@ -8616,11 +8616,11 @@ struct BurnDriver BurnDrvzerofxz = {
 
 
 // Oriental Legend Special / Meng Xun Ling Shan (Hack)
-// Hacked by XIAOYUER
-// GOTVG 2020/08/03
+// Modified by XIAOYUER
+// GOTVG 20240905
 
 static struct BurnRomInfo oldsmxRomDesc[] = {
-	{ "oldsmx_p0500.u24",			0x0400000, 0x3b94c0ac, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "oldsmx_p0500.u24",			0x0400000, 0xd271e4fb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "oldsmx_t0500.u18",			0x0400000, 0x434ddae8, 2 | BRF_GRA },			//  1 Tile data
 	{ "pgm_t0501.u19",				0x0200000, 0xd2106864, 2 | BRF_GRA },			//  2
@@ -8652,8 +8652,8 @@ STD_ROM_FN(oldsmx)
 
 struct BurnDriver BurnDrvoldsmx = {
 	"oldsmx", "olds", "pgm", NULL, "2020",
-	"Oriental Legend Special - Meng Xun Ling Shan (Hack)\0", NULL, "Hack", "PolyGameMaster",
-	L"Oriental Legend Super - Meng Xun Ling Shan (Hack)\0\u897f\u884c\u5e73\u5996\u8a18 - \u5922\u5c0b\u9748\u5c71 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+	"Xiyou Shi E Zhuan Super - Meng Xun Ling Shan (Hack)\0", NULL, "Hack", "PolyGameMaster",
+	L"Xiyou Shi E Zhuan Super - Meng Xun Ling Shan (Hack)\0\u897f\u884c\u5e73\u5996\u8bb0 - \u68a6\u5bfb\u7075\u5c71\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, oldsmxRomInfo, oldsmxRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, oldschsDIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

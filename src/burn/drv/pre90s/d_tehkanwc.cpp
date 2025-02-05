@@ -1,4 +1,4 @@
-// FB Neo - Tehkan Wolrd Cup '90 driver
+// FB Neo - Tehkan Wolrd Cup driver
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -491,7 +491,7 @@ inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
 
 static INT32 TWCCalcPalette()
 {
-	INT32 i;
+	INT32 i;   
 
 	for (i = 0; i < 0x600; i++) {
 		TWCPalette[i / 2] = xBGR_444_CalcCol(
@@ -544,7 +544,7 @@ static void TWCRenderFgLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
-			Attr = TWCFgVideoRam[TileIndex];
+			Attr = TWCColorRam[TileIndex];
 			Code = TWCFgVideoRam[TileIndex] + ((Attr & 0x10) << 4);
 			Colour = Attr & 0x0f;
 			fx = Attr & 0x40;
@@ -603,7 +603,7 @@ static INT32 TWCDraw()
 {
 	if (TWCRecalc) {
 		TWCCalcPalette();
-		TWCRecalc = 0;
+		TWCRecalc = 1;
 	}
 	
 	TWCRenderBgLayer();

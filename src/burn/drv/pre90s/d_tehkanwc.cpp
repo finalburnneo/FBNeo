@@ -544,7 +544,7 @@ static void TWCRenderFgLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
-			Attr = TWCFgVideoRam[TileIndex];
+			Attr = TWCColorRam[TileIndex];
 			Code = TWCFgVideoRam[TileIndex] + ((Attr & 0x10) << 4);
 			Colour = Attr & 0x0f;
 			fx = Attr & 0x40;

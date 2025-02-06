@@ -702,7 +702,7 @@ static INT32 TWCFrame()
 
 	// Number of interrupt slices per frame
 	//INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 264;
 
 	MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
 
@@ -721,37 +721,38 @@ static INT32 TWCFrame()
 	    // Main CPU
 		ZetOpen(CPU_MAIN);
 		CPU_RUN(CPU_MAIN, Zet); // Run the main CPU
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 	    // Sub CPU
 		ZetOpen(CPU_GRAPHICS);
 		CPU_RUN(CPU_GRAPHICS, Zet); // Run the sub CPU
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 	    // Audio CPU
 		ZetOpen(CPU_SOUND);
 
-	// src/burn/burn.h:227:#define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
-		CPU_RUN(CPU_SOUND,Zet); // Run the audio CPU (with timer synchronization)
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		// src/burn/burn.h:227:#define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
+		CPU_RUN_TIMER(CPU_SOUND); // Run the audio CPU (with timer synchronization)
 
 		// Update MSM5205 sound chip
 		//MSM5205Update();
 		MSM5205UpdateScanline(i);
 
 		ZetClose();
+
+		if (i == nInterleave - 1) {
+			ZetSetIRQLine(CPU_MAIN, 0, CPU_IRQSTATUS_HOLD);
+			ZetSetIRQLine(CPU_SUB, 0, CPU_IRQSTATUS_HOLD);
+			ZetSetIRQLine(CPU_SOUND, 0, CPU_IRQSTATUS_HOLD);
+		}
 	}
 
 	// Update sound
-	ZetOpen(CPU_SOUND);
 	if (pBurnSoundOut) {
 		// Update AY-8910 sound chips
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	// Render frame
 	if (pBurnDraw) BurnDrvRedraw();
@@ -961,7 +962,7 @@ static INT32 TWCInit()
 	//GenericTilemapSetOffsets(1,  0, -8);
 	GenericTilemapSetTransparent(0,0);
 
-	//	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
+	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
 	// Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
 	// WATCHDOG_TIMER(config, "watchdog");
@@ -975,6 +976,7 @@ static INT32 TWCInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
+	BurnTimerAttachZet(SOUND_CPU_CLOCK);
 
 	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);

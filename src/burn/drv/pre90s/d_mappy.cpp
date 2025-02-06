@@ -2664,14 +2664,18 @@ static struct BurnRomInfo phozonsRomDesc[] = {
 
 	{ "5t.rom",		0x2000, 0xd50f08f8, 5 | BRF_GRA },           //  8 Sprites
 
-	{ "red.prm",		0x0100, 0xa2880667, 6 | BRF_GRA },           //  9 Color Data
-	{ "green.prm",		0x0100, 0xd6e08bef, 6 | BRF_GRA },           // 10
-	{ "blue.prm",		0x0100, 0xb2d69c72, 6 | BRF_GRA },           // 11
-	{ "chr.prm",		0x0100, 0x429e8fee, 6 | BRF_GRA },           // 12
-	{ "sprite.prm",		0x0100, 0x9061db07, 6 | BRF_GRA },           // 13
+	{ "ph1-2.1r",		0x0100, 0xa2880667, 6 | BRF_GRA },           //  9 Color Data
+	{ "ph1-1.1s",		0x0100, 0xd6e08bef, 6 | BRF_GRA },           // 10
+	{ "ph1-3.1p",		0x0100, 0xb2d69c72, 6 | BRF_GRA },           // 11
+	{ "ph1-5.5l",		0x0100, 0x429e8fee, 6 | BRF_GRA },           // 12
+	{ "ph1-6.6r",		0x0100, 0x9061db07, 6 | BRF_GRA },           // 13
 	{ "palette.prm",	0x0020, 0x60e856ed, 6 | BRF_GRA | BRF_OPT }, // 14
 
-	{ "sound.prm",		0x0100, 0xad43688f, 7 | BRF_GRA },           // 15 Sound Prom
+	{ "ph1-4.3e",		0x0100, 0xad43688f, 7 | BRF_GRA },           // 15 Sound Prom
+
+	{ "ph1-7.7b",		0x0117, 0x9a00af9a, 0 | BRF_OPT },           // 16 PLDs
+	{ "ph1-8.4b",		0x0117, 0xfb180f00, 0 | BRF_OPT },           // 17
+	{ "ph1-9.7r",		0x0117, 0x3b21d560, 0 | BRF_OPT },           // 18
 };
 
 STD_ROM_PICK(phozons)

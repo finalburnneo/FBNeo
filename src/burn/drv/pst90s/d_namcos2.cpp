@@ -7043,8 +7043,8 @@ static struct BurnRomInfo finalap2RomDesc[] = {
 	{ "fls2mp0b",		0x20000, 0x97b48aae, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "fls2mp1b",		0x20000, 0xc9f3e0e7, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fls2sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "fls2sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "fls1sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fls1sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -7104,8 +7104,8 @@ static struct BurnRomInfo finalap2jRomDesc[] = {
 	{ "fls1_mp0.bin",	0x20000, 0x05ea8090, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "fls1_mp1.bin",	0x20000, 0xfb189f50, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fls2sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "fls2sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "fls1sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fls1sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 

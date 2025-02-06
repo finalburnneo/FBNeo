@@ -231,9 +231,12 @@ static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
 	{
 		case 0x00:
 		case 0x01:
+			AY8910Write(0, port & 1, data);
+			return;
+
 		case 0x02:
 		case 0x03:
-			AY8910Write(0, port & 3, data);
+			AY8910Write(1, port & 1, data);
 			return;
 	}
 }
@@ -243,8 +246,9 @@ static UINT8 __fastcall TWCSoundReadPort(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x00:
-		case 0x02:
 			return AY8910Read(0);
+		case 0x02:
+			return AY8910Read(1);
 	}
 
 	return 0;
@@ -407,7 +411,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf850:
 			ZetSetRESETLine(CPU_SOUND, data ? Z80_CLEAR_LINE : Z80_ASSERT_LINE);
-			MSM5205ResetWrite(0, data);
+			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
 
 		case 0xf860:
@@ -464,8 +468,12 @@ static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
 {
 	switch (address) {
 		case 0x8001:
-			MSM5205ResetWrite(0, data);
+			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
+
+		case 0x8002:
+		case 0x8003:
+			return;  // nopw
 
 		case 0xc000:
 			TWCSoundLatch2 = data;

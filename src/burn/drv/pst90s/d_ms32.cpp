@@ -2841,7 +2841,7 @@ struct BurnDriver BurnDrvBnstars1 = {
 };
 
 
-// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)
+// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem 32 Version)
 
 static struct BurnRomInfo bnstarsRomDesc[] = {
 	{ "vsjanshi_26_ver1.1.26",				0x080000, 0x75eeec8f, 1 | BRF_PRG | BRF_ESS }, //  0 V70 Code
@@ -2876,7 +2876,7 @@ STD_ROM_FN(bnstars)
 
 struct BurnDriver BurnDrvBnstars = {
 	"bnstars", "bnstars1", NULL, NULL, "1997",
-	"Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)\0", NULL, "Jaleco", "MegaSystem 32",
+	"Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem 32 Version)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, bnstarsRomInfo, bnstarsRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,

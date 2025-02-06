@@ -6977,6 +6977,7 @@ STD_ROM_PICK(Jurassic99)
 STD_ROM_FN(Jurassic99)
 
 static struct BurnRomInfo DinohRomDesc[] = {
+	// This set is known as dinos81 in HBMAME
 	{ "cda_23h.rom",   0x080000, 0x8e2a9cf0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cda_22h.rom",   0x080000, 0xf72cd219, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cda_21h.rom",   0x080000, 0xbc275b76, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -13664,7 +13665,7 @@ STD_ROM_PICK(Sf2amf10)
 STD_ROM_FN(Sf2amf10)
 
 // Dumped by: gomarco79
-// Street Fighter II - Champion Edition (L735 Test Rom / Mega Co, bootleg, set 4?)
+// Street Fighter II': Champion Edition (L735 Test Rom / Mega Co, bootleg, set 4?)
 static struct BurnRomInfo Sf2amf11RomDesc[] = {
 	{ "1.040.bin",   0x080000, 0x9e6d058a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "3.040.bin",   0x080000, 0x518d8404, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -24487,7 +24488,7 @@ struct BurnDriver BurnDrvCpsSf2amf9 = {
 
 struct BurnDriver BurnDrvCpsSf2amf10 = {
 	"sf2amf10", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - Champion Edition (L735 Test Rom, bootleg, set 3)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II': Champion Edition (L735 Test Rom, bootleg, set 3)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf10RomInfo, Sf2amf10RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -24497,7 +24498,7 @@ struct BurnDriver BurnDrvCpsSf2amf10 = {
 
 struct BurnDriver BurnDrvCpsSf2amf11 = {
 	"sf2amf11", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - Champion Edition (L735 Test Rom w/ Mega Co, bootleg, set 4)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II': Champion Edition (L735 Test Rom w/ Mega Co, bootleg, set 4)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf11RomInfo, Sf2amf11RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2megaDIPInfo,
@@ -24507,7 +24508,7 @@ struct BurnDriver BurnDrvCpsSf2amf11 = {
 
 struct BurnDriver BurnDrvCpsSf2amf12 = {
 	"sf2amf12", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - Champion Edition (L735 Test Rom, bootleg, set ?)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II': Champion Edition (L735 Test Rom, bootleg, set ?)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf12RomInfo, Sf2amf12RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -26178,7 +26179,7 @@ struct BurnDriver BurnDrvCpsSf2mix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II' - Champion Edition (920313 Brasil, v1.0, Hack)
+// Street Fighter II': Champion Edition (920313 Brasil, v1.0, Hack)
 // Modified by Alan Yagami & BisonSAS
 
 static struct BurnRomInfo Sf2cebrRomDesc[] = {
@@ -26218,7 +26219,7 @@ STD_ROM_FN(Sf2cebr)
 
 struct BurnDriver BurnDrvCpsSf2cebr = {
 	"sf2cebr", "sf2ce", NULL, NULL, "2005",
-	"Street Fighter II' - Champion Edition (920313 Brasil, v1.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "CPS1",
+	"Street Fighter II': Champion Edition (920313 Brasil, v1.0, Hack)\0", NULL, "hack (NeoGeo BR Team)", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cebrRomInfo, Sf2cebrRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -26226,7 +26227,7 @@ struct BurnDriver BurnDrvCpsSf2cebr = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II' - Champion Edition Golden Magic Hack
+// Street Fighter II': Champion Edition Golden Magic Hack
 // Files date: 2020-Oct-13
 
 static struct BurnRomInfo Sf2gmRomDesc[] = {
@@ -26258,7 +26259,7 @@ STD_ROM_FN(Sf2gm)
 
 struct BurnDriver BurnDrvCpsSf2gm = {
 	"sf2gm", "sf2ce", NULL, NULL, "2020",
-	"Street Fighter II' - Champion Edition (Golden Magic, Hack)\0", NULL, "hack", "CPS1",
+	"Street Fighter II': Champion Edition (Golden Magic, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2gmRomInfo, Sf2gmRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -28365,7 +28366,7 @@ static INT32 WofchpInit()
 
 struct BurnDriver BurnDrvCpsWofchp = {
 	"wofchp", "wofch", NULL, NULL, "2019",
-	"Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version, Hack)\0", NULL, "hack", "CPS Changer",
+	"Tenchi wo Kurau II: Sekiheki no Tatakai (PS/SS Version, Hack)\0", NULL, "hack", "CPS Changer",
 	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II: \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II: Sekiheki no Tatakai (PS/SS Version, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
 	NULL, wofchpRomInfo, wofchpRomName, NULL, NULL, NULL, NULL, WofchpInputInfo, NULL,

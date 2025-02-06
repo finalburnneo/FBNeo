@@ -11799,13 +11799,13 @@ struct BurnDriver BurnDrvCpsSsf2xjr1r = {
 };
 
 struct BurnDriver BurnDrvCpsSsf2xjr1trn = {
-   "ssf2xjr1trn", "ssf2t", NULL, NULL, "1994",
-   "Super Street Fighter II X - GMC Trainer (Japan 940223)\0", NULL, "Hack", "CPS2",
-   NULL, NULL, NULL, NULL,
-   BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-   NULL, Ssf2xjr1trnRomInfo, Ssf2xjr1trnRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-   Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-   &CpsRecalcPal, 0x1000, 384, 224, 4, 3
+	"ssf2xjr1trn", "ssf2t", NULL, NULL, "1994",
+	"Super Street Fighter II X: GMC Trainer (Japan 940223)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2xjr1trnRomInfo, Ssf2xjr1trnRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvCpsVhunt2 = {

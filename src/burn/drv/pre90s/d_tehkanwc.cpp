@@ -351,7 +351,8 @@ static void sound_sync()
 	// Both CPUs are same model with same frequency
 	INT32 cyc = ZetTotalCycles(CPU_MAIN) - ZetTotalCycles(CPU_SOUND);
 	if (cyc > 0) {
-		BurnTimerUpdate(ZetTotalCycles() + cyc);
+	  ZetRun(CPU_SOUND, cyc);
+	  //BurnTimerUpdate(ZetTotalCycles() + cyc);
 	}
 }
 
@@ -395,7 +396,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 			return;     // placeholder for future adding of gridiron_led1
 
 		case 0xf820:
-			//sound_sync();
+			sound_sync();
 			TWCSoundLatch = data;
 			ZetNmi(CPU_SOUND);
 			return;
@@ -610,7 +611,7 @@ static void TWCRenderSprites()
 
 		if (TWCFlipScreenY)
 		{
-			sy = 240 -sy;
+			sy = 240 - sy;
 			fy = !fy;
 		}
 
@@ -692,17 +693,16 @@ static INT32 TWCFrame()
 	ZetNewFrame(); // Reset CPU cycle counters
 
 	// Number of interrupt slices per frame
-	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
+	//INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
+	INT32 nInterleave = 256;
 
-	#if defined FBNEO_DEBUG
-	bprintf(PRINT_NORMAL, _T("d_tehkanwc, Frame: Interleave value: %d\n"), nInterleave);
-	#endif
+	MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
 
 	// Total cycles each CPU should run per frame
 	INT32 nCyclesTotal[3] = {
-	  76800, // Main CPU
-	  76800, // Sub CPU
-	  76800  // Audio CPU
+	  CPU_CYCLES_PER_FRAME, // Main CPU
+	  CPU_CYCLES_PER_FRAME, // Sub CPU
+	  CPU_CYCLES_PER_FRAME  // Audio CPU
 	};
 
 	INT32 nCyclesDone[3] = { 0, 0, 0 }; // Cycles executed so far
@@ -730,7 +730,8 @@ static INT32 TWCFrame()
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		// Update MSM5205 sound chip
-		MSM5205Update();
+		//MSM5205Update();
+		MSM5205UpdateScanline(i);
 
 		ZetClose();
 	}
@@ -768,7 +769,7 @@ static INT32 TileYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(double)ZetTotalCycles() * nSoundRate / MAIN_CPU_CLOCK;
+	return (INT64)(double)ZetTotalCycles() * nSoundRate / SOUND_CPU_CLOCK;
 }
 
 static UINT8 portA_r(UINT32)
@@ -901,8 +902,6 @@ static INT32 TWCInit()
 	// Main CPU
 	ZetInit(CPU_MAIN);
 	ZetOpen(CPU_MAIN);
-	ZetSetReadHandler(TWCMainRead);
-	ZetSetWriteHandler(TWCMainWrite);
 	ZetMapMemory(TWCZ80Rom1,    0x0000, 0xbfff, MAP_ROM);
 	ZetMapMemory(TWCZ80Ram1,    0xc000, 0xc7ff, MAP_RAM);
 	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
@@ -912,13 +911,13 @@ static INT32 TWCInit()
 	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
 	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
 	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
+	ZetSetReadHandler(TWCMainRead);
+	ZetSetWriteHandler(TWCMainWrite);
 	ZetClose();
 
 	// Graphics "sub" CPU
 	ZetInit(CPU_GRAPHICS);
 	ZetOpen(CPU_GRAPHICS);
-	ZetSetReadHandler(TWCSubRead);
-	ZetSetWriteHandler(TWCSubWrite);
 	ZetMapMemory(TWCZ80Rom2,    0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(TWCZ80Ram2,    0x8000, 0xc7ff, MAP_RAM);
 	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
@@ -928,31 +927,33 @@ static INT32 TWCInit()
 	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
 	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
 	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
+	ZetSetReadHandler(TWCSubRead);
+	ZetSetWriteHandler(TWCSubWrite);
 	ZetClose();
 
 
 	// Sound CPU
 	ZetInit(CPU_SOUND);
 	ZetOpen(CPU_SOUND);
+	ZetMapMemory(TWCZ80Rom3, 0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(TWCZ80Ram3, 0x4000, 0x47ff, MAP_RAM);
 	ZetSetReadHandler(TWCSoundRead);
 	ZetSetWriteHandler(TWCSoundWrite);
 	ZetSetOutHandler(TWCSoundWritePort);
 	ZetSetInHandler(TWCSoundReadPort);
-	ZetMapMemory(TWCZ80Rom3, 0x0000, 0x3fff, MAP_ROM);
-	ZetMapMemory(TWCZ80Ram3, 0x4000, 0x47ff, MAP_RAM);
 	ZetClose();
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
 	GenericTilemapSetGfx(0, TWCFgTiles, 4,  8,  8, 0x04000, 0x000, 0xf);
-	GenericTilemapSetGfx(1, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
-	GenericTilemapSetGfx(2, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
+	GenericTilemapSetGfx(1, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
+	GenericTilemapSetGfx(2, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
 	//GenericTilemapSetOffsets(0, -1, -8); // -1 ??
 	//GenericTilemapSetOffsets(1,  0, -8);
 	GenericTilemapSetTransparent(0,0);
 
-	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
+	//	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
 	// Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
 	// WATCHDOG_TIMER(config, "watchdog");

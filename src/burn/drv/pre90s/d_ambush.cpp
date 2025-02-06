@@ -1007,7 +1007,7 @@ static struct BurnRomInfo marioblRomDesc[] = {
 	{ "82s153.2",		0x00eb, 0x3b6ec269, 0 | BRF_OPT },           //  10 PLDs
 	{ "82s153.4",		0x00eb, 0x8e227b3e, 0 | BRF_OPT },           //  11
 	{ "82s153.11",		0x00eb, 0x9da5e80d, 0 | BRF_OPT },           //  12
-	{ "pal16x4cj.10",	0x02dd, 0xd2731879, 0 | BRF_OPT },           //  13
+	{ "pal16x4cj.10",	0x0104, 0xd2731879, 0 | BRF_OPT },           //  13
 };
 
 STD_ROM_PICK(mariobl)

@@ -3699,7 +3699,7 @@ static struct BurnRomInfo p47aRomDesc[] = {
 
 	{ "hn62312ap_c44.rom9",			0x40000, 0xa5f6da1f, 7 | BRF_SND },           // 11 OKI #0 Samples
 
-	{ "hn62312ap_c43.rom10",		0x20000, 0x9149286b, 8 | BRF_SND },           // 12 OKI #1 Samples
+	{ "hn62312ap_c43.rom10",		0x40000, 0x9149286b, 8 | BRF_SND },           // 12 OKI #1 Samples
 
 	{ "p-47.14m",					0x00200, 0x1d877538, 9 | BRF_GRA },           // 13 Priority PROM
 };

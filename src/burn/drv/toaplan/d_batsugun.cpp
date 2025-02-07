@@ -58,7 +58,7 @@ STD_ROM_PICK(batsugna)
 STD_ROM_FN(batsugna)
 
 static struct BurnRomInfo batugnspRomDesc[] = {
-	{ "tp030-sp.u69", 	0x080000, 0x8072a0cd, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
+	{ "tp-030sp.u69", 	0x080000, 0x8072a0cd, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
 
 	{ "tp030_3l.bin", 	0x100000, 0x3024b793, BRF_GRA },			//  1 GP9001 #1 Tile data
 	{ "tp030_3h.bin", 	0x100000, 0xed75730b, BRF_GRA },			//  2

@@ -1687,8 +1687,8 @@ struct BurnDriver BurnDrvKtigera = {
 // Flying Shark (World)
 
 static struct BurnRomInfo fsharkRomDesc[] = {
-	{ "b02_18-1.m8",	0x10000, 0x04739e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17-1.p8",	0x10000, 0xfd6ef7a8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18-1.p8",	0x10000, 0x04739e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17-1.m8",	0x10000, 0xfd6ef7a8, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -1747,8 +1747,8 @@ struct BurnDriver BurnDrvFshark = {
 // Sky Shark (US, set 1)
 
 static struct BurnRomInfo skysharkRomDesc[] = {
-	{ "b02_18-2.m8",	0x10000, 0x888e90f3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17-2.p8",	0x10000, 0x066d67be, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18-2.p8",	0x10000, 0x888e90f3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17-2.m8",	0x10000, 0x066d67be, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -1797,8 +1797,8 @@ struct BurnDriver BurnDrvSkyshark = {
 // Sky Shark (US, set 2)
 
 static struct BurnRomInfo skysharkaRomDesc[] = {
-	{ "b02_18-2.m8",	0x10000, 0x341deaac, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17-2.p8",	0x10000, 0xec3b5a2c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18-2.p8",	0x10000, 0x341deaac, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17-2.m8",	0x10000, 0xec3b5a2c, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -1847,10 +1847,10 @@ struct BurnDriver BurnDrvSkysharka = {
 // Hishou Zame (Japan)
 
 static struct BurnRomInfo hishouzaRomDesc[] = {
-	{ "b02_18.m8",		0x10000, 0x4444bb94, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17.p8",		0x10000, 0xcdac7228, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18.p8",		0x10000, 0x4444bb94, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17.m8",		0x10000, 0xcdac7228, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "b02_16.l5",		0x08000, 0xf0b98af2, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
 	{ "d70011u_gxc-01_mcu_64000",	0x00c00, 0x1ca63774, 3 | BRF_PRG | BRF_ESS }, //  3 TMS32010 code
 
@@ -1898,8 +1898,8 @@ struct BurnDriver BurnDrvHishouza = {
 // the ROM contents of the bootleg are the same of the original, the difference is the TMS320C10 code which is in external PROMs instead of internal
 
 static struct BurnRomInfo fsharkbRomDesc[] = {
-	{ "b02_18-1.m8",	0x10000, 0x04739e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17-1.p8",	0x10000, 0xfd6ef7a8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18-1.p8",	0x10000, 0x04739e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17-1.m8",	0x10000, 0xfd6ef7a8, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
@@ -1956,8 +1956,8 @@ struct BurnDriver BurnDrvFsharkb = {
 // The ROM contents of the bootleg are the same of the original, the difference is the TMS320C10 code which is in external PROMs instead of internal
 
 static struct BurnRomInfo hishouzabRomDesc[] = {
-	{ "b02_18.m8",		0x10000, 0x4444bb94, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "b02_17.p8",		0x10000, 0xcdac7228, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b02_18.p8",		0x10000, 0x4444bb94, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17.m8",		0x10000, 0xcdac7228, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 

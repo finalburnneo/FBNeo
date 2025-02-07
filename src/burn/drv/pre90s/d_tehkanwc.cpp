@@ -732,7 +732,7 @@ static INT32 TWCFrame()
 		ZetOpen(CPU_SOUND);
 
 		// src/burn/burn.h:227:#define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
-		CPU_RUN_TIMER(CPU_SOUND); // Run the audio CPU (with timer synchronization)
+		CPU_RUN(CPU_SOUND, Zet); // Run the audio CPU (with timer synchronization)
 
 		// Update MSM5205 sound chip
 		//MSM5205Update();
@@ -865,6 +865,11 @@ static void GfxDecodeX(INT32 num, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 }
 
+// static INT32 vblank_timer_cb(INT32 n, INT32 c)
+// {
+// 	ZetSetIRQLine(CPU_SOUND, 0, CPU_IRQSTATUS_HOLD);
+// 	return 0;
+// }
 
 static INT32 TWCInit()
 {
@@ -884,7 +889,7 @@ static INT32 TWCInit()
 
 	nRet = BurnLoadRom(TWCZ80Rom1 + 0x00000,  0,  1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(TWCZ80Rom1 + 0x04000,  1,  1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x04000,  2,  1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(TWCZ80Rom1 + 0x08000,  2,  1); if (nRet != 0) return 1;
 
 	nRet = BurnLoadRom(TWCZ80Rom2 + 0x00000,  3,  1); if (nRet != 0) return 1;
 
@@ -900,7 +905,7 @@ static INT32 TWCInit()
 	GfxDecodeX(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, TWCSprites);
 
 	memset(TWCTempGfx, 0, 0x10000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  9, 1); if (nRet != 0) return 1;
 	GfxDecodeX(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, TWCBgTiles);
 
@@ -962,7 +967,7 @@ static INT32 TWCInit()
 	//GenericTilemapSetOffsets(1,  0, -8);
 	GenericTilemapSetTransparent(0,0);
 
-	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
+	//	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
 	// Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
 	// WATCHDOG_TIMER(config, "watchdog");
@@ -976,7 +981,9 @@ static INT32 TWCInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-	BurnTimerAttachZet(SOUND_CPU_CLOCK);
+
+	//BurnTimerInit(vblank_timer_cb, NULL);
+	//BurnTimerAttachZet(SOUND_CPU_CLOCK);
 
 	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);

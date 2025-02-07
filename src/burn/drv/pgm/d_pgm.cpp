@@ -9399,7 +9399,7 @@ static struct BurnRomInfo kov2pshjzRomDesc[] = {
 	{ "shjz_16m.u23",  			0x400000, 0x8f0a0638, 8 | BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(kov2pshjz, kov2pshjz, pgm)
+STDROMPICKEXT(kov2pshjz, kov2pshjz, kov2pshjzBios)
 STD_ROM_FN(kov2pshjz)
 
 static INT32 kov2pshjzInit()

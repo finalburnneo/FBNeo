@@ -1454,7 +1454,7 @@ static struct BurnRomInfo warlordsRomDesc[] = {
 	{ "037159-01.e6",	0x0800, 0xff979a08, 2 | BRF_GRA },           //  6 gfx1
 
 	{ "037235-01.n7",	0x0100, 0xa2c5c277, 3 | BRF_GRA },           //  7 proms
-	{ "037161-01.m6",	0x0100, 0x4cd24c85, 3 | BRF_GRA },           //  8
+	{ "037161-01.m6",	0x0100, 0x6fa3093a, 3 | BRF_GRA },           //  8
 };
 
 STD_ROM_PICK(warlords)
@@ -1493,7 +1493,7 @@ struct BurnDriver BurnDrvMazeinv = {
 	"mazeinv", NULL, NULL, NULL, "1981",
 	"Maze Invaders (prototype)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mazeinvRomInfo, mazeinvRomName, NULL, NULL, NULL, NULL, MazeinvInputInfo, MazeinvDIPInfo,
 	DrvInitmazeinv, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4

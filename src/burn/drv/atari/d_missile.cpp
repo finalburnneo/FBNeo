@@ -682,13 +682,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-// Missile Command (rev 3)
+// Missile Command (rev 3, A035467-02/04 PCBs)
 
 static struct BurnRomInfo missileRomDesc[] = {
 	{ "035820-02.h1",	0x0800, 0x7a62ce6a, 1 | BRF_PRG | BRF_ESS }, //  0 6502 Code
 	{ "035821-02.jk1",	0x0800, 0xdf3bd57f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "035822-03e.kl1",	0x0800, 0x1a2f599a, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "035823-02.ln1",	0x0800, 0x82e552bb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "035823-02.lm1",	0x0800, 0x82e552bb, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "035824-02.np1",	0x0800, 0x606e42e0, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "035825-02.r1",	0x0800, 0xf752eaeb, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -700,7 +700,7 @@ STD_ROM_FN(missile)
 
 struct BurnDriver BurnDrvMissile = {
 	"missile", NULL, NULL, NULL, "1980",
-	"Missile Command (rev 3)\0", NULL, "Atari", "Miscellaneous",
+	"Missile Command (rev 3, A035467-02/04 PCBs)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missileRomInfo, missileRomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
@@ -709,13 +709,13 @@ struct BurnDriver BurnDrvMissile = {
 };
 
 
-// Missile Command (rev 2)
+// Missile Command (rev 2, A035467-02/04 PCBs)
 
 static struct BurnRomInfo missile2RomDesc[] = {
 	{ "035820-02.h1",	0x0800, 0x7a62ce6a, 1 | BRF_PRG | BRF_ESS }, //  0 6502 Code
 	{ "035821-02.jk1",	0x0800, 0xdf3bd57f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "035822-02.kl1",	0x0800, 0xa1cd384a, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "035823-02.ln1",	0x0800, 0x82e552bb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "035823-02.lm1",	0x0800, 0x82e552bb, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "035824-02.np1",	0x0800, 0x606e42e0, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "035825-02.r1",	0x0800, 0xf752eaeb, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -727,7 +727,7 @@ STD_ROM_FN(missile2)
 
 struct BurnDriver BurnDrvMissile2 = {
 	"missile2", "missile", NULL, NULL, "1980",
-	"Missile Command (rev 2)\0", NULL, "Atari", "Miscellaneous",
+	"Missile Command (rev 2, A035467-02/04 PCBs)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missile2RomInfo, missile2RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
@@ -736,13 +736,13 @@ struct BurnDriver BurnDrvMissile2 = {
 };
 
 
-// Missile Command (rev 1)
+// Missile Command (rev 1, A035467-02 PCBs)
 
 static struct BurnRomInfo missile1RomDesc[] = {
 	{ "35820-01.h1",	0x0800, 0x41cbb8f2, 1 | BRF_PRG | BRF_ESS }, //  0 6502 Code
 	{ "35821-01.jk1",	0x0800, 0x728702c8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "35822-01.kl1",	0x0800, 0x28f0999f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "35823-01.ln1",	0x0800, 0xbcc93c94, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "35823-01.lm1",	0x0800, 0xbcc93c94, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "35824-01.np1",	0x0800, 0x0ca089c8, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "35825-01.r1",	0x0800, 0x428cf0d5, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -754,7 +754,7 @@ STD_ROM_FN(missile1)
 
 struct BurnDriver BurnDrvMissile1 = {
 	"missile1", "missile", NULL, NULL, "1980",
-	"Missile Command (rev 1)\0", NULL, "Atari", "Miscellaneous",
+	"Missile Command (rev 1, A035467-02 PCBs)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, missile1RomInfo, missile1RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
@@ -821,12 +821,12 @@ struct BurnDriver BurnDrvSuprmatk = {
 // Super Missile Attack (not encrypted)
 
 static struct BurnRomInfo suprmatkdRomDesc[] = {
-	{ "035820.sma",		0x0800, 0x75f01b87, 1 | BRF_PRG | BRF_ESS }, //  0 6502 Code
-	{ "035821.sma",		0x0800, 0x3320d67e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "035822.sma",		0x0800, 0xe6be5055, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "035823.sma",		0x0800, 0xa6069185, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "035824.sma",		0x0800, 0x90a06be8, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "035825.sma",		0x0800, 0x1298213d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "035820_sma.h1",		0x0800, 0x75f01b87, 1 | BRF_PRG | BRF_ESS }, //  0 6502 Code
+	{ "035821_sma.jk1",		0x0800, 0x3320d67e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "035822_sma.kl1",		0x0800, 0xe6be5055, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "035823_sma.lm1",		0x0800, 0xa6069185, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "035824_sma.np1",		0x0800, 0x90a06be8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "035825_sma.r1",		0x0800, 0x1298213d, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "035826-01.l6",	0x0020, 0x86a22140, 1 | BRF_GRA },           //  6 Write PROM
 };

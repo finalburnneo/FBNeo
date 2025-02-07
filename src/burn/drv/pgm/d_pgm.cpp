@@ -976,6 +976,14 @@ static struct BurnRomInfo kovp12emBiosRomDesc[] = {
 	{ "pgm_p02s.u20", 				0x0020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x83 - 68K BIOS (V0001,     newer  - 07/10/97 - 16:36:08)
 };
 
+static struct BurnRomInfo kov2pshjzBiosRomDesc[] = {
+	{ "shjz_t01s_b.rom", 			0x0200000, 0xa87bc151, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
+	{ "pgm_m01s.rom", 				0x0200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
+
+	{ "pgm_p01s.u20", 				0x0020000, 0xe42b166e, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001,     older  - 02/26/97 - 11:14:09)
+	{ "pgm_p02s.u20", 				0x0020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x83 - 68K BIOS (V0001,     newer  - 07/10/97 - 16:36:08)
+};
+
 
 // -----------------------------------------------------------------------------
 // Normal Games
@@ -9363,6 +9371,66 @@ struct BurnDriver BurnDrvKovshmg = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshmgRomInfo, kovshmgRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+}; 
+
+
+static struct BurnRomInfo kov2pshjzRomDesc[] = {
+	{ "shjz_32m.u8",			0x600000, 0x572523dc, 1 | BRF_PRG | BRF_ESS },
+
+	{ "shjz_t1200.u21",			0x800000, 0xce5a0466, 2 | BRF_GRA },
+
+	{ "pgm_a1200.u1",			0x800000, 0xceeb81d8, 3 | BRF_GRA },
+	{ "pgm_a1201.u4",			0x800000, 0x21063ca7, 3 | BRF_GRA },
+	{ "pgm_a1202.u6",			0x800000, 0x4bb92fae, 3 | BRF_GRA },
+	{ "pgm_a1203.u8",			0x800000, 0xe73cb627, 3 | BRF_GRA },
+	{ "shjz_a1204.u10",			0x200000, 0xb767c89e, 3 | BRF_GRA },
+	{ "shjz_a1205.u11",			0x100000, 0x462944d8, 3 | BRF_GRA },
+
+	{ "pgm_b1200.u5",			0x800000, 0xbed7d994, 4 | BRF_GRA },
+	{ "shjz_b1201.u7",			0x800000, 0xbb88684a, 4 | BRF_GRA },
+	{ "shjz_b1202.u8",			0x100000, 0x125e1613, 4 | BRF_GRA },
+
+	{ "shjz_m1201.u4",			0x200000, 0x7a71a0b5, 5 | BRF_SND },
+	{ "shjz_m1200.u3",			0x800000, 0xd8bee5b6, 5 | BRF_SND },
+
+	{ "shjz_igs027a_china.bin",	0x004000, 0x686e0910, 7 | BRF_PRG | BRF_ESS },
+
+	{ "shjz_16m.u23",  			0x400000, 0x8f0a0638, 8 | BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(kov2pshjz, kov2pshjz, pgm)
+STD_ROM_FN(kov2pshjz)
+
+static INT32 kov2pshjzInit()
+{
+	nPGMSpriteBufferHack = 1;
+
+	INT32 nRet = kov2pInit();
+
+	if (nRet == 0)
+	{
+		if (!bDoIpsPatch)
+		{
+			memmove(ICSSNDROM + 0x800000, ICSSNDROM + 0x400000, 0x800000);
+			memset( ICSSNDROM + 0x400000, 0,                    0x400000);
+		}
+
+		if (PGMARMROM[0x26f] == 0x0a)	// crash patch
+			PGMARMROM[0x26f] == 0xea;
+	}
+
+	return nRet;
+}
+
+
+struct BurnDriver BurnDrvKov2pshjz = {
+	"kov2pshjz", "kov2p", "pgm", NULL, "202?",
+	"Knights of Valour 2 Plus - Shuang Han Jiu Zhou (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour 2 Plus - Shuang Han Jiu Zhou (Hack)\0\u4e09\u56fd\u6218\u7eaa 2 Plus - \u971c\u5bd2\u4e5d\u5dde\0", NULL, L"\u971c\u5bd2\u4e5d\u5dde\u56e2\u961f", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2pshjzRomInfo, kov2pshjzRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kov2pshjzInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

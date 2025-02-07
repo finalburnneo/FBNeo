@@ -147,7 +147,7 @@ static INT32 pgmGetRoms(bool bLoad)
 	if (bLoad) {
 		if (nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
 			PGMSNDROMLoad -= 0x200000;
-		} else if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (nIpsDrvDefine & IPS_PGM_SNDOFFS)) { // kov2dzxx
+		} else if ((!bDoIpsPatch && ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2pshjz")) || (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx")))) || (nIpsDrvDefine & IPS_PGM_SNDOFFS)) { // kov2pshjz, kov2dzxx
 			PGMSNDROMLoad -= 0x600000;
 		}
 	}

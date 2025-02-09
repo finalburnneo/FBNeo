@@ -2252,14 +2252,14 @@ struct BurnDriver BurnDrvPleiadce = {
 // Pleiads (GMP Games)
 
 static struct BurnRomInfo pleiadsgmpRomDesc[] = {
-	{ "ic45",			0x0800, 0x6a6dcabf, 1 | BRF_PRG | BRF_Esgmp }, //  0 i8085 Code
-	{ "0.ic46",			0x0800, 0xc82557b4, 1 | BRF_PRG | BRF_Esgmp }, //  1
-	{ "3.ic47",			0x0800, 0x3b29aec5, 1 | BRF_PRG | BRF_Esgmp }, //  2
-	{ "4.ic48",			0x0800, 0x10df5159, 1 | BRF_PRG | BRF_Esgmp }, //  3
-	{ "1.ic49",			0x0800, 0x263576e7, 1 | BRF_PRG | BRF_Esgmp }, //  4
-	{ "2.ic50",			0x0800, 0xaa4d93ec, 1 | BRF_PRG | BRF_Esgmp }, //  5
-	{ "ic51",			0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_Esgmp }, //  6
-	{ "8.ic52",			0x0800, 0xb3db08c2, 1 | BRF_PRG | BRF_Esgmp }, //  7
+	{ "ic45",			0x0800, 0x6a6dcabf, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "0.ic46",			0x0800, 0xc82557b4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.ic47",			0x0800, 0x3b29aec5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.ic48",			0x0800, 0x10df5159, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.ic49",			0x0800, 0x263576e7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "2.ic50",			0x0800, 0xaa4d93ec, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ic51",			0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.ic52",			0x0800, 0xb3db08c2, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "ic24.bin",		0x0800, 0x5188fc29, 2 | BRF_GRA },           //  8 Background Tiles
 	{ "ic23.bin",		0x0800, 0x4e30f9e7, 2 | BRF_GRA },           //  9

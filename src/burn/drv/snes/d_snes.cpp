@@ -1373,7 +1373,7 @@ struct BurnDriver BurnDrvsnes_Actraiserg = {
 };
 
 // Actraiser (Japan)
-
+// https://www.romhacking.net/translations/1063/
 static struct BurnRomInfo snes_ActraiserjRomDesc[] = {
 	{ "Actraiser (J)(1990)(Enix).sfc", 1048576, 0xbee9b30c, BRF_ESS | BRF_PRG },
 };
@@ -1387,6 +1387,25 @@ struct BurnDriver BurnDrvsnes_Actraiserj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_ActraiserjRomInfo, snes_ActraiserjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Actraiser (Hack, English)
+
+static struct BurnRomInfo snes_ActraiserjteRomDesc[] = {
+	{ "Actraiser T-Eng (2006)(Aeon Genesis).sfc", 1048576, 0x5a6eb990, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Actraiserjte)
+STD_ROM_FN(snes_Actraiserjte)
+
+struct BurnDriver BurnDrvsnes_Actraiserjte = {
+	"snes_actraiserjte", "snes_actraiser", NULL, NULL, "2006",
+	"Actraiser (Hack, English)\0", "A 'new' english translation, much closer to the Japanese original.", "Aeon Genesis", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
+	SNESGetZipName, snes_ActraiserjteRomInfo, snes_ActraiserjteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -6579,6 +6598,25 @@ struct BurnDriver BurnDrvsnes_Demonscrest = {
 	512, 448, 4, 3
 };
 
+// Demon's Crest Retranslation (Hack, English v1.2)
+// https://romhackplaza.org/translations/demons-crest-retranslation-restoration-english-translation-snes/
+static struct BurnRomInfo snes_DemonscrestrRomDesc[] = {
+	{ "Demon's Crest Retranslation v1.2 (2024)(RyuHayabusa).sfc", 2097152, 0x97b9f3d6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Demonscrestr)
+STD_ROM_FN(snes_Demonscrestr)
+
+struct BurnDriver BurnDrvsnes_Demonscrestr = {
+	"snes_demonscrestr", "snes_demonscrest", NULL, NULL, "2024",
+	"Demon's Crest Retranslation (Hack, English v1.2)\0", "An english retranslation, much closer to the Japanese original.", "RyuHayabusa", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_DemonscrestrRomInfo, snes_DemonscrestrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dennis the Menace (USA)
 
 static struct BurnRomInfo snes_DennisRomDesc[] = {
@@ -9220,10 +9258,10 @@ struct BurnDriver BurnDrvsnes_Finalfantii = {
 	512, 448, 4, 3
 };
 
-// Final Fantasy III (USA)
+// Final Fantasy III (USA, Rev. 1)
 
 static struct BurnRomInfo snes_FinalfantiiiRomDesc[] = {
-	{ "Final Fantasy III (U)(1994)(Squaresoft).sfc", 3145728, 0xc0fa0464, BRF_ESS | BRF_PRG },
+	{ "Final Fantasy III (U, Rev 1)(1994)(Squaresoft).sfc", 3145728, 0xc0fa0464, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Finalfantiii)
@@ -9231,7 +9269,7 @@ STD_ROM_FN(snes_Finalfantiii)
 
 struct BurnDriver BurnDrvsnes_Finalfantiii = {
 	"snes_finalfantiii", NULL, NULL, NULL, "1994",
-	"Final Fantasy III (USA)\0", NULL, "Squaresoft", "Nintendo",
+	"Final Fantasy III (USA, Rev. 1)\0", NULL, "Squaresoft", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_FinalfantiiiRomInfo, snes_FinalfantiiiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31980,6 +32018,25 @@ struct BurnDriver BurnDrvsnes_Mkbcf = {
 	512, 448, 4, 3
 };
 
+// Mortal Kombat 3 New Edition (Hack)
+// https://www.romhacking.net/hacks/8869/
+static struct BurnRomInfo snes_Mk3neRomDesc[] = {
+	{ "Mortal Kombat 3 New Edition (2025)(B-Zero TV).sfc", 8388608, 0x6e9bed4b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mk3ne)
+STD_ROM_FN(snes_Mk3ne)
+
+struct BurnDriver BurnDrvsnes_Mk3ne = {
+	"snes_mk3ne", "snes_mk3", NULL, NULL, "2025",
+	"Mortal Kombat 3 New Edition (Hack)\0", NULL, "B-Zero TV", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Mk3neRomInfo, snes_Mk3neRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mother 2 - Perfect Edition (Hack, v1.5)
 // https://www.romhacking.net/hacks/6140/
 static struct BurnRomInfo snes_Mother2peRomDesc[] = {
@@ -32380,6 +32437,25 @@ struct BurnDriver BurnDrvsnes_S3dnoaharkpk = {
 	512, 448, 4, 3
 };
 
+// Sauna Mario World 2 (GlobalHack, v1.1)
+
+static struct BurnRomInfo snes_SaunamarioworldRomDesc[] = {
+	{ "Sauna Mario World 2 v1.1 (2025)(pnaha).sfc", 4194304, 0xdc5fef0e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Saunamarioworld)
+STD_ROM_FN(snes_Saunamarioworld)
+
+struct BurnDriver BurnDrvsnes_Saunamarioworld = {
+	"snes_saunamarioworld", NULL, NULL, NULL, "2025",
+	"Sauna Mario World 2 (GlobalHack, v1.1)\0", "A complete overhaul of Super Mario World", "pnaha", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SaunamarioworldRomInfo, snes_SaunamarioworldRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Boss Gaiden (HB, v1.2)
 
 static struct BurnRomInfo snes_SbgaidenRomDesc[] = {
@@ -32490,6 +32566,25 @@ struct BurnDriver BurnDrvsnes_Skippfrds = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SkippfrdsRomInfo, snes_SkippfrdsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// SMW Friends and Rivalry (GlobalHack, v1.03)
+// https://www.romhacking.net/hacks/8862/
+static struct BurnRomInfo snes_SmwfnrRomDesc[] = {
+	{ "SMW Friends and Rivalry v1.03 (2025)(Bandicoot).sfc", 4194304, 0x5518f889, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smwfnr)
+STD_ROM_FN(snes_Smwfnr)
+
+struct BurnDriver BurnDrvsnes_Smwfnr = {
+	"snes_smwfnr", NULL, NULL, NULL, "2025",
+	"SMW Friends and Rivalry (GlobalHack, v1.03)\0", "A complete overhaul of Super Mario World", "Bandicoot", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmwfnrRomInfo, snes_SmwfnrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -749,8 +749,8 @@ STD_ROM_PICK(_1945kiiipt)
 STD_ROM_FN(_1945kiiipt)
 
 struct BurnDriver BurnDrv1945kiiipt = {
-	"1945kiiipt", "1945kiii", NULL, NULL, "2000",
-	"1945k III (Promat license, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
+	"1945kiiipt", "1945kiii", NULL, NULL, "1999",
+	"1945k III (Promat license, OPCX1 PCB)\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiiptRomInfo, _1945kiiiptRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, SoliteDIPInfo,

@@ -568,7 +568,7 @@ STD_ROM_FN(mirax)
 
 struct BurnDriver BurnDrvMirax = {
 	"mirax", NULL, NULL, NULL, "1985",
-	"Mirax (set 1)\0", NULL, "Current Technologies", "Miscellaneous",
+	"Mirax (set 1)\0", NULL, "Current Technology, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, miraxRomInfo, miraxRomName, NULL, NULL, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
@@ -606,10 +606,48 @@ STD_ROM_FN(miraxa)
 
 struct BurnDriver BurnDrvMiraxa = {
 	"miraxa", "mirax", NULL, NULL, "1985",
-	"Mirax (set 2)\0", NULL, "Current Technologies", "Miscellaneous",
+	"Mirax (set 2)\0", NULL, "Current Technology, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, miraxaRomInfo, miraxaRomName, NULL, NULL, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	240, 256, 3, 4
+};
+
+
+// Mirax (set 3)
+
+static struct BurnRomInfo miraxbRomDesc[] = {
+	{ "10.p5",		0x4000, 0x680cd519, 1 | BRF_PRG | BRF_ESS }, //  0 main cpu
+	{ "11.r5",		0x4000, 0xa518c8b0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.s5",		0x4000, 0xed1f6c30, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "13.r5",		0x2000, 0xcd2d52dc, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+
+	{ "4.e3",		0x4000, 0x0cede01f, 3 | BRF_GRA }, //  4 gfx1
+	{ "6.h3",		0x4000, 0x58221502, 3 | BRF_GRA }, //  5
+	{ "8.k3",		0x4000, 0x6dbc2961, 3 | BRF_GRA }, //  6
+
+	{ "1.e2",		0x4000, 0x2cf5d8b7, 4 | BRF_GRA }, //  7 gfx2
+	{ "2.f2",		0x4000, 0x1f42c7fa, 4 | BRF_GRA }, //  8
+	{ "3.h2",		0x4000, 0xcbaff4c6, 4 | BRF_GRA }, //  9
+	{ "5.f3",		0x4000, 0x14b1ca85, 4 | BRF_GRA }, // 10
+	{ "7.i3",		0x4000, 0x20fb2099, 4 | BRF_GRA }, // 11
+	{ "9.l3",		0x4000, 0x918487aa, 4 | BRF_GRA }, // 12
+
+	{ "mra3.prm",	0x0020, 0xae7e1a63, 5 | BRF_GRA }, // 13 proms
+	{ "mrb3.prm",	0x0020, 0xe3f3d0f5, 5 | BRF_GRA }, // 14
+};
+
+STD_ROM_PICK(miraxb)
+STD_ROM_FN(miraxb)
+
+struct BurnDriver BurnDrvMiraxb = {
+	"miraxb", "mirax", NULL, NULL, "1985",
+	"Mirax (set 3)\0", NULL, "Current Technology, Inc.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, miraxbRomInfo, miraxbRomName, NULL, NULL, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };

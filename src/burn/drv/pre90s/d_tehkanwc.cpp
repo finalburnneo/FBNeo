@@ -911,10 +911,8 @@ static INT32 TWCInit()
 	BurnWatchdogInit(TWCDoReset, 180);
 
 	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 1);
-	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
-	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
+	AY8910InitYM(0, AY_CLOCK, SOUND_CPU_CLOCK, NULL, NULL, &portA_w, &portB_w, NULL);
+	AY8910InitYM(1, AY_CLOCK, SOUND_CPU_CLOCK, &portA_r, &portB_r, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);

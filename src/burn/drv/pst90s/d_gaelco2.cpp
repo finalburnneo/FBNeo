@@ -1984,7 +1984,7 @@ static INT32 snowboaraInit()
 
 struct BurnDriver BurnDrvSnowboara = {
 	"snowboara", "snowboar", NULL, NULL, "1996",
-	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
+	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco / OMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
@@ -2034,8 +2034,8 @@ static INT32 snowboarInit()
 }
 
 struct BurnDriver BurnDrvSnowboar = {
-	"snowboar", NULL, NULL, NULL, "1996",
-	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco", "Miscellaneous",
+	"snowboar", NULL, NULL, NULL, "1997",
+	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco / OMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
@@ -2202,7 +2202,7 @@ static INT32 bangInit()
 
 struct BurnDriver BurnDrvBang = {
 	"bang", NULL, NULL, NULL, "1998",
-	"Bang!\0", NULL, "Gaelco", "Miscellaneous",
+	"Bang!\0", NULL, "Gaelco / Bit Managers", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bangRomInfo, bangRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
@@ -2239,8 +2239,8 @@ STD_ROM_PICK(bangj)
 STD_ROM_FN(bangj)
 
 struct BurnDriver BurnDrvBangj = {
-	"bangj", "bang", NULL, NULL, "1998",
-	"Gun Gabacho (Japan)\0", NULL, "Gaelco", "Miscellaneous",
+	"bangj", "bang", NULL, NULL, "1999",
+	"Gun Gabacho (Japan)\0", NULL, "Gaelco / Bit Managers (GM Shoji license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bangjRomInfo, bangjRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,

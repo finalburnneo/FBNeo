@@ -3119,7 +3119,7 @@ static struct BurnRomInfo dotronepRomDesc[] = {
 	{ "pgm0_8-9.1c",		0x4000, 0xa997e93d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "pgm1_8-9.2c",		0x4000, 0x31e5c11e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "pgm2_8-9.3c",		0x4000, 0x5162fe8d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pgm3_8-9.4c",		0x2000, 0x4e7085e1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pgm3_8-9.4c",		0x4000, 0x4e7085e1, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "0_8-9.a7",			0x1000, 0x872160b3, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
 	{ "1_8-9.a8",			0x1000, 0xd9c3d4ca, 2 | BRF_PRG | BRF_ESS }, //  5

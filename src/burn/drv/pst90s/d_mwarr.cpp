@@ -1129,7 +1129,7 @@ STD_ROM_FN(mwarr)
 
 struct BurnDriver BurnDrvMwarr = {
 	"mwarr", NULL, NULL, NULL, "199?",
-	"Mighty Warriors (24/1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	"Mighty Warriors (24/1)\0", NULL, "Elettronica Video-Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, mwarrRomInfo, mwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MwarrDIPInfo,
@@ -1200,7 +1200,7 @@ STD_ROM_FN(twinbrat)
 
 struct BurnDriver BurnDrvTwinbrat = {
 	"twinbrat", NULL, NULL, NULL, "1995",
-	"Twin Brats (set 1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	"Twin Brats (set 1)\0", NULL, "Elettronica Video-Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
@@ -1236,7 +1236,7 @@ STD_ROM_FN(twinbrata)
 
 struct BurnDriver BurnDrvTwinbrata = {
 	"twinbrata", "twinbrat", NULL, NULL, "1995",
-	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
@@ -1271,7 +1271,7 @@ STD_ROM_FN(twinbratb)
 
 struct BurnDriver BurnDrvTwinbratb = {
 	"twinbratb", "twinbrat", NULL, NULL, "1995",
-	"Twin Brats (set 3)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	"Twin Brats (set 3)\0", NULL, "Elettronica Video-Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbratbRomInfo, twinbratbRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,

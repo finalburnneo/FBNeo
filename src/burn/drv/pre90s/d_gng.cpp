@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvGngprot = {
 	"gngprot", "gng", NULL, NULL, "1985",
 	"Ghosts'n Goblins (prototype)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngprotRomInfo, GngprotRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1104,7 +1104,7 @@ STD_ROM_FN(Gngt)
 
 struct BurnDriver BurnDrvGngt = {
 	"gngt", "gng", NULL, NULL, "1985",
-	"Ghosts'n Goblins (US)\0", NULL, "Capcom (Taito America License)", "Miscellaneous",
+	"Ghosts'n Goblins (US)\0", NULL, "Capcom (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngtRomInfo, GngtRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
@@ -1195,6 +1195,90 @@ struct BurnDriver BurnDrvMakaimur = {
 };
 
 
+static struct BurnRomInfo MakaimubRomDesc[] = {
+	{ "mj04b.10n",     0x04000, 0xf8bda78f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mj03b.8n",      0x08000, 0x0ba14114, BRF_ESS | BRF_PRG }, //	 1
+	{ "mj05b.12n",     0x08000, 0x3040a574, BRF_ESS | BRF_PRG }, //	 2
+
+	{ "mm02.14h",      0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+
+	{ "mj01.11e",      0x04000, 0x178366b4, BRF_GRA },	     //  4	Characters
+
+	{ "mm11.3e",       0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
+	{ "mm10.1e",       0x04000, 0x7302529d, BRF_GRA },	     //  6
+	{ "mm09.3c",       0x04000, 0x20035bda, BRF_GRA },	     //  7
+	{ "mm08.1c",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
+	{ "mm07.3b",       0x04000, 0xe525207d, BRF_GRA },	     //  9
+	{ "mm06.1b",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+
+	{ "mj17.4n",       0x04000, 0x4613afdc, BRF_GRA },	     //  11	Sprites
+	{ "mj16.3n",       0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
+	{ "mj15.1n",       0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
+	{ "mj14.4l",       0x04000, 0x608d68d5, BRF_GRA },	     //  14
+	{ "mj13.3l",       0x04000, 0xe80c3fca, BRF_GRA },	     //  15
+	{ "mj12.1l",       0x04000, 0x7780a925, BRF_GRA },	     //  16
+
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+};
+
+STD_ROM_PICK(Makaimub)
+STD_ROM_FN(Makaimub)
+
+struct BurnDriver BurnDrvMakaimub = {
+	"makaimurb", "gng", NULL, NULL, "1985",
+	"Makaimura (Japan revision B)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, MakaimubRomInfo, MakaimubRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
+static struct BurnRomInfo MakaimubblRomDesc[] = {
+	{ "gg5.bin",       0x04000, 0xf8bda78f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg4.bin",       0x04000, 0xac0b25fb, BRF_ESS | BRF_PRG }, //	 1
+	{ "gg3.bin",       0x04000, 0x762b5af0, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg7.bin",       0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
+	{ "gg6.bin",       0x04000, 0x2e44634f, BRF_ESS | BRF_PRG }, //	 4
+
+	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+
+	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	         //  6	Characters
+
+	{ "gg13.bin",      0x04000, 0xddd56fa9, BRF_GRA },	         //  7	Tiles
+	{ "gg12.bin",      0x04000, 0x7302529d, BRF_GRA },	         //  8
+	{ "gg11.bin",      0x04000, 0x20035bda, BRF_GRA },	         //  9
+	{ "gg10.bin",      0x04000, 0xf12ba271, BRF_GRA },	         //  10
+	{ "gg9.bin",       0x04000, 0xe525207d, BRF_GRA },	         //  11
+	{ "gg8.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	         //  12
+
+	{ "gg19.bin",      0x04000, 0x93e50a8f, BRF_GRA },	         //  13	Sprites
+	{ "gg18.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	         //  14
+	{ "gg17.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	         //  15
+	{ "gg16.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	         //  16
+	{ "gg15.bin",      0x04000, 0xe80c3fca, BRF_GRA },	         //  17
+	{ "gg14.bin",      0x04000, 0x7780a925, BRF_GRA },	         //  18
+
+	{ "prom1",         0x00100, 0x00000000, BRF_GRA | BRF_NODUMP },	     //  19	PROMs
+	{ "prom2",         0x00100, 0x00000000, BRF_GRA | BRF_NODUMP },	     //  20
+};
+
+STD_ROM_PICK(Makaimubbl)
+STD_ROM_FN(Makaimubbl)
+
+struct BurnDriver BurnDrvMakaimubbl = {
+	"makaimurbbl", "gng", NULL, NULL, "1985",
+	"Makaimura (Japan revision B bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, MakaimubblRomInfo, MakaimubblRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
 static struct BurnRomInfo MakaimucRomDesc[] = {
 	{ "mj04c.bin",     0x04000, 0x1294edb1, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "mj03c.bin",     0x08000, 0xd343332d, BRF_ESS | BRF_PRG }, //	 1
@@ -1227,7 +1311,7 @@ STD_ROM_FN(Makaimuc)
 
 struct BurnDriver BurnDrvMakaimuc = {
 	"makaimurc", "gng", NULL, NULL, "1985",
-	"Makaimura (Japan Revision C)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan revision C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimucRomInfo, MakaimucRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1268,7 +1352,7 @@ STD_ROM_FN(Makaimug)
 
 struct BurnDriver BurnDrvMakaimug = {
 	"makaimurg", "gng", NULL, NULL, "1985",
-	"Makaimura (Japan Revision G)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan revision G)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimugRomInfo, MakaimugRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1305,7 +1389,7 @@ STD_ROM_PICK(Diamrun)
 STD_ROM_FN(Diamrun)
 
 struct BurnDriver BurnDrvDiamrun = {
-	"diamrun", NULL, NULL, NULL, "1985",
+	"diamrun", NULL, NULL, NULL, "1989",
 	"Diamond Run\0", NULL, "KH Video", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,

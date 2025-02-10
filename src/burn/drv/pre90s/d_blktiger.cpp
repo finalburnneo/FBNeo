@@ -943,7 +943,7 @@ struct BurnDriver BurnDrvBlktigerb1 = {
 	"blktigerb1", "blktiger", NULL, NULL, "1987",
 	"Black Tiger (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb1RomInfo, blktigerb1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -984,9 +984,9 @@ STD_ROM_FN(blktigerb2)
 
 struct BurnDriver BurnDrvblktigerb2 = {
 	"blktigerb2", "blktiger", NULL, NULL, "1987",
-	"Black Tiger (bootleg set 2)\0", NULL, "Capcom", "Miscellaneous",
+	"Black Tiger (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb2RomInfo, blktigerb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1053,9 +1053,9 @@ static INT32 blktigerb3Init()
 
 struct BurnDriver BurnDrvBlktigerb3 = {
 	"blktigerb3", "blktiger", NULL, NULL, "1987",
-	"Black Tiger / Black Dragon (mixed bootleg?)\0", NULL, "Capcom", "Miscellaneous",
+	"Black Tiger / Black Dragon (mixed bootleg?)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blktigerb3RomInfo, blktigerb3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	blktigerb3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1143,7 +1143,7 @@ struct BurnDriver BurnDrvBlkdrgonb = {
 	"blkdrgonb", "blktiger", NULL, NULL, "1987",
 	"Black Dragon (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, blkdrgonbRomInfo, blkdrgonbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

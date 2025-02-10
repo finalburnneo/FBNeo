@@ -1776,7 +1776,7 @@ struct BurnDriver BurnDrvNineteen43jaha = {
 
 struct BurnDriver BurnDrvNineteen43b = {
 	"1943b", "1943", NULL, NULL, "1987",
-	"1943: Battle of Midway (bootleg set 1, hack of Japan set)\0", NULL, "bootleg", "Miscellaneous",
+	"1943: Battle of Midway (bootleg, hack of Japan set, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1786,7 +1786,7 @@ struct BurnDriver BurnDrvNineteen43b = {
 
 struct BurnDriver BurnDrvNineteen43b2 = {
 	"1943b2", "1943", NULL, NULL, "1987",
-	"1943: Battle of Midway (bootleg set 2, hack of Japan set)\0", NULL, "bootleg", "Miscellaneous",
+	"1943: Battle of Midway (bootleg, hack of Japan set, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1815,7 +1815,7 @@ struct BurnDriver BurnDrvNineteen43kai = {
 };
 
 struct BurnDriver BurnDrvNineteen43mii = {
-	"1943mii", NULL, NULL, NULL, "1988",
+	"1943mii", NULL, NULL, NULL, "1987",
 	"1943: The Battle of Midway Mark II (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,

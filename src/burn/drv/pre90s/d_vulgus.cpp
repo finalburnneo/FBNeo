@@ -776,9 +776,9 @@ STD_ROM_FN(mach9)
 
 struct BurnDriver BurnDrvmach9 = {
 	"mach9", "vulgus", NULL, NULL, "1984",
-	"Mach-9 (bootleg of Vulgus)\0", NULL, "bootleg (ITISA)", "Miscellaneous",
+	"Mach-9 (bootleg of Vulgus)\0", NULL, "bootleg (Itisa)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, mach9RomInfo, mach9RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

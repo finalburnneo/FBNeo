@@ -3343,7 +3343,7 @@ struct BurnDriver BurnDrvPangb2 = {
 };
 
 struct BurnDriver BurnDrvCworld = {
-	"cworld", NULL, NULL, NULL, "1990",
+	"cworld", NULL, NULL, NULL, "1989",
 	"Capcom World (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
@@ -3396,7 +3396,7 @@ struct BurnDriver BurnDrvMstworld = {
 	"mstworld", NULL, NULL, NULL, "1994",
 	"Monsters World (bootleg of Super Pang)\0", NULL, "bootleg (TCH)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,
 	MstworldInit, CommonExit, MstworldFrame, DrvDraw, MstworldScan,
 	NULL, 0x800, 384, 240, 4, 3

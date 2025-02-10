@@ -2179,7 +2179,7 @@ struct BurnDriver BurnDrvLwingsb = {
 	"lwingsb", "lwings", NULL, NULL, "1986",
 	"Legendary Wings (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, lwingsbRomInfo, lwingsbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, LwingsbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
@@ -2449,7 +2449,7 @@ struct BurnDriver BurnDrvTrojanb = {
 	"trojanb", "trojan", NULL, NULL, "1986",
 	"Trojan (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanbRomInfo, trojanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -2611,7 +2611,7 @@ struct BurnDriver BurnDrvTrojanlt = {
 	"trojanlt", "trojan", NULL, NULL, "1986",
 	"Trojan (location test)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanltRomInfo, trojanltRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3

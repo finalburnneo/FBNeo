@@ -372,11 +372,11 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 		// 0xe000 .. 0xe7ff: BGVideoRAM
 		// 0xe800 .. 0xebff: SpriteRAM
 		case 0xec00:
-			TWCScrollXHi = data;
+			TWCScrollXLo = data;
 			return;
 
 		case 0xec01:
-			TWCScrollXLo = data;
+			TWCScrollXHi = data;
 			return;
 
 		case 0xec02:
@@ -516,44 +516,10 @@ static tilemap_callback( twc_bg )
 	INT32 attr  = TWCBgVideoRam[offs + 1];
 	INT32 code  = TWCBgVideoRam[offs] + ((attr & 0x30) << 4);
 	INT32 color = attr & 0x0f;
-	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6);
+	//INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6);
+	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 
-	TILE_SET_INFO(2, code, color, flags);
-}
-
-static void TWCRenderBgLayer()
-{
-	INT32 mx, my, Attr, Code, Colour, x, y, fx, fy, offs, TileIndex = 0;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			offs = TileIndex * 2;
-			Attr = TWCBgVideoRam[offs + 1];
-			Code = TWCBgVideoRam[offs] + ((Attr & 0x30) << 4);
-			Colour = Attr & 0x0f;
-			fx = Attr & 0x40;
-			fy = Attr & 0x80;
-
-			x = 16 * mx;
-			y = 8 * my;
-
-			// Visible grid: 256x240
-			// Tile map: 	512x256   (0x200 x 0x100)
-			// x, y are tile map coordinates
-			x -= TWCScrollXLo + 256 * TWCScrollXHi;
-			y -= TWCScrollY;
-
-			x &= 0x1ff;
-			y &= 0xff;
-
-			// y -= 16;
-			// if (x > 968) x -= 1024;
-
-			DrawCustomTile(pTransDraw, 16, 8, Code, x, y, fx, fy, Colour, 4, 512, TWCBgTiles);
-
-			TileIndex++;
-		}
-	}
+	TILE_SET_INFO(0, code, color, flags);
 }
 
 static tilemap_callback( twc_fg )
@@ -561,40 +527,13 @@ static tilemap_callback( twc_fg )
 	INT32 attr  = TWCColorRam[offs];
 	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
-	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6) | TILE_GROUP((attr & 0x20) >> 5);
+//	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6) | TILE_GROUP((attr & 0x20) >> 5);
+	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
+	// flags |= ((attr & 0x20) ? TMAP_SET_GROUP(1) : TMAP_SET_GROUP(0));
+	flags |= TILE_GROUP_ENABLE;
+	flags |= ((attr & 0x20) ? (1 << 16) : 0);
 
-	TILE_SET_INFO(0, code, color, flags);
-}
-
-static void TWCRenderFgLayer()
-{
-	INT32 mx, my, Attr, Code, Colour, x, y, fx, fy, TileIndex = 0;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Attr = TWCColorRam[TileIndex];
-			Code = TWCFgVideoRam[TileIndex] + ((Attr & 0x10) << 4);
-			Colour = Attr & 0x0f;
-			fx = Attr & 0x40;
-			fy = Attr & 0x80;
-
-			x = 8 * mx;
-			y = 8 * my;
-
-			x -= TWCScrollXLo + 256 * TWCScrollXHi;
-			y -= TWCScrollY;
-
-			x &= 0x1ff;
-			y &= 0xff;
-
-			// y -= 16;
-			// if (x > 968) x -= 1024;
-
-			Draw16x16Tile(pTransDraw, Code, x, y, fx, fy, Colour, 4, 0, TWCFgTiles);
-
-			TileIndex++;
-		}
-	}
+	TILE_SET_INFO(1, code, color, flags);
 }
 
 static void TWCRenderSprites()
@@ -604,12 +543,12 @@ static void TWCRenderSprites()
 	for (INT32 Offs = 0; Offs < 0x400; Offs += 4)
 	{
 		Attr = TWCSpriteRam[Offs + 1];
-		Code = TWCSpriteRam[Offs] + ((Attr & 0x80) << 5);
+		Code = TWCSpriteRam[Offs] + ((Attr & 0x08) << 5);
 		Color = Attr & 0x07;
 		fx = Attr & 0x40;
 		fy = Attr & 0x80;
 		sx = TWCSpriteRam[Offs + 2] + ((Attr & 0x20) << 3) - 128;
-		sy = TWCSpriteRam[Offs + 3];
+		sy = TWCSpriteRam[Offs + 3] - 16;
 
 		if (TWCFlipScreenX)
 		{
@@ -623,7 +562,7 @@ static void TWCRenderSprites()
 			fy = !fy;
 		}
 
-		Draw16x16MaskTile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 7, 256, TWCSprites);
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 0, 256, TWCSprites);
 	}
 }
 
@@ -636,18 +575,18 @@ static INT32 TWCDraw()
 	
 	GenericTilemapSetFlip(TMAP_GLOBAL, TWCFlipScreenX * TMAP_FLIPX | TWCFlipScreenY * TMAP_FLIPY);
 
-	GenericTilemapSetScrollY(1, TWCScrollY);
-	GenericTilemapSetScrollX(1, TWCScrollXLo + 256 * TWCScrollXHi);
+	GenericTilemapSetScrollY(0, TWCScrollY);
+	GenericTilemapSetScrollX(0, TWCScrollXLo + 256 * TWCScrollXHi);
 
 	BurnTransferClear();
 
 //	TWCRenderBgLayer();
 //	TWCRenderFgLayer();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
 	if (nSpriteEnable & 1) TWCRenderSprites();
-	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(TWCPalette);
 
@@ -897,17 +836,17 @@ static INT32 TWCInit()
 
 	memset(TWCTempGfx, 0, 0x4000);
 	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
-	GfxDecodeX(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCFgTiles);
+	GfxDecode(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCFgTiles);
 
 	memset(TWCTempGfx, 0, 0x10000);
 	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  7, 1); if (nRet != 0) return 1;
-	GfxDecodeX(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, TWCSprites);
+	GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, TWCSprites);
 
 	memset(TWCTempGfx, 0, 0x10000);
 	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  9, 1); if (nRet != 0) return 1;
-	GfxDecodeX(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, TWCBgTiles);
+	GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, TWCBgTiles);
 
 	BurnFree(TWCTempGfx);
 
@@ -958,14 +897,12 @@ static INT32 TWCInit()
 	ZetClose();
 
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
-	GenericTilemapSetGfx(0, TWCFgTiles, 4,  8,  8, 0x04000, 0x000, 0xf);
-	GenericTilemapSetGfx(1, TWCSprites, 4, 16, 16, 0x10000, 0x100, 0x7);
-	GenericTilemapSetGfx(2, TWCBgTiles, 4, 16,  8, 0x10000, 0x200, 0xf);
-	//GenericTilemapSetOffsets(0, -1, -8); // -1 ??
-	//GenericTilemapSetOffsets(1,  0, -8);
-	GenericTilemapSetTransparent(0,0);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapSetGfx(0, TWCBgTiles, 4, 16,  8, 0x80000, 0x200, 0xf);
+	GenericTilemapSetGfx(1, TWCFgTiles, 4,  8,  8, 0x20000, 0x000, 0xf);
+	GenericTilemapSetOffsets(TMAP_GLOBAL,  0, -16);
+	GenericTilemapSetTransparent(1,0);
 
 	//	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
 
@@ -1116,8 +1053,8 @@ struct BurnDriver BurnDrvTWC = {
 	TWCScan,				// Area Scan
 	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
-	224,					// Screen width
-	256,					// Screen height
-	3,						// Screen x aspect
-	4 						// Screen y aspect
+	256,					// Screen width
+	224,					// Screen height
+	4,						// Screen x aspect
+	3 						// Screen y aspect
 };

@@ -825,7 +825,7 @@ static struct BurnRomInfo hvyunitjaRomDesc[] = {
 	{ "b73_19.0h",		0x20000, 0x2fb1b3e3, 5 | BRF_GRA },           //  10
 	{ "b73_20.0k",		0x20000, 0x0662d0dd, 5 | BRF_GRA },           //  11
 
-	{ "b73_09.2p",		0x80000, 0x537c647f, 6 | BRF_GRA },           //  12 Background Tiles
+	{ "b73_23.2p",		0x80000, 0x537c647f, 6 | BRF_GRA },           //  12 Background Tiles
 };
 
 STD_ROM_PICK(hvyunitja)

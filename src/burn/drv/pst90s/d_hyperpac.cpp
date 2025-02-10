@@ -4583,7 +4583,7 @@ static INT32 Ballboy3pInit()
 }
 
 struct BurnDriver BurnDrvBallboy3p = {
-	"ballboy3p", "snowbro3", NULL, NULL, "2003",
+	"ballboy3p", "snowbro3", NULL, NULL, "2004",
 	"Ball Boy (3 players)\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,

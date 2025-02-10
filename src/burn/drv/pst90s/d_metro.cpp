@@ -5744,7 +5744,7 @@ struct BurnDriver BurnDrvToride2gk = {
 };
 
 
-// Toride II (Japan)
+// Toride II (Japan, revision K)
 
 static struct BurnRomInfo toride2jRomDesc[] = {
 	{ "tr2_jk-5.20e",			0x040000, 0xf2668578, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -5765,10 +5765,40 @@ STD_ROM_FN(toride2j)
 
 struct BurnDriver BurnDrvToride2j = {
 	"toride2j", "toride2g", NULL, NULL, "1994",
-	"Toride II (Japan)\0", "No sound", "Metro", "Miscellaneous",
+	"Toride II (Japan, revision K)\0", "No sound", "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, toride2jRomInfo, toride2jRomName, NULL, NULL, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
+	toride2gInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Toride II (Japan, revision I)
+
+static struct BurnRomInfo toride2jiRomDesc[] = {
+	{ "tr2_ji-5.20e",			0x040000, 0x15906855, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tr2_ji-6.20c",			0x040000, 0xe71e291e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tr2_jb-8.3i",			0x020000, 0x0168f46f, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "tr2_jb-2.14i",			0x080000, 0xb31754dc, 3 | BRF_GRA },           //  3 Graphics
+	{ "tr2_jb-4.18i",			0x080000, 0xa855c3fa, 3 | BRF_GRA },           //  4
+	{ "tr2_jb-1.12i",			0x080000, 0x856f40b7, 3 | BRF_GRA },           //  5
+	{ "tr2_jb-3.16i",			0x080000, 0x78ba205f, 3 | BRF_GRA },           //  6
+
+	{ "tr2_ja_7.3g",			0x020000, 0x6ee32315, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(toride2ji)
+STD_ROM_FN(toride2ji)
+
+struct BurnDriver BurnDrvToride2ji = {
+	"toride2ji", "toride2g", NULL, NULL, "1994",
+	"Toride II (Japan, revision I)\0", "No sound", "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	NULL, toride2jiRomInfo, toride2jiRomName, NULL, NULL, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
 	toride2gInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
 };

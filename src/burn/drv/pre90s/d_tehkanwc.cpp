@@ -297,7 +297,14 @@ static INT32 MemIndex()
 
 static UINT8 trackball_read(UINT16 offset)
 {
-	return (BurnTrackballRead(offset>>1, offset&1) - TballPrev[offset]) & 0xff;
+	// Dev 0: Addresses 0xf800,0xf801
+	// Dev 1: Addresses 0xf810,0xf811
+	return (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) - TballPrev[offset]) & 0xff;
+}
+
+static void trackball_reset(UINT16 offset, UINT8 data)
+{
+	TballPrev[offset] = (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) + data) & 0xff;
 }
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
@@ -308,7 +315,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf800:
 		case 0xf801:
-			return trackball_read(address & 1);
+			return trackball_read(address);
 
 		case 0xf802:
 		case 0xf806:
@@ -316,7 +323,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf810:
 		case 0xf811:
-			return trackball_read(2 + (address & 1));
+			return trackball_read(address);
 
 		case 0xf803:
 			return 0x20 - TWCInput[0];  // Player 1
@@ -344,11 +351,6 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 	return 0;
 }
 
-
-static void trackball_reset(UINT16 offset, UINT8 data)
-{
-	TballPrev[offset] = (BurnTrackballRead(offset>>1, offset&1) + data) & 0xff;
-}
 
 static void sound_sync()
 {
@@ -385,7 +387,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf800:
 		case 0xf801:
-			trackball_reset(address & 1, data);
+			trackball_reset(address, data);
 			return;
 
 		case 0xf802:
@@ -393,7 +395,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf810:
 		case 0xf811:
-			trackball_reset(2 + (address & 1), data);
+			trackball_reset(address, data);
 			return;
 
 		case 0xf812:
@@ -468,6 +470,7 @@ static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
 {
 	switch (address) {
 		case 0x8001:
+
 			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
 
@@ -640,10 +643,10 @@ static INT32 TWCFrame()
 	ZetNewFrame(); // Reset CPU cycle counters
 
 	// Number of interrupt slices per frame
-	//INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
-	INT32 nInterleave = 264;
+	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
+	//INT32 nInterleave = 264;
 
-	MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
+	//MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
 
 	// Total cycles each CPU should run per frame
 	INT32 nCyclesTotal[3] = {
@@ -674,8 +677,8 @@ static INT32 TWCFrame()
 		CPU_RUN(CPU_SOUND, Zet); // Run the audio CPU (with timer synchronization)
 
 		// Update MSM5205 sound chip
-		//MSM5205Update();
-		MSM5205UpdateScanline(i);
+		MSM5205Update();
+		//MSM5205UpdateScanline(i);
 
 		ZetClose();
 
@@ -687,12 +690,14 @@ static INT32 TWCFrame()
 	}
 
 	// Update sound
+	ZetOpen(CPU_SOUND);
 	if (pBurnSoundOut) {
 		// Update AY-8910 sound chips
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
+	ZetClose();
+	
 	// Render frame
 	if (pBurnDraw) BurnDrvRedraw();
 
@@ -755,53 +760,6 @@ static void adpcm_int()
 	}
 
 	msm_toggle ^= 1;
-}
-
-static INT32 readbitX(const UINT8 *src, INT32 bitnum, INT32 &ssize)
-{
-	if ( (bitnum / 8) > ssize) ssize = (bitnum / 8);
-
-	return src[bitnum / 8] & (0x80 >> (bitnum % 8));
-}
-
-/*
-In the GfxDecodeX function, the modulo argument is used to calculate the offset for accessing
-the correct portion of the source data (pSrc) for each sprite or tile (c). Specifically,
-it determines how much to skip in the source data when moving from one sprite/tile to the next.
-*/
-static void GfxDecodeX(INT32 num, INT32 numPlanes, INT32 xSize, INT32 ySize, INT32 planeoffsets[], INT32 xoffsets[], INT32 yoffsets[], INT32 modulo, UINT8 *pSrc, UINT8 *pDest)
-{
-	INT32 c;
-
-	INT32 src_len = 0;
-	INT32 dst_len = 0;
-
-	for (c = 0; c < num; c++) {
-		INT32 plane, x, y;
-
-		UINT8 *dp = pDest + (c * xSize * ySize);
-		memset(dp, 0, xSize * ySize);
-
-		if ( (c * xSize + ySize) > dst_len ) dst_len = (c * xSize + ySize);
-
-		for (plane = 0; plane < numPlanes; plane++) {
-			INT32 planebit = 1 << (numPlanes - 1 - plane);
-			INT32 planeoffs = (c * modulo) + planeoffsets[plane];
-
-			for (y = 0; y < ySize; y++) {
-				INT32 yoffs = planeoffs + yoffsets[y];
-				dp = pDest + (c * xSize * ySize) + (y * xSize);
-				if ( (c * xSize * ySize) + (y * xSize) > dst_len ) dst_len = (c * xSize * ySize) + (y * xSize);
-
-				for (x = 0; x < xSize; x++) {
-					if (readbitX(pSrc, yoffs + xoffsets[x], src_len)) dp[x] |= planebit;
-				}
-			}
-		}
-	}
-
-	bprintf(0, _T("gfxdecode  src / dst size:  %x   %x\n"), src_len, dst_len);
-
 }
 
 // static INT32 vblank_timer_cb(INT32 n, INT32 c)
@@ -911,8 +869,10 @@ static INT32 TWCInit()
 	BurnWatchdogInit(TWCDoReset, 180);
 
 	// Initialize sound chips
-	AY8910InitYM(0, AY_CLOCK, SOUND_CPU_CLOCK, NULL, NULL, &portA_w, &portB_w, NULL);
-	AY8910InitYM(1, AY_CLOCK, SOUND_CPU_CLOCK, &portA_r, &portB_r, NULL, NULL, NULL);
+	AY8910Init(0, AY_CLOCK, 1);
+	AY8910Init(1, AY_CLOCK, 0);
+	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
+	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);

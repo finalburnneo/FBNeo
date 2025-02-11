@@ -19764,11 +19764,11 @@ struct BurnDriver BurnDrvMslug4fd = {
 
 // Metal Slug 4 (Final, Hack)
 // Modified by AKS & SAKURA
-// GOTVG 20250120
+// GOTVG 20250122
 
 static struct BurnRomInfo mslug4zjRomDesc[] = {
-	{ "263-p1zj.p1",	0x100000, 0xc10b8f60, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2zj.sp2",	0x600000, 0x8af77298, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p1zj.p1",	0x100000, 0x521f944f, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2zj.sp2",	0x600000, 0xd886a760, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_TEXT
 

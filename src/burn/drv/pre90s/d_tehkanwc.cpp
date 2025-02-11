@@ -97,20 +97,19 @@ static struct BurnInputInfo TWCInputList[] = {
 	{"Reset",			BIT_DIGITAL,		&TWCReset,	        "reset"		},
 	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,         "dip"		},
 	{"Dip B",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
-	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
+	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 2,         "dip"		},
 };
 #undef A
 STDINPUTINFO(TWC)
 
 inline static void TWCMakeInputs()
 {
-	TWCInput[0] = TWCInput[1] = 0x00;
-	TWCInput[2] = 0x03;
+	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0x00;
 
 	for (INT32 i = 0; i < 8; i++) {
-		TWCInput[0] ^= (TWCInputPort0[i] & 1) << i;
-		TWCInput[1] ^= (TWCInputPort1[i] & 1) << i;
-		TWCInput[2] ^= (TWCInputPort2[i] & 1) << i;
+		TWCInput[0] |= (TWCInputPort0[i] & 1) << i;
+		TWCInput[1] |= (TWCInputPort1[i] & 1) << i;
+		TWCInput[2] |= (TWCInputPort2[i] & 1) << i;
 	}
 
 	hold_coin.checklow(0, TWCInput[2], 1<<0, 1);
@@ -131,118 +130,138 @@ inline static void TWCMakeInputs()
 static struct BurnDIPInfo TWCDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL                    },
-	{0x12, 0xff, 0xff, 0xff, NULL                    },
-	{0x13, 0xff, 0xff, 0xff, NULL                    },
+	// nOffset, nID,     nMask,   nDefault,   NULL
+	{  0x00,    0xff,    0xff,    0xff,       NULL                    },
+	{  0x01,    0xff,    0xff,    0xff,       NULL                    },
+	{  0x02,    0xff,    0xff,    0xff,       NULL                    },
 
 	// Dip 1
-	{0   , 0xfe, 0   , 4   , "Difficulty"            },
-	{0x11, 0x01, 0x03, 0x02, "Easy"                  },
-	{0x11, 0x01, 0x03, 0x03, "Normal"                },
-	{0x11, 0x01, 0x03, 0x01, "Hard"                  },
-	{0x11, 0x01, 0x03, 0x00, "Very Hard"             },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Difficulty"            },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x03,    0x02,       "Easy"                  },
+	{  0x00,    0x01,    0x03,    0x03,       "Normal"                },
+	{  0x00,    0x01,    0x03,    0x01,       "Hard"                  },
+	{  0x00,    0x01,    0x03,    0x00,       "Very Hard"             },
 
-	{0   , 0xfe, 0   , 2   , "Timer Speed"           },
-	{0x11, 0x01, 0x04, 0x04, "60/60"                 },
-	{0x11, 0x01, 0x04, 0x00, "55/60"                 },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Timer Speed"           },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x04,    0x04,       "60/60"                 },
+	{  0x00,    0x01,    0x04,    0x00,       "55/60"                 },
 
-	{0   , 0xfe, 0   , 2   , "Demo Sounds"           },
-	{0x11, 0x01, 0x08, 0x00, "Off"                   },
-	{0x11, 0x01, 0x08, 0x08, "On"                    },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Demo Sounds"           },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x08,    0x00,       "Off"                   },
+	{  0x00,    0x01,    0x08,    0x08,       "On"                    },
 
 	// Dip 2
-	{0   , 0xfe, 0   , 8  , "Coin A"                      },
-	{0x12, 0x01, 0x07, 0x01, " 2 Coins 1 Credit"          },
-	{0x12, 0x01, 0x07, 0x07, " 1 Coin  1 Credit"          },
-	{0x12, 0x01, 0x07, 0x00, " 2 Coins 3 Credits"         },
-	{0x12, 0x01, 0x07, 0x06, " 1 Coin  2 Credits"         },
-	{0x12, 0x01, 0x07, 0x05, " 1 Coin  3 Credits"         },
-	{0x12, 0x01, 0x07, 0x04, " 1 Coin  4 Credits"         },
-	{0x12, 0x01, 0x07, 0x03, " 1 Coin  5 Credits"         },
-	{0x12, 0x01, 0x07, 0x02, " 1 Coin  6 Credits"         },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       8,          "Coin A"                      },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x07,    0x01,       " 2 Coins 1 Credit"          },
+	{  0x01,    0x01,    0x07,    0x07,       " 1 Coin  1 Credit"          },
+	{  0x01,    0x01,    0x07,    0x00,       " 2 Coins 3 Credits"         },
+	{  0x01,    0x01,    0x07,    0x06,       " 1 Coin  2 Credits"         },
+	{  0x01,    0x01,    0x07,    0x05,       " 1 Coin  3 Credits"         },
+	{  0x01,    0x01,    0x07,    0x04,       " 1 Coin  4 Credits"         },
+	{  0x01,    0x01,    0x07,    0x03,       " 1 Coin  5 Credits"         },
+	{  0x01,    0x01,    0x07,    0x02,       " 1 Coin  6 Credits"         },
 
-	{0   , 0xfe, 0   , 8  , "Coin B"                      },
-	{0x12, 0x01, 0x38, 0x08, " 2 Coins 1 Credit"          },
-	{0x12, 0x01, 0x38, 0x38, " 1 Coin  1 Credit"          },
-	{0x12, 0x01, 0x38, 0x00, " 2 Coins 3 Credits"         },
-	{0x12, 0x01, 0x38, 0x30, " 1 Coin  2 Credits"         },
-	{0x12, 0x01, 0x38, 0x28, " 1 Coin  3 Credits"         },
-	{0x12, 0x01, 0x38, 0x20, " 1 Coin  4 Credits"         },
-	{0x12, 0x01, 0x38, 0x18, " 1 Coin  5 Credits"         },
-	{0x12, 0x01, 0x38, 0x10, " 1 Coin  6 Credits"         },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       8,          "Coin B"                      },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x38,    0x08,       " 2 Coins 1 Credit"          },
+	{  0x01,    0x01,    0x38,    0x38,       " 1 Coin  1 Credit"          },
+	{  0x01,    0x01,    0x38,    0x00,       " 2 Coins 3 Credits"         },
+	{  0x01,    0x01,    0x38,    0x30,       " 1 Coin  2 Credits"         },
+	{  0x01,    0x01,    0x38,    0x28,       " 1 Coin  3 Credits"         },
+	{  0x01,    0x01,    0x38,    0x20,       " 1 Coin  4 Credits"         },
+	{  0x01,    0x01,    0x38,    0x18,       " 1 Coin  5 Credits"         },
+	{  0x01,    0x01,    0x38,    0x10,       " 1 Coin  6 Credits"         },
 
-	{0   , 0xfe, 0   , 4  , "Start Credits (P1&P2)/Extra" },
-	{0x12, 0x01, 0xc0, 0x80, " 1&1/200%"                  },
-	{0x12, 0x01, 0xc0, 0xc0, " 1&2/100%"                  },
-	{0x12, 0x01, 0xc0, 0x40, " 2&2/100%"                  },
-	{0x12, 0x01, 0xc0, 0x00, " 2&3/67%"                   },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Start Credits (P1&P2)/Extra" },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0xc0,    0x80,       " 1&1/200%"                  },
+	{  0x01,    0x01,    0xc0,    0xc0,       " 1&2/100%"                  },
+	{  0x01,    0x01,    0xc0,    0x40,       " 2&2/100%"                  },
+	{  0x01,    0x01,    0xc0,    0x00,       " 2&3/67%"                   },
 
 	// Dip 3
-	{0   , 0xfe, 0   , 4  , "1P Game Time"                },
-	{0x13, 0x01, 0x03, 0x00, " 2:30"                      },
-	{0x13, 0x01, 0x03, 0x01, " 2:00"                      },
-	{0x13, 0x01, 0x03, 0x03, " 1:30"                      },
-	{0x13, 0x01, 0x03, 0x02, " 1:00"                      },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4, "1P Game Time"                },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x02,    0x01,    0x03,    0x00,       " 2:30"                      },
+	{  0x02,    0x01,    0x03,    0x01,       " 2:00"                      },
+	{  0x02,    0x01,    0x03,    0x03,       " 1:30"                      },
+	{  0x02,    0x01,    0x03,    0x02,       " 1:00"                      },
 
-	{0   , 0xfe, 0   , 32  , "2P Game Time"               },
-	{0x13, 0x01, 0x7c, 0x00, " 5:00/3:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x60, " 5:00/2:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x20, " 5:00/2:35 Extra"           },
-	{0x13, 0x01, 0x7c, 0x40, " 5:00/2:30 Extra"           },
-	{0x13, 0x01, 0x7c, 0x04, " 4:00/2:30 Extra"           },
-	{0x13, 0x01, 0x7c, 0x64, " 4:00/2:15 Extra"           },
-	{0x13, 0x01, 0x7c, 0x24, " 4:00/2:05 Extra"           },
-	{0x13, 0x01, 0x7c, 0x44, " 4:00/2:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x1c, " 3:30/2:15 Extra"           },
-	{0x13, 0x01, 0x7c, 0x7c, " 3:30/2:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x3c, " 3:30/1:50 Extra"           },
-	{0x13, 0x01, 0x7c, 0x5c, " 3:30/1:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x08, " 3:00/2:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x68, " 3:00/1:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x28, " 3:00/1:35 Extra"           },
-	{0x13, 0x01, 0x7c, 0x48, " 3:00/1:30 Extra"           },
-	{0x13, 0x01, 0x7c, 0x0c, " 2:30/1:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x6c, " 2:30/1:30 Extra"           },
-	{0x13, 0x01, 0x7c, 0x2c, " 2:30/1:20 Extra"           },
-	{0x13, 0x01, 0x7c, 0x4c, " 2:30/1:15 Extra"           },
-	{0x13, 0x01, 0x7c, 0x10, " 2:00/1:30 Extra"           },
-	{0x13, 0x01, 0x7c, 0x70, " 2:00/1:15 Extra"           },
-	{0x13, 0x01, 0x7c, 0x30, " 2:00/1:05 Extra"           },
-	{0x13, 0x01, 0x7c, 0x50, " 2:00/1:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x14, " 1:30/1:15 Extra"           },
-	{0x13, 0x01, 0x7c, 0x74, " 1:30/1:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x34, " 1:30/0:50 Extra"           },
-	{0x13, 0x01, 0x7c, 0x54, " 1:30/0:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x18, " 1:00/1:00 Extra"           },
-	{0x13, 0x01, 0x7c, 0x78, " 1:00/0:45 Extra"           },
-	{0x13, 0x01, 0x7c, 0x38, " 1:00/0:35 Extra"           },
-	{0x13, 0x01, 0x7c, 0x58, " 1:00/0:30 Extra"           },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       3,          "2P Game Time"               },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x02,    0x01,    0x7c,    0x00,       " 5:00/3:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x60,       " 5:00/2:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x20,       " 5:00/2:35 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x40,       " 5:00/2:30 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x04,       " 4:00/2:30 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x64,       " 4:00/2:15 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x24,       " 4:00/2:05 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x44,       " 4:00/2:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x1c,       " 3:30/2:15 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x7c,       " 3:30/2:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x3c,       " 3:30/1:50 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x5c,       " 3:30/1:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x08,       " 3:00/2:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x68,       " 3:00/1:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x28,       " 3:00/1:35 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x48,       " 3:00/1:30 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x0c,       " 2:30/1:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x6c,       " 2:30/1:30 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x2c,       " 2:30/1:20 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x4c,       " 2:30/1:15 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x10,       " 2:00/1:30 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x70,       " 2:00/1:15 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x30,       " 2:00/1:05 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x50,       " 2:00/1:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x14,       " 1:30/1:15 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x74,       " 1:30/1:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x34,       " 1:30/0:50 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x54,       " 1:30/0:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x18,       " 1:00/1:00 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x78,       " 1:00/0:45 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x38,       " 1:00/0:35 Extra"           },
+	{  0x02,    0x01,    0x7c,    0x58,       " 1:00/0:30 Extra"           },
 
-	{0   , 0xfe, 0   , 2   , "Game Type"                  },
-	{0x13, 0x01, 0x80, 0x80, " Timer In"                  },
-	{0x13, 0x01, 0x80, 0x00, " Credit In"                 },
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Game Type"                  },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x02,    0x01,    0x80,    0x80,       " Timer In"                  },
+	{  0x02,    0x01,    0x80,    0x00,       " Credit In"                 },
 };
 
 STDDIPINFO(TWC)
 
+static inline void data_address_w(INT32 chip, UINT8 offset, UINT8 data)
+{
+	AY8910Write(chip, ~offset & 1, data);
+}
 static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
 {
-	switch (port & 0xff)
-	{
-		case 0x00:
-			AY8910Write(0, 0, data);
-			return;
+	UINT8 offset = port & 0xff;
 
+	switch (offset)
+	{
+		// MAME code uses data_address_w, which negates the port
+		case 0x00:
 		case 0x01:
-			AY8910Write(0, 1, data);
+			data_address_w(0, offset, data);
 			return;
 
 		case 0x02:
-			AY8910Write(1, 0, data);
-			return;
-
 		case 0x03:
-			AY8910Write(1, 1, data);
+			data_address_w(1, offset, data);
 			return;
 	}
 }
@@ -332,10 +351,10 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 			return trackball_read(address);
 
 		case 0xf803:
-			return 0x20 - TWCInput[0];  // Player 1
+			return 0xff - TWCInput[0];  // Player 1
 
 		case 0xf813:
-			return 0x20 - TWCInput[1];  // Player 2
+			return 0xff - TWCInput[1];  // Player 2
 
 		case 0xf820:
 			return TWCSoundLatch2;

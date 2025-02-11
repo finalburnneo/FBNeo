@@ -230,13 +230,19 @@ static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x00:
+			AY8910Write(0, 0, data);
+			return;
+
 		case 0x01:
-			AY8910Write(0, port & 1, data);
+			AY8910Write(0, 1, data);
 			return;
 
 		case 0x02:
+			AY8910Write(1, 0, data);
+			return;
+
 		case 0x03:
-			AY8910Write(1, port & 1, data);
+			AY8910Write(1, 1, data);
 			return;
 	}
 }
@@ -869,7 +875,7 @@ static INT32 TWCInit()
 	BurnWatchdogInit(TWCDoReset, 180);
 
 	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 1);
+	AY8910Init(0, AY_CLOCK, 0);
 	AY8910Init(1, AY_CLOCK, 0);
 	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
 	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);

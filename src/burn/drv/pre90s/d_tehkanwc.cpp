@@ -104,16 +104,16 @@ STDINPUTINFO(TWC)
 
 inline static void TWCMakeInputs()
 {
-	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0x00;
+	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0xff;
 
 	for (INT32 i = 0; i < 8; i++) {
-		TWCInput[0] |= (TWCInputPort0[i] & 1) << i;
-		TWCInput[1] |= (TWCInputPort1[i] & 1) << i;
-		TWCInput[2] |= (TWCInputPort2[i] & 1) << i;
+		TWCInput[0] ^= (TWCInputPort0[i] & 1) << i;
+		TWCInput[1] ^= (TWCInputPort1[i] & 1) << i;
+		TWCInput[2] ^= (TWCInputPort2[i] & 1) << i;
 	}
 
-	hold_coin.checklow(0, TWCInput[2], 1<<0, 1);
-	hold_coin.checklow(1, TWCInput[2], 1<<1, 1);
+	hold_coin.checklow(0, TWCInput[2], 1<<0, 2);
+	hold_coin.checklow(1, TWCInput[2], 1<<1, 2);
 
 	// device, portA_reverse?, portB_reverse?
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
@@ -344,17 +344,17 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf802:
 		case 0xf806:
-			return 0xff - TWCInput[2];  // System
+			return TWCInput[2];  // System
 
 		case 0xf810:
 		case 0xf811:
 			return trackball_read(address);
 
 		case 0xf803:
-			return 0xff - TWCInput[0];  // Player 1
+			return TWCInput[0];  // Player 1
 
 		case 0xf813:
-			return 0xff - TWCInput[1];  // Player 2
+			return TWCInput[1];  // Player 2
 
 		case 0xf820:
 			return TWCSoundLatch2;
@@ -895,7 +895,7 @@ static INT32 TWCInit()
 
 	// Initialize sound chips
 	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
 	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
 	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);

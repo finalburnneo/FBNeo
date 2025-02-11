@@ -82,27 +82,26 @@ static UINT8 TWCFlipScreenY;
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TWCInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,		TWCInputPort2 + 0,	"p1 coin"	},
-	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	"p2 coin"	},
 	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	"p1 start"	},
+	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 fire 1"	},
+	A("P1 Stick X", BIT_ANALOG_REL,     &TWCAnalog[0],		"p1 x-axis"     ),
+	A("P1 Stick Y", BIT_ANALOG_REL,     &TWCAnalog[1],		"p1 y-axis"     ),
+
+	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,		TWCInputPort2 + 3,	"p2 start"	},
-
-	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 shot"	},
-	A("P1 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[0],		"p1 x-axis"     ),
-	A("P1 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[1],		"p1 y-axis"     ),
-
-	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	"p2 shot"	},
-	A("P2 Trackball X", BIT_ANALOG_REL,     &TWCAnalog[2],      "p2 x-axis"     ),
-	A("P2 Trackball Y", BIT_ANALOG_REL,     &TWCAnalog[3],      "p2 y-axis"     ),
+	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	"p2 fire 1"	},
+	A("P2 Stick X", BIT_ANALOG_REL,     &TWCAnalog[2],      "p2 x-axis"     ),
+	A("P2 Stick Y", BIT_ANALOG_REL,     &TWCAnalog[3],      "p2 y-axis"     ),
 
 	{"Reset",			BIT_DIGITAL,		&TWCReset,	        "reset"		},
 	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,         "dip"		},
 	{"Dip B",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
 	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 2,         "dip"		},
 };
-#undef A
+
 STDINPUTINFO(TWC)
 
-inline static void TWCMakeInputs()
+inline static void TWCMakeInputs(INT32 nInterleave)
 {
 	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0xff;
 
@@ -117,11 +116,11 @@ inline static void TWCMakeInputs()
 
 	// device, portA_reverse?, portB_reverse?
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(0, TWCAnalog[0], TWCAnalog[1], 0x02, 0x0f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballFrame(0, TWCAnalog[0], TWCAnalog[1], 0x02, 0x0f, nInterleave);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(1, TWCAnalog[2], TWCAnalog[3], 0x02, 0x0f);
+	BurnTrackballFrame(1, TWCAnalog[2], TWCAnalog[3], 0x02, 0x0f, nInterleave);
 	BurnTrackballUpdate(1);
 
 }
@@ -324,12 +323,12 @@ static UINT8 trackball_read(UINT16 offset)
 {
 	// Dev 0: Addresses 0xf800,0xf801
 	// Dev 1: Addresses 0xf810,0xf811
-	return (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) - TballPrev[offset]) & 0xff;
+	return (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) - TballPrev[offset & 0x03]) & 0xff;
 }
 
 static void trackball_reset(UINT16 offset, UINT8 data)
 {
-	TballPrev[offset] = (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) + data) & 0xff;
+	TballPrev[offset & 0x03] = (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) + data) & 0xff;
 }
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
@@ -663,13 +662,13 @@ static INT32 TWCFrame()
 
 	if (TWCReset) TWCDoReset(1); // Handle reset
 
-	TWCMakeInputs(); // Update inputs
-
-	ZetNewFrame(); // Reset CPU cycle counters
-
 	// Number of interrupt slices per frame
 	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
 	//INT32 nInterleave = 264;
+
+	TWCMakeInputs(nInterleave); // Update inputs
+
+	ZetNewFrame(); // Reset CPU cycle counters
 
 	//MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
 

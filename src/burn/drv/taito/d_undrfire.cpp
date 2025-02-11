@@ -972,11 +972,11 @@ static INT32 UndrfireDraw()
 
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0x3;
 	if (TC0100SCNBottomLayer(0)) {
-		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoCharsPivot);
+		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoCharsPivot, 0);
+		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoCharsPivot, 0);
 	} else {
-		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoCharsPivot);
+		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoCharsPivot, 0);
+		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoCharsPivot, 0);
 	}
 
 	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(layer[0], 0, 1, TaitoChars);

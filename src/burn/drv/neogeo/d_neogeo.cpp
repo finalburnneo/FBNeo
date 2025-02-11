@@ -12420,7 +12420,7 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Karnov's Revenge / Fighter's History Dynamite
+// Karnov's Revenge ~ Fighter's History Dynamite
 
 static struct BurnRomInfo karnovrRomDesc[] = {
 	{ "066-p1.p1",    0x100000, 0x8c86fd22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
@@ -12444,7 +12444,7 @@ STD_ROM_FN(karnovr)
 
 struct BurnDriver BurnDrvKarnovr = {
 	"karnovr", NULL, "neogeo", NULL, "1994",
-	"Karnov's Revenge / Fighter's History Dynamite\0", NULL, "Data East Corporation", "Neo Geo MVS",
+	"Karnov's Revenge ~ Fighter's History Dynamite\0", NULL, "Data East Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovrRomInfo, karnovrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -12453,7 +12453,7 @@ struct BurnDriver BurnDrvKarnovr = {
 };
 
 
-// Street Hoop / Street Slam / Dunk Dream (DEM-004 ~ DEH-004)
+// Street Hoop ~ Street Slam ~ Dunk Dream (DEM-004 ~ DEH-004)
 /* MVS AND AES VERSION */
 
 static struct BurnRomInfo strhoopRomDesc[] = {
@@ -12479,7 +12479,7 @@ STD_ROM_FN(strhoop)
 
 struct BurnDriver BurnDrvStrhoop = {
 	"strhoop", NULL, "neogeo", NULL, "1994",
-	"Street Hoop / Street Slam / Dunk Dream (DEM-004 ~ DEH-004)\0", NULL, "Data East Corporation", "Neo Geo MVS",
+	"Street Hoop ~ Street Slam ~ Dunk Dream (DEM-004 ~ DEH-004)\0", NULL, "Data East Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, strhoopRomInfo, strhoopRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -16588,7 +16588,7 @@ struct BurnDriver BurnDrvGowcaiet = {
 };
 
 
-// Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2)
+// Karnov's Revenge ~ Fighter's History Dynamite - Revolution (Hack, v0.2)
 // https://gamehackfan.github.io/karnovre/
 
 static struct BurnRomInfo karnovreRomDesc[] = {
@@ -16613,7 +16613,7 @@ STD_ROM_FN(karnovre)
 
 struct BurnDriver BurnDrvKarnovre = {
 	"karnovre", "karnovr", "neogeo", NULL, "2024",
-	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.2, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	"Karnov's Revenge ~ Fighter's History Dynamite - Revolution (Hack, v0.2)\0", NULL, "GameHackFan", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -16622,7 +16622,7 @@ struct BurnDriver BurnDrvKarnovre = {
 };
 
 
-// Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)
+// Matrimelee ~ Shin Gouketsuji Ichizoku Toukon (Hack, Enable Hidden Characters V2)
 
 static struct BurnRomInfo matrimbhRomDesc[] = {
 	{ "266-p1bh.p1",  0x100000, 0x5f7b6942, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -16651,9 +16651,9 @@ STDROMPICKEXT(matrimbh, matrimbh, neogeo)
 STD_ROM_FN(matrimbh)
 
 struct BurnDriver BurnDrvMatrimbh = {
-	"matrimbh", "matrim", "neogeo", NULL, "2002",
-	"Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)\0", NULL, "Creamymami[EGCG]", "Neo Geo MVS",
-	L"\u65B0\u8C6A\u8840\u5BFA\u4E00\u65CF - \u95D8\u5A5A\0Matrimelee (Enable Hidden Characters V2)\0", NULL, NULL, NULL,
+	"matrimbh", "matrim", "neogeo", NULL, "20??",
+	"Matrimelee ~ Shin Gouketsuji Ichizoku Toukon (Hack, Enable Hidden Characters V2)\0", NULL, "Creamymami[EGCG]", "Neo Geo MVS",
+	L"\u65B0\u8C6A\u8840\u5BFA\u4E00\u65CF - \u95D8\u5A5A\0Matrimelee (Hack, Enable Hidden Characters V2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, matrimbhRomInfo, matrimbhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	matrimInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -28593,6 +28593,36 @@ struct BurnDriver BurnDrvCaptainBarrel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, captainbarrelRomInfo, captainbarrelRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+
+// Karnov Neo Geo (HB)
+// https://www.neo-source.com/stuff/karnov_builder.zip
+
+static struct BurnRomInfo karnovngRomDesc[] = {
+	{ "karnov-p1.p1", 0x080000, 0x79fd92aa, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "karnov-s1.s1", 0x020000, 0xf6a144cf, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "karnov-c1.c1", 0x080000, 0xa27d94ff, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "karnov-c2.c2", 0x080000, 0xb9435703, 3 | BRF_GRA },           	//  4
+
+	{ "karnov-m1.m1", 0x010000, 0x089a15b5, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "karnov-v1.v1", 0x200000, 0x51502fea, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(karnovng, karnovng, neogeo)
+STD_ROM_FN(karnovng)
+
+struct BurnDriver BurnDrvKarnovng = {
+	"karnovng", NULL, "neogeo", NULL, "2025",
+	"Karnov Neo Geo (HB)\0", "Unofficial port, press P1 or P2 Select buttons to add coins.", "iq_132", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NULL, karnovngRomInfo, karnovngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };

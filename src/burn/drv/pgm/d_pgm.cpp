@@ -2136,12 +2136,7 @@ static INT32 oldsInit()
 	if (!(nIpsDrvDefine & IPS_NOT_PROTECT))
 		pPgmProtCallback = install_protection_asic25_asic28_olds;
 
-//	return pgmInit();
-	int nRet = pgmInit();
-	FILE* f = fopen("pgm_prg", "wb");
-	fwrite(PGM68KROM, 0x400000, 1, f);
-	fclose(f);
-	return nRet;
+	return pgmInit();
 }
 
 struct BurnDriver BurnDrvOlds = {

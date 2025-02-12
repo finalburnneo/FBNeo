@@ -35,10 +35,16 @@
 static UINT8 TWCInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 TWCFakeInputPort[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCDip[3]        = {0, 0, 0};
 static UINT8 TWCInput[3]      = {0x00, 0x00, 0x00};
+static UINT8 TWCFakeInput = 0;
 static INT32 TballPrev[4];
 static INT16 TWCAnalog[4]     = {0, 0, 0, 0};
+static INT16 track_p1[2];
+static INT16 track_p2[2];
+static INT32 track_reset_p1[2] = {0, 0};
+static INT32 track_reset_p2[2] = {0, 0};
 static UINT8 TWCReset         = 0;
 static HoldCoin<2> hold_coin;
 
@@ -84,45 +90,54 @@ static struct BurnInputInfo TWCInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,		TWCInputPort2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	"p1 start"	},
 	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 fire 1"	},
-	A("P1 Stick X", BIT_ANALOG_REL,     &TWCAnalog[0],		"p1 x-axis"     ),
-	A("P1 Stick Y", BIT_ANALOG_REL,     &TWCAnalog[1],		"p1 y-axis"     ),
+	A("P1 Stick X",     BIT_ANALOG_REL,     &track_p1[0],		"p1 x-axis" ),
+	A("P1 Stick Y",     BIT_ANALOG_REL,     &track_p1[1],		"p1 y-axis" ),
+	{"P1 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 up"		},
+	{"P1 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 down"	},
+	{"P1 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 left"	},
+	{"P1 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 3,	"p1 right"	},
 
 	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,		TWCInputPort2 + 3,	"p2 start"	},
 	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	"p2 fire 1"	},
-	A("P2 Stick X", BIT_ANALOG_REL,     &TWCAnalog[2],      "p2 x-axis"     ),
-	A("P2 Stick Y", BIT_ANALOG_REL,     &TWCAnalog[3],      "p2 y-axis"     ),
+	A("P2 Stick X",     BIT_ANALOG_REL,     &track_p2[0],       "p2 x-axis"     ),
+	A("P2 Stick Y",     BIT_ANALOG_REL,     &track_p2[1],       "p2 y-axis"     ),
+	{"P2 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 4,	"p2 up"		},
+	{"P2 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 5,	"p2 down"	},
+	{"P2 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 6,	"p2 left"	},
+	{"P2 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 7,	"p2 right"	},
 
 	{"Reset",			BIT_DIGITAL,		&TWCReset,	        "reset"		},
 	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,         "dip"		},
 	{"Dip B",			BIT_DIPSWITCH,		TWCDip + 1,         "dip"		},
 	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 2,         "dip"		},
 };
-
+#undef A
 STDINPUTINFO(TWC)
 
 inline static void TWCMakeInputs(INT32 nInterleave)
 {
 	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0xff;
+	TWCFakeInput = 0;
 
 	for (INT32 i = 0; i < 8; i++) {
 		TWCInput[0] ^= (TWCInputPort0[i] & 1) << i;
 		TWCInput[1] ^= (TWCInputPort1[i] & 1) << i;
 		TWCInput[2] ^= (TWCInputPort2[i] & 1) << i;
+		TWCFakeInput |= (TWCFakeInputPort[i] & 1) << i;
 	}
 
 	hold_coin.checklow(0, TWCInput[2], 1<<0, 2);
 	hold_coin.checklow(1, TWCInput[2], 1<<1, 2);
 
 	// device, portA_reverse?, portB_reverse?
-	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(0, TWCAnalog[0], TWCAnalog[1], 0x02, 0x0f, nInterleave);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
-	BurnTrackballUpdate(0);
+	// BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+	// BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x0f, nInterleave);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	// BurnTrackballUpdate(0);
 
-	BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(1, TWCAnalog[2], TWCAnalog[3], 0x02, 0x0f, nInterleave);
-	BurnTrackballUpdate(1);
-
+	// BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
+	// BurnTrackballFrame(1, track_p2[0]], track_p2[1], 0x02, 0x0f, nInterleave);
+	// BurnTrackballUpdate(1);
 }
 
 
@@ -331,6 +346,38 @@ static void trackball_reset(UINT16 offset, UINT8 data)
 	TballPrev[offset & 0x03] = (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) + data) & 0xff;
 }
 
+static UINT8 track_p1_r(UINT16 address)
+{
+	UINT16 offset = address & 1;
+	UINT8 joy;
+
+	joy = TWCFakeInput >> (2 * offset);
+	if (joy & 1) return -63;
+	if (joy & 2) return 63;
+	return (track_p1[offset] - track_reset_p1[offset]) & 0xff;
+}
+
+static void track_p1_reset_w(UINT16 offset, UINT8 data)
+{
+	track_reset_p1[offset] = track_p1[offset] + data;
+}
+
+static UINT8 track_p2_r(UINT16 address)
+{
+	UINT16 offset = address & 1;
+	UINT8 joy;
+
+	joy = TWCFakeInput >> (4 + 2 * offset);
+	if (joy & 1) return -63;
+	if (joy & 2) return 63;
+	return (track_p2[offset] - track_reset_p2[offset]) & 0xff;
+}
+
+static void track_p2_reset_w(UINT16 offset, UINT8 data)
+{
+	track_reset_p2[offset] = track_p2[offset] + data;
+}
+
 static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
 	switch (address) {
@@ -339,7 +386,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf800:
 		case 0xf801:
-			return trackball_read(address);
+			return track_p1_r(address & 1);
 
 		case 0xf802:
 		case 0xf806:
@@ -347,7 +394,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf810:
 		case 0xf811:
-			return trackball_read(address);
+			return track_p2_r(address & 1);
 
 		case 0xf803:
 			return TWCInput[0];  // Player 1
@@ -411,7 +458,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf800:
 		case 0xf801:
-			trackball_reset(address, data);
+			track_p1_reset_w(address & 1, data);
 			return;
 
 		case 0xf802:
@@ -419,8 +466,8 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf810:
 		case 0xf811:
-			trackball_reset(address, data);
-			return;
+			track_p2_reset_w(address & 1, data);
+		return;
 
 		case 0xf812:
 			return;     // placeholder for future adding of gridiron_led1
@@ -650,6 +697,11 @@ static INT32 TWCDoReset(INT32 clear_mem)
 
 	msm_data_offs  = 0;
 	msm_toggle     = 0;
+
+	track_reset_p1[0] = 0;
+	track_reset_p1[1] = 0;
+	track_reset_p2[0] = 0;
+	track_reset_p2[1] = 0;
 
 	HiscoreReset();
 
@@ -908,7 +960,7 @@ static INT32 TWCInit()
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
 
 	// Initialize analog controls for player 1 and player 2
-	BurnGunInit(2, true);
+	//BurnGunInit(2, true);
 
 	TWCDoReset(1);
 
@@ -923,7 +975,7 @@ static INT32 TWCExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	MSM5205Exit();
-	BurnGunExit();
+	//BurnGunExit();
 
 	BurnFree(Mem);
 	
@@ -967,6 +1019,10 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(TWCFlipScreenY);
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
+		SCAN_VAR(track_reset_p1[0]);
+		SCAN_VAR(track_reset_p1[1]);
+		SCAN_VAR(track_reset_p2[0]);
+		SCAN_VAR(track_reset_p2[1]);
 
 		BurnWatchdogScan(nAction);
 

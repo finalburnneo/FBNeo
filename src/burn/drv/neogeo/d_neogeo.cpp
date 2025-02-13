@@ -28598,6 +28598,37 @@ struct BurnDriver BurnDrvCaptainBarrel = {
 };
 
 
+// Golden Axe Neo Geo (HB)
+// https://h0ffman.itch.io/golden-axe
+
+static struct BurnRomInfo goldnaxengRomDesc[] = {
+	{ "1338-p1.p1",		0x100000, 0x3c3ed057, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "1338-s1.s1",		0x020000, 0x707d91c0, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "1338-c1.c1",		0x200000, 0x7540f3d6, 3 | BRF_GRA },           //  2 Sprite data
+	{ "1338-c2.c2",		0x200000, 0xa78a6647, 3 | BRF_GRA },           //  3
+
+	{ "1338-m1.m1",		0x010000, 0x7805d21b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "1338-v1.v1",		0x400000, 0x5ed99267, 5 | BRF_SND },           //  5 Sound data
+	{ "1338-v2.v2",		0x400000, 0xd30632dd, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(goldnaxeng, goldnaxeng, neogeo)
+STD_ROM_FN(goldnaxeng)
+
+struct BurnDriver BurnDrvGoldnaxeng = {
+	"goldnaxeng", NULL, "neogeo", NULL, "2025",
+	"Golden Axe Neo Geo (HB)\0", NULL, "h0ffman", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, goldnaxengRomInfo, goldnaxengRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Karnov Neo Geo (HB)
 // https://www.neo-source.com/stuff/karnov_builder.zip
 

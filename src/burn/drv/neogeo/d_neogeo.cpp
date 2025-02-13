@@ -1461,16 +1461,6 @@ static struct BurnDIPInfo kf2k23rdDIPList[] = {
 	{0x06, 0x01, 0x01, 0x01, "YZKOF"                        },
 };
 
-static struct BurnDIPInfo kf2k2ps2DIPList[] = {
-	// Fake DIPs
-	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Ver 1.0
-
-	{0,    0xFE, 0,    3,    "Version change (Must reload)"	},
-	{0x06, 0x01, 0x03, 0x00, "Ver 1.0"                      },
-	{0x06, 0x01, 0x03, 0x01, "Ver 0.4"                      },
-	{0x06, 0x01, 0x03, 0x02, "GOTVG"                        },
-};
-
 static struct BurnDIPInfo kf10thuoDIPList[] = {
 	// Fake DIPs
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // GOTVG
@@ -1499,7 +1489,6 @@ STDDIPINFOEXT(kof98cb,		ngdefault,		kof98cb		)
 STDDIPINFOEXT(kof98mix,		ngdefault,		kof98mix	)
 STDDIPINFOEXT(kof2kotc,		aesdefault,		kof2kotc	)
 STDDIPINFOEXT(kf2k23rd,		ngdefault,		kf2k23rd	)
-STDDIPINFOEXT(kf2k2ps2,		aesdefault,		kf2k2ps2	)
 STDDIPINFOEXT(kf10thuo,		ngdefault,		kf10thuo	)
 STDDIPINFOEXT(lastblad,		ngdefault,		lastblad	)
 
@@ -25440,41 +25429,30 @@ struct BurnDriver BurnDrvKof2002m = {
 };
 
 
-// The King of Fighters 2002 (PlayStation 2, Hack)
-// Modified by EGCG / EGHT / Dream / GSC2007
+// The King of Fighters 2002 (PlayStation 2 Plus 2025 ver 1.0, Hack)
 
-static struct BurnRomInfo kf2k2ps2RomDesc[] = {
-	/* Ver 1.0 - 20180417 */
-	{ "265-p1ps2.p1",		0x100000, 0x9da95b36, 1 | BRF_ESS | BRF_PRG },
-	{ "265-p2ps2.sp2",		0x500000, 0x9846db3a, 1 | BRF_ESS | BRF_PRG },
+static struct BurnRomInfo kf2k2ps2reRomDesc[] = {
+	{ "265-p1re.p1",		0x100000, 0xd2874a19, 1 | BRF_ESS | BRF_PRG },
+	{ "265-p2re.sp2",		0x500000, 0x14921466, 1 | BRF_ESS | BRF_PRG },
+	{ "265-p3re.p3",		0x100000, 0x6808554f, 1 | BRF_ESS | BRF_PRG },
+#if 0
+	{ "265-p4re.p4",		0x100000, 0x76c2051d, 1 | BRF_ESS | BRF_PRG },
+	{ "265-p5re.p5",		0x100000, 0x30cc9f28, 1 | BRF_ESS | BRF_PRG },
+#endif
 
-	{ "265-s1ps2.s1",		0x020000, 0x714ade47, 2 | BRF_GRA },
+	{ "265-s1re.s1",		0x020000, 0x7c31a953, 2 | BRF_GRA },
 
 	KOF2002_DECRYPTED_SPR1
 	KOF2002_DECRYPTED_SPR2
 	KOF2002_DECRYPTED_SPR3
 	{ "265-c7re.c7",		0x800000, 0xf0897b93, 3 | BRF_GRA },
 	{ "265-c8re.c8",		0x800000, 0x8d27a4a6, 3 | BRF_GRA },
-	{ "265-c9re.c9",		0x800000, 0x9939c08a, 3 | BRF_GRA },
+	{ "265-c9re.c9",		0x800000, 0x1a2a8f68, 3 | BRF_GRA },
 	{ "265-c10re.c10",		0x800000, 0xc724c069, 3 | BRF_GRA },
 
 	KOF2002_DECRYPTED_Z80
 
 	KOF2002_DECRYPTED_SND
-
-	/* Ver 0.4 - 20070801 */
-	{ "265-p1ps2.dif",		0x100000, 0x09fdfd82, 0 | BRF_ESS | BRF_PRG },
-	{ "265-p2ps2.dif",		0x500000, 0x9a7d5af0, 0 | BRF_ESS | BRF_PRG },
-
-	{ "265-c7ps2.dif",		0x800000, 0xf146f22d, 0 | BRF_GRA },
-	{ "265-c8ps2.dif",		0x800000, 0x321645f2, 0 | BRF_GRA },
-	{ "265-c9ps2.dif",		0x800000, 0x2960c058, 0 | BRF_GRA },
-	{ "265-c10ps2.dif",		0x800000, 0x45c40d11, 0 | BRF_GRA },
-
-	/* GOTVG - 20230514 */
-	{ "265-p1re.dif",		0x100000, 0xd26ca5a5, 0 | BRF_ESS | BRF_PRG },
-	{ "265-p2re.dif",		0x500000, 0x4c948784, 0 | BRF_ESS | BRF_PRG },
-	{ "265-p3re.p3",		0x020000, 0xadf44b1d, 0 | BRF_ESS | BRF_PRG },
 
 #if 0
 	{ "214-m1.m1",			0x020000, 0xdabc427c, 0 | BRF_ESS | BRF_PRG },
@@ -25495,65 +25473,25 @@ static struct BurnRomInfo kf2k2ps2RomDesc[] = {
 #endif
 };
 
-STDROMPICKEXT(kf2k2ps2, kf2k2ps2, neogeo)
-STD_ROM_FN(kf2k2ps2)
+STDROMPICKEXT(kf2k2ps2re, kf2k2ps2re, neogeo)
+STD_ROM_FN(kf2k2ps2re)
 
-static void kf2k2ps2Callback()
+static INT32 kf2k2ps2reInit()
 {
-	INT32 nIndex = (VerSwitcher & 0x01) ? 16 : 22;
-
-	RomDiffPatch(Neo68KROMActive + 0x000000, nIndex + 0, 0x100000, 1);
-	RomDiffPatch(Neo68KROMActive + 0x100000, nIndex + 1, 0x500000, 1);
-
-	if (VerSwitcher & 0x01) {
-		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x3000000, 18, 0x1000000, 2);
-		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x4000000, 20, 0x1000000, 2);
-	}
-
-	if (VerSwitcher & 0x02) {
-		RomDiffPatch(Neo68KROMActive + 0x600000, nIndex + 2, 0, 1);
-	}
-}
-
-static INT32 kf2k2ps2Init()
-{
-	nBurnDrvSubActive = (VerSwitcher & 0x03);
-
-	switch (nBurnDrvSubActive) {
-	case 0x00:
-		pszCustomNameA = "The King of Fighters 2002 (PlayStation 2, Ver 1.0, Hack)\0";
-		break;
-
-	case 0x01:
-		pszCustomNameA = "The King of Fighters 2002 (PlayStation 2, Ver 0.4, Hack)\0";
-		break;
-
-	case 0x02:
-		pszCustomNameA = "The King of Fighters 2002 (PlayStation 2, GOTVG, Hack)\0";
-		pNRI->nCodeSize = 0x020000;
-		break;
-	}
-
-	if (nBurnDrvSubActive) {
-		NeoCallbackActive->pInitialise = kf2k2ps2Callback;
-	}
-
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (VerSwitcher & 0x02)) {
-		NeoMapExtraRom(0x600000, 0x20000);
-	}
+	if (0 == nRet) NeoMapExtraRom(0x600000, 0x100000);
 
 	return nRet;
 }
 
-struct BurnDriver BurnDrvKf2k2ps2 = {
-	"kf2k2ps2", "kof2002", "neogeo", NULL, "2007-2023",
-	"The King of Fighters 2002 (PlayStation 2, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvKf2k2ps2re = {
+	"kf2k2ps2re", "kof2002", "neogeo", NULL, "2025",
+	"The King of Fighters 2002 (PlayStation 2 Plus 2025 ver 1.0, Hack)\0", NULL, "GSC2007, Dream", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kf2k2ps2RomInfo, kf2k2ps2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, kf2k2ps2DIPInfo,
-	kf2k2ps2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, kf2k2ps2reRomInfo, kf2k2ps2reRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kf2k2ps2reInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

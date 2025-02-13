@@ -702,7 +702,7 @@ STD_ROM_FN(mustachei)
 
 struct BurnDriver BurnDrvMustachei = {
 	"mustachei", "mustache", NULL, NULL, "1987",
-	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (IG SPA license)", "Miscellaneous",
+	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (International Games license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mustacheiRomInfo, mustacheiRomName, NULL, NULL, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,

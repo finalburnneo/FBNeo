@@ -163,7 +163,7 @@ void cx4_init(void *mem)
 	for (int i = 0; i < 0x400; i++) {
 		hash += cx4.rom[i];
 	}
-	if (hash != 0x169c91535) {
+	if (hash != 0x169c91535ULL) {
 		bprintf(PRINT_ERROR, _T("CX4 rom generation failed (bad hash, %I64x)\n"), hash);
 	}
 }
@@ -535,8 +535,8 @@ static uint32_t get_sfr(uint8_t address)
 static void set_sfr(uint8_t address, uint32_t data)
 {
 	switch (address & 0x7f) {
-		case 0x01: cx4.multiplier = (cx4.multiplier & 0x000000ffffff) | ((uint64_t)data << 24); break;
-		case 0x02: cx4.multiplier = (cx4.multiplier & 0xffffff000000) | ((uint64_t)data <<  0); break;
+		case 0x01: cx4.multiplier = (cx4.multiplier & 0x000000ffffffULL) | ((uint64_t)data << 24); break;
+		case 0x02: cx4.multiplier = (cx4.multiplier & 0xffffff000000ULL) | ((uint64_t)data <<  0); break;
 		case 0x03: cx4.bus_data = data; break;
 		case 0x08: cx4.rom_data = data; break;
 		case 0x0c: cx4.ram_data = data; break;
@@ -747,7 +747,7 @@ static void run_insn()
 
 		case 0x9800: // MUL imm,A
 		case 0x9c00:
-			cx4.multiplier = ((int64_t)sign_extend(get_immed(), 24) * sign_extend(cx4.A, 24)) & 0xffffffffffff;
+			cx4.multiplier = ((int64_t)sign_extend(get_immed(), 24) * sign_extend(cx4.A, 24)) & 0xffffffffffffULL;
 			break;
 
 		case 0xa000: // XNOR A,imm

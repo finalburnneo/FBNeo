@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvMarblmd2 = {
 	"marblmd2", NULL, NULL, NULL, "1991",
 	"Marble Madness II (prototype)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, marblmd2RomInfo, marblmd2RomName, NULL, NULL, NULL, NULL, Marblmd2InputInfo, Marblmd2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	336, 240, 4, 3

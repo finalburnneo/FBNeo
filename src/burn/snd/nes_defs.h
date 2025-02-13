@@ -131,6 +131,7 @@ typedef struct dpcm_s
    uint8 regs[4];
    uint32 address;
    uint32 length;
+   uint32 freq;
    INT32 bits_left;
    INT32 phaseacc;
    uint8 cur_byte;

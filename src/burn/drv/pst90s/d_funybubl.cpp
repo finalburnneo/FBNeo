@@ -603,7 +603,7 @@ STD_ROM_FN(funybubc)
 
 struct BurnDriver BurnDrvFunybubc = {
 	"funybublc", "funybubl", NULL, NULL, "1999",
-	"Funny Bubble (Comad version)\0", NULL, "Comad Industry Co Ltd", "misc",
+	"Funny Bubble (Comad version)\0", NULL, "Comad", "misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, funybubcRomInfo, funybubcRomName, NULL, NULL, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,

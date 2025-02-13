@@ -1817,7 +1817,7 @@ STD_ROM_FN(tripoola)
 
 struct BurnDriver BurnDrvTripoola = {
 	"tripoola", "tripool", NULL, NULL, "1981",
-	"Tri-Pool: 3-In-One (Coastal Games)\0", NULL, "Noma (Costal Games license)", "Jack the Giantkiller",
+	"Tri-Pool: 3-In-One (Coastal Games)\0", NULL, "Noma (Coastal Games license)", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tripoolaRomInfo, tripoolaRomName, NULL, NULL, NULL, NULL, TripoolInputInfo, TripoolDIPInfo,
@@ -2068,7 +2068,7 @@ struct BurnDriver BurnDrvLoverboy = {
 };
 
 
-// Triki Triki (Lover Boy bootleg)
+// Triki Triki (bootleg of Lover Boy)
 
 static struct BurnRomInfo trikitriRomDesc[] = {
 	{ "1.bin",		0x2000, 0x248f2f12, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2091,7 +2091,7 @@ STD_ROM_FN(trikitri)
 
 struct BurnDriver BurnDrvTrikitri = {
 	"trikitri", "loverboy", NULL, NULL, "1993",
-	"Triki Triki (Lover Boy bootleg)\0", NULL, "bootleg (DDT Enterprise Inc)", "Jack the Giantkiller",
+	"Triki Triki (bootleg of Lover Boy)\0", NULL, "bootleg (DDT Enterprise Inc)", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, trikitriRomInfo, trikitriRomName, NULL, NULL, NULL, NULL, LoverboyInputInfo, LoverboyDIPInfo,

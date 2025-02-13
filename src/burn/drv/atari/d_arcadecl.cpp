@@ -631,7 +631,7 @@ struct BurnDriver BurnDrvArcadecl = {
 	"arcadecl", NULL, NULL, NULL, "1992",
 	"Arcade Classics (prototype)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, arcadeclRomInfo, arcadeclRomName, NULL, NULL, NULL, NULL, ArcadeclInputInfo, ArcadeclDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvSparkz = {
 	"sparkz", NULL, NULL, NULL, "1992",
 	"Sparkz (prototype)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sparkzRomInfo, sparkzRomName, NULL, NULL, NULL, NULL, SparkzInputInfo, SparkzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3

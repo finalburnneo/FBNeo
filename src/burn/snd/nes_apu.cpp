@@ -132,7 +132,6 @@ static INT32 clocky;
 static INT32 _4017hack = 0;
 
 static UINT8 *dmc_buffer;
-INT16 *nes_ext_buffer;
 INT16 (*nes_ext_sound_cb)();
 
 static const INT32 *noise_clocks;
@@ -153,10 +152,6 @@ void nesapu_runclock(INT32 cycle)
 	dmc_buffer[cycle] = dmc_buffer[cycle + 1] = apu_dpcm(info, &info->APU.dpcm);
 	// [cycle + 1] = get around a bug in the mixer, evident when pausing ninja gaiden 1 or 2.
 	// a proper fix would need to move the mixing into nesapuUpdate() (TBA). -dink
-
-	if (nes_ext_sound_cb && nes_ext_buffer) {
-		nes_ext_buffer[cycle] = nes_ext_buffer[cycle + 1] = nes_ext_sound_cb();
-	}
 
 	// Frame-IRQ: we only emulate the frame-irq mode which is used by a few
 	// games to split the screen or other neat tricks (Qix, Bee52...)
@@ -504,11 +499,10 @@ static INT32 apu_dpcm_loadbyte(dpcm_t *chan)
 
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 {
-   INT32 freq = dpcm_clocks[chan->regs[0] & 0x0F];
    chan->phaseacc--; // 1-cycle per
 
-   while (chan->phaseacc < 0) {
-	   chan->phaseacc += freq;
+   if (chan->phaseacc < 0) {
+	   chan->phaseacc += chan->freq;
 
 	   if (chan->enabled) {
 
@@ -532,6 +526,10 @@ static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 			   }
 			   chan->cur_byte <<= 1;
 		   }
+		   if (chan->vol >= 0x7f)
+			   chan->vol = 0x7f;
+		   else
+			   if (chan->vol < 0) chan->vol = 0;
 	   }
 
 	   chan->bits_left--;
@@ -550,12 +548,7 @@ static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 	   }
    }
 
-   if (chan->vol >= 0x7f)
-	   chan->vol = 0x7f;
-   else
-	   if (chan->vol < 0) chan->vol = 0;
-
-   return (int8) (chan->vol);
+   return (chan->vol);
 }
 
 /* WRITE REGISTER VALUE */
@@ -690,6 +683,7 @@ static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 va
    /* DMC */
    case APU_WRE0:
       info->APU.dpcm.regs[0] = value;
+	  info->APU.dpcm.freq = dpcm_clocks[value & 0x0F];
 	  if (0 == (value & 0x80)) {
 		  M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		  info->APU.dpcm.irq_occurred = false;
@@ -852,7 +846,15 @@ static void apu_update(struct nesapu_info *info)
 		// mix new dmc engine (29781 samples/frame) with the rest  MIXER
 		INT32 dmcoffs = (cycles_per_frame * (startpos + i)) / info->samps_per_sync;
 		INT32 dmc = dmc_buffer[dmcoffs];
-		INT32 ext = nes_ext_buffer[dmcoffs];
+		INT32 ext = 0;
+		if (nes_ext_sound_cb) {
+			ext  = nes_ext_sound_cb();
+			ext += nes_ext_sound_cb();
+			ext += nes_ext_sound_cb();
+			ext += nes_ext_sound_cb();
+			ext /= 4;
+		}
+
 
 		if (arcade_mode) dmc = apu_dpcm(info, &info->APU.dpcm);
 
@@ -884,7 +886,6 @@ void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples)
 	apu_update(info);
 
 	INT16 *source = info->stream + 5;
-
 	info->resamp.resample(source, buffer, samples, info->gain[BURN_SND_NESAPU_ROUTE_1], BURN_SND_ROUTE_BOTH);
 
 	info->current_position = 0;
@@ -1002,6 +1003,7 @@ void nesapuReset()
 		memset(&info->APU.regs, 0, sizeof(info->APU.regs));
 
 		info->APU.dpcm.bits_left = 8;
+		info->APU.dpcm.freq = dpcm_clocks[0];
 		info->APU.noi.lfsr = 1;
 	    clocky = 0;
 		mode4017 = 0xc0; // disabled @ startup
@@ -1063,7 +1065,6 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	if (chip == 0) {
 		// cycles per frame: 29781 ntsc, 33248 pal
 		dmc_buffer = (UINT8*)BurnMalloc((cycles_per_frame + 5) * 2);
-		nes_ext_buffer = (INT16*)BurnMalloc((cycles_per_frame + 5) * 2 * 2);
 		nes_ext_sound_cb = NULL;
 	}
 	nesapu_mixermode = 0xff; // enable all
@@ -1108,7 +1109,6 @@ void nesapuExit()
 	}
 
 	BurnFree(dmc_buffer);
-	BurnFree(nes_ext_buffer);
 	nes_ext_sound_cb = NULL;
 
 	nesapuSetArcade(0);

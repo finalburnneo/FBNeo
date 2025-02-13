@@ -3361,7 +3361,7 @@ struct BurnDriver BurnDrvGulfstrmb = {
 };
 
 
-// Gulf Storm (Media Shoji)
+// Gulf Storm (Japan, Media Shoji license)
 
 static struct BurnRomInfo gulfstrmmRomDesc[] = {
 	{ "18.l4",	0x20000, 0xd38e2667, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3395,7 +3395,7 @@ STD_ROM_FN(gulfstrmm)
 
 struct BurnDriver BurnDrvGulfstrmm = {
 	"gulfstrmm", "gulfstrm", NULL, NULL, "1991",
-	"Gulf Storm (Media Shoji)\0", NULL, "Dooyong (Media Shoji license)", "Miscellaneous",
+	"Gulf Storm (Japan, Media Shoji license)\0", NULL, "Dooyong (Media Shoji license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gulfstrmmRomInfo, gulfstrmmRomName, NULL, NULL, NULL, NULL, GulfstrmInputInfo, GulfstrmDIPInfo,
@@ -3558,7 +3558,7 @@ struct BurnDriver BurnDrvPolluxa2 = {
 };
 
 
-// Pollux (Japan, NTC license)
+// Pollux (Japan, NTC license, distributed by Atlus)
 
 static struct BurnRomInfo polluxnRomDesc[] = {
 	{ "polluxntc_2.3g",			0x10000, 0x96d3e3af, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3586,7 +3586,7 @@ STD_ROM_FN(polluxn)
 
 struct BurnDriver BurnDrvPolluxn = {
 	"polluxn", "pollux", NULL, NULL, "1991",
-	"Pollux (Japan, NTC license)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	"Pollux (Japan, NTC license, distributed by Atlus)\0", NULL, "Dooyong (NTC / Atlus license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, polluxnRomInfo, polluxnRomName, NULL, NULL, NULL, NULL, PolluxInputInfo, PolluxDIPInfo,
@@ -3716,7 +3716,7 @@ struct BurnDriver BurnDrvBluehawk = {
 };
 
 
-// Blue Hawk (NTC)
+// Blue Hawk (Japan, NTC license)
 
 static struct BurnRomInfo bluehawknRomDesc[] = {
 	{ "rom19",	0x20000, 0x24149246, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3742,7 +3742,7 @@ STD_ROM_FN(bluehawkn)
 
 struct BurnDriver BurnDrvBluehawkn = {
 	"bluehawkn", "bluehawk", NULL, NULL, "1993",
-	"Blue Hawk (NTC)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	"Blue Hawk (Japan, NTC license)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, bluehawknRomInfo, bluehawknRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, BluehawkDIPInfo,
@@ -3751,7 +3751,7 @@ struct BurnDriver BurnDrvBluehawkn = {
 };
 
 
-// Sadari
+// Sadari (Japan, NTC license)
 
 static struct BurnRomInfo sadariRomDesc[] = {
 	{ "1.3d",	0x20000, 0xbd953217, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3783,7 +3783,7 @@ static INT32 SadariInit()
 
 struct BurnDriver BurnDrvSadari = {
 	"sadari", NULL, NULL, NULL, "1993",
-	"Sadari\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	"Sadari (Japan, NTC license)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, sadariRomInfo, sadariRomName, NULL, NULL, NULL, NULL, SadariInputInfo, SadariDIPInfo,
@@ -3834,7 +3834,7 @@ struct BurnDriver BurnDrvGundl94 = {
 };
 
 
-// Primella
+// Primella (Japan, NTC license)
 
 static struct BurnRomInfo primellaRomDesc[] = {
 	{ "1_d3.bin",		0x20000, 0x82fea4e0, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3857,7 +3857,7 @@ STD_ROM_FN(primella)
 
 struct BurnDriver BurnDrvPrimella = {
 	"primella", "gundl94", NULL, NULL, "1994",
-	"Primella\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	"Primella (Japan, NTC license)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, primellaRomInfo, primellaRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, PrimellaDIPInfo,

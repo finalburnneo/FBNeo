@@ -3113,6 +3113,52 @@ struct BurnDriver BurnDrvDotrone = {
 };
 
 
+// Discs of Tron (Environmental, prototype, 8/9/83)
+
+static struct BurnRomInfo dotronepRomDesc[] = {
+	{ "pgm0_8-9.1c",		0x4000, 0xa997e93d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "pgm1_8-9.2c",		0x4000, 0x31e5c11e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pgm2_8-9.3c",		0x4000, 0x5162fe8d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pgm3_8-9.4c",		0x4000, 0x4e7085e1, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "0_8-9.a7",			0x1000, 0x872160b3, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "1_8-9.a8",			0x1000, 0xd9c3d4ca, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "2_8-9.a9",			0x1000, 0x78cc8bad, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "3_8-9.a10",			0x1000, 0xb369ec5a, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "pre_aug_19.u3",		0x1000, 0xc3d0f762, 3 | BRF_PRG | BRF_ESS }, //  8 snt:cpu
+	{ "pre.u4",				0x1000, 0x7ca79b43, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "pre.u5",				0x1000, 0x24e9618e, 3 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "bg0_8-9.6f",			0x2000, 0x40167124, 3 | BRF_GRA },           // 11 gfx1
+	{ "bg1_8-9.5f",			0x2000, 0xbb2d7a5d, 3 | BRF_GRA },           // 12
+
+	{ "cp4_fg7-8-9-83.a7",	0x2000, 0x1e689f9c, 4 | BRF_GRA },           // 13 gfx2
+	{ "cp3_fg8-8-9-83.a8",	0x2000, 0x172685ee, 4 | BRF_GRA },           // 14
+	{ "cp6_fg5-8-9-83.a5",	0x2000, 0x4326041b, 4 | BRF_GRA },           // 15
+	{ "cp5_fg6-8-9-83.a6",	0x2000, 0x1df69f11, 4 | BRF_GRA },           // 16
+	{ "cp8_fg3-8-9-83.a3",	0x2000, 0x7587a8fd, 4 | BRF_GRA },           // 17
+	{ "cp7_fg4-8-9-83.a4",	0x2000, 0x6e1af64f, 4 | BRF_GRA },           // 18
+	{ "cp10_fg1.a1",		0x2000, 0x759f36a7, 4 | BRF_GRA },           // 19
+	{ "cp9_fg2-8-9-83.a2",	0x2000, 0x80ba9553, 4 | BRF_GRA },           // 20
+
+	{ "1f26.u2",			0x0020, 0xfb58b867, 0 | BRF_GRA },           // 21 lamp sequencer PROM
+};
+
+STDROMPICKEXT(dotronep, dotronep, Ssioprom)
+STD_ROM_FN(dotronep)
+
+struct BurnDriver BurnDrvDotronep = {
+	"dotronep", "dotron", "midssio", NULL, "1983",
+	"Discs of Tron (Environmental, prototype, 8/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
+	NULL, dotronepRomInfo, dotronepRomName, NULL, NULL, NULL, NULL, DotronInputInfo, DotroneDIPInfo,
+	DotroneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	512, 480, 4, 3
+};
+
+
 // Demolition Derby
 
 static struct BurnRomInfo demoderbRomDesc[] = {

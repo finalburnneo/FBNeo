@@ -1021,7 +1021,7 @@ struct BurnDriver BurnDrvSinvasnb = {
 };
 
 
-// Mercenario (Commando bootleg)
+// Mercenario (bootleg of Commando)
 
 static struct BurnRomInfo mercenarioRomDesc[] = {
 	{ "4ac.bin",					0x4000, 0x59ebf408, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code (Encrypted)
@@ -1065,7 +1065,7 @@ static INT32 MercenarioInit()
 
 struct BurnDriver BurnDrvMercenario = {
 	"mercenario", "commando", NULL, NULL, "1985",
-	"Mercenario (Commando bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Mercenario (bootleg of Commando)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, mercenarioRomInfo, mercenarioRomName, NULL, NULL, NULL, NULL, CommandoInputInfo, CommandoDIPInfo,

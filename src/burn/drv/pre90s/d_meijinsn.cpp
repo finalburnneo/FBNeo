@@ -517,7 +517,7 @@ STD_ROM_FN(meijinsn)
 
 struct BurnDriver BurnDrvMeijinsn = {
 	"meijinsn", NULL, NULL, NULL, "1986",
-	"Meijinsen (set 1)\0", NULL, "SNK Electronics corp.", "Miscellaneous",
+	"Meijinsen (set 1)\0", NULL, "SNK", "Miscellaneous",
 	L"\u540D\u4EBA\u6226\0Meijinsen (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, meijinsnRomInfo, meijinsnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -549,7 +549,7 @@ STD_ROM_FN(meijinsna)
 
 struct BurnDriver BurnDrvMeijinsna = {
 	"meijinsna", "meijinsn", NULL, NULL, "1986",
-	"Meijinsen (set 2)\0", NULL, "SNK Electronics corp.", "Miscellaneous",
+	"Meijinsen (set 2)\0", NULL, "SNK", "Miscellaneous",
 	L"\u540D\u4EBA\u6226\0Meijinsen (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, meijinsnaRomInfo, meijinsnaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

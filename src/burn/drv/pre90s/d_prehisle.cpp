@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvPrehislk = {
 };
 
 
-// Genshitou 1930's
+// Genshitou 1930's (Japan)
 
 static struct BurnRomInfo GensitouRomDesc[] = {
 	{ "gt-j2.2h",      0x20000, 0xa2da0b6b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -859,7 +859,7 @@ STD_ROM_FN(Gensitou)
 
 struct BurnDriver BurnDrvGensitou = {
 	"gensitou", "prehisle", NULL, NULL, "1989",
-	"Genshitou 1930's\0", NULL, "SNK", "Prehistoric Isle (SNK)",
+	"Genshitou 1930's (Japan)\0", NULL, "SNK", "Prehistoric Isle (SNK)",
 	L"Genshi-Tou 1930's (Japan)\0\u539F\u59CB\u5CF6 1930's\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, GensitouRomInfo, GensitouRomName, NULL, NULL, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,

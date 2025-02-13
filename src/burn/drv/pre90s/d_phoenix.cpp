@@ -2249,6 +2249,42 @@ struct BurnDriver BurnDrvPleiadce = {
 };
 
 
+// Pleiads (GMP Games)
+
+static struct BurnRomInfo pleiadsgmpRomDesc[] = {
+	{ "ic45",			0x0800, 0x6a6dcabf, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "0.ic46",			0x0800, 0xc82557b4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.ic47",			0x0800, 0x3b29aec5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.ic48",			0x0800, 0x10df5159, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.ic49",			0x0800, 0x263576e7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "2.ic50",			0x0800, 0xaa4d93ec, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ic51",			0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.ic52",			0x0800, 0xb3db08c2, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic24.bin",		0x0800, 0x5188fc29, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "ic23.bin",		0x0800, 0x4e30f9e7, 2 | BRF_GRA },           //  9
+
+	{ "ic39.bin",		0x0800, 0x85866607, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "ic40.bin",		0x0800, 0xa841d511, 3 | BRF_GRA },           // 11
+
+	{ "cpu41.bin",		0x0100, 0xe176b768, 4 | BRF_GRA },           // 12 Color Proms
+	{ "cpu40.bin",		0x0100, 0x79350b25, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(pleiadsgmp)
+STD_ROM_FN(pleiadsgmp)
+
+struct BurnDriver BurnDrvPleiadsgmp = {
+	"pleiadsgmp", "pleiads", NULL, NULL, "1981",
+	"Pleiads (GMP Games)\0", NULL, "bootleg (GMP Games)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, pleiadsgmpRomInfo, pleiadsgmpRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
+	PleiadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	208, 256, 3, 4
+};
+
+
 // Pleiads (Irecsa, set 1)
 
 static struct BurnRomInfo pleiadsiRomDesc[] = {

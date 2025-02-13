@@ -152,6 +152,7 @@ struct NGCDGAME games[] =
 	{ _T("zupapa")		, _T("Zupapa!")												, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0070 },		//
 	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
+	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//
 	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
 };
 

@@ -675,7 +675,7 @@ STD_ROM_FN(dogfgtu)
 
 struct BurnDriver BurnDrvDogfgtu = {
 	"dogfgtu", "dogfgt", NULL, NULL, "1985",
-	"Acrobatic Dog-Fight (USA)\0", NULL, "Technos Japan (Data East USA, Inc. license)", "Miscellaneous",
+	"Acrobatic Dog-Fight (USA)\0", NULL, "Technos Japan (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, dogfgtuRomInfo, dogfgtuRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,

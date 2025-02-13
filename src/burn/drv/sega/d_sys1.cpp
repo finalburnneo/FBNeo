@@ -3784,7 +3784,7 @@ static struct BurnRomInfo ChopliftblRomDesc[] = {
 STD_ROM_PICK(Chopliftbl)
 STD_ROM_FN(Chopliftbl)
 
-// "Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)
+// "Wonder Boy: Monster Land (Japan New Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmlRomDesc[] = {
 	{ "epr-11031a.90",	0x8000, 0xbd3349e5, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3813,7 +3813,7 @@ static struct BurnRomInfo wbmlRomDesc[] = {
 STD_ROM_PICK(wbml)
 STD_ROM_FN(wbml)
 
-// Wonder Boy - Monster Land (Japan bootleg)
+// Wonder Boy: Monster Land (Japan bootleg)
 
 static struct BurnRomInfo wbmljbRomDesc[] = {
 	{ "wbml.01",		0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3840,7 +3840,7 @@ static struct BurnRomInfo wbmljbRomDesc[] = {
 STD_ROM_PICK(wbmljb)
 STD_ROM_FN(wbmljb)
 
-// Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)
+// Wonder Boy: Monster Land (Japan Old Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmljoRomDesc[] = {
 	{ "epr-11031.90",	0x8000, 0x497ebfb4, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3869,7 +3869,7 @@ static struct BurnRomInfo wbmljoRomDesc[] = {
 STD_ROM_PICK(wbmljo)
 STD_ROM_FN(wbmljo)
 
-// Wonder Boy - Monster Land (English bootleg set 1)
+// Wonder Boy: Monster Land (English bootleg set 1)
 
 static struct BurnRomInfo wbmlbRomDesc[] = {
 	{ "wbml.01",		0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3896,7 +3896,34 @@ static struct BurnRomInfo wbmlbRomDesc[] = {
 STD_ROM_PICK(wbmlb)
 STD_ROM_FN(wbmlb)
 
-// Wonder Boy - Monster Land (English bootleg set 2)
+// Wonder Boy: Monster Land (English bootleg set 4)
+
+static struct BurnRomInfo wbmlb2RomDesc[] = {
+	{ "m5.e8",			0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "m6.f8",			0x10000, 0xc05e365a, BRF_ESS | BRF_PRG }, //  1
+	{ "m7.g8",			0x10000, 0xcb3ea856, BRF_ESS | BRF_PRG }, //  2
+
+	{ "m8",				0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "m11.g19",		0x08000, 0xbbea6afe, BRF_GRA },           //  4 Tiles
+	{ "m10.f19",		0x08000, 0x77567d41, BRF_GRA },           //  5
+	{ "m9.e19",			0x08000, 0xa52ffbdd, BRF_GRA },           //  6
+
+	{ "m2.b8",			0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "m1.a8",			0x08000, 0x0cf576d1, BRF_GRA },           //  8
+	{ "m4.d8",			0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "m3.c8",			0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlb2)
+STD_ROM_FN(wbmlb2)
+
+// Wonder Boy: Monster Land (English bootleg set 2)
 
 static struct BurnRomInfo wbmlbgRomDesc[] = {
 	{ "galaxy.ic90",	0x10000, 0x66482638, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3923,7 +3950,7 @@ static struct BurnRomInfo wbmlbgRomDesc[] = {
 STD_ROM_PICK(wbmlbg)
 STD_ROM_FN(wbmlbg)
 
-// Wonder Boy - Monster Land (English bootleg set 3)
+// Wonder Boy: Monster Land (English bootleg set 3)
 
 static struct BurnRomInfo wbmlbgeRomDesc[] = {
 	{ "3.k3",		0x10000, 0xb4f90adc, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3950,7 +3977,7 @@ static struct BurnRomInfo wbmlbgeRomDesc[] = {
 STD_ROM_PICK(wbmlbge)
 STD_ROM_FN(wbmlbge)
 
-// Wonder Boy - Monster Land (English, Virtual Console)
+// Wonder Boy: Monster Land (English, Virtual Console)
 
 static struct BurnRomInfo wbmlvcRomDesc[] = {
 	{ "vc.ic90",		0x10000, 0x093c4852, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -3977,7 +4004,7 @@ static struct BurnRomInfo wbmlvcRomDesc[] = {
 STD_ROM_PICK(wbmlvc)
 STD_ROM_FN(wbmlvc)
 
-// Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)
+// Wonder Boy: Monster Land (decrypted bootleg of English, Virtual Console release)
 // Fully decrypted version
 
 static struct BurnRomInfo wbmlvcdRomDesc[] = {
@@ -4005,7 +4032,7 @@ static struct BurnRomInfo wbmlvcdRomDesc[] = {
 STD_ROM_PICK(wbmlvcd)
 STD_ROM_FN(wbmlvcd)
 
-// Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)
+// Wonder Boy: Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)
 // Fully decrypted version
 
 static struct BurnRomInfo wbmldRomDesc[] = {
@@ -4033,7 +4060,7 @@ static struct BurnRomInfo wbmldRomDesc[] = {
 STD_ROM_PICK(wbmld)
 STD_ROM_FN(wbmld)
 
-// Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)
+// Wonder Boy: Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)
 // Fully decrypted version
 
 static struct BurnRomInfo wbmljodRomDesc[] = {
@@ -4061,7 +4088,7 @@ static struct BurnRomInfo wbmljodRomDesc[] = {
 STD_ROM_PICK(wbmljod)
 STD_ROM_FN(wbmljod)
 
-// Wonder Boy - Monster Land (English, difficulty hack)
+// Wonder Boy: Monster Land (English, difficulty hack)
 
 static struct BurnRomInfo wbmlhRomDesc[] = {
 	{ "6",			0x10000, 0x1ace78a0, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
@@ -7796,7 +7823,7 @@ struct BurnDriver BurnDrvShtngmst = {
 
 struct BurnDriver BurnDrvChoplift = {
 	"choplift", NULL, NULL,  NULL, "1985",
-	"Choplifter (8751 315-5151)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
+	"Choplifter (8751 315-5151)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
@@ -7806,7 +7833,7 @@ struct BurnDriver BurnDrvChoplift = {
 
 struct BurnDriver BurnDrvChopliftu = {
 	"chopliftu", "choplift", NULL,  NULL, "1985",
-	"Choplifter (unprotected)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
+	"Choplifter (unprotected)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
@@ -7836,7 +7863,7 @@ struct BurnDriver BurnDrvUfosensi = {
 
 struct BurnDriver BurnDrvWbml = {
 	"wbml", NULL, NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
+	"Wonder Boy: Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7846,7 +7873,7 @@ struct BurnDriver BurnDrvWbml = {
 
 struct BurnDriver BurnDrvWbmljb = {
 	"wbmljb", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (Japan bootleg)\0", NULL, "bootleg", "System 2",
+	"Wonder Boy: Monster Land (Japan bootleg)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljbRomInfo, wbmljbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7856,7 +7883,7 @@ struct BurnDriver BurnDrvWbmljb = {
 
 struct BurnDriver BurnDrvWbmljo = {
 	"wbmljo", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
+	"Wonder Boy: Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljoRomInfo, wbmljoRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7866,7 +7893,7 @@ struct BurnDriver BurnDrvWbmljo = {
 
 struct BurnDriver BurnDrvWbmlb = {
 	"wbmlb", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (English bootleg set 1)\0", NULL, "bootleg", "System 2",
+	"Wonder Boy: Monster Land (English bootleg set 1)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7874,9 +7901,19 @@ struct BurnDriver BurnDrvWbmlb = {
 	NULL, 0x800, 256, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvWbmlb2 = {
+	"wbmlb2", "wbml", NULL, NULL, "1987",
+	"Wonder Boy: Monster Land (English bootleg set 4)\0", NULL, "bootleg", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlb2RomInfo, wbmlb2RomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvWbmlbg = {
 	"wbmlbg", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (English bootleg set 2)\0", NULL, "bootleg (Galaxy Electronics)", "System 2",
+	"Wonder Boy: Monster Land (English bootleg set 2)\0", NULL, "bootleg (Galaxy Electronics)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbgRomInfo, wbmlbgRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7886,7 +7923,7 @@ struct BurnDriver BurnDrvWbmlbg = {
 
 struct BurnDriver BurnDrvWbmlbge = {
 	"wbmlbge", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (English bootleg set 3)\0", NULL, "bootleg (Gecas)", "System 2",
+	"Wonder Boy: Monster Land (English bootleg set 3)\0", NULL, "bootleg (Gecas)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbgeRomInfo, wbmlbgeRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7896,7 +7933,7 @@ struct BurnDriver BurnDrvWbmlbge = {
 
 struct BurnDriver BurnDrvWbmlvc = {
 	"wbmlvc", "wbml", NULL, NULL, "2009",
-	"Wonder Boy - Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
+	"Wonder Boy: Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlvcRomInfo, wbmlvcRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7906,7 +7943,7 @@ struct BurnDriver BurnDrvWbmlvc = {
 
 struct BurnDriver BurnDrvWbmlvcd = {
 	"wbmlvcd", "wbml", NULL, NULL, "2009",
-	"Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)\0", NULL, "bootleg (mpatou)", "System 2",
+	"Wonder Boy: Monster Land (decrypted bootleg of English, Virtual Console release)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG , 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlvcdRomInfo, wbmlvcdRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7916,7 +7953,7 @@ struct BurnDriver BurnDrvWbmlvcd = {
 
 struct BurnDriver BurnDrvWbmld = {
 	"wbmld", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
+	"Wonder Boy: Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmldRomInfo, wbmldRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7926,7 +7963,7 @@ struct BurnDriver BurnDrvWbmld = {
 
 struct BurnDriver BurnDrvWbmljod = {
 	"wbmljod", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
+	"Wonder Boy: Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljodRomInfo, wbmljodRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
@@ -7936,7 +7973,7 @@ struct BurnDriver BurnDrvWbmljod = {
 
 struct BurnDriver BurnDrvWbmlh = {
 	"wbmlh", "wbml", NULL, NULL, "1987",
-	"Wonder Boy - Monster Land (English, difficulty hack)\0", NULL, "bootleg", "System 2",
+	"Wonder Boy: Monster Land (English, difficulty hack)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlhRomInfo, wbmlhRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,

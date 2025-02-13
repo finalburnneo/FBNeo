@@ -801,7 +801,8 @@ static INT32 DrvInit()
 	return 0;
 }
 
-// Rom information
+// Gaia Crusaders
+
 static struct BurnRomInfo gaiaRomDesc[] = {
 	{ "prg1.127",     0x080000, 0x47B904B2, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "prg2.128",     0x080000, 0x469B7794, BRF_ESS | BRF_PRG }, //  1
@@ -818,7 +819,6 @@ static struct BurnRomInfo gaiaRomDesc[] = {
 	{ "snd3.455",     0x400000, 0x4048D64E, BRF_SND },			 //  9
 };
 
-
 STD_ROM_PICK(gaia)
 STD_ROM_FN(gaia)
 
@@ -831,6 +831,9 @@ struct BurnDriver BurnDrvGaia = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 224, 4, 3
 };
+
+
+// Thunder Heroes (set 1)
 
 static struct BurnRomInfo theroesRomDesc[] = {
 	{ "t-hero-epm1.u0127",    0x080000, 0x09db7195, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -853,10 +856,42 @@ STD_ROM_FN(theroes)
 
 struct BurnDriver BurnDrvTheroes = {
 	"theroes", NULL, NULL, NULL, "2001",
-	"Thunder Heroes\0", NULL, "Primetek Investments", "Cave",
+	"Thunder Heroes (set 1)\0", NULL, "Primetek Investments", "Cave",
 	L"\u9739\u96F3\u82F1\u96C4 Thunder Heroes\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
 	NULL, theroesRomInfo, theroesRomName, NULL, NULL, NULL, NULL, gaiaInputInfo, theroesDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 224, 4, 3
+};
+
+
+// Thunder Heroes (set 2)
+
+static struct BurnRomInfo theroesaRomDesc[] = {
+	{ "u0127",                0x080000, 0xa2c599a7, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "u0129",                0x080000, 0xf205a715, BRF_ESS | BRF_PRG }, //  1
+
+	{ "t-hero-obj1.u0736",    0x400000, 0x35090f7c, BRF_GRA },			 //  2 Sprite data
+	{ "t-hero-obj2.u0738",    0x400000, 0x71605108, BRF_GRA },			 //  3
+
+	{ "t-hero-bg1.u0999",     0x400000, 0x47b0fb40, BRF_GRA },			 //  4 Layer 0 Tile data
+	{ "t-hero-bg2.u0995",     0x400000, 0xb16237a1, BRF_GRA },			 //  5 Layer 1 Tile data
+	{ "t-hero-bg3.u0998",     0x400000, 0x08eb5604, BRF_GRA },			 //  6 Layer 2 Tile data
+
+	{ "crvsaders-snd1.u0447", 0x400000, 0x92770A52, BRF_SND },			 //  7 YMZ280B (AD)PCM data
+	{ "crvsaders-snd2.u0454", 0x400000, 0x329AE1CF, BRF_SND },			 //  8
+	{ "t-hero-snd3.u0455",    0x400000, 0x52b0b2c0, BRF_SND },			 //  9
+};
+
+STD_ROM_PICK(theroesa)
+STD_ROM_FN(theroesa)
+
+struct BurnDriver BurnDrvTheroesa = {
+	"theroesa", "theroes", NULL, NULL, "2001",
+	"Thunder Heroes (set 2)\0", NULL, "Primetek Investments", "Cave",
+	L"\u9739\u96F3\u82F1\u96C4 Thunder Heroes\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
+	NULL, theroesaRomInfo, theroesaRomName, NULL, NULL, NULL, NULL, gaiaInputInfo, theroesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 224, 4, 3
 };

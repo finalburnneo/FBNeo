@@ -570,10 +570,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Vampire (prototype?)
 
 static struct BurnRomInfo vampireRomDesc[] = {
-	{ "h1.1h",			0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "h2.2h",			0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "h3.3h",			0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "h4.4h",			0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1h.1h",			0x2000, 0x7e69ff9b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "2h.2h",			0x2000, 0xe94155f8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3h.3h",			0x2000, 0xce27dd90, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4h.4h",			0x2000, 0xa25f00bc, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "s_9d.9d",		0x1000, 0xe13a7aef, 2 | BRF_PRG | BRF_ESS }, //  4 M6502 Code
 

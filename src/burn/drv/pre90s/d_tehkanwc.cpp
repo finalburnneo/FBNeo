@@ -39,8 +39,6 @@ static UINT8 TWCFakeInputPort[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCDip[3]        = {0, 0, 0};
 static UINT8 TWCInput[3]      = {0x00, 0x00, 0x00};
 static UINT8 TWCFakeInput = 0;
-static INT32 TballPrev[4];
-static INT16 TWCAnalog[4]     = {0, 0, 0, 0};
 static INT16 track_p1[2];
 static INT16 track_p2[2];
 static INT32 track_reset_p1[2] = {0, 0};
@@ -91,7 +89,7 @@ static struct BurnInputInfo TWCInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	"p1 start"	},
 	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 fire 1"	},
 	A("P1 Stick X",     BIT_ANALOG_REL,     &track_p1[0],		"p1 x-axis" ),
-	A("P1 Stick Y",     BIT_ANALOG_REL,     &track_p1[1],		"p1 y-axis" ),
+	A("P1 Stick Y",     BIT_ANALOG_REL,     &track_p1[1],		"p1 y-axis" ),      // 0x0080: DOWN, 0xff80: UP
 	{"P1 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 right"	},
 	{"P1 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 left"	},
 	{"P1 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 down"	},
@@ -131,13 +129,17 @@ inline static void TWCMakeInputs(INT32 nInterleave)
 	hold_coin.checklow(1, TWCInput[2], 1<<1, 2);
 
 	// device, portA_reverse?, portB_reverse?
-	// BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	// BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x0f, nInterleave);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
-	// BurnTrackballUpdate(0);
+	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+	// From MAME: port_sensitivity=100, port_keydelta=63
+	// From AdvanceMame: fake keyboard input yields a |velocity| of 63 (0x7f / 2)
+	//                   In absence of keyboard input, velocity must be 0x80, the rest value
+	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x0f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballUpdate(0);
 
-	// BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
-	// BurnTrackballFrame(1, track_p2[0]], track_p2[1], 0x02, 0x0f, nInterleave);
-	// BurnTrackballUpdate(1);
+	BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
+	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x02, 0x0f);
+	BurnTrackballUpdate(1);
 }
 
 
@@ -334,28 +336,19 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static UINT8 trackball_read(UINT16 offset)
-{
-	// Dev 0: Addresses 0xf800,0xf801
-	// Dev 1: Addresses 0xf810,0xf811
-	return (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) - TballPrev[offset & 0x03]) & 0xff;
-}
-
-static void trackball_reset(UINT16 offset, UINT8 data)
-{
-	TballPrev[offset & 0x03] = (BurnTrackballRead((offset & 0x02) >> 1, offset & 0x01) + data) & 0xff;
-}
-
 static UINT8 track_p1_r(UINT16 address)
 {
 	UINT16 offset = address & 1;
-	UINT8 joy;
+	UINT8 read;
+	// UINT8 joy;
 
-	joy = TWCFakeInput >> (2 * offset);
-	if (joy & 1) return -63;
-	if (joy & 2) return 63;
-	return 0x80;
+	// joy = TWCFakeInput >> (2 * offset);
+	// if (joy & 1) return -63;
+	// if (joy & 2) return 63;
+	//return 0x80;
 	//return (track_p1[offset] - track_reset_p1[offset]) & 0xff;
+	read = BurnTrackballRead(0, offset) - track_reset_p1[offset];
+	return read;
 }
 
 static void track_p1_reset_w(UINT16 offset, UINT8 data)
@@ -366,13 +359,17 @@ static void track_p1_reset_w(UINT16 offset, UINT8 data)
 static UINT8 track_p2_r(UINT16 address)
 {
 	UINT16 offset = address & 1;
-	UINT8 joy;
+	UINT8 read;
+	// UINT8 joy;
 
-	joy = TWCFakeInput >> (4 + 2 * offset);
-	if (joy & 1) return -63;
-	if (joy & 2) return 63;
-	return 0x80;
+	// joy = TWCFakeInput >> (4 + 2 * offset);
+	// // P2 must be reversed
+	// if (joy & 1) return 63;
+	// if (joy & 2) return -63;
+	//return 0x80;
 	//return (track_p2[offset] - track_reset_p2[offset]) & 0xff;
+	read = BurnTrackballRead(1, offset) - track_reset_p2[offset];
+	return read;
 }
 
 static void track_p2_reset_w(UINT16 offset, UINT8 data)
@@ -592,7 +589,6 @@ static tilemap_callback( twc_bg )
 	INT32 attr  = TWCBgVideoRam[offs + 1];
 	INT32 code  = TWCBgVideoRam[offs] + ((attr & 0x30) << 4);
 	INT32 color = attr & 0x0f;
-	//INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6);
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 
 	TILE_SET_INFO(0, code, color, flags);
@@ -603,9 +599,7 @@ static tilemap_callback( twc_fg )
 	INT32 attr  = TWCColorRam[offs];
 	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
-//	INT32 flags = TILE_FLIPYX((attr & 0xc0) >> 6) | TILE_GROUP((attr & 0x20) >> 5);
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
-	// flags |= ((attr & 0x20) ? TMAP_SET_GROUP(1) : TMAP_SET_GROUP(0));
 	flags |= TILE_GROUP_ENABLE;
 	flags |= ((attr & 0x20) ? (1 << 16) : 0);
 
@@ -655,9 +649,6 @@ static INT32 TWCDraw()
 	GenericTilemapSetScrollX(0, TWCScrollXLo + 256 * TWCScrollXHi);
 
 	BurnTransferClear();
-
-//	TWCRenderBgLayer();
-//	TWCRenderFgLayer();
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
@@ -718,13 +709,10 @@ static INT32 TWCFrame()
 
 	// Number of interrupt slices per frame
 	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
-	//INT32 nInterleave = 264;
 
 	TWCMakeInputs(nInterleave); // Update inputs
 
 	ZetNewFrame(); // Reset CPU cycle counters
-
-	//MSM5205NewFrame(0, SOUND_CPU_CLOCK, nInterleave);
 
 	// Total cycles each CPU should run per frame
 	INT32 nCyclesTotal[3] = {
@@ -751,12 +739,10 @@ static INT32 TWCFrame()
 	    // Audio CPU
 		ZetOpen(CPU_SOUND);
 
-		// src/burn/burn.h:227:#define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
 		CPU_RUN(CPU_SOUND, Zet); // Run the audio CPU (with timer synchronization)
 
 		// Update MSM5205 sound chip
 		MSM5205Update();
-		//MSM5205UpdateScanline(i);
 
 		ZetClose();
 
@@ -839,12 +825,6 @@ static void adpcm_int()
 
 	msm_toggle ^= 1;
 }
-
-// static INT32 vblank_timer_cb(INT32 n, INT32 c)
-// {
-// 	ZetSetIRQLine(CPU_SOUND, 0, CPU_IRQSTATUS_HOLD);
-// 	return 0;
-// }
 
 static INT32 TWCInit()
 {
@@ -940,10 +920,6 @@ static INT32 TWCInit()
 	GenericTilemapSetOffsets(TMAP_GLOBAL,  0, -16);
 	GenericTilemapSetTransparent(1,0);
 
-	//	BurnSetRefreshRate(SCREEN_CLOCK / 384 / 264);
-
-	// Watchdog timer (not directly supported in FBNeo, but can be emulated if needed)
-	// WATCHDOG_TIMER(config, "watchdog");
 	BurnWatchdogInit(TWCDoReset, 180);
 
 	// Initialize sound chips
@@ -954,9 +930,6 @@ static INT32 TWCInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-
-	//BurnTimerInit(vblank_timer_cb, NULL);
-	//BurnTimerAttachZet(SOUND_CPU_CLOCK);
 
 	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);

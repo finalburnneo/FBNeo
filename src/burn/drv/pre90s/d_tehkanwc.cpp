@@ -92,20 +92,20 @@ static struct BurnInputInfo TWCInputList[] = {
 	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	"p1 fire 1"	},
 	A("P1 Stick X",     BIT_ANALOG_REL,     &track_p1[0],		"p1 x-axis" ),
 	A("P1 Stick Y",     BIT_ANALOG_REL,     &track_p1[1],		"p1 y-axis" ),
-	{"P1 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 up"		},
-	{"P1 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 down"	},
-	{"P1 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 left"	},
-	{"P1 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 3,	"p1 right"	},
+	{"P1 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 right"	},
+	{"P1 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 left"	},
+	{"P1 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 down"	},
+	{"P1 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 3,	"p1 up"		},
 
 	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,		TWCInputPort2 + 3,	"p2 start"	},
 	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	"p2 fire 1"	},
 	A("P2 Stick X",     BIT_ANALOG_REL,     &track_p2[0],       "p2 x-axis"     ),
 	A("P2 Stick Y",     BIT_ANALOG_REL,     &track_p2[1],       "p2 y-axis"     ),
-	{"P2 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 4,	"p2 up"		},
-	{"P2 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 5,	"p2 down"	},
-	{"P2 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 6,	"p2 left"	},
-	{"P2 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 7,	"p2 right"	},
+	{"P2 Right (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 4,	"p2 right"	},
+	{"P2 Left (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 5,	"p2 left"	},
+	{"P2 Down (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 6,	"p2 down"	},
+	{"P2 Up (Fake)",	BIT_DIGITAL,	    TWCFakeInputPort + 7,	"p2 up"		},
 
 	{"Reset",			BIT_DIGITAL,		&TWCReset,	        "reset"		},
 	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,         "dip"		},
@@ -354,7 +354,8 @@ static UINT8 track_p1_r(UINT16 address)
 	joy = TWCFakeInput >> (2 * offset);
 	if (joy & 1) return -63;
 	if (joy & 2) return 63;
-	return (track_p1[offset] - track_reset_p1[offset]) & 0xff;
+	return 0x80;
+	//return (track_p1[offset] - track_reset_p1[offset]) & 0xff;
 }
 
 static void track_p1_reset_w(UINT16 offset, UINT8 data)
@@ -370,7 +371,8 @@ static UINT8 track_p2_r(UINT16 address)
 	joy = TWCFakeInput >> (4 + 2 * offset);
 	if (joy & 1) return -63;
 	if (joy & 2) return 63;
-	return (track_p2[offset] - track_reset_p2[offset]) & 0xff;
+	return 0x80;
+	//return (track_p2[offset] - track_reset_p2[offset]) & 0xff;
 }
 
 static void track_p2_reset_w(UINT16 offset, UINT8 data)

@@ -2777,7 +2777,7 @@ static struct BurnRomInfo tangramqRomDesc[] = {
 STD_ROM_PICK(tangramq)
 STD_ROM_FN(tangramq)
 
-struct BurnDriverD BurnDrvTangramq = {
+struct BurnDriver BurnDrvTangramq = {
 	"tangramq", NULL, NULL, NULL, "1983",
 	"Tangram Q\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

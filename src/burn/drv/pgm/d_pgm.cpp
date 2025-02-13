@@ -8136,7 +8136,7 @@ struct BurnDriver BurnDrvkovshpzqhl = {
 };
 
 
-// San Guo Zhan Ji - Luan Shi Ying Xiong
+// Sanguo Zhan Ji - Luan Shi Ying Xiong
 // Modified by Fei Tian Xue
 // GOTVG 20141209
 
@@ -8171,8 +8171,8 @@ static INT32 kovshpmaphackInit()
 
 struct BurnDriver BurnDrvkovlsyx = {
 	"kovlsyx", "kovshp", "pgm", NULL, "2014",
-	"San Guo Zhan Ji - Luan Shi Ying Xiong\0", "Imperfect Protection Emulation", "hack", "PolyGameMaster",
-	L"San Guo Zhan Ji - Luan Shi Ying Xiong\0\u4e09\u56fd\u6218\u7eaa - \u4e71\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
+	"Sanguo Zhan Ji - Luan Shi Ying Xiong\0", "Imperfect Protection Emulation", "hack", "PolyGameMaster",
+	L"Sanguo Zhan Ji - Luan Shi Ying Xiong\0\u4e09\u56fd\u6218\u7eaa - \u4e71\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxRomInfo, kovlsyxRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovshpmaphackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -9053,38 +9053,38 @@ struct BurnDriver BurnDrvkovplusq = {
 	448, 224, 4, 3
 };
 
-// San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)
-// Modified by Fei Tian Xue
-// 2022-07-31
+// Qunxiong Zhengba - Fengyun Zai Qi (Wushuang, Hack, ver. 20230501)
+// Modified by 胡作飞为
+// 20230501
 
 static struct BurnRomInfo kovqxzbwsRomDesc[] = {
-	{ "qxzb_100.rom",			0x600000, 0xa14c3b2d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "qxzb-100cn.u10",			0x600000, 0x3cf50111, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "qxzb_t0600.u2",			0x800000, 0x9a361916, 2 | BRF_GRA },           //  1 Tile data
+	{ "qxzb_t0600.u2",			0x800000, 0x8227e98b, 2 | BRF_GRA },           //  1 Tile data
 
 	{ "qxzb_a0600.u3",			0x800000, 0x72643288, 3 | BRF_GRA },           //  2 Sprite Color Data
 	{ "qxzb_a0601.u4",			0x800000, 0x85c26c90, 3 | BRF_GRA },           //  3
 	{ "qxzb_a0602.u6",			0x800000, 0xee5a308e, 3 | BRF_GRA },           //  4
-	{ "qxzb_a05401w064.u8",		0x800000, 0x306adeeb, 3 | BRF_GRA },           //  5
-	{ "qxzb_a05411w064.u8",		0x800000, 0x4ed6ed80, 3 | BRF_GRA },           //  6
-	{ "qxzb_a05421w064.u8",		0x800000, 0x14499cf4, 3 | BRF_GRA },           //  7
+	{ "qxzb_a05401w064.u8",		0x800000, 0x22036822, 3 | BRF_GRA },           //  5
+	{ "qxzb_a05411w064.u8",		0x800000, 0x4c858970, 3 | BRF_GRA },           //  6
+	{ "qxzb_a05421w064.u8",		0x800000, 0xd4602270, 3 | BRF_GRA },           //  7
 	
 	{ "qxzb_b0600.u9",			0x800000, 0x0646c5ef, 4 | BRF_GRA },           //  8 Sprite Masks & Color Indexes
-	{ "qxzb_b05401w064.u11",	0x800000, 0x35728e9a, 4 | BRF_GRA },           //  9
-	{ "qxzb_b05411w064.u11",	0x800000, 0xfbdae21a, 4 | BRF_GRA },           // 10
+	{ "qxzb_b05401w064.u11",	0x800000, 0x95d6ffd3, 4 | BRF_GRA },           //  9
+	{ "qxzb_b05411w064.u11",	0x800000, 0x491e1157, 4 | BRF_GRA },           // 10
 	
-	{ "qxzb_m0600.u5",			0x800000, 0x468a0d43, 5 | BRF_SND },           // 11 Samples
+	{ "qxzb_m0600.u5",			0x800000, 0xf22347f9, 5 | BRF_SND },           // 11 Samples
 
-	{ "qxzb_v100_china.asic",	0x008000, 0xcf5c6119, 7 | BRF_PRG | BRF_ESS }, // 12 Internal ARM7 Rom
+	{ "qxzb_v100_china.asic",	0x008000, 0x0bbe09ff, 7 | BRF_PRG | BRF_ESS }, // 12 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovqxzbws, kovqxzbws, pgm)
 STD_ROM_FN(kovqxzbws)
 
 struct BurnDriver BurnDrvkovqxzbws = {
-	"kovqxzbws", "kovshp", "pgm", NULL, "2022",
-	"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0", "hack", "IGS", "PolyGameMaster",
-	L"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u96c4\u722d\u9738 \u98a8\u96f2\u518d\u8d77 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+	"kovqxzbws", "kovshp", "pgm", NULL, "2023",
+	"Qunxiong Zhengba - Fengyun Zai Qi (Wushuang, Hack, ver. 20230501)\0", "hack", "IGS", "PolyGameMaster",
+	L"Qunxiong Zhengba - Fengyun Zai Qi (Wushuang, Hack, ver. 20230501)\0\u7fa4\u96c4\u4e89\u9738 - \u98ce\u4e91\u518d\u8d77 (\u65e0\u53cc)\0", NULL, L"\u80e1\u4f5c\u98de\u4e3a", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqxzbwsRomInfo, kovqxzbwsRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovshpsprhackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -9092,7 +9092,7 @@ struct BurnDriver BurnDrvkovqxzbws = {
 };
 
 
-// San Guo Zhan Ji - Heng Sao Qian Jun (Hack)
+// Sanguo Zhan Ji - Heng Sao Qian Jun (Hack)
 
 static struct BurnRomInfo kovphsqjRomDesc[] = {
 	{ "hsqj_p0603_119.u1",	0x0600000, 0x476f2ae3, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
@@ -9127,8 +9127,8 @@ static INT32 kovsprhackInit()
 
 struct BurnDriver BurnDrvKovphsqj = {
 	"kovphsqj", "kovplus", "pgm", NULL, "2023",
-	"San Guo Zhan Ji - Heng Sao Qian Jun (Hack)\0", NULL, "hack", "PolyGameMaster",
-	L"San Guo Zhan Ji - Heng Sao Qian Jun\0\u4e09\u570b\u6230\u7d00 - \u6a6b\u6383\u5343\u8ecd (Hack)\0", NULL, NULL, NULL,
+	"Sanguo Zhan Ji - Heng Sao Qian Jun (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Sanguo Zhan Ji - Heng Sao Qian Jun\0\u4e09\u570b\u6230\u7d00 - \u6a6b\u6383\u5343\u8ecd (Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovphsqjRomInfo, kovphsqjRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovsprhackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -9136,7 +9136,7 @@ struct BurnDriver BurnDrvKovphsqj = {
 };
 
 
-// San Guo Zhan Ji - Zhen Tun Shi Tian Di (Hack)
+// Sanguo Zhan Ji - Zhen Tun Shi Tian Di (Hack)
 
 static struct BurnRomInfo kovptstdRomDesc[] = {
 	{ "tstd_p0603_119.u1",	0x0600000, 0xc83ca4de, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
@@ -9162,8 +9162,8 @@ STD_ROM_FN(kovptstd)
 
 struct BurnDriver BurnDrvKovptstd = {
 	"kovptstd", "kovplus", "pgm", NULL, "2023",
-	"San Guo Zhan Ji - Zhen Tun Shi Tian Di (Hack)\0", NULL, "hack", "PolyGameMaster",
-	L"San Guo Zhan Ji - Zhen Tun Shi Tian Di\0\u4e09\u570b\u6230\u7d00 - \u771f\u00b7\u541e\u98df\u5929\u5730 (Hack)\0", NULL, NULL, NULL,
+	"Sanguo Zhan Ji - Zhen Tun Shi Tian Di (Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Sanguo Zhan Ji - Zhen Tun Shi Tian Di\0\u4e09\u570b\u6230\u7d00 - \u771f\u00b7\u541e\u98df\u5929\u5730 (Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovptstdRomInfo, kovptstdRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -9182,7 +9182,7 @@ struct BurnDriver BurnDrvKovptstd = {
 	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },	\
 	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },
 
-// San Guo Zhan Ji - Xiao Bing Zheng Ba (Ver.A, Hack)
+// Sanguo Zhan Ji - Xiao Bing Zheng Ba (Ver.A, Hack)
 
 static struct BurnRomInfo kovpxbaRomDesc[] = {
 	{ "xba_p0603_v119.u1",	0x0400000, 0xf8cd3baa, 1 | BRF_PRG | BRF_ESS },
@@ -9195,8 +9195,8 @@ STD_ROM_FN(kovpxba)
 
 struct BurnDriver BurnDrvKovpxba = {
 	"kovpxba", "kovplus", "pgm", NULL, "2018",
-	"San Guo Zhan Ji - Xiao Bing Zheng Ba (Ver.A, Hack)\0", NULL, "hack", "PolyGameMaster",
-	L"San Guo Zhan Ji - Xiao Bing Zheng Ba\0\u4e09\u570b\u6230\u7d00 - \u5c0f\u5175\u722d\u9738 (Ver.A, Hack)\0", NULL, NULL, NULL,
+	"Sanguo Zhan Ji - Xiao Bing Zheng Ba (Ver.A, Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Sanguo Zhan Ji - Xiao Bing Zheng Ba\0\u4e09\u570b\u6230\u7d00 - \u5c0f\u5175\u722d\u9738 (Ver.A, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovpxbaRomInfo, kovpxbaRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -9204,7 +9204,7 @@ struct BurnDriver BurnDrvKovpxba = {
 };
 
 
-// San Guo Zhan Ji - Xiao Bing Zheng Ba (Ver.B, Hack)
+// Sanguo Zhan Ji - Xiao Bing Zheng Ba (Ver.B, Hack)
 
 static struct BurnRomInfo kovpxbbRomDesc[] = {
 	{ "xbb_p0603_v119.u1",	0x0400000, 0xc94d20b9, 1 | BRF_PRG | BRF_ESS },
@@ -9217,8 +9217,8 @@ STD_ROM_FN(kovpxbb)
 
 struct BurnDriver BurnDrvKovpxbb = {
 	"kovpxbb", "kovplus", "pgm", NULL, "2018",
-	"San Guo Zhan Ji - Xiao Bing Zheng Ba (Ver.B, Hack)\0", NULL, "hack", "PolyGameMaster",
-	L"San Guo Zhan Ji - Xiao Bing Zheng Ba\0\u4e09\u570b\u6230\u7d00 - \u5c0f\u5175\u722d\u9738 (Ver.B, Hack)\0", NULL, NULL, NULL,
+	"Sanguo Zhan Ji - Xiao Bing Zheng Ba (Ver.B, Hack)\0", NULL, "hack", "PolyGameMaster",
+	L"Sanguo Zhan Ji - Xiao Bing Zheng Ba\0\u4e09\u570b\u6230\u7d00 - \u5c0f\u5175\u722d\u9738 (Ver.B, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kovpxbbRomInfo, kovpxbbRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

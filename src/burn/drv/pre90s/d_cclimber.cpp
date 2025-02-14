@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "burn_pal.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -37,6 +38,7 @@ static INT32 flipscreen[2];
 static INT32 interrupt_enable;
 static UINT8 yamato_p0;
 static UINT8 yamato_p1;
+static UINT8 yamato_bg[3];
 static UINT8 swimmer_background_color;
 static UINT8 swimmer_sidebg;
 static UINT8 swimmer_palettebank;
@@ -702,7 +704,18 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 				case CKONGB:
 					interrupt_enable = data;
 					break;
+				case YAMATO:
+					yamato_bg[2] = data & 1;
+					break;
 			}
+		return;
+
+		case 0xa005:
+			yamato_bg[1] = data & 1;
+		return;
+
+		case 0xa006:
+			yamato_bg[0] = data & 1;
 		return;
 
 		case 0xa004:
@@ -716,12 +729,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 			sample_freq = 3072000 / 4 / (256 - data);
 			if (game_select == GUZZLER) {
 				soundlatch = data;
-				ZetClose();
-				ZetOpen(1);
-				ZetSetVector(0xff);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-				ZetClose();
-				ZetOpen(0);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -729,12 +737,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 			sample_vol = data & 0x1f;
 			if (game_select == TANGRAMQ) {
 				soundlatch = data;
-				ZetClose();
-				ZetOpen(1);
-				ZetSetVector(0xff);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-				ZetClose();
-				ZetOpen(0);
+				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -917,8 +920,6 @@ static UINT8 __fastcall tangramq_sub_read(UINT16 address)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset(AllRam, 0, RamEnd - AllRam);
 
 	flipscreen[0] = flipscreen[1] = 0;
@@ -1041,7 +1042,6 @@ static void DrvPaletteInit()
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 	if (game_select == SILVLAND) {
-		bprintf(0, _T("silvlandpalette"));
 		DrvPalette[0x42] = BurnHighCol(0xff, 0xce, 0xce, 0);
 	}
 }
@@ -1108,9 +1108,7 @@ static void YamatoPaletteInit()
 		DrvPalette[i + 0x40] = BurnHighCol(r, g, b, 0);
 	}
 
-	/* fake colors for bg gradient */
-	for (i = 0; i < 0x100; i++)
-		DrvPalette[i + 0x60] = BurnHighCol(0, 0, i, 0);
+	// BG Gradient colors are held in 0x60 - 0xe0
 }
 
 void swimmer_set_background_pen()
@@ -1320,12 +1318,7 @@ static INT32 GetRoms()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (GetRoms()) return 1;
@@ -1414,7 +1407,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	game_select = CCLIMBER;
 	uses_sub = 0;
@@ -1523,19 +1516,7 @@ static void draw_playfield()
 
 		if (sx > nScreenWidth || sy > nScreenHeight) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, bits, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, bits, 0, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, bits, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, bits, 0, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, 0, DrvGfxROM0);
 	}
 }
 
@@ -1595,19 +1576,7 @@ static void draw_sprites()
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, x, y, color, bits, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, x, y, color, bits, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, x, y, color, bits, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, x, y, color, bits, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, x, y, flipx, flipy, color, bits, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -1644,18 +1613,28 @@ void swimmer_draw_backdrop() // background effects for swimmer/guzzler
 	}
 }
 
-void yamato_draw_backdrop() // synth yamato backdrop
+void yamato_draw_backdrop()
 {
-	UINT8 *sky_rom = DrvUser1 + 0x1200;
+	UINT16 bank = (yamato_bg[2] << 2 | yamato_bg[1] << 1 | yamato_bg[0]) << 8;
+	bank |= (flipscreen[0] ? 0x80 : 0);
 
-	for (INT32 i = 0; i < 0x100; i++) {
-		INT32 pen = 0x60 + sky_rom[(flipscreen[0] ? 0x80 : 0) + (i >> 1)];
+	for (INT32 i = 0; i < 0x80; i++) {
+		UINT8 data0 = DrvUser1[0x0000 | bank | i];
+		UINT8 data1 = DrvUser1[0x1000 | bank | i];
 
-		for (INT32 j = 0; j < 0x100; j++) {
-			INT32 coord = (j * nScreenWidth) + ((i - 8) & 0xff);
+		UINT8 r = pal5bit(data0 & 0x1f);
+		UINT8 g = pal5bit(data0 >> 5 | (data1 << 3 & 0x18));
+		UINT8 b = pal6bit(data1 >> 2);
 
-			if (coord < (nScreenHeight * nScreenWidth))
-				pTransDraw[coord] = pen;
+		DrvPalette[i + 0x60] = BurnHighCol(r, g, b, 0);
+
+		for (int y = 0; y < nScreenHeight; y++) {
+			int start = (i * 2 - 8) & 0xff;
+			for (int x = start; x < start + 2; x++) {
+				if (x >= 0 && x < nScreenWidth) {
+					pTransDraw[y * nScreenWidth + x] = 0x60 + i;
+				}
+			}
 		}
 	}
 }
@@ -1713,8 +1692,9 @@ static INT32 DrvFrame()
 
 		CompileInput(DrvJoys, (void*)DrvInputs, 4, 8, JoyInit);
 
-		if (game_select == CKONG || game_select == CKONGB)
-			DrvInputs[2] = 0xff - DrvInputs[2];
+		if (game_select == CKONG || game_select == CKONGB) {
+			DrvInputs[2] = ~DrvInputs[2];
+		}
 
 		if (game_select == TANGRAMQ) {
 			// tangramq: these 2 are active low
@@ -1778,10 +1758,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(interrupt_enable);
 		SCAN_VAR(yamato_p0);
 		SCAN_VAR(yamato_p1);
+		SCAN_VAR(yamato_bg);
 		SCAN_VAR(swimmer_background_color);
 		SCAN_VAR(swimmer_sidebg);
 		SCAN_VAR(swimmer_palettebank);
 		SCAN_VAR(soundlatch);
+		SCAN_VAR(sample_num);
+		SCAN_VAR(sample_freq);
+		SCAN_VAR(sample_vol);
+		SCAN_VAR(sample_len);
+		SCAN_VAR(sample_pos);
 	}
 
 	return 0;

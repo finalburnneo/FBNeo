@@ -722,7 +722,7 @@ static void DrvPaletteUpdate()
 
 static void draw_sprites(INT32 *primasks,INT32 x_offs,INT32 y_offs)
 {
-	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRam;
+	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRamBuffered3;
 	UINT16 *spritemap = (UINT16*)TaitoSpriteMapRom;
 	INT32 offs, tilenum, color, flipx, flipy;
 	INT32 x, y, priority, dblsize, curx, cury;
@@ -1193,11 +1193,9 @@ static INT32 DrvFrame()
 		BurnDrvRedraw();
 	}
 
-	if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
-		memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
-		memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
-		memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
-	}
+	memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+	memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
+	memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
 
 	return 0;
 }

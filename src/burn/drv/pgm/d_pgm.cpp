@@ -9411,11 +9411,8 @@ static INT32 kov2pshjzInit()
 
 	if (nRet == 0)
 	{
-		if (!bDoIpsPatch)
-		{
-			memmove(ICSSNDROM + 0x800000, ICSSNDROM + 0x400000, 0x800000);
-			memset( ICSSNDROM + 0x400000, 0,                    0x400000);
-		}
+		memmove(ICSSNDROM + 0x800000, ICSSNDROM + 0x400000, 0x800000);
+		memset( ICSSNDROM + 0x400000, 0,                    0x400000);
 
 		if (PGMARMROM[0x26f] == 0x0a)	// crash patch
 			PGMARMROM[0x26f] == 0xea;

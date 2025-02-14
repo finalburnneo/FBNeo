@@ -136,6 +136,7 @@ struct NGCDGAME games[] =
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
 	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//
+	{ _T("blockpanicdx"), _T("Block Panic DX")										, _T("2025")	, _T("Blastar")				, 0x2023 },		//
 	{ _T("hypernoid")	, _T("Hypernoid")											, _T("2022")	, _T("NeoHomeBrew.com")		, 0x0600 },		//
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
 	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//

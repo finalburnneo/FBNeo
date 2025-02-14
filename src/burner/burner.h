@@ -72,7 +72,7 @@ typedef struct tagIMAGE {
 
 // burn/burn.cpp
 extern INT32 bRewindEnabled;
-extern INT32 nRewindMemory;
+extern INT64 nRewindMemory;
 
 
 // image.cpp

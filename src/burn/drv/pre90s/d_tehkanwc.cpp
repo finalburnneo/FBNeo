@@ -935,7 +935,7 @@ static INT32 TWCInit()
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
 
 	// Initialize analog controls for player 1 and player 2
-	//BurnGunInit(2, true);
+	BurnTrackballInit(2);
 
 	TWCDoReset(1);
 
@@ -950,7 +950,7 @@ static INT32 TWCExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	MSM5205Exit();
-	//BurnGunExit();
+	BurnTrackballExit();
 
 	BurnFree(Mem);
 	

@@ -134,11 +134,11 @@ inline static void TWCMakeInputs(INT32 nInterleave)
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 63 (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x0f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
 	BurnTrackballUpdate(0);
 
-	BurnTrackballConfig(1, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x02, 0x0f);
+	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
+	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x02, 0x3f);
 	BurnTrackballUpdate(1);
 }
 
@@ -336,45 +336,35 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static UINT8 track_p1_r(UINT16 address)
+static UINT8 track_p1_r(UINT8 axis)
 {
-	UINT16 offset = address & 1;
-	UINT8 read;
-	// UINT8 joy;
+	UINT8 joy;
 
-	// joy = TWCFakeInput >> (2 * offset);
-	// if (joy & 1) return -63;
-	// if (joy & 2) return 63;
-	//return 0x80;
-	//return (track_p1[offset] - track_reset_p1[offset]) & 0xff;
-	read = BurnTrackballRead(0, offset) - track_reset_p1[offset];
-	return read;
+	joy = TWCFakeInput >> (2 * axis);
+	if (joy & 1) return -63;
+	if (joy & 2) return 63;
+	return BurnTrackballRead(0, axis) - track_reset_p1[axis];
 }
 
-static void track_p1_reset_w(UINT16 offset, UINT8 data)
+static void track_p1_reset_w(UINT8 axis, UINT8 data)
 {
-	track_reset_p1[offset] = track_p1[offset] + data;
+	track_reset_p1[axis] = BurnTrackballRead(0, axis) + data;
 }
 
-static UINT8 track_p2_r(UINT16 address)
+static UINT8 track_p2_r(UINT8 axis)
 {
-	UINT16 offset = address & 1;
-	UINT8 read;
-	// UINT8 joy;
+	UINT8 joy;
 
-	// joy = TWCFakeInput >> (4 + 2 * offset);
-	// // P2 must be reversed
-	// if (joy & 1) return 63;
-	// if (joy & 2) return -63;
-	//return 0x80;
-	//return (track_p2[offset] - track_reset_p2[offset]) & 0xff;
-	read = BurnTrackballRead(1, offset) - track_reset_p2[offset];
-	return read;
+	joy = TWCFakeInput >> (4 + 2 * axis);
+	// P2 must be reversed
+	if (joy & 1) return 63;
+	if (joy & 2) return -63;
+	return BurnTrackballRead(1, axis) - track_reset_p2[axis];
 }
 
-static void track_p2_reset_w(UINT16 offset, UINT8 data)
+static void track_p2_reset_w(UINT8 axis, UINT8 data)
 {
-	track_reset_p2[offset] = track_p2[offset] + data;
+	track_reset_p2[axis] = BurnTrackballRead(1, axis) + data;
 }
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
@@ -385,6 +375,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf800:
 		case 0xf801:
+			//return trackball_read_p1(address & 1);
 			return track_p1_r(address & 1);
 
 		case 0xf802:
@@ -393,7 +384,8 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 
 		case 0xf810:
 		case 0xf811:
-			return track_p2_r(address & 1);
+		//return trackball_read_p2(address & 1);
+		return track_p2_r(address & 1);
 
 		case 0xf803:
 			return TWCInput[0];  // Player 1

@@ -4146,7 +4146,7 @@ STD_ROM_FN(grdiands)
 struct BurnDriver BurnDrvGrdiands = {
 	"grdiands", "grdians", NULL, NULL, "2024",
 	"Guardians / Denjin Makai II (Pro, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (Pro, Hack)\0", NULL, NULL, NULL,
+	L"Guardians / Denjin Makai II (Pro, Hack)\0\u96fb\u795e\u9b54\u5080\u2161 (\u5927\u795e)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiandsRomInfo, grdiandsRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4155,13 +4155,13 @@ struct BurnDriver BurnDrvGrdiands = {
 
 
 // Guardians / Denjin Makai II (Evil, Hack)
-// GOTVG 20250125
+// GOTVG 20250206
 
 static struct BurnRomInfo grdiansyRomDesc[] = {
-	{ "u2_sy.bin",	0x080000, 0x99f7c528, BRF_ESS | BRF_PRG },
-	{ "u3_sy.bin",	0x080000, 0xd725c494, BRF_ESS | BRF_PRG },
-	{ "u4_sy.bin",	0x080000, 0xea9ee175, BRF_ESS | BRF_PRG },
-	{ "u5_sy.bin",	0x080000, 0x7ac54dbc, BRF_ESS | BRF_PRG },
+	{ "u2_sy.bin",	0x080000, 0x97454744, BRF_ESS | BRF_PRG },
+	{ "u3_sy.bin",	0x080000, 0x8f63a863, BRF_ESS | BRF_PRG },
+	{ "u4_sy.bin",	0x080000, 0xd4cd2927, BRF_ESS | BRF_PRG },
+	{ "u5_sy.bin",	0x080000, 0x68b3388e, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4171,7 +4171,7 @@ STD_ROM_FN(grdiansy)
 struct BurnDriver BurnDrvGrdiansy = {
 	"grdiansy", "grdians", NULL, NULL, "2025",
 	"Guardians / Denjin Makai II (Evil, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (Evil, Hack)\0", NULL, NULL, NULL,
+	L"Guardians / Denjin Makai II (Evil, Hack)\0\u96fb\u795e\u9b54\u5080\u2161 (\u795e\u6708)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiansyRomInfo, grdiansyRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4196,7 +4196,7 @@ STD_ROM_FN(grdiansp)
 struct BurnDriver BurnDrvGrdiansp = {
 	"grdiansp", "grdians", NULL, NULL, "2023",
 	"Guardians / Denjin Makai II (Plus, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (Plus, Hack)\0", NULL, NULL, NULL,
+	L"Guardians / Denjin Makai II (Plus, Hack)\0\u96fb\u795e\u9b54\u5080\u2161 (\u68a6\u4e4b\u52a0\u5f3a)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdianspRomInfo, grdianspRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4221,7 +4221,7 @@ STD_ROM_FN(grdiansl)
 struct BurnDriver BurnDrvGrdiansl = {
 	"grdiansl", "grdians", NULL, NULL, "2024",
 	"Guardians / Denjin Makai II (LBS, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (LBS, Hack)\0", NULL, NULL, NULL,
+	L"Guardians / Denjin Makai II (LBS, Hack)\0\u96fb\u795e\u9b54\u5080\u2161 (\u4e50\u767e\u6c0f)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdianslRomInfo, grdianslRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4246,7 +4246,7 @@ STD_ROM_FN(grdianls)
 struct BurnDriver BurnDrvGrdianls = {
 	"grdianls", "grdians", NULL, NULL, "2021",
 	"Guardians / Denjin Makai II (LBS Super, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (LBS Super, Hack)\0", NULL, NULL, NULL,
+	L"Guardians / Denjin Makai II (LBS Super, Hack)\0\u96fb\u795e\u9b54\u5080\u2161 (\u91ce\u6218)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdianlsRomInfo, grdianlsRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4271,7 +4271,7 @@ STD_ROM_FN(grdianke)
 struct BurnDriver BurnDrvGrdianke = {
 	"grdianke", "grdians", NULL, NULL, "2022",
 	"Guardians / Denjin Makai II (Reverie, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (Reverie, Hack)\0", NULL, NULL, NULL,
+	L"Guardians\0\u96fb\u795e\u9b54\u5080\u2161 (\u5fc3\u68a6)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiankeRomInfo, grdiankeRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,

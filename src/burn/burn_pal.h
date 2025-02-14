@@ -40,7 +40,7 @@ void BurnPaletteWrite_BBGGGRRR_inverted(INT32 offset);
 void BurnPaletteWrite_RRRGGGBB_inverted(INT32 offset);
 
 // palette expansion macros
-
+#define pal6bit(x)	((((x) & 0x3f)<<2)|(((x) & 0x3f) >> 4))
 #define pal5bit(x)	((((x) & 0x1f)<<3)|(((x) & 0x1f) >> 2))
 #define pal4bit(x)	((((x) & 0x0f)<<4)|(((x) & 0x0f) << 4))
 #define pal3bit(x)	((((x) & 0x07)<<5)|(((x) & 0x07) << 2)|(((x) & 0x07) >> 1))

@@ -5677,13 +5677,13 @@ struct BurnDriver BurnDrvZerotm2k = {
 
 // Zero Team USA (Incubus, Hack)
 // Modified by YanYan
-// GOTVG 20250113
+// GOTVG 20250126
 
 static struct BurnRomInfo zteammmRomDesc[] = {
-	{ "ztmm__1.u024.5k",	0x040000, 0x9d0368a1, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztmm__1.u024.5k",	0x040000, 0x45b3c7a6, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "ztmm__3.u023.6k",	0x040000, 0x121bbf92, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ztmm__2.u025.6l",	0x040000, 0x7cf75d35, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ztmm__4.u026.5l",	0x040000, 0x341c5061, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ztmm__2.u025.6l",	0x040000, 0xe905e045, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztmm__4.u026.5l",	0x040000, 0x66c009a9, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	ZEROTEAM_COMPONENTS
 };

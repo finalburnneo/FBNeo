@@ -1054,7 +1054,7 @@ void GalRenderSoundSamples(INT16 *pSoundBuf, INT32 nLength)
 void GalaxianSoundWrite(UINT32 Offset, UINT8 d)
 {
 	d &= 0x01;
-	
+
 	switch (Offset & 0x07) {
 		case 0x00:
 		case 0x01:
@@ -1064,7 +1064,7 @@ void GalaxianSoundWrite(UINT32 Offset, UINT8 d)
 		}
 		
 		case 0x03: {
-			if ((d & 1) && GalNoiseEnable) {
+			if ((d & 1) && GalNoiseHold) {
 				GalNoiseHold = 20; // already noise-ing, just extend the hold
 				GalNoiseVolume = 100;
 				return;

@@ -26729,6 +26729,44 @@ struct BurnDriver BurnDrvsnes_Superturrican2 = {
 	512, 448, 4, 3
 };
 
+// Super Uno (Japan)
+
+static struct BurnRomInfo snes_SuperunojRomDesc[] = {
+	{ "Super Uno (J)(1993)(Tomy).sfc", 1048576, 0x61441201, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superunoj)
+STD_ROM_FN(snes_Superunoj)
+
+struct BurnDriver BurnDrvsnes_Superunoj = {
+	"snes_superunoj", "snes_superunote", NULL, NULL, "1993",
+	"Super Uno (Japan)\0", NULL, "Tomy", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 6, HARDWARE_SNES, GBF_BOARD | GBF_CARD, 0,
+	SNESGetZipName, snes_SuperunojRomInfo, snes_SuperunojRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Uno (Hack, English)
+// https://romhackplaza.org/translations/super-uno-english-translation-snes/
+static struct BurnRomInfo snes_SuperunoteRomDesc[] = {
+	{ "Super Uno T-Eng (2025)(Krokodyl).sfc", 1572864, 0x17799616, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superunote)
+STD_ROM_FN(snes_Superunote)
+
+struct BurnDriver BurnDrvsnes_Superunote = {
+	"snes_superunote", NULL, NULL, NULL, "2025",
+	"Super Uno (Hack, English)\0", NULL, "Krokodyl", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 6, HARDWARE_SNES, GBF_BOARD | GBF_CARD, 0,
+	SNESGetZipName, snes_SuperunoteRomInfo, snes_SuperunoteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Valis IV (USA)
 
 static struct BurnRomInfo snes_SupervalisivRomDesc[] = {
@@ -33022,6 +33060,26 @@ struct BurnDriver BurnDrvsnes_Tinheadpiko = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_TinheadpikoRomInfo, snes_TinheadpikoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tiny Toon Adventures Buster Busts Loose JP Remix (Hack, v2)
+// https://romhackplaza.org/romhacks/tiny-toon-adventures-buster-busts-loose-jp-remix-snes/
+// https://romhackplaza.org/romhacks/tiny-toon-adventures-buster-busts-loose-jp-remix-jp-restoration-snes/
+static struct BurnRomInfo snes_TinytoonjrRomDesc[] = {
+	{ "Tiny Toon Adventures Buster Busts Loose JP Remix v2 (2025)(bankbank, RetroProf, clymax).sfc", 1048576, 0x6e42b4e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tinytoonjr)
+STD_ROM_FN(snes_Tinytoonjr)
+
+struct BurnDriver BurnDrvsnes_Tinytoonjr = {
+	"snes_tinytoonjr", "snes_tinytoon", NULL, NULL, "2025",
+	"Tiny Toon Adventures Buster Busts Loose JP Remix (Hack, v2)\0", NULL, "bankbank, RetroProf, clymax", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_TinytoonjrRomInfo, snes_TinytoonjrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

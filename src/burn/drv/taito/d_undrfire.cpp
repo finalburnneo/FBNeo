@@ -722,7 +722,7 @@ static void DrvPaletteUpdate()
 
 static void draw_sprites(INT32 *primasks,INT32 x_offs,INT32 y_offs)
 {
-	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRamBuffered3;
+	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRamBuffered2;
 	UINT16 *spritemap = (UINT16*)TaitoSpriteMapRom;
 	INT32 offs, tilenum, color, flipx, flipy;
 	INT32 x, y, priority, dblsize, curx, cury;
@@ -1193,7 +1193,10 @@ static INT32 DrvFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+	if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
+		memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+	}
+	// undrfire sprites only need 2 frames ahead of tiles
 	memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
 	memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
 

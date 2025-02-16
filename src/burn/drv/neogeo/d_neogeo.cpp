@@ -27816,6 +27816,40 @@ struct BurnDriver BurnDrvBonusstage = {
 };
 
 
+// Block Panic DX (HB, ver. 20250101)
+// https://www.patreon.com/posts/block-panic-dx-119035418
+// 3 & 4 players not working (needs Multitap)
+
+static struct BurnRomInfo bpanicdxRomDesc[] = {
+	{ "bpanicdx.p1",	0x080000, 0x8f59134f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "bpanicdx.s1",	0x020000, 0x387a8f43, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "bpanicdx.c1",	0x080000, 0x9463af81, 3 | BRF_GRA },           //  2 Sprite data
+	{ "bpanicdx.c2",	0x080000, 0xa290a403, 3 | BRF_GRA },           //  3
+
+	{ "bpanicdx.m1",	0x020000, 0xd74159c0, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "bpanicdx.v1",	0x080000, 0x55185687, 5 | BRF_SND },           //  5 Sound data
+	{ "bpanicdx.v2",	0x080000, 0x7211595d, 5 | BRF_SND },           //  6
+	{ "bpanicdx.v3",	0x080000, 0xe08afa9f, 5 | BRF_SND },           //  7 Sound data
+	{ "bpanicdx.v4",	0x080000, 0x5a9d8d69, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(bpanicdx, bpanicdx, neogeo)
+STD_ROM_FN(bpanicdx)
+
+struct BurnDriver BurnDrvBpanicdx = {
+	"bpanicdx", NULL, "neogeo", NULL, "2025",
+	"Block Panic DX (HB, ver. 20250101)\0", NULL, "Blastar", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, bpanicdxRomInfo, bpanicdxRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // NeoTRIS (HB, Free beta 2 ver. 202009)
 // https://www.chipsonsteroids.com/
 // 3 & 4 players not working (needs Multitap)

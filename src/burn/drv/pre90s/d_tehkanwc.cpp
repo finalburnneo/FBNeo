@@ -122,7 +122,7 @@ inline static void TWCMakeInputs(INT32 nInterleave)
 		TWCInput[0] ^= (TWCInputPort0[i] & 1) << i;
 		TWCInput[1] ^= (TWCInputPort1[i] & 1) << i;
 		TWCInput[2] ^= (TWCInputPort2[i] & 1) << i;
-		TWCFakeInput |= (TWCFakeInputPort[i] & 1) << i;
+		//TWCFakeInput |= (TWCFakeInputPort[i] & 1) << i;
 	}
 
 	hold_coin.checklow(0, TWCInput[2], 1<<0, 2);
@@ -134,17 +134,22 @@ inline static void TWCMakeInputs(INT32 nInterleave)
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 63 (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x02, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x3f, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballUDLR(0, TWCFakeInputPort[3], TWCFakeInputPort[2], TWCFakeInputPort[1], TWCFakeInputPort[0]);
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
-	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x02, 0x3f);
+	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x3f, 0x3f);
+	BurnTrackballUDLR(1, TWCFakeInputPort[7], TWCFakeInputPort[6], TWCFakeInputPort[5], TWCFakeInputPort[4]);
 	BurnTrackballUpdate(1);
 }
 
 
 static struct BurnDIPInfo TWCDIPList[]=
 {
+	// I copied this line directly from d_bladestl.cpp. It works, I don't know why!
+	{0x13, 0xf0, 0xff, 0xff, NULL/*starting offset*/},
+
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
 	{  0x00,    0xff,    0xff,    0xff,       NULL                    },
@@ -215,7 +220,7 @@ static struct BurnDIPInfo TWCDIPList[]=
 	{  0x02,    0x01,    0x03,    0x02,       " 1:00"                      },
 
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
-	{  0,       0xfe,    0,       3,          "2P Game Time"               },
+	{  0,       0xfe,    0,       32,         "2P Game Time"               },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
 	{  0x02,    0x01,    0x7c,    0x00,       " 5:00/3:00 Extra"           },
 	{  0x02,    0x01,    0x7c,    0x60,       " 5:00/2:45 Extra"           },
@@ -338,11 +343,11 @@ static INT32 MemIndex()
 
 static UINT8 track_p1_r(UINT8 axis)
 {
-	UINT8 joy;
+	// UINT8 joy;
 
-	joy = TWCFakeInput >> (2 * axis);
-	if (joy & 1) return -63;
-	if (joy & 2) return 63;
+	// joy = TWCFakeInput >> (2 * axis);
+	// if (joy & 1) return -63;
+	// if (joy & 2) return 63;
 	return BurnTrackballRead(0, axis) - track_reset_p1[axis];
 }
 
@@ -353,12 +358,12 @@ static void track_p1_reset_w(UINT8 axis, UINT8 data)
 
 static UINT8 track_p2_r(UINT8 axis)
 {
-	UINT8 joy;
+	// UINT8 joy;
 
-	joy = TWCFakeInput >> (4 + 2 * axis);
-	// P2 must be reversed
-	if (joy & 1) return 63;
-	if (joy & 2) return -63;
+	// joy = TWCFakeInput >> (4 + 2 * axis);
+	// // P2 must be reversed
+	// if (joy & 1) return 63;
+	// if (joy & 2) return -63;
 	return BurnTrackballRead(1, axis) - track_reset_p2[axis];
 }
 
@@ -990,6 +995,8 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(track_reset_p1[1]);
 		SCAN_VAR(track_reset_p2[0]);
 		SCAN_VAR(track_reset_p2[1]);
+
+		BurnTrackballScan();
 
 		BurnWatchdogScan(nAction);
 

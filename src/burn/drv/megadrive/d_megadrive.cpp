@@ -2303,6 +2303,24 @@ struct BurnDriver BurnDrvmd_aladdinup = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Disney's Aladdin (Chicago C.E.S Demo) (1993-06-27)
+static struct BurnRomInfo md_aladdincesRomDesc[] = {
+	{ "Disney's Aladdin Chicago CES Demo (USA, Prototype)(1993)(Sega).bin", 0x400000, 0x78110310, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aladdinces)
+STD_ROM_FN(md_aladdinces)
+
+struct BurnDriver BurnDrvmd_aladdinces = {
+	"md_aladdinces", "md_aladdin", NULL, NULL, "1993",
+	"Disney's Aladdin Chicago CES Demo (USA, Prototype)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_aladdincesRomInfo, md_aladdincesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Alex Kidd in the Enchanted Castle (Euro)
 static struct BurnRomInfo md_alexkidd1RomDesc[] = {
 	{ "Alex Kidd in the Enchanted Castle (Euro)(1990)(Sega).bin", 0x040000, 0xc3a52529, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

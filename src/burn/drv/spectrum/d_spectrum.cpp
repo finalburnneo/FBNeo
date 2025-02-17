@@ -43640,7 +43640,7 @@ struct BurnDriver BurnSpecMoonrangerv2 = {
 // MoonRN (48K) (HB)
 
 static struct BurnRomInfo SpecMoonrnRomDesc[] = {
-	{ "MoonRN 48K-AY (2025)(Snauts).tap", 20171, 0xa7f3238c, BRF_ESS | BRF_PRG },
+	{ "MoonRN 48K-AY (2025)(Snauts).tap", 22900, 0xeb41580e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMoonrn, SpecMoonrn, Spectrum)
@@ -43652,25 +43652,6 @@ struct BurnDriver BurnSpecMoonrn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecMoonrnRomInfo, SpecMoonrnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// MoonRN (48K) (HB, v2)
-
-static struct BurnRomInfo SpecMoonrnaltRomDesc[] = {
-	{ "MoonRN 48K-AY v2 (2025)(Snauts).tap", 22900, 0xeb41580e, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecMoonrnalt, SpecMoonrnalt, Spectrum)
-STD_ROM_FN(SpecMoonrnalt)
-
-struct BurnDriver BurnSpecMoonrnalt = {
-	"spec_moonrnalt", "spec_moonrn", "spec_spectrum", NULL, "2025",
-	"MoonRN (48K) (HB, v2)\0", "AY Sound supported", "Snauts", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecMoonrnaltRomInfo, SpecMoonrnaltRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

@@ -14795,6 +14795,44 @@ struct BurnDriver BurnDrvsnes_Lemmings2 = {
 	512, 448, 4, 3
 };
 
+// Lennus II: Fuuin no Shito (Japan)
+
+static struct BurnRomInfo snes_Lennus2jRomDesc[] = {
+	{ "Lennus II - Fuuin no Shito (J)(1996)(Asmik).sfc", 4194304, 0xc68be22a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lennus2j)
+STD_ROM_FN(snes_Lennus2j)
+
+struct BurnDriver BurnDrvsnes_Lennus2j = {
+	"snes_lennus2j", "snes_lennus2te", NULL, NULL, "1996",
+	"Lennus II: Fuuin no Shito (Japan)\0", NULL, "Asmik", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Lennus2jRomInfo, snes_Lennus2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lennus II: The Apostles of the Seals (Hack, English v1.04)
+// https://www.romhacking.net/translations/1332/
+static struct BurnRomInfo snes_Lennus2teRomDesc[] = {
+	{ "Lennus II - The Apostles of the Seals T-Eng v1.04 (2008)(Magic Destiny).sfc", 4194304, 0xfb561d6b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lennus2te)
+STD_ROM_FN(snes_Lennus2te)
+
+struct BurnDriver BurnDrvsnes_Lennus2te = {
+	"snes_lennus2te", NULL, NULL, NULL, "2008",
+	"Lennus II: The Apostles of the Seals (Hack, English v1.04)\0", NULL, "Magic Destiny", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Lennus2teRomInfo, snes_Lennus2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Lester the Unlikely (USA)
 
 static struct BurnRomInfo snes_LesterRomDesc[] = {
@@ -22605,6 +22643,44 @@ struct BurnDriver BurnDrvsnes_Sidepocket = {
 	512, 448, 4, 3
 };
 
+// Silva Saga II: The Legend of Light and Darkness (Japan)
+
+static struct BurnRomInfo snes_Silvasaga2jRomDesc[] = {
+	{ "Silva Saga II - The Legend of Light and Darkness (J)(1993)(Seta).sfc", 2097152, 0x67e1756b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Silvasaga2j)
+STD_ROM_FN(snes_Silvasaga2j)
+
+struct BurnDriver BurnDrvsnes_Silvasaga2j = {
+	"snes_silvasaga2j", "snes_silvasaga2te", NULL, NULL, "1993",
+	"Silva Saga II: The Legend of Light and Darkness (Japan)\0", NULL, "Seta Co.", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Silvasaga2jRomInfo, snes_Silvasaga2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Silva Saga II: The Legend of Light and Darkness (Hack, English)
+// https://www.romhacking.net/translations/1698/
+static struct BurnRomInfo snes_Silvasaga2teRomDesc[] = {
+	{ "Silva Saga II - The Legend of Light and Darkness T-Eng (2012)(Dynamic-Designs).sfc", 3145728, 0xbc3df046, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Silvasaga2te)
+STD_ROM_FN(snes_Silvasaga2te)
+
+struct BurnDriver BurnDrvsnes_Silvasaga2te = {
+	"snes_silvasaga2te", NULL, NULL, NULL, "2012",
+	"Silva Saga II: The Legend of Light and Darkness (Hack, English)\0", NULL, "Dynamic-Designs", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Silvasaga2teRomInfo, snes_Silvasaga2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // SimAnt - The Electronic Ant Colony (USA)
 
 static struct BurnRomInfo snes_SimantRomDesc[] = {
@@ -28135,6 +28211,44 @@ struct BurnDriver BurnDrvsnes_Tetsuwatom = {
 	512, 448, 4, 3
 };
 
+// Theme Park (Euro)
+
+static struct BurnRomInfo snes_ThemeparkeRomDesc[] = {
+	{ "Theme Park (E)(1995)(Ocean).sfc", 1048576, 0xca0e041c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Themeparke)
+STD_ROM_FN(snes_Themeparke)
+
+struct BurnDriver BurnDrvsnes_Themeparke = {
+	"snes_themeparke", NULL, NULL, NULL, "1995",
+	"Theme Park (Euro)\0", NULL, "Ocean", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_ThemeparkeRomInfo, snes_ThemeparkeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Theme Park (Japan)
+
+static struct BurnRomInfo snes_ThemeparkjRomDesc[] = {
+	{ "Theme Park (J)(1995)(Electronic Arts).sfc", 2097152, 0x6797884a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Themeparkj)
+STD_ROM_FN(snes_Themeparkj)
+
+struct BurnDriver BurnDrvsnes_Themeparkj = {
+	"snes_themeparkj", "snes_themeparke", NULL, NULL, "1995",
+	"Theme Park (Japan)\0", NULL, "Electronic Arts", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_ThemeparkjRomInfo, snes_ThemeparkjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Thunder Spirits (USA)
 
 static struct BurnRomInfo snes_ThunderspiritsRomDesc[] = {
@@ -28401,7 +28515,7 @@ struct BurnDriver BurnDrvsnes_Tkoscb = {
 	512, 448, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles - Tournament Fighters (USA)
+// Teenage Mutant Ninja Turtles: Tournament Fighters (USA)
 
 static struct BurnRomInfo snes_TmntfightRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles - Tournament Fighters (U)(1993)(Konami).sfc", 2097152, 0xe2fe5dbf, BRF_ESS | BRF_PRG },
@@ -28412,7 +28526,7 @@ STD_ROM_FN(snes_Tmntfight)
 
 struct BurnDriver BurnDrvsnes_Tmntfight = {
 	"snes_tmntfight", NULL, NULL, NULL, "1993",
-	"Teenage Mutant Ninja Turtles - Tournament Fighters (USA)\0", NULL, "Konami", "Nintendo",
+	"Teenage Mutant Ninja Turtles: Tournament Fighters (USA)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightRomInfo, snes_TmntfightRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -28420,7 +28534,7 @@ struct BurnDriver BurnDrvsnes_Tmntfight = {
 	512, 448, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles IV - Turtles in Time (USA)
+// Teenage Mutant Ninja Turtles IV: Turtles in Time (USA)
 
 static struct BurnRomInfo snes_TmntivRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles IV - Turtles in Time (U)(1992)(Konami).sfc", 1048576, 0x5940bd99, BRF_ESS | BRF_PRG },
@@ -28431,7 +28545,7 @@ STD_ROM_FN(snes_Tmntiv)
 
 struct BurnDriver BurnDrvsnes_Tmntiv = {
 	"snes_tmntiv", NULL, NULL, NULL, "1992",
-	"Teenage Mutant Ninja Turtles IV - Turtles in Time (USA)\0", NULL, "Konami", "Nintendo",
+	"Teenage Mutant Ninja Turtles IV: Turtles in Time (USA)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntivRomInfo, snes_TmntivRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -28439,7 +28553,7 @@ struct BurnDriver BurnDrvsnes_Tmntiv = {
 	512, 448, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles - Turtles in Time (Japan)
+// Teenage Mutant Ninja Turtles: Turtles in Time (Japan)
 
 static struct BurnRomInfo snes_TmntivjRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles - Turtles in Time (J)(1992)(Konami).sfc", 1048576, 0xbdba1b55, BRF_ESS | BRF_PRG },
@@ -28450,7 +28564,7 @@ STD_ROM_FN(snes_Tmntivj)
 
 struct BurnDriver BurnDrvsnes_Tmntivj = {
 	"snes_tmntivj", "snes_tmntiv", NULL, NULL, "1992",
-	"Teenage Mutant Ninja Turtles - Turtles in Time (Japan)\0", NULL, "Konami", "Nintendo",
+	"Teenage Mutant Ninja Turtles: Turtles in Time (Japan)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntivjRomInfo, snes_TmntivjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -28458,7 +28572,7 @@ struct BurnDriver BurnDrvsnes_Tmntivj = {
 	512, 448, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles - Mutant Warriors (Japan)
+// Teenage Mutant Ninja Turtles: Mutant Warriors (Japan)
 
 static struct BurnRomInfo snes_TmntmwRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles - Mutant Warriors (J)(1993)(Konami).sfc", 2097152, 0x7e97e194, BRF_ESS | BRF_PRG },
@@ -28469,7 +28583,7 @@ STD_ROM_FN(snes_Tmntmw)
 
 struct BurnDriver BurnDrvsnes_Tmntmw = {
 	"snes_tmntmw", "snes_tmntfight", NULL, NULL, "1993",
-	"Teenage Mutant Ninja Turtles - Mutant Warriors (Japan)\0", NULL, "Konami", "Nintendo",
+	"Teenage Mutant Ninja Turtles: Mutant Warriors (Japan)\0", NULL, "Konami", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntmwRomInfo, snes_TmntmwRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31809,6 +31923,25 @@ struct BurnDriver BurnDrvsnes_Jimpoweree = {
 	512, 448, 4, 3
 };
 
+// Killer Instinct - Eyedol Edition (Hack)
+// https://www.romhacking.net/hacks/5453/
+static struct BurnRomInfo snes_KillinsteeRomDesc[] = {
+	{ "Killer Instinct - Eyedol Edition (2020)(NinjAkira).sfc", 4194304, 0xca350c4c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Killinstee)
+STD_ROM_FN(snes_Killinstee)
+
+struct BurnDriver BurnDrvsnes_Killinstee = {
+	"snes_killinstee", "snes_killinst", NULL, NULL, "2020",
+	"Killer Instinct - Eyedol Edition (Hack)\0", NULL, "NinjAkira", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_KillinsteeRomInfo, snes_KillinsteeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Legend of Zelda, The - 18 Hours Past (Hack, v1.12)
 // https://www.romhacking.net/hacks/7732/
 static struct BurnRomInfo snes_Legendofzelda18hpRomDesc[] = {
@@ -32433,6 +32566,44 @@ struct BurnDriver BurnDrvsnes_Ranmahb2tefr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ranmahb2tefrRomInfo, snes_Ranmahb2tefrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rockman 7 EP (Hack, Japan v1.02)
+// https://www.romhacking.net/hacks/5502/
+static struct BurnRomInfo snes_Rockman7epjRomDesc[] = {
+	{ "Rockman 7 EP - Japan v1.02 (2020)(Puresable).sfc", 4194304, 0x5a9fe058, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rockman7epj)
+STD_ROM_FN(snes_Rockman7epj)
+
+struct BurnDriver BurnDrvsnes_Rockman7epj = {
+	"snes_rockman7epj", "snes_megaman7", NULL, NULL, "2020",
+	"Rockman 7 EP (Hack, Japan v1.02)\0", NULL, "Puresable", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Rockman7epjRomInfo, snes_Rockman7epjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rockman 7 EP (Hack, English v1.02)
+// https://www.romhacking.net/hacks/6165/
+static struct BurnRomInfo snes_Rockman7epteRomDesc[] = {
+	{ "Rockman 7 EP - T-Eng v1.02 (2021)(Zynk Oxhyde).sfc", 4194304, 0xdfab9721, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rockman7epte)
+STD_ROM_FN(snes_Rockman7epte)
+
+struct BurnDriver BurnDrvsnes_Rockman7epte = {
+	"snes_rockman7epte", "snes_megaman7", NULL, NULL, "2021",
+	"Rockman 7 EP (Hack, English v1.02)\0", "In title screen press 'Select' button to enable English language", "Zynk Oxhyde", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Rockman7epteRomInfo, snes_Rockman7epteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33080,6 +33251,25 @@ struct BurnDriver BurnDrvsnes_Tinytoonjr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_TinytoonjrRomInfo, snes_TinytoonjrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// TMNT: Tournament Fighters - Cowabunga Edition (Hack)
+// https://www.romhacking.net/hacks/7374/
+static struct BurnRomInfo snes_TmntfightceRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - Tournament Fighters - Cowabunga Edition (2022)(gallaux).sfc", 2097152, 0x26540ce6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tmntfightce)
+STD_ROM_FN(snes_Tmntfightce)
+
+struct BurnDriver BurnDrvsnes_Tmntfightce = {
+	"snes_tmntfightce", "snes_tmntfight", NULL, NULL, "2022",
+	"TMNT: Tournament Fighters - Cowabunga Edition (Hack)\0", NULL, "gallaux", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_TmntfightceRomInfo, snes_TmntfightceRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

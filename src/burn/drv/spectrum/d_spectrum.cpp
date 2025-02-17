@@ -43640,7 +43640,7 @@ struct BurnDriver BurnSpecMoonrangerv2 = {
 // MoonRN (48K) (HB)
 
 static struct BurnRomInfo SpecMoonrnRomDesc[] = {
-	{ "MoonRN 48K-AY (2025)(Snauts).tap", 22900, 0xeb41580e, BRF_ESS | BRF_PRG },
+	{ "MoonRN 48K-AY (2025)(Snauts).tap", 20266, 0x2e9a1874, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMoonrn, SpecMoonrn, Spectrum)
@@ -43652,7 +43652,7 @@ struct BurnDriver BurnSpecMoonrn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecMoonrnRomInfo, SpecMoonrnRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecSlowTAPInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

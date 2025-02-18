@@ -4820,11 +4820,11 @@ struct BurnDriver BurnDrvHooknx2 = {
 
 
 // Hook (XX, Hack)
-// GOTVG 20241227
+// GOTVG 20250114
 
 static struct BurnRomInfo hookxxRomDesc[] = {
-	{ "hkxx_-h0-d.ic25",	0x040000, 0xa850ab9e, 1 | BRF_PRG | BRF_ESS },
-	{ "hkxx_-l0-d.ic38",	0x040000, 0xfde0a2e2, 1 | BRF_PRG | BRF_ESS },
+	{ "hkxx_-h0-d.ic25",	0x040000, 0x77cde5c5, 1 | BRF_PRG | BRF_ESS },
+	{ "hkxx_-l0-d.ic38",	0x040000, 0x106d883a, 1 | BRF_PRG | BRF_ESS },
 
 	HOOK_COMPONENTS
 };
@@ -4833,7 +4833,7 @@ STD_ROM_PICK(hookxx)
 STD_ROM_FN(hookxx)
 
 struct BurnDriver BurnDrvHookxx = {
-	"hookxx", "hook", NULL, NULL, "2024",
+	"hookxx", "hook", NULL, NULL, "2025",
 	"Hook (XX, Hack)\0", NULL, "hack", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
@@ -4916,11 +4916,11 @@ struct BurnDriver BurnDrvHookjy = {
 
 
 // Hook (Elite Competition, Hack)
-// GOTVG 20250103
+// GOTVG 20250208
 
 static struct BurnRomInfo hookjydsRomDesc[] = {
-	{ "hkjyds_-h0-d.ic25",	0x040000, 0xc9d3c68c, 1 | BRF_PRG | BRF_ESS },
-	{ "hkjyds_-l0-d.ic38",	0x040000, 0xdf241bd8, 1 | BRF_PRG | BRF_ESS },
+	{ "hkjyds_-h0-d.ic25",	0x040000, 0xba845593, 1 | BRF_PRG | BRF_ESS },
+	{ "hkjyds_-l0-d.ic38",	0x040000, 0x69891198, 1 | BRF_PRG | BRF_ESS },
 
 	HOOK_COMPONENTS
 };

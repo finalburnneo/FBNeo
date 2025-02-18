@@ -25893,6 +25893,25 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4e = {
 	512, 448, 4, 3
 };
 
+// Super Castlevania IV Uncensored Hack
+// https://www.romhacking.net/hacks/2928/ - 06 December 2021
+static struct BurnRomInfo snes_Supercastlevania4uhRomDesc[] = {
+	{ "Super Castlevania IV Uncensored Hack (U)(1991)(Konami).sfc", 3145728, 0xfeb7ace2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supercastlevania4uh)
+STD_ROM_FN(snes_Supercastlevania4uh)
+
+struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
+	"snes_supercastlevania4uh", "snes_supercastlevania4", NULL, NULL, "2021",
+	"Super Castlevania IV - Uncensored (Hack)\0", NULL, "ShadowOne333", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Supercastlevania4uhRomInfo, snes_Supercastlevania4uhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 480, 4, 3
+};
+
 // Super Chase H.Q. (USA)
 
 static struct BurnRomInfo snes_SuperchasehqRomDesc[] = {

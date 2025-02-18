@@ -27790,13 +27790,13 @@ struct BurnDriver BurnDrvCpsKoddw = {
 
 
 // The King of Dragons (Tough Plus, Hack)
-// GOTVG 20210622
+// GOTVG 20250203
 
 static struct BurnRomInfo kodlyRomDesc[] = {
-	{ "kdly_30b.11e",	0x020000, 0x1de154ff, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kdly_37b.11f",	0x020000, 0x225e422b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kdly_31b.12e",	0x020000, 0x4e5ac22a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "kdly_38b.12f",	0x020000, 0xd402b86a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kdly_30b.11e",	0x020000, 0x1047fcd6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kdly_37b.11f",	0x020000, 0x71a8263d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kdly_31b.12e",	0x020000, 0x28a362a0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kdly_38b.12f",	0x020000, 0x813a15a6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	KODU_PRG2
 
 	KOD_COMPONENTS
@@ -27806,7 +27806,7 @@ STD_ROM_PICK(kodly)
 STD_ROM_FN(kodly)
 
 struct BurnDriver BurnDrvCpsKodly = {
-	"kodly", "kod", NULL, NULL, "2021",
+	"kodly", "kod", NULL, NULL, "2025",
 	"The King of Dragons (Tough Plus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,

@@ -134,12 +134,12 @@ inline static void TWCMakeInputs(INT32 nInterleave)
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 63 (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x3f, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
 	BurnTrackballUDLR(0, TWCFakeInputPort[3], TWCFakeInputPort[2], TWCFakeInputPort[1], TWCFakeInputPort[0]);
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
-	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x3f, 0x3f);
+	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0, 0x3f);
 	BurnTrackballUDLR(1, TWCFakeInputPort[7], TWCFakeInputPort[6], TWCFakeInputPort[5], TWCFakeInputPort[4]);
 	BurnTrackballUpdate(1);
 }

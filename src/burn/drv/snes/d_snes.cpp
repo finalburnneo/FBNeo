@@ -25893,25 +25893,6 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4e = {
 	512, 448, 4, 3
 };
 
-// Super Castlevania IV Uncensored Hack
-// https://www.romhacking.net/hacks/2928/ - 06 December 2021
-static struct BurnRomInfo snes_Supercastlevania4uhRomDesc[] = {
-	{ "Super Castlevania IV Uncensored Hack (U)(1991)(Konami).sfc", 3145728, 0xfeb7ace2, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Supercastlevania4uh)
-STD_ROM_FN(snes_Supercastlevania4uh)
-
-struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
-	"snes_supercastlevania4uh", "snes_supercastlevania4", NULL, NULL, "2021",
-	"Super Castlevania IV - Uncensored (Hack)\0", NULL, "ShadowOne333", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	SNESGetZipName, snes_Supercastlevania4uhRomInfo, snes_Supercastlevania4uhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Super Chase H.Q. (USA)
 
 static struct BurnRomInfo snes_SuperchasehqRomDesc[] = {
@@ -31945,7 +31926,7 @@ struct BurnDriver BurnDrvsnes_Jimpoweree = {
 // Killer Instinct - Eyedol Edition (Hack)
 // https://www.romhacking.net/hacks/5453/
 static struct BurnRomInfo snes_KillinsteeRomDesc[] = {
-	{ "Killer Instinct - Eyedol Edition (2020)(NinjAkira).sfc", 4194304, 0xca350c4c, BRF_ESS | BRF_PRG },
+	{ "Killer Instinct - Eyedol Edition (2020)(NinjAkira).sfc", 4194816, 0xea44610a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Killinstee)
@@ -32931,6 +32912,25 @@ struct BurnDriver BurnDrvsnes_Supcooked = {
 	512, 448, 4, 3
 };
 
+// Super Castlevania IV Uncensored (Hack, v2.1)
+// https://www.romhacking.net/hacks/2928/ - 06 December 2021
+static struct BurnRomInfo snes_Supercastlevania4uhRomDesc[] = {
+	{ "Super Castlevania IV Uncensored v2.1 (2021)(ShadowOne333).sfc", 3145728, 0xfeb7ace2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supercastlevania4uh)
+STD_ROM_FN(snes_Supercastlevania4uh)
+
+struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
+	"snes_supercastlevania4uh", "snes_supercastlevania4", NULL, NULL, "2021",
+	"Super Castlevania IV Uncensored (Hack, v2.1)\0", NULL, "ShadowOne333", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Supercastlevania4uhRomInfo, snes_Supercastlevania4uhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Ghouls 'n Ghosts Restoration (Hack)
 // https://www.romhacking.net/hacks/3473/
 static struct BurnRomInfo snes_SupergngrRomDesc[] = {
@@ -33277,7 +33277,7 @@ struct BurnDriver BurnDrvsnes_Tinytoonjr = {
 // TMNT: Tournament Fighters - Cowabunga Edition (Hack)
 // https://www.romhacking.net/hacks/7374/
 static struct BurnRomInfo snes_TmntfightceRomDesc[] = {
-	{ "Teenage Mutant Ninja Turtles - Tournament Fighters - Cowabunga Edition (2022)(gallaux).sfc", 2097152, 0x26540ce6, BRF_ESS | BRF_PRG },
+	{ "Teenage Mutant Ninja Turtles - Tournament Fighters - Cowabunga Edition (2022)(gallaux).sfc", 2097152, 0xea03fbc9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tmntfightce)

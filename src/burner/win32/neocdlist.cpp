@@ -133,6 +133,7 @@ struct NGCDGAME games[] =
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
+	{ _T("jumpnrun")	, _T("Jump & Run")											, _T("2020")	, _T("Blastar")				, 0x2006 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
 	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//

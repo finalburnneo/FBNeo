@@ -682,6 +682,11 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 		if ((address & 0xc002) == 0x4000) { // 7ffd
 			if (Spec128kMapper & 0x20) return; // memory lock-out latch
 
+			if ((data ^ Spec128kMapper) & 0x08) {
+				// update video before video page swap
+				update_ula(ZetTotalCycles());
+			}
+
 			Spec128kMapper = data;
 			//bprintf(0, _T("7ffd: %x\t%x\n"), address, data);
 			spectrum128_bank();
@@ -699,6 +704,11 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 	} else { // standard 128k
 		if ((address & 0x8002) == 0x0000) { // 7ffd
 			if (Spec128kMapper & 0x20) return; // memory lock-out latch
+
+			if ((data ^ Spec128kMapper) & 0x08) {
+				// update video before video page swap
+				update_ula(ZetTotalCycles());
+			}
 
 			Spec128kMapper = data;
 			//bprintf(0, _T("7ffd: %x\t%x\n"), address, data);

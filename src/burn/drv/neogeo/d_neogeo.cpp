@@ -23836,6 +23836,7 @@ struct BurnDriver BurnDrvKof98bc2nd = {
 	0x1000,	304, 224, 4, 3
 };
 
+
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Unlimited, Hack)
 // Modified by Yashional
 
@@ -26831,6 +26832,38 @@ struct BurnDriver BurnDrvGhostbi = {
 };
 
 
+// NeoGeo/CD Jump & Run Techdemo Dez 2020 (HB, ver. 20201212)
+// https://www.patreon.com/blastar
+
+static struct BurnRomInfo ngcdtdd0RomDesc[] = {
+	{ "ngcdtdd0.p1",	0x080000, 0xe2d0dcf3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "ngcdtdd0.s1",	0x020000, 0xacc6a2a3, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "ngcdtdd0.c1",	0x080000, 0x0164735f, 3 | BRF_GRA },           //  2 Sprite data
+	{ "ngcdtdd0.c2",	0x080000, 0x38f8b27e, 3 | BRF_GRA },           //  3
+
+	{ "ngcdtdd0.m1",	0x010000, 0x30094ef9, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "ngcdtdd0.v11",	0x080000, 0x01a1a847, 5 | BRF_SND },           //  5 Sound data
+	{ "ngcdtdd0.v21",	0x080000, 0x398c3d56, 5 | BRF_SND },           //  6
+	{ "ngcdtdd0.v22",	0x080000, 0x47aa9572, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(ngcdtdd0, ngcdtdd0, neogeo)
+STD_ROM_FN(ngcdtdd0)
+
+struct BurnDriver BurnDrvNgcdtdd0 = {
+	"ngcdtdd0", NULL, "neogeo", NULL, "2020",
+	"NeoGeo/CD Jump & Run Techdemo Dez 2020 (HB, ver. 20201212)\0", NULL, "Blastar", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, ngcdtdd0RomInfo, ngcdtdd0RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Robocop (FMV Demo)
 
 static struct BurnRomInfo robocopiRomDesc[] = {
@@ -27832,7 +27865,7 @@ static struct BurnRomInfo bpanicdxRomDesc[] = {
 
 	{ "bpanicdx.v1",	0x080000, 0x55185687, 5 | BRF_SND },           //  5 Sound data
 	{ "bpanicdx.v2",	0x080000, 0x7211595d, 5 | BRF_SND },           //  6
-	{ "bpanicdx.v3",	0x080000, 0xe08afa9f, 5 | BRF_SND },           //  7 Sound data
+	{ "bpanicdx.v3",	0x080000, 0xe08afa9f, 5 | BRF_SND },           //  7
 	{ "bpanicdx.v4",	0x080000, 0x5a9d8d69, 5 | BRF_SND },           //  8
 };
 
@@ -27845,6 +27878,37 @@ struct BurnDriver BurnDrvBpanicdx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, bpanicdxRomInfo, bpanicdxRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Flappy Chicken (HB, ver. 20230430)
+// https://blastar.citavia.de/
+
+static struct BurnRomInfo flapchckRomDesc[] = {
+	{ "flapchck.p1",	0x080000, 0x2a7454a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "flapchck.s1",	0x020000, 0x3fd2b4d4, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "flapchck.c1",	0x080000, 0x4ecdb8ca, 3 | BRF_GRA },           //  2 Sprite data
+	{ "flapchck.c2",	0x080000, 0x47d06927, 3 | BRF_GRA },           //  3
+
+	{ "flapchck.m1",	0x020000, 0x5abc1bf6, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "flapchck.v1",	0x080000, 0xc5d09e58, 5 | BRF_SND },           //  5 Sound data
+	{ "flapchck.v2",	0x080000, 0xb9afe241, 5 | BRF_SND },           //  6
+};
+
+STDROMPICKEXT(flapchck, flapchck, neogeo)
+STD_ROM_FN(flapchck)
+
+struct BurnDriver BurnDrvFlapchck = {
+	"flapchck", NULL, "neogeo", NULL, "2023",
+	"Flappy Chicken (HB, ver. 20230430)\0", NULL, "Blastar", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, flapchckRomInfo, flapchckRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

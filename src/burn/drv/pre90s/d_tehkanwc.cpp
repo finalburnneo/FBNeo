@@ -17,6 +17,7 @@
 #define SCREEN_CLOCK	        (18432000 / 3)    // 6,144,000
 #define SCREEN_TOTAL_H		     384
 #define SCREEN_TOTAL_V		     264
+#define SCREEN_VBEND			 16
 #define CPU_CYCLES_PER_FRAME	(3 * SCREEN_TOTAL_H * SCREEN_TOTAL_V / 4)
 #define AY_CLOCK                (18432000 / 12)   // 1,536,000
 #define MSM5205_CLOCK 	         384000
@@ -80,6 +81,7 @@ static UINT8 TWCFlipScreenY;
 
 static INT32 has_led             = 0;
 static INT32 has_msm5205         = 0;
+static INT32 is_teedoff          = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TehkanWCInputList[] = {
@@ -554,6 +556,7 @@ static inline void data_address_w(INT32 chip, UINT8 offset, UINT8 data)
 {
 	AY8910Write(chip, ~offset & 1, data);
 }
+
 static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
 {
 	UINT8 offset = port & 0xff;
@@ -593,7 +596,7 @@ static INT32 MemIndex()
 	TWCZ80Rom1            = Next; Next += 0x0c000;
 	TWCZ80Rom2            = Next; Next += 0x08000;
 	TWCZ80Rom3            = Next; Next += 0x04000;
-	TWCSndRom             = Next; Next += 0x04000;
+	TWCSndRom             = Next; Next += 0x08000;
 
 	RamStart              = Next;
 
@@ -667,6 +670,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
 	switch (address) {
 		case 0xda00:
+			if (is_teedoff) return 0x80;
 			return 0; // teedoff_unk_r
 
 		case 0xf800:
@@ -908,7 +912,7 @@ static void TWCRenderSprites()
 		fx = Attr & 0x40;
 		fy = Attr & 0x80;
 		sx = TWCSpriteRam[Offs + 2] + ((Attr & 0x20) << 3) - 128;
-		sy = TWCSpriteRam[Offs + 3] - 16;
+		sy = TWCSpriteRam[Offs + 3];
 
 		if (TWCFlipScreenX)
 		{
@@ -922,7 +926,7 @@ static void TWCRenderSprites()
 			fy = !fy;
 		}
 
-		Draw16x16MaskTile(pTransDraw, Code, sx, sy, fx, fy, Color, 4, 0, 256, TWCSprites);
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy - SCREEN_VBEND, fx, fy, Color, 4, 0, 256, TWCSprites);
 	}
 }
 
@@ -1179,7 +1183,7 @@ static void GFXInit()
 
 static INT32 CommonRomLoad()
 {
-	INT32 nRet = 0, nLen, romindex = 0;
+	INT32 nRet = 0, nLen;
 
 	Mem = NULL;
 	MemIndex();
@@ -1555,6 +1559,31 @@ static struct BurnRomInfo GridironRomDesc[] = {
 STD_ROM_PICK(Gridiron)
 STD_ROM_FN(Gridiron)
 
+static INT32 TeedOffInit()
+{
+	has_msm5205 = 1;
+	is_teedoff = 1;
+
+	if(CommonRomLoad() != 0) return 1;
+
+	CPUsInit();
+	GFXInit();
+
+	BurnWatchdogInit(TWCDoReset, 180);
+
+	CommonSoundInit();
+
+	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+
+	// Initialize analog controls for player 1 and player 2
+	BurnTrackballInit(2);
+
+	TWCDoReset(1);
+
+	return 0;
+}
+
 static struct BurnRomInfo TeedOffRomDesc[] = {
 	{ "1_m5m27c128_dip28.4a",      	0x04000, 0x0e18f6ee, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "2_m5m27c128_dip28.4b",      	0x04000, 0x70635a77, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -1866,7 +1895,7 @@ struct BurnDriver BurnDrvTeedOff = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSMISC,		// Genre
@@ -1880,17 +1909,17 @@ struct BurnDriver BurnDrvTeedOff = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TeedOffDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
+	TeedOffInit,				// Init
 	TWCExit,				// Exit
 	TWCFrame,				// Frame
 	TWCDraw,				// Redraw
 	TWCScan,				// Area Scan
 	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
-	256,					// Screen width
-	224,					// Screen height
-	4,						// Screen x aspect
-	3 						// Screen y aspect
+	224,					// Screen width
+	256,					// Screen height
+	3,						// Screen x aspect
+	4 						// Screen y aspect
 };
 
 struct BurnDriver BurnDrvTeedOffj = {
@@ -1908,7 +1937,7 @@ struct BurnDriver BurnDrvTeedOffj = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSMISC,		// Genre
@@ -1922,15 +1951,15 @@ struct BurnDriver BurnDrvTeedOffj = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TeedOffDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
+	TeedOffInit,				// Init
 	TWCExit,				// Exit
 	TWCFrame,				// Frame
 	TWCDraw,				// Redraw
 	TWCScan,				// Area Scan
 	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
-	256,					// Screen width
-	224,					// Screen height
-	4,						// Screen x aspect
-	3 						// Screen y aspect
+	224,					// Screen width
+	256,					// Screen height
+	3,						// Screen x aspect
+	4 						// Screen y aspect
 };

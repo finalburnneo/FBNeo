@@ -1,4 +1,4 @@
-// Crazy Climber FBA Driver
+// Crazy Climber FBNeo Driver
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -26,6 +26,7 @@ static UINT8 *DrvBGSprRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
+static UINT8 *DrvPalRAM;
 static INT16 *samplebuf;
 
 static UINT32 *DrvPalette;
@@ -53,7 +54,7 @@ static UINT8 DrvInputs[4];
 static UINT8 DrvDips[2];
 
 // per-game constants
-enum { CCLIMBER=0, SILVLAND, CKONG, CKONGB, YAMATO, GUZZLER, TANGRAMQ };
+enum { CCLIMBER=0, SILVLAND, CKONG, CKONGB, YAMATO, GUZZLER, TANGRAMQ, AU };
 static INT32 game_select;
 static INT32 gfx0_cont800 = 0;
 static INT32 uses_sub;
@@ -542,17 +543,17 @@ static struct BurnDIPInfo SwimmerDIPList[]=
 STDDIPINFO(Swimmer)
 
 static struct BurnInputInfo TangramqInputList[] = {
-	{"P1 Coin"           , BIT_DIGITAL  , DrvJoy3 + 5, "p1 coin"  },  // 8000
+	{"P1 Coin"           , BIT_DIGITAL  , DrvJoy3 + 5, "p1 coin"  },
 	{"P1 Start"          , BIT_DIGITAL  , DrvJoy3 + 2, "p1 start" },
 
-	{"P1 Button 1"       , BIT_DIGITAL  , DrvJoy1 + 1, "p1 fire 1"  },  // a000
+	{"P1 Button 1"       , BIT_DIGITAL  , DrvJoy1 + 1, "p1 fire 1"  },
 	{"P1 Right"          , BIT_DIGITAL  , DrvJoy1 + 2, "p1 right"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvJoy1 + 3, "p1 left" },
 
-	{"P2 Coin"           , BIT_DIGITAL  , DrvJoy4 + 3, "p2 coin"  },  // 8020
+	{"P2 Coin"           , BIT_DIGITAL  , DrvJoy4 + 3, "p2 coin"  },
 	{"P2 Start"          , BIT_DIGITAL  , DrvJoy3 + 1, "p2 start" },
 
-	{"P2 Button 1"       , BIT_DIGITAL  , DrvJoy2 + 1, "p2 fire 1"  }, // a800
+	{"P2 Button 1"       , BIT_DIGITAL  , DrvJoy2 + 1, "p2 fire 1"  },
 	{"P2 Right"          , BIT_DIGITAL  , DrvJoy2 + 2, "p2 right"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvJoy2 + 3, "p2 left" },
 
@@ -602,6 +603,67 @@ static struct BurnDIPInfo TangramqDIPList[]=
 };
 
 STDDIPINFO(Tangramq)
+
+static struct BurnInputInfo AuInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Au)
+
+static struct BurnDIPInfo AuDIPList[]=
+{
+	DIP_OFFSET(0x0f)
+	{0x00, 0xff, 0xff, 0x00, NULL		},
+	{0x01, 0xff, 0xff, 0x80, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x00, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "Disabled"				},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x00, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x00, 0x01, 0x30, 0x00, "30000, 100000, Every 100000"	},
+	{0x00, 0x01, 0x30, 0x10, "20000, 50000, Every 50000"	},
+	{0x00, 0x01, 0x30, 0x20, "30000"						},
+	{0x00, 0x01, 0x30, 0x30, "None"							},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x00, 0x01, 0xc0, 0x00, "3"					},
+	{0x00, 0x01, 0xc0, 0x40, "4"					},
+	{0x00, 0x01, 0xc0, 0x80, "5"					},
+	{0x00, 0x01, 0xc0, 0xc0, "Infinite (Cheat)"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x01, 0x01, 0x80, 0x80, "Upright"		},
+	{0x01, 0x01, 0x80, 0x00, "Cocktail"		},
+};
+
+STDDIPINFO(Au)
 
 // cclimber sample player
 static INT32 sample_num = 0;
@@ -682,6 +744,11 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 		return;
 	}
 
+	if (game_select == AU && (address & 0xf880) == 0xb800) {
+		DrvPalRAM[address & 0x7f] = data;
+		return;
+	}
+
 	switch (address)
 	{
 		case 0xa000:
@@ -710,6 +777,13 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 			}
 		return;
 
+		case 0xa004:
+			if (data != 0) sample_start();
+			if (game_select == GUZZLER) {
+				swimmer_palettebank = data;
+			}
+		return;
+
 		case 0xa005:
 			yamato_bg[1] = data & 1;
 		return;
@@ -718,16 +792,9 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 			yamato_bg[0] = data & 1;
 		return;
 
-		case 0xa004:
-			if (data != 0) sample_start();
-			if (game_select == GUZZLER) {
-				swimmer_palettebank = data;
-			}
-		return;
-
 		case 0xa800:
 			sample_freq = 3072000 / 4 / (256 - data);
-			if (game_select == GUZZLER) {
+			if (game_select == GUZZLER || game_select == AU) {
 				soundlatch = data;
 				ZetSetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
 			}
@@ -755,6 +822,7 @@ static UINT8 __fastcall cclimber_read(UINT16 address)
 {
 	switch (game_select)
 	{
+		case AU:
 		case GUZZLER:
 			switch (address)
 			{
@@ -811,9 +879,12 @@ static UINT8 __fastcall swimmer_sub_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0x3000:
+		case 0x3000: {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			return soundlatch;
+			UINT8 sl = soundlatch;
+			soundlatch = 0;
+			return sl;
+		}
 	}
 
 	return 0;
@@ -853,7 +924,7 @@ static void __fastcall sub_out(UINT16 port, UINT8 data)
 {
 	port &= 0xff;
 
-	if (game_select == GUZZLER) { // swimmer / guzzler
+	if (game_select == GUZZLER || game_select == AU) { // swimmer / guzzler / au
 		switch (port)
 		{
 			case 0x00:
@@ -925,7 +996,19 @@ static INT32 DrvDoReset()
 	flipscreen[0] = flipscreen[1] = 0;
 	interrupt_enable = 0;
 
-	bigsprite_index = (game_select == GUZZLER) ? 0xfc : 0xdc;
+	bigsprite_index = (game_select == GUZZLER || game_select == AU) ? 0xfc : 0xdc;
+
+	if (game_select == AU) {
+		// load palram with defaults for the boot test to show
+		for (INT32 i = 0;i < 0x80/2; i++) {
+			UINT8 r = (i & 1) ? 7 : 0;
+			UINT8 g = (i & 2) ? 7 : 0;
+			UINT8 b = (i & 4) ? 7 : 0;
+
+			DrvPalRAM[i*2+1] = r | g << 4;
+			DrvPalRAM[i*2+0] = b;
+		}
+	}
 
 	yamato_p0 = yamato_p1 = 0;
 	swimmer_background_color = swimmer_sidebg = swimmer_palettebank = soundlatch = 0;
@@ -984,6 +1067,9 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x0000400;
 	DrvColRAM		= Next; Next += 0x0000400;
 	DrvVidRAM		= Next; Next += 0x0000400;
+	if (game_select == AU) {
+		DrvPalRAM	= Next; Next += 0x0000080;
+	}
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -1004,7 +1090,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx_base, UINT8 *gfx_dest, INT32 len, INT32 siz
 	}
 
 	memcpy (tmp, gfx_base, len);
-	if (game_select == GUZZLER) { // swimmer, guzzler
+	if (game_select == GUZZLER || game_select == AU) { // swimmer, guzzler
 		GfxDecode(((len * 8) / 3) / (size * size), 3, size, size, PlaneSwimmer, XOffs, YOffs, (size * size), tmp, gfx_dest);
 	} else {
 		GfxDecode(((len * 8) / 2) / (size * size), 2, size, size, Plane, XOffs, YOffs, (size * size), tmp, gfx_dest);
@@ -1327,13 +1413,13 @@ static INT32 DrvInit()
 		DrvGfxDecode(DrvGfxROM0, DrvGfxROM0, DrvGfxROM0Len,  8);
 		DrvGfxDecode(DrvGfxROM2, DrvGfxROM2, DrvGfxROM1Len,  8);
 
-		DrvPaletteInit();
+		if (game_select != AU) DrvPaletteInit();
 	}
 
 	ZetInit(0);
 	ZetOpen(0);
 
-	if (game_select == GUZZLER) { // swimmer, guzzler
+	if (game_select == GUZZLER || game_select == AU) { // swimmer, guzzler
 		ZetMapMemory(DrvZ80ROM,		    0x0000, 0x7fff, MAP_ROM);
 		ZetMapMemory(DrvZ80ROM + 0x8000,0xe000, 0xffff, MAP_ROM);
 		ZetMapMemory(DrvZ80RAM0,		0x8000, 0x87ff, MAP_RAM);
@@ -1369,7 +1455,7 @@ static INT32 DrvInit()
 			ZetSetOutHandler(sub_out);
 			ZetSetInHandler(sub_in);
 		}
-		if (game_select == GUZZLER) { // swimmer/guzzler
+		if (game_select == GUZZLER || game_select == AU) { // swimmer/guzzler
 			ZetMapMemory(DrvSndROM,		    0x0000, 0x0fff, MAP_ROM);
 			ZetMapMemory(DrvZ80RAM1_0,		0x2000, 0x23ff, MAP_RAM);
 			ZetMapMemory(DrvSndROM + 0x1000,0x4000, 0xffff, MAP_RAM);
@@ -1423,8 +1509,8 @@ static void cclimber_draw_bigsprite()
 	UINT8 y = 128 - DrvSprRAM[bigsprite_index + 2];
 	INT32 flipx = (DrvSprRAM[bigsprite_index + 1] & 0x10) >> 4;
 	INT32 flipy = (DrvSprRAM[bigsprite_index + 1] & 0x20) >> 5;
-	INT32 bits = (game_select == GUZZLER) ? 3 : 2;
-	INT32 palindex = (game_select == GUZZLER) ? 0x100 : 0x40;
+	INT32 bits = ((game_select == GUZZLER) || (game_select == AU)) ? 3 : 2;
+	INT32 palindex = (game_select == GUZZLER) ? 0x100 : ((game_select == AU) ? 0 : 0x40);
 
 	if (flipscreen[0] && !(game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ)) { // flipx
 		flipx = !flipx;
@@ -1479,7 +1565,7 @@ static void cclimber_draw_bigsprite()
 
 static void draw_playfield()
 {
-	INT32 bits = (game_select == GUZZLER) ? 3 : 2;
+	INT32 bits = (game_select == GUZZLER || game_select == AU) ? 3 : 2;
 
 	for (INT32 offs = 0; offs < 0x400; offs++)
 	{
@@ -1509,9 +1595,9 @@ static void draw_playfield()
 		INT32 code = ((DrvColRAM[tile_offs] & 0x10) << 5) + ((DrvColRAM[tile_offs] & 0x20) << 3) + DrvVidRAM[tile_offs];
 		INT32 color = DrvColRAM[tile_offs] & 0x0f;
 
-		if (game_select == GUZZLER) {
-			code = ((DrvColRAM[tile_offs] & 0x10) << 4) | DrvVidRAM[tile_offs];
-			color = ((swimmer_palettebank & 0x01) << 4) | (DrvColRAM[tile_offs] & 0x0f);
+		if (game_select == GUZZLER || game_select == AU) {
+			code = ((DrvColRAM[tile_offs] & 0x30) << 4) | DrvVidRAM[tile_offs];
+			color = (swimmer_palettebank << 4) | (DrvColRAM[tile_offs] & 0x0f);
 		}
 
 		if (sx > nScreenWidth || sy > nScreenHeight) continue;
@@ -1534,16 +1620,34 @@ static void draw_debug()
 }
 #endif
 
+inline static UINT32 CalcCol(UINT16 nColour)
+{
+	INT32 r, g, b;
+
+	r = pal3bit(nColour >> 0);
+	g = pal3bit(nColour >> 4);
+	b = pal3bit(nColour >> 8);
+
+	return BurnHighCol(r, g, b, 0);
+}
+
+static void AuPaletteUpdate()
+{
+	for (INT32 i = 0; i < 0x80; i += 2)
+	{
+		DrvPalette[i/2] = CalcCol(DrvPalRAM[i | 1] | (DrvPalRAM[i & ~1] << 8));
+	}
+}
+
 static void draw_sprites()
 {
-	INT32 bits = (game_select == GUZZLER) ? 3 : 2;
+	INT32 bits = (game_select == GUZZLER || game_select == AU) ? 3 : 2;
 
 	for (INT32 offs = 0x9c; offs >= 0x80; offs -= 4)
 	{
 		INT32 x = DrvSprRAM[offs + 3];
 		INT32 y = 240 - DrvSprRAM[offs + 2];
 
-		// note: does tangramq need this too ?
 		if (game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ) y += 16; else y -= 16; //offsets
 
 		INT32 code = ((DrvSprRAM[offs + 1] & 0x10) << 3) |
@@ -1552,11 +1656,11 @@ static void draw_sprites()
 
 		INT32 color = DrvSprRAM[offs + 1] & 0x0f;
 
-		if (game_select == GUZZLER) {
-			code = ((DrvSprRAM[offs + 1] & 0x10) << 2) |
+		if (game_select == GUZZLER || game_select == AU) {
+			code = ((DrvSprRAM[offs + 1] & 0x30) << 2) |
 					(DrvSprRAM[offs + 0] & 0x3f);
 
-			color = ((swimmer_palettebank & 0x01) << 4) |
+			color = (swimmer_palettebank << 4) |
 					(DrvSprRAM[offs + 1] & 0x0f);
 
 		}
@@ -1653,6 +1757,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	if (game_select == AU) {
+		AuPaletteUpdate();
+	}
+
 	BurnTransferClear();
 
 	if (game_select == GUZZLER) {
@@ -1718,6 +1826,8 @@ static INT32 DrvFrame()
 			ZetOpen(1);
 			CPU_RUN(1, Zet);
 			if ((game_select == GUZZLER || game_select == TANGRAMQ) && (i%63==0)) // 4x per frame
+				ZetNmi();
+			if (i == nInterleave - 1 && game_select == AU)
 				ZetNmi();
 			ZetClose();
 		}
@@ -2770,5 +2880,45 @@ struct BurnDriver BurnDrvTangramq = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, tangramqRomInfo, tangramqRomName, NULL, NULL, NULL, NULL, TangramqInputInfo, TangramqDIPInfo,
 	tangramqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+static INT32 auInit()
+{
+	game_select = AU;
+	uses_sub = 1;
+
+	return DrvInit();
+}
+
+// Au (location test)
+
+static struct BurnRomInfo auRomDesc[] = {
+	{ "program0.e8",	0x2000, 0x04c7ebc9, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "program1.b8",	0x2000, 0xd3820146, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "program2.d8",	0x2000, 0xda85cf0f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "program3.a8",	0x2000, 0xfa4bc959, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "sound0.c4",		0x1000, 0x0315f0a1, 7 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "tile2.bin",		0x2000, 0xfaa24ff4, 2 | BRF_GRA }, //  5 gfx1
+	{ "tile1.bin",		0x2000, 0x2bd7aa4e, 2 | BRF_GRA }, //  6
+	{ "tile0.bin",		0x2000, 0xd5a8bf00, 2 | BRF_GRA }, //  7
+
+	{ "big2.g7",		0x1000, 0x19d65322, 3 | BRF_GRA }, //  8 gfx2
+	{ "big1.e7",		0x1000, 0xdd2bf0ba, 3 | BRF_GRA }, //  9
+	{ "big0.c7",		0x1000, 0x4a22394e, 3 | BRF_GRA }, // 10
+};
+
+STD_ROM_PICK(au)
+STD_ROM_FN(au)
+
+struct BurnDriver BurnDrvAu = {
+	"au", NULL, NULL, NULL, "1983",
+	"Au (location test)\0", NULL, "Tehkan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, auRomInfo, auRomName, NULL, NULL, NULL, NULL, AuInputInfo, AuDIPInfo,
+	auInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

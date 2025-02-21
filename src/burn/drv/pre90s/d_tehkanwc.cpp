@@ -80,8 +80,6 @@ static UINT8 TWCFlipScreenX;
 static UINT8 TWCFlipScreenY;
 
 static INT32 has_led             = 0;
-static INT32 has_msm5205         = 0;
-static INT32 is_teedoff          = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TehkanWCInputList[] = {
@@ -149,7 +147,7 @@ static struct BurnDIPInfo TehkanWCDIPList[]=
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
-	{  0x00,    0xff,    0xff,    0xff,       NULL                          },
+	{  0x00,    0xff,    0xff,    0x0f,       NULL                          },
 	{  0x01,    0xff,    0xff,    0xff,       NULL                          },
 	{  0x02,    0xff,    0xff,    0xff,       NULL                          },
 
@@ -267,7 +265,7 @@ static struct BurnDIPInfo TehkanWCdDIPList[]=
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
-	{  0x00,    0xff,    0xff,    0xff,       NULL                          },
+	{  0x00,    0xff,    0xff,    0x00,       NULL                          },
 	{  0x01,    0xff,    0xff,    0xff,       NULL                          },
 	{  0x02,    0xff,    0xff,    0xff,       NULL                          },
 
@@ -385,17 +383,18 @@ static struct BurnDIPInfo GridironDIPList[]=
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
-	{  0x00,    0xff,    0xff,    0xff,       NULL                          },
+	{  0x00,    0xff,    0xff,    0x00,       NULL                          },
 	{  0x01,    0xff,    0xff,    0xff,       NULL                          },
+	{  0x02,    0xff,    0xff,    0xff,       NULL                          },
 
 	// Dip 2
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Start Credits (P1&P2)/Extra" },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x03,    0x01,       "1&1/200%"                    },
-	{  0x00,    0x01,    0x03,    0x03,       "1&2/100%"                    },
-	{  0x00,    0x01,    0x03,    0x00,       "2&1/200% (duplicate)"        },
-	{  0x00,    0x01,    0x03,    0x02,       "2&2/100%"                    },
+	{  0x01,    0x01,    0x03,    0x01,       "1&1/200%"                    },
+	{  0x01,    0x01,    0x03,    0x03,       "1&2/100%"                    },
+	{  0x01,    0x01,    0x03,    0x00,       "2&1/200% (duplicate)"        },
+	{  0x01,    0x01,    0x03,    0x02,       "2&2/100%"                    },
 
 	/* This Dip Switch only has an effect in a 2 players game.
 	   If offense player selects his formation before defense player,
@@ -405,84 +404,84 @@ static struct BurnDIPInfo GridironDIPList[]=
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Formation Time (Defense)"    },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x0c,    0x0c,       "Same as Offense"             },
-	{  0x00,    0x01,    0x0c,    0x00,       "7"                           },
-	{  0x00,    0x01,    0x0c,    0x08,       "5"                           },
-	{  0x00,    0x01,    0x0c,    0x04,       "3"                           },
+	{  0x01,    0x01,    0x0c,    0x0c,       "Same as Offense"             },
+	{  0x01,    0x01,    0x0c,    0x00,       "7"                           },
+	{  0x01,    0x01,    0x0c,    0x08,       "5"                           },
+	{  0x01,    0x01,    0x0c,    0x04,       "3"                           },
 
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Timer Speed"                 },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x30,    0x30,       "60/60"                       },
-	{  0x00,    0x01,    0x30,    0x00,       "57/60"                       },
-	{  0x00,    0x01,    0x30,    0x10,       "54/60"                       },
-	{  0x00,    0x01,    0x30,    0x20,       "50/60"                       },
+	{  0x01,    0x01,    0x30,    0x30,       "60/60"                       },
+	{  0x01,    0x01,    0x30,    0x00,       "57/60"                       },
+	{  0x01,    0x01,    0x30,    0x10,       "54/60"                       },
+	{  0x01,    0x01,    0x30,    0x20,       "50/60"                       },
 
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Formation Time (Ofense)"     },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0xc0,    0x00,       "25"                          },
-	{  0x00,    0x01,    0xc0,    0x40,       "20"                          },
-	{  0x00,    0x01,    0xc0,    0xc0,       "15"                          },
-	{  0x00,    0x01,    0xc0,    0x80,       "10"                          },
+	{  0x01,    0x01,    0xc0,    0x00,       "25"                          },
+	{  0x01,    0x01,    0xc0,    0x40,       "20"                          },
+	{  0x01,    0x01,    0xc0,    0xc0,       "15"                          },
+	{  0x01,    0x01,    0xc0,    0x80,       "10"                          },
 
 	// Dip 3
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "1P Game Time"                },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0x03,    0x00,       "2:30"                        },
-	{  0x01,    0x01,    0x03,    0x01,       "2:00"                        },
-	{  0x01,    0x01,    0x03,    0x03,       "1:30"                        },
-	{  0x01,    0x01,    0x03,    0x02,       "1:00"                        },
+	{  0x02,    0x01,    0x03,    0x00,       "2:30"                        },
+	{  0x02,    0x01,    0x03,    0x01,       "2:00"                        },
+	{  0x02,    0x01,    0x03,    0x03,       "1:30"                        },
+	{  0x02,    0x01,    0x03,    0x02,       "1:00"                        },
 
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       32,         "2P Game Time"                },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0x7c,    0x60,       "5:00/3:00 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x00,       "5:00/2:45 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x20,       "5:00/2:35 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x40,       "5:00/2:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x60,       "5:00/3:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x00,       "5:00/2:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x20,       "5:00/2:35 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x40,       "5:00/2:30 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x64,       "4:00/2:30 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x04,       "4:00/2:15 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x24,       "4:00/2:05 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x44,       "4:00/2:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x64,       "4:00/2:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x04,       "4:00/2:15 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x24,       "4:00/2:05 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x44,       "4:00/2:00 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x68,       "3:30/2:15 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x08,       "3:30/2:00 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x28,       "3:30/1:50 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x48,       "3:30/1:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x68,       "3:30/2:15 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x08,       "3:30/2:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x28,       "3:30/1:50 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x48,       "3:30/1:45 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x6c,       "3:00/2:00 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x0c,       "3:00/1:45 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x2c,       "3:00/1:35 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x4c,       "3:00/1:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x6c,       "3:00/2:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x0c,       "3:00/1:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x2c,       "3:00/1:35 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x4c,       "3:00/1:30 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x7c,       "2:30/1:45 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x1c,       "2:30/1:30 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x3c,       "2:30/1:20 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x5c,       "2:30/1:15 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x7c,       "2:30/1:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x1c,       "2:30/1:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x3c,       "2:30/1:20 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x5c,       "2:30/1:15 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x70,       "2:00/1:30 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x10,       "2:00/1:15 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x30,       "2:00/1:05 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x50,       "2:00/1:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x70,       "2:00/1:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x10,       "2:00/1:15 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x30,       "2:00/1:05 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x50,       "2:00/1:00 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x74,       "1:30/1:15 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x14,       "1:30/1:00 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x34,       "1:30/0:50 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x54,       "1:30/0:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x74,       "1:30/1:15 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x14,       "1:30/1:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x34,       "1:30/0:50 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x54,       "1:30/0:45 Extra"             },
 
-	{  0x01,    0x01,    0x7c,    0x78,       "1:00/1:00 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x18,       "1:00/0:45 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x38,       "1:00/0:35 Extra"             },
-	{  0x01,    0x01,    0x7c,    0x58,       "1:00/0:30 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x78,       "1:00/1:00 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x18,       "1:00/0:45 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x38,       "1:00/0:35 Extra"             },
+	{  0x02,    0x01,    0x7c,    0x58,       "1:00/0:30 Extra"             },
 
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       2,          "Demo Sounds"                 },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0x80,    0x00,       "Off"                         },
-	{  0x01,    0x01,    0x80,    0x80,       "On"                          },
+	{  0x02,    0x01,    0x80,    0x00,       "Off"                         },
+	{  0x02,    0x01,    0x80,    0x80,       "On"                          },
 };
 STDDIPINFO(Gridiron)
 
@@ -493,62 +492,63 @@ static struct BurnDIPInfo TeedOffDIPList[]=
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
-	{  0x00,    0xff,    0xff,    0xbf,       NULL                           },
-	{  0x01,    0xff,    0xff,    0xff,       NULL                           },
+	{  0x00,    0xff,    0xff,    0x00,       NULL                          },
+	{  0x01,    0xff,    0xff,    0xbf,       NULL                           },
+	{  0x02,    0xff,    0xff,    0xff,       NULL                           },
 
 	// Dip 2
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Coin A"                       },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x03,    0x02,       "2 Coins 1 Credit"             },
-	{  0x00,    0x01,    0x03,    0x03,       "1 Coin 1 Credit"              },
-	{  0x00,    0x01,    0x03,    0x01,       "1 Coin 2 Credits"             },
-	{  0x00,    0x01,    0x03,    0x00,       "1 Coin 3 Credits"             },
+	{  0x01,    0x01,    0x03,    0x02,       "2 Coins 1 Credit"             },
+	{  0x01,    0x01,    0x03,    0x03,       "1 Coin 1 Credit"              },
+	{  0x01,    0x01,    0x03,    0x01,       "1 Coin 2 Credits"             },
+	{  0x01,    0x01,    0x03,    0x00,       "1 Coin 3 Credits"             },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Coin B"                       },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x0c,    0x08,       "2 Coins 1 Credit"             },
-	{  0x00,    0x01,    0x0c,    0x0c,       "1 Coin 1 Credit"              },
-	{  0x00,    0x01,    0x0c,    0x04,       "1 Coin 2 Credits"             },
-	{  0x00,    0x01,    0x0c,    0x00,       "1 Coin 3 Credits"             },
+	{  0x01,    0x01,    0x0c,    0x08,       "2 Coins 1 Credit"             },
+	{  0x01,    0x01,    0x0c,    0x0c,       "1 Coin 1 Credit"              },
+	{  0x01,    0x01,    0x0c,    0x04,       "1 Coin 2 Credits"             },
+	{  0x01,    0x01,    0x0c,    0x00,       "1 Coin 3 Credits"             },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Balls"                        },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x30,    0x30,       "5"                            },
-	{  0x00,    0x01,    0x30,    0x20,       "6"                            },
-	{  0x00,    0x01,    0x30,    0x10,       "7"                            },
-	{  0x00,    0x01,    0x30,    0x00,       "8"                            },
+	{  0x01,    0x01,    0x30,    0x30,       "5"                            },
+	{  0x01,    0x01,    0x30,    0x20,       "6"                            },
+	{  0x01,    0x01,    0x30,    0x10,       "7"                            },
+	{  0x01,    0x01,    0x30,    0x00,       "8"                            },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
-	{  0,       0xfe,    0,       4,          "Cabinet"                      },
+	{  0,       0xfe,    0,       2,          "Cabinet"                      },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x40,    0x00,       "Upright"                      },
-	{  0x00,    0x01,    0x40,    0x40,       "Cocktail"                     },
+	{  0x01,    0x01,    0x40,    0x00,       "Upright"                      },
+	{  0x01,    0x01,    0x40,    0x40,       "Cocktail"                     },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       2,          "Demo Sounds"                  },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x00,    0x01,    0x80,    0x00,       "Off"                          },
-	{  0x00,    0x01,    0x80,    0x80,       "On"                           },
+	{  0x01,    0x01,    0x80,    0x00,       "Off"                          },
+	{  0x01,    0x01,    0x80,    0x80,       "On"                           },
 
 	// Dip 3
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Penalty (Over Par)"           },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0x18,    0x10,       "1/1/2/3/4"                    },
-	{  0x01,    0x01,    0x18,    0x18,       "1/2/3/3/4"                    },
-	{  0x01,    0x01,    0x18,    0x08,       "1/2/3/4/4"                    },
-	{  0x01,    0x01,    0x18,    0x00,       "2/3/3/4/4"                    },
+	{  0x02,    0x01,    0x18,    0x10,       "1/1/2/3/4"                    },
+	{  0x02,    0x01,    0x18,    0x18,       "1/2/3/3/4"                    },
+	{  0x02,    0x01,    0x18,    0x08,       "1/2/3/4/4"                    },
+	{  0x02,    0x01,    0x18,    0x00,       "2/3/3/4/4"                    },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
-	{  0,       0xfe,    0,       4,          "Bonus Balls (Multiple coins)" },
+	{  0,       0xfe,    0,       2,          "Bonus Balls (Multiple coins)" },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0x20,    0x20,       "None"                         },
-	{  0x01,    0x01,    0x20,    0x00,       "+1"                           },
+	{  0x02,    0x01,    0x20,    0x20,       "None"                         },
+	{  0x02,    0x01,    0x20,    0x00,       "+1"                           },
 	// x,       DIP_GRP, x,       OptionCnt,  szTitle
 	{  0,       0xfe,    0,       4,          "Difficulty?"                  },
 	// nInput,  nFlags,  nMask,   nSetting,   szText
-	{  0x01,    0x01,    0xc0,    0x80,       "Easy"                         },
-	{  0x01,    0x01,    0xc0,    0xc0,       "Normal"                       },
-	{  0x01,    0x01,    0xc0,    0x40,       "Hard"                         },
-	{  0x01,    0x01,    0xc0,    0x00,       "Hardest"                      },
+	{  0x02,    0x01,    0xc0,    0x80,       "Easy"                         },
+	{  0x02,    0x01,    0xc0,    0xc0,       "Normal"                       },
+	{  0x02,    0x01,    0xc0,    0x40,       "Hard"                         },
+	{  0x02,    0x01,    0xc0,    0x00,       "Hardest"                      },
 };
 STDDIPINFO(TeedOff)
 
@@ -623,7 +623,7 @@ static INT32 MemIndex()
 	TWCSprites            = Next; Next += (512 * 16 * 16 * 4);
 
 	// Palette format: xBGR_444 (xxxxBBBBGGGGRRRR), 768
-	TWCPalette            = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
+	TWCPalette            = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 
 	MemEnd                 = Next;
 
@@ -670,8 +670,7 @@ static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
 	switch (address) {
 		case 0xda00:
-			if (is_teedoff) return 0x80;
-			return 0; // teedoff_unk_r
+			return 0x80; // teedoff_unk_r
 
 		case 0xf800:
 		case 0xf801:
@@ -720,7 +719,6 @@ static void sound_sync()
 	INT32 cyc = ZetTotalCycles(CPU_MAIN) - ZetTotalCycles(CPU_SOUND);
 	if (cyc > 0) {
 	  ZetRun(CPU_SOUND, cyc);
-	  //BurnTimerUpdate(ZetTotalCycles() + cyc);
 	}
 }
 
@@ -777,7 +775,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf850:
 			ZetSetRESETLine(CPU_SOUND, data ? Z80_CLEAR_LINE : Z80_ASSERT_LINE);
-			if (has_msm5205) MSM5205ResetWrite(0, data ? 0 : 1);
+			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
 
 		case 0xf860:
@@ -835,7 +833,7 @@ static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
 	switch (address) {
 		case 0x8001:
 
-			if (has_msm5205) MSM5205ResetWrite(0, data ? 0 : 1);
+			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
 
 		case 0x8002:
@@ -965,7 +963,7 @@ static INT32 TWCDoReset(INT32 clear_mem)
 
 	ZetOpen(2);
 	ZetReset();
-	if (has_msm5205) MSM5205Reset();
+	MSM5205Reset();
 	ZetClose();
 
 	AY8910Reset(0);
@@ -984,9 +982,6 @@ static INT32 TWCDoReset(INT32 clear_mem)
 
 	msm_data_offs  = 0;
 	msm_toggle     = 0;
-
-	has_led        = 0;
-	has_msm5205    = 0;
 
 	track_reset_p1[0] = 0;
 	track_reset_p1[1] = 0;
@@ -1055,7 +1050,7 @@ static INT32 TWCFrame()
 	if (pBurnSoundOut) {
 		// Update AY-8910 sound chips
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		if (has_msm5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 	
@@ -1226,23 +1221,10 @@ static INT32 CommonRomLoad()
 	return 0;
 }
 
-static void CommonSoundInit()
-{
-	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 1);
-	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
-	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-}
-
 static INT32 GridironInit()
 {
 	INT32 nRet = 0, nLen;
 	has_led = 1;
-	has_msm5205 = 1;
 
 	Mem = NULL;
 	MemIndex();
@@ -1288,7 +1270,14 @@ static INT32 GridironInit()
 
 	BurnWatchdogInit(TWCDoReset, 180);
 
-	CommonSoundInit();
+	// Initialize sound chips
+	AY8910Init(0, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
+	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
+	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
 
 	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
@@ -1303,7 +1292,7 @@ static INT32 GridironInit()
 
 static INT32 TehkanWCInit()
 {
-	has_msm5205 = 1;
+	has_led = 0;
 
 	if(CommonRomLoad() != 0) return 1;
 
@@ -1312,7 +1301,14 @@ static INT32 TehkanWCInit()
 
 	BurnWatchdogInit(TWCDoReset, 180);
 
-	CommonSoundInit();
+	// Initialize sound chips
+	AY8910Init(0, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
+	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
+	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
 
 	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
@@ -1327,7 +1323,7 @@ static INT32 TehkanWCInit()
 
 static INT32 TehkanWCbInit()
 {
-	has_msm5205 = 0;
+	has_led = 0;
 
 	if(CommonRomLoad() != 0) return 1;
 
@@ -1336,7 +1332,17 @@ static INT32 TehkanWCbInit()
 
 	BurnWatchdogInit(TWCDoReset, 180);
 
-	CommonSoundInit();
+	// Initialize sound chips
+	AY8910Init(0, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
+	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
+	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
+
+	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
 
 	// Initialize analog controls for player 1 and player 2
 	BurnTrackballInit(2);
@@ -1352,7 +1358,7 @@ static INT32 TWCExit()
 	GenericTilesExit();
 	AY8910Exit(0);
 	AY8910Exit(1);
-	if (has_msm5205) MSM5205Exit();
+	MSM5205Exit();
 	BurnTrackballExit();
 
 	BurnFree(Mem);
@@ -1387,7 +1393,7 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 		
-		if (has_msm5205) MSM5205Scan(nAction, pnMin);
+		MSM5205Scan(nAction, pnMin);
 
 		SCAN_VAR(TWCScrollXLo);
 		SCAN_VAR(TWCScrollXLo);
@@ -1399,7 +1405,6 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
 		SCAN_VAR(has_led);
-		SCAN_VAR(has_msm5205);
 		SCAN_VAR(track_reset_p1[0]);
 		SCAN_VAR(track_reset_p1[1]);
 		SCAN_VAR(track_reset_p2[0]);
@@ -1558,31 +1563,6 @@ static struct BurnRomInfo GridironRomDesc[] = {
 
 STD_ROM_PICK(Gridiron)
 STD_ROM_FN(Gridiron)
-
-static INT32 TeedOffInit()
-{
-	has_msm5205 = 1;
-	is_teedoff = 1;
-
-	if(CommonRomLoad() != 0) return 1;
-
-	CPUsInit();
-	GFXInit();
-
-	BurnWatchdogInit(TWCDoReset, 180);
-
-	CommonSoundInit();
-
-	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-
-	// Initialize analog controls for player 1 and player 2
-	BurnTrackballInit(2);
-
-	TWCDoReset(1);
-
-	return 0;
-}
 
 static struct BurnRomInfo TeedOffRomDesc[] = {
 	{ "1_m5m27c128_dip28.4a",      	0x04000, 0x0e18f6ee, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -1909,7 +1889,7 @@ struct BurnDriver BurnDrvTeedOff = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TeedOffDIPInfo,		// Function to get the input info for the game
-	TeedOffInit,				// Init
+	TehkanWCInit,				// Init
 	TWCExit,				// Exit
 	TWCFrame,				// Frame
 	TWCDraw,				// Redraw
@@ -1951,7 +1931,7 @@ struct BurnDriver BurnDrvTeedOffj = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TeedOffDIPInfo,		// Function to get the input info for the game
-	TeedOffInit,				// Init
+	TehkanWCInit,				// Init
 	TWCExit,				// Exit
 	TWCFrame,				// Frame
 	TWCDraw,				// Redraw

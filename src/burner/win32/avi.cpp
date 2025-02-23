@@ -122,6 +122,7 @@ static struct FBAVI {
 	UINT8 *pBitmapBuf2; // buffer #2 (flippy, pBitmapBufX points to one of these depending on last effect used)
 } FBAvi;
 
+
 // Opens an avi file for writing.
 // Returns: 0 (successful), 1 (failed)
 static INT32 AviCreateFile()
@@ -619,6 +620,22 @@ static INT32 AviCreateAudStream()
 INT32 AviStart_INT();
 void AviStop_INT();
 
+static INT32 AviCheckSizeChanged()
+{
+	INT32 nW, nH;
+	BurnDrvGetVisibleSize(&nW, &nH);
+
+	if (nW != FBAvi.nWidth || nH != FBAvi.nHeight) {
+		nAviSplit++;
+		bprintf(0, _T("    AVI Writer Resolution Changed (0x%X), creating new file.\n"), nAviSplit);
+		AviStop_INT();
+		AviStart_INT();
+		return 1;
+	}
+
+	return 0;
+}
+
 // Records 1 frame worth of data to the output stream
 // Returns: 0 (successful), 1 (failed)
 INT32 AviRecordFrame(INT32 bDraw)
@@ -632,6 +649,11 @@ INT32 AviRecordFrame(INT32 bDraw)
 	is in vid/aud interleaved mode, audio must be recorded
 	every frame regardless of frameskip.
 	*/
+
+	if (AviCheckSizeChanged()) {
+		return 0; // window size changed, skip this one.
+	}
+
 	if(bDraw) {
 		if(MakeSSBitmap()) {
 #ifdef AVI_DEBUG

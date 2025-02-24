@@ -623,7 +623,7 @@ static INT32 MemIndex()
 	TWCSprites            = Next; Next += (512 * 16 * 16 * 4);
 
 	// Palette format: xBGR_444 (xxxxBBBBGGGGRRRR), 768
-	TWCPalette            = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	TWCPalette            = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
 
 	MemEnd                 = Next;
 

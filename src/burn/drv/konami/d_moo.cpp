@@ -1256,7 +1256,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 120;
+	INT32 nInterleave = 160;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	if (moomesabl) nCyclesTotal[0] = 16100000 / 60;  // weird
 	INT32 nCyclesDone[2] = { 0, 0 };

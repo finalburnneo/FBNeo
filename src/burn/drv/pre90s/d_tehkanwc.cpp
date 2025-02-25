@@ -623,7 +623,7 @@ static INT32 MemIndex()
 	TWCSprites            = Next; Next += (512 * 16 * 16 * 4);
 
 	// Palette format: xBGR_444 (xxxxBBBBGGGGRRRR), 768
-	TWCPalette            = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	TWCPalette            = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
 
 	MemEnd                 = Next;
 
@@ -759,6 +759,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 		// 0xde00 .. 0xdfff: Shared RAM (PaletteRAM2)
 		// 0xe000 .. 0xe7ff: BGVideoRAM
 		// 0xe800 .. 0xebff: SpriteRAM
+
 		case 0xec00:
 			TWCScrollXLo = data;
 			return;

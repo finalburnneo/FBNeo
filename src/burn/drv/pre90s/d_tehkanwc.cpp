@@ -668,9 +668,13 @@ static void track_p2_reset_w(UINT8 axis, UINT8 data)
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
+	if (address == 0xda00) return 0x80;
+	if (address >= 0xd800 && address <= 0xddff)
+		return TWCPalRam[address - 0xd800];
+
 	switch (address) {
-		case 0xda00:
-			return 0x80; // teedoff_unk_r
+		// case 0xda00:
+		// 	return 0x80; // teedoff_unk_r
 
 		case 0xf800:
 		case 0xf801:
@@ -725,6 +729,11 @@ static void sound_sync()
 
 static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 {
+	if (address >= 0xd800 && address <= 0xddff) {
+		TWCPalRam[address - 0xd800] = data;
+		return;
+	}
+
 	switch (address) {
 		// 0xc000 .. 0xcfff: Shared RAM
 		// 0xd000 .. 0xd3ff: TextVideoRAM
@@ -733,6 +742,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 		// 0xde00 .. 0xdfff: Shared RAM (PaletteRAM2)
 		// 0xe000 .. 0xe7ff: BGVideoRAM
 		// 0xe800 .. 0xebff: SpriteRAM
+
 		case 0xec00:
 			TWCScrollXLo = data;
 			return;
@@ -1123,15 +1133,19 @@ static void CPUsInit()
 	// Main CPU
 	ZetInit(CPU_MAIN);
 	ZetOpen(CPU_MAIN);
-	ZetMapMemory(TWCZ80Rom1,    0x0000, 0xbfff, MAP_ROM);
-	ZetMapMemory(TWCZ80Ram1,    0xc000, 0xc7ff, MAP_RAM);
-	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
-	ZetMapMemory(TWCFgVideoRam, 0xd000, 0xd3ff, MAP_RAM);
-	ZetMapMemory(TWCColorRam,   0xd400, 0xd7ff, MAP_RAM);
-	ZetMapMemory(TWCPalRam,     0xd800, 0xddff, MAP_RAM);
-	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
-	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
-	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(TWCZ80Rom1,         0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(TWCZ80Ram1,         0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(TWCSharedRam,       0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(TWCFgVideoRam,      0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(TWCColorRam,        0xd400, 0xd7ff, MAP_RAM);
+	// ZetMapArea(0xd800, 0xddff, 0, TWCPalRam);
+	// ZetMapArea(0xd800, 0xddff, 1, TWCPalRam);
+	// ZetMapArea(0xd800, 0xddff, 2, TWCPalRam);
+	//ZetMapMemory(TWCPalRam,          0xd800, 0xddff, MAP_RAM);
+	ZetMapMemory(TWCPalRam2,         0xde00, 0xdfff, MAP_RAM);
+	ZetMapMemory(TWCBgVideoRam,      0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(TWCSpriteRam,       0xe800, 0xebff, MAP_RAM);
+	//ZetMemCallback(0xda00, 0xda00, 1);
 	ZetSetReadHandler(TWCMainRead);
 	ZetSetWriteHandler(TWCMainWrite);
 	ZetClose();

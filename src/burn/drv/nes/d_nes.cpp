@@ -9408,10 +9408,10 @@ struct BurnDriver BurnDrvnes_snowbrothersc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Spy Vs Spy (Hack, Spanish)
+// Spy vs Spy (Hack, Spanish)
 // https://www.romhacking.net/translations/4364/
 static struct BurnRomInfo nes_spyvsspycRomDesc[] = {
-	{ "Spy Vs Spy T-Spa (2019)(Wave).nes",          40976, 0x0c4a3d91, BRF_ESS | BRF_PRG },
+	{ "Spy vs Spy T-Spa (2019)(Wave).nes",          40976, 0x0c4a3d91, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spyvsspyc)
@@ -9419,7 +9419,7 @@ STD_ROM_FN(nes_spyvsspyc)
 
 struct BurnDriver BurnDrvnes_spyvsspyc = {
 	"nes_spyvsspyc", "nes_spyvsspy", NULL, NULL, "2019",
-	"Spy Vs Spy (Hack, Spanish)\0", NULL, "Wave", "Miscellaneous",
+	"Spy vs Spy (Hack, Spanish)\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
 	NESGetZipName, nes_spyvsspycRomInfo, nes_spyvsspycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -12402,6 +12402,25 @@ struct BurnDriver BurnDrvnes_aspectstarn = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Asterix - Enhanced Colors (Hack)
+// https://romhackplaza.org/romhacks/asterix-nes-enhanced-colors-nes/
+static struct BurnRomInfo nes_asterixecRomDesc[] = {
+	{ "Asterix Enhanced Colors (Euro)(2025)(SuperMichaelTheMarioKirbyFan).nes",          131088, 0x9b4877e5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_asterixec)
+STD_ROM_FN(nes_asterixec)
+
+struct BurnDriver BurnDrvnes_asterixec = {
+	"nes_asterixec", "nes_asterix", NULL, NULL, "2025",
+	"Asterix - Enhanced Colors (Hack)\0", NULL, "SuperMichaelTheMarioKirbyFan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_asterixecRomInfo, nes_asterixecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
 // Astral World (GlobalHack)
 // https://www.romhacking.net/hacks/8091/
 static struct BurnRomInfo nes_astralworldRomDesc[] = {
@@ -14467,6 +14486,82 @@ struct BurnDriver BurnDrvnes_driar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_driarRomInfo, nes_driarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dr. Lady Decade (Hack, v1.0)
+// https://romhackplaza.org/romhacks/dr-lady-decade-nes/
+static struct BurnRomInfo nes_drladyRomDesc[] = {
+	{ "Dr. Lady Decade (2025)(Retro Master HD).nes",          65552, 0xa9b09e91, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drlady)
+STD_ROM_FN(nes_drlady)
+
+struct BurnDriver BurnDrvnes_drlady = {
+	"nes_drlady", "nes_drmario", NULL, NULL, "2025",
+	"Dr. Lady Decade (Hack, v1.0)\0", NULL, "Retro Master HD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drladyRomInfo, nes_drladyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dr. Mario Turbo (Hack, v1.0)
+// https://www.romhacking.net/hacks/6158/
+static struct BurnRomInfo nes_drmariotRomDesc[] = {
+	{ "Dr. Mario Turbo Hack v1.0 (2021)(TheExactSame).nes",          262160, 0xc1605818, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drmariot)
+STD_ROM_FN(nes_drmariot)
+
+struct BurnDriver BurnDrvnes_drmariot = {
+	"nes_drmariot", "nes_drmario", NULL, NULL, "2021",
+	"Dr. Mario Turbo (Hack, v1.0)\0", NULL, "TheExactSame", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drmariotRomInfo, nes_drmariotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dr. Mario - Input Fixes (Hack, v1.0)
+// https://www.romhacking.net/hacks/8200/
+static struct BurnRomInfo nes_drmarioifRomDesc[] = {
+	{ "Dr. Mario - Input Fixes (2023)(TakuikaNinja).nes",          65552, 0x91fe1811, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drmarioif)
+STD_ROM_FN(nes_drmarioif)
+
+struct BurnDriver BurnDrvnes_drmarioif = {
+	"nes_drmarioif", "nes_drmario", NULL, NULL, "2023",
+	"Dr. Mario - Input Fixes (Hack, v1.0)\0", NULL, "TakuikaNinja", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drmarioifRomInfo, nes_drmarioifRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dr. Retro (Hack, v3.7)
+// https://romhackplaza.org/romhacks/dr-retro-nes/
+static struct BurnRomInfo nes_drretroRomDesc[] = {
+	{ "Dr. Retro v3.7 (2024-25)(Retro Master HD).nes",          65552, 0xf29b5673, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drretro)
+STD_ROM_FN(nes_drretro)
+
+struct BurnDriver BurnDrvnes_drretro = {
+	"nes_drretro", "nes_drmario", NULL, NULL, "2024-25",
+	"Dr. Retro (Hack, v3.7)\0", NULL, "Retro Master HD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drretroRomInfo, nes_drretroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -22271,7 +22366,7 @@ struct BurnDriver BurnDrvnes_8eyesj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Abadox - The Deadly Inner War (USA)
+// Abadox: The Deadly Inner War (USA)
 static struct BurnRomInfo nes_abadoxRomDesc[] = {
 	{ "Abadox - The Deadly Inner War (USA)(1990)(Milton Bradley).nes",          262160, 0xdc87f63d, BRF_ESS | BRF_PRG },
 };
@@ -22280,11 +22375,29 @@ STD_ROM_PICK(nes_abadox)
 STD_ROM_FN(nes_abadox)
 
 struct BurnDriver BurnDrvnes_abadox = {
-	"nes_abadox", NULL, NULL, NULL, "1990",
-	"Abadox - The Deadly Inner War (USA)\0", NULL, "Milton Bradley", "Miscellaneous",
+	"nes_abadox", NULL, NULL, NULL, "1989-90",
+	"Abadox: The Deadly Inner War (USA)\0", NULL, "Milton Bradley", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_abadoxRomInfo, nes_abadoxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Abadox: Jigoku no Inner Wars (Japan)
+static struct BurnRomInfo nes_abadoxjRomDesc[] = {
+	{ "Abadox - Jigoku no Inner Wars (Japan)(1989)(Natsume).nes",          262160, 0x797e7640, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_abadoxj)
+STD_ROM_FN(nes_abadoxj)
+
+struct BurnDriver BurnDrvnes_abadoxj = {
+	"nes_abadoxj", "nes_abadox", NULL, NULL, "1989",
+	"Abadox: Jigoku no Inner Wars (Japan)\0", NULL, "Natsume", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_abadoxjRomInfo, nes_abadoxjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23542,7 +23655,7 @@ struct BurnDriver BurnDrvnes_asterix = {
 
 // Astro Boy (Hack, English)
 static struct BurnRomInfo nes_astroboyRomDesc[] = {
-	{ "Astro Boy T-Eng (2022)(Pacnsacdave).nes",          262160, 0xd5e10c90, BRF_ESS | BRF_PRG },
+	{ "Astro Boy T-Eng (2022)(pacnsacdave).nes",          262160, 0xd5e10c90, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_astroboy)
@@ -28778,7 +28891,7 @@ struct BurnDriver BurnDrvnes_downtspekunkunnojid = {
 
 // Dr. Chaos (USA)
 static struct BurnRomInfo nes_drchaosRomDesc[] = {
-	{ "Dr. Chaos (USA).nes",          131088, 0x406bda35, BRF_ESS | BRF_PRG },
+	{ "Dr. Chaos (USA)(1988)(FCI).nes",          131088, 0x406bda35, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_drchaos)
@@ -28796,7 +28909,7 @@ struct BurnDriver BurnDrvnes_drchaos = {
 
 // Dr. Jekyll and Mr. Hyde (USA)
 static struct BurnRomInfo nes_drjekandmrhyRomDesc[] = {
-	{ "Dr. Jekyll and Mr. Hyde (USA).nes",          163856, 0xc006a41b, BRF_ESS | BRF_PRG },
+	{ "Dr. Jekyll and Mr. Hyde (USA)(1989)(Bandai).nes",          163856, 0xc006a41b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_drjekandmrhy)
@@ -28812,9 +28925,9 @@ struct BurnDriver BurnDrvnes_drjekandmrhy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dr. Mario (Japan, USA) (Rev A)
+// Dr. Mario (Japan, USA, Rev A)
 static struct BurnRomInfo nes_drmarioRomDesc[] = {
-	{ "Dr. Mario (Japan, USA) (Rev A).nes",          65552, 0x7623dffd, BRF_ESS | BRF_PRG },
+	{ "Dr. Mario (Japan, USA, Rev A)(1990)(Nintendo).nes",          65552, 0x7623dffd, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_drmario)
@@ -28822,48 +28935,10 @@ STD_ROM_FN(nes_drmario)
 
 struct BurnDriver BurnDrvnes_drmario = {
 	"nes_drmario", NULL, NULL, NULL, "1990",
-	"Dr. Mario (Japan, USA) (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
+	"Dr. Mario (Japan, USA, Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_drmarioRomInfo, nes_drmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Dr. Mario Turbo (Hack, v1.0)
-// https://www.romhacking.net/hacks/6158/
-static struct BurnRomInfo nes_drmariotRomDesc[] = {
-	{ "Dr. Mario Turbo Hack v1.0 (2021)(TheExactSame).nes",          262160, 0xc1605818, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_drmariot)
-STD_ROM_FN(nes_drmariot)
-
-struct BurnDriver BurnDrvnes_drmariot = {
-	"nes_drmariot", "nes_drmario", NULL, NULL, "2021",
-	"Dr. Mario Turbo (Hack, v1.0)\0", NULL, "TheExactSame", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_drmariotRomInfo, nes_drmariotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Dr. Mario - Input Fixes (Hack, v1.0)
-// https://www.romhacking.net/hacks/8200/
-static struct BurnRomInfo nes_drmarioifRomDesc[] = {
-	{ "Dr. Mario - Input Fixes (2023)(TakuikaNinja).nes",          65552, 0x91fe1811, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_drmarioif)
-STD_ROM_FN(nes_drmarioif)
-
-struct BurnDriver BurnDrvnes_drmarioif = {
-	"nes_drmarioif", "nes_drmario", NULL, NULL, "2023",
-	"Dr. Mario - Input Fixes (Hack, v1.0)\0", NULL, "TakuikaNinja", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_drmarioifRomInfo, nes_drmarioifRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28888,7 +28963,7 @@ struct BurnDriver BurnDrvnes_dracsnightout = {
 
 // Dragon Ball - Dai Maou Fukkatsu (Japan)
 static struct BurnRomInfo nes_dragobaldaimaofujRomDesc[] = {
-	{ "Dragon Ball - Dai Maou Fukkatsu (Japan).nes",          262160, 0xbeff8c77, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball - Dai Maou Fukkatsu (Japan)(1988)(Bandai).nes",          262160, 0xbeff8c77, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobaldaimaofuj)
@@ -28904,9 +28979,10 @@ struct BurnDriver BurnDrvnes_dragobaldaimaofuj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dragon Ball - Dai Maou Fukkatsu (Hack, English)
+// Dragon Ball - Revival of the Dark Lord (Hack, English)
+// https://www.romhacking.net/translations/1604/
 static struct BurnRomInfo nes_dragobaldaimaofuRomDesc[] = {
-	{ "Dragon Ball - Dai Maou Fukkatsu (T-Eng).nes",          393232, 0x69beb7a5, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball - Dai Maou Fukkatsu T-Eng (2011)(Stardust Crusaders).nes",          393232, 0x69beb7a5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobaldaimaofu)
@@ -28914,7 +28990,7 @@ STD_ROM_FN(nes_dragobaldaimaofu)
 
 struct BurnDriver BurnDrvnes_dragobaldaimaofu = {
 	"nes_dragobaldaimaofu", NULL, NULL, NULL, "2011",
-	"Dragon Ball - Dai Maou Fukkatsu (Hack, English)\0", NULL, "Stardust Crusaders", "Miscellaneous",
+	"Dragon Ball - Revival of the Dark Lord (Hack, English)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_dragobaldaimaofuRomInfo, nes_dragobaldaimaofuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28924,7 +29000,7 @@ struct BurnDriver BurnDrvnes_dragobaldaimaofu = {
 
 // Dragon Ball - Shen Long no Nazo (Japan)
 static struct BurnRomInfo nes_dragobalshelonnonajRomDesc[] = {
-	{ "Dragon Ball - Shen Long no Nazo (Japan).nes",          163856, 0x815a4bad, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball - Shen Long no Nazo (Japan)(1986)(Bandai).nes",          163856, 0x815a4bad, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalshelonnonaj)
@@ -28940,17 +29016,18 @@ struct BurnDriver BurnDrvnes_dragobalshelonnonaj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dragon Ball - Shen Long no Nazo (Hack, English)
+// Dragon Ball - Dragon Mystery? (Hack, English)
+// https://www.romhacking.net/translations/131/
 static struct BurnRomInfo nes_dragobalshelonnonaRomDesc[] = {
-	{ "Dragon Ball - Shen Long no Nazo (T-Eng).nes",          163856, 0xb4e31bf4, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball - Shen Long no Nazo T-Eng (1999)(TransBRC).nes",          163856, 0xb4e31bf4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalshelonnona)
 STD_ROM_FN(nes_dragobalshelonnona)
 
 struct BurnDriver BurnDrvnes_dragobalshelonnona = {
-	"nes_dragobalshelonnona", "nes_dragonpower", NULL, NULL, "2016",
-	"Dragon Ball - Shen Long no Nazo (Hack, English)\0", NULL, "TransBRC", "Miscellaneous",
+	"nes_dragobalshelonnona", "nes_dragonpower", NULL, NULL, "1999",
+	"Dragon Ball - Dragon Mystery? (Hack, English)\0", NULL, "TransBRC", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_ACTION, 0,
 	NESGetZipName, nes_dragobalshelonnonaRomInfo, nes_dragobalshelonnonaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28960,7 +29037,7 @@ struct BurnDriver BurnDrvnes_dragobalshelonnona = {
 
 // Dragon Ball 3 - Gokuu Den (Japan)
 static struct BurnRomInfo nes_dragobal3gokdenRomDesc[] = {
-	{ "Dragon Ball 3 - Gokuu Den (Japan).nes",          393232, 0x0544b2a4, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball 3 - Gokuu Den (Japan)(1989)(Bandai).nes",          393232, 0x0544b2a4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobal3gokden)
@@ -28978,7 +29055,7 @@ struct BurnDriver BurnDrvnes_dragobal3gokden = {
 
 // Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)
 static struct BurnRomInfo nes_dragobalzkyosajinjRomDesc[] = {
-	{ "Dragon Ball Z - Kyoushuu! Saiya Jin (Japan).nes",          524304, 0xd78484b7, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball Z - Kyoushuu! Saiya Jin (Japan)(1990)(Bandai).nes",          524304, 0xd78484b7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalzkyosajinj)
@@ -28994,9 +29071,10 @@ struct BurnDriver BurnDrvnes_dragobalzkyosajinj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dragon Ball Z - Kyoushuu! Saiya Jin (Hack, English)
+// Dragon Ball Z - Assault of the Saiyans (Hack, English)
+// https://www.romhacking.net/translations/647/
 static struct BurnRomInfo nes_dragobalzkyosajinRomDesc[] = {
-	{ "Dragon Ball Z - Kyoushuu! Saiya Jin (T-Eng).nes",          524304, 0x31d0d50a, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball Z - Kyoushuu! Saiya Jin T-Eng (2005)(Twilight Translations).nes",          524304, 0x31d0d50a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalzkyosajin)
@@ -29004,7 +29082,7 @@ STD_ROM_FN(nes_dragobalzkyosajin)
 
 struct BurnDriver BurnDrvnes_dragobalzkyosajin = {
 	"nes_dragobalzkyosajin", NULL, NULL, NULL, "2005",
-	"Dragon Ball Z - Kyoushuu! Saiya Jin (Hack, English)\0", NULL, "Twilight Translations", "Miscellaneous",
+	"Dragon Ball Z - Assault of the Saiyans (Hack, English)\0", NULL, "Twilight Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_dragobalzkyosajinRomInfo, nes_dragobalzkyosajinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45671,7 +45749,7 @@ struct BurnDriver BurnDrvnes_spartanx2 = {
 
 // Spelunker (USA)
 static struct BurnRomInfo nes_spelunkerRomDesc[] = {
-	{ "Spelunker (USA).nes",          40976, 0x7ea3404f, BRF_ESS | BRF_PRG },
+	{ "Spelunker (USA)(1987)(Broderbund).nes",          40976, 0x7ea3404f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spelunker)
@@ -45689,7 +45767,7 @@ struct BurnDriver BurnDrvnes_spelunker = {
 
 // Spelunker II - Yuusha e no Chousen (Japan)
 static struct BurnRomInfo nes_speluiijRomDesc[] = {
-	{ "Spelunker II - Yuusha e no Chousen (Japan).nes",          131088, 0xf076f168, BRF_ESS | BRF_PRG },
+	{ "Spelunker II - Yuusha e no Chousen (Japan)(1987)(Irem).nes",          131088, 0xf076f168, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_speluiij)
@@ -45697,7 +45775,7 @@ STD_ROM_FN(nes_speluiij)
 
 struct BurnDriver BurnDrvnes_speluiij = {
 	"nes_speluiij", "nes_speluii", NULL, NULL, "1987",
-	"Spelunker II - Yuusha e no Chousen (Japan)\0", NULL, "Irem", "Miscellaneous",
+	"Spelunker II - Yuusha e no Chousen (Japan)\0", NULL, "Irem Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_speluiijRomInfo, nes_speluiijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45705,9 +45783,10 @@ struct BurnDriver BurnDrvnes_speluiij = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Spelunker II - Yuusha e no Chousen (Hack, English)
+// Spelunker II: A Hero's Challenge (Hack, English)
+// https://www.romhacking.net/translations/662/
 static struct BurnRomInfo nes_speluiiRomDesc[] = {
-	{ "Spelunker II - Yuusha e no Chousen (T-eng).nes",          262160, 0x72a28744, BRF_ESS | BRF_PRG },
+	{ "Spelunker II - Yuusha e no Chousen T-Eng (2003)(Sarysa).nes",          262160, 0x72a28744, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_speluii)
@@ -45715,7 +45794,7 @@ STD_ROM_FN(nes_speluii)
 
 struct BurnDriver BurnDrvnes_speluii = {
 	"nes_speluii", NULL, NULL, NULL, "2003",
-	"Spelunker II - Yuusha e no Chousen (Hack, English)\0", NULL, "Sarysa", "Miscellaneous",
+	"Spelunker II: A Hero's Challenge (Hack, English)\0", NULL, "Sarysa", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_speluiiRomInfo, nes_speluiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45725,7 +45804,7 @@ struct BurnDriver BurnDrvnes_speluii = {
 
 // Spider-Man - Return of the Sinister Six (USA)
 static struct BurnRomInfo nes_spidemanRomDesc[] = {
-	{ "Spider-Man - Return of the Sinister Six (USA).nes",          393232, 0x095b180b, BRF_ESS | BRF_PRG },
+	{ "Spider-Man - Return of the Sinister Six (USA)(1992)(Ljn).nes",          393232, 0x095b180b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spideman)
@@ -45741,19 +45820,38 @@ struct BurnDriver BurnDrvnes_spideman = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Splatter House - Wanpaku Graffiti (Japan)
+// Splatter House: Wanpaku Graffiti (Japan)
+static struct BurnRomInfo nes_splathoujRomDesc[] = {
+	{ "Splatter House - Wanpaku Graffiti (Japan)(1989)(Namco).nes",          262160, 0xb7eeb48b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_splathouj)
+STD_ROM_FN(nes_splathouj)
+
+struct BurnDriver BurnDrvnes_splathouj = {
+	"nes_splathouj", "nes_splathou", NULL, NULL, "1989",
+	"Splatter House: Wanpaku Graffiti (Japan)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_splathoujRomInfo, nes_splathoujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Splatter House: Super Deformed (Hack, English v2.0)
+// https://romhackplaza.org/translations/splatterhouse-super-deformed-translation-english-translation-nes/
 static struct BurnRomInfo nes_splathouRomDesc[] = {
-	{ "Splatter House - Wanpaku Graffiti (Japan).nes",          262160, 0xb7eeb48b, BRF_ESS | BRF_PRG },
+	{ "Splatterhouse - Super Deformed T-Eng v2.0 (2000)(Spinner 8 and friends).nes",          262160, 0x21d6c3df, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_splathou)
 STD_ROM_FN(nes_splathou)
 
 struct BurnDriver BurnDrvnes_splathou = {
-	"nes_splathou", NULL, NULL, NULL, "1989",
-	"Splatter House - Wanpaku Graffiti (Japan)\0", NULL, "Namco", "Miscellaneous",
+	"nes_splathou", NULL, NULL, NULL, "2000",
+	"Splatter House: Super Deformed (Hack, English v2.0)\0", NULL, "Spinner 8 and friends", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_splathouRomInfo, nes_splathouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45761,7 +45859,7 @@ struct BurnDriver BurnDrvnes_splathou = {
 
 // Spot (USA)
 static struct BurnRomInfo nes_spotRomDesc[] = {
-	{ "Spot (USA).nes",          131088, 0x1d6e0953, BRF_ESS | BRF_PRG },
+	{ "Spot (USA)(1990)(Arcadia).nes",          131088, 0x1d6e0953, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spot)
@@ -45779,7 +45877,7 @@ struct BurnDriver BurnDrvnes_spot = {
 
 // Spy Hunter (USA)
 static struct BurnRomInfo nes_spyhunterRomDesc[] = {
-	{ "Spy Hunter (USA).nes",          65552, 0x1e060ae0, BRF_ESS | BRF_PRG },
+	{ "Spy Hunter (USA)(1987)(Sunsoft).nes",          65552, 0x1e060ae0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spyhunter)
@@ -45797,7 +45895,7 @@ struct BurnDriver BurnDrvnes_spyhunter = {
 
 // Spy vs Spy (USA)
 static struct BurnRomInfo nes_spyvsspyRomDesc[] = {
-	{ "Spy vs Spy (USA).nes",          40976, 0x23d23dcc, BRF_ESS | BRF_PRG },
+	{ "Spy vs Spy (USA)(1988)(Kemco).nes",          40976, 0x23d23dcc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spyvsspy)
@@ -45813,9 +45911,27 @@ struct BurnDriver BurnDrvnes_spyvsspy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Spy vs Spy - The Island Caper (Japan)
+// Spy vs Spy (Japan)
+static struct BurnRomInfo nes_spyvsspyjRomDesc[] = {
+	{ "Spy vs Spy (Japan)(1986)(Kemco).nes",          40976, 0xb7f7f081, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spyvsspyj)
+STD_ROM_FN(nes_spyvsspyj)
+
+struct BurnDriver BurnDrvnes_spyvsspyj = {
+	"nes_spyvsspyj", "nes_spyvsspy", NULL, NULL, "1986",
+	"Spy vs Spy (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
+	NESGetZipName, nes_spyvsspyjRomInfo, nes_spyvsspyjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Spy vs Spy - Nangoku Shirei!! (Japan)
 static struct BurnRomInfo nes_spyvsspyislcajRomDesc[] = {
-	{ "Spy vs Spy - The Island Caper (Japan).nes",          131088, 0x23dff27d, BRF_ESS | BRF_PRG },
+	{ "Spy vs Spy - Nangoku Shirei!! (Japan)(1987)(Kemco).nes",          131088, 0x23dff27d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spyvsspyislcaj)
@@ -45823,7 +45939,7 @@ STD_ROM_FN(nes_spyvsspyislcaj)
 
 struct BurnDriver BurnDrvnes_spyvsspyislcaj = {
 	"nes_spyvsspyislcaj", "nes_spyvsspyislca", NULL, NULL, "1987",
-	"Spy vs Spy - The Island Caper (Japan)\0", NULL, "Kemco", "Miscellaneous",
+	"Spy vs Spy - Nangoku Shirei!! (Japan)\0", NULL, "Kemco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
 	NESGetZipName, nes_spyvsspyislcajRomInfo, nes_spyvsspyislcajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45832,8 +45948,9 @@ struct BurnDriver BurnDrvnes_spyvsspyislcaj = {
 };
 
 // Spy vs Spy - The Island Caper (Hack, English)
+// https://www.romhacking.net/translations/2387/
 static struct BurnRomInfo nes_spyvsspyislcaRomDesc[] = {
-	{ "Spy vs Spy - The Island Caper (T-Eng).nes",          131088, 0xf9e51c93, BRF_ESS | BRF_PRG },
+	{ "Spy vs Spy - The Island Caper T-Eng (2015)(pacnsacdave).nes",          131088, 0xf9e51c93, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_spyvsspyislca)
@@ -45887,7 +46004,7 @@ struct BurnDriver BurnDrvnes_squashed = {
 
 // Stanley - The Search for Dr. Livingston (USA)
 static struct BurnRomInfo nes_stanleyRomDesc[] = {
-	{ "Stanley - The Search for Dr. Livingston (USA).nes",          262160, 0x4871ef6e, BRF_ESS | BRF_PRG },
+	{ "Stanley - The Search for Dr. Livingston (USA)(1992)(Electro Brain).nes",          262160, 0x4871ef6e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_stanley)
@@ -45905,7 +46022,7 @@ struct BurnDriver BurnDrvnes_stanley = {
 
 // Lasalle Ishii no Child's Quest (Japan)
 static struct BurnRomInfo nes_lasalishiiRomDesc[] = {
-	{ "Lasalle Ishii no Child's Quest (J)(1989)(Namcot).nes",          196624, 0xc78d14f9, BRF_ESS | BRF_PRG },
+	{ "Lasalle Ishii no Child's Quest (Japan)(1989)(Namco).nes",          196624, 0xc78d14f9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_lasalishii)
@@ -45942,7 +46059,7 @@ struct BurnDriver BurnDrvnes_stardomwar = {
 
 // Star Force (USA)
 static struct BurnRomInfo nes_starforceRomDesc[] = {
-	{ "Star Force (USA).nes",          65552, 0xb3cf12b8, BRF_ESS | BRF_PRG },
+	{ "Star Force (USA)(1987)(Tecmo).nes",          65552, 0xb3cf12b8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_starforce)
@@ -45960,7 +46077,7 @@ struct BurnDriver BurnDrvnes_starforce = {
 
 // Star Gate (Japan)
 static struct BurnRomInfo nes_stargateRomDesc[] = {
-	{ "Star Gate (Japan).nes",          24592, 0x2b265d30, BRF_ESS | BRF_PRG },
+	{ "Star Gate (Japan)(1987)(HAL Laboratory).nes",          24592, 0x2b265d30, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_stargate)
@@ -45978,7 +46095,7 @@ struct BurnDriver BurnDrvnes_stargate = {
 
 // Hoshi wo Miru Hito (Japan)
 static struct BurnRomInfo nes_hosmiruhitoRomDesc[] = {
-	{ "Hoshi wo Miru Hito (J)(1987)(HOT-B).nes",          131088, 0x0ec30976, BRF_ESS | BRF_PRG },
+	{ "Hoshi wo Miru Hito (Japan)(1987)(HOT-B).nes",          131088, 0x0ec30976, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_hosmiruhito)
@@ -46015,7 +46132,7 @@ struct BurnDriver BurnDrvnes_stargazers = {
 
 // Star Luster (Japan)
 static struct BurnRomInfo nes_starlusterRomDesc[] = {
-	{ "Star Luster (Japan).nes",          40976, 0xd8604b5a, BRF_ESS | BRF_PRG },
+	{ "Star Luster (Japan)(1985)(Namco).nes",          40976, 0xd8604b5a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_starluster)
@@ -46033,7 +46150,7 @@ struct BurnDriver BurnDrvnes_starluster = {
 
 // Star Soldier (USA)
 static struct BurnRomInfo nes_starsoldierRomDesc[] = {
-	{ "Star Soldier (USA).nes",          65552, 0x69004001, BRF_ESS | BRF_PRG },
+	{ "Star Soldier (USA)(1989)(Taxan).nes",          65552, 0x69004001, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_starsoldier)

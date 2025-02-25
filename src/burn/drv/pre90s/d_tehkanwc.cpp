@@ -939,12 +939,12 @@ static tilemap_callback( twc_fg )
 	INT32 attr  = TWCColorRam[offs];
 	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
-	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
+	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_GROUP((attr >> 5) & 1);
 	// flags |= TILE_GROUP_ENABLE|TILE_GROUP(1);
 	// flags |= ((attr & 0x20) ? (1 << 16) : 0);
 
 	TILE_SET_INFO(1, code, color, flags);
-	sTile->category = (attr & 0x20) ? 1 : 0;
+	//sTile->category = (attr & 0x20) ? 1 : 0;
 }
 
 static void TWCRenderSprites()
@@ -992,9 +992,9 @@ static INT32 TWCDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
 	if (nSpriteEnable & 1) TWCRenderSprites();
-	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 1);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(TWCPalette);
 
@@ -1281,7 +1281,6 @@ static void GFXInit()
 	GenericTilemapSetGfx(1, TWCFgTiles, 4,  8,  8, 0x20000, 0x000, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL,  0, -16);
 	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapCategoryConfig(1, 2);
 }
 
 static INT32 CommonRomLoad()

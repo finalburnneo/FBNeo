@@ -4,7 +4,7 @@
 // BurnStateCompress: Save a state, "Compress" == organized into a buffer
 // BurnStateDecompress: Load a state from buffer
 
-#define DEBUG_STATEC 1
+#define DEBUG_STATEC 0
 #define stateclog(x) do { if (DEBUG_STATEC) bprintf x; } while (0)
 
 extern bool bWithEEPROM; // from state.cpp, win32/replay.cpp

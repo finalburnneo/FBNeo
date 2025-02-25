@@ -668,9 +668,14 @@ static void track_p2_reset_w(UINT8 axis, UINT8 data)
 
 static UINT8 __fastcall TWCMainRead(UINT16 address)
 {
+	if (address == 0xda00)
+		return 0x80; // teedoff_unk_r
+
+	if (address >= 0xd800 && address <= 0xddff) {
+		return TWCPalRam[address & 0x5ff];
+	}
+
 	switch (address) {
-		case 0xda00:
-			return 0x80; // teedoff_unk_r
 
 		case 0xf800:
 		case 0xf801:
@@ -725,6 +730,27 @@ static void sound_sync()
 
 static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 {
+	// videoram
+	if (address >= 0xd000 && address <= 0xd3ff) {
+		TWCFgVideoRam[address & 0x3ff] = data;
+		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		return;
+	}
+
+	// colorram
+	if (address >= 0xd400 && address <= 0xd7ff) {
+		TWCColorRam[address & 0x3ff] = data;
+		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		return;
+	}
+	
+	// videoram2
+	if (address >= 0xe000 && address <= 0xe7ff) {
+		TWCBgVideoRam[address & 0x7ff] = data;
+		GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
+		return;
+	}
+
 	switch (address) {
 		// 0xc000 .. 0xcfff: Shared RAM
 		// 0xd000 .. 0xd3ff: TextVideoRAM
@@ -803,6 +829,27 @@ static UINT8 __fastcall TWCSubRead(UINT16 address)
 
 static void __fastcall TWCSubWrite(UINT16 address, UINT8 data)
 {
+	// videoram
+	if (address >= 0xd000 && address <= 0xd3ff) {
+		TWCFgVideoRam[address & 0x3ff] = data;
+		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		return;
+	}
+
+	// colorram
+	if (address >= 0xd400 && address <= 0xd7ff) {
+		TWCColorRam[address & 0x3ff] = data;
+		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		return;
+	}
+	
+	// videoram2
+	if (address >= 0xe000 && address <= 0xe7ff) {
+		TWCBgVideoRam[address & 0x7ff] = data;
+		GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
+		return;
+	}
+
 	switch (address) {
 		case 0xec00:
 			TWCScrollXHi = data;
@@ -892,10 +939,11 @@ static tilemap_callback( twc_fg )
 	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
-	flags |= TILE_GROUP_ENABLE;
-	flags |= ((attr & 0x20) ? (1 << 16) : 0);
+	// flags |= TILE_GROUP_ENABLE|TILE_GROUP(1);
+	// flags |= ((attr & 0x20) ? (1 << 16) : 0);
 
 	TILE_SET_INFO(1, code, color, flags);
+	sTile->category = (attr & 0x20) ? 1 : 0;
 }
 
 static void TWCRenderSprites()
@@ -943,9 +991,9 @@ static INT32 TWCDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 	if (nSpriteEnable & 1) TWCRenderSprites();
-	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 1);
 
 	BurnTransferCopy(TWCPalette);
 
@@ -1118,36 +1166,89 @@ static void adpcm_int()
 	msm_toggle ^= 1;
 }
 
+#define MEM_MODE_READ  0
+#define MEM_MODE_WRITE 1
+#define MEM_MODE_FETCH 2
+#define MEM_MODE_ARG   3
+
 static void CPUsInit()
 {
 	// Main CPU
 	ZetInit(CPU_MAIN);
 	ZetOpen(CPU_MAIN);
+
+	// ROM
 	ZetMapMemory(TWCZ80Rom1,    0x0000, 0xbfff, MAP_ROM);
+
+	// RAM
 	ZetMapMemory(TWCZ80Ram1,    0xc000, 0xc7ff, MAP_RAM);
+
+	// Shared Memory
+	// shareram
 	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
-	ZetMapMemory(TWCFgVideoRam, 0xd000, 0xd3ff, MAP_RAM);
-	ZetMapMemory(TWCColorRam,   0xd400, 0xd7ff, MAP_RAM);
-	ZetMapMemory(TWCPalRam,     0xd800, 0xddff, MAP_RAM);
-	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
-	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
-	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
+
+	// videoram
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, TWCFgVideoRam);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, TWCFgVideoRam);
+
+	// colorram
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, TWCColorRam);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, TWCColorRam);
+
+	// palette
+	ZetMapArea(0xd800, 0xddff, MEM_MODE_WRITE, TWCPalRam);
+	ZetMapArea(0xd800, 0xddff, MEM_MODE_FETCH, TWCPalRam);
+
+	// palette2
+	ZetMapMemory(TWCPalRam2, 0xde00, 0xdfff, MAP_RAM);
+
+	// videoram2
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, TWCBgVideoRam);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, TWCBgVideoRam);
+
+	// spriteram
+	ZetMapMemory(TWCSpriteRam, 0xe800, 0xebff, MAP_RAM);
+
 	ZetSetReadHandler(TWCMainRead);
 	ZetSetWriteHandler(TWCMainWrite);
 	ZetClose();
 
+	
 	// Graphics "sub" CPU
 	ZetInit(CPU_SUB);
 	ZetOpen(CPU_SUB);
+
+	// ROM
 	ZetMapMemory(TWCZ80Rom2,    0x0000, 0x7fff, MAP_ROM);
+
+	// RAM
 	ZetMapMemory(TWCZ80Ram2,    0x8000, 0xc7ff, MAP_RAM);
+
+	// Shared Memory
+	// shareram
 	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
-	ZetMapMemory(TWCFgVideoRam, 0xd000, 0xd3ff, MAP_RAM);
-	ZetMapMemory(TWCColorRam,   0xd400, 0xd7ff, MAP_RAM);
-	ZetMapMemory(TWCPalRam,     0xd800, 0xddff, MAP_RAM);
-	ZetMapMemory(TWCPalRam2,    0xde00, 0xdfff, MAP_RAM);
-	ZetMapMemory(TWCBgVideoRam, 0xe000, 0xe7ff, MAP_RAM);
-	ZetMapMemory(TWCSpriteRam,  0xe800, 0xebff, MAP_RAM);
+
+	// videoram
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, TWCFgVideoRam);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, TWCFgVideoRam);
+
+	// colorram
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, TWCColorRam);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, TWCColorRam);
+
+	// palette
+	ZetMapMemory(TWCPalRam, 0xd800, 0xddff, MAP_RAM);
+
+	// palette2
+	ZetMapMemory(TWCPalRam2, 0xde00, 0xdfff, MAP_RAM);
+
+	// videoram2
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, TWCBgVideoRam);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, TWCBgVideoRam);
+
+	// spriteram
+	ZetMapMemory(TWCSpriteRam, 0xe800, 0xebff, MAP_RAM);
+
 	ZetSetReadHandler(TWCSubRead);
 	ZetSetWriteHandler(TWCSubWrite);
 	ZetClose();
@@ -1156,8 +1257,13 @@ static void CPUsInit()
 	// Sound CPU
 	ZetInit(CPU_SOUND);
 	ZetOpen(CPU_SOUND);
+
+	// ROM
 	ZetMapMemory(TWCZ80Rom3, 0x0000, 0x3fff, MAP_ROM);
+
+	// RAM
 	ZetMapMemory(TWCZ80Ram3, 0x4000, 0x47ff, MAP_RAM);
+
 	ZetSetReadHandler(TWCSoundRead);
 	ZetSetWriteHandler(TWCSoundWrite);
 	ZetSetOutHandler(TWCSoundWritePort);
@@ -1173,7 +1279,8 @@ static void GFXInit()
 	GenericTilemapSetGfx(0, TWCBgTiles, 4, 16,  8, 0x80000, 0x200, 0xf);
 	GenericTilemapSetGfx(1, TWCFgTiles, 4,  8,  8, 0x20000, 0x000, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL,  0, -16);
-	GenericTilemapSetTransparent(1,0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapCategoryConfig(1, 2);
 }
 
 static INT32 CommonRomLoad()
@@ -1940,6 +2047,6 @@ struct BurnDriver BurnDrvTeedOffj = {
 	0x300,					// Number of Palette Entries
 	224,					// Screen width
 	256,					// Screen height
-	3,						// Screen x aspect
-	4 						// Screen y aspect
+	7,						// Screen x aspect
+	8 						// Screen y aspect
 };

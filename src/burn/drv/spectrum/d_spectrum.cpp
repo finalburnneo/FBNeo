@@ -477,10 +477,10 @@ struct BurnDriver BurnSpecandycapp = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Angel Nieto Pole 500cc (Spanish) (128K)
+// Angel Nieto Pole 500cc (Spanish) (128K+2A)
 
 static struct BurnRomInfo Specanpole128RomDesc[] = {
-	{ "Angel Nieto Pole 500cc ES 128K (1990)(Opera Soft).tap", 68099, 0x010c9f97, BRF_ESS | BRF_PRG },
+	{ "Angel Nieto Pole 500cc ES 128K+2A (1990)(Opera Soft).tap", 68099, 0x010c9f97, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specanpole128, Specanpole128, Spec1282a)
@@ -488,7 +488,7 @@ STD_ROM_FN(Specanpole128)
 
 struct BurnDriver BurnSpecanpole128 = {
 	"spec_anpole128", NULL, "spec_spec1282a", NULL, "1990",
-	"Angel Nieto Pole 500cc (Spanish) (128K)\0", "Press '6', '7' and ENTER to choose and set options", "Opera Soft", "ZX Spectrum",
+	"Angel Nieto Pole 500cc (Spanish) (128K+2A)\0", "Press '6', '7' and ENTER to choose and set options", "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_RACING, 0,
 	SpectrumGetZipName, Specanpole128RomInfo, Specanpole128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -14005,10 +14005,10 @@ struct BurnDriver BurnSpecCore = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Corsarios - Part 1 (+2a)
+// Corsarios - Part 1 (128K+2A)
 
 static struct BurnRomInfo Speccorsarios1RomDesc[] = {
-	{ "Corsarios - Part 1 48K (1989)(Opera Soft).tzx", 49282, 0xe3ff3a51, BRF_ESS | BRF_PRG },
+	{ "Corsarios - Part 1 48K-128K+2A (1989)(Opera Soft).tzx", 49282, 0xe3ff3a51, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speccorsarios1, Speccorsarios1, Spec1282a)
@@ -14016,7 +14016,7 @@ STD_ROM_FN(Speccorsarios1)
 
 struct BurnDriver BurnSpeccorsarios1 = {
 	"spec_corsarios1", NULL, "spec_spec1282a", NULL, "1989",
-	"Corsarios - Part 1 (+2a)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Corsarios - Part 1 (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
 	SpectrumGetZipName, Speccorsarios1RomInfo, Speccorsarios1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
@@ -14024,10 +14024,10 @@ struct BurnDriver BurnSpeccorsarios1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Corsarios - Part 2 (+2a)
+// Corsarios - Part 2 (128K+2A)
 
 static struct BurnRomInfo Speccorsarios2RomDesc[] = {
-	{ "Corsarios - Part 2 48K (1989)(Opera Soft).tzx", 49282, 0x87850a26, BRF_ESS | BRF_PRG },
+	{ "Corsarios - Part 2 48K-128K+2A (1989)(Opera Soft).tzx", 49282, 0x87850a26, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speccorsarios2, Speccorsarios2, Spec1282a)
@@ -14035,7 +14035,7 @@ STD_ROM_FN(Speccorsarios2)
 
 struct BurnDriver BurnSpeccorsarios2 = {
 	"spec_corsarios2", "spec_corsarios1", "spec_spec1282a", NULL, "1989",
-	"Corsarios - Part 2 (+2a)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Corsarios - Part 2 (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
 	SpectrumGetZipName, Speccorsarios2RomInfo, Speccorsarios2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
@@ -15069,10 +15069,10 @@ struct BurnDriver BurnSpecDevildiver = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// DJ Puff's Volcanic Erruption (128K)
+// DJ Puff's Volcanic Erruption (128K+2A)
 
 static struct BurnRomInfo SpecDjpuffRomDesc[] = {
-	{ "DJ Puff's Volcanic Erruption 128K2a (1992)(Codemasters).tap", 58200, 0xc89e90ae, BRF_ESS | BRF_PRG },
+	{ "DJ Puff's Volcanic Erruption 128K+2A (1992)(Codemasters).tap", 58200, 0xc89e90ae, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDjpuff, SpecDjpuff, Spec1282a)
@@ -15080,7 +15080,7 @@ STD_ROM_FN(SpecDjpuff)
 
 struct BurnDriver BurnSpecDjpuff = {
 	"spec_djpuff", NULL, "spec_spec1282a", NULL, "1992",
-	"DJ Puff's Volcanic Erruption (128K)\0", NULL, "Codemasters", "ZX Spectrum",
+	"DJ Puff's Volcanic Erruption (128K+2A)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecDjpuffRomInfo, SpecDjpuffRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
@@ -20827,10 +20827,10 @@ struct BurnDriver BurnSpecmoonwalk = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mot - Intro (Spanish) (128K)
+// Mot - Intro (Spanish) (128K+2A)
 
 static struct BurnRomInfo Specmot128introRomDesc[] = {
-	{ "Mot - Intro ES 128K2a (1989)(Opera Soft).tap", 49127, 0x76c4cac9, BRF_ESS | BRF_PRG },
+	{ "Mot - Intro ES 128K+2A (1989)(Opera Soft).tap", 49127, 0x76c4cac9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmot128intro, Specmot128intro, Spec1282a)
@@ -20838,7 +20838,7 @@ STD_ROM_FN(Specmot128intro)
 
 struct BurnDriver BurnSpecmot128intro = {
 	"spec_mot128intro", NULL, "spec_spec1282a", NULL, "1989",
-	"Mot - Intro (Spanish) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Mot - Intro (Spanish) (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, Specmot128introRomInfo, Specmot128introRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -20846,10 +20846,10 @@ struct BurnDriver BurnSpecmot128intro = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mot - Part 1 (Spanish) (128K)
+// Mot - Part 1 (Spanish) (128K+2A)
 
 static struct BurnRomInfo Specmot128aRomDesc[] = {
-	{ "Mot - Part 1 ES 128K2a (1989)(Opera Soft).tap", 49127, 0x0713edec, BRF_ESS | BRF_PRG },
+	{ "Mot - Part 1 ES 128K+2A (1989)(Opera Soft).tap", 49127, 0x0713edec, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmot128a, Specmot128a, Spec1282a)
@@ -20857,7 +20857,7 @@ STD_ROM_FN(Specmot128a)
 
 struct BurnDriver BurnSpecmot128a = {
 	"spec_mot128a", "spec_mot128intro", "spec_spec1282a", NULL, "1989",
-	"Mot - Part 1 (Spanish) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Mot - Part 1 (Spanish) (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, Specmot128aRomInfo, Specmot128aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -20865,10 +20865,10 @@ struct BurnDriver BurnSpecmot128a = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mot - Part 2 (Spanish) (128K)
+// Mot - Part 2 (Spanish) (128K+2A)
 
 static struct BurnRomInfo Specmot128bRomDesc[] = {
-	{ "Mot - Part 2 ES 128K2a (1989)(Opera Soft).tap", 49127, 0xff0cb875, BRF_ESS | BRF_PRG },
+	{ "Mot - Part 2 ES 128K+2A (1989)(Opera Soft).tap", 49127, 0xff0cb875, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmot128b, Specmot128b, Spec1282a)
@@ -20876,7 +20876,7 @@ STD_ROM_FN(Specmot128b)
 
 struct BurnDriver BurnSpecmot128b = {
 	"spec_mot128b", "spec_mot128intro", "spec_spec1282a", NULL, "1989",
-	"Mot - Part 2 (Spanish) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Mot - Part 2 (Spanish) (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, Specmot128bRomInfo, Specmot128bRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -20884,10 +20884,10 @@ struct BurnDriver BurnSpecmot128b = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mot - Part 3 (Spanish) (128K)
+// Mot - Part 3 (Spanish) (128K+2A)
 
 static struct BurnRomInfo Specmot128cRomDesc[] = {
-	{ "Mot - Part 3 ES 128K2a (1989)(Opera Soft).tap", 49127, 0x43ed24bc, BRF_ESS | BRF_PRG },
+	{ "Mot - Part 3 ES 128K+2A (1989)(Opera Soft).tap", 49127, 0x43ed24bc, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmot128c, Specmot128c, Spec1282a)
@@ -20895,7 +20895,7 @@ STD_ROM_FN(Specmot128c)
 
 struct BurnDriver BurnSpecmot128c = {
 	"spec_mot128c", "spec_mot128intro", "spec_spec1282a", NULL, "1989",
-	"Mot - Part 3 (Spanish) (128K)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Mot - Part 3 (Spanish) (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, Specmot128cRomInfo, Specmot128cRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -23848,10 +23848,10 @@ struct BurnDriver BurnSpecSgrizam = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Shadow of the Unicorn (128K, 'rebuilt' version)
+// Shadow of the Unicorn (128K+2A, 'rebuilt' version)
 
 static struct BurnRomInfo SpecShadowotuRomDesc[] = {
-	{ "Shadow of the Unicorn 128K (1985)(Mikro-Gen).tap", 64656, 0xe88639c9, BRF_ESS | BRF_PRG },
+	{ "Shadow of the Unicorn 128K+2A (1985)(Mikro-Gen).tap", 64656, 0xe88639c9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecShadowotu, SpecShadowotu, Spec1282a)
@@ -23859,7 +23859,7 @@ STD_ROM_FN(SpecShadowotu)
 
 struct BurnDriver BurnSpecShadowotu = {
 	"spec_shadowotu", NULL, "spec_spec1282a", NULL, "1985",
-	"Shadow of the Unicorn (128K, 'rebuilt' version)\0", "NB: don't go back to ROM menu/loader", "Mikro-Gen", "ZX Spectrum",
+	"Shadow of the Unicorn (128K+2A, 'rebuilt' version)\0", "NB: don't go back to ROM menu/loader", "Mikro-Gen", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecShadowotuRomInfo, SpecShadowotuRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -32652,10 +32652,10 @@ struct BurnDriver BurnSpecBearfantes = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Beastie Feastie 128K2a
+// Beastie Feastie (128K+2A)
 
 static struct BurnRomInfo SpecBfeastieRomDesc[] = {
-	{ "Beastie Feastie 128K2a (2005)(Beyker Soft).tap", 84411, 0xf1c07740, BRF_ESS | BRF_PRG },
+	{ "Beastie Feastie 128K+2A (2005)(Beyker Soft).tap", 84411, 0xf1c07740, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBfeastie, SpecBfeastie, Spec1282a)
@@ -32663,7 +32663,7 @@ STD_ROM_FN(SpecBfeastie)
 
 struct BurnDriver BurnSpecBfeastie = {
 	"spec_bfeastie", NULL, "spec_spec1282a", NULL, "2005",
-	"Beastie Feastie (128K) (HB)\0", NULL, "Beyker Soft", "ZX Spectrum",
+	"Beastie Feastie (128K+2A) (HB)\0", NULL, "Beyker Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBfeastieRomInfo, SpecBfeastieRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

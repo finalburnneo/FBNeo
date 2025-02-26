@@ -23300,7 +23300,7 @@ struct BurnDriver BurnDrvCpsNemor1 = {
 
 struct BurnDriver BurnDrvCpsNemoj = {
 	"nemoj", "nemo", NULL, NULL, "1990",
-	"Nemo (Japan 901120, 89622B-3 ROM board)\0", NULL, "Capcom", "CPS1",
+	"Nemo (Japan 901120, 88622B-3 ROM board)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, NemojRomInfo, NemojRomName, NULL, NULL, NULL, NULL, NemoInputInfo, NemoDIPInfo,

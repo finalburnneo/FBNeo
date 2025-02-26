@@ -469,7 +469,7 @@ static INT32 SstrangrInit()
 
 struct BurnDriver BurnDrvSstrangr = {
 	"sstrangr", NULL, NULL, "invaders", "1978",
-	"Space Stranger\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
+	"Space Stranger\0", NULL, "Yachiyo Electric", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sstrangrRomInfo, sstrangrRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, SstrangrInputInfo, SstrangrDIPInfo,
@@ -497,7 +497,7 @@ static INT32 Sstrangr2Init()
 
 struct BurnDriver BurnDrvSstrangr2 = {
 	"sstrangr2", "sstrangr", NULL, "invaders", "1979",
-	"Space Stranger 2\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
+	"Space Stranger 2\0", NULL, "Yachiyo Electric", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sstrangr2RomInfo, sstrangr2RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, Sstrngr2InputInfo, Sstrngr2DIPInfo,

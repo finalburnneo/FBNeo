@@ -9959,7 +9959,7 @@ struct BurnDriver BurnDrvDunkshoto = {
 
 struct BurnDriver BurnDrvEswat = {
 	"eswat", NULL, NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 4, World) (FD1094 317-0130)\0", NULL, "Sega", "System 16B",
+	"Cyber Police ESWAT (set 4, World) (FD1094 317-0130)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatRomInfo, EswatRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -9969,7 +9969,7 @@ struct BurnDriver BurnDrvEswat = {
 
 struct BurnDriver BurnDrvEswatd = {
 	"eswatd", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 4, World) (bootleg of FD1094 317-0130 set)\0", NULL, "bootleg", "System 16B",
+	"Cyber Police ESWAT (set 4, World) (bootleg of FD1094 317-0130 set)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatdRomInfo, EswatdRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -9979,7 +9979,7 @@ struct BurnDriver BurnDrvEswatd = {
 
 struct BurnDriver BurnDrvEswatj = {
 	"eswatj", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 2, Japan) (FD1094 317-0128)\0", NULL, "Sega", "System 16B",
+	"Cyber Police ESWAT (set 2, Japan) (FD1094 317-0128)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatjRomInfo, EswatjRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -9989,7 +9989,7 @@ struct BurnDriver BurnDrvEswatj = {
 
 struct BurnDriver BurnDrvEswatjd = {
 	"eswatjd", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 2, Japan) (bootleg of FD1094 317-0128 set)\0", NULL, "bootleg", "System 16B",
+	"Cyber Police ESWAT (set 2, Japan) (bootleg of FD1094 317-0128 set)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatjdRomInfo, EswatjdRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -9999,7 +9999,7 @@ struct BurnDriver BurnDrvEswatjd = {
 
 struct BurnDriver BurnDrvEswatj1 = {
 	"eswatj1", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 1, Japan) (FD1094 317-0131)\0", NULL, "Sega", "System 16B",
+	"Cyber Police ESWAT (set 1, Japan) (FD1094 317-0131)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, Eswatj1RomInfo, Eswatj1RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -10009,7 +10009,7 @@ struct BurnDriver BurnDrvEswatj1 = {
 
 struct BurnDriver BurnDrvEswatj1d = {
 	"eswatj1d", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 1, Japan) (bootleg of FD1094 317-0131 set)\0", NULL, "bootleg", "System 16B",
+	"Cyber Police ESWAT (set 1, Japan) (bootleg of FD1094 317-0131 set)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_RUNGUN, 0,
 	NULL, Eswatj1dRomInfo, Eswatj1dRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -10019,7 +10019,7 @@ struct BurnDriver BurnDrvEswatj1d = {
 
 struct BurnDriver BurnDrvEswatu = {
 	"eswatu", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 3, US) (FD1094 317-0129)\0", NULL, "Sega", "System 16B",
+	"Cyber Police ESWAT (set 3, US) (FD1094 317-0129)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_RUNGUN, 0,
 	NULL, EswatuRomInfo, EswatuRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -10029,7 +10029,7 @@ struct BurnDriver BurnDrvEswatu = {
 
 struct BurnDriver BurnDrvEswatud = {
 	"eswatud", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 3, US) (bootleg of FD1094 317-0129 set)\0", NULL, "bootleg", "System 16B",
+	"Cyber Police ESWAT (set 3, US) (bootleg of FD1094 317-0129 set)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatudRomInfo, EswatudRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -10039,7 +10039,7 @@ struct BurnDriver BurnDrvEswatud = {
 
 struct BurnDriver BurnDrvEswatbl = {
 	"eswatbl", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (bootleg, set 1)\0", NULL, "bootleg", "System 16B",
+	"Cyber Police ESWAT (bootleg, set 1)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatblRomInfo, EswatblRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,

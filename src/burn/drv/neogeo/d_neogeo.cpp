@@ -12409,7 +12409,7 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Karnov's Revenge ~ Fighter's History Dynamite
+// Karnov's Revenge / Fighter's History Dynamite
 
 static struct BurnRomInfo karnovrRomDesc[] = {
 	{ "066-p1.p1",    0x100000, 0x8c86fd22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
@@ -12433,7 +12433,7 @@ STD_ROM_FN(karnovr)
 
 struct BurnDriver BurnDrvKarnovr = {
 	"karnovr", NULL, "neogeo", NULL, "1994",
-	"Karnov's Revenge ~ Fighter's History Dynamite\0", NULL, "Data East Corporation", "Neo Geo MVS",
+	"Karnov's Revenge / Fighter's History Dynamite\0", NULL, "Data East Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovrRomInfo, karnovrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -12442,7 +12442,7 @@ struct BurnDriver BurnDrvKarnovr = {
 };
 
 
-// Street Hoop ~ Street Slam ~ Dunk Dream (DEM-004 ~ DEH-004)
+// Street Hoop / Street Slam / Dunk Dream (DEM-004 ~ DEH-004)
 /* MVS AND AES VERSION */
 
 static struct BurnRomInfo strhoopRomDesc[] = {
@@ -12468,7 +12468,7 @@ STD_ROM_FN(strhoop)
 
 struct BurnDriver BurnDrvStrhoop = {
 	"strhoop", NULL, "neogeo", NULL, "1994",
-	"Street Hoop ~ Street Slam ~ Dunk Dream (DEM-004 ~ DEH-004)\0", NULL, "Data East Corporation", "Neo Geo MVS",
+	"Street Hoop / Street Slam / Dunk Dream (DEM-004 ~ DEH-004)\0", NULL, "Data East Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, strhoopRomInfo, strhoopRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -16577,7 +16577,7 @@ struct BurnDriver BurnDrvGowcaiet = {
 };
 
 
-// Karnov's Revenge ~ Fighter's History Dynamite - Revolution (Hack, v0.2)
+// Karnov's Revenge / Fighter's History Dynamite - Revolution (Hack, v0.2)
 // https://gamehackfan.github.io/karnovre/
 
 static struct BurnRomInfo karnovreRomDesc[] = {
@@ -16602,7 +16602,7 @@ STD_ROM_FN(karnovre)
 
 struct BurnDriver BurnDrvKarnovre = {
 	"karnovre", "karnovr", "neogeo", NULL, "2024",
-	"Karnov's Revenge ~ Fighter's History Dynamite - Revolution (Hack, v0.2)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	"Karnov's Revenge / Fighter's History Dynamite - Revolution (Hack, v0.2)\0", NULL, "GameHackFan", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

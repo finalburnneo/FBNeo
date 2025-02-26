@@ -2631,6 +2631,10 @@ static struct BurnRomInfo phozonRomDesc[] = {
 	{ "palette.prm",	0x0020, 0x60e856ed, 6 | BRF_GRA | BRF_OPT }, // 14
 
 	{ "sound.prm",		0x0100, 0xad43688f, 7 | BRF_GRA },           // 15 Sound Prom
+
+	{ "ph1-7.7b",		0x0117, 0x9a00af9a, 0 | BRF_OPT },           // 16 PLDs
+	{ "ph1-8.4b",		0x0117, 0xfb180f00, 0 | BRF_OPT },           // 17
+	{ "ph1-9.7r",		0x0117, 0x3b21d560, 0 | BRF_OPT },           // 18
 };
 
 STD_ROM_PICK(phozon)

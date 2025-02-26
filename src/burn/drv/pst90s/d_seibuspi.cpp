@@ -3847,7 +3847,7 @@ struct BurnDriver BurnDrvRdftua = {
 };
 
 
-// Raiden Fighters (Korea)
+// Raiden Fighters (Korea, SUB4 cart)
 
 static struct BurnRomInfo rdftadiRomDesc[] = {
 	{ "seibu_1.u0211",					0x080000, 0xfc0e2885, 1 | BRF_PRG | BRF_ESS }, //  0 i386 Code
@@ -3881,11 +3881,57 @@ static INT32 RdftadiInit()
 
 struct BurnDriver BurnDrvRdftadi = {
 	"rdftadi", "rdft", NULL, NULL, "1996",
-	"Raiden Fighters (Korea)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
+	"Raiden Fighters (Korea, SUB4 cart)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rdftadiRomInfo, rdftadiRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	RdftadiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
+	240, 320, 3, 4
+};
+
+
+// Raiden Fighters (Korea, SUB2 cart)
+
+static struct BurnRomInfo rdftadiaRomDesc[] = {
+	{ "seibu_1.u0211",					0x080000, 0xfc0e2885, 1 | BRF_PRG | BRF_ESS }, //  0 i386 Code
+	{ "seibu_2.u0212",					0x080000, 0x58ccb10c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu_3.u0210",					0x080000, 0x47fc3c96, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "seibu_4.u029",					0x080000, 0x271bdd4b, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "seibu_6.u0424",					0x010000, 0x6ac64968, 1 | BRF_GRA },           //  4 Characters
+	{ "seibu_5.u0423",					0x010000, 0x8f8d4e14, 1 | BRF_GRA },           //  5
+	{ "seibu_7.u048",					0x010000, 0x4d87e1ea, 1 | BRF_GRA },           //  6
+
+	{ "gun_dogs_bg1-d.u0415",			0x200000, 0x6a68054c, 2 | BRF_GRA },           //  7 Background Tiles
+	{ "gun_dogs_bg1-p.u0410",			0x100000, 0x3400794a, 2 | BRF_GRA },           //  8
+	{ "gun_dogs_bg2-d.u0424",			0x200000, 0x61cd2991, 2 | BRF_GRA },           //  9
+	{ "gun_dogs_bg2-p.u049",			0x100000, 0x502d5799, 2 | BRF_GRA },           // 10
+
+	{ "gun_dogs_obj-1.u0322",			0x400000, 0x59d86c99, 3 | BRF_GRA },           // 11 Sprites
+	{ "gun_dogs_obj-2.u0324",			0x400000, 0x1ceb0b6f, 3 | BRF_GRA },           // 12
+	{ "gun_dogs_obj-3.u0323",			0x400000, 0x36e93234, 3 | BRF_GRA },           // 13
+
+	{ "gun_dogs_pcm.u0217",				0x200000, 0x31253ad7, 3 | BRF_PRG | BRF_ESS }, // 14 Sample Data (Mapped to i386)
+	{ "seibu_8.u0216",					0x080000, 0xf88cb6e4, 3 | BRF_PRG | BRF_ESS }, // 15
+
+	{ "flash0_blank_region24.u1053",	0x100000, 0x72a33dc4, 0 | BRF_SND },           // 16 Intel Flash (Samples)
+};
+
+STD_ROM_PICK(rdftadia)
+STD_ROM_FN(rdftadia)
+
+static INT32 RdftadiaInit()
+{
+	return CommonInit(DECRYPT_SEI252, rdft_build_flash, 0x00298d0, 0x203f46);
+}
+
+struct BurnDriver BurnDrvRdftadia = {
+	"rdftadia", "rdft", NULL, NULL, "1996",
+	"Raiden Fighters (Korea, SUB2 cart)\0", NULL, "Seibu Kaihatsu (Dream Island license)", "SPI",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, rdftadiaRomInfo, rdftadiaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
+	RdftadiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	240, 320, 3, 4
 };
 

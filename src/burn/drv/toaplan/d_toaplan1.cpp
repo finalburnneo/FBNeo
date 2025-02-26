@@ -3255,7 +3255,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Rally Bike / Dash Yarou
+// Rally Bike (Europe, US) / Dash Yarou (Japan)
 
 static struct BurnRomInfo rallybikRomDesc[] = {
 	{ "b45-02.rom",			0x08000, 0x383386d7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3286,7 +3286,7 @@ STD_ROM_FN(rallybik)
 
 struct BurnDriver BurnDrvRallybik = {
 	"rallybik", NULL, NULL, NULL, "1988",
-	"Rally Bike / Dash Yarou\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
+	"Rally Bike (Europe, US) / Dash Yarou (Japan)\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
 	L"Rally Bike\0\u30C0\u30C3\u30B7\u30E5\uC91E\u90CE\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RACING, 0,
 	NULL, rallybikRomInfo, rallybikRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, RallybikDIPInfo,
@@ -3295,7 +3295,7 @@ struct BurnDriver BurnDrvRallybik = {
 };
 
 
-// Truxton / Tatsujin
+// Truxton (Europe, US) / Tatsujin (Japan)
 
 static struct BurnRomInfo truxtonRomDesc[] = {
 	{ "b65_11.7k",			0x20000, 0x1a62379a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3322,7 +3322,7 @@ STD_ROM_FN(truxton)
 
 struct BurnDriver BurnDrvTruxton = {
 	"truxton", NULL, NULL, NULL, "1988",
-	"Truxton / Tatsujin\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
+	"Truxton (Europe, US) / Tatsujin (Japan)\0", NULL, "Toaplan / Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, truxtonRomInfo, truxtonRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, TruxtonDIPInfo,
@@ -3589,7 +3589,7 @@ struct BurnDriver BurnDrvZerowingw = {
 };
 
 
-// Demon's World / Horror Story (set 1)
+// Demon's World (World) / Horror Story (Japan) (set 1)
 
 static struct BurnRomInfo demonwldRomDesc[] = {
 	{ "o16-10.v2",			0x20000, 0xca8194f3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3619,7 +3619,7 @@ STD_ROM_FN(demonwld)
 
 struct BurnDriver BurnDrvDemonwld = {
 	"demonwld", NULL, NULL, NULL, "1990",
-	"Demon's World / Horror Story (set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwldRomInfo, demonwldRomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
@@ -3628,7 +3628,7 @@ struct BurnDriver BurnDrvDemonwld = {
 };
 
 
-// Demon's World / Horror Story (set 2)
+// Demon's World (World) / Horror Story (Japan) (set 2)
 
 static struct BurnRomInfo demonwld1RomDesc[] = {
 	{ "o16n-10.bin",		0x20000, 0xfc38aeaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3658,7 +3658,7 @@ STD_ROM_FN(demonwld1)
 
 struct BurnDriver BurnDrvDemonwld1 = {
 	"demonwld1", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, DemonwldDIPInfo,
@@ -3667,7 +3667,7 @@ struct BurnDriver BurnDrvDemonwld1 = {
 };
 
 
-// Demon's World / Horror Story (set 3)
+// Demon's World (World) / Horror Story (Japan) (set 3)
 
 static struct BurnRomInfo demonwld2RomDesc[] = {
 	{ "o16-10.rom",			0x20000, 0x036ee46c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3697,7 +3697,7 @@ STD_ROM_FN(demonwld2)
 
 struct BurnDriver BurnDrvDemonwld2 = {
 	"demonwld2", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 3)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
@@ -3706,7 +3706,7 @@ struct BurnDriver BurnDrvDemonwld2 = {
 };
 
 
-// Demon's World / Horror Story (set 4)
+// Demon's World (World) / Horror Story (Japan) (set 4)
 
 static struct BurnRomInfo demonwld3RomDesc[] = {
 	{ "o16-10-2.bin",		0x20000, 0x84ee5218, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3736,7 +3736,7 @@ STD_ROM_FN(demonwld3)
 
 struct BurnDriver BurnDrvDemonwld3 = {
 	"demonwld3", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
@@ -3745,7 +3745,7 @@ struct BurnDriver BurnDrvDemonwld3 = {
 };
 
 
-// Demon's World / Horror Story (set 5)
+// Demon's World (World) / Horror Story (Japan) (set 5)
 
 static struct BurnRomInfo demonwld4RomDesc[] = {
 	{ "o16-10.bin",			0x20000, 0x6f7468e0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3775,7 +3775,7 @@ STD_ROM_FN(demonwld4)
 
 struct BurnDriver BurnDrvDemonwld4 = {
 	"demonwld4", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 5)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 5)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 5)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwld4RomInfo, demonwld4RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
@@ -3784,7 +3784,7 @@ struct BurnDriver BurnDrvDemonwld4 = {
 };
 
 
-// Demon's World / Horror Story (set 6)
+// Demon's World (World) / Horror Story (Japan) (set 6)
 
 static struct BurnRomInfo demonwld5RomDesc[] = {
 	{ "o16-10.bin",			0x20000, 0x4bcd85f6, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3814,7 +3814,7 @@ STD_ROM_FN(demonwld5)
 
 struct BurnDriver BurnDrvDemonwld5 = {
 	"demonwld5", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 6)\0", NULL, "Toaplan (APM Electronics license)", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World (World) / Horror Story (Japan) (set 6)\0", NULL, "Toaplan (APM Electronics license)", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 6)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
 	NULL, demonwld5RomInfo, demonwld5RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
@@ -3823,7 +3823,7 @@ struct BurnDriver BurnDrvDemonwld5 = {
 };
 
 
-// Same! Same! Same! (1P set)
+// Same! Same! Same! (Japan, 1P set)
 
 static struct BurnRomInfo samesameRomDesc[] = {
 	{ "o17_09.8j",			0x08000, 0x3f69e437, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3852,7 +3852,7 @@ STD_ROM_FN(samesame)
 
 struct BurnDriver BurnDrvSamesame = {
 	"samesame", "fireshrk", NULL, NULL, "1989",
-	"Same! Same! Same! (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same! (Japan, 1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (1P set)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesameRomInfo, samesameRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
@@ -3861,7 +3861,7 @@ struct BurnDriver BurnDrvSamesame = {
 };
 
 
-// Same! Same! Same! (2P set)
+// Same! Same! Same! (Japan, 2P set)
 
 static struct BurnRomInfo samesame2RomDesc[] = {
 	{ "o17_09x.8j",			0x08000, 0x3472e03e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3890,7 +3890,7 @@ STD_ROM_FN(samesame2)
 
 struct BurnDriver BurnDrvSamesame2 = {
 	"samesame2", "fireshrk", NULL, NULL, "1989",
-	"Same! Same! Same! (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same! (Japan, 2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesame2RomInfo, samesame2RomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, Samesame2DIPInfo,
@@ -3937,7 +3937,7 @@ struct BurnDriver BurnDrvSamesamecn = {
 };
 
 
-// Same! Same! Same! (1P set, NEW VER! hack)
+// Same! Same! Same! (Japan, 1P set, NEW VER! hack)
 
 static struct BurnRomInfo samesamenhRomDesc[] = {
 	{ "o17_09_nv.8j",		0x08000, 0xf60af2f9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -3966,7 +3966,7 @@ STD_ROM_FN(samesamenh)
 
 struct BurnDriver BurnDrvSamesamenh = {
 	"samesamenh", "fireshrk", NULL, NULL, "2015",
-	"Same! Same! Same! (1P set, NEW VER! hack)\0", NULL, "hack (trap15)", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same! (Japan, 1P set, NEW VER! hack)\0", NULL, "hack (trap15)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesamenhRomInfo, samesamenhRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,

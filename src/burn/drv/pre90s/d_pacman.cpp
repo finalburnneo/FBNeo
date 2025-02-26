@@ -3170,7 +3170,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 //------------------------------------------------------------------------------------------------------
 
 
-// Puck Man (Japan set 1)
+// Puck Man (Japan, set 1)
 
 static struct BurnRomInfo puckmanRomDesc[] = {
 	{ "pm1_prg1.6e",  0x0800, 0xf36e88ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -3204,7 +3204,7 @@ static INT32 puckmanInit()
 
 struct BurnDriver BurnDrvpuckman = {
 	"puckman", NULL, NULL, NULL, "1980",
-	"Puck Man (Japan set 1)\0", NULL, "Namco", "Pac-man",
+	"Puck Man (Japan, set 1)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, puckmanRomInfo, puckmanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -3213,7 +3213,7 @@ struct BurnDriver BurnDrvpuckman = {
 };
 
 
-// Puck Man (bootleg set 1)
+// Puck Man (bootleg, set 1)
 
 static struct BurnRomInfo puckmanbRomDesc[] = {
 	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
@@ -3236,7 +3236,7 @@ STD_ROM_FN(puckmanb)
 
 struct BurnDriver BurnDrvpuckmanb = {
 	"puckmanb", "puckman", NULL, NULL, "1980",
-	"Puck Man (bootleg set 1)\0", NULL, "bootleg", "Pac-man",
+	"Puck Man (bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, puckmanbRomInfo, puckmanbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -3277,7 +3277,7 @@ struct BurnDriver BurnDrvpuckmanf = {
 };
 
 
-// Puck Man (Bootleg set 2)
+// Puck Man (Bootleg, set 2)
 
 static struct BurnRomInfo puckmanhRomDesc[] = {
 	{ "pm01.6e",      0x1000, 0x5fe8610a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -3302,7 +3302,7 @@ STD_ROM_FN(puckmanh)
 
 struct BurnDriver BurnDrvpuckmanh = {
 	"puckmanh", "puckman", NULL, NULL, "1980",
-	"Puck Man (bootleg set 2)\0", NULL, "bootleg (Falcom?)", "Pac-man",
+	"Puck Man (bootleg, set 2)\0", NULL, "bootleg (Falcom?)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, puckmanhRomInfo, puckmanhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -3311,7 +3311,7 @@ struct BurnDriver BurnDrvpuckmanh = {
 };
 
 
-// Puck Man (Japan set 2)
+// Puck Man (Japan, set 2)
 
 static struct BurnRomInfo puckmodRomDesc[] = {
 	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
@@ -3334,7 +3334,7 @@ STD_ROM_FN(puckmod)
 
 struct BurnDriver BurnDrvpuckmod = {
 	"puckmod", "puckman", NULL, NULL, "1981",
-	"Puck Man (Japan set 2)\0", NULL, "Namco", "Pac-man",
+	"Puck Man (Japan, set 2)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, puckmodRomInfo, puckmodRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -5571,7 +5571,7 @@ struct BurnDriver BurnDrvcrush = {
 };
 
 
-// Crush Roller (bootleg set 1)
+// Crush Roller (bootleg, set 1)
 
 static struct BurnRomInfo crushblRomDesc[] = {
 	{ "cr1.bin",      0x1000, 0xe2e84cd1, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5594,7 +5594,7 @@ STD_ROM_FN(crushbl)
 
 struct BurnDriver BurnDrvcrushbl = {
 	"crushbl", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg set 1)\0", NULL, "bootleg", "Pac-man",
+	"Crush Roller (bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushblRomInfo, crushblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5603,7 +5603,7 @@ struct BurnDriver BurnDrvcrushbl = {
 };
 
 
-// Crush Roller (bootleg set 2)
+// Crush Roller (bootleg, set 2)
 
 static struct BurnRomInfo crushbl2RomDesc[] = {
 	{ "cr5.7d",       0x1000, 0x4954d51d, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5628,7 +5628,7 @@ STD_ROM_FN(crushbl2)
 
 struct BurnDriver BurnDrvcrushbl2 = {
 	"crushbl2", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg set 2)\0", NULL, "bootleg", "Pac-man",
+	"Crush Roller (bootleg, set 2)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushbl2RomInfo, crushbl2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5637,7 +5637,7 @@ struct BurnDriver BurnDrvcrushbl2 = {
 };
 
 
-// Crush Roller (bootleg set 3)
+// Crush Roller (bootleg, set 3)
 
 static struct BurnRomInfo crushbl3RomDesc[] = {
 	{ "cre.bin",      0x1000, 0xe1ecc4da, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5662,7 +5662,7 @@ STD_ROM_FN(crushbl3)
 
 struct BurnDriver BurnDrvcrushbl3 = {
 	"crushbl3", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg set 3)\0", NULL, "bootleg", "Pac-man",
+	"Crush Roller (bootleg, set 3)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushbl3RomInfo, crushbl3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -5924,7 +5924,7 @@ struct BurnDriver BurnDrvpainter = {
 };
 
 
-// Crush Roller (bootleg set 4)
+// Crush Roller (bootleg, set 4)
 
 static struct BurnRomInfo crushsRomDesc[] = {
 	{ "11105-0.0j",   0x1000, 0xdd425429, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5951,7 +5951,7 @@ static INT32 crushsInit()
 
 struct BurnDriver BurnDrvcrushs = {
 	"crushs", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg set 4)\0", NULL, "bootleg (Sidam)", "Pac-man",
+	"Crush Roller (bootleg, set 4)\0", NULL, "bootleg (Sidam)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushsRomInfo, crushsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, crushsDIPInfo,
@@ -6139,7 +6139,7 @@ struct BurnDriver BurnDrvkorosuke = {
 };
 
 
-// Eyes (US set 1)
+// Eyes (US, set 1)
 
 static struct BurnRomInfo eyesRomDesc[] = {
 	{ "d7",           0x1000, 0x3b09ac89, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -6167,7 +6167,7 @@ static INT32 eyesInit()
 
 struct BurnDriver BurnDrveyes = {
 	"eyes", NULL, NULL, NULL, "1982",
-	"Eyes (US set 1)\0", NULL, "Techstar (Rock-Ola license)", "Pac-man",
+	"Eyes (US, set 1)\0", NULL, "Techstar (Rock-Ola license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, eyesRomInfo, eyesRomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
@@ -6176,7 +6176,7 @@ struct BurnDriver BurnDrveyes = {
 };
 
 
-// Eyes (US set 2)
+// Eyes (US, set 2)
 
 static struct BurnRomInfo eyes2RomDesc[] = {
 	{ "g38201.7d",    0x1000, 0x2cda7185, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -6199,7 +6199,7 @@ STD_ROM_FN(eyes2)
 
 struct BurnDriver BurnDrveyes2 = {
 	"eyes2", "eyes", NULL, NULL, "1982",
-	"Eyes (US set 2)\0", NULL, "Techstar (Rock-Ola license)", "Pac-man",
+	"Eyes (US, set 2)\0", NULL, "Techstar (Rock-Ola license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, eyes2RomInfo, eyes2RomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
@@ -6208,7 +6208,7 @@ struct BurnDriver BurnDrveyes2 = {
 };
 
 
-// Eyes (bootleg set 1)
+// Eyes (bootleg, set 1)
 
 static struct BurnRomInfo eyesbRomDesc[] = {
 	{ "1.bin",	  0x0800, 0x339d279a, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
@@ -6237,7 +6237,7 @@ STD_ROM_FN(eyesb)
 
 struct BurnDriver BurnDrveyesb = {
 	"eyesb", "eyes", NULL, NULL, "1982",
-	"Eyes (bootleg set 1)\0", NULL, "bootleg", "Pac-man",
+	"Eyes (bootleg, set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, eyesbRomInfo, eyesbRomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
@@ -6246,7 +6246,7 @@ struct BurnDriver BurnDrveyesb = {
 };
 
 
-// Eyes (bootleg set 2, decrypted)
+// Eyes (bootleg, set 2, decrypted)
 
 static struct BurnRomInfo eyeszacbRomDesc[] = {
 	{ "zacb_1.bin",   0x0800, 0xa4a9d7a0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -6277,7 +6277,7 @@ STD_ROM_FN(eyeszacb)
 
 struct BurnDriver BurnDrveyeszac = {
 	"eyeszacb", "eyes", NULL, NULL, "1982",
-	"Eyes (bootleg set 2, decrypted)\0", NULL, "bootleg", "Pac-man",
+	"Eyes (bootleg, set 2, decrypted)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
 	NULL, eyeszacbRomInfo, eyeszacbRomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
@@ -7416,7 +7416,7 @@ struct BurnDriver BurnDrvvanvan = {
 };
 
 
-// Van-Van Car (Karateco set 1)
+// Van-Van Car (Karateco, set 1)
 
 static struct BurnRomInfo vanvankRomDesc[] = {
 	{ "van1.bin",	  0x1000, 0x00f48295, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -7437,7 +7437,7 @@ STD_ROM_FN(vanvank)
 
 struct BurnDriver BurnDrvvanvank = {
 	"vanvank", "vanvan", NULL, NULL, "1983",
-	"Van-Van Car (Karateco set 1)\0", NULL, "Sanritsu (Karateco license?)", "Pac-man",
+	"Van-Van Car (Karateco, set 1)\0", NULL, "Sanritsu (Karateco license?)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, vanvankRomInfo, vanvankRomName, NULL, NULL, NULL, NULL, vanvankInputInfo, vanvanDIPInfo,
@@ -7446,7 +7446,7 @@ struct BurnDriver BurnDrvvanvank = {
 };
 
 
-// Van-Van Car (Karateco set 2)
+// Van-Van Car (Karateco, set 2)
 
 static struct BurnRomInfo vanvanbRomDesc[] = {
 	{ "vv1.bin",      0x1000, 0xcf1b2df0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -7467,7 +7467,7 @@ STD_ROM_FN(vanvanb)
 
 struct BurnDriver BurnDrvvanvanb = {
 	"vanvanb", "vanvan", NULL, NULL, "1983",
-	"Van-Van Car (Karateco set 2)\0", NULL, "Sanritsu (Karateco license?)", "Pac-man",
+	"Van-Van Car (Karateco, set 2)\0", NULL, "Sanritsu (Karateco license?)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, vanvanbRomInfo, vanvanbRomName, NULL, NULL, NULL, NULL, vanvankInputInfo, vanvanDIPInfo,

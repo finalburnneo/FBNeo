@@ -2313,8 +2313,8 @@ static struct BurnRomInfo gratiaRomDesc[] = {
 	{ "mr94019-05.15",						0x200000, 0xa16994df, 2 | BRF_GRA },           //  8
 	{ "mr94019-06.3",						0x200000, 0x01d52ef1, 2 | BRF_GRA },           //  9
 
-	{ "mr94019-08.12",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
-	{ "mr94019-09.11",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
+	{ "mr94019-08.11",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
+	{ "mr94019-09.12",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
 
 	{ "94019_2.07",							0x200000, 0x043f969b, 4 | BRF_GRA },           // 12 Background Tiles
 
@@ -2357,8 +2357,8 @@ static struct BurnRomInfo gratiaaRomDesc[] = {
 	{ "mr94019-05.15",						0x200000, 0xa16994df, 2 | BRF_GRA },           //  8
 	{ "mr94019-06.3",						0x200000, 0x01d52ef1, 2 | BRF_GRA },           //  9
 
-	{ "mr94019-08.12",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
-	{ "mr94019-09.11",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
+	{ "mr94019-08.11",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
+	{ "mr94019-09.12",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
 
 	{ "mr94019-07.10",						0x200000, 0x561a786b, 4 | BRF_GRA },           // 12 Background Tiles
 

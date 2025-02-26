@@ -733,21 +733,21 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
 		TWCFgVideoRam[address & 0x3ff] = data;
-		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
 		TWCColorRam[address & 0x3ff] = data;
-		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		TWCBgVideoRam[address & 0x7ff] = data;
-		GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
+		//GenericTilemapSetTileDirty(0, (address & 0x7ff) / 2);
 		return;
 	}
 
@@ -833,31 +833,31 @@ static void __fastcall TWCSubWrite(UINT16 address, UINT8 data)
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
 		TWCFgVideoRam[address & 0x3ff] = data;
-		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
 		TWCColorRam[address & 0x3ff] = data;
-		GenericTilemapSetTileDirty(0, address & 0x3ff);
+		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		TWCBgVideoRam[address & 0x7ff] = data;
-		GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
+		//GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
 		return;
 	}
 
 	switch (address) {
 		case 0xec00:
-			TWCScrollXHi = data;
+			TWCScrollXLo = data;
 			return;
 
 		case 0xec01:
-			TWCScrollXLo = data;
+			TWCScrollXHi = data;
 			return;
 
 		case 0xec02:
@@ -940,11 +940,8 @@ static tilemap_callback( twc_fg )
 	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_GROUP((attr >> 5) & 1);
-	// flags |= TILE_GROUP_ENABLE|TILE_GROUP(1);
-	// flags |= ((attr & 0x20) ? (1 << 16) : 0);
 
 	TILE_SET_INFO(1, code, color, flags);
-	//sTile->category = (attr & 0x20) ? 1 : 0;
 }
 
 static void TWCRenderSprites()
@@ -991,10 +988,10 @@ static INT32 TWCDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
 	if (nSpriteEnable & 1) TWCRenderSprites();
-	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 8) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(TWCPalette);
 

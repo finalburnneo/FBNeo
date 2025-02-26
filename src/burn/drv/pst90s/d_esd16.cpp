@@ -1530,6 +1530,40 @@ struct BurnDriver BurnDrvHedpanif = {
 };
 
 
+// Head Panic (ver. 8.30)
+
+static struct BurnRomInfo hedpanic830RomDesc[] = {
+	{ "esd2.cu03",		0x040000, 0x955be87f, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu02", 		0x040000, 0xb56a4fe8, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "esd7.ju02",		0x200000, 0x5554ba0f, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd6.ju01",		0x200000, 0xffa6eb26, 3 | BRF_GRA },			//  4
+	{ "esd5.ju07",		0x080000, 0x95269b3c, 3 | BRF_GRA },			//  5
+
+	{ "esd8.fu35",		0x200000, 0x23aceb4f, 4 | BRF_GRA },			//  6 - Tiles
+	{ "esd9.fu34",		0x200000, 0x76b46cd2, 4 | BRF_GRA },			//  7
+
+	{ "esd4.su10",		0x040000, 0x5ba89bf1, 5 | BRF_SND },			//  8 - OKI Samples
+	
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+};
+
+STD_ROM_PICK(hedpanic830)
+STD_ROM_FN(hedpanic830)
+
+struct BurnDriver BurnDrvHedpanic830 = {
+	"hedpanic830", "hedpanic", NULL, NULL, "1999",
+	"Head Panic (ver. 8.30)\0", "Story line & game instructions in English", "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, hedpanic830RomInfo, hedpanic830RomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
+	HedpanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
 // Multi Champ Deluxe (ver. 0106, 06/01/2000)
 
 static struct BurnRomInfo mchampdxRomDesc[] = {

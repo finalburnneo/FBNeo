@@ -49,8 +49,9 @@ static INT32 track_reset_p2[2]   = {0, 0};
 static UINT8 DrvReset            = 0;
 static UINT8 m_digits[2];
 static HoldCoin<2> hold_coin;
+static INT32 nExtraCycles[3];
 
-static UINT8 *Mem                = NULL;
+static UINT8 *AllMem             = NULL;
 static UINT8 *MemEnd             = NULL;
 static UINT8 *RAMStart           = NULL;
 static UINT8 *RAMEnd             = NULL;
@@ -150,8 +151,7 @@ inline static void DrvMakeInputs()
 
 static struct BurnDIPInfo TehkanWCDIPList[]=
 {
-	// I copied this line directly from d_bladestl.cpp. It works, I don't know why!
-	{  0x13, 0xf0, 0xff, 0xff, NULL           /*starting offset*/           },
+	DIP_OFFSET(0x13)   // starting offset
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
@@ -268,8 +268,7 @@ STDDIPINFO(TehkanWC)
 
 static struct BurnDIPInfo TehkanWCdDIPList[]=
 {
-	// I copied this line directly from d_bladestl.cpp. It works, I don't know why!
-	{  0x13, 0xf0, 0xff, 0xff, NULL/*starting offset*/                      },
+	DIP_OFFSET(0x13)   // starting offset
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
@@ -386,8 +385,7 @@ STDDIPINFO(TehkanWCd)
 
 static struct BurnDIPInfo GridironDIPList[]=
 {
-	// I copied this line directly from d_bladestl.cpp. It works, I don't know why!
-	{  0x13, 0xf0, 0xff, 0xff, NULL  /*starting offset*/                    },
+	DIP_OFFSET(0x13)   // starting offset
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
@@ -495,8 +493,7 @@ STDDIPINFO(Gridiron)
 
 static struct BurnDIPInfo TeedOffDIPList[]=
 {
-	// I copied this line directly from d_bladestl.cpp. It works, I don't know why!
-	{  0x13, 0xf0, 0xff, 0xff, NULL/*starting offset*/                       },
+	DIP_OFFSET(0x13)   // starting offset
 
 	// Default Values
 	// nOffset, nID,     nMask,   nDefault,   NULL
@@ -594,7 +591,7 @@ static UINT8 __fastcall DrvSndReadPort(UINT16 port)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;;
 
 	DrvZ80MainROM         = Next; Next += 0x0c000;
 	DrvZ80SubROM          = Next; Next += 0x08000;
@@ -1022,6 +1019,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	track_reset_p2[0] = 0;
 	track_reset_p2[1] = 0;
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -1041,14 +1040,10 @@ static INT32 DrvFrame()
 	ZetNewFrame(); // Reset CPU cycle counters
 
 	// Total cycles each CPU should run per frame
-	INT32 nCyclesTotal[3] = {
-	  CPU_CYCLES_PER_FRAME, // Main CPU
-	  CPU_CYCLES_PER_FRAME, // Sub CPU
-	  CPU_CYCLES_PER_FRAME  // Audio CPU
-	};
+	INT32 nCyclesTotal[3] = { ((double)MAIN_CPU_CLOCK * 100 / nBurnFPS), ((double)SUB_CPU_CLOCK * 100 / nBurnFPS), ((double)SOUND_CPU_CLOCK * 100 / nBurnFPS) };
 
-	INT32 nCyclesDone[3] = { 0, 0, 0 }; // Cycles executed so far
-
+	// Cycles executed so far
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	// Run CPUs in sync
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -1078,6 +1073,11 @@ static INT32 DrvFrame()
 			ZetSetIRQLine(CPU_SOUND, 0, CPU_IRQSTATUS_HOLD);
 		}
 	}
+
+	// Let the next frame know if too many cycles were run
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	// Update sound
 	ZetOpen(CPU_SOUND);
@@ -1154,18 +1154,13 @@ static void adpcm_int()
 
 static INT32 DrvInit()
 {
-	INT32 nRet = 0, nLen;
+	// Set refresh rate
+	BurnSetRefreshRate(60.606061);
 
+	INT32 nRet = 0;
 
 	// --------------------- Memory Init
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 
 	// ----------------------------- ROMs Loading
@@ -1344,8 +1339,6 @@ static INT32 DrvInit()
 	// Initialize analog controls for player 1 and player 2
 	BurnTrackballInit(2);
 
-	HiscoreInit();
-
 	DrvDoReset(1);
 
 	return 0;
@@ -1369,9 +1362,8 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 	MSM5205Exit();
 	BurnTrackballExit();
-	HiscoreExit();
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	
 	DrvScrollXHi   = 0;
 	DrvScrollXLo   = 0;
@@ -1426,8 +1418,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(track_reset_p2[0]);
 		SCAN_VAR(track_reset_p2[1]);
 
+		SCAN_VAR(nExtraCycles);
+
 		BurnTrackballScan();
-		HiscoreScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
 

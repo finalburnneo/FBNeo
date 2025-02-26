@@ -733,21 +733,18 @@ static void __fastcall DrvMainWrite(UINT16 address, UINT8 data)
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
 		DrvVidFgCodesRAM[address & 0x3ff] = data;
-		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
 		DrvVidFgAttrRAM[address & 0x3ff] = data;
-		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		DrvVidBgRAM[address & 0x7ff] = data;
-		//GenericTilemapSetTileDirty(0, (address & 0x7ff) / 2);
 		return;
 	}
 
@@ -824,21 +821,18 @@ static void __fastcall DrvSubWrite(UINT16 address, UINT8 data)
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
 		DrvVidFgCodesRAM[address & 0x3ff] = data;
-		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
 		DrvVidFgAttrRAM[address & 0x3ff] = data;
-		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		DrvVidBgRAM[address & 0x7ff] = data;
-		//GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
 		return;
 	}
 
@@ -1398,7 +1392,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin != NULL) {
-		*pnMin = 0x029721;
+		*pnMin = 0x029721;  // Copied from d_wc90.cpp!!
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -1425,6 +1419,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
 		SCAN_VAR(isGridiron);
+		SCAN_VAR(m_digits[0]);
+		SCAN_VAR(m_digits[1]);
 		SCAN_VAR(track_reset_p1[0]);
 		SCAN_VAR(track_reset_p1[1]);
 		SCAN_VAR(track_reset_p2[0]);

@@ -3277,7 +3277,7 @@ struct BurnDriver BurnDrvpuckmanf = {
 };
 
 
-// Puck Man (Bootleg, set 2)
+// Puck Man (bootleg, set 2)
 
 static struct BurnRomInfo puckmanhRomDesc[] = {
 	{ "pm01.6e",      0x1000, 0x5fe8610a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -3306,6 +3306,44 @@ struct BurnDriver BurnDrvpuckmanh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, puckmanhRomInfo, puckmanhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Puck Man (bootleg, set 3)
+
+static struct BurnRomInfo puckmanb3RomDesc[] = {
+	{ "1.6e",	0x0800, 0x2c0fa0ab, 1 | BRF_ESS | BRF_PRG },		//  0 Z80 Code
+	{ "2.6k",	0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },		//  1
+	{ "3.6f",	0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },		//  2
+	{ "4.6m",	0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },		//  3
+	{ "5.6h",	0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },		//  4
+	{ "6.6n",	0x0800, 0x93f344c5, 1 | BRF_ESS | BRF_PRG },		//  5
+	{ "7.6j",	0x0800, 0x727ea0e9, 1 | BRF_ESS | BRF_PRG },		//  6
+	{ "8.6p",	0x0800, 0x64cf4fd2, 1 | BRF_ESS | BRF_PRG },		//  7
+
+	{ "9.5e",	0x0800, 0x2229ab07, 2 | BRF_GRA },					//  8 Graphics
+	{ "10.5h",	0x0800, 0x3591b89d, 2 | BRF_GRA },					//  9
+	{ "11.5f",	0x0800, 0x9e39323a, 2 | BRF_GRA },					// 10
+	{ "12.5j",	0x0800, 0x1b1d9096, 2 | BRF_GRA },					// 11
+
+	{ "prom.7f",	0x0020, 0x2fc650bd, 3 | BRF_GRA },				// 12 Color Proms
+	{ "prom.4a",	0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 13
+
+	{ "prom.1m",	0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 14 Sound Prom
+	{ "prom.3m",	0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(puckmanb3)
+STD_ROM_FN(puckmanb3)
+
+struct BurnDriver BurnDrvPuckmanb3 = {
+	"puckmanb3", "puckman", NULL, NULL, "1981",
+	"Puck Man (bootleg, set 3)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, puckmanb3RomInfo, puckmanb3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

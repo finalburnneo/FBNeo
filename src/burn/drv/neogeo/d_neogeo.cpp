@@ -17647,15 +17647,13 @@ struct BurnDriver BurnDrvLastbldi = {
 };
 
 
-// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, Hack)
-// Modified by GSC2007
-// Version number: Ver 2.0-FINAL
-// GOTVG 20230802
+// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017 v2.5 FINAL, Hack)
+// GOTVG 20250117
 
 static struct BurnRomInfo lastblspRomDesc[] = {
-	{ "234-p1sp.p1",	0x100000, 0x264f191b, 1 | BRF_ESS | BRF_PRG },
-	{ "234-p2sp.sp2",	0x600000, 0x6e5914ce, 1 | BRF_ESS | BRF_PRG },
-	{ "234-p3sp.p3",	0x020000, 0xd6a50f04, 1 | BRF_ESS | BRF_PRG },
+	{ "234-p1sp.p1",	0x100000, 0x977753ce, 1 | BRF_ESS | BRF_PRG },
+	{ "234-p2sp.sp2",	0x600000, 0x4a2a92fc, 1 | BRF_ESS | BRF_PRG },
+	{ "234-p3sp.p3",	0x020000, 0xd5fbd2dc, 1 | BRF_ESS | BRF_PRG },
 
 	LASTBLAD_TEXT
 
@@ -17677,6 +17675,7 @@ STD_ROM_FN(lastblsp)
 
 static void lastblspPatchCallback()
 {
+#if 0
 	UINT16* rom = (UINT16*)Neo68KROMActive;
 
 	for (INT32 i = 0; i < 0x100000 >> 1; i++) {
@@ -17698,14 +17697,12 @@ static void lastblspPatchCallback()
 
 	//	rom[0x11036 >> 1] = 0x4e75; // lbsp v1.1 fix, thanks HBMAME :)
 	rom[0x1102c >> 1] = 0x4e75; // lbsp v2.0 fix
-
+#endif
 }
 
 static INT32 lastblspInit()
 {
-	if (!bDoIpsPatch) {
-		NeoCallbackActive->pInitialise = lastblspPatchCallback;
-	}
+	NeoCallbackActive->pInitialise = lastblspPatchCallback;
 
 	INT32 nRet = NeoInit();
 
@@ -17717,9 +17714,9 @@ static INT32 lastblspInit()
 }
 
 struct BurnDriver BurnDrvLastblsp = {
-	"lastblsp", "lastblad", "neogeo", NULL, "2023",
-	"The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, Hack)\0", NULL, "hack", "Neo Geo MVS",
-	L"The Last Blade\0\u5E55\u672B\u6D6A\u6F2B \u6708\u83EF\u306E\u5263\u58EB (Special 2017, Hack)\0", NULL, NULL, NULL,
+	"lastblsp", "lastblad", "neogeo", NULL, "2025",
+	"The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017 v2.5 FINAL, Hack)\0", NULL, "GSC2007", "Neo Geo MVS",
+	L"The Last Blade\0\u5E55\u672B\u6D6A\u6F2B \u6708\u83EF\u306E\u5263\u58EB (Special 2017 v2.5 FINAL, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, lastblspRomInfo, lastblspRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	lastblspInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

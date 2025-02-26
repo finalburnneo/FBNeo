@@ -28,58 +28,66 @@
 #define CPU_SUB 1
 #define CPU_SOUND 2
 
+
+// Memory Modes
+#define MEM_MODE_READ  0
+#define MEM_MODE_WRITE 1
+#define MEM_MODE_FETCH 2
+#define MEM_MODE_ARG   3
+
+
 static UINT8 TWCInputPort0[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCInputPort1[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCInputPort2[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 TWCFakeInputPort[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 TWCDip[3]           = {0, 0, 0};
-static UINT8 TWCInput[3]         = {0x00, 0x00, 0x00};
+static UINT8 DrvDip[3]           = {0, 0, 0};
+static UINT8 DrvInput[3]         = {0x00, 0x00, 0x00};
 static INT16 track_p1[2];
 static INT16 track_p2[2];
 static INT32 track_reset_p1[2]   = {0, 0};
 static INT32 track_reset_p2[2]   = {0, 0};
-static UINT8 TWCReset            = 0;
+static UINT8 DrvReset            = 0;
 static UINT8 m_digits[2];
 static HoldCoin<2> hold_coin;
 
 static UINT8 *Mem                = NULL;
 static UINT8 *MemEnd             = NULL;
-static UINT8 *RamStart           = NULL;
-static UINT8 *RamEnd             = NULL;
-static UINT8 *TWCZ80Rom1         = NULL;
-static UINT8 *TWCZ80Rom2         = NULL;
-static UINT8 *TWCZ80Rom3         = NULL;
-static UINT8 *TWCSndRom          = NULL;
-static UINT8 *TWCZ80Ram1         = NULL;
-static UINT8 *TWCZ80Ram2         = NULL;
-static UINT8 *TWCZ80Ram3         = NULL;
-static UINT8 *TWCFgVideoRam      = NULL;
-static UINT8 *TWCBgVideoRam      = NULL;
-static UINT8 *TWCColorRam        = NULL;
-static UINT8 *TWCSpriteRam       = NULL;
-static UINT8 *TWCPalRam          = NULL;
-static UINT8 *TWCPalRam2         = NULL;
-static UINT8 *TWCSharedRam       = NULL;
-static UINT32 *TWCPalette        = NULL;
-static UINT8 TWCRecalc;
-static UINT8 *TWCFgTiles         = NULL;
-static UINT8 *TWCBgTiles         = NULL;
-static UINT8 *TWCSprites         = NULL;
+static UINT8 *RAMStart           = NULL;
+static UINT8 *RAMEnd             = NULL;
+static UINT8 *DrvZ80MainROM      = NULL;
+static UINT8 *DrvZ80SubROM       = NULL;
+static UINT8 *DrvZ80SndROM       = NULL;
+static UINT8 *DrvSndDataROM      = NULL;
+static UINT8 *DrvZ80MainRAM      = NULL;
+static UINT8 *DrvZ80SubRAM       = NULL;
+static UINT8 *DrvZ80SndRAM       = NULL;
+static UINT8 *DrvVidFgCodesRAM   = NULL;
+static UINT8 *DrvVidBgRAM        = NULL;
+static UINT8 *DrvVidFgAttrRAM    = NULL;
+static UINT8 *DrvVidSpriteRAM    = NULL;
+static UINT8 *DrvVidPalRAM       = NULL;
+static UINT8 *DrvVidUnusedPalRAM = NULL;
+static UINT8 *DrvSharedRAM       = NULL;
+static UINT32 *DrvPalette        = NULL;
+static UINT8 DrvPalRecalc;
+static UINT8 *DrvVidFgROM        = NULL;
+static UINT8 *DrvVidBgROM        = NULL;
+static UINT8 *DrvVidSpriteROM    = NULL;
 static UINT8 *TWCTempGfx         = NULL;
 
-static UINT8 TWCScrollXHi;
-static UINT8 TWCScrollXLo;
-static UINT8 TWCScrollY;
+static UINT8 DrvScrollXHi        = 0;
+static UINT8 DrvScrollXLo        = 0;
+static UINT8 DrvScrollY          = 0;
 
-static UINT8 TWCSoundLatch       = 0;
-static UINT8 TWCSoundLatch2      = 0;
+static UINT8 DrvSoundLatch       = 0;
+static UINT8 DrvSoundLatch2      = 0;
 static int   msm_data_offs       = 0;
 static INT32 msm_toggle          = 0;
 
-static UINT8 TWCFlipScreenX;
-static UINT8 TWCFlipScreenY;
+static UINT8 DrvFlipScreenX      = 0;
+static UINT8 DrvFlipScreenY      = 0;
 
-static INT32 has_led             = 0;
+static INT32 isGridiron          = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TehkanWCInputList[] = {
@@ -87,7 +95,7 @@ static struct BurnInputInfo TehkanWCInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	    "p1 start"	},
 	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	    "p1 fire 1"	},
 	A("P1 X Analog",    BIT_ANALOG_REL,     &track_p1[0],		    "p1 x-axis" ),
-	A("P1 Y Analog",    BIT_ANALOG_REL,     &track_p1[1],		    "p1 y-axis" ),      // 0x0080: DOWN, 0xff80: UP
+	A("P1 Y Analog",    BIT_ANALOG_REL,     &track_p1[1],		    "p1 y-axis" ),
 	{"P1 X Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 right"	},
 	{"P1 X Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 left"	},
 	{"P1 Y Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 down"	},
@@ -103,34 +111,34 @@ static struct BurnInputInfo TehkanWCInputList[] = {
 	{"P2 Y Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 6,	"p2 down"	},
 	{"P2 Y Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 7,	"p2 up"		},
 
-	{"Reset",			BIT_DIGITAL,		&TWCReset,	            "reset"		},
-	{"Dip A",			BIT_DIPSWITCH,		TWCDip + 0,             "dip"		},
-	{"Dip B",			BIT_DIPSWITCH,		TWCDip + 1,             "dip"		},
-	{"Dip C",			BIT_DIPSWITCH,		TWCDip + 2,             "dip"		},
+	{"Reset",			BIT_DIGITAL,		&DrvReset,	            "reset"		},
+	{"Dip A",			BIT_DIPSWITCH,		DrvDip + 0,             "dip"		},
+	{"Dip B",			BIT_DIPSWITCH,		DrvDip + 1,             "dip"		},
+	{"Dip C",			BIT_DIPSWITCH,		DrvDip + 2,             "dip"		},
 };
 #undef A
 STDINPUTINFO(TehkanWC)
 
-inline static void TWCMakeInputs(INT32 nInterleave)
+inline static void DrvMakeInputs()
 {
-	TWCInput[0] = TWCInput[1] = TWCInput[2] = 0xff;
+	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0xff;
 
 	for (INT32 i = 0; i < 8; i++) {
-		TWCInput[0] ^= (TWCInputPort0[i] & 1) << i;
-		TWCInput[1] ^= (TWCInputPort1[i] & 1) << i;
-		TWCInput[2] ^= (TWCInputPort2[i] & 1) << i;
+		DrvInput[0] ^= (TWCInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (TWCInputPort1[i] & 1) << i;
+		DrvInput[2] ^= (TWCInputPort2[i] & 1) << i;
 	}
 
-	hold_coin.checklow(0, TWCInput[2], 1<<0, 2);
-	hold_coin.checklow(1, TWCInput[2], 1<<1, 2);
+	hold_coin.checklow(0, DrvInput[2], 1<<0, 2);
+	hold_coin.checklow(1, DrvInput[2], 1<<1, 2);
 
 	// device, portA_reverse?, portB_reverse?
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
 	// From MAME: port_sensitivity=100, port_keydelta=63
-	// From AdvanceMame: fake keyboard input yields a |velocity| of 63 (0x7f / 2)
+	// From AdvanceMame: fake keyboard input yields a |velocity| of 0x3f (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0, 0x3f);  // 0x02, 0x0f taken from konami/d_bladestl.cpp
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0, 0x3f);  // 0x3f taken from advancemame driver
 	BurnTrackballUDLR(0, TWCFakeInputPort[3], TWCFakeInputPort[2], TWCFakeInputPort[1], TWCFakeInputPort[0]);
 	BurnTrackballUpdate(0);
 
@@ -552,12 +560,7 @@ static struct BurnDIPInfo TeedOffDIPList[]=
 };
 STDDIPINFO(TeedOff)
 
-static inline void data_address_w(INT32 chip, UINT8 offset, UINT8 data)
-{
-	AY8910Write(chip, ~offset & 1, data);
-}
-
-static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
+static void __fastcall DrvSndWritePort(UINT16 port, UINT8 data)
 {
 	UINT8 offset = port & 0xff;
 
@@ -566,17 +569,17 @@ static void __fastcall TWCSoundWritePort(UINT16 port, UINT8 data)
 		// MAME code uses data_address_w, which negates the port
 		case 0x00:
 		case 0x01:
-			data_address_w(0, offset, data);
+			AY8910Write(0, ~offset & 1, data);
 			return;
 
 		case 0x02:
 		case 0x03:
-			data_address_w(1, offset, data);
+			AY8910Write(1, ~offset & 1, data);
 			return;
 	}
 }
 
-static UINT8 __fastcall TWCSoundReadPort(UINT16 port)
+static UINT8 __fastcall DrvSndReadPort(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -593,39 +596,38 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	TWCZ80Rom1            = Next; Next += 0x0c000;
-	TWCZ80Rom2            = Next; Next += 0x08000;
-	TWCZ80Rom3            = Next; Next += 0x04000;
-	TWCSndRom             = Next; Next += 0x08000;
-
-	RamStart              = Next;
-
-	TWCZ80Ram1            = Next; Next += 0x00800;
-	TWCZ80Ram2            = Next; Next += 0x04800;
-	TWCZ80Ram3            = Next; Next += 0x00800;
-
-	TWCSharedRam          = Next; Next += 0x00800;
-
-	TWCFgVideoRam         = Next; Next += 0x00400;
-	TWCColorRam           = Next; Next += 0x00400;
-	TWCPalRam             = Next; Next += 0x00600;
-	TWCPalRam2            = Next; Next += 0x00200;
-	TWCBgVideoRam         = Next; Next += 0x00800;
-	TWCSpriteRam          = Next; Next += 0x00400;
-
-	RamEnd                = Next;
+	DrvZ80MainROM         = Next; Next += 0x0c000;
+	DrvZ80SubROM          = Next; Next += 0x08000;
+	DrvZ80SndROM          = Next; Next += 0x04000;
+	DrvSndDataROM         = Next; Next += 0x08000;
 
 	// Char Layout: 512 chars, 8x8 pixels, 4 bits/pixel
-	TWCFgTiles          = Next; Next += (512 * 8 * 8 * 4);
+	DrvVidFgROM           = Next; Next += (512 * 8 * 8 * 4);
 	// Tile Layout: 1024 tiles, 16x8 pixels, 4 bits/pixel
-	TWCBgTiles            = Next; Next += (1024 * 16 * 8 * 4);
+	DrvVidBgROM           = Next; Next += (1024 * 16 * 8 * 4);
 	// Sprite Layout: 512 sprites, 16x16 pixels, 4 bits/pixel
-	TWCSprites            = Next; Next += (512 * 16 * 16 * 4);
+	DrvVidSpriteROM       = Next; Next += (512 * 16 * 16 * 4);
 
 	// Palette format: xBGR_444 (xxxxBBBBGGGGRRRR), 768
-	TWCPalette            = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
+	DrvPalette            = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
 
-	MemEnd                 = Next;
+	RAMStart              = Next;
+
+	DrvZ80MainRAM         = Next; Next += 0x00800;
+	DrvZ80SubRAM          = Next; Next += 0x04800;
+	DrvZ80SndRAM          = Next; Next += 0x00800;
+
+	DrvSharedRAM          = Next; Next += 0x00800;
+
+	DrvVidFgCodesRAM      = Next; Next += 0x00400;
+	DrvVidFgAttrRAM       = Next; Next += 0x00400;
+	DrvVidPalRAM          = Next; Next += 0x00600;
+	DrvVidUnusedPalRAM    = Next; Next += 0x00200;
+	DrvVidBgRAM           = Next; Next += 0x00800;
+	DrvVidSpriteRAM       = Next; Next += 0x00400;
+
+	RAMEnd                = Next;
+	MemEnd                = Next;
 
 	return 0;
 }
@@ -666,52 +668,50 @@ static void track_p2_reset_w(UINT8 axis, UINT8 data)
 	track_reset_p2[axis] = BurnTrackballRead(1, axis) + data;
 }
 
-static UINT8 __fastcall TWCMainRead(UINT16 address)
+static UINT8 __fastcall DrvMainRead(UINT16 address)
 {
 	if (address == 0xda00)
 		return 0x80; // teedoff_unk_r
 
 	if (address >= 0xd800 && address <= 0xddff) {
-		return TWCPalRam[address & 0x5ff];
+		return DrvVidPalRAM[address & 0x5ff];
 	}
 
 	switch (address) {
 
 		case 0xf800:
 		case 0xf801:
-			//return trackball_read_p1(address & 1);
 			return track_p1_r(address & 1);
 
 		case 0xf802:
 		case 0xf806:
-			return TWCInput[2];  // System
+			return DrvInput[2];  // System
 
 		case 0xf810:
 		case 0xf811:
-		//return trackball_read_p2(address & 1);
 		return track_p2_r(address & 1);
 
 		case 0xf803:
-			return TWCInput[0];  // Player 1. DSW4 in test mode (tehkanwcd)
+			return DrvInput[0];  // Player 1. DSW4 in test mode (tehkanwcd)
 
 		case 0xf813:
-			return TWCInput[1];  // Player 2. DSW5 in test mode (tehkanwcd)
+			return DrvInput[1];  // Player 2. DSW5 in test mode (tehkanwcd)
 
 		case 0xf820:
-			return TWCSoundLatch2;
+			return DrvSoundLatch2;
 
 		case 0xf840:
-			return TWCDip[1];	// DSW2
+			return DrvDip[1];	// DSW2
 
 		case 0xf860:
 			BurnWatchdogReset();
 			return 0;
 
 		case 0xf850:
-			return TWCDip[2];	// DSW3
+			return DrvDip[2];	// DSW3
 
 		case 0xf870:
-			return TWCDip[0];	//DSW1
+			return DrvDip[0];	//DSW1
 	}
 
 	return 0;
@@ -728,48 +728,41 @@ static void sound_sync()
 }
 
 
-static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
+static void __fastcall DrvMainWrite(UINT16 address, UINT8 data)
 {
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
-		TWCFgVideoRam[address & 0x3ff] = data;
+		DrvVidFgCodesRAM[address & 0x3ff] = data;
 		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
-		TWCColorRam[address & 0x3ff] = data;
+		DrvVidFgAttrRAM[address & 0x3ff] = data;
 		//GenericTilemapSetTileDirty(1, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
-		TWCBgVideoRam[address & 0x7ff] = data;
+		DrvVidBgRAM[address & 0x7ff] = data;
 		//GenericTilemapSetTileDirty(0, (address & 0x7ff) / 2);
 		return;
 	}
 
 	switch (address) {
-		// 0xc000 .. 0xcfff: Shared RAM
-		// 0xd000 .. 0xd3ff: TextVideoRAM
-		// 0xd400 .. 0xd7ff: ColorRAM
-		// 0xd800 .. 0xddff: PaletteRAM
-		// 0xde00 .. 0xdfff: Shared RAM (PaletteRAM2)
-		// 0xe000 .. 0xe7ff: BGVideoRAM
-		// 0xe800 .. 0xebff: SpriteRAM
 
 		case 0xec00:
-			TWCScrollXLo = data;
+			DrvScrollXLo = data;
 			return;
 
 		case 0xec01:
-			TWCScrollXHi = data;
+			DrvScrollXHi = data;
 			return;
 
 		case 0xec02:
-			TWCScrollY = data;
+			DrvScrollY = data;
 			return;
 
 		case 0xf800:
@@ -792,7 +785,7 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 
 		case 0xf820:
 			sound_sync();
-			TWCSoundLatch = data;
+			DrvSoundLatch = data;
 			ZetNmi(CPU_SOUND);
 			return;
 
@@ -806,18 +799,16 @@ static void __fastcall TWCMainWrite(UINT16 address, UINT8 data)
 			return;
 
 		case 0xf860:
-			TWCFlipScreenX = data & 0x40;
-			// updateFlip() ??
+			DrvFlipScreenX = data & 0x40;
 			return;
 
 		case 0xf870:
-			TWCFlipScreenY = data & 0x40;
-			// updateFlip() ??
+			DrvFlipScreenY = data & 0x40;
 			return;
 	}
 }
 
-static UINT8 __fastcall TWCSubRead(UINT16 address)
+static UINT8 __fastcall DrvSubRead(UINT16 address)
 {
 	switch (address) {
 		case 0xf860:
@@ -828,59 +819,59 @@ static UINT8 __fastcall TWCSubRead(UINT16 address)
 	return 0;
 }
 
-static void __fastcall TWCSubWrite(UINT16 address, UINT8 data)
+static void __fastcall DrvSubWrite(UINT16 address, UINT8 data)
 {
 	// videoram
 	if (address >= 0xd000 && address <= 0xd3ff) {
-		TWCFgVideoRam[address & 0x3ff] = data;
+		DrvVidFgCodesRAM[address & 0x3ff] = data;
 		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 
 	// colorram
 	if (address >= 0xd400 && address <= 0xd7ff) {
-		TWCColorRam[address & 0x3ff] = data;
+		DrvVidFgAttrRAM[address & 0x3ff] = data;
 		//GenericTilemapSetTileDirty(0, address & 0x3ff);
 		return;
 	}
 	
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
-		TWCBgVideoRam[address & 0x7ff] = data;
+		DrvVidBgRAM[address & 0x7ff] = data;
 		//GenericTilemapSetTileDirty(1, (address & 0x7ff) / 2);
 		return;
 	}
 
 	switch (address) {
 		case 0xec00:
-			TWCScrollXLo = data;
+			DrvScrollXLo = data;
 			return;
 
 		case 0xec01:
-			TWCScrollXHi = data;
+			DrvScrollXHi = data;
 			return;
 
 		case 0xec02:
-			TWCScrollY = data;
+			DrvScrollY = data;
 			return;
 	}
 }
 
-static UINT8 __fastcall TWCSoundRead(UINT16 address)
+static UINT8 __fastcall DrvSndRead(UINT16 address)
 {
 	switch (address) {
 		case 0xc000:
-			return TWCSoundLatch;
+			return DrvSoundLatch;
 	}
 
 	return 0;
 }
 
-static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
+static void __fastcall DrvSndWrite(UINT16 address, UINT8 data)
 {
 	switch (address) {
-		case 0x8001:
 
+		case 0x8001:
 			MSM5205ResetWrite(0, data ? 0 : 1);
 			return;
 
@@ -889,7 +880,7 @@ static void __fastcall TWCSoundWrite(UINT16 address, UINT8 data)
 			return;  // nopw
 
 		case 0xc000:
-			TWCSoundLatch2 = data;
+			DrvSoundLatch2 = data;
 			return;
 	}
 }
@@ -911,12 +902,12 @@ inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-static INT32 TWCCalcPalette()
+static INT32 DrvCalcPalette()
 {
 	INT32 i;   
 
 	for (i = 0; i < 0x600; i++) {
-		TWCPalette[i / 2] = xBGR_444_CalcCol(TWCPalRam[i | 1] | (TWCPalRam[i & ~1] << 8));
+		DrvPalette[i / 2] = xBGR_444_CalcCol(DrvVidPalRAM[i | 1] | (DrvVidPalRAM[i & ~1] << 8));
 	}
 
 	return 0;
@@ -926,8 +917,8 @@ static tilemap_callback( twc_bg )
 {
 	offs *= 2; // ??
 
-	INT32 attr  = TWCBgVideoRam[offs + 1];
-	INT32 code  = TWCBgVideoRam[offs] + ((attr & 0x30) << 4);
+	INT32 attr  = DrvVidBgRAM[offs + 1];
+	INT32 code  = DrvVidBgRAM[offs] + ((attr & 0x30) << 4);
 	INT32 color = attr & 0x0f;
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 
@@ -936,72 +927,72 @@ static tilemap_callback( twc_bg )
 
 static tilemap_callback( twc_fg )
 {
-	INT32 attr  = TWCColorRam[offs];
-	INT32 code  = TWCFgVideoRam[offs] + ((attr & 0x10) << 4);
+	INT32 attr  = DrvVidFgAttrRAM[offs];
+	INT32 code  = DrvVidFgCodesRAM[offs] + ((attr & 0x10) << 4);
 	INT32 color = attr & 0x0f;
 	INT32 flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_GROUP((attr >> 5) & 1);
 
 	TILE_SET_INFO(1, code, color, flags);
 }
 
-static void TWCRenderSprites()
+static void DrvRenderSprites()
 {
 	INT32 Code, Attr, Color, fx, fy, sx, sy;
 
 	for (INT32 Offs = 0; Offs < 0x400; Offs += 4)
 	{
-		Attr = TWCSpriteRam[Offs + 1];
-		Code = TWCSpriteRam[Offs] + ((Attr & 0x08) << 5);
+		Attr = DrvVidSpriteRAM[Offs + 1];
+		Code = DrvVidSpriteRAM[Offs] + ((Attr & 0x08) << 5);
 		Color = Attr & 0x07;
 		fx = Attr & 0x40;
 		fy = Attr & 0x80;
-		sx = TWCSpriteRam[Offs + 2] + ((Attr & 0x20) << 3) - 128;
-		sy = TWCSpriteRam[Offs + 3];
+		sx = DrvVidSpriteRAM[Offs + 2] + ((Attr & 0x20) << 3) - 128;
+		sy = DrvVidSpriteRAM[Offs + 3];
 
-		if (TWCFlipScreenX)
+		if (DrvFlipScreenX)
 		{
 			sx = 240 - sx;
 			fx = !fx;
 		}
 
-		if (TWCFlipScreenY)
+		if (DrvFlipScreenY)
 		{
 			sy = 240 - sy;
 			fy = !fy;
 		}
 
-		Draw16x16MaskTile(pTransDraw, Code, sx, sy - SCREEN_VBEND, fx, fy, Color, 4, 0, 256, TWCSprites);
+		Draw16x16MaskTile(pTransDraw, Code, sx, sy - SCREEN_VBEND, fx, fy, Color, 4, 0, 256, DrvVidSpriteROM);
 	}
 }
 
-static INT32 TWCDraw()
+static INT32 DrvDraw()
 {
-	if (TWCRecalc) {
-		TWCCalcPalette();
-		TWCRecalc = 1;
+	if (DrvPalRecalc) {
+		DrvCalcPalette();
+		DrvPalRecalc = 1;
 	}
 	
-	GenericTilemapSetFlip(TMAP_GLOBAL, TWCFlipScreenX * TMAP_FLIPX | TWCFlipScreenY * TMAP_FLIPY);
+	GenericTilemapSetFlip(TMAP_GLOBAL, DrvFlipScreenX * TMAP_FLIPX | DrvFlipScreenY * TMAP_FLIPY);
 
-	GenericTilemapSetScrollY(0, TWCScrollY);
-	GenericTilemapSetScrollX(0, TWCScrollXLo + 256 * TWCScrollXHi);
+	GenericTilemapSetScrollY(0, DrvScrollY);
+	GenericTilemapSetScrollX(0, DrvScrollXLo + 256 * DrvScrollXHi);
 
 	BurnTransferClear();
 
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
 	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
-	if (nSpriteEnable & 1) TWCRenderSprites();
+	if (nSpriteEnable & 1) DrvRenderSprites();
 	if (nBurnLayer & 8) GenericTilemapDraw(1, pTransDraw, 0);
 
-	BurnTransferCopy(TWCPalette);
+	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
 
-static INT32 TWCDoReset(INT32 clear_mem)
+static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
-		memset(RamStart, 0, RamEnd - RamStart);
+		memset(RAMStart, 0, RAMEnd - RAMStart);
 	}
 
 	ZetReset(0);
@@ -1017,17 +1008,20 @@ static INT32 TWCDoReset(INT32 clear_mem)
 
 	hold_coin.reset();
 
-	TWCScrollXHi   = 0;
-	TWCScrollXLo   = 0;
-	TWCScrollY     = 0;
-	TWCFlipScreenX = 0;
-	TWCFlipScreenY = 0;
+	DrvScrollXHi   = 0;
+	DrvScrollXLo   = 0;
+	DrvScrollY     = 0;
+	DrvFlipScreenX = 0;
+	DrvFlipScreenY = 0;
 
-	TWCSoundLatch  = 0;
-	TWCSoundLatch2 = 0;
+	DrvSoundLatch  = 0;
+	DrvSoundLatch2 = 0;
 
 	msm_data_offs  = 0;
 	msm_toggle     = 0;
+
+	m_digits[0] = 0;
+	m_digits[1] = 0;
 
 	track_reset_p1[0] = 0;
 	track_reset_p1[1] = 0;
@@ -1039,16 +1033,16 @@ static INT32 TWCDoReset(INT32 clear_mem)
 	return 0;
 }
 
-static INT32 TWCFrame()
+static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
 
-	if (TWCReset) TWCDoReset(1); // Handle reset
+	if (DrvReset) DrvDoReset(1); // Handle reset
 
 	// Number of interrupt slices per frame
 	INT32 nInterleave = MSM5205CalcInterleave(0, SOUND_CPU_CLOCK);
 
-	TWCMakeInputs(nInterleave); // Update inputs
+	DrvMakeInputs(); // Update inputs
 
 	ZetNewFrame(); // Reset CPU cycle counters
 
@@ -1150,7 +1144,7 @@ static void portB_w(UINT32, UINT32 data)
 
 static void adpcm_int()
 {	
-	UINT8 msm_data = TWCSndRom[msm_data_offs & 0x7fff];
+	UINT8 msm_data = DrvSndDataROM[msm_data_offs & 0x7fff];
 
 	
 	if (msm_toggle == 0)
@@ -1164,51 +1158,110 @@ static void adpcm_int()
 	msm_toggle ^= 1;
 }
 
-#define MEM_MODE_READ  0
-#define MEM_MODE_WRITE 1
-#define MEM_MODE_FETCH 2
-#define MEM_MODE_ARG   3
-
-static void CPUsInit()
+static INT32 DrvInit()
 {
+	INT32 nRet = 0, nLen;
+
+
+	// --------------------- Memory Init
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+
+	// ----------------------------- ROMs Loading
+	TWCTempGfx = (UINT8*)BurnMalloc(0x10000);
+	if (TWCTempGfx == NULL) return 1;
+
+	nRet = BurnLoadRom(DrvZ80MainROM + 0x00000,  0,  1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80MainROM + 0x04000,  1,  1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80MainROM + 0x08000,  2,  1); if (nRet != 0) return 1;
+
+	nRet = BurnLoadRom(DrvZ80SubROM + 0x00000,  3,  1); if (nRet != 0) return 1;
+
+	nRet = BurnLoadRom(DrvZ80SndROM + 0x00000,  4,  1); if (nRet != 0) return 1;
+
+	memset(TWCTempGfx, 0, 0x4000);
+	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
+	GfxDecode(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, DrvVidFgROM);
+
+	memset(TWCTempGfx, 0, 0x10000);
+
+	if (isGridiron == 0) {
+		nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(TWCTempGfx + 0x08000,  7, 1); if (nRet != 0) return 1;
+		GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, DrvVidSpriteROM);
+
+		memset(TWCTempGfx, 0, 0x10000);
+		nRet = BurnLoadRom(TWCTempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(TWCTempGfx + 0x08000,  9, 1); if (nRet != 0) return 1;
+		GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, DrvVidBgROM);
+
+		BurnFree(TWCTempGfx);
+
+		nRet = BurnLoadRom(DrvSndDataROM + 0x00000, 10, 1); if (nRet !=0) return 1;
+	}
+	else {
+		nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(TWCTempGfx + 0x04000,  7, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(TWCTempGfx + 0x08000,  8, 1); if (nRet != 0) return 1;
+		GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, DrvVidSpriteROM);
+	
+		memset(TWCTempGfx, 0, 0x10000);
+		nRet = BurnLoadRom(TWCTempGfx + 0x00000,  9, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(TWCTempGfx + 0x04000,  10, 1); if (nRet != 0) return 1;
+		GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, DrvVidBgROM);
+	
+		BurnFree(TWCTempGfx);
+	
+		nRet = BurnLoadRom(DrvSndDataROM, 11, 1); if (nRet !=0) return 1;	
+	}
+
+
+	// --------------------- CPUS Init
 	// Main CPU
 	ZetInit(CPU_MAIN);
 	ZetOpen(CPU_MAIN);
 
 	// ROM
-	ZetMapMemory(TWCZ80Rom1,    0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80MainROM, 0x0000, 0xbfff, MAP_ROM);
 
 	// RAM
-	ZetMapMemory(TWCZ80Ram1,    0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80MainRAM, 0xc000, 0xc7ff, MAP_RAM);
 
 	// Shared Memory
 	// shareram
-	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAM, 0xc800, 0xcfff, MAP_RAM);
 
 	// videoram
-	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, TWCFgVideoRam);
-	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, TWCFgVideoRam);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, DrvVidFgCodesRAM);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, DrvVidFgCodesRAM);
 
 	// colorram
-	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, TWCColorRam);
-	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, TWCColorRam);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, DrvVidFgAttrRAM);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, DrvVidFgAttrRAM);
 
 	// palette
-	ZetMapArea(0xd800, 0xddff, MEM_MODE_WRITE, TWCPalRam);
-	ZetMapArea(0xd800, 0xddff, MEM_MODE_FETCH, TWCPalRam);
+	ZetMapArea(0xd800, 0xddff, MEM_MODE_WRITE, DrvVidPalRAM);
+	ZetMapArea(0xd800, 0xddff, MEM_MODE_FETCH, DrvVidPalRAM);
 
 	// palette2
-	ZetMapMemory(TWCPalRam2, 0xde00, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvVidUnusedPalRAM, 0xde00, 0xdfff, MAP_RAM);
 
 	// videoram2
-	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, TWCBgVideoRam);
-	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, TWCBgVideoRam);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, DrvVidBgRAM);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, DrvVidBgRAM);
 
 	// spriteram
-	ZetMapMemory(TWCSpriteRam, 0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvVidSpriteRAM, 0xe800, 0xebff, MAP_RAM);
 
-	ZetSetReadHandler(TWCMainRead);
-	ZetSetWriteHandler(TWCMainWrite);
+	ZetSetReadHandler(DrvMainRead);
+	ZetSetWriteHandler(DrvMainWrite);
 	ZetClose();
 
 	
@@ -1217,38 +1270,38 @@ static void CPUsInit()
 	ZetOpen(CPU_SUB);
 
 	// ROM
-	ZetMapMemory(TWCZ80Rom2,    0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80SubROM, 0x0000, 0x7fff, MAP_ROM);
 
 	// RAM
-	ZetMapMemory(TWCZ80Ram2,    0x8000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80SubRAM, 0x8000, 0xc7ff, MAP_RAM);
 
 	// Shared Memory
 	// shareram
-	ZetMapMemory(TWCSharedRam,  0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSharedRAM, 0xc800, 0xcfff, MAP_RAM);
 
 	// videoram
-	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, TWCFgVideoRam);
-	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, TWCFgVideoRam);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_READ, DrvVidFgCodesRAM);
+	ZetMapArea(0xd000, 0xd3ff, MEM_MODE_FETCH, DrvVidFgCodesRAM);
 
 	// colorram
-	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, TWCColorRam);
-	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, TWCColorRam);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_READ, DrvVidFgAttrRAM);
+	ZetMapArea(0xd400, 0xd7ff, MEM_MODE_FETCH, DrvVidFgAttrRAM);
 
 	// palette
-	ZetMapMemory(TWCPalRam, 0xd800, 0xddff, MAP_RAM);
+	ZetMapMemory(DrvVidPalRAM, 0xd800, 0xddff, MAP_RAM);
 
 	// palette2
-	ZetMapMemory(TWCPalRam2, 0xde00, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvVidUnusedPalRAM, 0xde00, 0xdfff, MAP_RAM);
 
 	// videoram2
-	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, TWCBgVideoRam);
-	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, TWCBgVideoRam);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_READ, DrvVidBgRAM);
+	ZetMapArea(0xe000, 0xe7ff, MEM_MODE_FETCH, DrvVidBgRAM);
 
 	// spriteram
-	ZetMapMemory(TWCSpriteRam, 0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvVidSpriteRAM, 0xe800, 0xebff, MAP_RAM);
 
-	ZetSetReadHandler(TWCSubRead);
-	ZetSetWriteHandler(TWCSubWrite);
+	ZetSetReadHandler(DrvSubRead);
+	ZetSetWriteHandler(DrvSubWrite);
 	ZetClose();
 
 
@@ -1257,206 +1310,64 @@ static void CPUsInit()
 	ZetOpen(CPU_SOUND);
 
 	// ROM
-	ZetMapMemory(TWCZ80Rom3, 0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80SndROM, 0x0000, 0x3fff, MAP_ROM);
 
 	// RAM
-	ZetMapMemory(TWCZ80Ram3, 0x4000, 0x47ff, MAP_RAM);
+	ZetMapMemory(DrvZ80SndRAM, 0x4000, 0x47ff, MAP_RAM);
 
-	ZetSetReadHandler(TWCSoundRead);
-	ZetSetWriteHandler(TWCSoundWrite);
-	ZetSetOutHandler(TWCSoundWritePort);
-	ZetSetInHandler(TWCSoundReadPort);
+	ZetSetReadHandler(DrvSndRead);
+	ZetSetWriteHandler(DrvSndWrite);
+	ZetSetOutHandler(DrvSndWritePort);
+	ZetSetInHandler(DrvSndReadPort);
 	ZetClose();
-}
 
-static void GFXInit()
-{
+
+	// --------------------------------- Initialize sound chips
+	AY8910Init(0, AY_CLOCK, 0);
+	AY8910Init(1, AY_CLOCK, 1);
+	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
+	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
+
+	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+
+
+	// ----------------------------------- Initialize Background and Foreground
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, twc_bg_map_callback, 16,  8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, twc_fg_map_callback,  8,  8, 32, 32);
-	GenericTilemapSetGfx(0, TWCBgTiles, 4, 16,  8, 0x80000, 0x200, 0xf);
-	GenericTilemapSetGfx(1, TWCFgTiles, 4,  8,  8, 0x20000, 0x000, 0xf);
+	GenericTilemapSetGfx(0, DrvVidBgROM, 4, 16,  8, 0x80000, 0x200, 0xf);
+	GenericTilemapSetGfx(1, DrvVidFgROM, 4,  8,  8, 0x20000, 0x000, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL,  0, -16);
 	GenericTilemapSetTransparent(1, 0);
-}
 
-static INT32 CommonRomLoad()
-{
-	INT32 nRet = 0, nLen;
 
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	BurnWatchdogInit(DrvDoReset, 180);
 
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	// Initialize analog controls for player 1 and player 2
+	BurnTrackballInit(2);
 
-	memset(Mem, 0, nLen);
-	MemIndex();
+	HiscoreInit();
 
-	TWCTempGfx = (UINT8*)BurnMalloc(0x10000);
-	if (TWCTempGfx == NULL) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x00000,  0,  1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x04000,  1,  1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x08000,  2,  1); if (nRet != 0) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom2 + 0x00000,  3,  1); if (nRet != 0) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom3 + 0x00000,  4,  1); if (nRet != 0) return 1;
-
-	memset(TWCTempGfx, 0, 0x4000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
-	GfxDecode(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCFgTiles);
-
-	memset(TWCTempGfx, 0, 0x10000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  7, 1); if (nRet != 0) return 1;
-	GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, TWCSprites);
-
-	memset(TWCTempGfx, 0, 0x10000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  9, 1); if (nRet != 0) return 1;
-	GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, TWCBgTiles);
-
-	BurnFree(TWCTempGfx);
-
-	nRet = BurnLoadRom(TWCSndRom, 10, 1); if (nRet !=0) return 1;
+	DrvDoReset(1);
 
 	return 0;
 }
 
 static INT32 GridironInit()
 {
-	INT32 nRet = 0, nLen;
-	has_led = 1;
+	INT32 nRet = 0;
+	isGridiron = 1;
 
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	nRet = DrvInit();
 
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-
-	memset(Mem, 0, nLen);
-	MemIndex();
-
-	TWCTempGfx = (UINT8*)BurnMalloc(0x10000);
-	if (TWCTempGfx == NULL) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x00000,  0,  1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x04000,  1,  1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCZ80Rom1 + 0x08000,  2,  1); if (nRet != 0) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom2 + 0x00000,  3,  1); if (nRet != 0) return 1;
-
-	nRet = BurnLoadRom(TWCZ80Rom3 + 0x00000,  4,  1); if (nRet != 0) return 1;
-
-	memset(TWCTempGfx, 0, 0x4000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
-	GfxDecode(512, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, TWCTempGfx, TWCFgTiles);
-
-	memset(TWCTempGfx, 0, 0x10000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCTempGfx + 0x04000,  7, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCTempGfx + 0x08000,  8, 1); if (nRet != 0) return 1;
-	GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, TWCSprites);
-
-	memset(TWCTempGfx, 0, 0x10000);
-	nRet = BurnLoadRom(TWCTempGfx + 0x00000,  9, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(TWCTempGfx + 0x04000,  10, 1); if (nRet != 0) return 1;
-	GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, TWCBgTiles);
-
-	BurnFree(TWCTempGfx);
-
-	nRet = BurnLoadRom(TWCSndRom, 11, 1); if (nRet !=0) return 1;
-
-	CPUsInit();
-	GFXInit();
-
-	BurnWatchdogInit(TWCDoReset, 180);
-
-	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 1);
-	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
-	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-
-	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-
-	// Initialize analog controls for player 1 and player 2
-	BurnTrackballInit(2);
-
-	TWCDoReset(1);
-
-	return 0;
+	return nRet;
 }
 
-static INT32 TehkanWCInit()
-{
-	has_led = 0;
-
-	if(CommonRomLoad() != 0) return 1;
-
-	CPUsInit();
-	GFXInit();
-
-	BurnWatchdogInit(TWCDoReset, 180);
-
-	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 1);
-	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
-	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-
-	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-
-	// Initialize analog controls for player 1 and player 2
-	BurnTrackballInit(2);
-
-	TWCDoReset(1);
-
-	return 0;
-}
-
-static INT32 TehkanWCbInit()
-{
-	has_led = 0;
-
-	if(CommonRomLoad() != 0) return 1;
-
-	CPUsInit();
-	GFXInit();
-
-	BurnWatchdogInit(TWCDoReset, 180);
-
-	// Initialize sound chips
-	AY8910Init(0, AY_CLOCK, 0);
-	AY8910Init(1, AY_CLOCK, 1);
-	AY8910SetPorts(0, NULL, NULL, &portA_w, &portB_w);
-	AY8910SetPorts(1, &portA_r, &portB_r, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetBuffered(ZetTotalCycles, SOUND_CPU_CLOCK);
-
-	MSM5205Init(0, DrvSynchroniseStream, MSM5205_CLOCK, adpcm_int, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-
-	// Initialize analog controls for player 1 and player 2
-	BurnTrackballInit(2);
-
-	TWCDoReset(1);
-
-	return 0;
-}
-
-static INT32 TWCExit()
+static INT32 DrvExit()
 {
 	ZetExit();
 	GenericTilesExit();
@@ -1464,19 +1375,25 @@ static INT32 TWCExit()
 	AY8910Exit(1);
 	MSM5205Exit();
 	BurnTrackballExit();
+	HiscoreExit();
 
 	BurnFree(Mem);
 	
-	TWCScrollXLo = 0;
-	TWCScrollXLo = 0;
-	TWCScrollY = 0;
-	TWCSoundLatch  = 0;
-	TWCSoundLatch2 = 0;
+	DrvScrollXHi   = 0;
+	DrvScrollXLo   = 0;
+	DrvScrollY     = 0;
+	DrvSoundLatch  = 0;
+	DrvSoundLatch2 = 0;
+	msm_data_offs  = 0;
+	msm_toggle     = 0;
+	DrvFlipScreenX = 0;
+	DrvFlipScreenY = 0;
+	isGridiron     = 0;
 
 	return 0;
 }
 
-static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1487,34 +1404,34 @@ static INT32 TWCScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = RamStart;
-		ba.nLen	  = RamEnd - RamStart;
+		ba.Data	  = RAMStart;
+		ba.nLen	  = RAMEnd - RAMStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		AY8910Scan(nAction, pnMin);
-		
+		AY8910Scan(nAction, pnMin);		
 		MSM5205Scan(nAction, pnMin);
 
-		SCAN_VAR(TWCScrollXLo);
-		SCAN_VAR(TWCScrollXLo);
-		SCAN_VAR(TWCScrollY);
-		SCAN_VAR(TWCSoundLatch);
-		SCAN_VAR(TWCSoundLatch2);
-		SCAN_VAR(TWCFlipScreenX);
-		SCAN_VAR(TWCFlipScreenY);
+		SCAN_VAR(DrvScrollXLo);
+		SCAN_VAR(DrvScrollXLo);
+		SCAN_VAR(DrvScrollY);
+		SCAN_VAR(DrvSoundLatch);
+		SCAN_VAR(DrvSoundLatch2);
+		SCAN_VAR(DrvFlipScreenX);
+		SCAN_VAR(DrvFlipScreenY);
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
-		SCAN_VAR(has_led);
+		SCAN_VAR(isGridiron);
 		SCAN_VAR(track_reset_p1[0]);
 		SCAN_VAR(track_reset_p1[1]);
 		SCAN_VAR(track_reset_p2[0]);
 		SCAN_VAR(track_reset_p2[1]);
 
 		BurnTrackballScan();
+		HiscoreScan(nAction, pnMin);
 
 		BurnWatchdogScan(nAction);
 
@@ -1743,12 +1660,12 @@ struct BurnDriver BurnDrvTehkanWC = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TehkanWCDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1785,12 +1702,12 @@ struct BurnDriver BurnDrvTehkanWCb = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TehkanWCDIPInfo,		// Function to get the input info for the game
-	TehkanWCbInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1798,15 +1715,15 @@ struct BurnDriver BurnDrvTehkanWCb = {
 	3 						// Screen y aspect
 };
 struct BurnDriver BurnDrvTehkanWCc = {
-	"tehkanwcc",				// The filename of the zip file (without extension)
-	"tehkanwc",					// The filename of the parent (without extension, NULL if not applicable)
+	"tehkanwcc",			// The filename of the zip file (without extension)
+	"tehkanwc",				// The filename of the parent (without extension, NULL if not applicable)
 	NULL,					// The filename of the board ROMs (without extension, NULL if not applicable)
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1985",
 	"Tehkan World Cup (set 3, bootleg)\0",	// Full Name A
-	NULL,							// Comment A
-	"bootleg",						// Manufacturer A
-	"Miscellaneous",				// System A
+	NULL,					// Comment A
+	"bootleg",				// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -1826,12 +1743,12 @@ struct BurnDriver BurnDrvTehkanWCc = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TehkanWCDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1839,15 +1756,15 @@ struct BurnDriver BurnDrvTehkanWCc = {
 	3 						// Screen y aspect
 };
 struct BurnDriver BurnDrvTehkanWCd = {
-	"tehkanwcd",				// The filename of the zip file (without extension)
-	"tehkanwc",					// The filename of the parent (without extension, NULL if not applicable)
+	"tehkanwcd",			// The filename of the zip file (without extension)
+	"tehkanwc",				// The filename of the parent (without extension, NULL if not applicable)
 	NULL,					// The filename of the board ROMs (without extension, NULL if not applicable)
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1985",
 	"Tehkan World Cup (set 4, earlier)\0",	// Full Name A
-	NULL,							// Comment A
-	"Tehkan",						// Manufacturer A
-	"Miscellaneous",				// System A
+	NULL,					// Comment A
+	"Tehkan",				// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -1867,12 +1784,12 @@ struct BurnDriver BurnDrvTehkanWCd = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TehkanWCdDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1881,15 +1798,15 @@ struct BurnDriver BurnDrvTehkanWCd = {
 };
 
 struct BurnDriver BurnDrvTehkanWCh = {
-	"tehkanwch",				// The filename of the zip file (without extension)
-	"tehkanwc",					// The filename of the parent (without extension, NULL if not applicable)
+	"tehkanwch",			// The filename of the zip file (without extension)
+	"tehkanwc",				// The filename of the parent (without extension, NULL if not applicable)
 	NULL,					// The filename of the board ROMs (without extension, NULL if not applicable)
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1986",
 	"Tehkan World Cup (1986 year hack)\0",	// Full Name A
-	NULL,							// Comment A
-	"hack",						// Manufacturer A
-	"Miscellaneous",				// System A
+	NULL,					// Comment A
+	"hack",					// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -1909,12 +1826,12 @@ struct BurnDriver BurnDrvTehkanWCh = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TehkanWCDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1928,10 +1845,10 @@ struct BurnDriver BurnDrvGridiron = {
 	NULL,					// The filename of the board ROMs (without extension, NULL if not applicable)
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1985",
-	"Gridiron Fight\0",	// Full Name A
-	NULL,							// Comment A
-	"Tehkan",						// Manufacturer A
-	"Miscellaneous",				// System A
+	"Gridiron Fight\0",		// Full Name A
+	NULL,					// Comment A
+	"Tehkan",				// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -1940,7 +1857,7 @@ struct BurnDriver BurnDrvGridiron = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
-	GBF_SPORTSMISC,		// Genre
+	GBF_SPORTSMISC,			// Genre
 	0,						// Family
 	NULL,					// Function to get possible zip names
 	GridironRomInfo,		// Function to get the length and crc of each rom
@@ -1951,12 +1868,12 @@ struct BurnDriver BurnDrvGridiron = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	GridironDIPInfo,		// Function to get the input info for the game
-	GridironInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	GridironInit,			// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	256,					// Screen width
 	224,					// Screen height
@@ -1971,9 +1888,9 @@ struct BurnDriver BurnDrvTeedOff = {
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1987",
 	"Tee'd Off (World)\0",	// Full Name A
-	NULL,							// Comment A
-	"Tehkan",						// Manufacturer A
-	"Miscellaneous",				// System A
+	NULL,					// Comment A
+	"Tehkan",				// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -1982,23 +1899,23 @@ struct BurnDriver BurnDrvTeedOff = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
-	GBF_SPORTSMISC,		// Genre
+	GBF_SPORTSMISC,			// Genre
 	0,						// Family
 	NULL,					// Function to get possible zip names
-	TeedOffRomInfo,		// Function to get the length and crc of each rom
-	TeedOffRomName,		// Function to get the possible names for each rom
+	TeedOffRomInfo,			// Function to get the length and crc of each rom
+	TeedOffRomName,			// Function to get the possible names for each rom
 	NULL,					// Function to get hdd info
 	NULL,					// Function to get the possible names for each hdd
 	NULL,					// Function to get the sample flags
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
-	TeedOffDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	TeedOffDIPInfo,			// Function to get the input info for the game
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	224,					// Screen width
 	256,					// Screen height
@@ -2008,14 +1925,14 @@ struct BurnDriver BurnDrvTeedOff = {
 
 struct BurnDriver BurnDrvTeedOffj = {
 	"teedoffj",				// The filename of the zip file (without extension)
-	"teedoff",					// The filename of the parent (without extension, NULL if not applicable)
+	"teedoff",				// The filename of the parent (without extension, NULL if not applicable)
 	NULL,					// The filename of the board ROMs (without extension, NULL if not applicable)
 	NULL,					// The filename of the samples zip file (without extension, NULL if not applicable)
 	"1986",
 	"Tee'd Off (Japan)\0",	// Full Name A
-	NULL,							// Comment A
-	"Tehkan",						// Manufacturer A
-	"Miscellaneous",				// System A
+	NULL,					// Comment A
+	"Tehkan",				// Manufacturer A
+	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
 	NULL,					// Manufacturer W
@@ -2024,7 +1941,7 @@ struct BurnDriver BurnDrvTeedOffj = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
-	GBF_SPORTSMISC,		// Genre
+	GBF_SPORTSMISC,			// Genre
 	0,						// Family
 	NULL,					// Function to get possible zip names
 	TeedOffjRomInfo,		// Function to get the length and crc of each rom
@@ -2034,16 +1951,16 @@ struct BurnDriver BurnDrvTeedOffj = {
 	NULL,					// Function to get the sample flags
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
-	TeedOffDIPInfo,		// Function to get the input info for the game
-	TehkanWCInit,				// Init
-	TWCExit,				// Exit
-	TWCFrame,				// Frame
-	TWCDraw,				// Redraw
-	TWCScan,				// Area Scan
-	&TWCRecalc,				// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
+	TeedOffDIPInfo,			// Function to get the input info for the game
+	DrvInit,				// Init
+	DrvExit,				// Exit
+	DrvFrame,				// Frame
+	DrvDraw,				// Redraw
+	DrvScan,				// Area Scan
+	&DrvPalRecalc,			// Recalc Palettes: Set to 1 if the palette needs to be fully re-calculated
 	0x300,					// Number of Palette Entries
 	224,					// Screen width
 	256,					// Screen height
-	7,						// Screen x aspect
-	8 						// Screen y aspect
+	3,						// Screen x aspect
+	4 						// Screen y aspect
 };

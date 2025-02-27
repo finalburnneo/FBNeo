@@ -190,8 +190,8 @@ typedef UInt32 UINT32;
 typedef INT32 LONG;   // LONG, ULONG and DWORD must be 32-bit for _WIN32 compatibility
 typedef UINT32 ULONG;
 
-//#undef DWORD
-//typedef UINT32 DWORD;
+#undef DWORD
+typedef UINT32 DWORD;
 
 #define VOID void
 

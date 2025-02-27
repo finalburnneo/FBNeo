@@ -19750,11 +19750,11 @@ struct BurnDriver BurnDrvMslug4fd = {
 
 // Metal Slug 4 (Final, Hack)
 // Modified by AKS & SAKURA
-// GOTVG 20250122
+// GOTVG 20250213
 
 static struct BurnRomInfo mslug4zjRomDesc[] = {
-	{ "263-p1zj.p1",	0x100000, 0x521f944f, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2zj.sp2",	0x600000, 0xd886a760, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p1zj.p1",	0x100000, 0x7ff2f18e, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2zj.sp2",	0x600000, 0xf6e65e5e, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_TEXT
 
@@ -20284,10 +20284,10 @@ struct BurnDriver BurnDrvMslug5ex = {
 
 // Metal Slug 5 (The Longest Battle, Hack)
 // Modified by 明天再努力吧
-// GOTVG 20230208
+// GOTVG 20231229
 
 static struct BurnRomInfo mslug5esRomDesc[] = {
-	{ "268-p1es.p1",	0x600000, 0xfc309b3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1es.p1",	0x600000, 0x8f8327a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	MSLUG5_DECRYPTED_COMPONENTS
 };
@@ -20689,7 +20689,7 @@ struct BurnDriver BurnDrvMslug5x = {
 
 // Metal Slug 5 (Enemy Enhance, Hack)
 // Modified by 尤古朵拉
-// GOTVG 20220406
+// GOTVG 20200406
 
 static struct BurnRomInfo mslug5dbRomDesc[] = {
 	{ "268-p1db.p1",	0x600000, 0x1527c4dd, 1 | BRF_ESS | BRF_PRG },

@@ -20,8 +20,8 @@ typedef const RECT* LPCRECT;
 #include <windows.h>
 #endif
 
-typedef unsigned long   DWORD;
-typedef unsigned char   BYTE;
+typedef UINT32 DWORD;
+typedef UINT8 BYTE;
 
 #ifndef MAX_PATH
 #define MAX_PATH    511

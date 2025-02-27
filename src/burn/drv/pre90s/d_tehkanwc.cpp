@@ -122,7 +122,8 @@ STDINPUTINFO(TehkanWC)
 
 inline static void DrvMakeInputs()
 {
-	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0xff;
+	DrvInput[2] = 0xff;
+	DrvInput[0] = DrvInput[1] = 0x00;
 
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] ^= (TWCInputPort0[i] & 1) << i;
@@ -139,12 +140,12 @@ inline static void DrvMakeInputs()
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 0x3f (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0, 0x3f);  // 0x3f taken from advancemame driver
+	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x2, 0x3f);  // 0x3f taken from advancemame driver
 	BurnTrackballUDLR(0, TWCFakeInputPort[3], TWCFakeInputPort[2], TWCFakeInputPort[1], TWCFakeInputPort[0]);
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
-	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0, 0x3f);
+	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x2, 0x3f);
 	BurnTrackballUDLR(1, TWCFakeInputPort[7], TWCFakeInputPort[6], TWCFakeInputPort[5], TWCFakeInputPort[4]);
 	BurnTrackballUpdate(1);
 }
@@ -689,10 +690,10 @@ static UINT8 __fastcall DrvMainRead(UINT16 address)
 		return track_p2_r(address & 1);
 
 		case 0xf803:
-			return DrvInput[0];  // Player 1. DSW4 in test mode (tehkanwcd)
+			return 0xff - DrvInput[0];  // Player 1. DSW4 in test mode (tehkanwcd)
 
 		case 0xf813:
-			return DrvInput[1];  // Player 2. DSW5 in test mode (tehkanwcd)
+			return 0xff - DrvInput[1];  // Player 2. DSW5 in test mode (tehkanwcd)
 
 		case 0xf820:
 			return DrvSoundLatch2;

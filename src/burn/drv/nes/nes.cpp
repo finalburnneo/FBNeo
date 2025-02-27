@@ -9691,14 +9691,6 @@ static void UpdatePalettePointer()
 	}
 }
 
-static UINT8 GetAvgBrightness(INT32 x, INT32 y)
-{
-	// Zapper Detection
-	const UINT32 rgbcolor = our_palette[pTransDraw[(y) * 256 + x] & 0x3f];
-
-	return ((rgbcolor & 0xff) + ((rgbcolor >> 8) & 0xff) + ((rgbcolor >> 16) & 0xff)) / 3;
-}
-
 static INT32 nes_frame_cycles;
 static UINT32 nes_ppu_cyc_mult;
 static UINT32 prerender_line; // ntsc 261, pal 311
@@ -10531,6 +10523,14 @@ static void ppu_init(INT32 is_pal)
 	screen = (UINT16*)BurnMalloc((256+8) * (256+8) * sizeof(UINT16));
 
 	ppu_reset();
+}
+
+static UINT8 GetAvgBrightness(INT32 x, INT32 y)
+{
+	// Zapper Detection
+	const UINT32 rgbcolor = our_palette[screen[(y) * 256 + x] & 0x3f];
+
+	return ((rgbcolor & 0xff) + ((rgbcolor >> 8) & 0xff) + ((rgbcolor >> 16) & 0xff)) / 3;
 }
 
 enum {

@@ -36,12 +36,14 @@
 #define MEM_MODE_ARG   3
 
 
-static UINT8 TWCInputPort0[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 TWCInputPort1[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 TWCInputPort2[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 TWCFakeInputPort[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 p1_button           = 0;
+static UINT8 p2_button           = 0;
+static UINT8 system_inputs[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvFakeInputPort[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvDip[3]           = {0, 0, 0};
-static UINT8 DrvInput[3]         = {0x00, 0x00, 0x00};
+static UINT8 DrvInputP1But       = 0;
+static UINT8 DrvInputP2But       = 0;
+static UINT8 DrvInputSystem      = 0;
 static INT16 track_p1[2];
 static INT16 track_p2[2];
 static INT32 track_reset_p1[2]   = {0, 0};
@@ -92,25 +94,25 @@ static INT32 isGridiron          = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TehkanWCInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,		TWCInputPort2 + 0,	    "p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,		TWCInputPort2 + 2,	    "p1 start"	},
-	{"P1 Button",   	BIT_DIGITAL,		TWCInputPort0 + 5,	    "p1 fire 1"	},
+	{"P1 Coin",			BIT_DIGITAL,		system_inputs + 0,	    "p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,		system_inputs + 2,	    "p1 start"	},
+	{"P1 Button",   	BIT_DIGITAL,		&p1_button,	            "p1 fire 1"	},
 	A("P1 X Analog",    BIT_ANALOG_REL,     &track_p1[0],		    "p1 x-axis" ),
 	A("P1 Y Analog",    BIT_ANALOG_REL,     &track_p1[1],		    "p1 y-axis" ),
-	{"P1 X Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 0,	"p1 right"	},
-	{"P1 X Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 1,	"p1 left"	},
-	{"P1 Y Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 2,	"p1 down"	},
-	{"P1 Y Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 3,	"p1 up"		},
+	{"P1 X Analog Inc",	BIT_DIGITAL,	    DrvFakeInputPort + 0,	"p1 right"	},
+	{"P1 X Analog Dec",	BIT_DIGITAL,	    DrvFakeInputPort + 1,	"p1 left"	},
+	{"P1 Y Analog Inc",	BIT_DIGITAL,	    DrvFakeInputPort + 2,	"p1 down"	},
+	{"P1 Y Analog Dec",	BIT_DIGITAL,	    DrvFakeInputPort + 3,	"p1 up"		},
 
-	{"P2 Coin",			BIT_DIGITAL,		TWCInputPort2 + 1,	    "p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,		TWCInputPort2 + 3,	    "p2 start"	},
-	{"P2 Button",		BIT_DIGITAL,		TWCInputPort1 + 5,	    "p2 fire 1"	},
+	{"P2 Coin",			BIT_DIGITAL,		system_inputs + 1,	    "p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,		system_inputs + 3,	    "p2 start"	},
+	{"P2 Button",		BIT_DIGITAL,		&p2_button,	            "p2 fire 1"	},
 	A("P2 X Analog",    BIT_ANALOG_REL,     &track_p2[0],           "p2 x-axis" ),
 	A("P2 Y Analog",    BIT_ANALOG_REL,     &track_p2[1],           "p2 y-axis" ),
-	{"P2 X Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 4,	"p2 right"	},
-	{"P2 X Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 5,	"p2 left"	},
-	{"P2 Y Analog Inc",	BIT_DIGITAL,	    TWCFakeInputPort + 6,	"p2 down"	},
-	{"P2 Y Analog Dec",	BIT_DIGITAL,	    TWCFakeInputPort + 7,	"p2 up"		},
+	{"P2 X Analog Inc",	BIT_DIGITAL,	    DrvFakeInputPort + 4,	"p2 right"	},
+	{"P2 X Analog Dec",	BIT_DIGITAL,	    DrvFakeInputPort + 5,	"p2 left"	},
+	{"P2 Y Analog Inc",	BIT_DIGITAL,	    DrvFakeInputPort + 6,	"p2 down"	},
+	{"P2 Y Analog Dec",	BIT_DIGITAL,	    DrvFakeInputPort + 7,	"p2 up"		},
 
 	{"Reset",			BIT_DIGITAL,		&DrvReset,	            "reset"		},
 	{"Dip A",			BIT_DIPSWITCH,		DrvDip + 0,             "dip"		},
@@ -122,17 +124,18 @@ STDINPUTINFO(TehkanWC)
 
 inline static void DrvMakeInputs()
 {
-	DrvInput[2] = 0xff;
-	DrvInput[0] = DrvInput[1] = 0x00;
+	DrvInputSystem = 0xff;
+	DrvInputP1But = DrvInputP2But = 0;
+
+	DrvInputP1But |= p1_button << 5;
+	DrvInputP2But |= p2_button << 5;
 
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] ^= (TWCInputPort0[i] & 1) << i;
-		DrvInput[1] ^= (TWCInputPort1[i] & 1) << i;
-		DrvInput[2] ^= (TWCInputPort2[i] & 1) << i;
+		DrvInputSystem ^= (system_inputs[i] & 1) << i;
 	}
 
-	hold_coin.checklow(0, DrvInput[2], 1<<0, 2);
-	hold_coin.checklow(1, DrvInput[2], 1<<1, 2);
+	hold_coin.checklow(0, DrvInputSystem, 1<<0, 2);
+	hold_coin.checklow(1, DrvInputSystem, 1<<1, 2);
 
 	// device, portA_reverse?, portB_reverse?
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
@@ -140,13 +143,13 @@ inline static void DrvMakeInputs()
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 0x3f (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0], track_p1[1], 0x2, 0x3f);  // 0x3f taken from advancemame driver
-	BurnTrackballUDLR(0, TWCFakeInputPort[3], TWCFakeInputPort[2], TWCFakeInputPort[1], TWCFakeInputPort[0]);
+	BurnTrackballFrame(0, track_p1[0]*6, track_p1[1]*6, 0x2, 0x3f);  // 0x3f taken from advancemame driver
+	BurnTrackballUDLR(0, DrvFakeInputPort[3], DrvFakeInputPort[2], DrvFakeInputPort[1], DrvFakeInputPort[0], 0x3f);
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
-	BurnTrackballFrame(1, track_p2[0], track_p2[1], 0x2, 0x3f);
-	BurnTrackballUDLR(1, TWCFakeInputPort[7], TWCFakeInputPort[6], TWCFakeInputPort[5], TWCFakeInputPort[4]);
+	BurnTrackballFrame(1, track_p2[0]*6, track_p2[1]*6, 0x2, 0x3f);
+	BurnTrackballUDLR(1, DrvFakeInputPort[7], DrvFakeInputPort[6], DrvFakeInputPort[5], DrvFakeInputPort[4], 0x3f);
 	BurnTrackballUpdate(1);
 }
 
@@ -683,17 +686,17 @@ static UINT8 __fastcall DrvMainRead(UINT16 address)
 
 		case 0xf802:
 		case 0xf806:
-			return DrvInput[2];  // System
+			return DrvInputSystem;  // System
 
 		case 0xf810:
 		case 0xf811:
 		return track_p2_r(address & 1);
 
 		case 0xf803:
-			return 0xff - DrvInput[0];  // Player 1. DSW4 in test mode (tehkanwcd)
+			return 0xff - DrvInputP1But;  // Player 1. DSW4 in test mode (tehkanwcd)
 
 		case 0xf813:
-			return 0xff - DrvInput[1];  // Player 2. DSW5 in test mode (tehkanwcd)
+			return 0xff - DrvInputP2But;  // Player 2. DSW5 in test mode (tehkanwcd)
 
 		case 0xf820:
 			return DrvSoundLatch2;

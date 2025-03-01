@@ -12765,6 +12765,39 @@ static struct BurnRomInfo Hsf2appRomDesc[] = {
 STD_ROM_PICK(Hsf2app)
 STD_ROM_FN(Hsf2app)
 
+// Street Fighter II': Prime (Ver 0.3, Hack)
+// Modified by Zero800
+// https://sf2prime.github.io/
+
+static struct BurnRomInfo Sf2primeRomDesc[] = {
+	{ "sf2pr.03",		0x080000, 0xfd845fd6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.04",		0x080000, 0x5fcdfebe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.05",		0x080000, 0x9339eb7b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.06",		0x080000, 0x67761d04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+#if 0
+	// All filled with 0xFF.
+	{ "sf2pr.07",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.08",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.09",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.10",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+#endif
+
+	{ "sf2pr.13m",		0x800000, 0x7c6a35f7, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.15m",		0x800000, 0x7b35f3f7, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.17m",		0x800000, 0x3852deb5, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.19m",		0x800000, 0x0454efa8, CPS2_GFX | BRF_GRA },
+
+	{ "sf2pr.01",		0x020000, 0x6ce233a7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sf2pr.02",		0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sf2pr.11m",		0x800000, 0xcd8b2d9f, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sf2prime)
+STD_ROM_FN(Sf2prime)
+
 static struct BurnRomInfo Megamn2dRomDesc[] = {
 	{ "rm2ud.03",      0x080000, 0xd3635f25, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "rm2ud.04",      0x080000, 0x768a1705, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14181,6 +14214,16 @@ struct BurnDriver BurnDrvCpsHsf2app = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2appRomInfo, Hsf2appRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2prime = {
+	"sf2prime", "hsf2", NULL, NULL, "2025",
+	"Street Fighter II': Prime (Ver 0.3, Hack)\0", NULL, "Zero800", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2primeRomInfo, Sf2primeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

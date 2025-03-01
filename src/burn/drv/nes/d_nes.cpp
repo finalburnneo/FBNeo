@@ -5489,7 +5489,7 @@ struct BurnDriver BurnDrvnes_finalmissionjc = {
 };
 
 // Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Hack, Chinese)
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶þ, ZARD/ÅÓÏÈÉú, º®Ñ©Ê¹Õß
+// Modified by ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ZARD/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Ñ©Ê¹ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-53027-1-1.html
 static struct BurnRomInfo nes_fireembcRomDesc[] = {
 	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi).nes",          655376, 0xa3126533, BRF_ESS | BRF_PRG },
@@ -5509,7 +5509,7 @@ struct BurnDriver BurnDrvnes_fireembc = {
 };
 
 // Fire Emblem Gaiden (Hack, Chinese v2.0)
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶þ, º®Ñ©Ê¹Õß
+// Modified by ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ï¿½ï¿½Ñ©Ê¹ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-51529-1-1.html
 static struct BurnRomInfo nes_fireembgaicRomDesc[] = {
 	{ "Fire Emblem Gaiden (T-Chi, v2.0).nes",          663568, 0x1df6fb24, BRF_ESS | BRF_PRG },
@@ -5679,7 +5679,7 @@ struct BurnDriver BurnDrvnes_jackalc = {
 };
 
 // Jackal - Endless Mission (v1.2) 20210313
-// Modified by HHNM Team - ZENG GE / Ôø¸ç
+// Modified by HHNM Team - ZENG GE / ï¿½ï¿½ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html
 static struct BurnRomInfo nes_jackalemRomDesc[] = {
 	{ "Jackal - Endless Mission (v1.2).nes",          262160, 0x833c6bc4, BRF_ESS | BRF_PRG },
@@ -6886,7 +6886,7 @@ struct BurnDriver BurnDrvnes_gundecc = {
 };
 
 // Teenage Mutant Ninja Turtles (Hack, Chinese v1.1)
-// Modified by MEZARANSU, ½ªÎ¬µÚ¶þ, ÂÞÔÆ
+// Modified by MEZARANSU, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ï¿½ï¿½ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-49880-1-1.html
 static struct BurnRomInfo nes_tmntcRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles T-Chi v1.1 (2021)(MEZARANSU).nes",          393232, 0xa02316dc, BRF_ESS | BRF_PRG },
@@ -14891,10 +14891,9 @@ struct BurnDriver BurnDrvnes_fallingtiles = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Famidash (feb.02.2025-git build)
-// if gets updated, make sure to change crc in nes.cpp! (search: famidash)
+// Famidash (mar.01.2025-git build)
 static struct BurnRomInfo nes_famidashRomDesc[] = {
-	{ "Famidash Demo v1.1-git (2024)(TFDSoft).nes",          786448, 0x9cc0ee5b, BRF_ESS | BRF_PRG },
+	{ "Famidash v1.2 (2024)(TFDSoft).nes",          786448, 0x708fbee4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_famidash)
@@ -14902,13 +14901,32 @@ STD_ROM_FN(nes_famidash)
 
 struct BurnDriver BurnDrvnes_famidash = {
 	"nes_famidash", NULL, NULL, NULL, "2024",
-	"Famidash (HB, Demo v1.1-git)\0", NULL, "TFDSoft", "Miscellaneous",
+	"Famidash (HB, v1.2)\0", NULL, "TFDSoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_famidashRomInfo, nes_famidashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+// Famidash Side B (mar.01.2025-git build)
+static struct BurnRomInfo nes_famidashbRomDesc[] = {
+	{ "Famidash v1.2 Side B (2024)(TFDSoft).nes", 786448, 0x2f19e44b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_famidashb)
+STD_ROM_FN(nes_famidashb)
+
+struct BurnDriver BurnDrvnes_famidash = {
+	"nes_famidashb", "nes_famidash", NULL, NULL, "2024",
+	"Famidash Side B (HB, v1.2)\0", NULL, "TFDSoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_famidashbRomInfo, nes_famidashbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 // Family Picross! (HB)
 static struct BurnRomInfo nes_familypicrossRomDesc[] = {
@@ -26948,7 +26966,7 @@ struct BurnDriver BurnDrvnes_contra = {
 };
 
 // Contra - The Last Rebirth (China)
-// Modified by Jing Jing Bu Xiang Wo / ¾²¾²²»ÏëÎÒ
+// Modified by Jing Jing Bu Xiang Wo / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // GOTVG 20221226
 static struct BurnRomInfo nes_contracsRomDesc[] = {
 	{ "contracs.nes",          541200, 0xe7e2ffa3, BRF_ESS | BRF_PRG },
@@ -26968,7 +26986,7 @@ struct BurnDriver BurnDrvnes_contracs = {
 };
 
 // Contra - Demon Contra (China)
-// Modified by Huan Tian / »ÃÌì
+// Modified by Huan Tian / ï¿½ï¿½ï¿½ï¿½
 // GOTVG 20200406
 static struct BurnRomInfo nes_contramdlRomDesc[] = {
 	{ "contramdl.nes",          541200, 0x78e3d5a4, BRF_ESS | BRF_PRG },

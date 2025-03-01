@@ -91,6 +91,7 @@ static UINT8 DrvFlipScreenX      = 0;
 static UINT8 DrvFlipScreenY      = 0;
 
 static INT32 isGridiron          = 0;
+static INT32 isTeedoff           = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TehkanWCInputList[] = {
@@ -143,12 +144,15 @@ inline static void DrvMakeInputs()
 	// From AdvanceMame: fake keyboard input yields a |velocity| of 0x3f (0x7f / 2)
 	//                   In absence of keyboard input, velocity must be 0x80, the rest value
 	// track_pi = {0x0, 0x0} && trac_reset_pi = {0x80, 0x80} implies no movement
-	BurnTrackballFrame(0, track_p1[0]*6, track_p1[1]*6, 0x2, 0x3f);  // 0x3f taken from advancemame driver
+
+	const INT32 TB_SCALE[2] = { 6, 4 };
+
+	BurnTrackballFrame(0, track_p1[0]*TB_SCALE[isTeedoff], track_p1[1]*TB_SCALE[isTeedoff], 0x2, 0x3f);  // 0x3f taken from advancemame driver
 	BurnTrackballUDLR(0, DrvFakeInputPort[3], DrvFakeInputPort[2], DrvFakeInputPort[1], DrvFakeInputPort[0], 0x3f);
 	BurnTrackballUpdate(0);
 
 	BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
-	BurnTrackballFrame(1, track_p2[0]*6, track_p2[1]*6, 0x2, 0x3f);
+	BurnTrackballFrame(1, track_p2[0]*TB_SCALE[isTeedoff], track_p2[1]*TB_SCALE[isTeedoff], 0x2, 0x3f);
 	BurnTrackballUDLR(1, DrvFakeInputPort[7], DrvFakeInputPort[6], DrvFakeInputPort[5], DrvFakeInputPort[4], 0x3f);
 	BurnTrackballUpdate(1);
 }
@@ -742,7 +746,7 @@ static void __fastcall DrvMainWrite(UINT16 address, UINT8 data)
 		DrvVidFgAttrRAM[address & 0x3ff] = data;
 		return;
 	}
-	
+
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		DrvVidBgRAM[address & 0x7ff] = data;
@@ -830,7 +834,7 @@ static void __fastcall DrvSubWrite(UINT16 address, UINT8 data)
 		DrvVidFgAttrRAM[address & 0x3ff] = data;
 		return;
 	}
-	
+
 	// videoram2
 	if (address >= 0xe000 && address <= 0xe7ff) {
 		DrvVidBgRAM[address & 0x7ff] = data;
@@ -899,7 +903,7 @@ inline static UINT32 xBGR_444_CalcCol(UINT16 nColour)
 
 static INT32 DrvCalcPalette()
 {
-	INT32 i;   
+	INT32 i;
 
 	for (i = 0; i < 0x600; i++) {
 		DrvPalette[i / 2] = xBGR_444_CalcCol(DrvVidPalRAM[i | 1] | (DrvVidPalRAM[i & ~1] << 8));
@@ -966,7 +970,7 @@ static INT32 DrvDraw()
 		DrvCalcPalette();
 		DrvPalRecalc = 1;
 	}
-	
+
 	GenericTilemapSetFlip(TMAP_GLOBAL, DrvFlipScreenX * TMAP_FLIPX | DrvFlipScreenY * TMAP_FLIPY);
 
 	GenericTilemapSetScrollY(0, DrvScrollY);
@@ -1091,7 +1095,7 @@ static INT32 DrvFrame()
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
-	
+
 	// Render frame
 	if (pBurnDraw) BurnDrvRedraw();
 
@@ -1141,10 +1145,9 @@ static void portB_w(UINT32, UINT32 data)
 
 
 static void adpcm_int()
-{	
+{
 	UINT8 msm_data = DrvSndDataROM[msm_data_offs & 0x7fff];
 
-	
 	if (msm_toggle == 0)
 		MSM5205DataWrite(0, (msm_data >> 4) & 0x0f);
 	else
@@ -1204,14 +1207,14 @@ static INT32 DrvInit()
 		nRet = BurnLoadRom(TWCTempGfx + 0x04000,  7, 1); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(TWCTempGfx + 0x08000,  8, 1); if (nRet != 0) return 1;
 		GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, TWCTempGfx, DrvVidSpriteROM);
-	
+
 		memset(TWCTempGfx, 0, 0x10000);
 		nRet = BurnLoadRom(TWCTempGfx + 0x00000,  9, 1); if (nRet != 0) return 1;
 		nRet = BurnLoadRom(TWCTempGfx + 0x04000,  10, 1); if (nRet != 0) return 1;
 		GfxDecode(1024, 4, 16, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x200, TWCTempGfx, DrvVidBgROM);
-	
+
 		BurnFree(TWCTempGfx);
-	
+
 		nRet = BurnLoadRom(DrvSndDataROM, 11, 1); if (nRet !=0) return 1;	
 	}
 
@@ -1257,7 +1260,7 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(DrvMainWrite);
 	ZetClose();
 
-	
+
 	// Graphics "sub" CPU
 	ZetInit(CPU_SUB);
 	ZetOpen(CPU_SUB);
@@ -1358,6 +1361,16 @@ static INT32 GridironInit()
 	return nRet;
 }
 
+static INT32 TeedOffInit()
+{
+	INT32 nRet = 0;
+	isTeedoff = 1;
+
+	nRet = DrvInit();
+
+	return nRet;
+}
+
 static INT32 DrvExit()
 {
 	ZetExit();
@@ -1368,7 +1381,7 @@ static INT32 DrvExit()
 	BurnTrackballExit();
 
 	BurnFreeMemIndex();
-	
+
 	DrvScrollXHi   = 0;
 	DrvScrollXLo   = 0;
 	DrvScrollY     = 0;
@@ -1379,11 +1392,12 @@ static INT32 DrvExit()
 	DrvFlipScreenX = 0;
 	DrvFlipScreenY = 0;
 	isGridiron     = 0;
+	isTeedoff      = 0;
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1402,7 +1416,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		AY8910Scan(nAction, pnMin);		
+		AY8910Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvScrollXLo);
@@ -1414,13 +1428,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(DrvFlipScreenY);
 		SCAN_VAR(msm_data_offs);
 		SCAN_VAR(msm_toggle);
-		SCAN_VAR(isGridiron);
-		SCAN_VAR(m_digits[0]);
-		SCAN_VAR(m_digits[1]);
-		SCAN_VAR(track_reset_p1[0]);
-		SCAN_VAR(track_reset_p1[1]);
-		SCAN_VAR(track_reset_p2[0]);
-		SCAN_VAR(track_reset_p2[1]);
+		SCAN_VAR(m_digits);
+		SCAN_VAR(track_reset_p1);
+		SCAN_VAR(track_reset_p2);
 
 		SCAN_VAR(nExtraCycles);
 
@@ -1903,7 +1913,7 @@ struct BurnDriver BurnDrvTeedOff = {
 	NULL,					// Function to get the possible names for each sample
 	TehkanWCInputInfo,		// Function to get the input info for the game
 	TeedOffDIPInfo,			// Function to get the input info for the game
-	DrvInit,				// Init
+	TeedOffInit,			// Init
 	DrvExit,				// Exit
 	DrvFrame,				// Frame
 	DrvDraw,				// Redraw

@@ -2021,8 +2021,9 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	INT32 nRet = NeoInit();
 
 	// If IPS_NOT_PROTECT, the data between PROM+0x700000 ~ 0x900000 is redundant, and the data of nIpsMemExpLen[PRG1_ROM] will be isolated.
+	// Expansion bytes larger than 5M should be moved after 5M.
 	if ((0 == nRet) && (nIpsDrvDefine & IPS_NOT_PROTECT) && (nIpsMemExpLen[PRG1_ROM] > 0)) {
-		memmove(Neo68KROMActive + 0x700000, Neo68KROMActive + 0x900000, nIpsMemExpLen[PRG1_ROM]);
+		memmove(Neo68KROMActive + 0x500000, Neo68KROMActive + 0x900000, nIpsMemExpLen[PRG1_ROM]);
 	}
 
 	return nRet;
@@ -8133,7 +8134,7 @@ struct BurnDriver BurnDrvMslug3h = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3hRomInfo, mslug3hRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -18790,11 +18791,11 @@ struct BurnDriver BurnDrvMslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower, Hack)
 // Modified by AKS
-// GOTVG 20241223
+// GOTVG 20250213
 
 static struct BurnRomInfo mslugxcqiRomDesc[] = {
-	{ "250-p1cqi.p1",	0x100000, 0x03bb5d5c, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2cqi.ep1",	0x400000, 0xe61c8983, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p1cqi.p1",	0x100000, 0xf1cd0db7, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2cqi.ep1",	0x400000, 0xab4cd88e, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
@@ -18813,7 +18814,7 @@ STDROMPICKEXT(mslugxcqi, mslugxcqi, neogeo)
 STD_ROM_FN(mslugxcqi)
 
 struct BurnDriver BurnDrvMslugxfs = {
-	"mslugxcqi", "mslugx", "neogeo", NULL, "2024",
+	"mslugxcqi", "mslugx", "neogeo", NULL, "2025",
 	"Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -19493,11 +19494,11 @@ struct BurnDriver BurnDrvMslug3cqi = {
 
 // Metal Slug 3 (Legend TD, Hack)
 // Modified by AKS
-// GOTVG 20241229
+// GOTVG 20250213
 
 static struct BurnRomInfo mslug3cqtRomDesc[] = {
 	{ "256-p1cqt.p1",	0x100000, 0x9a40066b, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqt.sp2",	0x600000, 0xf3ac11ef, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqt.sp2",	0x600000, 0x517ccf74, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
@@ -19514,7 +19515,7 @@ STDROMPICKEXT(mslug3cqt, mslug3cqt, neogeo)
 STD_ROM_FN(mslug3cqt)
 
 struct BurnDriver BurnDrvMslug3cqt = {
-	"mslug3cqt", "mslug3", "neogeo", NULL, "2024",
+	"mslug3cqt", "mslug3", "neogeo", NULL, "2025",
 	"Metal Slug 3 (Legend TD, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

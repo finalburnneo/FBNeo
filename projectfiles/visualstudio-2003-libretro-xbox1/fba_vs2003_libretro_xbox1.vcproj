@@ -987,6 +987,9 @@
 							RelativePath="..\..\src\burn\drv\pre90s\d_tecmo.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\pre90s\d_tehkanwc.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_terracre.cpp">
 						</File>
 						<File

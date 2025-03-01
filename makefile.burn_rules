@@ -72,7 +72,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_qbert.o d_quizo.o d_rallyx.o d_redclash.o d_renegade.o d_quantum.o d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_senjyo.o d_sf.o d_shangkid.o d_shisen.o \
 			d_sidearms.o d_skyarmy.o d_skyfox.o d_skykid.o d_snk.o d_snk6502.o d_snk68.o d_solomon.o d_sonson.o d_spacefb.o d_spdodgeb.o d_speedbal.o d_sprcros2.o \
 			d_srumbler.o d_ssozumo.o d_sstrangr.o d_starwars.o d_stfight.o d_stuntair.o d_sub.o d_suna8.o d_tagteam.o d_tankbust.o d_taxidriv.o d_tail2nose.o d_tbowl.o d_tceptor.o \
-			d_tecmo.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tiamc1.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_tubep.o d_usgames.o \
+			d_tecmo.o d_tehkanwc.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tiamc1.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_tubep.o d_usgames.o \
 			d_vampire.o d_vastar.o d_vball.o d_vicdual.o d_vulgus.o d_wallc.o d_warpwarp.o d_warpsped.o d_wc90.o d_wc90b.o d_williams.o d_wiping.o d_wiz.o d_wwfsstar.o \
 			d_xain.o d_xxmissio.o d_xyonix.o d_zaccaria.o d_zodiack.o d_zwackery.o \
 			\

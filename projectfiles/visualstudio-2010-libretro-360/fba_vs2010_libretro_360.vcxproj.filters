@@ -728,6 +728,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp">
       <Filter>Source Files\burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tehkanwc.cpp">
+      <Filter>Source Files\burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_terracre.cpp">
       <Filter>Source Files\burn\drv\pre90s</Filter>
     </ClCompile>

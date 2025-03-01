@@ -633,6 +633,7 @@ $$DRV_PRE90S {
 	    ../../src/burn/drv/pre90s/d_srumbler.cpp \
 	    ../../src/burn/drv/pre90s/d_tail2nose.cpp \
 	    ../../src/burn/drv/pre90s/d_tecmo.cpp \
+	    ../../src/burn/drv/pre90s/d_tehkanwc.cpp \
 	    ../../src/burn/drv/pre90s/d_terracre.cpp \
 	    ../../src/burn/drv/pre90s/d_tigeroad.cpp \
 	    ../../src/burn/drv/pre90s/d_toki.cpp \

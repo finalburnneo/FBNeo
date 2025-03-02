@@ -26567,6 +26567,52 @@ struct BurnDriver BurnDrvBeast = {
 };
 
 
+// Neo 2048 (HB)
+// Release by Nicole Caroline Branagan
+// https://github.com/nicolebranagan/neo2048
+
+static struct BurnRomInfo neo2048RomDesc[] = {
+	{ "neo2048.p1",		0x000bde, 0xa1039bdb, 1 | BRF_ESS | BRF_PRG },  //  0 68K Code
+
+	{ "fixlayer.s1",	0x020000, 0xd1e4c798, 2 | BRF_GRA },            //  1 Text data
+
+	{ "logo.c1",		0x100000, 0x479543cf, 3 | BRF_GRA },            //  2 Sprite data
+	{ "logo.c2",		0x100000, 0x1f6431d5, 3 | BRF_GRA },            //  3
+	{ "sprites.c1",		0x000c00, 0xef3e848e, 0 | BRF_GRA },            //  4
+	{ "sprites.c2",		0x000c00, 0x933b4e8f, 0 | BRF_GRA },            //  5
+
+	{ "sounddriver.m1",	0x010000, 0x6e363bd2, 4 | BRF_ESS | BRF_PRG },  //  6 Z80 code
+
+	{ "adpcma.v1",		0x00e200, 0xdba56bf0, 5 | BRF_SND },            //  7 Sound data
+};
+
+STDROMPICKEXT(neo2048, neo2048, neogeo)
+STD_ROM_FN(neo2048)
+
+static void neo2048Callback()
+{
+	BurnLoadRom(NeoSpriteROM[nNeoActiveSlot] + 0x100000, 4, 2);
+	BurnLoadRom(NeoSpriteROM[nNeoActiveSlot] + 0x100001, 5, 2);
+}
+
+static INT32 neo2048Init()
+{
+	NeoCallbackActive->pInitialise = neo2048Callback;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvNeo2048 = {
+	"neo2048", NULL, "neogeo", NULL, "2021",
+	"Neo 2048 (HB)\0", NULL, "Nicole Express", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, neo2048RomInfo, neo2048RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	neo2048Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Neo 2500 Demo
 
 static struct BurnRomInfo neo2500RomDesc[] = {

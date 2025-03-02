@@ -3631,6 +3631,21 @@
     <ClCompile Include="..\..\src\burn\drv\snes\statehandler.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Md5.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha3.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha512.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha512Opt.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lib7z\SwapBytes.c">
+      <Filter>libs\7z</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

@@ -339,6 +339,7 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\HuffEnc.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\LzFindOpt.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Lzma2DecMt.c" />
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Md5.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\MtDec.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd7aDec.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Ppmd8.c" />
@@ -347,6 +348,10 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha1Opt.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Sha256Opt.c" />
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha3.c" />
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha512.c" />
+    <ClCompile Include="..\..\src\dep\libs\lib7z\Sha512Opt.c" />
+    <ClCompile Include="..\..\src\dep\libs\lib7z\SwapBytes.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\Xxh64.c" />
     <ClCompile Include="..\..\src\dep\libs\lib7z\ZstdDec.c" />
     <ClCompile Include="..\..\src\dep\libs\libspng\spng.c" />

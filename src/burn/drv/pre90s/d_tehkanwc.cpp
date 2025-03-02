@@ -1691,7 +1691,7 @@ struct BurnDriver BurnDrvTehkanWCb = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1732,7 +1732,7 @@ struct BurnDriver BurnDrvTehkanWCc = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1773,7 +1773,7 @@ struct BurnDriver BurnDrvTehkanWCd = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1815,7 +1815,7 @@ struct BurnDriver BurnDrvTehkanWCh = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre

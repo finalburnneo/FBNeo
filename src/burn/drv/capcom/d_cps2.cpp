@@ -4609,6 +4609,39 @@ static struct BurnRomInfo Mshvsfu1RomDesc[] = {
 STD_ROM_PICK(Mshvsfu1)
 STD_ROM_FN(Mshvsfu1)
 
+// Marvel Super Heroes Vs. Street Fighter (Boss Hack)
+
+static struct BurnRomInfo MshvsfbhRomDesc[] = {
+	{ "mvsbh.03i",		0x080000, 0x54ecd389, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsbh.04i",		0x080000, 0x6031012f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.05h",		0x080000, 0x77870dc3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.06a",		0x080000, 0x959f3030, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.07b",		0x080000, 0x7f915bdb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.09b",		0x080000, 0x3ba08818, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.10b",		0x080000, 0xcf0dba98, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvs.13m",		0x400000, 0x29b05fd9, CPS2_GFX | BRF_GRA },
+	{ "mvs.15m",		0x400000, 0xfaddccf1, CPS2_GFX | BRF_GRA },
+	{ "mvs.17m",		0x400000, 0x97aaf4c7, CPS2_GFX | BRF_GRA },
+	{ "mvs.19m",		0x400000, 0xcb70e915, CPS2_GFX | BRF_GRA },
+	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
+	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
+	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
+	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+
+	{ "mvs.01",			0x020000, 0x68252324, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },
+	{ "mvs.12m",		0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+
+	{ "mshvsfj.key",	0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mshvsfbh)
+STD_ROM_FN(Mshvsfbh)
+
 static struct BurnRomInfo MvscRomDesc[] = {
 	{ "mvce.03a",      0x080000, 0x824e4a90, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvce.04a",      0x080000, 0x436c5a4e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -4918,6 +4951,39 @@ static struct BurnRomInfo Mvscur1RomDesc[] = {
 
 STD_ROM_PICK(Mvscur1)
 STD_ROM_FN(Mvscur1)
+
+// Marvel Vs. Capcom: Clash of Super Heroes (Boss Hack)
+
+static struct BurnRomInfo MvscbhRomDesc[] = {
+	{ "mvcbh.03d",		0x080000, 0xe557a885, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcbh.04d",		0x080000, 0x05e4ba51, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.05a",		0x080000, 0x2d8c8e86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.06a",		0x080000, 0x8528e1f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.07",			0x080000, 0xc3baa32b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.08",			0x080000, 0xbc002fcd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.09",			0x080000, 0xc67b26df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.10",			0x080000, 0x0fdd1e26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvc.13m",		0x400000, 0xfa5f74bc, CPS2_GFX | BRF_GRA },
+	{ "mvc.15m",		0x400000, 0x71938a8f, CPS2_GFX | BRF_GRA },
+	{ "mvc.17m",		0x400000, 0x92741d07, CPS2_GFX | BRF_GRA },
+	{ "mvc.19m",		0x400000, 0xbcb72fc6, CPS2_GFX | BRF_GRA },
+	{ "mvc.14m",		0x400000, 0x7f1df4e4, CPS2_GFX | BRF_GRA },
+	{ "mvc.16m",		0x400000, 0x90bd3203, CPS2_GFX | BRF_GRA },
+	{ "mvc.18m",		0x400000, 0x67aaf727, CPS2_GFX | BRF_GRA },
+	{ "mvc.20m",		0x400000, 0x8b0bade8, CPS2_GFX | BRF_GRA },
+
+	{ "mvc.01",			0x020000, 0x41629e95, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvc.02",			0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvc.11m",		0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
+	{ "mvc.12m",		0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+
+	{ "mvscu.key",		0x000014, 0xa83db333, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mvscbh)
+STD_ROM_FN(Mvscbh)
 
 static struct BurnRomInfo MvscjsingRomDesc[] = {
 	{ "mvc_ja.simm1",  0x200000, 0x6a2ef7c2, CPS2_PRG_68K_SIMM | BRF_ESS | BRF_PRG },
@@ -6643,13 +6709,13 @@ STD_ROM_FN(Sfa3us)
    
    Features
 
-    - Secret Characters Unlocked And Selectable Without Codes
-    - Color Selection From Char Select Screen, Lights = Xism, Mediums = Aism, Strongs = Vism
-    - Play With Either Branding Zero/Alpha
-    - Stage Select - Hold Start On A Character, A Sound Will Play Indicating Success
-    - Unlimited Taunts For A/V ism
-    - Six New Palettes For Chun Li Taken From The Console Releases
-    - Sodom Palette Fixes For Xism 
+	- Secret Characters Unlocked And Selectable Without Codes
+	- Color Selection From Char Select Screen, Lights = Xism, Mediums = Aism, Strongs = Vism
+	- Play With Either Branding Zero/Alpha
+	- Stage Select - Hold Start On A Character, A Sound Will Play Indicating Success
+	- Unlimited Taunts For A/V ism
+	- Six New Palettes For Chun Li Taken From The Console Releases
+	- Sodom Palette Fixes For Xism 
 */
 
 static struct BurnRomInfo Sfa3ceRomDesc[] = {
@@ -10736,6 +10802,16 @@ struct BurnDriver BurnDrvCpsMshvsfu1 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsMshvsfbh = {
+	"mshvsfbh", "mshvsf", NULL, NULL, "1997",
+	"Marvel Super Heroes Vs. Street Fighter (Boss Hack)\0", NULL, "Yumeji", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MshvsfbhRomInfo, MshvsfbhRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsMvsc = {
 	"mvsc", NULL, NULL, NULL, "1998",
 	"Marvel Vs. Capcom: Clash of Super Heroes (Europe 980123)\0", NULL, "Capcom", "CPS2",
@@ -10832,6 +10908,16 @@ struct BurnDriver BurnDrvCpsMvscur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Mvscur1RomInfo, Mvscur1RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMvscbh = {
+	"mvscbh", "mvsc", NULL, NULL, "1998",
+	"Marvel Vs. Capcom: Clash of Super Heroes (Boss Hack)\0", NULL, "0 DAY-S[EGCG]", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MvscbhRomInfo, MvscbhRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

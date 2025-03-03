@@ -3911,14 +3911,13 @@ static INT32 NeoInitCommon()
 	BurnDrvGetFullSize(&nNeoScreenWidth, &nNeoScreenHeight);
 
 	if (NeoOverscan != 0) {
-		// if a user dislike our width (overscan) choice,
+		// if a user dislikes the width (overscan) set by the driver,
 		// let's force the one he wants
 		if (NeoOverscan == 0x01)
 			nNeoScreenWidth = 304;
 		if (NeoOverscan == 0x02)
 			nNeoScreenWidth = 320;
 		BurnDrvSetVisibleSize(nNeoScreenWidth, nNeoScreenHeight);
-		Reinitialise();
 	}
 
 	if (nNeoSystemType & NEO_SYS_CART) {

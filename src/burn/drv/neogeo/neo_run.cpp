@@ -134,6 +134,7 @@ UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 UINT8 NeoCDBios = 0;
 UINT8 NeoUniHW = 0;
+UINT8 NeoOverscan = 0;
 static ClearOpposite<2, UINT8> clear_opposite;
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
@@ -3908,6 +3909,17 @@ static INT32 NeoInitCommon()
 	BurnSetRefreshRate((nNeoSystemType & NEO_SYS_CD) ? NEO_CDVREFRESH : NEO_VREFRESH);
 	INT32 nNeoScreenHeight; // not used
 	BurnDrvGetFullSize(&nNeoScreenWidth, &nNeoScreenHeight);
+
+	if (NeoOverscan != 0) {
+		// if a user dislike our width (overscan) choice,
+		// let's force the one he wants
+		if (NeoOverscan == 0x01)
+			nNeoScreenWidth = 304;
+		if (NeoOverscan == 0x02)
+			nNeoScreenWidth = 320;
+		BurnDrvSetVisibleSize(nNeoScreenWidth, nNeoScreenHeight);
+		Reinitialise();
+	}
 
 	if (nNeoSystemType & NEO_SYS_CART) {
 		nVBLankIRQ   = 1;

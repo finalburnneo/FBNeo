@@ -514,7 +514,7 @@ static struct BurnRomInfo emptyRomDesc[] = {
 
 // FDS System BIOS
 static struct BurnRomInfo fds_fdsbiosRomDesc[] = {
-    { "fdsbios.nes",     0x2000, 0x5e607dcf, BRF_BIOS }, // 0x80 - standard bios
+	{ "fdsbios.nes",     0x2000, 0x5e607dcf, BRF_BIOS }, // 0x80 - standard bios
 };
 
 STD_ROM_PICK(fds_fdsbios)
@@ -26453,6 +26453,42 @@ struct BurnDriver BurnDrvnes_choujsenwar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Chouyoku Senki ESTIQUE (Japan)
+static struct BurnRomInfo nes_chouyokushenkiRomDesc[] = {
+	{ "Chouyoku Senki ESTIQUE (Japan)(2023)(Cat Hui).nes",          524304, 0x2b74b0dc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chouyokushenki)
+STD_ROM_FN(nes_chouyokushenki)
+
+struct BurnDriver BurnDrvnes_chouyokushenki = {
+	"nes_chouyokushenki", NULL, NULL, NULL, "2023",
+	"Chouyoku Senki ESTIQUE (Japan)\0", NULL, "Cat Hui", "Miscellaneous",
+	L"Chouyoku Senki ESTIQUE (Japan)\0\u8d85\u7ffc\u6226\u9a0e\u30a8\u30b9\u30c6\u30a3\u30fc\u30af\0", NULL, L"\u8a31\u8336\u8c93", NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_chouyokushenkiRomInfo, nes_chouyokushenkiRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Chouyoku Senki ESTIQUE (God Mode, Hack)
+static struct BurnRomInfo nes_chouyokushenkigmRomDesc[] = {
+	{ "Chouyoku Senki ESTIQUE God Mode (2025)(darthvaderx).nes",          524304, 0xb412dbca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chouyokushenkigm)
+STD_ROM_FN(nes_chouyokushenkigm)
+
+struct BurnDriver BurnDrvnes_chouyokushenkigm = {
+	"nes_chouyokushenkigm", "nes_chouyokushenki", NULL, NULL, "2025",
+	"Chouyoku Senki ESTIQUE (God Mode, Hack)\0", NULL, "darthvaderx", "Miscellaneous",
+	L"Chouyoku Senki ESTIQUE (God Mode, Hack)\0\u8d85\u7ffc\u6226\u9a0e\u30a8\u30b9\u30c6\u30a3\u30fc\u30af\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_chouyokushenkigmRomInfo, nes_chouyokushenkigmRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Chubby Cherub (USA)
 static struct BurnRomInfo nes_chubbycherubRomDesc[] = {
 	{ "Chubby Cherub (USA)(1986)(Bandai).nes",          40976, 0x90f12ac8, BRF_ESS | BRF_PRG },
@@ -40572,6 +40608,24 @@ struct BurnDriver BurnDrvnes_nekkekoukunkun = {
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_nekkekoukunkunRomInfo, nes_nekkekoukunkunRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)
+static struct BurnRomInfo nes_nekkoudbsochenRomDesc[] = {
+	{ "Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)(1990)(Technos).nes",          262160, 0x4e6e3334, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkoudbsochen)
+STD_ROM_FN(nes_nekkoudbsochen)
+
+struct BurnDriver BurnDrvnes_nekkoudbsochen = {
+	"nes_nekkoudbsochen", "nes_ninteworcup", NULL, NULL, "1990",
+	"Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	L"Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)\0\u71b1\u8840\u9ad8\u6821\u30c9\u30c3\u30b8\u30dc\u30fc\u30eb\u90e8 \u30b5\u30c3\u30ab\u30fc\u7de8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
+	NESGetZipName, nes_nekkoudbsochenRomInfo, nes_nekkoudbsochenRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

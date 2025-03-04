@@ -26465,7 +26465,7 @@ struct BurnDriver BurnDrvnes_chouyokushenki = {
 	"nes_chouyokushenki", NULL, NULL, NULL, "2023",
 	"Chouyoku Senki ESTIQUE (Japan)\0", NULL, "Cat Hui", "Miscellaneous",
 	L"Chouyoku Senki ESTIQUE (Japan)\0\u8d85\u7ffc\u6226\u9a0e\u30a8\u30b9\u30c6\u30a3\u30fc\u30af\0", NULL, L"\u8a31\u8336\u8c93", NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_chouyokushenkiRomInfo, nes_chouyokushenkiRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

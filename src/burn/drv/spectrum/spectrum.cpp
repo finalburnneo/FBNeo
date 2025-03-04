@@ -191,12 +191,14 @@ static float filt_coeffs[FIR_TAPS];
 static float c_buffer[FIR_TAPS];
 static INT32 c_position;
 
+enum { WINDOW_NONE = 0, WINDOW_HAMMING = 1, WINDOW_BLACKMAN = 2 };
+
 static float sinc(float x)
 {
 	return (x == 0.0) ? 1.0 : sin(M_PI * x) / (M_PI * x);
 }
 
-static void generate_filter_coeffs(float *coeffs, int taps, float cutoff, float sample_rate)
+static void generate_filter_coeffs(float *coeffs, int window, int taps, float cutoff, float sample_rate)
 {
     int mid = taps / 2;
     float normalized_cutoff = cutoff / (sample_rate / 2.0);
@@ -205,9 +207,11 @@ static void generate_filter_coeffs(float *coeffs, int taps, float cutoff, float 
         float sinc_value = sinc((i - mid) * normalized_cutoff);
 		float hamming_window = 0.54 - 0.46 * cos(2.0 * M_PI * i / (taps - 1));
 		float blackman_window = 0.42 - 0.5 * cos(2.0 * M_PI * i / (taps - 1)) + 0.08 * cos(4.0 * M_PI * i / (taps - 1));
-//		coeffs[i] = sinc_value * hamming_window;
-//		coeffs[i] = sinc_value * blackman_window;
-		coeffs[i] = sinc_value;
+		switch (window) {
+			case WINDOW_HAMMING: coeffs[i] = sinc_value * hamming_window; break;
+			case WINDOW_BLACKMAN: coeffs[i] = sinc_value * blackman_window; break;
+			case WINDOW_NONE: coeffs[i] = sinc_value; break;
+		}
     }
 
 	float sum = 0.0;
@@ -237,7 +241,7 @@ static float update_filter(float sample) {
 static void BuzzerInit() // keep in DoReset()!
 {
 	// init the coefficients for an "ox8"x oversampling windowed-sinc filter
-	generate_filter_coeffs(filt_coeffs, FIR_TAPS, nBurnSoundRate/4, nBurnSoundRate*ox8);
+	generate_filter_coeffs(filt_coeffs, WINDOW_NONE, FIR_TAPS, nBurnSoundRate/4, nBurnSoundRate*ox8);
 	// init our filter's ring-buffer
     memset(c_buffer, 0, sizeof(c_buffer));
     c_position = 0;
@@ -260,7 +264,7 @@ static void BuzzerAdd(INT16 data)
 	const INT16 bips[4] = { 0, 0x2000, 0x3000, 0x3000 }; // !, tape, buzzer, tape+buzzer
 	data = bips[data & 3];
 
-	if (data != buzzer_last_data) {
+	if (data != buzzer_last_data && pBurnSoundOut) { // "&& pBurnSoundOut": fix runahead w/o having to scan huge buffer
 		INT32 len = ZetTotalCycles() - buzzer_last_update;
 		if (len > 0 && ((buzzer_data_len + len) < (buzzer_data_frame + 100)))
 		{
@@ -1268,6 +1272,46 @@ static void pulse_reset()
 	if (SpecMode & SPEC_TZX || SpecMode & SPEC_SLOWTAP) {
 		pulse_mode = PULSE_WAIT_EMIT;
 	}
+}
+
+static void pulse_scan()
+{
+	SCAN_VAR(pulse_status);
+	SCAN_VAR(pulse_mode);
+	SCAN_VAR(pulse_length);
+	SCAN_VAR(pulse_index);
+	SCAN_VAR(pulse_startup);
+	SCAN_VAR(pulse_count);
+	SCAN_VAR(pulse_pulse);
+
+	SCAN_VAR(super_tstate);
+	SCAN_VAR(start_tstate);
+	SCAN_VAR(target_tstate);
+
+	SCAN_VAR(load_check);
+	SCAN_VAR(last_cycle);
+	SCAN_VAR(last_bc);
+
+	SCAN_VAR(tap_pos);
+	SCAN_VAR(tap_op);
+	SCAN_VAR(tap_op_num);
+	SCAN_VAR(pause_len);
+	SCAN_VAR(block_len);
+	SCAN_VAR(block_len_pulses);
+	SCAN_VAR(leader_pulse_len);
+
+	SCAN_VAR(seq_pulses);
+	SCAN_VAR(seq_pulsecount);
+
+	SCAN_VAR(raw_t_per_sample);
+
+	SCAN_VAR(zero_bit_len);
+	SCAN_VAR(one_bit_len);
+	SCAN_VAR(leader_pulse_count);
+	SCAN_VAR(last8);
+	SCAN_VAR(loop_start);
+	SCAN_VAR(loop_count);
+	SCAN_VAR(got_emit);
 }
 
 #define d_abs(z) (((z) < 0) ? -(z) : (z))
@@ -2397,6 +2441,10 @@ INT32 SpecScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(Spec128kMapper2);
 
 		SCAN_VAR(nExtraCycles);
+
+		if (SpecMode & SPEC_SLOWTAP || SpecMode & SPEC_TZX) {
+			pulse_scan();
+		}
 
 		if (SpecMode & SPEC_TAP) {
 			// .TAP

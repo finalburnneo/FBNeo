@@ -1691,7 +1691,7 @@ struct BurnDriver BurnDrvTehkanWCb = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_BOOTLEG,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1732,7 +1732,7 @@ struct BurnDriver BurnDrvTehkanWCc = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
+	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_BOOTLEG,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1815,7 +1815,7 @@ struct BurnDriver BurnDrvTehkanWCh = {
 	NULL,					// Manufacturer W
 	NULL,					// System W
 	// Flags
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK,
 	2,						// Players: Max number of players a game supports (so we can remove single player games from netplay)
 	HARDWARE_MISC_PRE90S, 	// Hardware: Which type of hardware the game runs on
 	GBF_SPORTSFOOTBALL,		// Genre
@@ -1892,7 +1892,7 @@ struct BurnDriver BurnDrvTeedOff = {
 	"1987",
 	"Tee'd Off (World)\0",	// Full Name A
 	NULL,					// Comment A
-	"Tehkan",				// Manufacturer A
+	"Tecmo",				// Manufacturer A
 	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W
@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvTeedOffj = {
 	"1986",
 	"Tee'd Off (Japan)\0",	// Full Name A
 	NULL,					// Comment A
-	"Tehkan",				// Manufacturer A
+	"Tecmo",				// Manufacturer A
 	"Miscellaneous",		// System A
 	NULL,					// Full Name W
 	NULL,					// Comment W

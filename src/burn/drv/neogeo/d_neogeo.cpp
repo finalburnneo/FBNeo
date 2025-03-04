@@ -27497,6 +27497,42 @@ struct BurnDriver BurnDrvNeogalaga = {
 };
 
 
+// Shadow Gangs Zero (Kick Demo Ver: 2.0)
+// https://www.kickstarter.com/projects/jkmcorp/shadow-gangs-zero
+// The game would be accompanied by a black screen that made my finger move to F3 ... It's hard to tell.
+
+static struct BurnRomInfo sgzRomDesc[] = {
+	{ "shadowgangs-p1.bin",  0x100000, 0x825d0989, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "shadowgangs-p2.bin",  0x100000, 0x3d1f0314, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "shadowgangs-s1.bin",  0x020000, 0x2E4238D1, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "shadowgangs-c1.bin",  0x200000, 0x7679fe24, 3 | BRF_GRA },           //  3 Sprite data
+	{ "shadowgangs-c2.bin",  0x200000, 0x5374cdad, 3 | BRF_GRA },           //  4
+
+	{ "shadowgangs-m1.bin",  0x020000, 0x11c56b34, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+
+	{ "shadowgangs-v1.bin",  0x200000, 0x8928bcf2, 5 | BRF_SND },           //  6 Sound data
+#if 0
+	// All filled with 0.
+	{ "shadowgangs-v2.bin",  0x200000, 0x8d89877e, 5 | BRF_SND },           //  7
+#endif
+};
+
+STDROMPICKEXT(sgz, sgz, neogeo)
+STD_ROM_FN(sgz)
+
+struct BurnDriver BurnDrvSgz = {
+	"sgz", NULL, "neogeo", NULL, "2024",
+	"Shadow Gangs Zero (Kick Demo Ver: 2.0)\0", NULL, "kickstarter", "Neo Geo MVS",
+	L"Shadow Gangs Zero (Kick Demo Ver: 2.0)\0\u5f71\u306e\u30ae\u30e3\u30f3\u30b0 ZERO\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, sgzRomInfo, sgzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Time's UP! (HB, Demo)
 
 static struct BurnRomInfo timesupdRomDesc[] = {

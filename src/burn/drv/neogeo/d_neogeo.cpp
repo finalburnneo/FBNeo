@@ -997,10 +997,11 @@ static struct BurnDIPInfo neoCDDIPList[] = {
 	{0x00,	0x01, 0x03,	0x02, "Europe"							},
 	{0x00,	0x01, 0x03,	0x03, "Portugese"						},
 
-	{0,		0xFD, 0,	3,    "BIOS"							},
+	{0,		0xFD, 0,	4,    "BIOS"							},
 	{0x01,	0x01, 0x03,	0x00, "Neo Geo CDZ"						},
-	{0x01,	0x01, 0x03,	0x01, "Universe BIOS (Hack, Ver. 3.3)"	},
-	{0x01,	0x01, 0x03,	0x02, "Universe BIOS (Hack, Ver. 3.2)"	},
+	{0x01,	0x01, 0x03,	0x01, "CDZ BIOS (SMKDAN 0.7b DEC 2010)"	},
+	{0x01,	0x01, 0x03,	0x02, "Universe BIOS (Hack, Ver. 3.3)"	},
+	{0x01,	0x01, 0x03,	0x03, "Universe BIOS (Hack, Ver. 3.2)"	},
 
 	{0,		0xFD, 0,	2,    "CD Loading Speed"				},
 	{0x01,	0x01, 0x40,	0x40, "Normal"							},
@@ -1938,6 +1939,7 @@ struct BurnDriver BurnDrvNeoGeoMV4F = {
 
 static struct BurnRomInfo neocdzRomDesc[] = {
 	{ "neocd.bin",            0x080000, 0xdf9de490, BRF_ESS | BRF_PRG | BRF_BIOS           },
+	{ "neocd_sz.rom",         0x080000, 0x42f6b6c4, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // by SMKDan!
 	{ "uni-bioscd33.rom",     0x080000, 0xff3abc59, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // by razoola!
 	{ "uni-bioscd32.rom",     0x080000, 0x0ffb3127, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // also by razoola!
 	{ "",                     0x000000, 0x00000000, 0                                      }, // spacer woman, she just wants to love you

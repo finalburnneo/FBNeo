@@ -3266,7 +3266,7 @@ static UINT16 __fastcall neogeoReadWordCDROM(UINT32 sekAddress)
 			break;
 
 		case 0x011C:
-			return ~(((((NeoCDBios & 3) == 0) ? 0x10 : 0x00) | (NeoSystem & 3)) << 8);
+			return ~(((((NeoCDBios & 3) < 2) ? 0x10 : 0x00) | (NeoSystem & 3)) << 8); // 0x00 for unibioses, 0x10 for all others ?
 	}
 
 //	bprintf(PRINT_NORMAL, _T("  - NGCD port 0x%06X read (word, PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
@@ -4381,7 +4381,7 @@ INT32 NeoCDInit()
 	Neo68KFix[0] = Neo68KROM[0];
 
 	NeoLoad68KBIOS(0 + (NeoCDBios & 3));
-	BurnLoadRom(NeoZoomROM,	4, 1);
+	BurnLoadRom(NeoZoomROM,	5, 1);
 
 	// Create copy of 68K with BIOS vector table
 	memcpy(NeoVectorActive + 0x00, Neo68KBIOS, 0x0100);

@@ -572,6 +572,8 @@ void HiscoreApply()
 
 			if (cheat_subptr->read(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cheat_subptr->read(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
 				HiscoreMemRange[i].ApplyNextFrame = 1;
+			} else {
+				HiscoreMemRange[i].ApplyNextFrame = 0;
 			}
 			cheat_subptr->close();
 		}

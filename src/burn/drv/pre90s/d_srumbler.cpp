@@ -41,6 +41,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+static INT32 nExtraCycles[2];
 
 static struct BurnInputInfo SrumblerInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -251,6 +252,8 @@ static INT32 DrvDoReset()
 	DrvPaletteInit();
 
 	BurnYM2203Reset();
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -627,10 +630,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { ((double)8000000 * 100 / nBurnFPS), ((double)4000000 * 100 / nBurnFPS) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	M6809Open(0);
 	ZetOpen(0);
+	ZetIdle(nExtraCycles[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, M6809);
@@ -649,6 +653,9 @@ static INT32 DrvFrame()
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles(0) - nCyclesTotal[1];
 
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 
@@ -683,6 +690,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

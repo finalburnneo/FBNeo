@@ -11,6 +11,7 @@
 #include "burn_ym2610.h"
 #include "burn_ym2203.h"
 #include "msm6295.h"
+#include "burn_gun.h" // for dial (cameltry)
 
 static INT32 Footchmp = 0;
 static INT32 YesnoDip;
@@ -19,6 +20,7 @@ static INT32 DriveoutSoundNibble;
 static INT32 DriveoutOkiBank;
 static INT32 Driftout = 0;
 static INT32 bNoClearOpposites = 0;
+static INT32 has_dial = 0;
 
 INT32 TaitoF2SpriteType;
 
@@ -929,6 +931,12 @@ static void TC0220IOCMakeInputs()
 	if (bNoClearOpposites == 0) {
 		DrvClearOppositesCommon(&TC0220IOCInput[0]);
 		DrvClearOppositesCommon(&TC0220IOCInput[1]);
+	}
+
+	if (has_dial) {
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, TaitoAnalogPort0*2, TaitoAnalogPort1*2, 1, 0x3f);
+		BurnTrackballUpdate(0);
 	}
 }
 
@@ -5165,16 +5173,14 @@ static UINT16 __fastcall Cameltry68KReadWord(UINT32 a)
 
 	switch (a) {
 		case 0x300018: {
-			INT32 Temp = TaitoAnalogPort0 >> 6;
-			if (Temp >= 0x14 && Temp < 0x80) Temp = 0x14;
-			if (Temp <= 0x3ec && Temp > 0x80) Temp = 0x3ec;
+			INT32 Temp = BurnTrackballRead(0);
+			BurnTrackballReadReset(0);
 			return Temp;
 		}
 
 		case 0x30001c: {
-			INT32 Temp = TaitoAnalogPort1 >> 6;
-			if (Temp >= 0x14 && Temp < 0x80) Temp = 0x14;
-			if (Temp <= 0x3ec && Temp > 0x80) Temp = 0x3ec;
+			INT32 Temp = BurnTrackballRead(1);
+			BurnTrackballReadReset(1);
 			return Temp;
 		}
 
@@ -7900,6 +7906,9 @@ static INT32 CameltryInit()
 	SpritePriWritebackMode = 0;
 	bNoClearOpposites = 1;
 
+	BurnTrackballInit(2);
+	has_dial = 1;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -7993,6 +8002,9 @@ static INT32 CamltryaInit()
 	TaitoXOffset = 3;
 	SpritePriWritebackMode = 0;
 	bNoClearOpposites = 1;
+
+	BurnTrackballInit(2);
+	has_dial = 1;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9791,6 +9803,10 @@ static INT32 TaitoF2Exit()
 	PaletteType = 0;
 	SpritePriWritebackMode = 0;
 
+	if (has_dial) {
+		BurnTrackballExit();
+	}
+
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
@@ -11112,6 +11128,10 @@ static INT32 TaitoF2Scan(INT32 nAction, INT32 *pnMin)
 
 		if (TaitoNumYM2610) {
 			BurnYM2610Scan(nAction, pnMin);
+		}
+
+		if (has_dial) {
+			BurnTrackballScan();
 		}
 
 		SCAN_VAR(TaitoZ80Bank);

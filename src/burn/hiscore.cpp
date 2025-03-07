@@ -223,6 +223,11 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						// confirm the StartValue/EndValue in memory @ bootup, but not confirm that the value has stuck
 						// a frame after it has been written, since this is impossible.
 
+						if ( (!strcmp(name, "cppicf")) || (!strcmp(name, "cppicf2")) ) {
+							bprintf(0, _T("-- cppicf* noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
 						if ( (!strcmp(name, "megadon")) ) {
 							bprintf(0, _T("-- megadon* noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;

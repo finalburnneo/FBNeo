@@ -1,7 +1,5 @@
-// FB Alpha The Speed Rumbler driver module
+// FB Neo The Speed Rumbler driver module
 // Based on MAME driver by Paul Leaman
-// Note: main cpu oc'd otherwise there is terrible slowdown, I wonder if our
-// m6809 is cycle accurate or not? (I tried several different timing/irq methods) -dink
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -28,7 +26,6 @@ static UINT8 *DrvZ80RAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-static UINT8 DrvPalRAMWrite;
 
 static UINT8 *DrvBank;
 static UINT8 *DrvScroll;
@@ -41,7 +38,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles;
 
 static struct BurnInputInfo SrumblerInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -149,7 +146,6 @@ static void srumbler_main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x7000 && address <= 0x73ff) {
 		DrvPalRAM[address - 0x7000] = data;
-		DrvPalRAMWrite = 1;
 		DrvRecalc = 1;
 	}
 	switch (address)
@@ -223,21 +219,24 @@ static UINT8 __fastcall srumbler_sound_read(UINT16 address)
 	return 0;
 }
 
-static void DrvPaletteInit()
+static void DrvPalRAMInit()
 {
+	// init the palette ram with a pattern to make
+	// the bootup messages visible on first boot
 	for (INT32 i = 0; i < 0x200; i++) {
-		UINT8 r = ((i & 1) ? 0xff : 0);
-		UINT8 g = ((i & 2) ? 0xff : 0);
-		UINT8 b = ((i & 4) ? 0xff : 0);
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		const UINT8 r = ((i & 1) ? 0xff : 0);
+		const UINT8 g = ((i & 2) ? 0xff : 0);
+		const UINT8 b = ((i & 4) ? 0xff : 0);
+		const UINT32 d = (r & 0xf) << 12 | (g & 0xf) << 8 | (b & 0xf) << 4;
+
+		DrvPalRAM[i * 2 + 0] = d >> 8;
+		DrvPalRAM[i * 2 + 1] = d & 0xff;
 	}
+	DrvRecalc = 1;
 }
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-	DrvPalRAMWrite = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	M6809Open(0);
@@ -247,13 +246,10 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
+	BurnYM2203Reset();
 	ZetClose();
 
-	DrvPaletteInit();
-
-	BurnYM2203Reset();
-
-	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -319,21 +315,51 @@ static INT32 DrvGfxDecode()
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM0, 0x08000);
+	memcpy (tmp, DrvGfxROM0, 0x08000); // fg
 
 	GfxDecode(0x400, 2,  8,  8, Plane0, XOffs0, YOffs0, 0x080, tmp, DrvGfxROM0);
 
-	memcpy (tmp, DrvGfxROM1, 0x40000);
+	memcpy (tmp, DrvGfxROM1, 0x40000); // bg
 
 	GfxDecode(0x800, 4, 16, 16, Plane1, XOffs0, YOffs0, 0x200, tmp, DrvGfxROM1);
 
-	memcpy (tmp, DrvGfxROM2, 0x40000);
+	memcpy (tmp, DrvGfxROM2, 0x40000); // spr
 
 	GfxDecode(0x800, 4, 16, 16, Plane2, XOffs1, YOffs1, 0x100, tmp, DrvGfxROM2);
 
 	BurnFree (tmp);
 
 	return 0;
+}
+
+static tilemap_callback( bg )
+{
+	INT32 Attr = DrvBgRAM[2 * offs + 0];
+	INT32 Code = DrvBgRAM[2 * offs + 1] + ((Attr & 0x07) << 8);
+
+	TILE_SET_INFO(0, Code, (Attr >> 5) & 7, TILE_FLIPXY((Attr >> 3) & 1));
+	sTile->category = (Attr >> 4) & 1;
+}
+
+static tilemap_callback( fg )
+{
+	INT32 Attr = DrvFgRAM[2 * offs + 0];
+	INT32 Code = DrvFgRAM[2 * offs + 1] + ((Attr & 0x03) << 8);
+
+	TILE_SET_INFO(1, Code, (Attr >> 2) & 0xf, (Attr & 0x40) ? TILE_OPAQUE : 0);
+}
+
+static void tmap_init()
+{
+	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 64, 64);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, fg_map_callback,  8,  8, 64, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 4, 16, 16, 0x800 * 16 * 16, 0x80, 0x07);
+	GenericTilemapSetGfx(1, DrvGfxROM0, 2,  8,  8, 0x400 *  8 *  8, 0x1c0, 0x0f);
+	GenericTilemapSetTransSplit(0, 0, 0xffff, 0x0000);
+	GenericTilemapSetTransSplit(0, 1, 0x07ff, 0xf800);
+	GenericTilemapSetTransparent(1, 3);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -80,-8);
 }
 
 static INT32 DrvInit()
@@ -397,11 +423,8 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(srumbler_sound_write);
 	ZetSetReadHandler(srumbler_sound_read);
 	ZetClose();
@@ -417,9 +440,11 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.10, BURN_SND_ROUTE_BOTH);
 
-	GenericTilesInit();
+	tmap_init();
 
 	DrvDoReset();
+
+	DrvPalRAMInit(); // only once @ init, after reset!
 
 	return 0;
 }
@@ -436,106 +461,6 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	return 0;
-}
-
-static void draw_background_layer(INT32 type)
-{
-	INT32 scrollx = ((DrvScroll[1] << 8) | DrvScroll[0]) & 0x3ff;
-	INT32 scrolly = ((DrvScroll[3] << 8) | DrvScroll[2]) & 0x3ff;
-
-	INT32 masks[4] = { 0xffff, 0x0000, 0x07ff, 0xf800 }; // 0, 1
-	INT32 mask = masks[type];
-
-	for (INT32 offs = 0; offs < 64 * 64; offs++)
-	{
-		INT32 sy = (offs & 0x3f) << 4;
-		INT32 sx = (offs >> 6) << 4;
-
-		sy -= scrolly + 8;
-		if (sy < -15) sy += 1024;
-		sx -= scrollx + 80;
-		if (sx < -15) sx += 1024;
-
-		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
-
-		INT32 attr  = DrvBgRAM[offs * 2 + 0];
-		INT32 code  = DrvBgRAM[offs * 2 + 1] | ((attr & 0x07) << 8);
-		INT32 color = attr >> 5;
-		INT32 flipy = attr & 0x08;
-
-		INT32 group = (attr & 0x10) >> 4;
-		if ((type >> 1) != group) continue;
-
-		{
-			color = (color << 4) + 0x80;
-			if (flipy) flipy = 0xf0;
-			UINT8 *src = DrvGfxROM1 + (code << 8);
-			UINT16 *dst;
-
-			if (*flipscreen) {
-				flipy ^= 0xff;
-				sx = 336 - sx;
-				sy = 224 - sy;
-			}
-
-			for (INT32 y = 0; y < 16; y++, sy++) {
-				if (sy < 0 || sy >= nScreenHeight) continue;
-
-				dst = pTransDraw + sy * nScreenWidth;
-
-				for (INT32 x = 0; x < 16; x++, sx++) {
-					if (sx < 0 || sx >= nScreenWidth) continue;
-
-					INT32 pxl = src[((y << 4) | x) ^ flipy];
-
-					if (mask & (1 << pxl)) continue;
-
-					dst[sx] = pxl | color;
-				}
-
-				sx -= 16;
-			}
-		}
-	}
-}
-
-static void draw_foreground_layer(INT32 priority)
-{
-	for (INT32 offs = 0; offs < 64 * 32; offs++)
-	{
-		INT32 sy = (offs & 0x1f) << 3;
-		INT32 sx = (offs >> 5) << 3;
-
-		sx -= 80;
-		sy -=  8;
-
-		if (sx < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr = DrvFgRAM[offs * 2 + 0];
-
-		INT32 code  = DrvFgRAM[offs * 2 + 1] | ((attr & 0x03) << 8);
-		INT32 color = (attr & 0x3c) >> 2;
-		INT32 prio  = (attr & 0x40) >> 6;
-
-		if (prio != priority) continue;
-
-		if (*flipscreen) {
-			sx = 344 - sx;
-			sy = 232 - sy;
-
-			if (priority) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0x1c0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 80, sy, color, 2, 3, 0x1c0, DrvGfxROM0);
-			}
-		} else {
-			if (priority) {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 2, 0x1c0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 3, 0x1c0, DrvGfxROM0);
-			}
-		}
-	}
 }
 
 static void draw_sprites()
@@ -558,53 +483,37 @@ static void draw_sprites()
 			flipx = 1;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 80, sy - 8, color, 4, 15, 0x100, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 80, sy - 8, color, 4, 15, 0x100, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 80, sy - 8, color, 4, 15, 0x100, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 80, sy - 8, color, 4, 15, 0x100, DrvGfxROM2);
-			}
-		}
+		sx -= 80;
+		sy -= 8;
+
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 15, 0x100, DrvGfxROM2);
 	}
 }
 
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		if (DrvPalRAMWrite) {
-			UINT8 r,g,b;
-			for (INT32 i = 0; i < 0x400; i+=2) {
-				INT32 d = DrvPalRAM[i + 1] | (DrvPalRAM[i + 0] << 8);
+		for (INT32 i = 0; i < 0x400; i+=2) {
+			INT32 d = DrvPalRAM[i + 1] | (DrvPalRAM[i + 0] << 8);
 
-				r = (d >> 12);
-				g = (d >>  8) & 0x0f;
-				b = (d >>  4) & 0x0f;
+			UINT8 r = (d >> 12);
+			UINT8 g = (d >>  8) & 0x0f;
+			UINT8 b = (d >>  4) & 0x0f;
 
-				DrvPalette[i >> 1] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
-			}
-		} else {
-			DrvPaletteInit();
+			DrvPalette[i >> 1] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
 		}
 		DrvRecalc = 0;
 	}
 
-	if (nSpriteEnable & 1) draw_background_layer(1); // opaque
-	else BurnTransferClear();
+	BurnTransferClear();
 
-	if (nBurnLayer & 2) draw_background_layer(3);
+	GenericTilemapSetScrollX(0, (DrvScroll[1] << 8) | DrvScroll[0]);
+	GenericTilemapSetScrollY(0, (DrvScroll[3] << 8) | DrvScroll[2]);
 
-	draw_sprites();
-
-	if (nSpriteEnable & 2) draw_background_layer(0);
-	if (nSpriteEnable & 4) draw_background_layer(2);
-	if (nBurnLayer & 8) draw_foreground_layer(0);
-	if (nBurnLayer & 4) draw_foreground_layer(1);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
+	if (nSpriteEnable & 1) draw_sprites();
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -628,34 +537,27 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { ((double)8000000 * 100 / nBurnFPS), ((double)4000000 * 100 / nBurnFPS) };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	M6809Open(0);
 	ZetOpen(0);
-	ZetIdle(nExtraCycles[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, M6809);
 
-		if (i == (nInterleave / 2) - 1) {
-			M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
-			memcpy (DrvSprBuf, DrvSprRAM, 0x200);
-		}
-		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 8) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
+		if (i == nInterleave - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (i % (nInterleave/4) == (nInterleave/4) - 1) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles(0) - nCyclesTotal[1];
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 
@@ -665,6 +567,8 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	memcpy (DrvSprBuf, DrvSprRAM, 0x200);
 
 	return 0;
 }

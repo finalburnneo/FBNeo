@@ -16772,6 +16772,7 @@ struct BurnDriver BurnDrvNinjamasha = {
 	0x1000,	320, 224, 4, 3
 };
 
+
 // Rage of the Dragons (Portuguese Edition v2.0, Hack)
 // Modified by BisonSAS
 
@@ -16805,6 +16806,40 @@ struct BurnDriver BurnDrvRotdbr = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, rotdbrRomInfo, rotdbrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
+// Rage of the Dragons (Boss Hack)
+
+static struct BurnRomInfo rotddhRomDesc[] = {
+   { "264-p1dh.p1",		0x800000, 0x7c095666, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
+
+   { "264-c1d.c1",		0x800000, 0xec9d18c0, 3 | BRF_GRA },			//  1 Sprite data
+   { "264-c2d.c2",		0x800000, 0xb1069066, 3 | BRF_GRA },			//  2
+   { "264-c3d.c3",		0x800000, 0x7e636d49, 3 | BRF_GRA },			//  3
+   { "264-c4d.c4",		0x800000, 0x76892fda, 3 | BRF_GRA },			//  4
+   { "264-c5d.c5",		0x800000, 0x469061bc, 3 | BRF_GRA },			//  5
+   { "264-c6d.c6",		0x800000, 0x2200220a, 3 | BRF_GRA },			//  6
+   { "264-c7dh.c7",		0x800000, 0x2b5c1044, 3 | BRF_GRA },			//  7
+   { "264-c8dh.c8",		0x800000, 0xf697f287, 3 | BRF_GRA },			//  8
+
+   { "264-m1d.m1",		0x020000, 0xc5d36af9, 4 | BRF_ESS | BRF_PRG },	//  9 Z80 code
+
+   { "264-v1.v1",		0x800000, 0xfa005812, 5 | BRF_SND },			// 10 Sound data
+   { "264-v2d.v2",		0x800000, 0xc3dc8bf0, 5 | BRF_SND },			// 11
+};
+
+STDROMPICKEXT(rotddh, rotddh, neogeo)
+STD_ROM_FN(rotddh)
+
+struct BurnDriver BurnDrvRotddh = {
+	"rotddh", "rotd", "neogeo", NULL, "2002",
+	"Rage of the Dragons (Boss Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, rotddhRomInfo, rotddhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
 

@@ -45083,17 +45083,17 @@ struct BurnDriver BurnDrvmd_fightveng = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Final Fight MD (HB, v24.01.20b)
+// Final Fight MD (HB, v0.8b)
 static struct BurnRomInfo md_ffightmdRomDesc[] = {
-	{ "Final Fight MD v24.01.20b (2024)(MXRetroDev).bin", 3670016, 0x2d5321a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Final Fight MD v0.8b (2025)(MXRetroDev).bin", 4194304, 0x4554ede2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ffightmd)
 STD_ROM_FN(md_ffightmd)
 
 struct BurnDriver BurnDrvmd_ffightmd = {
-	"md_ffightmd", NULL, NULL, NULL, "2024",
-	"Final Fight MD (HB, v24.01.20b)\0", NULL, "MXRetroDev", "Sega Megadrive",
+	"md_ffightmd", NULL, NULL, NULL, "2025",
+	"Final Fight MD (HB, v0.8b)\0", NULL, "MXRetroDev", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_ffightmdRomInfo, md_ffightmdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

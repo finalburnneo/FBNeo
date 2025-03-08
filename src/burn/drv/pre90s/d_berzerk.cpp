@@ -870,9 +870,8 @@ static void berzerk_sound_write(UINT8 offset, UINT8 data)
 				case 1:
 					if (ZetGetActive() != -1)
 						s14001a_force_update();
-
 					/* volume */
-					s14001a_set_volume(((data >> 3 & 0xf) + 1) / 16.0);
+					s14001a_set_volume((data >> 3 & 7) / 7.0);
 
 					/* clock control - the first LS161 divides the clock by 9 to 16, the 2nd by 8,
 					 giving a final clock from 19.5kHz to 34.7kHz */
@@ -959,7 +958,7 @@ static UINT8 __fastcall berzerk_read_port(UINT16 address)
 	switch (address & 0xff)
 	{
 		case 0x44:
-			return (s14001a_busy_read()) ? 0xc0 : 0x40;
+			return (s14001a_busy_read()) ? 0x00 : 0x40;
 
 		case 0x48: // p1
 			return DrvInputs[0];
@@ -1004,7 +1003,7 @@ static UINT8 __fastcall berzerk_read_port(UINT16 address)
 			// led off, led on [67]
 			return 0;
 	}
-
+	bprintf(0, _T("rp  %x\n"), address);
 	return 0;
 }
 
@@ -1249,7 +1248,7 @@ static INT32 DrvFrame()
 			vblank = 1;
 		}
 
-		if (((i + 1) % 32) == 0 && nmi_enable) {
+		if ((i & 0x1f) == 0x10 && nmi_enable) {
 			ZetNmi();
 		}
 		if (i == 128 || i == 256) {

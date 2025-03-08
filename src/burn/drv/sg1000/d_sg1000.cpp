@@ -4443,10 +4443,48 @@ struct BurnDriver BurnDrvsg1k_musicj = {
 };
 
 
-// --------------
-// Homebrew Games
-// --------------
+// --------------------------
+// Homebrew/Aftermarket Games
+// --------------------------
 
+
+// Aerial (HB)
+
+static struct BurnRomInfo sg1k_aerialRomDesc[] = {
+	{ "Aerial (2022)(Inufuto).sg",	10750, 0x87e4f535, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_aerial)
+STD_ROM_FN(sg1k_aerial)
+
+struct BurnDriver BurnDrvsg1k_aerial = {
+	"sg1k_aerial", NULL, NULL, NULL, "2022",
+	"Aerial (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_HORSHOOT, 0,
+	SG1KGetZipName, sg1k_aerialRomInfo, sg1k_aerialRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// AntiAir (HB)
+
+static struct BurnRomInfo sg1k_antiairRomDesc[] = {
+	{ "AntiAir (2024)(Inufuto).sg",	8107, 0x948599bd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_antiair)
+STD_ROM_FN(sg1k_antiair)
+
+struct BurnDriver BurnDrvsg1k_antiair = {
+	"sg1k_antiair", NULL, NULL, NULL, "2024",
+	"AntiAir (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	SG1KGetZipName, sg1k_antiairRomInfo, sg1k_antiairRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
 
 // Arno Dash (HB)
 
@@ -4824,6 +4862,25 @@ struct BurnDriver BurnDrvsg1k_vexed = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_vexedRomInfo, sg1k_vexedRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Whack 'Em Smack 'Em Byrons (HB)
+
+static struct BurnRomInfo sg1k_wsbyronsRomDesc[] = {
+	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations).sg",	32706, 0xa444660d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_wsbyrons)
+STD_ROM_FN(sg1k_wsbyrons)
+
+struct BurnDriver BurnDrvsg1k_wsbyrons = {
+	"sg1k_wsbyrons", NULL, NULL, NULL, "2024",
+	"Whack 'Em Smack 'Em Byrons (HB)\0", NULL, "Jess Creations", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_wsbyronsRomInfo, sg1k_wsbyronsRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

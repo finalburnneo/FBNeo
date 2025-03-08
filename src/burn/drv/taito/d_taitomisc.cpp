@@ -6425,3 +6425,46 @@ struct BurnDriver BurnDrvVolfieduo = {
 	VolfiedInit, TaitoMiscExit, JumpingFrame, VolfiedDraw, TaitoMiscScan,
 	NULL, 0x2000, 240, 320, 3, 4
 };
+
+// -----------------------------------------------------------------------------
+// Hacks and Translations
+// -----------------------------------------------------------------------------
+
+// Rastan Saga (Portuguese-BR v1.11, Hack)
+// Modified by Antígeno
+
+static struct BurnRomInfo RastsagabrRomDesc[] = {
+	{ "b04br-14.19",	0x10000, 0xf33adf4d, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04br-13.7",		0x10000, 0xdcc16c00, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04br-16-1.20",	0x10000, 0x8375d5a3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04br-15-1.8",	0x10000, 0x602ccf6d, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04br-18-1.21",	0x10000, 0x1846353b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04br-17-1.9",	0x10000, 0x8f4414b8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "b04-19.49",		0x10000, 0xee81fdd8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "b04br-01.40",	0x20000, 0x56494cce, BRF_GRA | TAITO_CHARS },
+	{ "b04-03.39",		0x20000, 0xab67e064, BRF_GRA | TAITO_CHARS },
+	{ "b04br-02.67",	0x20000, 0xe4beeb34, BRF_GRA | TAITO_CHARS },
+	{ "b04-04.66",		0x20000, 0x94737e93, BRF_GRA | TAITO_CHARS },
+
+	{ "b04br-05.15",	0x20000, 0xd0de533f, BRF_GRA | TAITO_SPRITESA },
+	{ "b04br-07.14",	0x20000, 0x7521af01, BRF_GRA | TAITO_SPRITESA },
+	{ "b04br-06.28",	0x20000, 0x78510eed, BRF_GRA | TAITO_SPRITESA },
+	{ "b04br-08.27",	0x20000, 0xca183d63, BRF_GRA | TAITO_SPRITESA },
+
+	{ "b04-20.76",		0x10000, 0xfd1a34cc, BRF_SND | TAITO_MSM5205 },
+};
+
+STD_ROM_PICK(Rastsagabr)
+STD_ROM_FN(Rastsagabr)
+
+struct BurnDriver BurnDrvRastsagabr = {
+	"rastsagabr", "rastan", NULL, NULL, "2019",
+	"Rastan Saga (Portuguese-BR Translation v1.11, Hack)\0", NULL, "hack (Ant\u00EDgeno)", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, RastsagabrRomInfo, RastsagabrRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastanDIPInfo,
+	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
+	NULL, 0x2000, 320, 240, 4, 3
+};

@@ -115,6 +115,7 @@ extern bool bAlwaysCreateSupportFolders;
 extern bool bAutoLoadGameList;
 
 extern bool bQuietLoading;
+extern bool bNoPopups;
 extern bool bShonkyProfileMode;
 
 extern bool bNoChangeNumLock;
@@ -303,7 +304,7 @@ extern int nScreenSizeVer;	// For vertical orientation
 extern int nWindowSize;
 
 #define SHOW_PREV_GAMES		10
-extern TCHAR szPrevGames[SHOW_PREV_GAMES][32];
+extern TCHAR szPrevGames[SHOW_PREV_GAMES][64];
 
 extern bool bModelessMenu;
 
@@ -422,6 +423,7 @@ int StatedSave(int nSlot);
 // numdial.cpp
 int NumDialCreate(int bDial);
 void GammaDialog();
+void HardFXShaderSettingsDialog();
 void ScanlineDialog();
 void PhosphorDialog();
 void ScreenAngleDialog();
@@ -460,6 +462,7 @@ int ReplayInput();
 int StartRecord();
 int StartReplay(const TCHAR* szFileName = NULL);
 void StopReplay();
+INT32 FreezeInputSize();
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 void DisplayReplayProperties(HWND hDlg, bool bClear);

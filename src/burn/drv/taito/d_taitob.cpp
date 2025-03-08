@@ -3301,19 +3301,22 @@ struct BurnDriver BurnDrvNastarw = {
 // Rambo III (Europe)
 
 static struct BurnRomInfo rambo3RomDesc[] = {
-	{ "ramb3-11.bin",		0x020000, 0x1cc42247, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "ramb3-14.bin",		0x020000, 0x7d917c21, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "ramb3-07.bin",		0x020000, 0xc973ff6f, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "ramb3-06.bin",		0x020000, 0xa83d3fd5, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "b93-11.rom0e.ic9",		0x020000, 0x1cc42247, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "b93-14.rom0o.ic23",		0x020000, 0x7d917c21, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "b93-07.rom1e.ic8",		0x020000, 0xc973ff6f, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "b93-06-rom1o.ic22",		0x020000, 0xa83d3fd5, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "ramb3-10.bin",		0x010000, 0xb18bc020, TAITO_Z80ROM1 },          //  4 Z80 Code
+	{ "b93-10.ic36",			0x010000, 0xb18bc020, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "ramb3-03.bin",		0x080000, 0xf5808c41, TAITO_CHARS },            //  5 Graphics Tiles
-	{ "ramb3-04.bin",		0x080000, 0xc57831ce, TAITO_CHARS },            //  6
-	{ "ramb3-01.bin",		0x080000, 0xc55fcf54, TAITO_CHARS },            //  7
-	{ "ramb3-02.bin",		0x080000, 0x9dd014c6, TAITO_CHARS },            //  8
+	{ "b93-03.ic3",				0x080000, 0xf5808c41, TAITO_CHARS },            //  5 Graphics Tiles
+	{ "b93-04.ic4",				0x080000, 0xc57831ce, TAITO_CHARS },            //  6
+	{ "b93-02.ic2",				0x080000, 0xc55fcf54, TAITO_CHARS },            //  7
+	{ "b93-01.ic1",				0x080000, 0x9dd014c6, TAITO_CHARS },            //  8
 
-	{ "ramb3-05.bin",		0x080000, 0x0179dc40, TAITO_YM2610A },          //  9 YM2610 A Samples
+	{ "b93-05.roma.ic46",		0x080000, 0x0179dc40, TAITO_YM2610A },          //  9 YM2610 A Samples
+
+	{ "b93-08-pal16l8b.ic11",	0x000104, 0x6b1e5259, 0 | BRF_OPT },            // 10 PLDs
+	{ "b93-09-pal16l8b.ic25",	0x000104, 0xe63d9041, 0 | BRF_OPT },            // 11
 };
 
 STD_ROM_PICK(rambo3)

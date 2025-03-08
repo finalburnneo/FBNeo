@@ -156,12 +156,12 @@ static struct BurnDIPInfo tekipakiDIPList[] = {
 	{0x15,	0x01, 0x03,	0x01, "A"},
 	{0x15,	0x01, 0x03,	0x02, "C"},
 	{0x15,	0x01, 0x03,	0x03, "D"},
-	{0,		0xFE, 0,	2,	  NULL},
+	{0,		0xFE, 0,	2,	  "Game Mode"},
     {0x15,	0x01, 0x40,	0x00, "Normal game"},
     {0x15,	0x01, 0x40,	0x40, "Stop mode"},
 
 	// Region
-	{0,		0xFE, 0,	9,	  "Game difficulty"},
+	{0,		0xFE, 0,	10,	  "Game Region"},
 	{0x16,	0x01, 0x0F,	0x00, "Japan"},
 	{0x16,	0x01, 0x0F,	0x01, "U.S.A."},
 	{0x16,	0x01, 0x0F,	0x02, "Europe"},
@@ -171,13 +171,7 @@ static struct BurnDIPInfo tekipakiDIPList[] = {
 	{0x16,	0x01, 0x0F,	0x06, "Taiwan (Spacey Co, ltd.)"},
 	{0x16,	0x01, 0x0F,	0x07, "U.S.A. (Romstar inc.)"},
 	{0x16,	0x01, 0x0F,	0x08, "Hong Kong (Honest Trading Co.)"},
-	{0x16,	0x01, 0x0F,	0x09, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0A, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0B, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0C, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0D, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0E, "Japan"},
-	{0x16,	0x01, 0x0F,	0x0F, "Japan"},
+	{0x16,	0x01, 0x0F,	0x0F, "Japan (Distributed by Tecmo)"},
 };
 
 STDDIPINFO(tekipaki)
@@ -345,12 +339,8 @@ static UINT8 __fastcall tekipakiReadByte(UINT32 sekAddress)
 			return DrvInput[3];
 		case 0x180011:			   					// Dipswitch 2
 			return DrvInput[4];
-		case 0x180031: {								// Dipswitch 3 - Territory
-			if (whoopeemode)
-				return (DrvInput[5] & 0x0F) | (z80cmdavailable) ? 0x10 : 0x00;
-			else
-				return (DrvInput[5] & 0x0F) | (z80cmdavailable) ? 0x00 : 0x10;
-		}
+		case 0x180031:								// Dipswitch 3 - Territory
+			return (DrvInput[5] & 0x0F) | ((z80cmdavailable) ? 0x00 : 0x10);
 
 		case 0x14000D:								// VBlank
 			return ToaVBlankRegister();
@@ -377,12 +367,8 @@ static UINT16 __fastcall tekipakiReadWord(UINT32 sekAddress)
 			return DrvInput[3];
 		case 0x180010:								// Dipswitch 2
 			return DrvInput[4];
-		case 0x180030: {								// Dipswitch 3 - Territory
-			if (whoopeemode)
-				return (DrvInput[5] & 0x0F) | (z80cmdavailable) ? 0x10 : 0x00;
-			else
-				return (DrvInput[5] & 0x0F) | (z80cmdavailable) ? 0x00 : 0x10;
-		}
+		case 0x180030:								// Dipswitch 3 - Territory
+			return (DrvInput[5] & 0x0F) | ((z80cmdavailable) ? 0x00 : 0x10);
 
 		case 0x140004:
 			return ToaGP9001ReadRAM_Hi(0);

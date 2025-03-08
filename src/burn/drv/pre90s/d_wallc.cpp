@@ -456,7 +456,7 @@ struct BurnDriver BurnDrvWallca = {
 };
 
 
-// Wall Crash (set 2)
+// Brick Blast (bootleg of Wall Crash)
 
 static struct BurnRomInfo brkblastRomDesc[] = {
 	{ "fadesa-r0.6m",	0x4000, 0x4e96ca15, 0 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
@@ -466,6 +466,8 @@ static struct BurnRomInfo brkblastRomDesc[] = {
 	{ "rom1.rom",   	0x0800, 0x3884fd4f, 1 | BRF_GRA },	     //  4
 
 	{ "74s288.c2",		0x0020, 0x83e3e293, 2 | BRF_GRA },	     //  5 Color Prom
+
+	{ "82s153.h8",		0x00eb, 0xa6db7c28, 0 | BRF_OPT },	     //  6 PLDs
 };
 
 STD_ROM_PICK(brkblast)

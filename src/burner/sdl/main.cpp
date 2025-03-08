@@ -24,6 +24,7 @@ bool bAlwaysProcessKeyboardInput = 0;
 int usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
 bool bSaveconfig = 1;
 bool bIntegerScale = false;
+int nWindowScale = 2;			// Default to 2 for compatibility with previous hard coded value.
 bool bAlwaysMenu = false;
 int nGameSelect = 0;
 int nFilterSelect = HARDWARE_PUBLIC_MASK;
@@ -69,6 +70,22 @@ int parseSwitches(int argc, char* argv[])
 		else if (strcmp(argv[i], "-integerscale") == 0)
 		{
 			set_commandline_option(bIntegerScale, 1);
+		}
+		else if (strcmp(argv[i], "-windowscale") == 0)
+		{
+			int num;
+
+			if (++i >= argc)
+			{
+				return 1;
+			}
+
+			num = atoi(argv[i]);
+			if (num < 1 || 20 < num)	// Check it's not too small or ridiculously too big.
+			{
+				return 1;
+			}
+			set_commandline_option(nWindowScale, num);
 		}
 		else if (strcmp(argv[i], "-dat") == 0)
 		{
@@ -290,18 +307,19 @@ int main(int argc, char* argv[])
 	// set default videofiltering
 	snprintf(videofiltering, 3, "0");
 
-	parseSwitches(argc, argv);
+	bool switchesOK = parseSwitches(argc, argv) == 0;
 
 	// Do these bits before override via ConfigAppLoad
 	bCheatsAllowed = 1;
 	nAudDSPModule[0] = 0;
 	EnableHiscores = 1;
 
-	if ((romname == NULL) && !usemenu && !bAlwaysMenu && !dat)
+	if (!switchesOK || ((romname == NULL) && !usemenu && !bAlwaysMenu && !dat))
 	{
-		printf("Usage: %s [-cd] [-joy] [-menu] [-novsync] [-integerscale] [-fullscreen] [-dat] [-autosave] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
+		printf("Usage: %s [-cd] [-joy] [-menu] [-novsync] [-integerscale] [-windowscale <num>] [-fullscreen] [-dat] [-autosave] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
 		printf("Note the -menu switch does not require a romname\n");
 		printf("e.g.: %s mslug\n", argv[0]);
+		printf("e.g.: %s -windowscale 1 asteroid\n", argv[0]);
 		printf("e.g.: %s -menu -joy\n", argv[0]);
 		printf("For NeoCD games:\n");
 		printf("%s neocdz -cd path/to/ccd/filename.cue (or .ccd)\n", argv[0]);

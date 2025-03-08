@@ -61,9 +61,6 @@ static void partial_update();
 
 static struct BurnInputInfo SkullxboInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
-
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 15,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 14,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 13,	"p1 left"	},
@@ -71,12 +68,15 @@ static struct BurnInputInfo SkullxboInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 2"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 15,	"p2 up"		},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 14,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 13,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 2"	},
+
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},

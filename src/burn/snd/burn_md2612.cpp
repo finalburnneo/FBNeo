@@ -33,7 +33,7 @@ static void MD2612Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("MD2612Render called without init\n"));
 #endif
 	
-	if (nMD2612Position >= nSegmentLength || !pBurnSoundOut) {
+	if (nMD2612Position >= nSegmentLength) {
 		return;
 	}
 
@@ -106,12 +106,14 @@ static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * MD2612Volumes[BURN_SND_MD2612_MD2612_ROUTE_1]);
 		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample * MD2612Volumes[BURN_SND_MD2612_MD2612_ROUTE_2]);
 
-		if (bMD2612AddSignal) {
-			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
-			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
-		} else {
-			pSoundBuf[i + 0] = nTotalLeftSample;
-			pSoundBuf[i + 1] = nTotalRightSample;
+		if (pSoundBuf) {
+			if (bMD2612AddSignal) {
+				pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
+				pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
+			} else {
+				pSoundBuf[i + 0] = nTotalLeftSample;
+				pSoundBuf[i + 1] = nTotalRightSample;
+			}
 		}
 	}
 
@@ -232,15 +234,11 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nMD2612Position);
+		// ym2612 core has internal timers, we need to scan this to keep determinism
+		SCAN_VAR(nFractionalPosition);
 
 		if (nAction & ACB_WRITE) {
 			MDYM2612LoadContext();
-
-			if (~nAction & ACB_RUNAHEAD) {
-				nMD2612Position = 0;
-				nFractionalPosition = 0;
-				memset(pBuffer, 0, 4096 * 2 * 1 * sizeof(INT16));
-			}
 		} else {
 			MDYM2612SaveContext();
 		}

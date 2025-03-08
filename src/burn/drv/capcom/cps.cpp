@@ -981,7 +981,7 @@ static INT32 CpsLoadSf2ceeablTiles(UINT8* Tile, INT32 nNum)
 	return 0;
 }
 
-static INT32 CpsLoadSf2ceuab7Tiles(UINT8* Tile, INT32 nNum)
+static INT32 CpsLoadSf2ceblpTiles(UINT8* Tile, INT32 nNum)
 {
 	UINT8 *Rom = (UINT8*)BurnMalloc(0x200000 * sizeof(UINT8));
 	UINT8 *Temp = (UINT8*)BurnMalloc(0x200000 * sizeof(UINT8));
@@ -1340,7 +1340,7 @@ INT32 CpsLoadTilesSf2ceeabl(INT32 nStart)
 	return 0;
 }
 
-INT32 CpsLoadTilesSf2ceuab7(INT32 nStart)
+INT32 CpsLoadTilesSf2ceblp(INT32 nStart)
 {
 	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  0, 0, 0);
 	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  1, 0, 0);
@@ -1360,7 +1360,7 @@ INT32 CpsLoadTilesSf2ceuab7(INT32 nStart)
 	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart + 15, 0, 3);
 	
 	// The last eight roms are a complete pain, handled by this custom function
-	CpsLoadSf2ceuab7Tiles(CpsGfx + 0x400000, nStart + 16);
+	CpsLoadSf2ceblpTiles(CpsGfx + 0x400000, nStart + 16);
 	
 	return 0;
 }

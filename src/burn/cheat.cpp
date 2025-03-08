@@ -5,7 +5,8 @@
 
 #define CHEAT_MAXCPU	8 // enough?
 
-#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
+// any system that uses Game Genie/Pro Action Replay codes can be defined as HW_NES...
+#define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
 
 void (*nes_add_cheat)(char *) = NULL;
 void (*nes_remove_cheat)(char *) = NULL;

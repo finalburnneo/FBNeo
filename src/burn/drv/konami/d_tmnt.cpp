@@ -2181,6 +2181,30 @@ static struct BurnRomInfo tmnt2aRomDesc[] = {
 STD_ROM_PICK(tmnt2a)
 STD_ROM_FN(tmnt2a)
 
+static struct BurnRomInfo tmnt2oRomDesc[] = {
+	{ "063oaa02.8e",	0x020000, 0x07067dbf, BRF_ESS | BRF_PRG }, //  0 	68000 Program Code
+	{ "063oaa03.8g",	0x020000, 0xb0fadf6b, BRF_ESS | BRF_PRG }, //  1
+	{ "063oaa04.10e",	0x020000, 0xb5eb7c49, BRF_ESS | BRF_PRG }, //  2
+	{ "063oaa05.10g",	0x020000, 0xbd4dcca4, BRF_ESS | BRF_PRG }, //  3
+
+	{ "063b01.2f",		0x010000, 0x364f548a, BRF_ESS | BRF_PRG }, //  4 	Z80 Code
+
+	{ "063b12.16k",		0x080000, 0xd3283d19, BRF_GRA },           //  5	Tiles
+	{ "063b11.12k",		0x080000, 0x6ebc0c15, BRF_GRA },           //  6
+
+	{ "063b09.7l",		0x100000, 0x2d7a9d2a, BRF_GRA },           //  7	Sprites
+	{ "063b10.7k",		0x080000, 0xf2dd296e, BRF_GRA },           //  8
+	{ "063b07.3l",		0x100000, 0xd9bee7bf, BRF_GRA },           //  9
+	{ "063b08.3k",		0x080000, 0x3b1ae36f, BRF_GRA },           // 10
+
+	{ "063b06.1d",		0x200000, 0x1e510aa5, BRF_SND },           // 11	K053260 Samples
+
+	{ "tmnt2_oaa.nv",  	0x000080, 0xe3858340, BRF_OPT },
+};
+
+STD_ROM_PICK(tmnt2o)
+STD_ROM_FN(tmnt2o)
+
 static struct BurnRomInfo qgakumonRomDesc[] = {
 	{ "248jaa02.8e",	0x040000, 0xfab79410, BRF_ESS | BRF_PRG }, //  0 	68000 Program Code
 	{ "248jaa03.8g",	0x040000, 0x8d888ef3, BRF_ESS | BRF_PRG }, //  1
@@ -2274,6 +2298,24 @@ static struct BurnRomInfo punkshotjRomDesc[] = {
 
 STD_ROM_PICK(punkshotj)
 STD_ROM_FN(punkshotj)
+
+static struct BurnRomInfo punkshot2aRomDesc[] = {
+	{ "i7",				0x020000, 0xf17400ad, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "i10",			0x020000, 0x552668ec, BRF_ESS | BRF_PRG }, //  1
+
+	{ "907f01.e8",		0x008000, 0xf040c484, BRF_ESS | BRF_PRG }, //  2	Z80 Program
+
+	{ "907d06.e23",		0x040000, 0xf5cc38f4, BRF_GRA },	       //  3	Tiles
+	{ "907d05.e22",		0x040000, 0xe25774c1, BRF_GRA },	       //  4
+
+	{ "907d07.k2",		0x100000, 0xb0fe4543, BRF_GRA },	       //  5	Sprites
+	{ "907d08.k7",		0x100000, 0xd5ac8d9d, BRF_GRA },	       //  6
+
+	{ "907d04.d3",		0x080000, 0x090feb5e, BRF_SND },	       //  7	K053260 Samples
+};
+
+STD_ROM_PICK(punkshot2a)
+STD_ROM_FN(punkshot2a)
 
 static INT32 TmntMemIndex()
 {
@@ -7000,6 +7042,16 @@ struct BurnDriver BurnDrvTmnt2a = {
 	NULL, 0x800, 288, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvTmnt2o = {
+	"tmnt2o", "tmnt2", NULL, NULL, "1991",
+	"Teenage Mutant Ninja Turtles - Turtles in Time (4 Players ver OAA)\0", NULL, "Konami", "GX063",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, tmnt2oRomInfo, tmnt2oRomName, NULL, NULL, NULL, NULL, Ssriders4psInputInfo, NULL,
+	Tmnt2Init, BlswhstlExit, Tmnt2Frame, BlswhstlDraw, SsridersScan,
+	NULL, 0x800, 288, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvQgakumon = {
 	"qgakumon", NULL, NULL, NULL, "1993",
 	"Quiz Gakumon no Susume (Japan ver. JA1 Type H)\0", NULL, "Konami", "GX248",
@@ -7046,6 +7098,16 @@ struct BurnDriver BurnDrvPunkshotj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshotjRomInfo, punkshotjRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, PunkshotjDIPInfo,
+	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
+	NULL, 0x800, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPunkshot2a = {
+	"punkshot2a", "punkshot", NULL, NULL, "1990",
+	"Punk Shot (Asia 2 Players, hacked?)\0", NULL, "Konami", "GX907",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	NULL, punkshot2aRomInfo, punkshot2aRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };

@@ -548,7 +548,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Mad Motor (prototype)
+// Mad Motor (prototype, set 1)
 
 static struct BurnRomInfo madmotorRomDesc[] = {
 	{ "02-2.b4",	0x20000, 0x50b554e0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -581,6 +581,8 @@ static struct BurnRomInfo madmotorRomDesc[] = {
 	{ "12.h1",	0x20000, 0xc202d200, 7 | BRF_SND },           // 21 OKI #0 Samples
 
 	{ "13.h3",	0x20000, 0xcc4d65e9, 8 | BRF_SND },           // 22 OKI #1 Samples
+
+	{ "fm-23.19h",	0x100, 0x6d51adf8, 0 | BRF_OPT },         // 23 PROMS
 };
 
 STD_ROM_PICK(madmotor)
@@ -588,10 +590,61 @@ STD_ROM_FN(madmotor)
 
 struct BurnDriver BurnDrvMadmotor = {
 	"madmotor", NULL, NULL, NULL, "1989",
-	"Mad Motor (prototype)\0", NULL, "Mitchell", "Miscellaneous",
+	"Mad Motor (prototype, set 1)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, madmotorRomInfo, madmotorRomName, NULL, NULL, NULL, NULL, MadmotorInputInfo, MadmotorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
+
+// Mad Motor (prototype, set 2)
+
+static struct BurnRomInfo madmotoraRomDesc[] = {
+	{ "02.b4",	0x20000, 0x18d3dba8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "00.b1",	0x20000, 0x686342c6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "03.b6",	0x20000, 0x442a0a52, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "01.b3",	0x20000, 0xe246876e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "14.l7",	0x10000, 0x1c28a7e5, 2 | BRF_PRG | BRF_ESS }, //  4 H6280 Code
+
+	{ "04.a9",	0x10000, 0x833ca3ab, 3 | BRF_GRA },           //  5 Layer 0 Tiles (8x8)
+	{ "05.a11",	0x10000, 0xa691fbfe, 3 | BRF_GRA },           //  6
+
+	{ "10.a19",	0x20000, 0x9dbf482b, 4 | BRF_GRA },           //  7 Layer 1 Tiles (16x16)
+	{ "11.a21",	0x20000, 0x593c48a9, 4 | BRF_GRA },           //  8
+
+	{ "06.a13",	0x20000, 0x448850e5, 5 | BRF_GRA },           //  9 Layer 2 Tiles (16x16)
+	{ "07.a14",	0x20000, 0xede4d141, 5 | BRF_GRA },           // 10
+	{ "08.a16",	0x20000, 0xc380e5e5, 5 | BRF_GRA },           // 11
+	{ "09.a18",	0x20000, 0x1ee3326a, 5 | BRF_GRA },           // 12
+
+	{ "15.h11",	0x20000, 0x90ae9f74, 6 | BRF_GRA },           // 13 Sprites
+	{ "16.h13",	0x20000, 0xe96ac815, 6 | BRF_GRA },           // 14
+	{ "17.h14",	0x20000, 0xabad9a1b, 6 | BRF_GRA },           // 15
+	{ "18.h16",	0x20000, 0x96d8d64b, 6 | BRF_GRA },           // 16
+	{ "19.j13",	0x20000, 0xcbd8c9b8, 6 | BRF_GRA },           // 17
+	{ "20.j14",	0x20000, 0x47f706a8, 6 | BRF_GRA },           // 18
+	{ "21.j16",	0x20000, 0x9c72d364, 6 | BRF_GRA },           // 19
+	{ "22.j18",	0x20000, 0x1e78aa60, 6 | BRF_GRA },           // 20
+
+	{ "12.h1",	0x20000, 0xc202d200, 7 | BRF_SND },           // 21 OKI #0 Samples
+
+	{ "13.h3",	0x20000, 0xcc4d65e9, 8 | BRF_SND },           // 22 OKI #1 Samples
+
+	{ "fm-23.19h",	0x100, 0x6d51adf8, 0 | BRF_OPT },         // 23 PROMS
+};
+
+STD_ROM_PICK(madmotora)
+STD_ROM_FN(madmotora)
+
+struct BurnDriver BurnDrvMadmotora = {
+	"madmotora", "madmotor", NULL, NULL, "1989",
+	"Mad Motor (prototype, set 2)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, madmotoraRomInfo, madmotoraRomName, NULL, NULL, NULL, NULL, MadmotorInputInfo, MadmotorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

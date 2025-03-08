@@ -807,7 +807,9 @@ static struct BurnRomInfo mototourRomDesc[] = {
 	{ "mt1-9.m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
 	{ "mt1-10.k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
 
-	TRAVRUSA_PROMS
+	{ "mmi6349.k2",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
+	{ "prom1.f1",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12
+	{ "prom2.h2",		0x0100, 0x76062638, 5 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(mototour)

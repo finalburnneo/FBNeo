@@ -218,10 +218,10 @@ void do_shonky_profile()
 	unsigned int end_time = timeGetTime();
 
 	unsigned int total_time = end_time - start_time;
-	int total_seconds = total_time / 1000;
+	float total_seconds = (float)total_time / 1000.0;
 
 	bprintf(0, _T("shonky profile mode %d\n"), total_frames);
-	bprintf(0, _T("shonky profile:  %d frames,  %dms,  %dfps\n"), total_frames, total_time, total_frames / total_seconds);
+	bprintf(0, _T("shonky profile:  %d frames,  %dms,  %dfps\n"), total_frames, total_time, (int)(total_frames / total_seconds));
 }
 #endif
 
@@ -374,10 +374,10 @@ static int RunGetNextSound(int bDraw)
 		if (bAppDoStep) {
 			bAppDoStep = 0;									// done one step
 			RunFrame(bDraw, 0);
-			memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
 		} else {
 			RunFrame(bDraw, 1);
 		}
+		memset(nAudNextSound, 0, nAudSegLen << 2);	// Write silence into the buffer
 
 		return 0;
 	}
@@ -385,7 +385,7 @@ static int RunGetNextSound(int bDraw)
 	int bBrokeOutOfFFWD = 0;
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
-			if (!bAppDoFast) {
+			if (!bAppDoFast || bRunPause) {
 				bBrokeOutOfFFWD = 1; // recording ended, etc.
 				break;
 			}                     // break out if no longer in ffwd

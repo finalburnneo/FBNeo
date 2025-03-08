@@ -1574,6 +1574,8 @@ static struct BurnRomInfo zaxxon2RomDesc[] = {
 
 	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
 	{ "mro17.u41",			0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
+
+	{ "pal16l8cn.bin",		0x0117, 0xa3e8657c, 0 | BRF_OPT },           // 17 PLDs
 };
 
 STD_ROM_PICK(zaxxon2)

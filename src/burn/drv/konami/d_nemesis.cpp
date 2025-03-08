@@ -4121,7 +4121,7 @@ static struct BurnRomInfo salamandtRomDesc[] = {
 	{ "10_27512.17b",			0x10000, 0xb83e8724, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "4_27512.17c",			0x10000, 0xa6ef6dc4, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "9_27512.17b",			0x10000, 0xb4d2fec9, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "587-c06.17c",			0x10000, 0x6ea59643, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "3_27512.17c",			0x10000, 0x6ea59643, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "2_tmm24256ap.11j",		0x08000, 0x7eb8bb88, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code
 

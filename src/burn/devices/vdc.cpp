@@ -13,7 +13,7 @@ static INT32 vce_clock;		// currently unused
 
 static INT32 vce_current_line;
 
-static INT32 main_width; // 512 (most) 320 (daimakai)
+static INT32 main_width; // 1024 (most) 320 (daimakai)
 
 UINT8 *vdc_vidram[2];			// allocate externally!
 
@@ -35,6 +35,9 @@ static INT32	vdc_raster_count[2];
 static INT32	vdc_satb_countdown[2];
 
 UINT16 *vdc_tmp_draw;			// allocate externally!
+static UINT16 *vdc_linebuf; // allocated here, a single line
+static UINT8 vce_clock_list[263];
+static UINT16 vce_width_list[263];
 
 static UINT16 vpc_priority;
 static UINT16 vpc_window1;
@@ -56,8 +59,8 @@ static void vpc_update_prio_map()
 	for (INT32 i = 0; i < 512; i++)
 	{
 		vpc_prio_map[i] = 0;
-		if (win1_adj < 0x40 || i > win1_adj) vpc_prio_map[i] |= 1;
-		if (win2_adj < 0x40 || i > win2_adj) vpc_prio_map[i] |= 2;
+		if (vpc_window1 < 0x40 || i > win1_adj) vpc_prio_map[i] |= 1;
+		if (vpc_window2 < 0x40 || i > win2_adj) vpc_prio_map[i] |= 2;
 	}
 }
 
@@ -92,26 +95,31 @@ void vpc_write(UINT8 offset, UINT8 data)
 		case 0x02:	/* Window 1 LSB */
 			vpc_window1 = (vpc_window1 & 0xff00) | data;
 			vpc_update_prio_map();
+			//bprintf(0, _T("window1.lsb  %x  %x\n"), vpc_window1, data);
 		break;
 
 		case 0x03:	/* Window 1 MSB */
 			vpc_window1 = (vpc_window1 & 0x00ff) | ((data & 3) << 8);
 			vpc_update_prio_map();
+			//bprintf(0, _T("window1.msb  %x  %x\n"), vpc_window1, data);
 		break;
 
 		case 0x04:	/* Window 2 LSB */
 			vpc_window2 = (vpc_window2 & 0xff00) | data;
 			vpc_update_prio_map();
+			//bprintf(0, _T("window2.lsb  %x  %x\n"), vpc_window2, data);
 		break;
 
 		case 0x05:	/* Window 2 MSB */
 			vpc_window2 = (vpc_window2 & 0x00ff) | ((data & 3) << 8);
 			vpc_update_prio_map();
+			//bprintf(0, _T("window2.msb  %x  %x\n"), vpc_window2, data);
 		break;
 
 		case 0x06:	/* VDC I/O select */
 			vpc_vdc_select = data & 1;
 		break;
+		//default: bprintf(0, _T("vpc_write: uhoh: %x %x\n"), offset, data);
 	}
 }
 
@@ -162,6 +170,15 @@ void vpc_reset()
 	vpc_window2 = 0;
 	vpc_vdc_select = 0;
 	vpc_priority = 0;
+
+	vce_clock = 4;
+	for (int i = 0; i < (sizeof(vce_clock_list) / sizeof(vce_clock_list[0])); i++) {
+		vce_clock_list[i] = vce_clock;
+	}
+	for (int i = 0; i < (sizeof(vce_width_list) / sizeof(vce_width_list[0])); i++) {
+		vce_width_list[i] = 256;
+	}
+
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -214,12 +231,15 @@ void vce_write(UINT8 offset, UINT8 data)
 	{
 		case 0x00:
 			vce_control = data;
+			vce_clock = (data & 0x02) ? 2 : ((data & 0x01) ? 3 : 4);
+#if 0
 			switch (data & 3) {
 				case 0: vce_clock = 0; break;
 				case 1: vce_clock = 1; break;
 				case 2:
 				case 3: vce_clock = 2; break;
 			}
+#endif
 			//bprintf(0, _T("vce_clock:  %x\tvce_control:  %x\n"), vce_clock, vce_control);
 			break;
 
@@ -244,7 +264,7 @@ void vce_write(UINT8 offset, UINT8 data)
 	}
 }
 
-void vce_palette_init(UINT32 *Palette)
+void vce_palette_init(UINT32 *Palette, UINT32 *Alt_Palette)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_palette_init called without init\n"));
@@ -255,6 +275,12 @@ void vce_palette_init(UINT32 *Palette)
 		INT32 r = ((i >> 3) & 7) << 5;
 		INT32 g = ((i >> 6) & 7) << 5;
 		INT32 b = ((i >> 0) & 7) << 5;
+
+		if (Alt_Palette != NULL) {
+			r = (Alt_Palette[i] >> 16) & 0xff;
+			g = (Alt_Palette[i] >> 8) & 0xff;
+			b = (Alt_Palette[i] >> 0) & 0xff;
+		}
 
 		INT32 y = ((66 * r + 129 * g +  25 * b + 128) >> 8) +  16;
 
@@ -425,7 +451,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 			if(cgx == 0)
 			{
 				INT32 x;
-				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
+				INT32 pixel_x = obj_x; //( ( obj_x * main_width ) / vdc_width[which] );
 
 				conv_obj(which, obj_lsb, obj_i + (cgypos << 2), obj_l, hf, vf, buf);
 
@@ -441,10 +467,10 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								{
 									line_buffer[pixel_x] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
 
-									if ( vdc_width[which] != 512 )
+									if (0 && vdc_width[which] != 512 )
 									{
 										INT32 dp = 1;
-										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which] ) )
+										while ( pixel_x + dp < ( ( ( obj_x + x + 0 ) * main_width ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
 											line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -467,6 +493,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							}
 						}
 					}
+#if 0
 					if ( vdc_width[which] != 512 )
 					{
 						pixel_x = ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which];
@@ -475,12 +502,14 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					{
 						pixel_x += 1;
 					}
+#endif
+					pixel_x += 1;
 				}
 			}
 			else
 			{
 				INT32 x;
-				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
+				INT32 pixel_x = obj_x;//( ( obj_x * main_width ) / vdc_width[which] );
 
 				conv_obj(which, obj_lsb, obj_i + (cgypos << 2) + (hf ? 2 : 0), obj_l, hf, vf, buf);
 
@@ -495,10 +524,10 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								if ( priority || drawn[pixel_x] == 0 )
 								{
 									line_buffer[pixel_x] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
-									if ( vdc_width[which] != 512 )
+									if ( 0&& vdc_width[which] != 512 )
 									{
 										INT32 dp = 1;
-										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which] ) )
+										while ( pixel_x + dp < ( ( ( obj_x + x + 0 ) * main_width ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
 											line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -521,6 +550,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							}
 						}
 					}
+#if 0
 					if ( vdc_width[which] != 512 )
 					{
 						pixel_x = ( ( obj_x + x + 1 ) * main_width ) / vdc_width[which];
@@ -529,6 +559,8 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					{
 						pixel_x += 1;
 					}
+#endif
+					pixel_x += 1;
 				}
 
 				/* 32 pixel wide sprites are counted as 2 sprites and the right half
@@ -563,10 +595,10 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 									if( priority || drawn[pixel_x] == 0 )
 									{
 										line_buffer[pixel_x] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
-										if ( vdc_width[which] != 512 )
+										if ( 0&& vdc_width[which] != 512 )
 										{
 											INT32 dp = 1;
-											while ( pixel_x + dp < ( ( ( obj_x + x + 17 ) * main_width ) / vdc_width[which] ) )
+											while ( pixel_x + dp < ( ( ( obj_x + x + 16 + 0 ) * main_width ) / vdc_width[which] ) )
 											{
 												drawn[pixel_x + dp] = i + 2;
 												line_buffer[pixel_x + dp] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
@@ -589,6 +621,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								}
 							}
 						}
+#if 0
 						if ( vdc_width[which] != 512 )
 						{
 							pixel_x = ( ( obj_x + x + 17 ) * main_width ) / vdc_width[which];
@@ -597,6 +630,8 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 						{
 							pixel_x += 1;
 						}
+#endif
+						pixel_x += 1;
 					}
 				}
 			}
@@ -682,8 +717,9 @@ static void do_vblank(INT32 which)
 
 static void vdc_advance_line(INT32 which)
 {
-	if (which == 0) // increment master scanline
+	if (which == 0) { // increment master scanline
 		vce_current_line = (vce_current_line + 1) % vce_linecount();
+	}
 
 	vdc_current_segment_line[which] += 1;
 	vdc_raster_count[which] += 1;
@@ -724,6 +760,11 @@ static void vdc_advance_line(INT32 which)
 		vdc_current_segment_line[which] = 0;
 		vdc_raster_count[which] = 0x40;
 		//bprintf(0, _T("VDW_start(vdw:%x,bmp:%x)"), vdc_data[which][VDW] & 0x01FF,vce_current_line);
+	}
+
+	if ( STATE_VDW == vdc_current_segment[which]) {
+		vce_clock_list[vdc_current_segment_line[which]] = vce_clock;
+		vce_width_list[vdc_current_segment_line[which]] = vdc_width[which];
 	}
 
 	if ( STATE_VDW == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VDW] & 0x01ff) + 1 )
@@ -849,7 +890,7 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 					if ( c || ! external_input )
 						line_buffer[ pixel ] = color_base + vce_data[c];
 					pixel++;
-					if ( vdc_width[which] != 512 )
+					if ( 0 && vdc_width[which] != 512 )
 					{
 						while ( pixel < ( ( ( phys_x + 1 ) * main_width ) / vdc_width[which] ) )
 						{
@@ -1042,6 +1083,47 @@ void sgx_interrupt()
 
 	vdc_advance_line( 0 );
 	vdc_advance_line( 1 );
+}
+
+static UINT16 get_overscan(UINT16 &clock, UINT32 width)
+{
+	// if the clockscaled screen doesn't fit, center it
+	if (nScreenWidth < 1024) clock = 1; // custom resolution, default clock to 1
+	UINT32 w = clock * width;
+	if (w < nScreenWidth) {
+		w = nScreenWidth - w;
+		w = (w / 2);
+	} else {
+		w = 0;
+	}
+	return w;
+}
+
+UINT16 *vdc_get_line(UINT32 y)
+{
+	UINT16 line_clock = vce_clock_list[y];
+	UINT16 oversc = get_overscan(line_clock, vce_width_list[y]);
+	UINT16 *src = (vdc_tmp_draw + 86) + (684 * y);
+	UINT16 *dst = vdc_linebuf;
+
+	// game sets resolution
+	INT32 src_clock = 0;
+	INT32 src_pix = 0;
+	INT32 src_x = 0;
+	INT32 x = 0;
+	while (x < nScreenWidth) {
+		if (oversc) {
+			src_pix = 0;
+			oversc--;
+		} else
+			if (src_clock == 0) {
+				src_pix = src[src_x++];
+			}
+		dst[x] = src_pix;
+		x++;
+		src_clock = (src_clock + 1) % line_clock;
+	}
+	return vdc_linebuf;
 }
 
 static void vdc_do_dma(INT32 which)
@@ -1311,6 +1393,8 @@ void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)
 void vdc_init()
 {
 	DebugDev_VDCInitted = 1;
+
+	vdc_linebuf = (UINT16*)BurnMalloc(2048 * sizeof(UINT16));
 }
 
 void vdc_exit()
@@ -1320,6 +1404,8 @@ void vdc_exit()
 #endif
 
 	DebugDev_VDCInitted = 0;
+
+	BurnFree(vdc_linebuf);
 }
 
 INT32 vdc_scan(INT32 nAction, INT32 *pnMin)

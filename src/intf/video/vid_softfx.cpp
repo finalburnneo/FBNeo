@@ -15,7 +15,7 @@ typedef unsigned char uint8;
 
 #ifndef _WIN32
 #ifndef WITH_QTCREATOR
- typedef unsigned long DWORD;
+ typedef UINT32 DWORD;
 #endif
 #endif
 

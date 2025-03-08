@@ -503,7 +503,7 @@ struct BurnDriver BurnDrvMk = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mkRomInfo, mkRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mkr4RomDesc[] = {
@@ -541,7 +541,7 @@ struct BurnDriver BurnDrvMkr4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mkr4RomInfo, mkr4RomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mktturboRomDesc[] = {
@@ -586,7 +586,7 @@ struct BurnDriver BurnDrvMktturbo = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mktturboRomInfo, mktturboRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkTturboInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2RomDesc[] = {
@@ -633,7 +633,7 @@ struct BurnDriver BurnDrvMk2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2RomInfo, mk2RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r32eRomDesc[] = {
@@ -673,7 +673,7 @@ struct BurnDriver BurnDrvMk2r32e = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r32eRomInfo, mk2r32eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r31eRomDesc[] = {
@@ -713,7 +713,7 @@ struct BurnDriver BurnDrvMk2r31e = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r31eRomInfo, mk2r31eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r30RomDesc[] = {
@@ -753,7 +753,7 @@ struct BurnDriver BurnDrvMk2r30 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r30RomInfo, mk2r30RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r21RomDesc[] = {
@@ -793,7 +793,7 @@ struct BurnDriver BurnDrvMk2r21 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r21RomInfo, mk2r21RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r20RomDesc[] = {
@@ -833,7 +833,7 @@ struct BurnDriver BurnDrvMk2r20 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r20RomInfo, mk2r20RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r14RomDesc[] = {
@@ -873,7 +873,7 @@ struct BurnDriver BurnDrvMk2r14 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r14RomInfo, mk2r14RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r11RomDesc[] = {
@@ -913,7 +913,7 @@ struct BurnDriver BurnDrvMk2r11 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r11RomInfo, mk2r11RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r42RomDesc[] = {
@@ -953,7 +953,7 @@ struct BurnDriver BurnDrvMk2r42 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r42RomInfo, mk2r42RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2r91RomDesc[] = {
@@ -993,7 +993,7 @@ struct BurnDriver BurnDrvMk2r91 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2r91RomInfo, mk2r91RomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2chalRomDesc[] = {
@@ -1033,7 +1033,7 @@ struct BurnDriver BurnDrvMk2chal = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2chalRomInfo, mk2chalRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2uteRomDesc[] = {
@@ -1073,7 +1073,7 @@ struct BurnDriver BurnDrvMk2ute = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2uteRomInfo, mk2uteRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo mk2pRomDesc[] = {
@@ -1113,7 +1113,7 @@ struct BurnDriver BurnDrvmk2p = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mk2pRomInfo, mk2pRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
     Mk2Init, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamRomDesc[] = {
@@ -1163,7 +1163,7 @@ struct BurnDriver BurnDrvNbajam = {
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamRomInfo, nbajamRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamr2RomDesc[] = {
@@ -1206,7 +1206,7 @@ struct BurnDriver BurnDrvNbajamr2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamr2RomInfo, nbajamr2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamr1RomDesc[] = {
@@ -1249,7 +1249,7 @@ struct BurnDriver BurnDrvNbajamr1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamr1RomInfo, nbajamr1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
     NbajamInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static INT32 NbajampInit()
@@ -1300,7 +1300,7 @@ struct BurnDriver BurnDrvNbajamp2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamp2RomInfo, nbajamp2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
 	NbajampInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamp1RomDesc[] = {
@@ -1343,7 +1343,7 @@ struct BurnDriver BurnDrvNbajamp1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamp1RomInfo, nbajamp1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
 	NbajampInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamteRomDesc[] = {
@@ -1393,7 +1393,7 @@ struct BurnDriver BurnDrvNbajamte = {
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamteRomInfo, nbajamteRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte4RomDesc[] = {
@@ -1436,7 +1436,7 @@ struct BurnDriver BurnDrvNbajamte4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte4RomInfo, nbajamte4RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte3RomDesc[] = {
@@ -1479,7 +1479,7 @@ struct BurnDriver BurnDrvNbajamte3 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte3RomInfo, nbajamte3RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte3aRomDesc[] = {
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvNbajamte3a = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte3aRomInfo, nbajamte3aRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte2RomDesc[] = {
@@ -1565,7 +1565,7 @@ struct BurnDriver BurnDrvNbajamte2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte2RomInfo, nbajamte2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte2aRomDesc[] = {
@@ -1608,7 +1608,7 @@ struct BurnDriver BurnDrvNbajamte2a = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte2aRomInfo, nbajamte2aRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamte1RomDesc[] = {
@@ -1651,7 +1651,7 @@ struct BurnDriver BurnDrvNbajamte1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamtep2RomDesc[] = {
@@ -1694,7 +1694,7 @@ struct BurnDriver BurnDrvNbajamtep2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamtep2RomInfo, nbajamtep2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo nbajamtenRomDesc[] = {
@@ -1737,7 +1737,7 @@ struct BurnDriver BurnDrvNbajamten = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamtenRomInfo, nbajamtenRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
     NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 // NBA Jam Rewind (Hack)
@@ -1782,7 +1782,7 @@ struct BurnDriver BurnDrvNbajamre = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamreRomInfo, nbajamreRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
 static struct BurnRomInfo jdreddpRomDesc[] = {
@@ -1832,5 +1832,5 @@ struct BurnDriver BurnDrvJdreddp = {
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_TUNIT, GBF_SCRFIGHT, 0,
 	NULL, jdreddpRomInfo, jdreddpRomName, NULL, NULL, NULL, NULL, JdreddpInputInfo, JdreddpDIPInfo,
     JdreddpInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-	400, 256, 4, 3
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };

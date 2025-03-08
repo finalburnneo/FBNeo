@@ -4806,6 +4806,28 @@ struct BurnDriver BurnDrvwwanpanm = {
 	320, 224, 4, 3
 };
 
+// Waku Waku Anpanman
+
+static struct BurnRomInfo wwanpanmoRomDesc[] = {
+	{ "epr-14123.ic32",			0x40000, 0x0e4f38c6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "epr-14122.ic31",			0x40000, 0x20c0db3b, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "epr-14121.ic4",			0x40000, 0x69adf3a1, 2 | BRF_SND },           //  2 UPD Samples
+};
+
+STD_ROM_PICK(wwanpanmo)
+STD_ROM_FN(wwanpanmo)
+
+struct BurnDriver BurnDrvwwanpanmo = {
+	"wwanpanmo", "wwanpanm", NULL, NULL, "1992",
+	"Waku Waku Anpanman\0", NULL, "Sega", "C2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, wwanpanmoRomInfo, wwanpanmoRomName, NULL, NULL, NULL, NULL, WwmarineInputInfo, WwmarineDIPInfo,
+	WwmarineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
+	320, 224, 4, 3
+};
+
 
 // SegaSonic Cosmo Fighter (World)
 

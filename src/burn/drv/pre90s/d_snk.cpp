@@ -2211,7 +2211,7 @@ static void snkwave_exit()
 
 static void snkwave_update_waveform(UINT32 offset, UINT8 data)
 {
-	snkwave_waveform[offset * 2]     = ((data & 0x38) >> 3) << (12-CLOCK_SHIFT);
+	snkwave_waveform[offset * 2]     = ((data & 0x70) >> 4) << (12-CLOCK_SHIFT);
 	snkwave_waveform[offset * 2 + 1] = ((data & 0x07) >> 0) << (12-CLOCK_SHIFT);
 	snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH-2 - offset * 2] = ~snkwave_waveform[offset * 2 + 1];
 	snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH-1 - offset * 2] = ~snkwave_waveform[offset * 2];
@@ -2221,13 +2221,11 @@ static void snkwave_w(UINT32 offset, UINT8 data)
 {
 	stream.update();
 
-	data &= 0x3f; // all registers are 6-bit
-
-	if (offset == 0)
-		snkwave_frequency = (snkwave_frequency & 0x03f) | (data << 6);
-	else if (offset == 1)
-		snkwave_frequency = (snkwave_frequency & 0xfc0) | data;
-	else if (offset <= 5)
+	if (offset == 0) // F1, high 6 bits
+		snkwave_frequency = (snkwave_frequency & 0x03f) | ((data & 0xfc) << 4);
+	else if (offset == 1) // F2, low 6 bits
+		snkwave_frequency = (snkwave_frequency & 0xfc0) | (data & 0x3f);
+	else if (offset <= 5) // W3 thru W6, low 3 bits of each nybble
 		snkwave_update_waveform(offset - 2, data);
 }
 

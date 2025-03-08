@@ -1049,7 +1049,7 @@ struct BurnDriver BurnDrvNineteen42a = {
 
 struct BurnDriver BurnDrvNineteen42abl = {
 	"1942abl", "1942", NULL, NULL, "1984",
-	"1942 (Revision A, bootleg)\0", NULL, "Capcom", "Miscellaneous",
+	"1942 (Revision A, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvablRomInfo, DrvablRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1081,7 +1081,7 @@ struct BurnDriver BurnDrvNineteen42h = {
 	"1942h", "1942", NULL, NULL, "1991",
 	"Supercharger 1942\0", NULL, "hack (Two Bit Score)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvhRomInfo, DrvhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x600, 224, 256, 3, 4

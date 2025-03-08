@@ -256,6 +256,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_sonson.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_srumbler.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tehkanwc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_terracre.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tigeroad.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toki.cpp" />

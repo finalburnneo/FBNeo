@@ -1,5 +1,5 @@
 /* Xz.c - Xz
-2017-05-12 : Igor Pavlov : Public domain */
+2024-03-01 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
 
@@ -41,7 +41,7 @@ void Xz_Free(CXzStream *p, ISzAllocPtr alloc)
 unsigned XzFlags_GetCheckSize(CXzStreamFlags f)
 {
   unsigned t = XzFlags_GetCheckType(f);
-  return (t == 0) ? 0 : (4 << ((t - 1) / 3));
+  return (t == 0) ? 0 : ((unsigned)4 << ((t - 1) / 3));
 }
 
 void XzCheck_Init(CXzCheck *p, unsigned mode)
@@ -52,6 +52,7 @@ void XzCheck_Init(CXzCheck *p, unsigned mode)
     case XZ_CHECK_CRC32: p->crc = CRC_INIT_VAL; break;
     case XZ_CHECK_CRC64: p->crc64 = CRC64_INIT_VAL; break;
     case XZ_CHECK_SHA256: Sha256_Init(&p->sha); break;
+    default: break;
   }
 }
 
@@ -62,6 +63,7 @@ void XzCheck_Update(CXzCheck *p, const void *data, size_t size)
     case XZ_CHECK_CRC32: p->crc = CrcUpdate(p->crc, data, size); break;
     case XZ_CHECK_CRC64: p->crc64 = Crc64Update(p->crc64, data, size); break;
     case XZ_CHECK_SHA256: Sha256_Update(&p->sha, (const Byte *)data, size); break;
+    default: break;
   }
 }
 
@@ -70,7 +72,7 @@ int XzCheck_Final(CXzCheck *p, Byte *digest)
   switch (p->mode)
   {
     case XZ_CHECK_CRC32:
-      SetUi32(digest, CRC_GET_DIGEST(p->crc));
+      SetUi32(digest, CRC_GET_DIGEST(p->crc))
       break;
     case XZ_CHECK_CRC64:
     {

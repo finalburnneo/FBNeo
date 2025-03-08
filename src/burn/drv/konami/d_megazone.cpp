@@ -775,7 +775,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Mega Zone (program code L)
+// Mega Zone (version L)
 
 static struct BurnRomInfo megazoneRomDesc[] = {
 	{ "319_l07.11h",	0x2000, 0x73b616ca, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -808,7 +808,7 @@ STD_ROM_FN(megazone)
 
 struct BurnDriver BurnDrvMegazone = {
 	"megazone", NULL, NULL, NULL, "1983",
-	"Mega Zone (program code L)\0", NULL, "Konami", "GX319",
+	"Mega Zone (version L)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazoneRomInfo, megazoneRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -817,7 +817,7 @@ struct BurnDriver BurnDrvMegazone = {
 };
 
 
-// Mega Zone (program code J)
+// Mega Zone (version J)
 // Interlogic + Kosuka license set
 
 static struct BurnRomInfo megazonejRomDesc[] = {
@@ -851,7 +851,7 @@ STD_ROM_FN(megazonej)
 
 struct BurnDriver BurnDrvMegazonej = {
 	"megazonej", "megazone", NULL, NULL, "1983",
-	"Mega Zone (program code J)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
+	"Mega Zone (version J)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazonejRomInfo, megazonejRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -860,7 +860,7 @@ struct BurnDriver BurnDrvMegazonej = {
 };
 
 
-// Mega Zone (program code I)
+// Mega Zone (version I)
 
 static struct BurnRomInfo megazoneiRomDesc[] = {
 	{ "319_i07.11h",	0x2000, 0x94b22ea8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -893,7 +893,7 @@ STD_ROM_FN(megazonei)
 
 struct BurnDriver BurnDrvMegazonei = {
 	"megazonei", "megazone", NULL, NULL, "1983",
-	"Mega Zone (program code I)\0", NULL, "Konami", "GX319",
+	"Mega Zone (version I)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazoneiRomInfo, megazoneiRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -902,7 +902,7 @@ struct BurnDriver BurnDrvMegazonei = {
 };
 
 
-// Mega Zone (program code H)
+// Mega Zone (version H)
 // Kosuka license set
 
 static struct BurnRomInfo megazonehRomDesc[] = {
@@ -936,7 +936,7 @@ STD_ROM_FN(megazoneh)
 
 struct BurnDriver BurnDrvMegazoneh = {
 	"megazoneh", "megazone", NULL, NULL, "1983",
-	"Mega Zone (program code H)\0", NULL, "Konami (Kosuka license)", "GX319",
+	"Mega Zone (version H)\0", NULL, "Konami (Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazonehRomInfo, megazonehRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -945,7 +945,7 @@ struct BurnDriver BurnDrvMegazoneh = {
 };
 
 
-// Mega Zone (unknown program code 1)
+// Mega Zone (unknown version 1)
 
 static struct BurnRomInfo megazoneaRomDesc[] = {
 	{ "ic59_cpu.bin",	0x2000, 0xf41922a0, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -978,7 +978,7 @@ STD_ROM_FN(megazonea)
 
 struct BurnDriver BurnDrvMegazonea = {
 	"megazonea", "megazone", NULL, NULL, "1983",
-	"Mega Zone (unknown program code 1)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
+	"Mega Zone (unknown version 1)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazoneaRomInfo, megazoneaRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -987,7 +987,7 @@ struct BurnDriver BurnDrvMegazonea = {
 };
 
 
-// Mega Zone (unknown program code 2)
+// Mega Zone (unknown version 2)
 
 static struct BurnRomInfo megazonebRomDesc[] = {
 	{ "7.11h",			0x2000, 0xd42d67bf, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -1020,7 +1020,7 @@ STD_ROM_FN(megazoneb)
 
 struct BurnDriver BurnDrvMegazoneb = {
 	"megazoneb", "megazone", NULL, NULL, "1983",
-	"Mega Zone (unknown program code 2)\0", NULL, "Konami", "GX319",
+	"Mega Zone (unknown version 2)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazonebRomInfo, megazonebRomName, NULL, NULL, NULL, NULL, MegazoneInputInfo, MegazonaDIPInfo,

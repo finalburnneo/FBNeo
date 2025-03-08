@@ -640,22 +640,22 @@ struct BurnDriver BurnDrvFnkyfish = {
 // Kangaroo
 
 static struct BurnRomInfo kangarooRomDesc[] = {
-	{ "tvg_75.0",		0x1000, 0x0d18c581, 1 | BRF_PRG | BRF_ESS }, 	//  0 Z80 #0 Code
-	{ "tvg_76.1",		0x1000, 0x5978d37a, 1 | BRF_PRG | BRF_ESS }, 	//  1
-	{ "tvg_77.2",		0x1000, 0x522d1097, 1 | BRF_PRG | BRF_ESS }, 	//  2
-	{ "tvg_78.3",		0x1000, 0x063da970, 1 | BRF_PRG | BRF_ESS }, 	//  3
-	{ "tvg_79.4",		0x1000, 0x9e5cf8ca, 1 | BRF_PRG | BRF_ESS }, 	//  4
-	{ "tvg_80.5",		0x1000, 0x2fc18049, 1 | BRF_PRG | BRF_ESS }, 	//  5
+	{ "tvg_75.0",			0x1000, 0x0d18c581, 1 | BRF_PRG | BRF_ESS }, 	//  0 Z80 #0 Code
+	{ "tvg_76.1",			0x1000, 0x5978d37a, 1 | BRF_PRG | BRF_ESS }, 	//  1
+	{ "tvg_77.2",			0x1000, 0x522d1097, 1 | BRF_PRG | BRF_ESS }, 	//  2
+	{ "tvg_78.3",			0x1000, 0x063da970, 1 | BRF_PRG | BRF_ESS }, 	//  3
+	{ "tvg_79.4",			0x1000, 0x9e5cf8ca, 1 | BRF_PRG | BRF_ESS }, 	//  4
+	{ "tvg_80.5",			0x1000, 0x2fc18049, 1 | BRF_PRG | BRF_ESS }, 	//  5
 
-	{ "tvg_81.8",		0x1000, 0xfb449bfd, 2 | BRF_PRG | BRF_ESS }, 	//  6 Z80 #1 Code
+	{ "tvg_81.8",			0x1000, 0xfb449bfd, 2 | BRF_PRG | BRF_ESS }, 	//  6 Z80 #1 Code
 
-	{ "tvg_83.v0",		0x1000, 0xc0446ca6, 3 | BRF_GRA },           	//  7 Graphics
-	{ "tvg_85.v2",		0x1000, 0x72c52695, 3 | BRF_GRA },           	//  8
-	{ "tvg_84.v1",		0x1000, 0xe4cb26c2, 3 | BRF_GRA },           	//  9
-	{ "tvg_86.v3",		0x1000, 0x9e6a599f, 3 | BRF_GRA },           	// 10
+	{ "tvg_83.v0",			0x1000, 0xc0446ca6, 3 | BRF_GRA },           	//  7 Graphics
+	{ "tvg_85.v2",			0x1000, 0x72c52695, 3 | BRF_GRA },           	//  8
+	{ "tvg_84.v1",			0x1000, 0xe4cb26c2, 3 | BRF_GRA },           	//  9
+	{ "tvg_86.v3",			0x1000, 0x9e6a599f, 3 | BRF_GRA },           	// 10
 
-	{ "mb8841.ic29",	0x0800, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 11 MCU Internal ROM
-	{ "tvg_82.12",		0x0800, 0x57766f69, 4 | BRF_PRG | BRF_ESS }, 	// 12 MCU External ROM
+	{ "mb8841_477m.ic29",	0x0800, 0x04ca58ee, 4 | BRF_OPT },          	// 11 MCU Internal ROM
+	{ "tvg_82.12",			0x0800, 0x57766f69, 4 | BRF_PRG | BRF_ESS }, 	// 12 MCU External ROM
 };
 
 STD_ROM_PICK(kangaroo)
@@ -694,7 +694,7 @@ static struct BurnRomInfo kangarooaRomDesc[] = {
 	{ "136008-109.ic52",	0x1000, 0xe4cb26c2, 3 | BRF_GRA },           	//  9
 	{ "136008-111.ic53",	0x1000, 0x9e6a599f, 3 | BRF_GRA },           	// 10
 
-	{ "mb8841.ic29",		0x0800, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 11 MCU Internal ROM
+	{ "mb8841_477m.ic29",	0x0800, 0x04ca58ee, 4 | BRF_OPT },          	// 11 MCU Internal ROM
 	{ "136008-112.ic28",	0x0800, 0x57766f69, 4 | BRF_PRG | BRF_ESS }, 	// 12 MCU External ROM
 };
 
@@ -744,25 +744,25 @@ struct BurnDriver BurnDrvKangaroob = {
 };
 
 
-// Kangaroo (Loewen-Automaten)
+// Kangaroo (Löwen-Automaten)
 
 static struct BurnRomInfo kangaroolRomDesc[] = {
-	{ "tvg_75.ic7",		0x1000, 0x0d18c581, 1 | BRF_PRG | BRF_ESS }, 	//  0 Z80 #0 Code
-	{ "tvg_76.ic8",		0x1000, 0x5978d37a, 1 | BRF_PRG | BRF_ESS }, 	//  1
-	{ "tvg_77.ic9",		0x1000, 0x522d1097, 1 | BRF_PRG | BRF_ESS }, 	//  2
-	{ "tvg_78.ic10",	0x1000, 0x063da970, 1 | BRF_PRG | BRF_ESS }, 	//  3
-	{ "tvg_79.ic16",	0x1000, 0x9e5cf8ca, 1 | BRF_PRG | BRF_ESS }, 	//  4
-	{ "tvg_80.ic17",	0x1000, 0x62df0271, 1 | BRF_PRG | BRF_ESS }, 	//  5
+	{ "tvg_75.ic7",			0x1000, 0x0d18c581, 1 | BRF_PRG | BRF_ESS }, 	//  0 Z80 #0 Code
+	{ "tvg_76.ic8",			0x1000, 0x5978d37a, 1 | BRF_PRG | BRF_ESS }, 	//  1
+	{ "tvg_77.ic9",			0x1000, 0x522d1097, 1 | BRF_PRG | BRF_ESS }, 	//  2
+	{ "tvg_78.ic10",		0x1000, 0x063da970, 1 | BRF_PRG | BRF_ESS }, 	//  3
+	{ "tvg_79.ic16",		0x1000, 0x9e5cf8ca, 1 | BRF_PRG | BRF_ESS }, 	//  4
+	{ "tvg_80.ic17",		0x1000, 0x62df0271, 1 | BRF_PRG | BRF_ESS }, 	//  5
 
-	{ "tvg_81.ic24",	0x1000, 0xfb449bfd, 2 | BRF_PRG | BRF_ESS }, 	//  6 Z80 #1 Code
+	{ "tvg_81.ic24",		0x1000, 0xfb449bfd, 2 | BRF_PRG | BRF_ESS }, 	//  6 Z80 #1 Code
 
-	{ "tvg_83.ic76",	0x1000, 0xc0446ca6, 3 | BRF_GRA },           	//  7 Graphics
-	{ "tvg_85.ic77",	0x1000, 0x72c52695, 3 | BRF_GRA },           	//  8
-	{ "tvg_84.ic52",	0x1000, 0xe4cb26c2, 3 | BRF_GRA },           	//  9
-	{ "tvg_86.ic53",	0x1000, 0x9e6a599f, 3 | BRF_GRA },           	// 10
+	{ "tvg_83.ic76",		0x1000, 0xc0446ca6, 3 | BRF_GRA },           	//  7 Graphics
+	{ "tvg_85.ic77",		0x1000, 0x72c52695, 3 | BRF_GRA },           	//  8
+	{ "tvg_84.ic52",		0x1000, 0xe4cb26c2, 3 | BRF_GRA },           	//  9
+	{ "tvg_86.ic53",		0x1000, 0x9e6a599f, 3 | BRF_GRA },           	// 10
 
-	{ "mb8841.ic29",	0x0800, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 11 MCU Internal ROM
-	{ "tvg_82.ic28",	0x0800, 0x57766f69, 4 | BRF_PRG | BRF_ESS }, 	// 12 MCU External ROM
+	{ "mb8841_477m.ic29",	0x0800, 0x04ca58ee, 4 | BRF_OPT },           	// 11 MCU Internal ROM
+	{ "tvg_82.ic28",		0x0800, 0x57766f69, 4 | BRF_PRG | BRF_ESS }, 	// 12 MCU External ROM
 };
 
 STD_ROM_PICK(kangarool)
@@ -770,7 +770,7 @@ STD_ROM_FN(kangarool)
 
 struct BurnDriver BurnDrvKangarool = {
 	"kangarool", "kangaroo", NULL, NULL, "1982",
-	"Kangaroo (Loewen-Automaten)\0", NULL, "Sun Electronics (Loewen-Automaten license)", "Miscellaneous",
+	"Kangaroo (Löwen-Automaten)\0", NULL, "Sun Electronics (Löwen-Automaten license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, kangaroolRomInfo, kangaroolRomName, NULL, NULL, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,

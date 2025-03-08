@@ -22,35 +22,40 @@ static UINT8 bankdata;
 static INT32 vblank;
 
 static UINT8 DrvJoy1[8];
-static UINT8 DrvInputs[1];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvInputs[2];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
 	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"P1 Play",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 6"	},
+	{"P1 Cancel",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 7"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xfd, NULL				},
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0xfd, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Service Keyboard Attached?"	},
-	{0x07, 0x01, 0x01, 0x01, "No"				},
-	{0x07, 0x01, 0x01, 0x00, "Yes"				},
+	{0x00, 0x01, 0x01, 0x01, "No"				},
+	{0x00, 0x01, 0x01, 0x00, "Yes"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x07, 0x01, 0x02, 0x00, "Off"				},
-	{0x07, 0x01, 0x02, 0x02, "On"				},
+	{0x00, 0x01, 0x02, 0x00, "Off"				},
+	{0x00, 0x01, 0x02, 0x02, "On"				},
 };
 
 STDDIPINFO(Drv)
@@ -107,7 +112,7 @@ static UINT8 usgames_read(UINT16 address)
 	switch (address & ~0x0400)
 	{
 		case 0x2000:
-			return (DrvDips[0] & 0x7f) | (vblank ? 0x80 : 0);
+			return (DrvDips[0] & ~0x98) | (DrvInputs[1] & 0x18) | (vblank ? 0x80 : 0);
 
 		case 0x2010:
 			return DrvInputs[0];
@@ -166,12 +171,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (BurnLoadRom(DrvM6809ROM + 0x00000,  0, 1)) return 1;
 
@@ -264,7 +264,7 @@ static INT32 DrvExit()
 
 	AY8910Exit(0);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -310,15 +310,17 @@ static INT32 DrvFrame()
 
 	{
 		DrvInputs[0] = 0xff;
+		DrvInputs[1] = 0xff;
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal = 2000000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesTotal[1] = { 2000000 / 60 };
+	INT32 nCyclesDone[1]  = { 0 };
 
 	M6809Open(0);
 
@@ -326,11 +328,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += M6809Run(nCyclesTotal / nInterleave);
+		CPU_RUN(0, M6809);
 
-		if (i & 1) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i & 1) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-		if (i == 8) vblank = 1;		
+		if (i == 7) vblank = 1;
 	}
 
 	M6809Close();
@@ -346,7 +348,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -354,7 +356,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

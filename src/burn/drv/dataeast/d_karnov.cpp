@@ -1238,7 +1238,7 @@ struct BurnDriver BurnDrvWndrplnt = {
 };
 
 
-// Chelnov - Atomic Runner (World)
+// Atomic Runner Chelnov (World)
 /* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovRomDesc[] = {
@@ -1279,7 +1279,7 @@ static INT32 ChelnovInit()
 
 struct BurnDriver BurnDrvChelnov = {
 	"chelnov", NULL, NULL, NULL, "1988",
-	"Chelnov - Atomic Runner (World)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Atomic Runner Chelnov (World)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, chelnovRomInfo, chelnovRomName, NULL, NULL, NULL, NULL, KarnovInputInfo, ChelnovDIPInfo,
@@ -1288,7 +1288,7 @@ struct BurnDriver BurnDrvChelnov = {
 };
 
 
-// Chelnov - Atomic Runner (US)
+// Atomic Runner Chelnov (US)
 /* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovuRomDesc[] = {
@@ -1324,7 +1324,7 @@ STD_ROM_FN(chelnovu)
 
 struct BurnDriver BurnDrvChelnovu = {
 	"chelnovu", "chelnov", NULL, NULL, "1988",
-	"Chelnov - Atomic Runner (US)\0", NULL, "Data East USA", "Miscellaneous",
+	"Atomic Runner Chelnov (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, chelnovuRomInfo, chelnovuRomName, NULL, NULL, NULL, NULL, KarnovInputInfo, ChelnovuDIPInfo,
@@ -1333,7 +1333,7 @@ struct BurnDriver BurnDrvChelnovu = {
 };
 
 
-// Chelnov - Atomic Runner (Japan)
+// Atomic Runner Chelnov (Japan)
 /* DE-0248-1 main board, DE-259-0 sub/rom board */
 
 static struct BurnRomInfo chelnovjRomDesc[] = {
@@ -1369,7 +1369,7 @@ STD_ROM_FN(chelnovj)
 
 struct BurnDriver BurnDrvChelnovj = {
 	"chelnovj", "chelnov", NULL, NULL, "1988",
-	"Chelnov - Atomic Runner (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Atomic Runner Chelnov (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
 	NULL, chelnovjRomInfo, chelnovjRomName, NULL, NULL, NULL, NULL, KarnovInputInfo, ChelnovuDIPInfo,

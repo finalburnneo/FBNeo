@@ -23,6 +23,8 @@ static UINT8 *DrvPandoraRAM;
 
 static INT32 nOKIBank;
 
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
@@ -297,6 +299,10 @@ static INT32 DrvDoReset(INT32 full_reset)
 	BurnWatchdogResetEnable();
 	kaneko_hit_calc_reset();
 
+	nExtraCycles = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -401,7 +407,7 @@ static INT32 DrvInit(INT32 nLoadType)
 
 	BurnWatchdogInit(DrvDoReset, (nLoadType) ? -1 : 180);
 
-	MSM6295Init(0, 2000000 / 132, 0);
+	MSM6295Init(0, 2000000 / MSM6295_PIN7_LOW, 0);
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -481,7 +487,7 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(UINT16));
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -490,7 +496,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] =  { 12000000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	SekOpen(0);
 
@@ -498,8 +504,8 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		if (i ==  32) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-		if (i == 224) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i ==  64) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave-1) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {
@@ -507,6 +513,8 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -539,6 +547,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		kaneko_hit_calc_scan(nAction);
 
 		SCAN_VAR(nOKIBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -581,7 +591,7 @@ struct BurnDriver BurnDrvGalpanic = {
 	"galpanic", NULL, NULL, NULL, "1990",
 	"Gals Panic (unprotected, ver. 2.0)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, galpanicRomInfo, galpanicRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalpanicDIPInfo,
 	GalpanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	224, 256, 3, 4
@@ -621,7 +631,7 @@ struct BurnDriver BurnDrvGalpanica = {
 	"galpanica", "galpanic", NULL, NULL, "1990",
 	"Gals Panic (unprotected)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, galpanicaRomInfo, galpanicaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalpanicDIPInfo,
 	GalpanicaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	224, 256, 3, 4
@@ -658,7 +668,7 @@ struct BurnDriver BurnDrvGalpanicb = {
 	"galpanicb", "galpanic", NULL, NULL, "1990",
 	"Gals Panic (ULA protected, set 1)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, galpanicbRomInfo, galpanicbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalpanicaDIPInfo,
 	GalpanicbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	224, 256, 3, 4
@@ -690,7 +700,7 @@ struct BurnDriver BurnDrvGalpanicc = {
 	"galpanicc", "galpanic", NULL, NULL, "1990",
 	"Gals Panic (ULA protected, set 2)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, galpaniccRomInfo, galpaniccRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalpanicaDIPInfo,
 	GalpanicbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	224, 256, 3, 4

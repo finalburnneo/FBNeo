@@ -203,6 +203,22 @@ extern INT32 bVidCorrectAspect;
 extern INT32 bVidArcaderes;
 extern INT32 nVidDX9HardFX;
 
+struct hardfx_config {
+	char *szFileName;
+	int nOptions;
+	const float fDefaults[4];
+	float fOptions[4];
+	char *szOptions[4];
+
+	void hardfx_config_load_defaults() {
+		for (int i = 0; i < 4; i++) {
+			fOptions[i] = fDefaults[i];
+		}
+	}
+};
+
+extern hardfx_config HardFXConfigs[];
+
 extern INT32 bVidArcaderesHor;
 extern INT32 bVidArcaderesVer;
 

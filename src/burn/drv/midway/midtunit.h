@@ -12,6 +12,15 @@ extern UINT8 nTUnitRecalc;
 #define TUNIT_GFX_ADR(value)	((value & (0xFF << 12)) >> 12)
 #define TUNIT_GFX_OFF(value)	((value & (7 << 8)) >> 8)
 
+#define TUNIT_SCREEN_WIDTH  400
+// standalone builds have an issue where filters don't work properly
+// if height is not divisible by 4
+#ifndef __LIBRETRO__
+#define TUNIT_SCREEN_HEIGHT 256
+#else
+#define TUNIT_SCREEN_HEIGHT 254
+#endif
+
 INT32 TUnitInit();
 INT32 TUnitFrame();
 INT32 TUnitExit();

@@ -203,7 +203,7 @@ CXXFLAGS = -pipe \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
 	   -fcheck-new \
-	   -Wall -W -pedantic -Wno-long-long \
+	   -Wall -W -pedantic -Wno-long-long -Wno-sign-compare \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   $(DEF) $(incdir)
@@ -433,12 +433,15 @@ vpath %.d 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
 #
 #
 
+# backward compatibility (make less than 4.4 doesn't support .WAIT)
+.WAIT:
+
 .PHONY:	all init cleandep touch clean
 
 ifeq ($(MAKELEVEL),1)
 ifdef DEPEND
 
-all:	init $(drvdep) $(autdep) $(autobj) $(autdrv)
+all:	init .WAIT $(drvdep) $(autdep) $(autobj) $(autdrv)
 ifdef GCC345
 	@$(MAKE) -f makefile.mingw -s GCC345=1
 endif
@@ -454,7 +457,7 @@ endif
 
 else
 
-all:	init $(autobj) $(autdrv)
+all:	init .WAIT $(autobj) $(autdrv)
 ifdef GCC345
 	@$(MAKE) -f makefile.mingw -s GCC345=1
 endif

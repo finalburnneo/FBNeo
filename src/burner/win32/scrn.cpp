@@ -385,6 +385,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_SPECTRUM_ONLY) _sntprintf(szConsoleString, 64, _T(", ZX Spectrum Games only"));
 	if (bType == DAT_NES_ONLY) _sntprintf(szConsoleString, 64, _T(", NES Games only"));
 	if (bType == DAT_FDS_ONLY) _sntprintf(szConsoleString, 64, _T(", FDS Games only"));
+	if (bType == DAT_SNES_ONLY) _sntprintf(szConsoleString, 64, _T(", SNES Games only"));
 	if (bType == DAT_NGP_ONLY) _sntprintf(szConsoleString, 64, _T(", NeoGeo Pocket Games only"));
 	if (bType == DAT_CHANNELF_ONLY) _sntprintf(szConsoleString, 64, _T(", Fairchild Channel F Games only"));
 
@@ -501,6 +502,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", FDS Games only"));
 	create_datfile(szFilename, DAT_FDS_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", SNES Games only"));
+	create_datfile(szFilename, DAT_SNES_ONLY);
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Neo Geo Pocket Games only"));
 	create_datfile(szFilename, DAT_NGP_ONLY);
@@ -819,6 +823,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "spectrum",	{ HARDWARE_SPECTRUM, 0 } },
 	{ "nes",		{ HARDWARE_NES, 0 } },
 	{ "fds",		{ HARDWARE_FDS, 0 } },
+	{ "snes",		{ HARDWARE_SNES, 0 } },
 	{ "ngp",		{ HARDWARE_SNK_NGP, 0 } },
 	{ "ngpc",		{ HARDWARE_SNK_NGP | 0x10000, 0 } },
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
@@ -979,7 +984,7 @@ static void UpdatePreviousGameList()
 	}
 
 	// Declare temporary array
-	TCHAR szTmp[SHOW_PREV_GAMES][32];
+	TCHAR szTmp[SHOW_PREV_GAMES][64];
 
 	// Backup info for later use
 	for(int x = 0; x < SHOW_PREV_GAMES; x++) {
@@ -1976,6 +1981,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_DX9_ALT_HARD_FX_SETTINGS: {
+			if (UseDialogs()) {
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+				AudBlankSound();
+				HardFXShaderSettingsDialog();
+				GameInpCheckMouse(); //? dink?
+			}
+			break;
+		}
+
 		case MENU_GAMMA_OTHER: {
 			if (UseDialogs()) {
 				double nOldGamma = nGamma;
@@ -2662,6 +2677,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_FDS_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_FDS_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_SNES_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_SNES_ONLY);
 			}
 			break;
 
@@ -3439,6 +3460,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_DX9_ALT_HARD_FX_CRT_EASY_MODE:
 				case MENU_DX9_ALT_HARD_FX_CRT_STANDARD:
 				case MENU_DX9_ALT_HARD_FX_CRT_BICUBIC:
+				case MENU_DX9_ALT_HARD_FX_CRT_RETROSL:
 				case MENU_DX9_ALT_HARD_FX_CRT_CGA:
 					nVidDX9HardFX = id - MENU_DX9_ALT_HARD_FX_NONE;
 					break;
@@ -3664,10 +3686,10 @@ int ScrnSize()
 	} else {
 		if (nWindowSize) {
 			nMaxSize = nWindowSize;
-			if (bDrvOkay && nWindowSize == 2 && nBmapWidth >= 400 && nBmapHeight >= 400) {
+			if (bDrvOkay && nWindowSize > 1 && nBmapWidth >= 400 && nBmapHeight >= 400) {
 				// For Popeye, Hole Land and Syvalion, MCR..etc. when running Windowed: Double Size
 				bprintf(PRINT_NORMAL, _T("  * Game is double-sized to begin with.\n"));
-				nMaxSize = 1;
+				nMaxSize--;
 			}
 		} else {
 			if (nBmapWidth < nBmapHeight) {

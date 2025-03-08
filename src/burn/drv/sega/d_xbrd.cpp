@@ -3436,10 +3436,10 @@ struct BurnDriver BurnDrvAburner2g = {
 };
 
 struct BurnDriver BurnDrvAburner = {
-	"aburner", "aburner2", NULL, NULL, "1987",
+	"aburner", NULL, NULL, NULL, "1987",
 	"After Burner\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, AburnerRomInfo, AburnerRomName, NULL, NULL, NULL, NULL, Aburner2InputInfo, AburnerDIPInfo,
 	Aburner2Init, XBoardExit, XBoardFrame, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3

@@ -1,4 +1,5 @@
 #include "sys16.h"
+#include <math.h> // round()
 
 /*====================================================
 Input defs
@@ -843,6 +844,51 @@ static struct BurnDIPInfo MwalkDIPList[]=
 };
 
 STDDIPINFO(Mwalk)
+
+// same as above, except Coin Chute & Play Mode swapped bits
+static struct BurnDIPInfo MwalkuDIPList[]=
+{
+	DIP_OFFSET(0x1e)
+	// Default Values
+	{0x00, 0xff, 0xff, 0xff, NULL                                 },
+	{0x01, 0xff, 0xff, 0xfd, NULL                                 },
+
+	// Dip 1
+	SYSTEM18_COINAGE(0x00)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "2 Credits to Start"                 },
+	{0x01, 0x01, 0x01, 0x01, "Off"                                },
+	{0x01, 0x01, 0x01, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x01, 0x01, 0x02, 0x02, "Off"                                },
+	{0x01, 0x01, 0x02, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 2   , "Lives"                              },
+	{0x01, 0x01, 0x04, 0x04, "2"                                  },
+	{0x01, 0x01, 0x04, 0x00, "3"                                  },
+
+	{0   , 0xfe, 0   , 2   , "Player Vitality"                    },
+	{0x01, 0x01, 0x08, 0x08, "Low"                                },
+	{0x01, 0x01, 0x08, 0x00, "High"                               },
+
+	{0   , 0xfe, 0   , 2   , "Play Mode"                          },
+	{0x01, 0x01, 0x10, 0x00, "2 Players"                          },
+	{0x01, 0x01, 0x10, 0x10, "3 Players"                          },
+
+	{0   , 0xfe, 0   , 2   , "Coin Chute"                         },
+	{0x01, 0x01, 0x20, 0x00, "Common"                             },
+	{0x01, 0x01, 0x20, 0x20, "Individual"                         },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x01, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x01, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x01, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x01, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Mwalku)
 
 static void MwalkFixInputs()
 {
@@ -4030,8 +4076,8 @@ struct BurnDriver BurnDrvMWalku = {
 	"Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
-	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	MwalkInit, System18Exit, System18Frame, System18Render, System18Scan,
+	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
+	MwalkudInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -4059,7 +4105,7 @@ struct BurnDriver BurnDrvShdancer = {
 	"shdancer", NULL, NULL, NULL, "1989",
 	"Shadow Dancer (World)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShdancerRomInfo, ShdancerRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4069,7 +4115,7 @@ struct BurnDriver BurnDrvShdancer1 = {
 	"shdancer1", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (US)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shdancer1RomInfo, Shdancer1RomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4079,7 +4125,7 @@ struct BurnDriver BurnDrvShdancerj = {
 	"shdancerj", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (Japan)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShdancerjRomInfo, ShdancerjRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4089,7 +4135,7 @@ struct BurnDriverD BurnDrvShdancbl = {
 	"shdancbl", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (bootleg, set 1)\0", NULL, "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShdancblRomInfo, ShdancblRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	ShdancblInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4147,7 +4193,7 @@ struct BurnDriver BurnDrvWwallyja3p = {
 
 struct BurnDriver BurnDrvAquario = {
 	"aquario", NULL, NULL, NULL, "2021",
-	"Clockwork Aquario (prototype)\0", "No sound", "Sega / Westone", "System 18",
+	"Clockwork Aquario (prototype)\0", NULL, "Sega / Westone", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_PLATFORM, 0,
 	NULL, AquarioRomInfo, AquarioRomName, NULL, NULL, NULL, NULL, System18InputInfo, AquarioDIPInfo,

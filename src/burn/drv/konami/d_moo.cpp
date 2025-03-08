@@ -1256,7 +1256,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 120;
+	INT32 nInterleave = 160;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	if (moomesabl) nCyclesTotal[0] = 16100000 / 60;  // weird
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1270,12 +1270,12 @@ static INT32 DrvFrame()
 		if (i == (nInterleave - 1)) {
 			if (moomesabl) {
 				moo_objdma();
-				irq5_timer = 5; // guess
+				irq5_timer = 1;
 				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			} else {
 				if (K053246_is_IRQ_enabled()) {
 					moo_objdma();
-					irq5_timer = 5; // guess
+					irq5_timer = 1;
 				}
 
 				if (control_data & 0x20) {
@@ -1284,13 +1284,11 @@ static INT32 DrvFrame()
 			}
 		}
 
-		if (i != (nInterleave - 1)) {
-			if (irq5_timer > 0) {
-				irq5_timer--;
-				if (control_data & 0x800 && (irq5_timer == 0)) {
-					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-				}
-			} 
+		if (i == 0 && irq5_timer) {
+			irq5_timer = 0;
+			if (control_data & 0x800) {
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			}
 		}
 
 		if (!moomesabl) {

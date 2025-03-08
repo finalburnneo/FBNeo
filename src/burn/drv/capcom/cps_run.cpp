@@ -1,6 +1,20 @@
 // CPS - Run
 #include "cps.h"
 
+// CPS2
+INT32 Cps2Volume = 39;
+INT32 Cps2DisableDigitalVolume = 0;
+UINT8 Cps2VolUp;
+UINT8 Cps2VolDwn;
+UINT8 AspectDIP; // only for Cps2Turbo == 1
+
+UINT16 Cps2VolumeStates[40] = {
+	0xf010, 0xf008, 0xf004, 0xf002, 0xf001, 0xe810, 0xe808, 0xe804, 0xe802, 0xe801,
+	0xe410, 0xe408, 0xe404, 0xe402, 0xe401, 0xe210, 0xe208, 0xe204, 0xe202, 0xe201,
+	0xe110, 0xe108, 0xe104, 0xe102, 0xe101, 0xe090, 0xe088, 0xe084, 0xe082, 0xe081,
+	0xe050, 0xe048, 0xe044, 0xe042, 0xe041, 0xe030, 0xe028, 0xe024, 0xe022, 0xe021
+};
+
 // Inputs:
 UINT8 CpsReset = 0;
 UINT8 Cpi01A = 0, Cpi01C = 0, Cpi01E = 0;
@@ -172,8 +186,8 @@ INT32 CpsRunInit()
 		if (QsndInit()) {
 			return 1;
 		}
-		QsndSetRoute(BURN_SND_QSND_OUTPUT_1, 1.00, BURN_SND_ROUTE_LEFT);
-		QsndSetRoute(BURN_SND_QSND_OUTPUT_2, 1.00, BURN_SND_ROUTE_RIGHT);
+		QsndSetRoute(BURN_SND_QSND_OUTPUT_1, 2.00, BURN_SND_ROUTE_LEFT);
+		QsndSetRoute(BURN_SND_QSND_OUTPUT_2, 2.00, BURN_SND_ROUTE_RIGHT);
 	}
 
 	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();
@@ -436,8 +450,8 @@ INT32 Cps2Frame()
 		if (Cps2Volume > 39) Cps2Volume = 39;
 		if (Cps2Volume < 0) Cps2Volume = 0;
 		
-		QscSetRoute(BURN_SND_QSND_OUTPUT_1, Cps2Volume / 39.0, BURN_SND_ROUTE_LEFT);
-		QscSetRoute(BURN_SND_QSND_OUTPUT_2, Cps2Volume / 39.0, BURN_SND_ROUTE_RIGHT);
+		QscSetRoute(BURN_SND_QSND_OUTPUT_1, (Cps2Volume / 39.0)*2, BURN_SND_ROUTE_LEFT);
+		QscSetRoute(BURN_SND_QSND_OUTPUT_2, (Cps2Volume / 39.0)*2, BURN_SND_ROUTE_RIGHT);
 	}
 	
 	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank

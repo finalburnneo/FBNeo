@@ -761,3 +761,31 @@ struct BurnDriver BurnDrvLabyrunrk = {
 	DrvInit, DrvExit, DrvFrame,DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 280, 3, 4
 };
+
+
+// Labyrinth Runner (World Ver. F)
+
+static struct BurnRomInfo labyrunrfRomDesc[] = {
+	{ "771k04.10f",		0x10000, 0x86a36806, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+	{ "771k03.8f",		0x10000, 0x6c073295, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "771d01a.13a",	0x10000, 0x0cd1ed1a, 2 | BRF_GRA },           //  2 Graphics Tiles
+	{ "771d01c.13a",	0x10000, 0xd75521fe, 2 | BRF_GRA },           //  3
+	{ "771d01b",		0x10000, 0x07f2a71c, 2 | BRF_GRA },           //  4
+	{ "771d01d",		0x10000, 0xf6810a49, 2 | BRF_GRA },           //  5
+
+	{ "771d02.08d",		0x00100, 0x3d34bb5a, 3 | BRF_GRA },           //  6 Sprite Color Lookup Tables
+};
+
+STD_ROM_PICK(labyrunrf)
+STD_ROM_FN(labyrunrf)
+
+struct BurnDriver BurnDrvLabyrunrf = {
+	"labyrunrf", "tricktrp", NULL, NULL, "1987",
+	"Labyrinth Runner (World Ver. F)\0", NULL, "Konami", "GX771",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	NULL, labyrunrfRomInfo, labyrunrfRomName, NULL, NULL, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
+	DrvInit, DrvExit, DrvFrame,DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 280, 3, 4
+};

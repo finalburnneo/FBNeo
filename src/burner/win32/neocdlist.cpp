@@ -86,6 +86,7 @@ struct NGCDGAME games[] =
 	{ _T("kof95r1")		, _T("The King of Fighters '95 (JP-US)(Rev 1)")				, _T("1995")	, _T("SNK")					, 0x1084 },		//
 	{ _T("ssrpg")		, _T("Samurai Shodown RPG / Shinsetsu Samurai Spirits - Bushidohretsuden")		, _T("1997")	, _T("SNK")					, 0x0085 },		//
 	{ _T("ssrpgen")		, _T("Samurai Shodown RPG (English Translation)")			, _T("1997")	, _T("SNK")					, 0x1085 },		//
+	{ _T("ssrpgen11")	, _T("Samurai Shodown RPG (English Translation v1.1)")		, _T("1997")	, _T("SNK")					, 0x3085 },		//
 	{ _T("ssrpgfr")		, _T("Samurai Shodown RPG (French Translation)")			, _T("1997")	, _T("SNK")					, 0x2085 },		//
 	{ _T("samsho3")		, _T("Samurai Shodown 3 / Samurai Spirits 3")				, _T("1995")	, _T("SNK")					, 0x0087 },		//
 	{ _T("stakwin")		, _T("Stakes Winner - GI Kanzen Seiha Heno Machi")			, _T("1995")	, _T("Saurus")				, 0x0088 },		//
@@ -132,11 +133,29 @@ struct NGCDGAME games[] =
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
+	{ _T("jumpnrun")	, _T("Jump & Run")											, _T("2020")	, _T("Blastar")				, 0x2006 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
 	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//
+	{ _T("blockpanicdx"), _T("Block Panic DX")										, _T("2025")	, _T("Blastar")				, 0x2023 },		//
 	{ _T("hypernoid")	, _T("Hypernoid")											, _T("2022")	, _T("NeoHomeBrew.com")		, 0x0600 },		//
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
+	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//
+	{ _T("karnov")		, _T("Karnov")												, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0283 },		//
+	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0062 },		//
+	{ _T("chelnov")		, _T("Atomic Runner Chelnov")								, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x1320 },		//
+	{ _T("eightman")	, _T("Eight Man")											, _T("2024")	, _T("SNK / Pallas (iq_132 conversion)")	, 0x0025 },		//
+	{ _T("gururin")		, _T("Gururin")												, _T("2024")	, _T("Face (iq_132 conversion)")	, 0x0067 },		//
+	{ _T("kotm")		, _T("King of the Monsters")								, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0016 },		//
+	{ _T("legendos")	, _T("Legend of Success Joe")								, _T("2024")	, _T("SNK / Wave (iq_132 conversion)")	, 0x0029 },		//
+	{ _T("neomrdo")		, _T("Neo Mr. Do!")											, _T("2024")	, _T("Visco (iq_132 conversion)")	, 0x0207 },		//
+	{ _T("pnyaa")		, _T("Pochi and Nyaa")										, _T("2024")	, _T("Aiky / Taito (iq_132 conversion)")	, 0x0267 },		//
+	{ _T("sbp")			, _T("Super Bubble Pop")									, _T("2024")	, _T("Vektorlogic (iq_132 conversion)")	, 0xfedc },		//
+	{ _T("zupapa")		, _T("Zupapa!")												, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0070 },		//
+	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
+	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
+	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//
+	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
 };
 
 static char szVolumeID[64];
@@ -342,6 +361,11 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 				// Samurai Shodown RPG (English Translation)
 				if (nID == 0x0085 && nDate[0]==123 && nDate[1]==11 && nDate[2]==29) {
 					nID |= 0x1000;
+				}
+
+				// Samurai Shodown RPG (English Translation v1.1)
+				if (nID == 0x0085 && nDate[0]==124 && nDate[1]==1 && nDate[2]==26) {
+					nID |= 0x3000;
 				}
 
 				// Double Dragon Rev 1

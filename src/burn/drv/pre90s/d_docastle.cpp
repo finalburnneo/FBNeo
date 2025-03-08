@@ -1089,7 +1089,7 @@ struct BurnDriver BurnDrvDocastleo = {
 	192, 240, 3, 4
 };
 
-// Mr. Do vs. Unicorns
+// Mr. Do! vs. Unicorns (Japan)
 
 static struct BurnRomInfo douniRomDesc[] = {
 	{ "dorev1.bin",		0x2000, 0x1e2cbb3c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1116,7 +1116,7 @@ STD_ROM_FN(douni)
 
 struct BurnDriver BurnDrvDouni = {
 	"douni", "docastle", NULL, NULL, "1983",
-	"Mr. Do vs. Unicorns\0", NULL, "Universal", "Miscellaneous",
+	"Mr. Do! vs. Unicorns (Japan)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, douniRomInfo, douniRomName, NULL, NULL, NULL, NULL, DocastleInputInfo, DocastleDIPInfo,

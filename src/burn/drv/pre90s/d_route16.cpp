@@ -904,7 +904,7 @@ static INT32 route16aInit()
 
 struct BurnDriver BurnDrvroute16a = {
 	"route16a", "route16", NULL, NULL, "1981",
-	"Route 16 (Centuri license, set 1)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
+	"Route 16 (Centuri license, set 1)\0", NULL, "Sun Electronics / Tehkan (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16aRomInfo, route16aRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
@@ -964,7 +964,7 @@ static INT32 route16bInit()
 
 struct BurnDriver BurnDrvroute16b = {
 	"route16b", "route16", NULL, NULL, "1981",
-	"Route 16 (Centuri license, set 2)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
+	"Route 16 (Centuri license, set 2)\0", NULL, "Sun Electronics / Tehkan (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16bRomInfo, route16bRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
@@ -1016,7 +1016,7 @@ static INT32 route16cInit()
 
 struct BurnDriver BurnDrvroute16c = {
 	"route16c", "route16", NULL, NULL, "1981",
-	"Route 16 (Centuri license, set 3, bootleg?)\0", NULL, "Tehkan / Sun Electronics (Centuri license)", "Route 16",
+	"Route 16 (Centuri license, set 3, bootleg?)\0", NULL, "Sun Electronics / Tehkan (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16cRomInfo, route16cRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,

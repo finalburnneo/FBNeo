@@ -1664,10 +1664,10 @@ STD_ROM_FN(sailormnrot)
 
 // Pretty Soldier Sailor Moon (Black Moon, Hack)
 // Modified by Jane Eyre
-// GOTVG 20240216
+// GOTVG 20240505
 
 static struct BurnRomInfo sailmnhyRomDesc[] = {
-	{ "bpsmxy945a.u45",	0x080000, 0xf83b655d, BRF_ESS | BRF_PRG },
+	{ "bpsmhy945a.u45",	0x080000, 0xce0dfc34, BRF_ESS | BRF_PRG },
 	SAILORMN_REGIONS_COMPONENTS
 };
 
@@ -1676,10 +1676,10 @@ STD_ROM_FN(sailmnhy)
 
 // Pretty Soldier Sailor Moon (New Moon, Hack)
 // Modified by Jane Eyre
-// GOTVG 20240216
+// GOTVG 20240504
 
 static struct BurnRomInfo sailmnxyRomDesc[] = {
-	{ "bpsmxy945a.u45",	0x080000, 0x2a4143ab, BRF_ESS | BRF_PRG },
+	{ "bpsmxy945a.u45",	0x080000, 0x00fff8e9, BRF_ESS | BRF_PRG },
 	SAILORMN_REGIONS_COMPONENTS
 };
 
@@ -1721,6 +1721,18 @@ static struct BurnRomInfo sailmnyyRomDesc[] = {
 STD_ROM_PICK(sailmnyy)
 STD_ROM_FN(sailmnyy)
 
+// Pretty Soldier Sailor Moon (Moonlight, Hack)
+// Modified by 10Lo
+// GOTVG 20241210
+
+static struct BurnRomInfo sailmnygRomDesc[] = {
+	{ "bpsmyg945a.u45",	0x080000, 0x993a51fc, BRF_ESS | BRF_PRG },
+	SAILORMN_REGIONS_COMPONENTS
+};
+
+STD_ROM_PICK(sailmnyg)
+STD_ROM_FN(sailmnyg)
+
 #undef SAILORMN_REGIONS_COMPONENTS
 #undef SAILORMN_REGIONS
 
@@ -1740,10 +1752,10 @@ STD_ROM_FN(sailmnkf)
 
 // Pretty Soldier Sailor Moon (10-Lo, Hack)
 // Modified by 10Lo
-// GOTVG 20231221
+// GOTVG 20240313
 
 static struct BurnRomInfo sailmnslRomDesc[] = {
-	{ "bpsmsl945a.u45",		0x080000, 0x8b7be034, BRF_ESS | BRF_PRG },
+	{ "bpsmsl945a.u45",		0x080000, 0xe820d513, BRF_ESS | BRF_PRG },
 	SAILORMN_COMPONENTS
 
 	{ "sailormn_europe.nv", 0x000080, 0x59a7dc50, BRF_ESS | BRF_PRG },
@@ -2271,6 +2283,16 @@ struct BurnDriver BurnDrvSailorMoonyy = {
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
+struct BurnDriver BurnDrvSailorMoonyg = {
+	"sailmnyg", "sailormn", NULL, NULL, "2024",
+	"Pretty Soldier Sailor Moon (Moonlight, Hack)\0", NULL, "hack", "Cave",
+	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Moonlight, Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, sailmnygRomInfo, sailmnygRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
+	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
 struct BurnDriver BurnDrvSailorMoonkf = {
 	"sailmnkf", "sailormn", NULL, NULL, "2023",
 	"Bishoujo Senshi Sailor Moon (Korea-France, Hack)\0", NULL, "hack", "Cave",
@@ -2282,7 +2304,7 @@ struct BurnDriver BurnDrvSailorMoonkf = {
 };
 
 struct BurnDriver BurnDrvSailorMoonsl = {
-	"sailmnsl", "sailormn", NULL, NULL, "2023",
+	"sailmnsl", "sailormn", NULL, NULL, "2024",
 	"Bishoujo Senshi Sailor Moon (10-Lo, Hack)\0", NULL, "hack", "Cave",
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (10-Lo, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,

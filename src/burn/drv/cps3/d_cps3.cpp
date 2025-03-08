@@ -112,7 +112,7 @@ STDINPUTINFO(jojo)
 static struct BurnDIPInfo regionDIPList[] = {
 
 	// Region
-	{0,		0xFD, 0,	7,	  "Region"},
+	{0,		0xFD, 0,	9,	  "Region"},
 	{0x1B,	0x01, 0xFF,	0x01, "Japan"},
 	{0x1B,	0x01, 0xFF,	0x02, "Asia"},
 	{0x1B,	0x01, 0xFF,	0x03, "Euro"},
@@ -135,7 +135,7 @@ static struct BurnDIPInfo regionDIPList[] = {
 static struct BurnDIPInfo jojobaRegionDIPList[] = {
 
 	// Region
-	{0,		0xFD, 0,	8,	  "Region"},
+	{0,		0xFD, 0,	9,	  "Region"},
 	{0x1B,	0x01, 0xFF,	0x01, "Japan"},
 	{0x1B,	0x01, 0xFF,	0x02, "Asia"},
 	{0x1B,	0x01, 0xFF,	0x03, "Euro"},
@@ -154,7 +154,7 @@ static struct BurnDIPInfo jojobaRegionDIPList[] = {
 static struct BurnDIPInfo redeartnRegionDIPList[] = {
 
 	// Region
-	{0,		0xFD, 0,	7,	  "Region"},
+	{0,		0xFD, 0,	9,	  "Region"},
 	{0x1B,	0x01, 0xFF,	0x51, "Japan"},
 	{0x1B,	0x01, 0xFF,	0x52, "Asia"},
 	{0x1B,	0x01, 0xFF,	0x53, "Euro"},
@@ -173,7 +173,7 @@ static struct BurnDIPInfo redeartnRegionDIPList[] = {
 static struct BurnDIPInfo sfiiiwideDIPList[] = {
 
 	// Region
-	{0,		0xFD, 0,	7,	  "Region"},
+	{0,		0xFD, 0,	9,	  "Region"},
 	{0x1B,	0x01, 0x0F,	0x01, "Japan"},
 	{0x1B,	0x01, 0x0F,	0x02, "Asia"},
 	{0x1B,	0x01, 0x0F,	0x03, "Euro"},

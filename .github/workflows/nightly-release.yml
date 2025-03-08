@@ -48,10 +48,10 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Windows x32
           path: |
@@ -97,10 +97,10 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw SKIPDEPEND=1
+          make -j$(nproc) mingw SKIPDEPEND=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Windows x32 (Debug)
           path: |
@@ -140,10 +140,10 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Windows x64
           path: |
@@ -183,10 +183,10 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Windows x64 (Debug)
           path: |
@@ -227,7 +227,7 @@ jobs:
           make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Linux SDL 2
           path: |
@@ -268,7 +268,7 @@ jobs:
           make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Linux SDL 1.2
           path: |
@@ -303,7 +303,7 @@ jobs:
 #             xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Debug
 #
 #      - name: Upload Artifact
-#        uses: actions/upload-artifact@v2
+#        uses: actions/upload-artifact@v4
 #        with:
 #          name: macOS
 #          path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"

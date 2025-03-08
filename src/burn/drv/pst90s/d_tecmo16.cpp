@@ -1406,7 +1406,7 @@ struct BurnDriver BurnDrvGinkun = {
 
 struct BurnDriver BurnDrvRiot = {
 	"riot", NULL, NULL, NULL, "1992",
-	"Riot\0", NULL, "NMK", "Miscellaneous",
+	"Riot (NMK)\0", NULL, "Tecmo (NMK license)", "Miscellaneous",
 	L"\u96F7\u8ECB\u6597 Riot\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, RiotRomInfo, RiotRomName, NULL, NULL, NULL, NULL, RiotInputInfo, RiotDIPInfo,
@@ -1416,7 +1416,7 @@ struct BurnDriver BurnDrvRiot = {
 
 struct BurnDriver BurnDrvRiotw = {
 	"riotw", "riot", NULL, NULL, "1992",
-	"Riot (Woong Bi license)\0", NULL, "Woong Bi", "Miscellaneous",
+	"Riot (Woong Bi)\0", NULL, "Tecmo (Woong Bi license)", "Miscellaneous",
 	L"\u96F7\u8ECB\u6597 Riot (Woong Bi license)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, RiotwRomInfo, RiotwRomName, NULL, NULL, NULL, NULL, RiotInputInfo, RiotDIPInfo,

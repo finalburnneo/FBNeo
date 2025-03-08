@@ -2179,6 +2179,11 @@ static void scan_ym2612_internal()
 	SCAN_VAR(ym2612.dacout);
 	SCAN_VAR(ym2612.OPN);
 
+	SCAN_VAR(m2);
+	SCAN_VAR(c1);
+	SCAN_VAR(c2);
+	SCAN_VAR(mem);
+
 	for (i = 0; i < 6; i++) {
 		SCAN_VAR(ym2612.CH[i].ALGO);
 		SCAN_VAR(ym2612.CH[i].FB);
@@ -2199,6 +2204,7 @@ static void scan_ym2612_internal()
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &ym2612.CH[i].SLOT[j];
 			ba.nLen	  = STRUCT_SIZE_HELPER(FM_SLOT, AMmask);
+			ba.szName = szName;
 			BurnAcb(&ba);
 		}
 	}

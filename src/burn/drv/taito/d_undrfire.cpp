@@ -20,6 +20,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 *TaitoSpriteRamBuffered2;
 static UINT8 *TaitoSpriteRamBuffered3;
+static UINT8 *TaitoSpriteRamBuffered4;
 static UINT8 *Contrast_LUT;
 static UINT8 *Brightness_LUT;
 
@@ -365,6 +366,7 @@ static INT32 MemIndex()
 	TaitoSpriteRamBuffered = Next; Next += 0x004000;
 	TaitoSpriteRamBuffered2= Next; Next += 0x004000;
 	TaitoSpriteRamBuffered3= Next; Next += 0x004000;
+	TaitoSpriteRamBuffered4= Next; Next += 0x004000;
 	TaitoSpriteRam2		= Next; Next += 0x000400;
 	Taito68KRam1		= Next; Next += 0x020000;
 	Taito68KRam3		= Next; Next += 0x010000;
@@ -722,7 +724,7 @@ static void DrvPaletteUpdate()
 
 static void draw_sprites(INT32 *primasks,INT32 x_offs,INT32 y_offs)
 {
-	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRam;
+	UINT32 *spriteram32 = (UINT32*)TaitoSpriteRamBuffered4;
 	UINT16 *spritemap = (UINT16*)TaitoSpriteMapRom;
 	INT32 offs, tilenum, color, flipx, flipy;
 	INT32 x, y, priority, dblsize, curx, cury;
@@ -972,11 +974,11 @@ static INT32 UndrfireDraw()
 
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0x3;
 	if (TC0100SCNBottomLayer(0)) {
-		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoCharsPivot);
+		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoCharsPivot, 0);
+		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoCharsPivot, 0);
 	} else {
-		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoCharsPivot);
-		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoCharsPivot);
+		if (nSpriteEnable & 4) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoCharsPivot, 0);
+		if (nSpriteEnable & 8) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoCharsPivot, 0);
 	}
 
 	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(layer[0], 0, 1, TaitoChars);
@@ -1193,11 +1195,10 @@ static INT32 DrvFrame()
 		BurnDrvRedraw();
 	}
 
-	if (has_subcpu) { // cbombers sprites 3 frames ahead of tiles
-		memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
-		memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
-		memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
-	}
+	memcpy(TaitoSpriteRamBuffered4, TaitoSpriteRamBuffered3, 0x4000);
+	memcpy(TaitoSpriteRamBuffered3, TaitoSpriteRamBuffered2, 0x4000);
+	memcpy(TaitoSpriteRamBuffered2, TaitoSpriteRamBuffered,  0x4000);
+	memcpy(TaitoSpriteRamBuffered,  TaitoSpriteRam,			 0x4000);
 
 	return 0;
 }

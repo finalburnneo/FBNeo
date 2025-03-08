@@ -138,19 +138,19 @@ inline static void SetCurrentFrame(const UINT32 n) {
 #define BRF_NODUMP			(1 << 28)
 
 struct BurnRomInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nLen;
 	UINT32 nCrc;
 	UINT32 nType;
 };
 
 struct BurnSampleInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nFlags;
 };
 
 struct BurnHDDInfo {
-	char szName[100];
+	char *szName;
 	UINT32 nLen;
 	UINT32 nCrc;
 };
@@ -456,6 +456,7 @@ void Reinitialise();
 #define IPS_ACPU_EXPAND		(1 << 11)	// Additional request for audio cpu length.
 #define IPS_SND1_EXPAND		(1 << 12)	// Additional request for snd length.
 #define IPS_SND2_EXPAND		(1 << 13)	// Id.
+#define IPS_SNES_VRAMHK		(1 << 14)	// Allow invalid vram writes.
 
 enum IpsRomTypes { EXP_FLAG, LOAD_ROM, EXTR_ROM, PRG1_ROM, PRG2_ROM, GRA1_ROM, GRA2_ROM, GRA3_ROM, ACPU_ROM, SND1_ROM, SND2_ROM };
 extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];
@@ -463,6 +464,11 @@ extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];
 extern bool bDoIpsPatch;
 
 void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly = false);
+
+// ---------------------------------------------------------------------------
+// MISC Helper / utility functions, etc
+int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
+//int BurnComputeSHA1(const char *filename, char *hash_str);
 
 // ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure
@@ -526,6 +532,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly 
 #define HARDWARE_PREFIX_FDS                             (0x1F000000)
 #define HARDWARE_PREFIX_NGP                             (0x20000000)
 #define HARDWARE_PREFIX_CHANNELF                        (0x21000000)
+#define HARDWARE_PREFIX_SNES                            (0x22000000)
 
 #define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_NGP | 0x00000000)
 #define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_NGP | 0x00000001) // must not be 0x10000
@@ -765,6 +772,9 @@ void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly 
 
 #define HARDWARE_NES									(HARDWARE_PREFIX_NES)
 #define HARDWARE_FDS									(HARDWARE_PREFIX_FDS)
+#define HARDWARE_SNES                                   (HARDWARE_PREFIX_SNES)
+#define HARDWARE_SNES_ZAPPER                            (HARDWARE_PREFIX_SNES | 0x0000001)
+#define HARDWARE_SNES_JUSTIFIER                         (HARDWARE_PREFIX_SNES | 0x0000002)
 
 #define HARDWARE_CHANNELF                               (HARDWARE_PREFIX_CHANNELF)
 

@@ -42,6 +42,8 @@ struct Stream {
 	#define MAX_CHANNELS  8
 	INT32 nChannels;
 	bool bAddStream;
+	bool bRateChange;
+	UINT32 nNewRate;
 
 	INT16 *in_buffer[MAX_CHANNELS]; // resampler in-buffers
 	INT32 out_buffer_size;
@@ -52,16 +54,18 @@ struct Stream {
 		nSampleRateFrom = rate_from;
 		nSampleRateTo = rate_to;
 		nChannels = channels;
-		set_rate(rate_from);
+		set_rate_internal(rate_from);
 
 		stream_init(update_stream);
 	}
 	void set_rate(INT32 rate_from) {
+		bRateChange = true;
+		nNewRate = rate_from;
+	}
+	void set_rate_internal(INT32 rate_from) {
 		nSampleRateFrom = rate_from;
 		nSampleSize = (UINT64)nSampleRateFrom * (1 << 16) / ((nSampleRateTo == 0) ? 44100 : nSampleRateTo);
 		nSampleSize_Otherway = (UINT64)((nSampleRateTo == 0) ? 44100 : nSampleRateTo) * (1 << 16) / ((nSampleRateFrom == 0) ? 44100 : nSampleRateFrom);
-		// origially this restarted the frame (nPosition = 0), but this breaks
-		// qbert, as the game writes rate changes several times per frame.
 	}
 	void exit() {
 		nSampleSize = nFractionalPosition = 0;
@@ -112,6 +116,10 @@ struct Stream {
 		// mask off the whole samples from our accumulator
 		nFractionalPosition &= 0xffff;
 
+		if (bRateChange) {
+			set_rate_internal(nNewRate);
+			bRateChange = false;
+		}
 	}
 	void samplesample(INT16 *out_buffer, INT32 samples) {
 		for (INT32 i = 0; i < samples; i++, out_buffer += 2, nFractionalPosition += nSampleSize) {

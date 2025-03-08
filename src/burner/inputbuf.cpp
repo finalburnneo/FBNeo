@@ -35,6 +35,11 @@ void inputbuf_exit()
 
 #define FREEZE_EXTRA (sizeof(INT32)*4)
 
+INT32 inputbuf_freezer_size()
+{
+	return (buffer == NULL) ? 0 : (buffer_pos + FREEZE_EXTRA);
+}
+
 INT32 inputbuf_freeze(UINT8 **buf, INT32 *size)
 {
 	UINT8 *b = (UINT8*)malloc(buffer_pos + FREEZE_EXTRA);

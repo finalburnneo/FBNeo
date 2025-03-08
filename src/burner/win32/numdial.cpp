@@ -7,6 +7,31 @@ const double RADTODEG = 57.29577951308232286465f;	// Radians to Degrees
 
 static int nExitStatus;
 
+static bool bIsProperFloatString(TCHAR *szText)
+{
+	bool bValid = 1;
+	bool bPoint = 0;
+
+	if (_tcslen(szText) == 0) return 0;
+
+	// Scan string in the edit control for illegal characters
+	for (int i = 0; szText[i]; i++) {
+		if (szText[i] == _T('.')) {
+			if (bPoint) {
+				bValid = 0;
+				break;
+			}
+		} else {
+			if (!_istdigit(szText[i])) {
+				bValid = 0;
+				break;
+			}
+		}
+	}
+
+	return bValid;
+}
+
 // -----------------------------------------------------------------------------
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
@@ -49,6 +74,201 @@ int NumDialCreate(int)
 	return 1;
 }
 
+// -----------------------------------------------------------------------------
+// HardFX Shader Settings dialog
+
+static void HardFXUpdateValues(HWND hDlg)
+{
+	for (int i = 0; i < 4; i++) { // 4 edit controls!
+		TCHAR szText[18];
+		int SLIDER_ID = IDC_HARDFX_SLIDER1 + i;
+		int SLIDER_EDIT_ID = IDC_HARDFX_SLIDER_EDIT1 + i;
+		int f2i = HardFXConfigs[nVidDX9HardFX].fOptions[i] * 10000;
+		float temp = HardFXConfigs[nVidDX9HardFX].fOptions[i];
+
+		SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETPOS, (WPARAM)true, (LPARAM)f2i);
+
+		_stprintf(szText, _T("%0.2f"), temp);
+		SendDlgItemMessage(hDlg, SLIDER_EDIT_ID, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
+	}
+}
+
+static INT_PTR CALLBACK HardFXShaderSettingsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)	// LPARAM lParam
+{
+	static float nPrevSettings[4]; // for the "Cancel" button
+	int SLIDER_ID;
+	int SLIDER_ID_RAW;
+	int SLIDER_EDIT_ID;
+
+	switch (Msg) {
+		case WM_INITDIALOG: {
+			// back-up settings for "cancel" option
+			nPrevSettings[0] = HardFXConfigs[nVidDX9HardFX].fOptions[0];
+			nPrevSettings[1] = HardFXConfigs[nVidDX9HardFX].fOptions[1];
+			nPrevSettings[2] = HardFXConfigs[nVidDX9HardFX].fOptions[2];
+			nPrevSettings[3] = HardFXConfigs[nVidDX9HardFX].fOptions[3];
+
+			nExitStatus = 0;
+
+			WndInMid(hDlg, hScrnWnd);
+
+			for (int i = 0; i < 4; i++) { // 4 edit controls!
+				// Initialise option
+				SLIDER_ID = IDC_HARDFX_SLIDER1 + i;
+				SLIDER_EDIT_ID = IDC_HARDFX_SLIDER_EDIT1 + i;
+
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETRANGE, (WPARAM)0, (LPARAM)MAKELONG(1, 20000));
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETLINESIZE, (WPARAM)0, (LPARAM)200);
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETPAGESIZE, (WPARAM)0, (LPARAM)250);
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETTIC, (WPARAM)0, (LPARAM)7500);
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETTIC, (WPARAM)0, (LPARAM)10001);
+				SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETTIC, (WPARAM)0, (LPARAM)12500);
+
+				// Set Controlbox heading
+				TCHAR szHeading[255] = _T("Not Available");
+				HWND hHeading = GetDlgItem(hDlg, IDC_SPRITE1 + i);
+				SetWindowText(hHeading, (i < HardFXConfigs[nVidDX9HardFX].nOptions) ? ANSIToTCHAR(HardFXConfigs[nVidDX9HardFX].szOptions[i], NULL, 0) : szHeading);
+				if (i >= HardFXConfigs[nVidDX9HardFX].nOptions) {
+					EnableWindow(hHeading, FALSE);
+					HWND hSlider = GetDlgItem(hDlg, SLIDER_ID);
+					HWND hSliderEdit = GetDlgItem(hDlg, SLIDER_EDIT_ID);
+					EnableWindow(hSlider, FALSE);
+					EnableWindow(hSliderEdit, FALSE);
+				}
+			}
+
+			HardFXUpdateValues(hDlg);
+
+			// Update the screen
+			if (bVidOkay) {
+				VidRedraw();
+				VidPaint(0);
+			}
+
+			return TRUE;
+		}
+		case WM_COMMAND: {
+			switch (HIWORD(wParam)) {
+				case BN_CLICKED: {
+					if (LOWORD(wParam) == IDOK) {
+						nExitStatus = 1;
+						SendMessage(hDlg, WM_CLOSE, 0, 0);
+					}
+					if (LOWORD(wParam) == IDCANCEL) {
+						nExitStatus = -1;
+						SendMessage(hDlg, WM_CLOSE, 0, 0);
+					}
+					if (LOWORD(wParam) == IDRETRY) { // [Defaults] Button is here!
+						HardFXConfigs[nVidDX9HardFX].hardfx_config_load_defaults();
+						HardFXUpdateValues(hDlg);
+					}
+					break;
+				}
+				case EN_UPDATE: {
+					SLIDER_ID = -1;
+					SLIDER_EDIT_ID = -1;
+					switch (LOWORD(wParam)) {
+						case IDC_HARDFX_SLIDER_EDIT1:
+						case IDC_HARDFX_SLIDER_EDIT2:
+						case IDC_HARDFX_SLIDER_EDIT3:
+						case IDC_HARDFX_SLIDER_EDIT4:
+							SLIDER_EDIT_ID = LOWORD(wParam);
+							SLIDER_ID = IDC_HARDFX_SLIDER1 + (SLIDER_EDIT_ID - IDC_HARDFX_SLIDER_EDIT1);
+							SLIDER_ID_RAW = SLIDER_ID - IDC_HARDFX_SLIDER1;
+							break;
+					}
+					if (nExitStatus == 0 && SLIDER_ID != -1) {
+						TCHAR szText[18] = _T("");
+						bool bValid = 1;
+
+						if (SendDlgItemMessage(hDlg, SLIDER_EDIT_ID, WM_GETTEXTLENGTH, (WPARAM)0, (LPARAM)0) < 16) {
+							SendDlgItemMessage(hDlg, SLIDER_EDIT_ID, WM_GETTEXT, (WPARAM)16, (LPARAM)szText);
+						}
+
+						bValid = bIsProperFloatString(szText);
+
+						if (bValid) {
+							float fTemp = _tcstod(szText, NULL);
+							int nPos = fTemp * 10000;
+
+							HardFXConfigs[nVidDX9HardFX].fOptions[SLIDER_ID_RAW] = fTemp;
+
+							SendDlgItemMessage(hDlg, SLIDER_ID, TBM_SETPOS, (WPARAM)true, (LPARAM)nPos);
+
+							if (bVidOkay) {
+								VidRedraw();
+								VidPaint(0);
+							}
+						}
+					}
+					break;
+				}
+				break;
+			}
+		}
+
+		case WM_HSCROLL: {
+			switch (LOWORD(wParam)) {
+				case TB_BOTTOM:
+				case TB_ENDTRACK:
+				case TB_LINEDOWN:
+				case TB_LINEUP:
+				case TB_PAGEDOWN:
+				case TB_PAGEUP:
+				case TB_THUMBPOSITION:
+				case TB_THUMBTRACK:
+				case TB_TOP: {
+					if (nExitStatus == 0) {
+						// Update the contents of the edit control
+						SLIDER_ID = -1;
+						SLIDER_EDIT_ID = -1;
+						switch (GetDlgCtrlID((HWND)lParam)) {
+							case IDC_HARDFX_SLIDER1:
+							case IDC_HARDFX_SLIDER2:
+							case IDC_HARDFX_SLIDER3:
+							case IDC_HARDFX_SLIDER4:
+								SLIDER_ID = GetDlgCtrlID((HWND)lParam);// - IDC_HARDFX_SLIDER1;
+								SLIDER_EDIT_ID = IDC_HARDFX_SLIDER_EDIT1 + (SLIDER_ID - IDC_HARDFX_SLIDER1);
+								SLIDER_ID_RAW = SLIDER_ID - IDC_HARDFX_SLIDER1;
+
+								// Update the contents of the edit control
+								int nPos = SendDlgItemMessage(hDlg, SLIDER_ID, TBM_GETPOS, (WPARAM)0, (LPARAM)0);
+								float fTemp = (float)nPos / 10000;
+								HardFXConfigs[nVidDX9HardFX].fOptions[SLIDER_ID_RAW] = fTemp;
+
+								HardFXUpdateValues(hDlg);
+
+								if (bVidOkay) {
+									VidRedraw();
+									VidPaint(0);
+								}
+						}
+						break;
+					}
+				}
+				break;
+			}
+			break;
+		}
+
+		case WM_CLOSE:
+			if (nExitStatus != 1) {
+				// cancel pressed, restore backed-up settings
+				HardFXConfigs[nVidDX9HardFX].fOptions[0] = nPrevSettings[0];
+				HardFXConfigs[nVidDX9HardFX].fOptions[1] = nPrevSettings[1];
+				HardFXConfigs[nVidDX9HardFX].fOptions[2] = nPrevSettings[2];
+				HardFXConfigs[nVidDX9HardFX].fOptions[3] = nPrevSettings[3];
+			}
+			EndDialog(hDlg, 0);
+	}
+
+	return 0;
+}
+
+void HardFXShaderSettingsDialog()
+{
+	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_HARDFXSETTINGS), hScrnWnd, (DLGPROC)HardFXShaderSettingsProc);
+}
 // -----------------------------------------------------------------------------
 // Gamma dialog
 

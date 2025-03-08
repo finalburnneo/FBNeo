@@ -2313,8 +2313,8 @@ static struct BurnRomInfo gratiaRomDesc[] = {
 	{ "mr94019-05.15",						0x200000, 0xa16994df, 2 | BRF_GRA },           //  8
 	{ "mr94019-06.3",						0x200000, 0x01d52ef1, 2 | BRF_GRA },           //  9
 
-	{ "mr94019-08.12",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
-	{ "mr94019-09.11",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
+	{ "mr94019-08.11",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
+	{ "mr94019-09.12",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
 
 	{ "94019_2.07",							0x200000, 0x043f969b, 4 | BRF_GRA },           // 12 Background Tiles
 
@@ -2357,8 +2357,8 @@ static struct BurnRomInfo gratiaaRomDesc[] = {
 	{ "mr94019-05.15",						0x200000, 0xa16994df, 2 | BRF_GRA },           //  8
 	{ "mr94019-06.3",						0x200000, 0x01d52ef1, 2 | BRF_GRA },           //  9
 
-	{ "mr94019-08.12",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
-	{ "mr94019-09.11",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
+	{ "mr94019-08.11",						0x200000, 0xabd124e0, 3 | BRF_GRA },           // 10 ROZ Tiles
+	{ "mr94019-09.12",						0x200000, 0x711ab08b, 3 | BRF_GRA },           // 11
 
 	{ "mr94019-07.10",						0x200000, 0x561a786b, 4 | BRF_GRA },           // 12 Background Tiles
 
@@ -2841,7 +2841,7 @@ struct BurnDriver BurnDrvBnstars1 = {
 };
 
 
-// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)
+// Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem 32 Version)
 
 static struct BurnRomInfo bnstarsRomDesc[] = {
 	{ "vsjanshi_26_ver1.1.26",				0x080000, 0x75eeec8f, 1 | BRF_PRG | BRF_ESS }, //  0 V70 Code
@@ -2876,7 +2876,7 @@ STD_ROM_FN(bnstars)
 
 struct BurnDriver BurnDrvBnstars = {
 	"bnstars", "bnstars1", NULL, NULL, "1997",
-	"Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)\0", NULL, "Jaleco", "MegaSystem 32",
+	"Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem 32 Version)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, bnstarsRomInfo, bnstarsRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,

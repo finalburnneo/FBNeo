@@ -391,7 +391,7 @@ STD_ROM_FN(mole)
 
 struct BurnDriver BurnDrvMole = {
 	"mole", NULL, NULL, NULL, "1982",
-	"Mole Attack\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
+	"Mole Attack\0", NULL, "Yachiyo Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, moleRomInfo, moleRomName, NULL, NULL, NULL, NULL, MoleInputInfo, MoleDIPInfo,

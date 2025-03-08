@@ -508,8 +508,8 @@ static INT32 MemIndex()
 
 // sub(sprite) cpu could be one of 4 cpu-types
 // for ease - we'll access all of them via the cpu registry in the cheat engine.
-static cheat_core *cheat_ptr;
-static cpu_core_config *cheat_subptr;
+static cheat_core *cheat_ptr = NULL;
+static cpu_core_config *cheat_subptr = NULL;
 
 static void subInit()
 {
@@ -559,7 +559,10 @@ static void subReset()
 
 static void subExit()
 {
-	cheat_subptr->exit();
+	if (cheat_subptr) cheat_subptr->exit();
+
+	cheat_ptr = NULL;
+	cheat_subptr = NULL;
 }
 
 static INT32 subScan(INT32 nAction)

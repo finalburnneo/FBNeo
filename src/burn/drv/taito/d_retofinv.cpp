@@ -930,7 +930,7 @@ struct BurnDriver BurnDrvRetofinv = {
 };
 
 
-// Return of the Invaders (bootleg w/MCU)
+// Return of the Invaders (bootleg, with MCU)
 
 static struct BurnRomInfo retofinvbRomDesc[] = {
 	{ "a37-03.70",	0x2000, 0xeae7459d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -964,7 +964,7 @@ STD_ROM_FN(retofinvb)
 
 struct BurnDriver BurnDrvRetofinvb = {
 	"retofinvb", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg w/MCU)\0", NULL, "bootleg", "Miscellaneous",
+	"Return of the Invaders (bootleg, with MCU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofinvbRomInfo, retofinvbRomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
@@ -973,7 +973,7 @@ struct BurnDriver BurnDrvRetofinvb = {
 };
 
 
-// Return of the Invaders (bootleg no MCU set 1)
+// Return of the Invaders (bootleg, without MCU, set 1)
 
 static struct BurnRomInfo retofinvb1RomDesc[] = {
 	{ "roi.02",	0x2000, 0xd98fd462, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1005,7 +1005,7 @@ STD_ROM_FN(retofinvb1)
 
 struct BurnDriver BurnDrvRetofinvb1 = {
 	"retofinvb1", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg no MCU set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Return of the Invaders (bootleg, without MCU, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofinvb1RomInfo, retofinvb1RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
@@ -1014,7 +1014,7 @@ struct BurnDriver BurnDrvRetofinvb1 = {
 };
 
 
-// Return of the Invaders (bootleg no MCU set 2)
+// Return of the Invaders (bootleg, without MCU, set 2)
 
 static struct BurnRomInfo retofinvb2RomDesc[] = {
 	{ "ri-c.1e",	0x2000, 0xe3c31260, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1046,7 +1046,7 @@ STD_ROM_FN(retofinvb2)
 
 struct BurnDriver BurnDrvRetofinvb2 = {
 	"retofinvb2", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg no MCU set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Return of the Invaders (bootleg, without MCU, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofinvb2RomInfo, retofinvb2RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
@@ -1054,7 +1054,7 @@ struct BurnDriver BurnDrvRetofinvb2 = {
 	224, 288, 3, 4
 };
 
-// Return of the Invaders (bootleg no MCU set 3)
+// Return of the Invaders (bootleg, without MCU, set 3)
 
 static struct BurnRomInfo retofinvb3RomDesc[] = {
 	{ "1.11",		0x2000, 0x71c216ca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1090,10 +1090,51 @@ STD_ROM_FN(retofinvb3)
 
 struct BurnDriver BurnDrvRetofinvb3 = {
 	"retofinvb3", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg no MCU set 3)\0", NULL, "bootleg", "Miscellaneous",
+	"Return of the Invaders (bootleg, without MCU, set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofinvb3RomInfo, retofinvb3RomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
+	224, 288, 3, 4
+};
+
+
+// Return of the Invaders (Video Dens bootleg, without MCU)
+
+static struct BurnRomInfo retofinvbvRomDesc[] = {
+	{ "03.bin",		0x2000, 0xa5cfa153, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "02.bin",		0x2000, 0x3379f930, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "01.bin",		0x2000, 0x3ae7c530, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "04.bin",		0x2000, 0xd2899cc1, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "05.bin",		0x2000, 0x9025abea, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "16.bin",		0x2000, 0x4e3f501c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "10.bin",		0x2000, 0x6afdeec8, 5 | BRF_GRA },           //  6 Sprites
+	{ "11.bin",		0x2000, 0xd3dc9da3, 5 | BRF_GRA },           //  7
+	{ "12.bin",		0x2000, 0xd10b2eed, 5 | BRF_GRA },           //  8
+	{ "13.bin",		0x2000, 0x00ca6b3d, 5 | BRF_GRA },           //  9
+
+	{ "14.bin",		0x2000, 0xef7f8651, 6 | BRF_GRA },           // 10 Tiles
+	{ "15.bin",		0x2000, 0x03b40905, 6 | BRF_GRA },           // 11
+
+	{ "74s287.b",	0x0100, 0xe9643b8b, 7 | BRF_GRA },           // 12 Color Proms
+	{ "74s287.c",	0x0100, 0xe8f34e11, 7 | BRF_GRA },           // 13
+	{ "74s287.a",	0x0100, 0x50030af0, 7 | BRF_GRA },           // 14
+	{ "82s191n",	0x0800, 0x93c891e3, 7 | BRF_GRA },           // 15
+};
+
+STD_ROM_PICK(retofinvbv)
+STD_ROM_FN(retofinvbv)
+
+struct BurnDriver BurnDrvRetofinvbv = {
+	"retofinvbv", "retofinv", NULL, NULL, "1985",
+	"Return of the Invaders (Video Dens bootleg, without MCU)\0", NULL, "bootleg (Video Dens)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, retofinvbvRomInfo, retofinvbvRomName, NULL, NULL, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };

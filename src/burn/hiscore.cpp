@@ -223,6 +223,16 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						// confirm the StartValue/EndValue in memory @ bootup, but not confirm that the value has stuck
 						// a frame after it has been written, since this is impossible.
 
+						if ( (!strcmp(name, "cppicf")) || (!strcmp(name, "cppicf2")) ) {
+							bprintf(0, _T("-- cppicf* noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
+						if ( (!strcmp(name, "megadon")) ) {
+							bprintf(0, _T("-- megadon* noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
 						if (!strcmp(name, "dbreed") && HiscoreMemRange[nHiscoreNumRanges].Address == 0x88959) {
 							bprintf(0, _T("-- dbreed noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
@@ -567,6 +577,8 @@ void HiscoreApply()
 
 			if (cheat_subptr->read(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cheat_subptr->read(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
 				HiscoreMemRange[i].ApplyNextFrame = 1;
+			} else {
+				HiscoreMemRange[i].ApplyNextFrame = 0;
 			}
 			cheat_subptr->close();
 		}

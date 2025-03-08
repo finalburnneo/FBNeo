@@ -523,7 +523,7 @@ struct BurnDriver BurnDrvAkkaarrh = {
 	"akkaarrh", NULL, NULL, NULL, "1982",
 	"Akka Arrh (prototype)\0", "Video issue when zooming", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, akkaarrhRomInfo, akkaarrhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3

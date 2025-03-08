@@ -69,13 +69,13 @@ depobj	+= 	neocdlist.o \
 			\
 			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o \
 			cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata.o \
-			inpdipsw.o vid_sdlfx.o inputbuf.o replay.o vid_sdlopengl.o input.o stated.o
+			inpdipsw.o vid_sdlfx.o inputbuf.o replay.o vid_sdlopengl.o input_sdl.o stated.o
 
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \
 			\
 			7zArcIn.o 7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zFile.o 7zStream.o Alloc.o Bcj2.o Bra.o Bra86.o BraIA64.o CpuArch.o \
-			Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
+			Delta.o LzFindOpt.o LzmaDec.o Lzma2Dec.o MtDec.o Ppmd7.o Ppmd7Dec.o Ppmd7aDec.o Sha256.o Sha1Opt.o Sha256Opt.o Threads.o Xxh64.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o ZstdDec.o
 endif
 
 autobj += $(depobj)
@@ -173,7 +173,7 @@ CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   $(PLATFLAGS) $(DEF) $(incdir)
 
 CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
-	   -Wall -W -Wno-long-long \
+	   -Wall -W -Wno-long-long -Wno-sign-compare \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   -Wno-conversion -Wno-attributes \

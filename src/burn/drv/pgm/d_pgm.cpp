@@ -7137,6 +7137,42 @@ struct BurnDriver BurnDrvkovqhsgsd = {
 };
 
 
+// Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V302CN, China)
+
+/* VER: V300CN  V302CN
+   DATE: DEC 29  2010
+   TIME: 16:31:32 */
+   
+static struct BurnRomInfo kovqhsgs302RomDesc[] = {
+	{ "27c322.u3",  				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a01.u8",						0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a23.u9",						0x1000000, 0x1f51c140, 3 | BRF_GRA },			//  3
+	{ "a45.u10",					0x1000000, 0x5e44fd82, 3 | BRF_GRA },			//  4
+
+	{ "b01.u6",						0x1000000, 0x779825d3, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
+
+	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovqhsgs302, kovqhsgs302, pgm)
+STD_ROM_FN(kovqhsgs302)
+
+struct BurnDriver BurnDrvkovqhsgs302 = {
+	"kovqhsgs302", "kovsh", "pgm", NULL, "1999",
+	"Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V302CN, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"\u62f3\u7687\u4e09\u56fd\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V302CN, China)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovqhsgs302RomInfo, kovqhsgs302RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovqhsgsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Luanshi Quanhuang 2 (bootleg of Knights of Valour Super Heroes Plus, ver. 200CN)
 
 static struct BurnRomInfo kovlsqh2RomDesc[] = {

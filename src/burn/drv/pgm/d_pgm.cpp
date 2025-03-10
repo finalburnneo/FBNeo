@@ -6950,22 +6950,24 @@ struct BurnDriver BurnDrvPgemeni = {
    CREDITS TO: "GC8TECH.COM" AND IQ_132 */
 
 static struct BurnRomInfo kovgsyxRomDesc[] = {
+//  kovqhsgs302 in MAME
 	{ "igs_m3004.u3",				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
 
-	// none of the other roms aside from the program have been dumped, use parent's
-	{ "pgm_t0600.u2",    			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
+	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "pgm_a0600.u3",	   			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a0601.u4",	   			0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
-	{ "pgm_a0602.u6",	   			0x0800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
-	{ "igs_a05401w064.u8",	   		0x0800000, 0x4fd3413e, 3 | BRF_GRA }, 	        //  5
+	{ "a01.u8",						0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a23.u9",						0x1000000, 0x1f51c140, 3 | BRF_GRA },			//  3
+	{ "a45.u10",					0x1000000, 0x5e44fd82, 3 | BRF_GRA },			//  4
 
-	{ "pgm_b0600.u9",	   			0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05401w064.u11",	   		0x0800000, 0x60999757, 4 | BRF_GRA },			//  7
+	{ "b01.u6",						0x1000000, 0x779825d3, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
 
-	{ "pgm_m0600.u5",	   			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
+	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
-	{ "kovsh_v100_china.asic", 		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  9 Internal ARM7 Rom
+	#if !defined ROM_VERIFY
+	{ "gsyx_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)
@@ -7133,42 +7135,6 @@ struct BurnDriver BurnDrvkovqhsgsd = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqhsgsdRomInfo, kovqhsgsdRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovqhsgsdInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
-// Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V302CN, China)
-
-/* VER: V300CN  V302CN
-   DATE: DEC 29  2010
-   TIME: 16:31:32 */
-   
-static struct BurnRomInfo kovqhsgs302RomDesc[] = {
-	{ "27c322.u3",  				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-
-	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "a01.u8",						0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a23.u9",						0x1000000, 0x1f51c140, 3 | BRF_GRA },			//  3
-	{ "a45.u10",					0x1000000, 0x5e44fd82, 3 | BRF_GRA },			//  4
-
-	{ "b01.u6",						0x1000000, 0x779825d3, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
-
-	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
-
-	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
-};
-
-STDROMPICKEXT(kovqhsgs302, kovqhsgs302, pgm)
-STD_ROM_FN(kovqhsgs302)
-
-struct BurnDriver BurnDrvkovqhsgs302 = {
-	"kovqhsgs302", "kovsh", "pgm", NULL, "1999",
-	"Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V302CN, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"\u62f3\u7687\u4e09\u56fd\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V302CN, China)\0", NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovqhsgs302RomInfo, kovqhsgs302RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
-	kovqhsgsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

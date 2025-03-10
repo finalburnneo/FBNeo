@@ -11,11 +11,12 @@ CPSINPSET
 CPSINPSET
 #undef  INP
 
-// forgottn dials
+// forgottn, ecofght dials
 UINT16 CpsInp055 = 0;
 UINT16 CpsInp05d = 0;
-UINT8 CpsDigUD[4] = {0, 0, 0, 0};
 INT32 nDial055, nDial05d;
+// forgottn digital rotate
+UINT8 CpsDigUD[4] = {0, 0, 0, 0};
 
 // puzloop paddles
 INT16 CpsInpPaddle1 = 0;
@@ -52,6 +53,7 @@ INT32 Wofhfh = 0;
 INT32 Wofsgzb = 0;
 INT32 Wof3js = 0;
 INT32 Knightsh = 0;
+INT32 Ecofght = 0;
 
 ClearOpposite<4, UINT8> clear_opposite;
 
@@ -86,6 +88,12 @@ void CpsRwScan()
 	}
 
 	if (Forgottn) {
+		SCAN_VAR(nDial055);
+		SCAN_VAR(nDial05d);
+	}
+
+	// PJT: adding this separately in case we need to change it
+	if (Ecofght) {
 		SCAN_VAR(nDial055);
 		SCAN_VAR(nDial05d);
 	}
@@ -319,6 +327,22 @@ static UINT8 CpsReadPort(const UINT32 ia)
 		
 		// Forgotten Worlds Dial
 		if (Forgottn) {
+			if (ia == 0x053) {
+				return (nDial055 >> 0) & 0xff;
+			}
+			if (ia == 0x055) {
+				return (nDial055 >> 8) & 0x0f;
+			}
+			if (ia == 0x05B) {
+				return (nDial05d >> 0) & 0xff;
+			}
+			if (ia == 0x05D) {
+				return (nDial05d >> 8) & 0x0f;
+			}
+		}	
+
+		// Eco Fighters Worlds Dial
+		if (Ecofght) {
 			if (ia == 0x053) {
 				return (nDial055 >> 0) & 0xff;
 			}
@@ -594,6 +618,22 @@ INT32 CpsRwGetInp()
 		Inp177  |= (CpsInp179[0] & 1) << 6;
 
 	if (Forgottn) {
+		// Handle analog controls
+		if (fFakeDip & 0x80) {
+			if (CpsDigUD[0]) nDial055 += 0x40; // p1
+			if (CpsDigUD[1]) nDial055 -= 0x40;
+			if (CpsDigUD[2]) nDial05d += 0x40; // p2
+			if (CpsDigUD[3]) nDial05d -= 0x40;
+		} else {
+			if (CpsDigUD[0]) nDial055 -= 0x40; // p1
+			if (CpsDigUD[1]) nDial055 += 0x40;
+			if (CpsDigUD[2]) nDial05d -= 0x40; // p2
+			if (CpsDigUD[3]) nDial05d += 0x40;
+		}
+	}
+
+	// PJT: This likely needs to be changed
+	if (Ecofght) {
 		// Handle analog controls
 		if (fFakeDip & 0x80) {
 			if (CpsDigUD[0]) nDial055 += 0x40; // p1

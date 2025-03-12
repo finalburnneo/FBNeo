@@ -13256,10 +13256,10 @@ struct BurnDriver BurnDrvsnes_Jpark = {
 	512, 448, 4, 3
 };
 
-// Jurassic Park Part 2 - The Chaos Continues (USA)
+// Jurassic Park II - The Chaos Continues (USA)
 
 static struct BurnRomInfo snes_Jpark2RomDesc[] = {
-	{ "Jurassic Park Part 2 - The Chaos Continues (U)(1994)(Ocean).sfc", 2097152, 0x836ee990, BRF_ESS | BRF_PRG },
+	{ "Jurassic Park II - The Chaos Continues (U)(1994)(Ocean).sfc", 2097152, 0x836ee990, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Jpark2)
@@ -13267,7 +13267,7 @@ STD_ROM_FN(snes_Jpark2)
 
 struct BurnDriver BurnDrvsnes_Jpark2 = {
 	"snes_jpark2", NULL, NULL, NULL, "1994",
-	"Jurassic Park Part 2 - The Chaos Continues (USA)\0", NULL, "Ocean", "Nintendo",
+	"Jurassic Park II - The Chaos Continues (USA)\0", NULL, "Ocean", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Jpark2RomInfo, snes_Jpark2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -14772,6 +14772,44 @@ struct BurnDriver BurnDrvsnes_Lemmings = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_LemmingsRomInfo, snes_LemmingsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lemmings (Euro)
+
+static struct BurnRomInfo snes_LemmingseRomDesc[] = {
+	{ "Lemmings (E)(1992)(Sunsoft - Psygnosis).sfc", 1048576, 0xaebadcef, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lemmingse)
+STD_ROM_FN(snes_Lemmingse)
+
+struct BurnDriver BurnDrvsnes_Lemmingse = {
+	"snes_lemmingse", "snes_lemmings", NULL, NULL, "1992",
+	"Lemmings (Euro)\0", NULL, "Sunsoft - Psygnosis", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LemmingseRomInfo, snes_LemmingseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lemmings (Japan)
+
+static struct BurnRomInfo snes_LemmingsjRomDesc[] = {
+	{ "Lemmings (J)(1991)(Sunsoft - Psygnosis).sfc", 1048576, 0x13027564, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lemmingsj)
+STD_ROM_FN(snes_Lemmingsj)
+
+struct BurnDriver BurnDrvsnes_Lemmingsj = {
+	"snes_lemmingsj", "snes_lemmings", NULL, NULL, "1991",
+	"Lemmings (Japan)\0", NULL, "Sunsoft - Psygnosis", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LemmingsjRomInfo, snes_LemmingsjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -17262,6 +17300,25 @@ struct BurnDriver BurnDrvsnes_Mrtuffep = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MrtuffepRomInfo, snes_MrtuffepRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mary Shelley's Frankenstein (USA)
+
+static struct BurnRomInfo snes_MsfrankenRomDesc[] = {
+	{ "Mary Shelley's Frankenstein (U)(1994)(Sony Imagesoft).sfc", 2097152, 0x91415d1e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Msfranken)
+STD_ROM_FN(snes_Msfranken)
+
+struct BurnDriver BurnDrvsnes_Msfranken = {
+	"snes_msfranken", NULL, NULL, NULL, "1994",
+	"Mary Shelley's Frankenstein (USA)\0", NULL, "Sony Imagesoft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MsfrankenRomInfo, snes_MsfrankenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -26425,6 +26482,25 @@ struct BurnDriver BurnDrvsnes_Supermkartj = {
 	512, 448, 4, 3
 };
 
+// Super Morph (Euro)
+
+static struct BurnRomInfo snes_SupermorphRomDesc[] = {
+	{ "Super Morph (E)(1993)(Sony Imagesoft).sfc", 1048576, 0x388f6daa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supermorph)
+STD_ROM_FN(snes_Supermorph)
+
+struct BurnDriver BurnDrvsnes_Supermorph = {
+	"snes_supermorph", NULL, NULL, NULL, "1993",
+	"Super Morph (Euro)\0", NULL, "Sony Imagesoft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PUZZLE | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SupermorphRomInfo, snes_SupermorphRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Nova (USA)
 
 static struct BurnRomInfo snes_SupernovaRomDesc[] = {
@@ -31428,6 +31504,44 @@ struct BurnDriver BurnDrvsnes_Deflektor = {
 	512, 400, 4, 3
 };
 
+// Donkey Kong 4: Rise and Repeat (GlobalHack)
+// https://www.smwcentral.net/?p=section&a=details&id=39212
+static struct BurnRomInfo snes_Dkong4rrRomDesc[] = {
+	{ "Donkey Kong 4 - Rise and Repeat (2025)(Big Brawler).sfc", 2097152, 0x46ee3ce0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dkong4rr)
+STD_ROM_FN(snes_Dkong4rr)
+
+struct BurnDriver BurnDrvsnes_Dkong4rr = {
+	"snes_dkong4rr", NULL, NULL, NULL, "2025",
+	"Donkey Kong 4: Rise and Repeat (GlobalHack)\0", "GlobalHack of Super Mario World", "Big Brawler", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Dkong4rrRomInfo, snes_Dkong4rrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// D.O.L.L.S. (GlobalHack)
+// https://www.smwcentral.net/?p=section&a=details&id=39486
+static struct BurnRomInfo snes_DollsRomDesc[] = {
+	{ "D.O.L.L.S. (2025)(Jordan).sfc", 4194304, 0x53e0b93d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dolls)
+STD_ROM_FN(snes_Dolls)
+
+struct BurnDriver BurnDrvsnes_Dolls = {
+	"snes_dolls", NULL, NULL, NULL, "2025",
+	"D.O.L.L.S. (GlobalHack)\0", "GlobalHack of Super Mario World", "Jordan", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_DollsRomInfo, snes_DollsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dorke & Ymp (USA) (Piko)
 
 static struct BurnRomInfo snes_DorkeympRomDesc[] = {
@@ -31923,6 +32037,25 @@ struct BurnDriver BurnDrvsnes_Jimpoweree = {
 	512, 448, 4, 3
 };
 
+// Jurassic Park II - The Chaos Continues Redux (Hack)
+// https://romhackplaza.org/romhacks/jurassic-park-ii-the-chaos-continues-redux-snes/
+static struct BurnRomInfo snes_Jpark2reduxRomDesc[] = {
+	{ "Jurassic Park II - The Chaos Continues Redux (2025)(BillyTime! Games).sfc", 2097152, 0x620de6a3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Jpark2redux)
+STD_ROM_FN(snes_Jpark2redux)
+
+struct BurnDriver BurnDrvsnes_Jpark2redux = {
+	"snes_jpark2redux", "snes_jpark2", NULL, NULL, "2025",
+	"Jurassic Park II - The Chaos Continues Redux (Hack)\0", NULL, "BillyTime! Games", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Jpark2reduxRomInfo, snes_Jpark2reduxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Killer Instinct - Eyedol Edition (Hack)
 // https://www.romhacking.net/hacks/5453/
 static struct BurnRomInfo snes_KillinsteeRomDesc[] = {
@@ -31995,6 +32128,25 @@ struct BurnDriver BurnDrvsnes_Legendofzeldardx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldardxRomInfo, snes_LegendofzeldardxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lemmings - Colour Palette & Level Title Fix (Euro) (Hack, v1.1 FINAL)
+// https://romhackplaza.org/romhacks/lemmings-colour-palette-fix-v1-0-pal-snes/
+static struct BurnRomInfo snes_LemmingsehRomDesc[] = {
+	{ "Lemmings - Colour Palette & Level Title Fix v1.1 FINAL (E)(2025)(J.Russell).sfc", 1048576, 0x3426d622, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lemmingseh)
+STD_ROM_FN(snes_Lemmingseh)
+
+struct BurnDriver BurnDrvsnes_Lemmingseh = {
+	"snes_lemmingseh", "snes_lemmings", NULL, NULL, "2025",
+	"Lemmings - Colour Palette & Level Title Fix (Euro) (Hack, v1.1 FINAL)\0", NULL, "J.Russell", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LemmingsehRomInfo, snes_LemmingsehRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -32375,6 +32527,25 @@ struct BurnDriver BurnDrvsnes_Onegaimma = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_OnegaimmaRomInfo, snes_OnegaimmaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Other Castle II (Hack, v0.9.2)
+// https://romhackplaza.org/romhacks/othercastle2-snes/
+static struct BurnRomInfo snes_Othercastle2RomDesc[] = {
+	{ "Other Castle II v0.9.2 (2023)(bogaa).sfc", 4194304, 0x35b47398, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Othercastle2)
+STD_ROM_FN(snes_Othercastle2)
+
+struct BurnDriver BurnDrvsnes_Othercastle2 = {
+	"snes_othercastle2", "snes_supercastlevania4", NULL, NULL, "2023",
+	"Other Castle II (Hack, v0.9.2)\0", NULL, "bogaa", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Othercastle2RomInfo, snes_Othercastle2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33289,6 +33460,25 @@ struct BurnDriver BurnDrvsnes_Tmntfightce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightceRomInfo, snes_TmntfightceRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// TMNT: Tournament Fighters - Grandmasters Edition (Hack, v1.2)
+// https://www.romhacking.net/hacks/8894/
+static struct BurnRomInfo snes_TmntfightgmeRomDesc[] = {
+	{ "TMNT Tournament Fighters - Grandmasters Edition v1.2 (2025)(Allo).sfc", 4194304, 0xce1d413f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tmntfightgme)
+STD_ROM_FN(snes_Tmntfightgme)
+
+struct BurnDriver BurnDrvsnes_Tmntfightgme = {
+	"snes_tmntfightgme", "snes_tmntfight", NULL, NULL, "2025",
+	"TMNT: Tournament Fighters - Grandmasters Edition (Hack, v1.2)\0", NULL, "Allo", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_TmntfightgmeRomInfo, snes_TmntfightgmeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

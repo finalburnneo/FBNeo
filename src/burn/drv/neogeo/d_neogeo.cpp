@@ -2651,25 +2651,25 @@ struct BurnDriver BurnDrvMahretsu = {
 /* MVS AND AES VERSION */
 
 static struct BurnRomInfo ridheroRomDesc[] = {
-	{ "006-p1.p1",    0x080000, 0xd4aaf597, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ MB834200
+	{ "006-p1.p1",    		0x080000, 0xd4aaf597, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		  / MB834200
 
-	{ "006-s1.s1",    0x020000, 0xeb5189f0, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+	{ "006-s1.s1",    		0x020000, 0xeb5189f0, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "006-c1.c1",    0x080000, 0x4a5c7f78, 3 | BRF_GRA },           //  2 Sprite data 		/ CXK384000
-	{ "006-c2.c2",    0x080000, 0xe0b70ece, 3 | BRF_GRA },           //  3 					/ CXK384000
-	{ "006-c3.c3",    0x080000, 0x8acff765, 3 | BRF_GRA },           //  4 					/ CXK384000
-	{ "006-c4.c4",    0x080000, 0x205e3208, 3 | BRF_GRA },           //  5 					/ CXK384000
+	{ "006-c1.c1",    		0x080000, 0x4a5c7f78, 3 | BRF_GRA },           //  2 Sprite data 	  / CXK384000
+	{ "006-c2.c2",    		0x080000, 0xe0b70ece, 3 | BRF_GRA },           //  3 				  / CXK384000
+	{ "006-c3.c3",    		0x080000, 0x8acff765, 3 | BRF_GRA },           //  4 				  / CXK384000
+	{ "006-c4.c4",    		0x080000, 0x205e3208, 3 | BRF_GRA },           //  5 				  / CXK384000
 
-	{ "006-m1.m1",    0x040000, 0x92e7b4fe, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ MB832000
+	{ "006-m1.m1",    		0x040000, 0x92e7b4fe, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		  / MB832000
 
-	{ "006-v11.v11",  0x080000, 0xcdf74a42, 5 | BRF_SND },           //  7 Sound data 		/ MB834000
-	{ "006-v12.v12",  0x080000, 0xe2fd2371, 5 | BRF_SND },           //  8 					/ MB834000
-	{ "006-v21.v21",  0x080000, 0x94092bce, 6 | BRF_SND },           //  9 					/ MB834000
-	{ "006-v22.v22",  0x080000, 0x4e2cd7c3, 6 | BRF_SND },           // 10 					/ MB834000
-	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
-	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
+	{ "006-v11.v11",  		0x080000, 0xcdf74a42, 5 | BRF_SND },           //  7 Sound data 	  / MB834000
+	{ "006-v12.v12",  		0x080000, 0xe2fd2371, 5 | BRF_SND },           //  8 				  / MB834000
+	{ "006-v21.v21",  		0x080000, 0x94092bce, 6 | BRF_SND },           //  9 				  / MB834000
+	{ "006-v22.v22",  		0x080000, 0x4e2cd7c3, 6 | BRF_SND },           // 10 				  / MB834000
+	{ "006-v23.v23",  		0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 				  / MB834000
+	{ "006-v24.v24",  		0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 				  / MB834000
 
-	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu				/ Hitachi HD6301V1 MCU
+	{ "hd6301v1p_k78.com",	0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu			  / Hitachi HD6301V1 MCU
 	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
@@ -2766,26 +2766,26 @@ struct BurnDriver BurnDrvRidhero = {
 // Riding Hero (set 2)
 
 static struct BurnRomInfo ridherohRomDesc[] = {
-	{ "006-pg1.p1",   0x080000, 0x52445646, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ MB834200
+	{ "006-pg1.p1",   		0x080000, 0x52445646, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		  / MB834200
 	/* Chip label p1h does not exist, renamed temporarly to pg1, marked BAD_DUMP.
 	This needs to be verified. */
-	{ "006-s1.s1",    0x020000, 0xeb5189f0, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+	{ "006-s1.s1",    		0x020000, 0xeb5189f0, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "006-c1.c1",    0x080000, 0x4a5c7f78, 3 | BRF_GRA },           //  2 Sprite data 		/ CXK384000
-	{ "006-c2.c2",    0x080000, 0xe0b70ece, 3 | BRF_GRA },           //  3 					/ CXK384000
-	{ "006-c3.c3",    0x080000, 0x8acff765, 3 | BRF_GRA },           //  4 					/ CXK384000
-	{ "006-c4.c4",    0x080000, 0x205e3208, 3 | BRF_GRA },           //  5 					/ CXK384000
+	{ "006-c1.c1",    		0x080000, 0x4a5c7f78, 3 | BRF_GRA },           //  2 Sprite data 	  / CXK384000
+	{ "006-c2.c2",    		0x080000, 0xe0b70ece, 3 | BRF_GRA },           //  3 				  / CXK384000
+	{ "006-c3.c3",    		0x080000, 0x8acff765, 3 | BRF_GRA },           //  4 				  / CXK384000
+	{ "006-c4.c4",    		0x080000, 0x205e3208, 3 | BRF_GRA },           //  5 				  / CXK384000
 
-	{ "006-m1.m1",    0x040000, 0x92e7b4fe, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ MB832000
+	{ "006-m1.m1",    		0x040000, 0x92e7b4fe, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		  / MB832000
 
-	{ "006-v11.v11",  0x080000, 0xcdf74a42, 5 | BRF_SND },           //  7 Sound data 		/ MB834000
-	{ "006-v12.v12",  0x080000, 0xe2fd2371, 5 | BRF_SND },           //  8 					/ MB834000
-	{ "006-v21.v21",  0x080000, 0x94092bce, 6 | BRF_SND },           //  9 					/ MB834000
-	{ "006-v22.v22",  0x080000, 0x4e2cd7c3, 6 | BRF_SND },           // 10 					/ MB834000
-	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
-	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
+	{ "006-v11.v11",  		0x080000, 0xcdf74a42, 5 | BRF_SND },           //  7 Sound data 	  / MB834000
+	{ "006-v12.v12",  		0x080000, 0xe2fd2371, 5 | BRF_SND },           //  8 				  / MB834000
+	{ "006-v21.v21",  		0x080000, 0x94092bce, 6 | BRF_SND },           //  9 				  / MB834000
+	{ "006-v22.v22",  		0x080000, 0x4e2cd7c3, 6 | BRF_SND },           // 10 				  / MB834000
+	{ "006-v23.v23",  		0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 				  / MB834000
+	{ "006-v24.v24",  		0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 				  / MB834000
 
-	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu				/ Hitachi HD6301V1 MCU
+	{ "hd6301v1p_k78.com", 	0x002000, 0xe5cd6306, 0 | BRF_OPT }, 			 // 13 mcu			  / Hitachi HD6301V1 MCU
 	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
@@ -3351,7 +3351,7 @@ static struct BurnRomInfo lbowlingRomDesc[] = {
 	{ "019-v12.v12",  0x080000, 0x029faa57, 5 | BRF_SND },           //  6 					/ TC534000
 	{ "019-v21.v21",  0x080000, 0x2efd5ada, 6 | BRF_SND },           //  7 					/ TC534000
 
-	{ "hd6301v1p.com", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
+	{ "hd6301v1p_k78.com", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
 };
 
 STDROMPICKEXT(lbowling, lbowling, neogeo)
@@ -4515,7 +4515,7 @@ struct BurnDriver BurnDrvTophntrh = {
 
 static struct BurnRomInfo fatfury2RomDesc[] = {
 	{ "047-p1.p1",    0x100000, 0xecfdbb69, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
-	/* The original p1 is 8mbit; also found MVS set with p1 / p2 4mbit on eprom
+	/* The original p1 is 8mbit; also found MVS set with EP1 / EP2 4mbit on eprom
 	on PROG board NEO-MVS PROG-G2 (SNK-9201)
 	{ "047-epr.ep1",  0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
 	{ "047-epr.ep2",  0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
@@ -4895,6 +4895,7 @@ struct BurnDriver BurnDrvAof2a = {
 static struct BurnRomInfo fatfurspRomDesc[] = {
 	{ "058-p1.p1",    0x100000, 0x2f585ba2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
 	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC534200
+	/* also found MVS set with EP1 / EP2 / SP2 on eprom; correct chip label unknown */
 
 	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
@@ -11688,7 +11689,7 @@ static struct BurnRomInfo trallyRomDesc[] = {
 	{ "038-v1.v1",    0x100000, 0x5ccd9fd5, 5 | BRF_SND },           //  8 Sound data 		/ TC538200
 	{ "038-v2.v2",    0x080000, 0xddd8d1e6, 5 | BRF_SND },           //  9 					/ TC534200
 
-	{ "hd6301v1p.hd6301v1", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
+	{ "hd6301v1p_m58_neo-coma", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
 };
 
 STDROMPICKEXT(trally, trally, neogeo)

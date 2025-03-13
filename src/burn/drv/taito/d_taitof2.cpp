@@ -11319,7 +11319,7 @@ struct BurnDriver BurnDrvDriftoutj = {
 
 struct BurnDriver BurnDrvDriveout = {
 	"driveout", "driftout", NULL, NULL, "1991",
-	"Drive Out (bootleg of Drift Out)\0", NULL, "bootleg", "Taito F2",
+	"Drive Out (bootleg of Drift Out)\0", NULL, "bootleg (Electronic Devices)", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriveoutRomInfo, DriveoutRomName, NULL, NULL, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,

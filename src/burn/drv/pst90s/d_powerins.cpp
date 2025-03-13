@@ -1552,7 +1552,7 @@ struct BurnDriver BurnDrvPowerinb = {
 
 struct BurnDriver BurnDrvPowerinsc = {
 	"powerinsc", "powerins", NULL, NULL, "1993",
-	"Power Instinct (USA, bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
+	"Power Instinct (USA, bootleg set 3)\0", NULL, "bootleg (Electronic Devices)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinscRomInfo, powerinscRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,

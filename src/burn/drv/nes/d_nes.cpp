@@ -21045,9 +21045,9 @@ struct BurnDriver BurnDrvnes_teslavsedison = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// They Came To Wreak Hell (HB, v0.3a)
+// They Came To Wreak Hell (HB, v0.5)
 static struct BurnRomInfo nes_tctwhRomDesc[] = {
-	{ "They Came To Wreak Hell v0.3a (2022)(Team Disposable).nes",          65552, 0x83c4b5a3, BRF_ESS | BRF_PRG },
+	{ "They Came To Wreak Hell v0.5 (2022)(Team Disposable).nes",          131088, 0xdc8fddb1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tctwh)
@@ -21055,7 +21055,7 @@ STD_ROM_FN(nes_tctwh)
 
 struct BurnDriver BurnDrvnes_tctwh = {
 	"nes_tctwh", NULL, NULL, NULL, "2022",
-	"They Came To Wreak Hell (HB, v0.3a)\0", NULL, "Team Disposable", "Miscellaneous",
+	"They Came To Wreak Hell (HB, v0.5)\0", NULL, "Team Disposable", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_MAZE, 0,
 	NESGetZipName, nes_tctwhRomInfo, nes_tctwhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

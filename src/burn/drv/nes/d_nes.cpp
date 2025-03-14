@@ -19409,6 +19409,23 @@ struct BurnDriver BurnDrvnes_grimshire = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_necronancyRomDesc[] = {
+	{ "The Secret of NecroNancy Demo (2023)(Artix).nes",          524304, 0x47b34efe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_necronancy)
+STD_ROM_FN(nes_necronancy)
+
+struct BurnDriver BurnDrvnes_necronancy = {
+	"nes_necronancy", NULL, NULL, NULL, "2023",
+	"The Secret of NecroNancy Demo (HB)\0", NULL, "Artix", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_necronancyRomInfo, nes_necronancyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Senseless City (HB)
 static struct BurnRomInfo nes_sensecityRomDesc[] = {
 	{ "Senseless City (2022)(Rani Baker).nes",          40976, 0x70c92e3b, BRF_ESS | BRF_PRG },

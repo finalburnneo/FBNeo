@@ -287,6 +287,7 @@ extern INT32 Wofhfh;
 extern INT32 Wofsgzb;
 extern INT32 Wof3js;
 extern INT32 Knightsh;
+extern INT32 Ecofght;
 
 extern ClearOpposite<4, UINT8> clear_opposite;
 

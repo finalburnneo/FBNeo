@@ -1,5 +1,5 @@
 #include "cps.h"
-#include "burn_gun.h" // forgottn optional spinner dev.
+#include "burn_gun.h" // ecofght optional spinner dev.
 
 // Input Definitions
 
@@ -497,17 +497,18 @@ STDINPUTINFO(Dimahoo)
 
 /// Rotation stuff! -dink, pjft
 static UINT8 DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
-static UINT8 DrvFakeInput1[2]      = {0, 0}; // move satelite
+static UINT8 DrvFakeInput1[2]      = {0, 0}; // shoot charge shot
 static INT32 nRotateTarget[2]      = {0, 0};
 static UINT8 nAutoFireCounter[2]   = {0, 0};
 
 static INT16 Analog[6]; // 0-3 2ndstick x/y, 4,5 spinner (optional)
 
 extern INT32 nDial055, nDial05d;  // cps-system dial accu's
+extern INT32 nDial055_dir, nDial05d_dir;  // cps-system dial accu's direction
 
 // config
 static UINT8 game_rotates = 0;
-static const int nRotateTotal = 0x20; // ecofght has 32 positions (0 - 1f)
+static const int nRotateTotal = 0x100; // ecofght has 256 positions (0 - ff)
 static const int nRotateMask = nRotateTotal - 1;
 
 // Rotation-handler code
@@ -541,22 +542,26 @@ static INT32 RotateScan(INT32 nAction, INT32*)
 	return 0;
 }
 
-static const UINT8 ROT_ONE_POS = 0x40;
+static const UINT8 ROT_ONE_POS = 0x1;
 
 static void RotateNegative(INT32 player) {
-	for (int i = 0; i < nRotateTargetVSmemDistance; i++) {
+	int tot = nRotateTargetVSmemDistance;
+	if (tot > 16) tot = 16;
+	for (int i = 0; i < tot; i++) {
 		switch (player) {
-			case 0: nDial055 -= ROT_ONE_POS; break;
-			case 1: nDial05d -= ROT_ONE_POS; break;
+			case 0: nDial055 -= ROT_ONE_POS; nDial055_dir = 1; break;
+			case 1: nDial05d -= ROT_ONE_POS; nDial05d_dir = 1; break;
 		}
 	}
 }
 
 static void RotatePositive(INT32 player) {
-	for (int i = 0; i < nRotateTargetVSmemDistance; i++) {
+	int tot = nRotateTargetVSmemDistance;
+	if (tot > 16) tot = 16;
+	for (int i = 0; i < tot; i++) {
 		switch (player) {
-			case 0: nDial055 += ROT_ONE_POS; break;
-			case 1: nDial05d += ROT_ONE_POS; break;
+			case 0: nDial055 += ROT_ONE_POS; nDial055_dir = 0; break;
+			case 1: nDial05d += ROT_ONE_POS; nDial05d_dir = 0; break;
 		}
 	}
 }
@@ -578,10 +583,10 @@ static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -
 	return 0xff;
 }
 
-static UINT16 *rotate_gunpos[2] = {NULL, NULL};
+static UINT8 *rotate_gunpos[2] = {NULL, NULL};
 static UINT8 rotate_gunpos_multiplier = 1;
 
-static void RotateSetGunPosRAM(UINT16 *p1, UINT16 *p2, UINT8 multiplier) {
+static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 	rotate_gunpos[0] = p1;
 	rotate_gunpos[1] = p2;
 	rotate_gunpos_multiplier = multiplier;
@@ -594,7 +599,7 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	INT32 fromtmp = from;
 	INT32 totmp = to;
 
-	//bprintf(0, _T("get_distance: from/to: %x  %x\n"), from, to);
+//	bprintf(0, _T("get_distance: from/to: %x  %x\n"), from, to);
 
 	while (1) {
 		fromtmp = (fromtmp + 1) & nRotateMask;
@@ -622,7 +627,7 @@ static INT32 get_distance(INT32 from, INT32 to) {
 
 static UINT8 adjusted_rotate_gunpos(INT32 i)
 {
-	return (*rotate_gunpos[i] & 0x7ff) / 0x40;
+	return (*rotate_gunpos[i] & 0xff);
 }
 
 static void RotateDoTick()
@@ -634,7 +639,7 @@ static void RotateDoTick()
 			} else {
 				RotatePositive(i);
 			}
-			nRotateTarget[i] = -1;
+		    nRotateTarget[i] = -1;
 		} else {
 			nRotateTarget[i] = -1;
 		}
@@ -660,16 +665,21 @@ static void ProcessAnalogInputs() {
 		// some analog joysticks & inputs return -0x8000 0 +0x7fff
 		// atan2() needs -1 0 +1
 
-		float y_axis = (ProcessAnalog(AnalogPorts[i*2 + 0], 0, INPUT_DEADZONE, 0x00, 0xff) - 128.0)/128.0;
+		float y_axis = (ProcessAnalog(AnalogPorts[i*2 + 0], 1, INPUT_DEADZONE, 0x00, 0xff) - 128.0)/128.0;
 		float x_axis = (ProcessAnalog(AnalogPorts[i*2 + 1], 0, INPUT_DEADZONE, 0x00, 0xff) - 128.0)/128.0;
+		UINT8 y_axisu = ProcessAnalog(AnalogPorts[i*2 + 0], 1, INPUT_DEADZONE, 0x00, 0xff);
+		UINT8 x_axisu = ProcessAnalog(AnalogPorts[i*2 + 1], 0, INPUT_DEADZONE, 0x00, 0xff);
 
 		int deg = (atan2(-x_axis, -y_axis) * 180 / M_PI) - 360/nRotateTotal/2; // technically, on a scale from 0-31, "0" should be -5.625 to 5.625, and not 0 to 11.25.
 		if (deg < 0) deg += 360;
 
-		int g_val = deg * nRotateTotal / 360; // scale from 0-360 to 0-31
+		int g_val = deg * nRotateTotal / 360; // scale from 0-360 to 0-ff
+		if (i==0) bprintf(0, _T("ori g_val %x   x/y:  %f  %f  (%x,%x %x,%x)\n"), g_val,x_axis,y_axis,x_axisu,AnalogPorts[i*2 + 0],y_axisu,AnalogPorts[i*2 + 1]);
+
 		g_val = nRotateMask - g_val; // invert so up-left is 0xf, instead of up-right
-		g_val = (g_val + -8) & nRotateMask; // 0 starts at the 45deg mark
+		// g_val = (g_val + -8) & nRotateMask; // 0 starts at the 45deg mark
 		if (!(x_axis == 0.0 && y_axis == 0.0)) { // we're not in deadzone -- changed below
+			//if (i==0) bprintf(0, _T("g_val(adj) %x\n"), g_val);
 			DrvFakeInput[6 + i*4] = g_val; // for autofire
 			DrvFakeInput[7 + i*4] = 1; // if g_val is 0, we need to still register movement!
 		}
@@ -681,6 +691,13 @@ static void ProcessAnalogInputs() {
 
 	nDial055 += BurnTrackballReadSigned(0) * 4;
 	nDial05d += BurnTrackballReadSigned(1) * 4;
+	if (BurnTrackballReadSigned(0) != 0) {
+		nDial055_dir = BurnTrackballGetDirection(0) > 0;
+	}
+	if (BurnTrackballReadSigned(1) != 0) {
+		nDial055_dir = BurnTrackballGetDirection(1) > 0;
+	}
+
 	BurnTrackballReadReset();
 }
 
@@ -734,18 +751,18 @@ static void SuperJoy2Rotate() {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
 
-			// PJT: will need to adjust it here, especially as we do not yet have dips
-			// Forgotten Worlds takes 10 frames to process its rotation buffer
-			// If we're making a movement while fireing, we need to hold fire
-			// for 10+1 frames, in order to keep the satellite from glitching
-			// its location.
-
 			if (game_rotates == 1) {
 				if (*curr_input & (1<<4) || ~fFakeDip & 0x40) {
-					nAutoFireCounter[i] = 10 + 1;
+					nAutoFireCounter[i] = 2 + 1;
 				}
 			}
 		}
+
+		/*if (nAutoFireCounter[i]) {
+			*curr_input |= 1<<4; // fire!!
+
+			nAutoFireCounter[i]--;
+		}*/
 
 		if (nAutoFireCounter[i]) {
 			UINT8 no_fire = DrvFakeInput1[i];
@@ -781,6 +798,7 @@ static struct BurnInputInfo EcofghtrInputList[] = {
 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
 	{"P1 Turn 2"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 	{"P1 Rotate (digital)", BIT_DIGITAL, DrvFakeInput + 4,	"p1 fire 4"	},
+	{"P1 Shot Release"     , BIT_DIGITAL, DrvFakeInput1 + 0, "p1 fire 5"},
 	A("P1 Aim X", 		BIT_ANALOG_REL, &Analog[0],"p1 x-axis"),
 	A("P1 Aim Y", 		BIT_ANALOG_REL, &Analog[1],"p1 y-axis"),
 	A("P1 Spinner", 		BIT_ANALOG_REL, &Analog[4],"p1 nomap"),
@@ -794,9 +812,10 @@ static struct BurnInputInfo EcofghtrInputList[] = {
 	{"P2 Turn 1"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
 	{"P2 Turn 2"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
-	{"P2 Rotate (digital)", BIT_DIGITAL,  DrvFakeInput + 5,	"p2 fire 4"	},
-	A("P2 Aim X", 		BIT_ANALOG_REL, &Analog[2],"p2 x-axis"),
-	A("P2 Aim Y", 		BIT_ANALOG_REL, &Analog[3],"p2 y-axis"),
+	{"P2 Rotate (digital)", BIT_DIGITAL, DrvFakeInput + 5,	"p2 fire 4"	},
+	{"P2 Shot Release"     , BIT_DIGITAL, DrvFakeInput1 + 1, "p2 fire 5"},
+	A("P2 Aim X", 		BIT_ANALOG_REL,  &Analog[2],"p2 x-axis"),
+	A("P2 Aim Y", 		BIT_ANALOG_REL,  &Analog[3],"p2 y-axis"),
 	A("P2 Spinner", 		BIT_ANALOG_REL, &Analog[5],"p2 nomap"),
 
 	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
@@ -804,9 +823,31 @@ static struct BurnInputInfo EcofghtrInputList[] = {
 	{"Service"          , BIT_DIGITAL  , CpsInp021+2, "service"   },
 	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 4" },
 	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 5" },
+	{"Dip A"            , BIT_DIPSWITCH, &fFakeDip  , "dip"      },
 };
 
 STDINPUTINFO(Ecofghtr)
+
+static struct BurnDIPInfo EcofghtrDIPList[]=
+{
+	DIP_OFFSET(0x1f)
+	{0x00, 0xff, 0xff, 0x00, NULL                     },
+
+//	{0   , 0xfe, 0   , 0   , "** reset after changing! **" },
+	{0   , 0xfe, 0   , 2   , "Satellite Moves with"	  },
+	{0x00, 0x01, 0x20, 0x00, "Spinner or Second Stick"},
+	{0x00, 0x01, 0x20, 0x20, "Buttons"                },
+
+	{0   , 0xfe, 0   , 2   , "Invert \"Turn\" inputs" },
+	{0x00, 0x01, 0x80, 0x00, "Off"                    },
+	{0x00, 0x01, 0x80, 0x80, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Second Stick"           },
+	{0x00, 0x01, 0x40, 0x00, "Moves & Shoots"         },
+	{0x00, 0x01, 0x40, 0x40, "Moves"                  },
+};
+
+STDDIPINFO(Ecofghtr)
 
 static struct BurnInputInfo Ffightaec2InputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
@@ -9765,27 +9806,27 @@ static INT32 XmcotaInit()
 
 static void EcofghtRotateInit()
 {
-	// PJT: are these used in CPS2? We might have to rewrite this altogether
 	CpsRunFrameStartCallbackFunction = SuperJoy2Rotate;
 	CpsRunResetCallbackFunction = RotateReset;
 	CpsMemScanCallbackFunction = RotateScan;
 
 	game_rotates = 1;
 
-	// PJT: This WILL NOT work unless by pure luck. These addresses need an update
-	// remove the if(false) afterwards
-	if (false)
-		RotateSetGunPosRAM((UINT16*)CpsRamFF + (0xb36a / 2), (UINT16*)CpsRamFF + (0xb3ba / 2), 1);
+	RotateSetGunPosRAM((UINT8*)CpsRamFF + (0x86a4), (UINT8*)CpsRamFF + (0x86a5), 1);
 
 	BurnTrackballInit(1); // optional spinner
 }
 
 static INT32 EcofghtInit()
 {
-	Ecofght = 1;
-	EcofghtRotateInit();
-	
-	return Cps2Init();
+	INT32 rc = Cps2Init();
+
+	if (!rc) {
+		Ecofght = 1;
+		EcofghtRotateInit();
+	}
+
+	return rc;
 }
 
 static INT32 DrvExit()
@@ -10596,7 +10637,7 @@ struct BurnDriver BurnDrvCpsEcofghtr = {
 	"Eco Fighters (World 931203)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, EcofghtrRomInfo, EcofghtrRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, EcofghtrRomInfo, EcofghtrRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -10606,7 +10647,7 @@ struct BurnDriver BurnDrvCpsEcofghtra = {
 	"Eco Fighters (Asia 931203)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, EcofghtraRomInfo, EcofghtraRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, EcofghtraRomInfo, EcofghtraRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -10616,7 +10657,7 @@ struct BurnDriver BurnDrvCpsEcofghtrh = {
 	"Eco Fighters (Hispanic 931203)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, EcofghtrhRomInfo, EcofghtrhRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, EcofghtrhRomInfo, EcofghtrhRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -10626,7 +10667,7 @@ struct BurnDriver BurnDrvCpsEcofghtru = {
 	"Eco Fighters (USA 940215)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, EcofghtruRomInfo, EcofghtruRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, EcofghtruRomInfo, EcofghtruRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -10636,7 +10677,7 @@ struct BurnDriver BurnDrvCpsEcofghtru1 = {
 	"Eco Fighters (USA 931203)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, Ecofghtru1RomInfo, Ecofghtru1RomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, Ecofghtru1RomInfo, Ecofghtru1RomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -10646,7 +10687,7 @@ struct BurnDriver BurnDrvCpsUecology = {
 	"Ultimate Ecology (Japan 931203)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, UecologyRomInfo, UecologyRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, UecologyRomInfo, UecologyRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -14701,7 +14742,7 @@ struct BurnDriver BurnDrvCpsEcofghtrd = {
 	"Eco Fighters (World 931203 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_HORSHOOT, 0,
-	NULL, EcofghtrdRomInfo, EcofghtrdRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, NULL,
+	NULL, EcofghtrdRomInfo, EcofghtrdRomName, NULL, NULL, NULL, NULL, EcofghtrInputInfo, EcofghtrDIPInfo,
 	EcofghtPhoenixInit, EcofghtExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -15,6 +15,7 @@ CPSINPSET
 UINT16 CpsInp055 = 0;
 UINT16 CpsInp05d = 0;
 INT32 nDial055, nDial05d;
+INT32 nDial055_dir, nDial05d_dir;
 // forgottn digital rotate
 UINT8 CpsDigUD[4] = {0, 0, 0, 0};
 
@@ -92,10 +93,11 @@ void CpsRwScan()
 		SCAN_VAR(nDial05d);
 	}
 
-	// PJT: adding this separately in case we need to change it
 	if (Ecofght) {
 		SCAN_VAR(nDial055);
 		SCAN_VAR(nDial05d);
+		SCAN_VAR(nDial055_dir);
+		SCAN_VAR(nDial05d_dir);
 	}
 
 	if (Ghouls) {
@@ -110,6 +112,22 @@ void CpsRwScan()
 	SCAN_VAR(nRasterLine);
 }
 
+static UINT8 ecofght_readpaddle(UINT8 data, INT32 plr)
+{
+	if (ReadPaddle) {
+		switch (plr) {
+			case 0: return nDial055 & 0xff;
+			case 1: return nDial05d & 0xff;
+		}
+	} else {
+		data &= ~0x20;
+		switch (plr) {
+			case 0: data |= nDial055_dir << 5; break;
+			case 1: data |= nDial05d_dir << 5; break;
+		}
+	}
+	return data;
+}
 // Read input port 0x000-0x1ff
 static UINT8 CpsReadPort(const UINT32 ia)
 {
@@ -117,6 +135,9 @@ static UINT8 CpsReadPort(const UINT32 ia)
 
 	if (ia == 0x000) {
 		d = (UINT8)~Inp000;
+		if (Ecofght && (~fFakeDip & 0x20)) {
+			d = ecofght_readpaddle(d, 1);
+		}
 		if (Pzloop2) {
 			if (ReadPaddle) {
 				d -= CpsPaddle2Value;
@@ -128,6 +149,9 @@ static UINT8 CpsReadPort(const UINT32 ia)
 	}
 	if (ia == 0x001) {
 		d = (UINT8)~Inp001;
+		if (Ecofght && (~fFakeDip & 0x20)) {
+			d = ecofght_readpaddle(d, 0);
+		}
 		if (Pzloop2) {
 			if (ReadPaddle) {
 				d -= CpsPaddle1Value;
@@ -149,6 +173,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 	}
 	if (ia == 0x011) {
 		d = (UINT8)~Inp011;
+		if (Ecofght && (~fFakeDip & 0x20)) d &= 0xef; // select analog spinner
 		return d;
 	}
 	if (ia == 0x012) {
@@ -339,23 +364,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			if (ia == 0x05D) {
 				return (nDial05d >> 8) & 0x0f;
 			}
-		}	
-
-		// Eco Fighters Worlds Dial
-		if (Ecofght) {
-			if (ia == 0x053) {
-				return (nDial055 >> 0) & 0xff;
-			}
-			if (ia == 0x055) {
-				return (nDial055 >> 8) & 0x0f;
-			}
-			if (ia == 0x05B) {
-				return (nDial05d >> 0) & 0xff;
-			}
-			if (ia == 0x05D) {
-				return (nDial05d >> 8) & 0x0f;
-			}
-		}	
+		}
 	}
 	
 //	bprintf(PRINT_NORMAL, _T("Read Port %x\n"), ia);
@@ -425,6 +434,10 @@ void CpsWritePort(const UINT32 ia, UINT8 d)
 	if (Cps == 2) {
 		if (ia == 0x40) {
 			EEPROMWrite(d & 0x20, d& 0x40, d & 0x10);
+
+			if (Ecofght) {
+				ReadPaddle = d & 0x01;
+			}
 			return;
 		}
 

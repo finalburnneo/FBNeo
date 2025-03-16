@@ -172,46 +172,95 @@ STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
 STDDIPINFOEXT(SpecJJack, SpecJJack, Spec)
 STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
 
-// Macro for ROM Info
-#define ROM_INFO(NAME, ...) \
-static struct BurnRomInfo NAME##RomDesc[] = { __VA_ARGS__ }; \
-STD_ROM_PICK(NAME) \
-STD_ROM_FN(NAME)
+// BIOS Handling
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "", 0, 0, 0 },
+};
 
-// Macro for Burn Driver
-#define BURN_DRIVER(NAME, ID, YEAR, DESCRIPTION, MANUFACTURER, HARDWARE, ZIP_FUNC, ROM_INFO_NAME, INIT_FUNC) \
-struct BurnDriver Burn##NAME = { \
-    ID, NULL, NULL, NULL, YEAR, DESCRIPTION "\0", NULL, MANUFACTURER, "ZX Spectrum", \
-    NULL, NULL, NULL, NULL, BDF_GAME_WORKING, 1, HARDWARE, GBF_BIOS, 0, \
-    ZIP_FUNC, ROM_INFO_NAME##RomInfo, ROM_INFO_NAME##RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo, \
-    INIT_FUNC, SpecExit, SpecFrame, SpecDraw, SpecScan, &SpecRecalc, 0x10, 288, 224, 4, 3 \
-}
+static struct BurnRomInfo SpectrumRomDesc[] = {
+	{ "spectrum.rom",  0x04000, 0xddee531f, BRF_BIOS },
+};
 
-// ROM Definitions
-ROM_INFO(empty, 
-    { "", 0, 0, 0 }
-)
-ROM_INFO(Spectrum, 
-    { "spectrum.rom", 0x04000, 0xddee531f, BRF_BIOS }
-)
-ROM_INFO(Spec128, 
-    { "zx128_0.rom", 0x04000, 0xe76799d2, BRF_BIOS }, 
-    { "zx128_1.rom", 0x04000, 0xb96a36be, BRF_BIOS }
-)
-ROM_INFO(Spec1282a, 
-    { "zx128_2a_0.rom", 0x04000, 0x30c9f490, BRF_BIOS }, 
-    { "zx128_2a_1.rom", 0x04000, 0xa7916b3f, BRF_BIOS }, 
-    { "zx128_2a_2.rom", 0x04000, 0xc9a0b748, BRF_BIOS }, 
-    { "zx128_2a_3.rom", 0x04000, 0xb88fd6e3, BRF_BIOS }
-)
+STD_ROM_PICK(Spectrum)
+STD_ROM_FN(Spectrum)
 
-// Burn Driver Definitions
-BURN_DRIVER(SpecSpectrumBIOS, "spec_spectrum", "1982", "ZX Spectrum BIOS", "Sinclair Research Limited", HARDWARE_SPECTRUM, SpectrumGetZipName, Spectrum, SpecInit)
-BURN_DRIVER(SpecSpectrum, "spec_spec48k", "1982", "ZX Spectrum 16K/48K (OS)", "Sinclair Research Limited", HARDWARE_SPECTRUM, SpectrumGetZipName, Spectrum, SpecInit)
-BURN_DRIVER(SpecSpec128BIOS, "spec_spec128", "1986", "ZX Spectrum 128 BIOS", "Sinclair Research Limited", HARDWARE_SPECTRUM, SpectrumGetZipName, Spec128, Spec128KInit)
-BURN_DRIVER(SpecSpec1282aBIOS, "spec_spec1282a", "1987", "ZX Spectrum 128 +2a BIOS", "Amstrad Plc.", HARDWARE_SPECTRUM, SpectrumGetZipName, Spec1282a, Spec128KPlus2Init)
-BURN_DRIVER(SpecSpec128, "spec_spec128k", "1986", "ZX Spectrum 128K (OS)", "Sinclair Research Limited", HARDWARE_SPECTRUM, SpectrumGetZipName, Spec128, Spec128KInit)
-BURN_DRIVER(SpecSpec1282a, "spec_spec128k2a", "1987", "ZX Spectrum 128K +2a (OS)", "Amstrad Plc.", HARDWARE_SPECTRUM, SpectrumGetZipName, Spec1282a, Spec128KPlus2Init)
+static struct BurnRomInfo Spec128RomDesc[] = {
+	{ "zx128_0.rom",   0x04000, 0xe76799d2, BRF_BIOS },
+	{ "zx128_1.rom",   0x04000, 0xb96a36be, BRF_BIOS },
+};
+
+STD_ROM_PICK(Spec128)
+STD_ROM_FN(Spec128)
+
+static struct BurnRomInfo Spec1282aRomDesc[] = {
+	{ "zx128_2a_0.rom",   0x04000, 0x30c9f490, BRF_BIOS },
+	{ "zx128_2a_1.rom",   0x04000, 0xa7916b3f, BRF_BIOS },
+	{ "zx128_2a_2.rom",   0x04000, 0xc9a0b748, BRF_BIOS },
+	{ "zx128_2a_3.rom",   0x04000, 0xb88fd6e3, BRF_BIOS },
+};
+
+STD_ROM_PICK(Spec1282a)
+STD_ROM_FN(Spec1282a)
+
+struct BurnDriver BurnSpecSpectrumBIOS = {
+	"spec_spectrum", NULL, NULL, NULL, "1982",
+	"ZX Spectrum BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, SpectrumRomInfo, SpectrumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnSpecSpectrum = {
+	"spec_spec48k", NULL, NULL, NULL, "1982",
+	"ZX Spectrum 16K/48K (OS)\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, SpectrumRomInfo, SpectrumRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnSpecSpec128BIOS = {
+	"spec_spec128", NULL, NULL, NULL, "1986",
+	"ZX Spectrum 128 BIOS\0", "BIOS Only", "Sinclair Research Limited", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, Spec128RomInfo, Spec128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnSpecSpec1282aBIOS = {
+	"spec_spec1282a", NULL, NULL, NULL, "1987",
+	"ZX Spectrum 128 +2a BIOS\0", "BIOS Only", "Amstrad Plc.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 0, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, Spec1282aRomInfo, Spec1282aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnSpecSpec128 = {
+	"spec_spec128k", NULL, NULL, NULL, "1986",
+	"ZX Spectrum 128K (OS)\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, Spec128RomInfo, Spec128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnSpecSpec1282a = {
+	"spec_spec128k2a", NULL, NULL, NULL, "1987",
+	"ZX Spectrum 128K +2a (OS)\0", NULL, "Amstrad Plc.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_BIOS, 0,
+	SpectrumGetZipName, Spec1282aRomInfo, Spec1282aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
 
 
 // -------------------------------------------------------------

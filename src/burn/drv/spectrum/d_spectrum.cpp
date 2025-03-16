@@ -38182,10 +38182,10 @@ struct BurnDriver BurnSpecForward2past = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Frankee Goes Home (48K) (HB, v1.1)
+// Frankee Goes Home (48K) (HB, v1.2)
 
 static struct BurnRomInfo SpecFrankeeRomDesc[] = {
-	{ "Frankee Goes Home v1.1 48K (2025)(Radical Reflux).tap", 43348, 0xff6e7f55, BRF_ESS | BRF_PRG },
+	{ "Frankee Goes Home v1.2 48K (2025)(Radical Reflux).tap", 43417, 0x3ad059d3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFrankee, SpecFrankee, Spectrum)
@@ -38193,7 +38193,7 @@ STD_ROM_FN(SpecFrankee)
 
 struct BurnDriver BurnSpecFrankee = {
 	"spec_frankee", NULL, "spec_spectrum", NULL, "2025",
-	"Frankee Goes Home (48K) (HB, v1.1)\0", NULL, "Radical Reflux", "ZX Spectrum",
+	"Frankee Goes Home (48K) (HB, v1.2)\0", NULL, "Radical Reflux", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFrankeeRomInfo, SpecFrankeeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

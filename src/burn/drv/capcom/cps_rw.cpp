@@ -645,22 +645,6 @@ INT32 CpsRwGetInp()
 		}
 	}
 
-	// PJT: This likely needs to be changed
-	if (Ecofght) {
-		// Handle analog controls
-		if (fFakeDip & 0x80) {
-			if (CpsDigUD[0]) nDial055 += 0x40; // p1
-			if (CpsDigUD[1]) nDial055 -= 0x40;
-			if (CpsDigUD[2]) nDial05d += 0x40; // p2
-			if (CpsDigUD[3]) nDial05d -= 0x40;
-		} else {
-			if (CpsDigUD[0]) nDial055 -= 0x40; // p1
-			if (CpsDigUD[1]) nDial055 += 0x40;
-			if (CpsDigUD[2]) nDial05d -= 0x40; // p2
-			if (CpsDigUD[3]) nDial05d += 0x40;
-		}
-	}
-	
 	if (Pzloop2) {
 		if (ReadPaddle) {
 			CpsPaddle1Value = 0;

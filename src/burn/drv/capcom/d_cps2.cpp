@@ -1,5 +1,6 @@
 #include "cps.h"
 #include "burn_gun.h" // ecofght optional spinner dev.
+#include "bitswap.h"
 
 // Input Definitions
 
@@ -569,16 +570,16 @@ static void RotatePositive(INT32 player) {
 // we want 0 to be right
 static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -dink
 	// rotated counterclockwise
-	if (joy[3] && joy[1]) return 5;     // up left
-	if (joy[3] && joy[0]) return 7;     // up right
+	if (joy[3] && joy[1]) return 0xa0;     // up left
+	if (joy[3] && joy[0]) return 0x60;     // up right
 
-	if (joy[2] && joy[1]) return 3;     // down left
-	if (joy[2] && joy[0]) return 1;     // down right
+	if (joy[2] && joy[1]) return 0xe0;     // down left
+	if (joy[2] && joy[0]) return 0x20;     // down right
 
-	if (joy[3]) return 6;     // up
-	if (joy[2]) return 2;     // down
-	if (joy[1]) return 4;     // left
-	if (joy[0]) return 0;     // right
+	if (joy[3]) return 0x80;     // up
+	if (joy[2]) return 0x00;     // down
+	if (joy[1]) return 0xc0;     // left
+	if (joy[0]) return 0x40;     // right
 
 	return 0xff;
 }
@@ -646,9 +647,6 @@ static void RotateDoTick()
 	}
 }
 
-// PJT: We might need to adjust this in case the angles are different for ecofght
-// Furthermore, when we lose a life, it restarts aiming to the right - need to see if that also happens in the spinner version,
-// but from a video it seems to be the case as well: https://www.youtube.com/watch?v=k4IfUNr2Crw&t=266s
 static void ProcessAnalogInputs() {
 	// converts analog inputs to something that the existing rotate logic can work with
 	INT16 AnalogPorts[4] = { Analog[1], Analog[0], Analog[3], Analog[2] };
@@ -667,14 +665,14 @@ static void ProcessAnalogInputs() {
 
 		float y_axis = (ProcessAnalog(AnalogPorts[i*2 + 0], 1, INPUT_DEADZONE, 0x00, 0xff) - 128.0)/128.0;
 		float x_axis = (ProcessAnalog(AnalogPorts[i*2 + 1], 0, INPUT_DEADZONE, 0x00, 0xff) - 128.0)/128.0;
-		UINT8 y_axisu = ProcessAnalog(AnalogPorts[i*2 + 0], 1, INPUT_DEADZONE, 0x00, 0xff);
-		UINT8 x_axisu = ProcessAnalog(AnalogPorts[i*2 + 1], 0, INPUT_DEADZONE, 0x00, 0xff);
+		//UINT8 y_axisu = ProcessAnalog(AnalogPorts[i*2 + 0], 1, INPUT_DEADZONE, 0x00, 0xff);
+		//UINT8 x_axisu = ProcessAnalog(AnalogPorts[i*2 + 1], 0, INPUT_DEADZONE, 0x00, 0xff);
 
 		int deg = (atan2(-x_axis, -y_axis) * 180 / M_PI) - 360/nRotateTotal/2; // technically, on a scale from 0-31, "0" should be -5.625 to 5.625, and not 0 to 11.25.
 		if (deg < 0) deg += 360;
 
 		int g_val = deg * nRotateTotal / 360; // scale from 0-360 to 0-ff
-		if (i==0) bprintf(0, _T("ori g_val %x   x/y:  %f  %f  (%x,%x %x,%x)\n"), g_val,x_axis,y_axis,x_axisu,AnalogPorts[i*2 + 0],y_axisu,AnalogPorts[i*2 + 1]);
+		//if (i==0) bprintf(0, _T("ori g_val %x   x/y:  %f  %f  (%x,%x %x,%x)\n"), g_val,x_axis,y_axis,x_axisu,AnalogPorts[i*2 + 0],y_axisu,AnalogPorts[i*2 + 1]);
 
 		g_val = nRotateMask - g_val; // invert so up-left is 0xf, instead of up-right
 		// g_val = (g_val + -8) & nRotateMask; // 0 starts at the 45deg mark
@@ -706,6 +704,11 @@ static void SuperJoy2Rotate() {
 	UINT8 FakeDrvInputPort1[4] = { 0, 0, 0, 0 };
 	UINT8 NeedsSecondStick[2] = { 0, 0 };
 
+	if ((fFakeDip & 0x20) == 0x20) {
+		// using digital buttons 1,3 to turn, time to leave! :)
+		return;
+	}
+
 	// prepare for right-stick rotation
 	// this is not especially readable though
 
@@ -714,11 +717,14 @@ static void SuperJoy2Rotate() {
 	for (INT32 i = 0; i < 2; i++) { // process digital move button + D-PAD rotation
 		UINT8 *DrvInputs[2] = { &Inp001, &Inp000 };
 
+		// swap bits 4 & 5: use the same attack button as "Satellite Moves with: Buttons" mode
+		*DrvInputs[i] = BITSWAP07(*DrvInputs[i], 6, 4, 5, 3, 2, 1, 0);
+
 		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
 			UINT8 rot = Joy2Rotate(((!i) ? &CpsInp001[0] : &CpsInp000[0]));
 			if (rot != 0xff) {
 				if (game_rotates == 1) {
-					DrvFakeInput[6 + i*4] = ((rot) & 7) * 4; // convert 8-way to 32-way (forgottn)
+					DrvFakeInput[6 + i*4] = rot;
 					DrvFakeInput[7 + i*4] = 1;
 				} else {
 					nRotateTarget[i] = rot * rotate_gunpos_multiplier;
@@ -752,25 +758,18 @@ static void SuperJoy2Rotate() {
 			}
 
 			if (game_rotates == 1) {
-				if (*curr_input & (1<<4) || ~fFakeDip & 0x40) {
+				if (~fFakeDip & 0x40 && DrvFakeInput[4 + i] == 0) { // dip: 2nd stick shoots & moves, but not digital+udlr button
 					nAutoFireCounter[i] = 2 + 1;
 				}
 			}
 		}
-
-		/*if (nAutoFireCounter[i]) {
-			*curr_input |= 1<<4; // fire!!
-
-			nAutoFireCounter[i]--;
-		}*/
 
 		if (nAutoFireCounter[i]) {
 			UINT8 no_fire = DrvFakeInput1[i];
 
 			if (no_fire) {
 				// If "no fire" is pressed in "Moves & Shoots" mode, we
-				// disable fire so that the Option (Satellite) can
-				// be moved, it can be used as a sheild! :)
+				// turn off fire so the charge shot can be released.
 				*curr_input &= ~(1<<4); // clear fire bit
 			} else {
 				*curr_input |= 1<<4; // fire!!
@@ -830,7 +829,7 @@ STDINPUTINFO(Ecofghtr)
 
 static struct BurnDIPInfo EcofghtrDIPList[]=
 {
-	DIP_OFFSET(0x1f)
+	DIP_OFFSET(0x21)
 	{0x00, 0xff, 0xff, 0x00, NULL                     },
 
 //	{0   , 0xfe, 0   , 0   , "** reset after changing! **" },

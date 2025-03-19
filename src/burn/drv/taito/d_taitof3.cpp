@@ -2999,7 +2999,7 @@ struct BurnDriver BurnDrvLightbr = {
 	"lightbr", NULL, NULL, NULL, "1993",
 	"Light Bringer (Ver 2.2O 1994/04/08)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, lightbrRomInfo, lightbrRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	lightbrInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3
@@ -3039,7 +3039,7 @@ struct BurnDriver BurnDrvDungeonm = {
 	"dungeonm", "lightbr", NULL, NULL, "1993",
 	"Dungeon Magic (Ver 2.1O 1994/02/18)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, dungeonmRomInfo, dungeonmRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	lightbrInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3
@@ -3079,7 +3079,7 @@ struct BurnDriver BurnDrvDungeonmu = {
 	"dungeonmu", "lightbr", NULL, NULL, "1993",
 	"Dungeon Magic (Ver 2.1A 1994/02/18)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, dungeonmuRomInfo, dungeonmuRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	lightbrInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3
@@ -3119,7 +3119,7 @@ struct BurnDriver BurnDrvLightbrj = {
 	"lightbrj", "lightbr", NULL, NULL, "1993",
 	"Light Bringer (Ver 2.1J 1994/02/18)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, lightbrjRomInfo, lightbrjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	lightbrInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3

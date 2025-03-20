@@ -198,68 +198,65 @@ static struct BurnInputInfo KnInputList[] = {
 
 STDINPUTINFO(Kn)
 
-static struct BurnDIPInfo gseekerDIPList[]=
+static struct BurnDIPInfo F3GlobalDIPList[]=
 {
-	{0x2e, 0xff, 0xff, 0x01, NULL },
-
 	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x2e, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x2e, 0x01, 0x02, 0x02, "Slow / Mellow" },
-
-	{0   , 0xfe, 0   , 2   , "Stage 5 Graphic Glitch Fix" },
-	{0x2e, 0x01, 0x01, 0x01, "Yes" },
-	{0x2e, 0x01, 0x01, 0x00, "No" },
+	{0x00, 0x01, 0x02, 0x00, "Normal / Fast" },
+	{0x00, 0x01, 0x02, 0x02, "Slow / Mellow" },
 };
 
-STDDIPINFO(gseeker)
+static struct BurnDIPInfo gseekerDIPList[]=
+{
+	DIP_OFFSET(0x2e)
+
+	{0x00, 0xff, 0xff, 0x01, NULL },
+
+	{0   , 0xfe, 0   , 2   , "Stage 5 Graphic Glitch Fix" },
+	{0x00, 0x01, 0x01, 0x01, "Yes" },
+	{0x00, 0x01, 0x01, 0x00, "No" },
+};
+
+STDDIPINFOEXT(gseeker, F3Global, gseeker)
 
 static struct BurnDIPInfo F3DIPList[]=
 {
-	{0x2e, 0xff, 0xff, 0x00, NULL },
+	DIP_OFFSET(0x2e)
 
-	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x2e, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x2e, 0x01, 0x02, 0x02, "Slow / Mellow" },
+	{0x00, 0xff, 0xff, 0x00, NULL },
 };
 
-STDDIPINFO(F3)
+STDDIPINFOEXT(F3, F3Global, F3)
 
 static struct BurnDIPInfo GunlockDIPList[]=
 {
-	{0x2e, 0xff, 0xff, 0x00, NULL },
+	DIP_OFFSET(0x2e)
 
-	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x2e, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x2e, 0x01, 0x02, 0x02, "Slow / Mellow" },
+	{0x00, 0xff, 0xff, 0x00, NULL },
 
 	{0   , 0xfe, 0   , 2   , "GammaBrightness hack" },
-	{0x2e, 0x01, 0x04, 0x04, "On" },
-	{0x2e, 0x01, 0x04, 0x00, "Off" },
+	{0x00, 0x01, 0x04, 0x04, "On" },
+	{0x00, 0x01, 0x04, 0x00, "Off" },
 };
 
-STDDIPINFO(Gunlock)
+STDDIPINFOEXT(Gunlock, F3Global, Gunlock)
 
 static struct BurnDIPInfo F3AnalogDIPList[]=
 {
-	{0x30, 0xff, 0xff, 0x00, NULL },
+	DIP_OFFSET(0x30)
 
-	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x30, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x30, 0x01, 0x02, 0x02, "Slow / Mellow" },
+	{0x00, 0xff, 0xff, 0x00, NULL },
 };
 
-STDDIPINFO(F3Analog)
+STDDIPINFOEXT(F3Analog, F3Global, F3Analog)
 
 static struct BurnDIPInfo KnDIPList[]=
 {
-	{0x1e, 0xff, 0xff, 0x00, NULL },
+	DIP_OFFSET(0x1e)
 
-	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x1e, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x1e, 0x01, 0x02, 0x02, "Slow / Mellow" },
+	{0x00, 0xff, 0xff, 0x00, NULL },
 };
 
-STDDIPINFO(Kn)
+STDDIPINFOEXT(Kn, F3Global, Kn)
 
 static void control_w(INT32 offset, UINT32 d, INT32 b)
 {
@@ -1280,6 +1277,8 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag, UINT32 speedhack_addr)
 {
+	BurnSetRefreshRate(58.943844);
+
 	f3_game = kludge;
 
 	TaitoF3GetRoms(false);
@@ -1555,7 +1554,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[1] = { 16000000 / 60 }; // do not touch!
+	INT32 nCyclesTotal[1] = { (double)16000000 * 100 / nBurnFPS };
 	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	SekNewFrame();

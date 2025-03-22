@@ -41073,7 +41073,7 @@ struct BurnDriver BurnSpecJunglequeen = {
 // Jurl (48K) (HB)
 
 static struct BurnRomInfo SpecJurlRomDesc[] = {
-	{ "Jurl 48K (2025)(Tonsomo Entertainment).tap", 34027, 0xbd3986af, BRF_ESS | BRF_PRG },
+	{ "Jurl 48K (2025)(Tonsomo Entertainment).tap", 34919, 0xf3d9fB3f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJurl, SpecJurl, Spectrum)

@@ -14555,10 +14555,7 @@ static INT32 PhoenixInit()
 
 static INT32 EcofghtPhoenixInit()
 {
-	Ecofght = 1;
-	EcofghtRotateInit();
-
-	INT32 nRet = Cps2Init();
+	INT32 nRet = EcofghtInit();
 
 	if (!nRet) {
 		SekOpen(0);

@@ -26815,32 +26815,32 @@ struct BurnDriver BurnDrvCndi = {
 
 
 // Double Dragon One (Demo)
-// https://www.youtube.com/watch?v=5vtrwhQccHg
+// https://ozzyouzo.itch.io/double-dragon
 
-static struct BurnRomInfo doubledRomDesc[] = {
-	{ "doubled-p1.bin",		0x0100000, 0x1203e56d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "doubled-p2.bin",		0x0400000, 0x614c501e, 1 | BRF_ESS | BRF_PRG }, //  1
+static struct BurnRomInfo doubled1RomDesc[] = {
+	{ "doubled-p1.bin",		0x0100000, 0x0dd47ea6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "doubled-p2.bin",		0x0400000, 0x719b98e6, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "doubled-s1.bin",		0x0020000, 0x2882cffd, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "doubled-s1.bin",		0x0020000, 0xbbb20072, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "doubled-c1.bin",		0x1000000, 0xdb1d77da, 3 | BRF_GRA },           //  3 Sprite data
-	{ "doubled-c2.bin",		0x1000000, 0x340f0428, 3 | BRF_GRA },           //  4
+	{ "doubled-c1.bin",		0x1000000, 0xd4c50841, 3 | BRF_GRA },           //  3 Sprite data
+	{ "doubled-c2.bin",		0x1000000, 0x728eb8ae, 3 | BRF_GRA },           //  4
 
-	{ "doubled-m1.bin",		0x0010000, 0xd20925ae, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "doubled-m1.bin",		0x0010000, 0x128a9f84, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "doubled-v1.bin",		0x0800000, 0x197b6305, 5 | BRF_SND },           //  6 Sound data
-	{ "doubled-v2.bin",		0x0800000, 0x8135d5a8, 5 | BRF_SND },           //  7
+	{ "doubled-v1.bin",		0x0800000, 0x5018b7a9, 5 | BRF_SND },           //  6 Sound data
+	{ "doubled-v2.bin",		0x0800000, 0xf5c8192f, 5 | BRF_SND },           //  7
 };
 
-STDROMPICKEXT(doubled, doubled, neogeo)
-STD_ROM_FN(doubled)
+STDROMPICKEXT(doubled1, doubled1, neogeo)
+STD_ROM_FN(doubled1)
 
-struct BurnDriver BurnDrvDoubled = {
-	"doubled", NULL, "neogeo", NULL, "2025",
-	"Double Dragon One (Demo)\0", NULL, "unknown", "Neo Geo MVS",
+struct BurnDriver BurnDrvDoubled1 = {
+	"doubled1", NULL, "neogeo", NULL, "2025",
+	"Double Dragon One (Demo)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
-	NULL, doubledRomInfo, doubledRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, doubled1RomInfo, doubled1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

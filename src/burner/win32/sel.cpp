@@ -2236,6 +2236,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDRESCAN:
 					bRescanRoms = true;
+					LookupSubDirThreads();
 					CreateROMInfo(hSelDlg);
 					RebuildEverything();
 					break;
@@ -2265,6 +2266,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
+						LookupSubDirThreads();
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {

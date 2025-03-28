@@ -59,30 +59,30 @@ INT32 Dx9Core_Init();
 
 // Macros used for handling Window Messages
 #define HANDLE_WM_ENTERMENULOOP(hwnd, wParam, lParam, fn)		\
-    ((fn)((hwnd), (BOOL)(wParam)), 0L)
+	((fn)((hwnd), (BOOL)(wParam)), 0L)
 
 #ifdef __GNUC__
 #define HANDLE_WM_EXITMENULOOP(hwnd, wParam, lParam, fn)		\
-    ((fn)((hwnd), (BOOL)(wParam)))
+	((fn)((hwnd), (BOOL)(wParam)))
 #else
 #define HANDLE_WM_EXITMENULOOP(hwnd, wParam, lParam, fn)		\
-    ((fn)((hwnd), (BOOL)(wParam)), 0L)
+	((fn)((hwnd), (BOOL)(wParam)), 0L)
 #endif
 
 #define HANDLE_WM_ENTERSIZEMOVE(hwnd, wParam, lParam, fn)		\
-    ((fn)(hwnd), 0L)
+	((fn)(hwnd), 0L)
 
 #define HANDLE_WM_EXITSIZEMOVE(hwnd, wParam, lParam, fn)		\
-    ((fn)(hwnd), 0L)
+	((fn)(hwnd), 0L)
 
 #define HANDLE_WM_UNINITMENUPOPUP(hwnd,wParam,lParam,fn)		\
 	((fn)((hwnd), (HMENU)(wParam), (UINT)LOWORD(lParam), (BOOL)HIWORD(lParam)),0)
 
 // Extra macro used for handling Window Messages
 #define HANDLE_MSGB(hwnd, message, fn)							\
-    case (message): 												\
-         HANDLE_##message((hwnd), (wParam), (lParam), (fn)); \
-         break;
+	case (message): 												\
+		HANDLE_##message((hwnd), (wParam), (lParam), (fn)); \
+		break;
 
 // Macro used for re-initialiging video/sound/input
 // #define POST_INITIALISE_MESSAGE { dprintf(_T("*** (re-) initialising - %s %i\n"), _T(__FILE__), __LINE__); PostMessage(NULL, WM_APP + 0, 0, 0); }
@@ -362,6 +362,14 @@ HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
 // cona.cpp
+typedef struct {
+	TCHAR   BaseDir[MAX_PATH];
+	TCHAR** SubDirs;
+	UINT32  nCount;
+} ThreadParams;
+
+extern ThreadParams _ThreadParams[DIRS_MAX];
+
 extern int nIniVersion;
 
 struct VidPresetData { int nWidth; int nHeight; };
@@ -370,6 +378,8 @@ extern struct VidPresetData VidPreset[4];
 struct VidPresetDataVer { int nWidth; int nHeight; };
 extern struct VidPresetDataVer VidPresetVer[4];
 
+INT32 LookupSubDirThreads();
+void FreeSubDirsInfo();
 int ConfigAppLoad();
 int ConfigAppSave();
 

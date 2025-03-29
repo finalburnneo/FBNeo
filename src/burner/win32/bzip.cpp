@@ -443,6 +443,9 @@ int BzipOpen(bool bootApp)
 			TCHAR szFullName[MAX_PATH] = { 0 };
 
 			for (UINT32 nCount = 0; nCount < _ThreadParams[d].nCount; nCount++) {
+				// like: c:\1st_dir\2nd_dir\1 + ".zip" + '\0' = 5 chars
+				if ((_tcslen(_ThreadParams[d].SubDirs[nCount]) + strlen(szName)) > (MAX_PATH - 5))
+					continue;
 				_stprintf(szFullName, _T("%s%hs"), _ThreadParams[d].SubDirs[nCount], szName);
 
 				if (RomArchiveExists(szFullName)) {

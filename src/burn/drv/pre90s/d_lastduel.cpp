@@ -14,7 +14,7 @@ static UINT8 DrvDip[3]        = {0, 0, 0};
 static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
 static UINT8 DrvReset         = 0;
 
-static UINT8 *Mem                 = NULL;
+static UINT8 *AllMem              = NULL;
 static UINT8 *MemEnd              = NULL;
 static UINT8 *RamStart            = NULL;
 static UINT8 *RamEnd              = NULL;
@@ -46,28 +46,29 @@ static UINT8 DrvSoundLatch;
 static UINT8 DrvSpritePriMask;
 static UINT8 DrvSpriteFlipYMask;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 fire 2" },
+	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 fire 3" },
 
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 fire 2" },
-	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 fire 3" },
-
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 fire 2" },
-	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 fire 3" },
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 fire 2" },
+	{"P2 Fire 3"         , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 7, "service"   },
@@ -80,24 +81,23 @@ STDINPUTINFO(Drv)
 
 static struct BurnInputInfo LastduelInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 5, "service"   },
@@ -557,7 +557,7 @@ STD_ROM_FN(Lastduelb)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68KRom              = Next; Next += 0x80000;
 	DrvZ80Rom              = Next; Next += 0x10000;
@@ -606,6 +606,8 @@ static INT32 DrvDoReset()
 	DrvTmapPriority = 0;
 	DrvZ80RomBank = 0;
 	DrvSoundLatch = 0;
+
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -934,15 +936,9 @@ static INT32 SpriteYOffsets[16]      = { STEP16(0,32) };
 
 static INT32 DrvInit() // Madgear, Ledstorm
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -1031,15 +1027,9 @@ static INT32 DrvInit() // Madgear, Ledstorm
 
 static INT32 Leds2011Init()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -1122,15 +1112,9 @@ static INT32 Leds2011Init()
 
 static INT32 LastduelInit()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -1211,15 +1195,9 @@ static INT32 LastduelInit()
 
 static INT32 LastduelbInit()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nRet = 0;
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -1331,7 +1309,7 @@ static INT32 DrvExit()
 	DrvZ80RomBank = 0;
 	DrvSoundLatch = 0;
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1369,65 +1347,11 @@ static void DrvTileDraw(UINT8 *gfx, INT32 Code, INT32 Colour, INT32 x, INT32 y, 
 {
 	if (transparent)
 	{
-		if (x > 16 && x < 368 && y > 16 && y < 224) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, tcolor, 0, gfx);
-				}
-			}
-		}
-	} else {
-		if (x > 16 && x < 368 && y > 16 && y < 224) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, tcolor, 0, gfx);
+	}
+	else
+	{
+		Draw16x16Tile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, gfx);
 	}
 }
 
@@ -1519,13 +1443,14 @@ static void DrvRenderSprites(INT32 Priority)
 
 static void DrvRenderCharLayer()
 {
-	INT32 mx, my, Code, Colour, x, y, yFlip, TileIndex = 0;
+	INT32 mx, my, Code, Colour, x, y, yFlip, xFlip, TileIndex = 0;
 
 	UINT16 *VideoRam = (UINT16*)DrvVideoRam;
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			yFlip = 0;
+			xFlip = 0;
 			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Colour = Code >> 12;
 			if (Code & 0x800) yFlip = 1;
@@ -1537,19 +1462,7 @@ static void DrvRenderCharLayer()
 			x -= 64;
 			y -= 8;
 
-			if (x > 0 && x < 376 && y > 8 && y < 232) {
-				if (yFlip) {
-					Render8x8Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 2, 3, 0x300, DrvChars);
-				} else {
-					Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 2, 3, 0x300, DrvChars);
-				}
-			} else {
-				if (yFlip) {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x300, DrvChars);
-				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 2, 3, 0x300, DrvChars);
-				}
-			}
+			Draw8x8MaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 2, 3, 0x300, DrvChars);
 
 			TileIndex++;
 		}
@@ -1684,7 +1597,7 @@ static INT32 DrvDraw()  // madgear / ledstorm
 	}
 
 	if (nSpriteEnable & 2) DrvRenderSprites(1);
-	DrvRenderCharLayer();
+	if (nBurnLayer & 8) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -1716,42 +1629,30 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nCyclesSegment;
 
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 33 || i == 66) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
 
-	ZetOpen(0);
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-
 	}
-	ZetClose();
 
 	if (pBurnDraw) DrvDraw();
-
-	SekOpen(0);
-	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-	SekClose();
 
 	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x800);
 
@@ -1768,38 +1669,27 @@ static INT32 LastduelFrame()
 
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nCyclesSegment;
 
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 33 || i == 66) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
 
-	ZetOpen(0);
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	ZetClose();
 
 	if (pBurnDraw) LastduelDraw();
-
-	SekOpen(0);
-	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-	SekClose();
 
 	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x800);
 
@@ -1835,6 +1725,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
 		SCAN_VAR(DrvTmapPriority);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

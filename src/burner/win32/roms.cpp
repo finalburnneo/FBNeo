@@ -125,6 +125,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 //					}
 				}
 
+				LookupSubDirThreads();
+
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {

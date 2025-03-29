@@ -3338,6 +3338,7 @@ struct BurnDriver BurnDrvMkyawdim4 = {
 	400, 256, 4, 3
 };
 
+
 // Mortal Kombat (Yawdim bootleg, set 5)
 // f20v id 1408
 
@@ -3376,6 +3377,63 @@ struct BurnDriver BurnDrvMkyawdim5 = {
 	Mkyawdim3Init, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	400, 256, 4, 3
 };
+
+
+// Mortal Kombat (Yawdim bootleg, set 6)
+// This set is almost identical to mkyawdim2; the only difference is black sky in first stage seen on real yawdim bootleg footage video.
+
+static struct BurnRomInfo mkyawdim6RomDesc[] = {
+	{ "yawdim.u167",									0x010000, 0x16da7efb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
+
+	{ "yawdim.u159",									0x040000, 0x95b120af, 2 | BRF_SND },           //  1 Samples
+	{ "mw-15.u160",										0x080000, 0x6e68e0b0, 2 | BRF_SND },           //  2
+
+	// only one byte differs from mkyawdim2 4.u25 at 301304: C0 to 04
+	{ "4.u25",											0x080000, 0x80f30208, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	// only one byte differs from mkyawdim2 5.u26 at 301304: 05 to C0
+	{ "5.u26",											0x080000, 0x8a1de184, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "b-1.bin",										0x100000, 0xf41e61c6, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "b-2.bin",										0x100000, 0x8052740b, 4 | BRF_GRA },           //  6
+	{ "a-1.bin",										0x100000, 0x7da3cb93, 4 | BRF_GRA },           //  7
+	{ "a-2.bin",										0x100000, 0x1eedb0f8, 4 | BRF_GRA },           //  8
+	{ "c-1.bin",										0x100000, 0xde27c4c3, 4 | BRF_GRA },           //  9
+	{ "c-2.bin",										0x100000, 0xd99203f3, 4 | BRF_GRA },           // 10
+
+	{ "22v10.p1",										0x0002dd, 0x15c24092, 0 | BRF_OPT },           // 11 PLDs
+	{ "22v10.p2",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 12
+	{ "22v10.p3",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 13
+	{ "16v8.p4",										0x000117, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 14
+	{ "22v10.p5",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 15
+	{ "16v8.p6",										0x000117, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "16v8.p7",										0x000117, 0xfbbdc832, 0 | BRF_OPT },           // 17
+	{ "16v8.p8",										0x000117, 0x8c573ab4, 0 | BRF_OPT },           // 18
+	{ "22v10.p9",										0x0002e5, 0x4e68c9ba, 0 | BRF_OPT },           // 19
+	{ "20v8.p10",										0x000157, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 20
+	{ "20v8.p11",										0x000157, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 21
+	{ "22v10.p12",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 22
+	{ "22v10.p13",										0x0002e5, 0x3ccf1a6f, 0 | BRF_OPT },           // 23
+	{ "22v10.p14",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 24
+	{ "22v10.p15",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 25
+	{ "20v8.p16",										0x000157, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 26
+	{ "20v8.p17",										0x000157, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 27
+	{ "22v10.p18",										0x0002dd, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 28
+	{ "16v8.p19",										0x000117, 0x0346b5fc, 0 | BRF_OPT },           // 29
+};
+
+STD_ROM_PICK(mkyawdim6)
+STD_ROM_FN(mkyawdim6)
+
+struct BurnDriver BurnDrvMkyawdim6 = {
+	"mkyawdim6", "mk", NULL, NULL, "1992",
+	"Mortal Kombat (Yawdim bootleg, set 6)\0", NULL, "bootleg (Yawdim)", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
+	NULL, mkyawdim6RomInfo, mkyawdim6RomName, NULL, NULL, NULL, NULL, Mkla4InputInfo, Mkla4DIPInfo,
+	Mkyawdim2Init, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	400, 256, 4, 3
+};
+
 
 // Trog (rev LA5 3/29/91)
 

@@ -10907,6 +10907,75 @@ static struct BurnRomInfo Sf2ebbl3RomDesc[] = {
 STD_ROM_PICK(Sf2ebbl3)
 STD_ROM_FN(Sf2ebbl3)
 
+static struct BurnRomInfo Sf2ebbl4RomDesc[] = {
+	// f205v id 1751
+	/* main PCB is marked "AAB" and "STF" on component side
+	   piggyback PCB is marked "MASK ROM TAP 8M=2M*4" on component side
+	   main PCB is labeled "O.K" on component side 
+	   piggyback PCB fits into main PCB @ maskROM location 4 (C) */
+	{ "6.bin", 			0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.bin", 			0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "5.bin",       	0x040000, 0x82097d63, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.bin",       	0x040000, 0x0c83844d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "sh-street-a-sd145.1", 	0x100000, 0xa258de13, BRF_GRA | CPS1_TILES }, 
+	// { "9.u5",  				0x040000, 0x25ae23bc, BRF_GRA | CPS1_TILES }, // == sf2en epr-b-24.8h
+	// { "11.u2", 				0x040000, 0xe5819676, BRF_GRA | CPS1_TILES }, // == sf2en epr-b-23.8f
+	// { "10.u3", 				0x040000, 0x0ad7fb2b, BRF_GRA | CPS1_TILES }, // == sf2en epr-b-04.9a
+	// { "8.u6",                0x040000, 0xb6b8a84b, BRF_GRA | CPS1_TILES }, // Maybe bad - Needs redump
+	// Assuming 8.u6 is maybe bad, we are using instead c-se005.bin from sf2ebbl2 but not correct layout for this set
+	{ "c-se005.bin", 			0x100000, 0xc781bf87, BRF_GRA | CPS1_TILES }, // taken from sf2ebbl2
+	{ "sh-street-b-sg011.8", 	0x100000, 0x5726cab8, BRF_GRA | CPS1_TILES }, 
+	{ "sh-street-d-sf005.10", 	0x100000, 0x4dd24197, BRF_GRA | CPS1_TILES },
+	{ "sh-street-e-sg071.3", 	0x100000, 0x187667cc, BRF_GRA | CPS1_TILES }, 
+	{ "sh-street-f-sh123.6", 	0x100000, 0x5b585071, BRF_GRA | CPS1_TILES }, 
+
+	{ "10.bin",       	0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "2.bin",          0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1.bin",          0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "9h.bin",        	0x020000, 0x3a85a275, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "11h.bin",       	0x020000, 0x9156472f, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "10h.bin",      	0x020000, 0xecdb083b, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "12h.bin ",  		0x020000, 0x8fea8384, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	
+	{ "7.bin",          0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+	
+	{ "gal20v8-25lp.7",   		0x000157, 0xdf8d1dd0, BRF_OPT },	
+	{ "gal20v8-25lp.9",   		0x000157, 0x3b2cfa9d, BRF_OPT },	
+	{ "gal20v8-25lp.17",  		0x000157, 0xdf8d1dd0, BRF_OPT },
+	{ "gal20v8-25lp.20",  		0x000157, 0x131c47d8, BRF_OPT },
+	{ "gal20v8-25lp.21",  		0x000157, 0xe1f86f7d, BRF_OPT },	
+	{ "gal20v8-25lp.22",  		0x000157, 0x1418342d, BRF_OPT },
+	{ "gal20v8-25lp.24",  		0x000157, 0x131c47d8, BRF_OPT },	
+	{ "gal20v8-25lp.25",  		0x000157, 0xcb958d15, BRF_OPT },	
+	{ "gal20v8-25lp.29",  		0x000157, 0x316a1650, BRF_OPT },
+	{ "hy18cv8s-30.11",   		0x000155, 0xa9726e81, BRF_OPT },
+	{ "hy18cv8s-30.26",   		0x000155, 0xac1fbde8, BRF_OPT },
+	{ "hy18cv8s-30.27",   		0x000155, 0x5220d4c1, BRF_OPT },
+	{ "hy18cv8s-30.28",   		0x000155, 0xd818c91c, BRF_OPT },
+	{ "pal16l8acn.1",     		0x000104, 0xfa2195c9, BRF_OPT },
+	{ "pal16l8acn.2",     		0x000104, 0x555f26a7, BRF_OPT },
+	{ "pal16l8acn.3",     		0x000104, 0x454080bf, BRF_OPT },	
+	{ "pal16l8acn.5",     		0x000104, 0xe0b5eabc, BRF_OPT },
+	{ "pal16l8acn.6",     		0x000104, 0xd64883a5, BRF_OPT },
+	{ "pal16l8acn.10",    		0x000104, 0x17ede363, BRF_OPT },
+	{ "pal16l8acn.14",    		0x000104, 0xc3d8c4bf, BRF_OPT },
+	{ "pal16l8acn.15",    		0x000104, 0x03c161bc, BRF_OPT },
+	{ "pal16l8acn.16",    		0x000104, 0x19e5d05f, BRF_OPT },
+	{ "palce16v8h-25pc-4.8",	0x000117, 0x0babcc29, BRF_OPT },
+	{ "palce16v8h-25pc-4.12",	0x000117, 0x19787c52, BRF_OPT },
+	{ "palce16v8h-25pc-4.13",	0x000117, 0x19787c52, BRF_OPT },
+	{ "palce16v8h-25pc-4.19",	0x000117, 0x4aadc105, BRF_OPT },
+	{ "palce16v8h-25pc-4.23",	0x000117, 0x4badc9c4, BRF_OPT },
+	{ "palce22v10h-25pc-4.4",	0x0002dd, 0x06861673, BRF_OPT },
+	{ "palce22v10h-25pc-4.18",	0x0002dd, 0xe641a9d8, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2ebbl4)
+STD_ROM_FN(Sf2ebbl4)
+
 static struct BurnRomInfo Sf2sttRomDesc[] = {
 #if !defined ROM_VERIFY
 	// These first two are missing from the PCB
@@ -11969,6 +12038,36 @@ theguru@emuunlim.com*/
 
 STD_ROM_PICK(Sf2b4)
 STD_ROM_FN(Sf2b4)
+
+static struct BurnRomInfo Sf2b5RomDesc[] = {
+	// f205v id 1789
+	// PPCB is marked: "CH35 COMP" on component side
+	// PCB is marked: "CH35 SOLD" and "110-06-91" on solder side 
+	{ "2.ic172", 	  0x0080000, 0x42809e5a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1.ic171", 	  0x0080000, 0xe58db26c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "5.ic90",       0x0080000, 0x47fab9ed, BRF_GRA | CPS1_TILES },
+	{ "11.ic89",      0x0080000, 0x6e8c98d8, BRF_GRA | CPS1_TILES },	
+	{ "8.ic88",       0x0080000, 0xb8c39d56, BRF_GRA | CPS1_TILES },	
+	{ "14.ic87",      0x0080000, 0x672d4f85, BRF_GRA | CPS1_TILES },
+	{ "4.ic91",       0x0080000, 0x69d7b06b, BRF_GRA | CPS1_TILES },
+	{ "10.ic92",      0x0080000, 0x8c2fca3c, BRF_GRA | CPS1_TILES },	
+	{ "7.ic93",       0x0080000, 0xded88f5f, BRF_GRA | CPS1_TILES },
+	{ "13.ic94",      0x0080000, 0x26f09d38, BRF_GRA | CPS1_TILES },
+	{ "6.ic86",       0x0080000, 0xb6215991, BRF_GRA | CPS1_TILES },
+	{ "12.ic85",      0x0080000, 0x971903fa, BRF_GRA | CPS1_TILES },	
+	{ "9.ic84",       0x0080000, 0xb6a71ed7, BRF_GRA | CPS1_TILES },
+	{ "15.ic83",      0x0080000, 0x00983914, BRF_GRA | CPS1_TILES },
+
+	{ "3.ic26",       0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "gal16v8a-25lp.ic72",   0x000117, 0x48253c66, BRF_OPT },	
+	{ "gal16v8a-25lp.ic80",   0x000117, 0x2c43c330, BRF_OPT },
+	{ "gal20v8a-25lp.ic81",   0x000157, 0x6a55a974, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2b5)
+STD_ROM_FN(Sf2b5)
 
 static struct BurnRomInfo Sf2rkRomDesc[] = {
 	{ "w6.u222",       0x080000, 0x49422b6f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -16849,6 +16948,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ebbl"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl2"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl3"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2ebbl4"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2stt"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ly"         , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2ua"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
@@ -16878,6 +16978,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2b2"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b3"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b4"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2b5"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rk"         , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rk2"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2rules"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
@@ -23678,6 +23779,16 @@ struct BurnDriver BurnDrvCpsSf2ebbl3 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSf2ebbl4 = {
+	"sf2ebbl4", "sf2", NULL, NULL, "1992",
+	"Street Fighter II: The World Warrior (TAB Austria, bootleg, set 5)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ebbl4RomInfo, Sf2ebbl4RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2ebbl2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSf2stt = {
 	"sf2stt", "sf2", NULL, NULL, "1992",
 	"Street Fighter II: The World Warrior (TAB Austria, bootleg, set 2)\0", NULL, "bootleg", "CPS1",
@@ -23965,6 +24076,16 @@ struct BurnDriver BurnDrvCpsSf2b4 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2b4RomInfo, Sf2b4RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2b5 = {
+	"sf2b5", "sf2", NULL, NULL, "1991",
+	"Street Fighter II: The World Warrior (bootleg, earliest, set 5)\0", NULL, "bootleg (Playmark)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2b5RomInfo, Sf2b5RomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2mdtbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -26137,9 +26258,9 @@ struct BurnDriver BurnDrvCpsSf2hfsce = {
 // For more infomation, please visit: https://sf2mix.github.io/
 
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0x478d09c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0x23212fb2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0xd3d77d12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0xc1370215, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x5b0566c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0xcb6ab274, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa8f70643, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0xf73f1913, BRF_GRA | CPS1_TILES },
@@ -26172,8 +26293,8 @@ STD_ROM_PICK(sf2mix)
 STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpsSf2mix = {
-	"sf2mix", "sf2ce", NULL, NULL, "2023",
-	"Street Fighter II Mix (v1.3)\0", NULL, "hack", "CPS1",
+	"sf2mix", "sf2ce", NULL, NULL, "2025",
+	"Street Fighter II Mix (v1.4)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,

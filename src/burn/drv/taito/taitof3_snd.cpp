@@ -368,7 +368,7 @@ void TaitoF3SoundInit(INT32 cpunum)
 	SekSetIrqCallback(TaitoF3SoundIRQCallback);
 	SekClose();
 
-	ES5505Init(30476100/2, TaitoF3ES5506Rom, TaitoF3ES5506Rom, NULL);
+	ES5505Init(30476180/2, TaitoF3ES5506Rom, TaitoF3ES5506Rom, NULL);
 
 	mb87078_init(TaitoF3VolumeCallback);
 
@@ -377,7 +377,7 @@ void TaitoF3SoundInit(INT32 cpunum)
 
 void TaitoF3SoundIRQConfig(INT32 bAlternateHz)
 {
-	TaitoF3SoundIRQhz = (!bAlternateHz) ? IRQ_DEFAULT_HZ : (30476100 / 2);
+	TaitoF3SoundIRQhz = (!bAlternateHz) ? IRQ_DEFAULT_HZ : (30476180 / 2);
 }
 
 void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
@@ -386,7 +386,7 @@ void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
 		nCyclesDone = nCyclesExtra;
 	}
 
-	const INT32 nTotalCycles = (30476100 / 2) / (nBurnFPS / 100);
+	const INT32 nTotalCycles = (double)(30476180 / 2) * 100 / nBurnFPS;
 
 	SekOpen(TaitoF3CpuNum);
 

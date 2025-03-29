@@ -816,6 +816,7 @@ static int AppExit()
 
 	DrvExit();						// Make sure any game driver is exitted
 	FreeROMInfo();
+	FreeSubDirsInfo();
 	MediaExit();
 	BurnLibExit();					// Exit the Burn library
 

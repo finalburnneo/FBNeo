@@ -1483,7 +1483,7 @@ static struct BurnRomInfo bbustersuRomDesc[] = {
 
 	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
 
-	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
 
 	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
 };
@@ -1534,7 +1534,7 @@ static struct BurnRomInfo bbustersuaRomDesc[] = {
 
 	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
 
-	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
 
 	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
 };

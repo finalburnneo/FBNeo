@@ -1792,3 +1792,75 @@ struct BurnDriver BurnDrvsfw = {
 	SfwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
+
+
+// Street Fighter (Plus Plus)
+// Hack by Yumeji 2014-08-01
+
+static struct BurnRomInfo sfppRomDesc[] = {
+	{ "sfpp-19.2a",     0x10000, 0x9bcaeada, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sfpp-22.2c",     0x10000, 0x001cffb9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfpp-20.3a",     0x10000, 0x2a2abcf9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfpp-23.3c",     0x10000, 0x67303dea, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfpp-21.4a",     0x10000, 0x7a3e0c4e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sfpp-24.4c",     0x10000, 0xa8ad79f5, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "sf-02.7k",  		0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+
+	{ "sfpp-00.1h",     0x20000, 0x4b733845, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.1k",  		0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "sf-39.2k",  		0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.1k",  		0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.4k",  		0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.3k",  		0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+
+	{ "sf-25.1d",  		0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
+	{ "sf-28.1e",  		0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.1g",  		0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.1h",  		0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.2d",  		0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.2e",  		0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.2g",  		0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.2h",  		0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+
+	{ "sf-15.1m",  		0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.2m",  		0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.1k",  		0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.2k",  		0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.1h",  		0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.2h",  		0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.1f",  		0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.3m",  		0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.4m",  		0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.3k",  		0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.4k",  		0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.3h",  		0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.4h",  		0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.3f",  		0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+
+	{ "sf-27.4d",  		0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+
+	{ "sf-37.4h",  		0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.3h",  		0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.3g",  		0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.4g",  		0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+
+	{ "mb7114h.12k", 	0x0100, 0x75af3553, 0 | BRF_OPT },            // 40 Proms
+	{ "mb7114h.11h", 	0x0100, 0xc0e56586, 0 | BRF_OPT },            // 41
+	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
+	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
+};
+
+STD_ROM_PICK(sfpp)
+STD_ROM_FN(sfpp)
+
+struct BurnDriver BurnDrvsfpp = {
+	"sfpp", "sf", NULL, NULL, "2014",
+	"Street Fighter (Plus Plus)\0", NULL, "Yumeji", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
+	NULL, sfppRomInfo, sfppRomName, NULL, NULL, NULL, NULL, SfusInputInfo, SfusDIPInfo,
+	SfusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
+	&DrvRecalc, 0x401, 384, 224, 4, 3
+};

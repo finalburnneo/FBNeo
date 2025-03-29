@@ -1,9 +1,15 @@
 // Burner Config file module
 #include "burner.h"
+#include <process.h>
 
 #ifdef _UNICODE
  #include <locale.h>
 #endif
+
+#define IS_STRING_EMPTY(s) (NULL == (s) || (s)[0] == _T('\0'))
+
+HANDLE hMutex;
+ThreadParams _ThreadParams[DIRS_MAX];
 
 int nIniVersion = 0;
 
@@ -29,6 +35,107 @@ static void HardFXLoadDefaults()
 
 	for (int thfx = 0; thfx < totalHardFX; thfx++) {
 		HardFXConfigs[thfx].hardfx_config_load_defaults();
+	}
+}
+
+static int ends_with_slash(const TCHAR* dirPath)
+{
+	UINT32 len = _tcslen(dirPath);
+	if (0 == len) return 0;
+
+	TCHAR last_char = dirPath[len - 1];
+	return (last_char == _T('/') || last_char == _T('\\'));
+}
+
+static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* pnCount)
+{
+	if (IS_STRING_EMPTY(dirPath)) return;
+
+	TCHAR searchPath[MAX_PATH];
+
+	const TCHAR* szFormatA = ends_with_slash(dirPath) ? _T("%s*")  : _T("%s\\*");
+	const TCHAR* szFormatB = ends_with_slash(dirPath) ? _T("%s%s") : _T("%s\\%s");
+
+	_stprintf(searchPath, szFormatA, dirPath);
+
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind = FindFirstFile(searchPath, &findFileData);
+	if (INVALID_HANDLE_VALUE == hFind) return;
+
+	do {
+		if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+			if (0 == _tcscmp(findFileData.cFileName, _T(".")) || 0 == _tcscmp(findFileData.cFileName, _T("..")))
+				continue;
+
+			if ((_tcslen(dirPath) + _tcslen(findFileData.cFileName)) > (MAX_PATH - 2))
+				continue;
+
+			WaitForSingleObject(hMutex, INFINITE);
+
+			TCHAR subDirPath[MAX_PATH] = { 0 };
+			_stprintf(subDirPath, szFormatB, dirPath, findFileData.cFileName);
+
+			TCHAR** newArray = (TCHAR**)realloc(*pszArray, (*pnCount + 1) * sizeof(TCHAR*));
+			*pszArray = newArray;
+			(*pszArray)[*pnCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+			_stprintf((*pszArray)[(*pnCount)++], _T("%s\\"), subDirPath);
+
+			ReleaseMutex(hMutex);
+
+			TraverseDirectory(subDirPath, pszArray, pnCount);
+		}
+	} while (FindNextFile(hFind, &findFileData));
+
+	FindClose(hFind);
+}
+
+static UINT32 __stdcall TraverseDirsProc(void* lpParam)
+{
+	ThreadParams* pThreadParams = (ThreadParams*)lpParam;
+	TraverseDirectory(pThreadParams->BaseDir, &(pThreadParams->SubDirs), &(pThreadParams->nCount));
+
+	return 0;
+}
+
+INT32 LookupSubDirThreads()
+{
+	FreeSubDirsInfo();
+
+	HANDLE hThreads[DIRS_MAX];
+
+	if (NULL == (hMutex = CreateMutex(NULL, FALSE, NULL))) return 1;
+
+	for (INT32 i = 0; i < DIRS_MAX; i++) {
+		_tcscpy(_ThreadParams[i].BaseDir, szAppRomPaths[i]);
+
+		hThreads[i] = (HANDLE)_beginthreadex(
+			NULL, NULL, TraverseDirsProc, &_ThreadParams[i], 0, NULL
+		);
+		if (0 == hThreads[i]) return 1;
+	}
+
+	WaitForMultipleObjects(DIRS_MAX, hThreads, TRUE, INFINITE);
+
+	CloseHandle(hMutex);
+	for (INT32 i = 0; i < DIRS_MAX; i++) CloseHandle(hThreads[i]);
+
+	return 0;
+}
+
+void FreeSubDirsInfo()
+{
+	for (INT32 i = 0; i < DIRS_MAX; i++) {
+		if (NULL != _ThreadParams[i].SubDirs) {
+			for (UINT32 j = 0; j < _ThreadParams[i].nCount; j++) {
+				if (NULL != _ThreadParams[i].SubDirs[j]) {
+					free(_ThreadParams[i].SubDirs[j]);
+					_ThreadParams[i].SubDirs[j] = NULL;
+				}
+			}
+			free(_ThreadParams[i].SubDirs);
+			_ThreadParams[i].SubDirs = NULL;
+			_ThreadParams[i].nCount = 0;
+		}
 	}
 }
 
@@ -356,6 +463,9 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
+
+	LookupSubDirThreads();
+
 	return 0;
 }
 

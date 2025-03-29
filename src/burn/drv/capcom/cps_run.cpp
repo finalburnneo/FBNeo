@@ -441,6 +441,10 @@ INT32 Cps2Frame()
 	SekSetCyclesScanline(nCpsCycles / nCpsNumScanlines);
 
 	CpsRwGetInp();											// Update the input port values
+
+	if (CpsRunFrameStartCallbackFunction) {
+		CpsRunFrameStartCallbackFunction();
+	}
 	
 	// Check the volumes every 5 frames or so
 	if (GetCurrentFrame() % 5 == 0) {

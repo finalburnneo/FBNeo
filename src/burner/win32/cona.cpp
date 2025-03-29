@@ -67,7 +67,8 @@ static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* p
 			if (0 == _tcscmp(findFileData.cFileName, _T(".")) || 0 == _tcscmp(findFileData.cFileName, _T("..")))
 				continue;
 
-			if ((_tcslen(dirPath) + _tcslen(findFileData.cFileName)) > (MAX_PATH - 2))
+			// like: c:\1st_dir + '\' + 2nd_dir + '\' + "1.zip" + '\0' = 8 chars
+			if ((_tcslen(dirPath) + _tcslen(findFileData.cFileName)) > (MAX_PATH - 8))
 				continue;
 
 			WaitForSingleObject(hMutex, INFINITE);

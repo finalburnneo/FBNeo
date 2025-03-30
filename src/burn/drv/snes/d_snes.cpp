@@ -6182,16 +6182,17 @@ struct BurnDriver BurnDrvsnes_Cycberknight2te = {
 
 // Cyber Knight (Hack, English v1.01)
 // https://www.romhacking.net/translations/304/
+// https://www.romhacking.net/translations/6723/
 static struct BurnRomInfo snes_CyberknightteRomDesc[] = {
-	{ "Cyber Knight T-Eng v1.01 (2001)(Aeon Genesis).sfc", 1049088, 0x6d4548ef, BRF_ESS | BRF_PRG },
+	{ "Cyber Knight T-Eng v1.01 (2023)(Aeon Genesis, mteam).sfc", 1048576, 0x110925ae, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Cyberknightte)
 STD_ROM_FN(snes_Cyberknightte)
 
 struct BurnDriver BurnDrvsnes_Cyberknightte = {
-	"snes_cyberknightte", NULL, NULL, NULL, "2001",
-	"Cyber Knight (Hack, English v1.01)\0", NULL, "Aeon Genesis", "Nintendo",
+	"snes_cyberknightte", NULL, NULL, NULL, "2023",
+	"Cyber Knight (Hack, English v1.01)\0", NULL, "Aeon Genesis, mteam", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_CyberknightteRomInfo, snes_CyberknightteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -9524,6 +9525,63 @@ struct BurnDriver BurnDrvsnes_Finalfantiii = {
 	512, 448, 4, 3
 };
 
+// Final Fantasy III (Hack, Italian v2.1)
+// https://www.romhacking.net/translations/1053/
+static struct BurnRomInfo snes_FinalfantiiitiRomDesc[] = {
+	{ "Final Fantasy III T-Ita v2.1 (2002)(SadNES cITy).sfc", 4194304, 0xf35bdfe4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Finalfantiiiti)
+STD_ROM_FN(snes_Finalfantiiiti)
+
+struct BurnDriver BurnDrvsnes_Finalfantiiiti = {
+	"snes_finalfantiiiti", "snes_finalfantiii", NULL, NULL, "2002",
+	"Final Fantasy III (Hack, Italian v2.1)\0", NULL, "SadNES cITy", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_FinalfantiiitiRomInfo, snes_FinalfantiiitiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fantasy II (Hack, Italian v0.99)
+// https://www.romhacking.net/translations/6486/
+static struct BurnRomInfo snes_FinalfantiitiRomDesc[] = {
+	{ "Final Fantasy II T-Ita v0.99 (2005)(Brisma).sfc", 1048576, 0xff77c4a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Finalfantiiti)
+STD_ROM_FN(snes_Finalfantiiti)
+
+struct BurnDriver BurnDrvsnes_Finalfantiiti = {
+	"snes_finalfantiiti", "snes_finalfantii", NULL, NULL, "2005",
+	"Final Fantasy II (Hack, Italian v0.99)\0", NULL, "Brisma", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_FinalfantiitiRomInfo, snes_FinalfantiitiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fantasy II (Hack, Spanish)
+// https://www.romhacking.net/translations/6983/
+static struct BurnRomInfo snes_FinalfantiitsRomDesc[] = {
+	{ "Final Fantasy II T-Spa (2023)(Rod Merida).sfc", 1048576, 0x48797b1d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Finalfantiits)
+STD_ROM_FN(snes_Finalfantiits)
+
+struct BurnDriver BurnDrvsnes_Finalfantiits = {
+	"snes_finalfantiits", "snes_finalfantii", NULL, NULL, "2023",
+	"Final Fantasy II (Hack, Spanish)\0", NULL, "Rod Merida", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_FinalfantiitsRomInfo, snes_FinalfantiitsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Final Fantasy IV - Easy Type (Japan)
 
 static struct BurnRomInfo snes_FinalfantivetRomDesc[] = {
@@ -9596,6 +9654,25 @@ struct BurnDriver BurnDrvsnes_Finalfantvij = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_FinalfantvijRomInfo, snes_FinalfantvijRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fantasy VI (Hack, Spanish v1.15 rtm)
+// https://www.romhacking.net/translations/5487/
+static struct BurnRomInfo snes_FinalfantvitsRomDesc[] = {
+	{ "Final Fantasy VI v1.15 rtm (2023)(Rod Merida).sfc", 3145728, 0x2e73143c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Finalfantvits)
+STD_ROM_FN(snes_Finalfantvits)
+
+struct BurnDriver BurnDrvsnes_Finalfantvits = {
+	"snes_finalfantvits", "snes_finalfantiii", NULL, NULL, "2023",
+	"Final Fantasy VI (Hack, Spanish v1.15 rtm)\0", NULL, "Rod Merida", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_FinalfantvitsRomInfo, snes_FinalfantvitsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -17760,7 +17837,7 @@ struct BurnDriver BurnDrvsnes_Mspacman = {
 	512, 448, 4, 3
 };
 
-// Muscle Bomber - The Body Explosion (Japan)
+// Muscle Bomber: The Body Explosion (Japan)
 
 static struct BurnRomInfo snes_MusclebomberRomDesc[] = {
 	{ "Muscle Bomber - The Body Explosion (J)(1994)(Capcom).sfc", 3145728, 0xa6e028c2, BRF_ESS | BRF_PRG },
@@ -17771,7 +17848,7 @@ STD_ROM_FN(snes_Musclebomber)
 
 struct BurnDriver BurnDrvsnes_Musclebomber = {
 	"snes_musclebomber", "snes_slammasters", NULL, NULL, "1994",
-	"Muscle Bomber - The Body Explosion (Japan)\0", NULL, "Capcom", "Nintendo",
+	"Muscle Bomber: The Body Explosion (Japan)\0", NULL, "Capcom", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_MusclebomberRomInfo, snes_MusclebomberRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -28325,6 +28402,25 @@ struct BurnDriver BurnDrvsnes_Talesofphantte = {
 	512, 448, 4, 3
 };
 
+// Tales of Phantasia (Hack, Spanish)
+// https://www.romhacking.net/translations/1838/
+static struct BurnRomInfo snes_TalesofphanttsRomDesc[] = {
+	{ "Tales of Phantasia T-Spa (2005)(Traducciones Magno).sfc", 6291456, 0x5bcc6373, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Talesofphantts)
+STD_ROM_FN(snes_Talesofphantts)
+
+struct BurnDriver BurnDrvsnes_Talesofphantts = {
+	"snes_talesofphantts", "snes_talesofphantte", NULL, NULL, "2005",
+	"Tales of Phantasia (Hack, Spanish)\0", NULL, "Traducciones Magno", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TalesofphanttsRomInfo, snes_TalesofphanttsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Tatakae Genshijin 2 - Rookie no Bouken (Japan)
 
 static struct BurnRomInfo snes_Tatakae2RomDesc[] = {
@@ -32106,7 +32202,7 @@ struct BurnDriver BurnDrvsnes_Dkong4rr = {
 	"snes_dkong4rr", NULL, NULL, NULL, "2025",
 	"Donkey Kong 4: Rise and Repeat (GlobalHack)\0", "GlobalHack of Super Mario World", "Big Brawler", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Dkong4rrRomInfo, snes_Dkong4rrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -32125,7 +32221,7 @@ struct BurnDriver BurnDrvsnes_Dolls = {
 	"snes_dolls", NULL, NULL, NULL, "2025",
 	"D.O.L.L.S. (GlobalHack)\0", "GlobalHack of Super Mario World", "Jordan", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_DollsRomInfo, snes_DollsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -32886,7 +32982,7 @@ struct BurnDriver BurnDrvsnes_Megastalgia = {
 	"snes_megastalgia", NULL, NULL, NULL, "2024",
 	"Megastalgia - Megaman Edition (GlobalHack)\0", "GlobalHack of Super Mario World", "Koopenstein", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MegastalgiaRomInfo, snes_MegastalgiaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -33078,6 +33174,25 @@ struct BurnDriver BurnDrvsnes_Mshwargemsr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MshwargemsrRomInfo, snes_MshwargemsrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Muscle Bomber: The Body Explosion - Arcade Colors (Hack, v1.1)
+// https://romhackplaza.org/romhacks/muscle-bomber-the-body-explosion-arcade-colors-snes/
+static struct BurnRomInfo snes_MusclebomberacRomDesc[] = {
+	{ "Muscle Bomber - The Body Explosion - Arcade Colors v1.1 (2025)(Wu Shan).sfc", 3145728, 0x2d7e9ed0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Musclebomberac)
+STD_ROM_FN(snes_Musclebomberac)
+
+struct BurnDriver BurnDrvsnes_Musclebomberac = {
+	"snes_musclebomberac", "snes_slammasters", NULL, NULL, "2025",
+	"Muscle Bomber: The Body Explosion - Arcade Colors (Hack, v1.1)\0", NULL, "Wu Shan", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_MusclebomberacRomInfo, snes_MusclebomberacRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33858,6 +33973,25 @@ struct BurnDriver BurnDrvsnes_Supermkarthoriz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_SupermkarthorizRomInfo, snes_SupermkarthorizRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Ninji Land Reawakened (GlobalHack)
+// https://www.smwcentral.net/?p=section&a=details&id=39579
+static struct BurnRomInfo snes_SuperninjilandRomDesc[] = {
+	{ "Super Ninji Land Reawakened (2025)(Idunno).sfc", 3145728, 0x4de50cf1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superninjiland)
+STD_ROM_FN(snes_Superninjiland)
+
+struct BurnDriver BurnDrvsnes_Superninjiland = {
+	"snes_superninjiland", NULL, NULL, NULL, "2025",
+	"Super Ninji Land Reawakened (GlobalHack)\0", "GlobalHack of Super Mario World", "Idunno", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperninjilandRomInfo, snes_SuperninjilandRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -100,6 +100,9 @@ static UINT32 __stdcall TraverseDirsProc(void* lpParam)
 
 INT32 LookupSubDirThreads()
 {
+	if (!(nLoadMenuShowY & (1 << 26)))	// SEARCHSUBDIRS
+		return 1;
+
 	FreeSubDirsInfo();
 
 	HANDLE hThreads[DIRS_MAX];

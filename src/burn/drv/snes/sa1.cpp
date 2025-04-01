@@ -1,9 +1,5 @@
-// SA-1 mapper/simulator for LakeSnes, (c) 2024 dink
+// SA-1 mapper/simulator for LakeSnes, (c) 2024-25 dink
 // License: MIT
-
-// Supports everything except:
-// char conversion[1,2]-DMA & bitmap bwram
-// 3 games use this: Haruka Naru Augusta 3, Pebble Beach no Hotou & SD Gundam G NEXT
 
 #include "snes.h"
 #include "cpu_sa1.h"
@@ -60,6 +56,7 @@ static uint8_t supermmc[4];
 static uint32_t bwram_snes_bank;
 static uint32_t bwram_sa1_bank;
 static uint8_t bwram_sa1_mode;
+static uint8_t bwram_sa1_type; // 0 4bpp, !0 2bpp
 
 static uint8_t math_mode;
 static uint16_t math_param_a;
@@ -73,6 +70,12 @@ static uint8_t dma_control;
 static uint32_t dma_src;
 static uint32_t dma_dst;
 static uint16_t dma_len;
+static uint8_t dma_charconv1_active;
+
+static uint8_t dma_charconv_control;
+static uint8_t dma_charconv_bpp;
+static uint8_t dma_charconv_brf[0x10];
+static uint8_t dma_charconv_line;
 
 static uint32_t vari_src;
 static uint32_t vari_temp;
@@ -277,8 +280,9 @@ void snes_sa1_handleState(StateHandler* sh)
 {
 	cpusa1_handleState(sh);
 	sh_handleByteArray(sh, (uint8_t*)iram, 0x800);
+	sh_handleByteArray(sh, &dma_charconv_brf[0], 0x10);
 	sh_handleLongLongs(sh, &sa1_cycles, &math_result, NULL);
-	sh_handleBytes(sh, &openbus, &scpu_control, &scpu_irq_enable, &scpu_irq_pending, &sa1_control, &sa1_irq_enable, &sa1_irq_pending, &timer_mode, &supermmc[0], &supermmc[1], &supermmc[2], &supermmc[3], &bwram_sa1_mode, &math_mode, &math_overflow, &dma_control, &vari_bitcount, &vari_width, &vari_clock, NULL);
+	sh_handleBytes(sh, &openbus, &scpu_control, &scpu_irq_enable, &scpu_irq_pending, &sa1_control, &sa1_irq_enable, &sa1_irq_pending, &timer_mode, &supermmc[0], &supermmc[1], &supermmc[2], &supermmc[3], &bwram_sa1_mode, &bwram_sa1_type, &math_mode, &math_overflow, &dma_control, &dma_charconv1_active, &dma_charconv_control, &dma_charconv_bpp, &dma_charconv_line, &vari_bitcount, &vari_width, &vari_clock, NULL);
 	sh_handleBools(sh, &scpu_in_irq, NULL);
 	sh_handleWords(sh, &scpu_irq_vector, &scpu_nmi_vector, &sa1_reset_vector, &sa1_nmi_vector, &sa1_irq_vector, &timer_hpos, &timer_vpos, &hpos_latch, &vpos_latch, &bwram_snes_bank, &bwram_sa1_bank, &math_param_a, &math_param_b, &dma_len, NULL);
 	sh_handleInts(sh, &dma_src, &dma_dst, &vari_src, &vari_temp, NULL);
@@ -347,6 +351,7 @@ void snes_sa1_reset()
 	bwram_snes_bank = 0x00;
 	bwram_sa1_bank = 0x00;
 	bwram_sa1_mode = 0x00;
+	bwram_sa1_type = 0x00;
 
 	math_mode = 0x00;
 	math_param_a = 0x00;
@@ -358,6 +363,12 @@ void snes_sa1_reset()
 	dma_src = 0x00;
 	dma_dst = 0x00;
 	dma_len = 0x00;
+
+	dma_charconv1_active = 0x00;
+	dma_charconv_control = 0x00;
+	dma_charconv_bpp = 0x00;
+	memset(dma_charconv_brf, 0x00, sizeof(dma_charconv_brf));
+	dma_charconv_line = 0x00;
 
 	vari_src = 0x00;
 	vari_temp = 0x00;
@@ -459,10 +470,25 @@ static void dma_regs(uint32_t address, uint8_t data)
 {
 	switch (address) {
 		case 0x2230:
+			// 7       0
+			// epc1 .dss
+			// s. src device (prg, bwram, iram, unk)
+			// d. dst device (iram, bwram)
+			// 1. char conversion type-1 / type-2 (unset)
+			// c. char conversion enable
+			// p. dma priority (?)
+			// e. dma enable
 			dma_control = data;
+			if (~dma_control & 0x80) {
+				dma_charconv_line = 0;
+			}
 			break;
-		case 0x2231: // char conv. dma (unimpl)
-			bprintf(0, _T("cconvdma unimpl.\n"));
+		case 0x2231: // char conv. dma
+			dma_charconv_control = data & 0x1f;
+			dma_charconv_bpp = 1 << (~data & 3);
+			if (data & 0x80) {
+				dma_charconv1_active = 0;
+			}
 			break;
 		case 0x2232:
 		case 0x2233:
@@ -473,9 +499,24 @@ static void dma_regs(uint32_t address, uint8_t data)
 		case 0x2236:
 		case 0x2237:
 			set_byte(dma_dst, data, address - 0x2235);
-			if ( (address == 0x2236 && (dma_control & 0x80) && (~dma_control & 0x20) && (dma_control & 0x04) == 0x00) ||
-				(address == 0x2237 && (dma_control & 0x80) && (~dma_control & 0x20) && (dma_control & 0x04) == 0x04) ) {
-				dma_xfer();
+			if (dma_control & 0x80) {
+				switch (address) {
+					case 0x2236:
+						if (dma_control & 0x20 && dma_control & 0x10) {
+							dma_charconv1_active = 1;
+							scpu_set_irq(sa1_IRQ_DMA, 1);
+							check_pending_irqs();
+						}
+						if ((~dma_control & 0x20) && (dma_control & 0x04) == 0x00) {
+							dma_xfer();
+						}
+						break;
+					case 0x2237:
+						if ((~dma_control & 0x20) && (dma_control & 0x04) == 0x04) {
+							dma_xfer();
+						}
+						break;
+				}
 			}
 			break;
 		case 0x2238:
@@ -593,8 +634,10 @@ static void sa1_regs_write(uint32_t address, uint8_t data)
 			bwram_sa1_mode = data & 0x80;
 			break;
 		case 0x2227:
+			// bwram write protect
 			break;
 		case 0x222a:
+			// iram write protect bitmask
 			break;
 
 		case 0x2230:
@@ -610,11 +653,12 @@ static void sa1_regs_write(uint32_t address, uint8_t data)
 			dma_regs(address, data);
 			break;
 
-		case 0x223f: // bwram bitmap (unimpl)
-			bprintf(0, _T("bwram bitmap unimpl\n"));
+		case 0x223f: // bwram bitmap 4bpp (0) / 2bpp (&0x80)
+			bwram_sa1_type = data & 0x80;
+			//bprintf(0, _T("bwram bitmap type %x bpp\n"), (bwram_sa1_type) ? 2 : 4);
 			break;
 
-		case 0x2240: // dma type-2 char conversion (unimpl)
+		case 0x2240: // dma type-2 char conversion
 		case 0x2241:
 		case 0x2242:
 		case 0x2243:
@@ -630,7 +674,25 @@ static void sa1_regs_write(uint32_t address, uint8_t data)
 		case 0x224d:
 		case 0x224e:
 		case 0x224f:
-			bprintf(0, _T("dma cct2 unimpl\n"));
+			dma_charconv_brf[address & 0xf] = data;
+			if ((address & 7) == 7 && dma_control & 0x80) {
+				if (dma_control & 0x20 && ~dma_control & 0x10) {
+					const uint8_t bank = ((address & 0xf) == 0xf) << 3;
+					const uint16_t mask = 0x700 | (dma_charconv_bpp * 0x10);
+					address = (dma_dst & mask) + (dma_charconv_line & 8) * dma_charconv_bpp + ((dma_charconv_line & 7) << 1);
+
+					for (int b = 0; b < dma_charconv_bpp; b++) {
+						uint8_t pxl = 0;
+
+						for (int x = 0; x < 8; x++)
+							pxl |= ((dma_charconv_brf[bank + x] >> b) & 1) << (x ^ 7);
+
+						iram_write(address + ((b & 6) << 3) + (b & 1), pxl);
+					}
+
+					dma_charconv_line = (dma_charconv_line + 1) & 0xf;
+				}
+			}
 			break;
 
 		case 0x2250:
@@ -768,8 +830,8 @@ static void snes_regs_write(uint32_t address, uint8_t data)
 		case 0x2224:
 			bwram_snes_bank = (data & 0x1f) * 0x2000;
 			break;
-		case 0x2226: // bwram (?)
-		case 0x2228:// bprintf(0, _T("bwramwp %x  %x\n"), address, data);
+		case 0x2226: // bwram write enable
+		case 0x2228: // bwram write protect
 			break;
 
 		case 0x2229: // iram write protect (?)
@@ -831,9 +893,63 @@ static inline void iram_write_sa1(uint32_t address, uint8_t data) {
 	iram_write(address, data);
 }
 
+static uint8_t read_charconv1_dma(uint32_t address)
+{
+    const uint32_t mask = (dma_charconv_bpp << 3) - 1;
+
+    if ((address & mask) == 0) {
+		const uint32_t ccsize = (dma_charconv_control >> 2) & 7;
+		const uint32_t tile_pitch = (8 << (ccsize - (dma_charconv_control & 3)));
+		const uint32_t tile_start = dma_src & sram_mask;
+        const uint32_t tile_index = (address - tile_start) / (dma_charconv_bpp << 3);
+		uint32_t bwram_adr = tile_start + ((tile_index >> ccsize) * 8 * tile_pitch)
+			+ ((tile_index & ((1 << ccsize) - 1)) * dma_charconv_bpp);
+
+		bprintf(0, _T("tile index %x  addr %x  dma_src %x  bwram_adr %x\n"), tile_index, address, dma_src, bwram_adr);
+
+		for (uint32_t y = 0; y < 8; y++, bwram_adr += tile_pitch) {
+			uint64_t planar = 0;
+			uint8_t linear[8] = { 0, };
+			for (uint32_t bit = 0; bit < dma_charconv_bpp; bit++) {
+				planar |= (uint64_t)sram[(bwram_adr + bit) & sram_mask] << (bit << 3);
+			}
+
+			for (uint8_t x = 0; x < 8; x++, planar >>= dma_charconv_bpp) {
+				for (uint8_t bit = 0; bit < dma_charconv_bpp; bit++) {
+					linear[bit] |= ((planar >> bit) & 1) << (x ^ 7);
+				}
+			}
+
+			for (uint8_t byte = 0; byte < dma_charconv_bpp; byte++) {
+				iram_write(dma_dst + (y << 1) + ((byte & 1) | ((byte & 6) << 3)), linear[byte]);
+			}
+		}
+	}
+
+	return iram_read(dma_dst + (address & mask));
+}
+
 static inline uint8_t bwram_read(uint32_t address)
 {
 	return sram[address & sram_mask];
+}
+
+static inline uint8_t bwram_read_scpu(uint32_t address)
+{
+	if (dma_charconv1_active) {
+		return read_charconv1_dma(address & 0xfffff);
+	}
+
+	return sram[address & sram_mask];
+}
+
+static inline uint8_t bwram_read_bitmap(uint32_t address)
+{
+	if (bwram_sa1_type == 0x80) {
+		return (sram[(address >> 2) & sram_mask] >> ((address & 0x03) << 1)) & 0x03;
+	} else {
+		return (sram[(address >> 1) & sram_mask] >> ((address & 0x01) << 2)) & 0x0f;
+	}
 }
 
 static inline uint8_t bwram_read_bank(uint32_t address)
@@ -841,11 +957,32 @@ static inline uint8_t bwram_read_bank(uint32_t address)
 	return bwram_read(bwram_snes_bank + (address & 0x1fff));
 }
 
+#if 0
+static inline uint8_t bwram_read_bank_scpu(uint32_t address)
+{
+	address = bwram_snes_bank + (address & 0x1fff);
+
+	if (dma_charconv1_active) {
+		bprintf(0, _T("."));
+		return read_charconv1_dma(address);
+	}
+
+	return bwram_read(address);
+}
+#endif
+
 static inline uint8_t bwram_read_sa1(uint32_t address)
 {
 	acc_cyc();
 	acc_cyc_bwram_conflict();
 	return bwram_read(address);
+}
+
+static inline uint8_t bwram_read_bitmap_sa1(uint32_t address)
+{
+	acc_cyc();
+	acc_cyc_bwram_conflict();
+	return bwram_read_bitmap(address);
 }
 
 static inline uint8_t bwram_read_bank_sa1(uint32_t address)
@@ -860,6 +997,19 @@ static inline void bwram_write(uint32_t address, uint8_t data)
 	sram[address & sram_mask] = data;
 }
 
+static inline void bwram_write_bitmap(uint32_t address, uint8_t data)
+{
+	const bool is_2bpp = (bwram_sa1_type == 0x80);
+	const uint8_t shift = (is_2bpp) ? ((address & 3) << 1) : ((address & 1) << 2);
+	uint8_t mask = (is_2bpp) ? 0x03 : 0x0f;
+
+	data = (data & mask) << shift;
+	mask <<= shift;
+	address >>= (is_2bpp) ? 2 : 1;
+
+	sram[address & sram_mask] = (sram[address & sram_mask] & ~mask) | data;
+}
+
 static inline void bwram_write_bank(uint32_t address, uint8_t data)
 {
 	bwram_write(bwram_snes_bank + (address & 0x1fff), data);
@@ -872,11 +1022,23 @@ static inline void bwram_write_sa1(uint32_t address, uint8_t data)
 	bwram_write(address, data);
 }
 
+static inline void bwram_write_bitmap_sa1(uint32_t address, uint8_t data)
+{
+	acc_cyc();
+	acc_cyc_bwram_conflict();
+	bwram_write_bitmap(address & 0xfffff, data);
+}
+
 static inline void bwram_write_bank_sa1(uint32_t address, uint8_t data)
 {
+	address = bwram_sa1_bank + (address & 0x1fff);
     acc_cyc();
 	acc_cyc_bwram_conflict();
-	bwram_write(bwram_sa1_bank + (address & 0x1fff), data);
+	if (bwram_sa1_mode & 0x80) {
+		bwram_write_bitmap(address, data);
+	} else {
+		bwram_write(address, data);
+	}
 }
 
 static inline uint8_t rom_read(uint32_t address)
@@ -901,15 +1063,15 @@ static inline uint8_t rom_read_low_sa1(uint32_t address)
 			case 0xffee:
 				return sa1_irq_vector & 0xff;
 			case 0xffef:
-				return sa1_irq_vector >> 8;
+				return (sa1_irq_vector >> 8) & 0xff;
 			case 0xffea:
 				return sa1_nmi_vector & 0xff;
 			case 0xffeb:
-				return sa1_nmi_vector >> 8;
+				return (sa1_nmi_vector >> 8) & 0xff;
 			case 0xfffc:
 				return sa1_reset_vector & 0xff;
 			case 0xfffd:
-				return sa1_reset_vector >> 8;
+				return (sa1_reset_vector >> 8) & 0xff;
 		}
 	}
 	return rom_map[address >> 12][address & 0xfff];
@@ -943,7 +1105,7 @@ static void map_handlers_scpu() {
 	map_rw(SCPU, 0x80, 0xbf, 0x8000, 0xffff, snes_rom_vect_read, NULL);
 	map_rw(SCPU, 0xc0, 0xff, 0x0000, 0xffff, rom_read, NULL);
 
-	map_rw(SCPU, 0x40, 0x4f, 0x0000, 0xffff, bwram_read, bwram_write);
+	map_rw(SCPU, 0x40, 0x4f, 0x0000, 0xffff, bwram_read_scpu, bwram_write);
 }
 
 // snes-cart bus
@@ -963,8 +1125,8 @@ void snes_sa1_cart_write(uint32_t address, uint8_t data)
 
 // sa1 bus map & callbacks for cpu_sa1
 static void map_handlers_sa1() {
-	map_rw(SA1, 0x00, 0x3f, 0x0000, 0x0fff, iram_read, iram_write);
-	map_rw(SA1, 0x80, 0xbf, 0x0000, 0x0fff, iram_read, iram_write);
+	map_rw(SA1, 0x00, 0x3f, 0x0000, 0x0fff, iram_read_sa1, iram_write_sa1);
+	map_rw(SA1, 0x80, 0xbf, 0x0000, 0x0fff, iram_read_sa1, iram_write_sa1);
 
 	map_rw(SA1, 0x00, 0x3f, 0x2000, 0x2fff, sa1_regs_read, sa1_regs_write);
 	map_rw(SA1, 0x80, 0xbf, 0x2000, 0x2fff, sa1_regs_read, sa1_regs_write);
@@ -980,6 +1142,7 @@ static void map_handlers_sa1() {
 	map_rw(SA1, 0xc0, 0xff, 0x0000, 0xffff, rom_read_sa1, NULL);
 
 	map_rw(SA1, 0x40, 0x4f, 0x0000, 0xffff, bwram_read_sa1, bwram_write_sa1);
+	map_rw(SA1, 0x60, 0x6f, 0x0000, 0xffff, bwram_read_bitmap_sa1, bwram_write_bitmap_sa1);
 }
 
 void sa1_cpuIdle() {

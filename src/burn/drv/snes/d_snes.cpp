@@ -34453,3 +34453,60 @@ struct BurnDriver BurnDrvsnes_Zombiesue = {
 	512, 448, 4, 3
 };
 
+// Harukanaru Augusta 3
+
+static struct BurnRomInfo snes_Hkagusta3RomDesc[] = {
+	{ "Harukanaru Augusta 3 (1995)(T&E Soft)(Japan)(Rev 1).sfc", 2097152, 0xc1281f9b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hkagusta3)
+STD_ROM_FN(snes_Hkagusta3)
+
+struct BurnDriver BurnDrvsnes_Hkagusta3 = {
+	"snes_hkagusta3", NULL, NULL, NULL, "1995",
+	"Harukanaru Augusta 3\0", NULL, "T&E Soft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Hkagusta3RomInfo, snes_Hkagusta3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Pebble Beach no Hatou New - Tournament Edition
+
+static struct BurnRomInfo snes_PbnhntRomDesc[] = {
+	{ "Pebble Beach no Hatou New - Tournament Edition (1996)(T&E Soft)(Japan).sfc", 2097152, 0x0b6fb2f8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Pbnhnt)
+STD_ROM_FN(snes_Pbnhnt)
+
+struct BurnDriver BurnDrvsnes_Pbnhnt = {
+	"snes_pbnhnt", NULL, NULL, NULL, "1996",
+	"Pebble Beach no Hatou New - Tournament Edition\0", NULL, "T&E Soft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_PbnhntRomInfo, snes_PbnhntRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// SD Gundam G Next
+
+static struct BurnRomInfo snes_SdgundamgnextRomDesc[] = {
+	{ "SD Gundam G Next (1995)(Bandai)(Japan).sfc", 1572864, 0x845e420d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sdgundamgnext)
+STD_ROM_FN(snes_Sdgundamgnext)
+
+struct BurnDriver BurnDrvsnes_Sdgundamgnext = {
+	"snes_sdgundamgnext", NULL, NULL, NULL, "1995",
+	"SD Gundam G Next\0", NULL, "Bandai", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_SdgundamgnextRomInfo, snes_SdgundamgnextRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+

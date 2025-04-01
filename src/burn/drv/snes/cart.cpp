@@ -1,3 +1,5 @@
+// todo:
+// dsp_bios_reform(): support all format variants of the dsp bios?
 
 #include <stdio.h>
 #include <stdlib.h>

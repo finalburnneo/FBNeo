@@ -13341,15 +13341,15 @@ static struct BurnRomInfo Hsf2appRomDesc[] = {
 STD_ROM_PICK(Hsf2app)
 STD_ROM_FN(Hsf2app)
 
-// Street Fighter II': Prime (Ver 0.4, Hack)
+// Street Fighter II': Prime (Ver 0.41, Hack)
 // Modified by Zero800
 // https://sf2prime.github.io/
 
 static struct BurnRomInfo Sf2primeRomDesc[] = {
-	{ "sf2pr.03",		0x080000, 0x45c0c045, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.04",		0x080000, 0x252397fd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.05",		0x080000, 0x642c22b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.06",		0x080000, 0x910aeae4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.03",		0x080000, 0x8df8ef98, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.04",		0x080000, 0x8f5382e9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.05",		0x080000, 0x82e8b3c0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.06",		0x080000, 0xda43b431, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 #if 0
 	// All filled with 0xFF.
 	{ "sf2pr.07",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14555,10 +14555,7 @@ static INT32 PhoenixInit()
 
 static INT32 EcofghtPhoenixInit()
 {
-	Ecofght = 1;
-	EcofghtRotateInit();
-
-	INT32 nRet = Cps2Init();
+	INT32 nRet = EcofghtInit();
 
 	if (!nRet) {
 		SekOpen(0);
@@ -14818,7 +14815,7 @@ struct BurnDriver BurnDrvCpsHsf2app = {
 
 struct BurnDriver BurnDrvCpsSf2prime = {
 	"sf2prime", "hsf2", NULL, NULL, "2025",
-	"Street Fighter II': Prime (Ver 0.4, Hack)\0", NULL, "Zero800", "CPS2",
+	"Street Fighter II': Prime (Ver 0.41, Hack)\0", NULL, "Zero800", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2primeRomInfo, Sf2primeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -16010,6 +16007,94 @@ struct BurnDriver BurnDrvCpsSfa3br = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3brRomInfo, Sfa3brRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter Alpha 3 (Hidden Character Full Version Fix ver. 2009-09-27, Hack)
+// Modified by Pipi899
+
+static struct BurnRomInfo sfa3sp2RomDesc[] = {
+	{ "sz3sp2.03c",		0x080000, 0x41b961b4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3e.04c",		0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",		0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",		0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",		0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",		0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09c",		0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",		0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",		0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",		0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",		0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",		0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",		0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",		0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",		0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",		0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",			0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",			0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",		0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",		0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3.key",		0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(sfa3sp2)
+STD_ROM_FN(sfa3sp2)
+
+struct BurnDriver BurnDrvCpsSfa3sp2 = {
+	"sfa3sp2", "sfa3", NULL, NULL, "2009",
+	"Street Fighter Alpha 3 (Hidden Character Full Version Fix ver. 2009-09-27, Hack)\0", NULL, "Pipi899", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, sfa3sp2RomInfo, sfa3sp2RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Vampire: The Night Warriors (Enable hidden characters ver. 2006-05-31, Hack)
+// Modified by Yumeji
+
+static struct BurnRomInfo vampjbhRomDesc[] = {
+	{ "vamjbh.03a",		0x080000, 0x55c1be82, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamjbh.04b",		0x080000, 0x9c12017e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.05a",		0x080000, 0x6c497e92, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.06a",		0x080000, 0xf1bbecb6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.07a",		0x080000, 0x1067ad84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.08a",		0x080000, 0x4b89f41f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.09a",		0x080000, 0xfc0a4aac, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.10a",		0x080000, 0x9270c26b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "vam.13m",		0x400000, 0xc51baf99, CPS2_GFX | BRF_GRA },
+	{ "vam.15m",		0x400000, 0x3ce83c77, CPS2_GFX | BRF_GRA },
+	{ "vam.17m",		0x400000, 0x4f2408e0, CPS2_GFX | BRF_GRA },
+	{ "vam.19m",		0x400000, 0x9ff60250, CPS2_GFX | BRF_GRA },
+	{ "vam.14m",		0x100000, 0xbd87243c, CPS2_GFX | BRF_GRA },
+	{ "vam.16m",		0x100000, 0xafec855f, CPS2_GFX | BRF_GRA },
+	{ "vam.18m",		0x100000, 0x3a033625, CPS2_GFX | BRF_GRA },
+	{ "vam.20m",		0x100000, 0x2bff6a89, CPS2_GFX | BRF_GRA },
+
+	{ "vam.01",			0x020000, 0x64b685d5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vam.02",			0x020000, 0xcf7c97c7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vam.11m",		0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
+	{ "vam.12m",		0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "vampj.key",		0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(vampjbh)
+STD_ROM_FN(vampjbh)
+
+struct BurnDriver BurnDrvCpsVampjbh = {
+	"vampjbh", "dstlk", NULL, NULL, "2006",
+	"Vampire: The Night Warriors (Enable hidden characters ver. 2006-05-31, Hack)\0", NULL, "Yumeji", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, vampjbhRomInfo, vampjbhRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

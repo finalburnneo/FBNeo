@@ -31,7 +31,7 @@ extern UINT8 *tnzs_mcu_inputs;
 	{dip,  0x01, 0x03, 0x00, "Hardest"	},	\
 
 #define TNZS_LIVES_DIPSETTING(dip)				\
-	{0   , 0xfe, 0   ,    0, "Lives"		},	\
+	{0   , 0xfe, 0   ,    4, "Lives"		},	\
 	{dip, 0x01, 0x30, 0x20, "2"			},	\
 	{dip, 0x01, 0x30, 0x30, "3"			},	\
 	{dip, 0x01, 0x30, 0x10, "4"			},	\

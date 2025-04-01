@@ -16995,6 +16995,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2cejc"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfsce"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mix"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2pp"         , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2rb"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb2"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb3"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -17062,8 +17063,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceblp"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab7"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab8"    , HACK_B_1    , mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab9"    , HACK_B_1    , mapper_S9263B, 0, NULL                },
+	{ "sf2ceuab8"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
+	{ "sf2ceuab9"     , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceucbl"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2level"      , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2cebltw"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -26387,6 +26388,58 @@ struct BurnDriver BurnDrvCpsSf2gm = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2gmRomInfo, Sf2gmRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+
+// Street Fighter II Plus Plus (Ver. 2020/07/19, Hack)
+// Modified by Yumeji
+
+static struct BurnRomInfo sf2ppRomDesc[] = {
+	{ "sf2pp_30g.11e",	0x020000, 0xb5ecbb3a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_37g.11f",	0x020000, 0xddf2d988, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_31g.12e",	0x020000, 0x7e4af671, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_38g.12f",	0x020000, 0x2c70718a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_28g.9e",	0x020000, 0x3d96d4d2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_35g.9f",	0x020000, 0xc02a2be3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_29b.10e",	0x020000, 0x0bb77024, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2pp_36b.10f",	0x020000, 0x48256574, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "sf2-5m.4a",		0x080000, 0x22c9cc8e, BRF_GRA | CPS1_TILES },
+	{ "sf2-7m.6a",		0x080000, 0x57213be8, BRF_GRA | CPS1_TILES },
+	{ "sf2-1m.3a",		0x080000, 0xba529b4f, BRF_GRA | CPS1_TILES },
+	{ "sf2-3m.5a",		0x080000, 0x4b1b33a8, BRF_GRA | CPS1_TILES },
+	{ "sf2-6m.4c",		0x080000, 0x2c7e2229, BRF_GRA | CPS1_TILES },
+	{ "sf2-8m.6c",		0x080000, 0xb5548f17, BRF_GRA | CPS1_TILES },
+	{ "sf2-2m.3c",		0x080000, 0x14b84312, BRF_GRA | CPS1_TILES },
+	{ "sf2-4m.5c",		0x080000, 0x5e9cd89a, BRF_GRA | CPS1_TILES },
+	{ "sf2pp-13m.4d",	0x080000, 0x4267b696, BRF_GRA | CPS1_TILES },
+	{ "sf2pp-15m.6d",	0x080000, 0xdf9b9146, BRF_GRA | CPS1_TILES },
+	{ "sf2pp-9m.3d",	0x080000, 0xa08a9786, BRF_GRA | CPS1_TILES },
+	{ "sf2pp-11m.5d",	0x080000, 0x80feac31, BRF_GRA | CPS1_TILES },
+
+	{ "sf2_9.12a",		0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "sf2_18.11c",		0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sf2_19.12c",		0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "stf29.1a",		0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
+	{ "iob1.11d",		0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",		0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(sf2pp)
+STD_ROM_FN(sf2pp)
+
+struct BurnDriver BurnDrvCpsSf2pp = {
+	"sf2pp", "sf2", NULL, NULL, "2020",
+	"Street Fighter II Plus Plus (Ver. 2020/07/19, Hack)\0", NULL, "Yumeji", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, sf2ppRomInfo, sf2ppRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

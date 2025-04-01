@@ -61,6 +61,7 @@ static int nDlgUnavailableChbInitialPos[4];
 static int nDlgAlwaysClonesChbInitialPos[4];
 static int nDlgZipnamesChbInitialPos[4];
 static int nDlgLatinTextChbInitialPos[4];
+static int nDlgSearchSubDirsChbInitialPos[4];
 static int nDlgRomDirsBtnInitialPos[4];
 static int nDlgScanRomsBtnInitialPos[4];
 static int nDlgFilterGrpInitialPos[4];
@@ -287,6 +288,7 @@ static UINT64 MASKCHANNELF			= (UINT64)1 << ChannelFValue;
 
 static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
 
+#define SEARCHSUBDIRS			(1 << 26)
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
 #define AUTOEXPAND				(1 << 29)
@@ -399,6 +401,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
 	GetInititalControlPos(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
 	GetInititalControlPos(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+	GetInititalControlPos(IDC_SEL_SUBDIRS, nDlgSearchSubDirsChbInitialPos);
 	GetInititalControlPos(IDROM, nDlgRomDirsBtnInitialPos);
 	GetInititalControlPos(IDRESCAN, nDlgScanRomsBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
@@ -1005,6 +1008,7 @@ static void RefreshPanel()
 
 	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SUBDIRS, nLoadMenuShowY & SEARCHSUBDIRS ? BST_CHECKED : BST_UNCHECKED);
 }
 
 FILE* OpenPreview(int nIndex, TCHAR *szPath)
@@ -2236,6 +2240,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDRESCAN:
 					bRescanRoms = true;
+					LookupSubDirThreads();
 					CreateROMInfo(hSelDlg);
 					RebuildEverything();
 					break;
@@ -2263,8 +2268,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nLoadMenuShowY ^= ASCIIONLY;
 					RebuildEverything();
 					break;
+				case IDC_SEL_SUBDIRS:
+					nLoadMenuShowY ^= SEARCHSUBDIRS;
+					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
+						LookupSubDirThreads();
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {
@@ -2390,6 +2399,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetControlPosAlignTopRight(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
 		SetControlPosAlignTopRight(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
 		SetControlPosAlignTopRight(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+		SetControlPosAlignTopRight(IDC_SEL_SUBDIRS, nDlgSearchSubDirsChbInitialPos);
 		SetControlPosAlignTopRight(IDROM, nDlgRomDirsBtnInitialPos);
 		SetControlPosAlignTopRight(IDRESCAN, nDlgScanRomsBtnInitialPos);
 

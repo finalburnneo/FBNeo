@@ -289,9 +289,9 @@ jobs:
           asset_content_type: application/zip
 
   build_macos:
-    name: macOS
+    name: macOS (x86_64)
     needs: nightly_release
-    runs-on: macOS-latest-large # As we are building for x86_64
+    runs-on: macOS-13 # As we are building for x86_64
     steps:
       - uses: actions/checkout@v4
 
@@ -312,7 +312,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS.zip
+          asset_name: FinalBurn_Neo_macOS_(x86_64).zip
           asset_path: |
             projectfiles/xcode/build/Release/FinalBurn Neo.app
           asset_content_type: application/zip

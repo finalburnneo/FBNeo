@@ -9661,7 +9661,7 @@ struct BurnDriver BurnDrvsnes_Finalfantvij = {
 // Final Fantasy VI (Hack, Spanish v1.15 rtm)
 // https://www.romhacking.net/translations/5487/
 static struct BurnRomInfo snes_FinalfantvitsRomDesc[] = {
-	{ "Final Fantasy VI v1.15 rtm (2023)(Rod Merida).sfc", 3145728, 0x2e73143c, BRF_ESS | BRF_PRG },
+	{ "Final Fantasy VI T-Spa v1.15 rtm (2023)(Rod Merida).sfc", 3145728, 0x2e73143c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Finalfantvits)
@@ -12265,6 +12265,25 @@ struct BurnDriver BurnDrvsnes_Herosenkite = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_HerosenkiteRomInfo, snes_HerosenkiteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Harukanaru Augusta 3 (Japan, Rev. 1)
+
+static struct BurnRomInfo snes_Hkagusta3RomDesc[] = {
+	{ "Harukanaru Augusta 3 (J, Rev 1)(1995)(T&E Soft)(Japan).sfc", 2097152, 0xc1281f9b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hkagusta3)
+STD_ROM_FN(snes_Hkagusta3)
+
+struct BurnDriver BurnDrvsnes_Hkagusta3 = {
+	"snes_hkagusta3", NULL, NULL, NULL, "1995",
+	"Harukanaru Augusta 3 (Japan, Rev. 1)\0", "SA-1 enhancement CPU", "T&E Soft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Hkagusta3RomInfo, snes_Hkagusta3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19338,6 +19357,25 @@ struct BurnDriver BurnDrvsnes_Parodiusj = {
 	512, 448, 4, 3
 };
 
+// Pebble Beach no Hatou New - Tournament Edition (Japan)
+
+static struct BurnRomInfo snes_PbnhntRomDesc[] = {
+	{ "Pebble Beach no Hatou New - Tournament Edition (J)(1996)(T&E Soft).sfc", 2097152, 0x0b6fb2f8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Pbnhnt)
+STD_ROM_FN(snes_Pbnhnt)
+
+struct BurnDriver BurnDrvsnes_Pbnhnt = {
+	"snes_pbnhnt", NULL, NULL, NULL, "1996",
+	"Pebble Beach no Hatou New - Tournament Edition (Japan)\0", "SA-1 enhancement CPU", "T&E Soft", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_PbnhntRomInfo, snes_PbnhntRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Planet's Champ TG 3000, The (Japan)
 
 static struct BurnRomInfo snes_Pctg3000RomDesc[] = {
@@ -22317,6 +22355,25 @@ struct BurnDriver BurnDrvsnes_Sdgundamgx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
 	SNESGetZipName, snes_SdgundamgxRomInfo, snes_SdgundamgxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// SD Gundam G Next (Japan)
+
+static struct BurnRomInfo snes_SdgundamgnextRomDesc[] = {
+	{ "SD Gundam G Next (J)(1995)(Bandai).sfc", 1572864, 0x845e420d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sdgundamgnext)
+STD_ROM_FN(snes_Sdgundamgnext)
+
+struct BurnDriver BurnDrvsnes_Sdgundamgnext = {
+	"snes_sdgundamgnext", NULL, NULL, NULL, "1995",
+	"SD Gundam G Next (Japan)\0", "SA-1 enhancement CPU", "Bandai", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_SdgundamgnextRomInfo, snes_SdgundamgnextRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -34449,63 +34506,6 @@ struct BurnDriver BurnDrvsnes_Zombiesue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_ZombiesueRomInfo, snes_ZombiesueRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Harukanaru Augusta 3
-
-static struct BurnRomInfo snes_Hkagusta3RomDesc[] = {
-	{ "Harukanaru Augusta 3 (1995)(T&E Soft)(Japan)(Rev 1).sfc", 2097152, 0xc1281f9b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Hkagusta3)
-STD_ROM_FN(snes_Hkagusta3)
-
-struct BurnDriver BurnDrvsnes_Hkagusta3 = {
-	"snes_hkagusta3", NULL, NULL, NULL, "1995",
-	"Harukanaru Augusta 3\0", NULL, "T&E Soft", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SPORTSMISC, 0,
-	SNESGetZipName, snes_Hkagusta3RomInfo, snes_Hkagusta3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Pebble Beach no Hatou New - Tournament Edition
-
-static struct BurnRomInfo snes_PbnhntRomDesc[] = {
-	{ "Pebble Beach no Hatou New - Tournament Edition (1996)(T&E Soft)(Japan).sfc", 2097152, 0x0b6fb2f8, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Pbnhnt)
-STD_ROM_FN(snes_Pbnhnt)
-
-struct BurnDriver BurnDrvsnes_Pbnhnt = {
-	"snes_pbnhnt", NULL, NULL, NULL, "1996",
-	"Pebble Beach no Hatou New - Tournament Edition\0", NULL, "T&E Soft", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SPORTSMISC, 0,
-	SNESGetZipName, snes_PbnhntRomInfo, snes_PbnhntRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// SD Gundam G Next
-
-static struct BurnRomInfo snes_SdgundamgnextRomDesc[] = {
-	{ "SD Gundam G Next (1995)(Bandai)(Japan).sfc", 1572864, 0x845e420d, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Sdgundamgnext)
-STD_ROM_FN(snes_Sdgundamgnext)
-
-struct BurnDriver BurnDrvsnes_Sdgundamgnext = {
-	"snes_sdgundamgnext", NULL, NULL, NULL, "1995",
-	"SD Gundam G Next\0", NULL, "Bandai", "Nintendo",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
-	SNESGetZipName, snes_SdgundamgnextRomInfo, snes_SdgundamgnextRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

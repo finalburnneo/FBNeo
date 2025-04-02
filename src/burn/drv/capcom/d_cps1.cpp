@@ -10938,7 +10938,7 @@ static struct BurnRomInfo Sf2ebbl4RomDesc[] = {
 	{ "9h.bin",        	0x020000, 0x3a85a275, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	{ "11h.bin",       	0x020000, 0x9156472f, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	{ "10h.bin",      	0x020000, 0xecdb083b, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
-	{ "12h.bin ",  		0x020000, 0x8fea8384, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "12h.bin",  		0x020000, 0x8fea8384, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	
 	{ "7.bin",          0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 	

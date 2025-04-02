@@ -72,6 +72,8 @@ static INT32 timer_1_cycles;
 #define SOUND_IRQ_YM3438	0
 #define SOUND_IRQ_V60		1
 
+#define sign_extend(f, frombits) ((INT32)((f) << (32 - (frombits))) >> (32 - (frombits)))
+
 static UINT8 transparent_check[32][256];
 
 struct extents_list
@@ -2905,8 +2907,8 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 	UINT32 srcy = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff16/2 + 4 * bgnum]) & 0x1ff) << 20;
 	srcy += (BURN_ENDIAN_SWAP_INT16(ram[0x1ff14/2 + 4 * bgnum]) & 0xfe00) << 4;
 
-	srcx_start -= ((INT16)(BURN_ENDIAN_SWAP_INT16(ram[0x1ff30/2 + 2 * bgnum]) << 6) >> 6) * srcxstep;
-	srcy -= ((INT16)(BURN_ENDIAN_SWAP_INT16(ram[0x1ff32/2 + 2 * bgnum]) << 7) >> 7) * srcystep;
+	srcx_start -= sign_extend(BURN_ENDIAN_SWAP_INT16(ram[0x1ff30/2 + 2 * bgnum]), (dstxstep != 0x200) ? 10 : 9) * srcxstep;
+	srcy -= sign_extend(BURN_ENDIAN_SWAP_INT16(ram[0x1ff32/2 + 2 * bgnum]), (dstystep != 0x200) ? 10 : 9) * srcystep;
 
 	srcx_start += cliprect.nMinx * srcxstep;
 	srcy += cliprect.nMiny * srcystep;

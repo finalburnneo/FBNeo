@@ -306,13 +306,17 @@ jobs:
           name: macOS
           path: "projectfiles/xcode/build/Release/FinalBurn Neo.app"
 
+      - name: Compress macOS app
+        run: |
+          cd projectfiles/xcode/build/Release
+          zip -r "FinalBurn_Neo_macOS.zip" "FinalBurn Neo.app"
+
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS_(x86_64).zip
-          asset_path: |
-            projectfiles/xcode/build/Release/FinalBurn Neo.app
+          asset_name: FinalBurn_Neo_macOS.zip
+          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS.zip
           asset_content_type: application/zip

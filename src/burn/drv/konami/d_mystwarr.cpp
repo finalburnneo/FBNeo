@@ -662,8 +662,8 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 {
 	offset = (offset & 0x3e) / 2;
 
-	UINT32 adr, bsize, count, i, lim;
-	INT32 src, tgt, srcend, tgtend, skip, cx1, sx1, wx1, cy1, sy1, wy1, cz1, sz1, wz1, c2, s2, w2;
+	UINT32 adr, bsize, count, i, lim, src, dst;
+	INT32 tgt, srcend, tgtend, skip, cx1, sx1, wx1, cy1, sy1, wy1, cz1, sz1, wz1, c2, s2, w2;
 	INT32 dx, dy, angle;
 
 	if (offset == 0 && (mask & 0x00ff))
@@ -682,6 +682,23 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 
 				for(i=adr; i<lim; i+=2)
 					SekWriteWord(i, prot_data[0x1a/2]);
+			break;
+
+			case 0x98: // memcpy of some kind. incomplete
+				// known use cases:
+				// viostorm: transfer "color check" palette
+
+				dst = (prot_data[7] << 16) | prot_data[8];
+				src = (prot_data[2] << 16) | prot_data[3];
+				count = (prot_data[10] << 16 | prot_data[11]) >> 2;
+
+				for (int x = 0; x < count; ++x)
+				{
+					UINT32 src_data0 = SekReadWord((src + x * 8) + 0);
+					UINT32 src_data1 = SekReadWord((src + x * 8) + 2);
+					SekWriteWord((dst + x * 4) + 0, src_data0);
+					SekWriteWord((dst + x * 4) + 2, src_data1);
+				}
 			break;
 
 			// WARNING: The following cases are speculation based with questionable accuracy!(AAT)
@@ -1741,7 +1758,7 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		//extern int counter;
 		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
-	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
+	*color = layer_colorbase[layer] | ((*color >> 1) & 0x0f);
 }
 
 static void metamrph_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)

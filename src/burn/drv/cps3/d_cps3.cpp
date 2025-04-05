@@ -410,9 +410,7 @@ static struct BurnRomInfo sfiiinRomDesc[] = {
 
 	{ "sfiii_asia_nocd.29f400.u2",			0x080000, 0xca2b715f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	SFIII_970204_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiiin)
@@ -425,9 +423,7 @@ static struct BurnRomInfo sfiiinaRomDesc[] = {
 
 	{ "sfiii_asia_nocd.29f400.u2",			0x080000, 0x73e32463, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	SFIII_970204_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiiina)
@@ -523,9 +519,7 @@ static struct BurnRomInfo sfiii2nRomDesc[] = {
 
 	{ "sfiii2_asia_nocd.29f400.u2",			0x080000, 0xfd297c0d, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	SFIII2_970930_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiii2n)
@@ -629,9 +623,7 @@ static struct BurnRomInfo sfiii3nRomDesc[] = {
 
 	{ "sfiii3_japan_nocd.29f400.u2",		0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY	
 	SFIII3_990608_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiii3n)
@@ -644,9 +636,7 @@ static struct BurnRomInfo sfiii3naRomDesc[] = {
 
 	{ "sfiii3_asia_nocd.29f400.u2",		0x080000, 0xa12ebcd1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY	
 	SFIII3_990608_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiii3na)
@@ -750,9 +740,7 @@ static struct BurnRomInfo sfiii3nr1RomDesc[] = {
 
 	{ "sfiii3_japan_nocd.29f400.u2",		0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiii3nr1)
@@ -765,9 +753,7 @@ static struct BurnRomInfo sfiii3nar1RomDesc[] = {
 
 	{ "sfiii3_asia_nocd.29f400.u2",		0x080000, 0xa12ebcd1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
-#endif
 };
 
 STD_ROM_PICK(sfiii3nar1)
@@ -872,9 +858,7 @@ static struct BurnRomInfo jojonRomDesc[] = {
 
 	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJO_990128_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojon)
@@ -979,9 +963,7 @@ static struct BurnRomInfo jojonr1RomDesc[] = {
 
 	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJO_990108_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojonr1)
@@ -1086,9 +1068,7 @@ static struct BurnRomInfo jojonr2RomDesc[] = {
 
 	{ "jojo_asia_nocd.29f400.u2",			0x080000, 0x05b4f953, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJO_981202_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojonr2)
@@ -1139,9 +1119,7 @@ static struct BurnRomInfo jojobaRomDesc[] = {
 
 	{ "jojoba_euro_nocd.29f400.u2",			0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJOBA_991015_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojoba)
@@ -1154,9 +1132,7 @@ static struct BurnRomInfo jojobanRomDesc[] = {
 
 	{ "jojoba_japan_nocd.29f400.u2",		0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJOBA_991015_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojoban)
@@ -1237,9 +1213,7 @@ static struct BurnRomInfo jojobanr1RomDesc[] = {
 
 	{ "jojoba_japan_nocd.29f400.u2",		0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJOBA_990927_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojobanr1)
@@ -1252,9 +1226,7 @@ static struct BurnRomInfo jojobaner1RomDesc[] = {
 
 	{ "jojoba_euro_nocd.29f400.u2",			0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJOBA_990927_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojobaner1)
@@ -1335,9 +1307,7 @@ static struct BurnRomInfo jojobanr2RomDesc[] = {
 
 	{ "jojoba_japan_nocd.29f400.u2",		0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	JOJOBA_990913_FLASH
-#endif
 };
 
 STD_ROM_PICK(jojobanr2)
@@ -1350,9 +1320,7 @@ static struct BurnRomInfo jojobaner2RomDesc[] = {
 
 	{ "jojoba_euro_nocd.29f400.u2",			0x080000, 0x1ee2d679, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
-#if !defined ROM_VERIFY
 	JOJOBA_990913_FLASH
-#endif	
 };
 
 STD_ROM_PICK(jojobaner2)
@@ -1423,9 +1391,7 @@ static struct BurnRomInfo redearthnRomDesc[] = {
 
 	{ "redearth_asia_nocd.29f400.u2",		0x080000, 0x7a4f0851, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
 	REDEARTH_961121_FLASH
-#endif
 };
 
 STD_ROM_PICK(redearthn)

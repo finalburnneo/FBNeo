@@ -1771,12 +1771,31 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static INT32 res_check()
+{
+#ifdef __LIBRETRO__
+	INT32 screen_width, screen_height;
+	BurnDrvGetVisibleSize(&screen_width, &screen_height);
+	if (screen_height != visible_height) {
+		GenericTilesSetClipRaw(0, screen_width, 0, visible_height);
+		BurnTransferSetDimensions(screen_width, visible_height);
+		BurnDrvSetVisibleSize(screen_width, visible_height);
+		Reinitialise();
+		BurnTransferRealloc();
+		return 1;
+	}
+#endif
+	return 0;
+}
+
 static INT32 DrvDraw()
 {
 	if (BurnRecalc) {
 		DrvRecalculatePalette();
 		BurnRecalc = 0;
 	}
+
+	if (res_check()) return 0; // resolution changed?
 
 	BurnTransferCopy(BurnPalette);
 

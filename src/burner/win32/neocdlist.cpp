@@ -153,6 +153,7 @@ struct NGCDGAME games[] =
 	{ _T("sbp")			, _T("Super Bubble Pop")									, _T("2024")	, _T("Vektorlogic (iq_132 conversion)")	, 0xfedc },		//
 	{ _T("zupapa")		, _T("Zupapa!")												, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0070 },		//
 	{ _T("nitd")		, _T("Nightmare in the Dark")								, _T("2025")	, _T("Eleven (iq_132 conversion)")	, 0x0260 },		//
+	{ _T("neobombe")	, _T("Neo Bomberman")										, _T("2025")	, _T("Hudson (iq_132 conversion)")	, 0x0093 },		//
 	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
 	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//

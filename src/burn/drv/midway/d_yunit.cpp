@@ -115,6 +115,8 @@ static INT32 has_ym2151 = 0;
 static INT32 vb_start = 0;
 static INT32 v_total = 0;
 
+static INT32 visible_height;
+
 static struct BurnInputInfo NarcInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy2 + 8,	"p1 start"	},
@@ -1291,8 +1293,9 @@ static void autoerase_line(INT32 scanline)
 
 static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
 {
+	visible_height = (params->vsblnk - params->veblnk);
 	scanline -= params->veblnk; // top clipping
-	if (scanline < 0 || scanline >= nScreenHeight) return 0;
+	if (scanline < 0 || scanline >= visible_height) return 0;
 
 	UINT16 *src = &local_videoram[(params->rowaddr << 9) & 0x3fe00];
 	UINT16 *dest = pTransDraw + (scanline * nScreenWidth);
@@ -1342,7 +1345,7 @@ static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
 
 	autoerase_line(params->rowaddr - 1);
 
-	if (scanline == nScreenHeight-1) { // last visible line
+	if (scanline == visible_height-1) { // last visible line
 		autoerase_line(params->rowaddr);
 	}
 

@@ -16333,8 +16333,8 @@ STD_ROM_FN(Sgyxz)
 static struct BurnRomInfo SgyxzaRomDesc[] = {
 	{ "sgyx.800",       0x100000, 0x3703a650, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "sgyx-1.160",     0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
-	{ "sgyx-2.160",     0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
+	{ "sgyxz_gfx1.bin", 0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
+	{ "sgyxz_gfx2.bin", 0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
 	
 	// These sound roms are taken from sgyxz
 	{ "sgyxz_snd2.bin", 0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
@@ -16349,8 +16349,8 @@ static struct BurnRomInfo SgyxzbRomDesc[] = {
 	{ "fg-c.040",       0x080000, 0xd046fc86, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "fg-a.040",       0x080000, 0xf176ee8f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "sgyx-1.160",     0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
-	{ "sgyx-2.160",     0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
+	{ "sgyxz_gfx1.bin", 0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
+	{ "sgyxz_gfx2.bin", 0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
 	
 	// These sound roms are taken from sgyxz
 	{ "sgyxz_snd2.bin", 0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
@@ -16426,7 +16426,7 @@ static struct BurnRomInfo WofsjbRomDesc[] = {
 	{ "tk2-q3.3k",     0x080000, 0xbfcf6f52, BRF_SND },
 	{ "tk2-q4.4k",     0x080000, 0x36642e88, BRF_SND },
 
-	// using the sound roms from wofhfh or wof3js doesn't give the right result
+	// using the sound roms from wofhfh or wofsjs doesn't give the right result
 	// it doesn't use Q-Sound either
 };
 
@@ -16545,7 +16545,7 @@ static struct BurnRomInfo Wofr1blRomDesc[] = {
 	{ "11-4171.040",   0x080000, 0x219fd7e2, BRF_GRA | CPS1_TILES },
 	{ "12-f56b.040",   0x080000, 0xefc17c9a, BRF_GRA | CPS1_TILES },
 	
-	// These sound roms are taken from wof3js, this set looks it uses psound
+	// These sound roms are taken from wofsjs, this set looks it uses psound
 	{ "3js_09.rom",    0x010000, 0x21ce044c, BRF_PRG | CPS1_Z80_PROGRAM },
 	
 	{ "3js_18.rom",    0x020000, 0xac6e307d, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -17133,7 +17133,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofhfh"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
 	{ "sgyxz"         , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "sgyxza"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
-	{ "sgyxsb"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
+	{ "sgyxzb"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsj"         , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsja"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsjb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_patch			},
@@ -21546,7 +21546,7 @@ static INT32 WofhInit()
 {
 	INT32 nRet = 0;
 
-	WofhProtValue = 0xd0;
+	WofhProtValue = 0xD0;
 
 	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;

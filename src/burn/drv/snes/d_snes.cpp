@@ -3805,6 +3805,44 @@ struct BurnDriver BurnDrvsnes_Blockuzushi = {
 	512, 448, 4, 3
 };
 
+// Blue Crystal Rod, The (Japan)
+
+static struct BurnRomInfo snes_BlucryrodjRomDesc[] = {
+	{ "Blue Crystal Rod, The (J)(1994)(Namco).sfc", 2097152, 0xefc21f71, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Blucryrodj)
+STD_ROM_FN(snes_Blucryrodj)
+
+struct BurnDriver BurnDrvsnes_Blucryrodj = {
+	"snes_blucryrodj", "snes_blucryrodte", NULL, NULL, "1994",
+	"Blue Crystal Rod, The (Japan)\0", NULL, "Namco", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_BlucryrodjRomInfo, snes_BlucryrodjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Blue Crystal Rod, The (Hack, English)
+// https://stargood.org/trans/bluerod.php
+static struct BurnRomInfo snes_BlucryrodteRomDesc[] = {
+	{ "Blue Crystal Rod, The T-Eng (2025)(Supper).sfc", 3145728, 0x4aaa5806, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Blucryrodte)
+STD_ROM_FN(snes_Blucryrodte)
+
+struct BurnDriver BurnDrvsnes_Blucryrodte = {
+	"snes_blucryrodte", NULL, NULL, NULL, "2025",
+	"Blue Crystal Rod, The (Hack, English)\0", NULL, "Supper", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_BlucryrodteRomInfo, snes_BlucryrodteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Blues Brothers, The (USA)
 
 static struct BurnRomInfo snes_BluesbrosRomDesc[] = {
@@ -15822,6 +15860,25 @@ struct BurnDriver BurnDrvsnes_Lufiati = {
 	512, 448, 4, 3
 };
 
+// Lufia & A Fortaleza da Morte (Hack, Portuguese)
+// https://www.romhacking.net/translations/6857/
+static struct BurnRomInfo snes_LufiatpRomDesc[] = {
+	{ "Lufia & A Fortaleza da Morte PT-BR (2017)(Magalicia).sfc", 6291456, 0x83af6c9b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lufiatp)
+STD_ROM_FN(snes_Lufiatp)
+
+struct BurnDriver BurnDrvsnes_Lufiatp = {
+	"snes_lufiatp", "snes_lufia", NULL, NULL, "2017",
+	"Lufia & A Fortaleza da Morte (Hack, Portuguese)\0", NULL, "Magalicia", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_LufiatpRomInfo, snes_LufiatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Lufia & The Fortress of Doom (Hack, Spanish v1.03)
 // https://traduccioneslukas.blogspot.com/2013/01/fallos-lufia.html
 static struct BurnRomInfo snes_LufiatsRomDesc[] = {
@@ -17358,6 +17415,25 @@ struct BurnDriver BurnDrvsnes_Miragirlste = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_ACTION | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MiragirlsteRomInfo, snes_MiragirlsteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Miracle Girls (Hack, Spanish)
+// https://romhackplaza.org/translations/miracle-girls-spanish-translation-snes/
+static struct BurnRomInfo snes_MiragirlstsRomDesc[] = {
+	{ "Miracle Girls T-Spa (2024)(Full Moon).sfc", 1048576, 0xc6bbf5b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Miragirlsts)
+STD_ROM_FN(snes_Miragirlsts)
+
+struct BurnDriver BurnDrvsnes_Miragirlsts = {
+	"snes_miragirlsts", "snes_miragirlste", NULL, NULL, "2024",
+	"Miracle Girls (Hack, Spanish)\0", NULL, "Full Moon", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_ACTION | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MiragirlstsRomInfo, snes_MiragirlstsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -22473,6 +22549,44 @@ struct BurnDriver BurnDrvsnes_Secretmanag = {
 	512, 448, 4, 3
 };
 
+// Secret of Mana (Hack, Italian)
+// https://www.romhacking.net/translations/1056/
+static struct BurnRomInfo snes_SecretmanatiRomDesc[] = {
+	{ "Secret of Mana T-Ita (2001)(SadNES cITy).sfc", 2097152, 0x31114aac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Secretmanati)
+STD_ROM_FN(snes_Secretmanati)
+
+struct BurnDriver BurnDrvsnes_Secretmanati = {
+	"snes_secretmanati", "snes_secretmana", NULL, NULL, "2001",
+	"Secret of Mana (Hack, Italian)\0", NULL, "SadNES cITy", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_SecretmanatiRomInfo, snes_SecretmanatiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Secret of Mana (Hack, Spanish)
+// https://www.romhacking.net/translations/1818/
+static struct BurnRomInfo snes_SecretmanatsRomDesc[] = {
+	{ "Secret of Mana T-Spa (2010)(Traducciones Magno).sfc", 2097152, 0x98e12a2d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Secretmanats)
+STD_ROM_FN(snes_Secretmanats)
+
+struct BurnDriver BurnDrvsnes_Secretmanats = {
+	"snes_secretmanats", "snes_secretmana", NULL, NULL, "2010",
+	"Secret of Mana (Hack, Spanish)\0", NULL, "Traducciones Magno", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_SecretmanatsRomInfo, snes_SecretmanatsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Secret of Evermore (USA)
 
 static struct BurnRomInfo snes_SecreverRomDesc[] = {
@@ -22678,6 +22792,25 @@ struct BurnDriver BurnDrvsnes_Seikdens3te = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Seikdens3teRomInfo, snes_Seikdens3teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Seiken Densetsu 3 ~ Secret of Mana 2 (Hack, Spanish)
+// https://www.romhacking.net/translations/1837/
+static struct BurnRomInfo snes_Seikdens3tsRomDesc[] = {
+	{ "Seiken Densetsu 3 T-Spa (2013)(Traducciones Magno).sfc", 4194304, 0x11b87dea, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Seikdens3ts)
+STD_ROM_FN(snes_Seikdens3ts)
+
+struct BurnDriver BurnDrvsnes_Seikdens3ts = {
+	"snes_seikdens3ts", "snes_seikdens3te", NULL, NULL, "2013",
+	"Seiken Densetsu 3 ~ Secret of Mana 2 (Hack, Spanish)\0", NULL, "Traducciones Magno", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_Seikdens3tsRomInfo, snes_Seikdens3tsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33669,6 +33802,25 @@ struct BurnDriver BurnDrvsnes_Sbgaiden = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SbgaidenRomInfo, snes_SbgaidenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Secret of Mana Plus (Hack, v2.04)
+// https://www.romhacking.net/hacks/8491/
+static struct BurnRomInfo snes_SecretmanaplusRomDesc[] = {
+	{ "Secret of Mana Plus v2.04 (2024)(Tomm).sfc", 3145728, 0x666371a0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Secretmanaplus)
+STD_ROM_FN(snes_Secretmanaplus)
+
+struct BurnDriver BurnDrvsnes_Secretmanaplus = {
+	"snes_secretmanaplus", "snes_secretmana", NULL, NULL, "2024",
+	"Secret of Mana Plus (Hack, v2.04)\0", NULL, "Tomm", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_SecretmanaplusRomInfo, snes_SecretmanaplusRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

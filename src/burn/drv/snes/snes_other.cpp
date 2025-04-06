@@ -387,7 +387,8 @@ static void readHeader(const uint8_t* data, int length, int location, CartHeader
   score += (header->coprocessor <= 5 || header->coprocessor >= 0xe) ? 5 : -2;
   score += (header->chips <= 6 || header->chips == 9 || header->chips == 0xa) ? 5 : -2;
   score += (header->region <= 0x14) ? 5 : -2;
-  score += (header->checksum + header->checksumComplement == 0xffff) ? 8 : -6;
+  score += (header->checksum != 0 && header->checksumComplement != 0 && header->checksum + header->checksumComplement == 0xffff) ? 8 : -6;
+  //bprintf(0, _T("header checksum/compl: %x %x\n"), header->checksum, header->checksumComplement);
   uint16_t resetVector = data[location + 0x3c] | (data[location + 0x3d] << 8);
   score += (resetVector >= 0x8000) ? 8 : -20;
   // check first opcode after reset
@@ -410,5 +411,6 @@ static void readHeader(const uint8_t* data, int length, int location, CartHeader
     // brk, sbc alx, stp
     score -= 6;
   }
+  bprintf(0, _T("opcode: %x\n"), opcode);
   header->score = score;
 }

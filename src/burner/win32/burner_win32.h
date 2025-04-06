@@ -361,6 +361,10 @@ HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
+// romdata.cpp
+extern bool bRDListScanSub;
+INT32 RomDataManagerInit();
+
 // cona.cpp
 typedef struct {
 	TCHAR   BaseDir[MAX_PATH];

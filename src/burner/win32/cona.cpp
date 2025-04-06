@@ -90,6 +90,8 @@ static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* p
 	FindClose(hFind);
 }
 
+#undef IS_STRING_EMPTY
+
 static UINT32 __stdcall TraverseDirsProc(void* lpParam)
 {
 	ThreadParams* pThreadParams = (ThreadParams*)lpParam;
@@ -100,10 +102,10 @@ static UINT32 __stdcall TraverseDirsProc(void* lpParam)
 
 INT32 LookupSubDirThreads()
 {
+	FreeSubDirsInfo();
+
 	if (!(nLoadMenuShowY & (1 << 26)))	// SEARCHSUBDIRS
 		return 1;
-
-	FreeSubDirsInfo();
 
 	HANDLE hThreads[DIRS_MAX];
 
@@ -380,6 +382,7 @@ int ConfigAppLoad()
 		STR(szAppSamplesPath);
 		STR(szAppHDDPath);
 		STR(szAppIpsPath);
+		STR(szAppRomdataPath);
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
 		STR(szAppBlendPath);
@@ -446,6 +449,8 @@ int ConfigAppLoad()
 
 		VAR(bNeoCDListScanSub);
 		VAR(bNeoCDListScanOnlyISO);
+		
+		VAR(bRDListScanSub);
 
 		// Default Controls
 		VAR(nPlayerDefaultControls[0]);
@@ -804,6 +809,7 @@ int ConfigAppSave()
 	STR(szAppSamplesPath);
 	STR(szAppHDDPath);
 	STR(szAppIpsPath);
+	STR(szAppRomdataPath);
 	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);
 	STR(szAppBlendPath);
@@ -831,6 +837,9 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// Neo Geo CD Load Game Dialog options\n"));
 	VAR(bNeoCDListScanSub);
 	VAR(bNeoCDListScanOnlyISO);
+
+	_ftprintf(h, _T("\n// RomData Load Game Dialog options\n"));
+	VAR(bRDListScanSub);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- miscellaneous ---------------------------------------------------------\n"));

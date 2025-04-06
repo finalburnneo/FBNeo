@@ -113,6 +113,7 @@ BEGIN
 	IDS_SPATH_HISCORE			"High Scores"
 	IDS_SPATH_SAMPLES			"Samples"
 	IDS_SPATH_IPS				"IPS"
+	IDS_SPATH_ROMDATA			"RomData"
 	IDS_SPATH_NGCD_ISOS			"Neo Geo CDZ Games"
 	IDS_SPATH_NGCD_COVERS		"Neo Geo CDZ Covers"
 	IDS_SPATH_BLEND				"Blend Files"
@@ -265,6 +266,11 @@ BEGIN
 	IDS_NGCD_DIAG_TITLE			"%s%sNeo Geo CDZ%sSelect Game"
 	IDS_NGCD_TITLE				"Title"
 	IDS_NGCD_NGCDID				"NGCD-ID"
+
+	IDS_ROMDATAMANAGER_TITLE	"%s%sRomData Manager%sSelect Game"
+	IDS_ROMDATA_DATPATH			"Dat path"
+	IDS_ROMDATA_ROMSET			"Romset"
+	IDS_ROMDATA_HARDWARE_DESC	"%s"
 
 	IDS_MENU_0 					"&Arcade"
     IDS_MENU_1 					"&Other..."

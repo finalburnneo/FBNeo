@@ -98,11 +98,11 @@ void DisplayPopupMenu(int nMenu)
 		GetWindowRect(hMenubar, &clientRect);
 		SendMessage(hMenubar, TB_GETITEMRECT, nMenu, (LPARAM)&buttonRect);
 
-	 	if (!bModelessMenu) {
+		if (!bModelessMenu) {
 			hMenuHook = SetWindowsHookEx(WH_MSGFILTER, MenuHook, NULL, GetCurrentThreadId());
 		}
-  		TrackPopupMenuEx(hPopupMenu, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + buttonRect.left, clientRect.top + buttonRect.bottom, hScrnWnd, NULL);
-	 	if (!bModelessMenu) {
+		TrackPopupMenuEx(hPopupMenu, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + buttonRect.left, clientRect.top + buttonRect.bottom, hScrnWnd, NULL);
+		if (!bModelessMenu) {
 			UnhookWindowsHookEx(hMenuHook);
 		}
 	}
@@ -168,7 +168,7 @@ int OnUnInitMenuPopup(HWND, HMENU, UINT, BOOL)
 {
 	if (nRecursions <= 1) {
 		bMenuDisplayed = false;
-  		SendMessage(hMenubar, TB_PRESSBUTTON, nLastMenu + MENU_MENU_0, MAKELONG(0, 0));
+		SendMessage(hMenubar, TB_PRESSBUTTON, nLastMenu + MENU_MENU_0, MAKELONG(0, 0));
 		if(!bAltPause) {
 			if (bRunPause) {
 				bRunPause = 0;
@@ -443,8 +443,8 @@ void MenuDestroy()
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        myMenuItemInfo.fState = MFS_GRAYED;
-        myMenuItemInfo.hSubMenu = NULL;
+		myMenuItemInfo.fState = MFS_GRAYED;
+		myMenuItemInfo.hSubMenu = NULL;
 		if (hMenu) {
 			SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
 		}
@@ -1239,15 +1239,15 @@ void MenuEnableItems()
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_ENABLED;
-        	myMenuItemInfo.hSubMenu = GetSubMenu(hBlitterMenu[nVidSelect], 0);
+		myMenuItemInfo.fState = MFS_ENABLED;
+		myMenuItemInfo.hSubMenu = GetSubMenu(hBlitterMenu[nVidSelect], 0);
 		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
 	} else {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_GRAYED;
-        	myMenuItemInfo.hSubMenu = NULL;
+		myMenuItemInfo.fState = MFS_GRAYED;
+		myMenuItemInfo.hSubMenu = NULL;
 		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
 	}
 
@@ -1255,15 +1255,15 @@ void MenuEnableItems()
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_ENABLED;
-        	myMenuItemInfo.hSubMenu = GetSubMenu(hAudioPluginMenu[nAudSelect], 0);
+		myMenuItemInfo.fState = MFS_ENABLED;
+		myMenuItemInfo.hSubMenu = GetSubMenu(hAudioPluginMenu[nAudSelect], 0);
 		SetMenuItemInfo(GetSubMenu(hMenu, 2), 1, TRUE, &myMenuItemInfo);
 	} else {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
-        	myMenuItemInfo.fState = MFS_GRAYED;
-        	myMenuItemInfo.hSubMenu = NULL;
+		myMenuItemInfo.fState = MFS_GRAYED;
+		myMenuItemInfo.hSubMenu = NULL;
 		SetMenuItemInfo(GetSubMenu(hMenu, 2), 1, TRUE, &myMenuItemInfo);
 	}
 
@@ -1331,6 +1331,7 @@ void MenuEnableItems()
 			EnableMenuItem(hMenu, MENU_START_NEOGEO_CD,		MF_GRAYED  | MF_BYCOMMAND);
 		}
 		EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_QUIT,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INPUT,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FORCE60HZ,			MF_GRAYED  | MF_BYCOMMAND);
@@ -1492,6 +1493,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_LOAD,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_0,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_1,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_2,				MF_GRAYED  | MF_BYCOMMAND);

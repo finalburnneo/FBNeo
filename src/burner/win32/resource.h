@@ -50,6 +50,8 @@
 #define IDD_DOWNLOAD_LOCAL					82
 #define IDD_CHOOSEMONITOR					83
 #define IDD_HARDFXSETTINGS                  84
+#define IDD_ROMDATA_MANAGER					85
+#define IDD_ROMDATA_COVER_DLG				86
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -96,7 +98,7 @@
 #define IDC_WAIT_LABEL_B2              		20018
 #define ID_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
-                                       // 	20021 is used by IDC_INPS_CLEARLOCK.
+									   // 	20021 is used by IDC_INPS_CLEARLOCK.
 #define IDC_INPD_ANSLIDER					20022
 #define IDC_INPD_ANEDIT						20023
 
@@ -397,6 +399,7 @@
 #define IDC_SUPPORTDIR_EDIT22				20921
 #define IDC_SUPPORTDIR_EDIT23				20922
 #define IDC_SUPPORTDIR_EDIT24				20923
+#define IDC_SUPPORTDIR_EDIT25				20924
 
 #define IDC_SUPPORTDIR_BR1					20950
 #define IDC_SUPPORTDIR_BR2					20951
@@ -422,6 +425,7 @@
 #define IDC_SUPPORTDIR_BR22					20971
 #define IDC_SUPPORTDIR_BR23					20972
 #define IDC_SUPPORTDIR_BR24					20973
+#define IDC_SUPPORTDIR_BR25					20974
 
 #define ID_LICENSE                      	21000
 #define ID_DX9EFFECT                    	21001
@@ -468,6 +472,25 @@
 #define IDC_ROMSDIR_BR19                 	21158
 #define IDC_ROMSDIR_BR20                 	21159
 
+#define IDC_ROMDATA_MANAGER					21200
+#define IDC_ROMDATA_LIST					21201
+#define IDC_ROMDATA_TITLE					21202
+#define IDC_ROMDATA_PREVIEW					21203
+#define IDC_ROMDATA_TITLE_FRAME				21204
+#define IDC_ROMDATA_PREVIEW_FRAME			21205
+#define IDC_ROMDATA_TEXTGAME				21206
+#define IDC_ROMDATA_TEXTHARDWARE			21207
+#define IDC_ROMDATA_TEXTDRIVER				21208
+#define IDC_ROMDATA_SSUBDIR_CHECK			21209
+#define IDC_ROMDATA_SCAN_BUTTON				21210
+#define IDC_ROMDATA_SEL_DIR_BUTTON			21211
+#define IDC_ROMDATA_PLAY_BUTTON				21212
+#define IDC_ROMDATA_CANCEL_BUTTON			21213
+#define IDC_ROMDATA_LABELHARDWARE			21214
+#define IDC_ROMDATA_LABELGAME				21215
+#define IDC_ROMDATA_LABELDRIVER				21216
+#define IDC_ROMDATA_COVER_PREVIEW_PIC		21217
+
 #define MENU_LOAD                       	10001
 #define MENU_STARTNET			 			10002
 #define MENU_STARTREPLAY					10003
@@ -482,6 +505,7 @@
 #define MENU_EXIT                       	10012
 #define MENU_RESET                       	10013
 #define MENU_LOAD_ROMDATA					10014
+#define MENU_ROMDATA_MANAGER				10015
 #define MENU_MEMCARD_CREATE					10020
 #define MENU_MEMCARD_SELECT					10021
 #define MENU_MEMCARD_INSERT					10022

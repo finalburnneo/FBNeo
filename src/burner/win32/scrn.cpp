@@ -785,15 +785,15 @@ extern HWND hSelDlg;
 
 void PausedRedraw(void)
 {
-    if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
-        INT16 *pBtemp = pBurnSoundOut;
-        pBurnSoundOut = NULL;
+	if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
+		INT16 *pBtemp = pBurnSoundOut;
+		pBurnSoundOut = NULL;
 
 		VidRedraw();
 		VidPaint(0);
 
-        pBurnSoundOut = pBtemp;
-    }
+		pBurnSoundOut = pBtemp;
+	}
 }
 
 static INT32 ScrnHasBezel()
@@ -963,13 +963,13 @@ static void OnClose(HWND)
 #ifdef INCLUDE_AVI_RECORDING
 	AviStop();
 #endif
-    PostQuitMessage(0);					// Quit the program if the window is closed
+	PostQuitMessage(0);					// Quit the program if the window is closed
 }
 
 static void OnDestroy(HWND)
 {
-    VidExit();							// Stop using video with the Window
-    hScrnWnd = NULL;					// Make sure handle is not used again
+	VidExit();							// Stop using video with the Window
+	hScrnWnd = NULL;					// Make sure handle is not used again
 }
 
 static void UpdatePreviousGameList()
@@ -1270,7 +1270,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				ofn.lpstrFilter = szFilter;
 				ofn.lpstrFile = szRomdataName;
 				ofn.nMaxFile = sizeof(szRomdataName) / sizeof(TCHAR);
-				ofn.lpstrInitialDir = _T(".\\config\\romdata\\");
+				ofn.lpstrInitialDir = szAppRomdataPath;
 				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 				ofn.lpstrDefExt = _T("dat");
 
@@ -1302,6 +1302,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 				POST_INITIALISE_MESSAGE;
 			}
+			break;
+		}
+
+		case MENU_ROMDATA_MANAGER: {
+			RomDataManagerInit();
 			break;
 		}
 
@@ -1452,7 +1457,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				AviStop();
 #endif
 				DrvExit();
-  				if (kNetGame) {
+				if (kNetGame) {
 					kNetGame = 0;
 					Kaillera_End_Game();
 					DeActivateChat();
@@ -2630,13 +2635,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_SGX_ONLY);
 			}
-                        break;
+			break;
 
 		case MENU_CLRMAME_PRO_XML_SG1000_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_SG1000_ONLY);
 			}
-                        break;
+			break;
 
 		case MENU_CLRMAME_PRO_XML_COLECO_ONLY:
 			if (UseDialogs()) {
@@ -2858,7 +2863,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_ASSOCIATE:
 			RegisterExtensions(true);
 			break;
-        case MENU_DISASSOCIATE:
+		case MENU_DISASSOCIATE:
 			RegisterExtensions(false);
 			break;
 
@@ -3582,8 +3587,8 @@ static void OnEnterIdle(HWND /*hwnd*/, UINT /*source*/, HWND /*hwndSource*/)
 {
 	MSG Message;
 
-    // Modeless dialog is idle
-    while (kNetGame && !PeekMessage(&Message, NULL, 0, 0, PM_NOREMOVE)) {
+	// Modeless dialog is idle
+	while (kNetGame && !PeekMessage(&Message, NULL, 0, 0, PM_NOREMOVE)) {
 		RunIdle();
 	}
 }
@@ -3841,7 +3846,7 @@ int ScrnSize()
 
 	nWindowPosX = x; nWindowPosY = y;
 
-  	return 0;
+	return 0;
 }
 
 #include "neocdlist.h" // IsNeoGeoCD()

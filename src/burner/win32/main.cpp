@@ -1107,7 +1107,7 @@ int ProcessCmdLine()
 				TCHAR* szDatName = _tcstok(szPoint, _T("\""));
 
 				memset(szRomdataName, '\0', sizeof(szRomdataName));
-				_stprintf(szRomdataName, _T("%s%s%s"), _T(".\\config\\romdata\\"), szDatName, _T(".dat"));
+				_stprintf(szRomdataName, _T("%s%s%s"), szAppRomdataPath, szDatName, _T(".dat"));
 
 				szDatName = NULL;
 				szPoint = NULL;
@@ -1261,6 +1261,7 @@ static void CreateSupportFolders()
 		{_T("support/samples/")},
 		{_T("support/hdd/")},
 		{_T("support/ips/")},
+		{_T("support/romdata/")},
 		{_T("support/neocdz/")},
 		{_T("support/blend/")},
 		{_T("support/select/")},
@@ -1340,7 +1341,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("config/ips")},
 		{_T("config/localisation")},
 		{_T("config/presets")},
-		{_T("config/romdata")},
+//		{_T("config/romdata")},
 		{_T("recordings")},
 		{_T("roms")},
 		{_T("savestates")},

@@ -449,6 +449,7 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 
 	INT32 nType = IsDatUTF8BOM();
 	memset(szRomdataName, 0, sizeof(szRomdataName));
+	memset(pDatListInfo,  0, sizeof(DatListInfo));
 
 	if (-1 == nType) {
 		free(pDatListInfo);
@@ -522,11 +523,11 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 	}
 	fclose(fp);
 
-	if (!(pDatListInfo->nMarker & 0x03)) {					// No romset specified or No driver specified
+	if (!(pDatListInfo->nMarker & (UINT32)0x03)) {			// No romset specified or No driver specified
 		free(pDatListInfo); pDatListInfo = NULL;
 		return NULL;
 	}
-	if (!(pDatListInfo->nMarker & 0x80)) {					// No FullName specified
+	if (!(pDatListInfo->nMarker & (UINT32)0x08)) {			// No FullName specified
 		_tcscpy(pDatListInfo->szFullName, pDatListInfo->szRomSet);
 	}
 

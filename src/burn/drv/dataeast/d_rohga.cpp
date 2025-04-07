@@ -219,6 +219,79 @@ static struct BurnDIPInfo RohgaDIPList[]=
 
 STDDIPINFO(Rohga)
 
+static struct BurnDIPInfo RohgauDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xff, NULL							},
+	{0x15, 0xff, 0xff, 0x7f, NULL							},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"						},
+	{0x14, 0x01, 0x07, 0x00, "3 Coins 1 Credits"			},
+	{0x14, 0x01, 0x07, 0x01, "2 Coins 1 Credits"			},
+	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"			},
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"			},
+	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"			},
+	{0x14, 0x01, 0x07, 0x04, "1 Coin  4 Credits"			},
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  5 Credits"			},
+	{0x14, 0x01, 0x07, 0x02, "1 Coin  6 Credits"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"						},
+	{0x14, 0x01, 0x38, 0x00, "3 Coins 1 Credits"			},
+	{0x14, 0x01, 0x38, 0x08, "2 Coins 1 Credits"			},
+	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"			},
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"			},
+	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
+	{0x14, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  5 Credits"			},
+	{0x14, 0x01, 0x38, 0x10, "1 Coin  6 Credits"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x14, 0x01, 0x40, 0x40, "Off"							},
+	{0x14, 0x01, 0x40, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "2 Credits Start, 1 Continue"	},
+	{0x14, 0x01, 0x80, 0x80, "Off"							},
+	{0x14, 0x01, 0x80, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    4, "Player's Vitality"			},
+	{0x15, 0x01, 0x30, 0x30, "Normal"						},
+	{0x15, 0x01, 0x30, 0x20, "Low"							},
+	{0x15, 0x01, 0x30, 0x10, "Lowest"						},
+	{0x15, 0x01, 0x30, 0x00, "High"							},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"						},
+	{0x15, 0x01, 0x40, 0x40, "Off"							},
+	{0x15, 0x01, 0x40, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x15, 0x01, 0x80, 0x80, "Off"							},
+	{0x15, 0x01, 0x80, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x16, 0x01, 0x01, 0x01, "Off"							},
+	{0x16, 0x01, 0x01, 0x00, "On"							},
+
+	{0   , 0xfe, 0   ,    4, "Enemy's Vitality"				},
+	{0x16, 0x01, 0x0c, 0x08, "Low"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "High"							},
+	{0x16, 0x01, 0x0c, 0x00, "Highest"						},
+
+	{0   , 0xfe, 0   ,    4, "Enemy Encounter Rate"			},
+	{0x16, 0x01, 0x30, 0x20, "Low"							},
+	{0x16, 0x01, 0x30, 0x30, "Normal"						},
+	{0x16, 0x01, 0x30, 0x10, "High"							},
+	{0x16, 0x01, 0x30, 0x00, "Highest"						},
+
+	{0   , 0xfe, 0   ,    4, "Enemy's Weapon Speed"			},
+	{0x16, 0x01, 0xc0, 0x80, "Slow"							},
+	{0x16, 0x01, 0xc0, 0xc0, "Normal"						},
+	{0x16, 0x01, 0xc0, 0x40, "Fast"							},
+	{0x16, 0x01, 0xc0, 0x00, "Fastest"						},
+};
+
+STDDIPINFO(Rohgau)
+
 static struct BurnDIPInfo SchmeisrDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL							},
@@ -1874,7 +1947,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Rohga Armor Force (Asia/Europe v5.0)
+// Rohga: Armor Force (Asia/Europe v5.0)
 
 static struct BurnRomInfo rohgaRomDesc[] = {
 	{ "ht-00-1.2a",		0x040000, 0x1ed84a67, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1912,7 +1985,7 @@ STD_ROM_FN(rohga)
 
 struct BurnDriver BurnDrvRohga = {
 	"rohga", NULL, NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v5.0)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga: Armor Force (Asia/Europe v5.0)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohgaRomInfo, rohgaRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1921,7 +1994,7 @@ struct BurnDriver BurnDrvRohga = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 set 1)
+// Rohga: Armor Force (Asia/Europe v3.0 set 1)
 
 static struct BurnRomInfo rohga1RomDesc[] = {
 	{ "jd00.bin",		0x040000, 0xe046c77a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1959,7 +2032,7 @@ STD_ROM_FN(rohga1)
 
 struct BurnDriver BurnDrvRohga1 = {
 	"rohga1", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 set 1)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga: Armor Force (Asia/Europe v3.0 set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga1RomInfo, rohga1RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1968,7 +2041,7 @@ struct BurnDriver BurnDrvRohga1 = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 set 2)
+// Rohga: Armor Force (Asia/Europe v3.0 set 2)
 
 static struct BurnRomInfo rohga2RomDesc[] = {
 	{ "hts-00-3.2a",	0x040000, 0x154f02ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2006,7 +2079,7 @@ STD_ROM_FN(rohga2)
 
 struct BurnDriver BurnDrvRohga2 = {
 	"rohga2", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 set 2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga: Armor Force (Asia/Europe v3.0 set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga2RomInfo, rohga2RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -2015,7 +2088,7 @@ struct BurnDriver BurnDrvRohga2 = {
 };
 
 
-// Rohga Armor Force (Hong Kong v3.0)
+// Rohga: Armor Force (Hong Kong v3.0)
 
 static struct BurnRomInfo rohgahRomDesc[] = {
 	{ "jd00-2.2a",		0x040000, 0xec70646a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2053,16 +2126,16 @@ STD_ROM_FN(rohgah)
 
 struct BurnDriver BurnDrvRohgah = {
 	"rohgah", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Hong Kong v3.0)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga: Armor Force (Hong Kong v3.0)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, rohgahRomInfo, rohgahRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
+	NULL, rohgahRomInfo, rohgahRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgauDIPInfo,
 	RohgaInit, DrvExit, DrvFrame, RohgaDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
 
-// Rohga Armor Force (US v1.0)
+// Rohga: Armor Force (US v1.0)
 
 static struct BurnRomInfo rohgauRomDesc[] = {
 	{ "ha00.2a",		0x040000, 0xd8d13052, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2100,16 +2173,16 @@ STD_ROM_FN(rohgau)
 
 struct BurnDriver BurnDrvRohgau = {
 	"rohgau", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (US v1.0)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga: Armor Force (US v1.0)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, rohgauRomInfo, rohgauRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
+	NULL, rohgauRomInfo, rohgauRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgauDIPInfo,
 	RohgaInit, DrvExit, DrvFrame, RohgaDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
 
-// Wolf Fang -Kuhga 2001- (Japan)
+// Wolf Fang: Kuuga 2001 (Japan)
 
 static struct BurnRomInfo wolffangRomDesc[] = {
 	{ "hw_00-1.2a",		0x040000, 0x69dc611e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2147,7 +2220,7 @@ STD_ROM_FN(wolffang)
 
 struct BurnDriver BurnDrvWolffang = {
 	"wolffang", "rohga", NULL, NULL, "1991",
-	"Wolf Fang -Kuhga 2001- (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Wolf Fang: Kuuga 2001 (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, wolffangRomInfo, wolffangRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,

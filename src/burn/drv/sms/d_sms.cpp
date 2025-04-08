@@ -27663,9 +27663,9 @@ struct BurnDriver BurnDrvsms_ironman = {
 	256, 192, 4, 3
 };
 
-// Jumping Jackson (HB, v0.2)
+// Jumping Jackson (HB, v0.3)
 static struct BurnRomInfo sms_jumpjackRomDesc[] = {
-	{ "Jumping Jackson v0.2 (2025)(slogra).sms",	180224, 0x4d970e83, BRF_PRG | BRF_ESS },
+	{ "Jumping Jackson v0.3 (2025)(slogra).sms",	180224, 0xbd83d8aa, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_jumpjack)
@@ -27673,7 +27673,7 @@ STD_ROM_FN(sms_jumpjack)
 
 struct BurnDriver BurnDrvsms_jumpjack = {
 	"sms_jumpjack", NULL, NULL, NULL, "2025",
-	"Jumping Jackson (HB, v0.2)\0", NULL, "slogra", "Sega Master System",
+	"Jumping Jackson (HB, v0.3)\0", NULL, "slogra", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_jumpjackRomInfo, sms_jumpjackRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

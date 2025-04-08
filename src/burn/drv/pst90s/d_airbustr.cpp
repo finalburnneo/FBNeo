@@ -789,20 +789,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Air Buster: Trouble Specialty Raid Unit (World)
 
 static struct BurnRomInfo airbustrRomDesc[] = {
-	{ "pr12.h19",	0x20000, 0x91362eb2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pr12.h19",			0x20000, 0x91362eb2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "pr13.l15",	0x20000, 0x13b2257b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "pr13.l15",			0x20000, 0x13b2257b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "pr-21.bin",	0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "pr-21.bin",			0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "i80c51",		0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
+	{ "i80c51",				0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
 
-	{ "pr-000.bin",	0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
+	{ "pr-000.bin",			0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
 
-	{ "pr-001.bin",	0x80000, 0x7e6cb377, 6 | BRF_GRA }, 	      //  5 Sprites
-	{ "pr-02.bin",	0x10000, 0x6bbd5e46, 6 | BRF_GRA }, 	      //  6
+	{ "pr-001.bin",			0x80000, 0x7e6cb377, 6 | BRF_GRA }, 	      //  5 Sprites
+	{ "pr-02.bin",			0x10000, 0x6bbd5e46, 6 | BRF_GRA }, 	      //  6
 
-	{ "pr-200.bin",	0x40000, 0xa4dd3390, 7 | BRF_SND }, 	      //  7 OKI M6295
+	{ "pr-200.bin",			0x40000, 0xa4dd3390, 7 | BRF_SND }, 	      //  7 OKI M6295
+	
+	{ "pal16l8-pr-500.16f",	0x00104, 0xe0f901e1, 0 | BRF_OPT }, 	      //  8 Plds
+	{ "gal16v8a-pr-501.13j",0x00117, 0xd8bf8cb5, 0 | BRF_OPT }, 	      //  
 };
 
 STD_ROM_PICK(airbustr)
@@ -822,20 +825,23 @@ struct BurnDriver BurnDrvAirbustr = {
 // Air Buster: Trouble Specialty Raid Unit (Japan)
 
 static struct BurnRomInfo airbustrjRomDesc[] = {
-	{ "pr-14j.bin",	0x20000, 0x6b9805bd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pr-14j.bin",			0x20000, 0x6b9805bd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "pr-11j.bin",	0x20000, 0x85464124, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "pr-11j.bin",			0x20000, 0x85464124, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "pr-21.bin",	0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "pr-21.bin",			0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "i80c51",		0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
+	{ "i80c51",				0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
 
-	{ "pr-000.bin",	0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
+	{ "pr-000.bin",			0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
 
-	{ "pr-001.bin",	0x80000, 0x7e6cb377, 6 | BRF_GRA }, 	      //  5 Sprites
-	{ "pr-02.bin",	0x10000, 0x6bbd5e46, 6 | BRF_GRA }, 	      //  6
+	{ "pr-001.bin",			0x80000, 0x7e6cb377, 6 | BRF_GRA }, 	      //  5 Sprites
+	{ "pr-02.bin",			0x10000, 0x6bbd5e46, 6 | BRF_GRA }, 	      //  6
 
-	{ "pr-200.bin",	0x40000, 0xa4dd3390, 7 | BRF_SND }, 	      //  7 OKI M6295
+	{ "pr-200.bin",			0x40000, 0xa4dd3390, 7 | BRF_SND }, 	      //  7 OKI M6295
+	
+	{ "pal16l8-pr-500.16f",	0x00104, 0xe0f901e1, 0 | BRF_OPT }, 	      //  8 Plds
+	{ "gal16v8a-pr-501.13j",0x00117, 0xd8bf8cb5, 0 | BRF_OPT }, 	      //
 };
 
 STD_ROM_PICK(airbustrj)

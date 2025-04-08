@@ -1121,7 +1121,7 @@ struct BurnDriver BurnDrvCyclemb = {
 	"cyclemb", NULL, NULL, NULL, "1984",
 	"Cycle Maabou (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cyclembRomInfo, cyclembRomName, NULL, NULL, NULL, NULL, CyclembInputInfo, CyclembDIPInfo,
 	CyclembInit, DrvExit, DrvFrame, CyclembDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

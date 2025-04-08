@@ -219,79 +219,6 @@ static struct BurnDIPInfo RohgaDIPList[]=
 
 STDDIPINFO(Rohga)
 
-static struct BurnDIPInfo RohgauDIPList[]=
-{
-	{0x14, 0xff, 0xff, 0xff, NULL							},
-	{0x15, 0xff, 0xff, 0x7f, NULL							},
-	{0x16, 0xff, 0xff, 0xff, NULL							},
-
-	{0   , 0xfe, 0   ,    8, "Coin A"						},
-	{0x14, 0x01, 0x07, 0x00, "3 Coins 1 Credits"			},
-	{0x14, 0x01, 0x07, 0x01, "2 Coins 1 Credits"			},
-	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"			},
-	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"			},
-	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"			},
-	{0x14, 0x01, 0x07, 0x04, "1 Coin  4 Credits"			},
-	{0x14, 0x01, 0x07, 0x03, "1 Coin  5 Credits"			},
-	{0x14, 0x01, 0x07, 0x02, "1 Coin  6 Credits"			},
-
-	{0   , 0xfe, 0   ,    8, "Coin B"						},
-	{0x14, 0x01, 0x38, 0x00, "3 Coins 1 Credits"			},
-	{0x14, 0x01, 0x38, 0x08, "2 Coins 1 Credits"			},
-	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"			},
-	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"			},
-	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"			},
-	{0x14, 0x01, 0x38, 0x20, "1 Coin  4 Credits"			},
-	{0x14, 0x01, 0x38, 0x18, "1 Coin  5 Credits"			},
-	{0x14, 0x01, 0x38, 0x10, "1 Coin  6 Credits"			},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x14, 0x01, 0x40, 0x40, "Off"							},
-	{0x14, 0x01, 0x40, 0x00, "On"							},
-
-	{0   , 0xfe, 0   ,    2, "2 Credits Start, 1 Continue"	},
-	{0x14, 0x01, 0x80, 0x80, "Off"							},
-	{0x14, 0x01, 0x80, 0x00, "On"							},
-
-	{0   , 0xfe, 0   ,    4, "Player's Vitality"			},
-	{0x15, 0x01, 0x30, 0x30, "Normal"						},
-	{0x15, 0x01, 0x30, 0x20, "Low"							},
-	{0x15, 0x01, 0x30, 0x10, "Lowest"						},
-	{0x15, 0x01, 0x30, 0x00, "High"							},
-
-	{0   , 0xfe, 0   ,    2, "Unknown"						},
-	{0x15, 0x01, 0x40, 0x40, "Off"							},
-	{0x15, 0x01, 0x40, 0x00, "On"							},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x15, 0x01, 0x80, 0x80, "Off"							},
-	{0x15, 0x01, 0x80, 0x00, "On"							},
-
-	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
-	{0x16, 0x01, 0x01, 0x01, "Off"							},
-	{0x16, 0x01, 0x01, 0x00, "On"							},
-
-	{0   , 0xfe, 0   ,    4, "Enemy's Vitality"				},
-	{0x16, 0x01, 0x0c, 0x08, "Low"							},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
-	{0x16, 0x01, 0x0c, 0x04, "High"							},
-	{0x16, 0x01, 0x0c, 0x00, "Highest"						},
-
-	{0   , 0xfe, 0   ,    4, "Enemy Encounter Rate"			},
-	{0x16, 0x01, 0x30, 0x20, "Low"							},
-	{0x16, 0x01, 0x30, 0x30, "Normal"						},
-	{0x16, 0x01, 0x30, 0x10, "High"							},
-	{0x16, 0x01, 0x30, 0x00, "Highest"						},
-
-	{0   , 0xfe, 0   ,    4, "Enemy's Weapon Speed"			},
-	{0x16, 0x01, 0xc0, 0x80, "Slow"							},
-	{0x16, 0x01, 0xc0, 0xc0, "Normal"						},
-	{0x16, 0x01, 0xc0, 0x40, "Fast"							},
-	{0x16, 0x01, 0xc0, 0x00, "Fastest"						},
-};
-
-STDDIPINFO(Rohgau)
-
 static struct BurnDIPInfo SchmeisrDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL							},
@@ -2129,7 +2056,7 @@ struct BurnDriver BurnDrvRohgah = {
 	"Rohga: Armor Force (Hong Kong v3.0)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, rohgahRomInfo, rohgahRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgauDIPInfo,
+	NULL, rohgahRomInfo, rohgahRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
 	RohgaInit, DrvExit, DrvFrame, RohgaDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2176,7 +2103,7 @@ struct BurnDriver BurnDrvRohgau = {
 	"Rohga: Armor Force (US v1.0)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, rohgauRomInfo, rohgauRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgauDIPInfo,
+	NULL, rohgauRomInfo, rohgauRomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
 	RohgaInit, DrvExit, DrvFrame, RohgaDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

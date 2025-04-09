@@ -1639,7 +1639,7 @@ static INT32 DrvFrame()
 
 		HD63701Open(0);
 		CPU_RUN_TIMER(2);
-		if (i == nInterleave - 1) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) HD63701SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		HD63701Close();
 	}
 

@@ -155,6 +155,7 @@ struct NGCDGAME games[] =
 	{ _T("nitd")		, _T("Nightmare in the Dark")								, _T("2025")	, _T("Eleven (iq_132 conversion)")	, 0x0260 },		//
 	{ _T("neobombe")	, _T("Neo Bomberman")										, _T("2025")	, _T("Hudson (iq_132 conversion)")	, 0x0093 },		//
 	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
+	{ _T("ctomaday")	, _T("Captain Tomaday")										, _T("2025")	, _T("Visco (iq_132 conversion)")	, 0x0249 },		//
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
 	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//
 	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//

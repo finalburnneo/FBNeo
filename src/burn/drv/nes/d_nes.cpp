@@ -21590,7 +21590,7 @@ struct BurnDriver BurnDrvnes_upsadown = {
 
 // Urusei Yatsura: Lum's Wedding Bell - OVERHAUL (Hack)
 static struct BurnRomInfo nes_uruseyatohRomDesc[] = {
-	{ "Urusei Yatsura - Lum No Wedding Bell - OVERHAUL (2022)(Rani Baker).nes",          65552, 0x1443e638, BRF_ESS | BRF_PRG },
+	{ "Urusei Yatsura - Lum No Wedding Bell - OVERHAUL (2022)(Rani Baker).nes",          65552, 0x4fa35893, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_uruseyatoh)

@@ -8210,7 +8210,7 @@ STD_ROM_FN(fds_linknobouc)
 
 struct BurnDriver BurnDrvfds_linknobouc = {
 	"fds_linknobouc", "fds_linknobou", "fds_fdsbios", NULL, "2019",
-	"Link no Bouken - The Legend of Zelda II (Rev 1) (Rev 1) (Hack, Spanish)\0", NULL, "jackic", "Miscellaneous",
+	"Link no Bouken - The Legend of Zelda II (Rev 1) (Hack, Spanish)\0", NULL, "jackic", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, fds_linknoboucRomInfo, fds_linknoboucRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,

@@ -51567,3 +51567,20 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_bananabashdemoRomDesc[] = {
+	{ "Banana Bash! Demo (2025)(Work3 Studio).nes",          524304, 0xe08772d4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bananabashdemo)
+STD_ROM_FN(nes_bananabashdemo)
+
+struct BurnDriver BurnDrvnes_bananabashdemo = {
+	"nes_bananabashdemo", NULL, NULL, NULL, "2025",
+	"Banana Bash! Demo (HB)\0", NULL, "Work3 Studio", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_bananabashdemoRomInfo, nes_bananabashdemoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

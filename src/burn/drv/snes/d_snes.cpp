@@ -21478,9 +21478,30 @@ STD_ROM_FN(snes_Rockman7)
 struct BurnDriver BurnDrvsnes_Rockman7 = {
 	"snes_rockman7", "snes_megaman7", NULL, NULL, "1995",
 	"Rockman 7 - Shukumei no Taiketsu! (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Rockman 7 - Shukumei no Taiketsu! (Japan)\0\u30ed\u30c3\u30af\u30de\u30f37 \u5bbf\u547d\u306e\u5bfe\u6c7a!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Rockman7RomInfo, snes_Rockman7RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)
+// https://www.nesbbs.com/bbs/thread-58621-1-1.html
+// 20250406
+
+static struct BurnRomInfo snes_Rockman7tcRomDesc[] = {
+	{ "Rockman 7 - Shukumei no Taiketsu! T-Cht v20250406 (2025)(NOKOH).sfc", 3145728, 0xc1928f06, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rockman7tc)
+STD_ROM_FN(snes_Rockman7tc)
+
+struct BurnDriver BurnDrvsnes_Rockman7tc = {
+	"snes_rockman7tc", "snes_megaman7", NULL, NULL, "2025",
+	"Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)\0\u6d1b\u514b\u4eba7 \u5bbf\u547d\u7684\u5c0d\u6c7a!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Rockman7tcRomInfo, snes_Rockman7tcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

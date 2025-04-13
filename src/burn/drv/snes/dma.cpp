@@ -206,7 +206,7 @@ static void dma_checkHdma(Dma* dma) {
 
 static void dma_doDma(Dma* dma, int cpuCycles) {
   // nmi/irq is delayed by 1 opcode if requested during dma/hdma
-  cpu_setIntDelay();
+//  cpu_setIntDelay(); // probably not needed, breaks "Mighty Morphin Power Rangers - The Fighting Edition (U)(1995)(Bandai)"
   // align to multiple of 8
   snes_syncCycles(dma->snes, true, 8);
   dma_checkHdma(dma);
@@ -249,7 +249,7 @@ static void dma_initHdma(Dma* dma, bool doSync, int cpuCycles) {
   }
   if(!hdmaEnabled) return;
   // nmi/irq is delayed by 1 opcode if requested during dma/hdma
-  cpu_setIntDelay();
+//  cpu_setIntDelay();
   if(doSync) snes_syncCycles(dma->snes, true, 8);
   // full transfer overhead
   snes_runCycles(dma->snes, 8);
@@ -291,7 +291,7 @@ static void dma_doHdma(Dma* dma, bool doSync, int cpuCycles) {
   }
   if(!hdmaActive) return;
   // nmi/irq is delayed by 1 opcode if requested during dma/hdma
-  cpu_setIntDelay();
+//  cpu_setIntDelay();
   if(doSync) snes_syncCycles(dma->snes, true, 8);
   // full transfer overhead
   snes_runCycles(dma->snes, 8);

@@ -6950,9 +6950,30 @@ STD_ROM_FN(pce_xevious)
 struct BurnDriver BurnDrvpce_xevious = {
 	"pce_xevious", NULL, NULL, NULL, "1990",
 	"Xevious - Fardraut Densetsu (Japan)\0", NULL, "Namcot", "PC Engine",
-	NULL, NULL, NULL, NULL,
+	L"Xevious - Fardraut Densetsu (Japan)\0\u30bc\u30d3\u30a6\u30b9 \u30d5\u30a1\u30fc\u30c9\u30e9\u30a6\u30c8\u4f1d\u8aac\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VERSHOOT, 0,
 	PceGetZipName, pce_xeviousRomInfo, pce_xeviousRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Xevious - Fardraut Densetsu (Hack, Simplified Chinese v1.0)
+// https://www.1dzj.top/index.php/post/186.html
+// 20250330
+
+static struct BurnRomInfo pce_xeviousscRomDesc[] = {
+	{ "Xevious - Fardraut Densetsu T-Chs v1.0 (2025)(Feiyue Wujin Ankong).pce", 0x040000, 0xdcd579cf, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_xevioussc)
+STD_ROM_FN(pce_xevioussc)
+
+struct BurnDriver BurnDrvpce_xevioussc = {
+	"pce_xevioussc", "pce_xevious", NULL, NULL, "2025",
+	"Xevious - Fardraut Densetsu (Hack, Simplified Chinese v1.0)\0", NULL, "Feiyue Wujin Ankong", "PC Engine",
+	NULL, NULL, L"\u98de\u8dc3\u65e0\u5c3d\u6697\u7a7a", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VERSHOOT, 0,
+	PceGetZipName, pce_xeviousscRomInfo, pce_xeviousscRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };

@@ -2073,7 +2073,7 @@ static void UpdateShaderVariables()
 {
 	if (pVidEffect && pVidEffect->IsValid()) {
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
-		pVidEffect->SetParamFloat2("video_size", (nRotateGame ? nGameHeight : nGameWidth) + 0.5f, nRotateGame ? nGameWidth : nGameHeight + 0.5f);
+		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.5f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.5f);
 		pVidEffect->SetParamFloat2("video_time", nCurrentFrame, (float)nCurrentFrame / 60);
 		pVidEffect->SetParamFloat4("user_settings", HardFXConfigs[nDX9HardFX].fOptions[0], HardFXConfigs[nDX9HardFX].fOptions[1], HardFXConfigs[nDX9HardFX].fOptions[2], HardFXConfigs[nDX9HardFX].fOptions[3]);
 	}

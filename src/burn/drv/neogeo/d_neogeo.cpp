@@ -16738,11 +16738,11 @@ struct BurnDriver BurnDrvGalaxyfg03 = {
 
 // Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack)
 // Modified by jlima
-// https://www.ppxclub.com/forum.php?mod=viewthread&tid=724160
-// 20240523
+// https://bbs.xqemu.cn/forum.php?mod=viewthread&tid=3870
+// 20250331
 
 static struct BurnRomInfo gowcaietRomDesc[] = {
-	{ "094-p1et.p1",	0x200000, 0x4236d373, 1 | BRF_ESS | BRF_PRG },
+	{ "094-p1et.p1",	0x200000, 0xbee45a9e, 1 | BRF_ESS | BRF_PRG },
 
 	{ "094-s1.s1",		0x020000, 0x2f8748a2, 2 | BRF_GRA },
 
@@ -16766,9 +16766,9 @@ STDROMPICKEXT(gowcaiet, gowcaiet, neogeo)
 STD_ROM_FN(gowcaiet)
 
 struct BurnDriver BurnDrvGowcaiet = {
-	"gowcaiet", "gowcaizr", "neogeo", NULL, "2024",
-	"Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack)\0", NULL, "hack", "Neo Geo MVS",
-	L"Voltage Fighter - Gowcaizer\0\u8D85\u4EBA\u5B66\u5712\u30B4\u30A6\u30AB\u30A4\u30B6\u30FC (Eternal, Hack)\0", NULL, NULL, NULL,
+	"gowcaiet", "gowcaizr", "neogeo", NULL, "2025",
+	"Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer (Eternal, Hack)\0", NULL, "jlima", "Neo Geo MVS",
+	L"Voltage Fighter - Gowcaizer\0\u8D85\u4EBA\u5B66\u5712\u30B4\u30A6\u30AB\u30A4\u30B6\u30FC (\u30a8\u30bf\u30fc\u30ca\u30eb)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
 	NULL, gowcaietRomInfo, gowcaietRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

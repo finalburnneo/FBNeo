@@ -668,7 +668,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				unsigned int nID = 0;
 				_stscanf(szID, _T("%x"), &nID);
 
-				TCHAR szAudioTracks[] =_T("0");
+				TCHAR szAudioTracks[10] = _T("0");
 
 				if(nID == ngcd_list[nItem].nID) {
 					SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), ngcd_list[nItem].szShortName);

@@ -2648,8 +2648,12 @@ struct BurnDriver BurnDrvKovsh103 = {
 
 // Knights of Valour Super Heroes / Sanguo Zhan Ji Fengyun Zaiqi / Sangoku Senki Super Heroes (ver. 102, CN)
 
+/* IGS PCB N0-0257 MADE IN TAIWAN
+   風雲再起 V102 U1 on sticker
+   ROM TYPES: U1 ST M27C322 */
+
 static struct BurnRomInfo kovsh102RomDesc[] = {
-	{ "p0600.102",	   				0x0400000, 0xfdd4fb0f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "kovsh_v102_u1.u1",	   		0x0400000, 0xfdd4fb0f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t0600.u11",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4527,10 +4531,35 @@ struct BurnDriver BurnDrvdwpc101j = {
    SCREEN VER PIC: M105XX, S105XX, S100FA.
    ROM TYPES: ST M27C160 U5
    ROM TYPES: ST M27C322 U26
-   CREDITS TO: "IGSPGM.COM" */
+   CREDITS TO: "IGSPGM.COM" 
+   
+   DEMON FRONT "D7" VERSION (CART)
+   IGS PCB-0387-03-FV MADE IN TAIWAN
+   IGS PCB-0390-00-FV-A MADE IN TAIWAN
+   SCREEN VER PIC: M105XX, S105XX, S100FA.
+   DemonFront V105FA 16M on sticker
+   DemonFront V105FA 32M on sticker
+   ROM TYPES: ST M27C160 U5
+   ROM TYPES: ST M27C322 U26 
+   CREDITS TO: "Chickentail"
+   
+   DEMON FRONT "X7" VERSIONS (CART)
+   IGS PCB-0387-03-FV MADE IN TAIWAN
+   IGS PCB-0390-00-FV-A MADE IN TAIWAN
+   魔域战线 V105 U5 on sticker
+   魔域战线 V105 U26 on sticker
+   魔域战线 V105 16M on sticker
+   魔域战线 V105 32M on sticker
+   DemonFront V105FA 16M on sticker
+   DemonFront V105FA 32M on sticker
+   ROM TYPES: ST M27C160 U5
+   ROM TYPES: ST M27C322 U26
+   CREDITS TO: "Chickentail"   */
    
 static struct BurnRomInfo dmnfrntRomDesc[] = {
 	{ "v105_16m.u5",   			0x0200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+//	{ "v105fa_16m.u5",   		0x0200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+//	{ "v105_u5.u5",   			0x0200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "igs_t04501w064.u29",		0x0800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4546,6 +4575,8 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 	{ "dmnfrnt_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
 	{ "v105_32m.u26",			0x0400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS }, //  9 External ARM7 Rom
+//	{ "v105fa_32m.u26",			0x0400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS }, //  9 External ARM7 Rom
+//	{ "v105_u26.u26",			0x0400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS }, //  9 External ARM7 Rom
 };
 
 STDROMPICKEXT(dmnfrnt, dmnfrnt, pgm)

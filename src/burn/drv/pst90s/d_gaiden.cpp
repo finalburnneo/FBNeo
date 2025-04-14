@@ -1707,7 +1707,7 @@ STD_ROM_FN(gaiden)
 struct BurnDriver BurnDrvGaiden = {
 	"gaiden", "shadoww", NULL, NULL, "1988",
 	"Ninja Gaiden (US)\0", NULL, "Tecmo", "Miscellaneous",
-	L"Ninja \u5916\u4F1D Gaiden (US)\0", NULL, NULL, NULL,
+	L"Ninja Gaiden \u5916\u4F1D (US)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, gaidenRomInfo, gaidenRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,

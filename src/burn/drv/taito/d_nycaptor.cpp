@@ -39,7 +39,7 @@ static INT32 soundlatch[2];
 static INT32 nmi_pending;
 static INT32 nmi_enable;
 
-static INT32 coin_flip = 0;
+static INT32 is_game = 0;
 static INT32 spot_data;
 
 static UINT8 DrvJoy1[8];
@@ -303,7 +303,7 @@ static void __fastcall nycaptor_main_write(UINT16 address, UINT8 data)
 
 		case 0xd002:
 			generic_control_reg = data;
-			if ((BurnDrvGetFlags() & BDF_BOOTLEG) || coin_flip != 0) {
+			if ((BurnDrvGetFlags() & BDF_BOOTLEG) || is_game != 0) {
 				set_rombank((data >> 2) & 3); // cyclshtg, bronx
 			} else {
 				set_rombank((data >> 3) & 1); // nycaptor, colt
@@ -629,7 +629,7 @@ static INT32 DrvInit(INT32 game_select)
 
 		if (BurnLoadRom(DrvMCUROM    + 0x00000, k++, 1)) return 1;
 
-		coin_flip = 0x00;
+		is_game = 0x00;
 	}
 
 	if (game_select == 1) // colt
@@ -658,7 +658,7 @@ static INT32 DrvInit(INT32 game_select)
 
 		DrvPrgDecode();
 
-		coin_flip = 0x00;
+		is_game = 0x00;
 	}
 
 	if (game_select == 2) // bronx
@@ -687,7 +687,7 @@ static INT32 DrvInit(INT32 game_select)
 
 		DrvPrgDecode();
 
-		coin_flip = 0x30;
+		is_game = 0x30;
 	}
 
 	if (game_select == 3) // cyclesht
@@ -716,7 +716,7 @@ static INT32 DrvInit(INT32 game_select)
 
 		//if (BurnLoadRom(DrvMCUROM    + 0x00000, k++, 1)) return 1;
 
-		coin_flip = 0x30;
+		is_game = 0x30;
 
 		return 1; // unsupported for now
 	}
@@ -806,7 +806,7 @@ static INT32 DrvExit()
 
 	BurnFreeMemIndex();
 
-	coin_flip = 0;
+	is_game = 0;
 
 	return 0;
 }
@@ -853,7 +853,7 @@ static void Update_Spot()
 {
 	spot_data = 0;
 
-	if (coin_flip == 0) { // nycaptor
+	if (is_game == 0) { // nycaptor
 		// get the scene from ram, each scene (spot) uses a different priority system
 		spot_data = packedbcd_to_dec(DrvShareRAM[0x296]);
 		if (spot_data > 0) spot_data--;
@@ -952,13 +952,13 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 
-		if (coin_flip == 0) { // nycaptor/colt
+		if (is_game == 0) { // nycaptor/colt
 			BurnGunMakeInputs(0, DrvAnalog[0], DrvAnalog[1]);
 		} else {
 			BurnGunMakeInputs(0, DrvAnalog[1], -DrvAnalog[0]);
 		}
 
-		DrvInputs[0] ^= coin_flip;
+		DrvInputs[0] ^= 0x30;
 	}
 
 	INT32 nInterleave = 256;

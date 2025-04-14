@@ -2943,7 +2943,7 @@ struct BurnDriver BurnDrvNeckneck = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, neckneckRomInfo, neckneckRomName, NULL, NULL, NULL, NULL, NeckneckInputInfo, NeckneckDIPInfo,
 	PeggleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
-	400, 240, 4, 3
+	350, 240, 4, 3
 };
 
 

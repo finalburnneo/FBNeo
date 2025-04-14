@@ -15471,6 +15471,63 @@ struct BurnDriver BurnDrvFatfury3a = {
 };
 
 
+// Pulstar (alternate board) 
+/* MVS VERSION */
+
+static struct BurnRomInfo pulstaraRomDesc[] = {
+	/* This set uses NEO-MVS PROGGBK1 board and NEO-MVS CHA256B board; same rom data as in pulstar is used */
+	/* Eproms with sticker on P1, SP2, EP1 and EP2; Chip label are 089 P1 4C38, 089 SP2 A571, EP1 and EP2 */
+	{ "089_p1_4c38.p1",     0x100000, 0x8c3c699c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ eprom TC578200D
+	{ "089_p2_a571.sp2",    0x100000, 0x014ae068, 1 | BRF_ESS | BRF_PRG }, //  1 					/ eprom TC578200D
+	{ "ep1.ep1",   	  		0x080000, 0x2483b393, 1 | BRF_ESS | BRF_PRG }, //  2 					/ eprom 27C4002
+	{ "ep2.ep2",      		0x080000, 0x4d98a2f3, 1 | BRF_ESS | BRF_PRG }, //  3 					/ eprom 27C4002
+
+	{ "s1.s1",    	  		0x020000, 0xc79fc2c8, 2 | BRF_GRA },           //  4 Text layer tiles   / eprom 27C1000A
+
+	{ "089-c1.c1",    		0x400000, 0xf4e97332, 3 | BRF_GRA },           //  5 Sprite data		/ mask rom TC5332205
+	{ "089-c2.c2",    		0x400000, 0x836d14da, 3 | BRF_GRA },           //  6 					/ mask rom TC5332205
+	{ "089-c3.c3",    		0x400000, 0x913611c4, 3 | BRF_GRA },           //  7 					/ mask rom TC5332205
+	{ "089-c4.c4",    		0x400000, 0x44cef0e3, 3 | BRF_GRA },           //  8 					/ mask rom TC5332205
+	{ "089-c5.c5",    		0x400000, 0x89baa1d7, 3 | BRF_GRA },           //  9 					/ mask rom TC5332205
+	{ "089-c6.c6",    		0x400000, 0xb2594d56, 3 | BRF_GRA },           // 10 					/ mask rom TC5332205
+	{ "089-c7.c7",    		0x200000, 0x6a5618ca, 3 | BRF_GRA },           // 11 					/ mask rom TC5316200
+	{ "089-c8.c8",    		0x200000, 0xa223572d, 3 | BRF_GRA },           // 12 					/ mask rom TC5316200
+
+	{ "m1.m1",        		0x020000, 0xff3df7c7, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code			/ eprom 27C1001
+
+	{ "089-v1.v1",    		0x400000, 0x6f726ecb, 5 | BRF_SND },           // 14 Sound data			/ mask rom TC5332204
+	{ "089-v2.v2",    		0x400000, 0x9d2db551, 5 | BRF_SND },           // 15 					/ mask rom TC5332204
+};
+
+STDROMPICKEXT(pulstara, pulstara, neogeo)
+STD_ROM_FN(pulstara)
+
+static void PulstaraCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 2, 1);
+	BurnLoadRom(Neo68KROMActive + 0x080000, 3, 1);
+	BurnLoadRom(Neo68KROMActive + 0x100000, 1, 1);
+	BurnLoadRom(Neo68KROMActive + 0x200000, 0, 1);
+}
+
+static INT32 PulstaraInit()
+{
+	NeoCallbackActive->pInitialise = PulstaraCallback;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvPulstara = {
+	"pulstara", "pulstar", "neogeo", NULL, "1995",
+	"Pulstar (alternate board)\0", NULL, "Aicom", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, pulstaraRomInfo, pulstaraRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	PulstaraInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
 // The King of Fighters '96 (bootleg / hack)
 
 static struct BurnRomInfo kof96epRomDesc[] = {

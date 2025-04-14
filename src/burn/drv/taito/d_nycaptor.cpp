@@ -893,8 +893,8 @@ static INT32 DrvDraw()
 
 		case 1:
 			if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1 | TMAP_SET_GROUP(3));
-			if (nSpriteEnable & 0x10) draw_sprites(3);
 			if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0 | TMAP_SET_GROUP(3));
+			if (nSpriteEnable & 0x10) draw_sprites(3);
 			if (nSpriteEnable & 0x20) draw_sprites(2);
 			if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1 | TMAP_SET_GROUP(2));
 			if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1 | TMAP_SET_GROUP(1));

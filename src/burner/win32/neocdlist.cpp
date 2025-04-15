@@ -159,7 +159,9 @@ struct NGCDGAME games[] =
 	{ _T("ctomaday")	, _T("Captain Tomaday")										, _T("2025")	, _T("Visco (iq_132 conversion)")	, 0x0249 },		//
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
 	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//
-	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo)")	, 0x14A1 },		//
+	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo")	, 0x14A1 },		//
+	{ _T("yoyoshkn")	, _T("Yo-Yo Shuriken")										, _T("2023")	, _T("Dr. Ludos")	, 0xdad1 },		//
+	{ _T("flipshot")	, _T("Battle Flip Shot")									, _T("2022")	, _T("Visco (Pixel Heart)")	, 0x247 },		//
 };
 
 static char szVolumeID[64];

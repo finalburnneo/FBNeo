@@ -48,6 +48,8 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 is_fant = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 10,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 start"	},
@@ -947,7 +949,7 @@ static void FantasiaMap()
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	common_map(0x500000, 0xc80000, 1, 0xf00000, 0);
-	common_sound_map(0xf80000, 0);
+	common_sound_map(0xf80000, 0); // newfant uses 0xf80000
 	SekSetWriteWordHandler(0, 		expro02_write_word);
 	SekSetWriteByteHandler(0, 		expro02_write_byte);
 	SekSetReadWordHandler(0, 		expro02_read_word);
@@ -957,7 +959,38 @@ static void FantasiaMap()
 
 static INT32 FantasiaInit()
 {
-	return ComadCommonInit(FantasiaMap, 2000000 / 132);
+	is_fant = 1;
+
+	BurnAllocMemIndex();
+
+	if (DrvGetRoms()) return 1;
+
+	DrvGfxDecrypt();
+	DrvGfxDecode();
+
+	FantasiaMap();
+
+	BurnWatchdogInit(DrvDoReset, -1);
+
+	GenericTilesInit();
+	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, true);
+	GenericTilemapSetGfx(0, DrvGfxROM[0], 4, 16, 16, 0x400000, 0x000, 0x3f);
+	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 16, 16, 0x400000, 0x400, 0x3f);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, view2_layer0_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, view2_layer1_map_callback, 16, 16, 32, 32);
+	GenericTilemapBuildSkipTable(0, 1, 0);
+	GenericTilemapBuildSkipTable(1, 1, 0);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetScrollRows(0, 512);
+	GenericTilemapSetScrollRows(1, 512);
+
+	MSM6295Init(0, 2000000 / MSM6295_PIN7_LOW, 0);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+
+	DrvDoReset(1);
+
+	return 0;
 }
 
 static void Fantsia2Map()
@@ -1056,6 +1089,8 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	BurnFreeMemIndex();
+
+	is_fant = 0;
 
 	return 0;
 }
@@ -1350,13 +1385,13 @@ static INT32 DrvDraw()
 
 	for (INT32 i = 0; i < 8; i++) {
 		if (nBurnLayer & 2) GenericTilemapDraw(0, 0, TMAP_SET_GROUP(i));
-		if (nBurnLayer & 4) GenericTilemapDraw(1, 0, TMAP_SET_GROUP(i));
+		if (nBurnLayer & 4) GenericTilemapDraw(1, 0, TMAP_SET_GROUP(i) | ((is_fant) ? 8 : 0)); // fantasia: this is pri over sprites
 	}
 
 	render_sprites();
 
 	INT32 priorities[4] = { 8, 8, 8, 8 };
-	copybitmap(priorities, 0x100);
+	if (nSpriteEnable & 1) copybitmap(priorities, 0x100);
 
 	BurnTransferCopy(BurnPalette);
 
@@ -1824,7 +1859,7 @@ struct BurnDriver BurnDrvFantasia = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, fantasiaRomInfo, fantasiaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -1863,7 +1898,7 @@ struct BurnDriver BurnDrvFantasiaa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, fantasiaaRomInfo, fantasiaaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -1902,7 +1937,7 @@ struct BurnDriver BurnDrvFantasiab = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, fantasiabRomInfo, fantasiabRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -1936,7 +1971,7 @@ struct BurnDriver BurnDrvFantasian = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, fantasianRomInfo, fantasianRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -1970,7 +2005,7 @@ struct BurnDriver BurnDrvNewfant = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, newfantRomInfo, newfantRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -2004,7 +2039,7 @@ struct BurnDriver BurnDrvNewfanta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, newfantaRomInfo, newfantaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -2038,7 +2073,7 @@ struct BurnDriver BurnDrvHotnight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hotnightRomInfo, hotnightRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -2072,7 +2107,7 @@ struct BurnDriver BurnDrvFantsy95 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, fantsy95RomInfo, fantsy95RomName, NULL, NULL, NULL, NULL, DrvInputInfo, FantasiaaDIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	224, 256, 3, 4
 };
 
@@ -2105,7 +2140,7 @@ struct BurnDriver BurnDrvMissw96 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, missw96RomInfo, missw96RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -2137,7 +2172,7 @@ struct BurnDriver BurnDrvMissw96a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, missw96aRomInfo, missw96aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -2169,7 +2204,7 @@ struct BurnDriver BurnDrvMissw96b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, missw96bRomInfo, missw96bRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -2201,7 +2236,7 @@ struct BurnDriver BurnDrvMissw96c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, missw96cRomInfo, missw96cRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -2233,7 +2268,7 @@ struct BurnDriver BurnDrvMissmw96 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, missmw96RomInfo, missmw96RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Missw96DIPInfo,
-	FantasiaInit, DrvExit, DrvFrame, ComadDraw, DrvScan, &BurnRecalc, 0x800,
+	FantasiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
 

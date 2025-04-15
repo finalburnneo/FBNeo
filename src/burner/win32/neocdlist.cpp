@@ -335,11 +335,6 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
 				File[LEN_FI] = 0;
 
-				// Digger Man (Prototype), id conflicts with karnovr (0x0066), so we must do alt. check.
-				if (nID == 0x0066 && nDate[0]==125 && nDate[1]==4 && nDate[2]==9) {
-					nID |= 0x1200;
-				}
-
 				// Savage Reign Rev 1
 				if (nID == 0x0059 && nDate[0]==95 && nDate[1]==6 && nDate[2]==20) {
 					nID |= 0x1000;

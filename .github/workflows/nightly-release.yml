@@ -209,7 +209,7 @@ jobs:
   build_linux_sdl2:
     name: Linux SDL 2
     needs: nightly_release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash {0}
@@ -250,7 +250,7 @@ jobs:
   build_linux_sdl12:
     name: Linux SDL 1.2
     needs: nightly_release
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash {0}

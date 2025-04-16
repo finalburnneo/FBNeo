@@ -17217,6 +17217,27 @@ static struct BurnRomInfo ExplorerRomDesc[] = {
 STD_ROM_PICK(Explorer)
 STD_ROM_FN(Explorer)
 
+static struct BurnRomInfo Explorer2RomDesc[] = {
+	// Explorer (different revision)
+	// PCB is marked: "sidam 10800" 
+	// f205v id 310
+	{ "10805_0p.10l",  		0x01000, 0xd5adf626, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "10805_1p.9l",   		0x01000, 0x48e32788, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "10805_2p.8l",   		0x01000, 0xc0dbdbde, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "10805_3p.7l",   		0x01000, 0x40cfe7b2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "10805_0s.3b",   		0x01000, 0x9faf18cf, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "10805_1s.4b",   		0x00800, 0xe910b5c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "10805_0gc.5h",  		0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "10805_1gc.3h",  		0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "10806_6331-1j.1k",   0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Explorer2)
+STD_ROM_FN(Explorer2)
+
 static struct BurnRomInfo BomberRomDesc[] = {
 	{ "1.3l",          0x00800, 0x8c30c7c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.3k",          0x00800, 0x1fca370c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -19249,7 +19270,7 @@ struct BurnDriver BurnDrvStrfbomb = {
 
 struct BurnDriver BurnDrvExplorer = {
 	"explorer", "scramble", NULL, NULL, "1981",
-	"Explorer (bootleg of Scramble)\0", NULL, "bootleg (Sidam)", "Galaxian",
+	"Explorer (bootleg of Scramble, set 1)\0", NULL, "bootleg (Sidam)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ExplorerRomInfo, ExplorerRomName, NULL, NULL, NULL, NULL, ExplorerInputInfo, ExplorerDIPInfo,
@@ -19257,6 +19278,15 @@ struct BurnDriver BurnDrvExplorer = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvExplorer2 = {
+	"explorer2", "scramble", NULL, NULL, "1981",
+	"Explorer (bootleg of Scramble, set 2)\0", NULL, "bootleg (Sidam)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, Explorer2RomInfo, Explorer2RomName, NULL, NULL, NULL, NULL, ExplorerInputInfo, ExplorerDIPInfo,
+	ExplorerInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
 struct BurnDriver BurnDrvBomber = {
 	"bomber", "scramble", NULL, NULL, "198?",
 	"Bomber (bootleg of Scramble)\0", NULL, "bootleg (Alca)", "Galaxian",

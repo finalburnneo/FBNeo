@@ -48,6 +48,36 @@ static INT32 nSelItem = -1;
 TCHAR szRomdataName[MAX_PATH] = _T("");
 bool  bRDListScanSub          = false;
 
+static HIMAGELIST hHardwareIconList = NULL;
+
+struct HardwareIcon {
+	UINT32 nHardwareCode;
+	TCHAR* pszIconName;
+	INT32  nIconIndex;
+};
+
+static struct HardwareIcon IconTable[] =
+{
+	{	0,								_T("icon_arc"),		-1	},
+	{	HARDWARE_CHANNELF,				_T("icon_chf"),		-1	},
+	{	HARDWARE_COLECO,				_T("icon_cv"),		-1	},
+	{	HARDWARE_FDS,					_T("icon_fds"),		-1	},
+	{	HARDWARE_MSX,					_T("icon_msx"),		-1	},
+	{	HARDWARE_NES,					_T("icon_nes"),		-1	},
+	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_cv"),		-1	},
+	{	HARDWARE_PCENGINE_SGX,			_T("icon_sgx"),		-1	},
+	{	HARDWARE_PCENGINE_TG16,			_T("icon_tg"),		-1	},
+	{	HARDWARE_SEGA_GAME_GEAR,		_T("icon_gg"),		-1	},
+	{	HARDWARE_SEGA_MASTER_SYSTEM,	_T("icon_sms"),		-1	},
+	{	HARDWARE_SEGA_MEGADRIVE,		_T("icon_md"),		-1	},
+	{	HARDWARE_SEGA_SG1000,			_T("icon_sg1k"),	-1	},
+	{	HARDWARE_SNES,					_T("icon_snes"),	-1	},
+	{	HARDWARE_SNK_NGPC,				_T("icon_ngpc"),	-1	},
+	{	HARDWARE_SNK_NGP,				_T("icon_ngp"),		-1	},
+	{	HARDWARE_SPECTRUM,				_T("icon_spec"),	-1	},
+
+	{	~0U,							NULL,				-1	}	// End Marker
+};
 
 static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 {
@@ -93,6 +123,74 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 	}
 
 	return token;
+}
+
+static INT32 FileExists(const TCHAR* szName)
+{
+	return GetFileAttributes(szName) != INVALID_FILE_ATTRIBUTES;
+}
+
+static HIMAGELIST HardwareIconListInit()
+{
+	hHardwareIconList = ImageList_Create(24, 24, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
+	if (NULL == hHardwareIconList) return NULL;
+	ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
+
+	struct HardwareIcon* _it = &IconTable[0];
+
+	while (NULL != _it->pszIconName) {
+		TCHAR szIconFile[MAX_PATH] = { 0 };
+		_stprintf(szIconFile, _T("%s%s.ico"), szAppIconsPath, _it->pszIconName);
+
+		HICON hHardwareIcon = (FileExists(szIconFile)) ? (HICON)LoadImage(NULL, szIconFile, IMAGE_ICON, 0, 0, LR_LOADFROMFILE) : LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
+		if (NULL != hHardwareIcon) {
+			_it->nIconIndex = ImageList_AddIcon(hHardwareIconList, hHardwareIcon);
+			DestroyIcon(hHardwareIcon); hHardwareIcon = NULL;
+		}
+
+		_it++;
+	}
+
+	return hHardwareIconList;
+}
+
+static void DestroyHardwareIconList()
+{
+	struct HardwareIcon* _it = &IconTable[0];
+
+	while (NULL != _it->pszIconName) {
+		_it->nIconIndex = -1; _it++;
+	}
+
+	if (NULL != hHardwareIconList) {
+		ImageList_Destroy(hHardwareIconList); hHardwareIconList = NULL;
+	}
+}
+
+static INT32 FindHardwareIconIndex(const TCHAR* pszDrvName)
+{
+	UINT32 nOldDrvSel    = nBurnDrvActive;		// Backup
+	nBurnDrvActive       = BurnDrvGetIndex(TCHARToANSI(pszDrvName, NULL, 0));
+	UINT32 nHardwareCode = BurnDrvGetHardwareCode();
+
+	struct HardwareIcon* _it = &IconTable[0];
+
+	while (NULL != _it->pszIconName) {
+		if (_it->nHardwareCode > 0) {			// Consoles
+			if (_it->nHardwareCode == (nHardwareCode & HARDWARE_SNK_NGPC)) {
+				nBurnDrvActive = nOldDrvSel;	// Restore
+				return _it->nIconIndex;			// NeoGeo Pocket Color
+			}
+			if (_it->nHardwareCode == (nHardwareCode & HARDWARE_PUBLIC_MASK)) {
+				nBurnDrvActive = nOldDrvSel;	// Restore
+				return _it->nIconIndex;
+			}
+		}
+		_it++;
+	}
+
+	nBurnDrvActive = nOldDrvSel;				// Restore
+	return IconTable[0].nIconIndex;				// Arcade
 }
 
 static INT32 IsUTF8Text(const void* pBuffer, long size)
@@ -153,11 +251,6 @@ static INT32 IsDatUTF8BOM()
 	fclose(fp);
 
 	return nRet;
-}
-
-static INT32 FileExists(const TCHAR* szName)
-{
-	return GetFileAttributes(szName) != INVALID_FILE_ATTRIBUTES;
 }
 
 #define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
@@ -517,7 +610,7 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 			if (0 == _tcsicmp(_T("FullName"), pszLabel)) {	// FullName
 				pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
 				_tcscpy(pDatListInfo->szFullName, pszInfo);
-				pDatListInfo->nMarker |= (1 << 4);
+				pDatListInfo->nMarker |= (1 << 3);
 			}
 		}
 	}
@@ -604,7 +697,7 @@ static INT32 RomdataAddListItem(TCHAR* pszDatFile)
 	memset(&lvi, 0, sizeof(LVITEM));
 
 	// Dat path
-	lvi.iImage     = 0;
+	lvi.iImage     = FindHardwareIconIndex(pDatListInfo->szDrvName);
 	lvi.iItem      = ListView_GetItemCount(hRDListView);
 	lvi.mask       = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
 	lvi.cchTextMax = MAX_PATH;
@@ -712,12 +805,12 @@ static void RomDataInitListView()
 	memset(&LvCol, 0, sizeof(LvCol));
 	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 
-	LvCol.cx = 415;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true);
+	LvCol.cx       = 415;
+	LvCol.pszText  = FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true);
 	SendMessage(hRDListView, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
-	LvCol.cx = 100;
-	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMDATA_ROMSET, true);
+	LvCol.cx       = 100;
+	LvCol.pszText  = FBALoadStringEx(hAppInst, IDS_ROMDATA_ROMSET, true);
 	SendMessage(hRDListView, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
 	sort_direction = SORT_ASCENDING; // dink
@@ -884,6 +977,7 @@ static void RomdataCoverInit()
 static void RomDataManagerExit()
 {
 	RomDataClearList();
+	DestroyHardwareIconList();
 	DeleteObject(hWhiteBGBrush);
 
 	hRDMgrWnd = hRDListView = NULL;
@@ -893,14 +987,18 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 {
 	if (Msg == WM_INITDIALOG)
 	{
-		InitCommonControls();
+		INITCOMMONCONTROLSEX icc;
+		icc.dwSize    = sizeof(icc);
+		icc.dwICC     = ICC_LISTVIEW_CLASSES | ICC_BAR_CLASSES;
+		InitCommonControlsEx(&icc);
 
-		hRDMgrWnd   = hDlg;
-		hRDListView = GetDlgItem(hDlg, IDC_ROMDATA_LIST);
+		hRDMgrWnd     = hDlg;
+		hRDListView   = GetDlgItem(hDlg, IDC_ROMDATA_LIST);
 
 		RomDataInitListView();
+		HardwareIconListInit();
 
-		HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
+		HICON hIcon   = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);		// Set the Game Selection dialog icon.
 
 		hWhiteBGBrush = CreateSolidBrush(RGB(0xff, 0xff, 0xff));

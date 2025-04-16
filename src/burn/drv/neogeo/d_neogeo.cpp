@@ -28835,30 +28835,30 @@ struct BurnDriver BurnDrvAbyssali = {
 };
 
 
-// GladMort (HB, Demo 2)
+// GladMort
 
 static struct BurnRomInfo gladmortRomDesc[] = {
-	{ "gladmort-p1.bin",	0x0100000, 0xd7712425, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
+	{ "gladmort-p1.bin",	0x0100000, 0x64d77ca4, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
 
-	{ "gladmort-s1.bin",	0x0020000, 0x8304be52, 2 | BRF_GRA },			//  1 Text layer tiles	/ MB831000
+	{ "gladmort-s1.bin",	0x0020000, 0xc96154b9, 2 | BRF_GRA },			//  1 Text layer tiles	/ MB831000
 
-	{ "gladmort-c1.bin",	0x1400000, 0xbcb081ba, 3 | BRF_GRA },			//  2 Sprite data
-	{ "gladmort-c2.bin",	0x1400000, 0x1b927329, 3 | BRF_GRA },			//  3
+	{ "gladmort-c1.bin",	0x1400000, 0xc7d367cc, 3 | BRF_GRA },			//  2 Sprite data
+	{ "gladmort-c2.bin",	0x1400000, 0x2c39b98e, 3 | BRF_GRA },			//  3
 
-	{ "gladmort-m1.bin",	0x0010000, 0x0dfddae3, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code			/ MB832000
+	{ "gladmort-m1.bin",	0x0010000, 0xfbccedbd, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code			/ MB832000
 
-	{ "gladmort-v1.bin",	0x0400000, 0x3b5e1408, 5 | BRF_SND },			//  5 Sound data		/ MB834200
-	{ "gladmort-v2.bin",	0x0400000, 0xd44f004d, 5 | BRF_SND },			//  6
-	{ "gladmort-v3.bin",	0x0400000, 0xe9e8de2f, 5 | BRF_SND },			//  7
-	{ "gladmort-v4.bin",	0x0400000, 0xaaf3f4e2, 5 | BRF_SND },			//  8
+	{ "gladmort-v1.bin",	0x0400000, 0x4c0efb20, 5 | BRF_SND },			//  5 Sound data		/ MB834200
+	{ "gladmort-v2.bin",	0x0400000, 0xdbd083f5, 5 | BRF_SND },			//  6
+	{ "gladmort-v3.bin",	0x0400000, 0x2f5c4eeb, 5 | BRF_SND },			//  7
+	{ "gladmort-v4.bin",	0x0400000, 0x12e01947, 5 | BRF_SND },			//  8
 };
 
 STDROMPICKEXT(gladmort, gladmort, neogeo)
 STD_ROM_FN(gladmort)
 
 struct BurnDriver BurnDrvgladmort = {
-	"gladmort", NULL, "neogeo", NULL, "2024",
-	"GladMort (HB, Demo 2)\0", NULL, "PixelHeart", "Neo Geo MVS",
+	"gladmort", NULL, "neogeo", NULL, "2025",
+	"GladMort (HB)\0", NULL, "PixelHeart", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NULL, gladmortRomInfo, gladmortRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

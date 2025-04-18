@@ -144,10 +144,13 @@ struct NGCDGAME games[] =
 	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//
 	{ _T("karnov")		, _T("Karnov")												, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0283 },		//
 	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0062 },		//
+	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (Justin Gibbons conversion)")	, 0x1062 },		//
 	{ _T("chelnov")		, _T("Atomic Runner Chelnov")								, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x1320 },		//
 	{ _T("eightman")	, _T("Eight Man")											, _T("2024")	, _T("SNK / Pallas (iq_132 conversion)")	, 0x0025 },		//
+	{ _T("eightman")	, _T("Eight Man")											, _T("2024")	, _T("SNK / Pallas (Justin Gibbons conversion)")	, 0x1025 },		//
 	{ _T("gururin")		, _T("Gururin")												, _T("2024")	, _T("Face (iq_132 conversion)")	, 0x0067 },		//
 	{ _T("kotm")		, _T("King of the Monsters")								, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x0016 },		//
+	{ _T("kotm")		, _T("King of the Monsters")								, _T("2024")	, _T("SNK (Justin Gibbons conversion)")	, 0x1016 },		//
 	{ _T("legendos")	, _T("Legend of Success Joe")								, _T("2024")	, _T("SNK / Wave (iq_132 conversion)")	, 0x0029 },		//
 	{ _T("neomrdo")		, _T("Neo Mr. Do!")											, _T("2024")	, _T("Visco (iq_132 conversion)")	, 0x0207 },		//
 	{ _T("pnyaa")		, _T("Pochi and Nyaa")										, _T("2024")	, _T("Aiky / Taito (iq_132 conversion)")	, 0x0267 },		//
@@ -156,6 +159,7 @@ struct NGCDGAME games[] =
 	{ _T("nitd")		, _T("Nightmare in the Dark")								, _T("2025")	, _T("Eleven (iq_132 conversion)")	, 0x0260 },		//
 	{ _T("neobombe")	, _T("Neo Bomberman")										, _T("2025")	, _T("Hudson (iq_132 conversion)")	, 0x0093 },		//
 	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (iq_132 conversion)")	, 0x0076 },		//
+	{ _T("zedblade")	, _T("Zed Blade - Operation Ragnarok")						, _T("2024")	, _T("NMK (Justin Gibbons conversion)")	, 0x1076 },		//
 	{ _T("ctomaday")	, _T("Captain Tomaday")										, _T("2025")	, _T("Visco (iq_132 conversion)")	, 0x0249 },		//
 	{ _T("diggerma")	, _T("Digger Man (Prototype)")								, _T("2025")	, _T("Kyle Hodgetts (iq_132 conversion)")	, 0x1266 },		// it's really 0x0066, but this conflicts with karnovr.
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
@@ -334,6 +338,22 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
 				File[LEN_FI] = 0;
+
+				if (nID == 0x0016 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000; // Justin Gibbons Hacks (kotm)
+				}
+
+				if (nID == 0x0025 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000; // Justin Gibbons Hacks (eightman)
+				}
+
+				if (nID == 0x0076 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000; // Justin Gibbons Hacks (zedblade)
+				}
+
+				if (nID == 0x0062 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000; // Justin Gibbons Hacks (spinmast)
+				}
 
 				// Savage Reign Rev 1
 				if (nID == 0x0059 && nDate[0]==95 && nDate[1]==6 && nDate[2]==20) {

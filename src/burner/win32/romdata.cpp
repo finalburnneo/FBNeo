@@ -132,9 +132,17 @@ static INT32 FileExists(const TCHAR* szName)
 
 static HIMAGELIST HardwareIconListInit()
 {
-	hHardwareIconList = ImageList_Create(24, 24, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
+	INT32 cx = 0, cy = 0;
+
+	switch (nIconsSize) {
+		case ICON_16x16: cx = cy = 16;	break;
+		case ICON_24x24: cx = cy = 24;	break;
+		case ICON_32x32: cx = cy = 32;	break;
+	}
+
+	hHardwareIconList = ImageList_Create(cx, cy, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
 	if (NULL == hHardwareIconList) return NULL;
-	ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
+	if (bEnableIcons) ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
 
 	struct HardwareIcon* _it = &IconTable[0];
 

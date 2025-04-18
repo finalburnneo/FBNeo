@@ -2538,13 +2538,14 @@ INT32 System16Init()
 		
 		SekInit(2, 0x68000);
 		SekOpen(2);
+		SekSetAddressMask(0x1fffff);
 		SekMapMemory(System16Rom3          , 0x000000, 0x03ffff, MAP_ROM);
 		SekMapMemory(System16Ram           , 0x0c0000, 0x0cffff, MAP_RAM);
 		SekMapMemory(System16RotateRam     , 0x180000, 0x1807ff, MAP_RAM);
 		SekMapMemory(System16SpriteRam     , 0x188000, 0x188fff, MAP_RAM);
 		SekMapMemory(System16PaletteRam    , 0x190000, 0x193fff, MAP_RAM);
 		SekMapMemory(System16PaletteRam    , 0x194000, 0x197fff, MAP_RAM);
-		SekMapMemory(System16ExtraRam3     , 0xff0000, 0xffffff, MAP_RAM);
+		SekMapMemory(System16ExtraRam3     , 0x1f0000, 0x1fffff, MAP_RAM);
 		SekSetReadWordHandler(0, YBoard3ReadWord);
 		SekSetWriteWordHandler(0, YBoard3WriteWord);
 		SekSetReadByteHandler(0, YBoard3ReadByte);

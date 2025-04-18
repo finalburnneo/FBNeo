@@ -12440,6 +12440,24 @@ struct BurnDriver BurnDrvmd_flashbu1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Flashback (Sep 18, 1992 Prototype)
+static struct BurnRomInfo md_flashbpRomDesc[] = {
+	{ "flashback (Sep 18, 1992 Prototype).bin", 0x200000, 0x82095cb6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_flashbp)
+STD_ROM_FN(md_flashbp)
+
+struct BurnDriver BurnDrvmd_flashbp = {
+	"md_flashbp", "md_flashb", NULL, NULL, "1992",
+	"Flashback (Sep 18, 1992 Prototype)\0", NULL, "Sunsoft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
+	MegadriveGetZipName, md_flashbpRomInfo, md_flashbpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Flash Point (Japan, Prototype)
 static struct BurnRomInfo md_flashpRomDesc[] = {
 	{ "flash point (japan) (proto).bin", 0x020000, 0x0655074d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -28389,6 +28407,43 @@ struct BurnDriver BurnDrvmd_shinfrc2p1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Shining Force II (Prototype)
+// Header Information indicates that this is from September 1993, a month before the Japanese retail
+static struct BurnRomInfo md_shinfrc2p3RomDesc[] = {
+	{ "Shining Force II (Prototype).bin", 0x200000, 0x5af29c4b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrc2p3)
+STD_ROM_FN(md_shinfrc2p3)
+
+struct BurnDriver BurnDrvmd_shinfrc2p3 = {
+	"md_shinfrc2p3", "md_shinfrc2", NULL, NULL, "1994",
+	"Shining Force II (Prototype)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shinfrc2p3RomInfo, md_shinfrc2p3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shining Force II (Prototype B)
+static struct BurnRomInfo md_shinfrc2p4RomDesc[] = {
+	{ "Shining Force II (Prototype B).bin", 0x200000, 0xd2056aa8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrc2p4)
+STD_ROM_FN(md_shinfrc2p4)
+
+struct BurnDriver BurnDrvmd_shinfrc2p4 = {
+	"md_shinfrc2p4", "md_shinfrc2", NULL, NULL, "1994",
+	"Shining Force II (Prototype B)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shinfrc2p4RomInfo, md_shinfrc2p4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining Force II (USA)
 static struct BurnRomInfo md_shinfrc2uRomDesc[] = {
 	{ "Shining Force II (USA)(1994)(Sega).bin", 0x200000, 0x4815e075, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -28943,6 +28998,24 @@ struct BurnDriver BurnDrvmd_slapfigh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_slapfighRomInfo, md_slapfighRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Slap Fight MD (Prototype)
+static struct BurnRomInfo md_slapfighpRomDesc[] = {
+	{ "Slap Fight MD (Prototype).bin", 0x100000, 0xdbb62949, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_slapfighp)
+STD_ROM_FN(md_slapfighp)
+
+struct BurnDriver BurnDrvmd_slapfighp = {
+	"md_slapfighp", "md_slapfigh", NULL, NULL, "1992",
+	"Slap Fight MD (Prototype)\0", NULL, "Toaplan Co.,Ltd.", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_slapfighpRomInfo, md_slapfighpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

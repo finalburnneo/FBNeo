@@ -2546,6 +2546,42 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
+		case MENU_ICONS_BY_GAME: {
+			bIconsByHardwares = 0;
+			if (bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			if (bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
+		case MENU_ICONS_BY_HARDWARE: {
+			bIconsByHardwares = 1;
+			if (bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			if (bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
 		case MENU_AUDIO_VOLUME_0:
 		case MENU_AUDIO_VOLUME_10:
 		case MENU_AUDIO_VOLUME_20:

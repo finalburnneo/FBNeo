@@ -64,7 +64,7 @@ static struct HardwareIcon IconTable[] =
 	{	HARDWARE_FDS,					_T("icon_fds"),		-1	},
 	{	HARDWARE_MSX,					_T("icon_msx"),		-1	},
 	{	HARDWARE_NES,					_T("icon_nes"),		-1	},
-	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_cv"),		-1	},
+	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_pce"),		-1	},
 	{	HARDWARE_PCENGINE_SGX,			_T("icon_sgx"),		-1	},
 	{	HARDWARE_PCENGINE_TG16,			_T("icon_tg"),		-1	},
 	{	HARDWARE_SEGA_GAME_GEAR,		_T("icon_gg"),		-1	},

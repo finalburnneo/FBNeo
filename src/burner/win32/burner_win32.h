@@ -348,6 +348,7 @@ extern bool bIconsLoaded;
 extern bool bIconsOnlyParents;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
 extern bool bGameInfoOpen;
+extern bool bIconsByHardwares;
 
 // neocdsel.cpp
 extern int NeoCDList_Init();

@@ -1122,6 +1122,9 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_ENABLEICONS, bEnableIcons ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_ICONS_PARENTSONLY, bIconsOnlyParents ? MF_CHECKED : MF_UNCHECKED);
 
+	var = (bIconsByHardwares) ? MENU_ICONS_BY_HARDWARE : MENU_ICONS_BY_GAME;
+	CheckMenuRadioItem(hMenu, MENU_ICONS_BY_GAME, MENU_ICONS_BY_HARDWARE, var, MF_BYCOMMAND);
+
 	// Previous games list
 	for (int i = 0; i < SHOW_PREV_GAMES; i++) {
 		MENUITEMINFO menuItemInfo;

@@ -1219,8 +1219,8 @@ BEGIN
 			MENUITEM "Generate all dats...",					MENU_CLRMAME_PRO_ALL_DATS
 	END
         MENUITEM SEPARATOR
-        MENUITEM "Configure ROM paths...",				MENU_ROMDIRS
-        MENUITEM "Configure support file paths...",			MENU_SUPPORTDIRS
+        MENUITEM "Configure ROM paths...",						MENU_ROMDIRS
+        MENUITEM "Configure support file paths...",				MENU_SUPPORTDIRS
         MENUITEM SEPARATOR
 		POPUP    "UI skin"
         	BEGIN
@@ -1229,60 +1229,65 @@ BEGIN
         	END
        	POPUP    "UI language"
        	BEGIN
-       		MENUITEM "Select UI language...",				MENU_LANGUAGE_SELECT
-       		MENUITEM "Export UI translation template...",			MENU_LANGUAGE_EXPORT
+       		MENUITEM "Select UI language...",					MENU_LANGUAGE_SELECT
+       		MENUITEM "Export UI translation template...",		MENU_LANGUAGE_EXPORT
        		MENUITEM "Reset UI default language",				MENU_LANGUAGE_RESET
-			MENUITEM "Download UI language...",				MENU_LANGUAGE_DOWNLOAD
+			MENUITEM "Download UI language...",					MENU_LANGUAGE_DOWNLOAD
         END
 		POPUP    "Gamelist language"
        	BEGIN
        		MENUITEM "Select gamelist language...",				MENU_LANGUAGE_GL_SELECT
-       		MENUITEM "Export gamelist translation template...",			MENU_LANGUAGE_GL_EXPORT
-       		MENUITEM "Reset gamelist default language",				MENU_LANGUAGE_GL_RESET
+       		MENUITEM "Export gamelist translation template...",	MENU_LANGUAGE_GL_EXPORT
+       		MENUITEM "Reset gamelist default language",			MENU_LANGUAGE_GL_RESET
         END
 		MENUITEM SEPARATOR
         POPUP    "Icons"
         BEGIN
-			MENUITEM "Enable driver icons display",					MENU_ENABLEICONS
-			MENUITEM "Parents only (use if you have problems)",					MENU_ICONS_PARENTSONLY
+			MENUITEM "Enable driver icons display",				MENU_ENABLEICONS
+			MENUITEM "Parents only (use if you have problems)",	MENU_ICONS_PARENTSONLY
 			POPUP	"Icon size"
 			BEGIN
-				MENUITEM "16 x 16 pixels",							MENU_ICONS_SIZE_16
-				MENUITEM "24 x 24 pixels",							MENU_ICONS_SIZE_24
-				MENUITEM "32 x 32 pixels",							MENU_ICONS_SIZE_32
+				MENUITEM "16 x 16 pixels",						MENU_ICONS_SIZE_16
+				MENUITEM "24 x 24 pixels",						MENU_ICONS_SIZE_24
+				MENUITEM "32 x 32 pixels",						MENU_ICONS_SIZE_32
+			END
+			POPUP	"Display icon by..."
+			BEGIN
+				MENUITEM "By game",								MENU_ICONS_BY_GAME
+				MENUITEM "By hardware",							MENU_ICONS_BY_HARDWARE
 			END
         END
        	MENUITEM SEPARATOR
-        MENUITEM "Save snapshot\tF12",					MENU_SAVESNAP
-        MENUITEM "Shot factory..\tCtrl+F12",				MENU_SNAPFACT
+        MENUITEM "Save snapshot\tF12",							MENU_SAVESNAP
+        MENUITEM "Shot factory..\tCtrl+F12",					MENU_SNAPFACT
         MENUITEM SEPARATOR
-        MENUITEM "Enable cheats...\tCtrl+F1",				MENU_ENABLECHEAT, GRAYED
+        MENUITEM "Enable cheats...\tCtrl+F1",					MENU_ENABLECHEAT, GRAYED
         POPUP "Cheat search"
         BEGIN
            MENUITEM "Start New Search\tCtrl+Home",				MENU_CHEATSEARCH_START, GRAYED
            MENUITEM SEPARATOR
-           MENUITEM "Target value has not changed\tCtrl+/",			MENU_CHEATSEARCH_NOCHANGE, GRAYED
+           MENUITEM "Target value has not changed\tCtrl+/",		MENU_CHEATSEARCH_NOCHANGE, GRAYED
            MENUITEM "Target value has changed\tCtrl+*",			MENU_CHEATSEARCH_CHANGE, GRAYED
-           MENUITEM "Target value has decreased\tCtrl+-",			MENU_CHEATSEARCH_DECREASE, GRAYED
-           MENUITEM "Target value has increased\tCtrl++",			MENU_CHEATSEARCH_INCREASE, GRAYED
+           MENUITEM "Target value has decreased\tCtrl+-",		MENU_CHEATSEARCH_DECREASE, GRAYED
+           MENUITEM "Target value has increased\tCtrl++",		MENU_CHEATSEARCH_INCREASE, GRAYED
            MENUITEM SEPARATOR
-           MENUITEM "Dump search to file",				MENU_CHEATSEARCH_DUMPFILE, GRAYED
+           MENUITEM "Dump search to file",						MENU_CHEATSEARCH_DUMPFILE, GRAYED
            MENUITEM SEPARATOR
-           MENUITEM "Exit Cheat Search",				MENU_CHEATSEARCH_EXIT, GRAYED
+           MENUITEM "Exit Cheat Search",						MENU_CHEATSEARCH_EXIT, GRAYED
         END
         MENUITEM SEPARATOR
-        MENUITEM "Invoke 68K debugger...\tCtrl+Shift+F1",	MENU_DEBUG
+        MENUITEM "Invoke 68K debugger...\tCtrl+Shift+F1",		MENU_DEBUG
 	MENUITEM SEPARATOR
-	MENUITEM "Palette Viewer...\tShift+F12",			MENU_PALETTEVIEWER, GRAYED
+	MENUITEM "Palette Viewer...\tShift+F12",					MENU_PALETTEVIEWER, GRAYED
 	MENUITEM SEPARATOR
         MENUITEM "Associate with .fs and .fr files",			MENU_ASSOCIATE
         MENUITEM "Disassociate from .fs and .fr files",			MENU_DISASSOCIATE
         MENUITEM SEPARATOR
-        MENUITEM "Save input mapping now",				MENU_SAVEGAMEINPUTNOW
-        MENUITEM "Auto-save input mapping",				MENU_SAVEGAMEINPUT
+        MENUITEM "Save input mapping now",						MENU_SAVEGAMEINPUTNOW
+        MENUITEM "Auto-save input mapping",						MENU_SAVEGAMEINPUT
         MENUITEM SEPARATOR
-        MENUITEM "Save settings to .ini now",				MENU_SAVESET
-        MENUITEM "Reload settings from .ini",				MENU_LOADSET
+        MENUITEM "Save settings to .ini now",					MENU_SAVESET
+        MENUITEM "Reload settings from .ini",					MENU_LOADSET
     END
     POPUP "Help"
     BEGIN

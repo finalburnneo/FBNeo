@@ -1682,17 +1682,16 @@ void LoadDrvIcons()
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
 				hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_CHANNELF];  continue;
 			}
-			else
-			{
+			else {
 				hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_ENUMEND];   continue;
 			}
 		} else {
 			_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
-			hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+			hDrvIcon[nDrvIndex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 
 			if (!hDrvIcon[nDrvIndex] && BurnDrvGetText(DRV_PARENT)) {
 				_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_PARENT));
-				hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+				hDrvIcon[nDrvIndex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 			}
 		}
 	}

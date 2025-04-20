@@ -44801,6 +44801,24 @@ struct BurnDriver BurnDrvmd_cuknight = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Cursed Legacy, The (HB)
+static struct BurnRomInfo md_cursedlegacyRomDesc[] = {
+	{ "Cursed Legacy, The (2025)(GGS Studio, Broke Studio).md", 4194304, 0x43867c88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cursedlegacy)
+STD_ROM_FN(md_cursedlegacy)
+
+struct BurnDriver BurnDrvmd_cursedlegacy = {
+	"md_cursedlegacy", NULL, NULL, NULL, "2025",
+	"Cursed Legacy, The (HB)\0", NULL, "GGS Studio, Broke Studio", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_cursedlegacyRomInfo, md_cursedlegacyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 240, 4, 3
+};
+
 // Curse of Illmoore Bay, the (HB)
 static struct BurnRomInfo md_curseibayRomDesc[] = {
 	{ "Curse of Illmoore Bay, The (2021)(2nd Dimension).bin", 4189440, 0x7ad106c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -46244,6 +46262,24 @@ struct BurnDriver BurnDrvmd_omeblast = {
 	MegadriveGetZipName, md_omeblastRomInfo, md_omeblastRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// P-47 II MD (HB)
+static struct BurnRomInfo md_p47iimdRomDesc[] = {
+	{ "P-47 II MD - The Freedom Star (2025)(City Connection).md", 1048576, 0xfe9B4c7f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_p47iimd)
+STD_ROM_FN(md_p47iimd)
+
+struct BurnDriver BurnDrvmd_p47iimd = {
+	"md_p47iimd", NULL, NULL, NULL, "2025",
+	"P-47 II MD - The Freedom Star (HB)\0", NULL, "City Connection", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 5, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_p47iimdRomInfo, md_p47iimdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 240, 4, 3
 };
 
 // P.O.D. Proof Of Destruction (GlobalHack)
@@ -57038,4 +57074,3 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
-

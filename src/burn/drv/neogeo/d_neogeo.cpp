@@ -16523,6 +16523,45 @@ struct BurnDriver BurnDrvMslug5b2 = {
 };
 
 
+// Samurai Shodown III Enhanced (bootleg)
+/* MVS VERSION */
+
+static struct BurnRomInfo samsho3enRomDesc[] = {
+	// Eproms with sticker on NEO-MVS PROGBK1 on P1 and SP2; chip label are SAMURAI SHODOWN III EN - P1 and SAMURAI SHODOWN III EN - SP2.
+	{ "ss3_en-p1.p1", 0x100000, 0x15e021ca, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "ss3-sp2.sp2",  0x200000, 0x1cc2c370, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
+
+	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332202
+	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 					/ TC5332202
+	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 					/ TC538200
+	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 					/ TC538200
+
+	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
+
+	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data		/ TC5332201
+	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 					/ TC5316200
+};
+
+STDROMPICKEXT(samsho3en, samsho3en, neogeo)
+STD_ROM_FN(samsho3en)
+
+struct BurnDriver BurnDrvSamSho3en = {
+	"samsho3en", "samsho3", "neogeo", NULL, "2010",
+	"Samurai Shodown III Enhanced (bootleg)\0", NULL, "bootleg", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho3enRomInfo, samsho3enRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // -----------------------------------------------------------------------------
 // CD Conversion Series
 // -----------------------------------------------------------------------------

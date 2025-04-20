@@ -16528,8 +16528,8 @@ struct BurnDriver BurnDrvMslug5b2 = {
 
 static struct BurnRomInfo samsho3enRomDesc[] = {
 	// Eproms with sticker on NEO-MVS PROGBK1 on P1 and SP2; chip label are SAMURAI SHODOWN III EN - P1 and SAMURAI SHODOWN III EN - SP2.
-	{ "ss3_en-p1.p1", 0x100000, 0x15e021ca, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
-	{ "ss3-sp2.sp2",  0x200000, 0x1cc2c370, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
+	{ "ss3_en-p1.p1", 0x100000, 0x15e021ca, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "ss3-sp2.sp2",  0x200000, 0x1cc2c370, 1 | BRF_ESS | BRF_PRG }, //  1 					
 
 	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 

@@ -157,10 +157,7 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
   }
 
   // load it
-  const char* typeNames[12] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1"};
-  enum { CART_NONE = 0, CART_LOROM, CART_HIROM, CART_EXLOROM, CART_EXHIROM, CART_CX4, CART_LOROMDSP, CART_HIROMDSP, CART_LOROMSETA, CART_LOROMSA1, CART_LOROMOBC1, CART_LOROMSDD1 };
-
-  bprintf(0, _T("Loaded %S rom (%S)\n"), typeNames[headers[used].cartType], headers[used].pal ? "PAL" : "NTSC");
+  bprintf(0, _T("Loaded %S rom (%S)\n"), cart_gettype(headers[used].cartType), headers[used].pal ? "PAL" : "NTSC");
   bprintf(0, _T("\"%S\"\n"), headers[used].name);
 
   int bankSize = 0;

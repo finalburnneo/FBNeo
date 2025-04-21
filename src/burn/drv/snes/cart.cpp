@@ -44,6 +44,11 @@ void (*cart_run)() = NULL;
 void cart_run_dummy() { }
 void cart_mapRun(Cart* cart);
 
+const char *cart_gettype(int ctype) {
+  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1"};
+  return cartTypeNames[(ctype < CART_MAXENTRY) ? ctype : 0];
+}
+
 static void cart_mapRwHandlers(Cart* cart) {
   switch(cart->type) {
     case CART_NONE: cart_read = cart_readDummy; cart_write = cart_writeDummy; break;
@@ -86,6 +91,15 @@ static uint64_t upd_cycles;
 static uint8_t *upd_ram = NULL;
 static Snes *upd_snes_ctx;
 
+void upd_run() {
+	const uint64_t upd_sync_to = (uint64_t)upd_snes_ctx->cycles * upd_CyclesPerMaster;
+
+	int to_run = (int)((uint64_t)upd_sync_to - upd_cycles);
+	if (to_run > 0) {
+		upd_cycles += upd96050Run(to_run);
+	}
+}
+
 void cart_free(Cart* cart) {
   switch (cart->type) {
     case CART_LOROMSA1: snes_sa1_exit(); break;
@@ -98,15 +112,6 @@ void cart_free(Cart* cart) {
   if(upd_ram != NULL) BurnFree(upd_ram);
 
   BurnFree(cart);
-}
-
-void upd_run() {
-	const uint64_t upd_sync_to = (uint64_t)upd_snes_ctx->cycles * upd_CyclesPerMaster;
-
-	int to_run = (int)((uint64_t)upd_sync_to - upd_cycles);
-	if (to_run > 0) {
-		upd_cycles += upd96050Run(to_run);
-	}
 }
 
 void cart_mapRun(Cart* cart) {

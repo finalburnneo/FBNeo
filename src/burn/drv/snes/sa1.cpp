@@ -251,7 +251,7 @@ void snes_sa1_init(void *mem, uint8_t *srom, int32_t sromsize, void *s_ram, int3
 {
 	if (iram != NULL) return; // snes cart reset calls this, ignore if already initted.
 
-	bprintf(0, _T("sa1: snes_sa1_init().\n"));
+	//bprintf(0, _T("sa1: snes_sa1_init().\n"));
 
 	iram = (UINT8*)BurnMalloc(0x800);
 
@@ -905,7 +905,7 @@ static uint8_t read_charconv1_dma(uint32_t address)
 		uint32_t bwram_adr = tile_start + ((tile_index >> ccsize) * 8 * tile_pitch)
 			+ ((tile_index & ((1 << ccsize) - 1)) * dma_charconv_bpp);
 
-		bprintf(0, _T("tile index %x  addr %x  dma_src %x  bwram_adr %x\n"), tile_index, address, dma_src, bwram_adr);
+		//bprintf(0, _T("tile index %x  addr %x  dma_src %x  bwram_adr %x\n"), tile_index, address, dma_src, bwram_adr);
 
 		for (uint32_t y = 0; y < 8; y++, bwram_adr += tile_pitch) {
 			uint64_t planar = 0;
@@ -963,7 +963,7 @@ static inline uint8_t bwram_read_bank_scpu(uint32_t address)
 	address = bwram_snes_bank + (address & 0x1fff);
 
 	if (dma_charconv1_active) {
-		bprintf(0, _T("."));
+		//bprintf(0, _T("."));
 		return read_charconv1_dma(address);
 	}
 

@@ -1090,7 +1090,7 @@ struct BurnDriver BurnDrvroute16d = {
 };
 
 
-// Route 16 (bootleg)
+// Route 16 (bootleg, set 1)
 
 static struct BurnRomInfo route16blRomDesc[] = {
 	{ "rt16.0",       	0x0800, 0xb1f0f636, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -1114,10 +1114,45 @@ STD_ROM_FN(route16bl)
 
 struct BurnDriver BurnDrvroute16bl = {
 	"route16bl", "route16", NULL, NULL, "1981",
-	"Route 16 (bootleg)\0", NULL, "bootleg (Leisure and Allied)", "Route 16",
+	"Route 16 (bootleg, set 1)\0", NULL, "bootleg (Leisure and Allied)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16blRomInfo, route16blRomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	256, 256, 3, 4
+};
+
+
+// Route 16 (bootleg, set 2)
+// It's a clone of "Route 16 (bootleg, set 1)", only difference is removal of "LEISURE AND ALLIED (c) 1981" from intro screen. 
+// f205v id 206
+
+static struct BurnRomInfo route16bl2RomDesc[] = {
+	{ "37.bin",       	0x0800, 0xb1f0f636, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "38.bin",       	0x0800, 0x3ec52fe5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "39.bin",       	0x0800, 0xa8e92871, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "40.bin",       	0x0800, 0xa0fc9fc5, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "41.bin",       	0x0800, 0x231af7d5, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "42.bin",       	0x0800, 0x63d7b05b, 1 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "43.bin",       	0x0800, 0xfef605f3, 2 | BRF_ESS | BRF_PRG }, //  6 Z80 #1 Code
+	{ "44.bin",       	0x0800, 0xd0d6c189, 2 | BRF_ESS | BRF_PRG }, //  7
+	{ "45.bin",      	0x0800, 0xdefc5797, 2 | BRF_ESS | BRF_PRG }, //  8
+	{ "46.bin",       	0x0800, 0x88d94a66, 2 | BRF_ESS | BRF_PRG }, //  9
+
+	{ "im5623.f10",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 10 Graphics
+	{ "im5623.f12",   	0x0100, 0x08793ef7, 3 | BRF_GRA },	     // 11
+};
+
+STD_ROM_PICK(route16bl2)
+STD_ROM_FN(route16bl2)
+
+struct BurnDriver BurnDrvroute16bl2 = {
+	"route16bl2", "route16", NULL, NULL, "1981",
+	"Route 16 (bootleg, set 2)\0", NULL, "bootleg", "Route 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, route16bl2RomInfo, route16bl2RomName, NULL, NULL, NULL, NULL, Route16InputInfo, Route16DIPInfo,
 	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };

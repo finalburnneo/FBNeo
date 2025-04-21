@@ -98,6 +98,42 @@ static struct BurnDIPInfo CityconDIPList[]=
 
 STDDIPINFO(Citycon)
 
+static struct BurnDIPInfo CityconblDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0x00, NULL			},
+	{0x11, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x10, 0x01, 0x03, 0x00, "1 car"			},
+	{0x10, 0x01, 0x03, 0x01, "2 cars"			},
+	{0x10, 0x01, 0x03, 0x02, "3 cars"			},
+	{0x10, 0x01, 0x03, 0x03, "Infinite cars"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x10, 0x01, 0x20, 0x20, "Off"			},
+	{0x10, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x10, 0x01, 0x40, 0x00, "Upright"		},
+	{0x10, 0x01, 0x40, 0x40, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x11, 0x01, 0x07, 0x07, "5 Coins 1 Credits"	},
+	{0x11, 0x01, 0x07, 0x06, "4 Coins 1 Credits"	},
+	{0x11, 0x01, 0x07, 0x05, "3 Coins 1 Credits"	},
+	{0x11, 0x01, 0x07, 0x04, "2 Coins 1 Credits"	},
+	{0x11, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x11, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
+	{0x11, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
+	{0x11, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x11, 0x01, 0x08, 0x00, "Easy"			},
+	{0x11, 0x01, 0x08, 0x08, "Hard"			},
+};
+
+STDDIPINFO(Cityconbl)
+
 static void citycon_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0x2800) return;
@@ -664,6 +700,45 @@ struct BurnDriver BurnDrvCitycona = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, cityconaRomInfo, cityconaRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 224, 4, 3
+};
+
+
+// City Connection (bootleg)
+// Game differences are: soft lives settings modified
+// f205v id 1183
+
+static struct BurnRomInfo cityconblRomDesc[] = {
+	{ "c10",		0x4000, 0xae88b53c, 1 | BRF_PRG | BRF_ESS }, //  0 m6809 #0 Code
+	{ "c11boot",	0x8000, 0x8a19665a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "c1",			0x8000, 0x1fad7589, 2 | BRF_PRG | BRF_ESS }, //  2 m6809 #1 Code
+
+	{ "c4",			0x2000, 0xa6b32fc6, 3 | BRF_GRA },           //  3 Characters
+
+	{ "c12",		0x2000, 0x08eaaccd, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "c13",		0x2000, 0x1819aafb, 4 | BRF_GRA },           //  5
+
+	{ "c9",			0x8000, 0x8aeb47e6, 5 | BRF_GRA },           //  6 Sprites
+	{ "c8",			0x4000, 0x0d7a1eeb, 5 | BRF_GRA },           //  7
+	{ "c6",			0x8000, 0x2246fe9d, 5 | BRF_GRA },           //  8
+	{ "c7",			0x4000, 0xe8b97de9, 5 | BRF_GRA },           //  9
+
+	{ "c2",			0x8000, 0xf2da4f23, 6 | BRF_GRA },           // 10 Background Tile Map
+	{ "c3",			0x4000, 0x7ef3ac1b, 6 | BRF_GRA },           // 11
+	{ "c5",			0x2000, 0xc03d8b1b, 6 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(cityconbl)
+STD_ROM_FN(cityconbl)
+
+struct BurnDriver BurnDrvCityconbl = {
+	"cityconbl", "citycon", NULL, NULL, "1985",
+	"City Connection (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, cityconblRomInfo, cityconblRomName, NULL, NULL, NULL, NULL, CityconInputInfo, CityconblDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3
 };

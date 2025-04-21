@@ -2086,6 +2086,37 @@ static struct BurnRomInfo ShinoblsRomDesc[] = {
 STD_ROM_PICK(Shinobls)
 STD_ROM_FN(Shinobls)
 
+static struct BurnRomInfo Shinobls2RomDesc[] = {
+	// f205v id 809
+	{ "e-4.3k",        0x10000, 0xc178a39c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "e-2.3o",        0x10000, 0x5ad8ebf2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "e-5.2k",        0x10000, 0xa2a620bd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "e-3.2o",        0x10000, 0xa3ceda52, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "e-6.5a",        0x10000, 0x46627e7d, SYS16_ROM_TILES | BRF_GRA },
+	{ "e-7.4a",        0x10000, 0x87d0f321, SYS16_ROM_TILES | BRF_GRA },
+	{ "e-8.3a",        0x10000, 0xefb4af87, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "e-9.6u",        0x10000, 0x611f413a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-13.8u",       0x10000, 0x5eb00fc1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-10.6t",       0x10000, 0x3c0797c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-14.8t",       0x10000, 0x25307ef8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-11.6s",       0x10000, 0xc29ac34e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-15.8s",       0x10000, 0x04a437f8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-12.6r",       0x10000, 0x7e98bd36, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "e-16.8r",       0x10000, 0x0315cf42, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "e_1.5t",        0x08000, 0xdd50b745, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "7751.bin",      0x00400, 0x6a9534fc, SYS16_ROM_7751PROG | BRF_ESS | BRF_PRG },
+
+	{ "e-17.6w",       0x08000, 0x6d7966da, SYS16_ROM_7751DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Shinobls2)
+STD_ROM_FN(Shinobls2)
+
 static struct BurnRomInfo ShinoblbRomDesc[] = {
 	{ "4.3k",          0x10000, 0xc178a39c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "2.3n",          0x10000, 0x5ad8ebf2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -4062,10 +4093,20 @@ struct BurnDriver BurnDrvShinobi1d = {
 
 struct BurnDriver BurnDrvShinobls = {
 	"shinobls", "shinobi", NULL, NULL, "1987",
-	"Shinobi (Star bootleg, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
+	"Shinobi (Star bootleg set 1, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShinoblsRomInfo, ShinoblsRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
+	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvShinobls2 = {
+	"shinobls2", "shinobi", NULL, NULL, "1987",
+	"Shinobi (Star bootleg set 2, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, Shinobls2RomInfo, Shinobls2RomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

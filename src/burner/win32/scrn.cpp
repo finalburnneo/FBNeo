@@ -2479,6 +2479,25 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
+		case MENU_ICONS_THREAD_1: {
+			nIconsThreads = 1U;  break;
+		}
+		case MENU_ICONS_THREADS_2: {
+			nIconsThreads = 2U;  break;
+		}
+		case MENU_ICONS_THREADS_4: {
+			nIconsThreads = 4U;  break;
+		}
+		case MENU_ICONS_THREADS_8: {
+			nIconsThreads = 8U;  break;
+		}
+		case MENU_ICONS_THREADS_16: {
+			nIconsThreads = 16U; break;
+		}
+		case MENU_ICONS_THREADS_CORES: {
+			nIconsThreads = 0U;  break;
+		}
+
 		case MENU_ICONS_PARENTSONLY: {
 			bIconsOnlyParents = !bIconsOnlyParents;
 			if(bEnableIcons && bIconsLoaded) {

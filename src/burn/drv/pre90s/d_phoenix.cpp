@@ -1640,7 +1640,7 @@ struct BurnDriver BurnDrvCondorva = {
 
 // Condor (Bem Mi italy bootleg of Phoenix)
 // It enter in game straight away, seem sort of freeplay
-// It show "Bem Mi Italy" when the game is over 
+// It show "BEM Mi Italy" when the game is over 
 // f205v id 1123
 
 static struct BurnRomInfo condorbemRomDesc[] = {
@@ -1668,7 +1668,7 @@ STD_ROM_FN(condorbem)
 
 struct BurnDriver BurnDrvCondorbem = {
 	"condorbem", "phoenix", NULL, NULL, "1981",
-	"Condor (Bem Mi italy bootleg of Phoenix)\0", NULL, "bootleg (Bem Mi italy)", "Miscellaneous",
+	"Condor (BEM Mi Italy bootleg of Phoenix)\0", NULL, "bootleg (BEM Mi Italy)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, condorbemRomInfo, condorbemRomName, NULL, NULL, NULL, NULL, CondorInputInfo, CondorDIPInfo,

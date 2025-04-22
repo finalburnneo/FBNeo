@@ -2088,6 +2088,7 @@ STD_ROM_FN(Shinobls)
 
 static struct BurnRomInfo Shinobls2RomDesc[] = {
 	// f205v id 809
+	// Update 20250422 from Osso : This is a mix of ROMs from shinobls and shinoblb
 	{ "e-4.3k",        0x10000, 0xc178a39c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "e-2.3o",        0x10000, 0x5ad8ebf2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "e-5.2k",        0x10000, 0xa2a620bd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },

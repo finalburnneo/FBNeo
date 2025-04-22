@@ -2317,6 +2317,29 @@ static struct BurnRomInfo punkshot2aRomDesc[] = {
 STD_ROM_PICK(punkshot2a)
 STD_ROM_FN(punkshot2a)
 
+// PCB is marked: "GX907", "KONAMI" and "PWB352011A (made in Japan)" on component side
+// Update 20181206 from Osso: This set is identical to punkshotj with the year hacked to 1992. The game is 2 players.
+// f205v id 215
+static struct BurnRomInfo punkshotjhRomDesc[] = {
+	
+	{ "i7.bin",			0x020000, 0x9829a448, BRF_ESS | BRF_PRG }, //  0	68000 Program Code 
+	{ "i10.bin",		0x020000, 0x22a3d9d6, BRF_ESS | BRF_PRG }, //  1
+
+	// 1.e8 is a double capacity Audio ROM, with the first half empty.
+	{ "1.e8",			0x010000, 0x35a85077, BRF_ESS | BRF_PRG }, //  2	Z80 Program
+
+	{ "907d06.e23",		0x040000, 0xf5cc38f4, BRF_GRA },	       //  3	Tiles
+	{ "907d05.e22",		0x040000, 0xe25774c1, BRF_GRA },	       //  4
+
+	{ "907d07.k2",		0x100000, 0xb0fe4543, BRF_GRA },	       //  5	Sprites
+	{ "907d08.k7",		0x100000, 0xd5ac8d9d, BRF_GRA },	       //  6
+
+	{ "907d04.d3",		0x080000, 0x090feb5e, BRF_SND },	       //  7	K053260 Samples
+};
+
+STD_ROM_PICK(punkshotjh)
+STD_ROM_FN(punkshotjh)
+
 static INT32 TmntMemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -7108,6 +7131,16 @@ struct BurnDriver BurnDrvPunkshot2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
 	NULL, punkshot2aRomInfo, punkshot2aRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, Punkshot2DIPInfo,
+	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
+	NULL, 0x800, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPunkshotjh = {
+	"punkshotjh", "punkshot", NULL, NULL, "1992",
+	"Punk Shot (Japan 2 Players, year hack)\0", NULL, "Konami", "GX907",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_SPORTSMISC, 0,
+	NULL, punkshotjhRomInfo, punkshotjhRomName, NULL, NULL, NULL, NULL, Punkshot2InputInfo, PunkshotjDIPInfo,
 	PunkshotInit, PunkshotExit, PunkshotFrame, PunkshotDraw, Thndrx2aScan, 
 	NULL, 0x800, 288, 224, 4, 3
 };

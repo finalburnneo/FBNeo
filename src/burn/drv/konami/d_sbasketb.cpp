@@ -822,6 +822,51 @@ struct BurnDriver BurnDrvSbasketg = {
 };
 
 
+// Super Basketball (version G, encrypted, alt)
+// f205v id 103
+
+static struct BurnRomInfo sbasketgaRomDesc[] = {
+	{ "5.14j",		0x2000, 0x336dc0ab, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "4.13j",		0x2000, 0xf064a9bc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.11j",		0x2000, 0xb9de7d53, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.10j",		0x2000, 0xe98470a0, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.9j",		0x2000, 0x1bd0cd2e, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "15.7a",		0x2000, 0x81e64578, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+    // 1 byte differs at 1FDBB: DD D9; possibly a bitrot
+	{ "12.22f",		0x4000, 0x56dd717b, 3 | BRF_GRA },           //  6 Background Tiles
+
+	{ "6.14g",		0x2000, 0x7e2f5bb2, 4 | BRF_GRA },           //  7 Sprites
+	{ "7.16g",		0x2000, 0x963a44f9, 4 | BRF_GRA },           //  8
+	{ "8.17g",		0x2000, 0x63901deb, 4 | BRF_GRA },           //  9
+	{ "9.18g",		0x2000, 0xe1873677, 4 | BRF_GRA },           // 10
+	{ "10.20g",		0x2000, 0x824815e8, 4 | BRF_GRA },           // 11
+	{ "11.22g",		0x2000, 0xdca9b447, 4 | BRF_GRA },           // 12
+
+	{ "405e17.5a",	0x0100, 0xb4c36d57, 5 | BRF_GRA },           // 13 Color data
+	{ "405e16.4a",	0x0100, 0x0b7b03b8, 5 | BRF_GRA },           // 14
+	{ "405e18.6a",	0x0100, 0x9e533bad, 5 | BRF_GRA },           // 15
+	{ "405e20.19d",	0x0100, 0x8ca6de2f, 5 | BRF_GRA },           // 16
+	{ "405e19.16d",	0x0100, 0xe0bc782f, 5 | BRF_GRA },           // 17
+
+	{ "405e15.11f",	0x2000, 0x01bb5ce9, 6 | BRF_SND },           // 18 VLM data
+};
+
+STD_ROM_PICK(sbasketga)
+STD_ROM_FN(sbasketga)
+
+struct BurnDriver BurnDrvSbasketga = {
+	"sbasketga", "sbasketb", NULL, NULL, "1984",
+	"Super Basketball (version G, encrypted, alt)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	NULL, sbasketgaRomInfo, sbasketgaRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
+	SbasketgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
+	224, 256, 3, 4
+};
+
+
 // Super Basketball (version E, encrypted)
 
 static struct BurnRomInfo sbasketeRomDesc[] = {

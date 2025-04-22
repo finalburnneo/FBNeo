@@ -14076,9 +14076,9 @@ struct BurnDriver BurnDrvnes_dellatales = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Demon District (HB)
+// Demon District (HB), Sept. 2, 2020 version
 static struct BurnRomInfo nes_demondistrictRomDesc[] = {
-	{ "Demon District (2019)(Klonoa).nes",          319504, 0x33e22dcb, BRF_ESS | BRF_PRG },
+	{ "Demon District (2019)(Klonoa).nes",          335888, 0x9eadfdf1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_demondistrict)

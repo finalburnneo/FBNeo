@@ -2325,8 +2325,9 @@ static struct BurnRomInfo punkshotjhRomDesc[] = {
 	{ "i7.bin",			0x020000, 0x9829a448, BRF_ESS | BRF_PRG }, //  0	68000 Program Code 
 	{ "i10.bin",		0x020000, 0x22a3d9d6, BRF_ESS | BRF_PRG }, //  1
 
-	// 1.e8 is a double capacity Audio ROM, with the first half empty.
-	{ "1.e8",			0x010000, 0x35a85077, BRF_ESS | BRF_PRG }, //  2	Z80 Program
+	//  1.e8 is a double capacity Audio ROM, with the first half empty ; Probably bad.
+//	{ "1.e8",			0x010000, 0x35a85077, BRF_ESS | BRF_PRG }, //  2	Z80 Program
+	{ "1.e8",			0x008000, 0xf040c484, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 
 	{ "907d06.e23",		0x040000, 0xf5cc38f4, BRF_GRA },	       //  3	Tiles
 	{ "907d05.e22",		0x040000, 0xe25774c1, BRF_GRA },	       //  4

@@ -2806,6 +2806,16 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						if (!CheckWorkingStatus(((NODEINFO*)TvItem.lParam)->nBurnDrvNo)) {
 							lplvcd->clrText = RGB(0x7F, 0x7F, 0x7F);
 						}
+
+						// Slightly different color for favorites (key lime pie anyone?)
+						nBurnDrvActive = ((NODEINFO*)TvItem.lParam)->nBurnDrvNo;
+						if (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) {
+							if (!((NODEINFO*)TvItem.lParam)->bIsParent) {
+								lplvcd->clrTextBk = RGB(0xd7, 0xe7, 0xd7);
+							} else {
+								lplvcd->clrTextBk = RGB(0xe6, 0xff, 0xe6);
+							}
+						}
 					}
 
 					rect.left	= lplvcd->nmcd.rc.left;
@@ -2859,6 +2869,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							const int EXPAND_ICON_SIZE = 16 + 8;
 							const int temp_right = rect.right;
 							rect.right = EXPAND_ICON_SIZE + FIELD_SIZE - 2;
+
 							DrawText(lplvcd->nmcd.hdc, BurnDrvGetText(DRV_NAME), -1, &rect, DT_NOPREFIX | DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_END_ELLIPSIS);
 							rect.right = temp_right;
 

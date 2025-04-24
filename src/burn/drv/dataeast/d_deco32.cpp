@@ -4879,7 +4879,7 @@ static struct BurnRomInfo tattassRomDesc[] = {
 	{ "pp44.cpu",		0x80000, 0xc3ca5b49, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
 	{ "pp45.cpu",		0x80000, 0xd3f30de0, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "u7.snd",		0x10000, 0x6947be8a, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+	{ "u7.snd",			0x10000, 0xa7228077, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
 
 	{ "abak_b01.s02",	0x80000, 0xbc805680, 3 | BRF_GRA },           //  3 Tilemap 0&1 Tiles & Characters (Encrypted)
 	{ "abak_b01.s13",	0x80000, 0x350effcd, 3 | BRF_GRA },           //  4
@@ -4929,10 +4929,10 @@ static struct BurnRomInfo tattassRomDesc[] = {
 	{ "ob2_c2.b3",		0x80000, 0x90fe5f4f, 6 | BRF_GRA },           // 45
 	{ "ob2_c3.b3",		0x80000, 0xe3517e6e, 6 | BRF_GRA },           // 46
 
-	{ "u17.snd",		0x80000, 0xb945c18d, 7 | BRF_GRA },           // 47 BSMT Samples
-	{ "u21.snd",		0x80000, 0x10b2110c, 7 | BRF_GRA },           // 48
-	{ "u36.snd",		0x80000, 0x3b73abe2, 7 | BRF_GRA },           // 49
-	{ "u37.snd",		0x80000, 0x986066b5, 7 | BRF_GRA },           // 50
+	{ "u17.snd",		0x80000, 0x49303539, 7 | BRF_GRA },           // 47 BSMT Samples
+	{ "u21.snd",		0x80000, 0x0ad8bc18, 7 | BRF_GRA },           // 48
+	{ "u36.snd",		0x80000, 0xf558947b, 7 | BRF_GRA },           // 49
+	{ "u37.snd",		0x80000, 0x7a3190bc, 7 | BRF_GRA },           // 50
 
 	{ "eeprom-tattass.bin",	0x00400, 0x7140f40c, 8 | BRF_PRG | BRF_ESS }, // 51 Default Settings
 
@@ -4966,7 +4966,7 @@ static struct BurnRomInfo tattassaRomDesc[] = {
 	{ "rev232a.000",	0x80000, 0x1a357112, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
 	{ "rev232a.001",	0x80000, 0x550245d4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "u7.snd",		0x10000, 0x6947be8a, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+	{ "u7.snd",			0x10000, 0xa7228077, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
 
 	{ "abak_b01.s02",	0x80000, 0xbc805680, 3 | BRF_GRA },           //  3 Tilemap 0&1 Tiles & Characters (Encrypted)
 	{ "abak_b01.s13",	0x80000, 0x350effcd, 3 | BRF_GRA },           //  4
@@ -5016,10 +5016,10 @@ static struct BurnRomInfo tattassaRomDesc[] = {
 	{ "ob2_c2.b3",		0x80000, 0x90fe5f4f, 6 | BRF_GRA },           // 45
 	{ "ob2_c3.b3",		0x80000, 0xe3517e6e, 6 | BRF_GRA },           // 46
 
-	{ "u17.snd",		0x80000, 0xb945c18d, 7 | BRF_GRA },           // 47 BSMT Samples
-	{ "u21.snd",		0x80000, 0x10b2110c, 7 | BRF_GRA },           // 48
-	{ "u36.snd",		0x80000, 0x3b73abe2, 7 | BRF_GRA },           // 49
-	{ "u37.snd",		0x80000, 0x986066b5, 7 | BRF_GRA },           // 50
+	{ "u17.snd",		0x80000, 0x49303539, 7 | BRF_GRA },           // 47 BSMT Samples
+	{ "u21.snd",		0x80000, 0x0ad8bc18, 7 | BRF_GRA },           // 48
+	{ "u36.snd",		0x80000, 0xf558947b, 7 | BRF_GRA },           // 49
+	{ "u37.snd",		0x80000, 0x7a3190bc, 7 | BRF_GRA },           // 50
 
 	{ "eeprom-tattass.bin",	0x00400, 0x7140f40c, 8 | BRF_PRG | BRF_ESS }, // 51 Default Settings
 

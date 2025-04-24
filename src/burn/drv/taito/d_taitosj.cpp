@@ -3007,7 +3007,7 @@ STD_ROM_FN(jungleha)
 
 struct BurnDriver BurnDrvJungleha = {
 	"jungleha", "junglek", NULL, NULL, "1982",
-	"Jungle Hunt (US, alternate set\0", NULL, "Taito America Corp", "Taito SJ System",
+	"Jungle Hunt (US, alternate set)\0", NULL, "Taito America Corp", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglehaRomInfo, junglehaRomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,

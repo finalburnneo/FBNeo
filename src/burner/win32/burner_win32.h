@@ -321,9 +321,6 @@ bool MenuHandleKeyboard(MSG*);
 void MenuRemoveTheme();
 
 // sel.cpp
-#define UM_ICONCACHETHREADEXIT	(WM_USER + 110)
-#define UM_DRVICONTHREADEXIT	(WM_USER + 111)
-
 extern UINT64 nLoadMenuShowX;
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;
@@ -353,11 +350,9 @@ extern bool bIconsByHardwares;
 extern bool bCacheWait;
 
 void CreateIconsCache();
-void IconsCacheThreadExit();
 void DestroyIconsCache();
 
 void LoadDrvIcons();
-void DrvIconsThreadExit();
 void UnloadDrvIcons();
 
 // neocdsel.cpp

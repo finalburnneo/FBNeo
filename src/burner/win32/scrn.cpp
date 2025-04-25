@@ -595,21 +595,6 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		HANDLE_MSG(hWnd, WM_UNINITMENUPOPUP,OnUnInitMenuPopup);
 
 		HANDLE_MSG(hWnd, WM_DISPLAYCHANGE,	OnDisplayChange);
-
-		// Icons cache is complete
-		case UM_ICONCACHETHREADEXIT: {
-			Sleep(5);
-			IconsCacheThreadExit();
-			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
-			break;
-		}
-
-		// Driver icons are ready
-		case UM_DRVICONTHREADEXIT: {
-			Sleep(5);
-			DrvIconsThreadExit();
-			break;
-		}
 	}
 
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
@@ -975,11 +960,6 @@ static void OnPaint(HWND hWnd)
 
 static void OnClose(HWND)
 {
-	if (bCacheWait) {
-		MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_THREAD_WAIT, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK | MB_ICONINFORMATION);
-		return;
-	}
-
 #ifdef INCLUDE_AVI_RECORDING
 	AviStop();
 #endif
@@ -1228,10 +1208,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 	//}
 
 	if (bLoading) {
-		return;
-	}
-	if (bCacheWait) {
-		MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_THREAD_WAIT, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK | MB_ICONINFORMATION);
 		return;
 	}
 
@@ -2490,13 +2466,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_ENABLEICONS: {
 			bEnableIcons = !bEnableIcons;
-			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			LoadDrvIcons();
 			break;
 		}
 
 		case MENU_ICONS_PARENTSONLY: {
 			bIconsOnlyParents = !bIconsOnlyParents;
-			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			LoadDrvIcons();
 			break;
 		}
 
@@ -2523,13 +2499,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_ICONS_BY_GAME: {
 			bIconsByHardwares = 0;
-			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			LoadDrvIcons();
 			break;
 		}
 
 		case MENU_ICONS_BY_HARDWARE: {
 			bIconsByHardwares = 1;
-			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			LoadDrvIcons();
 			break;
 		}
 

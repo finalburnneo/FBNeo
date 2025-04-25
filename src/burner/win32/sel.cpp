@@ -1528,8 +1528,6 @@ static HICON* pIconsCache = NULL;
 static HANDLE hICThread   = NULL;	// IconsCache
 static HANDLE hDIThread   = NULL;	// DrvIcon
 
-static CRITICAL_SECTION cs;
-
 static UINT32 __stdcall LoadIconsCacheProc(void* lpParam)
 {
 	HICON* pCache = (HICON*)lpParam;
@@ -1547,19 +1545,12 @@ static UINT32 __stdcall LoadIconsCacheProc(void* lpParam)
 	for (UINT32 i = 0; i < nBurnDrvCount; i++) {		// By games
 		nBurnDrvActive = nDrvIdex = i;
 
-		// Occasional anomaly in debugging, suspected resource contention
-		EnterCriticalSection(&cs);
-		const INT32 nFlag     = BurnDrvGetFlags();
-		const char* pszParent = BurnDrvGetTextA(DRV_PARENT);
-		const TCHAR* szName   = BurnDrvGetText(DRV_NAME);
-		LeaveCriticalSection(&cs);
-
 		// GDI limits the number of objects and does not cache Clone.
-		if ((NULL != pszParent) && (nFlag & BDF_CLONE)) {
+		if ((NULL != BurnDrvGetTextA(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
 			pCache[nDrvIdex] = NULL; continue;
 		}
 
-		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, szName);
+		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
 		pCache[nDrvIdex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
 	}
 	nBurnDrvActive = nOldDrvActive;						// Restore
@@ -1592,12 +1583,6 @@ static UINT32 __stdcall LoadIconsCacheProc(void* lpParam)
 		pCache[nDrvIdex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
 	}
 
-	// Redraw must wait for icons cache to complete
-	bCacheWait = false;
-
-	// Throwing threads to the message queue is about to end
-	PostMessage(hScrnWnd, UM_ICONCACHETHREADEXIT, 0, 0);
-
 	return 0;
 }
 
@@ -1618,19 +1603,16 @@ void CreateIconsCache()
 		if (NULL == (pIconsCache = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
 	}
 
-	InitializeCriticalSection(&cs);
-
 	bCacheWait = true;
-	hICThread  = (HANDLE)_beginthreadex(NULL, 0, LoadIconsCacheProc, pIconsCache, 0, NULL);
-}
 
-void IconsCacheThreadExit()
-{
-	DeleteCriticalSection(&cs);
+	if (NULL == (hICThread = (HANDLE)_beginthreadex(NULL, 0, LoadIconsCacheProc, pIconsCache, 0, NULL))) return;
 
-	if (!bCacheWait && (NULL != hICThread)) {
-		CloseHandle(hICThread); hICThread = NULL;
-	}
+	WaitForSingleObject(hICThread, INFINITE);
+	CloseHandle(hICThread); hICThread = NULL;
+	LoadDrvIcons();
+
+	// Redraw must wait for icons cache to complete
+	bCacheWait = false;
 }
 
 static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
@@ -1643,14 +1625,8 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 	for (UINT32 nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) {
 		nBurnDrvActive = nDrvIndex;
 
-		// Occasional anomaly in debugging, suspected resource contention
-		EnterCriticalSection(&cs);
-		const INT32 nFlag = BurnDrvGetFlags();
-		char* pszParent   = BurnDrvGetTextA(DRV_PARENT);
-		LeaveCriticalSection(&cs);
-
 		// Skip Clone when only the parent item is selectednBurnDrvCount + ICON_ENUMEND
-		if (bIconsOnlyParents && (NULL != pszParent) && (nFlag & BDF_CLONE)) {
+		if (bIconsOnlyParents && (NULL != BurnDrvGetTextA(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
 			hDriver[nDrvIndex] = NULL;												continue;
 		}
 		if (bIconsByHardwares) {	// By hardwares
@@ -1722,7 +1698,7 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 			}
 		} else {					// By games
 			// When allowed and Clone is checked, loads the icon of the parent item when checking that the icon file does not exist
-			if ((NULL != pszParent) && (nFlag & BDF_CLONE)) {
+			if ((NULL != BurnDrvGetTextA(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
 				TCHAR szIcon[MAX_PATH] = { 0 };
 
 				// The icon file exists, and given the GDI cap, now is not the time to deal with it
@@ -1730,7 +1706,7 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 					// Must be NULL or it will be recognized as having an icon and ignored in message processing
 					hDriver[nDrvIndex] = NULL;										continue;
 				}
-				INT32 nParentDrv = BurnDrvGetIndex(pszParent);
+				INT32 nParentDrv = BurnDrvGetIndex(BurnDrvGetTextA(DRV_PARENT));
 
 				// Clone icon file does not exist, use parent item icon
 				// Icons are reused and do not take up GDI resources
@@ -1741,11 +1717,6 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 		}
 	}
 	nBurnDrvActive = nOldDrvSel;
-	bCacheWait     = false;
-	bIconsLoaded   = 1;
-
-	// Throwing threads to the message queue is about to end
-	PostMessage(hScrnWnd, UM_DRVICONTHREADEXIT, 0, 0);
 
 	return 0;
 }
@@ -1756,20 +1727,16 @@ void LoadDrvIcons()
 		if (NULL == (hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
 	}
 
-	InitializeCriticalSection(&cs);
-
 	bCacheWait   = true;
 	bIconsLoaded = 0;
-	hDIThread    = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL);
-}
 
-void DrvIconsThreadExit()
-{
-	DeleteCriticalSection(&cs);
+	if (NULL == (hDIThread = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL))) return;
 
-	if (bIconsLoaded && (NULL != hDIThread)) {
-		CloseHandle(hDIThread); hDIThread = NULL;
-	}
+	WaitForSingleObject(hDIThread, INFINITE);
+	CloseHandle(hDIThread); hDIThread = NULL;
+
+	bIconsLoaded = 1;
+	bCacheWait   = false;
 }
 
 void UnloadDrvIcons()

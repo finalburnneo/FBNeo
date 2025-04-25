@@ -2466,7 +2466,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_ENABLEICONS: {
 			bEnableIcons = !bEnableIcons;
-			LoadDrvIcons();
+			if (bEnableIcons) CreateIconsCache();
 			break;
 		}
 

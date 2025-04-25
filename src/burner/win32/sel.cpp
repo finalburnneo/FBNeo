@@ -1599,13 +1599,14 @@ void DestroyIconsCache()
 
 void CreateIconsCache()
 {
-	if (NULL == pIconsCache) {
-		if (NULL == (pIconsCache = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
-	}
+	if (!bEnableIcons) return;
 
-	bCacheWait = true;
+	bCacheWait  = true;
 
-	if (NULL == (hICThread = (HANDLE)_beginthreadex(NULL, 0, LoadIconsCacheProc, pIconsCache, 0, NULL))) return;
+	if (NULL != pIconsCache) DestroyIconsCache();
+
+	pIconsCache = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON));
+	hICThread   = (HANDLE)_beginthreadex(NULL, 0, LoadIconsCacheProc, pIconsCache, 0, NULL);
 
 	WaitForSingleObject(hICThread, INFINITE);
 	CloseHandle(hICThread); hICThread = NULL;
@@ -1723,14 +1724,16 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 
 void LoadDrvIcons()
 {
-	if (NULL == hDrvIcon) {
-		if (NULL == (hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
-	}
+	if (!bEnableIcons) return;
 
 	bCacheWait   = true;
 	bIconsLoaded = 0;
 
-	if (NULL == (hDIThread = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL))) return;
+	if (NULL == hDrvIcon) {
+		hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON));
+	}
+
+	hDIThread = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL);
 
 	WaitForSingleObject(hDIThread, INFINITE);
 	CloseHandle(hDIThread); hDIThread = NULL;

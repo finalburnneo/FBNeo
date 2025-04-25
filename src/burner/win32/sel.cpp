@@ -1549,15 +1549,17 @@ static UINT32 __stdcall LoadIconsCacheProc(void* lpParam)
 
 		// Occasional anomaly in debugging, suspected resource contention
 		EnterCriticalSection(&cs);
-		INT32 nFlag = BurnDrvGetFlags();
+		const INT32 nFlag     = BurnDrvGetFlags();
+		const char* pszParent = BurnDrvGetTextA(DRV_PARENT);
+		const TCHAR* szName   = BurnDrvGetText(DRV_NAME);
 		LeaveCriticalSection(&cs);
 
 		// GDI limits the number of objects and does not cache Clone.
-		if ((NULL != BurnDrvGetText(DRV_PARENT)) && (nFlag & BDF_CLONE)) {
+		if ((NULL != pszParent) && (nFlag & BDF_CLONE)) {
 			pCache[nDrvIdex] = NULL; continue;
 		}
 
-		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
+		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, szName);
 		pCache[nDrvIdex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
 	}
 	nBurnDrvActive = nOldDrvActive;						// Restore
@@ -1641,15 +1643,15 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 	for (UINT32 nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) {
 		nBurnDrvActive = nDrvIndex;
 
-		// No anomalies have occurred here
+		// Occasional anomaly in debugging, suspected resource contention
 		EnterCriticalSection(&cs);
-		INT32 nFlag = BurnDrvGetFlags();
+		const INT32 nFlag = BurnDrvGetFlags();
+		char* pszParent   = BurnDrvGetTextA(DRV_PARENT);
 		LeaveCriticalSection(&cs);
 
 		// Skip Clone when only the parent item is selectednBurnDrvCount + ICON_ENUMEND
-		if (bIconsOnlyParents && (NULL != BurnDrvGetText(DRV_PARENT)) && (nFlag & BDF_CLONE)) {
-			// hDriver[nBurnDrvCount + ICON_ENUMEND + 1] No icon is specified for no icon
-			hDriver[nDrvIndex] = hDriver[nBurnDrvCount + ICON_ENUMEND + 1];			continue;
+		if (bIconsOnlyParents && (NULL != pszParent) && (nFlag & BDF_CLONE)) {
+			hDriver[nDrvIndex] = NULL;												continue;
 		}
 		if (bIconsByHardwares) {	// By hardwares
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
@@ -1720,7 +1722,7 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 			}
 		} else {					// By games
 			// When allowed and Clone is checked, loads the icon of the parent item when checking that the icon file does not exist
-			if ((NULL != BurnDrvGetText(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
+			if ((NULL != pszParent) && (nFlag & BDF_CLONE)) {
 				TCHAR szIcon[MAX_PATH] = { 0 };
 
 				// The icon file exists, and given the GDI cap, now is not the time to deal with it
@@ -1728,7 +1730,7 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 					// Must be NULL or it will be recognized as having an icon and ignored in message processing
 					hDriver[nDrvIndex] = NULL;										continue;
 				}
-				INT32 nParentDrv = BurnDrvGetIndex(BurnDrvGetTextA(DRV_PARENT));
+				INT32 nParentDrv = BurnDrvGetIndex(pszParent);
 
 				// Clone icon file does not exist, use parent item icon
 				// Icons are reused and do not take up GDI resources
@@ -1751,12 +1753,12 @@ static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
 void LoadDrvIcons()
 {
 	if (NULL == hDrvIcon) {
-		if (NULL == (hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 2) * sizeof(HICON)))) return;
+		if (NULL == (hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
 	}
 
 	InitializeCriticalSection(&cs);
 
-	bCacheWait = true;
+	bCacheWait   = true;
 	bIconsLoaded = 0;
 	hDIThread    = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL);
 }
@@ -2749,6 +2751,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							}
 
 							if(!hDrvIcon[nBurnDrvActive]) {
+								if ((NULL == BurnDrvGetText(DRV_PARENT)) && !(BurnDrvGetFlags() & BDF_CLONE)) {
+									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+								}
+								else
 								// Find the icons that meet the conditions, load and redraw them one by one and then recycle the resources to avoid memory leakage due to GDI resource overflow
 								// Exclude all parent set
 								// Exclude all hardware icons
@@ -2766,7 +2772,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 									}
 								} else {
-									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+									if (!bIconsOnlyParents) {
+										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+									}
 								}
 							}
 							rect.left += nIconsSizeXY + 4;

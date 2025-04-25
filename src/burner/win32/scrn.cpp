@@ -975,6 +975,11 @@ static void OnPaint(HWND hWnd)
 
 static void OnClose(HWND)
 {
+	if (bCacheWait) {
+		MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_THREAD_WAIT, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK | MB_ICONINFORMATION);
+		return;
+	}
+
 #ifdef INCLUDE_AVI_RECORDING
 	AviStop();
 #endif

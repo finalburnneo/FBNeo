@@ -50,7 +50,7 @@ int nIconsXDiff;
 int nIconsYDiff;
 static HICON *hDrvIcon;
 bool bGameInfoOpen				= false;
-UINT32 nIconsThreads			= 1U;
+bool bCacheWait					= false;
 
 // Dialog Sizing
 int nSelDlgWidth = 750;
@@ -1524,405 +1524,250 @@ enum {
 	ICON_ENUMEND	// arcade
 };
 
-static HICON hConsDrvIcon[ICON_ENUMEND + 1];
-
-struct ProcessParams {
-	UINT32 START_INDEX;
-	UINT32 END_INDEX;
-};
+static HICON* pIconsCache = NULL;
+static HANDLE hICThread   = NULL;	// IconsCache
+static HANDLE hDIThread   = NULL;	// DrvIcon
 
 static CRITICAL_SECTION cs;
 
-static UINT32 __stdcall ProcessLoadIconsProc(void* lpParam)
+static UINT32 __stdcall LoadIconsCacheProc(void* lpParam)
 {
-	ProcessParams* pProcessParams = (ProcessParams*)lpParam;
-	EnterCriticalSection(&cs);
+	HICON* pCache = (HICON*)lpParam;
+	TCHAR szIcon[MAX_PATH] = { 0 };
 
-	for (UINT32 i = pProcessParams->START_INDEX; i < pProcessParams->END_INDEX; i++) {
-		nBurnDrvActive = i;
-		
-		if (bIconsOnlyParents && BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
-			continue;
+	switch (nIconsSize) {
+		case ICON_16x16: nIconsSizeXY = 16;	nIconsYDiff =  4;	break;
+		case ICON_24x24: nIconsSizeXY = 24;	nIconsYDiff =  8;	break;
+		case ICON_32x32: nIconsSizeXY = 32;	nIconsYDiff = 12;	break;
+	}
+
+	const UINT32 nOldDrvActive = nBurnDrvActive;		// Backup
+	UINT32 nDrvIdex = 0;
+
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {		// By games
+		nBurnDrvActive = nDrvIdex = i;
+
+		// Occasional anomaly in debugging, suspected resource contention
+		EnterCriticalSection(&cs);
+		INT32 nFlag = BurnDrvGetFlags();
+		LeaveCriticalSection(&cs);
+
+		// GDI limits the number of objects and does not cache Clone.
+		if ((NULL != BurnDrvGetText(DRV_PARENT)) && (nFlag & BDF_CLONE)) {
+			pCache[nDrvIdex] = NULL; continue;
 		}
-		if (bIconsByHardwares) {
+
+		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
+		pCache[nDrvIdex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
+	}
+	nBurnDrvActive = nOldDrvActive;						// Restore
+
+	const TCHAR szConsIcon[ICON_ENUMEND + 1][20] = {	// By hardwares
+		_T("icon_md"),
+		_T("icon_pce"),
+		_T("icon_sgx"),
+		_T("icon_tg"),
+		_T("icon_sg1k"),
+		_T("icon_cv"),
+		_T("icon_sms"),
+		_T("icon_gg"),
+		_T("icon_msx"),
+		_T("icon_spec"),
+		_T("icon_nes"),
+		_T("icon_fds"),
+		_T("icon_snes"),
+		_T("icon_ngpc"),
+		_T("icon_ngp"),
+		_T("icon_chf"),
+		_T("icon_arc")
+	};
+
+	// The start of the hardwares icon is immediately after the end of the games icon
+	for (UINT32 i = 0; (i + nBurnDrvCount) < ((nBurnDrvCount + ICON_ENUMEND + 1)); i++) {
+		nDrvIdex = i + nBurnDrvCount;
+
+		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, szConsIcon[i]);
+		pCache[nDrvIdex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
+	}
+
+	// Redraw must wait for icons cache to complete
+	bCacheWait = false;
+
+	// Throwing threads to the message queue is about to end
+	PostMessage(hScrnWnd, UM_ICONCACHETHREADEXIT, 0, 0);
+
+	return 0;
+}
+
+void DestroyIconsCache()
+{
+	if (NULL == pIconsCache) return;
+
+	for (UINT32 i = 0; i < (nBurnDrvCount + ICON_ENUMEND + 1); i++) {
+		if (NULL == pIconsCache[i]) continue;	// LoadImage failed and returned NULL.
+		DestroyIcon(pIconsCache[i]);
+	}
+	free(pIconsCache); pIconsCache = NULL;
+}
+
+void CreateIconsCache()
+{
+	if (NULL == pIconsCache) {
+		if (NULL == (pIconsCache = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON)))) return;
+	}
+
+	InitializeCriticalSection(&cs);
+
+	bCacheWait = true;
+	hICThread  = (HANDLE)_beginthreadex(NULL, 0, LoadIconsCacheProc, pIconsCache, 0, NULL);
+}
+
+void IconsCacheThreadExit()
+{
+	DeleteCriticalSection(&cs);
+
+	if (!bCacheWait && (NULL != hICThread)) {
+		CloseHandle(hICThread); hICThread = NULL;
+	}
+}
+
+static UINT32 __stdcall LoadDrvIconsProc(void* lpParam)
+{
+	HICON* hDriver = (HICON*)lpParam;
+
+	const UINT32 nOldDrvSel    = nBurnDrvActive;
+	const UINT32 nConsDrvIndex = nBurnDrvCount;
+
+	for (UINT32 nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) {
+		nBurnDrvActive = nDrvIndex;
+
+		// No anomalies have occurred here
+		EnterCriticalSection(&cs);
+		INT32 nFlag = BurnDrvGetFlags();
+		LeaveCriticalSection(&cs);
+
+		// Skip Clone when only the parent item is selectednBurnDrvCount + ICON_ENUMEND
+		if (bIconsOnlyParents && (NULL != BurnDrvGetText(DRV_PARENT)) && (nFlag & BDF_CLONE)) {
+			// hDriver[nBurnDrvCount + ICON_ENUMEND + 1] No icon is specified for no icon
+			hDriver[nDrvIndex] = hDriver[nBurnDrvCount + ICON_ENUMEND + 1];			continue;
+		}
+		if (bIconsByHardwares) {	// By hardwares
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_MEGADRIVE]; continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_MEGADRIVE];	continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_PCE];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_PCE];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_TG16];      continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_TG16];		continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_SGX];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_SGX];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_SG1000];    continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_SG1000];		continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_COLECO];    continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_COLECO];		continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_SMS];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_SMS];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_GG];        continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_GG];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_MSX];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_MSX];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_SPECTRUM];  continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_SPECTRUM];	continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_NES];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_NES];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_FDS];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_FDS];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_SNES];      continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_SNES];		continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_NGPC)    == HARDWARE_SNK_NGPC) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_NGPC];      continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_NGPC];		continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_NGP];       continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_NGP];			continue;
 			}
 			else
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
-				hDrvIcon[i] = hConsDrvIcon[ICON_CHANNELF];  continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_CHANNELF];	continue;
 			}
 			else {
-				hDrvIcon[i] = hConsDrvIcon[ICON_ENUMEND];   continue;
+				hDriver[nDrvIndex] = pIconsCache[nConsDrvIndex + ICON_ENUMEND];		continue;
 			}
-		} else {
-			TCHAR szIcon[MAX_PATH];
+		} else {					// By games
+			// When allowed and Clone is checked, loads the icon of the parent item when checking that the icon file does not exist
+			if ((NULL != BurnDrvGetText(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
+				TCHAR szIcon[MAX_PATH] = { 0 };
 
-			_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
-			hDrvIcon[i] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+				// The icon file exists, and given the GDI cap, now is not the time to deal with it
+				if (GetFileAttributes(szIcon) != INVALID_FILE_ATTRIBUTES) {
+					// Must be NULL or it will be recognized as having an icon and ignored in message processing
+					hDriver[nDrvIndex] = NULL;										continue;
+				}
+				INT32 nParentDrv = BurnDrvGetIndex(BurnDrvGetTextA(DRV_PARENT));
 
-			if (!hDrvIcon[i] && BurnDrvGetText(DRV_PARENT)) {
-				_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_PARENT));
-				hDrvIcon[i] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+				// Clone icon file does not exist, use parent item icon
+				// Icons are reused and do not take up GDI resources
+				hDriver[nDrvIndex] = pIconsCache[nParentDrv];						continue;
 			}
+			// Associate all non-Clone icons
+			hDriver[nDrvIndex] = pIconsCache[nDrvIndex];
 		}
 	}
-	LeaveCriticalSection(&cs);
-	free(pProcessParams);
+	nBurnDrvActive = nOldDrvSel;
+	bCacheWait     = false;
+	bIconsLoaded   = 1;
+
+	// Throwing threads to the message queue is about to end
+	PostMessage(hScrnWnd, UM_DRVICONTHREADEXIT, 0, 0);
 
 	return 0;
-}
-
-static UINT32 __stdcall ProcessUnloadIconsProc(void* lpParam)
-{
-	ProcessParams* pProcessParams = (ProcessParams*)lpParam;
-	EnterCriticalSection(&cs);
-
-	for (UINT32 i = pProcessParams->START_INDEX; i < pProcessParams->END_INDEX; i++) {
-		if (NULL != hDrvIcon[i]) {
-			DestroyIcon(hDrvIcon[i]); hDrvIcon[i] = NULL;
-		}
-	}
-	LeaveCriticalSection(&cs);
-	free(pProcessParams);
-
-	return 0;
-}
-
-static void LoadIconsThreads()
-{
-	INT32 THREAD_COUNT = nIconsThreads;
-	if (0U == nIconsThreads) {
-		SYSTEM_INFO sysInfo;
-		GetSystemInfo(&sysInfo);
-		THREAD_COUNT = sysInfo.dwNumberOfProcessors;
-	}
-	const INT32 ICONS_PER_THREAD = nBurnDrvCount / THREAD_COUNT;
-
-	HANDLE* THREADS = (HANDLE*)malloc(THREAD_COUNT * sizeof(HANDLE));
-
-	if (NULL == THREADS) return;
-	InitializeCriticalSection(&cs);
-
-	for (INT32 i = 0; i < THREAD_COUNT; i++) {
-		ProcessParams* pProcessParams = (ProcessParams*)malloc(sizeof(ProcessParams));
-		if (NULL == pProcessParams) {
-			for (INT32 j = 0; j < i; j++) CloseHandle(THREADS[j]);
-			free(THREADS); THREADS = NULL;
-			DeleteCriticalSection(&cs);
-			return;
-		}
-
-		pProcessParams->START_INDEX = (i + 0) * ICONS_PER_THREAD + 0;
-		pProcessParams->END_INDEX   = (i + 1) * ICONS_PER_THREAD - 1;
-		if ((THREAD_COUNT - 1) == i) {
-			if (pProcessParams->END_INDEX < nBurnDrvCount)
-				pProcessParams->END_INDEX = nBurnDrvCount;
-		}
-
-		THREADS[i] = (HANDLE)_beginthreadex(NULL, 0, ProcessLoadIconsProc, pProcessParams, 0, NULL);
-
-		if (NULL == THREADS[i]) {
-			free(pProcessParams);
-			for (INT32 j = 0; j < i; j++) CloseHandle(THREADS[i]);
-			free(THREADS); THREADS = NULL;
-			DeleteCriticalSection(&cs);
-			return;
-		}
-	}
-	WaitForMultipleObjects(THREAD_COUNT, THREADS, TRUE, INFINITE);
-
-	for (INT32 i = 0; i < THREAD_COUNT; i++) CloseHandle(THREADS[i]);
-	free(THREADS); THREADS = NULL;
-	DeleteCriticalSection(&cs);
 }
 
 void LoadDrvIcons()
 {
-	TCHAR szIcon[MAX_PATH];
-
-	hDrvIcon = (HICON *)malloc((nBurnDrvCount + 256) * sizeof(HICON));
-
-	switch (nIconsSize) {
-		case ICON_16x16: nIconsSizeXY = 16, nIconsYDiff =  4;	break;
-		case ICON_24x24: nIconsSizeXY = 24, nIconsYDiff =  8;	break;
-		case ICON_32x32: nIconsSizeXY = 32, nIconsYDiff = 12;	break;
+	if (NULL == hDrvIcon) {
+		if (NULL == (hDrvIcon = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 2) * sizeof(HICON)))) return;
 	}
 
-	if (bIconsByHardwares) {
-		// load default console images
-		_stprintf(szIcon, _T("%sicon_md.ico"),   szAppIconsPath);
-		hConsDrvIcon[ICON_MEGADRIVE] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_pce.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_PCE]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_sgx.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_SGX]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_tg.ico"),   szAppIconsPath);
-		hConsDrvIcon[ICON_TG16]      = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_sg1k.ico"), szAppIconsPath);
-		hConsDrvIcon[ICON_SG1000]    = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_cv.ico"),   szAppIconsPath);
-		hConsDrvIcon[ICON_COLECO]    = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_sms.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_SMS]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_gg.ico"),   szAppIconsPath);
-		hConsDrvIcon[ICON_GG]        = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_msx.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_MSX]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_spec.ico"), szAppIconsPath);
-		hConsDrvIcon[ICON_SPECTRUM]  = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_nes.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_NES]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_fds.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_FDS]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_snes.ico"), szAppIconsPath);
-		hConsDrvIcon[ICON_SNES]      = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_ngpc.ico"), szAppIconsPath);
-		hConsDrvIcon[ICON_NGPC]      = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_ngp.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_NGP]       = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_chf.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_CHANNELF]  = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-		_stprintf(szIcon, _T("%sicon_arc.ico"),  szAppIconsPath);
-		hConsDrvIcon[ICON_ENUMEND]   = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-	} else {
-		// By game
-		for (INT32 ConsolesIndex = 0; ConsolesIndex <= ICON_ENUMEND; ConsolesIndex++) {
-			if (NULL == hConsDrvIcon[ConsolesIndex]) continue;
-			DestroyIcon(hConsDrvIcon[ConsolesIndex]);
-			hConsDrvIcon[ConsolesIndex] = NULL;
-		}
-	}
-
-	UINT32 nOldDrvSel = nBurnDrvActive;
-
-	if (1U != nIconsThreads) LoadIconsThreads();
-	else {
-		for(UINT32 nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) {
-			nBurnDrvActive = nDrvIndex;
-#if 0
-			if ((((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP)
-				 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF)
-				)) {
-				continue; // Skip everything but arcade
-			}
-#endif
-			if (bIconsOnlyParents && BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
-				continue;
-			}
-			if (bIconsByHardwares) {
-				if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_NGPC)    == HARDWARE_SNK_NGPC) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_NGPC];      continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_MEGADRIVE]; continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_PCE];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_TG16];      continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SGX];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SG1000];    continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_COLECO];    continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SMS];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_GG];        continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_MSX];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SPECTRUM];  continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_NES];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_FDS];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SNES];      continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_NGP];       continue;
-				}
-				else
-				if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF) {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_CHANNELF];  continue;
-				}
-				else {
-					hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_ENUMEND];   continue;
-				}
-			} else {
-				_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
-				hDrvIcon[nDrvIndex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-
-				if (!hDrvIcon[nDrvIndex] && BurnDrvGetText(DRV_PARENT)) {
-					_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_PARENT));
-					hDrvIcon[nDrvIndex] = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-				}
-			}
-		}
-	}
-
-	nBurnDrvActive = nOldDrvSel;
-}
-
-static void UnloadIconsThreads()
-{
-	INT32 THREAD_COUNT = nIconsThreads;
-	if (0U == nIconsThreads) {
-		SYSTEM_INFO sysInfo;
-		GetSystemInfo(&sysInfo);
-		THREAD_COUNT = sysInfo.dwNumberOfProcessors;
-	}
-	const INT32 ICONS_PER_THREAD = nBurnDrvCount / THREAD_COUNT;
-
-	HANDLE* THREADS = (HANDLE*)malloc(THREAD_COUNT * sizeof(HANDLE));
-
-	if (NULL == THREADS) return;
 	InitializeCriticalSection(&cs);
 
-	for (INT32 i = 0; i < THREAD_COUNT; i++) {
-		ProcessParams* pProcessParams = (ProcessParams*)malloc(sizeof(ProcessParams));
-		if (NULL == pProcessParams) {
-			for (INT32 j = 0; j < i; j++) CloseHandle(THREADS[j]);
-			free(THREADS); THREADS = NULL;
-			DeleteCriticalSection(&cs);
-			return;
-		}
+	bCacheWait = true;
+	bIconsLoaded = 0;
+	hDIThread    = (HANDLE)_beginthreadex(NULL, 0, LoadDrvIconsProc, hDrvIcon, 0, NULL);
+}
 
-		pProcessParams->START_INDEX = (i + 0) * ICONS_PER_THREAD + 0;
-		pProcessParams->END_INDEX   = (i + 1) * ICONS_PER_THREAD - 1;
-		if ((THREAD_COUNT - 1) == i) {
-			if (pProcessParams->END_INDEX < nBurnDrvCount)
-				pProcessParams->END_INDEX = nBurnDrvCount;
-		}
-
-		THREADS[i] = (HANDLE)_beginthreadex(NULL, 0, ProcessUnloadIconsProc, pProcessParams, 0, NULL);
-
-		if (NULL == THREADS[i]) {
-			free(pProcessParams);
-			for (INT32 j = 0; j < i; j++) CloseHandle(THREADS[i]);
-			free(THREADS); THREADS = NULL;
-			DeleteCriticalSection(&cs);
-			return;
-		}
-	}
-	WaitForMultipleObjects(THREAD_COUNT, THREADS, TRUE, INFINITE);
-
-	for (INT32 i = 0; i < THREAD_COUNT; i++) CloseHandle(THREADS[i]);
-	free(THREADS); THREADS = NULL;
+void DrvIconsThreadExit()
+{
 	DeleteCriticalSection(&cs);
+
+	if (bIconsLoaded && (NULL != hDIThread)) {
+		CloseHandle(hDIThread); hDIThread = NULL;
+	}
 }
 
 void UnloadDrvIcons()
@@ -1930,8 +1775,7 @@ void UnloadDrvIcons()
 	nIconsSizeXY	= 16;
 	nIconsYDiff		= 4;
 
-	UnloadIconsThreads();
-	free(hDrvIcon);
+	free(hDrvIcon); hDrvIcon = NULL;
 }
 
 #define UM_CHECKSTATECHANGE (WM_USER + 100)
@@ -2895,13 +2739,35 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						}
 
 						// Driver Icon drawing code...
-						if(bEnableIcons && bIconsLoaded) {
+						if (!bCacheWait && bEnableIcons && bIconsLoaded) {
+							// Windows GDI limitation, can not cache all icons, can only cache the following icons
+							// All hardware icons exist (By hardware)
+							// All non-Clone icons exist (By game)
+							// When the Clone icon option is turned on, the parent item has an icon and Clone does not (By game, They do not take up GDI resources)
 							if(hDrvIcon[nBurnDrvActive]) {
 								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIcon[nBurnDrvActive], nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 							}
 
 							if(!hDrvIcon[nBurnDrvActive]) {
-								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+								// Find the icons that meet the conditions, load and redraw them one by one and then recycle the resources to avoid memory leakage due to GDI resource overflow
+								// Exclude all parent set
+								// Exclude all hardware icons
+								// All the Clones where you can find icons
+								if (!bIconsOnlyParents && !bIconsByHardwares && (NULL != BurnDrvGetText(DRV_PARENT)) && (BurnDrvGetFlags() & BDF_CLONE)) {
+									TCHAR szIcon[MAX_PATH] = { 0 };
+									_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
+
+									// Creates a temporary HICON object, which is destroyed immediately upon completion of the redraw.
+									HICON hTempIcon = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE | LR_SHARED);
+									if (NULL != hTempIcon) {
+										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hTempIcon, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+										DestroyIcon(hTempIcon); hTempIcon = NULL;
+									} else {
+										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+									}
+								} else {
+									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+								}
 							}
 							rect.left += nIconsSizeXY + 4;
 						}

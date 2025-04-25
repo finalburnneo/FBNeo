@@ -1243,16 +1243,6 @@ BEGIN
 		MENUITEM SEPARATOR
         POPUP    "Icons"
         BEGIN
-			POPUP	"Multi-threaded loading"
-			BEGIN
-				MENUITEM "1 thread",							MENU_ICONS_THREAD_1
-				MENUITEM "2 threads",							MENU_ICONS_THREADS_2
-				MENUITEM "4 threads",							MENU_ICONS_THREADS_4
-				MENUITEM "8 threads",							MENU_ICONS_THREADS_8
-				MENUITEM "16 threads",							MENU_ICONS_THREADS_16
-				MENUITEM "Number of CPU cores",					MENU_ICONS_THREADS_CORES
-			END
-			MENUITEM SEPARATOR
 			MENUITEM "Enable driver icons display",				MENU_ENABLEICONS
 			MENUITEM "Parents only (use if you have problems)",	MENU_ICONS_PARENTSONLY
 			POPUP	"Icon size"
@@ -1266,6 +1256,8 @@ BEGIN
 				MENUITEM "By game",								MENU_ICONS_BY_GAME
 				MENUITEM "By hardware",							MENU_ICONS_BY_HARDWARE
 			END
+			MENUITEM SEPARATOR
+			MENUITEM "Refresh icons",							MENU_ICONS_REFRESH
         END
        	MENUITEM SEPARATOR
         MENUITEM "Save snapshot\tF12",							MENU_SAVESNAP

@@ -321,6 +321,9 @@ bool MenuHandleKeyboard(MSG*);
 void MenuRemoveTheme();
 
 // sel.cpp
+#define UM_ICONCACHETHREADEXIT	(WM_USER + 110)
+#define UM_DRVICONTHREADEXIT	(WM_USER + 111)
+
 extern UINT64 nLoadMenuShowX;
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;
@@ -338,8 +341,6 @@ extern int nDialogSelect;
 extern int nOldDlgSelected;
 void CreateToolTipForRect(HWND hwndParent, PTSTR pszText);
 int SelMVSDialog();
-void LoadDrvIcons();
-void UnloadDrvIcons();
 #define		ICON_16x16			0
 #define		ICON_24x24			1
 #define		ICON_32x32			2
@@ -349,7 +350,15 @@ extern bool bIconsOnlyParents;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
 extern bool bGameInfoOpen;
 extern bool bIconsByHardwares;
-extern UINT32 nIconsThreads;
+extern bool bCacheWait;
+
+void CreateIconsCache();
+void IconsCacheThreadExit();
+void DestroyIconsCache();
+
+void LoadDrvIcons();
+void DrvIconsThreadExit();
+void UnloadDrvIcons();
 
 // neocdsel.cpp
 extern int NeoCDList_Init();

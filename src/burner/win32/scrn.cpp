@@ -595,6 +595,21 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		HANDLE_MSG(hWnd, WM_UNINITMENUPOPUP,OnUnInitMenuPopup);
 
 		HANDLE_MSG(hWnd, WM_DISPLAYCHANGE,	OnDisplayChange);
+
+		// Icons cache is complete
+		case UM_ICONCACHETHREADEXIT: {
+			Sleep(5);
+			IconsCacheThreadExit();
+			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			break;
+		}
+
+		// Driver icons are ready
+		case UM_DRVICONTHREADEXIT: {
+			Sleep(5);
+			DrvIconsThreadExit();
+			break;
+		}
 	}
 
 	return DefWindowProc(hWnd, Msg, wParam, lParam);
@@ -1208,6 +1223,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 	//}
 
 	if (bLoading) {
+		return;
+	}
+	if (bCacheWait) {
+		MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_THREAD_WAIT, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK | MB_ICONINFORMATION);
 		return;
 	}
 
@@ -2466,138 +2485,51 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_ENABLEICONS: {
 			bEnableIcons = !bEnableIcons;
-			if(!bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-			}
-			if(bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
 			break;
-		}
-
-		case MENU_ICONS_THREAD_1: {
-			nIconsThreads = 1U;  break;
-		}
-		case MENU_ICONS_THREADS_2: {
-			nIconsThreads = 2U;  break;
-		}
-		case MENU_ICONS_THREADS_4: {
-			nIconsThreads = 4U;  break;
-		}
-		case MENU_ICONS_THREADS_8: {
-			nIconsThreads = 8U;  break;
-		}
-		case MENU_ICONS_THREADS_16: {
-			nIconsThreads = 16U; break;
-		}
-		case MENU_ICONS_THREADS_CORES: {
-			nIconsThreads = 0U;  break;
 		}
 
 		case MENU_ICONS_PARENTSONLY: {
 			bIconsOnlyParents = !bIconsOnlyParents;
-			if(bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
 			break;
 		}
 
 		case MENU_ICONS_SIZE_16: {
 			nIconsSize = ICON_16x16;
-			if(bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
-			if(bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			DestroyIconsCache();
+			CreateIconsCache();
 			break;
 		}
 
 		case MENU_ICONS_SIZE_24: {
 			nIconsSize = ICON_24x24;
-			if(bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
-			if(bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			DestroyIconsCache();
+			CreateIconsCache();
 			break;
 		}
 
 		case MENU_ICONS_SIZE_32: {
 			nIconsSize = ICON_32x32;
-			if(bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
-			if(bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			DestroyIconsCache();
+			CreateIconsCache();
 			break;
 		}
 
 		case MENU_ICONS_BY_GAME: {
 			bIconsByHardwares = 0;
-			if (bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
-			if (bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
 			break;
 		}
 
 		case MENU_ICONS_BY_HARDWARE: {
 			bIconsByHardwares = 1;
-			if (bEnableIcons && bIconsLoaded) {
-				// unload icons
-				UnloadDrvIcons();
-				bIconsLoaded = 0;
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
-			if (bEnableIcons && !bIconsLoaded) {
-				// load icons
-				LoadDrvIcons();
-				bIconsLoaded = 1;
-			}
+			SendMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_ICONS_REFRESH, 0), 0);
+			break;
+		}
+
+		case MENU_ICONS_REFRESH: {
+			LoadDrvIcons();
 			break;
 		}
 
@@ -2627,11 +2559,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bRewindEnabled = !bRewindEnabled;
 			StateRewindReInit();
 			break;
-		case MENU_INPUT_REWIND_128MB: nRewindMemory = 128; StateRewindReInit(); break;
-		case MENU_INPUT_REWIND_256MB: nRewindMemory = 256; StateRewindReInit(); break;
-		case MENU_INPUT_REWIND_512MB: nRewindMemory = 512; StateRewindReInit(); break;
-		case MENU_INPUT_REWIND_768MB: nRewindMemory = 768; StateRewindReInit(); break;
-		case MENU_INPUT_REWIND_1GB: nRewindMemory = 1024; StateRewindReInit(); break;
+		case MENU_INPUT_REWIND_128MB: nRewindMemory =  128; StateRewindReInit(); break;
+		case MENU_INPUT_REWIND_256MB: nRewindMemory =  256; StateRewindReInit(); break;
+		case MENU_INPUT_REWIND_512MB: nRewindMemory =  512; StateRewindReInit(); break;
+		case MENU_INPUT_REWIND_768MB: nRewindMemory =  768; StateRewindReInit(); break;
+		case MENU_INPUT_REWIND_1GB:   nRewindMemory = 1024; StateRewindReInit(); break;
 
 		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;
@@ -2820,11 +2752,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
 
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_ENABLED | MF_BYCOMMAND);
-				EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE,   MF_ENABLED | MF_BYCOMMAND);
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_ENABLED | MF_BYCOMMAND);
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_INCREASE, MF_ENABLED | MF_BYCOMMAND);
 				EnableMenuItem(hMenu, MENU_CHEATSEARCH_DUMPFILE, MF_ENABLED | MF_BYCOMMAND);
-				EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT, MF_ENABLED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT,     MF_ENABLED | MF_BYCOMMAND);
 			}
 			break;
 		}
@@ -2907,11 +2839,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
 
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_GRAYED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE,   MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_INCREASE, MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DUMPFILE, MF_GRAYED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT, MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_CHEATSEARCH_EXIT,     MF_GRAYED | MF_BYCOMMAND);
 			break;
 		}
 

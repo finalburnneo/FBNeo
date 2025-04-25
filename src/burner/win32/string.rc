@@ -396,4 +396,6 @@ BEGIN
 
 	IDS_ERR_LOCAL_FAIL_CONNECT	"Failed to connect to Internet"
 	IDS_ERR_LOCAL_FAIL_OPEN_URL	"Failed to access FB Neo website"
+	
+	IDS_ERR_THREAD_WAIT			"Please wait for the background thread to finish"
 END

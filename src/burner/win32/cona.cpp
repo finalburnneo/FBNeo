@@ -428,7 +428,6 @@ int ConfigAppLoad()
 		VAR(bIconsOnlyParents);
 		VAR(nIconsSize);
 		VAR(bIconsByHardwares);
-		VAR(nIconsThreads);
 
 		STR(szPrevGames[0]);
 		STR(szPrevGames[1]);
@@ -907,9 +906,6 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, display icons by hardwares.\n"));
 	VAR(bIconsByHardwares);
-
-	_ftprintf(h, _T("\n// Use several threads when loading icons.\n"));
-	VAR(nIconsThreads);
 
 	_ftprintf(h, _T("\n// Previous games list.\n"));
 	STR(szPrevGames[0]);

@@ -27303,17 +27303,17 @@ struct BurnDriver BurnDrvsms_fpigarus = {
 	256, 192, 4, 3
 };
 
-// Frontier Force (HB, Alpha Demo v0.1.2.3)
+// Frontier Force (HB, 1.0)
 static struct BurnRomInfo sms_frontierforceRomDesc[] = {
-	{ "Frontier Force - Alpha Demo v0.1.2.3 (2024)(helpcomputer0).sms",	262144, 0xdef51eb0, BRF_PRG | BRF_ESS },
+	{ "Frontier Force (2025)(badcomputer0).sms",	262144, 0xa9bc14c0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_frontierforce)
 STD_ROM_FN(sms_frontierforce)
 
 struct BurnDriver BurnDrvsms_frontierforce = {
-	"sms_frontierforce", NULL, NULL, NULL, "2024",
-	"Frontier Force (HB, Alpha Demo v0.1.2.3)\0", NULL, "badcomputer0", "Sega Master System",
+	"sms_frontierforce", NULL, NULL, NULL, "2025",
+	"Frontier Force (HB)\0", NULL, "badcomputer0", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
 	SMSGetZipName, sms_frontierforceRomInfo, sms_frontierforceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

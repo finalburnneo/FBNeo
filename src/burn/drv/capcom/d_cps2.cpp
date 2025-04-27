@@ -13358,7 +13358,7 @@ static struct BurnRomInfo Sf2primeRomDesc[] = {
 	{ "sf2pr.10",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 #endif
 
-	{ "sf2pr.13m",		0x800000, 0xa48a99a4, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.13m",		0x800000, 0xf48a99a4, CPS2_GFX | BRF_GRA },
 	{ "sf2pr.15m",		0x800000, 0xabf5f4b2, CPS2_GFX | BRF_GRA },
 	{ "sf2pr.17m",		0x800000, 0x87dd1b40, CPS2_GFX | BRF_GRA },
 	{ "sf2pr.19m",		0x800000, 0xb3395339, CPS2_GFX | BRF_GRA },

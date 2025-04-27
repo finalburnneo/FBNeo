@@ -18662,7 +18662,7 @@ struct BurnDriver BurnSpeclivipres = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Livingstone Supongo II (I Premuse II) - Part 1 (128K+2A)
+// Livingstone Supongo II (I Presume II) - Part 1 (128K+2A)
 
 static struct BurnRomInfo Speclivipres21RomDesc[] = {
 	{ "Livingstone Supongo II - Part 1 48K-128K+2A (1989)(Opera Soft).tap", 49084, 0xeb0c8e93, BRF_ESS | BRF_PRG },
@@ -18673,7 +18673,7 @@ STD_ROM_FN(Speclivipres21)
 
 struct BurnDriver BurnSpeclivipres21 = {
 	"spec_livipres21", NULL, "spec_spec1282a", NULL, "1989",
-	"Livingstone Supongo II (I Premuse II) - Part 1 (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
+	"Livingstone Supongo II (I Presume II) - Part 1 (128K+2A)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, Speclivipres21RomInfo, Speclivipres21RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
@@ -18681,7 +18681,7 @@ struct BurnDriver BurnSpeclivipres21 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Livingstone Supongo II (I Premuse II) - Part 2 (128K+2A)
+// Livingstone Supongo II (I Presume II) - Part 2 (128K+2A)
 
 static struct BurnRomInfo Speclivipres22RomDesc[] = {
 	{ "Livingstone Supongo II - Part 2 48K-128K+2A (1989)(Opera Soft).tap", 49084, 0x216f6c0e, BRF_ESS | BRF_PRG },
@@ -18692,7 +18692,7 @@ STD_ROM_FN(Speclivipres22)
 
 struct BurnDriver BurnSpeclivipres22 = {
 	"spec_livipres22", "spec_livipres21", "spec_spec1282a", NULL, "1989",
-	"Livingstone Supongo II (I Premuse II) - Part 2 (128K+2A)\0", "Password: 15215", "Opera Soft", "ZX Spectrum",
+	"Livingstone Supongo II (I Presume II) - Part 2 (128K+2A)\0", "Password: 15215", "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, Speclivipres22RomInfo, Speclivipres22RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

@@ -1740,16 +1740,16 @@ struct BurnDriver BurnDrvNbajamten = {
     TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
-// NBA Jam Rewind (Hack)
+// NBA Rewind 4 Jam (Hack, v1.2)
 // https://www.romhacking.net/hacks/6989/
 static struct BurnRomInfo nbajamreRomDesc[] = {
-	{ "nbajamre.uj12",								0x080000, 0x9b3fc483, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "nbajamre.ug12",								0x080000, 0x18e75204, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "nbajamre.uj12",								0x080000, 0x1ef0eb74, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "nbajamre.ug12",								0x080000, 0xb2dd7831, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "l1_nba_jam_tournament_u3_sound_rom.u3",		0x020000, 0xd4551195, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 
 	{ "nbajamre.u12",								0x080000, 0xcd5d4532, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbajamre.u13",								0x080000, 0xe92fb0d3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "nbajamre.u13",								0x080000, 0xc4cbede2, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_tournament_game_rom_ug14.ug14",	0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_tournament_game_rom_uj14.uj14",	0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1776,14 +1776,15 @@ STD_ROM_PICK(nbajamre)
 STD_ROM_FN(nbajamre)
 
 struct BurnDriver BurnDrvNbajamre = {
-	"nbajamre", "nbajamte", NULL, NULL, "2022",
-	"NBA Jam Rewind (Hack, v1.1)\0", NULL, "hack", "Midway T-Unit",
+	"nbajamre", "nbajamte", NULL, NULL, "2023",
+	"NBA Rewind 4 Jam (Hack, v1.2)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamreRomInfo, nbajamreRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
 	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
+
 
 static struct BurnRomInfo jdreddpRomDesc[] = {
 	{ "t1_judge_dredd_game_rom_uj12.uj12",	0x080000, 0x7e5c8d5a, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010

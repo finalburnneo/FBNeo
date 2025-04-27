@@ -309,7 +309,7 @@ jobs:
       - name: Compress macOS app
         run: |
           cd projectfiles/xcode/build/Release
-          zip -r "FinalBurn_Neo_macOS_(x86_64).zip" "FinalBurn Neo.app"
+          zip -r "FinalBurn_Neo_macOS_[x86_64].zip" "FinalBurn Neo.app"
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
@@ -317,8 +317,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS_(x86_64).zip
-          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_(x86_64).zip
+          asset_name: FinalBurn_Neo_macOS_[x86_64].zip
+          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_[x86_64].zip
           asset_content_type: application/zip
 
   build_macos_arm64:
@@ -342,7 +342,7 @@ jobs:
       - name: Compress macOS app
         run: |
           cd projectfiles/xcode/build/Release
-          zip -r "FinalBurn_Neo_macOS_(arm64).zip" "FinalBurn Neo.app"
+          zip -r "FinalBurn_Neo_macOS_[arm64].zip" "FinalBurn Neo.app"
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
@@ -350,6 +350,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS_(arm64).zip
-          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_(arm64).zip
+          asset_name: FinalBurn_Neo_macOS_[arm64].zip
+          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_[arm64].zip
           asset_content_type: application/zip

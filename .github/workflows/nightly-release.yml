@@ -288,10 +288,10 @@ jobs:
           asset_path: Linux SDL 1.2.zip
           asset_content_type: application/zip
 
-  build_macos:
+  build_macos_x86_64:
     name: macOS (x86_64)
     needs: nightly_release
-    runs-on: macOS-13 # As we are building for x86_64
+    runs-on: macos-13 # Required version for x86_64
     steps:
       - uses: actions/checkout@v4
 
@@ -309,7 +309,7 @@ jobs:
       - name: Compress macOS app
         run: |
           cd projectfiles/xcode/build/Release
-          zip -r "FinalBurn_Neo_macOS.zip" "FinalBurn Neo.app"
+          zip -r "FinalBurn_Neo_macOS_(x86_64).zip" "FinalBurn Neo.app"
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
@@ -317,6 +317,39 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS.zip
-          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS.zip
+          asset_name: FinalBurn_Neo_macOS_(x86_64).zip
+          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_(x86_64).zip
+          asset_content_type: application/zip
+
+  build_macos_arm64:
+    name: macOS (arm64)
+    needs: nightly_release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build FBNeo
+        run: |
+          cd projectfiles/xcode
+          xcodebuild ARCHS=arm64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS
+          path: "projectfiles/xcode/build/Release/FinalBurn Neo.app"
+
+      - name: Compress macOS app
+        run: |
+          cd projectfiles/xcode/build/Release
+          zip -r "FinalBurn_Neo_macOS_(arm64).zip" "FinalBurn Neo.app"
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
+          asset_name: FinalBurn_Neo_macOS_(arm64).zip
+          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_(arm64).zip
           asset_content_type: application/zip

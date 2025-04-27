@@ -1740,7 +1740,7 @@ struct BurnDriver BurnDrvNbajamten = {
     TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
-// NBA Jam Rewind (Hack)
+// NBA Jam Rewind (Hack, v1.1)
 // https://www.romhacking.net/hacks/6989/
 static struct BurnRomInfo nbajamreRomDesc[] = {
 	{ "nbajamre.uj12",								0x080000, 0x9b3fc483, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
@@ -1781,6 +1781,51 @@ struct BurnDriver BurnDrvNbajamre = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamreRomInfo, nbajamreRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
+};
+
+// NBA Rewind 4 Jam (Protection hack, v1.2)
+// Protection hacked, runs on any T-Unit board.
+static struct BurnRomInfo nbajamr4jRomDesc[] = {
+	{ "nbajamr4j.uj12",								0x080000, 0x1ef0eb74, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "nbajamr4j.ug12",								0x080000, 0xb2dd7831, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1_nba_jam_tournament_u3_sound_rom.u3",		0x020000, 0xd4551195, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+
+	{ "nbajamr4j.u12",								0x080000, 0xcd5d4532, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "nbajamr4j.u13",								0x080000, 0xc4cbede2, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "l1_nba_jam_tournament_game_rom_ug14.ug14",	0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_nba_jam_tournament_game_rom_uj14.uj14",	0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_nba_jam_tournament_game_rom_ug19.ug19",	0x080000, 0xa8f22fbb, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_nba_jam_tournament_game_rom_uj19.uj19",	0x080000, 0x8130a8a2, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+
+	{ "nbajamr4j.ug16",								0x080000, 0xb9a07a6f, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "nbajamr4j.uj16",								0x080000, 0xffa7db04, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "nbajamr4j.ug20",								0x080000, 0x67c8646b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "nbajamr4j.uj20",								0x080000, 0x71d028f8, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+
+	{ "nbajamr4j.ug17",								0x080000, 0x34c6bdb8, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "nbajamr4j.uj17",								0x080000, 0x3af5b32e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "nbajamr4j.ug22",								0x080000, 0xd41234d2, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "nbajamr4j.uj22",								0x080000, 0x42196c84, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+
+	{ "nbajamr4j.ug18",								0x080000, 0xfe18a6ef, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 0) }, // 17
+	{ "nbajamr4j.uj18",								0x080000, 0x9a6d36de, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 1) }, // 18
+	{ "nbajamr4j.ug23",								0x080000, 0x8d1af1a6, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 2) }, // 19
+	{ "nbajamr4j.uj23",								0x080000, 0xb5bf66f9, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 3) }, // 20
+};
+
+STD_ROM_PICK(nbajamr4j)
+STD_ROM_FN(nbajamr4j)
+
+struct BurnDriver BurnDrvNbajamr4j = {
+	"nbajamr4j", "nbajamte", NULL, NULL, "2023",
+	"NBA Rewind 4 Jam (protection hack, v1.2)\0", NULL, "hack", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbajamr4jRomInfo, nbajamr4jRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
 	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
 	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };

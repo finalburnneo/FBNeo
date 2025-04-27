@@ -14815,7 +14815,7 @@ struct BurnDriver BurnDrvCpsHsf2app = {
 
 struct BurnDriver BurnDrvCpsSf2prime = {
 	"sf2prime", "hsf2", NULL, NULL, "2025",
-	"Street Fighter II': Prime (Ver 0.45, Hack)\0", NULL, "Zero800", "CPS2",
+	"Street Fighter II': Prime (Ver 0.50, Hack)\0", NULL, "Zero800", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2primeRomInfo, Sf2primeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

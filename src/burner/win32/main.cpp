@@ -795,7 +795,7 @@ static int AppInit()
 
 	bNumlockStatus = SetNumLock(false);
 
-	CreateIconsCache();
+	CreateDrvIconsCache();
 
 	return 0;
 }
@@ -803,7 +803,7 @@ static int AppInit()
 static int AppExit()
 {
 	UnloadDrvIcons();
-	DestroyIconsCache();
+	DestroyDrvIconsCache();
 
 	SetNumLock(bNumlockStatus);
 

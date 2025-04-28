@@ -32,7 +32,7 @@ TCHAR szAppEEPROMPath[MAX_PATH]		= _T("config/games/");
 static TCHAR szCheckIconsPath[MAX_PATH];
 
 static void IconsDirPathChanged() {
-	LoadDrvIcons();
+	CreateDrvIconsCache();
 }
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)

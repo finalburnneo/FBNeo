@@ -285,6 +285,8 @@ BEGIN
 
 	IDS_SCANNING_ROMS			"Scanning ROMs..."
 
+	IDS_CACHING_ICONS			"Loading Icons..."
+
 	IDS_CHEAT_SEARCH_NEW		"New cheat search started"
 	IDS_CHEAT_SEARCH_ADD_MATCH	"%i Addresses Matched"
 	IDS_CHEAT_SEARCH_RESULTS	"Address %08X Value %02X"

@@ -52,31 +52,30 @@ static HIMAGELIST hHardwareIconList = NULL;
 
 struct HardwareIcon {
 	UINT32 nHardwareCode;
-	TCHAR* pszIconName;
 	INT32  nIconIndex;
 };
 
 static struct HardwareIcon IconTable[] =
 {
-	{	0,								_T("icon_arc"),		-1	},
-	{	HARDWARE_CHANNELF,				_T("icon_chf"),		-1	},
-	{	HARDWARE_COLECO,				_T("icon_cv"),		-1	},
-	{	HARDWARE_FDS,					_T("icon_fds"),		-1	},
-	{	HARDWARE_MSX,					_T("icon_msx"),		-1	},
-	{	HARDWARE_NES,					_T("icon_nes"),		-1	},
-	{	HARDWARE_PCENGINE_PCENGINE,		_T("icon_pce"),		-1	},
-	{	HARDWARE_PCENGINE_SGX,			_T("icon_sgx"),		-1	},
-	{	HARDWARE_PCENGINE_TG16,			_T("icon_tg"),		-1	},
-	{	HARDWARE_SEGA_GAME_GEAR,		_T("icon_gg"),		-1	},
-	{	HARDWARE_SEGA_MASTER_SYSTEM,	_T("icon_sms"),		-1	},
-	{	HARDWARE_SEGA_MEGADRIVE,		_T("icon_md"),		-1	},
-	{	HARDWARE_SEGA_SG1000,			_T("icon_sg1k"),	-1	},
-	{	HARDWARE_SNES,					_T("icon_snes"),	-1	},
-	{	HARDWARE_SNK_NGPC,				_T("icon_ngpc"),	-1	},
-	{	HARDWARE_SNK_NGP,				_T("icon_ngp"),		-1	},
-	{	HARDWARE_SPECTRUM,				_T("icon_spec"),	-1	},
+	{	HARDWARE_SEGA_MEGADRIVE,		-1	},
+	{	HARDWARE_PCENGINE_PCENGINE,		-1	},
+	{	HARDWARE_PCENGINE_SGX,			-1	},
+	{	HARDWARE_PCENGINE_TG16,			-1	},
+	{	HARDWARE_SEGA_SG1000,			-1	},
+	{	HARDWARE_COLECO,				-1	},
+	{	HARDWARE_SEGA_MASTER_SYSTEM,	-1	},
+	{	HARDWARE_SEGA_GAME_GEAR,		-1	},
+	{	HARDWARE_MSX,					-1	},
+	{	HARDWARE_SPECTRUM,				-1	},
+	{	HARDWARE_NES,					-1	},
+	{	HARDWARE_FDS,					-1	},
+	{	HARDWARE_SNES,					-1	},
+	{	HARDWARE_SNK_NGPC,				-1	},
+	{	HARDWARE_SNK_NGP,				-1	},
+	{	HARDWARE_CHANNELF,				-1	},
+	{	0,								-1	},
 
-	{	~0U,							NULL,				-1	}	// End Marker
+	{	~0U,							-1	}	// End Marker
 };
 
 static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
@@ -132,7 +131,7 @@ static INT32 FileExists(const TCHAR* szName)
 
 static HIMAGELIST HardwareIconListInit()
 {
-	INT32 cx = 0, cy = 0;
+	INT32 cx = 0, cy = 0, nIdx = 0;
 
 	switch (nIconsSize) {
 		case ICON_16x16: cx = cy = 16;	break;
@@ -146,17 +145,10 @@ static HIMAGELIST HardwareIconListInit()
 
 	struct HardwareIcon* _it = &IconTable[0];
 
-	while (NULL != _it->pszIconName) {
-		TCHAR szIconFile[MAX_PATH] = { 0 };
-		_stprintf(szIconFile, _T("%s%s.ico"), szAppIconsPath, _it->pszIconName);
+	while (~0U != _it->nHardwareCode) {
+		_it->nIconIndex = ImageList_AddIcon(hHardwareIconList, pIconsCache[nBurnDrvCount + nIdx]);
 
-		HICON hHardwareIcon = (FileExists(szIconFile)) ? (HICON)LoadImage(NULL, szIconFile, IMAGE_ICON, 0, 0, LR_LOADFROMFILE) : LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
-		if (NULL != hHardwareIcon) {
-			_it->nIconIndex = ImageList_AddIcon(hHardwareIconList, hHardwareIcon);
-			DestroyIcon(hHardwareIcon); hHardwareIcon = NULL;
-		}
-
-		_it++;
+		_it++, nIdx++;
 	}
 
 	return hHardwareIconList;
@@ -166,7 +158,7 @@ static void DestroyHardwareIconList()
 {
 	struct HardwareIcon* _it = &IconTable[0];
 
-	while (NULL != _it->pszIconName) {
+	while (~0U != _it->nHardwareCode) {
 		_it->nIconIndex = -1; _it++;
 	}
 
@@ -177,28 +169,29 @@ static void DestroyHardwareIconList()
 
 static INT32 FindHardwareIconIndex(const TCHAR* pszDrvName)
 {
-	UINT32 nOldDrvSel    = nBurnDrvActive;		// Backup
-	nBurnDrvActive       = BurnDrvGetIndex(TCHARToANSI(pszDrvName, NULL, 0));
-	UINT32 nHardwareCode = BurnDrvGetHardwareCode();
+	const UINT32 nOldDrvSel    = nBurnDrvActive;	// Backup
+	nBurnDrvActive             = BurnDrvGetIndex(TCHARToANSI(pszDrvName, NULL, 0));
+	const UINT32 nHardwareCode = BurnDrvGetHardwareCode();
 
 	struct HardwareIcon* _it = &IconTable[0];
+	INT32 nIdx = 0;
 
-	while (NULL != _it->pszIconName) {
-		if (_it->nHardwareCode > 0) {			// Consoles
+	while (~0U != _it->nHardwareCode) {
+		if (_it->nHardwareCode > 0) {				// Consoles
 			if (_it->nHardwareCode == (nHardwareCode & HARDWARE_SNK_NGPC)) {
-				nBurnDrvActive = nOldDrvSel;	// Restore
-				return _it->nIconIndex;			// NeoGeo Pocket Color
+				nBurnDrvActive = nOldDrvSel;		// Restore
+				return _it->nIconIndex;				// NeoGeo Pocket Color
 			}
 			if (_it->nHardwareCode == (nHardwareCode & HARDWARE_PUBLIC_MASK)) {
-				nBurnDrvActive = nOldDrvSel;	// Restore
+				nBurnDrvActive = nOldDrvSel;		// Restore
 				return _it->nIconIndex;
 			}
 		}
-		_it++;
+		_it++, nIdx++;
 	}
 
-	nBurnDrvActive = nOldDrvSel;				// Restore
-	return IconTable[0].nIconIndex;				// Arcade
+	nBurnDrvActive = nOldDrvSel;					// Restore
+	return IconTable[--nIdx].nIconIndex;			// Arcade
 }
 
 static INT32 IsUTF8Text(const void* pBuffer, long size)

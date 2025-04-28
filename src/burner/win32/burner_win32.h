@@ -347,10 +347,11 @@ extern bool bIconsOnlyParents;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
 extern bool bGameInfoOpen;
 extern bool bIconsByHardwares;
-extern bool bCacheWait;
 
-void CreateIconsCache();
-void DestroyIconsCache();
+extern HICON* pIconsCache;
+
+void CreateDrvIconsCache();
+void DestroyDrvIconsCache();
 
 void LoadDrvIcons();
 void UnloadDrvIcons();

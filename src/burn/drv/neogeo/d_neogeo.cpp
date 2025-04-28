@@ -19190,6 +19190,38 @@ struct BurnDriver BurnDrvMslugxfs = {
 };
 
 
+// Metal Slug X - Super Vehicle-001 (Soldier Version, Hack)
+// 20250423
+static struct BurnRomInfo mslugxsvhRomDesc[] = {
+	{ "250-p1svh.p1",	0x100000, 0x787403ef, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2svh.ep1",	0x800000, 0x5858ecf7, 1 | BRF_ESS | BRF_PRG },
+
+	MSLUGX_TEXT
+
+	MSLUGX_SPR1
+	MSLUGX_SPR2
+	{ "250-c5svh.c5",	0x800000, 0x882f41c7, 3 | BRF_GRA },
+	{ "250-c6svh.c6",	0x800000, 0x35b5bb3a, 3 | BRF_GRA },
+
+	MSLUGX_Z80
+
+	MSLUGX_SND
+};
+
+STDROMPICKEXT(mslugxsvh, mslugxsvh, neogeo)
+STD_ROM_FN(mslugxsvh)
+
+struct BurnDriver BurnDrvMslugxsvh = {
+	"mslugxsvh", "mslugx", "neogeo", NULL, "2025",
+	"Metal Slug X - Super Vehicle-001 (Soldier Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxsvhRomInfo, mslugxsvhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // Metal Slug X - Super Vehicle-001 (Multifunction, Hack)
 // Modified by AKS
 // GOTVG 20230626

@@ -18665,7 +18665,7 @@ struct BurnDriver BurnSpeclivipres = {
 // Livingstone Supongo II (I Presume II) - Part 1 (128K+2A)
 
 static struct BurnRomInfo Speclivipres21RomDesc[] = {
-	{ "Livingstone Supongo II - Part 1 48K-128K+2A (1989)(Opera Soft).tap", 49084, 0xeb0c8e93, BRF_ESS | BRF_PRG },
+	{ "Livingstone Supongo II - Part 1 128K+2A (1989)(Opera Soft).tap", 49127, 0x362be350, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speclivipres21, Speclivipres21, Spec1282a)
@@ -18684,7 +18684,7 @@ struct BurnDriver BurnSpeclivipres21 = {
 // Livingstone Supongo II (I Presume II) - Part 2 (128K+2A)
 
 static struct BurnRomInfo Speclivipres22RomDesc[] = {
-	{ "Livingstone Supongo II - Part 2 48K-128K+2A (1989)(Opera Soft).tap", 49084, 0x216f6c0e, BRF_ESS | BRF_PRG },
+	{ "Livingstone Supongo II - Part 2 128K+2A (1989)(Opera Soft).tap", 49127, 0x4ca7e9dd, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Speclivipres22, Speclivipres22, Spec1282a)

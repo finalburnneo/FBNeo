@@ -2752,6 +2752,61 @@ struct BurnDriver BurnDrvCninjau = {
 };
 
 
+// Caveman Ninja (alternate)
+// PCB is marked: "DE-0347-1 MADE IN JAPAN" 
+// f205v id 1014
+
+static struct BurnRomInfo cninjaaRomDesc[] = {
+	{ "1.1k",			0x020000, 0xa6c40959, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.3k",			0x020000, 0x2e01d1fd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.2j",			0x020000, 0x18f0527c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "5.3j",			0x020000, 0xea4b6d53, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "gn-00.rom",		0x020000, 0x0b110b16, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "gn-03.rom",		0x020000, 0x1e28e697, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "gl-07.13k",		0x010000, 0xca8bef96, 2 | BRF_PRG | BRF_ESS }, //  6 Huc6280 Code
+
+	{ "gl-08.6y",		0x010000, 0x33a2b400, 3 | BRF_GRA }, 	       //  7 Characters
+	{ "gl-09.6z",		0x010000, 0x5a2d4752, 3 | BRF_GRA }, 	       //  8
+
+	{ "mag-02.4z",		0x080000, 0xde89c69a, 4 | BRF_GRA }, 	       //  9 Foreground Tiles
+
+	{ "mag-00.1y",		0x080000, 0xa8f05d33, 5 | BRF_GRA }, 	       // 10 Background Tiles
+	{ "mag-01.1z",		0x080000, 0x5b399eed, 5 | BRF_GRA }, 	       // 11
+
+	{ "mag-03.9y",		0x080000, 0x2220eb9f, 6 | BRF_GRA }, 	       // 12 Sprites
+	{ "mag-05.12y",		0x080000, 0x56a53254, 6 | BRF_GRA }, 	       // 13
+	{ "mag-04.9z",		0x080000, 0x144b94cc, 6 | BRF_GRA }, 	       // 14
+	{ "mag-06.12z",		0x080000, 0x82d44749, 6 | BRF_GRA }, 	       // 15
+
+	{ "gl-06.13j",		0x020000, 0xd92e519d, 7 | BRF_SND }, 	       // 16 OKI M6295 Samples 0
+
+	{ "mag-07.13f",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
+
+	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+	
+	{ "tj-00.9j",		0x000117, 0x46defe8f, 0 | BRF_OPT }, 	       // 19 PLDs
+	{ "tj-01.9h",		0x000117, 0x7a86902d, 0 | BRF_OPT }, 	       // 20 
+	{ "tj-02.9h",		0x000117, 0xb476d59c, 0 | BRF_OPT }, 	       // 21
+	{ "tj-03.9e",		0x000117, 0xcfb6e4aa, 0 | BRF_OPT }, 	       // 22
+	{ "tj-04.5n",		0x000117, 0xbca07086, 0 | BRF_OPT }, 	       // 23
+	{ "tj-05.1r",		0x000117, 0x0dfc091b, 0 | BRF_OPT }, 	       // 24
+};
+
+STD_ROM_PICK(cninjaa)
+STD_ROM_FN(cninjaa)
+
+struct BurnDriver BurnDrvCninjaa = {
+	"cninjaa", "cninja", NULL, NULL, "1991",
+	"Caveman Ninja (alternate)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NULL, cninjaaRomInfo, cninjaaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
+	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 240, 4, 3
+};
+
+
 // Tatakae Genshizin Joe & Mac (Japan ver 1)
 
 static struct BurnRomInfo joemacRomDesc[] = {

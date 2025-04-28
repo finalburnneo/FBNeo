@@ -21680,7 +21680,7 @@ struct BurnDriver BurnDrvsnes_Romasaga3j = {
 // Romancing Sa-Ga 3 (Hack, Simplified Chinese v1.01)
 
 static struct BurnRomInfo snes_Romasaga3tscRomDesc[] = {
-	{ "Romancing Sa-Ga 3 T-Cht v1.01 (2010)(Werther Lee).sfc", 4194304, 0xc9a66742, BRF_ESS | BRF_PRG },
+	{ "Romancing Sa-Ga 3 T-Chs v1.01 (2010)(Werther Lee).sfc", 4194304, 0xc9a66742, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Romasaga3tsc)

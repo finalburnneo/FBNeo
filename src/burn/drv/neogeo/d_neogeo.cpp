@@ -18321,6 +18321,15 @@ struct BurnDriver BurnDrvMagdrop3te = {
 	{ "201-v1.v1",		0x400000, 0x23d22ed1, 5 | BRF_SND },			\
 	{ "201-v2.v2",		0x400000, 0x472cf9db, 5 | BRF_SND },
 
+static INT32 NeoOcInit() {
+#if defined (FBNEO_DEBUG)
+	nBurnCPUSpeedAdjust = 0x300;	// lag
+#else
+	nBurnCPUSpeedAdjust = 0x400;
+#endif
+	return NeoInit();
+}
+
 // Metal Slug Unity (Added Timer Ver. 2021-02-05)
 // Modified by Alice愛麗絲, AKS, CXZInc
 
@@ -18395,12 +18404,10 @@ struct BurnDriver BurnDrvMslug1v2 = {
 
 
 // Metal Slug - Super Vehicle-001 (Origins, Hack)
-// Modified by AKS
-// Bug fixed by Alice - 20240409
+// Modified by AKS, SAKURA - 20250429
 
 static struct BurnRomInfo mslugqyRomDesc[] = {
-	{ "201-p1qy.p1",	0x100000, 0x16068dc1, 1 | BRF_ESS | BRF_PRG },
-	{ "201-p2dg.sp2",	0x100000, 0xc3cb544c, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1qy.p1",	0x200000, 0xf50e465c, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS
 };
@@ -18409,12 +18416,12 @@ STDROMPICKEXT(mslugqy, mslugqy, neogeo)
 STD_ROM_FN(mslugqy)
 
 struct BurnDriver BurnDrvMslugqy = {
-	"mslugqy", "mslug", "neogeo", NULL, "2024",
-	"Metal Slug - Super Vehicle-001 (Origins, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslugqy", "mslug", "neogeo", NULL, "2025",
+	"Metal Slug - Super Vehicle-001 (Origins, Hack)\0", NULL, "AKS, SAKURA", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugqyRomInfo, mslugqyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoOcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -18812,6 +18819,15 @@ struct BurnDriver BurnDrvMslug2eg = {
 	MSLUGX_Z80												\
 	MSLUGX_SND
 
+static INT32 mslugxOcInit() {
+#if defined (FBNEO_DEBUG)
+	nBurnCPUSpeedAdjust = 0x300;	// lag
+#else
+	nBurnCPUSpeedAdjust = 0x400;
+#endif
+	 return mslugxInit();
+}
+
 // Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)
 // Modified by Alice愛麗絲, AKS, CXZInc
 
@@ -19191,10 +19207,10 @@ struct BurnDriver BurnDrvMslugxfs = {
 
 
 // Metal Slug X - Super Vehicle-001 (Soldier Version, Hack)
-// 20250423
+// 20250428
 static struct BurnRomInfo mslugxsvhRomDesc[] = {
 	{ "250-p1svh.p1",	0x100000, 0x787403ef, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2svh.ep1",	0x800000, 0x5858ecf7, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2svh.ep1",	0x800000, 0xbcb02121, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUGX_TEXT
 
@@ -19217,7 +19233,7 @@ struct BurnDriver BurnDrvMslugxsvh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxsvhRomInfo, mslugxsvhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	mslugxOcInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

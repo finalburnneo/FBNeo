@@ -629,44 +629,6 @@ struct BurnDriver BurnSpecchronos = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Chuckie Egg (48K)
-
-static struct BurnRomInfo SpecchuckeggRomDesc[] = {
-	{ "Chuckie Egg 48K (1983)(A'n'F Software).tap", 20645, 0x15adf085, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specchuckegg, Specchuckegg, Spectrum)
-STD_ROM_FN(Specchuckegg)
-
-struct BurnDriver BurnSpecchuckegg = {
-	"spec_chuckegg", NULL, "spec_spectrum", NULL, "1983",
-	"Chuckie Egg (48K)\0", "Set '3' key type in Instructions 'I' menu to use controller", "A'n'F Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecchuckeggRomInfo, SpecchuckeggRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Chuckie Egg 2 (48K)
-
-static struct BurnRomInfo Specchuckeg2RomDesc[] = {
-	{ "Chuckie Egg 2 48K (1985)(A'n'F Software).tap", 49012, 0x7917ac74, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Specchuckeg2, Specchuckeg2, Spectrum)
-STD_ROM_FN(Specchuckeg2)
-
-struct BurnDriver BurnSpecchuckeg2 = {
-	"spec_chuckeg2", NULL, "spec_spectrum", NULL, "1985",
-	"Chuckie Egg 2 (48K)\0", "At title press 'Space' and wait for loading time, then press 'Space' again", "A'n'F Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, Specchuckeg2RomInfo, Specchuckeg2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // CJ's Elephant Antics (128K)
 
 static struct BurnRomInfo Speccjseleph128RomDesc[] = {
@@ -10984,6 +10946,44 @@ struct BurnDriver BurnSpecChubby = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Chuckie Egg (48K)
+
+static struct BurnRomInfo SpecchuckeggRomDesc[] = {
+	{ "Chuckie Egg 48K (1983)(A'n'F Software).tap", 20645, 0x15adf085, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specchuckegg, Specchuckegg, Spectrum)
+STD_ROM_FN(Specchuckegg)
+
+struct BurnDriver BurnSpecchuckegg = {
+	"spec_chuckegg", NULL, "spec_spectrum", NULL, "1983",
+	"Chuckie Egg (48K)\0", "Press 'I' to enter Instructions menu, then set 'Type 3 Keys' to use controller.", "A'n'F Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecchuckeggRomInfo, SpecchuckeggRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Chuckie Egg 2 (48K)
+
+static struct BurnRomInfo Specchuckeg2RomDesc[] = {
+	{ "Chuckie Egg 2 48K (1985)(A'n'F Software).tap", 49012, 0x7917ac74, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specchuckeg2, Specchuckeg2, Spectrum)
+STD_ROM_FN(Specchuckeg2)
+
+struct BurnDriver BurnSpecchuckeg2 = {
+	"spec_chuckeg2", NULL, "spec_spectrum", NULL, "1985",
+	"Chuckie Egg 2 (48K)\0", "At title screen press SPACE and wait for loading time, then press SPACE again.", "A'n'F Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Specchuckeg2RomInfo, Specchuckeg2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Circus Games (48K)
 
 static struct BurnRomInfo SpecCircusgamesRomDesc[] = {
@@ -19794,7 +19794,7 @@ STD_ROM_FN(Specmortfilemon22)
 
 struct BurnDriver BurnSpecmortfilemon22 = {
 	"spec_mortfilemon22", "spec_mortfilemon21", "spec_spec128", NULL, "1990",
-	"Mortadelo y Filemon II - Parte 2 (Spanish) (128K)\0", "Password: LOS HAS BESUGOS", "Dro Soft", "ZX Spectrum",
+	"Mortadelo y Filemon II - Parte 2 (Spanish) (128K)\0", "Password: LOS MAS BESUGOS", "Dro Soft", "ZX Spectrum",
 	L"Mortadelo y Filem\u00f3n II - Parte 2 (Spanish) (128K)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, Specmortfilemon22RomInfo, Specmortfilemon22RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -28910,44 +28910,6 @@ struct BurnDriver BurnSpecCaptaingofer = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Code-112 (128K) (HB)
-
-static struct BurnRomInfo SpecCode112RomDesc[] = {
-	{ "Code-112 (2020)(PCNONOGames).tap", 47864, 0xd3a6349d, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecCode112, SpecCode112, Spec128)
-STD_ROM_FN(SpecCode112)
-
-struct BurnDriver BurnSpecCode112 = {
-	"spec_code112", NULL, "spec_spec128", NULL, "2020",
-	"Code-112 (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PUZZLE, 0,
-	SpectrumGetZipName, SpecCode112RomInfo, SpecCode112RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Cosmic Payback (128K) (HB)
-
-static struct BurnRomInfo SpecCosmicpaybackRomDesc[] = {
-	{ "Cosmic Payback (2020)(John Connolly).tap", 58570, 0xc91aa72f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecCosmicpayback, SpecCosmicpayback, Spec128)
-STD_ROM_FN(SpecCosmicpayback)
-
-struct BurnDriver BurnSpecCosmicpayback = {
-	"spec_cosmicpayback", NULL, "spec_spec128", NULL, "2020",
-	"Cosmic Payback (128K) (HB)\0", NULL, "John Connolly", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING| BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecCosmicpaybackRomInfo, SpecCosmicpaybackRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // Cygnus - Alpha (128K) (HB)
 
 static struct BurnRomInfo SpecCygnusalphaRomDesc[] = {
@@ -33585,6 +33547,25 @@ struct BurnDriver BurnSpecCocoa2e3sp = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Code-112 (128K) (HB)
+
+static struct BurnRomInfo SpecCode112RomDesc[] = {
+	{ "Code-112 128K (2020)(PC NONO Games).tap", 47864, 0xd3a6349d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCode112, SpecCode112, Spec128)
+STD_ROM_FN(SpecCode112)
+
+struct BurnDriver BurnSpecCode112 = {
+	"spec_code112", NULL, "spec_spec128", NULL, "2020",
+	"Code-112 (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecCode112RomInfo, SpecCode112RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Code Zero (128K) (HB)
 
 static struct BurnRomInfo SpecCodezeroRomDesc[] = {
@@ -33905,6 +33886,25 @@ struct BurnDriver BurnSpecCosmiclan = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecCosmiclanRomInfo, SpecCosmiclanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cosmic Payback (128K) (HB)
+
+static struct BurnRomInfo SpecCosmicpaybackRomDesc[] = {
+	{ "Cosmic Payback 128K (2020)(John Connolly).tap", 58570, 0xc91aa72f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCosmicpayback, SpecCosmicpayback, Spec128)
+STD_ROM_FN(SpecCosmicpayback)
+
+struct BurnDriver BurnSpecCosmicpayback = {
+	"spec_cosmicpayback", NULL, "spec_spec128", NULL, "2020",
+	"Cosmic Payback (128K) (HB)\0", NULL, "John Connolly", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING| BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecCosmicpaybackRomInfo, SpecCosmicpaybackRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

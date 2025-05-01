@@ -442,11 +442,11 @@ int BzipOpen(bool bootApp)
 		for (int d = 0; d < DIRS_MAX; d++) { // Traverse the user-configured rom paths
 			TCHAR szFullName[MAX_PATH] = { 0 };
 
-			for (UINT32 nCount = 0; nCount < _ThreadParams[d].nCount; nCount++) {
+			for (UINT32 nCount = 0; nCount < _SubDirInfo[d].nCount; nCount++) {
 				// like: c:\1st_dir\2nd_dir\1 + ".zip" + '\0' = 5 chars
-				if ((_tcslen(_ThreadParams[d].SubDirs[nCount]) + strlen(szName)) > (MAX_PATH - 5))
+				if ((_tcslen(_SubDirInfo[d].SubDirs[nCount]) + strlen(szName)) > (MAX_PATH - 5))
 					continue;
-				_stprintf(szFullName, _T("%s%hs"), _ThreadParams[d].SubDirs[nCount], szName);
+				_stprintf(szFullName, _T("%s%hs"), _SubDirInfo[d].SubDirs[nCount], szName);
 
 				if (RomArchiveExists(szFullName)) {
 					bFound = true;

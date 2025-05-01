@@ -131,6 +131,8 @@ static INT32 FileExists(const TCHAR* szName)
 
 static HIMAGELIST HardwareIconListInit()
 {
+	if (!bEnableIcons) return NULL;
+
 	INT32 cx = 0, cy = 0, nIdx = 0;
 
 	switch (nIconsSize) {
@@ -141,7 +143,7 @@ static HIMAGELIST HardwareIconListInit()
 
 	hHardwareIconList = ImageList_Create(cx, cy, ILC_COLOR32 | ILC_MASK, (sizeof(IconTable) / sizeof(HardwareIcon)) - 1, 0);
 	if (NULL == hHardwareIconList) return NULL;
-	if (bEnableIcons) ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
+	ListView_SetImageList(hRDListView, hHardwareIconList, LVSIL_SMALL);
 
 	struct HardwareIcon* _it = &IconTable[0];
 
@@ -169,6 +171,8 @@ static void DestroyHardwareIconList()
 
 static INT32 FindHardwareIconIndex(const TCHAR* pszDrvName)
 {
+	if (!bEnableIcons) return 0;
+
 	const UINT32 nOldDrvSel    = nBurnDrvActive;	// Backup
 	nBurnDrvActive             = BurnDrvGetIndex(TCHARToANSI(pszDrvName, NULL, 0));
 	const UINT32 nHardwareCode = BurnDrvGetHardwareCode();
@@ -700,7 +704,7 @@ static INT32 RomdataAddListItem(TCHAR* pszDatFile)
 	// Dat path
 	lvi.iImage     = FindHardwareIconIndex(pDatListInfo->szDrvName);
 	lvi.iItem      = ListView_GetItemCount(hRDListView);
-	lvi.mask       = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+	lvi.mask       = LVIF_TEXT | LVIF_IMAGE;
 	lvi.cchTextMax = MAX_PATH;
 	lvi.pszText    = pszDatFile;
 
@@ -841,8 +845,7 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 static void RomDataShowPreview(HWND hDlg, TCHAR* szFile, INT32 nCtrID, INT32 nFrameCtrID, float maxw, float maxh)
 {
 	PNGRESOLUTION PNGRes = { 0, 0 };
-	if (!_tfopen(szFile, _T("rb")))
-	{
+	if (!_tfopen(szFile, _T("rb"))) {
 		HRSRC hrsrc     = FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
 		HGLOBAL hglobal = LoadResource(NULL, (HRSRC)hrsrc);
 
@@ -852,7 +855,6 @@ static void RomDataShowPreview(HWND hDlg, TCHAR* szFile, INT32 nCtrID, INT32 nFr
 		PNGRes.nHeight = pbmih->biHeight;
 
 		FreeResource(hglobal);
-
 	} else {
 		PNGRes = GetPNGResolution(szFile);
 	}
@@ -949,21 +951,18 @@ static void RomDataClearList()
 
 static INT_PTR CALLBACK RomDataCoveProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM /*lParam*/)
 {
-	if (Msg == WM_INITDIALOG)
-	{
+	if (Msg == WM_INITDIALOG) {
 		hRdCoverDlg = hDlg;
 		RomDataShowPreview(hDlg, szCover, IDC_ROMDATA_COVER_PREVIEW_PIC, IDC_ROMDATA_COVER_PREVIEW_PIC, 580, 415);
 
 		return TRUE;
 	}
 
-	if (Msg == WM_CLOSE)
-	{
+	if (Msg == WM_CLOSE) {
 		EndDialog(hDlg, 0); hRdCoverDlg = NULL;
 	}
 
-	if (Msg == WM_COMMAND)
-	{
+	if (Msg == WM_COMMAND) {
 		if (LOWORD(wParam) == WM_DESTROY) SendMessage(hDlg, WM_CLOSE, 0, 0);
 	}
 
@@ -986,14 +985,14 @@ static void RomDataManagerExit()
 
 static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	if (Msg == WM_INITDIALOG)
-	{
+	if (Msg == WM_INITDIALOG) {
+		hRDMgrWnd = hDlg;
+
 		INITCOMMONCONTROLSEX icc;
-		icc.dwSize    = sizeof(icc);
-		icc.dwICC     = ICC_LISTVIEW_CLASSES | ICC_BAR_CLASSES;
+		icc.dwSize = sizeof(INITCOMMONCONTROLSEX);
+		icc.dwICC  = ICC_LISTVIEW_CLASSES;
 		InitCommonControlsEx(&icc);
 
-		hRDMgrWnd     = hDlg;
 		hRDListView   = GetDlgItem(hDlg, IDC_ROMDATA_LIST);
 
 		RomDataInitListView();
@@ -1026,14 +1025,12 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		return TRUE;
 	}
 
-	if (Msg == WM_CLOSE)
-	{
+	if (Msg == WM_CLOSE) {
 		RomDataManagerExit();
 		EndDialog(hDlg, 0);
 	}
 
-	if (Msg == WM_CTLCOLORSTATIC)
-	{
+	if (Msg == WM_CTLCOLORSTATIC) {
 		if ((HWND)lParam == GetDlgItem(hRDMgrWnd, IDC_ROMDATA_LABELGAME))     return (INT_PTR)hWhiteBGBrush;
 		if ((HWND)lParam == GetDlgItem(hRDMgrWnd, IDC_ROMDATA_LABELDRIVER))   return (INT_PTR)hWhiteBGBrush;
 		if ((HWND)lParam == GetDlgItem(hRDMgrWnd, IDC_ROMDATA_LABELHARDWARE)) return (INT_PTR)hWhiteBGBrush;
@@ -1042,13 +1039,11 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		if ((HWND)lParam == GetDlgItem(hRDMgrWnd, IDC_ROMDATA_TEXTHARDWARE))  return (INT_PTR)hWhiteBGBrush;
 	}
 
-	if (Msg == WM_NOTIFY)
-	{
+	if (Msg == WM_NOTIFY) {
 		NMLISTVIEW* pNMLV = (NMLISTVIEW*)lParam;
 
 		// Dat selected
-		if (pNMLV->hdr.code == LVN_ITEMCHANGED && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST)
-		{
+		if (pNMLV->hdr.code == LVN_ITEMCHANGED && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST) {
 			INT32 nCount    = SendMessage(hRDListView, LVM_GETITEMCOUNT,     0, 0);
 			INT32 nSelCount = SendMessage(hRDListView, LVM_GETSELECTEDCOUNT, 0, 0);
 
@@ -1100,15 +1095,13 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		}
 
 		// Sort Change
-		if (pNMLV->hdr.code == LVN_COLUMNCLICK && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST)
-		{
+		if (pNMLV->hdr.code == LVN_COLUMNCLICK && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST) {
 			sort_direction ^= 1;
 			ListViewSort(sort_direction, pNMLV->iSubItem);
 		}
 
 		// Double Click
-		if (pNMLV->hdr.code == NM_DBLCLK && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST)
-		{
+		if (pNMLV->hdr.code == NM_DBLCLK && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST) {
 			if (nSelItem >= 0) {
 				LVITEM LvItem;
 				memset(&LvItem,       0, sizeof(LvItem));
@@ -1140,14 +1133,11 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		}
 	}
 
-	if (Msg == WM_COMMAND)
-	{
-		if (HIWORD(wParam) == STN_CLICKED)
-		{
+	if (Msg == WM_COMMAND) {
+		if (HIWORD(wParam) == STN_CLICKED) {
 			INT32 nCtrlID = LOWORD(wParam);
 
-			if (nCtrlID == IDC_ROMDATA_TITLE)
-			{
+			if (nCtrlID == IDC_ROMDATA_TITLE) {
 				if (nSelItem >= 0) {
 					TCHAR szSelDat[MAX_PATH] = { 0 };
 					LVITEM LvItem;
@@ -1180,8 +1170,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 				return 0;
 			}
 
-			if (nCtrlID == IDC_ROMDATA_PREVIEW)
-			{
+			if (nCtrlID == IDC_ROMDATA_PREVIEW) {
 				if (nSelItem >= 0) {
 					TCHAR szSelDat[MAX_PATH] = { 0 };
 					LVITEM LvItem;
@@ -1219,12 +1208,10 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 		}
 
-		if (HIWORD(wParam) == BN_CLICKED)
-		{
+		if (HIWORD(wParam) == BN_CLICKED) {
 			INT32 nCtrlID = LOWORD(wParam);
 
-			switch (nCtrlID)
-			{
+			switch (nCtrlID) {
 				case IDC_ROMDATA_PLAY_BUTTON:
 				{
 					if (nSelItem >= 0) {
@@ -1258,16 +1245,14 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 					break;
 				}
 
-				case IDC_ROMDATA_SCAN_BUTTON:
-				{
+				case IDC_ROMDATA_SCAN_BUTTON: {
 					RomDataClearList();
 					RomdataListFindDats(szAppRomdataPath);
 					SetFocus(hRDListView);
 					break;
 				}
 
-				case IDC_ROMDATA_SEL_DIR_BUTTON:
-				{
+				case IDC_ROMDATA_SEL_DIR_BUTTON: {
 					RomDataClearList();
 					SupportDirCreateTab(IDC_SUPPORTDIR_EDIT25, hRDMgrWnd);
 					RomdataListFindDats(szAppRomdataPath);
@@ -1275,8 +1260,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 					break;
 				}
 
-				case IDC_ROMDATA_SSUBDIR_CHECK:
-				{
+				case IDC_ROMDATA_SSUBDIR_CHECK: {
 					bRDListScanSub = (BST_CHECKED == IsDlgButtonChecked(hDlg, IDC_ROMDATA_SSUBDIR_CHECK));
 					RomDataClearList();
 					RomdataListFindDats(szAppRomdataPath);
@@ -1284,8 +1268,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 					break;
 				}
 
-				case IDC_ROMDATA_CANCEL_BUTTON:
-				{
+				case IDC_ROMDATA_CANCEL_BUTTON: {
 					RomDataManagerExit();
 					EndDialog(hDlg, 0);
 					break;

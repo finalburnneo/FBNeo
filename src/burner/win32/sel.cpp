@@ -1616,7 +1616,7 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 	return 0;
 }
 
-void IconsCacheThreadExit()
+static void IconsCacheThreadExit()
 {
 	DWORD dwExitCode = 0;
 	GetExitCodeThread(hICThread, &dwExitCode);
@@ -2383,12 +2383,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					SelOkay();
 					break;
 				case IDROM:
+					LookupSubDirThreads();
 					RomsDirCreate(hSelDlg);
 					RebuildEverything();
 					break;
 				case IDRESCAN:
 					bRescanRoms = true;
-					LookupSubDirThreads();
 					CreateROMInfo(hSelDlg);
 					RebuildEverything();
 					break;
@@ -2421,7 +2421,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
-						LookupSubDirThreads();
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {

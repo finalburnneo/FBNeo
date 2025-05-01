@@ -125,8 +125,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 //					}
 				}
 
-				LookupSubDirThreads();
-
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {
@@ -476,6 +474,8 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 int CreateROMInfo(HWND hParentWND)
 {
+	SubDirThreadExit();
+
 	hParent = hParentWND;
 	bool bStarting = 0;
 

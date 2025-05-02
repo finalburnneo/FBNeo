@@ -1745,6 +1745,7 @@ void LoadDrvIcons()
 		nBurnDrvActive       = nDrvIndex;
 		const INT32 nFlag    = BurnDrvGetFlags();
 		const INT32 nCode    = BurnDrvGetHardwareCode();
+		const TCHAR* pszName = BurnDrvGetText(DRV_NAME);
 		char* pszParent      = BurnDrvGetTextA(DRV_PARENT);
 		nBurnDrvActive       = nBackup;
 
@@ -1827,6 +1828,7 @@ void LoadDrvIcons()
 			// When allowed and Clone is checked, loads the icon of the parent item when checking that the icon file does not exist
 			if ((NULL != pszParent) && (nFlag & BDF_CLONE)) {
 				TCHAR szIcon[MAX_PATH] = { 0 };
+				_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, pszName);
 
 				// The icon file exists, and given the GDI cap, now is not the time to deal with it
 				if (GetFileAttributes(szIcon) != INVALID_FILE_ATTRIBUTES) {

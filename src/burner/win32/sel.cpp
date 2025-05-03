@@ -2,7 +2,6 @@
 // TreeView Version by HyperYagami
 #include "burner.h"
 #include <process.h>
-#include <commctrl.h>
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, spec1282a, decocass, midssio, cchip, fdsbios, ngp, bubsys, channelf, namcoc69, namcoc70, namcoc75, snes stuff)
 // don't reduce for these as we display them in the list (neogeo, neocdz)

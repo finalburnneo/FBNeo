@@ -2,6 +2,7 @@
 // TreeView Version by HyperYagami
 #include "burner.h"
 #include <process.h>
+#include <commctrl.h>
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, spec1282a, decocass, midssio, cchip, fdsbios, ngp, bubsys, channelf, namcoc69, namcoc70, namcoc75, snes stuff)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
@@ -18,7 +19,6 @@ bool bDrvSelected				= false;
 static int nShowMVSCartsOnly	= 0;
 
 HBITMAP hPrevBmp				= NULL;
-HBITMAP hTitleBmp				= NULL;
 
 HWND hSelDlg					= NULL;
 static HWND hSelList			= NULL;
@@ -69,17 +69,14 @@ static int nDlgRomDirsBtnInitialPos[4];
 static int nDlgScanRomsBtnInitialPos[4];
 static int nDlgFilterGrpInitialPos[4];
 static int nDlgFilterTreeInitialPos[4];
-static int nDlgIpsGrpInitialPos[4];
+static int nDlgDisableCrcInitialPos[4];
 static int nDlgApplyIpsChbInitialPos[4];
 static int nDlgIpsManBtnInitialPos[4];
 static int nDlgSearchGrpInitialPos[4];
 static int nDlgSearchTxtInitialPos[4];
 static int nDlgCancelBtnInitialPos[4];
 static int nDlgPlayBtnInitialPos[4];
-static int nDlgTitleGrpInitialPos[4];
-static int nDlgTitleImgHInitialPos[4];
-static int nDlgTitleImgVInitialPos[4];
-static int nDlgPreviewGrpInitialPos[4];
+static int nDlgSelTabInitialPos[4];
 static int nDlgPreviewImgHInitialPos[4];
 static int nDlgPreviewImgVInitialPos[4];
 static int nDlgWhiteBoxInitialPos[4];
@@ -103,6 +100,8 @@ static int nDlgSelectGameLstInitialPos[4];
 static int _213 = 213;
 static int _160 = 160;
 static int dpi_x = 96;
+
+static INT32 nSelTabPage = 0;
 
 // Filter TreeView
 HWND hFilterList					= NULL;
@@ -291,6 +290,7 @@ static UINT64 MASKCHANNELF			= (UINT64)1 << ChannelFValue;
 
 static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
 
+#define DISABLECRC				(1 << 25)
 #define SEARCHSUBDIRS			(1 << 26)
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -355,6 +355,9 @@ static void RebuildEverything();
 #define SetControlPosAlignBottomRight(a, b)						\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOSENDCHANGING);
 
+#define SetControlPosAlignTopLeftResizeHor(a, b)				\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], b[2] - xDelta, b[3], SWP_NOZORDER | SWP_NOSENDCHANGING);
+
 #define SetControlPosAlignBottomLeftResizeHor(a, b)				\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1] - yDelta, b[2] - xDelta, b[3], SWP_NOZORDER | SWP_NOSENDCHANGING);
 
@@ -372,11 +375,11 @@ static void RebuildEverything();
 static void GetTitlePreviewScale()
 {
 	RECT rect;
-	GetWindowRect(GetDlgItem(hSelDlg, IDC_STATIC2), &rect);
+	GetWindowRect(GetDlgItem(hSelDlg, IDC_SEL_TAB), &rect);
 	int w = rect.right - rect.left;
 	int h = rect.bottom - rect.top;
 
-	w = w * 90 / 100; // make W 90% of the "Preview / Title" windowpane
+	w = w * 95 / 100; // make W 90% of the "Preview / Title" windowpane
 	h = w * 75 / 100; // make H 75% of w (4:3)
 
 	_213 = w;
@@ -408,18 +411,15 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDROM, nDlgRomDirsBtnInitialPos);
 	GetInititalControlPos(IDRESCAN, nDlgScanRomsBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
+	GetInititalControlPos(IDC_SEL_TAB, nDlgSelTabInitialPos);
 	GetInititalControlPos(IDC_TREE2, nDlgFilterTreeInitialPos);
-	GetInititalControlPos(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
+	GetInititalControlPos(IDC_SEL_DISABLECRC, nDlgDisableCrcInitialPos);
 	GetInititalControlPos(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
 	GetInititalControlPos(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
 	GetInititalControlPos(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
 	GetInititalControlPos(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);
 	GetInititalControlPos(IDCANCEL, nDlgCancelBtnInitialPos);
 	GetInititalControlPos(IDOK, nDlgPlayBtnInitialPos);
-	GetInititalControlPos(IDC_STATIC3, nDlgTitleGrpInitialPos);
-	GetInititalControlPos(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
-	GetInititalControlPos(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
-	GetInititalControlPos(IDC_STATIC2, nDlgPreviewGrpInitialPos);
 	GetInititalControlPos(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
 	GetInititalControlPos(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
 	GetInititalControlPos(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
@@ -888,16 +888,9 @@ static void MyEndDialog()
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
-	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-
 	if (hPrevBmp) {
 		DeleteObject((HGDIOBJ)hPrevBmp);
 		hPrevBmp = NULL;
-	}
-	if(hTitleBmp) {
-		DeleteObject((HGDIOBJ)hTitleBmp);
-		hTitleBmp = NULL;
 	}
 
 	if (hExpand) {
@@ -979,10 +972,6 @@ static void RefreshPanel()
 		DeleteObject((HGDIOBJ)hPrevBmp);
 		hPrevBmp = NULL;
 	}
-	if (hTitleBmp) {
-		DeleteObject((HGDIOBJ)hTitleBmp);
-		hTitleBmp = NULL;
-	}
 	if (nTimer) {
 		KillTimer(hSelDlg, nTimer);
 		nTimer = 0;
@@ -991,13 +980,9 @@ static void RefreshPanel()
 	GetTitlePreviewScale();
 
 	hPrevBmp  = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
-	hTitleBmp = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
 
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-
-	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hTitleBmp);
-	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
 	// Clear the things in our Info-box
 	for (int i = 0; i < 6; i++) {
@@ -1005,13 +990,14 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND,  (nLoadMenuShowY & AUTOEXPAND)  ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE,   (nLoadMenuShowY & AVAILABLE)   ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND,  (nLoadMenuShowY & AUTOEXPAND)    ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE,   (nLoadMenuShowY & AVAILABLE)     ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE)   ? BST_CHECKED : BST_UNCHECKED);
 
-	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT     ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY     ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_SEL_SUBDIRS,   nLoadMenuShowY & SEARCHSUBDIRS ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME,    (nLoadMenuShowY & SHOWSHORT)     ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY,    (nLoadMenuShowY & ASCIIONLY)     ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SUBDIRS,      (nLoadMenuShowY & SEARCHSUBDIRS) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_DISABLECRC,   (nLoadMenuShowY & DISABLECRC)    ? BST_CHECKED : BST_UNCHECKED);
 }
 
 FILE* OpenPreview(int nIndex, TCHAR *szPath)
@@ -1053,14 +1039,30 @@ FILE* OpenPreview(int nIndex, TCHAR *szPath)
 	return fp;
 }
 
+static TCHAR* pszAppPath[] = {
+	szAppPreviewsPath,
+	szAppTitlesPath,
+	szAppSelectPath,
+	szAppVersusPath,
+	szAppHowtoPath,
+	szAppScoresPath,
+	szAppBossesPath,
+	szAppGameoverPath,
+	szAppFlyersPath,
+	szAppCabinetsPath,
+	szAppMarqueesPath,
+	szAppControlsPath,
+	szAppPCBsPath
+};
+
 static VOID CALLBACK PreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 {
-	UpdatePreview(false, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+	UpdatePreview(false, pszAppPath[nSelTabPage], IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 }
 
 static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 {
-	UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+	UpdatePreview(true, pszAppPath[nSelTabPage], IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 
 	if (GetIpsNumPatches()) {
 		if (!nShowMVSCartsOnly) {
@@ -1104,7 +1106,7 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 
 	nBurnDrvActive = nDialogSelect;
 
-	if ((nIndex != nOldIndex) || (HorCtrl == IDC_SCREENSHOT2_H)) {
+	if ((nIndex != nOldIndex) || (HorCtrl == IDC_SCREENSHOT_H)) {
 		int x, y, ax, ay;
 
 		BurnDrvGetAspect(&ax, &ay);
@@ -1198,13 +1200,6 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 		*&hPrevBmp = NULL;
 		hPrevBmp = hNewImage;
 	}
-
-	if (hTitleBmp && (HorCtrl == IDC_SCREENSHOT2_H || VerCtrl == IDC_SCREENSHOT2_V)) {
-		DeleteObject((HGDIOBJ)hTitleBmp);
-		*&hTitleBmp = NULL;
-		hTitleBmp = hNewImage;
-	}
-
 	if (bImageOrientation == 0) {
 		SendDlgItemMessage(hSelDlg, HorCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hNewImage);
 		SendDlgItemMessage(hSelDlg, VerCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
@@ -1863,6 +1858,42 @@ void UnloadDrvIcons()
 	_TreeView_SetCheckState(hFilterList, hItemChanged, (nShowX & nMASK) ? FALSE : TRUE);	\
 }
 
+static INT32 SelTabInit(HWND hDlg)
+{
+	UINT32 idsString[] = {
+		IDS_GAMEINFO_INGAME,
+		IDS_GAMEINFO_TITLE,
+		IDS_GAMEINFO_SELECT,
+		IDS_GAMEINFO_VERSUS,
+		IDS_GAMEINFO_HOWTO,
+		IDS_GAMEINFO_SCORES,
+		IDS_GAMEINFO_BOSSES,
+		IDS_GAMEINFO_GAMEOVER,
+		IDS_GAMEINFO_FLYER,
+		IDS_GAMEINFO_CABINET,
+		IDS_GAMEINFO_MARQUEE,
+		IDS_GAMEINFO_CONTROLS,
+		IDS_GAMEINFO_PCB
+	};
+
+	const INT32 nCount = sizeof(idsString) / sizeof(UINT32);
+	if (NULL == GetDlgItem(hDlg, IDC_SEL_TAB)) return NULL;
+
+	TC_ITEM TCI;
+	memset(&TCI, 0, sizeof(TC_ITEM));
+
+	TCI.mask = TCIF_TEXT;
+
+	for (INT32 i = 0; i < nCount; i++) {
+		TCI.pszText = FBALoadStringEx(hAppInst, idsString[i], true);
+		SendMessage(GetDlgItem(hDlg, IDC_SEL_TAB), TCM_INSERTITEM, (WPARAM)i, (LPARAM)&TCI);
+	}
+
+	return nCount;
+}
+
+static bool bIsDragging = false;
+
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
@@ -1876,9 +1907,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-
-		SendDlgItemMessage(hDlg, IDC_SCREENSHOT2_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-		SendDlgItemMessage(hDlg, IDC_SCREENSHOT2_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
 		hWhiteBGBrush	= CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
 
@@ -1935,6 +1963,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		SetFocus(hSelList);
 
+		SelTabInit(hDlg);
 		RebuildEverything();
 
 		TreeView_SetItemHeight(hSelList, cyItem);
@@ -1980,9 +2009,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		return TRUE;
 	}
 
-	if(Msg == UM_CHECKSTATECHANGE) {
+	if (Msg == UM_CHECKSTATECHANGE) {
 
-		HTREEITEM   hItemChanged = (HTREEITEM)lParam;
+		HTREEITEM hItemChanged = (HTREEITEM)lParam;
 
 		if (hItemChanged == hHardware) {
 			if ((nLoadMenuShowX & MASKALL) == 0) {
@@ -2367,6 +2396,27 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		RebuildEverything();
 	}
 
+	if (Msg == WM_SYSCOMMAND) {
+		if (wParam == SC_MOVE || wParam == SC_SIZE) {
+			// Drag to start, redraw disabled
+			SendMessage(hDlg, WM_SETREDRAW, FALSE, 0);
+			bIsDragging = true;
+		}
+	}
+
+	if (Msg == WM_ENTERSIZEMOVE) {
+		// Enter drag mode (after SC_MOVE/SC_SIZE is triggered)
+		SendMessage(hDlg, WM_SETREDRAW, FALSE, 0);
+		bIsDragging = true;
+	}
+
+	if (Msg == WM_EXITSIZEMOVE) {
+		// End of drag, resume redraw
+		SendMessage(hDlg, WM_SETREDRAW, TRUE, 0);
+		bIsDragging = false;
+//		RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
+	}
+
 	if (Msg == WM_COMMAND) {
 		if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == IDC_SEL_SEARCH) {
 			if (bSearchStringInit) {
@@ -2420,6 +2470,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDC_SEL_SUBDIRS:
 					nLoadMenuShowY ^= SEARCHSUBDIRS;
+					break;
+				case IDC_SEL_DISABLECRC:
+					nLoadMenuShowY ^= DISABLECRC;
 					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {
@@ -2542,33 +2595,29 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		if (xDelta == 0 && yDelta == 0) return 0;
 
-		SetControlPosAlignTopRight(IDC_STATIC_OPT, nDlgOptionsGrpInitialPos);
-		SetControlPosAlignTopRight(IDC_CHECKAVAILABLE, nDlgAvailableChbInitialPos);
-		SetControlPosAlignTopRight(IDC_CHECKUNAVAILABLE, nDlgUnavailableChbInitialPos);
-		SetControlPosAlignTopRight(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
-		SetControlPosAlignTopRight(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
-		SetControlPosAlignTopRight(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
-		SetControlPosAlignTopRight(IDC_SEL_SUBDIRS, nDlgSearchSubDirsChbInitialPos);
-		SetControlPosAlignTopRight(IDROM, nDlgRomDirsBtnInitialPos);
-		SetControlPosAlignTopRight(IDRESCAN, nDlgScanRomsBtnInitialPos);
+		SetControlPosAlignTopRight(IDC_SEL_TAB, nDlgSelTabInitialPos);
+		SetControlPosAlignTopRight(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
+		SetControlPosAlignTopRight(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
 
 		SetControlPosAlignTopRightResizeVert(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
 		SetControlPosAlignTopRightResizeVert(IDC_TREE2, nDlgFilterTreeInitialPos);
 
-		SetControlPosAlignBottomRight(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
+		SetControlPosAlignBottomRight(IDC_STATIC_OPT, nDlgOptionsGrpInitialPos);
+		SetControlPosAlignBottomRight(IDC_CHECKAVAILABLE, nDlgAvailableChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_CHECKUNAVAILABLE, nDlgUnavailableChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SUBDIRS, nDlgSearchSubDirsChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_DISABLECRC, nDlgDisableCrcInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
 		SetControlPosAlignBottomRight(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
-		SetControlPosAlignBottomRight(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
-		SetControlPosAlignBottomRight(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);
 		SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
 		SetControlPosAlignBottomRight(IDOK, nDlgPlayBtnInitialPos);
-
-		SetControlPosAlignTopLeft(IDC_STATIC3, nDlgTitleGrpInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
-		SetControlPosAlignTopLeft(IDC_STATIC2, nDlgPreviewGrpInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
-		SetControlPosAlignTopLeft(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
+		SetControlPosAlignBottomRight(IDROM, nDlgRomDirsBtnInitialPos);
+		SetControlPosAlignBottomRight(IDRESCAN, nDlgScanRomsBtnInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);
 
 		SetControlPosAlignBottomLeftResizeHor(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
 		SetControlPosAlignBottomLeftResizeHor(IDC_LABELCOMMENT, nDlgGameInfoLblInitialPos);
@@ -2613,8 +2662,18 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	}
 
 	NMHDR* pNmHdr = (NMHDR*)lParam;
+
 	if (Msg == WM_NOTIFY)
 	{
+		if ((pNmHdr->code == TCN_SELCHANGE) && (pNmHdr->idFrom == IDC_SEL_TAB))
+		{
+			nSelTabPage = TabCtrl_GetCurSel(GetDlgItem(hSelDlg, IDC_SEL_TAB));
+			if (nDialogSelect >= 0) {
+				UpdatePreview(true, pszAppPath[nSelTabPage], IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+			}
+			return TRUE;
+		}
+
 		if ((pNmHdr->code == TVN_ITEMEXPANDED) && (pNmHdr->idFrom == IDC_TREE2))
 		{
 			// save the expanded state of the filter nodes
@@ -2918,8 +2977,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nBurnDrvActive	= nBurnDrv[i].nBurnDrvNo;
 					nDialogSelect	= nBurnDrvActive;
 					bDrvSelected	= true;
-					UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
-					UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
+					UpdatePreview(true, pszAppPath[nSelTabPage], IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 					break;
 				}
 			}
@@ -3103,8 +3161,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			nDialogSelect	= nBurnDrvSelect[0];
 			bDrvSelected	= true;
-			UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
-			UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
+			UpdatePreview(true, pszAppPath[nSelTabPage], IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 
 			// Menu
 			POINT oPoint;

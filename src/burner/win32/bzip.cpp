@@ -539,11 +539,6 @@ INT32 BzipOpen(bool bootApp)
 					if (ri.nCrc) {										// If we know the CRC
 						if (List[nFind].nCrc != ri.nCrc) {				// Length okay, but CRC wrong
 							RomFind[i].nState = 2;
-
-							if (nLoadMenuShowY & (1 << 25)) {			// Disable CRC checksums
-								ri.nCrc = List[nFind].nCrc;
-								RomFind[i].nState = 1;
-							}
 						}
 					}
 				} else {

@@ -1010,7 +1010,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		SetWindowText(GetDlgItem(hRDMgrWnd, IDC_ROMDATA_TEXTDRIVER),   _T(""));
 		SetWindowText(GetDlgItem(hRDMgrWnd, IDC_ROMDATA_TEXTHARDWARE), _T(""));
 
-		CheckDlgButton(hRDMgrWnd, IDC_ROMDATA_SUBDIR, bRDListScanSub ? BST_CHECKED : BST_UNCHECKED);
+		CheckDlgButton(hRDMgrWnd, IDC_ROMDATA_SSUBDIR_CHECK, bRDListScanSub ? BST_CHECKED : BST_UNCHECKED);
 
 		TreeView_SetItemHeight(hRDListView, 40);
 
@@ -1212,7 +1212,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 			INT32 nCtrlID = LOWORD(wParam);
 
 			switch (nCtrlID) {
-				case IDC_ROMDATA_PLAY:
+				case IDC_ROMDATA_PLAY_BUTTON:
 				{
 					if (nSelItem >= 0) {
 						LVITEM LvItem;
@@ -1245,14 +1245,14 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 					break;
 				}
 
-				case IDC_ROMDATA_SCAN: {
+				case IDC_ROMDATA_SCAN_BUTTON: {
 					RomDataClearList();
 					RomdataListFindDats(szAppRomdataPath);
 					SetFocus(hRDListView);
 					break;
 				}
 
-				case IDC_ROMDATA_SELDIR: {
+				case IDC_ROMDATA_SEL_DIR_BUTTON: {
 					RomDataClearList();
 					SupportDirCreateTab(IDC_SUPPORTDIR_EDIT25, hRDMgrWnd);
 					RomdataListFindDats(szAppRomdataPath);
@@ -1260,15 +1260,15 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 					break;
 				}
 
-				case IDC_ROMDATA_SUBDIR: {
-					bRDListScanSub = (BST_CHECKED == IsDlgButtonChecked(hDlg, IDC_ROMDATA_SUBDIR));
+				case IDC_ROMDATA_SSUBDIR_CHECK: {
+					bRDListScanSub = (BST_CHECKED == IsDlgButtonChecked(hDlg, IDC_ROMDATA_SSUBDIR_CHECK));
 					RomDataClearList();
 					RomdataListFindDats(szAppRomdataPath);
 					SetFocus(hRDListView);
 					break;
 				}
 
-				case IDC_ROMDATA_CANCEL: {
+				case IDC_ROMDATA_CANCEL_BUTTON: {
 					RomDataManagerExit();
 					EndDialog(hDlg, 0);
 					break;

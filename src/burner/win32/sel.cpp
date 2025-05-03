@@ -1980,7 +1980,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		return TRUE;
 	}
 
-	if(Msg == UM_CHECKSTATECHANGE) {
+	if (Msg == UM_CHECKSTATECHANGE) {
 
 		HTREEITEM   hItemChanged = (HTREEITEM)lParam;
 
@@ -2365,6 +2365,18 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterBoard)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_BOARD);
 
 		RebuildEverything();
+	}
+
+	// Disable redraw
+	if (Msg == WM_MOVE) {
+		SendMessage(hDlg, WM_SETREDRAW, FALSE, 0);
+	}
+	// Enable redraw
+	if (Msg == WM_SIZE) {
+		SendMessage(hDlg, WM_SETREDRAW, TRUE,  0);
+	}
+	if (Msg == WM_EXITSIZEMOVE) {
+		SendMessage(hDlg, WM_SETREDRAW, TRUE,  0);
 	}
 
 	if (Msg == WM_COMMAND) {

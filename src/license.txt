@@ -66,9 +66,11 @@ Uses Xbyak (JIT assembler for x86/x64) by Herumi (https://github.com/herumi/xbya
 
 Some graphics effects provided by the Scale2x, 2xPM, Eagle Graphics, 2xSaI, hq2x/hq3x/hq4x, hq2xS/hq3xS/SuperEagle/2xSaI (VBA), hq2xS/hq3xS/hq2xBold/hq3xBold/EPXB/EPXC (SNES9X ReRecording) and SuperScale libraries (http://scale2x.sourceforge.net, http://2xpm.freeservers.com, http://retrofx.com, http://elektron.its.tudelft.nl/~dalikifa, http://www.hiend3d.com, http://code.google.com/p/vba-rerecording, http://code.google.com/p/snes9x151-rerecording, http://nebula.emulatronia.com).
 
+IntegerScaling library for pixel-perfect integer-ratio scaling by Marat Tanalin (https://github.com/Marat-Tanalin/integer-scaling)
+
 Miscellaneous other components from various sources. Copyright and license information are contained in the relevant parts of the source code.
 
-All material not covered above © 2004-2019 Team FB Neo.
+All material not covered above © 2004-2025 Team FB Neo.
 
 DISCLAIMER: The authors of FB Neo don't guarantee its fitness for any purpose, implied or otherwise, and do not accept responsibility for any damages whatsoever that might occur when using FB Neo. All games emulated by FB Neo, including any images and sounds therein, are copyrighted by their respective copyright holders. FB Neo DOES NOT INCLUDE any ROM images of emulated games.
 

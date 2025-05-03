@@ -665,6 +665,9 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_SETCPUCLOCK, nBurnCPUSpeedAdjust != 0x0100 ? MF_CHECKED : MF_UNCHECKED);
 	CreateCPUSpeedItem(nBurnCPUSpeedAdjust != 0x0100);
 
+	if (bVidIntegerScale) {
+		var = MENU_INTSCALE;
+	} else
 	if (bVidFullStretch) {
 		var = MENU_STRETCH;
 	} else {
@@ -674,8 +677,7 @@ void MenuUpdate()
 			var = MENU_NOSTRETCH;
 		}
 	}
-	CheckMenuRadioItem(hMenu, MENU_NOSTRETCH, MENU_ASPECT, var, MF_BYCOMMAND);
-	CheckMenuItem(hMenu, MENU_STRETCH, bVidFullStretch ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuRadioItem(hMenu, MENU_NOSTRETCH, MENU_INTSCALE, var, MF_BYCOMMAND);
 
 	CheckMenuItem(hMenu, MENU_TRIPLE, bVidTripleBuffer ? MF_CHECKED : MF_UNCHECKED);
 

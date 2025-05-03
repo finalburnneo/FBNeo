@@ -1638,25 +1638,31 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bDrvSaveAll = !bDrvSaveAll;
 			break;
 
+		case MENU_INTSCALE:
+			bVidCorrectAspect = 1;
+			bVidIntegerScale = 1;
+			bVidFullStretch = 0;
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_NOSTRETCH:
 			bVidCorrectAspect = 0;
 			bVidFullStretch = 0;
+			bVidIntegerScale = 0;
 			POST_INITIALISE_MESSAGE;
 			break;
 
 		case MENU_STRETCH:
 			bVidFullStretch = true;
-			if (bVidFullStretch) {
-				bVidCorrectAspect = 0;
-			}
+			bVidCorrectAspect = 0;
+			bVidIntegerScale = 0;
 			POST_INITIALISE_MESSAGE;
 			break;
 
 		case MENU_ASPECT:
 			bVidCorrectAspect = true;
-			if (bVidCorrectAspect) {
-				bVidFullStretch = 0;
-			}
+			bVidFullStretch = 0;
+			bVidIntegerScale = 0;
 			POST_INITIALISE_MESSAGE;
 			break;
 

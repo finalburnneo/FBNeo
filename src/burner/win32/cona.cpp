@@ -254,6 +254,7 @@ int ConfigAppLoad()
 		VAR(nScreenSizeVer);
 
 		VAR(nWindowSize);
+		VAR(bVidIntegerScale);
 		VAR(nWindowPosX); VAR(nWindowPosY);
 		VAR(bDoGamma);
 		VAR(bVidUseHardwareGamma);
@@ -590,6 +591,8 @@ int ConfigAppSave()
 	VAR(nVidRotationAdjust);
 	_ftprintf(h, _T("\n// Initial window size (0 = autosize)\n"));
 	VAR(nWindowSize);
+	_ftprintf(h, _T("\n// Use integer scaling? (1 on, 0 off)\n"));
+	VAR(bVidIntegerScale);
 	_ftprintf(h, _T("\n// Window position\n"));
 	VAR(nWindowPosX); VAR(nWindowPosY);
 	_ftprintf(h, _T("\n// If non-zero, perform gamma correction\n"));

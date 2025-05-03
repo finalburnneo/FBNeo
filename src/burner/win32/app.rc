@@ -988,6 +988,7 @@ BEGIN
             MENUITEM "&Normal stretch",					MENU_NOSTRETCH
             MENUITEM "&Full stretch",					MENU_STRETCH
             MENUITEM "Correct &aspect ratio",				MENU_ASPECT
+            MENUITEM "&Integer Scaling (Max size)",				MENU_INTSCALE
         END
         MENUITEM SEPARATOR
         MENUITEM "&Enable gamma correction",				MENU_GAMMA_DO

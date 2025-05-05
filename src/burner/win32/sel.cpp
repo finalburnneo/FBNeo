@@ -712,21 +712,26 @@ static int SelListMake()
 
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
+			TCHAR *StringFound1 = NULL;
 			TCHAR *StringFound2 = NULL;
 			TCHAR *StringFound3 = NULL;
 			TCHAR szDriverName[256] = { _T("") };
+			TCHAR szDriverNameA[256] = { _T("") };
 			TCHAR szManufacturerName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
+			swprintf(szDriverNameA, _T("%S"), BurnDrvGetTextA(DRV_FULLNAME));
 			swprintf(szManufacturerName, _T("%s %s"), BurnDrvGetText(DRV_MANUFACTURER), BurnDrvGetText(DRV_SYSTEM));
 			for (int k = 0; k < 256; k++) {
 				szDriverName[k] = _totlower(szDriverName[k]);
+				szDriverNameA[k] = _totlower(szDriverNameA[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
+			StringFound1 = wcsstr(szDriverNameA, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
 			StringFound3 = wcsstr(szManufacturerName, szSearchString);
 
-			if (!StringFound && !StringFound2 && !StringFound3) continue;
+			if (!StringFound && !StringFound1 && !StringFound2 && !StringFound3) continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));
@@ -777,21 +782,26 @@ static int SelListMake()
 
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
+			TCHAR *StringFound1 = NULL;
 			TCHAR *StringFound2 = NULL;
 			TCHAR *StringFound3 = NULL;
 			TCHAR szDriverName[256] = { _T("") };
+			TCHAR szDriverNameA[256] = { _T("") };
 			TCHAR szManufacturerName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
+			swprintf(szDriverNameA, _T("%S"), BurnDrvGetTextA(DRV_FULLNAME));
 			swprintf(szManufacturerName, _T("%s %s"), BurnDrvGetText(DRV_MANUFACTURER), BurnDrvGetText(DRV_SYSTEM));
-			for (int k =0; k < 256; k++) {
+			for (int k = 0; k < 256; k++) {
 				szDriverName[k] = _totlower(szDriverName[k]);
+				szDriverNameA[k] = _totlower(szDriverNameA[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
+			StringFound1 = wcsstr(szDriverNameA, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
 			StringFound3 = wcsstr(szManufacturerName, szSearchString);
 
-			if (!StringFound && !StringFound2 && !StringFound3) continue;
+			if (!StringFound && !StringFound1 && !StringFound2 && !StringFound3) continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));

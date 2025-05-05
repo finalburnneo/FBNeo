@@ -12808,7 +12808,7 @@ struct BurnDriver BurnDrvgg_castlill = {
 
 // Chakan (Euro, USA)
 static struct BurnRomInfo gg_chakanRomDesc[] = {
-	{ "Chakan (Euro, USA)/1992)(Sega).gg",	0x40000, 0xdfc7adc8, BRF_PRG | BRF_ESS },
+	{ "Chakan (Euro, USA)(1992)(Sega).gg",	0x40000, 0xdfc7adc8, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_chakan)

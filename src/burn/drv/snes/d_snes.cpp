@@ -3558,6 +3558,25 @@ struct BurnDriver BurnDrvsnes_Beethoven = {
 	512, 448, 4, 3
 };
 
+// Benkei Gaiden - Suna no Shou (Japan)
+
+static struct BurnRomInfo snes_BenkeigaidenRomDesc[] = {
+	{ "Benkei Gaiden - Suna no Shou (J)(1992)(Sunsoft).sfc", 1572864, 0x2743017d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Benkeigaiden)
+STD_ROM_FN(snes_Benkeigaiden)
+
+struct BurnDriver BurnDrvsnes_Benkeigaiden = {
+	"snes_benkeigaiden", NULL, NULL, NULL, "1992",
+	"Benkei Gaiden - Suna no Shou (Japan)\0", NULL, "Sunsoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_BenkeigaidenRomInfo, snes_BenkeigaidenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Best of the Best - Championship Karate (USA)
 
 static struct BurnRomInfo snes_BestofbestRomDesc[] = {

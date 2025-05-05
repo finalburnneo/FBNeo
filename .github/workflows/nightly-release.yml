@@ -2,354 +2,558 @@ name: "nightly-release"
 
 on:
   push:
-    branches:
-      - "master"
+    branches: [ master ]
+
+env:
+    WINDOWS_X86_64_ARTIFACT: windows-x86_64
+    WINDOWS_X86_64_ARTIFACT_PATH: windows-x86_64.txt
+    WINDOWS_X86_64_ARCHIVE_ARTIFACT: windows-x86_64-archive
+    WINDOWS_X86_64_DEBUG_ARTIFACT: windows-x86_64-debug
+    WINDOWS_X86_64_DEBUG_ARTIFACT_PATH: windows-x86_64-debug.txt
+    WINDOWS_X86_64_DEBUG_ARCHIVE_ARTIFACT: windows-x86_64-debug-archive
+    WINDOWS_X86_32_ARTIFACT: windows-x86_32
+    WINDOWS_X86_32_ARTIFACT_PATH: windows-x86_32.txt
+    WINDOWS_X86_32_ARCHIVE_ARTIFACT: windows-x86_32-archive
+    WINDOWS_X86_32_DEBUG_ARTIFACT: windows-x86_32-debug
+    WINDOWS_X86_32_DEBUG_ARTIFACT_PATH: windows-x86_32-debug.txt
+    WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT: windows-x86_32-debug-archive
+    LINUX_SDL2_X86_64_ARTIFACT: linux-sdl2-x86_64
+    LINUX_SDL2_X86_64_ARTIFACT_PATH: linux-sdl2-x86_64.txt
+    LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT: linux-sdl2-x86_64-archive
+    LINUX_SDL1_X86_64_ARTIFACT: linux-sdl1-x86_64
+    LINUX_SDL1_X86_64_ARTIFACT_PATH: linux-sdl1-x86_64.txt
+    LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT: linux-sdl1-x86_64-archive
+    MACOS_X86_64_ARTIFACT: macos-x86_64
+    MACOS_X86_64_ARTIFACT_PATH: macos-x86_64.txt
+    MACOS_X86_64_ARCHIVE_ARTIFACT: macos-x86_64-archive
+    MACOS_ARM64_ARTIFACT: macos-arm64
+    MACOS_ARM64_ARTIFACT_PATH: macos-arm64.txt
+    MACOS_ARM64_ARCHIVE_ARTIFACT: macos-arm64-archive
 
 jobs:
-  nightly_release:
-    name: Create release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.nightly_release.outputs.upload_url }}
-
-    steps:
-      - name: Create release
-        id: nightly_release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "nightly builds"
-
-  build_windows:
-    name: Windows x32
-    needs: nightly_release
+  build_windows_x86_64:
+    name: Build (Windows x86_64)
     runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
-
     steps:
-      - name: Install Windows MSYS2 dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
-          msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-
-      - uses: actions/checkout@v2
-
-      - name: Build FBNeo
-        run: |
-          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Windows x32
-          path: |
-            fbneo.exe
-
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Windows x32.zip" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Windows x32.zip
-          asset_path: Windows x32.zip
-          asset_content_type: application/zip
-
-  build_windows_debug:
-    name: Windows x32 (Debug)
-    needs: nightly_release
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-      - name: Install Windows MSYS2 dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
-          msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-
-      - uses: actions/checkout@v2
-
-      - name: Build FBNeo
-        run: |
-          make -j$(nproc) mingw SKIPDEPEND=1
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Windows x32 (Debug)
-          path: |
-            fbneod.exe
-
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Windows x32 (Debug).zip" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Windows x32 (Debug).zip
-          asset_path: Windows x32 (Debug).zip
-          asset_content_type: application/zip
-
-  build_windows64:
-    name: Windows x64
-    needs: nightly_release
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-
-    steps:
-      - name: Install Windows MSYS2 dependencies
+      - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
           update: true
           install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
           msystem: MINGW64
 
-      - uses: actions/checkout@v2
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_windows_x86_64_archive
         run: |
           make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+          archive_file="${{ env.WINDOWS_X86_64_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneo64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_windows_x86_64_archive.outputs.archive_file }}' > $WINDOWS_X86_64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: Windows x64
-          path: |
-            fbneo64.exe
+          name: ${{ env.WINDOWS_X86_64_ARTIFACT }}
+          path: ${{ env.WINDOWS_X86_64_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Windows x64.zip" fbneo64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Windows x64.zip
-          asset_path: Windows x64.zip
-          asset_content_type: application/zip
+          name: ${{ env.WINDOWS_X86_64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_x86_64_archive.outputs.archive_file }}
+          retention-days: 1
 
-  build_windows64_debug:
-    name: Windows x64 (Debug)
-    needs: nightly_release
+  build_windows_x86_64_debug:
+    name: Build (Windows x86_64 Debug)
     runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
-
     steps:
-      - name: Install Windows MSYS2 dependencies
+      - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
           update: true
           install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
           msystem: MINGW64
 
-      - uses: actions/checkout@v2
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_windows_x86_64_debug_archive
         run: |
           make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+          archive_file="${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneo64d.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_windows_x86_64_debug_archive.outputs.archive_file }}' > $WINDOWS_X86_64_DEBUG_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: Windows x64 (Debug)
-          path: |
-            fbneo64d.exe
+          name: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}
+          path: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Windows x64 (Debug).zip" fbneo64d.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Windows x64 (Debug).zip
-          asset_path: Windows x64 (Debug).zip
-          asset_content_type: application/zip
+          name: ${{ env.WINDOWS_X86_64_DEBUG_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_x86_64_debug_archive.outputs.archive_file }}
+          retention-days: 1
 
-  build_linux_sdl2:
-    name: Linux SDL 2
-    needs: nightly_release
+  build_windows_x86_32:
+    name: Build (Windows x86_32)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Install dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          msystem: MINGW32
+
+      - name: Downgrade pthread
+        run: |
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Build
+        id: create_windows_x86_32_archive
+        run: |
+          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
+          archive_file="${{ env.WINDOWS_X86_32_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_windows_x86_32_archive.outputs.archive_file }}' > $WINDOWS_X86_32_ARTIFACT_PATH
+
+      - name: Upload Archive Path
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
+          path: ${{ env.WINDOWS_X86_32_ARTIFACT_PATH }}
+          retention-days: 1
+
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_x86_32_archive.outputs.archive_file }}
+          retention-days: 1
+
+  build_windows_x86_32_debug:
+    name: Build (Windows x86_32 Debug)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Install dependencies
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          msystem: MINGW32
+
+      - name: Downgrade pthread
+        run: |
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Build
+        id: create_windows_x86_32_debug_archive
+        run: |
+          make -j$(nproc) mingw SKIPDEPEND=1
+          archive_file="${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_windows_x86_32_debug_archive.outputs.archive_file }}' > $WINDOWS_X86_32_DEBUG_ARTIFACT_PATH
+
+      - name: Upload Archive Path
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}
+          path: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT_PATH }}
+          retention-days: 1
+
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_x86_32_debug_archive.outputs.archive_file }}
+          retention-days: 1
+
+  build_linux_sdl2_x86_64:
+    name: Build (Linux SDL2 x86_64)
     runs-on: ubuntu-latest
+    continue-on-error: true
     defaults:
       run:
         shell: bash {0}
-
     steps:
-      - name: Install Linux dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get -y update
           sudo apt-get -y install libsdl2-dev libsdl2-image-dev
 
-      - uses: actions/checkout@v2
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_linux_sdl2_x86_64_archive
         run: |
           make -j$(nproc) sdl2 SKIPDEPEND=1 RELEASEBUILD=1
+          archive_file="${{ env.LINUX_SDL2_X86_64_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_linux_sdl2_x86_64_archive.outputs.archive_file }}' > $LINUX_SDL2_X86_64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: Linux SDL 2
-          path: |
-            fbneo
+          name: ${{ env.LINUX_SDL2_X86_64_ARTIFACT }}
+          path: ${{ env.LINUX_SDL2_X86_64_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Linux SDL 2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Linux SDL 2.zip
-          asset_path: Linux SDL 2.zip
-          asset_content_type: application/zip
+          name: ${{ env.LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_linux_sdl2_x86_64_archive.outputs.archive_file }}
+          retention-days: 1
 
-  build_linux_sdl12:
-    name: Linux SDL 1.2
-    needs: nightly_release
+  build_linux_sdl1_x86_64:
+    name: Build (Linux SDL1 x86_64)
     runs-on: ubuntu-latest
+    continue-on-error: true
     defaults:
       run:
         shell: bash {0}
-
     steps:
-      - name: Install Linux dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get -y update
           sudo apt-get -y install libsdl1.2-dev
 
-      - uses: actions/checkout@v2
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_linux_sdl1_x86_64_archive
         run: |
           make -j$(nproc) sdl SKIPDEPEND=1 RELEASEBUILD=1
+          archive_file="${{ env.LINUX_SDL1_X86_64_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip --junk-paths "${archive_file}" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_linux_sdl1_x86_64_archive.outputs.archive_file }}' > $LINUX_SDL1_X86_64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: Linux SDL 1.2
-          path: |
-            fbneo
+          name: ${{ env.LINUX_SDL1_X86_64_ARTIFACT }}
+          path: ${{ env.LINUX_SDL1_X86_64_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Build release asset
-        run: |
-          zip --junk-paths "Linux SDL 1.2.zip" fbneo src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: Linux SDL 1.2.zip
-          asset_path: Linux SDL 1.2.zip
-          asset_content_type: application/zip
+          name: ${{ env.LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_linux_sdl1_x86_64_archive.outputs.archive_file }}
+          retention-days: 1
 
   build_macos_x86_64:
-    name: macOS (x86_64)
-    needs: nightly_release
+    name: Build (MacOS x86_64)
     runs-on: macos-13 # Required version for x86_64
+    continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_macos_x86_64_archive
         run: |
           cd projectfiles/xcode
           xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
+          cd build/Release
+          archive_file="${{ env.MACOS_X86_64_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip -r "${archive_file}" FinalBurn\ Neo.app
+          mv "${archive_file}" ../../../..
+          cd ../../../..
+          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_macos_x86_64_archive.outputs.archive_file }}' > $MACOS_X86_64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: macOS_x86_64
-          path: "projectfiles/xcode/build/Release/FinalBurn Neo.app"
+          name: ${{ env.MACOS_X86_64_ARTIFACT }}
+          path: ${{ env.MACOS_X86_64_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Compress macOS app
-        run: |
-          cd projectfiles/xcode/build/Release
-          zip -r "FinalBurn_Neo_macOS_x86_64.zip" "FinalBurn Neo.app"
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS_x86_64.zip
-          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_x86_64.zip
-          asset_content_type: application/zip
+          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_macos_x86_64_archive.outputs.archive_file }}
+          retention-days: 1
 
   build_macos_arm64:
-    name: macOS (arm64)
-    needs: nightly_release
+    name: Build (MacOS arm64)
     runs-on: macos-latest
+    continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone
+        uses: actions/checkout@v4
 
-      - name: Build FBNeo
+      - name: Build
+        id: create_macos_arm64_archive
         run: |
           cd projectfiles/xcode
           xcodebuild ARCHS=arm64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
+          cd build/Release
+          archive_file="${{ env.MACOS_ARM64_ARTIFACT }}.zip"
+          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+          zip -r "${archive_file}" FinalBurn\ Neo.app
+          mv "${archive_file}" ../../../..
+          cd ../../../..
+          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Upload Artifact
+      - name: Create Archive Path
+        run: |
+          echo archive_path= '${{ steps.create_macos_arm64_archive.outputs.archive_file }}' > $MACOS_ARM64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
         uses: actions/upload-artifact@v4
         with:
-          name: macOSarm64
-          path: "projectfiles/xcode/build/Release/FinalBurn Neo.app"
+          name: ${{ env.MACOS_ARM64_ARTIFACT }}
+          path: ${{ env.MACOS_ARM64_ARTIFACT_PATH }}
+          retention-days: 1
 
-      - name: Compress macOS app
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_macos_arm64_archive.outputs.archive_file }}
+          retention-days: 1
+
+  release:
+    needs: [ build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64, build_macos_x86_64, build_macos_arm64 ]
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      # Windows x86_64
+      - name: Download Artifact (Windows x86_64)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_64_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows x86_64) and Store in Step Outputs
+        id: store_windows_x86_64
         run: |
-          cd projectfiles/xcode/build/Release
-          zip -r "FinalBurn_Neo_macOS_arm64.zip" "FinalBurn Neo.app"
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_X86_64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
+      - name: Download Artifact with Archive (Windows x86_64)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_64_ARCHIVE_ARTIFACT }}
+
+      # Windows x86_64 Debug
+      - name: Download Artifact (Windows x86_64 Debug)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows x86_64 Debug) and Store in Step Outputs
+        id: store_windows_x86_64_debug
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_X86_64_DEBUG_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Windows x86_64 Debug)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_64_DEBUG_ARCHIVE_ARTIFACT }}
+
+      # Windows x86_32
+      - name: Download Artifact (Windows x86_32)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows x86_32) and Store in Step Outputs
+        id: store_windows_x86_32
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_X86_32_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Windows x86_32)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_ARCHIVE_ARTIFACT }}
+
+      # Windows x86_32 Debug
+      - name: Download Artifact (Windows x86_32 Debug)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows x86_32 Debug) and Store in Step Outputs
+        id: store_windows_x86_32_debug
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_X86_32_DEBUG_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Windows x86_32 Debug)
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT }}
+
+      # Linux SDL2 x86_64
+      - name: Download Artifact (Linux SDL2 x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LINUX_SDL2_X86_64_ARTIFACT }}
+
+      - name: Extract Archive Path (Linux SDL2 x86_64) and Store in Step Outputs
+        id: store_linux_sdl2_x86_64
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $LINUX_SDL2_X86_64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Linux SDL2 x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT }}
+
+      # Linux SDL1 x86_64
+      - name: Download Artifact (Linux SDL1 x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LINUX_SDL1_X86_64_ARTIFACT }}
+
+      - name: Extract Archive Path (Linux SDL1 x86_64) and Store in Step Outputs
+        id: store_linux_sdl1_x86_64
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $LINUX_SDL1_X86_64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Linux SDL1 x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT }}
+
+      # MacOS x86_64
+      - name: Download Artifact (MacOS x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.MACOS_X86_64_ARTIFACT }}
+
+      - name: Extract Archive Path (MacOS x86_64) and Store in Step Outputs
+        id: store_macos_x86_64
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_X86_64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (MacOS x86_64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
+
+      # MacOS arm64
+      - name: Download Artifact (MacOS arm64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.MACOS_ARM64_ARTIFACT }}
+
+      - name: Extract Archive Path (MacOS arm64) and Store in Step Outputs
+        id: store_macos_arm64
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_ARM64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (MacOS arm64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
+
+      # Delete old nightly and create the new one
+      - name: Delete previous nightly
+        uses: ClementTsang/delete-tag-and-release@v0.3.1
+        with:
+          delete_release: true
+          tag_name: latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release new nightly
+        uses: softprops/action-gh-release@v2
         with:
-          upload_url: ${{ needs.nightly_release.outputs.upload_url }}
-          asset_name: FinalBurn_Neo_macOS_arm64.zip
-          asset_path: projectfiles/xcode/build/Release/FinalBurn_Neo_macOS_arm64.zip
-          asset_content_type: application/zip
+          name: nightly builds
+          tag_name: latest
+          target_commitish: ${{ github.sha }}
+          draft: false
+          prerelease: true
+          files: |
+            ${{ steps.store_linux_sdl2_x86_64.outputs.archive_path }}
+            ${{ steps.store_linux_sdl1_x86_64.outputs.archive_path }}
+            ${{ steps.store_windows_x86_64.outputs.archive_path }}
+            ${{ steps.store_windows_x86_32.outputs.archive_path }}
+            ${{ steps.store_windows_x86_64_debug.outputs.archive_path }}
+            ${{ steps.store_windows_x86_32_debug.outputs.archive_path }}
+            ${{ steps.store_macos_x86_64.outputs.archive_path }}
+            ${{ steps.store_macos_arm64.outputs.archive_path }}
+          token: ${{ secrets.GITHUB_TOKEN }}

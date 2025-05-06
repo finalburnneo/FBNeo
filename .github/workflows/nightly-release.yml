@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
     RELEASE_BODY_ARTIFACT: release-body
     RELEASE_BODY_ARTIFACT_PATH: release-body.txt

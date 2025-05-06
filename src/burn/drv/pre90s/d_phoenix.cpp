@@ -2055,8 +2055,8 @@ static struct BurnRomInfo nextfaseRomDesc[] = {
 	{ "nf09.bin",		0x0800, 0xbacbfa88, 3 | BRF_GRA },           // 10 Foreground Tiles
 	{ "nf10.bin",		0x0800, 0x3143a9ee, 3 | BRF_GRA },           // 11
 
-	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
-	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+	{ "nf.ic40",		0x0100, 0x725747be, 4 | BRF_GRA },           // 12 Color Proms
+	{ "nf.ic41",		0x0100, 0xa91055ab, 4 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(nextfase)

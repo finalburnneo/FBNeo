@@ -1934,7 +1934,7 @@ STD_ROM_FN(snes_Alcahestj)
 
 struct BurnDriver BurnDrvsnes_Alcahestj = {
 	"snes_alcahestj", "snes_alcahestte", NULL, NULL, "1993",
-	"Alcahest (Japan)\0", NULL, "Squaresoft - HAL Lab.", "SNES / Super Famicom",
+	"Alcahest (Japan)\0", NULL, "Squaresoft - HAL Laboratory", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_AlcahestjRomInfo, snes_AlcahestjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -3827,7 +3827,7 @@ struct BurnDriver BurnDrvsnes_Blockuzushi = {
 // Blue Crystal Rod, The (Japan)
 
 static struct BurnRomInfo snes_BlucryrodjRomDesc[] = {
-	{ "Blue Crystal Rod, The (J)(1994)(Namco).sfc", 2097152, 0xefc21f71, BRF_ESS | BRF_PRG },
+	{ "Blue Crystal Rod, The (J)(1994)(Namcot).sfc", 2097152, 0xefc21f71, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Blucryrodj)
@@ -3835,7 +3835,7 @@ STD_ROM_FN(snes_Blucryrodj)
 
 struct BurnDriver BurnDrvsnes_Blucryrodj = {
 	"snes_blucryrodj", "snes_blucryrodte", NULL, NULL, "1994",
-	"Blue Crystal Rod, The (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Blue Crystal Rod, The (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_BlucryrodjRomInfo, snes_BlucryrodjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -5952,10 +5952,10 @@ struct BurnDriver BurnDrvsnes_Coronland = {
 	512, 448, 4, 3
 };
 
-// Cosmo Gang - The Video (Japan)
+// Cosmo Gang: The Video (Japan)
 
 static struct BurnRomInfo snes_CosmogangRomDesc[] = {
-	{ "Cosmo Gang - The Video (J)(1992)(Namco).sfc", 1048576, 0xa26dc1de, BRF_ESS | BRF_PRG },
+	{ "Cosmo Gang - The Video (J)(1992)(Namcot).sfc", 1048576, 0xa26dc1de, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Cosmogang)
@@ -5963,7 +5963,7 @@ STD_ROM_FN(snes_Cosmogang)
 
 struct BurnDriver BurnDrvsnes_Cosmogang = {
 	"snes_cosmogang", NULL, NULL, NULL, "1992",
-	"Cosmo Gang - The Video (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Cosmo Gang: The Video (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VERSHOOT, 0,
 	SNESGetZipName, snes_CosmogangRomInfo, snes_CosmogangRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -5971,10 +5971,10 @@ struct BurnDriver BurnDrvsnes_Cosmogang = {
 	512, 448, 4, 3
 };
 
-// Cosmo Gang - The Puzzle (Japan)
+// Cosmo Gang: The Puzzle (Japan)
 
 static struct BurnRomInfo snes_CosmogangpzljRomDesc[] = {
-	{ "Cosmo Gang - The Puzzle (J)(1993)(Namco).sfc", 524288, 0x61b26167, BRF_ESS | BRF_PRG },
+	{ "Cosmo Gang - The Puzzle (J)(1993)(Namcot).sfc", 524288, 0x61b26167, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Cosmogangpzlj)
@@ -5982,7 +5982,7 @@ STD_ROM_FN(snes_Cosmogangpzlj)
 
 struct BurnDriver BurnDrvsnes_Cosmogangpzlj = {
 	"snes_cosmogangpzlj", NULL, NULL, NULL, "1993",
-	"Cosmo Gang - The Puzzle (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Cosmo Gang: The Puzzle (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_CosmogangpzljRomInfo, snes_CosmogangpzljRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -12253,7 +12253,7 @@ struct BurnDriver BurnDrvsnes_Hebepopoonj = {
 // Hello! Pac-Man (Japan)
 
 static struct BurnRomInfo snes_HellopacmanRomDesc[] = {
-	{ "Hello! Pac-Man (J)(1994)(Namco).sfc", 1572864, 0x0318fd8c, BRF_ESS | BRF_PRG },
+	{ "Hello! Pac-Man (J)(1994)(Namcot).sfc", 1572864, 0x0318fd8c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Hellopacman)
@@ -12261,7 +12261,7 @@ STD_ROM_FN(snes_Hellopacman)
 
 struct BurnDriver BurnDrvsnes_Hellopacman = {
 	"snes_hellopacman", "snes_pacman2adv", NULL, NULL, "1994",
-	"Hello! Pac-Man (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Hello! Pac-Man (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_HellopacmanRomInfo, snes_HellopacmanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -14579,7 +14579,7 @@ STD_ROM_FN(snes_Kirbyfunpak)
 
 struct BurnDriver BurnDrvsnes_Kirbyfunpak = {
 	"snes_kirbyfunpak", "snes_kirbysstar", NULL, NULL, "1996",
-	"Kirby's Fun Pak (Euro)\0", "SA-1 enhancement CPU", "Nintendo - HAL Lab.", "SNES / Super Famicom",
+	"Kirby's Fun Pak (Euro)\0", "SA-1 enhancement CPU", "Nintendo - HAL Laboratory", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_KirbyfunpakRomInfo, snes_KirbyfunpakRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -14617,7 +14617,7 @@ STD_ROM_FN(snes_Kirbysdx)
 
 struct BurnDriver BurnDrvsnes_Kirbysdx = {
 	"snes_kirbysdx", "snes_kirbysstar", NULL, NULL, "1996",
-	"Hoshi no Kirby Super Deluxe (Japan)\0", "SA-1 enhancement CPU", "Nintendo - HAL Lab.", "SNES / Super Famicom",
+	"Hoshi no Kirby Super Deluxe (Japan)\0", "SA-1 enhancement CPU", "Nintendo - HAL Laboratory", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_KirbysdxRomInfo, snes_KirbysdxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -14636,7 +14636,7 @@ STD_ROM_FN(snes_Kirbysstar)
 
 struct BurnDriver BurnDrvsnes_Kirbysstar = {
 	"snes_kirbysstar", NULL, NULL, NULL, "1996",
-	"Kirby Super Star (USA)\0", "SA-1 enhancement CPU", "Nintendo - HAL Lab.", "SNES / Super Famicom",
+	"Kirby Super Star (USA)\0", "SA-1 enhancement CPU", "Nintendo - HAL Laboratory", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_KirbysstarRomInfo, snes_KirbysstarRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -17365,7 +17365,7 @@ struct BurnDriver BurnDrvsnes_Mightmagic3 = {
 // Militia (Japan)
 
 static struct BurnRomInfo snes_MilitiaRomDesc[] = {
-	{ "Militia (J)(1993)(Namco).sfc", 1572864, 0x96717f64, BRF_ESS | BRF_PRG },
+	{ "Militia (J)(1993)(Namcot).sfc", 1572864, 0x96717f64, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Militia)
@@ -17373,7 +17373,7 @@ STD_ROM_FN(snes_Militia)
 
 struct BurnDriver BurnDrvsnes_Militia = {
 	"snes_militia", "snes_metmarines", NULL, NULL, "1993",
-	"Militia (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Militia (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
 	SNESGetZipName, snes_MilitiaRomInfo, snes_MilitiaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -19208,7 +19208,7 @@ struct BurnDriver BurnDrvsnes_Pacintimee = {
 // Pac-In-Time (Japan)
 
 static struct BurnRomInfo snes_PacintimejRomDesc[] = {
-	{ "Pac-In-Time (J)(1994)(Namco).sfc", 1048576, 0xbb6b3b1f, BRF_ESS | BRF_PRG },
+	{ "Pac-In-Time (J)(1994)(Namcot).sfc", 1048576, 0xbb6b3b1f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Pacintimej)
@@ -19216,7 +19216,7 @@ STD_ROM_FN(snes_Pacintimej)
 
 struct BurnDriver BurnDrvsnes_Pacintimej = {
 	"snes_pacintimej", "snes_pacintime", NULL, NULL, "1994",
-	"Pac-In-Time (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Pac-In-Time (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_PacintimejRomInfo, snes_PacintimejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -21485,7 +21485,7 @@ struct BurnDriver BurnDrvsnes_Rockmanforte = {
 	512, 448, 4, 3
 };
 
-// Rockman 7 - Shukumei no Taiketsu! (Japan)
+// Rockman 7: Shukumei no Taiketsu! (Japan)
 
 static struct BurnRomInfo snes_Rockman7RomDesc[] = {
 	{ "Rockman 7 - Shukumei no Taiketsu! (J)(1995)(Capcom).sfc", 2097152, 0x31f18dda, BRF_ESS | BRF_PRG },
@@ -21496,18 +21496,17 @@ STD_ROM_FN(snes_Rockman7)
 
 struct BurnDriver BurnDrvsnes_Rockman7 = {
 	"snes_rockman7", "snes_megaman7", NULL, NULL, "1995",
-	"Rockman 7 - Shukumei no Taiketsu! (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
-	L"Rockman 7 - Shukumei no Taiketsu! (Japan)\0\u30ed\u30c3\u30af\u30de\u30f37 \u5bbf\u547d\u306e\u5bfe\u6c7a!\0", NULL, NULL, NULL,
+	"Rockman 7: Shukumei no Taiketsu! (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
+	L"Rockman 7: Shukumei no Taiketsu! (Japan)\0\u30ed\u30c3\u30af\u30de\u30f37 \u5bbf\u547d\u306e\u5bfe\u6c7a!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Rockman7RomInfo, snes_Rockman7RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)
+// Rockman 7: Shukumei no Taiketsu! (Hack, Trad. Chinese)
 // https://www.nesbbs.com/bbs/thread-58621-1-1.html
 // 20250406
-
 static struct BurnRomInfo snes_Rockman7tcRomDesc[] = {
 	{ "Rockman 7 - Shukumei no Taiketsu! T-Cht v20250406 (2025)(NOKOH).sfc", 3145728, 0xc1928f06, BRF_ESS | BRF_PRG },
 };
@@ -21517,8 +21516,8 @@ STD_ROM_FN(snes_Rockman7tc)
 
 struct BurnDriver BurnDrvsnes_Rockman7tc = {
 	"snes_rockman7tc", "snes_megaman7", NULL, NULL, "2025",
-	"Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)\0", NULL, "NOKOH", "SNES / Super Famicom",
-	L"Rockman 7 - Shukumei no Taiketsu! (Hack, Traditional Chinese v20250406)\0\u6d1b\u514b\u4eba7 \u5bbf\u547d\u7684\u5c0d\u6c7a!\0", NULL, NULL, NULL,
+	"Rockman 7: Shukumei no Taiketsu! (Hack, Trad. Chinese)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Rockman 7: Shukumei no Taiketsu! (Hack, Trad. Chinese)\0\u6d1b\u514b\u4eba7 \u5bbf\u547d\u7684\u5c0d\u6c7a!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Rockman7tcRomInfo, snes_Rockman7tcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -23162,7 +23161,7 @@ struct BurnDriver BurnDrvsnes_Sfalpha2e = {
 // Super Family Circuit (Japan)
 
 static struct BurnRomInfo snes_SfcircuitjRomDesc[] = {
-	{ "Super Family Circuit (J)(1994)(Namco).sfc", 1048576, 0xdc82850e, BRF_ESS | BRF_PRG },
+	{ "Super Family Circuit (J)(1994)(Namcot).sfc", 1048576, 0xdc82850e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Sfcircuitj)
@@ -23170,7 +23169,7 @@ STD_ROM_FN(snes_Sfcircuitj)
 
 struct BurnDriver BurnDrvsnes_Sfcircuitj = {
 	"snes_sfcircuitj", "snes_sfcircuitte", NULL, NULL, "1994",
-	"Super Family Circuit (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Super Family Circuit (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_SfcircuitjRomInfo, snes_SfcircuitjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -23846,7 +23845,7 @@ struct BurnDriver BurnDrvsnes_Skyblazertp = {
 // Sky Mission (Japan)
 
 static struct BurnRomInfo snes_SkymissionRomDesc[] = {
-	{ "Sky Mission (J)(1992)(Namco).sfc", 524288, 0x0866a769, BRF_ESS | BRF_PRG },
+	{ "Sky Mission (J)(1992)(Namcot).sfc", 524288, 0x0866a769, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Skymission)
@@ -23854,7 +23853,7 @@ STD_ROM_FN(snes_Skymission)
 
 struct BurnDriver BurnDrvsnes_Skymission = {
 	"snes_skymission", "snes_wings2ah", NULL, NULL, "1992",
-	"Sky Mission (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Sky Mission (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SHOOT | GBF_SIM, 0,
 	SNESGetZipName, snes_SkymissionRomInfo, snes_SkymissionRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -27818,7 +27817,7 @@ struct BurnDriver BurnDrvsnes_Superswivj = {
 // Super Famista (Japan)
 
 static struct BurnRomInfo snes_SupfamistaRomDesc[] = {
-	{ "Super Famista (J)(1992)(Namco).sfc", 1048576, 0x72d49e26, BRF_ESS | BRF_PRG },
+	{ "Super Famista (J)(1992)(Namcot).sfc", 1048576, 0x72d49e26, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supfamista)
@@ -27826,7 +27825,7 @@ STD_ROM_FN(snes_Supfamista)
 
 struct BurnDriver BurnDrvsnes_Supfamista = {
 	"snes_supfamista", "snes_supbatterup", NULL, NULL, "1992",
-	"Super Famista (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Super Famista (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_SupfamistaRomInfo, snes_SupfamistaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -30478,7 +30477,7 @@ struct BurnDriver BurnDrvsnes_Volleytwin = {
 // Wagyan Paradise (Japan)
 
 static struct BurnRomInfo snes_WagparadiseRomDesc[] = {
-	{ "Wagyan Paradise (J)(1994)(Namco).sfc", 1310720, 0xc06e6621, BRF_ESS | BRF_PRG },
+	{ "Wagyan Paradise (J)(1994)(Namcot).sfc", 1310720, 0xc06e6621, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Wagparadise)
@@ -30486,7 +30485,7 @@ STD_ROM_FN(snes_Wagparadise)
 
 struct BurnDriver BurnDrvsnes_Wagparadise = {
 	"snes_wagparadise", NULL, NULL, NULL, "1994",
-	"Wagyan Paradise (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Wagyan Paradise (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_WagparadiseRomInfo, snes_WagparadiseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31406,10 +31405,10 @@ struct BurnDriver BurnDrvsnes_Wwfswm = {
 	512, 448, 4, 3
 };
 
-// Xandra no Daibouken - Valkyrie to no Deai (Japan)
+// Xandra no Daibouken: Valkyrie to no Deai (Japan)
 
 static struct BurnRomInfo snes_XandraRomDesc[] = {
-	{ "Xandra no Daibouken - Valkyrie to no Deai (J)(1992)(Namco).sfc", 1048576, 0x56ec4655, BRF_ESS | BRF_PRG },
+	{ "Xandra no Daibouken - Valkyrie to no Deai (J)(1992)(Namcot).sfc", 1048576, 0x56ec4655, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Xandra)
@@ -31417,7 +31416,7 @@ STD_ROM_FN(snes_Xandra)
 
 struct BurnDriver BurnDrvsnes_Xandra = {
 	"snes_xandra", "snes_whirlo", NULL, NULL, "1992",
-	"Xandra no Daibouken - Valkyrie to no Deai (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Xandra no Daibouken: Valkyrie to no Deai (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_XandraRomInfo, snes_XandraRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31770,7 +31769,7 @@ struct BurnDriver BurnDrvsnes_Ys4te = {
 // Yuu Yuu Hakusho (Japan)
 
 static struct BurnRomInfo snes_YuuyuuhakRomDesc[] = {
-	{ "Yuu Yuu Hakusho (J)(1993)(Namco).sfc", 2097152, 0xec96d517, BRF_ESS | BRF_PRG },
+	{ "Yuu Yuu Hakusho (J)(1993)(Namcot).sfc", 2097152, 0xec96d517, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuuhak)
@@ -31778,7 +31777,7 @@ STD_ROM_FN(snes_Yuuyuuhak)
 
 struct BurnDriver BurnDrvsnes_Yuuyuuhak = {
 	"snes_yuuyuuhak", NULL, NULL, NULL, "1993",
-	"Yuu Yuu Hakusho (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Yuu Yuu Hakusho (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuuhakRomInfo, snes_YuuyuuhakRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31789,7 +31788,7 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhak = {
 // Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
 
 static struct BurnRomInfo snes_YuuyuufinRomDesc[] = {
-	{ "Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (J)(1995)(Namco).sfc", 3145728, 0x5617a42e, BRF_ESS | BRF_PRG },
+	{ "Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (J)(1995)(Namcot).sfc", 3145728, 0x5617a42e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuufin)
@@ -31797,7 +31796,7 @@ STD_ROM_FN(snes_Yuuyuufin)
 
 struct BurnDriver BurnDrvsnes_Yuuyuufin = {
 	"snes_yuuyuufin", NULL, NULL, NULL, "1995",
-	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuufinRomInfo, snes_YuuyuufinRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31808,7 +31807,7 @@ struct BurnDriver BurnDrvsnes_Yuuyuufin = {
 // Yuu Yuu Hakusho 2 - Kakutou no Shou (Japan)
 
 static struct BurnRomInfo snes_Yuuyuuhak2jRomDesc[] = {
-	{ "Yuu Yuu Hakusho 2 - Kakutou no Shou (J)(1994)(Namco).sfc", 2097152, 0xeef45a93, BRF_ESS | BRF_PRG },
+	{ "Yuu Yuu Hakusho 2 - Kakutou no Shou (J)(1994)(Namcot).sfc", 2097152, 0xeef45a93, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuuhak2j)
@@ -31816,7 +31815,7 @@ STD_ROM_FN(snes_Yuuyuuhak2j)
 
 struct BurnDriver BurnDrvsnes_Yuuyuuhak2j = {
 	"snes_yuuyuuhak2j", NULL, NULL, NULL, "1994",
-	"Yuu Yuu Hakusho 2 - Kakutou no Shou (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Yuu Yuu Hakusho 2 - Kakutou no Shou (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Yuuyuuhak2jRomInfo, snes_Yuuyuuhak2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -31846,7 +31845,7 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhak2tp = {
 // Yuu Yuu Hakusho - Tokubetsu Hen (Japan)
 
 static struct BurnRomInfo snes_YuuyuutokuRomDesc[] = {
-	{ "Yuu Yuu Hakusho - Tokubetsu Hen (J)(1994)(Namco).sfc", 2097152, 0x535cccac, BRF_ESS | BRF_PRG },
+	{ "Yuu Yuu Hakusho - Tokubetsu Hen (J)(1994)(Namcot).sfc", 2097152, 0x535cccac, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuutoku)
@@ -31854,7 +31853,7 @@ STD_ROM_FN(snes_Yuuyuutoku)
 
 struct BurnDriver BurnDrvsnes_Yuuyuutoku = {
 	"snes_yuuyuutoku", NULL, NULL, NULL, "1994",
-	"Yuu Yuu Hakusho - Tokubetsu Hen (Japan)\0", NULL, "Namco", "SNES / Super Famicom",
+	"Yuu Yuu Hakusho - Tokubetsu Hen (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_ADV, 0,
 	SNESGetZipName, snes_YuuyuutokuRomInfo, snes_YuuyuutokuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

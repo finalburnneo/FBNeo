@@ -1762,16 +1762,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Maniac Square (protected, Version 1.0, Checksum DEEE)
+// Maniac Square (protected, version 1.0, checksum DEEE)
 
 static struct BurnRomInfo maniacsqRomDesc[] = {
 	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ms1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "ms2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "ms3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "ms4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",				0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ms2",				0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "ms3",				0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "ms4",				0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
 
 	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
 };
@@ -1786,7 +1786,7 @@ static INT32 maniacsqInit()
 
 struct BurnDriver BurnDrvManiacsq = {
 	"maniacsq", NULL, NULL, NULL, "1996",
-	"Maniac Square (protected, Version 1.0, Checksum DEEE)\0", NULL, "Gaelco", "Miscellaneous",
+	"Maniac Square (protected, version 1.0, checksum DEEE)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
@@ -1795,16 +1795,16 @@ struct BurnDriver BurnDrvManiacsq = {
 };
 
 
-// Maniac Square (protected, Version 1.0, Checksum CF2D)
+// Maniac Square (protected, version 1.0, checksum CF2D)
 
 static struct BurnRomInfo maniacsqaRomDesc[] = {
 	{ "ms_u_45.u45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ms_u_44.u44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ms1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "ms2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "ms3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "ms4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",			0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ms2",			0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "ms3",			0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "ms4",			0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
 
 	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
 };
@@ -1814,7 +1814,7 @@ STD_ROM_FN(maniacsqa)
 
 struct BurnDriver BurnDrvManiacsqa = {
 	"maniacsqa", "maniacsq", NULL, NULL, "1996",
-	"Maniac Square (protected, Version 1.0, Checksum CF2D)\0", NULL, "Gaelco", "Miscellaneous",
+	"Maniac Square (protected, version 1.0, checksum CF2D)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
@@ -1823,7 +1823,7 @@ struct BurnDriver BurnDrvManiacsqa = {
 };
 
 
-// Maniac Square (unprotected, Version 1.0, Checksum BB73)
+// Maniac Square (unprotected, version 1.0, checksum BB73)
 
 static struct BurnRomInfo maniacsquRomDesc[] = {
 	{ "d8-d15.1m",		0x020000, 0x9121d1b6, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1840,7 +1840,7 @@ STD_ROM_FN(maniacsqu)
 
 struct BurnDriver BurnDrvManiacsqu = {
 	"maniacsqu", "maniacsq", NULL, NULL, "1996",
-	"Maniac Square (unprotected, Version 1.0, Checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
+	"Maniac Square (unprotected, version 1.0, checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacsquRomInfo, maniacsquRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
@@ -1962,7 +1962,7 @@ struct BurnDriver BurnDrvAligatoruna = {
 };
 
 
-// Snow Board Championship (Version 2.0)
+// Snow Board Championship (version 2.0)
 
 static struct BurnRomInfo snowboaraRomDesc[] = {
 	{ "sb_53.ic53",		0x080000, 0xe4eaefd4, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1984,7 +1984,7 @@ static INT32 snowboaraInit()
 
 struct BurnDriver BurnDrvSnowboara = {
 	"snowboara", "snowboar", NULL, NULL, "1996",
-	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco / OMK", "Miscellaneous",
+	"Snow Board Championship (version 2.0)\0", NULL, "Gaelco / OMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
@@ -1993,7 +1993,7 @@ struct BurnDriver BurnDrvSnowboara = {
 };
 
 
-// Snow Board Championship (Version 2.1)
+// Snow Board Championship (version 2.1)
 
 static struct BurnRomInfo snowboarRomDesc[] = {
 	{ "sb.53",		0x080000, 0x4742749e, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2035,7 +2035,7 @@ static INT32 snowboarInit()
 
 struct BurnDriver BurnDrvSnowboar = {
 	"snowboar", NULL, NULL, NULL, "1997",
-	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco / OMK", "Miscellaneous",
+	"Snow Board Championship (version 2.1)\0", NULL, "Gaelco / OMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, NULL, NULL, SnowboarInputInfo, NULL,
@@ -2044,19 +2044,20 @@ struct BurnDriver BurnDrvSnowboar = {
 };
 
 
-// Touch and Go (World)
+// Touch and Go (World, 05/Feb/1996, checksum 059D0235)
+// REF: 950510-1
 
 static struct BurnRomInfo touchgoRomDesc[] = {
-	{ "tg_56.ic56",		0x080000, 0x8ab065f3, 1 | BRF_PRG | BRF_ESS }, //  0  68k Code
-	{ "tg_57.ic57",		0x080000, 0x0dfd3f65, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tg_873d_56_5-2.ic56",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0  68k Code
+	{ "tg_cee8_57_5-2.ic57",		0x080000, 0x845787b5, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
-	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
-	{ "tg_ic66.ic66",	0x200000, 0x52682953, 2 | BRF_GRA },           //  4
-	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		    0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		    0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgo)
@@ -2069,7 +2070,7 @@ static INT32 touchgoInit()
 
 struct BurnDriver BurnDrvTouchgo = {
 	"touchgo", NULL, NULL, NULL, "1995",
-	"Touch and Go (World)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (World, 05/Feb/1996, checksum 059D0235)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2078,85 +2079,204 @@ struct BurnDriver BurnDrvTouchgo = {
 };
 
 
-// Touch and Go (Non North America)
+// Touch and Go (World, 11/Dec/1995, checksum 05A0C7FB)
+// REF: 950906
 
-static struct BurnRomInfo touchgonRomDesc[] = {
-	{ "1.ic63",			0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "2.ic64",			0x080000, 0xee891835, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo touchgoaRomDesc[] = {
+	{ "tg_be51_5.6_11-12.ic56",		0x080000, 0x8ab065f3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tg_6701_5.7_11-12.ic57",		0x080000, 0x0dfd3f65, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
-	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
-	{ "tg_ic66.ic66",	0x200000, 0x52682953, 2 | BRF_GRA },           //  4
-	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		   0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
 };
 
-STD_ROM_PICK(touchgon)
-STD_ROM_FN(touchgon)
+STD_ROM_PICK(touchgoa)
+STD_ROM_FN(touchgoa)
 
-struct BurnDriver BurnDrvTouchgon = {
-	"touchgon", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvTouchgoa = {
+	"touchgoa", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (World, 11/Dec/1995, checksum 05A0C7FB)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgoaRomInfo, touchgoaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
 
 
-// Touch and Go (earlier revision)
+// Touch and Go (North America, 14/Nov/1995, checksum 05737572)
 
-static struct BurnRomInfo touchgoeRomDesc[] = {
-	{ "tg56.ic63",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tg57.ic64",		0x080000, 0x845787b5, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo touchgonaRomDesc[] = {
+	{ "v_us_56_f546_14-11.ic56",	0x080000, 0x3bfe2010, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "v_us_57_d888_14-11.ic57",	0x080000, 0xc8a9e7bd, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
-	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
-	{ "tg_ic66.ic66",	0x200000, 0x52682953, 2 | BRF_GRA },           //  4
-	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		   0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
 };
 
-STD_ROM_PICK(touchgoe)
-STD_ROM_FN(touchgoe)
+STD_ROM_PICK(touchgona)
+STD_ROM_FN(touchgona)
 
-struct BurnDriver BurnDrvTouchgoe = {
-	"touchgoe", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvTouchgona = {
+	"touchgona", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (North America, 14/Nov/1995, checksum 05737572)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgonaRomInfo, touchgonaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
 
 
-// Touch and Go (Korea, unprotected)
+// Touch and Go (non North America, 16/Nov/1995, checksum 056533F0)
 
-static struct BurnRomInfo touchgokRomDesc[] = {
-	{ "56.ic56",		0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "57.ic57",		0x080000, 0x36bcc7e7, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo touchgonnaRomDesc[] = {
+	{ "v_e_56_ef33_16-11.ic56",		0x080000, 0xc2715874, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "v_o_57_9c10_16-11.ic57",		0x080000, 0x3acefb06, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
-	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
-	{ "tg_ic66.ic66",	0x200000, 0x52682953, 2 | BRF_GRA },           //  4
-	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
 };
 
-STD_ROM_PICK(touchgok)
-STD_ROM_FN(touchgok)
+STD_ROM_PICK(touchgonna)
+STD_ROM_FN(touchgonna)
 
-struct BurnDriver BurnDrvTouchgok = {
-	"touchgok", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvTouchgonna = {
+	"touchgonna", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (non North America, 16/Nov/1995, checksum 056533F0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	NULL, touchgonnaRomInfo, touchgonnaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	480, 240, 4, 3
+};
+
+
+// Touch and Go (non North America, 15/Nov/1995, checksum 056C2336)
+
+static struct BurnRomInfo touchgonnaaRomDesc[] = {
+	{ "v_e_c79b_56_15-11.ic56",		0x080000, 0xd92bb02a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "v_e_b34a_57_15-11.ic57",		0x080000, 0x0711c8ba, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+};
+
+STD_ROM_PICK(touchgonnaa)
+STD_ROM_FN(touchgonnaa)
+
+struct BurnDriver BurnDrvTouchgonnaa = {
+	"touchgonnaa", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (non North America, 15/Nov/1995, checksum 056C2336)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, touchgonnaaRomInfo, touchgonnaaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	480, 240, 4, 3
+};
+
+
+// Touch and Go (non North America, 15/Nov/1995, checksum 056C138F)
+
+static struct BurnRomInfo touchgonnabRomDesc[] = {
+	{ "v_alt_e_56_15-11.ic56",		0x080000, 0x64b83556, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "v_alt_o_57_15-11.ic57",		0x080000, 0xe9ceb77a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+};
+
+STD_ROM_PICK(touchgonnab)
+STD_ROM_FN(touchgonnab)
+
+struct BurnDriver BurnDrvTouchgonnab = {
+	"touchgonnab", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (non North America, 15/Nov/1995, checksum 056C138F)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, touchgonnabRomInfo, touchgonnabRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	480, 240, 4, 3
+};
+
+
+// Touch and Go (non North America, 11/Nov/2005, checksum 056AA304)
+// REF 950906, no plug-in daughterboard, non North America notice, also found on REF: 950510-1 with daughterboard
+
+static struct BurnRomInfo touchgonnacRomDesc[] = {
+	{ "1.ic63",						0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.ic64",						0x080000, 0xee891835, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tg_ic69.ic69",				0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",				0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",				0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",				0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
+	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+};
+
+STD_ROM_PICK(touchgonnac)
+STD_ROM_FN(touchgonnac)
+
+struct BurnDriver BurnDrvTouchgonnac = {
+	"touchgonnac", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (non North America, 11/Nov/2005, checksum 056AA304)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, touchgonnacRomInfo, touchgonnacRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	480, 240, 4, 3
+};
+
+
+// Touch and Go (unprotected, checksum 059CC336)
+// REF: 950510-1 - ds5002fp unpopulated, game is unprotected
+
+static struct BurnRomInfo touchgounRomDesc[] = {
+	{ "tg_d_56_1e4b_no_dallas.ic56",	0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tg_d_57_060d_no_dallas.ic57",	0x080000, 0x36bcc7e7, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tg_ic69.ic69",					0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "tg_ic65.ic65",					0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "tg_ic66.ic66",					0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "tg_ic67.ic67",					0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(touchgoun)
+STD_ROM_FN(touchgoun)
+
+struct BurnDriver BurnDrvTouchgoun = {
+	"touchgoun", "touchgo", NULL, NULL, "1995",
+	"Touch and Go (unprotected, checksum 059CC336)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, touchgounRomInfo, touchgounRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };

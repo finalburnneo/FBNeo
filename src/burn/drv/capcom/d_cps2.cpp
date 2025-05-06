@@ -12923,6 +12923,26 @@ static struct BurnRomInfo BatcirdRomDesc[] = {
 STD_ROM_PICK(Batcird)
 STD_ROM_FN(Batcird)
 
+static struct BurnRomInfo ChokopRomDesc[] = {
+	{ "tkojp_03.bin",  0x080000, 0x4d857f39, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "tkojp_04.bin",  0x080000, 0x137afb29, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "tko_14.bin",    0x200000, 0x336e8aa2, CPS2_GFX | BRF_GRA },
+	{ "tko_16.bin",    0x200000, 0xe8429b54, CPS2_GFX | BRF_GRA },
+	{ "tko_18.bin",    0x200000, 0x62092fbd, CPS2_GFX | BRF_GRA },
+	{ "tko_20.bin",    0x200000, 0xb468a666, CPS2_GFX | BRF_GRA },
+		
+	{ "tko_01.bin",    0x020000, 0x6eda50c2, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "tko_11.bin",    0x200000, 0xca7179b1, CPS2_QSND | BRF_SND },	
+	{ "tko_12.bin",    0x100000, 0x83a4e635, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Chokop)
+STD_ROM_FN(Chokop)
+
 static struct BurnRomInfo Csclub1dRomDesc[] = {
 	{ "csce_d.03",     0x080000, 0x5aedc6e6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "csce_d.04",     0x080000, 0xa3d9aa25, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13646,6 +13666,32 @@ static struct BurnRomInfo Pzloop2jdRomDesc[] = {
 
 STD_ROM_PICK(Pzloop2jd)
 STD_ROM_FN(Pzloop2jd)
+
+static struct BurnRomInfo Pzloop2jpRomDesc[] = {
+	{ "pl2j_03.bin",   0x080000, 0xe9f904c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_04.bin",   0x080000, 0x61c7c18f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_05.bin",   0x080000, 0xee6da97c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pl2j_06.bin",   0x080000, 0x97e1c3ac, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pl2-13m.bin",   0x200000, 0x5f3b5f91, CPS2_GFX | BRF_GRA },
+	{ "pl2-15m.bin",   0x200000, 0x3702f309, CPS2_GFX | BRF_GRA }, 
+	{ "pl2-17m.bin",   0x200000, 0x62d3fce9, CPS2_GFX | BRF_GRA },
+	{ "pl2-19m.bin",   0x200000, 0x6dcbd8ce, CPS2_GFX | BRF_GRA },
+	{ "pl2-14m.bin",   0x200000, 0x2e22e71a, CPS2_GFX | BRF_GRA },
+	{ "pl2-16m.bin",   0x200000, 0x38090022, CPS2_GFX | BRF_GRA },
+	{ "pl2-18m.bin",   0x200000, 0x33afdd44, CPS2_GFX | BRF_GRA },
+	{ "pl2-20m.bin",   0x200000, 0xd4ae0278, CPS2_GFX | BRF_GRA },
+
+	{ "pl2_01.bin",    0x020000, 0x35697569, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pl2-11m.bin",   0x200000, 0x85d8fbe8, CPS2_QSND_SIMM | BRF_SND },
+	{ "pl2-12m.bin",   0x200000, 0x1ed62584, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Pzloop2jp)
+STD_ROM_FN(Pzloop2jp)
 
 static struct BurnRomInfo RingdstdRomDesc[] = {
 	{ "smbed.03b",     0x080000, 0xf6fba4cd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14663,6 +14709,16 @@ struct BurnDriver BurnDrvCpsBatcird = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsChokop = {
+	"chokop", "choko", NULL, NULL, "2001",
+	"Janpai Puzzle Choukou (Japan 010820 Publicity)\0", NULL, "Mitchell (Capcom license)", "CPS2",
+	L"\u96c0\u724c\u30d1\u30ba\u30eb \u9577\u6C5F (Japan 010820 Publicity)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, 0,
+	NULL, ChokopRomInfo, ChokopRomName, NULL, NULL, NULL, NULL, ChokoInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsCsclub1d = {
 	"csclub1d", "csclub", NULL, NULL, "1997",
 	"Capcom Sports Club (Europe 970722 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
@@ -14919,6 +14975,16 @@ struct BurnDriver BurnDrvCpsPzloop2jd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
 	NULL, Pzloop2jdRomInfo, Pzloop2jdRomName, NULL, NULL, NULL, NULL, Pzloop2InputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPzloop2jp = {
+	"pzloop2jp", "pzloop2", NULL, NULL, "2001",
+	"Puzz Loop 2 (Japan 010201 Publicity)\0", NULL, "Mitchell (Capcom license)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
+	NULL, Pzloop2jpRomInfo, Pzloop2jpRomName, NULL, NULL, NULL, NULL, Pzloop2InputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

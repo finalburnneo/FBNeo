@@ -36,7 +36,8 @@ static HHOOK hMenuHook;
 
 static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
-
+#if 0
+	// note: this switch block seems to cause more trouble than it's worth
 	switch (((MSG*)lParam)->message) {
 
 		case WM_MOUSEMOVE: {				// Translate coordinates to menubar client coordinates
@@ -84,7 +85,7 @@ static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 		}
 
 	}
-
+#endif
 	MenuHandleKeyboard((MSG*)lParam);
 
 	return CallNextHookEx(hMenuHook, nCode, wParam, lParam);

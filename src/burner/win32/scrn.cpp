@@ -977,30 +977,109 @@ static void UpdatePreviousGameList()
 	int nRecentIdenticalTo = -1;
 
 	// check if this game is identical to any of the listed in the recent menu
-	for (int x = 0; x < SHOW_PREV_GAMES; x++) {
+	for(int x = 0; x < SHOW_PREV_GAMES; x++) {
 		if(!_tcscmp(BurnDrvGetText(DRV_NAME), szPrevGames[x])) {
 			nRecentIdenticalTo = x;
 		}
 	}
 
-	// create unshuffled (temp) list
+	// Declare temporary array
 	TCHAR szTmp[SHOW_PREV_GAMES][64];
-	for (int x = 0; x < SHOW_PREV_GAMES; x++) {
+
+	// Backup info for later use
+	for(int x = 0; x < SHOW_PREV_GAMES; x++) {
 		_tcscpy(szTmp[x], szPrevGames[x]);
 	}
 
-	switch (nRecentIdenticalTo) {
-		case -1: // game was not in recents list, add it to the top
-			for (int i = 1; i < SHOW_PREV_GAMES; i++) {
-				_tcscpy(szPrevGames[i], szPrevGames[i - 1]);
-			}
-			_tcscpy(szPrevGames[0], BurnDrvGetText(DRV_NAME));
+	switch(nRecentIdenticalTo)
+	{
+		case -1:
+			// Normal rotation when recent game is not identical to any of the ones listed
+			// - - -
+			_tcscpy(szPrevGames[9], szPrevGames[8]);			// Recent 10 = 9
+			_tcscpy(szPrevGames[8], szPrevGames[7]);			// Recent 9 = 8
+			_tcscpy(szPrevGames[7], szPrevGames[6]);			// Recent 8 = 7
+			_tcscpy(szPrevGames[6], szPrevGames[5]);			// Recent 7 = 6
+			_tcscpy(szPrevGames[5], szPrevGames[4]);			// Recent 6 = 5
+			_tcscpy(szPrevGames[4], szPrevGames[3]);			// Recent 5 = 4
+			_tcscpy(szPrevGames[3], szPrevGames[2]);			// Recent 4 = 3
+			_tcscpy(szPrevGames[2], szPrevGames[1]);			// Recent 3 = 2
+			_tcscpy(szPrevGames[1], szPrevGames[0]);			// Recent 2 = 1
+			_tcscpy(szPrevGames[0], BurnDrvGetText(DRV_NAME));	// Update most recent game played (Recent 1)
 			break;
-		default:
-			// game was already in the recents list, move it to the top
-			for (int i = 0; i <= nRecentIdenticalTo; i++) {
-				_tcscpy(szPrevGames[i], szTmp[(i + nRecentIdenticalTo) % (nRecentIdenticalTo + 1)]);
-			}
+		case 0:
+			break;												// Nothing Change
+		case 1:
+			_tcscpy(szPrevGames[0], szTmp[1]);					// Update most recent game played (Recent 1 = 2)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			break;
+		case 2:
+			_tcscpy(szPrevGames[0], szTmp[2]);					// Update most recent game played (Recent 1 = 3)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			break;
+		case 3:
+			_tcscpy(szPrevGames[0], szTmp[3]);					// Update most recent game played (Recent 1 = 4)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			break;
+		case 4:
+			_tcscpy(szPrevGames[0], szTmp[4]);					// Update most recent game played (Recent 1 = 5)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			break;
+		case 5:
+			_tcscpy(szPrevGames[0], szTmp[5]);					// Update most recent game played (Recent 1 = 6)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			_tcscpy(szPrevGames[5], szTmp[4]);					// Recent 6 = 5
+			break;
+		case 6:
+			_tcscpy(szPrevGames[0], szTmp[6]);					// Update most recent game played (Recent 1 = 7)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			_tcscpy(szPrevGames[5], szTmp[4]);					// Recent 6 = 5
+			_tcscpy(szPrevGames[6], szTmp[5]);					// Recent 7 = 6
+			break;
+		case 7:
+			_tcscpy(szPrevGames[0], szTmp[7]);					// Update most recent game played (Recent 1 = 8)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			_tcscpy(szPrevGames[5], szTmp[4]);					// Recent 6 = 5
+			_tcscpy(szPrevGames[6], szTmp[5]);					// Recent 7 = 6
+			_tcscpy(szPrevGames[7], szTmp[6]);					// Recent 8 = 7
+			break;
+		case 8:
+			_tcscpy(szPrevGames[0], szTmp[8]);					// Update most recent game played (Recent 1 = 9)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			_tcscpy(szPrevGames[5], szTmp[4]);					// Recent 6 = 5
+			_tcscpy(szPrevGames[6], szTmp[5]);					// Recent 7 = 6
+			_tcscpy(szPrevGames[7], szTmp[6]);					// Recent 8 = 7
+			_tcscpy(szPrevGames[8], szTmp[7]);					// Recent 9 = 8
+			break;
+		case 9:
+			_tcscpy(szPrevGames[0], szTmp[9]);					// Update most recent game played (Recent 1 = 10)
+			_tcscpy(szPrevGames[1], szTmp[0]);					// Recent 2 = 1
+			_tcscpy(szPrevGames[2], szTmp[1]);					// Recent 3 = 2
+			_tcscpy(szPrevGames[3], szTmp[2]);					// Recent 4 = 3
+			_tcscpy(szPrevGames[4], szTmp[3]);					// Recent 5 = 4
+			_tcscpy(szPrevGames[5], szTmp[4]);					// Recent 6 = 5
+			_tcscpy(szPrevGames[6], szTmp[5]);					// Recent 7 = 6
+			_tcscpy(szPrevGames[7], szTmp[6]);					// Recent 8 = 7
+			_tcscpy(szPrevGames[8], szTmp[7]);					// Recent 9 = 8
+			_tcscpy(szPrevGames[9], szTmp[8]);					// Recent 10 = 9
 			break;
 	}
 }

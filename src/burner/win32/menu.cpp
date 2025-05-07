@@ -52,10 +52,10 @@ static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 					HMENU hPopupMenu = GetSubMenu(hMenu, nLastMenu);					// The last menu captured in the hook must be the menu you just clicked.
 					INT32 nMenuCount = GetMenuItemCount(hPopupMenu);					// Gets the number of submenus.
 					RECT itemRect = { 0,0,0,0 }, popmenuRect = { 0,0,0,0 };
-					GetMenuItemRect(hScrnWnd, hPopupMenu, 0, &itemRect);				// To get the left and top of the rect when the menu is expanded.
+					GetMenuItemRect(NULL, hPopupMenu, 0, &itemRect);					// To get the left and top of the rect when the menu is expanded.
 					popmenuRect.left = itemRect.left;
 					popmenuRect.top = itemRect.top;
-					GetMenuItemRect(hScrnWnd, hPopupMenu, nMenuCount - 1, &itemRect);	// To get the right and bottom of the rect when the menu is expanded.
+					GetMenuItemRect(NULL, hPopupMenu, nMenuCount - 1, &itemRect);		// To get the right and bottom of the rect when the menu is expanded.
 					popmenuRect.right = itemRect.right;
 					popmenuRect.bottom = itemRect.bottom;
 					if (!PtInRect(&popmenuRect, point)) {								// Executed when the mouse is not in the rect range.

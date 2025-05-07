@@ -2127,13 +2127,23 @@ static struct BurnRomInfo touchgonaRomDesc[] = {
 STD_ROM_PICK(touchgona)
 STD_ROM_FN(touchgona)
 
+static INT32 touchgonaInit() {
+	INT32 rc = touchgoInit();
+
+	if (!rc) {
+		Drv68KROM[1^1] = 0xfe;
+	}
+
+	return rc;
+}
+
 struct BurnDriver BurnDrvTouchgona = {
 	"touchgona", "touchgo", NULL, NULL, "1995",
 	"Touch and Go (North America, 14/Nov/1995, checksum 05737572)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonaRomInfo, touchgonaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
-	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	touchgonaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
 };
 

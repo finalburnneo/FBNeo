@@ -2132,6 +2132,7 @@ static INT32 touchgonaInit() {
 
 	if (!rc) {
 		Drv68KROM[1^1] = 0xfe;
+		SekReset(0); // need to latch SP in SekReset()
 	}
 
 	return rc;

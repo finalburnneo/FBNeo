@@ -46604,7 +46604,7 @@ struct BurnDriver BurnSpecPooperscooper = {
 // Poppy (48K) (HB, v1.3)
 
 static struct BurnRomInfo SpecPoppyRomDesc[] = {
-	{ "Poppy v1.3 48K (2025)(Crazy Duck Games).tap", 19679, 0x1DD658E8, BRF_ESS | BRF_PRG },
+	{ "Poppy v1.3 48K (2025)(Crazy Duck Games).tap", 19679, 0x1dd658e8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPoppy, SpecPoppy, Spectrum)

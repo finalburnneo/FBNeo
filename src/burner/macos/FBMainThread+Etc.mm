@@ -45,6 +45,9 @@
 
 - (NSString *) setName
 {
+    if (nBurnDrvActive == ~0U) {
+        return nil;
+    }
     return [NSString stringWithCString:BurnDrvGetText(DRV_NAME)
                               encoding:NSASCIIStringEncoding];
 }

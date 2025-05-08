@@ -737,6 +737,15 @@ static int AppInit()
 	OpenDebugLog();
 #endif
 
+#if defined BUILD_X64_EXE
+	if (nVidSelect == 1) {
+		// if "d3d7 / enhanced blitter" is set & running 64bit build,
+		// fall back to "basic blitter".  (d3d7 has no 64bit mode!)
+		nVidSelect = 0;
+		bprintf(0, _T("*** D3D7 / Enhanced Blitter set w/64bit build - falling back to basic blitter.\n"));
+	}
+#endif
+
 	FBALocaliseInit(szLocalisationTemplate);
 	BurnerDoGameListLocalisation();
 

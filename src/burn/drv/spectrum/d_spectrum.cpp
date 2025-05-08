@@ -46601,10 +46601,10 @@ struct BurnDriver BurnSpecPooperscooper = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Poppy (48K) (HB, v1.2)
+// Poppy (48K) (HB, v1.3)
 
 static struct BurnRomInfo SpecPoppyRomDesc[] = {
-	{ "Poppy v1.2 48K (2025)(Crazy Duck Games).tap", 19581, 0x677891b9, BRF_ESS | BRF_PRG },
+	{ "Poppy v1.3 48K (2025)(Crazy Duck Games).tap", 19679, 0x1DD658E8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPoppy, SpecPoppy, Spectrum)
@@ -46612,7 +46612,7 @@ STD_ROM_FN(SpecPoppy)
 
 struct BurnDriver BurnSpecPoppy = {
 	"spec_poppy", NULL, "spec_spectrum", NULL, "2025",
-	"Poppy (48K) (HB, v1.2)\0", NULL, "Crazy Duck Games", "ZX Spectrum",
+	"Poppy (48K) (HB, v1.3)\0", NULL, "Crazy Duck Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPoppyRomInfo, SpecPoppyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

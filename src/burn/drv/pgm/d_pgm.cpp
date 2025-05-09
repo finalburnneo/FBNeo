@@ -2185,10 +2185,10 @@ static struct BurnRomInfo olds100RomDesc[] = {
 
 	{ "pgm_m0500.u1",	   			0x0200000, 0x37928cdd, 5 | BRF_SND },			// 18 Samples
 
-	{ "sp_v100_u6.u6",				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
+	{ "sp_v100_u6.u6",				0x010000,  0xe7613dda, 9 | BRF_PRG | BRF_ESS }, // 19 Protection Rom
 	
 #if defined (ROM_VERIFY)
-	{ "ram_dump",	   				0x040000, 0x280cfb4e, 0 | BRF_OPT },            // 20 Dump of RAM shared with protection device
+	{ "ram_dump",	   				0x040000,  0x280cfb4e, 0 | BRF_OPT },           // 20 Dump of RAM shared with protection device
 #endif
 };
 
@@ -2234,11 +2234,11 @@ static struct BurnRomInfo olds100aRomDesc[] = {
 
 	{ "pgm_m0500.u1",	   			0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
-#if !defined (ROM_VERIFY)
 	// ROM label SP 西遊記 DATA on sticker
-	{ "sp_data.u6",	   				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
-#else
-	{ "ram_dump",	   				0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
+	{ "sp_data.u6",	   				0x010000,  0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
+
+#if defined (ROM_VERIFY)
+	{ "ram_dump",	   				0x040000,  0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
 #endif
 };
 
@@ -8590,10 +8590,10 @@ static struct BurnRomInfo oldsdsglRomDesc[] = {
 
 	{ "pgm_m0500.u1",			0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 
-#if !defined (ROM_VERIFY)
-	{ "sp_data.u6",				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
-#else
-	{ "ram_dump",				0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
+	{ "sp_data.u6",				0x010000,  0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
+
+#if defined (ROM_VERIFY)
+	{ "ram_dump",				0x040000,  0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
 #endif
 };
 
@@ -8636,10 +8636,10 @@ static struct BurnRomInfo zerofxzRomDesc[] = {
 
 	{ "pgm_m0500.u1",				0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
-#if !defined (ROM_VERIFY)
-	{ "sp_data.u6",					0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
-#else
-	{ "ram_dump",					0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
+	{ "sp_data.u6",					0x010000,  0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
+
+#if defined (ROM_VERIFY)
+	{ "ram_dump",					0x040000,  0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
 #endif
 };
 
@@ -8682,10 +8682,10 @@ static struct BurnRomInfo oldsmxRomDesc[] = {
 
 	{ "pgm_m0500.u1",				0x0200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
-#if !defined (ROM_VERIFY)
-	{ "sp_data.u6",	   				0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
-#else
-	{ "ram_dump",	   				0x040000, 0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
+	{ "sp_data.u6",	   				0x010000,  0xe7613dda, 9 | BRF_PRG | BRF_ESS },	// 15 Protection Rom
+
+#if defined (ROM_VERIFY)
+	{ "ram_dump",	   				0x040000,  0x280cfb4e, 0 | BRF_OPT },			// 16 Dump of RAM shared with protection device
 #endif
 };
 

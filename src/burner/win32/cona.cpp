@@ -350,6 +350,7 @@ int ConfigAppLoad()
 		VAR(nMaxChatFontSize);
 
 		VAR(bModelessMenu);
+		VAR(bAdaptivepopup);
 
 		VAR(nSplashTime);
 
@@ -752,6 +753,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Make the menu modeless\n"));
 	VAR(bModelessMenu);
+
+	_ftprintf(h, _T("\n// Automatically determines the direction of the popup menu\n"));
+	VAR(bAdaptivepopup);
 
 	_ftprintf(h, _T("\n// Minimum length of time to display the splash screen (in milliseconds)\n"));
 	VAR(nSplashTime);

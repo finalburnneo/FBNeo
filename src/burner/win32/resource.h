@@ -623,6 +623,7 @@
 #define MENU_DISPLAYINDICATOR				10302
 #define MENU_MODELESS						10303
 #define MENU_ROMSDIR                    	10304
+#define MENU_ADAPTIVEPOPUP					10305
 #define MENU_ENABLECHEAT                	10306
 #define MENU_LANGUAGE_SELECT            	10307
 #define MENU_LANGUAGE_EXPORT            	10308

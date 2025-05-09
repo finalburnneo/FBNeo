@@ -17,7 +17,8 @@ static HMENU hBlitterMenu[8] = {NULL, };	// Handles to the blitter-specific sub-
 static HMENU hAudioPluginMenu[8] = {NULL, };
 
 bool bMenuDisplayed = false;
-bool bModelessMenu = false;
+bool bModelessMenu  = false;
+bool bAdaptivepopup = false;
 int nLastMenu = 0;
 static int nRecursions = -1;
 static HMENU hCurrentMenu;
@@ -34,13 +35,42 @@ TCHAR szPrevGames[SHOW_PREV_GAMES][64];
 
 static HHOOK hMenuHook;
 
-static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
+static bool bTest = false;
+static RECT PopupRect = { 0,0,0,0, };
+
+static INT32 GetCurrentMonitorHigh() {
+	HMONITOR hMonitor = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
+	if (NULL == hMonitor) return -1;
+
+	MONITORINFO monitorInfo = { 0 };
+	monitorInfo.cbSize = sizeof(MONITORINFO);
+	if (!GetMonitorInfo(hMonitor, &monitorInfo)) return -1;
+
+	return monitorInfo.rcMonitor.bottom;
+}
+
+static LRESULT CALLBACK MenuHook(INT32 nCode, WPARAM wParam, LPARAM lParam)
 {
 	switch (((MSG*)lParam)->message) {
-
 		case WM_MOUSEMOVE: {				// Translate coordinates to menubar client coordinates
+			if (bAdaptivepopup && bTest) {	// Test the actual RECT after the MENU pop-up
+				HMENU hPopupMenu = GetSubMenu(hMenu, nLastMenu);
+				INT32 nMenuCount = GetMenuItemCount(hPopupMenu);
+				RECT itemRect    = { 0,0,0,0 };
+
+				GetMenuItemRect(NULL, hPopupMenu, 0, &itemRect);
+				PopupRect.left   = itemRect.left;
+				PopupRect.top    = itemRect.top;
+				GetMenuItemRect(NULL, hPopupMenu, nMenuCount - 1, &itemRect);
+				PopupRect.right  = itemRect.right;
+				PopupRect.bottom = itemRect.bottom;
+
+				EndMenu();					// Close the menu immediately after the test
+				return 1;
+			}
+
 			RECT rect;
-			POINT point = {GET_X_LPARAM(((MSG*)lParam)->lParam), GET_Y_LPARAM(((MSG*)lParam)->lParam)};
+			POINT point = { GET_X_LPARAM(((MSG*)lParam)->lParam), GET_Y_LPARAM(((MSG*)lParam)->lParam) };
 
 			GetWindowRect(hMenubar, &rect);
 
@@ -49,23 +79,93 @@ static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 				SendMessage(hMenubar, TB_GETITEMRECT, nLastMenu, (LPARAM)&buttonrect);
 
 				if (!(point.x >= rect.left + buttonrect.left && point.y >= rect.top + buttonrect.top && point.x < rect.left + buttonrect.right && point.y < rect.top + buttonrect.bottom)) {
-					HMENU hPopupMenu = GetSubMenu(hMenu, nLastMenu);					// The last menu captured in the hook must be the menu you just clicked.
-					INT32 nMenuCount = GetMenuItemCount(hPopupMenu);					// Gets the number of submenus.
-					RECT itemRect = { 0,0,0,0 }, popmenuRect = { 0,0,0,0 };
-					GetMenuItemRect(NULL, hPopupMenu, 0, &itemRect);					// To get the left and top of the rect when the menu is expanded.
-					popmenuRect.left = itemRect.left;
-					popmenuRect.top = itemRect.top;
-					GetMenuItemRect(NULL, hPopupMenu, nMenuCount - 1, &itemRect);		// To get the right and bottom of the rect when the menu is expanded.
-					popmenuRect.right = itemRect.right;
-					popmenuRect.bottom = itemRect.bottom;
-					if (!PtInRect(&popmenuRect, point)) {								// Executed when the mouse is not in the rect range.
+
+					bool bRet = false, bLoop = true;
+					RECT subitemRect = { 0,0,0,0 }, submenuRect = { 0,0,0,0 };
+
+					for (INT32 i = 0; i < 6; i++) {
+						if (!bLoop) break;
+
+						//	1st level pop-up menu
+						HMENU h1stMenu = GetSubMenu(hMenu, i);
+						if (NULL== h1stMenu)
+							continue;
+
+						const INT32 n1stcnt = GetMenuItemCount(h1stMenu);
+
+						// Adaptive Orientation popup menus have collapsed attributes and have been designed to circumvent triggering
+						if (!bAdaptivepopup) {
+							if (!GetMenuItemRect(NULL, h1stMenu, n1stcnt - 1, &subitemRect))
+								continue;
+
+							submenuRect.right  = subitemRect.right;
+							submenuRect.bottom = subitemRect.bottom;
+							GetMenuItemRect(NULL, h1stMenu, 0, &subitemRect);
+							submenuRect.left   = subitemRect.left;
+							submenuRect.top    = subitemRect.top;
+
+							if (PtInRect(&submenuRect, point)) {
+								bRet = true;
+								break;
+							}
+						}
+
+						for (INT32 j = 0; j < n1stcnt; j++) {
+							if (!bLoop) break;
+
+							//	2nd level pop-up menu
+							HMENU h2ndMenu = GetSubMenu(h1stMenu, j);
+							if (NULL == h2ndMenu)
+								continue;
+
+							const INT32 n2ndcnt = GetMenuItemCount(h2ndMenu);
+
+							if (!GetMenuItemRect(NULL, h2ndMenu, n2ndcnt - 1, &subitemRect))
+								continue;
+
+							submenuRect.right  = subitemRect.right;
+							submenuRect.bottom = subitemRect.bottom;
+							GetMenuItemRect(NULL, h2ndMenu, 0, &subitemRect);
+							submenuRect.left   = subitemRect.left;
+							submenuRect.top    = subitemRect.top;
+
+							if (PtInRect(&submenuRect, point)) {
+								bRet = true, bLoop = false;
+								break;
+							}
+
+							for (INT32 k = 0; k < n1stcnt; k++) {
+								//	3rd level pop-up menu
+								HMENU h3rdMenu = GetSubMenu(h2ndMenu, k);
+								if (NULL == h3rdMenu)
+									continue;
+
+								const INT32 n3rdcnt = GetMenuItemCount(h3rdMenu);
+
+								if (!GetMenuItemRect(NULL, h3rdMenu, n3rdcnt - 1, &subitemRect))
+									continue;
+
+								submenuRect.right  = subitemRect.right;
+								submenuRect.bottom = subitemRect.bottom;
+								GetMenuItemRect(NULL, h3rdMenu, 0, &subitemRect);
+								submenuRect.left   = subitemRect.left;
+								submenuRect.top    = subitemRect.top;
+
+								if (PtInRect(&submenuRect, point)) {
+									bRet = true, bLoop = false;
+									break;
+								}
+							}
+						}
+					}
+
+					if (!bRet) {
 						SendNotifyMessage(hMenubar, WM_MOUSEMOVE, wParam, MAKELONG(point.x - rect.left, point.y - rect.top));
 					}
 				}
 			}
 			break;
 		}
-
 #if 0
 		// This is a troublemaker, no need.
 		case WM_LBUTTONDOWN: {
@@ -84,7 +184,6 @@ static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 #endif
-
 	}
 	MenuHandleKeyboard((MSG*)lParam);
 
@@ -103,17 +202,64 @@ void DisplayPopupMenu(int nMenu)
 		RECT clientRect;
 		RECT buttonRect;
 
-		nLastMenu = nMenu;
-		nRecursions = 0;
+		nLastMenu         = nMenu;
+		nRecursions       = 0;
 		nCurrentItemFlags = 0;
 
 		GetWindowRect(hMenubar, &clientRect);
 		SendMessage(hMenubar, TB_GETITEMRECT, nMenu, (LPARAM)&buttonRect);
 
+		memset(&PopupRect, 0, sizeof(RECT));
+
 		if (!bModelessMenu) {
 			hMenuHook = SetWindowsHookEx(WH_MSGFILTER, MenuHook, NULL, GetCurrentThreadId());
 		}
+		bTest = true;						// Test the actual RECT after the MENU pop-up
 		TrackPopupMenuEx(hPopupMenu, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + buttonRect.left, clientRect.top + buttonRect.bottom, hScrnWnd, NULL);
+
+		if (bAdaptivepopup) {
+			RECT workArea = { 0,0,0,0 };
+			SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+			const INT32 nMonitorHigh = GetCurrentMonitorHigh();
+			const INT32 nTaskBar = nMonitorHigh - workArea.bottom;
+			const INT32 nPopupHigh = PopupRect.bottom - PopupRect.top;
+			INT32 nCy = clientRect.top + buttonRect.bottom;
+			INT32 nToBottom = nMonitorHigh - nCy;
+			if (workArea.bottom < nMonitorHigh)	// Taskbar at bottom
+				nToBottom -= nTaskBar;
+
+			INT32 nToTop = clientRect.top + buttonRect.top;
+			if (workArea.top > 0)				// Taskbar on top
+				nToTop -= nTaskBar;
+
+			UINT32 uFlags = TPM_LEFTALIGN;
+			MENUINFO mi = { sizeof(MENUINFO) };
+			GetMenuInfo(hPopupMenu, &mi);
+			if (!(mi.fMask & MIM_MAXHEIGHT)) {
+				mi.fMask |= MIM_MAXHEIGHT;
+			}
+			mi.cyMax = 0;
+
+			// The menu height is greater than the remaining height at the bottom of the workspace
+			// Actual testing revealed that the automatic switching of the system occurred 6 pixels in advance
+			if (nPopupHigh > (nToBottom - 6)) {
+				uFlags |= TPM_BOTTOMALIGN;
+				nCy = clientRect.top + buttonRect.top;
+
+				// The menu height is greater than the remaining height of the top of the workspace
+				// The maximum height of the menu when collapsed is the remaining height of the top of the workspace
+				if (nPopupHigh > nToTop)
+					mi.cyMax = nToTop;
+			}
+			else {
+				uFlags |= TPM_TOPALIGN;
+			}
+			SetMenuInfo(hPopupMenu, &mi);
+			bTest = false;						// Officially open the menu
+			TrackPopupMenuEx(hPopupMenu, uFlags, clientRect.left + buttonRect.left, nCy, hScrnWnd, NULL);
+		}
+
 		if (!bModelessMenu) {
 			UnhookWindowsHookEx(hMenuHook);
 		}
@@ -1044,6 +1190,7 @@ void MenuUpdate()
 	}
 	CheckMenuItem(hMenu, MENU_DISPLAYINDICATOR, nVidSDisplayStatus ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_MODELESS, bModelessMenu ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_ADAPTIVEPOPUP, bAdaptivepopup ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_NOCHANGENUMLOCK, bNoChangeNumLock ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_HIGHRESTIMER, bEnableHighResTimer ? MF_CHECKED : MF_UNCHECKED);
 #if defined (FBNEO_DEBUG)
@@ -1326,6 +1473,7 @@ void MenuEnableItems()
 	}
 
 	EnableMenuItem(hMenu, MENU_MODELESS,				MF_ENABLED | MF_BYCOMMAND);
+	EnableMenuItem(hMenu, MENU_ADAPTIVEPOPUP,			MF_ENABLED | MF_BYCOMMAND);
 
 #if defined BUILD_X86_ASM
 	EnableMenuItem(hBlitterMenu[1], MENU_ENHANCED_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);

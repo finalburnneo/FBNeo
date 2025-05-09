@@ -307,6 +307,7 @@ extern int nWindowSize;
 extern TCHAR szPrevGames[SHOW_PREV_GAMES][64];
 
 extern bool bModelessMenu;
+extern bool bAdaptivepopup;
 
 int MenuCreate();
 void MenuDestroy();

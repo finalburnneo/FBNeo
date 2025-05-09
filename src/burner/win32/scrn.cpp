@@ -2269,6 +2269,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_ADAPTIVEPOPUP:
+			bAdaptivepopup = !bAdaptivepopup;
+			break;
+
 		case MENU_NOCHANGENUMLOCK:
 			bNoChangeNumLock = !bNoChangeNumLock;
 			break;

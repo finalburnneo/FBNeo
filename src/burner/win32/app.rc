@@ -1164,11 +1164,16 @@ BEGIN
            MENUITEM "Auto pause",					MENU_AUTOPAUSE
            MENUITEM "Always process keyboard input",			MENU_PROCESSINPUT, GRAYED
            MENUITEM "Display mode indicator",				MENU_DISPLAYINDICATOR
-           MENUITEM "Modeless menu",					MENU_MODELESS
            MENUITEM "Don't change Num Lock status",			MENU_NOCHANGENUMLOCK
 	       MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
            MENUITEM "Show Game List at start-up",			MENU_AUTOLOADGAMELIST
            MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
+           MENUITEM SEPARATOR
+           POPUP "Menu options"
+           BEGIN
+              MENUITEM "Modeless menu",					MENU_MODELESS
+              MENUITEM "Adaptive pop-up direction",			MENU_ADAPTIVEPOPUP
+           END
            MENUITEM SEPARATOR
            POPUP "Set application process priority"
            BEGIN

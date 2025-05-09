@@ -1817,8 +1817,9 @@ void install_protection_asic25_asic28_olds()
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 		BurnDrvGetRomInfo(&ri, i);
 
-		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 9)
-			BurnLoadRom(PGMUSER0 + 0x10000, i, 1);
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 9) {
+			BurnLoadRom(PGMUSER0 + 0x10000, i, 1); break;
+		}
 	}
 
 	SekOpen(0);

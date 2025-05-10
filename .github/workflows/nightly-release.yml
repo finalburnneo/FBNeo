@@ -194,7 +194,7 @@ jobs:
       - name: Build
         id: create_windows_x86_32_archive
         run: |
-          make -j1 mingw SKIPDEPEND=1 RELEASEBUILD=1
+          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
           archive_file="${{ env.WINDOWS_X86_32_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -243,7 +243,7 @@ jobs:
       - name: Build
         id: create_windows_x86_32_debug_archive
         run: |
-          make -j1 mingw SKIPDEPEND=1
+          make -j$(nproc) mingw SKIPDEPEND=1
           archive_file="${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html

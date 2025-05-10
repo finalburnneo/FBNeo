@@ -239,6 +239,23 @@ static INT32 DrvInit(INT32 which)
 		}
 
 		DrvGfxDecode();
+	} else if (which == 2) {
+		memset (DrvZ80ROM, 0xff, 0x90000);
+		
+		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x70000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x80000, 2, 1)) return 1;
+		
+		if (BurnLoadRom(DrvGfxROM  + 0x00000, 3, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x00100, 4, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00000, 5, 1)) return 1;
+
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
+		}
+
+		DrvGfxDecode();
 	} else {
 		memset(DrvZ80ROM, 0xff, 0x90000);
 
@@ -535,7 +552,7 @@ STD_ROM_FN(mastboyoc)
 
 static INT32 mastboyocInit()
 {
-	return DrvInit(2);
+	return DrvInit(3);
 }
 
 struct BurnDriver BurnDrvMastboyoc = {
@@ -545,5 +562,38 @@ struct BurnDriver BurnDrvMastboyoc = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, mastboyocRomInfo, mastboyocRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Master Boy (1987, Z80 hardware)
+
+static struct BurnRomInfo mastboyodRomDesc[] = {
+	{ "mb_p1.ic14",				0x04000, 0x9ff8d386, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "mb_3-4_27c512.bin",		0x10000, 0xb2819e38, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mb_1-2_27c512.bin",		0x10000, 0x98fd79d2, 1 | BRF_PRG | BRF_ESS }, //  2
+	
+	{ "fij_6_27128.bin",		0x04000, 0x66ebd96b, 2 | BRF_GRA },           //  3 Graphics
+
+	{ "h_82s129.ic39",			0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  4 Color data
+	{ "l_82s129.ic40",			0x00100, 0x4d061216, 3 | BRF_GRA },           //  5
+
+	{ "d_82s129.ic23",			0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  6 Unused PROM
+};
+
+STD_ROM_PICK(mastboyod)
+STD_ROM_FN(mastboyod)
+
+static INT32 mastboyodInit()
+{
+	return DrvInit(2);
+}
+
+struct BurnDriver BurnDrvMastboyod = {
+	"mastboyod", "mastboyo", NULL, NULL, "1987",
+	"Master Boy (1987, Z80 hardware)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	NULL, mastboyodRomInfo, mastboyodRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	mastboyodInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

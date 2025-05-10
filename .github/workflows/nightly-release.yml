@@ -187,6 +187,7 @@ jobs:
           wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -S --noconfirm make
 
       - name: Clone
         uses: actions/checkout@v4
@@ -236,6 +237,7 @@ jobs:
           wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
           pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
+          pacman -S --noconfirm make
 
       - name: Clone
         uses: actions/checkout@v4

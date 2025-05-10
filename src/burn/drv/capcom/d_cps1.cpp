@@ -14691,6 +14691,44 @@ static struct BurnRomInfo Sf2mkotRomDesc[] = {
 STD_ROM_PICK(Sf2mkot)
 STD_ROM_FN(Sf2mkot)
 
+static struct BurnRomInfo Sf2mkot2RomDesc[] = {
+	// f205v id 1761
+	// PCB is marked "STF" on component side
+	// PCB is labeled "30-04-92" on component side
+	{ "7.bin",     	  0x0080000, 0xc57501cb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "5.bin",     	  0x0080000, 0x31d2691b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "6.bin",     	  0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.bin",     	  0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "11.bin",       0x0080000, 0xa887f7d4, BRF_GRA | CPS1_TILES },
+	{ "13.bin",       0x0080000, 0x79fa8bf0, BRF_GRA | CPS1_TILES },
+	{ "12.bin",       0x0080000, 0x9390ff23, BRF_GRA | CPS1_TILES },
+	{ "14.bin",       0x0080000, 0x6a5f153c, BRF_GRA | CPS1_TILES },
+	{ "19.bin",       0x0080000, 0xafb3b589, BRF_GRA | CPS1_TILES },
+	{ "21.bin",       0x0080000, 0x32518120, BRF_GRA | CPS1_TILES },
+	{ "20.bin",       0x0080000, 0x90f2053e, BRF_GRA | CPS1_TILES },	
+	{ "22.bin",       0x0080000, 0xc16579ae, BRF_GRA | CPS1_TILES },	
+	{ "15.bin",       0x0080000, 0x169d85a6, BRF_GRA | CPS1_TILES },
+	{ "23.bin",       0x0080000, 0x0c638630, BRF_GRA | CPS1_TILES },
+	{ "16.bin",       0x0080000, 0x32a3a841, BRF_GRA | CPS1_TILES },	
+	{ "24.bin",       0x0080000, 0x6ee19b94, BRF_GRA | CPS1_TILES },
+
+	{ "3.bin",        0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "2.bin",        0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1.bin",        0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "9.bin",        0x0020000, 0x94778332, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "17.bin",       0x0020000, 0x748f2dd0, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "10.bin",       0x0020000, 0xd1e452d3, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "18.bin",       0x0020000, 0x155824a9, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+
+	{ "8.bin",        0x0010000, 0x13ea1c44, BRF_OPT }, // unknown (bootleg prority?)
+};
+
+STD_ROM_PICK(Sf2mkot2)
+STD_ROM_FN(Sf2mkot2)
+
 static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	{ "7.bin",         0x080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
 	{ "5.bin",         0x080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
@@ -17267,6 +17305,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2cems6a"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2re"         , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2mkot"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2mkot2"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab4"     , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceblp"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -25149,11 +25188,21 @@ struct BurnDriver BurnDrvCpsSf2re = {
 
 struct BurnDriver BurnDrvCpsSf2mkot = {
 	"sf2mkot", "sf2", NULL, NULL, "1992",
-	"Street Fighter II': Magic KO Turbo!! - Nightmare Crack\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II': Magic KO Turbo!! - Nightmare Crack (set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mkotRomInfo, Sf2mkotRomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2koryuInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2mkot2 = {
+	"sf2mkot2", "sf2", NULL, NULL, "1992",
+	"Street Fighter II': Magic KO Turbo!! - Nightmare Crack (set 2)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mkot2RomInfo, Sf2mkot2RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2amf12Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -179,7 +179,7 @@ jobs:
       - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
-          update: true
+          update: false
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 
@@ -229,7 +229,7 @@ jobs:
       - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
-          update: true
+          update: false
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
 

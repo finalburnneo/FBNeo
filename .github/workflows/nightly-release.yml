@@ -47,22 +47,13 @@ jobs:
     steps:
       - name: Clone
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Build
         id: create_release_body_archive
         run: |
-          latest_sha=$(git rev-parse latest)
-          git log --pretty=format:"%s (%an)" ${latest_sha}..${{ github.sha }} > commits.txt
           archive_file="${{ env.RELEASE_BODY_ARTIFACT }}.md"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
-          echo "### Notes" > ${archive_file}
-          echo "• The macos and linux standalone ports are not actively maintained, and might be missing important features, using our libretro port or running windows builds through wine/crossover is considered a safer choice for those platforms" >> ${archive_file}
-          echo "• The macos builds might first require running \`xattr -dr com.apple.quarantine "FinalBurn Neo.app"\` from a terminal to avoid a \"FinalBurn Neo is damaged\" error" >> ${archive_file}
-          echo "" >> ${archive_file}
-          echo "### Commits since previous nightly" >> ${archive_file}
-          awk '{print "• " $0}' commits.txt >> ${archive_file}
+          git log -1 --pretty=format:"%s (%an)" > ${archive_file}
 
       - name: Create Archive Path
         run: |

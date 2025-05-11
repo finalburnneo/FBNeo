@@ -171,6 +171,7 @@ jobs:
   build_windows_x86_32:
     name: Build (Windows x86_32)
     runs-on: windows-latest
+    continue-on-error: true
     defaults:
       run:
         shell: msys2 {0}
@@ -220,6 +221,7 @@ jobs:
   build_windows_x86_32_debug:
     name: Build (Windows x86_32 Debug)
     runs-on: windows-latest
+    continue-on-error: true
     defaults:
       run:
         shell: msys2 {0}
@@ -486,6 +488,7 @@ jobs:
 
       # Windows x86_32
       - name: Download Artifact (Windows x86_32)
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
@@ -503,6 +506,7 @@ jobs:
 
       # Windows x86_32 Debug
       - name: Download Artifact (Windows x86_32 Debug)
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}

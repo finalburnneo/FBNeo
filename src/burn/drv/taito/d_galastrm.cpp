@@ -359,7 +359,7 @@ static INT32 DrvInit()
 	nScreenWidth = 512;
 	nScreenHeight = 400;
 	BurnBitmapAllocate(1, 512, 400, true); // tmp
-	BurnBitmapAllocate(2, 512, 400, true); // poly
+	BurnBitmapAllocate(2, 512, 404, true); // poly
 	BurnBitmapAllocate(3, 512, 400, true); // tmp2
 
 	poly = poly_alloc(16, sizeof(poly_extra_data), POLYFLAG_ALLOW_QUADS);

@@ -7824,7 +7824,7 @@ STD_ROM_FN(Ffightbla)
 
 static struct BurnRomInfo FcrashRomDesc[] = {
 	// f205v id 252
-	{ "9.ic58",        0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "9.ic57",        0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "5.ic56",        0x020000, 0x77f7c2b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "8.ic52",        0x020000, 0x1895b3df, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "4.ic51",        0x020000, 0xbbd411ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -7850,7 +7850,14 @@ static struct BurnRomInfo FcrashRomDesc[] = {
 	{ "15.ic126",      0x020000, 0x6d837e09, BRF_GRA | CPS1_TILES },
 	{ "17.ic124",      0x020000, 0xc59a4d6c, BRF_GRA | CPS1_TILES },
 
-	{ "1.ic171",       0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "1.ic172",       0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "gal16v8-25lnc.ic132.bad.dump",	0x000c25, 0x07369d5c, BRF_OPT },
+	{ "gal16v8-25lnc.ic141.bad.dump",	0x000c25, 0x9077fa78, BRF_OPT },
+	{ "palce16v8h-25pc.ic10.bad.dump",	0x000c28, 0x8d63e2ba, BRF_OPT },
+	{ "palce20v8h-25pc.ic56.bad.dump",	0x000e28, 0x89110049, BRF_OPT },
+	{ "palce20v8h-25pc.ic154.bad.dump",	0x000e28, 0xa7d1a4c0, BRF_OPT },
+	{ "palce20v8h-25pc.ic155.bad.dump",	0x000e28, 0x87b629bd, BRF_OPT },
 };
 
 STD_ROM_PICK(Fcrash)

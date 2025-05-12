@@ -179,15 +179,9 @@ jobs:
       - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
-          update: false
+          update: true
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - name: Clone
         uses: actions/checkout@v4
@@ -229,15 +223,9 @@ jobs:
       - name: Install dependencies
         uses: msys2/setup-msys2@v2
         with:
-          update: false
+          update: true
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - name: Clone
         uses: actions/checkout@v4

@@ -6713,6 +6713,44 @@ struct BurnDriver BurnDrvsnes_Ddoujou = {
 	512, 448, 4, 3
 };
 
+// Double Dragon V: The Shadow Falls (USA) 
+
+static struct BurnRomInfo snes_Ddragon5RomDesc[] = {
+	{ "Double Dragon V - The Shadow Falls (U)(1994)(Tradewest).sfc", 3145728, 0x98a96ae8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ddragon5)
+STD_ROM_FN(snes_Ddragon5)
+
+struct BurnDriver BurnDrvsnes_Ddragon5 = {
+	"snes_ddragon5", NULL, NULL, NULL, "1994",
+	"Double Dragon V: The Shadow Falls (USA)\0", NULL, "Tradewest", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Ddragon5RomInfo, snes_Ddragon5RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Double Dragon V: The Shadow Falls (Euro) 
+
+static struct BurnRomInfo snes_Ddragon5eRomDesc[] = {
+	{ "Double Dragon V - The Shadow Falls (E)(1994)(Tradewest).sfc", 2097152, 0xe80f6b65, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ddragon5e)
+STD_ROM_FN(snes_Ddragon5e)
+
+struct BurnDriver BurnDrvsnes_Ddragon5e = {
+	"snes_ddragon5e", "snes_ddragon5", NULL, NULL, "1994",
+	"Double Dragon V: The Shadow Falls (Euro)\0", NULL, "Tradewest", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Ddragon5eRomInfo, snes_Ddragon5eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dead Dance (Japan)
 
 static struct BurnRomInfo snes_DeaddanceRomDesc[] = {
@@ -7735,44 +7773,6 @@ struct BurnDriver BurnDrvsnes_Doremifantasyts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_DoremifantasytsRomInfo, snes_DoremifantasytsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Double Dragon V - The Shadow Falls (USA) 
-
-static struct BurnRomInfo snes_Ddragon5uRomDesc[] = {
-	{ "Double Dragon V - The Shadow Falls (U)(1994)(Tradewest).sfc", 3145728, 0x98a96ae8, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Ddragon5u)
-STD_ROM_FN(snes_Ddragon5u)
-
-struct BurnDriver BurnDrvsnes_Ddragon5u = {
-	"snes_ddragon5u", NULL, NULL, NULL, "1994",
-	"Double Dragon V - The Shadow Falls (USA)\0", NULL, "Tradewest", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_Ddragon5uRomInfo, snes_Ddragon5uRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Double Dragon V - The Shadow Falls (Europe) 
-
-static struct BurnRomInfo snes_Ddragon5RomDesc[] = {
-	{ "Double Dragon V - The Shadow Falls (E)(1994)(Tradewest).sfc", 2097152, 0xe80f6b65, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Ddragon5)
-STD_ROM_FN(snes_Ddragon5)
-
-struct BurnDriver BurnDrvsnes_Ddragon5 = {
-	"snes_ddragon5", "snes_ddragon5u", NULL, NULL, "1994",
-	"Double Dragon V - The Shadow Falls (Europe)\0", NULL, "Tradewest", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_Ddragon5RomInfo, snes_Ddragon5RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19091,18 +19091,18 @@ struct BurnDriver BurnDrvsnes_Otogirisouj = {
 	512, 448, 4, 3
 };
 
-// Otogirisou - Hypericum Perforatum (Hack, English)
-// https://www.translated.games/snes/otogirisou
+// Otogirisou - Hypericum Perforatum (Hack, English v1.1)
+// https://www.romhacking.net/translations/7402/
 static struct BurnRomInfo snes_OtogirisouteRomDesc[] = {
-	{ "Otogirisou T-Eng (2024)(Translated.Games).sfc", 4194304, 0x650112ca, BRF_ESS | BRF_PRG },
+	{ "Otogirisou T-Eng v1.1 (2025)(ButThouMust).sfc", 1572864, 0x33c8391d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Otogirisoute)
 STD_ROM_FN(snes_Otogirisoute)
 
 struct BurnDriver BurnDrvsnes_Otogirisoute = {
-	"snes_otogirisoute", NULL, NULL, NULL, "2024",
-	"Otogirisou - Hypericum Perforatum (Hack, English)\0", NULL, "Translated.Games", "SNES / Super Famicom",
+	"snes_otogirisoute", NULL, NULL, NULL, "2025",
+	"Otogirisou - Hypericum Perforatum (Hack, English v1.1)\0", NULL, "ButThouMust", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_OtogirisouteRomInfo, snes_OtogirisouteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -33158,6 +33158,44 @@ struct BurnDriver BurnDrvsnes_Lizard = {
 	SNESGetZipName, snes_LizardRomInfo, snes_LizardRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// Lost Vikings, The - Ragnarok Edition (Hack)
+// https://www.romhacking.net/hacks/8985/
+static struct BurnRomInfo snes_LostvikingreRomDesc[] = {
+	{ "Lost Vikings, The - Ragnarok Edition (2025)(Ragnarok).sfc", 2097152, 0x10adc197, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lostvikingre)
+STD_ROM_FN(snes_Lostvikingre)
+
+struct BurnDriver BurnDrvsnes_Lostvikingre = {
+	"snes_lostvikingre", "snes_lostviking", NULL, NULL, "2025",
+	"Lost Vikings, The - Ragnarok Edition (Hack)\0", NULL, "Ragnarok", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LostvikingreRomInfo, snes_LostvikingreRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Magical Quest Starring Mickey Mouse, The - FastROM Fix v0.2 (Hack)
+// https://romhackplaza.org/romhacks/magical-quest-starring-mickey-mouse-fastrom-snes/
+static struct BurnRomInfo snes_MagicalquestffRomDesc[] = {
+	{ "Magical Quest Starring Mickey Mouse, The - FastROM Fix v0.2 (2025)(bogaa).sfc", 1048576, 0xbde87211, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Magicalquestff)
+STD_ROM_FN(snes_Magicalquestff)
+
+struct BurnDriver BurnDrvsnes_Magicalquestff = {
+	"snes_magicalquestff", "snes_magicalquest", NULL, NULL, "2025",
+	"Magical Quest Starring Mickey Mouse, The - FastROM Fix v0.2 (Hack)\0", NULL, "bogaa", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MagicalquestffRomInfo, snes_MagicalquestffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // MazezaM Challenge DX (HB, v2.1)

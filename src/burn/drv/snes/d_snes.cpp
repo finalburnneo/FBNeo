@@ -27092,10 +27092,10 @@ struct BurnDriver BurnDrvsnes_Supergenjin2 = {
 	512, 448, 4, 3
 };
 
-// Super Ghouls 'n Ghosts (USA)
+// Super Ghouls'n Ghosts (USA)
 
 static struct BurnRomInfo snes_SupergngRomDesc[] = {
-	{ "Super Ghouls 'n Ghosts (U)(1991)(Capcom).sfc", 1048576, 0x6aaba901, BRF_ESS | BRF_PRG },
+	{ "Super Ghouls'n Ghosts (U)(1991)(Capcom).sfc", 1048576, 0x6aaba901, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supergng)
@@ -27103,10 +27103,29 @@ STD_ROM_FN(snes_Supergng)
 
 struct BurnDriver BurnDrvsnes_Supergng = {
 	"snes_supergng", NULL, NULL, NULL, "1991",
-	"Super Ghouls 'n Ghosts (USA)\0", NULL, "Capcom", "SNES / Super Famicom",
+	"Super Ghouls'n Ghosts (USA)\0", NULL, "Capcom", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupergngRomInfo, snes_SupergngRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Ghouls'n Ghosts (Euro)
+
+static struct BurnRomInfo snes_SupergngeRomDesc[] = {
+	{ "Super Ghouls'n Ghosts (E)(1992)(Capcom).sfc", 1048576, 0xa00bc05e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supergnge)
+STD_ROM_FN(snes_Supergnge)
+
+struct BurnDriver BurnDrvsnes_Supergnge = {
+	"snes_supergnge", "snes_supergng", NULL, NULL, "1992",
+	"Super Ghouls'n Ghosts (Euro)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SupergngeRomInfo, snes_SupergngeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33521,6 +33540,25 @@ struct BurnDriver BurnDrvsnes_Nekotaco = {
 	512, 448, 4, 3
 };
 
+// New Super Mario Land (HB, v1.5)
+
+static struct BurnRomInfo snes_NewsupermariolandRomDesc[] = {
+	{ "New Super Mario Land v1.5 (2019).sfc", 2097152, 0x2b50f2af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Newsupermarioland)
+STD_ROM_FN(snes_Newsupermarioland)
+
+struct BurnDriver BurnDrvsnes_Newsupermarioland = {
+	"snes_newsupermarioland", NULL, NULL, NULL, "2019",
+	"New Super Mario Land (HB, v1.5)\0", NULL, "<unknown>", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_NewsupermariolandRomInfo, snes_NewsupermariolandRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Nightmare Busters (Euro) (Bug Fix v1.1)
 // https://romhackplaza.org/romhacks/nightmare-busters-bug-fix-snes/
 static struct BurnRomInfo snes_NightbustbfRomDesc[] = {
@@ -34187,10 +34225,10 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	512, 448, 4, 3
 };
 
-// Super Ghouls 'n Ghosts Restoration (Hack)
+// Super Ghouls'n Ghosts Restoration (Hack)
 // https://www.romhacking.net/hacks/3473/
 static struct BurnRomInfo snes_SupergngrRomDesc[] = {
-	{ "Super Ghouls 'n Ghosts Restoration Hack (2023)(SCD).sfc", 2097152, 0xacaed88a, BRF_ESS | BRF_PRG },
+	{ "Super Ghouls'n Ghosts Restoration Hack (2023)(SCD).sfc", 2097152, 0xacaed88a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supergngr)
@@ -34198,7 +34236,7 @@ STD_ROM_FN(snes_Supergngr)
 
 struct BurnDriver BurnDrvsnes_Supergngr = {
 	"snes_supergngr", "snes_supergng", NULL, NULL, "2023",
-	"Super Ghouls 'n Ghosts Restoration (Hack)\0", NULL, "SCD", "SNES / Super Famicom",
+	"Super Ghouls'n Ghosts Restoration (Hack)\0", NULL, "SCD", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupergngrRomInfo, snes_SupergngrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34506,6 +34544,26 @@ struct BurnDriver BurnDrvsnes_Sydneyhuntee = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SydneyhunteeRomInfo, snes_SydneyhunteeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Teenage Queen (HB, v1.4)
+// https://www.portabledev.com/jeux/supernes/teenage-queen/
+
+static struct BurnRomInfo snes_TeenagequeenRomDesc[] = {
+	{ "Teenage Queen (2018)(Alekmaul).sfc", 1048576, 0x00e4c4e6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Teenagequeen)
+STD_ROM_FN(snes_Teenagequeen)
+
+struct BurnDriver BurnDrvsnes_Teenagequeen = {
+	"snes_teenagequeen", NULL, NULL, NULL, "2018",
+	"Teenage Queen (HB, v1.4)\0", NULL, "Alekmaul", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_CARD, 0,
+	SNESGetZipName, snes_TeenagequeenRomInfo, snes_TeenagequeenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

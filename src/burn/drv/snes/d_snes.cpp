@@ -7739,6 +7739,44 @@ struct BurnDriver BurnDrvsnes_Doremifantasyts = {
 	512, 448, 4, 3
 };
 
+// Double Dragon V - The Shadow Falls (USA) 
+
+static struct BurnRomInfo snes_Ddragon5uRomDesc[] = {
+	{ "Double Dragon V - The Shadow Falls (U)(1994)(Tradewest).sfc", 3145728, 0x98a96ae8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ddragon5u)
+STD_ROM_FN(snes_Ddragon5u)
+
+struct BurnDriver BurnDrvsnes_Ddragon5u = {
+	"snes_ddragon5u", NULL, NULL, NULL, "1994",
+	"Double Dragon V - The Shadow Falls (USA)\0", NULL, "Tradewest", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Ddragon5uRomInfo, snes_Ddragon5uRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Double Dragon V - The Shadow Falls (Europe) 
+
+static struct BurnRomInfo snes_Ddragon5RomDesc[] = {
+	{ "Double Dragon V - The Shadow Falls (E)(1994)(Tradewest).sfc", 2097152, 0xe80f6b65, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ddragon5)
+STD_ROM_FN(snes_Ddragon5)
+
+struct BurnDriver BurnDrvsnes_Ddragon5 = {
+	"snes_ddragon5", "snes_ddragon5u", NULL, NULL, "1994",
+	"Double Dragon V - The Shadow Falls (Europe)\0", NULL, "Tradewest", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Ddragon5RomInfo, snes_Ddragon5RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dragon Quest I & II (Japan)
 
 static struct BurnRomInfo snes_Dquest1n2jRomDesc[] = {

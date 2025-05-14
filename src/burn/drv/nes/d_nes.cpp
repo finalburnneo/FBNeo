@@ -4908,6 +4908,24 @@ struct BurnDriver BurnDrvnes_vstopgun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_vsurbanchampRomDesc[] = {
+	{ "VS. Urban Champion (1984)(Nintendo).nes",          49168, 0x2d96264d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vsurbanchamp)
+STD_ROM_FN(nes_vsurbanchamp)
+
+struct BurnDriver BurnDrvnes_vsurbanchamp = {
+	"vsurbanchamp", NULL, NULL, NULL, "1984",
+	"VS. Urban Champion\0", NULL, "Nintendo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_NVS, GBF_VSFIGHT, 0,
+	NULL, nes_vsurbanchampRomInfo, nes_vsurbanchampRomName, NULL, NULL, NULL, NULL, NESVSInputInfo, NESVSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+
 
 // -------------------------
 // Chinese Translation Hacks

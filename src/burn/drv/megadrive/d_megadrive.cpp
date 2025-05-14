@@ -40852,13 +40852,20 @@ static struct BurnRomInfo md_teenqueenRomDesc[] = {
 STD_ROM_PICK(md_teenqueen)
 STD_ROM_FN(md_teenqueen)
 
+static INT32 teenqueenInit()
+{
+	MegadriveUnmappedRom = 0x00;
+
+	return MegadriveInit();
+}
+
 struct BurnDriver BurnDrvmd_teenqueen = {
 	"md_teenqueen", NULL, NULL, NULL, "2006",
 	"Teenage Queen The Demo (HB)\0", NULL, "Spoutnick Team", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_teenqueenRomInfo, md_teenqueenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	teenqueenInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 

@@ -33,6 +33,8 @@
 #include "m68000_debug.h"
 #include "i2ceeprom.h" // i2c eeprom for MD
 
+UINT8 MegadriveUnmappedRom = 0xff;
+
 //#define CYCDBUG
 
 #define OSC_NTSC 53693175
@@ -3291,7 +3293,7 @@ INT32 MegadriveInit()
 	// Fido Dido (Prototype) goes into a weird debug mode in bonus stage #2
 	// if 0x645046 is 0x00 - making the game unplayable.
 
-	memset(RomMain, 0xff, MAX_CARTRIDGE_SIZE);
+	memset(RomMain, MegadriveUnmappedRom, MAX_CARTRIDGE_SIZE);
 
 	MegadriveLoadRoms(0);
 	if (MegadriveLoadRoms(1)) return 1;
@@ -3387,6 +3389,8 @@ INT32 MegadriveInit()
 
 INT32 MegadriveExit()
 {
+	MegadriveUnmappedRom = 0xff;
+
 	SekExit();
 	ZetExit();
 

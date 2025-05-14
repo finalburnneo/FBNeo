@@ -367,8 +367,9 @@ void sms_reset(void)
 	ZetReset();
 	ZetClose();
 
-	if (IS_SMS) {
+	if (IS_SMS||IS_GG) {
 		// Z80 Stack Pointer set by SMS Bios, fix for Shadow Dancer and Ace of Aces
+		// & GameGear Ecco the Dolphin (non-Japan version)
 		// ZetSetSP() Must be called after ZetReset() when the cpu is in a closed state.
 		ZetSetSP(0, 0xdff0); // note: doesn't need cpu open!
 	}

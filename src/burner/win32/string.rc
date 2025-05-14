@@ -40,6 +40,9 @@ BEGIN
 	IDS_REPLAY_REPLAY			"Replay Input from File"
 
 	IDS_ROMS_SELECT_DIR			"Select Directory:"
+	IDS_ROMS_PATHS				"ROMs paths"
+	IDS_ROMS_EDIT_PATHS			"%s%sEdit ROMs paths"
+	IDS_ROMS_EDIT_DEFAULTS		"Confirmed to reset all paths to defaults?"
 
 	IDS_STATE_LOAD				"Load State"
 	IDS_STATE_SAVE				"Save State"
@@ -131,27 +134,6 @@ BEGIN
 	IDS_SPATH_HISTORY			"History.dat"
 	IDS_SPATH_EEPROM			"EEPROM Saves"
 	IDS_SPATH_HDD				"HDD Images"
-
-	IDS_ROMPATH_1				"Path #1"
-	IDS_ROMPATH_2				"Path #2"
-	IDS_ROMPATH_3				"Path #3"
-	IDS_ROMPATH_4				"Path #4"
-	IDS_ROMPATH_5				"Path #5"
-	IDS_ROMPATH_6				"Path #6"
-	IDS_ROMPATH_7				"Path #7"
-	IDS_ROMPATH_8				"Path #8"
-	IDS_ROMPATH_9				"Path #9"
-	IDS_ROMPATH_10				"Path #10"
-	IDS_ROMPATH_11				"Path #11"
-	IDS_ROMPATH_12				"Path #12"
-	IDS_ROMPATH_13				"Path #13"
-	IDS_ROMPATH_14				"Path #14"
-	IDS_ROMPATH_15				"Path #15"
-	IDS_ROMPATH_16				"Path #16"
-	IDS_ROMPATH_17				"Path #17"
-	IDS_ROMPATH_18				"Path #18"
-	IDS_ROMPATH_19				"Path #19"
-	IDS_ROMPATH_20				"Path #20"
 
 	IDS_PRESET_SAVED			"The preset file was saved to %s."
 

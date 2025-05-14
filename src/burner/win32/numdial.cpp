@@ -47,7 +47,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 			return TRUE;
 
 		case WM_COMMAND:
-			if (LOWORD(wParam) == ID_VALUE_CLOSE) {
+			if (LOWORD(wParam) == IDC_VALUE_CLOSE) {
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 			} else {
 				if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {

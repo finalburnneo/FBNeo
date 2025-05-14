@@ -110,7 +110,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 		if (Id==IDOK && Notify==BN_CLICKED) { SendMessage(hDlg,WM_CLOSE,0,0); return 0; }  // cancel=close
 		if (Id==IDCANCEL && Notify==BN_CLICKED) { SendMessage(hDlg, WM_CLOSE, 0, 0); return 0; } // esc=cancel
 
-		if (Id==IDCAPTURE && Notify==BN_CLICKED)
+		if (Id==IDC_APTURE && Notify==BN_CLICKED)
 		{
 			if (bDrvOkay)
 			{

@@ -8255,7 +8255,7 @@ struct BurnDriver BurnDrvsnes_Dragmagic = {
 // Dragon - The Bruce Lee Story (USA)
 
 static struct BurnRomInfo snes_DragonblsRomDesc[] = {
-	{ "Dragon - The Bruce Lee Story (U)(1994)(Acclaim - Virgin).sfc", 2097152, 0x407c5c24, BRF_ESS | BRF_PRG },
+	{ "Dragon - The Bruce Lee Story (U)(1994)(Acclaim Ent. - Virgin).sfc", 2097152, 0x407c5c24, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dragonbls)
@@ -13963,7 +13963,7 @@ struct BurnDriver BurnDrvsnes_Jpcrazysports = {
 // Judge Dredd (USA)
 
 static struct BurnRomInfo snes_JudgedreedRomDesc[] = {
-	{ "Judge Dredd (U)(1995)(Acclaim - Probe).sfc", 2097152, 0x0a3f0288, BRF_ESS | BRF_PRG },
+	{ "Judge Dredd (U)(1995)(Acclaim Ent. - Probe).sfc", 2097152, 0x0a3f0288, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Judgedreed)
@@ -16547,7 +16547,7 @@ struct BurnDriver BurnDrvsnes_Makeruna = {
 // Marko's Magic Football (Euro)
 
 static struct BurnRomInfo snes_MarkosmfRomDesc[] = {
-	{ "Marko's Magic Football (E)(1995)(Acclaim - Domark).sfc", 2097152, 0x4824a630, BRF_ESS | BRF_PRG },
+	{ "Marko's Magic Football (E)(1995)(Acclaim Ent. - Domark).sfc", 2097152, 0x4824a630, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Markosmf)
@@ -20519,7 +20519,7 @@ struct BurnDriver BurnDrvsnes_Populousj = {
 // Porky Pig's Haunted Holiday (USA)
 
 static struct BurnRomInfo snes_PorkypigRomDesc[] = {
-	{ "Porky Pig's Haunted Holiday (U)(1995)(Acclaim - Sunsoft).sfc", 2097152, 0xf09e91a1, BRF_ESS | BRF_PRG },
+	{ "Porky Pig's Haunted Holiday (U)(1995)(Acclaim Ent. - Sunsoft).sfc", 2097152, 0xf09e91a1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Porkypig)
@@ -25195,7 +25195,7 @@ struct BurnDriver BurnDrvsnes_Speedracer = {
 // Speedy Gonzales - Los Gatos Bandidos (USA)
 
 static struct BurnRomInfo snes_SpeedygonzalesRomDesc[] = {
-	{ "Speedy Gonzales - Los Gatos Bandidos (U)(1994)(Acclaim - Sunsoft).sfc", 1048576, 0xe2dbad76, BRF_ESS | BRF_PRG },
+	{ "Speedy Gonzales - Los Gatos Bandidos (U)(1994)(Acclaim Ent. - Sunsoft).sfc", 1048576, 0xe2dbad76, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Speedygonzales)
@@ -25203,7 +25203,7 @@ STD_ROM_FN(snes_Speedygonzales)
 
 struct BurnDriver BurnDrvsnes_Speedygonzales = {
 	"snes_speedygonzales", NULL, NULL, NULL, "1994",
-	"Speedy Gonzales - Los Gatos Bandidos (USA)\0", NULL, "Acclaim Ent. - Sunsoft", "SNES / Super Famicom",
+	"Speedy Gonzales - Los Gatos Bandidos (USA)\0", NULL, "Acclaim Entertainment - Sunsoft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SpeedygonzalesRomInfo, snes_SpeedygonzalesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -25458,7 +25458,7 @@ struct BurnDriver BurnDrvsnes_Srwglete = {
 	512, 448, 4, 3
 };
 
-// Super Street Fighter II - The New Challengers (USA)
+// Super Street Fighter II: The New Challengers (USA)
 
 static struct BurnRomInfo snes_Ssf2RomDesc[] = {
 	{ "Super Street Fighter II - The New Challengers (U)(1994)(Capcom).sfc", 4194304, 0xf16d5ce9, BRF_ESS | BRF_PRG },
@@ -25469,7 +25469,7 @@ STD_ROM_FN(snes_Ssf2)
 
 struct BurnDriver BurnDrvsnes_Ssf2 = {
 	"snes_ssf2", NULL, NULL, NULL, "1994",
-	"Super Street Fighter II - The New Challengers (USA)\0", NULL, "Capcom", "SNES / Super Famicom",
+	"Super Street Fighter II: The New Challengers (USA)\0", NULL, "Capcom", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ssf2RomInfo, snes_Ssf2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -25477,7 +25477,7 @@ struct BurnDriver BurnDrvsnes_Ssf2 = {
 	512, 448, 4, 3
 };
 
-// Super Street Fighter II - The New Challengers (Euro)
+// Super Street Fighter II: The New Challengers (Euro)
 
 static struct BurnRomInfo snes_Ssf2eRomDesc[] = {
 	{ "Super Street Fighter II - The New Challengers (E)(1994)(Capcom).sfc", 4194304, 0x6d86bfb0, BRF_ESS | BRF_PRG },
@@ -25488,7 +25488,7 @@ STD_ROM_FN(snes_Ssf2e)
 
 struct BurnDriver BurnDrvsnes_Ssf2e = {
 	"snes_ssf2e", "snes_ssf2", NULL, NULL, "1994",
-	"Super Street Fighter II - The New Challengers (Euro)\0", NULL, "Capcom", "SNES / Super Famicom",
+	"Super Street Fighter II: The New Challengers (Euro)\0", NULL, "Capcom", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ssf2eRomInfo, snes_Ssf2eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -25496,7 +25496,7 @@ struct BurnDriver BurnDrvsnes_Ssf2e = {
 	512, 448, 4, 3
 };
 
-// Super Street Fighter II - The New Challengers (Japan)
+// Super Street Fighter II: The New Challengers (Japan)
 
 static struct BurnRomInfo snes_Ssf2jRomDesc[] = {
 	{ "Super Street Fighter II - The New Challengers (J)(1994)(Capcom).sfc", 4194304, 0x26ca246b, BRF_ESS | BRF_PRG },
@@ -25507,7 +25507,7 @@ STD_ROM_FN(snes_Ssf2j)
 
 struct BurnDriver BurnDrvsnes_Ssf2j = {
 	"snes_ssf2j", "snes_ssf2", NULL, NULL, "1994",
-	"Super Street Fighter II - The New Challengers (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
+	"Super Street Fighter II: The New Challengers (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Ssf2jRomInfo, snes_Ssf2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -25515,7 +25515,7 @@ struct BurnDriver BurnDrvsnes_Ssf2j = {
 	512, 448, 4, 3
 };
 
-// Super Shanghai - Dragon's Eye (Japan)
+// Super Shanghai: Dragon's Eye (Japan)
 
 static struct BurnRomInfo snes_SshanghaiRomDesc[] = {
 	{ "Super Shanghai - Dragon's Eye (J)(1991)(Hot-B).sfc", 1048576, 0x6f95d27e, BRF_ESS | BRF_PRG },
@@ -25526,7 +25526,7 @@ STD_ROM_FN(snes_Sshanghai)
 
 struct BurnDriver BurnDrvsnes_Sshanghai = {
 	"snes_sshanghai", "snes_shanghai2", NULL, NULL, "1991",
-	"Super Shanghai - Dragon's Eye (Japan)\0", NULL, "Hot-B", "SNES / Super Famicom",
+	"Super Shanghai: Dragon's Eye (Japan)\0", NULL, "Hot-B", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_MAHJONG | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SshanghaiRomInfo, snes_SshanghaiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -25594,7 +25594,7 @@ struct BurnDriver BurnDrvsnes_Stardustspx = {
 // Stargate (USA)
 
 static struct BurnRomInfo snes_StargateRomDesc[] = {
-	{ "Stargate (U)(1994)(Acclaim).sfc", 2097152, 0x526ce576, BRF_ESS | BRF_PRG },
+	{ "Stargate (U)(1994)(Acclaim Entertainment).sfc", 2097152, 0x526ce576, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Stargate)
@@ -25613,7 +25613,7 @@ struct BurnDriver BurnDrvsnes_Stargate = {
 // Stargate (Euro)
 
 static struct BurnRomInfo snes_StargateeRomDesc[] = {
-	{ "Stargate (E)(1994)(Acclaim).sfc", 2097152, 0xaf4d4439, BRF_ESS | BRF_PRG },
+	{ "Stargate (E)(1994)(Acclaim Entertainment).sfc", 2097152, 0xaf4d4439, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Stargatee)
@@ -25632,7 +25632,7 @@ struct BurnDriver BurnDrvsnes_Stargatee = {
 // Stargate (Japan)
 
 static struct BurnRomInfo snes_StargatejRomDesc[] = {
-	{ "Stargate (J)(1994)(Acclaim).sfc", 2097152, 0x24bbddf8, BRF_ESS | BRF_PRG },
+	{ "Stargate (J)(1994)(Acclaim Entertainment).sfc", 2097152, 0x24bbddf8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Stargatej)
@@ -33486,7 +33486,7 @@ struct BurnDriver BurnDrvsnes_Megamanxpz = {
 // Mega Man X SA-1 (Hack, v1.2)
 // https://www.romhacking.net/hacks/5145/
 static struct BurnRomInfo snes_Megamanxsa1RomDesc[] = {
-	{ "Mega Man X SA1 (2020)(Bosn).sfc", 1572864, 0xb0eea801, BRF_ESS | BRF_PRG },
+	{ "Mega Man X SA-1 v1.2 (2020)(Bosn).sfc", 1572864, 0xb0eea801, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Megamanxsa1)
@@ -34589,7 +34589,7 @@ struct BurnDriver BurnDrvsnes_Superninjiland = {
 // Super SpongeBob Kart (Hack)
 
 static struct BurnRomInfo snes_SuperspongekartRomDesc[] = {
-	{ "Super SpongeBob Kart - Hack (2014)(Kempy).sfc", 786432, 0xf6d5920b, BRF_ESS | BRF_PRG },
+	{ "Super SpongeBob Kart (2014)(Kempy).sfc", 786432, 0xf6d5920b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(snes_Superspongekart, snes_Superspongekart, snes_dsp1b)
@@ -34780,7 +34780,7 @@ struct BurnDriver BurnDrvsnes_Sydneyhuntee = {
 // https://www.portabledev.com/jeux/supernes/teenage-queen/
 
 static struct BurnRomInfo snes_TeenagequeenRomDesc[] = {
-	{ "Teenage Queen (2018)(Alekmaul).sfc", 1048576, 0x00e4c4e6, BRF_ESS | BRF_PRG },
+	{ "Teenage Queen v1.4 (2018)(Alekmaul).sfc", 1048576, 0x00e4c4e6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Teenagequeen)

@@ -32400,7 +32400,7 @@ struct BurnDriver BurnDrvsnes_Atkpetscii = {
 };
 
 // Axelay - FastROM Fix (Hack)
-
+// https://github.com/VitorVilela7/fastrom/tree/master/axelay
 static struct BurnRomInfo snes_AxelayffRomDesc[] = {
 	{ "Axelay - FastROM Fix (2021)(Vitor Vilela).sfc", 1048576, 0x4bb73534, BRF_ESS | BRF_PRG },
 };
@@ -32452,6 +32452,25 @@ struct BurnDriver BurnDrvsnes_Blowemout = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION, 0,
 	SNESGetZipName, snes_BlowemoutRomInfo, snes_BlowemoutRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Borderline (HB)
+// https://lockeddoorpuzzle.itch.io/borderline
+static struct BurnRomInfo snes_BorderlineRomDesc[] = {
+	{ "Borderline (2022)(Locked Door Puzzle).sfc", 524288, 0xb1154ec9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Borderline)
+STD_ROM_FN(snes_Borderline)
+
+struct BurnDriver BurnDrvsnes_Borderline = {
+	"snes_borderline", NULL, NULL, NULL, "2022",
+	"Borderline (HB)\0", NULL, "Locked Door Puzzle", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_BorderlineRomInfo, snes_BorderlineRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33864,7 +33883,7 @@ struct BurnDriver BurnDrvsnes_Othercastle2 = {
 };
 
 // Parodius: Non-Sense Fantasy - FastROM Fix (Euro, Hack, v1.04)
-
+// https://www.patreon.com/posts/parodius-non-e-80296776
 static struct BurnRomInfo snes_ParodiuseffRomDesc[] = {
 	{ "Parodius - Non-Sense Fantasy - FastROM Fix v1.04 (E)(2023)(kandowontu).sfc", 1048576, 0x7fa02b26, BRF_ESS | BRF_PRG },
 };
@@ -33883,7 +33902,7 @@ struct BurnDriver BurnDrvsnes_Parodiuseff = {
 };
 
 // Parodius Da!: Shinwa kara Owarai e - FastROM Fix (Japan, Hack)
-
+// https://www.romhacking.net/hacks/6432/
 static struct BurnRomInfo snes_ParodiusjffRomDesc[] = {
 	{ "Parodius Da! - Shinwa kara Owarai e - FastROM Fix (J)(2021)(MaxwelOlinda).sfc", 1048576, 0x9554dd02, BRF_ESS | BRF_PRG },
 };
@@ -34055,7 +34074,7 @@ struct BurnDriver BurnDrvsnes_Ranmahb2tefr = {
 };
 
 // Return of Double Dragon - FastROM Fix v2.0 (Hack)
-
+// https://www.patreon.com/posts/return-of-double-79355175
 static struct BurnRomInfo snes_ReturndoubledragonffRomDesc[] = {
 	{ "Return of Double Dragon - FastROM Fix v2.0 (2023)(kandowontu).sfc", 1048576, 0x088a7511, BRF_ESS | BRF_PRG },
 };
@@ -34950,7 +34969,7 @@ struct BurnDriver BurnDrvsnes_Witchnwiz = {
 };
 
 // Wolfchild - FastROM Fix (Hack)
-
+// https://www.patreon.com/posts/wolfchild-usa-100866978
 static struct BurnRomInfo snes_WolfchildffRomDesc[] = {
 	{ "Wolfchild - FastROM Fix (2024)(kandowontu).sfc", 1048576, 0xfe9deb64, BRF_ESS | BRF_PRG },
 };

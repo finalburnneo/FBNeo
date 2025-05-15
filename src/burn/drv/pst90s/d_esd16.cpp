@@ -1212,11 +1212,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 //----------------------------------------------------------------------------------------------------------
 
-// Multi Champ (World, ver. 2.5)
+// Multi Champ (World, ver. 9.6)
 
 static struct BurnRomInfo multchmpRomDesc[] = {
-	{ "esd2.cu02",		0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
-	{ "esd1.cu03",		0x040000, 0x10974063, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "esd7.cu02",		0x040000, 0xe25cbbfe, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd6.cu03",		0x040000, 0xe7f837f9, 1 | BRF_PRG | BRF_ESS },	//  1
 
 	{ "esd3.su06",		0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
@@ -1290,10 +1290,50 @@ static INT32 MultchmpInit()
 
 struct BurnDriver BurnDrvMultchmp = {
 	"multchmp", NULL, NULL, NULL, "1999",
-	"Multi Champ (World, ver. 2.5)\0", NULL, "ESD", "Miscellaneous",
+	"Multi Champ (World, ver. 9.6)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, multchmpRomInfo, multchmpRomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
+	MultchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Multi Champ (World, ver. 2.5)
+
+static struct BurnRomInfo multchmp25RomDesc[] = {
+	{ "esd2.cu02",		0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x10974063, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "esd14.ju03",		0x040000, 0xa6122225, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd15.ju04",		0x040000, 0x88b7a97c, 3 | BRF_GRA },			//  4
+	{ "esd16.ju05",		0x040000, 0xe670a6da, 3 | BRF_GRA },			//  5
+	{ "esd17.ju06",		0x040000, 0xa69d4399, 3 | BRF_GRA },			//  6
+	{ "esd13.ju07",		0x040000, 0x22071594, 3 | BRF_GRA },			//  7
+
+	{ "esd5.fu27",		0x080000, 0x299f32c2, 4 | BRF_GRA },			//  8 - Tiles
+	{ "esd6.fu32",		0x080000, 0xe2689bb2, 4 | BRF_GRA },			//  9
+	{ "esd11.fu29",		0x080000, 0x9bafd8ee, 4 | BRF_GRA },			// 10
+	{ "esd12.fu33",		0x080000, 0xc6b86001, 4 | BRF_GRA },			// 11
+	{ "esd7.fu26", 		0x080000, 0xa783a003, 4 | BRF_GRA },			// 12
+	{ "esd8.fu30",		0x080000, 0x22861af2, 4 | BRF_GRA },			// 13
+	{ "esd9.fu28",		0x080000, 0x6652c04a, 4 | BRF_GRA },			// 14
+	{ "esd10.fu31",		0x080000, 0xd815974b, 4 | BRF_GRA },			// 15
+
+	{ "esd4.su10",		0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
+};
+
+STD_ROM_PICK(multchmp25)
+STD_ROM_FN(multchmp25)
+
+struct BurnDriver BurnDrvMultchmp25 = {
+	"multchmp25", "multchmp", NULL, NULL, "1999",
+	"Multi Champ (World, ver. 2.5)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, multchmp25RomInfo, multchmp25RomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
 	MultchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

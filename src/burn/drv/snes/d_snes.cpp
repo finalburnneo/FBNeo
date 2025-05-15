@@ -32589,7 +32589,7 @@ struct BurnDriver BurnDrvsnes_Classickong = {
 	512, 448, 4, 3
 };
 
-// Contra III - The Alien Wars SA-1 (Hack, v1.2)
+// Contra III - The Alien Wars - SA-1 (Hack, v1.2)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Contra-III
 static struct BurnRomInfo snes_Contraiiisa1RomDesc[] = {
 	{ "Contra III - The Alien Wars SA-1 v1.2 (2022)(Vitor Vilela).sfc", 1048576, 0xff3ee176, BRF_ESS | BRF_PRG },
@@ -32600,7 +32600,7 @@ STD_ROM_FN(snes_Contraiiisa1)
 
 struct BurnDriver BurnDrvsnes_Contraiiisa1 = {
 	"snes_contraiiisa1", "snes_contraiii", NULL, NULL, "2022",
-	"Contra III - The Alien Wars SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Contra III - The Alien Wars - SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SNESGetZipName, snes_Contraiiisa1RomInfo, snes_Contraiiisa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -33046,7 +33046,7 @@ struct BurnDriver BurnDrvsnes_Gourmetpiko = {
 	512, 448, 4, 3
 };
 
-// Gradius III SA-1 (USA) (Hack, v1.7)
+// Gradius III - SA-1 (USA) (Hack, v1.7)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Gradius-III
 static struct BurnRomInfo snes_Gradius3sa1RomDesc[] = {
 	{ "Gradius III (U) SA-1 v1.7 (2022)(Vitor Vilela).sfc", 524288, 0x0317bdb2, BRF_ESS | BRF_PRG },
@@ -33057,7 +33057,7 @@ STD_ROM_FN(snes_Gradius3sa1)
 
 struct BurnDriver BurnDrvsnes_Gradius3sa1 = {
 	"snes_gradius3sa1", "snes_gradius3", NULL, NULL, "2022",
-	"Gradius III SA-1 (USA) (Hack, v1.7)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Gradius III - SA-1 (USA) (Hack, v1.7)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_Gradius3sa1RomInfo, snes_Gradius3sa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -33065,7 +33065,7 @@ struct BurnDriver BurnDrvsnes_Gradius3sa1 = {
 	512, 448, 4, 3
 };
 
-// Gradius III SA-1 (Japan) (Hack, v1.7)
+// Gradius III - SA-1 (Japan) (Hack, v1.7)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Gradius-III
 static struct BurnRomInfo snes_Gradius3sa1jRomDesc[] = {
 	{ "Gradius III (J) SA-1 v1.7 (2022)(Vitor Vilela).sfc", 524288, 0x7c2e0613, BRF_ESS | BRF_PRG },
@@ -33076,7 +33076,7 @@ STD_ROM_FN(snes_Gradius3sa1j)
 
 struct BurnDriver BurnDrvsnes_Gradius3sa1j = {
 	"snes_gradius3sa1j", "snes_gradius3", NULL, NULL, "2022",
-	"Gradius III SA-1 (Japan) (Hack, v1.7)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Gradius III - SA-1 (Japan) (Hack, v1.7)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_Gradius3sa1jRomInfo, snes_Gradius3sa1jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -33502,7 +33502,7 @@ struct BurnDriver BurnDrvsnes_Megamanxpz = {
 	512, 448, 4, 3
 };
 
-// Mega Man X SA-1 (Hack, v1.2)
+// Mega Man X - SA-1 (Hack, v1.2)
 // https://www.romhacking.net/hacks/5145/
 static struct BurnRomInfo snes_Megamanxsa1RomDesc[] = {
 	{ "Mega Man X SA-1 v1.2 (2020)(Bosn).sfc", 1572864, 0xb0eea801, BRF_ESS | BRF_PRG },
@@ -33513,7 +33513,7 @@ STD_ROM_FN(snes_Megamanxsa1)
 
 struct BurnDriver BurnDrvsnes_Megamanxsa1 = {
 	"snes_megamanxsa1", "snes_megamanx", NULL, NULL, "2020",
-	"Mega Man X SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Bosn", "SNES / Super Famicom",
+	"Mega Man X - SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Bosn", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Megamanxsa1RomInfo, snes_Megamanxsa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -33996,7 +33996,7 @@ struct BurnDriver BurnDrvsnes_Qwak = {
 	512, 448, 4, 3
 };
 
-// Race Drivin' SA-1 - Base (Hack, v1.1)
+// Race Drivin' - SA-1 - Base (Hack, v1.1)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Race-Drivin
 static struct BurnRomInfo snes_Racedrivinsa1bRomDesc[] = {
 	{ "Race Drivin' SA-1 - Base v1.1 (2021)(Vitor Vilela).sfc", 524288, 0x23eaa97e, BRF_ESS | BRF_PRG },
@@ -34007,7 +34007,7 @@ STD_ROM_FN(snes_Racedrivinsa1b)
 
 struct BurnDriver BurnDrvsnes_Racedrivinsa1b = {
 	"snes_racedrivinsa1b", "snes_racedrivin", NULL, NULL, "2021",
-	"Race Drivin' SA-1 - Base (Hack, v1.1)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Race Drivin' - SA-1 - Base (Hack, v1.1)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Racedrivinsa1bRomInfo, snes_Racedrivinsa1bRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34015,7 +34015,7 @@ struct BurnDriver BurnDrvsnes_Racedrivinsa1b = {
 	512, 448, 4, 3
 };
 
-// Race Drivin' SA-1 - Origin (Hack, v1.1)
+// Race Drivin' - SA-1 - Origin (Hack, v1.1)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Race-Drivin
 static struct BurnRomInfo snes_Racedrivinsa1oRomDesc[] = {
 	{ "Race Drivin' SA-1 - Origin v1.1 (2021)(Vitor Vilela).sfc", 524288, 0xbb42a085, BRF_ESS | BRF_PRG },
@@ -34026,7 +34026,7 @@ STD_ROM_FN(snes_Racedrivinsa1o)
 
 struct BurnDriver BurnDrvsnes_Racedrivinsa1o = {
 	"snes_racedrivinsa1o", "snes_racedrivin", NULL, NULL, "2021",
-	"Race Drivin' SA-1 - Origin (Hack, v1.1)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Race Drivin' - SA-1 - Origin (Hack, v1.1)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Racedrivinsa1oRomInfo, snes_Racedrivinsa1oRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34529,7 +34529,7 @@ struct BurnDriver BurnDrvsnes_Supermarioworld30th = {
 	512, 448, 4, 3
 };
 
-// Super Mario World SA-1 Pack (Hack, v1.40)
+// Super Mario World - SA-1 - Pack (Hack, v1.40)
 // https://github.com/VitorVilela7/SMW-SA1-Pack
 static struct BurnRomInfo snes_Supermarioworldsa1RomDesc[] = {
 	{ "Super Mario World SA-1 Pack v1.40 (2021)(Vitor Vilela).sfc", 1048576, 0x389df7f4, BRF_ESS | BRF_PRG },
@@ -34540,7 +34540,7 @@ STD_ROM_FN(snes_Supermarioworldsa1)
 
 struct BurnDriver BurnDrvsnes_Supermarioworldsa1 = {
 	"snes_supermarioworldsa1", "snes_supermarioworld", NULL, NULL, "2021",
-	"Super Mario World SA-1 Pack (Hack, v1.40)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Super Mario World - SA-1 - Pack (Hack, v1.40)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Supermarioworldsa1RomInfo, snes_Supermarioworldsa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34643,7 +34643,7 @@ struct BurnDriver BurnDrvsnes_Supninjakid = {
 	512, 448, 4, 3
 };
 
-// Super R-Type SA-1 (Hack, v1.2)
+// Super R-Type - SA-1 (Hack, v1.2)
 // https://github.com/VitorVilela7/SA1-Root/tree/master/Super-R-Type
 static struct BurnRomInfo snes_Superrtypesa1RomDesc[] = {
 	{ "Super R-Type SA-1 v1.2 (2022)(Vitor Vilela).sfc", 1048576, 0x0d73e7d3, BRF_ESS | BRF_PRG },
@@ -34654,7 +34654,7 @@ STD_ROM_FN(snes_Superrtypesa1)
 
 struct BurnDriver BurnDrvsnes_Superrtypesa1 = {
 	"snes_superrtypesa1", "snes_superrtype", NULL, NULL, "2022",
-	"Super R-Type SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
+	"Super R-Type - SA-1 (Hack, v1.2)\0", "SA-1 enhancement CPU", "Vitor Vilela", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_Superrtypesa1RomInfo, snes_Superrtypesa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

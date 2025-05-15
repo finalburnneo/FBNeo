@@ -109,7 +109,7 @@ static INT32 ConvertToAbsolutePath(const TCHAR* pszPath, TCHAR* pszAbsolutePath)
 		return -1;
 
 	INT32 nRet = -1;
-	TCHAR szAbsolutePath[MAX_PATH] = { 0 };
+//	TCHAR szAbsolutePath[MAX_PATH] = { 0 };
 
 	if (IsRelativePath(pszPath)) {
 		TCHAR szAppPath[MAX_PATH] = { 0 };
@@ -214,7 +214,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			BROWSEINFO bInfo;
 			ITEMIDLIST* pItemIDList = NULL;
 			TCHAR buffer[MAX_PATH];
-			HRESULT hResult;
 
 			if (LOWORD(wParam) == IDOK) {
 				for (int i = 0; i < 20; i++) {
@@ -239,7 +238,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				break;
 			} else {
 				if (LOWORD(wParam) >= IDC_ROMSDIR_BR1 && LOWORD(wParam) <= IDC_ROMSDIR_BR20) {
-					hResult = OleInitialize(NULL);
 					var = IDC_ROMSDIR_EDIT1 + LOWORD(wParam) - IDC_ROMSDIR_BR1;
 
 					TCHAR szPath[MAX_PATH] = { 0 };
@@ -277,8 +275,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			bInfo.pszDisplayName = buffer;
 			bInfo.lpszTitle      = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
 			bInfo.ulFlags        = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
-			if (S_OK == hResult) {
-				bInfo.ulFlags   |= BIF_NEWDIALOGSTYLE;	// Caller needs to call OleInitialize() before using API
+			if (S_OK == nCOMInit) {
+				bInfo.ulFlags   |= BIF_NEWDIALOGSTYLE;	// Caller needs to call CoInitialize() / OleInitialize() before using API (main.cpp)
 			}
 			bInfo.lpfn           = BRProc;
 			bInfo.lParam         = (LPARAM)szAbsolutePath;
@@ -299,11 +297,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				pMalloc->Free(pItemIDList);
 			}
 			pMalloc->Release();
-
-			if (S_OK == hResult || S_FALSE == hResult) {
-				OleUninitialize();
-			}
-
 			break;
 		}
 		case WM_CLOSE: {

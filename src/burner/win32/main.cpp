@@ -29,6 +29,7 @@ bool bDisableDebugConsole = true;
 HINSTANCE hAppInst = NULL;			// Application Instance
 HANDLE hMainThread;
 long int nMainThreadID;
+INT32 nCOMInit = S_FALSE;
 int nAppProcessPriority = NORMAL_PRIORITY_CLASS;
 int nAppShowCmd;
 
@@ -776,6 +777,8 @@ static int AppInit()
 			break;
 	}
 
+	nCOMInit = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
+
 	// Set the process priority
 	SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 
@@ -835,6 +838,9 @@ static int AppExit()
 		DestroyAcceleratorTable(hAccel);
 		hAccel = NULL;
 	}
+
+	CoUninitialize();
+	nCOMInit = S_FALSE;
 
 	SplashDestroy(1);
 

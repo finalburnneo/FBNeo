@@ -174,7 +174,8 @@ const TCHAR* VidGetModuleName();
 InterfaceInfo* VidGetInfo();
 
 #ifdef BUILD_WIN32
- extern HWND hVidWnd;
+extern HWND hVidWnd;
+extern INT32 nCOMInit; // in burner/win32/main.cpp
 #endif
 
 #if defined (_XBOX)

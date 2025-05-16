@@ -2653,7 +2653,7 @@ struct BurnDriver BurnDrvKovsh103 = {
    ROM TYPES: U1 ST M27C322 */
 
 static struct BurnRomInfo kovsh102RomDesc[] = {
-	{ "p0600.102",	   				0x0400000, 0xfdd4fb0f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "kovsh_v102_u1.u1",	   		0x0400000, 0xfdd4fb0f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t0600.u11",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 
@@ -6966,7 +6966,7 @@ struct BurnDriver BurnDrvPgemeni = {
 // Bootlegs & hacks
 
 
-// Gaishi Xingxiong Tebie Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN, Dec 29 2010 16:31:32)
+// Heroes of the World Special Edition / Gaishi Xingxiong Tebie Ban (V302CN, China)
 
 /*
    QCPASS: 2011-04-28
@@ -6981,7 +6981,12 @@ struct BurnDriver BurnDrvPgemeni = {
    CREDITS TO: "GC8TECH.COM" AND IQ_132 */
 
 static struct BurnRomInfo kovgsyxRomDesc[] = {
+<<<<<<< HEAD
 	{ "27c322.u3",					0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
+=======
+//  kovqhsgs302 in MAME
+	{ "igs_m3004.u3",				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
+>>>>>>> parent of 7c2a7311d (d_pgm.cpp: update protection rom for kovgsyx)
 
 	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
 
@@ -6993,7 +6998,15 @@ static struct BurnRomInfo kovgsyxRomDesc[] = {
 
 	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
+<<<<<<< HEAD
 	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+=======
+	#if !defined ROM_VERIFY
+	{ "gsyx_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+#endif
+>>>>>>> parent of 7c2a7311d (d_pgm.cpp: update protection rom for kovgsyx)
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)
@@ -7016,8 +7029,8 @@ static INT32 kovgsyxInit()
 }
 
 struct BurnDriverD BurnDrvKovgsyx = {
-	"kovgsyx", "kovshp", "pgm", NULL, "2010",
-	"Gaishi Xingxiong Tebie Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN, Dec 29 2010 16:31:32)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
+	"kovgsyx", "kovshp", "pgm", NULL, "2004",
+	"Heroes of the World Special Edition / Gaishi Xingxiong Tebie Ban (V302CN, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGame Master",
 	L"Heroes of the World Special Edition\0\u76D6\u4E16\u82F1\u96C4 \u7279\u522B\u7248 (V302CN, China)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovgsyxRomInfo, kovgsyxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
@@ -7070,7 +7083,7 @@ static INT32 kovqhsgsInit()
 
 struct BurnDriver BurnDrvkovqhsgs = {
 	"kovqhsgs", "kovsh", "pgm", NULL, "2008",
-	"Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V303CN, Nov 21 2008 19:03:49)\0", NULL, "bootleg (WDF)", "PolyGame Master",
+	"Quanhuang Sanguo Tebie Ban (bootleg of Knights of Valour Super Heroes, V303CN, Nov 21 2008 19:03:49)\0", NULL, "bootleg", "PolyGame Master",
 	L"\u62f3\u7687\u4e09\u56fd\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V303CN, Nov 21 2008 19:03:49)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqhsgsRomInfo, kovqhsgsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,

@@ -37743,6 +37743,25 @@ struct BurnDriver BurnDrvmd_16bitrhythmld = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Metal Gear (HB)
+// https://h0ffman.itch.io/metal-gear-md
+static struct BurnRomInfo md_metalgearRomDesc[] = {
+	{ "MetalGear-TTE.md", 1572864, 0x9f6a5f55, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_metalgear)
+STD_ROM_FN(md_metalgear)
+
+struct BurnDriver BurnDrvmd_metalgear = {
+	"md_metalgear", NULL, NULL, NULL, "2025",
+	"Metal Gear (HB)\0", NULL, "h0ffman", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_metalgearRomInfo, md_metalgearRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // 240p Test Suite (HB, v1.23)
 // https://artemiourbina.itch.io/240p-test-suite
 static struct BurnRomInfo md_testsuite240pRomDesc[] = {

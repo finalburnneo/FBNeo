@@ -211,6 +211,30 @@ static struct BurnDIPInfo SasukeDIPList[]=
 
 STDDIPINFO(Sasuke)
 
+static struct BurnDIPInfo SasukeaDIPList[]=
+{
+	{0x0a, 0xff, 0xff, 0x95, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0a, 0x01, 0x01, 0x01, "Upright"		},
+	{0x0a, 0x01, 0x01, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"		},
+	{0x0a, 0x01, 0x02, 0x00, "1 Coin  1 Credits"	},
+	{0x0a, 0x01, 0x02, 0x02, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x0a, 0x01, 0x04, 0x04, "5000"			},
+	{0x0a, 0x01, 0x04, 0x00, "10000"		},
+
+	{0   , 0xfe, 0   ,    3, "Lives"		},
+	{0x0a, 0x01, 0x30, 0x00, "3"			},
+	{0x0a, 0x01, 0x30, 0x10, "4"			},
+	{0x0a, 0x01, 0x30, 0x20, "5"			},
+};
+
+STDDIPINFO(Sasukea)
+
 static struct BurnDIPInfo SatansatDIPList[]=
 {
 	{0x0c, 0xff, 0xff, 0x15, NULL			},
@@ -1721,7 +1745,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Sasuke vs. Commander
+// Sasuke vs. Commander (set 1)
 
 static struct BurnRomInfo sasukeRomDesc[] = {
 	{ "sc1",		0x0800, 0x34cbbe03, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 code
@@ -1748,10 +1772,46 @@ STD_ROM_FN(sasuke)
 
 struct BurnDriver BurnDrvSasuke = {
 	"sasuke", NULL, NULL, "sasuke", "1980",
-	"Sasuke vs. Commander\0", NULL, "SNK", "Miscellaneous",
+	"Sasuke vs. Commander (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sasukeRomInfo, sasukeRomName, NULL, NULL, sasukeSampleInfo, sasukeSampleName, SasukeInputInfo, SasukeDIPInfo,
+	SasukeInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x20,
+	224, 256, 3, 4
+};
+
+
+// Sasuke vs. Commander (set 2)
+
+static struct BurnRomInfo sasukeaRomDesc[] = {
+	{ "sc1",		0x0800, 0x34cbbe03, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 code
+	{ "sc2",		0x0800, 0x38cc14f0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sc3",		0x0800, 0xc7a0c668, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sc4",		0x0800, 0x23edafcf, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sc5",		0x0800, 0xca410e4f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sc6",		0x0800, 0xd97e98fa, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sc7",		0x0800, 0x04d0f104, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "sc8",		0x0800, 0x1893a1d3, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "sc9",		0x0800, 0x681dc3c5, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "sc10",		0x0800, 0x19df6b9a, 1 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "mcs_c",		0x0800, 0xaff9743d, 2 | BRF_GRA },           // 10 Background tiles
+	{ "mcs_d",		0x0800, 0x9c805120, 2 | BRF_GRA },           // 11
+
+	{ "sasuke.clr",		0x0020, 0xb70f34c1, 3 | BRF_GRA },           // 12 Color data
+
+	{ "sc11",		0x0800, 0x24a0e121, 4 | BRF_GRA },           // 13 Custom sound data
+};
+
+STD_ROM_PICK(sasukea)
+STD_ROM_FN(sasukea)
+
+struct BurnDriver BurnDrvSasukea = {
+	"sasukea", "sasuke", NULL, "sasuke", "1980",
+	"Sasuke vs. Commander (set 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sasukeaRomInfo, sasukeaRomName, NULL, NULL, sasukeSampleInfo, sasukeSampleName, SasukeInputInfo, SasukeaDIPInfo,
 	SasukeInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
 };

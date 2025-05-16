@@ -7803,7 +7803,7 @@ STD_ROM_FN(tnk3b)
 
 struct BurnDriver BurnDrvTnk3b = {
 	"tnk3b", "tnk3", NULL, NULL, "1985",
-	"T.A.N.K (bootleg, 8-way joystick)\0", NULL, "SNK", "Miscellaneous",
+	"T.A.N.K (bootleg, 8-way joystick)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tnk3bRomInfo, tnk3bRomName, NULL, NULL, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
@@ -7881,7 +7881,7 @@ STD_ROM_FN(athenab)
 
 struct BurnDriver BurnDrvAthenab = {
 	"athenab", "athena", NULL, NULL, "1986",
-	"Athena (bootleg)\0", NULL, "SNK", "Miscellaneous",
+	"Athena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, athenabRomInfo, athenabRomName, NULL, NULL, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
@@ -8667,7 +8667,7 @@ struct BurnDriver BurnDrvVictroad = {
 };
 
 
-// Dogou Souken
+// Dogou Souken (Japan)
 
 static struct BurnRomInfo dogosokeRomDesc[] = {
 	{ "p1.4p",			0x10000, 0x37867ad2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -8710,7 +8710,7 @@ STD_ROM_FN(dogosoke)
 
 struct BurnDriver BurnDrvDogosoke = {
 	"dogosoke", "victroad", NULL, NULL, "1986",
-	"Dogou Souken\0", NULL, "SNK", "Miscellaneous",
+	"Dogou Souken (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, dogosokeRomInfo, dogosokeRomName, NULL, NULL, NULL, NULL, VictroadInputInfo, VictroadDIPInfo,

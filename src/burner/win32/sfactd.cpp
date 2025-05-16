@@ -114,7 +114,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 		{
 			if (bDrvOkay)
 			{
-				MakeScreenShot();
+				MakeScreenShot(0);
 				SFactdUpdate();
 			}
 		}

@@ -324,6 +324,9 @@
 #define IDS_EMPTY						(IDS_STRING + 1424)
 #define IDS_UNIDENTIFIED_CD				(IDS_STRING + 1426)
 
+#define IDS_STSHOT_SAVED				(IDS_STRING + 1428)
+#define IDS_SPSHOT_SAVED				(IDS_STRING + 1430)
+
 #define IDS_ERR_ERROR					(IDS_ERROR  +    0)
 #define IDS_ERR_WARNING					(IDS_ERROR  +    2)
 #define IDS_ERR_INFORMATION				(IDS_ERROR  +    4)

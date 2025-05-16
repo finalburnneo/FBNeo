@@ -666,6 +666,8 @@
 #define MENU_SAVEGAMEINPUT					10333
 #define MENU_SAVESET                    	10334
 #define MENU_LOADSET                    	10335
+#define MENU_SAVETITLESNAP                   	10336
+#define MENU_SAVEPREVIEWSNAP                   	10337
 #define MENU_STARTLOG                   	10390
 #define MENU_STOPLOG                    	10391
 #define MENU_DEBUG							10392

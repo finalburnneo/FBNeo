@@ -2634,10 +2634,42 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_SAVESNAP: {
 			if (bDrvOkay) {
-				int status = MakeScreenShot();
+				int status = MakeScreenShot(0);
 
 				if (!status) {
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SSHOT_SAVED, true));
+				} else {
+					TCHAR tmpmsg[256];
+
+					_sntprintf(tmpmsg, 256, FBALoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
+					VidSNewShortMsg(tmpmsg, 0xFF3F3F);
+				}
+			}
+			break;
+		}
+
+		case MENU_SAVETITLESNAP: {
+			if (bDrvOkay) {
+				int status = MakeScreenShot(1);
+
+				if (!status) {
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STSHOT_SAVED, true));
+				} else {
+					TCHAR tmpmsg[256];
+
+					_sntprintf(tmpmsg, 256, FBALoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
+					VidSNewShortMsg(tmpmsg, 0xFF3F3F);
+				}
+			}
+			break;
+		}
+
+		case MENU_SAVEPREVIEWSNAP: {
+			if (bDrvOkay) {
+				int status = MakeScreenShot(2);
+
+				if (!status) {
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SPSHOT_SAVED, true));
 				} else {
 					TCHAR tmpmsg[256];
 

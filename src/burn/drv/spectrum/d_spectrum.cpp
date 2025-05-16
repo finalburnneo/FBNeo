@@ -6446,7 +6446,7 @@ struct BurnDriver BurnSpec911ts = {
 // 1942 (48K)
 
 static struct BurnRomInfo Spec1942RomDesc[] = {
-	{ "1942 48K (1986)(Elite Systems).z80", 0x08a78, 0x82b77807, BRF_ESS | BRF_PRG },
+	{ "1942 48K (1986)(Elite Systems).tap",   47378, 0x30a03888, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec1942, Spec1942, Spectrum)
@@ -6465,7 +6465,7 @@ struct BurnDriver BurnSpec1942 = {
 // 1943 - The Battle of Midway (48K)
 
 static struct BurnRomInfo Spec1943RomDesc[] = {
-	{ "1943 - The Battle of Midway 48K (1988)(Go!).z80", 0x0996f, 0xc97f9144, BRF_ESS | BRF_PRG },
+	{ "1943 - The Battle of Midway 48K (1988)(Go!).tap",   46579, 0x846d1dff, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec1943, Spec1943, Spectrum)
@@ -23599,6 +23599,25 @@ struct BurnDriver BurnSpecSanxion128 = {
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
 	SpectrumGetZipName, SpecSanxion128RomInfo, SpecSanxion128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sanxion - The Spectrum Remix 2023 (128K)
+
+static struct BurnRomInfo SpecSanxion2023RomDesc[] = {
+	{ "Sanxion - The Spectrum Remix 128K (2023)(Thalamus).tap", 48009, 0x992b0d50, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSanxion2023, SpecSanxion2023, Spectrum)
+STD_ROM_FN(SpecSanxion2023)
+
+struct BurnDriver BurnSpecSanxion2023 = {
+	"spec_sanxion2023", "spec_sanxion128", "spec_spectrum", NULL, "2023",
+	"Sanxion - The Spectrum Remix 2023 (128K)\0", NULL, "Thalamus", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecSanxion2023RomInfo, SpecSanxion2023RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

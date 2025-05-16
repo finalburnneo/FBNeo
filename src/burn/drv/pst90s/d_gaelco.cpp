@@ -1604,10 +1604,10 @@ static struct BurnRomInfo thoopRomDesc[] = {
 
 	{ "sound",				0x100000, 0x99f80961, 3 | BRF_SND },           //  6 M6295 Samples
 	
-	{ "thunderhoop_gal16v8.f2",	 0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
-	{ "thunderhoop_gal16v8.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
-	{ "thunderhoop_gal20v8.d21", 0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
-	{ "thunderhoop_gal20v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
+	{ "mu_mu-1_6541_gal16v8as.f2",  0x00117, 0xd5ed5985, 4 | BRF_OPT },    //  7 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },    //  8
+	{ "thunderhoop_gal20v8.d21",    0x00157, 0xa715e392, 4 | BRF_OPT },    //  9
+	{ "mu_mu-3_gal20v8as.h11",      0x00157, 0x51e34bc2, 4 | BRF_OPT },    // 10
 };
 
 STD_ROM_PICK(thoop)

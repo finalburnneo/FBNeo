@@ -18122,6 +18122,25 @@ struct BurnDriver BurnDrvsnes_Msglorydcte = {
 	512, 448, 4, 3
 };
 
+// Marvel Super Heroes vs. Street Fighter (USA)
+
+static struct BurnRomInfo snes_MshvsfRomDesc[] = {
+	{ "Marvel Super Heroes vs. Street Fighter (U)(1999)(DVS Electronic).sfc", 2097152, 0x05f60d4a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mshvsf)
+STD_ROM_FN(snes_Mshvsf)
+
+struct BurnDriver BurnDrvsnes_Mshvsf = {
+	"snes_mshvsf", "snes_xmenvsf", NULL, NULL, "1999",
+	"Marvel Super Heroes vs. Street Fighter (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_MshvsfRomInfo, snes_MshvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Marvel Super Heroes - War of the Gems (USA)
 
 static struct BurnRomInfo snes_MshwargemsRomDesc[] = {
@@ -23289,6 +23308,25 @@ struct BurnDriver BurnDrvsnes_Sf1climitedj = {
 	SNESGetZipName, snes_Sf1climitedjRomInfo, snes_Sf1climitedjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// Street Fighter EX Plus Alpha (USA)
+
+static struct BurnRomInfo snes_SfexpalphaRomDesc[] = {
+	{ "Street Fighter EX Plus Alpha (U)(1997)(DVS Electronic).sfc", 2097152, 0xbf3fa644, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sfexpalpha)
+STD_ROM_FN(snes_Sfexpalpha)
+
+struct BurnDriver BurnDrvsnes_Sfexpalpha = {
+	"snes_sfexpalpha", NULL, NULL, NULL, "1997",
+	"Street Fighter EX Plus Alpha\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SfexpalphaRomInfo, snes_SfexpalphaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // Street Fighter II (USA)
@@ -31857,6 +31895,25 @@ struct BurnDriver BurnDrvsnes_Xmenma = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_XmenmaRomInfo, snes_XmenmaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// X-Men vs. Street Fighter (USA)
+
+static struct BurnRomInfo snes_XmenvsfRomDesc[] = {
+	{ "X-Men vs. Street Fighter (U)(1998)(DVS Electronic).sfc", 2097152, 0x7eedf7da, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Xmenvsf)
+STD_ROM_FN(snes_Xmenvsf)
+
+struct BurnDriver BurnDrvsnes_Xmenvsf = {
+	"snes_xmenvsf", NULL, NULL, NULL, "1998",
+	"X-Men vs. Street Fighter (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_XmenvsfRomInfo, snes_XmenvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

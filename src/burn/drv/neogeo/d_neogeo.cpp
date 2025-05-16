@@ -9207,7 +9207,7 @@ struct BurnDriver BurnDrvKf2k2mp = {
 };
 
 
-// The King of Fighters 2002 Magic Plus II (bootleg, set 2)
+// The King of Fighters 2002 Magic Plus II (bootleg)
 
 static struct BurnRomInfo kf2k2mp2RomDesc[] = {
 	{ "k2k2m2p1.bin", 0x200000, 0x1016806c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -9261,7 +9261,7 @@ static INT32 kof2km2Init()
 
 struct BurnDriver BurnDrvKf2k2mp2 = {
 	"kf2k2mp2", "kof2002", "neogeo", NULL, "2002",
-	"The King of Fighters 2002 Magic Plus II (bootleg, set 2)\0", NULL, "bootleg", "Neo Geo MVS",
+	"The King of Fighters 2002 Magic Plus II (bootleg)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k2mp2RomInfo, kf2k2mp2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -16024,7 +16024,7 @@ struct BurnDriver BurnDrvKf2k2plc = {
 };
 
 
-// The King of Fighters 2002 Magic Plus (bootleg set 2)
+// The King of Fighters 2002 Magic Plus (bootleg, set 2)
 
 static struct BurnRomInfo kf2k2mplRomDesc[] = {
 	{ "kf02m-p1p.bin",0x100000, 0xaba169fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -16052,7 +16052,7 @@ STD_ROM_FN(kf2k2mpl)
 
 struct BurnDriver BurnDrvKf2k2mpl = {
 	"kf2k2mpl", "kof2002", "neogeo", NULL, "2002",
-	"The King of Fighters 2002 Magic Plus (bootleg set 2)\0", NULL, "bootleg", "Neo Geo MVS",
+	"The King of Fighters 2002 Magic Plus (bootleg, set 2)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k2mplRomInfo, kf2k2mplRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

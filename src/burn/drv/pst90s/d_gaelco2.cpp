@@ -1765,15 +1765,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Maniac Square (protected, version 1.0, checksum DEEE)
 
 static struct BurnRomInfo maniacsqRomDesc[] = {
-	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS },       //  0 68k Code
+	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS },       //  1
 
-	{ "ms1",				0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "ms2",				0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "ms3",				0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "ms4",				0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",				0x080000, 0xd8551b2f, 1 | BRF_GRA },                 //  2 Graphics & Samples
+	{ "ms2",				0x080000, 0xb269c427, 1 | BRF_GRA },                 //  3
+	{ "ms3",				0x020000, 0xaf4ea5e7, 1 | BRF_GRA },                 //  4
+	{ "ms4",				0x020000, 0x578c3588, 1 | BRF_GRA },                 //  5
 
-	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
+	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },            //  7 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },            //  8
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },            //  9
 };
 
 STD_ROM_PICK(maniacsq)
@@ -1798,15 +1802,19 @@ struct BurnDriver BurnDrvManiacsq = {
 // Maniac Square (protected, version 1.0, checksum CF2D)
 
 static struct BurnRomInfo maniacsqaRomDesc[] = {
-	{ "ms_u_45.u45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ms_u_44.u44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "ms_u_45.u45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS },           //  0 68k Code
+	{ "ms_u_44.u44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS },           //  1
 
-	{ "ms1",			0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "ms2",			0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "ms3",			0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "ms4",			0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",			0x080000, 0xd8551b2f, 1 | BRF_GRA },                     //  2 Graphics & Samples
+	{ "ms2",			0x080000, 0xb269c427, 1 | BRF_GRA },                     //  3
+	{ "ms3",			0x020000, 0xaf4ea5e7, 1 | BRF_GRA },                     //  4
+	{ "ms4",			0x020000, 0x578c3588, 1 | BRF_GRA },                     //  5
 
-	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
+	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },            //  7 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },            //  8
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },            //  9
 };
 
 STD_ROM_PICK(maniacsqa)
@@ -1833,6 +1841,10 @@ static struct BurnRomInfo maniacsquRomDesc[] = {
 	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
 	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
 	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
 };
 
 STD_ROM_PICK(maniacsqu)
@@ -1849,18 +1861,22 @@ struct BurnDriver BurnDrvManiacsqu = {
 };
 
 
-// Alligator Hunt (World, protected)
+// Alligator Hunt (World, protected, checksum 2B34128B)
 
 static struct BurnRomInfo aligatorRomDesc[] = {
-	{ "1.u45",  	0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "2.u44",  	0x080000, 0x96bc77c2, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.u45",  	0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS },            //  0 68k Code
+	{ "2.u44",  	0x080000, 0x96bc77c2, 0 | BRF_PRG | BRF_ESS },            //  1
 
-	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
-	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
-	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },                      //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },                      //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },                      //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },                      //  5
 	
 	{ "aligator_ds5002fp_sram.bin", 0x08000, 0x6558f215, BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },         //  7 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },         //  8
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },         //  9
 };
 
 STD_ROM_PICK(aligator)
@@ -1873,7 +1889,7 @@ static INT32 aligatorInit()
 
 struct BurnDriver BurnDrvAligator = {
 	"aligator", NULL, NULL, NULL, "1994",
-	"Alligator Hunt (World, protected)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (World, protected, checksum 2B34128B)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1882,18 +1898,22 @@ struct BurnDriver BurnDrvAligator = {
 };
 
 
-// Alligator Hunt (Spain, protected)
+// Alligator Hunt (Spain, protected, checksum 2B34128B)
 
 static struct BurnRomInfo aligatorsRomDesc[] = {
-	{ "u45",  		0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u44",  		0x080000, 0xf0be007a, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "u45",  		0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS },            //  0 68k Code
+	{ "u44",  		0x080000, 0xf0be007a, 0 | BRF_PRG | BRF_ESS },            //  1
 
-	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
-	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
-	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },                      //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },                      //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },                      //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },                      //  5
 	
 	{ "aligator_ds5002fp_sram.bin", 0x08000, 0x6558f215, BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },         //  7 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },         //  8
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },         //  9
 };
 
 STD_ROM_PICK(aligators)
@@ -1901,7 +1921,7 @@ STD_ROM_FN(aligators)
 
 struct BurnDriver BurnDrvAligators = {
 	"aligators", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (Spain, protected)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (Spain, protected, checksum 2B34128B)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1910,16 +1930,20 @@ struct BurnDriver BurnDrvAligators = {
 };
 
 
-// Alligator Hunt (unprotected, set 1)
+// Alligator Hunt (unprotected, set 1, checksum F9C6891D)
 
 static struct BurnRomInfo aligatorunRomDesc[] = {
 	{ "ahntu45n.040",	0x080000, 0xfc02cb2d, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ahntu44n.040",	0x080000, 0x7fbea3a3, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
-	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
-	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },               //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },               //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },               //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },               //  5
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
 };
 
 STD_ROM_PICK(aligatorun)
@@ -1927,7 +1951,7 @@ STD_ROM_FN(aligatorun)
 
 struct BurnDriver BurnDrvAligatorun = {
 	"aligatorun", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected, set 1)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, set 1, checksum F9C6891D)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1936,16 +1960,20 @@ struct BurnDriver BurnDrvAligatorun = {
 };
 
 
-// Alligator Hunt (unprotected, set 2)
+// Alligator Hunt (unprotected, set 2, checksum 25A83609)
 
 static struct BurnRomInfo aligatorunaRomDesc[] = {
 	{ "stm27c4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "am27c040.44",	0x080000, 0xd45a26ed, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
-	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
-	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },               //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },               //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },               //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },               //  5
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
 };
 
 STD_ROM_PICK(aligatoruna)
@@ -1953,10 +1981,40 @@ STD_ROM_FN(aligatoruna)
 
 struct BurnDriver BurnDrvAligatoruna = {
 	"aligatoruna", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected, set 2)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, set 2, checksum 25A83609)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Lizard Hunt (unprotected, checksum 25A83609)
+
+static struct BurnRomInfo lizardhuntRomDesc[] = {
+	{ "liz_u45_22f4_29-3_no_dall_27c040.u45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "liz_u44_07be_29-3_no_dall_27c040.u44",	0x080000, 0x185ec99d, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },               //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },               //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },               //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },               //  5
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
+};
+
+STD_ROM_PICK(lizardhunt)
+STD_ROM_FN(lizardhunt)
+
+struct BurnDriver BurnDrvLizardhunt = {
+	"lizardhunt", "aligator", NULL, NULL, "1994",
+	"Lizard Hunt (unprotected, checksum 25A83609)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, lizardhuntRomInfo, lizardhuntRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1968,10 +2026,12 @@ static struct BurnRomInfo snowboaraRomDesc[] = {
 	{ "sb_53.ic53",		0x080000, 0xe4eaefd4, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "sb_55.ic55",		0x080000, 0xe2476994, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sb_ic43.ic43",		0x200000, 0xafce54ed, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "sb_ic44.ic44",		0x400000, 0x1bbe88bc, 1 | BRF_GRA },           //  3
-	{ "sb_ic45.ic45",		0x400000, 0x373983d9, 1 | BRF_GRA },           //  4
-	{ "sb_ic46.ic46",		0x400000, 0x22e7c648, 1 | BRF_GRA },           //  5
+	{ "sb_ic43.ic43",		0x200000, 0xafce54ed, 1 | BRF_GRA },       //  2 Graphics & Samples
+	{ "sb_ic44.ic44",		0x400000, 0x1bbe88bc, 1 | BRF_GRA },       //  3
+	{ "sb_ic45.ic45",		0x400000, 0x373983d9, 1 | BRF_GRA },       //  4
+	{ "sb_ic46.ic46",		0x400000, 0x22e7c648, 1 | BRF_GRA },       //  5
+
+	{ "mu.sb.3972_pal16l8.bin",	0x104, 0xe5868379, 0 | BRF_OPT },      //  6 plds
 };
 
 STD_ROM_PICK(snowboara)
@@ -2023,6 +2083,8 @@ static struct BurnRomInfo snowboarRomDesc[] = {
 	{ "sb.e1",		0x080000, 0x9f38910b, 1 | BRF_GRA },           // 23
 	{ "sb.e2",		0x080000, 0xf5948c6c, 1 | BRF_GRA },           // 24
 	{ "sb.e3",		0x080000, 0x4baa678f, 1 | BRF_GRA },           // 25
+
+	{ "mu.sb.3972_pal16l8.bin",	0x104, 0xe5868379, 0 | BRF_OPT },  // 26 plds
 };
 
 STD_ROM_PICK(snowboar)
@@ -2058,6 +2120,11 @@ static struct BurnRomInfo touchgoRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		    0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgo)
@@ -2069,7 +2136,7 @@ static INT32 touchgoInit()
 }
 
 struct BurnDriver BurnDrvTouchgo = {
-	"touchgo", NULL, NULL, NULL, "1995",
+	"touchgo", NULL, NULL, NULL, "1996",
 	"Touch and Go (World, 05/Feb/1996, checksum 059D0235)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -2093,6 +2160,11 @@ static struct BurnRomInfo touchgoaRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgoa)
@@ -2122,6 +2194,11 @@ static struct BurnRomInfo touchgonaRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgona)
@@ -2162,6 +2239,11 @@ static struct BurnRomInfo touchgonnaRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgonna)
@@ -2191,6 +2273,11 @@ static struct BurnRomInfo touchgonnaaRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgonnaa)
@@ -2220,6 +2307,11 @@ static struct BurnRomInfo touchgonnabRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgonnab)
@@ -2250,6 +2342,11 @@ static struct BurnRomInfo touchgonnacRomDesc[] = {
 
 	{ "touchgo_ds5002fp_sram.bin", 	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS },   //  6 Dallas MCU
 	{ "touchgo_scratch",		   	0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS },   //  7 Dallas MCU internal RAM
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },              //  8 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },              //  9
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },              // 10
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },              // 11
 };
 
 STD_ROM_PICK(touchgonnac)
@@ -2277,6 +2374,11 @@ static struct BurnRomInfo touchgounRomDesc[] = {
 	{ "tg_ic65.ic65",					0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
 	{ "tg_ic66.ic66",					0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "tg_ic67.ic67",					0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },                  //  6 plds
+	{ "mu.6a_5083_gal18v6qs.bin",	0x117, 0xc6758737, 0 | BRF_OPT },                  //  7
+	{ "mu.8_777d_gal20v8.bin",		0x157, 0x01cdc724, 0 | BRF_OPT },                  //  8
+	{ "mu_8_668b_pal20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },                  //  9
 };
 
 STD_ROM_PICK(touchgoun)
@@ -2314,7 +2416,7 @@ static struct BurnRomInfo bangRomDesc[] = {
 	{ "bang21.ic21",	0x80000, 0xfd93d7f2, 2 | BRF_GRA },           // 14
 	{ "bang14.ic14",	0x80000, 0x858fcbf9, 2 | BRF_GRA },           // 15
 	
-	{ "bang_gal16v8.ic56", 0x00117, 0x226923ac, 3 | BRF_OPT },		  // 16 plds
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  // 16 plds
 };
 
 STD_ROM_PICK(bang)
@@ -2363,7 +2465,7 @@ static struct BurnRomInfo bangjRomDesc[] = {
 	{ "bang-a.ic21",	0x80000, 0x531ce3b6, 2 | BRF_GRA },           // 14
 	{ "bang-a.ic14",	0x80000, 0xf8e1cf84, 2 | BRF_GRA },           // 15
 	
-	{ "bang_gal16v8.ic56", 0x00117, 0x226923ac, 3 | BRF_OPT },		  // 16 plds
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  // 16 plds
 };
 
 STD_ROM_PICK(bangj)
@@ -2383,14 +2485,19 @@ struct BurnDriver BurnDrvBangj = {
 // World Rally 2: Twin Racing (mask ROM version)
 
 static struct BurnRomInfo wrally2RomDesc[] = {
-	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
+	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS },         //  1
 
 	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
 	
-	{ "wr2_ic68.ic68",  0x0100000, 0x4a75ffaa, 3 | BRF_OPT },
-	{ "wr2_ic69.ic69",  0x0400000, 0xa174d196, 3 | BRF_OPT },
-	{ "wr2_ic70.ic70",  0x0200000, 0x8d1e43ba, 3 | BRF_OPT },
+	{ "wr2_ic68.ic68",  0x0100000, 0x4a75ffaa, 3 | BRF_OPT },                     //  3 Graphics & Samples
+
+	{ "wr2_ic69.ic69",  0x0400000, 0xa174d196, 3 | BRF_OPT },                     //  4 Temporary storage
+	{ "wr2_ic70.ic70",  0x0200000, 0x8d1e43ba, 3 | BRF_OPT },                     //  5
+
+	{ "7a_5461_gal16v8.bin",	0x117, 0xa9bbdb7e, 0 | BRF_OPT },                 //  6 plds
+	{ "mu.7a_436f_pal16l8.bin",	0x104, 0x632adb2f, 0 | BRF_OPT },                 //  7
+	{ "mu8_668b_palf20l8.bin",	0x144, 0x4145d424, 0 | BRF_OPT },                 //  8
 };
 
 STD_ROM_PICK(wrally2)
@@ -2415,25 +2522,29 @@ struct BurnDriver BurnDrvWrally2 = {
 // World Rally 2: Twin Racing (EPROM version)
 
 static struct BurnRomInfo wrally2aRomDesc[] = {
-	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
+	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS },         //  1
 
 	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
 
-	{ "wr2.16d",		0x80000, 0xad26086b, 3 | BRF_GRA },           //  3 Graphics & Samples
-	{ "wr2.17d",		0x80000, 0xc1ec0745, 3 | BRF_GRA },           //  4
-	{ "wr2.18d",		0x80000, 0xe3617814, 3 | BRF_GRA },           //  5
-	{ "wr2.19d",		0x80000, 0x2dae988c, 3 | BRF_GRA },           //  6
-	{ "wr2.09d",		0x80000, 0x372d70c8, 3 | BRF_GRA },           //  7
-	{ "wr2.10d",		0x80000, 0x5db67eb3, 3 | BRF_GRA },           //  8
-	{ "wr2.11d",		0x80000, 0xae66b97c, 3 | BRF_GRA },           //  9
-	{ "wr2.12d",		0x80000, 0x6dbdaa95, 3 | BRF_GRA },           // 10
-	{ "wr2.01d",		0x80000, 0x753a138d, 3 | BRF_GRA },           // 11
-	{ "wr2.02d",		0x80000, 0x9c2a723c, 3 | BRF_GRA },           // 12
-	{ "wr2.20d",		0x80000, 0x4f7ade84, 3 | BRF_GRA },           // 13
-	{ "wr2.13d",		0x80000, 0xa4cd32f8, 3 | BRF_GRA },           // 14
-	{ "wr2.21d",		0x80000, 0x899b0583, 3 | BRF_GRA },           // 15
-	{ "wr2.14d",		0x80000, 0x6eb781d5, 3 | BRF_GRA },           // 16
+	{ "wr2.16d",		0x80000, 0xad26086b, 3 | BRF_GRA },                       //  3 Graphics & Samples
+	{ "wr2.17d",		0x80000, 0xc1ec0745, 3 | BRF_GRA },                       //  4
+	{ "wr2.18d",		0x80000, 0xe3617814, 3 | BRF_GRA },                       //  5
+	{ "wr2.19d",		0x80000, 0x2dae988c, 3 | BRF_GRA },                       //  6
+	{ "wr2.09d",		0x80000, 0x372d70c8, 3 | BRF_GRA },                       //  7
+	{ "wr2.10d",		0x80000, 0x5db67eb3, 3 | BRF_GRA },                       //  8
+	{ "wr2.11d",		0x80000, 0xae66b97c, 3 | BRF_GRA },                       //  9
+	{ "wr2.12d",		0x80000, 0x6dbdaa95, 3 | BRF_GRA },                       // 10
+	{ "wr2.01d",		0x80000, 0x753a138d, 3 | BRF_GRA },                       // 11
+	{ "wr2.02d",		0x80000, 0x9c2a723c, 3 | BRF_GRA },                       // 12
+	{ "wr2.20d",		0x80000, 0x4f7ade84, 3 | BRF_GRA },                       // 13
+	{ "wr2.13d",		0x80000, 0xa4cd32f8, 3 | BRF_GRA },                       // 14
+	{ "wr2.21d",		0x80000, 0x899b0583, 3 | BRF_GRA },                       // 15
+	{ "wr2.14d",		0x80000, 0x6eb781d5, 3 | BRF_GRA },                       // 16
+
+	{ "7a_5461_gal16v8.bin",	0x117, 0xa9bbdb7e, 0 | BRF_OPT },                 // 17 plds
+	{ "mu.7a_436f_pal16l8.bin",	0x104, 0x632adb2f, 0 | BRF_OPT },                 // 18
+	{ "mu8_668b_palf20l8.bin",	0x144, 0x4145d424, 0 | BRF_OPT },                 // 19
 };
 
 STD_ROM_PICK(wrally2a)

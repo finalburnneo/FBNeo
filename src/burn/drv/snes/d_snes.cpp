@@ -821,6 +821,25 @@ struct BurnDriver BurnDrvsnes_Windowshapestest = {
 // -------------------------------
 
 
+// 101 Dalmatas (USA)
+
+static struct BurnRomInfo snes_101dalmatasRomDesc[] = {
+	{ "101 Dalmatas (U)(1998)(Twin Eagles Group).sfc", 1048576, 0xdee0cd43, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_101dalmatas)
+STD_ROM_FN(snes_101dalmatas)
+
+struct BurnDriver BurnDrvsnes_101dalmatas = {
+	"snes_101dalmatas", "snes_beethoven", NULL, NULL, "1998",
+	"101 Dalmatas (USA)\0", "Warning: graphical glitches", "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_101dalmatasRomInfo, snes_101dalmatasRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // 3-jigen Kakutou Ballz (Japan)
 
 static struct BurnRomInfo snes_3jkballzRomDesc[] = {
@@ -1862,6 +1881,25 @@ struct BurnDriver BurnDrvsnes_Aladdinj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_AladdinjRomInfo, snes_AladdinjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Aladdin 2000 (USA)
+
+static struct BurnRomInfo snes_Aladdin2000RomDesc[] = {
+	{ "Aladdin 2000 (U)(2000)(DVS Electronic).sfc", 2097152, 0xa818cfd5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Aladdin2000)
+STD_ROM_FN(snes_Aladdin2000)
+
+struct BurnDriver BurnDrvsnes_Aladdin2000 = {
+	"snes_aladdin2000", NULL, NULL, NULL, "2000",
+	"Aladdin 2000 (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Aladdin2000RomInfo, snes_Aladdin2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -4599,6 +4637,25 @@ struct BurnDriver BurnDrvsnes_Bugsbunnyj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BugsbunnyjRomInfo, snes_BugsbunnyjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Bug's Life, A (USA)
+
+static struct BurnRomInfo snes_BugslifeRomDesc[] = {
+	{ "Bug's Life, A (U)(2000)(DVS Electronic).sfc", 2097152, 0x1683518d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bugslife)
+STD_ROM_FN(snes_Bugslife)
+
+struct BurnDriver BurnDrvsnes_Bugslife = {
+	"snes_bugslife", NULL, NULL, NULL, "2000",
+	"Bug's Life, A (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_BugslifeRomInfo, snes_BugslifeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -10350,6 +10407,25 @@ struct BurnDriver BurnDrvsnes_Flintstonestsmj = {
 	512, 448, 4, 3
 };
 
+// Flubber (USA)
+
+static struct BurnRomInfo snes_FlubberRomDesc[] = {
+	{ "Flubber (U)(1998)(Twin Eagles Group).sfc", 1048576, 0x19d276b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Flubber)
+STD_ROM_FN(snes_Flubber)
+
+struct BurnDriver BurnDrvsnes_Flubber = {
+	"snes_flubber", "snes_jellyboy", NULL, NULL, "1998",
+	"Flubber (USA)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_FlubberRomInfo, snes_FlubberRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Flying Hero - Bugyuru no Daibouken (Japan)
 
 static struct BurnRomInfo snes_FlyingherojRomDesc[] = {
@@ -12379,6 +12455,25 @@ struct BurnDriver BurnDrvsnes_Heberekep = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_HeberekepRomInfo, snes_HeberekepRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Hercules (USA)
+
+static struct BurnRomInfo snes_HerculesRomDesc[] = {
+	{ "Hercules (U)(1999)(DVS Electronic).sfc", 2097152, 0xaa9504c4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hercules)
+STD_ROM_FN(snes_Hercules)
+
+struct BurnDriver BurnDrvsnes_Hercules = {
+	"snes_hercules", NULL, NULL, NULL, "1999",
+	"Hercules (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HerculesRomInfo, snes_HerculesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -28874,6 +28969,25 @@ struct BurnDriver BurnDrvsnes_Talesofphantts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TalesofphanttsRomInfo, snes_TalesofphanttsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tarzan (USA)
+
+static struct BurnRomInfo snes_TarzanRomDesc[] = {
+	{ "Tarzan (U)(2000)(Twin Eagles Group).sfc", 2097152, 0xbe969bfc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tarzan)
+STD_ROM_FN(snes_Tarzan)
+
+struct BurnDriver BurnDrvsnes_Tarzan = {
+	"snes_tarzan", "snes_junglebook", NULL, NULL, "2000",
+	"Tarzan (USA)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_TarzanRomInfo, snes_TarzanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -6981,12 +6981,7 @@ struct BurnDriver BurnDrvPgemeni = {
    CREDITS TO: "GC8TECH.COM" AND IQ_132 */
 
 static struct BurnRomInfo kovgsyxRomDesc[] = {
-<<<<<<< HEAD
-	{ "27c322.u3",					0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
-=======
-//  kovqhsgs302 in MAME
 	{ "igs_m3004.u3",				0x0400000, 0x4018559f, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
->>>>>>> parent of 7c2a7311d (d_pgm.cpp: update protection rom for kovgsyx)
 
 	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
 
@@ -6998,15 +6993,11 @@ static struct BurnRomInfo kovgsyxRomDesc[] = {
 
 	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
-<<<<<<< HEAD
-	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
-=======
-	#if !defined ROM_VERIFY
+#if !defined ROM_VERIFY
 	{ "gsyx_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
 #else
 	{ "kovsh_v100_china.asic",		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
 #endif
->>>>>>> parent of 7c2a7311d (d_pgm.cpp: update protection rom for kovgsyx)
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)

@@ -62,6 +62,8 @@ BEGIN
 	IDS_NETPLAY_TOOMUCH			"too much text"
 
 	IDS_SSHOT_SAVED				"PNG saved"
+	IDS_STSHOT_SAVED			"PNG saved to titles"
+	IDS_SPSHOT_SAVED			"PNG saved to previews"
 	IDS_SSHOT_ERROR				"PNG error %1d"
 
 	IDS_REC_AVI				"Rec AVI ON"

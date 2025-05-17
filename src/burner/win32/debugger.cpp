@@ -1293,7 +1293,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			return 0;
 		}
 		if (LOWORD(wParam) == IDC_DBG_SHOT && HIWORD(wParam) == BN_CLICKED) {
-			MakeScreenShot();
+			MakeScreenShot(0);
 			return 0;
 		}
 

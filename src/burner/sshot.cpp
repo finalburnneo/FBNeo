@@ -8,12 +8,8 @@
 
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	TCHAR *SSHOT_DIRECTORY = NULL;
-	TCHAR *STSHOT_DIRECTORY = NULL;
-	TCHAR *SPSHOT_DIRECTORY = NULL;
 #else
 	#define SSHOT_DIRECTORY "screenshots/"
-	#define STSHOT_DIRECTORY "support/titles/"
-	#define SPSHOT_DIRECTORY "support/previews/"
 #endif
 
 static UINT8* pSShot = NULL;
@@ -168,12 +164,10 @@ INT32 MakeScreenShot(INT32 bType)
     		sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 	}
 	else if (bType == 1) {
-		// construct our filename -> "support/titles/romname.png"
-    		sprintf(szSShotName,"%s%s.png", STSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME));
+		sprintf(szSShotName,"%s%s.png", _TtoA(szAppTitlesPath), BurnDrvGetTextA(DRV_NAME));
     	}
     	else {
-		// construct our filename -> "support/previews/romname.png"
-    		sprintf(szSShotName,"%s%s.png", SPSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME));
+		sprintf(szSShotName,"%s%s.png", _TtoA(szAppPreviewsPath), BurnDrvGetTextA(DRV_NAME));
 	}
 	//sprintf(szTime,"%.2d-%.2d-%.2d %.2d:%.2d:%.2d", tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_year, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 	sprintf(szTime, "%s", asctime(tmTime));

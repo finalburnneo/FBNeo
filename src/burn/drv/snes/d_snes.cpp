@@ -821,25 +821,6 @@ struct BurnDriver BurnDrvsnes_Windowshapestest = {
 // -------------------------------
 
 
-// 101 Dalmatas (USA)
-
-static struct BurnRomInfo snes_101dalmatasRomDesc[] = {
-	{ "101 Dalmatas (U)(1998)(Twin Eagles Group).sfc", 1048576, 0xdee0cd43, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_101dalmatas)
-STD_ROM_FN(snes_101dalmatas)
-
-struct BurnDriver BurnDrvsnes_101dalmatas = {
-	"snes_101dalmatas", "snes_beethoven", NULL, NULL, "1998",
-	"101 Dalmatas (USA)\0", "Warning: graphical glitches", "Twin Eagles Group", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_101dalmatasRomInfo, snes_101dalmatasRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // 3-jigen Kakutou Ballz (Japan)
 
 static struct BurnRomInfo snes_3jkballzRomDesc[] = {
@@ -1881,25 +1862,6 @@ struct BurnDriver BurnDrvsnes_Aladdinj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_AladdinjRomInfo, snes_AladdinjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Aladdin 2000 (USA)
-
-static struct BurnRomInfo snes_Aladdin2000RomDesc[] = {
-	{ "Aladdin 2000 (U)(2000)(DVS Electronic).sfc", 2097152, 0xa818cfd5, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Aladdin2000)
-STD_ROM_FN(snes_Aladdin2000)
-
-struct BurnDriver BurnDrvsnes_Aladdin2000 = {
-	"snes_aladdin2000", NULL, NULL, NULL, "2000",
-	"Aladdin 2000 (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_Aladdin2000RomInfo, snes_Aladdin2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -4637,25 +4599,6 @@ struct BurnDriver BurnDrvsnes_Bugsbunnyj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BugsbunnyjRomInfo, snes_BugsbunnyjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Bug's Life, A (USA)
-
-static struct BurnRomInfo snes_BugslifeRomDesc[] = {
-	{ "Bug's Life, A (U)(2000)(DVS Electronic).sfc", 2097152, 0x1683518d, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Bugslife)
-STD_ROM_FN(snes_Bugslife)
-
-struct BurnDriver BurnDrvsnes_Bugslife = {
-	"snes_bugslife", NULL, NULL, NULL, "2000",
-	"Bug's Life, A (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_BugslifeRomInfo, snes_BugslifeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -10407,25 +10350,6 @@ struct BurnDriver BurnDrvsnes_Flintstonestsmj = {
 	512, 448, 4, 3
 };
 
-// Flubber (USA)
-
-static struct BurnRomInfo snes_FlubberRomDesc[] = {
-	{ "Flubber (U)(1998)(Twin Eagles Group).sfc", 1048576, 0x19d276b5, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Flubber)
-STD_ROM_FN(snes_Flubber)
-
-struct BurnDriver BurnDrvsnes_Flubber = {
-	"snes_flubber", "snes_jellyboy", NULL, NULL, "1998",
-	"Flubber (USA)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_FlubberRomInfo, snes_FlubberRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Flying Hero - Bugyuru no Daibouken (Japan)
 
 static struct BurnRomInfo snes_FlyingherojRomDesc[] = {
@@ -12455,25 +12379,6 @@ struct BurnDriver BurnDrvsnes_Heberekep = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_HeberekepRomInfo, snes_HeberekepRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Hercules (USA)
-
-static struct BurnRomInfo snes_HerculesRomDesc[] = {
-	{ "Hercules (U)(1999)(DVS Electronic).sfc", 2097152, 0xaa9504c4, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Hercules)
-STD_ROM_FN(snes_Hercules)
-
-struct BurnDriver BurnDrvsnes_Hercules = {
-	"snes_hercules", NULL, NULL, NULL, "1999",
-	"Hercules (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_HerculesRomInfo, snes_HerculesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -18122,25 +18027,6 @@ struct BurnDriver BurnDrvsnes_Msglorydcte = {
 	512, 448, 4, 3
 };
 
-// Marvel Super Heroes vs. Street Fighter (USA)
-
-static struct BurnRomInfo snes_MshvsfRomDesc[] = {
-	{ "Marvel Super Heroes vs. Street Fighter (U)(1999)(DVS Electronic).sfc", 2097152, 0x05f60d4a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Mshvsf)
-STD_ROM_FN(snes_Mshvsf)
-
-struct BurnDriver BurnDrvsnes_Mshvsf = {
-	"snes_mshvsf", "snes_xmenvsf", NULL, NULL, "1999",
-	"Marvel Super Heroes vs. Street Fighter (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_MshvsfRomInfo, snes_MshvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Marvel Super Heroes - War of the Gems (USA)
 
 static struct BurnRomInfo snes_MshwargemsRomDesc[] = {
@@ -23308,25 +23194,6 @@ struct BurnDriver BurnDrvsnes_Sf1climitedj = {
 	SNESGetZipName, snes_Sf1climitedjRomInfo, snes_Sf1climitedjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
-};
-
-// Street Fighter EX Plus Alpha (USA)
-
-static struct BurnRomInfo snes_SfexpalphaRomDesc[] = {
-	{ "Street Fighter EX Plus Alpha (U)(1997)(DVS Electronic).sfc", 2097152, 0xbf3fa644, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Sfexpalpha)
-STD_ROM_FN(snes_Sfexpalpha)
-
-struct BurnDriver BurnDrvsnes_Sfexpalpha = {
-	"snes_sfexpalpha", NULL, NULL, NULL, "1997",
-	"Street Fighter EX Plus Alpha (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_SfexpalphaRomInfo, snes_SfexpalphaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
 };
 
 // Street Fighter II (USA)
@@ -29011,25 +28878,6 @@ struct BurnDriver BurnDrvsnes_Talesofphantts = {
 	512, 448, 4, 3
 };
 
-// Tarzan (USA)
-
-static struct BurnRomInfo snes_TarzanRomDesc[] = {
-	{ "Tarzan (U)(2000)(Twin Eagles Group).sfc", 2097152, 0xbe969bfc, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Tarzan)
-STD_ROM_FN(snes_Tarzan)
-
-struct BurnDriver BurnDrvsnes_Tarzan = {
-	"snes_tarzan", "snes_junglebook", NULL, NULL, "2000",
-	"Tarzan (USA)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_TarzanRomInfo, snes_TarzanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Tatakae Genshijin 2 - Rookie no Bouken (Japan)
 
 static struct BurnRomInfo snes_Tatakae2RomDesc[] = {
@@ -31899,25 +31747,6 @@ struct BurnDriver BurnDrvsnes_Xmenma = {
 	512, 448, 4, 3
 };
 
-// X-Men vs. Street Fighter (USA)
-
-static struct BurnRomInfo snes_XmenvsfRomDesc[] = {
-	{ "X-Men vs. Street Fighter (U)(1998)(DVS Electronic).sfc", 2097152, 0x7eedf7da, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Xmenvsf)
-STD_ROM_FN(snes_Xmenvsf)
-
-struct BurnDriver BurnDrvsnes_Xmenvsf = {
-	"snes_xmenvsf", NULL, NULL, NULL, "1998",
-	"X-Men vs. Street Fighter (USA)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_XmenvsfRomInfo, snes_XmenvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // X Zone (USA, Japan)
 
 static struct BurnRomInfo snes_XzoneRomDesc[] = {
@@ -32408,6 +32237,316 @@ struct BurnDriver BurnDrvsnes_Zoop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_ZoopRomInfo, snes_ZoopRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+
+// -------------------------
+// Bootlegs/Unlicensed Games
+// -------------------------
+
+
+// 101 Dalmatas (USA) (Unl)
+
+static struct BurnRomInfo snes_101dalmatasRomDesc[] = {
+	{ "101 Dalmatas (U)(Unl)(1998)(Twin Eagles Group).sfc", 1048576, 0xdee0cd43, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_101dalmatas)
+STD_ROM_FN(snes_101dalmatas)
+
+struct BurnDriver BurnDrvsnes_101dalmatas = {
+	"snes_101dalmatas", "snes_beethoven", NULL, NULL, "1998",
+	"101 Dalmatas (USA) (Unl)\0", "Warning: graphical glitches", "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_101dalmatasRomInfo, snes_101dalmatasRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Aladdin 2000 (USA) (Unl)
+
+static struct BurnRomInfo snes_Aladdin2000RomDesc[] = {
+	{ "Aladdin 2000 (U)(Unl)(2000)(DVS Electronic).sfc", 2097152, 0xa818cfd5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Aladdin2000)
+STD_ROM_FN(snes_Aladdin2000)
+
+struct BurnDriver BurnDrvsnes_Aladdin2000 = {
+	"snes_aladdin2000", NULL, NULL, NULL, "2000",
+	"Aladdin 2000 (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Aladdin2000RomInfo, snes_Aladdin2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Bananas de Pijamas (USA) (Unl)
+
+static struct BurnRomInfo snes_BananasRomDesc[] = {
+	{ "Bananas de Pijamas (U)(Unl)(1998)(Twin Eagles Group).sfc", 1048576, 0x4260d94e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bananas)
+STD_ROM_FN(snes_Bananas)
+
+struct BurnDriver BurnDrvsnes_Bananas = {
+	"snes_bananas", NULL, NULL, NULL, "1998",
+	"Bananas de Pijamas (USA) (Unl)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_BananasRomInfo, snes_BananasRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Bug's Life, A (USA) (Unl)
+
+static struct BurnRomInfo snes_BugslifeRomDesc[] = {
+	{ "Bug's Life, A (U)(Unl)(2000)(DVS Electronic).sfc", 2097152, 0x1683518d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bugslife)
+STD_ROM_FN(snes_Bugslife)
+
+struct BurnDriver BurnDrvsnes_Bugslife = {
+	"snes_bugslife", NULL, NULL, NULL, "2000",
+	"Bug's Life, A (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_BugslifeRomInfo, snes_BugslifeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Digimon Adventure (USA) (Unl)
+
+static struct BurnRomInfo snes_DigimonRomDesc[] = {
+	{ "Digimon Adventure (U)(Unl)(1999)(DVS Electronic).sfc", 2097152, 0xaea5e0ba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Digimon)
+STD_ROM_FN(snes_Digimon)
+
+struct BurnDriver BurnDrvsnes_Digimon = {
+	"snes_digimon", NULL, NULL, NULL, "1999",
+	"Digimon Adventure (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_DigimonRomInfo, snes_DigimonRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Flubber (USA) (Unl)
+
+static struct BurnRomInfo snes_FlubberRomDesc[] = {
+	{ "Flubber (U)(Unl)(1998)(Twin Eagles Group).sfc", 1048576, 0x19d276b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Flubber)
+STD_ROM_FN(snes_Flubber)
+
+struct BurnDriver BurnDrvsnes_Flubber = {
+	"snes_flubber", "snes_jellyboy", NULL, NULL, "1998",
+	"Flubber (USA) (Unl)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_FlubberRomInfo, snes_FlubberRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Hercules (USA) (Unl)
+
+static struct BurnRomInfo snes_HerculesRomDesc[] = {
+	{ "Hercules (U)(Unl)(1999)(DVS Electronic).sfc", 2097152, 0xaa9504c4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hercules)
+STD_ROM_FN(snes_Hercules)
+
+struct BurnDriver BurnDrvsnes_Hercules = {
+	"snes_hercules", NULL, NULL, NULL, "1999",
+	"Hercules (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HerculesRomInfo, snes_HerculesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Marvel Super Heroes vs. Street Fighter (USA) (Unl)
+
+static struct BurnRomInfo snes_MshvsfRomDesc[] = {
+	{ "Marvel Super Heroes vs. Street Fighter (U)(Unl)(1999)(DVS Electronic).sfc", 2097152, 0x05f60d4a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mshvsf)
+STD_ROM_FN(snes_Mshvsf)
+
+struct BurnDriver BurnDrvsnes_Mshvsf = {
+	"snes_mshvsf", "snes_xmenvsf", NULL, NULL, "1999",
+	"Marvel Super Heroes vs. Street Fighter (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_MshvsfRomInfo, snes_MshvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Pocket Monster (USA) (Unl)
+
+static struct BurnRomInfo snes_PocketmonsterRomDesc[] = {
+	{ "Pocket Monster (U)(Unl)(1999)(DVS Electronic).sfc", 2097152, 0x53a72516, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Pocketmonster)
+STD_ROM_FN(snes_Pocketmonster)
+
+struct BurnDriver BurnDrvsnes_Pocketmonster = {
+	"snes_pocketmonster", NULL, NULL, NULL, "1999",
+	"Pocket Monster (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_PocketmonsterRomInfo, snes_PocketmonsterRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Pokemon Gold & Silver (USA) (Unl)
+
+static struct BurnRomInfo snes_PokemongsRomDesc[] = {
+	{ "Pokemon Gold & Silver (U)(Unl)(1999).sfc", 2097152, 0xe6bafeee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Pokemongs)
+STD_ROM_FN(snes_Pokemongs)
+
+struct BurnDriver BurnDrvsnes_Pokemongs = {
+	"snes_pokemongs", NULL, NULL, NULL, "1999",
+	"Pokemon Gold & Silver (USA) (Unl)\0", NULL, "<unknown>", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_PokemongsRomInfo, snes_PokemongsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Pokemon Stadium (USA) (Unl)
+
+static struct BurnRomInfo snes_PokemonstRomDesc[] = {
+	{ "Pokemon Stadium (U)(Unl)(1999)(DVS Electronic).sfc", 2097152, 0xa8142249, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Pokemonst)
+STD_ROM_FN(snes_Pokemonst)
+
+struct BurnDriver BurnDrvsnes_Pokemonst = {
+	"snes_pokemonst", NULL, NULL, NULL, "1999",
+	"Pokemon Stadium (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_PokemonstRomInfo, snes_PokemonstRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Sonic The Hedgehog (USA) (Unl)
+
+static struct BurnRomInfo snes_SonichedgehogRomDesc[] = {
+	{ "Sonic The Hedgehog (U)(Unl)(1996)(Twin Eagles Group).sfc", 1048576, 0x07136575, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sonichedgehog)
+STD_ROM_FN(snes_Sonichedgehog)
+
+struct BurnDriver BurnDrvsnes_Sonichedgehog = {
+	"snes_sonichedgehog", "snes_speedygonzales", NULL, NULL, "1996",
+	"Sonic The Hedgehog (USA) (Unl)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SonichedgehogRomInfo, snes_SonichedgehogRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Squirrel (USA) (Unl)
+
+static struct BurnRomInfo snes_SquirrelRomDesc[] = {
+	{ "Squirrel (U)(Unl)(1996)(DVS Electronic).sfc", 2097152, 0x82ae070b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Squirrel)
+STD_ROM_FN(snes_Squirrel)
+
+struct BurnDriver BurnDrvsnes_Squirrel = {
+	"snes_squirrel", NULL, NULL, NULL, "1996",
+	"Squirrel (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SquirrelRomInfo, snes_SquirrelRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Street Fighter EX Plus Alpha (USA) (Unl)
+
+static struct BurnRomInfo snes_SfexpalphaRomDesc[] = {
+	{ "Street Fighter EX Plus Alpha (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0xbf3fa644, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sfexpalpha)
+STD_ROM_FN(snes_Sfexpalpha)
+
+struct BurnDriver BurnDrvsnes_Sfexpalpha = {
+	"snes_sfexpalpha", NULL, NULL, NULL, "1997",
+	"Street Fighter EX Plus Alpha (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SfexpalphaRomInfo, snes_SfexpalphaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tarzan (USA) (Unl)
+
+static struct BurnRomInfo snes_TarzanRomDesc[] = {
+	{ "Tarzan (U)(Unl)(2000)(Twin Eagles Group).sfc", 2097152, 0xbe969bfc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tarzan)
+STD_ROM_FN(snes_Tarzan)
+
+struct BurnDriver BurnDrvsnes_Tarzan = {
+	"snes_tarzan", "snes_junglebook", NULL, NULL, "2000",
+	"Tarzan (USA) (Unl)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_TarzanRomInfo, snes_TarzanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// X-Men vs. Street Fighter (USA) (Unl)
+
+static struct BurnRomInfo snes_XmenvsfRomDesc[] = {
+	{ "X-Men vs. Street Fighter (U)(Unl)(1998)(DVS Electronic).sfc", 2097152, 0x7eedf7da, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Xmenvsf)
+STD_ROM_FN(snes_Xmenvsf)
+
+struct BurnDriver BurnDrvsnes_Xmenvsf = {
+	"snes_xmenvsf", NULL, NULL, NULL, "1998",
+	"X-Men vs. Street Fighter (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_XmenvsfRomInfo, snes_XmenvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

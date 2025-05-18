@@ -9442,6 +9442,25 @@ struct BurnDriver BurnDrvpce_splitres = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
+// Taito Chase H.Q. - Noise Fix (Hack)
+// https://www.romhacking.net/hacks/7242/
+static struct BurnRomInfo tg_chasehqnfRomDesc[] = {
+	{ "Taito Chase H.Q. - Noise Fix (Hack)(2022)(Justin Gibbins).pce", 0x060000, 0x947740bc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(tg_chasehqnf)
+STD_ROM_FN(tg_chasehqnf)
+
+struct BurnDriver BurnDrvtg_chasehqnf = {
+	"tg_chasehqnf", "tg_chasehq", NULL, NULL, "2022",
+	"Taito Chase H.Q. - Noise Fix (Hack)\0", NULL, "Justin Gibbins", "TurboGrafx 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_TG16, GBF_RACING, 0,
+	TgGetZipName, tg_chasehqnfRomInfo, tg_chasehqnfRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
 // Tongueman's Logic (HB)
 
 static struct BurnRomInfo pce_tonguemanRomDesc[] = {

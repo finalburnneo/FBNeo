@@ -622,27 +622,27 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Flower (US)
 
 static struct BurnRomInfo flowerRomDesc[] = {
-	{ "1.5j",	0x8000, 0xa4c3af78, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1.5j",		0x8000, 0xa4c3af78, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "2.5f",	0x8000, 0x7c7ee2d8, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "2.5f",		0x8000, 0x7c7ee2d8, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "3.d9",	0x4000, 0x8866c2b0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "3.10d",		0x4000, 0x8866c2b0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "10.13e",	0x2000, 0x62f9b28c, 4 | BRF_GRA },           //  3 Foreground Tiles
+	{ "10.13e",		0x2000, 0x62f9b28c, 4 | BRF_GRA },           //  3 Foreground Tiles
 
-	{ "14.19e",	0x2000, 0x11b491c5, 5 | BRF_GRA },           //  4 Sprites
-	{ "13.17e",	0x2000, 0xea743986, 5 | BRF_GRA },           //  5
-	{ "12.16e",	0x2000, 0xe3779f7f, 5 | BRF_GRA },           //  6
-	{ "11.14e",	0x2000, 0x8801b34f, 5 | BRF_GRA },           //  7
+	{ "14.19e",		0x2000, 0x11b491c5, 5 | BRF_GRA },           //  4 Sprites
+	{ "13.17e",		0x2000, 0xea743986, 5 | BRF_GRA },           //  5
+	{ "12.16e",		0x2000, 0xe3779f7f, 5 | BRF_GRA },           //  6
+	{ "11.14e",		0x2000, 0x8801b34f, 5 | BRF_GRA },           //  7
 
-	{ "8.10e",	0x2000, 0xf85eb20f, 6 | BRF_GRA },           //  8 Background Tiles
-	{ "6.7e",	0x2000, 0x3e97843f, 6 | BRF_GRA },           //  9
-	{ "9.12e",	0x2000, 0xf1d9915e, 6 | BRF_GRA },           // 10
-	{ "15.9e",	0x2000, 0x1cad9f72, 6 | BRF_GRA },           // 11
+	{ "8.10e",		0x2000, 0xf85eb20f, 6 | BRF_GRA },           //  8 Background Tiles
+	{ "6.7e",		0x2000, 0x3e97843f, 6 | BRF_GRA },           //  9
+	{ "9.12e",		0x2000, 0xf1d9915e, 6 | BRF_GRA },           // 10
+	{ "15.9e",		0x2000, 0x1cad9f72, 6 | BRF_GRA },           // 11
 
-	{ "4.12a",	0x8000, 0x851ed9fd, 7 | BRF_GRA },           // 12 Sound Chip #0 Data
+	{ "4.12a",		0x8000, 0x851ed9fd, 7 | BRF_GRA },           // 12 Sound Chip #0 Data
 
-	{ "5.16a",	0x4000, 0x42fa2853, 8 | BRF_GRA },           // 13 Sound Chip #1 Data
+	{ "5.16a",		0x4000, 0x42fa2853, 8 | BRF_GRA },           // 13 Sound Chip #1 Data
 
 	{ "82s129.k1",	0x0100, 0xd311ed0d, 9 | BRF_GRA },           // 14 Color Data
 	{ "82s129.k2",	0x0100, 0xababb072, 9 | BRF_GRA },           // 15
@@ -671,27 +671,76 @@ struct BurnDriver BurnDrvFlower = {
 // Flower (Japan)
 
 static struct BurnRomInfo flowerjRomDesc[] = {
-	{ "1",		0x8000, 0x63a2ef04, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1.5j",			0x8000, 0xa4c3af78, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "2.5f",	0x8000, 0x7c7ee2d8, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "2.5f",			0x8000, 0x7c7ee2d8, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "3.d9",	0x4000, 0x8866c2b0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "3.10d",			0x4000, 0x8866c2b0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "10.13e",	0x2000, 0x62f9b28c, 4 | BRF_GRA },           //  3 Foreground Tiles
+	{ "10.13e",			0x2000, 0x62f9b28c, 4 | BRF_GRA },           //  3 Foreground Tiles
 
-	{ "14.19e",	0x2000, 0x11b491c5, 5 | BRF_GRA },           //  4 Sprites
-	{ "13.17e",	0x2000, 0xea743986, 5 | BRF_GRA },           //  5
-	{ "12.16e",	0x2000, 0xe3779f7f, 5 | BRF_GRA },           //  6
-	{ "11.14e",	0x2000, 0x8801b34f, 5 | BRF_GRA },           //  7
+	{ "14.19e",			0x2000, 0x11b491c5, 5 | BRF_GRA },           //  4 Sprites
+	{ "13.17e",			0x2000, 0xea743986, 5 | BRF_GRA },           //  5
+	{ "12.16e",			0x2000, 0xe3779f7f, 5 | BRF_GRA },           //  6
+	{ "11.14e",			0x2000, 0x8801b34f, 5 | BRF_GRA },           //  7
 
-	{ "8.10e",	0x2000, 0xf85eb20f, 6 | BRF_GRA },           //  8 Background Tiles
-	{ "6.7e",	0x2000, 0x3e97843f, 6 | BRF_GRA },           //  9
-	{ "9.12e",	0x2000, 0xf1d9915e, 6 | BRF_GRA },           // 10
-	{ "7.9e",	0x2000, 0xe350f36c, 6 | BRF_GRA },           // 11
+	{ "8.10e",			0x2000, 0xf85eb20f, 6 | BRF_GRA },           //  8 Background Tiles
+	{ "6.7e",			0x2000, 0x3e97843f, 6 | BRF_GRA },           //  9
+	{ "9.12e",			0x2000, 0xf1d9915e, 6 | BRF_GRA },           // 10
+	{ "15_alpha.9e",	0x2000, 0xe350f36c, 6 | BRF_GRA },           // 11
 
-	{ "4.12a",	0x8000, 0x851ed9fd, 7 | BRF_GRA },           // 12 Sound Chip #0 Data
+	{ "4.12a",			0x8000, 0x851ed9fd, 7 | BRF_GRA },           // 12 Sound Chip #0 Data
 
-	{ "5.16a",	0x4000, 0x42fa2853, 8 | BRF_GRA },           // 13 Sound Chip #1 Data
+	{ "5.16a",			0x4000, 0x42fa2853, 8 | BRF_GRA },           // 13 Sound Chip #1 Data
+
+	{ "82s129.k1",		0x0100, 0xd311ed0d, 9 | BRF_GRA },           // 14 Color Data
+	{ "82s129.k2",		0x0100, 0xababb072, 9 | BRF_GRA },           // 15
+	{ "82s129.k3",		0x0100, 0x5aab7b41, 9 | BRF_GRA },           // 16
+
+	{ "82s147.d7",		0x0200, 0xf0dbb2a7, 0 | BRF_OPT },           // 17 Unknown PROMs
+	{ "82s147.j18",		0x0200, 0xd7de0860, 0 | BRF_OPT },           // 18
+	{ "82s123.k7",		0x0020, 0xea9c65e4, 0 | BRF_OPT },           // 19
+	{ "82s129.a1",		0x0100, 0xc8dad3fc, 0 | BRF_OPT },           // 20
+};
+
+STD_ROM_PICK(flowerj)
+STD_ROM_FN(flowerj)
+
+struct BurnDriver BurnDrvFlowerj = {
+	"flowerj", "flower", NULL, NULL, "1986",
+	"Flower (Japan)\0", NULL, "Clarue (Sega / Alpha Denshi Co. license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, flowerjRomInfo, flowerjRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	288, 224, 4, 3
+};
+
+
+// Flower (Japan, bootleg?)
+
+static struct BurnRomInfo flowerjbRomDesc[] = {
+	{ "1",			0x8000, 0x63a2ef04, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "2.5f",		0x8000, 0x7c7ee2d8, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "3.10d",		0x4000, 0x8866c2b0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+
+	{ "10.13e",		0x2000, 0x62f9b28c, 4 | BRF_GRA },           //  3 Foreground Tiles
+
+	{ "14.19e",		0x2000, 0x11b491c5, 5 | BRF_GRA },           //  4 Sprites
+	{ "13.17e",		0x2000, 0xea743986, 5 | BRF_GRA },           //  5
+	{ "12.16e",		0x2000, 0xe3779f7f, 5 | BRF_GRA },           //  6
+	{ "11.14e",		0x2000, 0x8801b34f, 5 | BRF_GRA },           //  7
+
+	{ "8.10e",		0x2000, 0xf85eb20f, 6 | BRF_GRA },           //  8 Background Tiles
+	{ "6.7e",		0x2000, 0x3e97843f, 6 | BRF_GRA },           //  9
+	{ "9.12e",		0x2000, 0xf1d9915e, 6 | BRF_GRA },           // 10
+	{ "7.9e",		0x2000, 0xe350f36c, 6 | BRF_GRA },           // 11
+
+	{ "4.12a",		0x8000, 0x851ed9fd, 7 | BRF_GRA },           // 12 Sound Chip #0 Data
+
+	{ "5.16a",		0x4000, 0x42fa2853, 8 | BRF_GRA },           // 13 Sound Chip #1 Data
 
 	{ "82s129.k1",	0x0100, 0xd311ed0d, 9 | BRF_GRA },           // 14 Color Data
 	{ "82s129.k2",	0x0100, 0xababb072, 9 | BRF_GRA },           // 15
@@ -703,15 +752,15 @@ static struct BurnRomInfo flowerjRomDesc[] = {
 	{ "82s129.a1",	0x0100, 0xc8dad3fc, 0 | BRF_OPT },           // 20
 };
 
-STD_ROM_PICK(flowerj)
-STD_ROM_FN(flowerj)
+STD_ROM_PICK(flowerjb)
+STD_ROM_FN(flowerjb)
 
-struct BurnDriver BurnDrvFlowerj = {
-	"flowerj", "flower", NULL, NULL, "1986",
-	"Flower (Japan)\0", NULL, "Clarue (Sega / Alpha Denshi Co. license)", "Miscellaneous",
+struct BurnDriver BurnDrvFlowerjb = {
+	"flowerjb", "flower", NULL, NULL, "1986",
+	"Flower (Japan, bootleg?)\0", NULL, "Clarue (Sega / Alpha Denshi Co. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, flowerjRomInfo, flowerjRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
+	NULL, flowerjbRomInfo, flowerjbRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
 };

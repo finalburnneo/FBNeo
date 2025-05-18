@@ -1930,7 +1930,7 @@ struct BurnDriver BurnDrvAligators = {
 };
 
 
-// Alligator Hunt (unprotected, set 1, checksum F9C6891D)
+// Alligator Hunt (unprotected, checksum F9C6891D)
 
 static struct BurnRomInfo aligatorunRomDesc[] = {
 	{ "ahntu45n.040",	0x080000, 0xfc02cb2d, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1951,7 +1951,7 @@ STD_ROM_FN(aligatorun)
 
 struct BurnDriver BurnDrvAligatorun = {
 	"aligatorun", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected, set 1, checksum F9C6891D)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, checksum F9C6891D)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1960,7 +1960,7 @@ struct BurnDriver BurnDrvAligatorun = {
 };
 
 
-// Alligator Hunt (unprotected, set 2, checksum 25A83609)
+// Alligator Hunt (unprotected, checksum 25A83609
 
 static struct BurnRomInfo aligatorunaRomDesc[] = {
 	{ "stm27c4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1981,7 +1981,7 @@ STD_ROM_FN(aligatoruna)
 
 struct BurnDriver BurnDrvAligatoruna = {
 	"aligatoruna", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected, set 2, checksum 25A83609)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, checksum 25A83609\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -2395,9 +2395,96 @@ struct BurnDriver BurnDrvTouchgoun = {
 };
 
 
-// Bang!
+// Bang! (version 2, checksum 140E)
 
 static struct BurnRomInfo bangRomDesc[] = {
+	{ "so_demo_bang_ic53_6ff0_15-2-99.ic53",	0x80000, 0x0de5e331, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "so_demo_bang_ic55_abfc_15-2-99.ic55",	0x80000, 0xb97b9d3a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ba_16_468a_27c040.ic16",	0x80000, 0xc926486c, 2 | BRF_GRA },           				  //  2 Graphics & Samples
+	{ "ba_17_08d4_27c040.ic17",	0x80000, 0x0c35aa6f, 2 | BRF_GRA },           				  //  3
+	{ "ba_18_0a6a_27c040.ic18",	0x80000, 0x2056b1ad, 2 | BRF_GRA },           				  //  4
+	{ "ba_9_1bc7_27c040.ic9",	0x80000, 0x078195dc, 2 | BRF_GRA },           				  //  5
+	{ "ba_10_7a6b_27c040.ic10",	0x80000, 0x06711eeb, 2 | BRF_GRA },           				  //  6
+	{ "ba_11_e242_27c040.ic11",	0x80000, 0x2088d15c, 2 | BRF_GRA },           				  //  7
+	{ "ba_1_1223_27c040.ic1",	0x80000, 0xe7b97b0f, 2 | BRF_GRA },           				  //  8
+	{ "ba_2_a40f_27c040.ic2",	0x80000, 0xff297a8f, 2 | BRF_GRA },           				  //  9
+	{ "ba_3_f69f_27c040.ic3",	0x80000, 0xd3da5d4f, 2 | BRF_GRA },           				  // 10
+	{ "ba_20_b854_27c040.ic20",	0x80000, 0xa1145df8, 2 | BRF_GRA },           				  // 11
+	{ "ba_13_754e_27c040.ic13",	0x80000, 0xfe3e8d07, 2 | BRF_GRA },           				  // 12
+	{ "ba_5_a760_27c040.ic5",	0x80000, 0x9bee444c, 2 | BRF_GRA },           				  // 13
+	{ "ba_21_2e9c_27c040.ic21",	0x80000, 0xfd93d7f2, 2 | BRF_GRA },           				  // 14
+	{ "ba_14_6978_27c040.ic14",	0x80000, 0x858fcbf9, 2 | BRF_GRA },           				  // 15
+	
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  						  // 16 plds
+};
+
+STD_ROM_PICK(bang)
+STD_ROM_FN(bang)
+
+static INT32 bangInit()
+{
+	INT32 rc = DrvInit(6);
+
+	if (!rc) {
+		BurnGunInit(2, true);
+	}
+
+	return rc;
+}
+
+struct BurnDriver BurnDrvBang = {
+	"bang", NULL, NULL, NULL, "1998",
+	"Bang! (version 2, checksum 140E)\0", NULL, "Gaelco / Bit Managers", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bangRomInfo, bangRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
+	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Bang! (version 2, checksum D35D)
+
+static struct BurnRomInfo bangaRomDesc[] = {
+	{ "so_demo_bang_ic53_altera_6a11_15-2-99.ic53",	0x80000, 0x09954233, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "so_demo_bang_ic55_altera_1de5_15-2-99.ic55",	0x80000, 0x68f8f769, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ba_16_468a_27c040.ic16",	0x80000, 0xc926486c, 2 | BRF_GRA },           				  	  //  2 Graphics & Samples
+	{ "ba_17_08d4_27c040.ic17",	0x80000, 0x0c35aa6f, 2 | BRF_GRA },           				  	  //  3
+	{ "ba_18_0a6a_27c040.ic18",	0x80000, 0x2056b1ad, 2 | BRF_GRA },           				  	  //  4
+	{ "ba_9_1bc7_27c040.ic9",	0x80000, 0x078195dc, 2 | BRF_GRA },           				  	  //  5
+	{ "ba_10_7a6b_27c040.ic10",	0x80000, 0x06711eeb, 2 | BRF_GRA },           				  	  //  6
+	{ "ba_11_e242_27c040.ic11",	0x80000, 0x2088d15c, 2 | BRF_GRA },           				  	  //  7
+	{ "ba_1_1223_27c040.ic1",	0x80000, 0xe7b97b0f, 2 | BRF_GRA },           				  	  //  8
+	{ "ba_2_a40f_27c040.ic2",	0x80000, 0xff297a8f, 2 | BRF_GRA },           				  	  //  9
+	{ "ba_3_f69f_27c040.ic3",	0x80000, 0xd3da5d4f, 2 | BRF_GRA },           				  	  // 10
+	{ "ba_20_b854_27c040.ic20",	0x80000, 0xa1145df8, 2 | BRF_GRA },           				  	  // 11
+	{ "ba_13_754e_27c040.ic13",	0x80000, 0xfe3e8d07, 2 | BRF_GRA },           				  	  // 12
+	{ "ba_5_a760_27c040.ic5",	0x80000, 0x9bee444c, 2 | BRF_GRA },           				  	  // 13
+	{ "ba_21_2e9c_27c040.ic21",	0x80000, 0xfd93d7f2, 2 | BRF_GRA },           				  	  // 14
+	{ "ba_14_6978_27c040.ic14",	0x80000, 0x858fcbf9, 2 | BRF_GRA },           				  	  // 15
+	
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  						  	  // 16 plds
+};
+
+STD_ROM_PICK(banga)
+STD_ROM_FN(banga)
+
+struct BurnDriver BurnDrvBanga = {
+	"banga", "bang", NULL, NULL, "1998",
+	"Bang! (version 2, checksum D35D)\0", NULL, "Gaelco / Bit Managers", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bangaRomInfo, bangaRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
+	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Bang! (version 0, checksum B61D)
+
+static struct BurnRomInfo bangbRomDesc[] = {
 	{ "bang53.ic53",	0x80000, 0x014bb939, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "bang55.ic55",	0x80000, 0x582f8b1e, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -2419,32 +2506,21 @@ static struct BurnRomInfo bangRomDesc[] = {
 	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  // 16 plds
 };
 
-STD_ROM_PICK(bang)
-STD_ROM_FN(bang)
+STD_ROM_PICK(bangb)
+STD_ROM_FN(bangb)
 
-static INT32 bangInit()
-{
-	INT32 rc = DrvInit(6);
-
-	if (!rc) {
-		BurnGunInit(2, true);
-	}
-
-	return rc;
-}
-
-struct BurnDriver BurnDrvBang = {
-	"bang", NULL, NULL, NULL, "1998",
-	"Bang!\0", NULL, "Gaelco / Bit Managers", "Miscellaneous",
+struct BurnDriver BurnDrvBangb = {
+	"bangb", "bang", NULL, NULL, "1998",
+	"Bang! (version 0, checksum B61D)\0", NULL, "Gaelco / Bit Managers", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bangRomInfo, bangRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bangbRomInfo, bangbRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
 
 
-// Gun Gabacho (Japan)
+// Gun Gabacho (Japan, version 2, checksum C6BB)
 
 static struct BurnRomInfo bangjRomDesc[] = {
 	{ "bang-a.ic53",	0x80000, 0x5ee514e9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2473,10 +2549,86 @@ STD_ROM_FN(bangj)
 
 struct BurnDriver BurnDrvBangj = {
 	"bangj", "bang", NULL, NULL, "1999",
-	"Gun Gabacho (Japan)\0", NULL, "Gaelco / Bit Managers (GM Shoji license)", "Miscellaneous",
+	"Gun Gabacho (Japan, version 2, checksum C6BB)\0", NULL, "Gaelco / Bit Managers (GM Shoji license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bangjRomInfo, bangjRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
+	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Gun Gabacho (Japan, version 2, checksum 1C8C)
+
+static struct BurnRomInfo bangjaRomDesc[] = {
+	{ "bang_53_2fbe_29-4-99_jap_27c040.ic53",	0x80000, 0x8b1e8308, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bang_55_21b6_29-4-99_jap_27c040.ic55",	0x80000, 0x5d76d79c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bang-a.ic16",	0x80000, 0x3b63acfc, 2 | BRF_GRA },           						  //  2 Graphics & Samples
+	{ "bang-a.ic17",	0x80000, 0x72865b80, 2 | BRF_GRA },           						  //  3
+	{ "bang18.ic18",	0x80000, 0x2056b1ad, 2 | BRF_GRA },           						  //  4
+	{ "bang-a.ic9",		0x80000, 0x3cb86360, 2 | BRF_GRA },           						  //  5
+	{ "bang-a.ic10",	0x80000, 0x03fdd777, 2 | BRF_GRA },           						  //  6
+	{ "bang11.ic11",	0x80000, 0x2088d15c, 2 | BRF_GRA },           						  //  7
+	{ "bang-a.ic1",		0x80000, 0x965d0ad9, 2 | BRF_GRA },           						  //  8
+	{ "bang-a.ic2",		0x80000, 0x8ea261a7, 2 | BRF_GRA },           						  //  9
+	{ "bang3.ic3",		0x80000, 0xd3da5d4f, 2 | BRF_GRA },           						  // 10
+	{ "bang-a.ic20",	0x80000, 0x4b828f3c, 2 | BRF_GRA },           						  // 11
+	{ "bang-a.ic13",	0x80000, 0xd1146b92, 2 | BRF_GRA },           						  // 12
+	{ "bang5.ic5",		0x80000, 0x9bee444c, 2 | BRF_GRA },           						  // 13
+	{ "bang-a.ic21",	0x80000, 0x531ce3b6, 2 | BRF_GRA },           						  // 14
+	{ "bang-a.ic14",	0x80000, 0xf8e1cf84, 2 | BRF_GRA },           						  // 15
+	
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },  					   	  // 16 plds
+};
+
+STD_ROM_PICK(bangja)
+STD_ROM_FN(bangja)
+
+struct BurnDriver BurnDrvBangja = {
+	"bangja", "bang", NULL, NULL, "1999",
+	"Gun Gabacho (Japan, version 2, checksum 1C8C)\0", NULL, "Gaelco / Bit Managers (GM Shoji license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bangjaRomInfo, bangjaRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
+	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Gun Gabacho (Japan, version 2, checksum B75B)
+
+static struct BurnRomInfo bangjbRomDesc[] = {
+	{ "bang_53_4f19_23-4_japo_27c040.ic53",	0x80000, 0xb8a67a57, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bang_55_6b05_23-4_japo_27c040.ic55",	0x80000, 0x0211d5cb, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bang-a.ic16",	0x80000, 0x3b63acfc, 2 | BRF_GRA },           					  //  2 Graphics & Samples
+	{ "bang-a.ic17",	0x80000, 0x72865b80, 2 | BRF_GRA },           					  //  3
+	{ "bang18.ic18",	0x80000, 0x2056b1ad, 2 | BRF_GRA },           					  //  4
+	{ "bang-a.ic9",		0x80000, 0x3cb86360, 2 | BRF_GRA },           					  //  5
+	{ "bang-a.ic10",	0x80000, 0x03fdd777, 2 | BRF_GRA },           					  //  6
+	{ "bang11.ic11",	0x80000, 0x2088d15c, 2 | BRF_GRA },           					  //  7
+	{ "bang-a.ic1",		0x80000, 0x965d0ad9, 2 | BRF_GRA },           					  //  8
+	{ "bang-a.ic2",		0x80000, 0x8ea261a7, 2 | BRF_GRA },           					  //  9
+	{ "bang3.ic3",		0x80000, 0xd3da5d4f, 2 | BRF_GRA },           					  // 10
+	{ "bang-a.ic20",	0x80000, 0x4b828f3c, 2 | BRF_GRA },           					  // 11
+	{ "bang-a.ic13",	0x80000, 0xd1146b92, 2 | BRF_GRA },           					  // 12
+	{ "bang5.ic5",		0x80000, 0x9bee444c, 2 | BRF_GRA },           					  // 13
+	{ "bang-a.ic21",	0x80000, 0x531ce3b6, 2 | BRF_GRA },           					  // 14
+	{ "bang-a.ic14",	0x80000, 0xf8e1cf84, 2 | BRF_GRA },           					  // 15
+	
+	{ "mu.sb.3972_pal16l8.ic56", 0x00104, 0xe5868379, 0 | BRF_OPT },					  // 16 plds
+};
+
+STD_ROM_PICK(bangjb)
+STD_ROM_FN(bangjb)
+
+struct BurnDriver BurnDrvBangjb = {
+	"bangjb", "bang", NULL, NULL, "1999",
+	"Gun Gabacho (Japan, version 2, checksum B75B)\0", NULL, "Gaelco / Bit Managers (GM Shoji license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bangjbRomInfo, bangjbRomName, NULL, NULL, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };

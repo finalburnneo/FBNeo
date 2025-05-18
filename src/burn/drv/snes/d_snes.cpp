@@ -32342,6 +32342,25 @@ struct BurnDriver BurnDrvsnes_Digimon = {
 	512, 448, 4, 3
 };
 
+// Dragon Ball Z - Final Bout (USA) (Unl)
+
+static struct BurnRomInfo snes_DragballzfbRomDesc[] = {
+	{ "Dragon Ball Z - Final Bout (U)(Unl)(1998)(DVS Electronic).sfc", 2097152, 0x4d027796, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dragballzfb)
+STD_ROM_FN(snes_Dragballzfb)
+
+struct BurnDriver BurnDrvsnes_Dragballzfb = {
+	"snes_dragballzfb", NULL, NULL, NULL, "1998",
+	"Dragon Ball Z - Final Bout (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_DragballzfbRomInfo, snes_DragballzfbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Flubber (USA) (Unl)
 
 static struct BurnRomInfo snes_FlubberRomDesc[] = {
@@ -32380,6 +32399,44 @@ struct BurnDriver BurnDrvsnes_Hercules = {
 	512, 448, 4, 3
 };
 
+// King of Fighters 2000, The (USA) (Unl)
+
+static struct BurnRomInfo snes_Kof2000RomDesc[] = {
+	{ "King of Fighters 2000, The (U)(Unl)(2000)(DVS Electronic).sfc", 3145728, 0xee339f08, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kof2000)
+STD_ROM_FN(snes_Kof2000)
+
+struct BurnDriver BurnDrvsnes_Kof2000 = {
+	"snes_kof2000", NULL, NULL, NULL, "2000",
+	"King of Fighters 2000, The (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Kof2000RomInfo, snes_Kof2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// King of Fighters '98, The (USA) (Unl)
+
+static struct BurnRomInfo snes_Kof98RomDesc[] = {
+	{ "King of Fighters '98, The (U)(Unl)(1998)(DVS Electronic).sfc", 2097152, 0x41d93387, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kof98)
+STD_ROM_FN(snes_Kof98)
+
+struct BurnDriver BurnDrvsnes_Kof98 = {
+	"snes_kof98", NULL, NULL, NULL, "1998",
+	"King of Fighters '98, The (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Kof98RomInfo, snes_Kof98RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Marvel Super Heroes vs. Street Fighter (USA) (Unl)
 
 static struct BurnRomInfo snes_MshvsfRomDesc[] = {
@@ -32395,6 +32452,44 @@ struct BurnDriver BurnDrvsnes_Mshvsf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_MshvsfRomInfo, snes_MshvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Men in Black (USA) (Unl)
+
+static struct BurnRomInfo snes_MeninblackRomDesc[] = {
+	{ "Men in Black (U)(Unl)(1998)(Twin Eagles Group).sfc", 1048576, 0xcb5301b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Meninblack)
+STD_ROM_FN(snes_Meninblack)
+
+struct BurnDriver BurnDrvsnes_Meninblack = {
+	"snes_meninblack", "snes_bluesbros", NULL, NULL, "1998",
+	"Men in Black (USA) (Unl)\0", NULL, "Twin Eagles Group", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MeninblackRomInfo, snes_MeninblackRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mortal Kombat Mythologies - Gold 2000 (USA) (Unl)
+
+static struct BurnRomInfo snes_Mkmg2000RomDesc[] = {
+	{ "Mortal Kombat Mythologies - Gold 2000 (U)(Unl)(2000)(DVS Electronic).sfc", 2621440, 0xde672099, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mkmg2000)
+STD_ROM_FN(snes_Mkmg2000)
+
+struct BurnDriver BurnDrvsnes_Mkmg2000 = {
+	"snes_mkmg2000", NULL, NULL, NULL, "2000",
+	"Mortal Kombat Mythologies - Gold 2000 (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Mkmg2000RomInfo, snes_Mkmg2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -32475,6 +32570,44 @@ struct BurnDriver BurnDrvsnes_Sonichedgehog = {
 	512, 448, 4, 3
 };
 
+// Soul Edge vs Samurai (USA) (Unl)
+
+static struct BurnRomInfo snes_SouledgeRomDesc[] = {
+	{ "Soul Edge vs Samurai (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0x61abc296, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Souledge)
+STD_ROM_FN(snes_Souledge)
+
+struct BurnDriver BurnDrvsnes_Souledge = {
+	"snes_souledge", NULL, NULL, NULL, "1997",
+	"Soul Edge vs Samurai (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SouledgeRomInfo, snes_SouledgeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Soul Blade (USA) (Unl)
+
+static struct BurnRomInfo snes_SoulbladeRomDesc[] = {
+	{ "Soul Blade (U)(Unl)(1997)(DVS Electronic).sfc", 3145728, 0x2feefcc3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Soulblade)
+STD_ROM_FN(snes_Soulblade)
+
+struct BurnDriver BurnDrvsnes_Soulblade = {
+	"snes_soulblade", NULL, NULL, NULL, "1997",
+	"Soul Blade (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SoulbladeRomInfo, snes_SoulbladeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Squirrel (USA) (Unl)
 
 static struct BurnRomInfo snes_SquirrelRomDesc[] = {
@@ -32528,6 +32661,25 @@ struct BurnDriver BurnDrvsnes_Tarzan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_TarzanRomInfo, snes_TarzanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tekken 2 (USA) (Unl)
+
+static struct BurnRomInfo snes_Tekken2RomDesc[] = {
+	{ "Tekken 2 (U)(Unl)(1997)(Gamtec).sfc", 2097152, 0x5ba13729, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tekken2)
+STD_ROM_FN(snes_Tekken2)
+
+struct BurnDriver BurnDrvsnes_Tekken2 = {
+	"snes_tekken2", NULL, NULL, NULL, "1997",
+	"Tekken 2 (USA) (Unl)\0", NULL, "Gamtec", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Tekken2RomInfo, snes_Tekken2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

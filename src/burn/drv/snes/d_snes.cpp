@@ -6485,6 +6485,25 @@ struct BurnDriver BurnDrvsnes_Daikugensan = {
 	512, 448, 4, 3
 };
 
+// Super Dany (Euro, French) 
+
+static struct BurnRomInfo snes_SuperdanyfRomDesc[] = {
+	{ "Super Dany (E, France)(1994)(Virgin Interactive).sfc", 1048576, 0x0f578f67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superdanyf)
+STD_ROM_FN(snes_Superdanyf)
+
+struct BurnDriver BurnDrvsnes_Superdany = {
+	"snes_superdanyf", NULL, NULL, NULL, "1994",
+	"Super Dany (Euro, French)\0", NULL, "Virgin Interactive", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperdanyfRomInfo, snes_SuperdanyfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Darius Force (Japan)
 
 static struct BurnRomInfo snes_DariusforceRomDesc[] = {
@@ -9084,6 +9103,25 @@ struct BurnDriver BurnDrvsnes_F1rocii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_F1rociiRomInfo, snes_F1rociiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// F1 World Championship Edition (Euro)
+
+static struct BurnRomInfo snes_F1wceRomDesc[] = {
+	{ "F1 World Championship Edition (E)(1995)(Acclaim Entertainment).sfc", 2097152, 0x7ba8fc78, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_F1wce)
+STD_ROM_FN(snes_F1wce)
+
+struct BurnDriver BurnDrvsnes_F1wce = {
+	"snes_f1wce", NULL, NULL, NULL, "1995",
+	"F1 World Championship Edition (Euro)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_F1wceRomInfo, snes_F1wceRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -17434,6 +17472,25 @@ struct BurnDriver BurnDrvsnes_Micromachinese = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_MicromachineseRomInfo, snes_MicromachineseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Might and Magic II - Gates to Another World (Euro)
+
+static struct BurnRomInfo snes_Mightmagic2RomDesc[] = {
+	{ "Might and Magic II - Gates to Another World (E)(1993)(Elite).sfc", 1048576, 0x4062244b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mightmagic2)
+STD_ROM_FN(snes_Mightmagic2)
+
+struct BurnDriver BurnDrvsnes_Mightmagic2 = {
+	"snes_mightmagic2", NULL, NULL, NULL, "1993",
+	"Might and Magic II - Gates to Another World (Euro)\0", NULL, "Elite", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Mightmagic2RomInfo, snes_Mightmagic2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30816,6 +30873,25 @@ struct BurnDriver BurnDrvsnes_Warpspeed = {
 	512, 448, 4, 3
 };
 
+// Waterworld (Euro)
+
+static struct BurnRomInfo snes_WaterworldRomDesc[] = {
+	{ "Waterworld (E)(1995)(Ocean).sfc", 2097152, 0x7acf2ac6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Waterworld)
+STD_ROM_FN(snes_Waterworld)
+
+struct BurnDriver BurnDrvsnes_Waterworld = {
+	"snes_waterworld", NULL, NULL, NULL, "1995",
+	"Waterworld (Euro)\0", NULL, "Ocean", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_SHOOT, 0,
+	SNESGetZipName, snes_WaterworldRomInfo, snes_WaterworldRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // WCW Super Brawl Wrestling (USA)
 
 static struct BurnRomInfo snes_WcwsupbrawlRomDesc[] = {
@@ -31211,6 +31287,25 @@ struct BurnDriver BurnDrvsnes_Whu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_WhuRomInfo, snes_WhuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// World Masters Golf (Euro)
+
+static struct BurnRomInfo snes_WorldmgolfRomDesc[] = {
+	{ "World Masters Golf (E)(1995)(Virgin Interactive).sfc", 2097152, 0xe0ee681f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Worldmgolf)
+STD_ROM_FN(snes_Worldmgolf)
+
+struct BurnDriver BurnDrvsnes_Worldmgolf = {
+	"snes_worldmgolf", NULL, NULL, NULL, "1995",
+	"World Masters Golf (Euro)\0", NULL, "Virgin Interactive", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_WorldmgolfRomInfo, snes_WorldmgolfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -32399,25 +32494,6 @@ struct BurnDriver BurnDrvsnes_Hercules = {
 	512, 448, 4, 3
 };
 
-// King of Fighters 2000, The (USA) (Unl)
-
-static struct BurnRomInfo snes_Kof2000RomDesc[] = {
-	{ "King of Fighters 2000, The (U)(Unl)(2000)(DVS Electronic).sfc", 3145728, 0xee339f08, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Kof2000)
-STD_ROM_FN(snes_Kof2000)
-
-struct BurnDriver BurnDrvsnes_Kof2000 = {
-	"snes_kof2000", NULL, NULL, NULL, "2000",
-	"King of Fighters 2000, The (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_Kof2000RomInfo, snes_Kof2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // King of Fighters '98, The (USA) (Unl)
 
 static struct BurnRomInfo snes_Kof98RomDesc[] = {
@@ -32433,6 +32509,25 @@ struct BurnDriver BurnDrvsnes_Kof98 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Kof98RomInfo, snes_Kof98RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// King of Fighters 2000, The (USA) (Unl)
+
+static struct BurnRomInfo snes_Kof2000RomDesc[] = {
+	{ "King of Fighters 2000, The (U)(Unl)(2000)(DVS Electronic).sfc", 3145728, 0xee339f08, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kof2000)
+STD_ROM_FN(snes_Kof2000)
+
+struct BurnDriver BurnDrvsnes_Kof2000 = {
+	"snes_kof2000", NULL, NULL, NULL, "2000",
+	"King of Fighters 2000, The (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Kof2000RomInfo, snes_Kof2000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -32570,25 +32665,6 @@ struct BurnDriver BurnDrvsnes_Sonichedgehog = {
 	512, 448, 4, 3
 };
 
-// Soul Edge vs Samurai (USA) (Unl)
-
-static struct BurnRomInfo snes_SouledgeRomDesc[] = {
-	{ "Soul Edge vs Samurai (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0x61abc296, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Souledge)
-STD_ROM_FN(snes_Souledge)
-
-struct BurnDriver BurnDrvsnes_Souledge = {
-	"snes_souledge", NULL, NULL, NULL, "1997",
-	"Soul Edge vs Samurai (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_SouledgeRomInfo, snes_SouledgeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Soul Blade (USA) (Unl)
 
 static struct BurnRomInfo snes_SoulbladeRomDesc[] = {
@@ -32604,6 +32680,25 @@ struct BurnDriver BurnDrvsnes_Soulblade = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_SoulbladeRomInfo, snes_SoulbladeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Soul Edge vs Samurai (USA) (Unl)
+
+static struct BurnRomInfo snes_SouledgeRomDesc[] = {
+	{ "Soul Edge vs Samurai (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0x61abc296, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Souledge)
+STD_ROM_FN(snes_Souledge)
+
+struct BurnDriver BurnDrvsnes_Souledge = {
+	"snes_souledge", NULL, NULL, NULL, "1997",
+	"Soul Edge vs Samurai (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_SouledgeRomInfo, snes_SouledgeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

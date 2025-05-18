@@ -4002,7 +4002,10 @@ static INT32 NeoInitCommon()
 		SekSetWriteWordHandler(3, NeoPalWriteWord);
 		SekSetWriteByteHandler(3, NeoPalWriteByte);
 
-		SekSetReadWordHandler(8, neogeoUnmappedReadWord);
+		if (!(nNeoSystemType & NEO_SYS_CD) && !(nNeoSystemType & NEO_SYS_PCB)) {
+			// Limiting this to aes/mvs hw because some games (andro dunos on neocd) won't work otherwise
+			SekSetReadWordHandler(8, neogeoUnmappedReadWord);
+		}
 
 		// Set up mirrors
 		for (INT32 a = 0x420000; a < 0x800000; a += 0x2000) {

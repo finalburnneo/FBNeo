@@ -5135,6 +5135,25 @@ struct BurnDriver BurnDrvsnes_Championpool = {
 	512, 448, 4, 3
 };
 
+// Championship Soccer '94 (USA)
+
+static struct BurnRomInfo snes_ChampsoccerRomDesc[] = {
+	{ "Championship Soccer '94 (U)(1994)(Sony Imagesoft).sfc", 524288, 0x6b953095, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Champsoccer)
+STD_ROM_FN(snes_Champsoccer)
+
+struct BurnDriver BurnDrvsnes_Champsoccer = {
+	"snes_champsoccer", NULL, NULL, NULL, "1994",
+	"Championship Soccer '94 (USA)\0", NULL, "Sony Imagesoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_ChampsoccerRomInfo, snes_ChampsoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Chaos Engine, The (Euro)
 
 static struct BurnRomInfo snes_ChaosengineRomDesc[] = {
@@ -7241,6 +7260,25 @@ struct BurnDriver BurnDrvsnes_Dgbattlete = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_DgbattleteRomInfo, snes_DgbattleteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dino Dini's Soccer! (Euro)
+
+static struct BurnRomInfo snes_DinodiniRomDesc[] = {
+	{ "Dino Dini's Soccer! (E)(1994)(Virgin Interactive).sfc", 1048576, 0xdbf4a8ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dinodini)
+STD_ROM_FN(snes_Dinodini)
+
+struct BurnDriver BurnDrvsnes_Dinodini = {
+	"snes_dinodini", NULL, NULL, NULL, "1994",
+	"Dino Dini's Soccer! (Euro)\0", NULL, "Virgin Interactive", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_DinodiniRomInfo, snes_DinodiniRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -9521,6 +9559,44 @@ struct BurnDriver BurnDrvsnes_Fifasoccer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_FifasoccerRomInfo, snes_FifasoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// FIFA - Road to World Cup 98 (Euro)
+
+static struct BurnRomInfo snes_Fifartwc98RomDesc[] = {
+	{ "FIFA - Road to World Cup 98 (E)(1998)(Electronic Arts).sfc", 2097152, 0x0cc77af7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fifartwc98)
+STD_ROM_FN(snes_Fifartwc98)
+
+struct BurnDriver BurnDrvsnes_Fifartwc98 = {
+	"snes_fifartwc98", NULL, NULL, NULL, "1998",
+	"FIFA - Road to World Cup 98 (Euro)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Fifartwc98RomInfo, snes_Fifartwc98RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// FIFA - Road to World Cup 98 (Euro, Alt)
+
+static struct BurnRomInfo snes_Fifartwc98aRomDesc[] = {
+	{ "FIFA - Road to World Cup 98 (E, Alt)(1998)(Electronic Arts).sfc", 2097152, 0x5e4f4856, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fifartwc98a)
+STD_ROM_FN(snes_Fifartwc98a)
+
+struct BurnDriver BurnDrvsnes_Fifartwc98a = {
+	"snes_fifartwc98a", "snes_fifartwc98", NULL, NULL, "1998",
+	"FIFA - Road to World Cup 98 (Euro, Alt)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Fifartwc98aRomInfo, snes_Fifartwc98aRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -12896,6 +12972,25 @@ struct BurnDriver BurnDrvsnes_Icdummies = {
 	512, 448, 4, 3
 };
 
+// International Sensible Soccer - World Champions (Euro)
+
+static struct BurnRomInfo snes_IntsensiblesoccerRomDesc[] = {
+	{ "International Sensible Soccer - World Champions (E)(1994)(Sony Imagesoft).sfc", 524288, 0x6ff2d97e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Intsensiblesoccer)
+STD_ROM_FN(snes_Intsensiblesoccer)
+
+struct BurnDriver BurnDrvsnes_Intsensiblesoccer = {
+	"snes_intsensiblesoccer", "snes_champsoccer", NULL, NULL, "1994",
+	"International Sensible Soccer - World Champions (Euro)\0", NULL, "Sony Imagesoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_IntsensiblesoccerRomInfo, snes_IntsensiblesoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Ignition Factor, The (USA)
 
 static struct BurnRomInfo snes_IgnfactorRomDesc[] = {
@@ -14393,6 +14488,44 @@ struct BurnDriver BurnDrvsnes_Kentouwc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_KentouwcRomInfo, snes_KentouwcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Kevin Keegan's Player Manager (Euro)
+
+static struct BurnRomInfo snes_KkplayermanagerRomDesc[] = {
+	{ "Kevin Keegan's Player Manager (E)(1993)(Imagineer - Anco Software).sfc", 524288, 0xfce7bade, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kkplayermanager)
+STD_ROM_FN(snes_Kkplayermanager)
+
+struct BurnDriver BurnDrvsnes_Kkplayermanager = {
+	"snes_kkplayermanager", NULL, NULL, NULL, "1993",
+	"Kevin Keegan's Player Manager (Euro)\0", NULL, "Imagineer - Anco Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_KkplayermanagerRomInfo, snes_KkplayermanagerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// K.H. Rummenigge's Player Manager (Euro, German)
+
+static struct BurnRomInfo snes_KhrplayermanagerRomDesc[] = {
+	{ "K.H. Rummenigge's Player Manager (E, Germany)(1993)(Imagineer - Anco Software).sfc", 524288, 0x5e66a52c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Khrplayermanager)
+STD_ROM_FN(snes_Khrplayermanager)
+
+struct BurnDriver BurnDrvsnes_Khrplayermanager = {
+	"snes_khrplayermanager", "snes_kkplayermanager", NULL, NULL, "1993",
+	"K.H. Rummenigge's Player Manager (Euro, German)\0", NULL, "Imagineer - Anco Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_KhrplayermanagerRomInfo, snes_KhrplayermanagerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -16578,6 +16711,25 @@ struct BurnDriver BurnDrvsnes_Makeruna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MakerunaRomInfo, snes_MakerunaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Manchester United Championship Soccer (Euro)
+
+static struct BurnRomInfo snes_ManchestersoccerRomDesc[] = {
+	{ "Manchester United Championship Soccer (E)(1995)(Ocean Software).sfc", 1048576, 0x8d2596a7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Manchestersoccer)
+STD_ROM_FN(snes_Manchestersoccer)
+
+struct BurnDriver BurnDrvsnes_Manchestersoccer = {
+	"snes_manchestersoccer", NULL, NULL, NULL, "1995",
+	"Manchester United Championship Soccer (Euro)\0", NULL, "Ocean Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_ManchestersoccerRomInfo, snes_ManchestersoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -23116,6 +23268,25 @@ struct BurnDriver BurnDrvsnes_Sengokute = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_SengokuteRomInfo, snes_SengokuteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Sensible Soccer - European Champions (Euro)
+
+static struct BurnRomInfo snes_SensiblesoccerRomDesc[] = {
+	{ "Sensible Soccer - European Champions (E)(1994)(Sony Imagesoft).sfc", 524288, 0xdcc702d4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sensiblesoccer)
+STD_ROM_FN(snes_Sensiblesoccer)
+
+struct BurnDriver BurnDrvsnes_Sensiblesoccer = {
+	"snes_sensiblesoccer", "snes_champsoccer", NULL, NULL, "1994",
+	"Sensible Soccer - European Champions (Euro)\0", NULL, "Sony Imagesoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_SensiblesoccerRomInfo, snes_SensiblesoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -2969,6 +2969,44 @@ struct BurnDriver BurnDrvsnes_Ballz3d = {
 	512, 448, 4, 3
 };
 
+// Barbie - Super Model (USA)
+
+static struct BurnRomInfo snes_BarbiesupermodelRomDesc[] = {
+	{ "Barbie - Super Model (U)(1993)(Hi Tech Expressions).sfc", 1048576, 0x3b73610e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Barbiesupermodel)
+STD_ROM_FN(snes_Barbiesupermodel)
+
+struct BurnDriver BurnDrvsnes_Barbiesupermodel = {
+	"snes_barbiesupermodel", NULL, NULL, NULL, "1993",
+	"Barbie - Super Model (USA)\0", NULL, "Hi Tech Expressions", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_MINIGAMES, 0,
+	SNESGetZipName, snes_BarbiesupermodelRomInfo, snes_BarbiesupermodelRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Barbie - Vacation Adventure (USA, Prototype)
+
+static struct BurnRomInfo snes_BarbievacationadvRomDesc[] = {
+	{ "Barbie - Vacation Adventure (USA, Proto)(1994)(Hi Tech Entertainment).sfc", 1048576, 0xd1a90ab4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Barbievacationadv)
+STD_ROM_FN(snes_Barbievacationadv)
+
+struct BurnDriver BurnDrvsnes_Barbievacationadv = {
+	"snes_barbievacationadv", NULL, NULL, NULL, "1994",
+	"Barbie - Vacation Adventure (USA, Prototype)\0", NULL, "Hi Tech Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_MINIGAMES, 0,
+	SNESGetZipName, snes_BarbievacationadvRomInfo, snes_BarbievacationadvRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Barkley Shut Up and Jam! (USA)
 
 static struct BurnRomInfo snes_BarkleyRomDesc[] = {
@@ -27301,6 +27339,25 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4e = {
 	512, 448, 4, 3
 };
 
+// Super Chase H.Q. (Australia)
+
+static struct BurnRomInfo snes_SuperchasehqaRomDesc[] = {
+	{ "Super Chase H.Q. (A)(1993)(Taito).sfc", 1048576, 0x01211c80, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superchasehqa)
+STD_ROM_FN(snes_Superchasehqa)
+
+struct BurnDriver BurnDrvsnes_Superchasehqa = {
+	"snes_superchasehqa", "snes_superchasehq", NULL, NULL, "1993",
+	"Super Chase H.Q. (Australia)\0", NULL, "Taito", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_SuperchasehqaRomInfo, snes_SuperchasehqaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Chase H.Q. (USA)
 
 static struct BurnRomInfo snes_SuperchasehqRomDesc[] = {
@@ -33945,6 +34002,25 @@ struct BurnDriver BurnDrvsnes_Heberekepr = {
 	512, 448, 4, 3
 };
 
+// Hilda (HB)
+// https://gamejolt.com/games/hilda/162284
+static struct BurnRomInfo snes_HildaRomDesc[] = {
+	{ "Hilda (2016)(Orochii and EN-i).sfc", 262144, 0x169dda02, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hilda)
+STD_ROM_FN(snes_Hilda)
+
+struct BurnDriver BurnDrvsnes_Hilda = {
+	"snes_hilda", NULL, NULL, NULL, "2016",
+	"Hilda (HB)\0", NULL, "Orochii and EN.i", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_HildaRomInfo, snes_HildaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Hind Strike (HB)
 
 static struct BurnRomInfo snes_HindstrikeRomDesc[] = {
@@ -33979,6 +34055,25 @@ struct BurnDriver BurnDrvsnes_Hypermetroid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_HypermetroidRomInfo, snes_HypermetroidRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Incognity: A rover story (HB)
+// https://cand.itch.io/incognity
+static struct BurnRomInfo snes_IncognityRomDesc[] = {
+	{ "Incognity - A rover story (2021)(cand).sfc", 524288, 0x7e809b1a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Incognity)
+STD_ROM_FN(snes_Incognity)
+
+struct BurnDriver BurnDrvsnes_Incognity = {
+	"snes_incognity", NULL, NULL, NULL, "2021",
+	"Incognity: A rover story (HB)\0", NULL, "cand", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_IncognityRomInfo, snes_IncognityRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

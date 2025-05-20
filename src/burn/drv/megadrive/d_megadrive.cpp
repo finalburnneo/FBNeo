@@ -17687,10 +17687,10 @@ struct BurnDriver BurnDrvmd_kujaku2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Peacock King 2: Castle of Illusion (Hack, English + Gameplay Upgrade v2.4)
+// Peacock King 2: Castle of Illusion (Hack, English + Gameplay Upgrade v2.42)
 // https://romhackplaza.org/romhacks/mystic-defender-kujaku-ou-localization-fix-gameplay-upgrade-hack-genesis/
 static struct BurnRomInfo md_peacocking2RomDesc[] = {
-	{ "Peacock King 2 - Castle of Illusion T-Eng + Gameplay Upgrade v2.4 (2025)(Nani16Bit).bin", 524288, 0x52d67a90, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Peacock King 2 - Castle of Illusion T-Eng + Gameplay Upgrade v2.42 (2025)(Nani16Bit).bin", 524288, 0xbd2b5da9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_peacocking2)
@@ -17698,7 +17698,7 @@ STD_ROM_FN(md_peacocking2)
 
 struct BurnDriver BurnDrvmd_peacocking2 = {
 	"md_peacocking2", "md_mystdef", NULL, NULL, "2025",
-	"Peacock King 2: Castle of Illusion (Hack, English + Gameplay Upgrade v2.4)\0", NULL, "Nani16Bit", "Genesis / Mega Drive",
+	"Peacock King 2: Castle of Illusion (Hack, English + Gameplay Upgrade v2.42)\0", NULL, "Nani16Bit", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_peacocking2RomInfo, md_peacocking2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41992,10 +41992,10 @@ struct BurnDriver BurnDrvmd_btomatog = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.3)
-// https://romhackplaza.org/romhacks/bishoujo-super-street-fighter-ii-glamor-queen-genesis/
+// Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.7)
+// https://ssf2tnf.blogspot.com/p/releases.html
 static struct BurnRomInfo md_bssf2gqRomDesc[] = {
-	{ "Bishoujo Super Street Fighter II - Glamor Queen v2.3 (2025)(Yoni Arousement).bin", 5242880, 0x4af99b83, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Bishoujo Super Street Fighter II - Glamor Queen v2.7 (2025)(Yoni Arousement).bin", 5242880, 0x2df919cc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bssf2gq)
@@ -42003,7 +42003,7 @@ STD_ROM_FN(md_bssf2gq)
 
 struct BurnDriver BurnDrvmd_bssf2gq = {
 	"md_bssf2gq", "md_ssf2", NULL, NULL, "2025",
-	"Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.3)\0", "NB: also applied 'NoPause' patch.", "Yoni Arousement", "Genesis / Mega Drive",
+	"Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.7)\0", "NB: also applied 'NoPause' patch.", "Yoni Arousement", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_bssf2gqRomInfo, md_bssf2gqRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

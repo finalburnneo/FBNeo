@@ -59,7 +59,7 @@ int WINAPI Empty_Kaillera_End_Game()
 	return 0;
 }
 
-UINT_PTR CALLBACK KailleraDllHook(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+static UINT_PTR CALLBACK KailleraDllHook(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (uMsg == CDN_FILEOK) {
 		OPENFILENAMEA* pOFN = (OPENFILENAMEA*)lParam;
@@ -88,17 +88,18 @@ UINT_PTR CALLBACK KailleraDllHook(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 	return FALSE;
 }
 
-HMODULE FindkailleraDll() {
+static HMODULE FindkailleraDll()
+{
 	char szFile[MAX_PATH] = "kailleraclient.dll";
-	OPENFILENAMEA ofn   = { 0 };
-	ofn.lStructSize     = sizeof(OPENFILENAMEA);
-	ofn.hwndOwner       = NULL;
-	ofn.lpstrFilter     = "kailleraclient.dll\0kailleraclient.dll\0\0";
-	ofn.lpstrFile       = szFile;
-	ofn.nMaxFile        = MAX_PATH;
-	ofn.Flags           = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-	ofn.lpfnHook        = KailleraDllHook;
-	ofn.lpstrInitialDir = ".";
+	OPENFILENAMEA ofn     = { 0 };
+	ofn.lStructSize       = sizeof(OPENFILENAMEA);
+	ofn.hwndOwner         = NULL;
+	ofn.lpstrFilter       = "kailleraclient.dll\0kailleraclient.dll\0\0";
+	ofn.lpstrFile         = szFile;
+	ofn.nMaxFile          = MAX_PATH;
+	ofn.Flags             = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.lpfnHook          = KailleraDllHook;
+	ofn.lpstrInitialDir   = ".";
 
 	if (FALSE != GetOpenFileNameA(&ofn)) {
 		return LoadLibraryA(szFile);
@@ -152,7 +153,7 @@ int Init_Network(void)
 	if (Kaillera_HDLL == NULL) {
 		Kaillera_HDLL = FindkailleraDll();				// 2nd
 	}
-	if (ERROR_BAD_EXE_FORMAT == GetLastError()) {
+	if ((Kaillera_HDLL == NULL) && (ERROR_BAD_EXE_FORMAT == GetLastError())) {
 		if (IDRETRY == MessageBoxA(NULL, KailleraPeError, "Error", MB_RETRYCANCEL | MB_ICONERROR)) {
 			Kaillera_HDLL = FindkailleraDll();			// 3rd
 		}

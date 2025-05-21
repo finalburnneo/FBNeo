@@ -5838,6 +5838,25 @@ struct BurnDriver BurnDrvsnes_Collegeslam = {
 	512, 448, 4, 3
 };
 
+// Columns (Japan, NP)
+
+static struct BurnRomInfo snes_ColumnsjRomDesc[] = {
+	{ "Columns (J, NP)(1999)(Media Factory - Marigul).sfc", 524288, 0x005c77f5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Columnsj)
+STD_ROM_FN(snes_Columnsj)
+
+struct BurnDriver BurnDrvsnes_Columnsj = {
+	"snes_columnsj", NULL, NULL, NULL, "1999",
+	"Columns (Japan, NP)\0", NULL, "Media Factory - Marigul", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_ColumnsjRomInfo, snes_ColumnsjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Congo's Caper (USA)
 
 static struct BurnRomInfo snes_CongocaperRomDesc[] = {
@@ -8989,6 +9008,25 @@ struct BurnDriver BurnDrvsnes_Evots = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_EvotsRomInfo, snes_EvotsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Exhaust Heat (Euro)
+
+static struct BurnRomInfo snes_ExhaustheateRomDesc[] = {
+	{ "Exhaust Heat (E)(1992)(Ocean - Seta).sfc", 1048576, 0xaf5a3203, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Exhaustheate)
+STD_ROM_FN(snes_Exhaustheate)
+
+struct BurnDriver BurnDrvsnes_Exhaustheate = {
+	"snes_exhaustheate", "snes_f1roc", NULL, NULL, "1992",
+	"Exhaust Heat (Euro)\0", NULL, "Ocean - Seta Co.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_ExhaustheateRomInfo, snes_ExhaustheateRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -22854,6 +22892,25 @@ struct BurnDriver BurnDrvsnes_Sbmanj = {
 	512, 448, 4, 3
 };
 
+// Super Bombliss (Japan)
+
+static struct BurnRomInfo snes_SbomblissjRomDesc[] = {
+	{ "Super Bombliss (J)(1994)(Bullet-Proof Software).sfc", 524288, 0x1d123be6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sbomblissj)
+STD_ROM_FN(snes_Sbomblissj)
+
+struct BurnDriver BurnDrvsnes_Sbomblissj = {
+	"snes_sbomblissj", NULL, NULL, NULL, "1994",
+	"Super Bombliss (Japan)\0", NULL, "Bullet-Proof Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_SbomblissjRomInfo, snes_SbomblissjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Conflict (USA)
 
 static struct BurnRomInfo snes_SconflictRomDesc[] = {
@@ -29615,6 +29672,82 @@ struct BurnDriver BurnDrvsnes_Tetris2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_Tetris2RomInfo, snes_Tetris2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tetris 2 (Euro)
+
+static struct BurnRomInfo snes_Tetris2eRomDesc[] = {
+	{ "Tetris 2 (E)(1994)(Nintendo).sfc", 1048576, 0x19b69a57, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tetris2e)
+STD_ROM_FN(snes_Tetris2e)
+
+struct BurnDriver BurnDrvsnes_Tetris2e = {
+	"snes_tetris2e", "snes_tetris2", NULL, NULL, "1994",
+	"Tetris 2 (Euro)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_Tetris2eRomInfo, snes_Tetris2eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+//  Super Tetris 2 + Bombliss Gentei Ban (Japan)
+
+static struct BurnRomInfo snes_Stetris2bomblissgbjRomDesc[] = {
+	{ "Super Tetris 2 + Bombliss Gentei Ban (J)(1993)(Bullet-Proof Software).sfc", 1048576, 0xc709b922, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Stetris2bomblissgbj)
+STD_ROM_FN(snes_Stetris2bomblissgbj)
+
+struct BurnDriver BurnDrvsnes_Stetris2bomblissgbj = {
+	"snes_stetris2bomblissgbj", NULL, NULL, NULL, "1993",
+	"Super Tetris 2 + Bombliss Gentei Ban (Japan)\0", NULL, "Bullet-Proof Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_Stetris2bomblissgbjRomInfo, snes_Stetris2bomblissgbjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Tetris 2 + Bombliss (Japan, Rev. 1)
+
+static struct BurnRomInfo snes_Stetris2bomblissjRomDesc[] = {
+	{ "Super Tetris 2 + Bombliss (J, Rev 1)(1993)(Bullet-Proof Software).sfc", 1048576, 0x4ae93c10, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Stetris2bomblissj)
+STD_ROM_FN(snes_Stetris2bomblissj)
+
+struct BurnDriver BurnDrvsnes_Stetris2bomblissj = {
+	"snes_stetris2bomblissj", NULL, NULL, NULL, "1993",
+	"Super Tetris 2 + Bombliss (Japan, Rev. 1)\0", NULL, "Bullet-Proof Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_Stetris2bomblissjRomInfo, snes_Stetris2bomblissjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Tetris 3 (Japan)
+
+static struct BurnRomInfo snes_Stetris3jRomDesc[] = {
+	{ "Super Tetris 3 (J)(1994)(Bullet-Proof Software).sfc", 1048576, 0x329024c7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Stetris3j)
+STD_ROM_FN(snes_Stetris3j)
+
+struct BurnDriver BurnDrvsnes_Stetris3j = {
+	"snes_stetris3j", NULL, NULL, NULL, "1994",
+	"Super Tetris 3 (Japan)\0", NULL, "Bullet-Proof Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_Stetris3jRomInfo, snes_Stetris3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -2024,13 +2024,6 @@ static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 	return ~0;
 }
 
-static UINT16 __fastcall neogeoUnmappedReadWord(UINT32)
-{
-	/* unmapped memory returns the last word on the data bus, which is almost always the opcode
-	   of the next instruction due to prefetch */
-	return neogeoReadWord(SekGetPC(-1));
-}
-
 static void WriteIO1(INT32 nOffset, UINT8 byteValue)
 {
 	switch (nOffset) {
@@ -4001,11 +3994,6 @@ static INT32 NeoInitCommon()
 
 		SekSetWriteWordHandler(3, NeoPalWriteWord);
 		SekSetWriteByteHandler(3, NeoPalWriteByte);
-
-		if (!(nNeoSystemType & NEO_SYS_CD) && !(nNeoSystemType & NEO_SYS_PCB)) {
-			// Limiting this to aes/mvs hw because some games (andro dunos on neocd) won't work otherwise
-			SekSetReadWordHandler(8, neogeoUnmappedReadWord);
-		}
 
 		// Set up mirrors
 		for (INT32 a = 0x420000; a < 0x800000; a += 0x2000) {

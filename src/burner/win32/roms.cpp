@@ -155,7 +155,8 @@ static INT32 CALLBACK BRProc(HWND hWnd, UINT uMsg, LPARAM /*lParam*/, LPARAM lpD
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	HFONT hFont = NULL;
+	HFONT  hFont         = NULL;
+	HBRUSH hWhiteBGBrush = NULL;
 	TCHAR szAbsolutePath[MAX_PATH] = {0};
 
 	INT32 var;
@@ -167,6 +168,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 			SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+			hWhiteBGBrush = CreateSolidBrush(RGB(0xff, 0xff, 0xff));
 
 			TCHAR szDialogTitle[200];
 			_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_ROMS_EDIT_PATHS, true), _T(APP_TITLE), _T(SEPERATOR_1));
@@ -208,6 +211,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			HDC hDc = (HDC)wParam;
 			SetBkMode(hDc, TRANSPARENT);										// LTEXT control with transparent background
 			return (LRESULT)GetStockObject(HOLLOW_BRUSH);						// Return to empty brush
+			for (int x = 0; x < 20; x++) {
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x)) return (INT_PTR)hWhiteBGBrush;
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_TEXT1 + x)) return (LRESULT)GetStockObject(HOLLOW_BRUSH);
+			}
 		}
 		case WM_COMMAND: {
 			LPMALLOC pMalloc = NULL;
@@ -224,12 +231,11 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					// add trailing backslash
 					int strLen = _tcslen(buffer);
 					if (strLen) {
-						if ( buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
-							buffer[strLen + 0] = _T('\\');
-							buffer[strLen + 1] = _T('\0');
+						if (buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
+							buffer[strLen + 0]  = _T('\\');
+							buffer[strLen + 1]  = _T('\0');
 						}
 					}
-
 					lstrcpy(szAppRomPaths[i], buffer);
 //					}
 				}
@@ -307,7 +313,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				CreateROMInfo(hDlg);
 			}
 			if (NULL != hFont) {
-				DeleteObject(hFont); hFont = NULL;
+				DeleteObject(hFont);         hFont         = NULL;
+			}
+			if (NULL != hWhiteBGBrush) {
+				DeleteObject(hWhiteBGBrush); hWhiteBGBrush = NULL;
 			}
 		}
 	}

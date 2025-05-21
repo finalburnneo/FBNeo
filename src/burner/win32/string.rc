@@ -254,7 +254,9 @@ BEGIN
 	IDS_ROMDATAMANAGER_TITLE	"%s%sRomData Manager%sSelect Game"
 	IDS_ROMDATA_DATPATH			"Dat path"
 	IDS_ROMDATA_ROMSET			"Romset"
+	IDS_ROMDATA_DRIVER			"Driver"
 	IDS_ROMDATA_HARDWARE_DESC	"%s"
+	IDS_ROMDATA_FULLNAME		"Game"
 
 	IDS_MENU_0 					"&Arcade"
     IDS_MENU_1 					"&Other..."

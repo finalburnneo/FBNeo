@@ -1847,6 +1847,25 @@ struct BurnDriver BurnDrvsnes_Aladdin = {
 	512, 448, 4, 3
 };
 
+// Disney's Aladdin (Euro, Spanish)
+
+static struct BurnRomInfo snes_AladdinesRomDesc[] = {
+	{ "Disney's Aladdin (E, Spain)(1993)(Capcom).sfc", 1310720, 0x90ee8c61, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Aladdines)
+STD_ROM_FN(snes_Aladdines)
+
+struct BurnDriver BurnDrvsnes_Aladdines = {
+	"snes_aladdines", "snes_aladdin", NULL, NULL, "1993",
+	"Disney's Aladdin (Euro, Spanish)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_AladdinesRomInfo, snes_AladdinesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Disney's Aladdin (Japan)
 
 static struct BurnRomInfo snes_AladdinjRomDesc[] = {
@@ -8813,29 +8832,29 @@ STD_ROM_PICK(snes_Emeraldragont)
 STD_ROM_FN(snes_Emeraldragont)
 
 struct BurnDriver BurnDrvsnes_Emeraldragont = {
-	"snes_Emeraldragont", NULL, NULL, NULL, "2014",
+	"snes_emeraldragont", NULL, NULL, NULL, "2014",
 	"Emerald Dragon (Hack, English v1.2)\0", NULL, "Translation Corporation", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_EmeraldragontRomInfo, snes_EmeraldragontRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Emerald Dragon (Hack, Spanish v1.1)
-// https://www.romhacking.net/translations/6938/
+// Emerald Dragon (Hack, Spanish v1.2)
+// https://traduccionessemco.blogspot.com/2023/05/traduccion-de-emerald-dragon-de-snes-en.html
 static struct BurnRomInfo snes_EmeraldragonteRomDesc[] = {
-	{ "Emerald Dragon T-Spa v1.1 (2023)(semco).sfc", 3145728, 0xc0c313a3, BRF_ESS | BRF_PRG },
+	{ "Emerald Dragon T-Spa v1.2 (2024)(semco).sfc", 3145728, 0x64edf4fc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Emeraldragonte)
 STD_ROM_FN(snes_Emeraldragonte)
 
 struct BurnDriver BurnDrvsnes_Emeraldragonte = {
-	"snes_Emeraldragonte", "snes_Emeraldragont", NULL, NULL, "2023",
-	"Emerald Dragon (Hack, Spanish v1.1)\0", NULL, "semco", "SNES / Super Famicom",
+	"snes_emeraldragonte", "snes_emeraldragont", NULL, NULL, "2024",
+	"Emerald Dragon (Hack, Spanish v1.2)\0", NULL, "semco", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_EmeraldragonteRomInfo, snes_EmeraldragonteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -8851,7 +8870,7 @@ STD_ROM_PICK(snes_Emeraldragonj)
 STD_ROM_FN(snes_Emeraldragonj)
 
 struct BurnDriver BurnDrvsnes_Emeraldragonj = {
-	"snes_Emeraldragonj", "snes_Emeraldragont", NULL, NULL, "1995",
+	"snes_emeraldragonj", "snes_emeraldragont", NULL, NULL, "1995",
 	"Emerald Dragon (Japan)\0", NULL, "Media Works", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
@@ -16069,6 +16088,25 @@ struct BurnDriver BurnDrvsnes_Lostviking = {
 	512, 448, 4, 3
 };
 
+// Lost Vikings, The (Euro, Spanish)
+
+static struct BurnRomInfo snes_LostvikingesRomDesc[] = {
+	{ "Lost Vikings, The (E, Spain)(1992)(Interplay).sfc", 1048576, 0x6e8a1081, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lostvikinges)
+STD_ROM_FN(snes_Lostvikinges)
+
+struct BurnDriver BurnDrvsnes_Lostvikinges = {
+	"snes_lostvikinges", "snes_lostviking", NULL, NULL, "1992",
+	"Lost Vikings, The (Euro, Spanish)\0", NULL, "Interplay - Silicon & Synapse", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LostvikingesRomInfo, snes_LostvikingesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Lost Vikings II, The (USA)
 
 static struct BurnRomInfo snes_Lostviking2RomDesc[] = {
@@ -18517,6 +18555,44 @@ struct BurnDriver BurnDrvsnes_Musya = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MusyaRomInfo, snes_MusyaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// MechWarrior (USA)
+
+static struct BurnRomInfo snes_MechwarriorRomDesc[] = {
+	{ "MechWarrior (U)(1993)(Activision).sfc", 1048576, 0x40b7a858, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mechwarrior)
+STD_ROM_FN(snes_Mechwarrior)
+
+struct BurnDriver BurnDrvsnes_Mechwarrior = {
+	"snes_mechwarrior", NULL, NULL, NULL, "1993",
+	"MechWarrior (USA)\0", NULL, "Activision", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SIM | GBF_SHOOT, 0,
+	SNESGetZipName, snes_MechwarriorRomInfo, snes_MechwarriorRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// MechWarrior (Euro, Spanish)
+
+static struct BurnRomInfo snes_MechwarrioresRomDesc[] = {
+	{ "MechWarrior (E, Spain)(1993)(Activision).sfc", 1048576, 0xd713a74f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mechwarriores)
+STD_ROM_FN(snes_Mechwarriores)
+
+struct BurnDriver BurnDrvsnes_Mechwarriores = {
+	"snes_mechwarriores", "snes_mechwarrior", NULL, NULL, "1993",
+	"MechWarrior (Euro, Spanish)\0", NULL, "Activision", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SIM | GBF_SHOOT, 0,
+	SNESGetZipName, snes_MechwarrioresRomInfo, snes_MechwarrioresRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -27415,6 +27491,25 @@ struct BurnDriver BurnDrvsnes_Superbtank = {
 	512, 448, 4, 3
 };
 
+// Garry Kitchen's  Super Battletank (Japan)
+
+static struct BurnRomInfo snes_SuperbtankjRomDesc[] = {
+	{ "Garry Kitchen's  Super Battletank (J)(1993)(Pack-In-Video).sfc", 524288, 0xc53b82cd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superbtankj)
+STD_ROM_FN(snes_Superbtankj)
+
+struct BurnDriver BurnDrvsnes_Superbtankj = {
+	"snes_superbtankj", "snes_superbtank", NULL, NULL, "1993",
+	"Garry Kitchen's  Super Battletank (Japan)\0", NULL, "Pack-In-Video", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SIM, 0,
+	SNESGetZipName, snes_SuperbtankjRomInfo, snes_SuperbtankjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Battletank 2 (USA)
 
 static struct BurnRomInfo snes_Superbtank2RomDesc[] = {
@@ -27434,21 +27529,21 @@ struct BurnDriver BurnDrvsnes_Superbtank2 = {
 	512, 448, 4, 3
 };
 
-// Garry Kitchen's  Super Battletank (Japan)
+// Super Battletank 2 (Euro, Spanish)
 
-static struct BurnRomInfo snes_SuperbtankjRomDesc[] = {
-	{ "Garry Kitchen's  Super Battletank (J)(1993)(Pack-In-Video).sfc", 524288, 0xc53b82cd, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_Superbtank2esRomDesc[] = {
+	{ "Super Battletank 2 (E, Spain)(1993)(Absolute Entertainment).sfc", 2097152, 0xd3802a47, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Superbtankj)
-STD_ROM_FN(snes_Superbtankj)
+STD_ROM_PICK(snes_Superbtank2es)
+STD_ROM_FN(snes_Superbtank2es)
 
-struct BurnDriver BurnDrvsnes_Superbtankj = {
-	"snes_superbtankj", "snes_superbtank", NULL, NULL, "1993",
-	"Garry Kitchen's  Super Battletank (Japan)\0", NULL, "Pack-In-Video", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Superbtank2es = {
+	"snes_superbtank2es", "snes_superbtank2", NULL, NULL, "1993",
+	"Super Battletank 2 (Euro, Spanish)\0", NULL, "Absolute Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SIM, 0,
-	SNESGetZipName, snes_SuperbtankjRomInfo, snes_SuperbtankjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_Superbtank2esRomInfo, snes_Superbtank2esRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30227,6 +30322,25 @@ struct BurnDriver BurnDrvsnes_Tinytoon = {
 	512, 448, 4, 3
 };
 
+// Tiny Toon Adventures - Buster Busts Loose! (Euro, Spanish)
+
+static struct BurnRomInfo snes_TinytoonesRomDesc[] = {
+	{ "Tiny Toon Adventures - Buster Busts Loose! (E, Spain)(1993)(Konami).sfc", 1048576, 0xeeb4180c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tinytoones)
+STD_ROM_FN(snes_Tinytoones)
+
+struct BurnDriver BurnDrvsnes_Tinytoones = {
+	"snes_tinytoones", "snes_tinytoon", NULL, NULL, "1993",
+	"Tiny Toon Adventures - Buster Busts Loose! (Euro, Spanish)\0", NULL, "Konami", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_TinytoonesRomInfo, snes_TinytoonesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Tiny Toon Adventures (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_TinytoonjRomDesc[] = {
@@ -30755,6 +30869,25 @@ struct BurnDriver BurnDrvsnes_Turnburn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SIM, 0,
 	SNESGetZipName, snes_TurnburnRomInfo, snes_TurnburnRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Turn and Burn: No-Fly Zone (Euro, Spanish)
+
+static struct BurnRomInfo snes_TurnburnesRomDesc[] = {
+	{ "Turn and Burn - No-Fly Zone (E, Spain)(1993)(Absolute Entertainment).sfc", 2097152, 0xe9e676c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Turnburnes)
+STD_ROM_FN(snes_Turnburnes)
+
+struct BurnDriver BurnDrvsnes_Turnburnes = {
+	"snes_turnburnes", "snes_turnburn", NULL, NULL, "1993",
+	"Turn and Burn: No-Fly Zone (Euro, Spanish)\0", NULL, "Absolute Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SIM, 0,
+	SNESGetZipName, snes_TurnburnesRomInfo, snes_TurnburnesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33352,7 +33485,7 @@ struct BurnDriver BurnDrvsnes_Sfexpalpha = {
 // Super Big 2 (China) (Unl)
 
 static struct BurnRomInfo snes_Superbig2cRomDesc[] = {
-	{ "Super Big 2 (C)(Unl)(199x).sfc", 2097152, 0x6865f663, BRF_ESS | BRF_PRG },
+	{ "Super Big 2 (C)(Unl)(199x).sfc", 2162688, 0xf33c710d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superbig2c)

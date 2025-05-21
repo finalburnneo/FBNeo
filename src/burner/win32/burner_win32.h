@@ -372,6 +372,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 // romdata.cpp
 extern bool bRDListScanSub;
 INT32 RomDataManagerInit();
+INT32 RomDataCheck(const TCHAR* pszDatFile);
 
 // cona.cpp
 struct SubDirInfo {

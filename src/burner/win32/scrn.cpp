@@ -1182,38 +1182,33 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LOAD_ROMDATA: {
 			if (NULL == pDataRomDesc) {
-				TCHAR szFilter[100] = { 0 };
+				TCHAR szFilter[150] = { 0 };
 				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
 				memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
 
+				// '/' will result in a FNERR_INVALIDFILENAME error
+				TCHAR szInitialDir[MAX_PATH] = { 0 };
+				_tcscpy(szInitialDir, szAppRomdataPath);
+
 				memset(&ofn, 0, sizeof(OPENFILENAME));
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = hScrnWnd;
-				ofn.lpstrFilter = szFilter;
-				ofn.lpstrFile = szRomdataName;
-				ofn.nMaxFile = sizeof(szRomdataName) / sizeof(TCHAR);
-				ofn.lpstrInitialDir = szAppRomdataPath;
-				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-				ofn.lpstrDefExt = _T("dat");
+				ofn.lStructSize     = sizeof(OPENFILENAME);
+				ofn.hwndOwner       = hScrnWnd;
+				ofn.lpstrFilter     = szFilter;
+				ofn.lpstrFile       = StrReplace(szRomdataName, _T('/'), _T('\\'));
+				ofn.nMaxFile        = sizeof(szRomdataName) / sizeof(TCHAR);
+				ofn.lpstrInitialDir = StrReplace(szInitialDir,  _T('/'), _T('\\'));
+				ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+				ofn.lpstrDefExt     = _T("dat");
 
 				BOOL nOpenDlg = GetOpenFileName(&ofn);
-
-				if (0 == nOpenDlg) break;
+/*
+				DWORD dwError = CommDlgExtendedError();
+*/
+				if (FALSE == nOpenDlg)                break;
+				if (0 != RomDataCheck(szRomdataName)) break;
 
 				bLoading = 1;
-
-				char* szDrvName = RomdataGetDrvName();
-				INT32 nGame = BurnDrvGetIndex(szDrvName);
-
-				if ((NULL == szDrvName) || (-1 == nGame)) {
-					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
-					FBAPopupDisplay(PUF_TYPE_WARNING);
-
-					bLoading = 0;
-					break;
-				}
-
-				DrvInit(nGame, true);	// Init the game driver
+				DrvInit(BurnDrvGetIndex(RomdataGetDrvName()), true);	// Init the game driver
 				MenuEnableItems();
 				bAltPause = 0;
 				bLoading = 0;

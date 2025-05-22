@@ -949,7 +949,7 @@ int ProcessCmdLine()
 		}
 
 		if (_tcscmp(szName, _T("-listinfo")) == 0 ||
-			_tcscmp(szName, _T("-listxml")) == 0) {
+			_tcscmp(szName, _T("-listxml"))  == 0) {
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
@@ -1031,6 +1031,12 @@ int ProcessCmdLine()
 
 		if (_tcscmp(szName, _T("-listinfochannelfonly")) == 0) {
 			write_datfile(DAT_CHANNELF_ONLY, stdout);
+			return 1;
+		}
+
+		if (_tcscmp(szName, _T("-listinfoall")) == 0 ||
+			_tcscmp(szName, _T("-listxmlall"))  == 0) {
+			CreateAllDatfilesWindows();
 			return 1;
 		}
 

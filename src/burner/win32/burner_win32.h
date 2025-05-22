@@ -283,6 +283,7 @@ INT32 is_netgame_or_recording();
 void ScrnInitLua();
 void ScrnExitLua();
 char* DecorateKailleraGameName(UINT32 nBurnDrv);
+int CreateAllDatfilesWindows();
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)

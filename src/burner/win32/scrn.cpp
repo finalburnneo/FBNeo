@@ -365,7 +365,7 @@ static void DoNetGame()
 	KailleraServerSelect();
 }
 
-int CreateDatfileWindows(int bType)
+static int CreateDatfileWindows(int bType)
 {
 	TCHAR szTitle[1024];
 	TCHAR szFilter[1024];

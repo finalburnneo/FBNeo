@@ -546,6 +546,85 @@ static struct BurnDIPInfo ZeroteamDIPList[]=
 
 STDDIPINFO(Zeroteam)
 
+static struct BurnDIPInfo ZeroteamOlderDIPList[]=
+{
+	{0x26, 0xff, 0xff, 0xff, NULL			},
+	{0x27, 0xff, 0xff, 0xff, NULL			},
+	{0x28, 0xff, 0xff, 0xfd, NULL			},
+
+	{0x26, 0xff, 0xff, 0xff, NULL			},
+	{0x27, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x26, 0x01, 0x07, 0x00, "4 Coins 1 Credits"	},
+	{0x26, 0x01, 0x07, 0x01, "3 Coins 1 Credits"	},
+	{0x26, 0x01, 0x07, 0x02, "2 Coins 1 Credits"	},
+	{0x26, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x26, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x26, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x26, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x26, 0x01, 0x07, 0x04, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x26, 0x01, 0x38, 0x00, "4 Coins 1 Credits"	},
+	{0x26, 0x01, 0x38, 0x08, "3 Coins 1 Credits"	},
+	{0x26, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
+	{0x26, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x26, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x26, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x26, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
+	{0x26, 0x01, 0x38, 0x20, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
+	{0x26, 0x01, 0x40, 0x40, "Normal"		},
+	{0x26, 0x01, 0x40, 0x00, "X 2"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x26, 0x01, 0x80, 0x80, "Off"			},
+	{0x26, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x27, 0x01, 0x03, 0x03, "Normal"		},
+	{0x27, 0x01, 0x03, 0x02, "Hard"			},
+	{0x27, 0x01, 0x03, 0x01, "Easy"			},
+	{0x27, 0x01, 0x03, 0x00, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x27, 0x01, 0x04, 0x04, "2"			},
+	{0x27, 0x01, 0x04, 0x00, "1"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x27, 0x01, 0x30, 0x30, "1000000"		},
+	{0x27, 0x01, 0x30, 0x20, "2000000"		},
+	{0x27, 0x01, 0x30, 0x10, "Every 1000000"	},
+	{0x27, 0x01, 0x30, 0x00, "No Extend"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sound"		},
+	{0x27, 0x01, 0x40, 0x00, "Off"			},
+	{0x27, 0x01, 0x40, 0x40, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x27, 0x01, 0x80, 0x80, "Off"			},
+	{0x27, 0x01, 0x80, 0x00, "On"			},
+
+
+	{0   , 0xfe, 0   ,    8, "Cabinet Setting"	},
+	{0x28, 0x01, 0x07, 0x07, "2 Players"		},
+	{0x28, 0x01, 0x07, 0x06, "3 Players, 3 Slots"	},
+	{0x28, 0x01, 0x07, 0x05, "4 Players, 4 Slots"	},
+	{0x28, 0x01, 0x07, 0x04, "3 Players, 2 Slots"	},
+	{0x28, 0x01, 0x07, 0x03, "2 Players x2"		},
+	{0x28, 0x01, 0x07, 0x02, "4 Players, 2 Slots"	},
+	{0x28, 0x01, 0x07, 0x01, "2 Players, Freeplay"	},
+	{0x28, 0x01, 0x07, 0x00, "4 Players, Freeplay"	},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x28, 0x01, 0x08, 0x08, "Off"			},
+	{0x28, 0x01, 0x08, 0x00, "On"			},
+};
+
+STDDIPINFO(ZeroteamOlder)
+
 static struct BurnDIPInfo Rdx_v33DIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xc0, NULL			},
@@ -5070,7 +5149,7 @@ struct BurnDriver BurnDrvZeroteam = {
 	"Zero Team USA (US)\0", "Unemulated protection", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamOlderDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
@@ -5114,7 +5193,7 @@ struct BurnDriver BurnDrvZeroteama = {
 	"Zero Team (Japan?, earlier?, set 1)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamOlderDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
@@ -5299,7 +5378,7 @@ struct BurnDriver BurnDrvZeroteame = {
 	"Zero Team (Japan?, earlier?, set 2)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, zeroteameRomInfo, zeroteameRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	NULL, zeroteameRomInfo, zeroteameRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamOlderDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
@@ -5343,7 +5422,7 @@ struct BurnDriver BurnDrvZeroteams = {
 	"Zero Team Selection\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamOlderDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
@@ -5396,7 +5475,7 @@ struct BurnDriver BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Suicide Revival Kit\0", "No game code! Black screen normal!", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

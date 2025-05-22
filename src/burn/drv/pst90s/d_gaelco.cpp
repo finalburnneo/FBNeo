@@ -1606,6 +1606,39 @@ struct BurnDriver BurnDrvSquash = {
 	320, 240, 4, 3
 };
 
+
+// Squash (USA, ver. 1.1, checksum 015b6f8a)
+
+static struct BurnRomInfo squashaRomDesc[] = {
+	{ "sq_p_0_27c010.bin",	0x20000, 0x275e20e7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sq_p_1_27c010.bin",	0x20000, 0x077cc291, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "squash_c-12.c12",	0x80000, 0x5c440645, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "squash.c11",			0x80000, 0x9e19694d, 2 | BRF_GRA },           //  3
+	{ "squash_c-10.c10",	0x80000, 0x892a035c, 2 | BRF_GRA },           //  4
+	{ "squash_c-9.c9",		0x80000, 0x0bb91c69, 2 | BRF_GRA },           //  5 
+
+	{ "squash_sound.bin",	0x80000, 0xa1b9651b, 3 | BRF_SND },           //  6 M6295 Samples
+	
+	{ "squashv1_gal16v8.f2",	0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
+	{ "squashv1_gal16v8.j16",	0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
+	{ "squashv1_gal20v8.d21",	0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
+	{ "squashv1_gal20v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
+};
+
+STD_ROM_PICK(squasha)
+STD_ROM_FN(squasha)
+
+struct BurnDriver BurnDrvSquasha = {
+	"squasha", "squash", NULL, NULL, "1992",
+	"Squash (USA, ver. 1.1, checksum 015b6f8a)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, squashaRomInfo, squashaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SquashDIPInfo,
+	SquashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
 /*
 There is a Thunder Hoop on a REF.922804/2 PCB, with exactly the same ROM contents,
 but on a different chips layout / capacity:

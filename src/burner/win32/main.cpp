@@ -1036,7 +1036,7 @@ int ProcessCmdLine()
 
 		if (_tcscmp(szName, _T("-listinfoall")) == 0 ||
 			_tcscmp(szName, _T("-listxmlall"))  == 0) {
-			CreateAllDatfilesWindows();
+			CreateAllDatfilesWindows(true);
 			return 1;
 		}
 

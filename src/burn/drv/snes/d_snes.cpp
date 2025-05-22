@@ -1714,6 +1714,44 @@ struct BurnDriver BurnDrvsnes_Aerobiz2 = {
 	512, 448, 4, 3
 };
 
+// Aguri Suzuki F-1 Super Driving (Euro)
+
+static struct BurnRomInfo snes_Agurisuzukif1eRomDesc[] = {
+	{ "Aguri Suzuki F-1 Super Driving (E)(1993)(Altron).sfc", 1048576, 0xc8382f39, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Agurisuzukif1e)
+STD_ROM_FN(snes_Agurisuzukif1e)
+
+struct BurnDriver BurnDrvsnes_Agurisuzukif1e = {
+	"snes_agurisuzukif1e", "snes_redlinef1racer", NULL, NULL, "1993",
+	"Aguri Suzuki F-1 Super Driving (Euro)\0", NULL, "Altron", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_Agurisuzukif1eRomInfo, snes_Agurisuzukif1eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Aguri Suzuki F-1 Super Driving (Japan)
+
+static struct BurnRomInfo snes_Agurisuzukif1jRomDesc[] = {
+	{ "Aguri Suzuki F-1 Super Driving (J)(1992)(LOZC G. Amusements).sfc", 1048576, 0x75bdc895, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Agurisuzukif1j)
+STD_ROM_FN(snes_Agurisuzukif1j)
+
+struct BurnDriver BurnDrvsnes_Agurisuzukif1j = {
+	"snes_agurisuzukif1j", "snes_redlinef1racer", NULL, NULL, "1992",
+	"Aguri Suzuki F-1 Super Driving (Japan)\0", NULL, "LOZC G. Amusements", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_Agurisuzukif1jRomInfo, snes_Agurisuzukif1jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Air Management II - Koukuu Ou o Mezase (Japan)
 
 static struct BurnRomInfo snes_Aerobiz2jRomDesc[] = {
@@ -2109,6 +2147,25 @@ struct BurnDriver BurnDrvsnes_Alienvspred = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_AlienvspredRomInfo, snes_AlienvspredRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Alien vs. Predator (Euro)
+
+static struct BurnRomInfo snes_AlienvspredeRomDesc[] = {
+	{ "Alien vs. Predator (E)(1993)(Activision).sfc", 1048576, 0xa31d1f58, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Alienvsprede)
+STD_ROM_FN(snes_Alienvsprede)
+
+struct BurnDriver BurnDrvsnes_Alienvsprede = {
+	"snes_alienvsprede", "snes_alienvspred", NULL, NULL, "1993",
+	"Alien vs. Predator (Euro)\0", NULL, "Activision", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_AlienvspredeRomInfo, snes_AlienvspredeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -13390,6 +13447,44 @@ struct BurnDriver BurnDrvsnes_Indianajones = {
 	512, 448, 4, 3
 };
 
+// Indiana Jones' Greatest Adventures (Euro)
+
+static struct BurnRomInfo snes_IndianajoneseRomDesc[] = {
+	{ "Indiana Jones' Greatest Adventures (E)(1994)(JVC - LucasArts).sfc", 2097152, 0xfa4560c3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Indianajonese)
+STD_ROM_FN(snes_Indianajonese)
+
+struct BurnDriver BurnDrvsnes_Indianajonese = {
+	"snes_indianajonese", "snes_indianajones", NULL, NULL, "1994",
+	"Indiana Jones' Greatest Adventures (Euro)\0", NULL, "JVC Musical Industries - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_IndianajoneseRomInfo, snes_IndianajoneseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Indiana Jones' Greatest Adventures (Japan)
+
+static struct BurnRomInfo snes_IndianajonesjRomDesc[] = {
+	{ "Indiana Jones' Greatest Adventures (J)(1994)(JVC - LucasArts).sfc", 2097152, 0x079b9996, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Indianajonesj)
+STD_ROM_FN(snes_Indianajonesj)
+
+struct BurnDriver BurnDrvsnes_Indianajonesj = {
+	"snes_indianajonesj", "snes_indianajones", NULL, NULL, "1994",
+	"Indiana Jones' Greatest Adventures (Japan)\0", NULL, "JVC Musical Industries - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_IndianajonesjRomInfo, snes_IndianajonesjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Inindo - Way of the Ninja (USA)
 
 static struct BurnRomInfo snes_InindoRomDesc[] = {
@@ -15571,6 +15666,25 @@ struct BurnDriver BurnDrvsnes_Legend = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_LegendRomInfo, snes_LegendRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Legend (Euro)
+
+static struct BurnRomInfo snes_LegendeRomDesc[] = {
+	{ "Legend (E)(1993)(Arcade Zone).sfc", 1048576, 0x0cac572f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Legende)
+STD_ROM_FN(snes_Legende)
+
+struct BurnDriver BurnDrvsnes_Legende = {
+	"snes_legende", "snes_legend", NULL, NULL, "1993",
+	"Legend (Euro)\0", NULL, "Arcade Zone", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_LegendeRomInfo, snes_LegendeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -21846,6 +21960,25 @@ struct BurnDriver BurnDrvsnes_Realm = {
 	512, 448, 4, 3
 };
 
+// Redline F-1 Racer (USA)
+
+static struct BurnRomInfo snes_Redlinef1racerRomDesc[] = {
+	{ "Redline F-1 Racer (U)(1993)(Absolute Entertainment).sfc", 1048576, 0xe5faadd2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Redlinef1racer)
+STD_ROM_FN(snes_Redlinef1racer)
+
+struct BurnDriver BurnDrvsnes_Redlinef1racer = {
+	"snes_redlinef1racer", NULL, NULL, NULL, "1993",
+	"Redline F-1 Racer (USA)\0", NULL, "Absolute Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_Redlinef1racerRomInfo, snes_Redlinef1racerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Return of Double Dragon (Japan)
 
 static struct BurnRomInfo snes_ReturndoubledragonRomDesc[] = {
@@ -25610,6 +25743,25 @@ struct BurnDriver BurnDrvsnes_Spaceinv = {
 	512, 448, 4, 3
 };
 
+// Space Invaders - The Original Game (Australia)
+
+static struct BurnRomInfo snes_SpaceinvaRomDesc[] = {
+	{ "Space Invaders - The Original Game (A)(1997)(Nintendo).sfc", 262144, 0x6b62625a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Spaceinva)
+STD_ROM_FN(snes_Spaceinva)
+
+struct BurnDriver BurnDrvsnes_Spaceinva = {
+	"snes_spaceinva", "snes_spaceinv", NULL, NULL, "1997",
+	"Space Invaders - The Original Game (Australia)\0", NULL, "Nintendo - Taito", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VERSHOOT, 0,
+	SNESGetZipName, snes_SpaceinvaRomInfo, snes_SpaceinvaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Space Invaders - The Original Game (Japan)
 
 static struct BurnRomInfo snes_SpaceinvjRomDesc[] = {
@@ -27945,6 +28097,25 @@ struct BurnDriver BurnDrvsnes_Supergoal = {
 	SNESGetZipName, snes_SupergoalRomInfo, snes_SupergoalRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// Super Goal! 2 (USA)
+
+static struct BurnRomInfo snes_Supergoal2RomDesc[] = {
+	{ "Super Goal! 2 (U)(1993)(Jaleco).sfc", 524288, 0xc5829306, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supergoal2)
+STD_ROM_FN(snes_Supergoal2)
+
+struct BurnDriver BurnDrvsnes_Supergoal2 = {
+	"snes_supergoal2", NULL, NULL, NULL, "1993",
+	"Super Goal! 2 (USA)\0", NULL, "Jaleco", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Supergoal2RomInfo, snes_Supergoal2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // Super H.Q. - Criminal Chaser (Japan)
@@ -34587,6 +34758,25 @@ struct BurnDriver BurnDrvsnes_Jpark2redux = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Jpark2reduxRomInfo, snes_Jpark2reduxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// K-fet Invaders (HB)
+// https://nathbo.itch.io/k-fet-invaders-snes
+static struct BurnRomInfo snes_KfetinvadersRomDesc[] = {
+	{ "K-fet Invaders (2024)(NathBo).sfc", 262144, 0x67397d0d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kfetinvaders)
+STD_ROM_FN(snes_Kfetinvaders)
+
+struct BurnDriver BurnDrvsnes_Kfetinvaders = {
+	"snes_kfetinvaders", NULL, NULL, NULL, "2024",
+	"K-fet Invaders (HB)\0", NULL, "NathBo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_KfetinvadersRomInfo, snes_KfetinvadersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

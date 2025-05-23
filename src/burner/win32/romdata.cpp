@@ -538,7 +538,7 @@ static UINT32 RDGetCps1RomsType(const TCHAR* pszDrvName, const TCHAR* pszMask, c
 		nBaseType = BRF_PRG;
 	}
 	else
-	if (0 == _tcsicmp(pszMask, _T("Tiles")) || 0 == _tcsicmp(pszMask, _T("Extras")) || 0 == _tcsicmp(pszMask, _T("PRG2"))) {
+	if (0 == _tcsicmp(pszMask, _T("Tiles")) || 0 == _tcsicmp(pszMask, _T("Extras")) || 0 == _tcsicmp(pszMask, _T("GRA2"))) {
 		nMinIdx = CPS1_EXTRA_TILES_SF2EBBL_400000, nMaxIdx = CPS1_EXTRA_TILES_SF2MKOT_400000;
 		nBaseType = BRF_GRA;
 	}
@@ -638,7 +638,7 @@ static UINT32 RDGetCps2RomsType(const TCHAR* pszDrvName, const TCHAR* pszMask)
 
 static UINT32 RDGetCps3RomsType(const TCHAR* pszMask)
 {
-	if (0 == _tcsicmp(pszMask, _T("Bios")) || 0 == _tcsicmp(pszMask, _T("BIOS"))) {
+	if (0 == _tcsicmp(pszMask, _T("Bios"))) {
 		return (BRF_ESS | BRF_BIOS);
 	}
 	else
@@ -1009,7 +1009,7 @@ static TCHAR* Utf16beToUtf16le(const TCHAR* pszDatFile)
 
 	fseek(fpInFile, 2, SEEK_SET);
 
-	// Generate date file name (UTF16LE_YYYYMMDD.dat)
+	// Generate date file name (UTF16LE%Y%m%d.tmp)
 	time_t now = time(NULL);
 	struct tm* local = localtime(&now);
 	_tcsftime(szUtf16leFile, sizeof(szUtf16leFile), _T("UTF16LE%Y%m%d.tmp"), local);

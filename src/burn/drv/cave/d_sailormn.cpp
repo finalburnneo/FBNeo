@@ -1723,10 +1723,10 @@ STD_ROM_FN(sailmnyy)
 
 // Pretty Soldier Sailor Moon (Moonlight, Hack)
 // Modified by 10Lo
-// GOTVG 20241210
+// GOTVG 20250418
 
 static struct BurnRomInfo sailmnygRomDesc[] = {
-	{ "bpsmyg945a.u45",	0x080000, 0x993a51fc, BRF_ESS | BRF_PRG },
+	{ "bpsmyg945a.u45",	0x080000, 0xd61d64ba, BRF_ESS | BRF_PRG },
 	SAILORMN_REGIONS_COMPONENTS
 };
 
@@ -2284,7 +2284,7 @@ struct BurnDriver BurnDrvSailorMoonyy = {
 };
 
 struct BurnDriver BurnDrvSailorMoonyg = {
-	"sailmnyg", "sailormn", NULL, NULL, "2024",
+	"sailmnyg", "sailormn", NULL, NULL, "2025",
 	"Pretty Soldier Sailor Moon (Moonlight, Hack)\0", NULL, "hack", "Cave",
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Moonlight, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,

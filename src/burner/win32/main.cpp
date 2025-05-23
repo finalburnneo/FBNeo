@@ -1111,6 +1111,7 @@ int ProcessCmdLine()
 					break;
 				case 2:
 					CreateAllDatfilesWindows(true, szDirPath);
+					break;
 				default:
 					break;
 			}

@@ -19566,6 +19566,25 @@ struct BurnDriver BurnDrvsnes_Ninjaryuuken = {
 	512, 448, 4, 3
 };
 
+// Justice Ninja Casey
+
+static struct BurnRomInfo snes_NinjacaseyRomDesc[] = {
+	{ "Justice Ninja Casey (2025)(Sunsoft).sfc", 2097152, 0xb4923e4a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ninjacasey)
+STD_ROM_FN(snes_Ninjacasey)
+
+struct BurnDriver BurnDrvsnes_Ninjacasey = {
+	"snes_ninjacasey", NULL, NULL, NULL, "2025",
+	"Justice Ninja Casey\0", NULL, "Sunsoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
+	SNESGetZipName, snes_NinjacaseyRomInfo, snes_NinjacaseyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Shounen Ninja Sasuke (Japan)
 
 static struct BurnRomInfo snes_NinjasasukeRomDesc[] = {
@@ -19576,10 +19595,10 @@ STD_ROM_PICK(snes_Ninjasasuke)
 STD_ROM_FN(snes_Ninjasasuke)
 
 struct BurnDriver BurnDrvsnes_Ninjasasuke = {
-	"snes_ninjasasuke", NULL, NULL, NULL, "1994",
+	"snes_ninjasasuke", "snes_ninjacasey", NULL, NULL, "1994",
 	"Shounen Ninja Sasuke (Japan)\0", NULL, "Sunsoft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
 	SNESGetZipName, snes_NinjasasukeRomInfo, snes_NinjasasukeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

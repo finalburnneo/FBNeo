@@ -283,7 +283,7 @@ INT32 is_netgame_or_recording();
 void ScrnInitLua();
 void ScrnExitLua();
 char* DecorateKailleraGameName(UINT32 nBurnDrv);
-int CreateAllDatfilesWindows(bool bSilent = false);
+INT32 CreateAllDatfilesWindows(bool bSilent = false, const TCHAR* pszSpecDir = NULL);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -372,6 +372,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
 // romdata.cpp
 extern bool bRDListScanSub;
+TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
 INT32 RomDataManagerInit();
 INT32 RomDataCheck(const TCHAR* pszDatFile);
 

@@ -804,7 +804,7 @@ static UINT32 RDSetRomsType(const TCHAR* pszDrvName, const TCHAR* pszMask, const
 	}
 }
 
-static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
+TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 {
 	static TCHAR* prev_str = NULL;
 	TCHAR* token = NULL;

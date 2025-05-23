@@ -416,7 +416,7 @@ static int CreateDatfileWindows(int bType)
 	return create_datfile(szChoice, bType);
 }
 
-int CreateAllDatfilesWindows(bool bSilent)
+INT32 CreateAllDatfilesWindows(bool bSilent, const TCHAR* pszSpecDir)
 {
 	INT32 nRet = 0;
 
@@ -461,6 +461,10 @@ int CreateAllDatfilesWindows(bool bSilent)
 
 		pMalloc->Free(pItemIDList);
 		pMalloc->Release();
+	}
+
+	if (NULL != pszSpecDir) {
+		_tcscpy(buffer, pszSpecDir);
 	}
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));

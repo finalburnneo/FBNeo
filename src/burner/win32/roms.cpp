@@ -3,20 +3,43 @@
 #include <process.h>
 
 static HWND hTabControl = NULL;
+static HWND hParent     = NULL;
 
 HWND hRomsDlg = NULL;
-static HWND hParent = NULL;
 
 char* gameAv = NULL;
-bool avOk = false;
+bool avOk    = false;
 
 bool bSkipStartupCheck = false;
 
-static unsigned ScanThreadId = 0;
-static HANDLE hScanThread = NULL;
-static int nOldSelect = 0;
+static UINT32 ScanThreadId = 0;
+static HANDLE hScanThread  = NULL;
+static INT32 nOldSelect    = 0;
 
 static HANDLE hEvent = NULL;
+
+static const TCHAR szAppDefaultPaths[DIRS_MAX][MAX_PATH] = {
+	{ _T("roms/")			},
+	{ _T("roms/arcade/")	},
+	{ _T("roms/megadrive/")	},
+	{ _T("roms/pce/")		},
+	{ _T("roms/sgx/")		},
+	{ _T("roms/tg16/")		},
+	{ _T("roms/coleco/")	},
+	{ _T("roms/sg1000/")	},
+	{ _T("roms/gamegear/")	},
+	{ _T("roms/sms/")		},
+	{ _T("roms/msx/")		},
+	{ _T("roms/spectrum/")	},
+	{ _T("roms/snes/")		},
+	{ _T("roms/fds/")		},
+	{ _T("roms/nes/")		},
+	{ _T("roms/ngp/")		},
+	{ _T("roms/channelf/")	},
+	{ _T("roms/romdata/")	},
+	{ _T("")				},
+	{ _T("")				}
+};
 
 static void CreateRomDatName(TCHAR* szRomDat)
 {
@@ -25,79 +48,173 @@ static void CreateRomDatName(TCHAR* szRomDat)
 	return;
 }
 
+static bool IsRelativePath(const TCHAR* pszPath)
+{
+	// Invalid input
+	if ((NULL == pszPath) || (_T('\0' == pszPath[0]))) {
+		return false;
+	}
+
+	// Check for absolute path flags (drive letter or root / network path)
+	if (
+		((_tcslen(pszPath) >= 3) && _istalpha(pszPath[0]) && (_T(':') == pszPath[1]) && (_T('\\' == pszPath[2]) || (_T('/') == pszPath[2]))) ||
+		((_T('\\') == pszPath[0]) || (_T('/') == pszPath[0]))
+	) {
+		return false;
+	}
+
+	// Check that it is not a '.' or '..' starts with (e.g. . \folder or . \parent)
+	if (
+		(pszPath[0] == _T('.') && (pszPath[1] == _T('\0') || pszPath[1] == _T('\\') || pszPath[1] == _T('/'))) ||
+		(pszPath[0] == _T('.') && pszPath[1] == _T('.') && (pszPath[2] == _T('\0') || pszPath[2] == _T('\\') || pszPath[2] == _T('/')))
+	) {
+		return true;
+	}
+
+	return true;
+}
+
+static UINT32 GetAppDirectory(TCHAR* pszAppPath)
+{
+	TCHAR szExePath[MAX_PATH] = { 0 };
+
+	// Get executable file path
+	if (0 == GetModuleFileName(NULL, szExePath, MAX_PATH))
+		return 0;
+
+	// Find last slash or backslash
+	TCHAR* pLastSlash = _tcsrchr(szExePath, _T('\\'));
+	if (NULL == pLastSlash) {
+		pLastSlash = _tcsrchr(szExePath, _T('/'));
+		if (NULL == pLastSlash)
+			return 0;
+	}
+
+	// Calculate directory length (with slash or backslash)
+	UINT32 nLen = pLastSlash - szExePath + 1;
+	if (nLen >= MAX_PATH)
+		return 0;
+
+	if (NULL != pszAppPath) {
+		_tcsncpy(pszAppPath, szExePath, nLen);
+		pszAppPath[nLen] = _T('\0');
+	}
+
+	return nLen;
+}
+
+static INT32 ConvertToAbsolutePath(const TCHAR* pszPath, TCHAR* pszAbsolutePath)
+{
+	if (NULL == pszPath)
+		return -1;
+
+	INT32 nRet = -1;
+//	TCHAR szAbsolutePath[MAX_PATH] = { 0 };
+
+	if (IsRelativePath(pszPath)) {
+		TCHAR szAppPath[MAX_PATH] = { 0 };
+		UINT32 nAppPathLen = GetAppDirectory(szAppPath);
+		if (0 == nAppPathLen)
+			return -1;
+
+		UINT32 nPathLen = _tcslen(pszPath);
+		if ((nRet = nAppPathLen + nPathLen) >= MAX_PATH)
+			return -1;
+
+		if (NULL != pszAbsolutePath) {
+			_stprintf(pszAbsolutePath, _T("%s%s"), szAppPath, pszPath);
+
+			for (UINT32 i = 0; _T('\0') != pszAbsolutePath[i]; i++) {
+				if (pszAbsolutePath[i] == _T('/')) pszAbsolutePath[i] = _T('\\');
+			}
+		}
+
+		return nRet;
+	}
+
+	if ((nRet = _tcslen(pszPath)) >= MAX_PATH)
+		return -1;
+
+	if (NULL != pszAbsolutePath) {
+		_tcscpy(pszAbsolutePath, pszPath);
+	}
+
+	return nRet;
+}
+
+static INT32 CALLBACK BRProc(HWND hWnd, UINT uMsg, LPARAM /*lParam*/, LPARAM lpData)
+{
+	if (uMsg == BFFM_INITIALIZED) {
+		SendMessage(hWnd, BFFM_SETSELECTION, (WPARAM)TRUE, (LPARAM)lpData);
+	}
+
+	return 0;
+}
+
 //Select Directory Dialog//////////////////////////////////////////////////////////////////////////
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	int var;
+	HFONT  hFont         = NULL;
+	HBRUSH hWhiteBGBrush = NULL;
+	TCHAR szAbsolutePath[MAX_PATH] = {0};
+
+	INT32 var;
 	static bool chOk;
 
 	switch (Msg) {
 		case WM_INITDIALOG: {
 			chOk = false;
 
+			HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
+			SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+			hWhiteBGBrush = CreateSolidBrush(RGB(0xff, 0xff, 0xff));
+
+			TCHAR szDialogTitle[200];
+			_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_ROMS_EDIT_PATHS, true), _T(APP_TITLE), _T(SEPERATOR_1));
+			SetWindowText(hDlg, szDialogTitle);
+
 			// Setup edit controls values (ROMs Paths)
-			for(int x = 0; x < 20; x++) {
+			for (INT32 x = 0; x < 20; x++) {
 				SetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + x, szAppRomPaths[x]);
 			}
 
 			// Setup the tabs
 			hTabControl = GetDlgItem(hDlg, IDC_ROMPATH_TAB);
-
-			TC_ITEM tcItem;
+			TC_ITEM tcItem = { 0 };
 			tcItem.mask = TCIF_TEXT;
+			tcItem.pszText = FBALoadStringEx(hAppInst, IDS_ROMS_PATHS, true);
+			TabCtrl_InsertItem(hTabControl, 0, &tcItem);
 
-			UINT idsString[20] = { IDS_ROMPATH_1,IDS_ROMPATH_2,IDS_ROMPATH_3,IDS_ROMPATH_4,IDS_ROMPATH_5,IDS_ROMPATH_6,IDS_ROMPATH_7,IDS_ROMPATH_8,IDS_ROMPATH_9,IDS_ROMPATH_10,IDS_ROMPATH_11,IDS_ROMPATH_12,IDS_ROMPATH_13,IDS_ROMPATH_14,IDS_ROMPATH_15,IDS_ROMPATH_16,IDS_ROMPATH_17,IDS_ROMPATH_18,IDS_ROMPATH_19,IDS_ROMPATH_20 };
+			// Font
+			LOGFONT lf = { 0 };
+			SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(LOGFONT), &lf, 0);
+			lf.lfHeight = -MulDiv(9, GetDeviceCaps(GetDC(NULL), LOGPIXELSY), 72);
+			lf.lfWeight = FW_BOLD;
+			hFont = CreateFontIndirect(&lf);
+			SendMessage(hTabControl, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-			for(int nIndex = 0; nIndex < 20; nIndex++) {
-				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
-				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
-			}
-
-			int TabPage = TabCtrl_GetCurSel(hTabControl);
-
-			// hide all controls excluding the selected controls
 			for(int x = 0; x < 20; x++) {
-				if(x != TabPage) {
-					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE);		// browse buttons
-					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE);	// edit controls
-				}
+				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1   + x), SW_SHOW);	// browse buttons
+				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_SHOW);	// edit controls
+				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_TEXT1 + x), SW_SHOW);	// text controls
 			}
-
-			// Show the proper controls
-			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW);		// browse buttons
-			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
 
 			UpdateWindow(hDlg);
 
 			WndInMid(hDlg, hParent);
-			SetFocus(hDlg);											// Enable Esc=close
+			SetFocus(hDlg);														// Enable Esc=close
 			break;
 		}
-		case WM_NOTIFY: {
-			NMHDR* pNmHdr = (NMHDR*)lParam;
-
-			if (pNmHdr->code == TCN_SELCHANGE) {
-
-				int TabPage = TabCtrl_GetCurSel(hTabControl);
-
-				// hide all controls excluding the selected controls
-				for(int x = 0; x < 20; x++) {
-					if(x != TabPage) {
-						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE);		// browse buttons
-						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE);	// edit controls
-					}
-				}
-
-				// Show the proper controls
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW);		// browse buttons
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
-
-				UpdateWindow(hDlg);
-
-				return FALSE;
+		case WM_CTLCOLORSTATIC: {
+			HDC hDc = (HDC)wParam;
+			SetBkMode(hDc, TRANSPARENT);										// LTEXT control with transparent background
+			return (LRESULT)GetStockObject(HOLLOW_BRUSH);						// Return to empty brush
+			for (int x = 0; x < 20; x++) {
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x)) return (INT_PTR)hWhiteBGBrush;
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_TEXT1 + x)) return (LRESULT)GetStockObject(HOLLOW_BRUSH);
 			}
-			break;
 		}
 		case WM_COMMAND: {
 			LPMALLOC pMalloc = NULL;
@@ -106,7 +223,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TCHAR buffer[MAX_PATH];
 
 			if (LOWORD(wParam) == IDOK) {
-
 				for (int i = 0; i < 20; i++) {
 //					if (GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer)) && lstrcmp(szAppRomPaths[i], buffer)) {
 					GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer));
@@ -115,12 +231,11 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					// add trailing backslash
 					int strLen = _tcslen(buffer);
 					if (strLen) {
-						if ( buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
-							buffer[strLen] = _T('\\');
-							buffer[strLen + 1] = _T('\0');
+						if (buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
+							buffer[strLen + 0]  = _T('\\');
+							buffer[strLen + 1]  = _T('\0');
 						}
 					}
-
 					lstrcpy(szAppRomPaths[i], buffer);
 //					}
 				}
@@ -130,9 +245,30 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			} else {
 				if (LOWORD(wParam) >= IDC_ROMSDIR_BR1 && LOWORD(wParam) <= IDC_ROMSDIR_BR20) {
 					var = IDC_ROMSDIR_EDIT1 + LOWORD(wParam) - IDC_ROMSDIR_BR1;
+
+					TCHAR szPath[MAX_PATH] = { 0 };
+					GetDlgItemText(hDlg, var, szPath, sizeof(szPath));
+					ConvertToAbsolutePath(szPath, szAbsolutePath);
 				} else {
 					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {
 						SendMessage(hDlg, WM_CLOSE, 0, 0);
+					}
+					else
+					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDC_ROMSDIR_DEFAULTS) {
+						if (IDOK == MessageBox(
+							hDlg,
+							FBALoadStringEx(hAppInst, IDS_ROMS_EDIT_DEFAULTS, true),
+							FBALoadStringEx(hAppInst, IDS_ERR_WARNING,        true),
+							MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
+						) {
+							for (INT32 x = 0; x < 20; x++) {
+								if (lstrcmp(szAppRomPaths[x], szAppDefaultPaths[x])) chOk = true;
+								_tcscpy(szAppRomPaths[x], szAppDefaultPaths[x]);
+								SetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + x, szAppRomPaths[x]);
+							}
+
+							UpdateWindow(hDlg);
+						}
 					}
 					break;
 				}
@@ -141,10 +277,15 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		    SHGetMalloc(&pMalloc);
 
 			memset(&bInfo, 0, sizeof(bInfo));
-			bInfo.hwndOwner = hDlg;
+			bInfo.hwndOwner      = hDlg;
 			bInfo.pszDisplayName = buffer;
-			bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
-			bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+			bInfo.lpszTitle      = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+			bInfo.ulFlags        = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+			if (S_OK == nCOMInit) {
+				bInfo.ulFlags   |= BIF_NEWDIALOGSTYLE;	// Caller needs to call CoInitialize() / OleInitialize() before using API (main.cpp)
+			}
+			bInfo.lpfn           = BRProc;
+			bInfo.lParam         = (LPARAM)szAbsolutePath;
 
 			pItemIDList = SHBrowseForFolder(&bInfo);
 
@@ -162,7 +303,6 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				pMalloc->Free(pItemIDList);
 			}
 			pMalloc->Release();
-
 			break;
 		}
 		case WM_CLOSE: {
@@ -171,6 +311,12 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (chOk && bSkipStartupCheck == false) {
 				bRescanRoms = true;
 				CreateROMInfo(hDlg);
+			}
+			if (NULL != hFont) {
+				DeleteObject(hFont);         hFont         = NULL;
+			}
+			if (NULL != hWhiteBGBrush) {
+				DeleteObject(hWhiteBGBrush); hWhiteBGBrush = NULL;
 			}
 		}
 	}

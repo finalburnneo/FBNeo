@@ -498,6 +498,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x6a90da54) ? APU_HACKERY : 0; // famidashb
 	NESMode |= (ROMCRC == 0xc00c4ea5) ? APU_HACKERY : 0; // Sam's Journey
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
+	NESMode |= (ROMCRC == 0x2d826113) ? ALT_MMC3 : 0; // cybercoaster
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0x7946fe78) ? ALT_TIMING : 0; // ftkantaro53
 	NESMode |= (ROMCRC == 0xf167590d) ? ALT_TIMING : 0; // jay and silent bob (occasional hang on level transition w/o this)
@@ -3524,7 +3525,7 @@ static void mapper04_scanline()
 		if (spr == bg && _16 == 0) return;
 	}
 
-	INT32 cnt = mapper4_irqcount;
+	INT32 cnt = mapper4_irqcount || (NESMode & ALT_MMC3);
 	if (mapper4_irqcount == 0 || mapper4_irqreload) {
 		mapper4_irqcount = mapper4_irqlatch;
 	} else {

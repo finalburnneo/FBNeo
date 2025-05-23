@@ -502,7 +502,7 @@ int RunMessageLoop()
 #endif
 				case SDLK_F6: // screeenshot
 					if (!bscreenshot) {
-						MakeScreenShot();
+						MakeScreenShot(0);
 						bscreenshot = 1;
 					}
 					break;

@@ -29,6 +29,7 @@ bool bDisableDebugConsole = true;
 HINSTANCE hAppInst = NULL;			// Application Instance
 HANDLE hMainThread;
 long int nMainThreadID;
+INT32 nCOMInit = S_FALSE;
 int nAppProcessPriority = NORMAL_PRIORITY_CLASS;
 int nAppShowCmd;
 
@@ -714,6 +715,60 @@ bool SetNumLock(bool bState)
 	return keyState[VK_NUMLOCK] & 1;
 }
 
+static INT32 ParseExportPath(const TCHAR* pszCmdLine, TCHAR* pszDirPath, INT32* nPathLen)
+{
+	const TCHAR* pszDelims = _T(" \t\r\n");
+	TCHAR* pszArgA = NULL, * pszArgN = NULL;
+
+	TCHAR szBuffer[1024] = { 0 };
+	_tcscpy(szBuffer, pszCmdLine);
+
+	pszArgA = _strqtoken(szBuffer, pszDelims);	// -listxmlall or -listinfoall
+	if (NULL == pszArgA) return -1;
+
+	if ((0 != _tcsicmp(_T("-listxmlall"), pszArgA)) && (0 != _tcsicmp(_T("-listinfoall"), pszArgA)))
+		return -1;
+
+	INT32 nMarker = 0;
+
+	while (NULL != (pszArgN = _strqtoken(NULL, pszDelims))) {
+		if (0 == _tcsicmp(_T("-s"), pszArgN)) {
+			nMarker = 1;
+			continue;
+		}
+		// A parameter specifying the directory is entered
+		UINT32 nLen = _tcslen(pszArgN), nLimit = MAX_PATH;
+		if ((_T('/') != pszArgN[nLen - 1]) && (_T('\\') != pszArgN[nLen - 1]))
+			nLimit--;
+
+		if (nLen >= nLimit)
+			return -1;
+
+		TCHAR szDirPath[MAX_PATH] = { 0 };
+		_tcscpy(szDirPath, pszArgN);
+
+		DWORD dwAttrib = GetFileAttributes(szDirPath);
+		if ((INVALID_FILE_ATTRIBUTES == dwAttrib) || (!(dwAttrib & FILE_ATTRIBUTE_DIRECTORY)))
+			return -1;	// Input directory error
+
+		if ((_T('/') != szDirPath[nLen - 1]) && (_T('\\') != szDirPath[nLen - 1])) {
+			szDirPath[nLen + 0] = _T('\\');
+			szDirPath[nLen + 1] = _T('\0');
+			nLen++;
+		}
+
+		if (NULL != pszDirPath) _tcscpy(pszDirPath, szDirPath);
+		if (NULL != nPathLen)   *nPathLen = nLen;
+
+		return 2;
+	}
+
+	if (NULL != pszDirPath) _tcscpy(pszDirPath, _T(""));
+	if (NULL != nPathLen)   *nPathLen = 1;
+
+	return nMarker;	// 1 Silent, 0 Not
+}
+
 #include <wininet.h>
 
 static int AppInit()
@@ -735,6 +790,15 @@ static int AppInit()
 
 #if defined (FBNEO_DEBUG)
 	OpenDebugLog();
+#endif
+
+#if defined BUILD_X64_EXE
+	if (nVidSelect == 1) {
+		// if "d3d7 / enhanced blitter" is set & running 64bit build,
+		// fall back to "basic blitter".  (d3d7 has no 64bit mode!)
+		nVidSelect = 0;
+		bprintf(0, _T("*** D3D7 / Enhanced Blitter set w/64bit build - falling back to basic blitter.\n"));
+	}
 #endif
 
 	FBALocaliseInit(szLocalisationTemplate);
@@ -767,6 +831,8 @@ static int AppInit()
 			break;
 	}
 
+	nCOMInit = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
+
 	// Set the process priority
 	SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 
@@ -785,8 +851,18 @@ static int AppInit()
 
 	hAccel = LoadAccelerators(hAppInst, MAKEINTRESOURCE(IDR_ACCELERATOR));
 
-	// Build the ROM information
-	CreateROMInfo(NULL);
+	// nExport:
+	// -1 Error
+	//  0 Not silent
+	//  1 Silent + app same directory
+	//  2 Silent + specified path
+	INT32 nExport = ParseExportPath(szCmdLine, NULL, NULL);
+
+	// Suppresses ROMs scanning when full list is exported
+	if (-1 == nExport) {
+		// Build the ROM information
+		CreateROMInfo(NULL);
+	}
 
 	// Write a clrmame dat file if we are verifying roms
 #if defined (ROM_VERIFY)
@@ -826,6 +902,9 @@ static int AppExit()
 		DestroyAcceleratorTable(hAccel);
 		hAccel = NULL;
 	}
+
+	CoUninitialize();
+	nCOMInit = S_FALSE;
 
 	SplashDestroy(1);
 
@@ -934,7 +1013,7 @@ int ProcessCmdLine()
 		}
 
 		if (_tcscmp(szName, _T("-listinfo")) == 0 ||
-			_tcscmp(szName, _T("-listxml")) == 0) {
+			_tcscmp(szName, _T("-listxml"))  == 0) {
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
@@ -1016,6 +1095,26 @@ int ProcessCmdLine()
 
 		if (_tcscmp(szName, _T("-listinfochannelfonly")) == 0) {
 			write_datfile(DAT_CHANNELF_ONLY, stdout);
+			return 1;
+		}
+
+		if (_tcscmp(szName, _T("-listinfoall")) == 0 ||
+			_tcscmp(szName, _T("-listxmlall"))  == 0) {
+			TCHAR szDirPath[MAX_PATH] = { 0 };
+			INT32 nExport = ParseExportPath(szCmdLine, szDirPath, NULL);
+			switch (nExport) {
+				case 0:
+					CreateAllDatfilesWindows();
+					break;
+				case 1:
+					CreateAllDatfilesWindows(true);
+					break;
+				case 2:
+					CreateAllDatfilesWindows(true, szDirPath);
+					break;
+				default:
+					break;
+			}
 			return 1;
 		}
 

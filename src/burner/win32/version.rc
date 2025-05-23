@@ -52,7 +52,7 @@ BEGIN
             VALUE "FileDescription", APP_DESCRIPTION "\0"
             VALUE "FileVersion", MAKE_STRING(VER_MAJOR) "," MAKE_STRING(VER_MINOR) "," MAKE_STRING(VER_BETA) "," MAKE_STRING(VER_ALPHA) "\0"
             VALUE "InternalName", MAKE_STRING(FILENAME) "\0"
-            VALUE "LegalCopyright", "© 2004-2023 Team FB Neo\0"
+            VALUE "LegalCopyright", "© 2004-2025 Team FB Neo\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", MAKE_STRING(FILENAME) ".exe\0"
  #ifdef FBNEO_DEBUG

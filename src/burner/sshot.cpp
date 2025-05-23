@@ -28,7 +28,7 @@ static void free_temp_imagen()
 }
 
 
-INT32 MakeScreenShot()
+INT32 MakeScreenShot(INT32 bType)
 {
 	char szAuthor[256]; char szDescription[256]; char szCopyright[256];	char szTime[256]; char szSoftware[256]; char szSource[256];
 	spng_text text_ptr[8];
@@ -158,8 +158,17 @@ INT32 MakeScreenShot()
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	SSHOT_DIRECTORY = SDL_GetPrefPath("fbneo", "screenshots");
 #endif
-	// construct our filename -> "romname-mm-dd-hms.png"
-    sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	
+	if (bType == 0) {
+		// construct our filename -> "romname-mm-dd-hms.png"
+    		sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	}
+	else if (bType == 1) {
+		sprintf(szSShotName,"%s%s.png", _TtoA(szAppTitlesPath), BurnDrvGetTextA(DRV_NAME));
+    	}
+    	else {
+		sprintf(szSShotName,"%s%s.png", _TtoA(szAppPreviewsPath), BurnDrvGetTextA(DRV_NAME));
+	}
 	//sprintf(szTime,"%.2d-%.2d-%.2d %.2d:%.2d:%.2d", tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_year, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 	sprintf(szTime, "%s", asctime(tmTime));
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)

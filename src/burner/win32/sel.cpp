@@ -3350,7 +3350,7 @@ static INT_PTR CALLBACK MVSpreviewProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARA
 			return TRUE;
 		}
 		case WM_COMMAND:
-			if (LOWORD(wParam) == ID_VALUE_CLOSE) {
+			if (LOWORD(wParam) == IDC_VALUE_CLOSE) {
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			}

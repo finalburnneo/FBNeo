@@ -5,26 +5,26 @@
 int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
 TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = {
-	{ _T("") },
-	{ _T("") },
-	{ _T("roms/romdata/") },
-	{ _T("roms/channelf/") },
-	{ _T("roms/ngp/") },
-	{ _T("roms/nes/") },
-	{ _T("roms/fds/") },
-	{ _T("roms/snes/") },
-	{ _T("roms/spectrum/") },
-	{ _T("roms/msx/") },
-	{ _T("roms/sms/") },
-	{ _T("roms/gamegear/") },
-	{ _T("roms/sg1000/") },
-	{ _T("roms/coleco/") },
-	{ _T("roms/tg16/") },
-	{ _T("roms/sgx/") },
-	{ _T("roms/pce/") },
-	{ _T("roms/megadrive/") },
-	{ _T("roms/arcade/") },
-	{ _T("roms/") }
+	{ _T("roms/")			},
+	{ _T("roms/arcade/")	},
+	{ _T("roms/megadrive/")	},
+	{ _T("roms/pce/")		},
+	{ _T("roms/sgx/")		},
+	{ _T("roms/tg16/")		},
+	{ _T("roms/coleco/")	},
+	{ _T("roms/sg1000/")	},
+	{ _T("roms/gamegear/")	},
+	{ _T("roms/sms/")		},
+	{ _T("roms/msx/")		},
+	{ _T("roms/spectrum/")	},
+	{ _T("roms/snes/")		},
+	{ _T("roms/fds/")		},
+	{ _T("roms/nes/")		},
+	{ _T("roms/ngp/")		},
+	{ _T("roms/channelf/")	},
+	{ _T("roms/romdata/")	},
+	{ _T("")				},
+	{ _T("")				}
 };
 
 static bool bSaveRAM = false;

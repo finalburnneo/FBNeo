@@ -2215,6 +2215,37 @@ struct BurnDriver BurnDrvDefcmnd = {
 };
 
 
+// Next Century (bootleg of Defender)
+
+static struct BurnRomInfo nextcentRomDesc[] = {
+	{ "nextcentury_2732.ic29",			0x1000, 0x68effc1d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "nextcentury_2732.ic28",			0x1000, 0x1126adc9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "nextcentury_2732.ic27",			0x1000, 0x7340209d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "nextcentury_2732.ic30",			0x1000, 0x78b33590, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "nextcentury_2732.ic31",			0x1000, 0x23bddfaf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "nextcentury_2732.ic32",			0x1000, 0x03721aa7, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "nextcentury_2732.ic33",			0x1000, 0xe4a27e2f, 1 | BRF_PRG | BRF_ESS }, //  6
+	
+	{ "nextcentury_2732.ic24",			0x1000, 0x4c2236cc, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
+	
+	{ "nextcentury_7343_82s137.ic34",	0x0400, 0x00b0b5b5, 0 | BRF_OPT },           // 11 Address Decoder
+	{ "nextcentury_7343_82s137.ic41",	0x0400, 0xba1d88cd, 0 | BRF_OPT },           // 12
+};
+
+STD_ROM_PICK(nextcent)
+STD_ROM_FN(nextcent)
+
+struct BurnDriver BurnDrvNextcent = {
+	"nextcent", "defender", NULL, NULL, "1981",
+	"Next Century (bootleg of Defender)\0", NULL, "bootleg (Petaco)", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, nextcentRomInfo, nextcentRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
+	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	292, 240, 4, 3
+};
+
+
 // Defense (bootleg of Defender)
 
 static struct BurnRomInfo defensebRomDesc[] = {

@@ -47,13 +47,22 @@ jobs:
     steps:
       - name: Clone
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Build
         id: create_release_body_archive
         run: |
+          latest_sha=$(git rev-parse latest)
+          git log --pretty=format:"%s (%an)" ${latest_sha}..${{ github.sha }} > commits.txt
           archive_file="${{ env.RELEASE_BODY_ARTIFACT }}.md"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
-          git log -1 --pretty=format:"%s (%an)" > ${archive_file}
+          echo "### Notes" > ${archive_file}
+          echo "• The macos and linux standalone ports are not actively maintained, and might be missing important features, using our libretro port or running windows builds through wine/crossover is considered a safer choice for those platforms" >> ${archive_file}
+          echo "• The macos builds might first require running \`xattr -dr com.apple.quarantine "FinalBurn Neo.app"\` from a terminal to avoid a \"FinalBurn Neo is damaged\" error" >> ${archive_file}
+          echo "" >> ${archive_file}
+          echo "### Commits since previous nightly" >> ${archive_file}
+          awk '{print "• " $0}' commits.txt >> ${archive_file}
 
       - name: Create Archive Path
         run: |
@@ -162,6 +171,7 @@ jobs:
   build_windows_x86_32:
     name: Build (Windows x86_32)
     runs-on: windows-latest
+    continue-on-error: true
     defaults:
       run:
         shell: msys2 {0}
@@ -172,12 +182,6 @@ jobs:
           update: true
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - name: Clone
         uses: actions/checkout@v4
@@ -211,6 +215,7 @@ jobs:
   build_windows_x86_32_debug:
     name: Build (Windows x86_32 Debug)
     runs-on: windows-latest
+    continue-on-error: true
     defaults:
       run:
         shell: msys2 {0}
@@ -221,12 +226,6 @@ jobs:
           update: true
           install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
           msystem: MINGW32
-
-      - name: Downgrade pthread
-        run: |
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          wget https://github.com/finalburnneo/msys2-package-archives/raw/main/mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
-          pacman -U --noconfirm mingw-w64-i686-winpthreads-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz mingw-w64-i686-libwinpthread-git-6.0.0.5203.9afaf1c2-1-any.pkg.tar.xz
 
       - name: Clone
         uses: actions/checkout@v4
@@ -477,6 +476,7 @@ jobs:
 
       # Windows x86_32
       - name: Download Artifact (Windows x86_32)
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
@@ -494,6 +494,7 @@ jobs:
 
       # Windows x86_32 Debug
       - name: Download Artifact (Windows x86_32 Debug)
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}

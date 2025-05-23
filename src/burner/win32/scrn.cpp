@@ -365,7 +365,7 @@ static void DoNetGame()
 	KailleraServerSelect();
 }
 
-int CreateDatfileWindows(int bType)
+static int CreateDatfileWindows(int bType)
 {
 	TCHAR szTitle[1024];
 	TCHAR szFilter[1024];
@@ -416,50 +416,56 @@ int CreateDatfileWindows(int bType)
 	return create_datfile(szChoice, bType);
 }
 
-int CreateAllDatfilesWindows()
+INT32 CreateAllDatfilesWindows(bool bSilent, const TCHAR* pszSpecDir)
 {
 	INT32 nRet = 0;
 
 	LPMALLOC pMalloc = NULL;
 	BROWSEINFO bInfo;
 	ITEMIDLIST* pItemIDList = NULL;
-	TCHAR buffer[MAX_PATH];
+	TCHAR buffer[MAX_PATH] = { 0 };
 	TCHAR szFilename[MAX_PATH];
 	TCHAR szProgramString[25];
 
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
 
-	SHGetMalloc(&pMalloc);
+	if (!bSilent) {
+		SHGetMalloc(&pMalloc);
 
-	memset(&bInfo, 0, sizeof(bInfo));
-	bInfo.hwndOwner = hScrnWnd;
-	bInfo.pszDisplayName = buffer;
-	bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
-	bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+		memset(&bInfo, 0, sizeof(bInfo));
+		bInfo.hwndOwner = hScrnWnd;
+		bInfo.pszDisplayName = buffer;
+		bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+		bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
-	pItemIDList = SHBrowseForFolder(&bInfo);
+		pItemIDList = SHBrowseForFolder(&bInfo);
 
-	if (!pItemIDList) {	// User clicked 'Cancel'
-		pMalloc->Release();
-		return nRet;
-	}
+		if (!pItemIDList) {	// User clicked 'Cancel'
+			pMalloc->Release();
+			return nRet;
+		}
 
-	if (!SHGetPathFromIDList(pItemIDList, buffer)) {	// Browse dialog returned non-filesystem path
+		if (!SHGetPathFromIDList(pItemIDList, buffer)) {	// Browse dialog returned non-filesystem path
+			pMalloc->Free(pItemIDList);
+			pMalloc->Release();
+			return nRet;
+		}
+
+		int strLen = _tcslen(buffer);
+		if (strLen) {
+			if (buffer[strLen - 1] != _T('\\')) {
+				buffer[strLen]		= _T('\\');
+				buffer[strLen + 1]	= _T('\0');
+			}
+		}
+
 		pMalloc->Free(pItemIDList);
 		pMalloc->Release();
-		return nRet;
 	}
 
-	int strLen = _tcslen(buffer);
-	if (strLen) {
-		if (buffer[strLen - 1] != _T('\\')) {
-			buffer[strLen]		= _T('\\');
-			buffer[strLen + 1]	= _T('\0');
-		}
+	if (NULL != pszSpecDir) {
+		_tcscpy(buffer, pszSpecDir);
 	}
-
-	pMalloc->Free(pItemIDList);
-	pMalloc->Release();
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
@@ -1182,38 +1188,33 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LOAD_ROMDATA: {
 			if (NULL == pDataRomDesc) {
-				TCHAR szFilter[100] = { 0 };
+				TCHAR szFilter[150] = { 0 };
 				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
 				memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
 
+				// '/' will result in a FNERR_INVALIDFILENAME error
+				TCHAR szInitialDir[MAX_PATH] = { 0 };
+				_tcscpy(szInitialDir, szAppRomdataPath);
+
 				memset(&ofn, 0, sizeof(OPENFILENAME));
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = hScrnWnd;
-				ofn.lpstrFilter = szFilter;
-				ofn.lpstrFile = szRomdataName;
-				ofn.nMaxFile = sizeof(szRomdataName) / sizeof(TCHAR);
-				ofn.lpstrInitialDir = szAppRomdataPath;
-				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-				ofn.lpstrDefExt = _T("dat");
+				ofn.lStructSize     = sizeof(OPENFILENAME);
+				ofn.hwndOwner       = hScrnWnd;
+				ofn.lpstrFilter     = szFilter;
+				ofn.lpstrFile       = StrReplace(szRomdataName, _T('/'), _T('\\'));
+				ofn.nMaxFile        = sizeof(szRomdataName) / sizeof(TCHAR);
+				ofn.lpstrInitialDir = StrReplace(szInitialDir,  _T('/'), _T('\\'));
+				ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+				ofn.lpstrDefExt     = _T("dat");
 
 				BOOL nOpenDlg = GetOpenFileName(&ofn);
-
-				if (0 == nOpenDlg) break;
+/*
+				DWORD dwError = CommDlgExtendedError();
+*/
+				if (FALSE == nOpenDlg)                break;
+				if (0 != RomDataCheck(szRomdataName)) break;
 
 				bLoading = 1;
-
-				char* szDrvName = RomdataGetDrvName();
-				INT32 nGame = BurnDrvGetIndex(szDrvName);
-
-				if ((NULL == szDrvName) || (-1 == nGame)) {
-					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
-					FBAPopupDisplay(PUF_TYPE_WARNING);
-
-					bLoading = 0;
-					break;
-				}
-
-				DrvInit(nGame, true);	// Init the game driver
+				DrvInit(BurnDrvGetIndex(RomdataGetDrvName()), true);	// Init the game driver
 				MenuEnableItems();
 				bAltPause = 0;
 				bLoading = 0;
@@ -2269,6 +2270,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_ADAPTIVEPOPUP:
+			bAdaptivepopup = !bAdaptivepopup;
+			break;
+
 		case MENU_NOCHANGENUMLOCK:
 			bNoChangeNumLock = !bNoChangeNumLock;
 			break;
@@ -2630,10 +2635,42 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_SAVESNAP: {
 			if (bDrvOkay) {
-				int status = MakeScreenShot();
+				int status = MakeScreenShot(0);
 
 				if (!status) {
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SSHOT_SAVED, true));
+				} else {
+					TCHAR tmpmsg[256];
+
+					_sntprintf(tmpmsg, 256, FBALoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
+					VidSNewShortMsg(tmpmsg, 0xFF3F3F);
+				}
+			}
+			break;
+		}
+
+		case MENU_SAVETITLESNAP: {
+			if (bDrvOkay) {
+				int status = MakeScreenShot(1);
+
+				if (!status) {
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STSHOT_SAVED, true));
+				} else {
+					TCHAR tmpmsg[256];
+
+					_sntprintf(tmpmsg, 256, FBALoadStringEx(hAppInst, IDS_SSHOT_ERROR, true), status);
+					VidSNewShortMsg(tmpmsg, 0xFF3F3F);
+				}
+			}
+			break;
+		}
+
+		case MENU_SAVEPREVIEWSNAP: {
+			if (bDrvOkay) {
+				int status = MakeScreenShot(2);
+
+				if (!status) {
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SPSHOT_SAVED, true));
 				} else {
 					TCHAR tmpmsg[256];
 

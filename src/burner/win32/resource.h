@@ -96,7 +96,7 @@
 #define IDC_WAIT_LABEL_A                	20016
 #define IDC_WAIT_LABEL_B1               	20017
 #define IDC_WAIT_LABEL_B2              		20018
-#define ID_VALUE_CLOSE                  	20019
+#define IDC_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
 									   // 	20021 is used by IDC_INPS_CLEARLOCK.
 #define IDC_INPD_ANSLIDER					20022
@@ -120,7 +120,7 @@
 #define IDC_SCREENSHOT2_H               	20058
 #define IDC_SCREENSHOT2_V               	20059
 #define IDC_CHECKAVAILABLE              	20060
-#define IDCAPTURE                       	20061
+#define IDC_APTURE                       	20061
 #define IDC_ADVANCE                     	20062
 #define IDC_LABELROMNAME                	20063
 #define IDC_LABELROMINFO                	20064
@@ -217,7 +217,6 @@
 #define IDC_HARDFX_SLIDER_EDIT3				20155
 #define IDC_HARDFX_SLIDER_EDIT4				20156
 #define IDC_HARDFX_SLIDER_EDIT5				20157
-
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201
@@ -451,6 +450,27 @@
 #define IDC_ROMSDIR_EDIT19               	21118
 #define IDC_ROMSDIR_EDIT20               	21119
 
+#define IDC_ROMSDIR_TEXT1					21120
+#define IDC_ROMSDIR_TEXT2					21121
+#define IDC_ROMSDIR_TEXT3					21122
+#define IDC_ROMSDIR_TEXT4					21123
+#define IDC_ROMSDIR_TEXT5					21124
+#define IDC_ROMSDIR_TEXT6					21125
+#define IDC_ROMSDIR_TEXT7					21126
+#define IDC_ROMSDIR_TEXT8					21127
+#define IDC_ROMSDIR_TEXT9					21128
+#define IDC_ROMSDIR_TEXT10					21129
+#define IDC_ROMSDIR_TEXT11					21130
+#define IDC_ROMSDIR_TEXT12					21131
+#define IDC_ROMSDIR_TEXT13					21132
+#define IDC_ROMSDIR_TEXT14					21133
+#define IDC_ROMSDIR_TEXT15					21134
+#define IDC_ROMSDIR_TEXT16					21135
+#define IDC_ROMSDIR_TEXT17					21136
+#define IDC_ROMSDIR_TEXT18					21137
+#define IDC_ROMSDIR_TEXT19					21138
+#define IDC_ROMSDIR_TEXT20					21139
+
 #define IDC_ROMSDIR_BR1                 	21140
 #define IDC_ROMSDIR_BR2                 	21141
 #define IDC_ROMSDIR_BR3                 	21142
@@ -472,22 +492,24 @@
 #define IDC_ROMSDIR_BR19                 	21158
 #define IDC_ROMSDIR_BR20                 	21159
 
+#define IDC_ROMSDIR_DEFAULTS                21160
+
 #define IDC_ROMDATA_MANAGER					21200
 #define IDC_ROMDATA_LIST					21201
 #define IDC_ROMDATA_TITLE					21202
 #define IDC_ROMDATA_PREVIEW					21203
 #define IDC_ROMDATA_TITLE_FRAME				21204
 #define IDC_ROMDATA_PREVIEW_FRAME			21205
-#define IDC_ROMDATA_TEXTGAME				21206
+#define IDC_ROMDATA_TEXTDATPATH				21206
 #define IDC_ROMDATA_TEXTHARDWARE			21207
 #define IDC_ROMDATA_TEXTDRIVER				21208
-#define IDC_ROMDATA_SSUBDIR_CHECK			21209
+#define IDC_ROMDATA_SUBDIR_CHECK			21209
 #define IDC_ROMDATA_SCAN_BUTTON				21210
-#define IDC_ROMDATA_SEL_DIR_BUTTON			21211
+#define IDC_ROMDATA_SELDIR_BUTTON			21211
 #define IDC_ROMDATA_PLAY_BUTTON				21212
 #define IDC_ROMDATA_CANCEL_BUTTON			21213
 #define IDC_ROMDATA_LABELHARDWARE			21214
-#define IDC_ROMDATA_LABELGAME				21215
+#define IDC_ROMDATA_LABELDAT				21215
 #define IDC_ROMDATA_LABELDRIVER				21216
 #define IDC_ROMDATA_COVER_PREVIEW_PIC		21217
 
@@ -623,6 +645,7 @@
 #define MENU_DISPLAYINDICATOR				10302
 #define MENU_MODELESS						10303
 #define MENU_ROMSDIR                    	10304
+#define MENU_ADAPTIVEPOPUP					10305
 #define MENU_ENABLECHEAT                	10306
 #define MENU_LANGUAGE_SELECT            	10307
 #define MENU_LANGUAGE_EXPORT            	10308
@@ -643,6 +666,8 @@
 #define MENU_SAVEGAMEINPUT					10333
 #define MENU_SAVESET                    	10334
 #define MENU_LOADSET                    	10335
+#define MENU_SAVETITLESNAP                   	10336
+#define MENU_SAVEPREVIEWSNAP                   	10337
 #define MENU_STARTLOG                   	10390
 #define MENU_STOPLOG                    	10391
 #define MENU_DEBUG							10392

@@ -1130,21 +1130,26 @@ static INT32 RomLoader(bool bLoad)
 
 		switch (is_game) {
 			case TOFFY:
-				for (INT32 i = 0; i < 0x10000; i++)
-					DrvHD6309Rom[i] = BITSWAP08(DrvHD6309Rom[i], 6,7,5,4,3,2,1,0);
+				if (!strcmp(BurnDrvGetTextA(DRV_NAME), "toffya")) { // toffya only requires swap
+					// rom is swapped compared to dd/dd2
+					BurnSwapMemBlock(DrvHD6309Rom + 0x0000, DrvHD6309Rom + 0x8000, 0x8000);
+				} else {
+					for (INT32 i = 0; i < 0x10000; i++)
+						DrvHD6309Rom[i] = BITSWAP08(DrvHD6309Rom[i], 6,7,5,4,3,2,1,0);
 
-				// rom is swapped compared to dd/dd2
-				BurnSwapMemBlock(DrvHD6309Rom + 0x0000, DrvHD6309Rom + 0x8000, 0x8000);
+					// rom is swapped compared to dd/dd2
+					BurnSwapMemBlock(DrvHD6309Rom + 0x0000, DrvHD6309Rom + 0x8000, 0x8000);
 
-				for (int i = 0; i < 0x10000; i++)
-					DrvChars[i] = BITSWAP08(DrvChars[i], 7,6,5,3,4,2,1,0);
+					for (int i = 0; i < 0x10000; i++)
+						DrvChars[i] = BITSWAP08(DrvChars[i], 7,6,5,3,4,2,1,0);
 
-				for (int i = 0; i < 0x20000; i++)
-					DrvSprites[i] = BITSWAP08(DrvSprites[i], 7,6,5,4,3,2,0,1);
+					for (int i = 0; i < 0x20000; i++)
+						DrvSprites[i] = BITSWAP08(DrvSprites[i], 7,6,5,4,3,2,0,1);
 
-				for (int i = 0; i < 0x10000; i++) {
-					DrvTiles[i + 0*0x10000] = BITSWAP08(DrvTiles[i + 0*0x10000], 7,6,1,4,3,2,5,0);
-					DrvTiles[i + 1*0x10000] = BITSWAP08(DrvTiles[i + 1*0x10000], 7,6,2,4,3,5,1,0);
+					for (int i = 0; i < 0x10000; i++) {
+						DrvTiles[i + 0*0x10000] = BITSWAP08(DrvTiles[i + 0*0x10000], 7,6,1,4,3,2,5,0);
+						DrvTiles[i + 1*0x10000] = BITSWAP08(DrvTiles[i + 1*0x10000], 7,6,2,4,3,5,1,0);
+					}
 				}
 				// no break! (fallthrough)
 			case DDRAGON:
@@ -2476,7 +2481,7 @@ struct BurnDriver BurnDrvDarktowr = {
 	256, 240, 4, 3
 };
 
-// Toffy
+// Toffy (encrypted)
 
 static struct BurnRomInfo toffyRomDesc[] = {
 	{ "2-27512.rom",	0x10000, 0x244709dd, 1 | BRF_PRG | BRF_ESS }, //  0	HD6309 Program Code
@@ -2509,10 +2514,39 @@ static INT32 ToffyInit()
 
 struct BurnDriver BurnDrvToffy = {
 	"toffy", NULL, NULL, NULL, "1993",
-	"Toffy\0", NULL, "Midas", "Miscellaneous",
+	"Toffy (encrypted)\0", NULL, "Midas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
 	NULL, toffyRomInfo, toffyRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, ToffyDIPInfo,
+	ToffyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
+// Toffy (unencrypted)
+
+static struct BurnRomInfo toffyaRomDesc[] = {
+	{ "mde2.u70",	0x10000, 0xa27f1b49, 1 | BRF_PRG | BRF_ESS }, //  0	HD6309 Program Code
+
+	{ "mde1.u142",	0x10000, 0x541bd7f0, 3 | BRF_PRG | BRF_ESS }, //  1	M6809 Program Code (sound)
+
+	{ "mde7.u35",	0x10000, 0x6ddc2867, 1 | BRF_GRA },           //  2 Characters
+
+	{ "mde4.u78",	0x10000, 0x9506b10d, 3 | BRF_GRA },           //  3 Tiles
+	{ "mde3.u77",	0x10000, 0x77c097cc, 3 | BRF_GRA },           //  4
+
+	{ "mde6.u80",	0x10000, 0xaeef092a, 2 | BRF_GRA },           //  5 Sprites
+	{ "mde5.u79",	0x10000, 0x14b52f76, 2 | BRF_GRA },           //  6
+};
+
+STD_ROM_PICK(toffya)
+STD_ROM_FN(toffya)
+
+struct BurnDriver BurnDrvToffya = {
+	"toffya", "toffy", NULL, NULL, "1993",
+	"Toffy (unencrypted)\0", NULL, "Midas", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
+	NULL, toffyaRomInfo, toffyaRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, ToffyDIPInfo,
 	ToffyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };

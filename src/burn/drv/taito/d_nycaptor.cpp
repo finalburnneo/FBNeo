@@ -1110,7 +1110,7 @@ struct BurnDriver BurnDrvNycaptor = {
 };
 
 
-// Colt
+// Colt (bootleg of N.Y. Captor)
 
 static struct BurnRomInfo coltRomDesc[] = {
 	{ "04.bin",			0x4000, 0xdc61fdb2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1144,7 +1144,7 @@ static INT32 ColtInit()
 
 struct BurnDriver BurnDrvColt = {
 	"colt", "nycaptor", NULL, NULL, "1986",
-	"Colt\0", NULL, "bootleg", "Miscellaneous",
+	"Colt (bootleg of N.Y. Captor)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, coltRomInfo, coltRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, ColtDIPInfo,
@@ -1200,7 +1200,7 @@ struct BurnDriver BurnDrvCyclshtg = {
 };
 
 
-// Bronx
+// Bronx (bootleg of Cycle Shooting)
 
 static struct BurnRomInfo bronxRomDesc[] = {
 	{ "1.bin",			0x4000, 0x399b5063, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1236,7 +1236,7 @@ static INT32 BronxInit()
 
 struct BurnDriver BurnDrvBronx = {
 	"bronx", "cyclshtg", NULL, NULL, "1986",
-	"Bronx\0", "GFX/layer priority issues", "bootleg", "Miscellaneous",
+	"Bronx (bootleg of Cycle Shooting)\0", "GFX/layer priority issues", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, bronxRomInfo, bronxRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, BronxDIPInfo,

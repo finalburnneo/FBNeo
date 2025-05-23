@@ -3308,21 +3308,13 @@ static struct BurnRomInfo Bayroute1RomDesc[] = {
 	{ "br_obj3o.b4",   0x10000, 0xa2e238ac, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "br.b8",         0x10000, 0xd8de78ff, SYS16_ROM_SPRITES | BRF_GRA },
 
-#if !defined ROM_VERIFY
-	{ "sound.a7",      0x08000, 0x9e1ce6ed, SYS16_ROM_Z80PROG | BRF_PRG }, // Needs to be verified
+	{ "sound.a7",      0x10000, 0xe91e55cb, SYS16_ROM_Z80PROG | BRF_PRG },
 
-	{ "sound.a8",      0x10000, 0x077e9981, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
-	{ "sound.a9",      0x10000, 0x3c3f5f41, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
-	{ "sound.a10",     0x10000, 0x7c251347, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
-	{ "sound.a11",     0x10000, 0xa602ea2d, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
-#else
-    { "sound.a7",      0x08000, 0x00000000, SYS16_ROM_Z80PROG | BRF_NODUMP | BRF_PRG },
-
-    { "sound.a8",      0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-    { "sound.a9",      0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-    { "sound.a10",     0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-    { "sound.a11",     0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-#endif
+	{ "sound.a8",      0x10000, 0x077e9981, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "sound.a9",      0x10000, 0x3c3f5f41, SYS16_ROM_UPD7759DATA | BRF_SND },
+	// it expects different data from the parent set (copying that to here results in better sound overall, but some cut voices)
+	{ "sound.a10",     0x10000, 0x7c251347, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "sound.a11",     0x10000, 0xa602ea2d, SYS16_ROM_UPD7759DATA | BRF_SND },
 };
 
 

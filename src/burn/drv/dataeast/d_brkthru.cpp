@@ -756,9 +756,47 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Break Thru (US)
+// Break Thru (World)
 
 static struct BurnRomInfo brkthruRomDesc[] = {
+	{ "1.f9",		0x4000, 0x0f21b4c5, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "2.f11",		0x8000, 0x51c7c378, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.f14",		0x8000, 0x209484c2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.f12",		0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5.d6",		0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+
+	{ "12.bin",		0x2000, 0x58c0b29b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "7.b6",		0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
+	{ "6.b4",		0x8000, 0xfd3cee40, 4 | BRF_GRA },           //  7
+	{ "8.b7",		0x8000, 0xf67ee64e, 4 | BRF_GRA },           //  8
+
+	{ "9.bin",		0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
+	{ "10.bin",		0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
+	{ "11.bin",		0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
+
+	{ "13.bin",		0x0100, 0xaae44269, 6 | BRF_GRA },           // 12 Color data
+	{ "14.bin",		0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(brkthru)
+STD_ROM_FN(brkthru)
+
+struct BurnDriver BurnDrvBrkthru = {
+	"brkthru", NULL, NULL, NULL, "1986",
+	"Break Thru (World)\0", NULL, "Data East Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, brkthruRomInfo, brkthruRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthruDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	240, 240, 4, 3
+};
+
+
+// Break Thru (US)
+
+static struct BurnRomInfo brkthruuRomDesc[] = {
 	{ "brkthru.1",		0x4000, 0xcfb4265f, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
 	{ "brkthru.2",		0x8000, 0xfa8246d9, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "brkthru.4",		0x8000, 0x8cabf252, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -780,15 +818,15 @@ static struct BurnRomInfo brkthruRomDesc[] = {
 	{ "brkthru.14",		0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
 };
 
-STD_ROM_PICK(brkthru)
-STD_ROM_FN(brkthru)
+STD_ROM_PICK(brkthruu)
+STD_ROM_FN(brkthruu)
 
-struct BurnDriver BurnDrvBrkthru = {
-	"brkthru", NULL, NULL, NULL, "1986",
+struct BurnDriver BurnDrvBrkthruu = {
+	"brkthruu", "brkthru", NULL, NULL, "1986",
 	"Break Thru (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, brkthruRomInfo, brkthruRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthruDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, brkthruuRomInfo, brkthruuRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthruDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
 };
@@ -867,44 +905,6 @@ struct BurnDriver BurnDrvBrkthrut = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthrutRomInfo, brkthrutRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	240, 240, 4, 3
-};
-
-
-// Break Thru (bootleg)
-
-static struct BurnRomInfo brkthrublRomDesc[] = {
-	{ "4",			0x4000, 0x0f21b4c5, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
-	{ "3",			0x8000, 0x51c7c378, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "1",			0x8000, 0x209484c2, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "2",			0x8000, 0x2f2c40c2, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "5",			0x8000, 0xc309435f, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
-
-	{ "12",			0x2000, 0x58c0b29b, 3 | BRF_GRA },           //  5 Characters
-
-	{ "7",			0x8000, 0x920cc56a, 4 | BRF_GRA },           //  6 Background Layer
-	{ "6",			0x8000, 0xfd3cee40, 4 | BRF_GRA },           //  7
-	{ "8",			0x8000, 0xf67ee64e, 4 | BRF_GRA },           //  8
-
-	{ "9",			0x8000, 0xf54e50a7, 5 | BRF_GRA },           //  9 Sprites
-	{ "10",			0x8000, 0xfd156945, 5 | BRF_GRA },           // 10
-	{ "11",			0x8000, 0xc152a99b, 5 | BRF_GRA },           // 11
-
-	{ "brkthru.13",	0x0100, 0xaae44269, 6 | BRF_GRA },           // 12 Color data
-	{ "brkthru.14",	0x0100, 0xf2d4822a, 6 | BRF_GRA },           // 13
-};
-
-STD_ROM_PICK(brkthrubl)
-STD_ROM_FN(brkthrubl)
-
-struct BurnDriver BurnDrvBrkthrubl = {
-	"brkthrubl", "brkthru", NULL, NULL, "1986",
-	"Break Thru (bootleg)\0", NULL, "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
-	NULL, brkthrublRomInfo, brkthrublRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
 };

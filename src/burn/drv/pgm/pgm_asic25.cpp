@@ -1799,16 +1799,27 @@ static UINT8 __fastcall olds_mainram_read_byte(UINT32 address)
 
 void install_protection_asic25_asic28_olds()
 {
-	pPgmScanCallback = oldsScan;
+	pPgmScanCallback  = oldsScan;
 	pPgmResetCallback = reset_olds;
 
 	sharedprotram = (UINT16*)PGMUSER0;
-
+/*
 	// no protection rom and different offset for olds100a
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "olds100a") == 0) {
 		BurnLoadRom(PGMUSER0 + 0x10000,	15, 1);
 	} else {
 		BurnLoadRom(PGMUSER0 + 0x10000,	19, 1);
+	}
+*/
+	char* pRomName;
+	struct BurnRomInfo ri;
+
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
+		BurnDrvGetRomInfo(&ri, i);
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 9) {
+			BurnLoadRom(PGMUSER0 + 0x10000, i, 1); break;
+		}
 	}
 
 	SekOpen(0);
@@ -1821,7 +1832,7 @@ void install_protection_asic25_asic28_olds()
 		}
 	}
 
-	SekMapHandler(4,		0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,	0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4,	olds_protection_r);
 	SekSetWriteWordHandler(4,	olds_protection_w);
 

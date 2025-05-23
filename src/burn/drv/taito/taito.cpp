@@ -268,7 +268,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 				TaitoCharBRomSize += ri.nLen;
 				TaitoCharBRomNum++;
 			}
-			if ((ri.nType & 0xff) == TAITO_SPRITESA || (ri.nType & 0xff) == TAITO_SPRITESA_BYTESWAP || (ri.nType & 0xff) == TAITO_SPRITESA_BYTESWAP32 || (ri.nType & 0xff) == TAITO_SPRITESA_TOPSPEED) {
+			if ((ri.nType & 0xff) == TAITO_SPRITESA || (ri.nType & 0xff) == TAITO_SPRITESA_BYTESWAP || (ri.nType & 0xff) == TAITO_SPRITESA_BYTESWAP32 || (ri.nType & 0xff) == TAITO_SPRITESA_TOPSPEED || (ri.nType & 0xff) == TAITO_SPRITESA_DBLAXLEU) {
 				TaitoSpriteARomSize += ri.nLen;
 				TaitoSpriteARomNum++;
 			}
@@ -635,6 +635,16 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 					nRet = BurnLoadRom(TempRom + 0x100004, i + 15, 8); if (nRet) return 1;
 				
 					i += 16;
+				}
+				
+				if ((ri.nType & 0xff) == TAITO_SPRITESA_DBLAXLEU) {
+					nRet = BurnLoadRom(TempRom + 0x000000, i +  0, 4); if (nRet) return 1;
+					nRet = BurnLoadRom(TempRom + 0x000001, i +  1, 4); if (nRet) return 1;
+					nRet = BurnLoadRom(TempRom + 0x000002, i +  2, 4); if (nRet) return 1;
+					nRet = BurnLoadRom(TempRom + 0x000007, i +  3, 8); if (nRet) return 1;
+					nRet = BurnLoadRom(TempRom + 0x000003, i +  4, 8); if (nRet) return 1;
+				
+					i += 5;
 				}
 			}
 			

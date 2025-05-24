@@ -263,9 +263,15 @@ static INT32 load_rom()
 	BurnDrvGetRomInfo(&ri, 0);
 	size = ri.nLen;
 
-	/* If less than 16K pad up to 16K */
-	if (size < 0x2000)
-		size = 0x2000;
+	// cart must be at least 1 page (16k)!
+	if (size < 0x4000) {
+		bprintf(0, _T("weird rom size, padding to 16k\n"));
+		size = 0x4000;
+	}
+	if (size > 0x4000 && size < 0x8000) {
+		bprintf(0, _T("weird rom size, padding to 32k\n"));
+		size = 0x8000;
+	}
 
 	cart.rom = (UINT8 *)BurnMalloc((size < 0x100000) ? 0x100000 : size);
 	if (BurnLoadRom(cart.rom + 0x0000, 0, 1)) 
@@ -21742,7 +21748,7 @@ struct BurnDriver BurnDrvsms_acreflux = {
 
 // Aerial (HB)
 static struct BurnRomInfo sms_aerialRomDesc[] = {
-	{ "Aerial (2021)(Inufuto).sms",	16384, 0x29845dea, BRF_PRG | BRF_ESS },
+	{ "Aerial (2021)(Inufuto).sms",	15943, 0xbc64b967, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_aerial)
@@ -22230,7 +22236,7 @@ struct BurnDriver BurnDrvsms_castlescapev2 = {
 
 // Cavit (HB)
 static struct BurnRomInfo sms_cavitRomDesc[] = {
-	{ "Cavit (2021)(Inufuto).sms",	16384, 0x4cef36e1, BRF_PRG | BRF_ESS },
+	{ "Cavit (2021)(Inufuto).sms",	15990, 0x0c1674da, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_cavit)
@@ -22788,7 +22794,7 @@ struct BurnDriver BurnDrvsms_grimez80 = {
 
 // Guntus (HB)
 static struct BurnRomInfo sms_guntusRomDesc[] = {
-	{ "Guntus (2022)(Inufuto).sms",	32768, 0xff90d876, BRF_PRG | BRF_ESS },
+	{ "Guntus (2022)(Inufuto).sms",	16727, 0x691635e3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_guntus)
@@ -22842,7 +22848,7 @@ struct BurnDriver BurnDrvsms_had = {
 
 // Hopman (HB)
 static struct BurnRomInfo sms_hopmanRomDesc[] = {
-	{ "Hopman (2023)(Inufuto).sms",	16384, 0xcb0eec5b, BRF_PRG | BRF_ESS },
+	{ "Hopman (2023)(Inufuto).sms",	13037, 0x06090a9a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hopman)
@@ -23130,7 +23136,7 @@ struct BurnDriver BurnDrvsms_mainurse = {
 
 // Mazy (HB)
 static struct BurnRomInfo sms_mazyRomDesc[] = {
-	{ "Mazy (2022)(Inufuto).sms",	16384, 0x79fdf88c, BRF_PRG | BRF_ESS },
+	{ "Mazy (2022)(Inufuto).sms",	10992, 0xcb5c20fd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_mazy)

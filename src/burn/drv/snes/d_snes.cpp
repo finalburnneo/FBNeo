@@ -5479,19 +5479,19 @@ struct BurnDriver BurnDrvsnes_Chavez = {
 
 // Chavez II (USA, Spanish)
 
-static struct BurnRomInfo snes_ChavezIIRomDesc[] = {
+static struct BurnRomInfo snes_ChaveziiRomDesc[] = {
 	{ "Chavez II (U, Es)(1994)(American Softworks).sfc", 1048576, 0x86981887, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_ChavezII)
-STD_ROM_FN(snes_ChavezII)
+STD_ROM_PICK(snes_Chavezii)
+STD_ROM_FN(snes_Chavezii)
 
-struct BurnDriver BurnDrvsnes_ChavezII = {
-	"snes_chavezII", "snes_boxinglegends", NULL, NULL, "1994",
+struct BurnDriver BurnDrvsnes_Chavezii = {
+	"snes_chavezii", "snes_boxinglegends", NULL, NULL, "1994",
 	"Chavez II (USA, Spanish)\0", NULL, "American Softworks", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
-	SNESGetZipName, snes_ChavezIIRomInfo, snes_ChavezIIRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_ChaveziiRomInfo, snes_ChaveziiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -538,7 +538,7 @@ static UINT32 RDGetCps1RomsType(const TCHAR* pszDrvName, const TCHAR* pszMask, c
 		nBaseType = BRF_PRG;
 	}
 	else
-	if (0 == _tcsicmp(pszMask, _T("Tiles")) || 0 == _tcsicmp(pszMask, _T("Extras")) || 0 == _tcsicmp(pszMask, _T("PRG2"))) {
+	if (0 == _tcsicmp(pszMask, _T("Tiles")) || 0 == _tcsicmp(pszMask, _T("Extras")) || 0 == _tcsicmp(pszMask, _T("GRA2"))) {
 		nMinIdx = CPS1_EXTRA_TILES_SF2EBBL_400000, nMaxIdx = CPS1_EXTRA_TILES_SF2MKOT_400000;
 		nBaseType = BRF_GRA;
 	}
@@ -638,7 +638,7 @@ static UINT32 RDGetCps2RomsType(const TCHAR* pszDrvName, const TCHAR* pszMask)
 
 static UINT32 RDGetCps3RomsType(const TCHAR* pszMask)
 {
-	if (0 == _tcsicmp(pszMask, _T("Bios")) || 0 == _tcsicmp(pszMask, _T("BIOS"))) {
+	if (0 == _tcsicmp(pszMask, _T("Bios"))) {
 		return (BRF_ESS | BRF_BIOS);
 	}
 	else
@@ -649,6 +649,7 @@ static UINT32 RDGetCps3RomsType(const TCHAR* pszMask)
 	if (0 == _tcsicmp(pszMask, _T("Graphics")) || 0 == _tcsicmp(pszMask, _T("GRA1"))) {
 		return BRF_GRA;
 	}
+	return 0;
 }
 
 static INT32 RDGetPgmRomsType(const TCHAR* pszDrvName, const TCHAR* pszMask)
@@ -1009,7 +1010,7 @@ static TCHAR* Utf16beToUtf16le(const TCHAR* pszDatFile)
 
 	fseek(fpInFile, 2, SEEK_SET);
 
-	// Generate date file name (UTF16LE_YYYYMMDD.dat)
+	// Generate date file name (UTF16LE%Y%m%d.tmp)
 	time_t now = time(NULL);
 	struct tm* local = localtime(&now);
 	_tcsftime(szUtf16leFile, sizeof(szUtf16leFile), _T("UTF16LE%Y%m%d.tmp"), local);
@@ -1086,8 +1087,6 @@ static bool StrToUint(const TCHAR* str, UINT32* result) {
 static INT32 LoadRomdata()
 {
 	EncodingType nType = DetectEncoding(szRomdataName);
-	if (ENCODING_ERROR == nType) return -1;
-
 	const TCHAR* pszReadMode = NULL;
 
 	switch (nType) {
@@ -1100,18 +1099,18 @@ static INT32 LoadRomdata()
 			pszReadMode = _T("rt, ccs=UTF-8");
 			break;
 		}
-
 		case ENCODING_UTF16_LE: {
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
-
 		case ENCODING_UTF16_BE: {
 			const TCHAR* pszConvert = Utf16beToUtf16le(szRomdataName);
 			if (NULL == pszConvert) return -1;
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
+		default:
+			return -1;
 	}
 
 	RDI.nDescCount = -1;					// Failed
@@ -1273,8 +1272,6 @@ static INT32 LoadRomdata()
 char* RomdataGetDrvName()
 {
 	EncodingType nType = DetectEncoding(szRomdataName);
-	if (ENCODING_ERROR == nType) return NULL;
-
 	const TCHAR* pszReadMode = NULL;
 
 	switch (nType) {
@@ -1287,18 +1284,18 @@ char* RomdataGetDrvName()
 			pszReadMode = _T("rt, ccs=UTF-8");
 			break;
 		}
-
 		case ENCODING_UTF16_LE: {
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
-
 		case ENCODING_UTF16_BE: {
 			const TCHAR* pszConvert = Utf16beToUtf16le(szRomdataName);
 			if (NULL == pszConvert) return NULL;
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
+		default:
+			return NULL;
 	}
 
 	FILE* fp = _tfopen(szRomdataName, pszReadMode);
@@ -1386,7 +1383,7 @@ INT32 RomDataCheck(const TCHAR* pszDatFile)
 static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 {
 	EncodingType nType = DetectEncoding(pszDatFile);
-	if (ENCODING_ERROR == nType) return NULL;
+	if (NULL == pszDatFile) return NULL;
 
 	memset(szRomdataName, 0, sizeof(szRomdataName));
 	_tcscpy(szRomdataName, pszDatFile);
@@ -1413,6 +1410,8 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
+		default:
+			return NULL;
 	}
 
 	FILE* fp = _tfopen(szRomdataName, pszReadMode);

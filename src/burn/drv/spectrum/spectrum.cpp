@@ -25,6 +25,12 @@ static INT32 SpecMode = 0;
 #define SPEC_SLOWTAP	(1 << 6) // Slow-TAP mode, for games with custom loaders
 #define SPEC_TZX        (1 << 7)
 
+#define TAPE_TO_WAV 0 // outputs zxout.pcm (2ch/stereo/sound rate hz)
+#if TAPE_TO_WAV
+static INT32 tape_to_wav_startup_pause;
+static FILE *tape_dump_fp = NULL;
+#endif
+
 UINT8 SpecInputKbd[0x10][0x05] = {
 	{ 0, 0, 0, 0, 0 }, // Shift, Z, X, C, V
 	{ 0, 0, 0, 0, 0 }, // A, S, D, F, G
@@ -335,7 +341,7 @@ static void BuzzerRender(INT16 *dest)
 	for (INT32 i = 0; i < nBurnSoundLen; i++) {
 		int sample = 0;
 		for (INT32 j = 0; j < ox8; j++) {
-#if 0
+#if TAPE_TO_WAV
 			sample += BuzzerD8[foopos++];
 #else
 			sample += update_filter(BuzzerD8[foopos++]);
@@ -558,8 +564,9 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 static void __fastcall SpecZ80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
+#if !TAPE_TO_WAV
 		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 3) | ((SpecDips[1] & 2) ? last_pulse : 0));
-
+#endif
 		ula_border = data;
 		return;
 	}
@@ -675,8 +682,9 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 {
 	if (~address & 0x0001) {
+#if !TAPE_TO_WAV
 		if (in_tape_ffwd == 0) BuzzerAdd(((data & 0x10) >> 3) | ((SpecDips[1] & 2) ? last_pulse : 0));
-
+#endif
 		ula_border = data;
 		// needs to fall through!!
 	}
@@ -953,7 +961,7 @@ static void emit_pause_or_stop(INT32 pausems) {
 	pulse_mode = PULSE_PAUSE;
 	pulse_startup = 0;
 
-	if (DEBUG_TAP) bprintf(0, _T("emit_pause_or_stop: %d\n"), pausems);
+	if (DEBUG_TAP) bprintf(0, _T("emit_pause_or_stop: %d%S\n"), pausems, (pausems == 0) ? " (stop)" : "");
 	pause_len = (pausems == 0) ? 0xffff : pausems;
 
 	got_emit = true;
@@ -1270,6 +1278,18 @@ static void pulse_reset()
 
 	if (SpecMode & SPEC_TZX || SpecMode & SPEC_SLOWTAP) {
 		pulse_mode = PULSE_WAIT_EMIT;
+
+#if TAPE_TO_WAV
+		bprintf(0, _T("DUMPING TAPE TO zxout.pcm.\n"));
+		tape_to_wav_startup_pause = 20;
+
+		if (tape_dump_fp) {
+			fclose(tape_dump_fp);
+			tape_dump_fp = NULL;
+		}
+		tape_dump_fp = fopen("zxout.pcm", "wb+");
+		if (!tape_dump_fp) bprintf(0, _T("Can't open zxout.pcm for writing!\n"));
+#endif
 	}
 }
 
@@ -1317,6 +1337,9 @@ static void pulse_scan()
 
 static INT32 check_loading()
 {
+#if TAPE_TO_WAV
+	return 0;
+#endif
 	INT32 cycles = total_tstates() - last_cycle;
 	INT32 bc = d_abs(last_bc - ZetBc(-1)) & 0xff00;
 	last_bc = ZetBc(-1) & 0xff00;
@@ -1538,6 +1561,9 @@ static UINT8 pulse_synth()
 			pulse_status = TAPE_STOPPED;
 			pulse_pulse ^= 0x40; // end of tape edge
 			target_tstate = total_tstates(); // break out of catch-up loop, just incase
+#if TAPE_TO_WAV
+			bprintf(0, _T("zxout.pcm: Tape end reached.\n"));
+#endif
 			break;
 	}
 
@@ -2112,6 +2138,10 @@ INT32 SpecExit()
 
 	if (SpecMode & SPEC_AY8910) AY8910Exit(0);
 
+#if TAPE_TO_WAV
+	fclose(tape_dump_fp);
+	tape_dump_fp = NULL;
+#endif
 	BuzzerExit();
 
 	GenericTilesExit();
@@ -2272,6 +2302,41 @@ static void update_ula(INT32 cycle)
 	ula_last_cyc = cycle;
 }
 
+#if TAPE_TO_WAV
+static void DumpTape()
+{
+	if (tape_to_wav_startup_pause) {
+		tape_to_wav_startup_pause--;
+		BurnSoundClear();
+
+		if (tape_to_wav_startup_pause == 0) {
+			pulse_status = TAPE_PLAYING;
+			start_tstate = total_tstates();
+			if (SpecMode & SPEC_SLOWTAP) {
+				tap_op = -1;
+			}
+		} else {
+			ZetClose();
+			return;
+		}
+	}
+	for (INT32 i = 0; i < buzzer_data_frame; i++) {
+		ZetIdle(1);
+		get_pulse(0);
+		BuzzerAdd(last_pulse);
+	}
+	ZetClose();
+	nExtraCycles = 0;
+	SpecMode &= ~SPEC_AY8910;
+	INT16 *buf = (INT16*)BurnMalloc(nBurnSoundLen*2*2*2);
+	BuzzerRender(buf);
+	//	BurnDumpAppend("out.pcm", (UINT8*)buf, nBurnSoundLen*2*2); - kinda slow for this
+	fwrite((UINT8*)buf, 1, nBurnSoundLen*2*2, tape_dump_fp);
+	BurnFree(buf);
+	return;
+}
+#endif
+
 static void SwapByte(UINT8 &a, UINT8 &b)
 { // a <-> b, using xor
 	a = a ^ b;
@@ -2365,7 +2430,10 @@ INT32 SpecFrame()
 	nExtraCycles = 0;
 
 	const INT32 IRQ_LENGTH = 38; // 48k 32, 128k 36 (z80 core takes care of this - only allowing irq for proper length of machine, so value here is OK)
-
+#if TAPE_TO_WAV
+	DumpTape();
+	return 0;
+#endif
 	for (INT32 i = 0; i < SpecScanlines; i++) {
 		if (i == 0) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);

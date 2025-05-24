@@ -1325,6 +1325,62 @@ char* RomdataGetDrvName()
 	return NULL;
 }
 
+static char* RomdataGetZipName(const TCHAR* pszFileName)
+{
+	EncodingType nType = DetectEncoding(pszFileName);
+	const TCHAR* pszReadMode = NULL;
+
+	switch (nType) {
+	case ENCODING_ANSI: {
+		pszReadMode = _T("rt");
+		break;
+	}
+	case ENCODING_UTF8:
+	case ENCODING_UTF8_BOM: {
+		pszReadMode = _T("rt, ccs=UTF-8");
+		break;
+	}
+	case ENCODING_UTF16_LE: {
+		pszReadMode = _T("rt, ccs=UTF-16LE");
+		break;
+	}
+	case ENCODING_UTF16_BE: {
+		const TCHAR* pszConvert = Utf16beToUtf16le(pszFileName);
+		if (NULL == pszConvert) return NULL;
+		pszReadMode = _T("rt, ccs=UTF-16LE");
+		break;
+	}
+	default:
+		return NULL;
+	}
+
+	FILE* fp = _tfopen(pszFileName, pszReadMode);
+	if (NULL == fp) return NULL;
+
+	TCHAR szBuf[MAX_PATH] = { 0 };
+	TCHAR* pszBuf = NULL, * pszLabel = NULL, * pszInfo = NULL;
+
+	while (!feof(fp)) {
+		if (_fgetts(szBuf, MAX_PATH, fp) != NULL) {
+			pszBuf = szBuf;
+
+			pszLabel = _strqtoken(pszBuf, DELIM_TOKENS_NAME);
+			if (NULL == pszLabel) continue;
+			if ((_T('/') == pszLabel[0]) && (_T('/') == pszLabel[1])) continue;
+
+			if (0 == _tcsicmp(_T("ZipName"), pszLabel) || 0 == _tcsicmp(_T("RomName"), pszLabel)) {
+				pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
+				if (NULL == pszInfo) break;	// No romset specified
+				fclose(fp);
+				return TCHARToANSI(pszInfo, NULL, 0);
+			}
+		}
+	}
+	fclose(fp);
+
+	return NULL;
+}
+
 INT32 RomDataCheck(const TCHAR* pszDatFile)
 {
 	if (NULL == pszDatFile) {
@@ -1674,6 +1730,53 @@ static void RomdataListFindDats(const TCHAR* dirPath)
 	} while (FindNextFile(hFind, &findFileData));
 
 	FindClose(hFind);
+}
+
+bool FindZipNameFromDats(const TCHAR* dirPath, const char* pzsZipName, TCHAR* pszFindDat)
+{
+	if (IS_STRING_EMPTY(dirPath)) return false;
+
+	TCHAR searchPath[MAX_PATH] = { 0 };
+
+	const TCHAR* szFormatA = ends_with_slash(dirPath) ? _T("%s*") : _T("%s\\*.*");
+	const TCHAR* szFormatB = ends_with_slash(dirPath) ? _T("%s%s") : _T("%s\\%s");
+
+	_stprintf(searchPath, szFormatA, dirPath);
+
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind = FindFirstFile(searchPath, &findFileData);
+	if (INVALID_HANDLE_VALUE == hFind) return false;
+
+	do {
+		if (0 == _tcscmp(findFileData.cFileName, _T(".")) || 0 == _tcscmp(findFileData.cFileName, _T("..")))
+			continue;
+		// like: c:\1st_dir + '\' + 2nd_dir + '\' + "1.dat" + '\0' = 8 chars
+		if ((_tcslen(dirPath) + _tcslen(findFileData.cFileName)) > (MAX_PATH - 8))
+			continue;
+
+		TCHAR szFullPath[MAX_PATH] = { 0 };
+		_stprintf(szFullPath, szFormatB, dirPath, findFileData.cFileName);
+
+		if (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+			if (bRDListScanSub)
+				FindZipNameFromDats(szFullPath, NULL, NULL);
+		} else {
+			if (NULL == pzsZipName || (NULL == pszFindDat)) return false;
+
+			if (IsFileExt(findFileData.cFileName, _T(".dat"))){
+				const char* pszBuf = RomdataGetZipName(szFullPath);
+				if (NULL == pszBuf) continue;
+				if (0 == strcmp(pzsZipName, pszBuf)) {
+					_tcscpy(pszFindDat, szFullPath);
+					FindClose(hFind);
+					return true;
+				}
+			}
+		}
+	} while (FindNextFile(hFind, &findFileData));
+
+	FindClose(hFind);
+	return false;
 }
 
 #undef IS_STRING_EMPTY

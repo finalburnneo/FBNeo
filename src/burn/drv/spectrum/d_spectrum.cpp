@@ -18379,19 +18379,19 @@ struct BurnDriver BurnSpecmarblem = {
 
 // Mario Bros (48K)
 
-static struct BurnRomInfo SpecmaribrosRomDesc[] = {
-	{ "Mario Bros 48K (1987)(Ocean).z80", 0x08f38, 0xe42c245c, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecmarioRomDesc[] = {
+	{ "Mario Bros 48K (1987)(Ocean).tzx", 45160, 0xe631869e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specmaribros, Specmaribros, Spectrum)
-STD_ROM_FN(Specmaribros)
+STDROMPICKEXT(Specmario, Specmario, Spectrum)
+STD_ROM_FN(Specmario)
 
-struct BurnDriver BurnSpecmaribros = {
-	"spec_maribros", NULL, "spec_spectrum", NULL, "1987",
+struct BurnDriver BurnSpecmario = {
+	"spec_mario", NULL, "spec_spectrum", NULL, "1987",
 	"Mario Bros (48K)\0", NULL, "Ocean", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecmaribrosRomInfo, SpecmaribrosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpectrumGetZipName, SpecmarioRomInfo, SpecmarioRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

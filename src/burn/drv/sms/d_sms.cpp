@@ -18535,11 +18535,9 @@ struct BurnDriver BurnDrvgg_sdgundam = {
 	256, 192, 4, 3
 };
 
-
 // Sega Game Pack 4 in 1 (Euro)
-
 static struct BurnRomInfo gg_sega4in1RomDesc[] = {
-	{ "mpr-15205.ic1",	0x40000, 0x0924d2ec, BRF_PRG | BRF_ESS },
+	{ "Sega Game Pack 4 in 1 (Euro)(1991)(Sega).gg",	0x40000, 0x0924d2ec, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sega4in1)
@@ -18555,11 +18553,9 @@ struct BurnDriver BurnDrvgg_sega4in1 = {
 	256, 192, 4, 3
 };
 
-
 // Sega Game Pack 4 in 1 (Euro, Prototype)
-
 static struct BurnRomInfo gg_sega4in1pRomDesc[] = {
-	{ "sega game pack 4 in 1 (proto).bin",	0x40000, 0x758a7123, BRF_PRG | BRF_ESS },
+	{ "Sega Game Pack 4 in 1 (Euro, Proto)(1991)(Sega).gg",	0x40000, 0x758a7123, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sega4in1p)
@@ -18575,11 +18571,9 @@ struct BurnDriver BurnDrvgg_sega4in1p = {
 	256, 192, 4, 3
 };
 
-
 // Sensible Soccer (Euro)
-
 static struct BurnRomInfo gg_sensibleRomDesc[] = {
-	{ "sensible soccer (europe).bin",	0x20000, 0x5b68da75, BRF_PRG | BRF_ESS },
+	{ "Sensible Soccer (Euro)(1994)(Sony Imagesoft).gg",	0x20000, 0x5b68da75, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sensible)
@@ -18595,11 +18589,9 @@ struct BurnDriver BurnDrvgg_sensible = {
 	256, 192, 4, 3
 };
 
-
-// Shadam Crusader - Harukanaru Oukoku (Japan)
-
+// Shadam Crusader: Harukanaru Oukoku (Japan)
 static struct BurnRomInfo gg_shadamRomDesc[] = {
-	{ "shadam crusader - harukanaru oukoku (japan).bin",	0x80000, 0x09f9ed60, BRF_PRG | BRF_ESS },
+	{ "Shadam Crusader - Harukanaru Oukoku (Japan)(1992)(Sega).gg",	0x80000, 0x09f9ed60, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_shadam)
@@ -18607,7 +18599,7 @@ STD_ROM_FN(gg_shadam)
 
 struct BurnDriver BurnDrvgg_shadam = {
 	"gg_shadam", "gg_defoasis", NULL, NULL, "1992",
-	"Shadam Crusader - Harukanaru Oukoku (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Shadam Crusader: Harukanaru Oukoku (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shadamRomInfo, gg_shadamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18615,11 +18607,9 @@ struct BurnDriver BurnDrvgg_shadam = {
 	256, 192, 4, 3
 };
 
-
 // Shanghai II (Japan, v0)
-
 static struct BurnRomInfo gg_shangh2aRomDesc[] = {
-	{ "shanghai ii (japan).bin",	0x20000, 0x2ae8c75f, BRF_PRG | BRF_ESS },
+	{ "Shanghai II (Japan, v0)(1990)(Sunsoft).gg",	0x20000, 0x2ae8c75f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_shangh2a)
@@ -18635,11 +18625,9 @@ struct BurnDriver BurnDrvgg_shangh2a = {
 	256, 192, 4, 3
 };
 
-
 // Shanghai II (Japan, v1)
-
 static struct BurnRomInfo gg_shangh2RomDesc[] = {
-	{ "mpr-13494.ic1",	0x20000, 0x81314249, BRF_PRG | BRF_ESS },
+	{ "Shanghai II (Japan, v1)(1990)(Sunsoft).gg",	0x20000, 0x81314249, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_shangh2)
@@ -18655,11 +18643,9 @@ struct BurnDriver BurnDrvgg_shangh2 = {
 	256, 192, 4, 3
 };
 
-
 // Shaq Fu (Euro, USA)
-
 static struct BurnRomInfo gg_shaqfuRomDesc[] = {
-	{ "shaq fu (usa, europe).bin",	0x80000, 0x6fcb8ab0, BRF_PRG | BRF_ESS },
+	{ "Shaq Fu (Euro, USA)(1995)(Electronic Arts).gg",	0x80000, 0x6fcb8ab0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_shaqfu)
@@ -18675,11 +18661,9 @@ struct BurnDriver BurnDrvgg_shaqfu = {
 	256, 192, 4, 3
 };
 
-
 // Shikinjou (Japan)
-
 static struct BurnRomInfo gg_shikinjoRomDesc[] = {
-	{ "shikinjou (japan).bin",	0x20000, 0x9c5c7f53, BRF_PRG | BRF_ESS },
+	{ "Shikinjou (Japan)(1991)(Sunsoft).gg",	0x20000, 0x9c5c7f53, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_shikinjo)
@@ -18695,7 +18679,7 @@ struct BurnDriver BurnDrvgg_shikinjo = {
 	256, 192, 4, 3
 };
 
-// Shining Force Gaiden - Ensei, Jashin no Kuni e (Japan)
+// Shining Force Gaiden: Ensei, Jashin no Kuni e (Japan)
 static struct BurnRomInfo gg_shinfrcgRomDesc[] = {
 	{ "Shining Force Gaiden - Ensei, Jashin no Kuni e (Japan)(1992)(Sega).gg",	0x80000, 0x4d1f4699, BRF_PRG | BRF_ESS },
 };
@@ -18705,7 +18689,7 @@ STD_ROM_FN(gg_shinfrcg)
 
 struct BurnDriver BurnDrvgg_shinfrcg = {
 	"gg_shinfrcg", NULL, NULL, NULL, "1992",
-	"Shining Force Gaiden - Ensei, Jashin no Kuni e (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force Gaiden: Ensei, Jashin no Kuni e (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrcgRomInfo, gg_shinfrcgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18713,7 +18697,7 @@ struct BurnDriver BurnDrvgg_shinfrcg = {
 	256, 192, 4, 3
 };
 
-// Shining Force Gaiden - Final Conflict (Japan)
+// Shining Force Gaiden: Final Conflict (Japan)
 static struct BurnRomInfo gg_shinfrgfRomDesc[] = {
 	{ "Shining Force Gaiden - Final Conflict (Japan)(1995)(Sega).gg",	0x80000, 0x6019fe5e, BRF_PRG | BRF_ESS },
 };
@@ -18723,7 +18707,7 @@ STD_ROM_FN(gg_shinfrgf)
 
 struct BurnDriver BurnDrvgg_shinfrgf = {
 	"gg_shinfrgf", NULL, NULL, NULL, "1995",
-	"Shining Force Gaiden - Final Conflict (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force Gaiden: Final Conflict (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrgfRomInfo, gg_shinfrgfRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18731,7 +18715,7 @@ struct BurnDriver BurnDrvgg_shinfrgf = {
 	256, 192, 4, 3
 };
 
-// Shining Force II - The Sword of Hajya (Euro, USA)
+// Shining Force II: The Sword of Hajya (Euro, USA)
 static struct BurnRomInfo gg_shinfrc2RomDesc[] = {
 	{ "Shining Force II - The Sword of Hajya (Euro, USA)(1994)(Sega).gg",	0x80000, 0xa6ca6fa9, BRF_PRG | BRF_ESS },
 };
@@ -18741,7 +18725,7 @@ STD_ROM_FN(gg_shinfrc2)
 
 struct BurnDriver BurnDrvgg_shinfrc2 = {
 	"gg_shinfrc2", NULL, NULL, NULL, "1994",
-	"Shining Force II - The Sword of Hajya (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force II: The Sword of Hajya (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrc2RomInfo, gg_shinfrc2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18749,7 +18733,7 @@ struct BurnDriver BurnDrvgg_shinfrc2 = {
 	256, 192, 4, 3
 };
 
-// Shining Force Gaiden II - Jashin no Kakusei (Japan)
+// Shining Force Gaiden II: Jashin no Kakusei (Japan)
 static struct BurnRomInfo gg_shinfrg2RomDesc[] = {
 	{ "Shining Force Gaiden II - Jashin no Kakusei (Japan)(1993)(Sega).gg",	0x80000, 0x30374681, BRF_PRG | BRF_ESS },
 };
@@ -18759,7 +18743,7 @@ STD_ROM_FN(gg_shinfrg2)
 
 struct BurnDriver BurnDrvgg_shinfrg2 = {
 	"gg_shinfrg2", "gg_shinfrc2", NULL, NULL, "1993",
-	"Shining Force Gaiden II - Jashin no Kakusei (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force Gaiden II: Jashin no Kakusei (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrg2RomInfo, gg_shinfrg2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18767,7 +18751,7 @@ struct BurnDriver BurnDrvgg_shinfrg2 = {
 	256, 192, 4, 3
 };
 
-// Shining Force II - The Sword of Hajya (Prototype, 19940708)
+// Shining Force II: The Sword of Hajya (Prototype, 19940708)
 static struct BurnRomInfo gg_shinfrc2p1RomDesc[] = {
 	{ "Shining Force II - The Sword of Hajya (Proto, 19940708)(Sega).gg",	0x80000, 0x80dca91d, BRF_PRG | BRF_ESS },
 };
@@ -18777,7 +18761,7 @@ STD_ROM_FN(gg_shinfrc2p1)
 
 struct BurnDriver BurnDrvgg_shinfrc2p1 = {
 	"gg_shinfrc2p1", "gg_shinfrc2", NULL, NULL, "1994",
-	"Shining Force II - The Sword of Hajya (Prototype, 19940708)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force II: The Sword of Hajya (Prototype, 19940708)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrc2p1RomInfo, gg_shinfrc2p1RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18785,7 +18769,7 @@ struct BurnDriver BurnDrvgg_shinfrc2p1 = {
 	256, 192, 4, 3
 };
 
-// Shining Force II - The Sword of Hajya (Prototype, 19940627)
+// Shining Force II: The Sword of Hajya (Prototype, 19940627)
 static struct BurnRomInfo gg_shinfrc2p2RomDesc[] = {
 	{ "Shining Force II - The Sword of Hajya (Proto, 19940627)(Sega).gg",	0x80000, 0x8bfc56c3, BRF_PRG | BRF_ESS },
 };
@@ -18795,7 +18779,7 @@ STD_ROM_FN(gg_shinfrc2p2)
 
 struct BurnDriver BurnDrvgg_shinfrc2p2 = {
 	"gg_shinfrc2p2", "gg_shinfrc2", NULL, NULL, "1994",
-	"Shining Force II - The Sword of Hajya (Prototype, 19940627)\0", NULL, "Sega", "Sega Game Gear",
+	"Shining Force II: The Sword of Hajya (Prototype, 19940627)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_shinfrc2p2RomInfo, gg_shinfrc2p2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -18857,11 +18841,9 @@ struct BurnDriver BurnDrvgg_bartvswd = {
 	256, 192, 4, 3
 };
 
-
 // Skweek (Japan)
-
 static struct BurnRomInfo gg_skweekRomDesc[] = {
-	{ "skweek (japan).bin",	0x20000, 0x3d9c92c7, BRF_PRG | BRF_ESS },
+	{ "Skweek (Japan)(1991)(Victor).gg",	0x20000, 0x3d9c92c7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_skweek)
@@ -18877,11 +18859,9 @@ struct BurnDriver BurnDrvgg_skweek = {
 	256, 192, 4, 3
 };
 
-
 // Slider (Euro, USA)
-
 static struct BurnRomInfo gg_sliderRomDesc[] = {
-	{ "slider (usa, europe).bin",	0x20000, 0x4dc6f555, BRF_PRG | BRF_ESS },
+	{ "Slider (Euro, USA)(1991)(Victor).gg",	0x20000, 0x4dc6f555, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_slider)
@@ -18897,11 +18877,9 @@ struct BurnDriver BurnDrvgg_slider = {
 	256, 192, 4, 3
 };
 
-
 // Smurfs, The (Euro)
-
 static struct BurnRomInfo gg_smurfsRomDesc[] = {
-	{ "smurfs, the (europe) (en,fr,de,es).bin",	0x40000, 0x354e1cbd, BRF_PRG | BRF_ESS },
+	{ "Smurfs, The (Euro)(1994)(Infogrames).gg",	0x40000, 0x354e1cbd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_smurfs)
@@ -18917,11 +18895,9 @@ struct BurnDriver BurnDrvgg_smurfs = {
 	256, 192, 4, 3
 };
 
-
 // Smurfs 2, The (Euro)
-
 static struct BurnRomInfo gg_smurfs2RomDesc[] = {
-	{ "smurfs travel the world, the.bin",	0x40000, 0x3eb337df, BRF_PRG | BRF_ESS },
+	{ "Smurfs 2, The (Euro)(1995)(Infogrames).gg",	0x40000, 0x3eb337df, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_smurfs2)
@@ -18937,11 +18913,9 @@ struct BurnDriver BurnDrvgg_smurfs2 = {
 	256, 192, 4, 3
 };
 
-
 // Solitaire Funpak (USA)
-
 static struct BurnRomInfo gg_solitairRomDesc[] = {
-	{ "solitaire funpak (usa).bin",	0x40000, 0xf6f24b75, BRF_PRG | BRF_ESS },
+	{ "Solitaire Funpak (USA)(1994)(Interplay).gg",	0x40000, 0xf6f24b75, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_solitair)
@@ -18957,11 +18931,9 @@ struct BurnDriver BurnDrvgg_solitair = {
 	256, 192, 4, 3
 };
 
-
 // Solitaire Poker (Euro, USA)
-
 static struct BurnRomInfo gg_solitarpRomDesc[] = {
-	{ "solitaire poker (usa, europe).bin",	0x20000, 0x06f2fc46, BRF_PRG | BRF_ESS },
+	{ "Solitaire Poker (Euro, USA)(1991)(Sega).gg",	0x20000, 0x06f2fc46, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_solitarp)
@@ -21768,6 +21740,24 @@ struct BurnDriver BurnDrvsms_acreflux = {
 	256, 192, 4, 3
 };
 
+// Aerial (HB)
+static struct BurnRomInfo sms_aerialRomDesc[] = {
+	{ "Aerial (2021)(Inufuto).sms",	16384, 0x29845dea, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_aerial)
+STD_ROM_FN(sms_aerial)
+
+struct BurnDriver BurnDrvsms_aerial = {
+	"sms_aerial", NULL, NULL, NULL, "2021",
+	"Aerial (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_HORSHOOT, 0,
+	SMSGetZipName, sms_aerialRomInfo, sms_aerialRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Aleste II (Hack, GG2SMS Conversion)
 static struct BurnRomInfo sms_aleste2gg2smsRomDesc[] = {
 	{ "Aleste II GG2SMS (2014)(ccovell, Vingazole).sms",	0x40000, 0x516d899d, BRF_PRG | BRF_ESS },
@@ -21891,6 +21881,24 @@ struct BurnDriver BurnDrvsms_alexlostse = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexlostseRomInfo, sms_alexlostseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// AntiAir (HB)
+static struct BurnRomInfo sms_antiairRomDesc[] = {
+	{ "AntiAir (2024)(Inufuto).sms",	16384, 0xe49dfb4e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_antiair)
+STD_ROM_FN(sms_antiair)
+
+struct BurnDriver BurnDrvsms_antiair = {
+	"sms_antiair", NULL, NULL, NULL, "2024",
+	"AntiAir (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_antiairRomInfo, sms_antiairRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -22216,6 +22224,24 @@ struct BurnDriver BurnDrvsms_castlescapev2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_castlescapev2RomInfo, sms_castlescapev2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Cavit (HB)
+static struct BurnRomInfo sms_cavitRomDesc[] = {
+	{ "Cavit (2021)(Inufuto).sms",	16384, 0x4cef36e1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_cavit)
+STD_ROM_FN(sms_cavit)
+
+struct BurnDriver BurnDrvsms_cavit = {
+	"sms_cavit", NULL, NULL, NULL, "2021",
+	"Cavit (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_cavitRomInfo, sms_cavitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -22760,6 +22786,24 @@ struct BurnDriver BurnDrvsms_grimez80 = {
 	256, 224, 4, 3
 };
 
+// Guntus (HB)
+static struct BurnRomInfo sms_guntusRomDesc[] = {
+	{ "Guntus (2022)(Inufuto).sms",	32768, 0xff90d876, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_guntus)
+STD_ROM_FN(sms_guntus)
+
+struct BurnDriver BurnDrvsms_guntus = {
+	"sms_guntus", NULL, NULL, NULL, "2022",
+	"Guntus (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_guntusRomInfo, sms_guntusRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Heroes Against Demons (HB, v1.04b)
 static struct BurnRomInfo sms_hadretailRomDesc[] = {
 	{ "Heroes Against Demons v1.04b (2020)(Ichigo).sms",	262144, 0x8c77f8bf, BRF_PRG | BRF_ESS },
@@ -22792,6 +22836,24 @@ struct BurnDriver BurnDrvsms_had = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Hopman (HB)
+static struct BurnRomInfo sms_hopmanRomDesc[] = {
+	{ "Hopman (2023)(Inufuto).sms",	16384, 0xcb0eec5b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hopman)
+STD_ROM_FN(sms_hopman)
+
+struct BurnDriver BurnDrvsms_hopman = {
+	"sms_hopman", NULL, NULL, NULL, "2023",
+	"Hopman (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_hopmanRomInfo, sms_hopmanRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -23066,6 +23128,60 @@ struct BurnDriver BurnDrvsms_mainurse = {
 	256, 192, 4, 3
 };
 
+// Mazy (HB)
+static struct BurnRomInfo sms_mazyRomDesc[] = {
+	{ "Mazy (2022)(Inufuto).sms",	16384, 0x79fdf88c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mazy)
+STD_ROM_FN(sms_mazy)
+
+struct BurnDriver BurnDrvsms_mazy = {
+	"sms_mazy", NULL, NULL, NULL, "2022",
+	"Mazy (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+	SMSGetZipName, sms_mazyRomInfo, sms_mazyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Mazy 2 (HB)
+static struct BurnRomInfo sms_mazy2RomDesc[] = {
+	{ "Mazy 2 (2025)(Inufuto).sms",	16384, 0xd55761d1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mazy2)
+STD_ROM_FN(sms_mazy2)
+
+struct BurnDriver BurnDrvsms_mazy2 = {
+	"sms_mazy2", NULL, NULL, NULL, "2025",
+	"Mazy 2 (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+	SMSGetZipName, sms_mazy2RomInfo, sms_mazy2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Mieyen (HB)
+static struct BurnRomInfo sms_mieyenRomDesc[] = {
+	{ "Mieyen (2025)(Inufuto).sms",	16384, 0x364c06ed, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mieyen)
+STD_ROM_FN(sms_mieyen)
+
+struct BurnDriver BurnDrvsms_mieyen = {
+	"sms_mieyen", NULL, NULL, NULL, "2025",
+	"Mieyen (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+	SMSGetZipName, sms_mieyenRomInfo, sms_mieyenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // MiniMSX (HB)
 static struct BurnRomInfo sms_minimsxRomDesc[] = {
 	{ "MiniMSX (2021)(MikGames).sms",	131072, 0xeb6c0944, BRF_PRG | BRF_ESS },
@@ -23226,6 +23342,24 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_NO_CART_HEADER, GBF_MISC, 0,
 	SMSGetZipName, sms_novdmvdpRomInfo, sms_novdmvdpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Osotos (HB)
+static struct BurnRomInfo sms_osotosRomDesc[] = {
+	{ "Osotos (2024)(Inufuto).sms",	16384, 0xb8569995, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_osotos)
+STD_ROM_FN(sms_osotos)
+
+struct BurnDriver BurnDrvsms_osotos = {
+	"sms_osotos", NULL, NULL, NULL, "2024",
+	"Osotos (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_osotosRomInfo, sms_osotosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24259,6 +24393,24 @@ struct BurnDriver BurnDrvsms_wboymwldrest = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_wboymwldrestRomInfo, sms_wboymwldrestRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Yewdow (HB)
+static struct BurnRomInfo sms_yewdowRomDesc[] = {
+	{ "Yewdow (2023)(Inufuto).sms",	16384, 0x07302dd3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_yewdow)
+STD_ROM_FN(sms_yewdow)
+
+struct BurnDriver BurnDrvsms_yewdow = {
+	"sms_yewdow", NULL, NULL, NULL, "2024",
+	"Yewdow (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+	SMSGetZipName, sms_yewdowRomInfo, sms_yewdowRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

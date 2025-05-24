@@ -21782,6 +21782,25 @@ struct BurnDriver BurnDrvsms_aleste2gg2sms = {
 	256, 192, 4, 3
 };
 
+// Aleste 3 (Hack, GG2SMS Conversion)
+
+static struct BurnRomInfo sms_aleste3gg2smsRomDesc[] = {
+	{ "Aleste 3 GG2SMS v1 (2024)(BCNabel76, Revo).sms",	917504, 0x89643654, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_aleste3gg2sms)
+STD_ROM_FN(sms_aleste3gg2sms)
+
+struct BurnDriver BurnDrvsms_aleste3gg2sms = {
+	"sms_aleste3gg2sms", NULL, NULL, NULL, "2024",
+	"Aleste 3 (Hack, GG2SMS Conversion)\0", "CH3 fix applied", "BCNabel76, Revo", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_aleste3gg2smsRomInfo, sms_aleste3gg2smsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Alex Kidd in Miracle World 2 (GlobalHack)
 static struct BurnRomInfo sms_alexkidd2RomDesc[] = {
 	{ "Alex Kidd in Miracle World 2 (GlobalHack)(2016)(Ian Wall).sms",	524288, 0x7de172ff, BRF_PRG | BRF_ESS },
@@ -24622,6 +24641,24 @@ struct BurnDriver BurnDrvgg_ggaleste3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
 	GGGetZipName, gg_ggaleste3RomInfo, gg_ggaleste3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// GG Aleste 3 - Missing Sound Channel 3 activated
+static struct BurnRomInfo gg_ggaleste3sndfixRomDesc[] = {
+	{ "GG Aleste 3 - Sound Channel 3 fix (2020)(M2).gg",	0x100000, 0x53d0cacc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_ggaleste3sndfix)
+STD_ROM_FN(gg_ggaleste3sndfix)
+
+struct BurnDriver BurnDrvgg_ggaleste3sndfix = {
+	"gg_ggaleste3sndfix", "gg_ggaleste3", NULL, NULL, "2020",
+	"GG Aleste 3 - Sound Channel 3 fix (Japan)\0", "1-Byte fix: missing CH3 activated", "M2 Co.", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_ggaleste3sndfixRomInfo, gg_ggaleste3sndfixRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

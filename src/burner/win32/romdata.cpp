@@ -1732,7 +1732,7 @@ static void RomdataListFindDats(const TCHAR* dirPath)
 	FindClose(hFind);
 }
 
-bool FindZipNameFromDats(const TCHAR* dirPath, const char* pzsZipName, TCHAR* pszFindDat)
+bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat)
 {
 	if (IS_STRING_EMPTY(dirPath)) return false;
 

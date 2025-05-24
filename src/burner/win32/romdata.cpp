@@ -1761,12 +1761,11 @@ bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* ps
 			if (bRDListScanSub)
 				FindZipNameFromDats(szFullPath, NULL, NULL);
 		} else {
-			if (NULL == pzsZipName || (NULL == pszFindDat)) return false;
-
+			if (NULL == pszZipName || (NULL == pszFindDat)) return false;
 			if (IsFileExt(findFileData.cFileName, _T(".dat"))){
 				const char* pszBuf = RomdataGetZipName(szFullPath);
 				if (NULL == pszBuf) continue;
-				if (0 == strcmp(pzsZipName, pszBuf)) {
+				if (0 == strcmp(pszZipName, pszBuf)) {
 					_tcscpy(pszFindDat, szFullPath);
 					FindClose(hFind);
 					return true;

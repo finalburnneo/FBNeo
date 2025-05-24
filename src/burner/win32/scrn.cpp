@@ -1065,9 +1065,15 @@ int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
 
 	if (!bRecord) {				// Replay
+		// Exit RomData mode first
+		if (bRDMode) {
+			RomDataExit();
+			bRDMode = false;
+		}
 		char* pszDrv = utf8_from_wstring(szDriverName);
 		if (NULL == pszDrv) return 0;
-
+		// Search for the game's serial bits in non-RomData mode
+		// Failure to find the serial bit means that the game is a RomData game
 		INT32 nDrvIdx = BurnDrvGetIndex(pszDrv);
 		if (-1 == nDrvIdx) {	// Not in the list of drivers
 			TCHAR szDatName[MAX_PATH] = { 0 };

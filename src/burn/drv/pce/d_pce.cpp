@@ -9404,6 +9404,25 @@ struct BurnDriver BurnDrvpce_santatlantean = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
+// Special Criminal Investigation - Noise Fix (Hack)
+// https://www.romhacking.net/hacks/7270/
+static struct BurnRomInfo pce_scinfRomDesc[] = {
+	{ "Special Criminal Investigation - Noise Fix (2022)(Justin Gibbins).pce", 0x080000, 0x54e4c79b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_scinf)
+STD_ROM_FN(pce_scinf)
+
+struct BurnDriver BurnDrvpce_scinf = {
+	"pce_scinf", "pce_sci", NULL, NULL, "2022",
+	"Special Criminal Investigation - Noise Fix (Hack)\0", NULL, "Justin Gibbins", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_SHOOT | GBF_RACING, 0,
+	PceGetZipName, pce_scinfRomInfo, pce_scinfRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
 // Splatterhouse Chrome (Hack)
 // https://www.romhacking.net/hacks/520/
 static struct BurnRomInfo pce_splatthcRomDesc[] = {
@@ -9445,7 +9464,7 @@ struct BurnDriver BurnDrvpce_splitres = {
 // Taito Chase H.Q. - Noise Fix (Hack)
 // https://www.romhacking.net/hacks/7242/
 static struct BurnRomInfo tg_chasehqnfRomDesc[] = {
-	{ "Taito Chase H.Q. - Noise Fix (Hack)(2022)(Justin Gibbins).pce", 0x060000, 0x947740bc, BRF_PRG | BRF_ESS },
+	{ "Taito Chase H.Q. - Noise Fix (2022)(Justin Gibbins).pce", 0x060000, 0x947740bc, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(tg_chasehqnf)

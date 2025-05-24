@@ -45835,6 +45835,25 @@ struct BurnDriver BurnDrvmd_chakans = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Charnego Force II (Hack, Spanish)
+// https://charnego.krusher.net/
+static struct BurnRomInfo md_charnegoforce2sRomDesc[] = {
+	{ "Charnego Force II T-Spa (2022)(Charnego Translations).bin", 0x200000, 0x2b25992e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_charnegoforce2s)
+STD_ROM_FN(md_charnegoforce2s)
+
+struct BurnDriver BurnDrvmd_charnegoforce2s = {
+	"md_charnegoforce2s", "md_shinfrc2", NULL, NULL, "2022",
+	"Charnego Force II (Hack, Spanish)\0", NULL, "Charnego Translations", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_charnegoforce2sRomInfo, md_charnegoforce2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Chester Cheetah - Wild Wild Quest (Hack, Spanish)
 // https://www.romhacking.net/translations/4541/
 static struct BurnRomInfo md_chesterwsRomDesc[] = {
@@ -47579,6 +47598,25 @@ struct BurnDriver BurnDrvmd_kingcols = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_kingcolsRomInfo, md_kingcolsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Kombate Mortá (Hack, Spanish)
+// https://charnego.krusher.net/
+static struct BurnRomInfo md_kombatemortasRomDesc[] = {
+	{ "Kombate Morta T-Spa (2000)(Charnego Translations).md", 0x200000, 0x0b5647b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kombatemortas)
+STD_ROM_FN(md_kombatemortas)
+
+struct BurnDriver BurnDrvmd_kombatemortas = {
+	"md_kombatemortas", "md_mk", NULL, NULL, "2000",
+	"Kombate Morta (Hack, Spanish)\0", NULL, "Charnego Translations", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_kombatemortasRomInfo, md_kombatemortasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -49631,6 +49669,25 @@ struct BurnDriver BurnDrvmd_tazmanias = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_tazmaniasRomInfo, md_tazmaniasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tecmo Atleti (Hack, Spanish v2.0)
+// https://charnego.krusher.net/
+static struct BurnRomInfo md_tecmoatletisRomDesc[] = {
+	{ "Tecmo Atleti T-Spa v2.0 (2025)(Charnego Translations).bin", 0x100000, 0x1d6c8e33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tecmoatletis)
+STD_ROM_FN(md_tecmoatletis)
+
+struct BurnDriver BurnDrvmd_tecmoatletis = {
+	"md_tecmoatletis", "md_tecmocup", NULL, NULL, "2025",
+	"Tecmo Atleti (Hack, Spanish v2.0)\0", NULL, "Charnego Translations", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_tecmoatletisRomInfo, md_tecmoatletisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

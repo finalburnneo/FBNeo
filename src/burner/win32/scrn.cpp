@@ -1017,38 +1017,90 @@ static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is calle
 // Compact driver loading module
 int BurnerLoadDriver(TCHAR *szDriverName)
 {
-	unsigned int j;
+	char szBuf[100] = { 0 };
+	strcpy(szBuf, TCHARToANSI(szDriverName, NULL, 0));
 
-	int nOldDrvSelect = nBurnDrvActive;
+	bool bFinder = true;
+	bool bRDMode = (NULL != pDataRomDesc);
+	bool bGameInList = (BurnDrvGetIndex(szBuf) >= 0);
+	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
+
+	if (bRDMode) {			// RomData mode
+		if (bGameInList) {	// szBuf must be a running RomData game
+			_tcscpy(szRDDatBackup, szRomdataName);
+			bRDMode = true;
+		} else {
+/*
+			szBuf is not a running RomData game, or is a non-RomData game
+			true: szBuf is not a running RomData game
+			false:szBuf is a non-RomData game, or a non-existent RomData game
+*/
+			bFinder = bRDMode = FindZipNameFromDats(szAppRomdataPath, szBuf, szRDDatBackup);
+		}
+	} else {				// non-RomData mode
+		if (bGameInList) {	// szBuf is a non-RomData game
+			bRDMode = false;
+		} else {			// szBuf is a RomData game (It's possible it doesn't exist)
+			bFinder = bRDMode = FindZipNameFromDats(szAppRomdataPath, szBuf, szRDDatBackup);
+		}
+	}
 
 #ifdef INCLUDE_AVI_RECORDING
 	AviStop();
 #endif
 
-	DrvExit();
-	bLoading = 1;
+	DrvExit();				// This will exit RomData mode.
 
-	for (j = 0; j < nBurnDrvCount; j++) {
-		nBurnDrvActive = j;
-		if (!_tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
-			nBurnDrvActive = nOldDrvSelect;
-			nDialogSelect = nOldDlgSelected = j;
-			SplashDestroy(1);
-			StopReplay();
+	INT32 nDrvIdx = BurnDrvGetIndex(szBuf);
+	if (nDrvIdx >= 0) {
+		bFinder = true, bRDMode = false;
+	}
 
-			DrvExit();
-			DrvInit(j, bSramLoad);	// Init the game driver
-			MenuEnableItems();
-			bAltPause = 0;
-			AudSoundPlay();			// Restart sound
-			bLoading = 0;
-			UpdatePreviousGameList();
-			if (bVidAutoSwitchFull) {
-				nVidFullscreen = 1;
-				POST_INITIALISE_MESSAGE;
-			}
-			break;
+	if (!bFinder){			// Eventually identify if szBuf is a non-existent RomData game
+		bGameInList = (nDrvIdx >= 0);
+		if (!bGameInList) {
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), ANSIToTCHAR(szBuf, NULL, 0));
+			FBAPopupDisplay(PUF_TYPE_ERROR);
+			return 1;
 		}
+		bRDMode = false;
+	}
+/*
+	Now szBuf must be found
+*/
+	if (bRDMode) {			// RomData mode must be entered or the sequence szBuf will not be found
+		if (0 != RomDataCheck(szRDDatBackup)) return 1;
+		_tcscpy(szRomdataName, szRDDatBackup);
+		RomDataInit();
+		bGameInList = ((nDrvIdx = BurnDrvGetIndex(szBuf)) >= 0);
+		if (!bGameInList) {	// There seems to be no such possibility
+			RomDataExit();
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), ANSIToTCHAR(szBuf, NULL, 0));
+			FBAPopupDisplay(PUF_TYPE_ERROR);
+			return 1;
+		}
+		RomDataExit();
+	}
+
+	bLoading = 1;
+	nDialogSelect = nOldDlgSelected = nDrvIdx;
+
+	SplashDestroy(1);
+	StopReplay();
+
+	if (bRDMode) {
+		_tcscpy(szRomdataName, szRDDatBackup);
+	}
+
+	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
+	MenuEnableItems();
+	bAltPause = 0;
+	AudSoundPlay();			// Restart sound
+	bLoading = 0;
+	UpdatePreviousGameList();
+	if (bVidAutoSwitchFull) {
+		nVidFullscreen = 1;
+		POST_INITIALISE_MESSAGE;
 	}
 
 	return 0;
@@ -1056,74 +1108,29 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 
 int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 {
-/*
-	StartRecord		szDriverName = NULL;
-	StartReplay		szDriverName = wszStartupGame;
-*/
-	const bool bRecord = (NULL == szDriverName);
-	bool bRDMode = (NULL != pDataRomDesc);
-	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
-
-	if (!bRecord) {				// Replay
-		// Exit RomData mode first
-		if (bRDMode) {
-			RomDataExit();
-			bRDMode = false;
-		}
-		char* pszDrv = utf8_from_wstring(szDriverName);
-		if (NULL == pszDrv) return 0;
-		// Search for the game's serial bits in non-RomData mode
-		// Failure to find the serial bit means that the game is a RomData game
-		INT32 nDrvIdx = BurnDrvGetIndex(pszDrv);
-		if (-1 == nDrvIdx) {	// Not in the list of drivers
-			TCHAR szDatName[MAX_PATH] = { 0 };
-			bool bFinder = FindZipNameFromDats(szAppRomdataPath, pszDrv, szDatName);
-			if (!bFinder) {		// No results found in RomData either
-				free(pszDrv); pszDrv = NULL;
-				return 0;		// Exit
-			}
-			// ROMs check failed
-			if (0 != RomDataCheck(szDatName)) {
-				free(pszDrv); pszDrv = NULL;
-				return 0;		// Exit
-			}
-
-			// We have found (recursively or not depending on the settings) the dat containing romset in the RomData directory
-			_tcscpy(szRomdataName, szDatName);
-			bRDMode = true;		// RomData mode
-		}
-		free(pszDrv); pszDrv = NULL;
-	}
-	if (bRDMode) {
-		_tcscpy(szRDDatBackup, szRomdataName);
-	} else {
-		// Record scenarios will not be entered
-		// Replay should not be accessed from here in RomData mode
-		// We intentionally bypassed BurnerLoadDriver() in order to change the code as little as possible and chose DrvInit() to enter
-		if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)))) {
-			bSramLoad = bLoadSram;
-			BurnerLoadDriver(szDriverName);
-			bSramLoad = true;	// back to default
-			return 1;
-		}
+	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)))) {
+		bSramLoad = bLoadSram;
+		BurnerLoadDriver(szDriverName);
+		bSramLoad = true;	// back to default
+		return 1;
 	}
 
 	//if(nBurnDrvActive < 1) return 0;
 
-	// Record
-	int nOldDrvSelect = nBurnDrvActive;
+	INT32 nOldDrvSelect = nBurnDrvActive;
+	bool bRDMode = (NULL != pDataRomDesc);
+	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
+
+	if (bRDMode) {
+		_tcscpy(szRDDatBackup, szRomdataName);
+	}
 
 	DrvExit();
 	bLoading = 1;
 
-	if (bRDMode) {				// RomData
-		memset(szRomdataName, 0, sizeof(szRomdataName));
+	if (bRDMode) {
 		_tcscpy(szRomdataName, szRDDatBackup);
-
-		if (!bRecord) {			// Replay in RomData mode
-			bSramLoad = bLoadSram;
-			nOldDrvSelect = BurnDrvGetIndex(RomdataGetDrvName());
-		}
+		nOldDrvSelect = BurnDrvGetIndex(RomdataGetDrvName());
 	}
 
 	nBurnDrvActive = nOldDrvSelect;
@@ -1136,13 +1143,7 @@ int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 	bAltPause = 0;
 	AudSoundPlay();				// Restart sound
 	bLoading = 0;
-	if (!bRDMode) {				// Next refinement
-		UpdatePreviousGameList();
-	} else {
-		if (!bRecord) {			// Replay in RomData mode
-			bSramLoad = true;
-		}
-	}
+	UpdatePreviousGameList();
 	if (bVidAutoSwitchFull) {
 		nVidFullscreen = 1;
 		POST_INITIALISE_MESSAGE;
@@ -1273,20 +1274,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 /*
 				DWORD dwError = CommDlgExtendedError();
 */
-				if (FALSE == nOpenDlg)                break;
-				if (0 != RomDataCheck(szRomdataName)) break;
-
-				bLoading = 1;
-				DrvInit(BurnDrvGetIndex(RomdataGetDrvName()), true);	// Init the game driver
-				MenuEnableItems();
-				bAltPause = 0;
-				bLoading = 0;
-				if (bVidAutoSwitchFull) {
-					nVidFullscreen = 1;
-					POST_INITIALISE_MESSAGE;
-				}
-
-				POST_INITIALISE_MESSAGE;
+				if (FALSE == nOpenDlg)	break;
+				BurnerLoadDriver(ANSIToTCHAR(RomdataGetZipName(szRomdataName), NULL, 0));
 			}
 			break;
 		}

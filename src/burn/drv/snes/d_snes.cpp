@@ -31367,38 +31367,59 @@ struct BurnDriver BurnDrvsnes_Topgear3000 = {
 	512, 448, 4, 3
 };
 
-// Torneco no Daibouken - Fushigi no Dungeon (Japan)
+// Torneko no Daibouken - Fushigi no Dungeon (Japan)
 
 static struct BurnRomInfo snes_TornekodungjRomDesc[] = {
-	{ "Torneco no Daibouken - Fushigi no Dungeon (J)(1993)(Chun Soft).sfc", 1572864, 0x654e1be4, BRF_ESS | BRF_PRG },
+	{ "Torneko no Daibouken - Fushigi no Dungeon (J)(1993)(Chun Soft).sfc", 1572864, 0x654e1be4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tornekodungj)
 STD_ROM_FN(snes_Tornekodungj)
 
 struct BurnDriver BurnDrvsnes_Tornekodungj = {
-	"snes_tornekodungj", NULL, NULL, NULL, "1993",
-	"Torneco no Daibouken - Fushigi no Dungeon (Japan)\0", NULL, "Chun Soft", "SNES / Super Famicom",
-	L"Torneco no Daibouken - Fushigi no Dungeon (Japan)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	"snes_tornekodungj", "snes_tornekodungte", NULL, NULL, "1993",
+	"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0", NULL, "Chun Soft", "SNES / Super Famicom",
+	L"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TornekodungjRomInfo, snes_TornekodungjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Torneco no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)
+// Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)
+// https://www.romhacking.net/translations/480/
+// https://www.romhacking.net/translations/7405/
+
+static struct BurnRomInfo snes_TornekodungteRomDesc[] = {
+	{ "Torneko no Daibouken - Fushigi no Dungeon T-Eng v0.99 (2004-2025)(Magic Destiny, motke).sfc", 2097152, 0xeeafb152, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tornekodungte)
+STD_ROM_FN(snes_Tornekodungte)
+
+struct BurnDriver BurnDrvsnes_Tornekodungte = {
+	"snes_tornekodungte", NULL, NULL, NULL, "2004-2025",
+	"Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)\0", NULL, "Magic Destiny, motke", "SNES / Super Famicom",
+	L"Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TornekodungteRomInfo, snes_TornekodungteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Torneko no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)
 
 static struct BurnRomInfo snes_TornekodungtscRomDesc[] = {
-	{ "Torneco no Daibouken - Fushigi no Dungeon T-Chs v1.0 (2025)(Xiaoguihun, Feiyuying, Aren).sfc", 2097152, 0x2e14f887, BRF_ESS | BRF_PRG },
+	{ "Torneko no Daibouken - Fushigi no Dungeon T-Chs v1.0 (2025)(Xiaoguihun, Feiyuying, Aren).sfc", 2097152, 0x2e14f887, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tornekodungtsc)
 STD_ROM_FN(snes_Tornekodungtsc)
 
 struct BurnDriver BurnDrvsnes_Tornekodungtsc = {
-	"snes_tornekodungtsc", "snes_tornekodungj", NULL, NULL, "2025",
-	"Torneco no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)\0", NULL, "Xiaoguihun, Feiyuying, Aren", "SNES / Super Famicom",
-	L"Torneco no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)\0\u7279\u9c81\u5c3c\u514b\u7684\u5927\u5192\u9669 - \u4e0d\u53ef\u601d\u8bae\u7684\u8ff7\u5bab\0", NULL, L"\u5c0f\u9b3c\u6df7, \u98de\u96e8\u5f71, \u963f\u5203", NULL,
+	"snes_tornekodungtsc", "snes_tornekodungte", NULL, NULL, "2025",
+	"Torneko no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)\0", NULL, "Xiaoguihun, Feiyuying, Aren", "SNES / Super Famicom",
+	L"Torneko no Daibouken - Fushigi no Dungeon (Hack, Simplified Chinese v1.0)\0\u7279\u9c81\u5c3c\u514b\u7684\u5927\u5192\u9669 - \u4e0d\u53ef\u601d\u8bae\u7684\u8ff7\u5bab\0", NULL, L"\u5c0f\u9b3c\u6df7, \u98de\u96e8\u5f71, \u963f\u5203", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TornekodungtscRomInfo, snes_TornekodungtscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,

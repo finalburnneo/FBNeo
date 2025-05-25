@@ -4831,6 +4831,25 @@ struct BurnDriver BurnDrvsnes_Bugsbunnyj = {
 	512, 448, 4, 3
 };
 
+// Bulls vs Blazers and the NBA Playoffs (USA, Rev. 1)
+
+static struct BurnRomInfo snes_BullsvsblazersRomDesc[] = {
+	{ "Bulls vs Blazers and the NBA Playoffs (U, Rev 1)(1992)(Electronic Arts).sfc", 1048576, 0xc2e91694, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bullsvsblazers)
+STD_ROM_FN(snes_Bullsvsblazers)
+
+struct BurnDriver BurnDrvsnes_Bullsvsblazers = {
+	"snes_bullsvsblazers", NULL, NULL, NULL, "1992",
+	"Bulls vs Blazers and the NBA Playoffs (USA, Rev. 1)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_BullsvsblazersRomInfo, snes_BullsvsblazersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Gekitou Burning Pro Wrestling (Japan)
 
 static struct BurnRomInfo snes_BurnprowresjRomDesc[] = {
@@ -19300,6 +19319,44 @@ struct BurnDriver BurnDrvsnes_Natsukicb = {
 	512, 448, 4, 3
 };
 
+// NBA All-Star Challenge (USA)
+
+static struct BurnRomInfo snes_NbaallstarsRomDesc[] = {
+	{ "NBA All-Star Challenge (U)(1992)(LJN - Beam Software).sfc", 1048576, 0xa905a565, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbaallstars)
+STD_ROM_FN(snes_Nbaallstars)
+
+struct BurnDriver BurnDrvsnes_Nbaallstars = {
+	"snes_nbaallstars", NULL, NULL, NULL, "1992",
+	"NBA All-Star Challenge (USA)\0", NULL, "LJN - Beam Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_NbaallstarsRomInfo, snes_NbaallstarsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NBA Give 'n Go (USA)
+
+static struct BurnRomInfo snes_NbagivengoRomDesc[] = {
+	{ "NBA Give 'n Go (U)(1995)(Konami).sfc", 2097152, 0x68c8b643, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbagivengo)
+STD_ROM_FN(snes_Nbagivengo)
+
+struct BurnDriver BurnDrvsnes_Nbagivengo = {
+	"snes_nbagivengo", NULL, NULL, NULL, "1995",
+	"NBA Give 'n Go (USA)\0", NULL, "Konami", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_NbagivengoRomInfo, snes_NbagivengoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // NBA Hang Time (USA)
 
 static struct BurnRomInfo snes_NbahangtimeRomDesc[] = {
@@ -19353,6 +19410,82 @@ struct BurnDriver BurnDrvsnes_Nbajamte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_NbajamteRomInfo, snes_NbajamteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NBA Live 95 (USA)
+
+static struct BurnRomInfo snes_Nbalive95RomDesc[] = {
+	{ "NBA Live 95 (U)(1994)(Electronic Arts).sfc", 1572864, 0x1cd2393d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbalive95)
+STD_ROM_FN(snes_Nbalive95)
+
+struct BurnDriver BurnDrvsnes_Nbalive95 = {
+	"snes_nbalive95", NULL, NULL, NULL, "1994",
+	"NBA Live 95 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Nbalive95RomInfo, snes_Nbalive95RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NBA Live 96 (USA)
+
+static struct BurnRomInfo snes_Nbalive96RomDesc[] = {
+	{ "NBA Live 96 (U)(1995)(Electronic Arts).sfc", 1572864, 0x042a6495, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbalive96)
+STD_ROM_FN(snes_Nbalive96)
+
+struct BurnDriver BurnDrvsnes_Nbalive96 = {
+	"snes_nbalive96", NULL, NULL, NULL, "1995",
+	"NBA Live 96 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Nbalive96RomInfo, snes_Nbalive96RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NBA Live 97 (USA)
+
+static struct BurnRomInfo snes_Nbalive97RomDesc[] = {
+	{ "NBA Live 97 (U)(1996)(Electronic Arts).sfc", 2097152, 0x5115b8e5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbalive97)
+STD_ROM_FN(snes_Nbalive97)
+
+struct BurnDriver BurnDrvsnes_Nbalive97 = {
+	"snes_nbalive97", NULL, NULL, NULL, "1996",
+	"NBA Live 97 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Nbalive97RomInfo, snes_Nbalive97RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NBA Live 98 (USA)
+
+static struct BurnRomInfo snes_Nbalive98RomDesc[] = {
+	{ "NBA Live 98 (U)(1997)(Electronic Arts - THQ).sfc", 2097152, 0x514bfcb5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nbalive98)
+STD_ROM_FN(snes_Nbalive98)
+
+struct BurnDriver BurnDrvsnes_Nbalive98 = {
+	"snes_nbalive98", NULL, NULL, NULL, "1997",
+	"NBA Live 98 (USA)\0", NULL, "Electronic Arts - THQ", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Nbalive98RomInfo, snes_Nbalive98RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -22393,6 +22526,25 @@ struct BurnDriver BurnDrvsnes_Ranmarpgte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_RanmarpgteRomInfo, snes_RanmarpgteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// RapJam - Volume One (USA)
+
+static struct BurnRomInfo snes_RapjamvoloneRomDesc[] = {
+	{ "RapJam - Volume One (U)(1994)(Motown Software).sfc", 2097152, 0xadf4ffce, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rapjamvolone)
+STD_ROM_FN(snes_Rapjamvolone)
+
+struct BurnDriver BurnDrvsnes_Rapjamvolone = {
+	"snes_rapjamvolone", NULL, NULL, NULL, "1994",
+	"RapJam - Volume One (USA)\0", NULL, "Motown Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_RapjamvoloneRomInfo, snes_RapjamvoloneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30394,6 +30546,44 @@ struct BurnDriver BurnDrvsnes_Tecmosbb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_TecmosbbRomInfo, snes_TecmosbbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tecmo Super NBA Basketball (USA, SNS-NA)
+
+static struct BurnRomInfo snes_TecmosnbanaRomDesc[] = {
+	{ "Tecmo Super NBA Basketball (U, SNS-NA)(1993)(Tecmo).sfc", 1048576, 0xa002eda1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tecmosnbana)
+STD_ROM_FN(snes_Tecmosnbana)
+
+struct BurnDriver BurnDrvsnes_Tecmosnbana = {
+	"snes_tecmosnbana", "snes_tecmosnbaxm", NULL, NULL, "1993",
+	"Tecmo Super NBA Basketball (USA, SNS-NA)\0", "SNS-NA version doesn't featured Michael Jordan as player", "Tecmo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING  | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_TecmosnbanaRomInfo, snes_TecmosnbanaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tecmo Super NBA Basketball (USA, SNS-XM)
+
+static struct BurnRomInfo snes_TecmosnbaxmRomDesc[] = {
+	{ "Tecmo Super NBA Basketball (U, SNS-XM)(1993)(Tecmo).sfc", 1048576, 0x1b6f0b43, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tecmosnbaxm)
+STD_ROM_FN(snes_Tecmosnbaxm)
+
+struct BurnDriver BurnDrvsnes_Tecmosnbaxm = {
+	"snes_tecmosnbaxm", NULL, NULL, NULL, "1993",
+	"Tecmo Super NBA Basketball (USA, SNS-XM)\0", "SNS-XM version featured Michael Jordan as a Chicago Bulls player", "Tecmo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_TecmosnbaxmRomInfo, snes_TecmosnbaxmRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

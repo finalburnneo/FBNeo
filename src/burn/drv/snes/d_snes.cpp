@@ -31367,6 +31367,25 @@ struct BurnDriver BurnDrvsnes_Topgear3000 = {
 	512, 448, 4, 3
 };
 
+// Torneko no Daibouken - Fushigi no Dungeon (Japan)
+
+static struct BurnRomInfo snes_TornekodungjRomDesc[] = {
+	{ "Torneko no Daibouken - Fushigi no Dungeon (J)(1993)(Chun Soft).sfc", 1572864, 0x654e1be4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tornekodungj)
+STD_ROM_FN(snes_Tornekodungj)
+
+struct BurnDriver BurnDrvsnes_Tornekodungj = {
+	"snes_tornekodungj", "snes_tornekodungte", NULL, NULL, "1993",
+	"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0", NULL, "Chun Soft", "SNES / Super Famicom",
+	L"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TornekodungjRomInfo, snes_TornekodungjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)
 // https://www.romhacking.net/translations/480/
 // https://www.romhacking.net/translations/7405/
@@ -31384,25 +31403,6 @@ struct BurnDriver BurnDrvsnes_Tornekodungte = {
 	L"Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TornekodungteRomInfo, snes_TornekodungteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Torneko no Daibouken - Fushigi no Dungeon (Japan)
-
-static struct BurnRomInfo snes_TornekodungjRomDesc[] = {
-	{ "Torneko no Daibouken - Fushigi no Dungeon (J)(1993)(Chun Soft).sfc", 1572864, 0x654e1be4, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Tornekodungj)
-STD_ROM_FN(snes_Tornekodungj)
-
-struct BurnDriver BurnDrvsnes_Tornekodungj = {
-	"snes_tornekodungj", "snes_tornekodungte", NULL, NULL, "1993",
-	"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0", NULL, "Chun Soft", "SNES / Super Famicom",
-	L"Torneko no Daibouken - Fushigi no Dungeon (Japan)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
-	SNESGetZipName, snes_TornekodungjRomInfo, snes_TornekodungjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

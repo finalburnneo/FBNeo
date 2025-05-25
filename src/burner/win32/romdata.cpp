@@ -1381,6 +1381,27 @@ static char* RomdataGetZipName(const TCHAR* pszFileName)
 	return NULL;
 }
 
+static INT32 RomsetDuplicateName(const TCHAR* pszFileName)
+{
+	bool RDMode = (NULL != pDataRomDesc);
+	if (RDMode) return -2;
+
+	char* pszZipName = RomdataGetZipName(pszFileName);
+	if (NULL == pszZipName) return -3;
+
+	char szZipName[100] = { 0 };
+	strcpy(szZipName, pszZipName);
+/*
+	return:	-1 is success
+	0 ~ N	The name is duplicated
+	-1		Not in the list of drivers
+	-2		RomData mode
+	-3		No results were found in the Dat file
+*/
+	return BurnDrvGetIndex(szZipName);
+}
+
+// Checking in RomData mode is strictly prohibited
 INT32 RomDataCheck(const TCHAR* pszDatFile)
 {
 	if (NULL == pszDatFile) {
@@ -1395,23 +1416,22 @@ INT32 RomDataCheck(const TCHAR* pszDatFile)
 		return -2;
 	}
 
+
 	TCHAR szBackup[MAX_PATH] = { 0 };
 	_tcscpy(szBackup, szRomdataName);			// Backup szRomdataName
+	memset(szRomdataName, 0, sizeof(szRomdataName));
 	_tcscpy(szRomdataName, pszDatFile);
+	char* szDrvName = RomdataGetDrvName();		// Required szRomdataName
+	memset(szRomdataName, 0, sizeof(szRomdataName));
+	_tcscpy(szRomdataName, szBackup);			// Restore szRomdataName
 
-	const UINT32 nOldDrvSel = nBurnDrvActive;	// Backup nBurnDrvActive
-
-	char* szDrvName = RomdataGetDrvName();
-	nBurnDrvActive  = BurnDrvGetIndex(szDrvName);
+	const INT32 nDrvIdx  = BurnDrvGetIndex(szDrvName);
 
 	INT32 nRet = 0;
-	if (NULL == szDrvName)    nRet = -3;
-	if (-1 == nBurnDrvActive) nRet = -4;
+	if (NULL == szDrvName)  nRet = -3;
+	if (-1 == nDrvIdx)      nRet = -4;
 
 	if (nRet < 0) {
-		memset(szRomdataName, 0, sizeof(szRomdataName));
-		_tcscpy(szRomdataName, szBackup);
-		nBurnDrvActive = nOldDrvSel;
 		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), pszDatFile);
 		UINT32 nStrId = (-3 == nRet) ? IDS_ERR_NO_DRIVER_SELECTED : IDS_ERR_DRIVER_NOT_EXIST;
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(nStrId));
@@ -1419,19 +1439,45 @@ INT32 RomDataCheck(const TCHAR* pszDatFile)
 		return nRet;
 	}
 
+	nRet = RomsetDuplicateName(pszDatFile);
+	if (nRet >= 0) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), pszDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_ROMSET_DUPLICATE));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -5;
+	}
+/*
+	-2 and -3 should have no chance of being detected and are reserved for now
+*/
+	if (-2 == nRet) {
+		return -6;								// RomData mode
+	}
+	if (-3 == nRet) {
+		return -7;								// No romset specified,
+	}
+
+/*
+	Now we're going to go into RomData mode and check the integrity of the Romset
+	Exit RomData mode as soon as the check is complete
+*/
+	memset(szRomdataName, 0, sizeof(szRomdataName));
+	_tcscpy(szRomdataName, pszDatFile);
 	RomDataInit();								// Replace DrvName##RomDesc
+
+	const UINT32 nOldDrvSel = nBurnDrvActive;	// Backup nBurnDrvActive
+	nBurnDrvActive = nDrvIdx;					// Required nBurnDrvActive
 	nRet = BzipOpen(1);
 
-	if (1 == nRet) {
+	if (1 == nRet) {							// ROMs error report
 		BzipClose();
 		BzipOpen(0);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 	}
-
 	BzipClose();
-	RomDataExit();								// Restore DrvName##RomDesc
 	nBurnDrvActive = nOldDrvSel;				// Restore nBurnDrvActive
-	_tcscpy(szRomdataName, szBackup);
+
+	RomDataExit();								// Restore DrvName##RomDesc
+	_tcscpy(szRomdataName, szBackup);			// Restore szRomdataName
 
 	return nRet;
 }
@@ -2116,16 +2162,16 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 		// Double Click
 		if (pNMLV->hdr.code == NM_DBLCLK && pNMLV->hdr.idFrom == IDC_ROMDATA_LIST) {
 			if (nSelItem >= 0) {
-				memset(szRomdataName, 0, sizeof(szRomdataName));
+				TCHAR szSelDat[MAX_PATH] = { 0 };
 
 				LVITEM LvItem     = { 0 };
 				LvItem.iSubItem   = 3;	// Dat path column
-				LvItem.pszText    = szRomdataName;
-				LvItem.cchTextMax = sizeof(szRomdataName);
+				LvItem.pszText    = szSelDat;
+				LvItem.cchTextMax = sizeof(szSelDat);
 
 				SendMessage(hRDListView, LVM_GETITEMTEXT, (WPARAM)nSelItem, (LPARAM)&LvItem);
 
-				if (0 == RomDataCheck(szRomdataName)) {
+				if (0 == RomDataCheck(szSelDat)) {
 					RomDataManagerExit();
 					EndDialog(hDlg, 0);
 
@@ -2217,16 +2263,16 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 			switch (nCtrlID) {
 				case IDC_ROMDATA_PLAY_BUTTON: {
 					if (nSelItem >= 0) {
-						memset(szRomdataName, 0, sizeof(szRomdataName));
+						TCHAR szSelDat[MAX_PATH] = { 0 };
 
 						LVITEM LvItem     = { 0 };
 						LvItem.iSubItem   = 3;	// Dat path column
-						LvItem.pszText    = szRomdataName;
-						LvItem.cchTextMax = sizeof(szRomdataName);
+						LvItem.pszText    = szSelDat;
+						LvItem.cchTextMax = sizeof(szSelDat);
 
 						SendMessage(hRDListView, LVM_GETITEMTEXT, (WPARAM)nSelItem, (LPARAM)&LvItem);
 
-						if (0 == RomDataCheck(szRomdataName)) {
+						if (0 == RomDataCheck(szSelDat)) {
 							RomDataManagerExit();
 							EndDialog(hDlg, 0);
 

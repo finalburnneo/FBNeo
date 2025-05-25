@@ -380,6 +380,7 @@ BEGIN
 	IDS_ERR_NON_WORKING			"This game isn't working. Load it anyway?"
 	IDS_ERR_CDEMU_INI_FAIL		"Couldn't initialise CD emulation."
 	IDS_ERR_DRIVER_NOT_EXIST	"Driver does not exist."
+	IDS_ERR_ROMSET_DUPLICATE	"Romset has duplicate names with drivers in the driver list."
 	
 	IDS_ERR_MACRO_NOT_MAPPING	"Double-click the macro to change its mapping first"
 

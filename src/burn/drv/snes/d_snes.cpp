@@ -31400,7 +31400,7 @@ STD_ROM_FN(snes_Tornekodungte)
 struct BurnDriver BurnDrvsnes_Tornekodungte = {
 	"snes_tornekodungte", NULL, NULL, NULL, "2004-2025",
 	"Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)\0", NULL, "Magic Destiny, motke", "SNES / Super Famicom",
-	L"Torneko no Daibouken - Fushigi no Dungeon (Hack, English v0.99)\0\u30c8\u30eb\u30cd\u30b3\u306e\u5927\u5192\u967a - \u4e0d\u601d\u8b70\u306e\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TornekodungteRomInfo, snes_TornekodungteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,

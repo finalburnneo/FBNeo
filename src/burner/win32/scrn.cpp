@@ -980,32 +980,38 @@ static void OnDestroy(HWND)
 
 static void UpdatePreviousGameList()
 {
-	int nRecentIdenticalTo = -1;
+	INT32 nRecentIdenticalTo = -1;
+	TCHAR szDatFile[MAX_PATH] = { 0 };
 
 	// check if this game is identical to any of the listed in the recent menu
-	for (int x = 0; x < SHOW_PREV_GAMES; x++) {
+	for (INT32 x = 0; x < SHOW_PREV_GAMES; x++) {
 		if(!_tcscmp(BurnDrvGetText(DRV_NAME), szPrevGames[x])) {
+			if (NULL != pDataRomDesc) {
+				// Disables RomData games that are not in the RomData directory from being added to the list
+				if (!FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[x], NULL, 0), szDatFile))
+					return;
+			}
 			nRecentIdenticalTo = x;
 		}
 	}
 
 	// create unshuffled (temp) list
 	TCHAR szTmp[SHOW_PREV_GAMES][64];
-	for (int x = 0; x < SHOW_PREV_GAMES; x++) {
+	for (INT32 x = 0; x < SHOW_PREV_GAMES; x++) {
 		_tcscpy(szTmp[x], szPrevGames[x]);
 	}
 
 	switch (nRecentIdenticalTo) {
 		case -1:
 			// game was not in recents list, add it to the top
-			for (int i = 1; i < SHOW_PREV_GAMES; i++) {
+			for (INT32 i = 1; i < SHOW_PREV_GAMES; i++) {
 				_tcscpy(szPrevGames[i], szTmp[i - 1]);
 			}
 			_tcscpy(szPrevGames[0], BurnDrvGetText(DRV_NAME));
 			break;
 		default:
 			// game was already in the recents list, move it to the top
-			for (int i = 0; i <= nRecentIdenticalTo; i++) {
+			for (INT32 i = 0; i <= nRecentIdenticalTo; i++) {
 				_tcscpy(szPrevGames[i], szTmp[(i + nRecentIdenticalTo) % (nRecentIdenticalTo + 1)]);
 			}
 			break;
@@ -1017,74 +1023,35 @@ static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is calle
 // Compact driver loading module
 int BurnerLoadDriver(TCHAR *szDriverName)
 {
-	char szBuf[100] = { 0 };
-	strcpy(szBuf, TCHARToANSI(szDriverName, NULL, 0));
+	TCHAR szBuf[100] = { 0 };
+	_tcscpy(szBuf, szDriverName);
 
-	bool bFinder = true;
-	bool bRDMode = (NULL != pDataRomDesc);
-	bool bGameInList = (BurnDrvGetIndex(szBuf) >= 0);
-	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
-
-	if (bRDMode) {			// RomData mode
-		if (bGameInList) {	// szBuf must be a running RomData game
-			_tcscpy(szRDDatBackup, szRomdataName);
-			bRDMode = true;
-		} else {
-/*
-			szBuf is not a running RomData game, or is a non-RomData game
-			true: szBuf is not a running RomData game
-			false:szBuf is a non-RomData game, or a non-existent RomData game
-*/
-			bFinder = bRDMode = FindZipNameFromDats(szAppRomdataPath, szBuf, szRDDatBackup);
-		}
-	} else {				// non-RomData mode
-		if (bGameInList) {	// szBuf is a non-RomData game
-			bRDMode = false;
-		} else {			// szBuf is a RomData game (It's possible it doesn't exist)
-			bFinder = bRDMode = FindZipNameFromDats(szAppRomdataPath, szBuf, szRDDatBackup);
-		}
-	}
+	INT32 nOldDrvSelect = nBurnDrvActive;
 
 #ifdef INCLUDE_AVI_RECORDING
 	AviStop();
 #endif
 
-	DrvExit();				// This will exit RomData mode.
+	DrvExit();				// This will exit RomData mode
 
-	INT32 nDrvIdx = BurnDrvGetIndex(szBuf);
-	if (nDrvIdx >= 0) {
-		bFinder = true, bRDMode = false;
+	INT32 nDrvIdx = -1;
+	bool bRDMode = false, bFinder = false;;
+	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
+
+	if (bFinder = FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szBuf, NULL, 0), szRDDatBackup)) {
+		if ((nDrvIdx = RomDataCheck(szRDDatBackup)) >= 0) {
+			bRDMode = true;
+		}
 	}
-
-	if (!bFinder){			// Eventually identify if szBuf is a non-existent RomData game
-		bGameInList = (nDrvIdx >= 0);
-		if (!bGameInList) {
-			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), ANSIToTCHAR(szBuf, NULL, 0));
-			FBAPopupDisplay(PUF_TYPE_ERROR);
+	if (!bFinder || !bRDMode) {
+		if (-1 == (nDrvIdx = RomdataGetDrvIndex(szBuf))) {
 			return 1;
 		}
-		bRDMode = false;
 	}
-/*
-	Now szBuf must be found
-*/
-	if (bRDMode) {			// RomData mode must be entered or the sequence szBuf will not be found
-		if (0 != RomDataCheck(szRDDatBackup)) return 1;
-		_tcscpy(szRomdataName, szRDDatBackup);
-		RomDataInit();
-		bGameInList = ((nDrvIdx = BurnDrvGetIndex(szBuf)) >= 0);
-		if (!bGameInList) {	// There seems to be no such possibility
-			RomDataExit();
-			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), ANSIToTCHAR(szBuf, NULL, 0));
-			FBAPopupDisplay(PUF_TYPE_ERROR);
-			return 1;
-		}
-		RomDataExit();
-	}
+	nDialogSelect = nOldDlgSelected = nDrvIdx;
+	nBurnDrvActive = nOldDrvSelect;
 
 	bLoading = 1;
-	nDialogSelect = nOldDlgSelected = nDrvIdx;
-
 	SplashDestroy(1);
 	StopReplay();
 
@@ -1205,6 +1172,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 	switch (id) {
 		case MENU_LOAD: {
+			if (NULL != pDataRomDesc) RomDataExit();
+
 			int nGame;
 
 			if(kNetGame || !UseDialogs() || bLoading) {
@@ -1251,32 +1220,27 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		}
 
 		case MENU_LOAD_ROMDATA: {
-			if (NULL == pDataRomDesc) {
-				TCHAR szFilter[150] = { 0 };
-				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
-				memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
+			TCHAR szFilter[150] = { 0 };
+			_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
+			memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
 
-				// '/' will result in a FNERR_INVALIDFILENAME error
-				TCHAR szInitialDir[MAX_PATH] = { 0 };
-				_tcscpy(szInitialDir, szAppRomdataPath);
+			// '/' will result in a FNERR_INVALIDFILENAME error
+			TCHAR szInitialDir[MAX_PATH] = { 0 }, szSelDat[MAX_PATH] = { 0 };
+			_tcscpy(szInitialDir, szAppRomdataPath);
 
-				memset(&ofn, 0, sizeof(OPENFILENAME));
-				ofn.lStructSize     = sizeof(OPENFILENAME);
-				ofn.hwndOwner       = hScrnWnd;
-				ofn.lpstrFilter     = szFilter;
-				ofn.lpstrFile       = StrReplace(szRomdataName, _T('/'), _T('\\'));
-				ofn.nMaxFile        = sizeof(szRomdataName) / sizeof(TCHAR);
-				ofn.lpstrInitialDir = StrReplace(szInitialDir,  _T('/'), _T('\\'));
-				ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-				ofn.lpstrDefExt     = _T("dat");
+			memset(&ofn, 0, sizeof(OPENFILENAME));
+			ofn.lStructSize     = sizeof(OPENFILENAME);
+			ofn.hwndOwner       = hScrnWnd;
+			ofn.lpstrFilter     = szFilter;
+			ofn.lpstrFile       = StrReplace(szSelDat, _T('/'), _T('\\'));
+			ofn.nMaxFile        = sizeof(szSelDat) / sizeof(TCHAR);
+			ofn.lpstrInitialDir = StrReplace(szInitialDir, _T('/'), _T('\\'));
+			ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+			ofn.lpstrDefExt     = _T("dat");
 
-				BOOL nOpenDlg = GetOpenFileName(&ofn);
-/*
-				DWORD dwError = CommDlgExtendedError();
-*/
-				if (FALSE == nOpenDlg)	break;
-				BurnerLoadDriver(ANSIToTCHAR(RomdataGetZipName(szRomdataName), NULL, 0));
-			}
+			BOOL nOpenDlg = GetOpenFileName(&ofn);
+			if (FALSE == nOpenDlg)	break;
+			BurnerLoadDriver(RomdataGetZipName(szSelDat));
 			break;
 		}
 

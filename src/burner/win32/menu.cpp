@@ -1298,12 +1298,18 @@ void MenuUpdate()
 		menuItemInfo.fMask = MIIM_TYPE;
 
 		if (_tcslen(szPrevGames[i])) {
-			for (unsigned int j = 0; j < nBurnDrvCount; j++) {
-				nBurnDrvActive = j;
-				if (!_tcsicmp(szPrevGames[i], BurnDrvGetText(DRV_NAME))) {
-					_stprintf(szText, _T("%s\t%s"), BurnDrvGetText(DRV_FULLNAME), BurnDrvGetText(DRV_NAME));
+			// Find RomData directory (recursive or not depending on settings)
+			TCHAR szDatFile[MAX_PATH] = { 0 };
+			if (FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[i], NULL, 0), szDatFile)) {
+				_stprintf(szText, _T("%s\t%s"), RomdataGetFullName(szDatFile), szPrevGames[i]);
+			} else {
+				for (unsigned int j = 0; j < nBurnDrvCount; j++) {
+					nBurnDrvActive = j;
+					if (!_tcsicmp(szPrevGames[i], BurnDrvGetText(DRV_NAME))) {
+						_stprintf(szText, _T("%s\t%s"), BurnDrvGetText(DRV_FULLNAME), BurnDrvGetText(DRV_NAME));
 
-					break;
+						break;
+					}
 				}
 			}
 
@@ -1328,7 +1334,7 @@ void MenuUpdate()
 			menuItemInfo.cch = _tcslen(szText2);
 
 			SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
-			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, ((NULL == pDataRomDesc) ? MF_ENABLED : MF_GRAYED) | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_ENABLED | MF_BYCOMMAND);
 		} else {
 			_tcscpy(szText, FBALoadStringEx(hAppInst, IDS_MENU_6, true));
 
@@ -1482,21 +1488,6 @@ void MenuEnableItems()
 #endif
 
 	if (bDrvOkay) {
-		if (NULL == pDataRomDesc) {
-			EnableMenuItem(hMenu, MENU_LOAD,     (kNetGame ? MF_GRAYED : MF_ENABLED) | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_STARTNET, (kNetGame ? MF_GRAYED : MF_ENABLED) | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_START_NEOGEO_MVS,	MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_LOAD_NEOCD,			MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_START_NEOGEO_CD,		MF_ENABLED | MF_BYCOMMAND);
-		} else {
-			EnableMenuItem(hMenu, MENU_LOAD,				MF_GRAYED  | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_STARTNET,			MF_GRAYED  | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_START_NEOGEO_MVS,	MF_GRAYED  | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_LOAD_NEOCD,			MF_GRAYED  | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_START_NEOGEO_CD,		MF_GRAYED  | MF_BYCOMMAND);
-		}
-		EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,		MF_GRAYED  | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_QUIT,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INPUT,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FORCE60HZ,			MF_GRAYED  | MF_BYCOMMAND);
@@ -1570,6 +1561,10 @@ void MenuEnableItems()
 		}
 
 		if (kNetGame) {
+			EnableMenuItem(hMenu, MENU_LOAD,			MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_STARTNET,		MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_EXIT,			MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_SETCPUCLOCK,		MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_RESETCPUCLOCK,	MF_GRAYED | MF_BYCOMMAND);
@@ -1578,6 +1573,10 @@ void MenuEnableItems()
 			EnableMenuItem(hMenu, MENU_ENABLECHEAT,		MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_SNAPFACT,		MF_GRAYED | MF_BYCOMMAND);
 		} else {
+			EnableMenuItem(hMenu, MENU_LOAD,			MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER, MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_STARTNET,		MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_EXIT,			MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_SETCPUCLOCK,		MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_RESETCPUCLOCK,	(nBurnCPUSpeedAdjust != 0x0100 ? MF_ENABLED : MF_GRAYED) | MF_BYCOMMAND);

@@ -373,7 +373,10 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 // romdata.cpp
 extern bool bRDListScanSub;
 TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
-char* RomdataGetZipName(const TCHAR* pszFileName);
+INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName);
+TCHAR* RomdataGetZipName(const TCHAR* pszFileName);
+TCHAR* RomdataGetDrvName(const TCHAR* pszFileName);
+TCHAR* RomdataGetFullName(const TCHAR* pszFileName);
 bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat);
 INT32 RomDataManagerInit();
 INT32 RomDataCheck(const TCHAR* pszDatFile);

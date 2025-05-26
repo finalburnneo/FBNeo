@@ -51389,6 +51389,44 @@ struct BurnDriver BurnSpecTardigrade = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Telethugs (English) (128K) (HB)
+
+static struct BurnRomInfo SpecTelehugsen128RomDesc[] = {
+	{ "Telethugs EN 128K (2025)(Amaweks).tap", 57632, 0x4d583b43, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTelehugsen128, SpecTelehugsen128, Spec128)
+STD_ROM_FN(SpecTelehugsen128)
+
+struct BurnDriver BurnSpecTelehugsen128 = {
+	"spec_telehugsen128", NULL, "spec_spec128", NULL, "2025",
+	"Telethugs (English) (128K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecTelehugsen128RomInfo, SpecTelehugsen128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Telethugs (Portuguese) (128K) (HB)
+
+static struct BurnRomInfo SpecTelehugspt128RomDesc[] = {
+	{ "Telethugs PT 128K (2025)(Amaweks).tap", 57650, 0x2123919c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTelehugspt128, SpecTelehugspt128, Spec128)
+STD_ROM_FN(SpecTelehugspt128)
+
+struct BurnDriver BurnSpecTelehugspt128 = {
+	"spec_telehugspt128", "spec_telehugsen128", "spec_spec128", NULL, "2025",
+	"Telethugs (Portuguese) (128K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecTelehugspt128RomInfo, SpecTelehugspt128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Telethugs (English) (48K) (HB)
 
 static struct BurnRomInfo SpecTelehugsenRomDesc[] = {
@@ -51399,10 +51437,10 @@ STDROMPICKEXT(SpecTelehugsen, SpecTelehugsen, Spectrum)
 STD_ROM_FN(SpecTelehugsen)
 
 struct BurnDriver BurnSpecTelehugsen = {
-	"spec_telehugsen", NULL, "spec_spectrum", NULL, "2025",
+	"spec_telehugsen", "spec_telehugsen128", "spec_spectrum", NULL, "2025",
 	"Telethugs (English) (48K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecTelehugsenRomInfo, SpecTelehugsenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -51418,7 +51456,7 @@ STDROMPICKEXT(SpecTelehugspt, SpecTelehugspt, Spectrum)
 STD_ROM_FN(SpecTelehugspt)
 
 struct BurnDriver BurnSpecTelehugspt = {
-	"spec_telehugspt", "spec_telehugsen", "spec_spectrum", NULL, "2025",
+	"spec_telehugspt", "spec_telehugsen128", "spec_spectrum", NULL, "2025",
 	"Telethugs (Portuguese) (48K) (HB)\0", NULL, "Amaweks", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,

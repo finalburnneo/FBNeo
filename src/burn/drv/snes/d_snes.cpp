@@ -3615,6 +3615,25 @@ struct BurnDriver BurnDrvsnes_Bazooblitz = {
 	512, 478, 4, 3
 };
 
+// Bill Walsh College Football (USA)
+
+static struct BurnRomInfo snes_BillwalshfootballRomDesc[] = {
+	{ "Bill Walsh College Football (U)(1994)(Electronic Arts).sfc", 1048576, 0x25391c9f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Billwalshfootball)
+STD_ROM_FN(snes_Billwalshfootball)
+
+struct BurnDriver BurnDrvsnes_Billwalshfootball = {
+	"snes_billwalshfootball", NULL, NULL, NULL, "1994",
+	"Bill Walsh College Football (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_BillwalshfootballRomInfo, snes_BillwalshfootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Bing Bing! Bingo (Japan)
 
 static struct BurnRomInfo snes_BbbingoRomDesc[] = {
@@ -5097,6 +5116,25 @@ struct BurnDriver BurnDrvsnes_Cannonfoder = {
 	512, 448, 4, 3
 };
 
+// Capcom's MVP Football (USA)
+
+static struct BurnRomInfo snes_CapcommvpfootballRomDesc[] = {
+	{ "Capcom's MVP Football (U)(1992)(Capcom).sfc", 1048576, 0xbd0a0c0e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Capcommvpfootball)
+STD_ROM_FN(snes_Capcommvpfootball)
+
+struct BurnDriver BurnDrvsnes_Capcommvpfootball = {
+	"snes_capcommvpfootball", NULL, NULL, NULL, "1992",
+	"Capcom's MVP Football (USA)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_CapcommvpfootballRomInfo, snes_CapcommvpfootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Captain America and the Avengers (USA)
 
 static struct BurnRomInfo snes_CapamericaRomDesc[] = {
@@ -6157,6 +6195,25 @@ struct BurnDriver BurnDrvsnes_Clue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 6, HARDWARE_SNES, GBF_BOARD, 0,
 	SNESGetZipName, snes_ClueRomInfo, snes_ClueRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// College Football USA 97 (USA)
+
+static struct BurnRomInfo snes_Collegefootballusa97RomDesc[] = {
+	{ "College Football USA 97 (U)(1996)(Electronic Arts).sfc", 2097152, 0xa27940c1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Collegefootballusa97)
+STD_ROM_FN(snes_Collegefootballusa97)
+
+struct BurnDriver BurnDrvsnes_Collegefootballusa97 = {
+	"snes_collegefootballusa97", NULL, NULL, NULL, "1996",
+	"College Football USA 97 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Collegefootballusa97RomInfo, snes_Collegefootballusa97RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -9198,6 +9255,25 @@ struct BurnDriver BurnDrvsnes_Emeraldragon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_EmeraldragonRomInfo, snes_EmeraldragonRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Emmitt Smith Football (USA)
+
+static struct BurnRomInfo snes_EmmittsmithfootballusaRomDesc[] = {
+	{ "Emmitt Smith Football (U)(1995)(JVC Musical Industries).sfc", 1048576, 0x09c3c0ef, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Emmittsmithfootballusa)
+STD_ROM_FN(snes_Emmittsmithfootballusa)
+
+struct BurnDriver BurnDrvsnes_Emmittsmithfootballusa = {
+	"snes_emmittsmithfootballusa", NULL, NULL, NULL, "1995",
+	"Emmitt Smith Football (USA)\0", NULL, "JVC Musical Industries", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_EmmittsmithfootballusaRomInfo, snes_EmmittsmithfootballusaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -14549,6 +14625,44 @@ struct BurnDriver BurnDrvsnes_Joemacj = {
 	512, 448, 4, 3
 };
 
+// John Madden Football (USA)
+
+static struct BurnRomInfo snes_JohnmaddenfootballRomDesc[] = {
+	{ "John Madden Football (U)(1991)(Electronic Arts).sfc", 524288, 0x796294c6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Johnmaddenfootball)
+STD_ROM_FN(snes_Johnmaddenfootball)
+
+struct BurnDriver BurnDrvsnes_Johnmaddenfootball = {
+	"snes_johnmaddenfootball", NULL, NULL, NULL, "1991",
+	"John Madden Football (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_JohnmaddenfootballRomInfo, snes_JohnmaddenfootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// John Madden Football '93 (USA, Rev. 1)
+
+static struct BurnRomInfo snes_Johnmaddenfootball93RomDesc[] = {
+	{ "John Madden Football '93 (U, Rev 1)(1992)(Electronic Arts).sfc", 1048576, 0xdc5a250b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Johnmaddenfootball93)
+STD_ROM_FN(snes_Johnmaddenfootball93)
+
+struct BurnDriver BurnDrvsnes_Johnmaddenfootball93 = {
+	"snes_johnmaddenfootball93", NULL, NULL, NULL, "1992",
+	"John Madden Football '93 (USA, Rev. 1)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Johnmaddenfootball93RomInfo, snes_Johnmaddenfootball93RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // JoJo no Kimyou na Bouken (Japan)
 
 static struct BurnRomInfo snes_JojobajRomDesc[] = {
@@ -17072,6 +17186,44 @@ struct BurnDriver BurnDrvsnes_Madden96 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_Madden96RomInfo, snes_Madden96RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Madden NFL '97 (USA)
+
+static struct BurnRomInfo snes_Madden97RomDesc[] = {
+	{ "Madden NFL '97 (U)(1996)(Electronic Arts).sfc", 1572864, 0xabcf026e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Madden97)
+STD_ROM_FN(snes_Madden97)
+
+struct BurnDriver BurnDrvsnes_Madden97 = {
+	"snes_madden97", NULL, NULL, NULL, "1996",
+	"Madden NFL '97 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Madden97RomInfo, snes_Madden97RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Madden NFL '98 (USA)
+
+static struct BurnRomInfo snes_Madden98RomDesc[] = {
+	{ "Madden NFL '98 (U)(1997)(Electronic Arts).sfc", 2097152, 0xcf10cc01, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Madden98)
+STD_ROM_FN(snes_Madden98)
+
+struct BurnDriver BurnDrvsnes_Madden98 = {
+	"snes_madden98", NULL, NULL, NULL, "1997",
+	"Madden NFL '98 (USA)\0", NULL, "Electronic Arts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Madden98RomInfo, snes_Madden98RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19695,6 +19847,25 @@ struct BurnDriver BurnDrvsnes_Ncaabasketball = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_NcaabasketballRomInfo, snes_NcaabasketballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// NCAA Football (USA)
+
+static struct BurnRomInfo snes_NcaafootballRomDesc[] = {
+	{ "NCAA Football (U)(1994)(Mindscape - Software Toolworks).sfc", 1048576, 0x2641c12a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ncaafootball)
+STD_ROM_FN(snes_Ncaafootball)
+
+struct BurnDriver BurnDrvsnes_Ncaafootball = {
+	"snes_ncaafootball", NULL, NULL, NULL, "1994",
+	"NCAA Football (USA)\0", NULL, "Mindscape - Software Toolworks", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_NcaafootballRomInfo, snes_NcaafootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -32201,6 +32372,25 @@ struct BurnDriver BurnDrvsnes_Troddlers = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_TroddlersRomInfo, snes_TroddlersRomName, NULL, NULL, NULL, NULL, SNESMouseInputInfo, SNESMouseDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Troy Aikman NFL Football (USA)
+
+static struct BurnRomInfo snes_TroyaikmanfootballRomDesc[] = {
+	{ "Troy Aikman NFL Football (U)(1994)(Tradewest).sfc", 1572864, 0x0b26446b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Troyaikmanfootball)
+STD_ROM_FN(snes_Troyaikmanfootball)
+
+struct BurnDriver BurnDrvsnes_Troyaikmanfootball = {
+	"snes_troyaikmanfootball", NULL, NULL, NULL, "1994",
+	"Troy Aikman NFL Football (USA)\0", NULL, "Tradewest", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_TroyaikmanfootballRomInfo, snes_TroyaikmanfootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

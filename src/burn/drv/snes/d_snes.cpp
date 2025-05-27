@@ -5382,6 +5382,25 @@ struct BurnDriver BurnDrvsnes_Cardmaster = {
 	512, 448, 4, 3
 };
 
+// Cal Ripken Jr. Baseball (USA)
+
+static struct BurnRomInfo snes_CalripkenjrbaseballRomDesc[] = {
+	{ "Cal Ripken Jr. Baseball (U)(1992)(Mindscape).sfc", 1048576, 0xce2eaa41, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Calripkenjrbaseball)
+STD_ROM_FN(snes_Calripkenjrbaseball)
+
+struct BurnDriver BurnDrvsnes_Calripkenjrbaseball = {
+	"snes_calripkenjrbaseball", NULL, NULL, NULL, "1992",
+	"Cal Ripken Jr. Baseball (USA)\0", NULL, "Mindscape", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_CalripkenjrbaseballRomInfo, snes_CalripkenjrbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Carrier Aces (USA)
 
 static struct BurnRomInfo snes_CarrieracesRomDesc[] = {
@@ -11110,6 +11129,25 @@ struct BurnDriver BurnDrvsnes_Flyingherote = {
 	512, 448, 4, 3
 };
 
+// Frank Thomas Big Hurt Baseball (USA)
+
+static struct BurnRomInfo snes_FrankthomasbaseballRomDesc[] = {
+	{ "Frank Thomas Big Hurt Baseball (U)(1995)(Acclaim Entertainment).sfc", 3145728, 0x21239dda, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Frankthomasbaseball)
+STD_ROM_FN(snes_Frankthomasbaseball)
+
+struct BurnDriver BurnDrvsnes_Frankthomasbaseball = {
+	"snes_frankthomasbaseball", NULL, NULL, NULL, "1995",
+	"Frank Thomas Big Hurt Baseball (USA)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_FrankthomasbaseballRomInfo, snes_FrankthomasbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Front Mission - Gun Hazard (Japan)
 
 static struct BurnRomInfo snes_FmgunhazardjRomDesc[] = {
@@ -15267,6 +15305,25 @@ struct BurnDriver BurnDrvsnes_Kendorage = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_KendorageRomInfo, snes_KendorageRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ken Griffey Jr. Presents Major League Baseball (USA, Rev. 1)
+
+static struct BurnRomInfo snes_KengriffeymlbaseballRomDesc[] = {
+	{ "Ken Griffey Jr. Presents Major League Baseball (U, Rev 1)(1994)(Nintendo).sfc", 2097152, 0x12b592f2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kengriffeymlbaseball)
+STD_ROM_FN(snes_Kengriffeymlbaseball)
+
+struct BurnDriver BurnDrvsnes_Kengriffeymlbaseball = {
+	"snes_kengriffeymlbaseball", NULL, NULL, NULL, "1994",
+	"Ken Griffey Jr. Presents Major League Baseball (USA, Rev. 1)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_KengriffeymlbaseballRomInfo, snes_KengriffeymlbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -20421,6 +20478,25 @@ struct BurnDriver BurnDrvsnes_Noescape = {
 	512, 448, 4, 3
 };
 
+// Nolan Ryan's Baseball (USA)
+
+static struct BurnRomInfo snes_NolanryanbaseballRomDesc[] = {
+	{ "Nolan Ryan's Baseball (U)(1991)(Romstar).sfc", 524288, 0x1919baff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nolanryanbaseball)
+STD_ROM_FN(snes_Nolanryanbaseball)
+
+struct BurnDriver BurnDrvsnes_Nolanryanbaseball = {
+	"snes_nolanryanbaseball", NULL, NULL, NULL, "1991",
+	"Nolan Ryan's Baseball (USA)\0", NULL, "Romstar", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_NolanryanbaseballRomInfo, snes_NolanryanbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Nosferatu (USA)
 
 static struct BurnRomInfo snes_NosferatuRomDesc[] = {
@@ -23005,6 +23081,25 @@ struct BurnDriver BurnDrvsnes_Redlinef1racer = {
 	512, 448, 4, 3
 };
 
+// Relief Pitcher (USA)
+
+static struct BurnRomInfo snes_ReliefpitcherRomDesc[] = {
+	{ "Relief Pitcher (U))(1993)(Tengen).sfc", 2097152, 0x2f48ff14, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Reliefpitcher)
+STD_ROM_FN(snes_Reliefpitcher)
+
+struct BurnDriver BurnDrvsnes_Reliefpitcher = {
+	"snes_reliefpitcher", NULL, NULL, NULL, "1993",
+	"Relief Pitcher (USA)\0", NULL, "Tengen", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_ReliefpitcherRomInfo, snes_ReliefpitcherRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Return of Double Dragon (Japan)
 
 static struct BurnRomInfo snes_ReturndoubledragonRomDesc[] = {
@@ -23458,6 +23553,25 @@ struct BurnDriver BurnDrvsnes_Rockyrodent = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_RockyrodentRomInfo, snes_RockyrodentRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Roger Clemens' MVP Baseball (USA, Rev. 1)
+
+static struct BurnRomInfo snes_RogerclemensbaseballRomDesc[] = {
+	{ "Roger Clemens' MVP Baseball (U, Rev 1)(1992)(LJN).sfc", 1048576, 0xa012d1ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rogerclemensbaseball)
+STD_ROM_FN(snes_Rogerclemensbaseball)
+
+struct BurnDriver BurnDrvsnes_Rogerclemensbaseball = {
+	"snes_rogerclemensbaseball", NULL, NULL, NULL, "1992",
+	"Roger Clemens' MVP Baseball (USA, Rev. 1)\0", NULL, "LJN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_RogerclemensbaseballRomInfo, snes_RogerclemensbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -24165,6 +24279,25 @@ struct BurnDriver BurnDrvsnes_Sb2020 = {
 	512, 448, 4, 3
 };
 
+// Super Baseball Simulator 1.000 (USA)
+
+static struct BurnRomInfo snes_Sbaseballsimulator1000RomDesc[] = {
+	{ "Super Baseball Simulator 1.000 (U)(1991)(Culture Brain).sfc", 524288, 0xaa760fec, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sbaseballsimulator1000)
+STD_ROM_FN(snes_Sbaseballsimulator1000)
+
+struct BurnDriver BurnDrvsnes_Sbaseballsimulator1000 = {
+	"snes_sbaseballsimulator1000", NULL, NULL, NULL, "1991",
+	"Super Baseball Simulator 1.000 (USA)\0", NULL, "Culture Brain", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Sbaseballsimulator1000RomInfo, snes_Sbaseballsimulator1000RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Bases Loaded (USA)
 
 static struct BurnRomInfo snes_SbloadedRomDesc[] = {
@@ -24199,6 +24332,25 @@ struct BurnDriver BurnDrvsnes_Sbloadedii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_SbloadediiRomInfo, snes_SbloadediiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Bases Loaded 3 - License to Steal (USA)
+
+static struct BurnRomInfo snes_Sbloaded3ltsRomDesc[] = {
+	{ "Super Bases Loaded 3 - License to Steal (U)(1994)(Jaleco).sfc", 2097152, 0xf0540d1b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sbloaded3lts)
+STD_ROM_FN(snes_Sbloaded3lts)
+
+struct BurnDriver BurnDrvsnes_Sbloaded3lts = {
+	"snes_sbloaded3lts", NULL, NULL, NULL, "1994",
+	"Super Bases Loaded 3 - License to Steal (USA)\0", NULL, "Jaleco", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Sbloaded3ltsRomInfo, snes_Sbloaded3ltsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -27168,6 +27320,25 @@ struct BurnDriver BurnDrvsnes_Spirou = {
 	512, 448, 4, 3
 };
 
+// Sporting News, The - Power Baseball (USA)
+
+static struct BurnRomInfo snes_SportingnewsbaseballRomDesc[] = {
+	{ "Sporting News, The - Power Baseball (U)(1995)(LJN).sfc", 1048576, 0x315af696, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sportingnewsbaseball)
+STD_ROM_FN(snes_Sportingnewsbaseball)
+
+struct BurnDriver BurnDrvsnes_Sportingnewsbaseball = {
+	"snes_sportingnewsbaseball", NULL, NULL, NULL, "1995",
+	"Sporting News, The - Power Baseball (USA)\0", NULL, "LJN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_SportingnewsbaseballRomInfo, snes_SportingnewsbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Spriggan Powered (Japan)
 
 static struct BurnRomInfo snes_SprigganpowRomDesc[] = {
@@ -27259,6 +27430,25 @@ struct BurnDriver BurnDrvsnes_Spuyopuyoj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SpuyopuyojRomInfo, snes_SpuyopuyojRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super R.B.I. Baseball (USA)
+
+static struct BurnRomInfo snes_SuperrbibaseballRomDesc[] = {
+	{ "Super R.B.I. Baseball (U)(1995)(Time Warner).sfc", 1048576, 0x31db6cfe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superrbibaseball)
+STD_ROM_FN(snes_Superrbibaseball)
+
+struct BurnDriver BurnDrvsnes_Superrbibaseball = {
+	"snes_superrbibaseball", NULL, NULL, NULL, "1995",
+	"Super R.B.I. Baseball (USA)\0", NULL, "Time Warner", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_SuperrbibaseballRomInfo, snes_SuperrbibaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -940,6 +940,28 @@ static INT32 ThoopRomLoad()
 	return 0;
 }
 
+static INT32 ThoopaRomLoad()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x380000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x300000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x280000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x200000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x180000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x100000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  8, 1)) return 1;
+
+	DrvGfxReorder();
+
+	if (BurnLoadRom(DrvSndROM  + 0x000000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM  + 0x080000, 11, 1)) return 1;
+
+	return 0;
+}
+
 static INT32 SquashRomLoad()
 {
 	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -992,6 +1014,11 @@ static INT32 BigkarnkRomLoad()
 static INT32 ThoopInit()
 {
 	return DrvInit(ThoopRomLoad,	0x0e, 0);
+}
+
+static INT32 ThoopaInit()
+{
+	return DrvInit(ThoopaRomLoad,	0x0e, 0);
 }
 
 static INT32 SquashInit()
@@ -1672,7 +1699,7 @@ static struct BurnRomInfo thoopRomDesc[] = {
 	
 	{ "mu_mu-1_6541_gal16v8as.f2",  0x00117, 0xd5ed5985, 4 | BRF_OPT },    //  7 plds
 	{ "mu_mu-4_664c_gal16v8as.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },    //  8
-	{ "thunderhoop_gal20v8.d21",    0x00157, 0xa715e392, 4 | BRF_OPT },    //  9
+	{ "mu_mu-2_gal20v8.d21",    	0x00157, 0xa715e392, 4 | BRF_OPT },    //  9
 	{ "mu_mu-3_gal20v8as.h11",      0x00157, 0x51e34bc2, 4 | BRF_OPT },    // 10
 };
 
@@ -1686,6 +1713,196 @@ struct BurnDriver BurnDrvThoop = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoopRomInfo, thoopRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
 	ThoopInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Thunder Hoop (ver. 1, checksum 02a09fcd)
+
+static struct BurnRomInfo thoopaRomDesc[] = {
+	{ "tachado_th_4_europa_deba_22-7-92_27c040.bin",	0x080000, 0x68d52248, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tachado_th_3_1eeb_22-7-92_27c020.bin",			0x040000, 0x84e6c202, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "th_12_3455_27c4001.bin",			0x080000, 0xc1bacaef, 2 | BRF_GRA },           				   //  2 Tiles and Sprites
+	{ "th_8_9565_27c4001.bin",			0x080000, 0x4e989ca5, 2 | BRF_GRA },           				   //  3
+	{ "th_11_f8cd_27c4001.bin",			0x080000, 0x0805a690, 2 | BRF_GRA },           				   //  4
+	{ "th_7_dd91_27c4001.bin",			0x080000, 0x3af227c5, 2 | BRF_GRA },           				   //  5
+	{ "th_10_250d_27c4001.bin",			0x080000, 0x1f7778d3, 2 | BRF_GRA },           				   //  6
+	{ "th_6_54b2_27c4001.bin",			0x080000, 0x817618e0, 2 | BRF_GRA },           				   //  7
+	{ "th_9_6f76_27c4001.bin",			0x080000, 0x7a396cb4, 2 | BRF_GRA },           				   //  8
+	{ "th_5_1dca_27c4001.bin",			0x080000, 0x8db86f56, 2 | BRF_GRA },           				   //  9
+
+	{ "th_1_a0b1_27c4001.bin",			0x080000, 0xa7ba136d, 3 | BRF_SND },           				   // 10 M6295 Samples
+	{ "th_2_655e_27c4001.bin",			0x080000, 0xc9e0a14a, 3 | BRF_SND },
+	
+	{ "mu_mu-1_6541_gal16v8as.f2",  	0x00117, 0xd5ed5985, 4 | BRF_OPT },    						   // 11 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 	0x00117, 0xfe78b903, 4 | BRF_OPT },    						   // 12
+	{ "mu_mu-2_gal20v8.d21",    		0x00157, 0xa715e392, 4 | BRF_OPT },    						   // 13
+	{ "mu_mu-3_gal20v8as.h11",      	0x00157, 0x51e34bc2, 4 | BRF_OPT },    						   // 14
+};
+
+STD_ROM_PICK(thoopa)
+STD_ROM_FN(thoopa)
+
+struct BurnDriver BurnDrvThoopa = {
+	"thoopa", "thoop", NULL, NULL, "1992",
+	"Thunder Hoop (ver. 1, checksum 02a09fcd)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, thoopaRomInfo, thoopaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	ThoopaInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Thunder Hoop (ver. X, checksum 00000020, without title)
+
+static struct BurnRomInfo thoopbRomDesc[] = {
+	{ "tachado_th_4_sin_titol_2-7-92_27c040.bin",		0x080000, 0xa562028f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tachado_th_3_sin_titol_2-7-92_27c040.bin",		0x080000, 0x9768c962, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "th_12_3455_27c4001.bin",			0x080000, 0xc1bacaef, 2 | BRF_GRA },           				   //  2 Tiles and Sprites
+	{ "th_8_9565_27c4001.bin",			0x080000, 0x4e989ca5, 2 | BRF_GRA },           				   //  3
+	{ "th_11_f8cd_27c4001.bin",			0x080000, 0x0805a690, 2 | BRF_GRA },           				   //  4
+	{ "th_7_dd91_27c4001.bin",			0x080000, 0x3af227c5, 2 | BRF_GRA },           				   //  5
+	{ "th_10_250d_27c4001.bin",			0x080000, 0x1f7778d3, 2 | BRF_GRA },           				   //  6
+	{ "th_6_54b2_27c4001.bin",			0x080000, 0x817618e0, 2 | BRF_GRA },           				   //  7
+	{ "th_9_6f76_27c4001.bin",			0x080000, 0x7a396cb4, 2 | BRF_GRA },           				   //  8
+	{ "th_5_1dca_27c4001.bin",			0x080000, 0x8db86f56, 2 | BRF_GRA },           				   //  9
+
+	{ "th_1_a0b1_27c4001.bin",			0x080000, 0xa7ba136d, 3 | BRF_SND },           				   // 10 M6295 Samples
+	{ "th_2_655e_27c4001.bin",			0x080000, 0xc9e0a14a, 3 | BRF_SND },
+	
+	{ "mu_mu-1_6541_gal16v8as.f2",  	0x00117, 0xd5ed5985, 4 | BRF_OPT },    						   // 11 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 	0x00117, 0xfe78b903, 4 | BRF_OPT },    						   // 12
+	{ "mu_mu-2_gal20v8.d21",    		0x00157, 0xa715e392, 4 | BRF_OPT },    						   // 13
+	{ "mu_mu-3_gal20v8as.h11",      	0x00157, 0x51e34bc2, 4 | BRF_OPT },    						   // 14
+};
+
+STD_ROM_PICK(thoopb)
+STD_ROM_FN(thoopb)
+
+struct BurnDriver BurnDrvThoopb = {
+	"thoopb", "thoop", NULL, NULL, "1992",
+	"Thunder Hoop (ver. X, checksum 00000020, without title)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, thoopbRomInfo, thoopbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	ThoopaInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Thunder Hoop (North America, ver. C4, checksum 02A0A008)
+
+static struct BurnRomInfo thoopnaRomDesc[] = {
+	{ "th_4_america_de9e_24-8-92_27c040.bin",			0x080000, 0xf13a6ed5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "th_3_test_24-8-92_27c020.bin",					0x040000, 0x23abbb5f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "th_12_3455_27c4001.bin",			0x080000, 0xc1bacaef, 2 | BRF_GRA },           				   //  2 Tiles and Sprites
+	{ "th_8_9565_27c4001.bin",			0x080000, 0x4e989ca5, 2 | BRF_GRA },           				   //  3
+	{ "th_11_f8cd_27c4001.bin",			0x080000, 0x0805a690, 2 | BRF_GRA },           				   //  4
+	{ "th_7_dd91_27c4001.bin",			0x080000, 0x3af227c5, 2 | BRF_GRA },           				   //  5
+	{ "th_10_250d_27c4001.bin",			0x080000, 0x1f7778d3, 2 | BRF_GRA },           				   //  6
+	{ "th_6_54b2_27c4001.bin",			0x080000, 0x817618e0, 2 | BRF_GRA },           				   //  7
+	{ "th_9_6f76_27c4001.bin",			0x080000, 0x7a396cb4, 2 | BRF_GRA },           				   //  8
+	{ "th_5_1dca_27c4001.bin",			0x080000, 0x8db86f56, 2 | BRF_GRA },           				   //  9
+
+	{ "th_1_a0b1_27c4001.bin",			0x080000, 0xa7ba136d, 3 | BRF_SND },           				   // 10 M6295 Samples
+	{ "th_2_655e_27c4001.bin",			0x080000, 0xc9e0a14a, 3 | BRF_SND },
+	
+	{ "mu_mu-1_6541_gal16v8as.f2",  	0x00117, 0xd5ed5985, 4 | BRF_OPT },    						   // 11 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 	0x00117, 0xfe78b903, 4 | BRF_OPT },    						   // 12
+	{ "mu_mu-2_gal20v8.d21",    		0x00157, 0xa715e392, 4 | BRF_OPT },    						   // 13
+	{ "mu_mu-3_gal20v8as.h11",      	0x00157, 0x51e34bc2, 4 | BRF_OPT },    						   // 14
+};
+
+STD_ROM_PICK(thoopna)
+STD_ROM_FN(thoopna)
+
+struct BurnDriver BurnDrvThoopna = {
+	"thoopna", "thoop", NULL, NULL, "1992",
+	"Thunder Hoop (North America, ver. C4, checksum 02A0A008)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, thoopnaRomInfo, thoopnaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	ThoopaInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Thunder Hoop (non North America, ver. X, checksum 00000020, set 1)
+
+static struct BurnRomInfo thoopnnaRomDesc[] = {
+	{ "th_4_9-6-92_27c040.bin",			0x080000, 0x52c8cb1a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "th_3_9-6-92_27c040.bin",			0x080000, 0x4cc24f6a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "th_12_3455_27c4001.bin",			0x080000, 0xc1bacaef, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "th_8_9565_27c4001.bin",			0x080000, 0x4e989ca5, 2 | BRF_GRA },           //  3
+	{ "th_11_f8cd_27c4001.bin",			0x080000, 0x0805a690, 2 | BRF_GRA },           //  4
+	{ "th_7_dd91_27c4001.bin",			0x080000, 0x3af227c5, 2 | BRF_GRA },           //  5
+	{ "th_10_250d_27c4001.bin",			0x080000, 0x1f7778d3, 2 | BRF_GRA },           //  6
+	{ "th_6_54b2_27c4001.bin",			0x080000, 0x817618e0, 2 | BRF_GRA },           //  7
+	{ "th_9_6f76_27c4001.bin",			0x080000, 0x7a396cb4, 2 | BRF_GRA },           //  8
+	{ "th_5_1dca_27c4001.bin",			0x080000, 0x8db86f56, 2 | BRF_GRA },           //  9
+
+	{ "th_1_a0b1_27c4001.bin",			0x080000, 0xa7ba136d, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "th_2_655e_27c4001.bin",			0x080000, 0xc9e0a14a, 3 | BRF_SND },
+	
+	{ "mu_mu-1_6541_gal16v8as.f2",  	0x00117, 0xd5ed5985, 4 | BRF_OPT },    		   // 11 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 	0x00117, 0xfe78b903, 4 | BRF_OPT },    		   // 12
+	{ "mu_mu-2_gal20v8.d21",    		0x00157, 0xa715e392, 4 | BRF_OPT },    		   // 13
+	{ "mu_mu-3_gal20v8as.h11",      	0x00157, 0x51e34bc2, 4 | BRF_OPT },    		   // 14
+};
+
+STD_ROM_PICK(thoopnna)
+STD_ROM_FN(thoopnna)
+
+struct BurnDriver BurnDrvThoopnna = {
+	"thoopnna", "thoop", NULL, NULL, "1992",
+	"Thunder Hoop (non North America, ver. X, checksum 00000020, set 1)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, thoopnnaRomInfo, thoopnnaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	ThoopaInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Thunder Hoop (non North America, ver. X, checksum 00000020, set 2)
+
+static struct BurnRomInfo thoopnnaaRomDesc[] = {
+	{ "th_4_1fb6_27c4001.bin",			0x080000, 0x4dcba336, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "th_3_0c6c_27c4001.bin",			0x080000, 0x9e813244, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "th_12_3455_27c4001.bin",			0x080000, 0xc1bacaef, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "th_8_9565_27c4001.bin",			0x080000, 0x4e989ca5, 2 | BRF_GRA },           //  3
+	{ "th_11_f8cd_27c4001.bin",			0x080000, 0x0805a690, 2 | BRF_GRA },           //  4
+	{ "th_7_dd91_27c4001.bin",			0x080000, 0x3af227c5, 2 | BRF_GRA },           //  5
+	{ "th_10_250d_27c4001.bin",			0x080000, 0x1f7778d3, 2 | BRF_GRA },           //  6
+	{ "th_6_54b2_27c4001.bin",			0x080000, 0x817618e0, 2 | BRF_GRA },           //  7
+	{ "th_9_6f76_27c4001.bin",			0x080000, 0x7a396cb4, 2 | BRF_GRA },           //  8
+	{ "th_5_1dca_27c4001.bin",			0x080000, 0x8db86f56, 2 | BRF_GRA },           //  9
+
+	{ "th_1_a0b1_27c4001.bin",			0x080000, 0xa7ba136d, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "th_2_655e_27c4001.bin",			0x080000, 0xc9e0a14a, 3 | BRF_SND },
+	
+	{ "mu_mu-1_6541_gal16v8as.f2",  	0x00117, 0xd5ed5985, 4 | BRF_OPT },    		   // 11 plds
+	{ "mu_mu-4_664c_gal16v8as.j16", 	0x00117, 0xfe78b903, 4 | BRF_OPT },    		   // 12
+	{ "mu_mu-2_gal20v8.d21",    		0x00157, 0xa715e392, 4 | BRF_OPT },    		   // 13
+	{ "mu_mu-3_gal20v8as.h11",      	0x00157, 0x51e34bc2, 4 | BRF_OPT },    		   // 14
+};
+
+STD_ROM_PICK(thoopnnaa)
+STD_ROM_FN(thoopnnaa)
+
+struct BurnDriver BurnDrvThoopnnaa = {
+	"thoopnnaa", "thoop", NULL, NULL, "1992",
+	"Thunder Hoop (non North America, ver. X, checksum 00000020, set 2)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	NULL, thoopnnaaRomInfo, thoopnnaaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
+	ThoopaInit, DrvExit, DrvFrame, BigkarnkDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };
 

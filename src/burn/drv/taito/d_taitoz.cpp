@@ -1932,6 +1932,13 @@ static struct BurnRomInfo BsharkRomDesc[] = {
 	{ "c34_20.89",     0x00100, 0xfbf81f30, BRF_OPT },
 	{ "c34_21.7",      0x00400, 0x10728853, BRF_OPT },
 	{ "c34_22.8",      0x00400, 0x643e8bfc, BRF_OPT },
+	
+	{ "c34-23.ic27",   0x00104, 0x82942887, BRF_OPT }, // pld
+	{ "c34-24.ic65",   0x00104, 0xbe080005, BRF_OPT },
+	{ "c34-25.ic66",   0x00144, 0xd0ee97ee, BRF_OPT },
+	{ "c34-26.ic67",   0x00144, 0x022ee90f, BRF_OPT },
+	{ "c34-27.ic94",   0x00144, 0xa503352a, BRF_OPT },
+	{ "c34-28.ic95",   0x00144, 0xbf7c2a41, BRF_OPT },
 };
 
 STD_ROM_PICK(Bshark)
@@ -1968,6 +1975,13 @@ static struct BurnRomInfo BsharkjRomDesc[] = {
 	{ "c34_20.89",     0x00100, 0xfbf81f30, BRF_OPT },
 	{ "c34_21.7",      0x00400, 0x10728853, BRF_OPT },
 	{ "c34_22.8",      0x00400, 0x643e8bfc, BRF_OPT },
+	
+	{ "c34-23.ic27",   0x00104, 0x82942887, BRF_OPT }, // pld
+	{ "c34-24.ic65",   0x00104, 0xbe080005, BRF_OPT },
+	{ "c34-25.ic66",   0x00144, 0xd0ee97ee, BRF_OPT },
+	{ "c34-26.ic67",   0x00144, 0x022ee90f, BRF_OPT },
+	{ "c34-27.ic94",   0x00144, 0xa503352a, BRF_OPT },
+	{ "c34-28.ic95",   0x00144, 0xbf7c2a41, BRF_OPT },
 };
 
 STD_ROM_PICK(Bsharkj)
@@ -2004,6 +2018,13 @@ static struct BurnRomInfo BsharkjjsRomDesc[] = {
 	{ "c34_20.89",     0x00100, 0xfbf81f30, BRF_OPT },
 	{ "c34_21.7",      0x00400, 0x10728853, BRF_OPT },
 	{ "c34_22.8",      0x00400, 0x643e8bfc, BRF_OPT },
+	
+	{ "c34-23.ic27",   0x00104, 0x82942887, BRF_OPT }, // pld
+	{ "c34-24.ic65",   0x00104, 0xbe080005, BRF_OPT },
+	{ "c34-25.ic66",   0x00144, 0xd0ee97ee, BRF_OPT },
+	{ "c34-26.ic67",   0x00144, 0x022ee90f, BRF_OPT },
+	{ "c34-27.ic94",   0x00144, 0xa503352a, BRF_OPT },
+	{ "c34-28.ic95",   0x00144, 0xbf7c2a41, BRF_OPT },
 };
 
 STD_ROM_PICK(Bsharkjjs)
@@ -2040,6 +2061,13 @@ static struct BurnRomInfo BsharkuRomDesc[] = {
 	{ "c34_20.89",     0x00100, 0xfbf81f30, BRF_OPT },
 	{ "c34_21.7",      0x00400, 0x10728853, BRF_OPT },
 	{ "c34_22.8",      0x00400, 0x643e8bfc, BRF_OPT },
+	
+	{ "c34-23.ic27",   0x00104, 0x82942887, BRF_OPT }, // pld
+	{ "c34-24.ic65",   0x00104, 0xbe080005, BRF_OPT },
+	{ "c34-25.ic66",   0x00144, 0xd0ee97ee, BRF_OPT },
+	{ "c34-26.ic67",   0x00144, 0x022ee90f, BRF_OPT },
+	{ "c34-27.ic94",   0x00144, 0xa503352a, BRF_OPT },
+	{ "c34-28.ic95",   0x00144, 0xbf7c2a41, BRF_OPT },
 };
 
 STD_ROM_PICK(Bsharku)

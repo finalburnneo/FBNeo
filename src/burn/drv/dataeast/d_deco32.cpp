@@ -4960,6 +4960,88 @@ struct BurnDriver BurnDrvTattass = {
 };
 
 
+// Tattoo Assassins (US prototype, Mar 14 1995, older sound)
+
+static struct BurnRomInfo tattassoRomDesc[] = {
+	{ "pp44.cpu",		0x80000, 0xc3ca5b49, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
+	{ "pp45.cpu",		0x80000, 0xd3f30de0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u7.snd",			0x10000, 0x6947be8a, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
+
+	{ "abak_b01.s02",	0x80000, 0xbc805680, 3 | BRF_GRA },           //  3 Tilemap 0&1 Tiles & Characters (Encrypted)
+	{ "abak_b01.s13",	0x80000, 0x350effcd, 3 | BRF_GRA },           //  4
+	{ "abak_b23.s02",	0x80000, 0x91abdc21, 3 | BRF_GRA },           //  5
+	{ "abak_b23.s13",	0x80000, 0x80eb50fe, 3 | BRF_GRA },           //  6
+
+	{ "bbak_b01.s02",	0x80000, 0x611be9a6, 4 | BRF_GRA },           //  7 Tilemap 2&3 Tiles (Encrypted)
+	{ "bbak_b01.s13",	0x80000, 0x097e0604, 4 | BRF_GRA },           //  8
+	{ "bbak_b23.s02",	0x80000, 0x3836531a, 4 | BRF_GRA },           //  9
+	{ "bbak_b23.s13",	0x80000, 0x1210485a, 4 | BRF_GRA },           // 10
+
+	{ "ob1_c0.b0",		0x80000, 0x053fecca, 5 | BRF_GRA },           // 11 Sprites bank 0
+	{ "ob1_c1.b0",		0x80000, 0xe183e6bc, 5 | BRF_GRA },           // 12
+	{ "ob1_c2.b0",		0x80000, 0x1314f828, 5 | BRF_GRA },           // 13
+	{ "ob1_c3.b0",		0x80000, 0xc63866df, 5 | BRF_GRA },           // 14
+	{ "ob1_c4.b0",		0x80000, 0xf71cdd1b, 5 | BRF_GRA },           // 15
+	{ "ob1_c0.b1",		0x80000, 0x385434b0, 5 | BRF_GRA },           // 16
+	{ "ob1_c1.b1",		0x80000, 0x0a3ec489, 5 | BRF_GRA },           // 17
+	{ "ob1_c2.b1",		0x80000, 0x52f06081, 5 | BRF_GRA },           // 18
+	{ "ob1_c3.b1",		0x80000, 0xa8a5cfbe, 5 | BRF_GRA },           // 19
+	{ "ob1_c4.b1",		0x80000, 0x09d0acd6, 5 | BRF_GRA },           // 20
+	{ "ob1_c0.b2",		0x80000, 0x946e9f59, 5 | BRF_GRA },           // 21
+	{ "ob1_c1.b2",		0x80000, 0x9f66ad54, 5 | BRF_GRA },           // 22
+	{ "ob1_c2.b2",		0x80000, 0xa8df60eb, 5 | BRF_GRA },           // 23
+	{ "ob1_c3.b2",		0x80000, 0xa1a753be, 5 | BRF_GRA },           // 24
+	{ "ob1_c4.b2",		0x80000, 0xb65b3c4b, 5 | BRF_GRA },           // 25
+	{ "ob1_c0.b3",		0x80000, 0xcbbbc696, 5 | BRF_GRA },           // 26
+	{ "ob1_c1.b3",		0x80000, 0xf7b1bdee, 5 | BRF_GRA },           // 27
+	{ "ob1_c2.b3",		0x80000, 0x97815619, 5 | BRF_GRA },           // 28
+	{ "ob1_c3.b3",		0x80000, 0xfc3ccb7a, 5 | BRF_GRA },           // 29
+	{ "ob1_c4.b3",		0x80000, 0xdfdfd0ff, 5 | BRF_GRA },           // 30
+
+	{ "ob2_c0.b0",		0x80000, 0x9080ebe4, 6 | BRF_GRA },           // 31 Sprites bank 1
+	{ "ob2_c1.b0",		0x80000, 0xc0464970, 6 | BRF_GRA },           // 32
+	{ "ob2_c2.b0",		0x80000, 0x35a2e621, 6 | BRF_GRA },           // 33
+	{ "ob2_c3.b0",		0x80000, 0x99c7cc2d, 6 | BRF_GRA },           // 34
+	{ "ob2_c0.b1",		0x80000, 0x2c2c15c9, 6 | BRF_GRA },           // 35
+	{ "ob2_c1.b1",		0x80000, 0xd2c49a14, 6 | BRF_GRA },           // 36
+	{ "ob2_c2.b1",		0x80000, 0xfbe957e8, 6 | BRF_GRA },           // 37
+	{ "ob2_c3.b1",		0x80000, 0xd7238829, 6 | BRF_GRA },           // 38
+	{ "ob2_c0.b2",		0x80000, 0xaefa1b01, 6 | BRF_GRA },           // 39
+	{ "ob2_c1.b2",		0x80000, 0x4af620ca, 6 | BRF_GRA },           // 40
+	{ "ob2_c2.b2",		0x80000, 0x8e58be07, 6 | BRF_GRA },           // 41
+	{ "ob2_c3.b2",		0x80000, 0x1b5188c5, 6 | BRF_GRA },           // 42
+	{ "ob2_c0.b3",		0x80000, 0xa2a5dafd, 6 | BRF_GRA },           // 43
+	{ "ob2_c1.b3",		0x80000, 0x6f0afd05, 6 | BRF_GRA },           // 44
+	{ "ob2_c2.b3",		0x80000, 0x90fe5f4f, 6 | BRF_GRA },           // 45
+	{ "ob2_c3.b3",		0x80000, 0xe3517e6e, 6 | BRF_GRA },           // 46
+
+	{ "u17.snd",		0x80000, 0xb945c18d, 7 | BRF_GRA },           // 47 BSMT Samples
+	{ "u21.snd",		0x80000, 0x10b2110c, 7 | BRF_GRA },           // 48
+	{ "u36.snd",		0x80000, 0x3b73abe2, 7 | BRF_GRA },           // 49
+	{ "u37.snd",		0x80000, 0x986066b5, 7 | BRF_GRA },           // 50
+
+	{ "eeprom-tattass.bin",	0x00400, 0x7140f40c, 8 | BRF_PRG | BRF_ESS }, // 51 Default Settings
+
+#if !defined ROM_VERIFY
+	{ "bsmt2000.bin",	0x02000, 0xc2a265af, 9 | BRF_PRG | BRF_ESS }, // 52 DSP Code
+#endif
+};
+
+STD_ROM_PICK(tattasso)
+STD_ROM_FN(tattasso)
+
+struct BurnDriver BurnDrvTattasso = {
+	"tattasso", "tattass", NULL, NULL, "1994",
+	"Tattoo Assassins (US prototype, Mar 14 1995, older sound)\0", NULL, "Data East Pinball", "DECO 32",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, tattassoRomInfo, tattassoRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
+	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Tattoo Assassins (Asia prototype, Mar 14 1995)
 
 static struct BurnRomInfo tattassaRomDesc[] = {

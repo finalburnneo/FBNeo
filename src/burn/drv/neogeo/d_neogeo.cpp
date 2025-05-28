@@ -1558,7 +1558,16 @@ static struct BurnDIPInfo lastbladDIPList[] = {
 	// Fake DIPs
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Off
 
-	{0,    0xFE, 0,    2,    "Mini Game"                    },
+	{0,    0xFE, 0,    2,    "Mini game"                    },
+	{0x06, 0x01, 0x01, 0x00, "Off"                          },
+	{0x06, 0x01, 0x01, 0x01, "On"                           },
+};
+
+static struct BurnDIPInfo nam1975DIPList[] = {
+	// Fake DIPs
+	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Off
+
+	{0,    0xFE, 0,    2,    "Demo scene"                   },
 	{0x06, 0x01, 0x01, 0x00, "Off"                          },
 	{0x06, 0x01, 0x01, 0x01, "On"                           },
 };
@@ -1575,6 +1584,7 @@ STDDIPINFOEXT(kof2kotc,		aesdefault,		kof2kotc	)
 STDDIPINFOEXT(kf2k23rd,		ngdefault,		kf2k23rd	)
 STDDIPINFOEXT(kf10thuo,		ngdefault,		kf10thuo	)
 STDDIPINFOEXT(lastblad,		ngdefault,		lastblad	)
+STDDIPINFOEXT(nam1975,		ngdefault,		nam1975		)
 
 
 // Rom information
@@ -2479,6 +2489,18 @@ static struct BurnRomInfo nam1975RomDesc[] = {
 STDROMPICKEXT(nam1975, nam1975, neogeo)
 STD_ROM_FN(nam1975)
 
+static void Nam1975PatchCallback()
+{
+	Neo68KROMActive[0x2ba3] = (VerSwitcher & 0x01) ? 0x60 : 0x67;
+}
+
+static INT32 Nam1975Init()
+{
+	NeoCallbackActive->pResetCallback = Nam1975PatchCallback;
+
+	return NeoInit();
+}
+
 // Note: Even though the titlescreen is cropped, the ending scene requires 320x224!
 
 struct BurnDriver BurnDrvNam1975 = {
@@ -2486,8 +2508,8 @@ struct BurnDriver BurnDrvNam1975 = {
 	"NAM-1975 (NGM-001 ~ NGH-001)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
-	NULL, nam1975RomInfo, nam1975RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, nam1975RomInfo, nam1975RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, nam1975DIPInfo,
+	Nam1975Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 
@@ -6519,9 +6541,7 @@ static void LastbladPatchCallback()
 
 static INT32 LastbladInit()
 {
-	if (!bDoIpsPatch) {
-		NeoCallbackActive->pResetCallback = LastbladPatchCallback; // Mini Game Revealed (AES Mode)
-	}
+	NeoCallbackActive->pResetCallback = LastbladPatchCallback; // Mini Game Revealed (AES Mode)
 
 	return NeoInit();
 }

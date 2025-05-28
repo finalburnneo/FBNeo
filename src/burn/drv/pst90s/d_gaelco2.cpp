@@ -1960,7 +1960,7 @@ struct BurnDriver BurnDrvAligatorun = {
 };
 
 
-// Alligator Hunt (unprotected, checksum 25A83609
+// Alligator Hunt (unprotected, checksum 25A83609)
 
 static struct BurnRomInfo aligatorunaRomDesc[] = {
 	{ "stm27c4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1981,7 +1981,7 @@ STD_ROM_FN(aligatoruna)
 
 struct BurnDriver BurnDrvAligatoruna = {
 	"aligatoruna", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected, checksum 25A83609\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, checksum 25A83609)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,

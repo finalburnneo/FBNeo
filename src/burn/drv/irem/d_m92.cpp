@@ -2707,7 +2707,7 @@ STD_ROM_FN(inthuntk)
 
 struct BurnDriver BurnDrvInthuntk = {
 	"inthuntk", "inthunt", NULL, NULL, "1993",
-	"In The Hunt (Korea)\0", NULL, "Irem America", "Irem M92",
+	"In The Hunt (Korea?)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, inthuntkRomInfo, inthuntkRomName, NULL, NULL, NULL, NULL, p2CommonInputInfo, InthuntDIPInfo,

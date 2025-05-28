@@ -1600,7 +1600,7 @@ struct BurnDriver BurnDrvBioplayc = {
 };
 
 
-// Squash (ver. 1.0, checksum 015aef61)
+// Squash (World, ver. 1.0, checksum 015aef61)
 // PCB - REF.922804/1 
 
 static struct BurnRomInfo squashRomDesc[] = {
@@ -1625,7 +1625,7 @@ STD_ROM_FN(squash)
 
 struct BurnDriver BurnDrvSquash = {
 	"squash", NULL, NULL, NULL, "1992",
-	"Squash (ver. 1.0, checksum 015aef61)\0", NULL, "Gaelco", "Miscellaneous",
+	"Squash (World, ver. 1.0, checksum 015aef61)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, squashRomInfo, squashRomName, NULL, NULL, NULL, NULL, DrvInputInfo, SquashDIPInfo,

@@ -1628,7 +1628,7 @@ STD_ROM_PICK(condorva)
 STD_ROM_FN(condorva)
 
 struct BurnDriver BurnDrvCondorva = {
-	"condorva", "phoenix", NULL, NULL, "1981",
+	"condorva", "phoenix", NULL, NULL, "1980",
 	"Condor (Valadon Automation bootleg of Phoenix)\0", NULL, "bootleg (Valadon Automation)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
@@ -1996,6 +1996,42 @@ struct BurnDriver BurnDrvAvefenixl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, avefenixlRomInfo, avefenixlRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Fenix (Explomatic, Spanish bootleg of Phoenix)
+
+static struct BurnRomInfo fenixexplRomDesc[] = {
+	{ "fe1.a1",		0x0800, 0xb04260e9, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "fe2.a2",		0x0800, 0x25a2e4bd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fe3.a3",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "fe4.a4",		0x0800, 0xd4b6b69f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "fe5.a5",		0x0800, 0x74b1cf66, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "fe6.a6",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "fe7.a7",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "fe8.a8",		0x0800, 0xf15c439d, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic23.d3",	0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "ic24.d4",	0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "ic39.b3",	0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "ic40.b4",	0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
+
+	{ "6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(fenixexpl)
+STD_ROM_FN(fenixexpl)
+
+struct BurnDriver BurnDrvFenixexpl = {
+	"fenixexpl", "phoenix", NULL, NULL, "1980",
+	"Fenix (Explomatic, Spanish bootleg of Phoenix)\0", NULL, "bootleg (Explomatic)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, fenixexplRomInfo, fenixexplRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
 	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };

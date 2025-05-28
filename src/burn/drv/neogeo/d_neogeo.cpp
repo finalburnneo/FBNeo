@@ -26418,6 +26418,40 @@ struct BurnDriver BurnDrvKf10thuo = {
 	0x1000,	304, 224, 4, 3
 };
 
+
+// The King of Fighters 10th Anniversary (Optimized 2023, Hack)
+// GOTVG 20250328
+
+static struct BurnRomInfo kf10thupRomDesc[] = {
+	{ "kf10-p1up.bin",	0x800000, 0x637dfdce, 1 | BRF_ESS | BRF_PRG },
+
+	{ "kf10-s1up.bin",	0x020000, 0x614db6b7, 2 | BRF_GRA },
+
+	{ "kf10-c1uo.bin",	0x800000, 0x2c59db66, 3 | BRF_GRA },
+	{ "kf10-c2uo.bin",	0x800000, 0x024ffd69, 3 | BRF_GRA },
+	{ "kf10-c3.bin",	0x800000, 0x959fad0b, 3 | BRF_GRA },
+	{ "kf10-c4.bin",	0x800000, 0xefe6a468, 3 | BRF_GRA },
+	{ "kf10-c5.bin",	0x800000, 0x74bba7c6, 3 | BRF_GRA },
+	{ "kf10-c6.bin",	0x800000, 0xe20d2216, 3 | BRF_GRA },
+	{ "kf10-c7up.bin",	0x800000, 0x2bb52a73, 3 | BRF_GRA },
+	{ "kf10-c8up.bin",	0x800000, 0x26586fc1, 3 | BRF_GRA },
+
+	KOF10TH_DECRYPTED_SOUND
+};
+
+STDROMPICKEXT(kf10thup, kf10thup, neogeo)
+STD_ROM_FN(kf10thup)
+
+struct BurnDriver BurnDrvKf10thup = {
+	"kf10thup", "kof2002", "neogeo", NULL, "2025",
+	"The King of Fighters 10th Anniversary (Optimized 2023, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kf10thupRomInfo, kf10thupRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 #undef KOF10TH_DECRYPTED_SOUND
 #undef KOF2002_DECRYPTED_COMPONENTS
 #undef KOF2002_DECRYPTED_TEXT

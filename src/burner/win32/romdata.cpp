@@ -119,8 +119,6 @@
 #define TAITO_CCHIP_BIOS									34
 #define TAITO_CCHIP_EEPROM									35
 
-
-
 struct DatListInfo {
 	TCHAR szRomSet[100];
 	TCHAR szFullName[1024];
@@ -177,7 +175,8 @@ static HWND hRDMgrWnd   = NULL;
 static HWND hRDListView = NULL;
 static HWND hRdCoverDlg = NULL;
 
-static TCHAR szCover[MAX_PATH] = { 0 };
+static TCHAR szCover[MAX_PATH]      = { 0 };
+static TCHAR szBackupDat[MAX_PATH]  = { 0 };
 
 
 static struct HardwareIcon IconTable[] =
@@ -2163,6 +2162,11 @@ static void RomdataCoverInit()
 
 static void RomDataManagerExit()
 {
+	if (FileExists(szBackupDat)) {
+		_tcscpy(szRomdataName, szBackupDat);
+		memset(szBackupDat, 0, sizeof(szBackupDat));
+		RomDataInit();
+	}
 	RomDataClearList();
 	DestroyHardwareIconList();
 	DeleteObject(hWhiteBGBrush);
@@ -2298,11 +2302,9 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 
 				SendMessage(hRDListView, LVM_GETITEMTEXT, (WPARAM)nSelItem, (LPARAM)&LvItem);
 
-				if (0 == RomDataCheck(szSelDat)) {
-					RomDataManagerExit();
-					EndDialog(hDlg, 0);
-					BurnerLoadDriver(RomdataGetZipName(szSelDat));
-				}
+				RomDataManagerExit();
+				EndDialog(hDlg, 0);
+				RomDataLoadDriver(szSelDat);
 			}
 		}
 	}
@@ -2391,11 +2393,9 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 
 						SendMessage(hRDListView, LVM_GETITEMTEXT, (WPARAM)nSelItem, (LPARAM)&LvItem);
 
-						if (0 == RomDataCheck(szSelDat)) {
-							RomDataManagerExit();
-							EndDialog(hDlg, 0);
-							BurnerLoadDriver(RomdataGetZipName(szSelDat));
-						}
+						RomDataManagerExit();
+						EndDialog(hDlg, 0);
+						RomDataLoadDriver(szSelDat);
 					}
 					break;
 				}
@@ -2436,5 +2436,11 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 
 INT32 RomDataManagerInit()
 {
+	if (NULL != pDataRomDesc) {
+		memset(szBackupDat, 0, sizeof(szBackupDat));
+		_tcscpy(szBackupDat, szRomdataName);
+		RomDataExit();
+	}
+
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMDATA_MANAGER), hScrnWnd, (DLGPROC)RomDataManagerProc);
 }

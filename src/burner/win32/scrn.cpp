@@ -1073,6 +1073,46 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
+INT32 RomDataLoadDriver(TCHAR* szSelDat)
+{
+	INT32 nOldDrvSelect = nBurnDrvActive;
+
+#ifdef INCLUDE_AVI_RECORDING
+	AviStop();
+#endif
+
+	DrvExit();						// This will exit RomData mode
+
+	INT32 nDrvIdx         = -1;
+	TCHAR szBuf[MAX_PATH] = { 0 };
+	_tcscpy(szBuf, szSelDat);
+
+	if ((nDrvIdx = RomDataCheck(szBuf)) < 0)
+		return -1;
+
+	nDialogSelect = nOldDlgSelected = nDrvIdx;
+	nBurnDrvActive = nOldDrvSelect;
+
+	bLoading  = 1;
+	SplashDestroy(1);
+	StopReplay();
+
+	_tcscpy(szRomdataName, szBuf);
+
+	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
+	MenuEnableItems();
+	bAltPause = 0;
+	AudSoundPlay();					// Restart sound
+	bLoading  = 0;
+	UpdatePreviousGameList();
+	if (bVidAutoSwitchFull) {
+		nVidFullscreen = 1;
+		POST_INITIALISE_MESSAGE;
+	}
+
+	return 0;
+}
+
 int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 {
 	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME)))) {
@@ -1240,7 +1280,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 			BOOL nOpenDlg = GetOpenFileName(&ofn);
 			if (FALSE == nOpenDlg)	break;
-			BurnerLoadDriver(RomdataGetZipName(szSelDat));
+			RomDataLoadDriver(szSelDat);
 			break;
 		}
 

@@ -4094,7 +4094,7 @@ struct BurnDriver BurnDrvShinobi1d = {
 
 struct BurnDriver BurnDrvShinobls = {
 	"shinobls", "shinobi", NULL, NULL, "1987",
-	"Shinobi (Star bootleg set 1, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
+	"Shinobi (Star bootleg, set 1, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShinoblsRomInfo, ShinoblsRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -4104,7 +4104,7 @@ struct BurnDriver BurnDrvShinobls = {
 
 struct BurnDriver BurnDrvShinobls2 = {
 	"shinobls2", "shinobi", NULL, NULL, "1987",
-	"Shinobi (Star bootleg set 2, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
+	"Shinobi (Star bootleg, set 2, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobls2RomInfo, Shinobls2RomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,

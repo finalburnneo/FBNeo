@@ -759,7 +759,7 @@ struct BurnDriver BurnDrvFlowerjb = {
 	"flowerjb", "flower", NULL, NULL, "1986",
 	"Flower (Japan, bootleg?)\0", NULL, "Clarue (Sega / Alpha Denshi Co. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, flowerjbRomInfo, flowerjbRomName, NULL, NULL, NULL, NULL, FlowerInputInfo, FlowerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3

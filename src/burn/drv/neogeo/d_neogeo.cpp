@@ -18449,7 +18449,7 @@ struct BurnDriver BurnDrvMslugqy = {
 // GOTVG 20250521
 
 static struct BurnRomInfo mslugdyf2RomDesc[] = {
-	{ "201-p1dyf2.p1",	0x200000, 0x23bf5414, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1dyf2.p1",	0x200000, 0x708badd1, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS
 };

@@ -27796,15 +27796,42 @@ struct BurnDriver BurnDrvCpsCaptcmjy = {
 };
 
 
+// Captain Commando (Elite Competition ver B, Hack)
+// Modified by Jinggai
+// GOTVG 20250416
+
+static struct BurnRomInfo captcmjybRomDesc[] = {
+	{ "ccjyb_23d.8f",	0x080000, 0xb32ca7d3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccjyb_22d.7f",	0x080000, 0xb5a58f87, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccjyb_24d.9e",	0x100000, 0x124bc074, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccjyb_28d.9f",	0x100000, 0xe29abd3a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	CAPTCOMM_COMPONENTS
+};
+
+STD_ROM_PICK(captcmjyb)
+STD_ROM_FN(captcmjyb)
+
+struct BurnDriver BurnDrvCpsCaptcmjyb = {
+	"captcmjyb", "captcomm", NULL, NULL, "2025",
+	"Captain Commando (Elite Competition ver B, Hack\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, captcmjybRomInfo, captcmjybRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcm3pDIPInfo,
+	CaptcommInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+
 // Captain Commando (Incubus, Hack)
 // Modified by Jinggai
-// GOTVG 20241031
+// GOTVG 20250313
 
 static struct BurnRomInfo captcmmyRomDesc[] = {
-	{ "ccmy_23d.8f",	0x080000, 0xa4d8f588, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ccmy_23d.8f",	0x080000, 0xab253cdf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "ccmy_22d.7f",	0x080000, 0xe610b61c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "ccmy_24d.9e",	0x100000, 0xf9907214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ccmy_28d.9f",	0x100000, 0xa96ec966, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_24d.9e",	0x100000, 0x4888be04, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ccmy_28d.9f",	0x100000, 0x7dd07357, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27813,7 +27840,7 @@ STD_ROM_PICK(captcmmy)
 STD_ROM_FN(captcmmy)
 
 struct BurnDriver BurnDrvCpsCaptcmmy = {
-	"captcmmy", "captcomm", NULL, NULL, "2024",
+	"captcmmy", "captcomm", NULL, NULL, "2025",
 	"Captain Commando (Incubus, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
@@ -27906,13 +27933,13 @@ struct BurnDriver BurnDrvCpsCaptcmdw = {
 
 // Captain Commando (Master, Hack)
 // Modified by Jinggai
-// GOTVG 20230227
+// GOTVG 20250314
 
 static struct BurnRomInfo captcm2yRomDesc[] = {
 	{ "cc2y_23d.8f",	0x080000, 0xb5ae72bb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cc2y_22d.7f",	0x080000, 0x0284c8c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cc2y_24d.9e",	0x100000, 0xb80e4114, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cc2y_28d.9f",	0x100000, 0x22a3f9db, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cc2y_22d.7f",	0x080000, 0x0f5e1467, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cc2y_24d.9e",	0x100000, 0x2ea9a220, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cc2y_28d.9f",	0x100000, 0x42b3cfa7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	CAPTCOMM_COMPONENTS
 };
@@ -27921,7 +27948,7 @@ STD_ROM_PICK(captcm2y)
 STD_ROM_FN(captcm2y)
 
 struct BurnDriver BurnDrvCpsCaptcm2y = {
-	"captcm2y", "captcomm", NULL, NULL, "2023",
+	"captcm2y", "captcomm", NULL, NULL, "2025",
 	"Captain Commando (Master, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,

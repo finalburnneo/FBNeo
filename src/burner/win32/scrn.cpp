@@ -1212,8 +1212,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 	switch (id) {
 		case MENU_LOAD: {
-			if (NULL != pDataRomDesc) RomDataExit();
-
 			int nGame;
 
 			if(kNetGame || !UseDialogs() || bLoading) {

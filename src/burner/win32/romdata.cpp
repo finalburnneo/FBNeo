@@ -2160,13 +2160,27 @@ static void RomdataCoverInit()
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMDATA_COVER_DLG), hRDMgrWnd, (DLGPROC)RomDataCoveProc);
 }
 
-static void RomDataManagerExit()
+void RomDataStateBackup()
+{
+	if (NULL != pDataRomDesc) {
+		memset(szBackupDat, 0, sizeof(szBackupDat));
+		_tcscpy(szBackupDat, szRomdataName);
+		RomDataExit();
+	}
+}
+
+void RomDataStateRestore()
 {
 	if (FileExists(szBackupDat)) {
 		_tcscpy(szRomdataName, szBackupDat);
 		memset(szBackupDat, 0, sizeof(szBackupDat));
 		RomDataInit();
 	}
+}
+
+static void RomDataManagerExit()
+{
+	RomDataStateRestore();
 	RomDataClearList();
 	DestroyHardwareIconList();
 	DeleteObject(hWhiteBGBrush);
@@ -2436,11 +2450,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 
 INT32 RomDataManagerInit()
 {
-	if (NULL != pDataRomDesc) {
-		memset(szBackupDat, 0, sizeof(szBackupDat));
-		_tcscpy(szBackupDat, szRomdataName);
-		RomDataExit();
-	}
+	RomDataStateBackup();
 
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMDATA_MANAGER), hScrnWnd, (DLGPROC)RomDataManagerProc);
 }

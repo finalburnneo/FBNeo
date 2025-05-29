@@ -14,6 +14,7 @@ int nOldDlgSelected				= -1;
 bool bDialogCancel				= false;
 
 bool bDrvSelected				= false;
+static bool bSelOkay			= false;									// true: About to run the non-RomData game from the list
 
 static int nShowMVSCartsOnly	= 0;
 
@@ -941,6 +942,11 @@ static void MyEndDialog()
 	nSelDlgWidth = rect.right;
 	nSelDlgHeight = rect.bottom;
 
+	if (!bSelOkay) {
+		RomDataStateRestore();
+	}
+	bSelOkay = false;
+
 	EndDialog(hSelDlg, 0);
 }
 
@@ -976,7 +982,8 @@ static void SelOkay()
 	}
 #endif
 	nDialogSelect = nSelect;
-	IpsPatchInit();	// Entry point : SelOkay
+	bSelOkay      = true;			// Non-RomData game will be running soon
+	IpsPatchInit();					// Entry point : SelOkay
 
 	bDialogCancel = false;
 	MyEndDialog();
@@ -1876,7 +1883,6 @@ void UnloadDrvIcons()
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
-
 		InitCommonControls();
 
 		hSelDlg = hDlg;
@@ -3144,8 +3150,10 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 
 	hParent = hParentWND;
 	nShowMVSCartsOnly = nMVSCartsOnly;
-
-	InitCommonControls();
+/*
+	InitCommonControls();	// Already available in WM_INITDIALOG.
+*/
+	RomDataStateBackup();
 
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);
 

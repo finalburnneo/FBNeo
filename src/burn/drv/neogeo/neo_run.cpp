@@ -259,6 +259,8 @@ UINT8 *NeoSpriteRAM, *NeoTextRAM;
 UINT8 *Neo68KBIOS, *NeoZ80BIOS;
 static UINT8 *Neo68KRAM, *NeoZ80RAM, *NeoNVRAM, *NeoNVRAM2, *NeoMemoryCard;
 
+static UINT32 nNeo68KRAMLen = 0x010000;
+
 static UINT32 nSpriteSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT32 nCodeSize[MAX_SLOT]   = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -369,7 +371,7 @@ static INT32 RAMIndex()
 	NeoGraphicsRAM		= Next; Next += 0x020000;		// Graphics controller RAM (2 64KB banks)
 
 	if (nNeoSystemType & NEO_SYS_CART) {
-		Neo68KRAM		= Next; Next += 0x010000;		// 68K work RAM
+		Neo68KRAM		= Next; Next += nNeo68KRAMLen;	// 68K work RAM
 		NeoZ80RAM		= Next; Next += 0x000800;		// Z80 RAM
 
 		NeoNVRAM		= Next; Next += 0x010000;		// Battery backed SRAM
@@ -1413,7 +1415,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 		if (nNeoSystemType & NEO_SYS_CART) {
 			ba.Data		= Neo68KRAM;
-			ba.nLen		= 0x00010000;
+			ba.nLen		= nNeo68KRAMLen;
 			ba.nAddress = 0;
 			ba.szName	= "68K RAM";
 			BurnAcb(&ba);
@@ -3956,9 +3958,12 @@ static INT32 NeoInitCommon()
 		// Map 68000 memory:
 
 		if (nNeoSystemType & NEO_SYS_CART) {
-
-			for (INT32 a = 0x100000; a < 0x200000; a += 0x010000) {
-				SekMapMemory(Neo68KRAM, a, a + 0xFFFF, MAP_RAM);				// 68K RAM
+			if (nNeo68KRAMHack > 0) {
+				SekMapMemory(Neo68KRAM, 0x100000, 0x1FFFFF, MAP_RAM);		// 68K RAM
+			} else {
+				for (INT32 a = 0x100000; a < 0x200000; a += 0x010000) {
+					SekMapMemory(Neo68KRAM, a, a + 0xFFFF, MAP_RAM);		// 68K RAM
+				}
 			}
 
 			if (!(nNeoSystemType & NEO_SYS_PCB)) {
@@ -4209,6 +4214,8 @@ static bool recursing = false;
 
 INT32 NeoInit()
 {
+	nNeo68KRAMLen = ((nNeo68KRAMHack > 0) || bDoIpsPatch || (NULL != pDataRomDesc)) ? 0x100000 : 0x010000;
+
 	if (recursing) {
 		if (LoadRoms()) {
 			return 1;
@@ -4611,7 +4618,7 @@ INT32 NeoFrame()
 
 	if (NeoReset) {							   						// Reset machine
 		if (nNeoSystemType & NEO_SYS_CART) {
-			memset(Neo68KRAM, 0, 0x010000);
+			memset(Neo68KRAM, 0, nNeo68KRAMLen);
 		}
 		if (nNeoSystemType & NEO_SYS_CD) {
 			memset(Neo68KROM[0], 0, nCodeSize[0]);

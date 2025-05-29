@@ -90,6 +90,7 @@ extern UINT32 nNeo68KROMBank;
 
 extern UINT32 nAllCodeSize;
 
+extern UINT8 nNeo68KRAMHack;
 extern UINT8 *NeoSpriteRAM, *NeoTextRAM;
 
 extern bool bNeoEnableGraphics;

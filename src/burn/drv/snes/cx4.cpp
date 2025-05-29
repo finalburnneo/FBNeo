@@ -222,7 +222,12 @@ static void populate_cache(uint32_t address)
 	cx4.prg_cache[cx4.prg_cache_page] = address;
 
 	for (int i = 0; i < CACHE_PAGE; i++) {
-		cx4.prg[cx4.prg_cache_page][i] = (snes_read(cx4.snes, address++) << 0) | (snes_read(cx4.snes, address++) << 8);
+		// The following line will break MS VS. (2019 and 2022)
+		//cx4.prg[cx4.prg_cache_page][i] = (snes_read(cx4.snes, address++) << 0) | (snes_read(cx4.snes, address++) << 8);
+
+		// MS VS (2019, 2022) fix. one var++ per line.  yup.  git 'r dun!!
+		cx4.prg[cx4.prg_cache_page][i] = (snes_read(cx4.snes, address++) << 0);
+		cx4.prg[cx4.prg_cache_page][i] |= (snes_read(cx4.snes, address++) << 8);
 	}
 
 	cx4.prg_cache_timer += ((cx4.waitstate & 0x07) * CACHE_PAGE) * 2;

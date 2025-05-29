@@ -10405,7 +10405,7 @@ static void svcsplusCallback()
 		for (j = 0; j < 0x10000; j++)
 		{
 			k = BITSWAP16(j, 1, 9, 10, 12, 11, 13, 14, 5, 4, 2, 8, 7, 3, 6, 15, 0);
-			Neo68KROMActive[i + j] = Neo68KROMActive[k];
+				Neo68KROMActive[i + j] = Neo68KROMActive[k];
 		}
 	}
 
@@ -18449,7 +18449,7 @@ struct BurnDriver BurnDrvMslugqy = {
 // GOTVG 20250521
 
 static struct BurnRomInfo mslugdyf2RomDesc[] = {
-	{ "201-p1dyf2.p1",	0x200000, 0x23bf5414, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1dyf2.p1",	0x200000, 0x708badd1, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS
 };

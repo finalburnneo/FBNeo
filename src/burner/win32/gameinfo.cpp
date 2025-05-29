@@ -253,6 +253,9 @@ static int GameInfoInit()
 	if (bBracket) {
 		_stprintf(szItemText + _tcslen(szItemText), _T(")"));
 	}
+#ifdef FBNEO_DEBUG
+	_stprintf(szItemText, _T("%s\t(%S)"), szItemText, BurnDrvGetSourcefile());
+#endif
 	SendMessage(hInfoControl, WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 
 	//Display the rom info

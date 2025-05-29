@@ -2455,20 +2455,39 @@ struct BurnDriver BurnDrvsnes_Ararascal = {
 	512, 448, 4, 3
 };
 
-// Arcade's Greatest Hits - The Atari Collection (Euro)
+// Arcade's Greatest Hits - The Atari Collection 1 (USA)
+
+static struct BurnRomInfo snes_Arcadeatarih1RomDesc[] = {
+	{ "Arcade's Greatest Hits - The Atari Collection 1 (U)(1997)(Midway).sfc", 524288, 0x02394f36, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Arcadeatarih1)
+STD_ROM_FN(snes_Arcadeatarih1)
+
+struct BurnDriver BurnDrvsnes_Arcadeatarih1 = {
+	"snes_arcadeatarih1", NULL, NULL, NULL, "1997",
+	"Arcade's Greatest Hits - The Atari Collection 1 (USA)\0", NULL, "Midway", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_Arcadeatarih1RomInfo, snes_Arcadeatarih1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Arcade's Greatest Hits - The Atari Collection 1 (Euro)
 
 static struct BurnRomInfo snes_Arcadeatarih1eRomDesc[] = {
-	{ "Arcade's Greatest Hits - The Atari Collection (E)(1997)(Midway).sfc", 524288, 0xd562233e, BRF_ESS | BRF_PRG },
+	{ "Arcade's Greatest Hits - The Atari Collection 1 (E)(1997)(Midway).sfc", 524288, 0xd562233e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Arcadeatarih1e)
 STD_ROM_FN(snes_Arcadeatarih1e)
 
 struct BurnDriver BurnDrvsnes_Arcadeatarih1e = {
-	"snes_arcadeatarih1e", NULL, NULL, NULL, "1997",
-	"Arcade's Greatest Hits - The Atari Collection (Euro)\0", NULL, "Midway", "SNES / Super Famicom",
+	"snes_arcadeatarih1e", "snes_arcadeatarih1", NULL, NULL, "1997",
+	"Arcade's Greatest Hits - The Atari Collection 1 (Euro)\0", NULL, "Midway", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_ACTION, 0,
 	SNESGetZipName, snes_Arcadeatarih1eRomInfo, snes_Arcadeatarih1eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -12991,6 +13010,25 @@ struct BurnDriver BurnDrvsnes_Hamelints = {
 	512, 448, 4, 3
 };
 
+// Hammerlock Wrestling (USA)
+
+static struct BurnRomInfo snes_HammerlockwrestlingRomDesc[] = {
+	{ "Hammerlock Wrestling (U)(1994)(Jaleco).sfc", 2097152, 0x3d2352ea, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hammerlockwrestling)
+STD_ROM_FN(snes_Hammerlockwrestling)
+
+struct BurnDriver BurnDrvsnes_Hammerlockwrestling = {
+	"snes_hammerlockwrestling", NULL, NULL, NULL, "1994",
+	"Hammerlock Wrestling (USA)\0", NULL, "Jaleco", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_HammerlockwrestlingRomInfo, snes_HammerlockwrestlingRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Harapeko Bakka (Japan)
 
 static struct BurnRomInfo snes_HarabakkaRomDesc[] = {
@@ -15649,6 +15687,25 @@ struct BurnDriver BurnDrvsnes_Killinste = {
 	SNESGetZipName, snes_KillinsteRomInfo, snes_KillinsteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// King Arthur & The Knights of Justice (USA)
+
+static struct BurnRomInfo snes_KingarthurkjusticeRomDesc[] = {
+	{ "King Arthur & The Knights of Justice (U)(1994)(Enix).sfc", 2621440, 0x615a183b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kingarthurkjustice)
+STD_ROM_FN(snes_Kingarthurkjustice)
+
+struct BurnDriver BurnDrvsnes_Kingarthurkjustice = {
+	"snes_kingarthurkjustice", NULL, NULL, NULL, "1994",
+	"King Arthur & The Knights of Justice (USA)\0", NULL, "Enix", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_KingarthurkjusticeRomInfo, snes_KingarthurkjusticeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // King Arthur's World (USA)
@@ -19832,6 +19889,25 @@ struct BurnDriver BurnDrvsnes_Natsukicb = {
 	512, 448, 4, 3
 };
 
+// Natsume Championship Wrestling (USA)
+
+static struct BurnRomInfo snes_NatsumechampwrestlingRomDesc[] = {
+	{ "Natsume Championship Wrestling (U)(1994)(Natsume).sfc", 2097152, 0xd4dc20e1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Natsumechampwrestling)
+STD_ROM_FN(snes_Natsumechampwrestling)
+
+struct BurnDriver BurnDrvsnes_Natsumechampwrestling = {
+	"snes_natsumechampwrestling", NULL, NULL, NULL, "1994",
+	"Natsume Championship Wrestling (USA)\0", NULL, "Natsume", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_NatsumechampwrestlingRomInfo, snes_NatsumechampwrestlingRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // NBA All-Star Challenge (USA)
 
 static struct BurnRomInfo snes_NbaallstarsRomDesc[] = {
@@ -20189,6 +20265,25 @@ struct BurnDriver BurnDrvsnes_Newyatterman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION | GBF_STRATEGY, 0,
 	SNESGetZipName, snes_NewyattermanRomInfo, snes_NewyattermanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Newman Haas IndyCar featuring Nigel Mansell (USA)
+
+static struct BurnRomInfo snes_NewmanhaasindycarRomDesc[] = {
+	{ "Newman Haas IndyCar featuring Nigel Mansell (U)(1994)(Acclaim Entertainment).sfc", 2097152, 0xa0f80c02, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Newmanhaasindycar)
+STD_ROM_FN(snes_Newmanhaasindycar)
+
+struct BurnDriver BurnDrvsnes_Newmanhaasindycar = {
+	"snes_newmanhaasindycar", NULL, NULL, NULL, "1994",
+	"Newman Haas IndyCar featuring Nigel Mansell (USA)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_NewmanhaasindycarRomInfo, snes_NewmanhaasindycarRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -27396,6 +27491,25 @@ struct BurnDriver BurnDrvsnes_Spbaseball = {
 	512, 478, 4, 3
 };
 
+// Spectre (USA)
+
+static struct BurnRomInfo snes_SpectreRomDesc[] = {
+	{ "Spectre (U)(1994)(Cybersoft).sfc", 1048576, 0xade6e0d8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Spectre)
+STD_ROM_FN(snes_Spectre)
+
+struct BurnDriver BurnDrvsnes_Spectre = {
+	"snes_spectre", NULL, NULL, NULL, "1994",
+	"Spectre (USA)\0", NULL, "Cybersoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION | GBF_SHOOT, 0,
+	SNESGetZipName, snes_SpectreRomInfo, snes_SpectreRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Speed Racer (USA)
 
 static struct BurnRomInfo snes_SpeedracerRomDesc[] = {
@@ -33880,7 +33994,7 @@ struct BurnDriver BurnDrvsnes_Waynesworlde = {
 // WCW Super Brawl Wrestling (USA)
 
 static struct BurnRomInfo snes_WcwsupbrawlRomDesc[] = {
-	{ "WCW Super Brawl Wrestling (U)1994)(FCI).sfc", 1572864, 0x8b477300, BRF_ESS | BRF_PRG },
+	{ "WCW Super Brawl Wrestling (U)(1994)(FCI).sfc", 1572864, 0x8b477300, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Wcwsupbrawl)
@@ -34025,6 +34139,25 @@ struct BurnDriver BurnDrvsnes_Wildsnake = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_WildsnakeRomInfo, snes_WildsnakeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Williams Arcade's Greatest Hits (USA)
+
+static struct BurnRomInfo snes_WilliamsarcadeghitsRomDesc[] = {
+	{ "Williams Arcade's Greatest Hits (U)(1996)(Williams).sfc", 524288, 0x471b12b0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Williamsarcadeghits)
+STD_ROM_FN(snes_Williamsarcadeghits)
+
+struct BurnDriver BurnDrvsnes_Williamsarcadeghits = {
+	"snes_williamsarcadeghits", NULL, NULL, NULL, "1996",
+	"Williams Arcade's Greatest Hits (USA)\0", NULL, "Williams Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_WilliamsarcadeghitsRomInfo, snes_WilliamsarcadeghitsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -34177,6 +34310,25 @@ struct BurnDriver BurnDrvsnes_Wintextreme = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_WintextremeRomInfo, snes_WintextremeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Winter Olympic Games - Lillehammer '94 (USA)
+
+static struct BurnRomInfo snes_Winterolympicgames94RomDesc[] = {
+	{ "Winter Olympic Games - Lillehammer '94 (U)(1993)(U.S. Gold).sfc", 2097152, 0x0704abe4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Winterolympicgames94)
+STD_ROM_FN(snes_Winterolympicgames94)
+
+struct BurnDriver BurnDrvsnes_Winterolympicgames94 = {
+	"snes_winterolympicgames94", NULL, NULL, NULL, "1993",
+	"Winter Olympic Games - Lillehammer '94 (USA)\0", NULL, "U.S. Gold", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_Winterolympicgames94RomInfo, snes_Winterolympicgames94RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -34846,6 +34998,25 @@ struct BurnDriver BurnDrvsnes_Wwfswm = {
 	512, 448, 4, 3
 };
 
+// WWF WrestleMania - The Arcade Game (USA)
+
+static struct BurnRomInfo snes_WwfwrestlemaniaarcadeRomDesc[] = {
+	{ "WWF WrestleMania - The Arcade Game (U)(1995)(Acclaim Ent. - Midway).sfc", 3145728, 0x1ba08495, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Wwfwrestlemaniaarcade)
+STD_ROM_FN(snes_Wwfwrestlemaniaarcade)
+
+struct BurnDriver BurnDrvsnes_Wwfwrestlemaniaarcade = {
+	"snes_wwfwrestlemaniaarcade", NULL, NULL, NULL, "1995",
+	"WWF WrestleMania - The Arcade Game (USA)\0", NULL, "Acclaim Entertainment - Midway", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_WwfwrestlemaniaarcadeRomInfo, snes_WwfwrestlemaniaarcadeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Xandra no Daibouken: Valkyrie to no Deai (Japan)
 
 static struct BurnRomInfo snes_XandraRomDesc[] = {
@@ -35127,6 +35298,25 @@ struct BurnDriver BurnDrvsnes_Youkaibust = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_YoukaibustRomInfo, snes_YoukaibustRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Young Merlin (USA)
+
+static struct BurnRomInfo snes_YoungmerlinRomDesc[] = {
+	{ "Young Merlin (U)(1993)(Virgin Games).sfc", 2097152, 0x7ea1afe8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Youngmerlin)
+STD_ROM_FN(snes_Youngmerlin)
+
+struct BurnDriver BurnDrvsnes_Youngmerlin = {
+	"snes_youngmerlin", NULL, NULL, NULL, "1993",
+	"Young Merlin (USA)\0", NULL, "Virgin Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_YoungmerlinRomInfo, snes_YoungmerlinRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -35641,10 +35831,10 @@ STD_ROM_PICK(snes_Mshvsf)
 STD_ROM_FN(snes_Mshvsf)
 
 struct BurnDriver BurnDrvsnes_Mshvsf = {
-	"snes_mshvsf", "snes_xmenvsf", NULL, NULL, "1999",
+	"snes_mshvsf", NULL, NULL, NULL, "1999",
 	"Marvel Super Heroes vs. Street Fighter (USA) (Unl)\0", NULL, "DVS Electronic", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_MshvsfRomInfo, snes_MshvsfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -35701,7 +35891,7 @@ struct BurnDriver BurnDrvsnes_Omegabrazil97 = {
 	"snes_omegabrazil97", "snes_topgear2", NULL, NULL, "1997",
 	"Omega Brazil '97 (USA) (Unl)\0", NULL, "<unknown>", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Omegabrazil97RomInfo, snes_Omegabrazil97RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

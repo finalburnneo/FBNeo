@@ -10405,7 +10405,7 @@ static void svcsplusCallback()
 		for (j = 0; j < 0x10000; j++)
 		{
 			k = BITSWAP16(j, 1, 9, 10, 12, 11, 13, 14, 5, 4, 2, 8, 7, 3, 6, 15, 0);
-				Neo68KROMActive[i + j] = Neo68KROMActive[k];
+			Neo68KROMActive[i + j] = Neo68KROMActive[k];
 		}
 	}
 

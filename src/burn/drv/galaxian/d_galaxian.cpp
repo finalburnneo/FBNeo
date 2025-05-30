@@ -9760,7 +9760,7 @@ struct BurnDriver BurnDrvBatman2 = {
 
 struct BurnDriver BurnDrvLadybugg = {
 	"ladybugg", "ladybug", NULL, NULL, "1983",
-	"Lady Bug (bootleg on Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
+	"Lady Bug (bootleg on Galaxian hardware, unencrypted)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, LadybuggRomInfo, LadybuggRomName, NULL, NULL, NULL, NULL, LadybuggInputInfo, LadybuggDIPInfo,

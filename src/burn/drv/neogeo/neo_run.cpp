@@ -828,7 +828,7 @@ static INT32 LoadRoms()
 		}
 
 		ri.nType = 0;
-		ri.nLen = 0;
+		ri.nLen  = 0;
 		BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset);
 
 		pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot];
@@ -4214,7 +4214,7 @@ static bool recursing = false;
 
 INT32 NeoInit()
 {
-	nNeo68KRAMLen = ((nNeo68KRAMHack > 0) || bDoIpsPatch || (NULL != pDataRomDesc)) ? 0x100000 : 0x010000;
+	nNeo68KRAMLen = ((nNeo68KRAMHack > 0) || (nIpsDrvDefine & IPS_NEO_RAMHACK) || (NULL != pDataRomDesc)) ? 0x100000 : 0x010000;
 
 	if (recursing) {
 		if (LoadRoms()) {

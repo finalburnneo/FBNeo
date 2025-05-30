@@ -25631,15 +25631,15 @@ struct BurnDriver BurnDrvKf2k1pkz = {
 };
 
 
-// The King of Fighters 2001 (Ultimate, Hack)
+// The King of Fighters 2001 (All Boss Plus, Hack)
 // Modified by 西岐赏金猎人, 臂力哥
-// GOTVG 20250126
+// GOTVG 20250529
 
 static struct BurnRomInfo kf2k1ultRomDesc[] = {
-	{ "262-p1ult.p1",		0x100000, 0x7fb7ea52, 1 | BRF_ESS | BRF_PRG },
-	{ "262-p2ult.sp2",		0x500000, 0x6be21453, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p1ult.p1",		0x100000, 0x58d46565, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p2ult.sp2",		0x500000, 0x3f5b548c, 1 | BRF_ESS | BRF_PRG },
 
-	{ "262-s1ult.s1",		0x020000, 0x6bceef77, 2 | BRF_GRA },
+	{ "262-s1ult.s1",		0x020000, 0x30b62c23, 2 | BRF_GRA },
 
 	{ "262-c1ult.c1",		0x800000, 0xc2486ac2, 3 | BRF_GRA },
 	{ "262-c2ult.c2",		0x800000, 0x6614bacb, 3 | BRF_GRA },
@@ -25647,24 +25647,24 @@ static struct BurnRomInfo kf2k1ultRomDesc[] = {
 	{ "262-c4ult.c4",		0x800000, 0x649dc7fa, 3 | BRF_GRA },
 	{ "262-c5ult.c5",		0x800000, 0xb47e4f8d, 3 | BRF_GRA },
 	{ "262-c6ult.c6",		0x800000, 0xac5f2083, 3 | BRF_GRA },
-	{ "262-c7ult.c7",		0x800000, 0x8e0d191a, 3 | BRF_GRA },
-	{ "262-c8ult.c8",		0x800000, 0x6fea378f, 3 | BRF_GRA },
-	{ "262-c9ult.c9",		0x800000, 0xcf4b24ef, 3 | BRF_GRA },
-	{ "262-c10ult.c10",		0x800000, 0x4f20d0ff, 3 | BRF_GRA },
+	{ "262-c7ult.c7",		0x800000, 0x8641cd8b, 3 | BRF_GRA },
+	{ "262-c8ult.c8",		0x800000, 0x6a21a2b8, 3 | BRF_GRA },
+	{ "262-c9ult.c9",		0x800000, 0x1a4d9823, 3 | BRF_GRA },
+	{ "262-c10ult.c10",		0x800000, 0x74fc85e9, 3 | BRF_GRA },
 	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 3 | BRF_GRA },
 	{ "265-c8d.c8",			0x800000, 0xbef667a3, 3 | BRF_GRA },
-	{ "262-c13ult.c13",		0x800000, 0x19a099eb, 3 | BRF_GRA },
-	{ "262-c14ult.c14",		0x800000, 0x41205ffa, 3 | BRF_GRA },
+	{ "262-c13ult.c13",		0x800000, 0x421998ab, 3 | BRF_GRA },
+	{ "262-c14ult.c14",		0x800000, 0x9b169e23, 3 | BRF_GRA },
 
-	{ "262-m1ult.m1",		0x020000, 0xd0651ea0, 4 | BRF_ESS | BRF_PRG },
+	{ "262-m1ult.m1",		0x020000, 0x59ce2113, 4 | BRF_ESS | BRF_PRG },
 
-	{ "262-v1ult-08-e0.v1",	0x400000, 0xe1496ace, 5 | BRF_SND },
-	{ "262-v2ult-08-e0.v2",	0x400000, 0x51bd6805, 5 | BRF_SND },
-	{ "262-v3ult-08-e0.v3",	0x400000, 0x6cecc242, 5 | BRF_SND },
-	{ "262-v4ult-08-e0.v4",	0x400000, 0x81e7a417, 5 | BRF_SND },
-	{ "262-v5ult-08-e0.v5",	0x400000, 0x42423d32, 5 | BRF_SND },
-	{ "262-v6ult-08-e0.v6",	0x400000, 0x73a03cbf, 5 | BRF_SND },
-	{ "262-v7ult-08-e0.v7",	0x400000, 0x7a2d38df, 5 | BRF_SND },
+	{ "262-v1ult-08-e0.v1",	0x400000, 0x44532d73, 5 | BRF_SND },
+	{ "262-v2ult-08-e0.v2",	0x400000, 0xc063647a, 5 | BRF_SND },
+	{ "262-v3ult-08-e0.v3",	0x400000, 0x9456858d, 5 | BRF_SND },
+	{ "262-v4ult-08-e0.v4",	0x400000, 0x5f9b122a, 5 | BRF_SND },
+	{ "262-v5ult-08-e0.v5",	0x400000, 0xc46ba4da, 5 | BRF_SND },
+	{ "262-v6ult-08-e0.v6",	0x400000, 0xbbe29f9d, 5 | BRF_SND },
+	{ "262-v7ult-08-e0.v7",	0x400000, 0x2c337f9d, 5 | BRF_SND },
 };
 
 STDROMPICKEXT(kf2k1ult, kf2k1ult, neogeo)

@@ -1098,6 +1098,10 @@ static void GetIpsDrvDefine()
 						nIpsDrvDefine |= IPS_SNES_VRAMHK;
 						continue;
 					}
+					if (0 == strcmp(tmp, "IPS_NEO_RAMHACK")) {
+						nIpsDrvDefine |= IPS_NEO_RAMHACK;
+						continue;
+					}
 					if (0 == strcmp(tmp, "IPS_LOAD_EXPAND")) {
 						nIpsDrvDefine |= IPS_LOAD_EXPAND;
 						nIpsMemExpLen[EXP_FLAG] = 1;

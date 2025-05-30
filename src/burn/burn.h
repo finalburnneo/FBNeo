@@ -446,7 +446,7 @@ void Reinitialise();
 #define IPS_PGM_SPRHACK		(1 <<  1)	// For PGM hacks...
 #define IPS_PGM_MAPHACK		(1 <<  2)	// Id.
 #define IPS_PGM_SNDOFFS		(1 <<  3)	// Id.
-#define IPS_LOAD_EXPAND		(1 <<  4)	// Break the ips 16MB addressing limit.
+#define IPS_LOAD_EXPAND		(1 <<  4)	// Change temporary cache size on double load.
 #define IPS_EXTROM_INCL		(1 <<  5)	// Extra rom.
 #define IPS_PRG1_EXPAND		(1 <<  6)	// Additional request for prg length.
 #define IPS_PRG2_EXPAND		(1 <<  7)	// Id.
@@ -457,6 +457,7 @@ void Reinitialise();
 #define IPS_SND1_EXPAND		(1 << 12)	// Additional request for snd length.
 #define IPS_SND2_EXPAND		(1 << 13)	// Id.
 #define IPS_SNES_VRAMHK		(1 << 14)	// Allow invalid vram writes.
+#define IPS_NEO_RAMHACK		(1 << 15)	// Neo Geo 68kram hack.
 
 enum IpsRomTypes { EXP_FLAG, LOAD_ROM, EXTR_ROM, PRG1_ROM, PRG2_ROM, GRA1_ROM, GRA2_ROM, GRA3_ROM, ACPU_ROM, SND1_ROM, SND2_ROM };
 extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];

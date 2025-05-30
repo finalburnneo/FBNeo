@@ -27814,7 +27814,7 @@ STD_ROM_FN(captcmjyb)
 
 struct BurnDriver BurnDrvCpsCaptcmjyb = {
 	"captcmjyb", "captcomm", NULL, NULL, "2025",
-	"Captain Commando (Elite Competition ver B, Hack\0", NULL, "hack", "CPS1",
+	"Captain Commando (Elite Competition ver B, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, captcmjybRomInfo, captcmjybRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcm3pDIPInfo,

@@ -654,7 +654,7 @@ struct BurnDriver BurnDrvGlass = {
 };
 
 
-// Glass (Ver 1.0, Break Edition, Checksum C5513F3C)
+// Glass (Ver 1.0, Break Edition, checksum C5513F3C)
 
 static struct BurnRomInfo glass10RomDesc[] = {
 	{ "c23.bin",		0x040000, 0x688cdf33, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -675,7 +675,7 @@ STD_ROM_FN(glass10)
 
 struct BurnDriver BurnDrvGlass10 = {
 	"glass10", "glass", NULL, NULL, "1993",
-	"Glass (Ver 1.0, Break Edition, Checksum C5513F3C)\0", NULL, "OMK / Gaelco", "Miscellaneous",
+	"Glass (Ver 1.0, Break Edition, checksum C5513F3C)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glass10RomInfo, glass10RomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
@@ -684,7 +684,7 @@ struct BurnDriver BurnDrvGlass10 = {
 };
 
 
-// Glass (Ver 1.0, Break Edition, Checksum D3864FDB)
+// Glass (Ver 1.0, Break Edition, checksum D3864FDB)
 
 static struct BurnRomInfo glass10aRomDesc[] = {
 	{ "spl-c23.bin",	0x040000, 0xc1393bea, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -705,7 +705,7 @@ STD_ROM_FN(glass10a)
 
 struct BurnDriver BurnDrvGlass10a = {
 	"glass10a", "glass", NULL, NULL, "1993",
-	"Glass (Ver 1.0, Break Edition, Checksum D3864FDB)\0", NULL, "OMK / Gaelco", "Miscellaneous",
+	"Glass (Ver 1.0, Break Edition, checksum D3864FDB)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glass10aRomInfo, glass10aRomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,

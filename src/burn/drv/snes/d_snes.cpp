@@ -3558,6 +3558,25 @@ struct BurnDriver BurnDrvsnes_Battlegrandprix = {
 	512, 448, 4, 3
 };
 
+// Battle Grand Prix (Japan)
+
+static struct BurnRomInfo snes_BattlegrandprixjRomDesc[] = {
+	{ "Battle Grand Prix (J)(1993)(Naxat Soft).sfc", 1048576, 0x8b8afd6f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Battlegrandprixj)
+STD_ROM_FN(snes_Battlegrandprixj)
+
+struct BurnDriver BurnDrvsnes_Battlegrandprixj = {
+	"snes_battlegrandprixj", "snes_battlegrandprix", NULL, NULL, "1993",
+	"Battle Grand Prix (Japan)\0", NULL, "Naxat Soft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_BattlegrandprixjRomInfo, snes_BattlegrandprixjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Battle Master - Kyuukyoku no Senshi-tachi (Japan)
 
 static struct BurnRomInfo snes_BattlemastRomDesc[] = {
@@ -5648,10 +5667,10 @@ struct BurnDriver BurnDrvsnes_Carrieraces = {
 	512, 448, 4, 3
 };
 
-// Casper (USA) (Natsume)
+// Casper (USA) (Absolute)
 
 static struct BurnRomInfo snes_CasperRomDesc[] = {
-	{ "Casper (U)(1996)(Natsume).sfc", 1048576, 0xa3b745bc, BRF_ESS | BRF_PRG },
+	{ "Casper (U)(1996)(Absolute).sfc", 1048576, 0xa3b745bc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Casper)
@@ -5659,10 +5678,29 @@ STD_ROM_FN(snes_Casper)
 
 struct BurnDriver BurnDrvsnes_Casper = {
 	"snes_casper", NULL, NULL, NULL, "1996",
-	"Casper (USA) (Natsume)\0", NULL, "Natsume", "SNES / Super Famicom",
+	"Casper (USA) (Absolute)\0", NULL, "Absolute", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_CasperRomInfo, snes_CasperRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Casper (Euro) (Absolute)
+
+static struct BurnRomInfo snes_CaspereRomDesc[] = {
+	{ "Casper (E)(1996)(Absolute).sfc", 1048576, 0xa7677e65, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Caspere)
+STD_ROM_FN(snes_Caspere)
+
+struct BurnDriver BurnDrvsnes_Caspere = {
+	"snes_caspere", "snes_casper", NULL, NULL, "1996",
+	"Casper (Euro) (Absolute)\0", NULL, "Absolute", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_CaspereRomInfo, snes_CaspereRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -8058,6 +8096,25 @@ struct BurnDriver BurnDrvsnes_Dnrsuperman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_DnrsupermanRomInfo, snes_DnrsupermanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Death and Return of Superman, The (Euro)
+
+static struct BurnRomInfo snes_DnrsupermaneRomDesc[] = {
+	{ "Death and Return of Superman, The (E)(1994)(Sunsoft - Blizzard).sfc", 2097152, 0x65792d05, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dnrsupermane)
+STD_ROM_FN(snes_Dnrsupermane)
+
+struct BurnDriver BurnDrvsnes_Dnrsupermane = {
+	"snes_dnrsupermane", "snes_dnrsuperman", NULL, NULL, "1994",
+	"Death and Return of Superman, The (Euro)\0", NULL, "Sunsoft - Blizzard", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_DnrsupermaneRomInfo, snes_DnrsupermaneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -13732,6 +13789,25 @@ struct BurnDriver BurnDrvsnes_Hook = {
 	512, 448, 4, 3
 };
 
+// Hook (Euro)
+
+static struct BurnRomInfo snes_HookeRomDesc[] = {
+	{ "Hook (E)(1992)(Sony Imagesoft).sfc", 1048576, 0x6679a772, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hooke)
+STD_ROM_FN(snes_Hooke)
+
+struct BurnDriver BurnDrvsnes_Hooke = {
+	"snes_hooke", "snes_hook", NULL, NULL, "1992",
+	"Hook (Euro)\0", NULL, "Sony Imagesoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HookeRomInfo, snes_HookeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Hook (Japan)
 
 static struct BurnRomInfo snes_HookjRomDesc[] = {
@@ -18520,6 +18596,25 @@ struct BurnDriver BurnDrvsnes_Spidermanarcaderev = {
 	512, 448, 4, 3
 };
 
+// Spider-Man - X-Men - Arcade's Revenge (Euro)
+
+static struct BurnRomInfo snes_SpidermanarcadereveRomDesc[] = {
+	{ "Spider-Man - X-Men - Arcade's Revenge (E)(1992)(Ljn).sfc", 1048576, 0xd679058d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Spidermanarcadereve)
+STD_ROM_FN(snes_Spidermanarcadereve)
+
+struct BurnDriver BurnDrvsnes_Spidermanarcadereve = {
+	"snes_spidermanarcadereve", "snes_spidermanarcaderev", NULL, NULL, "1992",
+	"Spider-Man - X-Men - Arcade's Revenge (Euro)\0", NULL, "Ljn", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SpidermanarcadereveRomInfo, snes_SpidermanarcadereveRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Spider-Man and Venom: Maximum Carnage (USA)
 
 static struct BurnRomInfo snes_MaxcarnageRomDesc[] = {
@@ -18535,6 +18630,25 @@ struct BurnDriver BurnDrvsnes_Maxcarnage = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_MaxcarnageRomInfo, snes_MaxcarnageRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Spider-Man and Venom: Maximum Carnage (Euro)
+
+static struct BurnRomInfo snes_MaxcarnageeRomDesc[] = {
+	{ "Spider-Man and Venom - Maximum Carnage (E)(1994)(Ljn).sfc", 2097152, 0x4c68c5cf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Maxcarnagee)
+STD_ROM_FN(snes_Maxcarnagee)
+
+struct BurnDriver BurnDrvsnes_Maxcarnagee = {
+	"snes_maxcarnagee", "snes_maxcarnage", NULL, NULL, "1994",
+	"Spider-Man and Venom: Maximum Carnage (Euro)\0", NULL, "Ljn", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_MaxcarnageeRomInfo, snes_MaxcarnageeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19733,6 +19847,25 @@ struct BurnDriver BurnDrvsnes_Mrdo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ACTION, 0,
 	SNESGetZipName, snes_MrdoRomInfo, snes_MrdoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mr. Do! (Euro)
+
+static struct BurnRomInfo snes_MrdoeRomDesc[] = {
+	{ "Mr. Do! (E)(1995)(Imagineer).sfc", 262144, 0xccebb6e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mrdoe)
+STD_ROM_FN(snes_Mrdoe)
+
+struct BurnDriver BurnDrvsnes_Mrdoe = {
+	"snes_mrdoe", "snes_mrdo", NULL, NULL, "1995",
+	"Mr. Do! (Euro)\0", NULL, "Imagineer", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_MrdoeRomInfo, snes_MrdoeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -25666,6 +25799,25 @@ struct BurnDriver BurnDrvsnes_Sepanxiety = {
 	512, 448, 4, 3
 };
 
+// Venom & Spider-Man - Separation Anxiety (Euro)
+
+static struct BurnRomInfo snes_SepanxietyeRomDesc[] = {
+	{ "Venom & Spider-Man - Separation Anxiety (E)(1995)(Acclaim Entertainment).sfc", 3145728, 0xcd274974, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Sepanxietye)
+STD_ROM_FN(snes_Sepanxietye)
+
+struct BurnDriver BurnDrvsnes_Sepanxietye = {
+	"snes_sepanxietye", "snes_sepanxiety", NULL, NULL, "1995",
+	"Venom & Spider-Man - Separation Anxiety (Euro)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_SepanxietyeRomInfo, snes_SepanxietyeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Septentrion (Japan)
 
 static struct BurnRomInfo snes_SeptentrionRomDesc[] = {
@@ -27034,6 +27186,25 @@ struct BurnDriver BurnDrvsnes_Smallstarsworld = {
 	512, 448, 4, 3
 };
 
+// Super Mario All-Stars + Super Mario World (Euro)
+
+static struct BurnRomInfo snes_SmallstarsworldeRomDesc[] = {
+	{ "Super Mario All-Stars + Super Mario World (E)(1993)(Nintendo).sfc", 2621440, 0x303205d8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smallstarsworlde)
+STD_ROM_FN(snes_Smallstarsworlde)
+
+struct BurnDriver BurnDrvsnes_Smallstarsworlde = {
+	"snes_smallstarsworlde", "snes_smallstarsworld", NULL, NULL, "1993",
+	"Super Mario All-Stars + Super Mario World (Euro)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmallstarsworldeRomInfo, snes_SmallstarsworldeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Smart Ball (USA)
 
 static struct BurnRomInfo snes_SmartballRomDesc[] = {
@@ -27833,6 +28004,25 @@ struct BurnDriver BurnDrvsnes_Spawn = {
 	512, 448, 4, 3
 };
 
+// Spawn (Euro)
+
+static struct BurnRomInfo snes_SpawneRomDesc[] = {
+	{ "Spawn (E)(1995)(Acclaim Entertainment).sfc", 3145728, 0x0ca0b84f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Spawne)
+STD_ROM_FN(snes_Spawne)
+
+struct BurnDriver BurnDrvsnes_Spawne = {
+	"snes_spawne", "snes_spawn", NULL, NULL, "1995",
+	"Spawn (Euro)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SpawneRomInfo, snes_SpawneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Space Bazooka (Japan)
 
 static struct BurnRomInfo snes_SpbazookaRomDesc[] = {
@@ -27962,6 +28152,25 @@ struct BurnDriver BurnDrvsnes_Spiderman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SpidermanRomInfo, snes_SpidermanRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Spider-Man (Euro)
+
+static struct BurnRomInfo snes_SpidermaneRomDesc[] = {
+	{ "Spider-Man (E)(1994)(Ljn).sfc", 2097152, 0x02c52d37, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Spidermane)
+STD_ROM_FN(snes_Spidermane)
+
+struct BurnDriver BurnDrvsnes_Spidermane = {
+	"snes_spidermane", "snes_spiderman", NULL, NULL, "1994",
+	"Spider-Man (Euro)\0", NULL, "Ljn", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SpidermaneRomInfo, snes_SpidermaneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30835,6 +31044,44 @@ struct BurnDriver BurnDrvsnes_Superstarwars = {
 	512, 448, 4, 3
 };
 
+// Super Star Wars - Episode IV (Euro, Rev. 1)
+
+static struct BurnRomInfo snes_SuperstarwarseRomDesc[] = {
+	{ "Super Star Wars (E, Rev 1)(1992)(JVC - LucasArts).sfc", 1048576, 0x055926be, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarse)
+STD_ROM_FN(snes_Superstarwarse)
+
+struct BurnDriver BurnDrvsnes_Superstarwarse = {
+	"snes_superstarwarse", "snes_superstarwars", NULL, NULL, "1992",
+	"Super Star Wars - Episode IV (Euro, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarseRomInfo, snes_SuperstarwarseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode IV (Japan)
+
+static struct BurnRomInfo snes_SuperstarwarsjRomDesc[] = {
+	{ "Super Star Wars (J)(1992)(Victor - LucasArts).sfc", 1048576, 0x99cb2058, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsj)
+STD_ROM_FN(snes_Superstarwarsj)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsj = {
+	"snes_superstarwarsj", "snes_superstarwars", NULL, NULL, "1992",
+	"Super Star Wars - Episode IV (Japan)\0", NULL, "Victor - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsjRomInfo, snes_SuperstarwarsjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Star Wars - Episode V - The Empire Strikes Back (USA)
 
 static struct BurnRomInfo snes_SuperstarwarsesbRomDesc[] = {
@@ -30854,6 +31101,44 @@ struct BurnDriver BurnDrvsnes_Superstarwarsesb = {
 	512, 448, 4, 3
 };
 
+// Super Star Wars - Episode V - The Empire Strikes Back (Euro, Rev. 1)
+
+static struct BurnRomInfo snes_SuperstarwarsesbeRomDesc[] = {
+	{ "Super Star Wars - The Empire Strikes Back (E, Rev 1)(1993)(JVC - LucasArts).sfc", 1572864, 0xd308aa3e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsesbe)
+STD_ROM_FN(snes_Superstarwarsesbe)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsesbe = {
+	"snes_superstarwarsesbe", "snes_superstarwarsesb", NULL, NULL, "1993",
+	"Super Star Wars - Episode V - The Empire Strikes Back (Euro, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsesbeRomInfo, snes_SuperstarwarsesbeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode V - The Empire Strikes Back (Japan)
+
+static struct BurnRomInfo snes_SuperstarwarsesbjRomDesc[] = {
+	{ "Super Star Wars - The Empire Strikes Back (J)(1993)(Victor - LucasArts).sfc", 1572864, 0x05da6b44, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsesbj)
+STD_ROM_FN(snes_Superstarwarsesbj)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsesbj = {
+	"snes_superstarwarsesbj", "snes_superstarwarsesb", NULL, NULL, "1993",
+	"Super Star Wars - Episode V - The Empire Strikes Back (Japan)\0", NULL, "Victor - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsesbjRomInfo, snes_SuperstarwarsesbjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Star Wars - Episode VI - Return of the Jedi (USA)
 
 static struct BurnRomInfo snes_SuperstarwarsrjRomDesc[] = {
@@ -30869,6 +31154,44 @@ struct BurnDriver BurnDrvsnes_Superstarwarsrj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SuperstarwarsrjRomInfo, snes_SuperstarwarsrjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode VI - Return of the Jedi (Euro, Rev. 1)
+
+static struct BurnRomInfo snes_SuperstarwarsrjeRomDesc[] = {
+	{ "Super Star Wars - Return of the Jedi (E, Rev 1)(1994)(JVC - LucasArts).sfc", 2097152, 0xa79c7e7f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsrje)
+STD_ROM_FN(snes_Superstarwarsrje)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsrje = {
+	"snes_superstarwarsrje", "snes_superstarwarsrj", NULL, NULL, "1994",
+	"Super Star Wars - Episode VI - Return of the Jedi (Euro, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsrjeRomInfo, snes_SuperstarwarsrjeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode VI - Return of the Jedi (Japan)
+
+static struct BurnRomInfo snes_SuperstarwarsrjjRomDesc[] = {
+	{ "Super Star Wars - Return of the Jedi (J)(1994)(Victor - LucasArts).sfc", 2097152, 0xd21c6e7e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsrjj)
+STD_ROM_FN(snes_Superstarwarsrjj)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsrjj = {
+	"snes_superstarwarsrjj", "snes_superstarwarsrj", NULL, NULL, "1994",
+	"Super Star Wars - Episode VI - Return of the Jedi (Japan)\0", NULL, "Victor - LucasArts", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsrjjRomInfo, snes_SuperstarwarsrjjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33096,6 +33419,25 @@ struct BurnDriver BurnDrvsnes_Tmntfight = {
 	512, 448, 4, 3
 };
 
+// Teenage Mutant Hero Turtles: Tournament Fighters (Euro)
+
+static struct BurnRomInfo snes_TmntfighteRomDesc[] = {
+	{ "Teenage Mutant Hero Turtles - Tournament Fighters (E)(1993)(Konami).sfc", 2097152, 0x0dda3124, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tmntfighte)
+STD_ROM_FN(snes_Tmntfighte)
+
+struct BurnDriver BurnDrvsnes_Tmntfighte = {
+	"snes_tmntfighte", "snes_tmntfight", NULL, NULL, "1993",
+	"Teenage Mutant Hero Turtles: Tournament Fighters (Euro)\0", NULL, "Konami", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_TmntfighteRomInfo, snes_TmntfighteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Teenage Mutant Ninja Turtles IV: Turtles in Time (USA)
 
 static struct BurnRomInfo snes_TmntivRomDesc[] = {
@@ -33111,6 +33453,25 @@ struct BurnDriver BurnDrvsnes_Tmntiv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntivRomInfo, snes_TmntivRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Teenage Mutant Hero Turtles IV: Turtles in Time (Euro)
+
+static struct BurnRomInfo snes_TmntiveRomDesc[] = {
+	{ "Teenage Mutant Hero Turtles IV - Turtles in Time (E)(1992)(Konami).sfc", 1048576, 0xb0a3441e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tmntive)
+STD_ROM_FN(snes_Tmntive)
+
+struct BurnDriver BurnDrvsnes_Tmntive = {
+	"snes_tmntive", "snes_tmntiv", NULL, NULL, "1992",
+	"Teenage Mutant Hero Turtles IV: Turtles in Time (Euro)\0", NULL, "Konami", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_TmntiveRomInfo, snes_TmntiveRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -34063,6 +34424,25 @@ struct BurnDriver BurnDrvsnes_Unsquadron = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_UnsquadronRomInfo, snes_UnsquadronRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// U.N. Squadron (Euro)
+
+static struct BurnRomInfo snes_UnsquadroneRomDesc[] = {
+	{ "U.N. Squadron (E)(1991)(Capcom).sfc", 1048576, 0xc510285c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Unsquadrone)
+STD_ROM_FN(snes_Unsquadrone)
+
+struct BurnDriver BurnDrvsnes_Unsquadrone = {
+	"snes_unsquadrone", "snes_unsquadron", NULL, NULL, "1991",
+	"U.N. Squadron (Euro)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
+	SNESGetZipName, snes_UnsquadroneRomInfo, snes_UnsquadroneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -35659,6 +36039,44 @@ struct BurnDriver BurnDrvsnes_Xmenma = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_XmenmaRomInfo, snes_XmenmaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// X-Men - Mutant Apocalypse (Euro)
+
+static struct BurnRomInfo snes_XmenmaeRomDesc[] = {
+	{ "X-Men - Mutant Apocalypse (E)(1994)(Capcom).sfc", 2097152, 0x8e4ab536, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Xmenmae)
+STD_ROM_FN(snes_Xmenmae)
+
+struct BurnDriver BurnDrvsnes_Xmenmae = {
+	"snes_xmenmae", "snes_xmenma", NULL, NULL, "1994",
+	"X-Men - Mutant Apocalypse (Euro)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_XmenmaeRomInfo, snes_XmenmaeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// X-Men - Mutant Apocalypse (Japan)
+
+static struct BurnRomInfo snes_XmenmajRomDesc[] = {
+	{ "X-Men - Mutant Apocalypse (J)(1994)(Capcom).sfc", 2097152, 0x4f02a304, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Xmenmaj)
+STD_ROM_FN(snes_Xmenmaj)
+
+struct BurnDriver BurnDrvsnes_Xmenmaj = {
+	"snes_xmenmaj", "snes_xmenma", NULL, NULL, "1994",
+	"X-Men - Mutant Apocalypse (Japan)\0", NULL, "Capcom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_XmenmajRomInfo, snes_XmenmajRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

@@ -473,7 +473,7 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 
 	// IRRMAZE & Jamma-PCB: need to bank in z80 prog(!)
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL ||
-	    (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
+		(BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
 		bZ80BIOS = false;
 	}
 
@@ -836,7 +836,7 @@ static INT32 LoadRoms()
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pbobblenb")) {
 			// pbobblenb starts loading @ 0x200000
 			pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot] + 0x200000;
- 		}
+		}
 
 		NeoLoadADPCM(pInfo->nADPCMOffset, pInfo->nADPCMANum, pADPCMData);
 
@@ -1420,7 +1420,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			ba.szName	= "68K RAM";
 			BurnAcb(&ba);
 
-    		ba.Data		= NeoZ80RAM;
+			ba.Data		= NeoZ80RAM;
 			ba.nLen		= 0x00000800;
 			ba.nAddress = 0;
 			ba.szName	= "Z80 RAM";
@@ -1447,18 +1447,18 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			BurnAcb(&ba);
 		}
 
-    	ba.Data		= NeoPalSrc[0];
+		ba.Data		= NeoPalSrc[0];
 		ba.nLen		= 0x000002000;
 		ba.nAddress = 0;
 		ba.szName	= "Palette 0";
 		BurnAcb(&ba);
-    	ba.Data		= NeoPalSrc[1];
+		ba.Data		= NeoPalSrc[1];
 		ba.nLen		= 0x000002000;
 		ba.nAddress = 0;
 		ba.szName	= "Palette 1";
 		BurnAcb(&ba);
 
-    	ba.Data		= NeoGraphicsRAM;
+		ba.Data		= NeoGraphicsRAM;
 		ba.nLen		= 0x00020000;
 		ba.nAddress = 0;
 		ba.szName	= "Graphics RAM";
@@ -1785,8 +1785,8 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			bZ80NMIEnable = 1;
 			break;
 
-        case 0x18:
-            // sound nmi enable/disable bit.
+		case 0x18:
+			// sound nmi enable/disable bit.
 			bZ80NMIEnable = 0;
 			break;
 
@@ -3797,7 +3797,7 @@ static INT32 neogeoReset()
 			NeoMapActiveCartridge();
 		}
 
- 		if (nNeoSystemType & NEO_SYS_PCB) {
+		if (nNeoSystemType & NEO_SYS_PCB) {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SNK_KOF2K3) {
 				SekMapMemory(Neo68KBIOS, 0xC00000, 0xC7FFFF, MAP_ROM);
 				SekMapMemory(Neo68KBIOS, 0xC80000, 0xCFFFFF, MAP_ROM);
@@ -3943,7 +3943,7 @@ static INT32 NeoInitCommon()
 #endif
 
 	SekInit(0, 0x68000);											// Allocate 68000
-    SekOpen(0);
+	SekOpen(0);
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -4498,13 +4498,14 @@ INT32 NeoExit()
 	// release the NeoGeo CD information object if needed
 	NeoCDInfo_Exit();
 
-	s1945pmode = 0;
-	cphdmode = 0;
-	fatfury2mode = 0;
-	vlinermode = 0;
+	s1945pmode        = 0;
+	cphdmode          = 0;
+	fatfury2mode      = 0;
+	vlinermode        = 0;
 
 	nNeoProtectionXor = -1;
-	nNeoSystemType = 0;
+	nNeoSystemType    = 0;
+	nNeo68KRAMLen     = 0;
 
 	return 0;
 }

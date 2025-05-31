@@ -33329,7 +33329,7 @@ struct BurnDriver BurnDrvsnes_Tornekodungj = {
 // https://www.romhacking.net/translations/7405/
 
 static struct BurnRomInfo snes_TornekodungteRomDesc[] = {
-	{ "Torneko no Daibouken - Fushigi no Dungeon T-Eng v0.99 (2004-2025)(Magic Destiny, motke).sfc", 2097152, 0xeeafb152, BRF_ESS | BRF_PRG },
+	{ "Torneko no Daibouken - Fushigi no Dungeon T-Eng v0.99 (2004-2025)(Magic Destiny, motke).sfc", 2097152, 0xa2946cd0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tornekodungte)

@@ -16253,3 +16253,45 @@ struct BurnDriver BurnDrvCpsMshvsfcph = {
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+// Pocket Fighter (Simplified Chinese plot translation, Hack)
+// Modifier by: killme(·ï»Ë)
+// 20250528
+
+static struct BurnRomInfo PfghtscRomDesc[] = {
+	{ "pcfj.03",		0x080000, 0x681da43e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pcfsc.04",		0x080000, 0x53462930, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pcf.05",			0x080000, 0x215655f6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pcf.06",			0x080000, 0xea6f13ea, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pcf.07",			0x080000, 0x5ac6d5ea, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pcfsc.13m",		0x400000, 0xf516d278, CPS2_GFX | BRF_GRA },
+	{ "pcfsc.15m",		0x400000, 0x7d9de75b, CPS2_GFX | BRF_GRA },
+	{ "pcfsc.17m",		0x400000, 0x7343967c, CPS2_GFX | BRF_GRA },
+	{ "pcfsc.19m",		0x400000, 0x9368a861, CPS2_GFX | BRF_GRA },
+	{ "pcf.14m",		0x100000, 0x0383897c, CPS2_GFX | BRF_GRA },
+	{ "pcf.16m",		0x100000, 0x76f91084, CPS2_GFX | BRF_GRA },
+	{ "pcf.18m",		0x100000, 0x756c3754, CPS2_GFX | BRF_GRA },
+	{ "pcf.20m",		0x100000, 0x9ec9277d, CPS2_GFX | BRF_GRA },
+
+	{ "pcf.01",			0x020000, 0x254e5f33, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pcf.02",			0x020000, 0x6902f4f9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pcf.11m",		0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
+	{ "pcf.12m",		0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+
+	{ "pfghtj.key",		0x000014, 0x62297638, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Pfghtsc)
+STD_ROM_FN(Pfghtsc)
+
+struct BurnDriver BurnDrvCpsPfghtsc = {
+	"pfghtsc", "sgemf", NULL, NULL, "2025",
+	"Pocket Fighter (Simplified Chinese plot translation, Hack)\0", NULL, "killme", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, PfghtscRomInfo, PfghtscRomName, NULL, NULL, NULL, NULL, SgemfInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

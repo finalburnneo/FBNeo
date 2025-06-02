@@ -928,9 +928,47 @@ STD_ROM_FN(snes_46okunmono)
 struct BurnDriver BurnDrvsnes_46okunmono = {
 	"snes_46okunmono", "snes_evo", NULL, NULL, "1992",
 	"46 Okunen Monogatari - Harukanaru Eden e (Japan)\0", NULL, "Enix/Almanic", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"46 Okunen Monogatari - Harukanaru Eden e (Japan)\0\u0034\u0036\u5104\u5e74\u7269\u8a9e\u0020\u002d\u0020\u306f\u308b\u304b\u306a\u308a\u30a8\u30c7\u30f3\u3078\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_46okunmonoRomInfo, snes_46okunmonoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// 46 Okunen Monogatari - Harukanaru Eden e (Hack, Simplified Chinese v1.01)
+
+static struct BurnRomInfo snes_46okunmonotscRomDesc[] = {
+	{ "46 Okunen Monogatari - Harukanaru Eden e T-Chs v1.01 (2025)(aGuGu).sfc", 2097152, 0x7c984801, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_46okunmonotsc)
+STD_ROM_FN(snes_46okunmonotsc)
+
+struct BurnDriver BurnDrvsnes_46okunmonotsc = {
+	"snes_46okunmonotsc", "snes_evo", NULL, NULL, "2025",
+	"46 Okunen Monogatari - Harukanaru Eden e (Hack, Simplified Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	L"46 Okunen Monogatari - Harukanaru Eden e (Hack, Simplified Chinese v1.01)\0\u0034\u0036\u4ebf\u5e74\u524d\u7684\u6545\u4e8b\u0020\u002d\u0020\u5411\u9065\u8fdc\u7684\u4f0a\u7538\u56ed\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_46okunmonotscRomInfo, snes_46okunmonotscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// 46 Okunen Monogatari - Harukanaru Eden e (Hack, Traditional Chinese v1.01)
+
+static struct BurnRomInfo snes_46okunmonottcRomDesc[] = {
+	{ "46 Okunen Monogatari - Harukanaru Eden e T-Cht v1.01 (2025)(aGuGu).sfc", 2097152, 0x5265768a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_46okunmonottc)
+STD_ROM_FN(snes_46okunmonottc)
+
+struct BurnDriver BurnDrvsnes_46okunmonottc = {
+	"snes_46okunmonottc", "snes_evo", NULL, NULL, "2025",
+	"46 Okunen Monogatari - Harukanaru Eden e (Hack, Traditional Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	L"46 Okunen Monogatari - Harukanaru Eden e (Hack, Traditional Chinese v1.01)\0\u0034\u0036\u5104\u5e74\u524d\u7684\u6545\u4e8b\u0020\u002d\u0020\u5411\u9059\u9060\u7684\u4f0a\u7538\u5712\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_46okunmonottcRomInfo, snes_46okunmonottcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -26080,6 +26118,44 @@ struct BurnDriver BurnDrvsnes_Secrevertp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_SecrevertpRomInfo, snes_SecrevertpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Secret of Evermore (Hack, Simplified Chinese v1.01)
+
+static struct BurnRomInfo snes_SecrevertscRomDesc[] = {
+	{ "Secret of Evermore T-Chs v1.01 (2025)(aGuGu).sfc", 4194304, 0x94A99E3B, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Secrevertsc)
+STD_ROM_FN(snes_Secrevertsc)
+
+struct BurnDriver BurnDrvsnes_Secrevertsc = {
+	"snes_secrevertsc", "snes_secrever", NULL, NULL, "2025",
+	"Secret of Evermore (Hack, Simplified Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	L"Secret of Evermore (Hack, Simplified Chinese v1.01)\0\u6c38\u6052\u5883\u4e4b\u8c1c\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_SecrevertscRomInfo, snes_SecrevertscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Secret of Evermore (Hack, Traditional Chinese v1.01)
+
+static struct BurnRomInfo snes_SecreverttcRomDesc[] = {
+	{ "Secret of Evermore T-Cht v1.01 (2025)(aGuGu).sfc", 4194304, 0x5c293311, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Secreverttc)
+STD_ROM_FN(snes_Secreverttc)
+
+struct BurnDriver BurnDrvsnes_Secreverttc = {
+	"snes_secreverttc", "snes_secrever", NULL, NULL, "2025",
+	"Secret of Evermore (Hack, Traditional Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	L"Secret of Evermore (Hack, Traditional Chinese v1.01)\0\u6c38\u6046\u5883\u4e4b\u8b0e\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_SecreverttcRomInfo, snes_SecreverttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

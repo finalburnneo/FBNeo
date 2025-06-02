@@ -1542,6 +1542,8 @@ static int dx9MemToSurf()
 
 		pD3DDevice->SetViewport(&vp);
 
+		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+
 		pD3DDevice->BeginScene();
 
 		pD3DDevice->SetFVF(D3DFVF_LVERTEX2);
@@ -2480,6 +2482,8 @@ static int dx9AltRender()  // MemToSurf
 	}
 
 	UpdateShaderVariables(); // once per frame
+
+	pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
 
 	pD3DDevice->BeginScene();
 

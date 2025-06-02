@@ -27499,12 +27499,10 @@ struct BurnDriver BurnDrvCpsDinojj = {
 
 
 // Cadillacs and Dinosaurs (Judgement Day, Hack)
-// GOTVG 20241118
+// GOTVG 20250525
 
 static struct BurnRomInfo dinoplusRomDesc[] = {
-	{ "cdp_23a.8f",		0x080000, 0xce8cd21e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdp_22a.7f",		0x080000, 0xc1e14f11, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdp_21a.6f",		0x100000, 0x8e862536, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdu_pls.10f",	0x200000, 0xfbd102e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINO_COMPONENTS
 };
@@ -27513,7 +27511,7 @@ STD_ROM_PICK(dinoplus)
 STD_ROM_FN(dinoplus)
 
 struct BurnDriver BurnDrvCpsDinoplus = {
-	"dinoplus", "dino", NULL, NULL, "2024",
+	"dinoplus", "dino", NULL, NULL, "2025",
 	"Cadillacs and Dinosaurs (Judgement Day, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
@@ -27574,21 +27572,19 @@ struct BurnDriver BurnDrvCpsDinokr = {
 
 
 // Cadillacs and Dinosaurs (Triassic, Hack)
-// GOTVG 20241118
+// GOTVG 20250525
 
 static struct BurnRomInfo dinosdjRomDesc[] = {
-	{ "cdsdj_23a.8f",	0x080000, 0x8de40e6d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsdj_22a.7f",	0x080000, 0x8328a8bb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsdj_21a.6f",	0x100000, 0xf6702bdf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdu_sdj.10f",	0x200000, 0xe9320184, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	DINOJ_COMPONENTS
+	DINO_COMPONENTS
 };
 
 STD_ROM_PICK(dinosdj)
 STD_ROM_FN(dinosdj)
 
 struct BurnDriver BurnDrvCpsDinosdj = {
-	"dinosdj", "dino", NULL, NULL, "2024",
+	"dinosdj", "dino", NULL, NULL, "2025",
 	"Cadillacs and Dinosaurs (Triassic, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
@@ -27649,12 +27645,10 @@ struct BurnDriver BurnDrvCpsDinoxz = {
 
 
 // Cadillacs: Kyouryuu Shin Seiki (2020 Commemorative, Hack)
-// GOTVG 20240406
+// GOTVG 20250525
 
 static struct BurnRomInfo dinosynRomDesc[] = {
-	{ "cdsyn_23a.8f",	0x080000, 0x326cb331, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsyn_22a.7f",	0x080000, 0xe4776f9f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "cdsyn_21a.6f",	0x100000, 0xfa5d74c9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdj_syn.10",		0x200000, 0xaaa165ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINOJ_COMPONENTS
 };
@@ -27663,7 +27657,7 @@ STD_ROM_PICK(dinosyn)
 STD_ROM_FN(dinosyn)
 
 struct BurnDriver BurnDrvCpsDinosyn = {
-	"dinosyn", "dino", NULL, NULL, "2024",
+	"dinosyn", "dino", NULL, NULL, "2025",
 	"Cadillacs and Dinosaurs (2020 Commemorative, Hack)\0", NULL, "hack", "CPS1 / QSound",
 	L"Cadillacs \u6050\u7ADC\u65B0\u4E16\u7D00 (2020 Commemorative, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,

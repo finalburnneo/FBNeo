@@ -6169,6 +6169,38 @@ static struct BurnRomInfo TimescanRomDesc[] = {
 STD_ROM_PICK(Timescan)
 STD_ROM_FN(Timescan)
 
+static struct BurnRomInfo Timescan3RomDesc[] = {
+	{ "epr-10559.a4",   0x08000, 0x7be282cf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10556.a1",   0x08000, 0xf8bc7db8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10560.a5",   0x08000, 0xf4c38aa1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10557.a2",   0x08000, 0xcbf8dbea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10561.a6",   0x08000, 0xcb45981f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10558.a3",   0x08000, 0xd63c8eb7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10543.b9",   0x08000, 0x07dccc37, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10544.b10",  0x08000, 0x84fb9a3a, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10545.b11",  0x08000, 0xc8694bc0, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-10548.b1",   0x08000, 0xaa150735, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10552.b5",   0x08000, 0x6fcbb9f7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10549.b2",   0x08000, 0x2f59f067, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10553.b6",   0x08000, 0x8a220a9f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10550.b3",   0x08000, 0xf05069ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10554.b7",   0x08000, 0xdc64f809, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10551.b4",   0x08000, 0x435d811f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10555.b8",   0x08000, 0x2143c471, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-10562.a7",   0x08000, 0x3f5028bf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10563.a8",   0x08000, 0x9db7eddf, SYS16_ROM_UPD7759DATA | BRF_SND },
+
+	{ "317-0024.key",   0x02000, 0xdcd41d24, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Timescan3)
+STD_ROM_FN(Timescan3)
+
 static struct BurnRomInfo ToryumonRomDesc[] = {
 	{ "epr-17689.a2",   0x20000, 0x4f0dee19, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-17688.a1",   0x20000, 0x717d81c7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -10735,6 +10767,16 @@ struct BurnDriver BurnDrvTimescan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_PINBALL, 0,
 	NULL, TimescanRomInfo, TimescanRomName, NULL, NULL, NULL, NULL, System16bDip3InputInfo, TimescanDIPInfo,
+	TimescanInit, System16Exit, System16BFrame, System16BAltRender, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvTimescan3 = {
+	"timescan3", "timescan", NULL, NULL, "1987",
+	"Time Scanner (set 3, Japan, System 16B) (FD1089B 317-0024)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_PINBALL, 0,
+	NULL, Timescan3RomInfo, Timescan3RomName, NULL, NULL, NULL, NULL, System16bDip3InputInfo, TimescanDIPInfo,
 	TimescanInit, System16Exit, System16BFrame, System16BAltRender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };

@@ -3040,6 +3040,31 @@ static struct BurnRomInfo SpatterRomDesc[] = {
 STD_ROM_PICK(Spatter)
 STD_ROM_FN(Spatter)
 
+static struct BurnRomInfo SpatteraRomDesc[] = {
+	{ "epr-6597.116",      0x004000, 0xfb928b9d, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-6598.109",      0x004000, 0x5dff037a, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-6599.96",       0x004000, 0x7ba9de5b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+
+	{ "epr-6316.120",      0x002000, 0x1df95511, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+
+	{ "epr-6328.62",       0x002000, 0xa2bf2832, BRF_GRA },		  //  4 Tiles
+	{ "epr-6397.61",       0x002000, 0xc60d4471, BRF_GRA },		  //  5 Tiles
+	{ "epr-6326.64",       0x002000, 0x269fbb4c, BRF_GRA },		  //  6 Tiles
+	{ "epr-6396.63",       0x002000, 0xc15ccf3b, BRF_GRA },		  //  7 Tiles
+	{ "epr-6324.66",       0x002000, 0x8ab3b563, BRF_GRA },		  //  8 Tiles
+	{ "epr-6395.65",       0x002000, 0x3f083065, BRF_GRA },		  //  9 Tiles
+
+	{ "epr-6306.04",       0x004000, 0xe871e132, BRF_GRA },		  //  10 Sprites
+	{ "epr-6308.117",      0x004000, 0x99c2d90e, BRF_GRA },		  //  11 Sprites
+	{ "epr-6307.05",       0x004000, 0x0a5ad543, BRF_GRA },		  //  12 Sprites
+	{ "epr-6309.110",      0x004000, 0x7423ad98, BRF_GRA },		  //  13 Sprites
+
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+};
+
+STD_ROM_PICK(Spattera)
+STD_ROM_FN(Spattera)
+
 static struct BurnRomInfo SsanchanRomDesc[] = {
 	{ "epr-6310.116",      0x004000, 0x26b43701, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-6311.109",      0x004000, 0xcb2bc620, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -4491,6 +4516,33 @@ static void spatter_decode(void)
 		{ 0x80,0xa0,0x88,0xa8 }, { 0xa0,0x80,0x20,0x00 },	/* ...1...1...0...1 */
 		{ 0xa0,0x80,0x20,0x00 }, { 0x80,0xa0,0x88,0xa8 },	/* ...1...1...1...0 */
 		{ 0x28,0x20,0xa8,0xa0 }, { 0x00,0x08,0x20,0x28 }	/* ...1...1...1...1 */
+	};
+
+	sega_decode(convtable);
+}
+
+static void spattera_decode(void)
+{
+	static const UINT8 convtable[32][4] =
+	{
+		/*       opcode                   data                     address      */
+		/*  A    B    C    D         A    B    C    D                           */
+		{ 0xa0,0xa8,0x20,0x28 }, { 0x80,0xa0,0x00,0x20 },   /* ...0...0...0...0 */
+		{ 0x20,0x28,0x00,0x08 }, { 0x20,0x28,0x00,0x08 },   /* ...0...0...0...1 */
+		{ 0xa0,0xa8,0x20,0x28 }, { 0x08,0x28,0x00,0x20 },   /* ...0...0...1...0 */
+		{ 0x88,0x08,0xa8,0x28 }, { 0x88,0x08,0xa8,0x28 },   /* ...0...0...1...1 */
+		{ 0xa0,0xa8,0x20,0x28 }, { 0x20,0x28,0x00,0x08 },   /* ...0...1...0...0 */
+		{ 0x28,0xa8,0x20,0xa0 }, { 0x20,0x28,0x00,0x08 },   /* ...0...1...0...1 */
+		{ 0xa0,0xa8,0x20,0x28 }, { 0x08,0x28,0x00,0x20 },   /* ...0...1...1...0 */
+		{ 0x88,0x08,0xa8,0x28 }, { 0x88,0x08,0xa8,0x28 },   /* ...0...1...1...1 */
+		{ 0x28,0xa8,0x20,0xa0 }, { 0xa0,0xa8,0x20,0x28 },   /* ...1...0...0...0 */
+		{ 0x88,0x08,0xa8,0x28 }, { 0x80,0xa0,0x00,0x20 },   /* ...1...0...0...1 */
+		{ 0x28,0xa8,0x20,0xa0 }, { 0x08,0x28,0x00,0x20 },   /* ...1...0...1...0 */
+		{ 0x28,0xa8,0x20,0xa0 }, { 0x80,0xa0,0x00,0x20 },   /* ...1...0...1...1 */
+		{ 0x20,0x28,0x00,0x08 }, { 0x20,0x28,0x00,0x08 },   /* ...1...1...0...0 */
+		{ 0x88,0x08,0xa8,0x28 }, { 0x20,0x28,0x00,0x08 },   /* ...1...1...0...1 */
+		{ 0x08,0x28,0x00,0x20 }, { 0x80,0xa0,0x00,0x20 },   /* ...1...1...1...0 */
+		{ 0x08,0x28,0x00,0x20 }, { 0x88,0x08,0xa8,0x28 }    /* ...1...1...1...1 */
 	};
 
 	sega_decode(convtable);
@@ -6257,6 +6309,13 @@ static INT32 SpatterInit()
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
+static INT32 SpatteraInit()
+{
+	DecodeFunction = spattera_decode;
+
+	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
+}
+
 static INT32 StarjackInit()
 {
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
@@ -7588,6 +7647,16 @@ struct BurnDriver BurnDrvSpatter = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SpatterRomInfo, SpatterRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
 	SpatterInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 240, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSpattera = {
+	"spattera", "spatter", NULL, NULL, "1984",
+	"Spatter (315-5099)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
+	NULL, SpatteraRomInfo, SpatteraRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
+	SpatteraInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 240, 224, 4, 3
 };
 

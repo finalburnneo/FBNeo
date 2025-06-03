@@ -1214,7 +1214,7 @@ static INT32 DrvInit(INT32 game_selector)
 		}
 		break;
 
-		case 7: // wrally2a
+		case 7: // wrally2
 		{
 			if (BurnLoadRom(DrvMCUROM  + 0x000000,  2, 1)) return 1;
 
@@ -1243,7 +1243,7 @@ static INT32 DrvInit(INT32 game_selector)
 		}
 		break;
 		
-		case 8: // wrally2
+		case 8: // wrally2a
 		{
 			if (BurnLoadRom(DrvMCUROM  + 0x000000,  2, 1)) return 1;
 			
@@ -2106,7 +2106,8 @@ struct BurnDriver BurnDrvSnowboar = {
 };
 
 
-// Touch and Go (World, 05/Feb/1996, checksum 059D0235)
+// Touch and Go (World, checksum 059D0235)
+// 05/Feb/1996
 // REF: 950510-1
 
 static struct BurnRomInfo touchgoRomDesc[] = {
@@ -2137,7 +2138,7 @@ static INT32 touchgoInit()
 
 struct BurnDriver BurnDrvTouchgo = {
 	"touchgo", NULL, NULL, NULL, "1996",
-	"Touch and Go (World, 05/Feb/1996, checksum 059D0235)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (World, checksum 059D0235)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2146,7 +2147,8 @@ struct BurnDriver BurnDrvTouchgo = {
 };
 
 
-// Touch and Go (World, 11/Dec/1995, checksum 05A0C7FB)
+// Touch and Go (World, checksum 05A0C7FB)
+// 11/Dec/1995
 // REF: 950906
 
 static struct BurnRomInfo touchgoaRomDesc[] = {
@@ -2172,7 +2174,7 @@ STD_ROM_FN(touchgoa)
 
 struct BurnDriver BurnDrvTouchgoa = {
 	"touchgoa", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (World, 11/Dec/1995, checksum 05A0C7FB)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (World, checksum 05A0C7FB)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoaRomInfo, touchgoaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2181,7 +2183,8 @@ struct BurnDriver BurnDrvTouchgoa = {
 };
 
 
-// Touch and Go (North America, 14/Nov/1995, checksum 05737572)
+// Touch and Go (North America, checksum 05737572)
+// 14/Nov/1995
 
 static struct BurnRomInfo touchgonaRomDesc[] = {
 	{ "v_us_56_f546_14-11.ic56",	0x080000, 0x3bfe2010, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2217,7 +2220,7 @@ static INT32 touchgonaInit() {
 
 struct BurnDriver BurnDrvTouchgona = {
 	"touchgona", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (North America, 14/Nov/1995, checksum 05737572)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (North America, checksum 05737572)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonaRomInfo, touchgonaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2226,7 +2229,8 @@ struct BurnDriver BurnDrvTouchgona = {
 };
 
 
-// Touch and Go (non North America, 16/Nov/1995, checksum 056533F0)
+// Touch and Go (non North America, checksum 056533F0)
+// 16/Nov/1995
 
 static struct BurnRomInfo touchgonnaRomDesc[] = {
 	{ "v_e_56_ef33_16-11.ic56",		0x080000, 0xc2715874, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2251,7 +2255,7 @@ STD_ROM_FN(touchgonna)
 
 struct BurnDriver BurnDrvTouchgonna = {
 	"touchgonna", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (non North America, 16/Nov/1995, checksum 056533F0)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (non North America, checksum 056533F0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonnaRomInfo, touchgonnaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2260,7 +2264,8 @@ struct BurnDriver BurnDrvTouchgonna = {
 };
 
 
-// Touch and Go (non North America, 15/Nov/1995, checksum 056C2336)
+// Touch and Go (non North America, checksum 056C2336)
+// 15/Nov/1995
 
 static struct BurnRomInfo touchgonnaaRomDesc[] = {
 	{ "v_e_c79b_56_15-11.ic56",		0x080000, 0xd92bb02a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2285,7 +2290,7 @@ STD_ROM_FN(touchgonnaa)
 
 struct BurnDriver BurnDrvTouchgonnaa = {
 	"touchgonnaa", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (non North America, 15/Nov/1995, checksum 056C2336)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (non North America, checksum 056C2336)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonnaaRomInfo, touchgonnaaRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2294,7 +2299,8 @@ struct BurnDriver BurnDrvTouchgonnaa = {
 };
 
 
-// Touch and Go (non North America, 15/Nov/1995, checksum 056C138F)
+// Touch and Go (non North America, checksum 056C138F)
+// 15/Nov/1995
 
 static struct BurnRomInfo touchgonnabRomDesc[] = {
 	{ "v_alt_e_56_15-11.ic56",		0x080000, 0x64b83556, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2319,7 +2325,7 @@ STD_ROM_FN(touchgonnab)
 
 struct BurnDriver BurnDrvTouchgonnab = {
 	"touchgonnab", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (non North America, 15/Nov/1995, checksum 056C138F)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (non North America, checksum 056C138F)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonnabRomInfo, touchgonnabRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2328,7 +2334,8 @@ struct BurnDriver BurnDrvTouchgonnab = {
 };
 
 
-// Touch and Go (non North America, 11/Nov/2005, checksum 056AA304)
+// Touch and Go (non North America, checksum 056AA304)
+// 11/Nov/2005
 // REF 950906, no plug-in daughterboard, non North America notice, also found on REF: 950510-1 with daughterboard
 
 static struct BurnRomInfo touchgonnacRomDesc[] = {
@@ -2354,7 +2361,7 @@ STD_ROM_FN(touchgonnac)
 
 struct BurnDriver BurnDrvTouchgonnac = {
 	"touchgonnac", "touchgo", NULL, NULL, "1995",
-	"Touch and Go (non North America, 11/Nov/2005, checksum 056AA304)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (non North America, checksum 056AA304)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonnacRomInfo, touchgonnacRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2634,9 +2641,58 @@ struct BurnDriver BurnDrvBangjb = {
 };
 
 
-// World Rally 2: Twin Racing (mask ROM version)
+// World Rally 2: Twin Racing (version 20-07, checksum B1B8)
+// 31/Jul/1995 (but version 20/Jul on screen). Marked as "USA" internally at Gaelco.
 
 static struct BurnRomInfo wrally2RomDesc[] = {
+	{ "dallas_usa_wr-2_2_64_usa_e47e_31-7.bin",		0x80000, 0x5e6a364a, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
+	{ "dallas_usa_wr-2_1_63_usa_c584_31-7.bin",		0x80000, 0x5c106494, 1 | BRF_PRG | BRF_ESS },         //  1
+
+	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+
+	{ "wr2.16d",		0x80000, 0xad26086b, 3 | BRF_GRA },                       //  3 Graphics & Samples
+	{ "wr2.17d",		0x80000, 0xc1ec0745, 3 | BRF_GRA },                       //  4
+	{ "wr2.18d",		0x80000, 0xe3617814, 3 | BRF_GRA },                       //  5
+	{ "wr2.19d",		0x80000, 0x2dae988c, 3 | BRF_GRA },                       //  6
+	{ "wr2.09d",		0x80000, 0x372d70c8, 3 | BRF_GRA },                       //  7
+	{ "wr2.10d",		0x80000, 0x5db67eb3, 3 | BRF_GRA },                       //  8
+	{ "wr2.11d",		0x80000, 0xae66b97c, 3 | BRF_GRA },                       //  9
+	{ "wr2.12d",		0x80000, 0x6dbdaa95, 3 | BRF_GRA },                       // 10
+	{ "wr2.01d",		0x80000, 0x753a138d, 3 | BRF_GRA },                       // 11
+	{ "wr2.02d",		0x80000, 0x9c2a723c, 3 | BRF_GRA },                       // 12
+	{ "wr2.20d",		0x80000, 0x4f7ade84, 3 | BRF_GRA },                       // 13
+	{ "wr2.13d",		0x80000, 0xa4cd32f8, 3 | BRF_GRA },                       // 14
+	{ "wr2.21d",		0x80000, 0x899b0583, 3 | BRF_GRA },                       // 15
+	{ "wr2.14d",		0x80000, 0x6eb781d5, 3 | BRF_GRA },                       // 16
+
+	{ "7a_5461_gal16v8.bin",	0x117, 0xa9bbdb7e, 0 | BRF_OPT },                 // 17 plds
+	{ "mu.7a_436f_pal16l8.bin",	0x104, 0x632adb2f, 0 | BRF_OPT },                 // 18
+	{ "mu8_668b_palf20l8.bin",	0x144, 0x4145d424, 0 | BRF_OPT },                 // 19
+};
+
+STD_ROM_PICK(wrally2)
+STD_ROM_FN(wrally2)
+
+static INT32 wrally2Init()
+{
+	return DrvInit(7);
+}
+
+struct BurnDriver BurnDrvWrally2 = {
+	"wrally2", NULL, NULL, NULL, "1995",
+	"World Rally 2: Twin Racing (version 20-07, checksum B1B8)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	384*2, 240, 8, 3
+};
+
+
+// World Rally 2: Twin Racing (version 26-06, checksum 3EDB, mask ROM version)
+// 26/Jun/1995
+
+static struct BurnRomInfo wrally2aRomDesc[] = {
 	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
 	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS },         //  1
 
@@ -2652,28 +2708,29 @@ static struct BurnRomInfo wrally2RomDesc[] = {
 	{ "mu8_668b_palf20l8.bin",	0x144, 0x4145d424, 0 | BRF_OPT },                 //  8
 };
 
-STD_ROM_PICK(wrally2)
-STD_ROM_FN(wrally2)
+STD_ROM_PICK(wrally2a)
+STD_ROM_FN(wrally2a)
 
-static INT32 wrally2Init()
+static INT32 wrally2aInit()
 {
 	return DrvInit(8);
 }
 
-struct BurnDriver BurnDrvWrally2 = {
-	"wrally2", NULL, NULL, NULL, "1995",
-	"World Rally 2: Twin Racing (mask ROM version)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvWrally2a = {
+	"wrally2a", "wrally2", NULL, NULL, "1995",
+	"World Rally 2: Twin Racing (version 26-06, checksum 3EDB, mask ROM version)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
-	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, wrally2aRomInfo, wrally2aRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2aInit, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
 };
 
 
-// World Rally 2: Twin Racing (EPROM version)
+// World Rally 2: Twin Racing (version 26-06, checksum 3EDB)
+// 26/Jun/1995
 
-static struct BurnRomInfo wrally2aRomDesc[] = {
+static struct BurnRomInfo wrally2bRomDesc[] = {
 	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
 	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS },         //  1
 
@@ -2699,20 +2756,101 @@ static struct BurnRomInfo wrally2aRomDesc[] = {
 	{ "mu8_668b_palf20l8.bin",	0x144, 0x4145d424, 0 | BRF_OPT },                 // 19
 };
 
-STD_ROM_PICK(wrally2a)
-STD_ROM_FN(wrally2a)
+STD_ROM_PICK(wrally2b)
+STD_ROM_FN(wrally2b)
 
-static INT32 wrally2aInit()
-{
-	return DrvInit(7);
-}
-
-struct BurnDriver BurnDrvWrally2a = {
-	"wrally2a", "wrally2", NULL, NULL, "1995",
-	"World Rally 2: Twin Racing (EPROM version)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvWrally2b = {
+	"wrally2b", "wrally2", NULL, NULL, "1995",
+	"World Rally 2: Twin Racing (version 26-06, checksum 3EDB)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, wrally2aRomInfo, wrally2aRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
-	wrally2aInit, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	NULL, wrally2bRomInfo, wrally2bRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	384*2, 240, 8, 3
+};
+
+
+// World Rally 2: Twin Racing (version 09-06, checksum 7BE1)
+// 12/Jun/1995 (but version 09/Jun on screen)
+
+static struct BurnRomInfo wrally2cRomDesc[] = {
+	{ "wr2_e_ab01_12-6_27c040.bin",		0x80000, 0xc1c5ab6a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "wr2_o_7f46_12-6_27c040.bin",		0x80000, 0xddbcc45b, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "wrally2_ds5002fp_sram.bin",		0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+
+	{ "wr2_16_00_c846_4-6_27c040.bin",	0x80000, 0x76b9e7a4, 3 | BRF_GRA },           //  3 Graphics & Samples
+	{ "wr2_17_01_7913_4-6_27c040.bin",	0x80000, 0xc1ec0745, 3 | BRF_GRA },           //  4
+	{ "wr2.18d",						0x80000, 0xe3617814, 3 | BRF_GRA },           //  5
+	{ "wr2.19d",						0x80000, 0x2dae988c, 3 | BRF_GRA },           //  6
+	{ "wr2_9_10_3334_4-6_27c040.bin",	0x80000, 0xabf2c077, 3 | BRF_GRA },           //  7
+	{ "wr2_10_11_8573_4-6_27c040.bin",	0x80000, 0x5db67eb3, 3 | BRF_GRA },           //  8
+	{ "wr2.11d",						0x80000, 0xae66b97c, 3 | BRF_GRA },           //  9
+	{ "wr2.12d",						0x80000, 0x6dbdaa95, 3 | BRF_GRA },           // 10
+	{ "wr2_1_20_b950_4-6_27c040.bin",	0x80000, 0x0e089410, 3 | BRF_GRA },           // 11
+	{ "wr2_2_21_fdc3_4-6_27c040.bin",	0x80000, 0x9c2a723c, 3 | BRF_GRA },           // 12
+	{ "wr2_20_30_452c_4-6_27c040.bin",	0x80000, 0xf8108c1a, 3 | BRF_GRA },           // 13
+	{ "wr2_13_31_cddf_4-6_27c040.bin",	0x80000, 0xa4cd32f8, 3 | BRF_GRA },           // 14
+	{ "wr2_21_40_b704_4-6_27c040.bin",	0x80000, 0x2214c465, 3 | BRF_GRA },           // 15
+	{ "wr2_14_41_999d_4-6_27c040.bin",	0x80000, 0x6eb781d5, 3 | BRF_GRA },           // 16
+
+	{ "7a_5461_gal16v8.bin",		0x117, 0xa9bbdb7e, 0 | BRF_OPT },                 // 17 plds
+	{ "mu.7a_436f_pal16l8.bin",		0x104, 0x632adb2f, 0 | BRF_OPT },                 // 18
+	{ "mu8_668b_palf20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },                 // 19
+};
+
+STD_ROM_PICK(wrally2c)
+STD_ROM_FN(wrally2c)
+
+struct BurnDriver BurnDrvWrally2c = {
+	"wrally2c", "wrally2", NULL, NULL, "1995",
+	"World Rally 2: Twin Racing (version 09-06, checksum 7BE1)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, wrally2cRomInfo, wrally2cRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	384*2, 240, 8, 3
+};
+
+
+// World Rally 2: Twin Racing (version 09-06, checksum 50A2)
+// 09/Jun/1995
+
+static struct BurnRomInfo wrally2dRomDesc[] = {
+	{ "wr2_e_f1d9_9-6_27c040.bin",		0x80000, 0x3de4dbfe, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "wr2_o_080e_9-6_27c040.bin",		0x80000, 0x6652ebd9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "wrally2_ds5002fp_sram.bin",		0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+
+	{ "wr2_16_00_c846_4-6_27c040.bin",	0x80000, 0x76b9e7a4, 3 | BRF_GRA },           //  3 Graphics & Samples
+	{ "wr2_17_01_7913_4-6_27c040.bin",	0x80000, 0xc1ec0745, 3 | BRF_GRA },           //  4
+	{ "wr2.18d",						0x80000, 0xe3617814, 3 | BRF_GRA },           //  5
+	{ "wr2.19d",						0x80000, 0x2dae988c, 3 | BRF_GRA },           //  6
+	{ "wr2_9_10_3334_4-6_27c040.bin",	0x80000, 0xabf2c077, 3 | BRF_GRA },           //  7
+	{ "wr2_10_11_8573_4-6_27c040.bin",	0x80000, 0x5db67eb3, 3 | BRF_GRA },           //  8
+	{ "wr2.11d",						0x80000, 0xae66b97c, 3 | BRF_GRA },           //  9
+	{ "wr2.12d",						0x80000, 0x6dbdaa95, 3 | BRF_GRA },           // 10
+	{ "wr2_1_20_b950_4-6_27c040.bin",	0x80000, 0x0e089410, 3 | BRF_GRA },           // 11
+	{ "wr2_2_21_fdc3_4-6_27c040.bin",	0x80000, 0x9c2a723c, 3 | BRF_GRA },           // 12
+	{ "wr2_20_30_452c_4-6_27c040.bin",	0x80000, 0xf8108c1a, 3 | BRF_GRA },           // 13
+	{ "wr2_13_31_cddf_4-6_27c040.bin",	0x80000, 0xa4cd32f8, 3 | BRF_GRA },           // 14
+	{ "wr2_21_40_b704_4-6_27c040.bin",	0x80000, 0x2214c465, 3 | BRF_GRA },           // 15
+	{ "wr2_14_41_999d_4-6_27c040.bin",	0x80000, 0x6eb781d5, 3 | BRF_GRA },           // 16
+
+	{ "7a_5461_gal16v8.bin",		0x117, 0xa9bbdb7e, 0 | BRF_OPT },                 // 17 plds
+	{ "mu.7a_436f_pal16l8.bin",		0x104, 0x632adb2f, 0 | BRF_OPT },                 // 18
+	{ "mu8_668b_palf20l8.bin",		0x144, 0x4145d424, 0 | BRF_OPT },                 // 19
+};
+
+STD_ROM_PICK(wrally2d)
+STD_ROM_FN(wrally2d)
+
+struct BurnDriver BurnDrvWrally2d = {
+	"wrally2d", "wrally2", NULL, NULL, "1995",
+	"World Rally 2: Twin Racing (version 09-06, checksum 50A2)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, wrally2dRomInfo, wrally2dRomName, NULL, NULL, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
 };

@@ -382,8 +382,8 @@ static struct BurnInputInfo Gt3dInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 2"	},
 
-	{"Volume Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 3"	},
-	{"Volume Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 fire 4"	},
+	{"Volume Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"volumeup"	},
+	{"Volume Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"volumedown"},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy5 + 1,	"service"	},

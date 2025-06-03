@@ -72,8 +72,8 @@ static struct BurnInputInfo kinstInputList[] = {
 	{ "Service",		BIT_DIGITAL,	DrvJoy2 + 13,	"service"   },
 	{ "Service Mode",   BIT_DIGITAL,    DrvJoy1 + 12,   "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	DrvJoy2 + 12,	"tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	DrvJoy3 + 2,	"volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	DrvDSW + 0,		"dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	DrvDSW + 1,		"dip"       },
 };

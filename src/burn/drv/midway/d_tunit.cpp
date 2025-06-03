@@ -76,8 +76,8 @@ static struct BurnInputInfo Mk2InputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 10, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 10, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 11, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };
@@ -129,8 +129,8 @@ static struct BurnInputInfo NbajamInputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };
@@ -177,8 +177,8 @@ static struct BurnInputInfo JdreddpInputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };

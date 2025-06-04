@@ -75,14 +75,23 @@ static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* p
 			_stprintf(subDirPath, szFormatB, dirPath, findFileData.cFileName);
 
 			bool bSkip = false;
-			TCHAR szCmp[MAX_PATH] = { 0 };
+			TCHAR szCmpA[MAX_PATH] = { 0 }, szCmpB[MAX_PATH] = { 0 };
 			if (!ends_with_slash(subDirPath)) {
-				_stprintf(szCmp, _T("%s/"), subDirPath);
+				// The slash bar changes when the user reselects the ROMs directory
+				_stprintf(szCmpA, _T("%s/"),  subDirPath);
+				_stprintf(szCmpB, _T("%s\\"), subDirPath);
+			} else {
+				// After szFormatB formatting, there is almost no possibility to get to this step, reserved
+				INT32 nLen = _tcslen(subDirPath);
+				_tcscpy(szCmpA, subDirPath);
+				_tcscpy(szCmpB, subDirPath);
+				szCmpA[nLen - 1] = _T('/');
+				szCmpB[nLen - 1] = _T('\\');
 			}
 
 			// Ignore the default ROMs path
 			for (INT32 i = 0; i < sizeof(szAppRomPaths) / sizeof(szAppRomPaths[0]); i++) {
-				if (0 == _tcscmp(szCmp, szAppRomPaths[i])) {
+				if ((0 == _tcscmp(szCmpA, szAppRomPaths[i])) || (0 == _tcscmp(szCmpB, szAppRomPaths[i]))) {
 					bSkip = true; break;
 				}
 			}

@@ -180,9 +180,6 @@ static UINT16 __fastcall targeth_main_read_word(UINT32 address)
 		case 0x700008:
 			return DrvInputs[1];
 
-		case 0x70000a:
-			return DrvInputs[1] << 8;
-
 		case 0x70000e:
 			return MSM6295Read(0);
 	}
@@ -218,11 +215,9 @@ static UINT8 __fastcall targeth_main_read_byte(UINT32 address)
 
 		case 0x700008:
 		case 0x700009:
-			return DrvInputs[1];
-
 		case 0x70000a:
 		case 0x70000b:
-			return DrvInputs[1] << 8;
+			return DrvInputs[1];
 
 		case 0x70000e:
 		case 0x70000f:
@@ -771,8 +766,8 @@ struct BurnDriver BurnDrvTargeth10 = {
 // Quick Shots (ver 1.0, checksum AD0C)
 
 static struct BurnRomInfo quickshtsRomDesc[] = {
-	{ "book_16-06_o_6f77_27c020.bin", 0x40000, 0x9305509b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "book_16-06_e_7fd9_27c020.bin", 0x40000, 0x74999de4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "book_16-06_e_7fd9_27c020.bin", 0x40000, 0x74999de4, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "book_16-06_o_6f77_27c020.bin", 0x40000, 0x9305509b, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "targeth_ds5002fp.bin",         0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
 

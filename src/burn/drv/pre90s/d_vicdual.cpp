@@ -3242,6 +3242,35 @@ struct BurnDriver BurnDrvSupcrash = {
 };
 
 
+// Colision (bootleg of Head On)
+
+static struct BurnRomInfo colisionRomDesc[] = {
+	{ "0_2708.a0",	0x0400, 0x1febc85a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "1_2708.b0",	0x0400, 0xaeac8c5f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2_2708.d0",	0x0400, 0xdebcc3d4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3_2708.e0",	0x0400, 0x37644be6, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4_2708.e0",	0x0400, 0xff5665ba, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "5_2708.h0",	0x0400, 0x548bac7e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "6_2708.l0",	0x0400, 0xb6585b83, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "p0.a4",		0x0020, 0xe60a7960, 0 | BRF_OPT },           //  7 Unused PROMs
+	{ "p1.b4",		0x0020, 0xa1506b9d, 0 | BRF_OPT },           //  8
+};
+
+STD_ROM_PICK(colision)
+STD_ROM_FN(colision)
+
+struct BurnDriver BurnDrvColision = {
+	"colision", "headon", NULL, NULL, "1979",
+	"Colision (bootleg of Head On)\0", "No sound", "bootleg (ASSA)", "Vic Dual",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, colisionRomInfo, colisionRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, HeadonDIPInfo,
+	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 224, 4, 3
+};
+
+
 // Star Trek (Head On hardware)
 
 static struct BurnRomInfo startrksRomDesc[] = {

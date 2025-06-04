@@ -110,7 +110,7 @@ static struct BurnDIPInfo TargethDIPList[]=
 	{0x0f, 0x01, 0x20, 0x00, "Off"			},
 	{0x0f, 0x01, 0x20, 0x20, "On"			},
 
-	{0   , 0xfe, 0   ,    3, "Gun alarm"		},
+	{0   , 0xfe, 0   ,    2, "Gun alarm"		},
 	{0x0f, 0x01, 0x40, 0x40, "Off"			},
 	{0x0f, 0x01, 0x40, 0x00, "On"			},
 
@@ -180,6 +180,9 @@ static UINT16 __fastcall targeth_main_read_word(UINT32 address)
 		case 0x700008:
 			return DrvInputs[1];
 
+		case 0x70000a:
+			return DrvInputs[1] << 8;
+
 		case 0x70000e:
 			return MSM6295Read(0);
 	}
@@ -216,6 +219,10 @@ static UINT8 __fastcall targeth_main_read_byte(UINT32 address)
 		case 0x700008:
 		case 0x700009:
 			return DrvInputs[1];
+
+		case 0x70000a:
+		case 0x70000b:
+			return DrvInputs[1] << 8;
 
 		case 0x70000e:
 		case 0x70000f:
@@ -631,23 +638,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Target Hits (ver 1.1, Checksum 5152)
+// Target Hits (ver 1.1, checksum 5152)
 
 static struct BurnRomInfo targethRomDesc[] = {
-	{ "th2_b_c_23.c23",		0x40000, 0x840887d6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "th2_b_c_22.c22",		0x40000, 0xd2435eb8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "th2_b_c_23.c23",           0x40000, 0x840887d6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "th2_b_c_22.c22",           0x40000, 0xd2435eb8, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "targeth_ds5002fp.bin",	0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
+	{ "targeth_ds5002fp.bin",     0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
 
-	{ "targeth_ds5002fp_scratch",	0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
+	{ "targeth_ds5002fp_scratch", 0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
 
-	{ "targeth.i13",		0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
-	{ "targeth.i11",		0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
-	{ "targeth.i9",			0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
-	{ "targeth.i7",			0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
+	{ "targeth.i13",              0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
+	{ "targeth.i11",              0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
+	{ "targeth.i9",               0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
+	{ "targeth.i7",               0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
 
-	{ "targeth.c1",			0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
-	{ "targeth.c3",			0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
+	{ "targeth.c1",               0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
+	{ "targeth.c3",               0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
 };
 
 STD_ROM_PICK(targeth)
@@ -655,7 +662,7 @@ STD_ROM_FN(targeth)
 
 struct BurnDriver BurnDrvTargeth = {
 	"targeth", NULL, NULL, NULL, "1994",
-	"Target Hits (ver 1.1, Checksum 5152)\0", NULL, "Gaelco", "Miscellaneous",
+	"Target Hits (ver 1.1, checksum 5152)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, targethRomInfo, targethRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
@@ -663,23 +670,23 @@ struct BurnDriver BurnDrvTargeth = {
 	336, 232, 4, 3
 };
 
-// Target Hits (ver 1.1, Checksum 86E1)
+// Target Hits (ver 1.1, checksum 86E1)
 
 static struct BurnRomInfo targethaRomDesc[] = {
-	{ "th2_n_c_23.c23",		0x40000, 0xb99b25dc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "th2_n_c_22.c22",		0x40000, 0x6d34f0cf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "th2_n_c_23.c23",           0x40000, 0xb99b25dc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "th2_n_c_22.c22",           0x40000, 0x6d34f0cf, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "targeth_ds5002fp.bin",	0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
+	{ "targeth_ds5002fp.bin",     0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
 
-	{ "targeth_ds5002fp_scratch",	0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
+	{ "targeth_ds5002fp_scratch", 0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
 
-	{ "targeth.i13",		0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
-	{ "targeth.i11",		0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
-	{ "targeth.i9",			0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
-	{ "targeth.i7",			0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
+	{ "targeth.i13",              0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
+	{ "targeth.i11",              0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
+	{ "targeth.i9",               0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
+	{ "targeth.i7",               0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
 
-	{ "targeth.c1",			0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
-	{ "targeth.c3",			0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
+	{ "targeth.c1",               0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
+	{ "targeth.c3",               0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
 };
 
 STD_ROM_PICK(targetha)
@@ -687,7 +694,7 @@ STD_ROM_FN(targetha)
 
 struct BurnDriver BurnDrvTargetha = {
 	"targetha", "targeth", NULL, NULL, "1994",
-	"Target Hits (ver 1.1, Checksum 86E1)\0", NULL, "Gaelco", "Miscellaneous",
+	"Target Hits (ver 1.1, checksum 86E1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, targethaRomInfo, targethaRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
@@ -695,24 +702,56 @@ struct BurnDriver BurnDrvTargetha = {
 	336, 232, 4, 3
 };
 
+// Target Hits (ver 1.1, checksum B1F7)
 
-// Target Hits (ver 1.0, Checksum FBCB)
+static struct BurnRomInfo targethbRomDesc[] = {
+	{ "zigurat_e_esc_25-oct-94_f616_27c020.bin", 0x40000, 0x296085a6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "zigurat_o_esc_25-oct-94_405d_27c020.bin", 0x40000, 0xef93a1cc, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "targeth_ds5002fp.bin",                    0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
+
+	{ "targeth_ds5002fp_scratch",                0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
+
+	{ "targeth.i13",                             0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
+	{ "targeth.i11",                             0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
+	{ "targeth.i9",                              0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
+	{ "targeth.i7",                              0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
+
+	{ "targeth.c1",                              0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
+	{ "targeth.c3",                              0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
+};
+
+STD_ROM_PICK(targethb)
+STD_ROM_FN(targethb)
+
+struct BurnDriver BurnDrvTargethb = {
+	"targethb", "targeth", NULL, NULL, "1994",
+	"Target Hits (ver 1.1, checksum B1F7)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, targethbRomInfo, targethbRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	336, 232, 4, 3
+};
+
+
+// Target Hits (ver 1.0, checksum FBCB)
 
 static struct BurnRomInfo targeth10RomDesc[] = {
-	{ "c23.bin",			0x40000, 0xe38a54e2, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "c22.bin",			0x40000, 0x24fe3efb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "c23.bin",                  0x40000, 0xe38a54e2, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "c22.bin",                  0x40000, 0x24fe3efb, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "targeth_ds5002fp.bin",	0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
+	{ "targeth_ds5002fp.bin",     0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
 
-	{ "targeth_ds5002fp_scratch",	0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
+	{ "targeth_ds5002fp_scratch", 0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
 
-	{ "targeth.i13",		0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
-	{ "targeth.i11",		0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
-	{ "targeth.i9",			0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
-	{ "targeth.i7",			0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
+	{ "targeth.i13",              0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
+	{ "targeth.i11",              0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
+	{ "targeth.i9",               0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
+	{ "targeth.i7",               0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
 
-	{ "targeth.c1",			0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
-	{ "targeth.c3",			0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
+	{ "targeth.c1",               0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
+	{ "targeth.c3",               0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
 };
 
 STD_ROM_PICK(targeth10)
@@ -720,10 +759,43 @@ STD_ROM_FN(targeth10)
 
 struct BurnDriver BurnDrvTargeth10 = {
 	"targeth10", "targeth", NULL, NULL, "1994",
-	"Target Hits (ver 1.0, Checksum FBCB)\0", NULL, "Gaelco", "Miscellaneous",
+	"Target Hits (ver 1.0, checksum FBCB)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, targeth10RomInfo, targeth10RomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	336, 232, 4, 3
+};
+
+
+// Quick Shots (ver 1.0, checksum AD0C)
+
+static struct BurnRomInfo quickshtsRomDesc[] = {
+	{ "book_16-06_o_6f77_27c020.bin", 0x40000, 0x9305509b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "book_16-06_e_7fd9_27c020.bin", 0x40000, 0x74999de4, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "targeth_ds5002fp.bin",         0x08000, 0xabcdfee4, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002fp SRAM
+
+	{ "targeth_ds5002fp_scratch",     0x00080, 0xc927bcb1, 3 | BRF_PRG | BRF_ESS }, //  3 DS5002fp Internal RAM
+
+	{ "targeth.i13",                  0x80000, 0xb892be24, 4 | BRF_GRA },           //  4 Graphics
+	{ "targeth.i11",                  0x80000, 0x6797faf9, 4 | BRF_GRA },           //  5
+	{ "targeth.i9",                   0x80000, 0x0e922c1c, 4 | BRF_GRA },           //  6
+	{ "targeth.i7",                   0x80000, 0xd8b41000, 4 | BRF_GRA },           //  7
+
+	{ "targeth.c1",                   0x80000, 0xd6c9dfbc, 5 | BRF_SND },           //  8 Samples
+	{ "targeth.c3",                   0x80000, 0xd4c771df, 5 | BRF_SND },           //  9
+};
+
+STD_ROM_PICK(quickshts)
+STD_ROM_FN(quickshts)
+
+struct BurnDriver BurnDrvQuickshts = {
+	"quickshts", "targeth", NULL, NULL, "1994",
+	"Quick Shots (ver 1.0, checksum AD0C)\0", NULL, "Zero / Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, quickshtsRomInfo, quickshtsRomName, NULL, NULL, NULL, NULL, TargethInputInfo, TargethDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 232, 4, 3
 };

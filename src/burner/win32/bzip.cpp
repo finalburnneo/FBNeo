@@ -430,6 +430,8 @@ INT32 BzipOpen(bool bootApp)
 
 	SubDirsListFree();
 
+	const char* pszDrvName = (NULL != pDataRomDesc) ? pRDI->szDrvName : NULL;	// romdata mode, let's pick up the forgotten DrvName ROMs again.
+
 	// Locate each zip file
 	for (INT32 y = 0, z = 0; y < BZIP_MAX && z < BZIP_MAX; y++) {
 		char* szName = NULL;
@@ -440,7 +442,7 @@ INT32 BzipOpen(bool bootApp)
 		}
 
 		for (INT32 d = 0; d < DIRS_MAX; d++) { // Traverse the user-configured rom paths
-			TCHAR szFullName[MAX_PATH] = { 0 };
+			TCHAR szFullName[MAX_PATH] = { 0 }, szDrvName[MAX_PATH] = { 0 };
 
 			if (nLoadMenuShowY & (1 << 26)) {
 				for (UINT32 nCount = 0; nCount < _SubDirInfo[d].nCount; nCount++) {
@@ -448,6 +450,9 @@ INT32 BzipOpen(bool bootApp)
 					if ((_tcslen(_SubDirInfo[d].SubDirs[nCount]) + strlen(szName)) > (MAX_PATH - 5))
 						continue;
 					_stprintf(szFullName, _T("%s%hs"), _SubDirInfo[d].SubDirs[nCount], szName);
+					if (NULL != pszDrvName) {
+						_stprintf(szDrvName, _T("%s%hs"), _SubDirInfo[d].SubDirs[nCount], pszDrvName);
+					}
 
 					if (RomArchiveExists(szFullName)) {
 						bFound = true;
@@ -464,10 +469,28 @@ INT32 BzipOpen(bool bootApp)
 
 						_SubDirsZip.nCount++;
 					}
+					if (RomArchiveExists(szDrvName)) {
+						bFound = true;
+
+						TCHAR** newArray = (TCHAR**)realloc(_SubDirsZip.pszZipName, (_SubDirsZip.nCount + 1) * sizeof(TCHAR*));
+						_SubDirsZip.pszZipName = newArray;
+
+						_SubDirsZip.pszZipName[_SubDirsZip.nCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+						_tcscpy(_SubDirsZip.pszZipName[_SubDirsZip.nCount], szDrvName);
+
+						if (!bootApp) {
+							FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_FOUND), szName, _SubDirsZip.pszZipName[_SubDirsZip.nCount]);
+						}
+
+						_SubDirsZip.nCount++;
+					}
 				}
 			}
 
 			_stprintf(szFullName, _T("%s%hs"), szAppRomPaths[d], szName);
+			if (NULL != pszDrvName) {
+				_stprintf(szDrvName, _T("%s%hs"), szAppRomPaths[d], pszDrvName);
+			}
 
 			if (RomArchiveExists(szFullName)) { // Check existence of the rom zip/7z archive file
 
@@ -475,6 +498,20 @@ INT32 BzipOpen(bool bootApp)
 
 				szBzipName[z] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
 				_tcscpy(szBzipName[z], szFullName);
+
+				if (!bootApp) {
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_FOUND), szName, szBzipName[z]);
+				}
+
+				z++;
+				if (z >= BZIP_MAX) break;
+			}
+			if (RomArchiveExists(szDrvName)) { // Append DrvName ROMs
+
+				bFound = true;
+
+				szBzipName[z] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+				_tcscpy(szBzipName[z], szDrvName);
 
 				if (!bootApp) {
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_FOUND), szName, szBzipName[z]);

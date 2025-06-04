@@ -74,10 +74,24 @@ static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* p
 			TCHAR subDirPath[MAX_PATH] = { 0 };
 			_stprintf(subDirPath, szFormatB, dirPath, findFileData.cFileName);
 
-			TCHAR** newArray = (TCHAR**)realloc(*pszArray, (*pnCount + 1) * sizeof(TCHAR*));
-			*pszArray = newArray;
-			(*pszArray)[*pnCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-			_stprintf((*pszArray)[(*pnCount)++], _T("%s\\"), subDirPath);
+			bool bSkip = false;
+			TCHAR szCmp[MAX_PATH] = { 0 };
+			if (!ends_with_slash(subDirPath)) {
+				_stprintf(szCmp, _T("%s/"), subDirPath);
+			}
+
+			// Ignore the default ROMs path
+			for (INT32 i = 0; i < sizeof(szAppRomPaths) / sizeof(szAppRomPaths[0]); i++) {
+				if (0 == _tcscmp(szCmp, szAppRomPaths[i])) {
+					bSkip = true; break;
+				}
+			}
+			if (!bSkip) {
+				TCHAR** newArray = (TCHAR**)realloc(*pszArray, (*pnCount + 1) * sizeof(TCHAR*));
+				*pszArray = newArray;
+				(*pszArray)[*pnCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+				_stprintf((*pszArray)[(*pnCount)++], _T("%s\\"), subDirPath);
+			}
 
 			TraverseDirectory(subDirPath, pszArray, pnCount);
 		}

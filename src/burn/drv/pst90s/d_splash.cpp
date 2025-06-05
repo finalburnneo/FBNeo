@@ -859,29 +859,29 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-// Splash! (Ver. 1.2 World)
+// Splash! (ver. 1.3, checksum E7BEF3FA, World)
 
 static struct BurnRomInfo splashRomDesc[] = {
-	{ "splash_2.g3",			0x20000, 0xb38fda40, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "splash_6.i3",			0x20000, 0x02359c47, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "splash_3.g5",			0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "splash_7.i5",			0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "splash_4.g6",			0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "splash_8.i6",			0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "splash_5.g8",			0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "splash_9.i8",			0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "splash_2_no_fbi_no_eeuu_27c010.bin", 0x20000, 0x5d58ce67, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "splash_6_no_fbi_no_eeuu_27c010.bin", 0x20000, 0x45f83601, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "splash_3.g5",                        0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "splash_7.i5",                        0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "splash_4.g6",                        0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "splash_8.i6",                        0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "splash_5.g8",                        0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "splash_9.i8",                        0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
 
-	{ "splash_1.c5",			0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "splash_1.c5",                        0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
 
-	{ "splash_13.i17",			0x20000, 0x028a4a68, 3 | BRF_GRA },           //  9 Graphics
-	{ "splash_11.i14",			0x20000, 0x2a8cb830, 3 | BRF_GRA },           // 10
-	{ "splash_12.i16",			0x20000, 0x21aeff2c, 3 | BRF_GRA },           // 11
-	{ "splash_10.i13",			0x20000, 0xfebb9893, 3 | BRF_GRA },           // 12
+	{ "splash_13.i17",                      0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",                      0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",                      0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",                      0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
 
-	{ "p_a1020a-pl84c.g14",		0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 13 PLDs
-	{ "1_gal16v8a-25lp.c13",	0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 14
-	{ "2_gal16v8a-25lp.d5",		0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 15
-	{ "3_gal20v8a-25lp.f4",		0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "p_a1020a-pl84c.g14",                 0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13",                0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",                 0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",                 0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
 };
 
 STD_ROM_PICK(splash)
@@ -889,7 +889,7 @@ STD_ROM_FN(splash)
 
 struct BurnDriver BurnDrvSplash = {
 	"splash", NULL, NULL, NULL, "1992",
-	"Splash! (Ver. 1.2 World)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	"Splash! (ver. 1.3, checksum E7BEF3FA, World)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, splashRomInfo, splashRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
@@ -898,29 +898,185 @@ struct BurnDriver BurnDrvSplash = {
 };
 
 
-// Splash! (Ver. 1.0 World)
+// Splash! (ver. 1.3, checksum E7BEEEFA, North America)
+
+static struct BurnRomInfo splashnaRomDesc[] = {
+	{ "fbi_eeuu_2_splash_27c010.bin", 0x20000, 0x6350027d, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "fbi_eeuu_6_splash_27c010.bin", 0x20000, 0x45f83601, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "splash_3.g5",                  0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "splash_7.i5",                  0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "splash_4.g6",                  0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "splash_8.i6",                  0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "splash_5.g8",                  0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "splash_9.i8",                  0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
+
+	{ "splash_1.c5",                  0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "splash_13.i17",                0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",                0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",                0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",                0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
+
+	{ "p_a1020a-pl84c.g14",           0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13",          0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",           0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",           0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
+};
+
+STD_ROM_PICK(splashna)
+STD_ROM_FN(splashna)
+
+struct BurnDriver BurnDrvSplashna = {
+	"splashna", "splash", NULL, NULL, "1992",
+	"Splash! (ver. 1.3, checksum E7BEEEFA, North America)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, splashnaRomInfo, splashnaRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// Painted Lady (ver. 1.3, checksum E7BEEEFA, North America)
+
+static struct BurnRomInfo paintladRomDesc[] = {
+	{ "2.4g",              0x20000, 0xcd00864a, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "6.4i",              0x20000, 0x0f19d830, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "5g",                0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "5i",                0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "6g",                0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "6i",                0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "8g",                0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "8i",                0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
+
+	{ "5c",                0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "13.18i",            0x20000, 0x262ee31f, 3 | BRF_GRA },              //  9 Graphics
+	{ "11.15i",            0x20000, 0x6e4d598f, 3 | BRF_GRA },              // 10
+	{ "12.16i",            0x20000, 0x15761eb5, 3 | BRF_GRA },              // 11
+	{ "10.13i",            0x20000, 0x92a0eff8, 3 | BRF_GRA },              // 12
+
+	{ "a1020a-pl84c.g14",  0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "gal16v8a-25lp.c13", 0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "gal16v8a-25lp.d5",  0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "gal20v8a-25lp.f4",  0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
+};
+
+STD_ROM_PICK(paintlad)
+STD_ROM_FN(paintlad)
+
+struct BurnDriver BurnDrvPaintlad = {
+	"paintlad", "splash", NULL, NULL, "1992",
+	"Painted Lady (ver. 1.3, checksum E7BEEEFA, North America)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, paintladRomInfo, paintladRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// Splash! (ver. 1.3, checksum E7BEEBFA, Korea)
+
+static struct BurnRomInfo splashkrRomDesc[] = {
+	{ "windial_2_splash_27c010.bin", 0x20000, 0x55a97ae2, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "windial_6_splash_27c010.bin", 0x20000, 0x45f83601, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "sp_kor_3_27c040.bin",         0x80000, 0x70a97c7b, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "sp_kor_7_27c040.bin",         0x80000, 0x1dee35cb, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "sp_kor_4_27c040.bin",         0x80000, 0xa21e7485, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "sp_kor_8_27c040.bin",         0x80000, 0xa11a4340, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "sp_kor_5_27c040.bin",         0x80000, 0xb043a71b, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "sp_kor_9_27c040.bin",         0x80000, 0x57ec94bd, 1 | BRF_PRG | BRF_ESS },    //  7
+
+	{ "splash_1.c5",                 0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "splash_13.i17",               0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",               0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",               0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",               0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
+
+	{ "p_a1020a-pl84c.g14",          0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13",         0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",          0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",          0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
+};
+
+STD_ROM_PICK(splashkr)
+STD_ROM_FN(splashkr)
+
+struct BurnDriver BurnDrvSplashkr = {
+	"splashkr", "splash", NULL, NULL, "1992",
+	"Splash! (ver. 1.3, checksum E7BEEBFA, Korea)\0", NULL, "Gaelco / OMK Software (Windial license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, splashkrRomInfo, splashkrRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// Splash! (ver. 1.2, checksum 5071804D, non North America)
+
+static struct BurnRomInfo splash12RomDesc[] = {
+	{ "splash_2.g3",         0x20000, 0xb38fda40, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "splash_6.i3",         0x20000, 0x02359c47, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "splash_3.g5",         0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "splash_7.i5",         0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "splash_4.g6",         0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "splash_8.i6",         0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "splash_5.g8",         0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "splash_9.i8",         0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
+
+	{ "splash_1.c5",         0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "splash_13.i17",       0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",       0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",       0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",       0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
+
+	{ "p_a1020a-pl84c.g14",  0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13", 0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",  0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",  0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
+};
+
+STD_ROM_PICK(splash12)
+STD_ROM_FN(splash12)
+
+struct BurnDriver BurnDrvSplash12 = {
+	"splash12", "splash", NULL, NULL, "1992",
+	"Splash! (ver. 1.2, checksum 5071804D, non North America)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, splash12RomInfo, splash12RomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// Splash! (ver. 1.0, checksum 2FC9AE1D, non North America)
 
 static struct BurnRomInfo splash10RomDesc[] = {
-	{ "splash10_2.g3",			0x20000, 0x38ba6632, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "splash10_6.i3",			0x20000, 0x0edc3373, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "splash_3.g5",			0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "splash_7.i5",			0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "splash_4.g6",			0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "splash_8.i6",			0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "splash_5.g8",			0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "splash_9.i8",			0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "splash10_2.g3",       0x20000, 0x38ba6632, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "splash10_6.i3",       0x20000, 0x0edc3373, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "splash_3.g5",         0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "splash_7.i5",         0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "splash_4.g6",         0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "splash_8.i6",         0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "splash_5.g8",         0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "splash_9.i8",         0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
 
-	{ "splash_1.c5",			0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "splash_1.c5",         0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
 
-	{ "splash_13.i17",			0x20000, 0x028a4a68, 3 | BRF_GRA },           //  9 Graphics
-	{ "splash_11.i14",			0x20000, 0x2a8cb830, 3 | BRF_GRA },           // 10
-	{ "splash_12.i16",			0x20000, 0x21aeff2c, 3 | BRF_GRA },           // 11
-	{ "splash_10.i13",			0x20000, 0xfebb9893, 3 | BRF_GRA },           // 12
+	{ "splash_13.i17",       0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",       0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",       0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",       0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
 
-	{ "p_a1020a-pl84c.g14",		0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 13 PLDs
-	{ "1_gal16v8a-25lp.c13",	0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 14
-	{ "2_gal16v8a-25lp.d5",		0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 15
-	{ "3_gal20v8a-25lp.f4",		0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "p_a1020a-pl84c.g14",  0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13", 0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",  0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",  0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
 };
 
 STD_ROM_PICK(splash10)
@@ -934,7 +1090,7 @@ static INT32 Splash10Init()
 
 struct BurnDriver BurnDrvSplash10 = {
 	"splash10", "splash", NULL, NULL, "1992",
-	"Splash! (Ver. 1.0 World)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	"Splash! (ver. 1.0, checksum 2FC9AE1D, non North America)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, splash10RomInfo, splash10RomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
@@ -943,64 +1099,25 @@ struct BurnDriver BurnDrvSplash10 = {
 };
 
 
-// Painted Lady (Splash) (Ver. 1.3 US)
-
-static struct BurnRomInfo paintladRomDesc[] = {
-	{ "2.4g",					0x20000, 0xcd00864a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "6.4i",					0x20000, 0x0f19d830, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "5g",						0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "5i",						0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "6g",						0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "6i",						0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "8g",						0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "8i",						0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS }, //  7
-
-	{ "5c",						0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
-
-	{ "13.18i",					0x20000, 0x262ee31f, 3 | BRF_GRA },           //  9 Graphics
-	{ "11.15i",					0x20000, 0x6e4d598f, 3 | BRF_GRA },           // 10
-	{ "12.16i",					0x20000, 0x15761eb5, 3 | BRF_GRA },           // 11
-	{ "10.13i",					0x20000, 0x92a0eff8, 3 | BRF_GRA },           // 12
-
-	{ "a1020a-pl84c.g14",		0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 13 PLDs
-	{ "gal16v8a-25lp.c13",		0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 14
-	{ "gal16v8a-25lp.d5",		0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 15
-	{ "gal20v8a-25lp.f4",		0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT },           // 16
-};
-
-STD_ROM_PICK(paintlad)
-STD_ROM_FN(paintlad)
-
-struct BurnDriver BurnDrvPaintlad = {
-	"paintlad", "splash", NULL, NULL, "1992",
-	"Painted Lady (Splash) (Ver. 1.3 US)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, paintladRomInfo, paintladRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
-	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
-	368, 240, 4, 3
-};
-
-
 // The Return of Lady Frog (set 1)
 
 static struct BurnRomInfo roldfrogRomDesc[] = {
-	{ "roldfrog.002",			0x80000, 0x724cf022, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "roldfrog.006",			0x80000, 0xe52a7ae2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "roldfrog.003",			0x80000, 0xa1d49967, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "roldfrog.007",			0x80000, 0xe5805c4e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "roldfrog.004",			0x80000, 0x709281f5, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "roldfrog.008",			0x80000, 0x39adcba4, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "roldfrog.005",			0x80000, 0xb683160c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "roldfrog.009",			0x80000, 0xe475fb76, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "protdata.bin",			0x08000, 0xecaa8dd1, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "roldfrog.002", 0x80000, 0x724cf022, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "roldfrog.006", 0x80000, 0xe52a7ae2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "roldfrog.003", 0x80000, 0xa1d49967, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "roldfrog.007", 0x80000, 0xe5805c4e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "roldfrog.004", 0x80000, 0x709281f5, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "roldfrog.008", 0x80000, 0x39adcba4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "roldfrog.005", 0x80000, 0xb683160c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "roldfrog.009", 0x80000, 0xe475fb76, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "protdata.bin", 0x08000, 0xecaa8dd1, 1 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "roldfrog.001",			0x20000, 0xba9eb1c6, 2 | BRF_PRG | BRF_ESS }, //  9 Z80 Code
+	{ "roldfrog.001", 0x20000, 0xba9eb1c6, 2 | BRF_PRG | BRF_ESS }, //  9 Z80 Code
 
-	{ "roldfrog.010",			0x20000, 0x51fd0e1a, 3 | BRF_GRA },           // 10 Graphics
-	{ "roldfrog.011",			0x20000, 0x610bf6f3, 3 | BRF_GRA },           // 11
-	{ "roldfrog.012",			0x20000, 0x466ede67, 3 | BRF_GRA },           // 12
-	{ "roldfrog.013",			0x20000, 0xfad3e8be, 3 | BRF_GRA },           // 13
+	{ "roldfrog.010", 0x20000, 0x51fd0e1a, 3 | BRF_GRA },           // 10 Graphics
+	{ "roldfrog.011", 0x20000, 0x610bf6f3, 3 | BRF_GRA },           // 11
+	{ "roldfrog.012", 0x20000, 0x466ede67, 3 | BRF_GRA },           // 12
+	{ "roldfrog.013", 0x20000, 0xfad3e8be, 3 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(roldfrog)
@@ -1020,22 +1137,22 @@ struct BurnDriver BurnDrvRoldfrog = {
 // The Return of Lady Frog (set 2)
 
 static struct BurnRomInfo roldfrogaRomDesc[] = {
-	{ "roldfrog.002",			0x80000, 0x724cf022, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "roldfrog.006",			0x80000, 0xe52a7ae2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "roldfrog.003",			0x80000, 0xa1d49967, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "roldfrog.007",			0x80000, 0xe5805c4e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "roldfrog.004",			0x80000, 0x709281f5, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "roldfrog.008",			0x80000, 0x39adcba4, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "roldfrog.005",			0x80000, 0xb683160c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "9",						0x80000, 0xfd515b58, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "protdata.bin",			0x08000, 0xecaa8dd1, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "roldfrog.002", 0x80000, 0x724cf022, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "roldfrog.006", 0x80000, 0xe52a7ae2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "roldfrog.003", 0x80000, 0xa1d49967, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "roldfrog.007", 0x80000, 0xe5805c4e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "roldfrog.004", 0x80000, 0x709281f5, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "roldfrog.008", 0x80000, 0x39adcba4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "roldfrog.005", 0x80000, 0xb683160c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9",            0x80000, 0xfd515b58, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "protdata.bin", 0x08000, 0xecaa8dd1, 1 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "roldfrog.001",			0x20000, 0xba9eb1c6, 2 | BRF_PRG | BRF_ESS }, //  9 Z80 Code
+	{ "roldfrog.001", 0x20000, 0xba9eb1c6, 2 | BRF_PRG | BRF_ESS }, //  9 Z80 Code
 
-	{ "roldfrog.010",			0x20000, 0x51fd0e1a, 3 | BRF_GRA },           // 10 Graphics
-	{ "roldfrog.011",			0x20000, 0x610bf6f3, 3 | BRF_GRA },           // 11
-	{ "roldfrog.012",			0x20000, 0x466ede67, 3 | BRF_GRA },           // 12
-	{ "roldfrog.013",			0x20000, 0xfad3e8be, 3 | BRF_GRA },           // 13
+	{ "roldfrog.010", 0x20000, 0x51fd0e1a, 3 | BRF_GRA },           // 10 Graphics
+	{ "roldfrog.011", 0x20000, 0x610bf6f3, 3 | BRF_GRA },           // 11
+	{ "roldfrog.012", 0x20000, 0x466ede67, 3 | BRF_GRA },           // 12
+	{ "roldfrog.013", 0x20000, 0xfad3e8be, 3 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(roldfroga)

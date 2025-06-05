@@ -3218,6 +3218,31 @@ static struct BurnRomInfo TeddybboRomDesc[] = {
 STD_ROM_PICK(Teddybbo)
 STD_ROM_FN(Teddybbo)
 
+static struct BurnRomInfo TeddybboaRomDesc[] = {
+	{ "epr-6768.116",      0x004000, 0x30437ff1, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-6769.109",      0x004000, 0x984b47f1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-6770.96",       0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+
+	{ "epr-6748.120",      0x002000, 0x9325a1cf, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+
+	{ "epr-6747.62",       0x002000, 0xa0e5aca7, BRF_GRA },		  //  4 Tiles
+	{ "epr-6746.61",       0x002000, 0xcdb77e51, BRF_GRA },		  //  5 Tiles
+	{ "epr-6745.64",       0x002000, 0x0cab75c3, BRF_GRA },		  //  6 Tiles
+	{ "epr-6744.63",       0x002000, 0x0ef8d2cd, BRF_GRA },		  //  7 Tiles
+	{ "epr-6743.66",       0x002000, 0xc33062b5, BRF_GRA },		  //  8 Tiles
+	{ "epr-6742.65",       0x002000, 0xc457e8c5, BRF_GRA },		  //  9 Tiles
+
+	{ "epr-6735.117",      0x004000, 0x1be35a97, BRF_GRA },		  //  10 Sprites
+	{ "epr-6737.04",       0x004000, 0x6b53aa7a, BRF_GRA },		  //  11 Sprites
+	{ "epr-6736.110",      0x004000, 0x565c25d0, BRF_GRA },		  //  12 Sprites
+	{ "epr-6738.05",       0x004000, 0xe116285f, BRF_GRA },		  //  13 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+};
+
+STD_ROM_PICK(Teddybboa)
+STD_ROM_FN(Teddybboa)
+
 static struct BurnRomInfo TeddybboblRomDesc[] = {
 	{ "1.f2",        	   0x004000, 0x81a37e69, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "2.j2",	           0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -7717,6 +7742,16 @@ struct BurnDriver BurnDrvTeddybbo = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybboRomInfo, TeddybboRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybbInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTeddybboa = {
+	"teddybboa", "teddybb", NULL, NULL, "1985",
+	"TeddyBoy Blues (315-5111, Old Ver.)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, TeddybboaRomInfo, TeddybboaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
+	SpatterInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 

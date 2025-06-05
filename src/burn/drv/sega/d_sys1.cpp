@@ -3577,6 +3577,34 @@ static struct BurnRomInfo Wboy5RomDesc[] = {
 STD_ROM_PICK(Wboy5)
 STD_ROM_FN(Wboy5)
 
+static struct BurnRomInfo Wboy6RomDesc[] = {
+	{ "epr-7731.129",      0x002000, 0x9776ceb6, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-7732.130",      0x002000, 0x74ff0918, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-7733.131",      0x002000, 0x07c8b494, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-7734.132",      0x002000, 0x8ebd648c, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
+	{ "epr-7735.133",      0x002000, 0x8379aa23, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
+	{ "epr-7736.134",      0x002000, 0xc767a5d7, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
+
+	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
+
+	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  7 Tiles
+	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  8 Tiles
+	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  9 Tiles
+	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  10 Tiles
+	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  11 Tiles
+	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  12 Tiles
+
+	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  13 Sprites
+	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  14 Sprites
+	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  15 Sprites
+	{ "epr-7488.05",       0x004000, 0x007c2f1b, BRF_GRA },		  //  16 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+};
+
+STD_ROM_PICK(Wboy6)
+STD_ROM_FN(Wboy6)
+
 static struct BurnRomInfo WboyuRomDesc[] = {
 	{ "ic116_89.bin",      0x004000, 0x73d8cef0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ic109_90.bin",      0x004000, 0x29546828, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -4844,6 +4872,53 @@ static void wboy2_decode(void)
 		16,
 		11,15,11,15,11,
 		14,10,14,10,
+	};
+
+	sega_decode_2(System1Rom1, System1Fetch1, opcode_xor,opcode_swap_select,data_xor,data_swap_select);
+}
+
+static void wboy6_decode(void)
+{
+	static const UINT8 opcode_xor[64] =
+	{
+		0x00,0x41,0x10,0x51,0x04,0x45,0x14,0x00,0x41,0x10,0x51,0x04,0x45,0x14,
+		0x55,0x01,0x40,0x11,0x50,0x05,0x44,0x15,0x01,0x40,0x11,0x50,0x05,0x44,
+		0x15,0x54,0x00,0x41,
+		0x50,0x05,0x44,0x15,0x54,0x00,0x41,0x50,0x05,0x44,0x15,0x54,0x00,0x41,
+		0x10,0x51,0x04,0x45,0x14,0x55,0x01,0x40,0x51,0x04,0x45,0x14,0x55,0x01,
+		0x40,0x11,0x50,0x05,
+	};
+
+	static const UINT8 data_xor[64] =
+	{
+		0x45,0x14,0x55,0x01,0x40,0x11,0x50,0x05,0x44,0x15,0x54,0x00,0x41,0x10,
+		0x05,0x44,0x15,0x54,0x00,0x41,0x10,0x51,0x04,0x45,0x14,0x55,0x01,0x40,
+		0x11,0x04,0x45,0x14,
+		0x00,0x41,0x10,0x51,0x04,0x45,0x14,0x55,0x01,0x40,0x11,0x50,0x05,0x44,
+		0x55,0x01,0x40,0x11,0x50,0x05,0x44,0x15,0x54,0x00,0x41,0x10,0x51,0x04,
+		0x45,0x54,0x00,0x41,
+	};
+
+	static const INT32 opcode_swap_select[64] =
+	{
+		8,11,15,2,6,9,13,1,4,
+		8,11,15,2,6,9,13,1,4,
+		8,11,15,2,6,10,13,1,4,
+		8,11,15,3,6,7,2,6,1,5,
+		1,4,0,3,7,2,6,2,5,
+		1,4,0,3,7,2,6,2,5,
+		1,4,0,3,7,3,6,2,5,
+	};
+
+	static const INT32 data_swap_select[64] =
+	{
+		9,13,0,4,8,11,15,2,6,
+		9,13,1,4,8,11,15,2,6,
+		10,13,1,4,8,11,15,2,6,
+		10,13,1,4,8,1,4,0,3,7,
+		2,6,1,5,1,4,0,3,7,
+		2,6,2,5,1,4,0,3,7,
+		3,6,2,5,1,4,0,4,7,
 	};
 
 	sega_decode_2(System1Rom1, System1Fetch1, opcode_xor,opcode_swap_select,data_xor,data_swap_select);
@@ -6425,6 +6500,14 @@ static INT32 WboyuInit()
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
+static INT32 Wboy6Init()
+{
+	wide_mode = 1;
+	DecodeFunction = wboy6_decode;
+
+	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
+}
+
 static INT32 WmatchInit()
 {
 	DecodeFunction = wmatch_decode;
@@ -7872,6 +7955,16 @@ struct BurnDriver BurnDrvWboy5 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 512, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWboy6 = {
+	"wboy6", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (set 6, 315-5179)\0", NULL, "Escape (Sega license)", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, Wboy6RomInfo, Wboy6RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
+	Wboy6Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
 };
 

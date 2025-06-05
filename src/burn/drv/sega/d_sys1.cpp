@@ -3848,77 +3848,77 @@ STD_ROM_PICK(Choplift)
 STD_ROM_FN(Choplift)
 
 static struct BurnRomInfo ChopliftuRomDesc[] = {
-	{ "epr-7152.ic90",       0x008000, 0xfe49d83e, BRF_ESS | BRF_PRG }, 	//  0	Z80 #1 Program Code
-	{ "epr-7153.ic91",       0x008000, 0x48697666, BRF_ESS | BRF_PRG }, 	//  1	Z80 #1 Program Code
-	{ "epr-7154.ic92",       0x008000, 0x56d6222a, BRF_ESS | BRF_PRG }, 	//  2	Z80 #1 Program Code
+	{ "epr-7152.ic90",       0x008000, 0xfe49d83e, BRF_ESS | BRF_PRG }, 	//  0 Z80 #1 Program Code
+	{ "epr-7153.ic91",       0x008000, 0x48697666, BRF_ESS | BRF_PRG }, 	//  1 Z80 #1 Program Code
+	{ "epr-7154.ic92",       0x008000, 0x56d6222a, BRF_ESS | BRF_PRG }, 	//  2 Z80 #1 Program Code
 
-    { "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, 	//  3	Z80 #2 Program Code
+    { "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, 	//  3 Z80 #2 Program Code
 
 	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  		//  4 Tiles
 	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  		//  5 Tiles
 	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  		//  6 Tiles
 
-	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		  		//  4 Sprites
-	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  		//  5 Sprites
-	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  		//  6 Sprites
-	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  		//  7 Sprites
+	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		  		//  7 Sprites
+	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  		//  8 Sprites
+	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  		//  9 Sprites
+	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  		// 10 Sprites
 
-	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_OPT },		  		//  8 Red PROM
-	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_OPT },		  		//  9 Green PROM
-	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_OPT },		  		//  10 Blue PROM
+	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_GRA },		  		// 11 Red PROM
+	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_GRA },		  		// 12 Green PROM
+	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_GRA },		  		// 13 Blue PROM
 
-	{ "pr5317.ic28",         0x000100, 0x648350b8, BRF_OPT },				// 15 lookup_proms
+	{ "pr5317.ic28",         0x000100, 0x648350b8, BRF_OPT },				// 14 lookup_proms
 	
-	{ "315-5152.ic10",       0x000104, 0x2c9229b4, BRF_OPT },				// 16 plds
-	{ "315-5138.ic11",       0x000104, 0xdd223015, BRF_OPT },				// 17
-	{ "315-5139.ic50",       0x0000e7, 0x943d91b0, BRF_OPT },				// 18
-	{ "315-5025.ic7",        0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 19
-	{ "315-5025.ic13",       0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 20
-	{ "315-5025.ic19",       0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 21
+	{ "315-5152.ic10",       0x000104, 0x2c9229b4, BRF_OPT },				// 15 plds
+	{ "315-5138.ic11",       0x000104, 0xdd223015, BRF_OPT },				// 16
+	{ "315-5139.ic50",       0x0000e7, 0x943d91b0, BRF_OPT },				// 17
+	{ "315-5025.ic7",        0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 18
+	{ "315-5025.ic13",       0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 19
+	{ "315-5025.ic19",       0x000104, 0x00000000, BRF_OPT | BRF_NODUMP },	// 20
 };
 
 STD_ROM_PICK(Chopliftu)
 STD_ROM_FN(Chopliftu)
 
 static struct BurnRomInfo ChopliftblRomDesc[] = {
-	{ "ep7124bl.90",         0x008000, 0x71a37932, BRF_ESS | BRF_PRG }, 	//  0	Z80 #1 Program Code
-	{ "epr-7125.91",         0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, 	//  1	Z80 #1 Program Code
-	{ "epr-7126.92",         0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, 	//  2	Z80 #1 Program Code
+	{ "ep7124bl.90",         0x008000, 0x71a37932, BRF_ESS | BRF_PRG }, 	//  0 Z80 #1 Program Code
+	{ "epr-7125.91",         0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, 	//  1 Z80 #1 Program Code
+	{ "epr-7126.92",         0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, 	//  2 Z80 #1 Program Code
 
-	{ "epr-7130.126",        0x008000, 0x346af118, BRF_ESS | BRF_PRG }, 	//  3	Z80 #2 Program Code
+	{ "epr-7130.126",        0x008000, 0x346af118, BRF_ESS | BRF_PRG }, 	//  3 Z80 #2 Program Code
 
 	{ "epr-7127.4",          0x008000, 0x1e708f6d, BRF_GRA },		  		//  4 Tiles
 	{ "epr-7128.5",          0x008000, 0xb922e787, BRF_GRA },		  		//  5 Tiles
 	{ "epr-7129.6",          0x008000, 0xbd3b6e6e, BRF_GRA },		  		//  6 Tiles
 
-	{ "epr-7121.87",         0x008000, 0xf2b88f73, BRF_GRA },		  		//  4 Sprites
-	{ "epr-7120.86",         0x008000, 0x517d7fd3, BRF_GRA },		  		//  5 Sprites
-	{ "epr-7123.89",         0x008000, 0x8f16a303, BRF_GRA },		  		//  6 Sprites
-	{ "epr-7122.88",         0x008000, 0x7c93f160, BRF_GRA },		  		//  7 Sprites
+	{ "epr-7121.87",         0x008000, 0xf2b88f73, BRF_GRA },		  		//  7 Sprites
+	{ "epr-7120.86",         0x008000, 0x517d7fd3, BRF_GRA },		  		//  8 Sprites
+	{ "epr-7123.89",         0x008000, 0x8f16a303, BRF_GRA },		  		//  9 Sprites
+	{ "epr-7122.88",         0x008000, 0x7c93f160, BRF_GRA },		  		// 10 Sprites
 
-	{ "pr7119.20",           0x000100, 0xb2a8260f, BRF_OPT },		  		//  8 Red PROM
-	{ "pr7118.14",           0x000100, 0x693e20c7, BRF_OPT },		  		//  9 Green PROM
-	{ "pr7117.8",            0x000100, 0x4124307e, BRF_OPT },		  		//  10 Blue PROM
+	{ "pr7119.20",           0x000100, 0xb2a8260f, BRF_GRA },		  		// 11 Red PROM
+	{ "pr7118.14",           0x000100, 0x693e20c7, BRF_GRA },		  		// 12 Green PROM
+	{ "pr7117.8",            0x000100, 0x4124307e, BRF_GRA },		  		// 13 Blue PROM
 
-	{ "pr5317.28",           0x000100, 0x648350b8, BRF_OPT },				// 11 lookup_proms
+	{ "pr5317.28",           0x000100, 0x648350b8, BRF_OPT },				// 14 lookup_proms
 	
-	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP }, 	// 12 plds_main
-	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 13
-	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 14
+	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP }, 	// 15 plds_main
+	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 16
+	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 17
 	
-	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 15 plds_600a
-	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 16
-	
-	{ "pal20r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 17 plds_600b
-	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 18
+	{ "pal16r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 18 plds_600a
 	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 19
-	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 20
-	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 21
 	
-	{ "pal16r4a.ic9",        0x000104, 0xdd223015, BRF_OPT },				// 22 plds_unk
-	{ "pal16r4a.ic10",       0x000104, 0x2c9229b4, BRF_OPT },				// 23
-	{ "pal16r4a-chopbl1.bin",0x000104, 0xe1628a8e, BRF_OPT },				// 24
-	{ "pal16l8a-chopbl2.bin",0x000104, 0xafa7425d, BRF_OPT },				// 25
+	{ "pal20r4.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 20 plds_600b
+	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 21
+	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 22
+	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 23
+	{ "pal16l8.bin",         0x000001, 0x00000000, BRF_OPT | BRF_NODUMP },	// 24
+	
+	{ "pal16r4a.ic9",        0x000104, 0xdd223015, BRF_OPT },				// 25 plds_unk
+	{ "pal16r4a.ic10",       0x000104, 0x2c9229b4, BRF_OPT },				// 26
+	{ "pal16r4a-chopbl1.bin",0x000104, 0xe1628a8e, BRF_OPT },				// 27
+	{ "pal16l8a-chopbl2.bin",0x000104, 0xafa7425d, BRF_OPT },				// 28
 };
 
 STD_ROM_PICK(Chopliftbl)
@@ -3937,9 +3937,9 @@ static struct BurnRomInfo wboysys2RomDesc[] = {
 	{ "epr-7578.87",         0x008000, 0x6ff1637f, BRF_GRA },		  		//  6 Sprites
 	{ "epr-7577.86",         0x008000, 0x58b3705e, BRF_GRA },		  		//  7 Sprites
 
-	{ "pr-7345.ic20",        0x000100, 0x8eee0f72, BRF_OPT },		  		//  8 Red PROM
-	{ "pr-7344.ic14",        0x000100, 0x3e7babd7, BRF_OPT },		  		//  9 Green PROM
-	{ "pr-7343.ic8",         0x000100, 0x371c44a6, BRF_OPT },		  		//  10 Blue PROM
+	{ "pr-7345.ic20",        0x000100, 0x8eee0f72, BRF_GRA },		  		//  8 Red PROM
+	{ "pr-7344.ic14",        0x000100, 0x3e7babd7, BRF_GRA },		  		//  9 Green PROM
+	{ "pr-7343.ic8",         0x000100, 0x371c44a6, BRF_GRA },		  		// 10 Blue PROM
 
 	{ "pr-5317.28",          0x000100, 0x648350b8, BRF_OPT },				// 11 lookup_proms
 };
@@ -3960,9 +3960,9 @@ static struct BurnRomInfo wboysys2aRomDesc[] = {
 	{ "epr-7578.87",         0x008000, 0x6ff1637f, BRF_GRA },		  		//  6 Sprites
 	{ "epr-7577.86",         0x008000, 0x58b3705e, BRF_GRA },		  		//  7 Sprites
 
-	{ "pr-7345.20",          0x000100, 0x8eee0f72, BRF_OPT },		  		//  8 Red PROM
-	{ "pr-7344.14",          0x000100, 0x3e7babd7, BRF_OPT },		  		//  9 Green PROM
-	{ "pr-7343.8",           0x000100, 0x371c44a6, BRF_OPT },		  		//  10 Blue PROM
+	{ "pr-7345.20",          0x000100, 0x8eee0f72, BRF_GRA },		  		//  8 Red PROM
+	{ "pr-7344.14",          0x000100, 0x3e7babd7, BRF_GRA },		  		//  9 Green PROM
+	{ "pr-7343.8",           0x000100, 0x371c44a6, BRF_GRA },		  		// 10 Blue PROM
 
 	{ "pr-5317.28",          0x000100, 0x648350b8, BRF_OPT },				// 11 lookup_proms
 };

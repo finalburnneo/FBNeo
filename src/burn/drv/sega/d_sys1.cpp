@@ -3947,6 +3947,29 @@ static struct BurnRomInfo wboysys2RomDesc[] = {
 STD_ROM_PICK(wboysys2)
 STD_ROM_FN(wboysys2)
 
+static struct BurnRomInfo wboysys2aRomDesc[] = {
+	{ "epr-7625.90",         0x008000, 0x43b3d155, BRF_ESS | BRF_PRG }, 	//  0	Z80 #1 Program Code
+	{ "epr-7626.91",         0x008000, 0x8a6f4b00, BRF_ESS | BRF_PRG }, 	//  1	Z80 #1 Program Code
+
+	{ "epr-7583.126",        0x008000, 0x99334b3c, BRF_ESS | BRF_PRG }, 	//  2	Z80 #2 Program Code
+
+	{ "epr-7581.4",          0x008000, 0xd95565fd, BRF_GRA },		  		//  3 Tiles
+	{ "epr-7582.5",          0x008000, 0x560cbac0, BRF_GRA },		  		//  4 Tiles
+	{ "epr-7607.6",          0x008000, 0xbd36df03, BRF_GRA },		  		//  5 Tiles
+
+	{ "epr-7578.87",         0x008000, 0x6ff1637f, BRF_GRA },		  		//  6 Sprites
+	{ "epr-7577.86",         0x008000, 0x58b3705e, BRF_GRA },		  		//  7 Sprites
+
+	{ "pr-7345.20",          0x000100, 0x8eee0f72, BRF_OPT },		  		//  8 Red PROM
+	{ "pr-7344.14",          0x000100, 0x3e7babd7, BRF_OPT },		  		//  9 Green PROM
+	{ "pr-7343.8",           0x000100, 0x371c44a6, BRF_OPT },		  		//  10 Blue PROM
+
+	{ "pr-5317.28",          0x000100, 0x648350b8, BRF_OPT },				// 11 lookup_proms
+};
+
+STD_ROM_PICK(wboysys2a)
+STD_ROM_FN(wboysys2a)
+
 // "Wonder Boy: Monster Land (Japan New Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmlRomDesc[] = {
@@ -4851,6 +4874,51 @@ static void astrofl_decode(void)
 	};
 
 	sega_decode_2(System1Rom1, (IsSystem2 ? System1Rom1 + 0x20000 : System1Fetch1), opcode_xor,opcode_swap_select,data_xor,data_swap_select);
+}
+
+static void wboysys2a_decode(void)
+{
+	static const UINT8 opcode_xor[64] =
+	{
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+		0x44,0x51,0x40,0x54,0x45,0x50,0x41,0x55,
+	};
+
+	static const UINT8 data_xor[64] =
+	{
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+		0x01,0x15,0x04,0x11,0x00,0x14,0x05,0x10,
+	};
+
+	static const INT32 opcode_swap_select[64] =
+	{
+		0,0,1,1,1,2,2,2,3,3,4,4,4,5,5,5,6,6,
+		7,7,7,8,8,8,9,9,10,10,10,11,11,11,
+		8,8,9,9,9,10,10,10,11,11,12,12,12,
+		13,13,13,14,14,15,15,15,16,16,16,17,17,18,18,18,19,19,19,
+	};
+
+	static const INT32 data_swap_select[64] =
+	{
+		0,0,1,1,2,2,2,3,3,3,4,4,5,5,5,6,6,6,
+		7,7,8,8,8,9,9,9,10,10,11,11,11,12,8,8,
+		9,9,10,10,10,11,11,11,12,12,13,13,13,14,14,14,
+		15,15,16,16,16,17,17,17,18,18,19,19,19,20,
+	};
+
+	sega_decode_2(System1Rom1, System1Rom1 + 0x20000, opcode_xor,opcode_swap_select,data_xor,data_swap_select);
 }
 
 static void fdwarrio_decode(void)
@@ -6667,6 +6735,25 @@ static INT32 Wboysys2Init()
 	return nRet;
 }
 
+static INT32 Wboysys2aInit()
+{
+	INT32 nRet;
+
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+
+	DecodeFunction = wboysys2a_decode;
+
+	nRet = System2Init(2, 0x8000, 1, 0x8000, 3, 0x8000, 2, 0x8000, 1);
+
+	if (nRet == 0) {
+		System1FgRam = System1VideoRam + 0x0000;
+		System1BgRam = System1VideoRam + 0x0800;
+	}
+
+	return nRet;
+}
+
 static INT32 WbmlInit()
 {
 	INT32 nRet;
@@ -8159,6 +8246,16 @@ struct BurnDriver BurnDrvWboysys2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wboysys2RomInfo, wboysys2RomName, NULL, NULL, NULL, NULL, Wboysys2InputInfo, Wboysys2DIPInfo,
 	Wboysys2Init, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWboysys2a = {
+	"wboysys2a", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (system 2, set 2, 315-5176)\0", NULL, "Escape (Sega license)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wboysys2aRomInfo, wboysys2aRomName, NULL, NULL, NULL, NULL, Wboysys2InputInfo, Wboysys2DIPInfo,
+	Wboysys2aInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 

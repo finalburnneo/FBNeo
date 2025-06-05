@@ -21,7 +21,8 @@ static UINT8 System1Reset            = 0;
 
 static INT16 Analog[2];
 static INT32 sht_trigger             = 0;
-static INT32 is_shtngmst			 = 0;
+static INT32 is_shtngmst             = 0;
+static INT32 is_wboyub               = 0;
 static INT32 is_nob                  = 0;
 static UINT8 nob_cpu_latch;
 static UINT8 nob_mcu_latch;
@@ -3489,6 +3490,30 @@ static struct BurnRomInfo WboyRomDesc[] = {
 STD_ROM_PICK(Wboy)
 STD_ROM_FN(Wboy)
 
+static struct BurnRomInfo WboyubRomDesc[] = {
+	{ "1.bin",             0x008000, 0x07066b6f, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "epr-7491.96",       0x004000, 0x1f7d0efe, BRF_ESS | BRF_PRG }, //  1 Z80 #1 Program Code
+
+	{ "epr-7498a.3",       0x002000, 0xc198205c, BRF_ESS | BRF_PRG }, //  2 Z80 #2 Program Code
+
+	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },           //  3 Tiles
+	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },           //  4 Tiles
+	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },           //  5 Tiles
+	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },           //  6 Tiles
+	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },           //  7 Tiles
+	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },           //  8 Tiles
+
+	{ "4.bin",             0x008000, 0x8b3124e6, BRF_GRA },           //  9 Sprites
+	{ "5.bin",             0x008000, 0xb75278e7, BRF_GRA },           // 10 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },           // 11 Timing PROM
+
+	{ "0cpu.bin",          0x002000, 0xa962e6af, BRF_OPT },           // 12 Encryption key (unused)
+};
+
+STD_ROM_PICK(Wboyub)
+STD_ROM_FN(Wboyub)
+
 static struct BurnRomInfo WboyoRomDesc[] = {
 	{ "epr-7532.116",      0x004000, 0x51d27534, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr-7533.109",      0x004000, 0xe29d1cd1, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -6074,7 +6099,6 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	}
 
 	CalcPenUsage();
-	BurnFree(System1TempRom);
 
 	// Load Sprite roms
 	if (is_shtngmst) memset(System1Sprites, 0xff, System1SpriteRomSize);
@@ -6082,6 +6106,15 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		nRet = BurnLoadRom(System1Sprites + (i * nSpriteRomSize), i + RomOffset, 1);
 	}
 	RomOffset += nSpriteRomNum;
+	if (is_wboyub) {
+		memcpy(System1TempRom, System1Sprites, 0x10000);
+		memset(System1Sprites, 0, 0x10000);
+		memcpy(System1Sprites         , System1TempRom         , 0x4000);
+		memcpy(System1Sprites + 0x8000, System1TempRom + 0x4000, 0x4000);
+		memcpy(System1Sprites + 0x4000, System1TempRom + 0x8000, 0x4000);
+		memcpy(System1Sprites + 0xc000, System1TempRom + 0xc000, 0x4000);
+	}
+	BurnFree(System1TempRom);
 
 	// Load Colour proms
 	if (System1ColourProms) {
@@ -6615,6 +6648,15 @@ static INT32 WboyInit()
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
+static INT32 WboyubInit()
+{
+	wide_mode = 1;
+	is_wboyub = 1;
+	DecodeFunction = astrofl_decode;
+
+	return System1Init(2, 0x8000, 1, 0x2000, 6, 0x2000, 2, 0x8000, 1);
+}
+
 static INT32 WboyoInit()
 {
 	wide_mode = 1;
@@ -6861,6 +6903,7 @@ static INT32 System1Exit()
 		is_shtngmst = 0;
 	}
 	is_nob = 0;
+	is_wboyub = 0;
 
 	System1SoundLatch = 0;
 	System1ScrollX[0] = System1ScrollX[1] = System1ScrollY = 0;
@@ -8086,6 +8129,16 @@ struct BurnDriver BurnDrvWboy = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyRomInfo, WboyRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 512, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWboyub = {
+	"wboyub", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (US bootleg)\0", NULL, "bootleg", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, WboyubRomInfo, WboyubRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
+	WboyubInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
 };
 

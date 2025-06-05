@@ -1014,6 +1014,7 @@
 #define GAMESEL_MENU_GAMEINFO				11901
 #define GAMESEL_MENU_VIEWEMMA				11902
 #define GAMESEL_MENU_FAVORITE				11903
+#define GAMESEL_MENU_ROMDATA				11904
 
 // Next default values for new objects
 //

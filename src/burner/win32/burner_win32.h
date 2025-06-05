@@ -383,6 +383,7 @@ INT32 RomDataManagerInit();
 INT32 RomDataCheck(const TCHAR* pszDatFile);
 void RomDataStateBackup();
 void RomDataStateRestore();
+bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
 // cona.cpp
 struct SubDirInfo {

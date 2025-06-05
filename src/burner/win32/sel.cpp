@@ -2507,6 +2507,17 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 				break;
 			}
+
+			case GAMESEL_MENU_ROMDATA: { // Export to RomData template
+				if (bDrvSelected) {
+					RomDataExportTemplate(hSelDlg, nDialogSelect);
+				}
+				else {
+					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+				}
+
+				break;
+			}
 		}
 	}
 

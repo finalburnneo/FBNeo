@@ -1955,6 +1955,62 @@ bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* ps
 
 #undef IS_STRING_EMPTY
 
+bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect)
+{
+	if (-1 == nDrvSelect) return false;
+
+	const UINT32 nOldDrvSel = nBurnDrvActive;
+
+	TCHAR szFilter[150] = { 0 };
+	_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
+	memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
+	_stprintf(szChoice, _T("%s.dat"), BurnDrvGetText(DRV_NAME));
+
+	memset(&ofn, 0, sizeof(OPENFILENAME));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = hWnd;
+	ofn.lpstrFilter = szFilter;
+	ofn.lpstrFile = szChoice;
+	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
+	ofn.lpstrInitialDir = _T(".");
+	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+	ofn.lpstrDefExt = _T("dat");
+	ofn.Flags |= OFN_OVERWRITEPROMPT;
+
+	if (0 == GetOpenFileName(&ofn)) {
+		nBurnDrvActive = nOldDrvSel;
+		return false;
+	}
+
+	nBurnDrvActive = nDrvSelect;
+
+	FILE* fp = _tfopen(szChoice, _T("w"));
+	if (NULL == fp) {
+		nBurnDrvActive = nOldDrvSel;
+		return false;
+	}
+
+	_ftprintf(fp, _T("// RomData template for FinalBurn Neo\n\n"));
+	_ftprintf(fp, _T("// The *** in the ZipName field cannot be empty and cannot be duplicated with DrvName\n"));
+	_ftprintf(fp, _T("ZipName: ***\n"));
+	_ftprintf(fp, _T("DrvName: %s\n"),        BurnDrvGetText(DRV_NAME));
+	_ftprintf(fp, _T("FullName: \"%s\"\n\n"), BurnDrvGetText(DRV_FULLNAME));
+	_ftprintf(fp, _T("// Name\t\tLen\t\tCrc32\t\tType\n"));
+
+	char* pszRomName = NULL;
+	for (INT32 i = 0; !BurnDrvGetRomName(&pszRomName, i, 0); i++) {
+		struct BurnRomInfo ri = { 0 };
+
+		BurnDrvGetRomInfo(&ri, i);	// Get info about the rom
+		_ftprintf(fp, _T("\"%hs\",\t0x%08x,\t0x%08x,\t0x%08x\n"), pszRomName, ri.nLen, ri.nCrc, ri.nType);
+	}
+	pszRomName = NULL;
+	fclose(fp); fp = NULL;
+	nBurnDrvActive = nOldDrvSel;
+
+	return true;
+}
+
 static INT32 CALLBACK ListViewCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	TCHAR buf1[MAX_PATH];

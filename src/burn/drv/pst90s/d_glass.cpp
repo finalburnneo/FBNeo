@@ -374,8 +374,8 @@ static INT32 LoadRoms()
 		}
 
 		if ((ri.nType & 0xf) == 3) {
-			if (BurnLoadRom(gLoad + 1, i+0, 2)) return 1;
-			if (BurnLoadRom(gLoad + 0, i+1, 2)) return 1;
+			if (BurnLoadRom(gLoad + 0, i+0, 2)) return 1;
+			if (BurnLoadRom(gLoad + 1, i+1, 2)) return 1;
 			gLoad += ri.nLen * 2; i++;
 			continue;
 		}

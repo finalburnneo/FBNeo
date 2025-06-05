@@ -379,6 +379,30 @@ static struct BurnInputInfo ShtngmstInputList[] = {
 #undef A
 STDINPUTINFO(Shtngmst)
 
+static struct BurnInputInfo Wboysys2InputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
+	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 2" },
+
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 2" },
+
+	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , System1InputPort2 + 3, "service"   },
+	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Wboysys2)
+
 static struct BurnInputInfo UfosensiInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
@@ -1802,6 +1826,44 @@ static struct BurnDIPInfo ChopliftDIPList[]=
 };
 
 STDDIPINFO(Choplift)
+
+static struct BurnDIPInfo Wboysys2DIPList[]=
+{
+	DIP_OFFSET(0x0f)
+
+	{0x00, 0xff, 0xff, 0x6c, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x00, 0x01, 0x01, 0x00, "Upright"					},
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"					},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x00, 0x01, 0x0c, 0x08, "4"						},
+	{0x00, 0x01, 0x0c, 0x0c, "3"						},
+	{0x00, 0x01, 0x0c, 0x04, "5"						},
+	{0x00, 0x01, 0x0c, 0x00, "Free Play"				},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"				},
+	{0x00, 0x01, 0x10, 0x10, "30k 100k 170k 240k"		},
+	{0x00, 0x01, 0x10, 0x00, "30k 120k 210k 300k"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
+	{0x00, 0x01, 0x20, 0x00, "Off"						},
+	{0x00, 0x01, 0x20, 0x20, "On"						},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"				},
+	{0x00, 0x01, 0x40, 0x40, "Easy"						},
+	{0x00, 0x01, 0x40, 0x00, "Hard"						},
+
+	SYSTEM1_COINAGE(0x01)
+};
+
+STDDIPINFO(Wboysys2)
 
 static struct BurnDIPInfo UfosensiDIPList[]=
 {
@@ -3862,6 +3924,29 @@ static struct BurnRomInfo ChopliftblRomDesc[] = {
 STD_ROM_PICK(Chopliftbl)
 STD_ROM_FN(Chopliftbl)
 
+static struct BurnRomInfo wboysys2RomDesc[] = {
+	{ "epr-7580.90",         0x008000, 0xd69927a5, BRF_ESS | BRF_PRG }, 	//  0	Z80 #1 Program Code
+	{ "epr-7579.91",         0x008000, 0x8a6f4b00, BRF_ESS | BRF_PRG }, 	//  1	Z80 #1 Program Code
+
+	{ "epr-7583.126",        0x008000, 0x99334b3c, BRF_ESS | BRF_PRG }, 	//  2	Z80 #2 Program Code
+
+	{ "epr-7581.4",          0x008000, 0xd95565fd, BRF_GRA },		  		//  3 Tiles
+	{ "epr-7582.5",          0x008000, 0x560cbac0, BRF_GRA },		  		//  4 Tiles
+	{ "epr-7607.6",          0x008000, 0xbd36df03, BRF_GRA },		  		//  5 Tiles
+
+	{ "epr-7578.87",         0x008000, 0x6ff1637f, BRF_GRA },		  		//  6 Sprites
+	{ "epr-7577.86",         0x008000, 0x58b3705e, BRF_GRA },		  		//  7 Sprites
+
+	{ "pr-7345.ic20",        0x000100, 0x8eee0f72, BRF_OPT },		  		//  8 Red PROM
+	{ "pr-7344.ic14",        0x000100, 0x3e7babd7, BRF_OPT },		  		//  9 Green PROM
+	{ "pr-7343.ic8",         0x000100, 0x371c44a6, BRF_OPT },		  		//  10 Blue PROM
+
+	{ "pr-5317.28",          0x000100, 0x648350b8, BRF_OPT },				// 11 lookup_proms
+};
+
+STD_ROM_PICK(wboysys2)
+STD_ROM_FN(wboysys2)
+
 // "Wonder Boy: Monster Land (Japan New Ver., MC-8123, 317-0043)
 
 static struct BurnRomInfo wbmlRomDesc[] = {
@@ -4765,7 +4850,7 @@ static void astrofl_decode(void)
 		15,15,15,16,16,17,17,18,18,18,19,19,20,20,20,21,
 	};
 
-	sega_decode_2(System1Rom1, System1Fetch1, opcode_xor,opcode_swap_select,data_xor,data_swap_select);
+	sega_decode_2(System1Rom1, (IsSystem2 ? System1Rom1 + 0x20000 : System1Fetch1), opcode_xor,opcode_swap_select,data_xor,data_swap_select);
 }
 
 static void fdwarrio_decode(void)
@@ -6563,6 +6648,25 @@ static INT32 ShtngmstInit()
 	return nRet;
 }
 
+static INT32 Wboysys2Init()
+{
+	INT32 nRet;
+
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+
+	DecodeFunction = astrofl_decode;
+
+	nRet = System2Init(2, 0x8000, 1, 0x8000, 3, 0x8000, 2, 0x8000, 1);
+
+	if (nRet == 0) {
+		System1FgRam = System1VideoRam + 0x0000;
+		System1BgRam = System1VideoRam + 0x0800;
+	}
+
+	return nRet;
+}
+
 static INT32 WbmlInit()
 {
 	INT32 nRet;
@@ -8048,6 +8152,16 @@ struct BurnDriver BurnDrvChopliftbl = {
 	NULL, 0x800, 256, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvWboysys2 = {
+	"wboysys2", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (system 2, set 1, 315-5177)\0", NULL, "Escape (Sega license)", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wboysys2RomInfo, wboysys2RomName, NULL, NULL, NULL, NULL, Wboysys2InputInfo, Wboysys2DIPInfo,
+	Wboysys2Init, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvUfosensi = {
 	"ufosensi", NULL, NULL, NULL, "1988",
 	"Ufo Senshi Yohko Chan (MC-8123, 317-0064)\0", NULL, "Sega", "System 2",
@@ -8178,6 +8292,5 @@ struct BurnDriver BurnDrvWbmlh = {
 	NULL, 0x800, 256, 224, 4, 3
 };
 
-// wboysys2
 // blckgalb
 // dakkochn

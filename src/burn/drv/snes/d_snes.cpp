@@ -11653,6 +11653,25 @@ struct BurnDriver BurnDrvsnes_Fireemblem776te = {
 	512, 448, 4, 3
 };
 
+// Fire Emblem - Thracia 776 (Hack, Italian v1.0.0)
+// https://www.romhacking.net/translations/7360/
+static struct BurnRomInfo snes_Fireemblem776tiRomDesc[] = {
+	{ "Fire Emblem - Thracia 776 T-Ita v1.0.0 (2024)(EnDavio).sfc", 6291456, 0x3f2a7a82, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fireemblem776ti)
+STD_ROM_FN(snes_Fireemblem776ti)
+
+struct BurnDriver BurnDrvsnes_Fireemblem776ti = {
+	"snes_fireemblem776ti", "snes_fireemblem776te", NULL, NULL, "2024",
+	"Fire Emblem - Thracia 776 (Hack, Italian v1.0.0)\0", NULL, "EnDavio", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Fireemblem776tiRomInfo, snes_Fireemblem776tiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Fire Emblem - Thracia 776 (Hack, Simplified Chinese v1.01)
 
 static struct BurnRomInfo snes_Fireemblem776tscRomDesc[] = {

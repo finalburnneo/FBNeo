@@ -27648,7 +27648,7 @@ struct BurnDriver BurnDrvCpsDinoxz = {
 // GOTVG 20250525
 
 static struct BurnRomInfo dinosynRomDesc[] = {
-	{ "cdj_syn.10",		0x200000, 0xaaa165ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdj_syn.10f",		0x200000, 0xaaa165ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	DINOJ_COMPONENTS
 };

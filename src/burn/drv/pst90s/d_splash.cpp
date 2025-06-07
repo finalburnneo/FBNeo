@@ -535,6 +535,81 @@ static INT32 SplashInit()
 	return 0;
 }
 
+static INT32 NsplashInit()
+{
+	BurnAllocMemIndex();
+
+	{
+		INT32 k = 0;
+
+		if (BurnLoadRom(Drv68KROM    + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM    + 0x000000, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM    + 0x200001, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM    + 0x200000, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM    + 0x300001, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM    + 0x300000, k++, 2)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM    + 0x000000, k++, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM[0] + 0x000000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[0] + 0x020000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[0] + 0x040000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[0] + 0x060000, k++, 1)) return 1;
+
+		DrvGfxDecode();
+		BuildBitmapSwapTable(1);
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x407fff, MAP_ROM);
+	SekMapMemory(Drv68KRAM[0],	0x408000, 0x4087ff, MAP_RAM); // ?
+	SekMapMemory(DrvPixelRAM,	0x800000, 0x83ffff, MAP_RAM);
+	SekMapMemory(DrvVideoRAM,	0x880000, 0x8817ff, MAP_RAM);
+	SekMapMemory(Drv68KRAM[1],	0x881800, 0x881fff, MAP_RAM); // scroll regs at 881800-881803
+	SekMapMemory(BurnPalRAM,	0x8c0000, 0x8c0fff, MAP_RAM); /* Palette is xRRRRxGGGGxBBBBx */
+	SekMapMemory(DrvSpriteRAM,	0x900000, 0x900fff, MAP_RAM); // splash
+//	SekMapMemory(DrvSpriteRAM,	0xd00000, 0xd00fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM[2],	0xffc000, 0xffffff, MAP_RAM);
+	SekSetWriteWordHandler(0,	roldfrog_write_word);
+	SekSetWriteByteHandler(0,	roldfrog_write_byte);
+	SekSetReadWordHandler(0,	roldfrog_read_word);
+	SekSetReadByteHandler(0,	roldfrog_read_byte);
+	SekClose();
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xd7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0xf800, 0xffff, MAP_RAM);
+	ZetSetWriteHandler(splash_sound_write);
+	ZetSetReadHandler(splash_sound_read);
+	ZetClose();
+
+	BurnYM3812Init(1, 3750000, NULL, 0);
+	BurnTimerAttach(&ZetConfig, 3750000);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+
+	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, splash_adpcm_vck, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg0_map_callback,   8, 8, 64, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg1_map_callback, 16, 16, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM[0], 4,  8,  8, 0x100000, 0x000, 0x0f);
+	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 16, 16, 0x100000, 0x000, 0x0f);
+	GenericTilemapSetGfx(2, DrvGfxROM[1], 4, 16, 16, 0x100000, 0x100, 0x0f);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetOffsets(0, -20, -16);
+	GenericTilemapSetOffsets(1, -16, -16);
+
+	splash = 1;
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 RoldfrogInit()
 {
 	BurnAllocMemIndex();
@@ -976,6 +1051,70 @@ struct BurnDriver BurnDrvPaintlad = {
 };
 
 
+// New Splash (ver. 1.4, checksum A26032A3, Korea, set 1)
+
+static struct BurnRomInfo nsplashkrRomDesc[] = {
+	{ "new_splash_cor_2_27c010.bin", 0x20000, 0xeadf12dd, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "new_splash_cor_6_27c010.bin", 0x20000, 0x5a70d95b, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "new_splash_cor_4_27c040.bin", 0x80000, 0x0f71b5c5, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "new_splash_cor_8_27c040.bin", 0x80000, 0xccc0d187, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "new_splash_cor_5_27c040.bin", 0x80000, 0xe71f8536, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "new_splash_cor_9_27c040.bin", 0x80000, 0xa50537cc, 1 | BRF_PRG | BRF_ESS },    //  5
+	
+	{ "splash_1.c5",                 0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "new_splash_cor_13_27c010.bin",0x20000, 0x72ef9811, 3 | BRF_GRA },              //  9 Graphics
+	{ "new_splash_cor_11_27c010.bin",0x20000, 0xeffa8d57, 3 | BRF_GRA },              // 10
+	{ "new_splash_cor_12_27c010.bin",0x20000, 0x0f2d8006, 3 | BRF_GRA },              // 11
+	{ "new_splash_cor_10_27c010.bin",0x20000, 0xcb4bdf04, 3 | BRF_GRA },              // 12
+};
+
+STD_ROM_PICK(nsplashkr)
+STD_ROM_FN(nsplashkr)
+
+struct BurnDriver BurnDrvNsplashkr = {
+	"nsplashkr", "splash", NULL, NULL, "1992",
+	"New Splash (ver. 1.4, checksum A26032A3, Korea, set 1)\0", NULL, "Gaelco / OMK Software (Windial license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, nsplashkrRomInfo, nsplashkrRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	NsplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// New Splash (ver. 1.4, checksum A26032A3, Korea, set 2)
+
+static struct BurnRomInfo nsplashkraRomDesc[] = {
+	{ "demo_2_set_1_27c010.bin", 	 0x20000, 0x9f2d1cd5, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "demo_6_set_1_27c010.bin", 	 0x20000, 0x8faf055e, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "new_splash_cor_4_27c040.bin", 0x80000, 0x0f71b5c5, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "new_splash_cor_8_27c040.bin", 0x80000, 0xccc0d187, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "new_splash_cor_5_27c040.bin", 0x80000, 0xe71f8536, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "new_splash_cor_9_27c040.bin", 0x80000, 0xa50537cc, 1 | BRF_PRG | BRF_ESS },    //  5
+	
+	{ "splash_1.c5",                 0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "new_splash_cor_13_27c010.bin",0x20000, 0x72ef9811, 3 | BRF_GRA },              //  9 Graphics
+	{ "new_splash_cor_11_27c010.bin",0x20000, 0xeffa8d57, 3 | BRF_GRA },              // 10
+	{ "new_splash_cor_12_27c010.bin",0x20000, 0x0f2d8006, 3 | BRF_GRA },              // 11
+	{ "new_splash_cor_10_27c010.bin",0x20000, 0xcb4bdf04, 3 | BRF_GRA },              // 12
+};
+
+STD_ROM_PICK(nsplashkra)
+STD_ROM_FN(nsplashkra)
+
+struct BurnDriver BurnDrvNsplashkra = {
+	"nsplashkra", "splash", NULL, NULL, "1992",
+	"New Splash (ver. 1.4, checksum A26032A3, Korea, set 2)\0", NULL, "Gaelco / OMK Software (Windial license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, nsplashkraRomInfo, nsplashkraRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	NsplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
 // Splash! (ver. 1.3, checksum E7BEEBFA, Korea)
 
 static struct BurnRomInfo splashkrRomDesc[] = {
@@ -1010,6 +1149,45 @@ struct BurnDriver BurnDrvSplashkr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, splashkrRomInfo, splashkrRomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
+	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
+	368, 240, 4, 3
+};
+
+
+// Splash! (ver. 1.1, checksum 4697D2BF, non North America)
+
+static struct BurnRomInfo splash11RomDesc[] = {
+	{ "sp_2_de3d_27c010.bin",0x20000, 0xca3bc3a6, 1 | BRF_PRG | BRF_ESS },    //  0 68K Code
+	{ "sp_6_f9af_27c010.bin",0x20000, 0x9d727e1c, 1 | BRF_PRG | BRF_ESS },    //  1
+	{ "splash_3.g5",         0x80000, 0xa4e8ed18, 1 | BRF_PRG | BRF_ESS },    //  2
+	{ "splash_7.i5",         0x80000, 0x73e1154d, 1 | BRF_PRG | BRF_ESS },    //  3
+	{ "splash_4.g6",         0x80000, 0xffd56771, 1 | BRF_PRG | BRF_ESS },    //  4
+	{ "splash_8.i6",         0x80000, 0x16e9170c, 1 | BRF_PRG | BRF_ESS },    //  5
+	{ "splash_5.g8",         0x80000, 0xdc3a3172, 1 | BRF_PRG | BRF_ESS },    //  6
+	{ "splash_9.i8",         0x80000, 0x2e23e6c3, 1 | BRF_PRG | BRF_ESS },    //  7
+
+	{ "splash_1.c5",         0x10000, 0x0ed7ebc9, 2 | BRF_PRG | BRF_ESS },    //  8 Z80 Code
+
+	{ "splash_13.i17",       0x20000, 0x028a4a68, 3 | BRF_GRA },              //  9 Graphics
+	{ "splash_11.i14",       0x20000, 0x2a8cb830, 3 | BRF_GRA },              // 10
+	{ "splash_12.i16",       0x20000, 0x21aeff2c, 3 | BRF_GRA },              // 11
+	{ "splash_10.i13",       0x20000, 0xfebb9893, 3 | BRF_GRA },              // 12
+
+	{ "p_a1020a-pl84c.g14",  0x00200, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 13 PLDs
+	{ "1_gal16v8a-25lp.c13", 0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 14
+	{ "2_gal16v8a-25lp.d5",  0x00117, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 15
+	{ "3_gal20v8a-25lp.f4",  0x00157, 0x00000000, 4 | BRF_NODUMP | BRF_OPT }, // 16
+};
+
+STD_ROM_PICK(splash11)
+STD_ROM_FN(splash11)
+
+struct BurnDriver BurnDrvSplash11 = {
+	"splash11", "splash", NULL, NULL, "1992",
+	"Splash! (ver. 1.1, checksum 4697D2BF, non North America)\0", NULL, "Gaelco / OMK Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, splash11RomInfo, splash11RomName, NULL, NULL, NULL, NULL, SplashInputInfo, SplashDIPInfo,
 	SplashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	368, 240, 4, 3
 };

@@ -481,6 +481,11 @@ void sc01_set_buffered(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
 	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
 }
 
+void sc01_set_volume(double volume)
+{
+	stream.set_volume(volume);
+}
+
 void sc01_update(INT16 *output, INT32 samples_len)
 {
 	if (samples_len != nBurnSoundLen) {

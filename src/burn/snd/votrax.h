@@ -6,5 +6,6 @@ void sc01_write(UINT8 data);
 void sc01_inflection_write(UINT8 data);
 INT32 sc01_read_request();
 void sc01_set_clock(INT32 newclock);
+void sc01_set_volume(double volume);
 void sc01_scan(INT32 nAction, INT32 *pnMin);
 void sc01_update(INT16 *output, INT32 samples_len);

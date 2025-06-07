@@ -47345,7 +47345,7 @@ struct BurnDriver BurnSpecPutamili = {
 // Pyramid, The (128K) (HB)
 
 static struct BurnRomInfo SpecPyramidRomDesc[] = {
-	{ "Pyramid, The 128K (2025)(Amikosoft).tap", 59100, 0x9d23b35a, BRF_ESS | BRF_PRG },
+	{ "Pyramid, The 128K (2025)(Amikosoft).tap", 62761, 0x8bea7ad5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPyramid, SpecPyramid, Spec128)

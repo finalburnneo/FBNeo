@@ -41,6 +41,72 @@ static const TCHAR szAppDefaultPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("")				}
 };
 
+INT32 nRomsDlgWidth  = 0x1d2;
+INT32 nRomsDlgHeight = 0x291;
+static INT32 nDlgInitialWidth;
+static INT32 nDlgInitialHeight;
+static INT32 nDlgTabCtrlInitialPos[4];
+static INT32 nDlgGroupCtrlInitialPos[4];
+static INT32 nDlgOKBtnInitialPos[4];
+static INT32 nDlgCancelBtnInitialPos[4];
+static INT32 nDlgDefaultsBtnInitialPos[4];
+static INT32 nDlgTextCtrlInitialPos[20][4];
+static INT32 nDlgEditCtrlInitialPos[20][4];
+static INT32 nDlgBtnCtrlInitialPos[20][4];
+
+// Dialog sizing support functions and macros (everything working in client co-ords)
+#define GetInititalControlPos(a, b)								\
+	GetWindowRect(GetDlgItem(hRomsDlg, a), &rect);				\
+	memset(&point, 0, sizeof(POINT));							\
+	point.x = rect.left;										\
+	point.y = rect.top;											\
+	ScreenToClient(hRomsDlg, &point);							\
+	b[0] = point.x;												\
+	b[1] = point.y;												\
+	GetClientRect(GetDlgItem(hRomsDlg, a), &rect);				\
+	b[2] = rect.right;											\
+	b[3] = rect.bottom;
+
+#define SetControlPosAlignTopLeft(a, b)							\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0], b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+#define SetControlPosAlignTopLeftResizeHor(a, b)				\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0], b[1], b[2] + 4 - xDelta, b[3] + 4, SWP_NOZORDER);
+
+#define SetControlPosAlignTopLeftResizeHorVert(a, b)			\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0], b[1], b[2] - xDelta, b[3] - yDelta, SWP_NOZORDER);
+
+#define SetControlPosAlignTopRight(a, b)						\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0] - xDelta, b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+#define SetControlPosAlignBottomLeft(a, b)						\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0], b[1] - yDelta, b[2], b[3], SWP_NOZORDER);
+
+#define SetControlPosAlignBottomRight(a, b)						\
+	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+static void GetInitialPositions()
+{
+	RECT rect;
+	POINT point;
+
+	GetClientRect(hRomsDlg, &rect);
+	nDlgInitialWidth  = rect.right;
+	nDlgInitialHeight = rect.bottom;
+
+	GetInititalControlPos(IDC_ROMPATH_TAB,      nDlgTabCtrlInitialPos);
+	GetInititalControlPos(IDC_STATIC1,          nDlgGroupCtrlInitialPos);
+	GetInititalControlPos(IDOK,                 nDlgOKBtnInitialPos);
+	GetInititalControlPos(IDCANCEL,             nDlgCancelBtnInitialPos);
+	GetInititalControlPos(IDC_ROMSDIR_DEFAULTS, nDlgDefaultsBtnInitialPos);
+
+	for (INT32 i = 0; i < 20; i++) {
+		GetInititalControlPos(IDC_ROMSDIR_TEXT1 + i, nDlgTextCtrlInitialPos[i]);
+		GetInititalControlPos(IDC_ROMSDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
+		GetInititalControlPos(IDC_ROMSDIR_BR1   + i, nDlgBtnCtrlInitialPos[i]);
+	}
+}
+
 static void CreateRomDatName(TCHAR* szRomDat)
 {
 	_stprintf(szRomDat, _T("config/%s.roms.dat"), szAppExeName);
@@ -164,7 +230,11 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 	switch (Msg) {
 		case WM_INITDIALOG: {
+			hRomsDlg = hDlg;
 			chOk = false;
+
+			// add WS_MAXIMIZEBOX button;
+			SetWindowLongPtr(hDlg, GWL_STYLE, GetWindowLongPtr(hDlg, GWL_STYLE) | WS_MAXIMIZEBOX);
 
 			HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 			SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
@@ -202,6 +272,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 
 			UpdateWindow(hDlg);
+			GetInitialPositions();
+			SetWindowPos(hDlg, NULL, 0, 0, nRomsDlgWidth, nRomsDlgHeight, SWP_NOZORDER);
 
 			WndInMid(hDlg, hParent);
 			SetFocus(hDlg);														// Enable Esc=close
@@ -215,6 +287,41 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x)) return (INT_PTR)hWhiteBGBrush;
 				if ((HWND)lParam == GetDlgItem(hDlg, IDC_ROMSDIR_TEXT1 + x)) return (LRESULT)GetStockObject(HOLLOW_BRUSH);
 			}
+		}
+		case WM_GETMINMAXINFO: {
+			MINMAXINFO *info = (MINMAXINFO*)lParam;
+			info->ptMinTrackSize.x = nDlgInitialWidth;
+			info->ptMinTrackSize.y = nDlgInitialHeight + 40;
+			return 0;
+		}
+		case WM_SIZE: {
+			if (nDlgInitialWidth == 0 || nDlgInitialHeight == 0) return 0;
+
+			RECT rc;
+			GetClientRect(hDlg, &rc);
+
+			const INT32 xDelta = nDlgInitialWidth  - rc.right;
+			const INT32 yDelta = nDlgInitialHeight - rc.bottom;
+			if (xDelta == 0 && yDelta == 0) return 0;
+
+			SetControlPosAlignTopLeftResizeHorVert(IDC_ROMPATH_TAB, nDlgTabCtrlInitialPos);
+			SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1,     nDlgGroupCtrlInitialPos);
+
+			SetControlPosAlignBottomRight(IDOK,     nDlgOKBtnInitialPos);
+			SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
+
+			SetControlPosAlignBottomLeft(IDC_ROMSDIR_DEFAULTS, nDlgDefaultsBtnInitialPos);
+
+			for (INT32 i = 0; i < 20; i++) {
+				SetControlPosAlignTopLeft(IDC_ROMSDIR_TEXT1          + i, nDlgTextCtrlInitialPos[i]);
+				SetControlPosAlignTopLeftResizeHor(IDC_ROMSDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
+				SetControlPosAlignTopRight(IDC_ROMSDIR_BR1           + i, nDlgBtnCtrlInitialPos[i]);
+			}
+
+			InvalidateRect(hDlg, NULL, true);
+			UpdateWindow(hDlg);
+
+			return 0;
 		}
 		case WM_COMMAND: {
 			LPMALLOC pMalloc = NULL;
@@ -306,7 +413,11 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			break;
 		}
 		case WM_CLOSE: {
-			hParent = NULL;
+			RECT rect;
+			GetClientRect(hDlg, &rect);
+			nRomsDlgWidth  = rect.right;
+			nRomsDlgHeight = rect.bottom;
+
 			EndDialog(hDlg, 0);
 			if (chOk && bSkipStartupCheck == false) {
 				bRescanRoms = true;
@@ -318,6 +429,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (NULL != hWhiteBGBrush) {
 				DeleteObject(hWhiteBGBrush); hWhiteBGBrush = NULL;
 			}
+			hParent  = NULL;
+			hRomsDlg = NULL;
 		}
 	}
 

@@ -468,6 +468,8 @@ void CubicSharpnessDialog();
 int SFactdCreate();
 
 // roms.cpp
+extern int nRomsDlgWidth;
+extern int nRomsDlgHeight;
 extern char* gameAv;
 extern bool avOk;
 extern bool bSkipStartupCheck;

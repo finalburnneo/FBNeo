@@ -390,6 +390,9 @@ int ConfigAppLoad()
 		VAR(nCDEmuSelect);
 		PAT(CDEmuImage);
 
+		VAR(nRomsDlgWidth);
+		VAR(nRomsDlgHeight);
+
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
 		VARI64(nLoadMenuShowX);
@@ -805,6 +808,12 @@ int ConfigAppSave()
 	VAR(nCDEmuSelect);
 	_ftprintf(h, _T("\n // The path to the CD image to use (.cue or .iso)\n"));
 	STR(CDEmuImage);
+
+	_ftprintf(h, _T("\n\n\n"));
+	_ftprintf(h, _T("// --- Edit ROMs Paths Dialogs ------------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Edit roms dialog dimensions (in win32 client co-ordinates)\n"));
+	VAR(nRomsDlgWidth);
+	VAR(nRomsDlgHeight);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Load Game Dialogs ------------------------------------------------------\n"));

@@ -1762,9 +1762,46 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Maniac Square (protected, version 1.0, checksum DEEE)
+// Maniac Square (unprotected, version 1.0, checksum BB73)
+// REF 940411, unprotected
 
 static struct BurnRomInfo maniacsqRomDesc[] = {
+	{ "d8-d15.1m",		0x020000, 0x9121d1b6, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "d0-d7.1m",		0x020000, 0xa95cfd2a, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "d0-d7.4m",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+
+	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
+	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
+	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
+};
+
+STD_ROM_PICK(maniacsq)
+STD_ROM_FN(maniacsq)
+
+static INT32 maniacsqInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvManiacsq = {
+	"maniacsq", NULL, NULL, NULL, "1996",
+	"Maniac Square (unprotected, version 1.0, checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Maniac Square (protected, version 1.0, checksum DEEE)
+// REF 940411, protected
+
+static struct BurnRomInfo maniacsqaRomDesc[] = {
 	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS },       //  0 68k Code
 	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS },       //  1
 
@@ -1780,28 +1817,24 @@ static struct BurnRomInfo maniacsqRomDesc[] = {
 	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },            //  9
 };
 
-STD_ROM_PICK(maniacsq)
-STD_ROM_FN(maniacsq)
+STD_ROM_PICK(maniacsqa)
+STD_ROM_FN(maniacsqa)
 
-static INT32 maniacsqInit()
-{
-	return DrvInit(1);
-}
-
-struct BurnDriver BurnDrvManiacsq = {
-	"maniacsq", NULL, NULL, NULL, "1996",
+struct BurnDriver BurnDrvManiacsqa = {
+	"maniacsqa", "maniacsq", NULL, NULL, "1996",
 	"Maniac Square (protected, version 1.0, checksum DEEE)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
 
 
 // Maniac Square (protected, version 1.0, checksum CF2D)
+// REF 940411, protected
 
-static struct BurnRomInfo maniacsqaRomDesc[] = {
+static struct BurnRomInfo maniacsqbRomDesc[] = {
 	{ "ms_u_45.u45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS },           //  0 68k Code
 	{ "ms_u_44.u44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS },           //  1
 
@@ -1817,45 +1850,46 @@ static struct BurnRomInfo maniacsqaRomDesc[] = {
 	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },            //  9
 };
 
-STD_ROM_PICK(maniacsqa)
-STD_ROM_FN(maniacsqa)
+STD_ROM_PICK(maniacsqb)
+STD_ROM_FN(maniacsqb)
 
-struct BurnDriver BurnDrvManiacsqa = {
-	"maniacsqa", "maniacsq", NULL, NULL, "1996",
+struct BurnDriver BurnDrvManiacsqb = {
+	"maniacsqb", "maniacsq", NULL, NULL, "1996",
 	"Maniac Square (protected, version 1.0, checksum CF2D)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	NULL, maniacsqbRomInfo, maniacsqbRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
 
 
-// Maniac Square (unprotected, version 1.0, checksum BB73)
+// Maniac Square (unprotected, version 1.0, checksum BEAE)
+// unprotected
 
-static struct BurnRomInfo maniacsquRomDesc[] = {
-	{ "d8-d15.1m",		0x020000, 0x9121d1b6, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "d0-d7.1m",		0x020000, 0xa95cfd2a, 0 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo maniacsqcRomDesc[] = {
+	{ "ms_45_no_dallas_23-5_27c010.bin",	0x020000, 0xccf5724f, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ms_44_no_dallas_23-5_27c010.bin",	0x020000, 0x9aeaa141, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "d0-d7.4m",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",			0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ms2",			0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "ms3",			0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "ms4",			0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
 
 	{ "mu.6_4769_pal16l8.bin",		0x104, 0x00aedab5, 0 | BRF_OPT },  //  6 plds
 	{ "mu.6_585b_palce16v8.bin",	0x117, 0x6ba240e3, 0 | BRF_OPT },  //  7
 	{ "mu.c5_3a65_pal16r8.bin",		0x104, 0x27b1ca8b, 0 | BRF_OPT },  //  8
 };
 
-STD_ROM_PICK(maniacsqu)
-STD_ROM_FN(maniacsqu)
+STD_ROM_PICK(maniacsqc)
+STD_ROM_FN(maniacsqc)
 
-struct BurnDriver BurnDrvManiacsqu = {
-	"maniacsqu", "maniacsq", NULL, NULL, "1996",
-	"Maniac Square (unprotected, version 1.0, checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
+struct BurnDriver BurnDrvManiacsqc = {
+	"maniacsqc", "maniacsq", NULL, NULL, "1996",
+	"Maniac Square (unprotected, version 1.0, checksum BEAE)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, maniacsquRomInfo, maniacsquRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	NULL, maniacsqcRomInfo, maniacsqcRomName, NULL, NULL, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };

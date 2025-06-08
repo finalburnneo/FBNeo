@@ -376,7 +376,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 								for (INT32 x = 0; x < 25; x++) {
 									if (lstrcmp(pszSupportPath[x][0], pszSupportPath[x][1])) {
 										_tcscpy(pszSupportPath[x][0], pszSupportPath[x][1]);
-										SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, szAppRomPaths[x]);
+										SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);
 									}
 								}
 								UpdateWindow(hDlg);

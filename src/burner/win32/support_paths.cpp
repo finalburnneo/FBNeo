@@ -365,25 +365,25 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				} else {
 					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {
 						SendMessage(hDlg, WM_CLOSE, 0, 0);
-					} else {
-						if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDDEFAULT) {
-							if (IDOK == MessageBox(
-								hDlg,
-								FBALoadStringEx(hAppInst, IDS_EDIT_DEFAULTS, true),
-								FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true),
-								MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
-								) {
-								for (INT32 x = 0; x < 25; x++) {
-									if (lstrcmp(pszSupportPath[x][0], pszSupportPath[x][1])) {
-										_tcscpy(pszSupportPath[x][0], pszSupportPath[x][1]);
-										SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);
-									}
-								}
-								UpdateWindow(hDlg);
-							}
-						}
-						break;
 					}
+					else
+					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDDEFAULT) {
+						if (IDOK == MessageBox(
+							hDlg,
+							FBALoadStringEx(hAppInst, IDS_EDIT_DEFAULTS, true),
+							FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true),
+							MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
+							) {
+							for (INT32 x = 0; x < 25; x++) {
+								if (lstrcmp(pszSupportPath[x][0], pszSupportPath[x][1])) {
+									_tcscpy(pszSupportPath[x][0], pszSupportPath[x][1]);
+									SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);
+								}
+							}
+							UpdateWindow(hDlg);
+						}
+					}
+					break;
 				}
 			}
 

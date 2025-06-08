@@ -2482,7 +2482,7 @@ static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, L
 
 				case IDC_ROMDATA_SELDIR_BUTTON: {
 					RomDataClearList();
-					SupportDirCreateTab(IDC_SUPPORTDIR_EDIT25, hRDMgrWnd);
+					SupportDirCreate(hRDMgrWnd);
 					RomdataListFindDats(szAppRomdataPath);
 					SetFocus(hRDListView);
 					break;

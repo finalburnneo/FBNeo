@@ -1,9 +1,9 @@
 #include "burner.h"
 #include <shlobj.h>
 
-static HWND hTabControl 	= NULL;
-static int nInitTabSelect 	= 0;
-static HWND hParent			= NULL;
+static HWND hTabControl = NULL;
+static HWND hSupportDlg = NULL;
+static HWND hParent     = NULL;
 
 TCHAR szAppPreviewsPath[MAX_PATH]	= _T("support/previews/");
 TCHAR szAppTitlesPath[MAX_PATH]		= _T("support/titles/");
@@ -29,118 +29,310 @@ TCHAR szAppPCBsPath[MAX_PATH]		= _T("support/pcbs/");
 TCHAR szAppHistoryPath[MAX_PATH]	= _T("support/history/");
 TCHAR szAppEEPROMPath[MAX_PATH]		= _T("config/games/");
 
+static TCHAR* pszSupportPath[25][2] = {
+	{ szAppPreviewsPath, _T("support/previews/") },
+	{ szAppTitlesPath,   _T("support/titles/")   },
+	{ szAppIconsPath,    _T("support/icons/")    },
+	{ szAppCheatsPath,   _T("support/cheats/")   },
+	{ szAppHiscorePath,  _T("support/hiscores/") },
+	{ szAppSamplesPath,  _T("support/samples/")  },
+	{ szAppIpsPath,      _T("support/ips/")      },
+	{ szAppRomdataPath,  _T("support/romdata/")  },
+	{ szNeoCDGamesDir,   _T("neocdiso/")         },
+	{ szNeoCDCoverDir,   _T("support/neocdz/")   },
+	{ szAppBlendPath,    _T("support/blend/")    },
+	{ szAppSelectPath,   _T("support/select/")   },
+	{ szAppVersusPath,   _T("support/versus/")   },
+	{ szAppHowtoPath,    _T("support/howto/")    },
+	{ szAppScoresPath,   _T("support/scores/")   },
+	{ szAppBossesPath,   _T("support/bosses/")   },
+	{ szAppGameoverPath, _T("support/gameover/") },
+	{ szAppFlyersPath,   _T("support/flyers/")   },
+	{ szAppMarqueesPath, _T("support/marquees/") },
+	{ szAppControlsPath, _T("support/cpanel/")   },
+	{ szAppCabinetsPath, _T("support/cabinets/") },
+	{ szAppPCBsPath,     _T("support/pcbs/")     },
+	{ szAppHistoryPath  ,_T("support/history/")  },
+	{ szAppEEPROMPath,   _T("config/games/")     },
+	{ szAppHDDPath,      _T("support/hdd/")      }
+};
+
 static TCHAR szCheckIconsPath[MAX_PATH];
+
+INT32 nSupportDlgWidth  = 0x21c;
+INT32 nSupportDlgHeight = 0x2ec;
+static INT32 nDlgInitialWidth;
+static INT32 nDlgInitialHeight;
+static INT32 nDlgTabCtrlInitialPos[4];
+static INT32 nDlgGroupCtrlInitialPos[4];
+static INT32 nDlgOKBtnInitialPos[4];
+static INT32 nDlgCancelBtnInitialPos[4];
+static INT32 nDlgDefaultsBtnInitialPos[4];
+static INT32 nDlgTextCtrlInitialPos[25][4];
+static INT32 nDlgEditCtrlInitialPos[25][4];
+static INT32 nDlgBtnCtrlInitialPos[25][4];
+
+// Dialog sizing support functions and macros (everything working in client co-ords)
+#define GetInititalControlPos(a, b)								\
+	GetWindowRect(GetDlgItem(hSupportDlg, a), &rect);			\
+	memset(&point, 0, sizeof(POINT));							\
+	point.x = rect.left;										\
+	point.y = rect.top;											\
+	ScreenToClient(hSupportDlg, &point);						\
+	b[0] = point.x;												\
+	b[1] = point.y;												\
+	GetClientRect(GetDlgItem(hSupportDlg, a), &rect);			\
+	b[2] = rect.right;											\
+	b[3] = rect.bottom;
+
+#define SetControlPosAlignTopLeft(a, b)							\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0], b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+#define SetControlPosAlignTopLeftResizeHor(a, b)				\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0], b[1], b[2] + 4 - xDelta, b[3] + 4, SWP_NOZORDER);
+
+#define SetControlPosAlignTopLeftResizeHorVert(a, b)			\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0], b[1], b[2] - xDelta, b[3] - yDelta, SWP_NOZORDER);
+
+#define SetControlPosAlignTopRight(a, b)						\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0] - xDelta, b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+#define SetControlPosAlignBottomLeft(a, b)						\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0], b[1] - yDelta, b[2], b[3], SWP_NOZORDER);
+
+#define SetControlPosAlignBottomRight(a, b)						\
+	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
+static void GetInitialPositions()
+{
+	RECT rect;
+	POINT point;
+
+	GetClientRect(hSupportDlg, &rect);
+	nDlgInitialWidth = rect.right;
+	nDlgInitialHeight = rect.bottom;
+
+	GetInititalControlPos(IDC_TAB1,    nDlgTabCtrlInitialPos);
+	GetInititalControlPos(IDC_STATIC1, nDlgGroupCtrlInitialPos);
+	GetInititalControlPos(IDOK,        nDlgOKBtnInitialPos);
+	GetInititalControlPos(IDCANCEL,    nDlgCancelBtnInitialPos);
+	GetInititalControlPos(IDDEFAULT,   nDlgDefaultsBtnInitialPos);
+
+	for (INT32 i = 0; i < 25; i++) {
+		GetInititalControlPos(IDC_SUPPORTDIR_TEXT1 + i, nDlgTextCtrlInitialPos[i]);
+		GetInititalControlPos(IDC_SUPPORTDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
+		GetInititalControlPos(IDC_SUPPORTDIR_BR1   + i, nDlgBtnCtrlInitialPos[i]);
+	}
+}
 
 static void IconsDirPathChanged() {
 	CreateDrvIconsCache();
 }
 
+static bool IsRelativePath(const TCHAR* pszPath)
+{
+	// Invalid input
+	if ((NULL == pszPath) || (_T('\0' == pszPath[0]))) {
+		return false;
+	}
+
+	// Check for absolute path flags (drive letter or root / network path)
+	if (
+		((_tcslen(pszPath) >= 3) && _istalpha(pszPath[0]) && (_T(':') == pszPath[1]) && (_T('\\' == pszPath[2]) || (_T('/') == pszPath[2]))) ||
+		((_T('\\') == pszPath[0]) || (_T('/') == pszPath[0]))
+	) {
+		return false;
+	}
+
+	// Check that it is not a '.' or '..' starts with (e.g. . \folder or . \parent)
+	if (
+		(pszPath[0] == _T('.') && (pszPath[1] == _T('\0') || pszPath[1] == _T('\\') || pszPath[1] == _T('/'))) ||
+		(pszPath[0] == _T('.') && pszPath[1] == _T('.') && (pszPath[2] == _T('\0') || pszPath[2] == _T('\\') || pszPath[2] == _T('/')))
+	) {
+		return true;
+	}
+
+	return true;
+}
+
+static UINT32 GetAppDirectory(TCHAR* pszAppPath)
+{
+	TCHAR szExePath[MAX_PATH] = { 0 };
+
+	// Get executable file path
+	if (0 == GetModuleFileName(NULL, szExePath, MAX_PATH))
+		return 0;
+
+	// Find last slash or backslash
+	TCHAR* pLastSlash = _tcsrchr(szExePath, _T('\\'));
+	if (NULL == pLastSlash) {
+		pLastSlash = _tcsrchr(szExePath, _T('/'));
+		if (NULL == pLastSlash)
+			return 0;
+	}
+
+	// Calculate directory length (with slash or backslash)
+	UINT32 nLen = pLastSlash - szExePath + 1;
+	if (nLen >= MAX_PATH)
+		return 0;
+
+	if (NULL != pszAppPath) {
+		_tcsncpy(pszAppPath, szExePath, nLen);
+		pszAppPath[nLen] = _T('\0');
+	}
+
+	return nLen;
+}
+
+static INT32 ConvertToAbsolutePath(const TCHAR* pszPath, TCHAR* pszAbsolutePath)
+{
+	if (NULL == pszPath)
+		return -1;
+
+	INT32 nRet = -1;
+//	TCHAR szAbsolutePath[MAX_PATH] = { 0 };
+
+	if (IsRelativePath(pszPath)) {
+		TCHAR szAppPath[MAX_PATH] = { 0 };
+		UINT32 nAppPathLen = GetAppDirectory(szAppPath);
+		if (0 == nAppPathLen)
+			return -1;
+
+		UINT32 nPathLen = _tcslen(pszPath);
+		if ((nRet = nAppPathLen + nPathLen) >= MAX_PATH)
+			return -1;
+
+		if (NULL != pszAbsolutePath) {
+			_stprintf(pszAbsolutePath, _T("%s%s"), szAppPath, pszPath);
+
+			for (UINT32 i = 0; _T('\0') != pszAbsolutePath[i]; i++) {
+				if (pszAbsolutePath[i] == _T('/')) pszAbsolutePath[i] = _T('\\');
+			}
+		}
+
+		return nRet;
+	}
+
+	if ((nRet = _tcslen(pszPath)) >= MAX_PATH)
+		return -1;
+
+	if (NULL != pszAbsolutePath) {
+		_tcscpy(pszAbsolutePath, pszPath);
+	}
+
+	return nRet;
+}
+
+static INT32 CALLBACK BRProc(HWND hWnd, UINT uMsg, LPARAM /*lParam*/, LPARAM lpData)
+{
+	if (uMsg == BFFM_INITIALIZED) {
+		SendMessage(hWnd, BFFM_SETSELECTION, (WPARAM)TRUE, (LPARAM)lpData);
+	}
+
+	return 0;
+}
+
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	int var;
+	HFONT  hFont         = NULL;
+	HBRUSH hWhiteBGBrush = NULL;
+	TCHAR szAbsolutePath[MAX_PATH] = { 0 };
+	INT32 var;
 
 	switch (Msg) {
 		case WM_INITDIALOG: {
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1,  szAppPreviewsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT2,  szAppTitlesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3,  szAppIconsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4,  szAppCheatsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5,  szAppHiscorePath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6,  szAppSamplesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7,  szAppIpsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8,  szNeoCDGamesDir);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT9,  szNeoCDCoverDir);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT10, szAppBlendPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT11, szAppSelectPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT12, szAppVersusPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT13, szAppHowtoPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT14, szAppScoresPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT15, szAppBossesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT16, szAppGameoverPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT17, szAppFlyersPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT18, szAppMarqueesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT19, szAppControlsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT20, szAppCabinetsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT21, szAppPCBsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT22, szAppHistoryPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT23, szAppEEPROMPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT24, szAppHDDPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT25, szAppRomdataPath);
+			hSupportDlg = hDlg;
+
+			// add WS_MAXIMIZEBOX button;
+			SetWindowLongPtr(hDlg, GWL_STYLE, GetWindowLongPtr(hDlg, GWL_STYLE) | WS_MAXIMIZEBOX);
+
+			HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
+			SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+			hWhiteBGBrush = CreateSolidBrush(RGB(0xff, 0xff, 0xff));
+
+			TCHAR szDialogTitle[200];
+			_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_SUPPORTPATH_TITLE, true), _T(APP_TITLE), _T(SEPERATOR_1));
+			SetWindowText(hDlg, szDialogTitle);
+
+			// Setup edit controls values
+			for (INT32 x = 0; x < 25; x++) {
+				SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);
+			}
 
 			// Setup the tabs
-			hTabControl = GetDlgItem(hDlg, IDC_SPATH_TAB);
-
-			TC_ITEM tcItem;
+			hTabControl = GetDlgItem(hDlg, IDC_TAB1);
+			TC_ITEM tcItem = { 0 };
 			tcItem.mask = TCIF_TEXT;
+			tcItem.pszText = FBALoadStringEx(hAppInst, IDS_SUPPORT_PATHS, true);
+			TabCtrl_InsertItem(hTabControl, 0, &tcItem);
 
-			UINT idsString[25] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_ICONS, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS, IDS_SPATH_BLEND, IDS_SPATH_SELECT, IDS_SPATH_VERSUS, IDS_SPATH_HOWTO, IDS_SPATH_SCORES, IDS_SPATH_BOSSES, IDS_SPATH_GAMEOVER, IDS_SPATH_FLYERS, IDS_SPATH_MARQUEES, IDS_SPATH_CONTROLS, IDS_SPATH_CABINETS, IDS_SPATH_PCBS, IDS_SPATH_HISTORY, IDS_SPATH_EEPROM, IDS_SPATH_HDD, IDS_SPATH_ROMDATA };
+			// Font
+			LOGFONT lf = { 0 };
+			SystemParametersInfo(SPI_GETNONCLIENTMETRICS, sizeof(LOGFONT), &lf, 0);
+			lf.lfHeight = -MulDiv(9, GetDeviceCaps(GetDC(NULL), LOGPIXELSY), 72);
+			lf.lfWeight = FW_BOLD;
+			hFont = CreateFontIndirect(&lf);
+			SendMessage(hTabControl, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-			for(int nIndex = 0; nIndex < 25; nIndex++) {
-				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
-				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
+			for (int x = 0; x < 25; x++) {
+				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_SHOW);	// browse buttons
+				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_SHOW);	// edit controls
+				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_TEXT1 + x), SW_SHOW);	// text controls
 			}
 
-			int TabPage = TabCtrl_GetCurSel(hTabControl);
-
-			// hide all controls excluding the selected controls
-			for(int x = 0; x < 25; x++) {
-				if(x != TabPage) {
-					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_HIDE);	// browse buttons
-					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
-				}
-			}
-
-			// Show the proper controls
-			ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + TabPage), SW_SHOW);		// browse buttons
-			ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
+			UpdateWindow(hDlg);
+			GetInitialPositions();
+			SetWindowPos(hDlg, NULL, 0, 0, nSupportDlgWidth, nSupportDlgWidth, SWP_NOZORDER);
 
 			WndInMid(hDlg, hParent);
-			SetFocus(hDlg);											// Enable Esc=close
-
-			if (nInitTabSelect) {
-				SendMessage(hTabControl, TCM_SETCURSEL, nInitTabSelect, 0);
-				// hide all controls excluding the selected controls
-				for(int x = 0; x < 25; x++) {
-					if(x != nInitTabSelect) {
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_HIDE);	// browse buttons
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
-					} else {
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_SHOW);	// browse buttons
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_SHOW);	// edit controls
-					}
-				}
-			}
-
+			SetFocus(hDlg);															// Enable Esc=close
 			break;
 		}
-
-		case WM_NOTIFY:
-		{
-			NMHDR* pNmHdr = (NMHDR*)lParam;
-
-			if (pNmHdr->code == TCN_SELCHANGE) {
-
-				int TabPage = TabCtrl_GetCurSel(hTabControl);
-
-				// hide all controls excluding the selected controls
-				for(int x = 0; x < 25; x++) {
-					if(x != TabPage) {
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_HIDE);	// browse buttons
-						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
-					}
-				}
-
-				// Show the proper controls
-				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + TabPage), SW_SHOW);		// browse buttons
-				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
-
-				UpdateWindow(hDlg);
-
-				return FALSE;
+		case WM_CTLCOLORSTATIC: {
+			HDC hDc = (HDC)wParam;
+			SetBkMode(hDc, TRANSPARENT);											// LTEXT control with transparent background
+			return (LRESULT)GetStockObject(HOLLOW_BRUSH);							// Return to empty brush
+			for (int x = 0; x < 25; x++) {
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x)) return (INT_PTR)hWhiteBGBrush;
+				if ((HWND)lParam == GetDlgItem(hDlg, IDC_SUPPORTDIR_TEXT1 + x)) return (LRESULT)GetStockObject(HOLLOW_BRUSH);
 			}
-			break;
 		}
+		case WM_GETMINMAXINFO: {
+			MINMAXINFO* info = (MINMAXINFO*)lParam;
+			info->ptMinTrackSize.x = nDlgInitialWidth;
+			info->ptMinTrackSize.y = nDlgInitialHeight + 40;
+			return 0;
+		}
+		case WM_SIZE: {
+			if (nDlgInitialWidth == 0 || nDlgInitialHeight == 0) return 0;
 
+			RECT rc;
+			GetClientRect(hDlg, &rc);
+
+			const INT32 xDelta = nDlgInitialWidth  - rc.right;
+			const INT32 yDelta = nDlgInitialHeight - rc.bottom;
+			if (xDelta == 0 && yDelta == 0) return 0;
+
+			SetControlPosAlignTopLeftResizeHorVert(IDC_TAB1,    nDlgTabCtrlInitialPos);
+			SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1, nDlgGroupCtrlInitialPos);
+
+			SetControlPosAlignBottomRight(IDOK,     nDlgOKBtnInitialPos);
+			SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
+
+			SetControlPosAlignBottomLeft(IDDEFAULT, nDlgDefaultsBtnInitialPos);
+
+			for (INT32 i = 0; i < 25; i++) {
+				SetControlPosAlignTopLeft(IDC_SUPPORTDIR_TEXT1          + i, nDlgTextCtrlInitialPos[i]);
+				SetControlPosAlignTopLeftResizeHor(IDC_SUPPORTDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
+				SetControlPosAlignTopRight(IDC_SUPPORTDIR_BR1           + i, nDlgBtnCtrlInitialPos[i]);
+			}
+
+			InvalidateRect(hDlg, NULL, true);
+			UpdateWindow(hDlg);
+
+			return 0;
+		}
 		case WM_COMMAND: {
 			LPMALLOC pMalloc = NULL;
 			BROWSEINFO bInfo;
@@ -148,52 +340,65 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TCHAR buffer[MAX_PATH];
 
 			if (LOWORD(wParam) == IDOK) {
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1,  szAppPreviewsPath,	sizeof(szAppPreviewsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT2,  szAppTitlesPath,	sizeof(szAppTitlesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3,  szAppIconsPath,		sizeof(szAppIconsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4,  szAppCheatsPath,	sizeof(szAppCheatsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5,  szAppHiscorePath,	sizeof(szAppHiscorePath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6,  szAppSamplesPath,	sizeof(szAppSamplesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7,  szAppIpsPath,		sizeof(szAppIpsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8,  szNeoCDGamesDir,	sizeof(szNeoCDGamesDir));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT9,  szNeoCDCoverDir,	sizeof(szNeoCDCoverDir));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT10, szAppBlendPath,		sizeof(szAppBlendPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT11, szAppSelectPath,	sizeof(szAppSelectPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT12, szAppVersusPath,	sizeof(szAppVersusPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT13, szAppHowtoPath,		sizeof(szAppHowtoPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT14, szAppScoresPath,	sizeof(szAppScoresPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT15, szAppBossesPath,	sizeof(szAppBossesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT16, szAppGameoverPath,	sizeof(szAppGameoverPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT17, szAppFlyersPath,	sizeof(szAppFlyersPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT18, szAppMarqueesPath,	sizeof(szAppMarqueesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT19, szAppControlsPath,	sizeof(szAppControlsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT20, szAppCabinetsPath,	sizeof(szAppCabinetsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT21, szAppPCBsPath,		sizeof(szAppPCBsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT22, szAppHistoryPath,	sizeof(szAppHistoryPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT23, szAppEEPROMPath,	sizeof(szAppEEPROMPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT24, szAppHDDPath,		sizeof(szAppHDDPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT25, szAppRomdataPath,	sizeof(szAppRomdataPath));
+				for (int i = 0; i < 25; i++) {
+					GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + i, buffer, sizeof(buffer));
+					// add trailing backslash
+					INT32 strLen = _tcslen(buffer);
+					if (strLen) {
+						if (buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
+							buffer[strLen + 0]  = _T('\\');
+							buffer[strLen + 1]  = _T('\0');
+						}
+					}
+					_tcscpy(pszSupportPath[i][0], buffer);
+				}
 
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {
 				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR25) {
 					var = IDC_SUPPORTDIR_EDIT1 + LOWORD(wParam) - IDC_SUPPORTDIR_BR1;
+
+					TCHAR szPath[MAX_PATH] = { 0 };
+					GetDlgItemText(hDlg, var, szPath, sizeof(szPath));
+					ConvertToAbsolutePath(szPath, szAbsolutePath);
 				} else {
 					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {
 						SendMessage(hDlg, WM_CLOSE, 0, 0);
+					} else {
+						if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDDEFAULT) {
+							if (IDOK == MessageBox(
+								hDlg,
+								FBALoadStringEx(hAppInst, IDS_EDIT_DEFAULTS, true),
+								FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true),
+								MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
+								) {
+								for (INT32 x = 0; x < 25; x++) {
+									if (lstrcmp(pszSupportPath[x][0], pszSupportPath[x][1])) {
+										_tcscpy(pszSupportPath[x][0], pszSupportPath[x][1]);
+										SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, szAppRomPaths[x]);
+									}
+								}
+								UpdateWindow(hDlg);
+							}
+						}
+						break;
 					}
-					break;
 				}
 			}
 
-			SHGetMalloc(&pMalloc);
+		    SHGetMalloc(&pMalloc);
 
 			memset(&bInfo, 0, sizeof(bInfo));
-			bInfo.hwndOwner = hDlg;
+			bInfo.hwndOwner      = hDlg;
 			bInfo.pszDisplayName = buffer;
-			bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
-			bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+			bInfo.lpszTitle      = FBALoadStringEx(hAppInst, IDS_SELECT_DIR, true);
+			bInfo.ulFlags        = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+			if (S_OK == nCOMInit) {
+				bInfo.ulFlags   |= BIF_NEWDIALOGSTYLE;	// Caller needs to call CoInitialize() / OleInitialize() before using API (main.cpp)
+			}
+			bInfo.lpfn           = BRProc;
+			bInfo.lParam         = (LPARAM)szAbsolutePath;
 
 			pItemIDList = SHBrowseForFolder(&bInfo);
 
@@ -202,8 +407,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					int strLen = _tcslen(buffer);
 					if (strLen) {
 						if (buffer[strLen - 1] != _T('\\')) {
-							buffer[strLen]		= _T('\\');
-							buffer[strLen + 1]	= _T('\0');
+							buffer[strLen]      = _T('\\');
+							buffer[strLen + 1]  = _T('\0');
 						}
 						SetDlgItemText(hDlg, var, buffer);
 					}
@@ -211,16 +416,27 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				pMalloc->Free(pItemIDList);
 			}
 			pMalloc->Release();
-
 			break;
 		}
-
 		case WM_CLOSE: {
+			RECT rect;
+			GetClientRect(hDlg, &rect);
+			nSupportDlgWidth  = rect.right;
+			nSupportDlgHeight = rect.bottom;
+
+			if (NULL != hFont) {
+				DeleteObject(hFont);         hFont = NULL;
+			}
+			if (NULL != hWhiteBGBrush) {
+				DeleteObject(hWhiteBGBrush); hWhiteBGBrush = NULL;
+			}
 			EndDialog(hDlg, 0);
 			// If Icons directory path has been changed do the proper action
 			if(_tcscmp(szCheckIconsPath, szAppIconsPath)) {
 				IconsDirPathChanged();
 			}
+			hParent     = NULL;
+			hSupportDlg = NULL;
 			break;
 		}
 	}
@@ -228,7 +444,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	return 0;
 }
 
-int SupportDirCreate(HWND hParentWND)
+INT32 SupportDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
@@ -236,7 +452,7 @@ int SupportDirCreate(HWND hParentWND)
 
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }
-
+/*
 int SupportDirCreateTab(int nTab, HWND hParentWND)
 {
 	nInitTabSelect = nTab - IDC_SUPPORTDIR_EDIT1;
@@ -247,3 +463,4 @@ int SupportDirCreateTab(int nTab, HWND hParentWND)
 
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }
+*/

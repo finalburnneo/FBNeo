@@ -39,10 +39,11 @@ BEGIN
 	IDS_REPLAY_RECORD			"Record Input to File"
 	IDS_REPLAY_REPLAY			"Replay Input from File"
 
-	IDS_ROMS_SELECT_DIR			"Select Directory:"
+	IDS_SELECT_DIR				"Select Directory:"
 	IDS_ROMS_PATHS				"ROMs paths"
 	IDS_ROMS_EDIT_PATHS			"%s%sEdit ROMs paths"
-	IDS_ROMS_EDIT_DEFAULTS		"Confirmed to reset all paths to defaults?"
+	IDS_EDIT_DEFAULTS			"Confirmed to reset all paths to defaults?"
+	IDS_SUPPORT_PATHS			"Support file paths"
 
 	IDS_STATE_LOAD				"Load State"
 	IDS_STATE_SAVE				"Save State"
@@ -111,6 +112,7 @@ BEGIN
 	IDS_ROMINFO_BIOS			"%s, BIOS"
 	IDS_ROMINFO_NODUMP			"No Dump"
 
+/*
 	IDS_SPATH_PREVIEW			"Previews"
 	IDS_SPATH_TITLES			"Titles"
 	IDS_SPATH_ICONS				"Icons"
@@ -136,6 +138,7 @@ BEGIN
 	IDS_SPATH_HISTORY			"History.dat"
 	IDS_SPATH_EEPROM			"EEPROM Saves"
 	IDS_SPATH_HDD				"HDD Images"
+*/
 
 	IDS_PRESET_SAVED			"The preset file was saved to %s."
 
@@ -246,6 +249,8 @@ BEGIN
 	IDS_FAMILY_OTHER			"Other"
 
 	IDS_IPSMANAGER_TITLE		"IPS Patch Manager"
+	
+	IDS_SUPPORTPATH_TITLE		"%s%sEdit support file paths"
 
 	IDS_NGCD_DIAG_TITLE			"%s%sNeo Geo CDZ%sSelect Game"
 	IDS_NGCD_TITLE				"Title"

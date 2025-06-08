@@ -435,7 +435,7 @@ INT32 CreateAllDatfilesWindows(bool bSilent, const TCHAR* pszSpecDir)
 		memset(&bInfo, 0, sizeof(bInfo));
 		bInfo.hwndOwner = hScrnWnd;
 		bInfo.pszDisplayName = buffer;
-		bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+		bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_SELECT_DIR, true);
 		bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
 		pItemIDList = SHBrowseForFolder(&bInfo);

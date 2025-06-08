@@ -98,7 +98,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_STATIC1,          nDlgGroupCtrlInitialPos);
 	GetInititalControlPos(IDOK,                 nDlgOKBtnInitialPos);
 	GetInititalControlPos(IDCANCEL,             nDlgCancelBtnInitialPos);
-	GetInititalControlPos(IDC_ROMSDIR_DEFAULTS, nDlgDefaultsBtnInitialPos);
+	GetInititalControlPos(IDDEFAULT, 			nDlgDefaultsBtnInitialPos);
 
 	for (INT32 i = 0; i < 20; i++) {
 		GetInititalControlPos(IDC_ROMSDIR_TEXT1 + i, nDlgTextCtrlInitialPos[i]);
@@ -310,7 +310,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			SetControlPosAlignBottomRight(IDOK,     nDlgOKBtnInitialPos);
 			SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
 
-			SetControlPosAlignBottomLeft(IDC_ROMSDIR_DEFAULTS, nDlgDefaultsBtnInitialPos);
+			SetControlPosAlignBottomLeft(IDDEFAULT, nDlgDefaultsBtnInitialPos);
 
 			for (INT32 i = 0; i < 20; i++) {
 				SetControlPosAlignTopLeft(IDC_ROMSDIR_TEXT1          + i, nDlgTextCtrlInitialPos[i]);
@@ -336,14 +336,14 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					if (lstrcmp(szAppRomPaths[i], buffer)) chOk = true;
 
 					// add trailing backslash
-					int strLen = _tcslen(buffer);
+					INT32 strLen = _tcslen(buffer);
 					if (strLen) {
 						if (buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
 							buffer[strLen + 0]  = _T('\\');
 							buffer[strLen + 1]  = _T('\0');
 						}
 					}
-					lstrcpy(szAppRomPaths[i], buffer);
+					_tcscpy(szAppRomPaths[i], buffer);
 //					}
 				}
 
@@ -361,11 +361,11 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						SendMessage(hDlg, WM_CLOSE, 0, 0);
 					}
 					else
-					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDC_ROMSDIR_DEFAULTS) {
+					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDDEFAULT) {
 						if (IDOK == MessageBox(
 							hDlg,
-							FBALoadStringEx(hAppInst, IDS_ROMS_EDIT_DEFAULTS, true),
-							FBALoadStringEx(hAppInst, IDS_ERR_WARNING,        true),
+							FBALoadStringEx(hAppInst, IDS_EDIT_DEFAULTS, true),
+							FBALoadStringEx(hAppInst, IDS_ERR_WARNING,   true),
 							MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
 						) {
 							for (INT32 x = 0; x < 20; x++) {
@@ -386,7 +386,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			memset(&bInfo, 0, sizeof(bInfo));
 			bInfo.hwndOwner      = hDlg;
 			bInfo.pszDisplayName = buffer;
-			bInfo.lpszTitle      = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+			bInfo.lpszTitle      = FBALoadStringEx(hAppInst, IDS_SELECT_DIR, true);
 			bInfo.ulFlags        = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 			if (S_OK == nCOMInit) {
 				bInfo.ulFlags   |= BIF_NEWDIALOGSTYLE;	// Caller needs to call CoInitialize() / OleInitialize() before using API (main.cpp)
@@ -401,8 +401,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					int strLen = _tcslen(buffer);
 					if (strLen) {
 						if (buffer[strLen - 1] != _T('\\')) {
-							buffer[strLen] = _T('\\');
-							buffer[strLen + 1] = _T('\0');
+							buffer[strLen]      = _T('\\');
+							buffer[strLen + 1]  = _T('\0');
 						}
 						SetDlgItemText(hDlg, var, buffer);
 					}
@@ -438,7 +438,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 }
 
 
-int RomsDirCreate(HWND hParentWND)
+INT32 RomsDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
@@ -449,7 +449,7 @@ int RomsDirCreate(HWND hParentWND)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Check Romsets Dialog/////////////////////////////////////////////////////////////////////////////
 
-int WriteGameAvb()
+INT32 WriteGameAvb()
 {
 	TCHAR szRomDat[MAX_PATH];
 	FILE* h;
@@ -731,7 +731,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 	return 0;
 }
 
-int CreateROMInfo(HWND hParentWND)
+INT32 CreateROMInfo(HWND hParentWND)
 {
 	SubDirThreadExit();
 

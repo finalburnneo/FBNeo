@@ -2798,12 +2798,15 @@ static void MspacmanMap()
 	ZetSetOutHandler(pacman_out_port);
 }
 
-static void MspackplsMap()
+static void MspacmanbMap()
 {
-	MspacmanMap();
+	for (INT32 i = 0; i <= 0x8000; i += 0x8000)
+	{
+		ZetMapArea(0x0000 + i, 0x3fff + i, 0, DrvZ80ROM + i);
+		ZetMapArea(0x0000 + i, 0x3fff + i, 2, DrvZ80ROM + i);
+	}
 
-	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM);
+	MspacmanMap();
 }
 
 static void WidelMap()
@@ -4835,7 +4838,7 @@ STD_ROM_FN(mspacmab)
 
 static INT32 mspacmanbInit()
 {
-	return DrvInit(MspacmanMap, NULL, PACMAN);
+	return DrvInit(MspacmanbMap, NULL, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmab = {
@@ -4920,7 +4923,7 @@ static void mspacmbe_decode()
 
 static INT32 mspacmbeInit()
 {
-	return DrvInit(MspacmanMap, mspacmbe_decode, PACMAN);
+	return DrvInit(MspacmanbMap, mspacmbe_decode, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmbe = {
@@ -5206,10 +5209,10 @@ static void mspackpls_decode()
 
 static INT32 mspackplsInit()
 {
-	return DrvInit(MspackplsMap, mspackpls_decode, PACMAN);
+	return DrvInit(MspacmanbMap, mspackpls_decode, PACMAN);
 }
 
-struct BurnDriverD BurnDrvmspackpls = {
+struct BurnDriver BurnDrvmspackpls = {
 	"mspackpls", "mspacman", NULL, NULL, "1983",
 	"Miss Packman Plus\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
@@ -5273,7 +5276,7 @@ STD_ROM_FN(mspacmanbg)
 
 static INT32 mspacmanbgInit()
 {
-	return DrvInit(MspacmanMap, pacmansp_decode, PACMAN);
+	return DrvInit(MspacmanbMap, pacmansp_decode, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmanbg = {

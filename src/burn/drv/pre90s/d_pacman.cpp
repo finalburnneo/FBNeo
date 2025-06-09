@@ -5962,6 +5962,62 @@ struct BurnDriver BurnDrvpainter = {
 };
 
 
+// Crush Roller (Famare SA PCB)
+
+static struct BurnRomInfo crushrlfRomDesc[] = {
+	{ "pin1cc_6e.bin",   0x0800, 0x65e469cf, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pin5cc_6k.bin",   0x0800, 0x15f0415b, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pin2cc_6f.bin",   0x0800, 0x653f726d, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pin6cc_6m.bin",   0x0800, 0x4536ea5b, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pin3cc_6h.bin",   0x0800, 0x55e15863, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pin7cc_6n.bin",   0x0800, 0x409111ec, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pin4cc_6j.bin",   0x0800, 0x4fc4b582, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pin8cc_6p.bin",   0x0800, 0x0d97a047, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "pin9cc_5e.bin",   0x0800, 0xb6551507, 2 | BRF_GRA },			//  8 Graphics
+	{ "pin11cc_5h.bin",  0x0800, 0xe129d76a, 2 | BRF_GRA },			//  9
+	{ "pin10cc_5f.bin",  0x0800, 0xd1899f05, 2 | BRF_GRA },			// 10 
+	{ "pin12cc_5j.bin",  0x0800, 0xd35d1caf, 2 | BRF_GRA },			// 11 
+
+	{ "82s123.7f",       0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "2s140.4a",        0x0100, 0x63efb927, 3 | BRF_GRA },			// 13
+
+	{ "82s126.1m",       0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "82s126.3m",       0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(crushrlf)
+STD_ROM_FN(crushrlf)
+
+static void crushrlf_decode()
+{
+	// code
+	INT32 pOffset;
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x10000);
+	memcpy(pTemp, DrvZ80ROM, 0x10000);
+	for (pOffset = 0; pOffset <= 0x3800; pOffset += 0x800) {
+		memcpy(DrvZ80ROM + pOffset + 0x400, pTemp + pOffset, 0x400);
+		memcpy(DrvZ80ROM + pOffset, pTemp + pOffset + 0x400, 0x400);
+	}
+	BurnFree(pTemp);
+}
+
+static INT32 crushrlfInit()
+{
+	return DrvInit(StandardMap, crushrlf_decode, PACMAN);
+}
+
+struct BurnDriver BurnDrvcrushrlf = {
+	"crushrlf", "crush", NULL, NULL, "1981",
+	"Crush Roller (Famare SA PCB)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, crushrlfRomInfo, crushrlfRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
+	crushrlfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Crush Roller (bootleg, set 4)
 
 static struct BurnRomInfo crushsRomDesc[] = {

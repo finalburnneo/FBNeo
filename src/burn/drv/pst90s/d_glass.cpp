@@ -811,7 +811,7 @@ STD_ROM_PICK(ssplash10)
 STD_ROM_FN(ssplash10)
 
 struct BurnDriver BurnDrvSsplash10 = {
-	"ssplash10", "glass", NULL, NULL, "1994",
+	"ssplash10", "glass", NULL, NULL, "1993",
 	"Super Splash (Ver 1.0, checksum 2104394E, 27 Oct 1993)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,

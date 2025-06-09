@@ -5976,7 +5976,7 @@ static struct BurnRomInfo crushrlfRomDesc[] = {
 
 	{ "pin9cc_5e.bin",   0x0800, 0xb6551507, 2 | BRF_GRA },			//  8 Graphics
 	{ "pin11cc_5h.bin",  0x0800, 0xe129d76a, 2 | BRF_GRA },			//  9
-	{ "pin10cc_5f.bin",  0x0800, 0xd1899f05, 2 | BRF_GRA },			// 10 
+	{ "pin10cc_5f.bin",  0x0800, 0xd106da36, 2 | BRF_GRA },			// 10 
 	{ "pin12cc_5j.bin",  0x0800, 0xd35d1caf, 2 | BRF_GRA },			// 11 
 
 	{ "82s123.7f",       0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms

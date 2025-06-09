@@ -114,3 +114,8 @@ void SDL_Delay(unsigned int ms)
         now = SDL_GetTicks();
     } while (stop > now);
 }
+
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
+{
+	return NULL;
+}

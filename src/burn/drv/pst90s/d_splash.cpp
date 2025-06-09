@@ -33,6 +33,7 @@ static UINT8 soundlatch;
 static UINT8 soundbank;
 
 static INT32 splash = 0;
+static INT32 is_nsplash = 0;
 static INT32 sprite_attr2_shift = 8;
 
 static UINT8 DrvJoy1[8];
@@ -467,83 +468,12 @@ static INT32 SplashInit()
 
 		if (BurnLoadRom(Drv68KROM    + 0x000001, k++, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM    + 0x000000, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x100001, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x100000, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x200001, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x200000, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x300001, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x300000, k++, 2)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM    + 0x000000, k++, 1)) return 1;
+		if (!is_nsplash) {
+			if (BurnLoadRom(Drv68KROM    + 0x100001, k++, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM    + 0x100000, k++, 2)) return 1;
+		}
 
-		if (BurnLoadRom(DrvGfxROM[0] + 0x000000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM[0] + 0x020000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM[0] + 0x040000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM[0] + 0x060000, k++, 1)) return 1;
-
-		DrvGfxDecode();
-		BuildBitmapSwapTable(1);
-	}
-
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x407fff, MAP_ROM);
-	SekMapMemory(Drv68KRAM[0],	0x408000, 0x4087ff, MAP_RAM); // ?
-	SekMapMemory(DrvPixelRAM,	0x800000, 0x83ffff, MAP_RAM);
-	SekMapMemory(DrvVideoRAM,	0x880000, 0x8817ff, MAP_RAM);
-	SekMapMemory(Drv68KRAM[1],	0x881800, 0x881fff, MAP_RAM); // scroll regs at 881800-881803
-	SekMapMemory(BurnPalRAM,	0x8c0000, 0x8c0fff, MAP_RAM); /* Palette is xRRRRxGGGGxBBBBx */
-	SekMapMemory(DrvSpriteRAM,	0x900000, 0x900fff, MAP_RAM); // splash
-//	SekMapMemory(DrvSpriteRAM,	0xd00000, 0xd00fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM[2],	0xffc000, 0xffffff, MAP_RAM);
-	SekSetWriteWordHandler(0,	roldfrog_write_word);
-	SekSetWriteByteHandler(0,	roldfrog_write_byte);
-	SekSetReadWordHandler(0,	roldfrog_read_word);
-	SekSetReadByteHandler(0,	roldfrog_read_byte);
-	SekClose();
-
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		0x0000, 0xd7ff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,		0xf800, 0xffff, MAP_RAM);
-	ZetSetWriteHandler(splash_sound_write);
-	ZetSetReadHandler(splash_sound_read);
-	ZetClose();
-
-	BurnYM3812Init(1, 3750000, NULL, 0);
-	BurnTimerAttach(&ZetConfig, 3750000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
-
-	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, splash_adpcm_vck, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg0_map_callback,   8, 8, 64, 32);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg1_map_callback, 16, 16, 32, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM[0], 4,  8,  8, 0x100000, 0x000, 0x0f);
-	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 16, 16, 0x100000, 0x000, 0x0f);
-	GenericTilemapSetGfx(2, DrvGfxROM[1], 4, 16, 16, 0x100000, 0x100, 0x0f);
-	GenericTilemapSetTransparent(0, 0);
-	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapSetOffsets(0, -20, -16);
-	GenericTilemapSetOffsets(1, -16, -16);
-
-	splash = 1;
-
-	DrvDoReset();
-
-	return 0;
-}
-
-static INT32 NsplashInit()
-{
-	BurnAllocMemIndex();
-
-	{
-		INT32 k = 0;
-
-		if (BurnLoadRom(Drv68KROM    + 0x000001, k++, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM    + 0x000000, k++, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM    + 0x200001, k++, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM    + 0x200000, k++, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM    + 0x300001, k++, 2)) return 1;
@@ -704,6 +634,7 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	splash = 0;
+	is_nsplash = 0;
 	sprite_attr2_shift = 8;
 
 	return 0;
@@ -1071,6 +1002,13 @@ static struct BurnRomInfo nsplashkrRomDesc[] = {
 
 STD_ROM_PICK(nsplashkr)
 STD_ROM_FN(nsplashkr)
+
+static INT32 NsplashInit()
+{
+	is_nsplash = 1;
+
+	return SplashInit();
+}
 
 struct BurnDriver BurnDrvNsplashkr = {
 	"nsplashkr", "splash", NULL, NULL, "1992",

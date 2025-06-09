@@ -1004,60 +1004,42 @@ static EncodingType DetectEncoding(const TCHAR* pszDatFile)
 
 static TCHAR* Utf16beToUtf16le(const TCHAR* pszDatFile)
 {
-	FILE* fpInFile = _tfopen(pszDatFile, _T("rb"));
-	if (NULL == fpInFile) return NULL;
+	FILE* fp = _tfopen(pszDatFile, _T("rb"));
+	if (NULL == fp) return NULL;
 
-	fseek(fpInFile, 2, SEEK_SET);
+	fseek(fp, 0, SEEK_END);
+	long nLen = ftell(fp);
+	rewind(fp);
 
-	// Generate date file name (UTF16LE%Y%m%d.tmp)
-	time_t now = time(NULL);
-	struct tm* local = localtime(&now);
-	_tcsftime(szUtf16leFile, sizeof(szUtf16leFile), _T("UTF16LE%Y%m%d.tmp"), local);
-
-
-	// Create target file (UTF-16LE)
-	FILE* fpOutFile = _tfopen(szUtf16leFile, _T("wb"));
-	if (NULL == fpOutFile) {
-		fclose(fpInFile); fpInFile = NULL;
+	UINT8* pBuffer = (UINT8*)malloc(nLen);
+	if (NULL == pBuffer) {
+		fclose(fp);  fp = NULL;
 		return NULL;
 	}
+	memset(pBuffer, 0, nLen);
 
-	// Write to UTF-16LE BOM (0xfffe)
-	UINT8 cLeBom[2] = { 0xff, 0xfe };
-	if (2 != fwrite(cLeBom, 1, 2, fpOutFile)) {
-		fclose(fpInFile);  fpInFile  = NULL;
-		fclose(fpOutFile); fpOutFile = NULL;
-		return NULL;
+	UINT32 nRead = fread(pBuffer, 1, nLen, fp);
+	fclose(fp);
+
+	// Ensure that even bytes are handled
+	if (0 != (nRead % 2)) {
+		nRead--; // Discard last byte
 	}
 
-	// Buffer
-	UINT8 szBuf[4096];
-	UINT32 nRead;
-
-	while ((nRead = fread(szBuf, 1, sizeof(szBuf), fpInFile)) > 0) {
-		// Ensure that even bytes are handled
-		if (0 != (nRead % 2)) {
-			nRead--; // Discard last byte
-		}
-
-		// Swap the order of each double byte (BE -> LE)
-		for (UINT32 i = 0; i < nRead; i += 2) {
-			UINT8 cTemp  = szBuf[i];
-			szBuf[i + 0] = szBuf[i + 1];
-			szBuf[i + 1] = cTemp;
-		}
-
-		// Write converted data
-		if (nRead != fwrite(szBuf, 1, nRead, fpOutFile)){
-			fclose(fpInFile);  fpInFile  = NULL;
-			fclose(fpOutFile); fpOutFile = NULL;
-			return NULL;
-		}
+	// Swap the order of each double byte (BE -> LE)
+	for (UINT32 i = 0; i < nRead; i += 2) {
+		UINT8 cTemp = pBuffer[i];
+		pBuffer[i + 0] = pBuffer[i + 1];
+		pBuffer[i + 1] = cTemp;
 	}
-	fclose(fpInFile);  fpInFile  = NULL;
-	fclose(fpOutFile); fpOutFile = NULL;
 
-	MoveFileEx(szUtf16leFile, pszDatFile, MOVEFILE_REPLACE_EXISTING);
+	if (NULL == (fp = _tfopen(pszDatFile, _T("wb")))) {
+		free(pBuffer); pBuffer = NULL;
+	}
+
+	fwrite(pBuffer, 1, nRead, fp);
+	fclose(fp);    fp      = NULL;
+	free(pBuffer); pBuffer = NULL;
 
 	return (TCHAR*)pszDatFile;
 }
@@ -1081,12 +1063,10 @@ static bool StrToUint(const TCHAR* str, UINT32* result) {
 	return true;
 }
 
-#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
-
-static INT32 LoadRomdata()
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
 {
-	EncodingType nType = DetectEncoding(szRomdataName);
-	const TCHAR* pszReadMode = NULL;
+	EncodingType nType = DetectEncoding(pszFileName);
+	TCHAR* pszReadMode = NULL;
 
 	switch (nType) {
 		case ENCODING_ANSI: {
@@ -1103,14 +1083,25 @@ static INT32 LoadRomdata()
 			break;
 		}
 		case ENCODING_UTF16_BE: {
-			const TCHAR* pszConvert = Utf16beToUtf16le(szRomdataName);
-			if (NULL == pszConvert) return -1;
+			if (NULL == Utf16beToUtf16le(pszFileName)) return NULL;
 			pszReadMode = _T("rt, ccs=UTF-16LE");
 			break;
 		}
 		default:
-			return -1;
+			return NULL;
 	}
+
+	static TCHAR szRet[MAX_PATH] = { 0 };
+
+	return _tcscpy(szRet, pszReadMode);
+}
+
+#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
+
+static INT32 LoadRomdata()
+{
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(szRomdataName);
+	if (NULL == pszReadMode) return -1;
 
 	RDI.nDescCount = -1;					// Failed
 
@@ -1270,32 +1261,8 @@ static INT32 LoadRomdata()
 
 char* RomdataGetDrvName()
 {
-	EncodingType nType = DetectEncoding(szRomdataName);
-	const TCHAR* pszReadMode = NULL;
-
-	switch (nType) {
-		case ENCODING_ANSI: {
-			pszReadMode = _T("rt");
-			break;
-		}
-		case ENCODING_UTF8:
-		case ENCODING_UTF8_BOM: {
-			pszReadMode = _T("rt, ccs=UTF-8");
-			break;
-		}
-		case ENCODING_UTF16_LE: {
-			pszReadMode = _T("rt, ccs=UTF-16LE");
-			break;
-		}
-		case ENCODING_UTF16_BE: {
-			const TCHAR* pszConvert = Utf16beToUtf16le(szRomdataName);
-			if (NULL == pszConvert) return NULL;
-			pszReadMode = _T("rt, ccs=UTF-16LE");
-			break;
-		}
-		default:
-			return NULL;
-	}
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(szRomdataName);
+	if (NULL == pszReadMode) return NULL;
 
 	FILE* fp = _tfopen(szRomdataName, pszReadMode);
 	if (NULL == fp) return NULL;
@@ -1326,32 +1293,8 @@ char* RomdataGetDrvName()
 
 TCHAR* RomdataGetZipName(const TCHAR* pszFileName)
 {
-	EncodingType nType = DetectEncoding(pszFileName);
-	const TCHAR* pszReadMode = NULL;
-
-	switch (nType) {
-	case ENCODING_ANSI: {
-		pszReadMode = _T("rt");
-		break;
-	}
-	case ENCODING_UTF8:
-	case ENCODING_UTF8_BOM: {
-		pszReadMode = _T("rt, ccs=UTF-8");
-		break;
-	}
-	case ENCODING_UTF16_LE: {
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	case ENCODING_UTF16_BE: {
-		const TCHAR* pszConvert = Utf16beToUtf16le(pszFileName);
-		if (NULL == pszConvert) return NULL;
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	default:
-		return NULL;
-	}
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszFileName);
+	if (NULL == pszReadMode) return NULL;
 
 	FILE* fp = _tfopen(pszFileName, pszReadMode);
 	if (NULL == fp) return NULL;
@@ -1384,32 +1327,8 @@ TCHAR* RomdataGetZipName(const TCHAR* pszFileName)
 
 TCHAR* RomdataGetDrvName(const TCHAR* pszFileName)
 {
-	EncodingType nType = DetectEncoding(pszFileName);
-	const TCHAR* pszReadMode = NULL;
-
-	switch (nType) {
-	case ENCODING_ANSI: {
-		pszReadMode = _T("rt");
-		break;
-	}
-	case ENCODING_UTF8:
-	case ENCODING_UTF8_BOM: {
-		pszReadMode = _T("rt, ccs=UTF-8");
-		break;
-	}
-	case ENCODING_UTF16_LE: {
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	case ENCODING_UTF16_BE: {
-		const TCHAR* pszConvert = Utf16beToUtf16le(pszFileName);
-		if (NULL == pszConvert) return NULL;
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	default:
-		return NULL;
-	}
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszFileName);
+	if (NULL == pszReadMode) return NULL;
 
 	FILE* fp = _tfopen(pszFileName, pszReadMode);
 	if (NULL == fp) return NULL;
@@ -1454,32 +1373,8 @@ INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName)
 
 TCHAR* RomdataGetFullName(const TCHAR* pszFileName)
 {
-	EncodingType nType = DetectEncoding(pszFileName);
-	const TCHAR* pszReadMode = NULL;
-
-	switch (nType) {
-	case ENCODING_ANSI: {
-		pszReadMode = _T("rt");
-		break;
-	}
-	case ENCODING_UTF8:
-	case ENCODING_UTF8_BOM: {
-		pszReadMode = _T("rt, ccs=UTF-8");
-		break;
-	}
-	case ENCODING_UTF16_LE: {
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	case ENCODING_UTF16_BE: {
-		const TCHAR* pszConvert = Utf16beToUtf16le(pszFileName);
-		if (NULL == pszConvert) return NULL;
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-	}
-	default:
-		return NULL;
-	}
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszFileName);
+	if (NULL == pszReadMode) return NULL;
 
 	FILE* fp = _tfopen(pszFileName, pszReadMode);
 	if (NULL == fp) return NULL;
@@ -1611,35 +1506,10 @@ INT32 RomDataCheck(const TCHAR* pszDatFile)
 
 static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 {
-	EncodingType nType = DetectEncoding(pszDatFile);
-	if (NULL == pszDatFile) return NULL;
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszDatFile);
+	if (NULL == pszReadMode) return NULL;
+
 	_tcscpy(szRomdataName, pszDatFile);
-
-	const TCHAR* pszReadMode = NULL;
-
-	switch (nType) {
-		case ENCODING_ANSI: {
-			pszReadMode = _T("rt");
-			break;
-		}
-		case ENCODING_UTF8:
-		case ENCODING_UTF8_BOM: {
-			pszReadMode = _T("rt, ccs=UTF-8");
-			break;
-		}
-		case ENCODING_UTF16_LE: {
-			pszReadMode = _T("rt, ccs=UTF-16LE");
-			break;
-		}
-		case ENCODING_UTF16_BE: {
-			const TCHAR* pszConvert = Utf16beToUtf16le(szRomdataName);
-			if (NULL == pszConvert) return NULL;
-			pszReadMode = _T("rt, ccs=UTF-16LE");
-			break;
-		}
-		default:
-			return NULL;
-	}
 
 	FILE* fp = _tfopen(szRomdataName, pszReadMode);
 	if (NULL == fp) return NULL;

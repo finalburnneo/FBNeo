@@ -5826,7 +5826,7 @@ static void eyes_decode()
 		eyes_gfx_decode(DrvGfxROM + i);
 }
 
-static INT32 crush4Init()
+static INT32 eyesInit()
 {
 	return DrvInit(StandardMap, eyes_decode, PACMAN);
 }
@@ -5837,7 +5837,7 @@ struct BurnDriver BurnDrvcrush4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush4RomInfo, crush4RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
-	crush4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
@@ -6254,11 +6254,6 @@ static struct BurnRomInfo eyesRomDesc[] = {
 STD_ROM_PICK(eyes)
 STD_ROM_FN(eyes)
 
-static INT32 eyesInit()
-{
-	return DrvInit(StandardMap, eyes_decode, PACMAN);
-}
-
 struct BurnDriver BurnDrveyes = {
 	"eyes", NULL, NULL, NULL, "1982",
 	"Eyes (US, set 1)\0", NULL, "Techstar (Rock-Ola license)", "Pac-man",
@@ -6340,6 +6335,38 @@ struct BurnDriver BurnDrveyesb = {
 };
 
 
+// Eyes (Italy)
+
+static struct BurnRomInfo eyeszacRomDesc[] = {
+	{ "1.7e",         0x1000, 0xe555b265, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "2.7f",         0x1000, 0xd6d73eb5, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "3.7h",         0x1000, 0x604c940c, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "4.7i",         0x1000, 0xacc9cd8b, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "5.5d",         0x1000, 0xd6af0030, 2 | BRF_GRA },			//  8 Graphics
+	{ "6.5f",         0x1000, 0xa42b5201, 2 | BRF_GRA },			//  9
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },			// 13
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(eyeszac)
+STD_ROM_FN(eyeszac)
+
+struct BurnDriver BurnDrveyeszac = {
+	"eyeszac", "eyes", NULL, NULL, "1982",
+	"Eyes (Italy)\0", NULL, "Techstar (Zaccaria license)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
+	NULL, eyeszacRomInfo, eyeszacRomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
+	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Eyes (bootleg, set 2, decrypted)
 
 static struct BurnRomInfo eyeszacbRomDesc[] = {
@@ -6369,7 +6396,7 @@ static struct BurnRomInfo eyeszacbRomDesc[] = {
 STD_ROM_PICK(eyeszacb)
 STD_ROM_FN(eyeszacb)
 
-struct BurnDriver BurnDrveyeszac = {
+struct BurnDriver BurnDrveyeszacb = {
 	"eyeszacb", "eyes", NULL, NULL, "1982",
 	"Eyes (bootleg, set 2, decrypted)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,

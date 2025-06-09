@@ -2571,7 +2571,7 @@ static INT32 pacman_load()
 			qLoad += ri.nLen;
 
 			continue;
-		}	
+		}
 	}
 
 	return 0;
@@ -2798,12 +2798,15 @@ static void MspacmanMap()
 	ZetSetOutHandler(pacman_out_port);
 }
 
-static void MspackplsMap()
+static void MspacmanbMap()
 {
-	MspacmanMap();
+	for (INT32 i = 0; i <= 0x8000; i += 0x8000)
+	{
+		ZetMapArea(0x0000 + i, 0x3fff + i, 0, DrvZ80ROM + i);
+		ZetMapArea(0x0000 + i, 0x3fff + i, 2, DrvZ80ROM + i);
+	}
 
-	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM);
+	MspacmanMap();
 }
 
 static void WidelMap()
@@ -2855,7 +2858,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 
 	ZetInit(0);
 	ZetOpen(0);
-	mapCallback();	
+	mapCallback();
 	ZetClose();
 
 	AY8910Init(0, 1789750, 0);
@@ -4835,7 +4838,7 @@ STD_ROM_FN(mspacmab)
 
 static INT32 mspacmanbInit()
 {
-	return DrvInit(MspacmanMap, NULL, PACMAN);
+	return DrvInit(MspacmanbMap, NULL, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmab = {
@@ -4920,7 +4923,7 @@ static void mspacmbe_decode()
 
 static INT32 mspacmbeInit()
 {
-	return DrvInit(MspacmanMap, mspacmbe_decode, PACMAN);
+	return DrvInit(MspacmanbMap, mspacmbe_decode, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmbe = {
@@ -5206,10 +5209,10 @@ static void mspackpls_decode()
 
 static INT32 mspackplsInit()
 {
-	return DrvInit(MspackplsMap, mspackpls_decode, PACMAN);
+	return DrvInit(MspacmanbMap, mspackpls_decode, PACMAN);
 }
 
-struct BurnDriverD BurnDrvmspackpls = {
+struct BurnDriver BurnDrvmspackpls = {
 	"mspackpls", "mspacman", NULL, NULL, "1983",
 	"Miss Packman Plus\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
@@ -5273,7 +5276,7 @@ STD_ROM_FN(mspacmanbg)
 
 static INT32 mspacmanbgInit()
 {
-	return DrvInit(MspacmanMap, pacmansp_decode, PACMAN);
+	return DrvInit(MspacmanbMap, pacmansp_decode, PACMAN);
 }
 
 struct BurnDriver BurnDrvmspacmanbg = {
@@ -5899,7 +5902,7 @@ static void eyes_gfx_decode(UINT8 *src)
 
 static void eyes_decode()
 {
-	for (INT32 i = 0; i < 0x4000; i++)
+	for (INT32 i = 0; i < 0xc000; i++)
 		DrvZ80ROM[i] = BITSWAP08(DrvZ80ROM[i],7,6,3,4,5,2,1,0);
 
 	for (INT32 i = 0;i < 0x2000; i += 8)
@@ -5915,7 +5918,7 @@ struct BurnDriver BurnDrvcrush4 = {
 	"crush4", "crush", NULL, NULL, "1981",
 	"Crush Roller (set 4)\0", NULL, "Alpha Denshi Co. / Kural Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED /*| BDF_HISCORE_SUPPORTED*/, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush4RomInfo, crush4RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
 	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -6390,15 +6393,15 @@ static struct BurnRomInfo eyesbRomDesc[] = {
 	{ "8.bin",	  0x0800, 0x2baaadae, 1 | BRF_ESS | BRF_PRG },  //  7
 
 	{ "9.bin",	  0x0800, 0x342c0653, 2 | BRF_GRA },			//  8 Graphics
-	{ "11.bin",	  0x0800, 0xaaa7a537, 2 | BRF_GRA },			//  9
+	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },			//  9
 	{ "10.bin",	  0x0800, 0xb247b82c, 2 | BRF_GRA },			// 10
-	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },			// 11
+	{ "11.bin",	  0x0800, 0xaaa7a537, 2 | BRF_GRA },			// 11
 
 	{ "7051.bin",	  0x0020, 0x2c3cc909, 3 | BRF_GRA },		// 12 Color Proms
 	{ "7051-3.bin",	  0x0100, 0xd8d78829, 3 | BRF_GRA },		// 13
 
 	{ "82s126.1m",	  0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
-	{ "7051-2.bin",	  0x0100, 0x77245b66, 4 | BRF_OPT },     	// 15 Timing Prom (not used)
+	{ "7051-2.bin",	  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },     	// 15 Timing Prom (not used)
 };
 
 STD_ROM_PICK(eyesb)
@@ -6625,7 +6628,7 @@ STD_ROM_FN(piranha)
 
 static INT32 piranhaInit()
 {
-	return DrvInit(StandardMap, eyes_decode, PIRANHA);
+	return DrvInit(WoodpekMap, eyes_decode, PIRANHA);
 }
 
 struct BurnDriver BurnDrvpiranha = {
@@ -6672,6 +6675,44 @@ struct BurnDriver BurnDrvpiranhao = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, piranhaoRomInfo, piranhaoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	piranhaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Ms. Pac-Man (bootleg, set 3)
+
+static struct BurnRomInfo mspacmab3RomDesc[] = {
+	{ "p1.6ef",       0x1000, 0x50b38941, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "p2.7ef",       0x1000, 0x195883b8, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "p3.bin",       0x1000, 0x124a4507, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "p4.bin",       0x1000, 0x08ac65da, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "d5.6fh",       0x1000, 0x50b29f09, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "d6.6j",        0x0800, 0x33b09ed9, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "d7.5de",       0x0800, 0xb5d8c872, 2 | BRF_GRA },			//  6 Graphics
+	{ "d9.5fh",       0x0800, 0x9b2b936c, 2 | BRF_GRA },			//  7
+	{ "d8.5ef",       0x0800, 0xa70a6ac4, 2 | BRF_GRA },			//  8
+	{ "d10.5j",       0x0800, 0x53368498, 2 | BRF_GRA },			//  9
+
+	{ "6331.8h",      0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "6301.4a",      0x0200, 0x720528b4, 3 | BRF_GRA },			// 11
+
+	{ "63s141.1k",    0x0200, 0x459d2618, 4 | BRF_SND },			// 12 Sound Prom
+	{ "63s141.3k",    0x0200, 0xfcc24d5d, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+
+	{ "82s141.i14",   0x0200, 0x8d43d0a6, 0 | BRF_OPT },			// 14 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmab3)
+STD_ROM_FN(mspacmab3)
+
+struct BurnDriver BurnDrvmspacmab3 = {
+	"mspacmab3", "puckman", NULL, NULL, "1981",
+	"Ms. Pac-Man (bootleg, set 3)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmab3RomInfo, mspacmab3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	piranhaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

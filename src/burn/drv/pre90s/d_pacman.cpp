@@ -5115,7 +5115,8 @@ struct BurnDriver BurnDrvPacgal = {
 
 
 // Ms. Pac-Man Plus
-// note: supposedly released after mspackpls, so the 1981 date is most likely incorrect
+// note: the 1981 date displayed on title screen is most likely incorrect,
+//       this set is supposed to be based on mspackpls, which is dated 1983 on title screen
 
 static struct BurnRomInfo mspacplsRomDesc[] = {
 	{ "boot1",        0x1000, 0xd16b31b7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5150,6 +5151,12 @@ struct BurnDriver BurnDrvmspacpls = {
 
 
 // Miss Packman Plus
+// This is a bootleg Ms. Pac-Man auxiliary board that displays "Miss Packman Plus" at the title screen and
+// contains alternate mazes. These are the mazes that were later hacked into the mspacpls romset.
+//
+// The auxiliary board contains a Z80, a PAL with "MTS" handwritten on it, and 3 2764 eproms labelled "E",
+// "F", and "H". The eproms have data bits 3 and 4 swapped, and the PAL scrambles the addressing in 0x0800
+// chunks.
 
 static struct BurnRomInfo mspackplsRomDesc[] = {
 	{ "rom-h.bin",    0x2000, 0x88c89824, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code

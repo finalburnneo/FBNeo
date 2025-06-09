@@ -2798,6 +2798,14 @@ static void MspacmanMap()
 	ZetSetOutHandler(pacman_out_port);
 }
 
+static void MspackplsMap()
+{
+	MspacmanMap();
+
+	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM);
+	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM);
+}
+
 static void WidelMap()
 {
 	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM);
@@ -5107,6 +5115,7 @@ struct BurnDriver BurnDrvPacgal = {
 
 
 // Ms. Pac-Man Plus
+// note: supposedly released after mspackpls, so the 1981 date is most likely incorrect
 
 static struct BurnRomInfo mspacplsRomDesc[] = {
 	{ "boot1",        0x1000, 0xd16b31b7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -5130,12 +5139,76 @@ STD_ROM_PICK(mspacpls)
 STD_ROM_FN(mspacpls)
 
 struct BurnDriver BurnDrvmspacpls = {
-	"mspacpls", "mspacman", NULL, NULL, "1981",
+	"mspacpls", "mspacman", NULL, NULL, "1981?",
 	"Ms. Pac-Man Plus\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacplsRomInfo, mspacplsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Miss Packman Plus
+
+static struct BurnRomInfo mspackplsRomDesc[] = {
+	{ "rom-h.bin",    0x2000, 0x88c89824, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "rom-f.bin",    0x2000, 0x19620d5d, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "rom-e.bin",    0x2000, 0x59cb7ea0, 1 | BRF_ESS | BRF_PRG },	//  2
+
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  6 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspackpls)
+STD_ROM_FN(mspackpls)
+
+static void mspackpls_decode()
+{
+	// code
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x10000);
+	memcpy(pTemp, DrvZ80ROM, 0x10000);
+	memset(DrvZ80ROM, 0, 0x10000);
+
+	memcpy(DrvZ80ROM + 0x0000, pTemp + 0x0000, 0x800);
+	memcpy(DrvZ80ROM + 0x8800, pTemp + 0x0800, 0x800);
+	memcpy(DrvZ80ROM + 0x3000, pTemp + 0x1000, 0x800);
+	memcpy(DrvZ80ROM + 0x9800, pTemp + 0x1800, 0x800);
+
+	memcpy(DrvZ80ROM + 0x2000, pTemp + 0x2000, 0x800);
+	memcpy(DrvZ80ROM + 0x0800, pTemp + 0x2800, 0x800);
+	memcpy(DrvZ80ROM + 0x9000, pTemp + 0x3000, 0x800);
+	memcpy(DrvZ80ROM + 0x1800, pTemp + 0x3800, 0x800);
+
+	memcpy(DrvZ80ROM + 0x8000, pTemp + 0x8000, 0x800);
+	memcpy(DrvZ80ROM + 0x2800, pTemp + 0x8800, 0x800);
+	memcpy(DrvZ80ROM + 0x1000, pTemp + 0x9000, 0x800);
+	memcpy(DrvZ80ROM + 0x3800, pTemp + 0x9800, 0x800);
+
+	BurnFree(pTemp);
+
+	for (INT32 i = 0x0000; i < 0xa000; i++)
+		DrvZ80ROM[i] = BITSWAP08(DrvZ80ROM[i],7,6,5,3,4,2,1,0);
+}
+
+static INT32 mspackplsInit()
+{
+	return DrvInit(MspackplsMap, mspackpls_decode, PACMAN);
+}
+
+struct BurnDriverD BurnDrvmspackpls = {
+	"mspackpls", "mspacman", NULL, NULL, "1983",
+	"Miss Packman Plus\0", NULL, "hack", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspackplsRomInfo, mspackplsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspackplsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
@@ -6011,7 +6084,7 @@ struct BurnDriver BurnDrvcrushrlf = {
 	"crushrlf", "crush", NULL, NULL, "1981",
 	"Crush Roller (Famare SA PCB)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crushrlfRomInfo, crushrlfRomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
 	crushrlfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -6360,7 +6433,7 @@ struct BurnDriver BurnDrveyeszac = {
 	"eyeszac", "eyes", NULL, NULL, "1982",
 	"Eyes (Italy)\0", NULL, "Techstar (Zaccaria license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION | GBF_ACTION, 0,
 	NULL, eyeszacRomInfo, eyeszacRomName, NULL, NULL, NULL, NULL, eyesInputInfo, eyesDIPInfo,
 	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

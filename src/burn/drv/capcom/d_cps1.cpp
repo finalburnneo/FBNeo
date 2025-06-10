@@ -15404,6 +15404,34 @@ static struct BurnRomInfo Sf2cebltwRomDesc[] = {
 STD_ROM_PICK(Sf2cebltw)
 STD_ROM_FN(Sf2cebltw)
 
+static struct BurnRomInfo Sf2cedaRomDesc[] = {
+	// Unknown version by Drakon - sf2ce36 in HBMAME 
+	{ "sf2ceda_23b.8f", 0x080000, 0xa8a81db7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2ceda_22b.7f", 0x080000, 0x3c9ee969, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_21a.6f", 	0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92_01.bin",   	0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",   	0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",   	0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",   	0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",   	0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",   	0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",   	0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",   	0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",   	0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",   	0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",   	0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",   	0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.bin",   	0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.bin",  	0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.bin",   	0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sf2ceda)
+STD_ROM_FN(Sf2ceda)
+
 static struct BurnRomInfo SfzchRomDesc[] = {
 	{ "sfzch23",       0x080000, 0x1140743f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sfza22",        0x080000, 0x8d9b2480, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -17472,6 +17500,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2level"      , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2cebltw"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2sl73a"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceda"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfu"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfj"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -25537,6 +25566,16 @@ struct BurnDriver BurnDrvCpsSf2sl73a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2sl73aRomInfo, Sf2sl73aRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceda = {
+	"sf2ceda", "sf2ce", NULL, NULL, "2012",
+	"Street Fighter II': Champion Edition (unknown hack)\0", NULL, "Drakon", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2cedaRomInfo, Sf2cedaRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

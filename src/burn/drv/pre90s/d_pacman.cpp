@@ -4885,6 +4885,39 @@ struct BurnDriver BurnDrvmspacmab2 = {
 };
 
 
+// Ms. Pac-Man (bootleg, set 4)
+
+static struct BurnRomInfo mspacmab4RomDesc[] = {
+	{ "sub1.bin",        0x2000, 0x3ed9d3ca, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "sub2.bin",        0x2000, 0x988db4af, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "sub3.bin",        0x2000, 0x9921d46f, 1 | BRF_ESS | BRF_PRG }, //  2
+	
+	{ "5e",              0x1000, 0x5c281d01, 2 | BRF_GRA },           //  3 Graphics
+	{ "5f",              0x1000, 0x615af909, 2 | BRF_GRA },           //  4
+
+	{ "82s123.7f",       0x0020, 0x2fc650bd, 3 | BRF_GRA },           //  5 Color Proms
+	{ "82s126.4a",       0x0100, 0x3eb3a8e4, 3 | BRF_GRA },           //  6
+
+	{ "82s126.1m",       0x0100, 0xa9cc86bf, 4 | BRF_SND },           //  7 Sound Prom
+	{ "82s126.3m",       0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT }, //  8 Timing Prom (not used)
+	
+	{ "subpal16l8d.bin", 0x0104, 0x5f852ffa, 0 | BRF_OPT },           //  9 plds
+};
+
+STD_ROM_PICK(mspacmab4)
+STD_ROM_FN(mspacmab4)
+
+struct BurnDriver BurnDrvmspacmab4 = {
+	"mspacmab4", "mspacman", NULL, NULL, "1981",
+	"Ms. Pac-Man (bootleg, set 4)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmab4RomInfo, mspacmab4RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Ms. Pac-Man (bootleg, encrypted)
 
 static struct BurnRomInfo mspacmbeRomDesc[] = {
@@ -5918,7 +5951,7 @@ struct BurnDriver BurnDrvcrush4 = {
 	"crush4", "crush", NULL, NULL, "1981",
 	"Crush Roller (set 4)\0", NULL, "Alpha Denshi Co. / Kural Electric, Ltd.", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED /*| BDF_HISCORE_SUPPORTED*/, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crush4RomInfo, crush4RomName, NULL, NULL, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
 	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

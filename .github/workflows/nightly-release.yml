@@ -601,7 +601,7 @@ jobs:
 
       # Create new nightly
       - name: Release new nightly
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.2.2
         with:
           name: nightly builds
           tag_name: latest

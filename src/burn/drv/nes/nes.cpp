@@ -10484,7 +10484,7 @@ static void ppu_reset()
 
 	ppu_framecycles = 0; // total ran cycles this frame
 
-    memset(nt_ram, 0xff, sizeof(nt_ram));
+    memset(nt_ram, 0x00, sizeof(nt_ram));
 	memset(pal_ram, 0x00, sizeof(pal_ram));
     memset(oam_ram, 0xff, sizeof(oam_ram));
 

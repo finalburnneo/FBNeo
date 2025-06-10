@@ -577,7 +577,7 @@ static INT32 DrvDraw()
 	k007121_ctrl_write(0, 7, k007121_ctrl_read(0, 7) & ~8); // sprites: disable screen flipping
 
 	if (nBurnLayer & 1) draw_layer(0, 0);
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, DrvSprRAM, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x40) >> 5, 0);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, DrvSprRAM, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x20) >> 4, 0);
 	if (nBurnLayer & 2) draw_layer(0, 1);
 	if (nBurnLayer & 4) draw_layer(1, 0);
 

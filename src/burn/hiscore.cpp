@@ -234,6 +234,11 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
 
+						if ( (!strcmp(name, "crush4")) ) {
+							bprintf(0, _T("-- crush4 noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
 						if ( (!strcmp(name, "mmaze")) || (!strcmp(name, "mmaze2")) ) {
 							bprintf(0, _T("-- mmaze* noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;

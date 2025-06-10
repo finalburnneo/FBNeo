@@ -69,7 +69,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 			case 0x04: width = 1; height = 2; number &= (~2); break;
 			case 0x02: width = 2; height = 1; number &= (~1); break;
 			case 0x00: width = height = 2; number &= (~3); break;
-			case 0x08: width = height = 4; number &= (~3); break;
+			case 0x08: width = height = 4; number &= (~0xf); break;
 		    default: width = 1; height = 1;
 		}
 

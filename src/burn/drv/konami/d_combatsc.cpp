@@ -177,12 +177,6 @@ static void pf_control_write(UINT8 offset, UINT8 data)
 	//		m_textlayer->set_flip((data & 0x08) ? TILEMAP_FLIPY | TILEMAP_FLIPX : 0);
 	//	}
 	}
-
-	if (offset == 3) // buffer sprites
-	{
-	//	UINT8 *ram = DrvVidRAM + 0x1000 + ((~data & 8) * 0x100) + (video_circuit * 0x2000);
-	//	memcpy (DrvSprRAM[video_circuit], ram, 0x800);
-	}
 }
 
 static void combatsc_main_write(UINT16 address, UINT8 data)

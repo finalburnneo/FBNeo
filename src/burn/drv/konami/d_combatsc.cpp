@@ -23,7 +23,6 @@ static UINT8 *DrvSndROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
-static UINT8 *DrvSprRAM[2];
 static UINT8 *DrvScrollRAM[2];
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvHD6309RAM;
@@ -181,8 +180,8 @@ static void pf_control_write(UINT8 offset, UINT8 data)
 
 	if (offset == 3) // buffer sprites
 	{
-		UINT8 *ram = DrvVidRAM + 0x1000 + ((~data & 8) * 0x100) + (video_circuit * 0x2000);
-		memcpy (DrvSprRAM[video_circuit], ram, 0x800);
+	//	UINT8 *ram = DrvVidRAM + 0x1000 + ((~data & 8) * 0x100) + (video_circuit * 0x2000);
+	//	memcpy (DrvSprRAM[video_circuit], ram, 0x800);
 	}
 }
 
@@ -419,8 +418,6 @@ static INT32 MemIndex()
 
 	DrvZ80RAM			= Next; Next += 0x001000;
 	DrvVidRAM			= Next; Next += 0x004000;
-	DrvSprRAM[0]		= Next; Next += 0x000800;
-	DrvSprRAM[1]		= Next; Next += 0x000800;
 	DrvScrollRAM[0]		= Next; Next += 0x000040;
 	DrvScrollRAM[1]		= Next; Next += 0x000040;
 	DrvPalRAM			= Next; Next += 0x000100;
@@ -548,8 +545,8 @@ static INT32 DrvInit()
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.13);
 
-	k007121_init(0, (0x100000 / (8 * 8)) - 1);
-	k007121_init(1, (0x100000 / (8 * 8)) - 1);
+	k007121_init(0, (0x100000 / (8 * 8)) - 1, DrvVidRAM + 0x1000);
+	k007121_init(1, (0x100000 / (8 * 8)) - 1, DrvVidRAM + 0x3000);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
@@ -649,16 +646,16 @@ static INT32 DrvDraw()
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0) | 1);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1) | 2);
 
-		if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, color_table, DrvSprRAM[1], (0x40 + color1), 0, 16, 0, 0x0f00, 0x0000);
-		if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, color_table, DrvSprRAM[0], (0x00 + color0), 0, 16, 0, 0x4444, 0x0000);
+		if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, color_table, (0x40 + color1), 0, 16, 0, 0x0f00, 0x0000);
+		if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, color_table, (0x00 + color0), 0, 16, 0, 0x4444, 0x0000);
 	}
 	else
 	{
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWOPAQUE | TMAP_SET_GROUP(0) | 1);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWOPAQUE | TMAP_SET_GROUP(1) | 2);
 
-		if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, color_table, DrvSprRAM[1], (0x40 + color1), 0, 16, 0, 0x0f00, 0x0000);
-		if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, color_table, DrvSprRAM[0], (0x00 + color0), 0, 16, 0, 0x4444, 0x0000);
+		if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, color_table, (0x40 + color1), 0, 16, 0, 0x0f00, 0x0000);
+		if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, color_table, (0x00 + color0), 0, 16, 0, 0x4444, 0x0000);
 
 		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1) | 4);
 		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 8);
@@ -731,6 +728,8 @@ static INT32 DrvFrame()
 
 		if (i == 240) {
 			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_HOLD);
+			k007121_buffer(0);
+			k007121_buffer(1);
 
 			if (pBurnDraw) {
 				DrvDraw();

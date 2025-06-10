@@ -480,7 +480,7 @@ static INT32 DrvInit(INT32 rom_layout)
 	GenericTilemapSetGfx(0, DrvGfxROM, 4, 8, 8, 0x100000, 0x100, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
-	k007121_init(0, (0x100000 / (8 * 8)) - 1);
+	k007121_init(0, (0x100000 / (8 * 8)) - 1, DrvSprRAM);
 
 	DrvDoReset(1);
 
@@ -533,8 +533,7 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-	INT32 spr_offs = (k007121_ctrl_read(0, 3) & 8) ? 0x800 : 0x000;
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, &DrvSprRAM[spr_offs], 0, 40, 16, 0, -1, 0x0000);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, 0, 40, 16, 0, -1, 0x0000);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -579,6 +578,8 @@ static INT32 DrvFrame()
 		if (i == 240) {
 			if (k007121_ctrl_read(0, 7) & 0x02)
 				HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			k007121_buffer(0);
 
 			if (pBurnDraw) { // missing text in service mode if drawn after vbl
 				DrvDraw();

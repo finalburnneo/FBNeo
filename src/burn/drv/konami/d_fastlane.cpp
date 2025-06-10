@@ -327,26 +327,26 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvHD6309ROM	= Next; Next += 0x0200000;
+	DrvHD6309ROM	= Next; Next += 0x020000;
 
-	DrvGfxROM		= Next; Next += 0x1000000;
+	DrvGfxROM		= Next; Next += 0x100000;
 
-	DrvColPROM		= Next; Next += 0x0004000;
+	DrvColPROM		= Next; Next += 0x000100;
 
-	DrvSndROM0		= Next; Next += 0x0200000;
-	DrvSndROM1		= Next; Next += 0x0800000;
+	DrvSndROM0		= Next; Next += 0x020000;
+	DrvSndROM1		= Next; Next += 0x080000;
 
-	color_table		= Next; Next += 0x0040000;
+	color_table		= Next; Next += 0x004000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x40000 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x4000 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvK007121RAM	= Next; Next += 0x0001000;
-	DrvPalRAM		= Next; Next += 0x0010000;
-	DrvVidRAM0		= Next; Next += 0x0008000;
-	DrvVidRAM1		= Next; Next += 0x0008000;
-	DrvSprRAM		= Next; Next += 0x0010000;
+	DrvK007121RAM	= Next; Next += 0x000100;
+	DrvPalRAM		= Next; Next += 0x001000;
+	DrvVidRAM0		= Next; Next += 0x000800;
+	DrvVidRAM1		= Next; Next += 0x000800;
+	DrvSprRAM		= Next; Next += 0x001000;
 
 	RamEnd			= Next;
 
@@ -405,7 +405,7 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	k007121_init(0, (0x100000 / (8 * 8)) - 1);
+	k007121_init(0, (0x100000 / (8 * 8)) - 1, DrvSprRAM);
 
 	K007232Init(0, 3579545, DrvSndROM0, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback0);
@@ -486,7 +486,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, color_table, DrvSprRAM, 0, 40, 16, 0, -1, 0x0000);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, color_table, 0, 40, 16, 0, -1, 0x0000);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -527,8 +527,10 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, HD6309);
 
-		if (i == (nInterleave -1) && (k007121_ctrl_read(0, 7) & 0x02))
-			HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == (nInterleave -1)) {
+			if (k007121_ctrl_read(0, 7) & 0x02) HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			k007121_buffer(0);
+		}
 
 		if ((i & 0x1f) == 0 && (k007121_ctrl_read(0, 7) & 0x01))
 			HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);

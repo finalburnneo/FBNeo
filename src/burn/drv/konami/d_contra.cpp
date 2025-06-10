@@ -28,15 +28,12 @@ static UINT8 *DrvTxCRAM;
 static UINT8 *DrvTxVRAM;
 static UINT8 *DrvBgCRAM;
 static UINT8 *DrvBgVRAM;
-static UINT8 *DrvSprRAM;
+static UINT8 *DrvSprRAM[2];
 static UINT32 *DrvPalette;
 static UINT32 *Palette;
 static UINT8  DrvRecalc;
 
 static INT32 nExtraCycles;
-
-static UINT8 *pDrvSprRAM0;
-static UINT8 *pDrvSprRAM1;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -173,27 +170,11 @@ STDDIPINFOEXT(Gryzor, Drv, Cabinet)
 
 static void contra_K007121_ctrl_0_w(INT32 offset, INT32 data)
 {
-	if (offset == 3)
-	{
-		if (data & 0x08)
-			memcpy (pDrvSprRAM0, DrvSprRAM + 0x000, 0x800);
-		else
-			memcpy (pDrvSprRAM0, DrvSprRAM + 0x800, 0x800);
-	}
-
 	k007121_ctrl_write(0, offset & 7, data);
 }
 
 static void contra_K007121_ctrl_1_w(INT32 offset, INT32 data)
 {
-	if (offset == 3)
-	{
-		if (data&0x8)
-			memcpy(pDrvSprRAM1, DrvHD6309RAM1 + 0x0800, 0x800);
-		else
-			memcpy(pDrvSprRAM1, DrvHD6309RAM1 + 0x1000, 0x800);
-	}
-
 	k007121_ctrl_write(1, offset & 7, data);
 }
 
@@ -383,10 +364,8 @@ static INT32 MemIndex()
 	DrvTxVRAM		= Next; Next += 0x000400;
 	DrvBgCRAM		= Next; Next += 0x000400;
 	DrvBgVRAM		= Next; Next += 0x000400;
-	DrvSprRAM		= Next; Next += 0x001000;
-
-	pDrvSprRAM0		= Next; Next += 0x000800;
-	pDrvSprRAM1		= Next; Next += 0x000800;
+	DrvSprRAM[0]	= Next; Next += 0x001000;
+	DrvSprRAM[1]	= Next; Next += 0x001000;
 
 	Palette			= (UINT32*)Next; Next += 0x00080 * sizeof(UINT32);
 
@@ -479,15 +458,16 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvPalRAM,		0x0c00, 0x0cff, MAP_ROM);
-	HD6309MapMemory(DrvHD6309RAM0,		0x1000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM0,	0x1000, 0x1fff, MAP_RAM);
 	HD6309MapMemory(DrvFgCRAM,		0x2000, 0x23ff, MAP_RAM);
 	HD6309MapMemory(DrvFgVRAM,		0x2400, 0x27ff, MAP_RAM);
 	HD6309MapMemory(DrvTxCRAM,		0x2800, 0x2bff, MAP_RAM);
 	HD6309MapMemory(DrvTxVRAM,		0x2c00, 0x2fff, MAP_RAM);
-	HD6309MapMemory(DrvSprRAM,		0x3000, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM[0],	0x3000, 0x3fff, MAP_RAM);
 	HD6309MapMemory(DrvBgCRAM,		0x4000, 0x43ff, MAP_RAM);
 	HD6309MapMemory(DrvBgVRAM,		0x4400, 0x47ff, MAP_RAM);
-	HD6309MapMemory(DrvHD6309RAM1,		0x4800, 0x5fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM1,	0x4800, 0x4fff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM[1],	0x5000, 0x5fff, MAP_RAM);
 //	HD6309MapMemory(DrvHD6309ROM0 + 0x10000, 	0x6000, 0x7fff, MAP_ROM);
 	HD6309MapMemory(DrvHD6309ROM0 + 0x08000,	0x8000, 0xffff, MAP_ROM);
 	HD6309SetReadHandler(DrvContraHD6309ReadByte);
@@ -511,8 +491,8 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 
 	GenericTilesInit();
 
-	k007121_init(0, (0x100000 / (8 * 8)) - 1);
-	k007121_init(1, (0x100000 / (8 * 8)) - 1);
+	k007121_init(0, (0x100000 / (8 * 8)) - 1, DrvSprRAM[0]);
+	k007121_init(1, (0x100000 / (8 * 8)) - 1, DrvSprRAM[1]);
 
 	return 0;
 }
@@ -765,8 +745,8 @@ static INT32 DrvDraw()
 
 	INT32 base_color0 = (k007121_ctrl_read(0, 6) & 0x30) << 1;
 	INT32 base_color1 = (k007121_ctrl_read(1, 6) & 0x30) << 1;
-	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, pDrvSprRAM0, base_color0, 40, 16, 0, -1, 0x0000);
-	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, pDrvSprRAM1, base_color1, 40, 16, 0, -1, 0x0800);
+	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, base_color0, 40, 16, 0, -1, 0x0000);
+	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, base_color1, 40, 16, 0, -1, 0x0800);
 
 	draw_tx();
 
@@ -810,8 +790,10 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, HD6309);
 
-		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02)) {
-			HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) {
+			if (k007121_ctrl_read(0, 7) & 0x02) HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			k007121_buffer(0);
+			k007121_buffer(1);
 		}
 
 		CPU_RUN_TIMER(1);

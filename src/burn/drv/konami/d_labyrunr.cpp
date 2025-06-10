@@ -370,8 +370,6 @@ static INT32 CommonInit(INT32 nLoadType)
 
 		DrvGfxExpand(DrvGfxROM, 0x40000);
 		DrvExpandLookupTable();
-
-		k007121_init(0, (0x80000 / (8 * 8)) - 1);
 	}
 
 	HD6309Init(0);
@@ -396,6 +394,8 @@ static INT32 CommonInit(INT32 nLoadType)
 	BurnYM2203SetPSGVolume(1, 0.80);
 
 	GenericTilesInit();
+
+	k007121_init(0, (0x80000 / (8 * 8)) - 1, DrvSprRAM);
 
 	DrvDoReset(1);
 
@@ -577,7 +577,7 @@ static INT32 DrvDraw()
 	k007121_ctrl_write(0, 7, k007121_ctrl_read(0, 7) & ~8); // sprites: disable screen flipping
 
 	if (nBurnLayer & 1) draw_layer(0, 0);
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, DrvSprRAM, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x20) >> 4, 0);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x20) >> 4, 0);
 	if (nBurnLayer & 2) draw_layer(0, 1);
 	if (nBurnLayer & 4) draw_layer(1, 0);
 
@@ -627,6 +627,7 @@ static INT32 DrvFrame()
 
 		if (i == nInterleave-1) {
 			if (k007121_ctrl_read(0, 7) & 0x02) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
+			k007121_buffer(0);
 		}
 	}
 

@@ -5,6 +5,8 @@
 static UINT8 k007121_ctrlram[K007121_CHIPS][8];
 static INT32 k007121_flipscreen[K007121_CHIPS];
 static INT32 k007121_sprite_mask[K007121_CHIPS];
+static UINT8 *k007121_spriteram[K007121_CHIPS];
+static UINT8 k007121_sprites_buffer[K007121_CHIPS][0x800];
 
 UINT8 k007121_ctrl_read(INT32 chip, UINT8 offset)
 {
@@ -20,23 +22,52 @@ void k007121_ctrl_write(INT32 chip, UINT8 offset, UINT8 data)
 	k007121_ctrlram[chip][offset] = data;
 }
 
-void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *source, INT32 base_color, INT32 xoffs, INT32 yoffs, INT32 bank_base, INT32 pri_mask, INT32 color_offset)
+void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, INT32 base_color, INT32 xoffs, INT32 yoffs, INT32 bank_base, INT32 pri_mask, INT32 color_offset)
 {
 	INT32 flipscreen = k007121_flipscreen[chip];
-	INT32 num, inc;
 
-	/* TODO: sprite limit is supposed to be per-line! (check MT #00185) */
-	num = 0x40;
+	const INT32 MAX_SPRITE_BLOCKS = 264;
+	const INT32 SPRITE_FORMAT_SIZE = 5;
+	const UINT8 *source = k007121_sprites_buffer[chip];
 
-	inc = 5;
-	/* when using priority buffer, draw front to back */
-	if (pri_mask != -1)
+	// determine number of sprites that will be drawn
+	INT32 num_sprites = 0;
+	INT32 sprite_blocks = 0;
+	while (sprite_blocks < MAX_SPRITE_BLOCKS)
 	{
-		source += (num - 1)*inc;
+		INT32 attr = source[(num_sprites * SPRITE_FORMAT_SIZE) + 4];
+		switch (attr & 0xe)
+		{
+			case 0x06:
+			default:
+				sprite_blocks += 1;
+				break;
+
+			case 0x02:
+			case 0x04:
+				sprite_blocks += 2;
+				break;
+
+			case 0x00:
+				sprite_blocks += 4;
+				break;
+
+			case 0x08:
+				sprite_blocks += 16;
+				break;
+		}
+		num_sprites++;
+	}
+
+	INT32 inc = SPRITE_FORMAT_SIZE;
+	/* when using priority buffer, draw front to back */
+	if (pri_mask != (UINT32)~0)
+	{
+		source += (num_sprites - 1)*inc;
 		inc = -inc;
 	}
 
-	for (INT32 i = 0; i < num; i++)
+	for (INT32 i = 0; i < num_sprites; i++)
 	{
 		INT32 number = source[0];               /* sprite number */
 		INT32 sprite_bank = source[1] & 0x0f;   /* sprite bank */
@@ -66,8 +97,8 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 		switch (attr & 0xe)
 		{
 			case 0x06: width = height = 1; break;
-			case 0x04: width = 1; height = 2; number &= (~2); break;
 			case 0x02: width = 2; height = 1; number &= (~1); break;
+			case 0x04: width = 1; height = 2; number &= (~2); break;
 			case 0x00: width = height = 2; number &= (~3); break;
 			case 0x08: width = height = 4; number &= (~0xf); break;
 		    default: width = 1; height = 1;
@@ -97,7 +128,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 
 				INT32 code = (number + x_offset[ex] + y_offset[ey]) & k007121_sprite_mask[chip];
 
-				if (pri_mask != -1)
+				if (pri_mask != (UINT32)~0)
 				{
 					if (ctable != NULL) {
 						RenderPrioMaskTranstabSpriteOffset(dest, gfx, code, (color * 16), 0, destx, desty, flipx, flipy, 8, 8, ctable, color_offset, pri_mask);
@@ -162,13 +193,28 @@ INT32 k007121_scan(INT32 nAction)
 		{
 			SCAN_VAR(k007121_ctrlram[i]);
 			SCAN_VAR(k007121_flipscreen[i]);
+			SCAN_VAR(k007121_sprites_buffer[i]);
 		}
 	}
 
 	return 0;
 }
 
-void k007121_init(INT32 chip, INT32 sprite_mask)
+void k007121_init(INT32 chip, INT32 sprite_mask, UINT8 *spriteram)
 {
 	k007121_sprite_mask[chip] = sprite_mask;
+	k007121_spriteram[chip] = spriteram;
+}
+
+void k007121_buffer(INT32 chip)
+{
+	const UINT8 *source = k007121_spriteram[chip];
+
+	// There is 0x1000 sprite ram, which is broken up into 2 0x800 banks.
+	// The following control bit determines which bank is used.
+	if (k007121_ctrlram[chip][3]&0x8)
+		source += 0x800;
+
+	// It's actually a framebuffer, but it's sufficient to just buffer the sprite list.
+	memcpy(k007121_sprites_buffer[chip], source, 0x800);
 }

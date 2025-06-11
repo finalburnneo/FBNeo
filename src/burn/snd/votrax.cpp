@@ -363,7 +363,7 @@ votrax_sc01a_device::votrax_sc01a_device(const machine_config &mconfig, const ch
 }
 #endif
 
-static void ar_dummy_cb(INT32) { };
+static void ar_dummy_cb(INT32) { }
 
 INT32 sc01_read_request()
 {

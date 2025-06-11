@@ -87,6 +87,8 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 			if (NULL == (h = _tfopen(szAlternative, pszReadMode)))
 				return 1;
+		} else {
+			return 1;	// Parent driver
 		}
 	}
 
@@ -355,6 +357,8 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 			if (NULL == (fp = _tfopen(szAlternative, pszReadMode)))
 				return 1;
+		} else {
+			return 1;	// Parent driver
 		}
 	}
 

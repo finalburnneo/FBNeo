@@ -716,7 +716,7 @@ static INT32 DrvDraw()
 	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, base_color0, 40, 16, 0, -1, 0x0000);
 	if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, base_color1, 40, 16, 0, -1, 0x0800);
 
-	GenericTilesSetClip(-1, 40, -1, -1);
+	GenericTilesSetClip((flipscreen1 ? 240 : -1), (flipscreen1 ? -1 : 40), -1, -1);
 	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
 	GenericTilesClearClip();
 

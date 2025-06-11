@@ -115,8 +115,8 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, INT32 bas
 				{
 					flipx = !xflip;
 					flipy = !yflip;
-					destx = 248 - (sx + x * 8);
-					desty = 248 - (sy + y * 8);
+					destx = 232 - (sx + x * 8);
+					desty = 232 - (sy + y * 8);
 				}
 				else
 				{

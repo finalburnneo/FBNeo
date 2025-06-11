@@ -465,6 +465,7 @@ static void __fastcall Megadrive68K_Z80WriteByte(UINT32 address, UINT8 data)
 	address &= 0xffff;
 
 	if ((address & 0xc000) == 0x0000) { // z80 ram: 0000 - 1fff, 2000 - 3fff(mirror)
+		SekCyclesBurn(2);
 		RamZ80[address & 0x1fff] = data;
 		return;
 	}
@@ -487,6 +488,7 @@ static UINT8 __fastcall Megadrive68K_Z80ReadByte(UINT32 address)
 	address &= 0xffff;
 
 	if ((address & 0xc000) == 0x0000) { // z80 ram: 0000 - 1fff, 2000 - 3fff(mirror)
+		SekCyclesBurn(2);
 		return RamZ80[address & 0x1fff];
 	}
 

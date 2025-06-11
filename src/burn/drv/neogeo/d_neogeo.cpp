@@ -18421,11 +18421,11 @@ struct BurnDriver BurnDrvMslug1v2 = {
 
 
 // Metal Slug - Super Vehicle-001 (Origins, Hack)
-// Modified by AKS, SAKURA
-// GOTVG 20250502
+// Modified by AKS & Sakura
+// GOTVG 20250606
 
 static struct BurnRomInfo mslugqyRomDesc[] = {
-	{ "201-p1qy.p1",	0x200000, 0xc11b1c34, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1qy.p1",	0x200000, 0xee4ec348, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS
 };
@@ -18435,7 +18435,7 @@ STD_ROM_FN(mslugqy)
 
 struct BurnDriver BurnDrvMslugqy = {
 	"mslugqy", "mslug", "neogeo", NULL, "2025",
-	"Metal Slug - Super Vehicle-001 (Origins, Hack)\0", NULL, "AKS, SAKURA", "Neo Geo MVS",
+	"Metal Slug - Super Vehicle-001 (Origins, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugqyRomInfo, mslugqyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19218,13 +19218,13 @@ struct BurnDriver BurnDrvMslugxcq = {
 };
 
 
-// Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower, Hack)
-// Modified by AKS & SAKURA
-// GOTVG 20250403
+// Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower v6.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250609
 
 static struct BurnRomInfo mslugxcqiRomDesc[] = {
-	{ "250-p1cqi.p1",	0x100000, 0xb4cc793f, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2cqi.ep1",	0x800000, 0x93534961, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p1cqi.p1",	0x100000, 0xcce1fb1b, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2cqi.ep1",	0x800000, 0x1dca19dd, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
@@ -19246,7 +19246,7 @@ STD_ROM_FN(mslugxcqi)
 
 struct BurnDriver BurnDrvMslugxfs = {
 	"mslugxcqi", "mslugx", "neogeo", NULL, "2025",
-	"Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower v6.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxcqiRomInfo, mslugxcqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19931,13 +19931,13 @@ struct BurnDriver BurnDrvMslug3cq = {
 };
 
 
-// Metal Slug 3 (Legend with Infinite Firepower, Hack)
-// Modified by AKS
-// GOTVG 20255022
+// Metal Slug 3 (Legend with Infinite Firepower v6.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250609
 
 static struct BurnRomInfo mslug3cqiRomDesc[] = {
-	{ "256-p1cqi.p1",	0x100000, 0x0cf334e4, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqi.sp2",	0x800000, 0x65c1ea54, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqi.p1",	0x100000, 0x8b71f278, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqi.sp2",	0x800000, 0x87d0578d, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
@@ -19956,7 +19956,7 @@ STD_ROM_FN(mslug3cqi)
 
 struct BurnDriver BurnDrvMslug3cqi = {
 	"mslug3cqi", "mslug3", "neogeo", NULL, "2025",
-	"Metal Slug 3 (Legend with Infinite Firepower v6.0, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Legend with Infinite Firepower v6.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cqiRomInfo, mslug3cqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19965,13 +19965,13 @@ struct BurnDriver BurnDrvMslug3cqi = {
 };
 
 
-// Metal Slug 3 (Legend TD, Hack)
-// Modified by AKS
-// GOTVG 20250508
+// Metal Slug 3 (Legend TD v6.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250610
 
 static struct BurnRomInfo mslug3cqtRomDesc[] = {
-	{ "256-p1cqt.p1",	0x100000, 0x8be75a1e, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqt.sp2",	0x800000, 0xf14fb1ba, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqt.p1",	0x100000, 0x5ae59189, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqt.sp2",	0x800000, 0x50fd39dc, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
@@ -19989,7 +19989,7 @@ STD_ROM_FN(mslug3cqt)
 
 struct BurnDriver BurnDrvMslug3cqt = {
 	"mslug3cqt", "mslug3", "neogeo", NULL, "2025",
-	"Metal Slug 3 (Legend TD v5.0, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Legend TD v6.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cqtRomInfo, mslug3cqtRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19998,19 +19998,19 @@ struct BurnDriver BurnDrvMslug3cqt = {
 };
 
 
-// Metal Slug 3 (Legendary Journey, Hack)
-// Modified by AKS
-// GOTVG 20241114
+// Metal Slug 3 (Legendary Journey v5.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250609
 
 static struct BurnRomInfo mslug3cqzRomDesc[] = {
-	{ "256-p1cqz.p1",	0x100000, 0xda6213f0, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqz.sp2",	0x600000, 0x16e51482, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqz.p1",	0x100000, 0x44b4b221, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqz.sp2",	0x800000, 0xa6aecb08, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
 	MSLUG3_DECRYPTED_SPR3
-	{ "256-c7cqz.c7",	0x800000, 0x9fdf02a4, 3 | BRF_GRA },
-	{ "256-c8cqz.c8",	0x800000, 0x6449f0c1, 3 | BRF_GRA },
+	{ "256-c7cqz.c7",	0x800000, 0xac5d0a7e, 3 | BRF_GRA },
+	{ "256-c8cqz.c8",	0x800000, 0xe0018022, 3 | BRF_GRA },
 
 	MSLUG3_Z80
 
@@ -20021,12 +20021,12 @@ STDROMPICKEXT(mslug3cqz, mslug3cqz, neogeo)
 STD_ROM_FN(mslug3cqz)
 
 struct BurnDriver BurnDrvMslug3cqz = {
-	"mslug3cqz", "mslug3", "neogeo", NULL, "2024",
-	"Metal Slug 3 (Legendary Journey, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslug3cqz", "mslug3", "neogeo", NULL, "2025",
+	"Metal Slug 3 (Legendary Journey v5.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cqzRomInfo, mslug3cqzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoOcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoOchInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -20231,13 +20231,13 @@ struct BurnDriver BurnDrvMslug4fd = {
 };
 
 
-// Metal Slug 4 (Final, Hack)
-// Modified by AKS & SAKURA
-// GOTVG 20250403
+// Metal Slug 4 (Final v6.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250609
 
 static struct BurnRomInfo mslug4zjRomDesc[] = {
-	{ "263-p1zj.p1",	0x100000, 0x68e0e022, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2zj.sp2",	0x800000, 0xeba906ff, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p1zj.p1",	0x100000, 0x2ea44ba5, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2zj.sp2",	0x800000, 0x57d3bd0b, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_TEXT
 
@@ -20257,7 +20257,7 @@ STD_ROM_FN(mslug4zj)
 
 struct BurnDriver BurnDrvMslug4zj = {
 	"mslug4zj", "mslug4", "neogeo", NULL, "2025",
-	"Metal Slug 4 (Final v6.0, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 4 (Final v6.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4zjRomInfo, mslug4zjRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -20952,12 +20952,12 @@ struct BurnDriver BurnDrvMslug5sc = {
 };
 
 
-// Metal Slug 5 (Legend, Hack)
-// Modified by AKS
-// GOTVG 20250403
+// Metal Slug 5 (Legend v6.0, Hack)
+// Modified by AKS & Sakura
+// GOTVG 20250609
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
-	{ "268-p1cq.p1",	0xa00000, 0x8eb713e3, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1cq.p1",	0xa00000, 0x80179a8d, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_TEXT
 
@@ -20978,7 +20978,7 @@ STD_ROM_FN(mslug5cq)
 
 struct BurnDriver BurnDrvMslug5cq = {
 	"mslug5cq", "mslug5", "neogeo", NULL, "2025",
-	"Metal Slug 5 (Legend v6.0, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 5 (Legend v6.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5cqRomInfo, mslug5cqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

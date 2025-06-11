@@ -170,12 +170,12 @@ STDDIPINFOEXT(Gryzor, Drv, Cabinet)
 
 static void contra_K007121_ctrl_0_w(INT32 offset, INT32 data)
 {
-	k007121_ctrl_write(0, offset & 7, data);
+	k007121_ctrl_write(0, offset, data);
 }
 
 static void contra_K007121_ctrl_1_w(INT32 offset, INT32 data)
 {
-	k007121_ctrl_write(1, offset & 7, data);
+	k007121_ctrl_write(1, offset, data);
 }
 
 void contra_bankswitch_w(INT32 data)
@@ -262,7 +262,7 @@ void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 		case 0x0005:
 		case 0x0006:
 		case 0x0007:
-			contra_K007121_ctrl_0_w(address & 7, data);
+			contra_K007121_ctrl_0_w(address, data);
 		return;
 
 		case 0x0008:
@@ -298,7 +298,7 @@ void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 		case 0x0065:
 		case 0x0066:
 		case 0x0067:
-			contra_K007121_ctrl_1_w(address & 7, data);
+			contra_K007121_ctrl_1_w(address, data);
 		return;
 
 		case 0x7000:
@@ -334,6 +334,77 @@ void DrvContraM6809SoundWriteByte(UINT16 address, UINT8 data)
 			// nop
 		return;
 	}
+}
+
+static tilemap_callback( fg )
+{
+	offs &= 0x3ff;
+	INT32 attr = DrvFgCRAM[offs];
+	UINT8 ctrl_3 = k007121_ctrl_read(0, 3);
+	UINT8 ctrl_4 = k007121_ctrl_read(0, 4);
+	UINT8 ctrl_5 = k007121_ctrl_read(0, 5);
+	UINT8 ctrl_6 = k007121_ctrl_read(0, 6);
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 bank = ((attr & 0x80) >> 7) |
+			((attr >> (bit0+2)) & 0x02) |
+			((attr >> (bit1+1)) & 0x04) |
+			((attr >> (bit2  )) & 0x08) |
+			((attr >> (bit3-1)) & 0x10) |
+			((ctrl_3 & 0x01) << 5);
+
+	INT32 mask = (ctrl_4 & 0xf0) >> 4;
+
+	bank = (bank & ~(mask << 1)) | ((ctrl_4 & mask) << 1);
+
+	TILE_SET_INFO(0, DrvFgVRAM[offs] + (bank * 256), ((ctrl_6 & 0x30) * 2 + 16) + (attr & 7), 0);
+}
+
+static tilemap_callback( bg )
+{
+	offs &= 0x3ff;
+	INT32 attr = DrvBgCRAM[offs];
+	UINT8 ctrl_3 = k007121_ctrl_read(1, 3);
+	UINT8 ctrl_4 = k007121_ctrl_read(1, 4);
+	UINT8 ctrl_5 = k007121_ctrl_read(1, 5);
+	UINT8 ctrl_6 = k007121_ctrl_read(1, 6);
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 bank = ((attr & 0x80) >> 7) |
+			((attr >> (bit0+2)) & 0x02) |
+			((attr >> (bit1+1)) & 0x04) |
+			((attr >> (bit2  )) & 0x08) |
+			((attr >> (bit3-1)) & 0x10) |
+			((ctrl_3 & 0x01) << 5);
+
+	INT32 mask = (ctrl_4 & 0xf0) >> 4;
+
+	bank = (bank & ~(mask << 1)) | ((ctrl_4 & mask) << 1);
+
+	TILE_SET_INFO(1, DrvBgVRAM[offs] + (bank * 256), ((ctrl_6 & 0x30) * 2 + 16) + (attr & 7), 0);
+}
+
+static tilemap_callback( tx )
+{
+	offs &= 0x3ff;
+	INT32 attr = DrvTxCRAM[offs];
+	UINT8 ctrl_5 = k007121_ctrl_read(0, 5);
+	UINT8 ctrl_6 = k007121_ctrl_read(0, 6);
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 bank = ((attr & 0x80) >> 7) |
+			((attr >> (bit0+2)) & 0x02) |
+			((attr >> (bit1+1)) & 0x04) |
+			((attr >> (bit2  )) & 0x08) |
+			((attr >> (bit3-1)) & 0x10);
+
+	TILE_SET_INFO(0, DrvTxVRAM[offs] + (bank * 256), ((ctrl_6 & 0x30) * 2 + 16) + (attr & 7), 0);
 }
 
 static INT32 MemIndex()
@@ -376,11 +447,11 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvGfxExpand(UINT8 *src)
+static void DrvGfxExpand(UINT8 *src, INT32 len)
 {
-	for (INT32 i = 0x80000-1; i>=0; i--) {
-		src[i*2+1] = src[i] & 0xf;
-		src[i*2+0] = src[i] >> 4;
+	for (INT32 i = (len - 1) * 2; i >= 0; i-=2) {
+		src[i+0] = src[i/2] >> 4;
+		src[i+1] = src[i/2] & 0xf;
 	}
 }
 
@@ -437,20 +508,15 @@ static INT32 DrvDoReset()
 
 static INT32 CommonInit(INT32 (*pRomLoad)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (pRomLoad) {
 			if (pRomLoad()) return 1;
 		}
 
-		DrvGfxExpand(DrvGfxROM0);
-		DrvGfxExpand(DrvGfxROM1);
+		DrvGfxExpand(DrvGfxROM0, 0x80000);
+		DrvGfxExpand(DrvGfxROM1, 0x80000);
 
 		DrvColorTableInit();
 	}
@@ -487,12 +553,22 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachM6809(3000000);
 
-	DrvDoReset();
-
 	GenericTilesInit();
 
 	k007121_init(0, (0x100000 / (8 * 8)) - 1, DrvSprRAM[0]);
 	k007121_init(1, (0x100000 / (8 * 8)) - 1, DrvSprRAM[1]);
+
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, tx_map_callback, 8, 8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 8, 8, 0x100000,     0, 0x7f);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 8, 8, 0x100000, 0x800, 0x7f);
+	GenericTilemapSetOffsets(0, 40, -16);
+	GenericTilemapSetOffsets(1, 40, -16);
+	GenericTilemapSetOffsets(2, 0, -16);
+	GenericTilemapSetTransparent(0, 0);
+
+	DrvDoReset();
 
 	return 0;
 }
@@ -599,135 +675,9 @@ static INT32 DrvExit()
 	M6809Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
-}
-
-static void draw_bg()
-{
-	INT32 bit0 = (k007121_ctrl_read(1, 5) >> 0) & 0x03;
-	INT32 bit1 = (k007121_ctrl_read(1, 5) >> 2) & 0x03;
-	INT32 bit2 = (k007121_ctrl_read(1, 5) >> 4) & 0x03;
-	INT32 bit3 = (k007121_ctrl_read(1, 5) >> 6) & 0x03;
-	INT32 mask = (k007121_ctrl_read(1, 4) & 0xf0) >> 4;
-	INT32 scrollx = k007121_ctrl_read(1, 0) & 0xff;
-	INT32 scrolly = k007121_ctrl_read(1, 2) & 0xff;
-	INT32 flipscreen = (k007121_ctrl_read(1, 7) & 0x08);
-
-	for (INT32 offs = 0; offs < 0x400; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 5) << 3;
-
-		sx -= scrollx;
-		sy -= scrolly;
-		if (sx < -7) sx += 256;
-		if (sy < -7) sy += 256;
-		sx += 40;
-		sy -= 16;
-
-		INT32 attr = DrvBgCRAM[offs];
-
-		INT32 bank = ((attr & 0x80) >> 7) |
-			((attr >> (bit0+2)) & 0x02) |
-			((attr >> (bit1+1)) & 0x04) |
-			((attr >> (bit2  )) & 0x08) |
-			((attr >> (bit3-1)) & 0x10) |
-			((k007121_ctrl_read(1, 3) & 0x01) << 5);
-
-		bank = (bank & ~(mask << 1)) | ((k007121_ctrl_read(1, 4) & mask) << 1);
-
-		INT32 color = ((k007121_ctrl_read(1, 6)&0x30)*2+16)+(attr&7);
-
-		INT32 code = DrvBgVRAM[offs] | (bank << 8);
-
-		if (flipscreen) {
-			Render8x8Tile_FlipXY_Clip(pTransDraw, code, (280 - sx)-8, 224 - sy, color, 4, 0x800, DrvGfxROM1);
-		} else {
-			Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x800, DrvGfxROM1);
-		}
-	}
-}
-
-static void draw_fg()
-{
-	INT32 bit0 = (k007121_ctrl_read(0, 5) >> 0) & 0x03;
-	INT32 bit1 = (k007121_ctrl_read(0, 5) >> 2) & 0x03;
-	INT32 bit2 = (k007121_ctrl_read(0, 5) >> 4) & 0x03;
-	INT32 bit3 = (k007121_ctrl_read(0, 5) >> 6) & 0x03;
-	INT32 mask = (k007121_ctrl_read(0, 4) & 0xf0) >> 4;
-	INT32 scrollx = k007121_ctrl_read(0, 0) & 0xff;
-	INT32 scrolly = k007121_ctrl_read(0, 2) & 0xff;
-	INT32 flipscreen = k007121_ctrl_read(0, 7) & 8;
-
-	for (INT32 offs = 0; offs < 0x400; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 5) << 3;
-
-		sx -= scrollx;
-		sy -= scrolly;
-		if (sx < -7) sx += 256;
-		if (sy < -7) sy += 256;
-		sx += 40;
-		sy -= 16;
-
-		INT32 attr = DrvFgCRAM[offs];
-
-		INT32 bank = ((attr & 0x80) >> 7) |
-			((attr >> (bit0+2)) & 0x02) |
-			((attr >> (bit1+1)) & 0x04) |
-			((attr >> (bit2  )) & 0x08) |
-			((attr >> (bit3-1)) & 0x10) |
-			((k007121_ctrl_read(0, 3) & 0x01) << 5);
-
-		bank = (bank & ~(mask << 1)) | ((k007121_ctrl_read(0, 4) & mask) << 1);
-
-		INT32 color = ((k007121_ctrl_read(0, 6)&0x30)*2+16)+(attr&7);
-
-		INT32 code = DrvFgVRAM[offs] | (bank << 8);
-
-		if (flipscreen) {
-			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, (280 - sx)-8, 224 - sy, color, 4, 0, 0, DrvGfxROM0);
-		} else {
-			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM0);
-		}
-	}
-}
-
-static void draw_tx()
-{
-	INT32 bit0 = (k007121_ctrl_read(0, 5) >> 0) & 0x03;
-	INT32 bit1 = (k007121_ctrl_read(0, 5) >> 2) & 0x03;
-	INT32 bit2 = (k007121_ctrl_read(0, 5) >> 4) & 0x03;
-	INT32 bit3 = (k007121_ctrl_read(0, 5) >> 6) & 0x03;
-	INT32 flipscreen = k007121_ctrl_read(0, 7) & 8;
-
-	for (INT32 offs = 0x40; offs < 0x3c0; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 3;
-		if (sx > 39) continue;
-		INT32 sy = (offs >> 5) << 3;
-
-		INT32 attr = DrvTxCRAM[offs];
-
-		INT32 bank = ((attr & 0x80) >> 7) |
-			((attr >> (bit0+2)) & 0x02) |
-			((attr >> (bit1+1)) & 0x04) |
-			((attr >> (bit2  )) & 0x08) |
-			((attr >> (bit3-1)) & 0x10);
-
-		INT32 color = ((k007121_ctrl_read(0, 6)&0x30)*2+16)+(attr&7);
-
-		INT32 code = DrvTxVRAM[offs] | (bank << 8);
-
-		if (flipscreen) {
-			Render8x8Tile_FlipXY_Clip(pTransDraw, code, (sx ^ 0xf8) + 24, (sy ^ 0xf8) - 16, color, 4, 0, DrvGfxROM0);
-		} else {
-			Render8x8Tile(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM0);
-		}
-	}
 }
 
 static INT32 DrvDraw()
@@ -740,15 +690,35 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_bg();
-	draw_fg();
+	if (~nBurnLayer & 1) BurnTransferClear();
+
+	UINT8 ctrl_1_0 = k007121_ctrl_read(0, 0);
+	UINT8 ctrl_1_2 = k007121_ctrl_read(0, 2);
+	UINT8 ctrl_2_0 = k007121_ctrl_read(1, 0);
+	UINT8 ctrl_2_2 = k007121_ctrl_read(1, 2);
+	UINT8 flipscreen1 = k007121_ctrl_read(0, 7)&0x08;
+	UINT8 flipscreen2 = k007121_ctrl_read(1, 7)&0x08;
+
+	GenericTilemapSetFlip(0, flipscreen1 ? TMAP_FLIPXY : 0);
+	GenericTilemapSetFlip(1, flipscreen2 ? TMAP_FLIPXY : 0);
+	GenericTilemapSetFlip(2, flipscreen1 ? TMAP_FLIPXY : 0);
+
+	GenericTilemapSetScrollRow(0, 0, ctrl_1_0 - 40);
+	GenericTilemapSetScrollY(0, ctrl_1_2);
+	GenericTilemapSetScrollRow(1, 0, ctrl_2_0 - 40);
+	GenericTilemapSetScrollY(1, ctrl_2_2);
+
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
 	INT32 base_color0 = (k007121_ctrl_read(0, 6) & 0x30) << 1;
 	INT32 base_color1 = (k007121_ctrl_read(1, 6) & 0x30) << 1;
-	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, base_color0, 40, 16, 0, -1, 0x0000);
-	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, base_color1, 40, 16, 0, -1, 0x0800);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, base_color0, 40, 16, 0, -1, 0x0000);
+	if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, base_color1, 40, 16, 0, -1, 0x0800);
 
-	draw_tx();
+	GenericTilesSetClip(-1, 40, -1, -1);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
+	GenericTilesClearClip();
 
 	BurnTransferCopy(DrvPalette);
 

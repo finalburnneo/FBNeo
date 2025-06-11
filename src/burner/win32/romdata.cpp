@@ -119,6 +119,10 @@
 #define TAITO_CCHIP_BIOS									34
 #define TAITO_CCHIP_EEPROM									35
 
+#ifndef ERANGE
+  #define ERANGE 34
+#endif
+
 struct DatListInfo {
 	TCHAR szRomSet[100];
 	TCHAR szFullName[1024];

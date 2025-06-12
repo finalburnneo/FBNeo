@@ -4565,21 +4565,21 @@ struct BurnDriver BurnDrvsnes_Blazeon = {
 	512, 448, 4, 3
 };
 
-// Blazeon (Euro)
+// Blazeon (Japan)
 
-static struct BurnRomInfo snes_BlazeoneRomDesc[] = {
-	{ "Blazeon (E)(1992)(Atlus).sfc", 1048576, 0xad2effc3, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_BlazeonjRomDesc[] = {
+	{ "Blazeon (J)(1992)(Atlus).sfc", 1048576, 0xad2effc3, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Blazeone)
-STD_ROM_FN(snes_Blazeone)
+STD_ROM_PICK(snes_Blazeonj)
+STD_ROM_FN(snes_Blazeonj)
 
-struct BurnDriver BurnDrvsnes_Blazeone = {
-	"snes_blazeone", "snes_blazeon", NULL, NULL, "1992",
-	"Blazeon (Euro)\0", NULL, "Atlus", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Blazeonj = {
+	"snes_blazeonj", "snes_blazeon", NULL, NULL, "1992",
+	"Blazeon (Japan)\0", NULL, "Atlus", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
-	SNESGetZipName, snes_BlazeoneRomInfo, snes_BlazeoneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_BlazeonjRomInfo, snes_BlazeonjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

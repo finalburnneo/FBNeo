@@ -389,7 +389,8 @@ void gg_vdp_write(INT32 offset, UINT8 data)
 {
 	INT32 index;
 
-	if (((ZetTotalCycles() + 1) / CYCLES_PER_LINE) > vdp.line)
+	// hack, add +7 to partially fix "gg_madoumon"
+	if (((ZetTotalCycles() + 1 + 7) / CYCLES_PER_LINE) > vdp.line)
 	{
 		/* render next line now BEFORE updating register */
 		if (vdp.line+1 < vdp.lpf) render_line((vdp.line+1)%vdp.lpf);

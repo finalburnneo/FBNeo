@@ -210,6 +210,7 @@
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_akazukin.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_astrocde.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp" />
@@ -304,6 +305,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\astrocde_snd.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf271.cpp" />
     <ClCompile Include="..\..\src\burn\snd\c352.cpp" />

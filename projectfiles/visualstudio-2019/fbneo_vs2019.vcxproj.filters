@@ -3646,6 +3646,12 @@
     <ClCompile Include="..\..\src\dep\libs\lib7z\SwapBytes.c">
       <Filter>libs\7z</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_astrocde.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\astrocde_snd.cpp">
+      <Filter>burn\snd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

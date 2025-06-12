@@ -19933,10 +19933,10 @@ struct BurnDriver BurnDrvMslug3cq = {
 
 // Metal Slug 3 (Legend with Infinite Firepower v6.0, Hack)
 // Modified by AKS & Sakura
-// GOTVG 20250609
+// GOTVG 20250612
 
 static struct BurnRomInfo mslug3cqiRomDesc[] = {
-	{ "256-p1cqi.p1",	0x100000, 0x8b71f278, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqi.p1",	0x100000, 0x98c63ec0, 1 | BRF_ESS | BRF_PRG },
 	{ "256-p2cqi.sp2",	0x800000, 0x87d0578d, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1

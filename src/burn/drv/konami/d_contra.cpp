@@ -703,9 +703,9 @@ static INT32 DrvDraw()
 	GenericTilemapSetFlip(1, flipscreen2 ? TMAP_FLIPXY : 0);
 	GenericTilemapSetFlip(2, flipscreen1 ? TMAP_FLIPXY : 0);
 
-	GenericTilemapSetScrollRow(0, 0, ctrl_1_0 - 40);
+	GenericTilemapSetScrollX(0, ctrl_1_0);
 	GenericTilemapSetScrollY(0, ctrl_1_2);
-	GenericTilemapSetScrollRow(1, 0, ctrl_2_0 - 40);
+	GenericTilemapSetScrollX(1, ctrl_2_0);
 	GenericTilemapSetScrollY(1, ctrl_2_2);
 
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);

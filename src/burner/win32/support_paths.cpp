@@ -61,6 +61,7 @@ static TCHAR szCheckIconsPath[MAX_PATH];
 
 INT32 nSupportDlgWidth  = 0x21c;
 INT32 nSupportDlgHeight = 0x2ec;
+static INT32 nDlgCaptionHeight;
 static INT32 nDlgInitialWidth;
 static INT32 nDlgInitialHeight;
 static INT32 nDlgTabCtrlInitialPos[4];
@@ -103,13 +104,27 @@ static INT32 nDlgBtnCtrlInitialPos[25][4];
 #define SetControlPosAlignBottomRight(a, b)						\
 	SetWindowPos(GetDlgItem(hSupportDlg, a), hSupportDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
 
+static INT32 GetCaptionHight()
+{
+	RECT rect;
+
+	GetWindowRect(hSupportDlg, &rect);
+	const INT32 nWndHight = rect.bottom - rect.top;
+
+	GetClientRect(hSupportDlg, &rect);
+
+	return nWndHight - (rect.bottom - rect.top);
+}
+
 static void GetInitialPositions()
 {
 	RECT rect;
 	POINT point;
 
+	nDlgCaptionHeight = GetCaptionHight();
+
 	GetClientRect(hSupportDlg, &rect);
-	nDlgInitialWidth = rect.right;
+	nDlgInitialWidth  = rect.right;
 	nDlgInitialHeight = rect.bottom;
 
 	GetInititalControlPos(IDC_TAB1,    nDlgTabCtrlInitialPos);
@@ -275,16 +290,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			hFont = CreateFontIndirect(&lf);
 			SendMessage(hTabControl, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-			for (int x = 0; x < 25; x++) {
-				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1   + x), SW_SHOW);	// browse buttons
-				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_SHOW);	// edit controls
-				ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_TEXT1 + x), SW_SHOW);	// text controls
-			}
+			GetInitialPositions();
+			SetWindowPos(hDlg, NULL, 0, 0, nSupportDlgWidth, nSupportDlgHeight, SWP_NOZORDER);
 
 			UpdateWindow(hDlg);
-			GetInitialPositions();
-			SetWindowPos(hDlg, NULL, 0, 0, nSupportDlgWidth, nSupportDlgWidth, SWP_NOZORDER);
-
 			WndInMid(hDlg, hParent);
 			SetFocus(hDlg);															// Enable Esc=close
 			break;
@@ -301,7 +310,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		case WM_GETMINMAXINFO: {
 			MINMAXINFO* info = (MINMAXINFO*)lParam;
 			info->ptMinTrackSize.x = nDlgInitialWidth;
-			info->ptMinTrackSize.y = nDlgInitialHeight + 40;
+			info->ptMinTrackSize.y = nDlgInitialHeight + nDlgCaptionHeight;
 			return 0;
 		}
 		case WM_SIZE: {
@@ -420,9 +429,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 		case WM_CLOSE: {
 			RECT rect;
-			GetClientRect(hDlg, &rect);
-			nSupportDlgWidth  = rect.right;
-			nSupportDlgHeight = rect.bottom;
+
+			GetWindowRect(hDlg, &rect);
+			nSupportDlgWidth  = rect.right - rect.left;
+			nSupportDlgHeight = rect.bottom - rect.top;
 
 			if (NULL != hFont) {
 				DeleteObject(hFont);         hFont = NULL;

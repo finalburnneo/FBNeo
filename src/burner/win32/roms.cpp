@@ -43,6 +43,7 @@ static const TCHAR szAppDefaultPaths[DIRS_MAX][MAX_PATH] = {
 
 INT32 nRomsDlgWidth  = 0x1d2;
 INT32 nRomsDlgHeight = 0x291;
+static INT32 nDlgCaptionHeight;
 static INT32 nDlgInitialWidth;
 static INT32 nDlgInitialHeight;
 static INT32 nDlgTabCtrlInitialPos[4];
@@ -85,20 +86,34 @@ static INT32 nDlgBtnCtrlInitialPos[20][4];
 #define SetControlPosAlignBottomRight(a, b)						\
 	SetWindowPos(GetDlgItem(hRomsDlg, a), hRomsDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
 
+static INT32 GetCaptionHight()
+{
+	RECT rect;
+
+	GetWindowRect(hRomsDlg, &rect);
+	const INT32 nWndHight = rect.bottom - rect.top;
+
+	GetClientRect(hRomsDlg, &rect);
+
+	return nWndHight - (rect.bottom - rect.top);
+}
+
 static void GetInitialPositions()
 {
 	RECT rect;
 	POINT point;
 
+	nDlgCaptionHeight = GetCaptionHight();
+
 	GetClientRect(hRomsDlg, &rect);
 	nDlgInitialWidth  = rect.right;
 	nDlgInitialHeight = rect.bottom;
 
-	GetInititalControlPos(IDC_ROMPATH_TAB,      nDlgTabCtrlInitialPos);
-	GetInititalControlPos(IDC_STATIC1,          nDlgGroupCtrlInitialPos);
-	GetInititalControlPos(IDOK,                 nDlgOKBtnInitialPos);
-	GetInititalControlPos(IDCANCEL,             nDlgCancelBtnInitialPos);
-	GetInititalControlPos(IDDEFAULT, 			nDlgDefaultsBtnInitialPos);
+	GetInititalControlPos(IDC_ROMPATH_TAB, nDlgTabCtrlInitialPos);
+	GetInititalControlPos(IDC_STATIC1,     nDlgGroupCtrlInitialPos);
+	GetInititalControlPos(IDOK,            nDlgOKBtnInitialPos);
+	GetInititalControlPos(IDCANCEL,        nDlgCancelBtnInitialPos);
+	GetInititalControlPos(IDDEFAULT,       nDlgDefaultsBtnInitialPos);
 
 	for (INT32 i = 0; i < 20; i++) {
 		GetInititalControlPos(IDC_ROMSDIR_TEXT1 + i, nDlgTextCtrlInitialPos[i]);
@@ -265,16 +280,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			hFont = CreateFontIndirect(&lf);
 			SendMessage(hTabControl, WM_SETFONT, (WPARAM)hFont, TRUE);
 
-			for(int x = 0; x < 20; x++) {
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1   + x), SW_SHOW);	// browse buttons
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_SHOW);	// edit controls
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_TEXT1 + x), SW_SHOW);	// text controls
-			}
-
-			UpdateWindow(hDlg);
 			GetInitialPositions();
 			SetWindowPos(hDlg, NULL, 0, 0, nRomsDlgWidth, nRomsDlgHeight, SWP_NOZORDER);
 
+			UpdateWindow(hDlg);
 			WndInMid(hDlg, hParent);
 			SetFocus(hDlg);														// Enable Esc=close
 			break;
@@ -291,7 +300,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		case WM_GETMINMAXINFO: {
 			MINMAXINFO *info = (MINMAXINFO*)lParam;
 			info->ptMinTrackSize.x = nDlgInitialWidth;
-			info->ptMinTrackSize.y = nDlgInitialHeight + 40;
+			info->ptMinTrackSize.y = nDlgInitialHeight + nDlgCaptionHeight;
 			return 0;
 		}
 		case WM_SIZE: {
@@ -414,9 +423,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 		case WM_CLOSE: {
 			RECT rect;
-			GetClientRect(hDlg, &rect);
-			nRomsDlgWidth  = rect.right;
-			nRomsDlgHeight = rect.bottom;
+
+			GetWindowRect(hDlg, &rect);
+			nRomsDlgWidth  = rect.right - rect.left;
+			nRomsDlgHeight = rect.bottom - rect.top;
 
 			EndDialog(hDlg, 0);
 			if (chOk && bSkipStartupCheck == false) {

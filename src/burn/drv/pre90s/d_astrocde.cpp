@@ -1057,7 +1057,7 @@ static UINT8 __fastcall common_read(UINT16 address)
 	return 0;
 }
 
-static void common_port_write(UINT16 port, UINT8 data)
+static void __fastcall common_port_write(UINT16 port, UINT8 data)
 {
 	if (port == 0xa55b) {
 		ram_write_enable = 1;
@@ -1135,7 +1135,7 @@ static void common_port_write(UINT16 port, UINT8 data)
 	bprintf (0, _T("WP: %4.4x, %2.2x\n"), port, data);
 }
 
-static UINT8 common_port_read(UINT16 port)
+static UINT8 __fastcall common_port_read(UINT16 port)
 {
 	switch (port & 0xff)
 	{

@@ -12736,6 +12736,25 @@ struct BurnDriver BurnDrvsnes_Finalfantvts = {
 	512, 448, 4, 3
 };
 
+// Final Knockout (Japan)
+
+static struct BurnRomInfo snes_FinalkoRomDesc[] = {
+	{ "Final Knockout (J)(1993)(Electro Brain - Pack-In-Video).sfc", 1048576, 0xcc1dbc9b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Finalko)
+STD_ROM_FN(snes_Finalko)
+
+struct BurnDriver BurnDrvsnes_Finalko = {
+	"snes_finalko", "snes_boxinglegends", NULL, NULL, "1993",
+	"Final Knockout (Japan)\0", NULL, "Electro Brain - Pack-In-Video", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_FinalkoRomInfo, snes_FinalkoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Finalset (Japan)
 
 static struct BurnRomInfo snes_FinalsetjRomDesc[] = {
@@ -13105,6 +13124,25 @@ struct BurnDriver BurnDrvsnes_Firstsamurai = {
 	512, 448, 4, 3
 };
 
+// First Samurai (Euro)
+
+static struct BurnRomInfo snes_FirstsamuraieRomDesc[] = {
+	{ "First Samurai (E)(1993)(Kemco).sfc", 524288, 0x5685773a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Firstsamuraie)
+STD_ROM_FN(snes_Firstsamuraie)
+
+struct BurnDriver BurnDrvsnes_Firstsamuraie = {
+	"snes_firstsamuraie", "snes_firstsamurai", NULL, NULL, "1993",
+	"First Samurai (Euro)\0", NULL, "Kemco", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_FirstsamuraieRomInfo, snes_FirstsamuraieRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // First Samurai (Japan)
 
 static struct BurnRomInfo snes_FirstsamuraijRomDesc[] = {
@@ -13139,6 +13177,25 @@ struct BurnDriver BurnDrvsnes_Flashback = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_FlashbackRomInfo, snes_FlashbackRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Flashback (Euro)
+
+static struct BurnRomInfo snes_FlashbackeRomDesc[] = {
+	{ "Flashback (E)(1993)(U.S. Gold - Delphine Software).sfc", 2097152, 0xa0525b9c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Flashbacke)
+STD_ROM_FN(snes_Flashbacke)
+
+struct BurnDriver BurnDrvsnes_Flashbacke = {
+	"snes_flashbacke", "snes_flashback", NULL, NULL, "1993",
+	"Flashback (Euro)\0", NULL, "U.S. Gold - Delphine Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
+	SNESGetZipName, snes_FlashbackeRomInfo, snes_FlashbackeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -13352,6 +13409,44 @@ struct BurnDriver BurnDrvsnes_Frankthomasbaseball = {
 	512, 448, 4, 3
 };
 
+// Frank Thomas Big Hurt Baseball (Euro)
+
+static struct BurnRomInfo snes_FrankthomasbaseballeRomDesc[] = {
+	{ "Frank Thomas Big Hurt Baseball (E)(1995)(Acclaim Entertainment).sfc", 3145728, 0x50300f58, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Frankthomasbaseballe)
+STD_ROM_FN(snes_Frankthomasbaseballe)
+
+struct BurnDriver BurnDrvsnes_Frankthomasbaseballe = {
+	"snes_frankthomasbaseballe", "snes_frankthomasbaseball", NULL, NULL, "1995",
+	"Frank Thomas Big Hurt Baseball (Euro)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_FrankthomasbaseballeRomInfo, snes_FrankthomasbaseballeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Frank Thomas Big Hurt Baseball (Japan)
+
+static struct BurnRomInfo snes_FrankthomasbaseballjRomDesc[] = {
+	{ "Frank Thomas Big Hurt Baseball (J)(1995)(Acclaim Entertainment).sfc", 3145728, 0x1a895b24, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Frankthomasbaseballj)
+STD_ROM_FN(snes_Frankthomasbaseballj)
+
+struct BurnDriver BurnDrvsnes_Frankthomasbaseballj = {
+	"snes_frankthomasbaseballj", "snes_frankthomasbaseball", NULL, NULL, "1995",
+	"Frank Thomas Big Hurt Baseball (Japan)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_FrankthomasbaseballjRomInfo, snes_FrankthomasbaseballjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Front Mission - Gun Hazard (Japan)
 
 static struct BurnRomInfo snes_FmgunhazardjRomDesc[] = {
@@ -13409,6 +13504,44 @@ struct BurnDriver BurnDrvsnes_Foreman = {
 	512, 448, 4, 3
 };
 
+// Foreman for Real (Euro)
+
+static struct BurnRomInfo snes_ForemaneRomDesc[] = {
+	{ "Foreman for Real (E)(1995)(Acclaim Entertainment).sfc", 3145728, 0x8c1b9f50, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Foremane)
+STD_ROM_FN(snes_Foremane)
+
+struct BurnDriver BurnDrvsnes_Foremane = {
+	"snes_foremane", "snes_foreman", NULL, NULL, "1995",
+	"Foreman for Real (Euro)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_ForemaneRomInfo, snes_ForemaneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Foreman for Real (Japan)
+
+static struct BurnRomInfo snes_ForemanjRomDesc[] = {
+	{ "Foreman for Real (J)(1995)(Acclaim Entertainment).sfc", 3145728, 0xd7576775, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Foremanj)
+STD_ROM_FN(snes_Foremanj)
+
+struct BurnDriver BurnDrvsnes_Foremanj = {
+	"snes_foremanj", "snes_foreman", NULL, NULL, "1995",
+	"Foreman for Real (Japan)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_ForemanjRomInfo, snes_ForemanjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Fantastic Parodius (Hack, English v1.1a)
 // https://www.romhacking.net/translations/7021/
 static struct BurnRomInfo snes_FparodiusRomDesc[] = {
@@ -13443,6 +13576,25 @@ struct BurnDriver BurnDrvsnes_Franticflea = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_FranticfleaRomInfo, snes_FranticfleaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Frantic Flea (Euro)
+
+static struct BurnRomInfo snes_FranticfleaeRomDesc[] = {
+	{ "Frantic Flea (E)(1995)(GameTek).sfc", 2097152, 0xce5c3af9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Franticfleae)
+STD_ROM_FN(snes_Franticfleae)
+
+struct BurnDriver BurnDrvsnes_Franticfleae = {
+	"snes_franticfleae", "snes_franticflea", NULL, NULL, "1995",
+	"Frantic Flea (Euro)\0", NULL, "GameTek", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_FranticfleaeRomInfo, snes_FranticfleaeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -15689,6 +15841,44 @@ struct BurnDriver BurnDrvsnes_Homealone = {
 	512, 448, 4, 3
 };
 
+// Home Alone (Euro)
+
+static struct BurnRomInfo snes_HomealoneeRomDesc[] = {
+	{ "Home Alone (E)(1991)(THQ).sfc", 524288, 0x3eeea766, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Homealonee)
+STD_ROM_FN(snes_Homealonee)
+
+struct BurnDriver BurnDrvsnes_Homealonee = {
+	"snes_homealonee", "snes_homealone", NULL, NULL, "1991",
+	"Home Alone (Euro)\0", NULL, "THQ Inc.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HomealoneeRomInfo, snes_HomealoneeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Home Alone (Japan)
+
+static struct BurnRomInfo snes_HomealonejRomDesc[] = {
+	{ "Home Alone (J)(1991)(Altron - THQ).sfc", 524288, 0x6278bca1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Homealonej)
+STD_ROM_FN(snes_Homealonej)
+
+struct BurnDriver BurnDrvsnes_Homealonej = {
+	"snes_homealonej", "snes_homealone", NULL, NULL, "1991",
+	"Home Alone (Japan)\0", NULL, "Altron - THQ Inc.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HomealonejRomInfo, snes_HomealonejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Home Alone 2 - Lost in New York (USA)
 
 static struct BurnRomInfo snes_Homealone2RomDesc[] = {
@@ -15704,6 +15894,25 @@ struct BurnDriver BurnDrvsnes_Homealone2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Homealone2RomInfo, snes_Homealone2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Home Alone 2 - Lost in New York (Euro)
+
+static struct BurnRomInfo snes_Homealone2eRomDesc[] = {
+	{ "Home Alone 2 - Lost in New York (E)(1992)(THQ).sfc", 524288, 0x226998d6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Homealone2e)
+STD_ROM_FN(snes_Homealone2e)
+
+struct BurnDriver BurnDrvsnes_Homealone2e = {
+	"snes_homealone2e", "snes_homealone2", NULL, NULL, "1992",
+	"Home Alone 2 - Lost in New York (Euro)\0", NULL, "THQ Inc.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Homealone2eRomInfo, snes_Homealone2eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -42168,8 +42377,122 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonfr = {
 	"snes_returndoubledragonfr", "snes_superdoubledragon", NULL, NULL, "2023",
 	"Return of Double Dragon - FastROM (Hack, v2.0)\0", NULL, "kandowontu", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_ReturndoubledragonfrRomInfo, snes_ReturndoubledragonfrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Crime Syndicate (Hack, h8v4fullfix-11120953)
+
+static struct BurnRomInfo snes_Returndoubledragonh8v4RomDesc[] = {
+	{ "Return of Double Dragon - Crime Syndicate h8v4fullfix-11120953 (2009)(SENSOR&KV&SATAN).sfc", 1048576, 0x9bb7e57f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh8v4)
+STD_ROM_FN(snes_Returndoubledragonh8v4)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonh8v4 = {
+	"snes_returndoubledragonh8v4", "snes_superdoubledragon", NULL, NULL, "2009",
+	"Return of Double Dragon - Crime Syndicate (Hack, h8v4fullfix-11120953)\0", NULL, "SENSOR&KV&SATAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh8v4RomInfo, snes_Returndoubledragonh8v4RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Guarding Law (Hack, h9v8-30031023)
+
+static struct BurnRomInfo snes_Returndoubledragonh9v8RomDesc[] = {
+	{ "Return of Double Dragon - Guarding Law h9v8-30031023 (2009)(SENSOR&SATAN&SAN).sfc", 1048576, 0x3157c8d9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh9v8)
+STD_ROM_FN(snes_Returndoubledragonh9v8)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonh9v8 = {
+	"snes_returndoubledragonh9v8", "snes_superdoubledragon", NULL, NULL, "2009",
+	"Return of Double Dragon - Guarding Law (Hack, h9v8-30031023)\0", NULL, "SENSOR&SATAN&SAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh9v8RomInfo, snes_Returndoubledragonh9v8RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Rise of Evil (Hack, h10v2-15121037)
+
+static struct BurnRomInfo snes_Returndoubledragonh10v2RomDesc[] = {
+	{ "Return of Double Dragon - Rise of Evil h10v2-15121037 (2010)(SENSOR&SATAN&SAN).sfc", 1048576, 0xb7cc321d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh10v2)
+STD_ROM_FN(snes_Returndoubledragonh10v2)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonh10v2 = {
+	"snes_returndoubledragonh10v2", "snes_superdoubledragon", NULL, NULL, "2010",
+	"Return of Double Dragon - Rise of Evil (Hack, h10v2-15121037)\0", NULL, "SENSOR&SATAN&SAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh10v2RomInfo, snes_Returndoubledragonh10v2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Rise of Evil (Hack, h10v3-22081235)
+
+static struct BurnRomInfo snes_Returndoubledragonh10v3RomDesc[] = {
+	{ "Return of Double Dragon - Rise of Evil h10v3-22081235 (2010)(SENSOR&SATAN&SAN).sfc", 1048576, 0xb63adfe0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh10v3)
+STD_ROM_FN(snes_Returndoubledragonh10v3)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonh10v3 = {
+	"snes_returndoubledragonh10v3", "snes_superdoubledragon", NULL, NULL, "2010",
+	"Return of Double Dragon - Rise of Evil (Hack, h10v3-22081235)\0", NULL, "SENSOR&SATAN&SAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh10v3RomInfo, snes_Returndoubledragonh10v3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Threat from the East (Hack, h6v2-0808096)
+
+static struct BurnRomInfo snes_Returndoubledragonh6v2RomDesc[] = {
+	{ "Return of Double Dragon - Threat from the East h6v2-0808096 (2009)(SENSOR&KV&SATAN).sfc", 1048576, 0xc7676648, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh6v2)
+STD_ROM_FN(snes_Returndoubledragonh6v2)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonh6v2 = {
+	"snes_returndoubledragonh6v2", "snes_superdoubledragon", NULL, NULL, "2009",
+	"Return of Double Dragon - Threat from the East (Hack, h6v2-0808096)\0", NULL, "SENSOR&KV&SATAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh6v2RomInfo, snes_Returndoubledragonh6v2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Return of Double Dragon - Threat from the East (Hack, h7hard-1909096)
+
+static struct BurnRomInfo snes_Returndoubledragonh7RomDesc[] = {
+	{ "Return of Double Dragon - Threat from the East h7hard-1909096 (2009)(SENSOR&KV&SATAN).sfc", 1048576, 0x56192693, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonh7)
+STD_ROM_FN(snes_Returndoubledragonh7)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonte7 = {
+	"snes_returndoubledragonh7", "snes_superdoubledragon", NULL, NULL, "2009",
+	"Return of Double Dragon - Threat from the East (Hack, h7hard-1909096)\0", NULL, "SENSOR&KV&SATAN", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Returndoubledragonh7RomInfo, snes_Returndoubledragonh7RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

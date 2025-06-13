@@ -263,6 +263,7 @@ extern HWND hRebar;									// Handle to the Rebar control containing the menu
 extern HWND hwndChat;
 extern bool bRescanRoms;
 extern bool bMenuEnabled;
+extern bool bQuicklyCheck;
 
 extern RECT SystemWorkArea;							// The full screen area
 extern int nWindowPosX, nWindowPosY;
@@ -473,6 +474,7 @@ extern INT32 nRomsDlgHeight;
 extern char* gameAv;
 extern bool avOk;
 extern bool bSkipStartupCheck;
+extern bool bQuicklyScan;
 INT32 RomsDirCreate(HWND hParentWND);
 INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();

@@ -1198,13 +1198,14 @@ void MenuUpdate()
 #else
 	DeleteMenu(hMenu, MENU_DEBUGCONSOLE, MF_BYCOMMAND);
 #endif
-	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST, bAutoLoadGameList ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_AUTOSCANGAMELIST, !bSkipStartupCheck ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_GEARSHIFT, BurnShiftEnabled ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_LIGHTGUNRETICLES, bBurnGunDrawReticles ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_CREATEDIRS,        bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST,  bAutoLoadGameList           ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_AUTOSCANGAMELIST,  !bSkipStartupCheck          ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_QUICKSCANGAMELIST, bQuicklyCheck               ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_SAVEHISCORES,      EnableHiscores              ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_USEBLEND,          bBurnUseBlend               ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_GEARSHIFT,         BurnShiftEnabled            ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_LIGHTGUNRETICLES,  bBurnGunDrawReticles        ? MF_CHECKED : MF_UNCHECKED);
 
 	MenuUpdateSlowMo();
 

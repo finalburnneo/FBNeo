@@ -625,7 +625,7 @@ static INT32 DrvFrame()
 	konamiNewFrame();
 	ZetNewFrame();
 
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)3000000 * 100 / nBurnFPS), (INT32)((double)3579545 * 100 / nBurnFPS) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 nInterleave = 30;
 

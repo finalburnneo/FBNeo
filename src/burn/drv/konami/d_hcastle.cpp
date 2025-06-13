@@ -1,4 +1,4 @@
-// FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
+// FB Neo Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
@@ -7,6 +7,7 @@
 #include "burn_ym3812.h"
 #include "k051649.h"
 #include "k007232.h"
+#include "k007121.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -15,21 +16,14 @@ static UINT8 *RamEnd;
 static UINT8 *DrvKonROM;
 static UINT8 *nDrvKonBank;
 static UINT8 *DrvZ80ROM;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM[2];
 static UINT8 *DrvPalROM;
 static UINT8 *DrvSndROM;
 static UINT8 *DrvKonRAM0;
 static UINT8 *DrvKonRAM1;
 static UINT8 *DrvPalRAM;
-static UINT8 *DrvPf1RAM;
-static UINT8 *DrvPf2RAM;
-static UINT8 *DrvSprRAM1;
-static UINT8 *DrvSprRAM2;
-static UINT8 *DrvSprBuf1;
-static UINT8 *DrvSprBuf2;
-static UINT8 *DrvPf1Ctrl;
-static UINT8 *DrvPf2Ctrl;
+static UINT8 *DrvPfRAM[2];
+static UINT8 *DrvSprRAM[2];
 static UINT8 *DrvZ80RAM;
 static UINT8 *Palette;
 static UINT32 *DrvPalette;
@@ -167,26 +161,15 @@ static void bankswitch(INT32 data)
 	konamiMapMemory(DrvKonROM + 0x10000 + bankaddress, 0x6000, 0x7fff, MAP_ROM);
 }
 
-static void playfield_write(INT32 address, INT32 data, UINT8 *ctrl, UINT8 *spr, UINT8 *buf)
-{
-	address &= 7;
-
-	if (address == 3) { // buffer sprites
-		memcpy (buf, spr + ((data & 8) << 8), 0x800);
-	}
-
-	ctrl[address & 7] = data;
-}
-
 static void hcastle_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff8) == 0x0000) {
-		playfield_write(address, data, DrvPf1Ctrl, DrvSprRAM1, DrvSprBuf1);
+		k007121_ctrl_write(0, address & 7, data);
 		return;
 	}
 
 	if ((address & 0xfff8) == 0x0200) {
-		playfield_write(address, data, DrvPf2Ctrl, DrvSprRAM2, DrvSprBuf2);
+		k007121_ctrl_write(1, address & 7, data);
 		return;
 	}
 
@@ -308,6 +291,36 @@ static UINT8 __fastcall hcastle_sound_read(UINT16 address)
 	return 0;
 }
 
+template <int chip>
+static tilemap_callback( tile )
+{
+	UINT8 ctrl_3 = k007121_ctrl_read(chip, 3);
+	UINT8 ctrl_5 = k007121_ctrl_read(chip, 5);
+	UINT8 ctrl_6 = k007121_ctrl_read(chip, 6);
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 attr = DrvPfRAM[chip][offs];
+	INT32 tile = DrvPfRAM[chip][offs + 0x400];
+	INT32 color = attr & 0x7;
+	INT32 bank = ((attr & 0x80) >> 7) |
+			((attr >> (bit0 + 2)) & 0x02) |
+			((attr >> (bit1 + 1)) & 0x04) |
+			((attr >> (bit2    )) & 0x08) |
+			((attr >> (bit3 - 1)) & 0x10);
+
+	INT32 bank_base = (chip == 0 ? 0 : 0x4000 * ((*gfxbank & 2) >> 1));
+	if (ctrl_3 & 0x01) bank_base += 0x2000;
+
+	TILE_SET_INFO(chip, tile + bank * 0x100 + bank_base, ((ctrl_6 & 0x30) * 2 + 16) + color, 0);
+}
+
+static tilemap_scan( hcastle )
+{
+	return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);
+}
+
 static void DrvK007232VolCallback(INT32 v)
 {
 	K007232SetVolume(0, 0, (v >> 0x4) * 0x11, 0);
@@ -331,6 +344,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	k007121_reset();
 	K007232Reset(0);
 	K051649Reset();
 	BurnYM3812Reset();
@@ -350,8 +364,8 @@ static INT32 MemIndex()
 	DrvKonROM		= Next; Next += 0x030000;
 	DrvZ80ROM		= Next; Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x200000;
-	DrvGfxROM1		= Next; Next += 0x200000;
+	DrvGfxROM[0]	= Next; Next += 0x200000;
+	DrvGfxROM[1]	= Next; Next += 0x200000;
 
 	DrvPalROM		= Next; Next += 0x000400;
 
@@ -365,15 +379,10 @@ static INT32 MemIndex()
 	DrvKonRAM0		= Next; Next += 0x000100;
 	DrvKonRAM1		= Next; Next += 0x000100;
 	DrvPalRAM		= Next; Next += 0x002000;
-	DrvPf1RAM		= Next; Next += 0x001000;
-	DrvPf2RAM		= Next; Next += 0x001000;
-	DrvSprRAM1		= Next; Next += 0x001000;
-	DrvSprRAM2		= Next; Next += 0x001000;
-	DrvSprBuf1		= Next; Next += 0x000800;
-	DrvSprBuf2		= Next; Next += 0x000800;
-
-	DrvPf1Ctrl		= Next; Next += 0x000008;
-	DrvPf2Ctrl		= Next; Next += 0x000008;
+	DrvPfRAM[0]		= Next; Next += 0x001000;
+	DrvPfRAM[1]		= Next; Next += 0x001000;
+	DrvSprRAM[0]	= Next; Next += 0x001000;
+	DrvSprRAM[1]	= Next; Next += 0x001000;
 
 	DrvZ80RAM		= Next; Next += 0x000800;
 
@@ -431,13 +440,13 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x80000,  4, 1)) return 1;
-		BurnByteswap(DrvGfxROM0, 0x100000);
+		if (BurnLoadRom(DrvGfxROM[0] + 0x00000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[0] + 0x80000,  4, 1)) return 1;
+		BurnByteswap(DrvGfxROM[0], 0x100000);
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x80000,  6, 1)) return 1;
-		BurnByteswap(DrvGfxROM1, 0x100000);
+		if (BurnLoadRom(DrvGfxROM[1] + 0x00000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM[1] + 0x80000,  6, 1)) return 1;
+		BurnByteswap(DrvGfxROM[1], 0x100000);
 
 		if (BurnLoadRom(DrvSndROM  + 0x00000,  7, 1)) return 1;
 
@@ -447,8 +456,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvPalROM  + 0x00300, 11, 1)) return 1;
 
 		DrvPaletteInit();
-		DrvGfxExpand(DrvGfxROM0, 0x100000);
-		DrvGfxExpand(DrvGfxROM1, 0x100000);
+		DrvGfxExpand(DrvGfxROM[0], 0x100000);
+		DrvGfxExpand(DrvGfxROM[1], 0x100000);
 	}
 
 	konamiInit(0);
@@ -456,10 +465,10 @@ static INT32 DrvInit()
 	konamiMapMemory(DrvKonRAM0,		0x0000, 0x00ff, MAP_ROM); //020-03f
 	konamiMapMemory(DrvKonRAM1,		0x0200, 0x02ff, MAP_ROM); //220-23f
 	konamiMapMemory(DrvPalRAM,		0x0600, 0x1fff, MAP_RAM);
-	konamiMapMemory(DrvPf1RAM,		0x2000, 0x2fff, MAP_RAM);
-	konamiMapMemory(DrvSprRAM1,		0x3000, 0x3fff, MAP_RAM);
-	konamiMapMemory(DrvPf2RAM,		0x4000, 0x4fff, MAP_RAM);
-	konamiMapMemory(DrvSprRAM2,		0x5000, 0x5fff, MAP_RAM);
+	konamiMapMemory(DrvPfRAM[0],	0x2000, 0x2fff, MAP_RAM);
+	konamiMapMemory(DrvSprRAM[0],	0x3000, 0x3fff, MAP_RAM);
+	konamiMapMemory(DrvPfRAM[1],	0x4000, 0x4fff, MAP_RAM);
+	konamiMapMemory(DrvSprRAM[1],	0x5000, 0x5fff, MAP_RAM);
 	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x7fff, MAP_ROM);
 	konamiMapMemory(DrvKonROM,		0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(hcastle_write);
@@ -489,7 +498,17 @@ static INT32 DrvInit()
 	K051649Init(3579545/2);
 	K051649SetRoute(0.45, BURN_SND_ROUTE_BOTH);
 
+	k007121_init(0, (0x200000 / (8 * 8)) - 1, DrvSprRAM[0]);
+	k007121_init(1, (0x200000 / (8 * 8)) - 1, DrvSprRAM[1]);
+
 	GenericTilesInit();
+
+	GenericTilemapInit(0, hcastle_map_scan, tile_map_callback<0>, 8, 8, 64, 32);
+	GenericTilemapInit(1, hcastle_map_scan, tile_map_callback<1>, 8, 8, 64, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM[0], 4, 8, 8, 0x200000,     0, 0x7f);
+	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 8, 8, 0x200000, 0x800, 0x7f);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetTransparent(0, 0);
 
 	DrvDoReset();
 
@@ -512,156 +531,12 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_layer(UINT8 *ram, UINT8 *ctrl, UINT8 *gfx, INT32 colbase, INT32 base, INT32 t)
+static void draw_sprites(INT32 chip)
 {
-	INT32 bit0 = ((ctrl[0x05] >> 0) & 0x03) + 2;
-	INT32 bit1 = ((ctrl[0x05] >> 2) & 0x03) + 1;
-	INT32 bit2 = ((ctrl[0x05] >> 4) & 0x03) + 0;
-	INT32 bit3 = ((ctrl[0x05] >> 6) & 0x03) - 1;
-	INT32 col  = ((ctrl[0x06] << 1) & 0x60) | colbase;
+	INT32 base_color = ((k007121_ctrl_read(chip, 6) & 0x30) << 1);
+	INT32 bank_base = (chip == 0) ? 0x4000 * (*gfxbank & 1) : 0;
 
-	if (ctrl[0x03] & 0x01) base += 0x2000;
-
-	INT32 scrollx = ((ctrl[0x01] << 8) | ctrl[0x00]) & 0x1ff;
-	INT32 scrolly = ctrl[0x02] & 0xff;
-
-	INT32 tilemap_flip = ctrl[0x07] & 0x08; 
-
-	for (INT32 offs = 0; offs < 64 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x3f) << 3;
-		INT32 sy = (offs >> 6) << 3;
-
-		sx -= scrollx;
-		if (sx < -7) sx += 0x200;
-		sy -= scrolly;
-		if (sy < -7) sy += 0x100;
-
-	//	if (sx >= nScreenWidth || sy < 9 || sy > 240) continue;
-
-		INT32 ofst = (offs & 0x1f) + ((offs >> 1) & 0x3e0) + ((offs & 0x20) << 6);
-
-		INT32 attr  = ram[ofst];
-		INT32 code  = ram[ofst + 0x400];
-		INT32 color = (attr & 0x07) | col;
-		INT32 bank  = ((attr & 0x80) >> 7) | ((attr >> bit0) & 0x02) | ((attr >> bit1) & 0x04) | ((attr >> bit2) & 0x08) | ((attr >> bit3) & 0x10);
-
-		code += (bank << 8) + base;
-		sy -= 16; //offset
-
-		if (tilemap_flip) {
-			sx = 0xf8 - sx;
-			sy = 0xf8 - sy;
-
-			if (sx < -7 || sx >= nScreenWidth) continue;
-			if (sy < -7 || sy >= nScreenHeight) continue;
-
-			if (t) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
-			} else {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, gfx);
-			}
-		} else {
-			if (sx < -7 || sx >= nScreenWidth) continue;
-			if (sy < -7 || sy >= nScreenHeight) continue;
-
-			if (t) {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, gfx);
-			}
-		}
-	}
-}
-
-static void draw_sprites(INT32 bank, UINT8 *source, UINT8 *ctrl, UINT8 *gfx, INT32 col)
-{
-	INT32 bank_base = (bank == 0) ? 0x4000 * (*gfxbank & 1) : 0;
-
-	INT32 base_color = ((ctrl[6] & 0x30) << 1) + col;
-	INT32 flipscreen =   ctrl[7] & 0x08;
-
-	static const INT32 x_offset[4] = { 0x00, 0x01, 0x04, 0x05 };
-	static const INT32 y_offset[4] = { 0x00, 0x02, 0x08, 0x0a };
-
-	for (INT32 i = 0; i < 0x40; i++)
-	{
-		INT32 number = source[0];
-		INT32 sbank  = source[1] & 0x0f;
-		INT32 sy     = source[2];
-		INT32 sx     = source[3];
-		INT32 attr   = source[4];
-		INT32 xflip  = source[4] & 0x10;
-		INT32 yflip  = source[4] & 0x20;
-		INT32 color  = base_color + ((source[1] & 0xf0) >> 4);
-		INT32 width, height;
-
-		if (attr & 0x01) sx -= 256;
-		if (sy >= 240) sy -= 256;
-
-		number += ((sbank & 3) << 8) + ((attr & 0xc0) << 4);
-		number = (number << 2) | ((sbank >> 2) & 3);
-		number += bank_base;
-
-		switch (attr & 0x0e)
-		{
-			case 0x06: width = 1; height = 1; break;
-			case 0x04: width = 1; height = 2; number &= (~2); break;
-			case 0x02: width = 2; height = 1; number &= (~1); break;
-			case 0x00: width = 2; height = 2; number &= (~3); break;
-			case 0x08: width = 4; height = 4; number &= (~3); break;
-			default:   width = 1; height = 1;
-		}
-
-		for (INT32 y = 0; y < height; y++)
-		{
-			INT32 yy = sy + y * 8;
-			INT32 ey = yflip ? (height-1-y) : y;
-			yy -= 16; //offset
-
-			for (INT32 x = 0; x < width; x++)
-			{
-				INT32 ex = xflip ? (width-1-x) : x;
-				INT32 xx = sx + x * 8;
-
-				INT32 code = number + x_offset[ex] + y_offset[ey];
-				if (xx < -7 || xx >= nScreenWidth) continue;
-				if (yy < -7 || yy >= nScreenHeight) continue;
-
-				if (flipscreen) {
-					if (yflip ^ 0x20) {
-						if (xflip ^ 0x10) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
-						} else {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
-						}
-					} else {
-						if (xflip ^ 0x10) {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
-						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
-						}
-					}
-				} else {
-					if (yflip) {
-						if (xflip) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
-						} else {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
-						}
-					} else {
-						if (xflip) {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
-						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
-						}
-					}
-				}
-			}
-		}
-
-		source += 5;
-	}
+	k007121_draw(chip, pTransDraw, DrvGfxROM[chip], NULL, base_color, 0, 16, bank_base, -1, 0x0000);
 }
 
 static INT32 DrvDraw()
@@ -690,19 +565,31 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
+	UINT8 ctrl_1_0 = k007121_ctrl_read(0, 0);
+	UINT8 ctrl_1_1 = k007121_ctrl_read(0, 1);
+	UINT8 ctrl_1_2 = k007121_ctrl_read(0, 2);
+	UINT8 ctrl_2_0 = k007121_ctrl_read(1, 0);
+	UINT8 ctrl_2_1 = k007121_ctrl_read(1, 1);
+	UINT8 ctrl_2_2 = k007121_ctrl_read(1, 2);
+
+	GenericTilemapSetScrollY(1, ctrl_2_2);
+	GenericTilemapSetScrollX(1, ((ctrl_2_1 << 8) + ctrl_2_0));
+	GenericTilemapSetScrollY(0, ctrl_1_2);
+	GenericTilemapSetScrollX(0, ((ctrl_1_1 << 8) + ctrl_1_0));
+
 	if ((*gfxbank & 0x04) == 0)
 	{
-		if (nBurnLayer & 1) draw_layer(DrvPf2RAM, DrvPf2Ctrl, DrvGfxROM1, 0x90, ((*gfxbank & 2) >> 1) * 0x4000, 0);
-		if (nSpriteEnable & 1) draw_sprites(0, DrvSprBuf1, DrvPf1Ctrl, DrvGfxROM0, 0x00);
-		if (nSpriteEnable & 2) draw_sprites(1, DrvSprBuf2, DrvPf2Ctrl, DrvGfxROM1, 0x80);
-		if (nBurnLayer & 2) draw_layer(DrvPf1RAM, DrvPf1Ctrl, DrvGfxROM0, 0x10, 0x0000, 1);
+		if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
+		if (nSpriteEnable & 1) draw_sprites(0);
+		if (nSpriteEnable & 2) draw_sprites(1);
+		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
 	}
 	else
 	{
-		if (nBurnLayer & 1) draw_layer(DrvPf2RAM, DrvPf2Ctrl, DrvGfxROM1, 0x90, ((*gfxbank & 2) >> 1) * 0x4000, 0);
-		if (nBurnLayer & 2) draw_layer(DrvPf1RAM, DrvPf1Ctrl, DrvGfxROM0, 0x10, 0x0000, 1);
-		if (nSpriteEnable & 1) draw_sprites(0, DrvSprBuf1, DrvPf1Ctrl, DrvGfxROM0, 0x00);
-		if (nSpriteEnable & 2) draw_sprites(1, DrvSprBuf2, DrvPf2Ctrl, DrvGfxROM1, 0x80);
+		if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
+		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
+		if (nSpriteEnable & 1) draw_sprites(0);
+		if (nSpriteEnable & 2) draw_sprites(1);
 	}
 	
 	BurnTransferCopy(DrvPalette);
@@ -751,6 +638,8 @@ static INT32 DrvFrame()
 	}
 
 	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
+	k007121_buffer(0);
+	k007121_buffer(1);
 
 	konamiClose();
 	ZetClose();
@@ -792,6 +681,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3812Scan(nAction, pnMin);
 		K007232Scan(nAction, pnMin);
 		K051649Scan(nAction, pnMin);
+		k007121_scan(nAction);
 
 		SCAN_VAR(watchdog);
 

@@ -406,7 +406,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Xor World (prototype)
+// Xor World (ver 1.2, checksum DB5D0F, prototype)
 
 static struct BurnRomInfo xorworldRomDesc[] = {
 	{ "c13.bin",	0x10000, 0x615a864d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -415,9 +415,9 @@ static struct BurnRomInfo xorworldRomDesc[] = {
 	{ "d9.bin",		0x10000, 0xda8d4d65, 2 | BRF_GRA },           //  2 Tiles and Sprites
 	{ "d10.bin",	0x10000, 0x3b1d6f24, 2 | BRF_GRA },           //  3
 
-	{ "b4.bin",	0x00100, 0x75e468af, 3 | BRF_GRA },           //  4 Color PROMs
-	{ "b7.bin",	0x00100, 0x7e1cd146, 3 | BRF_GRA },           //  5
-	{ "b5.bin",	0x00100, 0xc1b9d9f9, 3 | BRF_GRA },           //  6
+	{ "b4.bin",		0x00100, 0x75e468af, 3 | BRF_GRA },           //  4 Color PROMs
+	{ "b7.bin",		0x00100, 0x7e1cd146, 3 | BRF_GRA },           //  5
+	{ "b5.bin",		0x00100, 0xc1b9d9f9, 3 | BRF_GRA },           //  6
 };
 
 STD_ROM_PICK(xorworld)
@@ -425,10 +425,38 @@ STD_ROM_FN(xorworld)
 
 struct BurnDriver BurnDrvXorworld = {
 	"xorworld", NULL, NULL, NULL, "1990",
-	"Xor World (prototype)\0", NULL, "Gaelco", "Miscellaneous",
+	"Xor World (ver 1.2, checksum DB5D0F, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, xorworldRomInfo, xorworldRomName, NULL, NULL, NULL, NULL, XorworldInputInfo, XorworldDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
+// Xor World (ver 1.2, checksum DB5D10, prototype)
+
+static struct BurnRomInfo xorworldaRomDesc[] = {
+	{ "2_p3_27c512.bin",	0x10000, 0x615a864d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1_4_27c512.bin",		0x10000, 0x4919889a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "d9.bin",				0x10000, 0xda8d4d65, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "d10.bin",			0x10000, 0x3b1d6f24, 2 | BRF_GRA },           //  3
+
+	{ "b4.bin",				0x00100, 0x75e468af, 3 | BRF_GRA },           //  4 Color PROMs
+	{ "b7.bin",				0x00100, 0x7e1cd146, 3 | BRF_GRA },           //  5
+	{ "b5.bin",				0x00100, 0xc1b9d9f9, 3 | BRF_GRA },           //  6
+};
+
+STD_ROM_PICK(xorworlda)
+STD_ROM_FN(xorworlda)
+
+struct BurnDriver BurnDrvXorworlda = {
+	"xorworlda", "xorworld", NULL, NULL, "1990",
+	"Xor World (ver 1.2, checksum DB5D10, prototype)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, xorworldaRomInfo, xorworldaRomName, NULL, NULL, NULL, NULL, XorworldInputInfo, XorworldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

@@ -17,8 +17,7 @@ static UINT8 *DrvM6809ROM0;
 static UINT8 *DrvHD6309RAM0;
 static UINT8 *DrvHD6309RAM1;
 static UINT8 *DrvM6809RAM0;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM[2];
 static UINT8 *DrvPROMs;
 static UINT8 *DrvColTable;
 static UINT8 *DrvPalRAM;
@@ -414,8 +413,8 @@ static INT32 MemIndex()
 	DrvHD6309ROM0	= Next; Next += 0x030000;
 	DrvM6809ROM0	= Next; Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x100000;
-	DrvGfxROM1		= Next; Next += 0x100000;
+	DrvGfxROM[0]	= Next; Next += 0x100000;
+	DrvGfxROM[1]	= Next; Next += 0x100000;
 
 	DrvPROMs		= Next; Next += 0x000400;
 
@@ -515,8 +514,8 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 			if (pRomLoad()) return 1;
 		}
 
-		DrvGfxExpand(DrvGfxROM0, 0x80000);
-		DrvGfxExpand(DrvGfxROM1, 0x80000);
+		DrvGfxExpand(DrvGfxROM[0], 0x80000);
+		DrvGfxExpand(DrvGfxROM[1], 0x80000);
 
 		DrvColorTableInit();
 	}
@@ -561,8 +560,8 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, tx_map_callback, 8, 8, 32, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 8, 8, 0x100000,     0, 0x7f);
-	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 8, 8, 0x100000, 0x800, 0x7f);
+	GenericTilemapSetGfx(0, DrvGfxROM[0], 4, 8, 8, 0x100000,     0, 0x7f);
+	GenericTilemapSetGfx(1, DrvGfxROM[1], 4, 8, 8, 0x100000, 0x800, 0x7f);
 	GenericTilemapSetOffsets(0, 40, -16);
 	GenericTilemapSetOffsets(1, 40, -16);
 	GenericTilemapSetOffsets(2, 0, -16);
@@ -581,11 +580,11 @@ static INT32 CommonRomLoad()
 
 	if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,   3, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x000001,   4, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,   3, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000001,   4, 2)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000,   5, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x000001,   6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x000000,   5, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x000001,   6, 2)) return 1;
 
 	if (BurnLoadRom(DrvPROMs   + 0x000000,   7, 1)) return 1;
 	if (BurnLoadRom(DrvPROMs   + 0x000100,   8, 1)) return 1;
@@ -603,22 +602,22 @@ static INT32 BootlegRomLoad()
 
 	if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0   + 0x00000,  3, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x10000,  4, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x20000,  5, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x30000,  6, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x40000,  7, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x50000,  8, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x60000,  9, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0   + 0x70000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x00000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x10000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x20000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x30000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x40000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x50000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x60000,  9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0]   + 0x70000, 10, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM1   + 0x00000, 11, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x10000, 12, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x20000, 13, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x30000, 14, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x40000, 15, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x50000, 16, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1   + 0x60000, 17, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x00000, 11, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x10000, 12, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x20000, 13, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x30000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x40000, 15, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x50000, 16, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1]   + 0x60000, 17, 1)) return 1;
 //	70000-7ffff empty
 
 	if (BurnLoadRom(DrvPROMs   + 0x000000,  18, 1)) return 1;
@@ -637,23 +636,23 @@ static INT32 ContraeRomLoad()
 
 	if (BurnLoadRom(DrvM6809ROM0 + 0x08000, 2, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x020000,  4, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x040000,  5, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x060000,  6, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x020001,  8, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x040001,  9, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x060001, 10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000000,  3, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x020000,  4, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x040000,  5, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x060000,  6, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x000001,  7, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x020001,  8, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x040001,  9, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[0] + 0x060001, 10, 2)) return 1;
 	
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x020000, 12, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x040000, 13, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x060000, 14, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x020001, 16, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x040001, 17, 2)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x060001, 18, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x000000, 11, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x020000, 12, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x040000, 13, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x060000, 14, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x000001, 15, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x020001, 16, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x040001, 17, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM[1] + 0x060001, 18, 2)) return 1;
 
 	if (BurnLoadRom(DrvPROMs   + 0x000000, 19, 1)) return 1;
 	if (BurnLoadRom(DrvPROMs   + 0x000100, 20, 1)) return 1;
@@ -678,6 +677,16 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	return 0;
+}
+
+static void draw_sprites(INT32 chip)
+{
+	INT32 base_color = ((k007121_ctrl_read(chip, 6) & 0x30) << 1);
+	INT32 global_x_offset = (k007121_ctrl_read(chip, 7)&0x08) ? 16 : 40;
+	INT32 global_y_offset = (k007121_ctrl_read(chip, 7)&0x08) ? -16 : 16;
+	INT32 color_offset = (chip * 0x800);
+
+	k007121_draw(chip, pTransDraw, DrvGfxROM[chip], DrvColTable, base_color, global_x_offset, global_y_offset, 0, -1, color_offset);
 }
 
 static INT32 DrvDraw()
@@ -711,10 +720,8 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	INT32 base_color0 = (k007121_ctrl_read(0, 6) & 0x30) << 1;
-	INT32 base_color1 = (k007121_ctrl_read(1, 6) & 0x30) << 1;
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, base_color0, 40, 16, 0, -1, 0x0000);
-	if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, base_color1, 40, 16, 0, -1, 0x0800);
+	if (nSpriteEnable & 1) draw_sprites(0);
+	if (nSpriteEnable & 2) draw_sprites(1);
 
 	GenericTilesSetClip((flipscreen1 ? 240 : -1), (flipscreen1 ? -1 : 40), -1, -1);
 	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);

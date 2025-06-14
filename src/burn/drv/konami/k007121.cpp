@@ -86,6 +86,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, INT32 bas
 		if (attr & 0x01) sx -= 256;
 		if (sy >= 240) sy -= 256;
 
+		sx += xoffs;
 		sy -= yoffs;
 
 		number += ((sprite_bank & 0x3) << 8) + ((attr & 0xc0) << 4);
@@ -115,14 +116,14 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, INT32 bas
 				{
 					flipx = !xflip;
 					flipy = !yflip;
-					destx = 232 - (sx + x * 8);
-					desty = 232 - (sy + y * 8);
+					destx = 248 - (sx + x * 8);
+					desty = 248 - (sy + y * 8);
 				}
 				else
 				{
 					flipx = xflip;
 					flipy = yflip;
-					destx = xoffs + sx + x * 8;
+					destx = sx + x * 8;
 					desty = sy + y * 8;
 				}
 

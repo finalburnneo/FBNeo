@@ -607,7 +607,8 @@ static int QuitRomsScan()
 
 	nBurnDrvActive = nOldSelect;
 	nOldSelect = 0;
-	bRescanRoms = false;
+	bRescanRoms  = false;
+	bQuicklyScan = false;	// Restore
 
 	if (avOk) {
 		WriteGameAvb();

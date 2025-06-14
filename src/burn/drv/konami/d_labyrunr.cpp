@@ -6,6 +6,7 @@
 #include "burn_ym2203.h"
 #include "konamiic.h"
 #include "k007121.h"
+#include "rectangle.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -19,8 +20,7 @@ static UINT8 *DrvSprTranspLut;
 static UINT8 *DrvHD6309RAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
-static UINT8 *DrvVidRAM0;
-static UINT8 *DrvVidRAM1;
+static UINT8 *DrvVidRAM[2];
 static UINT8 *DrvScrollRAM;
 static UINT8 *DrvTransTab;
 
@@ -254,6 +254,32 @@ static UINT8 ym2203_1_read_portB(UINT32 )
 	return DrvDips[2];
 }
 
+template <int chip>
+static tilemap_callback( tile )
+{
+	UINT8 ctrl_3 = k007121_ctrl_read(chip, 3);
+	UINT8 ctrl_4 = k007121_ctrl_read(chip, 4);
+	UINT8 ctrl_5 = k007121_ctrl_read(chip, 5);
+	UINT8 ctrl_6 = k007121_ctrl_read(chip, 6);
+	INT32 attr = DrvVidRAM[chip][offs];
+	INT32 code = DrvVidRAM[chip][offs + 0x400];
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 bank = ((attr & 0x80) >> 7) |
+			((attr >> (bit0 + 2)) & 0x02) |
+			((attr >> (bit1 + 1)) & 0x04) |
+			((attr >> (bit2    )) & 0x08) |
+			((attr >> (bit3 - 1)) & 0x10) |
+			((ctrl_3 & 0x01) << 5);
+	INT32 mask = (ctrl_4 & 0xf0) >> 4;
+
+	bank = (bank & ~(mask << 1)) | ((ctrl_4 & mask) << 1);
+
+	TILE_SET_INFO(0, code + bank * 256, ((ctrl_6 & 0x30) * 2 + 16) + (attr & 7), (chip ? 0 : TILE_GROUP((attr & 0x40) >> 6)));
+}
+
 static INT32 DrvDoReset(INT32 full_reset)
 {
 	if (full_reset) {
@@ -299,8 +325,8 @@ static INT32 MemIndex()
 	DrvPalRAM       = Next; Next += 0x000100;
 
 	DrvSprRAM       = Next; Next += 0x001000;
-	DrvVidRAM0      = Next; Next += 0x000800;
-	DrvVidRAM1      = Next; Next += 0x000800;
+	DrvVidRAM[0]    = Next; Next += 0x000800;
+	DrvVidRAM[1]    = Next; Next += 0x000800;
 	DrvScrollRAM    = Next; Next += 0x000040;
 
 	RamEnd          = Next;
@@ -377,8 +403,8 @@ static INT32 CommonInit(INT32 nLoadType)
 	HD6309MapMemory(DrvPalRAM,	0x1000, 0x10ff, MAP_ROM);
 	HD6309MapMemory(DrvHD6309RAM,	0x1800, 0x1fff, MAP_RAM);
 	HD6309MapMemory(DrvSprRAM,	0x2000, 0x2fff, MAP_RAM);
-	HD6309MapMemory(DrvVidRAM0,	0x3000, 0x37ff, MAP_RAM);
-	HD6309MapMemory(DrvVidRAM1,	0x3800, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM[0],	0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM[1],	0x3800, 0x3fff, MAP_RAM);
 	HD6309MapMemory(DrvHD6309ROM,	0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(labyrunr_write);
 	HD6309SetReadHandler(labyrunr_read);
@@ -396,6 +422,15 @@ static INT32 CommonInit(INT32 nLoadType)
 	GenericTilesInit();
 
 	k007121_init(0, (0x80000 / (8 * 8)) - 1, DrvSprRAM);
+
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, tile_map_callback<0>, 8, 8, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, tile_map_callback<1>, 8, 8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM, 4, 8, 8, 0x80000,     0, 0x7f);
+	GenericTilemapSetOffsets(0, 40, -16, 0, -16);
+	GenericTilemapSetOffsets(1, 0, -16);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetScrollCols(0, 32);
 
 	DrvDoReset(1);
 
@@ -416,126 +451,6 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	return 0;
-}
-
-static void draw_layer(INT32 layer, INT32 category)
-{
-	INT32 c1 = k007121_ctrl_read(0, 1);
-	INT32 c3 = k007121_ctrl_read(0, 3);
-	INT32 c4 = k007121_ctrl_read(0, 4);
-	INT32 c5 = k007121_ctrl_read(0, 5);
-	INT32 c6 = k007121_ctrl_read(0, 6);
-
-	INT32 colscroll = ((c1&6) == 6);
-
-	INT32 b0 = ((c5 >> 0) & 3) + 2;
-	INT32 b1 = ((c5 >> 2) & 3) + 1;
-	INT32 b2 = ((c5 >> 4) & 3) + 0;
-	INT32 b3 = ((c5 >> 6) & 3) - 1;
-
-	INT32 yscroll_enable = 1;
-
-	INT32 scrollx = k007121_ctrl_read(0, 0);
-	INT32 scrolly = k007121_ctrl_read(0, 2);
-
-	INT32 mask = c4 >> 4;
-
-	INT32 opaque = 0;
-	INT32 min_x = 0;
-	INT32 max_x = nScreenWidth;
-
-	UINT8 *vidram = (layer) ? DrvVidRAM1 : DrvVidRAM0;
-
-	INT32 follower = 0;
-
-	if (c3 & 0x20)
-	{ // ------------> game ending, title, intro mode <------------
-		opaque = 0;
-
-		follower = (scrollx < 40) ? ((~c1 & 0x01) | 0x100) : 0;
-
-		if (layer == (0 ^ (~c1 & 0x01))) {
-			min_x = nScreenWidth - scrollx + 8;
-		}
-
-		if (layer == (1 ^ (~c1 & 0x01))) {
-			if (scrollx < 40) {
-				min_x = 40 - scrollx;
-				max_x = nScreenWidth - scrollx + 8;
-			} else {
-				max_x = nScreenWidth - scrollx + 8;
-			}
-		}
-
-		scrollx -= 40;
-	}
-	else
-	{ // ------------> regular game mode <------------
-		if (layer == 0) { // playfield
-			min_x = 40;
-			max_x = 280;
-			scrollx -= 40;
-			opaque = 1;
-		}
-		if (layer == 1) { // top HUD
-			yscroll_enable = scrollx = 0;
-			max_x = 40;
-			opaque = 1;
-		}
-	}
-
-	for (INT32 iiter = 0; iiter < (((follower & 0x100) >> 8) + 1); iiter++) {
-		if (nBurnLayer & 8) {
-			if (follower & 0x100 && iiter > 0) {
-				if (layer == (follower & 0x01)) {
-					min_x = 0;
-					max_x = 40 - k007121_ctrl_read(0, 0) - 8;
-					if (max_x < 0) max_x = 0;
-				}
-			}
-			GenericTilesSetClip(min_x, max_x, 0, nScreenHeight);
-		}
-
-		for (INT32 offs = 0; offs < 32 * 32; offs++)
-		{
-			INT32 sx = (offs & 0x1f) * 8;
-			INT32 sy = (offs / 0x20) * 8;
-
-			if (yscroll_enable) {
-				if (colscroll && sx >= 16) {
-					sy -= DrvScrollRAM[(sx / 8) - 2];
-				}
-				sy -= scrolly;
-			}
-
-			sy -= 16;
-			if (sy < -7) sy += 256;
-
-			INT32 attr = vidram[offs];
-			INT32 code = vidram[offs + 0x400];
-
-			if (layer == 0 && (attr & 0x40) >> 6 != category) continue;
-
-			INT32 bank = ((attr >> 7) & 1) | ((attr >> b0) & 2) | ((attr >> b1) & 4) | ((attr >> b2) & 8) | ((attr >> b3) & 0x10) | ((c3 & 1) << 5);
-
-			code += ((bank & ~(mask << 1)) | ((c4 & mask) << 1)) << 8;
-
-			INT32 color = ((c6 & 0x30) << 1) | (attr & 7) | 0x10;
-
-			{
-				if (DrvTransTab[code&0x1fff] && !opaque) continue;
-
-				for (INT32 x_wrap = scrollx - 0x100; x_wrap < nScreenWidth; x_wrap += 0x100) {
-					if (opaque) {
-						Draw8x8Tile(pTransDraw, code & 0x1fff, sx - x_wrap, sy, 0, 0, color, 4, 0, DrvGfxROM);
-					} else {
-						Draw8x8MaskTile(pTransDraw, code & 0x1fff, sx - x_wrap, sy, 0, 0, color, 4, 0, 0, DrvGfxROM);
-					}
-				}
-			}
-		}
-		GenericTilesClearClip();
-	}
 }
 
 static void DrvPaletteInit()
@@ -565,6 +480,16 @@ static void DrvPaletteInit()
 	DrvPalette[0x800] = BurnHighCol(0,0,0,0); // black
 }
 
+static void draw_sprites()
+{
+	INT32 base_color = ((k007121_ctrl_read(0, 6) & 0x30) << 1);
+	INT32 global_x_offset = (k007121_ctrl_read(0, 7)&0x08) ? 16 : 40;
+	INT32 global_y_offset = (k007121_ctrl_read(0, 7)&0x08) ? -16 : 16;
+	UINT32 pri_mask = (k007121_ctrl_read(0, 3) & 0x20) >> 4;
+
+	k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, base_color, global_x_offset, global_y_offset, 0, pri_mask, 0);
+}
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -572,14 +497,118 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 	}
 
+	UINT8 ctrl_0 = k007121_ctrl_read(0, 0);
+	UINT8 ctrl_1 = k007121_ctrl_read(0, 1);
+	UINT8 ctrl_2 = k007121_ctrl_read(0, 2);
+	UINT8 ctrl_3 = k007121_ctrl_read(0, 3);
+	UINT8 flipscreen = k007121_ctrl_read(0, 7)&0x08;
+
+	rectangle visarea;
+	GenericTilesGetClip(&visarea.min_x, &visarea.max_x, &visarea.min_y, &visarea.max_y);
+
 	BurnTransferClear(0x800);
 
-	k007121_ctrl_write(0, 7, k007121_ctrl_read(0, 7) & ~8); // sprites: disable screen flipping
+	GenericTilemapSetFlip(0, flipscreen ? TMAP_FLIPXY : 0);
+	GenericTilemapSetFlip(1, flipscreen ? TMAP_FLIPXY : 0);
 
-	if (nBurnLayer & 1) draw_layer(0, 0);
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x20) >> 4, 0);
-	if (nBurnLayer & 2) draw_layer(0, 1);
-	if (nBurnLayer & 4) draw_layer(1, 0);
+	if (~ctrl_3 & 0x20)
+	{
+		rectangle clip[2];
+		clip[0] = clip[1] = visarea;
+
+		if (flipscreen)
+		{
+			clip[0].max_x -= 40;
+			clip[1].min_x = clip[1].max_x - 39;
+		}
+		else
+		{
+			clip[0].min_x += 40;
+			clip[1].max_x = 39;
+		}
+
+		GenericTilemapSetScrollX(0, ctrl_0);
+		GenericTilemapSetScrollX(1, 0);
+
+		for (INT32 i = 0; i < 32; i++)
+		{
+			if ((ctrl_1 & 6) == 6)
+				GenericTilemapSetScrollCol(0, (i + 2) & 0x1f, ctrl_2 + DrvScrollRAM[i]);
+			else
+				GenericTilemapSetScrollCol(0, (i + 2) & 0x1f, ctrl_2);
+		}
+
+
+		GenericTilesSetClip(clip[0].min_x, clip[0].max_x, clip[0].min_y, clip[0].max_y);
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWOPAQUE | TMAP_SET_GROUP(0));
+		if (nSpriteEnable & 1) draw_sprites();
+		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWOPAQUE | TMAP_SET_GROUP(1));
+		GenericTilesClearClip();
+
+		GenericTilesSetClip(clip[1].min_x, clip[1].max_x, clip[1].min_y, clip[1].max_y);
+		if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_DRAWOPAQUE);
+		GenericTilesClearClip();
+	}
+	else
+	{
+		rectangle clip[3];
+		clip[0] = clip[1] = clip[2] = visarea;
+
+		INT32 use_clip2[2] = { 0, 0 };
+
+		if (ctrl_1 & 1)
+		{
+			if (ctrl_0 < 40)
+			{
+				use_clip2[0] = 1;
+				clip[1].min_x = 40 - ctrl_0;
+			}
+
+			clip[0].min_x = clip[0].max_x - ctrl_0 + 8;
+			clip[1].max_x = clip[1].max_x - ctrl_0 + 8;
+		}
+		else
+		{
+			if (ctrl_0 < 40)
+			{
+				use_clip2[1] = 1;
+				clip[0].min_x = 40 - ctrl_0;
+			}
+
+			clip[0].max_x = clip[0].max_x - ctrl_0 + 8;
+			clip[1].min_x = clip[1].max_x - ctrl_0 + 8;
+		}
+
+		if (use_clip2[0] || use_clip2[1])
+			clip[2].max_x = 40 - ctrl_0 - 8;
+
+		for (INT32 i = 0; i < 3; i++)
+		{
+			if (flipscreen)
+			{
+				INT32 max_x = visarea.max_x - clip[i].min_x;
+				INT32 min_x = visarea.max_x - clip[i].max_x;
+				clip[i].max_x = max_x;
+				clip[i].min_x = min_x;
+			}
+		}
+
+		GenericTilemapSetScrollX(0, ctrl_0);
+		GenericTilemapSetScrollX(1, ctrl_0);
+
+		INT32 clip_idx;
+		clip_idx = use_clip2[0] ? 2 : 0;
+		GenericTilesSetClip(clip[clip_idx].min_x, clip[clip_idx].max_x, clip[clip_idx].min_y, clip[clip_idx].max_y);
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0));
+		if (nSpriteEnable & 1) draw_sprites();
+		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+		GenericTilesClearClip();
+
+		clip_idx = use_clip2[1] ? 2 : 0;
+		GenericTilesSetClip(clip[clip_idx].min_x, clip[clip_idx].max_x, clip[clip_idx].min_y, clip[clip_idx].max_y);
+		if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_DRAWOPAQUE);
+		GenericTilesClearClip();
+	}
 
 	BurnTransferCopy(DrvPalette);
 

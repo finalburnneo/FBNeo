@@ -1190,6 +1190,8 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 5: // touchgona
 		{
+			Drv68KROM[0] = 0xfe; // initial stack pointer in ic57 points to ROM not RAM, but checksum matched label?!
+
 			if (BurnLoadRom(DrvGfxROM0 + 0x1000000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x1080000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x1100000, 4, 1)) return 1;

@@ -246,7 +246,7 @@ static INT32 CheckRoms()
 		memset(&ri, 0, sizeof(ri));
 		BurnDrvGetRomInfo(&ri, i);							// Find information about the wanted rom
 		if ( /*ri.nCrc &&*/ (ri.nType & BRF_OPT) == 0 && (ri.nType & BRF_NODUMP) == 0) {
-			INT32 nState = RomFind[i].nState;					// Get the state of the rom in the zip file
+			INT32 nState = RomFind[i].nState;				// Get the state of the rom in the zip file
 			INT32 nError = GetBZipError(nState);
 
 			if (nState == 0 && ri.nType) {					// (A type of 0 means empty slot - no rom)
@@ -440,8 +440,12 @@ INT32 BzipOpen(bool bootApp)
 		if (BurnDrvGetZipName(&szName, y)) {
 			break;
 		}
+		if ((BurnDrvGetFlags() & BDF_BOARDROM) && bQuicklyScan)
+		{
+			continue;
+		}
 
-		for (INT32 d = 0; d < DIRS_MAX; d++) { // Traverse the user-configured rom paths
+		for (INT32 d = 0; d < DIRS_MAX; d++) {	// Traverse the user-configured rom paths
 			TCHAR szFullName[MAX_PATH] = { 0 }, szDrvName[MAX_PATH] = { 0 };
 
 			if (nLoadMenuShowY & (1 << 26)) {
@@ -456,6 +460,9 @@ INT32 BzipOpen(bool bootApp)
 
 					if (RomArchiveExists(szFullName)) {
 						bFound = true;
+
+						if (bQuicklyScan)		// Enable quickly scan only for overall scanning
+							return 0;
 
 						TCHAR** newArray = (TCHAR**)realloc(_SubDirsZip.pszZipName, (_SubDirsZip.nCount + 1) * sizeof(TCHAR*));
 						_SubDirsZip.pszZipName = newArray;
@@ -492,9 +499,11 @@ INT32 BzipOpen(bool bootApp)
 				_stprintf(szDrvName, _T("%s%hs"), szAppRomPaths[d], pszDrvName);
 			}
 
-			if (RomArchiveExists(szFullName)) { // Check existence of the rom zip/7z archive file
-
+			if (RomArchiveExists(szFullName)) {	// Check existence of the rom zip/7z archive file
 				bFound = true;
+
+				if (bQuicklyScan)				// Enable quickly scan only for overall scanning
+					return 0;
 
 				szBzipName[z] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
 				_tcscpy(szBzipName[z], szFullName);
@@ -506,8 +515,7 @@ INT32 BzipOpen(bool bootApp)
 				z++;
 				if (z >= BZIP_MAX) break;
 			}
-			if (RomArchiveExists(szDrvName)) { // Append DrvName ROMs
-
+			if (RomArchiveExists(szDrvName)) {	// Append DrvName ROMs
 				bFound = true;
 
 				szBzipName[z] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
@@ -526,6 +534,9 @@ INT32 BzipOpen(bool bootApp)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), szName);
 		}
 	}
+
+	if (bQuicklyScan)							// Nothing found
+		return 1;
 
 	if (!bootApp) {
 		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));

@@ -1277,6 +1277,7 @@ BEGIN
 	       MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
            MENUITEM "Show Game List at start-up",			MENU_AUTOLOADGAMELIST
            MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
+           MENUITEM "Quickly scan directories (zip only)",	MENU_QUICKSCANGAMELIST
            MENUITEM SEPARATOR
            POPUP "Menu options"
            BEGIN

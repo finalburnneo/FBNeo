@@ -2758,12 +2758,47 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						}
 
 						// Slightly different color for favorites (key lime pie anyone?)
-						nBurnDrvActive = ((NODEINFO*)TvItem.lParam)->nBurnDrvNo;
-						if (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) {
+						if (CheckFavorites(((NODEINFO*)TvItem.lParam)->pszROMName) != -1) {
 							if (!((NODEINFO*)TvItem.lParam)->bIsParent) {
 								lplvcd->clrTextBk = RGB(0xd7, 0xe7, 0xd7);
 							} else {
 								lplvcd->clrTextBk = RGB(0xe6, 0xff, 0xe6);
+
+								// Both parent and clone are in favorites
+								if (!(TvItem.state & TVIS_EXPANDED) && TvItem.cChildren) {
+									HTREEITEM hChild = TreeView_GetChild(hSelList, TvItem.hItem);
+									while (NULL != hChild) {
+										TVITEM tvi = { 0 };
+										tvi.mask   = TVIF_PARAM | TVIF_HANDLE;
+										tvi.hItem  = hChild;
+										if (TreeView_GetItem(hSelList, &tvi)) {
+											if (-1 != CheckFavorites(((NODEINFO*)tvi.lParam)->pszROMName)) {
+												lplvcd->clrTextBk = RGB(0xe6, 0xe6, 0xfa);		// Lavender
+												break;
+											}
+										}
+										hChild = TreeView_GetNextSibling(hSelList, hChild);
+									}
+								}
+							}
+						} else {
+							// Only clones are favorites
+							if (((NODEINFO*)TvItem.lParam)->bIsParent) {
+								if (!(TvItem.state & TVIS_EXPANDED) && TvItem.cChildren) {
+									HTREEITEM hChild = TreeView_GetChild(hSelList, TvItem.hItem);
+									while (NULL != hChild) {
+										TVITEM tvi = { 0 };
+										tvi.mask = TVIF_PARAM | TVIF_HANDLE;
+										tvi.hItem = hChild;
+										if (TreeView_GetItem(hSelList, &tvi)) {
+											if (-1 != CheckFavorites(((NODEINFO*)tvi.lParam)->pszROMName)) {
+												lplvcd->clrTextBk = RGB(0xff, 0xf0, 0xf5);		// Lavender blush
+												break;
+											}
+										}
+										hChild = TreeView_GetNextSibling(hSelList, hChild);
+									}
+								}
 							}
 						}
 					}

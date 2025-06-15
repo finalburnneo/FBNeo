@@ -938,9 +938,9 @@ static void MyEndDialog()
 
 	RECT rect;
 
-	GetClientRect(hSelDlg, &rect);
-	nSelDlgWidth = rect.right;
-	nSelDlgHeight = rect.bottom;
+	GetWindowRect(hSelDlg, &rect);
+	nSelDlgWidth  = rect.right - rect.left;
+	nSelDlgHeight = rect.bottom - rect.top;
 
 	if (!bSelOkay) {
 		RomDataStateRestore();
@@ -2554,7 +2554,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		return 0;
 	}
 
-	if (Msg == WM_WINDOWPOSCHANGED) {
+#if 0
+	if (Msg == WM_WINDOWPOSCHANGED) {	// All controls blink when dragging the window
+#endif // 0
+
+	if (Msg == WM_SIZE) {
 		RECT rc;
 		int xDelta;
 		int yDelta;

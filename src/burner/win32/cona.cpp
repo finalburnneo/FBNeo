@@ -442,6 +442,7 @@ int ConfigAppLoad()
 		STR(szAppBlendPath);
 		STR(szAppSelectPath);
 		STR(szAppVersusPath);
+		STR(szAppHowtoPath);
 		STR(szAppScoresPath);
 		STR(szAppBossesPath);
 		STR(szAppGameoverPath);
@@ -887,6 +888,7 @@ int ConfigAppSave()
 	STR(szAppBlendPath);
 	STR(szAppSelectPath);
 	STR(szAppVersusPath);
+	STR(szAppHowtoPath);
 	STR(szAppScoresPath);
 	STR(szAppBossesPath);
 	STR(szAppGameoverPath);

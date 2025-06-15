@@ -23275,7 +23275,7 @@ struct BurnDriver BurnDrvKof97plc = {
 	"The King of Fighters '97 Plus (Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97plcRomInfo, kof97plcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof97plcRomInfo, kof97plcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeojpnDIPInfo,
 	kof97plcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -23347,7 +23347,7 @@ struct BurnDriver BurnDrvKof97bs = {
 	"The King of Fighters '97 (Boss, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97bsRomInfo, kof97bsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof97bsRomInfo, kof97bsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeojpnDIPInfo,
 	kof97plcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -24273,7 +24273,7 @@ struct BurnDriver BurnDrvKof98bsc = {
 	"King of Fighters '98 - Dream Match Never Ends (Boss Chinese Edition, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof98bscRomInfo, kof98bscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof98bscRomInfo, kof98bscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeojpnDIPInfo,
 	kof98bscInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -24309,7 +24309,7 @@ struct BurnDriver BurnDrvKof98plc = {
 	"King of Fighters '98 - Dream Match Never Ends (Plus Chinese Edition, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof98plcRomInfo, kof98plcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, kof98plcRomInfo, kof98plcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeojpnDIPInfo,
 	kof98bscInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

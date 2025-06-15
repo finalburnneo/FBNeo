@@ -455,7 +455,7 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 
 		if (pszFn) bprintf(0, _T("NeoGeo CD: Loading BIOS  \"%S\".\n"), pszFn);
 
-		BurnLoadRom(Neo68KBIOS,	rom_pos, 1);
+		if (BurnLoadRom(Neo68KBIOS, rom_pos, 1)) return 1;
 		return 0;
 	}
 
@@ -487,12 +487,12 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	// Load the BIOS ROMs
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
 			// Load the BIOS ROMs
-			BurnLoadRom(Neo68KBIOS, 0x00000 + nBIOS, 1);
+			if (BurnLoadRom(Neo68KBIOS, 0x00000 + nBIOS, 1)) return 1;
 	} else {
 		if (nBIOS >= 0) {
-			BurnLoadRom(Neo68KBIOS, 0x00080 + nBIOS, 1);
+			if (BurnLoadRom(Neo68KBIOS, 0x00080 + nBIOS, 1)) return 1;
 		} else {
-			BurnLoadRom(Neo68KBIOS, 0x00080 +     0, 1);
+			if (BurnLoadRom(Neo68KBIOS, 0x00080 +     0, 1)) return 1;
 		}
 	}
 

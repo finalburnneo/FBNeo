@@ -1,5 +1,5 @@
 // FBNeo SNES driver / interface to LakeSnes
-// By Kev, dink, Gab75, fprietog
+// By Kev, dink, Gab75
 
 #include "tiles_generic.h"
 #include "snes.h"
@@ -35842,10 +35842,10 @@ STD_ROM_PICK(snes_Targa)
 STD_ROM_FN(snes_Targa)
 
 struct BurnDriver BurnDrvsnes_Targa = {
-	"snes_targa", NULL, NULL, NULL, "199X",
+	"snes_targa", "snes_rrangerr2", NULL, NULL, "199X",
 	"Targa (Euro, Prototype)\0", NULL, "Virgin Interactive - Rainbow Arts", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SNESGetZipName, snes_TargaRomInfo, snes_TargaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

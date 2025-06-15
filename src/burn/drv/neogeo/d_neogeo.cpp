@@ -24256,7 +24256,7 @@ STD_ROM_FN(kof98bsc)
 
 static void kof98TimePatch()
 {
-	Neo68KROMActive[BURN_ENDIAN_SWAP_INT8(0x030633)] = 0x65;
+	Neo68KROMActive[0x030633] = 0x65;
 }
 
 static INT32 kof98bscInit()

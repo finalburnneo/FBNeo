@@ -537,25 +537,25 @@ static struct BurnInputInfo neomahjongInputList[] = {
 	{"P1 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p1 fire 3"},		//	9
 	{"P1 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p1 fire 4"},		//	A
 
-	{"A",			BIT_DIGITAL,	NeoButton1 +  8,	"key tab"},		//  B
-	{"B",			BIT_DIGITAL,	NeoButton1 +  9,	"key q"},		//  C
-	{"C",			BIT_DIGITAL,	NeoButton1 + 10,	"key w"},		//  D
-	{"D",			BIT_DIGITAL,	NeoButton1 + 11,	"key e"},		//  E
-	{"E",			BIT_DIGITAL,	NeoButton1 + 12,	"key r"},		//  F
-	{"F",			BIT_DIGITAL,	NeoButton1 + 13,	"key t"},		// 10
-	{"G",			BIT_DIGITAL,	NeoButton1 + 14,	"key y"},		// 11
-	{"H",			BIT_DIGITAL,	NeoButton1 + 16,	"key u"},		// 12
-	{"I",			BIT_DIGITAL,	NeoButton1 + 17,	"key i"},		// 13
-	{"J",			BIT_DIGITAL,	NeoButton1 + 18,	"key o"},		// 14
-	{"K",			BIT_DIGITAL,	NeoButton1 + 19,	"key p"},		// 15
-	{"L",			BIT_DIGITAL,	NeoButton1 + 20,	"key ["},		// 16
-	{"M",			BIT_DIGITAL,	NeoButton1 + 21,	"key ]"},		// 17
-	{"N",			BIT_DIGITAL,	NeoButton1 + 22,	"key backslash"},		// 18
-	{"Pon",			BIT_DIGITAL,	NeoButton1 + 24,	"key a"},		// 19
-	{"Chi",			BIT_DIGITAL,	NeoButton1 + 25,	"key s"},		// 1A
-	{"Kan",			BIT_DIGITAL,	NeoButton1 + 26,	"key d"},		// 1B
-	{"Ron",			BIT_DIGITAL,	NeoButton1 + 27,	"key f"},		// 1C
-	{"Reach",		BIT_DIGITAL,	NeoButton1 + 28,	"key g"},		// 1D
+	{"P1 A",		BIT_DIGITAL,	NeoButton1 +  8,	"mah a"},		//  B
+	{"P1 B",		BIT_DIGITAL,	NeoButton1 +  9,	"mah b"},		//  C
+	{"P1 C",		BIT_DIGITAL,	NeoButton1 + 10,	"mah c"},		//  D
+	{"P1 D",		BIT_DIGITAL,	NeoButton1 + 11,	"mah d"},		//  E
+	{"P1 E",		BIT_DIGITAL,	NeoButton1 + 12,	"mah e"},		//  F
+	{"P1 F",		BIT_DIGITAL,	NeoButton1 + 13,	"mah f"},		// 10
+	{"P1 G",		BIT_DIGITAL,	NeoButton1 + 14,	"mah g"},		// 11
+	{"P1 H",		BIT_DIGITAL,	NeoButton1 + 16,	"mah h"},		// 12
+	{"P1 I",		BIT_DIGITAL,	NeoButton1 + 17,	"mah i"},		// 13
+	{"P1 J",		BIT_DIGITAL,	NeoButton1 + 18,	"mah j"},		// 14
+	{"P1 K",		BIT_DIGITAL,	NeoButton1 + 19,	"mah k"},		// 15
+	{"P1 L",		BIT_DIGITAL,	NeoButton1 + 20,	"mah l"},		// 16
+	{"P1 M",		BIT_DIGITAL,	NeoButton1 + 21,	"mah m"},		// 17
+	{"P1 N",		BIT_DIGITAL,	NeoButton1 + 22,	"mah n"},		// 18
+	{"P1 Pon",		BIT_DIGITAL,	NeoButton1 + 24,	"mah pon"},		// 19
+	{"P1 Chi",		BIT_DIGITAL,	NeoButton1 + 25,	"mah chi"},		// 1A
+	{"P1 Kan",		BIT_DIGITAL,	NeoButton1 + 26,	"mah kan"},		// 1B
+	{"P1 Ron",		BIT_DIGITAL,	NeoButton1 + 27,	"mah ron"},		// 1C
+	{"P1 Reach",	BIT_DIGITAL,	NeoButton1 + 28,	"mah reach"},	// 1D
 
 	{"P2 Coin",		BIT_DIGITAL,	NeoButton2 + 1,	"p2 coin"},			// 1E
 	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"},		// 1F

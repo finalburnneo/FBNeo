@@ -5087,7 +5087,7 @@ struct BurnDriver BurnDrvJanjans1 = {
 	"Lovely Pop Mahjong JangJang Shimasho (Japan)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_MAHJONG, 0,
-	NULL, janjans1RomInfo, janjans1RomName, NULL, NULL, NULL, NULL, MahjongInputInfo, Janjans1DIPInfo,
+	NULL, janjans1RomInfo, janjans1RomName, NULL, NULL, NULL, NULL, Srmp4InputInfo, Janjans1DIPInfo,
 	Janjans1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 238, 4, 3
 };

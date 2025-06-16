@@ -70,7 +70,7 @@ static INT32 DrvMahjongKeyMatrix;
 
 static struct BurnInputInfo MgakuenInputList[] =
 {
-	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0f + 7, "p1 coin"   },
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 start"  },
 	{"P1 A"              , BIT_DIGITAL  , DrvInputPort1  + 7, "mah a"     },
 	{"P1 B"              , BIT_DIGITAL  , DrvInputPort2  + 7, "mah b"     },

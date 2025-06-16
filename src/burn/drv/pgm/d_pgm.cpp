@@ -960,6 +960,14 @@ static struct BurnRomInfo kov2dzxxBiosRomDesc[] = {
 	{ "dzxx_p02s.u20", 				0x0080000, 0xcb060565, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (hack)
 };
 
+static struct BurnRomInfo kovlsyxBiosRomDesc[] = {
+	{ "pgm_t01s.rom", 				0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
+	{ "lsyx_m01s.rom", 				0x0200000, 0x81a6aeca, BRF_SND | BRF_BIOS },	// 0x81 - Samples (hack)
+
+	{ "pgm_p01s.u20", 				0x0020000, 0xe42b166e, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001,     older  - 02/26/97 - 11:14:09)
+	{ "pgm_p02s.u20", 				0x0020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x83 - 68K BIOS (V0001,     newer  - 07/10/97 - 16:36:08)
+};
+
 static struct BurnRomInfo kovp12dwBiosRomDesc[] = {
 	{ "pgm_t01s.rom", 				0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
 	{ "12dw_m01s.rom", 				0x0200000, 0x692511a5, BRF_SND | BRF_BIOS },	// 0x81 - Samples (hack)
@@ -8322,7 +8330,7 @@ struct BurnDriver BurnDrvkovshpzqhl = {
 // GOTVG 20141209
 
 static struct BurnRomInfo kovlsyxRomDesc[] = {
-	{ "lsyx_p0600h_101.rom",	0x0400000, 0xd24da1f8, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "lsyx_500.rom",			0x0400000, 0xd24da1f8, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "lsyx_t0600.u2",			0x0800000, 0xa919ec0f, 2 | BRF_GRA },            //  1 Tile data
 
@@ -8340,7 +8348,7 @@ static struct BurnRomInfo kovlsyxRomDesc[] = {
 	{ "lsyx_v100_china.asic",	0x0004000, 0x8598d603, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kovlsyx, kovlsyx, pgm)
+STDROMPICKEXT(kovlsyx, kovlsyx, kovlsyxBios)
 STD_ROM_FN(kovlsyx)
 
 static INT32 kovshpmaphackInit()

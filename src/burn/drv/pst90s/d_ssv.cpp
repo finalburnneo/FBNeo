@@ -501,7 +501,7 @@ STDINPUTINFO(Hypreact)
 
 static struct BurnInputInfo Hypreac2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoyF + 0,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 left"	},
@@ -528,7 +528,6 @@ static struct BurnInputInfo Hypreac2InputList[] = {
 	{"P1 Kan",		BIT_DIGITAL,	DrvJoy4 + 4,	"mah kan"	},
 	{"P1 Ron",		BIT_DIGITAL,	DrvJoy6 + 4,	"mah ron"	},
 	{"P1 Reach",	BIT_DIGITAL,	DrvJoy5 + 4,	"mah reach"	},
-
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 up"		},
@@ -5363,6 +5362,7 @@ static void Hypreac2V60Map()
 static INT32 Hypreac2Init()
 {
 	watchdog_disable = 1;
+	hypreact_kludge = 1;
 
 	return DrvCommonInit(Hypreac2V60Map, NULL, 1, 0, 1, 2, -1, 0.10);
 }

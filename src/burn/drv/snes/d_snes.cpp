@@ -14473,6 +14473,45 @@ struct BurnDriver BurnDrvsnes_Georgeforemane = {
 	512, 448, 4, 3
 };
 
+// Getsumen no Anubis / Anubis of the Moon's Surface (Japan)
+
+static struct BurnRomInfo snes_GetsumenjRomDesc[] = {
+	{ "Getsumen no Anubis - Anubis of the Moon's Surface (J)(1995)(Imagineer).sfc", 3145728, 0x78432ddc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Getsumenj)
+STD_ROM_FN(snes_Getsumenj)
+
+struct BurnDriver BurnDrvsnes_Getsumenj = {
+	"snes_getsumenj", NULL, NULL, NULL, "1995",
+	"Getsumen no Anubis / Anubis of the Moon's Surface (Japan)\0", NULL, "Imagineer", "SNES / Super Famicom",
+	L"\u6708\u9762\u306e\u30a2\u30cc\u30d3\u30b9\0Anubis of the Moon's Surface (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_GetsumenjRomInfo, snes_GetsumenjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Getsumen no Anubis / Anubis of the Moon's Surface (Hack, Simplified Chinese v1.0)
+// https://www.1dzj.top/index.php/post/194.html
+
+static struct BurnRomInfo snes_GetsumentscRomDesc[] = {
+	{ "Getsumen no Anubis - Anubis of the Moon's Surface T-Chs v1.0 (2025)(CLARK.H).sfc", 4194304, 0x779b5bc5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Getsumentsc)
+STD_ROM_FN(snes_Getsumentsc)
+
+struct BurnDriver BurnDrvsnes_Getsumentsc = {
+	"snes_getsumentsc", "snes_getsumenj", NULL, NULL, "2025",
+	"Getsumen no Anubis / Anubis of the Moon's Surface (Hack, Simplified Chinese v1.0)\0", NULL, "CLARK.H", "SNES / Super Famicom",
+	L"\u6708\u9762\u7684\u963f\u52aa\u6bd4\u65af\0Anubis of the Moon's Surface (Hack, Simplified Chinese v1.0)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_GetsumentscRomInfo, snes_GetsumentscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Kidou Butouden G-Gundam (Japan)
 
 static struct BurnRomInfo snes_GgundamjRomDesc[] = {
@@ -23005,7 +23044,7 @@ struct BurnDriver BurnDrvsnes_Mystdung2ts = {
 	512, 448, 4, 3
 };
 
-// Fushigi no Dungeon 2 - Fuurai no Shiren (Hack, Simplified Chinese v1.0)
+// Fushigi no Dungeon 2 - Fuurai no Shiren ()
 
 static struct BurnRomInfo snes_Mystdung2tscRomDesc[] = {
 	{ "Fushigi no Dungeon 2 - Fuurai no Shiren T-Chs v1.0 (2011)(Werther, Phoenix, Kenyo).sfc", 4194304, 0xb8d26134, BRF_ESS | BRF_PRG },

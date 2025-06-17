@@ -43,6 +43,7 @@ static UINT8 DrvMah9[8];
 static UINT8 DrvMahs[10];
 static UINT32 DrvInputs[2];
 static UINT8 DrvDips[3];
+static UINT8 DrvDiag[1];
 static UINT8 DrvReset;
 
 static INT32 mahjong = 0;
@@ -93,6 +94,7 @@ static struct BurnInputInfo LoderndfInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 21,	"p4 fire 2"	},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 22,	"p4 fire 3"	},
 
+	{"Service Mode",	BIT_DIGITAL,	DrvDiag + 0,		"diag"		},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
@@ -132,6 +134,7 @@ static struct BurnInputInfo HotdebutInputList[] = {
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 18,	"p4 fire 3"	},
 	{"P4 Button 4",		BIT_DIGITAL,	DrvJoy2 + 19,	"p4 fire 4"	},
 
+	{"Service Mode",	BIT_DIGITAL,	DrvDiag + 0,		"diag"		},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
@@ -186,6 +189,7 @@ static struct BurnInputInfo HotgmckInputList[] = {
 	{"P2 Ron",		BIT_DIGITAL,	DrvMah8 + 4,	"mah ron"	},
 	{"P2 Reach",	BIT_DIGITAL,	DrvMah7 + 4,	"mah reach"	},
 
+	{"Service Mode",	BIT_DIGITAL,	DrvDiag + 0,		"diag"		},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvMah1 + 4,	"service"	},
 	{"Service",		BIT_DIGITAL,	DrvMah1 + 7,	"service"	},
@@ -197,14 +201,10 @@ STDINPUTINFO(Hotgmck)
 
 static struct BurnDIPInfo LoderndfDIPList[]=
 {
-	DIP_OFFSET(0x27)
+	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0x60, NULL					},
 	{0x01, 0xff, 0xff, 0x01, NULL					},
 	{0x02, 0xff, 0xff, 0x01, NULL					},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x00, 0x01, 0x20, 0x20, "Off"					},
-	{0x00, 0x01, 0x20, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Debug"				},
 	{0x00, 0x01, 0x40, 0x40, "Off"					},
@@ -223,13 +223,9 @@ STDDIPINFO(Loderndf)
 
 static struct BurnDIPInfo HotdebutDIPList[]=
 {
-	DIP_OFFSET(0x1b)
+	DIP_OFFSET(0x1c)
 	{0x00, 0xff, 0xff, 0x60, NULL		},
 	{0x01, 0xff, 0xff, 0x01, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x00, 0x01, 0x20, 0x20, "Off"		},
-	{0x00, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Debug"	},
 	{0x00, 0x01, 0x40, 0x40, "Off"		},
@@ -244,13 +240,9 @@ STDDIPINFO(Hotdebut)
 
 static struct BurnDIPInfo HotgmckDIPList[]=
 {
-	DIP_OFFSET(0x2d)
+	DIP_OFFSET(0x2e)
 	{0x00, 0xff, 0xff, 0x60, NULL		},
 	{0x01, 0xff, 0xff, 0x01, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x00, 0x01, 0x20, 0x20, "Off"		},
-	{0x00, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Debug"	},
 	{0x00, 0x01, 0x40, 0x40, "Off"		},
@@ -956,6 +948,7 @@ static INT32 DrvFrame()
 	Sh2NewFrame();
 
 	{
+		DrvDips[0] = (DrvDips[0] & ~(1<<5)) | (!DrvDiag[0] << 5);
 		if (mahjong) {
 			memset (DrvMahs, 0xff, 10);
 			DrvMahs[0] = (~0x60) | (DrvDips[0] & 0x60);

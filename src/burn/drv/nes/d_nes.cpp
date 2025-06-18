@@ -1968,6 +1968,24 @@ struct BurnDriver BurnDrvfds_golfuscourse = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Gokuraku Yuugi - Game Tengoku (Japan)
+static struct BurnRomInfo fds_gokyuugamtenRomDesc[] = {
+	{ "Gokuraku Yuugi - Game Tengoku (Japan)(1987)(Sofel).fds",          131000, 0x42fc78ae, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_gokyuugamten, fds_gokyuugamten, fds_fdsbios)
+STD_ROM_FN(fds_gokyuugamten)
+
+struct BurnDriver BurnDrvfds_gokyuugamten = {
+	"fds_gokyuugamten", "fds_playtmprdise", "fds_fdsbios", NULL, "1987",
+	"Gokuraku Yuugi - Game Tengoku (Japan)\0", NULL, "Sofel", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_MINIGAMES, 0,
+	NESGetZipName, fds_gokyuugamtenRomInfo, fds_gokyuugamtenRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Goonies, The (Japan)
 static struct BurnRomInfo fds_gooniesRomDesc[] = {
 	{ "Goonies (Japan)(1988)(Konami).fds",          65516, 0x81b760a2, BRF_ESS | BRF_PRG },
@@ -2609,18 +2627,37 @@ struct BurnDriver BurnDrvfds_lutter = {
 };
 
 // Maerchen Veil (Japan)
-static struct BurnRomInfo fds_maerchenveilRomDesc[] = {
+static struct BurnRomInfo fds_maerchenveiljRomDesc[] = {
 	{ "Maerchen Veil (Japan)(1987)(Sunsoft).fds",          131016, 0x618d10a2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_maerchenveilj, fds_maerchenveilj, fds_fdsbios)
+STD_ROM_FN(fds_maerchenveilj)
+
+struct BurnDriver BurnDrvfds_maerchenveilj = {
+	"fds_maerchenveilj", "fds_maerchenveil", "fds_fdsbios", NULL, "1987",
+	"Maerchen Veil (Japan)\0", NULL, "Sunsoft", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, fds_maerchenveiljRomInfo, fds_maerchenveiljRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Maerchen Veil (Hack, English)
+// https://www.romhacking.net/translations/7411/
+static struct BurnRomInfo fds_maerchenveilRomDesc[] = {
+	{ "Marchen Veil T-Eng (2025)(BlackPaladin).fds",          131000, 0x51ec9018, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_maerchenveil, fds_maerchenveil, fds_fdsbios)
 STD_ROM_FN(fds_maerchenveil)
 
 struct BurnDriver BurnDrvfds_maerchenveil = {
-	"fds_maerchenveil", NULL, "fds_fdsbios", NULL, "1987",
-	"Maerchen Veil (Japan)\0", NULL, "Sunsoft", "Famicom Disk System",
+	"fds_maerchenveil", NULL, "fds_fdsbios", NULL, "2025",
+	"Maerchen Veil (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, fds_maerchenveilRomInfo, fds_maerchenveilRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -2951,6 +2988,25 @@ struct BurnDriver BurnDrvfds_patlaen = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_patlaenRomInfo, fds_patlaenRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Playtime Paradise (Hack, English)
+// https://www.romhacking.net/translations/7383/
+static struct BurnRomInfo fds_playtmprdiseRomDesc[] = {
+	{ "Playtime Paradise T-Eng (2024)(BlackPaladin).fds",          131000, 0x59ad90ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_playtmprdise, fds_playtmprdise, fds_fdsbios)
+STD_ROM_FN(fds_playtmprdise)
+
+struct BurnDriver BurnDrvfds_playtmprdise = {
+	"fds_playtmprdise", NULL, "fds_fdsbios", NULL, "2024",
+	"Playtime Paradise (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_FDS, GBF_MINIGAMES, 0,
+	NESGetZipName, fds_playtmprdiseRomInfo, fds_playtmprdiseRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

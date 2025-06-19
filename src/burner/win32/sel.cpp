@@ -1558,9 +1558,9 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 	TCHAR szIcon[MAX_PATH] = { 0 };
 
 	switch (nIconsSize) {
-		case ICON_16x16: nIconsSizeXY = 16;	nIconsYDiff =  4;	break;
-		case ICON_24x24: nIconsSizeXY = 24;	nIconsYDiff =  8;	break;
-		case ICON_32x32: nIconsSizeXY = 32;	nIconsYDiff = 12;	break;
+		case ICON_16x16: nIconsSizeXY = 16;	nIconsYDiff =  2;	break;
+		case ICON_24x24: nIconsSizeXY = 24;	nIconsYDiff =  6;	break;
+		case ICON_32x32: nIconsSizeXY = 32;	nIconsYDiff = 10;	break;
 	}
 
 	const UINT32 nDrvCount = nBurnDrvCount;
@@ -1731,12 +1731,17 @@ void DestroyDrvIconsCache()
 		DestroyIcon(pIconsCache[i]);
 	}
 	free(pIconsCache); pIconsCache = NULL;
-	nIconsSizeXY = 16; nIconsYDiff = 4;
+	nIconsSizeXY = 16; nIconsYDiff = 2;
 }
 
 void CreateDrvIconsCache()
 {
-	if (!bEnableIcons) return;
+	if (!bEnableIcons) {
+		nIconsSize   = ICON_16x16;
+		nIconsSizeXY = 16;
+		nIconsYDiff  = 2;
+		return;
+	}
 
 	if (NULL != pIconsCache) DestroyDrvIconsCache();
 	pIconsCache = (HICON*)malloc((nBurnDrvCount + ICON_ENUMEND + 1) * sizeof(HICON));
@@ -2831,8 +2836,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						rect.left += 16 + 8;
 					}
 
-					rect.top += 2;
-
 					{
 						// Draw text
 
@@ -2860,6 +2863,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 							rect.left += FIELD_SIZE;
 						}
+
+						rect.top += 2;
 
 						{
 							// Draw icons if needed

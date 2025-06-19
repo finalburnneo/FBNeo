@@ -233,7 +233,7 @@ static void dsp_bios_reform(uint8_t *ori_bios, uint8_t *new_bios, int is_seta) {
 	}
 }
 
-void cart_load(Cart* cart, int type, uint8_t* rom, int romSize, uint8_t* biosrom, int biosromSize, int ramSize, bool hasBattery) {
+void cart_load(Cart* cart, int type, uint8_t* rom, int romSize, uint8_t* biosrom, int biosromSize, int ramSize, bool ramFill, bool hasBattery) {
   cart->type = type;
   cart_mapRwHandlers(cart);
   cart_mapRun(cart);
@@ -245,6 +245,7 @@ void cart_load(Cart* cart, int type, uint8_t* rom, int romSize, uint8_t* biosrom
   cart->romSize = romSize;
   if(ramSize > 0) {
     cart->ram = BurnMalloc(ramSize);
+	memset(cart->ram, ramFill, ramSize);
   } else {
     cart->ram = NULL;
   }

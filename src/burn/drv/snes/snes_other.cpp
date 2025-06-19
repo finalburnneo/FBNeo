@@ -111,6 +111,8 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 
   // -- cart specific config --
   snes->ramFill = 0x00; // default, 00-fill
+  UINT8 cartRamFill = 0x00; // cart-ram or save ram default-fill
+
   if (!strcmp(headers[used].name, "DEATH BRADE") || !strcmp(headers[used].name, "POWERDRIVE")) {
 	  snes->ramFill = 0xff; // games prefer 0xff fill
   }
@@ -119,6 +121,9 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
   }
   if (!strcmp(headers[used].name, "PGA TOUR GOLF")) {
 	  snes->ramFill = 0x3f;
+  }
+  if (!strcmp(headers[used].name, "KEN GRIFFEY JR BASEBA")) {
+	  cartRamFill = 0xff;
   }
   if (!strcmp(headers[used].name, "SUPER MARIO KART")) {
 	  snes->ramFill = 0x3f; // start always select 2p if 00-fill
@@ -179,7 +184,7 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 
   cart_load(
     snes->cart, headers[used].cartType,
-    newData, newLength, biosdata, bioslength, headers[used].chips > 0 ? headers[used].ramSize : 0,
+    newData, newLength, biosdata, bioslength, headers[used].chips > 0 ? headers[used].ramSize : 0, cartRamFill,
     headers[used].hasBattery
   );
 

@@ -11261,20 +11261,38 @@ struct BurnDriver BurnDrvnes_streefigiihac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Street Fighter III (Unl)
+// Street Fighter III (Taiwan) (Unl)
 static struct BurnRomInfo nes_streefigiiiRomDesc[] = {
-	{ "Street Fighter III (Unl)(199x).nes",          655376, 0xa21b5886, BRF_ESS | BRF_PRG },
+	{ "Street Fighter III (Taiwan)(Unl)(1994)(Hummer Team).nes",          655376, 0x22cdd2f6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_streefigiii)
 STD_ROM_FN(nes_streefigiii)
 
 struct BurnDriver BurnDrvnes_streefigiii = {
-	"nes_streefigiii", NULL, NULL, NULL, "199?",
-	"Street Fighter III (Unl)\0", NULL, "<unknown>", "NES / Famicom",
+	"nes_streefigiii", NULL, NULL, NULL, "1994",
+	"Street Fighter III (Taiwan) (Unl)\0", NULL, "Hummer Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_streefigiiiRomInfo, nes_streefigiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Street Fighter III (Hack, 18 characters)
+static struct BurnRomInfo nes_streefigiii18cRomDesc[] = {
+	{ "Street Fighter III Hack (18 characters)(199x).nes",          655376, 0xa21b5886, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefigiii18c)
+STD_ROM_FN(nes_streefigiii18c)
+
+struct BurnDriver BurnDrvnes_streefigiii18c = {
+	"nes_streefigiii18c", "nes_streefigiii", NULL, NULL, "199?",
+	"Street Fighter III (Hack, 18 characters)\0", NULL, "<unknown>", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_streefigiii18cRomInfo, nes_streefigiii18cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

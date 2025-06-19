@@ -7800,7 +7800,7 @@ struct BurnDriver BurnDrvKovsgqyzd = {
 
 // Knights of Valour Super Heroes / Sangoku Senki Super Heroes (bootleg, V104CN)
 
-static struct BurnRomInfo kovshbRomDesc[] = {
+static struct BurnRomInfo kovshblRomDesc[] = {
 	{ "u0706.rom",	   				0x0400000, 0x57c75b34, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "pgm_t0600.u11",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
@@ -7820,10 +7820,10 @@ static struct BurnRomInfo kovshbRomDesc[] = {
 	{ "kovsh_v100_china.asic", 		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, // 11 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kovshb, kovshb, pgm)
-STD_ROM_FN(kovshb)
+STDROMPICKEXT(kovshbl, kovshbl, pgm)
+STD_ROM_FN(kovshbl)
 
-static INT32 kovshbInit()
+static INT32 kovshblInit()
 {
 	pPgmProtCallback = install_protection_asic27a_kovsh;
 
@@ -7836,13 +7836,13 @@ static INT32 kovshbInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvKovshb = {
-	"kovshb", "kovsh", "pgm", NULL, "1999",
+struct BurnDriver BurnDrvKovshbl = {
+	"kovshbl", "kovsh", "pgm", NULL, "1999",
 	"Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104CN)\0", NULL, "bootleg", "PolyGame Master",
 	L"Knights of Valour Superheroes\0\u4E09\u56FD\u6218\u7EAA\0\u98CE\u4E91\u518D\u8D77 (bootleg, V104CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovshbRomInfo, kovshbRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
-	kovshbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	NULL, kovshblRomInfo, kovshblRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovshblInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -7853,28 +7853,28 @@ struct BurnDriver BurnDrvKovshb = {
    TIME: 14:23:43 
    IGS PCB NO-0213 MADE IN TAIWAN */
 
-static struct BurnRomInfo kovbootRomDesc[] = {
-	{ "kovboot_prg1.29f1610ml", 	0x200000, 0xe74fcc47, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "kovboot_prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
+static struct BurnRomInfo kovblRomDesc[] = {
+	{ "prg1.29f1610ml", 	0x200000, 0xe74fcc47, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0600a 1610",				0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
-	{ "t0600b 1610",				0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
-	{ "t0600c 1610",				0x0200000, 0x461dc80c, 2 | BRF_GRA },			//  4
-	{ "t0600d 1610",				0x0200000, 0xf7e6b529, 2 | BRF_GRA },			//  5
+	{ "t0600a 1610",		0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
+	{ "t0600b 1610",		0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
+	{ "t0600c 1610",		0x0200000, 0x461dc80c, 2 | BRF_GRA },			//  4
+	{ "t0600d 1610",		0x0200000, 0xf7e6b529, 2 | BRF_GRA },			//  5
 
-	{ "pgm_a0600.u2",     			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
-	{ "pgm_a0601.u4",     			0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
-	{ "pgm_a0602.u6",     			0x0800000, 0xe7a32959, 3 | BRF_GRA },			//  8
-	{ "pgm_a0603.u9",     			0x0400000, 0xec31abda, 3 | BRF_GRA },			//  9
+	{ "pgm_a0600.u2",     	0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
+	{ "pgm_a0601.u4",     	0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
+	{ "pgm_a0602.u6",     	0x0800000, 0xe7a32959, 3 | BRF_GRA },			//  8
+	{ "pgm_a0603.u9",     	0x0400000, 0xec31abda, 3 | BRF_GRA },			//  9
 
-	{ "pgm_b0600.u5",     			0x0800000, 0x7d3cd059, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
-	{ "pgm_b0601.u7",     			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
+	{ "pgm_b0600.u5",     	0x0800000, 0x7d3cd059, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
+	{ "pgm_b0601.u7",     	0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
 
-	{ "pgm_m0600.u3",     			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples
+	{ "pgm_m0600.u3",     	0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples
 };
 
-STDROMPICKEXT(kovboot, kovboot, pgm)
-STD_ROM_FN(kovboot)
+STDROMPICKEXT(kovbl, kovbl, pgm)
+STD_ROM_FN(kovbl)
 
 static UINT16 __fastcall kovboot_read_word(UINT32 address)
 {
@@ -7936,12 +7936,12 @@ static INT32 kovbootExit()
 	return pgmExit();
 }
 
-struct BurnDriver BurnDrvKovboot = {
-	"kovboot", "kov", "pgm", NULL, "1999",
+struct BurnDriver BurnDrvKovbl = {
+	"kovbl", "kov", "pgm", NULL, "1999",
 	"Knights of Valour / San Guo Zhan Ji / Sangoku Senki (Bootleg, V112CN?)\0", NULL, "bootleg", "PolyGame Master",
 	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (bootleg, V112CN?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, kovbootRomInfo, kovbootRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovblRomInfo, kovblRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovbootInit, kovbootExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -7954,35 +7954,35 @@ struct BurnDriver BurnDrvKovboot = {
    TIME: 10:33:33 
    IGS PCB NO-0213 MADE IN TAIWAN */
 
-static struct BurnRomInfo kovboot2RomDesc[] = {
-	{ "kovboot2_prg1.29f1610ml", 	0x200000, 0x35806d1b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "kovboot2_prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
+static struct BurnRomInfo kovplusblRomDesc[] = {
+	{ "prg1.29f1610ml", 	0x200000, 0x35806d1b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "t0600a 1610",				0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
-	{ "t0600b 1610",				0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
-	{ "t0600c 1610",				0x0200000, 0x461dc80c, 2 | BRF_GRA },			//  4
-	{ "t0600d 1610",				0x0200000, 0xf7e6b529, 2 | BRF_GRA },			//  5
+	{ "t0600a 1610",		0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
+	{ "t0600b 1610",		0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
+	{ "t0600c 1610",		0x0200000, 0x461dc80c, 2 | BRF_GRA },			//  4
+	{ "t0600d 1610",		0x0200000, 0xf7e6b529, 2 | BRF_GRA },			//  5
 
-	{ "pgm_a0600.u2",     			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
-	{ "pgm_a0601.u4",     			0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
-	{ "pgm_a0602.u6",     			0x0800000, 0xe7a32959, 3 | BRF_GRA },			//  8
-	{ "pgm_a0603.u9",     			0x0400000, 0xec31abda, 3 | BRF_GRA },			//  9
+	{ "pgm_a0600.u2",     	0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
+	{ "pgm_a0601.u4",     	0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
+	{ "pgm_a0602.u6",     	0x0800000, 0xe7a32959, 3 | BRF_GRA },			//  8
+	{ "pgm_a0603.u9",     	0x0400000, 0xec31abda, 3 | BRF_GRA },			//  9
 
-	{ "pgm_b0600.u5",     			0x0800000, 0x7d3cd059, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
-	{ "pgm_b0601.u7",     			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
+	{ "pgm_b0600.u5",     	0x0800000, 0x7d3cd059, 4 | BRF_GRA },			// 10 Sprite Masks & Color Indexes
+	{ "pgm_b0601.u7",     	0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
 
-	{ "pgm_m0600.u3",     			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples
+	{ "pgm_m0600.u3",     	0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples
 };
 
-STDROMPICKEXT(kovboot2, kovboot2, pgm)
-STD_ROM_FN(kovboot2)
+STDROMPICKEXT(kovplusbl, kovplusbl, pgm)
+STD_ROM_FN(kovplusbl)
 
-struct BurnDriver BurnDrvKovboot2 = {
-	"kovboot2", "kov", "pgm", NULL, "1999",
+struct BurnDriver BurnDrvKovplusbl = {
+	"kovplusbl", "kov", "pgm", NULL, "1999",
 	"Knights of Valour Plus / San Guo Zhan Ji - Zeng Zong Plus/ Sangoku Senki Masamune Plus (bootleg, V117CN?) \0", NULL, "bootleg", "PolyGame Master",
 	L"Knights of Valour Plus\0\u4e09\u56fd\u6218\u7eaa \u6b63\u5b97 Plus\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 Plus (bootleg, V117CN?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, kovboot2RomInfo, kovboot2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovplusblRomInfo, kovplusblRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovbootInit, kovbootExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

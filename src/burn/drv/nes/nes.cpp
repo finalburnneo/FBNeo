@@ -555,6 +555,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x391be891) ? IS_PAL : 0; // Sensible Soccer
 	NESMode |= (ROMCRC == 0x732b1a7a) ? IS_PAL : 0; // Smurfs, The
 
+	if (nScreenHeight >= SCREEN_HEIGHT_PAL && !(NESMode & SHOW_OVERSCAN) && !(NESMode & IS_PAL)) { // cobol overscan collides with.....
+		bprintf(0, _T("*  PAL mode detected!\n"));
+		NESMode |= IS_PAL;
+	}
+
 	if (NESMode) {
 		bprintf(0, _T("Game-specific configuration:\n"));
 
@@ -9715,6 +9720,7 @@ static UINT16 v_addr, t_addr; // vram addr (loopy-v), temp vram addr (loopy-t)
 static UINT16 v_addr_update;
 static UINT32 v_addr_update_delay;
 static UINT8 fine_x; // fine-x (scroll)
+static UINT8 sprite0_timer;
 
 #if 0 // moved above the mapper section
 static UINT8 ppu_ctrl;
@@ -9962,7 +9968,7 @@ static void ppu_write(UINT16 reg, UINT8 data)
 			}
 
 			ppu_ctrl = data;
-			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d  PC  %X\n"), ctrl.reg, scanline, pixel, nCurrentFrame, M6502GetPC(-1));
+			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d  PC  %X\n"), ppu_ctrl, scanline, pixel, nCurrentFrame, M6502GetPC(-1));
 			t_addr = (t_addr & 0x73ff) | ((data & ctrl_ntbase) << 10);
 
 			sprite_height = (ppu_ctrl & ctrl_sprsize) ? 16 : 8;
@@ -10077,8 +10083,6 @@ static void evaluate_sprites()
 	INT32 cur_line = (scanline == prerender_line) ? -1 : scanline;
 	oam2_cnt = 0;
 
-	memset(sprite_cache, 0, sizeof(sprite_cache));
-
     for (INT32 i = oamAddr; i < 0x40; i++) {
         INT32 line = cur_line - oam_ram[(i << 2) + 0];
         if (line >= 0 && line < sprite_height) {
@@ -10098,6 +10102,8 @@ static void evaluate_sprites()
 
 static void load_sprites()
 {
+	memset(sprite_cache, 0, sizeof(sprite_cache));
+
 	oam_cnt = 0;
 	for (INT32 i = 0; i < oam2_cnt; i++) {
 		oam[oam_cnt++] = oam2[i];
@@ -10170,7 +10176,8 @@ static void draw_and_shift()
 					continue;
 
 				if (oam[i].idx == 0 && pix && x != 0xff) {
-					ppu_status |= status_sp0hit;
+					sprite0_timer = (NESMode & IS_PAL) ? 2 : 1; // rainbow islands (ocean) shaking HUD
+//					ppu_status |= status_sp0hit;
 				}
 
                 spr |= (oam[i].attr & 3) << 2; // add color (attr), 2bpp shift
@@ -10230,6 +10237,7 @@ static inline void scanlinestate(INT32 state)
 				memset(oam2, 0xff, sizeof(oam2)); // clear secondary oam
 
 				if (state == PRERENDER) {
+					//bprintf(0, _T("prerender, clear vblank.  x/scan: %d %d\n"), pixel, scanline);
 					ppu_status &= status_openbus; // clear vbl, spr0 hit & overflow bits
 
 					if (oamAddr > 7) { // 2c02 oamram corruption (Huge Insect, Tatakai no Banka pre-revA)
@@ -10307,6 +10315,13 @@ static inline void scanlinestate(INT32 state)
 			ppu_bus_address = 0x2000 | (v_addr & 0x0fff);
 		}
 
+		if (sprite0_timer) {
+			sprite0_timer--;
+			if (sprite0_timer == 0) {
+				ppu_status |= status_sp0hit;
+			}
+		}
+
 		// Signal scanline to mapper: (+18 gets rid of jitter in Kirby, Yume Penguin Monogatari, Klax, ...)
 		// Note: was 20, but caused occasional flickering in the rasterized water in "Kira Kira Star Night GOLD" (maybe the others in the series, too?)
 		if (pixel == (260+18) /*&& RENDERING*/ && mapper_scanline) mapper_scanline();
@@ -10333,12 +10348,11 @@ void ppu_cycle()
 			set_scanline(0);
 			ppu_frame++;
 			ppu_odd ^= 1;
-			if (RENDERING && ppu_odd) {
+			if (ppu_odd && ~NESMode & IS_PAL) {
 				// this real hw hack was added to the ppu back in the day for better
 				// rf/composite output.  since it messes with current cpu:ppu
 				// sync. and isn't really necessary w/emu, let's disable it. -dink
 				//pixel++;
-				//ppu_framecycles++;
 			}
         }
 	}
@@ -10369,10 +10383,6 @@ static void ppu_run(INT32 cyc)
 	while (ppu_over < 0) { // we didn't run enough cycles last frame, catch-up!
 		cyc++;
 		ppu_over++;
-	}
-
-	if ((NESMode & IS_PAL) && (mega_cyc_counter % 5) == 0) {
-		cyc++;
 	}
 
 	while (cyc) {
@@ -10412,6 +10422,7 @@ static void ppu_scan(INT32 nAction)
 	SCAN_VAR(ppu_pal_emphasis);
 	SCAN_VAR(spritemasklimit);
 	SCAN_VAR(bgmasklimit);
+	SCAN_VAR(sprite0_timer);
 
 	SCAN_VAR(ppu_no_nmi_this_frame);
 	SCAN_VAR(ppu_odd);
@@ -10454,6 +10465,7 @@ static void ppu_reset()
 	}
 	pixel = 0;
 	ppu_frame = 0;
+	sprite0_timer = 0;
 
 	v_addr = 0;
 	t_addr = 0;
@@ -10517,10 +10529,10 @@ static void ppu_init(INT32 is_pal)
 	if (is_pal) {
 		nes_frame_cycles = 33248; // pal
 		prerender_line = 311;
-		nes_ppu_cyc_mult = (UINT32)((float)3.2 * (1 << 12));
+		nes_ppu_cyc_mult = (UINT32)((float)3.2 * (1 << 15));
 	} else {
 		nes_frame_cycles = 29781; // ntsc (default)
-		nes_ppu_cyc_mult = (UINT32)((float)3.0 * (1 << 12));
+		nes_ppu_cyc_mult = (UINT32)((float)3.0 * (1 << 15));
 		prerender_line = 261;
 	}
 
@@ -11388,6 +11400,11 @@ INT32 nes_scanline()
 	return scanline;
 }
 
+INT32 nes_pixel()
+{
+	return pixel;
+}
+
 INT32 NESFrame()
 {
 #if DEBUG_CYC
@@ -11469,7 +11486,7 @@ INT32 NESFrame()
 
 		mapper_run();
 
-		const INT32 p_cyc = ((cyc_counter * nes_ppu_cyc_mult) >> 12) - ppu_framecycles;
+		const INT32 p_cyc = ((cyc_counter * nes_ppu_cyc_mult) >> 15) - ppu_framecycles;
 		if (p_cyc > 0) {
 			ppu_run(p_cyc);
 		}

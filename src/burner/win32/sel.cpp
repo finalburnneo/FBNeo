@@ -1957,6 +1957,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetFocus(hSelList);
 
 		RebuildEverything();
+		LookupSubDirThreads();
 
 		TreeView_SetItemHeight(hSelList, cyItem);
 
@@ -2441,6 +2442,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDC_SEL_SUBDIRS:
 					nLoadMenuShowY ^= SEARCHSUBDIRS;
+					LookupSubDirThreads();
 					break;
 				case IDGAMEINFO:
 					if (bDrvSelected) {

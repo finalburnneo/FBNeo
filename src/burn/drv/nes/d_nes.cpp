@@ -2802,7 +2802,7 @@ STD_ROM_FN(fds_moerotwi)
 struct BurnDriver BurnDrvfds_moerotwi = {
 	"fds_moerotwi", NULL, "fds_fdsbios", NULL, "1986",
 	"Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)\0", NULL, "Konami", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"\u3082\u3048\u308d \u30c4\u30a4\u30f3\u30d3\u30fc \u30b7\u30ca\u30e2\u30f3\u535a\u58eb\u3092\u6551\u3048!\0Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_moerotwiRomInfo, fds_moerotwiRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -24045,6 +24045,24 @@ struct BurnDriver BurnDrvnes_airfortress = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Air Fortress (Japan)
+static struct BurnRomInfo nes_airfortressjRomDesc[] = {
+	{ "Air Fortress (Japan)(1989)(HAL Laboratory).nes",          262160, 0x53cb7ced, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_airfortressj)
+STD_ROM_FN(nes_airfortressj)
+
+struct BurnDriver BurnDrvnes_airfortressj = {
+	"nes_airfortressj", "nes_airfortress", NULL, NULL, "1989",
+	"Air Fortress (Japan)\0", NULL, "HAL Laboratory", "NES / Famicom",
+	L"\u7a7a\u4e2d\u8981\u585e \u30a8\u30a2\u30fc\u30d5\u30a9\u30fc\u30c8\u30ec\u30b9\0Air Fortress (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_airfortressjRomInfo, nes_airfortressjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Airwolf (Japan)
 static struct BurnRomInfo nes_airwolfjRomDesc[] = {
 	{ "Airwolf (Japan)(1988)(Kyugo Boueki).nes",          262160, 0x9639baae, BRF_ESS | BRF_PRG },
@@ -25131,6 +25149,24 @@ struct BurnDriver BurnDrvnes_balloonfight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_balloonfightRomInfo, nes_balloonfightRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Balloon Fight (Japan)
+static struct BurnRomInfo nes_balloonfightjRomDesc[] = {
+	{ "Balloon Fight (Japan)(1986)(Nintendo).nes",          24592, 0xa0dabe0a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_balloonfightj)
+STD_ROM_FN(nes_balloonfightj)
+
+struct BurnDriver BurnDrvnes_balloonfightj = {
+	"nes_balloonfightj", "nes_balloonfight", NULL, NULL, "1986",
+	"Balloon Fight (Japan)\0", NULL, "Nintendo", "NES / Famicom",
+	L"\u30d0\u30eb\u30fc\u30f3\u30d5\u30a1\u30a4\u30c8\0Balloon Fight (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_balloonfightjRomInfo, nes_balloonfightjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30566,6 +30602,24 @@ struct BurnDriver BurnDrvnes_ducktales = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// DuckTales (Japan)
+static struct BurnRomInfo nes_ducktalesjRomDesc[] = {
+	{ "DuckTales (Japan)(1989)(Capcom).nes",          131088, 0xefbe1395, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ducktalesj)
+STD_ROM_FN(nes_ducktalesj)
+
+struct BurnDriver BurnDrvnes_ducktalesj = {
+	"nes_ducktalesj", "nes_ducktales", NULL, NULL, "1989",
+	"DuckTales (Japan)\0", NULL, "Capcom", "NES / Famicom",
+	L"\u308f\u3093\u3071\u304f\u30c0\u30c3\u30af\u5922\u5192\u967a\0DuckTales (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ducktalesjRomInfo, nes_ducktalesjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // DuckTales 2 (USA)
 static struct BurnRomInfo nes_ducktales2RomDesc[] = {
 	{ "DuckTales 2 (USA)(1993)(Capcom).nes",          131088, 0x40ce2fc0, BRF_ESS | BRF_PRG },
@@ -30580,6 +30634,24 @@ struct BurnDriver BurnDrvnes_ducktales2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ducktales2RomInfo, nes_ducktales2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// DuckTales 2 (Japan)
+static struct BurnRomInfo nes_ducktales2jRomDesc[] = {
+	{ "DuckTales 2 (Japan)(1993)(Capcom).nes",          131088, 0xded5175c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ducktales2j)
+STD_ROM_FN(nes_ducktales2j)
+
+struct BurnDriver BurnDrvnes_ducktales2j = {
+	"nes_ducktales2j", "nes_ducktales2", NULL, NULL, "1993",
+	"DuckTales 2 (Japan)\0", NULL, "Capcom", "NES / Famicom",
+	L"\u30c0\u30c3\u30af\u30c6\u30a4\u30eb\u30ba 2\0DuckTales 2 (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ducktales2jRomInfo, nes_ducktales2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -40657,7 +40729,7 @@ struct BurnDriver BurnDrvnes_moaikun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)
+// Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)
 static struct BurnRomInfo nes_moerotwiRomDesc[] = {
 	{ "Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)(1986)(Konami).nes",          131088, 0xac0a622b, BRF_ESS | BRF_PRG },
 };
@@ -40667,8 +40739,8 @@ STD_ROM_FN(nes_moerotwi)
 
 struct BurnDriver BurnDrvnes_moerotwi = {
 	"nes_moerotwi", NULL, NULL, NULL, "1986",
-	"Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"\u3082\u3048\u308d \u30c4\u30a4\u30f3\u30d3\u30fc \u30b7\u30ca\u30e2\u30f3\u535a\u58eb\u3092\u6551\u3048!\0Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_moerotwiRomInfo, nes_moerotwiRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -41237,6 +41309,24 @@ struct BurnDriver BurnDrvnes_mysteryquest = {
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mysteryquestRomInfo, nes_mysteryquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nagagutsu wo Haita Neko - Sekai Isshuu 80 Nichi Daibouken (Japan)
+static struct BurnRomInfo nes_nagagutsuRomDesc[] = {
+	{ "Nagagutsu wo Haita Neko - Sekai Isshuu 80 Nichi Daibouken (Japan)(1986)(Shouei System).nes",          65552, 0xa78475e9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nagagutsu)
+STD_ROM_FN(nes_nagagutsu)
+
+struct BurnDriver BurnDrvnes_nagagutsu = {
+	"nes_nagagutsu", NULL, NULL, NULL, "1986",
+	"Nagagutsu wo Haita Neko - Sekai Isshuu 80 Nichi Daibouken (Japan)\0", NULL, "Shouei System", "NES / Famicom",
+	L"\u9577\u9774\u3092\u306f\u3044\u305f\u732b \u4e16\u754c\u4e00\u546880\u65e5\u5927\u5192\u967a\0Nagagutsu wo Haita Neko - Sekai Isshuu 80 Nichi Daibouken (Japan)", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_nagagutsuRomInfo, nes_nagagutsuRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -48494,20 +48584,20 @@ struct BurnDriver BurnDrvnes_tagindragon = {
 // Taito Chase H.Q. (Hack, English)
 // https://www.romhacking.net/translations/2516/
 static struct BurnRomInfo nes_taitochasehqteRomDesc[] = {
-        { "Taito Chase H.Q. T-Eng (2015)(pacnsacdave).nes",          262160, 0x8b13b5e3, BRF_ESS | BRF_PRG },
+	{ "Taito Chase H.Q. T-Eng (2015)(pacnsacdave).nes",          262160, 0x8b13b5e3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_taitochasehqte)
 STD_ROM_FN(nes_taitochasehqte)
 
 struct BurnDriver BurnDrvnes_taitochasehqte = {
-        "nes_taitochasehqte", NULL, NULL, NULL, "2015",
-        "Taito Chase H.Q. (Hack, English)\0", NULL, "pacnsacdave", "NES / Famicom",
-        NULL, NULL, NULL, NULL,
-        BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RACING, 0,
-        NESGetZipName, nes_taitochasehqteRomInfo, nes_taitochasehqteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-        NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-        SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+	"nes_taitochasehqte", NULL, NULL, NULL, "2015",
+	"Taito Chase H.Q. (Hack, English)\0", NULL, "pacnsacdave", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RACING, 0,
+	NESGetZipName, nes_taitochasehqteRomInfo, nes_taitochasehqteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 // Taito Chase H.Q. (Hack, English + Palette Fix)

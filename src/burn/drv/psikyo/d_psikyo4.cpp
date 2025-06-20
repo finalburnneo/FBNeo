@@ -360,7 +360,7 @@ UINT16 __fastcall ps4_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x03003fe2:
-			return DrvDips[1] | ((EEPROMRead() & 1) << 4);
+			return (loderndf ? DrvDips[1] : 0) | ((EEPROMRead() & 1) << 4);
 
 		case 0x05800000: // used?
 			return psikyo4_read_inputs(0);
@@ -400,7 +400,7 @@ UINT8 __fastcall ps4_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x03003fe1:
-			return DrvDips[1] | ((EEPROMRead() & 1) << 4);
+			return (loderndf ? DrvDips[1] : 0) | ((EEPROMRead() & 1) << 4);
 		
 		case 0x05000000:
 			return BurnYMF278BReadStatus();

@@ -19220,11 +19220,11 @@ struct BurnDriver BurnDrvMslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Legend with Infinite Firepower v6.0, Hack)
 // Modified by AKS & Sakura
-// GOTVG 20250609
+// GOTVG 20250619
 
 static struct BurnRomInfo mslugxcqiRomDesc[] = {
-	{ "250-p1cqi.p1",	0x100000, 0xcce1fb1b, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2cqi.ep1",	0x800000, 0x1dca19dd, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p1cqi.p1",	0x100000, 0x774d4b6e, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2cqi.ep1",	0x800000, 0x62aa22c8, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
@@ -19933,11 +19933,11 @@ struct BurnDriver BurnDrvMslug3cq = {
 
 // Metal Slug 3 (Legend with Infinite Firepower v6.0, Hack)
 // Modified by AKS & Sakura
-// GOTVG 20250612
+// GOTVG 20250619
 
 static struct BurnRomInfo mslug3cqiRomDesc[] = {
-	{ "256-p1cqi.p1",	0x100000, 0x98c63ec0, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqi.sp2",	0x800000, 0x87d0578d, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqi.p1",	0x100000, 0x7c352790, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqi.sp2",	0x800000, 0x0b32c957, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
@@ -20233,11 +20233,11 @@ struct BurnDriver BurnDrvMslug4fd = {
 
 // Metal Slug 4 (Final v6.0, Hack)
 // Modified by AKS & Sakura
-// GOTVG 20250609
+// GOTVG 20250619
 
 static struct BurnRomInfo mslug4zjRomDesc[] = {
 	{ "263-p1zj.p1",	0x100000, 0x2ea44ba5, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2zj.sp2",	0x800000, 0x57d3bd0b, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2zj.sp2",	0x800000, 0x87659fef, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_TEXT
 
@@ -20954,10 +20954,10 @@ struct BurnDriver BurnDrvMslug5sc = {
 
 // Metal Slug 5 (Legend v6.0, Hack)
 // Modified by AKS & Sakura
-// GOTVG 20250609
+// GOTVG 20250619
 
 static struct BurnRomInfo mslug5cqRomDesc[] = {
-	{ "268-p1cq.p1",	0xa00000, 0x80179a8d, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1cq.p1",	0xa00000, 0x6a78dd0a, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_TEXT
 

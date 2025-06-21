@@ -1955,9 +1955,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		TreeView_SetItemHeight(hSelList, cyItem);
 
 		SetFocus(hSelList);
-
 		RebuildEverything();
-		LookupSubDirThreads();
 
 		TreeView_SetItemHeight(hSelList, cyItem);
 

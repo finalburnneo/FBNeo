@@ -11053,7 +11053,7 @@ INT32 NESInit()
 	ppu_init((NESMode & IS_PAL) ? 1 : 0);
 
 	if (NESMode & IS_PAL) {
-		nesapuInitPal(0, 1798773, 0);
+		nesapuInitPal(0, 1662607, 0);
 	} else {
 		nesapuInit(0, 1798773, 0);
 	}

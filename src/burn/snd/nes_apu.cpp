@@ -1037,7 +1037,7 @@ void nesapuInit(INT32 chip, INT32 clock, INT32 is_pal, UINT32 (*pSyncCallback)(I
 	noise_clocks = &noise_freq[(is_pal) ? 1 : 0][0];
 	dpcm_clocks = &dpcm_freq[(is_pal) ? 1 : 0][0];
 
-	info->samps_per_sync = 7445; //(rate * 100) / nBurnFPS;
+	info->samps_per_sync = cycles_per_frame / 4; // 7445 ntsc, 8312 pal
 	info->buffer_size = info->samps_per_sync;
 	info->real_rate = (info->samps_per_sync * nBurnFPS) / 100;
 	//info->apu_incsize = 4; //(float) (clock / (float) info->real_rate);

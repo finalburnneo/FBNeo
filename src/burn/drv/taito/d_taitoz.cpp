@@ -2505,7 +2505,7 @@ static struct BurnRomInfo DblaxleRomDesc[] = {
 	{ "c78-30-1.35",   0x020000, 0x026aac18, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "c78-31-1.36",   0x020000, 0x67ce23e8, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
-	{ "c78-34.c42",    0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "c78-34.42",     0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
 	{ "c78-10.12",     0x080000, 0x44b1897c, BRF_GRA | TAITO_CHARS_BYTESWAP },
 	{ "c78-11.11",     0x080000, 0x7db3d4a3, BRF_GRA | TAITO_CHARS_BYTESWAP },
@@ -2514,6 +2514,8 @@ static struct BurnRomInfo DblaxleRomDesc[] = {
 	{ "c78-07.33",     0x100000, 0x9da00d5b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c78-06.23",     0x100000, 0x8309e91b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c78-05.31",     0x100000, 0x90001f68, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+//	{ "c78-05h_3f99.2",0x080000, 0xc01039b5, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
+//	{ "c78-05l_6503.1",0x080000, 0xf24bf972, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
 	
 	{ "c78-09.12",     0x080000, 0x0dbde6f5, BRF_GRA | TAITO_ROAD },
 	
@@ -2544,7 +2546,7 @@ static struct BurnRomInfo DblaxleuRomDesc[] = {
 	{ "c78-30.35",     0x020000, 0xf73b3ce1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "c78-31.36",     0x020000, 0x4639adee, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
-	{ "c78-34.c42",    0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "c78-34.42",     0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
 	{ "c78-10.12",     0x080000, 0x44b1897c, BRF_GRA | TAITO_CHARS_BYTESWAP },
 	{ "c78-11.11",     0x080000, 0x7db3d4a3, BRF_GRA | TAITO_CHARS_BYTESWAP },
@@ -2574,6 +2576,47 @@ static struct BurnRomInfo DblaxleuRomDesc[] = {
 STD_ROM_PICK(Dblaxleu)
 STD_ROM_FN(Dblaxleu)
 
+static struct BurnRomInfo DblaxleuaRomDesc[] = {
+	/* Manual refers to this version as the "Version Without Communication" */
+	{ "c78_36-1.2",    0x020000, 0x3bb0344a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_38-1.4",    0x020000, 0x918176cb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_37-1.3",    0x020000, 0x5a12e2bb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c78_39-1.5",    0x020000, 0x62f910d4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "c78-30.35",     0x020000, 0xf73b3ce1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c78-31.36",     0x020000, 0x4639adee, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "c78-34.42",     0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c78-10.12",     0x080000, 0x44b1897c, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "c78-11.11",     0x080000, 0x7db3d4a3, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "c78-08.25",     0x100000, 0x6c725211, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-07.33",     0x100000, 0x9da00d5b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-06.23",     0x100000, 0x8309e91b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c78-05.31",     0x100000, 0x90001f68, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+//	{ "c78-05h_3f99.2",0x080000, 0xc01039b5, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
+//	{ "c78-05l_6503.1",0x080000, 0xf24bf972, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
+	
+	{ "c78-09.12",     0x080000, 0x0dbde6f5, BRF_GRA | TAITO_ROAD },
+	
+	{ "c78-04.3",      0x080000, 0xcc1aa37c, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "c78-12.33",     0x100000, 0xb0267404, BRF_SND | TAITO_YM2610A },
+	{ "c78-13.46",     0x080000, 0x1b363aa2, BRF_SND | TAITO_YM2610A },
+	
+	{ "c78-14.31",     0x080000, 0x9cad4dfb, BRF_SND | TAITO_YM2610B },
+	
+	{ "c78-25.15",     0x010000, 0x7245a6f6, BRF_OPT },
+	{ "c78-15.22",     0x000100, 0xfbf81f30, BRF_OPT },
+	{ "c78-21.74",     0x000100, 0x2926bf27, BRF_OPT },
+	{ "c84-10.16",     0x000400, 0x643e8bfc, BRF_OPT },
+	{ "c84-11.17",     0x000400, 0x10728853, BRF_OPT },
+};
+
+STD_ROM_PICK(Dblaxleua)
+STD_ROM_FN(Dblaxleua)
+
 static struct BurnRomInfo DblaxleulRomDesc[] = {
 	/* Side by side linkable version */
 	{ "c78_41-1.2",    0x020000, 0xcf297fe4, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2584,7 +2627,7 @@ static struct BurnRomInfo DblaxleulRomDesc[] = {
 	{ "c78-30-1.35",   0x020000, 0x026aac18, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "c78-31-1.36",   0x020000, 0x67ce23e8, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
-	{ "c78-34.c42",    0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "c78-34.42",     0x020000, 0xf2186943, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
 	{ "c78-10.12",     0x080000, 0x44b1897c, BRF_GRA | TAITO_CHARS_BYTESWAP },
 	{ "c78-11.11",     0x080000, 0x7db3d4a3, BRF_GRA | TAITO_CHARS_BYTESWAP },
@@ -2593,6 +2636,8 @@ static struct BurnRomInfo DblaxleulRomDesc[] = {
 	{ "c78-07.33",     0x100000, 0x9da00d5b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c78-06.23",     0x100000, 0x8309e91b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "c78-05.31",     0x100000, 0x90001f68, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+//	{ "c78-05h_3f99.2",0x080000, 0xc01039b5, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
+//	{ "c78-05l_6503.1",0x080000, 0xf24bf972, BRF_GRA | TAITO_SPRITESA_DBLAXLEU }, // these 2 ROMs known to come split on a Taito ROM 16 PCBOARD
 	
 	{ "c78-09.12",     0x080000, 0x0dbde6f5, BRF_GRA | TAITO_ROAD },
 	
@@ -7044,7 +7089,7 @@ struct BurnDriver BurnDrvContcircj = {
 
 struct BurnDriver BurnDrvDblaxle = {
 	"dblaxle", NULL, NULL, NULL, "1991",
-	"Double Axle (US, Rev 1)\0", NULL, "Taito America Corporation", "Taito Z",
+	"Double Axle (US, Rev 1, set 1)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, DblaxleRomInfo, DblaxleRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
@@ -7058,6 +7103,16 @@ struct BurnDriver BurnDrvDblaxleu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, DblaxleuRomInfo, DblaxleuRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
+	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDblaxleua = {
+	"dblaxleua", "dblaxle", NULL, NULL, "1991",
+	"Double Axle (US, Rev 1, set 2)\0", NULL, "Taito America Corporation", "Taito Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	NULL, DblaxleuaRomInfo, DblaxleuaRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
 	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

@@ -3652,7 +3652,7 @@ struct BurnDriver BurnDrvRpatroln = {
 	"rpatroln", "rpatrol", NULL, NULL, "1981",
 	"River Patrol (Japan, unprotected)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolnRomInfo, rpatrolnRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

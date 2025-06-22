@@ -3734,7 +3734,7 @@ STD_ROM_FN(fds_trans)
 
 struct BurnDriver BurnDrvfds_trans = {
 	"fds_trans", NULL, "fds_fdsbios", NULL, "1987",
-	"Transformers - The Headmasters (Hack, English)\0", NULL, "Takara", "Famicom Disk System",
+	"Transformers - The Headmasters (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_transRomInfo, fds_transRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,

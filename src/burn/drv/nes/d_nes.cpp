@@ -3706,8 +3706,27 @@ struct BurnDriver BurnDrvfds_topplezip = {
 };
 
 // Transformers - The Headmasters (Japan)
-static struct BurnRomInfo fds_transRomDesc[] = {
+static struct BurnRomInfo fds_transjRomDesc[] = {
 	{ "Transformers - The Headmasters (Japan)(1987)(Takara).fds",          131016, 0x8bd904cd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_transj, fds_transj, fds_fdsbios)
+STD_ROM_FN(fds_transj)
+
+struct BurnDriver BurnDrvfds_transj = {
+	"fds_transj", "fds_trans", "fds_fdsbios", NULL, "1987",
+	"Transformers - The Headmasters (Japan)\0", NULL, "Takara", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
+	NESGetZipName, fds_transjRomInfo, fds_transjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Transformers - The Headmasters (Hack, English)
+// https://www.romhacking.net/translations/7412/
+static struct BurnRomInfo fds_transRomDesc[] = {
+	{ "Transformers - The Headmasters T-Eng (2025)(BlackPaladin).fds",          131000, 0xe3165537, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_trans, fds_trans, fds_fdsbios)
@@ -3715,9 +3734,9 @@ STD_ROM_FN(fds_trans)
 
 struct BurnDriver BurnDrvfds_trans = {
 	"fds_trans", NULL, "fds_fdsbios", NULL, "1987",
-	"Transformers - The Headmasters (Japan)\0", NULL, "Takara", "Famicom Disk System",
+	"Transformers - The Headmasters (Hack, English)\0", NULL, "Takara", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_transRomInfo, fds_transRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

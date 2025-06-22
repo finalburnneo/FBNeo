@@ -61,7 +61,7 @@ struct Snes {
   bool fastMem;
   uint32_t adrBus;
   uint8_t openBus;
-  uint8_t vramhack;
+  uint8_t vramhack; // 1. allow vram writes during rendering, 2. oam hack for uniracers
 };
 
 Snes* snes_init(void);

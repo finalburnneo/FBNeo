@@ -125,6 +125,9 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
   if (!strcmp(headers[used].name, "KEN GRIFFEY JR BASEBA")) {
 	  cartRamFill = 0xff;
   }
+  if (!strcmp(headers[used].name, "UNIRACERS")) {
+	  snes->vramhack = 2;
+  }
   if (!strcmp(headers[used].name, "SUPER MARIO KART")) {
 	  snes->ramFill = 0x3f; // start always select 2p if 00-fill
   }

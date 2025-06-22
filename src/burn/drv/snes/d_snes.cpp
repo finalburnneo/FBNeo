@@ -284,7 +284,7 @@ static void DrvDoReset()
 	if ((nIpsDrvDefine & IPS_SNES_VRAMHK) || (NULL != pDataRomDesc))
 		DrvDips[0] = 1;
 
-	snes->vramhack = DrvDips[0];
+	snes->vramhack = (snes->vramhack & ~1) + (DrvDips[0] & 1);
 	LastControllerDip = DrvDips[1];
 	LastControllerTimer = 0;
 }

@@ -6577,6 +6577,22 @@ static struct BurnRomInfo DonightRomDesc[] = {
 STD_ROM_PICK(Donight)
 STD_ROM_FN(Donight)
 
+static struct BurnRomInfo VectrgalRomDesc[] = {
+	{ "galmidw.u",     0x00800, 0x745e2d61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galmidw.v",     0x00800, 0x9c999a40, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galmidw.w",     0x00800, 0xb5894925, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galmidw.y",     0x00800, 0x6b3ca10b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7l",            0x00800, 0x1b933207, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "vecgal.1h",     0x00800, 0x02815aec, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "vecgal.1k",     0x00800, 0x11c9898c, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Vectrgal)
+STD_ROM_FN(Vectrgal)
+
 struct BurnDriver BurnDrvGalaxian = {
 	"galaxian", NULL, NULL, NULL, "1979",
 	"Galaxian (Namco set 1)\0", NULL, "Namco", "Galaxian",
@@ -6643,6 +6659,16 @@ struct BurnDriver BurnDrvDonight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, DonightRomInfo, DonightRomName, NULL, NULL, NULL, NULL, DonightInputInfo, DonightDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvVectrgal = {
+	"vectrgal", "galaxian", NULL, NULL, "1998",
+	"Galaxian (Vector Sim, Hack)\0", NULL, "T-Bone", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, VectrgalRomInfo, VectrgalRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -3953,7 +3953,7 @@ struct BurnDriver BurnDrvSuperxm = {
 };
 
 
-// R-Shark
+// R-Shark (set 1)
 
 static struct BurnRomInfo rsharkRomDesc[] = {
 	{ "rspl00.bin",	0x20000, 0x40356b9d, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
@@ -3997,10 +3997,58 @@ static INT32 RsharkInit()
 
 struct BurnDriver BurnDrvRshark = {
 	"rshark", NULL, NULL, NULL, "1995",
-	"R-Shark\0", NULL, "Dooyong", "Miscellaneous",
+	"R-Shark (set 1)\0", NULL, "Dooyong", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rsharkRomInfo, rsharkRomName, NULL, NULL, NULL, NULL, RsharkInputInfo, RsharkDIPInfo,
+	RsharkInit, Drv68KExit, RsharkFrame, RsharkDraw, Drv68KScan, &DrvRecalc, 0x800,
+	240, 384, 3, 4
+};
+
+
+// R-Shark (set 2)
+
+static struct BurnRomInfo rsharkaRomDesc[] = {
+	{ "9.1",		0x20000, 0xdafa38df, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+	{ "8.2",		0x20000, 0x31bd7b90, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.15",		0x10000, 0x8be49bc1, 2 | BRF_PRG | BRF_ESS }, //  2 Audio CPU Code
+
+	{ "4.19",		0x80000, 0xb857e411, 3 | BRF_GRA },           //  3 Characters
+	{ "5.18",		0x80000, 0x7822d77a, 3 | BRF_GRA },           //  4
+	{ "6.21",		0x80000, 0x80215c52, 3 | BRF_GRA },           //  5
+	{ "7.20",		0x80000, 0xbd28bbdc, 3 | BRF_GRA },           //  6
+
+	{ "11.13",		0x80000, 0xb5912b55, 4 | BRF_GRA },           //  7 Sprites
+	{ "10.12",		0x80000, 0x345456af, 4 | BRF_GRA },           //  8
+
+	{ "15.10",		0x80000, 0xd188134d, 5 | BRF_GRA },           //  9 Tiles
+	{ "14.9",		0x80000, 0x0ef637a7, 5 | BRF_GRA },           // 10
+
+	{ "17.7",		0x80000, 0xf47e164c, 6 | BRF_GRA },           // 11 Tiles
+	{ "16.6",		0x80000, 0x52fae286, 6 | BRF_GRA },           // 12
+
+	{ "21.4",		0x80000, 0x0b7b6cc4, 7 | BRF_GRA },           // 13 Tiles
+	{ "20.3",		0x80000, 0x31f218bf, 7 | BRF_GRA },           // 14
+
+	{ "12.14",		0x20000, 0xd5cab49c, 8 | BRF_GRA },           // 15 Tiles
+	{ "13.11",		0x20000, 0x323d4df6, 8 | BRF_GRA },           // 16
+	{ "18.8",		0x20000, 0x5e0091a1, 8 | BRF_GRA },           // 17
+	{ "19.5",		0x20000, 0xe5ae7112, 8 | BRF_GRA },           // 18
+
+	{ "2.16",		0x20000, 0xdbe5632b, 9 | BRF_SND },           // 19 Samples
+	{ "3.17",		0x20000, 0x0dcd3ffb, 9 | BRF_SND },           // 20
+};
+
+STD_ROM_PICK(rsharka)
+STD_ROM_FN(rsharka)
+
+struct BurnDriver BurnDrvRsharka = {
+	"rsharka", "rshark", NULL, NULL, "1995",
+	"R-Shark (set 2)\0", NULL, "Dooyong", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, rsharkaRomInfo, rsharkaRomName, NULL, NULL, NULL, NULL, RsharkInputInfo, RsharkDIPInfo,
 	RsharkInit, Drv68KExit, RsharkFrame, RsharkDraw, Drv68KScan, &DrvRecalc, 0x800,
 	240, 384, 3, 4
 };

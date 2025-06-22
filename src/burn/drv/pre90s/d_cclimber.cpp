@@ -4069,7 +4069,7 @@ struct BurnDriver BurnDrvToprollr = {
 	"toprollr", NULL, NULL, NULL, "1983",
 	"Top Roller\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, toprollrRomInfo, toprollrRomName, NULL, NULL, NULL, NULL, ToprollrInputInfo, ToprollrDIPInfo,
 	toprollrInit, DrvExit, DrvFrame, ToprollrDraw, DrvScan, &DrvRecalc, 0xa0,
 	224, 256, 3, 4

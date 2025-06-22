@@ -2686,7 +2686,7 @@ struct BurnDriver BurnDrvGorfirec = {
 };
 
 
-// Adventures of Robby Roto, The: Roto to the Rescue!
+// The Adventures of Robby Roto! - Roto to the Rescue!
 
 static struct BurnRomInfo robbyRomDesc[] = {
 	{ "rotox1.bin",			0x1000, 0xa431b85a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2706,7 +2706,7 @@ STD_ROM_FN(robby)
 
 struct BurnDriver BurnDrvRobby = {
 	"robby", NULL, NULL, NULL, "1981",
-	"Adventures of Robby Roto, The: Roto to the Rescue!\0", NULL, "Dave Nutting Associates / Bally Midway", "Miscellaneous",
+	"The Adventures of Robby Roto! - Roto to the Rescue!\0", NULL, "Dave Nutting Associates / Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, robbyRomInfo, robbyRomName, NULL, NULL, NULL, NULL, RobbyInputInfo, RobbyDIPInfo,
@@ -2770,7 +2770,7 @@ struct BurnDriver BurnDrvProfpac = {
 };
 
 
-// Demons & Dragons (Prototype)
+// Demons & Dragons (prototype)
 
 static struct BurnRomInfo demndrgnRomDesc[] = {
 	{ "dd-x1.bin",			0x2000, 0x9aeaf79e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2793,7 +2793,7 @@ STD_ROM_FN(demndrgn)
 
 struct BurnDriver BurnDrvDemndrgn = {
 	"demndrgn", NULL, NULL, NULL, "1982",
-	"Demons & Dragons (Prototype)\0", "No Sound", "Dave Nutting Associates / Bally Midway", "Miscellaneous",
+	"Demons & Dragons (prototype)\0", "No Sound", "Dave Nutting Associates / Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demndrgnRomInfo, demndrgnRomName, NULL, NULL, NULL, NULL, DemndrgnInputInfo, DemndrgnDIPInfo,

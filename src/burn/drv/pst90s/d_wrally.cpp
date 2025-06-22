@@ -757,7 +757,7 @@ struct BurnDriver BurnDrvWrallya = {
 };
 
 
-// World Rally (version 1.0, checksum 8AA2)
+// World Rally Championship (version 1.0, checksum 8AA2)
 
 static struct BurnRomInfo wrallybRomDesc[] = {
 	{ "rally_c23.c23",			0x080000, 0xddd6f833, 1 | BRF_PRG | BRF_ESS },    //  0 m68K code
@@ -787,7 +787,7 @@ static INT32 WrallybInit()
 
 struct BurnDriver BurnDrvWrallyb = {
 	"wrallyb", "wrally", NULL, NULL, "1993",
-	"World Rally (version 1.0, checksum 8AA2)\0", NULL, "Gaelco", "Miscellaneous",
+	"World Rally Championship (version 1.0, checksum 8AA2)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallybRomInfo, wrallybRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
@@ -907,7 +907,7 @@ struct BurnDriver BurnDrvWrallye = {
 };
 
 
-// World Rally (version 1.0, checksum C448)
+// World Rally Championship (version 1.0, checksum C448)
 
 static struct BurnRomInfo wrallyacRomDesc[] = {
 	{ "17_27c4001.c23",			0x80000, 0xad823c0e, 1 | BRF_PRG | BRF_ESS },     //  0 m68K code
@@ -935,7 +935,7 @@ STD_ROM_FN(wrallyac)
 
 struct BurnDriver BurnDrvWrallyac = {
 	"wrallyac", "wrally", NULL, NULL, "1993",
-	"World Rally (version 1.0, checksum C448)\0", NULL, "Gaelco (Automáticos Canarios license)", "Miscellaneous",
+	"World Rally Championship (version 1.0, checksum C448)\0", NULL, "Gaelco (Automáticos Canarios license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyacRomInfo, wrallyacRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
@@ -944,7 +944,7 @@ struct BurnDriver BurnDrvWrallyac = {
 };
 
 
-// World Rally (America, version 1.0, checksum 2CC1)
+// World Rally Championship (America, version 1.0, checksum 2CC1)
 
 static struct BurnRomInfo wrallyatRomDesc[] = {
 	{ "rally.c23",			0x080000, 0x366595ad, 1 | BRF_PRG | BRF_ESS },    //  0 m68K code
@@ -969,7 +969,7 @@ STD_ROM_FN(wrallyat)
 
 struct BurnDriver BurnDrvWrallyat = {
 	"wrallyat", "wrally", NULL, NULL, "1993",
-	"World Rally (America, version 1.0, checksum 2CC1)\0", NULL, "Gaelco (Atari license)", "Miscellaneous",
+	"World Rally Championship (America, version 1.0, checksum 2CC1)\0", NULL, "Gaelco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyatRomInfo, wrallyatRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,

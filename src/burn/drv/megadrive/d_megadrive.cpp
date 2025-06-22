@@ -39375,6 +39375,24 @@ struct BurnDriver BurnDrvmd_inktober = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Inkventure (HB)
+static struct BurnRomInfo md_inkventureRomDesc[] = {
+	{ "Inkventure (2025)(Ratalaika Games).bin", 1049096, 0xf3d352ae, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_inkventure)
+STD_ROM_FN(md_inkventure)
+
+struct BurnDriver BurnDrvmd_inkventure = {
+	"md_inkventure", NULL, NULL, NULL, "2025",
+	"Inkventure (HB)\0", NULL, "Ratalaika Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_inkventureRomInfo, md_inkventureRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Insane Pain (HB)
 static struct BurnRomInfo md_insanepainRomDesc[] = {
 	{ "Insane Pain (2022)(Blast Process Games).bin", 4194304, 0xe5487539, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

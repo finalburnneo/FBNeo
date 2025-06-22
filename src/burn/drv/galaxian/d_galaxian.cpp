@@ -19375,7 +19375,7 @@ struct BurnDriver BurnDrvMars = {
 
 struct BurnDriver BurnDrvDevilfsh = {
 	"devilfsh", NULL, NULL, NULL, "1982",
-	"Devil Fish (Scramble hardware)\0", NULL, "Artic", "Galaxian",
+	"Devil Fish (Mars hardware)\0", NULL, "Artic", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, DevilfshRomInfo, DevilfshRomName, NULL, NULL, NULL, NULL, DevilfshInputInfo, DevilfshDIPInfo,

@@ -7006,11 +7006,7 @@ static struct BurnRomInfo kovgsyxRomDesc[] = {
 
 	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
-#if !defined ROM_VERIFY
-	{ "gsyx_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
-#else
-	{ "kovsh_v100_china.asic",		0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
-#endif
+	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)
@@ -7855,7 +7851,7 @@ struct BurnDriver BurnDrvKovshbl = {
 
 static struct BurnRomInfo kovblRomDesc[] = {
 	{ "prg1.29f1610ml", 	0x200000, 0xe74fcc47, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "prg2.am27c4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
 
 	{ "t0600a 1610",		0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
 	{ "t0600b 1610",		0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
@@ -7937,7 +7933,7 @@ static INT32 kovbootExit()
 }
 
 struct BurnDriver BurnDrvKovbl = {
-	"kovbl", "kov", "pgm", NULL, "1999",
+	"kovbl", "kov", "pgm", NULL, "199?",
 	"Knights of Valour / San Guo Zhan Ji / Sangoku Senki (Bootleg, V112CN?)\0", NULL, "bootleg", "PolyGame Master",
 	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (bootleg, V112CN?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
@@ -7956,7 +7952,7 @@ struct BurnDriver BurnDrvKovbl = {
 
 static struct BurnRomInfo kovplusblRomDesc[] = {
 	{ "prg1.29f1610ml", 	0x200000, 0x35806d1b, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "prg2.am27C4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "prg2.am27c4096", 	0x080000, 0x7b3577dc, 1 | BRF_PRG | BRF_ESS },  //  1
 
 	{ "t0600a 1610",		0x0200000, 0x64e406a1, 2 | BRF_GRA },			//  2 Tile data
 	{ "t0600b 1610",		0x0200000, 0x26591209, 2 | BRF_GRA },			//  3
@@ -7978,7 +7974,7 @@ STDROMPICKEXT(kovplusbl, kovplusbl, pgm)
 STD_ROM_FN(kovplusbl)
 
 struct BurnDriver BurnDrvKovplusbl = {
-	"kovplusbl", "kov", "pgm", NULL, "1999",
+	"kovplusbl", "kovplus", "pgm", NULL, "199?",
 	"Knights of Valour Plus / San Guo Zhan Ji - Zeng Zong Plus/ Sangoku Senki Masamune Plus (bootleg, V117CN?) \0", NULL, "bootleg", "PolyGame Master",
 	L"Knights of Valour Plus\0\u4e09\u56fd\u6218\u7eaa \u6b63\u5b97 Plus\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 Plus (bootleg, V117CN?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

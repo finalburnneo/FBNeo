@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		02B8EB041D1FCF2D2E68FF69 /* d_vampire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 356255316E4618747BCFFE7A /* d_vampire.cpp */; };
+		0766E4C32E09C8DB00C43BE5 /* astrocde_snd.h in Headers */ = {isa = PBXBuildFile; fileRef = 0766E4C12E09C8DB00C43BE5 /* astrocde_snd.h */; };
+		0766E4C42E09C8DB00C43BE5 /* astrocde_snd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0766E4C22E09C8DB00C43BE5 /* astrocde_snd.cpp */; };
+		0766E4C62E09C8EE00C43BE5 /* d_astrocde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0766E4C52E09C8EE00C43BE5 /* d_astrocde.cpp */; };
 		1068C09587386087CE47AEE5 /* burn_endian.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A8F47DC289921D421CDA4F5 /* burn_endian.h */; };
 		15D8111159D62DC6D956478E /* input.h in Headers */ = {isa = PBXBuildFile; fileRef = 46848DA1B3100FA88EC8B663 /* input.h */; };
 		23B709B6468DE33132FB4F71 /* d_snes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69DF892FAA153B8C4F32A728 /* d_snes.cpp */; };
@@ -1226,6 +1229,9 @@
 
 /* Begin PBXFileReference section */
 		0435A9635A997B78D6E4A2E6 /* d_lockon.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = d_lockon.cpp; path = ../../src/burn/drv/pre90s/d_lockon.cpp; sourceTree = SOURCE_ROOT; };
+		0766E4C12E09C8DB00C43BE5 /* astrocde_snd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = astrocde_snd.h; sourceTree = "<group>"; };
+		0766E4C22E09C8DB00C43BE5 /* astrocde_snd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = astrocde_snd.cpp; sourceTree = "<group>"; };
+		0766E4C52E09C8EE00C43BE5 /* d_astrocde.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = d_astrocde.cpp; sourceTree = "<group>"; };
 		1225BA6701265F04A9DA807F /* d_expro02.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = d_expro02.cpp; path = ../../src/burn/drv/pst90s/d_expro02.cpp; sourceTree = SOURCE_ROOT; };
 		173F4CC20B58E44BBD41ADA2 /* cx4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cx4.h; path = ../../src/burn/drv/snes/cx4.h; sourceTree = SOURCE_ROOT; };
 		19FF9286CF1987822D8A6469 /* snes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = snes.h; path = ../../src/burn/drv/snes/snes.h; sourceTree = SOURCE_ROOT; };
@@ -4712,6 +4718,7 @@
 		FE1B20F623561A6C0065200C /* pre90s */ = {
 			isa = PBXGroup;
 			children = (
+				0766E4C52E09C8EE00C43BE5 /* d_astrocde.cpp */,
 				FE1B214323561A6D0065200C /* d_4enraya.cpp */,
 				FE1B20FD23561A6D0065200C /* d_1942.cpp */,
 				FE1B210223561A6D0065200C /* d_1943.cpp */,
@@ -4960,6 +4967,8 @@
 		FE1B21E923561A6F0065200C /* snd */ = {
 			isa = PBXGroup;
 			children = (
+				0766E4C12E09C8DB00C43BE5 /* astrocde_snd.h */,
+				0766E4C22E09C8DB00C43BE5 /* astrocde_snd.cpp */,
 				8540A6F82D99D27B00B61187 /* tiamc1_snd.h */,
 				8540A6F92D99D27B00B61187 /* tiamc1_snd.cpp */,
 				8540A6FA2D99D27B00B61187 /* votrax.h */,
@@ -5597,6 +5606,7 @@
 				8540A7332D9B0C1100B61187 /* Sha3.h in Headers */,
 				8540A7342D9B0C1100B61187 /* Sha1.h in Headers */,
 				8540A7352D9B0C1100B61187 /* Lzma2DecMt.h in Headers */,
+				0766E4C32E09C8DB00C43BE5 /* astrocde_snd.h in Headers */,
 				8540A7362D9B0C1100B61187 /* DllSecur.h in Headers */,
 				8540A7372D9B0C1100B61187 /* Blake2.h in Headers */,
 				8540A7382D9B0C1100B61187 /* ZstdDec.h in Headers */,
@@ -6154,6 +6164,7 @@
 				FE1B251623561A760065200C /* d_3x3puzzl.cpp in Sources */,
 				FE1B26BE23561A770065200C /* d_sf.cpp in Sources */,
 				FE1B26EF23561A780065200C /* d_sprcros2.cpp in Sources */,
+				0766E4C42E09C8DB00C43BE5 /* astrocde_snd.cpp in Sources */,
 				FE1B25A423561A760065200C /* d_gijoe.cpp in Sources */,
 				FE1B278E23561A790065200C /* asteroids.cpp in Sources */,
 				FE1B276E23561A790065200C /* ymz280b.cpp in Sources */,
@@ -6257,6 +6268,7 @@
 				FE1B27A023561A790065200C /* tms36xx.cpp in Sources */,
 				FE1B23B623561A750065200C /* h6280.cpp in Sources */,
 				FE1B26DD23561A780065200C /* d_iqblock.cpp in Sources */,
+				0766E4C62E09C8EE00C43BE5 /* d_astrocde.cpp in Sources */,
 				FE1B244523561A750065200C /* 7zCrc.c in Sources */,
 				FE1B24F723561A760065200C /* d_diverboy.cpp in Sources */,
 				FE1B250323561A760065200C /* d_20pacgal.cpp in Sources */,

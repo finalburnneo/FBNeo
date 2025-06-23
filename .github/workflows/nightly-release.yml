@@ -30,12 +30,12 @@ env:
     LINUX_SDL1_X86_64_ARTIFACT: linux-sdl1-x86_64
     LINUX_SDL1_X86_64_ARTIFACT_PATH: linux-sdl1-x86_64.txt
     LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT: linux-sdl1-x86_64-archive
-    MACOS_X86_64_ARTIFACT: macos-x86_64
-    MACOS_X86_64_ARTIFACT_PATH: macos-x86_64.txt
-    MACOS_X86_64_ARCHIVE_ARTIFACT: macos-x86_64-archive
-    MACOS_ARM64_ARTIFACT: macos-arm64
-    MACOS_ARM64_ARTIFACT_PATH: macos-arm64.txt
-    MACOS_ARM64_ARCHIVE_ARTIFACT: macos-arm64-archive
+#    MACOS_X86_64_ARTIFACT: macos-x86_64
+#    MACOS_X86_64_ARTIFACT_PATH: macos-x86_64.txt
+#    MACOS_X86_64_ARCHIVE_ARTIFACT: macos-x86_64-archive
+#    MACOS_ARM64_ARTIFACT: macos-arm64
+#    MACOS_ARM64_ARTIFACT_PATH: macos-arm64.txt
+#    MACOS_ARM64_ARCHIVE_ARTIFACT: macos-arm64-archive
 
 jobs:
   create_release_body:
@@ -340,86 +340,86 @@ jobs:
           path: ${{ steps.create_linux_sdl1_x86_64_archive.outputs.archive_file }}
           retention-days: 1
 
-  build_macos_x86_64:
-    name: Build (MacOS x86_64)
-    runs-on: macos-13 # Required version for x86_64
-    continue-on-error: true
-    steps:
-      - name: Clone
-        uses: actions/checkout@v4
+#  build_macos_x86_64:
+#    name: Build (MacOS x86_64)
+#    runs-on: macos-13 # Required version for x86_64
+#    continue-on-error: true
+#    steps:
+#      - name: Clone
+#        uses: actions/checkout@v4
 
-      - name: Build
-        id: create_macos_x86_64_archive
-        run: |
-          cd projectfiles/xcode
-          xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
-          cd build/Release
-          archive_file="${{ env.MACOS_X86_64_ARTIFACT }}.zip"
-          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
-          zip -r "${archive_file}" FinalBurn\ Neo.app
-          mv "${archive_file}" ../../../..
-          cd ../../../..
-          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+#      - name: Build
+#        id: create_macos_x86_64_archive
+#        run: |
+#          cd projectfiles/xcode
+#          xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
+#          cd build/Release
+#          archive_file="${{ env.MACOS_X86_64_ARTIFACT }}.zip"
+#          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+#          zip -r "${archive_file}" FinalBurn\ Neo.app
+#          mv "${archive_file}" ../../../..
+#          cd ../../../..
+#          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Create Archive Path
-        run: |
-          echo archive_path= '${{ steps.create_macos_x86_64_archive.outputs.archive_file }}' > $MACOS_X86_64_ARTIFACT_PATH
+#      - name: Create Archive Path
+#        run: |
+#          echo archive_path= '${{ steps.create_macos_x86_64_archive.outputs.archive_file }}' > $MACOS_X86_64_ARTIFACT_PATH
 
-      - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.MACOS_X86_64_ARTIFACT }}
-          path: ${{ env.MACOS_X86_64_ARTIFACT_PATH }}
-          retention-days: 1
+#      - name: Upload Archive Path
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_X86_64_ARTIFACT }}
+#          path: ${{ env.MACOS_X86_64_ARTIFACT_PATH }}
+#          retention-days: 1
 
-      - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
-          path: ${{ steps.create_macos_x86_64_archive.outputs.archive_file }}
-          retention-days: 1
+#      - name: Upload Archive as Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
+#          path: ${{ steps.create_macos_x86_64_archive.outputs.archive_file }}
+#          retention-days: 1
 
-  build_macos_arm64:
-    name: Build (MacOS arm64)
-    runs-on: macos-latest
-    continue-on-error: true
-    steps:
-      - name: Clone
-        uses: actions/checkout@v4
+#  build_macos_arm64:
+#    name: Build (MacOS arm64)
+#    runs-on: macos-latest
+#    continue-on-error: true
+#    steps:
+#      - name: Clone
+#        uses: actions/checkout@v4
 
-      - name: Build
-        id: create_macos_arm64_archive
-        run: |
-          cd projectfiles/xcode
-          xcodebuild ARCHS=arm64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
-          cd build/Release
-          archive_file="${{ env.MACOS_ARM64_ARTIFACT }}.zip"
-          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
-          zip -r "${archive_file}" FinalBurn\ Neo.app
-          mv "${archive_file}" ../../../..
-          cd ../../../..
-          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
+#      - name: Build
+#        id: create_macos_arm64_archive
+#        run: |
+#          cd projectfiles/xcode
+#          xcodebuild ARCHS=arm64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Release
+#          cd build/Release
+#          archive_file="${{ env.MACOS_ARM64_ARTIFACT }}.zip"
+#          echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
+#          zip -r "${archive_file}" FinalBurn\ Neo.app
+#          mv "${archive_file}" ../../../..
+#          cd ../../../..
+#          zip -uj "${archive_file}" src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
 
-      - name: Create Archive Path
-        run: |
-          echo archive_path= '${{ steps.create_macos_arm64_archive.outputs.archive_file }}' > $MACOS_ARM64_ARTIFACT_PATH
+#      - name: Create Archive Path
+#        run: |
+#          echo archive_path= '${{ steps.create_macos_arm64_archive.outputs.archive_file }}' > $MACOS_ARM64_ARTIFACT_PATH
 
-      - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.MACOS_ARM64_ARTIFACT }}
-          path: ${{ env.MACOS_ARM64_ARTIFACT_PATH }}
-          retention-days: 1
+#      - name: Upload Archive Path
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_ARM64_ARTIFACT }}
+#          path: ${{ env.MACOS_ARM64_ARTIFACT_PATH }}
+#          retention-days: 1
 
-      - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
-          path: ${{ steps.create_macos_arm64_archive.outputs.archive_file }}
-          retention-days: 1
+#      - name: Upload Archive as Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
+#          path: ${{ steps.create_macos_arm64_archive.outputs.archive_file }}
+#          retention-days: 1
 
   release:
-    needs: [ create_release_body, build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64, build_macos_x86_64, build_macos_arm64 ]
+    needs: [ create_release_body, build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64 ] # , build_macos_x86_64, build_macos_arm64
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -560,44 +560,44 @@ jobs:
           name: ${{ env.LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT }}
 
       # MacOS x86_64
-      - name: Download Artifact (MacOS x86_64)
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.MACOS_X86_64_ARTIFACT }}
+#      - name: Download Artifact (MacOS x86_64)
+#        continue-on-error: true
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_X86_64_ARTIFACT }}
 
-      - name: Extract Archive Path (MacOS x86_64) and Store in Step Outputs
-        id: store_macos_x86_64
-        continue-on-error: true
-        run: |
-          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_X86_64_ARTIFACT_PATH`
-          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+#      - name: Extract Archive Path (MacOS x86_64) and Store in Step Outputs
+#        id: store_macos_x86_64
+#        continue-on-error: true
+#        run: |
+#          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_X86_64_ARTIFACT_PATH`
+#          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
-      - name: Download Artifact with Archive (MacOS x86_64)
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
+#      - name: Download Artifact with Archive (MacOS x86_64)
+#        continue-on-error: true
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
 
       # MacOS arm64
-      - name: Download Artifact (MacOS arm64)
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.MACOS_ARM64_ARTIFACT }}
+#      - name: Download Artifact (MacOS arm64)
+#        continue-on-error: true
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_ARM64_ARTIFACT }}
 
-      - name: Extract Archive Path (MacOS arm64) and Store in Step Outputs
-        id: store_macos_arm64
-        continue-on-error: true
-        run: |
-          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_ARM64_ARTIFACT_PATH`
-          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+#      - name: Extract Archive Path (MacOS arm64) and Store in Step Outputs
+#        id: store_macos_arm64
+#        continue-on-error: true
+#        run: |
+#          archive_path=`sed -E -n -e 's/archive_path= //p' $MACOS_ARM64_ARTIFACT_PATH`
+#          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
-      - name: Download Artifact with Archive (MacOS arm64)
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
+#      - name: Download Artifact with Archive (MacOS arm64)
+#        continue-on-error: true
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
 
       # Create new nightly
       - name: Release new nightly
@@ -616,6 +616,6 @@ jobs:
             ${{ steps.store_windows_x86_32.outputs.archive_path }}
             ${{ steps.store_windows_x86_64_debug.outputs.archive_path }}
             ${{ steps.store_windows_x86_32_debug.outputs.archive_path }}
-            ${{ steps.store_macos_x86_64.outputs.archive_path }}
-            ${{ steps.store_macos_arm64.outputs.archive_path }}
+#            ${{ steps.store_macos_x86_64.outputs.archive_path }}
+#            ${{ steps.store_macos_arm64.outputs.archive_path }}
           token: ${{ secrets.GITHUB_TOKEN }}

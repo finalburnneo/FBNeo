@@ -6960,8 +6960,6 @@
 				8540A7552D9B0FF600B61187 /* Threads.c in Sources */,
 				F023790BDBFEBACDE1C784F7 /* spc.cpp in Sources */,
 				BF22D7AA7BEA4552921789C5 /* statehandler.cpp in Sources */,
-				12492D83517942419FB6464B /* astrocde_snd.cpp in Sources */,
-				095E1D90166543B29D0A4149 /* d_astrocde.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

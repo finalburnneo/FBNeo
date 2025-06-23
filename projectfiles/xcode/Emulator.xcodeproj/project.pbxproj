@@ -1198,9 +1198,6 @@
 		FEFB2E7925A9A0A0005D9281 /* tms34010.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFB2E7625A9A083005D9281 /* tms34010.cpp */; settings = {COMPILER_FLAGS = "-Wno-shift-count-overflow"; }; };
 		FEFB2E7D25A9A245005D9281 /* tms34_intf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFB2E7A25A9A128005D9281 /* tms34_intf.cpp */; };
 		FEFE604923C7805A00535CE2 /* d_exprraid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FEFE604823C7805A00535CE2 /* d_exprraid.cpp */; };
-		AC85DEEBE4A54F6D82714053 /* astrocde_snd.h in Headers */ = {isa = PBXBuildFile; fileRef = AC85DEEBE4A54F6D82714053 /* astrocde_snd.h */; };
-		12492D83517942419FB6464B /* astrocde_snd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12492D83517942419FB6464B /* astrocde_snd.cpp */; };
-		095E1D90166543B29D0A4149 /* d_astrocde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 095E1D90166543B29D0A4149 /* d_astrocde.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2989,9 +2986,6 @@
 		FEFB2E7A25A9A128005D9281 /* tms34_intf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tms34_intf.cpp; sourceTree = "<group>"; };
 		FEFB2E7B25A9A128005D9281 /* tms34_intf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tms34_intf.h; sourceTree = "<group>"; };
 		FEFE604823C7805A00535CE2 /* d_exprraid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_exprraid.cpp; sourceTree = "<group>"; };
-		AC85DEEBE4A54F6D82714053 /* astrocde_snd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = astrocde_snd.h; sourceTree = "<group>"; };
-		12492D83517942419FB6464B /* astrocde_snd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = astrocde_snd.cpp; sourceTree = "<group>"; };
-		095E1D90166543B29D0A4149 /* d_astrocde.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_astrocde.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4733,7 +4727,6 @@
 				FE1B215323561A6D0065200C /* d_argus.cpp */,
 				FE1B219123561A6E0065200C /* d_armedf.cpp */,
 				FE1B215723561A6D0065200C /* d_asteroids.cpp */,
-				095E1D90166543B29D0A4149 /* d_astrocde.cpp */,
 				FE1B213923561A6D0065200C /* d_atetris.cpp */,
 				FE1B214E23561A6D0065200C /* d_aztarac.cpp */,
 				FE1B213823561A6D0065200C /* d_bagman.cpp */,
@@ -4973,8 +4966,6 @@
 				8540A6FB2D99D27B00B61187 /* votrax.cpp */,
 				FE1B222F23561A700065200C /* asteroids.cpp */,
 				FE1B221123561A700065200C /* asteroids.h */,
-				12492D83517942419FB6464B /* astrocde_snd.cpp */,
-				AC85DEEBE4A54F6D82714053 /* astrocde_snd.h */,
 				FE1B225C23561A700065200C /* ay8910.c */,
 				FE1B221223561A700065200C /* ay8910.h */,
 				FEB8081925A0F6AB0065DE86 /* biquad.h */,

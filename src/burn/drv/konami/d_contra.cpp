@@ -397,6 +397,7 @@ static tilemap_callback( tx )
 	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
 	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
 	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+
 	INT32 bank = ((attr & 0x80) >> 7) |
 			((attr >> (bit0+2)) & 0x02) |
 			((attr >> (bit1+1)) & 0x04) |
@@ -566,6 +567,7 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	GenericTilemapSetOffsets(1, 40, -16);
 	GenericTilemapSetOffsets(2, 0, -16);
 	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset();
 
@@ -699,7 +701,9 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	if (~nBurnLayer & 1) BurnTransferClear();
+	const int bgpen = 0x800 | ((k007121_ctrl_read(1, 6) & 0x30) * 2 + 16) << 4;
+
+	BurnTransferClear(bgpen);
 
 	UINT8 ctrl_1_0 = k007121_ctrl_read(0, 0);
 	UINT8 ctrl_1_2 = k007121_ctrl_read(0, 2);
@@ -717,8 +721,10 @@ static INT32 DrvDraw()
 	GenericTilemapSetScrollX(1, ctrl_2_0);
 	GenericTilemapSetScrollY(1, ctrl_2_2);
 
+	GenericTilesSetClip((flipscreen1 ? -1 : 40), (flipscreen1 ? 240 : -1), -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	GenericTilesClearClip();
 
 	if (nSpriteEnable & 1) draw_sprites(0);
 	if (nSpriteEnable & 2) draw_sprites(1);

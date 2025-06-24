@@ -7256,6 +7256,25 @@ struct BurnDriver BurnDrvnes_captatsuvoliic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Castle of Dragon (Hack, Spanish v1.1)
+// https://www.romhacking.net/translations/4651/
+static struct BurnRomInfo nes_castleofdragtsRomDesc[] = {
+	{ "Castle of Dragon T-Spa v1.1 (2019)(Wave).nes",          131088, 0xf3d293f5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castleofdragts)
+STD_ROM_FN(nes_castleofdragts)
+
+struct BurnDriver BurnDrvnes_castleofdragts = {
+	"nes_castleofdragts", "nes_castleofdragon", NULL, NULL, "2019",
+	"Castle of Dragon (Hack, Spanish v1.1)\0", NULL, "Wave", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_castleofdragtsRomInfo, nes_castleofdragtsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Castlevania (Hack, Spanish)
 // https://www.romhacking.net/translations/2137/
 static struct BurnRomInfo nes_castlevaniacRomDesc[] = {
@@ -8701,9 +8720,9 @@ struct BurnDriver BurnDrvnes_powc = {
 };
 
 // Probotector (Hack, Spanish)
-// https://www.romhacking.net/
+// https://www.romhacking.net/translations/4944/
 static struct BurnRomInfo nes_probotectorcRomDesc[] = {
-	{ "probotector (europe) - castellano v1.0.nes",          131088, 0x9e9a6477, BRF_ESS | BRF_PRG },
+	{ "Probotector T-Spa (2019)(Wave).nes",          131088, 0x9e9a6477, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_probotectorc)
@@ -8719,10 +8738,10 @@ struct BurnDriver BurnDrvnes_probotectorc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Probotector II - Return of the Evil Forces (Hack, Spanish)
-// https://www.romhacking.net/
+// Probotector II: Return of the Evil Forces (Hack, Spanish)
+// https://www.romhacking.net/translations/4950/
 static struct BurnRomInfo nes_probotectorretcRomDesc[] = {
-	{ "probotector ii - return of the evil forces (europe) - castellano v1.0.nes",          262160, 0xf8d46d0b, BRF_ESS | BRF_PRG },
+	{ "Probotector II - Return of the Evil Forces T-Spa (2019)(Wave).nes",          262160, 0xf8d46d0b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_probotectorretc)
@@ -8730,7 +8749,7 @@ STD_ROM_FN(nes_probotectorretc)
 
 struct BurnDriver BurnDrvnes_probotectorretc = {
 	"nes_probotectorretc", "nes_superc", NULL, NULL, "2019",
-	"Probotector II - Return of the Evil Forces (Hack, Spanish)\0", NULL, "Wave", "NES / Famicom",
+	"Probotector II: Return of the Evil Forces (Hack, Spanish)\0", NULL, "Wave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_probotectorretcRomInfo, nes_probotectorretcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -12370,6 +12389,24 @@ struct BurnDriver BurnDrvnes_mojontwiapuche = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mojontwiapucheRomInfo, nes_mojontwiapucheRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Argon Dream (HB)
+static struct BurnRomInfo nes_argondreamRomDesc[] = {
+	{ "Argon Dream (2025)(Johnybot).nes",          24592, 0xd4ab5d9c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_argondream)
+STD_ROM_FN(nes_argondream)
+
+struct BurnDriver BurnDrvnes_argondream = {
+	"nes_argondream", NULL, NULL, NULL, "2025",
+	"Argon Dream (HB)\0", "No Sound", "Johnybot", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_argondreamRomInfo, nes_argondreamRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30567,6 +30604,24 @@ struct BurnDriver BurnDrvnes_dragonslair = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Dragon Unit (Japan)
+static struct BurnRomInfo nes_dragunitRomDesc[] = {
+	{ "Dragon Unit (Japan)(1990)(Athena).nes",          131088, 0xb3465abe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragunit)
+STD_ROM_FN(nes_dragunit)
+
+struct BurnDriver BurnDrvnes_dragunit = {
+	"nes_dragunit", "nes_castleofdragon", NULL, NULL, "1990",
+	"Dragon Unit (Japan)\0", NULL, "Athena", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_dragunitRomInfo, nes_dragunitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Dreamworld Pogie (Prototype)
 static struct BurnRomInfo nes_dreamworldpogieRomDesc[] = {
 	{ "Dreamworld Pogie (Proto)(1993)(Codemasters).nes",          131088, 0x2ace2f1b, BRF_ESS | BRF_PRG },
@@ -33128,7 +33183,7 @@ struct BurnDriver BurnDrvnes_gansosai = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Garfield no Isshukan - A Week of Garfield (Japan)
+// Garfield no Isshukan ~ A Week of Garfield (Japan)
 static struct BurnRomInfo nes_garfiRomDesc[] = {
 	{ "Garfield - A Week of Garfield (Japan)(1989)(Towa Chiki).nes",          163856, 0x39c68f84, BRF_ESS | BRF_PRG },
 };
@@ -33138,7 +33193,7 @@ STD_ROM_FN(nes_garfi)
 
 struct BurnDriver BurnDrvnes_garfi = {
 	"nes_garfi", NULL, NULL, NULL, "1989",
-	"Garfield no Isshukan - A Week of Garfield (Japan)\0", NULL, "Towa Chiki", "NES / Famicom",
+	"Garfield no Isshukan ~ A Week of Garfield (Japan)\0", NULL, "Towa Chiki", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_garfiRomInfo, nes_garfiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -43427,11 +43482,30 @@ STD_ROM_PICK(nes_pockezau)
 STD_ROM_FN(nes_pockezau)
 
 struct BurnDriver BurnDrvnes_pockezau = {
-	"nes_pockezau", NULL, NULL, NULL, "1987",
+	"nes_pockezau", "nes_pockezaute", NULL, NULL, "1987",
 	"Pocket Zaurus: Juu Ouken no Nazo (Japan)\0", NULL, "Bandai", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_pockezauRomInfo, nes_pockezauRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Pocket Zaurus: Swords of the Ten Kings (Hack, English)
+// https://dvdtranslations.eludevisibility.org/pocket_zaurus.html
+static struct BurnRomInfo nes_pockezauteRomDesc[] = {
+	{ "Pocket Zaurus - Juu Ouken no Nazo T-Eng (2025)(DvD Translations).nes",          262160, 0x51548a77, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pockezaute)
+STD_ROM_FN(nes_pockezaute)
+
+struct BurnDriver BurnDrvnes_pockezaute = {
+	"nes_pockezaute", NULL, NULL, NULL, "2025",
+	"Pocket Zaurus: Swords of the Ten Kings (Hack, English)\0", NULL, "DvD Translations", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_pockezauteRomInfo, nes_pockezauteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43830,6 +43904,24 @@ struct BurnDriver BurnDrvnes_probotector = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_probotectorRomInfo, nes_probotectorRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+// Probotector II: Return of the Evil Forces (Euro)
+static struct BurnRomInfo nes_probotector2RomDesc[] = {
+	{ "Probotector II - Return of the Evil Forces (Euro)(1992)(Konami).nes",          262160, 0x1d36e3c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_probotector2)
+STD_ROM_FN(nes_probotector2)
+
+struct BurnDriver BurnDrvnes_probotector2 = {
+	"nes_probotector2", "nes_superc", NULL, NULL, "1992",
+	"Probotector II: Return of the Evil Forces (Euro)\0", NULL, "Konami", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_probotector2RomInfo, nes_probotector2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
@@ -45787,24 +45879,6 @@ struct BurnDriver BurnDrvnes_sansaranaga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_sansaranagaRomInfo, nes_sansaranagaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Super Contra - Alien no Gyakusyuu (Japan)
-static struct BurnRomInfo nes_scontraRomDesc[] = {
-	{ "Super Contra - Alien no Gyakusyuu (Japan)(1990)(Konami).nes",          262160, 0x9bb6059e, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_scontra)
-STD_ROM_FN(nes_scontra)
-
-struct BurnDriver BurnDrvnes_scontra = {
-	"nes_scontra", "nes_superc", NULL, NULL, "1990",
-	"Super Contra - Alien no Gyakusyuu (Japan)\0", NULL, "Konami", "NES / Famicom",
-	L"\u30b9\u30fc\u30d1\u30fc\u9b42\u6597\u7f85 \u30a8\u30a4\u30ea\u30a2\u30f3\u306e\u9006\u8972\0Super Contra - Alien no Gyakusyuu (Japan)", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_scontraRomInfo, nes_scontraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -48252,6 +48326,24 @@ struct BurnDriver BurnDrvnes_supercars = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_supercarsRomInfo, nes_supercarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Contra: Alien no Gyakusyuu (Japan)
+static struct BurnRomInfo nes_supercontraRomDesc[] = {
+	{ "Super Contra - Alien no Gyakusyuu (Japan)(1990)(Konami).nes",          262160, 0x9bb6059e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supercontra)
+STD_ROM_FN(nes_supercontra)
+
+struct BurnDriver BurnDrvnes_supercontra = {
+	"nes_supercontra", "nes_superc", NULL, NULL, "1990",
+	"Super Contra: Alien no Gyakusyuu (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"\u30b9\u30fc\u30d1\u30fc\u9b42\u6597\u7f85 \u30a8\u30a4\u30ea\u30a2\u30f3\u306e\u9006\u8972\0Super Contra: Alien no Gyakusyuu (Japan)", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_supercontraRomInfo, nes_supercontraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

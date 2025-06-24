@@ -41302,6 +41302,23 @@ struct BurnDriver BurnDrvmd_zoomsecr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// ZPF (HB)
+static struct BurnRomInfo md_zpfRomDesc[] = {
+	{ "ZPF (2025)(Mega Cat Studios).bin", 4194304, 0xcd657892, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_zpf)
+STD_ROM_FN(md_zpf)
+
+struct BurnDriver BurnDrvmd_zpf = {
+	"md_zpf", NULL, NULL, NULL, "2025",
+	"ZPF (HB)\0", NULL, "Mega Cat Studios", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_zpfRomInfo, md_zpfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
 
 // ------------------
 // -- Sonic Hacks  --

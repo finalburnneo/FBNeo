@@ -202,75 +202,210 @@ struct define_hash
 };
 
 // kovsh - 68K ROM - checked while encrypted
-static define_hash hash_regions_kovsh[0x0d] = {	// table in asic @ $2144
-	{ 0x00000, 0x0002, 0x1000 },
-	{ 0x48000, 0x0001, 0x8000 },
-	{ 0x58000, 0x0002, 0x8000 },
-	{ 0x68000, 0x0001, 0x8000 },
-	{ 0x78000, 0x0002, 0x8000 },
-	{ 0x88000, 0x0001, 0x8000 },
-	{ 0x98000, 0x0002, 0x8000 },
-	{ 0xa8000, 0x0001, 0x8000 },
-	{ 0xb8000, 0x0002, 0x8000 },
-	{ 0xc8000, 0x0001, 0x8000 },
-	{ 0xd8000, 0x0002, 0x4000 },
-	{ 0xe8000, 0x0001, 0x3000 },
-	{ 0x39abe, 0, 0 }	// address to find stored hash
+static define_hash hash_regions_kovsh[12 + 1] = {	// table in asic @ $2144
+	{ 0x000000, 2, 0x001000 },
+	{ 0x048000, 1, 0x008000 },
+	{ 0x058000, 2, 0x008000 },
+	{ 0x068000, 1, 0x008000 },
+	{ 0x078000, 2, 0x008000 },
+	{ 0x088000, 1, 0x008000 },
+	{ 0x098000, 2, 0x008000 },
+	{ 0x0a8000, 1, 0x008000 },
+	{ 0x0b8000, 2, 0x008000 },
+	{ 0x0c8000, 1, 0x008000 },
+	{ 0x0d8000, 2, 0x004000 },
+	{ 0x0e8000, 1, 0x003000 },
+	{ 0x039abe, 0, 0 }		// address to find stored hash
 };
 
 // photoy2k - 68K ROM - checked while encrypted
-static define_hash hash_regions_photoy2k[0x11] = { // table in asic @ 17c0
-	{ 0x010000, 0x0001, 0x5000 },
-	{ 0x030000, 0x0002, 0x5000 },
-	{ 0x050000, 0x0001, 0x5000 },
-	{ 0x070000, 0x0002, 0x5000 },
-	{ 0x090000, 0x0001, 0x5000 },
-	{ 0x0b0000, 0x0002, 0x5000 },
-	{ 0x0d0000, 0x0001, 0x5000 },
-	{ 0x0f0000, 0x0002, 0x5000 },
-	{ 0x110000, 0x0001, 0x5000 },
-	{ 0x130000, 0x0002, 0x5000 },
-	{ 0x150000, 0x0001, 0x5000 },
-	{ 0x170000, 0x0002, 0x5000 },
-	{ 0x190000, 0x0001, 0x5000 },
-	{ 0x1b0000, 0x0002, 0x5000 },
-	{ 0x1d0000, 0x0001, 0x5000 },
-	{ 0x1e0000, 0x0002, 0x5000 },
-	{ 0x1f0000, 0, 0 } // address to find stored hash
+static define_hash hash_regions_photoy2k[16 + 1] = { // table in asic @ 17c0
+	{ 0x010000, 1, 0x005000 },
+	{ 0x030000, 2, 0x005000 },
+	{ 0x050000, 1, 0x005000 },
+	{ 0x070000, 2, 0x005000 },
+	{ 0x090000, 1, 0x005000 },
+	{ 0x0b0000, 2, 0x005000 },
+	{ 0x0d0000, 1, 0x005000 },
+	{ 0x0f0000, 2, 0x005000 },
+	{ 0x110000, 1, 0x005000 },
+	{ 0x130000, 2, 0x005000 },
+	{ 0x150000, 1, 0x005000 },
+	{ 0x170000, 2, 0x005000 },
+	{ 0x190000, 1, 0x005000 },
+	{ 0x1b0000, 2, 0x005000 },
+	{ 0x1d0000, 1, 0x005000 },
+	{ 0x1e0000, 2, 0x005000 },
+	{ 0x1f0000, 0, 0 }		// address to find stored hash
 };
 
 // martmast - External ARM7 ROM - checked after decryption
-static define_hash hash_regions_martmast[16+1] = { // table in asic @ 3508
-	{ 0x000000, 0x0001, 0x0500 },
-	{ 0x020000, 0x0002, 0x0500 },
-	{ 0x040000, 0x0001, 0x0500 },
-	{ 0x060000, 0x0002, 0x0500 },
-	{ 0x080000, 0x0001, 0x0500 },
-	{ 0x0a0000, 0x0002, 0x0500 },
-	{ 0x0c0000, 0x0001, 0x0500 },
-	{ 0x0e0000, 0x0002, 0x0500 },
-	{ 0x100000, 0x0001, 0x0500 },
-	{ 0x110000, 0x0002, 0x0500 },
-	{ 0x120000, 0x0001, 0x0500 },
-	{ 0x130000, 0x0002, 0x0500 },
-	{ 0x140000, 0x0001, 0x0500 },
-	{ 0x150000, 0x0002, 0x0500 },
-	{ 0x160000, 0x0001, 0x0500 },
-	{ 0x170000, 0x0002, 0x0500 },
+static define_hash hash_regions_martmast[16 + 1] = { // table in asic @ 3508
+	{ 0x000000, 1, 0x000500 },
+	{ 0x020000, 2, 0x000500 },
+	{ 0x040000, 1, 0x000500 },
+	{ 0x060000, 2, 0x000500 },
+	{ 0x080000, 1, 0x000500 },
+	{ 0x0a0000, 2, 0x000500 },
+	{ 0x0c0000, 1, 0x000500 },
+	{ 0x0e0000, 2, 0x000500 },
+	{ 0x100000, 1, 0x000500 },
+	{ 0x110000, 2, 0x000500 },
+	{ 0x120000, 1, 0x000500 },
+	{ 0x130000, 2, 0x000500 },
+	{ 0x140000, 1, 0x000500 },
+	{ 0x150000, 2, 0x000500 },
+	{ 0x160000, 1, 0x000500 },
+	{ 0x170000, 2, 0x000500 },
 	{ 0x1fff00, 0, 0 }		// address to find stored hash
 };
 
 // ddp2 - checked after decryption
 static define_hash hash_regions_ddp2[1 + 1] = {
-	{ 0x00000, 0x0001, 0x1fff8 },
-	{ 0x1fffc, 0, 0 }
+	{ 0x000000, 1, 0x01fff8 },
+	{ 0x01fffc, 0, 0 }		// address to find stored hash
 };
 
 // kov2 & kov2p - checked after decryption
 static define_hash hash_regions_kov2[1 + 1] = {
-	{ 0x000000, 0x0001, 0x1ffffc },
-	{ 0x1ffffc, 0, 0 }
+	{ 0x000000, 1, 0x1ffffc },
+	{ 0x1ffffc, 0, 0 }		// address to find stored hash
 };
+
+// table at $34c4 of internal rom, checked after decryption (starting addresses actually + $8000000)
+static define_hash hash_regions_happy6[16 + 1] = {
+	{ 0x000000, 1, 0x040000 },
+	{ 0x040000, 2, 0x040000 },
+	{ 0x080000, 1, 0x040000 },
+	{ 0x0c0000, 2, 0x040000 },
+	{ 0x100000, 1, 0x040000 },
+	{ 0x140000, 2, 0x040000 },
+	{ 0x180000, 1, 0x040000 },
+	{ 0x1c0000, 2, 0x040000 },
+	{ 0x200000, 1, 0x040000 },
+	{ 0x240000, 2, 0x040000 },
+	{ 0x280000, 1, 0x040000 },
+	{ 0x2c0000, 2, 0x040000 },
+	{ 0x300000, 1, 0x040000 },
+	{ 0x340000, 2, 0x040000 },
+	{ 0x380000, 1, 0x040000 },
+	{ 0x3c0000, 2, 0x03fffc },
+	{ 0x3ffffc, 0, 0 }		// address to find stored hash
+};
+
+// theglad-table at $3254 of internal rom, checked after decryption (starting addresses actually + $8000000)
+static define_hash hash_regions_theglad[16 + 1] = {
+	{ 0x000000, 1, 0x020000 },
+	{ 0x020000, 2, 0x020000 },
+	{ 0x040000, 1, 0x020000 },
+	{ 0x060000, 2, 0x020000 },
+	{ 0x080000, 1, 0x020000 },
+	{ 0x0a0000, 2, 0x020000 },
+	{ 0x0c0000, 1, 0x020000 },
+	{ 0x0e0000, 2, 0x020000 },
+	{ 0x100000, 1, 0x020000 },
+	{ 0x120000, 2, 0x020000 },
+	{ 0x140000, 1, 0x020000 },
+	{ 0x160000, 2, 0x020000 },
+	{ 0x180000, 1, 0x020000 },
+	{ 0x1a0000, 2, 0x020000 },
+	{ 0x1c0000, 1, 0x020000 },
+	{ 0x1e0000, 2, 0x01fffc },
+	{ 0x1ffffc, 0, 0 }		// address to find stored hash
+};
+
+// svg-table at $3B7C of internal rom, checked after decryption (starting addresses actually + $8000000)
+// Only svg- the 2.0 version
+static define_hash hash_regions_svg200[16 + 1] = {
+	{ 0x000000, 1, 0x080000 },
+	{ 0x080000, 2, 0x040000 },
+	{ 0x100000, 3, 0x080000 },
+	{ 0x180000, 1, 0x040000 },
+	{ 0x200000, 2, 0x080000 },
+	{ 0x280000, 3, 0x040000 },
+	{ 0x300000, 3, 0x080000 },
+	{ 0x380000, 2, 0x040000 },
+	{ 0x400000, 1, 0x080000 },
+	{ 0x480000, 2, 0x040000 },
+	{ 0x500000, 3, 0x080000 },
+	{ 0x580000, 3, 0x040000 }, 
+	{ 0x600000, 1, 0x020000 },
+	{ 0x620000, 3, 0x020000 },
+	{ 0x640000, 2, 0x020000 },
+	{ 0x660000, 2, 0x01fffc }, 
+	{ 0x634360, 0, 0 }		// address to find stored hash
+};
+
+// svgpcb-table at $39cc of internal rom, checked after decryption (starting addresses actually + $8000000)
+// Only svgpcb and carts with 1.0 version
+static define_hash hash_regions_svg100[16 + 1] = {
+	{ 0x000000, 1, 0x020000 },
+	{ 0x020000, 2, 0x020000 },
+	{ 0x040000, 1, 0x020000 },
+	{ 0x060000, 2, 0x020000 },
+	{ 0x080000, 1, 0x020000 },
+	{ 0x0a0000, 2, 0x020000 },
+	{ 0x0c0000, 1, 0x020000 },
+	{ 0x0e0000, 2, 0x020000 },
+	{ 0x100000, 1, 0x020000 },
+	{ 0x120000, 2, 0x020000 },
+	{ 0x140000, 1, 0x020000 },
+	{ 0x160000, 2, 0x020000 },
+	{ 0x180000, 1, 0x020000 },
+	{ 0x1a0000, 2, 0x020000 },
+	{ 0x1c0000, 1, 0x020000 },
+	{ 0x1e0000, 2, 0x01fffc },
+	{ 0x5ffffc, 0, 0 }		// address to find stored hash
+};
+
+static unsigned short hash_type_1(unsigned short *rom, unsigned int length)
+{
+	int i;
+	unsigned short res = 0;
+
+	for (i = 0; i < length/2; i++)
+	{
+		res = res + rom[i];
+	}
+
+	return res;
+}
+
+static unsigned short hash_type_2(unsigned short *rom, unsigned int length)
+{
+	int i;
+	unsigned short res = 0;
+
+	for (i = 0; i < length/2; i++)
+	{
+		res = res ^ rom[i];
+	}
+
+	return res;
+}
+
+static unsigned short hash_type_3_svg(unsigned short *rom, unsigned int length)
+{
+	int i;
+	unsigned short res = 0;
+
+	for (i = 0; i < length/2; i++)
+	{
+		unsigned short v = rom[i];
+
+		     if ((v & 0xff00) == 0x0000) res  = v << 8;
+		else if ((v & 0xfe00) == 0x0000) res  = v << 7; // correct?
+		else if ((v & 0xfc00) == 0x0000) res  = v << 6; // correct?
+		else if ((v & 0xf800) == 0x0000) res  = v << 5;
+		else if ((v & 0xf000) == 0x0000) res  = v << 4;
+		else if ((v & 0xe000) == 0x0000) res  = v << 3;
+		else if ((v & 0xc000) == 0x0000) res  = v << 2;
+		else if ((v & 0x8000) == 0x0000) res  = v << 1;
+		else                             res ^= v;
+	}
+
+	return res;
+}
 
 //	These do not do hash checks
 //		Dragon World 2001
@@ -283,10 +418,11 @@ void verify_hash_function(unsigned char *src, define_hash *ptr)
 
 	while (1)
 	{
-		for (j = 0, shash = 0; j < ptr->length; j+=2)
+		switch (ptr->add_or_xor)
 		{
-			value = rom[(ptr->start_address + j)/2];
-			shash = (ptr->add_or_xor == 1) ? (shash + value) : (shash ^ value);
+			case 1: shash = hash_type_1(rom + (ptr->start_address / 2), ptr->length); break;
+			case 2: shash = hash_type_2(rom + (ptr->start_address / 2), ptr->length); break;
+			case 3: shash = hash_type_3_svg(rom + (ptr->start_address / 2), ptr->length); break;
 		}
 		ptr++;
 		hash += shash;

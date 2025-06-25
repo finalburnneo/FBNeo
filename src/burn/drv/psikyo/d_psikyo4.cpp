@@ -299,7 +299,7 @@ static UINT32 psikyo4_read_inputs(INT32 bsel)
 	return 0;
 }
 
-UINT32 __fastcall ps4_read_long(UINT32 address)
+static UINT32 __fastcall ps4_read_long(UINT32 address)
 {
 	address &= 0xc7fffffc;
 
@@ -322,7 +322,7 @@ UINT32 __fastcall ps4_read_long(UINT32 address)
 	return 0;
 }
 
-void __fastcall ps4_write_long(UINT32 address, UINT32 data)
+static void __fastcall ps4_write_long(UINT32 address, UINT32 data)
 {
 	address &= 0xc7fffffc;
 
@@ -343,7 +343,7 @@ void __fastcall ps4_write_long(UINT32 address, UINT32 data)
 	}
 }
 
-UINT16 __fastcall ps4_read_word(UINT32 address)
+static UINT16 __fastcall ps4_read_word(UINT32 address)
 {
 	address &= 0xc7fffffe;
 #ifdef LSB_FIRST
@@ -378,7 +378,7 @@ UINT16 __fastcall ps4_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall ps4_read_byte(UINT32 address)
+static UINT8 __fastcall ps4_read_byte(UINT32 address)
 {
 	address &= 0xc7ffffff;
 
@@ -424,7 +424,7 @@ UINT8 __fastcall ps4_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall ps4_write_word(UINT32 address, UINT16 data)
+static void __fastcall ps4_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xc7fffffe;
 #ifdef LSB_FIRST
@@ -453,7 +453,7 @@ void __fastcall ps4_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
+static void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xc7ffffff;
 
@@ -542,7 +542,7 @@ void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT32 __fastcall ps4hack_read_long(UINT32 a)
+static UINT32 __fastcall ps4hack_read_long(UINT32 a)
 {
 	a &= 0xffffc;
 
@@ -559,7 +559,7 @@ UINT32 __fastcall ps4hack_read_long(UINT32 a)
 	return *((UINT32*)(DrvSh2RAM + a));
 }
 
-UINT16 __fastcall ps4hack_read_word(UINT32 a)
+static UINT16 __fastcall ps4hack_read_word(UINT32 a)
 {
 #ifdef LSB_FIRST
 	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe) ^ 2)));
@@ -568,7 +568,7 @@ UINT16 __fastcall ps4hack_read_word(UINT32 a)
 #endif
 }
 
-UINT8 __fastcall ps4hack_read_byte(UINT32 a)
+static UINT8 __fastcall ps4hack_read_byte(UINT32 a)
 {
 #ifdef LSB_FIRST
 	return DrvSh2RAM[(a & 0xfffff) ^ 3];
@@ -652,7 +652,7 @@ static INT32 DrvDoReset()
 	sample_offs = 0;
 	memset (ioselect, 0xff, 4);
 	ioselect[2] = 0x32;
-	
+
 	if (mahjong) {
 		pcmbank_previous = ~0;
 		set_pcm_bank();
@@ -702,15 +702,12 @@ static void BurnSwapEndian()
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (long long)Sh2TotalCycles() * nSoundRate / 28636350;
+	return (INT64)Sh2TotalCycles() * nSoundRate / 28636350;
 }
 
 static void DrvIRQCallback(INT32, INT32 nStatus)
 {
-	if (nStatus)
-		Sh2SetIRQLine(12, CPU_IRQSTATUS_ACK);
-	else
-		Sh2SetIRQLine(12, CPU_IRQSTATUS_NONE);
+	Sh2SetIRQLine(12, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 gfx_len)
@@ -845,6 +842,9 @@ static void draw_sprites(UINT16 *dest, UINT32 scr)
 
 					if (sx < -15 || sx >= 320 || sy < -15 || sy >= nScreenHeight || nGfxMask < code) continue;
 
+					Draw16x16MaskTile(dest, code, sx, sy, flipx, flipy, colr, 5, 0, 0, DrvGfxROM);
+
+#if 0
 					if (flipy) {
 						if (flipx) {
 							Render16x16Tile_Mask_FlipXY_Clip(dest, code, sx, sy, colr, 5, 0, 0, DrvGfxROM);
@@ -858,6 +858,7 @@ static void draw_sprites(UINT16 *dest, UINT32 scr)
 							Render16x16Tile_Mask_Clip(dest, code, sx, sy, colr, 5, 0, 0, DrvGfxROM);
 						}
 					}
+#endif
 				}
 			}
 		}
@@ -869,7 +870,7 @@ static void draw_sprites(UINT16 *dest, UINT32 scr)
 
 static void DrvDoPalette(UINT32 *dst, INT32 c)
 {
-	UINT8 r,g,b;
+	UINT8 r, g, b;
 	UINT32 *p = (UINT32*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x2000 / 4; i++) {
 		r = p[i] >> 24;
@@ -926,7 +927,7 @@ static INT32 DrvDraw()
 	else {
 		for (INT32 y = 0; y < nScreenHeight; y++) {
 			for (INT32 x = 0; x < 320; x++) {
-				pTransDraw[y * 320 + x] = 0x1001;
+				pTransDraw[y * 320 + x] = 0x1000;
 			}
 		}
 
@@ -994,7 +995,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (pnMin != NULL) {
 		*pnMin =  0x029707;
 	}
-	
+
 	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
@@ -1002,7 +1003,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "All RAM";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
 		BurnYMF278BScan(nAction, pnMin);

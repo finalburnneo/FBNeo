@@ -1156,11 +1156,6 @@ static INT32 DrvInit(INT32 bios)
 	Sh2SetReadWordHandler (1,		suprnova_hack_read_word);
 	Sh2SetReadLongHandler (1,		suprnova_hack_read_long);
 
-	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "galpanis", 8) || !strncmp(BurnDrvGetTextA(DRV_NAME), "panicstr", 8)) {
-		bprintf(0, _T("Note (soundfix): switching Busy Loop Speedhack to mode #2 for galpanis*.\n"));
-		sh2_busyloop_speedhack_mode2 = 1;
-	}
-
 	BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);

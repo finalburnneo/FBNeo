@@ -35,7 +35,6 @@
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
-INT32 sh2_busyloop_speedhack_mode2;
 
 #define BUSY_LOOP_HACKS     1
 #define FAST_OP_FETCH		1
@@ -502,7 +501,6 @@ int Sh2Init(int nCount)
 	has_sh2 = 1;
 
 	cps3speedhack = 0;
-	sh2_busyloop_speedhack_mode2 = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
 	if (Sh2Ext == NULL) {
@@ -1022,13 +1020,8 @@ SH2_INLINE void BRA(UINT32 d)
          */
 		if (next_opcode == 0x0009) {
 			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS: %d\n"), sh2->sh2_icount);
-			if (sh2_busyloop_speedhack_mode2) {
-				sh2->sh2_icount -= 10;
-				sh2->sh2_total_cycles += 10;
-			} else {
-				sh2->sh2_total_cycles += sh2->sh2_icount;
-				sh2->sh2_icount %= 3;	/* cycles for BRA $ and NOP taken (3) */
-			}
+			sh2->sh2_icount -= 9;
+			sh2->sh2_total_cycles += 9;
 		}
 	}
 #endif

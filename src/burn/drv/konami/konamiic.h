@@ -322,6 +322,7 @@ void K054000Scan(INT32 nAction);
 void K051733Reset();
 void K051733Write(INT32 offset, INT32 data);
 UINT8 K051733Read(INT32 offset);
+UINT8 K051733nmi_ok();
 void K051733Scan(INT32 nAction);
 
 // K053936.cpp

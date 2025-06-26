@@ -25,7 +25,6 @@ static UINT8 *DrvHD6309RAM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *soundlatch;
 static UINT8 *irq_enable;
-static UINT8 *nmi_enable;
 
 static UINT8 *nDrvBank;
 
@@ -491,10 +490,6 @@ static void mainevt_main_write(UINT16 address, UINT8 data)
 
 		case 0x1f90:
 		return;
-
-		case 0x1fb2:
-			*nmi_enable = data;
-		return;
 	}
 
 	if ((address & 0xffe0) == 0x1fa0 && nGame) {
@@ -671,7 +666,6 @@ static INT32 MemIndex()
 	soundlatch		= Next; Next += 0x000001;
 
 	irq_enable		= Next; Next += 0x000001;
-	nmi_enable		= Next; Next += 0x000001;
 
 	nDrvBank		= Next; Next += 0x000002;
 
@@ -858,7 +852,7 @@ static INT32 DrvFrame()
 	}
 
 	if (nGame) {
-		if (nmi_enable[0]) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
+		if (K051733nmi_ok()) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 	} else {
 		if (K052109_irq_enabled) HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	}
@@ -1100,7 +1094,7 @@ static INT32 devstorsInit()
 
 struct BurnDriver BurnDrvDevstors = {
 	"devstors", NULL, NULL, NULL, "1988",
-	"Devastators (ver. Z)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
+	"Devastators (ver. Z)\0", NULL, "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstorsRomInfo, devstorsRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
@@ -1134,7 +1128,7 @@ STD_ROM_FN(devstorsx)
 
 struct BurnDriver BurnDrvDevstorsx = {
 	"devstorsx", "devstors", NULL, NULL, "1988",
-	"Devastators (ver. X)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
+	"Devastators (ver. X)\0", NULL, "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstorsxRomInfo, devstorsxRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
@@ -1168,7 +1162,7 @@ STD_ROM_FN(devstorsv)
 
 struct BurnDriver BurnDrvDevstorsv = {
 	"devstorsv", "devstors", NULL, NULL, "1988",
-	"Devastators (ver. V)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
+	"Devastators (ver. V)\0", NULL, "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstorsvRomInfo, devstorsvRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
@@ -1202,7 +1196,7 @@ STD_ROM_FN(devstors2)
 
 struct BurnDriver BurnDrvDevstors2 = {
 	"devstors2", "devstors", NULL, NULL, "1988",
-	"Devastators (ver. 2)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
+	"Devastators (ver. 2)\0", NULL, "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstors2RomInfo, devstors2RomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
@@ -1236,7 +1230,7 @@ STD_ROM_FN(garuka)
 
 struct BurnDriver BurnDrvGaruka = {
 	"garuka", "devstors", NULL, NULL, "1988",
-	"Garuka (Japan ver. W)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
+	"Garuka (Japan ver. W)\0", NULL, "Konami", "GX890",
 	L"\u9913\u6D41\u798D (Japan ver. W)\0Garuka\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, garukaRomInfo, garukaRomName, NULL, NULL, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,

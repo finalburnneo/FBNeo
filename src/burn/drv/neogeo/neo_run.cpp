@@ -3958,7 +3958,7 @@ static INT32 NeoInitCommon()
 		// Map 68000 memory:
 
 		if (nNeoSystemType & NEO_SYS_CART) {
-			if (nNeo68KRAMHack > 0) {
+			if (0x100000 == nNeo68KRAMLen) {
 				SekMapMemory(Neo68KRAM, 0x100000, 0x1FFFFF, MAP_RAM);		// 68K RAM
 			} else {
 				for (INT32 a = 0x100000; a < 0x200000; a += 0x010000) {
@@ -4506,6 +4506,7 @@ INT32 NeoExit()
 	nNeoProtectionXor = -1;
 	nNeoSystemType    = 0;
 	nNeo68KRAMLen     = 0;
+	nNeo68KRAMHack    = 0;
 
 	return 0;
 }

@@ -1082,16 +1082,16 @@ static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 	if (GetIpsNumPatches()) {
 		if (!nShowMVSCartsOnly) {
 			EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSMANAGER), TRUE);
-			LoadIpsActivePatches();
+			INT32 nActivePatches = LoadIpsActivePatches();
 
 			// Whether IDC_SEL_APPLYIPS is enabled must be subordinate to IDC_SEL_IPSMANAGER
 			// to verify that xxx.dat is not removed after saving config.
 			// Reduce useless array lookups.
-			EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), GetIpsNumActivePatches());
+			EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), nActivePatches);
 		}
 	} else {
 		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_IPSMANAGER), FALSE);
-		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS), FALSE);	// xxx.dat path not found, must be disabled.
+		EnableWindow(GetDlgItem(hSelDlg, IDC_SEL_APPLYIPS),   FALSE);	// xxx.dat path not found, must be disabled.
 	}
 
 	KillTimer(hSelDlg, nInitPreviewTimer);
@@ -2451,15 +2451,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 				case IDC_SEL_IPSMANAGER:
 					if (bDrvSelected) {
-						int nOldnBurnDrvActive = nBurnDrvActive;
+						UINT32 nOldnBurnDrvActive = nBurnDrvActive;
 						IpsManagerCreate(hSelDlg);
 						nBurnDrvActive = nOldnBurnDrvActive; // due to some weird bug in sel.cpp, nBurnDrvActive can sometimes change when clicking in new dialogs.
-						LoadIpsActivePatches();
-						if (GetIpsNumActivePatches()) {
-							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), TRUE);
-						} else {
-							EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
-						}
+						INT32 nActivePatches = LoadIpsActivePatches();
+						EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), nActivePatches);
 						SetFocus(hSelList);
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
@@ -3010,16 +3006,16 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (GetIpsNumPatches()) {
 				if (!nShowMVSCartsOnly) {
 					EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), TRUE);
-					LoadIpsActivePatches();
+					INT32 nActivePatches = LoadIpsActivePatches();
 
 					// Whether IDC_SEL_APPLYIPS is enabled must be subordinate to IDC_SEL_IPSMANAGER
 					// to verify that xxx.dat is not removed after saving config.
 					// Reduce useless array lookups.
-					EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), GetIpsNumActivePatches());
+					EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), nActivePatches);
 				}
 			} else {
 				EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
-				EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);	// xxx.dat path not found, must be disabled.
+				EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS),   FALSE);	// xxx.dat path not found, must be disabled.
 			}
 
 			// Get the text from the drivers via BurnDrvGetText()

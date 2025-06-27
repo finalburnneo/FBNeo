@@ -1310,14 +1310,14 @@ int ProcessCmdLine()
 
 					if (bDoIpsPatch) {
 						LoadIpsActivePatches();
-						IpsPatchInit();	// Entry point: cmdline launch
+						IpsPatchInit();		// Entry point: cmdline launch
 					}
 
 					if (DrvInit(i, true)) { // failed (bad romset, etc.)
 						nVidFullscreen = 0; // Don't get stuck in fullscreen mode
 					}
 
-					IpsPatchExit();	// 
+					IpsPatchExit();
 					break;
 				}
 			}

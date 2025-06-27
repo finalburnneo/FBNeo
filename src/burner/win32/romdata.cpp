@@ -160,7 +160,6 @@ enum {
 struct BurnRomInfo* pDataRomDesc = NULL;
 
 TCHAR szRomdataName[MAX_PATH] = _T("");
-TCHAR szUtf16leFile[21]       = { 0 };
 bool  bRDListScanSub          = false;
 
 static struct BurnRomInfo* pDRD = NULL;
@@ -172,8 +171,8 @@ static HIMAGELIST hHardwareIconList = NULL;
 RomDataInfo*  pRDI = &RDI;
 
 static HBRUSH hWhiteBGBrush;
-static INT32  sort_direction = 0;
-static INT32 nSelItem = -1;
+static INT32 sort_direction = 0;
+static INT32 nSelItem       = -1;
 
 static HWND hRDMgrWnd   = NULL;
 static HWND hRDListView = NULL;
@@ -1876,7 +1875,7 @@ bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect)
 		struct BurnRomInfo ri = { 0 };
 
 		BurnDrvGetRomInfo(&ri, i);	// Get info about the rom
-		if ((NULL == pszRomName) || (_T('\0') == *pszRomName))
+		if ((NULL == pszRomName) || ('\0' == *pszRomName))
 			continue;
 		if ((ri.nType & BRF_BIOS) && (i >= 0x80))
 			continue;

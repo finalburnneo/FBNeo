@@ -547,8 +547,7 @@ int PaletteViewerDialogCreate(HWND hParentWND);
 // ips_manager.cpp
 extern INT32 nIpsSelectedLanguage;
 INT32 GetIpsNumPatches();
-void LoadIpsActivePatches();
-INT32 GetIpsNumActivePatches();
+INT32 LoadIpsActivePatches();
 INT32 IpsManagerCreate(HWND hParentWND);
 
 // localise_download.cpp

@@ -36,7 +36,7 @@
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
 
-#define BUSY_LOOP_HACKS     1
+#define BUSY_LOOP_HACKS     0
 #define FAST_OP_FETCH		1
 #define USE_JUMPTABLE		0
 

@@ -10046,7 +10046,7 @@ STD_ROM_FN(nes_chinarabbab)
 struct BurnDriver BurnDrvnes_chinarabbab = {
 	"nes_chinarabbab", NULL, NULL, NULL, "1996",
 	"China Rabbit Baby (Taiwan) (Unl)\0", NULL, "J.Y. Company", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"\u4e2d\u570b\u5154\u5bf6\u5bf6 RABBIT\0China Rabbit Baby (Taiwan) (Unl)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chinarabbabRomInfo, nes_chinarabbabRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -26541,6 +26541,24 @@ struct BurnDriver BurnDrvnes_buckyohare = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bucky O'Hare (Japan)
+static struct BurnRomInfo nes_buckyoharejRomDesc[] = {
+	{ "Bucky O'Hare (Japan)(1991)(Konami).nes",          262160, 0x0c7b289a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_buckyoharej)
+STD_ROM_FN(nes_buckyoharej)
+
+struct BurnDriver BurnDrvnes_buckyoharej = {
+	"nes_buckyoharej", "nes_buckyohare", NULL, NULL, "1991",
+	"Bucky O'Hare (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"\u30d0\u30c3\u30ad\u30fc \u30aa\u30d8\u30a2\0Bucky O'Hare (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_buckyoharejRomInfo, nes_buckyoharejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Buggy Popper (Japan)
 static struct BurnRomInfo nes_buggypopperRomDesc[] = {
 	{ "Buggy Popper (Japan)(1986)(Data East).nes",          65552, 0x46cc2d53, BRF_ESS | BRF_PRG },
@@ -28730,6 +28748,24 @@ struct BurnDriver BurnDrvnes_davidcrasaboyandhis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_davidcrasaboyandhisRomInfo, nes_davidcrasaboyandhisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Famikan (Japan) (Unl)
+static struct BurnRomInfo nes_famikanRomDesc[] = {
+	{ "Famikan (Japan)(Unl)(2005)(Dengakudou).nes",          49168, 0xd7f808a1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_famikan)
+STD_ROM_FN(nes_famikan)
+
+struct BurnDriver BurnDrvnes_famikan = {
+	"nes_famikan", NULL, NULL, NULL, "2005",
+	"Famikan (Japan) (Unl)\0", "ADULT ONLY", "Dengakudou", "NES / Famicom",
+	L"\u30d5\u30a1\u30df\u59e6\0Famikan (Japan) (Unl)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_famikanRomInfo, nes_famikanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -34086,9 +34122,9 @@ struct BurnDriver BurnDrvnes_greatwalsea = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Gremlins 2 - The New Batch (USA)
+// Gremlins 2: The New Batch (USA)
 static struct BurnRomInfo nes_greml2RomDesc[] = {
-	{ "Gremlins 2 - The New Batch (USA).nes",          393232, 0x2abb2ee7, BRF_ESS | BRF_PRG },
+	{ "Gremlins 2 - The New Batch (USA)(1990)(Sunsoft).nes",          393232, 0x2abb2ee7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_greml2)
@@ -34096,10 +34132,28 @@ STD_ROM_FN(nes_greml2)
 
 struct BurnDriver BurnDrvnes_greml2 = {
 	"nes_greml2", NULL, NULL, NULL, "1990",
-	"Gremlins 2 - The New Batch (USA)\0", NULL, "Sunsoft", "NES / Famicom",
+	"Gremlins 2: The New Batch (USA)\0", NULL, "Sunsoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_greml2RomInfo, nes_greml2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Gremlins 2: Shinshu Tanjou (Japan)
+static struct BurnRomInfo nes_greml2jRomDesc[] = {
+	{ "Gremlins 2 - Shinshu Tanjou (Japan)(1990)(Sunsoft).nes",          393232, 0xea313dc5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_greml2j)
+STD_ROM_FN(nes_greml2j)
+
+struct BurnDriver BurnDrvnes_greml2j = {
+	"nes_greml2j", "nes_greml2", NULL, NULL, "1990",
+	"Gremlins 2: Shinshu Tanjou (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
+	L"\u30b0\u30ec\u30e0\u30ea\u30f3 2 \u65b0\u30fb\u7a2e\u30fb\u8a95\u30fb\u751f\0Gremlins 2: Shinshu Tanjou (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_greml2jRomInfo, nes_greml2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -48348,6 +48402,24 @@ struct BurnDriver BurnDrvnes_supercontra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Contra X (China) (Unl)
+static struct BurnRomInfo nes_supercontraxRomDesc[] = {
+	{ "Super Contra X (China)(Unl)(1994)(Chengdu Tai Jing Da Dong).nes",          524304, 0xc4bc7460, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supercontrax)
+STD_ROM_FN(nes_supercontrax)
+
+struct BurnDriver BurnDrvnes_supercontrax = {
+	"nes_supercontrax", NULL, NULL, NULL, "1994",
+	"Super Contra X (China) (Unl)\0", NULL, "Chengdu Tai Jing Da Dong", "NES / Famicom",
+	L"Super \u9b42\u6597\u7f85 X\0Super Contra X (China) (Unl)", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_supercontraxRomInfo, nes_supercontraxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Dodge Ball (USA)
 static struct BurnRomInfo nes_superdodgeballRomDesc[] = {
 	{ "Super Dodge Ball (USA)(1989)(Sony Imagesoft).nes",          262160, 0x052a50d7, BRF_ESS | BRF_PRG },
@@ -50193,6 +50265,24 @@ struct BurnDriver BurnDrvnes_tinytooadv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinytooadvRomInfo, nes_tinytooadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tiny Toon Adventures (Japan)
+static struct BurnRomInfo nes_tinytooadvjRomDesc[] = {
+	{ "Tiny Toon Adventures (Japan)(1991)(Konami).nes",          262160, 0xa9dfa32d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinytooadvj)
+STD_ROM_FN(nes_tinytooadvj)
+
+struct BurnDriver BurnDrvnes_tinytooadvj = {
+	"nes_tinytooadvj", "nes_tinytooadv", NULL, NULL, "1991",
+	"Tiny Toon Adventures (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"\u30bf\u30a4\u30cb\u30fc \u30c8\u30a5\u30fc\u30f3 \u30a2\u30c9\u30d9\u30f3\u30c1\u30e3\u30fc\u30ba\0Tiny Toon Adventures (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinytooadvjRomInfo, nes_tinytooadvjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

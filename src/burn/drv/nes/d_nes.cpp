@@ -2937,6 +2937,25 @@ struct BurnDriver BurnDrvfds_nazonomur = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Operation: Jump Out (Hack, English)
+// https://www.romhacking.net/translations/7414/
+static struct BurnRomInfo fds_oprjumpoutRomDesc[] = {
+	{ "Operation - Jump Out T-Eng (2025)(BlackPaladin).fds",          131000, 0x938ab0af, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_oprjumpout, fds_oprjumpout, fds_fdsbios)
+STD_ROM_FN(fds_oprjumpout)
+
+struct BurnDriver BurnDrvfds_oprjumpout = {
+	"fds_oprjumpout", NULL, "fds_fdsbios", NULL, "2025",
+	"Operation: Jump Out (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION, 0,
+	NESGetZipName, fds_oprjumpoutRomInfo, fds_oprjumpoutRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Otocky (Japan)
 static struct BurnRomInfo fds_otockyRomDesc[] = {
 	{ "Otocky (Japan)(1987)(ASCII).fds",          131016, 0xd7a49861, BRF_ESS | BRF_PRG },
@@ -3678,10 +3697,10 @@ STDROMPICKEXT(fds_tobiddai, fds_tobiddai, fds_fdsbios)
 STD_ROM_FN(fds_tobiddai)
 
 struct BurnDriver BurnDrvfds_tobiddai = {
-	"fds_tobiddai", NULL, "fds_fdsbios", NULL, "1987",
+	"fds_tobiddai", "fds_oprjumpout", "fds_fdsbios", NULL, "1987",
 	"Tobidase Daisakusen (Japan)\0", NULL, "Squaresoft", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_tobiddaiRomInfo, fds_tobiddaiRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

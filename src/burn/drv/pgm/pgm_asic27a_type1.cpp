@@ -43,7 +43,7 @@ static inline void pgm_cpu_sync()
 
 static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)
 {
-	switch (address & 0x6)
+	switch (address & 0xe)
 	{
 		case 0:
 			lowlatch_to_arm = data;
@@ -55,6 +55,12 @@ static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)
 		
 		case 4:
 			// this MUST be written to before writing a new command (at least on a bootleg)
+		return;
+
+		case 8: // support 4 in 1 bootleg's 68k banking
+			if (nPGM68KROMLen == 0x1000000) {
+				SekMapMemory(PGM68KROM + (data & 3) * 0x400000, 0x100000, 0x4fffff, MAP_ROM);
+			}
 		return;
 	}
 }

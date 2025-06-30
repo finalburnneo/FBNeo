@@ -7984,6 +7984,68 @@ struct BurnDriver BurnDrvKovplusbl = {
 };
 
 
+// Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)
+/* QCPASS: 2009-10-12
+   SN: FYZQ4IN1-0015
+   VER: V100CN V200CN
+   DATE: AUG 15 2009
+   TIME: 16:28:29 
+   PCB 2009-09-01 */
+   
+static struct BurnRomInfo kovfyzq4in1RomDesc[] = {
+	// Dumped from the 68K's memory; needs redump
+	{ "u4.bin",  					0x1000000, 0x2abd0aae, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	//	these were not dumped
+	{ "lsqh2_t01.rom",      		0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+
+	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovfyzq4in1, kovfyzq4in1, pgm)
+STD_ROM_FN(kovfyzq4in1)
+
+static void kovfyzq4in1()
+{	
+	void pgm_decrypt_kovfyzq4in1();
+	pgm_decrypt_kovfyzq4in1();
+}
+
+static INT32 kovfyzq4in1Init()
+{
+	pPgmInitCallback = kovfyzq4in1;
+	pPgmProtCallback = install_protection_asic27a_kovsh;
+	pPgmTileDecryptCallback = pgm_decode_kovqhsgs_tile_data;
+	pPgmColorDataDecryptcallback = pgm_decode_kovqhsgs_gfx;
+
+	nPgmAsicRegionHackAddress = 0x3f0d;
+
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x00000260);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvKovfyzq4in1 = {
+	"kovfyzq4in1", "kovsh", "pgm", NULL, "2009",
+	"Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)\0", NULL, "bootleg", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovfyzq4in1RomInfo, kovfyzq4in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovfyzq4in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // DoDonPachi Dai-Ou-Jou Black Label (Japan, 2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
 // 68k: SANGO EX V100 12/06/99 13:36:04, ARM: China internal ROM
 

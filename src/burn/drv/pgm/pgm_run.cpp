@@ -899,7 +899,10 @@ INT32 pgmInit()
 				SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
 			}
 
-			SekMapMemory(PGM68KROM,				0x100000, (nPGM68KROMLen-1)+0x100000, MAP_ROM);		// 68000 ROM
+			if (nPGM68KROMLen == 0x1000000) // banked 68k rom
+				SekMapMemory(PGM68KROM,				0x100000, 0x4fffff, MAP_ROM);
+			else
+				SekMapMemory(PGM68KROM,				0x100000, (nPGM68KROMLen-1)+0x100000, MAP_ROM);		// 68000 ROM
 
 			// from 0 to 7fffff is completely mappable by the cartridge (it can cover the bios!)
 		}

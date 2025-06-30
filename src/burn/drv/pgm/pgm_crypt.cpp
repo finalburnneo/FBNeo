@@ -1200,3 +1200,14 @@ void pgm_decrypt_kovgsyx()
 	// graphics when dumped?
 }
 
+void pgm_decrypt_kovfyzq4in1() 
+{
+//	pgm_decrypt_kovqhsgs_program();
+
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x000000);
+	decode_kovqhsgs_gfx_block(PGMSPRMaskROM + 0x800000);
+
+	// sprite colors are decoded in pgm_run
+
+	pgm_decode_kovqhsgs_samples();
+}

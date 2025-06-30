@@ -345,6 +345,24 @@ void EEPROMByteFill(UINT8 byte, INT32 length)
 	memset(eeprom_data, byte, length);
 }
 
+UINT8 EEPROMReadByte(UINT32 offset)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMReadByte called without init\n"));
+#endif
+
+	return eeprom_data[offset];
+}
+
+void EEPROMWriteByte(UINT32 offset, UINT8 data)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMWriteOffset called without init\n"));
+#endif
+
+	eeprom_data[offset] = data;
+}
+
 void EEPROMScan(INT32 nAction, INT32* pnMin)
 {
 #if defined FBNEO_DEBUG

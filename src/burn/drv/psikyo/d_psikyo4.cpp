@@ -50,6 +50,10 @@ static INT32 mahjong = 0;
 static INT32 loderndf = 0;
 static INT32 nGfxMask;
 
+static INT32 single_screen = 0;
+static INT32 gamemode_single_screen = 0;
+static INT32 gamemode_eeprom_offset = 0;
+
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[4] = { 0, 0, 0, 0 };
 
@@ -204,7 +208,7 @@ static struct BurnDIPInfo LoderndfDIPList[]=
 	DIP_OFFSET(0x28)
 	{0x00, 0xff, 0xff, 0x60, NULL					},
 	{0x01, 0xff, 0xff, 0x01, NULL					},
-	{0x02, 0xff, 0xff, 0x01, NULL					},
+	{0x02, 0xff, 0xff, 0x02, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Debug"				},
 	{0x00, 0x01, 0x40, 0x40, "Off"					},
@@ -214,9 +218,10 @@ static struct BurnDIPInfo LoderndfDIPList[]=
 	{0x01, 0x01, 0x03, 0x00, "Japan (Shows Version Number)"		},
 	{0x01, 0x01, 0x03, 0x01, "World (Does Not Show Version Number)"	},
 
-	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
-	{0x02, 0x01, 0x01, 0x01, "Disabled"				},
-	{0x02, 0x01, 0x01, 0x00, "Enabled"				},
+	{0   , 0xfe, 0   ,    3, "Game Mode"	},
+	{0x02, 0x01, 0x03, 0x00, "2 Cabinets (Versus)"	},
+	{0x02, 0x01, 0x03, 0x01, "2 Cabinets (Non-Versus)"},
+	{0x02, 0x01, 0x03, 0x02, "1 Cabinet"	},
 };
 
 STDDIPINFO(Loderndf)
@@ -231,14 +236,32 @@ static struct BurnDIPInfo HotdebutDIPList[]=
 	{0x00, 0x01, 0x40, 0x40, "Off"		},
 	{0x00, 0x01, 0x40, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
-	{0x01, 0x01, 0x01, 0x01, "Disabled"				},
-	{0x01, 0x01, 0x01, 0x00, "Enabled"				},
+	{0   , 0xfe, 0   ,    2, "Game Mode"	},
+	{0x01, 0x01, 0x01, 0x00, "2 Cabinets"	},
+	{0x01, 0x01, 0x01, 0x01, "1 Cabinet"	},
 };
 
 STDDIPINFO(Hotdebut)
 
 static struct BurnDIPInfo HotgmckDIPList[]=
+{
+	DIP_OFFSET(0x2e)
+	{0x00, 0xff, 0xff, 0x60, NULL		},
+	{0x01, 0xff, 0xff, 0x02, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Debug"	},
+	{0x00, 0x01, 0x40, 0x40, "Off"		},
+	{0x00, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    3, "Game Mode"	},
+	{0x01, 0x01, 0x03, 0x00, "2 Cabinets (Versus)"	},
+	{0x01, 0x01, 0x03, 0x01, "2 Cabinets (Non-Versus)"},
+	{0x01, 0x01, 0x03, 0x02, "1 Cabinet"	},
+};
+
+STDDIPINFO(Hotgmck)
+
+static struct BurnDIPInfo HotgmckiDIPList[]=
 {
 	DIP_OFFSET(0x2e)
 	{0x00, 0xff, 0xff, 0x60, NULL		},
@@ -248,12 +271,12 @@ static struct BurnDIPInfo HotgmckDIPList[]=
 	{0x00, 0x01, 0x40, 0x40, "Off"		},
 	{0x00, 0x01, 0x40, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},
-	{0x01, 0x01, 0x01, 0x01, "Disabled"				},
-	{0x01, 0x01, 0x01, 0x00, "Enabled"				},
+	{0   , 0xfe, 0   ,    2, "Game Mode"	},
+	{0x01, 0x01, 0x01, 0x00, "2 Cabinets"	},
+	{0x01, 0x01, 0x01, 0x01, "1 Cabinet"	},
 };
 
-STDDIPINFO(Hotgmck)
+STDDIPINFO(Hotgmcki)
 
 #ifndef LSB_FIRST
 static void le_to_be(unsigned char * p, int size)
@@ -614,9 +637,10 @@ static INT32 MemIndex(INT32 gfx_len)
 	return 0;
 }
 
-static INT32 MultiScreenCheck()
+static void MultiScreenCheck()
 {
-	INT32 screensize = (DrvDips[loderndf ? 2 : 1] & 1) ? 320 : 640;
+	single_screen = (DrvDips[loderndf ? 2 : 1] & gamemode_single_screen);
+	INT32 screensize = single_screen ? 320 : 640;
 	if (screensize != nScreenWidth)
 	{
 		BurnTransferSetDimensions(screensize, nScreenHeight);
@@ -628,11 +652,8 @@ static INT32 MultiScreenCheck()
 			BurnDrvSetAspect(8, 3);
 		}
 		Reinitialise();
-
-		return 1; // don't draw this time around
 	}
-
-	return 0;
+	EEPROMWriteByte(gamemode_eeprom_offset, DrvDips[loderndf ? 2 : 1]);
 }
 
 static INT32 DrvDoReset()
@@ -657,8 +678,6 @@ static INT32 DrvDoReset()
 		pcmbank_previous = ~0;
 		set_pcm_bank();
 	}
-
-	MultiScreenCheck();
 
 	return 0;
 }
@@ -764,6 +783,9 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 gfx_len)
 
 	DrvDoReset();
 
+	// note: reset will erase game mode setting at first boot if we don't do this afterward
+	MultiScreenCheck();
+
 	return 0;
 }
 
@@ -780,6 +802,10 @@ static INT32 DrvExit()
 
 	mahjong = 0;
 	loderndf = 0;
+
+	single_screen = 0;
+	gamemode_eeprom_offset = 0;
+	gamemode_single_screen = 0;
 
 	return 0;
 }
@@ -901,11 +927,7 @@ static INT32 DrvDraw()
 	DrvRecalcPalette();
 	BurnTransferClear();
 
-	if (MultiScreenCheck()) {
-		return 1; // if mode changed, don't draw this time around
-	}
-
-	if (~DrvDips[loderndf ? 2 : 1] & 1) {
+	if (!single_screen) {
 		for (INT32 y = 0; y < nScreenHeight; y++) {
 			for (INT32 x = 0; x < 320; x++) {
 				pTransDraw[y * 640 + x] = 0x1000;
@@ -1067,6 +1089,9 @@ static INT32 HotgmckInit()
 {
 	mahjong = 1;
 
+	gamemode_eeprom_offset = 4;
+	gamemode_single_screen = 2;
+
 	return DrvInit(HotgmckLoadCallback, 0x2000000);
 }
 
@@ -1136,6 +1161,9 @@ static INT32 HgkairakLoadCallback()
 static INT32 HgkairakInit()
 {
 	mahjong = 1;
+
+	gamemode_eeprom_offset = 4;
+	gamemode_single_screen = 2;
 
 	return DrvInit(HgkairakLoadCallback, 0x3000000);
 }
@@ -1214,6 +1242,9 @@ static INT32 Hotgmck3LoadCallback()
 static INT32 Hotgmck3Init()
 {
 	mahjong = 1;
+
+	gamemode_eeprom_offset = 4;
+	gamemode_single_screen = 2;
 
 	return DrvInit(Hotgmck3LoadCallback, 0x4000000);
 }
@@ -1318,6 +1349,9 @@ static INT32 HotgmckiInit()
 {
 	mahjong = 1;
 
+	gamemode_eeprom_offset = 4;
+	gamemode_single_screen = 1;
+
 	return DrvInit(HotgmckiLoadCallback, 0x4000000);
 }
 
@@ -1326,7 +1360,7 @@ struct BurnDriver BurnDrvHotgmcki = {
 	"Mahjong Hot Gimmick Integral (Japan)\0", NULL, "Psikyo", "PS4",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
-	NULL, hotgmckiRomInfo, hotgmckiRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckDIPInfo,
+	NULL, hotgmckiRomInfo, hotgmckiRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckiDIPInfo,
 	HotgmckiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
 	640, 224, 8, 3
 };
@@ -1371,6 +1405,9 @@ static INT32 LoderndfInit()
 	speedhack_pc[0] = 0x00001B3E;
 	speedhack_pc[1] = 0x00001B40;
 
+	gamemode_eeprom_offset = 8;
+	gamemode_single_screen = 2;
+
 	loderndf = 1;
 
 	return DrvInit(LoderndfLoadCallback, 0x2000000);
@@ -1409,6 +1446,9 @@ static INT32 LoderndfaInit()
 	speedhack_address = 0x0020;
 	speedhack_pc[0] = 0x00001B4A;
 	speedhack_pc[1] = 0x00001B4C;
+
+	gamemode_eeprom_offset = 8;
+	gamemode_single_screen = 2;
 
 	loderndf = 1;
 
@@ -1467,6 +1507,9 @@ static INT32 HotdebutInit()
 	speedhack_address = 0x0001c;
 	speedhack_pc[0] = 0x000029EE;
 	speedhack_pc[1] = 0x000029F0;
+
+	gamemode_eeprom_offset = 6;
+	gamemode_single_screen = 1;
 
 	return DrvInit(HotdebutLoadCallback, 0x1800000);
 }

@@ -115,29 +115,47 @@ struct HoldCoin {
 
 template <int N, typename T>
 struct ClearOpposite {
-	T prev[N<<2];
+	T prev[N << 2], prev_a[N << 2], prev_b[N << 2];
 
 	void reset() {
-		memset(&prev, 0, sizeof(prev));
+		memset(&prev,   0, sizeof(prev));
+		memset(&prev_a, 0, sizeof(prev_a));
+		memset(&prev_b, 0, sizeof(prev_b));
 	}
 
 	void scan() {
 		SCAN_VAR(prev);
+		SCAN_VAR(prev_a);
+		SCAN_VAR(prev_b);
 	}
 
 	void checkval(UINT8 n, T &inp, T val_a, T val_b) {
-		// When opposites become pressed simultaneously, and a 3rd direction isn't pressed
-		// remove the previously stored direction if it exists, cancel both otherwise
 		if ((inp & val_a) == val_a)
-			inp &= (prev[n] && (inp & val_b) == 0 ? (inp ^ prev[n]) : ~val_a);
-		// Store direction anytime it's pressed without its opposite
+			inp &= (inp ^ prev_a[n]);
 		else if (inp & val_a)
-			prev[n] = inp & val_a;
+			prev_a[n] = inp & val_a;
+		if ((inp & val_b) == val_b)
+			inp &= (inp ^ prev_b[n]);
+		else if (inp & val_b)
+			prev_b[n] = inp & val_b;
+
+		if ((inp & val_a) == val_a)
+			inp &= ~val_a;
+		if ((inp & val_b) == val_b)
+			inp &= ~val_b;
+
+		// Handling cross-frame conflicts
+		if (((inp | prev[n]) & val_a) == val_a)
+			inp &= ~val_a;
+		if (((inp | prev[n]) & val_b) == val_b)
+			inp &= ~val_b;
+
+		prev[n] = inp;
 	}
 
 	void check(UINT8 num, T &inp, T val1, T val2) {
-		checkval((num<<1)  , inp, val1, val2);
-		checkval((num<<1)+1, inp, val2, val1);
+		checkval((num<<1),       inp, val1, val2);
+		checkval((num << 1) | 1, inp, val2, val1);
 	}
 };
 

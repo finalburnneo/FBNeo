@@ -305,7 +305,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					SetBkMode(hDc, TRANSPARENT);									// LTEXT control with transparent background
 					return (LRESULT)GetStockObject(HOLLOW_BRUSH);					// Return to empty brush
 				}
-			}
+			}														// Enable Esc=close
+			break;
 		}
 		case WM_GETMINMAXINFO: {
 			MINMAXINFO* info = (MINMAXINFO*)lParam;

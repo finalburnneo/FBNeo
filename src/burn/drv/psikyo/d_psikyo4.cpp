@@ -664,10 +664,6 @@ static INT32 DrvDoReset()
 
 	EEPROMReset();
 
-	if (EEPROMAvailable() == 0) {
-		EEPROMFill(DrvSh2RAM /*0 fill*/, 0, 0x100);
-	}
-
 	BurnYMF278BReset();
 
 	sample_offs = 0;
@@ -776,15 +772,15 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 gfx_len)
 	BurnTimerAttachSh2(28636350);
 
 	EEPROMInit(&eeprom_interface_93C56);
+	if (EEPROMAvailable() == 0) EEPROMByteFill(0, 0x100);
 
 	nGfxMask = (gfx_len - 1) >> 8;
 
 	GenericTilesInit();
 
-	DrvDoReset();
-
-	// note: reset will erase game mode setting at first boot if we don't do this afterward
 	MultiScreenCheck();
+
+	DrvDoReset();
 
 	return 0;
 }

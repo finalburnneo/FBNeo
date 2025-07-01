@@ -7985,12 +7985,19 @@ struct BurnDriver BurnDrvKovplusbl = {
 
 
 // Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)
-/* QCPASS: 2009-10-12
+/* Multi-game bootleg cart ; 4 games are available in game select menu :
+   1) 风云再起 fengyunzaiqi
+   2) 拳皇三国 quanhuangsanguo
+   3) 三国英杰传sanguoyingjiezhuan
+   4) 武神回归 wushenhuigui
+   
+   QCPASS: 2009-10-12
    SN: FYZQ4IN1-0015
    VER: V100CN V200CN
    DATE: AUG 15 2009
    TIME: 16:28:29 
-   PCB 2009-09-01 */
+   PCB 2009-09-01
+   LABEL: 风云四合一 */
    
 static struct BurnRomInfo kovfyzq4in1RomDesc[] = {
 	// Dumped from the 68K's memory; needs redump
@@ -8038,7 +8045,7 @@ static INT32 kovfyzq4in1Init()
 struct BurnDriver BurnDrvKovfyzq4in1 = {
 	"kovfyzq4in1", "kovsh", "pgm", NULL, "2009",
 	"Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)\0", NULL, "bootleg", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Fengyun 4 in 1\0\u98ce\u4e91\u56db\u5408\u4e00 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovfyzq4in1RomInfo, kovfyzq4in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovfyzq4in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

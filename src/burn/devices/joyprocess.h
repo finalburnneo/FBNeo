@@ -215,18 +215,6 @@ struct ClearOpposite {
 		if ((inp & val_b) == val_b) inp &= ~val_b;
 		if (val_u)                  inp |= val_u;
 
-		interp(n, inp, val_a, val_b);
-	}
-
-	void ff(UINT8 n, T& inp, T val_a, T val_b) {
-		const T mask_a = inp & val_a;
-		if (mask_a == val_a) inp &= ~val_a | prev_a[n];
-		else if (mask_a) prev_a[n] = mask_a;
-
-		const T mask_b = inp & val_b;
-		if (mask_b == val_b) inp &= ~val_b | prev_b[n];
-		else if (mask_b) prev_b[n] = mask_b;
-
 		neu(n, inp, val_a, val_b);
 	}
 

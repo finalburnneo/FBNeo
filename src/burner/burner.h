@@ -25,6 +25,7 @@
 
 #include "title.h"
 #include "burn.h"
+#include "joyprocess.h"
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality

@@ -2127,8 +2127,8 @@ INT32 cps3Frame()
 	}
 
 	// Clear Opposites
-	clear_opposite.check(0, Cps3Input[0], 0x0003, 0x000c);
-	clear_opposite.check(1, Cps3Input[0], 0x0300, 0x0c00);
+	clear_opposite.check(0, Cps3Input[0], 0x0003, 0x000c, nSocd[0]);
+	clear_opposite.check(1, Cps3Input[0], 0x0300, 0x0c00, nSocd[1]);
 
 	Sh2NewFrame();
 

@@ -2560,6 +2560,47 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
 
+		case MENU_INPUT_P1_SOCDN:
+		case MENU_INPUT_P1_SOCDLF:
+		case MENU_INPUT_P1_SOCDLE:
+		case MENU_INPUT_P1_SOCDF:
+		case MENU_INPUT_P1_SOCDU:
+		case MENU_INPUT_P1_SOCDDL:
+		case MENU_INPUT_P2_SOCDN:
+		case MENU_INPUT_P2_SOCDLF:
+		case MENU_INPUT_P2_SOCDLE:
+		case MENU_INPUT_P2_SOCDF:
+		case MENU_INPUT_P2_SOCDU:
+		case MENU_INPUT_P2_SOCDDL:
+		case MENU_INPUT_P3_SOCDN:
+		case MENU_INPUT_P3_SOCDLF:
+		case MENU_INPUT_P3_SOCDLE:
+		case MENU_INPUT_P3_SOCDF:
+		case MENU_INPUT_P3_SOCDU:
+		case MENU_INPUT_P3_SOCDDL:
+		case MENU_INPUT_P4_SOCDN:
+		case MENU_INPUT_P4_SOCDLF:
+		case MENU_INPUT_P4_SOCDLE:
+		case MENU_INPUT_P4_SOCDF:
+		case MENU_INPUT_P4_SOCDU:
+		case MENU_INPUT_P4_SOCDDL:
+		case MENU_INPUT_P5_SOCDN:
+		case MENU_INPUT_P5_SOCDLF:
+		case MENU_INPUT_P5_SOCDLE:
+		case MENU_INPUT_P5_SOCDF:
+		case MENU_INPUT_P5_SOCDU:
+		case MENU_INPUT_P5_SOCDDL:
+		case MENU_INPUT_P6_SOCDN:
+		case MENU_INPUT_P6_SOCDLF:
+		case MENU_INPUT_P6_SOCDLE:
+		case MENU_INPUT_P6_SOCDF:
+		case MENU_INPUT_P6_SOCDU:
+		case MENU_INPUT_P6_SOCDDL: {
+			const INT32 nOffset = id - MENU_INPUT_P1_SOCDN, nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_SOCDN + 1) / (sizeof(nSocd) / sizeof(nSocd[0]));
+			nSocd[nOffset / nCount] = nOffset % nCount;
+			break;
+		}
+
 		case MENU_CLRMAME_PRO_XML:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_ARCADE_ONLY);

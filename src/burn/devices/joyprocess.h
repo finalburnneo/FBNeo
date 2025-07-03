@@ -29,6 +29,9 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 // for analog pedals, allows a mapped digital button to work
 #define INPUT_MIGHTBEDIGITAL    0x04
 
+// joyprocess.cpp
+extern INT32 nSocd[6];
+
 // Need something else / looking for:
 // analog dial, paddle & trackball, use BurnTrackball device (burn_gun.h)
 // lightgun, use BurnGun device (also burn_gun.h)
@@ -161,11 +164,11 @@ struct ClearOpposite {
 	// SOCD - Last Input Priority (4 Way)
 	void lif(UINT8 n, T& inp, T val_a, T val_b) {
 		const T mask_a = inp & val_a;
-		if (mask_a == val_a) inp &= (inp ^ prev_a[n]);
+		if (mask_a == val_a) inp &= ~prev_a[n];
 		else if (mask_a) prev_a[n] = mask_a;
 
 		const T mask_b = inp & val_b;
-		if (mask_b == val_b) inp &= (inp ^ prev_b[n]);
+		if (mask_b == val_b) inp &= ~prev_b[n];
 		else if (mask_b) prev_b[n] = mask_b;
 
 		neu(n, inp, val_a, val_b);
@@ -175,8 +178,15 @@ struct ClearOpposite {
 	void lie(UINT8 n, T& inp, T val_a, T val_b) {
 		lif(n, inp, val_a, val_b);
 
-		const T inp_u  = (1 << 0), inp_d = (1 << 1), inp_l = (1 << 2), inp_r = (1 << 3);
-		const T inp_ud = (inp_u | inp_d),           inp_lr = (inp_l & inp_r);
+		const T val = (val_a < val_b) ? val_a : val_b;
+		INT32 i;
+
+		for (i = 0; i < 8; i++) {
+			if (val & (1 << i)) break;	// Find up
+		}
+
+		const T inp_u  = (1 << i), inp_d = (inp_u << 1), inp_l = (inp_u << 2), inp_r = (inp_u << 3);
+		const T inp_ud = (inp_u | inp_d), inp_lr = (inp_l & inp_r);
 		const T inp_e  = (inp & (inp_ud | inp_lr)), prev_e = (prev[n] & (inp_ud | inp_lr));
 
 		if (((inp_e == (inp_d | inp_l)) && (prev_e == (inp_d | inp_r))) ||
@@ -198,11 +208,11 @@ struct ClearOpposite {
 	// SOCD - First Input Priority
 	void fip(UINT8 n, T& inp, T val_a, T val_b) {
 		const T mask_a = inp & val_a;
-		if (mask_a == val_a) inp &= ~val_a | prev_a[n];
+		if (mask_a == val_a) inp &= (~val_a) | prev_a[n];
 		else if (mask_a) prev_a[n] = mask_a;
 
 		const T mask_b = inp & val_b;
-		if (mask_b == val_b) inp &= ~val_b | prev_b[n];
+		if (mask_b == val_b) inp &= (~val_b) | prev_b[n];
 		else if (mask_b) prev_b[n] = mask_b;
 
 		neu(n, inp, val_a, val_b);
@@ -210,10 +220,50 @@ struct ClearOpposite {
 
 	// SOCD - Up Priority (Up-override Down)
 	void uod(UINT8 n, T& inp, T val_a, T val_b) {
-		const T val_u = (inp & 1);	// up = 0x01
+		const T val = (val_a < val_b) ? val_a : val_b;
+		INT32 i;
+
+		for (i = 0; i < 8; i++) {
+			if (val & (1 << i)) break;	// Find up
+		}
+
+		const T inp_u = (inp & (1 << i));
 		if ((inp & val_a) == val_a) inp &= ~val_a;
 		if ((inp & val_b) == val_b) inp &= ~val_b;
-		if (val_u)                  inp |= val_u;
+		if (inp_u)                  inp |= inp_u;
+
+		neu(n, inp, val_a, val_b);
+	}
+
+	// SOCD - Down Priority (Left/Right Last Input Priority)​
+	void dlr(UINT8 n, T& inp, T val_a, T val_b) {
+		const T val = (val_a < val_b) ? val_a : val_b;
+		INT32 i;
+
+		for (i = 0; i < 8; i++) {
+			if (val & (1 << i)) break;	// Find up
+		}
+
+		i++;
+
+		const T inp_d  = (inp & (1 << i));
+		const T mask_a = inp & val_a;
+		if (mask_a == val_a) {
+			if (inp_d && (val_a & (1 << i)))
+				inp &= (~val_a) | (1 << i);
+			else
+				inp &= ~prev_a[n];
+		}
+		else if (mask_a) prev_a[n] = mask_a;
+
+		const T mask_b = inp & val_b;
+		if (mask_b == val_b) {
+			if (inp_d && (val_b & (1 << i)))
+				inp &= (~val_b) | (1 << i);
+			else
+				inp &= ~prev_b[n];
+		}
+		else if (mask_b) prev_b[n] = mask_b;
 
 		neu(n, inp, val_a, val_b);
 	}
@@ -221,14 +271,19 @@ struct ClearOpposite {
 	void check(UINT8 num, T& inp, T val1, T val2, INT32 socd = 2) {
 //		checkval((num << 1),     inp, val1, val2);
 //		checkval((num << 1) + 1, inp, val2, val1);
+#define DISPATCH_SOCD(x) x(num, inp, val1, val2)
+
 		switch (socd) {
-			case 0: neu((num), inp, val1, val2); break;
-			case 1: lif((num), inp, val1, val2); break;
-			case 2: lie((num), inp, val1, val2); break;
-			case 3: fip((num), inp, val1, val2); break;
-			case 4: uod((num), inp, val1, val2); break;
-			default:                             break;
+			case 0: DISPATCH_SOCD(neu); break;
+			case 1: DISPATCH_SOCD(lif); break;
+			case 2: DISPATCH_SOCD(lie); break;
+			case 3: DISPATCH_SOCD(fip); break;
+			case 4: DISPATCH_SOCD(uod); break;
+			case 5: DISPATCH_SOCD(dlr); break;
+			default:                    break;
 		}
+
+#undef DISPATCH_SOCD
 	}
 };
 

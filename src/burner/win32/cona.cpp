@@ -519,6 +519,14 @@ int ConfigAppLoad()
 		VAR(nPlayerDefaultControls[3]);
 		STR(szPlayerDefaultIni[3]);
 
+		// SOCD
+		VAR(nSocd[0]);
+		VAR(nSocd[1]);
+		VAR(nSocd[2]);
+		VAR(nSocd[3]);
+		VAR(nSocd[4]);
+		VAR(nSocd[5]);
+
 #undef DRV
 #undef PAT
 #undef STR
@@ -1004,6 +1012,14 @@ int ConfigAppSave()
 	STR(szPlayerDefaultIni[2]);
 	VAR(nPlayerDefaultControls[3]);
 	STR(szPlayerDefaultIni[3]);
+
+	_ftprintf(h, _T("\n// Index of SOCD settings for each player.\n"));
+	VAR(nSocd[0]);
+	VAR(nSocd[1]);
+	VAR(nSocd[2]);
+	VAR(nSocd[3]);
+	VAR(nSocd[4]);
+	VAR(nSocd[5]);
 
 	_ftprintf(h, _T("\n\n\n"));
 

@@ -1101,7 +1101,7 @@ INT32 pgmFrame()
 
 		// clear opposites
 		for (INT32 i = 0; i < 4; i++) {
-			clear_opposite.check(i, PgmInput[i], 0x06, 0x18);
+			clear_opposite.check(i, PgmInput[i], 0x06, 0x18, nSocd[i]);
 		}
 
 		hold_coin.check(0, PgmInput[4], 1, 7);

@@ -1085,7 +1085,7 @@ static INT32 HotgmckInit()
 {
 	mahjong = 1;
 
-	gamemode_eeprom_offset = 4;
+	gamemode_eeprom_offset = 3;
 	gamemode_single_screen = 2;
 
 	return DrvInit(HotgmckLoadCallback, 0x2000000);
@@ -1158,7 +1158,7 @@ static INT32 HgkairakInit()
 {
 	mahjong = 1;
 
-	gamemode_eeprom_offset = 4;
+	gamemode_eeprom_offset = 3;
 	gamemode_single_screen = 2;
 
 	return DrvInit(HgkairakLoadCallback, 0x3000000);
@@ -1239,7 +1239,7 @@ static INT32 Hotgmck3Init()
 {
 	mahjong = 1;
 
-	gamemode_eeprom_offset = 4;
+	gamemode_eeprom_offset = 3;
 	gamemode_single_screen = 2;
 
 	return DrvInit(Hotgmck3LoadCallback, 0x4000000);
@@ -1345,7 +1345,7 @@ static INT32 HotgmckiInit()
 {
 	mahjong = 1;
 
-	gamemode_eeprom_offset = 4;
+	gamemode_eeprom_offset = 3;
 	gamemode_single_screen = 1;
 
 	return DrvInit(HotgmckiLoadCallback, 0x4000000);

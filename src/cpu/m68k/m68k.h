@@ -323,6 +323,7 @@ void m68k_burn_until_irq(int enabled);  /* Sleep until INT (speedhacks) */
  * Setting IRQ to 0 will clear an interrupt request.
  */
 void m68k_set_irq(unsigned int int_level);
+int m68k_get_irq();
 void m68k_set_irq_delay(unsigned int int_level);
 
 /* Set the virtual irq lines, where the highest level

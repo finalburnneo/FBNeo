@@ -17203,7 +17203,7 @@ struct BurnDriver BurnDrvmd_mworld4eng = {
 
 // Monster World IV (USA, Europe) (English, Japanese) (Virtual Console)
 static struct BurnRomInfo md_mworld4eng2RomDesc[] = {
-	{ "Monster World IV EN/JP (USA, Europe)(Virtual Console)(2012)(Sega).bin", 0x200000, 0xaf050c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Monster World IV (USA, Europe)(English, Japanese)(Virtual Console)(2012)(Sega).bin", 0x200000, 0xaf050c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mworld4eng2)

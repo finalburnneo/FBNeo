@@ -859,6 +859,7 @@
 #define MENU_INPUT_P6_SOCDF					10783
 #define MENU_INPUT_P6_SOCDU					10784
 #define MENU_INPUT_P6_SOCDDL				10785
+#define MENU_INPUT_ALL_DEFAULT				10786
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

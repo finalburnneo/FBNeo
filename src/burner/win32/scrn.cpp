@@ -2601,6 +2601,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
+		case MENU_INPUT_ALL_DEFAULT: {
+			const INT32 nCount = sizeof(nSocd) / sizeof(nSocd[0]);
+			for (INT32 i = 0; i < nCount; i++) {
+				nSocd[i] = 2;
+			}
+			break;
+		}
+
 		case MENU_CLRMAME_PRO_XML:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_ARCADE_ONLY);

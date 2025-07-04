@@ -119,7 +119,7 @@ struct HoldCoin {
 template <int N, typename T>
 struct ClearOpposite {
 //	T prev[N << 2];
-	T prev[N << 1], prev_a[N << 1], prev_b[N << 1];
+	T prev[N], prev_a[N], prev_b[N];
 
 	void reset() {
 		memset(&prev,   0, sizeof(prev));
@@ -186,7 +186,7 @@ struct ClearOpposite {
 		}
 
 		const T inp_u  = (1 << i), inp_d = (inp_u << 1), inp_l = (inp_u << 2), inp_r = (inp_u << 3);
-		const T inp_ud = (inp_u | inp_d), inp_lr = (inp_l & inp_r);
+		const T inp_ud = (inp_u | inp_d), inp_lr = (inp_l | inp_r);
 		const T inp_e  = (inp & (inp_ud | inp_lr)), prev_e = (prev[n] & (inp_ud | inp_lr));
 
 		if (((inp_e == (inp_d | inp_l)) && (prev_e == (inp_d | inp_r))) ||

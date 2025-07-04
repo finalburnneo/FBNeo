@@ -30,6 +30,8 @@ static UINT8 DrvInputs[4]   = { 0, 0, 0, 0 };
 static UINT32 JoyShifter[2] = { 0, 0 };
 static UINT8 JoyStrobe      = 0;
 
+static ClearOpposite<4, UINT8> clear_opposite;
+
 // Zapper emulation
 INT16 ZapperX;
 INT16 ZapperY;
@@ -10982,6 +10984,8 @@ static INT32 DrvDoReset()
 	cyc_counter = 0;
 	mega_cyc_counter = 0;
 
+	clear_opposite.reset();
+
 	{
 		INT32 nAspectX, nAspectY;
 		BurnDrvGetAspect(&nAspectX, &nAspectY);
@@ -11378,6 +11382,7 @@ INT32 NESDraw()
 	return 0;
 }
 
+#if 0
 static void clear_opposites(UINT8 &inpt)
 {
 	// some games will straight-up crash or go berzerk if up+down or left+right
@@ -11390,6 +11395,7 @@ static void clear_opposites(UINT8 &inpt)
 	if ((inpt & ( (1 << 6) | (1 << 7) )) == ((1 << 6) | (1 << 7)) )
 		inpt &= ~((1 << 6) | (1 << 7)); // left + right pressed, cancel both
 }
+#endif
 
 #define DEBUG_CYC 0
 
@@ -11425,11 +11431,16 @@ INT32 NESFrame()
 			DrvInputs[2] ^= (NESJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (NESJoy4[i] & 1) << i;
 		}
-
+#if 0
 		clear_opposites(DrvInputs[0]);
 		clear_opposites(DrvInputs[1]);
 		clear_opposites(DrvInputs[2]);
 		clear_opposites(DrvInputs[3]);
+#endif
+		clear_opposite.check(0, DrvInputs[0], 0x30, 0xc0, nSocd[0]);
+		clear_opposite.check(1, DrvInputs[1], 0x30, 0xc0, nSocd[1]);
+		clear_opposite.check(2, DrvInputs[2], 0x30, 0xc0, nSocd[2]);
+		clear_opposite.check(3, DrvInputs[3], 0x30, 0xc0, nSocd[3]);
 
 		if (NESMode & (USE_ZAPPER | VS_ZAPPER)) {
 			BurnGunMakeInputs(0, ZapperX, ZapperY);
@@ -11553,6 +11564,7 @@ INT32 NESScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(JoyShifter);
 		SCAN_VAR(JoyStrobe);
 		SCAN_VAR(ZapperReloadTimer);
+		clear_opposite.scan();
 
 		ScanVar(NES_CPU_RAM, 0x800, "CPU Ram");
 		ScanVar(Cart.WorkRAM, Cart.WorkRAMSize, "Work Ram");

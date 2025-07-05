@@ -942,7 +942,7 @@ STD_ROM_FN(fds_biomirbokupa)
 struct BurnDriver BurnDrvfds_biomirbokupa = {
 	"fds_biomirbokupa", NULL, "fds_fdsbios", NULL, "1988",
 	"Bio Miracle Bokutte Upa (Japan)\0", NULL, "Konami", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Bio Miracle Bokutte Upa (Japan)\0\u30D0\u30A4\u30AA\u30DF\u30E9\u30AF\u30EB\u3000\u307C\u304F\u3063\u3066\u30A6\u30D1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PLATFORM, 0,
 	NESGetZipName, fds_biomirbokupaRomInfo, fds_biomirbokupaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -960,7 +960,7 @@ STD_ROM_FN(fds_bomberman)
 struct BurnDriver BurnDrvfds_bomberman = {
 	"fds_bomberman", NULL, "fds_fdsbios", NULL, "1990",
 	"Bomberman (Japan)\0", NULL, "Hudson Soft", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Bomberman (Japan)\0\u30dc\u30f3\u30d0\u30fc\u30de\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, fds_bombermanRomInfo, fds_bombermanRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -1815,7 +1815,7 @@ STD_ROM_FN(fds_galaga)
 struct BurnDriver BurnDrvfds_galaga = {
 	"fds_galaga", NULL, "fds_fdsbios", NULL, "1990",
 	"Galaga (Japan)\0", NULL, "Namcot", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Galaga (Japan)\0\u30ae\u30e3\u30e9\u30ac\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_VERSHOOT, 0,
 	NESGetZipName, fds_galagaRomInfo, fds_galagaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -1833,7 +1833,7 @@ STD_ROM_FN(fds_galaxian)
 struct BurnDriver BurnDrvfds_galaxian = {
 	"fds_galaxian", NULL, "fds_fdsbios", NULL, "1990",
 	"Galaxian (Japan)\0", NULL, "Namcot", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Galaxian (Japan)\0\u30ae\u30e3\u30e9\u30af\u30b7\u30a2\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_VERSHOOT, 0,
 	NESGetZipName, fds_galaxianRomInfo, fds_galaxianRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -5692,7 +5692,7 @@ struct BurnDriver BurnDrvnes_jackalc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Jackal - Endless Mission (v1.2)
+// Jackal - Endless Mission (Hack, v1.2)
 // Modified by HHNM Team - ZENG GE / Ôø¸ç
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html
 static struct BurnRomInfo nes_jackalemRomDesc[] = {
@@ -5704,8 +5704,8 @@ STD_ROM_FN(nes_jackalem)
 
 struct BurnDriver BurnDrvnes_jackalem = {
 	"nes_jackalem", "nes_jackal", NULL, NULL, "2021",
-	"Jackal - Endless Mission (v1.2)\0", NULL, "HHNM Team - ZENG GE", "NES / Famicom",
-	L"Jackal - Endless Mission (v1.2)\0\u8d64\u8272\u8981\u585e - \u65e0\u5c3d\u7684\u4efb\u52a1 (v1.2)", NULL, NULL, NULL,
+	"Jackal - Endless Mission (Hack, v1.2)\0", NULL, "HHNM Team - ZENG GE", "NES / Famicom",
+	L"Jackal - Endless Mission (Hack, v1.2)\0\u8d64\u8272\u8981\u585e - \u65e0\u5c3d\u7684\u4efb\u52a1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_jackalemRomInfo, nes_jackalemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -10054,6 +10054,24 @@ struct BurnDriver BurnDrvnes_caltron9in1 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Chao Ji Zhan Hun: Super Contra 7 (China) (Unl)
+static struct BurnRomInfo nes_supercontra7RomDesc[] = {
+	{ "Chao Ji Zhan Hun - Super Contra 7 (China)(Unl)(1996)(E.S.C Co.).nes",          262160, 0x69480594, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supercontra7)
+STD_ROM_FN(nes_supercontra7)
+
+struct BurnDriver BurnDrvnes_supercontra7 = {
+	"nes_supercontra7", NULL, NULL, NULL, "1996",
+	"Chao Ji Zhan Hun: Super Contra 7 (China) (Unl)\0", NULL, "E.S.C Co.", "NES / Famicom",
+	L"Chao Ji Zhan Hun: Super Contra 7 (China) (Unl)\0\u8d85\u7d1a\u6230\u9b42\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_supercontra7RomInfo, nes_supercontra7RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // China Rabbit Baby (Taiwan) (Unl)
 static struct BurnRomInfo nes_chinarabbabRomDesc[] = {
 	{ "China Rabbit Baby (Taiwan)(Unl)(1996)(J.Y. Company).nes",          524304, 0x6ab0db42, BRF_ESS | BRF_PRG },
@@ -10302,6 +10320,24 @@ struct BurnDriver BurnDrvnes_doublestrike = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_doublestrikeRomInfo, nes_doublestrikeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dragon Ball Z 5 (China) (Unl)
+static struct BurnRomInfo nes_dragonballz5RomDesc[] = {
+	{ "Dragon Ball Z 5 (China)(Unl)(199x)(Rex Game Soft).nes",          786448, 0x1f2b86ea, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragonballz5)
+STD_ROM_FN(nes_dragonballz5)
+
+struct BurnDriver BurnDrvnes_dragonballz5 = {
+	"nes_dragonballz5", NULL, NULL, NULL, "199?",
+	"Dragon Ball Z 5 (China) (Unl)\0", NULL, "Rex Game Soft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_dragonballz5RomInfo, nes_dragonballz5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -24313,7 +24349,7 @@ STD_ROM_FN(nes_akiraj)
 struct BurnDriver BurnDrvnes_akiraj = {
 	"nes_akiraj", "nes_akira", NULL, NULL, "1988",
 	"Akira (Japan)\0", NULL, "Taito Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Akira (Japan)\0\u30a2\u30ad\u30e9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_akirajRomInfo, nes_akirajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -25076,7 +25112,7 @@ STD_ROM_FN(nes_atlantisnonazoj)
 struct BurnDriver BurnDrvnes_atlantisnonazoj = {
 	"nes_atlantisnonazoj", "nes_atlantisnonazo", NULL, NULL, "1986",
 	"Atlantis no Nazo (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Atlantis no Nazo (Japan)\0\u30a2\u30c8\u30e9\u30f3\u30c1\u30b9\u306e\u8b0e\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_atlantisnonazojRomInfo, nes_atlantisnonazojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -26084,7 +26120,7 @@ STD_ROM_FN(nes_biomirbokupaj)
 struct BurnDriver BurnDrvnes_biomirbokupaj = {
 	"nes_biomirbokupaj", "nes_biomirbokupa", NULL, NULL, "1993",
 	"Bio Miracle Bokutte Upa (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Bio Miracle Bokutte Upa (Japan)\0\u30D0\u30A4\u30AA\u30DF\u30E9\u30AF\u30EB\u3000\u307C\u304F\u3063\u3066\u30A6\u30D1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_biomirbokupajRomInfo, nes_biomirbokupajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -27443,24 +27479,6 @@ struct BurnDriver BurnDrvnes_champlodrun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_champlodrunRomInfo, nes_champlodrunRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Chao Ji Zhan Hun: Super Contra 7 (China)
-static struct BurnRomInfo nes_supercontra7RomDesc[] = {
-	{ "Chao Ji Zhan Hun - Super Contra 7 (China)(1996)(E.S.C Co.).nes",          262160, 0x69480594, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_supercontra7)
-STD_ROM_FN(nes_supercontra7)
-
-struct BurnDriver BurnDrvnes_supercontra7 = {
-	"nes_supercontra7", NULL, NULL, NULL, "1996",
-	" Chao Ji Zhan Hun: Super Contra 7 (China)\0", NULL, "E.S.C Co.", "NES / Famicom",
-	L"Chao Ji Zhan Hun: Super Contra 7 (China)\0\u8d85\u7d1a\u6230\u9b42: Super Contra 7\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
-	NESGetZipName, nes_supercontra7RomInfo, nes_supercontra7RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30315,24 +30333,6 @@ struct BurnDriver BurnDrvnes_dragobalzsupbu2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dragon Ball Z 5 (China) (Unl)
-static struct BurnRomInfo nes_dragonballz5RomDesc[] = {
-	{ "Dragon Ball Z 5 (China).nes",          786448, 0x1f2b86ea, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_dragonballz5)
-STD_ROM_FN(nes_dragonballz5)
-
-struct BurnDriver BurnDrvnes_dragonballz5 = {
-	"nes_dragonballz5", NULL, NULL, NULL, "19??",
-	"Dragon Ball Z 5 (China) (Unl)\0", NULL, "Rex Game Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
-	NESGetZipName, nes_dragonballz5RomInfo, nes_dragonballz5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan)
 static struct BurnRomInfo nes_dragobalzgaisajinzejeRomDesc[] = {
 	{ "Dragon Ball Z Gaiden - Saiya Jin Zetsumetsu Keikaku (Japan).nes",          524304, 0x69ae6291, BRF_ESS | BRF_PRG },
@@ -30525,7 +30525,7 @@ STD_ROM_FN(nes_dragninjaj)
 struct BurnDriver BurnDrvnes_dragninjaj = {
 	"nes_dragninjaj", "nes_baddudes", NULL, NULL, "1989",
 	"Dragon Ninja (Japan)\0", NULL, "Namcot - Data East", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Dragon Ninja (Japan)\0\u30c9\u30e9\u30b4\u30f3\u30cb\u30f3\u30b8\u30e3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_dragninjajRomInfo, nes_dragninjajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -39578,7 +39578,7 @@ STD_ROM_FN(nes_maharajaj)
 struct BurnDriver BurnDrvnes_maharajaj = {
 	"nes_maharajaj", "nes_maharaja", NULL, NULL, "1989",
 	"Maharaja (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Maharaja (Japan)\0\u30de\u30cf\u30e9\u30b8\u30e3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maharajajRomInfo, nes_maharajajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

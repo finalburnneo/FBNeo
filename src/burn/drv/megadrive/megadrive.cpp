@@ -5011,7 +5011,8 @@ INT32 MegadriveFrame()
 			RamVReg->pending_ints |= 0x10;
 			if (RamVReg->reg[0] & 0x10) {
 				//bprintf(0, _T("h-int @ %d. "), SekCyclesDoneFrame());
-				SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+				//SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+				if (SekGetIRQLevel() < 4) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 			}
 		}
 
@@ -5031,7 +5032,7 @@ INT32 MegadriveFrame()
 			SekCyclesBurn(DMABURN());
 #endif
 #endif
-			SekCyclesBurnRun(CheckDMA());
+			SekCyclesBurn(CheckDMA());
 
 			SekRunM68k(CYCLES_M68K_VINT_LAG);
 
@@ -5079,7 +5080,7 @@ INT32 MegadriveFrame()
 			if (y < lines_vis) {
 				do_timing_hacks_as(vdp_slots);
 			} else {
-				SekCyclesBurnRun(CheckDMA());
+				SekCyclesBurn(CheckDMA());
 			}
 			SekRunM68k(CYCLES_M68K_LINE);
 		}

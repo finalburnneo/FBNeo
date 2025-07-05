@@ -741,7 +741,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 address, UINT8 data)
 }
 
 // Spectrum TAP loader (c) 2020 dink
-#define BLKNUM 0x200
+#define BLKNUM 0x800
 static UINT8 *SpecTAPBlock[BLKNUM];
 static INT32 SpecTAPBlockLen[BLKNUM];
 

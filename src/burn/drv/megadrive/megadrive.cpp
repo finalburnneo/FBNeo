@@ -254,6 +254,7 @@ UINT8 MegadriveJoy3[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy4[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy5[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveDIP[2] = {0, 0};
+static ClearOpposite<5, UINT16> clear_opposite;
 
 static UINT32 RomNum = 0;
 static UINT32 RomSize = 0;
@@ -1602,6 +1603,7 @@ static INT32 MegadriveResetDo()
 
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	teamplayer_reset();
+	clear_opposite.reset();
 
 	// default VDP register values (based on Fusion)
 	memset(RamVReg, 0, sizeof(struct PicoVideo));
@@ -4919,6 +4921,12 @@ INT32 MegadriveFrame()
 		JoyPad->pad[4] |= (MegadriveJoy5[i] & 1) << i;
 	}
 
+	clear_opposite.check(0, JoyPad->pad[0], 0x0c, 0x03, nSocd[0]);
+	clear_opposite.check(1, JoyPad->pad[1], 0x0c, 0x03, nSocd[1]);
+	clear_opposite.check(2, JoyPad->pad[2], 0x0c, 0x03, nSocd[2]);
+	clear_opposite.check(3, JoyPad->pad[3], 0x0c, 0x03, nSocd[3]);
+	clear_opposite.check(4, JoyPad->pad[4], 0x0c, 0x03, nSocd[4]);
+
 	SekCyclesNewFrame(); // for sound sync
 	ZetNewFrame();
 
@@ -5149,6 +5157,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_cycle_cnt);
 
 		BurnRandomScan(nAction);
+		clear_opposite.scan();
 	}
 
 	if ((nAction & ACB_NVRAM) && RamMisc->SRamDetected) {

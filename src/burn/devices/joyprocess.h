@@ -179,9 +179,9 @@ struct ClearOpposite {
 		lif(n, inp, val_a, val_b);
 
 		const T val = (val_a < val_b) ? val_a : val_b;
-		INT32 i;
+		INT32 nBit = sizeof(val) * 8, i;
 
-		for (i = 0; i < 8; i++) {
+		for (i = 0; i < nBit; i++) {
 			if (val & (1 << i)) break;	// Find up
 		}
 
@@ -221,9 +221,9 @@ struct ClearOpposite {
 	// SOCD - Up Priority (Up-override Down)
 	void uod(UINT8 n, T& inp, T val_a, T val_b) {
 		const T val = (val_a < val_b) ? val_a : val_b;
-		INT32 i;
+		INT32 nBit = sizeof(val) * 8, i;
 
-		for (i = 0; i < 8; i++) {
+		for (i = 0; i < nBit; i++) {
 			if (val & (1 << i)) break;	// Find up
 		}
 
@@ -238,9 +238,9 @@ struct ClearOpposite {
 	// SOCD - Down Priority (Left/Right Last Input Priority)​
 	void dlr(UINT8 n, T& inp, T val_a, T val_b) {
 		const T val = (val_a < val_b) ? val_a : val_b;
-		INT32 i;
+		INT32 nBit = sizeof(val) * 8, i;
 
-		for (i = 0; i < 8; i++) {
+		for (i = 0; i < nBit; i++) {
 			if (val & (1 << i)) break;	// Find up
 		}
 

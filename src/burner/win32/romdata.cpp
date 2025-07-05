@@ -935,74 +935,92 @@ typedef enum {
 	ENCODING_ERROR
 } EncodingType;
 
-// Verify that the byte stream conforms to UTF-8 encoding rules
-static bool IsUtf8Encoding(const UINT8* data, UINT32 len)
-{
-	INT32 nBytes = 0;
-
-	for (UINT32 i = 0; i < len; i++) {
-		UINT8 c = data[i];
-		if (0 == nBytes) {
-			if (0x00 == (c & 0x80)) continue;		// ASCII
-			else
-			if (0xc0 == (c & 0xe0)) nBytes = 1;		// 2-byte
-			else
-			if (0xe0 == (c & 0xf0)) nBytes = 2;		// 3-byte
-			else
-			if (0xf0 == (c & 0xf8)) nBytes = 3;		// 4-byte
-			else                    return false;	// Invalid UTF-8 start byte
-		} else {
-			if (0x80 != (c & 0xc0)) return false;	// Subsequent byte format error
-			nBytes--;
-		}
-	}
-
-	return (0 == nBytes);							// Checking the completeness of a multibyte sequence
-}
-
 static EncodingType DetectEncoding(const TCHAR* pszDatFile)
 {
 	FILE* fp = _tfopen(pszDatFile, _T("rb"));
-	if (NULL == fp) return ENCODING_ERROR;
+	if (NULL == fp)
+		return ENCODING_ERROR;
 
 	EncodingType encType = ENCODING_UTF8;
 
 	// Read BOM
-	char cBom[3] = { 0 };
+	UINT8 cBom[3] = { 0 };
 	const UINT32 nBomSize = fread(cBom, 1, 3, fp);
 
 	if (0 == nBomSize) {	// Empty file or read error
 		fclose(fp);
 		return ENCODING_ERROR;
 	}
-	if ((nBomSize >= 3) && ('\xEF' == cBom[0]) && ('\xBB' == cBom[1]) && ('\xBF' == cBom[2])) {
+	if ((nBomSize >= 3) && (0xef == cBom[0]) && (0xbb == cBom[1]) && (0xbf == cBom[2])) {
 		fclose(fp);
 		return ENCODING_UTF8_BOM;
 	}
 	if (nBomSize >= 2) {
-		if (('\xFF' == cBom[0]) && ('\xFE' == cBom[1])) {
+		if ((0xff == cBom[0]) && (0xfe == cBom[1])) {
 			fclose(fp);
 			return ENCODING_UTF16_LE;
 		}
-		if (('\xFE' == cBom[0]) && ('\xFF' == cBom[1])) {
+		if ((0xfe == cBom[0]) && (0xff == cBom[1])) {
 			fclose(fp);
 			return ENCODING_UTF16_BE;
 		}
 	}
+
+	fseek(fp, 0, SEEK_END);
+	long nLen = ftell(fp);
 	rewind(fp);
 
-	UINT8 szBuf[4096];
-	UINT32 nLen;
-
-	while ((nLen = fread(szBuf, 1, sizeof(szBuf), fp)) > 0) {
-		if (!IsUtf8Encoding(szBuf, nLen)) {
-			fclose(fp); fp = NULL;
-			return ENCODING_ANSI;
-		}
+	UINT8* pBuf = (UINT8*)malloc(nLen);
+	if (!pBuf) {
+		fclose(fp);
+		return ENCODING_ERROR;
 	}
 
-	fclose(fp); fp = NULL;
-	return encType;
+	UINT32 nRead = fread(pBuf, 1, nLen, fp);
+	fclose(fp);
+
+	if (nRead != (UINT32)nLen) {
+		free(pBuf);
+		return ENCODING_ERROR;
+	}
+
+	UINT32 p = 0;
+	while (p < nRead) {
+		if (pBuf[p] < 0x80) {
+			p++;
+			continue;
+		}
+
+		if (!((pBuf[p] >= 0xc2) && (pBuf[p] <= 0xf4))) {
+			free(pBuf);
+			return ENCODING_ANSI;
+		}
+
+		INT32 nBytes = 0;
+		if ((pBuf[p] >= 0xc2) && (pBuf[p] <= 0xdf))
+			nBytes = 1;
+		if ((pBuf[p] >= 0xe0) && (pBuf[p] <= 0xef))
+			nBytes = 2;
+		if ((pBuf[p] >= 0xf0) && (pBuf[p] <= 0xf4))
+			nBytes = 3;
+
+		if ((p + nBytes) >= nRead) {
+			free(pBuf);
+			return ENCODING_ANSI;
+		}
+
+		for (int i = 1; i <= nBytes; i++) {
+			if (!(0x80 == (pBuf[p + i] & 0xc0))) {
+				free(pBuf);
+				return ENCODING_ANSI;
+			}
+		}
+
+		p += (nBytes + 1);
+	}
+	free(pBuf);
+
+	return ENCODING_UTF8;
 }
 
 static TCHAR* Utf16beToUtf16le(const TCHAR* pszDatFile)

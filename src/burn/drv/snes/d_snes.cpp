@@ -10,6 +10,9 @@ static UINT8 snesInputPort1[12];
 static INT16 Analog[4];
 static UINT8 snesMouseButtons[4];
 
+static UINT16 DrvInput[2] = { 0x0000, 0x0000 };
+static ClearOpposite<2, UINT16> clear_opposite;
+
 static UINT8 DrvReset;
 static UINT8 DrvDips[2]; // [0] ?, [1] controller config
 static UINT8 DrvRecalc = 1;
@@ -287,6 +290,7 @@ static void DrvDoReset()
 	snes->vramhack = (snes->vramhack & ~1) + (DrvDips[0] & 1);
 	LastControllerDip = DrvDips[1];
 	LastControllerTimer = 0;
+	clear_opposite.reset();
 }
 
 static INT32 DrvInit()
@@ -429,6 +433,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 				scope_pause.Scan();
 			}
 		}
+		clear_opposite.scan();
 	}
 
 	if (nAction & ACB_NVRAM && snes_batterysize > 0) {
@@ -471,11 +476,23 @@ static INT32 DrvFrame()
 				case 2: p2_type = DEVICE_JUSTIFIER; break;
 			}
 
+			// Compile digital inputs
+			DrvInput[0] = 0x0000;									// Player 1
+			DrvInput[1] = 0x0000;									// Player 2
+			for (INT32 i = 0; i < 12; i++) {
+				DrvInput[0] |= ((snesInputPort0[i] & 1) << i);
+				DrvInput[1] |= ((snesInputPort1[i] & 1) << i);
+			}
+			clear_opposite.check(0, DrvInput[0], 0x0030, 0x00c0, nSocd[0]);
+			clear_opposite.check(1, DrvInput[1], 0x0030, 0x00c0, nSocd[1]);
+
 			for (INT32 i = 0; i < 12; i++) {
 				if ((DrvDips[1] & 0x01) == 0) {
+					snesInputPort0[i] = (DrvInput[0] & (1 << i));	// SOCD after takeover
 					snes_setButtonState(snes, 1, i, snesInputPort0[i], DEVICE_GAMEPAD);
 				}
 				if ((DrvDips[1] & 0x02) == 0) { // p2 controller or lightgun (SuperScope, Justifier)
+					snesInputPort1[i] = (DrvInput[1] & (1 << i));	// SOCD after takeover
 					snes_setButtonState(snes, 2, i, snesInputPort1[i], p2_type);
 				}
 			}

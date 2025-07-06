@@ -362,7 +362,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 
 				// Digger Man (Prototype)
 				if (nID == 0x0066 && nDate[0] == 125 && nDate[1] == 4 && nDate[2] == 10) {
-					nID |= 0x1200; // Justin Gibbons Hacks (kotm)
+					nID |= 0x1200;
 				}
 
 				// Fatal Fury 3 Rev 1

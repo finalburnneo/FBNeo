@@ -44256,6 +44256,24 @@ struct BurnDriver BurnDrvmd_genchohic = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)
+static struct BurnRomInfo md_daikok2tscRomDesc[] = {
+	{ "Daikoukai Jidai II T-Chi v1.9c (2011)(Ken_Tse).bin", 0x200000, 0xa3ca9b9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_daikok2tsc)
+STD_ROM_FN(md_daikok2tsc)
+
+struct BurnDriver BurnDrvmd_daikok2tsc = {
+	"md_daikok2tsc", "md_newhoriz", NULL, NULL, "2011",
+	"Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
+	L"Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)\0\u5927\u822a\u6d77\u65f6\u4ee3\u2161\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_daikok2tscRomInfo, md_daikok2tscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Dial Q o Mawase! (Hack, Chinese)
 // Translation by Phanteam
 static struct BurnRomInfo md_dialqocRomDesc[] = {

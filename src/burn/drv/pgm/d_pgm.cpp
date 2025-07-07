@@ -7984,7 +7984,7 @@ struct BurnDriver BurnDrvKovplusbl = {
 };
 
 
-// Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)
+// Feng Yun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN, V200CN)
 /* Multi-game bootleg cart ; 4 games are available in game select menu :
    1) 风云再起 fengyunzaiqi
    2) 拳皇三国 quanhuangsanguo
@@ -8003,7 +8003,7 @@ static struct BurnRomInfo kovfyzq4in1RomDesc[] = {
 	// Dumped from the 68K's memory; needs redump
 	{ "u4.bin",  					0x1000000, 0x2abd0aae, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	//	these were not dumped
+	// These were not dumped
 	{ "lsqh2_t01.rom",      		0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
 
 	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
@@ -8044,8 +8044,8 @@ static INT32 kovfyzq4in1Init()
 
 struct BurnDriver BurnDrvKovfyzq4in1 = {
 	"kovfyzq4in1", "kovsh", "pgm", NULL, "2009",
-	"Fengyun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)\0", NULL, "bootleg", "PolyGameMaster",
-	L"Fengyun 4 in 1\0\u98ce\u4e91\u56db\u5408\u4e00 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN)\0", NULL, NULL, NULL,
+	"Feng Yun 4 in 1 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN, V200CN)\0", NULL, "bootleg", "PolyGameMaster",
+	L"Feng Yun 4 in 1\0\u98ce\u4e91\u56db\u5408\u4e00 (multi-game cart, bootleg of Knights of Valour Super Heroes, V100CN, V200CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovfyzq4in1RomInfo, kovfyzq4in1RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovfyzq4in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

@@ -30923,7 +30923,7 @@ STD_ROM_FN(nes_druaganotou)
 struct BurnDriver BurnDrvnes_druaganotou = {
 	"nes_druaganotou", NULL, NULL, NULL, "1985",
 	"Druaga no Tou (Japan)\0", NULL, "Namcot", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Druaga no Tou (Japan)\0\u30c9\u30eb\u30a2\u30fc\u30ac\u306e\u5854\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_druaganotouRomInfo, nes_druaganotouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -50826,24 +50826,6 @@ struct BurnDriver BurnDrvnes_toukonclub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_toukonclubRomInfo, nes_toukonclubRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Tower of Druaga, The (Japan)
-static struct BurnRomInfo nes_towerdruRomDesc[] = {
-	{ "Tower of Druaga, The (Japan)(1985)(Namcot).nes",          40976, 0x0c045fb9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_towerdru)
-STD_ROM_FN(nes_towerdru)
-
-struct BurnDriver BurnDrvnes_towerdru = {
-	"nes_towerdru", NULL, NULL, NULL, "1985",
-	"Tower of Druaga, The (Japan)\0", NULL, "Namcot", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
-	NESGetZipName, nes_towerdruRomInfo, nes_towerdruRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

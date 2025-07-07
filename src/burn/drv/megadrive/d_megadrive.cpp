@@ -44258,7 +44258,7 @@ struct BurnDriver BurnDrvmd_genchohic = {
 
 // Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)
 static struct BurnRomInfo md_daikok2tscRomDesc[] = {
-	{ "Daikoukai Jidai II T-Chi v1.9c (2011)(Ken_Tse).bin", 0x200000, 0xa3ca9b9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Daikoukai Jidai II T-Chs v1.9c (2011)(Ken_Tse).bin", 0x200000, 0xa3ca9b9e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_daikok2tsc)
@@ -44613,6 +44613,24 @@ struct BurnDriver BurnDrvmd_taikorisc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_taikoriscRomInfo, md_taikoriscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tougiou King Colossus (Hack, Simplified Chinese)
+static struct BurnRomInfo md_kingcoltscRomDesc[] = {
+	{ "Tougiou King Colossus T-Chs (2017)(WINSEN).bin", 0x100000, 0x53ea0f67, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kingcoltsc)
+STD_ROM_FN(md_kingcoltsc)
+
+struct BurnDriver BurnDrvmd_kingcoltsc = {
+	"md_kingcoltsc", "md_kingcol", NULL, NULL, "2017",
+	"Tougiou King Colossus (Hack, Simplified Chinese)\0", NULL, "WINSEN", "Genesis / Mega Drive",
+	L"Tougiou King Colossus (Hack, Simplified Chinese)\0\u9b25\u6280\u738b\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_kingcoltscRomInfo, md_kingcoltscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

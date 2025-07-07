@@ -477,8 +477,8 @@ static INT32 DrvFrame()
 			}
 
 			// Compile digital inputs
-			DrvInput[0] = 0x0000;									// Player 1
-			DrvInput[1] = 0x0000;									// Player 2
+			DrvInput[0] = 0x0000;											// Player 1
+			DrvInput[1] = 0x0000;											// Player 2
 			for (INT32 i = 0; i < 12; i++) {
 				DrvInput[0] |= ((snesInputPort0[i] & 1) << i);
 				DrvInput[1] |= ((snesInputPort1[i] & 1) << i);
@@ -488,11 +488,11 @@ static INT32 DrvFrame()
 
 			for (INT32 i = 0; i < 12; i++) {
 				if ((DrvDips[1] & 0x01) == 0) {
-					snesInputPort0[i] = (DrvInput[0] & (1 << i));	// SOCD after takeover
+					snesInputPort0[i] = (uint8_t)((DrvInput[0] >> i) & 1);	// SOCD after takeover
 					snes_setButtonState(snes, 1, i, snesInputPort0[i], DEVICE_GAMEPAD);
 				}
 				if ((DrvDips[1] & 0x02) == 0) { // p2 controller or lightgun (SuperScope, Justifier)
-					snesInputPort1[i] = (DrvInput[1] & (1 << i));	// SOCD after takeover
+					snesInputPort1[i] = (uint8_t)((DrvInput[1] >> i) & 1);	// SOCD after takeover
 					snes_setButtonState(snes, 2, i, snesInputPort1[i], p2_type);
 				}
 			}
@@ -15799,6 +15799,25 @@ struct BurnDriver BurnDrvsnes_Harvmoonj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_ADV, 0,
 	SNESGetZipName, snes_HarvmoonjRomInfo, snes_HarvmoonjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Bokujou Monogatari (Hack, Simplified Chinese v2.0)
+
+static struct BurnRomInfo snes_harvmoontscRomDesc[] = {
+	{ "Bokujou Monogatari T-Chs v2.0 (2009)(TGB).sfc", 2097152, 0x2da5d261, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_harvmoontsc)
+STD_ROM_FN(snes_harvmoontsc)
+
+struct BurnDriver BurnDrvsnes_harvmoontsc = {
+	"snes_harvmoontsc", "snes_harvmoon", NULL, NULL, "2009",
+	"Bokujou Monogatari (Hack, Simplified Chinese v2.0)\0", NULL, "TGB", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_ADV, 0,
+	SNESGetZipName, snes_harvmoontscRomInfo, snes_harvmoontscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

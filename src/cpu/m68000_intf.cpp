@@ -2288,6 +2288,20 @@ UINT32 SekGetPPC(INT32)
 #endif
 }
 
+UINT32 SekGetDAR(INT32 n)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetDAR called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetDAR called when no CPU open\n"));
+#endif
+
+#ifdef EMU_M68K
+		return m68k_get_dar(n);
+#else
+		return 0;
+#endif
+}
+
 INT32 SekDbgGetCPUType()
 {
 #if defined FBNEO_DEBUG

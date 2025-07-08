@@ -20276,7 +20276,7 @@ struct BurnDriver BurnDrvMslug4fd = {
 };
 
 
-// Metal Slug 4 (Legendary Unlimited Fire v7.0, Hack, Hack)
+// Metal Slug 4 (Legendary Unlimited Fire v7.0, Hack)
 // Modified by AKS & Sakura
 // 20250706
 
@@ -20310,7 +20310,7 @@ static INT32 mslug4cqiInit()
 
 struct BurnDriver BurnDrvMslug4cqi = {
 	"mslug4cqi", "mslug4", "neogeo", NULL, "2025",
-	"Metal Slug 4 (Legendary Unlimited Fire v7.0, Hack, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
+	"Metal Slug 4 (Legendary Unlimited Fire v7.0, Hack)\0", NULL, "AKS & Sakura", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4cqiRomInfo, mslug4cqiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, mslugLvxDIPInfo,

@@ -4920,12 +4920,9 @@ INT32 MegadriveFrame()
 		JoyPad->pad[3] |= (MegadriveJoy4[i] & 1) << i;
 		JoyPad->pad[4] |= (MegadriveJoy5[i] & 1) << i;
 	}
-
-	clear_opposite.check(0, JoyPad->pad[0], 0x0c, 0x03, nSocd[0]);
-	clear_opposite.check(1, JoyPad->pad[1], 0x0c, 0x03, nSocd[1]);
-	clear_opposite.check(2, JoyPad->pad[2], 0x0c, 0x03, nSocd[2]);
-	clear_opposite.check(3, JoyPad->pad[3], 0x0c, 0x03, nSocd[3]);
-	clear_opposite.check(4, JoyPad->pad[4], 0x0c, 0x03, nSocd[4]);
+	for (INT32 i = 0; i < 5; i++) {
+		clear_opposite.check(i, JoyPad->pad[i], 0x01, 0x02, 0x04, 0x08, nSocd[i]);
+	}
 
 	SekCyclesNewFrame(); // for sound sync
 	ZetNewFrame();

@@ -787,6 +787,7 @@ static int AppInit()
 
 	// Load config for the application
 	ConfigAppLoad();
+	LookupSubDirThreads();
 
 #if defined (FBNEO_DEBUG)
 	OpenDebugLog();

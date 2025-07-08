@@ -483,8 +483,9 @@ static INT32 DrvFrame()
 				DrvInput[0] |= ((snesInputPort0[i] & 1) << i);
 				DrvInput[1] |= ((snesInputPort1[i] & 1) << i);
 			}
-			clear_opposite.check(0, DrvInput[0], 0x0030, 0x00c0, nSocd[0]);
-			clear_opposite.check(1, DrvInput[1], 0x0030, 0x00c0, nSocd[1]);
+			for (INT32 i = 0; i < 2; i++) {
+				clear_opposite.check(i, DrvInput[i], 0x0010, 0x0020, 0x0040, 0x0080, nSocd[i]);
+			}
 
 			for (INT32 i = 0; i < 12; i++) {
 				if ((DrvDips[1] & 0x01) == 0) {

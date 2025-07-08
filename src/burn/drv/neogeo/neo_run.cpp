@@ -4546,8 +4546,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[10] |= (NeoButton3[i] & 1) << i;
 			NeoInput[11] |= (NeoButton4[i] & 1) << i;
 		}
-		clear_opposite.check(2, NeoInput[ 8], 0x0c, 0x03, nSocd[2]);
-		clear_opposite.check(3, NeoInput[ 9], 0x0c, 0x03, nSocd[3]);
+		clear_opposite.check(2, NeoInput[8], 0x01, 0x02, 0x04, 0x08, nSocd[2]);
+		clear_opposite.check(3, NeoInput[9], 0x01, 0x02, 0x04, 0x08, nSocd[3]);
 
 		if (NeoDiag[1]) {
 			NeoInput[13] |= 0x80;
@@ -4563,8 +4563,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[ 2] |= (NeoButton1[i] & 1) << i;
 			NeoInput[ 3] |= (NeoButton2[i] & 1) << i;
 		}
-		clear_opposite.check(0, NeoInput[ 0], 0x0c, 0x03, nSocd[0]);
-		clear_opposite.check(1, NeoInput[ 1], 0x0c, 0x03, nSocd[1]);
+		clear_opposite.check(0, NeoInput[0], 0x01, 0x02, 0x04, 0x08, nSocd[0]);
+		clear_opposite.check(1, NeoInput[1], 0x01, 0x02, 0x04, 0x08, nSocd[1]);
 		if (NeoDiag[0]) {
 			NeoInput[ 5] |= 0x80;
 		}

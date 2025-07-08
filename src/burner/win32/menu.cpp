@@ -1269,10 +1269,10 @@ void MenuUpdate()
 	CheckMenuRadioItem(hMenu, MENU_INPUT_REWIND_128MB, MENU_INPUT_REWIND_1GB, var, MF_BYCOMMAND);
 
 	// SOCD
-	const INT32 nPlayer = sizeof(nSocd) / sizeof(nSocd[0]), nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_SOCDN + 1) / nPlayer;
+	const INT32 nPlayer = sizeof(nSocd) / sizeof(nSocd[0]), nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_DISABLE + 1) / nPlayer;
 	for (INT32 i = 0; i < nPlayer; i++) {
-		var = MENU_INPUT_P1_SOCDN + i * nCount + nSocd[i];
-		const INT32 startId = MENU_INPUT_P1_SOCDN + i * nCount, endId = startId + nCount - 1;
+		var = MENU_INPUT_P1_DISABLE + i * nCount + nSocd[i];
+		const INT32 startId = MENU_INPUT_P1_DISABLE + i * nCount, endId = startId + nCount - 1;
 
 		CheckMenuRadioItem(hMenu, startId, endId, var, MF_BYCOMMAND);
 	}

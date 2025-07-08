@@ -537,7 +537,6 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
-	LookupSubDirThreads();
 
 	return 0;
 }

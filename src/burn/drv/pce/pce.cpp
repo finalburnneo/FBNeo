@@ -650,36 +650,22 @@ INT32 PCEDraw()
 
 static void PCECompileInputs()
 {
-//	memset (PCEInputs, 0xff, 5 * sizeof(UINT16));
-	memset(PCEInputs, 0x00, 5 * sizeof(UINT16));
+	memset(PCEInputs, 0xff, 5 * sizeof(UINT16));
 
 	for (INT32 i = 0; i < 12; i++) {
-/*
 		PCEInputs[0] ^= (PCEJoy1[i] & 1) << i;
 		PCEInputs[1] ^= (PCEJoy2[i] & 1) << i;
 		PCEInputs[2] ^= (PCEJoy3[i] & 1) << i;
 		PCEInputs[3] ^= (PCEJoy4[i] & 1) << i;
 		PCEInputs[4] ^= (PCEJoy5[i] & 1) << i;
-*/
-		PCEInputs[0] |= (PCEJoy1[i] & 1) << i;
-		PCEInputs[1] |= (PCEJoy2[i] & 1) << i;
-		PCEInputs[2] |= (PCEJoy3[i] & 1) << i;
-		PCEInputs[3] |= (PCEJoy4[i] & 1) << i;
-		PCEInputs[4] |= (PCEJoy5[i] & 1) << i;
 	}
-
-#define PCEBITSWAP16(u16) (u16 = (((u16) & ~0xe0) | ((((u16) >> 5) & 1) << 7) | ((((u16) >> 7) & 1) << 6) | ((((u16) >> 6) & 1) << 5)))	// msvc ...
-#define PCERESTORE16(u16) (u16 = (((u16) & ~0xe0) | ((((u16) >> 7) & 1) << 5) | ((((u16) >> 6) & 1) << 7) | ((((u16) >> 5) & 1) << 6)))	// must be u16 = ...
-
 	for (INT32 i = 0; i < 5; i++) {
-		PCEBITSWAP16(PCEInputs[i]);
-		clear_opposite.check(i, PCEInputs[i], 0x00c0, 0x0030, nSocd[i]);
-		PCERESTORE16(PCEInputs[i]);
+		if ((0 == nSocd[i]) || (nSocd[i] > 6)) continue;
+
+		PCEInputs[i] = ~PCEInputs[i];
+		clear_opposite.check(i, PCEInputs[i], 0x10, 0x40, 0x80, 0x20, nSocd[i]);
 		PCEInputs[i] = ~PCEInputs[i];
 	}
-
-#undef PCEBITSWAP16
-#undef PCERESTORE16
 
 	if ((last_dip ^ PCEDips[2]) & 0x80) {
 		bprintf(0, _T("Sound core switched to: %s\n"), (PCEDips[2] & 0x80) ? _T("HQ") : _T("LQ"));

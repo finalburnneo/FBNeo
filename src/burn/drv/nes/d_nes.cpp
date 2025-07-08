@@ -9748,6 +9748,24 @@ struct BurnDriver BurnDrvnes_adameve = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Aladdin II (Taiwan) (Unl)
+static struct BurnRomInfo nes_aladdin2RomDesc[] = {
+	{ "Aladdin II (Taiwan)(Unl)(1995)(Hummer Team).nes",          393232, 0x7c0664a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aladdin2)
+STD_ROM_FN(nes_aladdin2)
+
+struct BurnDriver BurnDrvnes_aladdin2 = {
+	"nes_aladdin2", NULL, NULL, NULL, "1995",
+	"Aladdin II (Taiwan) (Unl)\0", NULL, "Hummer Team", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_aladdin2RomInfo, nes_aladdin2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Aladdin 4 (Taiwan) (Unl)
 static struct BurnRomInfo nes_aladdin4RomDesc[] = {
 	{ "Aladdin 4 (Taiwan)(Unl)(1996)(J.Y. Company).nes",          524304, 0xdda79434, BRF_ESS | BRF_PRG },
@@ -11391,6 +11409,24 @@ struct BurnDriver BurnDrvnes_shinsamspi2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Snow Ball (Unl)
+static struct BurnRomInfo nes_snowballRomDesc[] = {
+	{ "Snow Ball (Unl)(2002)(Power Joy).nes",          40976, 0x46fa1304, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snowball)
+STD_ROM_FN(nes_snowball)
+
+struct BurnDriver BurnDrvnes_snowball = {
+	"nes_snowball", NULL, NULL, NULL, "2002",
+	"Snow Ball (Unl)\0", NULL, "Power Joy", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_snowballRomInfo, nes_snowballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Somari (Taiwan) (Unl)
 static struct BurnRomInfo nes_somariRomDesc[] = {
 	{ "Somari (Taiwan)(Unl)(1994)(Ge De Industry Co.).nes",          524304, 0x51589daf, BRF_ESS | BRF_PRG },
@@ -11477,6 +11513,24 @@ struct BurnDriver BurnDrvnes_streefigiii18c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_streefigiii18cRomInfo, nes_streefigiii18cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Aladdin (Unl)
+static struct BurnRomInfo nes_superaladdinRomDesc[] = {
+	{ "Super Aladdin (Unl)(1995)(Super Game).nes",          524304, 0xc35332e0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superaladdin)
+STD_ROM_FN(nes_superaladdin)
+
+struct BurnDriver BurnDrvnes_superaladdin = {
+	"nes_superaladdin", NULL, NULL, NULL, "1995",
+	"Super Aladdin (Unl)\0", NULL, "Super Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_superaladdinRomInfo, nes_superaladdinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

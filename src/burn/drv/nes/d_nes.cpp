@@ -5894,7 +5894,7 @@ STD_ROM_FN(nes_madcityc)
 
 struct BurnDriver BurnDrvnes_madcityc = {
 	"nes_madcityc", "nes_advenbaybil", NULL, NULL, "2018",
-	"Mad City (Hack, Chinese v2)\0", NULL, "Tan Xiao Feng Sheng", "NES / Famicom",
+	"Mad City (Hack, Chinese v2)\0", "Zapper compatible game", "Tan Xiao Feng Sheng", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_madcitycRomInfo, nes_madcitycRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -9974,7 +9974,7 @@ STD_ROM_FN(nes_bloodjur)
 
 struct BurnDriver BurnDrvnes_bloodjur = {
 	"nes_bloodjur", NULL, NULL, NULL, "1997",
-	"Blood of Jurassic (China) (Unl)\0", NULL, "Shanghai PS&T", "NES / Famicom",
+	"Blood of Jurassic (China) (Unl)\0", "Zapper compatible game", "Shanghai PS&T", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_bloodjurRomInfo, nes_bloodjurRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -12793,9 +12793,27 @@ struct BurnDriver BurnDrvnes_astronm = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Astrosmash (HB)
+static struct BurnRomInfo nes_astrosmashRomDesc[] = {
+	{ "Astrosmash (2014).nes",          24592, 0xe8af01ee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_astrosmash)
+STD_ROM_FN(nes_astrosmash)
+
+struct BurnDriver BurnDrvnes_astrosmash = {
+	"nes_astrosmash", NULL, NULL, NULL, "2014",
+	"Astrosmash (HB)\0", "Original title developed for Intellivision in 1982", "<unknown>", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_astrosmashRomInfo, nes_astrosmashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Assimilate (HB)
 static struct BurnRomInfo nes_assimilateRomDesc[] = {
-	{ "Assimilate (HB).nes",          262160, 0xa2d504a8, BRF_ESS | BRF_PRG },
+	{ "Assimilate (2012)(Nessylum).nes",          262160, 0xa2d504a8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_assimilate)
@@ -15661,7 +15679,7 @@ STD_ROM_FN(nes_fallingtiles)
 
 struct BurnDriver BurnDrvnes_fallingtiles = {
 	"nes_fallingtiles", NULL, NULL, NULL, "2020",
-	"Falling Tiles (HB, Rev B)\0", NULL, "Doug Fraker", "NES / Famicom",
+	"Falling Tiles (HB, Rev B)\0", "Zapper compatible game", "Doug Fraker", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_fallingtilesRomInfo, nes_fallingtilesRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -16835,7 +16853,7 @@ STD_ROM_FN(nes_gadget)
 
 struct BurnDriver BurnDrvnes_gadget = {
 	"nes_gadget", "nes_gumshoe", NULL, NULL, "2022",
-	"Inspector Gadget (Hack)\0", NULL, "Garrett Gilchrist", "NES / Famicom",
+	"Inspector Gadget (Hack)\0", "Zapper compatible game", "Garrett Gilchrist", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gadgetRomInfo, nes_gadgetRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -20631,7 +20649,7 @@ struct BurnDriver BurnDrvnes_sharkshark = {
 	"nes_sharkshark", NULL, NULL, NULL, "2014",
 	"Shark! Shark! (HB)\0", "Original title developed for Intellivision in 1982", "<unknown>", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_sharksharkRomInfo, nes_sharksharkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -20702,7 +20720,7 @@ STD_ROM_FN(nes_shootufo)
 
 struct BurnDriver BurnDrvnes_shootufo = {
 	"nes_shootufo", NULL, NULL, NULL, "2015",
-	"Shoot UFO (GlobalHack)\0", "A GlobalHack of 'Duck Hunt'", "<unknown>", "NES / Famicom",
+	"Shoot UFO (GlobalHack)\0", "A GlobalHack of 'Duck Hunt' - Zapper compatible game", "<unknown>", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_shootufoRomInfo, nes_shootufoRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -21961,7 +21979,7 @@ STD_ROM_FN(nes_superrusrou)
 
 struct BurnDriver BurnDrvnes_superrusrou = {
 	"nes_srroulette", NULL, NULL, NULL, "2017",
-	"Super Russian Roulette (HB)\0", NULL, "Andrew Reitano", "NES / Famicom",
+	"Super Russian Roulette (HB)\0", "Zapper compatible game", "Andrew Reitano", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 3, HARDWARE_NES, GBF_MISC | GBF_SHOOT, 0,
 	NESGetZipName, nes_superrusrouRomInfo, nes_superrusrouRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -24186,7 +24204,7 @@ STD_ROM_FN(nes_advenbaybil)
 
 struct BurnDriver BurnDrvnes_advenbaybil = {
 	"nes_advenbaybil", NULL, NULL, NULL, "1989",
-	"Adventures of Bayou Billy, The (USA)\0", NULL, "Konami", "NES / Famicom",
+	"Adventures of Bayou Billy, The (USA)\0", "Zapper compatible game", "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_advenbaybilRomInfo, nes_advenbaybilRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -24955,6 +24973,24 @@ struct BurnDriver BurnDrvnes_arkanoid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Arkanoid (Japan)
+static struct BurnRomInfo nes_arkanoidjRomDesc[] = {
+	{ "Arkanoid (Japan)(1986)(Taito).nes",          49168, 0x04f6fd68, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_arkanoidj)
+STD_ROM_FN(nes_arkanoidj)
+
+struct BurnDriver BurnDrvnes_arkanoidj = {
+	"nes_arkanoidj", "nes_arkanoid", NULL, NULL, "1986",
+	"Arkanoid (Japan)\0", NULL, "Taito Corp.", "NES / Famicom",
+	L"Arkanoid (Japan)\0\u30a2\u30eb\u30ab\u30ce\u30a4\u30c9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_arkanoidjRomInfo, nes_arkanoidjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Arkanoid II (Japan)
 static struct BurnRomInfo nes_arkanoidiiRomDesc[] = {
 	{ "Arkanoid II (Japan)(1988)(Taito).nes",          262160, 0xc7db2710, BRF_ESS | BRF_PRG },
@@ -24965,8 +25001,8 @@ STD_ROM_FN(nes_arkanoidii)
 
 struct BurnDriver BurnDrvnes_arkanoidii = {
 	"nes_arkanoidii", NULL, NULL, NULL, "1988",
-	"Arkanoid II (Japan)\0", NULL, "Taito Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Arkanoid II (Japan)\0", "Arkanoid: Revenge of DoH", "Taito Corp.", "NES / Famicom",
+	L"Arkanoid II (Japan)\0\u30a2\u30eb\u30ab\u30ce\u30a4\u30c9 II\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_BREAKOUT, 0,
 	NESGetZipName, nes_arkanoidiiRomInfo, nes_arkanoidiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -25384,7 +25420,7 @@ STD_ROM_FN(nes_babyboomer)
 
 struct BurnDriver BurnDrvnes_babyboomer = {
 	"nes_babyboomer", NULL, NULL, NULL, "1989",
-	"Baby Boomer (USA)\0", NULL, "Color Dreams", "NES / Famicom",
+	"Baby Boomer (USA)\0", "Zapper compatible game", "Color Dreams", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_babyboomerRomInfo, nes_babyboomerRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -25645,6 +25681,7 @@ struct BurnDriver BurnDrvnes_bandikinancchi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Barker Bill's Trick Shooting (USA)
 static struct BurnRomInfo nes_barkebilstrishRomDesc[] = {
 	{ "Barker Bill's Trick Shooting (USA).nes",          196624, 0xc898e6c1, BRF_ESS | BRF_PRG },
 };
@@ -25654,7 +25691,7 @@ STD_ROM_FN(nes_barkebilstrish)
 
 struct BurnDriver BurnDrvnes_barkebilstrish = {
 	"nes_barkebilstrish", NULL, NULL, NULL, "1990",
-	"Barker Bill's Trick Shooting (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"Barker Bill's Trick Shooting (USA)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_barkebilstrishRomInfo, nes_barkebilstrishRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -25662,6 +25699,7 @@ struct BurnDriver BurnDrvnes_barkebilstrish = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Base Wars (USA)
 static struct BurnRomInfo nes_basewarsRomDesc[] = {
 	{ "Base Wars (USA).nes",          262160, 0xeed00ddf, BRF_ESS | BRF_PRG },
 };
@@ -25679,6 +25717,7 @@ struct BurnDriver BurnDrvnes_basewars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Baseball Simulator 1.000 (USA)
 static struct BurnRomInfo nes_basebsim1000RomDesc[] = {
 	{ "Baseball Simulator 1.000 (USA).nes",          262160, 0x469b04f6, BRF_ESS | BRF_PRG },
 };
@@ -26323,24 +26362,6 @@ struct BurnDriver BurnDrvnes_bioniccommando = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bioniccommandoRomInfo, nes_bioniccommandoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Bionic Commando - Return of Hitler (Hack)
-static struct BurnRomInfo nes_bionicomRomDesc[] = {
-	{ "Bionic Commando - Return of Hitler (2006)(Chris Covell).nes",          262160, 0x519a3005, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_bionicom)
-STD_ROM_FN(nes_bionicom)
-
-struct BurnDriver BurnDrvnes_bionicom = {
-	"nes_bionicom", "nes_bioniccommando", NULL, NULL, "2006",
-	"Bionic Commando - Return of Hitler (Hack)\0", NULL, "Chris Covell", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_bionicomRomInfo, nes_bionicomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27765,7 +27786,7 @@ STD_ROM_FN(nes_chiller)
 
 struct BurnDriver BurnDrvnes_chiller = {
 	"nes_chiller", NULL, NULL, NULL, "1990",
-	"Chiller (USA)\0", NULL, "AGCI", "NES / Famicom",
+	"Chiller (USA)\0", "Zapper compatible game", "AGCI", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_chillerRomInfo, nes_chillerRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -28199,7 +28220,7 @@ STD_ROM_FN(nes_cobramission)
 
 struct BurnDriver BurnDrvnes_cobramission = {
 	"nes_cobramission", NULL, NULL, NULL, "1994",
-	"Cobra Mission (Asia)\0", NULL, "Asder", "NES / Famicom",
+	"Cobra Mission (Asia)\0", "Zapper compatible game", "Asder", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_cobramissionRomInfo, nes_cobramissionRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -28644,7 +28665,7 @@ struct BurnDriver BurnDrvnes_crashnboy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Crayon Shin-chan - Ora to Poi Poi (Japan)
+// Crayon Shin-chan: Ora to Poi Poi (Japan)
 static struct BurnRomInfo nes_crayoshichaRomDesc[] = {
 	{ "Crayon Shin-chan - Ora to Poi Poi (Japan).nes",          262160, 0x564205d0, BRF_ESS | BRF_PRG },
 };
@@ -28654,8 +28675,8 @@ STD_ROM_FN(nes_crayoshicha)
 
 struct BurnDriver BurnDrvnes_crayoshicha = {
 	"nes_crayoshicha", NULL, NULL, NULL, "1993",
-	"Crayon Shin-chan - Ora to Poi Poi (Japan)\0", NULL, "Bandai", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Crayon Shin-chan: Ora to Poi Poi (Japan)\0", NULL, "Bandai", "NES / Famicom",
+	L"Crayon Shin-chan: Ora to Poi Poi (Japan)\0\u30af\u30ec\u30e8\u30f3\u3057\u3093\u3061\u3083\u3093 \u30aa\u30e9\u3068\u30dd\u30a4\u30dd\u30a4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_crayoshichaRomInfo, nes_crayoshichaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -28690,7 +28711,7 @@ STD_ROM_FN(nes_crimebusters)
 
 struct BurnDriver BurnDrvnes_crimebusters = {
 	"nes_crimebusters", NULL, NULL, NULL, "1989",
-	"Crime Busters (USA)\0", NULL, "Gradiente", "NES / Famicom",
+	"Crime Busters (USA)\0", "Zapper compatible game", "Gradiente", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_crimebustersRomInfo, nes_crimebustersRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -30994,7 +31015,7 @@ STD_ROM_FN(nes_duckhunt)
 
 struct BurnDriver BurnDrvnes_duckhunt = {
 	"nes_duckhunt", NULL, NULL, NULL, "1984-85",
-	"Duck Hunt (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"Duck Hunt (USA)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_duckhuntRomInfo, nes_duckhuntRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -32973,7 +32994,7 @@ STD_ROM_FN(nes_freedomforce)
 
 struct BurnDriver BurnDrvnes_freedomforce = {
 	"nes_freedomforce", NULL, NULL, NULL, "1988",
-	"Freedom Force (USA)\0", NULL, "Sunsoft", "NES / Famicom",
+	"Freedom Force (USA)\0", "Zapper compatible game", "Sunsoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_freedomforceRomInfo, nes_freedomforceRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -34149,7 +34170,7 @@ STD_ROM_FN(nes_gotcha)
 
 struct BurnDriver BurnDrvnes_gotcha = {
 	"nes_gotcha", NULL, NULL, NULL, "1987",
-	"Gotcha! - The Sport! (USA)\0", NULL, "Ljn", "NES / Famicom",
+	"Gotcha! - The Sport! (USA)\0", "Zapper compatible game", "Ljn", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gotchaRomInfo, nes_gotchaRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -34493,7 +34514,7 @@ STD_ROM_FN(nes_gumshoe)
 
 struct BurnDriver BurnDrvnes_gumshoe = {
 	"nes_gumshoe", NULL, NULL, NULL, "1986",
-	"Gumshoe (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"Gumshoe (USA)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gumshoeRomInfo, nes_gumshoeRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -35355,6 +35376,24 @@ struct BurnDriver BurnDrvnes_hitlenofuk = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bionic Commando: Return of Hitler (Hack, English v1.04)
+static struct BurnRomInfo nes_hitlenofukteRomDesc[] = {
+	{ "Bionic Commando - Return of Hitler T-Eng v1.04 (2017)(Stardust Crusaders).nes",          262160, 0x519a3005, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hitlenofukte)
+STD_ROM_FN(nes_hitlenofukte)
+
+struct BurnDriver BurnDrvnes_hitlenofukte = {
+	"nes_hitlenofukte", "nes_bioniccommando", NULL, NULL, "2017",
+	"Bionic Commando: Return of Hitler (Hack, English v1.04)\0", NULL, "Stardust Crusaders", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hitlenofukteRomInfo, nes_hitlenofukteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Hogan's Alley (USA)
 static struct BurnRomInfo nes_hogansalleyRomDesc[] = {
 	{ "Hogan's Alley (USA)(1984)(Nintendo).nes",          24592, 0x9d39585b, BRF_ESS | BRF_PRG },
@@ -35365,7 +35404,7 @@ STD_ROM_FN(nes_hogansalley)
 
 struct BurnDriver BurnDrvnes_hogansalley = {
 	"nes_hogansalley", NULL, NULL, NULL, "1984",
-	"Hogan's Alley (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"Hogan's Alley (USA)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_hogansalleyRomInfo, nes_hogansalleyRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -35898,6 +35937,42 @@ struct BurnDriver BurnDrvnes_iceicehoccha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_iceicehocchaRomInfo, nes_iceicehocchaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Idol Hakkenden (Hack, English)
+static struct BurnRomInfo nes_idolhakteRomDesc[] = {
+	{ "Idol Hakkenden T-Eng (2018)(LIPEMCO! Translations).nes",          393232, 0xdc790cdb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_idolhakte)
+STD_ROM_FN(nes_idolhakte)
+
+struct BurnDriver BurnDrvnes_idolhakte = {
+	"nes_idolhakte", NULL, NULL, NULL, "2018",
+	"Idol Hakkenden (Hack, English)\0", NULL, "LIPEMCO! Translations", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_idolhakteRomInfo, nes_idolhakteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Idol Hakkenden (Japan)
+static struct BurnRomInfo nes_idolhakjRomDesc[] = {
+	{ "Idol Hakkenden (Japan)(1989)(Natsume).nes",          262160, 0xe017c417, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_idolhakj)
+STD_ROM_FN(nes_idolhakj)
+
+struct BurnDriver BurnDrvnes_idolhakj = {
+	"nes_idolhakj", "nes_idolhakte", NULL, NULL, "1989",
+	"Idol Hakkenden (Japan)\0", NULL, "Natsume", "NES / Famicom",
+	L"Idol Hakkenden (Japan)\0\u30a2\u30a4\u30c9\u30eb\u516b\u72ac\u4f1d\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_idolhakjRomInfo, nes_idolhakjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -37802,7 +37877,7 @@ struct BurnDriver BurnDrvnes_kicklecubicle = {
 	"nes_kicklecubicle", NULL, NULL, NULL, "1990",
 	"Kickle Cubicle (USA)\0", NULL, "Irem", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_kicklecubicleRomInfo, nes_kicklecubicleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -38579,7 +38654,7 @@ STD_ROM_FN(nes_laserinvasion)
 
 struct BurnDriver BurnDrvnes_laserinvasion = {
 	"nes_laserinvasion", NULL, NULL, NULL, "1991",
-	"Laser Invasion (USA)\0", NULL, "Konami", "NES / Famicom",
+	"Laser Invasion (USA)\0", "Zapper compatible game", "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_laserinvasionRomInfo, nes_laserinvasionRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -39161,7 +39236,7 @@ STD_ROM_FN(nes_lonerangerthe)
 
 struct BurnDriver BurnDrvnes_lonerangerthe = {
 	"nes_lonerangerthe", NULL, NULL, NULL, "1991",
-	"Lone Ranger, The (USA)\0", NULL, "Konami", "NES / Famicom",
+	"Lone Ranger, The (USA)\0", "Zapper compatible game", "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
 	NESGetZipName, nes_lonerangertheRomInfo, nes_lonerangertheRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -39360,7 +39435,7 @@ STD_ROM_FN(nes_madcityj)
 
 struct BurnDriver BurnDrvnes_madcityj = {
 	"nes_madcityj", "nes_advenbaybil", NULL, NULL, "1988",
-	"Mad City (Japan)\0", NULL, "Konami", "NES / Famicom",
+	"Mad City (Japan)\0", "Zapper compatible game", "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_madcityjRomInfo, nes_madcityjRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -39379,7 +39454,7 @@ STD_ROM_FN(nes_madcity)
 
 struct BurnDriver BurnDrvnes_madcity = {
 	"nes_madcity", "nes_advenbaybil", NULL, NULL, "2010",
-	"Mad City (Hack, English)\0", NULL, "Stardust Crusaders", "NES / Famicom",
+	"Mad City (Hack, English)\0", "Zapper compatible game", "Stardust Crusaders", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_madcityRomInfo, nes_madcityRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -40266,7 +40341,7 @@ STD_ROM_FN(nes_mechaatt)
 
 struct BurnDriver BurnDrvnes_mechaatt = {
 	"nes_mechaatt", NULL, NULL, NULL, "1990",
-	"Mechanized Attack (USA)\0", NULL, "SNK", "NES / Famicom",
+	"Mechanized Attack (USA)\0", "Zapper compatible game", "SNK", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_mechaattRomInfo, nes_mechaattRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -40382,19 +40457,19 @@ struct BurnDriver BurnDrvnes_megaman6 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Meikyuu-jima (Japan)
+// Meikyuu Jima (Japan)
 static struct BurnRomInfo nes_meikyuujimaRomDesc[] = {
-	{ "Meikyuu-jima (Japan)(1990)(Irem).nes",          262160, 0x93b8cfce, BRF_ESS | BRF_PRG },
+	{ "Meikyuu Jima (Japan)(1990)(Irem).nes",          262160, 0x93b8cfce, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_meikyuujima)
 STD_ROM_FN(nes_meikyuujima)
 
 struct BurnDriver BurnDrvnes_meikyuujima = {
-	"nes_meikyuujima", NULL, NULL, NULL, "1990",
-	"Meikyuu-jima (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ACTION, 0,
+	"nes_meikyuujima", "nes_kicklecubicle", NULL, NULL, "1990",
+	"Meikyuu Jima (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
+	L"Meikyuu Jima (Japan)\0\u8ff7\u5bae\u5cf6\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_meikyuujimaRomInfo, nes_meikyuujimaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -41325,6 +41400,42 @@ struct BurnDriver BurnDrvnes_mdensetsu = {
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, nes_mdensetsuRomInfo, nes_mdensetsuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Money Game, The (Japan)
+static struct BurnRomInfo nes_moneygameRomDesc[] = {
+	{ "Money Game, The (Japan)(1988)(Sofel).nes",          163856, 0xf5014d25, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_moneygame)
+STD_ROM_FN(nes_moneygame)
+
+struct BurnDriver BurnDrvnes_moneygame = {
+	"nes_moneygame", NULL, NULL, NULL, "1988",
+	"Money Game, The (Japan)\0", NULL, "Sofel", "NES / Famicom",
+	L"Money Game, The (Japan)\0\u30b6\u30FB\u30de\u30cd\u30fc\u30b2\u30fc\u30e0\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_moneygameRomInfo, nes_moneygameRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Money Game II, The: Kabutochou no Kiseki (Japan)
+static struct BurnRomInfo nes_moneygame2RomDesc[] = {
+	{ "Money Game II, The - Kabutochou no Kiseki (Japan)(1989)(Sofel).nes",          262160, 0xfad933e9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_moneygame2)
+STD_ROM_FN(nes_moneygame2)
+
+struct BurnDriver BurnDrvnes_moneygame2 = {
+	"nes_moneygame2", "nes_wallstreetkid", NULL, NULL, "1989",
+	"Money Game II, The: Kabutochou no Kiseki (Japan)\0", NULL, "Sofel", "NES / Famicom",
+	L"Money Game II, The: Kabutochou no Kiseki (Japan)\0\u30b6\u30FB\u30de\u30cd\u30fc\u30b2\u30fc\u30e0 II\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_moneygame2RomInfo, nes_moneygame2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -42717,10 +42828,28 @@ STD_ROM_FN(nes_operationwolf)
 
 struct BurnDriver BurnDrvnes_operationwolf = {
 	"nes_operationwolf", NULL, NULL, NULL, "1989",
-	"Operation Wolf (USA)\0", NULL, "Taito", "NES / Famicom",
+	"Operation Wolf (USA)\0", "Zapper compatible game", "Taito", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_operationwolfRomInfo, nes_operationwolfRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Operation Wolf (Japan)
+static struct BurnRomInfo nes_operationwolfjRomDesc[] = {
+	{ "Operation Wolf (Japan)(1989)(Taito).nes",          262160, 0xafc504dc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_operationwolfj)
+STD_ROM_FN(nes_operationwolfj)
+
+struct BurnDriver BurnDrvnes_operationwolfj = {
+	"nes_operationwolfj", "nes_operationwolf", NULL, NULL, "1989",
+	"Operation Wolf (Japan)\0", "Zapper compatible game", "Taito Corp.", "NES / Famicom",
+	L"Operation Wolf (Japan)\0\u30aa\u30da\u30ec\u30fc\u30b7\u30e7\u30f3\u30a6\u30eb\u30d5\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_operationwolfjRomInfo, nes_operationwolfjRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -46726,7 +46855,7 @@ STD_ROM_FN(nes_shootingrange)
 
 struct BurnDriver BurnDrvnes_shootingrange = {
 	"nes_shootingrange", NULL, NULL, NULL, "1989",
-	"Shooting Range (USA)\0", NULL, "Bandai", "NES / Famicom",
+	"Shooting Range (USA)\0", "Zapper compatible game", "Bandai", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_shootingrangeRomInfo, nes_shootingrangeRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -50605,7 +50734,7 @@ STD_ROM_FN(nes_totheearth)
 
 struct BurnDriver BurnDrvnes_totheearth = {
 	"nes_totheearth", NULL, NULL, NULL, "1989",
-	"To The Earth (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"To The Earth (USA)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_totheearthRomInfo, nes_totheearthRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -50930,7 +51059,7 @@ STD_ROM_FN(nes_trackfieldii)
 
 struct BurnDriver BurnDrvnes_trackfieldii = {
 	"nes_trackfieldii", NULL, NULL, NULL, "1989",
-	"Track & Field II (USA, Rev A)\0", NULL, "Konami", "NES / Famicom",
+	"Track & Field II (USA, Rev A)\0", "Zapper compatible game", "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_trackfieldiiRomInfo, nes_trackfieldiiRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
@@ -51802,7 +51931,7 @@ STD_ROM_FN(nes_waiwaiworldj)
 struct BurnDriver BurnDrvnes_waiwaiworldj = {
 	"nes_waiwaiworldj", "nes_waiwaiworld", NULL, NULL, "1988",
 	"Wai Wai World (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Wai Wai World (Japan)\0\u30b3\u30ca\u30df \u30ef\u30a4\u30ef\u30a4\u30ef\u30fc\u30eb\u30c9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_waiwaiworldjRomInfo, nes_waiwaiworldjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -51828,7 +51957,7 @@ struct BurnDriver BurnDrvnes_waiwaiworld = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Wai Wai World 2 - SOS!! Paseri Jou (Japan)
+// Wai Wai World 2: SOS!! Paseri Jou (Japan)
 static struct BurnRomInfo nes_waiwaiwor2jRomDesc[] = {
 	{ "Wai Wai World 2 - SOS!! Paseri Jou (Japan)(1991)(Konami).nes",          393232, 0xebd96a66, BRF_ESS | BRF_PRG },
 };
@@ -51838,15 +51967,15 @@ STD_ROM_FN(nes_waiwaiwor2j)
 
 struct BurnDriver BurnDrvnes_waiwaiwor2j = {
 	"nes_waiwaiwor2j", "nes_waiwaiwor2", NULL, NULL, "1991",
-	"Wai Wai World 2 - SOS!! Paseri Jou (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Wai Wai World 2: SOS!! Paseri Jou (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"Wai Wai World 2: SOS!! Paseri Jou (Japan)\0\u30b3\u30ca\u30df \u30ef\u30a4\u30ef\u30a4\u30ef\u30fc\u30eb\u30c9 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_waiwaiwor2jRomInfo, nes_waiwaiwor2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Wai Wai World 2 - SOS!! Paseri Jou (Hack, English)
+// Wai Wai World 2: SOS!! Paseri Jou (Hack, English)
 // https://www.romhacking.net/translations/4099/
 static struct BurnRomInfo nes_waiwaiwor2RomDesc[] = {
 	{ "Wai Wai World 2 - SOS!! Paseri Jou T-Eng (2018)(chronix).nes",          393232, 0x45fadda1, BRF_ESS | BRF_PRG },
@@ -51857,7 +51986,7 @@ STD_ROM_FN(nes_waiwaiwor2)
 
 struct BurnDriver BurnDrvnes_waiwaiwor2 = {
 	"nes_waiwaiwor2", NULL, NULL, NULL, "2018",
-	"Wai Wai World 2 - SOS!! Paseri Jou (Hack, English)\0", NULL, "chronix", "NES / Famicom",
+	"Wai Wai World 2: SOS!! Paseri Jou (Hack, English)\0", NULL, "chronix", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_waiwaiwor2RomInfo, nes_waiwaiwor2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -52128,7 +52257,7 @@ STD_ROM_FN(nes_wildgunman)
 
 struct BurnDriver BurnDrvnes_wildgunman = {
 	"nes_wildgunman", NULL, NULL, NULL, "1984",
-	"Wild Gunman (World, Rev A)\0", NULL, "Nintendo", "NES / Famicom",
+	"Wild Gunman (World, Rev A)\0", "Zapper compatible game", "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_wildgunmanRomInfo, nes_wildgunmanRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,

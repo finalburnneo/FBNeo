@@ -17194,7 +17194,7 @@ STD_ROM_PICK(nes_junkoid)
 STD_ROM_FN(nes_junkoid)
 
 struct BurnDriver BurnDrvnes_junkoid = {
-	"nes_junkoid", NULL, NULL, NULL, "2022",
+	"nes_junkoid", "nes_metroid", NULL, NULL, "2022",
 	"Junkoid (GlobalHack, v1.1)\0", "A GlobalHack of 'Metroid'", "P. Yoshi", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
@@ -52588,7 +52588,7 @@ struct BurnDriver BurnDrvnes_woodypoko = {
 	"nes_woodypoko", NULL, NULL, NULL, "2010",
 	"Woody Poko (Hack, English)\0", NULL, "sqpat", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_woodypokoRomInfo, nes_woodypokoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

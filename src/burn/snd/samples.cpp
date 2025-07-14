@@ -639,7 +639,7 @@ void BurnSampleInitOne(INT32 sample)
 	}
 
 	INT32 length;
-	char path[256];
+	char path[256*2];
 	char setname[128];
 	void *destination = NULL;
 	char szTempPath[MAX_PATH];
@@ -661,7 +661,7 @@ void BurnSampleInitOne(INT32 sample)
 	strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5); // leave space for ".wav" + null, just incase!
 	strcat(&szSampleName[0], ".wav");
 
-	if (sample_ptr->playing || sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
+	if (sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;
 	}
 
@@ -670,7 +670,7 @@ void BurnSampleInitOne(INT32 sample)
 	destination = NULL;
 	length = 0;
 	ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-		
+
 	if (length) {
 		make_raw((UINT8*)destination, length);
 	}
@@ -823,6 +823,15 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	{
 		sample_ptr = &samples[i];
 		if (sample_ptr->playing == 0 || sample_ptr->length == 0) continue;
+
+		if (sample_ptr->data == NULL) {
+			if (sample_ptr->flags & SAMPLE_NOSTOREF) {
+				BurnSampleInitOne(i);
+			} else {
+				// something went wrong here :)
+				continue;
+			}
+		}
 
 		INT32 playlen = pLen;
 		INT32 length = sample_ptr->length;

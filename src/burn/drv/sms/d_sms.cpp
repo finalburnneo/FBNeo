@@ -950,7 +950,7 @@ struct BurnDriver BurnDrvsms_alexkiddj = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd - The Lost Stars (World)
+// Alex Kidd: The Lost Stars (World)
 static struct BurnRomInfo sms_alexlostRomDesc[] = {
 	{ "Alex Kidd - The Lost Stars (World)(1988)(Sega).sms",	0x40000, 0xc13896d5, BRF_PRG | BRF_ESS },
 };
@@ -960,7 +960,7 @@ STD_ROM_FN(sms_alexlost)
 
 struct BurnDriver BurnDrvsms_alexlost = {
 	"sms_alexlost", NULL, NULL, NULL, "1988",
-	"Alex Kidd - The Lost Stars (World)\0", NULL, "Sega", "Sega Master System",
+	"Alex Kidd: The Lost Stars (World)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexlostRomInfo, sms_alexlostRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1688,11 +1688,9 @@ struct BurnDriver BurnDrvsms_beast = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Hang On + Pit Pot + Spy vs Spy (Korea)
-
+// Best Game Collection, The: Hang On + Pit Pot + Spy vs Spy (Korea)
 static struct BurnRomInfo sms_hicom3aRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection a (kr).sms",	0x20000, 0x98af0236, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection A (Korea)(1990)(Hi-Com).sms",	0x20000, 0x98af0236, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3a)
@@ -1700,7 +1698,7 @@ STD_ROM_FN(sms_hicom3a)
 
 struct BurnDriver BurnDrvsms_hicom3a = {
 	"sms_hicom3a", NULL, NULL, NULL, "1990",
-	"The Best Game Collection - Hang On + Pit Pot + Spy vs Spy (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Hang On + Pit Pot + Spy vs Spy (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3aRomInfo, sms_hicom3aRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1708,11 +1706,9 @@ struct BurnDriver BurnDrvsms_hicom3a = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Great Baseball + Great Soccer + Super Tennis (Korea)
-
+// Best Game Collection, The: Great Baseball + Great Soccer + Super Tennis (Korea)
 static struct BurnRomInfo sms_hicom3bRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection b (kr).sms",	0x20000, 0x6ebfe1c3, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection B (Korea)(1990)(Hi-Com).sms",	0x20000, 0x6ebfe1c3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3b)
@@ -1720,7 +1716,7 @@ STD_ROM_FN(sms_hicom3b)
 
 struct BurnDriver BurnDrvsms_hicom3b = {
 	"sms_hicom3b", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection - Great Baseball + Great Soccer + Super Tennis (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Great Baseball + Great Soccer + Super Tennis (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_SPORTSMISC, 0,
 	SMSGetZipName, sms_hicom3bRomInfo, sms_hicom3bRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1728,11 +1724,9 @@ struct BurnDriver BurnDrvsms_hicom3b = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Teddy Boy Blues + Pit-Pot + Astro Flash (Korea)
-
+// Best Game Collection, The: Teddy Boy Blues + Pit-Pot + Astro Flash (Korea)
 static struct BurnRomInfo sms_hicom3cRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection c (kr).sms",	0x20000, 0x81a36a4f, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection C (Korea)(1990)(Hi-Com).sms",	0x20000, 0x81a36a4f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3c)
@@ -1740,7 +1734,7 @@ STD_ROM_FN(sms_hicom3c)
 
 struct BurnDriver BurnDrvsms_hicom3c = {
 	"sms_hicom3c", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection - Teddy Boy Blues + Pit-Pot + Astro Flash (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Teddy Boy Blues + Pit-Pot + Astro Flash (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3cRomInfo, sms_hicom3cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1748,11 +1742,9 @@ struct BurnDriver BurnDrvsms_hicom3c = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Korea)
-
+// Best Game Collection, The: Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Korea)
 static struct BurnRomInfo sms_hicom3dRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection d (kr).sms",	0x20000, 0x8d2d695d, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection D (Korea)(1990)(Hi-Com).sms",	0x20000, 0x8d2d695d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3d)
@@ -1760,7 +1752,7 @@ STD_ROM_FN(sms_hicom3d)
 
 struct BurnDriver BurnDrvsms_hicom3d = {
 	"sms_hicom3d", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection - Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3dRomInfo, sms_hicom3dRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1768,11 +1760,9 @@ struct BurnDriver BurnDrvsms_hicom3d = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Ghost House + Teddy Boy Blues + Seishun Scandal (Korea)
-
+// Best Game Collection, The: Ghost House + Teddy Boy Blues + Seishun Scandal (Korea)
 static struct BurnRomInfo sms_hicom3eRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection e (kr).sms",	0x20000, 0x82c09b57, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection E (Korea)(1990)(Hi-Com).sms",	0x20000, 0x82c09b57, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3e)
@@ -1780,7 +1770,7 @@ STD_ROM_FN(sms_hicom3e)
 
 struct BurnDriver BurnDrvsms_hicom3e = {
 	"sms_hicom3e", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection - Ghost House + Teddy Boy Blues + Seishun Scandal (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Ghost House + Teddy Boy Blues + Seishun Scandal (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3eRomInfo, sms_hicom3eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1788,11 +1778,9 @@ struct BurnDriver BurnDrvsms_hicom3e = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection - Satellite-7 + Great Baseball + Seishun Scandal (Korea)
-
+// Best Game Collection, The: Satellite-7 + Great Baseball + Seishun Scandal (Korea)
 static struct BurnRomInfo sms_hicom3fRomDesc[] = {
-	{ "hi-com 3-in-1 the best game collection f (kr).sms",	0x20000, 0x4088eeb4, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 3-in-1 - The Best Game Collection F (Korea)(1990)(Hi-Com).sms",	0x20000, 0x4088eeb4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom3f)
@@ -1800,7 +1788,7 @@ STD_ROM_FN(sms_hicom3f)
 
 struct BurnDriver BurnDrvsms_hicom3f = {
 	"sms_hicom3f", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection - Satellite-7 + Great Baseball + Seishun Scandal (Korea)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The: Satellite-7 + Great Baseball + Seishun Scandal (Korea)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3fRomInfo, sms_hicom3fRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1808,11 +1796,9 @@ struct BurnDriver BurnDrvsms_hicom3f = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection (Korea, 8 in 1 Ver. A)
-
+// Best Game Collection, The (Korea, 8 in 1 Ver. A)
 static struct BurnRomInfo sms_hicom8aRomDesc[] = {
-	{ "hi-com 8-in-1 the best game collection a (kr).sms",	0x40000, 0xfba94148, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 8-in-1 - The Best Game collection A (Korea)(1990)(Hi-Com).sms",	0x40000, 0xfba94148, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom8a)
@@ -1820,7 +1806,7 @@ STD_ROM_FN(sms_hicom8a)
 
 struct BurnDriver BurnDrvsms_hicom8a = {
 	"sms_hicom8a", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection (Korea, 8 in 1 Ver. A)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The (Korea, 8 in 1 Ver. A)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8aRomInfo, sms_hicom8aRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1828,11 +1814,9 @@ struct BurnDriver BurnDrvsms_hicom8a = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection (Korea, 8 in 1 Ver. B)
-
+// Best Game Collection, The (Korea, 8 in 1 Ver. B)
 static struct BurnRomInfo sms_hicom8bRomDesc[] = {
-	{ "hi-com 8-in-1 the best game collection b (kr).sms",	0x40000, 0x8333c86e, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 8-in-1 - The Best Game collection B (Korea)(1990)(Hi-Com).sms",	0x40000, 0x8333c86e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom8b)
@@ -1840,7 +1824,7 @@ STD_ROM_FN(sms_hicom8b)
 
 struct BurnDriver BurnDrvsms_hicom8b = {
 	"sms_hicom8b", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection (Korea, 8 in 1 Ver. B)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The (Korea, 8 in 1 Ver. B)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8bRomInfo, sms_hicom8bRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1848,11 +1832,9 @@ struct BurnDriver BurnDrvsms_hicom8b = {
 	256, 192, 4, 3
 };
 
-
-// The Best Game Collection (Korea, 8 in 1 Ver. C)
-
+// Best Game Collection, The (Korea, 8 in 1 Ver. C)
 static struct BurnRomInfo sms_hicom8cRomDesc[] = {
-	{ "hi-com 8-in-1 the best game collection c (kr).sms",	0x40000, 0x00e9809f, BRF_PRG | BRF_ESS },
+	{ "Hi-Com 8-in-1 - The Best Game collection C (Korea)(1990)(Hi-Com).sms",	0x40000, 0x00e9809f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hicom8c)
@@ -1860,7 +1842,7 @@ STD_ROM_FN(sms_hicom8c)
 
 struct BurnDriver BurnDrvsms_hicom8c = {
 	"sms_hicom8c", "sms_hicom3a", NULL, NULL, "1990",
-	"The Best Game Collection (Korea, 8 in 1 Ver. C)\0", NULL, "Hi-Com", "Sega Master System",
+	"Best Game Collection, The (Korea, 8 in 1 Ver. C)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8cRomInfo, sms_hicom8cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3057,9 +3039,7 @@ struct BurnDriver BurnDrvsms_dinodool = {
 	256, 192, 4, 3
 };
 
-
 // Doki Doki Penguin Land - Uchuu Daibouken (Japan)
-
 static struct BurnRomInfo sms_dokidokiRomDesc[] = {
 	{ "Doki Doki Penguin Land - Uchuu Daibouken (Japan)(1987)(Sega).sms",	0x20000, 0x2bcdb8fa, BRF_PRG | BRF_ESS },
 };
@@ -3077,9 +3057,7 @@ struct BurnDriver BurnDrvsms_dokidoki = {
 	256, 192, 4, 3
 };
 
-
 // Doki Doki Penguin Land - Uchuu Daibouken (Japan, Prototype)
-
 static struct BurnRomInfo sms_dokidokipRomDesc[] = {
 	{ "Doki Doki Penguin Land - Uchuu Daibouken (Japan, Proto)(1987)(Sega).sms",	0x20000, 0x56bd2455, BRF_PRG | BRF_ESS },
 };
@@ -3133,7 +3111,7 @@ struct BurnDriver BurnDrvsms_doublhwkp = {
 	256, 192, 4, 3
 };
 
-// Double Target - Cynthia no Nemuri (Japan)
+// Double Target: Cynthia no Nemuri (Japan)
 static struct BurnRomInfo sms_doubltgtRomDesc[] = {
 	{ "Double Target - Cynthia no Nemuri (Japan)(1987)(Sega).sms",	0x20000, 0x52b83072, BRF_PRG | BRF_ESS },
 };
@@ -3143,7 +3121,7 @@ STD_ROM_FN(sms_doubltgt)
 
 struct BurnDriver BurnDrvsms_doubltgt = {
 	"sms_doubltgt", "sms_quartet", NULL, NULL, "1987",
-	"Double Target - Cynthia no Nemuri (Japan)\0", NULL, "Sega", "Sega Master System",
+	"Double Target: Cynthia no Nemuri (Japan)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SMSGetZipName, sms_doubltgtRomInfo, sms_doubltgtRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3223,11 +3201,9 @@ struct BurnDriver BurnDrvsms_drrobotn = {
 	256, 192, 4, 3
 };
 
-
 // Desert Strike (Euro)
-
 static struct BurnRomInfo sms_dstrikeRomDesc[] = {
-	{ "desert strike (europe) (en,fr,de,es).bin",	0x80000, 0x6c1433f9, BRF_PRG | BRF_ESS },
+	{ "Desert Strike (Euro)(1992)(Domark).sms",	0x80000, 0x6c1433f9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dstrike)
@@ -3243,11 +3219,9 @@ struct BurnDriver BurnDrvsms_dstrike = {
 	256, 192, 4, 3
 };
 
-
 // Gokuaku Doumei Dump Matsumoto (Japan)
-
 static struct BurnRomInfo sms_dumpmatsRomDesc[] = {
-	{ "gokuaku doumei dump matsumoto (japan).bin",	0x20000, 0xa249fa9d, BRF_PRG | BRF_ESS },
+	{ "Gokuaku Doumei Dump Matsumoto (Japan)(1986)(Sega).sms",	0x20000, 0xa249fa9d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dumpmats)
@@ -3263,11 +3237,9 @@ struct BurnDriver BurnDrvsms_dumpmats = {
 	256, 192, 4, 3
 };
 
-
 // Dynamite Duke (Euro, Brazil)
-
 static struct BurnRomInfo sms_dyndukeRomDesc[] = {
-	{ "dynamite duke (europe).bin",	0x40000, 0x07306947, BRF_PRG | BRF_ESS },
+	{ "Dynamite Duke (Euro, Brazil)(1991)(Sega).sms",	0x40000, 0x07306947, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dynduke)
@@ -3283,11 +3255,9 @@ struct BurnDriver BurnDrvsms_dynduke = {
 	256, 192, 4, 3
 };
 
-
 // Dynamite Dux (Euro, Brazil)
-
 static struct BurnRomInfo sms_dduxRomDesc[] = {
-	{ "dynamite dux (europe).bin",	0x40000, 0x0e1cc1e0, BRF_PRG | BRF_ESS },
+	{ "Dynamite Dux (Euro, Brazil)(1989)(Sega).sms",	0x40000, 0x0e1cc1e0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_ddux)
@@ -3303,11 +3273,9 @@ struct BurnDriver BurnDrvsms_ddux = {
 	256, 192, 4, 3
 };
 
-
 // Dynamite Headdy (Brazil)
-
 static struct BurnRomInfo sms_dheadRomDesc[] = {
-	{ "dynamite headdy (brazil).bin",	0x80000, 0x7db5b0fa, BRF_PRG | BRF_ESS },
+	{ "Dynamite Headdy (Brazil)(1995)(Tec Toy).sms",	0x80000, 0x7db5b0fa, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dhead)
@@ -3323,11 +3291,9 @@ struct BurnDriver BurnDrvsms_dhead = {
 	256, 192, 4, 3
 };
 
-
 // E.I. - Exa Innova (Korea)
-
 static struct BurnRomInfo sms_exainnovRomDesc[] = {
-	{ "e.i. - exa innova (kr).sms",	0x08000, 0xdd74bcf1, BRF_PRG | BRF_ESS },
+	{ "E.I. - Exa Innova (Korea)(19xx)(HiCom).sms",	0x08000, 0xdd74bcf1, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_exainnov)
@@ -3343,11 +3309,9 @@ struct BurnDriver BurnDrvsms_exainnov = {
 	256, 192, 4, 3
 };
 
-
 // Eagles 5 (Korea)
-
 static struct BurnRomInfo sms_eagles5RomDesc[] = {
-	{ "eagles 5 (kr).bin",	0x08000, 0xf06f2ccb, BRF_PRG | BRF_ESS },
+	{ "Eagles 5 (Korea)(1990)(Zemina).sms",	0x08000, 0xf06f2ccb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_eagles5)
@@ -3381,7 +3345,7 @@ struct BurnDriver BurnDrvsms_ecco = {
 	256, 192, 4, 3
 };
 
-// Ecco the Dolphin II - The Tides of Time (Brazil)
+// Ecco the Dolphin II: The Tides of Time (Brazil)
 static struct BurnRomInfo sms_ecco2RomDesc[] = {
 	{ "Ecco the Dolphin II - The Tides of Time (Brazil)(1996)(Tec Toy).sms",	0x80000, 0x7c28703a, BRF_PRG | BRF_ESS },
 };
@@ -3391,7 +3355,7 @@ STD_ROM_FN(sms_ecco2)
 
 struct BurnDriver BurnDrvsms_ecco2 = {
 	"sms_ecco2", NULL, NULL, NULL, "1996",
-	"Ecco the Dolphin II - The Tides of Time (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
+	"Ecco the Dolphin II: The Tides of Time (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_ADV, 0,
 	SMSGetZipName, sms_ecco2RomInfo, sms_ecco2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3651,7 +3615,7 @@ struct BurnDriver BurnDrvsms_fantzon2 = {
 	256, 192, 4, 3
 };
 
-// Fantasy Zone II - Opa Opa no Namida (Japan)
+// Fantasy Zone II: Opa Opa no Namida (Japan)
 static struct BurnRomInfo sms_fantzon2jRomDesc[] = {
 	{ "Fantasy Zone II - Opa Opa no Namida (Japan)(1987)(Sega).sms",	0x40000, 0xc722fb42, BRF_PRG | BRF_ESS },
 };
@@ -3661,7 +3625,7 @@ STD_ROM_FN(sms_fantzon2j)
 
 struct BurnDriver BurnDrvsms_fantzon2j = {
 	"sms_fantzon2j", "sms_fantzon2", NULL, NULL, "1987",
-	"Fantasy Zone II - Opa Opa no Namida (Japan)\0", NULL, "Sega", "Sega Master System",
+	"Fantasy Zone II: Opa Opa no Namida (Japan)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_HORSHOOT, 0,
 	SMSGetZipName, sms_fantzon2jRomInfo, sms_fantzon2jRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3777,7 +3741,7 @@ struct BurnDriver BurnDrvsms_finalbb = {
 	256, 192, 4, 3
 };
 
-// Felipe em Acao (Brazil)
+// Felipe em Ação (Brazil)
 static struct BurnRomInfo sms_felipeRomDesc[] = {
 	{ "Felipe em Acao (Brazil)(1999)(Tec Toy).sms",	0x08000, 0xccb2cab4, BRF_PRG | BRF_ESS },
 };
@@ -3788,7 +3752,7 @@ STD_ROM_FN(sms_felipe)
 struct BurnDriver BurnDrvsms_felipe = {
 	"sms_felipe", "sms_teddyboy", NULL, NULL, "1999",
 	"Felipe em Acao (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
-	NULL, NULL, NULL, NULL,
+	L"Felipe em A\u00e7\u00e3o (Brazil)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_felipeRomInfo, sms_felipeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
@@ -9541,7 +9505,6 @@ struct BurnDriver BurnDrvsms_tbladejp = {
 	256, 192, 4, 3
 };
 
-
 // Time Soldiers (Euro, USA, Brazil)
 static struct BurnRomInfo sms_timesoldRomDesc[] = {
 	{ "Time Soldiers (Euro, USA, Brazil)(1989)(Sega).sms",	0x40000, 0x51bd14be, BRF_PRG | BRF_ESS },
@@ -9758,7 +9721,7 @@ struct BurnDriver BurnDrvsms_tvcolos = {
 	256, 192, 4, 3
 };
 
-// Ultima IV - Quest of the Avatar (Euro, Brazil)
+// Ultima IV: Quest of the Avatar (Euro, Brazil)
 static struct BurnRomInfo sms_ultima4RomDesc[] = {
 	{ "Ultima IV - Quest of the Avatar (Euro, Brazil)(1990)(Sega).sms",	0x80000, 0xb52d60c8, BRF_PRG | BRF_ESS },
 };
@@ -9768,7 +9731,7 @@ STD_ROM_FN(sms_ultima4)
 
 struct BurnDriver BurnDrvsms_ultima4 = {
 	"sms_ultima4", NULL, NULL, NULL, "1990",
-	"Ultima IV - Quest of the Avatar (Euro, Brazil)\0", NULL, "Sega", "Sega Master System",
+	"Ultima IV: Quest of the Avatar (Euro, Brazil)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_ultima4RomInfo, sms_ultima4RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -9776,7 +9739,7 @@ struct BurnDriver BurnDrvsms_ultima4 = {
 	256, 192, 4, 3
 };
 
-// Ultima IV - Quest of the Avatar (Euro, Prototype)
+// Ultima IV: Quest of the Avatar (Euro, Prototype)
 static struct BurnRomInfo sms_ultima4pRomDesc[] = {
 	{ "Ultima IV - Quest of the Avatar (Euro, Proto)(1990)(Sega).sms",	0x80000, 0xde9f8517, BRF_PRG | BRF_ESS },
 };
@@ -9786,7 +9749,7 @@ STD_ROM_FN(sms_ultima4p)
 
 struct BurnDriver BurnDrvsms_ultima4p = {
 	"sms_ultima4p", "sms_ultima4", NULL, NULL, "1990",
-	"Ultima IV - Quest of the Avatar (Euro, Prototype)\0", NULL, "Sega", "Sega Master System",
+	"Ultima IV: Quest of the Avatar (Euro, Prototype)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_ultima4pRomInfo, sms_ultima4pRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -10790,9 +10753,7 @@ struct BurnDriver BurnDrvsms_pitpot = {
 	256, 192, 4, 3
 };
 
-
 // Ghost House (Euro, USA, Brazil, Sega Card)
-
 static struct BurnRomInfo sms_ghosthcRomDesc[] = {
 	{ "Ghost House (Euro, USA, Brazil, Sega Card)(1986)(Sega).bin",	0x08000, 0xf1f8ff2d, BRF_PRG | BRF_ESS },
 };
@@ -10810,9 +10771,7 @@ struct BurnDriver BurnDrvsms_ghosthc = {
 	256, 192, 4, 3
 };
 
-
 // Ghost House (Sega Card, Prototype)
-
 static struct BurnRomInfo sms_ghosthcpRomDesc[] = {
 	{ "Ghost House (Sega Card, Proto)(1986)(Sega).bin",	0x08000, 0xc3e7c1ed, BRF_PRG | BRF_ESS },
 };
@@ -10830,9 +10789,7 @@ struct BurnDriver BurnDrvsms_ghosthcp = {
 	256, 192, 4, 3
 };
 
-
 // Ghost House (Japan, MyCard)
-
 static struct BurnRomInfo sms_ghosthjRomDesc[] = {
 	{ "Ghost House (Japan, MyCard)(1986)(Sega).bin",	0x08000, 0xc0f3ce7e, BRF_PRG | BRF_ESS },
 };
@@ -10850,9 +10807,7 @@ struct BurnDriver BurnDrvsms_ghosthj = {
 	256, 192, 4, 3
 };
 
-
 // Great Baseball (Japan, MyCard)
-
 static struct BurnRomInfo sms_greatbasjRomDesc[] = {
 	{ "Great Baseball (Japan, MyCard)(1985)(Sega).bin",	0x08000, 0x89e98a7c, BRF_PRG | BRF_ESS },
 };
@@ -10870,9 +10825,7 @@ struct BurnDriver BurnDrvsms_greatbasj = {
 	256, 192, 4, 3
 };
 
-
 // Great Soccer (Euro, Sega Card)
-
 static struct BurnRomInfo sms_greatscrcRomDesc[] = {
 	{ "Great Soccer (Euro, Sega Card)(1985)(Sega).bin",	0x08000, 0x0ed170c9, BRF_PRG | BRF_ESS },
 };
@@ -10890,9 +10843,7 @@ struct BurnDriver BurnDrvsms_greatscrc = {
 	256, 192, 4, 3
 };
 
-
 // Great Soccer (Japan, MyCard)
-
 static struct BurnRomInfo sms_greatscrjRomDesc[] = {
 	{ "Great Soccer (Japan, MyCard)(1985)(Sega).bin",	0x08000, 0x2d7fd7ef, BRF_PRG | BRF_ESS },
 };
@@ -10911,7 +10862,6 @@ struct BurnDriver BurnDrvsms_greatscrj = {
 };
 
 // Great Tennis ~ Super Tennis (Japan, MyCard)
-
 static struct BurnRomInfo sms_greattnsRomDesc[] = {
 	{ "Great Tennis (Japan, MyCard)(1986)(Sega).bin",	0x08000, 0x95cbf3dd, BRF_PRG | BRF_ESS },
 };
@@ -10929,9 +10879,7 @@ struct BurnDriver BurnDrvsms_greattns = {
 	256, 192, 4, 3
 };
 
-
 // Hang-On (Euro, Brazil, Australia, Sega Card)
-
 static struct BurnRomInfo sms_hangoncRomDesc[] = {
 	{ "Hang-On (Euro, Brazil, Australia, Sega Card)(1985)(Sega).bin",	0x08000, 0x071b045e, BRF_PRG | BRF_ESS },
 };
@@ -10949,9 +10897,7 @@ struct BurnDriver BurnDrvsms_hangonc = {
 	256, 192, 4, 3
 };
 
-
 // Hang-On (Japan, MyCard)
-
 static struct BurnRomInfo sms_hangonjRomDesc[] = {
 	{ "Hang-On (Japan, MyCard)(1985)(Sega).bin",	0x08000, 0x5c01adf9, BRF_PRG | BRF_ESS },
 };
@@ -10969,9 +10915,7 @@ struct BurnDriver BurnDrvsms_hangonj = {
 	256, 192, 4, 3
 };
 
-
 // Lethal Weapon 3 (Music Prototype)
-
 static struct BurnRomInfo sms_sn_lwep3RomDesc[] = {
 	{ "Lethal Weapon 3 (Music Proto)(1992)(Probe).bin",	0x08000, 0xeb71247b, BRF_PRG | BRF_ESS },
 };
@@ -10989,9 +10933,7 @@ struct BurnDriver BurnDrvsms_sn_lwep3 = {
 	256, 192, 4, 3
 };
 
-
 // My Hero (Euro, USA, Brazil, Sega Card)
-
 static struct BurnRomInfo sms_myherocRomDesc[] = {
 	{ "My Hero (Euro, USA, Brazil, Sega Card)(1986)(Sega).bin",	0x08000, 0x62f0c23d, BRF_PRG | BRF_ESS },
 };
@@ -11009,9 +10951,7 @@ struct BurnDriver BurnDrvsms_myheroc = {
 	256, 192, 4, 3
 };
 
-
 // Satellite 7 (Japan, MyCard)
-
 static struct BurnRomInfo sms_satell7RomDesc[] = {
 	{ "Satellite 7 (Japan, MyCard)(1985)(Sega).bin",	0x08000, 0x16249e19, BRF_PRG | BRF_ESS },
 };
@@ -11029,9 +10969,7 @@ struct BurnDriver BurnDrvsms_satell7 = {
 	256, 192, 4, 3
 };
 
-
 // Seishun Scandal (Japan, MyCard)
-
 static struct BurnRomInfo sms_seishunRomDesc[] = {
 	{ "Seishun Scandal (Japan, MyCard)(1986)(Sega).bin",	0x08000, 0xf0ba2bc6, BRF_PRG | BRF_ESS },
 };
@@ -11379,11 +11317,9 @@ struct BurnDriver BurnDrvgg_aladdinp1 = {
 	256, 192, 4, 3
 };
 
-
 // Alex Kidd in Miracle World (Taiwan, SMS Mode) (Unl)
-
 static struct BurnRomInfo gg_alexkiddRomDesc[] = {
-	{ "alex kidd in miracle world [sms-gg] (tw).bin",	0x20000, 0x6f8e46cf, BRF_PRG | BRF_ESS },
+	{ "Alex Kidd in Miracle World (Taiwan, SMS Mode)(Unl)(198x)(Hung Tao Hsin).gg",	0x20000, 0x6f8e46cf, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_alexkidd)
@@ -12461,6 +12397,24 @@ struct BurnDriver BurnDrvgg_champhck = {
 	256, 192, 4, 3
 };
 
+// Cheese Cat-astrophe Starring Speedy Gonzales (Euro)
+static struct BurnRomInfo gg_cheeseRomDesc[] = {
+	{ "Cheese Cat-astrophe Starring Speedy Gonzales (Euro)(1995)(Sega).gg",	0x80000, 0x4e78fd36, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_cheese)
+STD_ROM_FN(gg_cheese)
+
+struct BurnDriver BurnDrvgg_cheese = {
+	"gg_cheese", NULL, NULL, NULL, "1995",
+	"Cheese Cat-astrophe Starring Speedy Gonzales (Euro)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
+	GGGetZipName, gg_cheeseRomInfo, gg_cheeseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Chessmaster, The (Euro, USA)
 static struct BurnRomInfo gg_chessmstRomDesc[] = {
 	{ "Chessmaster, The (Euro, USA)(1991)(Sega).gg",	0x20000, 0xda811ba6, BRF_PRG | BRF_ESS },
@@ -13307,7 +13261,7 @@ struct BurnDriver BurnDrvgg_dcrystal = {
 	256, 192, 4, 3
 };
 
-// Dragon Crystal - Tsurani no Meikyuu (Japan)
+// Dragon Crystal: Tsurani no Meikyuu (Japan)
 static struct BurnRomInfo gg_dcrystaljRomDesc[] = {
 	{ "Dragon Crystal - Tsurani no Meikyuu (Japan)(1990)(Sega).gg",	0x20000, 0x89f12e1e, BRF_PRG | BRF_ESS },
 };
@@ -13317,7 +13271,7 @@ STD_ROM_FN(gg_dcrystalj)
 
 struct BurnDriver BurnDrvgg_dcrystalj = {
 	"gg_dcrystalj", "gg_dcrystal", NULL, NULL, "1990",
-	"Dragon Crystal - Tsurani no Meikyuu (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Dragon Crystal: Tsurani no Meikyuu (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_dcrystaljRomInfo, gg_dcrystaljRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -16213,11 +16167,9 @@ struct BurnDriver BurnDrvgg_mmprtm = {
 	256, 192, 4, 3
 };
 
-
 // MLBPA Baseball (USA)
-
 static struct BurnRomInfo gg_mlbpaRomDesc[] = {
-	{ "mlbpa baseball (usa).bin",	0x80000, 0x1ecf07b4, BRF_PRG | BRF_ESS },
+	{ "MLBPA Baseball (USA)(1995)(Electronic Arts).gg",	0x80000, 0x1ecf07b4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_mlbpa)
@@ -16233,11 +16185,9 @@ struct BurnDriver BurnDrvgg_mlbpa = {
 	256, 192, 4, 3
 };
 
-
-// Moldorian - Hikari to Yami no Sister (Japan)
-
+// Moldorian: Hikari to Yami no Sister (Japan)
 static struct BurnRomInfo gg_moldoranRomDesc[] = {
-	{ "moldorian - hikari to yami no sister (japan).bin",	0x80000, 0x4d5d15fb, BRF_PRG | BRF_ESS },
+	{ "Moldorian - Hikari to Yami no Sister (Japan)(1994)(Sega).gg",	0x80000, 0x4d5d15fb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_moldoran)
@@ -16245,7 +16195,7 @@ STD_ROM_FN(gg_moldoran)
 
 struct BurnDriver BurnDrvgg_moldoran = {
 	"gg_moldoran", NULL, NULL, NULL, "1994",
-	"Moldorian - Hikari to Yami no Sister (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Moldorian: Hikari to Yami no Sister (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_moldoranRomInfo, gg_moldoranRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -16253,11 +16203,9 @@ struct BurnDriver BurnDrvgg_moldoran = {
 	256, 192, 4, 3
 };
 
-
 // Monster Truck Wars (Euro, USA)
-
 static struct BurnRomInfo gg_monstwarRomDesc[] = {
-	{ "mpr-17420-s.ic1",	0x40000, 0x453c5cec, BRF_PRG | BRF_ESS },
+	{ "Monster Truck Wars (Euro, USA)(1994)(Acclaim).gg",	0x40000, 0x453c5cec, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_monstwar)
@@ -16273,11 +16221,9 @@ struct BurnDriver BurnDrvgg_monstwar = {
 	256, 192, 4, 3
 };
 
-
-// Monster World II - Dragon no Wana (Japan)
-
+// Monster World II: Dragon no Wana (Japan)
 static struct BurnRomInfo gg_mworld2RomDesc[] = {
-	{ "monster world ii - dragon no wana (japan).bin",	0x40000, 0xea89e0e7, BRF_PRG | BRF_ESS },
+	{ "Monster World II - Dragon no Wana (Japan)(1992)(Sega).gg",	0x40000, 0xea89e0e7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_mworld2)
@@ -16285,7 +16231,7 @@ STD_ROM_FN(gg_mworld2)
 
 struct BurnDriver BurnDrvgg_mworld2 = {
 	"gg_mworld2", "gg_wboydtrp", NULL, NULL, "1992",
-	"Monster World II - Dragon no Wana (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"Monster World II: Dragon no Wana (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_ADV, 0,
 	GGGetZipName, gg_mworld2RomInfo, gg_mworld2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -16365,11 +16311,9 @@ struct BurnDriver BurnDrvgg_mk2 = {
 	256, 192, 4, 3
 };
 
-
 // Ms. Pac-Man (USA)
-
 static struct BurnRomInfo gg_mspacmanRomDesc[] = {
-	{ "ms. pac-man (usa).bin",	0x20000, 0x5ee88bd5, BRF_PRG | BRF_ESS },
+	{ "Ms. Pac-Man (USA)(1993)(Namco).gg",	0x20000, 0x5ee88bd5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_mspacman)
@@ -16602,7 +16546,6 @@ struct BurnDriver BurnDrvgg_nbaactp03 = {
 	256, 192, 4, 3
 };
 
-
 // NBA Action Starring David Robinson (Final G,  19940305)
 static struct BurnRomInfo gg_nbaactp02RomDesc[] = {
 	{ "NBA Action Starring David Robinson (Final G,  19940305)(Sega).gg",	0x40000, 0xe197a0bb, BRF_PRG | BRF_ESS },
@@ -16711,11 +16654,9 @@ struct BurnDriver BurnDrvgg_nbajamte = {
 	256, 192, 4, 3
 };
 
-
 // Pet Club Neko Daisuki! (Japan)
-
 static struct BurnRomInfo gg_nekodaisRomDesc[] = {
-	{ "neko daisuki! (japan).bin",	0x80000, 0x3679be80, BRF_PRG | BRF_ESS },
+	{ "Pet Club Neko Daisuki! (Japan)(1996)(Sega).gg",	0x80000, 0x3679be80, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_nekodais)
@@ -19267,11 +19208,9 @@ struct BurnDriver BurnDrvgg_sonictrip = {
 	256, 192, 4, 3
 };
 
-
 // Soukoban (Japan)
-
 static struct BurnRomInfo gg_sokobanRomDesc[] = {
-	{ "soukoban (japan).bin",	0x20000, 0x0f3e3840, BRF_PRG | BRF_ESS },
+	{ "Soukoban (Japan)(1990)(Riverhill Software).gg",	0x20000, 0x0f3e3840, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sokoban)
@@ -19287,11 +19226,9 @@ struct BurnDriver BurnDrvgg_sokoban = {
 	256, 192, 4, 3
 };
 
-
 // Space Harrier (World)
-
 static struct BurnRomInfo gg_sharrierRomDesc[] = {
-	{ "mpr-14346.ic1",	0x20000, 0x600c15b3, BRF_PRG | BRF_ESS },
+	{ "Space Harrier (World)(1991)(Sega).gg",	0x20000, 0x600c15b3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_sharrier)
@@ -19303,26 +19240,6 @@ struct BurnDriver BurnDrvgg_sharrier = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SHOOT, 0,
 	GGGetZipName, gg_sharrierRomInfo, gg_sharrierRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-
-// Cheese Cat-astrophe Starring Speedy Gonzales (Euro)
-
-static struct BurnRomInfo gg_cheeseRomDesc[] = {
-	{ "cheese catastrophe (euro).bin",	0x80000, 0x4e78fd36, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_cheese)
-STD_ROM_FN(gg_cheese)
-
-struct BurnDriver BurnDrvgg_cheese = {
-	"gg_cheese", NULL, NULL, NULL, "1995",
-	"Cheese Cat-astrophe Starring Speedy Gonzales (Euro)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
-	GGGetZipName, gg_cheeseRomInfo, gg_cheeseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -20311,11 +20228,9 @@ struct BurnDriver BurnDrvgg_tailskyp = {
 	256, 192, 4, 3
 };
 
-
 // Taisen Mahjong HaoPai (Japan)
-
 static struct BurnRomInfo gg_taisnmjRomDesc[] = {
-	{ "taisen mahjong haopai (japan).bin",	0x20000, 0xcf9c607c, BRF_PRG | BRF_ESS },
+	{ "Taisen Mahjong HaoPai (Japan)(1990)(Sega).gg",	0x20000, 0xcf9c607c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_taisnmj)
@@ -20331,11 +20246,9 @@ struct BurnDriver BurnDrvgg_taisnmj = {
 	256, 192, 4, 3
 };
 
-
 // Taisen Mahjong HaoPai 2 (Japan)
-
 static struct BurnRomInfo gg_taisnmj2RomDesc[] = {
-	{ "taisen mahjong haopai 2 (japan).bin",	0x80000, 0x20527530, BRF_PRG | BRF_ESS },
+	{ "Taisen Mahjong HaoPai 2 (Japan)(1993)(Sega).gg",	0x80000, 0x20527530, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_taisnmj2)
@@ -20933,11 +20846,9 @@ struct BurnDriver BurnDrvgg_vfmini = {
 	256, 192, 4, 3
 };
 
-
 // VR Troopers (Euro, USA)
-
 static struct BurnRomInfo gg_vrtroopRomDesc[] = {
-	{ "vr troopers (usa, europe).bin",	0x80000, 0xb0f22745, BRF_PRG | BRF_ESS },
+	{ "VR Troopers (Euro, USA)(1995)(Sega).gg",	0x80000, 0xb0f22745, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_vrtroop)
@@ -20953,11 +20864,9 @@ struct BurnDriver BurnDrvgg_vrtroop = {
 	256, 192, 4, 3
 };
 
-
 // Wagyan Land (Japan)
-
 static struct BurnRomInfo gg_wagyanRomDesc[] = {
-	{ "mpr-13930.ic1",	0x40000, 0x29e697b2, BRF_PRG | BRF_ESS },
+	{ "Wagyan Land (Japan)(1991)(Namcot).gg",	0x40000, 0x29e697b2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wagyan)
@@ -20973,11 +20882,9 @@ struct BurnDriver BurnDrvgg_wagyan = {
 	256, 192, 4, 3
 };
 
-
 // Wagyan Land (Japan, Alt)
-
 static struct BurnRomInfo gg_wagyanaRomDesc[] = {
-	{ "wagan land (j) [a1].bin",	0x40000, 0xd5369192, BRF_PRG | BRF_ESS },
+	{ "Wagyan Land (Japan, Alt)(1991)(Namcot).gg",	0x40000, 0xd5369192, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wagyana)
@@ -20993,11 +20900,9 @@ struct BurnDriver BurnDrvgg_wagyana = {
 	256, 192, 4, 3
 };
 
-
 // Wheel of Fortune (USA)
-
 static struct BurnRomInfo gg_wheelofRomDesc[] = {
-	{ "wheel of fortune (usa).bin",	0x20000, 0xe91cdb2a, BRF_PRG | BRF_ESS },
+	{ "Wheel of Fortune (USA)(1992)(GameTek).gg",	0x20000, 0xe91cdb2a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wheelof)
@@ -21013,11 +20918,9 @@ struct BurnDriver BurnDrvgg_wheelof = {
 	256, 192, 4, 3
 };
 
-
-// WildSnake 1.0 Unreleased (Prototype) (Spectrum Holobyte)
-
+// WildSnake (Prototype)
 static struct BurnRomInfo gg_wildsnakeRomDesc[] = {
-	{ "WildSnake [Proto].gg",	0x20000, 0xd460cc7f, BRF_PRG | BRF_ESS },
+	{ "WildSnake (Proto)(1994)(Spectrum HoloByte).gg",	0x20000, 0xd460cc7f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wildsnake)
@@ -21033,11 +20936,9 @@ struct BurnDriver BurnDrvgg_wildsnake = {
 	256, 192, 4, 3
 };
 
-
 // Wimbledon (World)
-
 static struct BurnRomInfo gg_wimbledRomDesc[] = {
-	{ "mpr-14994.ic1",	0x20000, 0xce1108fd, BRF_PRG | BRF_ESS },
+	{ "Wimbledon (World)(1992)(Sega).gg",	0x20000, 0xce1108fd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wimbled)
@@ -21053,11 +20954,9 @@ struct BurnDriver BurnDrvgg_wimbled = {
 	256, 192, 4, 3
 };
 
-
 // Winter Olympics - Lillehammer '94 (Japan)
-
 static struct BurnRomInfo gg_wintoljRomDesc[] = {
-	{ "mpr-16350.ic1",	0x80000, 0xd5195a39, BRF_PRG | BRF_ESS },
+	{ "Winter Olympics - Lillehammer '94 (Japan)(1994)(Sega).gg",	0x80000, 0xd5195a39, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wintolj)
@@ -21073,11 +20972,9 @@ struct BurnDriver BurnDrvgg_wintolj = {
 	256, 192, 4, 3
 };
 
-
 // Winter Olympics - Lillehammer '94 (Euro, USA)
-
 static struct BurnRomInfo gg_wintolRomDesc[] = {
-	{ "mpr-16024.ic1",	0x80000, 0xd15d335b, BRF_PRG | BRF_ESS },
+	{ "Winter Olympics - Lillehammer '94 (Euro, USA)(1993)(U.S. Gold).sms",	0x80000, 0xd15d335b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wintol)
@@ -21093,11 +20990,9 @@ struct BurnDriver BurnDrvgg_wintol = {
 	256, 192, 4, 3
 };
 
-
 // Wizard Pinball (Euro)
-
 static struct BurnRomInfo gg_wizardRomDesc[] = {
-	{ "wizard pinball (europe).bin",	0x40000, 0x9e03f96c, BRF_PRG | BRF_ESS },
+	{ "Wizard Pinball (Euro)(1995)(Domark).gg",	0x40000, 0x9e03f96c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wizard)
@@ -21113,11 +21008,9 @@ struct BurnDriver BurnDrvgg_wizard = {
 	256, 192, 4, 3
 };
 
-
 // Wolfchild (Euro)
-
 static struct BurnRomInfo gg_wolfchldRomDesc[] = {
-	{ "mpr-15717-s.ic1",	0x40000, 0x840a8f8e, BRF_PRG | BRF_ESS },
+	{ "Wolfchild (Euro)(1993)(Virgin Interactive).gg",	0x40000, 0x840a8f8e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wolfchld)
@@ -21133,11 +21026,9 @@ struct BurnDriver BurnDrvgg_wolfchld = {
 	256, 192, 4, 3
 };
 
-
 // Wonder Boy (Euro)
-
 static struct BurnRomInfo gg_wboyRomDesc[] = {
-	{ "mpr-13912.ic1",	0x20000, 0xea2dd3a7, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy (Euro)(1991)(Sega).gg",	0x20000, 0xea2dd3a7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wboy)
@@ -21153,11 +21044,9 @@ struct BurnDriver BurnDrvgg_wboy = {
 	256, 192, 4, 3
 };
 
-
 // Wonder Boy (Japan)
-
 static struct BurnRomInfo gg_wboyjRomDesc[] = {
-	{ "wonder boy (japan).bin",	0x20000, 0x9977fcb3, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy (Japan)(1990)(Sega).gg",	0x20000, 0x9977fcb3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wboyj)
@@ -21173,11 +21062,9 @@ struct BurnDriver BurnDrvgg_wboyj = {
 	256, 192, 4, 3
 };
 
-
-// Wonder Boy - The Dragon's Trap (Euro)
-
+// Wonder Boy: The Dragon's Trap (Euro)
 static struct BurnRomInfo gg_wboydtrpRomDesc[] = {
-	{ "mpr-14768.ic1",	0x40000, 0xa74c97a7, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy - The Dragon's Trap (Euro)(1992)(Sega).gg",	0x40000, 0xa74c97a7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wboydtrp)
@@ -21185,7 +21072,7 @@ STD_ROM_FN(gg_wboydtrp)
 
 struct BurnDriver BurnDrvgg_wboydtrp = {
 	"gg_wboydtrp", NULL, NULL, NULL, "1992",
-	"Wonder Boy - The Dragon's Trap (Euro)\0", NULL, "Sega", "Sega Game Gear",
+	"Wonder Boy: The Dragon's Trap (Euro)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_ADV, 0,
 	GGGetZipName, gg_wboydtrpRomInfo, gg_wboydtrpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -21193,11 +21080,9 @@ struct BurnDriver BurnDrvgg_wboydtrp = {
 	256, 192, 4, 3
 };
 
-
-// Wonder Boy III - The Dragon's Trap (Euro, Prototype)
-
+// Wonder Boy III: The Dragon's Trap (Euro, Prototype)
 static struct BurnRomInfo gg_wboydtrppRomDesc[] = {
-	{ "wonder boy iii - the dragon's trap (europe) (beta).bin",	0x40000, 0xdb1b5b44, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy III - The Dragon's Trap (Euro, Proto)(1992)(Sega).gg",	0x40000, 0xdb1b5b44, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wboydtrpp)
@@ -21205,7 +21090,7 @@ STD_ROM_FN(gg_wboydtrpp)
 
 struct BurnDriver BurnDrvgg_wboydtrpp = {
 	"gg_wboydtrpp", "gg_wboydtrp", NULL, NULL, "1992",
-	"Wonder Boy III - The Dragon's Trap (Euro, Prototype)\0", NULL, "Sega", "Sega Game Gear",
+	"Wonder Boy III: The Dragon's Trap (Euro, Prototype)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_ADV, 0,
 	GGGetZipName, gg_wboydtrppRomInfo, gg_wboydtrppRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -21213,11 +21098,9 @@ struct BurnDriver BurnDrvgg_wboydtrpp = {
 	256, 192, 4, 3
 };
 
-
 // Woody Pop (Euro, USA, v1.1)
-
 static struct BurnRomInfo gg_woodypopRomDesc[] = {
-	{ "mpr-13808.ic1",	0x08000, 0xb74f3a4f, BRF_PRG | BRF_ESS },
+	{ "Woody Pop (Euro, USA, v1.1)(1991)(Sega).gg",	0x08000, 0xb74f3a4f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_woodypop)
@@ -21233,11 +21116,9 @@ struct BurnDriver BurnDrvgg_woodypop = {
 	256, 192, 4, 3
 };
 
-
 // Woody Pop (Euro, USA)
-
 static struct BurnRomInfo gg_woodypop1RomDesc[] = {
-	{ "woody pop (usa, europe).bin",	0x08000, 0x9c0e5a04, BRF_PRG | BRF_ESS },
+	{ "Woody Pop (Euro, USA)(1991)(Sega).gg",	0x08000, 0x9c0e5a04, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_woodypop1)
@@ -21253,11 +21134,9 @@ struct BurnDriver BurnDrvgg_woodypop1 = {
 	256, 192, 4, 3
 };
 
-
 // World Class Leader Board (Euro, USA)
-
 static struct BurnRomInfo gg_wcleadRomDesc[] = {
-	{ "mpr-14251.ic1",	0x40000, 0x868fe528, BRF_PRG | BRF_ESS },
+	{ "World Class Leader Board (Euro, USA)(1991)(Sega).gg",	0x40000, 0x868fe528, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wclead)
@@ -21273,11 +21152,9 @@ struct BurnDriver BurnDrvgg_wclead = {
 	256, 192, 4, 3
 };
 
-
 // World Cup USA 94 (Euro, USA)
-
 static struct BurnRomInfo gg_wcup94RomDesc[] = {
-	{ "world cup usa 94 (usa, europe) (en,fr,de,es,it,nl,pt,sv).bin",	0x80000, 0xd2bb3690, BRF_PRG | BRF_ESS },
+	{ "World Cup USA 94 (Euro, USA)(1994)(U.S. Gold).gg",	0x80000, 0xd2bb3690, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wcup94)
@@ -21293,11 +21170,9 @@ struct BurnDriver BurnDrvgg_wcup94 = {
 	256, 192, 4, 3
 };
 
-
 // World Derby (Japan)
-
 static struct BurnRomInfo gg_wderbyRomDesc[] = {
-	{ "world derby (japan).bin",	0x80000, 0x1e81861f, BRF_PRG | BRF_ESS },
+	{ "World Derby (Japan)(1994)(CRI).gg",	0x80000, 0x1e81861f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wderby)
@@ -21313,11 +21188,9 @@ struct BurnDriver BurnDrvgg_wderby = {
 	256, 192, 4, 3
 };
 
-
 // WWF Raw (Euro, USA)
-
 static struct BurnRomInfo gg_wwfrawRomDesc[] = {
-	{ "wwf raw (usa, europe).bin",	0x80000, 0x8dc68d92, BRF_PRG | BRF_ESS },
+	{ "WWF Raw (Euro, USA)(1992)(Acclaim).gg",	0x80000, 0x8dc68d92, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wwfraw)
@@ -21333,11 +21206,9 @@ struct BurnDriver BurnDrvgg_wwfraw = {
 	256, 192, 4, 3
 };
 
-
 // WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)
-
 static struct BurnRomInfo gg_wwfsteelRomDesc[] = {
-	{ "wwf wrestlemania steel cage challenge (europe).bin",	0x40000, 0xda8e95a9, BRF_PRG | BRF_ESS },
+	{ "WWF Wrestlemania Steel Cage Challenge (Euro, SMS Mode)(1993)(Flying Edge).gg",	0x40000, 0xda8e95a9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_wwfsteel)
@@ -21719,7 +21590,7 @@ struct BurnDriver BurnDrvsms_alexkidd2 = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd 3 - Curse in Miracle World (Global Hack, v3.0)
+// Alex Kidd 3: Curse in Miracle World (Global Hack, v3.0)
 static struct BurnRomInfo sms_alexkidd3fRomDesc[] = {
 	{ "Alex Kidd 3 - Curse in Miracle World v3.0 (2021)(Yeti).sms",	524288, 0x2096b9f1, BRF_PRG | BRF_ESS },
 };
@@ -21729,7 +21600,7 @@ STD_ROM_FN(sms_alexkidd3f)
 
 struct BurnDriver BurnDrvsms_alexkidd3f = {
 	"sms_alexkidd3f", NULL, NULL, NULL, "2021",
-	"Alex Kidd 3 - Curse in Miracle World (GlobalHack, v3.0)\0", NULL, "Yeti", "Sega Master System",
+	"Alex Kidd 3: Curse in Miracle World (GlobalHack, v3.0)\0", NULL, "Yeti", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3fRomInfo, sms_alexkidd3fRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -21737,7 +21608,7 @@ struct BurnDriver BurnDrvsms_alexkidd3f = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd 3 - Curse in Miracle World (Global Hack, demo v.4)
+// Alex Kidd 3: Curse in Miracle World (Global Hack, demo v.4)
 static struct BurnRomInfo sms_alexkidd3RomDesc[] = {
 	{ "Alex Kidd 3 - Curse in Miracle World (2016)(Yeti-Demo4).sms",	1048576, 0x35b498a4, BRF_PRG | BRF_ESS },
 };
@@ -21747,7 +21618,7 @@ STD_ROM_FN(sms_alexkidd3)
 
 struct BurnDriver BurnDrvsms_alexkidd3 = {
 	"sms_alexkidd3", "sms_alexkidd3f", NULL, NULL, "2016",
-	"Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo v.4)\0", NULL, "Yeti", "Sega Master System",
+	"Alex Kidd 3: Curse in Miracle World (GlobalHack, Demo v.4)\0", NULL, "Yeti", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3RomInfo, sms_alexkidd3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22963,6 +22834,24 @@ struct BurnDriver BurnDrvsms_jumpjack = {
 	256, 192, 4, 3
 };
 
+// Jurl (HB, v0.5b)
+static struct BurnRomInfo sms_jurlRomDesc[] = {
+	{ "Jurl v0.5b (2024)(Tonsomo Entertainment).sms",	32768, 0x0f692fef, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_jurl)
+STD_ROM_FN(sms_jurl)
+
+struct BurnDriver BurnDrvsms_jurl = {
+	"sms_jurl", NULL, NULL, NULL, "2024",
+	"Jurl (HB, v0.5b)\0", NULL, "Tonsomo Entertainment", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_jurlRomInfo, sms_jurlRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Klondike Solitaire (HB, v1.04)
 static struct BurnRomInfo sms_ksolitaireRomDesc[] = {
 	{ "Klondike Solitaire v1.04 (2023)(Under4Mhz).sms",	49152, 0x52b870f3, BRF_PRG | BRF_ESS },
@@ -23125,9 +23014,9 @@ struct BurnDriver BurnDrvsms_luckypeng = {
 	256, 192, 4, 3
 };
 
-// Lunar Skirmish (HB, v63)
+// Lunar Skirmish (HB, v64)
 static struct BurnRomInfo sms_lunarskirmishRomDesc[] = {
-	{ "Lunar Skirmish v63 (2025)(MikGames).sms",	425984, 0x08577d0c, BRF_PRG | BRF_ESS },
+	{ "Lunar Skirmish v64 (2025)(MikGames).sms",	425984, 0x461a369a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_lunarskirmish)
@@ -23135,7 +23024,7 @@ STD_ROM_FN(sms_lunarskirmish)
 
 struct BurnDriver BurnDrvsms_lunarskirmish = {
 	"sms_lunarskirmish", NULL, NULL, NULL, "2025",
-	"Lunar Skirmish (HB, v63)\0", NULL, "MikGames", "Sega Master System",
+	"Lunar Skirmish (HB, v64)\0", NULL, "MikGames", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_HORSHOOT, 0,
 	SMSGetZipName, sms_lunarskirmishRomInfo, sms_lunarskirmishRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23925,6 +23814,24 @@ struct BurnDriver BurnDrvsms_sptonbow = {
 	256, 192, 4, 3
 };
 
+// Stella in Adventure World (GlobalHack)
+static struct BurnRomInfo sms_stellaRomDesc[] = {
+	{ "Stella in Adventure World (2024-25)(TSP).sms",	524288, 0x2efda49b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_stella)
+STD_ROM_FN(sms_stella)
+
+struct BurnDriver BurnDrvsms_stella = {
+	"sms_stella", NULL, NULL, NULL, "2024-25",
+	"Stella in Adventure World (GlobalHack)\0", NULL, "TSP", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_stellaRomInfo, sms_stellaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Stygian Quest (HB, v1.2)
 static struct BurnRomInfo sms_stygianquestRomDesc[] = {
 	{ "Stygian Quest v1.2 (2024)(Naarshakta).sms",	573440, 0xb6c9a3c5, BRF_PRG | BRF_ESS },
@@ -24141,6 +24048,24 @@ struct BurnDriver BurnDrvsms_tempojrgg2sms = {
 	256, 192, 4, 3
 };
 
+// Time Soldiers Pro (Hack)
+static struct BurnRomInfo sms_timesoldproRomDesc[] = {
+	{ "Time Soldiers Pro (2023)(BcnAbel76).sms",	262144, 0x1558b8c6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_timesoldpro)
+STD_ROM_FN(sms_timesoldpro)
+
+struct BurnDriver BurnDrvsms_timesoldpro = {
+	"sms_timesoldpro", "sms_timesold", NULL, NULL, "2023",
+	"Time Soldiers Pro (Hack)\0", NULL, "Sega", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN, 0,
+	SMSGetZipName, sms_timesoldproRomInfo, sms_timesoldproRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Tower of Sorrow - SMS Power Ed. (HB, rev3)
 static struct BurnRomInfo sms_tosRomDesc[] = {
 	{ "Tower of Sorrow REV3 (2020)(Neofuturism).sms",	524288, 0xd0e103d9, BRF_PRG | BRF_ESS },
@@ -24303,7 +24228,7 @@ struct BurnDriverD BurnDrvsms_vdptest = {
 	256, 192, 4, 3
 };
 
-// Voyage - A Sorceress Vacation (GlobalHack, v1.05)
+// Voyage: A Sorceress Vacation (GlobalHack, v1.05)
 static struct BurnRomInfo sms_voyageRomDesc[] = {
 	{ "Voyage - A Sorceress Vacation v1.05 (GlobalHack)(2021)(SNAGS).sms",	524288, 0x76a1d277, BRF_PRG | BRF_ESS },
 };
@@ -24313,7 +24238,7 @@ STD_ROM_FN(sms_voyage)
 
 struct BurnDriver BurnDrvsms_voyage = {
 	"sms_voyage", NULL, NULL, NULL, "2021",
-	"Voyage - A Sorceress Vacation (GlobalHack, v1.05)\0", NULL, "SNAGS", "Sega Master System",
+	"Voyage: A Sorceress Vacation (GlobalHack, v1.05)\0", NULL, "SNAGS", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_voyageRomInfo, sms_voyageRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -24357,9 +24282,9 @@ struct BurnDriver BurnDrvsms_wekainvaders = {
 	256, 192, 4, 3
 };
 
-// Whack 'Em Smack 'Em Byrons Remarked (HB, RC1)
+// Whack 'Em Smack 'Em Byrons Remarked (HB)
 static struct BurnRomInfo sms_wsbyronsrRomDesc[] = {
-	{ "Whack 'Em Smack 'Em Byrons Remarked RC1 (2025)(ArugulaZ).sms",	131072, 0x3bd2d27a, BRF_PRG | BRF_ESS },
+	{ "Whack 'Em Smack 'Em Byrons Remarked (2025)(ArugulaZ).sms",	131072, 0xbe34ae87, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_wsbyronsr)
@@ -24367,7 +24292,7 @@ STD_ROM_FN(sms_wsbyronsr)
 
 struct BurnDriver BurnDrvsms_wsbyronsr = {
 	"sms_wsbyronsr", NULL, NULL, NULL, "2025",
-	"Whack 'Em Smack 'Em Byrons Remarked (HB, RC1)\0", NULL, "ArugulaZ", "Sega Master System",
+	"Whack 'Em Smack 'Em Byrons Remarked (HB)\0", NULL, "ArugulaZ", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_wsbyronsrRomInfo, sms_wsbyronsrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -24986,7 +24911,7 @@ struct BurnDriver BurnDrvsms_alexbmxc = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd - High-Tech World (Hack, Spanish)
+// Alex Kidd: High-Tech World (Hack, Spanish)
 // https://www.romhacking.net/translations/2849/
 static struct BurnRomInfo sms_alexhitwcRomDesc[] = {
 	{ "Alex Kidd - High-Tech World T-Spa (2017)(Wave).sms",          131072, 0xaeb143f2, BRF_ESS | BRF_PRG },
@@ -24997,7 +24922,7 @@ STD_ROM_FN(sms_alexhitwc)
 
 struct BurnDriver BurnDrvsms_alexhitwc = {
 	"sms_alexhitwc", "sms_alexhitw", NULL, NULL, "2017",
-	"Alex Kidd - High-Tech World (Hack, Spanish)\0", NULL, "Wave", "Sega Master System",
+	"Alex Kidd: High-Tech World (Hack, Spanish)\0", NULL, "Wave", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexhitwcRomInfo, sms_alexhitwcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -25005,7 +24930,7 @@ struct BurnDriver BurnDrvsms_alexhitwc = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd - The Lost Stars (Hack, Spanish)
+// Alex Kidd: The Lost Stars (Hack, Spanish)
 // https://www.romhacking.net/translations/4036/
 static struct BurnRomInfo sms_alexlostcRomDesc[] = {
 	{ "Alex Kidd - The Lost Stars T-Spa (2018)(Wave).sms",          262144, 0xd3fa9af0, BRF_ESS | BRF_PRG },
@@ -25016,7 +24941,7 @@ STD_ROM_FN(sms_alexlostc)
 
 struct BurnDriver BurnDrvsms_alexlostc = {
 	"sms_alexlostc", "sms_alexlost", NULL, NULL, "2018",
-	"Alex Kidd - The Lost Stars (Hack, Spanish)\0", NULL, "Wave", "Sega Master System",
+	"Alex Kidd: The Lost Stars (Hack, Spanish)\0", NULL, "Wave", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexlostcRomInfo, sms_alexlostcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

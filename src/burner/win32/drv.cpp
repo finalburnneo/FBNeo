@@ -27,6 +27,8 @@ TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("")				}
 };
 
+TCHAR szAppQuickPath[MAX_PATH] = _T("");
+
 static bool bSaveRAM = false;
 
 static INT32 nNeoCDZnAudSampleRateSave = 0;
@@ -304,9 +306,7 @@ int DrvExit()
 {
 	if (bDrvOkay) {
 		NeoCDZRateChangeback();
-
 		StopReplay();
-
 		VidExit();
 
 		InvalidateRect(hScrnWnd, NULL, 1);
@@ -325,18 +325,14 @@ int DrvExit()
 			}
 
 			ConfigGameSave(bSaveInputs);
-
 			GameInpExit();				// Exit game input
-
 			BurnDrvExit();				// Exit the driver
 		}
 	}
 
 	BurnExtLoadRom = NULL;
-
-	bDrvOkay = 0;					// Stop using the BurnDrv functions
-
-	bRunPause = 0;					// Don't pause when exitted
+	bDrvOkay       = 0;					// Stop using the BurnDrv functions
+	bRunPause      = 0;					// Don't pause when exitted
 
 	if (bAudOkay && pBurnSoundOut) {
 		// Write silence into the sound buffer on exit, and for drivers which don't use pBurnSoundOut
@@ -344,12 +340,10 @@ int DrvExit()
 	}
 
 	CDEmuExit();
-
-	BurnExtCartridgeSetupCallback = NULL;
-
 	RomDataExit();
 
-	nBurnDrvActive = ~0U;			// no driver selected
+	BurnExtCartridgeSetupCallback = NULL;
+	nBurnDrvActive = ~0U;				// no driver selected
 
 	return 0;
 }

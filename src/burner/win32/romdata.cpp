@@ -853,9 +853,11 @@ TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 	return token;
 }
 
-static INT32 FileExists(const TCHAR* szName)
+static INT32 FileExists(const TCHAR* pszName)
 {
-	return GetFileAttributes(szName) != INVALID_FILE_ATTRIBUTES;
+	DWORD dwAttrib = GetFileAttributes(pszName);
+	return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+		!(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
 static HIMAGELIST HardwareIconListInit()
@@ -1280,6 +1282,48 @@ static INT32 LoadRomdata()
 	return RDI.nDescCount;
 }
 
+bool RomDataSetQuickPath(const TCHAR* pszSelDat)
+{
+	if ((NULL == pszSelDat) || !FileExists(pszSelDat)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelDat);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* pszExt = _tcsrchr(pszSelDat, _T('.'));
+	if (NULL == pszExt || (0 != _tcsicmp(_T(".dat"), pszExt))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszSelDat, _T(".dat"));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* p = pszSelDat + _tcslen(pszSelDat), * dir_end = NULL;
+	INT32 nCount = 0;
+	while (p > pszSelDat) {
+		if ((_T('/') == *p) || (_T('\\') == *p)) {
+			TCHAR c = *(p - 1);
+			if ((_T('/') == c) ||
+				(_T('\\') == c)) {		// xxxx//ssss\\...
+				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelDat);
+				FBAPopupDisplay(PUF_TYPE_ERROR);
+				return false;
+			}
+			if (1 == ++nCount) {
+				dir_end = p + 1;		// Intentionally add 1
+			}
+		}
+		p--;
+	}
+
+	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
+	_tcsncpy(szAppQuickPath, pszSelDat, dir_end - pszSelDat);
+
+	return true;
+}
+
 char* RomdataGetDrvName()
 {
 	const TCHAR* pszReadMode = AdaptiveEncodingReads(szRomdataName);
@@ -1431,11 +1475,10 @@ TCHAR* RomdataGetFullName(const TCHAR* pszFileName)
 
 static INT32 RomsetDuplicateName(const TCHAR* pszFileName)
 {
-	bool RDMode = (NULL != pDataRomDesc);
-	if (RDMode) return -2;
+	if (NULL != pDataRomDesc) return -2;
 
 	TCHAR* pszZipName = RomdataGetZipName(pszFileName);
-	if (NULL == pszZipName) return -3;
+	if (NULL == pszZipName)   return -3;
 /*
 	return:	-1 is success
 	0 ~ N	The name is duplicated
@@ -1443,50 +1486,39 @@ static INT32 RomsetDuplicateName(const TCHAR* pszFileName)
 	-2		RomData mode
 	-3		No results were found in the Dat file
 */
-	return BurnDrvGetIndex(TCHARToANSI(pszZipName, NULL, 0));
+	return BurnDrvGetIndex(_TtoA(pszZipName));
 }
 
 // Checking in RomData mode is strictly prohibited
 INT32 RomDataCheck(const TCHAR* pszDatFile)
 {
-	if (NULL == pszDatFile) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
+	if (NULL == pszDatFile || !FileExists(pszDatFile)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszDatFile);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return -1;
 	}
 
-	TCHAR szDatFile[MAX_PATH] = { 0 };
-	_tcscpy(szDatFile, pszDatFile);
-
-	if (!FileExists(szDatFile)) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), szDatFile);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
-		FBAPopupDisplay(PUF_TYPE_ERROR);
-		return -2;
-	}
-
 	INT32 nRet = 0;
-	const TCHAR* pszDrvName = RomdataGetDrvName(szDatFile);
-	if (NULL == pszDrvName) nRet -3;
-
-	TCHAR szDrvName[100] = { 0 };
-	_tcscpy(szDrvName, pszDrvName);
-
-	const INT32 nDrvIdx = BurnDrvGetIndex(TCHARToANSI(szDrvName, NULL, 0));
-	if (-1 == nDrvIdx)      nRet -4;
-
-
-	if (nRet < 0) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), szDatFile);
-		UINT32 nStrId = (-3 == nRet) ? IDS_ERR_NO_DRIVER_SELECTED : IDS_ERR_DRIVER_NOT_EXIST;
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(nStrId));
+	const TCHAR* pszDrvName = RomdataGetDrvName(pszDatFile);
+	if (NULL == pszDrvName) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData: %s\n\n"), pszDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
-		return nRet;
+		return -3;
 	}
 
-	nRet = RomsetDuplicateName(szDatFile);
+	const INT32 nDrvIdx = BurnDrvGetIndex(_TtoA(pszDrvName));
+	if (-1 == nDrvIdx) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData: %s\n\n"), pszDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -4;
+	}
+
+	nRet = RomsetDuplicateName(pszDatFile);
 	if (nRet >= 0) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), szDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData: %s\n\n"), pszDatFile);
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_ROMSET_DUPLICATE));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return -5;
@@ -1507,15 +1539,17 @@ INT32 RomDataCheck(const TCHAR* pszDatFile)
 */
 	TCHAR szBackup[MAX_PATH] = { 0 };
 	_tcscpy(szBackup, szRomdataName);			// Backup szRomdataName
-	_tcscpy(szRomdataName, szDatFile);
+	_tcscpy(szRomdataName, pszDatFile);
 	RomDataInit();								// Replace DrvName##RomDesc
 	const UINT32 nOldDrvSel = nBurnDrvActive;	// Backup nBurnDrvActive
 	nBurnDrvActive = nDrvIdx;					// Required nBurnDrvActive
 	nRet = BzipOpen(1);
 	if (1 == nRet) {							// ROMs error report
 		BzipClose();
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData: %s\n\n"), pszDatFile);
 		BzipOpen(0);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
+		nRet = -1;
 	}
 	BzipClose();
 	nBurnDrvActive = nOldDrvSel;				// Restore nBurnDrvActive
@@ -1556,7 +1590,7 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 			if (0 == _tcsicmp(_T("ZipName"), pszLabel) || 0 == _tcsicmp(_T("RomName"), pszLabel)) {	// Romset
 				pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
 				if (NULL == pszInfo) {						// No romset specified
-					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), pszDatFile);
+					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
 					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s:?\n\n"),   FBALoadStringEx(hAppInst, IDS_ROMDATA_ROMSET,  true));
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), _T("ROM"));
 					FBAPopupDisplay(PUF_TYPE_ERROR);
@@ -1570,7 +1604,7 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 			if (0 == _tcsicmp(_T("DrvName"), pszLabel) || 0 == _tcsicmp(_T("Parent"), pszLabel)) {	// Driver
 				pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
 				if (NULL == pszInfo) {						// No driver specified
-					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), pszDatFile);
+					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
 					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s:?\n\n"),   FBALoadStringEx(hAppInst, IDS_ROMDATA_DRIVER,  true));
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_NO_DRIVER_SELECTED));
 					FBAPopupDisplay(PUF_TYPE_ERROR);
@@ -1585,7 +1619,7 @@ static DatListInfo* RomdataGetListInfo(const TCHAR* pszDatFile)
 					UINT32 nOldDrvSel = nBurnDrvActive;		// Backup
 					nBurnDrvActive = BurnDrvGetIndex(TCHARToANSI(pDatListInfo->szDrvName, NULL, 0));
 					if (-1 == nBurnDrvActive) {
-						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DATPATH, true), pszDatFile);
+						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("RomData:\n\n"));
 						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("%s: %s\n\n"), FBALoadStringEx(hAppInst, IDS_ROMDATA_DRIVER,  true), pDatListInfo->szDrvName);
 						FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST));
 						FBAPopupDisplay(PUF_TYPE_ERROR);

@@ -58,9 +58,11 @@ static IpsExtraPatch _IpsEarly = { 0 }, _IpsLast = { 0 };
 #define _TreeView_GetCheckState(hwndTV, hti) \
    ((((UINT)(SNDMSG((hwndTV), TVM_GETITEMSTATE, (WPARAM)(hti), TVIS_STATEIMAGEMASK))) >> 12) -1)
 
-static INT32 FileExists(const TCHAR* szName)
+static INT32 FileExists(const TCHAR* pszName)
 {
-	return GetFileAttributes(szName) != INVALID_FILE_ATTRIBUTES;
+	DWORD dwAttrib = GetFileAttributes(pszName);
+	return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+		!(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
 static TCHAR* GameIpsConfigName()
@@ -78,8 +80,7 @@ INT32 GetIpsNumPatches()
 	TCHAR szFilePath[MAX_PATH];
 	INT32 Count = 0;
 
-	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, BurnDrvGetText(DRV_NAME));
-	_tcscat(szFilePath, _T("*.dat"));
+	_stprintf(szFilePath, _T("%s%s\\*.dat"), szAppIpsPath, BurnDrvGetText(DRV_NAME));
 
 	hSearch = FindFirstFile(szFilePath, &wfd);
 
@@ -912,6 +913,9 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 	const TCHAR* pszReadMode = AdaptiveEncodingReads(patch_name);
 	if (NULL == pszReadMode) return;
 
+	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
+	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
+
 	if ((fp = _tfopen(patch_name, pszReadMode)) != NULL) {
 		bool bTarget = false;
 
@@ -985,12 +989,25 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
 				}
 
-				TCHAR ips_path[MAX_PATH];
-				if (_tcschr(ips_name, _T('\\'))) {
-					// ips in parent's folder
-					_stprintf(ips_path, _T("%s\\%s%s"), szAppIpsPath, ips_name, (has_ext) ? _T("") : IPS_EXT);
-				} else {
-					_stprintf(ips_path, _T("%s%s\\%s%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), ips_name, (has_ext) ? _T("") : IPS_EXT);
+				TCHAR ips_path[MAX_PATH] = { 0 };
+				_stprintf(ips_path, _T("%s%s"), ips_name, (has_ext) ? _T("") : IPS_EXT);
+
+				// Prioritize the use of ips files with custom correct paths
+				if (!FileExists(ips_path)) {
+					_stprintf(ips_path, _T(""));
+
+					// Traditional IPS path
+					if ((_T('\\') == ips_name[0]) || (_T('/') == ips_name[0])) {
+						// ips in parent's folder
+						// app_path: xxxxx/yyy/ or xxxxx\yyy\
+						// ips_name: /aaa/n.ips or \aaa\n.ips, (ips_name + 1) -> aaa/n.ips or aaa\n.ips
+						// app_path + ips_name: xxxxx/yyy/aaa/n.ips or xxxxx\yyy\aaa\n.ips
+						_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name + 1, (has_ext) ? _T("") : IPS_EXT);
+					} else {
+						// ips in drv_name's folder (Same folder as dat)
+						// xxxxx/yyy/drv_name/.../n.ips or xxxxx\yyy\drv_name\...\n.ips
+						_stprintf(ips_path, _T("%s%s\\%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
+					}
 				}
 
 				PatchFile(_TtoA(ips_path), base, readonly);
@@ -1003,6 +1020,94 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 			nIpsMemExpLen[LOAD_ROM] = 0;
 		}
 	}
+}
+
+static INT32 IpsVerifyDat(const TCHAR* pszDatFile)
+{
+	TCHAR s[MAX_PATH] = { 0 }, * p = NULL, * rom_name = NULL, * ips_name = NULL;
+	FILE* fp = NULL;
+
+	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszDatFile);
+	if (NULL == pszReadMode) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_ENCODING), pszDatFile);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -1;
+	}
+	if (NULL== (fp = _tfopen(pszDatFile, pszReadMode))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_OPEN), pszDatFile);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -2;
+	}
+
+	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
+	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
+	INT32 nLoop = 0, nError = 0, nFind = 0;
+
+	while (!feof(fp)) {
+		if (_fgetts(s, sizeof(s), fp) != NULL) {
+			p = s;
+
+			if (p[0] == _T('[')) {
+				if (0 == nLoop) {
+					nError++;
+					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_CONTENT), pszDatFile);
+				}
+				break;
+			}
+
+#define DELIM_TOKENS_NAME _T(" \t\r\n")
+#define DELIM_TOKENS      _T(" \t\r\n()")
+
+			rom_name = _strqtoken(p, DELIM_TOKENS_NAME);
+			if (!rom_name)
+				continue;
+			if (*rom_name == _T('#'))
+				continue;
+
+			ips_name = _strqtoken(NULL, DELIM_TOKENS_NAME);
+			if (!ips_name)
+				continue;
+
+#undef DELIM_TOKENS_NAME
+#undef DELIM_TOKENS
+
+			char* has_ext = stristr_int(_TtoA(ips_name), ".ips");
+			TCHAR ips_path[MAX_PATH] = { 0 };
+			_stprintf(ips_path, _T("%s%s"), ips_name, (has_ext) ? _T("") : IPS_EXT);
+
+			if (!FileExists(ips_path)) {
+				_stprintf(ips_path, _T(""));
+
+				if ((_T('\\') == ips_name[0]) || (_T('/') == ips_name[0])) {
+					_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name + 1, (has_ext) ? _T("") : IPS_EXT);
+				} else {
+					_stprintf(ips_path, _T("%s%s\\%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
+				}
+				if (!FileExists(ips_path)) {
+					nError++;
+					if (1 == nError) {
+						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
+					}
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), ips_path);
+				} else {
+					nFind++;
+				}
+			} else {
+				nFind++;
+			}
+		}
+		nLoop++;
+	}
+	fclose(fp);
+
+	if (nError > 0) {
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+	}
+
+	return (nFind > 0) ? 0 : -3;
 }
 
 #undef IPS_EXT
@@ -1072,9 +1177,152 @@ static void ExtraPatchesExit()
 	_IpsLast.nCount = 0;
 }
 
+#if 0
+static bool NormalizePath(const TCHAR* pSrcPath, TCHAR* pDestPath, UINT32 nDestSize) {
+	if ((NULL == pSrcPath) || (NULL == pDestPath) || (0 == nDestSize))
+		return false;
+
+	TCHAR szFullPath[MAX_PATH] = { 0 };
+	DWORD dwRet = GetFullPathName(pSrcPath, MAX_PATH, szFullPath, NULL);
+	if ((0 == dwRet) || (dwRet >= MAX_PATH))
+		return false;
+
+	for (UINT32 i = 0; i < dwRet; i++) {
+		if (_T('\\') == szFullPath[i])
+			pDestPath[i] = _T('/');
+		else
+			pDestPath[i] = _tolower(szFullPath[i]);
+	}
+	pDestPath[dwRet] = _T('\0');
+	return true;
+}
+
+static bool CompareTwoPaths(const TCHAR* pszPathA, const TCHAR* pszPathB)
+{
+	TCHAR szPathA[MAX_PATH] = { 0 }, szPathB[MAX_PATH] = { 0 };
+
+	if (!NormalizePath(pszPathA, szPathA, MAX_PATH) ||
+		!NormalizePath(pszPathB, szPathB, MAX_PATH))
+		return false;
+
+	return (0 == _tcsicmp(szPathA, szPathB));
+}
+#endif
+
+static INT32 IpsDatPathGetInfo(const TCHAR* pszSelDat, TCHAR** pszDrvName, TCHAR** pszIpsPath)
+{
+	*pszDrvName = *pszIpsPath = NULL;
+
+	if ((NULL == pszSelDat) || !FileExists(pszSelDat)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelDat);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -2;
+	}
+
+	const TCHAR* pszExt = _tcsrchr(pszSelDat, _T('.'));
+	if (NULL == pszExt || (0 != _tcsicmp(_T(".dat"), pszExt))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszSelDat, _T(".dat"));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -5;
+	}
+
+	const TCHAR* p = pszSelDat + _tcslen(pszSelDat), * drv_start = NULL, * drv_end = NULL, * dir_end = NULL;
+	INT32 nCount = 0;
+	while (p > pszSelDat) {
+		if ((_T('/') == *p) || (_T('\\') == *p)) {
+			TCHAR c = *(p - 1);
+			if ((_T('/') == c) ||
+				(_T('\\') == c)) {		// xxxx//ssss\\...
+				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelDat);
+				FBAPopupDisplay(PUF_TYPE_ERROR);
+				return -2;
+			}
+
+			nCount++;
+			if (1 == nCount) {
+				drv_end = p;			// Intentionally add 1
+			}
+			if (2 == nCount) {
+				dir_end = drv_start = p + 1;
+			}
+		}
+		p--;
+	}
+
+	TCHAR szDrvName[64] = { 0 }, szIpsPath[MAX_PATH] = { 0 };
+	switch (nCount) {
+		case 0:							// xxx.dat
+			FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST), pszSelDat);
+			FBAPopupDisplay(PUF_TYPE_ERROR);
+			return -4;
+		case 1:							// drv_name/xxx.dat
+			drv_start = dir_end = p;
+			_tcscpy(szIpsPath, _T(""));
+			break;
+		default:
+			_tcsncpy(szIpsPath, pszSelDat, dir_end - pszSelDat);
+			break;
+	}
+
+	const UINT32 nDrvLen = drv_end - drv_start;
+	if (0 == nDrvLen) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST), pszSelDat);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -4;
+	}
+
+	_tcsncpy(szDrvName, drv_start, nDrvLen);
+
+	const INT32 nDrvIdx = BurnDrvGetIndex(_TtoA(szDrvName));
+	if (nDrvIdx < 0) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS %s:\n\n"), pszSelDat);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_DRIVER_NOT_EXIST), pszSelDat);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return -4;
+	}
+
+	*pszDrvName = _tcsdup(szDrvName);	// The caller needs to free it
+	*pszIpsPath = _tcsdup(szIpsPath);	// free(pszIpsPath)
+
+	return nDrvIdx;
+}
+
+INT32 IpsGetDrvForQuickOpen(const TCHAR* pszSelDat)
+{
+	TCHAR* pszDrv, * pszPath;
+	const INT32 nDrvIdx = IpsDatPathGetInfo(pszSelDat, &pszDrv, &pszPath);
+	if (nDrvIdx < 0)
+		return nDrvIdx;
+
+	_tcscpy(szDriverName,   pszDrv);  free(pszDrv);
+	_tcscpy(szAppQuickPath, pszPath); free(pszPath);
+
+	INT32 nVerify = IpsVerifyDat(pszSelDat);
+	if (0 != nVerify) {
+		memset(szDriverName, 0, sizeof(szDriverName));
+		return nVerify;
+	}
+
+	_tcscpy(szIpsActivePatches[0], pszSelDat);
+
+	for (INT32 i = 1; i < MAX_ACTIVE_PATCHES; i++) {
+		_stprintf(szIpsActivePatches[i], _T(""));
+	}
+
+	return nDrvIdx;
+}
+
 static void ExtraPatchesInit(const INT32 nActivePatches)
 {
 	ExtraPatchesExit();
+
+	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
+	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
 
 	for (INT32 i = 0; i < nActivePatches; i++) {
 		TCHAR str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL;
@@ -1117,8 +1365,7 @@ static void ExtraPatchesInit(const INT32 nActivePatches)
 							// ips_path/drv_name/game.dat
 							TCHAR szInclde[MAX_PATH] = { 0 };
 							const TCHAR* pszFormat = (NULL == _tcsrchr(tmp, _T('.'))) ? _T("%s%s\\%s.dat") : _T("%s%s\\%s");
-
-							_stprintf(szInclde, pszFormat, szAppIpsPath, BurnDrvGetText(DRV_NAME), tmp);
+							_stprintf(szInclde, pszFormat, pszAppRomPaths, pszDriverName, tmp);
 
 							// Check if the file exists
 							if (!FileExists(szInclde))

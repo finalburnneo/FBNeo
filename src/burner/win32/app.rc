@@ -996,11 +996,19 @@ BEGIN
     POPUP "Game"
     BEGIN
         MENUITEM "Load game...\tF6",					MENU_LOAD
-        POPUP "RomData function"
+        POPUP "Quick load game"
 		BEGIN
-            MENUITEM "Select RomData ...",				MENU_LOAD_ROMDATA, GRAYED
-            MENUITEM "Open RomData Manager\tCtrl+R",	MENU_ROMDATA_MANAGER, GRAYED
+            MENUITEM "Select RomData dat...",			MENU_LOAD_ROMDATA, GRAYED
+            MENUITEM SEPARATOR
+            MENUITEM "Select IPS patch dat...",			MENU_LOAD_IPSPATCH, GRAYED
+            MENUITEM SEPARATOR
+            MENUITEM "Select NeoGeo-CD cue sheet...",	MENU_LOAD_NEOGEOCD, GRAYED
+            MENUITEM SEPARATOR
+            MENUITEM "Select Archive file...",			MENU_LOAD_ARCHIVE, GRAYED
         END
+        MENUITEM SEPARATOR
+        MENUITEM "Open RomData manager\tCtrl+R",		MENU_ROMDATA_MANAGER, GRAYED
+        MENUITEM SEPARATOR
         MENUITEM "Play via Kaillera...",				MENU_STARTNET
         POPUP "Most recent games..."
 		BEGIN
@@ -1343,7 +1351,6 @@ BEGIN
 	       MENUITEM "Create support folders at runtime",		MENU_CREATEDIRS
            MENUITEM "Show Game List at start-up",			MENU_AUTOLOADGAMELIST
            MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
-           MENUITEM "Quickly scan directories (zip only)",	MENU_QUICKSCANGAMELIST
            MENUITEM SEPARATOR
            POPUP "Menu options"
            BEGIN

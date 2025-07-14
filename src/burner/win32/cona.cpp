@@ -470,7 +470,6 @@ int ConfigAppLoad()
 		VAR(bBurnGunDrawReticles);
 		VAR(bBurnGunPositionalMode);
 		VAR(bSkipStartupCheck);
-		VAR(bQuicklyCheck);
 
 		VAR(nSlowMo);
 
@@ -963,9 +962,6 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);
-
-	_ftprintf(h, _T("\n// If non-zero, enable quickly scan directories (zip only).\n"));
-	VAR(bQuicklyCheck);
 
 	_ftprintf(h, _T("\n// If non-zero, enable SlowMo T.A. [0 - 4]\n"));
 	VAR(nSlowMo);

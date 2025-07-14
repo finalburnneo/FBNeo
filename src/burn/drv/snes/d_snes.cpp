@@ -37982,6 +37982,45 @@ struct BurnDriver BurnDrvsnes_Ultimarovii = {
 	512, 448, 4, 3
 };
 
+// Ultima Kyouryuu Teikoku - The Savage Empire (Japan)
+
+static struct BurnRomInfo snes_UltimasavempjRomDesc[] = {
+	{ "Ultima Kyouryuu Teikoku - The Savage Empire (J)(1995)(Pony Canyon).sfc", 1572864, 	0xdddb20ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ultimasavempj)
+STD_ROM_FN(snes_Ultimasavempj)
+
+struct BurnDriver BurnDrvsnes_Ultimasavempj = {
+	"snes_ultimasavempj", "snes_ultimasavempte", NULL, NULL, "1995",
+	"Ultima Kyouryuu Teikoku - The Savage Empire (Japan)\0", NULL, "Pony Canyon", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_UltimasavempjRomInfo, snes_UltimasavempjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ultima Kyouryuu Teikoku - The Savage Empire (Hack, English v1.02)
+// https://www.romhacking.net/translations/7255/
+
+static struct BurnRomInfo snes_UltimasavempteRomDesc[] = {
+	{ "Ultima Kyouryuu Teikoku - The Savage Empire T-Eng v1.02 (2025)(Nytegard).sfc", 1572864, 	0xb9dbbd96, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ultimasavempte)
+STD_ROM_FN(snes_Ultimasavempte)
+
+struct BurnDriver BurnDrvsnes_Ultimasavempte = {
+	"snes_ultimasavempte", NULL, NULL, NULL, "2025",
+	"Ultima Kyouryuu Teikoku - The Savage Empire (Hack, English v1.02)\0", NULL, "Nytegard", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_UltimasavempteRomInfo, snes_UltimasavempteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Ultima VI - The False Prophet (USA)
 
 static struct BurnRomInfo snes_UltimaviRomDesc[] = {

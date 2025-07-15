@@ -11907,6 +11907,23 @@ struct BurnDriver BurnDrvnes_yarsrev = {
 // Aftermarket/Hack/Homebrew Games
 // -------------------------------
 
+// Piopow (HB)
+static struct BurnRomInfo nes_piopowRomDesc[] = {
+	{ "Piopow (2024)(Jeremias Babini).nes",          40976, 0x1c8c6b32, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_piopow)
+STD_ROM_FN(nes_piopow)
+
+struct BurnDriver BurnDrvnes_piopow = {
+	"nes_piopow", NULL, NULL, NULL, "2024",
+	"Piopow (HB)\0", NULL, "Jeremias Babini", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_piopowRomInfo, nes_piopowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {

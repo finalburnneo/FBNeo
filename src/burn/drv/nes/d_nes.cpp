@@ -14067,6 +14067,25 @@ struct BurnDriver BurnDrvnes_celestemario = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Celeste Mario's Zap & Dash DELUXE! v2.00 (Hack)
+// https://www.romhacking.net/hacks/9044/
+static struct BurnRomInfo nes_celestemariodlRomDesc[] = {
+	{ "Celeste Mario's Zap & Dash DELUXE! v2.00 (2025)(w7n).nes",          655376, 0x3a8afc37, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_celestemariodl)
+STD_ROM_FN(nes_celestemariodl)
+
+struct BurnDriver BurnDrvnes_celestemariodl = {
+	"nes_celestemariodl", "nes_smb", NULL, NULL, "2025",
+	"Celeste Mario's Zap & Dash DELUXE! v2.00 (Hack)\0", NULL, "w7n", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_celestemariodlRomInfo, nes_celestemariodlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Cereal Cafe (HB)
 static struct BurnRomInfo nes_cerealcafeRomDesc[] = {
 	{ "Cereal Cafe (2022)(Rigg'd Games).nes",          40976, 0x9299ba01, BRF_ESS | BRF_PRG },
@@ -36087,6 +36106,25 @@ struct BurnDriver BurnDrvnes_idolhakj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ikari (Japan)
+// JP: November 26, 1986
+static struct BurnRomInfo nes_ikariRomDesc[] = {
+	{ "Ikari (Japan)(1986)(SNK).nes",          131088, 0x68b0cfdc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikari)
+STD_ROM_FN(nes_ikari)
+
+struct BurnDriver BurnDrvnes_ikari = {
+	"nes_ikari", "nes_ikariwarriors", NULL, NULL, "1986",
+	"Ikari (Japan)\0", NULL, "SNK", "NES / Famicom",
+	L"Ikari (Japan)\0\u6012\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_ikariRomInfo, nes_ikariRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Ikari Warriors (USA, Rev A)
 static struct BurnRomInfo nes_ikariwarriorsRomDesc[] = {
 	{ "Ikari Warriors (USA, Rev A)(1987)(SNK).nes",          131088, 0xeed05076, BRF_ESS | BRF_PRG },
@@ -36105,7 +36143,45 @@ struct BurnDriver BurnDrvnes_ikariwarriors = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ikari Warriors II - Victory Road (USA)
+// Ikari Warriors (Euro)
+// EU: August 10, 1989
+static struct BurnRomInfo nes_ikariwarriorseRomDesc[] = {
+	{ "Ikari Warriors (Euro)(1989)(SNK).nes",          131088, 0x90757260, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikariwarriorse)
+STD_ROM_FN(nes_ikariwarriorse)
+
+struct BurnDriver BurnDrvnes_ikariwarriorse = {
+	"nes_ikariwarriorse", "nes_ikariwarriors", NULL, NULL, "1989",
+	"Ikari Warriors (Euro)\0", NULL, "SNK", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_ikariwarriorseRomInfo, nes_ikariwarriorseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+// Ikari II: Dogosoken (Japan)
+// JP: April 16, 1988
+static struct BurnRomInfo nes_ikariiiRomDesc[] = {
+	{ "Ikari II - Dogosoken (Japan)(1988)(SNK).nes",          262160, 0x8355c1df, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikariii)
+STD_ROM_FN(nes_ikariii)
+
+struct BurnDriver BurnDrvnes_ikariii = {
+	"nes_ikariii", "nes_ikariwarii", NULL, NULL, "1988",
+	"Ikari II: Dogosoken (Japan)\0", NULL, "SNK", "NES / Famicom",
+	L"Ikari II: Dogosoken (Japan)\0\u6012\u2161 DOGOSOKEN\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_ikariiiRomInfo, nes_ikariiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ikari Warriors II: Victory Road (USA)
 static struct BurnRomInfo nes_ikariwariiRomDesc[] = {
 	{ "Ikari Warriors II - Victory Road (USA)(1988)(SNK).nes",          262160, 0x1eaf333c, BRF_ESS | BRF_PRG },
 };
@@ -36115,7 +36191,7 @@ STD_ROM_FN(nes_ikariwarii)
 
 struct BurnDriver BurnDrvnes_ikariwarii = {
 	"nes_ikariwarii", NULL, NULL, NULL, "1988",
-	"Ikari Warriors II - Victory Road (USA)\0", NULL, "SNK", "NES / Famicom",
+	"Ikari Warriors II: Victory Road (USA)\0", NULL, "SNK", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_ikariwariiRomInfo, nes_ikariwariiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36123,7 +36199,26 @@ struct BurnDriver BurnDrvnes_ikariwarii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ikari Warriors III - The Rescue (USA)
+// Ikari III (Japan)
+// JP: March 16, 1990
+static struct BurnRomInfo nes_ikariiiiRomDesc[] = {
+	{ "Ikari III (Japan)(1990)(SNK).nes",          262160, 0x9a6120af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikariiii)
+STD_ROM_FN(nes_ikariiii)
+
+struct BurnDriver BurnDrvnes_ikariiii = {
+	"nes_ikariiii", "nes_ikariwariii", NULL, NULL, "1990",
+	"Ikari III (Japan)\0", NULL, "SNK", "NES / Famicom",
+	L"Ikari III (Japan)\0\u6012\u2162\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_ikariiiiRomInfo, nes_ikariiiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ikari Warriors III: The Rescue (USA)
 static struct BurnRomInfo nes_ikariwariiiRomDesc[] = {
 	{ "Ikari Warriors III - The Rescue (USA)(1991)(SNK).nes",          262160, 0x3bcd370e, BRF_ESS | BRF_PRG },
 };
@@ -36133,7 +36228,7 @@ STD_ROM_FN(nes_ikariwariii)
 
 struct BurnDriver BurnDrvnes_ikariwariii = {
 	"nes_ikariwariii", NULL, NULL, NULL, "1991",
-	"Ikari Warriors III - The Rescue (USA)\0", NULL, "SNK", "NES / Famicom",
+	"Ikari Warriors III: The Rescue (USA)\0", NULL, "SNK", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_ikariwariiiRomInfo, nes_ikariwariiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

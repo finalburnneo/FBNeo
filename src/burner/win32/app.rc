@@ -996,6 +996,19 @@ BEGIN
     POPUP "Game"
     BEGIN
         MENUITEM "Load game...\tF6",					MENU_LOAD
+        POPUP "Most recent games..."
+		BEGIN
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES1, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES2, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES3, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES4, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES5, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES6, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES7, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES8, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES9, GRAYED
+            MENUITEM "no game selected",				MENU_PREVIOUSGAMES10, GRAYED
+        END
         POPUP "Quick load game"
 		BEGIN
             MENUITEM "Select RomData dat...",			MENU_LOAD_ROMDATA, GRAYED
@@ -1010,19 +1023,6 @@ BEGIN
         MENUITEM "Open RomData manager\tCtrl+R",		MENU_ROMDATA_MANAGER, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "Play via Kaillera...",				MENU_STARTNET
-        POPUP "Most recent games..."
-		BEGIN
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES1, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES2, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES3, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES4, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES5, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES6, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES7, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES8, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES9, GRAYED
-            MENUITEM "no game selected",				MENU_PREVIOUSGAMES10, GRAYED
-        END
         MENUITEM SEPARATOR
 		MENUITEM "Start Neo Geo Multi-slot...\tCtrl+F6",MENU_START_NEOGEO_MVS
 		MENUITEM SEPARATOR

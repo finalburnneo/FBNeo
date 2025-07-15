@@ -556,6 +556,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xfac97247) ? IS_PAL : 0; // Rainbow Islands (Ocean)
 	NESMode |= (ROMCRC == 0x391be891) ? IS_PAL : 0; // Sensible Soccer
 	NESMode |= (ROMCRC == 0x732b1a7a) ? IS_PAL : 0; // Smurfs, The
+	NESMode |= (ROMCRC == 0x90757260) ? IS_PAL : 0; // Ikari Warriors
 
 	if (nScreenHeight >= SCREEN_HEIGHT_PAL && !(NESMode & SHOW_OVERSCAN) && !(NESMode & IS_PAL)) { // cobol overscan collides with.....
 		bprintf(0, _T("*  PAL mode detected!\n"));

@@ -889,6 +889,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_NOTIFY) {
 		NMHDR* pNmHdr = (NMHDR*)lParam;
 
+		if (pNmHdr->code == HDN_ENDTRACK) {
+			InvalidateRect(GetDlgItem(hGameInfoDlg, IDC_LIST1), NULL, TRUE);
+			return TRUE;
+		}
+
 		if (pNmHdr->code == TCN_SELCHANGE) {
 			int TabPage = TabCtrl_GetCurSel(hTabControl);
 

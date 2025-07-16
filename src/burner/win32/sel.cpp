@@ -1890,8 +1890,6 @@ void UnloadDrvIcons()
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
-		InitCommonControls();
-
 		hSelDlg = hDlg;
 
 		// add WS_MAXIMIZEBOX button;
@@ -3213,9 +3211,6 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 
 	hParent = hParentWND;
 	nShowMVSCartsOnly = nMVSCartsOnly;
-/*
-	InitCommonControls();	// Already available in WM_INITDIALOG.
-*/
 	RomDataStateBackup();
 
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);

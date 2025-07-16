@@ -568,11 +568,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 	if(Msg == WM_INITDIALOG)
 	{
 		hNeoCDWnd = hDlg;
-
-		InitCommonControls();
-
 		hListView = GetDlgItem(hDlg, IDC_NCD_LIST);
-
 		NeoCDList_InitListView();
 
 		HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));

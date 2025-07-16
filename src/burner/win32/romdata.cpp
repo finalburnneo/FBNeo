@@ -2180,14 +2180,8 @@ static void RomDataManagerExit()
 static INT_PTR CALLBACK RomDataManagerProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
-		hRDMgrWnd = hDlg;
-
-		INITCOMMONCONTROLSEX icc;
-		icc.dwSize = sizeof(INITCOMMONCONTROLSEX);
-		icc.dwICC  = ICC_LISTVIEW_CLASSES;
-		InitCommonControlsEx(&icc);
-
-		hRDListView   = GetDlgItem(hDlg, IDC_ROMDATA_LIST);
+		hRDMgrWnd   = hDlg;
+		hRDListView = GetDlgItem(hDlg, IDC_ROMDATA_LIST);
 		ListView_SetExtendedListViewStyle(hRDListView, LVS_EX_FULLROWSELECT);
 
 		RomDataInitListView();

@@ -1452,7 +1452,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	{                                           // Init Win* Common Controls lib
 		INITCOMMONCONTROLSEX initCC = {
 			sizeof(INITCOMMONCONTROLSEX),
-			ICC_BAR_CLASSES | ICC_COOL_CLASSES | ICC_LISTVIEW_CLASSES | ICC_PROGRESS_CLASS | ICC_TREEVIEW_CLASSES,
+			ICC_WIN95_CLASSES,
 		};
 		InitCommonControlsEx(&initCC);
 	}

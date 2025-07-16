@@ -114,6 +114,7 @@ static int DisplayRomInfo()
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_SHOW);
+	SetFocus(GetDlgItem(hGameInfoDlg, IDC_LIST1));
 	UpdateWindow(hGameInfoDlg);
 
 	return 0;
@@ -780,6 +781,8 @@ static void MyEndDialog()
 
 static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
+	HWND hLv1 = GetDlgItem(hGameInfoDlg, IDC_LIST1);
+
 	if (Msg == WM_INITDIALOG) {
 		hGameInfoDlg = hDlg;
 
@@ -794,6 +797,13 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetFocus(hDlg);											// Enable Esc=close
 
 		return TRUE;
+	}
+
+	if (Msg == WM_SHOWWINDOW) {
+		if (0 == TabCtrl_GetCurSel(hTabControl)) {
+			SetFocus(hLv1);
+			return TRUE;
+		}
 	}
 
 	if (Msg == WM_CLOSE) {
@@ -827,6 +837,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			INT32 nButtonState = SendDlgItemMessage(hGameInfoDlg, IDFAVORITESET, BM_GETSTATE, 0, 0);
 
 			AddFavorite((nButtonState & BST_CHECKED) ? 1 : 0);
+
+			if (0 == TabCtrl_GetCurSel(hTabControl)) {
+				SetFocus(hLv1);
+			}
+
 			return 0;
 		}
 
@@ -882,6 +897,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 			BzipClose();
 			WriteGameAvb();
+
+			if (0 == TabCtrl_GetCurSel(hTabControl)) {
+				SetFocus(hLv1);
+			}
+
 			return 0;
 		}
 	}
@@ -889,8 +909,25 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_NOTIFY) {
 		NMHDR* pNmHdr = (NMHDR*)lParam;
 
+		if (pNmHdr->idFrom == IDC_LIST1) {
+			if (pNmHdr->code == NM_KILLFOCUS) {
+				if (0 == TabCtrl_GetCurSel(hTabControl)) {
+					InvalidateRect(hLv1, NULL, TRUE);
+					return TRUE;
+				}
+			}
+/*
+			if (pNmHdr->code == NM_SETFOCUS) {
+				if (0 == TabCtrl_GetCurSel(hTabControl)) {
+					UpdateWindow(hLv1);
+					return TRUE;
+				}
+			}
+*/
+		}
+
 		if (pNmHdr->code == HDN_ENDTRACK) {
-			InvalidateRect(GetDlgItem(hGameInfoDlg, IDC_LIST1), NULL, TRUE);
+			InvalidateRect(hLv1, NULL, TRUE);
 			return TRUE;
 		}
 
@@ -943,11 +980,7 @@ int GameInfoDialogCreate(HWND hParentWND, int nDrvSel)
 	bGameInfoOpen = true;
 	nGiDriverSelected = nDrvSel;
 
-#if defined (_UNICODE)
-	hRiched = LoadLibrary(L"RICHED20.DLL");
-#else
-	hRiched = LoadLibrary("RICHED20.DLL");
-#endif
+	hRiched = LoadLibrary(_T("RICHED20.DLL"));
 
 	if (hRiched) {
 		hParent = hParentWND;

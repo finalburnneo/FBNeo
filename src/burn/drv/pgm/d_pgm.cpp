@@ -6384,6 +6384,72 @@ struct BurnDriver BurnDrvKetb = {
 };
 
 
+// Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)
+
+/* - The coloring of A-TYPE and B-TYPE are reversed. (A is blue and B is red)
+   - The hitboxes are pretty little, your helicopter is godly
+   - the PLEASE WAIT (on player 1 side) glitch only occurs after entering to LEVEL 2-3-4-5 with player 2 and FREE PLAY mode
+   - After defeating the 1-5 boss at the end of the first round, you go straight into a battle with Doom.
+   - The second round's barrage starts right from the beginning. There's no counterattack. The second half has a lot of first round's barrages.
+   - Actually, the first and second round's barrages are mixed together.
+   - The scoring system is the same as the first round.
+   - The distance judgment for box items is really strict
+   - Start with 1 bomb and 1 remaining (default is 2 bombs and 3 remaining). If you die, you get 1 bomb.
+   - You get extra lives if you clear each stage without making any mistakes or with no bombs.
+   - It seems the lives didn't increase on stage 4.
+   - There are extension items on stages 3 and 5.
+   - The last boss has the hidden fase unlocked by default and if lose all lives there you can't continue
+*/
+
+static struct BurnRomInfo ketmatsuriRomDesc[] = {
+	// extracted from Playstation 4 port
+	{ "ket_matsuriver.bin",			0x0200000, 0xd6dbd74d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "cave_t04701w064.u19", 		0x0800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "cave_a04701w064.u7", 		0x0800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "cave_a04702w064.u8", 		0x0800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+
+	{ "cave_b04701w064.u1",			0x0800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "cave_m04701b032.u17",		0x0400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+
+	{ "ket_igs027a.bin",			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",			0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ketmatsuri, ketmatsuri, ketsuiBios) // custom bios
+STD_ROM_FN(ketmatsuri)
+
+static void ketmatsuri_patch()
+{
+	/* These appear to have been purposefully changed to cause a bug where selecting the orange helicopter
+	   will cause the player to start with the pink helicopter and vice versa. This is likely corrected by
+	   the emulator running on the Playstation 4. */
+	*((UINT16*)(PGM68KROM + 0xad0ec)) = 0x6600; // bne -> beq
+	*((UINT16*)(PGM68KROM + 0xad166)) = 0x6600; // bne -> beq
+}
+
+static INT32 ketmatsuriInit()
+{
+	pPgmInitCallback = ketmatsuri_patch;
+	pPgmProtCallback = install_protection_asic27a_ketsui;  // simulation
+
+	return pgmInit();
+}
+
+struct BurnDriver BurnDrvketmatsuri = {
+	"ketmatsuri", "ket", NULL, NULL, "2007",
+	"Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketmatsuriRomInfo, ketmatsuriRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketmatsuriInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
 // Ketsui: Kizuna Jigoku Tachi (2014/07/16 ARRANGE 1.7 VER) (hack)
 
 static struct BurnRomInfo ketarrRomDesc[] = {

@@ -1542,7 +1542,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			ofn.lpstrFile       = StrReplace(szSelect, _T('/'), _T('\\'));
 			ofn.nMaxFile        = sizeof(szSelect) / sizeof(TCHAR);
 			ofn.lpstrInitialDir = _T(".");
-			ofn.Flags           = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+			ofn.Flags           = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 
 			if (!GetOpenFileName(&ofn))
 				break;

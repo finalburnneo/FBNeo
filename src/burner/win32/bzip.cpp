@@ -414,20 +414,18 @@ INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc)
 
 			char* pszArcNoExt = _TtoA(szArcNoExt);
 			if (0 != ZipOpen(pszArcNoExt))
-				continue;
+				continue;	// Make sure nothing is open
 
 			ZipGetList(&List, &nListCount);
-			for (INT32 y = 0; y < nRomCount; y++) {
+			for (INT32 y = 0; 0 == BurnDrvGetRomInfo(NULL, y); y++) {
 				if (FindRom(y) >= 0) {
+					nDrvIdx = i;
+					z = BZIP_MAX;
 					break;
 				}
 			}
 			BzipListFree();
 			ZipClose();
-
-			nDrvIdx = i;
-			z = BZIP_MAX;
-			break;
 		}
 	}
 

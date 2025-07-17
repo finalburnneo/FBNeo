@@ -496,7 +496,9 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 
 void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 {
-	bAddToStream = bAdd;
+	bAddToStream = bAdd & ~0x8000;
+	bool bForceNostore = bAdd & 0x8000;
+
 	nTotalSamples = 0;
 	bNiceFadeVolume = 0;
 
@@ -586,8 +588,8 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
 
-		if (si.nFlags & SAMPLE_NOSTOREF) {
-			sample_ptr->flags = si.nFlags;
+		if (si.nFlags & SAMPLE_NOSTOREF || bForceNostore) {
+			sample_ptr->flags = si.nFlags | (bForceNostore ? SAMPLE_NOSTOREF : 0);
 			sample_ptr->data = NULL;
 			continue;
 		}

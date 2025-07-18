@@ -40511,11 +40511,29 @@ STD_ROM_FN(md_paprium)
 
 struct BurnDriver BurnDrvmd_paprium = {
 	"md_paprium", NULL, NULL, "paprium", "2020",
-	"Paprium (World) (HB)\0", "First boot is a joke!  Hit reset after selecting language.", "WaterMelon", "Genesis / Mega Drive",
+	"Paprium (World) (HB)\0", "NB: at first boot hit 'reset' after selecting language.", "WaterMelon", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_papriumRomInfo, md_papriumRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
 	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium Minigame (HB)
+static struct BurnRomInfo md_papriuminiRomDesc[] = {
+	{ "Paprium Minigame (2020)(WaterMelon).bin", 524288, 0x57b0ffa4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_papriumini)
+STD_ROM_FN(md_papriumini)
+
+struct BurnDriver BurnDrvmd_papriumini = {
+	"md_papriumini", "md_paprium", NULL, NULL, "2025",
+	"Paprium Minigame (HB)\0", NULL, "WaterMelon", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 

@@ -22834,9 +22834,9 @@ struct BurnDriver BurnDrvsms_jumpjack = {
 	256, 192, 4, 3
 };
 
-// Jurl (HB, v0.5b)
+// Jurl (HB, v0.9a)
 static struct BurnRomInfo sms_jurlRomDesc[] = {
-	{ "Jurl v0.5b (2024)(Tonsomo Entertainment).sms",	32768, 0x0f692fef, BRF_PRG | BRF_ESS },
+	{ "Jurl v0.9a (2024)(Tonsomo Entertainment).sms",	32768, 0x347fb7ab, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_jurl)
@@ -22844,7 +22844,7 @@ STD_ROM_FN(sms_jurl)
 
 struct BurnDriver BurnDrvsms_jurl = {
 	"sms_jurl", NULL, NULL, NULL, "2024",
-	"Jurl (HB, v0.5b)\0", NULL, "Tonsomo Entertainment", "Sega Master System",
+	"Jurl (HB, v0.9a)\0", NULL, "Tonsomo Entertainment", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_jurlRomInfo, sms_jurlRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -756,6 +756,7 @@ static void DmaSlow(INT32 len)
 		pd    = (UINT16 *)(Ram68K + (source & 0xfffe));
 		pdend = (UINT16 *)(Ram68K + 0x10000);
 	} else if( source < RomSize) {	// ROM
+		if (papriummode || psolarmode) fromrom = 1;
 		fromrom = 1;
 		source &= ~1;
 		pd    = (UINT16 *)(RomMain + source);
@@ -782,7 +783,7 @@ static void DmaSlow(INT32 len)
 			if (fromrom) {
 				if (psolarmode) {
 					d = md_psolar_rw(source);
-				} else if (papriummode) {
+				} else {
 					d = SekReadWord(source);
 				}
 				source+=2;
@@ -807,7 +808,7 @@ static void DmaSlow(INT32 len)
 			if (fromrom) {
 				if (psolarmode) {
 					d = md_psolar_rw(source);
-				} else if (papriummode) {
+				} else {
 					d = SekReadWord(source);
 				}
 				source+=2;
@@ -832,7 +833,7 @@ static void DmaSlow(INT32 len)
 			if (fromrom) {
 				if (psolarmode) {
 					d = md_psolar_rw(source);
-				} else if (papriummode) {
+				} else {
 					d = SekReadWord(source);
 				}
 				source+=2;

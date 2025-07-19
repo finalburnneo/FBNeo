@@ -965,6 +965,11 @@ int m68k_get_irq()
 	return CPU_INT_LEVEL >> 8;
 }
 
+unsigned int m68k_get_dar(int n)
+{
+	return m68ki_cpu.dar[n&0xf];
+}
+
 /* ASG: rewrote so that the int_level is a mask of the IPL0/IPL1/IPL2 bits */
 /* KS: Modified so that IPL* bits match with mask positions in the SR
  *     and cleaned out remenants of the interrupt controller.

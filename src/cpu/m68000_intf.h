@@ -259,6 +259,7 @@ INT32 SekSetTASCallback(pSekTASCallback pCallback);
 // Get a CPU's PC
 UINT32 SekGetPC(INT32 n);
 UINT32 SekGetPPC(INT32);
+UINT32 SekGetDAR(INT32 n);
 
 INT32 SekScan(INT32 nAction);
 

@@ -23,11 +23,12 @@ extern UINT8 MegadriveJoy2[12];
 extern UINT8 MegadriveJoy3[12];
 extern UINT8 MegadriveJoy4[12];
 extern UINT8 MegadriveJoy5[12];
-extern UINT8 MegadriveDIP[2];
-extern INT32 psolarmode;
+extern UINT8 MegadriveDIP[3];
 
 INT32 MegadriveInit();
 INT32 MegadriveInitNoDebug();
+INT32 MegadriveInitPaprium();
+INT32 MegadriveInitPsolar();
 INT32 MegadriveExit();
 INT32 MegadriveFrame();
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin);

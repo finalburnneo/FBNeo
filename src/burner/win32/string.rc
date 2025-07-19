@@ -89,7 +89,10 @@ BEGIN
 	IDS_DISK_ALL_CARD			"All Memory Card Files"
 	IDS_DISK_ALL_DAT			"All Dat Files"
 	IDS_DISK_TEXT				"Text Files"
-	IDS_DISK_FILE_ROMDATA		"%s Romdata Files"
+	IDS_DISK_FILE_ROMDATA		"%s RomData Type"
+	IDS_DISK_FILE_IPSPATCH		"%s IPS Type"
+	IDS_DISK_FILE_NEOGEOCD		"%s NeoGeo-CD Type"
+	IDS_DISK_FILE_ARCHIVE		"%s Archive Types"
 
 	IDS_DISK_SAVEREPORT			"Save system information report"
 
@@ -378,6 +381,12 @@ BEGIN
 	IDS_ERR_DISK_UNAVAIL		" is for an unavailable game."
 	IDS_ERR_DISK_TOONEW			" does not work with this version of %s."
 	IDS_ERR_DISK_TOOOLD			" requires a more recent version of %s, please upgrade."
+	
+	IDS_ERR_FILE_ENCODING		"Unable to recognize the file encoding of xx.\n\nPlease use the following encodings:\n\nANSI\nUTF-8\nUTF-8 BOM\nUCS-2 Big Endian\nUCS-2 Little Endian\n"
+	IDS_ERR_FILE_EXIST			"File does not exist: %s\n"
+	IDS_ERR_FILE_OPEN			"An error occurred while opening the %s file."
+	IDS_ERR_FILE_CONTENT		"%s has been opened,\n\nbut it does not contain the required content."
+	IDS_ERR_FILE_EXTENSION		"Incorrect extension: %s\n\nCorrect extension: %s."
 
 	IDS_ERR_NO_NETPLAYDLL		"Error finding 'kailleraclient.dll'."
 	IDS_ERR_NO_DRIVER_SELECTED	"No driver has been selected from the list."

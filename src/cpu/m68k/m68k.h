@@ -326,6 +326,8 @@ void m68k_set_irq(unsigned int int_level);
 int m68k_get_irq();
 void m68k_set_irq_delay(unsigned int int_level);
 
+unsigned int m68k_get_dar(int n);
+
 /* Set the virtual irq lines, where the highest level
  * active line is automatically selected.  If you use this function,
  * do not use m68k_set_irq.

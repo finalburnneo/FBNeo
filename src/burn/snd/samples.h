@@ -5,6 +5,7 @@
 // Change this to 0 to 1 if using samples in a low-ram environment.
 // May cause momentary stutter while sample loads.
 #define SAMPLE_NOSTORE		(0<<3) // only keep in memory while playing
+#define SAMPLE_NOSTOREF		(1<<3) // only keep in memory while playing (forced)
 #define SAMPLE_NODUMP       (1<<4) // dump not available
 
 #define SAMPLE_PLAYING		(1<<0) // playing
@@ -21,7 +22,7 @@ INT32 BurnSampleGetStatus(INT32 sample);
 INT32 BurnSampleGetPosition(INT32 sample);
 void BurnSampleSetPosition(INT32 sample, UINT32 position);
 
-void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop = false);
+void BurnSampleChannelPlay(INT32 channel, INT32 sample, INT32 loop = 0); // loop: -1, use config from sample struct
 void BurnSampleChannelPause(INT32 channel, bool pause);
 void BurnSampleChannelStop(INT32 channel);
 INT32 BurnSampleGetChannelStatus(INT32 channel);

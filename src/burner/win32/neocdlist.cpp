@@ -39,6 +39,7 @@ struct NGCDGAME games[] =
 	{ _T("roboarmy")	, _T("Robo Army")											, _T("1991")	, _T("SNK")					, 0x0032 },		//
 	{ _T("fatfury")		, _T("Fatal Fury - The Battle of Fury")						, _T("1994")	, _T("SNK")					, 0x0033 },		//
 	{ _T("fbfrenzy")	, _T("Football Frenzy")										, _T("1994")	, _T("SNK")					, 0x0034 },		//
+	{ _T("bakatono")	, _T("Bakatonosama Mahjong Manyuuki")						, _T("1991")	, _T("Monolith Corp.")		, 0x0036 },		//
 	{ _T("crswords")	, _T("Crossed Swords")										, _T("1994")	, _T("SNK/ADK")				, 0x0037 },		//
 	{ _T("rallych")		, _T("Rally Chase")											, _T("1991")	, _T("SNK/ADK")				, 0x0038 },		//
 	{ _T("kotm2")		, _T("King of the Monsters 2")								, _T("1992")	, _T("SNK")					, 0x0039 },		//
@@ -64,7 +65,7 @@ struct NGCDGAME games[] =
 	{ _T("fatfursp")	, _T("Fatal Fury Special / Garou Densetsu Special")			, _T("1994")	, _T("SNK")					, 0x0058 },		//
 	{ _T("fatfurspr1")	, _T("Fatal Fury Special / Garou Densetsu Special (Rev 1)")	, _T("1994")	, _T("SNK")					, 0x1058 },		//
 	{ _T("savagere")	, _T("Savage Reign / Fu'un Mokujiroku - Kakutou Sousei")	, _T("1995")	, _T("SNK")					, 0x0059 },		//
-	{ _T("savagerer1")	, _T("Savage Reign / Fu'un Mokujiroku - Kakutou Sousei (Rev 1)"), _T("1995")	, _T("SNK")					, 0x1059 },		//
+	{ _T("savagerer1")	, _T("Savage Reign / Fu'un Mokujiroku - Kakutou Sousei (Rev 1)"), _T("1995")	, _T("SNK")				, 0x1059 },		//
 	{ _T("ssideki2")	, _T("Super Sidekicks 2 / Tokuten Oh 2")					, _T("1994")	, _T("SNK")					, 0x0061 },		//
 	{ _T("samsho2")		, _T("Samurai Shodown 2 / Shin Samurai Spirits")			, _T("1994")	, _T("SNK")					, 0x0063 },		//
 	{ _T("wh2j")		, _T("World Heroes 2 Jet")									, _T("1995")	, _T("SNK/ADK")				, 0x0064 },		//
@@ -134,6 +135,8 @@ struct NGCDGAME games[] =
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
+	{ _T("puzzldpc")	, _T("Puzzle de Pon! CD Collection")						, _T("1997")	, _T("Visco")				, 0x7778 },		//
+	{ _T("neothndr")	, _T("Neo Thunder")											, _T("2012")	, _T("Sebastian Mihai")		, 0x1234 },		//
 	{ _T("jumpnrun")	, _T("Jump & Run")											, _T("2020")	, _T("Blastar")				, 0x2006 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
@@ -360,6 +363,11 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 					nID |= 0x1000;
 				}
 
+				// Digger Man (Prototype)
+				if (nID == 0x0066 && nDate[0] == 125 && nDate[1] == 4 && nDate[2] == 10) {
+					nID |= 0x1200;
+				}
+
 				// Fatal Fury 3 Rev 1
 				if (nID == 0x069c && nDate[0]==95 && nDate[1]==4 && nDate[2]==29) {
 					nID |= 0x1000;
@@ -401,6 +409,11 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 						nID |= 0x4000;
 					}
 					else {};
+				}
+
+				// Puzzle de Pon! CD Collection
+				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14) {
+					nID = 0x7778;
 				}
 
 				// Double Dragon Rev 1

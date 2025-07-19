@@ -29,6 +29,9 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 // for analog pedals, allows a mapped digital button to work
 #define INPUT_MIGHTBEDIGITAL    0x04
 
+// joyprocess.cpp
+extern INT32 nSocd[6];
+
 // Need something else / looking for:
 // analog dial, paddle & trackball, use BurnTrackball device (burn_gun.h)
 // lightgun, use BurnGun device (also burn_gun.h)
@@ -113,122 +116,131 @@ struct HoldCoin {
 	}
 };
 
+// Take over and handle logic in the opposite input direction in advance when necessary
+// When SOCD is disabled, control is transferred to the default frame control
 template <int N, typename T>
 struct ClearOpposite {
-//	T prev[N << 2];
-	T prev[N << 1], prev_a[N << 1], prev_b[N << 1];
+	T prev[N], prev_ud[N], prev_lr[N];
 
 	void reset() {
-		memset(&prev,   0, sizeof(prev));
-		memset(&prev_a, 0, sizeof(prev_a));
-		memset(&prev_b, 0, sizeof(prev_b));
+		memset(&prev,    0, sizeof(prev));
+		memset(&prev_ud, 0, sizeof(prev_ud));
+		memset(&prev_lr, 0, sizeof(prev_lr));
 	}
 
 	void scan() {
 		SCAN_VAR(prev);
-		SCAN_VAR(prev_a);
-		SCAN_VAR(prev_b);
+		SCAN_VAR(prev_ud);
+		SCAN_VAR(prev_lr);
 	}
-
-#if 0
-	void checkval(UINT8 n, T &inp, T val_a, T val_b) {
-		// When opposites become pressed simultaneously, and a 3rd direction isn't pressed
-		// remove the previously stored direction if it exists, cancel both otherwise
-		if ((inp & val_a) == val_a)
-			inp &= (prev[n] && (inp & val_b) == 0 ? (inp ^ prev[n]) : ~val_a);
-		// Store direction anytime it's pressed without its opposite
-		else if (inp & val_a)
-			prev[n] = inp & val_a;
-	}
-#endif
 
 	// Insert the positive direction into the two fast-switching oblique directions
-	void interp(UINT8 n, T& inp, T val_a, T val_b) {
-		if (((inp | prev[n]) & val_a) == val_a) inp &= ~val_a;
-		if (((inp | prev[n]) & val_b) == val_b) inp &= ~val_b;
+	void interp(UINT8 n, T& inp, const T val_ud, const T val_lr) {
+		if (((inp | prev[n]) & val_ud) == val_ud) inp &= ~val_ud;
+		if (((inp | prev[n]) & val_lr) == val_lr) inp &= ~val_lr;
 
 		prev[n] = inp;
 	}
 
-	// SOCD - Simultaneous Neutral
-	void neu(UINT8 n, T& inp, T val_a, T val_b) {
-		if ((inp & val_a) == val_a) inp &= ~val_a;
-		if ((inp & val_b) == val_b) inp &= ~val_b;
+	// Oppose simultaneous input from left and right or up and down
+	void oppoxy(UINT8 n, T& inp, const T val_ud, const T val_lr) {
+		if ((inp & val_ud) == val_ud) inp &= ~val_ud;
+		if ((inp & val_lr) == val_lr) inp &= ~val_lr;
+	}
 
-		interp(n, inp, val_a, val_b);
+	// SOCD - Simultaneous Neutral
+	void neu(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T val_ud = val_u | val_d, val_lr = val_l | val_r;
+		oppoxy(n, inp, val_ud, val_lr);
+		interp(n, inp, val_ud, val_lr);
 	}
 
 	// SOCD - Last Input Priority (4 Way)
-	void lif(UINT8 n, T& inp, T val_a, T val_b) {
-		const T mask_a = inp & val_a;
-		if (mask_a == val_a) inp &= (inp ^ prev_a[n]);
-		else if (mask_a) prev_a[n] = mask_a;
+	void lif(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T val_ud = val_u | val_d, val_lr = val_l | val_r;
+		const T inp_lr = inp & val_lr;
+		if (inp_lr == val_lr) inp &= ~prev_lr[n];
+		else if (inp_lr) prev_lr[n] = inp_lr;
 
-		const T mask_b = inp & val_b;
-		if (mask_b == val_b) inp &= (inp ^ prev_b[n]);
-		else if (mask_b) prev_b[n] = mask_b;
+		const T inp_ud = inp & val_ud;
+		if (inp_ud == val_ud) inp &= ~prev_ud[n];
+		else if (inp_ud) prev_ud[n] = inp_ud;
 
-		neu(n, inp, val_a, val_b);
+		neu(n, inp, val_u, val_d, val_l, val_r);
 	}
 
 	// SOCD - Last Input Priority (8 Way)
-	void lie(UINT8 n, T& inp, T val_a, T val_b) {
-		lif(n, inp, val_a, val_b);
+	void lie(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T prev_state = prev[n];
+		lif(n, inp, val_u, val_d, val_l, val_r);
 
-		const T inp_u  = (1 << 0), inp_d = (1 << 1), inp_l = (1 << 2), inp_r = (1 << 3);
-		const T inp_ud = (inp_u | inp_d),           inp_lr = (inp_l & inp_r);
-		const T inp_e  = (inp & (inp_ud | inp_lr)), prev_e = (prev[n] & (inp_ud | inp_lr));
-
-		if (((inp_e == (inp_d | inp_l)) && (prev_e == (inp_d | inp_r))) ||
-			((inp_e == (inp_d | inp_r)) && (prev_e == (inp_d | inp_l))) ||
-			((inp_e == (inp_u | inp_l)) && (prev_e == (inp_u | inp_r))) ||
-			((inp_e == (inp_u | inp_r)) && (prev_e == (inp_u | inp_l)))) {
-			inp &= ~inp_lr;
+		const T val_ud = (val_u | val_d), val_lr = (val_l | val_r);
+		const T inp_e  = (inp & (val_ud | val_lr)), prev_e = (prev_state & (val_ud | val_lr));
+		if (((inp_e == (val_d | val_l)) && (prev_e == (val_d | val_r))) ||
+			((inp_e == (val_d | val_r)) && (prev_e == (val_d | val_l))) ||
+			((inp_e == (val_u | val_l)) && (prev_e == (val_u | val_r))) ||
+			((inp_e == (val_u | val_r)) && (prev_e == (val_u | val_l)))) {
+			inp &= ~val_lr;
 		}
-		if (((inp_e == (inp_d | inp_l)) && (prev_e == (inp_u | inp_l))) ||
-			((inp_e == (inp_d | inp_r)) && (prev_e == (inp_u | inp_r))) ||
-			((inp_e == (inp_u | inp_l)) && (prev_e == (inp_d | inp_l))) ||
-			((inp_e == (inp_u | inp_r)) && (prev_e == (inp_d | inp_r)))) {
-			inp &= ~inp_ud;
+		if (((inp_e == (val_d | val_l)) && (prev_e == (val_u | val_l))) ||
+			((inp_e == (val_d | val_r)) && (prev_e == (val_u | val_r))) ||
+			((inp_e == (val_u | val_l)) && (prev_e == (val_d | val_l))) ||
+			((inp_e == (val_u | val_r)) && (prev_e == (val_d | val_r)))) {
+			inp &= ~val_ud;
 		}
-
 		prev[n] = inp;
 	}
 
 	// SOCD - First Input Priority
-	void fip(UINT8 n, T& inp, T val_a, T val_b) {
-		const T mask_a = inp & val_a;
-		if (mask_a == val_a) inp &= ~val_a | prev_a[n];
-		else if (mask_a) prev_a[n] = mask_a;
+	void fip(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T val_ud = (val_u | val_d), val_lr = (val_l | val_r);
+		const T inp_lr = inp & val_lr;
+		if (inp_lr == val_lr) inp &= (~val_lr) | prev_lr[n];
+		else if (inp_lr) prev_lr[n] = inp_lr;
 
-		const T mask_b = inp & val_b;
-		if (mask_b == val_b) inp &= ~val_b | prev_b[n];
-		else if (mask_b) prev_b[n] = mask_b;
+		const T inp_ud = inp & val_ud;
+		if (inp_ud == val_ud) inp &= (~val_ud) | prev_ud[n];
+		else if (inp_ud) prev_ud[n] = inp_ud;
 
-		neu(n, inp, val_a, val_b);
+		neu(n, inp, val_u, val_d, val_l, val_r);
 	}
 
 	// SOCD - Up Priority (Up-override Down)
-	void uod(UINT8 n, T& inp, T val_a, T val_b) {
-		const T val_u = (inp & 1);	// up = 0x01
-		if ((inp & val_a) == val_a) inp &= ~val_a;
-		if ((inp & val_b) == val_b) inp &= ~val_b;
-		if (val_u)                  inp |= val_u;
+	void uod(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T val_ud = (val_u | val_d), val_lr = (val_l | val_r), inp_u = inp & val_u;
+		oppoxy(n, inp, val_ud, val_lr);
+		if (inp_u) inp |= inp_u;
 
-		neu(n, inp, val_a, val_b);
+		neu(n, inp, val_u, val_d, val_l, val_r);
 	}
 
-	void check(UINT8 num, T& inp, T val1, T val2, INT32 socd = 2) {
-//		checkval((num << 1),     inp, val1, val2);
-//		checkval((num << 1) + 1, inp, val2, val1);
+	// SOCD - Down Priority (Left/Right Last Input Priority)​
+	void dlr(UINT8 n, T& inp, const T val_u, const T val_d, const T val_l, const T val_r) {
+		const T val_ud = (val_u | val_d), val_lr = (val_l | val_r), inp_d = (inp & val_d);
+		const T inp_lr = inp & val_lr;
+		if (inp_lr == val_lr) inp &= ~prev_lr[n];
+		else if (inp_lr) prev_lr[n] = inp_lr;
+
+		const T inp_ud = inp & val_ud;
+		if (inp_ud == val_ud) inp &= (~val_ud) | inp_d;
+
+		neu(n, inp, val_u, val_d, val_l, val_r);
+	}
+
+	void check(UINT8 num, T& inp, const T val_u, const T val_d, const T val_l, const T val_r, INT32 socd = 2) {
+#define DISPATCH_SOCD(x) x(num, inp, val_u, val_d, val_l, val_r)
+
 		switch (socd) {
-			case 0: neu((num), inp, val1, val2); break;
-			case 1: lif((num), inp, val1, val2); break;
-			case 2: lie((num), inp, val1, val2); break;
-			case 3: fip((num), inp, val1, val2); break;
-			case 4: uod((num), inp, val1, val2); break;
-			default:                             break;
+			case 1: DISPATCH_SOCD(neu); break;
+			case 2: DISPATCH_SOCD(lif); break;
+			case 3: DISPATCH_SOCD(lie); break;
+			case 4: DISPATCH_SOCD(fip); break;
+			case 5: DISPATCH_SOCD(uod); break;
+			case 6: DISPATCH_SOCD(dlr); break;
+			default:                    break;	// Disable SOCD
 		}
+
+#undef DISPATCH_SOCD
 	}
 };
 

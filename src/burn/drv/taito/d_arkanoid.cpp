@@ -2233,6 +2233,36 @@ struct BurnDriver BurnDrvarktayt2 = {
 };
 
 
+// Arkanoid (bootleg of version Japan, older)
+
+static struct BurnRomInfo arkabootRomDesc[] = {
+	{ "1",      	  0x8000, 0x3234917c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "2",      	  0x8000, 0xd57c6bff, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "3",   		  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  2 Graphics
+	{ "4",   		  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  3
+	{ "5",   		  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  4
+
+	// not dumped for this set, but GFX match, so safe to assume these are the same, too
+	{ "ic73.11e",     0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  5 Color Proms
+	{ "ic74.12e",     0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  6
+	{ "ic75.13e",     0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  7
+};
+
+STD_ROM_PICK(arkaboot)
+STD_ROM_FN(arkaboot)
+
+struct BurnDriver BurnDrvarkaboot = {
+	"arkaboot", "arkanoid", NULL, NULL, "1986",
+	"Arkanoid (bootleg of version Japan, older)\0", NULL, "bootleg", "Arkanoid",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
+	NULL, arkabootRomInfo, arkabootRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkangcDIPInfo,
+	arkangcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
 // Tetris (D.R. Korea, set 1, encrypted)
 
 static struct BurnRomInfo tetrsarkRomDesc[] = {

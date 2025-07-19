@@ -262,7 +262,7 @@ void BurnSamplePlay(INT32 sample)
 
 	if (sample_ptr->flags & SAMPLE_IGNORE) return;
 
-	if (sample_ptr->flags & SAMPLE_NOSTORE) {
+	if (sample_ptr->flags & SAMPLE_NOSTOREF) {
 		BurnSampleInitOne(sample);
 	}
 
@@ -270,7 +270,7 @@ void BurnSamplePlay(INT32 sample)
 	sample_ptr->position = 0;
 }
 
-void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop)
+void BurnSampleChannelPlay(INT32 channel, INT32 sample, INT32 loop)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleChannelPlay called without init\n"));
@@ -284,7 +284,9 @@ void BurnSampleChannelPlay(INT32 channel, INT32 sample, bool loop)
 	sample_channels[channel] = sample;
 
 	BurnSamplePlay(sample);
-	BurnSampleSetLoop(sample, loop);
+	if (loop != -1) { // -1, use config from sample struct
+		BurnSampleSetLoop(sample, loop);
+	}
 }
 
 void BurnSamplePause(INT32 sample)
@@ -494,7 +496,9 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 
 void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 {
-	bAddToStream = bAdd;
+	bAddToStream = bAdd & ~0x8000;
+	bool bForceNostore = bAdd & 0x8000;
+
 	nTotalSamples = 0;
 	bNiceFadeVolume = 0;
 
@@ -573,8 +577,19 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 		if (si.nFlags == 0) break;
 
-		if (si.nFlags & SAMPLE_NOSTORE) {
-			sample_ptr->flags = si.nFlags;
+		// set defaults before NOSTORE check!
+		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
+		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
+
+		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
+		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
+
+		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
+		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
+		sample_ptr->playback_rate = 100;
+
+		if (si.nFlags & SAMPLE_NOSTOREF || bForceNostore) {
+			sample_ptr->flags = si.nFlags | (bForceNostore ? SAMPLE_NOSTOREF : 0);
 			sample_ptr->data = NULL;
 			continue;
 		}
@@ -596,16 +611,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		} else {
 			sample_ptr->flags = SAMPLE_IGNORE;
 		}
-		
-		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
-		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
-
-		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
-		sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] = 1.00;
-
-		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
-		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
-		sample_ptr->playback_rate = 100;
 	}
 }
 
@@ -620,8 +625,7 @@ void BurnSampleInitOne(INT32 sample)
 
 		int i = 0;
 		while (i < nTotalSamples) {
-			
-			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
+			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTOREF)) {
 				BurnFree(clr_ptr->data);
 				clr_ptr->playing = 0;
 				clr_ptr->playback_rate = 100;
@@ -632,12 +636,12 @@ void BurnSampleInitOne(INT32 sample)
 		}
 	}
 
-	if ((sample_ptr->flags & SAMPLE_NOSTORE) == 0) {
+	if ((sample_ptr->flags & SAMPLE_NOSTOREF) == 0) {
 		return;
 	}
 
 	INT32 length;
-	char path[256];
+	char path[256*2];
 	char setname[128];
 	void *destination = NULL;
 	char szTempPath[MAX_PATH];
@@ -659,7 +663,7 @@ void BurnSampleInitOne(INT32 sample)
 	strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5); // leave space for ".wav" + null, just incase!
 	strcat(&szSampleName[0], ".wav");
 
-	if (sample_ptr->playing || sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
+	if (sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;
 	}
 
@@ -668,7 +672,7 @@ void BurnSampleInitOne(INT32 sample)
 	destination = NULL;
 	length = 0;
 	ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-		
+
 	if (length) {
 		make_raw((UINT8*)destination, length);
 	}
@@ -821,6 +825,15 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	{
 		sample_ptr = &samples[i];
 		if (sample_ptr->playing == 0 || sample_ptr->length == 0) continue;
+
+		if (sample_ptr->data == NULL) {
+			if (sample_ptr->flags & SAMPLE_NOSTOREF) {
+				BurnSampleInitOne(i);
+			} else {
+				// something went wrong here :)
+				continue;
+			}
+		}
 
 		INT32 playlen = pLen;
 		INT32 length = sample_ptr->length;

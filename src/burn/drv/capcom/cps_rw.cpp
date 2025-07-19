@@ -686,8 +686,8 @@ INT32 CpsRwGetInp()
 		CpsPaddle1 += CpsInpPaddle1 / 0x80; // add +-8 maximum to paddle-accumulator
 	}
 
-	clear_opposite.check(0, Inp000, 0x0c, 0x03);
-	clear_opposite.check(1, Inp001, 0x0c, 0x03);
+	clear_opposite.check(0, Inp000, 0x08, 0x04, 0x02, 0x01, nSocd[0]);
+	clear_opposite.check(1, Inp001, 0x08, 0x04, 0x02, 0x01, nSocd[1]);
 
 	// Ghouls uses a 4-way stick
 	if (Ghouls) {
@@ -718,19 +718,19 @@ INT32 CpsRwGetInp()
 
 	if (nMaxPlayers > 2) {
 		if (Cps == 2) {
-			clear_opposite.check(2, Inp011, 0x0c, 0x03);
+			clear_opposite.check(2, Inp011, 0x08, 0x04, 0x02, 0x01, nSocd[2]);
 			if (nMaxPlayers == 4) {
-				clear_opposite.check(3, Inp010, 0x0c, 0x03);
+				clear_opposite.check(3, Inp010, 0x08, 0x04, 0x02, 0x01, nSocd[3]);
 			}
 		} else {
-			clear_opposite.check(4, Inp177, 0x0c, 0x03);
+			clear_opposite.check(2, Inp177, 0x08, 0x04, 0x02, 0x01, nSocd[2]);
 			if (nMaxPlayers == 4) {
-				clear_opposite.check(5, Inp179, 0x0c, 0x03);
+				clear_opposite.check(3, Inp179, 0x08, 0x04, 0x02, 0x01, nSocd[3]);
 			}
 			if (Cps1Qs) {
-				clear_opposite.check(6, Inpc001, 0x0c, 0x03);
+				clear_opposite.check(2, Inpc001, 0x08, 0x04, 0x02, 0x01, nSocd[2]);
 				if (nMaxPlayers == 4) {
-					clear_opposite.check(7, Inpc003, 0x0c, 0x03);
+					clear_opposite.check(3, Inpc003, 0x08, 0x04, 0x02, 0x01, nSocd[3]);
 				}
 			}
 		}

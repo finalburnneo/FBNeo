@@ -1201,7 +1201,6 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_CREATEDIRS,        bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOLOADGAMELIST,  bAutoLoadGameList           ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_AUTOSCANGAMELIST,  !bSkipStartupCheck          ? MF_CHECKED : MF_UNCHECKED);
-	CheckMenuItem(hMenu, MENU_QUICKSCANGAMELIST, bQuicklyCheck               ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES,      EnableHiscores              ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_USEBLEND,          bBurnUseBlend               ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_GEARSHIFT,         BurnShiftEnabled            ? MF_CHECKED : MF_UNCHECKED);
@@ -1267,6 +1266,15 @@ void MenuUpdate()
 	if (nRewindMemory == 768)  var = MENU_INPUT_REWIND_768MB;
 	if (nRewindMemory == 1024) var = MENU_INPUT_REWIND_1GB;
 	CheckMenuRadioItem(hMenu, MENU_INPUT_REWIND_128MB, MENU_INPUT_REWIND_1GB, var, MF_BYCOMMAND);
+
+	// SOCD
+	const INT32 nPlayer = sizeof(nSocd) / sizeof(nSocd[0]), nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_DISABLE + 1) / nPlayer;
+	for (INT32 i = 0; i < nPlayer; i++) {
+		var = MENU_INPUT_P1_DISABLE + i * nCount + nSocd[i];
+		const INT32 startId = MENU_INPUT_P1_DISABLE + i * nCount, endId = startId + nCount - 1;
+
+		CheckMenuRadioItem(hMenu, startId, endId, var, MF_BYCOMMAND);
+	}
 
 	MenuUpdateVolume(); // also called in run.cpp by alt+ / alt-
 
@@ -1564,6 +1572,9 @@ void MenuEnableItems()
 		if (kNetGame) {
 			EnableMenuItem(hMenu, MENU_LOAD,			MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_STARTNET,		MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_EXIT,			MF_GRAYED | MF_BYCOMMAND);
@@ -1576,6 +1587,9 @@ void MenuEnableItems()
 		} else {
 			EnableMenuItem(hMenu, MENU_LOAD,			MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,	MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,	MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,	MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER, MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_STARTNET,		MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_EXIT,			MF_ENABLED | MF_BYCOMMAND);
@@ -1660,6 +1674,9 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_LOAD,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_0,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_1,				MF_GRAYED  | MF_BYCOMMAND);

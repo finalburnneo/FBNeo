@@ -56,7 +56,7 @@ int bKailleraServerDialogActive = 0;
 
 int nSavestateSlot = 1;
 
-static TCHAR* szClass = _T("FinalBurn Neo");					// Window class name
+static TCHAR* szClass = _T("FinalBurn Neo");			// Window class name
 HWND hScrnWnd = NULL;									// Handle to the screen window
 HWND hRebar = NULL;										// Handle to the Rebar control containing the menu
 
@@ -70,7 +70,7 @@ HWND hwndChat = NULL;
 WNDPROC pOldWndProc = NULL;
 
 bool bRescanRoms   = false;
-bool bQuicklyCheck = false;
+INT32 nQuickOpen = 0;									// 0 Disable, 1 RomData, 2 IPS, 3 NeoGeo-CD, 4 Zip / 7z
 
 static bool bDrag  = false;
 static int nDragX, nDragY;
@@ -1021,49 +1021,74 @@ static void UpdatePreviousGameList()
 
 static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is called from StartFromReset()
 
-// Compact driver loading module
-int BurnerLoadDriver(TCHAR *szDriverName)
-{
-	TCHAR szBuf[100] = { 0 };
-	_tcscpy(szBuf, szDriverName);
-
-	INT32 nOldDrvSelect = nBurnDrvActive;
-
+static void QuitGame() {
+	AudBlankSound();
+	if (nVidFullscreen) {
+		nVidFullscreen = 0;
+		VidExit();
+	}
+	if (bDrvOkay) {
+		StopReplay();
 #ifdef INCLUDE_AVI_RECORDING
-	AviStop();
+		AviStop();
 #endif
+		DrvExit();
+		if (kNetGame) {
+			kNetGame = 0;
+			Kaillera_End_Game();
+			DeActivateChat();
+		}
+		bCheatsAllowed = true;
 
-	DrvExit();				// This will exit RomData mode
+		ScrnSize();
+		ScrnTitle();
+		MenuEnableItems();
+		nBurnDrvActive = ~0U;
 
+		POST_INITIALISE_MESSAGE;
+	}
+}
+
+// Compact driver loading module
+int BurnerLoadDriver(TCHAR *pszDriverName)
+{
 	INT32 nDrvIdx = -1;
-	bool bRDMode = false, bFinder = false;
-	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
+	bool bCurrentRD = (NULL != pDataRomDesc), bRDMode = false, bFinder = false;
+	TCHAR szBackup[MAX_PATH] = { 0 }, szRDDatBackup[MAX_PATH] = { 0 };
 
-	if (bFinder = FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szBuf, NULL, 0), szRDDatBackup)) {
+	if (bCurrentRD) {
+		_tcscpy(szBackup, szRomdataName);
+		RomDataExit();
+	}
+	if (bFinder = FindZipNameFromDats(szAppRomdataPath, _TtoA(pszDriverName), szRDDatBackup)) {
 		if ((nDrvIdx = RomDataCheck(szRDDatBackup)) >= 0) {
 			bRDMode = true;
 		}
 	}
 	if (!bFinder || !bRDMode) {
-		if (-1 == (nDrvIdx = RomdataGetDrvIndex(szBuf))) {
-			return 1;
-		}
+		nDrvIdx = RomdataGetDrvIndex(pszDriverName);
 	}
-	nDialogSelect = nOldDlgSelected = nDrvIdx;
-	nBurnDrvActive = nOldDrvSelect;
+	if (bCurrentRD) {
+		_tcscpy(szRomdataName, szBackup);
+		RomDataInit();
+	}
+	if (nDrvIdx < 0)
+		return -1;
 
-	bLoading = 1;
-	SplashDestroy(1);
-	StopReplay();
+	QuitGame();
 
 	if (bRDMode) {
 		_tcscpy(szRomdataName, szRDDatBackup);
 	}
 
+	nDialogSelect = nOldDlgSelected = nBurnDrvActive = nDrvIdx;
+	bLoading = 1;
+	SplashDestroy(1);
+	StopReplay();
 	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
 	MenuEnableItems();
 	bAltPause = 0;
-	AudSoundPlay();			// Restart sound
+	AudSoundPlay();					// Restart sound
 	bLoading = 0;
 	UpdatePreviousGameList();
 	if (bVidAutoSwitchFull) {
@@ -1074,32 +1099,33 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
-INT32 RomDataLoadDriver(TCHAR* szSelDat)
+INT32 RomDataLoadDriver(const TCHAR* pszSelDat)
 {
-	INT32 nOldDrvSelect = nBurnDrvActive;
+	bool bRDMode = (NULL != pDataRomDesc);
+	TCHAR szBackup[MAX_PATH] = { 0 };
 
-#ifdef INCLUDE_AVI_RECORDING
-	AviStop();
-#endif
+	if (bRDMode) {
+		_tcscpy(szBackup, szRomdataName);
+		RomDataExit();				// Before handling RomDataCheck, exit RDMode
+	}
 
-	DrvExit();						// This will exit RomData mode
+	INT32 nDrvIdx = RomDataCheck(pszSelDat);
 
-	INT32 nDrvIdx         = -1;
-	TCHAR szBuf[MAX_PATH] = { 0 };
-	_tcscpy(szBuf, szSelDat);
-
-	if ((nDrvIdx = RomDataCheck(szBuf)) < 0)
+	if (bRDMode) {
+		_tcscpy(szRomdataName, szBackup);
+		RomDataInit();				// Restore state
+	}
+	if (nDrvIdx < 0)
 		return -1;
 
-	nDialogSelect = nOldDlgSelected = nDrvIdx;
-	nBurnDrvActive = nOldDrvSelect;
+	QuitGame();						// Quit the game completely
 
+	_tcscpy(szRomdataName, pszSelDat);
+
+	nDialogSelect = nOldDlgSelected = nBurnDrvActive = nDrvIdx;
 	bLoading  = 1;
 	SplashDestroy(1);
 	StopReplay();
-
-	_tcscpy(szRomdataName, szBuf);
-
 	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
 	MenuEnableItems();
 	bAltPause = 0;
@@ -1109,6 +1135,214 @@ INT32 RomDataLoadDriver(TCHAR* szSelDat)
 	if (bVidAutoSwitchFull) {
 		nVidFullscreen = 1;
 		POST_INITIALISE_MESSAGE;
+	}
+
+	return 0;
+}
+
+static INT32 FileExists(const TCHAR* pszName)
+{
+	DWORD dwAttrib = GetFileAttributes(pszName);
+	return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+		!(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}
+
+static void QuickOpenExit()
+{
+	nQuickOpen = 0;
+	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
+}
+
+static bool NgcdVerifyPath(const TCHAR* pszSelCue)
+{
+	if ((NULL == pszSelCue) || !FileExists(pszSelCue)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* pszExt = _tcsrchr(pszSelCue, _T('.'));
+	if (NULL == pszExt || (0 != _tcsicmp(_T(".cue"), pszExt))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD: %s\n\n"), pszSelCue);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue"));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* p = pszSelCue + _tcslen(pszSelCue);
+	while (p > pszSelCue) {
+		if ((_T('/') == *p) || (_T('\\') == *p)) {
+			TCHAR c = *(p - 1);
+			if ((_T('/') == c) ||
+				(_T('\\') == c)) {		// xxxx//ssss\\...
+				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
+				FBAPopupDisplay(PUF_TYPE_ERROR);
+				return false;
+			}
+		}
+		p--;
+	}
+
+	return true;
+}
+
+static bool ArchiveSetQuickPath(const TCHAR* pszSelArc)
+{
+	if ((NULL == pszSelArc) || !FileExists(pszSelArc)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Zip / 7z:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelArc);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* pszExt = _tcsrchr(pszSelArc, _T('.'));
+	if (NULL == pszExt || ((0 != _tcsicmp(_T(".zip"), pszExt)) && (0 != _tcsicmp(_T(".7z"), pszExt)))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Zip / 7z:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".zip / .7z"));
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return false;
+	}
+
+	const TCHAR* p = pszSelArc + _tcslen(pszSelArc), * dir_end = NULL;
+	INT32 nCount = 0;
+	while (p > pszSelArc) {
+		if ((_T('/') == *p) || (_T('\\') == *p)) {
+			TCHAR c = *(p - 1);
+			if ((_T('/') == c) ||
+				(_T('\\') == c)) {		// xxxx//ssss\\...
+				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Zip / 7z:\n\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelArc);
+				FBAPopupDisplay(PUF_TYPE_ERROR);
+				return false;
+			}
+			if (1 == ++nCount) {
+				dir_end = p + 1;		// Intentionally add 1
+			}
+		}
+		p--;
+	}
+
+	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
+	_tcsncpy(szAppQuickPath, pszSelArc, dir_end - pszSelArc);
+
+	return true;
+}
+
+INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
+{
+	nQuickOpen = nMode;
+
+	bool bRDMode = (NULL != pDataRomDesc);
+
+	switch (nMode) {
+		case 1:
+			if (!RomDataSetQuickPath(pszSelect)) {
+				QuickOpenExit();
+				return -1;
+			}
+			break;
+
+		case 3:
+			if (!NgcdVerifyPath(pszSelect)) {
+				return -1;
+			}
+			break;
+
+		case 4:
+			if (!ArchiveSetQuickPath(pszSelect)) {
+				QuickOpenExit();
+				return -1;
+			}
+			break;
+
+		default:
+			break;
+	}
+
+	TCHAR szBackup[MAX_PATH] = { 0 };
+
+	if (bRDMode) {
+		_tcscpy(szBackup, szRomdataName);
+		RomDataExit();				// Before handling RomDataCheck, exit RDMode
+	}
+
+	INT32 nDrvIdx = -1;
+
+	switch (nMode) {
+		case 1:
+			nDrvIdx = RomDataCheck(pszSelect);
+			break;
+
+		case 2:
+			nDrvIdx = IpsGetDrvForQuickOpen(pszSelect);
+			break;
+
+		case 3:
+			nDrvIdx = RomdataGetDrvIndex(_T("neocdz"));
+			break;
+
+		case 4:
+			nDrvIdx = ArchiveNameFindDrv(pszSelect);
+
+		default:
+			break;
+	}
+
+	if (bRDMode) {
+		_tcscpy(szRomdataName, szBackup);
+		RomDataInit();				// Restore state
+	}
+	if (nDrvIdx < 0) {
+		QuickOpenExit();
+		return -1;
+	}
+
+/*
+	This process may occur during gameplay.
+	All of the above checks must be completed before resetting the game:
+	[1] If the check fails, the current game will continue;
+	[2] If the check passes, the game will quit completely (Enter a new game).
+*/
+
+	QuitGame();						// Quit the game completely
+
+	switch (nMode) {
+		case 1:
+			_tcscpy(szRomdataName, pszSelect);
+			break;
+
+		case 2:
+			bDoIpsPatch = true;
+			IpsPatchInit();
+			break;
+
+		case 3:
+			memset(CDEmuImage, 0, sizeof(CDEmuImage));
+			_tcscpy(CDEmuImage, pszSelect);
+			break;
+
+		default:
+			break;
+	}
+
+	nDialogSelect = nBurnDrvActive = nDrvIdx;
+	bLoading = 1;
+	SplashDestroy(1);
+	StopReplay();
+	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
+	MenuEnableItems();
+	bAltPause = 0;
+	AudSoundPlay();					// Restart sound
+	QuickOpenExit();				// No need to save variables anymore
+	bLoading = 0;
+	if (bVidAutoSwitchFull) {
+		nVidFullscreen = 1;
+		POST_INITIALISE_MESSAGE;
+	}
+	if (3 == nMode) {
+		memset(CDEmuImage, 0, sizeof(CDEmuImage));
 	}
 
 	return 0;
@@ -1260,28 +1494,60 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 		}
 
-		case MENU_LOAD_ROMDATA: {
+		case MENU_LOAD_ROMDATA:
+		case MENU_LOAD_IPSPATCH:
+		case MENU_LOAD_NEOGEOCD:
+		case MENU_LOAD_ARCHIVE: {
+			nQuickOpen = id - MENU_LOAD_ROMDATA + 1;
+
+			const TCHAR* pszFilter = _T(" (*.dat)\0*.dat\0\0");
+			INT32 nStringID = 0, nStrLen = 16;
+
+			switch (nQuickOpen) {
+				case 1:
+					nStringID = IDS_DISK_FILE_ROMDATA;
+					break;
+
+				case 2:
+					nStringID = IDS_DISK_FILE_IPSPATCH;
+					break;
+
+				case 3:
+					pszFilter = _T(" (*.cue)\0*.cue\0\0");
+					nStringID = IDS_DISK_FILE_NEOGEOCD;
+					break;
+
+				case 4:
+					pszFilter = _T(" (*.zip;*7z)\0*.zip;*7z\0\0");
+					nStringID = IDS_DISK_FILE_ARCHIVE;
+					nStrLen   = 24;
+					break;
+
+				default:
+					break;
+			}
+
 			TCHAR szFilter[150] = { 0 };
-			_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
-			memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
+
+			_stprintf(szFilter, FBALoadStringEx(hAppInst, nStringID, true), _T("FBNeo"));
+			memcpy(szFilter + _tcslen(szFilter), pszFilter, nStrLen * sizeof(TCHAR));
 
 			// '/' will result in a FNERR_INVALIDFILENAME error
-			TCHAR szInitialDir[MAX_PATH] = { 0 }, szSelDat[MAX_PATH] = { 0 };
-			_tcscpy(szInitialDir, szAppRomdataPath);
+			TCHAR szSelect[MAX_PATH] = { 0 };
 
 			memset(&ofn, 0, sizeof(OPENFILENAME));
 			ofn.lStructSize     = sizeof(OPENFILENAME);
 			ofn.hwndOwner       = hScrnWnd;
 			ofn.lpstrFilter     = szFilter;
-			ofn.lpstrFile       = StrReplace(szSelDat, _T('/'), _T('\\'));
-			ofn.nMaxFile        = sizeof(szSelDat) / sizeof(TCHAR);
-			ofn.lpstrInitialDir = StrReplace(szInitialDir, _T('/'), _T('\\'));
-			ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-			ofn.lpstrDefExt     = _T("dat");
+			ofn.lpstrFile       = StrReplace(szSelect, _T('/'), _T('\\'));
+			ofn.nMaxFile        = sizeof(szSelect) / sizeof(TCHAR);
+			ofn.lpstrInitialDir = _T(".");
+			ofn.Flags           = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 
-			BOOL nOpenDlg = GetOpenFileName(&ofn);
-			if (FALSE == nOpenDlg)	break;
-			RomDataLoadDriver(szSelDat);
+			if (!GetOpenFileName(&ofn))
+				break;
+
+			BurnerQuickLoad(nQuickOpen, szSelect);
 			break;
 		}
 
@@ -1337,7 +1603,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				ofn.nMaxFile = MAX_PATH;
 				ofn.lpstrTitle = szTitle;
 				ofn.lpstrFilter = szFilter;
-				ofn.lpstrInitialDir = _T(".");
+				ofn.lpstrInitialDir = szNeoCDGamesDir;
 				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 				ofn.lpstrDefExt = _T("cue");
 
@@ -1426,32 +1692,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 #endif
 
 		case MENU_QUIT:
-			AudBlankSound();
-			if (nVidFullscreen) {
-				nVidFullscreen = 0;
-				VidExit();
-			}
-			if (bDrvOkay) {
-				StopReplay();
-#ifdef INCLUDE_AVI_RECORDING
-				AviStop();
-#endif
-				DrvExit();
-				if (kNetGame) {
-					kNetGame = 0;
-					Kaillera_End_Game();
-					DeActivateChat();
-				}
-				bCheatsAllowed = true;						// reenable cheats netplay has ended
-
-				ScrnSize();
-				ScrnTitle();
-				MenuEnableItems();
-				//nDialogSelect = -1;
-				nBurnDrvActive = ~0U;
-
-				POST_INITIALISE_MESSAGE;
-			}
+			QuitGame();
 			break;
 
 		case MENU_EXIT:
@@ -2359,10 +2600,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bSkipStartupCheck = !bSkipStartupCheck;
 			break;
 
-		case MENU_QUICKSCANGAMELIST:
-			bQuicklyCheck = !bQuicklyCheck;
-			break;
-
 		case MENU_SAVEHISCORES:
 			EnableHiscores = !EnableHiscores;
 			break;
@@ -2559,6 +2796,61 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			nAppProcessPriority = IDLE_PRIORITY_CLASS;
 			SetPriorityClass(GetCurrentProcess(), nAppProcessPriority);
 			break;
+
+		case MENU_INPUT_P1_DISABLE:
+		case MENU_INPUT_P1_SOCDN:
+		case MENU_INPUT_P1_SOCDLF:
+		case MENU_INPUT_P1_SOCDLE:
+		case MENU_INPUT_P1_SOCDF:
+		case MENU_INPUT_P1_SOCDU:
+		case MENU_INPUT_P1_SOCDDL:
+		case MENU_INPUT_P2_DISABLE:
+		case MENU_INPUT_P2_SOCDN:
+		case MENU_INPUT_P2_SOCDLF:
+		case MENU_INPUT_P2_SOCDLE:
+		case MENU_INPUT_P2_SOCDF:
+		case MENU_INPUT_P2_SOCDU:
+		case MENU_INPUT_P2_SOCDDL:
+		case MENU_INPUT_P3_DISABLE:
+		case MENU_INPUT_P3_SOCDN:
+		case MENU_INPUT_P3_SOCDLF:
+		case MENU_INPUT_P3_SOCDLE:
+		case MENU_INPUT_P3_SOCDF:
+		case MENU_INPUT_P3_SOCDU:
+		case MENU_INPUT_P3_SOCDDL:
+		case MENU_INPUT_P4_DISABLE:
+		case MENU_INPUT_P4_SOCDN:
+		case MENU_INPUT_P4_SOCDLF:
+		case MENU_INPUT_P4_SOCDLE:
+		case MENU_INPUT_P4_SOCDF:
+		case MENU_INPUT_P4_SOCDU:
+		case MENU_INPUT_P4_SOCDDL:
+		case MENU_INPUT_P5_DISABLE:
+		case MENU_INPUT_P5_SOCDN:
+		case MENU_INPUT_P5_SOCDLF:
+		case MENU_INPUT_P5_SOCDLE:
+		case MENU_INPUT_P5_SOCDF:
+		case MENU_INPUT_P5_SOCDU:
+		case MENU_INPUT_P5_SOCDDL:
+		case MENU_INPUT_P6_DISABLE:
+		case MENU_INPUT_P6_SOCDN:
+		case MENU_INPUT_P6_SOCDLF:
+		case MENU_INPUT_P6_SOCDLE:
+		case MENU_INPUT_P6_SOCDF:
+		case MENU_INPUT_P6_SOCDU:
+		case MENU_INPUT_P6_SOCDDL: {
+			const INT32 nOffset = id - MENU_INPUT_P1_DISABLE, nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_DISABLE + 1) / (sizeof(nSocd) / sizeof(nSocd[0]));
+			nSocd[nOffset / nCount] = nOffset % nCount;
+			break;
+		}
+
+		case MENU_INPUT_ALL_DEFAULT: {
+			const INT32 nCount = sizeof(nSocd) / sizeof(nSocd[0]);
+			for (INT32 i = 0; i < nCount; i++) {
+				nSocd[i] = 3;
+			}
+			break;
+		}
 
 		case MENU_CLRMAME_PRO_XML:
 			if (UseDialogs()) {

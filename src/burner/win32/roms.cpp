@@ -11,7 +11,6 @@ char* gameAv = NULL;
 bool avOk    = false;
 
 bool bSkipStartupCheck = false;
-bool bQuicklyScan      = false;
 
 static UINT32 ScanThreadId = 0;
 static HANDLE hScanThread  = NULL;
@@ -609,7 +608,6 @@ static int QuitRomsScan()
 	nBurnDrvActive = nOldSelect;
 	nOldSelect = 0;
 	bRescanRoms  = false;
-	bQuicklyScan = false;	// Restore
 
 	if (avOk) {
 		WriteGameAvb();
@@ -620,8 +618,6 @@ static int QuitRomsScan()
 
 static unsigned __stdcall AnalyzingRoms(void*)
 {
-	bQuicklyScan = bQuicklyCheck;	// Enable Quickly scan only for overall scanning
-
 	for (unsigned int z = 0; z < nBurnDrvCount; z++) {
 		nBurnDrvActive = z;
 
@@ -645,8 +641,7 @@ static unsigned __stdcall AnalyzingRoms(void*)
 		BzipClose();
    }
 
-	avOk         = true;
-	bQuicklyScan = false;			// Restore
+	avOk = true;
 
 	PostMessage(hRomsDlg, WM_CLOSE, 0, 0);
 

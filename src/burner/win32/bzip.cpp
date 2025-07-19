@@ -380,6 +380,66 @@ static INT32 __cdecl BzipBurnLoadRom(UINT8* Dest, INT32* pnWrote, INT32 i)
 	return 0;
 }
 
+INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc)
+{
+	const UINT32 nOldDrvSel = nBurnDrvActive, nArcNameLen = _tcslen(szAppQuickPath);
+	const TCHAR* p = pszSelArc + nArcNameLen, * pszExt = _tcsrchr((TCHAR*)pszSelArc, _T('.'));
+	INT32 nDrvIdx = -1;
+
+	TCHAR szArcName[64] = { 0 }, szArcNoExt[MAX_PATH] = { 0 };
+	_tcsncpy(szArcName,  p,         pszExt - p);
+	_tcsncpy(szArcNoExt, pszSelArc, pszExt - pszSelArc);
+
+	for (UINT32 i = 0; (i < nBurnDrvCount) && (nDrvIdx < 0); i++) {
+		nBurnDrvActive = i;
+		const UINT32 nFlag = BurnDrvGetFlags();
+
+		if (nFlag & BDF_BOARDROM)
+			continue;
+
+		for (int z = 0; z < BZIP_MAX; z++) {
+			char* szName = NULL;
+			if (BurnDrvGetZipName(&szName, z))
+				break;
+
+			const TCHAR* pszName = _AtoT(szName);
+			if (0 != _tcsicmp(szArcName, pszName))
+				continue;
+
+			if (nFlag & BDF_CLONE) {
+				const TCHAR* pszParent = BurnDrvGetText(DRV_PARENT);
+				if ((NULL != pszParent) && (0 == _tcsicmp(szArcName, pszParent)))
+					continue;
+			}
+
+			char* pszArcNoExt = _TtoA(szArcNoExt);
+			if (0 != ZipOpen(pszArcNoExt))
+				continue;	// Make sure nothing is open
+
+			ZipGetList(&List, &nListCount);
+			for (INT32 y = 0; 0 == BurnDrvGetRomInfo(NULL, y); y++) {
+				if (FindRom(y) >= 0) {
+					nDrvIdx = i;
+					z = BZIP_MAX;
+					break;
+				}
+			}
+			BzipListFree();
+			ZipClose();
+		}
+	}
+
+	nBurnDrvActive = nOldDrvSel;
+
+	if (nDrvIdx < 0) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Zip / 7z:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_CONTENT), pszSelArc);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+	}
+
+	return nDrvIdx;
+}
+
 // ----------------------------------------------------------------------------
 
 INT32 BzipStatus()
@@ -431,6 +491,7 @@ INT32 BzipOpen(bool bootApp)
 	SubDirsListFree();
 
 	const char* pszDrvName = (NULL != pDataRomDesc) ? pRDI->szDrvName : NULL;	// romdata mode, let's pick up the forgotten DrvName ROMs again.
+	const INT32 nAppRomPaths = (nQuickOpen > 0) ? DIRS_MAX + 1 : DIRS_MAX;
 
 	// Locate each zip file
 	for (INT32 y = 0, z = 0; y < BZIP_MAX && z < BZIP_MAX; y++) {
@@ -440,13 +501,10 @@ INT32 BzipOpen(bool bootApp)
 		if (BurnDrvGetZipName(&szName, y)) {
 			break;
 		}
-		if ((BurnDrvGetFlags() & BDF_BOARDROM) && bQuicklyScan)
-		{
-			continue;
-		}
 
-		for (INT32 d = 0; d < DIRS_MAX; d++) {	// Traverse the user-configured rom paths
+		for (INT32 d = 0; d < nAppRomPaths; d++) {	// Traverse the user-configured rom paths
 			TCHAR szFullName[MAX_PATH] = { 0 }, szDrvName[MAX_PATH] = { 0 };
+			const TCHAR* pszAppRomPaths = (d < DIRS_MAX) ? szAppRomPaths[d] : szAppQuickPath;
 
 			if (nLoadMenuShowY & (1 << 26)) {
 				for (UINT32 nCount = 0; nCount < _SubDirInfo[d].nCount; nCount++) {
@@ -460,9 +518,6 @@ INT32 BzipOpen(bool bootApp)
 
 					if (RomArchiveExists(szFullName)) {
 						bFound = true;
-
-						if (bQuicklyScan)		// Enable quickly scan only for overall scanning
-							return 0;
 
 						TCHAR** newArray = (TCHAR**)realloc(_SubDirsZip.pszZipName, (_SubDirsZip.nCount + 1) * sizeof(TCHAR*));
 						_SubDirsZip.pszZipName = newArray;
@@ -494,16 +549,13 @@ INT32 BzipOpen(bool bootApp)
 				}
 			}
 
-			_stprintf(szFullName, _T("%s%hs"), szAppRomPaths[d], szName);
+			_stprintf(szFullName, _T("%s%hs"), pszAppRomPaths, szName);
 			if (NULL != pszDrvName) {
-				_stprintf(szDrvName, _T("%s%hs"), szAppRomPaths[d], pszDrvName);
+				_stprintf(szDrvName, _T("%s%hs"), pszAppRomPaths, pszDrvName);
 			}
 
 			if (RomArchiveExists(szFullName)) {	// Check existence of the rom zip/7z archive file
 				bFound = true;
-
-				if (bQuicklyScan)				// Enable quickly scan only for overall scanning
-					return 0;
 
 				szBzipName[z] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
 				_tcscpy(szBzipName[z], szFullName);
@@ -534,9 +586,6 @@ INT32 BzipOpen(bool bootApp)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOTFOUND), szName);
 		}
 	}
-
-	if (bQuicklyScan)							// Nothing found
-		return 1;
 
 	if (!bootApp) {
 		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));

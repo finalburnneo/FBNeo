@@ -168,9 +168,6 @@ struct PicoMisc {
 	UINT32 SRamReadOnly;
 	UINT32 SRamHasSerialEEPROM;
 
-	UINT8 I2CMem;
-	UINT8 I2CClk;
-
 	UINT16 JCartIOData[2];
 
 	UINT16 L3Reg[3];
@@ -253,7 +250,8 @@ UINT8 MegadriveJoy2[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy3[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy4[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy5[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-UINT8 MegadriveDIP[2] = {0, 0};
+UINT8 MegadriveDIP[3] = {0, 0, 0};
+static ClearOpposite<5, UINT16> clear_opposite;
 
 static UINT32 RomNum = 0;
 static UINT32 RomSize = 0;
@@ -275,6 +273,13 @@ static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
 static INT32 TeamPlayerMode = 0;
 static INT32 FourWayPlayMode = 0;
+
+static INT32 papriummode = 0;
+
+static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
+static UINT8 __fastcall MegadriveReadByte(UINT32 address);
+
+#include "paprium.h"
 
 static void MegadriveCheckHardware()
 {
@@ -396,7 +401,7 @@ inline static void CalcCol(INT32 index, UINT16 nColour)
 	INT32 g = (nColour & 0x00e0) >> 4; 	// Green
 	INT32 b = (nColour & 0x0e00) >> 8;	// Blue
 
-	RamPal[index] = nColour;
+	RamPal[index] = nColour & 0xeee;
 
 	// Normal Color
 	MegadriveCurPal[index + 0x00] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
@@ -726,7 +731,7 @@ static UINT32 CheckDMA(void)
 static void DmaSlow(INT32 len)
 {
 	UINT16 *pd=0, *pdend, *r;
-	UINT32 a = RamVReg->addr, a2, d;
+	UINT32 a = RamVReg->addr, a2, d = 0;
 	UINT8 inc = RamVReg->reg[0xf];
 	UINT32 source;
 	UINT32 fromrom = 0;
@@ -738,7 +743,7 @@ static void DmaSlow(INT32 len)
   //dprintf("DmaSlow[%i] %06x->%04x len %i inc=%i blank %i [%i|%i]", Pico.video.type, source, a, len, inc,
   //         (Pico.video.status&8)||!(Pico.video.reg[1]&0x40), Pico.m.scanline, SekCyclesDone());
 
-	dma_xfers += len;
+	dma_xfers += (papriummode) ? 1 : len;
 
 //	INT32 dmab = CheckDMA();
 
@@ -751,10 +756,12 @@ static void DmaSlow(INT32 len)
 		pd    = (UINT16 *)(Ram68K + (source & 0xfffe));
 		pdend = (UINT16 *)(Ram68K + 0x10000);
 	} else if( source < RomSize) {	// ROM
+		if (papriummode || psolarmode) fromrom = 1;
 		fromrom = 1;
 		source &= ~1;
 		pd    = (UINT16 *)(RomMain + source);
 		pdend = (UINT16 *)(RomMain + RomSize);
+		if (papriummode && source > 0xffff) fromrom = 0;
 	} else return; // Invalid source address
 
 	// overflow protection, might break something..
@@ -773,8 +780,12 @@ static void DmaSlow(INT32 len)
 	case 1: // vram
 		r = RamVid;
 		for(; len; len--) {
-			if (psolarmode && fromrom) {
-				d = md_psolar_rw(source);
+			if (fromrom) {
+				if (psolarmode) {
+					d = md_psolar_rw(source);
+				} else {
+					d = SekReadWord(source);
+				}
 				source+=2;
 			} else {
 				d = *pd++;
@@ -794,8 +805,12 @@ static void DmaSlow(INT32 len)
 		//dprintf("DmaSlow[%i] %06x->%04x len %i inc=%i blank %i [%i|%i]", Pico.video.type, source, a, len, inc,
 		//         (Pico.video.status&8)||!(Pico.video.reg[1]&0x40), Pico.m.scanline, SekCyclesDone());
 		for(a2 = a&0x7f; len; len--) {
-			if (psolarmode && fromrom) {
-				d = md_psolar_rw(source);
+			if (fromrom) {
+				if (psolarmode) {
+					d = md_psolar_rw(source);
+				} else {
+					d = SekReadWord(source);
+				}
 				source+=2;
 			} else {
 				d = *pd++;
@@ -815,8 +830,12 @@ static void DmaSlow(INT32 len)
 	case 5: // vsram[a&0x003f]=d;
 		r = RamSVid;
 		for(a2=a; len; len--) {
-			if (psolarmode && fromrom) {
-				d = md_psolar_rw(source);
+			if (fromrom) {
+				if (psolarmode) {
+					d = md_psolar_rw(source);
+				} else {
+					d = SekReadWord(source);
+				}
 				source+=2;
 			} else {
 				d = *pd++;
@@ -860,7 +879,7 @@ static void DmaCopy(INT32 len)
 	//dprintf("DmaCopy len %i [%i|%i]", len, Pico.m.scanline, SekCyclesDone());
 
 	RamVReg->status |= 2; // dma busy
-	dma_xfers += len;
+	dma_xfers += (papriummode) ? 1 : len;
 
 	source  = RamVReg->reg[0x15];
 	source |= RamVReg->reg[0x16]<<8;
@@ -893,7 +912,7 @@ static void DmaFill(INT32 data)
 	// from Charles MacDonald's genvdp.txt:
 	// Write lower byte to address specified
 	RamVReg->status |= 2; // dma busy
-	dma_xfers += len;
+	dma_xfers += (papriummode) ? 1 : len;
 	vr[a] = (UINT8) data;
 	a = (UINT16)(a+inc);
 
@@ -1045,12 +1064,12 @@ static UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	UINT16 res = 0;
 
 	switch (sekAddress & 0x1c) {
-	case 0x00:	// data
-		switch (RamVReg->type) {
-			case 0: res = BURN_ENDIAN_SWAP_INT16(RamVid [(RamVReg->addr >> 1) & 0x7fff]); break;
-			case 4: res = BURN_ENDIAN_SWAP_INT16(RamSVid[(RamVReg->addr >> 1) & 0x003f]); break;
-			case 8: res = BURN_ENDIAN_SWAP_INT16(RamPal [(RamVReg->addr >> 1) & 0x003f]); break;
-		}
+		case 0x00:	// data
+			switch (RamVReg->type) {
+				case 0: res = BURN_ENDIAN_SWAP_INT16(RamVid [(RamVReg->addr >> 1) & 0x7fff]); break;
+				case 4: res = BURN_ENDIAN_SWAP_INT16(RamSVid[(RamVReg->addr >> 1) & 0x003f]); break;
+				case 8: res = BURN_ENDIAN_SWAP_INT16(RamPal [(RamVReg->addr >> 1) & 0x003f]); break;
+			}
 		RamVReg->addr += RamVReg->reg[0xf];
 		break;
 
@@ -1151,7 +1170,7 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				CalcCol((RamVReg->addr >> 1) & 0x003f, wordValue);
 				break;
 			case 5:
-				RamSVid[(RamVReg->addr >> 1) & 0x003f] = BURN_ENDIAN_SWAP_INT16(wordValue);
+				RamSVid[(RamVReg->addr >> 1) & 0x003f] = BURN_ENDIAN_SWAP_INT16(wordValue & 0x7ff);
 				break;
 			case 0x81: {
 				UINT32 a = RamVReg->addr | (RamVReg->addr_u << 16);
@@ -1520,6 +1539,10 @@ static INT32 MegadriveResetDo()
 {
 	memset (RamStart, 0, RamEnd - RamStart);
 
+	if (papriummode) {
+		paprium_reset(); // before SekReset()!
+	}
+
 	SekOpen(0);
 	SekReset();
 	m68k_megadrive_sr_checkint_mode(1);
@@ -1591,9 +1614,6 @@ static INT32 MegadriveResetDo()
 		RamMisc->SRamReadOnly = 0;
 	}
 
-	RamMisc->I2CClk = 0;
-	RamMisc->I2CMem = 0;
-
 	if ((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {
 		for (INT32 i = 0; i < 7; i++) {
 			Ssf2BankWriteByte(0xa130f3 + (i*2), i + 1);
@@ -1602,6 +1622,7 @@ static INT32 MegadriveResetDo()
 
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	teamplayer_reset();
+	clear_opposite.reset();
 
 	// default VDP register values (based on Fusion)
 	memset(RamVReg, 0, sizeof(struct PicoVideo));
@@ -3090,6 +3111,11 @@ static void MegadriveSetupSRAM()
 	RamMisc->SRamReg = 0;
 	MegadriveBackupRam = NULL;
 
+	if (papriummode) {
+		RamMisc->SRamDetected = 1;
+		return;  // sram handled by mapper (paprium.h)
+	}
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000)) {
 		RamMisc->SRamStart = 0x200000;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) RamMisc->SRamEnd = 0x2003ff;
@@ -3287,6 +3313,24 @@ INT32 MegadriveInitNoDebug()
 	return rc;
 }
 
+INT32 MegadriveInitPaprium()
+{
+	papriummode = 1;
+
+	INT32 rc = MegadriveInit();
+
+	return rc;
+}
+
+INT32 MegadriveInitPsolar()
+{
+	psolarmode = 1;
+
+	INT32 rc = MegadriveInit();
+
+	return rc;
+}
+
 INT32 MegadriveInit()
 {
 	BurnAllocMemIndex();
@@ -3374,6 +3418,10 @@ INT32 MegadriveInit()
 
 	pBurnDrvPalette = (UINT32*)MegadriveCurPal;
 
+	if (papriummode) {
+		paprium_init();
+	}
+
 	MegadriveResetDo();
 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "puggsy")) {
@@ -3401,6 +3449,10 @@ INT32 MegadriveExit()
 
 	if (RamMisc->SRamHasSerialEEPROM) {
 		i2c_exit();
+	}
+
+	if (papriummode) {
+		paprium_exit();
 	}
 
 	BurnFreeMemIndex();
@@ -4919,6 +4971,10 @@ INT32 MegadriveFrame()
 		JoyPad->pad[4] |= (MegadriveJoy5[i] & 1) << i;
 	}
 
+	for (INT32 i = 0; i < 5; i++) {
+		clear_opposite.check(i, JoyPad->pad[i], 0x01, 0x02, 0x04, 0x08, nSocd[i]);
+	}
+
 	SekCyclesNewFrame(); // for sound sync
 	ZetNewFrame();
 
@@ -5011,7 +5067,8 @@ INT32 MegadriveFrame()
 			RamVReg->pending_ints |= 0x10;
 			if (RamVReg->reg[0] & 0x10) {
 				//bprintf(0, _T("h-int @ %d. "), SekCyclesDoneFrame());
-				SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+				//SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+				if (SekGetIRQLevel() < 4) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 			}
 		}
 
@@ -5031,7 +5088,7 @@ INT32 MegadriveFrame()
 			SekCyclesBurn(DMABURN());
 #endif
 #endif
-			SekCyclesBurnRun(CheckDMA());
+			SekCyclesBurn(CheckDMA());
 
 			SekRunM68k(CYCLES_M68K_VINT_LAG);
 
@@ -5079,7 +5136,7 @@ INT32 MegadriveFrame()
 			if (y < lines_vis) {
 				do_timing_hacks_as(vdp_slots);
 			} else {
-				SekCyclesBurnRun(CheckDMA());
+				SekCyclesBurn(CheckDMA());
 			}
 			SekRunM68k(CYCLES_M68K_LINE);
 		}
@@ -5107,6 +5164,10 @@ INT32 MegadriveFrame()
 
 	// ym2612 needs to be updated even if pBurnSoundOut is NULL.
 	BurnMD2612Update(pBurnSoundOut, nBurnSoundLen);
+
+	if (papriummode && pBurnSoundOut) {
+		paprium_audio(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	SekClose();
 	ZetClose();
@@ -5149,6 +5210,11 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_cycle_cnt);
 
 		BurnRandomScan(nAction);
+		clear_opposite.scan();
+
+		if (papriummode) {
+			paprium_scan(nAction, pnMin);
+		}
 	}
 
 	if ((nAction & ACB_NVRAM) && RamMisc->SRamDetected) {

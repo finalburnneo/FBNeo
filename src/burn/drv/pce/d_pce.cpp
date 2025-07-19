@@ -3595,26 +3595,6 @@ struct BurnDriver BurnDrvpce_mikkokue = {
 };
 
 
-// Majin Eiyuu Den Wataru (Japan)
-
-static struct BurnRomInfo pce_wataruRomDesc[] = {
-	{ "Majin Eiyuu Den Wataru (Japan)(1988)(Hudson Soft).pce", 0x040000, 0x2f8935aa, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(pce_wataru)
-STD_ROM_FN(pce_wataru)
-
-struct BurnDriver BurnDrvpce_wataru = {
-	"pce_wataru", NULL, NULL, NULL, "1988",
-	"Majin Eiyuu Den Wataru (Japan)\0", NULL, "Hudson Soft", "PC Engine",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
-	PceGetZipName, pce_wataruRomInfo, pce_wataruRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
-};
-
-
 // Makai Hakken Den Shada (Japan)
 
 static struct BurnRomInfo pce_makaihakRomDesc[] = {
@@ -3747,7 +3727,7 @@ STD_ROM_FN(pce_mashwataru)
 struct BurnDriver BurnDrvpce_mashwataru = {
 	"pce_mashwataru", NULL, NULL, NULL, "1988",
 	"Mashin Eiyuuden Wataru (Japan)\0", NULL, "Hudson Soft", "PC Engine",
-	NULL, NULL, NULL, NULL,
+	L"Mashin Eiyuuden Wataru (Japan)\0\u9b54\u795e\u82f1\u96c4\u4f1d\u30ef\u30bf\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM | GBF_ADV, 0,
 	PceGetZipName, pce_mashwataruRomInfo, pce_mashwataruRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,

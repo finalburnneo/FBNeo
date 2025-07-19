@@ -1,4 +1,4 @@
-// FB Alpha PC-Engine / TurboGrafx 16 / SuperGrafx driver module
+// FB Neo PC-Engine / TurboGrafx 16 / SuperGrafx driver module
 // Based on MESS driver by Charles MacDonald
 
 #include "tiles_generic.h"
@@ -34,6 +34,7 @@ static void (*interrupt)();
 static void (*hblank)();
 
 static UINT16 PCEInputs[5];
+static ClearOpposite<5, UINT16> clear_opposite;
 UINT8 PCEReset;
 UINT8 PCEJoy1[12];
 UINT8 PCEJoy2[12];
@@ -418,6 +419,8 @@ static INT32 PCEDoReset()
 
 	nExtraCycles = 0;
 
+	clear_opposite.reset();
+
 	return 0;
 }
 
@@ -647,7 +650,7 @@ INT32 PCEDraw()
 
 static void PCECompileInputs()
 {
-	memset (PCEInputs, 0xff, 5 * sizeof(UINT16));
+	memset(PCEInputs, 0xff, 5 * sizeof(UINT16));
 
 	for (INT32 i = 0; i < 12; i++) {
 		PCEInputs[0] ^= (PCEJoy1[i] & 1) << i;
@@ -655,6 +658,13 @@ static void PCECompileInputs()
 		PCEInputs[2] ^= (PCEJoy3[i] & 1) << i;
 		PCEInputs[3] ^= (PCEJoy4[i] & 1) << i;
 		PCEInputs[4] ^= (PCEJoy5[i] & 1) << i;
+	}
+	for (INT32 i = 0; i < 5; i++) {
+		if ((0 == nSocd[i]) || (nSocd[i] > 6)) continue;
+
+		PCEInputs[i] = ~PCEInputs[i];
+		clear_opposite.check(i, PCEInputs[i], 0x10, 0x40, 0x80, 0x20, nSocd[i]);
+		PCEInputs[i] = ~PCEInputs[i];
 	}
 
 	if ((last_dip ^ PCEDips[2]) & 0x80) {
@@ -743,6 +753,8 @@ INT32 PCEScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bram_locked);
 
 		SCAN_VAR(nExtraCycles);
+
+		clear_opposite.scan();
 
 		if (pce_sf2) {
 			SCAN_VAR(pce_sf2_bank);

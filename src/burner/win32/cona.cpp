@@ -470,7 +470,6 @@ int ConfigAppLoad()
 		VAR(bBurnGunDrawReticles);
 		VAR(bBurnGunPositionalMode);
 		VAR(bSkipStartupCheck);
-		VAR(bQuicklyCheck);
 
 		VAR(nSlowMo);
 
@@ -519,6 +518,14 @@ int ConfigAppLoad()
 		VAR(nPlayerDefaultControls[3]);
 		STR(szPlayerDefaultIni[3]);
 
+		// SOCD
+		VAR(nSocd[0]);
+		VAR(nSocd[1]);
+		VAR(nSocd[2]);
+		VAR(nSocd[3]);
+		VAR(nSocd[4]);
+		VAR(nSocd[5]);
+
 #undef DRV
 #undef PAT
 #undef STR
@@ -529,7 +536,6 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
-	LookupSubDirThreads();
 
 	return 0;
 }
@@ -957,9 +963,6 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, DISABLE start-up rom scan (if needed).\n"));
 	VAR(bSkipStartupCheck);
 
-	_ftprintf(h, _T("\n// If non-zero, enable quickly scan directories (zip only).\n"));
-	VAR(bQuicklyCheck);
-
 	_ftprintf(h, _T("\n// If non-zero, enable SlowMo T.A. [0 - 4]\n"));
 	VAR(nSlowMo);
 
@@ -1004,6 +1007,14 @@ int ConfigAppSave()
 	STR(szPlayerDefaultIni[2]);
 	VAR(nPlayerDefaultControls[3]);
 	STR(szPlayerDefaultIni[3]);
+
+	_ftprintf(h, _T("\n// Index of SOCD settings for each player.\n"));
+	VAR(nSocd[0]);
+	VAR(nSocd[1]);
+	VAR(nSocd[2]);
+	VAR(nSocd[3]);
+	VAR(nSocd[4]);
+	VAR(nSocd[5]);
 
 	_ftprintf(h, _T("\n\n\n"));
 

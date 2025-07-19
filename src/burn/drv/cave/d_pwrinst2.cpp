@@ -503,8 +503,9 @@ static INT32 DrvFrame()
 		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
 		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
 	}
-	clear_opposite.check(0, DrvInput[0], 0x0003, 0x000c);
-	clear_opposite.check(1, DrvInput[1], 0x0003, 0x000c);
+	for (INT32 i = 0; i < 2; i++) {
+		clear_opposite.check(i, DrvInput[i], 0x0001, 0x0002, 0x0004, 0x0008, nSocd[i]);
+	}
 
 	SekNewFrame();
 	ZetNewFrame();

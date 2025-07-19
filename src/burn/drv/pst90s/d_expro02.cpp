@@ -2595,7 +2595,8 @@ struct BurnDriver BurnDrvSmissw = {
 };
 
 
-// Gals Hustler
+// Gals Hustler (set 1)
+// An original PCB has been seen with genuine AFEGA labels
 
 static struct BurnRomInfo galhustlRomDesc[] = {
 	{ "ue17.3",						0x080000, 0xb2583dbb, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -2612,10 +2613,36 @@ STD_ROM_FN(galhustl)
 
 struct BurnDriver BurnDrvGalhustl = {
 	"galhustl", "pgalvip", NULL, NULL, "1997",
-	"Gals Hustler\0", NULL, "ACE International", "EXPRO-02",
+	"Gals Hustler (set 1)\0", NULL, "ACE International", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, galhustlRomInfo, galhustlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalhustlDIPInfo,
+	GalhustlInit, DrvExit, DrvFrame, ZipzapDraw, DrvScan, &BurnRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// Gals Hustler (set 2)
+
+static struct BurnRomInfo galhustlaRomDesc[] = {
+	{ "afega_3.uc17",				0x080000, 0xb811c791, 0x1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "afega_4.ud17",				0x080000, 0xb9aeb643, 0x1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "afega_5.u5",					0x080000, 0x8bbffcd3, 0x2 | BRF_GRA },           //  2 Sprites
+
+	{ "afega_1.ub6",				0x080000, 0x1aac243c, 0x2 | BRF_SND },           //  3 Samples
+	{ "afega_2.uc6",				0x080000, 0x2168e54a, 0x2 | BRF_SND },           //  4
+};
+
+STD_ROM_PICK(galhustla)
+STD_ROM_FN(galhustla)
+
+struct BurnDriver BurnDrvGalhustla = {
+	"galhustla", "pgalvip", NULL, NULL, "1997",
+	"Gals Hustler (set 2)\0", NULL, "ACE International", "EXPRO-02",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, galhustlaRomInfo, galhustlaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalhustlDIPInfo,
 	GalhustlInit, DrvExit, DrvFrame, ZipzapDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };

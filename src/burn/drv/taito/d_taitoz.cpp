@@ -7111,7 +7111,7 @@ struct BurnDriver BurnDrvDblaxleua = {
 	"dblaxleua", "dblaxle", NULL, NULL, "1991",
 	"Double Axle (US, Rev 1, set 2)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, DblaxleuaRomInfo, DblaxleuaRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, DblaxlesDIPInfo,
 	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3

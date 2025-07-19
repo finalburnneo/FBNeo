@@ -54,6 +54,7 @@
 #include "driver.h"
 
 #ifdef __LIBRETRO__
+ #define HAVE_64BIT_OFFSETS
  #include <streams/file_stream_transforms.h>
 #endif
 

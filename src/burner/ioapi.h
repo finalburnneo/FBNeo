@@ -46,6 +46,7 @@
 #include "zlib.h"
 
 #ifdef __LIBRETRO__
+ #define HAVE_64BIT_OFFSETS
  #include <streams/file_stream_transforms.h>
  #ifndef USE_FILE32API
   #define USE_FILE32API

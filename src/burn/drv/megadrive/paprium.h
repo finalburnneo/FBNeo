@@ -1057,8 +1057,9 @@ static void paprium_init()
 
 	INT32 load_all_samples = MegadriveDIP[2] & 1;
 
-#if !defined BUILD_X64_EXE
+#if !defined BUILD_X64_EXE && !defined __LIBRETRO__
 	// 32bit process can't handle it
+	// libretro is a more complex case so let's not enable that limitation for now
 	load_all_samples = 0;
 #endif
 

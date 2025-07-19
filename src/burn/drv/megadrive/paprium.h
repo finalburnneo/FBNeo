@@ -543,13 +543,11 @@ reload:
 		if ( tile == 0 ) continue;
 		if ( spriteCount >= 94 ) continue;
 
-
 		sprAttr  = (tileAttr & 0x8000) ? 0x8000 : (objAttr & 0x8000);
 		sprAttr += (tileAttr & 0x6000) ? (tileAttr & 0x6000) : (objAttr & 0x6000);
 		sprAttr += (tileAttr & 0x1800) ^ (objAttr & 0x1800);
 
-
-		if ( (spr_y >= 128) && (spr_y + size_y*8 < 368) ) {
+		if ( (spr_y + size_y*8 >= (128-16)) && (spr_y + size_y*8 < (368+16)) ) {
 			if ( (!flip_h && ((spr_x + size_x*8 >= 128) && spr_x < 448)) ||
 				 (flip_h && ((spr_x - size_x*8 < 448) && spr_x >= 128)) ) {
 				if ( spriteCount < 80 ) {

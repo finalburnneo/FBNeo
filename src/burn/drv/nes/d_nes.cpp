@@ -10178,6 +10178,42 @@ struct BurnDriver BurnDrvnes_depbomb2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Desert Storm: Nightmare Snaps Soul (English) (Unl)
+static struct BurnRomInfo nes_desertstormRomDesc[] = {
+	{ "Desert Storm - Nightmare Snaps Soul (English)(Unl)(1996)(Waixing).nes",          393232, 0xae05c80f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_desertstorm)
+STD_ROM_FN(nes_desertstorm)
+
+struct BurnDriver BurnDrvnes_desertstorm = {
+	"nes_desertstorm", NULL, NULL, NULL, "1996",
+	"Desert Storm: Nightmare Snaps Soul (English) (Unl)\0", NULL, "Waixing", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_desertstormRomInfo, nes_desertstormRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Desert Storm (Chinese) (Unl)
+static struct BurnRomInfo nes_desertstormscRomDesc[] = {
+	{ "Desert Storm - Nightmare Snaps Soul (Chinese)(Unl)(1996)(Waixing).nes",          393232, 0x984fbc0b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_desertstormsc)
+STD_ROM_FN(nes_desertstormsc)
+
+struct BurnDriver BurnDrvnes_desertstormsc = {
+	"nes_desertstormsc", "nes_desertstorm", NULL, NULL, "1996",
+	"Desert Storm (Chinese) (Unl)\0", NULL, "Waixing", "NES / Famicom",
+	L"Desert Storm (Chinese) (Unl)\0\u6c99\u6f20\u98ce\u66b4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_desertstormscRomInfo, nes_desertstormscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Destroyer (Unl)
 static struct BurnRomInfo nes_destroyerRomDesc[] = {
 	{ "Destroyer (Unl)(1992)(Mega Soft).nes",          65552, 0xd9362123, BRF_ESS | BRF_PRG },
@@ -18788,6 +18824,24 @@ struct BurnDriver BurnDrvnes_miscastle = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_miscastleRomInfo, nes_miscastleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mister Scary: Where Are You? (HB, Demo)
+static struct BurnRomInfo nes_misterscarydRomDesc[] = {
+	{ "Mister Scary - Where Are You (2025)(CalGames).nes",          524304, 0x0d27e7fd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_misterscaryd)
+STD_ROM_FN(nes_misterscaryd)
+
+struct BurnDriver BurnDrvnes_misterscaryd = {
+	"nes_misterscaryd", NULL, NULL, NULL, "2025",
+	"Mister Scary: Where Are You? (HB, Demo)\0", NULL, "CalGames", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_misterscarydRomInfo, nes_misterscarydRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -37213,6 +37267,25 @@ struct BurnDriver BurnDrvnes_joust = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Joust (Japan)
+// JP: October 30, 1987
+static struct BurnRomInfo nes_joustjRomDesc[] = {
+	{ "Joust (Japan)(1987)(Atari Games).nes",          24592, 0x19e0e420, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_joustj)
+STD_ROM_FN(nes_joustj)
+
+struct BurnDriver BurnDrvnes_joustj = {
+	"nes_joustj", "nes_joust", NULL, NULL, "1987",
+	"Joust (Japan)\0", NULL, "Atari Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_joustjRomInfo, nes_joustjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Joy Mech Fight (Japan)
 static struct BurnRomInfo nes_joymechfightjRomDesc[] = {
 	{ "Joy Mech Fight (Japan)(1993)(Nintendo).nes",          524304, 0xd6c81006, BRF_ESS | BRF_PRG },
@@ -47156,6 +47229,42 @@ struct BurnDriver BurnDrvnes_sidepocket = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_sidepocketRomInfo, nes_sidepocketRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Side Pocket (Euro)
+static struct BurnRomInfo nes_sidepocketeRomDesc[] = {
+	{ "Side Pocket (Euro)(1987)(Data East).nes",          131088, 0x40f76343, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sidepockete)
+STD_ROM_FN(nes_sidepockete)
+
+struct BurnDriver BurnDrvnes_sidepockete = {
+	"nes_sidepockete", "nes_sidepocket", NULL, NULL, "1987",
+	"Side Pocket (Euro)\0", NULL, "Data East", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_sidepocketeRomInfo, nes_sidepocketeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+// Side Pocket (Japan)
+static struct BurnRomInfo nes_sidepocketjRomDesc[] = {
+	{ "Side Pocket (Japan)(1987)(Namcot).nes",          163856, 0x3a04ae26, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sidepocketj)
+STD_ROM_FN(nes_sidepocketj)
+
+struct BurnDriver BurnDrvnes_sidepocketj = {
+	"nes_sidepocketj", "nes_sidepocket", NULL, NULL, "1987",
+	"Side Pocket (Japan)\0", NULL, "Namcot", "NES / Famicom",
+	L"Side Pocket (Japan)\0\u30b5\u30a4\u30c9\u30dd\u30b1\u30c3\u30c8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_sidepocketjRomInfo, nes_sidepocketjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

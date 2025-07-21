@@ -10548,7 +10548,8 @@ static void ppu_init(INT32 is_pal)
 static UINT8 GetAvgBrightness(INT32 x, INT32 y)
 {
 	// Zapper Detection
-	const UINT32 rgbcolor = our_palette[screen[(y) * 256 + x] & 0x3f];
+	const INT32 start_y = (NESMode & SHOW_OVERSCAN) ? 0 : 8;
+	const UINT32 rgbcolor = our_palette[screen[(y + start_y) * 256 + x] & 0x3f];
 
 	return ((rgbcolor & 0xff) + ((rgbcolor >> 8) & 0xff) + ((rgbcolor >> 16) & 0xff)) / 3;
 }
@@ -10578,7 +10579,7 @@ static UINT8 nes_read_zapper()
 
 		for (INT32 xx = in_x - 2; xx < in_x + 2; xx++) {
 			if (xx < 0 || xx > 255) continue;
-			if (yy == real_sl && xx >= pixel) break; // <- timing is everything, here.
+			if (yy >= real_sl || xx >= pixel) continue; // <- timing is everything, here.
 			if (GetAvgBrightness(xx, yy) > 0x88) { // + flux capacitor makes time travel possible
 				return ZAP_SENSE;
 			}

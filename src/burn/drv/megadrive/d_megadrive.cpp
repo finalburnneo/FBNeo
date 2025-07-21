@@ -44845,7 +44845,7 @@ struct BurnDriver BurnDrvmd_zerowingc = {
 // Disney's Aladdin (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/disneys-aladdin-nicolas-mega/
 static struct BurnRomInfo md_aladdinptRomDesc[] = {
-	{ "Disney's Aladdin PT-BR (2007)(Nenhum).bin", 2097152, 0xe2090f4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Disney's Aladdin PT-BR (2007)(Nicolas Mega).bin", 2097152, 0xe2090f4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_aladdinpt)
@@ -44853,7 +44853,7 @@ STD_ROM_FN(md_aladdinpt)
 
 struct BurnDriver BurnDrvmd_aladdinpt = {
 	"md_aladdinpt", "md_aladdin", NULL, NULL, "2007",
-	"Disney's Aladdin (Hack, Portuguese)\0", NULL, "Nenhum", "Genesis / Mega Drive",
+	"Disney's Aladdin (Hack, Portuguese)\0", NULL, "hack (Nicolas Mega)", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_aladdinptRomInfo, md_aladdinptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44902,7 +44902,7 @@ struct BurnDriver BurnDrvmd_castlillpt = {
 // Chakan (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/chakan-the-forever-man-volstag-e-panca-loca/
 static struct BurnRomInfo md_chakanptRomDesc[] = {
-	{ "Chakan PT-BR (2002)(Nenhum).bin", 1048576, 0x59b93489, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Chakan PT-BR (2002)(Volstag, Panca Loca).bin", 1048576, 0x59b93489, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_chakanpt)
@@ -44910,7 +44910,7 @@ STD_ROM_FN(md_chakanpt)
 
 struct BurnDriver BurnDrvmd_chakanpt = {
 	"md_chakanpt", "md_chakan", NULL, NULL, "2002",
-	"Chakan (Hack, Portuguese)\0", NULL, "Nenhum", "Genesis / Mega Drive",
+	"Chakan (Hack, Portuguese)\0", NULL, "hack (Volstag, Panca Loca)", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_chakanptRomInfo, md_chakanptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45206,7 +45206,7 @@ struct BurnDriver BurnDrvmd_shinfrcept = {
 // Shining Force II (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/shining-force-ii-daniel-v.-dias-e-outros/
 static struct BurnRomInfo md_shinfrc2ptRomDesc[] = {
-	{ "Shining Force II PT-BR (2007)(Nenhum).bin", 2097152, 0x39afbe56, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shining Force II PT-BR (2007)(Various).bin", 2097152, 0x39afbe56, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinfrc2pt)
@@ -45214,7 +45214,7 @@ STD_ROM_FN(md_shinfrc2pt)
 
 struct BurnDriver BurnDrvmd_shinfrc2pt = {
 	"md_shinfrc2pt", "md_shinfrc2", NULL, NULL, "2007",
-	"Shining Force II (Hack, Portuguese)\0", NULL, "Nenhum", "Genesis / Mega Drive",
+	"Shining Force II (Hack, Portuguese)\0", NULL, "hack (Various)", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_shinfrc2ptRomInfo, md_shinfrc2ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

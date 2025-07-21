@@ -6426,11 +6426,11 @@ struct BurnDriver BurnDrvVolfieduo = {
 	NULL, 0x2000, 240, 320, 3, 4
 };
 
-// -----------------------------------------------------------------------------
+// ----------------------
 // Hacks and Translations
-// -----------------------------------------------------------------------------
+// ----------------------
 
-// Rastan Saga (Portuguese-BR v1.11, Hack)
+// Rastan Saga (Portuguese-BR Translation v1.11, Hack)
 // Modified by Antígeno
 
 static struct BurnRomInfo RastsagabrRomDesc[] = {
@@ -6461,8 +6461,8 @@ STD_ROM_FN(Rastsagabr)
 
 struct BurnDriver BurnDrvRastsagabr = {
 	"rastsagabr", "rastan", NULL, NULL, "2019",
-	"Rastan Saga (Portuguese-BR Translation v1.11, Hack)\0", NULL, "hack (Ant\u00EDgeno)", "Taito Misc",
-	NULL, NULL, NULL, NULL,
+	"Rastan Saga (Portuguese-BR Translation v1.11, Hack)\0", NULL, "hack (Antigeno)", "Taito Misc",
+	NULL, NULL, L"hack (Ant\u00EDgeno)", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RastsagabrRomInfo, RastsagabrRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastanDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,

@@ -26883,7 +26883,7 @@ struct BurnDriver BurnDrvCpsSf2mix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II': Champion Edition (920313 Brasil, v1.0, Hack)
+// Street Fighter II': Champion Edition (Brasil 920313, v1.0, Hack)
 // Modified by Alan Yagami & BisonSAS
 
 static struct BurnRomInfo Sf2cebrRomDesc[] = {
@@ -27086,7 +27086,7 @@ struct BurnDriver BurnDrvCpsMercsc = {
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
-// Willow (Portuguese-BR Translation v1.06, Hack)
+// Willow (Hack, Portuguese-BR Translation, v1.06)
 // Modified by Antígeno
 
 static struct BurnRomInfo WillowbrRomDesc[] = {
@@ -27125,8 +27125,8 @@ STD_ROM_FN(Willowbr)
 
 struct BurnDriver BurnDrvCpsWillowbr = {
 	"willowbr", "willow", NULL, NULL, "2019",
-	"Willow (hack, Portuguese-BR Translation, v1.06)\0", NULL, "hack (Antigeno)", "CPS1",
-	NULL, NULL, NULL, NULL,
+	"Willow (Hack, Portuguese-BR Translation, v1.06)\0", NULL, "hack (Antigeno)", "CPS1",
+	NULL, NULL, L"hack (Ant\u00EDgeno)", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, WillowbrRomInfo, WillowbrRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

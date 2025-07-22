@@ -914,24 +914,6 @@ struct BurnDriver BurnDrvsms_alexkidd1 = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd in Miracle World (Brazil, v1, Pirate)
-static struct BurnRomInfo sms_alexkiddbRomDesc[] = {
-	{ "Alex Kidd in Miracle World (Brazil, v1, Pirate)(1986).bin",	0x20000, 0x7545d7c2, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_alexkiddb)
-STD_ROM_FN(sms_alexkiddb)
-
-struct BurnDriver BurnDrvsms_alexkiddb = {
-	"sms_alexkiddb", "sms_alexkidd", NULL, NULL, "1986",
-	"Alex Kidd in Miracle World (Brazil, v1, Pirate)\0", NULL, "<unknown>", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
-	SMSGetZipName, sms_alexkiddbRomInfo, sms_alexkiddbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Alex Kidd no Miracle World (Japan)
 static struct BurnRomInfo sms_alexkiddjRomDesc[] = {
 	{ "Alex Kidd no Miracle World (Japan)(1986)(Sega).sms",	0x20000, 0x08c9ec91, BRF_PRG | BRF_ESS },
@@ -21474,6 +21456,24 @@ struct BurnDriver BurnDrvgg_zoop = {
 // -------------------------------
 
 
+// 4lex Kidd In Nightmare World (GlobalHack)
+static struct BurnRomInfo sms_4lexkiddnwRomDesc[] = {
+	{ "4lex Kidd In Nightmare World (GlobalHack)(2023)(pinkeyeFR).sms",	524288, 0xd2586223, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_4lexkiddnw)
+STD_ROM_FN(sms_4lexkiddnw)
+
+struct BurnDriver BurnDrvsms_4lexkiddnw = {
+	"sms_4lexkiddnw", NULL, NULL, NULL, "2023",
+	"4lex Kidd In Nightmare World (GlobalHack)\0", NULL, "pinkeyeFR", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_4lexkiddnwRomInfo, sms_4lexkiddnwRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Acid Reflux (HB, v1.1)
 static struct BurnRomInfo sms_acrefluxRomDesc[] = {
 	{ "Acid Reflux v1.1 (2016)(furrtek & robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
@@ -21596,6 +21596,27 @@ struct BurnDriver BurnDrvsms_alexkidd3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3RomInfo, sms_alexkidd3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Alex Kidd no Mundo dos Milagres (Hack, Portuguese v1.0)
+// https://romhackers.org/traducoes/console/master-system/alex-kidd-in-miracle-world-po.b.r.e
+// Modified by Mr.Fox
+
+static struct BurnRomInfo sms_AlexkiddbRomDesc[] = {
+	{ "Alex Kidd no Mundo dos Milagres T-Por v1.0 (2017)(PO.B.R.E).sms",	262144, 0x4c7c2042, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_Alexkiddb)
+STD_ROM_FN(sms_Alexkiddb)
+
+struct BurnDriver BurnDrvsms_Alexkiddb = {
+	"sms_alexkiddb", "sms_alexkidd", NULL, NULL, "2017",
+	"Alex Kidd no Mundo dos Milagres (Hack, Portuguese v1.0)\0", NULL, "hack (PO.B.R.E)", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_AlexkiddbRomInfo, sms_AlexkiddbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

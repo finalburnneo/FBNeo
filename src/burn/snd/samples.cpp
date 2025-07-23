@@ -1,7 +1,14 @@
-// FB Alpha sample player module
+// FB Neo sample player module
 
 #include "burnint.h"
 #include "samples.h"
+
+#ifdef BUILD_WIN32	// Already tested platforms are added here
+#define INCLUDE_FLACMP3_SUPPORT
+#endif // BUILD_WIN32
+
+
+#ifdef INCLUDE_FLACMP3_SUPPORT
 
 #ifndef DR_FLAC_IMPLEMENTATION
 #define DR_FLAC_IMPLEMENTATION
@@ -12,6 +19,8 @@
 #define DR_MP3_IMPLEMENTATION
 #include "dr_mp3.h"
 #endif
+
+#endif // INCLUDE_FLACMP3_SUPPORT
 
 
 #define SAMPLE_DIRECTORY	szAppSamplesPath
@@ -194,6 +203,8 @@ static void make_raw(UINT8 *src, UINT32 len)
 	sample_ptr->position = 0;
 }
 
+
+#ifdef INCLUDE_FLACMP3_SUPPORT
 // Decode FLAC to PCM (Annotation Reference MP3)
 static void make_raw_flac(UINT8* src, UINT32 len)
 {
@@ -450,6 +461,7 @@ static void make_raw_mp3(UINT8* src, UINT32 len)
 	bprintf(0, _T("Loaded MP3: %d frames (%dHz -> %dHz)\n"),
 		sample_ptr->length, sample_rate, nBurnSoundRate);
 }
+#endif
 
 // for stream-sync
 static INT32 samples_buffered = 0;
@@ -877,6 +889,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 			make_raw((UINT8*)destination, length);
 			free(destination);			// ZipLoadOneFile uses malloc()
 		} else {
+#ifdef INCLUDE_FLACMP3_SUPPORT
 			// append .flac to filename
 			memset(&szSampleName, 0, sizeof(szSampleName));
 			strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 6);		// leave space for ".flac" + null, just incase!
@@ -912,6 +925,9 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 					sample_ptr->flags = SAMPLE_IGNORE;
 				}
 			}
+#else
+				sample_ptr->flags = SAMPLE_IGNORE;
+#endif
 		}
 	}
 }
@@ -975,7 +991,9 @@ void BurnSampleInitOne(INT32 sample)
 
 	if (length) {
 		make_raw((UINT8*)destination, length);
-	} else {
+	}
+#ifdef INCLUDE_FLACMP3_SUPPORT
+	else {
 		// append .flac to filename
 		memset(&szSampleName, 0, sizeof(szSampleName));
 		strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 6);		// leave space for ".flac" + null, just incase!
@@ -989,8 +1007,7 @@ void BurnSampleInitOne(INT32 sample)
 
 		if (length) {
 			make_raw_flac((UINT8*)destination, length);
-		}
-		else {
+		} else {
 			// append .mp3 to filename
 			memset(&szSampleName, 0, sizeof(szSampleName));
 			strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5);	// leave space for ".mp3" + null, just incase!
@@ -1007,6 +1024,7 @@ void BurnSampleInitOne(INT32 sample)
 			}
 		}
 	}
+#endif
 
 	free(destination); // ZipLoadOneFile uses malloc()
 }

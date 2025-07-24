@@ -2840,25 +2840,6 @@ struct BurnDriver BurnDrvsms_danan = {
 	256, 192, 4, 3
 };
 
-// Danan: The Jungle Fighter (Hack, Portuguese v3.1)
-// https://www.romhacking.net.br/index.php?topic=2993.0
-static struct BurnRomInfo sms_dananptRomDesc[] = {
-	{ "Danan - The Jungle Fighter T-Por v3.1 (2025)(SatY Traducoes).sms",	262144, 0xd2a99fdc, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_dananpt)
-STD_ROM_FN(sms_dananpt)
-
-struct BurnDriver BurnDrvsms_dananpt = {
-	"sms_dananpt", "sms_danan", NULL, NULL, "2025",
-	"Danan: The Jungle Fighter (Hack, Portuguese v3.1)\0", NULL, "SatY Traducoes", "Sega Master System",
-	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	SMSGetZipName, sms_dananptRomInfo, sms_dananptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Double Dragon (World)
 static struct BurnRomInfo sms_ddragonRomDesc[] = {
 	{ "Double Dragon (World)(1988)(Sega).sms",	0x40000, 0xa55d89f3, BRF_PRG | BRF_ESS },
@@ -3111,7 +3092,7 @@ struct BurnDriver BurnDrvsms_doubltgt = {
 	256, 192, 4, 3
 };
 
-// Dragon - The Bruce Lee Story (Euro)
+// Dragon: The Bruce Lee Story (Euro)
 static struct BurnRomInfo sms_dragonRomDesc[] = {
 	{ "Dragon - The Bruce Lee Story (Euro)(1994)(Virgin Interactive).sms",	0x40000, 0xc88a5064, BRF_PRG | BRF_ESS },
 };
@@ -3121,7 +3102,7 @@ STD_ROM_FN(sms_dragon)
 
 struct BurnDriver BurnDrvsms_dragon = {
 	"sms_dragon", NULL, NULL, NULL, "1994",
-	"Dragon - The Bruce Lee Story (Euro)\0", NULL, "Virgin Interactive", "Sega Master System",
+	"Dragon: The Bruce Lee Story (Euro)\0", NULL, "Virgin Interactive", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_dragonRomInfo, sms_dragonRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3357,7 +3338,7 @@ struct BurnDriver BurnDrvsms_ejim = {
 	"sms_ejim", NULL, NULL, NULL, "1995",
 	"Earthworm Jim (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SMSGetZipName, sms_ejimRomInfo, sms_ejimRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -4157,14 +4138,14 @@ struct BurnDriver BurnDrvsms_gaxewarr = {
 
 // Geraldinho (Brazil)
 static struct BurnRomInfo sms_geraldRomDesc[] = {
-	{ "Geraldinho (Brazil)(198x)(Tec Toy).sms",	0x08000, 0x956c416b, BRF_PRG | BRF_ESS },
+	{ "Geraldinho (Brazil)(1995)(Tec Toy).sms",	0x08000, 0x956c416b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_gerald)
 STD_ROM_FN(sms_gerald)
 
 struct BurnDriver BurnDrvsms_gerald = {
-	"sms_gerald", "sms_teddyboy", NULL, NULL, "198?",
+	"sms_gerald", "sms_teddyboy", NULL, NULL, "1995",
 	"Geraldinho (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
@@ -4853,44 +4834,6 @@ struct BurnDriver BurnDrvsms_hokuto = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	SMSGetZipName, sms_hokutoRomInfo, sms_hokutoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-// Hokuto no Ken ~ Fist of the North Star (Hack, English)
-// https://www.romhacking.net/translations/3381/
-static struct BurnRomInfo sms_hokutoteRomDesc[] = {
-	{ "Hokuto no Ken T-Eng (2017)(phalanX).sms",	131072, 0xb890cc85, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_hokutote)
-STD_ROM_FN(sms_hokutote)
-
-struct BurnDriver BurnDrvsms_hokutote = {
-	"sms_hokutote", "sms_blackblt", NULL, NULL, "2017",
-	"Hokuto no Ken ~ Fist of the North Star (Hack, English)\0", "Title screen addendum by jackic", "phalanX", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
-	SMSGetZipName, sms_hokutoteRomInfo, sms_hokutoteRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-// Hokuto no Ken ~ Fist of the North Star (Hack, Spanish)
-// https://www.romhacking.net/translations/3928/
-static struct BurnRomInfo sms_hokutotsRomDesc[] = {
-	{ "Hokuto no Ken T-Spa (2018)(jackic).sms",	131072, 0x03810a29, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_hokutots)
-STD_ROM_FN(sms_hokutots)
-
-struct BurnDriver BurnDrvsms_hokutots = {
-	"sms_hokutots", "sms_blackblt", NULL, NULL, "2018",
-	"Hokuto no Ken ~ Fist of the North Star (Hack, Spanish)\0", NULL, "jackic", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
-	SMSGetZipName, sms_hokutotsRomInfo, sms_hokutotsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -9255,14 +9198,14 @@ struct BurnDriver BurnDrvsms_tazmaniap = {
 
 // Taz in Escape from Mars (Brazil)
 static struct BurnRomInfo sms_tazmarsRomDesc[] = {
-	{ "Taz in Escape from Mars (Brazil)(199x)(Tec Toy).sms",	0x80000, 0x11ce074c, BRF_PRG | BRF_ESS },
+	{ "Taz in Escape from Mars (Brazil)(1994)(Tec Toy).sms",	0x80000, 0x11ce074c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_tazmars)
 STD_ROM_FN(sms_tazmars)
 
 struct BurnDriver BurnDrvsms_tazmars = {
-	"sms_tazmars", NULL, NULL, NULL, "199?",
+	"sms_tazmars", NULL, NULL, NULL, "1994",
 	"Taz in Escape from Mars (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
@@ -13201,7 +13144,7 @@ struct BurnDriver BurnDrvgg_dragon = {
 	"gg_dragon", NULL, NULL, NULL, "1994",
 	"Dragon: The Bruce Lee Story (Euro)\0", NULL, "Virgin Interactive", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	GGGetZipName, gg_dragonRomInfo, gg_dragonRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -13219,7 +13162,7 @@ struct BurnDriver BurnDrvgg_dragonu = {
 	"gg_dragonu", "gg_dragon", NULL, NULL, "1995",
 	"Dragon: The Bruce Lee Story (USA)\0", NULL, "Acclaim Entertainment", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	GGGetZipName, gg_dragonuRomInfo, gg_dragonuRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -13363,7 +13306,7 @@ struct BurnDriver BurnDrvgg_ejim = {
 	"gg_ejim", NULL, NULL, NULL, "1995",
 	"Earthworm Jim (Euro)\0", NULL, "Virgin Interactive", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GGGetZipName, gg_ejimRomInfo, gg_ejimRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -13381,7 +13324,7 @@ struct BurnDriver BurnDrvgg_ejimu = {
 	"gg_ejimu", "gg_ejim", NULL, NULL, "1995",
 	"Earthworm Jim (USA)\0", NULL, "Playmates Interactive", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GGGetZipName, gg_ejimuRomInfo, gg_ejimuRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -14071,7 +14014,7 @@ struct BurnDriver BurnDrvgg_ggorby = {
 	256, 192, 4, 3
 };
 
-// Garfield - Caught in the Act (Euro, USA)
+// Garfield: Caught in the Act (Euro, USA)
 static struct BurnRomInfo gg_garfieldRomDesc[] = {
 	{ "Garfield - Caught in the Act (Euro, USA)(1995)(Sega).gg",	0x100000, 0xcd53f3af, BRF_PRG | BRF_ESS },
 };
@@ -14081,7 +14024,7 @@ STD_ROM_FN(gg_garfield)
 
 struct BurnDriver BurnDrvgg_garfield = {
 	"gg_garfield", NULL, NULL, NULL, "1995",
-	"Garfield - Caught in the Act (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
+	"Garfield: Caught in the Act (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
 	GGGetZipName, gg_garfieldRomInfo, gg_garfieldRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -14215,7 +14158,7 @@ struct BurnDriver BurnDrvgg_ggdora = {
 	256, 192, 4, 3
 };
 
-// GG Portrait - Pai Chen (Japan)
+// GG Portrait: Pai Chen (Japan)
 static struct BurnRomInfo gg_ggportRomDesc[] = {
 	{ "GG Portrait - Pai Chen (Japan)(1996)(Sega).gg",	0x80000, 0x695cc120, BRF_PRG | BRF_ESS },
 };
@@ -14225,7 +14168,7 @@ STD_ROM_FN(gg_ggport)
 
 struct BurnDriver BurnDrvgg_ggport = {
 	"gg_ggport", NULL, NULL, NULL, "1996",
-	"GG Portrait - Pai Chen (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"GG Portrait: Pai Chen (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_ggportRomInfo, gg_ggportRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -14233,7 +14176,7 @@ struct BurnDriver BurnDrvgg_ggport = {
 	256, 192, 4, 3
 };
 
-// GG Portrait - Yuuki Akira (Japan)
+// GG Portrait: Yuuki Akira (Japan)
 static struct BurnRomInfo gg_ggport1RomDesc[] = {
 	{ "GG Portrait - Yuuki Akira (Japan)(1996)(Sega).gg",	0x80000, 0x51159f8f, BRF_PRG | BRF_ESS },
 };
@@ -14243,7 +14186,7 @@ STD_ROM_FN(gg_ggport1)
 
 struct BurnDriver BurnDrvgg_ggport1 = {
 	"gg_ggport1", NULL, NULL, NULL, "1996",
-	"GG Portrait - Yuuki Akira (Japan)\0", NULL, "Sega", "Sega Game Gear",
+	"GG Portrait: Yuuki Akira (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_ggport1RomInfo, gg_ggport1RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -14263,7 +14206,7 @@ struct BurnDriver BurnDrvgg_shinobij = {
 	"gg_shinobij", "gg_shinobi", NULL, NULL, "1991",
 	"GG Shinobi, The (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GGGetZipName, gg_shinobijRomInfo, gg_shinobijRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -14281,7 +14224,7 @@ struct BurnDriver BurnDrvgg_shinobi = {
 	"gg_shinobi", NULL, NULL, NULL, "1991",
 	"GG Shinobi, The (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GGGetZipName, gg_shinobiRomInfo, gg_shinobiRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -14299,7 +14242,7 @@ struct BurnDriver BurnDrvgg_shinobi2 = {
 	"gg_shinobi2", NULL, NULL, NULL, "1992",
 	"GG Shinobi II, The (World)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GGGetZipName, gg_shinobi2RomInfo, gg_shinobi2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -18167,25 +18110,6 @@ struct BurnDriver BurnDrvgg_royalstn = {
 	256, 192, 4, 3
 };
 
-// Royal Stone: Hirakareshi Toki no Tobira (Hack, English)
-// Source : http://www.romhacking.net/translations/2076/
-static struct BurnRomInfo gg_royalstneRomDesc[] = {
-	{ "Royal Stone - Hirakareshi Toki no Tobira T-Eng (2013)(Aeon Genesis).gg",	0x80000, 0xe4677b07, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_royalstne)
-STD_ROM_FN(gg_royalstne)
-
-struct BurnDriver BurnDrvgg_royalstne = {
-	"gg_royalstne", "gg_royalstn", NULL, NULL, "2013",
-	"Royal Stone: Hirakareshi Toki no Tobira (Hack, English)\0", NULL, "Aeon Genesis", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
-	GGGetZipName, gg_royalstneRomInfo, gg_royalstneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Ryuukyuu (Japan)
 static struct BurnRomInfo gg_ryukyuRomDesc[] = {
 	{ "Ryuukyuu (Japan)(1991)(Face).gg",	0x20000, 0x95efd52b, BRF_PRG | BRF_ESS },
@@ -21401,9 +21325,9 @@ struct BurnDriver BurnDrvsms_4lexkiddnw = {
 	256, 192, 4, 3
 };
 
-// Acid Reflux (HB, v1.1)
+// Acid Reflux (HB, v1.10)
 static struct BurnRomInfo sms_acrefluxRomDesc[] = {
-	{ "Acid Reflux v1.1 (2016)(furrtek & robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
+	{ "Acid Reflux v1.10 (2016)(Furrtek & Robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_acreflux)
@@ -21411,7 +21335,7 @@ STD_ROM_FN(sms_acreflux)
 
 struct BurnDriver BurnDrvsms_acreflux = {
 	"sms_acreflux", NULL, NULL, NULL, "2016",
-	"Acid Reflux (HB, v1.1)\0", NULL, "furrtek & robotwo", "Sega Master System",
+	"Acid Reflux (HB, v1.10)\0", NULL, "Furrtek & Robotwo", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_acrefluxRomInfo, sms_acrefluxRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -21466,7 +21390,7 @@ STD_ROM_FN(sms_aleste3gg2sms)
 struct BurnDriver BurnDrvsms_aleste3gg2sms = {
 	"sms_aleste3gg2sms", NULL, NULL, NULL, "2024",
 	"Aleste 3 (Hack, GG2SMS Conversion)\0", "CH3 fix applied", "BCNabel76, Revo", "Sega Master System",
-	NULL, NULL, NULL, NULL,
+	NULL, NULL, L"BCNabel76, R\u00e9vo", NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_aleste3gg2smsRomInfo, sms_aleste3gg2smsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
@@ -21795,6 +21719,24 @@ struct BurnDriver BurnDrvsms_battlot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_SHOOT, 0,
 	SMSGetZipName, sms_battlotRomInfo, sms_battlotRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Bay Third Dungeon (HB, v1.20)
+static struct BurnRomInfo sms_bay3dungRomDesc[] = {
+	{ "Bay Third Dungeon v1.20 (2015-18)(Tibone).sms",	524288, 0xdc4a38c3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_bay3dung)
+STD_ROM_FN(sms_bay3dung)
+
+struct BurnDriver BurnDrvsms_bay3dung = {
+	"sms_bay3dung", NULL, NULL, NULL, "2015-18",
+	"Bay Third Dungeon (HB, v1.20)\0", NULL, "Tibone", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	SMSGetZipName, sms_bay3dungRomInfo, sms_bay3dungRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -22162,7 +22104,7 @@ struct BurnDriver BurnDrvsms_draconic = {
 
 // Duke Nukem (GlobalHack)
 static struct BurnRomInfo sms_dnukemRomDesc[] = {
-	{ "Duke Nukem (2017)(revo-tibone-calindro).sms",	524288, 0xa16dba3b, BRF_PRG | BRF_ESS },
+	{ "Duke Nukem v0.93 (2017)(Revo, Tibone, Calindro).sms",	524288, 0xa16dba3b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dnukem)
@@ -22170,8 +22112,8 @@ STD_ROM_FN(sms_dnukem)
 
 struct BurnDriver BurnDrvsms_dnukem = {
 	"sms_dnukem", NULL, NULL, NULL, "2017",
-	"Duke Nukem (GlobalHack, v0.93)\0", NULL, "revo, tibone, calindro", "Sega Master System",
-	NULL, NULL, NULL, NULL,
+	"Duke Nukem (GlobalHack, v0.93)\0", NULL, "Revo, Tibone, Calindro", "Sega Master System",
+	NULL, NULL, L"R\u00e9vo, Tibone, Calindro", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_dnukemRomInfo, sms_dnukemRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
@@ -23332,7 +23274,7 @@ struct BurnDriver BurnDrvsms_pitman = {
 	256, 192, 4, 3
 };
 
-// Piracy - The Chest Of Doom (GlobalHack, Demo)
+// Piracy: The Chest Of Doom (GlobalHack, Demo)
 static struct BurnRomInfo sms_piracycodRomDesc[] = {
     { "Piracy - The Chest Of Doom (2021)(SirDarkNoon).sms",    524288, 0xd94c89fa, BRF_PRG | BRF_ESS },
 };
@@ -23342,7 +23284,7 @@ STD_ROM_FN(sms_piracycod)
 
 struct BurnDriver BurnDrvsms_piracycod = {
     "sms_piracycod", NULL, NULL, NULL, "2021",
-    "Piracy - The Chest Of Doom (GlobalHack, Demo)\0", "Demo with the 5 first levels", "SirDarkNoon", "Sega Master System",
+    "Piracy: The Chest Of Doom (GlobalHack, Demo)\0", "Demo with the 5 first levels", "SirDarkNoon", "Sega Master System",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
     SMSGetZipName, sms_piracycodRomInfo, sms_piracycodRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23950,6 +23892,42 @@ struct BurnDriver BurnDrvsms_tailsadvgg2sms = {
 	256, 192, 4, 3
 };
 
+// Tank Battle (Hack, v0.02d)
+static struct BurnRomInfo sms_tankbattleRomDesc[] = {
+	{ "Tank Battle v0.02d (2023)(Revo).sms",	49152, 0x7f3e8931, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tankbattle)
+STD_ROM_FN(sms_tankbattle)
+
+struct BurnDriver BurnDrvsms_tankbattle = {
+	"sms_tankbattle", "sms_tanques", NULL, NULL, "2023",
+	"Tank Battle (Hack, v0.02d)\0", NULL, "Revo", "Sega Master System",
+	NULL, NULL, L"R\u00e9vo", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_tankbattleRomInfo, sms_tankbattleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tanques (Brazil)
+static struct BurnRomInfo sms_tanquesRomDesc[] = {
+	{ "Tanques (Brazil)(2009)(Tec Toy).sms",	49152, 0xb67f24da, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tanques)
+STD_ROM_FN(sms_tanques)
+
+struct BurnDriver BurnDrvsms_tanques = {
+	"sms_tanques", NULL, NULL, NULL, "2009",
+	"Tanques (Brazil)\0", NULL, "Tec Toy", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_tanquesRomInfo, sms_tanquesRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Tempo Jr. (Hack, GG2SMS Conversion)
 static struct BurnRomInfo sms_tempojrgg2smsRomDesc[] = {
 	{ "Tempo Jr. GG2SMS v1.0 (2014)(Vinganzole).sms",	524288, 0x4a707dfb, BRF_PRG | BRF_ESS },
@@ -24088,7 +24066,7 @@ struct BurnDriver BurnDrvsms_turmamon2 = {
 	"sms_turmamon2", "sms_wboymwld", NULL, NULL, "2025",
 	"Turma Da Monica Na Terra Dos Monstros (Hack, v1.02)\0", NULL, "chirinea", "Sega Master System",
 	L"Turma Da M\u00f4nica Na Terra Dos Monstros (Hack, v1.02)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_turmamon2RomInfo, sms_turmamon2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -24096,7 +24074,7 @@ struct BurnDriver BurnDrvsms_turmamon2 = {
 
 // Ultimate Dungeon Escape (HB, v0.9)
 static struct BurnRomInfo sms_ultdungescRomDesc[] = {
-	{ "Ultimate Dungeon Escape v0.9 (2025)(tibone, Cyrus, Revo).sms",	32768, 0xc75b7e8b, BRF_PRG | BRF_ESS },
+	{ "Ultimate Dungeon Escape v0.9 (2025)(Tibone, Cyrus, Revo).sms",	32768, 0xc75b7e8b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_ultdungesc)
@@ -24104,8 +24082,8 @@ STD_ROM_FN(sms_ultdungesc)
 
 struct BurnDriver BurnDrvsms_ultdungesc = {
 	"sms_ultdungesc", NULL, NULL, NULL, "2025",
-	"Ultimate Dungeon Escape (HB, v0.9)\0", NULL, "tibone, Cyrus, Revo", "Sega Master System",
-	NULL, NULL, NULL, NULL,
+	"Ultimate Dungeon Escape (HB, v0.9)\0", NULL, "Tibone, Cyrus, Revo", "Sega Master System",
+	NULL, NULL, L"Tibone, Cyrus, R\u00e9vo", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_RPG, 0,
 	SMSGetZipName, sms_ultdungescRomInfo, sms_ultdungescRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
@@ -24196,7 +24174,7 @@ struct BurnDriver BurnDrvsms_wekainvaders = {
 	"sms_wekainvaders", NULL, NULL, NULL, "2017",
 	"Weka Invaders (HB)\0", NULL, "Disjointed Studio", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_wekainvadersRomInfo, sms_wekainvadersRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -25193,6 +25171,25 @@ struct BurnDriver BurnDrvgg_crayone = {
 	256, 192, 4, 3
 };
 
+// Danan: The Jungle Fighter (Hack, Portuguese v3.1)
+// https://www.romhacking.net.br/index.php?topic=2993.0
+static struct BurnRomInfo sms_dananptRomDesc[] = {
+	{ "Danan - The Jungle Fighter T-Por v3.1 (2025)(SatY Traducoes).sms",	262144, 0xd2a99fdc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_dananpt)
+STD_ROM_FN(sms_dananpt)
+
+struct BurnDriver BurnDrvsms_dananpt = {
+	"sms_dananpt", "sms_danan", NULL, NULL, "2025",
+	"Danan: The Jungle Fighter (Hack, Portuguese v3.1)\0", NULL, "SatY Traducoes", "Sega Master System",
+	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_dananptRomInfo, sms_dananptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Deep Duck Trouble Starring Donald Duck (Hack, Spanish)
 // https://www.romhacking.net/translations/3219/
 static struct BurnRomInfo sms_deepduckcRomDesc[] = {
@@ -25326,7 +25323,7 @@ struct BurnDriver BurnDrvsms_bakabonen = {
 	256, 192, 4, 3
 };
 
-// Godzilla - Kaijuu Daishingeki (Hack, English v1.1)
+// Godzilla: Kaijuu Daishingeki (Hack, English v1.1)
 // https://www.romhacking.net/translations/4140/
 static struct BurnRomInfo gg_godzillaeRomDesc[] = {
 	{ "Godzilla - Kaijuu Daishingeki T-Eng (2019)(Supper).gg",	1048576, 0xfc0ac103, BRF_PRG | BRF_ESS },
@@ -25337,7 +25334,7 @@ STD_ROM_FN(gg_godzillae)
 
 struct BurnDriver BurnDrvgg_godzillae = {
 	"gg_godzillae", "gg_godzilla", NULL, NULL, "2019",
-	"Godzilla - Kaijuu Daishingeki (Hack, English v1.1)\0", NULL, "Supper", "Sega Game Gear",
+	"Godzilla: Kaijuu Daishingeki (Hack, English v1.1)\0", NULL, "Supper", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_STRATEGY, 0,
 	GGGetZipName, gg_godzillaeRomInfo, gg_godzillaeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -25436,6 +25433,44 @@ struct BurnDriver BurnDrvsms_highsce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
 	SMSGetZipName, sms_highsceRomInfo, sms_highsceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Hokuto no Ken ~ Fist of the North Star (Hack, English)
+// https://www.romhacking.net/translations/3381/
+static struct BurnRomInfo sms_hokutoteRomDesc[] = {
+	{ "Hokuto no Ken T-Eng (2017)(phalanX).sms",	131072, 0xb890cc85, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hokutote)
+STD_ROM_FN(sms_hokutote)
+
+struct BurnDriver BurnDrvsms_hokutote = {
+	"sms_hokutote", "sms_blackblt", NULL, NULL, "2017",
+	"Hokuto no Ken ~ Fist of the North Star (Hack, English)\0", "Title screen addendum by jackic", "phalanX", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	SMSGetZipName, sms_hokutoteRomInfo, sms_hokutoteRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Hokuto no Ken ~ Fist of the North Star (Hack, Spanish)
+// https://www.romhacking.net/translations/3928/
+static struct BurnRomInfo sms_hokutotsRomDesc[] = {
+	{ "Hokuto no Ken T-Spa (2018)(jackic).sms",	131072, 0x03810a29, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hokutots)
+STD_ROM_FN(sms_hokutots)
+
+struct BurnDriver BurnDrvsms_hokutots = {
+	"sms_hokutots", "sms_blackblt", NULL, NULL, "2018",
+	"Hokuto no Ken ~ Fist of the North Star (Hack, Spanish)\0", NULL, "jackic", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	SMSGetZipName, sms_hokutotsRomInfo, sms_hokutotsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -25911,6 +25946,25 @@ struct BurnDriver BurnDrvsms_rastanpt = {
 	256, 192, 4, 3
 };
 
+// Royal Stone: Hirakareshi Toki no Tobira (Hack, English)
+// Source : http://www.romhacking.net/translations/2076/
+static struct BurnRomInfo gg_royalstneRomDesc[] = {
+	{ "Royal Stone - Hirakareshi Toki no Tobira T-Eng (2013)(Aeon Genesis).gg",	0x80000, 0xe4677b07, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_royalstne)
+STD_ROM_FN(gg_royalstne)
+
+struct BurnDriver BurnDrvgg_royalstne = {
+	"gg_royalstne", "gg_royalstn", NULL, NULL, "2013",
+	"Royal Stone: Hirakareshi Toki no Tobira (Hack, English)\0", NULL, "Aeon Genesis", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
+	GGGetZipName, gg_royalstneRomInfo, gg_royalstneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Shining Force Gaiden - Final Conflict (Hack, English)
 // https://www.romhacking.net/translations/876/
 static struct BurnRomInfo gg_shinfrgfeRomDesc[] = {
@@ -26009,7 +26063,7 @@ struct BurnDriver BurnDrvsms_solomonen = {
 // SpellCaster (Euro, USA, Brazil) - Castellano v0.99
 // https://www.romhacking.net/translations/4230/
 static struct BurnRomInfo sms_spellcstcRomDesc[] = {
-	{ "spellcaster (euro, usa, bra) - castellano v0,99.sms",          524288, 0x32b31c6e, BRF_ESS | BRF_PRG },
+	{ "Spellcaster T-Spa v0.99 (2019)(jackic).sms",          524288, 0x32b31c6e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(sms_spellcstc)
@@ -26028,7 +26082,7 @@ struct BurnDriver BurnDrvsms_spellcstc = {
 // Spy vs Spy (Euro, USA, Brazil) - Castellano v1.0
 // https://www.romhacking.net/translations/5098/
 static struct BurnRomInfo sms_spyvsspycastRomDesc[] = {
-	{ "spy vs. spy (euro, usa, bra) - castellano v1,0.sms",          32768, 0xacc2eea4, BRF_ESS | BRF_PRG },
+	{ "Spy vs. Spy T-Spa (2019)(Wave).sms",          32768, 0xacc2eea4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(sms_spyvsspycast)
@@ -26036,7 +26090,7 @@ STD_ROM_FN(sms_spyvsspycast)
 
 struct BurnDriver BurnDrvsms_spyvsspycast = {
 	"sms_spyvsspycast", "sms_spyvsspy", NULL, NULL, "2019",
-	"Spy vs Spy (Hack, Spanish v1.0)\0", NULL, "Wave", "Sega Master System",
+	"Spy vs Spy (Hack, Spanish)\0", NULL, "Wave", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_spyvsspycastRomInfo, sms_spyvsspycastRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

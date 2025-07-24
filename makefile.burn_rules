@@ -4,7 +4,7 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom bur
 			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/e132xs cpu/f8 cpu/h6280 cpu/hd6309 cpu/i386 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/adsp2100 cpu/konami cpu/m377 cpu/mips3 cpu/m68k \
 			cpu/mb88xx cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/tlcs900 cpu/sh2 cpu/sh4 cpu/tms32010 cpu/tms34 cpu/upd7725 cpu/upd7810 \
 			cpu/v60 cpu/z80 cpu/z180 \
-			dep/libs/dr_lib
+			dep/libs/dr_libs
 
 drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstroid.o d_eprom.o d_gauntlet.o d_klax.o d_marblmd2.o d_missile.o d_offtwall.o d_rampart.o \
 			d_relief.o d_shuuz.o d_skullxbo.o d_thunderj.o d_toobin.o d_vindictr.o d_xybots.o \

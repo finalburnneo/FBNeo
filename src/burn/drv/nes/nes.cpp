@@ -10565,22 +10565,28 @@ static UINT8 nes_read_zapper()
 	if (RENDERING == 0 || scanline < 8 || scanline > 240)
 		return ZAP_NONSENSE;
 
+	// scale crosshair from gun device to nes coordinates
 	INT32 in_y = ((BurnGunReturnY(0) * 224) / 255);
 	INT32 in_x = BurnGunReturnX(0);
-	INT32 real_sl = scanline - 8;
+
+	// compute the last drawn scanline/pixel
+	const INT32 overscan = (NESMode & SHOW_OVERSCAN) ? 0 : 8;
+	INT32 real_sl = scanline - overscan;
+	INT32 real_pixel = pixel - 2;
 
 	// offscreen check
-	if (in_y == 0 || in_y == 224 || in_x == 0 || in_x == 255) {
+	if (in_y == 0 || in_y == 224 || in_x == 0 || in_x == 255 || real_sl < 0 || real_pixel < 0) {
 		return ZAP_NONSENSE;
 	}
 
-	for (INT32 yy = in_y - 2; yy < in_y + 2; yy++) {
+	for (INT32 yy = in_y - 2; yy < in_y + 12; yy++) {
 		if (yy < real_sl-8 || yy > real_sl || yy < 0 || yy > 224) continue;
 
-		for (INT32 xx = in_x - 2; xx < in_x + 2; xx++) {
+		for (INT32 xx = in_x - 4; xx < in_x + 4; xx++) {
 			if (xx < 0 || xx > 255) continue;
-			if (yy >= real_sl || xx >= pixel) continue; // <- timing is everything, here.
+			if (yy >= real_sl && xx >= real_pixel) break; // <- timing is everything, here.
 			if (GetAvgBrightness(xx, yy) > 0x88) { // + flux capacitor makes time travel possible
+				//bprintf(0, _T("HIT %d,%d  @ %d,%d    fr %d\n"), xx,yy, real_pixel,real_sl, nCurrentFrame);
 				return ZAP_SENSE;
 			}
 		}

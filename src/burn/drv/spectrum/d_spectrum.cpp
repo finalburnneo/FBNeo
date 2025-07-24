@@ -14237,7 +14237,7 @@ struct BurnDriver BurnSpecHeavymag = {
 // HeliChopper (48K)
 
 static struct BurnRomInfo SpecHelichopRomDesc[] = {
-	{ "HeliChopper 48K (1985)(Firebird Software).z80", 33920, 0x28c9aa3f, BRF_ESS | BRF_PRG },
+	{ "HeliChopper 48K (1985)(Firebird Software).tap", 48038, 0x5160aec4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecHelichop, SpecHelichop, Spectrum)
@@ -20147,7 +20147,7 @@ struct BurnDriver BurnSpecOverlander = {
 // P-47 Thunderbolt (128K)
 
 static struct BurnRomInfo SpecP47thunderboltRomDesc[] = {
-	{ "P-47 Thunderbolt 128K (1990)(Firebird Software).z80", 72894, 0x9efaf7fc, BRF_ESS | BRF_PRG },
+	{ "P-47 Thunderbolt 48K-128K (1990)(Firebird Software).tap", 81239, 0x3d1ffa84, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecP47thunderbolt, SpecP47thunderbolt, Spec128)
@@ -29651,6 +29651,26 @@ struct BurnDriver BurnSpec70908 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// A-10 Thunderbolt (48K-128K) (HB)
+
+static struct BurnRomInfo SpecA10thunderboltRomDesc[] = {
+	{ "A-10 Thunderbolt 48K-128K (1995)(Gadget Software Unlimited).tap", 48034, 0xd2d4da4a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecA10thunderbolt, SpecA10thunderbolt, Spec128)
+STD_ROM_FN(SpecA10thunderbolt)
+
+struct BurnDriver BurnSpecA10thunderbolt = {
+	"spec_a10thunderbolt", NULL, "spec_spec128", NULL, "1995",
+	"A-10 Thunderbolt (48K-128K) (HB)\0", NULL, "Gadget Software Unlimited", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecA10thunderboltRomInfo, SpecA10thunderboltRomName, 
+	NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Acolyte (48K) (HB)
 
 static struct BurnRomInfo SpecAcolyteRomDesc[] = {
@@ -38202,6 +38222,25 @@ struct BurnDriver BurnSpecFillomania = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Fire 'N Ice (128K) (HB)
+
+static struct BurnRomInfo SpecFireniceRomDesc[] = {
+	{ "Fire 'N Ice 128K (1987-2003)(n-Discovery).tap", 569884, 0x05B70672, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFirenice, SpecFirenice, Spec128)
+STD_ROM_FN(SpecFirenice)
+
+struct BurnDriver BurnSpecFirenice = {
+	"spec_firenice", NULL, "spec_spec128", NULL, "1987-2003",
+	"Fire 'N Ice (128K) (HB)\0", NULL, "n-Discovery", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecFireniceRomInfo, SpecFireniceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Fireman (48K) (HB)
 
 static struct BurnRomInfo SpecFiremanRomDesc[] = {
@@ -46560,6 +46599,25 @@ struct BurnDriver BurnSpecOure = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecOureRomInfo, SpecOureRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// P-47 The Freedom Fighter (128K) (Hack)
+
+static struct BurnRomInfo SpecP47freedomfRomDesc[] = {
+	{ "P-47 The Feedom Fighter 128K (Hack)(1990-2022)(SGT - Slider, Goodboy, Tiboh).tap", 119134, 0x9ec5769f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecP47freedomf, SpecP47freedomf, Spec128)
+STD_ROM_FN(SpecP47freedomf)
+
+struct BurnDriver BurnSpecP47freedomf = {
+	"spec_p47freedomf", "spec_p47thunderbolt", "spec_spec128", NULL, "1990-2022",
+	"P-47 The Freedom Fighter (128K) (Hack)\0", "Trainer, Speedup, AY", "Slider, Goodboy, Tiboh", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecP47freedomfRomInfo, SpecP47freedomfRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

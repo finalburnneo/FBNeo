@@ -58,9 +58,10 @@ YMF278B sound core by R. Belmont & O.Galibert (http://www.mamedev.org).
 
 Uses SMS Plus by Charles MacDonald (http://www.techno-junk.org).
 
-7Z functionality provided by LZMA SDK (http://www.7-zip.org/sdk.html)
-PNG functionality provided by libspng (https://libspng.org/)
+7Z functionality provided by LZMA SDK (http://www.7-zip.org/sdk.html).
+PNG functionality provided by libspng (https://libspng.org/).
 Zip functionality provided by zlib (http://www.zlib.net).
+FLAC and MP3 functionality provided by dr_libs (https://github.com/mackron/dr_libs).
 
 Uses Xbyak (JIT assembler for x86/x64) by Herumi (https://github.com/herumi/xbyak)
 

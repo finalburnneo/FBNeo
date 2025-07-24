@@ -745,7 +745,6 @@ struct BurnDriver BurnDrvKangaroob = {
 
 
 // Kangaroo (Löwen-Automaten)
-// Kangaroo (loewen-Automaten)
 
 static struct BurnRomInfo kangaroolRomDesc[] = {
 	{ "tvg_75.ic7",			0x1000, 0x0d18c581, 1 | BRF_PRG | BRF_ESS }, 	//  0 Z80 #0 Code
@@ -771,8 +770,8 @@ STD_ROM_FN(kangarool)
 
 struct BurnDriver BurnDrvKangarool = {
 	"kangarool", "kangaroo", NULL, NULL, "1982",
-	"Kangaroo (loewen-Automaten)\0", NULL, "Sun Electronics (loewen-Automaten license)", "Miscellaneous",
-	L"Kangaroo (L\u00f6wen-Automaten)\0", NULL, L"Sun Electronics (L\u00f6wen-Automaten license)", NULL,
+	"Kangaroo (Löwen-Automaten)\0", NULL, "Sun Electronics (Löwen-Automaten license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, kangaroolRomInfo, kangaroolRomName, NULL, NULL, NULL, NULL, KangarooInputInfo, KangarooDIPInfo,
 	kangarooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,

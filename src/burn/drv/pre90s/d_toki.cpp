@@ -1856,9 +1856,9 @@ struct BurnDriver BurnDrvTokib = {
 	256, 224, 4, 3
 };
 
-// -----------------------------------------------------------------------------
+// ----------------------
 // Hacks and Translations
-// -----------------------------------------------------------------------------
+// ----------------------
 
 // Toki (Portuguese-BR Translation v1.07, Hack)
 // Modified by Antígeno
@@ -1893,8 +1893,8 @@ STD_ROM_FN(tokibr)
 
 struct BurnDriver BurnDrvTokibr = {
 	"tokibr", "toki", NULL, NULL, "2019",
-	"Toki (Portuguese-BR Translation v1.07, Hack)\0", NULL, "hack (Ant\u00EDgeno)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"Toki (Portuguese-BR Translation v1.07, Hack)\0", NULL, "hack (Antigeno)", "Miscellaneous",
+	NULL, NULL, L"hack (Ant\u00EDgeno)", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokibrRomInfo, tokibrRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,

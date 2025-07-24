@@ -18457,10 +18457,10 @@ struct BurnDriver BurnDrvMslugqy = {
 
 // Metal Slug - Super Vehicle-001 (Origins Item Random v2, Hack)
 // Modified by Alice
-// GOTVG 20250527
+// 20250718
 
 static struct BurnRomInfo mslugdyf2RomDesc[] = {
-	{ "201-p1dyf2.p1",	0x200000, 0x23bf5414, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1dyf2.p1",	0x200000, 0x84c96797, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENTS
 };
@@ -19249,11 +19249,11 @@ struct BurnDriver BurnDrvMslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Legendary Unlimited Fire v7.0, Hack)
 // Modified by AKS & Sakura
-// 20250706
+// 20250710
 
 static struct BurnRomInfo mslugxcqiRomDesc[] = {
-	{ "250-p1cqi.p1",	0x100000, 0x4fc439b6, 1 | BRF_ESS | BRF_PRG },
-	{ "250-p2cqi.ep1",	0x800000, 0xcc71939a, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p1cqi.p1",	0x100000, 0xab07db9b, 1 | BRF_ESS | BRF_PRG },
+	{ "250-p2cqi.ep1",	0x800000, 0x307f1787, 1 | BRF_ESS | BRF_PRG },
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },
 
@@ -19970,11 +19970,11 @@ struct BurnDriver BurnDrvMslug3cq = {
 
 // Metal Slug 3 (Legendary Unlimited Fire v7.0, Hack)
 // Modified by AKS & Sakura
-// 20250706
+// 20250714
 
 static struct BurnRomInfo mslug3cqiRomDesc[] = {
-	{ "256-p1cqi.p1",	0x100000, 0x62c572e0, 1 | BRF_ESS | BRF_PRG },
-	{ "256-p2cqi.sp2",	0x800000, 0x679274ad, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p1cqi.p1",	0x100000, 0xf4c15b2b, 1 | BRF_ESS | BRF_PRG },
+	{ "256-p2cqi.sp2",	0x800000, 0xb0a9fda3, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG3_DECRYPTED_SPR1
 	MSLUG3_DECRYPTED_SPR2
@@ -20278,11 +20278,11 @@ struct BurnDriver BurnDrvMslug4fd = {
 
 // Metal Slug 4 (Legendary Unlimited Fire v7.0, Hack)
 // Modified by AKS & Sakura
-// 20250706
+// 20250707
 
 static struct BurnRomInfo mslug4cqiRomDesc[] = {
 	{ "263-p1cqi.p1",	0x100000, 0x98bdd962, 1 | BRF_ESS | BRF_PRG },
-	{ "263-p2cqi.sp2",	0x800000, 0xdca90ac3, 1 | BRF_ESS | BRF_PRG },
+	{ "263-p2cqi.sp2",	0x800000, 0x4d8ff476, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG4_DECRYPTED_TEXT
 

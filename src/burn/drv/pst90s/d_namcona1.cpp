@@ -1478,15 +1478,15 @@ struct BurnDriver BurnDrvCgangpzlj = {
 
 // Emeraldia (Japan Version B)
 
-static struct BurnRomInfo emeraldajRomDesc[] = {
+static struct BurnRomInfo emeraldajbRomDesc[] = {
 	{ "em1-ep0lb.6c",			0x080000, 0xfcd55293, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "em1-ep0ub.6f",			0x080000, 0xa52f00d5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "em1-ep1u.7f",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
 };
 
-STDROMPICKEXT(emeraldaj, emeraldaj, namcoc69)
-STD_ROM_FN(emeraldaj)
+STDROMPICKEXT(emeraldajb, emeraldajb, namcoc69)
+STD_ROM_FN(emeraldajb)
 
 static INT32 emeralda_keycus_read(INT32 offset)
 {
@@ -1499,12 +1499,12 @@ static INT32 EmeraldaInit()
 	return DrvInit(emeralda_keycus_read);
 }
 
-struct BurnDriver BurnDrvEmeraldaj = {
-	"emeraldaj", "emeralda", "namcoc69", NULL, "1993",
+struct BurnDriver BurnDrvEmeraldajb = {
+	"emeraldajb", "emeralda", "namcoc69", NULL, "1993",
 	"Emeraldia (Japan Version B)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, emeraldajRomInfo, emeraldajRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	NULL, emeraldajbRomInfo, emeraldajbRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	EmeraldaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
 };
@@ -1512,22 +1512,22 @@ struct BurnDriver BurnDrvEmeraldaj = {
 
 // Emeraldia (Japan)
 
-static struct BurnRomInfo emeraldajaRomDesc[] = {
+static struct BurnRomInfo emeraldajRomDesc[] = {
 	{ "em1-ep0l.6c",			0x080000, 0x443f3fce, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "em1-ep0u.6f",			0x080000, 0x484a2a81, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "em1-ep1u.7c",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
 };
 
-STDROMPICKEXT(emeraldaja, emeraldaja, namcoc69)
-STD_ROM_FN(emeraldaja)
+STDROMPICKEXT(emeraldaj, emeraldaj, namcoc69)
+STD_ROM_FN(emeraldaj)
 
-struct BurnDriver BurnDrvEmeraldaja = {
-	"emeraldaja", "emeralda", "namcoc69", NULL, "1993",
+struct BurnDriver BurnDrvEmeraldaj = {
+	"emeraldaj", "emeralda", "namcoc69", NULL, "1993",
 	"Emeraldia (Japan)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, emeraldajaRomInfo, emeraldajaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	NULL, emeraldajRomInfo, emeraldajRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	EmeraldaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
 };
@@ -1875,6 +1875,29 @@ struct BurnDriver BurnDrvEmeralda = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, emeraldaRomInfo, emeraldaRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
+	EmeraldaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	304, 224, 4, 3
+};
+
+
+// Emeraldia (Japan Version D)
+
+static struct BurnRomInfo emeraldajdRomDesc[] = {
+	{ "em1-ep0ld.6c",			0x080000, 0x988eb1cb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "em1-ep0ud.6f",			0x080000, 0x6a169b8c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "em1-ep1u.7c",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
+};
+
+STDROMPICKEXT(emeraldajd, emeraldajd, namcoc69)
+STD_ROM_FN(emeraldajd)
+
+struct BurnDriver BurnDrvEmeraldajd = {
+	"emeraldajd", "emeralda", "namcoc69", NULL, "1993",
+	"Emeraldia (Japan Version D)\0", "Slight GFX Issues", "Namco", "NA-1 / NA-2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, emeraldajdRomInfo, emeraldajdRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	EmeraldaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3
 };

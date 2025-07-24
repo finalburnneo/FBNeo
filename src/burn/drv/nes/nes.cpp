@@ -557,6 +557,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x391be891) ? IS_PAL : 0; // Sensible Soccer
 	NESMode |= (ROMCRC == 0x732b1a7a) ? IS_PAL : 0; // Smurfs, The
 	NESMode |= (ROMCRC == 0x90757260) ? IS_PAL : 0; // Ikari Warriors
+	NESMode |= (ROMCRC == 0x40f76343) ? IS_PAL : 0; // Side Pocket
 
 	if (nScreenHeight >= SCREEN_HEIGHT_PAL && !(NESMode & SHOW_OVERSCAN) && !(NESMode & IS_PAL)) { // cobol overscan collides with.....
 		bprintf(0, _T("*  PAL mode detected!\n"));
@@ -10547,7 +10548,8 @@ static void ppu_init(INT32 is_pal)
 static UINT8 GetAvgBrightness(INT32 x, INT32 y)
 {
 	// Zapper Detection
-	const UINT32 rgbcolor = our_palette[screen[(y) * 256 + x] & 0x3f];
+	const INT32 start_y = (NESMode & SHOW_OVERSCAN) ? 0 : 8;
+	const UINT32 rgbcolor = our_palette[screen[(y + start_y) * 256 + x] & 0x3f];
 
 	return ((rgbcolor & 0xff) + ((rgbcolor >> 8) & 0xff) + ((rgbcolor >> 16) & 0xff)) / 3;
 }
@@ -10563,22 +10565,28 @@ static UINT8 nes_read_zapper()
 	if (RENDERING == 0 || scanline < 8 || scanline > 240)
 		return ZAP_NONSENSE;
 
+	// scale crosshair from gun device to nes coordinates
 	INT32 in_y = ((BurnGunReturnY(0) * 224) / 255);
 	INT32 in_x = BurnGunReturnX(0);
-	INT32 real_sl = scanline - 8;
+
+	// compute the last drawn scanline/pixel
+	const INT32 overscan = (NESMode & SHOW_OVERSCAN) ? 0 : 8;
+	INT32 real_sl = scanline - overscan;
+	INT32 real_pixel = pixel - 2;
 
 	// offscreen check
-	if (in_y == 0 || in_y == 224 || in_x == 0 || in_x == 255) {
+	if (in_y == 0 || in_y == 224 || in_x == 0 || in_x == 255 || real_sl < 0 || real_pixel < 0) {
 		return ZAP_NONSENSE;
 	}
 
-	for (INT32 yy = in_y - 2; yy < in_y + 2; yy++) {
+	for (INT32 yy = in_y - 2; yy < in_y + 12; yy++) {
 		if (yy < real_sl-8 || yy > real_sl || yy < 0 || yy > 224) continue;
 
-		for (INT32 xx = in_x - 2; xx < in_x + 2; xx++) {
+		for (INT32 xx = in_x - 4; xx < in_x + 4; xx++) {
 			if (xx < 0 || xx > 255) continue;
-			if (yy == real_sl && xx >= pixel) break; // <- timing is everything, here.
+			if (yy >= real_sl && xx >= real_pixel) break; // <- timing is everything, here.
 			if (GetAvgBrightness(xx, yy) > 0x88) { // + flux capacitor makes time travel possible
+				//bprintf(0, _T("HIT %d,%d  @ %d,%d    fr %d\n"), xx,yy, real_pixel,real_sl, nCurrentFrame);
 				return ZAP_SENSE;
 			}
 		}

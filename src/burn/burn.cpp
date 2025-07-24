@@ -6,6 +6,10 @@
 //#include "burn_sound.h" // included in burnint.h
 #include "driverlist.h"
 
+#ifdef BUILD_WIN32
+#include <windows.h>
+#endif
+
 #ifndef __LIBRETRO__
 // filler function, used if the application is not printing debug messages
 static INT32 __cdecl BurnbprintfFiller(INT32, TCHAR* , ...) { return 0; }
@@ -456,9 +460,20 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 	}
 
 	if (pszStringW && pszStringA && pszStringA[0]) {
-		if (mbstowcs(pszStringW, pszStringA, 256) != -1U) {
-			return pszStringW;
+#ifdef BUILD_WIN32
+		// CP_UTF8 65001
+		const int n = MultiByteToWideChar(65001, 0, pszStringA, -1, NULL, 0);
+		if (0 == n)
+			return NULL;
+
+		if (0 == MultiByteToWideChar(65001, 0, pszStringA, -1, pszStringW, n))
+			return NULL;
+#else
+		if (mbstowcs(pszStringW, pszStringA, 256) == -1U) {
+			return NULL;
 		}
+#endif
+		return pszStringW;
 	}
 
 #else

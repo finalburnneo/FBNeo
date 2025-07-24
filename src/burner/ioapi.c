@@ -20,7 +20,7 @@
 #define FTELLO_FUNC(stream) ftello(stream)
 #define FSEEKO_FUNC(stream, offset, origin) fseeko(stream, offset, origin)
 #else
-// note: In libretro, we want to always use fopen64/ftello64/fseeko64, which are redirecting to fopen/ftell/fseek becausee we force USE_FILE32API,
+// note: In libretro, we want to always use fopen64/ftello64/fseeko64, which are redirecting to fopen/ftell/fseek because we force USE_FILE32API,
 //       themselves redirecting to libretro's "file_stream_transform" abstraction layer. As of 2024-10-03, they don't have implementations for ftello/fseeko yet.
 #define FOPEN_FUNC(filename, mode) fopen64(filename, mode)
 #define FTELLO_FUNC(stream) ftello64(stream)

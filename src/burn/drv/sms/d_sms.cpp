@@ -21527,26 +21527,6 @@ struct BurnDriver BurnDrvsms_alexkidd3 = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd no Mundo dos Milagres (Hack, Portuguese)
-// https://romhackers.org/traducoes/console/master-system/alex-kidd-in-miracle-world-po.b.r.e
-// Modified by Mr.Fox
-static struct BurnRomInfo sms_AlexkiddbRomDesc[] = {
-	{ "Alex Kidd no Mundo dos Milagres T-Por (2017)(PO.B.R.E. - Mr.Fox).sms",	262144, 0x4c7c2042, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_Alexkiddb)
-STD_ROM_FN(sms_Alexkiddb)
-
-struct BurnDriver BurnDrvsms_Alexkiddb = {
-	"sms_alexkiddb", "sms_alexkidd", NULL, NULL, "2017",
-	"Alex Kidd no Mundo dos Milagres (Hack, Portuguese)\0", NULL, "PO.B.R.E. - Mr.Fox", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
-	SMSGetZipName, sms_AlexkiddbRomInfo, sms_AlexkiddbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Alex Kidd in Miracle World - Extended Edition (Hack, v1.3 Final)
 static struct BurnRomInfo sms_alexkiddeeRomDesc[] = {
 	{ "Alex Kidd in Miracle World - Extended Edition v1.3 Final (2024)(Adrian Gauna).sms",	524288, 0x1ae81c0b, BRF_PRG | BRF_ESS },
@@ -24832,6 +24812,25 @@ struct BurnDriver BurnDrvsms_herolancc = {
 	256, 192, 4, 3
 };
 
+// Disney's Aladdin (Hack, Portuguese v2.0)
+// https://www.romhacking.net/translations/7352/
+static struct BurnRomInfo sms_aladdinptRomDesc[] = {
+	{ "Disney's Aladdin T-Por v2.0 (2024)(SatY Traducoes).sms",	524288, 0x01ff1acc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_aladdinpt)
+STD_ROM_FN(sms_aladdinpt)
+
+struct BurnDriver BurnDrvsms_aladdinpt = {
+	"sms_aladdinpt", "sms_aladdin", NULL, NULL, "2024",
+	"Disney's Aladdin (Hack, Portuguese v2.0)\0", NULL, "SatY Traducoes", "Sega Master System",
+	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_aladdinptRomInfo, sms_aladdinptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Alex Kidd BMX Trial (Hack, Spanish v1.1)
 // https://www.romhacking.net/
 static struct BurnRomInfo sms_alexbmxcRomDesc[] = {
@@ -24870,6 +24869,26 @@ struct BurnDriver BurnDrvsms_alexhitwc = {
 	256, 192, 4, 3
 };
 
+// Alex Kidd: High-Tech World (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/master-system/alex-kidd-in-high-tech-world-games-br/
+
+static struct BurnRomInfo sms_alexhitwptRomDesc[] = {
+	{ "Alex Kidd - High-Tech World T-Por (2005)(Games BR).sms",	131072, 0xdd6277fb, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexhitwpt)
+STD_ROM_FN(sms_alexhitwpt)
+
+struct BurnDriver BurnDrvsms_alexhitwpt = {
+	"sms_alexhitwpt", "sms_alexhitw", NULL, NULL, "2005",
+	"Alex Kidd: High-Tech World (Hack, Portuguese)\0", NULL, "Games BR", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexhitwptRomInfo, sms_alexhitwptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Alex Kidd: The Lost Stars (Hack, Spanish)
 // https://www.romhacking.net/translations/4036/
 static struct BurnRomInfo sms_alexlostcRomDesc[] = {
@@ -24885,6 +24904,25 @@ struct BurnDriver BurnDrvsms_alexlostc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexlostcRomInfo, sms_alexlostcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Alex Kidd no Mundo dos Milagres (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/master-system/alex-kidd-in-miracle-world-po.b.r.e
+static struct BurnRomInfo sms_alexkiddbRomDesc[] = {
+	{ "Alex Kidd no Mundo dos Milagres T-Por (2017)(PO.B.R.E.).sms",	262144, 0x4c7c2042, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexkiddb)
+STD_ROM_FN(sms_alexkiddb)
+
+struct BurnDriver BurnDrvsms_alexkiddb = {
+	"sms_alexkiddb", "sms_alexkidd", NULL, NULL, "2017",
+	"Alex Kidd no Mundo dos Milagres (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexkiddbRomInfo, sms_alexkiddbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24923,6 +24961,25 @@ struct BurnDriver BurnDrvsms_alexshinc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexshincRomInfo, sms_alexshincRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Alex Kidd in Shinobi World (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/master-system/alex-kidd-in-shinobi-world-po.b.r.e
+static struct BurnRomInfo sms_alexshinptRomDesc[] = {
+	{ "Alex Kidd no Mundo de Shinobi T-Por (2017)(PO.B.R.E.).sms",	262144, 0x005ede22, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexshinpt)
+STD_ROM_FN(sms_alexshinpt)
+
+struct BurnDriver BurnDrvsms_alexshinpt = {
+	"sms_alexshinpt", "sms_alexshin", NULL, NULL, "2017",
+	"Alex Kidd no Mundo de Shinobi (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexshinptRomInfo, sms_alexshinptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -25687,6 +25744,25 @@ struct BurnDriver BurnDrvgg_moldorane = {
 	256, 192, 4, 3
 };
 
+// Ninja Gaiden (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/master-system/ninja-gaiden-versao-final-do-jogo-po.b.r.e
+static struct BurnRomInfo sms_ngaidenptRomDesc[] = {
+	{ "Ninja Gaiden T-Por v1.2 (2008-2021)(PO.B.R.E.).sms",	262144, 0xc73a614c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_ngaidenpt)
+STD_ROM_FN(sms_ngaidenpt)
+
+struct BurnDriver BurnDrvsms_ngaidenpt = {
+	"sms_ngaidenpt", "sms_ngaiden", NULL, NULL, "2008-2021",
+	"Ninja Gaiden (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_ngaidenptRomInfo, sms_ngaidenptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Phantasy Star (Japan) (Hack, English v2.5)
 static struct BurnRomInfo sms_pstarjeRomDesc[] = {
 	{ "Phantasy Star T-Eng v2.5 (Japan)(2024)(SMS Power!).sms",	524288, 0x98d2b825, BRF_PRG | BRF_ESS },
@@ -25779,6 +25855,25 @@ struct BurnDriver BurnDrvsms_ppersiac = {
 	256, 192, 4, 3
 };
 
+// Psychic World ~ Mundo Psíquico (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/master-system/psychic-world-po.b.r.e
+static struct BurnRomInfo sms_psychicwptRomDesc[] = {
+	{ "Psychic World - Mundo Psiquico T-Por (2019)(PO.B.R.E.).sms",	262144, 0xb9f22a5e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_psychicwpt)
+STD_ROM_FN(sms_psychicwpt)
+
+struct BurnDriver BurnDrvsms_psychicwpt = {
+	"sms_psychicwpt", "sms_psychicw", NULL, NULL, "2019",
+	"Psychic World ~ Mundo Psiquico (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	L"Psychic World ~ Mundo Ps\u00edquico (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_psychicwptRomInfo, sms_psychicwptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Shadow of the Beast (Hack, Spanish v1.12a)
 // https://www.romhacking.net/translations/5455/
 static struct BurnRomInfo sms_beastcRomDesc[] = {
@@ -25796,7 +25891,25 @@ struct BurnDriver BurnDrvsms_beastc = {
 	SMSGetZipName, sms_beastcRomInfo, sms_beastcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
-};								
+};
+
+// Rastan (Hack, Portuguese v1.05)
+static struct BurnRomInfo sms_rastanptRomDesc[] = {
+	{ "Rastan T-Por v1.05 (2019)(Antigeno).sms",	262144, 0xd10011cd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_rastanpt)
+STD_ROM_FN(sms_rastanpt)
+
+struct BurnDriver BurnDrvsms_rastanpt = {
+	"sms_rastanpt", "sms_rastan", NULL, NULL, "2019",
+	"Rastan (Hack, Portuguese v1.05)\0", NULL, "Antigeno", "Sega Master System",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_rastanptRomInfo, sms_rastanptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
 
 // Shining Force Gaiden - Final Conflict (Hack, English)
 // https://www.romhacking.net/translations/876/
@@ -25851,6 +25964,25 @@ struct BurnDriver BurnDrvsms_bartvswc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_bartvswcRomInfo, sms_bartvswcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Smurfs, Os (Hack, Portuguese)
+// https://www.romhacking.net/translations/7359/
+static struct BurnRomInfo sms_smurfsptRomDesc[] = {
+	{ "Smurfs, Os T-Por (2024)(SatY Traducoes).sms",	262144, 0x2261a06c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_smurfspt)
+STD_ROM_FN(sms_smurfspt)
+
+struct BurnDriver BurnDrvsms_smurfspt = {
+	"sms_smurfspt", "sms_smurfs", NULL, NULL, "2024",
+	"Smurfs, Os (Hack, Portuguese)\0", NULL, "SatY Traducoes", "Sega Master System",
+	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_smurfsptRomInfo, sms_smurfsptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -25986,7 +26118,25 @@ struct BurnDriver BurnDrvsms_termntrc = {
 	SMSGetZipName, sms_termntrcRomInfo, sms_termntrcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
-};	
+};
+
+// Terminator, The (Hack, Portuguese v1.09)
+static struct BurnRomInfo sms_termntrptRomDesc[] = {
+	{ "Terminator, The T-Por v1.09 (2024)(Antigeno).sms",	262144, 0xe829e26e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_termntrpt)
+STD_ROM_FN(sms_termntrpt)
+
+struct BurnDriver BurnDrvsms_termntrpt = {
+	"sms_termntrpt", "sms_termntr", NULL, NULL, "2024",
+	"Terminator, The (Hack, Portuguese v1.09)\0", NULL, "Antigeno", "Sega Master System",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_termntrptRomInfo, sms_termntrptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
 
 // Tom and Jerry - The Movie (Hack, Spanish)
 // https://www.romhacking.net/translations/3950/

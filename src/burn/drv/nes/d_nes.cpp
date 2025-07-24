@@ -11708,7 +11708,7 @@ STD_ROM_FN(nes_thunderbolt)
 
 struct BurnDriver BurnDrvnes_thunderbolt = {
 	"nes_thunderbolt", NULL, NULL, NULL, "1993-2019",
-	"Thunderbolt Fighting Plane (World) (Unl)\0", NULL, "Piko Interactive", "NES / Famicom",
+	"Thunderbolt Fighting Plane (World)\0", NULL, "Piko Interactive", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_thunderboltRomInfo, nes_thunderboltRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

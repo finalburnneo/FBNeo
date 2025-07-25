@@ -5293,7 +5293,7 @@ struct BurnDriver BurnDrvnes_contrac = {
 };
 
 // Contra: Demon Contra (Hack, Chinese)
-// Modified by Huan Tian / »ÃÌì - GOTVG 20200406
+// Modified by Huan Tian / ï¿½ï¿½ï¿½ï¿½ - GOTVG 20200406
 static struct BurnRomInfo nes_contramdlRomDesc[] = {
 	{ "Contra - Demon Contra T-Chi (2020)(Huan Tian).nes",          541200, 0x78e3d5a4, BRF_ESS | BRF_PRG },
 };
@@ -5331,7 +5331,7 @@ struct BurnDriver BurnDrvnes_contraforcec = {
 };
 
 // Contra: The Last Rebirth (Hack, Chinese)
-// Modified by Jing Jing Bu Xiang Wo / ¾²¾²²»ÏëÎÒ - GOTVG 20221226
+// Modified by Jing Jing Bu Xiang Wo / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - GOTVG 20221226
 static struct BurnRomInfo nes_contracsRomDesc[] = {
 	{ "Contra - The Last Rebirth T-Chi (2022)(Jing Jing Bu Xiang Wo).nes",          541200, 0xe7e2ffa3, BRF_ESS | BRF_PRG },
 };
@@ -5521,7 +5521,7 @@ struct BurnDriver BurnDrvnes_finalmissionjc = {
 };
 
 // Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Hack, Chinese)
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶þ, ZARD/ÅÓÏÈÉú, º®Ñ©Ê¹Õß
+// Modified by ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ZARD/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Ñ©Ê¹ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-53027-1-1.html
 static struct BurnRomInfo nes_fireembcRomDesc[] = {
 	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi T-Chi (2022)(Han Xue Shi Zhe).nes",          655376, 0xa3126533, BRF_ESS | BRF_PRG },
@@ -5541,7 +5541,7 @@ struct BurnDriver BurnDrvnes_fireembc = {
 };
 
 // Fire Emblem Gaiden (Hack, Chinese v2.0)
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶þ, º®Ñ©Ê¹Õß
+// Modified by ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ï¿½ï¿½Ñ©Ê¹ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-51529-1-1.html
 static struct BurnRomInfo nes_fireembgaicRomDesc[] = {
 	{ "Fire Emblem Gaiden T-Chi v2.0 (2021)(Han Xue Shi Zhe).nes",          663568, 0x1df6fb24, BRF_ESS | BRF_PRG },
@@ -5769,7 +5769,7 @@ struct BurnDriver BurnDrvnes_jackalc = {
 };
 
 // Jackal - Endless Mission (Hack, v1.2)
-// Modified by HHNM Team - ZENG GE / Ôø¸ç
+// Modified by HHNM Team - ZENG GE / ï¿½ï¿½ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html
 static struct BurnRomInfo nes_jackalemRomDesc[] = {
 	{ "Jackal - Endless Mission v1.2 (2021)(HHNM Team - ZENG GE).nes",          262160, 0x833c6bc4, BRF_ESS | BRF_PRG },
@@ -6605,7 +6605,7 @@ struct BurnDriver BurnDrvnes_takameivic = {
 };
 
 // Teenage Mutant Ninja Turtles (Hack, Chinese v1.1)
-// Modified by MEZARANSU, ½ªÎ¬µÚ¶þ, ÂÞÔÆ
+// Modified by MEZARANSU, ï¿½ï¿½Î¬ï¿½Ú¶ï¿½, ï¿½ï¿½ï¿½ï¿½
 // https://www.nesbbs.com/bbs/thread-49880-1-1.html
 static struct BurnRomInfo nes_tmntcRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles T-Chi v1.1 (2021)(MEZARANSU).nes",          393232, 0xa02316dc, BRF_ESS | BRF_PRG },
@@ -11698,6 +11698,24 @@ struct BurnDriver BurnDrvnes_tekken3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Thunderbolt Fighting Plane (World)
+static struct BurnRomInfo nes_thunderboltRomDesc[] = {
+	{ "Thunderbolt Fighting Plane (1993-2019)(Piko Interactive)",  262160, 0x933e2aa8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_thunderbolt)
+STD_ROM_FN(nes_thunderbolt)
+
+struct BurnDriver BurnDrvnes_thunderbolt = {
+	"nes_thunderbolt", NULL, NULL, NULL, "1993-2019",
+	"Thunderbolt Fighting Plane (World)\0", NULL, "Piko Interactive", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_thunderboltRomInfo, nes_thunderboltRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Thunderbolt 2 (Taiwan) (Unl)
 static struct BurnRomInfo nes_thunderbolt2RomDesc[] = {
 	{ "Thunderbolt 2 (Taiwan)(Unl)(1993)(Gamtec).nes",          262160, 0xce1813c9, BRF_ESS | BRF_PRG },
@@ -11707,10 +11725,10 @@ STD_ROM_PICK(nes_thunderbolt2)
 STD_ROM_FN(nes_thunderbolt2)
 
 struct BurnDriver BurnDrvnes_thunderbolt2 = {
-	"nes_thunderbolt2", NULL, NULL, NULL, "1993",
+	"nes_thunderbolt2", "nes_thunderbolt", NULL, NULL, "1993",
 	"Thunderbolt 2 (Taiwan) (Unl)\0", NULL, "Gamtec", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_thunderbolt2RomInfo, nes_thunderbolt2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13846,7 +13864,7 @@ struct BurnDriver BurnDrvnes_bustina = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Cadàveriön (HB)
+// Cadï¿½veriï¿½n (HB)
 static struct BurnRomInfo nes_cadaverionRomDesc[] = {
 	{ "Cadaverion (2018)(The Mojon Twins).nes",          40976, 0x6a45c96a, BRF_ESS | BRF_PRG },
 };
@@ -23582,7 +23600,7 @@ struct BurnDriver BurnDrvnes_wordle = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Wo Xiang Niào Niào (HB)
+// Wo Xiang Niï¿½o Niï¿½o (HB)
 static struct BurnRomInfo nes_wxniaoRomDesc[] = {
 	{ "Wo Xiang Niao Niao (2016)(Xin Xin).nes",          40976, 0x7063779c, BRF_ESS | BRF_PRG },
 };

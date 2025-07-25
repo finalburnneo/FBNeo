@@ -11970,6 +11970,24 @@ struct BurnDriver BurnDrvnes_xiaohonmao = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Xiao Mali (China) (Unl)
+static struct BurnRomInfo nes_xiaomaliRomDesc[] = {
+	{ "Xiao Mali (China)(Unl)(1991)(Nei-Hu).nes",          24592, 0xc8f9a5ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_xiaomali)
+STD_ROM_FN(nes_xiaomali)
+
+struct BurnDriver BurnDrvnes_xiaomali = {
+	"nes_xiaomali", NULL, NULL, NULL, "1991",
+	"Xiao Mali (China) (Unl)\0", NULL, "Nei-Hu", "NES / Famicom",
+	L"Xiao Mali (China) (Unl)\0\u5c0f\u746a\u740d\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_CASINO, 0,
+	NESGetZipName, nes_xiaomaliRomInfo, nes_xiaomaliRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Yars Revenge (Unl)
 static struct BurnRomInfo nes_yarsrevRomDesc[] = {
 	{ "Yars Revenge (Unl)(200x)(Nice Code).nes",          16400, 0x70132549, BRF_ESS | BRF_PRG },

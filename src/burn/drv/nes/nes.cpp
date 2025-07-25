@@ -2401,6 +2401,75 @@ static void mapper132_map()
 #undef mapper132_reg
 #undef mapper132_reghi
 
+// ---[ mapper 173 (Idea-Tek ET-xx series) Xiao Mali
+#define mapper173_p_reg    (mapper_regs[0x1f - 0])  // 3-bit P register
+#define mapper173_r_reg    (mapper_regs[0x1f - 1])  // 3-bit R register
+#define mapper173_s_bit    (mapper_regs[0x1f - 2])  // 1-bit S flag
+#define mapper173_inc_bit  (mapper_regs[0x1f - 3])  // 1-bit increment mode
+#define mapper173_inv_bit  (mapper_regs[0x1f - 4])  // 1-bit invert flag
+
+static void mapper173_write(UINT16 address, UINT8 data) {
+	// $4100-$4103 register writes
+	if ((address & 0xe100) == 0x4100) {
+		switch (address & 0x03) {
+			case 0x00:  // $4100
+				if (mapper173_inc_bit) {
+					// Increment R register
+					mapper173_r_reg = (mapper173_r_reg + 1) & 0x07;
+				} else {
+					// Copy P to R (with optional inversion)
+					mapper173_r_reg = mapper173_inv_bit ? (~mapper173_p_reg & 0x07) : mapper173_p_reg;
+				}
+				break;
+
+			case 0x01:  // $4101
+				mapper173_inv_bit = data & 0x01;
+				mapper_map();  // Invert affects CHR banking immediately
+				break;
+
+			case 0x02:  // $4102
+				mapper173_s_bit = (data >> 3) & 0x01;
+				mapper173_p_reg = data & 0x07;
+				break;
+
+			case 0x03:  // $4103
+				mapper173_inc_bit = data & 0x01;
+				break;
+		}
+	}
+	// $8000+ banking control
+	else if (address & 0x8000) {
+		// Output R register low 2 bits to CHR banking pins
+		mapper_map();
+	}
+}
+
+static UINT8 mapper173_read(UINT16 address) {
+	// $4100 register read
+	if (address == 0x4100) {
+		// [xxxx SRRR] format with S inverted by V bit
+		return (mapper173_s_bit << 3) |
+			(mapper173_r_reg & 0x07) |
+			((mapper173_s_bit ^ mapper173_inv_bit) << 4);
+	}
+	return cpu_open_bus;
+}
+
+static void mapper173_map() {
+	// Fixed 32KB PRG ROM (no banking)
+	mapper_map_prg(32, 0, 0);
+
+	// Calculate CHR bank: (R & 1) | (~INV << 1)
+	UINT8 chr_bank = (mapper173_r_reg & 0x01) | ((~mapper173_inv_bit & 0x01) << 1);
+	mapper_map_chr(8, 0, chr_bank);
+}
+
+#undef mapper173_p_reg
+#undef mapper173_r_reg
+#undef mapper173_s_bit
+#undef mapper173_inc_bit
+#undef mapper173_inv_bit
+
 
 // flashrom simulator (flash eeprom)
 #define flashrom_cmd            (mapper_regs[0x1f - 0x9]) // must not conflict with mmc3 for 406 (Haradius Zero)
@@ -2586,7 +2655,7 @@ static void mapper03_cycle()
 }
 #undef mapper03_need_update
 
-// ---[ mapper 04 (mmc3) & mmc3-based: 12, 76, 95, 108, 115, 118, 119, 189, 262
+// ---[ mapper 04 (mmc3) & mmc3-based: 12, 76, 95, 108, 114, 115, 118, 119, 189, 262
 #define mapper4_banksel         (mapper_regs[0x1f - 0])
 #define mapper4_mirror			(mapper_regs[0x1f - 1])
 #define mapper4_irqlatch 		(mapper_regs[0x1f - 2])
@@ -2608,7 +2677,7 @@ static void mapper03_cycle()
 // mapper 165 mmc3 w/mmc4-like 4k chr banking latch
 #define mapper165_chrlatch(x)   (mapper_regs[(0x1f - 0x0a) + (x)])
 #define mapper165_update        (mapper_regs[0x1f - 0xb])
-// mapper 114 (MMC3 variant)
+// mapper 114 (mmc3 variant)
 #define mapper114_exreg         (mapper_regs[0x1f - 0x10]) // Extended register
 #define mapper114_cmdin         (mapper_regs[0x1f - 0x11]) // Command status flag
 // Command value arrangement
@@ -3560,8 +3629,7 @@ static void mapper114_pwrap(INT32 slot, INT32 bank)
 		// 114: Two 16KB blocks mapped to the same bank
 		mapper_map_prg(16, 0, mapper114_exreg & 0x0f);
 		mapper_map_prg(16, 1, mapper114_exreg & 0x0f);
-	}
-	else {
+	} else {
 		// MMC3
 		mapper_map_prg(8, slot, bank & 0x3f);
 	}
@@ -8541,6 +8609,16 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 173: { // Xiao Mali
+			mapper_write   = mapper173_write;
+			mapper_map     = mapper173_map;
+			psg_area_read  = mapper173_read;
+			psg_area_write = mapper173_write;
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
 		case 3: { // CNROM
 			mapper_write = mapper03_write;
 			mapper_map   = mapper03_map;
@@ -9705,6 +9783,9 @@ static INT32 mapper_init(INT32 mappernum)
 	}
 	return retval;
 }
+
+#undef mapper114_exreg
+#undef mapper114_cmdin
 
 static void mapper_irq(INT32 delay_cyc)
 {

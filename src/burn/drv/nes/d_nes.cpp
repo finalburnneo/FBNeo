@@ -21037,24 +21037,6 @@ struct BurnDriver BurnDrvnes_slowmoleplus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Slow Mole (HB, v1.2b)
-static struct BurnRomInfo nes_eeeeeerrrrRomDesc[] = {
-	{ "Slow xxxx.nes",          524304, 0xf242c3b6, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_eeeeeerrrr)
-STD_ROM_FN(nes_eeeeeerrrr)
-
-struct BurnDriver BurnDrvnes_eeeeeerrrr = {
-	"nes_eeeeeerrrr", NULL, NULL, NULL, "2021",
-	"xxxxxxx (HB, v1.2b)\0", NULL, "Erik Rosenlund", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_eeeeeerrrrRomInfo, nes_eeeeeerrrrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Snail Hop (HB)
 static struct BurnRomInfo nes_snailhopRomDesc[] = {
 	{ "Snail Hop (2023)(Libra Bits).nes",          163856, 0xba16a036, BRF_ESS | BRF_PRG },

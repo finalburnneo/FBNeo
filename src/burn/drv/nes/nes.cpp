@@ -2608,6 +2608,11 @@ static void mapper03_cycle()
 // mapper 165 mmc3 w/mmc4-like 4k chr banking latch
 #define mapper165_chrlatch(x)   (mapper_regs[(0x1f - 0x0a) + (x)])
 #define mapper165_update        (mapper_regs[0x1f - 0xb])
+// mapper 114 (MMC3 variant)
+#define mapper114_exreg         (mapper_regs[0x1f - 0x10]) // Extended register
+#define mapper114_cmdin         (mapper_regs[0x1f - 0x11]) // Command status flag
+// Command value arrangement
+static const UINT8 mapper114_perm[8] = { 0, 3, 1, 5, 6, 7, 2, 4 };
 
 static UINT8 mapper04_vs_rbi_tko_prot(UINT16 address)
 {
@@ -3547,6 +3552,78 @@ static void mapper04_scanline()
 		}
 	}
 	mapper4_irqreload = 0;
+}
+
+static void mapper114_pwrap(INT32 slot, INT32 bank)
+{
+	if (mapper114_exreg & 0x80) {
+		// 114: Two 16KB blocks mapped to the same bank
+		mapper_map_prg(16, 0, mapper114_exreg & 0x0f);
+		mapper_map_prg(16, 1, mapper114_exreg & 0x0f);
+	}
+	else {
+		// MMC3
+		mapper_map_prg(8, slot, bank & 0x3f);
+	}
+}
+
+// Extended register write ($5000-$7FFF)
+static void mapper114_exwrite(UINT16 address, UINT8 data)
+{
+	if (address <= 0x7fff) {
+		mapper114_exreg = data;
+		mapper_map();
+	}
+}
+
+// Main register write ($8000-$FFFF)
+static void mapper114_write(UINT16 address, UINT8 data)
+{
+	switch (address & 0xe001) {
+		case 0x8001: mapper04_write(0xa000, data); break;   // Remap to MMC3 $A000
+		case 0xa000:
+			mapper04_write(0x8000, (data & 0xc0) | mapper114_perm[data & 0x07]);
+			mapper114_cmdin = 1;
+			break;
+		case 0xc000:
+			if (mapper114_cmdin) {
+				mapper04_write(0x8001, data);
+				mapper114_cmdin = 0;
+			}
+			break;
+		case 0xa001: mapper04_write(0xc000, data); break;	// IRQ Latch
+		case 0xc001: mapper04_write(0xc001, data); break;	// IRQ Reload
+		case 0xe000: mapper04_write(0xe000, data); break;	// IRQ Disable
+		case 0xe001: mapper04_write(0xe001, data); break;	// IRQ Enable
+	}
+}
+
+static void mapper114_map()
+{
+	mapper114_pwrap(0, mapper_regs[6]);
+	mapper114_pwrap(1, mapper_regs[7]);
+	mapper114_pwrap(2, -2);
+	mapper114_pwrap(3, -1);
+
+	// CHR mapping uses standard MMC3 logic
+	if (~mapper4_banksel & 0x80) {
+		mapper_map_chr(2, 0, mapper_regs[0] >> 1);
+		mapper_map_chr(2, 1, mapper_regs[1] >> 1);
+		mapper_map_chr(1, 4, mapper_regs[2]);
+		mapper_map_chr(1, 5, mapper_regs[3]);
+		mapper_map_chr(1, 6, mapper_regs[4]);
+		mapper_map_chr(1, 7, mapper_regs[5]);
+	} else {
+		mapper_map_chr(1, 0, mapper_regs[2]);
+		mapper_map_chr(1, 1, mapper_regs[3]);
+		mapper_map_chr(1, 2, mapper_regs[4]);
+		mapper_map_chr(1, 3, mapper_regs[5]);
+		mapper_map_chr(2, 2, mapper_regs[0] >> 1);
+		mapper_map_chr(2, 3, mapper_regs[1] >> 1);
+	}
+
+	// mirroring
+	set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
 //#undef mapper4_mirror // used in mapper_init()
@@ -9594,6 +9671,34 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
 			mapper_map_prg( 8, 3, -1);
 		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 114: { // mmc3-derivative (Lion King, The)
+			mapper_write    = mapper114_write;
+			cart_exp_write  = mapper114_exwrite;	// Extended area
+			mapper_map      = mapper114_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror  = Cart.Mirroring;
+
+			// default mmc3 regs:
+			// chr
+			mapper_regs[0] = 0;
+			mapper_regs[1] = 2;
+			mapper_regs[2] = 4;
+			mapper_regs[3] = 5;
+			mapper_regs[4] = 6;
+			mapper_regs[5] = 7;
+			// prg
+			mapper_regs[6] = 0;
+			mapper_regs[7] = 1;
+
+			// Initialize & Reset
+			mapper114_exreg = 0;
+			mapper114_cmdin = 0;
+
+			mapper_map();
 			retval = 0;
 			break;
 		}

@@ -11013,6 +11013,24 @@ struct BurnDriver BurnDrvnes_lionkinleg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Lion King, The (Unl, v1.1)
+static struct BurnRomInfo nes_lionkingunlRomDesc[] = {
+	{ "Lion King, The v1.1 (Unl)(1995)(Super Game).nes",          524304, 0xf242c3b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lionkingunl)
+STD_ROM_FN(nes_lionkingunl)
+
+struct BurnDriver BurnDrvnes_lionkingunl = {
+	"nes_lionkingunl", NULL, NULL, NULL, "1995",
+	"Lion King, The (Unl, v1.1)\0", NULL, "Super Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_lionkingunlRomInfo, nes_lionkingunlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Mahjong Block (Unl)
 static struct BurnRomInfo nes_mahjongblockRomDesc[] = {
 	{ "Mahjong Block (Unl)(1991)(Idea-tek).nes",          65552, 0x30820b60, BRF_ESS | BRF_PRG },
@@ -21015,6 +21033,24 @@ struct BurnDriver BurnDrvnes_slowmoleplus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_slowmoleplusRomInfo, nes_slowmoleplusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Slow Mole (HB, v1.2b)
+static struct BurnRomInfo nes_eeeeeerrrrRomDesc[] = {
+	{ "Slow xxxx.nes",          524304, 0xf242c3b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_eeeeeerrrr)
+STD_ROM_FN(nes_eeeeeerrrr)
+
+struct BurnDriver BurnDrvnes_eeeeeerrrr = {
+	"nes_eeeeeerrrr", NULL, NULL, NULL, "2021",
+	"xxxxxxx (HB, v1.2b)\0", NULL, "Erik Rosenlund", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_eeeeeerrrrRomInfo, nes_eeeeeerrrrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

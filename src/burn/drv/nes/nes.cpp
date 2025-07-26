@@ -3271,6 +3271,52 @@ static void mapper119_map()
 		set_mirroring((mapper4_mirror) ? VERTICAL : HORIZONTAL);
 }
 
+static void mapper191_chrmap(INT32 slot, INT32 bank)
+{
+	if (bank & 0x80) {	// bit7 == 1
+		UINT8 ram_bank = bank & 0x01;
+		mapper_map_chr_ramrom(1, slot, ram_bank, MEM_RAM);
+	} else {
+		mapper_map_chr_ramrom(1, slot, bank,     MEM_ROM);
+	}
+}
+
+static void mapper191_map()
+{
+	mapper_map_prg(8, 1, mapper_regs[7]);
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
+
+	if (~mapper4_banksel & 0x80) {
+		mapper191_chrmap(0, mapper_regs[0] & 0xfe);
+		mapper191_chrmap(1, mapper_regs[0] | 0x01);
+		mapper191_chrmap(2, mapper_regs[1] & 0xfe);
+		mapper191_chrmap(3, mapper_regs[1] | 0x01);
+		mapper191_chrmap(4, mapper_regs[2]);
+		mapper191_chrmap(5, mapper_regs[3]);
+		mapper191_chrmap(6, mapper_regs[4]);
+		mapper191_chrmap(7, mapper_regs[5]);
+	} else {
+		mapper191_chrmap(0, mapper_regs[2]);
+		mapper191_chrmap(1, mapper_regs[3]);
+		mapper191_chrmap(2, mapper_regs[4]);
+		mapper191_chrmap(3, mapper_regs[5]);
+		mapper191_chrmap(4, mapper_regs[0] & 0xfe);
+		mapper191_chrmap(5, mapper_regs[0] | 0x01);
+		mapper191_chrmap(6, mapper_regs[1] & 0xfe);
+		mapper191_chrmap(7, mapper_regs[1] | 0x01);
+	}
+
+	if (Cart.Mirroring != 4) {
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+	}
+}
+
 static void mapper165_ppu_clock(UINT16 address)
 {
 	if (mapper165_update) {
@@ -9651,6 +9697,29 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
 		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 191: { // there is also an additional 2k of CHR-RAM which is selectable. Bit 7 of each CHR reg selects RAM or ROM (1=RAM, 0=ROM)
+			mapper_write = mapper04_write;
+			mapper_map = mapper191_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror = Cart.Mirroring;
+
+			mapper_regs[0] = 0;
+			mapper_regs[1] = 2;
+			mapper_regs[2] = 4;
+			mapper_regs[3] = 5;
+			mapper_regs[4] = 6;
+			mapper_regs[5] = 7;
+			mapper_regs[6] = 0;
+			mapper_regs[7] = 1;
+
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg(32, 0, 0);
+			mapper_map_prg(8, 3, -1);
+			mapper_map();
 			retval = 0;
 			break;
 		}

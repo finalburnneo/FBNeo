@@ -6547,6 +6547,25 @@ struct BurnDriver BurnDrvnes_spidemanc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Sugoro Quest: Quest of Dice Heros, The (Hack, Chinese)
+// http://www.nesbbs.com/bbs/thread-12374-1-1.html
+static struct BurnRomInfo nes_sugorquetscRomDesc[] = {
+	{ "Sugoro Quest - Quest of Dice Heros, The T-Chs (2012)(Jiu Ban).nes",          524304, 0xf94149c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sugorquetsc)
+STD_ROM_FN(nes_sugorquetsc)
+
+struct BurnDriver BurnDrvnes_sugorquetsc = {
+	"nes_sugorquetsc", "nes_sugorque", NULL, NULL, "2012",
+	"Sugoro Quest: Quest of Dice Heros, The (Hack, Chinese)\0", NULL, "Jiu Ban", "NES / Famicom",
+	L"Sugoro Quest: Quest of Dice Heros, The (Hack, Chinese)\0\u8d4c\u795e: \u63b7\u9ab0\u6218\u58eb\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
+	NESGetZipName, nes_sugorquetscRomInfo, nes_sugorquetscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Chinese II - Dragon Kid (Hack, Chinese v1.4)
 // https://www.nesbbs.com/bbs/thread-46648-1-1.html
 static struct BurnRomInfo nes_superchiiRomDesc[] = {
@@ -49010,7 +49029,7 @@ struct BurnDriver BurnDrvnes_stuntkids = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Sugoro Quest - Dice no Senshitachi (Japan)
+// Sugoro Quest: Dice no Senshitachi (Japan)
 static struct BurnRomInfo nes_sugorquejRomDesc[] = {
 	{ "Sugoro Quest - Dice no Senshitachi (Japan)(1991)(Technos).nes",          262160, 0x0ac48932, BRF_ESS | BRF_PRG },
 };
@@ -49020,18 +49039,18 @@ STD_ROM_FN(nes_sugorquej)
 
 struct BurnDriver BurnDrvnes_sugorquej = {
 	"nes_sugorquej", "nes_sugorque", NULL, NULL, "1991",
-	"Sugoro Quest - Dice no Senshitachi (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Sugoro Quest: Dice no Senshitachi (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
+	L"Sugoro Quest: Dice no Senshitachi (Japan)\0\u3059\u3054\u308d\u30af\u30a8\u30b9\u30c8 \u30c0\u30a4\u30b9\u306e\u6226\u58eb\u305f\u3061\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_sugorquejRomInfo, nes_sugorquejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Sugoro Quest - Dice no Senshitachi (Hack, English)
+// Sugoro Quest: Quest of Dice Heros, The (Hack, English)
 // https://www.romhacking.net/translations/218/
 static struct BurnRomInfo nes_sugorqueRomDesc[] = {
-	{ "Sugoro Quest - Dice no Senshitachi T-Eng (2007)(AlanMidas).nes",          262160, 0xd2cdeb7b, BRF_ESS | BRF_PRG },
+	{ "Sugoro Quest - Quest of Dice Heros, The T-Eng (2007)(AlanMidas).nes",          262160, 0xd2cdeb7b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_sugorque)
@@ -49039,7 +49058,7 @@ STD_ROM_FN(nes_sugorque)
 
 struct BurnDriver BurnDrvnes_sugorque = {
 	"nes_sugorque", NULL, NULL, NULL, "2007",
-	"Sugoro Quest - Dice no Senshitachi (Hack, English)\0", NULL, "AlanMidas", "NES / Famicom",
+	"Sugoro Quest: Quest of Dice Heros, The (Hack, English)\0", NULL, "AlanMidas", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_sugorqueRomInfo, nes_sugorqueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

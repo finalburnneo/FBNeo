@@ -5655,6 +5655,24 @@ struct BurnDriver BurnDrvnes_gomokuc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Goonies, The (Hack, Traditional Chinese)
+static struct BurnRomInfo nes_gooniesttcRomDesc[] = {
+	{ "Goonies, The T-Cht (2025)(NOKOH).nes",          131088, 0xdc21318d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gooniesttc)
+STD_ROM_FN(nes_gooniesttc)
+
+struct BurnDriver BurnDrvnes_gooniesttc = {
+	"nes_gooniesttc", "nes_goonies", NULL, NULL, "2025",
+	"Goonies, The (Hack, Traditional Chinese)\0", NULL, "NOKOH", "NES / Famicom",
+	L"Goonies, The (Hack, Traditional Chinese)\0\u4e03\u5bf6\u5947\u8b00\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_gooniesttcRomInfo, nes_gooniesttcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Grand Master (Hack, Chinese v1.1)
 // https://www.nesbbs.com/bbs/thread-51304-1-1.html
 static struct BurnRomInfo nes_grandmastercRomDesc[] = {
@@ -6429,6 +6447,24 @@ struct BurnDriver BurnDrvnes_rockm3c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_rockm3cRomInfo, nes_rockm3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Rockman 6: Shijou Saidai no Tatakai!! (Hack, Traditional Chinese)
+static struct BurnRomInfo nes_rockm6ttcRomDesc[] = {
+	{ "Rockman 6 - Shijou Saidai no Tatakai!! T-Cht (2025)(NOKOH).nes",          524304, 0x375e5982, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm6ttc)
+STD_ROM_FN(nes_rockm6ttc)
+
+struct BurnDriver BurnDrvnes_rockm6ttc = {
+	"nes_rockm6ttc", "nes_megaman6", NULL, NULL, "2025",
+	"Rockman 6: Shijou Saidai no Tatakai!! (Hack, Traditional Chinese)\0", NULL, "NOKOH", "NES / Famicom",
+	L"Rockman 6: Shijou Saidai no Tatakai!! (Hack, Traditional Chinese)\0\u6d1b\u514b\u4eba 6: \u53f2\u4e0a\u6700\u5927\u7684\u6230\u722d!!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_rockm6ttcRomInfo, nes_rockm6ttcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

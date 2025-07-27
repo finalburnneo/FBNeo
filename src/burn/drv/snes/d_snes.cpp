@@ -30226,6 +30226,25 @@ struct BurnDriver BurnDrvsnes_Smallstarsworlde = {
 	512, 448, 4, 3
 };
 
+// Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)
+
+static struct BurnRomInfo snes_SmallstarswldttcRomDesc[] = {
+	{ "Super Mario All-Stars + Super Mario World T-Cht (2025)(NOKOH).sfc", 4194304, 0x438960ae, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smallstarswldttc)
+STD_ROM_FN(snes_Smallstarswldttc)
+
+struct BurnDriver BurnDrvsnes_Smallstarswldttc = {
+	"snes_smallstarswldttc", "snes_smallstarsworld", NULL, NULL, "2025",
+	"Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmallstarswldttcRomInfo, snes_SmallstarswldttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Smart Ball (USA)
 
 static struct BurnRomInfo snes_SmartballRomDesc[] = {
@@ -30276,9 +30295,28 @@ STD_ROM_FN(snes_Smcollection)
 struct BurnDriver BurnDrvsnes_Smcollection = {
 	"snes_smcollection", "snes_smallstars", NULL, NULL, "1993",
 	"Super Mario Collection (Japan, Rev. 1)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Super Mario Collection (Japan, Rev. 1)\0\u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30b3\u30ec\u30af\u30b7\u30e7\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SmcollectionRomInfo, snes_SmcollectionRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario Collection (Hack, Traditional Chinese v1.1)
+
+static struct BurnRomInfo snes_SmcollectionttcRomDesc[] = {
+	{ "Super Mario Collection T-Cht v1.1 (2025)(NOKOH).sfc", 4194304, 0x761f5b75, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smcollectionttc)
+STD_ROM_FN(snes_Smcollectionttc)
+
+struct BurnDriver BurnDrvsnes_Smcollectionttc = {
+	"snes_smcollectionttc", "snes_smallstars", NULL, NULL, "2025",
+	"Super Mario Collection (Hack, Traditional Chinese v1.1)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Super Mario Collection (Hack, Traditional Chinese v1.1)\0\u8d85\u7d1a\u746a\u5229\u6b50\u6536\u85cf\u8f2f\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmcollectionttcRomInfo, snes_SmcollectionttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33868,7 +33906,7 @@ STD_ROM_FN(snes_Supermarioworldj)
 struct BurnDriver BurnDrvsnes_Supermarioworldj = {
 	"snes_supermarioworldj", "snes_supermarioworld", NULL, NULL, "1990",
 	"Super Mario World ~ Super Mario Bros. 4 (Japan)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Super Mario World ~ Super Mario Bros. 4 (Japan)\0\u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30ef\u30fc\u30eb\u30c9: \u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30d6\u30e9\u30b6\u30fc\u30ba 4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermarioworldjRomInfo, snes_SupermarioworldjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -33890,6 +33928,25 @@ struct BurnDriver BurnDrvsnes_Supermarioworldtp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermarioworldtpRomInfo, snes_SupermarioworldtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario World (Hack, Traditional Chinese)
+
+static struct BurnRomInfo snes_SmworldttcRomDesc[] = {
+	{ "Super Mario World T-Cht (2025)(NOKOH).sfc", 786432, 0xdc68b8cb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smworldttc)
+STD_ROM_FN(snes_Smworldttc)
+
+struct BurnDriver BurnDrvsnes_Smworldttc = {
+	"snes_smworldttc", "snes_supermarioworld", NULL, NULL, "2025",
+	"Super Mario World (Hack, Traditional Chinese)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Super Mario World (Hack, Traditional Chinese)\0\u8d85\u7d1a\u746a\u5229\u6b50\u4e16\u754c\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmworldttcRomInfo, snes_SmworldttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

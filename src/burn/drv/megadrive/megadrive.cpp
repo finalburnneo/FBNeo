@@ -2754,7 +2754,7 @@ static void vx_switch_track()
 		BurnSampleChannelStop(0);
 	} else {
 		bprintf(0, _T("vx: song play %d.\n"), vx_track);
-		BurnSampleChannelPlay(0, vx_track, -1);
+		BurnSampleChannelPlay(0, vx_track - 1, -1);
 	}
 }
 

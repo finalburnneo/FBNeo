@@ -22978,7 +22978,7 @@ struct BurnDriver BurnDrvnes_thiefcob = {
 
 // Thunderbolt Fighting Plane (World)
 static struct BurnRomInfo nes_thunderboltRomDesc[] = {
-	{ "Thunderbolt Fighting Plane (1993-2019)(Piko Interactive)",  262160, 0x933e2aa8, BRF_ESS | BRF_PRG },
+	{ "Thunderbolt Fighting Plane (1993-2019)(Piko Interactive).nes",  262160, 0x933e2aa8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_thunderbolt)

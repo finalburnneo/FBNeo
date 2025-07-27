@@ -40579,7 +40579,7 @@ STD_SAMPLE_PICK(Sot4w)
 STD_SAMPLE_FN(Sot4w)
 
 static struct BurnRomInfo md_Sot4wRomDesc[] = {
-	{ "The Secret of the 4 Winds (2025)(Neofit).bin", 4194304, 0xf081e18b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+	{ "The Secret of the 4 Winds (2025)(Kai Magazine).bin", 4194304, 0xf081e18b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
 
 STD_ROM_PICK(md_Sot4w)

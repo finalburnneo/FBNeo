@@ -19624,7 +19624,7 @@ struct BurnDriver BurnDrvsnes_Legendmninjag = {
 
 // Legend of Zelda, The: A Link to the Past (Euro)
 static struct BurnRomInfo snes_LegendofzeldaeRomDesc[] = {
-	{ "Legend of Zelda, The: A Link to the Past (E)(1992)(Nintendo).sfc", 1048576, 0x04d55e12, BRF_ESS | BRF_PRG },
+	{ "Legend of Zelda, The - A Link to the Past (E)(1992)(Nintendo).sfc", 1048576, 0x04d55e12, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Legendofzeldae)
@@ -19681,7 +19681,7 @@ struct BurnDriver BurnDrvsnes_Legendofzeldafr = {
 // Legend of Zelda, The: A Link to the Past (Hack, Italian v1.1)
 // https://www.romhacking.net/translations/7163/
 static struct BurnRomInfo snes_LegendofzeldatiRomDesc[] = {
-	{ "Legend of Zelda, The: A Link to the Past T-Ita v1.1 (2001)(Mickey, SadNES cITy).sfc", 1048576, 0x6d879a98, BRF_ESS | BRF_PRG },
+	{ "Legend of Zelda, The - A Link to the Past T-Ita v1.1 (2001)(Mickey, SadNES cITy).sfc", 1048576, 0x6d879a98, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Legendofzeldati)
@@ -19700,7 +19700,7 @@ struct BurnDriver BurnDrvsnes_Legendofzeldati = {
 // Legend of Zelda, The: A Link to the Past (Hack, Simplified Chinese)
 // https://bbs.a9vg.com/thread-8695745-1-1.html
 static struct BurnRomInfo snes_LegendofzeldatscRomDesc[] = {
-	{ "Legend of Zelda, The: A Link to the Past T-Chs v1.1 (2020)(Dark_Link, hlken).sfc", 2097152, 0xc1d16a61, BRF_ESS | BRF_PRG },
+	{ "Legend of Zelda, The - A Link to the Past T-Chs v1.1 (2020)(Dark_Link, hlken).sfc", 2097152, 0xc1d16a61, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Legendofzeldatsc)
@@ -42288,7 +42288,7 @@ struct BurnDriver BurnDrvsnes_Legendofzeldapw = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past Redux (Hack, v10.2.3)
+// Legend of Zelda, The: A Link to the Past Redux (Hack, v10.2.3)
 // https://www.romhacking.net/hacks/2594/
 static struct BurnRomInfo snes_LegendofzeldardxRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past Redux v10.2.3 (2024)(ShadowOne333).sfc", 2097152, 0xb0b544c1, BRF_ESS | BRF_PRG },
@@ -42299,7 +42299,7 @@ STD_ROM_FN(snes_Legendofzeldardx)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldardx = {
 	"snes_legendofzeldardx", "snes_legendofzelda", NULL, NULL, "2024",
-	"Legend of Zelda, The - A Link to the Past Redux (Hack, v10.2.3)\0", NULL, "ShadowOne333", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past Redux (Hack, v10.2.3)\0", NULL, "ShadowOne333", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldardxRomInfo, snes_LegendofzeldardxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

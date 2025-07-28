@@ -558,6 +558,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x732b1a7a) ? IS_PAL : 0; // Smurfs, The
 	NESMode |= (ROMCRC == 0x90757260) ? IS_PAL : 0; // Ikari Warriors
 	NESMode |= (ROMCRC == 0x40f76343) ? IS_PAL : 0; // Side Pocket
+	NESMode |= (ROMCRC == 0xbb441910) ? IS_PAL : 0; // Castlevania II
 
 	if (nScreenHeight >= SCREEN_HEIGHT_PAL && !(NESMode & SHOW_OVERSCAN) && !(NESMode & IS_PAL)) { // cobol overscan collides with.....
 		bprintf(0, _T("*  PAL mode detected!\n"));
@@ -3669,6 +3670,12 @@ static void mapper04_scanline()
 	mapper4_irqreload = 0;
 }
 
+static void mapper114_reset()
+{
+	mapper114_exreg = 0;
+	mapper114_cmdin = 0;
+}
+
 static void mapper114_pwrap(INT32 slot, INT32 bank)
 {
 	if (mapper114_exreg & 0x80) {
@@ -3739,6 +3746,9 @@ static void mapper114_map()
 	// mirroring
 	set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
+
+#undef mapper114_exreg
+#undef mapper114_cmdin
 
 //#undef mapper4_mirror // used in mapper_init()
 #undef mapper4_irqlatch
@@ -4206,12 +4216,12 @@ static void mapper09_write(UINT16 address, UINT8 data)
 {
 	if (address & 0x8000) {
 		switch (address & 0xf000) {
-			case 0xa000: mapper9_prg       = data & 0xf; break;
+			case 0xa000: mapper9_prg       = data & 0xf;  break;
 			case 0xb000: mapper9_chr_lo(0) = data & 0x1f; break;
 			case 0xc000: mapper9_chr_lo(1) = data & 0x1f; break;
 			case 0xd000: mapper9_chr_hi(0) = data & 0x1f; break;
 			case 0xe000: mapper9_chr_hi(1) = data & 0x1f; break;
-			case 0xf000: mapper9_mirror    = data & 0x1; break;
+			case 0xf000: mapper9_mirror    = data & 0x1;  break;
 		}
 		mapper_map();
 	}
@@ -4225,6 +4235,52 @@ static void mapper09_map()
 	mapper_map_chr( 4, 1, mapper9_chr_hi(mapper9_chr_hi_E000));
 }
 
+static void mapper09_ppu_clk(UINT16 busaddr)
+{
+	switch (busaddr & 0x3fff) {
+		case 0x0fd8:
+			mapper9_chr_lo_C000 = 0;
+			mapper9_update      = 1;
+			break;
+		case 0x0fe8:
+			mapper9_chr_lo_C000 = 1;
+			mapper9_update      = 1;
+			break;
+	}
+
+	switch (busaddr & 0x3ff8) {
+		case 0x1fd8:
+			mapper9_chr_hi_E000 = 0;
+			mapper9_update      = 1;
+			break;
+		case 0x1fe8:
+			mapper9_chr_hi_E000 = 1;
+			mapper9_update      = 1;
+			break;
+	}
+
+	if (mapper9_update) {
+		// mmc2 needs update immediately on latch
+		mapper9_update = 0;
+		mapper_map();
+	}
+}
+
+static void mapper10_write(UINT16 address, UINT8 data)
+{
+	if (address & 0x8000) {
+		switch (address & 0xf000) {
+			case 0xa000: mapper9_prg       = data & 0xf; break;
+			case 0xb000: mapper9_chr_lo(0) = data;       break;	// 8-bits chr_reg[0]
+			case 0xc000: mapper9_chr_lo(1) = data;       break;	// 8-bits chr_reg[1]
+			case 0xd000: mapper9_chr_hi(0) = data;       break;	// 8-bits chr_reg[2]
+			case 0xe000: mapper9_chr_hi(1) = data;       break;	// 8-bits chr_reg[3]
+			case 0xf000: mapper9_mirror    = data & 0x1; break;
+		}
+		mapper_map();
+	}
+}
+
 static void mapper10_map()
 {
 	set_mirroring((mapper9_mirror) ? HORIZONTAL : VERTICAL);
@@ -4234,35 +4290,21 @@ static void mapper10_map()
 	mapper_map_chr( 4, 1, mapper9_chr_hi(mapper9_chr_hi_E000));
 }
 
-static void mapper09_ppu_clk(UINT16 busaddr)
+static void mapper10_reset()
 {
-	switch (busaddr & 0x3fff) {
-		case 0x0fd8:
-			mapper9_chr_lo_C000 = 0;
-			mapper9_update = 1;
-			break;
-		case 0x0fe8:
-			mapper9_chr_lo_C000 = 1;
-			mapper9_update = 1;
-			break;
-	}
+	// For Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)
+	// Skip the first image after resetting the power
+	memset(NES_CPU_RAM, 0x00, 0x800);
 
-	switch (busaddr & 0x3ff8) {
-		case 0x1fd8:
-			mapper9_chr_hi_E000 = 0;
-			mapper9_update = 1;
-			break;
-		case 0x1fe8:
-			mapper9_chr_hi_E000 = 1;
-			mapper9_update = 1;
-			break;
-	}
-
-	if (mapper9_update) {
-		// mmc2 needs update immediately on latch
-		mapper9_update = 0;
-		mapper_map();
-	}
+	mapper9_prg         = 0;
+	mapper9_chr_lo_C000 = 1;
+	mapper9_chr_hi_E000 = 1;
+	mapper9_mirror      = 0;
+	mapper9_update      = 0;
+	mapper9_chr_lo(0)   = 0;
+	mapper9_chr_lo(1)   = 0;
+	mapper9_chr_hi(0)   = 0;
+	mapper9_chr_hi(1)   = 0;
 }
 
 static void mapper10_ppu_clk(UINT16 busaddr)
@@ -4277,19 +4319,19 @@ static void mapper10_ppu_clk(UINT16 busaddr)
 	switch (busaddr & 0x3ff8) {
 		case 0x0fd8:
 			mapper9_chr_lo_C000 = 0;
-			mapper9_update = 1;
+			mapper9_update      = 1;
 			break;
 		case 0x0fe8:
 			mapper9_chr_lo_C000 = 1;
-			mapper9_update = 1;
+			mapper9_update      = 1;
 			break;
 		case 0x1fd8:
 			mapper9_chr_hi_E000 = 0;
-			mapper9_update = 1;
+			mapper9_update      = 1;
 			break;
 		case 0x1fe8:
 			mapper9_chr_hi_E000 = 1;
-			mapper9_update = 1;
+			mapper9_update      = 1;
 			break;
 	}
 }
@@ -8719,9 +8761,10 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 10: { // mmc4: fire emblem (mmc2 + sram + different prg mapping)
-			mapper_write = mapper09_write;
+			mapper_write = mapper10_write;
 			mapper_map   = mapper10_map;
 			mapper_ppu_clock = mapper10_ppu_clk;
+			mapper10_reset();
 			mapper_map();
 			retval = 0;
 			break;
@@ -9841,10 +9884,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[6] = 0;
 			mapper_regs[7] = 1;
 
-			// Initialize & Reset
-			mapper114_exreg = 0;
-			mapper114_cmdin = 0;
-
+			mapper114_reset();
 			mapper_map();
 			retval = 0;
 			break;
@@ -9852,9 +9892,6 @@ static INT32 mapper_init(INT32 mappernum)
 	}
 	return retval;
 }
-
-#undef mapper114_exreg
-#undef mapper114_cmdin
 
 static void mapper_irq(INT32 delay_cyc)
 {

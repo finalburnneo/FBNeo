@@ -5162,7 +5162,7 @@ struct BurnDriver BurnDrvnes_avmahjongclubc = {
 // Batman: The Video Game (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-48898-1-1.html
 static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
-	{ "Batman - The Video Game T-Chi (2020)(HHNM Team).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
+	{ "Batman - Video Game, The T-Chi (2020)(HHNM Team).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_batmavidgamc)
@@ -5170,7 +5170,7 @@ STD_ROM_FN(nes_batmavidgamc)
 
 struct BurnDriver BurnDrvnes_batmavidgamc = {
 	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020",
-	"Batman: The Video Game (Hack, Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
+	"Batman: Batman - Video Game, The (Hack, Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -5212,6 +5212,44 @@ struct BurnDriver BurnDrvnes_captaameandavec = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_captaameandavecRomInfo, nes_captaameandavecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)
+// https://www.nesbbs.com/bbs/thread-19179-1-1.html
+static struct BurnRomInfo nes_castliitscRomDesc[] = {
+	{ "Castlevania II - Simon's Quest T-Chs v1.2 (2013)(Nonamed).nes",          524304, 0xcb170ca0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castliitsc)
+STD_ROM_FN(nes_castliitsc)
+
+struct BurnDriver BurnDrvnes_castliitsc = {
+	"nes_castliitsc", "nes_castlii", NULL, NULL, "2013",
+	"Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)\0", NULL, "Nonamed", "NES / Famicom",
+	L"Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)\0\u6076\u9b54\u57ce\u2161: \u897f\u8499\u7684\u4efb\u52a1\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_castliitscRomInfo, nes_castliitscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)
+// https://www.nesbbs.com/bbs/thread-19179-1-1.html
+static struct BurnRomInfo nes_castliittcRomDesc[] = {
+	{ "Castlevania II - Simon's Quest T-Cht v1.2 (2013)(Nonamed).nes",          524304, 0xb6a932fd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castliittc)
+STD_ROM_FN(nes_castliittc)
+
+struct BurnDriver BurnDrvnes_castliittc = {
+	"nes_castliittc", "nes_castlii", NULL, NULL, "2013",
+	"Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)\0", NULL, "Nonamed", "NES / Famicom",
+	L"Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)\0\u60e1\u9b54\u57ce\u2161: \u897f\u8499\u7684\u4efb\u52d9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_castliittcRomInfo, nes_castliittcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -5996,10 +6034,10 @@ struct BurnDriver BurnDrvnes_littlemagicc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Little Nemo - The Dream Master (Hack, Chinese)
+// Little Nemo - Dream Master, The (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-43984-1-1.html [Logo by ZARD]
 static struct BurnRomInfo nes_littlnemcRomDesc[] = {
-	{ "Little Nemo - The Dream Master T-Chi (2017)(Ice Team).nes",          327696, 0x841cbcd1, BRF_ESS | BRF_PRG },
+	{ "Little Nemo - Dream Master, The T-Chi (2017)(Ice Team).nes",          327696, 0x841cbcd1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_littlnemc)
@@ -6007,7 +6045,7 @@ STD_ROM_FN(nes_littlnemc)
 
 struct BurnDriver BurnDrvnes_littlnemc = {
 	"nes_littlnemc", "nes_littlnem", NULL, NULL, "2017",
-	"Little Nemo - The Dream Master (Hack, Chinese)\0", NULL, "Ice Team", "NES / Famicom",
+	"Little Nemo - Dream Master, The (Hack, Chinese)\0", NULL, "Ice Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_littlnemcRomInfo, nes_littlnemcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28037,6 +28075,24 @@ struct BurnDriver BurnDrvnes_castlevania = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Castlevania II: Simon's Quest (Euro)
+static struct BurnRomInfo nes_castliieRomDesc[] = {
+	{ "Castlevania II - Simon's Quest (Euro)(1990)(Konami).nes",          262160, 0xbb441910, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castliie)
+STD_ROM_FN(nes_castliie)
+
+struct BurnDriver BurnDrvnes_castliie = {
+	"nes_castliie", "nes_castlii", NULL, NULL, "1990",
+	"Castlevania II: Simon's Quest (Euro)\0", NULL, "Konami", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_castliieRomInfo, nes_castliieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
 // Castlevania II: Simon's Quest (USA)
 static struct BurnRomInfo nes_castliiRomDesc[] = {
 	{ "Castlevania II - Simon's Quest (USA)(1988)(Konami).nes",          262160, 0xa9c2c503, BRF_ESS | BRF_PRG },
@@ -33193,9 +33249,9 @@ struct BurnDriver BurnDrvnes_firenice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan)
+// Fire Emblem: Ankoku Ryuu to Hikari no Tsurugi (Japan)
 static struct BurnRomInfo nes_fireembjRomDesc[] = {
-	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan).nes",          393232, 0xab8057b9, BRF_ESS | BRF_PRG },
+	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan).nes",          393232, 0x3452e97c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_fireembj)
@@ -33203,15 +33259,15 @@ STD_ROM_FN(nes_fireembj)
 
 struct BurnDriver BurnDrvnes_fireembj = {
 	"nes_fireembj", "nes_fireemb", NULL, NULL, "1990",
-	"Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Japan)\0", NULL, "Nintendo", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Fire Emblem: Ankoku Ryuu to Hikari no Tsurugi (Japan)\0", NULL, "Nintendo", "NES / Famicom",
+	L"Fire Emblem: Ankoku Ryuu to Hikari no Tsurugi (Japan)\0\u30d5\u30a1\u30a4\u30a2\u30fc\u30a8\u30e0\u30d6\u30ec\u30e0 \u6697\u9ed2\u7adc\u3068\u5149\u306e\u5263\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY | GBF_RPG, 0,
 	NESGetZipName, nes_fireembjRomInfo, nes_fireembjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Hack, English)
+// Fire Emblem: Ankoku Ryuu to Hikari no Tsurugi (Hack, English)
 // https://www.romhacking.net/translations/1593/
 static struct BurnRomInfo nes_fireembRomDesc[] = {
 	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Eng).nes",          393232, 0xdc848ddd, BRF_ESS | BRF_PRG },
@@ -33222,7 +33278,7 @@ STD_ROM_FN(nes_fireemb)
 
 struct BurnDriver BurnDrvnes_fireemb = {
 	"nes_fireemb", NULL, NULL, NULL, "2011",
-	"Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (Hack, English)\0", NULL, "Quirino", "NES / Famicom",
+	"Fire Emblem: Ankoku Ryuu to Hikari no Tsurugi (Hack, English)\0", NULL, "Quirino", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY | GBF_RPG, 0,
 	NESGetZipName, nes_fireembRomInfo, nes_fireembRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -39875,7 +39931,7 @@ struct BurnDriver BurnDrvnes_littlmer = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Little Nemo - The Dream Master (USA)
+// Little Nemo - Dream Master, The (USA)
 static struct BurnRomInfo nes_littlnemRomDesc[] = {
 	{ "Little Nemo - The Dream Master (USA)(1990)(Capcom).nes",          262160, 0x71d868c4, BRF_ESS | BRF_PRG },
 };
@@ -39885,7 +39941,7 @@ STD_ROM_FN(nes_littlnem)
 
 struct BurnDriver BurnDrvnes_littlnem = {
 	"nes_littlnem", NULL, NULL, NULL, "1990",
-	"Little Nemo - The Dream Master (USA)\0", NULL, "Capcom", "NES / Famicom",
+	"Little Nemo - Dream Master, The (USA)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_littlnemRomInfo, nes_littlnemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -1546,7 +1546,6 @@ static INT32 MegadriveResetDo()
 	}
 
 	if (sot4wmode) {
-		BurnSampleReset();
 		vx_reset();
 	}
 
@@ -2765,8 +2764,25 @@ static void vx_set_volume()
 	BurnSampleSetRouteFadeAllSamples(BURN_SND_SAMPLE_ROUTE_2, vol, BURN_SND_ROUTE_BOTH);
 }
 
+static void vx_init()
+{
+	BurnSampleInit(1 | 0x8000); // setting nostore.
+}
+
+static void vx_exit()
+{
+	BurnSampleExit();
+}
+
+static void vx_render(INT16 *snd, INT32 samples)
+{
+	BurnSampleRender(snd, samples);
+}
+
 static void vx_reset()
 {
+	BurnSampleReset();
+
 	vx_cmdnum = 0;
 	vx_serialnum = 0;
 	vx_track = -1;
@@ -2780,12 +2796,17 @@ static void vx_command(UINT8 command, UINT16 param)
 	switch (command) {
 		case 0x01: if (vx_track < 0xbb7) { vx_track++; vx_switch_track(); } break;
 		case 0x02: if (vx_track > 0) { vx_track--; vx_switch_track(); } break;
-		case 0x03: vx_track = param; vx_switch_track(); break;
+		case 0x08: // play (looped)
+		case 0x03: vx_track = param; vx_switch_track(); break; // play (also loops!)
 		case 0x04: if (vx_volume < 0x1f) vx_volume++; vx_set_volume(); break;
 		case 0x05: if (vx_volume > 0) vx_volume--; vx_set_volume(); break;
-		case 0x06: vx_volume = param&0x1f; vx_set_volume(); break;
+		case 0x06: vx_volume = param & 0x1f; vx_set_volume(); break;
+		case 0x0e: BurnSampleChannelPause(0, true); break; // pause
+		case 0x0d: BurnSampleChannelPause(0, false); break; // resume
+		case 0x0a: // sleep
 		case 0x0c: // reset
-		case 0x16: vx_track = -1; vx_switch_track(); break; // stop
+		case 0x16: vx_track = -1; vx_switch_track(); break; // stop (same as reset)
+
 		default: bprintf(0, _T("vx5200: unhandled command / param:  %x  %x\n"), command, param);
 	}
 }
@@ -2827,10 +2848,7 @@ static void __fastcall sot4w_mp3_writebyte(UINT32 address, UINT8 data)
 static void SetupCustomCartridgeMappers()
 {
 	if (sot4wmode) {
-		BurnSampleInit(0x8000); // setting nostore.
-
-		SekOpen(0);                        //xxxxxdinkxxx
-
+		SekOpen(0);
 		SekMapHandler(7, 0x000000, 0x00ffff, MAP_READ | MAP_WRITE);
 		SekSetReadByteHandler(7, sot4w_readbyte);
 		SekSetWriteByteHandler(7, sot4w_writebyte);
@@ -2841,7 +2859,6 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteWordHandler(8, sot4w_writeword);
 
 		SekMapHandler(9, 0xa13000, 0xa133ff, MAP_WRITE);
-//		SekSetReadByteHandler(9, sot4w_readbyte);
 		SekSetWriteByteHandler(9, sot4w_mp3_writebyte);
 		SekClose();
 	}
@@ -3741,7 +3758,7 @@ INT32 MegadriveInit()
 	}
 
 	if (sot4wmode) {
-		//yx5200_init();
+		vx_init();
 	}
 
 	MegadriveResetDo();
@@ -3778,7 +3795,8 @@ INT32 MegadriveExit()
 	}
 
 	if (sot4wmode) {
-		BurnSampleExit();
+		vx_exit();
+		sot4wmode = 0;
 	}
 
 	BurnFreeMemIndex();
@@ -5496,7 +5514,7 @@ INT32 MegadriveFrame()
 	}
 
 	if (sot4wmode && pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		vx_render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();

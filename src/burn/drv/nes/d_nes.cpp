@@ -6244,6 +6244,24 @@ struct BurnDriver BurnDrvnes_mitsumegatooruc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nekketsu Koukou Dodgeball Bu (Hack, Simplified Chinese)
+static struct BurnRomInfo nes_nekkedodgebttsRomDesc[] = {
+	{ "Nekketsu Koukou Dodgeball Bu T-Chs (2005)(Old Liu).nes",          262160, 0xc1b03e1c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkedodgebtts)
+STD_ROM_FN(nes_nekkedodgebtts)
+
+struct BurnDriver BurnDrvnes_nekkedodgebtts = {
+	"nes_nekkedodgebtts", "nes_superdodgeball", NULL, NULL, "2005",
+	"Nekketsu Koukou Dodgeball Bu (Hack, Simplified Chinese)\0", NULL, "Old Liu", "NES / Famicom",
+	L"Nekketsu Koukou Dodgeball Bu (Hack, Simplified Chinese)\0\u70ed\u8840\u9ad8\u6821\u8eb2\u907f\u7403\u90e8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_CLONE, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nekkedodgebttsRomInfo, nes_nekkedodgebttsRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Nekketsu! Street Basket - Ganbare Dunk Heroes (Hack, Chinese v2)
 // https://www.nesbbs.com/bbs/forum.php?mod=viewthread&tid=50722 
 static struct BurnRomInfo nes_nekkestrbascRomDesc[] = {
@@ -10276,6 +10294,24 @@ struct BurnDriver BurnDrvnes_chinarabbab = {
 	L"China Rabbit Baby (Taiwan) (Unl)\0\u4e2d\u570b\u5154\u5bf6\u5bf6 RABBIT\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chinarabbabRomInfo, nes_chinarabbabRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Contra 2-in-1 (Hack)
+static struct BurnRomInfo nes_contra2in1RomDesc[] = {
+	{ "Contra 2-in-1 (2023)(FlameCyclone).nes",          917536, 0x9788ED9E, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contra2in1)
+STD_ROM_FN(nes_contra2in1)
+
+struct BurnDriver BurnDrvnes_contra2in1 = {
+	"nes_contra2in1", NULL, NULL, NULL, "2023",
+	"Contra 2-in-1 (Hack)\0", NULL, "FlameCyclone", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_contra2in1RomInfo, nes_contra2in1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -42828,8 +42864,8 @@ struct BurnDriver BurnDrvnes_nekkedodgeball = {
 	"nes_nekkedodgeball", "nes_superdodgeball", NULL, NULL, "1988",
 	"Nekketsu Koukou Dodgeball Bu (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
 	L"Nekketsu Koukou Dodgeball Bu (Japan)\0\u71b1\u8840\u9ad8\u6821\u30c9\u30c3\u30b8\u30dc\u30fc\u30eb\u90e8\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
-	NESGetZipName, nes_nekkedodgeballRomInfo, nes_nekkedodgeballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_nekkedodgeballRomInfo, nes_nekkedodgeballRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -49576,6 +49612,24 @@ struct BurnDriver BurnDrvnes_superdodgeball = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_superdodgeballRomInfo, nes_superdodgeballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Dodge Ball (USA, Evercade)
+static struct BurnRomInfo nes_superdodgeballecRomDesc[] = {
+	{ "Super Dodge Ball (USA)(1989)(Evercade).nes",          262160, 0x69fd97b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superdodgeballec)
+STD_ROM_FN(nes_superdodgeballec)
+
+struct BurnDriver BurnDrvnes_superdodgeballec = {
+	"nes_superdodgeballec", "nes_superdodgeball", NULL, NULL, "1989",
+	"Super Dodge Ball (USA, Evercade)\0", NULL, "Evercade", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_superdodgeballecRomInfo, nes_superdodgeballecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

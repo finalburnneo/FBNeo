@@ -59,6 +59,7 @@
     <ClCompile Include="..\..\src\burner\win32\localise_gamelist.cpp" />
     <ClCompile Include="..\..\src\burner\win32\luaconsole.cpp" />
     <ClCompile Include="..\..\src\burner\win32\main.cpp" />
+    <ClCompile Include="..\..\src\burner\win32\mbtwc.cpp" />
     <ClCompile Include="..\..\src\burner\win32\media.cpp" />
     <ClCompile Include="..\..\src\burner\win32\memcard.cpp" />
     <ClCompile Include="..\..\src\burner\win32\menu.cpp" />

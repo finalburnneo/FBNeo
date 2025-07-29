@@ -2668,7 +2668,7 @@ static void mapper03_cycle()
 #define mapper12_highchr		(mapper_regs16[0x1f - 1])
 #define mapper04_vs_prottype    (mapper_regs16[0x1f - 2])
 #define mapper04_vs_protidx	    (mapper_regs16[0x1f - 3])
-#define mapper115_prg           (mapper_regs[0x1f - 7])
+#define mapper115_prg           (mapper_regs[0x1f - 7]) // note: pirate / unl usually start with "- 7"
 #define mapper115_chr           (mapper_regs[0x1f - 8])
 #define mapper115_prot          (mapper_regs[0x1f - 9])
 #define mapper258_reg           (mapper_regs[0x1f - 0xa])
@@ -2679,10 +2679,8 @@ static void mapper03_cycle()
 #define mapper165_chrlatch(x)   (mapper_regs[(0x1f - 0x0a) + (x)])
 #define mapper165_update        (mapper_regs[0x1f - 0xb])
 // mapper 114 (mmc3 variant)
-#define mapper114_exreg         (mapper_regs[0x1f - 0x10]) // Extended register
-#define mapper114_cmdin         (mapper_regs[0x1f - 0x11]) // Command status flag
-// Command value arrangement
-static const UINT8 mapper114_perm[8] = { 0, 3, 1, 5, 6, 7, 2, 4 };
+#define mapper114_prg           (mapper_regs[0x1f - 0x7])
+#define mapper114_chr           (mapper_regs[0x1f - 0x8])
 
 static UINT8 mapper04_vs_rbi_tko_prot(UINT16 address)
 {
@@ -3670,85 +3668,102 @@ static void mapper04_scanline()
 	mapper4_irqreload = 0;
 }
 
-static void mapper114_reset()
+// ---[ mapper 114: "Super Game": Lion King, The,  Boogerman,  Super Donkey Kong,  Aladdin
+static void mapper114_map_prg(INT32 slot, INT32 bank)
 {
-	mapper114_exreg = 0;
-	mapper114_cmdin = 0;
-}
-
-static void mapper114_pwrap(INT32 slot, INT32 bank)
-{
-	if (mapper114_exreg & 0x80) {
-		// 114: Two 16KB blocks mapped to the same bank
-		mapper_map_prg(16, 0, mapper114_exreg & 0x0f);
-		mapper_map_prg(16, 1, mapper114_exreg & 0x0f);
+	if (mapper114_prg & 0x80) {
+		if (mapper114_prg & 0x20) {
+			// 114: NROM-256
+			mapper_map_prg(32, 0, (mapper114_prg & 0x0e) >> 1);
+		} else {
+			// 114: NROM-128
+			mapper_map_prg(16, 0, mapper114_prg & 0x0f);
+			mapper_map_prg(16, 1, mapper114_prg & 0x0f);
+		}
 	} else {
 		// MMC3
 		mapper_map_prg(8, slot, bank & 0x3f);
 	}
 }
 
-// Extended register write ($5000-$7FFF)
-static void mapper114_exwrite(UINT16 address, UINT8 data)
+static const UINT16 mapper114_addr_remap[3][8] = {
+	{ 0x8000, 0x8001, 0xa000, 0xa001, 0xc000, 0xc001, 0xe000, 0xe001 }, /* mmc3 key */
+	{ 0xa000, 0xc000, 0x8001, 0x8000, 0xa001, 0xc001, 0xe000, 0xe001 }, /* sub 0 */
+	{ 0xa000, 0x8001, 0xc000, 0x8000, 0xc001, 0xa001, 0xe000, 0xe001 }  /* sub 1 */
+};
+
+static const UINT8 mapper114_reg_remap[2][8] = {
+	{ 0, 3, 1, 5, 6, 7, 2, 4 },
+	{ 0, 2, 5, 3, 6, 1, 7, 4 }
+};
+
+static UINT16 mapper114_address_remap(UINT16 address)
 {
-	if (address <= 0x7fff) {
-		mapper114_exreg = data;
-		mapper_map();
+	for (int i = 0; i < 8; i++) {
+		if (address == mapper114_addr_remap[1 + (Cart.SubMapper & 1)][i]) {
+			address = mapper114_addr_remap[0][i];
+			break;
+		}
 	}
+
+	return address;
 }
 
-// Main register write ($8000-$FFFF)
+// $6000-$7fff, $8000-$ffff
 static void mapper114_write(UINT16 address, UINT8 data)
 {
-	switch (address & 0xe001) {
-		case 0x8001: mapper04_write(0xa000, data); break;   // Remap to MMC3 $A000
-		case 0xa000:
-			mapper04_write(0x8000, (data & 0xc0) | mapper114_perm[data & 0x07]);
-			mapper114_cmdin = 1;
-			break;
-		case 0xc000:
-			if (mapper114_cmdin) {
-				mapper04_write(0x8001, data);
-				mapper114_cmdin = 0;
-			}
-			break;
-		case 0xa001: mapper04_write(0xc000, data); break;	// IRQ Latch
-		case 0xc001: mapper04_write(0xc001, data); break;	// IRQ Reload
-		case 0xe000: mapper04_write(0xe000, data); break;	// IRQ Disable
-		case 0xe001: mapper04_write(0xe001, data); break;	// IRQ Enable
+	if (address & 0xe001) {
+		address = mapper114_address_remap(address & 0xe001);
+		switch (address) {
+			case 0x6000:
+				mapper114_prg = data;
+				mapper_map();
+				break;
+			case 0x6001:
+				mapper114_chr = data & 1;
+				mapper_map();
+				break;
+			case 0x8000:
+				mapper04_write(0x8000, (data & 0xc0) | mapper114_reg_remap[Cart.SubMapper & 1][data & 0x07]);
+				break;
+			default:
+				mapper04_write(address, data);
+				break;
+		}
 	}
 }
 
 static void mapper114_map()
 {
-	mapper114_pwrap(0, mapper_regs[6]);
-	mapper114_pwrap(1, mapper_regs[7]);
-	mapper114_pwrap(2, -2);
-	mapper114_pwrap(3, -1);
+	mapper114_map_prg(0, mapper_regs[6]);
+	mapper114_map_prg(1, mapper_regs[7]);
+	mapper114_map_prg(2, -2);
+	mapper114_map_prg(3, -1);
 
-	// CHR mapping uses standard MMC3 logic
-	if (~mapper4_banksel & 0x80) {
-		mapper_map_chr(2, 0, mapper_regs[0] >> 1);
-		mapper_map_chr(2, 1, mapper_regs[1] >> 1);
-		mapper_map_chr(1, 4, mapper_regs[2]);
-		mapper_map_chr(1, 5, mapper_regs[3]);
-		mapper_map_chr(1, 6, mapper_regs[4]);
-		mapper_map_chr(1, 7, mapper_regs[5]);
+    if (~mapper4_banksel & 0x80) {
+		mapper_map_chr(2, 0, (mapper_regs[0] + (mapper114_chr << 8)) >> 1);
+        mapper_map_chr(2, 1, (mapper_regs[1] + (mapper114_chr << 8)) >> 1);
+
+		mapper_map_chr(1, 4, mapper_regs[2] + (mapper114_chr << 8));
+		mapper_map_chr(1, 5, mapper_regs[3] + (mapper114_chr << 8));
+		mapper_map_chr(1, 6, mapper_regs[4] + (mapper114_chr << 8));
+		mapper_map_chr(1, 7, mapper_regs[5] + (mapper114_chr << 8));
 	} else {
-		mapper_map_chr(1, 0, mapper_regs[2]);
-		mapper_map_chr(1, 1, mapper_regs[3]);
-		mapper_map_chr(1, 2, mapper_regs[4]);
-		mapper_map_chr(1, 3, mapper_regs[5]);
-		mapper_map_chr(2, 2, mapper_regs[0] >> 1);
-		mapper_map_chr(2, 3, mapper_regs[1] >> 1);
+		mapper_map_chr(1, 0, mapper_regs[2] + (mapper114_chr << 8));
+		mapper_map_chr(1, 1, mapper_regs[3] + (mapper114_chr << 8));
+		mapper_map_chr(1, 2, mapper_regs[4] + (mapper114_chr << 8));
+		mapper_map_chr(1, 3, mapper_regs[5] + (mapper114_chr << 8));
+
+		mapper_map_chr(2, 2, (mapper_regs[0] + (mapper114_chr << 8)) >> 1);
+		mapper_map_chr(2, 3, (mapper_regs[1] + (mapper114_chr << 8)) >> 1);
 	}
 
 	// mirroring
 	set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
-#undef mapper114_exreg
-#undef mapper114_cmdin
+#undef mapper114_prg
+#undef mapper114_chr
 
 //#undef mapper4_mirror // used in mapper_init()
 #undef mapper4_irqlatch
@@ -9867,7 +9882,7 @@ static INT32 mapper_init(INT32 mappernum)
 
 		case 114: { // mmc3-derivative (Lion King, The)
 			mapper_write    = mapper114_write;
-			cart_exp_write  = mapper114_exwrite;	// Extended area
+			cart_exp_write  = mapper114_write;
 			mapper_map      = mapper114_map;
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror  = Cart.Mirroring;
@@ -9884,7 +9899,6 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[6] = 0;
 			mapper_regs[7] = 1;
 
-			mapper114_reset();
 			mapper_map();
 			retval = 0;
 			break;

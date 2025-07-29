@@ -7,7 +7,7 @@
 #include "driverlist.h"
 
 #ifdef BUILD_WIN32
-#include <windows.h>
+#include "mbtwc.h"
 #endif
 
 #ifndef __LIBRETRO__
@@ -462,11 +462,11 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 	if (pszStringW && pszStringA && pszStringA[0]) {
 #ifdef BUILD_WIN32
 		// CP_UTF8 65001
-		const int n = MultiByteToWideChar(65001, 0, pszStringA, -1, NULL, 0);
+		const int n = _MultiByteToWideChar(65001, 0, pszStringA, -1, NULL, 0);
 		if (0 == n)
 			return NULL;
 
-		if (0 == MultiByteToWideChar(65001, 0, pszStringA, -1, pszStringW, n))
+		if (0 == _MultiByteToWideChar(65001, 0, pszStringA, -1, pszStringW, n))
 			return NULL;
 #else
 		if (mbstowcs(pszStringW, pszStringA, 256) == -1U) {

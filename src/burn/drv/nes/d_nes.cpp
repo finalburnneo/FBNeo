@@ -10300,7 +10300,7 @@ struct BurnDriver BurnDrvnes_chinarabbab = {
 
 // Contra 2-in-1 (Hack)
 static struct BurnRomInfo nes_contra2in1RomDesc[] = {
-	{ "Contra 2-in-1 (2023)(FlameCyclone).nes",          917536, 0x9788ED9E, BRF_ESS | BRF_PRG },
+	{ "Contra 2-in-1 (2023)(FlameCyclone).nes",          524304, 0xdb96ef78, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_contra2in1)

@@ -10154,20 +10154,20 @@ struct BurnDriver BurnDrvnes_bloodjur = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Boogerman (Unl)
-static struct BurnRomInfo nes_boogermanRomDesc[] = {
-	{ "Boogerman (Unl)(1997)(Realtec).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
+// Super Boogerman (Unl)
+static struct BurnRomInfo nes_sboogermanRomDesc[] = {
+	{ "Super Boogerman (Unl)(1997)(Realtec).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_boogerman)
-STD_ROM_FN(nes_boogerman)
+STD_ROM_PICK(nes_sboogerman)
+STD_ROM_FN(nes_sboogerman)
 
-struct BurnDriver BurnDrvnes_boogerman = {
-	"nes_boogerman", NULL, NULL, NULL, "1997",
-	"Boogerman (Unl)\0", NULL, "Realtec", "NES / Famicom",
+struct BurnDriver BurnDrvnes_sboogerman = {
+	"nes_sboogerman", NULL, NULL, NULL, "1997",
+	"Super Boogerman (Unl)\0", NULL, "Realtec", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_boogermanRomInfo, nes_boogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_sboogermanRomInfo, nes_sboogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -54019,6 +54019,57 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_zunousengalRomInfo, nes_zunousengalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_aladdinunlRomDesc[] = {
+	{ "Aladdin (Unl)(1995)(Super Game).nes",          524304, 0x264b4efb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aladdinunl)
+STD_ROM_FN(nes_aladdinunl)
+
+struct BurnDriver BurnDrvnes_aladdinunl = {
+	"nes_aladdinunl", NULL, NULL, NULL, "1995",
+	"Aladdin (Unl)\0", NULL, "Super Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_aladdinunlRomInfo, nes_aladdinunlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_boogermanRomDesc[] = {
+	{ "Boogerman (199x)(Super Game).nes",          524304, 0xfc5ae371, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_boogerman)
+STD_ROM_FN(nes_boogerman)
+
+struct BurnDriver BurnDrvnes_boogerman = {
+	"nes_boogerman", NULL, NULL, NULL, "199x",
+	"Boogerman\0", NULL, "Super Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_boogermanRomInfo, nes_boogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_superdonkeykongRomDesc[] = {
+	{ "Super Donkey Kong (199x)(Hosenken).nes",          262160, 0x11790c6e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_superdonkeykong)
+STD_ROM_FN(nes_superdonkeykong)
+
+struct BurnDriver BurnDrvnes_superdonkeykong = {
+	"nes_superdonkeykong", NULL, NULL, NULL, "199x",
+	"Super Donkey Kong (Unl)\0", NULL, "Hosenken", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_superdonkeykongRomInfo, nes_superdonkeykongRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

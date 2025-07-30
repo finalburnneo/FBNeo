@@ -26332,7 +26332,7 @@ struct BurnDriver BurnDrvsms_zillionpt = {
 // https://romhackers.org/traducoes/console/master-system/zillion-ii-the-tri-formation-po.b.r.e
 
 static struct BurnRomInfo sms_zillion2ptRomDesc[] = {
-	{ "Zillion II - The Tri Formation T-Por v1.1 (2009-2020)(PO.B.R.E.).sms",	131072, 0x70846349, BRF_PRG | BRF_ESS },
+	{ "Zillion II: The Tri Formation T-Por v1.1 (2009-2020)(PO.B.R.E.).sms",	131072, 0x70846349, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_zillion2pt)
@@ -26340,7 +26340,7 @@ STD_ROM_FN(sms_zillion2pt)
 
 struct BurnDriver BurnDrvsms_zillion2pt = {
 	"sms_zillion2pt", "sms_zillion2", NULL, NULL, "2009-2020",
-	"Zillion II - The Tri Formation (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	"Zillion II: The Tri Formation (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_zillion2ptRomInfo, sms_zillion2ptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -19622,7 +19622,25 @@ struct BurnDriver BurnDrvsnes_Legendmninjag = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past (USA)
+// Legend of Zelda, The: A Link to the Past (Euro)
+static struct BurnRomInfo snes_LegendofzeldaeRomDesc[] = {
+	{ "Legend of Zelda, The - A Link to the Past (E)(1992)(Nintendo).sfc", 1048576, 0x04d55e12, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Legendofzeldae)
+STD_ROM_FN(snes_Legendofzeldae)
+
+struct BurnDriver BurnDrvsnes_Legendofzeldae = {
+	"snes_legendofzeldae", "snes_legendofzelda", NULL, NULL, "1992",
+	"Legend of Zelda, The: A Link to the Past (Euro)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_LegendofzeldaeRomInfo, snes_LegendofzeldaeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Legend of Zelda, The: A Link to the Past (USA)
 
 static struct BurnRomInfo snes_LegendofzeldaRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past (U)(1991-92)(Nintendo).sfc", 1048576, 0x777aac2f, BRF_ESS | BRF_PRG },
@@ -19633,7 +19651,7 @@ STD_ROM_FN(snes_Legendofzelda)
 
 struct BurnDriver BurnDrvsnes_Legendofzelda = {
 	"snes_legendofzelda", NULL, NULL, NULL, "1991-92",
-	"Legend of Zelda, The - A Link to the Past (USA)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past (USA)\0", NULL, "Nintendo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldaRomInfo, snes_LegendofzeldaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -19641,7 +19659,7 @@ struct BurnDriver BurnDrvsnes_Legendofzelda = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past (Canada, French)
+// Legend of Zelda, The: A Link to the Past (Canada, French)
 
 static struct BurnRomInfo snes_LegendofzeldafrRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past (Can, Fr)(1992)(Nintendo).sfc", 1048576, 0x47760381, BRF_ESS | BRF_PRG },
@@ -19652,7 +19670,7 @@ STD_ROM_FN(snes_Legendofzeldafr)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldafr = {
 	"snes_legendofzeldafr", "snes_legendofzelda", NULL, NULL, "1992",
-	"Legend of Zelda, The - A Link to the Past (Canada, French)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past (Canada, French)\0", NULL, "Nintendo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldafrRomInfo, snes_LegendofzeldafrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -19660,7 +19678,7 @@ struct BurnDriver BurnDrvsnes_Legendofzeldafr = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past (Hack, Italian v1.1)
+// Legend of Zelda, The: A Link to the Past (Hack, Italian v1.1)
 // https://www.romhacking.net/translations/7163/
 static struct BurnRomInfo snes_LegendofzeldatiRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past T-Ita v1.1 (2001)(Mickey, SadNES cITy).sfc", 1048576, 0x6d879a98, BRF_ESS | BRF_PRG },
@@ -19671,7 +19689,7 @@ STD_ROM_FN(snes_Legendofzeldati)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldati = {
 	"snes_legendofzeldati", "snes_legendofzelda", NULL, NULL, "2001",
-	"Legend of Zelda, The - A Link to the Past (Hack, Italian v1.1)\0", NULL, "Mickey - 'SadNES cITy'", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past (Hack, Italian v1.1)\0", NULL, "Mickey - 'SadNES cITy'", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldatiRomInfo, snes_LegendofzeldatiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -19679,7 +19697,26 @@ struct BurnDriver BurnDrvsnes_Legendofzeldati = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past (Hack, Spanish v1.11)
+// Legend of Zelda, The: A Link to the Past (Hack, Simplified Chinese)
+// https://bbs.a9vg.com/thread-8695745-1-1.html
+static struct BurnRomInfo snes_LegendofzeldatscRomDesc[] = {
+	{ "Legend of Zelda, The - A Link to the Past T-Chs v1.1 (2020)(Dark_Link, hlken).sfc", 2097152, 0xc1d16a61, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Legendofzeldatsc)
+STD_ROM_FN(snes_Legendofzeldatsc)
+
+struct BurnDriver BurnDrvsnes_Legendofzeldatsc = {
+	"snes_legendofzeldatsc", "snes_legendofzelda", NULL, NULL, "2020",
+	"Legend of Zelda, The: A Link to the Past (Hack, Simplified Chinese)\0", NULL, "Dark_Link, hlken", "SNES / Super Famicom",
+	L"Legend of Zelda, The: A Link to the Past (Hack, Simplified Chinese)\0\u585e\u5c14\u8fbe\u4f20\u8bf4: \u4f17\u795e\u7684\u4e09\u89d2\u529b\u91cf\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_LegendofzeldatscRomInfo, snes_LegendofzeldatscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Legend of Zelda, The: A Link to the Past (Hack, Spanish v1.11)
 // https://www.romhacking.net/translations/2195/
 static struct BurnRomInfo snes_LegendofzeldatsRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past T-Spa v1.11 (2021)(D_Skywalk).sfc", 2097152, 0x69f58bba, BRF_ESS | BRF_PRG },
@@ -19690,7 +19727,7 @@ STD_ROM_FN(snes_Legendofzeldats)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldats = {
 	"snes_legendofzeldats", "snes_legendofzelda", NULL, NULL, "2021",
-	"Legend of Zelda, The - A Link to the Past (Hack, Spanish v1.11)\0", NULL, "D_Skywalk", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past (Hack, Spanish v1.11)\0", NULL, "D_Skywalk", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldatsRomInfo, snes_LegendofzeldatsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -30226,6 +30263,25 @@ struct BurnDriver BurnDrvsnes_Smallstarsworlde = {
 	512, 448, 4, 3
 };
 
+// Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)
+
+static struct BurnRomInfo snes_SmallstarswldttcRomDesc[] = {
+	{ "Super Mario All-Stars + Super Mario World T-Cht (2025)(NOKOH).sfc", 4194304, 0x438960ae, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smallstarswldttc)
+STD_ROM_FN(snes_Smallstarswldttc)
+
+struct BurnDriver BurnDrvsnes_Smallstarswldttc = {
+	"snes_smallstarswldttc", "snes_smallstarsworld", NULL, NULL, "2025",
+	"Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmallstarswldttcRomInfo, snes_SmallstarswldttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Smart Ball (USA)
 
 static struct BurnRomInfo snes_SmartballRomDesc[] = {
@@ -30276,9 +30332,28 @@ STD_ROM_FN(snes_Smcollection)
 struct BurnDriver BurnDrvsnes_Smcollection = {
 	"snes_smcollection", "snes_smallstars", NULL, NULL, "1993",
 	"Super Mario Collection (Japan, Rev. 1)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Super Mario Collection (Japan, Rev. 1)\0\u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30b3\u30ec\u30af\u30b7\u30e7\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SmcollectionRomInfo, snes_SmcollectionRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario Collection (Hack, Traditional Chinese v1.1)
+
+static struct BurnRomInfo snes_SmcollectionttcRomDesc[] = {
+	{ "Super Mario Collection T-Cht v1.1 (2025)(NOKOH).sfc", 4194304, 0x761f5b75, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smcollectionttc)
+STD_ROM_FN(snes_Smcollectionttc)
+
+struct BurnDriver BurnDrvsnes_Smcollectionttc = {
+	"snes_smcollectionttc", "snes_smallstars", NULL, NULL, "2025",
+	"Super Mario Collection (Hack, Traditional Chinese v1.1)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Super Mario Collection (Hack, Traditional Chinese v1.1)\0\u8d85\u7d1a\u746a\u5229\u6b50\u6536\u85cf\u8f2f\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmcollectionttcRomInfo, snes_SmcollectionttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -33868,7 +33943,7 @@ STD_ROM_FN(snes_Supermarioworldj)
 struct BurnDriver BurnDrvsnes_Supermarioworldj = {
 	"snes_supermarioworldj", "snes_supermarioworld", NULL, NULL, "1990",
 	"Super Mario World ~ Super Mario Bros. 4 (Japan)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Super Mario World ~ Super Mario Bros. 4 (Japan)\0\u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30ef\u30fc\u30eb\u30c9: \u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa \u30d6\u30e9\u30b6\u30fc\u30ba 4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermarioworldjRomInfo, snes_SupermarioworldjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -33890,6 +33965,25 @@ struct BurnDriver BurnDrvsnes_Supermarioworldtp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermarioworldtpRomInfo, snes_SupermarioworldtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario World (Hack, Traditional Chinese)
+
+static struct BurnRomInfo snes_SmworldttcRomDesc[] = {
+	{ "Super Mario World T-Cht (2025)(NOKOH).sfc", 786432, 0xdc68b8cb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smworldttc)
+STD_ROM_FN(snes_Smworldttc)
+
+struct BurnDriver BurnDrvsnes_Smworldttc = {
+	"snes_smworldttc", "snes_supermarioworld", NULL, NULL, "2025",
+	"Super Mario World (Hack, Traditional Chinese)\0", NULL, "NOKOH", "SNES / Super Famicom",
+	L"Super Mario World (Hack, Traditional Chinese)\0\u8d85\u7d1a\u746a\u5229\u6b50\u4e16\u754c\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmworldttcRomInfo, snes_SmworldttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -36167,9 +36261,28 @@ STD_ROM_FN(snes_Tenchisouzou)
 struct BurnDriver BurnDrvsnes_Tenchisouzou = {
 	"snes_tenchisouzou", "snes_terranigmae", NULL, NULL, "1996",
 	"Tenchi Souzou (Japan)\0", NULL, "Enix", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Tenchi Souzou (Japan)\0\u5929\u5730\u5275\u9020\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_TenchisouzouRomInfo, snes_TenchisouzouRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tenchi Souzou (Hack, Simplified Chinese)
+// https://bbs.a9vg.com/thread-8695745-3-1.html
+static struct BurnRomInfo snes_TenchisouzoutscRomDesc[] = {
+	{ "Tenchi Souzou T-Chs (2020)(Necrosaro, hlken).sfc", 4194304, 0x629953e2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tenchisouzoutsc)
+STD_ROM_FN(snes_Tenchisouzoutsc)
+
+struct BurnDriver BurnDrvsnes_Tenchisouzoutsc = {
+	"snes_tenchisouzoutsc", "snes_terranigmae", NULL, NULL, "2020",
+	"Tenchi Souzou (Hack, Simplified Chinese)\0", NULL, "Necrosaro, hlken", "SNES / Super Famicom",
+	L"Tenchi Souzou (Hack, Simplified Chinese)\0\u5929\u5730\u521b\u9020\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_TenchisouzoutscRomInfo, snes_TenchisouzoutscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -40388,7 +40501,7 @@ STD_ROM_FN(snes_Zeldanodensetsu)
 struct BurnDriver BurnDrvsnes_Zeldanodensetsu = {
 	"snes_zeldanodensetsu", "snes_legendofzelda", NULL, NULL, "1991",
 	"Zelda no Densetsu - Kamigami no Triforce (Japan)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Zelda no Densetsu - Kamigami no Triforce (Japan)\0\u30bc\u30eb\u30c0\u306e\u4f1d\u8aac \u795e\u3005\u306e\u30c8\u30e9\u30a4\u30d5\u30a9\u30fc\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_ZeldanodensetsuRomInfo, snes_ZeldanodensetsuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -42175,7 +42288,7 @@ struct BurnDriver BurnDrvsnes_Legendofzeldapw = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The - A Link to the Past Redux (Hack, v10.2.3)
+// Legend of Zelda, The: A Link to the Past Redux (Hack, v10.2.3)
 // https://www.romhacking.net/hacks/2594/
 static struct BurnRomInfo snes_LegendofzeldardxRomDesc[] = {
 	{ "Legend of Zelda, The - A Link to the Past Redux v10.2.3 (2024)(ShadowOne333).sfc", 2097152, 0xb0b544c1, BRF_ESS | BRF_PRG },
@@ -42186,7 +42299,7 @@ STD_ROM_FN(snes_Legendofzeldardx)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldardx = {
 	"snes_legendofzeldardx", "snes_legendofzelda", NULL, NULL, "2024",
-	"Legend of Zelda, The - A Link to the Past Redux (Hack, v10.2.3)\0", NULL, "ShadowOne333", "SNES / Super Famicom",
+	"Legend of Zelda, The: A Link to the Past Redux (Hack, v10.2.3)\0", NULL, "ShadowOne333", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldardxRomInfo, snes_LegendofzeldardxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

@@ -1086,6 +1086,20 @@ void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	}
 }
 
+void BurnSampleSetRouteFadeAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called without init\n"));
+	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called with invalid index %i\n"), nIndex);
+#endif
+
+	if (!nTotalSamples) return;
+
+	for (INT32 i = 0; i < nTotalSamples; i++) {
+		BurnSampleSetRouteFade(i, nIndex, nVolume, nRouteDir);
+	}
+}
+
 void BurnSampleExit()
 {
 #if defined FBNEO_DEBUG

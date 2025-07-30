@@ -275,6 +275,7 @@ static INT32 TeamPlayerMode = 0;
 static INT32 FourWayPlayMode = 0;
 
 static INT32 papriummode = 0;
+static INT32 sot4wmode = 0;
 
 static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
 static UINT8 __fastcall MegadriveReadByte(UINT32 address);
@@ -628,7 +629,7 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 		default: {
 //			if (!bNoDebug)
-//				bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x (PC: %X, PPC: %x)\n"), byteValue, sekAddress, SekGetPC(-1), SekGetPPC(-1));
+			   bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x (PC: %X, PPC: %x)\n"), byteValue, sekAddress, SekGetPC(-1), SekGetPPC(-1));
 		}
 	}
 }
@@ -1533,6 +1534,7 @@ inline static INT32 MegadriveSynchroniseStreamPAL(INT32 nSoundRate)
 // ---------------------------------------------------------------
 
 static INT32 res_check(); // forward
+static void vx_reset();
 static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
 
 static INT32 MegadriveResetDo()
@@ -1541,6 +1543,10 @@ static INT32 MegadriveResetDo()
 
 	if (papriummode) {
 		paprium_reset(); // before SekReset()!
+	}
+
+	if (sot4wmode) {
+		vx_reset();
 	}
 
 	SekOpen(0);
@@ -2535,8 +2541,328 @@ static void __fastcall TopfigWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	bprintf(PRINT_NORMAL, _T("Topfig write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
 
+// dink's flashrom simulator (flash eeprom) from nes.cpp
+static UINT8 flashrom_cmd;
+static UINT16 flashrom_busy;
+enum { AMIC = 0, MXIC = 1, MC_SST = 2, S29GL = 3 };
+#define flashrom_chiptype S29GL
+
+// S29GL settings: 16bit databus, custom cfi data
+
+static UINT8 flashrom_read(UINT16 address)
+{
+#if 0
+	if (flashrom_cmd == 0x98) { // flash chip identification
+		bprintf(0, _T("flashrom chip ID\n"));
+		if (flashrom_chiptype == AMIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0x37; // manufacturer ID
+				case 0x01: return 0x86; // device ID
+				case 0x03: return 0x7f; // Continuation ID
+			}
+		} else if (flashrom_chiptype == MXIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0xc2; // manufacturer ID
+				case 0x01: return 0xa4; // device ID
+			}
+		} else if (flashrom_chiptype == MC_SST) {
+			switch (address & 0x03) {
+				case 0x00: return 0xbf; // manufacturer ID
+				case 0x01: return 0xb7; // device ID
+			}
+		}
+	}
+#endif
+	if (flashrom_cmd == 0x98 && (address >= 0x21 && address < 0x80)) {
+		const UINT8 sot4_preprog_data[0x40] = { //
+			0x51, 0x52, 0x59, 0x02, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, 0x36, 0x00, 0x00, 0x07,
+			0x07, 0x0a, 0x00, 0x03, 0x05, 0x04, 0x00, 0x17, 0x02, 0x00, 0x05, 0x00, 0x02, 0x07, 0x00, 0x20,
+			0x00, 0x7e, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		};
+		return sot4_preprog_data[(address - 0x21) >> 1];
+	}
+
+	if (flashrom_busy > 0) { // flash chip program or "erasing sector or chip" mode (it takes time..)
+		flashrom_busy--;
+
+		UINT8 status = (flashrom_busy & 0x01) << 6; // toggle bit I
+		switch (flashrom_cmd) {
+			case 0x82: // embedded erase sector/chip
+				status |= (flashrom_busy & 0x01) << 2; // toggle bit II
+				status |= 1 << 3; // "erasing" status bit
+				if (flashrom_busy < 2) {
+					//MXIC MX29F040.pdf, bottom pg. 7
+					//"SET-UP AUTOMATIC CHIP/SECTOR ERASE" (last paragraph)
+					//...and terminates when the data on Q7 is "1" and
+					//the data on Q6 stops toggling for two consecutive read
+					//cycles, at which time the device returns to the Read mode
+					status = (1 << 7); // Courier doesn't like when the other status bits are set.
+				}
+				break;
+			case 0xa0: // embedded program
+				status |= 0xff;/*~mapper_prg_read_int(address) & 0x80;*/
+				break;
+		}
+		bprintf(0, _T("erase/pgm status  %x (cmd %x)\n"), status, flashrom_cmd);
+		if (flashrom_busy == 0) {
+			flashrom_cmd = 0; // done! (req: Courier doesn't write 0xf0 (return to read array))
+		}
+		return status;
+	}
+
+	return RomMain[address ^ 1];
+}
+
+static void flashrom_write(UINT16 address, UINT16 data)
+{
+	//bprintf(0, _T("flashrom_write( %x,  %x )\n"), address, data);
+	if (data == 0xf0) {
+		// read array / reset
+		flashrom_cmd = 0;
+		flashrom_busy = 0;
+		return;
+	}
+
+	switch (flashrom_cmd) {
+		case 0x00:
+		case 0x80:
+			if ((address & 0xfff) == 0xaab && data == 0xaa)
+				flashrom_cmd++;
+			if ((address & 0xfff) == 0xab && data == 0x98) {
+				flashrom_cmd = 0x98; // read cfi jibba-jabba
+			}
+			break;
+		case 0x01:
+		case 0x81:
+			if (((address & 0xfff) == 0xaab ||
+				 (address & 0xfff) == 0x555) && data == 0x55)
+				flashrom_cmd++;  // unlocked!
+
+			break;
+		case 0x02:
+			if ((address & 0xfff) == 0xaab) {
+				//bprintf(0, _T("flash command set: %x\n"), data);
+				flashrom_cmd = data;
+			}
+			break;
+		case 0x82: {
+			switch (data) {
+				case 0x10:
+					bprintf(0, _T("flashrom - full flash erase not impl. (will break game!)\n"));
+					flashrom_busy = 0xffff;
+					break;
+				case 0x30:
+					bprintf(0, _T("flashrom - sector erase.  addr %x \n"), address);
+
+					if (flashrom_chiptype == S29GL) {
+						address &= ~1;
+						for (int i = 0; i < 0x1000; i += 2) {
+							UINT16 *Ram = (UINT16*)SRam;
+							Ram[(address + i) >> 1] = 0xffff;
+						}
+						flashrom_busy = 0; // this chip is fast(?)
+						flashrom_cmd = 0;
+					} else
+					if (flashrom_chiptype == MC_SST) {
+						for (INT32 i = 0; i < 0x1000; i++) {
+						  //  Cart.PRGRom[PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1000) + i] = data;
+						}
+						flashrom_busy = 0xfff;
+					} else {
+						for (INT32 i = 0; i < 0x10000; i++) {
+						 //   Cart.PRGRom[(PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000) + i] = 0xff;
+						}
+						flashrom_busy = 0xffff;
+					}
+					break;
+			}
+			break;
+		}
+		case 0xa0:
+			//bprintf(0, _T("write word %x  ->  %x\n"), address, data);
+
+			UINT16 *Ram = (UINT16*)SRam;
+			Ram[(address) >> 1] = data;
+
+			flashrom_busy = (flashrom_chiptype == S29GL) ? 0 : 8;
+			flashrom_cmd = 0;
+			break;
+	}
+}
+
+static void __fastcall sot4w_writeword(UINT32 address, UINT16 data)
+{
+//	bprintf(0, _T("ww %x  %x\n"), address, data);
+	flashrom_write(address, data);
+}
+
+static void __fastcall sot4w_writebyte(UINT32 address, UINT8 data)
+{
+	flashrom_write(address, data);
+}
+
+static UINT16 __fastcall sot4w_readword(UINT32 address)
+{
+	UINT16 *Ram = (UINT16*)SRam;
+	UINT16 rc = Ram[(address & 0xffff) >> 1];
+//	bprintf(0, _T("sram read word %x:  %x\n"), address, rc);
+	return rc;
+}
+
+static UINT8 __fastcall sot4w_readbyte(UINT32 address)
+{
+	return flashrom_read(address);
+}
+
+// vx5200 mp3 player chip
+static UINT8 vx_cmd[10] = { 0, };
+static UINT8 vx_cmdnum = 0;
+static UINT8 vx_serialnum = 0;
+static INT32 vx_track; // 0 - 0xbb7
+static UINT8 vx_volume; // 0 - 0x1f
+
+static void vx_scan(INT32 nAction, INT32 *pnMin)
+{
+	BurnSampleScan(nAction, pnMin);
+
+	SCAN_VAR(vx_cmd);
+	SCAN_VAR(vx_cmdnum);
+	SCAN_VAR(vx_serialnum);
+	SCAN_VAR(vx_track);
+	SCAN_VAR(vx_volume);
+}
+
+static int vx_checksum()
+{
+	int firstpass = (vx_cmd[0] == 0x7e && vx_cmd[9] == 0xef);
+	int cx = ((vx_cmd[7] << 8) + (vx_cmd[8] << 0) - 1) & 0xffff;
+	int cx_calc = 0;
+	for (int i = 1; i < 7; i++) {
+		cx_calc += vx_cmd[i];
+	}
+	cx_calc = (~cx_calc) & 0xffff;
+	if (cx != cx_calc) bprintf(0, _T("vx: bad packet! cx %x   cx_calc %x\n"), cx, cx_calc);
+	return (cx == cx_calc && firstpass);
+}
+
+static void vx_switch_track()
+{
+	if (vx_track == -1) {
+		bprintf(0, _T("vx: song stop.\n"));
+		BurnSampleChannelStop(0);
+	} else {
+		bprintf(0, _T("vx: song play %d.\n"), vx_track);
+		BurnSampleChannelPlay(0, vx_track - 1, -1);
+	}
+}
+
+static void vx_set_volume()
+{
+	double vol = (double)vx_volume * 0.50 / 0x1f;
+	BurnSampleSetRouteFadeAllSamples(BURN_SND_SAMPLE_ROUTE_1, vol, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRouteFadeAllSamples(BURN_SND_SAMPLE_ROUTE_2, vol, BURN_SND_ROUTE_BOTH);
+}
+
+static void vx_init()
+{
+	BurnSampleInit(1 | 0x8000); // setting nostore.
+}
+
+static void vx_exit()
+{
+	BurnSampleExit();
+}
+
+static void vx_render(INT16 *snd, INT32 samples)
+{
+	BurnSampleRender(snd, samples);
+}
+
+static void vx_reset()
+{
+	BurnSampleReset();
+
+	vx_cmdnum = 0;
+	vx_serialnum = 0;
+	vx_track = -1;
+	vx_volume = 0;
+	vx_switch_track();
+	vx_set_volume();
+}
+
+static void vx_command(UINT8 command, UINT16 param)
+{
+	switch (command) {
+		case 0x01: if (vx_track < 0xbb7) { vx_track++; vx_switch_track(); } break;
+		case 0x02: if (vx_track > 0) { vx_track--; vx_switch_track(); } break;
+		case 0x08: // play (looped)
+		case 0x03: vx_track = param; vx_switch_track(); break; // play (also loops!)
+		case 0x04: if (vx_volume < 0x1f) vx_volume++; vx_set_volume(); break;
+		case 0x05: if (vx_volume > 0) vx_volume--; vx_set_volume(); break;
+		case 0x06: vx_volume = param & 0x1f; vx_set_volume(); break;
+		case 0x0e: BurnSampleChannelPause(0, true); break; // pause
+		case 0x0d: BurnSampleChannelPause(0, false); break; // resume
+		case 0x0a: // sleep
+		case 0x0c: // reset
+		case 0x16: vx_track = -1; vx_switch_track(); break; // stop (same as reset)
+
+		default: bprintf(0, _T("vx5200: unhandled command / param:  %x  %x\n"), command, param);
+	}
+}
+
+static void __fastcall sot4w_mp3_writebyte(UINT32 address, UINT8 data)
+{
+	if (address != 0xa13000) return;
+
+	data &= 1;
+	switch (vx_serialnum) {
+		case 0:
+			if (data == 0) vx_serialnum++; // let's go
+			break;
+		case 9:
+			if (data == 1) {
+				vx_cmdnum++;
+				if (vx_cmdnum == 10) {
+					bprintf(0, _T("vx_5200: (in) %x %x %x %x %x %x %x %x %x %x\n"), vx_cmd[0], vx_cmd[1], vx_cmd[2], vx_cmd[3], vx_cmd[4], vx_cmd[5], vx_cmd[6], vx_cmd[7], vx_cmd[8], vx_cmd[9] );
+					vx_cmdnum = 0;
+					if (vx_checksum()) {
+						vx_command(vx_cmd[3], (vx_cmd[5] << 8) + (vx_cmd[6] << 0));
+					}
+				}
+			} else {
+				bprintf(0, _T("vx_5200: bad stop bit!\n"));
+			}
+			vx_serialnum = 0;
+			break; // end of byte
+		case 1:
+			vx_cmd[vx_cmdnum] = 0; // clear on the first bit
+			// no breaks!
+		default:
+			vx_cmd[vx_cmdnum] |= data << (vx_serialnum-1);
+			vx_serialnum++;
+			break;
+	}
+}
+
 static void SetupCustomCartridgeMappers()
 {
+	if (sot4wmode) {
+		SekOpen(0);
+		SekMapHandler(7, 0x000000, 0x00ffff, MAP_READ | MAP_WRITE);
+		SekSetReadByteHandler(7, sot4w_readbyte);
+		SekSetWriteByteHandler(7, sot4w_writebyte);
+
+		SekMapHandler(8, 0x3f0000, 0x3fffff, MAP_READ | MAP_WRITE);
+		SekSetReadWordHandler(8, sot4w_readword);
+		SekSetWriteByteHandler(8, sot4w_writebyte);
+		SekSetWriteWordHandler(8, sot4w_writeword);
+
+		SekMapHandler(9, 0xa13000, 0xa133ff, MAP_WRITE);
+		SekSetWriteByteHandler(9, sot4w_mp3_writebyte);
+		SekClose();
+	}
+
 	if (((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART) || ((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART_SEPROM)) {
 		SekOpen(0);
 		SekMapHandler(7, 0x38fffe, 0x38ffff, MAP_READ | MAP_WRITE);
@@ -3111,7 +3437,7 @@ static void MegadriveSetupSRAM()
 	RamMisc->SRamReg = 0;
 	MegadriveBackupRam = NULL;
 
-	if (papriummode) {
+	if (papriummode || sot4wmode) {
 		RamMisc->SRamDetected = 1;
 		return;  // sram handled by mapper (paprium.h)
 	}
@@ -3331,6 +3657,15 @@ INT32 MegadriveInitPsolar()
 	return rc;
 }
 
+INT32 MegadriveInitSot4w()
+{
+	sot4wmode = 1;
+
+	INT32 rc = MegadriveInit();
+
+	return rc;
+}
+
 INT32 MegadriveInit()
 {
 	BurnAllocMemIndex();
@@ -3422,6 +3757,10 @@ INT32 MegadriveInit()
 		paprium_init();
 	}
 
+	if (sot4wmode) {
+		vx_init();
+	}
+
 	MegadriveResetDo();
 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "puggsy")) {
@@ -3453,6 +3792,11 @@ INT32 MegadriveExit()
 
 	if (papriummode) {
 		paprium_exit();
+	}
+
+	if (sot4wmode) {
+		vx_exit();
+		sot4wmode = 0;
 	}
 
 	BurnFreeMemIndex();
@@ -5169,6 +5513,10 @@ INT32 MegadriveFrame()
 		paprium_audio(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	if (sot4wmode && pBurnSoundOut) {
+		vx_render(pBurnSoundOut, nBurnSoundLen);
+	}
+
 	SekClose();
 	ZetClose();
 
@@ -5214,6 +5562,9 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 
 		if (papriummode) {
 			paprium_scan(nAction, pnMin);
+		}
+		if (sot4wmode) {
+			vx_scan(nAction, pnMin);
 		}
 	}
 

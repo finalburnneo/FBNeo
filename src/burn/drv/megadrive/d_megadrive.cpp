@@ -44964,7 +44964,7 @@ STD_ROM_PICK(md_atomrobopt)
 STD_ROM_FN(md_atomrobopt)
 
 struct BurnDriver BurnDrvmd_atomrobopt = {
-	"md_atomrobopt", "md_atomrobo", NULL, NULL, "1990",
+	"md_atomrobopt", "md_atomrobo", NULL, NULL, "2019",
 	"Atomic Robo-Kid (Hack, Portuguese v1.11)\0", NULL, "Antigeno", "Genesis / Mega Drive",
 	NULL, NULL, L"Ant\u00EDgeno", NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,

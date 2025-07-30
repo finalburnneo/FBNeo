@@ -45268,7 +45268,7 @@ STD_ROM_FN(md_pstar4pt)
 struct BurnDriver BurnDrvmd_pstar4pt = {
 	"md_pstar4pt", "md_pstar4", NULL, NULL, "2021",
 	"Phantasy Star - O Fim do Milenio (Hack, Portuguese v1.0a)\0", NULL, "Mad-Dentist", "Genesis / Mega Drive",
-	L"Phantasy Star - O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)", NULL, NULL, NULL,
+	L"Phantasy Star - O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4ptRomInfo, md_pstar4ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,

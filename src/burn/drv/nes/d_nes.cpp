@@ -5162,7 +5162,7 @@ struct BurnDriver BurnDrvnes_avmahjongclubc = {
 // Batman: The Video Game (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-48898-1-1.html
 static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
-	{ "Batman - Video Game, The T-Chi (2020)(HHNM Team).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
+	{ "Batman - The Video Game T-Chi (2020)(HHNM Team).nes",          393232, 0x4b2de665, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_batmavidgamc)
@@ -5170,7 +5170,7 @@ STD_ROM_FN(nes_batmavidgamc)
 
 struct BurnDriver BurnDrvnes_batmavidgamc = {
 	"nes_batmavidgamc", "nes_batmavidgam", NULL, NULL, "2020",
-	"Batman: Video Game, The (Hack, Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
+	"Batman: The Video Game (Hack, Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmavidgamcRomInfo, nes_batmavidgamcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -5228,7 +5228,7 @@ STD_ROM_FN(nes_castliitsc)
 struct BurnDriver BurnDrvnes_castliitsc = {
 	"nes_castliitsc", "nes_castlii", NULL, NULL, "2013",
 	"Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)\0", NULL, "Nonamed", "NES / Famicom",
-	L"Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)\0\u6076\u9b54\u57ce\u2161: \u897f\u8499\u7684\u4efb\u52a1\0", NULL, NULL, NULL,
+	L"Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)\0\u6076\u9b54\u57ce II\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_castliitscRomInfo, nes_castliitscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -5247,7 +5247,7 @@ STD_ROM_FN(nes_castliittc)
 struct BurnDriver BurnDrvnes_castliittc = {
 	"nes_castliittc", "nes_castlii", NULL, NULL, "2013",
 	"Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)\0", NULL, "Nonamed", "NES / Famicom",
-	L"Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)\0\u60e1\u9b54\u57ce\u2161: \u897f\u8499\u7684\u4efb\u52d9\0", NULL, NULL, NULL,
+	L"Castlevania II: Simon's Quest (Hack, Traditional Chinese v1.2)\0\u60e1\u9b54\u57ce II\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_castliittcRomInfo, nes_castliittcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -6034,10 +6034,10 @@ struct BurnDriver BurnDrvnes_littlemagicc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Little Nemo - Dream Master, The (Hack, Chinese)
+// Little Nemo: The Dream Master (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-43984-1-1.html [Logo by ZARD]
 static struct BurnRomInfo nes_littlnemcRomDesc[] = {
-	{ "Little Nemo - Dream Master, The T-Chi (2017)(Ice Team).nes",          327696, 0x841cbcd1, BRF_ESS | BRF_PRG },
+	{ "Little Nemo - The Dream Master T-Chi (2017)(Ice Team).nes",          327696, 0x841cbcd1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_littlnemc)
@@ -6045,7 +6045,7 @@ STD_ROM_FN(nes_littlnemc)
 
 struct BurnDriver BurnDrvnes_littlnemc = {
 	"nes_littlnemc", "nes_littlnem", NULL, NULL, "2017",
-	"Little Nemo - Dream Master, The (Hack, Chinese)\0", NULL, "Ice Team", "NES / Famicom",
+	"Little Nemo: The Dream Master (Hack, Chinese)\0", NULL, "Ice Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_littlnemcRomInfo, nes_littlnemcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -10172,24 +10172,6 @@ struct BurnDriver BurnDrvnes_bloodjur = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Super Boogerman (Unl)
-static struct BurnRomInfo nes_sboogermanRomDesc[] = {
-	{ "Super Boogerman (Unl)(1997)(Realtec).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_sboogerman)
-STD_ROM_FN(nes_sboogerman)
-
-struct BurnDriver BurnDrvnes_sboogerman = {
-	"nes_sboogerman", NULL, NULL, NULL, "1997",
-	"Super Boogerman (Unl)\0", NULL, "Realtec", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_sboogermanRomInfo, nes_sboogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Bookyman (Unl)
 static struct BurnRomInfo nes_bookymanRomDesc[] = {
 	{ "Bookyman (Unl)(1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
@@ -11834,6 +11816,24 @@ struct BurnDriver BurnDrvnes_superaladdin = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Boogerman (Unl)
+static struct BurnRomInfo nes_sboogermanRomDesc[] = {
+	{ "Super Boogerman (Unl)(1997)(Realtec).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sboogerman)
+STD_ROM_FN(nes_sboogerman)
+
+struct BurnDriver BurnDrvnes_sboogerman = {
+	"nes_sboogerman", NULL, NULL, NULL, "1997",
+	"Super Boogerman (Unl)\0", NULL, "Realtec", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_sboogermanRomInfo, nes_sboogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Contra (Hack, Chinese)
 // http://flamecyclone.ysepan.com/
 static struct BurnRomInfo nes_supercontracRomDesc[] = {
@@ -12544,7 +12544,7 @@ struct BurnDriver BurnDrvnes_advpanzer = {
 	"nes_advpanzer", NULL, NULL, NULL, "2021-22",
 	"Adventures of Panzer, The (HB, v1.5)\0", NULL, "PixelCraft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_advpanzerRomInfo, nes_advpanzerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12562,7 +12562,7 @@ struct BurnDriver BurnDrvnes_advpanzer2 = {
 	"nes_advpanzer2", NULL, NULL, NULL, "2022",
 	"Adventures of Panzer II, The (HB, v1.1)\0", NULL, "PixelCraft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_advpanzer2RomInfo, nes_advpanzer2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12580,8 +12580,26 @@ struct BurnDriver BurnDrvnes_advpanzer3 = {
 	"nes_advpanzer3", NULL, NULL, NULL, "2024",
 	"Adventures of Panzer 3, The (HB, v1.1)\0", NULL, "PixelCraft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_advpanzer3RomInfo, nes_advpanzer3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Adventures of Rip (HB, v1.2)
+static struct BurnRomInfo nes_advofripRomDesc[] = {
+	{ "Adventures of Rip v1.2 (2025)(Jay-GFDgaming).nes",          524304, 0x7542b323, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_advofrip)
+STD_ROM_FN(nes_advofrip)
+
+struct BurnDriver BurnDrvnes_advofrip = {
+	"nes_advofrip", NULL, NULL, NULL, "2025",
+	"Adventures of Rip (HB, v1.2)\0", NULL, "Jay-GFDgaming", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_advofripRomInfo, nes_advofripRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -12724,7 +12742,7 @@ struct BurnDriver BurnDrvnes_alterego = {
 	"nes_alterego", NULL, NULL, NULL, "2011",
 	"Alter Ego (HB)\0", NULL, "Shiru", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_alteregoRomInfo, nes_alteregoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12802,7 +12820,7 @@ struct BurnDriver BurnDrvnes_amazorundie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Anguna - Scourge of the Goblin King (HB)
+// Anguna: Scourge of the Goblin King (HB)
 static struct BurnRomInfo nes_angunaRomDesc[] = {
 	{ "Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes",          524304, 0x1119efff, BRF_ESS | BRF_PRG },
 };
@@ -12812,7 +12830,7 @@ STD_ROM_FN(nes_anguna)
 
 struct BurnDriver BurnDrvnes_anguna = {
 	"nes_anguna", NULL, NULL, NULL, "2021",
-	"Anguna - Scourge of the Goblin King (HB)\0", NULL, "The 6502 Collective", "NES / Famicom",
+	"Anguna: Scourge of the Goblin King (HB)\0", NULL, "The 6502 Collective", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_angunaRomInfo, nes_angunaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -12958,7 +12976,7 @@ struct BurnDriver BurnDrvnes_arkaderush = {
 	"nes_arkaderush", NULL, NULL, NULL, "2021",
 	"Arkade Rush (HB)\0", NULL, "Nathan Tolbert", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_arkaderushRomInfo, nes_arkaderushRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14670,6 +14688,24 @@ struct BurnDriver BurnDrvnes_christmascrisis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_christmascrisisRomInfo, nes_christmascrisisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Christmas Crisis 2 (HB)
+static struct BurnRomInfo nes_christmascrisis2RomDesc[] = {
+	{ "Christmas Crisis 2 (2024)(German Garage Games).nes",          524304, 0x81296414, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_christmascrisis2)
+STD_ROM_FN(nes_christmascrisis2)
+
+struct BurnDriver BurnDrvnes_christmascrisis2 = {
+	"nes_christmascrisis2", NULL, NULL, NULL, "2024",
+	"Christmas Crisis 2 (HB)\0", NULL, "German Garage Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_christmascrisis2RomInfo, nes_christmascrisis2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -18431,6 +18467,24 @@ struct BurnDriver BurnDrvnes_magnilocase = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mai Nurse (HB, v1.03)
+static struct BurnRomInfo nes_mainurseRomDesc[] = {
+	{ "Mai Nurse v1.03 (2024-25)(lunoka).nes",          131088, 0x1c909b75, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mainurse)
+STD_ROM_FN(nes_mainurse)
+
+struct BurnDriver BurnDrvnes_mainurse = {
+	"nes_mainurse", NULL, NULL, NULL, "2024-25",
+	"Mai Nurse (HB, v1.03)\0", NULL, "lunoka", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_mainurseRomInfo, nes_mainurseRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Makaimura Arcade (Hack)
 static struct BurnRomInfo nes_makaimuraarcadeRomDesc[] = {
 	{ "Makaimura Arcade (2010)(2CH).nes",          131088, 0xb523b441, BRF_ESS | BRF_PRG },
@@ -21882,7 +21936,7 @@ struct BurnDriver BurnDrvnes_starversus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Star Wars - The Empire Strikes Back - Easy (Hack)
+// Star Wars: The Empire Strikes Back - Easy (Hack)
 static struct BurnRomInfo nes_starwaresbeasRomDesc[] = {
 	{ "Star Wars - The Empire Strikes Back - Easy (Hack)(2019)(chronix).nes",          524304, 0x11be60fe, BRF_ESS | BRF_PRG },
 };
@@ -21892,9 +21946,9 @@ STD_ROM_FN(nes_starwaresbeas)
 
 struct BurnDriver BurnDrvnes_starwaresbeas = {
 	"nes_starwaresbeas", "nes_starwaresb", NULL, NULL, "2019",
-	"Star Wars - The Empire Strikes Back - Easy (Hack)\0", NULL, "chronix", "NES / Famicom",
+	"Star Wars: The Empire Strikes Back - Easy (Hack)\0", NULL, "chronix", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_starwaresbeasRomInfo, nes_starwaresbeasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21912,15 +21966,15 @@ struct BurnDriver BurnDrvnes_starwarseasy = {
 	"nes_starwarseasy", "nes_starwars", NULL, NULL, "2018",
 	"Star Wars - Easy (Hack)\0", NULL, "chronix", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_starwarseasyRomInfo, nes_starwarseasyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Steel Legion (HB)
+// Steel Legion (HB, v1.1)
 static struct BurnRomInfo nes_steellegionRomDesc[] = {
-	{ "Steel Legion (2024)(Aeon & Star Interactive).nes",          524304, 0xaf212481, BRF_ESS | BRF_PRG },
+	{ "Steel Legion v1.1 (2024)(Aeon & Star Interactive).nes",          524304, 0x8e4c48fd, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_steellegion)
@@ -21928,9 +21982,9 @@ STD_ROM_FN(nes_steellegion)
 
 struct BurnDriver BurnDrvnes_steellegion = {
 	"nes_steellegion", NULL, NULL, NULL, "2024",
-	"Steel Legion (HB)\0", NULL, "Aeon & Star Interactive", "NES / Famicom",
+	"Steel Legion (HB, v1.1)\0", NULL, "Aeon & Star Interactive", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_steellegionRomInfo, nes_steellegionRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -32885,7 +32939,7 @@ struct BurnDriver BurnDrvnes_fantazonii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Faria - A World of Mystery & Danger! (USA)
+// Faria: A World of Mystery & Danger! (USA)
 static struct BurnRomInfo nes_fariaRomDesc[] = {
 	{ "Faria - A World of Mystery & Danger! (USA)(1991)(Nexoft).nes",          262160, 0x1c059dfb, BRF_ESS | BRF_PRG },
 };
@@ -32895,7 +32949,7 @@ STD_ROM_FN(nes_faria)
 
 struct BurnDriver BurnDrvnes_faria = {
 	"nes_faria", NULL, NULL, NULL, "1991",
-	"Faria - A World of Mystery & Danger! (USA)\0", NULL, "Nexoft", "NES / Famicom",
+	"Faria: A World of Mystery & Danger! (USA)\0", NULL, "Nexoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_fariaRomInfo, nes_fariaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32903,7 +32957,7 @@ struct BurnDriver BurnDrvnes_faria = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Faria - Fuuin no Tsurugi (Japan)
+// Faria: Fuuin no Tsurugi (Japan)
 static struct BurnRomInfo nes_fariajRomDesc[] = {
 	{ "Faria - Fuuin no Tsurugi (Japan)(1989)(Game Arts).nes",          262160, 0xa17079e4, BRF_ESS | BRF_PRG },
 };
@@ -32913,8 +32967,8 @@ STD_ROM_FN(nes_fariaj)
 
 struct BurnDriver BurnDrvnes_fariaj = {
 	"nes_fariaj", "nes_faria", NULL, NULL, "1989",
-	"Faria - Fuuin no Tsurugi (Japan)\0", NULL, "Game Arts", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Faria: Fuuin no Tsurugi (Japan)\0", NULL, "Game Arts", "NES / Famicom",
+	L"Faria: Fuuin no Tsurugi (Japan)\0\u30d5\u30a1\u30ea\u30a2 \u5c01\u5370\u306e\u5263\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_fariajRomInfo, nes_fariajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -34293,8 +34347,8 @@ STD_ROM_FN(nes_gekityonbat)
 struct BurnDriver BurnDrvnes_gekityonbat = {
 	"nes_gekityonbat", NULL, NULL, NULL, "1989",
 	"Gekitotsu Yonku Battle (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
+	L"Gekitotsu Yonku Battle (Japan)\0\u6fc0\u7a81\u56db\u99c6\u30d0\u30c8\u30eb\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_gekityonbatRomInfo, nes_gekityonbatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -39967,7 +40021,7 @@ struct BurnDriver BurnDrvnes_littlmer = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Little Nemo - Dream Master, The (USA)
+// Little Nemo: The Dream Master (USA)
 static struct BurnRomInfo nes_littlnemRomDesc[] = {
 	{ "Little Nemo - The Dream Master (USA)(1990)(Capcom).nes",          262160, 0x71d868c4, BRF_ESS | BRF_PRG },
 };
@@ -39977,7 +40031,7 @@ STD_ROM_FN(nes_littlnem)
 
 struct BurnDriver BurnDrvnes_littlnem = {
 	"nes_littlnem", NULL, NULL, NULL, "1990",
-	"Little Nemo - Dream Master, The (USA)\0", NULL, "Capcom", "NES / Famicom",
+	"Little Nemo: The Dream Master (USA)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_littlnemRomInfo, nes_littlnemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -42354,7 +42408,7 @@ struct BurnDriver BurnDrvnes_mooncrystalj = {
 	"nes_mooncrystalj", "nes_mooncrystal", NULL, NULL, "1992",
 	"Moon Crystal (Japan)\0", NULL, "Hector", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mooncrystaljRomInfo, nes_mooncrystaljRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -42373,7 +42427,7 @@ struct BurnDriver BurnDrvnes_mooncrystal = {
 	"nes_mooncrystal", NULL, NULL, NULL, "2000",
 	"Moon Crystal (Hack, English)\0", NULL, "Alex W. Jackson", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mooncrystalRomInfo, nes_mooncrystalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -44952,7 +45006,7 @@ struct BurnDriver BurnDrvnes_princeofpersia = {
 	"nes_princeofpersia", NULL, NULL, NULL, "1992",
 	"Prince of Persia (USA)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiaRomInfo, nes_princeofpersiaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -44970,7 +45024,7 @@ struct BurnDriver BurnDrvnes_princeofpersiae = {
 	"nes_princeofpersiae", "nes_princeofpersia", NULL, NULL, "1992",
 	"Prince of Persia (Euro)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiaeRomInfo, nes_princeofpersiaeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -44988,7 +45042,7 @@ struct BurnDriver BurnDrvnes_princeofpersiaf = {
 	"nes_princeofpersiaf", "nes_princeofpersia", NULL, NULL, "1992",
 	"Prince of Persia (France)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiafRomInfo, nes_princeofpersiafRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45006,7 +45060,7 @@ struct BurnDriver BurnDrvnes_princeofpersiag = {
 	"nes_princeofpersiag", "nes_princeofpersia", NULL, NULL, "1992",
 	"Prince of Persia (Germany)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiagRomInfo, nes_princeofpersiagRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45024,7 +45078,7 @@ struct BurnDriver BurnDrvnes_princeofpersiar = {
 	"nes_princeofpersiar", "nes_princeofpersia", NULL, NULL, "1994",
 	"Prince of Persia (Russia)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiarRomInfo, nes_princeofpersiarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45042,7 +45096,7 @@ struct BurnDriver BurnDrvnes_princeofpersias = {
 	"nes_princeofpersias", "nes_princeofpersia", NULL, NULL, "1992",
 	"Prince of Persia (Spain)\0", NULL, "Virgin Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_princeofpersiasRomInfo, nes_princeofpersiasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -49616,9 +49670,9 @@ struct BurnDriver BurnDrvnes_superdodgeball = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Super Dodge Ball (USA, Evercade)
+// Super Dodge Ball (USA, Evercade release)
 static struct BurnRomInfo nes_superdodgeballecRomDesc[] = {
-	{ "Super Dodge Ball (USA)(1989)(Evercade).nes",          262160, 0x69fd97b8, BRF_ESS | BRF_PRG },
+	{ "Super Dodge Ball - Evercade release (USA)(1989)(Sony Imagesoft).nes",          262160, 0x69fd97b8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_superdodgeballec)
@@ -49626,7 +49680,7 @@ STD_ROM_FN(nes_superdodgeballec)
 
 struct BurnDriver BurnDrvnes_superdodgeballec = {
 	"nes_superdodgeballec", "nes_superdodgeball", NULL, NULL, "1989",
-	"Super Dodge Ball (USA, Evercade)\0", NULL, "Evercade", "NES / Famicom",
+	"Super Dodge Ball (USA, Evercade release)\0", NULL, "Sony Imagesoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_superdodgeballecRomInfo, nes_superdodgeballecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50176,9 +50230,9 @@ struct BurnDriver BurnDrvnes_tagteawre = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Tagin' Dragon (Unl)
+// Tagin' Dragon (USA)
 static struct BurnRomInfo nes_tagindragonRomDesc[] = {
-	{ "Tagin' Dragon (Unl).nes",          49168, 0x163720d6, BRF_ESS | BRF_PRG },
+	{ "Tagin' Dragon (USA)(1990)(Bunch Games).nes",          49168, 0x163720d6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tagindragon)
@@ -50186,9 +50240,9 @@ STD_ROM_FN(nes_tagindragon)
 
 struct BurnDriver BurnDrvnes_tagindragon = {
 	"nes_tagindragon", NULL, NULL, NULL, "1990",
-	"Tagin' Dragon (Unl)\0", NULL, "Bunch Games", "NES / Famicom",
+	"Tagin' Dragon (USA)\0", NULL, "Bunch Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_tagindragonRomInfo, nes_tagindragonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

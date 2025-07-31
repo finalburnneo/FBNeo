@@ -3798,18 +3798,37 @@ struct BurnDriver BurnDrvfds_ultra = {
 };
 
 // Ultraman 2 - Shutsugeki Katoku Tai (Japan)
-static struct BurnRomInfo fds_ultra2RomDesc[] = {
+static struct BurnRomInfo fds_ultra2jRomDesc[] = {
 	{ "Ultraman 2 - Shutsugeki Katoku Tai (Japan)(1987)(Bandai).fds",          131016, 0x4010e726, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_ultra2j, fds_ultra2j, fds_fdsbios)
+STD_ROM_FN(fds_ultra2j)
+
+struct BurnDriver BurnDrvfds_ultra2j = {
+	"fds_ultra2j", "fds_ultra2", "fds_fdsbios", NULL, "1987",
+	"Ultraman 2 - Shutsugeki Katoku Tai (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION, 0,
+	NESGetZipName, fds_ultra2jRomInfo, fds_ultra2jRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ultraman 2 - Sally Forth, Science Patrol (Hack, English)
+// https://www.romhacking.net/translations/7418/
+static struct BurnRomInfo fds_ultra2RomDesc[] = {
+	{ "Ultraman 2 - Sally Forth, Science Patrol T-Eng (2025)(BlackPaladin).fds",          131000, 0x12d4da55, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_ultra2, fds_ultra2, fds_fdsbios)
 STD_ROM_FN(fds_ultra2)
 
 struct BurnDriver BurnDrvfds_ultra2 = {
-	"fds_ultra2", NULL, "fds_fdsbios", NULL, "1987",
-	"Ultraman 2 - Shutsugeki Katoku Tai (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	"fds_ultra2", NULL, "fds_fdsbios", NULL, "2025",
+	"Ultraman 2 - Sally Forth, Science Patrol (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_ultra2RomInfo, fds_ultra2RomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

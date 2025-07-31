@@ -44955,6 +44955,42 @@ struct BurnDriver BurnDrvmd_alien3pt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Atomic Robo-Kid (Hack, Portuguese v1.11)
+static struct BurnRomInfo md_atomroboptRomDesc[] = {
+	{ "Atomic Robo-Kid PT-BR v1.11 (2019)(Antigeno).bin", 524288, 0xc0cbbca8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_atomrobopt)
+STD_ROM_FN(md_atomrobopt)
+
+struct BurnDriver BurnDrvmd_atomrobopt = {
+	"md_atomrobopt", "md_atomrobo", NULL, NULL, "2019",
+	"Atomic Robo-Kid (Hack, Portuguese v1.11)\0", NULL, "Antigeno", "Genesis / Mega Drive",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_atomroboptRomInfo, md_atomroboptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Atomic Runner (Hack, Portuguese v1.05)
+static struct BurnRomInfo md_atomrunptRomDesc[] = {
+	{ "Atomic Runner PT-BR v1.05 (2019)(Antigeno).bin", 1048576, 0x458c12f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_atomrunpt)
+STD_ROM_FN(md_atomrunpt)
+
+struct BurnDriver BurnDrvmd_atomrunpt = {
+	"md_atomrunpt", "md_atomrun", NULL, NULL, "2019",
+	"Atomic Runner (Hack, Portuguese v1.05)\0", NULL, "Antigeno", "Genesis / Mega Drive",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_atomrunptRomInfo, md_atomrunptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Castelo da Ilusao Estralando Mickey Mouse (Hack, Portuguese v1.2)
 // https://romhackers.org/traducoes/console/mega-drive/castle-of-illusion-renix-traducoes/
 static struct BurnRomInfo md_castlillptRomDesc[] = {
@@ -45107,6 +45143,24 @@ struct BurnDriver BurnDrvmd_godspt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Insector X (Hack, Portuguese v1.15)
+static struct BurnRomInfo md_insectxptRomDesc[] = {
+	{ "Insector X PT-BR v1.15 (2017)(Antigeno).bin", 524288, 0x3c366f22, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_insectxpt)
+STD_ROM_FN(md_insectxpt)
+
+struct BurnDriver BurnDrvmd_insectxpt = {
+	"md_insectxpt", "md_insectx", NULL, NULL, "2017",
+	"Insector X (Hack, Portuguese v1.15)\0", NULL, "Antigeno", "Genesis / Mega Drive",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_insectxptRomInfo, md_insectxptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Light Crusader (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/light-crusader-monkeys-traducoes/
 static struct BurnRomInfo md_lightcptRomDesc[] = {
@@ -45129,7 +45183,7 @@ struct BurnDriver BurnDrvmd_lightcpt = {
 // Magical Hat's Turbo Flying Adventure! (Hack, Portuguese v0.8)
 // https://www.romhacking.net/translations/7270/
 static struct BurnRomInfo md_magichatptRomDesc[] = {
-	{ "Magical Hat's Turbo Flying Adventure! BR-PT v0.8 (2024)(RLGC).bin", 535218, 0x376d60aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Magical Hat's Turbo Flying Adventure! PT-BR v0.8 (2024)(RLGC).bin", 535218, 0x376d60aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_magichatpt)
@@ -45214,7 +45268,7 @@ STD_ROM_FN(md_pstar4pt)
 struct BurnDriver BurnDrvmd_pstar4pt = {
 	"md_pstar4pt", "md_pstar4", NULL, NULL, "2021",
 	"Phantasy Star - O Fim do Milenio (Hack, Portuguese v1.0a)\0", NULL, "Mad-Dentist", "Genesis / Mega Drive",
-	L"Phantasy Star - O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)", NULL, NULL, NULL,
+	L"Phantasy Star - O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4ptRomInfo, md_pstar4ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -47720,7 +47774,7 @@ struct BurnDriver BurnDrvmd_indycruss = {
 // Insector X (Hack, Spanish)
 // https://www.romhacking.net/translations/4505/
 static struct BurnRomInfo md_insectxsRomDesc[] = {
-	{ "Insector X T-Spa T-Spa (2019)(Wave).bin", 524288, 0x0a96a725, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Insector X T-Spa (2019)(Wave).bin", 524288, 0x0a96a725, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_insectxs)

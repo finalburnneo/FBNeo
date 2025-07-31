@@ -26328,11 +26328,11 @@ struct BurnDriver BurnDrvsms_zillionpt = {
 	256, 192, 4, 3
 };
 
-// Zillion II - The Tri Formation (Hack, Portuguese v1.1)
+// Zillion II: The Tri Formation (Hack, Portuguese v1.1)
 // https://romhackers.org/traducoes/console/master-system/zillion-ii-the-tri-formation-po.b.r.e
 
 static struct BurnRomInfo sms_zillion2ptRomDesc[] = {
-	{ "Zillion II: The Tri Formation T-Por v1.1 (2009-2020)(PO.B.R.E.).sms",	131072, 0x70846349, BRF_PRG | BRF_ESS },
+	{ "Zillion - II The Tri Formation T-Por v1.1 (2009-2020)(PO.B.R.E.).sms",	131072, 0x70846349, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_zillion2pt)

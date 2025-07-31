@@ -24271,7 +24271,7 @@ struct BurnDriver BurnDrvmd_shinfrcep = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shining Force - Kamigami no Isan (Japan)
+// Shining Force: Kamigami no Isan (Japan)
 static struct BurnRomInfo md_shinfrcejRomDesc[] = {
 	{ "Shining Force - Kamigami no Isan (Japan)(1992)(Sega).bin", 0x180000, 0x9378fbcd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -24281,8 +24281,8 @@ STD_ROM_FN(md_shinfrcej)
 
 struct BurnDriver BurnDrvmd_shinfrcej = {
 	"md_shinfrcej", "md_shinfrce", NULL, NULL, "1992",
-	"Shining Force - Kamigami no Isan (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"Shining Force: Kamigami no Isan (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	L"Shining Force: Kamigami no Isan (Japan)\0\u30b7\u30e3\u30a4\u30cb\u30f3\u30b0\u30fb\u30d5\u30a9\u30fc\u30b9 \u795e\u3005\u306e\u907a\u7523\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_shinfrcejRomInfo, md_shinfrcejRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -24307,7 +24307,7 @@ struct BurnDriver BurnDrvmd_shinfrc2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shining Force II - Koe no Fuuin (Japan)
+// Shining Force II: Koe no Fuuin (Japan)
 static struct BurnRomInfo md_shinfrc2jRomDesc[] = {
 	{ "Shining Force II - Koe no Fuuin (Japan)(1993)(Sega).bin", 0x200000, 0x0288f3e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -24317,8 +24317,8 @@ STD_ROM_FN(md_shinfrc2j)
 
 struct BurnDriver BurnDrvmd_shinfrc2j = {
 	"md_shinfrc2j", "md_shinfrc2", NULL, NULL, "1993",
-	"Shining Force II - Koe no Fuuin (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"Shining Force II: Koe no Fuuin (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	L"Shining Force II: Koe no Fuuin (Japan)\0\u30b7\u30e3\u30a4\u30cb\u30f3\u30b0\u30fb\u30d5\u30a9\u30fc\u30b9 II \u53e4\u3048\u306e\u5c01\u5370\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_shinfrc2jRomInfo, md_shinfrc2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -44494,7 +44494,7 @@ struct BurnDriver BurnDrvmd_zombieswm = {
 // -------------------------
 
 
-// Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)
+// Aoki Ookami to Shiroki Mejika: Genchou Hishi (Hack, Chinese)
 // Translation by SKOB
 static struct BurnRomInfo md_genchohicRomDesc[] = {
 	{ "Aoki Ookami to Shiroki Mejika - Genchou Hishi T-Chi (199x)(SKOB).bin", 0x140000, 0x7c161c48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44505,7 +44505,7 @@ STD_ROM_FN(md_genchohic)
 
 struct BurnDriver BurnDrvmd_genchohic = {
 	"md_genchohic", "md_genghis2", NULL, NULL, "199?",
-	"Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)\0", NULL, "SKOB", "Genesis / Mega Drive",
+	"Aoki Ookami to Shiroki Mejika: Genchou Hishi (Hack, Chinese)\0", NULL, "SKOB", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_genchohicRomInfo, md_genchohicRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44524,7 +44524,7 @@ STD_ROM_FN(md_daikok2tsc)
 struct BurnDriver BurnDrvmd_daikok2tsc = {
 	"md_daikok2tsc", "md_newhoriz", NULL, NULL, "2011",
 	"Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
-	L"Daikoukai Jidai II (Hack, Simplified Chinese v1.9c)\0\u5927\u822a\u6d77\u65f6\u4ee3\u2161\0", NULL, NULL, NULL,
+	L"Daikoukai Jidai II (Hack, Simpl. Chinese v1.9c)\0\u5927\u822a\u6d77\u65f6\u4ee3\u2161\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_daikok2tscRomInfo, md_daikok2tscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -44550,7 +44550,7 @@ struct BurnDriver BurnDrvmd_dialqoc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)
+// From TV Animation Slam Dunk: Kyougou Makkou Taiketsu! (Hack, Chinese)
 // Translation by Bear Team
 static struct BurnRomInfo md_slamdunkcRomDesc[] = {
 	{ "From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! T-Chi (200x)(Bear Team).bin", 0x200000, 0x89253739, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44561,7 +44561,7 @@ STD_ROM_FN(md_slamdunkc)
 
 struct BurnDriver BurnDrvmd_slamdunkc = {
 	"md_slamdunkc", "md_slamdunk", NULL, NULL, "200?",
-	"From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)\0", NULL, "Bear Team", "Genesis / Mega Drive",
+	"From TV Animation Slam Dunk: Kyougou Makkou Taiketsu! (Hack, Chinese)\0", NULL, "Bear Team", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_slamdunkcRomInfo, md_slamdunkcRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
@@ -44608,9 +44608,9 @@ struct BurnDriver BurnDrvmd_hybridfc = {
 };
 
 // Landstalker: Koutei no Zaihou (Hack, Chinese)
-// Translation by Yi Zhi Zhi Lu
+// Translation by Ken_Tse
 static struct BurnRomInfo md_landstlkcRomDesc[] = {
-	{ "Landstalker - Koutei no Zaihou T-Chi (2007)(Yi Zhi Zhi Lu).bin", 0x230000, 0xd2982a65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Landstalker - Koutei no Zaihou T-Chi (2007)(Ken_Tse).bin", 0x230000, 0xd2982a65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_landstlkc)
@@ -44618,7 +44618,7 @@ STD_ROM_FN(md_landstlkc)
 
 struct BurnDriver BurnDrvmd_landstlkc = {
 	"md_landstlkc", "md_landstlk", NULL, NULL, "2007",
-	"Landstalker: Koutei no Zaihou (Hack, Chinese)\0", NULL, "Yi Zhi Zhi Lu", "Genesis / Mega Drive",
+	"Landstalker: Koutei no Zaihou (Hack, Chinese)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_PLATFORM | GBF_RPG, 0,
 	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44665,7 +44665,7 @@ struct BurnDriver BurnDrvmd_mworld4c = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// NHK Taiga Drama - Taiheiki (Hack, Chinese)
+// NHK Taiga Drama: Taiheiki (Hack, Chinese)
 // Translation by cslrxyz
 static struct BurnRomInfo md_nhktaidrcRomDesc[] = {
 	{ "NHK Taiga Drama - Taiheiki T-Chi (199x)(cslrxyz).bin", 0x100000, 0x19864175, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44676,7 +44676,7 @@ STD_ROM_FN(md_nhktaidrc)
 
 struct BurnDriver BurnDrvmd_nhktaidrc = {
 	"md_nhktaidrc", "md_nhktaidr", NULL, NULL, "199?",
-	"NHK Taiga Drama - Taiheiki (Hack, Chinese)\0", NULL, "cslrxyz", "Genesis / Mega Drive",
+	"NHK Taiga Drama: Taiheiki (Hack, Chinese)\0", NULL, "cslrxyz", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_nhktaidrcRomInfo, md_nhktaidrcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44703,7 +44703,7 @@ struct BurnDriver BurnDrvmd_ninjabt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Nobunaga no Yabou - Haouden (Hack, Chinese)
+// Nobunaga no Yabou: Haouden (Hack, Chinese)
 // Translation by Xu Yong Sheng
 static struct BurnRomInfo md_nobuhaocRomDesc[] = {
 	{ "Nobunaga no Yabou - Haouden T-Chi (199x)(Xu Yong Sheng).bin", 0x200000, 0x0a0993cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44714,7 +44714,7 @@ STD_ROM_FN(md_nobuhaoc)
 
 struct BurnDriver BurnDrvmd_nobuhaoc = {
 	"md_nobuhaoc", "md_nobuhao", NULL, NULL, "199?",
-	"Nobunaga no Yabou - Haouden (Hack, Chinese)\0", NULL, "Xu Yong Sheng", "Genesis / Mega Drive",
+	"Nobunaga no Yabou: Haouden (Hack, Chinese)\0", NULL, "Xu Yong Sheng", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 8, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_nobuhaocRomInfo, md_nobuhaocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44722,7 +44722,7 @@ struct BurnDriver BurnDrvmd_nobuhaoc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pac-Man 2 - The New Adventures (Hack, Chinese v1.1)
+// Pac-Man 2: The New Adventures (Hack, Chinese v1.1)
 // http://www.nesbbs.com/bbs/thread-45543-1-1.html
 static struct BurnRomInfo md_pacman2cRomDesc[] = {
 	{ "Pac-Man 2 - The New Adventures T-Chi v1.1 (2018)(Axi).bin", 0x280000, 0x9dde7643, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44733,7 +44733,7 @@ STD_ROM_FN(md_pacman2c)
 
 struct BurnDriver BurnDrvmd_pacman2c = {
 	"md_pacman2c", "md_pacman2", NULL, NULL, "2018",
-	"Pac-Man 2 - The New Adventures (Hack, Chinese v1.1)\0", NULL, "Axi", "Genesis / Mega Drive",
+	"Pac-Man 2: The New Adventures (Hack, Chinese v1.1)\0", NULL, "Axi", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_pacman2cRomInfo, md_pacman2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44741,7 +44741,7 @@ struct BurnDriver BurnDrvmd_pacman2c = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - The End of the Millennium (Hack, Chinese v1.6)
+// Phantasy Star: The End of the Millennium (Hack, Chinese v1.6)
 // https://yzzl.kxb4u.com/viewthread.php?tid=115457&extra=page%3D1
 static struct BurnRomInfo md_pstar4cRomDesc[] = {
 	{ "Phantasy Star - The End of the Millennium T-Chi v1.6 (2022)(Ken_Tse).bin", 0x320000, 0x0db82dd1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44752,7 +44752,7 @@ STD_ROM_FN(md_pstar4c)
 
 struct BurnDriver BurnDrvmd_pstar4c = {
 	"md_pstar4c", "md_pstar4", NULL, NULL, "2022",
-	"Phantasy Star - The End of the Millennium (Hack, Chinese v1.6)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
+	"Phantasy Star: The End of the Millennium (Hack, Chinese v1.6)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4cRomInfo, md_pstar4cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44760,10 +44760,46 @@ struct BurnDriver BurnDrvmd_pstar4c = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Shining Force: Kamigami no Isan (Hack, Simplified Chinese)
+static struct BurnRomInfo md_shinfrcetscRomDesc[] = {
+	{ "Shining Force - Kamigami no Isan T-Chs (2013)(zymgundam).bin", 0x200000, 0x6aec9557, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrcetsc)
+STD_ROM_FN(md_shinfrcetsc)
+
+struct BurnDriver BurnDrvmd_shinfrcetsc = {
+	"md_shinfrcetsc", "md_shinfrce", NULL, NULL, "2013",
+	"Shining Force: Kamigami no Isan (Hack, Simplified Chinese)\0", NULL, "zymgundam", "Genesis / Mega Drive",
+	L"Shining Force: Kamigami no Isan (Hack, Simpl. Chinese)\0\u5149\u660e\u4e0e\u9ed1\u6697 \u7eed\u6218: \u8bf8\u795e\u7684\u9057\u4ea7\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shinfrcetscRomInfo, md_shinfrcetscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shining Force: Kamigami no Isan (Hack, Traditional Chinese)
+static struct BurnRomInfo md_shinfrcettcRomDesc[] = {
+	{ "Shining Force - Kamigami no Isan T-Cht (20xx).bin", 0x200000, 0x6ee8cbda, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrcettc)
+STD_ROM_FN(md_shinfrcettc)
+
+struct BurnDriver BurnDrvmd_shinfrcettc = {
+	"md_shinfrcettc", "md_shinfrce", NULL, NULL, "20xx",
+	"Shining Force: Kamigami no Isan (Hack, Traditional Chinese)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	L"Shining Force: Kamigami no Isan (Hack, Trad. Chinese)\0\u5149\u660e\u8207\u9ed1\u6697 \u7e8c\u6230: \u8af8\u795e\u7684\u907a\u7522\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shinfrcettcRomInfo, md_shinfrcettcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining Force II - Koe no Fuuin (Hack, Chinese v2)
-// Translation by Yi Zhi Zhi Lu
+// Translation by Ken_Tse
 static struct BurnRomInfo md_shinfrc2cRomDesc[] = {
-	{ "Shining Force II - Koe no Fuuin T-Chi, v2 (2007)(Yi Zhi Zhi Lu).bin", 0x300000, 0x5dd08aea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shining Force II - Koe no Fuuin T-Chi, v2 (2007)(Ken_Tse).bin", 0x300000, 0x5dd08aea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinfrc2c)
@@ -44771,10 +44807,28 @@ STD_ROM_FN(md_shinfrc2c)
 
 struct BurnDriver BurnDrvmd_shinfrc2c = {
 	"md_shinfrc2c", "md_shinfrc2", NULL, NULL, "2007",
-	"Shining Force II - Koe no Fuuin (Hack, Chinese v2)\0", NULL, "Yi Zhi Zhi Lu", "Genesis / Mega Drive",
+	"Shining Force II: Koe no Fuuin (Hack, Chinese v2)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shining in the Darkness (Hack, Traditional Chinese)
+static struct BurnRomInfo md_shindarkttcRomDesc[] = {
+	{ "Shining in the Darkness T-Cht (20xx)(WINSEN, Xiaoguihun).bin", 0x200000, 0xea770243, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shindarkttc)
+STD_ROM_FN(md_shindarkttc)
+
+struct BurnDriver BurnDrvmd_shindarkttc = {
+	"md_shindarkttc", "md_shindark", NULL, NULL, "20xx",
+	"Shining in the Darkness (Hack, Traditional Chinese)\0", NULL, "WINSEN, Xiaoguihun", "Genesis / Mega Drive",
+	L"Shining in the Darkness (Hack, Trad. Chinese)\0\u5149\u660e\u8207\u9ed1\u6697\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shindarkttcRomInfo, md_shindarkttcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44798,7 +44852,7 @@ struct BurnDriver BurnDrvmd_ragnacenc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)
+// Story of Thor, The: Hikari o Tsugumono (Hack, Chinese)
 // Translation by KEN & MADCELL
 static struct BurnRomInfo md_thorcRomDesc[] = {
 	{ "Story of Thor, The - Hikari o Tsugumono T-Chi (2004)(YUZO).bin", 0x300000, 0x3ca3fcd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44809,7 +44863,7 @@ STD_ROM_FN(md_thorc)
 
 struct BurnDriver BurnDrvmd_thorc = {
 	"md_thorc", "md_thor", NULL, NULL, "2004",
-	"Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)\0", NULL, "YUZO", "Genesis / Mega Drive",
+	"Story of Thor, The: Hikari o Tsugumono (Hack, Chinese)\0", NULL, "YUZO", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_ACTION | GBF_ADV, 0,
 	MegadriveGetZipName, md_thorcRomInfo, md_thorcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44837,9 +44891,9 @@ struct BurnDriver BurnDrvmd_supshin2c = {
 };
 
 // Surging Aura (Hack, Chinese)
-// Translation by Yi Zhi Zhi Lu
+// Translation by Ken_Tse
 static struct BurnRomInfo md_surgingcRomDesc[] = {
-	{ "Surging Aura T-Chi (199x)(YiZhi Zhi Lu).bin", 0x240000, 0x38a17fd0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Surging Aura T-Chi (199x)(Ken_Tse).bin", 0x240000, 0x38a17fd0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_surgingc)
@@ -44847,7 +44901,7 @@ STD_ROM_FN(md_surgingc)
 
 struct BurnDriver BurnDrvmd_surgingc = {
 	"md_surgingc", "md_surging", NULL, NULL, "199?",
-	"Surging Aura (Hack, Chinese)\0", NULL, "Yi Zhi Zhi Lu", "Genesis / Mega Drive",
+	"Surging Aura (Hack, Chinese)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_surgingcRomInfo, md_surgingcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44885,7 +44939,7 @@ STD_ROM_FN(md_kingcoltsc)
 struct BurnDriver BurnDrvmd_kingcoltsc = {
 	"md_kingcoltsc", "md_kingcol", NULL, NULL, "2017",
 	"Tougiou King Colossus (Hack, Simplified Chinese)\0", NULL, "WINSEN", "Genesis / Mega Drive",
-	L"Tougiou King Colossus (Hack, Simplified Chinese)\0\u9b25\u6280\u738b\0", NULL, NULL, NULL,
+	L"Tougiou King Colossus (Hack, Simpl. Chinese)\0\u9b25\u6280\u738b\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_kingcoltscRomInfo, md_kingcoltscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -51741,7 +51795,7 @@ struct BurnDriverD BurnDrvmd_insnspeed = {
 
 */
 
-// Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)
+// Di Guo Wang Chao: Ya Se Chuan Shuo (Chinese)
 // Audio fix by Ken_Tse - 20230112
 static struct BurnRomInfo md_dgwcyscsRomDesc[] = {
 	{ "Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)", 0x200000, 0x87ac7f92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -51753,7 +51807,7 @@ STD_ROM_FN(md_dgwcyscs)
 
 struct BurnDriver BurnDrvmd_dgwcyscs = {
 	"md_dgwcyscs", NULL, NULL, NULL, "2023",
-	"Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Genesis / Mega Drive",
+	"Di Guo Wang Chao: Ya Se Chuan Shuo (Chinese)\0", NULL, "Chuanpu, Ken_Tse", "Genesis / Mega Drive",
 	L"\u5c01\u795e\u82f1\u5091\u8f49 (\u4e2d\u6587)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
 	MegadriveGetZipName, md_dgwcyscsRomInfo, md_dgwcyscsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -51773,7 +51827,7 @@ STD_ROM_FN(md_fsyjz)
 
 struct BurnDriver BurnDrvmd_fsyjz = {
 	"md_fsyjz", NULL, NULL, NULL, "2023",
-	"Feng Shen Ying Jie Zhuan (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Genesis / Mega Drive",
+	"Feng Shen Ying Jie Zhuan (Chinese)\0", NULL, "Chuanpu, Ken_Tse", "Genesis / Mega Drive",
 	L"\u5c01\u795e\u82f1\u5091\u50b3 (\u4e2d\u6587)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
 	MegadriveGetZipName, md_fsyjzRomInfo, md_fsyjzRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -51793,7 +51847,7 @@ STD_ROM_FN(md_shz)
 
 struct BurnDriver BurnDrvmd_shz = {
 	"md_shz", NULL, NULL, NULL, "2023",
-	"Shui Hu Zhuan (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Genesis / Mega Drive",
+	"Shui Hu Zhuan (Chinese)\0", NULL, "Chuanpu , Ken_Tse", "Genesis / Mega Drive",
 	L"\u6c34\u6ef8\u50b3 (\u4e2d\u6587)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_shzRomInfo, md_shzRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -51813,8 +51867,8 @@ STD_ROM_FN(md_tkzs)
 
 struct BurnDriver BurnDrvmd_tkzs = {
 	"md_barverbs", "md_barver", NULL, NULL, "2023",
-	"Barver Battle Saga (China) (Hack)\0", "Audio fix hack", "Chuanpu / Ken_Tse", "Genesis / Mega Drive",
-	L"\u592a\u7a7a\u6230\u58eb - \u9b54\u6cd5\u6230\u58eb (\u4e2d\u6587)\0", NULL, NULL, NULL,
+	"Barver Battle Saga (China) (Hack)\0", "Audio fix hack", "Chuanpu, Ken_Tse", "Genesis / Mega Drive",
+	L"\u592a\u7a7a\u6230\u58eb: \u9b54\u6cd5\u6230\u58eb (\u4e2d\u6587)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_tkzsRomInfo, md_tkzsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,

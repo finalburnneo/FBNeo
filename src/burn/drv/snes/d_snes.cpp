@@ -40559,7 +40559,7 @@ STD_ROM_FN(snes_Yuuyuuhak)
 struct BurnDriver BurnDrvsnes_Yuuyuuhak = {
 	"snes_yuuyuuhak", NULL, NULL, NULL, "1993",
 	"Yuu Yuu Hakusho (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Yuu Yuu Hakusho (Japan)\0\u5e7d\u904a\u767d\u66f8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuuhakRomInfo, snes_YuuyuuhakRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -40578,7 +40578,7 @@ STD_ROM_FN(snes_Yuuyuufin)
 struct BurnDriver BurnDrvsnes_Yuuyuufin = {
 	"snes_yuuyuufin", NULL, NULL, NULL, "1995",
 	"Yuu Yuu Hakusho Final: Makai Saikyou Retsuden (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Yuu Yuu Hakusho Final: Makai Saikyou Retsuden (Japan)\0\u5E7d\u904a\u767d\u66f8 Final\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuufinRomInfo, snes_YuuyuufinRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -40597,7 +40597,7 @@ STD_ROM_FN(snes_Yuuyuuhak2j)
 struct BurnDriver BurnDrvsnes_Yuuyuuhak2j = {
 	"snes_yuuyuuhak2j", NULL, NULL, NULL, "1994",
 	"Yuu Yuu Hakusho 2: Kakutou no Shou (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Yuu Yuu Hakusho 2: Kakutou no Shou (Japan)\0\u5E7d\u904a\u767d\u66f8 2 \u683c\u95d8\u306e\u7ae0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Yuuyuuhak2jRomInfo, snes_Yuuyuuhak2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -40607,7 +40607,7 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhak2j = {
 // Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese)
 // https://www.romhacking.net/translations/7223/
 static struct BurnRomInfo snes_Yuuyuuhak2tpRomDesc[] = {
-	{ "Yu Yu Hakusho 2 - The Fighting Chapter PT-BR v1.0 (2024)(Taihen).sfc", 2097152, 0x52ac1195, BRF_ESS | BRF_PRG },
+	{ "Yu Yu Hakusho 2 - The Fighting Chapter PT-BR v1.0 (2024)(Hextinkers).sfc", 2097152, 0x52ac1195, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuuhak2tp)
@@ -40615,7 +40615,7 @@ STD_ROM_FN(snes_Yuuyuuhak2tp)
 
 struct BurnDriver BurnDrvsnes_Yuuyuuhak2tp = {
 	"snes_yuuyuuhak2tp", "snes_yuuyuuhak2j", NULL, NULL, "2024",
-	"Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese)\0", NULL, "Taihen", "SNES / Super Famicom",
+	"Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese)\0", NULL, "Hextinkers", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Yuuyuuhak2tpRomInfo, snes_Yuuyuuhak2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -40635,14 +40635,14 @@ STD_ROM_FN(snes_Yuuyuutoku)
 struct BurnDriver BurnDrvsnes_Yuuyuutoku = {
 	"snes_yuuyuutoku", NULL, NULL, NULL, "1994",
 	"Yuu Yuu Hakusho: Tokubetsu Hen (Japan)\0", NULL, "Namcot", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Yuu Yuu Hakusho: Tokubetsu Hen (Japan)\0\u5E7d\u904a\u767d\u66f8 \u7279\u5225\u7bc7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_ADV | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_YuuyuutokuRomInfo, snes_YuuyuutokuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Zelda no Densetsu - Kamigami no Triforce (Japan)
+// Zelda no Densetsu: Kamigami no Triforce (Japan)
 
 static struct BurnRomInfo snes_ZeldanodensetsuRomDesc[] = {
 	{ "Zelda no Densetsu - Kamigami no Triforce (J)(1991)(Nintendo).sfc", 1048576, 0x3322effc, BRF_ESS | BRF_PRG },
@@ -40653,8 +40653,8 @@ STD_ROM_FN(snes_Zeldanodensetsu)
 
 struct BurnDriver BurnDrvsnes_Zeldanodensetsu = {
 	"snes_zeldanodensetsu", "snes_legendofzelda", NULL, NULL, "1991",
-	"Zelda no Densetsu - Kamigami no Triforce (Japan)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	L"Zelda no Densetsu - Kamigami no Triforce (Japan)\0\u30bc\u30eb\u30c0\u306e\u4f1d\u8aac \u795e\u3005\u306e\u30c8\u30e9\u30a4\u30d5\u30a9\u30fc\u30b9\0", NULL, NULL, NULL,
+	"Zelda no Densetsu: Kamigami no Triforce (Japan)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	L"Zelda no Densetsu: Kamigami no Triforce (Japan)\0\u30bc\u30eb\u30c0\u306e\u4f1d\u8aac \u795e\u3005\u306e\u30c8\u30e9\u30a4\u30d5\u30a9\u30fc\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_ZeldanodensetsuRomInfo, snes_ZeldanodensetsuRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,

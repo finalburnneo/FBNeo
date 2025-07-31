@@ -877,6 +877,25 @@ struct BurnDriver BurnDrvsnes_3ninjaskb = {
 	512, 448, 4, 3
 };
 
+// 3 Ninjas Kick Back (Hack, Portuguese v1.7)
+
+static struct BurnRomInfo snes_3ninjaskbtpRomDesc[] = {
+	{ "3 Ninjas Kick Back PT-BR v1.7 (2020)(Antigeno).sfc", 2097152, 0x4ac5454d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_3ninjaskbtp)
+STD_ROM_FN(snes_3ninjaskbtp)
+
+struct BurnDriver BurnDrvsnes_3ninjaskbtp = {
+	"snes_3ninjaskbtp", "snes_3ninjaskb", NULL, NULL, "2020",
+	"3 Ninjas Kick Back (Hack, Portuguese v1.7)\0", NULL, "Antigeno", "SNES / Super Famicom",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_3ninjaskbtpRomInfo, snes_3ninjaskbtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // 3x3 Eyes: Juuma Houkan (Japan)
 
 static struct BurnRomInfo snes_3x3eyesjRomDesc[] = {
@@ -11519,6 +11538,25 @@ struct BurnDriver BurnDrvsnes_Evo = {
 	512, 448, 4, 3
 };
 
+// E.V.O. - Em Busca do Paraiso (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/e.v.o.-search-for-eden-po.b.r.e
+static struct BurnRomInfo snes_EvotpRomDesc[] = {
+	{ "E.V.O. - Em Busca do Paraiso PR-BR (2011)(PO.B.R.E.).sfc", 2097152, 0x6291ff7c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Evotp)
+STD_ROM_FN(snes_Evotp)
+
+struct BurnDriver BurnDrvsnes_Evotp = {
+	"snes_evotp", "snes_evo", NULL, NULL, "2011",
+	"E.V.O. - Em Busca do Paraiso (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "SNES / Super Famicom",
+	L"E.V.O. - Em Busca do Para\u00edso (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_EvotpRomInfo, snes_EvotpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // E.V.O. - Search for Eden (Hack, Spanish v1.2)
 // https://www.romhacking.net/translations/6526/
 static struct BurnRomInfo snes_EvotsRomDesc[] = {
@@ -17129,6 +17167,25 @@ struct BurnDriver BurnDrvsnes_Inspgadget = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_InspgadgetRomInfo, snes_InspgadgetRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Inspector Gadget ~ Inspetor Bugiganga (Hack, Portuguese v1.6)
+// https://romhackers.org/traducoes/console/super-nes/inspector-gadget-po.b.r.e
+static struct BurnRomInfo snes_InspgadgettpRomDesc[] = {
+	{ "Inspector Gadget - Inspetor Bugiganga PT-BR (2009)(PO.B.R.E.).sfc", 1572864, 0x5684022d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Inspgadgettp)
+STD_ROM_FN(snes_Inspgadgettp)
+
+struct BurnDriver BurnDrvsnes_Inspgadgettp = {
+	"snes_inspgadgettp", "snes_inspgadget", NULL, NULL, "2009",
+	"Inspector Gadget ~ Inspetor Bugiganga (Hack, Portuguese v1.6)\0", NULL, "PO.B.R.E.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_InspgadgettpRomInfo, snes_InspgadgettpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -27698,6 +27755,25 @@ struct BurnDriver BurnDrvsnes_Rtypeiii = {
 	512, 448, 4, 3
 };
 
+// R-Type III - The Third Lightning (Euro)
+
+static struct BurnRomInfo snes_RtypeiiieRomDesc[] = {
+	{ "R-Type III (E)(1994)(Irem).sfc", 2097152, 0x5a183e62, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rtypeiiie)
+STD_ROM_FN(snes_Rtypeiiie)
+
+struct BurnDriver BurnDrvsnes_Rtypeiiie = {
+	"snes_rtypeiiie", "snes_rtypeiii", NULL, NULL, "1994",
+	"R-Type III - The Third Lightning (Euro)\0", NULL, "Irem", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
+	SNESGetZipName, snes_RtypeiiieRomInfo, snes_RtypeiiieRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // R-Type III - The Third Lightning (Japan)
 
 static struct BurnRomInfo snes_RtypeiiijRomDesc[] = {
@@ -30073,6 +30149,25 @@ struct BurnDriver BurnDrvsnes_Slrmoonanstoryte = {
 	512, 448, 4, 3
 };
 
+// Pretty Soldier Sailor Moon - Another Story (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3025.0
+static struct BurnRomInfo snes_SlrmoonanstorytpRomDesc[] = {
+	{ "Pretty Soldier Sailor Moon - Another Story PT-BR (2025)(Dindo).sfc", 4194304, 0x44c322eb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Slrmoonanstorytp)
+STD_ROM_FN(snes_Slrmoonanstorytp)
+
+struct BurnDriver BurnDrvsnes_Slrmoonanstorytp = {
+	"snes_slrmoonanstorytp", "snes_slrmoonanstoryte", NULL, NULL, "2025",
+	"Pretty Soldier Sailor Moon - Another Story (Hack, Portuguese)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_SlrmoonanstorytpRomInfo, snes_SlrmoonanstorytpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Bishoujo Senshi Sailor Moon Super S - Fuwa Fuwa Panic (Japan)
 
 static struct BurnRomInfo snes_SlrmoonffpjRomDesc[] = {
@@ -30659,6 +30754,25 @@ struct BurnDriver BurnDrvsnes_Snoopyconcertte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SnoopyconcertteRomInfo, snes_SnoopyconcertteRomName, NULL, NULL, NULL, NULL, SNESMouseInputInfo, SNESMouseDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Snoopy Concert (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/snoopy-concert-po.b.r.e
+static struct BurnRomInfo snes_SnoopyconcerttpRomDesc[] = {
+	{ "Snoopy Concert PT-BR (2009)(PO.B.R.E. - Aeon Genesis).sfc", 2097152, 0xcba81d3d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Snoopyconcerttp)
+STD_ROM_FN(snes_Snoopyconcerttp)
+
+struct BurnDriver BurnDrvsnes_Snoopyconcerttp = {
+	"snes_snoopyconcerttp", "snes_snoopyconcertte", NULL, NULL, "2009",
+	"Snoopy Concert (Hack, Portuguese)\0", "'SNES Mouse' compatible game (Set Dipswitches)", "PO.B.R.E. - Aeon Genesis", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
+	SNESGetZipName, snes_SnoopyconcerttpRomInfo, snes_SnoopyconcerttpRomName, NULL, NULL, NULL, NULL, SNESMouseInputInfo, SNESMouseDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -36245,6 +36359,44 @@ struct BurnDriver BurnDrvsnes_Tecmosbowl3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_Tecmosbowl3RomInfo, snes_Tecmosbowl3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tenchi Muyou! - Game Hen (Japan)
+
+static struct BurnRomInfo snes_TenchimuyoujRomDesc[] = {
+	{ "Tenchi Muyou! - Game Hen (J)(1995)(Banpresto).sfc", 2097152, 0x69d9caa9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tenchimuyouj)
+STD_ROM_FN(snes_Tenchimuyouj)
+
+struct BurnDriver BurnDrvsnes_Tenchimuyouj = {
+	"snes_tenchimuyouj", NULL, NULL, NULL, "1995",
+	"Tenchi Muyou! - Game Hen (Japan)\0", NULL, "Banpresto", "SNES / Super Famicom",
+	L"Tenchi Muyou! - Game Hen (Japan)\0\u5929\u5730\u7121\u7528\uff01 \u3052\u30fc\u3080\u7de8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_TenchimuyoujRomInfo, snes_TenchimuyoujRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tenchi Muyo! - O Jogo (Hack, Portuguese v2.0)
+// https://romhackers.org/traducoes/console/super-nes/tenchi-muyou-game-hen-po.b.r.e
+static struct BurnRomInfo snes_TenchimuyoutpRomDesc[] = {
+	{ "Tenchi Muyo! - O Jogo PT-BR v2.0 (2010)(PO.B.R.E.).sfc", 3145776, 0x609694b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tenchimuyoutp)
+STD_ROM_FN(snes_Tenchimuyoutp)
+
+struct BurnDriver BurnDrvsnes_Tenchimuyoutp = {
+	"snes_tenchimuyoutp", "snes_tenchimuyouj", NULL, NULL, "2010",
+	"Tenchi Muyo! - O Jogo (Hack, Portuguese v2.0)\0", NULL, "PO.B.R.E.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_TenchimuyoutpRomInfo, snes_TenchimuyoutpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

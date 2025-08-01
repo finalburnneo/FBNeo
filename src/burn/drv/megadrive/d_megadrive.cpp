@@ -38991,6 +38991,61 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+
+// Earthion (English) (HB)
+static struct BurnRomInfo md_earthioneRomDesc[] = {
+	{ "Earthion (En)(2025)(Ancient).bin", 7864320, 0xf2cc6b7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_earthione)
+STD_ROM_FN(md_earthione)
+
+struct BurnDriver BurnDrvmd_earthione = {
+	"md_earthione", NULL, NULL, NULL, "2025",
+	"Earthion (English)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_earthioneRomInfo, md_earthioneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Earthion (Japanese) (HB)
+static struct BurnRomInfo md_earthionjRomDesc[] = {
+	{ "Earthion (Jp)(2025)(Ancient).bin", 7864320, 0xf1948b8f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_earthionj)
+STD_ROM_FN(md_earthionj)
+
+struct BurnDriver BurnDrvmd_earthionj = {
+	"md_earthionj", "md_earthione", NULL, NULL, "2025",
+	"Earthion (Japanese)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_earthionjRomInfo, md_earthionjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Earthion (Portuguese) (HB)
+static struct BurnRomInfo md_earthionpRomDesc[] = {
+	{ "Earthion (Pt)(2025)(Ancient).bin", 7864320, 0x2677de3e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_earthionp)
+STD_ROM_FN(md_earthionp)
+
+struct BurnDriver BurnDrvmd_earthionp = {
+	"md_earthionp", "md_earthione", NULL, NULL, "2025",
+	"Earthion (Portuguese)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_earthionpRomInfo, md_earthionpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Escape 2042 (M4) (HB)
 static struct BurnRomInfo md_escape2042RomDesc[] = {
 	{ "Escape 2042 (2018)(OrionSoft).bin", 4194304, 0x0d81511c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

@@ -614,8 +614,8 @@ STD_ROM_FN(fds_aisenshinicol)
 struct BurnDriver BurnDrvfds_aisenshinicol = {
 	"fds_aisenshinicol", "fds_wolnicol", "fds_fdsbios", NULL, "1987",
 	"Ai Senshi Nicol (Japan)\0", NULL, "Konami", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_RUNGUN | GBF_ADV, 0,
+	L"Ai Senshi Nicol (Japan)\u611b\u6226\u58eb\u30cb\u30b3\u30eb\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ADV | GBF_RUNGUN, 0,
 	NESGetZipName, fds_aisenshinicolRomInfo, fds_aisenshinicolRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -778,7 +778,7 @@ STD_ROM_FN(fds_armananokisekij)
 struct BurnDriver BurnDrvfds_armananokisekij = {
 	"fds_armananokisekij", "fds_armananokiseki", "fds_fdsbios", NULL, "1987",
 	"Armana no Kiseki (Japan)\0", NULL, "Konami", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Armana no Kiseki (Japan)\0\u30a2\u30eb\u30de\u30ca\u306e\u5947\u8de1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_PLATFORM, 0,
 	NESGetZipName, fds_armananokisekijRomInfo, fds_armananokisekijRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -804,7 +804,7 @@ struct BurnDriver BurnDrvfds_armananokiseki = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Aspic - Majaou no Noroi (Japan)
+// Aspic: Majaou no Noroi (Japan)
 static struct BurnRomInfo fds_aspicjRomDesc[] = {
 	{ "Aspic - Majaou no Noroi (Japan)(1988)(Bothtec).fds",          131000, 0x1999addb, BRF_ESS | BRF_PRG },
 };
@@ -814,15 +814,15 @@ STD_ROM_FN(fds_aspicj)
 
 struct BurnDriver BurnDrvfds_aspicj = {
 	"fds_aspicj", "fds_aspic", "fds_fdsbios", NULL, "1988",
-	"Aspic - Majaou no Noroi (Japan)\0", NULL, "Bothtec", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Aspic: Majaou no Noroi (Japan)\0", NULL, "Bothtec", "Famicom Disk System",
+	L"Aspic: Majaou no Noroi (Japan)\0\u30a2\u30b9\u30d4\u30c3\u30af \u9b54\u86c7\u738b\u306e\u546a\u3044\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_RPG, 0,
 	NESGetZipName, fds_aspicjRomInfo, fds_aspicjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Aspic - Curse of the Snakelord (Hack, English)
+// Aspic: Curse of the Snakelord (Hack, English)
 // https://www.romhacking.net/translations/6861/
 static struct BurnRomInfo fds_aspicRomDesc[] = {
 	{ "Aspic - Curse of the Snakelord T-Eng (2023)(BlackPaladin).fds",          131000, 0x9f1976dd, BRF_ESS | BRF_PRG },
@@ -833,10 +833,28 @@ STD_ROM_FN(fds_aspic)
 
 struct BurnDriver BurnDrvfds_aspic = {
 	"fds_aspic", NULL, "fds_fdsbios", NULL, "2023",
-	"Aspic - Curse of the Snakelord (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	"Aspic: Curse of the Snakelord (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_RPG, 0,
 	NESGetZipName, fds_aspicRomInfo, fds_aspicRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Backgammon (Japan)
+static struct BurnRomInfo fds_backgammonRomDesc[] = {
+	{ "Backgammon (Japan)(1990)(Nintendo).fds",          65500, 0x97ff65a0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_backgammon, fds_backgammon, fds_fdsbios)
+STD_ROM_FN(fds_backgammon)
+
+struct BurnDriver BurnDrvfds_backgammon = {
+	"fds_backgammon", NULL, "fds_fdsbios", NULL, "1990",
+	"Backgammon (Japan)\0", NULL, "Nintendo", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_BOARD, 0,
+	NESGetZipName, fds_backgammonRomInfo, fds_backgammonRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -1076,7 +1094,7 @@ struct BurnDriver BurnDrvfds_crystaldrag = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dandy - Zeuon no Fukkatsu (Japan)
+// Dandy: Zeuon no Fukkatsu (Japan)
 static struct BurnRomInfo fds_dandyjRomDesc[] = {
 	{ "Dandy - Zeuon no Fukkatsu (Japan)(1988)(Pony Canyon).fds",          131016, 0xa2bfcbcc, BRF_ESS | BRF_PRG },
 };
@@ -1086,15 +1104,15 @@ STD_ROM_FN(fds_dandyj)
 
 struct BurnDriver BurnDrvfds_dandyj = {
 	"fds_dandyj", "fds_dandy", "fds_fdsbios", NULL, "1988",
-	"Dandy - Zeuon no Fukkatsu (Japan)\0", NULL, "Pony Canyon", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_RPG, 0,
+	"Dandy: Zeuon no Fukkatsu (Japan)\0", NULL, "Pony Canyon", "Famicom Disk System",
+	L"Dandy: Zeuon no Fukkatsu (Japan)\0\u30c0\u30f3\u30c7\u30a3\u30fc \u30bc\u30a6\u30aa\u30f3\u306e\u5fa9\u6d3b\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, fds_dandyjRomInfo, fds_dandyjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dandy - Zeuon no Fukkatsu (Hack, English)
+// Dandy: The Resurrection of Zeuon (Hack, English)
 // https://www.romhacking.net/translations/6395/
 static struct BurnRomInfo fds_dandyRomDesc[] = {
 	{ "Dandy - Zeuon no Fukkatsu T-Eng (2021)(Stardust Crusaders).fds",          131383, 0x29a1613f, BRF_ESS | BRF_PRG },
@@ -1105,9 +1123,9 @@ STD_ROM_FN(fds_dandy)
 
 struct BurnDriver BurnDrvfds_dandy = {
 	"fds_dandy", NULL, "fds_fdsbios", NULL, "2021",
-	"Dandy - Zeuon no Fukkatsu (Hack, English)\0", NULL, "Stardust Crusaders", "Famicom Disk System",
+	"Dandy: The Resurrection of Zeuon (Hack, English)\0", NULL, "Stardust Crusaders", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, fds_dandyRomInfo, fds_dandyRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -1146,6 +1164,80 @@ struct BurnDriver BurnDrvfds_deadzone = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ADV, 0,
 	NESGetZipName, fds_deadzoneRomInfo, fds_deadzoneRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deep Dungeon: Madou Senki (Japan)
+static struct BurnRomInfo fds_deepdungjRomDesc[] = {
+	{ "Deep Dungeon - Madou Senki (Japan)(1986)(HummingBird Soft).fds",          131000, 0xed9011d0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_deepdungj, fds_deepdungj, fds_fdsbios)
+STD_ROM_FN(fds_deepdungj)
+
+struct BurnDriver BurnDrvfds_deepdungj = {
+	"fds_deepdungj", "fds_deepdung", "fds_fdsbios", NULL, "1986",
+	"Deep Dungeon: Madou Senki (Japan)\0", NULL, "HummingBird Soft", "Famicom Disk System",
+	L"Deep Dungeon: Madou Senki (Japan)\0\u9b54\u6d1e\u6226\u8a18 \u30c7\u30a3\u30fc\u30d7\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, fds_deepdungjRomInfo, fds_deepdungjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deep Dungeon: The Heretic War (Hack, English)
+// https://www.romhacking.net/translations/613/
+static struct BurnRomInfo fds_deepdungRomDesc[] = {
+	{ "Deep Dungeon - The Heretic War T-Eng (2006)(KingMike's Translations).fds",          131016, 0x29f8cf56, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_deepdung, fds_deepdung, fds_fdsbios)
+STD_ROM_FN(fds_deepdung)
+
+struct BurnDriver BurnDrvfds_deepdung = {
+	"fds_deepdung", NULL, "fds_fdsbios", NULL, "2006",
+	"Deep Dungeon: The Heretic War (Hack, English)\0", NULL, "KingMike's Translations", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, fds_deepdungRomInfo, fds_deepdungRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deep Dungeon II: Yuushi no Monshou (Japan)
+static struct BurnRomInfo fds_deepdung2jRomDesc[] = {
+	{ "Deep Dungeon II - Yuushi no Monshou (Japan, v1.1)(1987)(HummingBird Soft).fds",          131000, 0x4e5298e4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_deepdung2j, fds_deepdung2j, fds_fdsbios)
+STD_ROM_FN(fds_deepdung2j)
+
+struct BurnDriver BurnDrvfds_deepdung2j = {
+	"fds_deepdung2j", "fds_deepdung2", "fds_fdsbios", NULL, "1987",
+	"Deep Dungeon II: Yuushi no Monshou (Japan)\0", NULL, "HummingBird Soft", "Famicom Disk System",
+	L"Deep Dungeon II: Yuushi no Monshou (Japan)\0\u52c7\u58eb\u306e\u7d0b\u7ae0 \u30c7\u30a3\u30fc\u30d7\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, fds_deepdung2jRomInfo, fds_deepdung2jRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deep Dungeon II: The Hero's Crest (Hack, English)
+// https://www.romhacking.net/translations/1568/
+static struct BurnRomInfo fds_deepdung2RomDesc[] = {
+	{ "Deep Dungeon II - The Hero's Crest T-Eng (2010)(KingMike's Translations).fds",          131000, 0xd4eca4d4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_deepdung2, fds_deepdung2, fds_fdsbios)
+STD_ROM_FN(fds_deepdung2)
+
+struct BurnDriver BurnDrvfds_deepdung2 = {
+	"fds_deepdung2", NULL, "fds_fdsbios", NULL, "2010",
+	"Deep Dungeon II: The The Hero's Crest (Hack, English)\0", NULL, "KingMike's Translations", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, fds_deepdung2RomInfo, fds_deepdung2RomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -3305,25 +3397,44 @@ struct BurnDriver BurnDrvfds_santaclausj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)
-static struct BurnRomInfo fds_sdgunworgacsescwaRomDesc[] = {
+// SD Gundam World: Gachapon Senshi - Scramble Wars (Japan)
+static struct BurnRomInfo fds_sdgunworgacsescwajRomDesc[] = {
 	{ "SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)(1987)(Bandai).fds",          131000, 0x9d287c3f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_sdgunworgacsescwaj, fds_sdgunworgacsescwaj, fds_fdsbios)
+STD_ROM_FN(fds_sdgunworgacsescwaj)
+
+struct BurnDriver BurnDrvfds_sdgunworgacsescwaj = {
+	"fds_sdgunworgacsescwaj", "fds_sdgunworgacsescwa", "fds_fdsbios", NULL, "1987",
+	"SD Gundam World: Gachapon Senshi - Scramble Wars (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_STRATEGY, 0,
+	NESGetZipName, fds_sdgunworgacsescwajRomInfo, fds_sdgunworgacsescwajRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// SD Gundam World: Gachapon Soldier - Scramble Wars (Hack, English v1.01)
+// https://www.romhacking.net/translations/3645/
+static struct BurnRomInfo fds_sdgunworgacsescwaRomDesc[] = {
+	{ "SD Gundam World - Gachapon Soldier - Scramble Wars T-Eng v1.01 (2018)(MrRichard999).fds",          131016, 0x1cac22d0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_sdgunworgacsescwa, fds_sdgunworgacsescwa, fds_fdsbios)
 STD_ROM_FN(fds_sdgunworgacsescwa)
 
 struct BurnDriver BurnDrvfds_sdgunworgacsescwa = {
-	"fds_sdgunworgacsescwa", NULL, "fds_fdsbios", NULL, "1987",
-	"SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	"fds_sdgunworgacsescwa", NULL, "fds_fdsbios", NULL, "2018",
+	"SD Gundam World: Gachapon Soldier - Scramble Wars (Hack, English v1.01)\0", NULL, "MrRichard999", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_FDS, GBF_STRATEGY, 0,
 	NESGetZipName, fds_sdgunworgacsescwaRomInfo, fds_sdgunworgacsescwaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish)
+// SD Gundam World: Gachapon Soldier - Scramble Wars (Hack, Spanish)
 // https://www.romhacking.net/translations/5827/
 static struct BurnRomInfo fds_sdgunworgacsescwacRomDesc[] = {
 	{ "SD Gundam World - Gachapon Senshi - Scramble Wars T-Spa (2020)(Max1323).fds",          131016, 0x53f73319, BRF_ESS | BRF_PRG },
@@ -3334,7 +3445,7 @@ STD_ROM_FN(fds_sdgunworgacsescwac)
 
 struct BurnDriver BurnDrvfds_sdgunworgacsescwac = {
 	"fds_sdgunworgacsescwac", "fds_sdgunworgacsescwa", "fds_fdsbios", NULL, "2020",
-	"SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish)\0", NULL, "Max1323", "Famicom Disk System",
+	"SD Gundam World: Gachapon Soldier - Scramble Wars (Hack, Spanish)\0", NULL, "Max1323", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_FDS, GBF_STRATEGY, 0,
 	NESGetZipName, fds_sdgunworgacsescwacRomInfo, fds_sdgunworgacsescwacRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -3779,25 +3890,44 @@ struct BurnDriver BurnDrvfds_twinbee = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)
-static struct BurnRomInfo fds_ultraRomDesc[] = {
+// Ultraman: Kaijuu Teikoku no Gyakushuu (Japan)
+static struct BurnRomInfo fds_ultrajRomDesc[] = {
 	{ "Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)(1986)(Bandai).fds",          131016, 0x2ab0c9bd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_ultraj, fds_ultraj, fds_fdsbios)
+STD_ROM_FN(fds_ultraj)
+
+struct BurnDriver BurnDrvfds_ultraj = {
+	"fds_ultraj", "fds_ultra", "fds_fdsbios", NULL, "1986",
+	"Ultraman: Kaijuu Teikoku no Gyakushuu (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	L"Ultraman: Kaijuu Teikoku no Gyakushuu (Japan)\0\u30a6\u30eb\u30c8\u30e9\u30de\u30f3 \u602a\u7363\u5e1d\u56fd\u306e\u9006\u8972\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, fds_ultrajRomInfo, fds_ultrajRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ultraman: Wrath of the Kaiju Empire (Hack, English)
+// https://www.romhacking.net/translations/7380/
+static struct BurnRomInfo fds_ultraRomDesc[] = {
+	{ "Ultraman - Wrath of the Kaiju Empire T-Eng (2025)(BlackPaladin).fds",          131000, 0x9b9f0120, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_ultra, fds_ultra, fds_fdsbios)
 STD_ROM_FN(fds_ultra)
 
 struct BurnDriver BurnDrvfds_ultra = {
-	"fds_ultra", NULL, "fds_fdsbios", NULL, "1986",
-	"Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	"fds_ultra", NULL, "fds_fdsbios", NULL, "2025",
+	"Ultraman: Wrath of the Kaiju Empire (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, fds_ultraRomInfo, fds_ultraRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ultraman 2 - Shutsugeki Katoku Tai (Japan)
+// Ultraman 2: Shutsugeki Katoku Tai (Japan)
 static struct BurnRomInfo fds_ultra2jRomDesc[] = {
 	{ "Ultraman 2 - Shutsugeki Katoku Tai (Japan)(1987)(Bandai).fds",          131016, 0x4010e726, BRF_ESS | BRF_PRG },
 };
@@ -3807,15 +3937,15 @@ STD_ROM_FN(fds_ultra2j)
 
 struct BurnDriver BurnDrvfds_ultra2j = {
 	"fds_ultra2j", "fds_ultra2", "fds_fdsbios", NULL, "1987",
-	"Ultraman 2 - Shutsugeki Katoku Tai (Japan)\0", NULL, "Bandai", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Ultraman 2: Shutsugeki Katoku Tai (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	L"Ultraman 2: Shutsugeki Katoku Tai (Japan)\0\u30a6\u30eb\u30c8\u30e9\u30de\u30f3 2 \u51fa\u6483\u79d1\u7279\u968a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_ultra2jRomInfo, fds_ultra2jRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ultraman 2 - Sally Forth, Science Patrol (Hack, English)
+// Ultraman 2: Sally Forth, Science Patrol (Hack, English)
 // https://www.romhacking.net/translations/7418/
 static struct BurnRomInfo fds_ultra2RomDesc[] = {
 	{ "Ultraman 2 - Sally Forth, Science Patrol T-Eng (2025)(BlackPaladin).fds",          131000, 0x12d4da55, BRF_ESS | BRF_PRG },
@@ -3826,7 +3956,7 @@ STD_ROM_FN(fds_ultra2)
 
 struct BurnDriver BurnDrvfds_ultra2 = {
 	"fds_ultra2", NULL, "fds_fdsbios", NULL, "2025",
-	"Ultraman 2 - Sally Forth, Science Patrol (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	"Ultraman 2: Sally Forth, Science Patrol (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_ultra2RomInfo, fds_ultra2RomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -3834,7 +3964,7 @@ struct BurnDriver BurnDrvfds_ultra2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ultraman Club - Chikyuu Dakkan Sakusen (Japan)
+// Ultraman Club: Chikyuu Dakkan Sakusen (Japan)
 static struct BurnRomInfo fds_ultracluRomDesc[] = {
 	{ "Ultraman Club - Chikyuu Dakkan Sakusen (Japan)(1988)(Bandai).fds",          131000, 0xfd150e81, BRF_ESS | BRF_PRG },
 };
@@ -3844,8 +3974,8 @@ STD_ROM_FN(fds_ultraclu)
 
 struct BurnDriver BurnDrvfds_ultraclu = {
 	"fds_ultraclu", NULL, "fds_fdsbios", NULL, "1988",
-	"Ultraman Club - Chikyuu Dakkan Sakusen (Japan)\0", NULL, "Bandai", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Ultraman Club: Chikyuu Dakkan Sakusen (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	L"Ultraman Club: Chikyuu Dakkan Sakusen (Japan)\0\u30a6\u30eb\u30c8\u30e9\u30de\u30f3 \u5036\u697d\u90e8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, fds_ultracluRomInfo, fds_ultracluRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -3937,7 +4067,7 @@ struct BurnDriver BurnDrvfds_wolnicol = {
 	"fds_wolnicol", NULL, "fds_fdsbios", NULL, "2025",
 	"Warrior of Love Nicol (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_RUNGUN | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ADV | GBF_RUNGUN, 0,
 	NESGetZipName, fds_wolnicolRomInfo, fds_wolnicolRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

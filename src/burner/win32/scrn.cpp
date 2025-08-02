@@ -1068,12 +1068,12 @@ int BurnerLoadDriver(TCHAR *pszDriverName)
 	if (!bFinder || !bRDMode) {
 		nDrvIdx = RomdataGetDrvIndex(pszDriverName);
 	}
+	if (nDrvIdx < 0)
+		return -1;
 	if (bCurrentRD) {
 		_tcscpy(szRomdataName, szBackup);
 		RomDataInit();
 	}
-	if (nDrvIdx < 0)
-		return -1;
 
 	QuitGame();
 
@@ -1109,14 +1109,14 @@ INT32 RomDataLoadDriver(const TCHAR* pszSelDat)
 		RomDataExit();				// Before handling RomDataCheck, exit RDMode
 	}
 
-	INT32 nDrvIdx = RomDataCheck(pszSelDat);
+	INT32 nDrvIdx = -1;
 
+	if ((nDrvIdx = RomDataCheck(pszSelDat)) < 0)
+		return -1;
 	if (bRDMode) {
 		_tcscpy(szRomdataName, szBackup);
 		RomDataInit();				// Restore state
 	}
-	if (nDrvIdx < 0)
-		return -1;
 
 	QuitGame();						// Quit the game completely
 
@@ -1289,14 +1289,13 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 		default:
 			break;
 	}
-
-	if (bRDMode) {
-		_tcscpy(szRomdataName, szBackup);
-		RomDataInit();				// Restore state
-	}
 	if (nDrvIdx < 0) {
 		QuickOpenExit();
 		return -1;
+	}
+	if (bRDMode) {
+		_tcscpy(szRomdataName, szBackup);
+		RomDataInit();				// Restore state
 	}
 
 /*

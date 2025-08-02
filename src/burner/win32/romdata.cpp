@@ -1427,12 +1427,18 @@ TCHAR* RomdataGetDrvName(const TCHAR* pszFileName)
 // It is recommended to save and restore the state of nBurnDrvActive before and after the call
 INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName)
 {
+	// nBurnDrvActive must be saved and restored, as BurnAreaScan() depends on it
+	const UINT32 nOldDrvActive = nBurnDrvActive;
+
 	for (INT32 nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) {
 		nBurnDrvActive = nDrvIndex;
 		if ((0 == _tcscmp(pszDrvName, BurnDrvGetText(DRV_NAME))) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
+			nBurnDrvActive = nOldDrvActive;
 			return nDrvIndex;
 		}
 	}
+
+	nBurnDrvActive = nOldDrvActive;
 	return -1;
 }
 

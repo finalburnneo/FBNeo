@@ -1179,7 +1179,7 @@ STD_ROM_FN(fds_deepdungj)
 struct BurnDriver BurnDrvfds_deepdungj = {
 	"fds_deepdungj", "fds_deepdung", "fds_fdsbios", NULL, "1986",
 	"Deep Dungeon: Madou Senki (Japan)\0", NULL, "HummingBird Soft", "Famicom Disk System",
-	L"Deep Dungeon: Madou Senki (Japan)\0\u9b54\u6d1e\u6226\u8a18 \u30c7\u30a3\u30fc\u30d7\u30c0\u30f3\u30b8\u30e7\u30f3\0", NULL, NULL, NULL,
+	L"Deep Dungeon: Madou Senki (Japan)\0\u30c7\u30a3\u30fc\u30d7\u30c0\u30f3\u30b8\u30e7\u30f3 \u9b54\u6d1e\u6226\u7d00\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_MAZE | GBF_RPG, 0,
 	NESGetZipName, fds_deepdungjRomInfo, fds_deepdungjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -15369,7 +15369,7 @@ struct BurnDriver BurnDrvnes_crillion = {
 
 // Crypto (HB)
 static struct BurnRomInfo nes_cryptoRomDesc[] = {
-	{ "Crypto (HB).nes",          49168, 0x45aaa381, BRF_ESS | BRF_PRG },
+	{ "Crypto (2016)(EEMU).nes",          49168, 0x45aaa381, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_crypto)
@@ -15550,7 +15550,27 @@ struct BurnDriver BurnDrvnes_deadtomb = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Deja Vu - A Nightmare Comes True!! - Uncensored (Hack)
+// Deep Dungeon III: The Journey to Become a Hero - Graphics Mod (Hack, v1.1)
+// https://www.romhacking.net/translations/1996/
+// https://www.romhacking.net/translations/3395/
+static struct BurnRomInfo nes_deepdung3hRomDesc[] = {
+	{ "Deep Dungeon III - The Journey to Become a Hero T-Eng + Graphics Mod v1.1 (2013)(KingMike's Translations, MrRichard999).nes",          524304, 0xb646f50f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_deepdung3h)
+STD_ROM_FN(nes_deepdung3h)
+
+struct BurnDriver BurnDrvnes_deepdung3h = {
+	"nes_deepdung3h", "nes_deepdung3", NULL, NULL, "2013",
+	"Deep Dungeon III: The Journey to Become a Hero - Graphics Mod (Hack, v1.1)\0", NULL, "KingMike's Translations, MrRichard999", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, nes_deepdung3hRomInfo, nes_deepdung3hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deja Vu: A Nightmare Comes True!! - Uncensored (Hack)
 // https://www.romhacking.net/hacks/5880/
 static struct BurnRomInfo nes_dejavuhackRomDesc[] = {
 	{ "Deja Vu - A Nightmare Comes True!! - Uncensored (2021)(Zhukorop).nes",          393232, 0xd0b73a99, BRF_ESS | BRF_PRG },
@@ -15561,7 +15581,7 @@ STD_ROM_FN(nes_dejavuhack)
 
 struct BurnDriver BurnDrvnes_dejavuhack = {
 	"nes_dejavuhack", "nes_dejavu", NULL, NULL, "2021",
-	"Deja Vu - A Nightmare Comes True!! - Uncensored (Hack)\0", NULL, "Zhukorop", "NES / Famicom",
+	"Deja Vu: A Nightmare Comes True!! - Uncensored (Hack)\0", NULL, "Zhukorop", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_dejavuhackRomInfo, nes_dejavuhackRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -27213,7 +27233,7 @@ struct BurnDriver BurnDrvnes_biomirbokupa = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Bio Senshi Dan - Increaser Tono Tatakai (Japan)
+// Bio Senshi Dan: Increaser Tono Tatakai (Japan)
 static struct BurnRomInfo nes_biosendanRomDesc[] = {
 	{ "Bio Senshi Dan - Increaser Tono Tatakai (Japan)(1987)(Jaleco).nes",          262160, 0x5b2d91d0, BRF_ESS | BRF_PRG },
 };
@@ -27223,8 +27243,8 @@ STD_ROM_FN(nes_biosendan)
 
 struct BurnDriver BurnDrvnes_biosendan = {
 	"nes_biosendan", NULL, NULL, NULL, "1987",
-	"Bio Senshi Dan - Increaser Tono Tatakai (Japan)\0", NULL, "Jaleco", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Bio Senshi Dan: Increaser Tono Tatakai (Japan)\0", NULL, "Jaleco", "NES / Famicom",
+	L"Bio Senshi Dan: Increaser Tono Tatakai (Japan)\0\u30c0\u30f3 \u30d0\u30a4\u30aa\u6226\u58eb Dan\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_biosendanRomInfo, nes_biosendanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -30048,7 +30068,7 @@ STD_ROM_FN(nes_ddeburasj)
 struct BurnDriver BurnDrvnes_ddeburasj = {
 	"nes_ddeburasj", "nes_ddeburas", NULL, NULL, "1990",
 	"Daikaijuu Deburas (Japan)\0", NULL, "Data East", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Daikaijuu Deburas (Japan)\0\u5927\u602a\u7363 \u30c7\u30d6\u30e9\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_ddeburasjRomInfo, nes_ddeburasjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -30182,9 +30202,46 @@ struct BurnDriver BurnDrvnes_deblock = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Deep Dungeon III: Yuushi heno Tabi (Japan)
+static struct BurnRomInfo nes_deepdung3jRomDesc[] = {
+	{ "Deep Dungeon III - Yuushi heno Tabi (Japan)(1988)(Squaresoft).nes",          262160, 0x1658230f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_deepdung3j)
+STD_ROM_FN(nes_deepdung3j)
+
+struct BurnDriver BurnDrvnes_deepdung3j = {
+	"nes_deepdung3j", "nes_deepdung3", NULL, NULL, "1988",
+	"Deep Dungeon III: Yuushi heno Tabi (Japan)\0", NULL, "Squaresoft", "NES / Famicom",
+	L"Deep Dungeon III: Yuushi heno Tabi (Japan)\0\u30c7\u30a3\u30fc\u30d7\u30c0\u30f3\u30b8\u30e7\u30f3III \u52c7\u58eb\u3078\u306e\u65c5\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, nes_deepdung3jRomInfo, nes_deepdung3jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Deep Dungeon III: The Journey to Become a Hero (Hack, English)
+// https://www.romhacking.net/translations/1996/
+static struct BurnRomInfo nes_deepdung3RomDesc[] = {
+	{ "Deep Dungeon III - The Journey to Become a Hero T-Eng (2013)(KingMike's Translations).nes",          524304, 0x7b7a45c9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_deepdung3)
+STD_ROM_FN(nes_deepdung3)
+
+struct BurnDriver BurnDrvnes_deepdung3 = {
+	"nes_deepdung3", NULL, NULL, NULL, "2013",
+	"Deep Dungeon III: The Journey to Become a Hero (Hack, English)\0", NULL, "KingMike's Translations", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_MAZE | GBF_RPG, 0,
+	NESGetZipName, nes_deepdung3RomInfo, nes_deepdung3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Defender II (USA)
 static struct BurnRomInfo nes_defenderiiRomDesc[] = {
-	{ "Defender II (USA)(1988)(HAL Lab.).nes",          24592, 0xc0b2aa1f, BRF_ESS | BRF_PRG },
+	{ "Defender II (USA)(1988)(HAL Laboratory).nes",          24592, 0xc0b2aa1f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_defenderii)
@@ -30236,7 +30293,7 @@ struct BurnDriver BurnDrvnes_defendyncit = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Deja Vu - A Nightmare Comes True!! (USA)
+// Deja Vu: A Nightmare Comes True!! (USA)
 static struct BurnRomInfo nes_dejavuRomDesc[] = {
 	{ "Deja Vu - A Nightmare Comes True!! (USA)(1990)(Kemco).nes",          393232, 0x67b25db5, BRF_ESS | BRF_PRG },
 };
@@ -30246,7 +30303,7 @@ STD_ROM_FN(nes_dejavu)
 
 struct BurnDriver BurnDrvnes_dejavu = {
 	"nes_dejavu", NULL, NULL, NULL, "1990",
-	"Deja Vu - A Nightmare Comes True!! (USA)\0", NULL, "Kemco", "NES / Famicom",
+	"Deja Vu: A Nightmare Comes True!! (USA)\0", NULL, "Kemco", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_dejavuRomInfo, nes_dejavuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30272,7 +30329,7 @@ struct BurnDriver BurnDrvnes_demonsword = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dengeki - Big Bang! (Japan)
+// Dengeki: Big Bang! (Japan)
 static struct BurnRomInfo nes_dengekiRomDesc[] = {
 	{ "Dengeki - Big Bang! (Japan)(1989)(Vic Tokai).nes",          262160, 0x4e0c2429, BRF_ESS | BRF_PRG },
 };
@@ -30282,15 +30339,15 @@ STD_ROM_FN(nes_dengeki)
 
 struct BurnDriver BurnDrvnes_dengeki = {
 	"nes_dengeki", "nes_clashatdem", NULL, NULL, "1989",
-	"Dengeki - Big Bang! (Japan)\0", NULL, "Vic Tokai", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Dengeki: Big Bang! (Japan)\0", NULL, "Vic Tokai", "NES / Famicom",
+	L"Dengeki: Big Bang! (Japan)\0\u96FB\u6483 \u30d3\u30c3\u30b0\u30d0\u30f3!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_dengekiRomInfo, nes_dengekiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dengeki - Big Bang! (Hack, English v2.8a)
+// Dengeki: Big Bang! (Hack, English v2.8a)
 // https://www.romhacking.net/translations/6913/
 static struct BurnRomInfo nes_dengekienRomDesc[] = {
 	{ "Dengeki - Big Bang! (T-Eng)(2023)(StripyMonk).nes",          262160, 0x6a89092e, BRF_ESS | BRF_PRG },
@@ -30301,7 +30358,7 @@ STD_ROM_FN(nes_dengekien)
 
 struct BurnDriver BurnDrvnes_dengekien = {
 	"nes_dengekien", "nes_clashatdem", NULL, NULL, "2023",
-	"Dengeki - Big Bang! (Hack, English v2.8a)\0", NULL, "StripyMonk", "NES / Famicom",
+	"Dengeki: Big Bang! (Hack, English v2.8a)\0", NULL, "StripyMonk", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_dengekienRomInfo, nes_dengekienRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

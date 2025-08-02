@@ -544,7 +544,7 @@ struct BurnDriver BurnDrvMkr4 = {
     TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
-// Mortal Kombat (Hack, BUILD 5.0.0741)
+// Mortal Kombat Plus (Hack, BUILD 5.0.0741)
 static struct BurnRomInfo mkplusRomDesc[] = {
 	{ "mortal_kombat_plus.uj12",					0x080000, 0x8edf28c0, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "mortal_kombat_plus.ug12",					0x080000, 0xbe771d8d, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -575,7 +575,7 @@ STD_ROM_FN(mkplus)
 
 struct BurnDriver BurnDrvMkplus = {
 	"mkplus", "mk", NULL, NULL, "2020",
-	"Mortal Kombat (Hack, BUILD 5.0.0741)\0", NULL, "Paul", "Midway T-Unit",
+	"Mortal Kombat Plus (Hack, BUILD 5.0.0741)\0", NULL, "Paul", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mkplusRomInfo, mkplusRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,

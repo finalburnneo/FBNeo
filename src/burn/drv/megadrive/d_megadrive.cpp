@@ -4059,7 +4059,7 @@ struct BurnDriver BurnDrvmd_brianl96a = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Brutal - Paws of Fury (Euro)
+// Brutal: Paws of Fury (Euro)
 static struct BurnRomInfo md_brutalRomDesc[] = {
 	{ "Brutal - Paws of Fury (Euro)(1994)(GameTek).bin", 0x200000, 0x7e9a8d32, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -4069,7 +4069,7 @@ STD_ROM_FN(md_brutal)
 
 struct BurnDriver BurnDrvmd_brutal = {
 	"md_brutal", NULL, NULL, NULL, "1994",
-	"Brutal - Paws of Fury (Euro)\0", NULL, "GameTek", "Genesis / Mega Drive",
+	"Brutal: Paws of Fury (Euro)\0", NULL, "GameTek", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_brutalRomInfo, md_brutalRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -4077,7 +4077,7 @@ struct BurnDriver BurnDrvmd_brutal = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Brutal - Paws of Fury (USA)
+// Brutal: Paws of Fury (USA)
 static struct BurnRomInfo md_brutaluRomDesc[] = {
 	{ "Brutal - Paws of Fury (USA)(1994)(GameTek).bin", 0x200000, 0x98d502cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -4087,7 +4087,7 @@ STD_ROM_FN(md_brutalu)
 
 struct BurnDriver BurnDrvmd_brutalu = {
 	"md_brutalu", "md_brutal", NULL, NULL, "1994",
-	"Brutal - Paws of Fury (USA)\0", NULL, "GameTek", "Genesis / Mega Drive",
+	"Brutal: Paws of Fury (USA)\0", NULL, "GameTek", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_brutaluRomInfo, md_brutaluRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -4131,7 +4131,7 @@ struct BurnDriver BurnDrvmd_bubbap = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Bubba'n'Stix - A Strategy Adventure (USA)
+// Bubba'n'Stix: A Strategy Adventure (USA)
 static struct BurnRomInfo md_bubbauRomDesc[] = {
 	{ "Bubba'n'Stix - A Strategy Adventure (USA)(1993)(Core Design).bin", 0x100000, 0xd45cb46f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -4141,7 +4141,7 @@ STD_ROM_FN(md_bubbau)
 
 struct BurnDriver BurnDrvmd_bubbau = {
 	"md_bubbau", "md_bubba", NULL, NULL, "1993",
-	"Bubba'n'Stix - A Strategy Adventure (USA)\0", NULL, "Core Design", "Genesis / Mega Drive",
+	"Bubba'n'Stix: A Strategy Adventure (USA)\0", NULL, "Core Design", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_bubbauRomInfo, md_bubbauRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20189,7 +20189,7 @@ struct BurnDriver BurnDrvmd_pstar2br = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Kaerazaru Toki no Owari ni (Japan)
+// Phantasy Star II: Kaerazaru Toki no Owari ni (Japan)
 static struct BurnRomInfo md_pstar2jRomDesc[] = {
 	{ "Phantasy Star II - Kaerazaru Toki no Owari ni (Japan)(1989)(Sega).bin", 0x0c0000, 0xbec8eb5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20199,7 +20199,7 @@ STD_ROM_FN(md_pstar2j)
 
 struct BurnDriver BurnDrvmd_pstar2j = {
 	"md_pstar2j", "md_pstar2", NULL, NULL, "1989",
-	"Phantasy Star II - Kaerazaru Toki no Owari ni (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Kaerazaru Toki no Owari ni (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar2jRomInfo, md_pstar2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20207,7 +20207,7 @@ struct BurnDriver BurnDrvmd_pstar2j = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Amia's Adventure (Japan, SegaNet)
+// Phantasy Star II: Amia's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2aaRomDesc[] = {
 	{ "Phantasy Star II - Amia's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0xa3a724aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20217,7 +20217,7 @@ STD_ROM_FN(md_ps2aa)
 
 struct BurnDriver BurnDrvmd_ps2aa = {
 	"md_ps2aa", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Amia's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Amia's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aaRomInfo, md_ps2aaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20225,7 +20225,7 @@ struct BurnDriver BurnDrvmd_ps2aa = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Amia's Adventure (Hack, English)
+// Phantasy Star II: Amia's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1530/
 static struct BurnRomInfo md_ps2aaeRomDesc[] = {
 	{ "Phantasy Star II - Amia's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0x7fdb5fe9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20236,7 +20236,7 @@ STD_ROM_FN(md_ps2aae)
 
 struct BurnDriver BurnDrvmd_ps2aae = {
 	"md_ps2aae", "md_ps2aa", NULL, NULL, "2010",
-	"Phantasy Star II - Amia's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Amia's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aaeRomInfo, md_ps2aaeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20244,7 +20244,7 @@ struct BurnDriver BurnDrvmd_ps2aae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Anne's Adventure (Japan, SegaNet)
+// Phantasy Star II: Anne's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2abRomDesc[] = {
 	{ "Phantasy Star II - Anne's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0xfafa5b6f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20254,7 +20254,7 @@ STD_ROM_FN(md_ps2ab)
 
 struct BurnDriver BurnDrvmd_ps2ab = {
 	"md_ps2ab", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Anne's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Anne's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2abRomInfo, md_ps2abRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20262,7 +20262,7 @@ struct BurnDriver BurnDrvmd_ps2ab = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Anne's Adventure (Hack, English)
+// Phantasy Star II: Anne's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1221/
 static struct BurnRomInfo md_ps2abeRomDesc[] = {
 	{ "Phantasy Star II - Anne's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0x355fad11, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20273,7 +20273,7 @@ STD_ROM_FN(md_ps2abe)
 
 struct BurnDriver BurnDrvmd_ps2abe = {
 	"md_ps2abe", "md_ps2ab", NULL, NULL, "2010",
-	"Phantasy Star II - Anne's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II:Anne's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2abeRomInfo, md_ps2abeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20281,7 +20281,7 @@ struct BurnDriver BurnDrvmd_ps2abe = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Huey's Adventure (Japan, SegaNet)
+// Phantasy Star II: Huey's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2acRomDesc[] = {
 	{ "Phantasy Star II - Huey's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x1a076f83, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20291,7 +20291,7 @@ STD_ROM_FN(md_ps2ac)
 
 struct BurnDriver BurnDrvmd_ps2ac = {
 	"md_ps2ac", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Huey's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Huey's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2acRomInfo, md_ps2acRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20299,7 +20299,7 @@ struct BurnDriver BurnDrvmd_ps2ac = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Huey's Adventure (Hack, English)
+// Phantasy Star II: Huey's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1337/
 static struct BurnRomInfo md_ps2aceRomDesc[] = {
 	{ "Phantasy Star II - Huey's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0xdb2cce50, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20310,7 +20310,7 @@ STD_ROM_FN(md_ps2ace)
 
 struct BurnDriver BurnDrvmd_ps2ace = {
 	"md_ps2ace", "md_ps2ac", NULL, NULL, "2010",
-	"Phantasy Star II - Huey's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Huey's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aceRomInfo, md_ps2aceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20318,7 +20318,7 @@ struct BurnDriver BurnDrvmd_ps2ace = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Kinds's Adventure (Japan, SegaNet)
+// Phantasy Star II: Kinds's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2adRomDesc[] = {
 	{ "Phantasy Star II - Kinds's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0xc334f308, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20328,7 +20328,7 @@ STD_ROM_FN(md_ps2ad)
 
 struct BurnDriver BurnDrvmd_ps2ad = {
 	"md_ps2ad", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Kinds's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Kinds's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2adRomInfo, md_ps2adRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20336,7 +20336,7 @@ struct BurnDriver BurnDrvmd_ps2ad = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Kinds's Adventure (Hack, English)
+// Phantasy Star II: Kinds's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1150/
 static struct BurnRomInfo md_ps2adeRomDesc[] = {
 	{ "Phantasy Star II - Kinds's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0xe91051e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20347,7 +20347,7 @@ STD_ROM_FN(md_ps2ade)
 
 struct BurnDriver BurnDrvmd_ps2ade = {
 	"md_ps2ade", "md_ps2ad", NULL, NULL, "2010",
-	"Phantasy Star II - Kinds's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Kinds's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2adeRomInfo, md_ps2adeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20355,7 +20355,7 @@ struct BurnDriver BurnDrvmd_ps2ade = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Nei's Adventure (Japan, SegaNet)
+// Phantasy Star II: Nei's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2aeRomDesc[] = {
 	{ "Phantasy Star II - Nei's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x3d9ad465, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20365,7 +20365,7 @@ STD_ROM_FN(md_ps2ae)
 
 struct BurnDriver BurnDrvmd_ps2ae = {
 	"md_ps2ae", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Nei's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Nei's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aeRomInfo, md_ps2aeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20373,7 +20373,7 @@ struct BurnDriver BurnDrvmd_ps2ae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Nei's Adventure (Hack, English)
+// Phantasy Star II: Nei's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1532/
 static struct BurnRomInfo md_ps2aeeRomDesc[] = {
 	{ "Phantasy Star II - Nei's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0xb0ce897c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20384,7 +20384,7 @@ STD_ROM_FN(md_ps2aee)
 
 struct BurnDriver BurnDrvmd_ps2aee = {
 	"md_ps2aee", "md_ps2ae", NULL, NULL, "2010",
-	"Phantasy Star II - Nei's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Nei's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aeeRomInfo, md_ps2aeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20392,7 +20392,7 @@ struct BurnDriver BurnDrvmd_ps2aee = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Rudger's Adventure (Japan, SegaNet)
+// Phantasy Star II: Rudger's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2afRomDesc[] = {
 	{ "Phantasy Star II - Rudger's Adventure (Japan, SegaNet)(1991(Sega).bin", 0x040000, 0x6b5916d2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20402,7 +20402,7 @@ STD_ROM_FN(md_ps2af)
 
 struct BurnDriver BurnDrvmd_ps2af = {
 	"md_ps2af", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Rudger's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Rudger's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2afRomInfo, md_ps2afRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20410,7 +20410,7 @@ struct BurnDriver BurnDrvmd_ps2af = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Rudger's Adventure (Hack, English)
+// Phantasy Star II: Rudger's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1533/
 static struct BurnRomInfo md_ps2afeRomDesc[] = {
 	{ "Phantasy Star II - Rudger's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0x3cd3bc1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20421,7 +20421,7 @@ STD_ROM_FN(md_ps2afe)
 
 struct BurnDriver BurnDrvmd_ps2afe = {
 	"md_ps2afe", "md_ps2af", NULL, NULL, "2010",
-	"Phantasy Star II - Rudger's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Rudger's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2afeRomInfo, md_ps2afeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20429,7 +20429,7 @@ struct BurnDriver BurnDrvmd_ps2afe = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Shilka's Adventure (Japan, SegaNet)
+// Phantasy Star II: Shilka's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2agRomDesc[] = {
 	{ "Phantasy Star II - Shilka's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x1f83beb2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20439,7 +20439,7 @@ STD_ROM_FN(md_ps2ag)
 
 struct BurnDriver BurnDrvmd_ps2ag = {
 	"md_ps2ag", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Shilka's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Shilka's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2agRomInfo, md_ps2agRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20447,7 +20447,7 @@ struct BurnDriver BurnDrvmd_ps2ag = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Shilka's Adventure (Hack, English)
+// Phantasy Star II: Shilka's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1159/
 static struct BurnRomInfo md_ps2ageRomDesc[] = {
 	{ "Phantasy Star II - Shilka's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0x76e56009, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20458,7 +20458,7 @@ STD_ROM_FN(md_ps2age)
 
 struct BurnDriver BurnDrvmd_ps2age = {
 	"md_ps2age", "md_ps2ag", NULL, NULL, "2010",
-	"Phantasy Star II - Shilka's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Shilka's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2ageRomInfo, md_ps2ageRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20466,7 +20466,7 @@ struct BurnDriver BurnDrvmd_ps2age = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Yushis's Adventure (Japan, SegaNet)
+// Phantasy Star II: Yushis's Adventure (Japan, SegaNet)
 static struct BurnRomInfo md_ps2ahRomDesc[] = {
 	{ "Phantasy Star II - Yushis's Adventure (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0xd40c76d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20476,7 +20476,7 @@ STD_ROM_FN(md_ps2ah)
 
 struct BurnDriver BurnDrvmd_ps2ah = {
 	"md_ps2ah", NULL, NULL, NULL, "1991",
-	"Phantasy Star II - Yushis's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star II: Yushis's Adventure (Japan, SegaNet)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2ahRomInfo, md_ps2ahRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20484,7 +20484,7 @@ struct BurnDriver BurnDrvmd_ps2ah = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star II - Yushis's Adventure (Hack, English)
+// Phantasy Star II: Yushis's Adventure (Hack, English)
 // Source : http://www.romhacking.net/translations/1531/
 static struct BurnRomInfo md_ps2aheRomDesc[] = {
 	{ "Phantasy Star II - Yushis's Adventure T-Eng (2010)(Jon Najar).bin", 0x040000, 0x5395a7e2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20495,7 +20495,7 @@ STD_ROM_FN(md_ps2ahe)
 
 struct BurnDriver BurnDrvmd_ps2ahe = {
 	"md_ps2ahe", "md_ps2ah", NULL, NULL, "2010",
-	"Phantasy Star II - Yushis's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
+	"Phantasy Star II: Yushis's Adventure (Hack, English)\0", NULL, "Jon Najar", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_ps2aheRomInfo, md_ps2aheRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20503,7 +20503,7 @@ struct BurnDriver BurnDrvmd_ps2ahe = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star III - Generations of Doom (Euro, USA, Korea)
+// Phantasy Star III: Generations of Doom (Euro, USA, Korea)
 static struct BurnRomInfo md_pstar3RomDesc[] = {
 	{ "Phantasy Star III - Generations of Doom (Euro, USA, Korea)(1990)(Sega).bin", 786432, 0xc6b42b0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20513,7 +20513,7 @@ STD_ROM_FN(md_pstar3)
 
 struct BurnDriver BurnDrvmd_pstar3 = {
 	"md_pstar3", NULL, NULL, NULL, "1990",
-	"Phantasy Star III - Generations of Doom (Euro, USA, Korea)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star III: Generations of Doom (Euro, USA, Korea)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar3RomInfo, md_pstar3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20521,7 +20521,7 @@ struct BurnDriver BurnDrvmd_pstar3 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star III - Generations of Doom (Brazil)
+// Phantasy Star III: Generations of Doom (Brazil)
 static struct BurnRomInfo md_pstar3brRomDesc[] = {
 	{ "Phantasy Star III - Generations of Doom (Brazil)(1998)(Tec Toy).bin", 786432, 0x2e9b4c23, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20531,7 +20531,7 @@ STD_ROM_FN(md_pstar3br)
 
 struct BurnDriver BurnDrvmd_pstar3br = {
 	"md_pstar3br", "md_pstar3", NULL, NULL, "1998",
-	"Phantasy Star III - Generations of Doom (Brazil)\0", NULL, "Tec Toy", "Genesis / Mega Drive",
+	"Phantasy Star III: Generations of Doom (Brazil)\0", NULL, "Tec Toy", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar3brRomInfo, md_pstar3brRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20539,7 +20539,7 @@ struct BurnDriver BurnDrvmd_pstar3br = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star III - Toki no Keishousha (Japan)
+// Phantasy Star III: Toki no Keishousha (Japan)
 static struct BurnRomInfo md_pstar3jRomDesc[] = {
 	{ "Phantasy Star III - Toki no Keishousha (Japan)(1990)(Sega).bin", 786432, 0x6c48c06f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20549,7 +20549,7 @@ STD_ROM_FN(md_pstar3j)
 
 struct BurnDriver BurnDrvmd_pstar3j = {
 	"md_pstar3j", "md_pstar3", NULL, NULL, "1990",
-	"Phantasy Star III - Toki no Keishousha (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star III: Toki no Keishousha (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar3jRomInfo, md_pstar3jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20557,7 +20557,7 @@ struct BurnDriver BurnDrvmd_pstar3j = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - The End of the Millennium (USA)
+// Phantasy Star: The End of the Millennium (USA)
 static struct BurnRomInfo md_pstar4uRomDesc[] = {
 	{ "Phantasy Star - The End of the Millennium (USA)(1994)(Sega).bin", 0x300000, 0xfe236442, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20567,7 +20567,7 @@ STD_ROM_FN(md_pstar4u)
 
 struct BurnDriver BurnDrvmd_pstar4u = {
 	"md_pstar4u", "md_pstar4", NULL, NULL, "1994",
-	"Phantasy Star - The End of the Millennium (USA)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star: The End of the Millennium (USA)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4uRomInfo, md_pstar4uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20575,7 +20575,7 @@ struct BurnDriver BurnDrvmd_pstar4u = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - The End of the Millennium (Euro)
+// Phantasy Star: The End of the Millennium (Euro)
 static struct BurnRomInfo md_pstar4RomDesc[] = {
 	{ "Phantasy Star - The End of the Millennium (Euro)(1994)(Sega).bin", 0x300000, 0x389c2968, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20585,7 +20585,7 @@ STD_ROM_FN(md_pstar4)
 
 struct BurnDriver BurnDrvmd_pstar4 = {
 	"md_pstar4", NULL, NULL, NULL, "1994",
-	"Phantasy Star - The End of the Millennium (Euro)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star: The End of the Millennium (Euro)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4RomInfo, md_pstar4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20593,7 +20593,7 @@ struct BurnDriver BurnDrvmd_pstar4 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - Sennenki no Owari ni (Japan)
+// Phantasy Star: Sennenki no Owari ni (Japan)
 static struct BurnRomInfo md_pstar4jRomDesc[] = {
 	{ "Phantasy Star - Sennenki no Owari ni (Japan)(1993)(Sega).bin", 0x300000, 0xf0bfad42, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20603,7 +20603,7 @@ STD_ROM_FN(md_pstar4j)
 
 struct BurnDriver BurnDrvmd_pstar4j = {
 	"md_pstar4j", "md_pstar4", NULL, NULL, "1993",
-	"Phantasy Star - Sennenki no Owari ni (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star: Sennenki no Owari ni (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4jRomInfo, md_pstar4jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20611,7 +20611,7 @@ struct BurnDriver BurnDrvmd_pstar4j = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - The End of the Millennium (Prototype, 19941107)
+// Phantasy Star: The End of the Millennium (Prototype, 19941107)
 static struct BurnRomInfo md_pstar4p1RomDesc[] = {
 	{ "Phantasy Star - The End of the Millennium (Proto, 19941107)(Sega).bin", 0x300000, 0xbda29cdf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20621,7 +20621,7 @@ STD_ROM_FN(md_pstar4p1)
 
 struct BurnDriver BurnDrvmd_pstar4p1 = {
 	"md_pstar4p1", "md_pstar4", NULL, NULL, "1994",
-	"Phantasy Star - The End of the Millennium (Prototype, 19941107)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star: The End of the Millennium (Prototype, 19941107)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4p1RomInfo, md_pstar4p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -20629,7 +20629,7 @@ struct BurnDriver BurnDrvmd_pstar4p1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - The End of the Millennium (Prototype, 19941027)
+// Phantasy Star: The End of the Millennium (Prototype, 19941027)
 static struct BurnRomInfo md_pstar4p2RomDesc[] = {
 	{ "Phantasy Star - The End of the Millennium (Proto, 19941027)(Sega).bin", 0x300000, 0x12a2590a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20639,7 +20639,7 @@ STD_ROM_FN(md_pstar4p2)
 
 struct BurnDriver BurnDrvmd_pstar4p2 = {
 	"md_pstar4p2", "md_pstar4", NULL, NULL, "1994",
-	"Phantasy Star - The End of the Millennium (Prototype, 19941027)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Phantasy Star: The End of the Millennium (Prototype, 19941027)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4p2RomInfo, md_pstar4p2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -24581,7 +24581,7 @@ struct BurnDriver BurnDrvmd_supshin2p2 = {
 
 // Ship (Visitor Prototype)
 static struct BurnRomInfo md_shipRomDesc[] = {
-	{ "ship (visitor prototype).bin", 0x040000, 0x852b5511, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ship (Visitor Prototype)(199x)(Technopop).bin", 0x040000, 0x852b5511, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ship)
@@ -24599,7 +24599,7 @@ struct BurnDriver BurnDrvmd_ship = {
 
 // Ship (Prototype)
 static struct BurnRomInfo md_ship1RomDesc[] = {
-	{ "ship (prototype).bin", 0x020000, 0x4cdc9f16, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ship (Prototype)(199x)(Technopop).bin", 0x020000, 0x4cdc9f16, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ship1)
@@ -24617,7 +24617,7 @@ struct BurnDriver BurnDrvmd_ship1 = {
 
 // Shougi no Hoshi (Japan)
 static struct BurnRomInfo md_shougiRomDesc[] = {
-	{ "shougi no hoshi (jpn).bin", 0x040000, 0x4148f816, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shougi no Hoshi (Japan)(1991)(Home Data).bin", 0x040000, 0x4148f816, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shougi)
@@ -24795,7 +24795,7 @@ struct BurnDriver BurnDrvmd_sidepocku = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Simpsons, The - Bart Vs The Space Mutants (Euro, USA, Rev. A)
+// Simpsons, The: Bart Vs The Space Mutants (Euro, USA, Rev. A)
 static struct BurnRomInfo md_bartvssmRomDesc[] = {
 	{ "Simpsons, The - Bart Vs The Space Mutants (Euro, USA, Rev A)(1992)(Flying Edge).bin", 0x080000, 0xdb70e8ca, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -24805,7 +24805,7 @@ STD_ROM_FN(md_bartvssm)
 
 struct BurnDriver BurnDrvmd_bartvssm = {
 	"md_bartvssm", NULL, NULL, NULL, "1992",
-	"Simpsons, The - Bart Vs The Space Mutants (Euro, USA, Rev. A)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
+	"Simpsons, The: Bart Vs The Space Mutants (Euro, USA, Rev. A)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_bartvssmRomInfo, md_bartvssmRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -24813,7 +24813,7 @@ struct BurnDriver BurnDrvmd_bartvssm = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Simpsons, The - Bart Vs The Space Mutants (Euro, USA)
+// Simpsons, The: Bart Vs The Space Mutants (Euro, USA)
 static struct BurnRomInfo md_bartvssm1RomDesc[] = {
 	{ "Simpsons, The - Bart Vs The Space Mutants (Euro, USA)(1992)(Flying Edge).bin", 0x080000, 0xc8620574, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -24823,7 +24823,7 @@ STD_ROM_FN(md_bartvssm1)
 
 struct BurnDriver BurnDrvmd_bartvssm1 = {
 	"md_bartvssm1", "md_bartvssm", NULL, NULL, "1992",
-	"Simpsons, The - Bart Vs The Space Mutants (Euro, USA)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
+	"Simpsons, The: Bart Vs The Space Mutants (Euro, USA)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_bartvssm1RomInfo, md_bartvssm1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -24831,7 +24831,7 @@ struct BurnDriver BurnDrvmd_bartvssm1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Simpsons, The - Bart's Nightmare (Euro, USA)
+// Simpsons, The: Bart's Nightmare (Euro, USA)
 static struct BurnRomInfo md_bartnighRomDesc[] = {
 	{ "Simpsons, The - Bart's Nightmare (Euro, USA)(1993)(Flying Edge).bin", 0x100000, 0x24d7507c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -24841,7 +24841,7 @@ STD_ROM_FN(md_bartnigh)
 
 struct BurnDriver BurnDrvmd_bartnigh = {
 	"md_bartnigh", NULL, NULL, NULL, "1993",
-	"Simpsons, The - Bart's Nightmare (Euro, USA)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
+	"Simpsons, The: Bart's Nightmare (Euro, USA)\0", NULL, "Flying Edge", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_bartnighRomInfo, md_bartnighRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -30201,9 +30201,9 @@ struct BurnDriver BurnDrvmd_toki1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tom and Jerry - Frantic Antics (USA, 1993)
+// Tom and Jerry: Frantic Antics (USA, 1993)
 static struct BurnRomInfo md_tomjerryRomDesc[] = {
-	{ "tom and jerry - frantic antics (usa) (1993).bin", 0x100000, 0xb9992e1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tom and Jerry - Frantic Antics (USA)(1993)(Sega).bin", 0x100000, 0xb9992e1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tomjerry)
@@ -30211,7 +30211,7 @@ STD_ROM_FN(md_tomjerry)
 
 struct BurnDriver BurnDrvmd_tomjerry = {
 	"md_tomjerry", NULL, NULL, NULL, "1993",
-	"Tom and Jerry - Frantic Antics (USA, 1993)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Tom and Jerry: Frantic Antics (USA, 1993)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_tomjerryRomInfo, md_tomjerryRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -30219,9 +30219,9 @@ struct BurnDriver BurnDrvmd_tomjerry = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tom and Jerry - Frantic Antics (USA, 1994)
+// Tom and Jerry: Frantic Antics (USA, Rev. B)
 static struct BurnRomInfo md_tomjerry1RomDesc[] = {
-	{ "tom and jerry - frantic antics (usa) (1994).bin", 0x100000, 0x3044460c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tom and Jerry - Frantic Antics (USA, Rev B)(1994)(Sega).bin", 0x100000, 0x3044460c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tomjerry1)
@@ -30229,7 +30229,7 @@ STD_ROM_FN(md_tomjerry1)
 
 struct BurnDriver BurnDrvmd_tomjerry1 = {
 	"md_tomjerry1", "md_tomjerry", NULL, NULL, "1994",
-	"Tom and Jerry - Frantic Antics (USA, 1994)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Tom and Jerry: Frantic Antics (USA, Rev. B)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_tomjerry1RomInfo, md_tomjerry1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -30239,7 +30239,7 @@ struct BurnDriver BurnDrvmd_tomjerry1 = {
 
 // Tony La Russa Baseball (USA, Oceania)
 static struct BurnRomInfo md_larussaRomDesc[] = {
-	{ "tony la russa baseball (usa, aus).bin", 0x100000, 0x24629c78, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tony La Russa Baseball (USA, Oceania)(1993)(Electronic Arts).bin", 0x100000, 0x24629c78, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_larussa)
@@ -30257,7 +30257,7 @@ struct BurnDriver BurnDrvmd_larussa = {
 
 // Top Gear 2 (USA)
 static struct BurnRomInfo md_topgear2RomDesc[] = {
-	{ "top gear 2 (usa).bin", 0x100000, 0xbd3074d2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Top Gear 2 (USA)(1994)(Vic Tokai).bin", 0x100000, 0xbd3074d2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_topgear2)
@@ -30275,7 +30275,7 @@ struct BurnDriver BurnDrvmd_topgear2 = {
 
 // Top Pro Golf (Japan)
 static struct BurnRomInfo md_topgolfRomDesc[] = {
-	{ "mpr-14853.bin", 0x100000, 0x62bad606, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Top Pro Golf (Japan)(1992)(Soft Vision).bin", 0x100000, 0x62bad606, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_topgolf)
@@ -30293,7 +30293,7 @@ struct BurnDriver BurnDrvmd_topgolf = {
 
 // Top Pro Golf 2 (Japan)
 static struct BurnRomInfo md_topgolf2RomDesc[] = {
-	{ "top pro golf 2 (jpn).bin", 0x100000, 0xb8ce98b3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Top Pro Golf 2 (Japan)(1993)(Soft Vision).bin", 0x100000, 0xb8ce98b3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_topgolf2)
@@ -30311,7 +30311,7 @@ struct BurnDriver BurnDrvmd_topgolf2 = {
 
 // Total Football (Euro)
 static struct BurnRomInfo md_totlfootRomDesc[] = {
-	{ "total football (euro).bin", 0x200000, 0x8360b66a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Total Football (Euro)(1995)(Domark).bin", 0x200000, 0x8360b66a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_totlfoot)
@@ -30329,7 +30329,7 @@ struct BurnDriver BurnDrvmd_totlfoot = {
 
 // Toughman Contest (Euro, USA)
 static struct BurnRomInfo md_toughmanRomDesc[] = {
-	{ "toughman contest (euro, usa).bin", 0x400000, 0xe19fbc93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Toughman Contest (Euro, USA)(1995)(Electronic Arts).bin", 0x400000, 0xe19fbc93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_toughman)
@@ -35243,6 +35243,60 @@ struct BurnDriver BurnDrvmd_kof2k = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Kung Fu Panda 2 (Russia) (Unl)
+static struct BurnRomInfo md_kfpanda2RomDesc[] = {
+	{ "Kung Fu Panda 2 (Russia)(Unl)(201x).bin", 0x400000, 0xa08c3b25, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kfpanda2)
+STD_ROM_FN(md_kfpanda2)
+
+struct BurnDriver BurnDrvmd_kfpanda2 = {
+	"md_kfpanda2", "md_brutal", NULL, NULL, "201?",
+	"Kung Fu Panda 2 (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_kfpanda2RomInfo, md_kfpanda2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Kuzya - V Mire Dinozavrov (Russia) (Unl)
+static struct BurnRomInfo md_kuzyamdRomDesc[] = {
+	{ "Kuzya - V Mire Dinozavrov (Russia)(Unl)(199x).bin", 0x200000, 0xbd0ebe1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kuzyamd)
+STD_ROM_FN(md_kuzyamd)
+
+struct BurnDriver BurnDrvmd_kuzyamd = {
+	"md_kuzyamd", "md_chukrck2", NULL, NULL, "199?",
+	"Kuzya - V Mire Dinozavrov (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_kuzyamdRomInfo, md_kuzyamdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Kuzya - Ekologiya V Opasnosti (Russia) (Unl)
+static struct BurnRomInfo md_kuzyaeoRomDesc[] = {
+	{ "Kuzya - Ekologiya V Opasnosti (Russia)(Unl)(199x).bin", 0x200000, 0xbe32d65b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kuzyaeo)
+STD_ROM_FN(md_kuzyaeo)
+
+struct BurnDriver BurnDrvmd_kuzyaeo = {
+	"md_kuzyaeo", "md_chukrck2", NULL, NULL, "199?",
+	"Kuzya - Ekologiya V Opasnosti (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_kuzyaeoRomInfo, md_kuzyaeoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Lego Batman (Russia) (Unl)
 static struct BurnRomInfo md_legobatmanRomDesc[] = {
 	{ "Lego Batman (Unl)(2014)(BMB).bin", 0x080000, 0x00da53a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -35405,7 +35459,43 @@ struct BurnDriver BurnDrvmd_long = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Madagascar - Operatsiya Pingvin (Russia) (Unl)
+// Lord of the Rings (Russia) (Unl)
+static struct BurnRomInfo md_lotrRomDesc[] = {
+	{ "Lord of the Rings (Russia, Hack of Stormlord)(Unl)(200x).bin", 0x080000, 0xe2a2342a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lotr)
+STD_ROM_FN(md_lotr)
+
+struct BurnDriver BurnDrvmd_lotr = {
+	"md_lotr", "md_strmlord", NULL, NULL, "200?",
+	"Lord of the Rings (Russia) (Unl)\0", "Hack of Stormlord", "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_lotrRomInfo, md_lotrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Lord of the Rings: The Return of the King (Russia) (Unl)
+static struct BurnRomInfo md_lotrgsRomDesc[] = {
+	{ "Lord of the Rings - The Return of the King (Russia)(Unl)(200x)(Glorysun).bin", 0x200000, 0x513ea675, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lotrgs)
+STD_ROM_FN(md_lotrgs)
+
+struct BurnDriver BurnDrvmd_lotrgs = {
+	"md_lotrgs", NULL, NULL, NULL, "200?",
+	"Lord of the Rings: The Return of the King (Russia) (Unl)\0", NULL, "Glorysun", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_lotrgsRomInfo, md_lotrgsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Madagascar: Operatsiya Pingvin (Russia) (Unl)
 static struct BurnRomInfo md_madagoppRomDesc[] = {
 	{ "Madagascar - Operatsiya Pingvin (Russia)(Unl)(20xx).bin", 0x100000, 0x6d28ace5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -35415,7 +35505,7 @@ STD_ROM_FN(md_madagopp)
 
 struct BurnDriver BurnDrvmd_madagopp = {
 	"md_madagopp", "md_magichat", NULL, NULL, "20??",
-	"Madagascar - Operatsiya Pingvin (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	"Madagascar: Operatsiya Pingvin (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_madagoppRomInfo, md_madagoppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -35437,6 +35527,24 @@ struct BurnDriver BurnDrvmd_madagsc3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_madagsc3RomInfo, md_madagsc3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mafia (Russia) (Unl)
+static struct BurnRomInfo md_mafiaRomDesc[] = {
+	{ "Mafia (Russia)(Unl)(2010)(BMB).bin", 0x100000, 0xede60834, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mafia)
+STD_ROM_FN(md_mafia)
+
+struct BurnDriver BurnDrvmd_mafia = {
+	"md_mafia", "md_dicktr", NULL, NULL, "2010",
+	"Mafia (Russia) (Unl)\0", NULL, "BMB", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_mafiaRomInfo, md_mafiaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -35563,6 +35671,42 @@ struct BurnDriver BurnDrvmd_maqiao = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG, 0,
 	MegadriveGetZipName, md_maqiaoRomInfo, md_maqiaoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mario 3: Vokrug Sveta (Russia) (Unl)
+static struct BurnRomInfo md_mario3RomDesc[] = {
+	{ "Mario 3 - Vokrug Sveta (Russia)(Unl)(199x).bin", 0x200000, 0x69f5b02f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mario3)
+STD_ROM_FN(md_mario3)
+
+struct BurnDriver BurnDrvmd_mario3 = {
+	"md_mario3", NULL, NULL, NULL, "199?",
+	"Mario 3: Vokrug Sveta (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_mario3RomInfo, md_mario3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mario 4: Kosmicheskaya Odissyeya (Russia) (Unl)
+static struct BurnRomInfo md_mario4RomDesc[] = {
+	{ "Mario 4 - Kosmicheskaya Odissyeya (Russia)(Unl)(199x).bin", 0x200000, 0x96b0ecd9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mario4)
+STD_ROM_FN(md_mario4)
+
+struct BurnDriver BurnDrvmd_mario4 = {
+	"md_mario4", NULL, NULL, NULL, "199?",
+	"Mario 4: Kosmicheskaya Odissyeya (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_mario4RomInfo, md_mario4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -36679,150 +36823,6 @@ struct BurnDriver BurnDrvmd_zhuogu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_zhuoguRomInfo, md_zhuoguRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Kung Fu Panda 2 (Russia) (Unl)
-static struct BurnRomInfo md_kfpanda2RomDesc[] = {
-	{ "kung fu panda 2 (unl).bin", 0x400000, 0xa08c3b25, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_kfpanda2)
-STD_ROM_FN(md_kfpanda2)
-
-struct BurnDriver BurnDrvmd_kfpanda2 = {
-	"md_kfpanda2", "md_brutal", NULL, NULL, "201?",
-	"Kung Fu Panda 2 (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_kfpanda2RomInfo, md_kfpanda2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Kuzya - V Mire Dinozavrov (Russia) (Unl)
-static struct BurnRomInfo md_kuzyamdRomDesc[] = {
-	{ "agent hugo - in the world of dinosaurs (unl).bin", 0x200000, 0xbd0ebe1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_kuzyamd)
-STD_ROM_FN(md_kuzyamd)
-
-struct BurnDriver BurnDrvmd_kuzyamd = {
-	"md_kuzyamd", "md_chukrck2", NULL, NULL, "199?",
-	"Kuzya - V Mire Dinozavrov (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_kuzyamdRomInfo, md_kuzyamdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Kuzya - Ekologiya V Opasnosti (Russia) (Unl)
-static struct BurnRomInfo md_kuzyaeoRomDesc[] = {
-	{ "agent hugo - environment at risk (unl).bin", 0x200000, 0xbe32d65b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_kuzyaeo)
-STD_ROM_FN(md_kuzyaeo)
-
-struct BurnDriver BurnDrvmd_kuzyaeo = {
-	"md_kuzyaeo", "md_chukrck2", NULL, NULL, "199?",
-	"Kuzya - Ekologiya V Opasnosti (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_kuzyaeoRomInfo, md_kuzyaeoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Lord of the Rings (Russia, Hack of Stormlord)
-static struct BurnRomInfo md_lotrRomDesc[] = {
-	{ "lord of the rings (unl).bin", 0x080000, 0xe2a2342a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_lotr)
-STD_ROM_FN(md_lotr)
-
-struct BurnDriver BurnDrvmd_lotr = {
-	"md_lotr", "md_strmlord", NULL, NULL, "199?",
-	"Lord of the Rings (Russia, Hack of Stormlord)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
-	MegadriveGetZipName, md_lotrRomInfo, md_lotrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Lord of the Rings - The Return of the King (Russia) (Unl)
-static struct BurnRomInfo md_lotrgsRomDesc[] = {
-	{ "lord of the rings (unl).bin", 0x200000, 0x513ea675, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_lotrgs)
-STD_ROM_FN(md_lotrgs)
-
-struct BurnDriver BurnDrvmd_lotrgs = {
-	"md_lotrgs", NULL, NULL, NULL, "200?",
-	"Lord of the Rings - The Return of the King (Russia) (Unl)\0", NULL, "Glorysun", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_lotrgsRomInfo, md_lotrgsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mafia (Russia) (Unl)
-static struct BurnRomInfo md_mafiaRomDesc[] = {
-	{ "mafia (unl).bin", 0x100000, 0xede60834, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_mafia)
-STD_ROM_FN(md_mafia)
-
-struct BurnDriver BurnDrvmd_mafia = {
-	"md_mafia", "md_dicktr", NULL, NULL, "2010",
-	"Mafia (Russia) (Unl)\0", NULL, "BMB", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT | GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_mafiaRomInfo, md_mafiaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mario 3 - Vokrug Sveta (Russia) (Unl)
-static struct BurnRomInfo md_mario3RomDesc[] = {
-	{ "mario 3 (unl).bin", 0x200000, 0x69f5b02f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_mario3)
-STD_ROM_FN(md_mario3)
-
-struct BurnDriver BurnDrvmd_mario3 = {
-	"md_mario3", NULL, NULL, NULL, "199?",
-	"Mario 3 - Vokrug Sveta (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_mario3RomInfo, md_mario3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mario 4 - Kosmicheskaya Odissyeya (Russia) (Unl)
-static struct BurnRomInfo md_mario4RomDesc[] = {
-	{ "mario 4 (unl).bin", 0x200000, 0x96b0ecd9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_mario4)
-STD_ROM_FN(md_mario4)
-
-struct BurnDriver BurnDrvmd_mario4 = {
-	"md_mario4", NULL, NULL, NULL, "199?",
-	"Mario 4 - Kosmicheskaya Odissyeya (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_mario4RomInfo, md_mario4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -38029,7 +38029,6 @@ struct BurnDriver BurnDrvmd_badapple = {
 };
 
 // Barbarian - Amiga (HB)
-
 static struct BurnRomInfo md_barbarianamiRomDesc[] = {
 	{ "Barbarian AMIGA (2017)(F.L).bin", 1031574, 0x4fc515f5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38048,7 +38047,6 @@ struct BurnDriver BurnDrvmd_barbarianami = {
 };
 
 // Barbarian - Atari ST (HB)
-
 static struct BurnRomInfo md_barbarianstRomDesc[] = {
 	{ "Barbarian Atari ST (2014)(F.L).bin", 2487416, 0xfec97705, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38067,7 +38065,6 @@ struct BurnDriver BurnDrvmd_barbarianst = {
 };
 
 // Barbarian - C64 (HB)
-
 static struct BurnRomInfo md_barbarianc64RomDesc[] = {
 	{ "Barbarian C64 (2014)(F.L).bin", 3028428, 0xd37f9af0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38086,7 +38083,6 @@ struct BurnDriver BurnDrvmd_barbarianc64 = {
 };
 
 // Barbarian - ZX Spectrum (HB)
-
 static struct BurnRomInfo md_barbarianzxsRomDesc[] = {
 	{ "Barbarian ZX Spectrum (2015)(F.L).bin", 1432448, 0x5360129d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38105,7 +38101,6 @@ struct BurnDriver BurnDrvmd_barbarianzxs = {
 };
 
 // Barbarian - Amstrad CPC (HB)
-
 static struct BurnRomInfo md_barbariancpcRomDesc[] = {
 	{ "Barbarian Amstrad CPC (2014)(F.L).bin", 2296122, 0xd63f8446, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38124,7 +38119,6 @@ struct BurnDriver BurnDrvmd_barbariancpc = {
 };
 
 // Death Sword - Apple II (HB)
-
 static struct BurnRomInfo md_barbarianap2RomDesc[] = {
 	{ "Death Sword Apple II (2014)(F.L).bin", 425616, 0x12a01f70, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38143,7 +38137,6 @@ struct BurnDriver BurnDrvmd_barbarianap2 = {
 };
 
 // Death Sword - PC CGA (HB)
-
 static struct BurnRomInfo md_barbarianpcRomDesc[] = {
 	{ "Death Sword PC CGA (2014)(F.L).bin", 446380, 0xaaeaeb87, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38793,7 +38786,7 @@ struct BurnDriver BurnDrvmd_custodian = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Darius Extra Version (HB)
+// Darius Extra Version (World)
 static struct BurnRomInfo md_dariusevRomDesc[] = {
 	{ "Darius Extra Version (2020)(Strictly Limited Games).bin", 4194304, 0x7fdc6236, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38803,9 +38796,9 @@ STD_ROM_FN(md_dariusev)
 
 struct BurnDriver BurnDrvmd_dariusev = {
 	"md_dariusev", NULL, NULL, NULL, "2020",
-	"Darius Extra Version (HB)\0", NULL, "Taito - Strictly Limited Games", "Genesis / Mega Drive",
+	"Darius Extra Version (World)\0", NULL, "Taito - Strictly Limited Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_dariusevRomInfo, md_dariusevRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -38991,10 +38984,9 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-
-// Earthion (English) (HB)
+// Earthion (HB, English)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
-	{ "Earthion (En)(2025)(Ancient).bin", 7864320, 0xf2cc6b7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (English)(2025)(Ancient).bin", 7864320, 0xf2cc6b7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthione)
@@ -39002,7 +38994,7 @@ STD_ROM_FN(md_earthione)
 
 struct BurnDriver BurnDrvmd_earthione = {
 	"md_earthione", NULL, NULL, NULL, "2025",
-	"Earthion (English)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, English)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthioneRomInfo, md_earthioneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39010,9 +39002,9 @@ struct BurnDriver BurnDrvmd_earthione = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (Japanese) (HB)
+// Earthion (HB, Japanese)
 static struct BurnRomInfo md_earthionjRomDesc[] = {
-	{ "Earthion (Jp)(2025)(Ancient).bin", 7864320, 0xf1948b8f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (Japanese)(2025)(Ancient).bin", 7864320, 0xf1948b8f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionj)
@@ -39020,7 +39012,7 @@ STD_ROM_FN(md_earthionj)
 
 struct BurnDriver BurnDrvmd_earthionj = {
 	"md_earthionj", "md_earthione", NULL, NULL, "2025",
-	"Earthion (Japanese)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Japanese)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionjRomInfo, md_earthionjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39028,9 +39020,9 @@ struct BurnDriver BurnDrvmd_earthionj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (Portuguese) (HB)
+// Earthion (HB, Portuguese)
 static struct BurnRomInfo md_earthionpRomDesc[] = {
-	{ "Earthion (Pt)(2025)(Ancient).bin", 7864320, 0x2677de3e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (Portugiese)(2025)(Ancient).bin", 7864320, 0x2677de3e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionp)
@@ -39038,7 +39030,7 @@ STD_ROM_FN(md_earthionp)
 
 struct BurnDriver BurnDrvmd_earthionp = {
 	"md_earthionp", "md_earthione", NULL, NULL, "2025",
-	"Earthion (Portuguese)(HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Portuguese)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionpRomInfo, md_earthionpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -40057,9 +40049,9 @@ struct BurnDriver BurnDrvmd_megasmole = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Turrican - Director's Cut (HB)
+// Mega Turrican - Director's Cut (World)
 static struct BurnRomInfo md_megaturrdcRomDesc[] = {
-	{ "Mega Turrican - Director's Cut (2021)(Strictly Limited Games).smd", 5242880, 0x3226ec36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Turrican - Director's Cut (2021)(Strictly Limited Games).bin", 5242880, 0x3226ec36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megaturrdc)
@@ -40067,9 +40059,9 @@ STD_ROM_FN(md_megaturrdc)
 
 struct BurnDriver BurnDrvmd_megaturrdc = {
 	"md_megaturrdc", NULL, NULL, NULL, "2021",
-	"Mega Turrican - Director's Cut (HB)\0", NULL, "Factor 5 - Strictly Limited Games", "Genesis / Mega Drive",
+	"Mega Turrican - Director's Cut (World)\0", NULL, "Factor 5 - Strictly Limited Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_megaturrdcRomInfo, md_megaturrdcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43204,7 +43196,7 @@ struct BurnDriver BurnDrvmd_pstar2ser = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star III - Successors of Time (Hack, v1.2)
+// Phantasy Star III: Successors of Time (Hack, v1.2)
 // https://www.romhacking.net/translations/3549/
 static struct BurnRomInfo md_pstar3stRomDesc[] = {
 	{ "Phantasy Star III - Successors of Time v1.2 (2020)(Rebecca Capowski, lory1990, Peaches).bin", 828012, 0x4db28d1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43215,7 +43207,7 @@ STD_ROM_FN(md_pstar3st)
 
 struct BurnDriver BurnDrvmd_pstar3st = {
 	"md_pstar3st", "md_pstar3", NULL, NULL, "2020",
-	"Phantasy Star III - Successors of Time (Hack, v1.2)\0", NULL, "Rebecca Capowski, lory1990, Peaches", "Genesis / Mega Drive",
+	"Phantasy Star III: Successors of Time (Hack, v1.2)\0", NULL, "Rebecca Capowski, lory1990, Peaches", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar3stRomInfo, md_pstar3stRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45365,7 +45357,7 @@ struct BurnDriver BurnDrvmd_nadiapt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantasy Star - O Fim do Milenio (Hack, Portuguese v1.0a)
+// Phantasy Star: O Fim do Milenio (Hack, Portuguese v1.0a)
 // https://www.romhacking.net/translations/6276/
 static struct BurnRomInfo md_pstar4ptRomDesc[] = {
 	{ "Phantasy Star - O Fim do Milenio PT-BR v1.0a (2021)(Mad-Dentist).bin", 3145728, 0xa2314303, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -45376,8 +45368,8 @@ STD_ROM_FN(md_pstar4pt)
 
 struct BurnDriver BurnDrvmd_pstar4pt = {
 	"md_pstar4pt", "md_pstar4", NULL, NULL, "2021",
-	"Phantasy Star - O Fim do Milenio (Hack, Portuguese v1.0a)\0", NULL, "Mad-Dentist", "Genesis / Mega Drive",
-	L"Phantasy Star - O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)\0", NULL, NULL, NULL,
+	"Phantasy Star: O Fim do Milenio (Hack, Portuguese v1.0a)\0", NULL, "Mad-Dentist", "Genesis / Mega Drive",
+	L"Phantasy Star: O Fim do Mil\u00eanio (Hack, Portuguese v1.0a)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_pstar4ptRomInfo, md_pstar4ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -45995,6 +45987,25 @@ struct BurnDriver BurnDrvmd_backtof3s = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_backtof3sRomInfo, md_backtof3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)
+// https://www.romhacking.net/translations/2001/
+static struct BurnRomInfo md_bk3sRomDesc[] = {
+	{ "Bare Knuckle III T-Spa (Uncensored, All Unlocked)(2012)(pepodmc).bin", 3146096, 0xd848ee12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bk3s)
+STD_ROM_FN(md_bk3s)
+
+struct BurnDriver BurnDrvmd_bk3s = {
+	"md_bk3s", "md_sor3", NULL, NULL, "2012",
+	"Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)\0", NULL, "pepodmc", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_bk3sRomInfo, md_bk3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -48016,7 +48027,7 @@ struct BurnDriver BurnDrvmd_jponds = {
 // jammit (Hack, Spanish)
 // https://www.romhacking.net/translations/4802/
 static struct BurnRomInfo md_jammitsRomDesc[] = {
-	{ "jammit (hack, spanish).bin",2097152, 0x70c27091, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Jammit T-Spa (2019)(Wave).bin",2097152, 0x70c27091, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jammits)
@@ -48184,21 +48195,21 @@ struct BurnDriver BurnDrvmd_kidchams = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tougiou King Colossus (Hack, Spanish)
-// https://www.romhacking.net/translations/5515/
-static struct BurnRomInfo md_kingcolsRomDesc[] = {
-	{ "Tougiou King Colossus T-Spa (2020)(Luceid).bin", 1048576, 0xa6c9e0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// King's Bounty - The Conqueror's Quest (Hack, Spanish)
+// https://www.romhacking.net/translations/5813/
+static struct BurnRomInfo md_kingsbtysRomDesc[] = {
+	{ "King's Bounty - The Conqueror's Quest T-Spa (2020)(Wave).bin", 524288, 0x06f79c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_kingcols)
-STD_ROM_FN(md_kingcols)
+STD_ROM_PICK(md_kingsbtys)
+STD_ROM_FN(md_kingsbtys)
 
-struct BurnDriver BurnDrvmd_kingcols = {
-	"md_kingcols", "md_kingcol", NULL, NULL, "2020",
-	"Tougiou King Colossus (Hack, Spanish)\0", NULL, "Luceid", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_kingsbtys = {
+	"md_kingsbtys", "md_kingsbty", NULL, NULL, "2020",
+	"King's Bounty - The Conqueror's Quest (Hack, Spanish)\0", NULL, "Wave", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
-	MegadriveGetZipName, md_kingcolsRomInfo, md_kingcolsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_RPG, 0,
+	MegadriveGetZipName, md_kingsbtysRomInfo, md_kingsbtysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -49913,10 +49924,10 @@ struct BurnDriver BurnDrvmd_strider2s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// subterrania (Hack, Spanish)
+// Subterrania (Hack, Spanish)
 // https://www.romhacking.net/translations/5613/
 static struct BurnRomInfo md_subterrsRomDesc[] = {
-	{ "subterrania (hack, spanish).bin", 2097152, 0x5bfd7998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Subterrania T-Spa (2020)(m0sca).bin", 2097152, 0x5bfd7998, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_subterrs)
@@ -49932,10 +49943,10 @@ struct BurnDriver BurnDrvmd_subterrs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// sunset riders (Hack, Spanish)
+// Sunset Riders (Hack, Spanish)
 // https://www.romhacking.net/translations/4763/
 static struct BurnRomInfo md_ssriderssRomDesc[] = {
-	{ "sunset riders (hack, spanish).bin", 524288, 0x63909c3d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sunset Riders T-Spa (2019)(Wave).bin", 524288, 0x63909c3d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssriderss)
@@ -49954,7 +49965,7 @@ struct BurnDriver BurnDrvmd_ssriderss = {
 // Super Fantasy Zone (Hack, Spanish)
 // https://www.romhacking.net/translations/4783/
 static struct BurnRomInfo md_sfzonesRomDesc[] = {
-	{ "super fantasy zone (hack, spanish).bin", 1048576, 0xe79f6216, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Super Fantasy Zone T-Spa (2019)(Wave).bin", 1048576, 0xe79f6216, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sfzones)
@@ -49970,10 +49981,10 @@ struct BurnDriver BurnDrvmd_sfzones = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// super hang-on (Hack, Spanish)
+// Super Hang-On (Hack, Spanish)
 // https://www.romhacking.net/translations/3210/
 static struct BurnRomInfo md_shangonsRomDesc[] = {
-	{ "super hang-on (hack, spanish).bin", 524288, 0x9586e314, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Super Hang-On T-Spa (2017)(Wave).bin", 524288, 0x9586e314, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shangons)
@@ -49989,10 +50000,10 @@ struct BurnDriver BurnDrvmd_shangons = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// super off road (Hack, Spanish)
+// Super Off Road (Hack, Spanish)
 // https://www.romhacking.net/translations/4110/
 static struct BurnRomInfo md_superoffsRomDesc[] = {
-	{ "super off road (hack, spanish).bin", 524288, 0x050bbb2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Super Off Road T-Spa (2019)(Wave).bin", 524288, 0x050bbb2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_superoffs)
@@ -50008,10 +50019,10 @@ struct BurnDriver BurnDrvmd_superoffs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// super smash tv (Hack, Spanish)
+// Super Smash TV (Hack, Spanish)
 // https://www.romhacking.net/translations/4879/
 static struct BurnRomInfo md_ssmashtvsRomDesc[] = {
-	{ "super smash tv (hack, spanish).bin", 524288, 0x349b2a6c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Super Smash TV T-Spa (2019)(Wave).bin", 524288, 0x349b2a6c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ssmashtvs)
@@ -50046,48 +50057,10 @@ struct BurnDriver BurnDrvmd_ssf2s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)
-// https://www.romhacking.net/translations/2001/
-static struct BurnRomInfo md_bk3sRomDesc[] = {
-	{ "Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked).bin", 3146096, 0xd848ee12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bk3s)
-STD_ROM_FN(md_bk3s)
-
-struct BurnDriver BurnDrvmd_bk3s = {
-	"md_bk3s", "md_sor3", NULL, NULL, "2012",
-	"Bare Knuckle III (Hack, Spanish) (Uncensored) (All Unlocked)\0", NULL, "pepodmc", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_bk3sRomInfo, md_bk3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// King's Bounty - The Conqueror's Quest (Hack, Spanish)
-// https://www.romhacking.net/translations/5813/
-static struct BurnRomInfo md_kingsbtysRomDesc[] = {
-	{ "king's bounty - the conqueror's quest (hack, spanish).bin", 524288, 0x06f79c46, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_kingsbtys)
-STD_ROM_FN(md_kingsbtys)
-
-struct BurnDriver BurnDrvmd_kingsbtys = {
-	"md_kingsbtys", "md_kingsbty", NULL, NULL, "2020",
-	"King's Bounty - The Conqueror's Quest (Hack, Spanish)\0", NULL, "Wave", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_RPG, 0,
-	MegadriveGetZipName, md_kingsbtysRomInfo, md_kingsbtysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Superman (Hack, Spanish)
 // https://www.romhacking.net/translations/3527/
 static struct BurnRomInfo md_SupermansRomDesc[] = {
-	{ "superman (hack, spanish).bin", 1048576, 0x5d538528, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Superman T-Spa (2018)(Wave).bin", 1048576, 0x5d538528, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_Supermans)
@@ -50103,10 +50076,10 @@ struct BurnDriver BurnDrvmd_Supermans = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// sword of sodan (Hack, Spanish)
+// Sword of Sodan (Hack, Spanish)
 // https://www.romhacking.net/translations/4831/
 static struct BurnRomInfo md_swordsodsRomDesc[] = {
-	{ "sword of sodan (hack, spanish).bin", 524288, 0x5e504f77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sword of Sodan T-Spa (2019)(Wave).bin", 524288, 0x5e504f77, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_swordsods)
@@ -50863,10 +50836,10 @@ struct BurnDriver BurnDrvmd_toejam2s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Toki - Going Ape Spit ~ JuJu Densetsu (Hack, Spanish v1.2)
+// Toki: Going Ape Spit ~ JuJu Densetsu (Hack, Spanish v1.2)
 // https://www.romhacking.net/translations/3139/
 static struct BurnRomInfo md_tokisRomDesc[] = {
-	{ "toki - going ape spit ~ juJu densetsu (hack, spanish).bin", 524288, 0xef5bf668, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Toki - Going ape spit - JuJu Densetsu T-Spa v1.2 (2017)(Wave).bin", 524288, 0xef5bf668, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tokis)
@@ -50874,7 +50847,7 @@ STD_ROM_FN(md_tokis)
 
 struct BurnDriver BurnDrvmd_tokis = {
 	"md_tokis", "md_toki", NULL, NULL, "2017",
-	"Toki - Going Ape Spit ~ JuJu Densetsu (Hack, Spanish v1.2)\0", NULL, "Wave", "Genesis / Mega Drive",
+	"Toki: Going Ape Spit ~ JuJu Densetsu (Hack, Spanish v1.2)\0", NULL, "Wave", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_tokisRomInfo, md_tokisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -50882,10 +50855,29 @@ struct BurnDriver BurnDrvmd_tokis = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Tougiou King Colossus (Hack, Spanish)
+// https://www.romhacking.net/translations/5515/
+static struct BurnRomInfo md_kingcolsRomDesc[] = {
+	{ "Tougiou King Colossus T-Spa (2020)(Luceid).bin", 1048576, 0xa6c9e0b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kingcols)
+STD_ROM_FN(md_kingcols)
+
+struct BurnDriver BurnDrvmd_kingcols = {
+	"md_kingcols", "md_kingcol", NULL, NULL, "2020",
+	"Tougiou King Colossus (Hack, Spanish)\0", NULL, "Luceid", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_kingcolsRomInfo, md_kingcolsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Toxic Crusaders (Hack, Spanish)
 // https://www.romhacking.net/translations/4018/
 static struct BurnRomInfo md_toxiccsRomDesc[] = {
-	{ "toxic crusaders (hack, spanish).bin", 524288, 0xc2541e0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Toxic Crusaders T-Spa (2018)(Wave).bin", 524288, 0xc2541e0a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_toxiccs)
@@ -50904,7 +50896,7 @@ struct BurnDriver BurnDrvmd_toxiccs = {
 // Toy Story (Hack, Spanish)
 // https://www.romhacking.net/translations/3588/
 static struct BurnRomInfo md_toystorysRomDesc[] = {
-	{ "toy story (hack, spanish).bin", 4194304, 0x82cf5f0e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Toy Story T-Spa (2018)(Wave).bin", 4194304, 0x82cf5f0e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_toystorys)
@@ -50923,7 +50915,7 @@ struct BurnDriver BurnDrvmd_toystorys = {
 // Trouble Shooter (Hack, Spanish)
 // https://www.romhacking.net/translations/3092/
 static struct BurnRomInfo md_troubshtsRomDesc[] = {
-	{ "trouble shooter (hack, spanish).bin", 524288, 0x6549645a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Trouble Shooter T-Spa (2018)(Wave).bin", 524288, 0x6549645a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_troubshts)
@@ -50942,7 +50934,7 @@ struct BurnDriver BurnDrvmd_troubshts = {
 // True Lies (Hack, Spanish)
 // https://www.romhacking.net/translations/3689/
 static struct BurnRomInfo md_trueliessRomDesc[] = {
-	{ "true lies (hack, spanish).bin", 2097152, 0x97821532, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "True Lies T-Spa (2018)(Wave).bin", 2097152, 0x97821532, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_trueliess)
@@ -50961,7 +50953,7 @@ struct BurnDriver BurnDrvmd_trueliess = {
 // Truxton (Hack, Spanish)
 // https://www.romhacking.net/translations/4467/
 static struct BurnRomInfo md_truxtonsRomDesc[] = {
-	{ "truxton (hack, spanish).bin", 524288, 0x0c92ea14, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Truxton T-Spa (2019)(Wave).bin", 524288, 0x0c92ea14, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_truxtons)

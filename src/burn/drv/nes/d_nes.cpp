@@ -5671,7 +5671,7 @@ struct BurnDriver BurnDrvnes_downtnekkousordac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Downtown - Nekketsu Monogatari (Hack, Chinese)
+// Downtown: Nekketsu Monogatari (Hack, Chinese)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=711718
 static struct BurnRomInfo nes_downtnekmoncRomDesc[] = {
 	{ "Downtown - Nekketsu Monogatari T-Chi (2022)(asiwish).nes",          262160, 0x60a9ee52, BRF_ESS | BRF_PRG },
@@ -5682,10 +5682,49 @@ STD_ROM_FN(nes_downtnekmonc)
 
 struct BurnDriver BurnDrvnes_downtnekmonc = {
 	"nes_downtnekmonc", "nes_downtnekmon", NULL, NULL, "2022",
-	"Downtown - Nekketsu Monogatari (Hack, Chinese)\0", NULL, "asiwish", "NES / Famicom",
+	"Downtown: Nekketsu Monogatari (Hack, Chinese)\0", NULL, "asiwish", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_downtnekmoncRomInfo, nes_downtnekmoncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Simplified Chinese)
+// Mapper 191
+static struct BurnRomInfo nes_downtspetscRomDesc[] = {
+	{ "Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! T-Chs (2024)(Axi, Ahe).nes",          327696, 0xd7e1027b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_downtspetsc)
+STD_ROM_FN(nes_downtspetsc)
+
+struct BurnDriver BurnDrvnes_downtspetsc = {
+	"nes_downtspetsc", "nes_downtspekunkunnojid", NULL, NULL, "2024",
+	"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Simplified Chinese)\0", NULL, "Axi, Ahe", "NES / Famicom",
+	L"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Simpl. Chinese)\0\u70ed\u8840\u65f6\u4ee3\u5267 \u5168\u5458\u96c6\u5408\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_downtspetscRomInfo, nes_downtspetscRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Traditional Chinese)
+// Mapper 74
+// Fixed real console
+static struct BurnRomInfo nes_downtspettcRomDesc[] = {
+	{ "Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! T-Cht (2022)(Axi, Ahe).nes",          393232, 0x8016bcff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_downtspettc)
+STD_ROM_FN(nes_downtspettc)
+
+struct BurnDriver BurnDrvnes_downtspettc = {
+	"nes_downtspettc", "nes_downtspekunkunnojid", NULL, NULL, "2022",
+	"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Traditional Chinese)\0", NULL, "Axi, Ahe", "NES / Famicom",
+	L"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Hack, Trad. Chinese)\0\u71b1\u8840\u6642\u4ee3\u5287 \u5168\u54e1\u96c6\u5408\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_downtspettcRomInfo, nes_downtspettcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -6010,6 +6049,45 @@ struct BurnDriver BurnDrvnes_heberekecc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_heberekecRomInfo, nes_heberekecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Simplified Chinese)
+// Mapper 74
+static struct BurnRomInfo nes_ikeikenekhocbutscRomDesc[] = {
+	{ "Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou T-Chs (2013)(Axi,Ahe).nes",          524304, 0x7b7b436b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikeikenekhocbutsc)
+STD_ROM_FN(nes_ikeikenekhocbutsc)
+
+struct BurnDriver BurnDrvnes_ikeikenekhocbutsc = {
+	"nes_ikeikenekhocbutsc", "nes_iceicehoccha", NULL, NULL, "2013",
+	"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Simplified Chinese)\0", NULL, "Axi,Ahe", "NES / Famicom",
+	L"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Simpl. Chinese)\0\u51b2\u554a\u51b2\u554a! \u70ed\u8840\u66f2\u68cd\u7403\u90e8: \u4eba\u4ef0\u9a6c\u7ffb\u5927\u4e71\u6597\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_ikeikenekhocbutscRomInfo, nes_ikeikenekhocbutscRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Traditional Chinese)
+// Mapper 74
+// Fixed real console
+static struct BurnRomInfo nes_ikeikenekhocbuttcRomDesc[] = {
+	{ "Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou T-Cht (2022)(Axi,Ahe).nes",          524304, 0x76b79b74, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ikeikenekhocbuttc)
+STD_ROM_FN(nes_ikeikenekhocbuttc)
+
+struct BurnDriver BurnDrvnes_ikeikenekhocbuttc = {
+	"nes_ikeikenekhocbuttc", "nes_iceicehoccha", NULL, NULL, "2022",
+	"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Traditional Chinese)\0", NULL, "Axi,Ahe", "NES / Famicom",
+	L"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Hack, Trad. Chinese)\0\u885d\u554a\u885d\u554a! \u71b1\u8840\u66f2\u68cd\u7403\u90e8: \u4eba\u4ef0\u99ac\u7ffb\u5927\u4e82\u9b25\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_ikeikenekhocbuttcRomInfo, nes_ikeikenekhocbuttcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -6449,6 +6527,46 @@ struct BurnDriver BurnDrvnes_nekkedodgebtts = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_CLONE, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_nekkedodgebttsRomInfo, nes_nekkedodgebttsRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Simplified Chinese)
+// Mapper 74
+// Fixed real console
+static struct BurnRomInfo nes_nekkoudbsochentscRomDesc[] = {
+	{ "Nekketsu Koukou Dodgeball-bu - Soccer Hen T-Chs (2022)(Axi, Ahe).nes",          524304, 0x2c37839e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkoudbsochentsc)
+STD_ROM_FN(nes_nekkoudbsochentsc)
+
+struct BurnDriver BurnDrvnes_nekkoudbsochentsc = {
+	"nes_nekkoudbsochentsc", "nes_ninteworcup", NULL, NULL, "2022",
+	"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Simplified Chinese)\0", NULL, "Axi, Ahe", "NES / Famicom",
+	L"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Simpl. Chinese)\0\u70ed\u8840\u9ad8\u6821\u8eb2\u907f\u7403\u90e8: \u8db3\u7403\u7bc7\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
+	NESGetZipName, nes_nekkoudbsochentscRomInfo, nes_nekkoudbsochentscRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Traditional Chinese)
+// Mapper 74
+// Fixed real console
+static struct BurnRomInfo nes_nekkoudbsochenttcRomDesc[] = {
+	{ "Nekketsu Koukou Dodgeball-bu - Soccer Hen T-Cht (2022)(Axi, Ahe).nes",          524304, 0xb5338efd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkoudbsochenttc)
+STD_ROM_FN(nes_nekkoudbsochenttc)
+
+struct BurnDriver BurnDrvnes_nekkoudbsochenttc = {
+	"nes_nekkoudbsochenttc", "nes_ninteworcup", NULL, NULL, "2022",
+	"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Traditional Chinese)\0", NULL, "Axi, Ahe", "NES / Famicom",
+	L"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Hack, Trad. Chinese)\0\u71b1\u8840\u9ad8\u6821\u8eb2\u907f\u7403\u90e8: \u8db3\u7403\u7bc7\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
+	NESGetZipName, nes_nekkoudbsochenttcRomInfo, nes_nekkoudbsochenttcRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -31242,9 +31360,17 @@ struct BurnDriver BurnDrvnes_downtnekmon = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)
+// Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)
+/*
+	4-player mode
+	------------------------
+	On the game mode selection screen before the game starts or during the game, move the cursor to the character selection option,
+	hold down Right + B or Left + B on controller 1 (depending on your preferred game mode), and then press the Start button.
+	If the operation is correct, you will automatically start a new game or continue the current game. From now on,
+	all enemy encounters will be controlled by the Famicom's 4 player controllers instead of the regular CPU AI.
+*/
 static struct BurnRomInfo nes_downtspekunkunnojidRomDesc[] = {
-	{ "Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)(1991)(Technos).nes",          262160, 0x014d63c9, BRF_ESS | BRF_PRG },
+	{ "Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)(1991)(Technos).nes",          262160, 0xf6d6a014, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_downtspekunkunnojid)
@@ -31252,10 +31378,10 @@ STD_ROM_FN(nes_downtspekunkunnojid)
 
 struct BurnDriver BurnDrvnes_downtspekunkunnojid = {
 	"nes_downtspekunkunnojid", NULL, NULL, NULL, "1991",
-	"Downtown Special - Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
-	NESGetZipName, nes_downtspekunkunnojidRomInfo, nes_downtspekunkunnojidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
+	L"Downtown Special: Kunio-kun no Jidaigeki Da yo Zenin Shuugou! (Japan)\0\u30c0\u30a6\u30f3\u30bf\u30a6\u30f3\u30b9\u30da\u30b7\u30e3\u30eb \u304f\u306b\u304a\u304f\u3093\u306e\u6642\u4ee3\u5287\u3060\u3088 \u5168\u54e1\u96c6\u5408!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_downtspekunkunnojidRomInfo, nes_downtspekunkunnojidRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -37145,9 +37271,9 @@ struct BurnDriver BurnDrvnes_ikariwariii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)
+// Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Japan)
 static struct BurnRomInfo nes_ikeikenekhocbuRomDesc[] = {
-	{ "Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)(1992)(Technos).nes",          262160, 0x920be27c, BRF_ESS | BRF_PRG },
+	{ "Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)(1992)(Technos).nes",          262160, 0x659021a1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ikeikenekhocbu)
@@ -37155,8 +37281,8 @@ STD_ROM_FN(nes_ikeikenekhocbu)
 
 struct BurnDriver BurnDrvnes_ikeikenekhocbu = {
 	"nes_ikeikenekhocbu", "nes_iceicehoccha", NULL, NULL, "1992",
-	"Ike Ike! Nekketsu Hockey-bu - Subette Koronde Dairantou (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
+	L"Ike Ike! Nekketsu Hockey-bu: Subette Koronde Dairantou (Japan)\0\u3044\u3051\u3044\u3051! \u71b1\u8840\u30db\u30c3\u30b1\u30fc\u90e8 \u3059\u3079\u3063\u3066\u3053\u308d\u3093\u3067\u5927\u4e71\u95d8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_ikeikenekhocbuRomInfo, nes_ikeikenekhocbuRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -43280,7 +43406,7 @@ struct BurnDriver BurnDrvnes_nekkekoukunkun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)
+// Nekketsu Koukou Dodgeball-bu: Soccer Hen (Japan)
 static struct BurnRomInfo nes_nekkoudbsochenRomDesc[] = {
 	{ "Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)(1990)(Technos).nes",          262160, 0x4e6e3334, BRF_ESS | BRF_PRG },
 };
@@ -43290,8 +43416,8 @@ STD_ROM_FN(nes_nekkoudbsochen)
 
 struct BurnDriver BurnDrvnes_nekkoudbsochen = {
 	"nes_nekkoudbsochen", "nes_ninteworcup", NULL, NULL, "1990",
-	"Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
-	L"Nekketsu Koukou Dodgeball-bu - Soccer Hen (Japan)\0\u71b1\u8840\u9ad8\u6821\u30c9\u30c3\u30b8\u30dc\u30fc\u30eb\u90e8\0", NULL, NULL, NULL,
+	"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
+	L"Nekketsu Koukou Dodgeball-bu: Soccer Hen (Japan)\0\u71b1\u8840\u9ad8\u6821\u30c9\u30c3\u30b8\u30dc\u30fc\u30eb\u90e8 \u30b5\u30c3\u30ab\u30fc\u7de8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
 	NESGetZipName, nes_nekkoudbsochenRomInfo, nes_nekkoudbsochenRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

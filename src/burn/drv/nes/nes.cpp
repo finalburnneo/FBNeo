@@ -3367,6 +3367,50 @@ static void mapper165_map()
 		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
+// mapper 74: mmc3 + chrram banks 8-9
+static void mapper74_chrmap(INT32 slot, INT32 bank)
+{
+	mapper_map_chr_ramrom(1, slot, bank, (bank >= 0x08 && bank <= 0x09) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper74_map()
+{
+	mapper_map_prg(8, 1, mapper_regs[7]);
+
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
+
+	if (~mapper4_banksel & 0x80) {
+		mapper74_chrmap(0, mapper_regs[0] & 0xfe);
+		mapper74_chrmap(1, mapper_regs[0] | 0x01);
+		mapper74_chrmap(2, mapper_regs[1] & 0xfe);
+		mapper74_chrmap(3, mapper_regs[1] | 0x01);
+
+		mapper74_chrmap(4, mapper_regs[2]);
+		mapper74_chrmap(5, mapper_regs[3]);
+		mapper74_chrmap(6, mapper_regs[4]);
+		mapper74_chrmap(7, mapper_regs[5]);
+	} else {
+		mapper74_chrmap(0, mapper_regs[2]);
+		mapper74_chrmap(1, mapper_regs[3]);
+		mapper74_chrmap(2, mapper_regs[4]);
+		mapper74_chrmap(3, mapper_regs[5]);
+
+		mapper74_chrmap(4, mapper_regs[0] & 0xfe);
+		mapper74_chrmap(5, mapper_regs[0] | 0x01);
+		mapper74_chrmap(6, mapper_regs[1] & 0xfe);
+		mapper74_chrmap(7, mapper_regs[1] | 0x01);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
 // mapper 194: mmc3 + chrram banks 0-1
 static void mapper194_chrmap(INT32 slot, INT32 bank)
 {
@@ -9798,6 +9842,17 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
 		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 74: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 8, 9
+			mapper_write = mapper04_write;
+			mapper_map = mapper74_map;
+			mapper_scanline = mapper04_scanline;
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg(8, 3, -1);
+			mapper_map();
 			retval = 0;
 			break;
 		}

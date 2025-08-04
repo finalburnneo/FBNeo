@@ -6179,7 +6179,7 @@ struct BurnDriver BurnDrvnes_kyattonindentsc = {
 	"nes_kyattonindentsc", "nes_catnintey", NULL, NULL, "2017",
 	"Kyatto Ninden Teyandee (Hack, Simplified Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
 	L"Kyatto Ninden Teyandee (Hack, Simpl. Chinese)\0\u732b\u515a\u5fcd\u4f20 \u80e1\u626f\u4ec0\u4e48\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kyattonindentscRomInfo, nes_kyattonindentscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

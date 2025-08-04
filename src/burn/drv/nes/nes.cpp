@@ -9943,6 +9943,7 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
+		case 182:
 		case 114: { // mmc3-derivative (Lion King, The)
 			mapper_write    = mapper114_write;
 			cart_exp_write  = mapper114_write;

@@ -11874,8 +11874,9 @@ struct BurnDriver BurnDrvnes_pocahontas = {
 };
 
 // Pocohontos (China) (Unl)
+// Mapper 182 (Equals Mapper 114)
 static struct BurnRomInfo nes_pocohontosRomDesc[] = {
-	{ "Pocohontos (Unl)(China)(1997)(Hosenkan Electronics).nes",          524304, 0xb57153d5, BRF_ESS | BRF_PRG },
+	{ "Pocohontos (Unl)(China)(1997)(Hosenkan Electronics).nes",          524304, 0x746aa039, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_pocohontos)
@@ -11885,7 +11886,7 @@ struct BurnDriver BurnDrvnes_pocohontos = {
 	"nes_pocohontos", "nes_pocahontas", NULL, NULL, "1997",
 	"Pocohontos (China) (Unl)\0", NULL, "Hosenkan Electronics", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_pocohontosRomInfo, nes_pocohontosRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12198,8 +12199,9 @@ struct BurnDriver BurnDrvnes_sboogerman = {
 };
 
 // Super Donkey Kong (Taiwan) (Unl)
+// Mapper 182
 static struct BurnRomInfo nes_superdonkeykongRomDesc[] = {
-	{ "Super Donkey Kong (Taiwan)(Unl)(1997)(Hosenkan Electronics).nes",          262160, 0x11790c6e, BRF_ESS | BRF_PRG },
+	{ "Super Donkey Kong (Taiwan)(Unl)(1997)(Hosenkan Electronics).nes",          262160, 0x06f84d16, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_superdonkeykong)

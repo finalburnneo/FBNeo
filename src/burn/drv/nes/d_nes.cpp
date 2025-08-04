@@ -5365,6 +5365,27 @@ struct BurnDriver BurnDrvnes_captaameandavec = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Captain Tsubasa Vol. II: Super Striker (Hack, Simplified Chinese)
+// Fixed real console by Jujue Ronghua
+// Mapper 195
+// https://nesbbs.com/bbs/thread-57861-1-1.html
+static struct BurnRomInfo nes_captatsuvoliitscRomDesc[] = {
+	{ "Captain Tsubasa Vol. II - Super Striker T-Chs (2025)(Kuixinwu, Jujue Ronghua).nes",          786448, 0x2f1b5cbd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_captatsuvoliitsc)
+STD_ROM_FN(nes_captatsuvoliitsc)
+
+struct BurnDriver BurnDrvnes_captatsuvoliitsc = {
+	"nes_captatsuvoliitsc", "nes_captatsuvolii", NULL, NULL, "2025",
+	"Captain Tsubasa Vol. II: Super Striker (Hack, Simplified Chinese)\0", NULL, "Kuixinwu, Jujue Ronghua", "NES / Famicom",
+	L"Captain Tsubasa Vol. II: Super Striker (Hack, Simpl. Chinese)\0\u5929\u4f7f\u4e4b\u7ffc\u2161: \u8d85\u7ea7\u5c04\u624b\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_captatsuvoliitscRomInfo, nes_captatsuvoliitscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Castlevania II: Simon's Quest (Hack, Simplified Chinese v1.2)
 // https://www.nesbbs.com/bbs/thread-19179-1-1.html
 static struct BurnRomInfo nes_castliitscRomDesc[] = {
@@ -6140,6 +6161,26 @@ struct BurnDriver BurnDrvnes_kungfuc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_kungfucRomInfo, nes_kungfucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Kyatto Ninden Teyandee (Hack, Simplified Chinese)
+// Mapper 195
+// http://www.nesbbs.com/bbs/thread-41876-1-1.html
+static struct BurnRomInfo nes_kyattonindentscRomDesc[] = {
+	{ "Kyatto Ninden Teyandee T-Chs (2017)(HHNM Team).nes",          524304, 0x3f59cb21, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kyattonindentsc)
+STD_ROM_FN(nes_kyattonindentsc)
+
+struct BurnDriver BurnDrvnes_kyattonindentsc = {
+	"nes_kyattonindentsc", "nes_catnintey", NULL, NULL, "2017",
+	"Kyatto Ninden Teyandee (Hack, Simplified Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
+	L"Kyatto Ninden Teyandee (Hack, Simpl. Chinese)\0\u732b\u515a\u5fcd\u4f20 \u80e1\u626f\u4ec0\u4e48\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kyattonindentscRomInfo, nes_kyattonindentscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -7500,7 +7541,7 @@ struct BurnDriver BurnDrvnes_bramstosdrac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Captain Tsubasa Vol. II - Super Striker (Hack, Spanish)
+// Captain Tsubasa Vol. II: Super Striker (Hack, Spanish)
 // https://www.romhacking.net/translations/2072/
 static struct BurnRomInfo nes_captatsuvoliicRomDesc[] = {
 	{ "Captain Tsubasa Vol. II - Super Striker T-Spa (2013)(pepodmc).nes",          393233, 0x49c692c5, BRF_ESS | BRF_PRG },
@@ -7511,7 +7552,7 @@ STD_ROM_FN(nes_captatsuvoliic)
 
 struct BurnDriver BurnDrvnes_captatsuvoliic = {
 	"nes_captatsuvoliic", "nes_captatsuvolii", NULL, NULL, "2013",
-	"Captain Tsubasa Vol. II - Super Striker (Hack, Spanish)\0", NULL, "pepodmc", "NES / Famicom",
+	"Captain Tsubasa Vol. II: Super Striker (Hack, Spanish)\0", NULL, "pepodmc", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_captatsuvoliicRomInfo, nes_captatsuvoliicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28170,7 +28211,7 @@ struct BurnDriver BurnDrvnes_captaintsubasa = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Captain Tsubasa Vol. II - Super Striker (Japan)
+// Captain Tsubasa Vol. II: Super Striker (Japan)
 static struct BurnRomInfo nes_captatsuvoliijRomDesc[] = {
 	{ "Captain Tsubasa Vol. II - Super Striker (Japan)(1990)(Tecmo).nes",          393232, 0x14a366bb, BRF_ESS | BRF_PRG },
 };
@@ -28180,15 +28221,15 @@ STD_ROM_FN(nes_captatsuvoliij)
 
 struct BurnDriver BurnDrvnes_captatsuvoliij = {
 	"nes_captatsuvoliij", "nes_captatsuvolii", NULL, NULL, "1990",
-	"Captain Tsubasa Vol. II - Super Striker (Japan)\0", NULL, "Tecmo", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Captain Tsubasa Vol. II: Super Striker (Japan)\0", NULL, "Tecmo", "NES / Famicom",
+	L"Captain Tsubasa Vol. II: Super Striker (Japan)\0\u30ad\u30e3\u30d7\u30c6\u30f3\u7ffc II \u30b9\u30fc\u30d1\u30fc\u30b9\u30c8\u30e9\u30a4\u30ab\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SPORTSFOOTBALL | GBF_RPG, 0,
 	NESGetZipName, nes_captatsuvoliijRomInfo, nes_captatsuvoliijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Captain Tsubasa Vol. II - Super Striker (Hack, English)
+// Captain Tsubasa Vol. II: Super Striker (Hack, English)
 // https://www.romhacking.net/translations/1182/
 static struct BurnRomInfo nes_captatsuvoliiRomDesc[] = {
 	{ "Captain Tsubasa Vol. II - Super Striker T-Eng (2007)(hayabusakun).nes",          393232, 0x465917f7, BRF_ESS | BRF_PRG },
@@ -28199,7 +28240,7 @@ STD_ROM_FN(nes_captatsuvolii)
 
 struct BurnDriver BurnDrvnes_captatsuvolii = {
 	"nes_captatsuvolii", NULL, NULL, NULL, "2007",
-	"Captain Tsubasa Vol. II - Super Striker (Hack, English)\0", NULL, "hayabusakun", "NES / Famicom",
+	"Captain Tsubasa Vol. II: Super Striker (Hack, English)\0", NULL, "hayabusakun", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_SPORTSFOOTBALL | GBF_RPG, 0,
 	NESGetZipName, nes_captatsuvoliiRomInfo, nes_captatsuvoliiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28438,24 +28479,6 @@ struct BurnDriver BurnDrvnes_castliii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_castliiiRomInfo, nes_castliiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Cat Ninden Teyandee (Japan)
-static struct BurnRomInfo nes_catninteyjRomDesc[] = {
-	{ "Cat Ninden Teyandee (Japan)(1991)(Tecmo).nes",          262160, 0x6f1485ed, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_catninteyj)
-STD_ROM_FN(nes_catninteyj)
-
-struct BurnDriver BurnDrvnes_catninteyj = {
-	"nes_catninteyj", "nes_catnintey", NULL, NULL, "1991",
-	"Cat Ninden Teyandee (Japan)\0", NULL, "Tecmo", "NES / Famicom",
-	L"Cat Ninden Teyandee (Japan)\0\u30ad\u30e3\u30c3\u515a\u5FCD\u4f1d\u3066\u3084\u3093\u3067\u3048\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_catninteyjRomInfo, nes_catninteyjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -39677,6 +39700,24 @@ struct BurnDriver BurnDrvnes_kuniokunnoneksole = {
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
 	NESGetZipName, nes_kuniokunnoneksoleRomInfo, nes_kuniokunnoneksoleRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NESHori4pInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Kyatto Ninden Teyandee (Japan)
+static struct BurnRomInfo nes_kyattonindenRomDesc[] = {
+	{ "Kyatto Ninden Teyandee (Japan)(1991)(Tecmo).nes",          262160, 0x6f1485ed, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kyattoninden)
+STD_ROM_FN(nes_kyattoninden)
+
+struct BurnDriver BurnDrvnes_kyattoninden = {
+	"nes_kyattoninden", "nes_catnintey", NULL, NULL, "1991",
+	"Kyatto Ninden Teyandee (Japan)\0", NULL, "Tecmo", "NES / Famicom",
+	L"Kyatto Ninden Teyandee (Japan)\0\u30ad\u30e3\u30c3\u515a\u5FCD\u4f1d \u3066\u3084\u3093\u3067\u3048\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kyattonindenRomInfo, nes_kyattonindenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 

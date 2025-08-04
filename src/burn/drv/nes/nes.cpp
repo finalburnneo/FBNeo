@@ -3502,14 +3502,22 @@ static void mapper195_map()
 static void mapper195_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x5000 && address <= 0x5fff) {
-		Cart.CHRRam[address&0xfff] = data;
+		// Offset in WorkRAM, address - 0x5000
+		const INT32 nOffset = address & 0x0fff;
+		if (nOffset < Cart.WorkRAMSize) {
+			Cart.WorkRAM[nOffset] = data;
+		}
 	}
 }
 
 static UINT8 mapper195_read(UINT16 address)
 {
 	if (address >= 0x5000 && address <= 0x5fff) {
-		return Cart.CHRRam[address&0xfff];
+		const INT32 nOffset = address & 0x0fff;
+		if (nOffset < Cart.WorkRAMSize) {
+			return Cart.WorkRAM[nOffset];
+		}
+		return 0xff;	// Overflow
 	}
 	return cpu_open_bus;
 }

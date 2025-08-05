@@ -11155,7 +11155,7 @@ static UINT8 gg_bit(UINT8 g)
 	const UINT8 gg_str[0x11] = "APZLGITYEOXUKSVN";
 
 	for (UINT8 i = 0; i < 0x10; i++) {
-		if (g == gg_str[i]) {
+		if ((g & ~0x20) == gg_str[i]) {
 			return i;
 		}
 	}
@@ -11165,6 +11165,8 @@ static UINT8 gg_bit(UINT8 g)
 static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &compare)
 {
 	INT32 type = strlen(gg_code);
+
+	bool address_lower = gg_code[0] & 0x20;
 
 	if (type != 6 && type != 8) {
 		// bad code!
@@ -11177,7 +11179,7 @@ static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &comp
 		str_bits[i] = gg_bit(gg_code[i]);
 	}
 
-	address = 0x8000 | ((str_bits[1] & 8) << 4) | ((str_bits[2] & 7) << 4) | ((str_bits[3] & 7) << 12) | ((str_bits[3] & 8) << 0) | ((str_bits[4] & 7) << 0) | ((str_bits[4] & 8) << 8) | ((str_bits[5] & 7) << 8);
+	address = ((address_lower) ? 0x0000 : 0x8000) | ((str_bits[1] & 8) << 4) | ((str_bits[2] & 7) << 4) | ((str_bits[3] & 7) << 12) | ((str_bits[3] & 8) << 0) | ((str_bits[4] & 7) << 0) | ((str_bits[4] & 8) << 8) | ((str_bits[5] & 7) << 8);
 	value = ((str_bits[0] & 7) << 0) | ((str_bits[0] & 8) << 4) | ((str_bits[1] & 7) << 4);
 	compare = -1;
 
@@ -11209,7 +11211,7 @@ struct cheat_struct {
 static cheat_struct cheats[cheat_MAX];
 
 static void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
-{
+{ // lowercase GGenie code: access 0-7fff, uppercase: access 8000-ffff
 	UINT16 address;
 	UINT8 value;
 	INT32 compare;

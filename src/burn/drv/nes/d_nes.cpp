@@ -15513,7 +15513,7 @@ struct BurnDriver BurnDrvnes_cratersongde = {
 
 // Creeping It Reel (HB)
 static struct BurnRomInfo nes_creepitreelRomDesc[] = {
-	{ "Creeping It Reel (2017)(Mega Cat Studios).nes",          524304, 0x01da5e1c, BRF_ESS | BRF_PRG },
+	{ "Creeping It Reel (2017)(Mega Cat Studios).nes",          524304, 0x8f2ee6dc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_creepitreel)

@@ -591,44 +591,6 @@ struct BurnDriver BurnSpecsubbuteo = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Three Weeks in Paradise (48K)
-
-static struct BurnRomInfo Spec3weekspr_48RomDesc[] = {
-	{ "Three Weeks In Paradise (1986)(Mikro-Gen).z80", 0x0a49e, 0x3c7ac0a9, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Spec3weekspr_48, Spec3weekspr_48, Spectrum)
-STD_ROM_FN(Spec3weekspr_48)
-
-struct BurnDriver BurnSpec3weekspr_48 = {
-	"spec_3weekspr_48", "spec_3weekspr", "spec_spectrum", NULL, "1986",
-	"Three Weeks in Paradise (48K)\0", NULL, "Mikro-Gen", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
-	SpectrumGetZipName, Spec3weekspr_48RomInfo, Spec3weekspr_48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Three Weeks in Paradise (128K)
-
-static struct BurnRomInfo Spec3weeksprRomDesc[] = {
-	{ "Three Weeks In Paradise (1986)(Mikro-Gen)(128k).z80", 0x0e06c, 0xf21d8b5d, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Spec3weekspr, Spec3weekspr, Spec128)
-STD_ROM_FN(Spec3weekspr)
-
-struct BurnDriver BurnSpec3weekspr = {
-	"spec_3weekspr", NULL, "spec_spec128", NULL, "1986",
-	"Three Weeks in Paradise (128K)\0", NULL, "Mikro-Gen", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
-	SpectrumGetZipName, Spec3weeksprRomInfo, Spec3weeksprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
 // Time Scanner (128K)
 
 static struct BurnRomInfo SpectimescanRomDesc[] = {
@@ -1062,44 +1024,6 @@ struct BurnDriver BurnSpechydrofool = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpechydrofoolRomInfo, SpechydrofoolRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Kong's Revenge - Part 1 (Spanish) (128K)
-
-static struct BurnRomInfo Speckongsrevenge1RomDesc[] = {
-	{ "Kong's Revenge (Part 1)(1991)(Zigurat Software).tap", 56868, 0x20a7e7ce, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Speckongsrevenge1, Speckongsrevenge1, Spec128)
-STD_ROM_FN(Speckongsrevenge1)
-
-struct BurnDriver BurnSpeckongsrevenge1 = {
-	"spec_kongsrevenge1", NULL, "spec_spec128", NULL, "1991",
-	"Kong's Revenge - Part 1 (Spanish) (128K)\0", NULL, "Zigurat Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, Speckongsrevenge1RomInfo, Speckongsrevenge1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Kong's Revenge - Part 2 (Spanish) (128K)
-
-static struct BurnRomInfo Speckongsrevenge2RomDesc[] = {
-	{ "Kong's Revenge (Part 2)(1991)(Zigurat Software).tap", 56868, 0xdf77b41f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Speckongsrevenge2, Speckongsrevenge2, Spec128)
-STD_ROM_FN(Speckongsrevenge2)
-
-struct BurnDriver BurnSpeckongsrevenge2 = {
-	"spec_kongsrevenge2", "spec_kongsrevenge1", "spec_spec128", NULL, "1991",
-	"Kong's Revenge - Part 2 (Spanish) (128K)\0", "Password: CHIRIPA - use num-keys from 1 to 7 to set password", "Zigurat Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
-	SpectrumGetZipName, Speckongsrevenge2RomInfo, Speckongsrevenge2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -16306,6 +16230,44 @@ struct BurnDriver BurnSpeckong2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Kong's Revenge - Part 1 (Spanish) (48K-128K)
+
+static struct BurnRomInfo Speckongsrevenge1RomDesc[] = {
+	{ "Kong's Revenge - Part 1 ES 48K-128K (1991)(Zigurat Software).tap", 56868, 0x20a7e7ce, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speckongsrevenge1, Speckongsrevenge1, Spec128)
+STD_ROM_FN(Speckongsrevenge1)
+
+struct BurnDriver BurnSpeckongsrevenge1 = {
+	"spec_kongsrevenge1", NULL, "spec_spec128", NULL, "1991",
+	"Kong's Revenge - Part 1 (Spanish) (48K-128K)\0", NULL, "Zigurat Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, Speckongsrevenge1RomInfo, Speckongsrevenge1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Kong's Revenge - Part 2 (Spanish) (48K-128K)
+
+static struct BurnRomInfo Speckongsrevenge2RomDesc[] = {
+	{ "Kong's Revenge - Part 2 ES 48K-128K (1991)(Zigurat Software).tap", 56868, 0xdf77b41f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Speckongsrevenge2, Speckongsrevenge2, Spec128)
+STD_ROM_FN(Speckongsrevenge2)
+
+struct BurnDriver BurnSpeckongsrevenge2 = {
+	"spec_kongsrevenge2", "spec_kongsrevenge1", "spec_spec128", NULL, "1991",
+	"Kong's Revenge - Part 2 (Spanish) (48K-128K)\0", "Password: CHIRIPA - use num-keys from 1 to 7 to set password", "Zigurat Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, Speckongsrevenge2RomInfo, Speckongsrevenge2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Kraal (48K)
 
 static struct BurnRomInfo SpeckraalRomDesc[] = {
@@ -27174,6 +27136,44 @@ struct BurnDriver BurnSpecThanatos48 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Three Weeks in Paradise (48K)
+
+static struct BurnRomInfo Spec3weekspr48RomDesc[] = {
+	{ "Three Weeks in Paradise 48K (1986)(Mikro-Gen).tzx", 49638, 0x81b2b340, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec3weekspr48, Spec3weekspr48, Spectrum)
+STD_ROM_FN(Spec3weekspr48)
+
+struct BurnDriver BurnSpec3weekspr48 = {
+	"spec_3weekspr48", "spec_3weekspr", "spec_spectrum", NULL, "1986",
+	"Three Weeks in Paradise (48K)\0", NULL, "Mikro-Gen", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec3weekspr48RomInfo, Spec3weekspr48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Three Weeks in Paradise (128K)
+
+static struct BurnRomInfo Spec3weeksprRomDesc[] = {
+	{ "Three Weeks in Paradise 128K (1986)(Mikro-Gen).tzx", 88220, 0x71a5ebfe, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Spec3weekspr, Spec3weekspr, Spec128)
+STD_ROM_FN(Spec3weekspr)
+
+struct BurnDriver BurnSpec3weekspr = {
+	"spec_3weekspr", NULL, "spec_spec128", NULL, "1986",
+	"Three Weeks in Paradise (128K)\0", NULL, "Mikro-Gen", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, Spec3weeksprRomInfo, Spec3weeksprRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Throne of Fire (48K)
 
 static struct BurnRomInfo SpecThronefireRomDesc[] = {
@@ -28403,7 +28403,7 @@ struct BurnDriver BurnSpecviajecentterra = {
 	"spec_viajecentterra", NULL, "spec_spectrum", NULL, "1989",
 	"Viaje al Centro de la Tierra (Spanish) (48K)\0", NULL, "Topo Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MINIGAMES, 0,
 	SpectrumGetZipName, SpecviajecentterraRomInfo, SpecviajecentterraRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -54334,10 +54334,10 @@ struct BurnDriver BurnSpecVexed48 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (Hack)
+// Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecViajecentterraextRomDesc[] = {
-	{ "Viaje al Centro de la Tierra - Version Extendida ES 48K-128K (2008)(Topo Siglo XXI).tap", 89772, 0x306f4184, BRF_ESS | BRF_PRG },
+	{ "Viaje al Centro de la Tierra - Version Extendida ES 48K-128K (2008)(Topo Siglo XXI).tap", 196541, 0x83c5cd5b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecViajecentterraext, SpecViajecentterraext, Spec128)
@@ -54345,9 +54345,9 @@ STD_ROM_FN(SpecViajecentterraext)
 
 struct BurnDriver BurnSpecViajecentterraext = {
 	"spec_viajecentterraext", "spec_viajecentterra", "spec_spec128", NULL, "2008",
-	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (Hack)\0", NULL, "Topo Siglo XXI", "ZX Spectrum",
+	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)\0", "AY Music + 2 additional stages (Fase 4 and 5)", "Topo Siglo XXI", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MINIGAMES, 0,
 	SpectrumGetZipName, SpecViajecentterraextRomInfo, SpecViajecentterraextRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

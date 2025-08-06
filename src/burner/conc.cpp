@@ -866,6 +866,10 @@ static int encodeNES(int address, int value, int compare, char *result) {
 	return 0;
 }
 
+#ifdef _MSC_VER
+#define strtok_r strtok_s
+#endif
+
 // VirtuaNES .vct format
 static INT32 ConfigParseVCT(TCHAR* pszFilename)
 {
@@ -888,13 +892,11 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 	tmp[c0[a+1] - (c0[a]+1)] = '\0';				\
 
 	TCHAR tmp[256];
-	TCHAR tmp2[256];
 	TCHAR szLine[1024];
-	char szGGenie[128*2] = { 0, };
+	char szGGenie[256] = { 0, };
 
 	INT32 nLen;
 	INT32 n = 0;
-	INT32 nFound = 0;
 	INT32 nCurrentAddress = 0;
 
 	CheatInfo* pCurrentCheat = NULL;
@@ -928,9 +930,7 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 		if (szLine[0] == ';') continue;
 
-		nFound = 1;
-
-		INT32 c0[16], c1 = 0, cprev = 0;					// find colons / break
+		INT32 c0[16], c1 = 0, cprev = 0; // find columns / break
 		for (INT32 i = 0; i < nLen; i++)
 			if ((szLine[i] == ' ' && c1 < 2) || szLine[i] == '\t' || szLine[i] == '\r' || szLine[i] == '\n')
 			{
@@ -939,89 +939,74 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			}
 
 		tmpcpy(0);
-		bprintf(0, _T("%s,"), tmp);
 		strcpy(szGGenie, TCHARToANSI(tmp, NULL, 0));
+		szGGenie[255] = '\0';
 		tmpcpy(1);
-		bprintf(0, _T("%s\n"), tmp);
 
-
-#if 0
-		if (nCurrentAddress < CHEAT_MAX_ADDRESS) {
-			if (HW_GGENIE) {
-		//		AddressInfoGameGenie();
-			}
-		}
-#endif
-
-		n = 0;
-		nCurrentAddress = 0;
-
-		// Link new node into the list
-		CheatInfo* pPreviousCheat = pCurrentCheat;
-		pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-		if (pCheatInfo == NULL) {
-			pCheatInfo = pCurrentCheat;
-		}
-
-		memset(pCurrentCheat, 0, sizeof(CheatInfo));
-		pCurrentCheat->pPrevious = pPreviousCheat;
-		if (pPreviousCheat) {
-			pPreviousCheat->pNext = pCurrentCheat;
-		}
-
-		// Fill in defaults
-		pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
-		pCurrentCheat->nStatus = -1;							// Disable cheat
-		pCurrentCheat->nDefault = 0;							// Set default option
-		pCurrentCheat->bOneShot = 0;							// Set default option (off)
-		pCurrentCheat->bWatchMode = 0;							// Set default option (off)
-
-		_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
-
-		OptionName(_T("Disabled"));
-
-		n++;
-		OptionName(_T("Enabled"));
 		if (HW_GGENIE) {
 			//szGGenie "0077-01-FF" or "0077-04-80808080"
 			char *tok_main = NULL;
-			char blyat[256] = { 0, };
-
-			char addr[256] = { 0, };
-			char count[256] = { 0, };
-			char bytes[256] = { 0, };
+			char temp2[256] = { 0, };
 			UINT32 fAddr = 0;
 			UINT32 fCount = 0;
+			UINT32 fAttr = 0; // always = 0, oneshot = 1, greater = 2 (mem[addr] > bytes), less = 3 (mem[addr] < bytes)
 			UINT32 fBytes = 0;
 
-			strcpy(blyat, szGGenie);
-
-#ifdef _MSC_VER
-#define strtok_r strtok_s
+			strcpy(temp2, szGGenie);
 
 			// split up "0077-01-FF" "address-bytecount-bytes_to_program"
-			char *tok = strtok_r(blyat, "-", &tok_main);
-			strcpy(addr, tok);
-			sscanf (addr, "%x", &fAddr);
+			char *tok = strtok_r(temp2, "-", &tok_main);
+			if (!tok) continue;
+			sscanf(tok, "%x", &fAddr);
 
 			tok = strtok_r(NULL, "-", &tok_main);
-			strcpy(count, tok);
-			sscanf (count, "%x", &fCount);
+			if (!tok) continue;
+			sscanf(tok, "%x", &fCount);
+			fAttr = (fCount & 0x30) >> 4;
 			fCount &= 0x07;
 			if (fCount < 1 || fCount > 4) fCount = 1;
 
 			tok = strtok_r(NULL, "-", &tok_main);
-			strcpy(bytes, tok);
-			sscanf (bytes, "%x", &fBytes);
+			if (!tok) continue;
+			sscanf(tok, "%x", &fBytes);
 
-#undef strtok_r
-#endif
-			bprintf(0, _T("addr[%S:%x] count[%S:%x] bytes[%S:%x]\n"), addr, fAddr, count, fCount, bytes, fBytes);
-//static int encodeNES(int address, int value, int compare, char *result) {
+			bprintf(0, _T(".vct: addr[%x] count[%x] bytes[%x]\n"), fAddr, fCount, fBytes);
+
+			// -- add to cheat engine --
+			n = 0;
+			nCurrentAddress = 0;
+
+			// Link new node into the list
+			CheatInfo* pPreviousCheat = pCurrentCheat;
+			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
+			if (pCheatInfo == NULL) {
+				pCheatInfo = pCurrentCheat;
+			}
+
+			memset(pCurrentCheat, 0, sizeof(CheatInfo));
+			pCurrentCheat->pPrevious = pPreviousCheat;
+			if (pPreviousCheat) {
+				pPreviousCheat->pNext = pCurrentCheat;
+			}
+
+			// Fill in defaults
+			pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
+			pCurrentCheat->nStatus = -1;							// Disable cheat
+			pCurrentCheat->nDefault = 0;							// Set default option
+			pCurrentCheat->bOneShot = 0;							// Set default option (off)
+			pCurrentCheat->bWatchMode = 0;							// Set default option (off)
+
+			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
+
+			OptionName(_T("Disabled"));
+			n++;
+			OptionName(_T("Enabled"));
 
 			for (int i = 0; i < fCount; i++) {
 				memset(szGGenie, 0, sizeof(szGGenie));
 				encodeNES(fAddr + i, fBytes >> (i*8), -1, szGGenie);
+				INT32 cLen = strlen(szGGenie);
+				szGGenie[cLen] = '0' + fAttr; // append the attribute to the end of the GameGenie code (handled in drv/nes/nes.cpp)
 				AddressInfoGameGenie();
 			}
 		}
@@ -1034,6 +1019,10 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 	return 0;
 }
+
+#ifdef _MSC_VER
+#undef strtok_r
+#endif
 
 
 INT32 ConfigCheatLoad()

@@ -11150,6 +11150,9 @@ static void prg_ram_write(UINT16 address, UINT8 data)
 }
 
 // cheat system
+
+enum { TYPE_GAMEGENIE = 0, TYPE_GOOD = 0x100, TYPE_ALWAYS = 0x100, TYPE_ONESHOT = 0x101, TYPE_CMP_GT = 0x102, TYPE_CMP_LT = 0x103, TYPE_DISABLED = 0x104 };
+
 static UINT8 gg_bit(UINT8 g)
 {
 	const UINT8 gg_str[0x11] = "APZLGITYEOXUKSVN";
@@ -11162,15 +11165,28 @@ static UINT8 gg_bit(UINT8 g)
 	return 0;
 }
 
-static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &compare)
+static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &compare, INT32 &attrib)
 {
 	INT32 type = strlen(gg_code);
-
-	bool address_lower = gg_code[0] & 0x20;
+	bool address_lower = gg_code[0] & 0x20; // test for ascii lowercase
+	attrib = 0;
 
 	if (type != 6 && type != 8) {
-		// bad code!
-		return 1;
+		if (type == 7) {
+			switch (gg_code[6]) {
+				case '0': attrib = TYPE_ALWAYS; break;
+				case '1': attrib = TYPE_ONESHOT; break;
+				case '2': attrib = TYPE_CMP_GT; break;
+				case '3': attrib = TYPE_CMP_LT; break;
+				default: return 1; // bad code!
+			}
+		}
+		if (attrib & TYPE_GOOD) {
+			// good code?  remove (ignore) the attrib byte at the end of gg_code string
+			type--;
+		} else {
+			return 1; // bad code!
+		}
 	}
 
 	UINT8 str_bits[8];
@@ -11206,6 +11222,7 @@ struct cheat_struct {
 	UINT16 address;
 	UINT8 value;
 	INT32 compare; // -1, compare disabled.
+	INT32 type;
 };
 
 static cheat_struct cheats[cheat_MAX];
@@ -11215,12 +11232,14 @@ static void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 	UINT16 address;
 	UINT8 value;
 	INT32 compare;
+	INT32 type;
 
-	if (!gg_decode(code, address, value, compare) && cheats_active < (cheat_MAX-1)) {
+	if (!gg_decode(code, address, value, compare, type) && cheats_active < (cheat_MAX-1)) {
 		strncpy(cheats[cheats_active].code, code, 9);
 		cheats[cheats_active].address = address;
 		cheats[cheats_active].value = value;
 		cheats[cheats_active].compare = compare;
+		cheats[cheats_active].type = type;
 		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x, %d)\n"), cheats_active, cheats[cheats_active].code, address, value, compare);
 		cheats_active++;
 	} else {
@@ -11250,13 +11269,33 @@ static void nes_remove_cheat(char *code)
 	cheats_active = temp_num;
 }
 
+//enum { TYPE_GOOD = 0x100, TYPE_ALWAYS = 0x100, TYPE_ONESHOT = 0x101, TYPE_CMP_GT = 0x102, TYPE_CMP_LT = 0x103, TYPE_DISABLED = 0x104 };
+static UINT8 cpu_bus_read(UINT16 address); // forward....
+static void cpu_bus_write(UINT16 address, UINT8 data); // forward....
+static void cheat_check_frame()
+{
+	for (INT32 i = 0; i < cheats_active; i++) {
+		if (cheats[i].type & TYPE_GOOD) {
+
+			switch (cheats[i].type) {
+				case TYPE_ALWAYS: cpu_bus_write(cheats[i].address, cheats[i].value); break;
+				case TYPE_ONESHOT: cpu_bus_write(cheats[i].address, cheats[i].value); cheats[i].type = TYPE_DISABLED; break;
+				case TYPE_CMP_GT: if (cpu_bus_read(cheats[i].address) > cheats[i].value) cpu_bus_write(cheats[i].address, cheats[i].value); break;
+				case TYPE_CMP_LT: if (cpu_bus_read(cheats[i].address) < cheats[i].value) cpu_bus_write(cheats[i].address, cheats[i].value); break;
+				case TYPE_DISABLED: break;
+			}
+		}
+	}
+}
+
 static inline UINT8 cheat_check(UINT16 address, UINT8 value)
 {
 	for (INT32 i = 0; i < cheats_active; i++) {
-		if (cheats[i].address == address && (cheats[i].compare == -1 || cheats[i].compare == value)) {
+		if (cheats[i].address == address && (cheats[i].compare == -1 || cheats[i].compare == value) && cheats[i].type == TYPE_GAMEGENIE) {
 #if FIND_CHEAT_ROMOFFSET
 			bprintf(0, _T("%x %x -> %x, prg addy/offset: %x  %x\n"), address, cheats[i].compare, cheats[i].value, l_address, l_offset);
 #endif
+
 			return cheats[i].value;
 		}
 	}
@@ -11836,6 +11875,8 @@ INT32 NESFrame()
 			}
 		}
 	}
+
+	cheat_check_frame();
 
 	M6502Open(0);
 	M6502NewFrame();

@@ -38986,7 +38986,7 @@ struct BurnDriver BurnDrvmd_doroppu = {
 
 // Earthion (HB, English)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
-	{ Earthion v2.0.1 (English)(2025)(Ancient).bin", 7864320, 0x47d6ac2c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v2.0.1 (English)(2025)(Ancient).bin", 7864320, 0x47d6ac2c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthione)

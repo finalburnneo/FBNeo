@@ -251,6 +251,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_goori.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_gstream.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_hyprduel.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_igs011.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech8.cpp" />

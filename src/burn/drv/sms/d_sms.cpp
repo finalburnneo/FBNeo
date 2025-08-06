@@ -25532,6 +25532,26 @@ struct BurnDriver BurnDrvgg_sainttale = {
 	256, 192, 4, 3
 };
 
+// Kenseiden (Hack, Portuguese v1.4)
+// https://romhackers.org/traducoes/console/master-system/kenseiden-po.b.r.e
+
+static struct BurnRomInfo sms_kenseidptRomDesc[] = {
+	{ "Kenseiden T-Por v1.4 (2020)(PO.B.R.E.).sms",	262144, 0x495a613c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_kenseidpt)
+STD_ROM_FN(sms_kenseidpt)
+
+struct BurnDriver BurnDrvsms_kenseidpt = {
+	"sms_kenseidpt", "sms_kenseid", NULL, NULL, "2020",
+	"Kenseiden (Hack, Portuguese v1.4)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_kenseidptRomInfo, sms_kenseidptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Krusty's Fun House (Hack, Spanish)
 // https://www.romhacking.net/translations/4924/
 static struct BurnRomInfo sms_krustyfhcRomDesc[] = {
@@ -25547,6 +25567,26 @@ struct BurnDriver BurnDrvsms_krustyfhc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_krustyfhcRomInfo, sms_krustyfhcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Master of Darkness ~ Mestre das Trevas (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/master-system/master-of-darkness-po.b.r.e
+
+static struct BurnRomInfo sms_mastdarkptRomDesc[] = {
+	{ "Master of Darkness - Mestre das Trevas T-Por (2017)(PO.B.R.E.).sms",	262144, 0x30703780, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mastdarkpt)
+STD_ROM_FN(sms_mastdarkpt)
+
+struct BurnDriver BurnDrvsms_mastdarkpt = {
+	"sms_mastdarkpt", "sms_mastdark", NULL, NULL, "2017",
+	"Master of Darkness ~ Mestre das Trevas (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_mastdarkptRomInfo, sms_mastdarkptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26264,6 +26304,46 @@ struct BurnDriver BurnDrvsms_wboymwldc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_wboymwldcRomInfo, sms_wboymwldcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Zillion (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/master-system/zillion-po.b.r.e
+
+static struct BurnRomInfo sms_zillionptRomDesc[] = {
+	{ "Zillion T-Por v1.2 (2008-2020)(PO.B.R.E.).sms",	131072, 0xce74ab80, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_zillionpt)
+STD_ROM_FN(sms_zillionpt)
+
+struct BurnDriver BurnDrvsms_zillionpt = {
+	"sms_zillionpt", "sms_zillion", NULL, NULL, "2008-2020",
+	"Zillion (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_zillionptRomInfo, sms_zillionptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Zillion II: The Tri Formation (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/master-system/zillion-ii-the-tri-formation-po.b.r.e
+
+static struct BurnRomInfo sms_zillion2ptRomDesc[] = {
+	{ "Zillion - II The Tri Formation T-Por v1.1 (2009-2020)(PO.B.R.E.).sms",	131072, 0x70846349, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_zillion2pt)
+STD_ROM_FN(sms_zillion2pt)
+
+struct BurnDriver BurnDrvsms_zillion2pt = {
+	"sms_zillion2pt", "sms_zillion2", NULL, NULL, "2009-2020",
+	"Zillion II: The Tri Formation (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_zillion2ptRomInfo, sms_zillion2ptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

@@ -996,6 +996,9 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 			strcpy(blyat, szGGenie);
 
+#ifdef _MSC_VER
+#define strtok_r strtok_s
+
 			// split up "0077-01-FF" "address-bytecount-bytes_to_program"
 			char *tok = strtok_r(blyat, "-", &tok_main);
 			strcpy(addr, tok);
@@ -1011,6 +1014,8 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			strcpy(bytes, tok);
 			sscanf (bytes, "%x", &fBytes);
 
+#undef strtok_r
+#endif
 			bprintf(0, _T("addr[%S:%x] count[%S:%x] bytes[%S:%x]\n"), addr, fAddr, count, fCount, bytes, fBytes);
 //static int encodeNES(int address, int value, int compare, char *result) {
 

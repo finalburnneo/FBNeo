@@ -38986,7 +38986,7 @@ struct BurnDriver BurnDrvmd_doroppu = {
 
 // Earthion (HB, English)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
-	{ "Earthion (English)(2025)(Ancient).bin", 7864320, 0xf2cc6b7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (English)(2025)(Ancient).bin", 7864320, 0x47d6ac2c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthione)
@@ -39040,7 +39040,7 @@ struct BurnDriver BurnDrvmd_earthionfd = {
 
 // Earthion (HB, Japanese)
 static struct BurnRomInfo md_earthionjRomDesc[] = {
-	{ "Earthion (Japanese)(2025)(Ancient).bin", 7864320, 0xf1948b8f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (Japanese)(2025)(Ancient).bin", 7864320, 0x7f751480, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionj)
@@ -39058,7 +39058,7 @@ struct BurnDriver BurnDrvmd_earthionj = {
 
 // Earthion (HB, Portuguese)
 static struct BurnRomInfo md_earthionpRomDesc[] = {
-	{ "Earthion (Portugiese)(2025)(Ancient).bin", 7864320, 0x2677de3e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion (Portugiese)(2025)(Ancient).bin", 7864320, 0xa087dfd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionp)

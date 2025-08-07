@@ -5,6 +5,9 @@
 #define HW_SNES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) )
 #define HW_GGENIE ( HW_NES || HW_SNES )
 
+static CheatInfo* pCurrentCheat = NULL;
+static CheatInfo* pPreviousCheat = NULL;
+
 static bool SkipComma(TCHAR** s)
 {
 	while (**s && **s != _T(',')) {
@@ -59,6 +62,31 @@ static void CheatError(TCHAR* pszFilename, INT32 nLineNumber, CheatInfo* pCheat,
 #endif
 }
 
+static void CheatLinkNewNode(TCHAR *szDerp)
+{
+	// Link new node into the list
+	pPreviousCheat = pCurrentCheat;
+	pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
+	if (pCheatInfo == NULL) {
+		pCheatInfo = pCurrentCheat;
+	}
+
+	memset(pCurrentCheat, 0, sizeof(CheatInfo));
+	pCurrentCheat->pPrevious = pPreviousCheat;
+	if (pPreviousCheat) {
+		pPreviousCheat->pNext = pCurrentCheat;
+	}
+
+	// Fill in defaults
+	pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
+	pCurrentCheat->nStatus = -1;							// Disable cheat
+	pCurrentCheat->nDefault = 0;							// Set default option
+	pCurrentCheat->bOneShot = 0;							// Set default option (off)
+	pCurrentCheat->bWatchMode = 0;							// Set default option (off)
+
+	_tcsncpy (pCurrentCheat->szCheatName, szDerp, QUOTE_MAX);
+}
+
 static INT32 ConfigParseFile(TCHAR* pszFilename)
 {
 #define INSIDE_NOTHING (0xFFFF & (1 << ((sizeof(TCHAR) * 8) - 1)))
@@ -67,11 +95,10 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 	TCHAR* s;
 	TCHAR* t;
 	INT32 nLen;
+	bool bFirst = true;
 
 	INT32 nLine = 0;
 	TCHAR nInside = INSIDE_NOTHING;
-
-	CheatInfo* pCurrentCheat = NULL;
 
 	TCHAR* pszReadMode = AdaptiveEncodingReads(pszFilename);
 	if (NULL == pszReadMode) pszReadMode = _T("rt");
@@ -163,24 +190,12 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 #endif
 			nInside = *s;
 
-			// Link new node into the list
-			CheatInfo* pPreviousCheat = pCurrentCheat;
-			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
-				pCheatInfo = pCurrentCheat;
+			if (bFirst) {
+				CheatLinkNewNode(_T("-- .ini cheat file --"));
+				bFirst = false;
 			}
 
-			memset(pCurrentCheat, 0, sizeof(CheatInfo));
-			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
-				pPreviousCheat->pNext = pCurrentCheat;
-			}
-
-			// Fill in defaults
-			pCurrentCheat->nType = 0;								// Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-
-			memcpy(pCurrentCheat->szCheatName, szQuote, QUOTE_MAX);
+			CheatLinkNewNode(szQuote);
 
 			continue;
 		}
@@ -366,8 +381,7 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 	INT32 i, j, n = 0;
 	TCHAR tmp[32];
 	TCHAR szLine[1024];
-
-	CheatInfo* pCurrentCheat = NULL;
+	bool bFirst = true;
 
 	while (1)
 	{
@@ -382,25 +396,13 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		{
 			n = 0;
 
-			// Link new node into the list
-			CheatInfo* pPreviousCheat = pCurrentCheat;
-			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
-				pCheatInfo = pCurrentCheat;
+			if (bFirst) {
+				CheatLinkNewNode(_T("-- Nebula .dat cheat file --"));
+				bFirst = false;
 			}
 
-			memset(pCurrentCheat, 0, sizeof(CheatInfo));
-			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
-				pPreviousCheat->pNext = pCurrentCheat;
-			}
+			CheatLinkNewNode(szLine + 5);
 
-			// Fill in defaults
-			pCurrentCheat->nType = 0;							// Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-			pCurrentCheat->nDefault = 0;							// Set default option
-
-			_tcsncpy (pCurrentCheat->szCheatName, szLine + 5, QUOTE_MAX);
 			pCurrentCheat->szCheatName[nLen-6] = '\0';
 
 			continue;
@@ -539,8 +541,8 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 	UINT32 nAddress = 0;
 	UINT32 nValue = 0;
 	UINT32 nAttrib = 0;
+	bool bFirst = true;
 
-	CheatInfo* pCurrentCheat = NULL;
 	_stprintf(gName, _T(":%s:"), name);
 
 	while (1)
@@ -643,27 +645,12 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 			menu = 0;
 			nCurrentAddress = 0;
 
-			// Link new node into the list
-			CheatInfo* pPreviousCheat = pCurrentCheat;
-			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
-				pCheatInfo = pCurrentCheat;
+			if (bFirst) {
+				CheatLinkNewNode(_T("-- .dat cheat file --"));
+				bFirst = false;
 			}
 
-			memset(pCurrentCheat, 0, sizeof(CheatInfo));
-			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
-				pPreviousCheat->pNext = pCurrentCheat;
-			}
-
-			// Fill in defaults
-			pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-			pCurrentCheat->nDefault = 0;							// Set default option
-			pCurrentCheat->bOneShot = 0;							// Set default option (off)
-			pCurrentCheat->bWatchMode = 0;							// Set default option (off)
-
-			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
+			CheatLinkNewNode(tmp);
 
 #if defined(BUILD_WIN32)
 			if (lstrlen(tmp) <= 0 || flags == 0x60000000) {
@@ -899,7 +886,7 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 	INT32 n = 0;
 	INT32 nCurrentAddress = 0;
 
-	CheatInfo* pCurrentCheat = NULL;
+	bool bFirst = true;
 
 	TCHAR* pszReadMode = AdaptiveEncodingReads(pszFilename);
 	if (NULL == pszReadMode) pszReadMode = _T("rt");
@@ -954,7 +941,7 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 			strcpy(temp2, szGGenie);
 
-			// split up "0077-01-FF" "address-bytecount-bytes_to_program"
+			// split up "0077-01-FF" format: "address-[attribute][bytecount]-bytes_to_program"
 			char *tok = strtok_r(temp2, "-", &tok_main);
 			if (!tok) continue;
 			sscanf(tok, "%x", &fAddr);
@@ -970,33 +957,18 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			if (!tok) continue;
 			sscanf(tok, "%x", &fBytes);
 
-			bprintf(0, _T(".vct: addr[%x] count[%x] bytes[%x]\n"), fAddr, fCount, fBytes);
+			//bprintf(0, _T(".vct: addr[%x] count[%x] bytes[%x]\n"), fAddr, fCount, fBytes);
+
+			if (bFirst) {
+				CheatLinkNewNode(_T("-- .vct cheat file --"));
+				bFirst = false;
+			}
 
 			// -- add to cheat engine --
 			n = 0;
 			nCurrentAddress = 0;
 
-			// Link new node into the list
-			CheatInfo* pPreviousCheat = pCurrentCheat;
-			pCurrentCheat = (CheatInfo*)malloc(sizeof(CheatInfo));
-			if (pCheatInfo == NULL) {
-				pCheatInfo = pCurrentCheat;
-			}
-
-			memset(pCurrentCheat, 0, sizeof(CheatInfo));
-			pCurrentCheat->pPrevious = pPreviousCheat;
-			if (pPreviousCheat) {
-				pPreviousCheat->pNext = pCurrentCheat;
-			}
-
-			// Fill in defaults
-			pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
-			pCurrentCheat->nStatus = -1;							// Disable cheat
-			pCurrentCheat->nDefault = 0;							// Set default option
-			pCurrentCheat->bOneShot = 0;							// Set default option (off)
-			pCurrentCheat->bWatchMode = 0;							// Set default option (off)
-
-			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
+			CheatLinkNewNode(tmp);
 
 			OptionName(_T("Disabled"));
 			n++;
@@ -1029,20 +1001,24 @@ INT32 ConfigCheatLoad()
 {
 	TCHAR szFilename[MAX_PATH] = _T("");
 
+	pCurrentCheat = NULL;
+	pPreviousCheat = NULL;
+
 	if (HW_NES) { // only for NES/FC!
 		_stprintf(szFilename, _T("%s%s.vct"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
 		ConfigParseVCT(szFilename);
 	} // keep loading & adding stuff even if .vct file loads.
 
-	if (ConfigParseMAMEFile()) {
-		_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-		if (ConfigParseFile(szFilename)) {
-			_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-			if (ConfigParseNebulaFile(szFilename)) {
-				return 1;
-			}
-		}
-	}
+	// cheat.dat, cheatnes.dat, cheatsnes.dat
+	ConfigParseMAMEFile();
+
+	// ini-style file
+	_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+	ConfigParseFile(szFilename);
+
+	// nebula-format .dat file
+	_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+	ConfigParseNebulaFile(szFilename);
 
 	if (pCheatInfo) {
 		INT32 nCurrentCheat = 0;

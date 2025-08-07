@@ -712,7 +712,7 @@ struct cheat_struct {
 
 static cheat_struct cheats[cheat_MAX];
 
-static void snes_add_cheat(char *code)
+static void snes_add_cheat(char *code, int fbn_cheat_id /*currently unused in snes*/)
 {
 	UINT32 address;
 	UINT8 value;

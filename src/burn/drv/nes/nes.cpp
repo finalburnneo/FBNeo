@@ -11173,6 +11173,8 @@ static INT32 gg_decode(char *gg_code, UINT16 &address, UINT8 &value, INT32 &comp
 
 	if (type != 6 && type != 8) {
 		if (type == 7) {
+			// extra character added to GameGenie code for .vct format, to
+			// support the following actions:
 			switch (gg_code[6]) {
 				case '0': attrib = TYPE_ALWAYS; break;
 				case '1': attrib = TYPE_ONESHOT; break;
@@ -11223,11 +11225,12 @@ struct cheat_struct {
 	UINT8 value;
 	INT32 compare; // -1, compare disabled.
 	INT32 type;
+	INT32 fbn_cheat_id;
 };
 
 static cheat_struct cheats[cheat_MAX];
 
-static void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
+static void nes_add_cheat(char *code, int fbn_cheat_id) // 6/8 character game genie codes allowed
 { // lowercase GGenie code: access 0-7fff, uppercase: access 8000-ffff
 	UINT16 address;
 	UINT8 value;
@@ -11240,7 +11243,8 @@ static void nes_add_cheat(char *code) // 6/8 character game genie codes allowed
 		cheats[cheats_active].value = value;
 		cheats[cheats_active].compare = compare;
 		cheats[cheats_active].type = type;
-		bprintf(0, _T("cheat #%d (%S) added.  (%x, %x, %d)\n"), cheats_active, cheats[cheats_active].code, address, value, compare);
+		cheats[cheats_active].fbn_cheat_id = fbn_cheat_id;
+		bprintf(0, _T("cheat #%d (%S) added. (fbn subsys index: %d)  (%x, %x, %d)\n"), cheats_active, cheats[cheats_active].code, fbn_cheat_id, address, value, compare);
 		cheats_active++;
 	} else {
 		if (cheats_active < (cheat_MAX-1)) {
@@ -11269,7 +11273,6 @@ static void nes_remove_cheat(char *code)
 	cheats_active = temp_num;
 }
 
-//enum { TYPE_GOOD = 0x100, TYPE_ALWAYS = 0x100, TYPE_ONESHOT = 0x101, TYPE_CMP_GT = 0x102, TYPE_CMP_LT = 0x103, TYPE_DISABLED = 0x104 };
 static UINT8 cpu_bus_read(UINT16 address); // forward....
 static void cpu_bus_write(UINT16 address, UINT8 data); // forward....
 static void cheat_check_frame()
@@ -11278,10 +11281,23 @@ static void cheat_check_frame()
 		if (cheats[i].type & TYPE_GOOD) {
 
 			switch (cheats[i].type) {
-				case TYPE_ALWAYS: cpu_bus_write(cheats[i].address, cheats[i].value); break;
-				case TYPE_ONESHOT: cpu_bus_write(cheats[i].address, cheats[i].value); cheats[i].type = TYPE_DISABLED; break;
-				case TYPE_CMP_GT: if (cpu_bus_read(cheats[i].address) > cheats[i].value) cpu_bus_write(cheats[i].address, cheats[i].value); break;
-				case TYPE_CMP_LT: if (cpu_bus_read(cheats[i].address) < cheats[i].value) cpu_bus_write(cheats[i].address, cheats[i].value); break;
+				case TYPE_ALWAYS:
+					cpu_bus_write(cheats[i].address, cheats[i].value);
+					break;
+				case TYPE_ONESHOT:
+					cpu_bus_write(cheats[i].address, cheats[i].value);
+					cheats[i].type = TYPE_DISABLED;
+					bprintf(0, _T("nes cheat %S: oneshot hits, ending..\n"), cheats[i].code);
+					CheatEnable(cheats[i].fbn_cheat_id, -1);
+					break;
+				case TYPE_CMP_GT:
+					if (cpu_bus_read(cheats[i].address) > cheats[i].value)
+						cpu_bus_write(cheats[i].address, cheats[i].value);
+					break;
+				case TYPE_CMP_LT:
+					if (cpu_bus_read(cheats[i].address) < cheats[i].value)
+						cpu_bus_write(cheats[i].address, cheats[i].value);
+					break;
 				case TYPE_DISABLED: break;
 			}
 		}

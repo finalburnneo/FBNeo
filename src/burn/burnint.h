@@ -183,7 +183,8 @@ void CpuCheatRegister(INT32 type, cpu_core_config *config);
 cheat_core *GetCpuCheatRegister(INT32 nCPU);
 cpu_core_config *GetCpuCoreConfig(INT32 nCPU);
 
-void nes_init_cheat_functions(void (*func1)(char*), void (*func2)(char*)); // callback for d_nes
+// Setup callbacks for systems which internalize the cheat system, ie: nes & snes GameGenie codes
+void nes_init_cheat_functions(void (*add_func)(char*, int), void (*remove_func)(char*));
 
 // burn_memory.cpp
 void BurnInitMemoryManager();

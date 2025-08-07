@@ -8,13 +8,13 @@
 // any system that uses Game Genie/Pro Action Replay codes can be defined as HW_NES...
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
 
-void (*nes_add_cheat)(char *) = NULL;
+void (*nes_add_cheat)(char *, int) = NULL;
 void (*nes_remove_cheat)(char *) = NULL;
 
-void nes_init_cheat_functions(void (*func1)(char*), void (*func2)(char*))
+void nes_init_cheat_functions(void (*add_func)(char*, int), void (*remove_func)(char*))
 {
-	nes_add_cheat = func1;
-	nes_remove_cheat = func2;
+	nes_add_cheat = add_func;
+	nes_remove_cheat = remove_func;
 }
 
 bool bCheatsAllowed;
@@ -223,7 +223,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 
 					if (HW_NES) {
 						bprintf(0, _T("NES-Cheat #%d, option #%d: "), nCheat, nOption);
-						if (nes_add_cheat) nes_add_cheat(pAddressInfo->szGenieCode);
+						if (nes_add_cheat) nes_add_cheat(pAddressInfo->szGenieCode, nCheat);
 					} else {
 						// Prefill data
 						if (pCurrentCheat->nPrefillMode) {

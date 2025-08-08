@@ -21,7 +21,7 @@ static int InpCheatListBegin()
 	// Make column headers
 	memset(&LvCol, 0, sizeof(LvCol));
 	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
-	LvCol.cx = 0xA4;
+	LvCol.cx = 0xd4;
 	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_CHEAT_NAME, true);
 	SendMessage(hInpCheatList, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 	LvCol.cx = 0xA4;
@@ -31,7 +31,7 @@ static int InpCheatListBegin()
 	return 0;
 }
 
-// Make a list view of the DIPswitches
+// Make a list view of the Cheats
 static int InpCheatListMake()
 {
 	if (hInpCheatList == NULL) {
@@ -52,10 +52,15 @@ static int InpCheatListMake()
 		LvItem.iSubItem = 0;
 		LvItem.pszText = pCurrentCheat->szCheatName;
 		SendMessage(hInpCheatList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
-		LvItem.mask = LVIF_TEXT;
-		LvItem.iSubItem = 1;
-		LvItem.pszText = pCurrentCheat->pOption[pCurrentCheat->nCurrent]->szOptionName;
-		SendMessage(hInpCheatList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+
+		if (pCurrentCheat->pOption[pCurrentCheat->nCurrent] != NULL) {
+			LvItem.mask = LVIF_TEXT;
+			LvItem.iSubItem = 1;
+			LvItem.pszText = pCurrentCheat->pOption[pCurrentCheat->nCurrent]->szOptionName;
+			SendMessage(hInpCheatList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+		} else {
+			//bprintf(0, _T("cht %d null pOption[%d]!\n"), i,pCurrentCheat->nCurrent);
+		}
 
 		pCurrentCheat = pCurrentCheat->pNext;
 		i++;
@@ -223,6 +228,46 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_NOTIFY && lParam) {
 		int Id = LOWORD(wParam);
 		NMHDR *pnm = (NMHDR*)lParam;
+
+		if (Id == IDC_INPCHEAT_LIST && ((LPNMHDR)lParam)->code == NM_CUSTOMDRAW) {
+			LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
+
+			switch (lplvcd->nmcd.dwDrawStage) {
+				case CDDS_PREPAINT: {
+					SetWindowLongPtr(hInpCheatDlg, DWLP_MSGRESULT, CDRF_NOTIFYITEMDRAW);
+					return 1;
+				}
+
+				case CDDS_ITEMPREPAINT:	{
+					int nSel = lplvcd->nmcd.dwItemSpec;
+
+					CheatInfo* pCurrentCheat = pCheatInfo;
+					int nCheatNum = 0;
+					while (pCurrentCheat && nCheatNum < nSel) {
+						pCurrentCheat = pCurrentCheat->pNext;
+						nCheatNum++;
+					}
+
+					//bprintf(0, _T("nSel is %d, nCheatNum %d\n"), nSel, nCheatNum);
+
+					if (pCurrentCheat->szCheatName[0] && pCurrentCheat->pOption[0] == NULL) {
+						// it's a heading!
+
+						if (ListView_GetItemState(hInpCheatList, nSel, LVIS_SELECTED) & LVIS_SELECTED) {
+							// if we're selected...
+							// dink note: can't really do much here.. ideas?
+							//lplvcd->clrTextBk = RGB(0xff, 0x00, 0x00);
+						} else {
+							lplvcd->clrTextBk = RGB(0x00, 0xff, 0x00);
+						}
+
+
+						SetWindowLongPtr(hInpCheatDlg, DWLP_MSGRESULT, CDRF_NEWFONT);
+					}
+					return 1;
+				}
+			}
+		}
 
 		if (Id == IDC_INPCHEAT_LIST && pnm->code == LVN_ITEMCHANGED) {
 			if (((NM_LISTVIEW*)lParam)->uNewState & LVIS_SELECTED) {

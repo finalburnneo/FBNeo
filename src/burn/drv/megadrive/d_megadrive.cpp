@@ -40821,7 +40821,7 @@ struct BurnDriver BurnDrvmd_rickdang2 = {
 
 // Rick Dangerous DX (HB)
 static struct BurnRomInfo md_rickdangerousdxRomDesc[] = {
-	{ "Rick Dangerous DX (2025)(Z-Team).bin", 1572864, 0xf28df099, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Rick Dangerous DX (2025)(Z-Team).bin", 1572864, 0x12e804a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rickdangerousdx)

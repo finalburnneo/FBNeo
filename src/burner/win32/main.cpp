@@ -50,6 +50,8 @@ bool bAutoLoadGameList = false;
 bool bQuietLoading = false;
 bool bNoPopups = false;
 
+bool bDontInitMedia = false; // doesn't init media (screen, input, etc.)
+
 bool bShonkyProfileMode = false;
 
 bool bNoChangeNumLock = 1;
@@ -953,6 +955,7 @@ void make_sha1_database(bool snes)
 	UINT32 nGameSelect = 0;
 
 	bNoPopups = true;
+	bDontInitMedia = true;
 
 	for (nGameSelect = 0; nGameSelect < nBurnDrvCount; nGameSelect++) {
 

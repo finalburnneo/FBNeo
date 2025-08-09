@@ -117,6 +117,7 @@ extern bool bAutoLoadGameList;
 extern bool bQuietLoading;
 extern bool bNoPopups;
 extern bool bShonkyProfileMode;
+extern bool bDontInitMedia;
 
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;

@@ -214,7 +214,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 	{ // Init input, save audio and blitter init for later. (reduce # of mode changes, nice for emu front-ends)
 		bVidOkay = 1; // don't init video yet
 		bAudOkay = 1; // don't init audio yet, but grab soundcard params (nBurnSoundRate) so soundcores can init.
-		MediaInit();
+		if (bDontInitMedia == false) MediaInit();
 		bVidOkay = 0;
 		bAudOkay = 0;
 	}

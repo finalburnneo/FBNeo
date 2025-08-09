@@ -26709,9 +26709,9 @@ struct BurnDriver BurnDrvnes_banana = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Banana Prince (Euro, Germany)
+// Banana Prince (Germany)
 static struct BurnRomInfo nes_bananaprincegRomDesc[] = {
-	{ "Banana Prince (Euro, Germany)(1992)(Takara).nes",          262160, 0xa0f6edee, BRF_ESS | BRF_PRG },
+	{ "Banana Prince (Germany)(1992)(Takara).nes",          262160, 0xa0f6edee, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bananaprinceg)
@@ -26719,7 +26719,7 @@ STD_ROM_FN(nes_bananaprinceg)
 
 struct BurnDriver BurnDrvnes_bananaprinceg = {
 	"nes_bananaprinceg", "nes_bananaprince", NULL, NULL, "1992",
-	"Banana Prince (Euro, Germany)\0", NULL, "Takara", "NES / Famicom",
+	"Banana Prince (Germany)\0", NULL, "Takara", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bananaprincegRomInfo, nes_bananaprincegRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

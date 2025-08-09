@@ -34,6 +34,13 @@ static int InpCheatListBegin()
 // Make a list view of the Cheats
 static int InpCheatListMake()
 {
+	{
+		// save place in the list (scroll)
+		int topIndex = ListView_GetTopIndex(hInpCheatList);
+		int nPageCount = ListView_GetCountPerPage(hInpCheatList);
+		int bottomIndex = (topIndex + nPageCount) - 1;
+	}
+
 	if (hInpCheatList == NULL) {
 		return 1;
 	}
@@ -64,6 +71,12 @@ static int InpCheatListMake()
 
 		pCurrentCheat = pCurrentCheat->pNext;
 		i++;
+	}
+
+	{
+		// return list positsion
+		ListView_EnsureVisible(hInpCheatList, topIndex, FALSE);
+		ListView_EnsureVisible(hInpCheatList, bottomIndex, FALSE);
 	}
 
 	return 0;

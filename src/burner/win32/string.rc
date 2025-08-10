@@ -227,6 +227,7 @@ BEGIN
 	IDS_GENRE_MAHJONG			"Mahjong"
 	IDS_GENRE_RACING			"Racing"
 	IDS_GENRE_SHOOT				"Shooter"
+	IDS_GENRE_MULTISHOOT		"Shooter / Multi-scroll / Sh'mup"
 	IDS_GENRE_RUNGUN            "Run 'n Gun (Shooter)"
     IDS_GENRE_STRATEGY          "Strategy"
     IDS_GENRE_ACTION            "Action (Classic)"

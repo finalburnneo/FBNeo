@@ -314,6 +314,11 @@ TCHAR* DecorateGenreInfo()
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
+		if (nGenre & GBF_MULTISHOOT) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_MULTISHOOT, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
 		if (nGenre & GBF_ACTION) {
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_ACTION, true));
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));

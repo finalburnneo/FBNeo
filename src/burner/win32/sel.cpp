@@ -168,6 +168,7 @@ HTREEITEM hFilterMisc				= NULL;
 HTREEITEM hFilterMahjong			= NULL;
 HTREEITEM hFilterRacing				= NULL;
 HTREEITEM hFilterShoot				= NULL;
+HTREEITEM hFilterMultiShoot			= NULL;
 HTREEITEM hFilterRungun 			= NULL;
 HTREEITEM hFilterAction				= NULL;
 HTREEITEM hFilterStrategy   		= NULL;
@@ -302,7 +303,7 @@ static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 
 #define MASKBOARDTYPEGENUINE	(1)
 #define MASKFAMILYOTHER			0x10000000
 
-#define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY | GBF_RPG | GBF_SIM | GBF_ADV | GBF_CARD | GBF_BOARD)
+#define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_MULTISHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY | GBF_RPG | GBF_SIM | GBF_ADV | GBF_CARD | GBF_BOARD)
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC | FBF_DONPACHI | FBF_MAHOU)
 #define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
@@ -610,6 +611,7 @@ static int DoExtraFilters()
 	if ((~nLoadMenuGenreFilter & GBF_MAHJONG)				&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			bGenreOk = 1;
 	if ((~nLoadMenuGenreFilter & GBF_RACING)				&& (BurnDrvGetGenreFlags() & GBF_RACING))			bGenreOk = 1;
 	if ((~nLoadMenuGenreFilter & GBF_SHOOT)					&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_MULTISHOOT)			&& (BurnDrvGetGenreFlags() & GBF_MULTISHOOT))		bGenreOk = 1;
 	if ((~nLoadMenuGenreFilter & GBF_ACTION)				&& (BurnDrvGetGenreFlags() & GBF_ACTION))			bGenreOk = 1;
 	if ((~nLoadMenuGenreFilter & GBF_RUNGUN)				&& (BurnDrvGetGenreFlags() & GBF_RUNGUN))			bGenreOk = 1;
 	if ((~nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			bGenreOk = 1;
@@ -1455,6 +1457,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_RACING		, hFilterRacing			, nLoadMenuGenreFilter & GBF_RACING					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_RUNGUN		, hFilterRungun			, nLoadMenuGenreFilter & GBF_RUNGUN 				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SHOOT		, hFilterShoot			, nLoadMenuGenreFilter & GBF_SHOOT					);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_MULTISHOOT	, hFilterMultiShoot		, nLoadMenuGenreFilter & GBF_MULTISHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_HORSHOOT	, hFilterHorshoot		, nLoadMenuGenreFilter & GBF_HORSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_VERSHOOT	, hFilterVershoot		, nLoadMenuGenreFilter & GBF_VERSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SPORTSMISC	, hFilterSportsmisc		, nLoadMenuGenreFilter & GBF_SPORTSMISC				);
@@ -2240,6 +2243,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMahjong, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterRacing, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterShoot, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterMultiShoot, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterAction, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterRungun, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterStrategy, FALSE);
@@ -2273,6 +2277,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMahjong, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterRacing, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterShoot, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterMultiShoot, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterAction, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterRungun, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterStrategy, TRUE);
@@ -2374,6 +2379,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterMahjong)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MAHJONG);
 		if (hItemChanged == hFilterRacing)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_RACING);
 		if (hItemChanged == hFilterShoot)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_SHOOT);
+		if (hItemChanged == hFilterMultiShoot)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_MULTISHOOT);
 		if (hItemChanged == hFilterAction)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_ACTION);
 		if (hItemChanged == hFilterRungun)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_RUNGUN);
 		if (hItemChanged == hFilterStrategy)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_STRATEGY);

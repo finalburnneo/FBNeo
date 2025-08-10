@@ -2616,7 +2616,7 @@ struct BurnDriver BurnDrvGalhustl = {
 	"Gals Hustler (set 1)\0", NULL, "ACE International", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, galhustlRomInfo, galhustlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalhustlDIPInfo,
+	NULL, galhustlRomInfo, galhustlRomName, NULL, NULL, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
 	GalhustlInit, DrvExit, DrvFrame, ZipzapDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -2642,7 +2642,7 @@ struct BurnDriver BurnDrvGalhustla = {
 	"Gals Hustler (set 2)\0", NULL, "ACE International", "EXPRO-02",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, galhustlaRomInfo, galhustlaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GalhustlDIPInfo,
+	NULL, galhustlaRomInfo, galhustlaRomName, NULL, NULL, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
 	GalhustlInit, DrvExit, DrvFrame, ZipzapDraw, DrvScan, &BurnRecalc, 0x800,
 	256, 224, 4, 3
 };

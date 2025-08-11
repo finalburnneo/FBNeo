@@ -209,7 +209,11 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 
 			if (bFirst) {
 				TCHAR szHeading[256];
+#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
+#else
+				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
+#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
@@ -419,7 +423,11 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 			if (bFirst) {
 				TCHAR szHeading[256];
+#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" (Nebula) ]"), pszFileHeading);
+#else
+				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
+#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
@@ -670,7 +678,11 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *pszFileHeading,
 
 			if (bFirst) {
 				TCHAR szHeading[256];
+#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
+#else
+				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
+#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
@@ -995,7 +1007,11 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 			if (bFirst) {
 				TCHAR szHeading[256];
+#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
+#else
+				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
+#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}

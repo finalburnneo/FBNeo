@@ -44475,9 +44475,9 @@ struct BurnDriver BurnDrvmd_umk3h = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Ultimate Mortal Kombat 3 OSC (Hack, v31) - 2025-06-22
+// Ultimate Mortal Kombat 3 OSC (Hack, v31a) - 2025-08-10
 static struct BurnRomInfo md_umk3oscRomDesc[] = {
-	{ "Ultimate Mortal Kombat 3 OSC v31 (2025)(Bonus).bin", 5459844, 0x63a27314, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ultimate Mortal Kombat 3 OSC v31a (2025)(Bonus).bin", 5459844, 0x4d83ac52, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_umk3osc)
@@ -44485,7 +44485,7 @@ STD_ROM_FN(md_umk3osc)
 
 struct BurnDriver BurnDrvmd_umk3osc = {
 	"md_umk3osc", "md_umk3", NULL, NULL, "2025",
-	"Ultimate Mortal Kombat 3 OSC (Hack, v31)\0", NULL, "Bonus", "Genesis / Mega Drive",
+	"Ultimate Mortal Kombat 3 OSC (Hack, v31a)\0", NULL, "Bonus", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_umk3oscRomInfo, md_umk3oscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

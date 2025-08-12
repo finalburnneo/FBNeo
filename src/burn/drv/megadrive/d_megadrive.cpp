@@ -38788,7 +38788,7 @@ struct BurnDriver BurnDrvmd_custodian = {
 
 // Daemon Claw - Origins of Nnar (HB)
 static struct BurnRomInfo md_daemonclawRomDesc[] = {
-	{ "Daemon Claw - Origins of Nnar (2025)(Neofid Studion, BitBeam Cannon).bin", 9699328, 0x65311f25, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Daemon Claw - Origins of Nnar (2025)(Neofid Studios, BitBeam Cannon).bin", 9699328, 0x65311f25, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_daemonclaw)
@@ -38796,7 +38796,7 @@ STD_ROM_FN(md_daemonclaw)
 
 struct BurnDriver BurnDrvmd_daemonclaw = {
 	"md_daemonclaw", NULL, NULL, NULL, "2025",
-	"Daemon Claw - Origins of Nnar (HB)\0", NULL, "Neofid Studion, BitBeam Cannon", "Genesis / Mega Drive",
+	"Daemon Claw - Origins of Nnar (HB)\0", NULL, "Neofid Studios, BitBeam Cannon", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_daemonclawRomInfo, md_daemonclawRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

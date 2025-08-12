@@ -7963,6 +7963,25 @@ struct BurnDriver BurnDrvnes_doubldraiic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Double Dragon II: A Revanche (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/nes/double-dragon-ii-the-revenge-po.b.r.e
+static struct BurnRomInfo nes_doubldraiiptRomDesc[] = {
+	{ "Double Dragon II - A Revanche T-Por v1.2 (2020)(PO.B.R.E.).nes",          262160, 0xa0380893, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doubldraiipt)
+STD_ROM_FN(nes_doubldraiipt)
+
+struct BurnDriver BurnDrvnes_doubldraiipt = {
+	"nes_doubldraiipt", "nes_doubldraii", NULL, NULL, "2020",
+	"Double Dragon II: A Revanche (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_doubldraiiptRomInfo, nes_doubldraiiptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Double Dragon III: The Sacred Stones (Hack, Spanish)
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_doubldraiiicRomDesc[] = {
@@ -7978,6 +7997,44 @@ struct BurnDriver BurnDrvnes_doubldraiiic = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_doubldraiiicRomInfo, nes_doubldraiiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Double Dragon III: As Pedras de Rosetta (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/double-dragon-iii-the-rosetta-stone-po.b.r.e
+static struct BurnRomInfo nes_doubldraiiiptRomDesc[] = {
+	{ "Double Dragon III - As Pedras de Rosetta T-Por (2017)(PO.B.R.E.).nes",          262160, 0xba399f1e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doubldraiiipt)
+STD_ROM_FN(nes_doubldraiiipt)
+
+struct BurnDriver BurnDrvnes_doubldraiiipt = {
+	"nes_doubldraiiipt", "nes_doubldraiii", NULL, NULL, "2017",
+	"Double Dragon III: As Pedras de Rosetta (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_doubldraiiiptRomInfo, nes_doubldraiiiptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Double Dragon (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/nes/double-dragon-po.b.r.e
+static struct BurnRomInfo nes_doubledragonptRomDesc[] = {
+	{ "Double Dragon T-Por v1.2 (2008)(PO.B.R.E.).nes",          262160, 0xf3cbef86, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doubledragonpt)
+STD_ROM_FN(nes_doubledragonpt)
+
+struct BurnDriver BurnDrvnes_doubledragonpt = {
+	"nes_doubledragonpt", "nes_doubledragon", NULL, NULL, "2008",
+	"Double Dragon (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_doubledragonptRomInfo, nes_doubledragonptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -8073,6 +8130,25 @@ struct BurnDriver BurnDrvnes_dragobusiis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, nes_dragobusiisRomInfo, nes_dragobusiisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dragon Ninja (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/nes/dragon-ninja-po.b.r.e
+static struct BurnRomInfo nes_dragninjaptRomDesc[] = {
+	{ "Dragon Ninja T-Por v1.1 (2019)(PO.B.R.E.).nes",          262160, 0x381718c7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dragninjapt)
+STD_ROM_FN(nes_dragninjapt)
+
+struct BurnDriver BurnDrvnes_dragninjapt = {
+	"nes_dragninjapt", "nes_baddudes", NULL, NULL, "2019",
+	"Dragon Ninja (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_dragninjaptRomInfo, nes_dragninjaptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -8305,6 +8381,25 @@ struct BurnDriver BurnDrvnes_faxanaduc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Faxanadu (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/nes/faxanadu-emu-brasil-po.b.r.e.-e-br-games/
+static struct BurnRomInfo nes_faxanaduptRomDesc[] = {
+	{ "Faxanadu T-Por v1.1 (2017)(Emu Brasil, PO.B.R.E., BR Games).nes",          262160, 0x87235621, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_faxanadupt)
+STD_ROM_FN(nes_faxanadupt)
+
+struct BurnDriver BurnDrvnes_faxanadupt = {
+	"nes_faxanadupt", "nes_faxanadu", NULL, NULL, "2017",
+	"Faxanadu (Hack, Portuguese v1.1)\0", NULL, "Emu Brasil, PO.B.R.E., BR Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_faxanaduptRomInfo, nes_faxanaduptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Final Fantasy (Hack, Spanish)
 // https://www.romhacking.net/translations/3419/
 static struct BurnRomInfo nes_finalfantasycRomDesc[] = {
@@ -8529,6 +8624,25 @@ struct BurnDriver BurnDrvnes_gooniesiithec = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_gooniesiithecRomInfo, nes_gooniesiithecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Guerreiro de Argos, O (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/argos-no-senshi-hachamecha-daishingeki-po.b.r.e
+static struct BurnRomInfo nes_grrdeargosptRomDesc[] = {
+	{ "Guerreiro de Argos, O T-Por (2017)(PO.B.R.E.).nes",          131088, 0x7e314a61, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_grrdeargospt)
+STD_ROM_FN(nes_grrdeargospt)
+
+struct BurnDriver BurnDrvnes_grrdeargospt = {
+	"nes_grrdeargospt", "nes_rygar", NULL, NULL, "2017",
+	"Guerreiro de Argos, O (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_grrdeargosptRomInfo, nes_grrdeargosptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -9768,6 +9882,25 @@ struct BurnDriver BurnDrvnes_smb3cast = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Resgate Solbrain (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/nes/tokkyuu-shirei-solbrain-po.b.r.e
+static struct BurnRomInfo nes_sprgsolbrainptRomDesc[] = {
+	{ "Super Resgate Solbrain T-Por v1.1 (2009)(PO.B.R.E.).nes",          262160, 0xfca739ea, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sprgsolbrainpt)
+STD_ROM_FN(nes_sprgsolbrainpt)
+
+struct BurnDriver BurnDrvnes_sprgsolbrainpt = {
+	"nes_sprgsolbrainpt", "nes_shatterhand", NULL, NULL, "2009",
+	"Super Resgate Solbrain (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_sprgsolbrainptRomInfo, nes_sprgsolbrainptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Sword Master (Hack, Spanish)
 // https://www.romhacking.net/translations/4582/
 static struct BurnRomInfo nes_swordmastercRomDesc[] = {
@@ -9916,6 +10049,25 @@ struct BurnDriver BurnDrvnes_termi2c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_RUNGUN, 0,
 	NESGetZipName, nes_termi2cRomInfo, nes_termi2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Exterminador do Futuro 2: O Julgamento Final (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/nes/terminator-2-judgment-day-po.b.r.e
+static struct BurnRomInfo nes_termi2ptRomDesc[] = {
+	{ "Exterminador do Futuro 2 - O Julgamento Final T-Por v1.1 (2018)(PO.B.R.E.).nes",          262160, 0xb1d2f26e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_termi2pt)
+STD_ROM_FN(nes_termi2pt)
+
+struct BurnDriver BurnDrvnes_termi2pt = {
+	"nes_termi2pt", "nes_termi2", NULL, NULL, "2018",
+	"Exterminador do Futuro 2: O Julgamento Final (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_termi2ptRomInfo, nes_termi2ptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -4350,6 +4350,38 @@ struct BurnDriver BurnDrvpacmanp = {
 };
 
 
+// Pacu Pacu (GlobalHack)
+
+static struct BurnRomInfo pacupacuRomDesc[] = {
+	{ "pacman.6e",    0x1000, 0x9d0bd8fc, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x61a5f90f, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacman.6h",    0x1000, 0x7297a588, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacman.6j",    0x1000, 0x034c1c70, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "pacman.5e",    0x1000, 0x650ced28, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0xab0c1c47, 2 | BRF_GRA },			//  5
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacupacu)
+STD_ROM_FN(pacupacu)
+
+struct BurnDriver BurnDrvpacupacu = {
+	"pacupacu", "puckman", NULL, NULL, "2025",
+	"Pacu Pacu (GlobalHack)\0", NULL, "Tardis Remakes", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED | BDF_HACK | BDF_HOMEBREW, 1, HARDWARE_PACMAN, GBF_ACTION, 0,
+	NULL, pacupacuRomInfo, pacupacuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Pac-Man Plus
 
 static struct BurnRomInfo pacplusRomDesc[] = {

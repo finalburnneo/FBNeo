@@ -35891,6 +35891,78 @@ struct BurnDriver BurnDrvmd_nba2k5 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Need for Speed Undercover (Russia) (Unl)
+static struct BurnRomInfo md_nfsuRomDesc[] = {
+	{ "Need for Speed Undercover (Russia)(Unl)(200x).bin", 0x100000, 0xbe1b8e93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nfsu)
+STD_ROM_FN(md_nfsu)
+
+struct BurnDriver BurnDrvmd_nfsu = {
+	"md_nfsu", "md_toutrun", NULL, NULL, "200?",
+	"Need for Speed Undercover (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_nfsuRomInfo, md_nfsuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// NHLPA 2003 (Russia) (Unl)
+static struct BurnRomInfo md_nhlpa2k3RomDesc[] = {
+	{ "NHLPA 2003 (Russia)(Unl)(200x).bin", 0x200000, 0x4591571b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nhlpa2k3)
+STD_ROM_FN(md_nhlpa2k3)
+
+struct BurnDriver BurnDrvmd_nhlpa2k3 = {
+	"md_nhlpa2k3", "md_nhl98", NULL, NULL, "200?",
+	"NHLPA 2003 (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_nhlpa2k3RomInfo, md_nhlpa2k3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Pirates of the Caribbean (Russia) (Unl)
+static struct BurnRomInfo md_pcaribRomDesc[] = {
+	{ "Pirates of the Caribbean (Russia)(Unl)(200x).bin", 0x200000, 0x48da0bf4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pcarib)
+STD_ROM_FN(md_pcarib)
+
+struct BurnDriver BurnDrvmd_pcarib = {
+	"md_pcarib", "md_unchartd", NULL, NULL, "200?",
+	"Pirates of the Caribbean (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_pcaribRomInfo, md_pcaribRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Piraty Karibskogo Morya: Na Strannyh Beregah ~ Pirates of the Caribbean: On Stranger Tides (Russia) (Unl)
+static struct BurnRomInfo md_pcarib2RomDesc[] = {
+	{ "Piraty Karibskogo Morya, Na Strannyh Beregah - Pirates of the Caribbean, On Stranger Tides (Russia)(Unl)(20xx).bin", 0x100000, 0x63c90c7c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pcarib2)
+STD_ROM_FN(md_pcarib2)
+
+struct BurnDriver BurnDrvmd_pcarib2 = {
+	"md_pcarib2", NULL, NULL, NULL, "20??",
+	"Pirates of the Caribbean: On Stranger Tides (Russia) (Unl)\0", "Piraty Karibskogo Morya: Na Strannyh Beregah", "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_pcarib2RomInfo, md_pcarib2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pocket Monsters (Taiwan) (Unl)
 static struct BurnRomInfo md_pokemonRomDesc[] = {
 	{ "pocket monsters (Taiwan)(Unl)(2000)(X Boy, Chuanpu).bin", 0x200000, 0xf68f6367, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -35945,6 +36017,24 @@ struct BurnDriver BurnDrvmd_pokecd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Pokemon Crazy Drummer (Alt) (Unl)
+static struct BurnRomInfo md_pokecdaRomDesc[] = {
+	{ "Pokemon Crazy Drummer (Alt)(Unl)(2003)(Tomsoft).bin", 0x200000, 0x84f49061, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pokecda)
+STD_ROM_FN(md_pokecda)
+
+struct BurnDriver BurnDrvmd_pokecda = {
+	"md_pokecda", "md_pokecd", NULL, NULL, "2003",
+	"Pokemon Crazy Drummer (Alt) (Unl)\0", NULL, "Tomsoft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_pokecdaRomInfo, md_pokecdaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pokemon Stadium (China) (Unl)
 static struct BurnRomInfo md_pokestadRomDesc[] = {
 	{ "Pokemon Stadium (China)(Unl)(200x)(SKOB).bin", 0x200000, 0xfe187c5d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -35995,6 +36085,24 @@ struct BurnDriver BurnDrvmd_radicav1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_RADICA, GBF_MISC, 0,
 	MegadriveGetZipName, md_radicav1RomInfo, md_radicav1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// RHL 2007 (Russia) (Unl)
+static struct BurnRomInfo md_rhl2k7RomDesc[] = {
+	{ "RHL 2007 (Russia)(Unl)(199x)(NewGame).bin", 0x0a0000, 0xbb7a978b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rhl2k7)
+STD_ROM_FN(md_rhl2k7)
+
+struct BurnDriver BurnDrvmd_rhl2k7 = {
+	"md_rhl2k7", "md_nhlpa93", NULL, NULL, "199?",
+	"RHL 2007 (Russia) (Unl)\0", NULL, "NewGame", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_rhl2k7RomInfo, md_rhl2k7RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -36931,114 +37039,6 @@ struct BurnDriver BurnDrvmd_zhuogu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_zhuoguRomInfo, md_zhuoguRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Need for Speed Undercover (Russia) (Unl)
-static struct BurnRomInfo md_nfsuRomDesc[] = {
-	{ "Need for Speed Undercover (Russia)(Unl)(200x).bin", 0x100000, 0xbe1b8e93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_nfsu)
-STD_ROM_FN(md_nfsu)
-
-struct BurnDriver BurnDrvmd_nfsu = {
-	"md_nfsu", "md_toutrun", NULL, NULL, "200?",
-	"Need for Speed Undercover (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_nfsuRomInfo, md_nfsuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// NHLPA 2003 (Russia) (Unl)
-static struct BurnRomInfo md_nhlpa2k3RomDesc[] = {
-	{ "nhlpa 2003 (unl).bin", 0x200000, 0x4591571b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_nhlpa2k3)
-STD_ROM_FN(md_nhlpa2k3)
-
-struct BurnDriver BurnDrvmd_nhlpa2k3 = {
-	"md_nhlpa2k3", "md_nhl98", NULL, NULL, "200?",
-	"NHLPA 2003 (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
-	MegadriveGetZipName, md_nhlpa2k3RomInfo, md_nhlpa2k3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Pirates of the Caribbean (Russia) (Unl)
-static struct BurnRomInfo md_pcaribRomDesc[] = {
-	{ "pirates of the caribbean (unl).bin", 0x200000, 0x48da0bf4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_pcarib)
-STD_ROM_FN(md_pcarib)
-
-struct BurnDriver BurnDrvmd_pcarib = {
-	"md_pcarib", "md_unchartd", NULL, NULL, "199?",
-	"Pirates of the Caribbean (Russia) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
-	MegadriveGetZipName, md_pcaribRomInfo, md_pcaribRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Russia) (Unl)
-static struct BurnRomInfo md_pcarib2RomDesc[] = {
-	{ "pirates of the caribbean - on stranger tides (unl).bin", 0x100000, 0x63c90c7c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_pcarib2)
-STD_ROM_FN(md_pcarib2)
-
-struct BurnDriver BurnDrvmd_pcarib2 = {
-	"md_pcarib2", NULL, NULL, NULL, "20??",
-	"Pirates of the Caribbean - On Stranger Tides (Russia) (Unl)\0", "Piraty Karibskogo Morya - Na Strannyh Beregah", "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
-	MegadriveGetZipName, md_pcarib2RomInfo, md_pcarib2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Pokemon Crazy Drummer (Alt) (Unl)
-static struct BurnRomInfo md_pokecdaRomDesc[] = {
-	{ "pokemon crazy drummer (unl) [a].bin", 0x200000, 0x84f49061, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_pokecda)
-STD_ROM_FN(md_pokecda)
-
-struct BurnDriver BurnDrvmd_pokecda = {
-	"md_pokecda", "md_pokecd", NULL, NULL, "2003",
-	"Pokemon Crazy Drummer (Alt) (Unl)\0", NULL, "Tomsoft", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
-	MegadriveGetZipName, md_pokecdaRomInfo, md_pokecdaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// RHL 2007 (Russia) (Unl)
-static struct BurnRomInfo md_rhl2k7RomDesc[] = {
-	{ "rhl 2000 (unl).bin", 0x0a0000, 0xbb7a978b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_rhl2k7)
-STD_ROM_FN(md_rhl2k7)
-
-struct BurnDriver BurnDrvmd_rhl2k7 = {
-	"md_rhl2k7", "md_nhlpa93", NULL, NULL, "199?",
-	"RHL 2007 (Russia) (Unl)\0", NULL, "NewGame", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
-	MegadriveGetZipName, md_rhl2k7RomInfo, md_rhl2k7RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -40819,25 +40819,25 @@ struct BurnDriver BurnDrvmd_rickdang2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rick Dangerous DX (HB)
-static struct BurnRomInfo md_rickdangerousdxRomDesc[] = {
-	{ "Rick Dangerous DX (2025)(Z-Team).bin", 1572864, 0x12e804a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Rick Dangerous DX (HB, v1.2)
+static struct BurnRomInfo md_rickdangdxRomDesc[] = {
+	{ "Rick Dangerous DX v1.2 (2025)(Z-Team).bin", 1572864, 0x98f62ee5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_rickdangerousdx)
-STD_ROM_FN(md_rickdangerousdx)
+STD_ROM_PICK(md_rickdangdx)
+STD_ROM_FN(md_rickdangdx)
 
-struct BurnDriver BurnDrvmd_rickdangerousdx = {
-	"md_rickdangerousdx", NULL, NULL, NULL, "2025",
-	"Rick Dangerous DX (HB)\0", NULL, "Z-Team", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_rickdangdx = {
+	"md_rickdangdx", NULL, NULL, NULL, "2025",
+	"Rick Dangerous DX (HB, v1.2)\0", NULL, "Z-Team", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_rickdangerousdxRomInfo, md_rickdangerousdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_rickdangdxRomInfo, md_rickdangdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rocket Panda - Into the Unknown (HB, v4)
+// Rocket Panda (HB)
 static struct BurnRomInfo md_rocketpandaRomDesc[] = {
 	{ "Rocket Panda (2024)(Mega Cat Studios).bin", 2097152, 0xecbd5ba8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -40855,7 +40855,7 @@ struct BurnDriver BurnDrvmd_rocketpanda = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rocket Panda - Into the Unknown (HB, v4)
+// Rocket Panda: Into the Unknown (HB, v4)
 static struct BurnRomInfo md_rpunknownRomDesc[] = {
 	{ "Rocket Panda Into the Unknown v4 (2022)(Space Pants Games).bin", 2097152, 0x70d33705, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42890,6 +42890,25 @@ struct BurnDriver BurnDrvmd_gouketsuec = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Great Circus Mystery Starring Mickey & Minnie, The - Widescreen (Hack, v1.1)
+// https://romhackplaza.org/romhacks/great-circus-mystery-widescreen-genesis/
+static struct BurnRomInfo md_greatcirwsRomDesc[] = {
+	{ "Great Circus Mystery Starring Mickey & Minnie, The - Widescreen v1.1 (2025)(bankbank).bin", 2097152, 0x0334113f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_greatcirws)
+STD_ROM_FN(md_greatcirws)
+
+struct BurnDriver BurnDrvmd_greatcirws = {
+	"md_greatcirws", "md_mickeycm", NULL, NULL, "2025",
+	"Great Circus Mystery Starring Mickey & Minnie, The - Widescreen (Hack, v1.1)\0", NULL, "bankbank", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_greatcirwsRomInfo, md_greatcirwsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Grind Stormer - Color Hack (Hack)
 // https://www.romhacking.net/hacks/8766/
 static struct BurnRomInfo md_grindstchRomDesc[] = {
@@ -43078,7 +43097,7 @@ struct BurnDriver BurnDrvmd_mkaee = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Revelations (Hack, v1.0)
+// Mortal Kombat Revelations (Hack)
 static struct BurnRomInfo md_mkrRomDesc[] = {
 	{ "Mortal Kombat Revelations (2012)(Smoke).bin", 0x987A70, 0x318B81F2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -43087,10 +43106,10 @@ STD_ROM_PICK(md_mkr)
 STD_ROM_FN(md_mkr)
 
 struct BurnDriver BurnDrvmd_mkr = {
-	"md_mkr", "md_umk3t", NULL, NULL, "2012",
-	"Mortal Kombat Revelations (Hack, v1.0)\0", NULL, "Smoke", "Genesis / Mega Drive",
+	"md_mkr", NULL, NULL, NULL, "2012",
+	"Mortal Kombat Revelations (Hack)\0", "Hack of Ultimate Mortal Kombat 3", "Smoke", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkrRomInfo, md_mkrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44404,7 +44423,7 @@ struct BurnDriver BurnDrvmd_ultgargoyle = {
 
 // Ultimate Mortal Kombat Trilogy (Hack, Rev. 5149)
 static struct BurnRomInfo md_umk3tRomDesc[] = {
-	{ "Ultimate Mortal Kombat Trilogy (Rev 5149)(2017)(KABAL_MK).bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ultimate Mortal Kombat Trilogy (Rev 5149)(2017)(KABAL_MK).bin", 10485760, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_umk3t)
@@ -44412,10 +44431,29 @@ STD_ROM_FN(md_umk3t)
 
 struct BurnDriver BurnDrvmd_umk3t = {
 	"md_umk3t", NULL, NULL, NULL, "2017",
-	"Ultimate Mortal Kombat Trilogy (Hack, Rev. 5149)\0", NULL, "KABAL_MK", "Genesis / Mega Drive",
+	"Ultimate Mortal Kombat Trilogy (Hack, Rev. 5149)\0", "Hack of Ultimate Mortal Kombat 3", "KABAL_MK", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat Trilogy (Hack, Rev. 5125)
+// https://www.romhacking.net/hacks/1059/
+static struct BurnRomInfo md_umk3taRomDesc[] = {
+	{ "Ultimate Mortal Kombat Trilogy (Rev 5125)(2014)(KABAL_MK).bin", 10485760, 0xd083dbba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3ta)
+STD_ROM_FN(md_umk3ta)
+
+struct BurnDriver BurnDrvmd_umk3ta = {
+	"md_umk3ta", "md_umk3t", NULL, NULL, "2014",
+	"Ultimate Mortal Kombat Trilogy (Hack, Rev. 5125)\0", "Hack of Ultimate Mortal Kombat 3", "KABAL_MK", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_umk3taRomInfo, md_umk3taRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

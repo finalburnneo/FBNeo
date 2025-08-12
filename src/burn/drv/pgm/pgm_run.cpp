@@ -888,15 +888,11 @@ INT32 pgmInit()
 			SekMapMemory(PGM68KROM,				0x000000, (nPGM68KROMLen-1), MAP_ROM);			// 68000 ROM (no bios)
 		} else {
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
-			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
-				if ((!bDoIpsPatch && nPGMMapperHack) || (nIpsDrvDefine & IPS_PGM_MAPHACK)) {
-					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM); // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail.
-					SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6fffff, MAP_ROM); // Adds a mapping for the specified game/ips.
+			// note: kov2dzxx, kovplus 68K BIOS, Mapped addresses other than 7fffff will fail.
+			SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM);
 
-					break;
-				}
-
-				SekMapMemory(PGM68KBIOS,			0x000000 | i, 0x01ffff | i, MAP_ROM);			// 68000 BIOS
+			if ((!bDoIpsPatch && nPGMMapperHack) || (nIpsDrvDefine & IPS_PGM_MAPHACK)) {
+				SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6fffff, MAP_ROM); // Adds a mapping for the specified game/ips.
 			}
 
 			if (nPGM68KROMLen == 0x1000000) // banked 68k rom

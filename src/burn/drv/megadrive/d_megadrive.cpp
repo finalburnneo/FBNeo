@@ -36289,7 +36289,7 @@ struct BurnDriver BurnDrvmd_shijie = {
 
 // Shrek (Russia) (Unl)
 static struct BurnRomInfo md_shrekRomDesc[] = {
-	{ "Shrek (Russia)(Unl)(200?).bin", 0x100000, 0x561e84b9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shrek (Russia)(Unl)(200x).bin", 0x100000, 0x561e84b9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shrek)
@@ -36307,7 +36307,7 @@ struct BurnDriver BurnDrvmd_shrek = {
 
 // Shrek 2 (Russia) (Unl)
 static struct BurnRomInfo md_shrek2RomDesc[] = {
-	{ "Shrek 2 (Russia)(Unl)(200?).bin", 0x100000, 0x0ccd3651, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shrek 2 (Russia)(Unl)(200x).bin", 0x100000, 0x0ccd3651, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shrek2)

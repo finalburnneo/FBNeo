@@ -207,21 +207,23 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 #endif
 			nInside = *s;
 
+#ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
-#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
-#else
-				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
-#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
+#endif
 
 			CheatLinkNewNode(szQuote);
 
 			continue;
 		}
+
+#ifdef __LIBRETRO__
+		_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+#endif
 
 		if ((t = LabelCheck(s, _T("type"))) != 0) {					// Cheat type
 			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
@@ -421,16 +423,14 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 		{
 			n = 0;
 
+#ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
-#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" (Nebula) ]"), pszFileHeading);
-#else
-				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
-#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
+#endif
 
 			CheatLinkNewNode(szLine + 5);
 
@@ -438,6 +438,10 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 			continue;
 		}
+
+#ifdef __LIBRETRO__
+		_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+#endif
 
 		if (!_tcsncmp (_T("Default="), szLine, 8) && n >= 0)
 		{
@@ -676,18 +680,20 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *pszFileHeading,
 			menu = 0;
 			nCurrentAddress = 0;
 
+#ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
-#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
-#else
-				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
-#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
+#endif
 
 			CheatLinkNewNode(tmp);
+
+#ifdef __LIBRETRO__
+			_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+#endif
 
 #if defined(BUILD_WIN32)
 			if (lstrlen(tmp) <= 0 || flags == 0x60000000) {
@@ -1005,22 +1011,24 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 			//bprintf(0, _T(".vct: addr[%x] count[%x] bytes[%x]\n"), fAddr, fCount, fBytes);
 
+#ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
-#ifndef __LIBRETRO__
 				_stprintf(szHeading, _T("[ Cheats \"%s\" ]"), pszFileHeading);
-#else
-				_stprintf(szHeading, _T("[%s] "), pszFileHeading);
-#endif
 				CheatLinkNewNode(szHeading);
 				bFirst = false;
 			}
+#endif
 
 			// -- add to cheat engine --
 			n = 0;
 			nCurrentAddress = 0;
 
 			CheatLinkNewNode(tmp);
+
+#ifdef __LIBRETRO__
+			_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+#endif
 
 			OptionName(_T("Disabled"));
 			n++;

@@ -41,6 +41,9 @@ struct CheatInfo {
 	INT32 bWriteWithMask;                       // Use nExtended field as mask
 
 	TCHAR szCheatName[CHEAT_MAX_NAME];
+#ifdef __LIBRETRO__
+	TCHAR szCheatFilename[128];
+#endif
 	struct CheatOption* pOption[CHEAT_MAX_OPTIONS];
 };
 

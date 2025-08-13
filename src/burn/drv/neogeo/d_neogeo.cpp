@@ -2301,7 +2301,7 @@ static INT32 NeoPVCScan(INT32 nAction, INT32*)
 static void NeoPVCInstallHandlers()
 {
 	// Install cart PVC protections
-	SekMapMemory(PVCRAM, 0x2fe000,  0x2fffff,  MAP_READ);
+	SekMapMemory(PVCRAM, 0x2fe000,  0x2fffff,  MAP_READ | MAP_FETCH);
 
 	SekMapHandler(6,      0x2fe000,  0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6,    PVCWriteWordBankSwitch);

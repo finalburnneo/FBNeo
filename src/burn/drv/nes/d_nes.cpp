@@ -54860,3 +54860,20 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_fishRomDesc[] = {
+	{ "Fish (HB)(2023)(Voxel).nes",          40976, 0x20120db7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fish)
+STD_ROM_FN(nes_fish)
+
+struct BurnDriver BurnDrvnes_fish = {
+	"nes_fish", NULL, NULL, NULL, "2023",
+	"Fish (HB)\0", NULL, "Voxel", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_fishRomInfo, nes_fishRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

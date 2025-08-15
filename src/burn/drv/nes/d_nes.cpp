@@ -7564,6 +7564,44 @@ struct BurnDriver BurnDrvnes_akumadenjc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Akumajou Densetsu: A Lenda do Castelo Demoniaco (Hack, Portuguese v1.1J)
+// https://romhackers.org/traducoes/console/nes/akumajou-densetsu-po.b.r.e
+static struct BurnRomInfo nes_akumadenptRomDesc[] = {
+	{ "Akumajou Densetsu - A Lenda do Castelo Demoniaco T-Por v1.1J (2020)(Mr.Fox).nes",          393232, 0x7cc3c046, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_akumadenpt)
+STD_ROM_FN(nes_akumadenpt)
+
+struct BurnDriver BurnDrvnes_akumadenpt = {
+	"nes_akumadenpt", "nes_castliii", NULL, NULL, "2020",
+	"Akumajou Densetsu: A Lenda do Castelo Demoniaco (Hack, Portuguese v1.1J)\0", NULL, "Mr.Fox", "NES / Famicom",
+	L"Akumajou Densetsu: A Lenda do Castelo Demon\u00edaco (Hack, Portuguese v1.1J)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_akumadenptRomInfo, nes_akumadenptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Akumajou Dracula (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/akumajou-dracula-po.b.r.e
+static struct BurnRomInfo nes_akumajoudraculaptRomDesc[] = {
+	{ "Akumajou Dracula T-Por (2019)(PO.B.R.E.).nes",          131088, 0x8afb5dd8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_akumajoudraculapt)
+STD_ROM_FN(nes_akumajoudraculapt)
+
+struct BurnDriver BurnDrvnes_akumajoudraculapt = {
+	"nes_akumajoudraculapt", "nes_castlevania", NULL, NULL, "2019",
+	"Akumajou Dracula (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	L"Akumajou Dr\u00e1cula (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_akumajoudraculaptRomInfo, nes_akumajoudraculaptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Battle of Olympus, The (Hack, Spanish v1.1)
 // https://www.romhacking.net/translations/3737/
 static struct BurnRomInfo nes_battlolycRomDesc[] = {
@@ -7655,6 +7693,25 @@ struct BurnDriver BurnDrvnes_bramstosdrac = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bramstosdracRomInfo, nes_bramstosdracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Capitao America e os Vingadores (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/nes/captain-america-and-the-avengers-po.b.r.e
+static struct BurnRomInfo nes_captaameandaveptRomDesc[] = {
+	{ "Capitao America e os Vingadores T-Por v1.2 (2008-2019)(PO.B.R.E.).nes",          262160, 0x3f27612c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_captaameandavept)
+STD_ROM_FN(nes_captaameandavept)
+
+struct BurnDriver BurnDrvnes_captaameandavept = {
+	"nes_captaameandavept", "nes_captaameandave", NULL, NULL, "2008-2019",
+	"Capitao America e os Vingadores (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	L"Capit\u00e3o Am\u00e9rica e os Vingadores (Hack, Portuguese v1.2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_captaameandaveptRomInfo, nes_captaameandaveptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -8476,6 +8533,44 @@ struct BurnDriver BurnDrvnes_finalfaniiic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Flintstones, Os: O Resgate de Dino & Hoppy (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/the-flintstones-the-rescue-of-dino-and-hoppy-po.b.r.e
+static struct BurnRomInfo nes_flintresdinhopptRomDesc[] = {
+	{ "Flintstones, Os - O Resgate de Dino & Hoppy T-Por (2019)(PO.B.R.E.).nes",          393232, 0xedc2caf7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_flintresdinhoppt)
+STD_ROM_FN(nes_flintresdinhoppt)
+
+struct BurnDriver BurnDrvnes_flintresdinhoppt = {
+	"nes_flintresdinhoppt", "nes_flintresdinhop", NULL, NULL, "2019",
+	"Flintstones, Os: O Resgate de Dino & Hoppy (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_flintresdinhopptRomInfo, nes_flintresdinhopptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Flintstones, Os: A Surpresa no Pico do Dinossauro! (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/the-flintstones-the-surprise-at-dinosaur-peak-po.b.r.e
+static struct BurnRomInfo nes_flintsuratdinpeptRomDesc[] = {
+	{ "Flintstones, Os - A Surpresa no Pico do Dinossauro! T-Por (2019)(PO.B.R.E.).nes",          393232, 0x369498b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_flintsuratdinpept)
+STD_ROM_FN(nes_flintsuratdinpept)
+
+struct BurnDriver BurnDrvnes_flintsuratdinpept = {
+	"nes_flintsuratdinpept", "nes_flintsuratdinpe", NULL, NULL, "2019",
+	"Flintstones, Os: A Surpresa no Pico do Dinossauro! (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_flintsuratdinpeptRomInfo, nes_flintsuratdinpeptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Friday the 13th (Hack, Spanish v1.1)
 // https://www.romhacking.net/translations/3356/
 static struct BurnRomInfo nes_fridaythe13thcRomDesc[] = {
@@ -8894,6 +8989,25 @@ struct BurnDriver BurnDrvnes_krustsfunhouc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Esquadrao Dinossauro Zyuranger (Hack, Portuguese)
+// https://www.romhacking.net/translations/7103/
+static struct BurnRomInfo nes_kyoursenzyuptRomDesc[] = {
+	{ "Esquadrao Dinossauro Zyuranger T-Por (2023)(Hextinkers).nes",          262160, 0xa67b0424, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kyoursenzyupt)
+STD_ROM_FN(nes_kyoursenzyupt)
+
+struct BurnDriver BurnDrvnes_kyoursenzyupt = {
+	"nes_kyoursenzyupt", "nes_kyoursenjuu", NULL, NULL, "2023",
+	"Esquadrao Dinossauro Zyuranger (Hack, Portuguese)\0", NULL, "Hextinkers", "NES / Famicom",
+	L"Esquadr\u00e3o Dinossauro Zyuranger (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MINIGAMES | GBF_PLATFORM, 0,
+	NESGetZipName, nes_kyoursenzyuptRomInfo, nes_kyoursenzyuptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Legacy of the Wizard (Hack, Spanish)
 // https://www.romhacking.net/translations/5377/
 static struct BurnRomInfo nes_legacwizcRomDesc[] = {
@@ -9023,6 +9137,25 @@ struct BurnDriver BurnDrvnes_mafatconc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_SHOOT, 0,
 	NESGetZipName, nes_mafatconcRomInfo, nes_mafatconcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Magic John (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/magic-john-po.b.r.e
+static struct BurnRomInfo nes_magicjohnptRomDesc[] = {
+	{ "Magic John T-Por (2019)(PO.B.R.E.).nes",          262160, 0x4d7e7d5a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magicjohnpt)
+STD_ROM_FN(nes_magicjohnpt)
+
+struct BurnDriver BurnDrvnes_magicjohnpt = {
+	"nes_magicjohnpt", "nes_totallyrad", NULL, NULL, "2019",
+	"Magic John (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_magicjohnptRomInfo, nes_magicjohnptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -9612,6 +9745,25 @@ struct BurnDriver BurnDrvnes_rushnattackc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_rushnattackcRomInfo, nes_rushnattackcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Seiya ~ Cavaleiros do Zodiaco, Os: A Lenda Dourada Parte Final (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/saint-seiya-ougon-densetsu-kanketsu-hen-l_victor/
+static struct BurnRomInfo nes_saintseicdzldfptRomDesc[] = {
+	{ "Cavaleiros do Zodiaco, Os - A Lenda Dourada Parte Final T-Por (2010)(L_Victor, Magic Team).nes",          262160, 0x290b04ce, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseicdzldfpt)
+STD_ROM_FN(nes_saintseicdzldfpt)
+
+struct BurnDriver BurnDrvnes_saintseicdzldfpt = {
+	"nes_saintseicdzldfpt", "nes_saintseiougdenkahen", NULL, NULL, "2010",
+	"Saint Seiya ~ Cavaleiros do Zodiaco, Os: A Lenda Dourada Parte Final (Hack, Portuguese)\0", NULL, "L_Victor, Magic Team", "NES / Famicom",
+	L"Saint Seiya ~ Cavaleiros do Zod\u00edaco, Os: A Lenda Dourada Parte Final (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_saintseicdzldfptRomInfo, nes_saintseicdzldfptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -10296,6 +10448,25 @@ struct BurnDriver BurnDrvnes_wolverinec = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wolverinecRomInfo, nes_wolverinecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Wolverine (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/wolverine-po.b.r.e
+static struct BurnRomInfo nes_wolverineptRomDesc[] = {
+	{ "Wolverine T-Por (2020)(PO.B.R.E.).nes",          262160, 0x36703295, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wolverinept)
+STD_ROM_FN(nes_wolverinept)
+
+struct BurnDriver BurnDrvnes_wolverinept = {
+	"nes_wolverinept", "nes_wolverine", NULL, NULL, "2020",
+	"Wolverine (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_wolverineptRomInfo, nes_wolverineptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -15727,7 +15898,7 @@ STD_ROM_FN(nes_crow)
 
 struct BurnDriver BurnDrvnes_crow = {
 	"nes_crow", NULL, NULL, NULL, "2022",
-	"Crow, The (GlobalHack)\0", "A GlobalHack of 'Ninja Gaiden'", "pacnsacdave", "NES / Famicom",
+	"Crow, The (GlobalHack)\0", "A GlobalHack of 'Batman: The Video Game'", "pacnsacdave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_crowRomInfo, nes_crowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

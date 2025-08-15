@@ -686,6 +686,33 @@ static struct BurnRomInfo RallyxegRomDesc[] = {
 STD_ROM_PICK(Rallyxeg)
 STD_ROM_FN(Rallyxeg)
 
+static struct BurnRomInfo RallyxtdRomDesc[] = {
+	{ "6101_2716.1b",  0x00800, 0x921699dc, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "2_2716.1c",     0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
+	{ "6103_2716.1e",  0x00800, 0x36e9918f, BRF_ESS | BRF_PRG }, //	 2
+	{ "4_2716.1f",     0x00800, 0x85d52586, BRF_ESS | BRF_PRG }, //	 3
+	{ "5_2716.1h",     0x00800, 0xfd78ba1a, BRF_ESS | BRF_PRG }, //	 4
+	{ "6106_2716.1j",  0x00800, 0xd72ee519, BRF_ESS | BRF_PRG }, //	 5
+	{ "7_2716.1k",     0x00800, 0x843109f2, BRF_ESS | BRF_PRG }, //	 6
+	{ "8_2716.1m",     0x00800, 0x8ab078ef, BRF_ESS | BRF_PRG }, //	 7
+	
+	{ "6110_2716.8e",  0x00800, 0x836fb24f, BRF_GRA },	     //  8	Characters & Sprites
+	{ "6109_2716.8d",  0x00800, 0x22d7113b, BRF_GRA },	     //  9
+	
+	{ "r6_82s129.8m",  0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
+	
+	{ "r1_82s123.1n",  0x00020, 0xc7865434, BRF_GRA },	     //  11	Palette PROM
+	{ "r7_82s129.8p",  0x00100, 0x834d4fda, BRF_GRA },	     //  12	Lookup PROM
+	{ "r2_82s123.4n",  0x00020, 0x659c3f5d, BRF_GRA },	     //  13	Video Layout PROM
+	{ "r3_82s123.7k",  0x00020, 0xbdef006f, BRF_GRA },	     //  14	Video Timing PROM
+	
+	{ "r5_82s129.3p",  0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
+	{ "r4_82s129.2m",  0x00100, 0x77245b66, BRF_SND },	     //  16
+};
+
+STD_ROM_PICK(Rallyxtd)
+STD_ROM_FN(Rallyxtd)
+
 static struct BurnRomInfo DngrtrckRomDesc[] = {
 	{ "1b-2716.bin",   0x00800, 0xb6180a12, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
 	{ "1c-2716.bin",   0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
@@ -2107,6 +2134,16 @@ struct BurnDriver BurnDrvRallyxeg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxegRomInfo, RallyxegRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 260, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvRallyxtd = {
+	"rallyxtd", "rallyx", NULL, "rallyx", "1981",
+	"Rally X (Tecnidiver bootleg)\0", NULL, "bootleg (Tecnidiver)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, RallyxtdRomInfo, RallyxtdRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 224, 288, 3, 4
 };

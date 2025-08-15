@@ -693,3 +693,40 @@ struct BurnDriver BurnDrvTutankhms = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	224, 256, 3, 4
 };
+
+
+// Tutankham (bootleg)
+
+static struct BurnRomInfo tutankhmbRomDesc[] = {
+	{ "t1.1h",	0x1000, 0x37794533, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "t2.2h",	0x1000, 0xa0f02c85, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t3.3h",	0x1000, 0x0c41e644, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "t4.4h",	0x1000, 0xbd06fad0, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "t5.5h",	0x1000, 0xbf9fd9b0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "t6.6h",	0x1000, 0x39cd1b22, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "t7.1i",	0x1000, 0x55deafe2, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "t8.2i",	0x1000, 0x6615eff3, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "t9.3i",	0x1000, 0xa10d4444, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "t10.4i",	0x1000, 0x58cd143c, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "t11.5i",	0x1000, 0xd7e7ae95, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "t12.6i",	0x1000, 0xdcde1109, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "t13.7i",	0x1000, 0xc7250b9a, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "t14.8i",	0x1000, 0x685a623e, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "t15.9i",	0x1000, 0x8ea9c6a6, 1 | BRF_PRG | BRF_ESS }, // 14
+
+	{ "t16.7a",	0x1000, 0xb52d01fa, 2 | BRF_PRG | BRF_ESS }, // 15 Z80 Code
+	{ "t17.8a",	0x1000, 0x9db5c0ce, 2 | BRF_PRG | BRF_ESS }, // 16
+};
+
+STD_ROM_PICK(tutankhmb)
+STD_ROM_FN(tutankhmb)
+
+struct BurnDriver BurnDrvTutankhmb = {
+	"tutankhmb", "tutankhm", NULL, NULL, "1982",
+	"Tutankham (bootleg)\0", NULL, "bootleg", "GX350",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_MAZE, 0,
+	NULL, tutankhmbRomInfo, tutankhmbRomName, NULL, NULL, NULL, NULL, TutankhmInputInfo, TutankhmDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	224, 256, 3, 4
+};

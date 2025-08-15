@@ -811,3 +811,37 @@ struct BurnDriver BurnDrvOzmawars2 = {
 	Ozmawars2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
 };
+
+
+// Ozma Wars (set 3)
+
+static struct BurnRomInfo ozmawars3RomDesc[] = {
+	{ "u36",		0x0400, 0xf71ae28d, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
+	{ "u35",		0x0400, 0xab922611, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "u34",		0x0400, 0x689c5c2b, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "u33",		0x0400, 0xda0c394a, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "u32",		0x0400, 0x1980bad9, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "u31",		0x0400, 0x19b43578, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "u42",		0x0400, 0xa285bfde, 1 | BRF_ESS | BRF_PRG }, //  6
+	{ "u41",		0x0400, 0xae59a629, 1 | BRF_ESS | BRF_PRG }, //  7
+	{ "u40",		0x0400, 0xdf0cc633, 1 | BRF_ESS | BRF_PRG }, //  8
+	{ "u39",		0x0400, 0x31b7692e, 1 | BRF_ESS | BRF_PRG }, //  9
+	{ "u38",		0x0400, 0x50257351, 1 | BRF_ESS | BRF_PRG }, //  10
+	{ "u37",		0x0400, 0x8b969f61, 1 | BRF_ESS | BRF_PRG }, //  11
+	
+	{ "82s137.u1",	0x0400, 0xaac24f34, 0 | BRF_OPT },
+	{ "82s137.u2",	0x0400, 0x2bdf83a0, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(ozmawars3)
+STD_ROM_FN(ozmawars3)
+
+struct BurnDriver BurnDrvOzmawars3 = {
+	"ozmawars3", "ozmawars", NULL, "invaders", "1979",
+	"Ozma Wars (set 3)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, ozmawars3RomInfo, ozmawars3RomName, NULL, NULL, OzmawarsSampleInfo, OzmawarsSampleName, InvadersInputInfo, OzmawarsDIPInfo,
+	Ozmawars2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
+	224, 260, 3, 4
+};

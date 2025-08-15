@@ -9735,7 +9735,7 @@ static INT32 kov2pshjzInit()
 		memset( ICSSNDROM + 0x400000, 0,                    0x400000);
 
 		if (PGMARMROM[0x26f] == 0x0a)	// crash patch
-			PGMARMROM[0x26f] == 0xea;
+			PGMARMROM[0x26f] = 0xea;
 	}
 
 	return nRet;

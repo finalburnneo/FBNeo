@@ -961,46 +961,46 @@ STD_ROM_PICK(Marukina)
 STD_ROM_FN(Marukina)
 
 static struct BurnRomInfo Qtono1RomDesc[] = {
-	{ "q3-05.rom",		0x08000, 0x1dd0a344, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "q3-06.rom",		0x20000, 0xbd6a2110, BRF_ESS | BRF_PRG }, //  1
-	{ "q3-07.rom",		0x20000, 0x61e53c4f, BRF_ESS | BRF_PRG }, //  2
+	{ "q3-05.14f",		0x08000, 0x1dd0a344, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "q3-06.15f",		0x20000, 0xbd6a2110, BRF_ESS | BRF_PRG }, //  1
+	{ "q3-07.16f",		0x20000, 0x61e53c4f, BRF_ESS | BRF_PRG }, //  2
 	
-	{ "q3-08.rom",		0x20000, 0x1533b978, BRF_GRA },           //  3	Characters
-	{ "q3-09.rom",		0x20000, 0xa32db2f2, BRF_GRA },           //  4
-	{ "q3-10.rom",		0x20000, 0xed681aa8, BRF_GRA },           //  5
-	{ "q3-11.rom",		0x20000, 0x38b2fd10, BRF_GRA },           //  6
-	{ "q3-18.rom",		0x20000, 0x9e4292ac, BRF_GRA },           //  7
-	{ "q3-19.rom",		0x20000, 0xb7f6d40f, BRF_GRA },           //  8
-	{ "q3-20.rom",		0x20000, 0x6cd7f38d, BRF_GRA },           //  9
-	{ "q3-21.rom",		0x20000, 0xb4aa6b4b, BRF_GRA },           // 10
+	{ "q3-08.8h",		0x20000, 0x1533b978, BRF_GRA },           //  3	Characters
+	{ "q3-09.9h",		0x20000, 0xa32db2f2, BRF_GRA },           //  4
+	{ "q3-10.10h",		0x20000, 0xed681aa8, BRF_GRA },           //  5
+	{ "q3-11.11h",		0x20000, 0x38b2fd10, BRF_GRA },           //  6
+	{ "q3-18.8j",		0x20000, 0x9e4292ac, BRF_GRA },           //  7
+	{ "q3-19.9j",		0x20000, 0xb7f6d40f, BRF_GRA },           //  8
+	{ "q3-20.10j",		0x20000, 0x6cd7f38d, BRF_GRA },           //  9
+	{ "q3-21.11j",		0x20000, 0xb4aa6b4b, BRF_GRA },           // 10
 	
-	{ "q3-16.rom",		0x20000, 0x863d6836, BRF_GRA },           // 11	Sprites
-	{ "q3-17.rom",		0x20000, 0x459bf59c, BRF_GRA },           // 12
+	{ "q3-16.2j",		0x20000, 0x863d6836, BRF_GRA },           // 11	Sprites
+	{ "q3-17.3j",		0x20000, 0x459bf59c, BRF_GRA },           // 12
 	
-	{ "q3-01.rom",		0x20000, 0x6c1be591, BRF_SND },           // 13	Samples
+	{ "q3-01.2d",		0x20000, 0x6c1be591, BRF_SND },           // 13	Samples
 };
 
 STD_ROM_PICK(Qtono1)
 STD_ROM_FN(Qtono1)
 
 static struct BurnRomInfo QsangokuRomDesc[] = {
-	{ "q4-05c.rom",    0x08000, 0xe1d010b4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "q4-06.rom",     0x20000, 0xa0301849, BRF_ESS | BRF_PRG }, //	 1
-	{ "q4-07.rom",     0x20000, 0x2941ef5b, BRF_ESS | BRF_PRG }, //	 2
+	{ "q4-05c.14f",    0x08000, 0xe1d010b4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "q4-06.15f",     0x20000, 0xa0301849, BRF_ESS | BRF_PRG }, //	 1
+	{ "q4-07.16f",     0x20000, 0x2941ef5b, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "q4-08.rom",     0x20000, 0xdc84c6cb, BRF_GRA },	     //  3	Characters
-	{ "q4-09.rom",     0x20000, 0xcbb6234c, BRF_GRA },	     //  4
-	{ "q4-10.rom",     0x20000, 0xc20a27a8, BRF_GRA },	     //  5
-	{ "q4-11.rom",     0x20000, 0x4ff66aed, BRF_GRA },	     //  6
-	{ "q4-18.rom",     0x20000, 0xca3acea5, BRF_GRA },	     //  7
-	{ "q4-19.rom",     0x20000, 0x1fd92b7d, BRF_GRA },	     //  8
-	{ "q4-20.rom",     0x20000, 0xb02dc6a1, BRF_GRA },	     //  9
-	{ "q4-21.rom",     0x20000, 0x432b1dc1, BRF_GRA },	     //  10
+	{ "q4-08.8h",     0x20000, 0xdc84c6cb, BRF_GRA },	     //  3	Characters
+	{ "q4-09.9h",     0x20000, 0xcbb6234c, BRF_GRA },	     //  4
+	{ "q4-10.10h",     0x20000, 0xc20a27a8, BRF_GRA },	     //  5
+	{ "q4-11.11h",     0x20000, 0x4ff66aed, BRF_GRA },	     //  6
+	{ "q4-18.8j",     0x20000, 0xca3acea5, BRF_GRA },	     //  7
+	{ "q4-19.9j",     0x20000, 0x1fd92b7d, BRF_GRA },	     //  8
+	{ "q4-20.10j",     0x20000, 0xb02dc6a1, BRF_GRA },	     //  9
+	{ "q4-21.11j",     0x20000, 0x432b1dc1, BRF_GRA },	     //  10
 	
-	{ "q4-16.rom",     0x20000, 0x77342320, BRF_GRA },	     //  11	Sprites
-	{ "q4-17.rom",     0x20000, 0x1275c436, BRF_GRA },	     //  12
+	{ "q4-16.2j",     0x20000, 0x77342320, BRF_GRA },	     //  11	Sprites
+	{ "q4-17.3j",     0x20000, 0x1275c436, BRF_GRA },	     //  12
 	
-	{ "q4-01.rom",     0x20000, 0x5d0d07d8, BRF_SND },	     //  13	Samples
+	{ "q4-01.2d",     0x20000, 0x5d0d07d8, BRF_SND },	     //  13	Samples
 };
 
 STD_ROM_PICK(Qsangoku)

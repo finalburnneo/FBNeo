@@ -15727,9 +15727,9 @@ STD_ROM_FN(nes_crow)
 
 struct BurnDriver BurnDrvnes_crow = {
 	"nes_crow", NULL, NULL, NULL, "2022",
-	"Crow, The (GlobalHack)\0", "A GlobalHack of 'Ninja Gaiden'", "pacnsacdave", "NES / Famicom",
+	"Crow, The (GlobalHack)\0", "A GlobalHack of 'Batman: The Video Game'", "pacnsacdave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_crowRomInfo, nes_crowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

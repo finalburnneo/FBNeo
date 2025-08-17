@@ -2073,29 +2073,27 @@ static void UpdateShaderVariables()
 {
 	if (pVidEffect && pVidEffect->IsValid()) {
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
-		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.5f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.5f);
+		// dinknote: "+ 0.5f" causes weird vertical lines in some shaders (f.ex: crt_aperture.fx)
+//		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.5f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.5f);
+		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.0f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.0f);
 		pVidEffect->SetParamFloat2("video_time", nCurrentFrame, (float)nCurrentFrame / 60);
 		pVidEffect->SetParamFloat4("user_settings", HardFXConfigs[nDX9HardFX].fOptions[0], HardFXConfigs[nDX9HardFX].fOptions[1], HardFXConfigs[nDX9HardFX].fOptions[2], HardFXConfigs[nDX9HardFX].fOptions[3]);
 	}
 }
 
+// DINKNOTE: Changing HardFX needs a reinit of video. (or some will fail to display properly)
 static int dx9AltSetHardFX(int nHardFX)
 {
 	// cutre reload
 	//static bool reload = true; if (GetAsyncKeyState(VK_CONTROL)) { if (reload) { nDX9HardFX = 0; reload = false; } } else reload = true;
 
-	if (nHardFX == nDX9HardFX)
-	{
-		return 0;
-	}
-	
 	nDX9HardFX = nHardFX;
 
 	if (pVidEffect) {
 		delete pVidEffect;
 		pVidEffect = NULL;
 	}
-	
+
 	if (nDX9HardFX == 0)
 	{
 		return 0;
@@ -2299,6 +2297,9 @@ static int dx9AltInit()
 			return 1;
 		}
 	}
+
+	// HardFX gets initted here
+	dx9AltSetHardFX(nVidDX9HardFX);
 
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
@@ -2549,8 +2550,6 @@ static int dx9AltRender()  // MemToSurf
 	vid_FontDraw(Dest);
 
 	pD3DDevice->EndScene();
-
-	dx9AltSetHardFX(nVidDX9HardFX);
 
 	return 0;
 }

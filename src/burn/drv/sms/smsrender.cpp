@@ -652,9 +652,9 @@ void palette_sync(INT16 index, INT16 force)
 			0xfc5554, 0xff7978, 0xd4c154, 0xe6ce80, 0x21b03b, 0xc95bba, 0xcccccc, 0xffffff
 		};
 
-		r = TMS9928A_palette[index & 0x0f] >> 16;
-		g = TMS9928A_palette[index & 0x0f] >> 8;
-		b = TMS9928A_palette[index & 0x0f] >> 0;
+		r = (TMS9928A_palette[index & 0x0f] >> 16) & 0xff;
+		g = (TMS9928A_palette[index & 0x0f] >> 8) & 0xff;
+		b = (TMS9928A_palette[index & 0x0f] >> 0) & 0xff;
 
 		bitmap.pal.color[index][0] = r;
 		bitmap.pal.color[index][1] = g;

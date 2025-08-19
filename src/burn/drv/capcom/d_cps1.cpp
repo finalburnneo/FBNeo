@@ -4486,9 +4486,21 @@ static struct BurnDIPInfo Sf2mixDIPList[]=
 
 	// Dip B
 	CPS1_DIFFICULTY_1(0x1c)
-	{0   , 0xfe, 0   , 2   , "Complete Mode"           },
+	{0   , 0xfe, 0   , 2   , "Complete Mode"          },
 	{0x1c, 0x01, 0x08, 0x00, "Off"                    },
 	{0x1c, 0x01, 0x08, 0x08, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Disable Classic Mode"   },
+	{0x1c, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Change between Rounds"  },
+	{0x1c, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "SF2HF ROM SPEED"        },
+	{0x1c, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x40, 0x40, "On"                     },
 	
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
@@ -26839,22 +26851,22 @@ struct BurnDriver BurnDrvCpsSf2hfsce = {
 // For more infomation, please visit: https://sf2mix.github.io/
 
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0xc1370215, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0x5b0566c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0xcb6ab274, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0x75a9f308, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x19b0ece8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0x859903a4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa8f70643, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0xf73f1913, BRF_GRA | CPS1_TILES },
 	{ "smx-2m.4a",     0x080000, 0xa80234b4, BRF_GRA | CPS1_TILES },
 	{ "smx-4m.6a",     0x080000, 0x4d910b53, BRF_GRA | CPS1_TILES },
-	{ "smx-5m.7a",     0x080000, 0x01ae6240, BRF_GRA | CPS1_TILES },
-	{ "smx-7m.9a",     0x080000, 0x88dea20a, BRF_GRA | CPS1_TILES },
-	{ "smx-6m.8a",     0x080000, 0x7ea140b2, BRF_GRA | CPS1_TILES },
-	{ "smx-8m.10a",    0x080000, 0xfbc81a7e, BRF_GRA | CPS1_TILES },
-	{ "smx-10m.3c",    0x080000, 0x78e86cf4, BRF_GRA | CPS1_TILES },
-	{ "smx-12m.5c",    0x080000, 0x2f8e6dc9, BRF_GRA | CPS1_TILES },
-	{ "smx-11m.4c",    0x080000, 0x70095fdc, BRF_GRA | CPS1_TILES },
-	{ "smx-13m.6c",    0x080000, 0xd14d18e5, BRF_GRA | CPS1_TILES },
+	{ "smx-5m.7a",     0x080000, 0x26a56c2c, BRF_GRA | CPS1_TILES },
+	{ "smx-7m.9a",     0x080000, 0x3a2c2e5f, BRF_GRA | CPS1_TILES },
+	{ "smx-6m.8a",     0x080000, 0xf71b978c, BRF_GRA | CPS1_TILES },
+	{ "smx-8m.10a",    0x080000, 0x8fe56540, BRF_GRA | CPS1_TILES },
+	{ "smx-10m.3c",    0x080000, 0xf352721f, BRF_GRA | CPS1_TILES },
+	{ "smx-12m.5c",    0x080000, 0x810c6499, BRF_GRA | CPS1_TILES },
+	{ "smx-11m.4c",    0x080000, 0x75d7c15c, BRF_GRA | CPS1_TILES },
+	{ "smx-13m.6c",    0x080000, 0x642c40e7, BRF_GRA | CPS1_TILES },
 
 	{ "smx_09.11a",    0x010000, 0xa379fdc5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -26875,7 +26887,7 @@ STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpsSf2mix = {
 	"sf2mix", "sf2ce", NULL, NULL, "2025",
-	"Street Fighter II Mix (v1.4)\0", NULL, "hack", "CPS1",
+	"Street Fighter II Mix (v1.5)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,

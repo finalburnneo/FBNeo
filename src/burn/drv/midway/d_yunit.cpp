@@ -3803,6 +3803,11 @@ static struct BurnRomInfo smashtvRomDesc[] = {
 	{ "la1_smash_tv_game_rom_u106.u106",				0x20000, 0x5c718361, 4 | BRF_GRA },           // 11
 	{ "la1_smash_tv_game_rom_u107.u107",				0x20000, 0x0fba1e36, 4 | BRF_GRA },           // 12
 	{ "la1_smash_tv_game_rom_u108.u108",				0x20000, 0xcb0a092f, 4 | BRF_GRA },           // 13
+	
+	{ "a_5346_3044_1.u8",								0x0032f, 0x2ef0c217, 0 | BRF_OPT },			  // 14 Plds
+	{ "a_5346_3044_5.u52",								0x0032f, 0xe13d6403, 0 | BRF_OPT },			  // 15
+	{ "a_5346_3044_6.u53",								0x0032f, 0xb165a4f9, 0 | BRF_OPT },			  // 16
+	{ "a_5346_3044_7.u65",								0x0032f, 0xecbd3bf2, 0 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(smashtv)
@@ -3845,6 +3850,11 @@ static struct BurnRomInfo smashtv6RomDesc[] = {
 	{ "la1_smash_tv_game_rom_u106.u106",				0x20000, 0x5c718361, 4 | BRF_GRA },           // 11
 	{ "la1_smash_tv_game_rom_u107.u107",				0x20000, 0x0fba1e36, 4 | BRF_GRA },           // 12
 	{ "la1_smash_tv_game_rom_u108.u108",				0x20000, 0xcb0a092f, 4 | BRF_GRA },           // 13
+	
+	{ "a_5346_3044_1.u8",								0x0032f, 0x2ef0c217, 0 | BRF_OPT },			  // 14 Plds
+	{ "a_5346_3044_5.u52",								0x0032f, 0xe13d6403, 0 | BRF_OPT },			  // 15
+	{ "a_5346_3044_6.u53",								0x0032f, 0xb165a4f9, 0 | BRF_OPT },			  // 16
+	{ "a_5346_3044_7.u65",								0x0032f, 0xecbd3bf2, 0 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(smashtv6)
@@ -3880,6 +3890,11 @@ static struct BurnRomInfo smashtv5RomDesc[] = {
 	{ "la1_smash_tv_game_rom_u106.u106",				0x20000, 0x5c718361, 4 | BRF_GRA },           // 11
 	{ "la1_smash_tv_game_rom_u107.u107",				0x20000, 0x0fba1e36, 4 | BRF_GRA },           // 12
 	{ "la1_smash_tv_game_rom_u108.u108",				0x20000, 0xcb0a092f, 4 | BRF_GRA },           // 13
+	
+	{ "a_5346_3044_1.u8",								0x0032f, 0x2ef0c217, 0 | BRF_OPT },			  // 14 Plds
+	{ "a_5346_3044_5.u52",								0x0032f, 0xe13d6403, 0 | BRF_OPT },			  // 15
+	{ "a_5346_3044_6.u53",								0x0032f, 0xb165a4f9, 0 | BRF_OPT },			  // 16
+	{ "a_5346_3044_7.u65",								0x0032f, 0xecbd3bf2, 0 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(smashtv5)
@@ -3916,6 +3931,11 @@ static struct BurnRomInfo smashtv4RomDesc[] = {
 	{ "la1_smash_tv_game_rom_u106.u106",				0x20000, 0x5c718361, 4 | BRF_GRA },           // 11
 	{ "la1_smash_tv_game_rom_u107.u107",				0x20000, 0x0fba1e36, 4 | BRF_GRA },           // 12
 	{ "la1_smash_tv_game_rom_u108.u108",				0x20000, 0xcb0a092f, 4 | BRF_GRA },           // 13
+	
+	{ "a_5346_3044_1.u8",								0x0032f, 0x2ef0c217, 0 | BRF_OPT },			  // 14 Plds
+	{ "a_5346_3044_5.u52",								0x0032f, 0xe13d6403, 0 | BRF_OPT },			  // 15
+	{ "a_5346_3044_6.u53",								0x0032f, 0xb165a4f9, 0 | BRF_OPT },			  // 16
+	{ "a_5346_3044_7.u65",								0x0032f, 0xecbd3bf2, 0 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(smashtv4)
@@ -3951,6 +3971,11 @@ static struct BurnRomInfo smashtv3RomDesc[] = {
 	{ "la1_smash_tv_game_rom_u106.u106",				0x20000, 0x5c718361, 4 | BRF_GRA },           // 11
 	{ "la1_smash_tv_game_rom_u107.u107",				0x20000, 0x0fba1e36, 4 | BRF_GRA },           // 12
 	{ "la1_smash_tv_game_rom_u108.u108",				0x20000, 0xcb0a092f, 4 | BRF_GRA },           // 13
+	
+	{ "a_5346_3044_1.u8",								0x0032f, 0x2ef0c217, 0 | BRF_OPT },			  // 14 Plds
+	{ "a_5346_3044_5.u52",								0x0032f, 0xe13d6403, 0 | BRF_OPT },			  // 15
+	{ "a_5346_3044_6.u53",								0x0032f, 0xb165a4f9, 0 | BRF_OPT },			  // 16
+	{ "a_5346_3044_7.u65",								0x0032f, 0xecbd3bf2, 0 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(smashtv3)

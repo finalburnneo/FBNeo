@@ -1616,6 +1616,14 @@ static struct BurnRomInfo MgcrystlRomDesc[] = {
 	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
 	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	
+	{ "18cv8.u08",			0x000155, 0x5e35733c, BRF_OPT },		   //  8 Plds
+	{ "18cv8.u20",			0x000155, 0x65b945b2, BRF_OPT },		   //  9
+	{ "18cv8.u41",			0x000155, 0x0b05a7ea, BRF_OPT },		   // 10
+	{ "18cv8.u42",			0x000155, 0x434c0fbb, BRF_OPT },		   // 11
+	{ "18cv8.u50",			0x000155, 0x2fd7e6dc, BRF_OPT },		   // 12
+	{ "18cv8.u51",			0x000155, 0x8d1fd79b, BRF_OPT },		   // 13
+	{ "18cv8.u54",			0x000155, 0x5e35733c, BRF_OPT },		   // 13 identical to u08
 };
 
 
@@ -1635,6 +1643,14 @@ static struct BurnRomInfo MgcrystloRomDesc[] = {
 	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
 	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	
+	{ "18cv8.u08",			0x000155, 0x5e35733c, BRF_OPT },		   //  8 Plds
+	{ "18cv8.u20",			0x000155, 0x65b945b2, BRF_OPT },		   //  9
+	{ "18cv8.u41",			0x000155, 0x0b05a7ea, BRF_OPT },		   // 10
+	{ "18cv8.u42",			0x000155, 0x434c0fbb, BRF_OPT },		   // 11
+	{ "18cv8.u50",			0x000155, 0x2fd7e6dc, BRF_OPT },		   // 12
+	{ "18cv8.u51",			0x000155, 0x8d1fd79b, BRF_OPT },		   // 13
+	{ "18cv8.u54",			0x000155, 0x5e35733c, BRF_OPT },		   // 13 identical to u08
 };
 
 
@@ -1654,6 +1670,14 @@ static struct BurnRomInfo MgcrystljRomDesc[] = {
 	{ "kaneko__mc-020_0004.u34",		0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
 	{ "kaneko__mc-030_0005_t99.u32",	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	
+	{ "18cv8.u08",			0x000155, 0x5e35733c, BRF_OPT },		   //  8 Plds
+	{ "18cv8.u20",			0x000155, 0x65b945b2, BRF_OPT },		   //  9
+	{ "18cv8.u41",			0x000155, 0x0b05a7ea, BRF_OPT },		   // 10
+	{ "18cv8.u42",			0x000155, 0x434c0fbb, BRF_OPT },		   // 11
+	{ "18cv8.u50",			0x000155, 0x2fd7e6dc, BRF_OPT },		   // 12
+	{ "18cv8.u51",			0x000155, 0x8d1fd79b, BRF_OPT },		   // 13
+	{ "18cv8.u54",			0x000155, 0x5e35733c, BRF_OPT },		   // 13 identical to u08
 };
 
 

@@ -6854,6 +6854,43 @@ struct BurnDriver BurnDrvmspacmab3 = {
 };
 
 
+// Ms. Pac-Man (bootleg, set 5)
+// GDP-01 PCB (same as Piranha). Very similar to mspacmab3, code-wise
+
+static struct BurnRomInfo mspacmab5RomDesc[] = {
+	{ "d1.d7",        0x1000, 0x50b38941, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "d2.e7",        0x1000, 0x713af282, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "d3.g7",        0x1000, 0x124a4507, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "d4.j7",        0x1000, 0x08ac65da, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "d5.g6",        0x1000, 0x50b29f09, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "d6.j6",        0x0800, 0x33b09ed9, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "d7.d5",        0x0800, 0xb5d8c872, 2 | BRF_GRA },			//  6 Graphics
+	{ "d9.g5",        0x0800, 0x9b2b936c, 2 | BRF_GRA },			//  7
+	{ "d8.e5",        0x0800, 0xa70a6ac4, 2 | BRF_GRA },			//  8
+	{ "d10.j5",       0x0800, 0x53368498, 2 | BRF_GRA },			//  9
+
+	{ "6331.8h",      0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "6301.4a",      0x0100, 0x08c9447b, 3 | BRF_GRA },			// 11
+
+	{ "63s141.1k",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
+	{ "63s141.3k",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmab5)
+STD_ROM_FN(mspacmab5)
+
+struct BurnDriver BurnDrvmspacmab5 = {
+	"mspacmab5", "puckman", NULL, NULL, "1981",
+	"Ms. Pac-Man (bootleg, set 5)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmab5RomInfo, mspacmab5RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	piranhaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Piranha (hack)
 
 static struct BurnRomInfo piranhahRomDesc[] = {

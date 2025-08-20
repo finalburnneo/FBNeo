@@ -55308,3 +55308,37 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_highhopesRomDesc[] = {
+	{ "High Hopes (2007)(Aspekt).nes",          196624, 0x7dcbda9f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_highhopes)
+STD_ROM_FN(nes_highhopes)
+
+struct BurnDriver BurnDrvnes_highhopes = {
+	"nes_highhopes", NULL, NULL, NULL, "2007",
+	"High Hopes (Demo)\0", NULL, "Aspekt @ Assembly 2007", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_highhopesRomInfo, nes_highhopesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mapperlessRomDesc[] = {
+	{ "mapperless (2025)(Otomata Labs).nes",          40976, 0x15d072a9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mapperless)
+STD_ROM_FN(nes_mapperless)
+
+struct BurnDriver BurnDrvnes_mapperless = {
+	"nes_mapperless", NULL, NULL, NULL, "2025",
+	"mapperless (Demo)\0", NULL, "Otomata Labs @ Revision 2025", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_mapperlessRomInfo, nes_mapperlessRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

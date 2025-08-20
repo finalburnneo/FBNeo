@@ -307,6 +307,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		ROMData[6] |= 8; // "fix to 4-screen mode" - nesdev wiki
 	}
 
+	if (nes20 && ((ROMData[12] & 3) == 1)) {
+		NESMode |= IS_PAL;
+	}
+
 	bprintf(0, _T("PRG Size: %d\n"), Cart.PRGRomSize);
 	bprintf(0, _T("CHR Size: %d\n"), Cart.CHRRomSize);
 

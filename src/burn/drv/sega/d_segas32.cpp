@@ -4191,7 +4191,7 @@ static INT32 SingleScreenModeChangeCheck()
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
 		BurnDrvSetVisibleSize(screensize, 224);
-		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		ReinitialiseVideo(); // re-inits video subsystem (pBurnDraw)
 		BurnTransferRealloc(); // re-inits pTransDraw
 
 		if (is_slipstrm || is_radr) {

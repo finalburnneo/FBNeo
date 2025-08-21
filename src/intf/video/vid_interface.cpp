@@ -239,6 +239,9 @@ INT32 VidInit()
 					VidExit();
 					nRet = 1;
 				}
+
+				memset(pVidTransPalette, 0, 32768 * sizeof(UINT32));
+				memset(pVidTransImage, 0, nVidImageWidth * nVidImageHeight * sizeof(INT16));
 			}
 		}
 	}
@@ -440,6 +443,7 @@ INT32 VidReInitialise()
 
 		free(pVidTransImage);
 		pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
+		memset(pVidTransImage, 0, nVidImageWidth * nVidImageHeight * sizeof(INT16));
 	}
 
 	pVidImage = NULL; // Invalidate pVidImage* until blitter is reinitted. (pBurnDraw points to it on active video-frames)

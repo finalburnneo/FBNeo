@@ -5190,7 +5190,7 @@ static INT32 res_check()
 		if (screen_height != (v_res[v_idx]*2)) {
 			bprintf(0, _T("switching to 320 x (%d*2) mode\n"), v_res[v_idx]);
 			BurnDrvSetVisibleSize(320, (v_res[v_idx]*2));
-			Reinitialise();
+			ReinitialiseVideo();
 			return 1;
 		}
 	}
@@ -5201,7 +5201,7 @@ static INT32 res_check()
 		if (screen_width != 256 || screen_height != 224) {
 			bprintf(0, _T("switching to 256 x 224 mode\n"));
 			BurnDrvSetVisibleSize(256, 224);
-			Reinitialise();
+			ReinitialiseVideo();
 			return 1;
 		}
 	} else {
@@ -5210,7 +5210,7 @@ static INT32 res_check()
 		if (screen_width != 320 || screen_height != 224) {
 			bprintf(0, _T("switching to 320 x 224 mode\n"));
 			BurnDrvSetVisibleSize(320, 224);
-			Reinitialise();
+			ReinitialiseVideo();
 			return 1;
 		}
 	}

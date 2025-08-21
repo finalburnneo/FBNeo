@@ -437,7 +437,8 @@ INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
 INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 char* BurnDrvGetSourcefile();
 
-void Reinitialise();
+void Reinitialise(); // re-inits everything, including UI window
+void ReinitialiseVideo(); // re-init's video w/ new resolution/aspect ratio (see drv/megadrive.cpp)
 
 // ---------------------------------------------------------------------------
 // IPS Control

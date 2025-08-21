@@ -35,7 +35,12 @@ void InpDIPSWResetDIPs()
 
 void Reinitialise(void)
 {
-	
+
+}
+
+void ReinitialiseVideo(void)
+{
+
 }
 
 void wav_pause(bool bResume)

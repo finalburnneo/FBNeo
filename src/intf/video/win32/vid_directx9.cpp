@@ -1274,8 +1274,9 @@ static int dx9Init()
 
 		GetClientScreenRect(hVidWnd, &rect);
 		rect.top += nMenuHeight; rect.bottom += nMenuHeight;
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		// this clear interferes with bezel (other blitters dont clear the entire screen!)
+//		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+//		pD3DDevice->Present(&rect, &rect, NULL, NULL);
 	}
 
 	// Create osd font
@@ -2351,8 +2352,9 @@ static int dx9AltInit()
 		RECT rect;
 		GetClientScreenRect(hVidWnd, &rect);
 
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		// this clear interferes with bezel (other blitters dont clear the entire screen!)
+		//pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+		//pD3DDevice->Present(&rect, &rect, NULL, NULL);
 	}
 
 	// Create osd font

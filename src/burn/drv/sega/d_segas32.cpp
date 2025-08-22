@@ -4247,7 +4247,7 @@ static INT32 MultiScreenCheck()
 			BurnDrvSetAspect(8, 3);
 			MultiPCMSetMono(0);
 		}
-		Reinitialise(); // re-inits video subsystem (pBurnDraw)
+		ReinitialiseVideo(); // re-inits video subsystem (pBurnDraw)
 		BurnTransferRealloc(); // re-inits pTransDraw
 
 		return 1; // don't draw this time around

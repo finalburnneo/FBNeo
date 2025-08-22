@@ -3930,7 +3930,6 @@ int ScrnSize()
 	int nMaxSize;
 
 	if (hScrnWnd == NULL || nVidFullscreen) {
-		bprintf(0, _T("-no scrnsize()!\n"));
 		return 1;
 	}
 

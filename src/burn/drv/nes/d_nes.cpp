@@ -10320,19 +10320,19 @@ struct BurnDriver BurnDrvnes_termi2c = {
 
 // Exterminador do Futuro 2: O Julgamento Final (Hack, Portuguese v1.1)
 // https://romhackers.org/traducoes/console/nes/terminator-2-judgment-day-po.b.r.e
-static struct BurnRomInfo nes_termi2ptRomDesc[] = {
+static struct BurnRomInfo nes_termi2tpRomDesc[] = {
 	{ "Exterminador do Futuro 2 - O Julgamento Final T-Por v1.1 (2018)(PO.B.R.E.).nes",          262160, 0xb1d2f26e, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_termi2pt)
-STD_ROM_FN(nes_termi2pt)
+STD_ROM_PICK(nes_termi2tp)
+STD_ROM_FN(nes_termi2tp)
 
-struct BurnDriver BurnDrvnes_termi2pt = {
-	"nes_termi2pt", "nes_termi2", NULL, NULL, "2018",
+struct BurnDriver BurnDrvnes_termi2tp = {
+	"nes_termi2tp", "nes_termi2", NULL, NULL, "2018",
 	"Exterminador do Futuro 2: O Julgamento Final (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_SCRFIGHT, 0,
-	NESGetZipName, nes_termi2ptRomInfo, nes_termi2ptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_termi2tpRomInfo, nes_termi2tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -10586,19 +10586,19 @@ struct BurnDriver BurnDrvnes_wolverinec = {
 
 // Wolverine (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/nes/wolverine-po.b.r.e
-static struct BurnRomInfo nes_wolverineptRomDesc[] = {
+static struct BurnRomInfo nes_wolverinetpRomDesc[] = {
 	{ "Wolverine T-Por (2020)(PO.B.R.E.).nes",          262160, 0x36703295, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_wolverinept)
-STD_ROM_FN(nes_wolverinept)
+STD_ROM_PICK(nes_wolverinetp)
+STD_ROM_FN(nes_wolverinetp)
 
-struct BurnDriver BurnDrvnes_wolverinept = {
-	"nes_wolverinept", "nes_wolverine", NULL, NULL, "2020",
+struct BurnDriver BurnDrvnes_wolverinetp = {
+	"nes_wolverinetp", "nes_wolverine", NULL, NULL, "2020",
 	"Wolverine (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_wolverineptRomInfo, nes_wolverineptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_wolverinetpRomInfo, nes_wolverinetpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -12325,6 +12325,24 @@ struct BurnDriver BurnDrvnes_pandaworld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_pandaworldRomInfo, nes_pandaworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Papillon (Taiwan) (Unl)
+static struct BurnRomInfo nes_papillongalsRomDesc[] = {
+	{ "Papillon (Taiwan)(Unl)(1989)(Joy Van & Kinema Music).nes",          98320, 0x5b273e7f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_papillongals)
+STD_ROM_FN(nes_papillongals)
+
+struct BurnDriver BurnDrvnes_papillongals = {
+	"nes_papillongals", "nes_galaccru", NULL, NULL, "1989",
+	"Papillon (Taiwan) (Unl)\0", NULL, "Joy Van & Kinema Music", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_papillongalsRomInfo, nes_papillongalsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -17207,9 +17225,9 @@ struct BurnDriver BurnDrvnes_flappybird = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// FLEA! (HB)
+// FLEA! (HB, v1.1)
 static struct BurnRomInfo nes_fleaRomDesc[] = {
-	{ "FLEA! (2020)(Lowtek Games).nes",          524304, 0xd208c6da, BRF_ESS | BRF_PRG },
+	{ "FLEA! v1.1 (2020)(Lowtek Games).nes",          524304, 0x41078ac4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_flea)
@@ -17217,7 +17235,7 @@ STD_ROM_FN(nes_flea)
 
 struct BurnDriver BurnDrvnes_flea = {
 	"nes_flea", NULL, NULL, NULL, "2020",
-	"FLEA! (HB)\0", NULL, "Lowtek Games", "NES / Famicom",
+	"FLEA! (HB, v1.1)\0", NULL, "Lowtek Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_fleaRomInfo, nes_fleaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18742,9 +18760,9 @@ struct BurnDriver BurnDrvnes_kirbyshlw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Knight on the Moon (HB, v1.02)
+// Knight on the Moon (HB, v1.09)
 static struct BurnRomInfo nes_knightmoonRomDesc[] = {
-	{ "Knight on the Moon v1.02 (2025)(kn56k).nes",          524304, 0x4c2e62b1, BRF_ESS | BRF_PRG },
+	{ "Knight on the Moon v1.09 (2025)(kn56k).nes",          524304, 0x3841984a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_knightmoon)
@@ -18752,7 +18770,7 @@ STD_ROM_FN(nes_knightmoon)
 
 struct BurnDriver BurnDrvnes_knightmoon = {
 	"nes_knightmoon", NULL, NULL, NULL, "2025",
-	"Knight on the Moon (HB, v1.02)\0", NULL, "kn56k", "NES / Famicom",
+	"Knight on the Moon (HB, v1.09)\0", NULL, "kn56k", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_knightmoonRomInfo, nes_knightmoonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18790,7 +18808,7 @@ struct BurnDriver BurnDrvnes_labbaye = {
 	"nes_labbaye", NULL, NULL, NULL, "2021",
 	"L'Abbaye des Morts (HB, M5)\0", NULL, "Broke Studio", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_labbayeRomInfo, nes_labbayeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -22392,9 +22410,9 @@ struct BurnDriver BurnDrvnes_slowmoleplus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Slow Mole Jr. (HB, v0.9b)
+// Slow Mole Jr. (HB, v0.99)
 static struct BurnRomInfo nes_slowmolejrRomDesc[] = {
-	{ "Slow Mole Jr. v0.9b (2025)(Slow Mole Studio).nes",          163856, 0x7448a8a4, BRF_ESS | BRF_PRG },
+	{ "Slow Mole Jr. v0.99 (2025)(Slow Mole Studio).nes",          163856, 0x4acaee81, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_slowmolejr)
@@ -22402,7 +22420,7 @@ STD_ROM_FN(nes_slowmolejr)
 
 struct BurnDriver BurnDrvnes_slowmolejr = {
 	"nes_slowmolejr", NULL, NULL, NULL, "2025",
-	"Slow Mole Jr. (HB, v0.9b)\0", NULL, "Slow Mole Studio", "NES / Famicom",
+	"Slow Mole Jr. (HB, v0.99)\0", NULL, "Slow Mole Studio", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_slowmolejrRomInfo, nes_slowmolejrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34695,7 +34713,7 @@ struct BurnDriver BurnDrvnes_flipull = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Flying Dragon - The Secret Scroll (USA)
+// Flying Dragon: The Secret Scroll (USA)
 static struct BurnRomInfo nes_flyindraRomDesc[] = {
 	{ "Flying Dragon - The Secret Scroll (USA)(1989)(Culture Brain).nes",          131088, 0xc2f70a8c, BRF_ESS | BRF_PRG },
 };
@@ -34705,7 +34723,7 @@ STD_ROM_FN(nes_flyindra)
 
 struct BurnDriver BurnDrvnes_flyindra = {
 	"nes_flyindra", NULL, NULL, NULL, "1989",
-	"Flying Dragon - The Secret Scroll (USA)\0", NULL, "Culture Brain", "NES / Famicom",
+	"Flying Dragon: The Secret Scroll (USA)\0", NULL, "Culture Brain", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_flyindraRomInfo, nes_flyindraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34724,7 +34742,7 @@ STD_ROM_FN(nes_flyinghero)
 struct BurnDriver BurnDrvnes_flyinghero = {
 	"nes_flyinghero", NULL, NULL, NULL, "1989",
 	"Flying Hero (Japan)\0", NULL, "ASCII Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Flying Hero (Japan)\0\u98dBing \u30d2\u30fc\u30ed\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_flyingheroRomInfo, nes_flyingheroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -34767,7 +34785,7 @@ struct BurnDriver BurnDrvnes_formationz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Formula One - Built To Win (USA)
+// Formula One: Built To Win (USA)
 static struct BurnRomInfo nes_formuoneRomDesc[] = {
 	{ "Formula One - Built To Win (USA)(1990)(Seta).nes",          262160, 0x037eed7d, BRF_ESS | BRF_PRG },
 };
@@ -34777,7 +34795,7 @@ STD_ROM_FN(nes_formuone)
 
 struct BurnDriver BurnDrvnes_formuone = {
 	"nes_formuone", NULL, NULL, NULL, "1990",
-	"Formula One - Built To Win (USA)\0", NULL, "Seta", "NES / Famicom",
+	"Formula One: Built To Win (USA)\0", NULL, "Seta", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_formuoneRomInfo, nes_formuoneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -35002,9 +35020,9 @@ struct BurnDriver BurnDrvnes_gaiapolis = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Galactic Crusader (Taiwan) (Unl)
+// Galactic Crusader (USA) (Unl)
 static struct BurnRomInfo nes_galaccruRomDesc[] = {
-	{ "Galactic Crusader (Taiwan)(Unl)(1990)(Sachen - Joy Van).nes",          65552, 0xce3f8820, BRF_ESS | BRF_PRG },
+	{ "Galactic Crusader (USA)(Unl)(1990)(Bunch Games - Sachen).nes",          65552, 0xce3f8820, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_galaccru)
@@ -35012,9 +35030,9 @@ STD_ROM_FN(nes_galaccru)
 
 struct BurnDriver BurnDrvnes_galaccru = {
 	"nes_galaccru", NULL, NULL, NULL, "1990",
-	"Galactic Crusader (Taiwan) (Unl)\0", NULL, "Sachen - Joy Van", "NES / Famicom",
+	"Galactic Crusader (USA) (Unl)\0", NULL, "Bunch Games - Sachen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_galaccruRomInfo, nes_galaccruRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45025,7 +45043,7 @@ struct BurnDriver BurnDrvnes_overlord = {
 
 // Paaman: Enban wo Torikaese!! (Japan)
 static struct BurnRomInfo nes_paamanRomDesc[] = {
-	{ "Paaman - Enban wo Torikaese!! (Japan)(1990)(Irem).nes",          262160, 0x93f7c1a9, BRF_ESS | BRF_PRG },
+	{ "Paaman - Enban wo Torikaese!! (Japan)(1990)(Irem).nes",          262160, 0x02dd2b01, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_paaman)
@@ -45035,7 +45053,7 @@ struct BurnDriver BurnDrvnes_paaman = {
 	"nes_paaman", "nes_perman", NULL, NULL, "1990",
 	"Paaman: Enban wo Torikaese!! (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
 	L"Paaman: Enban wo Torikaese!! (Japan)\0\u30d1\u30fc\u30de\u30f3 \u5186\u76e4\u3092 \u3068\u308a\u304b\u3048\u305b!!\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_BOARD | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_BOARD | GBF_PLATFORM, 0,
 	NESGetZipName, nes_paamanRomInfo, nes_paamanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45108,7 +45126,7 @@ STD_ROM_FN(nes_pacdaisa2j)
 struct BurnDriver BurnDrvnes_pacdaisa2j = {
 	"nes_pacdaisa2j", "nes_pacdaisa2", NULL, NULL, "1992",
 	"Pachinko Daisakusen 2 (Japan)\0", NULL, "Coconuts Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Pachinko Daisakusen 2 (Japan)\0\u30d1\u30c1\u30f3\u30b3\u5927\u4f5c\u6226 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_CASINO, 0,
 	NESGetZipName, nes_pacdaisa2jRomInfo, nes_pacdaisa2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -45126,7 +45144,7 @@ STD_ROM_FN(nes_pacdaisaj)
 struct BurnDriver BurnDrvnes_pacdaisaj = {
 	"nes_pacdaisaj", "nes_pacdaisa", NULL, NULL, "1991",
 	"Pachinko Daisakusen (Japan)\0", NULL, "Coconuts Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Pachinko Daisakusen (Japan)\0\u30d1\u30c1\u30f3\u30b3\u5927\u4f5c\u6226\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_CASINO, 0,
 	NESGetZipName, nes_pacdaisajRomInfo, nes_pacdaisajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -45241,7 +45259,25 @@ struct BurnDriver BurnDrvnes_palamedes = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)
+// Palamedes (Japan)
+static struct BurnRomInfo nes_palamedesjRomDesc[] = {
+	{ "Palamedes (Japan)(1990)(HOT-B).nes",          65552, 0x6ece1b48, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_palamedesj)
+STD_ROM_FN(nes_palamedesj)
+
+struct BurnDriver BurnDrvnes_palamedesj = {
+	"nes_palamedesj", "nes_palamedes", NULL, NULL, "1990",
+	"Palamedes (Japan)\0", NULL, "HOT-B", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_palamedesjRomInfo, nes_palamedesjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Palamedes II: Star Twinkle, Hoshi no Mabataki (Japan)
 static struct BurnRomInfo nes_palamiiRomDesc[] = {
 	{ "Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)(1991)(HOT-B).nes",          65552, 0x0fdad901, BRF_ESS | BRF_PRG },
 };
@@ -45251,7 +45287,7 @@ STD_ROM_FN(nes_palamii)
 
 struct BurnDriver BurnDrvnes_palamii = {
 	"nes_palamii", NULL, NULL, NULL, "1991",
-	"Palamedes II - Star Twinkle, Hoshi no Mabataki (Japan)\0", NULL, "HOT-B", "NES / Famicom",
+	"Palamedes II: Star Twinkle, Hoshi no Mabataki (Japan)\0", NULL, "HOT-B", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_palamiiRomInfo, nes_palamiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45327,24 +45363,6 @@ struct BurnDriver BurnDrvnes_paperboy2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_paperboy2RomInfo, nes_paperboy2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Papillon Gals (Japan) (Unl)
-static struct BurnRomInfo nes_papillongalsRomDesc[] = {
-	{ "Papillon Gals (Japan)(Unl)(1989)(Joy Van and Kinema Music).nes",          98320, 0x5b273e7f, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_papillongals)
-STD_ROM_FN(nes_papillongals)
-
-struct BurnDriver BurnDrvnes_papillongals = {
-	"nes_papillongals", NULL, NULL, NULL, "1989",
-	"Papillon Gals (Japan) (Unl)\0", NULL, "Joy Van & Kinema Music", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
-	NESGetZipName, nes_papillongalsRomInfo, nes_papillongalsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -45646,7 +45664,7 @@ struct BurnDriver BurnDrvnes_perfectbowling = {
 // Perman: Return the Space Saucer! (Hack, English v2.0)
 // https://www.romhacking.net/translations/2588/
 static struct BurnRomInfo nes_permanRomDesc[] = {
-	{ "Perman - Return the Space Saucer! T-Eng v2.0 (2016)(Zynk Oxhyde).nes",          262160, 0x024a635f, BRF_ESS | BRF_PRG },
+	{ "Perman - Return the Space Saucer! T-Eng v2.0 (2016)(Zynk Oxhyde).nes",          262160, 0x936089f7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_perman)
@@ -45656,7 +45674,7 @@ struct BurnDriver BurnDrvnes_perman = {
 	"nes_perman", NULL, NULL, NULL, "2016",
 	"Perman: Return the Space Saucer! (Hack, English v2.0)\0", NULL, "Zynk Oxhyde", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_BOARD | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_BOARD | GBF_PLATFORM, 0,
 	NESGetZipName, nes_permanRomInfo, nes_permanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

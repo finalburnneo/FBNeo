@@ -48,7 +48,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			\
 			d_psikyo.o d_psikyo4.o d_psikyosh.o \
 			\
-			d_angelkds.o d_appoooh.o d_bankp.o d_dotrikun.o d_hangon.o d_outrun.o d_segac2.o d_segae.o d_segag80v.o d_segas32.o d_suprloco.o d_sys1.o d_sys16a.o d_sys16b.o d_sys18.o \
+			d_119.o d_angelkds.o d_appoooh.o d_bankp.o d_dotrikun.o d_hangon.o d_outrun.o d_segac2.o d_segae.o d_segag80v.o d_segas32.o d_suprloco.o d_sys1.o d_sys16a.o d_sys16b.o d_sys18.o \
 			d_sys24.o d_turbo.o d_xbrd.o d_ybrd.o d_zaxxon.o \
 			\
 			d_arkanoid.o d_ashnojoe.o d_asuka.o d_bublbobl.o d_buggychl.o d_chaknpop.o d_crbaloon.o d_cyclemb.o d_darius2.o d_exzisus.o d_flstory.o d_galastrm.o d_gladiatr.o \

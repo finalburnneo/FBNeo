@@ -73,18 +73,20 @@ static void SekRunM68k(INT32 cyc)
 }
 
 static UINT64 z80_cycle_cnt;
+static INT32 Z80HasBus = 0;
+static INT32 MegadriveZ80Reset = 0;
 
 #define z80CyclesReset()        { z80_cycle_cnt = 0; }
 #define cycles_68k_to_z80(x)    ((UINT64) (x)*957 >> 11 )
 
 /* sync z80 to 68k */
-static void z80CyclesSync(INT32 bRun)
+static void z80CyclesSync()
 {
 	INT64 z80_total = cycles_68k_to_z80(SekCyclesDone());
 	INT32 cnt = z80_total - z80_cycle_cnt;
 
 	if (cnt > 0) {
-		if (bRun) {
+		if (Z80HasBus && !MegadriveZ80Reset) {
 			z80_cycle_cnt += ZetRun(cnt);
 		} else {
 			z80_cycle_cnt += cnt;
@@ -258,9 +260,6 @@ static UINT32 RomSize = 0;
 static UINT32 SRamSize = 0;
 
 static INT32 Scanline = 0;
-
-static INT32 Z80HasBus = 0;
-static INT32 MegadriveZ80Reset = 0;
 
 static INT32 dma_xfers = 0; // vdp dma
 
@@ -594,12 +593,12 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xA11100: {
 			if (byteValue & 1) {
 				if (Z80HasBus == 1) {
-					z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
+					z80CyclesSync(); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
 					Z80HasBus = 0;
 				}
 			} else {
 				if (Z80HasBus == 0) {
-					z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
+					z80CyclesSync(); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
 					z80_cycle_cnt += 2;
 					Z80HasBus = 1;
 				}
@@ -610,13 +609,13 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xA11200: {
 			if (~byteValue & 1) {
 				if (MegadriveZ80Reset == 0) {
-					z80CyclesSync(Z80HasBus && !MegadriveZ80Reset);
+					z80CyclesSync();
 					BurnMD2612Reset();
 					MegadriveZ80Reset = 1;
 				}
 			} else {
 				if (MegadriveZ80Reset == 1) {
-					z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
+					z80CyclesSync(); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
 					ZetReset();
 					z80_cycle_cnt += 2;
 					MegadriveZ80Reset = 0;
@@ -5343,7 +5342,6 @@ INT32 MegadriveFrame()
 
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 vcnt_wrap = 0;
-	INT32 zirq_skipped = 0;
 #ifdef CYCDBUG
 	INT32 burny = 0;
 #endif
@@ -5456,18 +5454,13 @@ INT32 MegadriveFrame()
 			}
 		}
 
-		if (Z80HasBus && !MegadriveZ80Reset) {
-			z80CyclesSync(1);
+		z80CyclesSync();
 
-			if (y == line_sample || (y == lines_vis && zirq_skipped)) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-				zirq_skipped = 0;
-			}
-		} else {
-			if (y == line_sample) {
-				zirq_skipped = 1; // if the irq gets skipped, try again @ vbl
-			}
-			z80CyclesSync(0);
+		if (y == line_sample) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
+		if (y == line_sample+1) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 
 		// Run scanline
@@ -5485,7 +5478,7 @@ INT32 MegadriveFrame()
 			SekRunM68k(CYCLES_M68K_LINE);
 		}
 
-		z80CyclesSync(Z80HasBus && !MegadriveZ80Reset);
+		z80CyclesSync();
 
 #ifdef CYCDBUG
 		if (burny)
@@ -5494,13 +5487,6 @@ INT32 MegadriveFrame()
 	}
 
 	if (pBurnDraw) MegadriveDraw();
-
-#if 0
-	// this makes no sense
-	if (Z80HasBus && !MegadriveZ80Reset) {
-		z80CyclesSync(1);
-	}
-#endif
 
 	if (pBurnSoundOut) {
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);

@@ -3658,6 +3658,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_igs011.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_119.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

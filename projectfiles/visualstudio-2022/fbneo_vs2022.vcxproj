@@ -273,6 +273,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_x2222.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_119.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />

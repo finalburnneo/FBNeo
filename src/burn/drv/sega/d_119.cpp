@@ -11,6 +11,7 @@ static UINT8 DrvRecalc;
 static UINT8 character_bank;
 static UINT8 sprite_bank;
 static UINT8 nmi_enable;
+static INT32 nCyclesExtra[2];
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	GalInputPort1 + 5,	"p1 coin"	},
@@ -198,6 +199,8 @@ static INT32 DrvDoReset()
 	GalFlipScreenX = 0;
 	GalFlipScreenY = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	return 0;
 }
 
@@ -291,9 +294,10 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
-	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -420,7 +424,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	GalVBlank = 1;
 
@@ -448,6 +452,8 @@ static INT32 DrvFrame()
 			}
 		}
 	}
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -483,6 +489,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(GalFlipScreenY);
 		SCAN_VAR(GalSoundLatch);
 		SCAN_VAR(nmi_enable);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

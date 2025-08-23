@@ -1,0 +1,791 @@
+<?xml version="1.0"?>
+<!DOCTYPE datafile PUBLIC "-//FinalBurn Neo//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">
+
+<datafile>
+	<header>
+		<name>FinalBurn Neo [DEBUG] - Psikyo Games</name>
+		<description>FinalBurn Neo [DEBUG] v1.0.0.03 Psikyo Games</description>
+		<category>Standard DatFile</category>
+		<version>1.0.0.03</version>
+		<author>FinalBurn Neo [DEBUG]</author>
+		<homepage>https://neo-source.com/</homepage>
+		<url>https://neo-source.com/</url>
+		<clrmamepro forcenodump="ignore"/>
+	</header>
+	<game name="btlkroadk" cloneof="btlkroad" romof="btlkroad" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Battle K-Road (Korea)</description>
+		<year>1994</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4,dot.u46" size="262144" crc="e724d429"/>
+		<rom name="5,dot.u39" size="262144" crc="c0d65765"/>
+		<rom name="u14.bin" merge="u14.bin" size="2097152" crc="282d89c3"/>
+		<rom name="u24.bin" merge="u24.bin" size="2097152" crc="bbe9d3d1"/>
+		<rom name="u15.bin" merge="u15.bin" size="2097152" crc="d4d1b07c"/>
+		<rom name="u3.bin" merge="u3.bin" size="262144" crc="30d541ed"/>
+		<rom name="u33.bin" merge="u33.bin" size="2097152" crc="4c8577f1"/>
+		<rom name="3,k.u71" size="131072" crc="e0f0c597"/>
+		<rom name="u64.bin" merge="u64.bin" size="524288" crc="0f33049f"/>
+		<rom name="u56.bin" merge="u56.bin" size="1048576" crc="51d73682"/>
+		<rom name="tibpal16l8.u69" size="260" status="nodump"/>
+		<rom name="tibpal16l8.u19" size="260" status="nodump"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="btlkroad" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Battle K-Road</description>
+		<year>1994</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4-u46.bin" size="262144" crc="8a7a28b4"/>
+		<rom name="5-u39.bin" size="262144" crc="933561fa"/>
+		<rom name="u14.bin" size="2097152" crc="282d89c3"/>
+		<rom name="u24.bin" size="2097152" crc="bbe9d3d1"/>
+		<rom name="u15.bin" size="2097152" crc="d4d1b07c"/>
+		<rom name="u3.bin" size="262144" crc="30d541ed"/>
+		<rom name="u33.bin" size="2097152" crc="4c8577f1"/>
+		<rom name="3-u71.bin" size="131072" crc="22411fab"/>
+		<rom name="u64.bin" size="524288" crc="0f33049f"/>
+		<rom name="u56.bin" size="1048576" crc="51d73682"/>
+		<rom name="tibpal16l8.u69" size="260" status="nodump"/>
+		<rom name="tibpal16l8.u19" size="260" status="nodump"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragnblz" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Dragon Blaze</description>
+		<year>2000</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1prog_l.u22" size="524288" crc="95d6fd02"/>
+		<rom name="2prog_h.u21" size="524288" crc="fc5eade8"/>
+		<rom name="1l.u4" size="2097152" crc="c2eb565c"/>
+		<rom name="1h.u12" size="2097152" crc="23cb46b7"/>
+		<rom name="2l.u5" size="2097152" crc="bc256aea"/>
+		<rom name="2h.u13" size="2097152" crc="b75f59ec"/>
+		<rom name="3l.u6" size="2097152" crc="4284f008"/>
+		<rom name="3h.u14" size="2097152" crc="abe5cbbf"/>
+		<rom name="4l.u7" size="2097152" crc="c9fcf2e5"/>
+		<rom name="4h.u15" size="2097152" crc="0ab0a12a"/>
+		<rom name="5l.u8" size="2097152" crc="68d03ccf"/>
+		<rom name="5h.u16" size="2097152" crc="5450fbca"/>
+		<rom name="6l.u1" size="2097152" crc="8b52c90b"/>
+		<rom name="6h.u2" size="2097152" crc="7362f929"/>
+		<rom name="7l.u19" size="2097152" crc="b4f4d86e"/>
+		<rom name="7h.u20" size="2097152" crc="44b7b9cc"/>
+		<rom name="8l.u28" size="2097152" crc="cd079f89"/>
+		<rom name="8h.u29" size="2097152" crc="3edb508a"/>
+		<rom name="9l.u41" size="2097152" crc="0b53cd78"/>
+		<rom name="9h.u42" size="2097152" crc="bc61998a"/>
+		<rom name="10l.u58" size="2097152" crc="a3f5c7f8"/>
+		<rom name="10h.u59" size="2097152" crc="30e304c4"/>
+		<rom name="snd0.u52" size="2097152" crc="7fd1b225"/>
+		<rom name="eeprom-dragnblz.u44" size="256" crc="46e85da9"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gnbarich" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Gunbarich</description>
+		<year>2001</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1-prog_h.u22" size="524288" crc="6588fc96"/>
+		<rom name="2-prog_l.u21" size="524288" crc="c136cd9c"/>
+		<rom name="6l.u1" size="2097152" crc="0432e1a8"/>
+		<rom name="6h.u2" size="2097152" crc="f90fa3ea"/>
+		<rom name="7l.u19" size="2097152" crc="36bf9a58"/>
+		<rom name="7h.u20" size="2097152" crc="4b3eafd8"/>
+		<rom name="8l.u28" size="2097152" crc="026754da"/>
+		<rom name="8h.u29" size="2097152" crc="8cd7aaa0"/>
+		<rom name="9l.u41" size="2097152" crc="02c066fe"/>
+		<rom name="9h.u42" size="2097152" crc="5433385a"/>
+		<rom name="snd0.u52" size="2097152" crc="7b10436b"/>
+		<rom name="eeprom-gnbarich.bin" size="256" crc="0f5bf42f"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunbirdj" cloneof="gunbird" romof="gunbird" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Gunbird (Japan)</description>
+		<year>1994</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1.u46" size="262144" crc="474abd69"/>
+		<rom name="2.u39" size="262144" crc="3e3e661f"/>
+		<rom name="u14.bin" merge="u14.bin" size="2097152" crc="7d7e8a00"/>
+		<rom name="u24.bin" merge="u24.bin" size="2097152" crc="5e3ffc9d"/>
+		<rom name="u15.bin" merge="u15.bin" size="2097152" crc="a827bfb5"/>
+		<rom name="u25.bin" merge="u25.bin" size="1048576" crc="ef652e0c"/>
+		<rom name="u3.bin" merge="u3.bin" size="262144" crc="0905aeb2"/>
+		<rom name="u33.bin" merge="u33.bin" size="2097152" crc="54494e6b"/>
+		<rom name="3.u71" merge="3.u71" size="131072" crc="2168e4ba"/>
+		<rom name="u64.bin" merge="u64.bin" size="524288" crc="e187ed4f"/>
+		<rom name="u56.bin" merge="u56.bin" size="1048576" crc="9e07104d"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunbirdk" cloneof="gunbird" romof="gunbird" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Gunbird (Korea)</description>
+		<year>1994</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1k.u46" size="524288" crc="745cee52"/>
+		<rom name="2k.u39" size="524288" crc="669632fb"/>
+		<rom name="u14.bin" merge="u14.bin" size="2097152" crc="7d7e8a00"/>
+		<rom name="u24.bin" merge="u24.bin" size="2097152" crc="5e3ffc9d"/>
+		<rom name="u15.bin" merge="u15.bin" size="2097152" crc="a827bfb5"/>
+		<rom name="u25.bin" merge="u25.bin" size="1048576" crc="ef652e0c"/>
+		<rom name="u3.bin" merge="u3.bin" size="262144" crc="0905aeb2"/>
+		<rom name="u33.bin" merge="u33.bin" size="2097152" crc="54494e6b"/>
+		<rom name="k3.u71" size="131072" crc="11994055"/>
+		<rom name="u64.bin" merge="u64.bin" size="524288" crc="e187ed4f"/>
+		<rom name="u56.bin" merge="u56.bin" size="1048576" crc="9e07104d"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunbird" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Gunbird (World)</description>
+		<year>1994</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4.u46" size="262144" crc="b78ec99d"/>
+		<rom name="5.u39" size="262144" crc="925f095d"/>
+		<rom name="u14.bin" size="2097152" crc="7d7e8a00"/>
+		<rom name="u24.bin" size="2097152" crc="5e3ffc9d"/>
+		<rom name="u15.bin" size="2097152" crc="a827bfb5"/>
+		<rom name="u25.bin" size="1048576" crc="ef652e0c"/>
+		<rom name="u3.bin" size="262144" crc="0905aeb2"/>
+		<rom name="u33.bin" size="2097152" crc="54494e6b"/>
+		<rom name="3.u71" size="131072" crc="2168e4ba"/>
+		<rom name="u64.bin" size="524288" crc="e187ed4f"/>
+		<rom name="u56.bin" size="1048576" crc="9e07104d"/>
+		<rom name="3020.u19" size="1" status="nodump"/>
+		<rom name="3021.u69" size="1" status="nodump"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunbird2" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Gunbird 2 (set 1)</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2_prog_l.u16" size="524288" crc="76f934f0"/>
+		<rom name="1_prog_h.u17" size="524288" crc="7328d8bf"/>
+		<rom name="3_pdata.u1" size="524288" crc="a5b697e6"/>
+		<rom name="0l.u3" size="8388608" crc="5c826bc8"/>
+		<rom name="0h.u10" size="8388608" crc="3df0cb6c"/>
+		<rom name="1l.u4" size="8388608" crc="1558358d"/>
+		<rom name="1h.u11" size="8388608" crc="4ee0103b"/>
+		<rom name="2l.u5" size="8388608" crc="e1c7a7b8"/>
+		<rom name="2h.u12" size="8388608" crc="bc8a41df"/>
+		<rom name="3l.u6" size="4194304" crc="0229d37f"/>
+		<rom name="3h.u13" size="4194304" crc="f41bbf2b"/>
+		<rom name="sound.u9" size="4194304" crc="f19796ab"/>
+		<rom name="eeprom-gunbird2.bin" size="256" crc="7ac38846"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunbird2a" cloneof="gunbird2" romof="gunbird2" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Gunbird 2 (set 2)</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="prog_l.u16" size="524288" crc="974f85ba"/>
+		<rom name="prog_h.u17" size="524288" crc="cb0cb826"/>
+		<rom name="pdata.u1" size="524288" crc="23751839"/>
+		<rom name="0l.u3" merge="0l.u3" size="8388608" crc="5c826bc8"/>
+		<rom name="0h.u10" merge="0h.u10" size="8388608" crc="3df0cb6c"/>
+		<rom name="1l.u4" merge="1l.u4" size="8388608" crc="1558358d"/>
+		<rom name="1h.u11" merge="1h.u11" size="8388608" crc="4ee0103b"/>
+		<rom name="2l.u5" merge="2l.u5" size="8388608" crc="e1c7a7b8"/>
+		<rom name="2h.u12" merge="2h.u12" size="8388608" crc="bc8a41df"/>
+		<rom name="3l.u6" merge="3l.u6" size="4194304" crc="0229d37f"/>
+		<rom name="3h.u13" merge="3h.u13" size="4194304" crc="f41bbf2b"/>
+		<rom name="sound.u9" merge="sound.u9" size="4194304" crc="f19796ab"/>
+		<rom name="eeprom-gunbird2.bin" merge="eeprom-gunbird2.bin" size="256" crc="7ac38846"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="loderndfa" cloneof="loderndf" romof="loderndf" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Lode Runner - The Dig Fight (ver. A)</description>
+		<year>2000</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="12.u23" size="524288" crc="661d372e"/>
+		<rom name="3.u22" size="524288" crc="0a63529f"/>
+		<rom name="0l.u2" merge="0l.u2" size="8388608" crc="ccae855d"/>
+		<rom name="0h.u11" merge="0h.u11" size="8388608" crc="7a146c59"/>
+		<rom name="1l.u3" merge="1l.u3" size="8388608" crc="7a9cd21e"/>
+		<rom name="1h.u12" merge="1h.u12" size="8388608" crc="78f40d0d"/>
+		<rom name="snd0.u10" merge="snd0.u10" size="8388608" crc="2da3788f"/>
+		<video type="raster" orientation="horizontal" width="640" height="240" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="loderndf" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Lode Runner - The Dig Fight (ver. B)</description>
+		<year>2000</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1b.u23" size="524288" crc="fae92286"/>
+		<rom name="2b.u22" size="524288" crc="fe2424c0"/>
+		<rom name="0l.u2" size="8388608" crc="ccae855d"/>
+		<rom name="0h.u11" size="8388608" crc="7a146c59"/>
+		<rom name="1l.u3" size="8388608" crc="7a9cd21e"/>
+		<rom name="1h.u12" size="8388608" crc="78f40d0d"/>
+		<rom name="snd0.u10" size="8388608" crc="2da3788f"/>
+		<video type="raster" orientation="horizontal" width="640" height="240" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mjgtaste" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Mahjong G-Taste</description>
+		<year>2002</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1.u22" size="524288" crc="f5ff7876"/>
+		<rom name="2.u21" size="524288" crc="5f2041dc"/>
+		<rom name="1l.u4" size="2097152" crc="30da42b1"/>
+		<rom name="1h.u12" size="2097152" crc="629c1d44"/>
+		<rom name="2l.u5" size="2097152" crc="1f6126ab"/>
+		<rom name="2h.u13" size="2097152" crc="dba34e46"/>
+		<rom name="3l.u6" size="2097152" crc="1023e35e"/>
+		<rom name="3h.u14" size="2097152" crc="8aebec7f"/>
+		<rom name="4l.u7" size="2097152" crc="9acf018b"/>
+		<rom name="4h.u15" size="2097152" crc="f93e154c"/>
+		<rom name="snd0.u52" size="4194304" crc="0179f018"/>
+		<rom name="eeprom-mjgtaste.u44" size="256" crc="d35586f2"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotgmcki" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Mahjong Hot Gimmick Integral (Japan)</description>
+		<year>2001</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2.u22" size="524288" crc="abc192dd"/>
+		<rom name="1.u23" size="524288" crc="8be896d0"/>
+		<rom name="prog.u1" size="2097152" crc="9017ae8e"/>
+		<rom name="0l.u2" size="2097152" crc="58ae45eb"/>
+		<rom name="0h.u11" size="2097152" crc="d7bbb929"/>
+		<rom name="1l.u3" size="2097152" crc="27576360"/>
+		<rom name="1h.u12" size="2097152" crc="7439a63f"/>
+		<rom name="2l.u4" size="2097152" crc="fda64e24"/>
+		<rom name="2h.u13" size="2097152" crc="8be54ea6"/>
+		<rom name="3l.u5" size="2097152" crc="92507b3f"/>
+		<rom name="3h.u14" size="2097152" crc="042bef5e"/>
+		<rom name="4l.u6" size="2097152" crc="023b6d70"/>
+		<rom name="4h.u15" size="2097152" crc="9be7e8b1"/>
+		<rom name="5l.u7" size="2097152" crc="7aa54306"/>
+		<rom name="5h.u16" size="2097152" crc="e6b48e52"/>
+		<rom name="6l.u8" size="2097152" crc="dfe675e9"/>
+		<rom name="6h.u17" size="2097152" crc="45919576"/>
+		<rom name="7l.u9" size="2097152" crc="cd3af598"/>
+		<rom name="7h.u18" size="2097152" crc="a3fd4ae5"/>
+		<rom name="snd0.u10" size="4194304" crc="5f275f35"/>
+		<rom name="snd1.u19" size="4194304" crc="98608779"/>
+		<video type="raster" orientation="horizontal" width="640" height="224" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotdebut" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Quiz de Idol! Hot Debut (Japan)</description>
+		<year>2000</year>
+		<manufacturer>MOSS / Psikyo</manufacturer>
+		<rom name="1.u23" size="524288" crc="0b0d0027"/>
+		<rom name="2.u22" size="524288" crc="c3b5180b"/>
+		<rom name="0l.u2" size="4194304" crc="15da9983"/>
+		<rom name="0h.u11" size="4194304" crc="76d7b73f"/>
+		<rom name="1l.u3" size="4194304" crc="76ea3498"/>
+		<rom name="1h.u12" size="4194304" crc="a056859f"/>
+		<rom name="2l.u4" size="4194304" crc="9d2d1bb1"/>
+		<rom name="2h.u13" size="4194304" crc="a7753c4d"/>
+		<rom name="snd0.u10" size="4194304" crc="eef28aa7"/>
+		<video type="raster" orientation="horizontal" width="640" height="240" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="samuraia" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Samurai Aces (World)</description>
+		<year>1993</year>
+		<manufacturer>Psikyo (Banpresto license)</manufacturer>
+		<rom name="4-u127.bin" size="262144" crc="8c9911ca"/>
+		<rom name="5-u126.bin" size="262144" crc="d20c3ef0"/>
+		<rom name="u14.bin" size="2097152" crc="00a546cb"/>
+		<rom name="u11.bin" size="262144" crc="11a04d91"/>
+		<rom name="u34.bin" size="1048576" crc="e6a75bd8"/>
+		<rom name="u35.bin" size="1048576" crc="c4ca0164"/>
+		<rom name="3-u58.bin" size="131072" crc="310f5c76"/>
+		<rom name="u68.bin" size="1048576" crc="9a7f6c34"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="sngkace" cloneof="samuraia" romof="samuraia" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Sengoku Ace (Japan, set 1)</description>
+		<year>1993</year>
+		<manufacturer>Psikyo (Banpresto license)</manufacturer>
+		<rom name="1-u127.bin" size="262144" crc="6c45b2f8"/>
+		<rom name="2-u126.bin" size="262144" crc="845a6760"/>
+		<rom name="u14.bin" merge="u14.bin" size="2097152" crc="00a546cb"/>
+		<rom name="u11.bin" merge="u11.bin" size="262144" crc="11a04d91"/>
+		<rom name="u34.bin" merge="u34.bin" size="1048576" crc="e6a75bd8"/>
+		<rom name="u35.bin" merge="u35.bin" size="1048576" crc="c4ca0164"/>
+		<rom name="3-u58.bin" merge="3-u58.bin" size="131072" crc="310f5c76"/>
+		<rom name="u68.bin" merge="u68.bin" size="1048576" crc="9a7f6c34"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="sngkacea" cloneof="samuraia" romof="samuraia" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Sengoku Ace (Japan, set 2)</description>
+		<year>1993</year>
+		<manufacturer>Psikyo (Banpresto license)</manufacturer>
+		<rom name="1.-u127.bin" size="262144" crc="3a43708d"/>
+		<rom name="2.-u126.bin" size="262144" crc="7aa50c46"/>
+		<rom name="u14.bin" merge="u14.bin" size="2097152" crc="00a546cb"/>
+		<rom name="u11.bin" merge="u11.bin" size="262144" crc="11a04d91"/>
+		<rom name="u34.bin" merge="u34.bin" size="1048576" crc="e6a75bd8"/>
+		<rom name="u35.bin" merge="u35.bin" size="1048576" crc="c4ca0164"/>
+		<rom name="3-u58.bin" merge="3-u58.bin" size="131072" crc="310f5c76"/>
+		<rom name="u68.bin" merge="u68.bin" size="1048576" crc="9a7f6c34"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="tengaij" cloneof="tengai" romof="tengai" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Sengoku Blade: Sengoku Ace Episode II (Japan) / Tengai (World)</description>
+		<year>1996</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2-u40.bin" size="524288" crc="ab6fe58a"/>
+		<rom name="3-u41.bin" size="524288" crc="02e42e39"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="ed42ef73"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="8d21caee"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="efe34eed"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="681d7d55"/>
+		<rom name="u34.bin" merge="u34.bin" size="4194304" crc="2a2e2eeb"/>
+		<rom name="1-u63.bin" merge="1-u63.bin" size="131072" crc="2025e387"/>
+		<rom name="u61.bin" merge="u61.bin" size="2097152" crc="a63633c5"/>
+		<rom name="u62.bin" merge="u62.bin" size="2097152" crc="3ad0c357"/>
+		<rom name="4.u59" merge="4.u59" size="4096" crc="e563b054"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soldividk" cloneof="soldivid" romof="soldivid" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Sol Divide - The Sword Of Darkness (Korea)</description>
+		<year>1997</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="9-prog_lk.u18" size="524288" crc="b534029d"/>
+		<rom name="8-prog_hk.u17" size="524288" crc="a48e3206"/>
+		<rom name="4l.u10" merge="4l.u10" size="4194304" crc="9eb9f269"/>
+		<rom name="4h.u31" merge="4h.u31" size="4194304" crc="7c76cfe7"/>
+		<rom name="5l.u9" merge="5l.u9" size="4194304" crc="c59c6858"/>
+		<rom name="5h.u30" merge="5h.u30" size="4194304" crc="73bc66d0"/>
+		<rom name="6l.u8" merge="6l.u8" size="4194304" crc="f01b816e"/>
+		<rom name="6h.u37" merge="6h.u37" size="4194304" crc="fdd57361"/>
+		<rom name="sound.u32" merge="sound.u32" size="4194304" crc="e98f8d45"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soldivid" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Sol Divide - The Sword Of Darkness</description>
+		<year>1997</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2-prog_l.u18" size="524288" crc="cf179b04"/>
+		<rom name="1-prog_h.u17" size="524288" crc="f467d1c4"/>
+		<rom name="4l.u10" size="4194304" crc="9eb9f269"/>
+		<rom name="4h.u31" size="4194304" crc="7c76cfe7"/>
+		<rom name="5l.u9" size="4194304" crc="c59c6858"/>
+		<rom name="5h.u30" size="4194304" crc="73bc66d0"/>
+		<rom name="6l.u8" size="4194304" crc="f01b816e"/>
+		<rom name="6h.u37" size="4194304" crc="fdd57361"/>
+		<rom name="sound.u32" size="4194304" crc="e98f8d45"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sbomber" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Space Bomber (ver. B)</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1-b_pr_l.u18" size="524288" crc="52d12225"/>
+		<rom name="1-b_pr_h.u17" size="524288" crc="1bbd0345"/>
+		<rom name="0l.u4" size="4194304" crc="b7e4ac51"/>
+		<rom name="0h.u13" size="4194304" crc="235e6c27"/>
+		<rom name="1l.u3" size="4194304" crc="3c88c48c"/>
+		<rom name="1h.u12" size="4194304" crc="15626a6e"/>
+		<rom name="2l.u2" size="4194304" crc="41e92f64"/>
+		<rom name="2h.u20" size="4194304" crc="4ae62e84"/>
+		<rom name="3l.u1" size="4194304" crc="43ba5f0f"/>
+		<rom name="3h.u19" size="4194304" crc="ff01bb12"/>
+		<rom name="4l.u10" size="4194304" crc="e491d593"/>
+		<rom name="4h.u31" size="4194304" crc="7bdd377a"/>
+		<rom name="sound.u32" size="4194304" crc="85cbff69"/>
+		<rom name="eeprom-sbomber.bin" size="256" crc="7ac38846"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="sbombera" cloneof="sbomber" romof="sbomber" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Space Bomber</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2.u18" size="524288" crc="57819a26"/>
+		<rom name="1.u17" size="524288" crc="c388e847"/>
+		<rom name="0l.u4" merge="0l.u4" size="4194304" crc="b7e4ac51"/>
+		<rom name="0h.u13" merge="0h.u13" size="4194304" crc="235e6c27"/>
+		<rom name="1l.u3" merge="1l.u3" size="4194304" crc="3c88c48c"/>
+		<rom name="1h.u12" merge="1h.u12" size="4194304" crc="15626a6e"/>
+		<rom name="2l.u2" merge="2l.u2" size="4194304" crc="41e92f64"/>
+		<rom name="2h.u20" merge="2h.u20" size="4194304" crc="4ae62e84"/>
+		<rom name="3l.u1" merge="3l.u1" size="4194304" crc="43ba5f0f"/>
+		<rom name="3h.u19" merge="3h.u19" size="4194304" crc="ff01bb12"/>
+		<rom name="4l.u10" merge="4l.u10" size="4194304" crc="e491d593"/>
+		<rom name="4h.u31" merge="4h.u31" size="4194304" crc="7bdd377a"/>
+		<rom name="sound.u32" merge="sound.u32" size="4194304" crc="85cbff69"/>
+		<rom name="eeprom-sbomber.bin" merge="eeprom-sbomber.bin" size="256" crc="7ac38846"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945bl" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<comment>Bootleg</comment>
+		<description>Strikers 1945 (Hong Kong, bootleg)</description>
+		<year>1995</year>
+		<manufacturer>bootleg</manufacturer>
+		<rom name="27c010-1" size="131072" crc="d3361536"/>
+		<rom name="27c010-2" size="131072" crc="1d1916b1"/>
+		<rom name="27c010-3" size="131072" crc="391e0387"/>
+		<rom name="27c010-4" size="131072" crc="2aebcf6b"/>
+		<rom name="rv27c3200.m4" size="4194304" crc="70c8f72e"/>
+		<rom name="rv27c3200.m3" size="4194304" crc="0dec2a8d"/>
+		<rom name="rv27c1600.m1" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="rv27c040.m6" size="524288" crc="c22e5b65"/>
+		<rom name="27c010-b" size="131072" crc="e38d5ab7"/>
+		<rom name="27c010-a" size="131072" crc="cb8c65ec"/>
+		<rom name="27c512" size="65536" crc="0da8db45"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="preliminary"/>
+	</game>
+	<game name="s1945a" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (Japan / World)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4-u40.bin" size="262144" crc="29ffc217"/>
+		<rom name="5-u41.bin" size="262144" crc="c3d3fb64"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" merge="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u63.bin" merge="3-u63.bin" size="131072" crc="42d40ae1"/>
+		<rom name="u61.bin" merge="u61.bin" size="2097152" crc="a839cf47"/>
+		<rom name="4-u59.bin" size="4096" status="nodump"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945j" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1-u40.bin" size="262144" crc="c00eb012"/>
+		<rom name="2-u41.bin" size="262144" crc="3f5a134b"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" merge="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u63.bin" merge="3-u63.bin" size="131072" crc="42d40ae1"/>
+		<rom name="u61.bin" merge="u61.bin" size="2097152" crc="a839cf47"/>
+		<rom name="4-u59.bin" size="4096" status="nodump"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945nj" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (Japan, unprotected)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="1-u46.bin" size="262144" crc="95028132"/>
+		<rom name="2-u39.bin" size="262144" crc="3df79a16"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" merge="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u71.bin" size="131072" crc="e3e366bd"/>
+		<rom name="u64.bin" size="524288" crc="a44a4a9b"/>
+		<rom name="u56.bin" size="1048576" crc="fe1312c2"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945k" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (Korea)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="10.u40" size="262144" crc="5a32af36"/>
+		<rom name="9.u41" size="262144" crc="29cc6d7d"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" merge="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u63.bin" merge="3-u63.bin" size="131072" crc="42d40ae1"/>
+		<rom name="u61.bin" merge="u61.bin" size="2097152" crc="a839cf47"/>
+		<rom name="4-u59.bin" size="4096" status="nodump"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (World)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2s.u40" size="262144" crc="9b10062a"/>
+		<rom name="3s.u41" size="262144" crc="f87e871a"/>
+		<rom name="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u63.bin" size="131072" crc="42d40ae1"/>
+		<rom name="u61.bin" size="2097152" crc="a839cf47"/>
+		<rom name="4-u59.bin" size="4096" status="nodump"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945n" cloneof="s1945" romof="s1945" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Strikers 1945 (World, unprotected)</description>
+		<year>1995</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4.u46" size="262144" crc="28fb8181"/>
+		<rom name="5.u39" size="262144" crc="8ca05f94"/>
+		<rom name="u20.bin" merge="u20.bin" size="2097152" crc="28a27fee"/>
+		<rom name="u22.bin" merge="u22.bin" size="2097152" crc="ca152a32"/>
+		<rom name="u21.bin" merge="u21.bin" size="2097152" crc="c5d60ea9"/>
+		<rom name="u23.bin" merge="u23.bin" size="2097152" crc="48710332"/>
+		<rom name="u1.bin" merge="u1.bin" size="262144" crc="dee22654"/>
+		<rom name="u34.bin" merge="u34.bin" size="2097152" crc="aaf83e23"/>
+		<rom name="3-u71.bin" size="131072" crc="e3e366bd"/>
+		<rom name="u64.bin" size="524288" crc="a44a4a9b"/>
+		<rom name="u56.bin" size="1048576" crc="fe1312c2"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945iii" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Strikers 1945 III (World) / Strikers 1999 (Japan)</description>
+		<year>1999</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2_progl.u16" size="524288" crc="5d5d385f"/>
+		<rom name="1_progh.u17" size="524288" crc="1b8a5a18"/>
+		<rom name="3_data.u1" size="524288" crc="8ff5f7d3"/>
+		<rom name="0l.u3" size="8388608" crc="70a0d52c"/>
+		<rom name="0h.u10" size="8388608" crc="4dcd22b4"/>
+		<rom name="1l.u4" size="8388608" crc="de1042ff"/>
+		<rom name="1h.u11" size="8388608" crc="b51a4430"/>
+		<rom name="2l.u5" size="8388608" crc="23b02dca"/>
+		<rom name="2h.u12" size="8388608" crc="9933ab04"/>
+		<rom name="3l.u6" size="4194304" crc="f693438c"/>
+		<rom name="3h.u13" size="4194304" crc="2d0c334f"/>
+		<rom name="sound.u9" size="4194304" crc="c5374beb"/>
+		<rom name="eeprom-s1945iii.bin" size="256" crc="b39f3604"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="s1945ii" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Strikers 1945 II</description>
+		<year>1997</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2_prog_l.u18" size="524288" crc="20a911b8"/>
+		<rom name="1_prog_h.u17" size="524288" crc="4c0fe85e"/>
+		<rom name="0l.u4" size="4194304" crc="bfacf98d"/>
+		<rom name="0h.u13" size="4194304" crc="1266f67c"/>
+		<rom name="1l.u3" size="4194304" crc="2d3332c9"/>
+		<rom name="1h.u12" size="4194304" crc="27b32c3e"/>
+		<rom name="2l.u2" size="4194304" crc="91ba6d23"/>
+		<rom name="2h.u20" size="4194304" crc="fabf4334"/>
+		<rom name="3l.u1" size="4194304" crc="a6c3704e"/>
+		<rom name="3h.u19" size="4194304" crc="4cd3ca70"/>
+		<rom name="sound.u32" size="4194304" crc="ba680ca7"/>
+		<rom name="eeprom-s1945ii.bin" size="256" crc="7ac38846"/>
+		<video type="raster" orientation="vertical" width="224" height="320" aspectx="3" aspecty="4"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotgmck" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Taisen Hot Gimmick (Japan)</description>
+		<year>1997</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2-u23.bin" size="524288" crc="23ed4aa5"/>
+		<rom name="1-u22.bin" size="524288" crc="5db3649f"/>
+		<rom name="prog.bin" size="2097152" crc="500f6b1b"/>
+		<rom name="0l.bin" size="4194304" crc="91f9ba60"/>
+		<rom name="0h.bin" size="4194304" crc="bfa800b7"/>
+		<rom name="1l.bin" size="4194304" crc="4b670809"/>
+		<rom name="1h.bin" size="4194304" crc="ab513a4d"/>
+		<rom name="2l.bin" size="4194304" crc="1a7d51e9"/>
+		<rom name="2h.bin" size="4194304" crc="bf866222"/>
+		<rom name="3l.bin" size="4194304" crc="a8a646f7"/>
+		<rom name="3h.bin" size="4194304" crc="8c32becd"/>
+		<rom name="snd0.bin" size="4194304" crc="c090d51a"/>
+		<rom name="snd1.bin" size="4194304" crc="c24243b5"/>
+		<video type="raster" orientation="horizontal" width="640" height="224" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotgmck3" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Taisen Hot Gimmick 3 Digital Surfing (Japan)</description>
+		<year>1999</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2.u22" size="524288" crc="3b06a4a3"/>
+		<rom name="1.u23" size="524288" crc="7aad6b24"/>
+		<rom name="prog.u1" size="1048576" crc="316c3356"/>
+		<rom name="0l.u2" size="4194304" crc="d4bbd035"/>
+		<rom name="0h.u11" size="4194304" crc="e8832b0b"/>
+		<rom name="1l.u3" size="4194304" crc="08426cb2"/>
+		<rom name="1h.u12" size="4194304" crc="112c6eea"/>
+		<rom name="2l.u4" size="4194304" crc="0f197cd4"/>
+		<rom name="2h.u13" size="4194304" crc="fc37808c"/>
+		<rom name="3l.u5" size="4194304" crc="c4d094dc"/>
+		<rom name="3h.u14" size="4194304" crc="ef0dad0a"/>
+		<rom name="4l.u6" size="4194304" crc="5186790f"/>
+		<rom name="4h.u15" size="4194304" crc="187a6f43"/>
+		<rom name="5l.u7" size="4194304" crc="ecf151f3"/>
+		<rom name="5h.u16" size="4194304" crc="720bf4ec"/>
+		<rom name="6l.u8" size="4194304" crc="e490404d"/>
+		<rom name="6h.u17" size="4194304" crc="7e8a141a"/>
+		<rom name="7l.u9" size="4194304" crc="2ec78fb2"/>
+		<rom name="7h.u18" size="4194304" crc="c1735612"/>
+		<rom name="snd0.u10" size="4194304" crc="d62a0dba"/>
+		<rom name="snd1.u19" size="4194304" crc="1df91fb4"/>
+		<video type="raster" orientation="horizontal" width="640" height="224" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotgm4ev" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Taisen Hot Gimmick 4 Ever (Japan)</description>
+		<year>2000</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2.u22" size="524288" crc="3334c21e"/>
+		<rom name="1.u23" size="524288" crc="b1a1c643"/>
+		<rom name="prog.u1" size="4194304" crc="ad556d8e"/>
+		<rom name="0l.u2" size="4194304" crc="f65986f7"/>
+		<rom name="0h.u11" size="4194304" crc="51fd07a9"/>
+		<rom name="1l.u3" size="4194304" crc="f59d21d7"/>
+		<rom name="1h.u12" size="4194304" crc="60ea4797"/>
+		<rom name="2l.u4" size="4194304" crc="fbaf05e3"/>
+		<rom name="2h.u13" size="4194304" crc="61281612"/>
+		<rom name="3l.u5" size="4194304" crc="e2e1bd9f"/>
+		<rom name="3h.u14" size="4194304" crc="c4426542"/>
+		<rom name="4l.u6" size="4194304" crc="7298a242"/>
+		<rom name="4h.u15" size="4194304" crc="fe91b459"/>
+		<rom name="5l.u7" size="4194304" crc="cc714a7d"/>
+		<rom name="5h.u16" size="4194304" crc="2f149cf9"/>
+		<rom name="6l.u8" size="4194304" crc="bfe97dfe"/>
+		<rom name="6h.u17" size="4194304" crc="3473052a"/>
+		<rom name="7l.u9" size="4194304" crc="022a8a31"/>
+		<rom name="7h.u18" size="4194304" crc="77e47409"/>
+		<rom name="snd0.u10" size="4194304" crc="051e2fed"/>
+		<rom name="snd1.u19" size="4194304" crc="0de0232d"/>
+		<video type="raster" orientation="horizontal" width="640" height="224" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hgkairak" sourcefile="psikyo/d_psikyo4.cpp">
+		<description>Taisen Hot Gimmick Kairakuten (Japan)</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="2.u23" size="524288" crc="1c1a034d"/>
+		<rom name="1.u22" size="524288" crc="24b04aa2"/>
+		<rom name="prog.u1" size="1048576" crc="83cff542"/>
+		<rom name="0l.u2" size="4194304" crc="f7472212"/>
+		<rom name="0h.u11" size="4194304" crc="30019d0f"/>
+		<rom name="1l.u3" size="4194304" crc="f46d5002"/>
+		<rom name="1h.u12" size="4194304" crc="210592b6"/>
+		<rom name="2l.u4" size="4194304" crc="b98adf21"/>
+		<rom name="2h.u13" size="4194304" crc="8e3da1e1"/>
+		<rom name="3l.u5" size="4194304" crc="fa7ba4ed"/>
+		<rom name="3h.u14" size="4194304" crc="a5d400ea"/>
+		<rom name="4l.u6" size="4194304" crc="76c10026"/>
+		<rom name="4h.u15" size="4194304" crc="799f0889"/>
+		<rom name="5l.u7" size="4194304" crc="4639ef36"/>
+		<rom name="5h.u16" size="4194304" crc="549e9e9e"/>
+		<rom name="snd0.u10" size="4194304" crc="0e8e5fdf"/>
+		<rom name="snd1.u19" size="4194304" crc="d8057d2f"/>
+		<video type="raster" orientation="horizontal" width="640" height="224" aspectx="8" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tengai" sourcefile="psikyo/d_psikyo.cpp">
+		<description>Tengai (World)</description>
+		<year>1996</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="5-u40.bin" size="524288" crc="90088195"/>
+		<rom name="4-u41.bin" size="524288" crc="0d53196c"/>
+		<rom name="u20.bin" size="2097152" crc="ed42ef73"/>
+		<rom name="u22.bin" size="2097152" crc="8d21caee"/>
+		<rom name="u21.bin" size="2097152" crc="efe34eed"/>
+		<rom name="u1.bin" size="262144" crc="681d7d55"/>
+		<rom name="u34.bin" size="4194304" crc="2a2e2eeb"/>
+		<rom name="1-u63.bin" size="131072" crc="2025e387"/>
+		<rom name="u61.bin" size="2097152" crc="a63633c5"/>
+		<rom name="u62.bin" size="2097152" crc="3ad0c357"/>
+		<rom name="4.u59" size="4096" crc="e563b054"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tgm2p" cloneof="tgm2" romof="tgm2" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Tetris: The Absolute - The Grand Master 2 Plus</description>
+		<year>2000</year>
+		<manufacturer>Arika</manufacturer>
+		<rom name="1b.u22" size="524288" crc="7599fb19"/>
+		<rom name="2b.u21" size="524288" crc="38bc626c"/>
+		<rom name="81ts_3l.u6" merge="81ts_3l.u6" size="2097152" crc="d77cff9c"/>
+		<rom name="82ts_3h.u14" merge="82ts_3h.u14" size="2097152" crc="f012b583"/>
+		<rom name="83ts_4l.u7" merge="83ts_4l.u7" size="2097152" crc="078cafc3"/>
+		<rom name="84ts_4h.u15" merge="84ts_4h.u15" size="2097152" crc="1f91446b"/>
+		<rom name="85ts_5l.u8" merge="85ts_5l.u8" size="2097152" crc="40fbd259"/>
+		<rom name="86ts_5h.u16" merge="86ts_5h.u16" size="2097152" crc="186c935f"/>
+		<rom name="87ts_6l.u1" merge="87ts_6l.u1" size="2097152" crc="c17dc48a"/>
+		<rom name="88ts_6h.u2" merge="88ts_6h.u2" size="2097152" crc="e4dba5da"/>
+		<rom name="89ts_7l.u19" merge="89ts_7l.u19" size="2097152" crc="dab1b2c5"/>
+		<rom name="90ts_7h.u20" merge="90ts_7h.u20" size="2097152" crc="aae696b3"/>
+		<rom name="91ts_8l.u28" merge="91ts_8l.u28" size="2097152" crc="e953ace1"/>
+		<rom name="92ts_8h.u29" merge="92ts_8h.u29" size="2097152" crc="9da3b976"/>
+		<rom name="93ts_9l.u41" merge="93ts_9l.u41" size="2097152" crc="233087fe"/>
+		<rom name="94ts_9h.u42" merge="94ts_9h.u42" size="2097152" crc="9da831c7"/>
+		<rom name="95ts_10l.u58" merge="95ts_10l.u58" size="2097152" crc="303a5240"/>
+		<rom name="96ts_10h.u59" merge="96ts_10h.u59" size="2097152" crc="2240ebf6"/>
+		<rom name="97ts_snd.u52" merge="97ts_snd.u52" size="4194304" crc="9155eca6"/>
+		<rom name="tgm2p.default.nv" size="256" crc="b2328b40"/>
+		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tgm2" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>Tetris: The Absolute - The Grand Master 2</description>
+		<year>2000</year>
+		<manufacturer>Arika</manufacturer>
+		<rom name="1.u22" size="524288" crc="c521bf24"/>
+		<rom name="2.u21" size="524288" crc="b19f6c31"/>
+		<rom name="81ts_3l.u6" size="2097152" crc="d77cff9c"/>
+		<rom name="82ts_3h.u14" size="2097152" crc="f012b583"/>
+		<rom name="83ts_4l.u7" size="2097152" crc="078cafc3"/>
+		<rom name="84ts_4h.u15" size="2097152" crc="1f91446b"/>
+		<rom name="85ts_5l.u8" size="2097152" crc="40fbd259"/>
+		<rom name="86ts_5h.u16" size="2097152" crc="186c935f"/>
+		<rom name="87ts_6l.u1" size="2097152" crc="c17dc48a"/>
+		<rom name="88ts_6h.u2" size="2097152" crc="e4dba5da"/>
+		<rom name="89ts_7l.u19" size="2097152" crc="dab1b2c5"/>
+		<rom name="90ts_7h.u20" size="2097152" crc="aae696b3"/>
+		<rom name="91ts_8l.u28" size="2097152" crc="e953ace1"/>
+		<rom name="92ts_8h.u29" size="2097152" crc="9da3b976"/>
+		<rom name="93ts_9l.u41" size="2097152" crc="233087fe"/>
+		<rom name="94ts_9h.u42" size="2097152" crc="9da831c7"/>
+		<rom name="95ts_10l.u58" size="2097152" crc="303a5240"/>
+		<rom name="96ts_10h.u59" size="2097152" crc="2240ebf6"/>
+		<rom name="97ts_snd.u52" size="4194304" crc="9155eca6"/>
+		<rom name="tgm2.default.nv" size="256" crc="50e2348c"/>
+		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daraku" sourcefile="psikyo/d_psikyosh.cpp">
+		<description>The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)</description>
+		<year>1998</year>
+		<manufacturer>Psikyo</manufacturer>
+		<rom name="4_prog_l.u18" size="524288" crc="660b4609"/>
+		<rom name="3_prog_h.u17" size="524288" crc="7a9cf601"/>
+		<rom name="prog.u16" size="1048576" crc="3742e990"/>
+		<rom name="0l.u4" size="4194304" crc="565d8427"/>
+		<rom name="0h.u13" size="4194304" crc="9a602630"/>
+		<rom name="1l.u3" size="4194304" crc="ac5ce8e1"/>
+		<rom name="1h.u12" size="4194304" crc="b0a59f7b"/>
+		<rom name="2l.u2" size="4194304" crc="2daa03b2"/>
+		<rom name="2h.u20" size="4194304" crc="e98e185a"/>
+		<rom name="3l.u1" size="4194304" crc="1d372aa1"/>
+		<rom name="3h.u19" size="4194304" crc="597f3f15"/>
+		<rom name="4l.u10" size="4194304" crc="e3d58cd8"/>
+		<rom name="4h.u31" size="4194304" crc="aebc9cd0"/>
+		<rom name="5l.u9" size="4194304" crc="eab5a50b"/>
+		<rom name="5h.u30" size="4194304" crc="f157474f"/>
+		<rom name="6l.u8" size="2097152" crc="9f008d1b"/>
+		<rom name="6h.u37" size="2097152" crc="acd2d0e3"/>
+		<rom name="sound.u32" size="4194304" crc="ef2c781d"/>
+		<rom name="eeprom-daraku.bin" size="256" crc="a9715297"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+</datafile>

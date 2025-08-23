@@ -181,6 +181,54 @@ void generateDats()
 	_stprintf(filename, _T("%sFBNeo_-_Fairchild_Channel_F.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_CHANNELF_ONLY);
 
+	_stprintf(filename, _T("%sFBNeo_-_CPS1.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_CPS1_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_CPS2.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_CPS2_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_CPS3.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_CPS3_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_PGM.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_PGM_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Cave.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_CAVE_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Taito.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_TAITO_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Toaplan.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_TOAPLAN_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Psikyo.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_PSIKYO_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Konami.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_KONAMI_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Irem.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_IREM_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Data_East.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_DATAEAST_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Sega_Arcade.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_SEGA_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Midway.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_MIDWAY_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Galaxian.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_GALAXIAN_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Pre_1990s_Arcade.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_PRE90S_ONLY);
+
+	_stprintf(filename, _T("%sFBNeo_-_Post_1990s_Arcade.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_PST90S_ONLY);
+
 #else
 	printf("Creating fbneo dats\n");
 
@@ -238,6 +286,54 @@ void generateDats()
 
 	sprintf(filename, "FBNeo_-_Fairchild_Channel_F.dat");
 	create_datfile(filename, DAT_CHANNELF_ONLY);
+
+	sprintf(filename, "FBNeo_-_CPS1.dat");
+	create_datfile(filename, DAT_CPS1_ONLY);
+
+	sprintf(filename, "FBNeo_-_CPS2.dat");
+	create_datfile(filename, DAT_CPS2_ONLY);
+
+	sprintf(filename, "FBNeo_-_CPS3.dat");
+	create_datfile(filename, DAT_CPS3_ONLY);
+
+	sprintf(filename, "FBNeo_-_PGM.dat");
+	create_datfile(filename, DAT_PGM_ONLY);
+
+	sprintf(filename, "FBNeo_-_Cave.dat");
+	create_datfile(filename, DAT_CAVE_ONLY);
+
+	sprintf(filename, "FBNeo_-_Taito.dat");
+	create_datfile(filename, DAT_TAITO_ONLY);
+
+	sprintf(filename, "FBNeo_-_Toaplan.dat");
+	create_datfile(filename, DAT_TOAPLAN_ONLY);
+
+	sprintf(filename, "FBNeo_-_Psikyo.dat");
+	create_datfile(filename, DAT_PSIKYO_ONLY);
+
+	sprintf(filename, "FBNeo_-_Konami.dat");
+	create_datfile(filename, DAT_KONAMI_ONLY);
+
+	sprintf(filename, "FBNeo_-_Irem.dat");
+	create_datfile(filename, DAT_IREM_ONLY);
+
+	sprintf(filename, "FBNeo_-_Data_East.dat");
+	create_datfile(filename, DAT_DATAEAST_ONLY);
+
+	sprintf(filename, "FBNeo_-_Sega_Arcade.dat");
+	create_datfile(filename, DAT_SEGA_ONLY);
+
+	sprintf(filename, "FBNeo_-_Midway.dat");
+	create_datfile(filename, DAT_MIDWAY_ONLY);
+
+	sprintf(filename, "FBNeo_-_Galaxian.dat");
+	create_datfile(filename, DAT_GALAXIAN_ONLY);
+
+	sprintf(filename, "FBNeo_-_Pre_1990s_Arcade.dat");
+	create_datfile(filename, DAT_PRE90S_ONLY);
+
+	sprintf(filename, "FBNeo_-_Post_1990s_Arcade.dat");
+	create_datfile(filename, DAT_PST90S_ONLY);
 #endif
 }
 

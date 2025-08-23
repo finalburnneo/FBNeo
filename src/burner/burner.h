@@ -229,6 +229,22 @@ void ComputeGammaLUT();
 #define DAT_SNES_ONLY			14
 #define DAT_NGP_ONLY			15
 #define DAT_CHANNELF_ONLY		16
+#define DAT_CPS1_ONLY			17
+#define DAT_CPS2_ONLY			18
+#define DAT_CPS3_ONLY			19
+#define DAT_PGM_ONLY			20
+#define DAT_CAVE_ONLY			21
+#define DAT_TAITO_ONLY			22
+#define DAT_TOAPLAN_ONLY		23
+#define DAT_PSIKYO_ONLY			24
+#define DAT_KONAMI_ONLY			25
+#define DAT_IREM_ONLY			26
+#define DAT_DATAEAST_ONLY		27
+#define DAT_SEGA_ONLY			28
+#define DAT_MIDWAY_ONLY			29
+#define DAT_GALAXIAN_ONLY		30
+#define DAT_PRE90S_ONLY			31
+#define DAT_PST90S_ONLY			32
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

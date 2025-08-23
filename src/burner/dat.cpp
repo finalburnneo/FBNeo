@@ -126,6 +126,22 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_SNES_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - SNES Games</name>\n");
 	if (bType == DAT_NGP_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Neo Geo Pocket Games</name>\n");
 	if (bType == DAT_CHANNELF_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Fairchild Channel F Games</name>\n");
+	if (bType == DAT_CPS1_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - CPS-1 Games</name>\n");
+	if (bType == DAT_CPS2_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - CPS-2 Games</name>\n");
+	if (bType == DAT_CPS3_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - CPS-3 Games</name>\n");
+	if (bType == DAT_PGM_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - PGM Games</name>\n");
+	if (bType == DAT_CAVE_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Cave Games</name>\n");
+	if (bType == DAT_TAITO_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Taito Games</name>\n");
+	if (bType == DAT_TOAPLAN_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Toaplan Games</name>\n");
+	if (bType == DAT_PSIKYO_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Psikyo Games</name>\n");
+	if (bType == DAT_KONAMI_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Konami Games</name>\n");
+	if (bType == DAT_IREM_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Irem Games</name>\n");
+	if (bType == DAT_DATAEAST_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Data East Games</name>\n");
+	if (bType == DAT_SEGA_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Sega Arcade Games</name>\n");
+	if (bType == DAT_MIDWAY_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Midway Games</name>\n");
+	if (bType == DAT_GALAXIAN_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Galaxian Hardware Games</name>\n");
+	if (bType == DAT_PRE90S_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Pre-1990s Arcade Games</name>\n");
+	if (bType == DAT_PST90S_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Post-1990s Arcade Games</name>\n");
 
 	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
@@ -144,6 +160,22 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_SNES_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" SNES Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_NGP_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Neo Geo Pocket Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_CHANNELF_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Fairchild Channel F Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_CPS1_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" CPS-1 Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_CPS2_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" CPS-2 Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_CPS3_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" CPS-3 Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PGM_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" PGM Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_CAVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Cave Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_TAITO_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Taito Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_TOAPLAN_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Toaplan Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PSIKYO_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Psikyo Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_KONAMI_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Konami Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_IREM_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Irem Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_DATAEAST_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Data East Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_SEGA_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Sega Arcade Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_MIDWAY_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Midway Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_GALAXIAN_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Galaxian Hardware Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PRE90S_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Pre-1990s Arcade Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PST90S_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Post-1990s Arcade Games</description>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
 	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
@@ -252,6 +284,82 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
+			continue;
+		}
+
+		// CPS-1 (multiple variants)
+		if (!(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_QSOUND) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_GENERIC) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPSCHANGER)) && (bType == DAT_CPS1_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_CAPCOM_CPS2) && (bType == DAT_CPS2_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_CAPCOM_CPS3) && (bType == DAT_CPS3_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_IGS_PGM) && (bType == DAT_PGM_ONLY)) {
+			continue;
+		}
+
+		// Cave (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CAVE) == HARDWARE_PREFIX_CAVE) && (bType == DAT_CAVE_ONLY)) {
+			continue;
+		}
+
+		// Taito (multiple variants)  
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_TAITO) == HARDWARE_PREFIX_TAITO) && (bType == DAT_TAITO_ONLY)) {
+			continue;
+		}
+
+		// Toaplan (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_TOAPLAN) == HARDWARE_PREFIX_TOAPLAN) && (bType == DAT_TOAPLAN_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PSIKYO) && (bType == DAT_PSIKYO_ONLY)) {
+			continue;
+		}
+
+		// Konami (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_KONAMI) == HARDWARE_PREFIX_KONAMI) && (bType == DAT_KONAMI_ONLY)) {
+			continue;
+		}
+
+		// Irem (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_IREM) == HARDWARE_PREFIX_IREM) && (bType == DAT_IREM_ONLY)) {
+			continue;
+		}
+
+		// Data East (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_DATAEAST) == HARDWARE_PREFIX_DATAEAST) && (bType == DAT_DATAEAST_ONLY)) {
+			continue;
+		}
+
+		// Sega Arcade (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_SEGA) == HARDWARE_PREFIX_SEGA) && (bType == DAT_SEGA_ONLY)) {
+			continue;
+		}
+
+		// Midway (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY) && (bType == DAT_MIDWAY_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_GALAXIAN) && (bType == DAT_GALAXIAN_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_MISC_PRE90S) && (bType == DAT_PRE90S_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_MISC_POST90S) && (bType == DAT_PST90S_ONLY)) {
 			continue;
 		}
 
@@ -716,6 +824,82 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
+			continue;
+		}
+
+		// CPS-1 (multiple variants)
+		if (!(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_QSOUND) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS1_GENERIC) ||
+			  ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPSCHANGER)) && (bType == DAT_CPS1_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_CAPCOM_CPS2) && (bType == DAT_CPS2_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_CAPCOM_CPS3) && (bType == DAT_CPS3_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_IGS_PGM) && (bType == DAT_PGM_ONLY)) {
+			continue;
+		}
+
+		// Cave (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CAVE) == HARDWARE_PREFIX_CAVE) && (bType == DAT_CAVE_ONLY)) {
+			continue;
+		}
+
+		// Taito (multiple variants)  
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_TAITO) == HARDWARE_PREFIX_TAITO) && (bType == DAT_TAITO_ONLY)) {
+			continue;
+		}
+
+		// Toaplan (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_TOAPLAN) == HARDWARE_PREFIX_TOAPLAN) && (bType == DAT_TOAPLAN_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PSIKYO) && (bType == DAT_PSIKYO_ONLY)) {
+			continue;
+		}
+
+		// Konami (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_KONAMI) == HARDWARE_PREFIX_KONAMI) && (bType == DAT_KONAMI_ONLY)) {
+			continue;
+		}
+
+		// Irem (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_IREM) == HARDWARE_PREFIX_IREM) && (bType == DAT_IREM_ONLY)) {
+			continue;
+		}
+
+		// Data East (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_DATAEAST) == HARDWARE_PREFIX_DATAEAST) && (bType == DAT_DATAEAST_ONLY)) {
+			continue;
+		}
+
+		// Sega Arcade (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_SEGA) == HARDWARE_PREFIX_SEGA) && (bType == DAT_SEGA_ONLY)) {
+			continue;
+		}
+
+		// Midway (multiple variants)
+		if (!((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY) && (bType == DAT_MIDWAY_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_GALAXIAN) && (bType == DAT_GALAXIAN_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_MISC_PRE90S) && (bType == DAT_PRE90S_ONLY)) {
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_MISC_POST90S) && (bType == DAT_PST90S_ONLY)) {
 			continue;
 		}
 

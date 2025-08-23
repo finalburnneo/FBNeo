@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE datafile PUBLIC "-//FinalBurn Neo//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">
+
+<datafile>
+	<header>
+		<name>FinalBurn Neo [DEBUG] - SuprGrafx Games</name>
+		<description>FinalBurn Neo [DEBUG] v1.0.0.03 SuprGrafx Games</description>
+		<category>Standard DatFile</category>
+		<version>1.0.0.03</version>
+		<author>FinalBurn Neo [DEBUG]</author>
+		<homepage>https://neo-source.com/</homepage>
+		<url>https://neo-source.com/</url>
+		<clrmamepro forcenodump="ignore"/>
+	</header>
+	<game name="1941" sourcefile="pce/d_pce.cpp">
+		<description>1941 - Counter Attack (Japan) (SGX)</description>
+		<year>1991</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="1941 - Counter Attack (Japan)(1991)(Hudson Soft).pce" size="1048576" crc="8c4588e2"/>
+		<video type="raster" orientation="horizontal" width="224" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aldynes" sourcefile="pce/d_pce.cpp">
+		<description>Aldynes (Japan) (SGX)</description>
+		<year>1991</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Aldynes (Japan)(1991)(Hudson Soft).pce" size="1048576" crc="4c2126b0"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="battlace" sourcefile="pce/d_pce.cpp">
+		<description>Battle Ace (Japan) (SGX)</description>
+		<year>1989</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Battle Ace (Japan)(1989)(Hudson Soft).pce" size="524288" crc="3b13af61"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daimakai" sourcefile="pce/d_pce.cpp">
+		<description>Daimakaimura (Japan) (SGX)</description>
+		<year>1990</year>
+		<manufacturer>NEC Avenue</manufacturer>
+		<rom name="Daimakaimura (Japan)(1990)(NEC Avenue).pce" size="1048576" crc="b486a8ed"/>
+		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daimakai1" cloneof="daimakai" romof="daimakai" sourcefile="pce/d_pce.cpp">
+		<description>Daimakaimura (Japan, Alt) (SGX)</description>
+		<year>1990</year>
+		<manufacturer>NEC Avenue</manufacturer>
+		<rom name="Daimakaimura (Japan, Alt)(1990)(NEC Avenue).pce" size="1049088" crc="8e961f63"/>
+		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daimakaid" cloneof="daimakai" romof="daimakai" sourcefile="pce/d_pce.cpp">
+		<comment>Hack</comment>
+		<description>Daimakaimura - Debug Menu (SGX) (Hack)</description>
+		<year>2007</year>
+		<manufacturer>Chris Covell</manufacturer>
+		<rom name="Daimakaimura - Debug Menu (2007)(Chris Covell).pce" size="1048576" crc="d6722c04"/>
+		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daimakaii" cloneof="daimakai" romof="daimakai" sourcefile="pce/d_pce.cpp">
+		<comment>Hack</comment>
+		<description>Daimakaimura - Improvement Hack (Hack, SGX)</description>
+		<year>2024</year>
+		<manufacturer>Upsilandre</manufacturer>
+		<rom name="Daimakaimura Improvement Hack (2024)(Upsilandre).pce" size="1048576" crc="460d8892"/>
+		<video type="raster" orientation="horizontal" width="352" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="granzort" sourcefile="pce/d_pce.cpp">
+		<description>Madou Ou Granzort (Japan) (SGX)</description>
+		<year>1990</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Madou Ou Granzort (Japan)(1990)(Hudson Soft).pce" size="524288" crc="1f041166"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtypeuh" sourcefile="pce/d_pce.cpp">
+		<comment>Hack</comment>
+		<description>R-Type (SGX) (Hack, Unfinished)</description>
+		<year>2019</year>
+		<manufacturer>Chris Covell</manufacturer>
+		<rom name="R-Type SGX (Unfinished Hack)(2019)(Chris Covell).sgx" size="524288" crc="cdc9bb74"/>
+		<video type="raster" orientation="horizontal" width="352" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rta2" sourcefile="pce/d_pce.cpp">
+		<comment>Homebrew, Homebrew conversion of RTA2</comment>
+		<description>RTA2 (HB, SGX)</description>
+		<year>2016</year>
+		<manufacturer>Revival Games</manufacturer>
+		<rom name="RTA2 (2016)(Revival Games).sgx" size="164352" crc="4a4db3da"/>
+		<video type="raster" orientation="horizontal" width="336" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+</datafile>

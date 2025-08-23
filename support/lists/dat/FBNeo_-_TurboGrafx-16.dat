@@ -1,0 +1,803 @@
+<?xml version="1.0"?>
+<!DOCTYPE datafile PUBLIC "-//FinalBurn Neo//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">
+
+<datafile>
+	<header>
+		<name>FinalBurn Neo [DEBUG] - TurboGrafx 16 Games</name>
+		<description>FinalBurn Neo [DEBUG] v1.0.0.03 TurboGrafx 16 Games</description>
+		<category>Standard DatFile</category>
+		<version>1.0.0.03</version>
+		<author>FinalBurn Neo [DEBUG]</author>
+		<homepage>https://neo-source.com/</homepage>
+		<url>https://neo-source.com/</url>
+		<clrmamepro forcenodump="ignore"/>
+	</header>
+	<game name="aeroblst" sourcefile="pce/d_pce.cpp">
+		<description>Aero Blasters (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Aero Blasters (USA)(1990)(NEC - Hudson Soft).pce" size="524288" crc="b03e0b32"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="airzonk" sourcefile="pce/d_pce.cpp">
+		<description>Air Zonk (USA)</description>
+		<year>1992</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Air Zonk (USA)(1992)(Hudson Soft).pce" size="524288" crc="933d5bcc"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="acrush" sourcefile="pce/d_pce.cpp">
+		<description>Alien Crush (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Alien Crush (USA)(1989)(NEC, Hudson Soft).pce" size="262144" crc="ea488494"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ballistx" sourcefile="pce/d_pce.cpp">
+		<description>Ballistix (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC - Psygnosis</manufacturer>
+		<rom name="Ballistix (USA)(1991)(NEC - Psygnosis).pce" size="262144" crc="420fa189"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="batlroyl" sourcefile="pce/d_pce.cpp">
+		<description>Battle Royale (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Battle Royale (USA)(1990)(NEC).pce" size="524288" crc="e70b01af"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blazlazr" sourcefile="pce/d_pce.cpp">
+		<description>Blazing Lazers (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Blazing Lazers (USA)(1989)(NEC - Hudson Soft).pce" size="393216" crc="b4a1b0f6"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blodwolf" sourcefile="pce/d_pce.cpp">
+		<description>Bloody Wolf (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Data East</manufacturer>
+		<rom name="Bloody wolf (USA)(1990)(NEC - Data East).pce" size="524288" crc="37baf6bc"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bombmn93" sourcefile="pce/d_pce.cpp">
+		<description>Bomberman '93 (USA)</description>
+		<year>1990</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Bomberman '93 (USA)(1990)(Hudson Soft).pce" size="524288" crc="56171c1c"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bombman" sourcefile="pce/d_pce.cpp">
+		<description>Bomberman (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Bomberman (USA)(1991)(NEC - Hudson Soft).pce" size="262144" crc="5f6f3c2a"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bonk3" sourcefile="pce/d_pce.cpp">
+		<description>Bonk III - Bonk's Big Adventure (USA)</description>
+		<year>1993</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Bonk III - Bonk's Big Adventure (USA)(1993)(Hudson Soft).pce" size="1048576" crc="5a3f76d8"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bonk" sourcefile="pce/d_pce.cpp">
+		<description>Bonk's Adventure (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Bonk's Adventure (USA)(1990)(NEC - Hudson Soft).pce" size="393216" crc="599ead9b"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bonk2" sourcefile="pce/d_pce.cpp">
+		<description>Bonk's Revenge (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="Bonk's Revenge (USA)(1991)(NEC - Hudson Soft).pce" size="524288" crc="14250f9a"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="boxyboy" sourcefile="pce/d_pce.cpp">
+		<description>Boxyboy (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Boxyboy (USA)(1990)(NEC).pce" size="131072" crc="605be213"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bravoman" sourcefile="pce/d_pce.cpp">
+		<description>Bravoman (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Bravoman (USA)(1990)(NEC).pce" size="524288" crc="cca08b02"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cadash" sourcefile="pce/d_pce.cpp">
+		<comment>Bad graphics</comment>
+		<description>Cadash (USA)</description>
+		<year>1991</year>
+		<manufacturer>Working Designs</manufacturer>
+		<rom name="Cadash (USA)(1991)(Working Designs).pce" size="524288" crc="bb0b3aef"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="forevbox" sourcefile="pce/d_pce.cpp">
+		<comment>Bad sound</comment>
+		<description>Champions Forever Boxing (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Champions Forever Boxing (USA)(1991)(NEC).pce" size="524288" crc="15ee889a"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chewman" sourcefile="pce/d_pce.cpp">
+		<description>Chew-Man-Fu (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Chew-Man-Fu (USA)(1990)(NEC).pce" size="262144" crc="8cd13e9a"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chinawar" sourcefile="pce/d_pce.cpp">
+		<description>China Warrior (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="China Warrior (USA)(1989)(NEC).pce" size="262144" crc="a2ee361d"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cratermz" sourcefile="pce/d_pce.cpp">
+		<description>Cratermaze (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Cratermaze (USA)(1990)(NEC).pce" size="262144" crc="9033e83a"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cybrcore" sourcefile="pce/d_pce.cpp">
+		<description>Cyber Core (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Cyber Core (USA)(1990)(NEC).pce" size="393216" crc="4cfb6e3e"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="darkwing" sourcefile="pce/d_pce.cpp">
+		<description>Darkwing Duck (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Darkwing Duck (USA)(1992)(TTI).pce" size="524288" crc="4ac97606"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="daviscup" sourcefile="pce/d_pce.cpp">
+		<description>Davis Cup Tennis (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Davis Cup Tennis (USA)(1991)(NEC).pce" size="524288" crc="9edab596"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deadmoon" sourcefile="pce/d_pce.cpp">
+		<description>Dead Moon (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Dead Moon (USA)(1992)(TTI).pce" size="524288" crc="f5d98b0b"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deepblue" sourcefile="pce/d_pce.cpp">
+		<description>Deep Blue (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Deep Blue (USA)(1989)(NEC).pce" size="262144" crc="16b40b44"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="devlcrsh" sourcefile="pce/d_pce.cpp">
+		<description>Devil's Crush - Naxat Pinball (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Devil's Crush - Naxat Pinball (USA)(1990)(NEC).pce" size="393216" crc="157b4492"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddungw" sourcefile="pce/d_pce.cpp">
+		<description>Double Dungeons - W (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - NCS</manufacturer>
+		<rom name="Double Dungeons - W (USA)(1990)(NEC - NCS).pce" size="262144" crc="4a1a8c60"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dspirit" sourcefile="pce/d_pce.cpp">
+		<description>Dragon Spirit (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Dragon Spirit (USA)(1989)(NEC).pce" size="262144" crc="086f148c"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dragcrse" sourcefile="pce/d_pce.cpp">
+		<description>Dragon's Curse (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Dragon's Curse (USA)(1990)(NEC).pce" size="262144" crc="7d2c4b09"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dropoff" sourcefile="pce/d_pce.cpp">
+		<description>Drop Off (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Drop Off (USA)(1990)(NEC).pce" size="262144" crc="fea27b32"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dungexpl" sourcefile="pce/d_pce.cpp">
+		<description>Dungeon Explorer (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Dungeon Explorer (USA)(1989)(NEC).pce" size="393216" crc="4ff01515"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="falcon" sourcefile="pce/d_pce.cpp">
+		<description>Falcon (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Falcon (USA)(1992)(TTI).pce" size="524288" crc="0bc0a12b"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fantzone" sourcefile="pce/d_pce.cpp">
+		<description>Fantasy Zone (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Fantasy Zone (USA)(1989)(NEC).pce" size="262144" crc="e8c3573d"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="finallap" sourcefile="pce/d_pce.cpp">
+		<description>Final Lap Twin (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Final Lap Twin (USA)(1990)(NEC).pce" size="393216" crc="26408ea3"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="galaga90" sourcefile="pce/d_pce.cpp">
+		<description>Galaga '90 (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Galaga '90 (USA)(1989)(NEC).pce" size="262144" crc="2909dec6"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ghostman" sourcefile="pce/d_pce.cpp">
+		<description>Ghost Manor (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Ghost Manor (USA)(1992)(TTI).pce" size="524288" crc="2db4c1fd"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gunboat" sourcefile="pce/d_pce.cpp">
+		<description>Gunboat (USA)</description>
+		<year>1992</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Gunboat (USA)(1992)(NEC).pce" size="524288" crc="f370b58e"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hitice" sourcefile="pce/d_pce.cpp">
+		<description>Hit the Ice - VHL The Official Video Hockey League (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Hit the Ice - VHL The Official Video Hockey League (USA)(1992)(TTI).pce" size="393216" crc="8b29c3aa"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="impossam" sourcefile="pce/d_pce.cpp">
+		<description>Impossamole (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC - Gremlin Graphics</manufacturer>
+		<rom name="Impossamole (USA)(1991)(NEC - Gremlin Graphics).pce" size="524288" crc="e2470f5f"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jjnjeff" sourcefile="pce/d_pce.cpp">
+		<description>J.J. &amp; Jeff (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="J.J. &amp; Jeff (USA)(1990)(NEC - Hudson Soft).pce" size="262144" crc="e01c5127"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nicklaus" sourcefile="pce/d_pce.cpp">
+		<description>Jack Nicklaus' Turbo Golf (USA)</description>
+		<year>1990</year>
+		<manufacturer>Accolade</manufacturer>
+		<rom name="Jack Nicklaus' Turbo Golf (USA)(1990)(Accolade).pce" size="262144" crc="83384572"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jchan" sourcefile="pce/d_pce.cpp">
+		<description>Jackie Chan's Action Kung Fu (USA)</description>
+		<year>1992</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Jackie Chan's Action Kung Fu (USA)(1992)(Hudson Soft).pce" size="524288" crc="9d2f6193"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="keithcor" sourcefile="pce/d_pce.cpp">
+		<description>Keith Courage in Alpha Zones (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Keith Courage in Alpha Zones (USA)(1989)(NEC).pce" size="262144" crc="474d7a72"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kingcasn" sourcefile="pce/d_pce.cpp">
+		<description>King of Casino (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="King of Casino (USA)(1990)(NEC).pce" size="262144" crc="2f2e2240"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="klax" sourcefile="pce/d_pce.cpp">
+		<description>Klax (USA)</description>
+		<year>1990</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="Klax (USA)(1990)(Tengen).pce" size="262144" crc="0f1b59b4"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="loht" sourcefile="pce/d_pce.cpp">
+		<description>Legend of Hero Tonma (USA)</description>
+		<year>1991</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Legend of Hero Tonma (USA)(1991)(TTI).pce" size="524288" crc="3c131486"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="legaxe2" sourcefile="pce/d_pce.cpp">
+		<description>Legendary Axe II, The (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Legendary Axe II, The (USA)(1990)(NEC).pce" size="262144" crc="220ebf91"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="legaxe" sourcefile="pce/d_pce.cpp">
+		<description>Legendary Axe, The (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Legendary Axe, The (USA)(1989)(NEC).pce" size="262144" crc="2d211007"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="magchase" sourcefile="pce/d_pce.cpp">
+		<description>Magical Chase (USA)</description>
+		<year>1993</year>
+		<manufacturer>Quest</manufacturer>
+		<rom name="Magical Chase (USA)(1993)(Quest).pce" size="524288" crc="95cd2979"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="miltrymd" sourcefile="pce/d_pce.cpp">
+		<description>Military Madness (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Military Madness (USA)(1989)(NEC).pce" size="393216" crc="93f316f7"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="motoroad" sourcefile="pce/d_pce.cpp">
+		<description>Moto Roader (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Moto Roader (USA)(1989)(NEC).pce" size="262144" crc="e2b0d544"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="neutopia" sourcefile="pce/d_pce.cpp">
+		<description>Neutopia (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Neutopia (USA)(1990)(NEC).pce" size="393216" crc="a9a94e1b"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="neutopi2" sourcefile="pce/d_pce.cpp">
+		<description>Neutopia II (USA)</description>
+		<year>1992</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Neutopia II (USA)(1992)(NEC).pce" size="786432" crc="c4ed4307"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advislnd" sourcefile="pce/d_pce.cpp">
+		<description>New Adventure Island (USA)</description>
+		<year>1992</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="New Adventure Island (USA)(1992)(Hudson Soft).pce" size="524288" crc="756a1802"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nightcr" sourcefile="pce/d_pce.cpp">
+		<description>Night Creatures (USA)</description>
+		<year>1992</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Night Creatures (USA)(1992)(NEC).pce" size="524288" crc="c159761b"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nspirit" sourcefile="pce/d_pce.cpp">
+		<description>Ninja Spirit (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Irem</manufacturer>
+		<rom name="Ninja Spirit (USA)(1990)(NEC - Irem).pce" size="524288" crc="de8af1c1"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="griffon" sourcefile="pce/d_pce.cpp">
+		<description>Order of the Griffon (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Order of the Griffon (USA)(1992)(TTI).pce" size="524288" crc="fae0fc60"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ordyne" sourcefile="pce/d_pce.cpp">
+		<description>Ordyne (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Ordyne (USA)(1989)(NEC).pce" size="524288" crc="e7bf2a74"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pacland" sourcefile="pce/d_pce.cpp">
+		<description>Pac-Land (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Pac-Land (USA)(1990)(NEC).pce" size="262144" crc="d6e30ccd"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="panzakb" sourcefile="pce/d_pce.cpp">
+		<description>Panza Kick Boxing (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Panza Kick Boxing (USA)(1991)(NEC).pce" size="524288" crc="a980e0e9"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="parasol" sourcefile="pce/d_pce.cpp">
+		<description>Parasol Stars: The Story of Bubble Bobble III (USA)</description>
+		<year>1991</year>
+		<manufacturer>Working Designs</manufacturer>
+		<rom name="Parasol Stars - The Story of Bubble Bobble III (USA)(1991)(Working Designs).pce" size="393216" crc="e6458212"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pgolf" sourcefile="pce/d_pce.cpp">
+		<description>Power Golf (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Power Golf (USA)(1989)(NEC).pce" size="393216" crc="ed1d3843"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="psychos" sourcefile="pce/d_pce.cpp">
+		<description>Psychosis (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Psychosis (USA)(1990)(NEC).pce" size="262144" crc="6cc10824"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtype" sourcefile="pce/d_pce.cpp">
+		<description>R-Type (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="R-Type (USA)(1989)(NEC).pce" size="524288" crc="91ce5156"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtypeplus" cloneof="rtype" romof="rtype" sourcefile="pce/d_pce.cpp">
+		<comment>Hack</comment>
+		<description>R-Type Plus (Hack)</description>
+		<year>2024</year>
+		<manufacturer>Justin Gibbins</manufacturer>
+		<rom name="R-Type Plus (2024)(Justin Gibbins).pce" size="524288" crc="dc118e24"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="raiden" sourcefile="pce/d_pce.cpp">
+		<description>Raiden (USA)</description>
+		<year>1991</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Raiden (USA)(1991)(Hudson Soft).pce" size="786432" crc="bc59c31e"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="samuraig" sourcefile="pce/d_pce.cpp">
+		<description>Samurai-Ghost (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Samurai-Ghost (USA)(1992)(TTI).pce" size="524288" crc="77a924b7"/>
+		<video type="raster" orientation="horizontal" width="264" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shockman" sourcefile="pce/d_pce.cpp">
+		<description>Shockman (USA)</description>
+		<year>1992</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Shockman (USA)(1992)(NEC).pce" size="524288" crc="2774462c"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sidearms" sourcefile="pce/d_pce.cpp">
+		<description>Side Arms - Hyper Dyne (USA)</description>
+		<year>1989</year>
+		<manufacturer>Radiance Software</manufacturer>
+		<rom name="Side Arms - Hyper Dyne (USA)(1989)(Radiance Software).pce" size="262144" crc="d1993c9f"/>
+		<video type="raster" orientation="horizontal" width="352" height="242" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="silentd" sourcefile="pce/d_pce.cpp">
+		<description>Silent Debuggers (USA)</description>
+		<year>1991</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Silent Debuggers (USA)(1991)(Hudson Soft).pce" size="524288" crc="fa7e5d66"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sinistrn" sourcefile="pce/d_pce.cpp">
+		<description>Sinistron (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Sinistron (USA)(1991)(NEC).pce" size="393216" crc="4f6e2dbd"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="soldblad" sourcefile="pce/d_pce.cpp">
+		<description>Soldier Blade (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Soldier Blade (USA)(1992)(TTI).pce" size="524288" crc="4bb68b13"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="somerass" sourcefile="pce/d_pce.cpp">
+		<description>Somer Assault (USA)</description>
+		<year>1992</year>
+		<manufacturer>Atlus Co.</manufacturer>
+		<rom name="Somer Assault (USA)(1992)(Atlus).pce" size="524288" crc="8fcaf2e9"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wbeach" sourcefile="pce/d_pce.cpp">
+		<description>Sonic Spike: World Championship Beach Volleyball (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Sonic Spike - World Championship Beach Volleyball (USA)(1990)(NEC).pce" size="262144" crc="f74e5eb3"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sharrier" sourcefile="pce/d_pce.cpp">
+		<description>Space Harrier (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Space Harrier (USA)(1989)(NEC).pce" size="524288" crc="43b05eb8"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="splatth" sourcefile="pce/d_pce.cpp">
+		<description>Splatterhouse (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Namco</manufacturer>
+		<rom name="Splatterhouse (USA)(1990)(NEC - Namco).pce" size="524288" crc="d00ca74f"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sssoldr" sourcefile="pce/d_pce.cpp">
+		<description>Super Star Soldier (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Super Star Soldier (USA)(1990)(NEC).pce" size="524288" crc="db29486f"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="svolley" sourcefile="pce/d_pce.cpp">
+		<description>Super Volleyball (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Super Volleyball (USA)(1990)(NEC).pce" size="262144" crc="245040b3"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chasehq" sourcefile="pce/d_pce.cpp">
+		<description>Taito Chase H.Q. (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Taito Chase H.Q. (USA)(1992)(TTI).pce" size="393216" crc="9298254c"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chasehqnf" cloneof="chasehq" romof="chasehq" sourcefile="pce/d_pce.cpp">
+		<comment>Hack</comment>
+		<description>Taito Chase H.Q. - Noise Fix (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Justin Gibbins</manufacturer>
+		<rom name="Taito Chase H.Q. - Noise Fix (2022)(Justin Gibbins).pce" size="393216" crc="947740bc"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="taknhoop" sourcefile="pce/d_pce.cpp">
+		<description>Takin' It to the Hoop (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC - Aicom</manufacturer>
+		<rom name="Takin' It to the Hoop (USA)(1989)(NEC - Aicom).pce" size="262144" crc="e9d51797"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="talespin" sourcefile="pce/d_pce.cpp">
+		<description>TaleSpin (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="TaleSpin (USA)(1991)(NEC).pce" size="524288" crc="bae9cecc"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tigerrod" sourcefile="pce/d_pce.cpp">
+		<description>Tiger Road (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Tiger Road (USA)(1990)(NEC).pce" size="393216" crc="985d492d"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="timcrus" sourcefile="pce/d_pce.cpp">
+		<description>Time Cruise (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="Time Cruise (USA)(1992)(TTI).pce" size="524288" crc="02c39660"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="timeball" sourcefile="pce/d_pce.cpp">
+		<description>Timeball (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Timeball (USA)(1990)(NEC).pce" size="131072" crc="5d395019"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tricky" sourcefile="pce/d_pce.cpp">
+		<description>Tricky Kick (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Tricky Kick (USA)(1990)(NEC).pce" size="262144" crc="48e6fd34"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="scdsys" sourcefile="pce/d_pce.cpp">
+		<description>TurboGrafx CD Super System Card (v3.0)</description>
+		<year>1992</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="TurboGrafx CD System Card (USA, v3.0)(1992).pce" size="262144" crc="2b5b75fe"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="preliminary"/>
+	</game>
+	<game name="cdsys" sourcefile="pce/d_pce.cpp">
+		<description>TurboGrafx CD System Card (v2.0)</description>
+		<year>1989</year>
+		<manufacturer>NEC - Hudson Soft</manufacturer>
+		<rom name="TurboGrafx CD System Card (USA, v2.0)(1989).pce" size="262144" crc="ff2a5ec3"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="preliminary"/>
+	</game>
+	<game name="turrican" sourcefile="pce/d_pce.cpp">
+		<description>Turrican (USA)</description>
+		<year>1991</year>
+		<manufacturer>Ballistic</manufacturer>
+		<rom name="Turrican (USA)(1991)(Ballistic).pce" size="262144" crc="eb045edf"/>
+		<video type="raster" orientation="horizontal" width="1024" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tvbasket" sourcefile="pce/d_pce.cpp">
+		<description>TV Sports Basketball (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC - Cinemaware</manufacturer>
+		<rom name="TV Sports Basketball (USA)(1991)(NEC - Cinemaware).pce" size="524288" crc="ea54d653"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tvfootbl" sourcefile="pce/d_pce.cpp">
+		<description>TV Sports Football (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC - Cinemaware</manufacturer>
+		<rom name="TV Sports Football (USA)(1990)(NEC - Cinemaware).pce" size="393216" crc="5e25b557"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tvhockey" sourcefile="pce/d_pce.cpp">
+		<description>TV Sports Hockey (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="TV Sports Hockey (USA)(1991)(NEC).pce" size="393216" crc="97fe5bcf"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="veigues" sourcefile="pce/d_pce.cpp">
+		<description>Veigues - Tactical Gladiator (USA)</description>
+		<year>1990</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Veigues - Tactical Gladiator (USA)(1990)(NEC).pce" size="393216" crc="99d14fb7"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="victoryr" sourcefile="pce/d_pce.cpp">
+		<description>Victory Run (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Victory Run (USA)(1989)(NEC).pce" size="262144" crc="85cbd045"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vigilant" sourcefile="pce/d_pce.cpp">
+		<description>Vigilante (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Vigilante (USA)(1989)(NEC).pce" size="393216" crc="79d49a0d"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wcbasebl" sourcefile="pce/d_pce.cpp">
+		<description>World Class Baseball (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="World Class Baseball (USA)(1989)(NEC).pce" size="262144" crc="4186d0c0"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wctennis" sourcefile="pce/d_pce.cpp">
+		<description>World Court Tennis (USA)</description>
+		<year>1989</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="World Court Tennis (USA)(1989)(NEC).pce" size="262144" crc="a4457df0"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wscomp" sourcefile="pce/d_pce.cpp">
+		<description>World Sports Competition (USA)</description>
+		<year>1992</year>
+		<manufacturer>TTI</manufacturer>
+		<rom name="World Sports Competition (USA)(1992)(TTI).pce" size="524288" crc="4b93f0ac"/>
+		<video type="raster" orientation="horizontal" width="1024" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yobro" sourcefile="pce/d_pce.cpp">
+		<description>Yo, Bro (USA)</description>
+		<year>1991</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Yo, Bro (USA)(1991)(NEC).pce" size="524288" crc="3ca7db48"/>
+		<video type="raster" orientation="horizontal" width="352" height="208" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+</datafile>

@@ -342,6 +342,11 @@ static INT32 load_rom()
 			break;
 		}
 
+		case HARDWARE_SMS_MAPPER_WONDERKID: {
+			cart.mapper = MAPPER_WONDERKID;
+			break;
+		}
+
 		default: {
 			cart.mapper = MAPPER_SEGA;
 			break;
@@ -459,7 +464,7 @@ static void system_load_state()
 			if (cart.fcr[1]) sms_mapper8kvirt_w(1, cart.fcr[1]);
 			if (cart.fcr[2]) sms_mapper8kvirt_w(2, cart.fcr[2]);
 			if (cart.fcr[3]) sms_mapper8kvirt_w(3, cart.fcr[3]);
-		} else if (cart.mapper != MAPPER_XIN1 && cart.mapper != MAPPER_NONE) {
+		} else if (cart.mapper != MAPPER_XIN1 && cart.mapper != MAPPER_NONE && cart.mapper != MAPPER_WONDERKID) {
 			sms_mapper_w(0, cart.fcr[0]);
 			sms_mapper_w(1, cart.fcr[1]);
 			sms_mapper_w(2, cart.fcr[2]);
@@ -9964,7 +9969,7 @@ struct BurnDriver BurnDrvsms_wonderkidp = {
 	"sms_wonderkidp", NULL, NULL, NULL, "1993",
 	"Wonder Kid (Korea, Prototype)\0", NULL, "Open Corp.", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_WONDERKID, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_wonderkidpRomInfo, sms_wonderkidpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

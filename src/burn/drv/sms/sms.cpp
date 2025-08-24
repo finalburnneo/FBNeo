@@ -25,6 +25,25 @@ void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 	}
 }
 
+UINT8 __fastcall readmem_mapper_wonderkid(UINT16 offset) // ist wunderbar!
+{
+	if(offset >= 0xc000 /*&& offset <= 0xffff*/)
+		return sms.wram[offset & 0x1fff];
+	else
+		if (offset >= 0x8000) {
+			return cart.rom[(cart.fcr[0] * 0x4000) + (offset & 0x3fff)];
+		}
+
+	return cart.rom[offset & 0x3fff];
+}
+
+void __fastcall writemem_mapper_wonderkid(UINT16 offset, UINT8 data)
+{
+	if (offset >= 0x8000) {
+		cart.fcr[0] = data;
+	}
+}
+
 void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
 {
 	switch(offset & 0xC000)
@@ -230,6 +249,12 @@ void sms_init(void)
 		ZetSetWriteHandler(writemem_mapper_xin1);
 		ZetSetReadHandler(readmem_mapper_xin1);
 	}
+	else if (cart.mapper == MAPPER_WONDERKID)
+	{
+		bprintf(0, _T("Wonder Kid\n"));
+		ZetSetWriteHandler(writemem_mapper_wonderkid);
+		ZetSetReadHandler(readmem_mapper_wonderkid);
+	}
 	else {
 		bprintf(0, _T("Sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
@@ -321,7 +346,7 @@ void sms_reset(void)
 		if (cart.mapper == MAPPER_XIN1) {
 			// HiCom Xin1 Carts
 			// Nothing here (uses virtual mapping, see readmem/writemem_mapper_xin1())
-		} else {
+		} else if (cart.mapper != MAPPER_WONDERKID) {
 			ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
 			ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
 			ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
@@ -329,7 +354,7 @@ void sms_reset(void)
 		}
 
 	// Work Ram (0xc000 - 0xffff) mappings:
-	if(cart.mapper == MAPPER_CODIES || cart.mapper == MAPPER_4PAK) {
+	if(cart.mapper == MAPPER_CODIES || cart.mapper == MAPPER_4PAK || cart.mapper == MAPPER_WONDERKID) {
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 	} else {
@@ -464,7 +489,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
 
 		case 1: // page 0
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x3fff, MAP_ROM);
-			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK && cart.mapper != MAPPER_XIN1) // first 1k is in the Sega mapper
+			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK && cart.mapper != MAPPER_XIN1 && cart.mapper != MAPPER_WONDERKID) // first 1k is in the Sega mapper
 				ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
 			break;
 

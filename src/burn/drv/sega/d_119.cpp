@@ -1,7 +1,11 @@
 // FinalBurn Neo Sega 119 driver module
 // Based on MAME driver by David Haywood
 
+#ifdef _MSC_VER
+#include "../burn/drv/galaxian/gal.h"
+#else
 #include "gal.h"
+#endif // _MSC_VER
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

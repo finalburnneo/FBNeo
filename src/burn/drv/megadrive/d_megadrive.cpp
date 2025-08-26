@@ -39635,14 +39635,14 @@ struct BurnDriver BurnDrvmd_ikplusdx = {
 
 // Irena: Genesis Metal Fury (HB, Demo)
 static struct BurnRomInfo md_irenademoRomDesc[] = {
-	{ "Irena - Genesis Metal Fury Demo (2021)(White Ninja Studio).bin", 2621440, 0xf0ab7cf3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Irena - Genesis Metal Fury Demo (2025)(White Ninja Studio).bin", 3932160, 0xb8f47aac, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_irenademo)
 STD_ROM_FN(md_irenademo)
 
 struct BurnDriver BurnDrvmd_irenademo = {
-	"md_irenademo", NULL, NULL, NULL, "2021",
+	"md_irenademo", NULL, NULL, NULL, "2025",
 	"Irena: Genesis Metal Fury (HB, Demo)\0", NULL, "White Ninja Studio", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,

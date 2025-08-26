@@ -1021,8 +1021,10 @@ static void UpdatePreviousGameList()
 
 static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is called from StartFromReset()
 
-static void QuitGame() {
+static void QuitGame()
+{
 	AudBlankSound();
+
 	if (nVidFullscreen) {
 		nVidFullscreen = 0;
 		VidExit();
@@ -1070,6 +1072,8 @@ int BurnerLoadDriver(TCHAR *pszDriverName)
 	}
 	if (nDrvIdx < 0)
 		return -1;
+
+	memset(szRomdataName, 0, sizeof(szRomdataName));
 	if (bCurrentRD) {
 		_tcscpy(szRomdataName, szBackup);
 		RomDataInit();

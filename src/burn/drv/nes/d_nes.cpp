@@ -10147,10 +10147,10 @@ struct BurnDriver BurnDrvnes_streefig201c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Street Fighter 2010 - The Final Fight (Hack, Portuguese v1.3)
+// Street Fighter 2010 - A Luta Final (Hack, Portuguese v1.3)
 // https://romhackers.org/traducoes/console/nes/street-fighter-2010-the-final-fight-po.b.r.e
 static struct BurnRomInfo nes_streefig201tpRomDesc[] = {
-	{ "Street Fighter 2010 - The Final Fight T-Por v1.3 (2018)(PO.B.R.E.).nes",          262160, 0x6a8bb09a, BRF_ESS | BRF_PRG },
+	{ "Street Fighter 2010 - A Luta Final T-Por v1.3 (2018)(PO.B.R.E.).nes",          262160, 0x6a8bb09a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_streefig201tp)
@@ -10158,7 +10158,7 @@ STD_ROM_FN(nes_streefig201tp)
 
 struct BurnDriver BurnDrvnes_streefig201tp = {
 	"nes_streefig201tp", "nes_streefig201", NULL, NULL, "2018",
-	"Street Fighter 2010 - The Final Fight (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	"Street Fighter 2010 - A Luta Final (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_streefig201tpRomInfo, nes_streefig201tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

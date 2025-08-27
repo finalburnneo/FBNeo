@@ -8609,6 +8609,25 @@ struct BurnDriver BurnDrvnes_flintsuratdinpetp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Frankenstein - The Monster Returns (Hack, Portuguese v1.3)
+// https://romhackers.org/traducoes/console/nes/frankenstein-the-monster-returns-po.b.r.e
+static struct BurnRomInfo nes_franktpRomDesc[] = {
+	{ "Frankenstein - The Monster Returns T-Por v1.3 (2008-2019)(PO.B.R.E.).nes",          262160, 0x4d08cdfc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_franktp)
+STD_ROM_FN(nes_franktp)
+
+struct BurnDriver BurnDrvnes_franktp = {
+	"nes_franktp", "nes_frank", NULL, NULL, "2008-2019",
+	"Frankenstein - The Monster Returns (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_franktpRomInfo, nes_franktpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Friday the 13th (Hack, Spanish v1.1)
 // https://www.romhacking.net/translations/3356/
 static struct BurnRomInfo nes_fridaythe13thcRomDesc[] = {
@@ -8928,6 +8947,25 @@ struct BurnDriver BurnDrvnes_immortalthec = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_RUNGUN, 0,
 	NESGetZipName, nes_immortalthecRomInfo, nes_immortalthecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// James Bond Jr (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/james-bond-jr.-po.b.r.e
+static struct BurnRomInfo nes_jamesbondjrtpRomDesc[] = {
+	{ "James Bond Jr T-Por (2019)(PO.B.R.E.).nes",          262160, 0xc2e2795d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jamesbondjrtp)
+STD_ROM_FN(nes_jamesbondjrtp)
+
+struct BurnDriver BurnDrvnes_jamesbondjrtp = {
+	"nes_jamesbondjrtp", "nes_jamesbondjr", NULL, NULL, "2019",
+	"James Bond Jr (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_jamesbondjrtpRomInfo, nes_jamesbondjrtpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -9805,6 +9843,25 @@ struct BurnDriver BurnDrvnes_robocop3c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rollergames (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/rollergames-po.b.r.e
+static struct BurnRomInfo nes_rollergamestpRomDesc[] = {
+	{ "Rollergames T-Por (2008)(PO.B.R.E.).nes",          262160, 0x6767594c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rollergamestp)
+STD_ROM_FN(nes_rollergamestp)
+
+struct BurnDriver BurnDrvnes_rollergamestp = {
+	"nes_rollergamestp", "nes_rollergames", NULL, NULL, "2008",
+	"Rollergames (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_rollergamestpRomInfo, nes_rollergamestpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Romancia (Hack, Spanish)
 // https://www.romhacking.net/translations/7134/
 static struct BurnRomInfo nes_romanciasRomDesc[] = {
@@ -9938,6 +9995,25 @@ struct BurnDriver BurnDrvnes_sdhstangc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://romhackers.org/traducoes/console/nes/shadow-of-the-ninja-po.b.r.e
+// Shadow of the Ninja (Hack, Portuguese v1.1)
+static struct BurnRomInfo nes_shadonintpRomDesc[] = {
+	{ "Shadow of the Ninja T-Por v1.1 (2019)(PO.B.R.E.).nes",          262160, 0x5b7ce58c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadonintp)
+STD_ROM_FN(nes_shadonintp)
+
+struct BurnDriver BurnDrvnes_shadonintp = {
+	"nes_shadonintp", "nes_shadonin", NULL, NULL, "2019",
+	"Shadow of the Ninja (Hack, Portuguese v1.1)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_shadonintpRomInfo, nes_shadonintpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Smash T.V. (Hack, Spanish)
 // https://www.romhacking.net/translations/4876/
 static struct BurnRomInfo nes_smashtvcRomDesc[] = {
@@ -10067,6 +10143,25 @@ struct BurnDriver BurnDrvnes_streefig201c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_streefig201cRomInfo, nes_streefig201cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Street Fighter 2010 - The Final Fight (Hack, Portuguese v1.3)
+// https://romhackers.org/traducoes/console/nes/street-fighter-2010-the-final-fight-po.b.r.e
+static struct BurnRomInfo nes_streefig201tpRomDesc[] = {
+	{ "Street Fighter 2010 - The Final Fight T-Por v1.3 (2018)(PO.B.R.E.).nes",          262160, 0x6a8bb09a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_streefig201tp)
+STD_ROM_FN(nes_streefig201tp)
+
+struct BurnDriver BurnDrvnes_streefig201tp = {
+	"nes_streefig201tp", "nes_streefig201", NULL, NULL, "2018",
+	"Street Fighter 2010 - The Final Fight (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_streefig201tpRomInfo, nes_streefig201tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

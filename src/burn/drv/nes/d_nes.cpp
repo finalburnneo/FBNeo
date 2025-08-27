@@ -9995,8 +9995,8 @@ struct BurnDriver BurnDrvnes_sdhstangc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// https://romhackers.org/traducoes/console/nes/shadow-of-the-ninja-po.b.r.e
 // Shadow of the Ninja (Hack, Portuguese v1.1)
+// https://romhackers.org/traducoes/console/nes/shadow-of-the-ninja-po.b.r.e
 static struct BurnRomInfo nes_shadonintpRomDesc[] = {
 	{ "Shadow of the Ninja T-Por v1.1 (2019)(PO.B.R.E.).nes",          262160, 0x5b7ce58c, BRF_ESS | BRF_PRG },
 };

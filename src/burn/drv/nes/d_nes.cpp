@@ -6390,8 +6390,8 @@ STD_ROM_FN(nes_makaimurac)
 struct BurnDriver BurnDrvnes_makaimurac = {
 	"nes_makaimurac", "nes_ghostsngoblins", NULL, NULL, "2020",
 	"Makaimura (Hack, Chinese)\0", NULL, "Advance Team", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Makaimura (Hack, Chinese)\0\u9b54\u754c\u6751\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_makaimuracRomInfo, nes_makaimuracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9211,7 +9211,7 @@ struct BurnDriver BurnDrvnes_magicschc = {
 	"nes_magicschc", "nes_magicsch", NULL, NULL, "2019",
 	"Magic of Scheherazade, The (Hack, Spanish v0.99)\0", NULL, "jackic", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_magicschcRomInfo, nes_magicschcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -17670,7 +17670,7 @@ struct BurnDriver BurnDrvnes_ghostsngoblinsh = {
 	"nes_ghostsngoblinsh", "nes_ghostsngoblins", NULL, NULL, "2019",
 	"Ghosts'n Goblins - Easy Mode (Hack, v2.0)\0", NULL, "chronix", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_ghostsngoblinshRomInfo, nes_ghostsngoblinshRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -19498,8 +19498,8 @@ STD_ROM_FN(nes_makaimuraarcade)
 struct BurnDriver BurnDrvnes_makaimuraarcade = {
 	"nes_makaimuraarcade", "nes_ghostsngoblins", NULL, NULL, "2010",
 	"Makaimura Arcade (Hack)\0", NULL, "2CH", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Makaimura Arcade (Hack)\0\u9b54\u754c\u6751 Arcade\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_makaimuraarcadeRomInfo, nes_makaimuraarcadeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -26650,6 +26650,24 @@ struct BurnDriver BurnDrvnes_anticipation = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_anticipationRomInfo, nes_anticipationRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Arabian Dream Scheherazade (Japan)
+static struct BurnRomInfo nes_scheherazadejRomDesc[] = {
+	{ "Arabian Dream Scheherazade (Japan)(1987)(Culture Brain).nes",          262160, 0x6afde50a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_scheherazadej)
+STD_ROM_FN(nes_scheherazadej)
+
+struct BurnDriver BurnDrvnes_scheherazadej = {
+	"nes_scheherazadej", "nes_magicsch", NULL, NULL, "1987",
+	"Arabian Dream Scheherazade (Japan)\0", NULL, "Culture Brain", "NES / Famicom",
+	L"Arabian Dream Scheherazade (Japan)\0\u30a2\u30e9\u30d3\u30a2\u30f3\u30c9\u30ea\u30fc\u30e0 \u30b7\u30a7\u30e9\u30b6\u30fc\u30c9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_scheherazadejRomInfo, nes_scheherazadejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -41768,7 +41786,7 @@ struct BurnDriver BurnDrvnes_magicsch = {
 	"nes_magicsch", NULL, NULL, NULL, "1989",
 	"Magic of Scheherazade, The (USA)\0", NULL, "Culture Brain", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_magicschRomInfo, nes_magicschRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -42021,8 +42039,8 @@ STD_ROM_FN(nes_makaimura)
 struct BurnDriver BurnDrvnes_makaimura = {
 	"nes_makaimura", "nes_ghostsngoblins", NULL, NULL, "1986",
 	"Makaimura (Japan)\0", NULL, "Capcom", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Makaimura (Japan)\0\u9b54\u754c\u6751\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_makaimuraRomInfo, nes_makaimuraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -48507,42 +48525,6 @@ struct BurnDriver BurnDrvnes_sansaranaga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_sansaranagaRomInfo, nes_sansaranagaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Arabian Dream Scheherazade (Japan)
-static struct BurnRomInfo nes_scheherazadejRomDesc[] = {
-	{ "Arabian Dream Scheherazade (Japan)(1987)(Culture Brain).nes",          262160, 0x6afde50a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_scheherazadej)
-STD_ROM_FN(nes_scheherazadej)
-
-struct BurnDriver BurnDrvnes_scheherazadej = {
-	"nes_scheherazadej", "nes_scheherazade", NULL, NULL, "1987",
-	"Arabian Dream Scheherazade (Japan)\0", NULL, "Culture Brain", "NES / Famicom",
-	L"Arabian Dream Scheherazade (Japan)\0\u30a2\u30e9\u30d3\u30a2\u30f3\u30c9\u30ea\u30fc\u30e0 \u30b7\u30a7\u30e9\u30b6\u30fc\u30c9\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_scheherazadejRomInfo, nes_scheherazadejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Magic of Scheherazade, The (USA)
-static struct BurnRomInfo nes_scheherazadeRomDesc[] = {
-	{ "Magic of Scheherazade, The (USA)(1989)(Culture Brain).nes",          262160, 0xffaa505d, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_scheherazade)
-STD_ROM_FN(nes_scheherazade)
-
-struct BurnDriver BurnDrvnes_scheherazade = {
-	"nes_scheherazade", NULL, NULL, NULL, "1989",
-	"Magic of Scheherazade, The (USA)\0", NULL, "Culture Brain", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_scheherazadeRomInfo, nes_scheherazadeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

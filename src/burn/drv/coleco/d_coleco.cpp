@@ -5016,7 +5016,7 @@ struct BurnDriver BurnDrvcv_cabbagep1 = {
 
 // Cabbage Patch Kids: Adventure in the Park (USA, Prototype, Alt)
 static struct BurnRomInfo cv_cabbagep2RomDesc[] = {
-	{ "Cabbage Patch Kids - Adventures in the Park (USA, Proto 1)(1984)(Coleco - Konami).rom",	16384, 0x5da13dfd, BRF_PRG | BRF_ESS },
+	{ "Cabbage Patch Kids - Adventures in the Park (USA, Proto 2)(1984)(Coleco - Konami).rom",	16384, 0x5da13dfd, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_cabbagep2, cv_cabbagep2, cv_coleco)

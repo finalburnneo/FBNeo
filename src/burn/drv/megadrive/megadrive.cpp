@@ -106,6 +106,7 @@ struct PicoVideo {
 	UINT8 addr_u;       // bit16 of .addr (for 128k)
 	INT32 status;		// Status bits
 	UINT8 pending_ints;	// pending interrupts: ??VH????
+	UINT16 hv_latch;
 	INT8 lwrite_cnt;    // VDP write count during active display line
 	UINT16 v_counter;   // V-counter
 	INT32 field;		// for interlace mode 2.  -dink
@@ -1100,7 +1101,7 @@ static UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 			else d = hcounts_32[d];
 
 			//elprintf(EL_HVCNT, "hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
-			return d | (RamVReg->v_counter << 8);
+			return (RamVReg->reg[0]&2) ? RamVReg->hv_latch : (d | (RamVReg->v_counter << 8));
 		}
 		break;
 
@@ -1213,6 +1214,20 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				// update IRQ level (Lemmings, Wiz 'n' Liz intro, ... )
 				// may break if done improperly:
 				// International Superstar Soccer Deluxe (crash), Street Racer (logos), Burning Force (gfx), Fatal Rewind (hang), Sesame Street Counting Cafe
+				if (num == 0) {
+					if ( (oldreg^RamVReg->reg[num]) & 2) {
+						UINT32 d;
+
+						d = (SekCyclesLine()) & 0x1ff;
+
+						if (RamVReg->reg[12]&1)
+							d = hcounts_40[d];
+						else d = hcounts_32[d];
+
+						//elprintf(EL_HVCNT, "latch hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
+						RamVReg->hv_latch = d | (RamVReg->v_counter << 8);
+					}
+				}
 				if(num < 2 && !SekShouldInterrupt()) {
 
 					INT32 irq = 0;

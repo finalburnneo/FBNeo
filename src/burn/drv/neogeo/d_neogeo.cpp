@@ -27333,6 +27333,38 @@ struct BurnDriver BurnDrvDoubled1 = {
 };
 
 
+// Bad Dudes - Burger Edition (Demo Version)
+// https://ozzyouzo.itch.io/bad-dudes
+
+static struct BurnRomInfo bdudesRomDesc[] = {
+	{ "bdudes-p1.bin",		0x0100000, 0x77a74315, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "bdudes-p2.bin",		0x0700000, 0xf827dd6e, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "bdudes-s1.bin",		0x0020000, 0x83b0f6c4, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "bdudes-c1.bin",		0x1000000, 0xfe7bb928, 3 | BRF_GRA },           //  3 Sprite data
+	{ "bdudes-c2.bin",		0x1000000, 0x68deb392, 3 | BRF_GRA },           //  4
+
+	{ "bdudes-m1.bin",		0x0010000, 0x2854b516, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+
+	{ "bdudes-v1.bin",		0x0800000, 0xd8ac5857, 5 | BRF_SND },           //  6 Sound data
+	{ "bdudes-v2.bin",		0x0800000, 0xf37bd666, 5 | BRF_SND },           //  7
+};
+
+STDROMPICKEXT(bdudes, bdudes, neogeo)
+STD_ROM_FN(bdudes)
+
+struct BurnDriver BurnDrvBdudes = {
+	"bdudes", NULL, "neogeo", NULL, "2025",
+	"Bad Dudes - Burger Edition (Demo Version)\0", NULL, "Balek Corp", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, bdudesRomInfo, bdudesRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // DarkWing Duck (FMV Demo)
 
 static struct BurnRomInfo dwiRomDesc[] = {

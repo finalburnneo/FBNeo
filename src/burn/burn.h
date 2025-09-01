@@ -658,6 +658,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SMS_MAPPER_NONE     					(0x0F)
 
 #define HARDWARE_SMS_CONTROL_PADDLE						(0x00010)
+#define HARDWARE_SMS_CONTROL_PHASER						(0x00020)
 
 #define HARDWARE_SMS_NO_CART_HEADER						(0x01000)
 #define HARDWARE_SMS_GG_SMS_MODE						(0x02000)

@@ -381,25 +381,6 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 	return 0;
 }
 
-// 2 in 1 - Psycho Pinball & Micro Machines (Euro)
-static struct BurnRomInfo md_2psymmacRomDesc[] = {
-	{ "mdppf821.bin", 0x200000, 0x32dd8351, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-	{ "mdmm_acd3.bin", 0x080000, 0x50081a0b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_200000  },
-};
-
-STD_ROM_PICK(md_2psymmac)
-STD_ROM_FN(md_2psymmac)
-
-struct BurnDriver BurnDrvmd_2psymmac = {
-	"md_2psymmac", NULL, NULL, NULL, "1993",
-	"2 in 1 - Psycho Pinball & Micro Machines (Euro)\0", NULL, "Codemasters", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_2psymmacRomInfo, md_2psymmacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // 16 Ton (Japan, SegaNet)
 static struct BurnRomInfo md_16tonRomDesc[] = {
 	{ "16 Ton (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x537f04b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -486,42 +467,6 @@ struct BurnDriver BurnDrvmd_3ninja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_3ninjaRomInfo, md_3ninjaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// 3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)
-static struct BurnRomInfo md_3in1fwtRomDesc[] = {
-	{ "3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)(199x).bin", 0x200000, 0xa8fd28d7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_3in1fwt)
-STD_ROM_FN(md_3in1fwt)
-
-struct BurnDriver BurnDrvmd_3in1fwt = {
-	"md_3in1fwt", NULL, NULL, NULL, "199?",
-	"3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_3in1fwtRomInfo, md_3in1fwtRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// 3 in 1 Road Rash - Ms. Pac-Man - Block Out (Pirate)
-static struct BurnRomInfo md_3in1rmbRomDesc[] = {
-	{ "3 in 1 Road Rash - Ms. Pac-Man - Block Out (Pirate)(199x).bin", 0x100000, 0x13c96154, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_3in1rmb)
-STD_ROM_FN(md_3in1rmb)
-
-struct BurnDriver BurnDrvmd_3in1rmb = {
-	"md_3in1rmb", NULL, NULL, NULL, "199?",
-	"3 in 1 Road Rash - Ms. Pac-Man - Block Out (Pirate)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_3in1rmbRomInfo, md_3in1rmbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -33909,24 +33854,6 @@ struct BurnDriver BurnDrvmd_4in1pb = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// 12 in 1 (Pirate)
-static struct BurnRomInfo md_12in1RomDesc[] = {
-	{ "12-in-1 (Unl)(199x).bin", 0x200000, 0xa98bf454, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_12in1)
-STD_ROM_FN(md_12in1)
-
-struct BurnDriver BurnDrvmd_12in1 = {
-	"md_12in1", NULL, NULL, NULL, "199?",
-	"12 in 1 (Pirate)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MC_12IN1, GBF_MISC, 0,
-	MegadriveGetZipName, md_12in1RomInfo, md_12in1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // 13 Ma Jiang - 98 Mei Shao Nu Pian (China) (Unl)
 static struct BurnRomInfo md_13mahjanRomDesc[] = {
 	{ "13 Ma Jiang - 98 Mei Shao Nu Pian (China)(Unl)(1998)(BBD).bin", 0x0a0000, 0x68b372f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -34825,24 +34752,6 @@ struct BurnDriver BurnDrvmd_futbol = {
 	L"Futbol Argentino 98: Pasi\u00f3n de Multitudes (Unl)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSFOOTBALL, 0,
 	MegadriveGetZipName, md_futbolRomInfo, md_futbolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Golden 10 in 1 (Incomplete Dump) (Unl)
-static struct BurnRomInfo md_golden10RomDesc[] = {
-	{ "Golden 10-in-1 (Bad Dump)(Unl)(199x).bin", 0x100000, 0x4fa3f82b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_golden10)
-STD_ROM_FN(md_golden10)
-
-struct BurnDriver BurnDrvmd_golden10 = {
-	"md_golden10", NULL, NULL, NULL, "199?",
-	"Golden 10 in 1 (Incomplete Dump) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MC_12IN1, GBF_MISC, 0,
-	MegadriveGetZipName, md_golden10RomInfo, md_golden10RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

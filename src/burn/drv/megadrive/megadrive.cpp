@@ -570,19 +570,6 @@ static UINT16 __fastcall MegadriveReadWord(UINT32 address)
 
 static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if(sekAddress >= 0xA13004 && sekAddress < 0xA13040) {
-		bprintf(0, _T("---------dumb 12-in-1 banking stuff.\n"));
-		// dumb 12-in-1 or 4-in-1 banking support
-		sekAddress &= 0x3f;
-		sekAddress <<= 16;
-		INT32 len = RomSize - sekAddress;
-		if (len <= 0) return; // invalid/missing bank
-		if (len > 0x200000) len = 0x200000; // 2 megs
-		// code which does this is in RAM so this is safe.
-		memcpy(RomMain, RomMain + sekAddress, len);
-		return;
-	}
-
 	if (sekAddress >= 0xa00000 && sekAddress <= 0xa07fff) {
 		Megadrive68K_Z80WriteByte(sekAddress, byteValue);
 		return;
@@ -2466,13 +2453,31 @@ static void __fastcall Sup19in1BankWriteWord(UINT32 sekAddress, UINT16 /*wordVal
 
 static void __fastcall Mc12in1BankWriteByte(UINT32 sekAddress, UINT8 /*byteValue*/)
 {
-	INT32 Offset = (sekAddress - 0xa13000) >> 1;
-	memcpy(RomMain + 0x000000, OriginalRom + ((Offset & 0x3f) << 17), 0x100000);
+	RamMisc->MapperBank[0] = ((sekAddress - 0xa13000) >> 1) & 0x3f;
 }
 
 static void __fastcall Mc12in1BankWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	bprintf(PRINT_NORMAL, _T("Mc12in1Bank write word value %04x to location %08x\n"), wordValue, sekAddress);
+}
+
+static UINT8 __fastcall Mc12in1ReadByteRom(UINT32 sekAddress)
+{
+	if (sekAddress < 0x200000) {
+		return RomMain[((RamMisc->MapperBank[0] * 0x20000) + sekAddress)^1];
+	} else {
+		return 0xff;
+	}
+}
+
+static UINT16 __fastcall Mc12in1ReadWordRom(UINT32 sekAddress)
+{
+	if (sekAddress < 0x200000) {
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[((RamMisc->MapperBank[0] * 0x20000) + sekAddress) >> 1];
+	} else {
+		return 0xffff;
+	}
 }
 
 static UINT8 __fastcall TopfigReadByte(UINT32 sekAddress)
@@ -3178,15 +3183,13 @@ static void SetupCustomCartridgeMappers()
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_MC_12IN1) {
-		OriginalRom = (UINT8*)BurnMalloc(RomSize * 2); // add a little buffer on the end so memcpy @ the last bank doesn't crash
-		memcpy(OriginalRom, RomMain, RomSize);
-
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
-
 		SekOpen(0);
 		SekMapHandler(7, 0xa13000, 0xa1303f, MAP_WRITE);
 		SekSetWriteByteHandler(7, Mc12in1BankWriteByte);
 		SekSetWriteWordHandler(7, Mc12in1BankWriteWord);
+		SekMapHandler(8, 0x000000, 0x1fffff, MAP_READ | MAP_FETCH);
+		SekSetReadByteHandler(8, Mc12in1ReadByteRom);
+		SekSetReadWordHandler(8, Mc12in1ReadWordRom);
 		SekClose();
 	}
 

@@ -27326,7 +27326,7 @@ struct BurnDriver BurnDrvDoubled1 = {
 	"doubled1", NULL, "neogeo", NULL, "2025",
 	"Double Dragon One (Beta Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, doubled1RomInfo, doubled1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -27360,6 +27360,38 @@ struct BurnDriver BurnDrvBdudes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, bdudesRomInfo, bdudesRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// In The Hunt (Demo Version)
+// https://ozzyouzo.itch.io/inthehunt
+
+static struct BurnRomInfo inthehuntRomDesc[] = {
+	{ "inthehunt-p1.bin",	0x0100000, 0x58e3317a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "inthehunt-p2.bin",	0x0100000, 0xc6494f12, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "inthehunt-s1.bin",	0x0020000, 0x35c8a6e0, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "inthehunt-c1.bin",	0x1000000, 0x1b32eaf5, 3 | BRF_GRA },           //  3 Sprite data
+	{ "inthehunt-c2.bin",	0x1000000, 0x87b8def8, 3 | BRF_GRA },           //  4
+
+	{ "inthehunt-m1.bin",	0x0010000, 0xdd055711, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+
+	{ "inthehunt-v1.bin",	0x0800000, 0xeb947c63, 5 | BRF_SND },           //  6 Sound data
+	{ "inthehunt-v2.bin",	0x0800000, 0x79156c41, 5 | BRF_SND },           //  7
+};
+
+STDROMPICKEXT(inthehunt, inthehunt, neogeo)
+STD_ROM_FN(inthehunt)
+
+struct BurnDriver BurnDrvInthehunt = {
+	"inthehunt", NULL, "neogeo", NULL, "2025",
+	"In The Hunt (Demo Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	NULL, inthehuntRomInfo, inthehuntRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

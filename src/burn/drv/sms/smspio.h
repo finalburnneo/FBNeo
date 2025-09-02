@@ -28,7 +28,8 @@ enum {
 enum {
 	DEVICE_NONE     = 0,    /* No peripheral */
 	DEVICE_PAD2B    = 1,    /* Standard 2-button digital joystick/gamepad */
-	DEVICE_PADDLE   = 2     /* Paddle controller; rotary dial with fire button */
+	DEVICE_PADDLE   = 2,    /* Paddle controller; rotary dial with fire button */
+	DEVICE_PHASER   = 3     /* Lightgun/Phaser/Zapper/whatever you want to call it */
 };
 
 typedef struct {

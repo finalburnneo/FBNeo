@@ -121,6 +121,29 @@ UINT8 device_r(INT32 port)
 			if(input.pad[port] & INPUT_BUTTON1) temp &= ~0x10;  /* TL */
 			if(input.pad[port] & INPUT_BUTTON2) temp &= ~0x20;  /* TR */
 			break;
+
+		case DEVICE_PHASER:
+			if (io_current->th_dir[port] == PIN_DIR_IN) {
+				const int h = hc_ntsc_256[ZetTotalCycles() % CYCLES_PER_LINE];
+				const int gunX = input.analog[0] / 2;
+				const int gunY = input.analog[1];
+
+				if ( (gunX > h - 25 && gunX < h + 25) &&
+					 (gunY > vdp.line - 8 && gunY < vdp.line + 8)
+				   ) {
+					if (sms.paddle_ff[port] == 0) {
+						sms.hlatch = gunX + 22;
+						sms.paddle_ff[port] = 1;
+					}
+					temp &= ~0x40;
+				} else {
+					sms.paddle_ff[port] = 0;
+				}
+			}
+
+			if (input.pad[port] & INPUT_BUTTON1) temp &= ~0x10;
+			break;
+
 		case DEVICE_PADDLE:
 			if (sms.territory == TERRITORY_EXPORT) {
 				sms.paddle_ff[port] = (io_current->th_level[0] == PIN_LVL_LO);

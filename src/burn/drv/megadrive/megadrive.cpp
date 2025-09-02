@@ -1538,6 +1538,8 @@ static INT32 res_check(); // forward
 static void vx_reset();
 static void __fastcall Ssf2BankWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
 
+static INT32 last_hardware = -1;
+
 static INT32 MegadriveResetDo()
 {
 	memset (RamStart, 0, RamEnd - RamStart);
@@ -1574,38 +1576,43 @@ static INT32 MegadriveResetDo()
 
 	MegadriveCheckHardware();
 
-	if (Hardware & 0x40) {
+	if (last_hardware != Hardware) {
+		bprintf(0, _T("**  Megadrive Region/Hardware change, %dhz\n"), (Hardware & 0x40) ? 50 : 60);
+		if (Hardware & 0x40) {
 
-		BurnSetRefreshRate(50.0);
-		Reinitialise();
+			BurnSetRefreshRate(50.0);
+			Reinitialise();
 
-		BurnMD2612Exit();
-		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, 1);
-		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+			BurnMD2612Exit();
+			BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, 1);
+			BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+			BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 
-		BurnMD2612Reset();
+			BurnMD2612Reset();
 
-		SN76496Exit();
-		SN76496Init(0, OSC_PAL / 15, 0);
-		SN76496SetBuffered(SekCyclesDoneFrameF, OSC_PAL / 7);
-		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	} else {
-		BurnSetRefreshRate(60.0);
-		Reinitialise();
+			SN76496Exit();
+			SN76496Init(0, OSC_PAL / 15, 0);
+			SN76496SetBuffered(SekCyclesDoneFrameF, OSC_PAL / 7);
+			SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+		} else {
+			BurnSetRefreshRate(60.0);
+			Reinitialise();
 
-		BurnMD2612Exit();
-		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 1);
-		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+			BurnMD2612Exit();
+			BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 1);
+			BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+			BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 
-		BurnMD2612Reset();
+			BurnMD2612Reset();
 
-		SN76496Exit();
-		SN76496Init(0, OSC_NTSC / 15, 0);
-		SN76496SetBuffered(SekCyclesDoneFrameF, OSC_NTSC / 7);
-		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+			SN76496Exit();
+			SN76496Init(0, OSC_NTSC / 15, 0);
+			SN76496SetBuffered(SekCyclesDoneFrameF, OSC_NTSC / 7);
+			SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+		}
 	}
+
+	last_hardware = Hardware;
 
 	// other reset
 	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers/SRam are set up in here when the driver inits
@@ -3777,6 +3784,8 @@ INT32 MegadriveInit()
 	if (sot4wmode) {
 		vx_init();
 	}
+
+	last_hardware = -1;
 
 	MegadriveResetDo();
 

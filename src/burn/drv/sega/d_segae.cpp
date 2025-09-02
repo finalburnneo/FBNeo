@@ -1293,8 +1293,8 @@ static INT32 DrvInit(UINT8 game)
 	SN76489Init(0, 10738635 / 3, 0);
 	SN76489Init(1, 10738635 / 3, 1);
 
-	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
 	if (ridleofp) { // and megrescu
 		BurnTrackballInit(1);

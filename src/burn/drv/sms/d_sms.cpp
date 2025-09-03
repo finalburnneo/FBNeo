@@ -474,6 +474,8 @@ INT32 SMSInit()
 
 	memset(cart.sram,    0, sizeof(cart.sram));
 
+	system_reset();
+
 	return 0;
 }
 
@@ -23568,7 +23570,7 @@ struct BurnDriver BurnDrvsms_shootstars = {
 	"sms_shootstars", NULL, NULL, NULL, "2013",
 	"Shooting Stars (HB, v1.01)\0", "Light Phaser game", "dragonfeet", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PHASER, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PHASER | HARDWARE_SMS_DISPLAY_PAL, GBF_SHOOT, 0,
 	SMSGetZipName, sms_shootstarsRomInfo, sms_shootstarsRomName, NULL, NULL, NULL, NULL, SMSPhaserInputInfo, SMSPhaserDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

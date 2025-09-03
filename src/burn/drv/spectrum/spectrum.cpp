@@ -801,12 +801,13 @@ static UINT8 *rawtap;
 static INT16 *rawtap16;
 static UINT16 rawtap_channels;
 static UINT16 rawtap_samplerate;
+static const INT32 rawtap_size = 46106924;
 
 static void taperaw_init()
 {
 	BurnFree(rawtap);
-	rawtap = (UINT8*)BurnMalloc(32000000);
-	BurnDumpLoad("testioso.wav", rawtap, 27185032);
+	rawtap = (UINT8*)BurnMalloc(rawtap_size+10);
+	BurnDumpLoad("testioso.wav", rawtap, rawtap_size);
 	rawtap16 = (INT16*)rawtap + 0x2c;
 	rawtap_channels = *((UINT16*)&rawtap[0x16]);
 	rawtap_samplerate = *((UINT16*)&rawtap[0x18]);
@@ -825,9 +826,14 @@ static INT32 taperaw_index()
 
 static UINT8 taperaw_pulse()
 {
-	pulse_pulse = (rawtap16[taperaw_index() * rawtap_channels + 0] > 1024) ? 0x40 : 0x00;
+	const INT32 index = taperaw_index() * rawtap_channels + 0;
+	if (index < ((rawtap_size - 0x2c) / 2)) {
+		pulse_pulse = (rawtap16[index] > 1024) ? 0x40 : 0x00;
 	last_pulse = (pulse_pulse >> 6) & 1;
-
+	} else {
+		pulse_status = TAPE_STOPPED;
+		bprintf(0, _T("rawtape: finished loading.\n"));
+	}
 	return pulse_pulse;
 }
 #endif
@@ -1272,6 +1278,9 @@ static void pulse_reset()
 	pulse_count = 0;
 	pulse_pulse = 0;
 
+	start_tstate = 0;
+	target_tstate = 0;
+
 	load_check = 0;
 	last_cycle = 0;
 	last_bc = 0;
@@ -1536,6 +1545,7 @@ static UINT8 pulse_synth()
 				pulse_startup = 1;
 				pulse_index = 0;
 			}
+			start_tstate = total_tstates(); // keep synchronized for stopping during pause.
 			if (total_tstates() >= target_tstate) {
 				if (DEBUG_TAP) bprintf(0, _T("pause index %x  @  %I64x\n"), pulse_index, total_tstates());
 				if (pulse_index == 0) {
@@ -1546,6 +1556,14 @@ static UINT8 pulse_synth()
 					}
 					target_tstate += pause_len * 3500;
 					if (pause_len != 0) pulse_pulse ^= 0x40; // 0-length pauses don't get an edge
+					//bprintf(0, _T("tape position in pause: %x  total len: %x\n"), tap_pos, SpecTAPLen);
+					if (tap_pos == SpecTAPLen && pause_len != 0) {
+						// end of the road, no need to wait!
+						pulse_status = TAPE_STOPPED;
+						target_tstate = total_tstates(); // break out of catch-up loop, just incase
+						pulse_mode = PULSE_WAIT_EMIT;
+						pulse_index = 0;
+					}
 				}
 				pulse_index++;
 				if (pulse_index == 2) {
@@ -1587,8 +1605,8 @@ static UINT8 get_pulse(bool from_ula)
 	// Sometimes the ULA stops reading, for example:
 	// During leader - it only checks every couple frames until it gets the
 	// steady leader pulse.
-	// Protection Check - 1942 stops when there are still 8 bits left in
-	// a block, then starts reading shortly after @ the next leader
+	// Protection Check - 1942 stops (reading ula) when there are still 8 bits
+	// left in a block, then starts reading shortly after @ the next leader
 	// This loop will get us to where we need to be.
 	while (total_tstates() >= target_tstate && pulse_status != TAPE_STOPPED) {
 		pulse_synth();
@@ -2288,6 +2306,7 @@ static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 
 static void update_ula(INT32 cycle)
 {
+	if (in_tape_ffwd) return;
 	//bprintf(0, _T("update_ula:  %d   last %d\n"), cycle, ula_last_cyc);
 	if (cycle == -1) {
 		// next frame!

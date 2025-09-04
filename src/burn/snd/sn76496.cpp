@@ -428,9 +428,6 @@ void SN76496Reset()
 			R->Period[i] = R->Count[i] = R->UpdateStep;
 		}
 
-		R->FeedbackMask = 0x4000;
-		R->WhitenoiseTaps = 0x03;
-		R->WhitenoiseInvert = 1;
 		R->StereoMask = 0xFF;
 
 		R->RNG = R->FeedbackMask;

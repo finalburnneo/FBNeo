@@ -19600,6 +19600,24 @@ struct BurnDriver BurnDrvnes_makaimuraarcade = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Malasombra (HB)
+static struct BurnRomInfo nes_malasombraRomDesc[] = {
+	{ "Malasombra (2025)(4MHz).nes",   524304, 0x2f99c445, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_malasombra)
+STD_ROM_FN(nes_malasombra)
+
+struct BurnDriver BurnDrvnes_malasombra = {
+	"nes_malasombra", NULL, NULL, NULL, "2025",
+	"Malasombra (HB)\0", NULL, "4MHz", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_malasombraRomInfo, nes_malasombraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Maniac Mansion Uncensored (Hack, v2.0)
 // https://www.romhacking.net/hacks/7784/
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {

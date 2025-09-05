@@ -52188,10 +52188,10 @@ struct BurnDriver BurnSpecSokoban = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Soko Ban 1000 (48K) (HB)
+// Sōko Ban 1000 (48K) (HB)
 
 static struct BurnRomInfo SpecSoko1000RomDesc[] = {
-	{ "Soko Ban 1000 48K (2025)(Serdjuk).tap", 44833, 0x513de6b4, BRF_ESS | BRF_PRG },
+	{ "Soko Ban 1000 48K (2025)(Serdjuk).tap", 45089, 0x22c579e2, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSoko1000, SpecSoko1000, Spectrum)
@@ -52200,9 +52200,9 @@ STD_ROM_FN(SpecSoko1000)
 struct BurnDriver BurnSpecSoko1000 = {
 	"spec_soko1000", NULL, "spec_spectrum", NULL, "2025",
 	"Soko Ban 1000 (48K) (HB)\0", NULL, "Serdjuk", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
+	L"S\u014dko Ban 1000 (48K) (HB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
-	SpectrumGetZipName, SpecSoko1000RomInfo, SpecSoko1000RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpectrumGetZipName, SpecSoko1000RomInfo, SpecSoko1000RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

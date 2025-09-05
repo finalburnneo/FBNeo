@@ -10967,7 +10967,7 @@ struct BurnDriver BurnDrvmd_ghouls = {
 	"md_ghouls", NULL, NULL, NULL, "1989",
 	"Ghouls'n Ghosts (Euro, USA, Rev. 2)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_ghoulsRomInfo, md_ghoulsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -10985,7 +10985,7 @@ struct BurnDriver BurnDrvmd_ghouls1 = {
 	"md_ghouls1", "md_ghouls", NULL, NULL, "1989",
 	"Ghouls'n Ghosts (Euro, USA, Rev. 1)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_ghouls1RomInfo, md_ghouls1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -11002,8 +11002,8 @@ STD_ROM_FN(md_daimakai)
 struct BurnDriver BurnDrvmd_daimakai = {
 	"md_daimakai", "md_ghouls", NULL, NULL, "1989",
 	"Dai Makaimura (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Dai Makaimura (Japan)\0\u5927\u9b54\u754c\u6751\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_daimakaiRomInfo, md_daimakaiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -11309,7 +11309,7 @@ STD_ROM_FN(md_gouketsu)
 struct BurnDriver BurnDrvmd_gouketsu = {
 	"md_gouketsu", NULL, NULL, NULL, "1994",
 	"Gouketsuji Ichizoku (Japan)\0", NULL, "Atlus Co.", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Gouketsuji Ichizoku (Japan)\0\u8c6a\u8840\u5bfa\u4e00\u65cf\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_gouketsuRomInfo, md_gouketsuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -40861,9 +40861,9 @@ struct BurnDriver BurnDrvmd_rickdang2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rick Dangerous DX (HB, v1.2)
+// Rick Dangerous DX (HB, v1.3)
 static struct BurnRomInfo md_rickdangdxRomDesc[] = {
-	{ "Rick Dangerous DX v1.2 (2025)(Z-Team).bin", 1572864, 0x98f62ee5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Rick Dangerous DX v1.3 (2025)(Z-Team).bin", 1572864, 0x82fb7b96, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rickdangdx)
@@ -40871,7 +40871,7 @@ STD_ROM_FN(md_rickdangdx)
 
 struct BurnDriver BurnDrvmd_rickdangdx = {
 	"md_rickdangdx", NULL, NULL, NULL, "2025",
-	"Rick Dangerous DX (HB, v1.2)\0", NULL, "Z-Team", "Genesis / Mega Drive",
+	"Rick Dangerous DX (HB, v1.3)\0", NULL, "Z-Team", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_rickdangdxRomInfo, md_rickdangdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -47919,7 +47919,7 @@ struct BurnDriver BurnDrvmd_ghoulss = {
 	"md_ghoulss", "md_ghouls", NULL, NULL, "2019",
 	"Ghouls'n Ghosts (Hack, Spanish v1.1)\0", NULL, "Wave", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_ghoulssRomInfo, md_ghoulssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

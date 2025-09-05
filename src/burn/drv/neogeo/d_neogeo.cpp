@@ -27301,11 +27301,11 @@ struct BurnDriver BurnDrvCndi = {
 };
 
 
-// Double Dragon One (Beta Version)
+// Double Dragon One (Beta2 Version)
 // https://ozzyouzo.itch.io/double-dragon
 
 static struct BurnRomInfo doubled1RomDesc[] = {
-	{ "doubled-p1.bin",		0x0100000, 0x83d2ec24, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "doubled-p1.bin",		0x0100000, 0xe7923280, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "doubled-p2.bin",		0x0400000, 0x7e5ed6b8, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "doubled-s1.bin",		0x0020000, 0x714afb4b, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -27324,7 +27324,7 @@ STD_ROM_FN(doubled1)
 
 struct BurnDriver BurnDrvDoubled1 = {
 	"doubled1", NULL, "neogeo", NULL, "2025",
-	"Double Dragon One (Beta Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"Double Dragon One (Beta2 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, doubled1RomInfo, doubled1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

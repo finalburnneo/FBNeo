@@ -1287,9 +1287,9 @@ struct BurnDriver BurnDrvsg1k_circusck = {
 	272, 228, 4, 3
 };
 
-// Congo Bongo (Euro, Japan, v1)
+// Congo Bongo (Euro, Japan, v1.1)
 static struct BurnRomInfo sg1k_congoRomDesc[] = {
-	{ "Congo Bongo (Euro, Japan, v1)(1983)(Sega).sg",	0x06000, 0x5a24c7cf, BRF_PRG | BRF_ESS },
+	{ "Congo Bongo (Euro, Japan, v1.1)(1983)(Sega).sg",	0x06000, 0x5a24c7cf, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_congo)
@@ -1297,7 +1297,7 @@ STD_ROM_FN(sg1k_congo)
 
 struct BurnDriver BurnDrvsg1k_congo = {
 	"sg1k_congo", NULL, NULL, NULL, "1983",
-	"Congo Bongo (Euro, Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Congo Bongo (Euro, Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_congoRomInfo, sg1k_congoRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1305,9 +1305,9 @@ struct BurnDriver BurnDrvsg1k_congo = {
 	272, 228, 4, 3
 };
 
-// Congo Bongo (Euro, Japan, v1 Alt)
+// Congo Bongo (Euro, Japan, v1.1, Alt)
 static struct BurnRomInfo sg1k_congoaRomDesc[] = {
-	{ "Congo Bongo (Euro, Japan, v1 Alt)(1983)(Sega).sg",	0x0a000, 0xf1506565, BRF_PRG | BRF_ESS },
+	{ "Congo Bongo (Euro, Japan, v1.1, Alt)(1983)(Sega).sg",	0x0a000, 0xf1506565, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_congoa)
@@ -1315,7 +1315,7 @@ STD_ROM_FN(sg1k_congoa)
 
 struct BurnDriver BurnDrvsg1k_congoa = {
 	"sg1k_congoa", "sg1k_congo", NULL, NULL, "1983",
-	"Congo Bongo (Euro, Japan, v1 Alt)\0", NULL, "Sega", "Sega SG-1000",
+	"Congo Bongo (Euro, Japan, v1.1, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_congoaRomInfo, sg1k_congoaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1323,9 +1323,9 @@ struct BurnDriver BurnDrvsg1k_congoa = {
 	272, 228, 4, 3
 };
 
-// Congo Bongo (Japan, v0)
+// Congo Bongo (Japan)
 static struct BurnRomInfo sg1k_congobRomDesc[] = {
-	{ "Congo Bongo (Japan, v0)(1983)(Sega).sg",	0x06000, 0x5eb48a20, BRF_PRG | BRF_ESS },
+	{ "Congo Bongo (Japan)(1983)(Sega).sg",	0x06000, 0x5eb48a20, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_congob)
@@ -1333,7 +1333,7 @@ STD_ROM_FN(sg1k_congob)
 
 struct BurnDriver BurnDrvsg1k_congob = {
 	"sg1k_congob", "sg1k_congo", NULL, NULL, "1983",
-	"Congo Bongo (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Congo Bongo (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_congobRomInfo, sg1k_congobRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1449,9 +1449,9 @@ struct BurnDriver BurnDrvsg1k_qie = {
 	272, 228, 4, 3
 };
 
-// Dragon Wang (Japan, v1)
+// Dragon Wang (Japan, v1.1)
 static struct BurnRomInfo sg1k_dragwangRomDesc[] = {
-	{ "Dragon Wang (Japan, v1)(1985)(Sega).sg",	0x08000, 0x99c3de21, BRF_PRG | BRF_ESS },
+	{ "Dragon Wang (Japan, v1.1)(1985)(Sega).sg",	0x08000, 0x99c3de21, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_dragwang)
@@ -1459,7 +1459,7 @@ STD_ROM_FN(sg1k_dragwang)
 
 struct BurnDriver BurnDrvsg1k_dragwang = {
 	"sg1k_dragwang", NULL, NULL, NULL, "1985",
-	"Dragon Wang (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Dragon Wang (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_SCRFIGHT, 0,
 	SG1KGetZipName, sg1k_dragwangRomInfo, sg1k_dragwangRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1467,9 +1467,9 @@ struct BurnDriver BurnDrvsg1k_dragwang = {
 	272, 228, 4, 3
 };
 
-// Dragon Wang (Japan, v0)
+// Dragon Wang (Japan)
 static struct BurnRomInfo sg1k_dragwang1RomDesc[] = {
-	{ "Dragon Wang (Japan, v0)(1985)(Sega).sg",	0x08000, 0x60f30138, BRF_PRG | BRF_ESS },
+	{ "Dragon Wang (Japan)(1985)(Sega).sg",	0x08000, 0x60f30138, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_dragwang1)
@@ -1477,7 +1477,7 @@ STD_ROM_FN(sg1k_dragwang1)
 
 struct BurnDriver BurnDrvsg1k_dragwang1 = {
 	"sg1k_dragwang1", "sg1k_dragwang", NULL, NULL, "1985",
-	"Dragon Wang (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Dragon Wang (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_SCRFIGHT, 0,
 	SG1KGetZipName, sg1k_dragwang1RomInfo, sg1k_dragwang1RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1521,11 +1521,9 @@ struct BurnDriver BurnDrvsg1k_jingwumna = {
 	272, 228, 4, 3
 };
 
-
 // Drol (Japan)
-
 static struct BurnRomInfo sg1k_drolRomDesc[] = {
-	{ "drol (japan).bin",	0x08000, 0x288940cb, BRF_PRG | BRF_ESS },
+	{ "Drol (Japan)(1985)(Sega).sg",	0x08000, 0x288940cb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_drol)
@@ -1667,9 +1665,9 @@ struct BurnDriver BurnDrvsg1k_exerionk = {
 	272, 228, 4, 3
 };
 
-// Flicky (Japan, v1)
+// Flicky (Japan, v1.1)
 static struct BurnRomInfo sg1k_flickyRomDesc[] = {
-	{ "Flicky (Japan, v1)(1984)(Sega).sg",	0x08000, 0x26d2862c, BRF_PRG | BRF_ESS },
+	{ "Flicky (Japan, v1.1)(1984)(Sega).sg",	0x08000, 0x26d2862c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_flicky)
@@ -1677,7 +1675,7 @@ STD_ROM_FN(sg1k_flicky)
 
 struct BurnDriver BurnDrvsg1k_flicky = {
 	"sg1k_flicky", NULL, NULL, NULL, "1984",
-	"Flicky (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Flicky (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_flickyRomInfo, sg1k_flickyRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1685,9 +1683,9 @@ struct BurnDriver BurnDrvsg1k_flicky = {
 	272, 228, 4, 3
 };
 
-// Flicky (Japan, v0)
+// Flicky (Japan)
 static struct BurnRomInfo sg1k_flickyaRomDesc[] = {
-	{ "Flicky (Japan, v0)(1984)(Sega).sg",	0x08000, 0xbd24d27b, BRF_PRG | BRF_ESS },
+	{ "Flicky (Japan)(1984)(Sega).sg",	0x08000, 0xbd24d27b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_flickya)
@@ -1695,7 +1693,7 @@ STD_ROM_FN(sg1k_flickya)
 
 struct BurnDriver BurnDrvsg1k_flickya = {
 	"sg1k_flickya", "sg1k_flicky", NULL, NULL, "1984",
-	"Flicky (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Flicky (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_flickyaRomInfo, sg1k_flickyaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1775,9 +1773,9 @@ struct BurnDriver BurnDrvsg1k_golgo13 = {
 	272, 228, 4, 3
 };
 
-// GP World (Japan, v1)
+// GP World (Japan, v1.1)
 static struct BurnRomInfo sg1k_gpworldRomDesc[] = {
-	{ "GP World (Japan, v1)(1985)(Sega).sg",	0x08000, 0x191ffe0a, BRF_PRG | BRF_ESS },
+	{ "GP World (Japan, v1.1)(1985)(Sega).sg",	0x08000, 0x191ffe0a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_gpworld)
@@ -1785,7 +1783,7 @@ STD_ROM_FN(sg1k_gpworld)
 
 struct BurnDriver BurnDrvsg1k_gpworld = {
 	"sg1k_gpworld", NULL, NULL, NULL, "1985",
-	"GP World (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"GP World (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_gpworldRomInfo, sg1k_gpworldRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1793,9 +1791,9 @@ struct BurnDriver BurnDrvsg1k_gpworld = {
 	272, 228, 4, 3
 };
 
-// GP World (Japan, v0)
+// GP World (Japan)
 static struct BurnRomInfo sg1k_gpworldaRomDesc[] = {
-	{ "GP World (Japan, v0)(1985)(Sega).sg",	0x08000, 0x942adf84, BRF_PRG | BRF_ESS },
+	{ "GP World (Japan)(1985)(Sega).sg",	0x08000, 0x942adf84, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_gpworlda)
@@ -1803,7 +1801,7 @@ STD_ROM_FN(sg1k_gpworlda)
 
 struct BurnDriver BurnDrvsg1k_gpworlda = {
 	"sg1k_gpworlda", "sg1k_gpworld", NULL, NULL, "1985",
-	"GP World (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"GP World (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_gpworldaRomInfo, sg1k_gpworldaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1991,9 +1989,9 @@ struct BurnDriver BurnDrvsg1k_herot = {
 	272, 228, 4, 3
 };
 
-// Home Mahjong (Japan, v1)
+// Home Mahjong (Japan, v1.1)
 static struct BurnRomInfo sg1k_homemjRomDesc[] = {
-	{ "Home Mahjong (Japan, v1)(1984)(Sega).sg",	0x0c000, 0xe7e0f0e3, BRF_PRG | BRF_ESS },
+	{ "Home Mahjong (Japan, v1.1)(1984)(Sega).sg",	0x0c000, 0xe7e0f0e3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_homemj)
@@ -2001,17 +1999,17 @@ STD_ROM_FN(sg1k_homemj)
 
 struct BurnDriver BurnDrvsg1k_homemj = {
 	"sg1k_homemj", NULL, NULL, NULL, "1984",
-	"Home Mahjong (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
-	L"Home Mahjong (Japan, v1)\0\u30db\u30fc\u30e0\u9ebb\u96c0\0", NULL, NULL, NULL,
+	"Home Mahjong (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
+	L"Home Mahjong (Japan, v1.1)\0\u30db\u30fc\u30e0\u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_homemjRomInfo, sg1k_homemjRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-// Home Mahjong (Japan, v0)
+// Home Mahjong (Japan)
 static struct BurnRomInfo sg1k_homemj1RomDesc[] = {
-	{ "Home Mahjong (Japan, v0)(1984)(Sega).sg",	0x0c000, 0xc9d1ae7d, BRF_PRG | BRF_ESS },
+	{ "Home Mahjong (Japan)(1984)(Sega).sg",	0x0c000, 0xc9d1ae7d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_homemj1)
@@ -2019,8 +2017,8 @@ STD_ROM_FN(sg1k_homemj1)
 
 struct BurnDriver BurnDrvsg1k_homemj1 = {
 	"sg1k_homemj1", "sg1k_homemj", NULL, NULL, "1984",
-	"Home Mahjong (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
-	L"Home Mahjong (Japan, v0)\0\u30db\u30fc\u30e0\u9ebb\u96c0\0", NULL, NULL, NULL,
+	"Home Mahjong (Japan)\0", NULL, "Sega", "Sega SG-1000",
+	L"Home Mahjong (Japan)\0\u30db\u30fc\u30e0\u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_homemj1RomInfo, sg1k_homemj1RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -2045,11 +2043,9 @@ struct BurnDriver BurnDrvsg1k_homemjt = {
 	272, 228, 4, 3
 };
 
-
 // Hustle Chumy (Japan)
-
 static struct BurnRomInfo sg1k_hustleRomDesc[] = {
-	{ "hustle chumy (japan).bin",	0x04000, 0xa627d440, BRF_PRG | BRF_ESS },
+	{ "Hustle Chumy (Japan)(1984)(Compile).sg",	0x04000, 0xa627d440, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_hustle)
@@ -2065,11 +2061,9 @@ struct BurnDriver BurnDrvsg1k_hustle = {
 	272, 228, 4, 3
 };
 
-
 // Hyper Sports (Japan)
-
 static struct BurnRomInfo sg1k_hypersptRomDesc[] = {
-	{ "mpr-6487.ic1",	0x08000, 0xba09a0fd, BRF_PRG | BRF_ESS },
+	{ "Hyper Sports (Japan)(1985)(Sega).sg",	0x08000, 0xba09a0fd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_hyperspt)
@@ -2085,18 +2079,16 @@ struct BurnDriver BurnDrvsg1k_hyperspt = {
 	272, 228, 4, 3
 };
 
-
 // Hyper Sports (Taiwan)
-
 static struct BurnRomInfo sg1k_hyperspttRomDesc[] = {
-	{ "hyper sports (tw).bin",	0x08000, 0x87619ac2, BRF_PRG | BRF_ESS },
+	{ "Hyper Sports (Taiwan)(198x)(aaronix).sg",	0x08000, 0x87619ac2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_hypersptt)
 STD_ROM_FN(sg1k_hypersptt)
 
 struct BurnDriver BurnDrvsg1k_hypersptt = {
-	"sg1k_hypersptt", "sg1k_hyperspt", NULL, NULL, "1985?",
+	"sg1k_hypersptt", "sg1k_hyperspt", NULL, NULL, "198?",
 	"Hyper Sports (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_SPORTSMISC, 0,
@@ -2105,11 +2097,9 @@ struct BurnDriver BurnDrvsg1k_hypersptt = {
 	272, 228, 4, 3
 };
 
-
 // Hyper Sports (Korea)
-
 static struct BurnRomInfo sg1k_hypersptkRomDesc[] = {
-	{ "hyper sports (kr).bin",	0x08000, 0x3157ef9c, BRF_PRG | BRF_ESS },
+	{ "Hyper Sports (Korea)(198x)(Samsung).sg",	0x08000, 0x3157ef9c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_hypersptk)
@@ -2125,11 +2115,9 @@ struct BurnDriver BurnDrvsg1k_hypersptk = {
 	272, 228, 4, 3
 };
 
-
 // Hyper Sports 2 (Taiwan)
-
 static struct BurnRomInfo sg1k_hypersp2RomDesc[] = {
-	{ "hyper sports 2 (tw).bin",	0x08000, 0xb0234e12, BRF_PRG | BRF_ESS },
+	{ "Hyper Sports 2 (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xb0234e12, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_hypersp2)
@@ -2199,11 +2187,9 @@ struct BurnDriver BurnDrvsg1k_jb007t = {
 	272, 228, 4, 3
 };
 
-
-// Jinzita (Taiwan)
-
+// Jīnzìtǎ ~ King's Valley (Taiwan)
 static struct BurnRomInfo sg1k_jinzitaRomDesc[] = {
-	{ "king's valley (tw).bin",	0x08000, 0x223397a1, BRF_PRG | BRF_ESS },
+	{ "Jinzita - King's Valley (Taiwan)(198x)(Aaronix).sg",	0x08000, 0x223397a1, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_jinzita)
@@ -2211,19 +2197,17 @@ STD_ROM_FN(sg1k_jinzita)
 
 struct BurnDriver BurnDrvsg1k_jinzita = {
 	"sg1k_jinzita", NULL, NULL, NULL, "198?",
-	"King's Valley, Jinzita (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	"Jinzita ~ King's Valley (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
+	L"J\u012bnz\u00ect\u01ce ~ King's Valley (Taiwan)\0\u91d1\u5b57\u5854\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_A, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_jinzitaRomInfo, sg1k_jinzitaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
 // Lode Runner (Euro, Japan)
-
 static struct BurnRomInfo sg1k_ldrunRomDesc[] = {
-	{ "mpr-5998.ic1",	0x08000, 0x00ed3970, BRF_PRG | BRF_ESS },
+	{ "Lode Runner (Euro, Japan)(1984)(Sega).sg",	0x08000, 0x00ed3970, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ldrun)
@@ -2239,19 +2223,17 @@ struct BurnDriver BurnDrvsg1k_ldrun = {
 	272, 228, 4, 3
 };
 
-
 // Lode Runner (Korea)
-
 static struct BurnRomInfo sg1k_ldrunkRomDesc[] = {
-	{ "lode runner (kr).bin",	0x08000, 0xe68bc7d6, BRF_PRG | BRF_ESS },
+	{ "Lode Runner (Korea)(198x).sg",	0x08000, 0xe68bc7d6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ldrunk)
 STD_ROM_FN(sg1k_ldrunk)
 
 struct BurnDriver BurnDrvsg1k_ldrunk = {
-	"sg1k_ldrunk", "sg1k_ldrun", NULL, NULL, "1984?",
-	"Lode Runner (Korea)\0", NULL, "Unknown", "Sega SG-1000",
+	"sg1k_ldrunk", "sg1k_ldrun", NULL, NULL, "198?",
+	"Lode Runner (Korea)\0", NULL, "<unknown>", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_ldrunkRomInfo, sg1k_ldrunkRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2259,18 +2241,16 @@ struct BurnDriver BurnDrvsg1k_ldrunk = {
 	272, 228, 4, 3
 };
 
-
 // Lode Runner (Taiwan)
-
 static struct BurnRomInfo sg1k_ldruntRomDesc[] = {
-	{ "lode runner (tw).bin",	0x08000, 0xd953bdb7, BRF_PRG | BRF_ESS },
+	{ "Lode Runner (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xd953bdb7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ldrunt)
 STD_ROM_FN(sg1k_ldrunt)
 
 struct BurnDriver BurnDrvsg1k_ldrunt = {
-	"sg1k_ldrunt", "sg1k_ldrun", NULL, NULL, "1984?",
+	"sg1k_ldrunt", "sg1k_ldrun", NULL, NULL, "198?",
 	"Lode Runner (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
@@ -2279,11 +2259,9 @@ struct BurnDriver BurnDrvsg1k_ldrunt = {
 	272, 228, 4, 3
 };
 
-
-// SG-1000 M2 Check Program
-
+// SG-1000 M2 Check Program (Japan)
 static struct BurnRomInfo sg1k_m2cpRomDesc[] = {
-	{ "sg-1000 m2 check program.bin",	0x02000, 0x207e7e99, BRF_PRG | BRF_ESS },
+	{ "SG-1000 M2 Check Program (Japan)(1984)(Sega).sg",	0x02000, 0x207e7e99, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_m2cp)
@@ -2291,7 +2269,7 @@ STD_ROM_FN(sg1k_m2cp)
 
 struct BurnDriver BurnDrvsg1k_m2cp = {
 	"sg1k_m2cp", NULL, NULL, NULL, "1984",
-	"SG-1000 M2 Check Program\0", NULL, "Sega", "Sega SG-1000",
+	"SG-1000 M2 Check Program (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_m2cpRomInfo, sg1k_m2cpRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2299,11 +2277,9 @@ struct BurnDriver BurnDrvsg1k_m2cp = {
 	272, 228, 4, 3
 };
 
-
 // Magical Tree (Taiwan)
-
 static struct BurnRomInfo sg1k_magtreeRomDesc[] = {
-	{ "magical tree (tw).bin",	0x08000, 0xb3a8291a, BRF_PRG | BRF_ESS },
+	{ "Magical Tree (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xb3a8291a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_magtree)
@@ -2319,11 +2295,9 @@ struct BurnDriver BurnDrvsg1k_magtree = {
 	272, 228, 4, 3
 };
 
-
 // Magical Kid Wiz (Taiwan)
-
 static struct BurnRomInfo sg1k_mkidwizRomDesc[] = {
-	{ "magical kid wiz (tw).bin",	0x0c000, 0xffc4ee3f, BRF_PRG | BRF_ESS },
+	{ "Magical Kid Wiz (Taiwan)(198x)(Aaronix).sg",	0x0c000, 0xffc4ee3f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_mkidwiz)
@@ -2331,7 +2305,7 @@ STD_ROM_FN(sg1k_mkidwiz)
 
 struct BurnDriver BurnDrvsg1k_mkidwiz = {
 	"sg1k_mkidwiz", NULL, NULL, NULL, "198?",
-	"Magical Kid Wiz (Taiwan)\0", "Stuck at boot logo?", "Aaronix", "Sega SG-1000",
+	"Magical Kid Wiz (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_mkidwizRomInfo, sg1k_mkidwizRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2393,9 +2367,9 @@ struct BurnDriver BurnDrvsg1k_mahjongt = {
 	272, 228, 4, 3
 };
 
-// Monaco GP (Japan, v2)
+// Monaco GP (Japan, v1.2)
 static struct BurnRomInfo sg1k_monacogpRomDesc[] = {
-	{ "Monaco GP (Japan, v2)(1983)(Sega).sg",	0x08000, 0x02e5d66a, BRF_PRG | BRF_ESS },
+	{ "Monaco GP (Japan, v1.2)(1983)(Sega).sg",	0x08000, 0x02e5d66a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_monacogp)
@@ -2403,7 +2377,7 @@ STD_ROM_FN(sg1k_monacogp)
 
 struct BurnDriver BurnDrvsg1k_monacogp = {
 	"sg1k_monacogp", NULL, NULL, NULL, "1983",
-	"Monaco GP (Japan, v2)\0", NULL, "Sega", "Sega SG-1000",
+	"Monaco GP (Japan, v1.2)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_monacogpRomInfo, sg1k_monacogpRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2411,9 +2385,9 @@ struct BurnDriver BurnDrvsg1k_monacogp = {
 	272, 228, 4, 3
 };
 
-// Monaco GP (Japan, v1)
+// Monaco GP (Japan, v1.1)
 static struct BurnRomInfo sg1k_monacogpaRomDesc[] = {
-	{ "Monaco GP (Japan, v1)(1983)(Sega).sg",	0x08000, 0xda2d57f3, BRF_PRG | BRF_ESS },
+	{ "Monaco GP (Japan, v1.1)(1983)(Sega).sg",	0x08000, 0xda2d57f3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_monacogpa)
@@ -2421,7 +2395,7 @@ STD_ROM_FN(sg1k_monacogpa)
 
 struct BurnDriver BurnDrvsg1k_monacogpa = {
 	"sg1k_monacogpa", "sg1k_monacogp", NULL, NULL, "1983",
-	"Monaco GP (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Monaco GP (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_monacogpaRomInfo, sg1k_monacogpaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2429,9 +2403,9 @@ struct BurnDriver BurnDrvsg1k_monacogpa = {
 	272, 228, 4, 3
 };
 
-// Monaco GP (Japan, v0)
+// Monaco GP (Japan)
 static struct BurnRomInfo sg1k_monacogpbRomDesc[] = {
-	{ "Monaco GP (Japan, v0)(1983)(Sega).sg",	0x0a000, 0x8572d73a, BRF_PRG | BRF_ESS },
+	{ "Monaco GP (Japan)(1983)(Sega).sg",	0x0a000, 0x8572d73a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_monacogpb)
@@ -2439,7 +2413,7 @@ STD_ROM_FN(sg1k_monacogpb)
 
 struct BurnDriver BurnDrvsg1k_monacogpb = {
 	"sg1k_monacogpb", "sg1k_monacogp", NULL, NULL, "1983",
-	"Monaco GP (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Monaco GP (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_monacogpbRomInfo, sg1k_monacogpbRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2763,7 +2737,7 @@ STD_ROM_PICK(sg1k_pacart)
 STD_ROM_FN(sg1k_pacart)
 
 struct BurnDriver BurnDrvsg1k_pacart = {
-	"sg1k_pacart", "sg1k_pacar", NULL, NULL, "1983?",
+	"sg1k_pacart", "sg1k_pacar", NULL, NULL, "198?",
 	"Pacar (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
@@ -2772,11 +2746,9 @@ struct BurnDriver BurnDrvsg1k_pacart = {
 	272, 228, 4, 3
 };
 
-
 // Pachinko II (Japan)
-
 static struct BurnRomInfo sg1k_pachink2RomDesc[] = {
-	{ "pachinko ii (japan).bin",	0x04000, 0xfd7cb50a, BRF_PRG | BRF_ESS },
+	{ "Pachinko II (Japan)(1984)(Sega).sg",	0x04000, 0xfd7cb50a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pachink2)
@@ -2786,37 +2758,33 @@ struct BurnDriver BurnDrvsg1k_pachink2 = {
 	"sg1k_pachink2", NULL, NULL, NULL, "1984",
 	"Pachinko II (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_CASINO, 0,
 	SG1KGetZipName, sg1k_pachink2RomInfo, sg1k_pachink2RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
 // Pachinko II (Taiwan)
-
 static struct BurnRomInfo sg1k_pachink2tRomDesc[] = {
-	{ "pachinko ii (tw).bin",	0x04000, 0x6ebe81bf, BRF_PRG | BRF_ESS },
+	{ "Pachinko II (Taiwan)(198x)(Aaronix).sg",	0x04000, 0x6ebe81bf, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pachink2t)
 STD_ROM_FN(sg1k_pachink2t)
 
 struct BurnDriver BurnDrvsg1k_pachink2t = {
-	"sg1k_pachink2t", "sg1k_pachink2", NULL, NULL, "1984?",
+	"sg1k_pachink2t", "sg1k_pachink2", NULL, NULL, "198?",
 	"Pachinko II (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_CASINO, 0,
 	SG1KGetZipName, sg1k_pachink2tRomInfo, sg1k_pachink2tRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
 // Pachinko (Japan)
-
 static struct BurnRomInfo sg1k_pachinkoRomDesc[] = {
-	{ "pachinko (japan).bin",	0x0a000, 0x326587e1, BRF_PRG | BRF_ESS },
+	{ "Pachinko (Japan)(1983)(Sega).sg",	0x0a000, 0x326587e1, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pachinko)
@@ -2826,37 +2794,33 @@ struct BurnDriver BurnDrvsg1k_pachinko = {
 	"sg1k_pachinko", NULL, NULL, NULL, "1983",
 	"Pachinko (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_CASINO, 0,
 	SG1KGetZipName, sg1k_pachinkoRomInfo, sg1k_pachinkoRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
 // Ping Pong (Taiwan)
-
 static struct BurnRomInfo sg1k_pingpongRomDesc[] = {
-	{ "ping pong (konami's) (tw).bin",	0x08000, 0x4d972a9e, BRF_PRG | BRF_ESS },
+	{ "Ping Pong (Taiwan)(198x)(Aaronix).sg",	0x08000, 0x4d972a9e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pingpong)
 STD_ROM_FN(sg1k_pingpong)
 
 struct BurnDriver BurnDrvsg1k_pingpong = {
-	"sg1k_pingpong", NULL, NULL, NULL, "1985?",
+	"sg1k_pingpong", NULL, NULL, NULL, "198?",
 	"Ping Pong (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_SPORTSMISC, 0,
 	SG1KGetZipName, sg1k_pingpongRomInfo, sg1k_pingpongRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
-// Pitfall II - The Lost Caverns (Japan, v0)
-
+// Pitfall II: The Lost Caverns (Japan)
 static struct BurnRomInfo sg1k_pitfall2aRomDesc[] = {
-	{ "pitfall ii - the lost caverns (japan).bin",	0x08000, 0x37fca2eb, BRF_PRG | BRF_ESS },
+	{ "Pitfall II - The Lost Caverns (Japan)(1985)(Sega).sg",	0x08000, 0x37fca2eb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pitfall2a)
@@ -2864,7 +2828,7 @@ STD_ROM_FN(sg1k_pitfall2a)
 
 struct BurnDriver BurnDrvsg1k_pitfall2a = {
 	"sg1k_pitfall2a", "sg1k_pitfall2", NULL, NULL, "1985",
-	"Pitfall II - The Lost Caverns (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Pitfall II: The Lost Caverns (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_pitfall2aRomInfo, sg1k_pitfall2aRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2872,11 +2836,9 @@ struct BurnDriver BurnDrvsg1k_pitfall2a = {
 	272, 228, 4, 3
 };
 
-
-// Pitfall II - The Lost Caverns (Japan, v1)
-
+// Pitfall II: The Lost Caverns (Japan, v1.1)
 static struct BurnRomInfo sg1k_pitfall2RomDesc[] = {
-	{ "pitfall ii - the lost caverns (japan) (alt).bin",	0x08000, 0x3db74761, BRF_PRG | BRF_ESS },
+	{ "Pitfall II - The Lost Caverns (Japan, v1.1)(1985)(Sega).sg",	0x08000, 0x3db74761, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_pitfall2)
@@ -2884,7 +2846,7 @@ STD_ROM_FN(sg1k_pitfall2)
 
 struct BurnDriver BurnDrvsg1k_pitfall2 = {
 	"sg1k_pitfall2", NULL, NULL, NULL, "1985",
-	"Pitfall II - The Lost Caverns (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Pitfall II: The Lost Caverns (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_pitfall2RomInfo, sg1k_pitfall2RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2892,18 +2854,16 @@ struct BurnDriver BurnDrvsg1k_pitfall2 = {
 	272, 228, 4, 3
 };
 
-
 // Fa Gui Qibing (Taiwan)
-
 static struct BurnRomInfo sg1k_faguiqibRomDesc[] = {
-	{ "pitfall ii [v0] [chinese logo] (tw).bin",	0x08000, 0x476a079b, BRF_PRG | BRF_ESS },
+	{ "Fa Gui Qibing (Taiwan)(198x)(Aaronix).sg",	0x08000, 0x476a079b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_faguiqib)
 STD_ROM_FN(sg1k_faguiqib)
 
 struct BurnDriver BurnDrvsg1k_faguiqib = {
-	"sg1k_faguiqib", "sg1k_pitfall2", NULL, NULL, "1985?",
+	"sg1k_faguiqib", "sg1k_pitfall2", NULL, NULL, "198?",
 	"Fa Gui Qibing (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
@@ -2912,19 +2872,17 @@ struct BurnDriver BurnDrvsg1k_faguiqib = {
 	272, 228, 4, 3
 };
 
-
-// Fa Gui Qibing (Taiwan, Alt)
-
+// Pitfall II (Taiwan, Alt)
 static struct BurnRomInfo sg1k_faguiqibaRomDesc[] = {
-	{ "pitfall ii [v0] [english logo] (tw).bin",	0x08000, 0x4e93bc8e, BRF_PRG | BRF_ESS },
+	{ "Fa Gui Qibing - Pitfall II (Taiwan, Alt)(198?)(Aaronix).sg",	0x08000, 0x4e93bc8e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_faguiqiba)
 STD_ROM_FN(sg1k_faguiqiba)
 
 struct BurnDriver BurnDrvsg1k_faguiqiba = {
-	"sg1k_faguiqiba", "sg1k_pitfall2", NULL, NULL, "1985?",
-	"Fa Gui Qibing (Taiwan, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
+	"sg1k_faguiqiba", "sg1k_pitfall2", NULL, NULL, "198?",
+	"Pitfall II (Taiwan, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_faguiqibaRomInfo, sg1k_faguiqibaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2932,11 +2890,9 @@ struct BurnDriver BurnDrvsg1k_faguiqiba = {
 	272, 228, 4, 3
 };
 
-
 // Pop Flamer (Euro, Japan)
-
 static struct BurnRomInfo sg1k_popflameRomDesc[] = {
-	{ "pop flamer (japan, europe).bin",	0x04000, 0xdb6404ba, BRF_PRG | BRF_ESS },
+	{ "Pop Flamer (Euro, Japan)(1983)(Sega).sg",	0x04000, 0xdb6404ba, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_popflame)
@@ -2952,18 +2908,16 @@ struct BurnDriver BurnDrvsg1k_popflame = {
 	272, 228, 4, 3
 };
 
-
 // Pop Flamer (Taiwan)
-
 static struct BurnRomInfo sg1k_popflametRomDesc[] = {
-	{ "pop flamer (tw).bin",	0x04000, 0xab1da8a6, BRF_PRG | BRF_ESS },
+	{ "Pop Flamer (Taiwan)(198x)(Aaronix).sg",	0x04000, 0xab1da8a6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_popflamet)
 STD_ROM_FN(sg1k_popflamet)
 
 struct BurnDriver BurnDrvsg1k_popflamet = {
-	"sg1k_popflamet", "sg1k_popflame", NULL, NULL, "1983?",
+	"sg1k_popflamet", "sg1k_popflame", NULL, NULL, "198?",
 	"Pop Flamer (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
@@ -2972,11 +2926,9 @@ struct BurnDriver BurnDrvsg1k_popflamet = {
 	272, 228, 4, 3
 };
 
-
 // Q*bert (Japan, OMV)
-
 static struct BurnRomInfo sg1k_qbertRomDesc[] = {
-	{ "q-bert (japan) (om).bin",	0x02000, 0x77db4704, BRF_PRG | BRF_ESS },
+	{ "Q*bert (Japan, OMV)(1983)(Tsukuda Original).sg",	0x02000, 0x77db4704, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_qbert)
@@ -2992,19 +2944,17 @@ struct BurnDriver BurnDrvsg1k_qbert = {
 	272, 228, 4, 3
 };
 
-
-// Rally-X (Taiwan)
-
+// Rally-X (Taiwan) (Unl)
 static struct BurnRomInfo sg1k_rallyxRomDesc[] = {
-	{ "rally-x (tw).bin",	0x08000, 0xaaac12cf, BRF_PRG | BRF_ESS },
+	{ "Rally-X (Taiwan)(Unl)(198x).sg",	0x08000, 0xaaac12cf, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_rallyx)
 STD_ROM_FN(sg1k_rallyx)
 
 struct BurnDriver BurnDrvsg1k_rallyx = {
-	"sg1k_rallyx", NULL, NULL, NULL, "1986?",
-	"Rally-X (Taiwan)\0", NULL, "DahJee", "Sega SG-1000",
+	"sg1k_rallyx", NULL, NULL, NULL, "198?",
+	"Rally-X (Taiwan) (Unl)\0", NULL, "<unknown>", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_ACTION | GBF_MAZE, 0,
 	SG1KGetZipName, sg1k_rallyxRomInfo, sg1k_rallyxRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -3012,19 +2962,35 @@ struct BurnDriver BurnDrvsg1k_rallyx = {
 	272, 228, 4, 3
 };
 
+// Dū Dū Chē (Taiwan) (Unl)
+static struct BurnRomInfo sg1k_duducheRomDesc[] = {
+	{ "Du Du Che (Taiwan)(Unl)(198x)(DahJee).sg",	0x08000, 0x306d5f78, BRF_PRG | BRF_ESS },
+};
 
-// Road Fighter (Taiwan)
+STD_ROM_PICK(sg1k_duduche)
+STD_ROM_FN(sg1k_duduche)
 
+struct BurnDriver BurnDrvsg1k_duduche = {
+	"sg1k_duduche", "sg1k_rallyx", NULL, NULL, "198?",
+	"Du Du Che (Taiwan) (Unl)\0", NULL, "DahJee", "Sega SG-1000",
+	L"D\u016b D\u016b Ch\u0113 (Taiwan)\0\u561f\u561f\u8eca\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_A, GBF_ACTION | GBF_MAZE, 0,
+	SG1KGetZipName, sg1k_duducheRomInfo, sg1k_duducheRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Road Fighter (Taiwan) (Unl)
 static struct BurnRomInfo sg1k_roadfghtRomDesc[] = {
-	{ "road fighter (tw).bin",	0x08000, 0xd2edd329, BRF_PRG | BRF_ESS },
+	{ "Road Fighter (Taiwan)(Unl)(198x).sg",	0x08000, 0xd2edd329, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_roadfght)
 STD_ROM_FN(sg1k_roadfght)
 
 struct BurnDriver BurnDrvsg1k_roadfght = {
-	"sg1k_roadfght", NULL, NULL, NULL, "1986?",
-	"Road Fighter (Taiwan)\0", NULL, "Jumbo?", "Sega SG-1000",
+	"sg1k_roadfght", NULL, NULL, NULL, "198?",
+	"Road Fighter (Taiwan) (Unl)\0", NULL, "<unknown>", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_roadfghtRomInfo, sg1k_roadfghtRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -3032,31 +2998,27 @@ struct BurnDriver BurnDrvsg1k_roadfght = {
 	272, 228, 4, 3
 };
 
-
-// Huojian Che (Taiwan)
-
+// Huǒjiàn Chē (Taiwan) (Unl)
 static struct BurnRomInfo sg1k_huojicheRomDesc[] = {
-	{ "road fighter [jumbo] (tw).bin",	0x08000, 0x29e047cc, BRF_PRG | BRF_ESS },
+	{ "Huojian Che (Taiwan)(Unl)(198x)(Jumbo).sg",	0x08000, 0x29e047cc, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_huojiche)
 STD_ROM_FN(sg1k_huojiche)
 
 struct BurnDriver BurnDrvsg1k_huojiche = {
-	"sg1k_huojiche", "sg1k_roadfght", NULL, NULL, "1986?",
-	"Huojian Che (Taiwan)\0", NULL, "Jumbo", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_RACING, 0,
+	"sg1k_huojiche", "sg1k_roadfght", NULL, NULL, "198?",
+	"Huojian Che (Taiwan) (Unl)\0", NULL, "Jumbo", "Sega SG-1000",
+	L"Hu\u01D2ji\u00E0n Ch\u0113 (Taiwan) (Unl)\0\u706b\u7bad\u8eca\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_A, GBF_RACING, 0,
 	SG1KGetZipName, sg1k_huojicheRomInfo, sg1k_huojicheRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
 // Rock n' Bolt (Japan)
-
 static struct BurnRomInfo sg1k_rocknbolRomDesc[] = {
-	{ "rock n' bolt (japan).bin",	0x08000, 0x0ffdd03d, BRF_PRG | BRF_ESS },
+	{ "Rock n' Bolt (Japan)(1985)(Sega).sg",	0x08000, 0x0ffdd03d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_rocknbol)
@@ -3072,20 +3034,18 @@ struct BurnDriver BurnDrvsg1k_rocknbol = {
 	272, 228, 4, 3
 };
 
-
 // Mo Tian Da Lou (Taiwan)
-
 static struct BurnRomInfo sg1k_motiandaRomDesc[] = {
-	{ "rock n' bolt (tw).bin",	0x08000, 0x4eacb981, BRF_PRG | BRF_ESS },
+	{ "Mo Tian Da Lou (Taiwan)(198x)(Aaronix).sg",	0x08000, 0x4eacb981, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_motianda)
 STD_ROM_FN(sg1k_motianda)
 
 struct BurnDriver BurnDrvsg1k_motianda = {
-	"sg1k_motianda", "sg1k_rocknbol", NULL, NULL, "1985?",
+	"sg1k_motianda", "sg1k_rocknbol", NULL, NULL, "198?",
 	"Mo Tian Da Lou (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"Mo Tian Da Lou (Taiwan)\0\u6469\u5929\u5927\u697c\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_motiandaRomInfo, sg1k_motiandaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -3193,7 +3153,7 @@ STD_ROM_FN(sg1k_3ninmj)
 struct BurnDriver BurnDrvsg1k_3ninmj = {
 	"sg1k_3ninmj", NULL, NULL, NULL, "1984",
 	"San-nin Mahjong (Japan, OMV)\0", NULL, "Tsukuda Original", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"San-nin Mahjong (Japan, OMV)\0\u4e09\u4eba\u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_3ninmjRomInfo, sg1k_3ninmjRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -3211,7 +3171,7 @@ STD_ROM_FN(sg1k_3ninmjt)
 struct BurnDriver BurnDrvsg1k_3ninmjt = {
 	"sg1k_3ninmjt", "sg1k_3ninmj", NULL, NULL, "198?",
 	"San-nin Mahjong (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"San-nin Mahjong (Taiwan)\0\u4e09\u4eba\u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MAHJONG, 0,
 	SG1KGetZipName, sg1k_3ninmjtRomInfo, sg1k_3ninmjtRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -3326,11 +3286,9 @@ struct BurnDriver BurnDrvsg1k_galaga = {
 	272, 228, 4, 3
 };
 
-
 // Serizawa Hachidan no Tsumeshogi (Japan)
-
 static struct BurnRomInfo sg1k_serizawaRomDesc[] = {
-	{ "serizawa hachidan no tsumeshogi (japan).bin",	0x04000, 0x545fc9bb, BRF_PRG | BRF_ESS },
+	{ "Serizawa Hachidan no Tsumeshogi (Japan)(1983)(Sega).bin",	0x04000, 0x545fc9bb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_serizawa)
@@ -3339,18 +3297,16 @@ STD_ROM_FN(sg1k_serizawa)
 struct BurnDriver BurnDrvsg1k_serizawa = {
 	"sg1k_serizawa", NULL, NULL, NULL, "1983",
 	"Serizawa Hachidan no Tsumeshogi (Japan)\0", NULL, "Sega", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"Serizawa Hachidan no Tsumeshogi (Japan)\u82b9\u6ca2\u516b\u6bb5 \u306e\u8a70\u5c06\u68cb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_BOARD, 0,
 	SG1KGetZipName, sg1k_serizawaRomInfo, sg1k_serizawaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
-// Shinnyushain Tooru Kun (Japan)
-
+// Shinnyushain Tooru-kun (Japan)
 static struct BurnRomInfo sg1k_shinnyusRomDesc[] = {
-	{ "shinnyushain tooru kun (japan).bin",	0x08000, 0x5a917e06, BRF_PRG | BRF_ESS },
+	{ "Shinnyushain Tooru-kun (Japan)(1985)(Sega).sg",	0x08000, 0x5a917e06, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_shinnyus)
@@ -3358,28 +3314,26 @@ STD_ROM_FN(sg1k_shinnyus)
 
 struct BurnDriver BurnDrvsg1k_shinnyus = {
 	"sg1k_shinnyus", NULL, NULL, NULL, "1985",
-	"Shinnyushain Tooru Kun (Japan)\0", NULL, "Sega", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	"Shinnyushain Tooru-kun (Japan)\0", NULL, "Sega", "Sega SG-1000",
+	L"Shinnyushain Tooru-kun (Japan)\0\u65b0\u5165\u793e\u54e1 \u3068\u304a\u308b\u304f\u3093\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_shinnyusRomInfo, sg1k_shinnyusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-
-// Shinnyushain Tooru Kun (Taiwan)
-
+// Shinnyushain Tooru-kun (Taiwan)
 static struct BurnRomInfo sg1k_shinnyustRomDesc[] = {
-	{ "shinnyushain tooru kun (tw).bin",	0x08000, 0x33fc5cf6, BRF_PRG | BRF_ESS },
+	{ "Shinnyushain Tooru-kun (Taiwan)(198x).sg",	0x08000, 0x33fc5cf6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_shinnyust)
 STD_ROM_FN(sg1k_shinnyust)
 
 struct BurnDriver BurnDrvsg1k_shinnyust = {
-	"sg1k_shinnyust", "sg1k_shinnyus", NULL, NULL, "19??",
-	"Shinnyushain Tooru Kun (Taiwan)\0", NULL, "Unknown", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	"sg1k_shinnyust", "sg1k_shinnyus", NULL, NULL, "198?",
+	"Shinnyushain Tooru-kun (Taiwan)\0", NULL, "<unknown>", "Sega SG-1000",
+	L"Shinnyushain Tooru-kun (Taiwan)\0\u65b0\u5165\u793e\u54e1 \u3068\u304a\u308b\u304f\u3093\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_shinnyustRomInfo, sg1k_shinnyustRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -3404,11 +3358,9 @@ struct BurnDriver BurnDrvsg1k_sxpao = {
 	272, 228, 4, 3
 };
 
-
 // Sindbad Mystery (Euro, Japan)
-
 static struct BurnRomInfo sg1k_sindbadmRomDesc[] = {
-	{ "mpr-5546.ic1",	0x08000, 0x01932df9, BRF_PRG | BRF_ESS },
+	{ "Sindbad Mystery (Euro, Japan)(1983)(Sega).sg",	0x08000, 0x01932df9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_sindbadm)
@@ -3424,18 +3376,16 @@ struct BurnDriver BurnDrvsg1k_sindbadm = {
 	272, 228, 4, 3
 };
 
-
 // Sindbad Mystery (Taiwan)
-
 static struct BurnRomInfo sg1k_sindbadmtRomDesc[] = {
-	{ "sindbad mystery (tw).bin",	0x08000, 0x945f7847, BRF_PRG | BRF_ESS },
+	{ "Sindbad Mystery (Taiwan)(198x)(Aaronix).sg",	0x08000, 0x945f7847, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_sindbadmt)
 STD_ROM_FN(sg1k_sindbadmt)
 
 struct BurnDriver BurnDrvsg1k_sindbadmt = {
-	"sg1k_sindbadmt", "sg1k_sindbadm", NULL, NULL, "1983?",
+	"sg1k_sindbadmt", "sg1k_sindbadm", NULL, NULL, "198?",
 	"Sindbad Mystery (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
@@ -3732,9 +3682,9 @@ struct BurnDriver BurnDrvsg1k_starjack1 = {
 	272, 228, 4, 3
 };
 
-// Star Jacker (Japan, v1.0)
+// Star Jacker (Japan)
 static struct BurnRomInfo sg1k_starjack2RomDesc[] = {
-	{ "Star Jacker (Japan, v1.0)(1983)(Sega).sg",	0x08000, 0x1ae94122, BRF_PRG | BRF_ESS },
+	{ "Star Jacker (Japan)(1983)(Sega).sg",	0x08000, 0x1ae94122, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_starjack2)
@@ -3742,7 +3692,7 @@ STD_ROM_FN(sg1k_starjack2)
 
 struct BurnDriver BurnDrvsg1k_starjack2 = {
 	"sg1k_starjack2", "sg1k_starjack", NULL, NULL, "1983",
-	"Star Jacker (Japan, v1.0)\0", NULL, "Sega", "Sega SG-1000",
+	"Star Jacker (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_VERSHOOT, 0,
 	SG1KGetZipName, sg1k_starjack2RomInfo, sg1k_starjack2RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -3752,7 +3702,7 @@ struct BurnDriver BurnDrvsg1k_starjack2 = {
 
 // Star Jacker (Taiwan)
 static struct BurnRomInfo sg1k_starjacktRomDesc[] = {
-	{ "Star Jacker (Taiwan)(198x)(Aaronix.sg",	0x08000, 0xdf162201, BRF_PRG | BRF_ESS },
+	{ "Star Jacker (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xdf162201, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_starjackt)
@@ -3822,9 +3772,9 @@ struct BurnDriver BurnDrvsg1k_supertnkt = {
 	272, 228, 4, 3
 };
 
-// Wonder Boy (Japan, v1)
+// Wonder Boy (Japan, v1.1)
 static struct BurnRomInfo sg1k_wboyRomDesc[] = {
-	{ "Wonder Boy (Japan, v1)(1986)(Sega).sg",	0x08000, 0xe8f0344d, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy (Japan, v1.1)(1986)(Sega).sg",	0x08000, 0xe8f0344d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_wboy)
@@ -3832,7 +3782,7 @@ STD_ROM_FN(sg1k_wboy)
 
 struct BurnDriver BurnDrvsg1k_wboy = {
 	"sg1k_wboy", NULL, NULL, NULL, "1986",
-	"Wonder Boy (Japan, v1)\0", NULL, "Sega", "Sega SG-1000",
+	"Wonder Boy (Japan, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_wboyRomInfo, sg1k_wboyRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -3840,9 +3790,9 @@ struct BurnDriver BurnDrvsg1k_wboy = {
 	272, 228, 4, 3
 };
 
-// Wonder Boy (Japan, v0)
+// Wonder Boy (Japan)
 static struct BurnRomInfo sg1k_wboyaRomDesc[] = {
-	{ "Wonder Boy (Japan, v0)(1986)(Sega).sg",	0x08000, 0x160535c5, BRF_PRG | BRF_ESS },
+	{ "Wonder Boy (Japan)(1986)(Sega).sg",	0x08000, 0x160535c5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_wboya)
@@ -3850,7 +3800,7 @@ STD_ROM_FN(sg1k_wboya)
 
 struct BurnDriver BurnDrvsg1k_wboya = {
 	"sg1k_wboya", "sg1k_wboy", NULL, NULL, "1986",
-	"Wonder Boy (Japan, v0)\0", NULL, "Sega", "Sega SG-1000",
+	"Wonder Boy (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_wboyaRomInfo, sg1k_wboyaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4280,7 +4230,7 @@ struct BurnDriver BurnDrvsg1k_crosstrex = {
 
 // Foryster (HB, v00.9)
 static struct BurnRomInfo sg1k_forysterRomDesc[] = {
-	{ "Foryster v00.9 (2022)(siudym).bin",	32768, 0xf8d7fa2c, BRF_PRG | BRF_ESS },
+	{ "Foryster v00.9 (2022)(siudym).sg",	32768, 0xf8d7fa2c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_foryster)
@@ -4440,6 +4390,24 @@ struct BurnDriver BurnDrvsg1k_mieyen = {
 	272, 228, 4, 3
 };
 
+// Operation Hibernation Plus (HB)
+static struct BurnRomInfo sg1k_ophibernplusRomDesc[] = {
+	{ "Operation Hibernation Plus (2025)(Jess Creations - ArugulaZ).sg",	40960, 0xe530d8f5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_ophibernplus)
+STD_ROM_FN(sg1k_ophibernplus)
+
+struct BurnDriver BurnDrvsg1k_ophibernplus = {
+	"sg1k_ophibernplus", NULL, NULL, NULL, "2025",
+	"Operation Hibernation Plus (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_ophibernplusRomInfo, sg1k_ophibernplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Palikat (HB)
 // https://www.smspower.org/forums/18128-PalikatForSegaSC3000
 static struct BurnRomInfo sg1k_palikatRomDesc[] = {
@@ -4533,7 +4501,7 @@ struct BurnDriver BurnDrvsg1k_sgthelmet = {
 
 // Solar Fox II (HB)
 static struct BurnRomInfo sg1k_solarfoxiiRomDesc[] = {
-	{ "Solar Fox II (2025)(Jess Creations).sg",	40960, 0x2ce5cf6f, BRF_PRG | BRF_ESS },
+	{ "Solar Fox II (2025)(Jess Creations - ArugulaZ).sg",	40960, 0x2ce5cf6f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_solarfoxii)
@@ -4541,7 +4509,7 @@ STD_ROM_FN(sg1k_solarfoxii)
 
 struct BurnDriver BurnDrvsg1k_solarfoxii = {
 	"sg1k_solarfoxii", NULL, NULL, NULL, "2025",
-	"Solar Fox II (HB)\0", NULL, "Jess Creations", "Sega SG-1000",
+	"Solar Fox II (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_solarfoxiiRomInfo, sg1k_solarfoxiiRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4561,7 +4529,7 @@ struct BurnDriver BurnDrvsg1k_spacerocks = {
 	"sg1k_spacerocks", NULL, NULL, NULL, "2021",
 	"Space Rocks (HB)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_MULTISHOOT, 0,
 	SG1KGetZipName, sg1k_spacerocksRomInfo, sg1k_spacerocksRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -4581,6 +4549,24 @@ struct BurnDriver BurnDrvsg1k_superuwol = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_superuwolRomInfo, sg1k_superuwolRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Svellas (HB)
+static struct BurnRomInfo sg1k_svellasRomDesc[] = {
+	{ "Svellas (2025)(Inufuto).sg",	16384, 0xea0cc388, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_svellas)
+STD_ROM_FN(sg1k_svellas)
+
+struct BurnDriver BurnDrvsg1k_svellas = {
+	"sg1k_svellas", NULL, NULL, NULL, "2025",
+	"Svellas (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
+	SG1KGetZipName, sg1k_svellasRomInfo, sg1k_svellasRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -4623,7 +4609,7 @@ struct BurnDriver BurnDrvsg1k_vexed = {
 
 // Whack 'Em Smack 'Em Byrons (HB)
 static struct BurnRomInfo sg1k_wsbyronsRomDesc[] = {
-	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations).sg",	32706, 0xa444660d, BRF_PRG | BRF_ESS },
+	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations - ArugulaZ).sg",	32706, 0xa444660d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_wsbyrons)
@@ -4631,7 +4617,7 @@ STD_ROM_FN(sg1k_wsbyrons)
 
 struct BurnDriver BurnDrvsg1k_wsbyrons = {
 	"sg1k_wsbyrons", NULL, NULL, NULL, "2024",
-	"Whack 'Em Smack 'Em Byrons (HB)\0", NULL, "Jess Creations", "Sega SG-1000",
+	"Whack 'Em Smack 'Em Byrons (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_wsbyronsRomInfo, sg1k_wsbyronsRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4669,7 +4655,7 @@ struct BurnDriver BurnDrvsg1k_yewdow = {
 	"sg1k_yewdow", NULL, NULL, NULL, "2023",
 	"Yewdow (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
 	SG1KGetZipName, sg1k_yewdowRomInfo, sg1k_yewdowRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

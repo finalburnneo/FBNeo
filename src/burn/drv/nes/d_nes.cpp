@@ -18384,7 +18384,7 @@ struct BurnDriver BurnDrvnes_huntwump = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Hurdles (HB)
+// Hurdles! (HB)
 static struct BurnRomInfo nes_hurdlesRomDesc[] = {
 	{ "Hurdles! (2025)(AUVIMA Software).nes",          40976, 0x4b724112, BRF_ESS | BRF_PRG },
 };
@@ -18394,7 +18394,7 @@ STD_ROM_FN(nes_hurdles)
 
 struct BurnDriver BurnDrvnes_hurdles = {
 	"nes_hurdles", NULL, NULL, NULL, "2025",
-	"Hurdles (HB)\0", NULL, "AUVIMA Software", "NES / Famicom",
+	"Hurdles! (HB)\0", NULL, "AUVIMA Software", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_hurdlesRomInfo, nes_hurdlesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32539,7 +32539,7 @@ struct BurnDriver BurnDrvnes_dragobalzkyosajin = {
 // Dragon Ball Z: Assault of the Saiyans (Hack, English v2)
 // https://www.romhacking.net/translations/7420/
 static struct BurnRomInfo nes_dragobalzkyosajinv2RomDesc[] = {
-	{ " Dragon Ball Z - Assault of the Saiyans T-Eng (2025)(injoon84, RedComet).nes",          524304, 0x78017d32, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball Z - Assault of the Saiyans T-Eng (2025)(injoon84, RedComet).nes",          524304, 0x78017d32, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dragobalzkyosajinv2)

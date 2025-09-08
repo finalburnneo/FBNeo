@@ -39441,6 +39441,25 @@ struct BurnDriver BurnDrvmd_gluf = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+
+// Go! Go! Pogogirl (HB)
+static struct BurnRomInfo md_gogopogogirlRomDesc[] = {
+	{ "Go! Go! Pogogirl (2025)(Space Pants Games).bin", 2097152, 0x25ada8df, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gogopogogirl)
+STD_ROM_FN(md_gogopogogirl)
+
+struct BurnDriver BurnDrvmd_gogopogogirl = {
+	"md_gogopogogirl", NULL, NULL, NULL, "2025",
+	"Go! Go! Pogogirl (HB)\0", NULL, "Space Pants Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_gogopogogirlRomInfo, md_gogopogogirlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // GraviBots (HB)
 static struct BurnRomInfo md_gravibotsRomDesc[] = {
 	{ "Gravibots (2021)(RetroSouls).bin", 1441792, 0x0d66d022, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

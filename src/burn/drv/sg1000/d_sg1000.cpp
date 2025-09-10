@@ -396,15 +396,15 @@ struct BurnDriver BurnDrvsg1k_bankp = {
 	"sg1k_bankp", NULL, NULL, NULL, "1985",
 	"Bank Panic (Japan)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
 	SG1KGetZipName, sg1k_bankpRomInfo, sg1k_bankpRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-// Bi Li Da Dao (Taiwan)
+// Bank Panic ~ Bǐ Lì Dà Dào (Taiwan)
 static struct BurnRomInfo sg1k_bilidadaRomDesc[] = {
-	{ "Bi Li Da Dao (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xbd43fde4, BRF_PRG | BRF_ESS },
+	{ "Bank Panic - Bi Li Da Dao (Taiwan)(198x)(Aaronix).sg",	0x08000, 0xbd43fde4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_bilidada)
@@ -412,9 +412,9 @@ STD_ROM_FN(sg1k_bilidada)
 
 struct BurnDriver BurnDrvsg1k_bilidada = {
 	"sg1k_bilidada", "sg1k_bankp", NULL, NULL, "198?",
-	"Bi Li Da Dao (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	"Bank Panic ~ Bi Li Da Dao (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
+	L"Bank Panic ~ B\u01d0 L\u00ec D\u00e0 D\u00e0o (Taiwan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
 	SG1KGetZipName, sg1k_bilidadaRomInfo, sg1k_bilidadaRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -2865,7 +2865,7 @@ STD_ROM_FN(sg1k_faguiqib)
 struct BurnDriver BurnDrvsg1k_faguiqib = {
 	"sg1k_faguiqib", "sg1k_pitfall2", NULL, NULL, "198?",
 	"Fa Gui Qibing (Taiwan)\0", NULL, "Aaronix", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"Fa Gui Qibing (Taiwan)\0\u6cd5\u6ac3\u5947\u5175\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_faguiqibRomInfo, sg1k_faguiqibRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -3288,7 +3288,7 @@ struct BurnDriver BurnDrvsg1k_galaga = {
 
 // Serizawa Hachidan no Tsumeshogi (Japan)
 static struct BurnRomInfo sg1k_serizawaRomDesc[] = {
-	{ "Serizawa Hachidan no Tsumeshogi (Japan)(1983)(Sega).bin",	0x04000, 0x545fc9bb, BRF_PRG | BRF_ESS },
+	{ "Serizawa Hachidan no Tsumeshogi (Japan)(1983)(Sega).sg",	0x04000, 0x545fc9bb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_serizawa)
@@ -4048,17 +4048,17 @@ struct BurnDriver BurnDrvsg1k_antiair = {
 	272, 228, 4, 3
 };
 
-// Arno Dash (HB)
+// Arno Dash (HB, v1.03)
 static struct BurnRomInfo sg1k_arnodashRomDesc[] = {
-	{ "Arno Dash (2020)(Under4Mhz).sg",	0x08000, 0xea921f7c, BRF_PRG | BRF_ESS },
+	{ "Arno Dash v1.03 (2021)(Under4Mhz).sg",	32768, 0x6dad65d3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_arnodash)
 STD_ROM_FN(sg1k_arnodash)
 
 struct BurnDriver BurnDrvsg1k_arnodash = {
-	"sg1k_arnodash", NULL, NULL, NULL, "2020",
-	"Arno Dash (HB)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	"sg1k_arnodash", NULL, NULL, NULL, "2021",
+	"Arno Dash (HB, v1.03)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_arnodashRomInfo, sg1k_arnodashRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4302,14 +4302,14 @@ struct BurnDriver BurnDrvsg1k_jetpaco = {
 
 // Klondike Solitaire (HB, v1.04)
 static struct BurnRomInfo sg1k_ksolitaireRomDesc[] = {
-	{ "Klondike Solitaire v1.04 (2020)(Under4Mhz).sg",	32768, 0x5f9f8b15, BRF_PRG | BRF_ESS },
+	{ "Klondike Solitaire v1.04 (2021)(Under4Mhz).sg",	32768, 0x5f9f8b15, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ksolitaire)
 STD_ROM_FN(sg1k_ksolitaire)
 
 struct BurnDriver BurnDrvsg1k_ksolitaire = {
-	"sg1k_ksolitaire", NULL, NULL, NULL, "2020",
+	"sg1k_ksolitaire", NULL, NULL, NULL, "2021",
 	"Klondike Solitaire (HB, v1.04)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_CARD, 0,
@@ -4318,17 +4318,17 @@ struct BurnDriver BurnDrvsg1k_ksolitaire = {
 	272, 228, 4, 3
 };
 
-// Mahjong Solitaire (HB, v1.07)
+// Mahjong Solitaire (HB, v1.16)
 static struct BurnRomInfo sg1k_msolitaireRomDesc[] = {
-	{ "Mahjong Solitaire v1.07 (2020)(Under4Mhz).sg",	32768, 0x1b14b1c2, BRF_PRG | BRF_ESS },
+	{ "Mahjong Solitaire v1.16 (2023)(Under4Mhz).sg",	32768, 0xd07afa95, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_msolitaire)
 STD_ROM_FN(sg1k_msolitaire)
 
 struct BurnDriver BurnDrvsg1k_msolitaire = {
-	"sg1k_msolitaire", NULL, NULL, NULL, "2020",
-	"Mahjong Solitaire (HB, v1.07)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	"sg1k_msolitaire", NULL, NULL, NULL, "2023",
+	"Mahjong Solitaire (HB, v1.16)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_msolitaireRomInfo, sg1k_msolitaireRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4598,7 +4598,7 @@ STD_ROM_PICK(sg1k_vexed)
 STD_ROM_FN(sg1k_vexed)
 
 struct BurnDriver BurnDrvsg1k_vexed = {
-	"sg1k_vexed", NULL, NULL, NULL, "2020-23",
+	"sg1k_vexed", NULL, NULL, NULL, "2023",
 	"Vexed (HB, v1.08)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,

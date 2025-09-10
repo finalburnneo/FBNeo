@@ -22,6 +22,7 @@ UINT8 BurnGunReturnY(INT32 num);
 extern void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets);
 void BurnGunExit();
 void BurnGunScan();
+void BurnGunResolutionChanged();
 extern void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y);
 extern void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y);
 void BurnGunDrawTargets(); // call this after BurnTransferCopy();

@@ -733,6 +733,8 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SEGA_MEGADRIVE_PCB_MULAN				(42)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG             (43)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ            (44)
+#define HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER        (45)
+#define HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER      (46) // we can have 64 (0-63) of these
 #define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (0x40)
 #define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (0x80)
 #define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (0xc0)

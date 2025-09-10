@@ -655,6 +655,15 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	TrackDefault = 0;
 }
 
+void BurnGunResolutionChanged()
+{
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nBurnGunMaxY, &nBurnGunMaxX);
+	} else {
+		BurnDrvGetVisibleSize(&nBurnGunMaxX, &nBurnGunMaxY);
+	}
+}
+
 void BurnGunExit()
 {
 #if defined FBNEO_DEBUG

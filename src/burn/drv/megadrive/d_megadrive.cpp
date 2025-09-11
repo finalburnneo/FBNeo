@@ -34944,7 +34944,7 @@ struct BurnDriver BurnDrvmd_gt5 = {
 
 // Gunfight 3 in 1 (Taiwan) (Unl)
 static struct BurnRomInfo md_Gun3in1RomDesc[] = {
-	{ "Gunfight 3 in 1 (Taiwan)(Unl)(1998)(Gamtec).bin", 1048576, 0xe5785d45, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+	{ "Gunfight 3 in 1 (Taiwan)(Unl)(1998)(Gamtec).bin", 524288, 0x8fa43256, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
 
 STD_ROM_PICK(md_Gun3in1)

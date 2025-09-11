@@ -5678,7 +5678,7 @@ struct BurnDriver BurnDrvcv_blackonyx = {
     272, 228, 4, 3
 };
 
-// Blocktris (HB, v1.03)
+// Bloktris (HB, v1.03)
 static struct BurnRomInfo cv_bloktrisRomDesc[] = {
 	{ "Bloktris v1.03 (2023)(Under4Mhz).rom",	32768, 0xd1bc1d23, BRF_PRG | BRF_ESS },
 };
@@ -5688,7 +5688,7 @@ STD_ROM_FN(cv_bloktris)
 
 struct BurnDriver BurnDrvcv_bloktris = {
 	"cv_bloktris", NULL, "cv_coleco", NULL, "2023",
-	"Blocktris (HB, v1.03)\0", NULL, "Under4Mhz", "ColecoVision",
+	"Bloktris (HB, v1.03)\0", NULL, "Under4Mhz", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
 	CVGetZipName, cv_bloktrisRomInfo, cv_bloktrisRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

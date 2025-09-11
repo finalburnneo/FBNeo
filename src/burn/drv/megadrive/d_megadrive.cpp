@@ -3747,7 +3747,7 @@ STD_ROM_FN(md_bodyco)
 
 struct BurnDriver BurnDrvmd_bodyco = {
 	"md_bodyco", NULL, NULL, NULL, "1994",
-	"Body Count (Euro)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Body Count (Euro)\0", "Lightgun 'Menacer' compatible game", "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_bodycoRomInfo, md_bodycoRomName, NULL, NULL, NULL, NULL, MegadriveMenacerInputInfo, MegadriveMenacerDIPInfo,
@@ -3765,7 +3765,7 @@ STD_ROM_FN(md_bodycob)
 
 struct BurnDriver BurnDrvmd_bodycob = {
 	"md_bodycob", "md_bodyco", NULL, NULL, "1994",
-	"Body Count (Brazil)\0", NULL, "Tec Toy", "Genesis / Mega Drive",
+	"Body Count (Brazil)\0", "Lightgun 'Menacer' compatible game", "Tec Toy", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_bodycobRomInfo, md_bodycobRomName, NULL, NULL, NULL, NULL, MegadriveMenacerInputInfo, MegadriveMenacerDIPInfo,
@@ -3783,7 +3783,7 @@ STD_ROM_FN(md_bodycop2)
 
 struct BurnDriver BurnDrvmd_bodycop2 = {
 	"md_bodycop2", "md_bodyco", NULL, NULL, "1994",
-	"Body Count (USA, Prototype)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Body Count (USA, Prototype)\0", "Lightgun 'Menacer' compatible game", "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_bodycop2RomInfo, md_bodycop2RomName, NULL, NULL, NULL, NULL, MegadriveMenacerInputInfo, MegadriveMenacerDIPInfo,
@@ -14671,7 +14671,7 @@ STD_ROM_FN(md_lethalen)
 
 struct BurnDriver BurnDrvmd_lethalen = {
 	"md_lethalen", NULL, NULL, NULL, "1993",
-	"Lethal Enforcers (Euro)\0", NULL, "Konami", "Genesis / Mega Drive",
+	"Lethal Enforcers (Euro)\0", "Lightgun 'The Justifier' compatible game", "Konami", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_lethalenRomInfo, md_lethalenRomName, NULL, NULL, NULL, NULL, MegadriveJustifierInputInfo, MegadriveJustifierDIPInfo,
@@ -14689,7 +14689,7 @@ STD_ROM_FN(md_lethalenj)
 
 struct BurnDriver BurnDrvmd_lethalenj = {
 	"md_lethalenj", "md_lethalen", NULL, NULL, "1993",
-	"Lethal Enforcers (Japan)\0", NULL, "Konami", "Genesis / Mega Drive",
+	"Lethal Enforcers (Japan)\0", "Lightgun 'The Justifier' compatible game", "Konami", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_lethalenjRomInfo, md_lethalenjRomName, NULL, NULL, NULL, NULL, MegadriveJustifierInputInfo, MegadriveJustifierDIPInfo,
@@ -14707,7 +14707,7 @@ STD_ROM_FN(md_lethalenu)
 
 struct BurnDriver BurnDrvmd_lethalenu = {
 	"md_lethalenu", "md_lethalen", NULL, NULL, "1993",
-	"Lethal Enforcers (USA)\0", NULL, "Konami", "Genesis / Mega Drive",
+	"Lethal Enforcers (USA)\0", "Lightgun 'The Justifier' compatible game", "Konami", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_lethalenuRomInfo, md_lethalenuRomName, NULL, NULL, NULL, NULL, MegadriveJustifierInputInfo, MegadriveJustifierDIPInfo,
@@ -14734,7 +14734,7 @@ STD_ROM_FN(md_le2)
 
 struct BurnDriver BurnDrvmd_le2 = {
 	"md_le2", NULL, NULL, NULL, "1994",
-	"Lethal Enforcers II - Gun Fighters (Euro)\0", NULL, "Konami", "Genesis / Mega Drive",
+	"Lethal Enforcers II - Gun Fighters (Euro)\0", "Lightgun 'The Justifier' compatible game", "Konami", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_le2RomInfo, md_le2RomName, NULL, NULL, NULL, NULL, MegadriveJustifierInputInfo, MegadriveJustifierDIPInfo,
@@ -14752,7 +14752,7 @@ STD_ROM_FN(md_le2u)
 
 struct BurnDriver BurnDrvmd_le2u = {
 	"md_le2u", "md_le2", NULL, NULL, "1994",
-	"Lethal Enforcers II - Gun Fighters (USA)\0", NULL, "Konami", "Genesis / Mega Drive",
+	"Lethal Enforcers II - Gun Fighters (USA)\0", "Lightgun 'The Justifier' compatible game", "Konami", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_le2uRomInfo, md_le2uRomName, NULL, NULL, NULL, NULL, MegadriveJustifierInputInfo, MegadriveJustifierDIPInfo,
@@ -16403,9 +16403,9 @@ STD_ROM_FN(md_menacer)
 
 struct BurnDriver BurnDrvmd_menacer = {
 	"md_menacer", NULL, NULL, NULL, "1992",
-	"Menacer 6-Game Cartridge (Euro, USA)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"Menacer 6-Game Cartridge (Euro, USA)\0", "Lightgun 'Menacer' compatible game", "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_menacerRomInfo, md_menacerRomName, NULL, NULL, NULL, NULL, MegadriveMenacerInputInfo, MegadriveMenacerDIPInfo,
 	menacerInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -28770,7 +28770,7 @@ STD_ROM_FN(md_t2ag)
 
 struct BurnDriver BurnDrvmd_t2ag = {
 	"md_t2ag", NULL, NULL, NULL, "1992",
-	"T2: The Arcade Game (Euro, USA)\0", NULL, "Acclaim Entertainment", "Genesis / Mega Drive",
+	"T2: The Arcade Game (Euro, USA)\0", "Lightgun 'Menacer' compatible game", "Acclaim Entertainment", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agRomInfo, md_t2agRomName, NULL, NULL, NULL, NULL, MegadriveMenacerInputInfo, MegadriveMenacerDIPInfo,
@@ -28788,7 +28788,7 @@ STD_ROM_FN(md_t2agp)
 
 struct BurnDriver BurnDrvmd_t2agp = {
 	"md_t2agp", "md_t2ag", NULL, NULL, "1992",
-	"T2: The Arcade Game (USA, Prototype)\0", NULL, "Acclaim Entertainment", "Genesis / Mega Drive",
+	"T2: The Arcade Game (USA, Prototype)\0", "Lightgun 'Menacer' compatible game", "Acclaim Entertainment", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agpRomInfo, md_t2agpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -28806,7 +28806,7 @@ STD_ROM_FN(md_t2agj)
 
 struct BurnDriver BurnDrvmd_t2agj = {
 	"md_t2agj", "md_t2ag", NULL, NULL, "1994",
-	"T2: The Arcade Game (Japan)\0", NULL, "Acclaim Entertainment", "Genesis / Mega Drive",
+	"T2: The Arcade Game (Japan)\0", "Lightgun 'Menacer' compatible game", "Acclaim Entertainment", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agjRomInfo, md_t2agjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39191,9 +39191,9 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, English)
+// Earthion (HB, English v3.3.0)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
-	{ "Earthion v2.0.1 (English)(2025)(Ancient).bin", 7864320, 0x47d6ac2c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v3.3.0 (English)(2025)(Ancient).bin", 7340032, 0xae5f1fb1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthione)
@@ -39201,7 +39201,7 @@ STD_ROM_FN(md_earthione)
 
 struct BurnDriver BurnDrvmd_earthione = {
 	"md_earthione", NULL, NULL, NULL, "2025",
-	"Earthion (HB, English v2.0.1)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, English v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthioneRomInfo, md_earthioneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39229,7 +39229,7 @@ struct BurnDriver BurnDrvmd_earthionep = {
 
 // Earthion - Fall 2024 Demo (HB)
 static struct BurnRomInfo md_earthionfdRomDesc[] = {
-	{ "Earthion - Fall 2024 Demo (2024)(Ancient).bin", 6946816, 0x13b8a4a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion - Fall 2024 Demo (2024)(Ancient).bin", 6946816, 0xf3e4f17e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionfd)
@@ -39245,9 +39245,9 @@ struct BurnDriver BurnDrvmd_earthionfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, Japanese)
+// Earthion (HB, Japanese v3.3.0)
 static struct BurnRomInfo md_earthionjRomDesc[] = {
-	{ "Earthion v2.0.1 (Japanese)(2025)(Ancient).bin", 7864320, 0x7f751480, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v3.3.0 (Japanese)(2025)(Ancient).bin", 7340032, 0x65ebc8e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionj)
@@ -39255,7 +39255,7 @@ STD_ROM_FN(md_earthionj)
 
 struct BurnDriver BurnDrvmd_earthionj = {
 	"md_earthionj", "md_earthione", NULL, NULL, "2025",
-	"Earthion (HB, Japanese v2.0.1)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Japanese v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionjRomInfo, md_earthionjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39263,9 +39263,9 @@ struct BurnDriver BurnDrvmd_earthionj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, Portuguese)
+// Earthion (HB, Portuguese v3.3.0)
 static struct BurnRomInfo md_earthionpRomDesc[] = {
-	{ "Earthion v2.0.1 (Portuguese)(2025)(Ancient).bin", 7864320, 0xa087dfd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v3.3.0 (Portuguese)(2025)(Ancient).bin", 7340032, 0xf44386a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionp)
@@ -39273,7 +39273,7 @@ STD_ROM_FN(md_earthionp)
 
 struct BurnDriver BurnDrvmd_earthionp = {
 	"md_earthionp", "md_earthione", NULL, NULL, "2025",
-	"Earthion (HB, Portuguese v2.0.1)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Portuguese v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionpRomInfo, md_earthionpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39283,7 +39283,7 @@ struct BurnDriver BurnDrvmd_earthionp = {
 
 // Earthion - Summer 2024 Demo (HB)
 static struct BurnRomInfo md_earthionsdRomDesc[] = {
-	{ "Earthion - Summer 2024 Demo (2024)(Ancient).bin", 6946816, 0xc6461075, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion - Summer 2024 Demo (2024)(Ancient).bin", 6946816, 0x261a45a8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionsd)
@@ -39301,7 +39301,7 @@ struct BurnDriver BurnDrvmd_earthionsd = {
 
 // Earthion - Winter 2024 Demo (HB)
 static struct BurnRomInfo md_earthionwdRomDesc[] = {
-	{ "Earthion - Winter 2024 Demo (2024)(Ancient).bin", 7602176, 0x36838b4b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion - Winter 2024 Demo (2024)(Ancient).bin", 7602176, 0xa9b237f9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionwd)

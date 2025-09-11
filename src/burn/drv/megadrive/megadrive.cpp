@@ -1,3 +1,5 @@
+//TODINK/TODO: remove old "megadrivebackupram" garbage
+
 /********************************************************************************
  SEGA Genesis / Mega Drive Driver for FBA
  ********************************************************************************
@@ -32,9 +34,18 @@
 #include "bitswap.h"
 #include "m68000_debug.h"
 #include "i2ceeprom.h" // i2c eeprom for MD
+#include "burn_gun.h" // menacer, justifier
 
 UINT8 MegadriveUnmappedRom = 0xff;
 
+// Light Gun, in second port
+enum {GUN_NONE = 0, GUN_MENACER = 1, GUN_JUSTIFIER = 2 };
+static INT32 has_gun = 0; // 1,2 (menacer, justifier)
+static UINT16 lg_latch;
+static UINT16 lg_latched = 0;
+static INT32 lg_x_offset = 0;
+static INT32 lg_y_offset = 0;
+static bool lg_has_reticle = true;
 //#define CYCDBUG
 
 #define OSC_NTSC 53693175
@@ -255,6 +266,7 @@ UINT8 MegadriveJoy4[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy5[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveDIP[3] = {0, 0, 0};
 static ClearOpposite<5, UINT16> clear_opposite;
+INT16 MegadriveAnalog[4];
 
 static UINT32 RomNum = 0;
 static UINT32 RomSize = 0;
@@ -1044,6 +1056,10 @@ static const UINT8 hcounts_32[] = {
 	0x08,0x08,0x08,0x09,0x09,0x09,0x0a,0x0a,0x0a,0x0b,0x0b,0x0b,0x0c,0x0c,0x0c,0x0d,
 };
 
+struct h_ { UINT16 hres; UINT8 hint; UINT8 start; UINT8 end; };
+
+static const h_ hints[2] = { {256, 0x85, 0x94, 0xe9}, {320, 0xa5, 0xb7, 0xe5} };
+
 static UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 {
 	if (sekAddress > 0xC0001F)
@@ -1081,14 +1097,22 @@ static UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 		{
 			UINT32 d;
 
-			d = (SekCyclesLine()) & 0x1ff; // FIXME
+			d = SekCyclesLine();
+
+			if (lg_latched && (lg_latch >> 8) != Scanline) lg_latched = 0;
+			if (lg_latched) {
+				return lg_latch;
+			}
+
+			if (RamVReg->reg[0] & 2) return RamVReg->hv_latch; // sunset riders
 
 			if (RamVReg->reg[12]&1)
 				d = hcounts_40[d];
 			else d = hcounts_32[d];
 
 			//elprintf(EL_HVCNT, "hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
-			return (RamVReg->reg[0]&2) ? RamVReg->hv_latch : (d | (RamVReg->v_counter << 8));
+			//bprintf(0, _T("hvcnt %x  @ sl %d\n"), (d | (RamVReg->v_counter << 8)), Scanline);
+			return (d | (RamVReg->v_counter << 8));
 		}
 		break;
 
@@ -1196,7 +1220,7 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 				UINT8 oldreg = RamVReg->reg[num];
 				RamVReg->reg[num] = wordValue & 0xff;
 
-//				if (num < 2) bprintf(0, _T("sl %d, reg[%02x]  %02x\n"),Scanline, num, wordValue&0xff);
+//				if (num < 2) bprintf(0, _T("sl %d, reg[%02x]  %02x\n"),Scanline, num, wordValue & 0xff);
 
 				// update IRQ level (Lemmings, Wiz 'n' Liz intro, ... )
 				// may break if done improperly:
@@ -1213,6 +1237,7 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 
 						//elprintf(EL_HVCNT, "latch hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
 						RamVReg->hv_latch = d | (RamVReg->v_counter << 8);
+						//bprintf(0, _T("Latch hvc %x  @ SL: %d\n"), RamVReg->hv_latch, Scanline);
 					}
 				}
 				if(num < 2 && !SekShouldInterrupt()) {
@@ -1268,6 +1293,28 @@ static INT32 PadRead(INT32 i)
 	pad = ~(JoyPad->pad[i]);					// Get inverse of pad MXYZ SACB RLDU
 	TH = ((FourWayPlayMode) ? JoyPad->fourway[i & 0x03] : RamIO[i+1]) & 0x40;
 
+	if (has_gun != 0 && i == 1) { // lightgun on second port
+		UINT8 data_reg = RamIO[i + 1];
+		UINT8 ctrl_reg = RamIO[i + 4] | 0x80;
+		UINT8 out = data_reg & ctrl_reg;
+		out |= 0x3f & ~ctrl_reg;
+		switch (has_gun) {
+			case GUN_MENACER:
+				pad = JoyPad->pad[1];
+				value = ((pad >> 4) & 0x09) | ((pad >> 3) & 0x4) | ((pad >> 5) & 0x2) | 0x40;
+				return (value & ~ctrl_reg) | (data_reg & ctrl_reg);
+			case GUN_JUSTIFIER:
+				value = 0x30;
+				if (!(RamIO[i + 1] & out & 0x50)) {
+					pad = ~JoyPad->pad[1 + ((RamIO[i + 1] >> 5) & 1)];
+					value |= ((pad >> 6) & 0x03);
+				}
+				value |= out & 0x40;
+				//bprintf(0, _T("justi: %x   %x\n"), (RamIO[i + 1] ),value);
+				return (value & ~ctrl_reg) | (data_reg & ctrl_reg);
+		}
+	}
+
 	if (!bForce3Button) {					    // 6 button gamepad enabled
 		INT32 phase = JoyPad->padTHPhase[i];
 
@@ -1292,7 +1339,7 @@ end:
 	if (!FourWayPlayMode)
 		value |= RamIO[i+1] & RamIO[i+4];
 
-	return value; // will mirror later
+	return (RamIO[i+1] & 0x80) | value;
 }
 
 static void PadWrite(INT32 port, UINT8 data, UINT8 *ior)
@@ -1410,9 +1457,11 @@ static UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
 			case 0:	// Get Hardware
 				return Hardware;
 			case 1: // Pad 1
-				return (RamIO[1] & 0x80) | PadRead(0);
+				return PadRead(0);
+			 //   return (RamIO[1] & 0x80) | PadRead(0);
 			case 2: // Pad 2
-				return (RamIO[2] & 0x80) | PadRead(1);
+				return PadRead(1);
+			 //   return (RamIO[2] & 0x80) | PadRead(1);
 	        default:
 				//bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
 				return RamIO[offset];
@@ -3228,7 +3277,21 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 
-	switch ((BurnDrvGetHardwareCode() & 0xc0)) {
+	has_gun = 0;
+	if ((BurnDrvGetHardwareCode() & 0x0f00) == HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER) {
+		bprintf(0, _T("With: Menacer lightgun\n"));
+		has_gun = GUN_MENACER;
+	}
+	if ((BurnDrvGetHardwareCode() & 0x0f00) == HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER) {
+		bprintf(0, _T("With: Justifier lightguns\n"));
+		has_gun = GUN_JUSTIFIER;
+	}
+
+	if (has_gun != 0) {
+		BurnGunInit((has_gun == GUN_JUSTIFIER) ? 2 : 1, true);
+	}
+
+	switch ((BurnDrvGetHardwareCode() & 0x0c00)) {
 		case HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY:
 			FourWayPlayMode = 1;
 			break;
@@ -3466,11 +3529,11 @@ static void MegadriveSetupSRAM()
 		return;  // sram handled by mapper (paprium.h)
 	}
 
-	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000)) {
+	if (/*(BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) ||*/ (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000)) {
 		RamMisc->SRamStart = 0x200000;
-		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) RamMisc->SRamEnd = 0x2003ff;
-		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) RamMisc->SRamEnd = 0x2007ff;
-		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) RamMisc->SRamEnd = 0x200fff;
+//		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) RamMisc->SRamEnd = 0x2003ff;
+//		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) RamMisc->SRamEnd = 0x2007ff;
+//		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) RamMisc->SRamEnd = 0x200fff;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) RamMisc->SRamEnd = 0x203fff;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000) RamMisc->SRamEnd = 0x20ffff;
 
@@ -3502,7 +3565,7 @@ static void MegadriveSetupSRAM()
 		RamMisc->SRamActive = 1;
 		InstallSRAMHandlers(false);
 	}
-
+#if 0
 	if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_FRAM_00400) {
 		RamMisc->SRamStart = 0x200000;
 		RamMisc->SRamEnd = 0x2003ff;
@@ -3520,7 +3583,7 @@ static void MegadriveSetupSRAM()
 
 		InstallSRAMHandlers(false);
 	}
-
+#endif
 	// mask @ 0x3f because teamplayer/4wayplay uses 0x40/0x80/0xc0
 	if ((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
@@ -3653,6 +3716,19 @@ static INT32 __fastcall MegadriveTAScallback(void)
 	return 0; // disable
 }
 
+
+void MegadriveLightGunOffsets(INT32 x, INT32 y, bool reticle)
+{
+	if (has_gun) {
+		lg_x_offset = x;
+		lg_y_offset = y;
+		lg_has_reticle = reticle;
+
+		// re-init with reticle setting
+		BurnGunExit();
+		BurnGunInit((has_gun == GUN_JUSTIFIER) ? 2 : 1, reticle);
+	}
+}
 
 INT32 MegadriveInitNoDebug()
 {
@@ -3823,6 +3899,17 @@ INT32 MegadriveExit()
 	if (sot4wmode) {
 		vx_exit();
 		sot4wmode = 0;
+	}
+
+	if (has_gun != 0) {
+		BurnGunExit();
+
+		has_gun = 0;
+		lg_latch = 0;
+		lg_latched = 0;
+		lg_x_offset = 0;
+		lg_y_offset = 0;
+		lg_has_reticle = true;
 	}
 
 	BurnFreeMemIndex();
@@ -5216,6 +5303,7 @@ static INT32 res_check()
 		if (screen_height != (v_res[v_idx]*2)) {
 			bprintf(0, _T("switching to 320 x (%d*2) mode\n"), v_res[v_idx]);
 			BurnDrvSetVisibleSize(320, (v_res[v_idx]*2));
+			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;
 		}
@@ -5227,6 +5315,7 @@ static INT32 res_check()
 		if (screen_width != 256 || screen_height != 224) {
 			bprintf(0, _T("switching to 256 x 224 mode\n"));
 			BurnDrvSetVisibleSize(256, 224);
+			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;
 		}
@@ -5236,6 +5325,7 @@ static INT32 res_check()
 		if (screen_width != 320 || screen_height != 224) {
 			bprintf(0, _T("switching to 320 x 224 mode\n"));
 			BurnDrvSetVisibleSize(320, 224);
+			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;
 		}
@@ -5306,6 +5396,8 @@ INT32 MegadriveDraw()
 
 	}
 
+	if (has_gun) BurnGunDrawTargets();
+
 	return 0;
 }
 
@@ -5343,6 +5435,13 @@ INT32 MegadriveFrame()
 
 	for (INT32 i = 0; i < 5; i++) {
 		clear_opposite.check(i, JoyPad->pad[i], 0x01, 0x02, 0x04, 0x08, nSocd[i]);
+	}
+
+	if (has_gun) {
+		BurnGunMakeInputs(0, MegadriveAnalog[0], MegadriveAnalog[1]);
+		if (has_gun == GUN_JUSTIFIER) {
+			BurnGunMakeInputs(1, MegadriveAnalog[2], MegadriveAnalog[3]);
+		}
 	}
 
 	SekCyclesNewFrame(); // for sound sync
@@ -5385,14 +5484,41 @@ INT32 MegadriveFrame()
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	RamVReg->v_counter = 0;
 
-	SekRunM68k(CYCLES_M68K_ASD);
+	INT32 lg_y_value = (has_gun) ? (BurnGunReturnY(0) * lines_vis / 256) : 0;
 
 	for (INT32 y=0; y<lines; y++) {
+
+		line_base_cycles = SekCycleAim;//SekCyclesDone();
+
+		if (y == 0) SekRunM68k(CYCLES_M68K_ASD);
 
 		if (y > lines_vis && nBurnCPUSpeedAdjust > 0x100)
 			SekRunM68k((INT32)((INT64)CYCLES_M68K_LINE * (nBurnCPUSpeedAdjust - 0x100) / 0x0100));
 
 		Scanline = y;
+
+		if (has_gun) {
+			//extern int counter;
+			//lg_y_offset=counter;
+			if (lg_y_value == y + lg_y_offset && y + lg_y_offset < lines_vis) {
+				//xxxxxxxxdinkxxxxx
+				if ((RamIO[4] | RamIO[5]) & 0x80) {
+					const h_ h = hints[RamVReg->reg[12] & 1];
+					int slot = ((BurnGunReturnX(0) * h.hres / 256) + lg_x_offset) >> 1;
+					if (slot >= h.start) slot += h.end - h.start;
+
+					if ( (has_gun == GUN_JUSTIFIER && !(RamIO[2] & 0x30) ) ||
+						has_gun == GUN_MENACER) {
+
+						lg_latched = 1;
+						lg_latch = ((y & 0xff) << 8) | (slot & 0xff);
+						if ((RamVReg->reg[11] & 8) && SekGetIRQLevel() < 2) {
+							SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+						}
+					}
+				}
+			}
+		}
 
 		if (y < lines_vis) {
 			RamVReg->v_counter = y;
@@ -5446,7 +5572,6 @@ INT32 MegadriveFrame()
 			RamVReg->status |= 0x08; // V-Int
 			RamVReg->pending_ints |= 0x20;
 
-			line_base_cycles = SekCyclesDone();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
 #if 0
 #ifdef CYCDBUG
@@ -5495,7 +5620,6 @@ INT32 MegadriveFrame()
 			do_timing_hacks_as(vdp_slots);
 			SekRunM68k(CYCLES_M68K_LINE - CYCLES_M68K_VINT_LAG - CYCLES_M68K_ASD);
 		} else {
-			line_base_cycles = SekCyclesDone();
 
 			if (y < lines_vis) {
 				do_timing_hacks_as(vdp_slots);
@@ -5572,6 +5696,10 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 
 		BurnRandomScan(nAction);
 		clear_opposite.scan();
+
+		if (has_gun != 0) {
+			BurnGunScan();
+		}
 
 		if (papriummode) {
 			paprium_scan(nAction, pnMin);

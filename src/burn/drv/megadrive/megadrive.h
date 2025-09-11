@@ -24,6 +24,7 @@ extern UINT8 MegadriveJoy3[12];
 extern UINT8 MegadriveJoy4[12];
 extern UINT8 MegadriveJoy5[12];
 extern UINT8 MegadriveDIP[3];
+extern INT16 MegadriveAnalog[4];
 
 INT32 MegadriveInit();
 INT32 MegadriveInitNoDebug();
@@ -34,6 +35,8 @@ INT32 MegadriveExit();
 INT32 MegadriveFrame();
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin);
 INT32 MegadriveDraw();
+
+void MegadriveLightGunOffsets(INT32 x, INT32 y, bool reticle = true);
 
 // pier solar
 void md_eeprom_stm95_reset();

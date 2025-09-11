@@ -1693,7 +1693,7 @@ static INT32 MegadriveResetDo()
 	RamVReg->reg[0x01] = 0x04;
 	RamVReg->reg[0x0c] = 0x81;
 	RamVReg->reg[0x0f] = 0x02;
-	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
+	RamVReg->status = 0x3408 | ((Hardware & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
 	RamVReg->rotate = 0;
 
 	RamMisc->Bank68k = 0;

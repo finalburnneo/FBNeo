@@ -7602,6 +7602,63 @@ struct BurnDriver BurnDrvnes_akumajoudraculatp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Batman O Retorno (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/batman-returns-po.b.r.e
+static struct BurnRomInfo nes_batmanreturnstpRomDesc[] = {
+	{ "Batman O Retorno T-Por (2020)(PO.B.R.E.).nes",          393232, 0x980b84a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batmanreturnstp)
+STD_ROM_FN(nes_batmanreturnstp)
+
+struct BurnDriver BurnDrvnes_batmanreturnstp = {
+	"nes_batmanreturnstp", "nes_batmanreturns", NULL, NULL, "2020",
+	"Batman O Retorno (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_batmanreturnstpRomInfo, nes_batmanreturnstpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Batman: The Video Game (Hack, Portuguese v1.2)
+// https://romhackers.org/traducoes/console/nes/batman-the-video-game-po.b.r.e
+static struct BurnRomInfo nes_batmavidgamtpRomDesc[] = {
+	{ "Batman - The Video Game T-Por v1.2 (2019)(PO.B.R.E.).nes",          262160, 0x01b06ae3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_batmavidgamtp)
+STD_ROM_FN(nes_batmavidgamtp)
+
+struct BurnDriver BurnDrvnes_batmavidgamtp = {
+	"nes_batmavidgamtp", "nes_batmavidgam", NULL, NULL, "2019",
+	"Batman: The Video Game (Hack, Portuguese v1.2)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_batmavidgamtpRomInfo, nes_batmavidgamtpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Battletoads (Hack, Portuguese v1.1 + Bug Fixes)
+// https://romhackers.org/traducoes/console/nes/battletoads-po.b.r.e
+static struct BurnRomInfo nes_battletoadstpRomDesc[] = {
+	{ "Battletoads T-Por v1.1 + Bug Fixes (2018)(PO.B.R.E. - Ti).nes",          262160, 0x7d2bfe54, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_battletoadstp)
+STD_ROM_FN(nes_battletoadstp)
+
+struct BurnDriver BurnDrvnes_battletoadstp = {
+	"nes_battletoadstp", "nes_battletoads", NULL, NULL, "2018",
+	"Battletoads (Hack, Portuguese v1.1 + Bug Fixes)\0", NULL, "PO.B.R.E. - Ti", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_battletoadstpRomInfo, nes_battletoadstpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Battle of Olympus, The (Hack, Spanish v1.1)
 // https://www.romhacking.net/translations/3737/
 static struct BurnRomInfo nes_battlolycRomDesc[] = {
@@ -9539,6 +9596,25 @@ struct BurnDriver BurnDrvnes_ninjagaidenc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ninja Gaiden (Hack, Portuguese v1.0u)
+// https://romhackers.org/traducoes/console/nes/ninja-gaiden-nes-po.b.r.e
+static struct BurnRomInfo nes_ninjagaidentpRomDesc[] = {
+	{ "Ninja Gaiden T-Por v1.0u (2021)(PO.B.R.E.).nes",          262160, 0xc072e8d1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjagaidentp)
+STD_ROM_FN(nes_ninjagaidentp)
+
+struct BurnDriver BurnDrvnes_ninjagaidentp = {
+	"nes_ninjagaidentp", "nes_ninjagaiden", NULL, NULL, "2021",
+	"Ninja Gaiden (Hack, Portuguese v1.0u)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_ninjagaidentpRomInfo, nes_ninjagaidentpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Ninja Gaiden II: The Dark Sword of Chaos (Hack, Spanish + Addendum)
 // https://www.romhacking.net/translations/2691/
 static struct BurnRomInfo nes_ninjagaiiicRomDesc[] = {
@@ -9558,6 +9634,25 @@ struct BurnDriver BurnDrvnes_ninjagaiiic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ninja Gaiden II: A Espada Demoniaca das Trevas (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/nes/ninja-gaiden-II-nes-po.b.r.e
+static struct BurnRomInfo nes_ninjagaiiitpRomDesc[] = {
+	{ "Ninja Gaiden II - A Espada Demoniaca das Trevas (2021)(PO.B.R.E.).nes",          262160, 0x7063b62e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjagaiiitp)
+STD_ROM_FN(nes_ninjagaiiitp)
+
+struct BurnDriver BurnDrvnes_ninjagaiiitp = {
+	"nes_ninjagaiiitp", "nes_ninjagaiii", NULL, NULL, "2021",
+	"Ninja Gaiden II: A Espada Demoniaca das Trevas (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	L"Ninja Gaiden II: A Espada Demon\u00edaca das Trevas (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_ninjagaiiitpRomInfo, nes_ninjagaiiitpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Ninja Gaiden III: The Ancient Ship of Doom (Hack, Spanish + Addendum)
 // https://www.romhacking.net/translations/2692/
 static struct BurnRomInfo nes_ninjagaiiiicRomDesc[] = {
@@ -9573,6 +9668,25 @@ struct BurnDriver BurnDrvnes_ninjagaiiiic = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_ninjagaiiiicRomInfo, nes_ninjagaiiiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ninja Gaiden III: A Arca do Inferno (Hack, Portuguese v1.0rh + Restored)
+// https://romhackers.org/traducoes/console/nes/ninja-gaiden-III-nes-po.b.r.e
+static struct BurnRomInfo nes_ninjagaiiiitpRomDesc[] = {
+	{ "Ninja Gaiden III - A Arca do Inferno v1.0rh + Restored (2021)(PO.B.R.E. - MottZilla).nes",          262160, 0x814beb61, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ninjagaiiiitp)
+STD_ROM_FN(nes_ninjagaiiiitp)
+
+struct BurnDriver BurnDrvnes_ninjagaiiiitp = {
+	"nes_ninjagaiiiitp", "nes_ninjagaiiii", NULL, NULL, "2021",
+	"Ninja Gaiden III: A Arca do Inferno (Hack, Portuguese v1.0rh + Restored)\0", NULL, "PO.B.R.E. - MottZilla", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, nes_ninjagaiiiitpRomInfo, nes_ninjagaiiiitpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

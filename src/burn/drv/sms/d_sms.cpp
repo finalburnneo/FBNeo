@@ -24632,6 +24632,42 @@ struct BurnDriverD BurnDrvsms_zexall = {
 // ---------------------------------
 
 
+// Aerial Mini (HB)
+static struct BurnRomInfo gg_aerialmRomDesc[] = {
+	{ "Aerial Mini (2023)(Inufuto).gg",	16384, 0xfe76beb0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_aerialm)
+STD_ROM_FN(gg_aerialm)
+
+struct BurnDriver BurnDrvgg_aerialm = {
+	"gg_aerialm", NULL, NULL, NULL, "2023",
+	"Aerial Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_HORSHOOT, 0,
+	GGGetZipName, gg_aerialmRomInfo, gg_aerialmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// AntiAir Mini (HB)
+static struct BurnRomInfo gg_antiairmRomDesc[] = {
+	{ "AntiAir Mini (2024)(Inufuto).gg",	16384, 0xb781327e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_antiairm)
+STD_ROM_FN(gg_antiairm)
+
+struct BurnDriver BurnDrvgg_antiairm = {
+	"gg_antiairm", NULL, NULL, NULL, "2024",
+	"AntiAir Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_antiairmRomInfo, gg_antiairmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Bishoujo Mahjong Puzzle (HB)
 static struct BurnRomInfo gg_bmpuzzleRomDesc[] = {
 	{ "Bishoujo Mahjong Puzzle (2022)(Habit Soft).gg",	262144, 0x57122381, BRF_PRG | BRF_ESS },
@@ -24664,6 +24700,24 @@ struct BurnDriver BurnDrvgg_burgkitch = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
 	GGGetZipName, gg_burgkitchRomInfo, gg_burgkitchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Cacorm Mini (HB)
+static struct BurnRomInfo gg_cacormmRomDesc[] = {
+	{ "Cacorm Mini (2023)(Inufuto).gg",	16368, 0xd1880cca, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_cacormm)
+STD_ROM_FN(gg_cacormm)
+
+struct BurnDriver BurnDrvgg_cacormm = {
+	"gg_cacormm", NULL, NULL, NULL, "2023",
+	"Cacorm Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_cacormmRomInfo, gg_cacormmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24794,6 +24848,42 @@ struct BurnDriver BurnDrvgg_gunstreamcv = {
 	256, 192, 4, 3
 };
 
+// Hopman Mini (HB)
+static struct BurnRomInfo gg_hopmanmRomDesc[] = {
+	{ "Hopman Mini (2023)(Inufuto).gg",	16368, 0x84fd672d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_hopmanm)
+STD_ROM_FN(gg_hopmanm)
+
+struct BurnDriver BurnDrvgg_hopmanm = {
+	"gg_hopmanm", NULL, NULL, NULL, "2025",
+	"Hopman Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
+	GGGetZipName, gg_hopmanmRomInfo, gg_hopmanmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Impetus Mini (HB)
+static struct BurnRomInfo gg_impetusmRomDesc[] = {
+	{ "Impetus Mini (2023)(Inufuto).gg",	32768, 0x07e1fa70, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_impetusm)
+STD_ROM_FN(gg_impetusm)
+
+struct BurnDriver BurnDrvgg_impetusm = {
+	"gg_impetusm", NULL, NULL, NULL, "2023",
+	"Impetus Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_impetusmRomInfo, gg_impetusmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Mai Nurse (HB)
 static struct BurnRomInfo gg_mainurseggRomDesc[] = {
 	{ "Mai Nurse (2024)(Lunoka).gg",	131072, 0x36a2da11, BRF_PRG | BRF_ESS },
@@ -24808,6 +24898,42 @@ struct BurnDriver BurnDrvgg_mainursegg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
 	GGGetZipName, gg_mainurseggRomInfo, gg_mainurseggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Mazy Mini (HB)
+static struct BurnRomInfo gg_mazymRomDesc[] = {
+	{ "Mazy Mini (2023)(Inufuto).gg",	16384, 0xfc3a058c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_mazym)
+STD_ROM_FN(gg_mazym)
+
+struct BurnDriver BurnDrvgg_mazym = {
+	"gg_mazym", NULL, NULL, NULL, "2023",
+	"Mazy Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_mazymRomInfo, gg_mazymRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Mieyen Mini (HB)
+static struct BurnRomInfo gg_mieyenmRomDesc[] = {
+	{ "Mieyen Mini (2025)(Inufuto).gg",	16384, 0xc3eb27e8, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_mieyenm)
+STD_ROM_FN(gg_mieyenm)
+
+struct BurnDriver BurnDrvgg_mieyenm = {
+	"gg_mieyenm", NULL, NULL, NULL, "2025",
+	"Mieyen Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_mieyenmRomInfo, gg_mieyenmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24866,6 +24992,42 @@ struct BurnDriver BurnDrvgg_prgarden = {
 	256, 192, 4, 3
 };
 
+// Ruptus Mini (HB)
+static struct BurnRomInfo gg_ruptusmRomDesc[] = {
+	{ "Ruptus Mini (2023)(Inufuto).gg",	16384, 0x591350a8, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_ruptusm)
+STD_ROM_FN(gg_ruptusm)
+
+struct BurnDriver BurnDrvgg_ruptusm = {
+	"gg_ruptusm", NULL, NULL, NULL, "2025",
+	"Ruptus Mini (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_MULTISHOOT, 0,
+	GGGetZipName, gg_ruptusmRomInfo, gg_ruptusmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Super Princess' 2092 Exodus (HB, v1.1)
+static struct BurnRomInfo gg_sp2092exRomDesc[] = {
+	{ "Super Princess' 2092 Exodus v1.1 (2024)(toxa).gg",	131072, 0x273218ca, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_sp2092ex)
+STD_ROM_FN(gg_sp2092ex)
+
+struct BurnDriver BurnDrvgg_sp2092ex = {
+	"gg_sp2092ex", NULL, NULL, NULL, "2024",
+	"Super Princess' 2092 Exodus (HB, v1.1)\0", "Port of the homonymous Game Boy game", "toxa", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_RUNGUN, 0,
+	GGGetZipName, gg_sp2092exRomInfo, gg_sp2092exRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Sushi Nights GG (HB, v1.04)
 static struct BurnRomInfo gg_sushinightsggRomDesc[] = {
 	{ "Sushi Nights v1.04 (2021-24)(MONIS GAMES).gg",	131072, 0x934523bb, BRF_PRG | BRF_ESS },
@@ -24880,6 +25042,24 @@ struct BurnDriver BurnDrvgg_sushinightsgg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
 	GGGetZipName, gg_sushinightsggRomInfo, gg_sushinightsggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Svellas Micro (HB)
+static struct BurnRomInfo gg_svellasmRomDesc[] = {
+	{ "Svellas Micro (2025)(Inufuto).gg",	16384, 0xd0a447dd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_svellasm)
+STD_ROM_FN(gg_svellasm)
+
+struct BurnDriver BurnDrvgg_svellasm = {
+	"gg_svellasm", NULL, NULL, NULL, "2025",
+	"Svellas Micro (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_svellasmRomInfo, gg_svellasmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

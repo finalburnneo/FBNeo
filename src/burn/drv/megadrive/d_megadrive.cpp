@@ -39899,7 +39899,7 @@ struct BurnDriver BurnDrvmd_jtoblivion = {
 // Kunio no Nekketsu School Fighters Beta (HB, Beta v1.4)
 // https://usagiru-orochi.itch.io/kunio-no-nekketsu-school-fighters
 static struct BurnRomInfo md_knnsfRomDesc[] = {
-	{ "Kunio no Nekketsu School Fighters Beta v1.4 (2025)(UsagiRu).bin", 5767168, 0x16EDF7EA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Kunio no Nekketsu School Fighters Beta v1.4 (2025)(UsagiRu).bin", 5767168, 0x16edf7ea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_knnsf)

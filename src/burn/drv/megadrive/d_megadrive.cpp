@@ -38813,6 +38813,11 @@ struct BurnDriver BurnDrvmd_doukutsuc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Chase (HB, v2.00)
+static struct BurnRomInfo md_chaseRomDesc[] = {
+	{ "Chase v2.00 (2014)(Jack Nolddor & Davidian).bin", 0x60000, 0x0b3426ed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
 STD_ROM_PICK(md_chase)
 STD_ROM_FN(md_chase)
 

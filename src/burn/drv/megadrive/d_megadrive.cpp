@@ -39950,10 +39950,10 @@ struct BurnDriver BurnDrvmd_jtoblivion = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Kunio no Nekketsu School Fighters Beta (HB, v1.5)
+// Kunio no Nekketsu School Fighters Beta (HB, v1.6)
 // https://usagiru-orochi.itch.io/kunio-no-nekketsu-school-fighters
 static struct BurnRomInfo md_knnsfRomDesc[] = {
-	{ "Kunio no Nekketsu School Fighters v1.5 (2025)(UsagiRu).bin", 5767168, 0xdbac2fb4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Kunio no Nekketsu School Fighters v1.6 (2025)(UsagiRu).bin", 5767168, 0x3b0db849, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_knnsf)
@@ -39961,7 +39961,7 @@ STD_ROM_FN(md_knnsf)
 
 struct BurnDriver BurnDrvmd_knnsf = {
 	"md_knnsf", NULL, NULL, NULL, "2025",
-	"Kunio no Nekketsu School Fighters (HB, v1.5)\0", NULL, "UsagiRu", "Genesis / Mega Drive",
+	"Kunio no Nekketsu School Fighters (HB, v1.6)\0", NULL, "UsagiRu", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_knnsfRomInfo, md_knnsfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

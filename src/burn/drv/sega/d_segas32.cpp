@@ -3220,7 +3220,7 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 						pix |= color;
 					dst[-3] = BURN_ENDIAN_SWAP_INT16(pix);
 
-					pix = BURN_ENDIAN_SWAP_INT16(*src++);
+					pixels = BURN_ENDIAN_SWAP_INT16(*src++);
 
 					pix = (pixels >> 4) & 0x0f;
 					if (pix)

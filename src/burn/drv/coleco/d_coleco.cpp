@@ -1066,7 +1066,6 @@ INT32 CVGetZipName(char** pszName, UINT32 i)
 }
 
 // ColecoVision
-
 static struct BurnRomInfo cv_colecoRomDesc[] = {
     { "coleco.rom",     0x2000, 0x3aa93ef3, BRF_PRG | BRF_BIOS }, // 0x80 - Normal (Coleco, 1982)
     { "colecoa.rom",	0x2000, 0x39bb16fc, BRF_PRG | BRF_BIOS | BRF_OPT }, // 0x81 - Thick Characters (Coleco, 1982)
@@ -1087,7 +1086,6 @@ struct BurnDriver BurnDrvcv_Coleco = {
 	272, 228, 4, 3
 };
 
-
 // Final Test Cartridge (Prototype)
 static struct BurnRomInfo cv_finaltstRomDesc[] = {
 	{ "Colecovision Final Test (Proto)(1982)(Coleco).rom",	0x02000, 0x3ae4b58c, BRF_PRG | BRF_ESS },
@@ -1105,7 +1103,6 @@ struct BurnDriver BurnDrvcv_finaltst = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
-
 
 // Super Controller Test Cartridge
 static struct BurnRomInfo cv_suprtestRomDesc[] = {
@@ -1125,11 +1122,9 @@ struct BurnDriver BurnDrvcv_suprtest = {
 	272, 228, 4, 3
 };
 
-// Music Box (Demo)
+// MusicBox (Demo)
 static struct BurnRomInfo cv_musicboxRomDesc[] = {
-	{ "musicbox.1",	0x02000, 0x4557ed22, BRF_PRG | BRF_ESS },
-	{ "musicbox.2",	0x02000, 0x5f40d58b, BRF_PRG | BRF_ESS },
-	{ "musicbox.3",	0x02000, 0x0ab26aaa, BRF_PRG | BRF_ESS },
+	{ "MusicBox (Demo)(1987)(Coleco).rom",	24576, 0x164c8c26, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_musicbox, cv_musicbox, cv_coleco)
@@ -1137,7 +1132,7 @@ STD_ROM_FN(cv_musicbox)
 
 struct BurnDriver BurnDrvcv_musicbox = {
 	"cv_musicbox", NULL, "cv_coleco", NULL, "1987",
-	"Music Box (Demo)\0", NULL, "Coleco", "ColecoVision",
+	"MusicBox (Demo)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_musicboxRomInfo, cv_musicboxRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

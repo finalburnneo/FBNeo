@@ -11,10 +11,12 @@ struct i2c_device_struct {
 
 static i2c_device_struct i2c_devices[] = {
 	{ I2C_NONE,     0x00,   0x0 },
-	{ I2C_24C01,	0x80,	0x4-1 },
+	{ I2C_AT24C01,	0x80,	0x4-1 }, // uncommon (note: rev a/b/+ have 8byte write page)
+	{ I2C_24C01,	0x80,	0x8-1 },
 	{ I2C_X24C01,	0x80,	0x4-1 },
 	{ I2C_X24C02,	0x100,	0x4-1 },
-	{ I2C_24C02,	0x100,	0x4-1 },
+	{ I2C_AT24C02,	0x100,	0x4-1 },
+	{ I2C_24C02,	0x100,	0x8-1 },
 	{ I2C_24C04,	0x200,	0x10-1 },
 	{ I2C_24C08,	0x400,	0x10-1 },
 	{ I2C_24C16,	0x800,	0x10-1 },
@@ -54,7 +56,7 @@ static UINT8 sda_bit, scl_bit, sda_read_bit;
 static UINT8 bus_buffer[2];
 
 #define bus_debug 0
-#define device_debug 0
+#define device_debug 1
 
 void i2c_write_bus16(UINT32 data) {
 	const UINT8 scl = (data >> scl_bit) & 1;
@@ -226,6 +228,8 @@ void i2c_write_bit(bool sda, bool scl) {
 				break;
 
 				case I2C_WRITE: {
+					if (device_debug)
+						bprintf(0, _T("write memory @ %x (mask/pg %x/%x) with  %x\n"), i2c_address, i2c_mask, i2c_page_mask, i2c_shifter);
 					i2c_memory[i2c_address & i2c_mask] = i2c_shifter;
 					i2c_address = ((i2c_address + 1) & i2c_page_mask) | (i2c_address & ~i2c_page_mask);
 				}
@@ -234,6 +238,7 @@ void i2c_write_bit(bool sda, bool scl) {
 				case I2C_READ: {
 					if (i2c_bit_count == 0) {
 						i2c_shifter = i2c_memory[i2c_address & i2c_mask];
+						bprintf(0, _T("reload shifter with %x  @  %x\n"), i2c_shifter, i2c_address);
 						i2c_address++;
 					}
 

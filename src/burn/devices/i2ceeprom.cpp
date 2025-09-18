@@ -56,7 +56,7 @@ static UINT8 sda_bit, scl_bit, sda_read_bit;
 static UINT8 bus_buffer[2];
 
 #define bus_debug 0
-#define device_debug 1
+#define device_debug 0
 
 void i2c_write_bus16(UINT32 data) {
 	const UINT8 scl = (data >> scl_bit) & 1;
@@ -238,7 +238,8 @@ void i2c_write_bit(bool sda, bool scl) {
 				case I2C_READ: {
 					if (i2c_bit_count == 0) {
 						i2c_shifter = i2c_memory[i2c_address & i2c_mask];
-						bprintf(0, _T("reload shifter with %x  @  %x\n"), i2c_shifter, i2c_address);
+						if (device_debug)
+							bprintf(0, _T("reload shifter with %x  @  %x\n"), i2c_shifter, i2c_address);
 						i2c_address++;
 					}
 

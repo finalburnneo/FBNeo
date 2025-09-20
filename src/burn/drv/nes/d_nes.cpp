@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvfds_aliensfix = {
 	"fds_aliensfix", NULL, "fds_fdsbios", NULL, "2017",
 	"Aliens - Alien 2 (Fix Hack)\0", NULL, "lancuster", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, fds_aliensfixRomInfo, fds_aliensfixRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -725,7 +725,7 @@ struct BurnDriver BurnDrvfds_aliens = {
 	"fds_aliens", "fds_aliensfix", "fds_fdsbios", NULL, "1987",
 	"Aliens - Alien 2 (Japan) (Prototype)\0", NULL, "Squaresoft", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_FDS, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_FDS, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, fds_aliensRomInfo, fds_aliensRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvfds_allnignipsupmabr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Apple Town Monogatari - Little Computer People (Japan)
+// Apple Town Monogatari: Little Computer People (Japan)
 static struct BurnRomInfo fds_appletowmonRomDesc[] = {
 	{ "Apple Town Monogatari - Little Computer People (Japan)(1987)(Squaresoft).fds",          131016, 0xbf89dd4a, BRF_ESS | BRF_PRG },
 };
@@ -758,11 +758,30 @@ STDROMPICKEXT(fds_appletowmon, fds_appletowmon, fds_fdsbios)
 STD_ROM_FN(fds_appletowmon)
 
 struct BurnDriver BurnDrvfds_appletowmon = {
-	"fds_appletowmon", NULL, "fds_fdsbios", NULL, "1987",
-	"Apple Town Monogatari - Little Computer People (Japan)\0", NULL, "Squaresoft", "Famicom Disk System",
+	"fds_appletowmon", "fds_appletowstory", "fds_fdsbios", NULL, "1987",
+	"Apple Town Monogatari: Little Computer People (Japan)\0", NULL, "Squaresoft", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ADV, 0,
 	NESGetZipName, fds_appletowmonRomInfo, fds_appletowmonRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Apple Town Story: Little Computer People (Hack, English)
+// https://www.romhacking.net/translations/7430/
+static struct BurnRomInfo fds_appletowstoryRomDesc[] = {
+	{ "Apple Town Story - Little Computer People T-Eng (2025)(BlackPaladin).fds",          131000, 0x4a72fdd0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_appletowstory, fds_appletowstory, fds_fdsbios)
+STD_ROM_FN(fds_appletowstory)
+
+struct BurnDriver BurnDrvfds_appletowstory = {
+	"fds_appletowstory", NULL, "fds_fdsbios", NULL, "2025",
+	"Apple Town Story: Little Computer People (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ADV, 0,
+	NESGetZipName, fds_appletowstoryRomInfo, fds_appletowstoryRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -870,7 +889,7 @@ STD_ROM_FN(fds_bakutpatkun)
 struct BurnDriver BurnDrvfds_bakutpatkun = {
 	"fds_bakutpatkun", NULL, "fds_fdsbios", NULL, "1988",
 	"Bakutoushi Patton-kun (Japan)\0", NULL, "Soft Pro", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Bakutoushi Patton-kun (Japan)\0\u7206\u95d8\u58eb \u30d1\u30c3\u30c8\u30f3\u304f\u3093\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_FDS, GBF_ACTION, 0,
 	NESGetZipName, fds_bakutpatkunRomInfo, fds_bakutpatkunRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -888,7 +907,7 @@ STD_ROM_FN(fds_bigchadogspi)
 struct BurnDriver BurnDrvfds_bigchadogspi = {
 	"fds_bigchadogspi", NULL, "fds_fdsbios", NULL, "1988",
 	"Big Challenge! Dogfight Spirit (Japan)\0", NULL, "Jaleco", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Big Challenge! Dogfight Spirit (Japan)\0\u30d3\u30c3\u30b0\u30c1\u30e3\u30ec\u30f3\u30b8! Dogfight Spirit\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_VERSHOOT, 0,
 	NESGetZipName, fds_bigchadogspiRomInfo, fds_bigchadogspiRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -906,7 +925,7 @@ STD_ROM_FN(fds_bigchagogobo)
 struct BurnDriver BurnDrvfds_bigchagogobo = {
 	"fds_bigchagogobo", NULL, "fds_fdsbios", NULL, "1989",
 	"Big Challenge! Go! Go! Bowling (Japan)\0", NULL, "Jaleco", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Big Challenge! Go! Go! Bowling (Japan)\0\u30d3\u30c3\u30b0\u30c1\u30e3\u30ec\u30f3\u30b8! Go! Go! Bowling\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_FDS, GBF_SPORTSMISC, 0,
 	NESGetZipName, fds_bigchagogoboRomInfo, fds_bigchagogoboRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -924,8 +943,8 @@ STD_ROM_FN(fds_bigchagunfig)
 struct BurnDriver BurnDrvfds_bigchagunfig = {
 	"fds_bigchagunfig", NULL, "fds_fdsbios", NULL, "1989",
 	"Big Challenge! Gun Fighter (Japan)\0", NULL, "Jaleco", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Big Challenge! Gun Fighter (Japan)\0\u30d3\u30c3\u30b0\u30c1\u30e3\u30ec\u30f3\u30b8! Gun Fighter\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, fds_bigchagunfigRomInfo, fds_bigchagunfigRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -942,7 +961,7 @@ STD_ROM_FN(fds_bigchajuusen)
 struct BurnDriver BurnDrvfds_bigchajuusen = {
 	"fds_bigchajuusen", NULL, "fds_fdsbios", NULL, "1988",
 	"Big Challenge! Juudou Senshuken (Japan)\0", NULL, "Jaleco", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Big Challenge! Juudou Senshuken (Japan)\0\u30d3\u30c3\u30b0\u30c1\u30e3\u30ec\u30f3\u30b8! \u67d4\u9053\u9078\u624b\u6a29\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_VSFIGHT, 0,
 	NESGetZipName, fds_bigchajuusenRomInfo, fds_bigchajuusenRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -1278,7 +1297,7 @@ struct BurnDriver BurnDrvfds_digdugii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dirty Pair - Project Eden (Japan)
+// Dirty Pair: Project Eden (Japan)
 static struct BurnRomInfo fds_dirtypaijRomDesc[] = {
 	{ "Dirty Pair - Project Eden (Japan)(1987)(Bandai).fds",          131016, 0x0bba3177, BRF_ESS | BRF_PRG },
 };
@@ -1288,15 +1307,15 @@ STD_ROM_FN(fds_dirtypaij)
 
 struct BurnDriver BurnDrvfds_dirtypaij = {
 	"fds_dirtypaij", "fds_dirtypai", "fds_fdsbios", NULL, "1987",
-	"Dirty Pair - Project Eden (Japan)\0", NULL, "Bandai", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Dirty Pair: Project Eden (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	L"Dirty Pair: Project Eden (Japan)\0\u30c0\u30fc\u30c6\u30a3\u30da\u30a2 \u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30a8\u30c7\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_FDS, GBF_HORSHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_dirtypaijRomInfo, fds_dirtypaijRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Dirty Pair - Project Eden (Hack, English)
+// Dirty Pair: Project Eden (Hack, English)
 // https://www.romhacking.net/translations/1735/
 static struct BurnRomInfo fds_dirtypaiRomDesc[] = {
 	{ "Dirty Pair - Project Eden T-Eng (2021)(stardust Crusaders).fds",          131000, 0x5707b40a, BRF_ESS | BRF_PRG },
@@ -1307,7 +1326,7 @@ STD_ROM_FN(fds_dirtypai)
 
 struct BurnDriver BurnDrvfds_dirtypai = {
 	"fds_dirtypai", NULL, "fds_fdsbios", NULL, "2021",
-	"Dirty Pair - Project Eden (Hack, English)\0", NULL, "Stardust Crusaders", "Famicom Disk System",
+	"Dirty Pair: Project Eden (Hack, English)\0", NULL, "Stardust Crusaders", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_FDS, GBF_HORSHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_dirtypaiRomInfo, fds_dirtypaiRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -1453,7 +1472,7 @@ STD_ROM_FN(fds_druid)
 struct BurnDriver BurnDrvfds_druid = {
 	"fds_druid", "fds_druiden", "fds_fdsbios", NULL, "1988",
 	"Druid: Kyoufu no Tobira (Japan)\0", NULL, "Jaleco", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Druid: Kyoufu no Tobira (Japan)\0Druid \u6050\u6016\u306e\u6249\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_MAZE | GBF_RUNGUN, 0,
 	NESGetZipName, fds_druidRomInfo, fds_druidRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -3610,7 +3629,7 @@ STD_ROM_FN(fds_suishoudrag)
 struct BurnDriver BurnDrvfds_suishoudrag = {
 	"fds_suishoudrag", "fds_crystaldrag", "fds_fdsbios", NULL, "1986",
 	"Suishou no Dragon (Japan)\0", NULL, "Squaresoft", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	L"Suishou no Dragon (Japan)\0\u6c34\u6676\u306e\u9f8d \u30c9\u30e9\u30b4\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ADV, 0,
 	NESGetZipName, fds_suishoudragRomInfo, fds_suishoudragRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -18426,20 +18445,38 @@ struct BurnDriver BurnDrvnes_highhopes = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Hobo Albo's Big Adventure (HB)
+// Hobo Albo's Big Adventure (HB, v1.2)
 static struct BurnRomInfo nes_hoboalboRomDesc[] = {
-	{ "Hobo Albo's Big Adventure (2024)(RetroBro85).nes",          524304, 0xd276c4db, BRF_ESS | BRF_PRG },
+	{ "Hobo Albo's Big Adventure v1.2 (2025)(RBG Entertainment).nes",          524304, 0x0e907f78, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_hoboalbo)
 STD_ROM_FN(nes_hoboalbo)
 
 struct BurnDriver BurnDrvnes_hoboalbo = {
-	"nes_hoboalbo", NULL, NULL, NULL, "2024",
-	"Hobo Albo's Big Adventure (HB)\0", NULL, "RetroBro85", "NES / Famicom",
+	"nes_hoboalbo", NULL, NULL, NULL, "2025",
+	"Hobo Albo's Big Adventure (HB, v1.2)\0", NULL, "RBG Entertainment", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_hoboalboRomInfo, nes_hoboalboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hobo Albo's Halloween Adventure (HB, v1.5)
+static struct BurnRomInfo nes_hoboalbohaRomDesc[] = {
+	{ "Hobo Albo's Halloween Adventure v1.5 (2025)(RBG Entertainment).nes",          524304, 0x889637a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoboalboha)
+STD_ROM_FN(nes_hoboalboha)
+
+struct BurnDriver BurnDrvnes_hoboalboha = {
+	"nes_hoboalboha", NULL, NULL, NULL, "2025",
+	"Hobo Albo's Halloween Adventure (HB, v1.5)\0", NULL, "RBG Entertainment", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hoboalbohaRomInfo, nes_hoboalbohaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43753,7 +43790,7 @@ STD_ROM_FN(nes_moerojrbas)
 struct BurnDriver BurnDrvnes_moerojrbas = {
 	"nes_moerojrbas", "nes_hoops", NULL, NULL, "1988",
 	"Moero!! Junior Basket: Two on Two (Japan)\0", NULL, "Jaleco", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Moero!! Junior Basket: Two on Two (Japan)\0\u71c3\u3048\u308d!! \u30b8\u30e5\u30cb\u30a2\u30d0\u30b9\u30b1\u30c3\u30c8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_moerojrbasRomInfo, nes_moerojrbasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -43771,7 +43808,7 @@ STD_ROM_FN(nes_moeroproten)
 struct BurnDriver BurnDrvnes_moeroproten = {
 	"nes_moeroproten", "nes_racketattack", NULL, NULL, "1988",
 	"Moero!! Pro Tennis (Japan)\0", NULL, "Jaleco", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Moero!! Pro Tennis (Japan)\0\u71c3\u3048\u308d!! \u30d7\u30ed\u30c6\u30cb\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_moeroprotenRomInfo, nes_moeroprotenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -43789,7 +43826,7 @@ STD_ROM_FN(nes_moeruoniisanj)
 struct BurnDriver BurnDrvnes_moeruoniisanj = {
 	"nes_moeruoniisanj", "nes_moeruoniisan", NULL, NULL, "1989",
 	"Moeru! Oniisan (Japan)\0", NULL, "Toho Co.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Moeru! Oniisan (Japan)\0\u71c3\u3048\u308b! \u304a\u5144\u3055\u3093\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_moeruoniisanjRomInfo, nes_moeruoniisanjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -44062,7 +44099,7 @@ STD_ROM_FN(nes_motocchaj)
 struct BurnDriver BurnDrvnes_motocchaj = {
 	"nes_motocchaj", "nes_motoccha", NULL, NULL, "1989",
 	"Motocross Champion (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Motocross Champion (Japan)\0\u30e2\u30c8\u30af\u30ed\u30b9 \u30c1\u30e3\u30f3\u30d4\u30aa\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_motocchajRomInfo, nes_motocchajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -44100,7 +44137,7 @@ struct BurnDriver BurnDrvnes_motorcitpat = {
 	"nes_motorcitpat", NULL, NULL, NULL, "1992",
 	"Motor City Patrol (USA)\0", NULL, "Matchbox", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV | GBF_RACING, 0,
 	NESGetZipName, nes_motorcitpatRomInfo, nes_motorcitpatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -44117,8 +44154,8 @@ STD_ROM_FN(nes_mottoabudek)
 struct BurnDriver BurnDrvnes_mottoabudek = {
 	"nes_mottoabudek", NULL, NULL, NULL, "1990",
 	"Mottomo Abunai Deka (Japan)\0", NULL, "Toei Animation", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	L"Mottomo Abunai Deka (Japan)\0\u3082\u3063\u3068\u3082 \u3042\u3076\u306a\u3044\u5211\u4e8b\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_mottoabudekRomInfo, nes_mottoabudekRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -44135,7 +44172,7 @@ STD_ROM_FN(nes_mourysenmadj)
 struct BurnDriver BurnDrvnes_mourysenmadj = {
 	"nes_mourysenmadj", "nes_mourysenmad", NULL, NULL, "1990",
 	"Mouryou Senki Madara (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Mouryou Senki Madara (Japan)\0\u9b4d\u9b4e\u6226\u8a18 Madara\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_mourysenmadjRomInfo, nes_mourysenmadjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

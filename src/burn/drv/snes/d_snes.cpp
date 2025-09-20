@@ -44572,3 +44572,41 @@ struct BurnDriver BurnDrvsnes_Zombiesue = {
 	512, 448, 4, 3
 };
 
+// Der Wanderknecht
+
+static struct BurnRomInfo snes_DerwanderknechtRomDesc[] = {
+	{ "Der Wanderknecht (J) (v1.1) (Goldlocke).sfc", 262144, 0xd5d30c22, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Derwanderknecht)
+STD_ROM_FN(snes_Derwanderknecht)
+
+struct BurnDriver BurnDrvsnes_Derwanderknecht = {
+	"snes_derwanderknecht", NULL, NULL, NULL, "2025",
+	"Der Wanderknecht (HB)\0", NULL, "Goldlocke", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_DerwanderknechtRomInfo, snes_DerwanderknechtRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Bug Hunters
+
+static struct BurnRomInfo snes_SuperbughuntersRomDesc[] = {
+	{ "Super Bug Hunters (V1.1) (MaxwelOlinda).sfc", 262144, 0xf9305a4f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superbughunters)
+STD_ROM_FN(snes_Superbughunters)
+
+struct BurnDriver BurnDrvsnes_Superbughunters = {
+	"snes_superbughunters", NULL, NULL, NULL, "2025",
+	"Super Bug Hunters (HB)\0", NULL, "MaxwelOlinda", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_SuperbughuntersRomInfo, snes_SuperbughuntersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+

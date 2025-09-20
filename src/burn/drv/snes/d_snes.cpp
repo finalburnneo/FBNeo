@@ -44604,7 +44604,7 @@ struct BurnDriver BurnDrvsnes_Superbughunters = {
 	"snes_superbughunters", NULL, NULL, NULL, "2025",
 	"Super Bug Hunters (HB)\0", NULL, "MaxwelOlinda", "Nintendo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_MISC, 0,
 	SNESGetZipName, snes_SuperbughuntersRomInfo, snes_SuperbughuntersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

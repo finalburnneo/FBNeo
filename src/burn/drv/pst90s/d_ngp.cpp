@@ -1116,46 +1116,6 @@ struct BurnDriver BurnDrvngp_ptennis = {
 };
 
 
-// Pocket Fighting Series - Samurai Spirit! (Japan) ~ Samurai Shodown! (Euro)
-
-static struct BurnRomInfo ngp_samshoRomDesc[] = {
-	{ "samurai shodown - pocket fighting series (japan, europe) (en,ja).bin", 0x200000, 0x32e4696a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_samsho, ngp_samsho, ngpc_ngp)
-STD_ROM_FN(ngp_samsho)
-
-struct BurnDriver BurnDrvngp_samsho = {
-	"ngp_samsho", NULL, "ngp_ngp", NULL, "1998",
-	"Pocket Fighting Series - Samurai Spirit! (Japan) ~ Samurai Shodown! (Euro)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
-	NgpGetZipName, ngp_samshoRomInfo, ngp_samshoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
-// Shougi no Tatsujin (Japan)
-
-static struct BurnRomInfo ngp_shougiRomDesc[] = {
-	{ "shougi no tatsujin (japan).bin", 0x80000, 0xf34d0c9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_shougi, ngp_shougi, ngpc_ngp)
-STD_ROM_FN(ngp_shougi)
-
-struct BurnDriver BurnDrvngp_shougi = {
-	"ngp_shougi", NULL, "ngp_ngp", NULL, "1998",
-	"Shougi no Tatsujin (Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_STRATEGY, 0,
-	NgpGetZipName, ngp_shougiRomInfo, ngp_shougiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
 // Renketsu Puzzle Tsunagete Pon! (Japan)
 
 static struct BurnRomInfo ngp_tsunapnRomDesc[] = {
@@ -1195,11 +1155,9 @@ struct BurnDriver BurnDrvngpc_bakumats = {
 	160, 152, 4, 3
 };
 
-
 // Big Bang Pro Wrestling (Japan)
-
 static struct BurnRomInfo ngpc_bigbangRomDesc[] = {
-	{ "big bang pro wrestling (japan) (en,ja).bin", 0x200000, 0xb783c372, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Big Bang Pro Wrestling (Japan)(2000)(SNK).ngp", 0x200000, 0xb783c372, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_bigbang, ngpc_bigbang, ngpc_ngp)
@@ -2955,11 +2913,9 @@ struct BurnDriver BurnDrvngpc_puyopopa = {
 	160, 152, 4, 3
 };
 
-
 // Puzzle Link (Euro)
-
 static struct BurnRomInfo ngpc_puzzlinkRomDesc[] = {
-	{ "puzzle link (europe).bin", 0x80000, 0x8d0610ac, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puzzle Link (Euro)(1999)(SNK - Yumekobo).ngp", 0x80000, 0x8d0610ac, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_puzzlink, ngpc_puzzlink, ngpc_ngp)
@@ -2967,7 +2923,7 @@ STD_ROM_FN(ngpc_puzzlink)
 
 struct BurnDriver BurnDrvngpc_puzzlink = {
 	"ngp_puzzlink", NULL, "ngp_ngp", NULL, "1999",
-	"Puzzle Link (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puzzle Link (Euro)\0", NULL, "SNK - Yumekobo", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puzzlinkRomInfo, ngpc_puzzlinkRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2975,19 +2931,17 @@ struct BurnDriver BurnDrvngpc_puzzlink = {
 	160, 152, 4, 3
 };
 
-
 // Puzzle Link 2 (Euro, USA)
-
 static struct BurnRomInfo ngpc_puzzlnk2RomDesc[] = {
-	{ "puzzle link 2 (usa, europe).bin", 0x100000, 0xba9ca21c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puzzle Link 2 (Euro, USA)(1999)(SNK - Yumekobo).ngp", 0x100000, 0xba9ca21c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_puzzlnk2, ngpc_puzzlnk2, ngpc_ngp)
 STD_ROM_FN(ngpc_puzzlnk2)
 
 struct BurnDriver BurnDrvngpc_puzzlnk2 = {
-	"ngp_puzzlnk2", NULL, "ngp_ngp", NULL, "2000",
-	"Puzzle Link 2 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"ngp_puzzlnk2", NULL, "ngp_ngp", NULL, "1999",
+	"Puzzle Link 2 (Euro, USA)\0", NULL, "SNK - Yumekobo", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puzzlnk2RomInfo, ngpc_puzzlnk2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2995,11 +2949,9 @@ struct BurnDriver BurnDrvngpc_puzzlnk2 = {
 	160, 152, 4, 3
 };
 
-
 // Renketsu Puzzle Tsunagete Pon! Color (Japan)
-
 static struct BurnRomInfo ngpc_tsunapncRomDesc[] = {
-	{ "renketsu puzzle tsunagete pon color (japan).bin", 0x80000, 0xc3f3e83c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Renketsu Puzzle Tsunagete Pon! Color (Japan)(1999)(SNK - Yumekobo).ngp", 0x80000, 0xc3f3e83c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_tsunapnc, ngpc_tsunapnc, ngpc_ngp)
@@ -3007,19 +2959,17 @@ STD_ROM_FN(ngpc_tsunapnc)
 
 struct BurnDriver BurnDrvngpc_tsunapnc = {
 	"ngp_tsunapnc", "ngp_puzzlink", "ngp_ngp", NULL, "1999",
-	"Renketsu Puzzle Tsunagete Pon! Color (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Renketsu Puzzle Tsunagete Pon! Color (Japan)\0", NULL, "SNK -Yumekobo", "NeoGeo Pocket Color",
+	L"Renketsu Puzzle Tsunagete Pon! Color (Japan)\0\u9023\u7d50\u30d1\u30ba\u30eb \u3064\u306a\u3052\u3066 \u30dd\u30f3\u30c3!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_tsunapncRomInfo, ngpc_tsunapncRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Rockman - Battle & Fighters (Japan)
-
+// Rockman: Battle & Fighters (Japan)
 static struct BurnRomInfo ngpc_rockmanbRomDesc[] = {
-	{ "rockman - battle & fighters (japan).bin", 0x200000, 0x9c861e49, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Rockman - Battle & Fighters (Japan)(2000)(Capcom).ngp", 0x200000, 0x9c861e49, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_rockmanb, ngpc_rockmanb, ngpc_ngp)
@@ -3027,19 +2977,17 @@ STD_ROM_FN(ngpc_rockmanb)
 
 struct BurnDriver BurnDrvngpc_rockmanb = {
 	"ngp_rockmanb", NULL, "ngp_ngp", NULL, "2000",
-	"Rockman - Battle & Fighters (Japan)\0", NULL, "Capcom", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Rockman: Battle & Fighters (Japan)\0", NULL, "Capcom", "NeoGeo Pocket Color",
+	L"Rockman: Battle & Fighters (Japan)\0\u30ed\u30c3\u30af\u30de\u30f3 \u30d0\u30c8\u30eb & \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_rockmanbRomInfo, ngpc_rockmanbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Rockman - Battle & Fighters (Japan, Demo)
-
+// Rockman: Battle & Fighters (Japan, Demo)
 static struct BurnRomInfo ngpc_rockmanbdRomDesc[] = {
-	{ "rockman battle & fighters (japan) (demo).bin", 0x200000, 0x16a98ac4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Rockman - Battle & Fighters (Japan, Demo)(2000)(Capcom).ngp", 0x200000, 0x16a98ac4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_rockmanbd, ngpc_rockmanbd, ngpc_ngp)
@@ -3047,19 +2995,35 @@ STD_ROM_FN(ngpc_rockmanbd)
 
 struct BurnDriver BurnDrvngpc_rockmanbd = {
 	"ngp_rockmanbd", "ngp_rockmanb", "ngp_ngp", NULL, "2000",
-	"Rockman - Battle & Fighters (Japan, Demo)\0", NULL, "Capcom", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Rockman: Battle & Fighters (Japan, Demo)\0", NULL, "Capcom", "NeoGeo Pocket Color",
+	L"Rockman: Battle & Fighters (Japan, Demo)\0\u30ed\u30c3\u30af\u30de\u30f3 \u30d0\u30c8\u30eb & \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_rockmanbdRomInfo, ngpc_rockmanbdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
+// Samurai Spirit! - Pocket Fighting Series (Japan)
+static struct BurnRomInfo ngp_samshoRomDesc[] = {
+	{ "Samurai Spirit! - Pocket Fighting Series (Japan)(1998)(SNK).ngp", 0x200000, 0x32e4696a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
-// Pocket Fighting Series - Samurai Shodown! 2 (World)
+STDROMPICKEXT(ngp_samsho, ngp_samsho, ngpc_ngp)
+STD_ROM_FN(ngp_samsho)
 
+struct BurnDriver BurnDrvngp_samsho = {
+	"ngp_samsho", NULL, "ngp_ngp", NULL, "1998",
+	"Samurai Spirit! - Pocket Fighting Series (Japan)\0", NULL, "SNK", "NeoGeo Pocket",
+	L"Samurai Spirit! - Pocket Fighting Series (Japan)\0\u30b5\u30e0\u30e9\u30a4\u30b9\u30d4\u30ea\u30c3\u30c4!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	NgpGetZipName, ngp_samshoRomInfo, ngp_samshoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
+
+// Samurai Shodown! 2 - Pocket Fighting Series (World)
 static struct BurnRomInfo ngpc_samsho2RomDesc[] = {
-	{ "samurai shodown 2 - pocket fighting series (world) (en,ja).bin", 0x200000, 0x4f7fb156, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Samurai Shodown! 2 - Pocket Fighting Series (World)(1999)(SNK).ngp", 0x200000, 0x4f7fb156, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_samsho2, ngpc_samsho2, ngpc_ngp)
@@ -3067,7 +3031,7 @@ STD_ROM_FN(ngpc_samsho2)
 
 struct BurnDriver BurnDrvngpc_samsho2 = {
 	"ngp_samsho2", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Fighting Series - Samurai Shodown! 2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Samurai Shodown! 2 - Pocket Fighting Series (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_samsho2RomInfo, ngpc_samsho2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3075,11 +3039,9 @@ struct BurnDriver BurnDrvngpc_samsho2 = {
 	160, 152, 4, 3
 };
 
-
 // Shanghai Mini (World)
-
 static struct BurnRomInfo ngpc_shanghaiRomDesc[] = {
-	{ "shanghai mini (world) (en,ja).bin", 0x100000, 0x90732d53, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Shanghai Mini (World)(1999)(SNK - Activision).ngp", 0x100000, 0x90732d53, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_shanghai, ngpc_shanghai, ngpc_ngp)
@@ -3087,19 +3049,17 @@ STD_ROM_FN(ngpc_shanghai)
 
 struct BurnDriver BurnDrvngpc_shanghai = {
 	"ngp_shanghai", NULL, "ngp_ngp", NULL, "1999",
-	"Shanghai Mini (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Shanghai Mini (World)\0", NULL, "SNK - Activision", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MAHJONG | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_shanghaiRomInfo, ngpc_shanghaiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Shanghai Mini (USA, Prototype)
-
 static struct BurnRomInfo ngpc_shanghaipuRomDesc[] = {
-	{ "shminiusp.bin", 0x100000, 0x920af0ed, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Shanghai Mini (USA, Proto)(1999)(SNK - Activision).ngp", 0x100000, 0x920af0ed, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_shanghaipu, ngpc_shanghaipu, ngpc_ngp)
@@ -3107,19 +3067,17 @@ STD_ROM_FN(ngpc_shanghaipu)
 
 struct BurnDriver BurnDrvngpc_shanghaipu = {
 	"ngp_shanghaipu", "ngp_shanghai", "ngp_ngp", NULL, "1999",
-	"Shanghai Mini (USA, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Shanghai Mini (USA, Prototype)\0", NULL, "SNK - Activision", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_MAHJONG | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_shanghaipuRomInfo, ngpc_shanghaipuRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Shanghai Mini (Japan, Prototype)
-
 static struct BurnRomInfo ngpc_shanghaipjRomDesc[] = {
-	{ "shminijpp.bin", 0x100000, 0x79620c3f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Shanghai Mini (Japan, Proto)(1999)(SNK - Activision).ngp", 0x100000, 0x79620c3f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_shanghaipj, ngpc_shanghaipj, ngpc_ngp)
@@ -3127,19 +3085,35 @@ STD_ROM_FN(ngpc_shanghaipj)
 
 struct BurnDriver BurnDrvngpc_shanghaipj = {
 	"ngp_shanghaipj", "ngp_shanghai", "ngp_ngp", NULL, "1999",
-	"Shanghai Mini (Japan, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Shanghai Mini (Japan, Prototype)\0", NULL, "SNK - Activision", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_MAHJONG | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_shanghaipjRomInfo, ngpc_shanghaipjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
+// Shougi no Tatsujin (Japan)
+static struct BurnRomInfo ngp_shougiRomDesc[] = {
+	{ "Shougi no Tatsujin (Japan)(1998)(SNK - ADK).ngp", 0x80000, 0xf34d0c9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngp_shougi, ngp_shougi, ngpc_ngp)
+STD_ROM_FN(ngp_shougi)
+
+struct BurnDriver BurnDrvngp_shougi = {
+	"ngp_shougi", NULL, "ngp_ngp", NULL, "1998",
+	"Shougi no Tatsujin (Japan)\0", NULL, "SNK - ADK Corp.", "NeoGeo Pocket",
+	L"Shougi no Tatsujin (Japan)\0\u5c06\u68cb\u306e\u9054\u4eba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_BOARD | GBF_STRATEGY, 0,
+	NgpGetZipName, ngp_shougiRomInfo, ngp_shougiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
 
 // Shougi no Tatsujin Color (Japan)
-
 static struct BurnRomInfo ngpc_shougicRomDesc[] = {
-	{ "shougi no tatsujin color (japan).bin", 0x80000, 0x1f2872ed, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Shougi no Tatsujin Color (Japan)(1999)(SNK - ADK).ngp", 0x80000, 0x1f2872ed, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_shougic, ngpc_shougic, ngpc_ngp)
@@ -3147,19 +3121,17 @@ STD_ROM_FN(ngpc_shougic)
 
 struct BurnDriver BurnDrvngpc_shougic = {
 	"ngp_shougic", NULL, "ngp_ngp", NULL, "1999",
-	"Shougi no Tatsujin Color (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_STRATEGY | GBF_BOARD, 0,
+	"Shougi no Tatsujin Color (Japan)\0", NULL, "SNK - ADK Corp.", "NeoGeo Pocket Color",
+	L"Shougi no Tatsujin Color (Japan)\0\u5c06\u68cb\u306e\u9054\u4eba Color\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_BOARD | GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_shougicRomInfo, ngpc_shougicRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // SNK Gals' Fighters (Euro, USA)
-
 static struct BurnRomInfo ngpc_snkgalsRomDesc[] = {
-	{ "snk gals' fighters (usa, europe).bin", 0x200000, 0xb02c2be7, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK Gals' Fighters (Euro, USA)(2000)(SNK).ngp", 0x200000, 0xb02c2be7, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_snkgals, ngpc_snkgals, ngpc_ngp)
@@ -3175,11 +3147,9 @@ struct BurnDriver BurnDrvngpc_snkgals = {
 	160, 152, 4, 3
 };
 
-
 // SNK Gals' Fighters (Japan)
-
 static struct BurnRomInfo ngpc_snkgalsjRomDesc[] = {
-	{ "snk gals' fighters (japan).bin", 0x200000, 0x6a9ffa47, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK Gals' Fighters (Japan)(2000)(SNK).ngp", 0x200000, 0x6a9ffa47, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_snkgalsj, ngpc_snkgalsj, ngpc_ngp)
@@ -3195,19 +3165,17 @@ struct BurnDriver BurnDrvngpc_snkgalsj = {
 	160, 152, 4, 3
 };
 
-
-// Sonic the Hedgehog - Pocket Adventure (World)
-
+// Sonic the Hedgehog: Pocket Adventure (World)
 static struct BurnRomInfo ngpc_sonicRomDesc[] = {
-	{ "sonic the hedgehog - pocket adventure (world).bin", 0x200000, 0x356f0849, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Sonic the Hedgehog - Pocket Adventure (World)(1999)(Sega).ngp", 0x200000, 0x356f0849, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_sonic, ngpc_sonic, ngpc_ngp)
 STD_ROM_FN(ngpc_sonic)
 
 struct BurnDriver BurnDrvngpc_sonic = {
-	"ngp_sonic", NULL, "ngp_ngp", NULL, "2000",
-	"Sonic the Hedgehog - Pocket Adventure (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"ngp_sonic", NULL, "ngp_ngp", NULL, "1999",
+	"Sonic the Hedgehog: Pocket Adventure (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicRomInfo, ngpc_sonicRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3215,19 +3183,17 @@ struct BurnDriver BurnDrvngpc_sonic = {
 	160, 152, 4, 3
 };
 
-
-// Sonic the Hedgehog - Pocket Adventure (World, Prototype)
-
+// Sonic the Hedgehog: Pocket Adventure (World, Prototype)
 static struct BurnRomInfo ngpc_sonicpRomDesc[] = {
-	{ "sonic the hedgehog - pocket adventure (world) (beta).bin", 0x200000, 0x622176ce, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Sonic the Hedgehog: Pocket Adventure (World, Proto)(1999)(Sega).ngp", 0x200000, 0x622176ce, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_sonicp, ngpc_sonicp, ngpc_ngp)
 STD_ROM_FN(ngpc_sonicp)
 
 struct BurnDriver BurnDrvngpc_sonicp = {
-	"ngp_sonicp", "ngp_sonic", "ngp_ngp", NULL, "2000",
-	"Sonic the Hedgehog - Pocket Adventure (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"ngp_sonicp", "ngp_sonic", "ngp_ngp", NULL, "1999",
+	"Sonic the Hedgehog: Pocket Adventure (World, Prototype)\0", NULL, "Sega", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicpRomInfo, ngpc_sonicpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3235,11 +3201,9 @@ struct BurnDriver BurnDrvngpc_sonicp = {
 	160, 152, 4, 3
 };
 
-
-// Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)
-
+// Sonic the Hedgehog: Pocket Adventure (World, Prototype 2)
 static struct BurnRomInfo ngpc_sonicp2RomDesc[] = {
-	{ "sonic the hedgehog - pocket adventure (world) (oct 22 1999 prototype).bin", 0x200000, 0x45fc3bca, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Sonic the Hedgehog - Pocket Adventure (World, Proto 2)(1999)(Sega).ngp", 0x200000, 0x45fc3bca, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_sonicp2, ngpc_sonicp2, ngpc_ngp)
@@ -3247,7 +3211,7 @@ STD_ROM_FN(ngpc_sonicp2)
 
 struct BurnDriver BurnDrvngpc_sonicp2 = {
 	"ngp_sonicp2", "ngp_sonic", "ngp_ngp", NULL, "1999",
-	"Sonic the Hedgehog - Pocket Adventure (World, Oct 22 1999 Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Sonic the Hedgehog: Pocket Adventure (World, Prototype 2)\0", NULL, "Sega", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_sonicp2RomInfo, ngpc_sonicp2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3255,11 +3219,9 @@ struct BurnDriver BurnDrvngpc_sonicp2 = {
 	160, 152, 4, 3
 };
 
-
 // Soreike!! Hanafuda Doujou (Japan)
-
 static struct BurnRomInfo ngpc_hanadojoRomDesc[] = {
-	{ "soreike hanafuda doujou (japan).bin", 0x80000, 0x05fa3eb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Soreike!! Hanafuda Doujou (Japan)(1999(Dyna Corp.).ngp", 0x80000, 0x05fa3eb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_hanadojo, ngpc_hanadojo, ngpc_ngp)
@@ -3267,19 +3229,17 @@ STD_ROM_FN(ngpc_hanadojo)
 
 struct BurnDriver BurnDrvngpc_hanadojo = {
 	"ngp_hanadojo", NULL, "ngp_ngp", NULL, "1999",
-	"Soreike!! Hanafuda Doujou (Japan)\0", NULL, "Dyna", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Soreike!! Hanafuda Doujou (Japan)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
+	L"Soreike!! Hanafuda Doujou (Japan)\0\u305d\u308c\u3044\u3051!! \u82b1\u672d\u9053\u5834\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_hanadojoRomInfo, ngpc_hanadojoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Super Real Mahjong - Premium Collection (Japan)
-
+// Super Real Mahjong: Premium Collection (Japan)
 static struct BurnRomInfo ngpc_srmpRomDesc[] = {
-	{ "super real mahjong - premium collection (japan).bin", 0x200000, 0xc6e620c3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Super Real Mahjong: Premium Collection (Japan)(2001)(SNK - Seta Corp.).ngp", 0x200000, 0xc6e620c3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_srmp, ngpc_srmp, ngpc_ngp)
@@ -3287,19 +3247,17 @@ STD_ROM_FN(ngpc_srmp)
 
 struct BurnDriver BurnDrvngpc_srmp = {
 	"ngp_srmp", NULL, "ngp_ngp", NULL, "2001",
-	"Super Real Mahjong - Premium Collection (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Super Real Mahjong: Premium Collection (Japan)\0", NULL, "SNK - Seta Corp.", "NeoGeo Pocket Color",
+	L"Super Real Mahjong: Premium Collection (Japan)\0\u30b9\u30fc\u30d1\u30fc\u30ea\u30a2\u30eb\u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_srmpRomInfo, ngpc_srmpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Japan)
-
+// SNK vs. Capcom: The Match of the Millennium (World)
 static struct BurnRomInfo ngpc_svcRomDesc[] = {
-	{ "snk vs. capcom - the match of the millennium (world) (en,ja).bin", 0x400000, 0xb173030a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - The Match of the Millennium (World)(1999)(SNK).ngp", 0x400000, 0xb173030a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svc, ngpc_svc, ngpc_ngp)
@@ -3307,7 +3265,7 @@ STD_ROM_FN(ngpc_svc)
 
 struct BurnDriver BurnDrvngpc_svc = {
 	"ngp_svc", NULL, "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"SNK vs. Capcom: The Match of the Millennium (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_svcRomInfo, ngpc_svcRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3315,11 +3273,9 @@ struct BurnDriver BurnDrvngpc_svc = {
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Card Fighters 2 - Expand Edition (Japan)
-
+// SNK vs. Capcom: Card Fighters 2 - Expand Edition (Japan)
 static struct BurnRomInfo ngpc_svccard2RomDesc[] = {
-	{ "snk vs. capcom - card fighters 2 - expand edition (japan).bin", 0x200000, 0xccbcfda7, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - Card Fighters 2 - Expand Edition (Japan)(2001)(SNK).ngp", 0x200000, 0xccbcfda7, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccard2, ngpc_svccard2, ngpc_ngp)
@@ -3327,19 +3283,18 @@ STD_ROM_FN(ngpc_svccard2)
 
 struct BurnDriver BurnDrvngpc_svccard2 = {
 	"ngp_svccard2", NULL, "ngp_ngp", NULL, "2001",
-	"SNK vs. Capcom - Card Fighters 2 - Expand Edition (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	"SNK vs. Capcom: Card Fighters 2 - Expand Edition (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	L"SNK vs. Capcom: Card Fighters 2 - Expand Edition (Japan)\0\u6fc0\u7a81 \u30ab\u30fc\u30c9 \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccard2RomInfo, ngpc_svccard2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)
+// SNK vs. Capcom: Card Fighters 2 - Expand Edition (Hack, English)
 // https://www.romhacking.net/translations/82/
 static struct BurnRomInfo ngpc_svccard2eRomDesc[] = {
-	{ "snk vs. capcom - card fighters 2 - expand edition (english translation).bin", 0x200000, 0x0cc88d96, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - Card Fighters 2 - Expand Edition T-Eng (2017)(The CFC2 Translation Team).ngp", 0x200000, 0x0cc88d96, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccard2e, ngpc_svccard2e, ngpc_ngp)
@@ -3347,19 +3302,17 @@ STD_ROM_FN(ngpc_svccard2e)
 
 struct BurnDriver BurnDrvngpc_svccard2e = {
 	"ngp_svccard2e", "ngp_svccard2", "ngp_ngp", NULL, "2017",
-	"SNK vs. Capcom - Card Fighters 2 - Expand Edition (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"SNK vs. Capcom: Card Fighters 2 - Expand Edition (Hack, English)\0", NULL, "The CFC2 Translation Team", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccard2eRomInfo, ngpc_svccard2eRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)
-
+// SNK vs. Capcom: Card Fighters' Clash - Capcom Ver. (Euro, USA)
 static struct BurnRomInfo ngpc_svccardcRomDesc[] = {
-	{ "snk vs. capcom - card fighters' clash - capcom version (usa, europe).bin", 0x200000, 0x80ce137b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - Card Fighters' Clash - Capcom Ver. (Euro, USA)(1999)(SNK).ngp", 0x200000, 0x80ce137b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccardc, ngpc_svccardc, ngpc_ngp)
@@ -3367,19 +3320,17 @@ STD_ROM_FN(ngpc_svccardc)
 
 struct BurnDriver BurnDrvngpc_svccardc = {
 	"ngp_svccardc", NULL, "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Card Fighters' Clash - Capcom Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"SNK vs. Capcom: Card Fighters' Clash - Capcom Ver. (Euro, USA)\0", "Capcom Supporters Version", "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardcRomInfo, ngpc_svccardcRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Supporters Version (Japan)
-
+// SNK vs. Capcom: Gekitotsu Card Fighters - Capcom Ver. (Japan)
 static struct BurnRomInfo ngpc_svccardcjRomDesc[] = {
-	{ "snk vs. capcom - gekitotsu card fighters - capcom supporter version (japan).bin", 0x200000, 0x9217159b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Ver. (Japan)(SNK)(1999).ngp", 0x200000, 0x9217159b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccardcj, ngpc_svccardcj, ngpc_ngp)
@@ -3387,19 +3338,17 @@ STD_ROM_FN(ngpc_svccardcj)
 
 struct BurnDriver BurnDrvngpc_svccardcj = {
 	"ngp_svccardcj", "ngp_svccardc", "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Gekitotsu Card Fighters - Capcom Supporters Version (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	"SNK vs. Capcom: Gekitotsu Card Fighters - Capcom Ver. (Japan)\0", "Capcom Supporters Version", "SNK", "NeoGeo Pocket Color",
+	L"SNK vs. Capcom: Gekitotsu Card Fighters - Capcom Ver. (Japan)\0\u6fc0\u7a81 \u30ab\u30fc\u30c9 \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardcjRomInfo, ngpc_svccardcjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Gekitotsu Card Fighters (Japan, Demo)
-
+// SNK vs. Capcom: Gekitotsu Card Fighters (Japan, Demo)
 static struct BurnRomInfo ngpc_svccardpRomDesc[] = {
-	{ "snk vs. capcom - gekitotsu card fighters (japan) (beta).bin", 0x200000, 0x4a41a56e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom: Gekitotsu Card Fighters (Japan, Demo)(1999)(SNK).ngp", 0x200000, 0x4a41a56e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccardp, ngpc_svccardp, ngpc_ngp)
@@ -3407,19 +3356,17 @@ STD_ROM_FN(ngpc_svccardp)
 
 struct BurnDriver BurnDrvngpc_svccardp = {
 	"ngp_svccardp", "ngp_svccards", "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Gekitotsu Card Fighters (Japan, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	"SNK vs. Capcom: Gekitotsu Card Fighters (Japan, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	L"SNK vs. Capcom: Gekitotsu Card Fighters (Japan, Demo)\0\u6fc0\u7a81 \u30ab\u30fc\u30c9 \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardpRomInfo, ngpc_svccardpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)
-
+// SNK vs. Capcom: Card Fighters' Clash - SNK Ver. (Euro, USA)
 static struct BurnRomInfo ngpc_svccardsRomDesc[] = {
-	{ "snk vs. capcom - card fighters' clash - snk version (usa, europe).bin", 0x200000, 0x94b63a97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom - Card Fighters' Clash - SNK Ver. (Euro, USA)(1999)(SNK).ngp", 0x200000, 0x94b63a97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccards, ngpc_svccards, ngpc_ngp)
@@ -3427,19 +3374,17 @@ STD_ROM_FN(ngpc_svccards)
 
 struct BurnDriver BurnDrvngpc_svccards = {
 	"ngp_svccards", NULL, "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Card Fighters' Clash - SNK Cardfighter's Version (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"SNK vs. Capcom: Card Fighters' Clash - SNK Ver. (Euro, USA)\0", "SNK Cardfighter's Version", "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardsRomInfo, ngpc_svccardsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Japan, v7)
-
+// SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v7)
 static struct BurnRomInfo ngpc_svccardsjRomDesc[] = {
-	{ "snk vs. capcom - gekitotsu card fighters - snk supporter version (japan).bin", 0x200000, 0x7065295c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v7)(1999)(SNK).ngp", 0x200000, 0x7065295c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccardsj, ngpc_svccardsj, ngpc_ngp)
@@ -3447,19 +3392,17 @@ STD_ROM_FN(ngpc_svccardsj)
 
 struct BurnDriver BurnDrvngpc_svccardsj = {
 	"ngp_svccardsj", "ngp_svccards", "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Japan, v7)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	"SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v7)\0", "SNK Cardfighter's Version", "SNK", "NeoGeo Pocket Color",
+	L"SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v7)\0\u6fc0\u7a81 \u30ab\u30fc\u30c9 \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardsjRomInfo, ngpc_svccardsjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Japan, v6)
-
+// SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v6)
 static struct BurnRomInfo ngpc_svccardsjaRomDesc[] = {
-	{ "snk vs. capcom - gekitotsu card fighters - snk supporter version (japan) (beta).bin", 0x200000, 0xe70e3f1a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v6)(1999)(SNK).ngp", 0x200000, 0xe70e3f1a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_svccardsja, ngpc_svccardsja, ngpc_ngp)
@@ -3467,19 +3410,17 @@ STD_ROM_FN(ngpc_svccardsja)
 
 struct BurnDriver BurnDrvngpc_svccardsja = {
 	"ngp_svccardsja", "ngp_svccards", "ngp_ngp", NULL, "1999",
-	"SNK vs. Capcom - Gekitotsu Card Fighters - SNK Supporters Version (Japan, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_ADV, 0,
+	"SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v6)\0", "SNK Cardfighter's Version", "SNK", "NeoGeo Pocket Color",
+	L"SNK vs. Capcom: Gekitotsu Card Fighters - SNK Ver. (Japan, v6)\0\u6fc0\u7a81 \u30ab\u30fc\u30c9 \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_CARD | GBF_RPG, 0,
 	NgpGetZipName, ngpc_svccardsjaRomInfo, ngpc_svccardsjaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Tsunagete Pon! 2 (Japan)
-
 static struct BurnRomInfo ngpc_tsunapn2RomDesc[] = {
-	{ "tsunagete pon 2 (japan).bin", 0x100000, 0x129091bb, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Tsunagete Pon 2 (Japan)(1999)(SNK - Yumekobo).ngp", 0x100000, 0x129091bb, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_tsunapn2, ngpc_tsunapn2, ngpc_ngp)
@@ -3487,19 +3428,17 @@ STD_ROM_FN(ngpc_tsunapn2)
 
 struct BurnDriver BurnDrvngpc_tsunapn2 = {
 	"ngp_tsunapn2", "ngp_puzzlnk2", "ngp_ngp", NULL, "1999",
-	"Tsunagete Pon! 2 (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Tsunagete Pon! 2 (Japan)\0", NULL, "SNK - Yumekobo", "NeoGeo Pocket Color",
+	L"Tsunagete Pon! 2 (Japan)\0\u3064\u306a\u3052\u3066\u30dd\u30f3\u30c3!2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_tsunapn2RomInfo, ngpc_tsunapn2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Wrestling Madness (Euro, USA, Prototype)
-
 static struct BurnRomInfo ngpc_wrestmadRomDesc[] = {
-	{ "wrestling madness (usa, europe) (beta).bin", 0x200000, 0x16b0be9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Wrestling Madness (Euro, USA, Proto)(2000)(SNK).ngp", 0x200000, 0x16b0be9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_wrestmad, ngpc_wrestmad, ngpc_ngp)
@@ -3515,18 +3454,16 @@ struct BurnDriver BurnDrvngpc_wrestmad = {
 	160, 152, 4, 3
 };
 
-
 // Prize Game - PP-AA01 Pusher Program (Japan)
-
 static struct BurnRomInfo ngpc_ppaa01RomDesc[] = {
-	{ "prize game - pp-aa01 pusher program (japan).bin", 0x80000, 0x78acdbcb, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Prize Game - PP-AA01 Pusher Program (Japan)(199x)(Aruze).ngp", 0x80000, 0x78acdbcb, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ppaa01, ngpc_ppaa01, ngpc_ngp)
 STD_ROM_FN(ngpc_ppaa01)
 
 struct BurnDriverX BurnDrvngpc_ppaa01 = {
-	"ngp_ppaa01", NULL, "ngp_ngp", NULL, "19??",
+	"ngp_ppaa01", NULL, "ngp_ngp", NULL, "199?",
 	"Prize Game - PP-AA01 Pusher Program (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
@@ -3535,8 +3472,25 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 	160, 152, 4, 3
 };
 
-// Gears of Fate (HB)
+// Don't Die, Mr. Robot! (HB)
+static struct BurnRomInfo ngpc_ddmrRomDesc[] = {
+	{ "Don't Die, Mr. Robot! (2025)(Infinite State Games).ngp", 259526, 0x40d906ea, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
+STDROMPICKEXT(ngpc_ddmr, ngpc_ddmr, ngpc_ngp)
+STD_ROM_FN(ngpc_ddmr)
+
+struct BurnDriver BurnDrvngpc_ddmr = {
+	"ngp_ddmr", NULL, "ngp_ngp", NULL, "2025",
+	"Don't Die, Mr. Robot! (HB)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_ddmrRomInfo, ngpc_ddmrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Gears of Fate (HB)
 static struct BurnRomInfo ngpc_gearsoffateRomDesc[] = {
 	{ "Gears of Fate (2009)(Thor).ngp", 1917732, 0x3c75807e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
@@ -3546,7 +3500,7 @@ STD_ROM_FN(ngpc_gearsoffate)
 
 struct BurnDriver BurnDrvngpc_gearsoffate = {
 	"ngp_gearsoffate", NULL, "ngp_ngp", NULL, "2009",
-	"Gears of Fate (HB)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Gears of Fate (HB)\0", NULL, "Thor", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_gearsoffateRomInfo, ngpc_gearsoffateRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3554,21 +3508,3 @@ struct BurnDriver BurnDrvngpc_gearsoffate = {
 	160, 152, 4, 3
 };
 
-// Don't Die Mr Robot Pocket (HB)
-
-static struct BurnRomInfo ngpc_ddmrRomDesc[] = {
-	{ "Dont Die Mr Robot Pocket (2025)(Ahchay).ngp", 259526, 0x40d906ea, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngpc_ddmr, ngpc_ddmr, ngpc_ngp)
-STD_ROM_FN(ngpc_ddmr)
-
-struct BurnDriver BurnDrvngpc_ddmr = {
-	"ngp_ddmr", NULL, "ngp_ngp", NULL, "2025",
-	"Don't Die Mr. Robot Pocket (HB)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
-	NgpGetZipName, ngpc_ddmrRomInfo, ngpc_ddmrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
-	160, 152, 4, 3
-};

@@ -34574,10 +34574,10 @@ struct BurnDriver BurnSpecChronos128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Chuckie Mail (48K) (HB)
+// Chuckie Mail (48K) (HB, Rev1.0)
 
 static struct BurnRomInfo SpecChuckiemailRomDesc[] = {
-	{ "Chuckie Mail 48K (2025)(Proteusy).tap", 24664, 0xc5145769, BRF_ESS | BRF_PRG },
+	{ "Chuckie Mail Rev1.0 48K (2025)(Proteusy).tap", 25130, 0xd7a7b13a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecChuckiemail, SpecChuckiemail, Spectrum)
@@ -34585,7 +34585,7 @@ STD_ROM_FN(SpecChuckiemail)
 
 struct BurnDriver BurnSpecChuckiemail = {
 	"spec_chuckiemail", NULL, "spec_spectrum", NULL, "2025",
-	"Chuckie Mail (48K) (HB)\0", NULL, "Proteusy", "ZX Spectrum",
+	"Chuckie Mail (48K) (HB, Rev1.0)\0", NULL, "Proteusy", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecChuckiemailRomInfo, SpecChuckiemailRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -49645,7 +49645,7 @@ struct BurnDriver BurnSpecRabidmower = {
 // Racetrack Riches (48K) (HB)
 
 static struct BurnRomInfo SpecRacerichesRomDesc[] = {
-	{ "Racetrack Riches 48K (2025)(bedroom-coders).tap", 44828, 0xba32d423, BRF_ESS | BRF_PRG },
+	{ "Racetrack Riches 48K (2025)(bedroom-coders).tap", 46109, 0x1fe06ca6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRaceriches, SpecRaceriches, Spectrum)

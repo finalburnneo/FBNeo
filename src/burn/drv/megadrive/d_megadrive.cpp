@@ -39245,6 +39245,24 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Driftin Rage - Alpha Version (HB)
+static struct BurnRomInfo md_driftinrageRomDesc[] = {
+	{ "Driftin Rage - Alpha Version v0.01a (HB).bin", 2621440, 0x7319f173, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_driftinrage)
+STD_ROM_FN(md_driftinrage)
+
+struct BurnDriver BurnDrvmd_driftinrage = {
+	"md_driftinrage", NULL, NULL, NULL, "2025",
+	"Driftin Rage - Alpha Version v0.01a (HB)\0", NULL, "MXRETRODEV", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_driftinrageRomInfo, md_driftinrageRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Earthion (HB, English v3.3.0)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
 	{ "Earthion v3.3.0 (English)(2025)(Ancient).bin", 7340032, 0xae5f1fb1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

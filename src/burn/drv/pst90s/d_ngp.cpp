@@ -1016,26 +1016,6 @@ struct BurnDriver BurnDrvngp_kof_mlon = {
 };
 
 
-// Pocket Fighting Series - King of Fighters R-1 (Euro, Japan)
-
-static struct BurnRomInfo ngp_kofr1RomDesc[] = {
-	{ "king of fighters r-1 (japan, europe) (en,ja).bin", 0x200000, 0xdceb7e11, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_kofr1, ngp_kofr1, ngpc_ngp)
-STD_ROM_FN(ngp_kofr1)
-
-struct BurnDriver BurnDrvngp_kofr1 = {
-	"ngp_kofr1", NULL, "ngp_ngp", NULL, "1998",
-	"Pocket Fighting Series - King of Fighters R-1 (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
-	NgpGetZipName, ngp_kofr1RomInfo, ngp_kofr1RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
 // Melon-chan no Seichou Nikki (Japan)
 
 static struct BurnRomInfo ngp_melonchnRomDesc[] = {
@@ -1051,66 +1031,6 @@ struct BurnDriver BurnDrvngp_melonchn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGP, GBF_RPG, 0,
 	NgpGetZipName, ngp_melonchnRomInfo, ngp_melonchnRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
-// Pocket Casino Series - Neo Cherry Master (Euro, Japan)
-
-static struct BurnRomInfo ngp_neocherRomDesc[] = {
-	{ "neo cherry master - real casino series (japan, europe) (en,ja).bin", 0x100000, 0x5c067579, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_neocher, ngp_neocher, ngpc_ngp)
-STD_ROM_FN(ngp_neocher)
-
-struct BurnDriver BurnDrvngp_neocher = {
-	"ngp_neocher", NULL, "ngp_ngp", NULL, "1998",
-	"Pocket Casino Series - Neo Cherry Master (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_CASINO, 0,
-	NgpGetZipName, ngp_neocherRomInfo, ngp_neocherRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
-// Pocket Sports Series - Neo Geo Cup '98 (Euro, Japan)
-
-static struct BurnRomInfo ngp_neocup98RomDesc[] = {
-	{ "neo geo cup '98 (japan, europe) (en,ja).bin", 0x100000, 0x33add5bd, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_neocup98, ngp_neocup98, ngpc_ngp)
-STD_ROM_FN(ngp_neocup98)
-
-struct BurnDriver BurnDrvngp_neocup98 = {
-	"ngp_neocup98", NULL, "ngp_ngp", NULL, "1998",
-	"Pocket Sports Series - Neo Geo Cup '98 (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSFOOTBALL, 0,
-	NgpGetZipName, ngp_neocup98RomInfo, ngp_neocup98RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
-	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
-	160, 152, 4, 3
-};
-
-
-// Pocket Sports Series - Pocket Tennis (Euro, Japan)
-
-static struct BurnRomInfo ngp_ptennisRomDesc[] = {
-	{ "pocket tennis - pocket sports series (japan, europe) (en,ja).bin", 0x80000, 0x4b1eed05, 1 | BRF_PRG | BRF_ESS }, // Cartridge
-};
-
-STDROMPICKEXT(ngp_ptennis, ngp_ptennis, ngpc_ngp)
-STD_ROM_FN(ngp_ptennis)
-
-struct BurnDriver BurnDrvngp_ptennis = {
-	"ngp_ptennis", NULL, "ngp_ngp", NULL, "1998",
-	"Pocket Sports Series - Pocket Tennis (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSMISC, 0,
-	NgpGetZipName, ngp_ptennisRomInfo, ngp_ptennisRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
 	160, 152, 4, 3
 };
@@ -1135,11 +1055,9 @@ struct BurnDriver BurnDrvngp_tsunapn = {
 	160, 152, 4, 3
 };
 
-
 // Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Japan)
-
 static struct BurnRomInfo ngpc_bakumatsRomDesc[] = {
-	{ "bakumatsu rouman tokubetsu hen - gekka no kenshi - tsuki ni saku hana, chiri yuku hana (japan).bin", 0x200000, 0x12afacb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Bakumatsu Rouman Tokubetsu Hen (Japan)(2000)(SNK).ngp", 0x200000, 0x12afacb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_bakumats, ngpc_bakumats, ngpc_ngp)
@@ -1147,8 +1065,8 @@ STD_ROM_FN(ngpc_bakumats)
 
 struct BurnDriver BurnDrvngpc_bakumats = {
 	"ngp_bakumats", "ngp_lastblad", "ngp_ngp", NULL, "2000",
-	"Bakumatsu Rouman Tokubetsu Hen - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Bakumatsu Rouman Tokubetsu Hen (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	L"Bakumatsu Rouman Tokubetsu Hen (Japan)\0\u5e55\u672b\u6d6a\u6f2b\u7279\u5225\u7de8 \u6708\u83ef\u306e\u5263\u58eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_bakumatsRomInfo, ngpc_bakumatsRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
@@ -1253,11 +1171,9 @@ struct BurnDriver BurnDrvngpc_bstarsc = {
 	160, 152, 4, 3
 };
 
-
 // Bust-A-Move Pocket (USA)
-
 static struct BurnRomInfo ngpc_bamRomDesc[] = {
-	{ "bust-a-move pocket (usa).bin", 0x100000, 0x85fe6ae3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Bust-A-Move Pocket (USA)(1999)(SNK).ngp", 0x100000, 0x85fe6ae3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_bam, ngpc_bam, ngpc_ngp)
@@ -1273,11 +1189,9 @@ struct BurnDriver BurnDrvngpc_bam = {
 	160, 152, 4, 3
 };
 
-
 // Bust-A-Move Pocket (USA, Prototype)
-
 static struct BurnRomInfo ngpc_bampRomDesc[] = {
-	{ "bustmove.bin", 0x100000, 0x78a1361d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Bust-A-Move Pocket (USA, Proto)(1999)(SNK).ngp", 0x100000, 0x78a1361d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_bamp, ngpc_bamp, ngpc_ngp)
@@ -1833,11 +1747,9 @@ struct BurnDriver BurnDrvngpc_kikousei = {
 	160, 152, 4, 3
 };
 
-
-// King of Fighters, The - Battle de Paradise (Japan)
-
+// King of Fighters, The: Battle de Paradise (Japan)
 static struct BurnRomInfo ngpc_kofparaRomDesc[] = {
-	{ "king of fighters, the - battle de paradise (japan).bin", 0x200000, 0x77e37bac, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "King of Fighters, The - Battle de Paradise (Japan)(2000)(SNK).ngp", 0x200000, 0x77e37bac, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_kofpara, ngpc_kofpara, ngpc_ngp)
@@ -1845,19 +1757,35 @@ STD_ROM_FN(ngpc_kofpara)
 
 struct BurnDriver BurnDrvngpc_kofpara = {
 	"ngp_kofpara", NULL, "ngp_ngp", NULL, "2000",
-	"King of Fighters, The - Battle de Paradise (Japan)\0", "Force B&W mode to unlock the hidden game 'Yosaku'", "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"King of Fighters, The: Battle de Paradise (Japan)\0", "Force B&W mode to unlock the hidden game 'Yosaku'", "SNK", "NeoGeo Pocket Color",
+	L"King of Fighters, The: Battle de Paradise (Japan)\0\u30d0\u30c8\u30eb DE \u30d1\u30e9\u30c0\u30a4\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
 	NgpGetZipName, ngpc_kofparaRomInfo, ngpc_kofparaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpcDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
+// King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)
+static struct BurnRomInfo ngp_kofr1RomDesc[] = {
+	{ "King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)(1998)(SNK).ngp", 0x200000, 0xdceb7e11, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
-// Pocket Fighting Series - King of Fighters R-2 (World)
+STDROMPICKEXT(ngp_kofr1, ngp_kofr1, ngpc_ngp)
+STD_ROM_FN(ngp_kofr1)
 
+struct BurnDriver BurnDrvngp_kofr1 = {
+	"ngp_kofr1", NULL, "ngp_ngp", NULL, "1998",
+	"King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
+	L"King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)\0\u30ad\u30f3\u30b0\u30fb\u30aa\u30d6\u30fb\u30d5\u30a1\u30a4\u30bf\u30fc\u30ba R-1\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
+	NgpGetZipName, ngp_kofr1RomInfo, ngp_kofr1RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
+
+// King of Fighters R-2 - Pocket Fighting Series (World)
 static struct BurnRomInfo ngpc_kofr2RomDesc[] = {
-	{ "king of fighters r-2 (world) (en,ja).bin", 0x200000, 0x47e490a2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "King of Fighters R-2 - Pocket Fighting Series (World)(1999)(SNK).ngp", 0x200000, 0x47e490a2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_kofr2, ngpc_kofr2, ngpc_ngp)
@@ -1865,7 +1793,7 @@ STD_ROM_FN(ngpc_kofr2)
 
 struct BurnDriver BurnDrvngpc_kofr2 = {
 	"ngp_kofr2", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Fighting Series - King of Fighters R-2 (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"King of Fighters R-2 - Pocket Fighting Series (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2RomInfo, ngpc_kofr2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -1873,11 +1801,9 @@ struct BurnDriver BurnDrvngpc_kofr2 = {
 	160, 152, 4, 3
 };
 
-
-// Pocket Fighting Series - King of Fighters R-2 (World, Demo)
-
+// King of Fighters R-2 - Pocket Fighting Series (World, Demo)
 static struct BurnRomInfo ngpc_kofr2dRomDesc[] = {
-	{ "king of fighters r-2 (world) (en,ja) (beta).bin", 0x200000, 0xe3ae79c0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "King of Fighters R-2 - Pocket Fighting Series (World, Demo)(1999)(SNK).npg", 0x200000, 0xe3ae79c0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_kofr2d, ngpc_kofr2d, ngpc_ngp)
@@ -1885,7 +1811,7 @@ STD_ROM_FN(ngpc_kofr2d)
 
 struct BurnDriver BurnDrvngpc_kofr2d = {
 	"ngp_kofr2d", "ngp_kofr2", "ngp_ngp", NULL, "1999",
-	"Pocket Fighting Series - King of Fighters R-2 (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"King of Fighters R-2 - Pocket Fighting Series (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2dRomInfo, ngpc_kofr2dRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -1893,11 +1819,9 @@ struct BurnDriver BurnDrvngpc_kofr2d = {
 	160, 152, 4, 3
 };
 
-
-// Pocket Fighting Series - King of Fighters R-2 (World, Demo Version 2)
-
+// King of Fighters R-2 - Pocket Fighting Series (World, Demo v2)
 static struct BurnRomInfo ngpc_kofr2d2RomDesc[] = {
-	{ "king of fighters r-2 version 2 (world) (en,ja) (demo).bin", 0x200000, 0x76544c97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "King of Fighters R-2 - Pocket Fighting Series (World, Demo v2)(1999)(SNK).ngp", 0x200000, 0x76544c97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_kofr2d2, ngpc_kofr2d2, ngpc_ngp)
@@ -1905,7 +1829,7 @@ STD_ROM_FN(ngpc_kofr2d2)
 
 struct BurnDriver BurnDrvngpc_kofr2d2 = {
 	"ngp_kofr2d2", "ngp_kofr2", "ngp_ngp", NULL, "1999",
-	"Pocket Fighting Series - King of Fighters R-2 (World, Demo Version 2)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"King of Fighters R-2 - Pocket Fighting Series (World, Demo v2)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_kofr2d2RomInfo, ngpc_kofr2d2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -1913,11 +1837,9 @@ struct BurnDriver BurnDrvngpc_kofr2d2 = {
 	160, 152, 4, 3
 };
 
-
 // Koi Koi Mahjong (Japan)
-
 static struct BurnRomInfo ngpc_koikoiRomDesc[] = {
-	{ "koi koi mahjong (japan).bin", 0x80000, 0xb51c3eba, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Koi Koi Mahjong (Japan)(2000)(Visco Corp.).ngp", 0x80000, 0xb51c3eba, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_koikoi, ngpc_koikoi, ngpc_ngp)
@@ -1925,19 +1847,17 @@ STD_ROM_FN(ngpc_koikoi)
 
 struct BurnDriver BurnDrvngpc_koikoi = {
 	"ngp_koikoi", NULL, "ngp_ngp", NULL, "2000",
-	"Koi Koi Mahjong (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Koi Koi Mahjong (Japan)\0", NULL, "Visco Corp.", "NeoGeo Pocket Color",
+	L"Koi Koi Mahjong (Japan)\0\u30b3\u30a4\u30b3\u30a4 \u9ebb\u96c0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_MAHJONG, 0,
 	NgpGetZipName, ngpc_koikoiRomInfo, ngpc_koikoiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Last Blade, The - Beyond the Destiny (Euro)
-
+// Last Blade, The: Beyond the Destiny (Euro)
 static struct BurnRomInfo ngpc_lastbladRomDesc[] = {
-	{ "last blade, the - beyond the destiny (europe).bin", 0x200000, 0x94fcfd1e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Last Blade, The - Beyond the Destiny (Euro)(2000)(SNK).ngp", 0x200000, 0x94fcfd1e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_lastblad, ngpc_lastblad, ngpc_ngp)
@@ -1945,7 +1865,7 @@ STD_ROM_FN(ngpc_lastblad)
 
 struct BurnDriver BurnDrvngpc_lastblad = {
 	"ngp_lastblad", NULL, "ngp_ngp", NULL, "2000",
-	"Last Blade, The - Beyond the Destiny (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Last Blade, The: Beyond the Destiny (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_lastbladRomInfo, ngpc_lastbladRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -1953,11 +1873,9 @@ struct BurnDriver BurnDrvngpc_lastblad = {
 	160, 152, 4, 3
 };
 
-
 // Magical Drop Pocket (Euro, USA)
-
 static struct BurnRomInfo ngpc_magdropRomDesc[] = {
-	{ "magical drop pocket (usa, europe).bin", 0x100000, 0x7712f82d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Magical Drop Pocket (Euro, USA)(1999)(Data East).ngp", 0x100000, 0x7712f82d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_magdrop, ngpc_magdrop, ngpc_ngp)
@@ -1973,11 +1891,9 @@ struct BurnDriver BurnDrvngpc_magdrop = {
 	160, 152, 4, 3
 };
 
-
 // Magical Drop Pocket (Japan)
-
 static struct BurnRomInfo ngpc_magdropjRomDesc[] = {
-	{ "magical drop pocket (japan).bin", 0x100000, 0x694ce2dc, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Magical Drop Pocket (Japan)(1999)(Data East).ngp", 0x100000, 0x694ce2dc, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_magdropj, ngpc_magdropj, ngpc_ngp)
@@ -1986,18 +1902,16 @@ STD_ROM_FN(ngpc_magdropj)
 struct BurnDriver BurnDrvngpc_magdropj = {
 	"ngp_magdropj", "ngp_magdrop", "ngp_ngp", NULL, "1999",
 	"Magical Drop Pocket (Japan)\0", NULL, "Data East", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Magical Drop Pocket (Japan)\0\u30de\u30b8\u30ab\u30eb\u30c9\u30ed\u30c3\u30d7 \u30dd\u30b1\u30c3\u30c8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_magdropjRomInfo, ngpc_magdropjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Magical Drop Pocket (Demo)
-
+// Magical Drop Pocket (Japan, Demo)
 static struct BurnRomInfo ngpc_magdropjdRomDesc[] = {
-	{ "magical drop pocket (japan) (demo).bin", 0x100000, 0xd76f1a47, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Magical Drop Pocket (Japan, Demo)(1999)(Data East).ngp", 0x100000, 0xd76f1a47, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_magdropjd, ngpc_magdropjd, ngpc_ngp)
@@ -2005,19 +1919,17 @@ STD_ROM_FN(ngpc_magdropjd)
 
 struct BurnDriver BurnDrvngpc_magdropjd = {
 	"ngp_magdropjd", "ngp_magdrop", "ngp_ngp", NULL, "1999",
-	"Magical Drop Pocket (Demo)\0", NULL, "Data East", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Magical Drop Pocket (Japan, Demo)\0", NULL, "Data East", "NeoGeo Pocket Color",
+	L"Magical Drop Pocket (Japan, Demo)\0\u30de\u30b8\u30ab\u30eb\u30c9\u30ed\u30c3\u30d7 \u30dd\u30b1\u30c3\u30c8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_magdropjdRomInfo, ngpc_magdropjdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Memories Off - Pure (Japan)
-
+// Memories Off: Pure (Japan)
 static struct BurnRomInfo ngpc_memoriesRomDesc[] = {
-	{ "memories off - pure (japan).bin", 0x100000, 0xa7926e90, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Memories Off - Pure (Japan)(2000)(KID).ngp", 0x100000, 0xa7926e90, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_memories, ngpc_memories, ngpc_ngp)
@@ -2025,7 +1937,7 @@ STD_ROM_FN(ngpc_memories)
 
 struct BurnDriver BurnDrvngpc_memories = {
 	"ngp_memories", NULL, "ngp_ngp", NULL, "2000",
-	"Memories Off - Pure (Japan)\0", NULL, "KID", "NeoGeo Pocket Color",
+	"Memories Off: Pure (Japan)\0", NULL, "KID", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_memoriesRomInfo, ngpc_memoriesRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2033,11 +1945,9 @@ struct BurnDriver BurnDrvngpc_memories = {
 	160, 152, 4, 3
 };
 
-
 // Mezase! Kanji Ou (Japan)
-
 static struct BurnRomInfo ngpc_mezaseRomDesc[] = {
-	{ "mezase kanji ou (japan).bin", 0x200000, 0xa52e1c82, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Mezase! Kanji Ou (Japan)(2000)(SNK).ngp", 0x200000, 0xa52e1c82, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mezase, ngpc_mezase, ngpc_ngp)
@@ -2046,18 +1956,16 @@ STD_ROM_FN(ngpc_mezase)
 struct BurnDriver BurnDrvngpc_mezase = {
 	"ngp_mezase", NULL, "ngp_ngp", NULL, "2000",
 	"Mezase! Kanji Ou (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Mezase! Kanji Ou (Japan)\0\u3081\u3056\u305b! \u6f22\u5b57\u738b\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_QUIZ, 0,
 	NgpGetZipName, ngpc_mezaseRomInfo, ngpc_mezaseRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Mizuki Shigeru no Youkai Shashinkan (Japan)
-
 static struct BurnRomInfo ngpc_mizukiRomDesc[] = {
-	{ "mizuki shigeru no youkai shashinkan (japan).bin", 0x200000, 0xdde08335, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Mizuki Shigeru no Youkai Shashinkan (Japan)(1999)(SNK).ngp", 0x200000, 0xdde08335, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mizuki, ngpc_mizuki, ngpc_ngp)
@@ -2066,18 +1974,16 @@ STD_ROM_FN(ngpc_mizuki)
 struct BurnDriver BurnDrvngpc_mizuki = {
 	"ngp_mizuki", NULL, "ngp_ngp", NULL, "1999",
 	"Mizuki Shigeru no Youkai Shashinkan (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Mizuki Shigeru no Youkai Shashinkan (Japan)\0\u6c34\u6728\u3057\u3052\u308b\u306e \u5996\u602a\u5199\u771f\u9928\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_mizukiRomInfo, ngpc_mizukiRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Metal Slug - 1st Mission (World)
-
+// Metal Slug: 1st Mission (World)
 static struct BurnRomInfo ngpc_mslug1stRomDesc[] = {
-	{ "metal slug - 1st mission (world) (en,ja).bin", 0x200000, 0x4ff91807, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Metal Slug - 1st Mission (World)(1999)(SNK).ngp", 0x200000, 0x4ff91807, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mslug1st, ngpc_mslug1st, ngpc_ngp)
@@ -2085,19 +1991,17 @@ STD_ROM_FN(ngpc_mslug1st)
 
 struct BurnDriver BurnDrvngpc_mslug1st = {
 	"ngp_mslug1st", NULL, "ngp_ngp", NULL, "1999",
-	"Metal Slug - 1st Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Metal Slug: 1st Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug1stRomInfo, ngpc_mslug1stRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Metal Slug - 2nd Mission (World)
-
+// Metal Slug: 2nd Mission (World)
 static struct BurnRomInfo ngpc_mslug2ndRomDesc[] = {
-	{ "metal slug - 2nd mission (world) (en,ja).bin", 0x400000, 0xac549144, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Metal Slug - 2nd Mission (World)(2000)(SNK).ngp", 0x400000, 0xac549144, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mslug2nd, ngpc_mslug2nd, ngpc_ngp)
@@ -2105,19 +2009,17 @@ STD_ROM_FN(ngpc_mslug2nd)
 
 struct BurnDriver BurnDrvngpc_mslug2nd = {
 	"ngp_mslug2nd", NULL, "ngp_ngp", NULL, "2000",
-	"Metal Slug - 2nd Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Metal Slug: 2nd Mission (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug2ndRomInfo, ngpc_mslug2ndRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Metal Slug - 2nd Mission (Demo)
-
+// Metal Slug: 2nd Mission (World, Demo)
 static struct BurnRomInfo ngpc_mslug2nddRomDesc[] = {
-	{ "metal slug - 2nd mission (world) (en,ja) (demo).bin", 0x200000, 0x8b1647d4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Metal Slug - 2nd Mission (World, Demo)(2000)(SNK).ngp", 0x200000, 0x8b1647d4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mslug2ndd, ngpc_mslug2ndd, ngpc_ngp)
@@ -2125,19 +2027,17 @@ STD_ROM_FN(ngpc_mslug2ndd)
 
 struct BurnDriver BurnDrvngpc_mslug2ndd = {
 	"ngp_mslug2ndd", "ngp_mslug2nd", "ngp_ngp", NULL, "2000",
-	"Metal Slug - 2nd Mission (Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Metal Slug: 2nd Mission (World, Demo)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_mslug2nddRomInfo, ngpc_mslug2nddRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo 21 (Euro, USA)
-
+// Neo 21 - Real Casino Series (World)
 static struct BurnRomInfo ngpc_neo21RomDesc[] = {
-	{ "neo 21 - real casino series (world).bin", 0x100000, 0x0a2a2f28, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo 21 - Real Casino Series (World)(2000)(Dyna Corp.).ngp", 0x100000, 0x0a2a2f28, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neo21, ngpc_neo21, ngpc_ngp)
@@ -2145,19 +2045,17 @@ STD_ROM_FN(ngpc_neo21)
 
 struct BurnDriver BurnDrvngpc_neo21 = {
 	"ngp_neo21", NULL, "ngp_ngp", NULL, "2000",
-	"Pocket Casino Series - Neo 21 (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo 21 - Real Casino Series (World)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO | GBF_CARD, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CARD | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neo21RomInfo, ngpc_neo21RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Baccarat (World)
-
+// Neo Baccarat - Real Casino Series (World)
 static struct BurnRomInfo ngpc_neobaccaRomDesc[] = {
-	{ "neo baccarat - real casino series (world).bin", 0x100000, 0x22aab454, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Baccarat - Real Casino Series (World)(2000)(Dyna Corp.).ngp", 0x100000, 0x22aab454, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neobacca, ngpc_neobacca, ngpc_ngp)
@@ -2165,19 +2063,17 @@ STD_ROM_FN(ngpc_neobacca)
 
 struct BurnDriver BurnDrvngpc_neobacca = {
 	"ngp_neobacca", NULL, "ngp_ngp", NULL, "2000",
-	"Pocket Casino Series - Neo Baccarat (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Baccarat - Real Casino Series (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO | GBF_CARD, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CARD | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neobaccaRomInfo, ngpc_neobaccaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Baccarat (World, Prototype)
-
+// Neo Baccarat - Real Casino Series (World, Prototype)
 static struct BurnRomInfo ngpc_neobaccapRomDesc[] = {
-	{ "baccarat.bin", 0x100000, 0x80880498, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Baccarat - Real Casino Series (World, Proto)(2000)(Dyna Corp.).ngp", 0x100000, 0x80880498, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neobaccap, ngpc_neobaccap, ngpc_ngp)
@@ -2185,19 +2081,35 @@ STD_ROM_FN(ngpc_neobaccap)
 
 struct BurnDriver BurnDrvngpc_neobaccap = {
 	"ngp_neobaccap", "ngp_neobacca", "ngp_ngp", NULL, "2000",
-	"Pocket Casino Series - Neo Baccarat (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Baccarat - Real Casino Series (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_CASINO | GBF_CARD, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_CARD | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neobaccapRomInfo, ngpc_neobaccapRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
+// Neo Cherry Master - Real Casino Series (Euro, Japan)
+static struct BurnRomInfo ngp_neocherRomDesc[] = {
+	{ "Neo Cherry Master - Real Casino Series (Euro, Japan)(1998)(Dyna Corp.).ngp", 0x100000, 0x5c067579, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
-// Pocket Casino Series - Neo Cherry Master Color (World)
+STDROMPICKEXT(ngp_neocher, ngp_neocher, ngpc_ngp)
+STD_ROM_FN(ngp_neocher)
 
+struct BurnDriver BurnDrvngp_neocher = {
+	"ngp_neocher", NULL, "ngp_ngp", NULL, "1998",
+	"Neo Cherry Master - Real Casino Series (Euro, Japan)\0", NULL, "Dyna Corp.", "NeoGeo Pocket",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_CASINO, 0,
+	NgpGetZipName, ngp_neocherRomInfo, ngp_neocherRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
+
+// Neo Cherry Master Color - Real Casino Series (World)
 static struct BurnRomInfo ngpc_neochercRomDesc[] = {
-	{ "neo cherry master color - real casino series (world) (en,ja).bin", 0x100000, 0xa6dca584, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Cherry Master Color - Real Casino Series (World)(1999)(Dyna Corp.).ngp", 0x100000, 0xa6dca584, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neocherc, ngpc_neocherc, ngpc_ngp)
@@ -2205,7 +2117,7 @@ STD_ROM_FN(ngpc_neocherc)
 
 struct BurnDriver BurnDrvngpc_neocherc = {
 	"ngp_neocherc", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Casino Series - Neo Cherry Master Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Cherry Master Color - Real Casino Series (World)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neochercRomInfo, ngpc_neochercRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2213,11 +2125,9 @@ struct BurnDriver BurnDrvngpc_neocherc = {
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Cherry Master Color (World, Prototype)
-
+// Neo Cherry Master Color - Real Casino Series (World, Prototype)
 static struct BurnRomInfo ngpc_neochercpRomDesc[] = {
-	{ "neo cherry master color - real casino series (world) (en,ja) (beta).bin", 0x100000, 0x939a9912, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Cherry Master Color - Real Casino Series (World, Proto)(1999)(Dyna Corp.).ngp", 0x100000, 0x939a9912, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neochercp, ngpc_neochercp, ngpc_ngp)
@@ -2225,7 +2135,7 @@ STD_ROM_FN(ngpc_neochercp)
 
 struct BurnDriver BurnDrvngpc_neochercp = {
 	"ngp_neochercp", "ngp_neocherc", "ngp_ngp", NULL, "1999",
-	"Pocket Casino Series - Neo Cherry Master Color (World, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Cherry Master Color - Real Casino Series (World, Prototype)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neochercpRomInfo, ngpc_neochercpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2233,11 +2143,27 @@ struct BurnDriver BurnDrvngpc_neochercp = {
 	160, 152, 4, 3
 };
 
+// Neo Geo Cup '98 - Pocket Sports Series (Euro, Japan)
+static struct BurnRomInfo ngp_neocup98RomDesc[] = {
+	{ "Neo Geo Cup '98 - Pocket Sports Series (Euro, Japan)(1998)(SNK).ngp", 0x100000, 0x33add5bd, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
-// Pocket Sport Series - Neo Geo Cup '98 Plus (World)
+STDROMPICKEXT(ngp_neocup98, ngp_neocup98, ngpc_ngp)
+STD_ROM_FN(ngp_neocup98)
 
+struct BurnDriver BurnDrvngp_neocup98 = {
+	"ngp_neocup98", NULL, "ngp_ngp", NULL, "1998",
+	"Neo Geo Cup '98 - Pocket Sports Series (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSFOOTBALL, 0,
+	NgpGetZipName, ngp_neocup98RomInfo, ngp_neocup98RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
+
+// Neo Geo Cup '98 Plus - Pocket Sports Series (World)
 static struct BurnRomInfo ngpc_neocupplRomDesc[] = {
-	{ "neo geo cup '98 plus (world) (en,ja).bin", 0x100000, 0xc0da4fe9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Geo Cup '98 Plus - Pocket Sports Series (World)(1999)(SNK).ngp", 0x100000, 0xc0da4fe9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neocuppl, ngpc_neocuppl, ngpc_ngp)
@@ -2245,7 +2171,7 @@ STD_ROM_FN(ngpc_neocuppl)
 
 struct BurnDriver BurnDrvngpc_neocuppl = {
 	"ngp_neocuppl", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Sport Series - Neo Geo Cup '98 Plus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Geo Cup '98 Plus - Pocket Sports Series (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSFOOTBALL, 0,
 	NgpGetZipName, ngpc_neocupplRomInfo, ngpc_neocupplRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2253,11 +2179,9 @@ struct BurnDriver BurnDrvngpc_neocuppl = {
 	160, 152, 4, 3
 };
 
-
 // Neo Derby Champ Daiyosou (Japan)
-
 static struct BurnRomInfo ngpc_neoderbyRomDesc[] = {
-	{ "neo derby champ daiyosou (japan).bin", 0x200000, 0x5a053559, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Derby Champ Daiyosou (Japan)(1999)(Dyna Corp.).ngp", 0x200000, 0x5a053559, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neoderby, ngpc_neoderby, ngpc_ngp)
@@ -2265,19 +2189,17 @@ STD_ROM_FN(ngpc_neoderby)
 
 struct BurnDriver BurnDrvngpc_neoderby = {
 	"ngp_neoderby", NULL, "ngp_ngp", NULL, "1999",
-	"Neo Derby Champ Daiyosou (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Neo Derby Champ Daiyosou (Japan)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
+	L"Neo Derby Champ Daiyosou (Japan)\0Neo Derby Champ \u5927\u4e88\u60f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoderbyRomInfo, ngpc_neoderbyRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Dragon's Wild (World, v13)
-
+// Neo Dragon's Wild - Real Casino Series (World, v1.13)
 static struct BurnRomInfo ngpc_neodragRomDesc[] = {
-	{ "neo dragon's wild - real casino series (world) (en,ja) (v1.13).bin", 0x100000, 0x5d028c99, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Dragon's Wild - Real Casino Series v1.13 (World)(1999)(Dyna Corp.).ngp", 0x100000, 0x5d028c99, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neodrag, ngpc_neodrag, ngpc_ngp)
@@ -2285,19 +2207,17 @@ STD_ROM_FN(ngpc_neodrag)
 
 struct BurnDriver BurnDrvngpc_neodrag = {
 	"ngp_neodrag", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Casino Series - Neo Dragon's Wild (World, v13)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Dragon's Wild - Real Casino Series (World, v1.13)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO | GBF_CARD, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CARD | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neodragRomInfo, ngpc_neodragRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Dragon's Wild (World, v11)
-
+// Neo Dragon's Wild - Real Casino Series (World, v1.11)
 static struct BurnRomInfo ngpc_neodragaRomDesc[] = {
-	{ "neo dragon's wild - real casino series (world) (en,ja) (v1.11).bin", 0x100000, 0x225fd7f9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Dragon's Wild - Real Casino Series v1.11 (World)(1999)(Dyna Corp.).ngp", 0x100000, 0x225fd7f9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neodraga, ngpc_neodraga, ngpc_ngp)
@@ -2305,19 +2225,17 @@ STD_ROM_FN(ngpc_neodraga)
 
 struct BurnDriver BurnDrvngpc_neodraga = {
 	"ngp_neodraga", "ngp_neodrag", "ngp_ngp", NULL, "1999",
-	"Pocket Casino Series - Neo Dragon's Wild (World, v11)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Dragon's Wild - Real Casino Series (World, v1.11)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_CASINO | GBF_CARD, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_CARD | GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neodragaRomInfo, ngpc_neodragaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Casino Series - Neo Mystery Bonus (World)
-
+// Neo Mystery Bonus - Real Casino Series (World)
 static struct BurnRomInfo ngpc_neomystrRomDesc[] = {
-	{ "neo mystery bonus - real casino series (world) (en,ja).bin", 0x100000, 0xe79dc5b3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Mystery Bonus - Real Casino Series (World)(1999)(Dyna Corp.).ngp", 0x100000, 0xe79dc5b3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neomystr, ngpc_neomystr, ngpc_ngp)
@@ -2325,7 +2243,7 @@ STD_ROM_FN(ngpc_neomystr)
 
 struct BurnDriver BurnDrvngpc_neomystr = {
 	"ngp_neomystr", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Casino Series - Neo Mystery Bonus (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Mystery Bonus - Real Casino Series (World)\0", NULL, "Dyna Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_neomystrRomInfo, ngpc_neomystrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2333,11 +2251,9 @@ struct BurnDriver BurnDrvngpc_neomystr = {
 	160, 152, 4, 3
 };
 
-
-// Pocket Sport Series - Neo Poke Pro Yakyuu (Japan)
-
+// Neo Poke Pro Yakyuu - Pocket Sport Series (Japan)
 static struct BurnRomInfo ngpc_neoproykRomDesc[] = {
-	{ "neo poke pro yakyuu (japan).bin", 0x100000, 0xf4d78f12, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Poke Pro Yakyuu - Pocket Sport Series (Japan)(1999)(SNK - ADK).ngp", 0x100000, 0xf4d78f12, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neoproyk, ngpc_neoproyk, ngpc_ngp)
@@ -2345,19 +2261,17 @@ STD_ROM_FN(ngpc_neoproyk)
 
 struct BurnDriver BurnDrvngpc_neoproyk = {
 	"ngp_neoproyk", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Sport Series - Neo Poke Pro Yakyuu (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Neo Poke Pro Yakyuu - Pocket Sport Series (Japan)\0", NULL, "SNK - ADK Corp.", "NeoGeo Pocket Color",
+	L"Neo Poke Pro Yakyuu - Pocket Sport Series (Japan)\0\u30cd\u30aa\u30dd\u30b1 \u30d7\u30ed\u91ce\u7403\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoproykRomInfo, ngpc_neoproykRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pocket Sport Series - Big Tournament Golf ~ Neo Turf Masters (World)
-
+// Neo Turf Masters - Pocket Sport Series (World)
 static struct BurnRomInfo ngpc_neoturfmRomDesc[] = {
-	{ "neo turf masters (world) (en,ja).bin", 0x200000, 0x317a66d2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Turf Masters - Pocket Sport Series (World)(1999)(SNK).ngp", 0x200000, 0x317a66d2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neoturfm, ngpc_neoturfm, ngpc_ngp)
@@ -2365,7 +2279,7 @@ STD_ROM_FN(ngpc_neoturfm)
 
 struct BurnDriver BurnDrvngpc_neoturfm = {
 	"ngp_neoturfm", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Sport Series - Big Tournament Golf ~ Neo Turf Masters (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Neo Turf Masters - Pocket Sport Series (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_neoturfmRomInfo, ngpc_neoturfmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2373,11 +2287,9 @@ struct BurnDriver BurnDrvngpc_neoturfm = {
 	160, 152, 4, 3
 };
 
-
 // Nige-ron-pa (Japan)
-
 static struct BurnRomInfo ngpc_nigeronpRomDesc[] = {
-	{ "nigeronpa (japan).bin", 0x100000, 0x3cc3e269, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Nige-ron-pa (Japan)(2000)(Dennoi Eizo).ngp", 0x100000, 0x3cc3e269, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_nigeronp, ngpc_nigeronp, ngpc_ngp)
@@ -2385,19 +2297,18 @@ STD_ROM_FN(ngpc_nigeronp)
 
 struct BurnDriver BurnDrvngpc_nigeronp = {
 	"ngp_nigeronp", NULL, "ngp_ngp", NULL, "2000",
-	"Nige-ron-pa (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Nige-ron-pa (Japan)\0", NULL, "Dennou Eizo", "NeoGeo Pocket Color",
+	L"Nige-ron-pa (Japan)\0\u306b\u3052\u30ed\u30f3\u30d1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_nigeronpRomInfo, ngpc_nigeronpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Nige-ron-pa (Hack, English)
+// Nige-ron-pa (Hack, English v0.9)
 // https://www.romhacking.net/translations/3804/
 static struct BurnRomInfo ngpc_nigeronpeRomDesc[] = {
-	{ "nigeronpa (english translation).bin", 0x200000, 0x6672d6e6, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Nige-ron-pa T-Eng v0.9 (2018)(Loic).ngp", 0x200000, 0x6672d6e6, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_nigeronpe, ngpc_nigeronpe, ngpc_ngp)
@@ -2405,7 +2316,7 @@ STD_ROM_FN(ngpc_nigeronpe)
 
 struct BurnDriver BurnDrvngpc_nigeronpe = {
 	"ngp_nigeronpe", "ngp_nigeronp", "ngp_ngp", NULL, "2018",
-	"Nige-ron-pa (Hack, English)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Nige-ron-pa (Hack, English v0.9)\0", NULL, "Loic", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNK_NGPC, GBF_RPG, 0,
 	NgpGetZipName, ngpc_nigeronpeRomInfo, ngpc_nigeronpeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2413,11 +2324,9 @@ struct BurnDriver BurnDrvngpc_nigeronpe = {
 	160, 152, 4, 3
 };
 
-
 // Oekaki Puzzle (Japan)
-
 static struct BurnRomInfo ngpc_oekakipRomDesc[] = {
-	{ "oekaki puzzle (japan).bin", 0x80000, 0x59ab1e0f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Oekaki Puzzle (Japan)(2000)(Success).ngp", 0x80000, 0x59ab1e0f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_oekakip, ngpc_oekakip, ngpc_ngp)
@@ -2426,18 +2335,16 @@ STD_ROM_FN(ngpc_oekakip)
 struct BurnDriver BurnDrvngpc_oekakip = {
 	"ngp_oekakip", "ngp_picturep", "ngp_ngp", NULL, "2000",
 	"Oekaki Puzzle (Japan)\0", NULL, "Success", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Oekaki Puzzle (Japan)\0\u304a\u3048\u304b\u304d \u30d1\u30ba\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_oekakipRomInfo, ngpc_oekakipRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Japan)
-
+// Ogre Battle Gaiden: Prince of Zenobia (Japan)
 static struct BurnRomInfo ngpc_ogrebatlRomDesc[] = {
-	{ "densetsu no ogre battle gaiden - zenobia no ouji (japan).bin", 0x200000, 0xeeeefd6a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Ogre Battle Gaiden - Prince of Zenobia (Japan)(2000)(SNK).ngp", 0x200000, 0xeeeefd6a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ogrebatl, ngpc_ogrebatl, ngpc_ngp)
@@ -2445,19 +2352,17 @@ STD_ROM_FN(ngpc_ogrebatl)
 
 struct BurnDriver BurnDrvngpc_ogrebatl = {
 	"ngp_ogrebatl", NULL, "ngp_ngp", NULL, "2000",
-	"Densetsu no Ogre Battle Gaiden - Zenobia no Ouji (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_STRATEGY, 0,
+	"Ogre Battle Gaiden: Prince of Zenobia (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	L"Ogre Battle Gaiden: Prince of Zenobia (Japan)\0\u4f1d\u8aac\u306e\u30aa\u30a6\u30ac\u30d0\u30c8\u30eb\u5916\u4f1d \u30bc\u30ce\u30d3\u30a2\u306e\u7687\u5b50\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_RPG | GBF_STRATEGY, 0,
 	NgpGetZipName, ngpc_ogrebatlRomInfo, ngpc_ogrebatlRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pachinko Hisshou Guide - Pocket Parlor (Japan)
-
+// Pachinko Hisshou Guide: Pocket Parlor (Japan)
 static struct BurnRomInfo ngpc_pachinkoRomDesc[] = {
-	{ "pachinko hisshou guide - pocket parlor (japan).bin", 0x100000, 0xc3d6b28b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachinko Hisshou Guide - Pocket Parlor (Japan)(1999)(Japan Vistec).ngp", 0x100000, 0xc3d6b28b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pachinko, ngpc_pachinko, ngpc_ngp)
@@ -2465,7 +2370,7 @@ STD_ROM_FN(ngpc_pachinko)
 
 struct BurnDriver BurnDrvngpc_pachinko = {
 	"ngp_pachinko", NULL, "ngp_ngp", NULL, "1999",
-	"Pachinko Hisshou Guide - Pocket Parlor (Japan)\0", NULL, "Japan Vistec", "NeoGeo Pocket Color",
+	"Pachinko Hisshou Guide: Pocket Parlor (Japan)\0", NULL, "Japan Vistec", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pachinkoRomInfo, ngpc_pachinkoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2473,11 +2378,9 @@ struct BurnDriver BurnDrvngpc_pachinko = {
 	160, 152, 4, 3
 };
 
-
 // Pac-Man (World)
-
 static struct BurnRomInfo ngpc_pacmanRomDesc[] = {
-	{ "pac-man (world) (en,ja).bin", 0x80000, 0x21e8cc15, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pac-Man (World)(1999)(SNK - Namco).ngp", 0x80000, 0x21e8cc15, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pacman, ngpc_pacman, ngpc_ngp)
@@ -2485,7 +2388,7 @@ STD_ROM_FN(ngpc_pacman)
 
 struct BurnDriver BurnDrvngpc_pacman = {
 	"ngp_pacman", NULL, "ngp_ngp", NULL, "1999",
-	"Pac-Man (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Pac-Man (World)\0", NULL, "SNK - Namco", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_MAZE, 0,
 	NgpGetZipName, ngpc_pacmanRomInfo, ngpc_pacmanRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2493,11 +2396,9 @@ struct BurnDriver BurnDrvngpc_pacman = {
 	160, 152, 4, 3
 };
 
-
-// Puzzle Bobble Mini (Euro, Japan, v10)
-
+// Puzzle Bobble Mini (Euro, Japan, v1.10)
 static struct BurnRomInfo ngpc_pbobbleRomDesc[] = {
-	{ "puzzle bobble mini (japan, europe) (v1.10).bin", 0x100000, 0xe69eae3e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puzzle Bobble Mini v1.10 (Euro, Japan)(1999)(SNK).ngp", 0x100000, 0xe69eae3e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pbobble, ngpc_pbobble, ngpc_ngp)
@@ -2505,7 +2406,7 @@ STD_ROM_FN(ngpc_pbobble)
 
 struct BurnDriver BurnDrvngpc_pbobble = {
 	"ngp_pbobble", NULL, "ngp_ngp", NULL, "1999",
-	"Puzzle Bobble Mini (Euro, Japan, v10)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puzzle Bobble Mini (Euro, Japan, v1.10)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobbleRomInfo, ngpc_pbobbleRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2513,11 +2414,9 @@ struct BurnDriver BurnDrvngpc_pbobble = {
 	160, 152, 4, 3
 };
 
-
-// Puzzle Bobble Mini (Euro, Japan, v09)
-
+// Puzzle Bobble Mini (Euro, Japan, v1.09)
 static struct BurnRomInfo ngpc_pbobbleaRomDesc[] = {
-	{ "puzzle bobble mini (japan, europe) (v1.09).bin", 0x100000, 0xc94b173a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puzzle Bobble Mini v1.09 (Euro, Japan)(1999)(SNK).ngp", 0x100000, 0xc94b173a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pbobblea, ngpc_pbobblea, ngpc_ngp)
@@ -2525,7 +2424,7 @@ STD_ROM_FN(ngpc_pbobblea)
 
 struct BurnDriver BurnDrvngpc_pbobblea = {
 	"ngp_pbobblea", "ngp_pbobble", "ngp_ngp", NULL, "1999",
-	"Puzzle Bobble Mini (Euro, Japan, v09)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puzzle Bobble Mini (Euro, Japan, v1.09)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobbleaRomInfo, ngpc_pbobbleaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2533,11 +2432,9 @@ struct BurnDriver BurnDrvngpc_pbobblea = {
 	160, 152, 4, 3
 };
 
-
-// Puzzle Bobble Mini (Euro, Japan, v09 Prototype)
-
+// Puzzle Bobble Mini (Euro, Japan, Prototype)
 static struct BurnRomInfo ngpc_pbobblebRomDesc[] = {
-	{ "puzzle bobble mini (japan, europe) (en,ja) (beta).bin", 0x100000, 0xe3d9f38e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puzzle Bobble Mini (Euro, Japan, Proto)(1999)(SNK).ngp", 0x100000, 0xe3d9f38e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pbobbleb, ngpc_pbobbleb, ngpc_ngp)
@@ -2545,7 +2442,7 @@ STD_ROM_FN(ngpc_pbobbleb)
 
 struct BurnDriver BurnDrvngpc_pbobbleb = {
 	"ngp_pbobbleb", "ngp_pbobble", "ngp_ngp", NULL, "1999",
-	"Puzzle Bobble Mini (Euro, Japan, v09 Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puzzle Bobble Mini (Euro, Japan, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_pbobblebRomInfo, ngpc_pbobblebRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2553,11 +2450,9 @@ struct BurnDriver BurnDrvngpc_pbobbleb = {
 	160, 152, 4, 3
 };
 
-
 // Picture Puzzle (Euro, USA)
-
 static struct BurnRomInfo ngpc_picturepRomDesc[] = {
-	{ "picture puzzle (usa, europe).bin", 0x100000, 0x67e6dc56, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Picture Puzzle (Euro, USA)(2000)(Success).ngp", 0x100000, 0x67e6dc56, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_picturep, ngpc_picturep, ngpc_ngp)
@@ -2565,7 +2460,7 @@ STD_ROM_FN(ngpc_picturep)
 
 struct BurnDriver BurnDrvngpc_picturep = {
 	"ngp_picturep", NULL, "ngp_ngp", NULL, "2000",
-	"Picture Puzzle (Euro, USA)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Picture Puzzle (Euro, USA)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_picturepRomInfo, ngpc_picturepRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2573,11 +2468,9 @@ struct BurnDriver BurnDrvngpc_picturep = {
 	160, 152, 4, 3
 };
 
-
 // Pocket Love if (Japan)
-
 static struct BurnRomInfo ngpc_poktloveRomDesc[] = {
-	{ "pocket love if (japan).bin", 0x200000, 0xc2ee1ee5, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pocket Love if (Japan)(1999)(KID).ngp", 0x200000, 0xc2ee1ee5, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_poktlove, ngpc_poktlove, ngpc_ngp)
@@ -2586,18 +2479,16 @@ STD_ROM_FN(ngpc_poktlove)
 struct BurnDriver BurnDrvngpc_poktlove = {
 	"ngp_poktlove", NULL, "ngp_ngp", NULL, "1999",
 	"Pocket Love if (Japan)\0", NULL, "KID", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Pocket Love if (Japan)\0\u30dd\u30b1\u30c3\u30c8\u30e9\u30d6if\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_ADV, 0,
 	NgpGetZipName, ngpc_poktloveRomInfo, ngpc_poktloveRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Pocket Reversi (Euro)
-
 static struct BurnRomInfo ngpc_pockrevRomDesc[] = {
-	{ "pocket reversi (europe).bin", 0x100000, 0x20f09880, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pocket Reversi (Euro)(2000)(Success).ngp", 0x100000, 0x20f09880, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pockrev, ngpc_pockrev, ngpc_ngp)
@@ -2605,7 +2496,7 @@ STD_ROM_FN(ngpc_pockrev)
 
 struct BurnDriver BurnDrvngpc_pockrev = {
 	"ngp_pockrev", NULL, "ngp_ngp", NULL, "2000",
-	"Pocket Reversi (Euro)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Pocket Reversi (Euro)\0", NULL, "Success", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
 	NgpGetZipName, ngpc_pockrevRomInfo, ngpc_pockrevRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2613,11 +2504,9 @@ struct BurnDriver BurnDrvngpc_pockrev = {
 	160, 152, 4, 3
 };
 
-
 // Pocket Reversi (Japan)
-
 static struct BurnRomInfo ngpc_pockrevjRomDesc[] = {
-	{ "pocket reversi (japan).bin", 0x80000, 0xfb0b55b8, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pocket Reversi (Japan)(2000)(Success).ngp", 0x80000, 0xfb0b55b8, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pockrevj, ngpc_pockrevj, ngpc_ngp)
@@ -2626,18 +2515,16 @@ STD_ROM_FN(ngpc_pockrevj)
 struct BurnDriver BurnDrvngpc_pockrevj = {
 	"ngp_pockrevj", "ngp_pockrev", "ngp_ngp", NULL, "2000",
 	"Pocket Reversi (Japan)\0", NULL, "Success", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	L"Pocket Reversi (Japan)\0Pocket \u30ea\u30d0\u30fc\u30b7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
 	NgpGetZipName, ngpc_pockrevjRomInfo, ngpc_pockrevjRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Party Mail (Japan)
-
 static struct BurnRomInfo ngpc_prtymailRomDesc[] = {
-	{ "party mail (japan).bin", 0x100000, 0x4da8a1c0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Party Mail (Japan)(1999)(SNK - ADK).ngp", 0x100000, 0x4da8a1c0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_prtymail, ngpc_prtymail, ngpc_ngp)
@@ -2645,19 +2532,17 @@ STD_ROM_FN(ngpc_prtymail)
 
 struct BurnDriver BurnDrvngpc_prtymail = {
 	"ngp_prtymail", NULL, "ngp_ngp", NULL, "1999",
-	"Party Mail (Japan)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Party Mail (Japan)\0", NULL, "SNK - ADK Corp.", "NeoGeo Pocket Color",
+	L"Party Mail (Japan)\0\u30d1\u30fc\u30c6\u30a3\u30fc\u30e1\u30fc\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_prtymailRomInfo, ngpc_prtymailRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
 // Party Mail (Japan, Prototype)
-
 static struct BurnRomInfo ngpc_prtymailpRomDesc[] = {
-	{ "partymail.bin", 0x200000, 0xf2284a95, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Party Mail (Japan, Proto)(1999)(SNK - ADK).ngp", 0x200000, 0xf2284a95, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_prtymailp, ngpc_prtymailp, ngpc_ngp)
@@ -2665,19 +2550,17 @@ STD_ROM_FN(ngpc_prtymailp)
 
 struct BurnDriver BurnDrvngpc_prtymailp = {
 	"ngp_prtymailp", "ngp_prtymail", "ngp_ngp", NULL, "1999",
-	"Party Mail (Japan, Prototype)\0", NULL, "SNK", "NeoGeo Pocket Color",
-	NULL, NULL, NULL, NULL,
+	"Party Mail (Japan, Proto)\0", NULL, "SNK - ADK Corp.", "NeoGeo Pocket Color",
+	L"Party Mail (Japan, Proto)\0\u30d1\u30fc\u30c6\u30a3\u30fc\u30e1\u30fc\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_prtymailpRomInfo, ngpc_prtymailpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Azteca (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Azteca (Japan)
 static struct BurnRomInfo ngpc_pslotaztRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - azteca (japan).bin", 0x80000, 0xc56ef8c3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Azteca (Japan)(2000)(Aruze).ngp", 0x80000, 0xc56ef8c3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotazt, ngpc_pslotazt, ngpc_ngp)
@@ -2685,7 +2568,7 @@ STD_ROM_FN(ngpc_pslotazt)
 
 struct BurnDriver BurnDrvngpc_pslotazt = {
 	"ngp_pslotazt", NULL, "ngp_ngp", NULL, "2000",
-	"Pachi-Slot Aruze Oukoku Pocket - Azteca (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Azteca (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotaztRomInfo, ngpc_pslotaztRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2693,11 +2576,9 @@ struct BurnDriver BurnDrvngpc_pslotazt = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Dekahel 2 (Japan)
 static struct BurnRomInfo ngpc_pslotdk2RomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - dekahel 2 (japan).bin", 0x100000, 0x346f3c46, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Japan)(2001)(Aruze).ngp", 0x100000, 0x346f3c46, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotdk2, ngpc_pslotdk2, ngpc_ngp)
@@ -2705,7 +2586,7 @@ STD_ROM_FN(ngpc_pslotdk2)
 
 struct BurnDriver BurnDrvngpc_pslotdk2 = {
 	"ngp_pslotdk2", NULL, "ngp_ngp", NULL, "2001",
-	"Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Dekahel 2 (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotdk2RomInfo, ngpc_pslotdk2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2713,11 +2594,9 @@ struct BurnDriver BurnDrvngpc_pslotdk2 = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Delsol 2 (Japan)
 static struct BurnRomInfo ngpc_pslotds2RomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - delsol 2 (japan).bin", 0x100000, 0x1ea69db1, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Japan)(2000)(Aruze).ngp", 0x100000, 0x1ea69db1, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotds2, ngpc_pslotds2, ngpc_ngp)
@@ -2725,7 +2604,7 @@ STD_ROM_FN(ngpc_pslotds2)
 
 struct BurnDriver BurnDrvngpc_pslotds2 = {
 	"ngp_pslotds2", NULL, "ngp_ngp", NULL, "2000",
-	"Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Delsol 2 (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotds2RomInfo, ngpc_pslotds2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2733,11 +2612,9 @@ struct BurnDriver BurnDrvngpc_pslotds2 = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - e-Cup (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: e-Cup (Japan)
 static struct BurnRomInfo ngpc_pslotecpRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - e-cup (japan).bin", 0x100000, 0x0a7c32df, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - e-Cup (Japan)(2001)(Aruze).ngp", 0x100000, 0x0a7c32df, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotecp, ngpc_pslotecp, ngpc_ngp)
@@ -2745,7 +2622,7 @@ STD_ROM_FN(ngpc_pslotecp)
 
 struct BurnDriver BurnDrvngpc_pslotecp = {
 	"ngp_pslotecp", NULL, "ngp_ngp", NULL, "2001",
-	"Pachi-Slot Aruze Oukoku Pocket - e-Cup (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: e-Cup (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotecpRomInfo, ngpc_pslotecpRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2753,11 +2630,9 @@ struct BurnDriver BurnDrvngpc_pslotecp = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Hanabi (Japan, v5)
-
+// Pachi-Slot Aruze Oukoku Pocket: Hanabi (Japan, v1.04)
 static struct BurnRomInfo ngpc_pslothanRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - hanabi (japan) (v1.04).bin", 0x80000, 0xa0c26f9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Hanabi v1.04 (Japan)(1999)(Aruze).ngp", 0x80000, 0xa0c26f9b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslothan, ngpc_pslothan, ngpc_ngp)
@@ -2765,7 +2640,7 @@ STD_ROM_FN(ngpc_pslothan)
 
 struct BurnDriver BurnDrvngpc_pslothan = {
 	"ngp_pslothan", NULL, "ngp_ngp", NULL, "1999",
-	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Japan, v5)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Hanabi (Japan, v1.04)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslothanRomInfo, ngpc_pslothanRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2773,11 +2648,9 @@ struct BurnDriver BurnDrvngpc_pslothan = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Hanabi (Japan, v3)
-
+// Pachi-Slot Aruze Oukoku Pocket: Hanabi (Japan, v1.02)
 static struct BurnRomInfo ngpc_pslothanaRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - hanabi (japan) (v1.02).bin", 0x80000, 0xcfd1c8f2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Hanabi v1.02 (Japan)(1999)(Aruze).ngp", 0x80000, 0xcfd1c8f2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslothana, ngpc_pslothana, ngpc_ngp)
@@ -2785,7 +2658,7 @@ STD_ROM_FN(ngpc_pslothana)
 
 struct BurnDriver BurnDrvngpc_pslothana = {
 	"ngp_pslothana", "ngp_pslothan", "ngp_ngp", NULL, "1999",
-	"Pachi-Slot Aruze Oukoku Pocket - Hanabi (Japan, v3)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Hanabi (Japan, v1.02)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslothanaRomInfo, ngpc_pslothanaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2793,11 +2666,9 @@ struct BurnDriver BurnDrvngpc_pslothana = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Oohanabi (Japan)
 static struct BurnRomInfo ngpc_pslotoohRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - oohanabi (japan).bin", 0x100000, 0x8a88c50f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Japan)(2000)(Aruze).ngp", 0x100000, 0x8a88c50f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotooh, ngpc_pslotooh, ngpc_ngp)
@@ -2805,7 +2676,7 @@ STD_ROM_FN(ngpc_pslotooh)
 
 struct BurnDriver BurnDrvngpc_pslotooh = {
 	"ngp_pslotooh", NULL, "ngp_ngp", NULL, "2000",
-	"Pachi-Slot Aruze Oukoku Pocket - Oohanabi (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Oohanabi (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotoohRomInfo, ngpc_pslotoohRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2813,11 +2684,9 @@ struct BurnDriver BurnDrvngpc_pslotooh = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Porcano 2 (Japan)
 static struct BurnRomInfo ngpc_pslotpc2RomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - porcano 2 (japan).bin", 0x100000, 0x96ddfbe3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Japan)(2000)(Aruze).ngp", 0x100000, 0x96ddfbe3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotpc2, ngpc_pslotpc2, ngpc_ngp)
@@ -2825,7 +2694,7 @@ STD_ROM_FN(ngpc_pslotpc2)
 
 struct BurnDriver BurnDrvngpc_pslotpc2 = {
 	"ngp_pslotpc2", NULL, "ngp_ngp", NULL, "2000",
-	"Pachi-Slot Aruze Oukoku Pocket - Porcano 2 (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Porcano 2 (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotpc2RomInfo, ngpc_pslotpc2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2833,11 +2702,9 @@ struct BurnDriver BurnDrvngpc_pslotpc2 = {
 	160, 152, 4, 3
 };
 
-
-// Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Japan)
-
+// Pachi-Slot Aruze Oukoku Pocket: Ward of Lights (Japan)
 static struct BurnRomInfo ngpc_pslotwrdRomDesc[] = {
-	{ "pachi-slot aruze oukoku pocket - ward of lights (japan).bin", 0x80000, 0xd46cbc54, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Japan)(2000)(Aruze).ngp", 0x80000, 0xd46cbc54, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_pslotwrd, ngpc_pslotwrd, ngpc_ngp)
@@ -2845,7 +2712,7 @@ STD_ROM_FN(ngpc_pslotwrd)
 
 struct BurnDriver BurnDrvngpc_pslotwrd = {
 	"ngp_pslotwrd", NULL, "ngp_ngp", NULL, "2000",
-	"Pachi-Slot Aruze Oukoku Pocket - Ward of Lights (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Pachi-Slot Aruze Oukoku Pocket: Ward of Lights (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_CASINO, 0,
 	NgpGetZipName, ngpc_pslotwrdRomInfo, ngpc_pslotwrdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2853,11 +2720,27 @@ struct BurnDriver BurnDrvngpc_pslotwrd = {
 	160, 152, 4, 3
 };
 
+// Pocket Tennis - Pocket Sports Series (Euro, Japan)
+static struct BurnRomInfo ngp_ptennisRomDesc[] = {
+	{ "Pocket Tennis - Pocket Sports Series (Euro, Japan)(1998)(SNK - Yumekobo).ngp", 0x80000, 0x4b1eed05, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
 
-// Pocket Sport Series - Pocket Tennis Color (World)
+STDROMPICKEXT(ngp_ptennis, ngp_ptennis, ngpc_ngp)
+STD_ROM_FN(ngp_ptennis)
 
+struct BurnDriver BurnDrvngp_ptennis = {
+	"ngp_ptennis", NULL, "ngp_ngp", NULL, "1998",
+	"Pocket Tennis - Pocket Sports Series (Euro, Japan)\0", NULL, "SNK - Yumekobo", "NeoGeo Pocket",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_SPORTSMISC, 0,
+	NgpGetZipName, ngp_ptennisRomInfo, ngp_ptennisRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
+	160, 152, 4, 3
+};
+
+// Pocket Tennis Color - Pocket Sports Series (World)
 static struct BurnRomInfo ngpc_ptenniscRomDesc[] = {
-	{ "pocket tennis color - pocket sports series (world) (en,ja).bin", 0x80000, 0xd8590b96, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Pocket Tennis Color - Pocket Sports Series (World)(1999)(SNK - Yumekobo).ngp", 0x80000, 0xd8590b96, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ptennisc, ngpc_ptennisc, ngpc_ngp)
@@ -2865,7 +2748,7 @@ STD_ROM_FN(ngpc_ptennisc)
 
 struct BurnDriver BurnDrvngpc_ptennisc = {
 	"ngp_ptennisc", NULL, "ngp_ngp", NULL, "1999",
-	"Pocket Sport Series - Pocket Tennis Color (World)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Pocket Tennis Color - Pocket Sports Series (World)\0", NULL, "SNK - Yumekobo", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_SPORTSMISC, 0,
 	NgpGetZipName, ngpc_ptenniscRomInfo, ngpc_ptenniscRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -2873,11 +2756,9 @@ struct BurnDriver BurnDrvngpc_ptennisc = {
 	160, 152, 4, 3
 };
 
-
-// Puyo Pop (World, v6) ~ Puyo Pyuo Tsuu (Japan, v6)
-
+// Puyo Pop ~ Puyo Pyuo Tsuu (World, v1.06)
 static struct BurnRomInfo ngpc_puyopopRomDesc[] = {
-	{ "puyo pop (world) (en,ja) (v1.06).bin", 0x100000, 0x5c649d1e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puyo Pop - Puyo Pyuo Tsuu v1.06 (World)(1999)(Sega).ngp", 0x100000, 0x5c649d1e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_puyopop, ngpc_puyopop, ngpc_ngp)
@@ -2885,19 +2766,17 @@ STD_ROM_FN(ngpc_puyopop)
 
 struct BurnDriver BurnDrvngpc_puyopop = {
 	"ngp_puyopop", NULL, "ngp_ngp", NULL, "1999",
-	"Puyo Pop (World, v6) ~ Puyo Pyuo Tsuu (Japan, v6)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puyo Pop ~ Puyo Pyuo Tsuu (World, v1.06)\0", NULL, "Sega", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puyopopRomInfo, ngpc_puyopopRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-
-// Puyo Pop (World, v5) ~ Puyo Pyuo Tsuu (Japan, v5)
-
+// Puyo Pop ~ Puyo Pyuo Tsuu (World, v1.05)
 static struct BurnRomInfo ngpc_puyopopaRomDesc[] = {
-	{ "puyo pop (world) (en,ja) (v1.05).bin", 0x100000, 0x3090b2fd, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Puyo Pop - Puyo Pyuo Tsuu v1.05 (World)(1999)(Sega).ngp", 0x100000, 0x3090b2fd, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_puyopopa, ngpc_puyopopa, ngpc_ngp)
@@ -2905,9 +2784,9 @@ STD_ROM_FN(ngpc_puyopopa)
 
 struct BurnDriver BurnDrvngpc_puyopopa = {
 	"ngp_puyopopa", "ngp_puyopop", "ngp_ngp", NULL, "1999",
-	"Puyo Pop (World, v5) ~ Puyo Pyuo Tsuu (Japan, v5)\0", NULL, "SNK", "NeoGeo Pocket Color",
+	"Puyo Pop ~ Puyo Pyuo Tsuu (World, v1.05)\0", NULL, "Sega", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_puyopopaRomInfo, ngpc_puyopopaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
@@ -3005,7 +2884,7 @@ struct BurnDriver BurnDrvngpc_rockmanbd = {
 
 // Samurai Spirit! - Pocket Fighting Series (Japan)
 static struct BurnRomInfo ngp_samshoRomDesc[] = {
-	{ "Samurai Spirit! - Pocket Fighting Series (Japan)(1998)(SNK).ngp", 0x200000, 0x32e4696a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Samurai Spirit! - Pocket Fighting Series (Euro, Japan)(1998)(SNK).ngp", 0x200000, 0x32e4696a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngp_samsho, ngp_samsho, ngpc_ngp)
@@ -3013,8 +2892,8 @@ STD_ROM_FN(ngp_samsho)
 
 struct BurnDriver BurnDrvngp_samsho = {
 	"ngp_samsho", NULL, "ngp_ngp", NULL, "1998",
-	"Samurai Spirit! - Pocket Fighting Series (Japan)\0", NULL, "SNK", "NeoGeo Pocket",
-	L"Samurai Spirit! - Pocket Fighting Series (Japan)\0\u30b5\u30e0\u30e9\u30a4\u30b9\u30d4\u30ea\u30c3\u30c4!\0", NULL, NULL, NULL,
+	"Samurai Spirit! - Pocket Fighting Series (Euro, Japan)\0", NULL, "SNK", "NeoGeo Pocket",
+	L"Samurai Spirit! - Pocket Fighting Series (Euro, Japan)\0\u30b5\u30e0\u30e9\u30a4\u30b9\u30d4\u30ea\u30c3\u30c4!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_NGP, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngp_samshoRomInfo, ngp_samshoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x8,
@@ -3464,7 +3343,7 @@ STD_ROM_FN(ngpc_ppaa01)
 
 struct BurnDriverX BurnDrvngpc_ppaa01 = {
 	"ngp_ppaa01", NULL, "ngp_ngp", NULL, "199?",
-	"Prize Game - PP-AA01 Pusher Program (Japan)\0", NULL, "Aruze", "NeoGeo Pocket Color",
+	"Prize Game - PP-AA01 Pusher Program (Japan)\0", NULL, "Aruze Corp.", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_MISC, 0,
 	NgpGetZipName, ngpc_ppaa01RomInfo, ngpc_ppaa01RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

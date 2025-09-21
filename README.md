@@ -1,4 +1,4 @@
-# FinalBurn Neo
+# FinalBurn Neot
 Official Forum: https://neo-source.com
 
 Discord: https://discord.gg/8EGVd9v

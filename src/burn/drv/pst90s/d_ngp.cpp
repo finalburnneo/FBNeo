@@ -3474,7 +3474,7 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 
 // Don't Die, Mr. Robot! (HB)
 static struct BurnRomInfo ngpc_ddmrRomDesc[] = {
-	{ "Don't Die, Mr. Robot! (2025)(Infinite State Games).ngp", 259526, 0x40d906ea, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Don't Die, Mr. Robot! (2025)(Infinite State Games).ngp", 289634, 0x86838a9d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ddmr, ngpc_ddmr, ngpc_ngp)

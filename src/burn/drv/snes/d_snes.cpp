@@ -36418,7 +36418,7 @@ struct BurnDriver BurnDrvsnes_Tecmosnbana = {
 	BDF_GAME_WORKING  | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_TecmosnbanaRomInfo, snes_TecmosnbanaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Tecmo Super NBA Basketball (USA, SNS-XM)
@@ -36437,7 +36437,7 @@ struct BurnDriver BurnDrvsnes_Tecmosnbaxm = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_TecmosnbaxmRomInfo, snes_TecmosnbaxmRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
+	512, 478, 4, 3
 };
 
 // Tecmo Super Bowl (USA)
@@ -42783,6 +42783,25 @@ struct BurnDriver BurnDrvsnes_Lostvikingre = {
 	512, 448, 4, 3
 };
 
+// Mai Nurse (HB, v1.02)
+// https://lunoka.itch.io/mai-nurse
+static struct BurnRomInfo snes_MainurseRomDesc[] = {
+	{ "Mai Nurse v1.02 (2024)(lunoka).sfc", 262144, 0x7cd0eecd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mainurse)
+STD_ROM_FN(snes_Mainurse)
+
+struct BurnDriver BurnDrvsnes_Mainurse = {
+	"snes_mainurse", NULL, NULL, NULL, "2024",
+	"Mai Nurse (HB, v1.02)\0", NULL, "lunoka", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_MainurseRomInfo, snes_MainurseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Magical Quest Starring Mickey Mouse, The - FastROM (Hack, v0.2)
 // https://romhackplaza.org/romhacks/magical-quest-starring-mickey-mouse-fastrom-snes/
 static struct BurnRomInfo snes_MagicalquestfrRomDesc[] = {
@@ -42798,6 +42817,25 @@ struct BurnDriver BurnDrvsnes_Magicalquestfr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MagicalquestfrRomInfo, snes_MagicalquestfrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Marvel Super Heroes - War of the Gems Redux (Hack)
+// https://romhackplaza.org/romhacks/marvel-super-heroes-in-war-of-the-gems-redux-snes/
+static struct BurnRomInfo snes_MshwargemsrRomDesc[] = {
+	{ "Marvel Super Heroes - War of the Gems Redux (2025)(BillyTime! Games).sfc", 2097152, 0x2dc14312, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mshwargemsr)
+STD_ROM_FN(snes_Mshwargemsr)
+
+struct BurnDriver BurnDrvsnes_Mshwargemsr = {
+	"snes_mshwargemsr", "snes_mshwargems", NULL, NULL, "2025",
+	"Marvel Super Heroes - War of the Gems Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MshwargemsrRomInfo, snes_MshwargemsrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -43102,25 +43140,6 @@ struct BurnDriver BurnDrvsnes_Mrtuffe = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MrtuffeRomInfo, snes_MrtuffeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
-// Marvel Super Heroes - War of the Gems Redux (Hack)
-// https://romhackplaza.org/romhacks/marvel-super-heroes-in-war-of-the-gems-redux-snes/
-static struct BurnRomInfo snes_MshwargemsrRomDesc[] = {
-	{ "Marvel Super Heroes - War of the Gems Redux (2025)(BillyTime! Games).sfc", 2097152, 0x2dc14312, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Mshwargemsr)
-STD_ROM_FN(snes_Mshwargemsr)
-
-struct BurnDriver BurnDrvsnes_Mshwargemsr = {
-	"snes_mshwargemsr", "snes_mshwargems", NULL, NULL, "2025",
-	"Marvel Super Heroes - War of the Gems Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	SNESGetZipName, snes_MshwargemsrRomInfo, snes_MshwargemsrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

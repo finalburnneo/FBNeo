@@ -22528,9 +22528,9 @@ struct BurnDriver BurnDrvsms_gotris = {
 	256, 192, 4, 3
 };
 
-// Grail of the Gods (HB, v0.48)
+// Grail of the Gods (HB, v0.49b)
 static struct BurnRomInfo sms_grailgodsRomDesc[] = {
-	{ "Grail of the Gods v0.48 (2023-25)(Guydebaville).sms",	65536, 0xdf1f88de, BRF_PRG | BRF_ESS },
+	{ "Grail of the Gods v0.49b (2023-25)(Guydebaville).sms",	65536, 0xe6afde12, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grailgods)
@@ -22538,7 +22538,7 @@ STD_ROM_FN(sms_grailgods)
 
 struct BurnDriver BurnDrvsms_grailgods = {
 	"sms_grailgods", NULL, NULL, NULL, "2023-25",
-	"Grail of the Gods (HB, v0.48)\0", NULL, "Guydebaville", "Sega Master System",
+	"Grail of the Gods (HB, v0.49b)\0", NULL, "Guydebaville", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_grailgodsRomInfo, sms_grailgodsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22997,7 +22997,6 @@ struct BurnDriver BurnDrvsms_msolitaire = {
 };
 
 // Mai Nurse (HB)
-// https://lunoka.itch.io/mai-nurse
 static struct BurnRomInfo sms_mainurseRomDesc[] = {
 	{ "Mai Nurse (2024)(lunoka).sms",	131072, 0xcbcb62f8, BRF_PRG | BRF_ESS },
 };
@@ -23414,7 +23413,6 @@ struct BurnDriver BurnDrvsms_psychicwen = {
 };
 
 // Pyramid Escape (HB)
-// ahttps://iratahack.itch.io/pyramid-escape-sega-master-system
 static struct BurnRomInfo sms_pyramidescapeRomDesc[] = {
 	{ "Pyramid Escape (2025)(IrataHack).sms",	114688, 0x705c8342, BRF_PRG | BRF_ESS },
 };
@@ -24905,7 +24903,6 @@ struct BurnDriver BurnDrvgg_impetusm = {
 };
 
 // Mai Nurse (HB)
-// https://lunoka.itch.io/mai-nurse
 static struct BurnRomInfo gg_mainurseggRomDesc[] = {
 	{ "Mai Nurse (2024)(lunoka).gg",	131072, 0x36a2da11, BRF_PRG | BRF_ESS },
 };

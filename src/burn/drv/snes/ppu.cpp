@@ -1123,7 +1123,7 @@ void ppu_write(uint8_t adr, uint8_t val) {
       bgLayer[2].mosaicEnabled = val & 0x4;
       bgLayer[3].mosaicEnabled = val & 0x8;
       mosaicSize = (val >> 4) + 1;
-      mosaicStartLine = snes->vPos;
+	  mosaicStartLine = snes->vPos + 1;
       break;
     }
     case 0x07:

@@ -2820,17 +2820,14 @@ static void compute_tilemap_flips(INT32 bgnum, INT32 &flipx, INT32 &flipy)
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
 
-	INT32 global_flip = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 9)&1;
+	// determine flip bits
+	INT32 global_flip    = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 9) & 1;
+	INT32 layer_flip     = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> bgnum) & 1;
+	INT32 prohibit_flipy = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 8) & 1;
 
-	flipx = global_flip;
-	flipy = global_flip;
+	flipx = (layer_flip) ? !global_flip : global_flip;
 
-	INT32 layer_flip = (BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> bgnum) & 1;
-
-	flipy ^= layer_flip;
-	flipx ^= layer_flip;
-
-	if ((BURN_ENDIAN_SWAP_INT16(ram[0x1ff00 / 2]) >> 8) & 1) flipy = 0;
+	flipy = (layer_flip && !prohibit_flipy) ? !global_flip : global_flip;
 }
 
 static void get_tilemaps(INT32 bgnum, INT32 *tilemaps)
@@ -3041,20 +3038,23 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 			}
 
 			INT32 srcy;
+			INT32 ylookup;
 			if (!flipy)
 			{
 				srcy = yscroll + y;
+				ylookup = y;
 			}
 			else
 			{
 				srcy = yscroll + cliprect.nMaxy /*visarea.nMaxy*/ - y;
+				ylookup = cliprect.nMaxy - y;
 			}
 
 			/* apply row scroll/select */
 			if (rowscroll)
-				srcx += BURN_ENDIAN_SWAP_INT16(table[0x000 + 0x100 * (bgnum - 2) + y]) & 0x3ff;
+				srcx += BURN_ENDIAN_SWAP_INT16(table[0x000 + 0x100 * (bgnum - 2) + ylookup]) & 0x3ff;
 			if (rowselect)
-				srcy = (yscroll + BURN_ENDIAN_SWAP_INT16(table[0x200 + 0x100 * (bgnum - 2) + y])) & 0x1ff;
+				srcy = (yscroll + BURN_ENDIAN_SWAP_INT16(table[0x200 + 0x100 * (bgnum - 2) + ylookup])) & 0x1ff;
 
 			/* look up the pages and get their source pixmaps */
 			UINT16 const *tm0 = BurnBitmapGetBitmap(tmap_cache[tilemaps[((srcy >> 7) & 2) + 0]].tmap + 32 );

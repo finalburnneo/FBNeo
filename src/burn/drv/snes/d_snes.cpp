@@ -27653,10 +27653,48 @@ STD_ROM_FN(snes_Rrracing)
 
 struct BurnDriver BurnDrvsnes_Rrracing = {
 	"snes_rrracing", NULL, NULL, NULL, "1993",
-	"Rock N' Roll Racing (USA)\0", NULL, "Inteplay", "SNES / Super Famicom",
+	"Rock N' Roll Racing (USA)\0", NULL, "Interplay", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_RrracingRomInfo, snes_RrracingRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rock N' Roll Racing (Euro)
+
+static struct BurnRomInfo snes_RrracingeRomDesc[] = {
+	{ "Rock N' Roll Racing (E)(1993)(Interplay).sfc", 1048576, 0xb02daf39, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rrracinge)
+STD_ROM_FN(snes_Rrracinge)
+
+struct BurnDriver BurnDrvsnes_Rrracinge = {
+	"snes_rrracinge", "snes_rrracing", NULL, NULL, "1993",
+	"Rock N' Roll Racing (Euro)\0", NULL, "Interplay", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RrracingeRomInfo, snes_RrracingeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rock N' Roll Racing (Japan)
+
+static struct BurnRomInfo snes_RrracingjRomDesc[] = {
+	{ "Rock N' Roll Racing (J)(1993)(Interplay).sfc", 1048576, 0xa206384c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rrracingj)
+STD_ROM_FN(snes_Rrracingj)
+
+struct BurnDriver BurnDrvsnes_Rrracingj = {
+	"snes_rrracingj", "snes_rrracing", NULL, NULL, "1993",
+	"Rock N' Roll Racing (Japan)\0", NULL, "Interplay", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RrracingjRomInfo, snes_RrracingjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -43524,6 +43562,24 @@ struct BurnDriver BurnDrvsnes_Ranmahb2tefr = {
 	512, 448, 4, 3
 };
 
+// Return of Double Dragon (Evercade)
+static struct BurnRomInfo snes_ReturndoubledragonevRomDesc[] = {
+	{ "Return of Double Dragon (Evercade)(2020)(Blaze Entertainment).sfc", 1572864, 0xbb2684c3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonev)
+STD_ROM_FN(snes_Returndoubledragonev)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonev = {
+	"snes_returndoubledragonev", "snes_superdoubledragon", NULL, NULL, "2020",
+	"Return of Double Dragon (Evercade)\0", NULL, "Blaze Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_ReturndoubledragonevRomInfo, snes_ReturndoubledragonevRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Return of Double Dragon - FastROM (Hack, v2.0)
 // https://www.patreon.com/posts/return-of-double-79355175
 static struct BurnRomInfo snes_ReturndoubledragonfrRomDesc[] = {
@@ -43653,6 +43709,44 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonte7 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_Returndoubledragonh7RomInfo, snes_Returndoubledragonh7RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rock N' Roll Racing (USA, Demo)
+
+static struct BurnRomInfo snes_RrracingdemoRomDesc[] = {
+	{ "Rock N' Roll Racing (U, Demo)(1993-2014)(Interplay).sfc", 1048576, 0x2313d87e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rrracingdemo)
+STD_ROM_FN(snes_Rrracingdemo)
+
+struct BurnDriver BurnDrvsnes_Rrracingdemo = {
+	"snes_rrracingdemo", "snes_rrracing", NULL, NULL, "1993-2014",
+	"Rock N' Roll Racing (USA, Demo)\0", NULL, "Interplay", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RrracingdemoRomInfo, snes_RrracingdemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rock N' Roll Racing - Alternate Tracks (Hack)
+// https://romhackplaza.org/romhacks/rock-n-roll-racing-alternate-tracks-snes/
+static struct BurnRomInfo snes_RrracingatRomDesc[] = {
+	{ "Rock N' Roll Racing - Alternate Tracks (2025)(DarthMarino).sfc", 1048576, 0x5fe4fe95, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rrracingat)
+STD_ROM_FN(snes_Rrracingat)
+
+struct BurnDriver BurnDrvsnes_Rrracingat = {
+	"snes_rrracingat", "snes_rrracing", NULL, NULL, "2025",
+	"Rock N' Roll Racing - Alternate Tracks (Hack)\0", NULL, "DarthMarino", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RrracingatRomInfo, snes_RrracingatRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

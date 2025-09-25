@@ -3190,8 +3190,8 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 			/* flipped case */
 			else
 			{
-				INT32 effdstx = (width - 1) - x * 8;
-				INT32 effdsty = (height - 1) - y * 8;
+				INT32 effdstx = (cliprect.nMaxx) - x * 8;
+				INT32 effdsty = (cliprect.nMaxy) - y * 8;
 				UINT16 *dst = BurnBitmapGetPosition(destbmp+5, (x > 1) ? ((effdstx) + (wide_offs * fake_wide_screen)) : effdstx, effdsty);
 
 				/* loop over rows */

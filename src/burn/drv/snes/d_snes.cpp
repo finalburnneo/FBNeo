@@ -41642,6 +41642,25 @@ struct BurnDriver BurnDrvsnes_Axelayfr = {
 	512, 448, 4, 3
 };
 
+// Bad Apple (HB, Tech-Demo)
+// https://www.smwcentral.net/?p=viewthread&t=85373&page=3&pid=1561279#p1561279
+static struct BurnRomInfo snes_BadappleRomDesc[] = {
+	{ "Bad Apple Tech-Demo (2021)(Ladida).sfc", 8388608, 0xb2e98625, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Badapple)
+STD_ROM_FN(snes_Badapple)
+
+struct BurnDriver BurnDrvsnes_Badapple = {
+	"snes_badapple", NULL, NULL, NULL, "2021",
+	"Bad Apple (HB, Tech-Demo)\0", NULL, "Ladida", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_BadappleRomInfo, snes_BadappleRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Battletoads in Battlemaniacs - Easier (Hack)
 // https://romhackplaza.org/romhacks/battletoads-in-battlemaniacs-easier-snes/
 static struct BurnRomInfo snes_BattletoadseasyRomDesc[] = {
@@ -43716,7 +43735,7 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonte7 = {
 // Rock N' Roll Racing (USA, Demo)
 
 static struct BurnRomInfo snes_RrracingdemoRomDesc[] = {
-	{ "Rock N' Roll Racing (U, Demo)(1993-2014)(Interplay).sfc", 1048576, 0x2313d87e, BRF_ESS | BRF_PRG },
+	{ "Rock N' Roll Racing (U, Demo)(1993-2014)(Blizzard).sfc", 1048576, 0x2313d87e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Rrracingdemo)
@@ -43724,29 +43743,29 @@ STD_ROM_FN(snes_Rrracingdemo)
 
 struct BurnDriver BurnDrvsnes_Rrracingdemo = {
 	"snes_rrracingdemo", "snes_rrracing", NULL, NULL, "1993-2014",
-	"Rock N' Roll Racing (USA, Demo)\0", NULL, "Interplay", "SNES / Super Famicom",
+	"Rock N' Roll Racing (USA, Demo)\0", NULL, "Blizzard", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_DEMO, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_RrracingdemoRomInfo, snes_RrracingdemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Rock N' Roll Racing - Alternate Tracks (Hack)
-// https://romhackplaza.org/romhacks/rock-n-roll-racing-alternate-tracks-snes/
-static struct BurnRomInfo snes_RrracingatRomDesc[] = {
-	{ "Rock N' Roll Racing - Alternate Tracks (2025)(DarthMarino).sfc", 1048576, 0x5fe4fe95, BRF_ESS | BRF_PRG },
+// Rock N' Roll Racing - Alternate Race Tracks (Hack, v1.2)
+// https://romhackplaza.org/romhacks/rock-n-roll-racing-alternate-race-tracks-snes/
+static struct BurnRomInfo snes_RrracingartRomDesc[] = {
+	{ "Rock N' Roll Racing - Alternate Race Tracks v1.2 (2025)(DarthMarino).sfc", 1048576, 0x21cf199e, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Rrracingat)
-STD_ROM_FN(snes_Rrracingat)
+STD_ROM_PICK(snes_Rrracingart)
+STD_ROM_FN(snes_Rrracingart)
 
-struct BurnDriver BurnDrvsnes_Rrracingat = {
-	"snes_rrracingat", "snes_rrracing", NULL, NULL, "2025",
-	"Rock N' Roll Racing - Alternate Tracks (Hack)\0", NULL, "DarthMarino", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Rrracingart = {
+	"snes_rrracingart", "snes_rrracing", NULL, NULL, "2025",
+	"Rock N' Roll Racing - Alternate Race Tracks (Hack)\0", NULL, "DarthMarino", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
-	SNESGetZipName, snes_RrracingatRomInfo, snes_RrracingatRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_RrracingartRomInfo, snes_RrracingartRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

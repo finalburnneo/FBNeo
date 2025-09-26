@@ -791,6 +791,16 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	// normalize volume with other drivers by increasing it from its default 25% to around 60% in service menu
+	// note : this can't be done at init because the cmos has to be initialized first
+	// note2: we could also normalize by boosting volume with Dcs2kSetVolume,
+	//        but then the volume would be way too loud for anyone who did increase it in service menu
+	if (DrvNVRAM[0x41cc] == 0x3f && DrvNVRAM[0x4360] == 0xfd && DrvNVRAM[0x4364] == 0x05) {
+		DrvNVRAM[0x41cc] = 0xac;
+		DrvNVRAM[0x4360] = 0xfc;
+		DrvNVRAM[0x4364] = 0x98;
+	}
+
 	{
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
 

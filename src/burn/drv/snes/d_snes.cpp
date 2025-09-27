@@ -23043,10 +23043,10 @@ struct BurnDriver BurnDrvsnes_Msglorydcj = {
 	512, 448, 4, 3
 };
 
-// Metal Slader Glory - Director's Cut (Hack, English)
+// Metal Slader Glory - Director's Cut (Hack, English v1.1)
 // https://www.romhacking.net/translations/7390/
 static struct BurnRomInfo snes_MsglorydcteRomDesc[] = {
-	{ "Metal Slader Glory - Director's Cut T-Eng (2025)(FCandChill).sfc", 3145728, 0x2b41a062, BRF_ESS | BRF_PRG },
+	{ "Metal Slader Glory - Director's Cut T-Eng v1.1 (2025)(FCandChill).sfc", 3145728, 0x00419052, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Msglorydcte)
@@ -23054,7 +23054,7 @@ STD_ROM_FN(snes_Msglorydcte)
 
 struct BurnDriver BurnDrvsnes_Msglorydcte = {
 	"snes_msglorydcte", NULL, NULL, NULL, "2025",
-	"Metal Slader Glory - Director's Cut (Hack, English)\0", NULL, "FCandChill", "SNES / Super Famicom",
+	"Metal Slader Glory - Director's Cut (Hack, English v1.1)\0", NULL, "FCandChill", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_MsglorydcteRomInfo, snes_MsglorydcteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -44856,10 +44856,10 @@ struct BurnDriver BurnDrvsnes_Tmntfightce = {
 	512, 448, 4, 3
 };
 
-// TMNT: Tournament Fighters - Grandmasters Edition (Hack, v1.2)
+// TMNT: Tournament Fighters - Grandmasters Edition (Hack, v2.1)
 // https://www.romhacking.net/hacks/8894/
 static struct BurnRomInfo snes_TmntfightgmeRomDesc[] = {
-	{ "TMNT Tournament Fighters - Grandmasters Edition v1.2 (2025)(Allo).sfc", 4194304, 0xce1d413f, BRF_ESS | BRF_PRG },
+	{ "TMNT Tournament Fighters - Grandmasters Edition v2.1 (2025)(Allo).sfc", 4194304, 0x276a5820, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tmntfightgme)
@@ -44867,7 +44867,7 @@ STD_ROM_FN(snes_Tmntfightgme)
 
 struct BurnDriver BurnDrvsnes_Tmntfightgme = {
 	"snes_tmntfightgme", "snes_tmntfight", NULL, NULL, "2025",
-	"TMNT: Tournament Fighters - Grandmasters Edition (Hack, v1.2)\0", NULL, "Allo", "SNES / Super Famicom",
+	"TMNT: Tournament Fighters - Grandmasters Edition (Hack, v2.1)\0", NULL, "Allo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightgmeRomInfo, snes_TmntfightgmeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

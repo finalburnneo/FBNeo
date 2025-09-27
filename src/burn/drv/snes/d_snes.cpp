@@ -25257,10 +25257,10 @@ STD_ROM_PICK(snes_Pierrelechef)
 STD_ROM_FN(snes_Pierrelechef)
 
 struct BurnDriver BurnDrvsnes_Pierrelechef = {
-	"snes_pierrelechef", NULL, NULL, NULL, "1993",
+	"snes_pierrelechef", "snes_outlunch", NULL, NULL, "1993",
 	"Pierre le Chef is... Out to Lunch (Euro)\0", NULL, "Mindscape", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_PierrelechefRomInfo, snes_PierrelechefRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -34863,10 +34863,10 @@ struct BurnDriver BurnDrvsnes_Supersoccere = {
 	512, 448, 4, 3
 };
 
-// Super Star Wars - Episode IV (USA)
+// Super Star Wars - Episode IV (USA, Rev. 1)
 
 static struct BurnRomInfo snes_SuperstarwarsRomDesc[] = {
-	{ "Super Star Wars (U)(1992)(JVC - LucasArts).sfc", 1048576, 0xacbcae7c, BRF_ESS | BRF_PRG },
+	{ "Super Star Wars (U, Rev 1)(1992)(JVC - LucasArts).sfc", 1048576, 0xbe47f6c6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superstarwars)
@@ -34874,7 +34874,7 @@ STD_ROM_FN(snes_Superstarwars)
 
 struct BurnDriver BurnDrvsnes_Superstarwars = {
 	"snes_superstarwars", NULL, NULL, NULL, "1992",
-	"Super Star Wars - Episode IV (USA)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	"Super Star Wars - Episode IV (USA, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SuperstarwarsRomInfo, snes_SuperstarwarsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34920,10 +34920,10 @@ struct BurnDriver BurnDrvsnes_Superstarwarsj = {
 	512, 448, 4, 3
 };
 
-// Super Star Wars - Episode V - The Empire Strikes Back (USA)
+// Super Star Wars - Episode V - The Empire Strikes Back (USA, Rev. 1)
 
 static struct BurnRomInfo snes_SuperstarwarsesbRomDesc[] = {
-	{ "Super Star Wars - The Empire Strikes Back (U)(1993)(JVC - LucasArts).sfc", 1572864, 0xf45b15be, BRF_ESS | BRF_PRG },
+	{ "Super Star Wars - The Empire Strikes Back (U, Rev 1)(1993)(JVC - LucasArts).sfc", 1572864, 0x1e7ea62c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superstarwarsesb)
@@ -34931,7 +34931,7 @@ STD_ROM_FN(snes_Superstarwarsesb)
 
 struct BurnDriver BurnDrvsnes_Superstarwarsesb = {
 	"snes_superstarwarsesb", NULL, NULL, NULL, "1993",
-	"Super Star Wars - Episode V - The Empire Strikes Back (USA)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	"Super Star Wars - Episode V - The Empire Strikes Back (USA, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SuperstarwarsesbRomInfo, snes_SuperstarwarsesbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -34977,10 +34977,10 @@ struct BurnDriver BurnDrvsnes_Superstarwarsesbj = {
 	512, 448, 4, 3
 };
 
-// Super Star Wars - Episode VI - Return of the Jedi (USA)
+// Super Star Wars - Episode VI - Return of the Jedi (USA, Rev. 1)
 
 static struct BurnRomInfo snes_SuperstarwarsrjRomDesc[] = {
-	{ "Super Star Wars - Return of the Jedi (U)(1994)(JVC - LucasArts).sfc", 2097152, 0xc709ec69, BRF_ESS | BRF_PRG },
+	{ "Super Star Wars - Return of the Jedi (U, Rev 1)(1994)(JVC - LucasArts).sfc", 2097152, 0x4a5f30d8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superstarwarsrj)
@@ -34988,7 +34988,7 @@ STD_ROM_FN(snes_Superstarwarsrj)
 
 struct BurnDriver BurnDrvsnes_Superstarwarsrj = {
 	"snes_superstarwarsrj", NULL, NULL, NULL, "1994",
-	"Super Star Wars - Episode VI - Return of the Jedi (USA)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
+	"Super Star Wars - Episode VI - Return of the Jedi (USA, Rev. 1)\0", NULL, "JVC - LucasArts", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SuperstarwarsrjRomInfo, snes_SuperstarwarsrjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -41718,6 +41718,25 @@ struct BurnDriver BurnDrvsnes_Battletoadseasy = {
 	512, 448, 4, 3
 };
 
+// Black Jewel Reborn (HB, Demo)
+
+static struct BurnRomInfo snes_BjreborndemoRomDesc[] = {
+	{ "Black Jewel Reborn Demo (2024)(PSCD Games).sfc", 1048576, 0x5cf1f05c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bjreborndemo)
+STD_ROM_FN(snes_Bjreborndemo)
+
+struct BurnDriver BurnDrvsnes_Bjreborndemo = {
+	"snes_bjreborndemo", NULL, NULL, NULL, "2024",
+	"Black Jewel Reborn (HB, Demo)\0", NULL, "PSCD Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_BjreborndemoRomInfo, snes_BjreborndemoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Blow'em Out (HB)
 
 static struct BurnRomInfo snes_BlowemoutRomDesc[] = {
@@ -44545,6 +44564,63 @@ struct BurnDriver BurnDrvsnes_Superrtypesa1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_Superrtypesa1RomInfo, snes_Superrtypesa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode IV Redux (Hack)
+// https://romhackplaza.org/romhacks/super-star-wars-redux-snes/
+static struct BurnRomInfo snes_SuperstarwarsrxRomDesc[] = {
+	{ "Super Star Wars Redux (2025)(BillyTime! Games).sfc", 1572864, 0xb331a037, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsrx)
+STD_ROM_FN(snes_Superstarwarsrx)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsrx = {
+	"snes_superstarwarsrx", "snes_superstarwars", NULL, NULL, "2025",
+	"Super Star Wars - Episode IV Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsrxRomInfo, snes_SuperstarwarsrxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode V - The Empire Strikes Back Redux (Hack)
+// https://romhackplaza.org/romhacks/super-star-wars-the-empire-strikes-back-redux-snes/
+static struct BurnRomInfo snes_SuperstarwarsesbrxRomDesc[] = {
+	{ "Super Star Wars - The Empire Strikes Back Redux (2015)(BillyTime! Games).sfc", 1572864, 0x1fdef9ed, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsesbrx)
+STD_ROM_FN(snes_Superstarwarsesbrx)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsesbrx = {
+	"snes_superstarwarsesbrx", "snes_superstarwarsesb", NULL, NULL, "2025",
+	"Super Star Wars - Episode V - The Empire Strikes Back Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsesbrxRomInfo, snes_SuperstarwarsesbrxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Star Wars - Episode VI - Return of the Jedi Redux (Hack)
+// https://romhackplaza.org/romhacks/super-star-wars-return-of-the-jedi-redux-snes/
+static struct BurnRomInfo snes_SuperstarwarsrjrxRomDesc[] = {
+	{ "Super Star Wars - Return of the Jedi Redux (2025)(BillyTime! Games).sfc", 2097152, 0x04698461, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superstarwarsrjrx)
+STD_ROM_FN(snes_Superstarwarsrjrx)
+
+struct BurnDriver BurnDrvsnes_Superstarwarsrjrx = {
+	"snes_superstarwarsrjrx", "snes_superstarwarsrj", NULL, NULL, "2025",
+	"Super Star Wars - Episode VI - Return of the Jedi Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperstarwarsrjrxRomInfo, snes_SuperstarwarsrjrxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

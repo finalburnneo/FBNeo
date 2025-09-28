@@ -2073,6 +2073,49 @@ static struct BurnRomInfo BsharkuRomDesc[] = {
 STD_ROM_PICK(Bsharku)
 STD_ROM_FN(Bsharku)
 
+static struct BurnRomInfo BsharkuoRomDesc[] = {
+	{ "c34_13.98",     0x20000, 0xbc55fc14, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c34_11.75",     0x20000, 0xdecb522c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c34_12.97",     0x20000, 0x30394013, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c34_10.74",     0x20000, 0x3a852420, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "c34_16.128",    0x20000, 0x6869fa99, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c34_14.112",    0x20000, 0xc09c0f91, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c34_17.129",    0x20000, 0x4798358f, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c34_15.113",    0x20000, 0x451d9053, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "c34_05.3",      0x80000, 0x596b83da, BRF_GRA | TAITO_CHARS },
+	
+	{ "c34_04.17",     0x80000, 0x2446b0da, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c34_03.16",     0x80000, 0xa18eab78, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c34_02.15",     0x80000, 0x8488ba10, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c34_01.14",     0x80000, 0x3ebe8c63, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "c34_07.42",     0x80000, 0xedb07808, BRF_GRA | TAITO_ROAD },
+	
+	{ "c34_06.12",     0x80000, 0xd200b6eb, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "c34_08.127",    0x80000, 0x89a30450, BRF_SND | TAITO_YM2610A },
+	
+	{ "c34_09.126",    0x80000, 0x39d12b50, BRF_SND | TAITO_YM2610B },
+	
+	{ "c34_18.22",     0x10000, 0x7245a6f6, BRF_OPT },
+	{ "c34_19.72",     0x00100, 0x2ee9c404, BRF_OPT },
+	{ "c34_20.89",     0x00100, 0xfbf81f30, BRF_OPT },
+	{ "c34_21.7",      0x00400, 0x10728853, BRF_OPT },
+	{ "c34_22.8",      0x00400, 0x643e8bfc, BRF_OPT },
+	
+	{ "c34-23.ic27",   0x00104, 0x82942887, BRF_OPT }, // pld
+	{ "c34-24.ic65",   0x00104, 0xbe080005, BRF_OPT },
+	{ "c34-25.ic66",   0x00144, 0xd0ee97ee, BRF_OPT },
+	{ "c34-26.ic67",   0x00144, 0x022ee90f, BRF_OPT },
+	{ "c34-27.ic94",   0x00144, 0xa503352a, BRF_OPT },
+	{ "c34-28.ic95",   0x00144, 0xbf7c2a41, BRF_OPT },
+};
+
+STD_ROM_PICK(Bsharkuo)
+STD_ROM_FN(Bsharkuo)
+
 static struct BurnRomInfo ChasehqRomDesc[] = {
 	{ "b52-130.36",    0x20000, 0x4e7beb46, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b52-136.29",    0x20000, 0x2f414df0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -7003,6 +7046,16 @@ struct BurnDriver BurnDrvBsharku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, BsharkuRomInfo, BsharkuRomName, NULL, NULL, NULL, NULL, BsharkInputInfo, BsharkuDIPInfo,
+	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvBsharkuo = {
+	"bsharkuo", "bshark", NULL, NULL, "1989",
+	"Battle Shark (US, older)\0", NULL, "Taito America Corporation", "Taito Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
+	NULL, BsharkuoRomInfo, BsharkuoRomName, NULL, NULL, NULL, NULL, BsharkInputInfo, BsharkuDIPInfo,
 	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

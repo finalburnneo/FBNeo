@@ -3684,11 +3684,11 @@ struct BurnDriver BurnDrvFlytigera = {
 // Blue Hawk
 
 static struct BurnRomInfo bluehawkRomDesc[] = {
-	{ "rom19",	0x20000, 0x24149246, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+	{ "rom19",		0x20000, 0x24149246, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
 
-	{ "rom1",	0x10000, 0xeef22920, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
+	{ "rom1",		0x10000, 0xeef22920, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
 
-	{ "rom3",	0x10000, 0xc192683f, 3 | BRF_GRA },           //  2 Characters
+	{ "rom3",		0x10000, 0xc192683f, 3 | BRF_GRA },           //  2 Characters
 
 	{ "dy-bh-m3",	0x80000, 0x8809d157, 4 | BRF_GRA },           //  3 Sprites
 
@@ -3696,10 +3696,10 @@ static struct BurnRomInfo bluehawkRomDesc[] = {
 
 	{ "dy-bh-m2",	0x80000, 0xf9daace6, 6 | BRF_GRA },           //  5 Tiles
 
-	{ "rom6",	0x20000, 0xe6bd9daa, 7 | BRF_GRA },           //  6 Tiles
-	{ "rom5",	0x20000, 0x5c654dc6, 7 | BRF_GRA },           //  7
+	{ "rom6",		0x20000, 0xe6bd9daa, 7 | BRF_GRA },           //  6 Tiles
+	{ "rom5",		0x20000, 0x5c654dc6, 7 | BRF_GRA },           //  7
 
-	{ "rom4",	0x20000, 0xf7318919, 8 | BRF_SND },           //  8 Samples
+	{ "rom4",		0x20000, 0xf7318919, 8 | BRF_SND },           //  8 Samples
 };
 
 STD_ROM_PICK(bluehawk)
@@ -3716,12 +3716,12 @@ struct BurnDriver BurnDrvBluehawk = {
 };
 
 
-// Blue Hawk (Japan, NTC license)
+// Blue Hawk (Japan, NTC license, set 1)
 
 static struct BurnRomInfo bluehawknRomDesc[] = {
-	{ "rom19",	0x20000, 0x24149246, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+	{ "rom19",		0x20000, 0x24149246, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
 
-	{ "rom1",	0x10000, 0xeef22920, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
+	{ "rom1",		0x10000, 0xeef22920, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
 
 	{ "rom3ntc",	0x10000, 0x31eb221a, 3 | BRF_GRA },           //  2 Characters
 
@@ -3731,10 +3731,10 @@ static struct BurnRomInfo bluehawknRomDesc[] = {
 
 	{ "dy-bh-m2",	0x80000, 0xf9daace6, 6 | BRF_GRA },           //  5 Tiles
 
-	{ "rom6",	0x20000, 0xe6bd9daa, 7 | BRF_GRA },           //  6 Tiles
-	{ "rom5",	0x20000, 0x5c654dc6, 7 | BRF_GRA },           //  7
+	{ "rom6",		0x20000, 0xe6bd9daa, 7 | BRF_GRA },           //  6 Tiles
+	{ "rom5",		0x20000, 0x5c654dc6, 7 | BRF_GRA },           //  7
 
-	{ "rom4",	0x20000, 0xf7318919, 8 | BRF_SND },           //  8 Samples
+	{ "rom4",		0x20000, 0xf7318919, 8 | BRF_SND },           //  8 Samples
 };
 
 STD_ROM_PICK(bluehawkn)
@@ -3742,10 +3742,45 @@ STD_ROM_FN(bluehawkn)
 
 struct BurnDriver BurnDrvBluehawkn = {
 	"bluehawkn", "bluehawk", NULL, NULL, "1993",
-	"Blue Hawk (Japan, NTC license)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	"Blue Hawk (Japan, NTC license, set 1)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, bluehawknRomInfo, bluehawknRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, BluehawkDIPInfo,
+	BluehawkInit, Z80YM2151Exit, FlytigerFrame, BluehawkDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
+	240, 384, 3, 4
+};
+
+
+// Blue Hawk (Japan, NTC license, set 2)
+
+static struct BurnRomInfo bluehawknaRomDesc[] = {
+	{ "rom2",		0x20000, 0xe5579e7a, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+
+	{ "rom1",		0x10000, 0xeef22920, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
+
+	{ "rom3ntc",	0x10000, 0x31eb221a, 3 | BRF_GRA },           //  2 Characters
+
+	{ "dy-bh-m3",	0x80000, 0x8809d157, 4 | BRF_GRA },           //  3 Sprites
+
+	{ "dy-bh-m1",	0x80000, 0x51816b2c, 5 | BRF_GRA },           //  4 Tiles
+
+	{ "dy-bh-m2",	0x80000, 0xf9daace6, 6 | BRF_GRA },           //  5 Tiles
+
+	{ "rom6",		0x20000, 0xe6bd9daa, 7 | BRF_GRA },           //  6 Tiles
+	{ "rom5",		0x20000, 0x5c654dc6, 7 | BRF_GRA },           //  7
+
+	{ "rom4",		0x20000, 0xf7318919, 8 | BRF_SND },           //  8 Samples
+};
+
+STD_ROM_PICK(bluehawkna)
+STD_ROM_FN(bluehawkna)
+
+struct BurnDriver BurnDrvBluehawkna = {
+	"bluehawkna", "bluehawk", NULL, NULL, "1993",
+	"Blue Hawk (Japan, NTC license, set 2)\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, bluehawknaRomInfo, bluehawknaRomName, NULL, NULL, NULL, NULL, BluehawkInputInfo, BluehawkDIPInfo,
 	BluehawkInit, Z80YM2151Exit, FlytigerFrame, BluehawkDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	240, 384, 3, 4
 };

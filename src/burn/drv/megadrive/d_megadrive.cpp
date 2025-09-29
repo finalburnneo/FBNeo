@@ -40006,10 +40006,10 @@ struct BurnDriver BurnDrvmd_jtoblivion = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Jurl (HB)
+// Jurl (HB, v1.0c)
 // https://tonsomo.itch.io/jurl-megadrive-edition
 static struct BurnRomInfo md_jurlRomDesc[] = {
-	{ "Jurl (2025)(Tonsomo Entertainment).bin", 393216, 0xa7a56b9b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Jurl v1.0c (2025)(Tonsomo Entertainment).bin", 393216, 0xa7a56b9b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jurl)
@@ -40017,7 +40017,7 @@ STD_ROM_FN(md_jurl)
 
 struct BurnDriver BurnDrvmd_jurl = {
 	"md_jurl", NULL, NULL, NULL, "2025",
-	"Jurl (HB)\0", NULL, "Tonsomo Entertainment", "Genesis / Mega Drive",
+	"Jurl (HB, v1.0c)\0", NULL, "Tonsomo Entertainment", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_jurlRomInfo, md_jurlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

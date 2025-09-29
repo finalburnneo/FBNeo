@@ -28654,6 +28654,36 @@ struct BurnDriver BurnDrvFlapchck = {
 };
 
 
+// Jurl (HB, v0.3c)
+// https://tonsomo.itch.io/jurl-neo-geo-edition
+
+static struct BurnRomInfo jurlRomDesc[] = {
+	{ "202-p1.p1",    0x080000, 0x601b540e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "202-s1.s1",    0x020000, 0xd6c058c9, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "202-c1.c1",    0x100000, 0x02811fe9, 3 | BRF_GRA },           //  2 Sprite data
+	{ "202-c2.c2",    0x100000, 0x953bb9a9, 3 | BRF_GRA },           //  3
+
+	{ "202-m1.m1",    0x020000, 0xb758c5d2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "202-v1.v1",    0x400000, 0x16db022e, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(jurl, jurl, neogeo)
+STD_ROM_FN(jurl)
+
+struct BurnDriver BurnDrvjurl = {
+	"jurl", NULL, "neogeo", NULL, "2025",
+	"Jurl (HB, v0.3c)\0", NULL, "Tonsomo Entertainment", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_ACTION, 0,
+	NULL, jurlRomInfo, jurlRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // NeoTRIS (HB, Free beta 2 ver. 202009)
 // https://www.chipsonsteroids.com/
 // 3 & 4 players not working (needs Multitap)

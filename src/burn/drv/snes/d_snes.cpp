@@ -42212,10 +42212,10 @@ struct BurnDriver BurnDrvsnes_Dkong4rr = {
 	512, 448, 4, 3
 };
 
-// Donkey Kong Country 2: The Project 4 Kongs
+// Donkey Kong Country 2: The Project 4 Kongs (Hack)
 
 static struct BurnRomInfo snes_Dkongcntry2p4kRomDesc[] = {
-	{ "Donkey Kong Country 2  - The Project 4 Kongs (2024)(The Kong's Team).sfc", 6291456, 0x19742050, BRF_ESS | BRF_PRG },
+	{ "Donkey Kong Country 2 - The Project 4 Kongs (2024)(The Kong's Team).sfc", 6291456, 0x19742050, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dkongcntry2p4k)
@@ -43926,7 +43926,7 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonh9v8 = {
 // Return of Double Dragon - Kencho hacks (Hack)
 // https://www.romhacking.net/hacks/3288/
 static struct BurnRomInfo snes_ReturndoubledragonkhRomDesc[] = {
-	{ "Return of Double Dragon - Kencho hacks (2017)(Jesús Alonso Abad).sfc", 1048576, 0xa83cc8b3, BRF_ESS | BRF_PRG },
+	{ "Return of Double Dragon - Kencho hacks (2017)(Jesus Alonso Abad).sfc", 1048576, 0xa83cc8b3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Returndoubledragonkh)
@@ -43934,8 +43934,8 @@ STD_ROM_FN(snes_Returndoubledragonkh)
 
 struct BurnDriver BurnDrvsnes_Returndoubledragonkh = {
 	"snes_returndoubledragonkh", "snes_superdoubledragon", NULL, NULL, "2017",
-	"Return of Double Dragon - Kencho hacks (Hack)\0", NULL, "Jesús Alonso Abad", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Return of Double Dragon - Kencho hacks (Hack)\0", NULL, "Jesus Alonso Abad", "SNES / Super Famicom",
+	NULL, NULL, L"Jes\u00fas Alonso Abad", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_ReturndoubledragonkhRomInfo, snes_ReturndoubledragonkhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
@@ -44781,7 +44781,7 @@ struct BurnDriver BurnDrvsnes_Superstarwarsrx = {
 // Super Star Wars - Episode V - The Empire Strikes Back Redux (Hack)
 // https://romhackplaza.org/romhacks/super-star-wars-the-empire-strikes-back-redux-snes/
 static struct BurnRomInfo snes_SuperstarwarsesbrxRomDesc[] = {
-	{ "Super Star Wars - The Empire Strikes Back Redux (2015)(BillyTime! Games).sfc", 1572864, 0x1fdef9ed, BRF_ESS | BRF_PRG },
+	{ "Super Star Wars - The Empire Strikes Back Redux (2025)(BillyTime! Games).sfc", 1572864, 0x1fdef9ed, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superstarwarsesbrx)

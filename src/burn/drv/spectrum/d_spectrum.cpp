@@ -14919,6 +14919,44 @@ struct BurnDriver BurnSpecironman = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Jabato - Parte 1 - Jabato vs Imperio: libertad (Spanish) (48K)
+
+static struct BurnRomInfo SpecJabato1RomDesc[] = {
+	{ "Jabato vs Imperio - libertad 48K (1989)(Aventuras AD).tzx", 56615, 0x32c85abb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJabato1, SpecJabato1, Spectrum)
+STD_ROM_FN(SpecJabato1)
+
+struct BurnDriver BurnSpecJabato1 = {
+	"spec_jabato1", NULL, "spec_spectrum", NULL, "1989",
+	"Jabato vs Imperio: libertad (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecJabato1RomInfo, SpecJabato1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jabato - Parte 2 - Jabato en África (Spanish) (48K)
+
+static struct BurnRomInfo SpecJabato2RomDesc[] = {
+	{ "Jabato en Africa 48K (1989)(Aventuras AD).tzx", 56615, 0x619fcdea, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJabato2, SpecJabato2, Spectrum)
+STD_ROM_FN(SpecJabato2)
+
+struct BurnDriver BurnSpecJabato2 = {
+	"spec_jabato2", "spec_jabato1", "spec_spectrum", NULL, "1989",
+	"Jabato en Africa (Spanish) (48K)\0", "PASSWORD: inexes loxiko", "Aventuras A.D.", "ZX Spectrum",
+	L"Jabato en \u00c1frica (Spanish) (48K)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecJabato2RomInfo, SpecJabato2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Jack the Nipper (48K)
 
 static struct BurnRomInfo SpecjacknipperRomDesc[] = {
@@ -27003,6 +27041,25 @@ struct BurnDriver BurnSpecSuperted = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Super Trolley (48K)
+
+static struct BurnRomInfo SpecStrolleyRomDesc[] = {
+	{ "Super Trolley 48K (1988)(Mastertronic).tap", 37256, 0x821cecb1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStrolley, SpecStrolley, Spectrum)
+STD_ROM_FN(SpecStrolley)
+
+struct BurnDriver BurnSpecStrolley = {
+	"spec_strolley", NULL, "spec_spectrum", NULL, "1988",
+	"Super Trolley (48K)\0", NULL, "Mastertronic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecStrolleyRomInfo, SpecStrolleyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Super Trux (128K)
 
 static struct BurnRomInfo SpecsupertruxRomDesc[] = {
@@ -27037,6 +27094,25 @@ struct BurnDriver BurnSpecSuperwonderboy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
 	SpectrumGetZipName, SpecSuperwonderboyRomInfo, SpecSuperwonderboyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Supervivencia (El Firfurcio) (Spanish) (48K)
+
+static struct BurnRomInfo SpecSupervivenciaRomDesc[] = {
+	{ "Supervivencia (El Firfurcio) 48K (1988)(Aventuras AD).tap", 36944, 0xd0ab3f04, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSupervivencia, SpecSupervivencia, Spectrum)
+STD_ROM_FN(SpecSupervivencia)
+
+struct BurnDriver BurnSpecSupervivencia = {
+	"spec_supervivencia", NULL, "spec_spectrum", NULL, "1988",
+	"Supervivencia (El Firfurcio) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecSupervivenciaRomInfo, SpecSupervivenciaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -40369,10 +40445,10 @@ struct BurnDriver BurnSpecGcastle2se = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// ghoSte's Grunge (128K) (HB)
+// GhoSte's Grunge (128K) (HB)
 
 static struct BurnRomInfo SpecGhosteRomDesc[] = {
-	{ "ghoSte's Grunge 128K (2022)(Buck).tap", 38696, 0x95860a70, BRF_ESS | BRF_PRG },
+	{ "GhoSte's Grunge 128K (2022)(Buck).tap", 38696, 0x95860a70, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecGhoste, SpecGhoste, Spec128)
@@ -40380,7 +40456,7 @@ STD_ROM_FN(SpecGhoste)
 
 struct BurnDriver BurnSpecGhoste = {
 	"spec_ghoste", NULL, "spec_spec128", NULL, "2022",
-	"ghoSte's Grunge (128K) (HB)\0", NULL, "Buck", "ZX Spectrum",
+	"GhoSte's Grunge (128K) (HB)\0", NULL, "Buck", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecGhosteRomInfo, SpecGhosteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
@@ -42231,6 +42307,25 @@ struct BurnDriver BurnSpecincprof = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Indiana Jones and the Fate of Atlantis - Text Adventure (48K) (HB)
+
+static struct BurnRomInfo SpecIndyfateatlantistxtRomDesc[] = {
+	{ "Indiana Jones and the Fate of Atlantis - Text Adventure 48K (2025)(Kamil Blazek).tap", 46567, 0x456d8d5b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecIndyfateatlantistxt, SpecIndyfateatlantistxt, Spectrum)
+STD_ROM_FN(SpecIndyfateatlantistxt)
+
+struct BurnDriver BurnSpecIndyfateatlantistxt = {
+	"spec_indyfateatlantistxt", NULL, "spec_spectrum", NULL, "2025",
+	"Indiana Jones and the Fate of Atlantis - Text Adventure (48K) (HB)\0", NULL, "Kamil Blazek", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecIndyfateatlantistxtRomInfo, SpecIndyfateatlantistxtRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Innsmouth (English) (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecInnsmouthenRomDesc[] = {
@@ -42988,6 +43083,25 @@ struct BurnDriver BurnSpecJetsbot = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecJetsbotRomInfo, SpecJetsbotRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jet Set Luis: rumbo a la Costa Blanca (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecjsluisRomDesc[] = {
+	{ "Jet Set Luis - rumbo a la Costa Blanca 48K (2015)(Softwarecete).tap", 39975, 0x0da926da, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specjsluis, Specjsluis, Spectrum)
+STD_ROM_FN(Specjsluis)
+
+struct BurnDriver BurnSpecjsluis = {
+	"spec_jsluis", NULL, "spec_spectrum", NULL, "2015",
+	"Jet Set Luis: rumbo a la Costa Blanca (Spanish) (48K) (HB)\0", NULL, "Softwarecete", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecjsluisRomInfo, SpecjsluisRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

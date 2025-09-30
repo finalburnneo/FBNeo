@@ -38001,6 +38001,25 @@ struct BurnDriver BurnDrvmd_2048 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// A Satyr In Hell (HB)
+// https://kakoeimon.itch.io/satyr-in-hell
+static struct BurnRomInfo md_satyrhellRomDesc[] = {
+	{ "A Satyr In Hell (2022)(kakoeimon).bin", 655360, 0xf4148d5c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_satyrhell)
+STD_ROM_FN(md_satyrhell)
+
+struct BurnDriver BurnDrvmd_satyrhell = {
+	"md_satyrhell", NULL, NULL, NULL, "2022",
+	"A Satyr In Hell (HB)\0", NULL, "kakoeimon", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_satyrhellRomInfo, md_satyrhellRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Abyssal Infants (HB)
 static struct BurnRomInfo md_abyssalRomDesc[] = {
 	{ "Abyssal Infants (2021)(kakoeimon).bin", 845624, 0xb893bea7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41298,25 +41317,6 @@ struct BurnDriver BurnDrvmd_runes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_runesRomInfo, md_runesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Satyr In Hell (HB)
-// https://kakoeimon.itch.io/satyr-in-hell
-static struct BurnRomInfo md_satyrhellRomDesc[] = {
-	{ "Satyr In Hell (2022)(kakoeimon).bin", 655360, 0xf4148d5c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_satyrhell)
-STD_ROM_FN(md_satyrhell)
-
-struct BurnDriver BurnDrvmd_satyrhell = {
-	"md_satyrhell", NULL, NULL, NULL, "2022",
-	"Satyr In Hell (HB)\0", NULL, "kakoeimon", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_satyrhellRomInfo, md_satyrhellRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

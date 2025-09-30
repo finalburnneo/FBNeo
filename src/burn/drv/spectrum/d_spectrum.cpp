@@ -8594,18 +8594,113 @@ struct BurnDriver BurnSpecDilithium = {
 // Diosa de Cozumel, La (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumelRomDesc[] = {
-	{ "Diosa de Cozumel, La ES 48K (1990)(Aventuras AD).tap", 95528, 0x225d77d8, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La 48K (1987)(Samusoft).tap", 47964, 0xa2ed8d01, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel, SpecCozumel, Spectrum)
 STD_ROM_FN(SpecCozumel)
 
 struct BurnDriver BurnSpecCozumel = {
-	"spec_cozumel", NULL, "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"spec_cozumel", NULL, "spec_spectrum", NULL, "1987",
+	"Diosa de Cozumel, La (Spanish) (48K)\0", NULL, "Samusoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumelRomInfo, SpecCozumelRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Diosa de Cozumel, La - Parte 1 (B&W) (Spanish) (48K)
+
+static struct BurnRomInfo SpecCozumel1bwRomDesc[] = {
+	{ "Diosa de Cozumel, La - Parte 1 (B&W) 48K (1990)(Aventuras AD).tap", 47503, 0x3d8ec21d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCozumel1bw, SpecCozumel1bw, Spectrum)
+STD_ROM_FN(SpecCozumel1bw)
+
+struct BurnDriver BurnSpecCozumel1bw = {
+	"spec_cozumel1bw", NULL, "spec_spectrum", NULL, "1990",
+	"Diosa de Cozumel, La - Parte 1 (B&W) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecCozumel1bwRomInfo, SpecCozumel1bwRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Diosa de Cozumel, La - Parte 1 (Color) (Spanish) (48K)
+
+static struct BurnRomInfo SpecCozumel1colRomDesc[] = {
+	{ "Diosa de Cozumel, La - Parte 1 (Color) 48K (1990)(Aventuras AD).tap", 47764, 0x2afedb89, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCozumel1col, SpecCozumel1col, Spectrum)
+STD_ROM_FN(SpecCozumel1col)
+
+struct BurnDriver BurnSpecCozumel1col = {
+	"spec_cozumel1col", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
+	"Diosa de Cozumel, La - Parte 1 (Color) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecCozumel1colRomInfo, SpecCozumel1colRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Diosa de Cozumel, La - Parte 2 (B&W) (Spanish) (48K)
+
+static struct BurnRomInfo SpecCozumel2bwRomDesc[] = {
+	{ "Diosa de Cozumel, La - Parte 2 (B&W) 48K (1990)(Aventuras AD).tap", 48040, 0x111f81d1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCozumel2bw, SpecCozumel2bw, Spectrum)
+STD_ROM_FN(SpecCozumel2bw)
+
+struct BurnDriver BurnSpecCozumel2bw = {
+	"spec_cozumel2bw", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
+	"Diosa de Cozumel, La - Parte 2 (B&W) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecCozumel2bwRomInfo, SpecCozumel2bwRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Diosa de Cozumel, La - Parte 2 (Color) (Spanish) (48K)
+
+static struct BurnRomInfo SpecCozumel2colRomDesc[] = {
+	{ "Diosa de Cozumel, La - Parte 2 (Color) 48K (1990)(Aventuras AD).tap", 48838, 0xd48d4786, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCozumel2col, SpecCozumel2col, Spectrum)
+STD_ROM_FN(SpecCozumel2col)
+
+struct BurnDriver BurnSpecCozumel2col = {
+	"spec_cozumel2col", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
+	"Diosa de Cozumel, La - Parte 2 (Color) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecCozumel2colRomInfo, SpecCozumel2colRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Diosa de Cozumel, La (Demo) (Spanish) (48K)
+
+static struct BurnRomInfo SpecCozumeldemoRomDesc[] = {
+	{ "Diosa de Cozumel, La (Demo) 48K (1990)(Aventuras AD).tap", 40640, 0x3374a234, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCozumeldemo, SpecCozumeldemo, Spectrum)
+STD_ROM_FN(SpecCozumeldemo)
+
+struct BurnDriver BurnSpecCozumeldemo = {
+	"spec_cozumeldemo", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
+	"Diosa de Cozumel, La (Demo) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_DEMO , 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecCozumeldemoRomInfo, SpecCozumeldemoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -27113,6 +27208,25 @@ struct BurnDriver BurnSpecSupervivencia = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecSupervivenciaRomInfo, SpecSupervivenciaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Supervivencia (El Firfurcio) (Spanish, Alt) (48K)
+
+static struct BurnRomInfo SpecSupervivenciaaRomDesc[] = {
+	{ "Supervivencia (El Firfurcio) (Alt) 48K (1988)(Aventuras AD).tap", 37364, 0xc7f5990f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSupervivenciaa, SpecSupervivenciaa, Spectrum)
+STD_ROM_FN(SpecSupervivenciaa)
+
+struct BurnDriver BurnSpecSupervivenciaa = {
+	"spec_supervivenciaa", "spec_supervivencia", "spec_spectrum", NULL, "1988",
+	"Supervivencia (El Firfurcio) (Spanish, Alt) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecSupervivenciaaRomInfo, SpecSupervivenciaaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

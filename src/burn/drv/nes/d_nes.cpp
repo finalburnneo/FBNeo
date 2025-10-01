@@ -13778,7 +13778,27 @@ struct BurnDriver BurnDrvnes_alfonsarcadv = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// All Hell Unleashed (HB, v6.66)
+// https://8bitslasher.itch.io/ahu
+static struct BurnRomInfo nes_allhellunl666RomDesc[] = {
+	{ "All Hell Unleashed v6.66 (2025)(Fista Productions).nes",          524304, 0x4203e09a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_allhellunl666)
+STD_ROM_FN(nes_allhellunl666)
+
+struct BurnDriver BurnDrvnes_allhellunl666 = {
+	"nes_allhellunl666", NULL, NULL, NULL, "2025",
+	"All Hell Unleashed (HB, v6.66)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	NESGetZipName, nes_allhellunl666RomInfo, nes_allhellunl666RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // All Hell Unleashed (HB)
+// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunlRomDesc[] = {
 	{ "All Hell Unleashed (2025)(Fista Productions).nes",          524304, 0x2f78164f, BRF_ESS | BRF_PRG },
 };
@@ -13787,10 +13807,10 @@ STD_ROM_PICK(nes_allhellunl)
 STD_ROM_FN(nes_allhellunl)
 
 struct BurnDriver BurnDrvnes_allhellunl = {
-	"nes_allhellunl", NULL, NULL, NULL, "2025",
+	"nes_allhellunl", "nes_allhellunl666", NULL, NULL, "2025",
 	"All Hell Unleashed (HB)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	NESGetZipName, nes_allhellunlRomInfo, nes_allhellunlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

@@ -55920,3 +55920,21 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hammerin' Harry 2 (2025)(Retro-Bit)
+static struct BurnRomInfo nes_hammerinharry2RomDesc[] = {
+	{ "Hammerin' Harry 2 (2025)(Retro-Bit).nes",          1048592, 0x6f47afc7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hammerinharry2)
+STD_ROM_FN(nes_hammerinharry2)
+
+struct BurnDriver BurnDrvnes_hammerinharry2 = {
+	"nes_hammerinharry2", NULL, NULL, NULL, "2025",
+	"Hammerin' Harry 2\0", NULL, "Retro-Bit", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hammerinharry2RomInfo, nes_hammerinharry2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

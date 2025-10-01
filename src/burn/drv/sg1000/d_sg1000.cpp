@@ -2874,7 +2874,7 @@ struct BurnDriver BurnDrvsg1k_faguiqib = {
 
 // Pitfall II (Taiwan, Alt)
 static struct BurnRomInfo sg1k_faguiqibaRomDesc[] = {
-	{ "Fa Gui Qibing - Pitfall II (Taiwan, Alt)(198?)(Aaronix).sg",	0x08000, 0x4e93bc8e, BRF_PRG | BRF_ESS },
+	{ "Fa Gui Qibing - Pitfall II (Taiwan, Alt)(198x)(Aaronix).sg",	0x08000, 0x4e93bc8e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_faguiqiba)
@@ -2928,7 +2928,7 @@ struct BurnDriver BurnDrvsg1k_popflamet = {
 
 // Q*bert (Japan, OMV)
 static struct BurnRomInfo sg1k_qbertRomDesc[] = {
-	{ "Q*bert (Japan, OMV)(1983)(Tsukuda Original).sg",	0x02000, 0x77db4704, BRF_PRG | BRF_ESS },
+	{ "Q-bert (Japan, OMV)(1983)(Tsukuda Original).sg",	0x02000, 0x77db4704, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_qbert)

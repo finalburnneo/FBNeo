@@ -5586,7 +5586,7 @@ STD_ROM_PICK(nes_daikunogensanc)
 STD_ROM_FN(nes_daikunogensanc)
 
 struct BurnDriver BurnDrvnes_daikunogensanc = {
-	"nes_daikunogensanc", "nes_daikunogensan", NULL, NULL, "2019",
+	"nes_daikunogensanc", "nes_hammerinharry", NULL, NULL, "2019",
 	"Daiku no Gen-san (Hack, Chinese)\0", NULL, "DMG Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
@@ -5605,7 +5605,7 @@ STD_ROM_PICK(nes_daikunogensan2c)
 STD_ROM_FN(nes_daikunogensan2c)
 
 struct BurnDriver BurnDrvnes_daikunogensan2c = {
-	"nes_daikunogensan2c", "nes_daikunogensan2", NULL, NULL, "2019",
+	"nes_daikunogensan2c", "nes_hammerinharry2", NULL, NULL, "2019",
 	"Daiku no Gen-san 2: Akage no Dan no Gyakushuu (Hack, Chinese)\0", NULL, "Advance Team & DMG Team", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
@@ -18173,6 +18173,24 @@ struct BurnDriver BurnDrvnes_hackmatch = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_hackmatchRomInfo, nes_hackmatchRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hammerin' Harry 2 (USA)
+static struct BurnRomInfo nes_hammerinharry2RomDesc[] = {
+	{ "Hammerin' Harry 2 (USA)(2025)(Retro-Bit).nes",          1048592, 0x6f47afc7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hammerinharry2)
+STD_ROM_FN(nes_hammerinharry2)
+
+struct BurnDriver BurnDrvnes_hammerinharry2 = {
+	"nes_hammerinharry2", NULL, NULL, NULL, "2025",
+	"Hammerin' Harry 2 (USA)\0", NULL, "Retro-Bit", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hammerinharry2RomInfo, nes_hammerinharry2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -31093,16 +31111,16 @@ STD_ROM_PICK(nes_daikunogensan)
 STD_ROM_FN(nes_daikunogensan)
 
 struct BurnDriver BurnDrvnes_daikunogensan = {
-	"nes_daikunogensan", NULL, NULL, NULL, "1991",
+	"nes_daikunogensan", "nes_hammerinharry", NULL, NULL, "1991",
 	"Daiku no Gen-san (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	L"Daiku no Gen-san (Japan)\0\u5927\u5de5\u306e\u6e90\u3055\u3093\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_daikunogensanRomInfo, nes_daikunogensanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)
+// Daiku no Gen-san 2: Akage no Dan no Gyakushuu (Japan)
 static struct BurnRomInfo nes_daikunogensan2RomDesc[] = {
 	{ "Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)(1993)(Irem).nes",          524304, 0x3774121e, BRF_ESS | BRF_PRG },
 };
@@ -31111,10 +31129,10 @@ STD_ROM_PICK(nes_daikunogensan2)
 STD_ROM_FN(nes_daikunogensan2)
 
 struct BurnDriver BurnDrvnes_daikunogensan2 = {
-	"nes_daikunogensan2", NULL, NULL, NULL, "1993",
-	"Daiku no Gen-san 2 - Akage no Dan no Gyakushuu (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	"nes_daikunogensan2", "nes_hammerinharry2", NULL, NULL, "1993",
+	"Daiku no Gen-san 2: Akage no Dan no Gyakushuu (Japan)\0", NULL, "Irem Corp.", "NES / Famicom",
+	L"Daiku no Gen-san 2: Akage no Dan no Gyakushuu (Japan)\0\u5927\u5de5\u306e\u6e90\u3055\u3093 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_daikunogensan2RomInfo, nes_daikunogensan2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -37050,10 +37068,10 @@ STD_ROM_PICK(nes_hammerinharry)
 STD_ROM_FN(nes_hammerinharry)
 
 struct BurnDriver BurnDrvnes_hammerinharry = {
-	"nes_hammerinharry", "nes_daikunogensan", NULL, NULL, "1992",
+	"nes_hammerinharry", NULL, NULL, NULL, "1992",
 	"Hammerin' Harry (Euro)\0", NULL, "Irem", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_hammerinharryRomInfo, nes_hammerinharryRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
@@ -55916,24 +55934,6 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_zunousengalRomInfo, nes_zunousengalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Hammerin' Harry 2 (2025)(Retro-Bit)
-static struct BurnRomInfo nes_hammerinharry2RomDesc[] = {
-	{ "Hammerin' Harry 2 (2025)(Retro-Bit).nes",          1048592, 0x6f47afc7, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_hammerinharry2)
-STD_ROM_FN(nes_hammerinharry2)
-
-struct BurnDriver BurnDrvnes_hammerinharry2 = {
-	"nes_hammerinharry2", NULL, NULL, NULL, "2025",
-	"Hammerin' Harry 2\0", NULL, "Retro-Bit", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_hammerinharry2RomInfo, nes_hammerinharry2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

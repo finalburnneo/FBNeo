@@ -506,7 +506,7 @@ static void GameInpInitMacros()
 	}
 
 	// Remove two keys for volume adjustment of cps2
-	INT32 nRealButtons = ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) ? nFireButtons - 2 : nFireButtons;
+	INT32 nRealButtons = nFireButtons;
 	INT32 nIndex = 0;
 
 	for (UINT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {

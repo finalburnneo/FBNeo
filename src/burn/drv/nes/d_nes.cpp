@@ -13779,7 +13779,6 @@ struct BurnDriver BurnDrvnes_alfonsarcadv = {
 };
 
 // All Hell Unleashed (HB, v6.66)
-// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunl666RomDesc[] = {
 	{ "All Hell Unleashed v6.66 (2025)(Fista Productions).nes",          524304, 0x4203e09a, BRF_ESS | BRF_PRG },
 };
@@ -13798,7 +13797,6 @@ struct BurnDriver BurnDrvnes_allhellunl666 = {
 };
 
 // All Hell Unleashed (HB)
-// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunlRomDesc[] = {
 	{ "All Hell Unleashed (2025)(Fista Productions).nes",          524304, 0x2f78164f, BRF_ESS | BRF_PRG },
 };
@@ -15299,6 +15297,24 @@ struct BurnDriver BurnDrvnes_cadaverion = {
 	L"Cad\u00e0veri\u00f6n (HB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PUZZLE, 0,
 	NESGetZipName, nes_cadaverionRomInfo, nes_cadaverionRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Candyman: Be My Victim Demake (HB, v0.12)
+static struct BurnRomInfo nes_candymanbmvdmkRomDesc[] = {
+	{ "Candyman - Be My Victim Demake v0.12 (2006-23)(Fista Productions).nes",          524304, 0x5be0eec9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_candymanbmvdmk)
+STD_ROM_FN(nes_candymanbmvdmk)
+
+struct BurnDriver BurnDrvnes_candymanbmvdmk = {
+	"nes_candymanbmvdmk", NULL, NULL, NULL, "2006-23",
+	"Candyman: Be My Victim Demake (HB, v0.12)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_candymanbmvdmkRomInfo, nes_candymanbmvdmkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -17671,6 +17687,24 @@ struct BurnDriver BurnDrvnes_frenzy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Friday The 13th: Return To Camp Blood Demake (HB, v1.52)
+static struct BurnRomInfo nes_fridaythe13rtcbdRomDesc[] = {
+	{ "Friday The 13th - Return To Camp Blood Demake v1.52 (1998-2022)(Fista Productions).nes",          524304, 0x6627511b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_fridaythe13rtcbd)
+STD_ROM_FN(nes_fridaythe13rtcbd)
+
+struct BurnDriver BurnDrvnes_fridaythe13rtcbd = {
+	"nes_fridaythe13rtcbd", NULL, NULL, NULL, "1998-2022",
+	"Friday The 13th: Return To Camp Blood Demake (HB, v1.52)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_fridaythe13rtcbdRomInfo, nes_fridaythe13rtcbdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Frog (HB)
 static struct BurnRomInfo nes_frogRomDesc[] = {
 	{ "Frog (2020)(Boston Breams).nes",          393232, 0x06d96b55, BRF_ESS | BRF_PRG },
@@ -18173,6 +18207,24 @@ struct BurnDriver BurnDrvnes_hackmatch = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_hackmatchRomInfo, nes_hackmatchRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Halloween: October 31st Demake (HB, v0.02)
+static struct BurnRomInfo nes_halloweeno31dmkRomDesc[] = {
+	{ "Halloween - October 31st Demake v0.02 (1999-2022)(Fista Productions).nes",          524304, 0xfa59a6b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_halloweeno31dmk)
+STD_ROM_FN(nes_halloweeno31dmk)
+
+struct BurnDriver BurnDrvnes_halloweeno31dmk = {
+	"nes_halloweeno31dmk", NULL, NULL, NULL, "1999-2022",
+	"Halloween: October 31st Demake (HB, v0.02)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_halloweeno31dmkRomInfo, nes_halloweeno31dmkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21098,9 +21150,9 @@ struct BurnDriver BurnDrvnes_nessyrobotv2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)
+// Nightmare on Elm Street, A: Son of a Hundred Maniacs Demake (HB, v0.02)
 static struct BurnRomInfo nes_nightelmstreetdmkRomDesc[] = {
-	{ "Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (1999-2022)(Fista Productions).nes",          524304, 0x7c6b0b6c, BRF_ESS | BRF_PRG },
+	{ "Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake v0.02 (1999-2022)(Fista Productions).nes",          524304, 0x7c6b0b6c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nightelmstreetdmk)
@@ -21108,7 +21160,7 @@ STD_ROM_FN(nes_nightelmstreetdmk)
 
 struct BurnDriver BurnDrvnes_nightelmstreetdmk = {
 	"nes_nightelmstreetdmk", NULL, NULL, NULL, "1999-2022",
-	"Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)\0", NULL, "Fista Productions", "NES / Famicom",
+	"Nightmare on Elm Street, A: Son of a Hundred Maniacs Demake (HB, v0.02)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_nightelmstreetdmkRomInfo, nes_nightelmstreetdmkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

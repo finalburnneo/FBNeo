@@ -649,7 +649,7 @@ STD_ROM_FN(sg1k_castlet)
 struct BurnDriver BurnDrvsg1k_castlet = {
 	"sg1k_castlet", "sg1k_castle", NULL, NULL, "198?",
 	"Mowang migong ~ Castle, The (Taiwan)\0", NULL, "DahJee", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
+	L"Mowang migong ~ Castle, The (Taiwan)\0\u9b54\u738b\u8ff7\u5bae\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_castletRomInfo, sg1k_castletRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvsg1k_chackn = {
 // Chack'n Pop (Hack, English)
 // https://www.romhacking.net/translations/1550/
 static struct BurnRomInfo sg1k_chackneRomDesc[] = {
-	{ "Chack'n Pop T-Eng (2010)(goldenband).bin",	32768, 0xc106c923, BRF_PRG | BRF_ESS },
+	{ "Chack'n Pop T-Eng (2010)(goldenband).sg",	32768, 0xc106c923, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_chackne)
@@ -2478,7 +2478,7 @@ struct BurnDriver BurnDrvsg1k_ninjapri = {
 // Ninja Princess (Hack, English)
 // https://www.romhacking.net/translations/1586/
 static struct BurnRomInfo sg1k_ninjaprieRomDesc[] = {
-	{ "Ninja Princess T-Eng (2010)(goldenband).bin",	32768, 0xbdb6cf0e, BRF_PRG | BRF_ESS },
+	{ "Ninja Princess T-Eng (2010)(goldenband).sg",	32768, 0xbdb6cf0e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ninjaprie)
@@ -4140,7 +4140,7 @@ struct BurnDriver BurnDrvsg1k_camknights = {
 
 // Che-Man (HB)
 static struct BurnRomInfo sg1k_chemanRomDesc[] = {
-	{ "Che-Man (2018)(The Mojon Twins).bin",	49152, 0x477a5d75, BRF_PRG | BRF_ESS },
+	{ "Che-Man (2018)(The Mojon Twins).sg",	49152, 0x477a5d75, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_cheman)
@@ -4158,7 +4158,7 @@ struct BurnDriver BurnDrvsg1k_cheman = {
 
 // Cheril Perils Classic (HB)
 static struct BurnRomInfo sg1k_cherilpRomDesc[] = {
-	{ "Cheril Perils Classic (2018)(The Mojon Twins).bin",	49152, 0xf87d6ef5, BRF_PRG | BRF_ESS },
+	{ "Cheril Perils Classic (2018)(The Mojon Twins).sg",	49152, 0xf87d6ef5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_cherilp)
@@ -4390,9 +4390,9 @@ struct BurnDriver BurnDrvsg1k_mieyen = {
 	272, 228, 4, 3
 };
 
-// Operation Hibernation Plus (HB)
+// Operation Hibernation Plus (HB, Rev.2)
 static struct BurnRomInfo sg1k_ophibernplusRomDesc[] = {
-	{ "Operation Hibernation Plus (2025)(Jess Creations - ArugulaZ).sg",	40960, 0xe530d8f5, BRF_PRG | BRF_ESS },
+	{ "Operation Hibernation Plus Rev.2 (2025)(Jess Creations - ArugulaZ).sg",	49152, 0xd4b2189a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ophibernplus)
@@ -4400,7 +4400,7 @@ STD_ROM_FN(sg1k_ophibernplus)
 
 struct BurnDriver BurnDrvsg1k_ophibernplus = {
 	"sg1k_ophibernplus", NULL, NULL, NULL, "2025",
-	"Operation Hibernation Plus (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"Operation Hibernation Plus (HB, Rev.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_ophibernplusRomInfo, sg1k_ophibernplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4481,9 +4481,9 @@ struct BurnDriver BurnDrvsg1k_snake = {
 	272, 228, 4, 3
 };
 
-// Sgt. Helmet - Training Day (HB)
+// Sgt. Helmet: Training Day (HB)
 static struct BurnRomInfo sg1k_sgthelmetRomDesc[] = {
-	{ "Sgt. Helmet - Training Day (2018)(The Mojon Twins).bin",	49152, 0x27c065a5, BRF_PRG | BRF_ESS },
+	{ "Sgt. Helmet - Training Day (2018)(The Mojon Twins).sg",	49152, 0x27c065a5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_sgthelmet)
@@ -4491,7 +4491,7 @@ STD_ROM_FN(sg1k_sgthelmet)
 
 struct BurnDriver BurnDrvsg1k_sgthelmet = {
 	"sg1k_sgthelmet", NULL, NULL, NULL, "2018",
-	"Sgt. Helmet - Training Day (HB)\0", NULL, "The Mojon Twins", "Sega SG-1000",
+	"Sgt. Helmet: Training Day (HB)\0", NULL, "The Mojon Twins", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_MAZE | GBF_RUNGUN, 0,
 	SG1KGetZipName, sg1k_sgthelmetRomInfo, sg1k_sgthelmetRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,

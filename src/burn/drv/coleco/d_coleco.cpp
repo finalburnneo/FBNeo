@@ -641,7 +641,7 @@ static UINT8 __fastcall main_read(UINT16 address)
 			//bprintf(0, _T("eeprom_ok\n"));
 			return EEP_STATUS_OK;
 		}
-		if (/*OCMBanks[2] == 0xf*/ O_EEPROM_ReadTimer > 0) {// && (address & 0x1fff) < 0x3ff) {
+		if (OCMBanks[2] == 0xf && O_EEPROM_ReadTimer > 0 && (address & 0xfff) < 0x100) {
 //			bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvEEPROM[address & 0x3ff];
 		} else {

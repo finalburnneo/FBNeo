@@ -7204,6 +7204,25 @@ struct BurnDriver BurnSpecCore = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Corona, La (Spanish) (48K)
+
+static struct BurnRomInfo SpecLacoronaRomDesc[] = {
+	{ "Corona, La ES 48K (1988)(System 4).tzx", 54331, 0x8587df33, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLacorona, SpecLacorona, Spectrum)
+STD_ROM_FN(SpecLacorona)
+
+struct BurnDriver BurnSpecLacorona = {
+	"spec_lacorona", NULL, "spec_spectrum", NULL, "1988",
+	"Corona, La (Spanish) (48K)\0", NULL, "System 4", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecLacoronaRomInfo, SpecLacoronaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Corsarios - Part 1 (128K+2A)
 
 static struct BurnRomInfo Speccorsarios1RomDesc[] = {
@@ -8594,7 +8613,7 @@ struct BurnDriver BurnSpecDilithium = {
 // Diosa de Cozumel, La (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumelRomDesc[] = {
-	{ "Diosa de Cozumel, La 48K (1987)(Samusoft).tap", 47964, 0xa2ed8d01, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La ES 48K (1987)(Samusoft).tap", 47964, 0xa2ed8d01, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel, SpecCozumel, Spectrum)
@@ -8613,7 +8632,7 @@ struct BurnDriver BurnSpecCozumel = {
 // Diosa de Cozumel, La - Parte 1 (B&W) (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumel1bwRomDesc[] = {
-	{ "Diosa de Cozumel, La - Parte 1 (B&W) 48K (1990)(Aventuras AD).tap", 47503, 0x3d8ec21d, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La - Parte 1 (B&W) ES 48K (1990)(Aventuras AD).tap", 47503, 0x3d8ec21d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel1bw, SpecCozumel1bw, Spectrum)
@@ -8632,7 +8651,7 @@ struct BurnDriver BurnSpecCozumel1bw = {
 // Diosa de Cozumel, La - Parte 1 (Color) (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumel1colRomDesc[] = {
-	{ "Diosa de Cozumel, La - Parte 1 (Color) 48K (1990)(Aventuras AD).tap", 47764, 0x2afedb89, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La - Parte 1 (Color) ES 48K (1990)(Aventuras AD).tap", 47764, 0x2afedb89, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel1col, SpecCozumel1col, Spectrum)
@@ -8651,7 +8670,7 @@ struct BurnDriver BurnSpecCozumel1col = {
 // Diosa de Cozumel, La - Parte 2 (B&W) (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumel2bwRomDesc[] = {
-	{ "Diosa de Cozumel, La - Parte 2 (B&W) 48K (1990)(Aventuras AD).tap", 48040, 0x111f81d1, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La - Parte 2 (B&W) ES 48K (1990)(Aventuras AD).tap", 48040, 0x111f81d1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel2bw, SpecCozumel2bw, Spectrum)
@@ -8670,7 +8689,7 @@ struct BurnDriver BurnSpecCozumel2bw = {
 // Diosa de Cozumel, La - Parte 2 (Color) (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumel2colRomDesc[] = {
-	{ "Diosa de Cozumel, La - Parte 2 (Color) 48K (1990)(Aventuras AD).tap", 48838, 0xd48d4786, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La - Parte 2 (Color) ES 48K (1990)(Aventuras AD).tap", 48838, 0xd48d4786, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumel2col, SpecCozumel2col, Spectrum)
@@ -8689,7 +8708,7 @@ struct BurnDriver BurnSpecCozumel2col = {
 // Diosa de Cozumel, La (Demo) (Spanish) (48K)
 
 static struct BurnRomInfo SpecCozumeldemoRomDesc[] = {
-	{ "Diosa de Cozumel, La (Demo) 48K (1990)(Aventuras AD).tap", 40640, 0x3374a234, BRF_ESS | BRF_PRG },
+	{ "Diosa de Cozumel, La (Demo) ES 48K (1990)(Aventuras AD).tap", 40640, 0x3374a234, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCozumeldemo, SpecCozumeldemo, Spectrum)
@@ -15017,7 +15036,7 @@ struct BurnDriver BurnSpecironman = {
 // Jabato - Parte 1 - Jabato vs Imperio: libertad (Spanish) (48K)
 
 static struct BurnRomInfo SpecJabato1RomDesc[] = {
-	{ "Jabato vs Imperio - libertad 48K (1989)(Aventuras AD).tzx", 56615, 0x32c85abb, BRF_ESS | BRF_PRG },
+	{ "Jabato vs Imperio - libertad ES 48K (1989)(Aventuras AD).tzx", 56615, 0x32c85abb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJabato1, SpecJabato1, Spectrum)
@@ -15036,7 +15055,7 @@ struct BurnDriver BurnSpecJabato1 = {
 // Jabato - Parte 2 - Jabato en África (Spanish) (48K)
 
 static struct BurnRomInfo SpecJabato2RomDesc[] = {
-	{ "Jabato en Africa 48K (1989)(Aventuras AD).tzx", 56615, 0x619fcdea, BRF_ESS | BRF_PRG },
+	{ "Jabato en Africa ES 48K (1989)(Aventuras AD).tzx", 56615, 0x619fcdea, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJabato2, SpecJabato2, Spectrum)
@@ -15827,6 +15846,25 @@ struct BurnDriver BurnSpecKayleth = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecKaylethRomInfo, SpecKaylethRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ke rulen los petas (Spanish) (48K)
+
+static struct BurnRomInfo SpecKerulenlospetasRomDesc[] = {
+	{ "Ke rulen los petas ES 48K (1989)(Iber Software).tzx", 48162, 0x6511df48, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKerulenlospetas, SpecKerulenlospetas, Spectrum)
+STD_ROM_FN(SpecKerulenlospetas)
+
+struct BurnDriver BurnSpecKerulenlospetas = {
+	"spec_kerulenlospetas", NULL, "spec_spectrum", NULL, "1989",
+	"Ke rulen los petas (Spanish) (48K)\0", NULL, "Iber Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecKerulenlospetasRomInfo, SpecKerulenlospetasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -17347,6 +17385,44 @@ struct BurnDriver BurnSpecManollo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecManolloRomInfo, SpecManolloRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mantis 1 (Spanish) (48K)
+
+static struct BurnRomInfo SpecMantis1RomDesc[] = {
+	{ "Mantis 1 ES 48K (1990)(Raven Adventures).tzx", 47532, 0x5ebe81f7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMantis1, SpecMantis1, Spectrum)
+STD_ROM_FN(SpecMantis1)
+
+struct BurnDriver BurnSpecMantis1 = {
+	"spec_mantis1", NULL, "spec_spectrum", NULL, "1990",
+	"Mantis 1 (Spanish) (48K)\0", NULL, "Raven Adventures", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecMantis1RomInfo, SpecMantis1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mantis 2 (Spanish) (48K)
+
+static struct BurnRomInfo SpecMantis2RomDesc[] = {
+	{ "Mantis 2 ES 48K (1990)(Raven Adventures).tzx", 47333, 0xf9471b51, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMantis2, SpecMantis2, Spectrum)
+STD_ROM_FN(SpecMantis2)
+
+struct BurnDriver BurnSpecMantis2 = {
+	"spec_mantis2", NULL, "spec_spectrum", NULL, "1990",
+	"Mantis 2 (Spanish) (48K)\0", NULL, "Raven Adventures", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecMantis2RomInfo, SpecMantis2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -20596,6 +20672,44 @@ struct BurnDriver BurnSpecPentagram = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecPentagramRomInfo, SpecPentagramRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pepe Carvalho. Los pájaros de Bangkok 'versión fácil' (Spanish) (48K)
+
+static struct BurnRomInfo SpecPepecarvalhovfRomDesc[] = {
+	{ "Pepe Carvalho. Los pajaros de Bangkok - version facil ES 48K (1988)(Dinamic Software).tap", 48796, 0xf2a5820d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPepecarvalhovf, SpecPepecarvalhovf, Spectrum)
+STD_ROM_FN(SpecPepecarvalhovf)
+
+struct BurnDriver BurnSpecPepecarvalhovf = {
+	"spec_pepecarvalhovf", NULL, "spec_spectrum", NULL, "1988",
+	"Pepe Carvalho. Los pajaros de Bangkok 'version facil' (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	L"Pepe Carvalho. Los p\u00e1jaros de Bangkok 'versi\u00f3n f\u00e1cil' (Spanish) (48K)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecPepecarvalhovfRomInfo, SpecPepecarvalhovfRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pepe Carvalho. Los pájaros de Bangkok 'versión difícil' (Spanish) (48K)
+
+static struct BurnRomInfo SpecPepecarvalhovdRomDesc[] = {
+	{ "Pepe Carvalho. Los pajaros de Bangkok - Experts version ES 48K (1988)(Dinamic Software).tap", 48796, 0xc577e450, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPepecarvalhovd, SpecPepecarvalhovd, Spectrum)
+STD_ROM_FN(SpecPepecarvalhovd)
+
+struct BurnDriver BurnSpecPepecarvalhovd = {
+	"spec_pepecarvalhovd", "spec_pepecarvalhovf", "spec_spectrum", NULL, "1988",
+	"Pepe Carvalho. Los pajaros de Bangkok 'version dificil' (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	L"Pepe Carvalho. Los p\u00e1jaros de Bangkok 'versi\u00f3n dif\u00edcil' (Spanish) (48K)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecPepecarvalhovdRomInfo, SpecPepecarvalhovdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -27196,7 +27310,7 @@ struct BurnDriver BurnSpecSuperwonderboy = {
 // Supervivencia (El Firfurcio) (Spanish) (48K)
 
 static struct BurnRomInfo SpecSupervivenciaRomDesc[] = {
-	{ "Supervivencia (El Firfurcio) 48K (1988)(Aventuras AD).tap", 36944, 0xd0ab3f04, BRF_ESS | BRF_PRG },
+	{ "Supervivencia (El Firfurcio) ES 48K (1988)(Aventuras AD).tap", 36944, 0xd0ab3f04, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupervivencia, SpecSupervivencia, Spectrum)
@@ -27215,7 +27329,7 @@ struct BurnDriver BurnSpecSupervivencia = {
 // Supervivencia (El Firfurcio) (Spanish, Alt) (48K)
 
 static struct BurnRomInfo SpecSupervivenciaaRomDesc[] = {
-	{ "Supervivencia (El Firfurcio) (Alt) 48K (1988)(Aventuras AD).tap", 37364, 0xc7f5990f, BRF_ESS | BRF_PRG },
+	{ "Supervivencia (El Firfurcio) (Alt) ES 48K (1988)(Aventuras AD).tap", 37364, 0xc7f5990f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSupervivenciaa, SpecSupervivenciaa, Spectrum)
@@ -30515,6 +30629,44 @@ struct BurnDriver BurnSpecZipzap = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecZipzapRomInfo, SpecZipzapRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Zipi y Zape - Parte 1 (Spanish) (48K)
+
+static struct BurnRomInfo SpecZipiyzape1RomDesc[] = {
+	{ "Zipi y Zape - Parte 1 ES 48K (1989)(Dro Soft).tzx", 50013, 0x296287b9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZipiyzape1, SpecZipiyzape1, Spectrum)
+STD_ROM_FN(SpecZipiyzape1)
+
+struct BurnDriver BurnSpecZipiyzape1 = {
+	"spec_zipiyzape1", NULL, "spec_spectrum", NULL, "1989",
+	"Zipi y Zape - Parte 1 (Spanish) (48K)\0", NULL, "Dro Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecZipiyzape1RomInfo, SpecZipiyzape1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Zipi y Zape - Parte 2 (Spanish) (48K)
+
+static struct BurnRomInfo SpecZipiyzape2RomDesc[] = {
+	{ "Zipi y Zape - Parte 2 ES 48K (1989)(Dro Soft).tzx", 50013, 0x5fc90776, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZipiyzape2, SpecZipiyzape2, Spectrum)
+STD_ROM_FN(SpecZipiyzape2)
+
+struct BurnDriver BurnSpecZipiyzape2 = {
+	"spec_zipiyzape2", "spec_zipiyzape1", "spec_spectrum", NULL, "1989",
+	"Zipi y Zape - Parte 2 (Spanish) (48K)\0", "Password: tito", "Dro Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecZipiyzape2RomInfo, SpecZipiyzape2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -43203,7 +43355,7 @@ struct BurnDriver BurnSpecJetsbot = {
 // Jet Set Luis: rumbo a la Costa Blanca (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecjsluisRomDesc[] = {
-	{ "Jet Set Luis - rumbo a la Costa Blanca 48K (2015)(Softwarecete).tap", 39975, 0x0da926da, BRF_ESS | BRF_PRG },
+	{ "Jet Set Luis - rumbo a la Costa Blanca ES 48K (2015)(Softwarecete).tap", 39975, 0x0da926da, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specjsluis, Specjsluis, Spectrum)

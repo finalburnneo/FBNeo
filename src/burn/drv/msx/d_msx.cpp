@@ -27307,7 +27307,7 @@ STD_ROM_FN(MSX_viajecentro)
 
 struct BurnDriver BurnDrvMSX_viajecentro = {
 	"msx_viajecentro", NULL, "msx_msx", NULL, "1989",
-	"Viaje al Centro de la Tierra (Euro, Spanish)\0", NULL, "Topo Soft", "MSX",
+	"Viaje al Centro de la Tierra (Euro, Spanish)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED", "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV | GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_viajecentroRomInfo, MSX_viajecentroRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,

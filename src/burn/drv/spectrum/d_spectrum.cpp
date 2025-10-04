@@ -29332,7 +29332,7 @@ STD_ROM_FN(Specviajecentterra)
 
 struct BurnDriver BurnSpecviajecentterra = {
 	"spec_viajecentterra", NULL, "spec_spectrum", NULL, "1989",
-	"Viaje al Centro de la Tierra (Spanish) (48K)\0", NULL, "Topo Soft", "ZX Spectrum",
+	"Viaje al Centro de la Tierra (Spanish) (48K)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED", "Topo Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MINIGAMES, 0,
 	SpectrumGetZipName, SpecviajecentterraRomInfo, SpecviajecentterraRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -53331,7 +53331,7 @@ struct BurnDriver BurnSpecSorceryen2 = {
 // Sorcery Island - First Part (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecSorceryes1RomDesc[] = {
-	{ "Sorcery Island Part1 ES 48K (2021)(Jose Manuel Gris).tap", 41618, 0xa55dca8a, BRF_ESS | BRF_PRG },
+	{ "Sorcery Island Part1 ES 48K (2021)(Jose Manuel Gris).tap", 41696, 0xed923b49, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSorceryes1, SpecSorceryes1, Spectrum)
@@ -53350,7 +53350,7 @@ struct BurnDriver BurnSpecSorceryes1 = {
 // Sorcery Island - Second Part (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecSorceryes2RomDesc[] = {
-	{ "Sorcery Island Part2 ES 48K (2021)(Jose Manuel Gris).tap", 41929, 0x4526a7fe, BRF_ESS | BRF_PRG },
+	{ "Sorcery Island Part2 ES 48K (2021)(Jose Manuel Gris).tap", 42007, 0xa6b976a1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSorceryes2, SpecSorceryes2, Spectrum)
@@ -56341,7 +56341,7 @@ STD_ROM_FN(SpecViajecentterraext)
 
 struct BurnDriver BurnSpecViajecentterraext = {
 	"spec_viajecentterraext", "spec_viajecentterra", "spec_spec128", NULL, "2008",
-	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)\0", "AY Music + 2 additional stages (Fase 4 and 5)", "Topo Siglo XXI", "ZX Spectrum",
+	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED / Fase 5 KREATOR", "Topo Siglo XXI", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MINIGAMES, 0,
 	SpectrumGetZipName, SpecViajecentterraextRomInfo, SpecViajecentterraextRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

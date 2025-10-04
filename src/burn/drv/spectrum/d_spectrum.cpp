@@ -56341,7 +56341,7 @@ STD_ROM_FN(SpecViajecentterraext)
 
 struct BurnDriver BurnSpecViajecentterraext = {
 	"spec_viajecentterraext", "spec_viajecentterra", "spec_spec128", NULL, "2008",
-	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED / Fase 5 KREATOR", "Topo Siglo XXI", "ZX Spectrum",
+	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (48K-128K) (HB)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED / Fase 5: KREATOR", "Topo Siglo XXI", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MINIGAMES, 0,
 	SpectrumGetZipName, SpecViajecentterraextRomInfo, SpecViajecentterraextRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

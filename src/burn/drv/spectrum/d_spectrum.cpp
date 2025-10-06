@@ -31874,6 +31874,25 @@ struct BurnDriver BurnSpecBrunildaru = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Ancient Fighters (48K) (Hack, English)
+
+static struct BurnRomInfo SpecAncientfightRomDesc[] = {
+	{ "Ancient Fighters T-Eng 48K (2021)(Pavero).tap", 90253, 0xae641ead, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAncientfight, SpecAncientfight, Spectrum)
+STD_ROM_FN(SpecAncientfight)
+
+struct BurnDriver BurnSpecAncientfight = {
+	"spec_ancientfight", NULL, "spec_spectrum", NULL, "2021",
+	"Ancient Fighters (48K) (Hack, English)\0", "Original game: 'Ancient Fighters' 1994", "Pavero", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecAncientfightRomInfo, SpecAncientfightRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Androide (48K) (HB)
 
 static struct BurnRomInfo SpecAndroideRomDesc[] = {
@@ -35695,6 +35714,25 @@ struct BurnDriver BurnSpecColoristic = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Commando II (48K) (Hack, English)
+
+static struct BurnRomInfo SpecCommando2RomDesc[] = {
+	{ "Commando II T-Eng 48K (2016)(Daniel Szaraz).tap", 37143, 0x45acb36e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCommando2, SpecCommando2, Spectrum)
+STD_ROM_FN(SpecCommando2)
+
+struct BurnDriver BurnSpecCommando2 = {
+	"spec_commando2", NULL, "spec_spectrum", NULL, "2016",
+	"Commando II (48K) (Hack, English)\0", "Original game: 'Komando 2' 1992", "Daniel Szaraz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecCommando2RomInfo, SpecCommando2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Cómeme el Chip (128K) (HB)
 
 static struct BurnRomInfo SpecComechipRomDesc[] = {
@@ -36414,6 +36452,25 @@ struct BurnDriver BurnSpecCults = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecCultsRomInfo, SpecCultsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Curse of the Night (48K) (Hack, English)
+
+static struct BurnRomInfo SpecCursenightRomDesc[] = {
+	{ "Curse of the Night T-Eng 48K (2012)(Pavero).tap", 43633, 0x252bd837, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCursenight, SpecCursenight, Spectrum)
+STD_ROM_FN(SpecCursenight)
+
+struct BurnDriver BurnSpecCursenight = {
+	"spec_cursenight", NULL, "spec_spectrum", NULL, "2012",
+	"Curse of the Night (48K) (Hack, English)\0", "Original game: 'Kliatba noci' 1993", "Pavero", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecCursenightRomInfo, SpecCursenightRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -42516,6 +42573,25 @@ struct BurnDriver BurnSpecIceslidz = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Il Noma Della Rosa (48K) (Hack, English)
+
+static struct BurnRomInfo SpecNomarosaRomDesc[] = {
+	{ "Il Noma Della Rosa T-Eng 48K (2025)(Miloslav Bahna).tap", 145914, 0x515c98a0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNomarosa, SpecNomarosa, Spectrum)
+STD_ROM_FN(SpecNomarosa)
+
+struct BurnDriver BurnSpecNomarosa = {
+	"spec_nomarosa", NULL, "spec_spectrum", NULL, "2025",
+	"Il Noma Della Rosa (48K) (Hack, English)\0", "Original game: 'Il Noma Della Rosa' 1993", "Miloslav Bahna", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecNomarosaRomInfo, SpecNomarosaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // iLogicAll (English) (128K) (HB)
 
 static struct BurnRomInfo SpecIlogicenRomDesc[] = {
@@ -48407,6 +48483,25 @@ struct BurnDriver BurnSpecOceano = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Octopussy (128K) (Hack, English)
+
+static struct BurnRomInfo SpecOctopussyRomDesc[] = {
+	{ "Octopussy T-Eng 128K (2018)(Tiboh).tap", 49665, 0xcf5f7e3c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOctopussy, SpecOctopussy, Spec128)
+STD_ROM_FN(SpecOctopussy)
+
+struct BurnDriver BurnSpecOctopussy = {
+	"spec_octopussy", NULL, "spec_spec128", NULL, "2018",
+	"Octopussy (128K) (Hack, English)\0", "Original game: 'Octopussy' 1992", "Tiboh", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecOctopussyRomInfo, SpecOctopussyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // OctuKitty (128K) (HB)
 
 static struct BurnRomInfo SpecOctukttyRomDesc[] = {
@@ -49239,6 +49334,63 @@ struct BurnDriver BurnSpecPatrickpaddle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecPatrickpaddleRomInfo, SpecPatrickpaddleRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pedro in the Haunted Castle (48K) (Hack, English)
+
+static struct BurnRomInfo SpecPedrocastleRomDesc[] = {
+	{ "Pedro in the Haunted Castle T-Eng 48K (2011)(Pavero).tap", 38531, 0xb375f77a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPedrocastle, SpecPedrocastle, Spectrum)
+STD_ROM_FN(SpecPedrocastle)
+
+struct BurnDriver BurnSpecPedrocastle = {
+	"spec_pedrocastle", NULL, "spec_spectrum", NULL, "2011",
+	"Pedro in the Haunted Castle (48K) (Hack, English)\0", "Original game: 'Pedro v strasidelnom zamku' 1993", "Pavero", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPedrocastleRomInfo, SpecPedrocastleRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pedro in the Land of Pyramids (48K) (Hack, English)
+
+static struct BurnRomInfo SpecPedropyramidsRomDesc[] = {
+	{ "Pedro in the Land of Pyramids T-Eng 48K (2011)(Pavero).tap", 96804, 0x2d6ddbb9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPedropyramids, SpecPedropyramids, Spectrum)
+STD_ROM_FN(SpecPedropyramids)
+
+struct BurnDriver BurnSpecPedropyramids = {
+	"spec_pedropyramids", NULL, "spec_spectrum", NULL, "2011",
+	"Pedro in the Land of Pyramids (48K) (Hack, English)\0", "Original game: 'Pedro v krajine pyramid' 1993", "Pavero", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPedropyramidsRomInfo, SpecPedropyramidsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pedro on the Pirate Island (48K) (Hack, English)
+
+static struct BurnRomInfo SpecPedroislandRomDesc[] = {
+	{ "Pedro on the Pirate Island T-Eng 48K (2011)(Pavero).tap", 36190, 0x7eb92bba, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPedroisland, SpecPedroisland, Spectrum)
+STD_ROM_FN(SpecPedroisland)
+
+struct BurnDriver BurnSpecPedroisland = {
+	"spec_pedroisland", NULL, "spec_spectrum", NULL, "2011",
+	"Pedro on the Pirate Island (48K) (Hack, English)\0", "Original game: 'Pedro na ostrove piratov' 1992", "Pavero", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPedroislandRomInfo, SpecPedroislandRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

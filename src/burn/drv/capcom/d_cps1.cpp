@@ -17445,6 +17445,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2v0042"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0043"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2gm"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2cre"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dongb"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acc"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acca"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -26979,6 +26980,55 @@ struct BurnDriver BurnDrvCpsSf2gm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2gmRomInfo, Sf2gmRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter II': Champion Re-Edit (Hack, v0.29.7)
+// https://sf2cre.blogspot.com
+// Modified by Persona
+
+static struct BurnRomInfo Sf2creRomDesc[] = {
+	{ "sf2cre_23b.8f",	0x080000, 0xffa481c9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2cre_22b.7f",	0x080000, 0xe2944558, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2cre_21a.6f",	0x080000, 0xc9c4acb8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92_01.3a",		0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.4a",		0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.5a",		0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.6a",		0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.7a",		0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.8a",		0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.9a",		0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.10a",		0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.3c",		0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.4c",		0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.5c",		0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.6c",		0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.12a",		0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",		0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",		0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",		0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",		0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",		0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",		0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",		0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2cre)
+STD_ROM_FN(Sf2cre)
+
+struct BurnDriver BurnDrvCpsSf2cre = {
+	"sf2cre", "sf2ce", NULL, NULL, "2025",
+	"Street Fighter II': Champion Re-Edit (Hack, v0.29.7)\0", NULL, "Persona", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2creRomInfo, Sf2creRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2cejDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -3288,9 +3288,9 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 // --------------------------
 
 
-// Don't Die, Mr. Robot! (HB, v2.0.2)
+// Don't Die, Mr. Robot! (HB, v2.0.3)
 static struct BurnRomInfo ngpc_ddmrRomDesc[] = {
-	{ "Don't Die, Mr. Robot! v2.0.2 (2025)(Infinite State Games).ngp", 2097152, 0x11c15d94, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Don't Die, Mr. Robot! v2.0.3 (2025)(Infinite State Games).ngp", 2097152, 0x0c36f0f3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ddmr, ngpc_ddmr, ngpc_ngp)
@@ -3298,7 +3298,7 @@ STD_ROM_FN(ngpc_ddmr)
 
 struct BurnDriver BurnDrvngpc_ddmr = {
 	"ngp_ddmr", NULL, "ngp_ngp", NULL, "2025",
-	"Don't Die, Mr. Robot! (HB, v2.0.2)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
+	"Don't Die, Mr. Robot! (HB, v2.0.3)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
 	NgpGetZipName, ngpc_ddmrRomInfo, ngpc_ddmrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

@@ -624,7 +624,8 @@ int RunMessageLoop()
 
 				kNetGame = 1;
 
-				bCheatsAllowed = false;								// Disable cheats during netplay
+				bCheatsAllowed = (nKailleraCheatEnableHack == 0) ? false : true; // Disable cheats during netplay unless hack enabled....
+				bprintf(0, _T("cheats allowerd %x\n"), bCheatsAllowed);
 				AudSoundStop();										// Stop while we load roms
 				DrvInit(nBurnDrvActive, false);						// Init the game driver
 

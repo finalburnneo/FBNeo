@@ -386,6 +386,7 @@ int ConfigAppLoad()
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
+		VAR(nKailleraCheatEnableHack);
 
 		VAR(nCDEmuSelect);
 		PAT(CDEmuImage);
@@ -812,6 +813,8 @@ int ConfigAppSave()
 	VAR(bAutoPause);
 	_ftprintf(h, _T("\n// If non-zero, save the inputs for each game\n"));
 	VAR(bSaveInputs);
+	_ftprintf(h, _T("\n// If non-zero, Allow cheats in Kaillera.  Experimental & might cause desyncs!  Both sides must enable the same cheat at the same time, usually on titlescreen before starting game.\n"));
+	VAR(nKailleraCheatEnableHack);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- CD emulation -----------------------------------------------------------\n"));

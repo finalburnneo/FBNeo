@@ -117,6 +117,7 @@ extern bool bAutoLoadGameList;
 extern bool bQuietLoading;
 extern bool bNoPopups;
 extern bool bShonkyProfileMode;
+extern int nKailleraCheatEnableHack;
 extern bool bDontInitMedia;
 
 extern bool bNoChangeNumLock;

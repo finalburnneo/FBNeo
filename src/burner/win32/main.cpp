@@ -54,6 +54,8 @@ bool bDontInitMedia = false; // doesn't init media (screen, input, etc.)
 
 bool bShonkyProfileMode = false;
 
+int nKailleraCheatEnableHack = 0;
+
 bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 

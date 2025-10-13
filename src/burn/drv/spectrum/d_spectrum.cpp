@@ -54411,10 +54411,10 @@ struct BurnDriver BurnSpecSpeccies2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Speccy Saga Codename: RKV (48K-128K) (HB)
+// Speccy Saga Codename: RKW (48K-128K) (HB)
 
 static struct BurnRomInfo SpecSpeccysagaRomDesc[] = {
-	{ "Speccy Saga Codename - RKV 48K-128K (2025)(MicroChops).tap", 51545, 0xfe1ebb8d, BRF_ESS | BRF_PRG },
+	{ "Speccy Saga Codename - RKW 48K-128K (2025)(MicroChops).tap", 51545, 0xfe1ebb8d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSpeccysaga, SpecSpeccysaga, Spec128)
@@ -54422,7 +54422,7 @@ STD_ROM_FN(SpecSpeccysaga)
 
 struct BurnDriver BurnSpecSpeccysaga = {
 	"spec_speccysaga", NULL, "spec_spec128", NULL, "2025",
-	"Speccy Saga Codename: RKV (48K-128K) (HB)\0", NULL, "MicroChops", "ZX Spectrum",
+	"Speccy Saga Codename: RKW (48K-128K) (HB)\0", NULL, "MicroChops", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecSpeccysagaRomInfo, SpecSpeccysagaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

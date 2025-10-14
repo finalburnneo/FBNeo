@@ -210,13 +210,13 @@ static void dma_doDma(Dma* dma, int cpuCycles) {
   // align to multiple of 8
   snes_syncCycles(dma->snes, true, 8);
   dma_checkHdma(dma);
-  snes_runCycles(dma->snes, 8); // full transfer overhead
+  snes_runCyclesDma(dma->snes, 8); // full transfer overhead
   for(int i = 0; i < 8; i++) {
     if(!dma->channel[i].dmaActive) continue;
     //bprintf(0, _T("d%x, x/y %d %d\n"), i, dma->snes->hPos, dma->snes->vPos);
 	// do channel i
     dma_checkHdma(dma);
-    snes_runCycles(dma->snes, 8); // overhead per channel
+    snes_runCyclesDma(dma->snes, 8); // overhead per channel
     int offIndex = 0;
     while(dma->channel[i].dmaActive) {
       dma_checkHdma(dma);
@@ -252,7 +252,7 @@ static void dma_initHdma(Dma* dma, bool doSync, int cpuCycles) {
 //  cpu_setIntDelay();
   if(doSync) snes_syncCycles(dma->snes, true, 8);
   // full transfer overhead
-  snes_runCycles(dma->snes, 8);
+  snes_runCyclesDma(dma->snes, 8);
   for(int i = 0; i < 8; i++) {
     if(dma->channel[i].hdmaActive) {
 	  //bprintf(0, _T("Hdinit%x, x/y %d %d\n"), i, dma->snes->hPos, dma->snes->vPos);
@@ -260,18 +260,18 @@ static void dma_initHdma(Dma* dma, bool doSync, int cpuCycles) {
       dma->channel[i].dmaActive = false;
       // load address, repCount, and indirect address if needed
       dma->channel[i].tableAdr = dma->channel[i].aAdr;
-      snes_runCycles(dma->snes, 4);
+      snes_runCyclesDma(dma->snes, 4);
       dma->channel[i].repCount = snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr++);
-      snes_runCycles(dma->snes, 4);
+      snes_runCyclesDma(dma->snes, 4);
       if(dma->channel[i].repCount == 0) dma->channel[i].terminated = true;
       if(dma->channel[i].indirect) {
-        snes_runCycles(dma->snes, 4);
+        snes_runCyclesDma(dma->snes, 4);
         dma->channel[i].size = snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr++);
-        snes_runCycles(dma->snes, 4);
+        snes_runCyclesDma(dma->snes, 4);
 
-		snes_runCycles(dma->snes, 4);
+		snes_runCyclesDma(dma->snes, 4);
         dma->channel[i].size |= snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr++) << 8;
-        snes_runCycles(dma->snes, 4);
+        snes_runCyclesDma(dma->snes, 4);
       }
       dma->channel[i].doTransfer = true;
     }
@@ -294,7 +294,7 @@ static void dma_doHdma(Dma* dma, bool doSync, int cpuCycles) {
 //  cpu_setIntDelay();
   if(doSync) snes_syncCycles(dma->snes, true, 8);
   // full transfer overhead
-  snes_runCycles(dma->snes, 8);
+  snes_runCyclesDma(dma->snes, 8);
   // do all copies
   for(int i = 0; i < 8; i++) {
     // terminate any dma
@@ -325,9 +325,9 @@ static void dma_doHdma(Dma* dma, bool doSync, int cpuCycles) {
 	  //bprintf(0, _T("Hdma%x, x/y %d %d\n"), i, dma->snes->hPos, dma->snes->vPos);
       dma->channel[i].repCount--;
       dma->channel[i].doTransfer = dma->channel[i].repCount & 0x80;
-      snes_runCycles(dma->snes, 4);
+      snes_runCyclesDma(dma->snes, 4);
       uint8_t newRepCount = snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr);
-      snes_runCycles(dma->snes, 4);
+      snes_runCyclesDma(dma->snes, 4);
       if((dma->channel[i].repCount & 0x7f) == 0) {
         dma->channel[i].repCount = newRepCount;
         dma->channel[i].tableAdr++;
@@ -336,13 +336,13 @@ static void dma_doHdma(Dma* dma, bool doSync, int cpuCycles) {
             // if this is the last active channel, only fetch high, and use 0 for low
             dma->channel[i].size = 0;
           } else {
-            snes_runCycles(dma->snes, 4);
+            snes_runCyclesDma(dma->snes, 4);
             dma->channel[i].size = snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr++);
-            snes_runCycles(dma->snes, 4);
+            snes_runCyclesDma(dma->snes, 4);
           }
-          snes_runCycles(dma->snes, 4);
+          snes_runCyclesDma(dma->snes, 4);
           dma->channel[i].size |= snes_read(dma->snes, (dma->channel[i].aBank << 16) | dma->channel[i].tableAdr++) << 8;
-          snes_runCycles(dma->snes, 4);
+          snes_runCyclesDma(dma->snes, 4);
         }
         if(dma->channel[i].repCount == 0) dma->channel[i].terminated = true;
         dma->channel[i].doTransfer = true;
@@ -362,14 +362,14 @@ static void dma_transferByte(Dma* dma, uint16_t aAdr, uint8_t aBank, uint8_t bAd
     aAdr == 0x420b || aAdr == 0x420c || (aAdr >= 0x4300 && aAdr < 0x4380) || (aAdr >= 0x2100 && aAdr < 0x2200)
   ));
   if(fromB) {
-    snes_runCycles(dma->snes, 4);
+    snes_runCyclesDma(dma->snes, 4);
     uint8_t val = validB ? snes_readBBus(dma->snes, bAdr) : dma->snes->openBus;
-    snes_runCycles(dma->snes, 4);
+    snes_runCyclesDma(dma->snes, 4);
     if(validA) snes_write(dma->snes, (aBank << 16) | aAdr, val);
   } else {
-    snes_runCycles(dma->snes, 4);
+    snes_runCyclesDma(dma->snes, 4);
     uint8_t val = validA ? snes_read(dma->snes, (aBank << 16) | aAdr) : dma->snes->openBus;
-    snes_runCycles(dma->snes, 4);
+    snes_runCyclesDma(dma->snes, 4);
     if(validB) snes_writeBBus(dma->snes, bAdr, val);
   }
 }

@@ -45,6 +45,13 @@ typedef struct DspChannel {
   bool echoEnable;
 } DspChannel;
 
+#define MAX_AUDIOQUEUE 4
+typedef struct audioQueue {
+  uint16_t count;
+  uint16_t boundary;
+  int frame;
+} audioQueue;
+
 struct Dsp {
   Apu* apu;
   // mirror ram
@@ -80,11 +87,13 @@ struct Dsp {
   int8_t firValues[8];
   int16_t firBufferL[8];
   int16_t firBufferR[8];
-  // sample ring buffer (2048 samples, *2 for stereo)
-  int16_t sampleBuffer[0x800 * 2];
+  // sample ring buffer (4096 samples, *2 for stereo)
+  int16_t sampleBuffer[0x1000 * 2];
   uint16_t sampleOffset; // current offset in samplebuffer
-  uint32_t sampleCount; // samples generated since last render
-  uint16_t lastFrameBoundary;
+  uint16_t sampleCount; // samples generated since last frame
+  audioQueue audioQue[MAX_AUDIOQUEUE];
+  uint16_t audioQuePos = 0;
+  uint16_t audioQueTotal = 0;
 };
 
 Dsp* dsp_init(Apu* apu);
@@ -96,5 +105,6 @@ uint8_t dsp_read(Dsp* dsp, uint8_t adr);
 void dsp_write(Dsp* dsp, uint8_t adr, uint8_t val);
 void dsp_getSamples(Dsp* dsp, int16_t* sampleData, int samplesPerFrame);
 void dsp_newFrame(Dsp* dsp);
+int dsp_checkAudioQue(Dsp* dsp);
 
 #endif

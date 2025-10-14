@@ -517,9 +517,8 @@ static INT32 DrvFrame()
 		DrvDraw();
 	}
 
-	if (pBurnSoundOut) {
-		snes_setSamples(snes, pBurnSoundOut, nBurnSoundLen);
-	}
+	// always run, even if pBurnSoundOut == NULL
+	snes_setSamples(snes, pBurnSoundOut, nBurnSoundLen);
 
 	return 0;
 }

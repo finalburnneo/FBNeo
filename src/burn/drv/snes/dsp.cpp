@@ -136,11 +136,22 @@ void dsp_reset(Dsp* dsp) {
   memset(dsp->sampleBuffer, 0, sizeof(dsp->sampleBuffer));
   dsp->sampleOffset = 0;
   dsp->sampleCount = 0;
-  dsp->lastFrameBoundary = 0;
+  dsp->audioQuePos = 0;
+  dsp->audioQueTotal = 0;
+  memset(dsp->audioQue, 0, sizeof(dsp->audioQue));
 }
 
 void dsp_newFrame(Dsp* dsp) {
-  dsp->lastFrameBoundary = dsp->sampleOffset;
+  dsp->audioQue[dsp->audioQuePos & (MAX_AUDIOQUEUE-1)].count = dsp->sampleCount;
+  dsp->audioQue[dsp->audioQuePos & (MAX_AUDIOQUEUE-1)].boundary = dsp->sampleOffset;
+  dsp->audioQue[dsp->audioQuePos & (MAX_AUDIOQUEUE-1)].frame = dsp->apu->snes->frames;
+  dsp->audioQueTotal = ++dsp->audioQuePos;
+
+  dsp->sampleCount = 0;
+}
+
+int dsp_checkAudioQue(Dsp* dsp) {
+  return dsp->audioQuePos;
 }
 
 void dsp_handleState(Dsp* dsp, StateHandler* sh) {
@@ -152,7 +163,8 @@ void dsp_handleState(Dsp* dsp, StateHandler* sh) {
     &dsp->firValues[5], &dsp->firValues[6], &dsp->firValues[7], NULL
   );
   sh_handleWords(sh,
-    &dsp->counter, &dsp->dirPage, &dsp->echoBufferAdr, &dsp->echoDelay, &dsp->echoLength, &dsp->echoBufferIndex, &dsp->lastFrameBoundary, &dsp->sampleOffset, NULL
+    &dsp->counter, &dsp->dirPage, &dsp->echoBufferAdr, &dsp->echoDelay, &dsp->echoLength, &dsp->echoBufferIndex, &dsp->sampleOffset,
+    &dsp->audioQuePos, &dsp->audioQueTotal, NULL
   );
   sh_handleWordsS(sh,
     &dsp->sampleOutL, &dsp->sampleOutR, &dsp->echoOutL, &dsp->echoOutR, &dsp->noiseSample,
@@ -186,8 +198,9 @@ void dsp_handleState(Dsp* dsp, StateHandler* sh) {
     );
   }
   sh_handleByteArray(sh, dsp->ram, 0x80);
+  sh_handleByteArray(sh, (uint8_t*)&dsp->audioQue, sizeof(dsp->audioQue));
 //  sh_handleByteArray(sh, (UINT8*)&dsp->sampleBuffer[0], 0x800*2*2);
-//  sh_handleInts(sh, dsp->sampleCount, NULL);
+  sh_handleInts(sh, &dsp->sampleCount, NULL);
 }
 
 void dsp_cycle(Dsp* dsp) {
@@ -209,8 +222,8 @@ void dsp_cycle(Dsp* dsp) {
   }
   if (bBurnRunAheadFrame == 0) {
     // put final sample in the samplebuffer
-    dsp->sampleBuffer[(dsp->sampleOffset   & 0x7ff) * 2 + 0] = dsp->sampleOutL;
-    dsp->sampleBuffer[(dsp->sampleOffset++ & 0x7ff) * 2 + 1] = dsp->sampleOutR;
+    dsp->sampleBuffer[(dsp->sampleOffset   & 0xfff) * 2 + 0] = dsp->sampleOutL;
+    dsp->sampleBuffer[(dsp->sampleOffset++ & 0xfff) * 2 + 1] = dsp->sampleOutR;
 	dsp->sampleCount++;
   }
 }
@@ -593,13 +606,25 @@ void dsp_write(Dsp* dsp, uint8_t adr, uint8_t val) {
 
 void dsp_getSamples(Dsp* dsp, int16_t* sampleData, int samplesPerFrame) {
   // resample from 534 / 641 samples per frame to wanted value
-  float wantedSamples = dsp->sampleCount; // (dsp->apu->snes->palTiming ? 641.0 : 534.0);
-  dsp->sampleCount = 0;
-  double adder = wantedSamples / samplesPerFrame;
-  double location = dsp->lastFrameBoundary - wantedSamples;
+
+  if (dsp->audioQuePos < 1) {
+    bprintf(0, _T("---[DSP: no queue'd audio! d'oh!\n"));
+    return;
+  }
+  dsp->audioQuePos--;
+  int quePos = ((dsp->audioQueTotal-1) - dsp->audioQuePos) & (MAX_AUDIOQUEUE-1);
+  if (sampleData == NULL || samplesPerFrame == 0) return;
+
+  int wantedSamples = dsp->audioQue[quePos].count; // (dsp->apu->snes->palTiming ? 641.0 : 534.0);
+  if (dsp->audioQueTotal > 1) {
+    bprintf(0, _T("rendering que#/queTotal/frame: %d / %d / %d   sams  %d   current frame %d\n"), quePos, dsp->audioQueTotal, dsp->audioQue[quePos].frame, wantedSamples, dsp->apu->snes->frames);
+  }
+
+  double adder = (float)wantedSamples / samplesPerFrame;
+  double location = dsp->audioQue[quePos].boundary - wantedSamples;
   for(int i = 0; i < samplesPerFrame; i++) {
-    sampleData[i * 2 + 0] = dsp->sampleBuffer[(((int) location) & 0x7ff) * 2 + 0];
-    sampleData[i * 2 + 1] = dsp->sampleBuffer[(((int) location) & 0x7ff) * 2 + 1];
+    sampleData[i * 2 + 0] = dsp->sampleBuffer[(((int) location) & 0xfff) * 2 + 0];
+    sampleData[i * 2 + 1] = dsp->sampleBuffer[(((int) location) & 0xfff) * 2 + 1];
     location += adder;
   }
 }

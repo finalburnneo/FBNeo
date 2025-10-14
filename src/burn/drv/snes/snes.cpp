@@ -112,8 +112,8 @@ void snes_handleState(Snes* snes, StateHandler* sh) {
     &snes->portAutoRead[0], &snes->portAutoRead[1], &snes->portAutoRead[2], &snes->portAutoRead[3],
     &snes->multiplyResult, &snes->divideA, &snes->divideResult, NULL
   );
-  sh_handleInts(sh, &snes->hvTimer, &snes->ramAdr, &snes->frames, &snes->nextHoriEvent, NULL);
-  sh_handleLongLongs(sh, &snes->cycles, &snes->syncCycle, &snes->autoJoyTimer, NULL);
+  sh_handleInts(sh, &snes->hvTimer, &snes->ramAdr, &snes->frames, &snes->syncCycle, &snes->nextHoriEvent, NULL);
+  sh_handleLongLongs(sh, &snes->cycles, &snes->autoJoyTimer, NULL);
   sh_handleByteArray(sh, snes->ram, 0x20000);
   // components
   cpu_handleState(sh);
@@ -127,18 +127,29 @@ void snes_handleState(Snes* snes, StateHandler* sh) {
 
 #define DEBUG_CYC 0
 
-void snes_runFrame(Snes* snes) {
+void snes_runFrame_internal(Snes* snes) {
 #if DEBUG_CYC
   uint32_t apu_cyc_start = apu_cycles(snes->apu);
   uint64_t cpu_cyc_start = snes->cycles;
   bprintf(0, _T("fr. %d: cycles start frame:  %I64u\n"), nCurrentFrame, snes->cycles);
 #endif
+  const uint32_t sframe = snes->frames;
 
-  while(snes->inVblank) {
+  // theory: we start @ vblank, and break out @ the end of vblank
+  // aka the start of next frame.
+  while(snes->inVblank && sframe == snes->frames) {
     cpu_runOpcode();
   }
-  // then run until we are at vblank, or we end up at next frame (DMA caused vblank to be skipped)
-  uint32_t frame = snes->frames;
+
+  if (snes->frames >= sframe + 2) {
+    // extra-long dma extended the frame, well past where we need to be
+    // for this entire function.  no need to run any further!
+    bprintf(0, _T("--- UHOH sframe %d  now  %d ---\n"), sframe, snes->frames);
+    return;
+  }
+
+  // we're at the beginning of active draw, let's take it to vblank and be done.
+  const uint32_t frame = snes->frames;
   while(!snes->inVblank && frame == snes->frames) {
     cpu_runOpcode();
   }
@@ -151,10 +162,27 @@ void snes_runFrame(Snes* snes) {
 #endif
 }
 
+void snes_runFrame(Snes* snes) {
+  if (dsp_checkAudioQue(snes->apu->dsp)) {
+    // due to dma extending a frame, audio could be ahead a frame (or 2)
+    // no need to run frame/opcodes until we catch-up with audio.
+    bprintf(0, _T("---[ DSP: audio queue'd for this frame!\n"));
+    return;
+  }
+  snes_runFrame_internal(snes);
+}
+
 void snes_runCycles(Snes* snes, int cycles) {
   for(int i = 0; i < cycles; i += 2) {
     snes_runCycle(snes);
   }
+}
+
+void snes_runCyclesDma(Snes* snes, int cycles) {
+  for(int i = 0; i < cycles; i += 2) {
+    snes_runCycle(snes);
+  }
+  snes->syncCycle += cycles;
 }
 
 void snes_runCycles4(Snes* snes) {
@@ -177,12 +205,11 @@ void snes_runCycles8(Snes* snes) {
 
 void snes_syncCycles(Snes* snes, bool start, int syncCycles) {
   if(start) {
-    snes->syncCycle = snes->cycles;
-    int count = syncCycles - (snes->cycles % syncCycles);
-    snes_runCycles(snes, count);
+    snes->syncCycle = syncCycles - (snes->cycles % 8);
+    snes_runCycles(snes, snes->syncCycle);
   } else {
-    int count = syncCycles - ((snes->cycles - snes->syncCycle) % syncCycles);
-    snes_runCycles(snes, count);
+    const int count = syncCycles - (snes->syncCycle % syncCycles);
+	snes_runCycles(snes, count);
   }
 }
 
@@ -302,10 +329,8 @@ static void snes_runCycle(Snes* snes) {
 		if(startingVblank) {
           // catch up the apu at end of emulated frame (we end frame @ start of vblank)
           snes_catchupApu(snes);
-          // notify dsp of frame-end, because sometimes dma will extend much further past vblank (or even into the next frame)
-          // Megaman X2 (titlescreen animation), Tales of Phantasia (game demo), Actraiser 2 (fade-in @ bootup)
+		  //bprintf(0, _T("starting vblank - snes fr# %d\n"), snes->frames);
           dsp_newFrame(snes->apu->dsp);
-
           // we are starting vblank
           ppu_handleVblank();
           snes->inVblank = true;

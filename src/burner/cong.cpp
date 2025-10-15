@@ -146,7 +146,7 @@ INT32 ConfigGameSave(bool bSave)
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Inputs -----------------------------------------------------------------\n\n"));
 
-	GameInpWrite(h);
+	GameInpWrite(h, true);
 
 	fclose(h);
 	return 0;

@@ -120,7 +120,7 @@ INT32 GameInpBlank(INT32 bDipSwitch);
 INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite);
 INT32 ConfigGameLoadHardwareDefaults();
 INT32 GameInpDefault();
-INT32 GameInpWrite(FILE* h);
+INT32 GameInpWrite(FILE* h, bool bSaveDips);
 INT32 GameInpRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameMacroAutofireRead(TCHAR* szVal, bool bOverWrite);
@@ -129,6 +129,7 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 struct tIniStruct {
 	TCHAR system[80];
 	TCHAR ini[MAX_PATH];
+	bool dips_in_preset;
 	INT32 hw[8];
 	char gameinfotoken[80];
 };

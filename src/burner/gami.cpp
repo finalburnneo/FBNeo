@@ -1844,6 +1844,13 @@ TCHAR* InputNumToName(UINT32 i)
 	return ANSIToTCHAR(bii.szName, NULL, 0);
 }
 
+bool InputNumIsDIPSWITCH(UINT32 i)
+{
+	struct BurnInputInfo bii = { NULL, 0, };
+	BurnDrvGetInputInfo(&bii, i);
+	return (bii.nType == BIT_DIPSWITCH);
+}
+
 static UINT32 MacroNameToNum(TCHAR* szName)
 {
 	struct GameInp* pgi = GameInp + nGameInpCount;
@@ -2158,27 +2165,27 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 
 // Hardware description, preset file, {hardware, codes}, history.dat token
 tIniStruct gamehw_cfg[] = {
-	{_T("CPS-1/CPS-2/CPS-3 hardware"),	_T("config/presets/cps.ini"),		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, HARDWARE_CAPCOM_CPS2, HARDWARE_CAPCOM_CPS3, 0 }, "\t\t\t<system name=\"" },
-	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	{ HARDWARE_SNK_NEOGEO, 0 }, 		"\t\t\t<system name=\""						},
-	{_T("Neo-Geo CD hardware"),			_T("config/presets/neogeocd.ini"),	{ HARDWARE_SNK_NEOCD, 0 },			"\t\t\t<item list=\"neocd\" name=\""		},
-	{_T("Neo Geo Pocket hardware"),     _T("config/presets/ngp.ini"),       { HARDWARE_SNK_NGP, 0 },			"\t\t\t<item list=\"ngp\" name=\""			},
-	{_T("Neo Geo Pocket C hardware"),	_T("config/presets/ngp.ini"),		{ HARDWARE_SNK_NGPC, 0 },			"\t\t\t<item list=\"ngpc\" name=\""			},
-	{_T("NES hardware"),				_T("config/presets/nes.ini"),		{ HARDWARE_NES, 0 },				"\t\t\t<item list=\"nes\" name=\""			},
-	{_T("FDS hardware"),				_T("config/presets/fds.ini"),		{ HARDWARE_FDS, 0 },				"\t\t\t<item list=\"famicom_flop\" name=\""	},
-	{_T("SNES hardware"),				_T("config/presets/snes.ini"),		{ HARDWARE_SNES, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
-	{_T("SNES w/Scope hardware"),		_T("config/presets/snes_scope.ini"),{ HARDWARE_SNES_ZAPPER, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
-	{_T("PGM hardware"),				_T("config/presets/pgm.ini"),		{ HARDWARE_IGS_PGM, 0 },			"\t\t\t<system name=\""        				},
-	{_T("MegaDrive hardware"),			_T("config/presets/megadrive.ini"),	{ HARDWARE_SEGA_MEGADRIVE, 0 },		"\t\t\t<item list=\"megadriv\" name=\""		},
-	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_PCENGINE, 0 },	"\t\t\t<item list=\"pce\" name=\""			},
-	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_TG16, 0 },		"\t\t\t<item list=\"tg16\" name=\""			},
-	{_T("MSX1 hardware"),				_T("config/presets/msx.ini"),		{ HARDWARE_MSX, 0 },				"\t\t\t<item list=\"msx1_cart\" name=\""	},
-	{_T("Coleco hardware"),				_T("config/presets/coleco.ini"),	{ HARDWARE_COLECO, 0 },				"\t\t\t<item list=\"coleco\" name=\""		},
-	{_T("SG1000 hardware"),				_T("config/presets/sg1000.ini"),	{ HARDWARE_SEGA_SG1000, 0 },		"\t\t\t<item list=\"sg1000\" name=\""		},
-	{_T("Sega Master System hardware"),	_T("config/presets/sms.ini"),		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 },	"\t\t\t<item list=\"sms\" name=\""			},
-	{_T("Sega Game Gear hardware"),		_T("config/presets/gg.ini"),		{ HARDWARE_SEGA_GAME_GEAR, 0 },		"\t\t\t<item list=\"gamegear\" name=\""		},
-	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	{ HARDWARE_SPECTRUM, 0 },			"\t\t\t<item list=\"spectrum_cass\" name=\""},
-	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	{ HARDWARE_CHANNELF, 0 },			"\t\t\t<item list=\"channelf\" name=\""		},
-	{_T("\0"), _T("\0"), { 0 }, "" } // END of list
+	{_T("CPS-1/CPS-2/CPS-3 hardware"),	_T("config/presets/cps.ini"),		false,	{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, HARDWARE_CAPCOM_CPS2, HARDWARE_CAPCOM_CPS3, 0 }, "\t\t\t<system name=\"" },
+	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	true,	{ HARDWARE_SNK_NEOGEO, 0 }, 		"\t\t\t<system name=\""						},
+	{_T("Neo-Geo CD hardware"),			_T("config/presets/neogeocd.ini"),	true,	{ HARDWARE_SNK_NEOCD, 0 },			"\t\t\t<item list=\"neocd\" name=\""		},
+	{_T("Neo-Geo Pocket hardware"),     _T("config/presets/ngp.ini"),		false,	{ HARDWARE_SNK_NGP, 0 },			"\t\t\t<item list=\"ngp\" name=\""			},
+	{_T("Neo-Geo Pocket C hardware"),	_T("config/presets/ngp.ini"),		false,	{ HARDWARE_SNK_NGPC, 0 },			"\t\t\t<item list=\"ngpc\" name=\""			},
+	{_T("NES hardware"),				_T("config/presets/nes.ini"),		true,	{ HARDWARE_NES, 0 },				"\t\t\t<item list=\"nes\" name=\""			},
+	{_T("FDS hardware"),				_T("config/presets/fds.ini"),		true,	{ HARDWARE_FDS, 0 },				"\t\t\t<item list=\"famicom_flop\" name=\""	},
+	{_T("SNES hardware"),				_T("config/presets/snes.ini"),		true,	{ HARDWARE_SNES, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
+	{_T("SNES w/Scope hardware"),		_T("config/presets/snes_scope.ini"),true,	{ HARDWARE_SNES_ZAPPER, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
+	{_T("PGM hardware"),				_T("config/presets/pgm.ini"),		false,	{ HARDWARE_IGS_PGM, 0 },			"\t\t\t<system name=\""        				},
+	{_T("MegaDrive hardware"),			_T("config/presets/megadrive.ini"),	true,	{ HARDWARE_SEGA_MEGADRIVE, 0 },		"\t\t\t<item list=\"megadriv\" name=\""		},
+	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_PCENGINE, 0 },	"\t\t\t<item list=\"pce\" name=\""			},
+	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_TG16, 0 },		"\t\t\t<item list=\"tg16\" name=\""			},
+	{_T("MSX1 hardware"),				_T("config/presets/msx.ini"),		false,	{ HARDWARE_MSX, 0 },				"\t\t\t<item list=\"msx1_cart\" name=\""	},
+	{_T("Coleco hardware"),				_T("config/presets/coleco.ini"),	true,	{ HARDWARE_COLECO, 0 },				"\t\t\t<item list=\"coleco\" name=\""		},
+	{_T("SG1000 hardware"),				_T("config/presets/sg1000.ini"),	true,	{ HARDWARE_SEGA_SG1000, 0 },		"\t\t\t<item list=\"sg1000\" name=\""		},
+	{_T("Sega Master System hardware"),	_T("config/presets/sms.ini"),		true,	{ HARDWARE_SEGA_MASTER_SYSTEM, 0 },	"\t\t\t<item list=\"sms\" name=\""			},
+	{_T("Sega Game Gear hardware"),		_T("config/presets/gg.ini"),		true,	{ HARDWARE_SEGA_GAME_GEAR, 0 },		"\t\t\t<item list=\"gamegear\" name=\""		},
+	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	false,	{ HARDWARE_SPECTRUM, 0 },			"\t\t\t<item list=\"spectrum_cass\" name=\""},
+	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	true,	{ HARDWARE_CHANNELF, 0 },			"\t\t\t<item list=\"channelf\" name=\""		},
+	{_T("\0"), _T("\0"), false, { 0 }, "" } // END of list
 };
 
 void GetHistoryDatHardwareToken(char *to_string)
@@ -2206,6 +2213,7 @@ UINT32 GameInputGetHWFlag()
 
 	if (nHardwareFlag == HARDWARE_SNES) {
 		// for this(these?) systems, get the unmasked HW flag
+		// needs separate definition/.ini file for superscope games, for example
 		nHardwareFlag = BurnDrvGetHardwareCode();
 	}
 
@@ -2216,11 +2224,9 @@ INT32 ConfigGameLoadHardwareDefaults()
 {
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	TCHAR *szFolderName = NULL;
-	TCHAR szFileName[MAX_PATH] = _T("");
 	szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
-#else
-	TCHAR *szFileName = _T("");
 #endif
+	TCHAR szFileName[MAX_PATH] = _T("");
 	INT32 nApplyHardwareDefaults = 0;
 
 	UINT32 nHardwareFlag = GameInputGetHWFlag();
@@ -2233,7 +2239,7 @@ INT32 ConfigGameLoadHardwareDefaults()
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 				_stprintf(szFileName, _T("%s%s"), szFolderName, gamehw_cfg[i].ini);
 #else
-				szFileName = gamehw_cfg[i].ini;
+				_tcscpy(szFileName, gamehw_cfg[i].ini);
 #endif
 				nApplyHardwareDefaults = 1;
 				break;
@@ -2330,13 +2336,17 @@ INT32 GameInpDefault()
 // ---------------------------------------------------------------------------
 // Write all the GameInps out to config file 'h'
 
-INT32 GameInpWrite(FILE* h)
+INT32 GameInpWrite(FILE* h, bool bSaveDips)
 {
 	// Write input types
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		TCHAR* szName = NULL;
 		INT32 nPad = 0;
 		szName = InputNumToName(i);
+		if (bSaveDips == false && InputNumIsDIPSWITCH(i)) {
+			bprintf(0, _T("not saving dip [%s]\n"), szName);
+			continue;
+		}
 		_ftprintf(h, _T("input  \"%s\" "), szName);
 		nPad = 16 - _tcslen(szName);
 		for (INT32 j = 0; j < nPad; j++) {
@@ -2354,7 +2364,9 @@ INT32 GameInpWrite(FILE* h)
 		if (pgi->nInput & GIT_GROUP_MACRO) {
 			switch (pgi->nInput) {
 				case GIT_MACRO_AUTO:									// Auto-assigned macros
-					if (pgi->Macro.nSysMacro == 15) _ftprintf(h, _T("afire  \"%hs\"\n"), pgi->Macro.szName);  // Create autofire (afire) tag
+					if (pgi->Macro.nSysMacro == 15) {					// Autofire magic number
+						_ftprintf(h, _T("afire  \"%hs\"\n"), pgi->Macro.szName);  // Create autofire (afire) tag
+					}
 					_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
 					break;
 				case GIT_MACRO_CUSTOM:									// Custom macros

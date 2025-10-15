@@ -606,59 +606,13 @@ static int InitAnalogOptions(int nGi, int nPci)
 	return 0;
 }
 
-INT32 HardwarePresetWrite(FILE* h)
-{
-	// Write input types
-	for (UINT32 i = 0; i < nGameInpCount; i++) {
-		TCHAR* szName = NULL;
-		INT32 nPad = 0;
-		szName = InputNumToName(i);
-		_ftprintf(h, _T("input  \"%s\" "), szName);
-		nPad = 16 - _tcslen(szName);
-		for (INT32 j = 0; j < nPad; j++) {
-			_ftprintf(h, _T(" "));
-		}
-		_ftprintf(h, _T("%s\n"), InpToString(GameInp + i));
-	}
-
-	_ftprintf(h, _T("\n"));
-
-	struct GameInp* pgi = GameInp + nGameInpCount;
-	for (UINT32 i = nGameInpCount; i < nGameInpCount + nMacroCount; i++, pgi++) {
-		INT32 nPad = 0;
-
-		if (pgi->nInput & GIT_GROUP_MACRO) {
-			switch (pgi->nInput) {
-			case GIT_MACRO_AUTO:									// Auto-assigned macros
-				if (pgi->Macro.nSysMacro == 15) { // Autofire magic number
-					_ftprintf(h, _T("afire  \"%hs\"\n"), pgi->Macro.szName);  // Create autofire (afire) tag
-				}
-				_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
-				break;
-			case GIT_MACRO_CUSTOM:									// Custom macros
-				_ftprintf(h, _T("custom \"%hs\" "), pgi->Macro.szName);
-				break;
-			default:												// Unknown -- ignore
-				continue;
-			}
-
-			nPad = 16 - strlen(pgi->Macro.szName);
-			for (INT32 j = 0; j < nPad; j++) {
-				_ftprintf(h, _T(" "));
-			}
-			_ftprintf(h, _T("%s\n"), InpMacroToString(pgi));
-		}
-	}
-
-	return 0;
-}
-
 static void SaveHardwarePreset()
 {
 	TCHAR *szFileName = _T("config\\presets\\preset.ini");
 	TCHAR *szHardwareString = _T("Generic hardware");
 
 	int nHardwareFlag = GameInputGetHWFlag();
+	bool bSaveDIPs = false;
 
 	// See if nHardwareFlag belongs to any systems (nes.ini, neogeo.ini, etc) in gamehw_config (see: burner/gami.cpp)
 	for (INT32 i = 0; gamehw_cfg[i].ini[0] != '\0'; i++) {
@@ -667,6 +621,7 @@ static void SaveHardwarePreset()
 			{
 				szFileName = gamehw_cfg[i].ini;
 				szHardwareString = gamehw_cfg[i].system;
+				bSaveDIPs = gamehw_cfg[i].dips_in_preset;
 				break;
 			}
 		}
@@ -677,7 +632,7 @@ static void SaveHardwarePreset()
 		_ftprintf(fp, _T(APP_TITLE) _T(" - Hardware Default Preset\n\n"));
 		_ftprintf(fp, _T("%s\n\n"), szHardwareString);
 		_ftprintf(fp, _T("version 0x%06X\n\n"), nBurnVer);
-		HardwarePresetWrite(fp);
+		GameInpWrite(fp, bSaveDIPs);
 		fclose(fp);
 	}
 

@@ -1,5 +1,3 @@
-//TODINK/TODO: remove old "megadrivebackupram" garbage
-
 /********************************************************************************
  SEGA Genesis / Mega Drive Driver for FBA
  ********************************************************************************
@@ -245,8 +243,6 @@ static struct PicoMisc *RamMisc;
 static struct MegadriveJoyPad *JoyPad;
 
 UINT32 *MegadriveCurPal;
-
-static UINT16 *MegadriveBackupRam;
 
 static UINT8 *HighCol;
 static UINT8 *HighColFull;
@@ -2617,8 +2613,6 @@ static void __fastcall TopfigWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	bprintf(PRINT_NORMAL, _T("Topfig write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
 
-//extern int counter;
-
 // dink's flashrom simulator (flash eeprom) from nes.cpp
 static UINT8 flashrom_cmd;
 static UINT16 flashrom_busy;
@@ -2629,8 +2623,6 @@ enum { AMIC = 0, MXIC = 1, MC_SST = 2, S29GL = 3 };
 
 static UINT8 flashrom_read(UINT32 address)
 {
-	//if (counter) bprintf(0, _T("fe_read: %x\n"), address);
-
 	if (flashrom_cmd == 0x90) { // flash chip identification
 		//bprintf(0, _T("flashrom chip ID\n"));
 		if (flashrom_chiptype == AMIC) {
@@ -2710,7 +2702,7 @@ static UINT8 flashrom_read(UINT32 address)
 
 static void flashrom_write(UINT16 address, UINT16 data)
 {
-   // bprintf(0, _T("flashrom_write( %x,  %x )\n"), address, data);
+	// bprintf(0, _T("flashrom_write( %x,  %x )\n"), address, data);
 	if (data == 0xf0) {
 		// read array / reset
 		flashrom_cmd = 0;
@@ -2737,7 +2729,7 @@ static void flashrom_write(UINT16 address, UINT16 data)
 		case 0x90:
 			if (data == 0x00) {
 				flashrom_cmd = 0;
-				bprintf(0, _T("ending secure serial\n"));
+				//bprintf(0, _T("ending secure serial\n"));
 			}
 			break;
 		case 0x01:
@@ -2749,7 +2741,7 @@ static void flashrom_write(UINT16 address, UINT16 data)
 			break;
 		case 0x02:
 			if ((address & 0xfff) == 0xaab) {
-				bprintf(0, _T("-----------------flash command set: %x\n"), data);
+				//bprintf(0, _T("-----------------flash command set: %x\n"), data);
 				flashrom_cmd = data;
 			}
 			break;
@@ -2799,13 +2791,11 @@ static void flashrom_write(UINT16 address, UINT16 data)
 
 static void __fastcall sot4w_writeword(UINT32 address, UINT16 data)
 {
-	//if (counter) bprintf(0, _T("ww %x  %x   PC: %x\n"), address, data, SekGetPC(-1));
 	flashrom_write(address, data);
 }
 
 static void __fastcall sot4w_writebyte(UINT32 address, UINT8 data)
 {
-	//if (counter)	bprintf(0, _T("wb %x  %x    PC: %x\n"), address, data, SekGetPC(-1));
 	flashrom_write(address, data);
 }
 
@@ -2820,21 +2810,18 @@ static UINT16 __fastcall sot4w_readword(UINT32 address)
 			0x5dd4, 0xcbfc, 0x96f5, 0x453b, 0x0000, 0x0000, 0x0000, 0x0000
 		};
 		rc = table_[(address&0x3f) >> 1];
-		bprintf(0, _T("flash secured sector.rw %x  %x   PC: %x\n"), address, rc, SekGetPC(-1));
+		//bprintf(0, _T("flash secured sector.rw %x  %x   PC: %x\n"), address, rc, SekGetPC(-1));
 		return rc;
 	}
 
 	UINT16 *Ram = (UINT16*)RomMain;
 	rc = Ram[(address & 0x7fffff) >> 1];
-	//if (counter)	bprintf(0, _T("rw %x  %x   PC: %x\n"), address, rc, SekGetPC(-1));
-//	bprintf(0, _T("sram read word %x:  %x\n"), address, rc);
 	return rc;
 }
 
 static UINT8 __fastcall sot4w_readbyte(UINT32 address)
 {
 	UINT8 rc = flashrom_read(address);
-	//if (counter) bprintf(0, _T("rb %x  %x    PC: %x\n"), address, rc, SekGetPC(-1));
 	return rc;
 }
 
@@ -3433,10 +3420,6 @@ static void InstallSRAMHandlers(bool MaskAddr)
 
 	memset(SRam, 0xff, MAX_SRAM_SIZE);
 
-	// this breaks "md_thor".  sram is mapped in and out, so this is totally wrong.
-	// leaving this in "just incase / for reference" incase I come across a game that needs it.
-	//memcpy((UINT8*)MegadriveBackupRam, SRam, RamMisc->SRamEnd - RamMisc->SRamStart + 1);
-
 	SekOpen(0);
 	SekMapHandler(6, RamMisc->SRamStart & Mask, RamMisc->SRamEnd & Mask, MAP_READ | MAP_WRITE);
 	SekSetReadByteHandler(6, MegadriveSRAMReadByte);
@@ -3592,7 +3575,6 @@ static void MegadriveSetupSRAM()
 	RamMisc->SRamReadOnly = 0;
 	RamMisc->SRamHasSerialEEPROM = 0;
 	RamMisc->SRamReg = 0;
-	MegadriveBackupRam = NULL;
 
 	if (papriummode || sot4wmode || colocodxmode) {
 		RamMisc->SRamDetected = 1;
@@ -3609,7 +3591,6 @@ static void MegadriveSetupSRAM()
 
 		bprintf(PRINT_IMPORTANT, _T("SRAM Settings: start %06x - end %06x\n"), RamMisc->SRamStart, RamMisc->SRamEnd);
 		RamMisc->SRamDetected = 1;
-		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 
 		SekOpen(0);
 		SekMapHandler(5, 0xa130f0, 0xa130f1, MAP_WRITE);
@@ -3630,7 +3611,6 @@ static void MegadriveSetupSRAM()
 		RamMisc->SRamEnd = 0x40ffff;
 
 		RamMisc->SRamDetected = 1;
-		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 
 		RamMisc->SRamActive = 1;
 		InstallSRAMHandlers(false);
@@ -3641,7 +3621,6 @@ static void MegadriveSetupSRAM()
 		RamMisc->SRamEnd = 0x2003ff;
 
 		RamMisc->SRamDetected = 1;
-		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 
 		SekOpen(0);
 		SekMapHandler(5, 0xa130f0, 0xa130f1, MAP_READ | MAP_WRITE);
@@ -3755,9 +3734,6 @@ static void MegadriveSetupSRAM()
 		if (RamMisc->SRamStart & 1) RamMisc->SRamStart -= 1;
 
 		if (!(RamMisc->SRamEnd & 1)) RamMisc->SRamEnd += 1;
-
-		// calculate backup RAM location
-		MegadriveBackupRam = (UINT16*) (RomMain + (RamMisc->SRamStart & 0x3fffff));
 
 		if (RamMisc->SRamDetected) {
 			bprintf(PRINT_IMPORTANT, _T("SRAM detected in header: start %06x - end %06x\n"), RamMisc->SRamStart, RamMisc->SRamEnd);

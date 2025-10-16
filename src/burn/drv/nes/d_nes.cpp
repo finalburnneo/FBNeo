@@ -20302,6 +20302,42 @@ struct BurnDriver BurnDrvnes_mawthornej = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mawthorne II (USA) (HB)
+static struct BurnRomInfo nes_mawthorne2RomDesc[] = {
+	{ "Mawthorne II (USA)(2022)(CGT Games).nes",          524304, 0x769bde92, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mawthorne2)
+STD_ROM_FN(nes_mawthorne2)
+
+struct BurnDriver BurnDrvnes_mawthorne2 = {
+	"nes_mawthorne2", NULL, NULL, NULL, "2025",
+	"Mawthorne II (USA) (HB)\0", NULL, "CGT Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_mawthorne2RomInfo, nes_mawthorne2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Depths / https://depths.nes.science/
+static struct BurnRomInfo nes_depthsRomDesc[] = {
+	{ "Depths (2020)(Sarah Parker).nes",          262160, 0xd842ca33, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_depths)
+STD_ROM_FN(nes_depths)
+
+struct BurnDriver BurnDrvnes_depths = {
+	"nes_depths", NULL, NULL, NULL, "2020",
+	"Depths (HB)\0", NULL, "Sarah Parker", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_depthsRomInfo, nes_depthsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // MazezaM Challenge (HB, v1.1)
 static struct BurnRomInfo nes_mazezamRomDesc[] = {
 	{ "MazezaM Challenge v1.1 (2025)(Alekmaul Studio).nes",          524304, 0x0afef2fa, BRF_ESS | BRF_PRG },

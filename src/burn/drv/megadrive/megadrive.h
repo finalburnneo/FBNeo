@@ -31,6 +31,8 @@ INT32 MegadriveInitNoDebug();
 INT32 MegadriveInitPaprium();
 INT32 MegadriveInitPsolar();
 INT32 MegadriveInitSot4w();
+INT32 MegadriveInitColocodx();
+
 INT32 MegadriveExit();
 INT32 MegadriveFrame();
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin);

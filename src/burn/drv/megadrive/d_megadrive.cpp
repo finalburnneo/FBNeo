@@ -38852,10 +38852,8 @@ struct BurnDriver BurnDrvmd_coffeecrisis = {
 };
 
 // Coloco DX (HB)
-// Note: "music fixed" crack from Oct 08, 2025
 static struct BurnRomInfo md_colocodxRomDesc[] = {
-	//unmodded rom:	{ "Coloco DX (2025)(MegaCat Studio, Tuxedo GameDevs).bin", 8388608, 0x48074b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-	{ "Coloco DX (2025)(Mega Cat Studios, Tuxedo GameDevs).bin", 8388608, 0x46684e68, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Coloco DX (2025)(MegaCat Studio, Tuxedo GameDevs).bin", 8388608, 0x48074b89, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_colocodx)
@@ -38863,11 +38861,11 @@ STD_ROM_FN(md_colocodx)
 
 struct BurnDriver BurnDrvmd_colocodx = {
 	"md_colocodx", NULL, NULL, NULL, "2025",
-	"Coloco DX (HB)\0", "SRAM not supported", "Mega Cat Studios, Tuxedo GameDevs", "Genesis / Mega Drive",
+	"Coloco DX (HB)\0", NULL, "Mega Cat Studios, Tuxedo GameDevs", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_colocodxRomInfo, md_colocodxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	MegadriveInitColocodx, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 

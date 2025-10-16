@@ -288,6 +288,7 @@ static INT32 FourWayPlayMode = 0;
 
 static INT32 papriummode = 0;
 static INT32 sot4wmode = 0;
+static INT32 colocodxmode = 0;
 
 static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue); // forward
 static UINT8 __fastcall MegadriveReadByte(UINT32 address);
@@ -2616,6 +2617,8 @@ static void __fastcall TopfigWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	bprintf(PRINT_NORMAL, _T("Topfig write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
 
+//extern int counter;
+
 // dink's flashrom simulator (flash eeprom) from nes.cpp
 static UINT8 flashrom_cmd;
 static UINT16 flashrom_busy;
@@ -2624,11 +2627,12 @@ enum { AMIC = 0, MXIC = 1, MC_SST = 2, S29GL = 3 };
 
 // S29GL settings: 16bit databus, custom cfi data
 
-static UINT8 flashrom_read(UINT16 address)
+static UINT8 flashrom_read(UINT32 address)
 {
-#if 0
-	if (flashrom_cmd == 0x98) { // flash chip identification
-		bprintf(0, _T("flashrom chip ID\n"));
+	//if (counter) bprintf(0, _T("fe_read: %x\n"), address);
+
+	if (flashrom_cmd == 0x90) { // flash chip identification
+		//bprintf(0, _T("flashrom chip ID\n"));
 		if (flashrom_chiptype == AMIC) {
 			switch (address & 0x03) {
 				case 0x00: return 0x37; // manufacturer ID
@@ -2645,17 +2649,32 @@ static UINT8 flashrom_read(UINT16 address)
 				case 0x00: return 0xbf; // manufacturer ID
 				case 0x01: return 0xb7; // device ID
 			}
+		} else if (flashrom_chiptype == S29GL) {
+			switch (address & 0x03) {
+				case 0x00: return 0x00; // manufacturer ID
+				case 0x01: return 0x01; // device ID
+			}
 		}
 	}
-#endif
+
 	if (flashrom_cmd == 0x98 && (address >= 0x21 && address < 0x80)) {
-		const UINT8 sot4_preprog_data[0x40] = { //
-			0x51, 0x52, 0x59, 0x02, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, 0x36, 0x00, 0x00, 0x07,
-			0x07, 0x0a, 0x00, 0x03, 0x05, 0x04, 0x00, 0x17, 0x02, 0x00, 0x05, 0x00, 0x02, 0x07, 0x00, 0x20,
-			0x00, 0x7e, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		//bprintf(0, _T("flash read CFI.... %x\n"), address);
+
+		const UINT8 cfi_data[2][0x40] = {
+			{ // sot4w
+				0x51, 0x52, 0x59, 0x02, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, 0x36, 0x00, 0x00, 0x07,
+				0x07, 0x0a, 0x00, 0x03, 0x05, 0x04, 0x00, 0x17, 0x02, 0x00, 0x05, 0x00, 0x02, 0x07, 0x00, 0x20,
+				0x00, 0x7e, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+			},
+			{
+				0x51, 0x52, 0x59, 0x02, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, 0x36, 0x00, 0x00, 0x07,
+				0x07, 0x0A, 0x00, 0x03, 0x05, 0x04, 0x00, 0x17, 0x02, 0x00, 0x05, 0x00, 0x02, 0x7e, 0x00, 0x00,
+				0x01, 0x07, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+			}
 		};
-		return sot4_preprog_data[(address - 0x21) >> 1];
+		return cfi_data[colocodxmode][(address - 0x21) >> 1];
 	}
 
 	if (flashrom_busy > 0) { // flash chip program or "erasing sector or chip" mode (it takes time..)
@@ -2691,7 +2710,7 @@ static UINT8 flashrom_read(UINT16 address)
 
 static void flashrom_write(UINT16 address, UINT16 data)
 {
-	//bprintf(0, _T("flashrom_write( %x,  %x )\n"), address, data);
+   // bprintf(0, _T("flashrom_write( %x,  %x )\n"), address, data);
 	if (data == 0xf0) {
 		// read array / reset
 		flashrom_cmd = 0;
@@ -2707,6 +2726,19 @@ static void flashrom_write(UINT16 address, UINT16 data)
 			if ((address & 0xfff) == 0xab && data == 0x98) {
 				flashrom_cmd = 0x98; // read cfi jibba-jabba
 			}
+			if ((address & 0xfff) == 0xab && data == 0x90) {
+				flashrom_cmd = 0x90; // read autoselect
+			}
+			break;
+		case 0x88: //secured sector id jib
+			if ((address & 0xfff) == 0xaab && data == 0xaa)
+				flashrom_cmd = 1;
+			break;
+		case 0x90:
+			if (data == 0x00) {
+				flashrom_cmd = 0;
+				bprintf(0, _T("ending secure serial\n"));
+			}
 			break;
 		case 0x01:
 		case 0x81:
@@ -2717,7 +2749,7 @@ static void flashrom_write(UINT16 address, UINT16 data)
 			break;
 		case 0x02:
 			if ((address & 0xfff) == 0xaab) {
-				//bprintf(0, _T("flash command set: %x\n"), data);
+				bprintf(0, _T("-----------------flash command set: %x\n"), data);
 				flashrom_cmd = data;
 			}
 			break;
@@ -2731,7 +2763,7 @@ static void flashrom_write(UINT16 address, UINT16 data)
 					bprintf(0, _T("flashrom - sector erase.  addr %x \n"), address);
 
 					if (flashrom_chiptype == S29GL) {
-						address &= ~1;
+						address &= 0xfffe;
 						for (int i = 0; i < 0x1000; i += 2) {
 							UINT16 *Ram = (UINT16*)SRam;
 							Ram[(address + i) >> 1] = 0xffff;
@@ -2755,8 +2787,7 @@ static void flashrom_write(UINT16 address, UINT16 data)
 			break;
 		}
 		case 0xa0:
-			//bprintf(0, _T("write word %x  ->  %x\n"), address, data);
-
+			//bprintf(0, _T("----------------flash write word %x  ->  %x\n"), address, data);
 			UINT16 *Ram = (UINT16*)SRam;
 			Ram[(address) >> 1] = data;
 
@@ -2768,26 +2799,43 @@ static void flashrom_write(UINT16 address, UINT16 data)
 
 static void __fastcall sot4w_writeword(UINT32 address, UINT16 data)
 {
-//	bprintf(0, _T("ww %x  %x\n"), address, data);
+	//if (counter) bprintf(0, _T("ww %x  %x   PC: %x\n"), address, data, SekGetPC(-1));
 	flashrom_write(address, data);
 }
 
 static void __fastcall sot4w_writebyte(UINT32 address, UINT8 data)
 {
+	//if (counter)	bprintf(0, _T("wb %x  %x    PC: %x\n"), address, data, SekGetPC(-1));
 	flashrom_write(address, data);
 }
 
 static UINT16 __fastcall sot4w_readword(UINT32 address)
 {
-	UINT16 *Ram = (UINT16*)SRam;
-	UINT16 rc = Ram[(address & 0xffff) >> 1];
+	UINT16 rc = 0;
+	if (flashrom_cmd == 0x88) {
+		static UINT16 table_[0x20] = {
+			0x2923, 0xbe84, 0xe16c, 0xd6ae, 0x5290, 0x49f1, 0xf1bb, 0xe9eb,
+			0xb3a6, 0xdb3c, 0x870c, 0x3e99, 0x245e, 0x0d1c, 0x06b7, 0x47de,
+			0xb312, 0x4dc8, 0x43bb, 0x8ba6, 0x1f03, 0x5a7d, 0x0938, 0x251f,
+			0x5dd4, 0xcbfc, 0x96f5, 0x453b, 0x0000, 0x0000, 0x0000, 0x0000
+		};
+		rc = table_[(address&0x3f) >> 1];
+		bprintf(0, _T("flash secured sector.rw %x  %x   PC: %x\n"), address, rc, SekGetPC(-1));
+		return rc;
+	}
+
+	UINT16 *Ram = (UINT16*)RomMain;
+	rc = Ram[(address & 0x7fffff) >> 1];
+	//if (counter)	bprintf(0, _T("rw %x  %x   PC: %x\n"), address, rc, SekGetPC(-1));
 //	bprintf(0, _T("sram read word %x:  %x\n"), address, rc);
 	return rc;
 }
 
 static UINT8 __fastcall sot4w_readbyte(UINT32 address)
 {
-	return flashrom_read(address);
+	UINT8 rc = flashrom_read(address);
+	//if (counter) bprintf(0, _T("rb %x  %x    PC: %x\n"), address, rc, SekGetPC(-1));
+	return rc;
 }
 
 // vx5200 mp3 player chip
@@ -2922,13 +2970,33 @@ static void __fastcall sot4w_mp3_writebyte(UINT32 address, UINT8 data)
 
 static void SetupCustomCartridgeMappers()
 {
+	if (colocodxmode) {
+		bprintf(0, _T("colocodx mode!\n"));
+		SekOpen(0);
+		SekMapHandler(7, 0x000000, 0x00ffff, MAP_READ | MAP_WRITE);
+		SekSetReadByteHandler(7, sot4w_readbyte);
+		SekSetReadWordHandler(7, sot4w_readword);
+		SekSetWriteByteHandler(7, sot4w_writebyte);
+		SekSetWriteWordHandler(7, sot4w_writeword);
+
+		SRam = &RomMain[0x7f0000];
+		SekMapHandler(8, 0x7f0000, 0x7fffff, MAP_READ | MAP_WRITE);
+		SekSetReadByteHandler(8, sot4w_readbyte);
+		SekSetReadWordHandler(8, sot4w_readword);
+		SekSetWriteByteHandler(8, sot4w_writebyte);
+		SekSetWriteWordHandler(8, sot4w_writeword);
+		SekClose();
+	}
+
 	if (sot4wmode) {
 		SekOpen(0);
 		SekMapHandler(7, 0x000000, 0x00ffff, MAP_READ | MAP_WRITE);
 		SekSetReadByteHandler(7, sot4w_readbyte);
 		SekSetWriteByteHandler(7, sot4w_writebyte);
 
+		SRam = &RomMain[0x3f0000];
 		SekMapHandler(8, 0x3f0000, 0x3fffff, MAP_READ | MAP_WRITE);
+		SekSetReadByteHandler(8, sot4w_readbyte);
 		SekSetReadWordHandler(8, sot4w_readword);
 		SekSetWriteByteHandler(8, sot4w_writebyte);
 		SekSetWriteWordHandler(8, sot4w_writeword);
@@ -3380,6 +3448,7 @@ static void InstallSRAMHandlers(bool MaskAddr)
 	RamMisc->SRamHandlersInstalled = 1;
 }
 
+#if 0
 static UINT8 __fastcall Megadrive6658ARegReadByte(UINT32 sekAddress)
 {
 	if (sekAddress & 1) return RamMisc->SRamActive;
@@ -3417,6 +3486,7 @@ static void __fastcall Megadrive6658ARegWriteWord(UINT32 sekAddress, UINT16 word
 {
 	bprintf(PRINT_NORMAL, _T("6658A Reg write word value %04x to location %08x\n"), wordValue, sekAddress);
 }
+#endif
 
 static UINT8 __fastcall x200000EEPROMReadByte(UINT32 sekAddress)
 {
@@ -3524,9 +3594,9 @@ static void MegadriveSetupSRAM()
 	RamMisc->SRamReg = 0;
 	MegadriveBackupRam = NULL;
 
-	if (papriummode || sot4wmode) {
+	if (papriummode || sot4wmode || colocodxmode) {
 		RamMisc->SRamDetected = 1;
-		return;  // sram handled by mapper (paprium.h)
+		return;  // sram handled by paprium.h, flash eeprom (sot4w, colocodx)
 	}
 
 	if (/*(BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) ||*/ (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000)) {
@@ -3766,6 +3836,15 @@ INT32 MegadriveInitSot4w()
 	return rc;
 }
 
+INT32 MegadriveInitColocodx()
+{
+	colocodxmode = 1;
+
+	INT32 rc = MegadriveInit();
+
+	return rc;
+}
+
 INT32 MegadriveInit()
 {
 	BurnAllocMemIndex();
@@ -3935,6 +4014,7 @@ INT32 MegadriveExit()
 	FourWayPlayMode = 0;
 
 	psolarmode = 0;
+	colocodxmode = 0;
 
 	return 0;
 }

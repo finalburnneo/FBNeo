@@ -770,6 +770,8 @@ static struct BurnRomInfo HangonRomDesc[] = {
 	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
 	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
 	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
+	{ "315-5103.6e",      0x000eb, 0x85284c32, BRF_OPT },
+	{ "315-5121.2a",      0x000eb, 0x5dd89643, BRF_OPT },
 };
 
 
@@ -816,6 +818,8 @@ static struct BurnRomInfo Hangon1RomDesc[] = {
 	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
 	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
 	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
+	{ "315-5103.6e",      0x000eb, 0x85284c32, BRF_OPT },
+	{ "315-5121.2a",      0x000eb, 0x5dd89643, BRF_OPT },
 };
 
 
@@ -862,6 +866,8 @@ static struct BurnRomInfo Hangon2RomDesc[] = {
 	{ "315-5118.bin",     0x0008f, 0x51d448a2, BRF_OPT },
 	{ "315-5119.bin",     0x0008f, 0xa37f00e1, BRF_OPT },
 	{ "315-5120.bin",     0x0008f, 0xba5f92ec, BRF_OPT },
+	{ "315-5103.6e",      0x000eb, 0x85284c32, BRF_OPT },
+	{ "315-5121.2a",      0x000eb, 0x5dd89643, BRF_OPT },
 };
 
 

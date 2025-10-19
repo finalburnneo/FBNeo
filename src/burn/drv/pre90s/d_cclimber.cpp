@@ -3536,13 +3536,13 @@ static struct BurnRomInfo swimmerbRomDesc[] = {
 
 	{ "sw12.4k",		0x1000, 0x2eee9bcb, 7 | BRF_PRG | BRF_ESS }, //  8 Z80 #2 Code
 
-	{ "sw15.18k",		0x1000, 0x4f3608cb, 3 | BRF_GRA },           //  9 Sprites & Tiles
-	{ "sw14.18l",		0x1000, 0x7181c8b4, 3 | BRF_GRA },           // 10
-	{ "sw13.18m",		0x1000, 0x2eb1af5c, 3 | BRF_GRA },           // 11
+	{ "sw15.18k",		0x1000, 0x4f3608cb, 2 | BRF_GRA },           //  9 Sprites & Tiles
+	{ "sw14.18l",		0x1000, 0x7181c8b4, 2 | BRF_GRA },           // 10
+	{ "sw13.18m",		0x1000, 0x2eb1af5c, 2 | BRF_GRA },           // 11
 
-	{ "sw23.6c",		0x0800, 0x9ca67e24, 4 | BRF_GRA },           // 12 Big Sprites
-	{ "sw22.5c",		0x0800, 0x02c10992, 4 | BRF_GRA },           // 13
-	{ "sw21.4c",		0x0800, 0x7f4993c1, 4 | BRF_GRA },           // 14
+	{ "sw23.6c",		0x0800, 0x9ca67e24, 3 | BRF_GRA },           // 12 Big Sprites
+	{ "sw22.5c",		0x0800, 0x02c10992, 3 | BRF_GRA },           // 13
+	{ "sw21.4c",		0x0800, 0x7f4993c1, 3 | BRF_GRA },           // 14
 
 	{ "24s10.13b",		0x0100, 0x8e35b97d, 6 | BRF_GRA },           // 15 Color PROMs
 	{ "24s10.13a",		0x0100, 0xc5f24909, 6 | BRF_GRA },           // 16

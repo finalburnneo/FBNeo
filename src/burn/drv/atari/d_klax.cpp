@@ -560,6 +560,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Klax (version 6)
+// internal ROM test date: 13FEB1990 11:10:09
 
 static struct BurnRomInfo klaxRomDesc[] = {
 	{ "136075-6006.3n",			0x10000, 0xe8991709, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -589,7 +590,7 @@ STD_ROM_PICK(klax)
 STD_ROM_FN(klax)
 
 struct BurnDriver BurnDrvKlax = {
-	"klax", NULL, NULL, NULL, "1989",
+	"klax", NULL, NULL, NULL, "1990",
 	"Klax (version 6)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -600,6 +601,7 @@ struct BurnDriver BurnDrvKlax = {
 
 
 // Klax (Germany, version 2)
+// internal ROM test date: 13FEB1990 11:10:09
 
 static struct BurnRomInfo klaxd2RomDesc[] = {
 	{ "136075-2206.3n",			0x10000, 0x9d1a713b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -629,7 +631,7 @@ STD_ROM_PICK(klaxd2)
 STD_ROM_FN(klaxd2)
 
 struct BurnDriver BurnDrvKlaxd2 = {
-	"klaxd2", "klax", NULL, NULL, "1989",
+	"klaxd2", "klax", NULL, NULL, "1990",
 	"Klax (Germany, version 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -640,6 +642,7 @@ struct BurnDriver BurnDrvKlaxd2 = {
 
 
 // Klax (Japan, version 3)
+// internal ROM test date: 20JAN1990 14:47:06
 
 static struct BurnRomInfo klaxj3RomDesc[] = {
 	{ "136075-3406.3n",			0x10000, 0xab2aa50b, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -669,7 +672,7 @@ STD_ROM_PICK(klaxj3)
 STD_ROM_FN(klaxj3)
 
 struct BurnDriver BurnDrvKlaxj3 = {
-	"klaxj3", "klax", NULL, NULL, "1989",
+	"klaxj3", "klax", NULL, NULL, "1990",
 	"Klax (Japan, version 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -680,6 +683,7 @@ struct BurnDriver BurnDrvKlaxj3 = {
 
 
 // Klax (Japan, version 4)
+// internal ROM test date: 13FEB1990 11:10:09
 
 static struct BurnRomInfo klaxj4RomDesc[] = {
 	{ "136075-4406.3n",			0x10000, 0xfc4045ec, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -709,7 +713,7 @@ STD_ROM_PICK(klaxj4)
 STD_ROM_FN(klaxj4)
 
 struct BurnDriver BurnDrvKlaxj4 = {
-	"klaxj4", "klax", NULL, NULL, "1989",
+	"klaxj4", "klax", NULL, NULL, "1990",
 	"Klax (Japan, version 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -720,6 +724,7 @@ struct BurnDriver BurnDrvKlaxj4 = {
 
 
 // Klax (version 4)
+// internal ROM test date: 20JAN1990 14:47:06
 
 static struct BurnRomInfo klax4RomDesc[] = {
 	{ "136075-5006.3n",			0x10000, 0x65eb9a31, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -749,7 +754,7 @@ STD_ROM_PICK(klax4)
 STD_ROM_FN(klax4)
 
 struct BurnDriver BurnDrvKlax4 = {
-	"klax4", "klax", NULL, NULL, "1989",
+	"klax4", "klax", NULL, NULL, "1990",
 	"Klax (version 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -760,6 +765,7 @@ struct BurnDriver BurnDrvKlax4 = {
 
 
 // Klax (version 5)
+// internal ROM test date: 20JAN1990 14:47:06
 
 static struct BurnRomInfo klax5RomDesc[] = {
 	{ "13607-5006.3n",			0x10000, 0x05c98fc0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -789,7 +795,7 @@ STD_ROM_PICK(klax5)
 STD_ROM_FN(klax5)
 
 struct BurnDriver BurnDrvKlax5 = {
-	"klax5", "klax", NULL, NULL, "1989",
+	"klax5", "klax", NULL, NULL, "1990",
 	"Klax (version 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
@@ -800,7 +806,7 @@ struct BurnDriver BurnDrvKlax5 = {
 
 
 // Klax (version 5, bootleg set 1)
-// derived from 'klax5' set
+// derived from 'klax5' set, internal ROM test date: 20JAN1990 14:47:06
 
 static struct BurnRomInfo klax5blRomDesc[] = {
 	{ "6.bin",					0x10000, 0x3cfd2748, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -824,11 +830,46 @@ STD_ROM_PICK(klax5bl)
 STD_ROM_FN(klax5bl)
 
 struct BurnDriverD BurnDrvKlax5bl = {
-	"klax5bl", "klax", NULL, NULL, "1989",
+	"klax5bl", "klax", NULL, NULL, "1990",
 	"Klax (version 5, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klax5blRomInfo, klax5blRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	336, 240, 4, 3
+};
+
+
+// Klax (version 5, bootleg set 2)
+// derived from 'klax5' set, closer than klax5bl, internal ROM test date: 20JAN1990 14:47:06
+
+static struct BurnRomInfo klax5bl2RomDesc[] = {
+	{ "3.ic31",					0x10000, 0xe43699f3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "1.ic13",					0x10000, 0xdc67f13a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.ic30",					0x10000, 0xf1b8e588, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.ic12",					0x10000, 0xadbe33a8, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "8.ic116",				0x10000, 0xebe4bd96, 2 | BRF_GRA },           //  4 Sprites and Backgrounds
+	{ "7.ic117",				0x10000, 0x3b79c0d3, 2 | BRF_GRA },           //  5
+	{ "12.ic134",				0x10000, 0xef7712fd, 2 | BRF_GRA },           //  6
+	{ "11.ic135",				0x10000, 0xc2d8ce0c, 2 | BRF_GRA },           //  7
+
+	{ "10.ic101",				0x10000, 0x5c551e92, 3 | BRF_GRA },           //  8 Sprites and Backgrounds
+	{ "9.ic102",				0x10000, 0x29708e34, 3 | BRF_GRA },           //  9
+
+	{ "6.ic22",					0x10000, 0xedd4c42c, 7 | BRF_PRG | BRF_ESS }, // 10 Audio CPU Code?
+	{ "5.ic23",					0x10000, 0xa245e005, 7 | BRF_PRG | BRF_ESS }, // 11
+};
+
+STD_ROM_PICK(klax5bl2)
+STD_ROM_FN(klax5bl2)
+
+struct BurnDriverD BurnDrvKlax5bl2 = {
+	"klax5bl2", "klax", NULL, NULL, "1990",
+	"Klax (version 5, bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, klax5bl2RomInfo, klax5bl2RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
 };

@@ -6848,6 +6848,27 @@ static struct BurnRomInfo GalaktronRomDesc[] = {
 STD_ROM_PICK(Galaktron)
 STD_ROM_FN(Galaktron)
 
+static struct BurnRomInfo Galaktrons3RomDesc[] = {
+	{ "1b.1b",   			0x00400, 0x7fa16c70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2b.2b",   			0x00400, 0xafec8adb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3b.3b",   			0x00400, 0x770988b5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4b.4b",   			0x00400, 0xde7e7770, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5b.5b",   			0x00400, 0x8718391e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6b.6b",   			0x00400, 0x9175882b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7a.7a",   			0x00400, 0x6a57f9e8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8a.8a",   			0x00400, 0x8eeb4c6f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "9a.9a",   			0x00400, 0x7bd2befa, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "10a.10a",   			0x00400, 0x05bf58ed, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "7.7a",   			0x00800, 0x833e112c, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "9.9a",   			0x00800, 0xeca21395, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "ims5610.bin",   		0x00020, 0x24652bc4, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaktrons3)
+STD_ROM_FN(Galaktrons3)
+
 static struct BurnRomInfo GalkamikaRomDesc[] = {
 	{ "3.bin",   			0x00800, 0x51ba70ac, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.bin",   			0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7355,6 +7376,16 @@ struct BurnDriver BurnDrvGalaktron = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaktronRomInfo, GalaktronRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaktrons3 = {
+	"galaktrons3", "galaxian", NULL, NULL, "1979",
+	"Galaktron (Sede 3)\0", NULL, "bootleg (Sede 3)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galaktrons3RomInfo, Galaktrons3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

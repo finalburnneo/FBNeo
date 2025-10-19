@@ -5562,6 +5562,46 @@ struct BurnDriver BurnDrvEdfa = {
 };
 
 
+// E.D.F.: Earth Defense Force (set 3)
+
+static struct BurnRomInfo edfbRomDesc[] = {
+	{ "edf_5_ver1.b5",	0x40000, 0x1a5958a9, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "edf_6_ver1.b3",	0x40000, 0xb1987203, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "edf1.f5",		0x20000, 0x2290ea19, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "edf2.f3",		0x20000, 0xce93643e, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "edf.mcu",		0x04000, 0x1503026d, 0 | BRF_OPT },           //  4 MCU Code
+
+	{ "edf_m04.rom",	0x80000, 0x6744f406, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
+
+	{ "edf_m05.rom",	0x80000, 0x6f47e456, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
+
+	{ "edf_09.rom",		0x20000, 0x96e38983, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
+
+	{ "edf_m03.rom",	0x80000, 0xef469449, 6 | BRF_GRA },           //  8 Sprites
+
+	{ "edf_m02.rom",	0x40000, 0xfc4281d2, 7 | BRF_SND },           //  9 OKI #0 Samples
+
+	{ "edf_m01.rom",	0x40000, 0x9149286b, 8 | BRF_SND },           // 10 OKI #1 Samples
+
+	{ "rd.20n",			0x00200, 0x1d877538, 9 | BRF_GRA },           // 11 Priority PROM
+};
+
+STD_ROM_PICK(edfb)
+STD_ROM_FN(edfb)
+
+struct BurnDriver BurnDrvEdfb = {
+	"edfb", "edf", NULL, NULL, "1991",
+	"E.D.F.: Earth Defense Force (set 3\0", NULL, "Jaleco", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	NULL, edfbRomInfo, edfbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
+	edfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
 // E.D.F.: Earth Defense Force (North America)
 
 static struct BurnRomInfo edfuRomDesc[] = {
@@ -6203,7 +6243,7 @@ static struct BurnRomInfo peekabooRomDesc[] = {
 	{ "peek a boo j ver 1.1 - 3.ic29",	0x020000, 0xf5f4cf33, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "peek a boo j ver 1.1 - 2.ic28",	0x020000, 0x7b3d430d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "mo-90233.mcu",					0x001000, 0x00000000, 0 | BRF_NODUMP },        //  2 MCU Code
+	{ "mo-90233.mcu",					0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
 
 	{ "5",								0x080000, 0x34fa07bb, 3 | BRF_GRA },           //  3 Tilemap #0 Tiles
 
@@ -6241,7 +6281,7 @@ static struct BurnRomInfo peekaboouRomDesc[] = {
 	{ "pb92127a_3_ver1.0.ic29",	0x020000, 0x4603176a, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "pb92127a_2_ver1.0.ic28",	0x020000, 0x7bf4716b, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "mo-90233.mcu",			0x001000, 0x00000000, 0 | BRF_NODUMP },        //  2 MCU Code
+	{ "mo-90233.mcu",			0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
 
 	{ "5",						0x080000, 0x34fa07bb, 3 | BRF_GRA },           //  3 Tilemap #0 Tiles
 

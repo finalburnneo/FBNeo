@@ -9140,7 +9140,7 @@ struct BurnDriver BurnDrvpce_bughunt = {
 // Daimakaimura - Improvement Hack (Hack, SGX)
 // https://romhackplaza.org/romhacks/daimakaimura-improvement-hack-pc-engine-supergrafx/
 static struct BurnRomInfo sgx_daimakaiiRomDesc[] = {
-	{ "Daimakaimura Improvement Hack (2024)(Upsilandre).pce", 0x100000, 0x460d8892, BRF_PRG | BRF_ESS },
+	{ "Daimakaimura Improvement Hack (2024)(Upsilandre).pce", 0x100000, 0x86c295a0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sgx_daimakaii)

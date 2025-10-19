@@ -1752,7 +1752,7 @@ struct BurnDriver BurnDrvMchampdb = {
 };
 
 
-// Tang Tang (ver. 0526, 26/05/2000)
+// Tang Tang (ver. 0526, 26/05/2000, set 1)
 
 static struct BurnRomInfo tangtangRomDesc[] = {
 	{ "esd2.cu02",	0x040000, 0xb6dd6e3d, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
@@ -1826,10 +1826,46 @@ static INT32 TangtangInit()
 
 struct BurnDriver BurnDrvTangtang = {
 	"tangtang", NULL, NULL, NULL, "2000",
-	"Tang Tang (ver. 0526, 26/05/2000)\0", NULL, "ESD", "Miscellaneous",
+	"Tang Tang (ver. 0526, 26/05/2000, set 1)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, tangtangRomInfo, tangtangRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
+	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Tang Tang (ver. 0526, 26/05/2000, set 2)
+
+static struct BurnRomInfo tangtangaRomDesc[] = {
+	{ "esd_2.cu02",	0x040000, 0x3d244f6f, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd_1.cu03",	0x040000, 0x9e24a934, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",	0x040000, 0xd48ecc5c, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "xju04.bin",	0x040000, 0xf999b9d7, 3 | BRF_GRA },		//  3 - Sprites
+	{ "xju05.bin",	0x040000, 0x679302cf, 3 | BRF_GRA },		//  4
+	{ "xju06.bin",	0x040000, 0x01f59ff7, 3 | BRF_GRA },		//  5
+	{ "xju07.bin",	0x040000, 0x556acac3, 3 | BRF_GRA },		//  6
+	{ "xju08.bin",	0x040000, 0xecc2d8c7, 3 | BRF_GRA },		//  7
+
+	{ "fu35.bin",	0x200000, 0x84f3f833, 4 | BRF_GRA },		//  8 - Tiles
+	{ "fu34.bin",	0x200000, 0xbf91f543, 4 | BRF_GRA },		//  9
+
+	{ "esd4.su10",	0x020000, 0xf2dfb02d, 5 | BRF_SND },		// 10 - OKI Samples
+	
+	{ "eeprom",		0x000080, 0x00514989, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(tangtanga)
+STD_ROM_FN(tangtanga)
+
+struct BurnDriver BurnDrvTangtanga = {
+	"tangtanga", "tangtang", NULL, NULL, "2000",
+	"Tang Tang (ver. 0526, 26/05/2000, set 2)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, tangtangaRomInfo, tangtangaRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
 	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

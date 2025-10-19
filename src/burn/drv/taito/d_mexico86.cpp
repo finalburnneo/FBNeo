@@ -1346,6 +1346,12 @@ static struct BurnRomInfo mexico86RomDesc[] = {
 	{ "a87-10.g15",			0x00100, 0xbe6eb1f0, 6 | BRF_GRA },           //  9 Color Data
 	{ "a87-12.g12",			0x00100, 0x3e953444, 6 | BRF_GRA },           // 10
 	{ "a87-11.g14",			0x00100, 0x14f6c28d, 6 | BRF_GRA },           // 11
+	
+	{ "pal16l8.1",			0x00104, 0x87a26c2b, 7 | BRF_OPT },			  // 13 PLDs
+	{ "pal16r4.2",			0x00104, 0x213a71d1, 7 | BRF_OPT },			  // 14
+	{ "pal16l8.3",			0x00104, 0xf9ce900a, 7 | BRF_OPT },			  // 15
+	{ "pal16l8.4",			0x00104, 0x39120b6f, 7 | BRF_OPT },			  // 16
+	{ "pal16l8.5",			0x00104, 0x1d27f7b9, 7 | BRF_OPT },			  // 17
 };
 
 STD_ROM_PICK(mexico86)

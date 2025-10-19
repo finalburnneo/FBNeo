@@ -1945,12 +1945,45 @@ static INT32 SamuraiaInit() // sngkace, sngkacea
 	return CommonInit(PSIKYO_HW_SAMURAIA, NULL, SamuraiaCallback);
 }
 
-struct BurnDriver BurnDrvSamuraiA = {
+struct BurnDriver BurnDrvSamuraia = {
 	"samuraia", NULL, NULL, NULL, "1993",
 	"Samurai Aces (World)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, samuraiaRomInfo, samuraiaRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, samuraiaDIPInfo,
+	SamuraiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
+	224, 320, 3, 4
+};
+
+
+// Samurai Aces (Korea?)
+// PCB was found in Korea. Banpresto copyright removed (still shows the Psikyo splash screen)
+
+static struct BurnRomInfo samuraiakRomDesc[] = {
+	{ "u127.bin",     0x080000, 0xed4a3626, 1 | BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "u126.bin",     0x080000, 0x21803147, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "u14.bin",      0x200000, 0x00a546cb, 3 | BRF_GRA },			 //  2 Sprite data
+
+	{ "u11.bin",      0x040000, 0x11a04d91, 7 | BRF_GRA },			 //  3 Sprite LUT
+
+	{ "u34.bin",      0x100000, 0xe6a75bd8, 4 | BRF_GRA },			 //  4 Tile data
+	{ "u35.bin",      0x100000, 0xc4ca0164, 4 | BRF_GRA },			 //  5
+
+	{ "3-u58.bin",    0x020000, 0x310f5c76, 2 | BRF_ESS | BRF_PRG }, //  6 CPU #1 code
+
+	{ "u68.bin",      0x100000, 0x9a7f6c34, 6 | BRF_SND },			 //  7 YM2610 (delta-t) ADPCM data
+};
+
+STD_ROM_PICK(samuraiak)
+STD_ROM_FN(samuraiak)
+
+struct BurnDriver BurnDrvSamuraiak = {
+	"samuraiak", "samuraia", NULL, NULL, "1993",
+	"Samurai Aces (Korea?)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	NULL, samuraiakRomInfo, samuraiakRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, samuraiaDIPInfo,
 	SamuraiaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
 };
@@ -1977,7 +2010,7 @@ static struct BurnRomInfo sngkaceRomDesc[] = {
 STD_ROM_PICK(sngkace)
 STD_ROM_FN(sngkace)
 
-struct BurnDriver BurnDrvSngkAce = {
+struct BurnDriver BurnDrvSngkace = {
 	"sngkace", "samuraia", NULL, NULL, "1993",
 	"Sengoku Ace (Japan, set 1)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30A8\u30FC\u30B9 (Japan, set 1)\0Sengoku Ace\0", NULL, NULL, NULL,
@@ -2010,7 +2043,7 @@ static struct BurnRomInfo sngkaceaRomDesc[] = {
 STD_ROM_PICK(sngkacea)
 STD_ROM_FN(sngkacea)
 
-struct BurnDriver BurnDrvSngkAcea = {
+struct BurnDriver BurnDrvSngkacea = {
 	"sngkacea", "samuraia", NULL, NULL, "1993",
 	"Sengoku Ace (Japan, set 2)\0", NULL, "Psikyo (Banpresto license)", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30A8\u30FC\u30B9 (Japan, set 2)\0Sengoku Ace\0", NULL, NULL, NULL,

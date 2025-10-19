@@ -2735,7 +2735,8 @@ static struct BurnRomInfo wrally2RomDesc[] = {
 	{ "dallas_usa_wr-2_2_64_usa_e47e_31-7.bin",		0x80000, 0x5e6a364a, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
 	{ "dallas_usa_wr-2_1_63_usa_c584_31-7.bin",		0x80000, 0x5c106494, 1 | BRF_PRG | BRF_ESS },         //  1
 
-	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+	// 'bugfixed' version of DS5002FP code, from Gaelco's repair archives
+	{ "wrally2_ds5002fp_sram_new.bin",	0x08000, 0xbcf47f69, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
 
 	{ "wr2.16d",		0x80000, 0xad26086b, 3 | BRF_GRA },                       //  3 Graphics & Samples
 	{ "wr2.17d",		0x80000, 0xc1ec0745, 3 | BRF_GRA },                       //  4
@@ -2783,7 +2784,9 @@ static struct BurnRomInfo wrally2aRomDesc[] = {
 	{ "wr2_64.ic64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS },         //  0 68k Code
 	{ "wr2_63.ic63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS },         //  1
 
-	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+	// 'older' version of DS5002FP code, from Gaelco's repair archives
+	// very similar to dumped version, except 0xff fill instead of 0x00 and minor change to startup code
+	{ "wrally2_ds5002fp_sram_old.bin",	0x08000, 0xb0e25571, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
 	
 	{ "wr2_ic68.ic68",  0x0100000, 0x4a75ffaa, 3 | BRF_OPT },                     //  3 Graphics & Samples
 

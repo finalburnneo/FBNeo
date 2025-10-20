@@ -21644,6 +21644,24 @@ struct BurnDriver BurnDrvsms_ascend = {
 	256, 192, 4, 3
 };
 
+// Astro Climber (HB, v1.2.1)
+static struct BurnRomInfo sms_astroclimberRomDesc[] = {
+	{ "Astro Climber v1.2.1 (2025)(BadComputer).sms",	65536, 0x7f66528c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_astroclimber)
+STD_ROM_FN(sms_astroclimber)
+
+struct BurnDriver BurnDrvsms_astroclimber = {
+	"sms_astroclimber", NULL, NULL, NULL, "2025",
+	"Astro Climber (HB, v1.2.1)\0", NULL, "BadComputer", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_astroclimberRomInfo, sms_astroclimberRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Astro Force (HB, v1.03)
 static struct BurnRomInfo sms_astforceRomDesc[] = {
 	{ "Astro Force v1.03 (2017)(MikGames).sms",	262144, 0x1bad75c5, BRF_PRG | BRF_ESS },
@@ -22296,7 +22314,7 @@ struct BurnDriver BurnDrvsms_forestescape = {
 
 // Frontier Force (HB, v1.1)
 static struct BurnRomInfo sms_frontierforceRomDesc[] = {
-	{ "Frontier Force v1.1 (2025)(Badcomputer).sms",	524288, 0xfd09f46d, BRF_PRG | BRF_ESS },
+	{ "Frontier Force v1.1 (2025)(BadComputer).sms",	524288, 0xfd09f46d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_frontierforce)
@@ -22304,7 +22322,7 @@ STD_ROM_FN(sms_frontierforce)
 
 struct BurnDriver BurnDrvsms_frontierforce = {
 	"sms_frontierforce", NULL, NULL, NULL, "2025",
-	"Frontier Force (HB, v1.1)\0", NULL, "Badcomputer", "Sega Master System",
+	"Frontier Force (HB, v1.1)\0", NULL, "BadComputer", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_frontierforceRomInfo, sms_frontierforceRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22314,7 +22332,7 @@ struct BurnDriver BurnDrvsms_frontierforce = {
 
 // Frontier Force (HB, Alpha Demo v0.1.2.3)
 static struct BurnRomInfo sms_frontierforcedRomDesc[] = {
-	{ "Frontier Force - Alpha Demo v0.1.2.3 (2024)(Badcomputer).sms",	262144, 0xdef51eb0, BRF_PRG | BRF_ESS },
+	{ "Frontier Force - Alpha Demo v0.1.2.3 (2024)(BadComputer).sms",	262144, 0xdef51eb0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_frontierforced)
@@ -22322,28 +22340,10 @@ STD_ROM_FN(sms_frontierforced)
 
 struct BurnDriver BurnDrvsms_frontierforced = {
 	"sms_frontierforced", "sms_frontierforce", NULL, NULL, "2024",
-	"Frontier Force (HB, Alpha Demo v0.1.2.3)\0", NULL, "Badcomputer", "Sega Master System",
+	"Frontier Force (HB, Alpha Demo v0.1.2.3)\0", NULL, "BadComputer", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_frontierforcedRomInfo, sms_frontierforcedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-// Astro Climber (HB, v1.2.1), https://badcomputer0.itch.io/astro-climber
-static struct BurnRomInfo sms_astroclimberRomDesc[] = {
-	{ "Astro Climber v1.2.1 (2025)(Badcomputer).sms",	65536, 0x7f66528c, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_astroclimber)
-STD_ROM_FN(sms_astroclimber)
-
-struct BurnDriver BurnDrvsms_astroclimber = {
-	"sms_astroclimber", NULL, NULL, NULL, "2025",
-	"Astro Climber (HB, v1.2.1)\0", NULL, "Badcomputer", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
-	SMSGetZipName, sms_astroclimberRomInfo, sms_astroclimberRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

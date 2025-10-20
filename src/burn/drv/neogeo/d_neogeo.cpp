@@ -16970,34 +16970,34 @@ struct BurnDriver BurnDrvKarnovre = {
 // Magician Lord - AGAIN CHANGES FROM HELL (Hack, v1.0.0)
 // https://github.com/Boomchil/maglord-acfh/
 
-static struct BurnRomInfo maglordafchRomDesc[] = {
-	{ "005-p1afch.p1",  0x080000, 0x9486bcf4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ MB834200
+static struct BurnRomInfo maglordacfhRomDesc[] = {
+	{ "005-p1acfh.p1",	0x080000, 0x9486bcf4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ MB834200
 
-	{ "005-s1afch.s1",  0x020000, 0x0e1839b2, 2 | BRF_GRA },           //  1 Text layer tiles / MB831000
+	{ "005-s1acfh.s1",	0x020000, 0x0e1839b2, 2 | BRF_GRA },           //  1 Text layer tiles / MB831000
 
-	{ "005-c1.c1",    	0x080000, 0x806aee34, 3 | BRF_GRA },           //  2 Sprite data 		/ MB834200
-	{ "005-c2.c2",    	0x080000, 0x34aa9a86, 3 | BRF_GRA },           //  3 					/ MB834200
-	{ "005-c3.c3",    	0x080000, 0xc4c2b926, 3 | BRF_GRA },           //  4 					/ MB834200
-	{ "005-c4.c4",    	0x080000, 0x9c46dcf4, 3 | BRF_GRA },           //  5 					/ MB834200
-	{ "005-c5.c5",    	0x080000, 0x69086dec, 3 | BRF_GRA },           //  6 					/ MB834200
-	{ "005-c6.c6",    	0x080000, 0xab7ac142, 3 | BRF_GRA },           //  7 					/ MB834200
+	{ "005-c1.c1",		0x080000, 0x806aee34, 3 | BRF_GRA },           //  2 Sprite data 		/ MB834200
+	{ "005-c2.c2",		0x080000, 0x34aa9a86, 3 | BRF_GRA },           //  3 					/ MB834200
+	{ "005-c3.c3",		0x080000, 0xc4c2b926, 3 | BRF_GRA },           //  4 					/ MB834200
+	{ "005-c4.c4",		0x080000, 0x9c46dcf4, 3 | BRF_GRA },           //  5 					/ MB834200
+	{ "005-c5.c5",		0x080000, 0x69086dec, 3 | BRF_GRA },           //  6 					/ MB834200
+	{ "005-c6.c6",		0x080000, 0xab7ac142, 3 | BRF_GRA },           //  7 					/ MB834200
 
-	{ "005-m1.m1",    	0x040000, 0x26259f0f, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code 		/ MB832000
+	{ "005-m1.m1",		0x040000, 0x26259f0f, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code 		/ MB832000
 
-	{ "005-v11.v11",  	0x080000, 0xcc0455fd, 5 | BRF_SND },           //  9 Sound data 		/ MB834000
-	{ "005-v21.v21",  	0x080000, 0xf94ab5b7, 6 | BRF_SND },           // 10 					/ MB834000
-	{ "005-v22.v22",  	0x080000, 0x232cfd04, 6 | BRF_SND },           // 11 					/ MB834000
+	{ "005-v11.v11",	0x080000, 0xcc0455fd, 5 | BRF_SND },           //  9 Sound data 		/ MB834000
+	{ "005-v21.v21",	0x080000, 0xf94ab5b7, 6 | BRF_SND },           // 10 					/ MB834000
+	{ "005-v22.v22",	0x080000, 0x232cfd04, 6 | BRF_SND },           // 11 					/ MB834000
 };
 
-STDROMPICKEXT(maglordafch, maglordafch, neogeo)
-STD_ROM_FN(maglordafch)
+STDROMPICKEXT(maglordacfh, maglordacfh, neogeo)
+STD_ROM_FN(maglordacfh)
 
-struct BurnDriver BurnDrvMaglordafch = {
-	"maglordafch", "maglord", "neogeo", NULL, "2025",
+struct BurnDriver BurnDrvMaglordacfh = {
+	"maglordacfh", "maglord", "neogeo", NULL, "2025",
 	"Magician Lord - AGAIN CHANGES FROM HELL (Hack, v1.0.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM | GBF_RUNGUN, 0,
-	NULL, maglordafchRomInfo, maglordafchRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, maglordacfhRomInfo, maglordacfhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };

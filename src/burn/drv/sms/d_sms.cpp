@@ -22330,6 +22330,24 @@ struct BurnDriver BurnDrvsms_frontierforced = {
 	256, 192, 4, 3
 };
 
+// Astro Climber (HB, v1.2.1), https://badcomputer0.itch.io/astro-climber
+static struct BurnRomInfo sms_astroclimberRomDesc[] = {
+	{ "Astro Climber v1.2.1 (2025)(Badcomputer).sms",	65536, 0x7f66528c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_astroclimber)
+STD_ROM_FN(sms_astroclimber)
+
+struct BurnDriver BurnDrvsms_astroclimber = {
+	"sms_astroclimber", NULL, NULL, NULL, "2025",
+	"Astro Climber (HB, v1.2.1)\0", NULL, "Badcomputer", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_astroclimberRomInfo, sms_astroclimberRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Galactic Boogers (GlobalHack)
 static struct BurnRomInfo sms_gboogersRomDesc[] = {
 	{ "Galactic Boogers (GlobalHack)(2020)(Yeti).sms",	1048576, 0xb5dac318, BRF_PRG | BRF_ESS },

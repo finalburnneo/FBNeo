@@ -22546,9 +22546,9 @@ struct BurnDriver BurnDrvsms_gotris = {
 	256, 192, 4, 3
 };
 
-// Grail of the Gods (HB, v0.49b)
+// Grail of the Gods (HB, v0.50)
 static struct BurnRomInfo sms_grailgodsRomDesc[] = {
-	{ "Grail of the Gods v0.49b (2023-25)(Guydebaville).sms",	65536, 0xe6afde12, BRF_PRG | BRF_ESS },
+	{ "Grail of the Gods v0.50 (2023-25)(Guydebaville).sms",	65536, 0x1ccadfd4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grailgods)
@@ -22556,7 +22556,7 @@ STD_ROM_FN(sms_grailgods)
 
 struct BurnDriver BurnDrvsms_grailgods = {
 	"sms_grailgods", NULL, NULL, NULL, "2023-25",
-	"Grail of the Gods (HB, v0.49b)\0", NULL, "Guydebaville", "Sega Master System",
+	"Grail of the Gods (HB, v0.50)\0", NULL, "Guydebaville", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_grailgodsRomInfo, sms_grailgodsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22602,7 +22602,7 @@ struct BurnDriver BurnDrvsms_grazers = {
 
 // Green Beret Remake (HB, v2)
 static struct BurnRomInfo sms_gberetrmkRomDesc[] = {
-	{ "Green Beret Remake (2022)(MikGames).sms",	131072, 0x529172bd, BRF_PRG | BRF_ESS },
+	{ "Green Beret Remake v2 (2022)(MikGames).sms",	131072, 0x529172bd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_gberetrmk)
@@ -22620,7 +22620,7 @@ struct BurnDriver BurnDrvsms_gberetrmk = {
 
 // Grime Z80 (HB)
 static struct BurnRomInfo sms_grimez80RomDesc[] = {
-	{ "Grime Z80 (Chibi Akumas)(2018).sms",	32768, 0x6664c3d5, BRF_PRG | BRF_ESS },
+	{ "Grime Z80 (2018)(Chibi Akumas).sms",	32768, 0x6664c3d5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grimez80)
@@ -23286,9 +23286,9 @@ struct BurnDriver BurnDrvsms_osotos = {
 	256, 192, 4, 3
 };
 
-// Out Run (Color Hack)
+// Out Run - Color Hack (Hack)
 static struct BurnRomInfo sms_outrunchRomDesc[] = {
-	{ "OutRun (Color Hack)(2023)(Slogra).sms",	262208, 0x0fc1cf7a, BRF_PRG | BRF_ESS },
+	{ "OutRun - Color Hack (2023)(Slogra).sms",	262208, 0x0fc1cf7a, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_outrunch)
@@ -23296,7 +23296,7 @@ STD_ROM_FN(sms_outrunch)
 
 struct BurnDriver BurnDrvsms_outrunch = {
 	"sms_outrunch", "sms_outrun", NULL, NULL, "2023",
-	"Out Run (Color Hack)\0", NULL, "Slogra", "Sega Master System",
+	"Out Run - Color Hack (Hack)\0", NULL, "Slogra", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
 	SMSGetZipName, sms_outrunchRomInfo, sms_outrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23412,9 +23412,9 @@ struct BurnDriver BurnDrvsms_piracycod = {
     256, 192, 4, 3
 };
 
-// Psychic World (Enhanced Hack, v1.2)
+// Psychic World - Enhanced Colors (Hack, v1.2)
 static struct BurnRomInfo sms_psychicwenRomDesc[] = {
-	{ "Psychic World (Enhanced Hack, v1.2)(2020)(BcnAbel76).sms",	0x40000, 0xf0ec4500, BRF_PRG | BRF_ESS },
+	{ "Psychic World - Enhanced Colors v1.2 (2020)(BcnAbel76).sms",	0x40000, 0xf0ec4500, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_psychicwen)
@@ -23422,7 +23422,7 @@ STD_ROM_FN(sms_psychicwen)
 
 struct BurnDriver BurnDrvsms_psychicwen = {
 	"sms_psychicwen", "sms_psychicw", NULL, NULL, "2020",
-	"Psychic World (Enhanced Hack, v1.2)\0", NULL, "BcnAbel76", "Sega Master System",
+	"Psychic World - Enhanced Colors (Hack, v1.2)\0", NULL, "BcnAbel76", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_psychicwenRomInfo, sms_psychicwenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23466,11 +23466,10 @@ struct BurnDriver BurnDrvsms_pyramidwex = {
 	256, 192, 4, 3
 };
 
-// Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)
+// Rainbow Islands: The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)
 // by Tom and BcnAbel76: do not edit - dink :)
-
 static struct BurnRomInfo sms_rbislandoRomDesc[] = {
-	{ "rainbow islands - the story of bubble bobble 2 (over the rainbow + color hack).bin",	0x40000, 0x7E43BED5, BRF_PRG | BRF_ESS },
+	{ "Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)(2021)(Tom, BcnAbel76).sms",	0x40000, 0x7E43BED5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_rbislando)
@@ -23478,7 +23477,7 @@ STD_ROM_FN(sms_rbislando)
 
 struct BurnDriver BurnDrvsms_rbislando = {
 	"sms_rbislando", "sms_rbisland", NULL, NULL, "2021",
-	"Rainbow Islands - The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)\0", NULL, "Tom, BcnAbel76", "Sega Master System",
+	"Rainbow Islands: The Story of Bubble Bobble 2 (Over the Rainbow + Color Hack)\0", NULL, "Tom, BcnAbel76", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_rbislandoRomInfo, sms_rbislandoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23488,7 +23487,7 @@ struct BurnDriver BurnDrvsms_rbislando = {
 
 // Rambo III (Hack, FM Mod)
 static struct BurnRomInfo sms_rambo3fmRomDesc[] = {
-	{ "Rambo III FM-Mod (2018)(fatnick).sms",	262144, 0xc2073674, BRF_PRG | BRF_ESS },
+	{ "Rambo III - FM Mod (2018)(fatnick).sms",	262144, 0xc2073674, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_rambo3fm)
@@ -23496,7 +23495,7 @@ STD_ROM_FN(sms_rambo3fm)
 
 struct BurnDriver BurnDrvsms_rambo3fm = {
 	"sms_rambo3fm", "sms_rambo3", NULL, NULL, "2018",
-	"Rambo III (Hack, FM Mod)\0", "Light Phaser game - YM2413 FM support", "Sega - fatnick", "Sega Master System",
+	"Rambo III (Hack, FM Mod)\0", "Light Phaser game - YM2413 FM support", "fatnick", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PHASER, GBF_SHOOT, 0,
 	SMSGetZipName, sms_rambo3fmRomInfo, sms_rambo3fmRomName, NULL, NULL, NULL, NULL, SMSPhaserInputInfo, SMSPhaserDIPInfo,
@@ -23524,7 +23523,7 @@ struct BurnDriver BurnDrvsms_raymanrr = {
 
 // R-Type Arcade Style (Hack, v1.1a)
 static struct BurnRomInfo sms_rtypeasRomDesc[] = {
-	{ "R-Type Arcade Style Hack v1.1a (2025)(Datchy).sms",	524288, 0xa9d2c2dc, BRF_PRG | BRF_ESS },
+	{ "R-Type Arcade Style v1.1a (2025)(Datchy).sms",	524288, 0xa9d2c2dc, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_rtypeas)

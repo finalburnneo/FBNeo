@@ -22546,9 +22546,9 @@ struct BurnDriver BurnDrvsms_gotris = {
 	256, 192, 4, 3
 };
 
-// Grail of the Gods (HB, v0.50)
+// Grail of the Gods (HB, v0.50b)
 static struct BurnRomInfo sms_grailgodsRomDesc[] = {
-	{ "Grail of the Gods v0.50 (2023-25)(Guydebaville).sms",	65536, 0x1ccadfd4, BRF_PRG | BRF_ESS },
+	{ "Grail of the Gods v0.50b (2023-25)(Guydebaville).sms",	65536, 0x2bfe75d4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grailgods)
@@ -22556,7 +22556,7 @@ STD_ROM_FN(sms_grailgods)
 
 struct BurnDriver BurnDrvsms_grailgods = {
 	"sms_grailgods", NULL, NULL, NULL, "2023-25",
-	"Grail of the Gods (HB, v0.50)\0", NULL, "Guydebaville", "Sega Master System",
+	"Grail of the Gods (HB, v0.50b)\0", NULL, "Guydebaville", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_grailgodsRomInfo, sms_grailgodsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

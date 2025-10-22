@@ -440,6 +440,7 @@ int ConfigAppLoad()
 		STR(szAppRomdataPath);
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
+		STR(szNeoCDPreviewDir);
 		STR(szAppBlendPath);
 		STR(szAppSelectPath);
 		STR(szAppVersusPath);
@@ -894,6 +895,7 @@ int ConfigAppSave()
 	STR(szAppRomdataPath);
 	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);
+	STR(szNeoCDPreviewDir);
 	STR(szAppBlendPath);
 	STR(szAppSelectPath);
 	STR(szAppVersusPath);

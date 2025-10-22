@@ -1361,6 +1361,7 @@ static void CreateSupportFolders()
 		{_T("support/ips/")},
 		{_T("support/romdata/")},
 		{_T("support/neocdz/")},
+		{_T("support/neocdzpreviews/")},
 		{_T("support/blend/")},
 		{_T("support/select/")},
 		{_T("support/versus/")},
@@ -1375,6 +1376,7 @@ static void CreateSupportFolders()
 		{_T("support/pcbs/")},
 		{_T("support/history/")},
 		{_T("support/lua/")},
+		{_T("support/shaders/")},
 		{_T("neocdiso/")},
 		// rom directories
 		{_T("roms/arcade/")},

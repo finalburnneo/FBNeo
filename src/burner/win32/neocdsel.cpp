@@ -28,6 +28,7 @@ static HBRUSH hWhiteBGBrush;
 bool bNeoCDListScanSub			= false;
 bool bNeoCDListScanOnlyISO		= false;
 TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdz/");
+TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/neocdzpreviews/");
 TCHAR szNeoCDGamesDir[MAX_PATH] = _T("neocdiso/");
 
 static int nSelectedItem = -1;
@@ -294,6 +295,15 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 	NeoCDList_ScanDir_Internal(hList, pszDirectory);
 }
 
+static bool FileExists(TCHAR *tcszFile)
+{
+	FILE *fp = _tfopen(tcszFile, _T("rb"));
+	const bool bExists = fp != NULL;
+	if (bExists) fclose(fp);
+
+	return bExists;
+}
+
 // This will parse the specified CUE file and return the ISO path, if found
 static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 {
@@ -413,7 +423,7 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFrameCtrID, float maxw, float maxh)
 {
 	PNGRESOLUTION PNGRes = { 0, 0 };
-	if(!_tfopen(szFile, _T("rb")))
+	if(!FileExists(szFile))
 	{
 		HRSRC hrsrc			= FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
 		HGLOBAL hglobal		= LoadResource(NULL, (HRSRC)hrsrc);
@@ -677,7 +687,12 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					TCHAR szBack[512];
 
 					_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
-					_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nItem].szShortName );
+
+					_stprintf(szBack, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nItem].szShortName );
+					if (!FileExists(szBack)) {
+						// no neocd-specific preview? fall-back to regular previews
+						_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nItem].szShortName );
+					}
 
 					// Front / Back Cover preview
 					NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
@@ -734,7 +749,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				if(nSelectedItem >= 0) {
 					_stprintf(szBigCover, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
 
-					if(!_tfopen(szBigCover, _T("rb"))) {
+					if(!FileExists(szBigCover)) {
 						szBigCover[0] = 0;
 						return 0;
 					}
@@ -747,9 +762,13 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			if(nCtrlID == IDC_NCD_BACK_PIC)
 			{
 				if(nSelectedItem >= 0) {
-					_stprintf(szBigCover, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nSelectedItem].szShortName );
+					_stprintf(szBigCover, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nSelectedItem].szShortName );
+					if (!FileExists(szBigCover)) {
+						// no neocd-specific preview? fall-back to regular previews
+						_stprintf(szBigCover, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nSelectedItem].szShortName );
+					}
 
-					if(!_tfopen(szBigCover, _T("rb"))) {
+					if(!FileExists(szBigCover)) {
 						szBigCover[0] = 0;
 						return 0;
 					}

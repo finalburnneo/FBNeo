@@ -5,6 +5,8 @@ static HWND hTabControl = NULL;
 static HWND hSupportDlg = NULL;
 static HWND hParent     = NULL;
 
+#define NUM_ENTRIES 26
+
 TCHAR szAppPreviewsPath[MAX_PATH]	= _T("support/previews/");
 TCHAR szAppTitlesPath[MAX_PATH]		= _T("support/titles/");
 TCHAR szAppCheatsPath[MAX_PATH]		= _T("support/cheats/");
@@ -29,7 +31,7 @@ TCHAR szAppPCBsPath[MAX_PATH]		= _T("support/pcbs/");
 TCHAR szAppHistoryPath[MAX_PATH]	= _T("support/history/");
 TCHAR szAppEEPROMPath[MAX_PATH]		= _T("config/games/");
 
-static TCHAR* pszSupportPath[25][2] = {
+static TCHAR* pszSupportPath[][2] = {
 	{ szAppPreviewsPath, _T("support/previews/") },
 	{ szAppTitlesPath,   _T("support/titles/")   },
 	{ szAppIconsPath,    _T("support/icons/")    },
@@ -40,6 +42,7 @@ static TCHAR* pszSupportPath[25][2] = {
 	{ szAppRomdataPath,  _T("support/romdata/")  },
 	{ szNeoCDGamesDir,   _T("neocdiso/")         },
 	{ szNeoCDCoverDir,   _T("support/neocdz/")   },
+	{ szNeoCDPreviewDir, _T("support/neocdzpreviews/") },
 	{ szAppBlendPath,    _T("support/blend/")    },
 	{ szAppSelectPath,   _T("support/select/")   },
 	{ szAppVersusPath,   _T("support/versus/")   },
@@ -52,9 +55,10 @@ static TCHAR* pszSupportPath[25][2] = {
 	{ szAppControlsPath, _T("support/cpanel/")   },
 	{ szAppCabinetsPath, _T("support/cabinets/") },
 	{ szAppPCBsPath,     _T("support/pcbs/")     },
-	{ szAppHistoryPath  ,_T("support/history/")  },
+	{ szAppHistoryPath,  _T("support/history/")  },
 	{ szAppEEPROMPath,   _T("config/games/")     },
-	{ szAppHDDPath,      _T("support/hdd/")      }
+	{ szAppHDDPath,      _T("support/hdd/")      },
+	{ NULL, NULL }
 };
 
 static TCHAR szCheckIconsPath[MAX_PATH];
@@ -69,9 +73,9 @@ static INT32 nDlgGroupCtrlInitialPos[4];
 static INT32 nDlgOKBtnInitialPos[4];
 static INT32 nDlgCancelBtnInitialPos[4];
 static INT32 nDlgDefaultsBtnInitialPos[4];
-static INT32 nDlgTextCtrlInitialPos[25][4];
-static INT32 nDlgEditCtrlInitialPos[25][4];
-static INT32 nDlgBtnCtrlInitialPos[25][4];
+static INT32 nDlgTextCtrlInitialPos[NUM_ENTRIES][4];
+static INT32 nDlgEditCtrlInitialPos[NUM_ENTRIES][4];
+static INT32 nDlgBtnCtrlInitialPos[NUM_ENTRIES][4];
 
 // Dialog sizing support functions and macros (everything working in client co-ords)
 #define GetInititalControlPos(a, b)								\
@@ -133,7 +137,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDCANCEL,    nDlgCancelBtnInitialPos);
 	GetInititalControlPos(IDDEFAULT,   nDlgDefaultsBtnInitialPos);
 
-	for (INT32 i = 0; i < 25; i++) {
+	for (INT32 i = 0; i < NUM_ENTRIES; i++) {
 		GetInititalControlPos(IDC_SUPPORTDIR_TEXT1 + i, nDlgTextCtrlInitialPos[i]);
 		GetInititalControlPos(IDC_SUPPORTDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
 		GetInititalControlPos(IDC_SUPPORTDIR_BR1   + i, nDlgBtnCtrlInitialPos[i]);
@@ -271,7 +275,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			SetWindowText(hDlg, szDialogTitle);
 
 			// Setup edit controls values
-			for (INT32 x = 0; x < 25; x++) {
+			for (INT32 x = 0; x < NUM_ENTRIES; x++) {
 				SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);
 			}
 
@@ -300,7 +304,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 		case WM_CTLCOLORSTATIC: {
 			HDC hDc = (HDC)wParam;
-			for (int x = 0; x < 25; x++) {
+			for (int x = 0; x < NUM_ENTRIES; x++) {
 				if ((HWND)lParam == GetDlgItem(hDlg, IDC_SUPPORTDIR_TEXT1 + x)) {
 					SetBkMode(hDc, TRANSPARENT);									// LTEXT control with transparent background
 					return (LRESULT)GetStockObject(HOLLOW_BRUSH);					// Return to empty brush
@@ -332,7 +336,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			SetControlPosAlignBottomLeft(IDDEFAULT, nDlgDefaultsBtnInitialPos);
 
-			for (INT32 i = 0; i < 25; i++) {
+			for (INT32 i = 0; i < NUM_ENTRIES; i++) {
 				SetControlPosAlignTopLeft(IDC_SUPPORTDIR_TEXT1          + i, nDlgTextCtrlInitialPos[i]);
 				SetControlPosAlignTopLeftResizeHor(IDC_SUPPORTDIR_EDIT1 + i, nDlgEditCtrlInitialPos[i]);
 				SetControlPosAlignTopRight(IDC_SUPPORTDIR_BR1           + i, nDlgBtnCtrlInitialPos[i]);
@@ -350,7 +354,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TCHAR buffer[MAX_PATH];
 
 			if (LOWORD(wParam) == IDOK) {
-				for (int i = 0; i < 25; i++) {
+				for (int i = 0; i < NUM_ENTRIES; i++) {
 					GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + i, buffer, sizeof(buffer));
 					// add trailing backslash
 					INT32 strLen = _tcslen(buffer);
@@ -366,7 +370,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {
-				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR25) {
+				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR1+NUM_ENTRIES) {
 					var = IDC_SUPPORTDIR_EDIT1 + LOWORD(wParam) - IDC_SUPPORTDIR_BR1;
 
 					TCHAR szPath[MAX_PATH] = { 0 };
@@ -384,7 +388,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true),
 							MB_OKCANCEL | MB_ICONEXCLAMATION | MB_DEFBUTTON2)
 							) {
-							for (INT32 x = 0; x < 25; x++) {
+							for (INT32 x = 0; x < NUM_ENTRIES; x++) {
 								if (lstrcmp(pszSupportPath[x][0], pszSupportPath[x][1])) {
 									_tcscpy(pszSupportPath[x][0], pszSupportPath[x][1]);
 									SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1 + x, pszSupportPath[x][0]);

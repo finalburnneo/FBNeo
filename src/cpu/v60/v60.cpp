@@ -506,8 +506,9 @@ cpu_core_config v70Config =
 	v60Scan,
 	v60Exit,
 	0x1000000,
-	MB_CHEAT_ENDI_SWAP | 32 // LE (32bit databus) but needs address swap when writing multibyte cheats
+	MB_CHEAT_ENDI_SWAP | 16 // LE (32bit databus) but needs address swap when writing multibyte cheats
 };
+// note: changed | 16 above to fix an issue with orunners.
 
 struct cpu_info {
 	UINT8  (*mr8) (offs_t address);

@@ -9236,10 +9236,10 @@ struct BurnDriver BurnDrvnes_legenzelti = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Legend of Zelda, The (Hack, Portuguese v2.0)
+// Lenda de Zelda, A (Hack, Portuguese v2.0)
 // https://www.romhacking.net/translations/6490/
 static struct BurnRomInfo nes_legenzeltpRomDesc[] = {
-	{ "Legend of Zelda, The T-Por v2.0 (2022)(SatY Traducoes).nes",          131088, 0x44d4d62c, BRF_ESS | BRF_PRG },
+	{ "Lenda de Zelda, A T-Por v2.0 (2022)(SatY Traducoes).nes",          131088, 0x44d4d62c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_legenzeltp)
@@ -9247,7 +9247,7 @@ STD_ROM_FN(nes_legenzeltp)
 
 struct BurnDriver BurnDrvnes_legenzeltp = {
 	"nes_legenzeltp", "nes_legenzel", NULL, NULL, "2022",
-	"Legend of Zelda, The (Hack, Portuguese v2.0)\0", NULL, "SatY Traducoes", "NES / Famicom",
+	"Lenda de Zelda, A (Hack, Portuguese v2.0)\0", NULL, "SatY Traducoes", "NES / Famicom",
 	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenzeltpRomInfo, nes_legenzeltpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

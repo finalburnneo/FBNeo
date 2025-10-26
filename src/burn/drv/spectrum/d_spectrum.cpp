@@ -934,6 +934,44 @@ struct BurnDriver BurnSpecAbadcrim = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Abracadabra, Parte 1 (Spanish) (48K)
+
+static struct BurnRomInfo SpecAbracadabra1RomDesc[] = {
+	{ "Abracadabra, Parte 1 ES 48K (1988)(Proein Soft Line).tap", 48416, 0x4e3b010e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAbracadabra1, SpecAbracadabra1, Spectrum)
+STD_ROM_FN(SpecAbracadabra1)
+
+struct BurnDriver BurnSpecAbracadabra1 = {
+	"spec_abracadabra1", NULL, "spec_spectrum", NULL, "1988",
+	"Abracadabra, Parte 1 (Spanish) (48K)\0", NULL, "Proein Soft Line", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecAbracadabra1RomInfo, SpecAbracadabra1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Abracadabra, Parte 2 (Spanish) (48K)
+
+static struct BurnRomInfo SpecAbracadabra2RomDesc[] = {
+	{ "Abracadabra, Parte 2 ES 48K (1988)(Proein Soft Line).tap", 48416, 0x3e70e8e2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAbracadabra2, SpecAbracadabra2, Spectrum)
+STD_ROM_FN(SpecAbracadabra2)
+
+struct BurnDriver BurnSpecAbracadabra2 = {
+	"spec_abracadabra2", "spec_abracadabra1", "spec_spectrum", NULL, "1988",
+	"Abracadabra, Parte 2 (Spanish) (48K)\0", "PASSWORD: YO CLUS A VIOLETA ENCONTRARE", "Proein Soft Line", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecAbracadabra2RomInfo, SpecAbracadabra2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Abu Simbel Profanation (Spanish) (48K)
 
 static struct BurnRomInfo SpecabusimprdRomDesc[] = {
@@ -20178,6 +20216,25 @@ struct BurnDriver BurnSpecOhmummy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
 	SpectrumGetZipName, SpecOhmummyRomInfo, SpecOhmummyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ole, toro (Spanish) (48K)
+
+static struct BurnRomInfo SpecOletoroRomDesc[] = {
+	{ "Ole, toro ES 48K (1985)(Dinamic Software).tzx", 38335, 0x1f40df1f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOletoro, SpecOletoro, Spectrum)
+STD_ROM_FN(SpecOletoro)
+
+struct BurnDriver BurnSpecOletoro = {
+	"spec_oletoro", NULL, "spec_spectrum", NULL, "1985",
+	"Ole, toro (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecOletoroRomInfo, SpecOletoroRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -42858,6 +42915,82 @@ struct BurnDriver BurnSpecHobbit128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Hobbit (Vah-ka's Cut), The (English) (48K) (HB)
+
+static struct BurnRomInfo SpecHobbitvcenRomDesc[] = {
+	{ "Hobbit (Vah-ka's Cut), The EN 48K (2012)(The Mojon Twins).tap", 34049, 0xdf530833, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHobbitvcen, SpecHobbitvcen, Spectrum)
+STD_ROM_FN(SpecHobbitvcen)
+
+struct BurnDriver BurnSpecHobbitvcen = {
+	"spec_hobbitvcen", NULL, "spec_spectrum", NULL, "2012",
+	"Hobbit (Vah-ka's Cut), The (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHobbitvcenRomInfo, SpecHobbitvcenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hobbit (Vah-ka's Cut), El (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecHobbitvcesRomDesc[] = {
+	{ "Hobbit (Vah-ka's Cut), El ES 48K (2012)(The Mojon Twins).tap", 34226, 0xe77cc2e9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHobbitvces, SpecHobbitvces, Spectrum)
+STD_ROM_FN(SpecHobbitvces)
+
+struct BurnDriver BurnSpecHobbitvces = {
+	"spec_hobbitvces", "spec_hobbitvcen", "spec_spectrum", NULL, "2012",
+	"Hobbit (Vah-ka's Cut), El (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHobbitvcesRomInfo, SpecHobbitvcesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hobbit (Vah-ka's Cut)R, The (English) (48K) (HB, v1.2)
+
+static struct BurnRomInfo SpecHobbitvcrenRomDesc[] = {
+	{ "Hobbit (Vah-ka's Cut)R, The EN v1.2 48K (2012-25)(The Mojon Twins).tap", 29125, 0xa32a5fe7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHobbitvcren, SpecHobbitvcren, Spectrum)
+STD_ROM_FN(SpecHobbitvcren)
+
+struct BurnDriver BurnSpecHobbitvcren = {
+	"spec_hobbitvcren", NULL, "spec_spectrum", NULL, "2012-25",
+	"Hobbit (Vah-ka's Cut)R, The (English) (48K) (HB, v1.2)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHobbitvcrenRomInfo, SpecHobbitvcrenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hobbit (Vah-ka's Cut)R, El (Spanish) (48K) (HB, v1.1)
+
+static struct BurnRomInfo SpecHobbitvcresRomDesc[] = {
+	{ "Hobbit (Vah-ka's Cut)R, El ES v1.1 48K (2012-25)(The Mojon Twins).tap", 29199, 0x944980fd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHobbitvcres, SpecHobbitvcres, Spectrum)
+STD_ROM_FN(SpecHobbitvcres)
+
+struct BurnDriver BurnSpecHobbitvcres = {
+	"spec_hobbitvcres", "spec_hobbitvcren", "spec_spectrum", NULL, "2012-25",
+	"Hobbit (Vah-ka's Cut)R, El (Spanish) (48K) (HB, v1.1)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecHobbitvcresRomInfo, SpecHobbitvcresRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew (48K) (HB)
 
 static struct BurnRomInfo SpecHomebrewRomDesc[] = {
@@ -46484,6 +46617,25 @@ struct BurnDriver BurnSpecManicminerllv2 = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecManicminerllv2RomInfo, SpecManicminerllv2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Manic Mining Robot's Day Out (48K) (HB)
+
+static struct BurnRomInfo SpecManicrobotRomDesc[] = {
+	{ "Manic Mining Robot's Day Out 48K (2003-08)(Manic Miner Technologies).tap", 40381, 0x21f6c799, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecManicrobot, SpecManicrobot, Spectrum)
+STD_ROM_FN(SpecManicrobot)
+
+struct BurnDriver BurnSpecManicrobot = {
+	"spec_manicrobot", NULL, "spec_spectrum", NULL, "2003-08",
+	"Manic Mining Robot's Day Out (48K) (HB)\0", NULL, "Manic Miner Technologies", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecManicrobotRomInfo, SpecManicrobotRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -51200,18 +51352,56 @@ struct BurnDriver BurnSpecRallybug = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramire the Vampire 'Rewamp' - Part 1 (48K) (HB)
+// Ramiro el Vampiro - Parte 1 (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecRamiro1RomDesc[] = {
+	{ "Ramiro el Vampiro Parte 1 ES 48K (2013)(The Mojon Twins).tap", 40517, 0xcd8156bf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro1, SpecRamiro1, Spectrum)
+STD_ROM_FN(SpecRamiro1)
+
+struct BurnDriver BurnSpecRamiro1 = {
+	"spec_ramiro1", NULL, "spec_spectrum", NULL, "2013",
+	"Ramiro el Vampiro - Parte 1 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRamiro1RomInfo, SpecRamiro1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramiro el Vampiro - Parte 2 (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecRamiro2RomDesc[] = {
+	{ "Ramiro el Vampiro Parte 2 ES 48K (2013)(The Mojon Twins).tap", 41250, 0x1b41cef8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro2, SpecRamiro2, Spectrum)
+STD_ROM_FN(SpecRamiro2)
+
+struct BurnDriver BurnSpecRamiro2 = {
+	"spec_ramiro2", "spec_ramiro1", "spec_spectrum", NULL, "2013",
+	"Ramiro el Vampiro - Parte 2 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRamiro2RomInfo, SpecRamiro2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramire the Vampire 'Revamp' - Part 1 (48K) (HB)
 
 static struct BurnRomInfo SpecRamirer1RomDesc[] = {
-	{ "Ramire the Vampire Rewamp Part 1 EN 48K (2016)(The Mojon Twins).tap", 44159, 0x69c64f56, BRF_ESS | BRF_PRG },
+	{ "Ramire the Vampire Revamp Part 1 EN 48K (2013-16)(The Mojon Twins).tap", 44159, 0x69c64f56, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamirer1, SpecRamirer1, Spectrum)
 STD_ROM_FN(SpecRamirer1)
 
 struct BurnDriver BurnSpecRamirer1 = {
-	"spec_ramirer1", NULL, "spec_spectrum", NULL, "2016",
-	"Ramire the Vampire 'Rewamp' - Part 1 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramirer1", NULL, "spec_spectrum", NULL, "2013-16",
+	"Ramire the Vampire 'Revamp' - Part 1 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamirer1RomInfo, SpecRamirer1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51219,18 +51409,18 @@ struct BurnDriver BurnSpecRamirer1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramire the Vampire 'Rewamp' - Part 2 (English) (48K) (HB)
+// Ramire the Vampire 'Revamp' - Part 2 (English) (48K) (HB)
 
 static struct BurnRomInfo SpecRamirer2RomDesc[] = {
-	{ "Ramire the Vampire Rewamp Part 2 EN 48K (2016)(The Mojon Twins).tap", 44509, 0x3ce3ae4c, BRF_ESS | BRF_PRG },
+	{ "Ramire the Vampire Revamp Part 2 EN 48K (2013-16)(The Mojon Twins).tap", 44509, 0x3ce3ae4c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamirer2, SpecRamirer2, Spectrum)
 STD_ROM_FN(SpecRamirer2)
 
 struct BurnDriver BurnSpecRamirer2 = {
-	"spec_ramirer2", "spec_ramirer1", "spec_spectrum", NULL, "2016",
-	"Ramire the Vampire 'Rewamp' - Part 2 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramirer2", "spec_ramirer1", "spec_spectrum", NULL, "2013-16",
+	"Ramire the Vampire 'Revamp' - Part 2 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamirer2RomInfo, SpecRamirer2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51238,18 +51428,18 @@ struct BurnDriver BurnSpecRamirer2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramire the Vampire 'Rewamp' - Part 3 (English) (48K) (HB)
+// Ramire the Vampire 'Revamp' - Part 3 (English) (48K) (HB)
 
 static struct BurnRomInfo SpecRamirer3RomDesc[] = {
-	{ "Ramire the Vampire Rewamp Part 3 EN 48K (2016)(The Mojon Twins).tap", 44938, 0xa65f4290, BRF_ESS | BRF_PRG },
+	{ "Ramire the Vampire Revamp Part 3 EN 48K (2013-16)(The Mojon Twins).tap", 44938, 0xa65f4290, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamirer3, SpecRamirer3, Spectrum)
 STD_ROM_FN(SpecRamirer3)
 
 struct BurnDriver BurnSpecRamirer3 = {
-	"spec_ramirer3", "spec_ramirer1", "spec_spectrum", NULL, "2016",
-	"Ramire the Vampire 'Rewamp' - Part 3 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramirer3", "spec_ramirer1", "spec_spectrum", NULL, "2013-16",
+	"Ramire the Vampire 'Revamp' - Part 3 (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamirer3RomInfo, SpecRamirer3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51257,18 +51447,18 @@ struct BurnDriver BurnSpecRamirer3 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramiro el Vampiro 'Rewamp' - Parte 1 (Spanish) (48K) (HB)
+// Ramiro el Vampiro 'Revamp' - Parte 1 (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecRamiror1RomDesc[] = {
-	{ "Ramiro el Vampiro Rewamp Part 1 ES 48K (2016)(The Mojon Twins).tap", 44399, 0x9d9e0971, BRF_ESS | BRF_PRG },
+	{ "Ramiro el Vampiro Revamp Part 1 ES 48K (2013-16)(The Mojon Twins).tap", 44399, 0x9d9e0971, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamiror1, SpecRamiror1, Spectrum)
 STD_ROM_FN(SpecRamiror1)
 
 struct BurnDriver BurnSpecRamiror1 = {
-	"spec_ramiror1", NULL, "spec_spectrum", NULL, "2016",
-	"Ramiro el Vampiro 'Rewamp' - Parte 1 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramiror1", NULL, "spec_spectrum", NULL, "2013-16",
+	"Ramiro el Vampiro 'Revamp' - Parte 1 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamiror1RomInfo, SpecRamiror1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51276,18 +51466,18 @@ struct BurnDriver BurnSpecRamiror1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramiro el Vampiro 'Rewamp' - Parte 2 (Spanish) (48K) (HB)
+// Ramiro el Vampiro 'Revamp' - Parte 2 (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecRamiror2RomDesc[] = {
-	{ "Ramiro el Vampiro Rewamp Part 2 ES 48K (2016)(The Mojon Twins).tap", 44601, 0x01ed38e9, BRF_ESS | BRF_PRG },
+	{ "Ramiro el Vampiro Revamp Part 2 ES 48K (2013-16)(The Mojon Twins).tap", 44601, 0x01ed38e9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamiror2, SpecRamiror2, Spectrum)
 STD_ROM_FN(SpecRamiror2)
 
 struct BurnDriver BurnSpecRamiror2 = {
-	"spec_ramiror2", "spec_ramiror1", "spec_spectrum", NULL, "2016",
-	"Ramiro el Vampiro 'Rewamp' - Parte 2 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramiror2", "spec_ramiror1", "spec_spectrum", NULL, "2013-16",
+	"Ramiro el Vampiro 'Revamp' - Parte 2 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamiror2RomInfo, SpecRamiror2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51295,18 +51485,18 @@ struct BurnDriver BurnSpecRamiror2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Ramiro el Vampiro 'Rewamp' - Parte 3 (Spanish) (48K) (HB)
+// Ramiro el Vampiro 'Revamp' - Parte 3 (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecRamiror3RomDesc[] = {
-	{ "Ramiro el Vampiro Rewamp Part 3 ES 48K (2016)(The Mojon Twins).tap", 45083, 0xec94c119, BRF_ESS | BRF_PRG },
+	{ "Ramiro el Vampiro Revamp Part 3 ES 48K (2013-16)(The Mojon Twins).tap", 45083, 0xec94c119, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecRamiror3, SpecRamiror3, Spectrum)
 STD_ROM_FN(SpecRamiror3)
 
 struct BurnDriver BurnSpecRamiror3 = {
-	"spec_ramiror3", "spec_ramiror1", "spec_spectrum", NULL, "2016",
-	"Ramiro el Vampiro 'Rewamp' - Parte 3 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	"spec_ramiror3", "spec_ramiror1", "spec_spectrum", NULL, "2013-16",
+	"Ramiro el Vampiro 'Revamp' - Parte 3 (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRamiror3RomInfo, SpecRamiror3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

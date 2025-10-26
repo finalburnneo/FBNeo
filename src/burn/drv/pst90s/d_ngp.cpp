@@ -132,6 +132,7 @@ static void ngp_io_w(UINT8 offset, UINT8 data)
 
 				case 0xaa:
 					t6w28Enable(0);
+					t6w28Reset(); // kludge
 				break;
 			}
 		break;
@@ -3324,3 +3325,20 @@ struct BurnDriver BurnDrvngpc_gearsoffate = {
 	160, 152, 4, 3
 };
 
+// Manic Miner (HB, v1.0)
+static struct BurnRomInfo ngpc_mminerRomDesc[] = {
+	{ "Manic Miner V1.0 by Lindon Dodd (PD).ngc", 524288, 0x7b23af97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_mminer, ngpc_mminer, ngpc_ngp)
+STD_ROM_FN(ngpc_mminer)
+
+struct BurnDriver BurnDrvngpc_mminer = {
+	"ngp_mminer", NULL, "ngp_ngp", NULL, "200x",
+	"Manic Miner (HB, v1.0)\0", NULL, "Lindon Dodd", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_mminerRomInfo, ngpc_mminerRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};

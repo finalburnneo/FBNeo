@@ -39229,9 +39229,9 @@ struct BurnDriver BurnDrvmd_driftinrage = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, English v3.3.0)
+// Earthion (HB, English v4.0.0)
 static struct BurnRomInfo md_earthioneRomDesc[] = {
-	{ "Earthion v3.3.0 (English)(2025)(Ancient).bin", 7340032, 0xae5f1fb1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v4.0.0 (English)(2025)(Ancient).bin", 7340032, 0xe5516900, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthione)
@@ -39239,7 +39239,7 @@ STD_ROM_FN(md_earthione)
 
 struct BurnDriver BurnDrvmd_earthione = {
 	"md_earthione", NULL, NULL, NULL, "2025",
-	"Earthion (HB, English v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, English v4.0.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthioneRomInfo, md_earthioneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39283,9 +39283,9 @@ struct BurnDriver BurnDrvmd_earthionfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, Japanese v3.3.0)
+// Earthion (HB, Japanese v4.0.0)
 static struct BurnRomInfo md_earthionjRomDesc[] = {
-	{ "Earthion v3.3.0 (Japanese)(2025)(Ancient).bin", 7340032, 0x65ebc8e0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v4.0.0 (Japanese)(2025)(Ancient).bin", 7340032, 0x0655e663, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionj)
@@ -39293,7 +39293,7 @@ STD_ROM_FN(md_earthionj)
 
 struct BurnDriver BurnDrvmd_earthionj = {
 	"md_earthionj", "md_earthione", NULL, NULL, "2025",
-	"Earthion (HB, Japanese v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Japanese v4.0.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionjRomInfo, md_earthionjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39301,9 +39301,9 @@ struct BurnDriver BurnDrvmd_earthionj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Earthion (HB, Portuguese v3.3.0)
+// Earthion (HB, Portuguese v4.0.0)
 static struct BurnRomInfo md_earthionpRomDesc[] = {
-	{ "Earthion v3.3.0 (Portuguese)(2025)(Ancient).bin", 7340032, 0xf44386a4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Earthion v4.0.0 (Portuguese)(2025)(Ancient).bin", 7340032, 0xc564f290, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_earthionp)
@@ -39311,7 +39311,7 @@ STD_ROM_FN(md_earthionp)
 
 struct BurnDriver BurnDrvmd_earthionp = {
 	"md_earthionp", "md_earthione", NULL, NULL, "2025",
-	"Earthion (HB, Portuguese v3.3.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	"Earthion (HB, Portuguese v4.0.0)\0", NULL, "Ancient", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_earthionpRomInfo, md_earthionpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

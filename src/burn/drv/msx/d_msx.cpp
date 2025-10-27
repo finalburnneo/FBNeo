@@ -24033,22 +24033,40 @@ struct BurnDriver BurnDrvMSX_habilit = {
 	272, 228, 4, 3
 };
 
-// Hammer Boy (Euro, Spanish)
+// Hammer Boy - Part 1 (Euro)
 
-static struct BurnRomInfo MSX_hammboyRomDesc[] = {
-	{ "Hammer Boy (Euro, ES)(1991)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	0x0da92, 0x907a6931, BRF_PRG | BRF_ESS },
-	{ "Hammer Boy (Euro, ES)(1991)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	0x0da92, 0x2e7eba8e, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo MSX_hammerboy1RomDesc[] = {
+	{ "Hammer Boy (Euro)(1991)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	0x0da92, 0x907a6931, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_hammboy, MSX_hammboy, msx_msx)
-STD_ROM_FN(MSX_hammboy)
+STDROMPICKEXT(MSX_hammerboy1, MSX_hammerboy1, msx_msx)
+STD_ROM_FN(MSX_hammerboy1)
 
-struct BurnDriver BurnDrvMSX_hammboy = {
-	"msx_hammboy", NULL, "msx_msx", NULL, "1991",
-	"Hammer Boy (Euro, Spanish)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
+struct BurnDriver BurnDrvMSX_hammerboy1 = {
+	"msx_hammerboy1", NULL, "msx_msx", NULL, "1991",
+	"Hammer Boy - Part 1 (Euro)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
-	MSXGetZipName, MSX_hammboyRomInfo, MSX_hammboyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_hammerboy1RomInfo, MSX_hammerboy1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Hammer Boy - Part 2 (Euro)
+
+static struct BurnRomInfo MSX_hammerboy2RomDesc[] = {
+	{ "Hammer Boy (Euro)(1991)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	0x0da92, 0x2e7eba8e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_hammerboy2, MSX_hammerboy2, msx_msx)
+STD_ROM_FN(MSX_hammerboy2)
+
+struct BurnDriver BurnDrvMSX_hammerboy2 = {
+	"msx_hammerboy2", "msx_hammerboy1", "msx_msx", NULL, "1991",
+	"Hammer Boy - Part 2 (Euro)\0", "Keyboard controls only: O, P and Space", "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_hammerboy2RomInfo, MSX_hammerboy2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

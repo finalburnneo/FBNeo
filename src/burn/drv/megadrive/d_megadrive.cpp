@@ -37966,6 +37966,25 @@ struct BurnDriver BurnDrvmd_aliencat2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Altered Beast II - The Seven Depths of Hell (HB, Alpha-4)
+// https://fabianodigital.itch.io/altered-beast-2-genesis
+static struct BurnRomInfo md_altbeast2RomDesc[] = {
+	{ "Altered Beast II - The Seven Depths of Hell Alpha-4 (2024-25)(Fabianodigital).bin", 0x260000, 0xd6a8b0ab, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_altbeast2)
+STD_ROM_FN(md_altbeast2)
+
+struct BurnDriver BurnDrvmd_altbeast2 = {
+	"md_altbeast2", NULL, NULL, NULL, "2024-25",
+	"Altered Beast II - The Seven Depths of Hell (HB, Alpha-4)\0", NULL, "Fabianodigital", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_altbeast2RomInfo, md_altbeast2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // AlterEgo Remastered (HB)
 static struct BurnRomInfo md_alteregoRomDesc[] = {
 	{ "AlterEgo Remastered (2020)(RetroSouls).bin", 786432, 0x3be95745, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -38088,6 +38107,25 @@ struct BurnDriver BurnDrvmd_atkpetscii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_atkpetsciiRomInfo, md_atkpetsciiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Aureole - Wings of Hope (HB)
+// https://jandusoft.itch.io/aureole-retro
+static struct BurnRomInfo md_aureoleRomDesc[] = {
+	{ "Aureole - Wings of Hope (2025)(JanduSoft).bin", 0x120000, 0x51aef53d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aureole)
+STD_ROM_FN(md_aureole)
+
+struct BurnDriver BurnDrvmd_aureole = {
+	"md_aureole", NULL, NULL, NULL, "2025",
+	"Aureole - Wings of Hope (HB)\0", NULL, "JanduSoft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_aureoleRomInfo, md_aureoleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

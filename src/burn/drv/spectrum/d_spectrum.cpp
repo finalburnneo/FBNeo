@@ -29834,6 +29834,25 @@ struct BurnDriver BurnSpecVictoryroad = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Video Olimpic (Spanish) (48K)
+
+static struct BurnRomInfo SpecVideoolimpicRomDesc[] = {
+	{ "Video Olimpic ES 48K (1984)(Dinamic Software).tap", 45119, 0xcfd1c90e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecVideoolimpic, SpecVideoolimpic, Spectrum)
+STD_ROM_FN(SpecVideoolimpic)
+
+struct BurnDriver BurnSpecVideoolimpic = {
+	"spec_videoolimpic", NULL, "spec_spectrum", NULL, "1984",
+	"Video Olimpic (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
+	SpectrumGetZipName, SpecVideoolimpicRomInfo, SpecVideoolimpicRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Video Poker (48K)
 
 static struct BurnRomInfo SpecVideopokerRomDesc[] = {
@@ -44796,21 +44815,40 @@ struct BurnDriver BurnSpecKnightmarebs128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Knightmare ZX (128K) (HB)
+
+static struct BurnRomInfo SpecKnight1zxRomDesc[] = {
+	{ "Knightmare ZX 128K (2012)(Climacus).tap", 69179, 0xa842c746, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKnight1zx, SpecKnight1zx, Spec128)
+STD_ROM_FN(SpecKnight1zx)
+
+struct BurnDriver BurnSpecKnight1zx = {
+	"spec_knight1zx", NULL, "spec_spec128", NULL, "2012",
+	"Knightmare ZX (128K) (HB)\0", NULL, "Climacus", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecKnight1zxRomInfo, SpecKnight1zxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Knightmare 2 ZX (48K) (HB)
 
-static struct BurnRomInfo SpecKnightzxRomDesc[] = {
+static struct BurnRomInfo SpecKnight2zxRomDesc[] = {
 	{ "Knightmare 2 ZX 48K (2015)(Climacus).tap", 54725, 0xc0b2638a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecKnightzx, SpecKnightzx, Spectrum)
-STD_ROM_FN(SpecKnightzx)
+STDROMPICKEXT(SpecKnight2zx, SpecKnight2zx, Spectrum)
+STD_ROM_FN(SpecKnight2zx)
 
-struct BurnDriver BurnSpecKnightzx = {
-	"spec_knightzx", NULL, "spec_spectrum", NULL, "2015",
+struct BurnDriver BurnSpecKnight2zx = {
+	"spec_knight2zx", NULL, "spec_spectrum", NULL, "2015",
 	"Knightmare 2 ZX (48K) (HB)\0", NULL, "Climacus", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecKnightzxRomInfo, SpecKnightzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecKnight2zxRomInfo, SpecKnight2zxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

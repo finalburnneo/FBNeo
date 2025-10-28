@@ -5513,21 +5513,40 @@ struct BurnDriver BurnSpeccanywarr = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Capitan Sevilla (Spanish) (48K)
+// Capitan Sevilla - Part 1 (Spanish) (48K)
 
-static struct BurnRomInfo SpecCaptsevillaRomDesc[] = {
-	{ "Capitan Sevilla ES 48K (1988)(Dinamic Software).tap", 97238, 0x8f8c61e7, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecCaptsevilla1RomDesc[] = {
+	{ "Capitan Sevilla - Part 1 ES 48K (1988)(Dinamic Software).tap", 48619, 0x1f0ef121, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecCaptsevilla, SpecCaptsevilla, Spectrum)
-STD_ROM_FN(SpecCaptsevilla)
+STDROMPICKEXT(SpecCaptsevilla1, SpecCaptsevilla1, Spectrum)
+STD_ROM_FN(SpecCaptsevilla1)
 
-struct BurnDriver BurnSpecCaptsevilla = {
-	"spec_captsevilla", NULL, "spec_spectrum", NULL, "1988",
-	"Capitan Sevilla (Spanish) (48K)\0", "SPACE: change to Cap. Sevilla (if available)", "Dinamic Software", "ZX Spectrum",
+struct BurnDriver BurnSpecCaptsevilla1 = {
+	"spec_captsevilla1", NULL, "spec_spectrum", NULL, "1988",
+	"Capitan Sevilla - Part 1 (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecCaptsevillaRomInfo, SpecCaptsevillaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecCaptsevilla1RomInfo, SpecCaptsevilla1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Capitan Sevilla - Part 2 (Spanish) (48K)
+
+static struct BurnRomInfo SpecCaptsevilla2RomDesc[] = {
+	{ "Capitan Sevilla - Part 2 ES 48K (1988)(Dinamic Software).tap", 48619, 0x7109d33d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCaptsevilla2, SpecCaptsevilla2, Spectrum)
+STD_ROM_FN(SpecCaptsevilla2)
+
+struct BurnDriver BurnSpecCaptsevilla2 = {
+	"spec_captsevilla2", "spec_captsevilla1", "spec_spectrum", NULL, "1988",
+	"Capitan Sevilla - Part 2 (Spanish) (48K)\0", "Password: 574527", "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCaptsevilla2RomInfo, SpecCaptsevilla2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -19463,15 +19482,15 @@ struct BurnDriver BurnSpecNarc = {
 // Narco Police (128K)
 
 static struct BurnRomInfo SpecNarcopolRomDesc[] = {
-	{ "Narco Police 128K (1991)(Rajsoft).tap", 0x1cf59, 0xd47256a3, BRF_ESS | BRF_PRG },
+	{ "Narco Police 128K (1990)(Dinamic Software).tap", 0x1cf59, 0xd47256a3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecNarcopol, SpecNarcopol, Spec128)
 STD_ROM_FN(SpecNarcopol)
 
 struct BurnDriver BurnSpecNarcopol = {
-	"spec_narcopol", NULL, "spec_spec128", NULL, "1991",
-	"Narco Police (128K)\0", NULL, "Rajsoft", "ZX Spectrum",
+	"spec_narcopol", NULL, "spec_spec128", NULL, "1990",
+	"Narco Police (128K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecNarcopolRomInfo, SpecNarcopolRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -25559,10 +25578,10 @@ struct BurnDriver BurnSpecSoldierone = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Sol Negro: Special Edition - Part 1 (Spanish) (48K)
+// Sol Negro - Part 1 (Spanish) (48K)
 
 static struct BurnRomInfo Specsolnegro1RomDesc[] = {
-	{ "Sol Negro - Special Edition - Part 1 48K-AY (1989)(Opera Soft).z80", 42525, 0x27b7e34f, BRF_ESS | BRF_PRG },
+	{ "Sol Negro - Part 1 ES 48K (1989)(Opera Soft).tap", 48329, 0x3a029c8a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specsolnegro1, Specsolnegro1, Spectrum)
@@ -25570,7 +25589,7 @@ STD_ROM_FN(Specsolnegro1)
 
 struct BurnDriver BurnSpecsolnegro1 = {
 	"spec_solnegro1", NULL, "spec_spectrum", NULL, "1989",
-	"Sol Negro: Special Edition - Part 1 (Spanish) (48K)\0", "AY Sound supported", "Opera Soft", "ZX Spectrum",
+	"Sol Negro - Part 1 (Spanish) (48K)\0", NULL, "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, Specsolnegro1RomInfo, Specsolnegro1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
@@ -25578,10 +25597,10 @@ struct BurnDriver BurnSpecsolnegro1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Sol Negro: Special Edition - Part 2 (Spanish) (48K)
+// Sol Negro - Part 2 (Spanish) (48K)
 
 static struct BurnRomInfo Specsolnegro2RomDesc[] = {
-	{ "Sol Negro - Special Edition - Part 2 48K-AY (1989)(Opera Soft).z80", 37075, 0xaf912284, BRF_ESS | BRF_PRG },
+	{ "Sol Negro - Part 2 ES 48K (1989)(Opera Soft).tap", 89549, 0x4400c360, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specsolnegro2, Specsolnegro2, Spectrum)
@@ -25589,10 +25608,48 @@ STD_ROM_FN(Specsolnegro2)
 
 struct BurnDriver BurnSpecsolnegro2 = {
 	"spec_solnegro2", "spec_solnegro1", "spec_spectrum", NULL, "1989",
-	"Sol Negro: Special Edition - Part 2 (Spanish) (48K)\0", "AY Sound supported", "Opera Soft", "ZX Spectrum",
+	"Sol Negro - Part 2 (Spanish) (48K)\0", "Password: 2414520", "Opera Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, Specsolnegro2RomInfo, Specsolnegro2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sol Negro: Special Edition - Part 1 (Spanish) (48K)
+
+static struct BurnRomInfo Specsolnegrose1RomDesc[] = {
+	{ "Sol Negro - Special Edition - Part 1 ES 48K-AY (1989)(Opera Soft).z80", 42525, 0x27b7e34f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specsolnegrose1, Specsolnegrose1, Spectrum)
+STD_ROM_FN(Specsolnegrose1)
+
+struct BurnDriver BurnSpecsolnegrose1 = {
+	"spec_solnegrose1", NULL, "spec_spectrum", NULL, "1989",
+	"Sol Negro: Special Edition - Part 1 (Spanish) (48K)\0", "AY Sound supported", "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, Specsolnegrose1RomInfo, Specsolnegrose1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sol Negro: Special Edition - Part 2 (Spanish) (48K)
+
+static struct BurnRomInfo Specsolnegrose2RomDesc[] = {
+	{ "Sol Negro - Special Edition - Part 2 ES 48K-AY (1989)(Opera Soft).z80", 37075, 0xaf912284, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(Specsolnegrose2, Specsolnegrose2, Spectrum)
+STD_ROM_FN(Specsolnegrose2)
+
+struct BurnDriver BurnSpecsolnegrose2 = {
+	"spec_solnegrose2", "spec_solnegrose1", "spec_spectrum", NULL, "1989",
+	"Sol Negro: Special Edition - Part 2 (Spanish) (48K)\0", "AY Sound supported", "Opera Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, Specsolnegrose2RomInfo, Specsolnegrose2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

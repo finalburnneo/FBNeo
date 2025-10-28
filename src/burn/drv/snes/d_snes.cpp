@@ -1712,6 +1712,25 @@ struct BurnDriver BurnDrvsnes_Advbatmane = {
 	512, 448, 4, 3
 };
 
+// Adventures of Batman & Robin, The (Hack, Portuguese v1-BETA)
+
+static struct BurnRomInfo snes_AdvbatmantpRomDesc[] = {
+	{ "Adventures of Batman & Robin, The PT-BR v1-BETA (2025)(Kyle Romhacker).sfc", 4194304, 0x30829019, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Advbatmantp)
+STD_ROM_FN(snes_Advbatmantp)
+
+struct BurnDriver BurnDrvsnes_Advbatmantp = {
+	"snes_advbatmantp", "snes_advbatman", NULL, NULL, "2025",
+	"Adventures of Batman & Robin, The (Hack, Portuguese v1-BETA)\0", NULL, "Kyle Romhacker", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_AdvbatmantpRomInfo, snes_AdvbatmantpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Adventures of Dr. Franken, The (USA)
 
 static struct BurnRomInfo snes_AdvdrfrankRomDesc[] = {

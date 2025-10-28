@@ -43655,6 +43655,25 @@ struct BurnDriver BurnDrvsnes_Dkongcntry2p4k = {
 	512, 448, 4, 3
 };
 
+// Donkey Kong Country 2: Squitter's Spider Quest (Hack, v1.1)
+// https://www.romhacking.net/hacks/7315/
+static struct BurnRomInfo snes_Dkongcntry2ssqRomDesc[] = {
+	{ "Donkey Kong Country 2 - Squitter's Spider Quest v1.1 (2022)(Saetta06).sfc", 4194304, 0x214b511e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dkongcntry2ssq)
+STD_ROM_FN(snes_Dkongcntry2ssq)
+
+struct BurnDriver BurnDrvsnes_Dkongcntry2ssq = {
+	"snes_dkongcntry2ssq", "snes_dkongcntry2", NULL, NULL, "2022",
+	"Donkey Kong Country 2: Squitter's Spider Quest (Hack, v1.1)\0", NULL, "Saetta06", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Dkongcntry2ssqRomInfo, snes_Dkongcntry2ssqRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Donkey Kong Country: Seiryuki Remix 2025 (Hack)
 // https://romhackplaza.org/romhacks/donkey-kong-country-seiryuki-remix-2025-snes/
 static struct BurnRomInfo snes_Dkongcntrysr25RomDesc[] = {
@@ -43899,6 +43918,63 @@ struct BurnDriver BurnDrvsnes_Finalfantivult = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_FinalfantivultRomInfo, snes_FinalfantivultRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fight 3 - Boss (Hack)
+
+static struct BurnRomInfo snes_Ffight3bossRomDesc[] = {
+	{ "Final Fight 3 - Boss (20xx).sfc", 4194304, 0xb82cbdff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ffight3boss)
+STD_ROM_FN(snes_Ffight3boss)
+
+struct BurnDriver BurnDrvsnes_Ffight3boss = {
+	"snes_ffight3boss", "snes_ffight3", NULL, NULL, "20xx",
+	"Final Fight 3 - Boss (Hack)\0", NULL, "<unknown>", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Ffight3bossRomInfo, snes_Ffight3bossRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fight 3 - Hard Edition (Hack)
+// https://www.romhacking.net/hacks/5549/
+static struct BurnRomInfo snes_Ffight3heRomDesc[] = {
+	{ "Final Fight 3 - Hard Edition (2019)(Programer Peru).sfc", 3145728, 0xcd812d3a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ffight3he)
+STD_ROM_FN(snes_Ffight3he)
+
+struct BurnDriver BurnDrvsnes_Ffight3he = {
+	"snes_ffight3he", "snes_ffight3", NULL, NULL, "2019",
+	"Final Fight 3 - Hard Edition (Hack)\0", NULL, "Programer Peru", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Ffight3heRomInfo, snes_Ffight3heRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Final Fight 3 - Tough Edition (Hack)
+// https://www.romhacking.net/hacks/8035/
+static struct BurnRomInfo snes_Ffight3teRomDesc[] = {
+	{ "Final Fight 3 - Tough Edition (2023)(Samir Rolemberg).sfc", 3145728, 0xbc1c4134, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ffight3te)
+STD_ROM_FN(snes_Ffight3te)
+
+struct BurnDriver BurnDrvsnes_Ffight3te = {
+	"snes_ffight3te", "snes_ffight3", NULL, NULL, "2023",
+	"Final Fight 3 - Tough Edition (Hack)\0", NULL, "Samir Rolemberg", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Ffight3teRomInfo, snes_Ffight3teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -44621,6 +44697,44 @@ struct BurnDriver BurnDrvsnes_Mazezam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_MazezamRomInfo, snes_MazezamRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man 7 Jet Suit (Hack)
+// https://romhackplaza.org/romhacks/mega-man-7-jet-suit-snes/
+static struct BurnRomInfo snes_Megaman7jsRomDesc[] = {
+	{ "Mega Man 7 Jet Suit (2025)(BillyTime! Games).sfc", 2097152, 0x06442631, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megaman7js)
+STD_ROM_FN(snes_Megaman7js)
+
+struct BurnDriver BurnDrvsnes_Megaman7js = {
+	"snes_megaman7js", "snes_megaman7", NULL, NULL, "2025",
+	"Mega Man 7 Jet Suit (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megaman7jsRomInfo, snes_Megaman7jsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man 7 PSX Sprite (Hack)
+
+static struct BurnRomInfo snes_Megaman7psxRomDesc[] = {
+	{ "Mega Man 7 PSX Sprite (20xx).sfc", 2097152, 0x34b84d00, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megaman7psx)
+STD_ROM_FN(snes_Megaman7psx)
+
+struct BurnDriver BurnDrvsnes_Megaman7psx = {
+	"snes_megaman7psx", "snes_megaman7", NULL, NULL, "20xx",
+	"Mega Man 7 PSX Sprite (Hack)\0", NULL, "<unknown>", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megaman7psxRomInfo, snes_Megaman7psxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -46486,6 +46600,25 @@ struct BurnDriver BurnDrvsnes_Tmntfightgme = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightgmeRomInfo, snes_TmntfightgmeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 BZero Edition (Hack, v1.1)
+// https://www.romhacking.net/hacks/9151/
+static struct BurnRomInfo snes_Umk3bzeroRomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 BZero Edition v1.1 (2025)(B-Zero TV).sfc", 8388608, 0x4ae4d7ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Umk3bzero)
+STD_ROM_FN(snes_Umk3bzero)
+
+struct BurnDriver BurnDrvsnes_Umk3bzero = {
+	"snes_umk3bzero", "snes_umk3", NULL, NULL, "2025",
+	"Ultimate Mortal Kombat 3 BZero Edition (Hack, v1.1)\0", NULL, "B-Zero TV", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Umk3bzeroRomInfo, snes_Umk3bzeroRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

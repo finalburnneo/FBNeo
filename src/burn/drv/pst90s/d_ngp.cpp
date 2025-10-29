@@ -1661,6 +1661,25 @@ struct BurnDriver BurnDrvngpc_kofpara = {
 	160, 152, 4, 3
 };
 
+// King of Fighters, The: Battle de Paradise (Hack, English)
+// https://www.romhacking.net/translations/7436/
+static struct BurnRomInfo ngpc_kofparaeRomDesc[] = {
+	{ "King of Fighters, The - Battle de Paradise T-Eng (2025)(marc_max).ngp", 0x200000, 0xe08dc918, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_kofparae, ngpc_kofparae, ngpc_ngp)
+STD_ROM_FN(ngpc_kofparae)
+
+struct BurnDriver BurnDrvngpc_kofparae = {
+	"ngp_kofparae", "ngp_kofpara", "ngp_ngp", NULL, "2025",
+	"King of Fighters, The: Battle de Paradise (Hack, English)\0", "Force B&W mode to unlock the hidden game 'Yosaku'", "marc_max", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
+	NgpGetZipName, ngpc_kofparaeRomInfo, ngpc_kofparaeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpcDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)
 static struct BurnRomInfo ngp_kofr1RomDesc[] = {
 	{ "King of Fighters R-1 - Pocket Fighting Series (Euro, Japan)(1998)(SNK).ngp", 0x200000, 0xdceb7e11, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -2796,6 +2815,25 @@ struct BurnDriver BurnDrvngpc_rockmanb = {
 	160, 152, 4, 3
 };
 
+// Rockman: Battle & Fighters (Hack, English v0.9)
+// https://www.romhacking.net/translations/3925/
+static struct BurnRomInfo ngpc_rockmanbeRomDesc[] = {
+	{ "Rockman - Battle & Fighters T-Eng v0.9 (2018)(marc_max).ngp", 0x200000, 0x65985356, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_rockmanbe, ngpc_rockmanbe, ngpc_ngp)
+STD_ROM_FN(ngpc_rockmanbe)
+
+struct BurnDriver BurnDrvngpc_rockmanbe = {
+	"ngp_rockmanbe", "ngp_rockmanb", "ngp_ngp", NULL, "2018",
+	"Rockman: Battle & Fighters (Hack, English v0.9)\0", NULL, "marc_max", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
+	NgpGetZipName, ngpc_rockmanbeRomInfo, ngpc_rockmanbeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Rockman: Battle & Fighters (Japan, Demo)
 static struct BurnRomInfo ngpc_rockmanbdRomDesc[] = {
 	{ "Rockman - Battle & Fighters (Japan, Demo)(2000)(Capcom).ngp", 0x200000, 0x16a98ac4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -3327,14 +3365,14 @@ struct BurnDriver BurnDrvngpc_gearsoffate = {
 
 // Manic Miner (HB, v1.0)
 static struct BurnRomInfo ngpc_mminerRomDesc[] = {
-	{ "Manic Miner V1.0 by Lindon Dodd (PD).ngc", 524288, 0x7b23af97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Manic Miner v1.0 (2001)(Lindon Dodd).ngp", 524288, 0x7b23af97, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_mminer, ngpc_mminer, ngpc_ngp)
 STD_ROM_FN(ngpc_mminer)
 
 struct BurnDriver BurnDrvngpc_mminer = {
-	"ngp_mminer", NULL, "ngp_ngp", NULL, "200x",
+	"ngp_mminer", NULL, "ngp_ngp", NULL, "2001",
 	"Manic Miner (HB, v1.0)\0", NULL, "Lindon Dodd", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,

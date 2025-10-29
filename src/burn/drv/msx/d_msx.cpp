@@ -23231,7 +23231,7 @@ struct BurnDriver BurnDrvMSX_dkongeu = {
 	272, 228, 4, 3
 };
 
-// Don Quijote - Parte I (Euro, Spanish)
+// Don Quijote - Part I (Euro, Spanish)
 
 static struct BurnRomInfo MSX_donquijote1RomDesc[] = {
 	{ "Don Quijote (Euro, ES)(1987)(Dinamic Software)(Side A)[RUN'CAS-'].cas",	54252, 0x68395271, BRF_PRG | BRF_ESS },
@@ -23242,7 +23242,7 @@ STD_ROM_FN(MSX_donquijote1)
 
 struct BurnDriver BurnDrvMSX_donquijote1 = {
 	"msx_donquijote1", NULL, "msx_msx", NULL, "1987",
-	"Don Quijote - Parte I (Euro, Spanish)\0", NULL, "Dinamic Software", "MSX",
+	"Don Quijote - Part I (Euro, Spanish)\0", NULL, "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_donquijote1RomInfo, MSX_donquijote1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
@@ -23250,7 +23250,7 @@ struct BurnDriver BurnDrvMSX_donquijote1 = {
 	272, 228, 4, 3
 };
 
-// Don Quijote - Parte II (Euro, Spanish)
+// Don Quijote - Part II (Euro, Spanish)
 
 static struct BurnRomInfo MSX_donquijote2RomDesc[] = {
 	{ "Don Quijote (Euro, ES)(1987)(Dinamic Software)(Side B)[RUN'CAS-'].cas",	51442, 0x833d4f52, BRF_PRG | BRF_ESS },
@@ -23261,7 +23261,7 @@ STD_ROM_FN(MSX_donquijote2)
 
 struct BurnDriver BurnDrvMSX_donquijote2 = {
 	"msx_donquijote2", "msx_donquijote1", "msx_msx", NULL, "1987",
-	"Don Quijote - Parte II (Euro, Spanish)\0", "Password: EL BALSAMO DE FIERABRAS", "Dinamic Software", "MSX",
+	"Don Quijote - Part II (Euro, Spanish)\0", "Password: EL BALSAMO DE FIERABRAS", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
 	MSXGetZipName, MSX_donquijote2RomInfo, MSX_donquijote2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
@@ -27140,22 +27140,40 @@ struct BurnDriver BurnDrvMSX_timetrax = {
 	272, 228, 4, 3
 };
 
-// Titanic (Euro, Spanish)
+// Titanic - Part 1 (Euro, Spanish)
 
-static struct BurnRomInfo MSX_titanicRomDesc[] = {
+static struct BurnRomInfo MSX_titanic1RomDesc[] = {
 	{ "Titanic (Euro, ES)(1988)(Topo Soft)(Side A)[RUN'CAS-'].cas",	0x0c300, 0x7e7a8653, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_titanic1, MSX_titanic1, msx_msx)
+STD_ROM_FN(MSX_titanic1)
+
+struct BurnDriver BurnDrvMSX_titanic1 = {
+	"msx_titanic1", NULL, "msx_msx", NULL, "1988",
+	"Titanic - Part 1 (Euro, Spanish)\0", NULL, "Topo Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_titanic1RomInfo, MSX_titanic1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Titanic - Part 2 (Euro, Spanish)
+
+static struct BurnRomInfo MSX_titanic2RomDesc[] = {
 	{ "Titanic (Euro, ES)(1988)(Topo Soft)(Side B)[RUN'CAS-'].cas",	0x0c91c, 0x45b1c035, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_titanic, MSX_titanic, msx_msx)
-STD_ROM_FN(MSX_titanic)
+STDROMPICKEXT(MSX_titanic2, MSX_titanic2, msx_msx)
+STD_ROM_FN(MSX_titanic2)
 
-struct BurnDriver BurnDrvMSX_titanic = {
-	"msx_titanic", NULL, "msx_msx", NULL, "1988",
-	"Titanic (Euro, Spanish)\0", NULL, "Topo Soft", "MSX",
+struct BurnDriver BurnDrvMSX_titanic2 = {
+	"msx_titanic2", "msx_titanic1", "msx_msx", NULL, "1988",
+	"Titanic - Part 2 (Euro, Spanish)\0", "Password: SUSIE", "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
-	MSXGetZipName, MSX_titanicRomInfo, MSX_titanicRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_titanic2RomInfo, MSX_titanic2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -27361,7 +27379,7 @@ STD_ROM_FN(MSX_viajecentro)
 
 struct BurnDriver BurnDrvMSX_viajecentro = {
 	"msx_viajecentro", NULL, "msx_msx", NULL, "1989",
-	"Viaje al Centro de la Tierra (Euro, Spanish)\0", "PASSWORDS: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED", "Topo Soft", "MSX",
+	"Viaje al Centro de la Tierra (Euro, Spanish)\0", "Passwords: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED", "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV | GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_viajecentroRomInfo, MSX_viajecentroRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,

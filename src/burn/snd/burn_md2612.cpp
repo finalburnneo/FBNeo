@@ -33,7 +33,7 @@ static void MD2612Render(INT32 nSegmentLength)
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("MD2612Render called without init\n"));
 #endif
 	
-	if (nMD2612Position >= nSegmentLength) {
+	if (nMD2612Position >= nSegmentLength || (!pBurnSoundOut && bBurnRunAheadFrame)) { // note: don't update if it's a runahead frame && pBurnSoundOut == NULL
 		return;
 	}
 

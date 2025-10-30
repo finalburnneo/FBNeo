@@ -134,7 +134,7 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
   if (!strcmp(headers[used].name, "BATMAN--REVENGE JOKER")) {
 	  headers[used].cartType = CART_LOROM; // it's detected as HiROM but actually LoROM (prototype)
   }
-  if (!strcmp(headers[used].name, "SNESFOREVER.COM.BR")) {
+  if (!strcmp(headers[used].name, "AS AVEN DE BATMAN&ROB")) {
 	  headers[used].chips = 1; // advbatmantp has 8k sram (non-battery backed)
   }
 

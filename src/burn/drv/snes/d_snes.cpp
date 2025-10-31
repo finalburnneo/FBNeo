@@ -1713,9 +1713,9 @@ struct BurnDriver BurnDrvsnes_Advbatmane = {
 };
 
 // Adventures of Batman & Robin, The (Hack, Portuguese v1-BETA)
-
+// https://www.romhacking.net.br/index.php?topic=3113.0
 static struct BurnRomInfo snes_AdvbatmantpRomDesc[] = {
-	{ "Adventures of Batman & Robin, The PT-BR v1-BETA (2025)(Kyle Romhacker).sfc", 4194304, 0x30829019, BRF_ESS | BRF_PRG },
+	{ "Adventures of Batman & Robin, The PT-BR v1-BETA (2025)(Kyle Romhacker).sfc", 4194304, 0xfe9cdcda, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Advbatmantp)

@@ -9009,10 +9009,10 @@ struct BurnDriver BurnSpecdkongjr = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Don Quijote de la Mancha - Parte I (Spanish) (48K)
+// Don Quijote - Parte I (Spanish) (48K)
 
 static struct BurnRomInfo SpecDonquijote1RomDesc[] = {
-	{ "Don Quijote de la Mancha - Parte I ES 48K (1987)(Dinamic Software).tap", 49387, 0x1ac98966, BRF_ESS | BRF_PRG },
+	{ "Don Quijote - Parte I ES 48K (1987)(Dinamic Software).tap", 49387, 0x1ac98966, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDonquijote1, SpecDonquijote1, Spectrum)
@@ -9020,7 +9020,7 @@ STD_ROM_FN(SpecDonquijote1)
 
 struct BurnDriver BurnSpecDonquijote1 = {
 	"spec_donquijote1", NULL, "spec_spectrum", NULL, "1987",
-	"Don Quijote de la Mancha - Parte I (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	"Don Quijote - Parte I (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDonquijote1RomInfo, SpecDonquijote1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -9028,10 +9028,10 @@ struct BurnDriver BurnSpecDonquijote1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Don Quijote de la Mancha - Parte II (Spanish) (48K)
+// Don Quijote - Parte II (Spanish) (48K)
 
 static struct BurnRomInfo SpecDonquijote2RomDesc[] = {
-	{ "Don Quijote de la Mancha - Parte II ES 48K (1987)(Dinamic Software).tap", 49387, 0x042db349, BRF_ESS | BRF_PRG },
+	{ "Don Quijote - Parte II ES 48K (1987)(Dinamic Software).tap", 49387, 0x042db349, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDonquijote2, SpecDonquijote2, Spectrum)
@@ -9039,7 +9039,7 @@ STD_ROM_FN(SpecDonquijote2)
 
 struct BurnDriver BurnSpecDonquijote2 = {
 	"spec_donquijote2", "spec_donquijote1", "spec_spectrum", NULL, "1987",
-	"Don Quijote de la Mancha - Parte II (Spanish) (48K)\0", "Password: EL INGENIOSO HIDALGO", "Dinamic Software", "ZX Spectrum",
+	"Don Quijote - Parte II (Spanish) (48K)\0", "Password: EL INGENIOSO HIDALGO", "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDonquijote2RomInfo, SpecDonquijote2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34155,6 +34155,44 @@ struct BurnDriver BurnSpecBlond48es = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Blood of Dracula (English) (48K) (HB)
+
+static struct BurnRomInfo SpecBlooddraculaeRomDesc[] = {
+	{ "Blood of Dracula EN 48K (2025)(Furillo Productions).tap", 44589, 0xebea38d3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBlooddraculae, SpecBlooddraculae, Spectrum)
+STD_ROM_FN(SpecBlooddraculae)
+
+struct BurnDriver BurnSpecBlooddraculae = {
+	"spec_blooddraculae", NULL, "spec_spectrum", NULL, "2025",
+	"Blood of Dracula (English) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecBlooddraculaeRomInfo, SpecBlooddraculaeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Blood of Dracula (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecBlooddraculasRomDesc[] = {
+	{ "Blood of Dracula ES 48K (2025)(Furillo Productions).tap", 44574, 0x5d6ca527, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBlooddraculas, SpecBlooddraculas, Spectrum)
+STD_ROM_FN(SpecBlooddraculas)
+
+struct BurnDriver BurnSpecBlooddraculas = {
+	"spec_blooddraculas", "spec_blooddraculae", "spec_spectrum", NULL, "2025",
+	"Blood of Dracula (Spanish) (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecBlooddraculasRomInfo, SpecBlooddraculasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Bluber (48K) (HB)
 
 static struct BurnRomInfo SpecBluberRomDesc[] = {
@@ -51120,6 +51158,25 @@ struct BurnDriver BurnSpecPuppiesrescue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
 	SpectrumGetZipName, SpecPuppiesrescueRomInfo, SpecPuppiesrescueRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Puppies Rescue - Halloween Edition (128K) (HB)
+
+static struct BurnRomInfo SpecPuppiesrescueheRomDesc[] = {
+	{ "Puppies Rescue - Halloween Edition 128K (2025)(Daniel Isoba).tap", 60276, 0x43c1d3dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPuppiesrescuehe, SpecPuppiesrescuehe, Spec128)
+STD_ROM_FN(SpecPuppiesrescuehe)
+
+struct BurnDriver BurnSpecPuppiesrescuehe = {
+	"spec_puppiesrescuehe", "spec_puppiesrescue", "spec_spec128", NULL, "2025",
+	"Puppies Rescue - Halloween Edition (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecPuppiesrescueheRomInfo, SpecPuppiesrescueheRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

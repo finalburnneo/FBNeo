@@ -51124,6 +51124,25 @@ struct BurnDriver BurnSpecPuppiesrescue = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Puppies Rescue - Halloween Edition (128K) (HB)
+
+static struct BurnRomInfo SpecPuppiesrescueheRomDesc[] = {
+	{ "Puppies Rescue - Halloween Edition 128K (2025)(Daniel Isoba).tap", 60276, 0x43c1d3dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPuppiesrescuehe, SpecPuppiesrescuehe, Spec128)
+STD_ROM_FN(SpecPuppiesrescuehe)
+
+struct BurnDriver BurnSpecPuppiesrescuehe = {
+	"spec_puppiesrescuehe", "spec_puppiesrescue", "spec_spec128", NULL, "2025",
+	"Puppies Rescue - Halloween Edition (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecPuppiesrescueheRomInfo, SpecPuppiesrescueheRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Puta Mili (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecPutamiliRomDesc[] = {

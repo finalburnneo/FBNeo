@@ -18687,6 +18687,24 @@ struct BurnDriver BurnDrvnes_halloween86spex = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Haunted Halloween '87 - Year of the Witch (HB)
+static struct BurnRomInfo nes_halloween87RomDesc[] = {
+	{ "Haunted Halloween '87 - Year of the Witch (2025)(Retrotainment Games).nes",          524304, 0x066bc7ee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_halloween87)
+STD_ROM_FN(nes_halloween87)
+
+struct BurnDriver BurnDrvnes_halloween87 = {
+	"nes_halloween87", NULL, NULL, NULL, "2025",
+	"Haunted Halloween '87 - Year of the Witch (HB)\0", NULL, "Retrotainment Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_halloween87RomInfo, nes_halloween87RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Haunted House Adventure (HB)
 static struct BurnRomInfo nes_hauntedadvRomDesc[] = {
 	{ "Haunted House Adventure (2019)(M. Stave).nes",          524304, 0xd0c3acbc, BRF_ESS | BRF_PRG },

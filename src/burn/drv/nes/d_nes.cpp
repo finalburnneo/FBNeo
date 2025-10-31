@@ -10337,7 +10337,7 @@ struct BurnDriver BurnDrvnes_starwarsc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Street Fighter 2010 - The Final Fight (Hack, Spanish)
+// Street Fighter 2010: The Final Fight (Hack, Spanish)
 // https://www.romhacking.net/translations/2919/
 static struct BurnRomInfo nes_streefig201cRomDesc[] = {
 	{ "Street Fighter 2010 - The Final Fight T-Spa (2017)(Wave).nes",          262160, 0x0c963bf7, BRF_ESS | BRF_PRG },
@@ -10348,15 +10348,15 @@ STD_ROM_FN(nes_streefig201c)
 
 struct BurnDriver BurnDrvnes_streefig201c = {
 	"nes_streefig201c", "nes_streefig201", NULL, NULL, "2017",
-	"Street Fighter 2010 - The Final Fight (Hack, Spanish)\0", NULL, "Wave", "NES / Famicom",
+	"Street Fighter 2010: The Final Fight (Hack, Spanish)\0", NULL, "Wave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_streefig201cRomInfo, nes_streefig201cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Street Fighter 2010 - A Luta Final (Hack, Portuguese v1.3)
+// Street Fighter 2010: A Luta Final (Hack, Portuguese v1.3)
 // https://romhackers.org/traducoes/console/nes/street-fighter-2010-the-final-fight-po.b.r.e
 static struct BurnRomInfo nes_streefig201tpRomDesc[] = {
 	{ "Street Fighter 2010 - A Luta Final T-Por v1.3 (2018)(PO.B.R.E.).nes",          262160, 0x6a8bb09a, BRF_ESS | BRF_PRG },
@@ -10367,9 +10367,9 @@ STD_ROM_FN(nes_streefig201tp)
 
 struct BurnDriver BurnDrvnes_streefig201tp = {
 	"nes_streefig201tp", "nes_streefig201", NULL, NULL, "2018",
-	"Street Fighter 2010 - A Luta Final (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
+	"Street Fighter 2010: A Luta Final (Hack, Portuguese v1.3)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_streefig201tpRomInfo, nes_streefig201tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13857,9 +13857,9 @@ struct BurnDriver BurnDrvnes_advpanzer4 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Adventures of Rip (HB, v1.2)
+// Adventures of Rip (HB, v1.4)
 static struct BurnRomInfo nes_advofripRomDesc[] = {
-	{ "Adventures of Rip v1.2 (2025)(Jay-GFDgaming).nes",          524304, 0x7542b323, BRF_ESS | BRF_PRG },
+	{ "Adventures of Rip v1.4 (2025)(Jay-GFDgaming).nes",          524304, 0x49edfa50, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_advofrip)
@@ -13867,7 +13867,7 @@ STD_ROM_FN(nes_advofrip)
 
 struct BurnDriver BurnDrvnes_advofrip = {
 	"nes_advofrip", NULL, NULL, NULL, "2025",
-	"Adventures of Rip (HB, v1.2)\0", NULL, "Jay-GFDgaming", "NES / Famicom",
+	"Adventures of Rip (HB, v1.4)\0", NULL, "Jay-GFDgaming", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_advofripRomInfo, nes_advofripRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -13920,11 +13920,29 @@ STD_ROM_PICK(nes_alfonsarcadv)
 STD_ROM_FN(nes_alfonsarcadv)
 
 struct BurnDriver BurnDrvnes_alfonsarcadv = {
-	"nes_alfonsarcadv", NULL, NULL, NULL, "2018",
+	"nes_alfonsarcadv", "nes_alfonsarcadvr", NULL, NULL, "2018",
 	"Alfonzo's Arctic Adventure (HB)\0", NULL, "Spoony Bard Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_alfonsarcadvRomInfo, nes_alfonsarcadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Alfonzo's Arctic Adventure (HB, v1.4)
+static struct BurnRomInfo nes_alfonsarcadvrRomDesc[] = {
+	{ "Alfonzo's Arctic Adventure v1.4 (2020)(Spoony Bard Productions).nes",          262160, 0xb1736cf6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_alfonsarcadvr)
+STD_ROM_FN(nes_alfonsarcadvr)
+
+struct BurnDriver BurnDrvnes_alfonsarcadvr = {
+	"nes_alfonsarcadvr", NULL, NULL, NULL, "2020",
+	"Alfonzo's Arctic Adventure (HB, 1.4)\0", NULL, "Spoony Bard Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_alfonsarcadvrRomInfo, nes_alfonsarcadvrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -15198,17 +15216,17 @@ struct BurnDriver BurnDrvnes_bobabuddies = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Bobby Six Seven: Time Travelling Detective (HB)
+// Bobby Six Seven: Time Travelling Detective (HB, v1.1)
 static struct BurnRomInfo nes_bobsixsevenRomDesc[] = {
-	{ "Bobby Six Seven - Time Traveling Detective (2023)(Calgames).nes",          524304, 0xbc33f79b, BRF_ESS | BRF_PRG },
+	{ "Bobby Six Seven - Time Traveling Detective v1.1 (2022-25)(Calgames).nes",          524304, 0xd9839626, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bobsixseven)
 STD_ROM_FN(nes_bobsixseven)
 
 struct BurnDriver BurnDrvnes_bobsixseven = {
-	"nes_bobsixseven", NULL, NULL, NULL, "2022-23",
-	"Bobby Six Seven: Time Travelling Detective (HB)\0", NULL, "CalGames", "NES / Famicom",
+	"nes_bobsixseven", NULL, NULL, NULL, "2022-25",
+	"Bobby Six Seven: Time Travelling Detective (HB, v1.1)\0", NULL, "CalGames", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bobsixsevenRomInfo, nes_bobsixsevenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -26346,7 +26364,7 @@ struct BurnDriver BurnDrvnes_1942 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// 1943 - The Battle of Midway (USA)
+// 1943: The Battle of Midway (USA)
 static struct BurnRomInfo nes_1943RomDesc[] = {
 	{ "1943 - The Battle of Midway (USA)(1988)(Capcom).nes",          131088, 0xd131bf15, BRF_ESS | BRF_PRG },
 };
@@ -26356,7 +26374,7 @@ STD_ROM_FN(nes_1943)
 
 struct BurnDriver BurnDrvnes_1943 = {
 	"nes_1943", NULL, NULL, NULL, "1988",
-	"1943 - The Battle of Midway (USA)\0", NULL, "Capcom", "NES / Famicom",
+	"1943: The Battle of Midway (USA)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_1943RomInfo, nes_1943RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -26364,7 +26382,7 @@ struct BurnDriver BurnDrvnes_1943 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// 1943 - The Battle of Valhalla (Japan)
+// 1943: The Battle of Valhalla (Japan)
 static struct BurnRomInfo nes_1943jRomDesc[] = {
 	{ "1943 - The Battle of Valhalla (Japan)(1988)(Capcom).nes",          131088, 0x8db59be8, BRF_ESS | BRF_PRG },
 };
@@ -26374,7 +26392,7 @@ STD_ROM_FN(nes_1943j)
 
 struct BurnDriver BurnDrvnes_1943j = {
 	"nes_1943j", "nes_1943", NULL, NULL, "1988",
-	"1943 - The Battle of Valhalla (Japan)\0", NULL, "Capcom", "NES / Famicom",
+	"1943: The Battle of Valhalla (Japan)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_1943jRomInfo, nes_1943jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -26382,20 +26400,20 @@ struct BurnDriver BurnDrvnes_1943j = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// 2010 - Street Fighter (Japan)
-static struct BurnRomInfo nes_2010RomDesc[] = {
-	{ "2010 - Street Fighter (Japan)(1990)(Capcom).nes",          262160, 0xc5a04eff, BRF_ESS | BRF_PRG },
+// 2010 Street Fighter (Japan)
+static struct BurnRomInfo nes_2010sfRomDesc[] = {
+	{ "2010 Street Fighter (Japan)(1990)(Capcom).nes",          262160, 0xa311678a, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_2010)
-STD_ROM_FN(nes_2010)
+STD_ROM_PICK(nes_2010sf)
+STD_ROM_FN(nes_2010sf)
 
-struct BurnDriver BurnDrvnes_2010 = {
-	"nes_2010", NULL, NULL, NULL, "1990",
-	"2010 - Street Fighter (Japan)\0", NULL, "Capcom", "NES / Famicom",
+struct BurnDriver BurnDrvnes_2010sf = {
+	"nes_2010sf", "nes_streefig201", NULL, NULL, "1990",
+	"2010 Street Fighter (Japan)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
-	NESGetZipName, nes_2010RomInfo, nes_2010RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_2010sfRomInfo, nes_2010sfRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -30560,9 +30578,9 @@ struct BurnDriver BurnDrvnes_choplifter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Choujikuu Yousai - Macross (Japan)
+// Choujikuu Yousai Macross (Japan)
 static struct BurnRomInfo nes_choujyouRomDesc[] = {
-	{ "Choujikuu Yousai - Macross (Japan)(1985)(Namco).nes",          24592, 0xa3ca24d2, BRF_ESS | BRF_PRG },
+	{ "Choujikuu Yousai Macross (Japan)(1985)(Namco).nes",          24592, 0xa3ca24d2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_choujyou)
@@ -30570,8 +30588,8 @@ STD_ROM_FN(nes_choujyou)
 
 struct BurnDriver BurnDrvnes_choujyou = {
 	"nes_choujyou", NULL, NULL, NULL, "1985",
-	"Choujikuu Yousai - Macross (Japan)\0", NULL, "Namco", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Choujikuu Yousai Macross (Japan)\0", NULL, "Namco", "NES / Famicom",
+	L"Choujikuu Yousai Macross (Japan)\0\u8d85\u6642\u7a7a\u8981\u585e \u30de\u30af\u30ed\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_choujyouRomInfo, nes_choujyouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -30589,7 +30607,7 @@ STD_ROM_FN(nes_choujsenjetj)
 struct BurnDriver BurnDrvnes_choujsenjetj = {
 	"nes_choujsenjetj", "nes_choujsenjet", NULL, NULL, "1991",
 	"Choujin Sentai Jetman (Japan)\0", NULL, "Angel Studio", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Choujin Sentai Jetman (Japan)\0\u9ce5\u4eba\u6226\u968a \u30b8\u30a7\u30c3\u30c8\u30de\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_VSFIGHT, 0,
 	NESGetZipName, nes_choujsenjetjRomInfo, nes_choujsenjetjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -31487,7 +31505,7 @@ struct BurnDriver BurnDrvnes_cyber = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Cycle Race - Road Man (Japan)
+// Cycle Race: Road Man (Japan)
 static struct BurnRomInfo nes_cycleracRomDesc[] = {
 	{ "Cycle Race - Road Man (Japan)(1988)(Tokyo Shoseki).nes",          262160, 0x899ad1fd, BRF_ESS | BRF_PRG },
 };
@@ -31497,8 +31515,8 @@ STD_ROM_FN(nes_cyclerac)
 
 struct BurnDriver BurnDrvnes_cyclerac = {
 	"nes_cyclerac", NULL, NULL, NULL, "1988",
-	"Cycle Race - Road Man (Japan)\0", NULL, "Tokyo Shoseki", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Cycle Race: Road Man (Japan)\0", NULL, "Tokyo Shoseki", "NES / Famicom",
+	L"Cycle Race: Road Man (Japan)\0\u30b5\u30a4\u30af\u30eb\u30ec\u30fc\u30b9 \u30ed\u30fc\u30c9\u30de\u30f3 \u6fc0\u8d70!! \u65e5\u672c-\u54684000km\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_cycleracRomInfo, nes_cycleracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -39586,7 +39604,7 @@ STD_ROM_FN(nes_jarvasj)
 struct BurnDriver BurnDrvnes_jarvasj = {
 	"nes_jarvasj", "nes_jarvas", NULL, NULL, "1987",
 	"Mirai Shinwa Jarvas (Japan)\0", NULL, "Taito Corp.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Mirai Shinwa Jarvas (Japan)\0\u672a\u6765\u795e\u8a71\u30b8\u30e3\u30fc\u30f4\u30a1\u30b9 Jarvas\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, nes_jarvasjRomInfo, nes_jarvasjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -51627,7 +51645,7 @@ struct BurnDriver BurnDrvnes_stinger = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Street Fighter 2010 - The Final Fight (USA)
+// Street Fighter 2010: The Final Fight (USA)
 static struct BurnRomInfo nes_streefig201RomDesc[] = {
 	{ "Street Fighter 2010 - The Final Fight (USA)(1990)(Capcom).nes",          262160, 0xa7355946, BRF_ESS | BRF_PRG },
 };
@@ -51637,9 +51655,9 @@ STD_ROM_FN(nes_streefig201)
 
 struct BurnDriver BurnDrvnes_streefig201 = {
 	"nes_streefig201", NULL, NULL, NULL, "1990",
-	"Street Fighter 2010 - The Final Fight (USA)\0", NULL, "Capcom", "NES / Famicom",
+	"Street Fighter 2010: The Final Fight (USA)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_streefig201RomInfo, nes_streefig201RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

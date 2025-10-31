@@ -52,6 +52,7 @@ INT32 CaveTileInitLayer(INT32 nLayer, INT32 nROMSize, INT32 nBitdepth, INT32 nOf
 
 // cave_sprite.cpp
 extern INT32 CaveSpriteVisibleXOffset;
+extern INT32 CaveSpriteVisibleYOffset;
 
 extern UINT8* CaveSpriteROM;
 extern UINT8* CaveSpriteRAM;

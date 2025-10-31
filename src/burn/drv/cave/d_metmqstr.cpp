@@ -164,8 +164,8 @@ void __fastcall metmqstrWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			return;
 			
 		case 0xa80008:
-			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
+			CaveSpriteBuffer();
 			return;
 			
 		case 0xa8006E:
@@ -734,8 +734,10 @@ static INT32 DrvInit()
 	CaveTileInitLayer(1, 0x400000, 8, 0x4000);
 	CaveTileInitLayer(2, 0x400000, 8, 0x4000);
 	
-	nCaveExtraXOffset = -126;
-	CaveSpriteVisibleXOffset = -126;
+	nCaveExtraXOffset = -125;
+	nCaveExtraYOffset = +1;
+	CaveSpriteVisibleXOffset = -125;
+	CaveSpriteVisibleYOffset = +1;
 	
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);

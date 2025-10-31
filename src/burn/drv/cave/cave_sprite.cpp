@@ -2,6 +2,7 @@
 #include "cave.h"
 
 INT32 CaveSpriteVisibleXOffset;
+INT32 CaveSpriteVisibleYOffset;
 
 UINT8* CaveSpriteROM = NULL;
 UINT8* CaveSpriteRAM = NULL;
@@ -379,7 +380,7 @@ static INT32 CaveSpriteBuffer_NoZoom()
 #if 0
 		y = (BURN_ENDIAN_SWAP_INT16(pSprite[3]) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = BURN_ENDIAN_SWAP_INT16(pSprite[3]) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[3]) + CaveSpriteVisibleYOffset) & 0x03FF;
 #endif
 		if (y >= 240) {
 			if (y + ys <= 0x0400) {
@@ -455,7 +456,7 @@ static INT32 CaveSpriteBuffer_ZoomA()
 #if 0
 		y = ((BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 6) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = (BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 6) & 0x03FF;
+		y = ((BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 6) + CaveSpriteVisibleYOffset) & 0x03FF;
 #endif
 
 		if (BURN_ENDIAN_SWAP_INT16(pSprite[4]) <= 0x0100 && BURN_ENDIAN_SWAP_INT16(pSprite[5]) <= 0x0100) {
@@ -543,7 +544,7 @@ static INT32 CaveSpriteBuffer_ZoomB()
 #if 0
 		y = (BURN_ENDIAN_SWAP_INT16(pSprite[1]) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = BURN_ENDIAN_SWAP_INT16(pSprite[1]) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[1]) + CaveSpriteVisibleYOffset) & 0x03FF;
 #endif
 
 		if (BURN_ENDIAN_SWAP_INT16(pSprite[4]) <= 0x0100 && BURN_ENDIAN_SWAP_INT16(pSprite[5]) <= 0x0100) {
@@ -669,6 +670,7 @@ void CaveSpriteExit()
 	BurnFree(pZBuffer);
 	
 	CaveSpriteVisibleXOffset = 0;
+	CaveSpriteVisibleYOffset = 0;
 
 	return;
 }

@@ -10152,7 +10152,7 @@ struct BurnDriver BurnSpecEskicapers = {
 // Eskimo Eddie (48K)
 
 static struct BurnRomInfo SpecEskeddieRomDesc[] = {
-	{ "Eskimo Eddie 48K (1984)(Ocean).tap", 36318, 0x4b532294, BRF_ESS | BRF_PRG },
+	{ "Eskimo Eddie 48K (1984)(Ocean).tzx", 36376, 0xb723eb19, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecEskeddie, SpecEskeddie, Spectrum)
@@ -10666,7 +10666,7 @@ struct BurnDriver BurnSpecFatworm = {
 // Fearless Frank (48K)
 
 static struct BurnRomInfo SpecFearlessfrankRomDesc[] = {
-	{ "Fearless Frank 48K (1984)(Visions).tap", 40614, 0x573889ab, BRF_ESS | BRF_PRG },
+	{ "Fearless Frank 48K (1984)(St. Michael).tzx", 40672, 0x8e3f25f9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFearlessfrank, SpecFearlessfrank, Spectrum)
@@ -10674,7 +10674,7 @@ STD_ROM_FN(SpecFearlessfrank)
 
 struct BurnDriver BurnSpecFearlessfrank = {
 	"spec_fearlessfrank", NULL, "spec_spectrum", NULL, "1984",
-	"Fearless Frank (48K)\0", NULL, "Visions", "ZX Spectrum",
+	"Fearless Frank (48K)\0", NULL, "St. Michael", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecFearlessfrankRomInfo, SpecFearlessfrankRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -51842,6 +51842,44 @@ struct BurnDriver BurnSpecRebearfan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecRebearfanRomInfo, SpecRebearfanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Rebel Wars (English) (128K) (HB)
+
+static struct BurnRomInfo SpecRebelwarsenRomDesc[] = {
+	{ "Rebel Wars EN 128K (2025)(Mananuk).tap", 125249, 0xf6fd47d4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRebelwarsen, SpecRebelwarsen, Spec128)
+STD_ROM_FN(SpecRebelwarsen)
+
+struct BurnDriver BurnSpecRebelwarsen = {
+	"spec_rebelwarsen", NULL, "spec_spec128", NULL, "2025",
+	"Rebel Wars (English) (128K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecRebelwarsenRomInfo, SpecRebelwarsenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Rebel Wars (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecRebelwarsesRomDesc[] = {
+	{ "Rebel Wars ES 128K (2025)(Mananuk).tap", 125716, 0xaf3c9ff5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRebelwarses, SpecRebelwarses, Spec128)
+STD_ROM_FN(SpecRebelwarses)
+
+struct BurnDriver BurnSpecRebelwarses = {
+	"spec_rebelwarses", "spec_rebelwarsen", "spec_spec128", NULL, "2025",
+	"Rebel Wars (Spanish) (128K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecRebelwarsesRomInfo, SpecRebelwarsesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

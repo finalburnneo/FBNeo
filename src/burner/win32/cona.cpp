@@ -454,6 +454,7 @@ int ConfigAppLoad()
 		STR(szAppCabinetsPath);
 		STR(szAppPCBsPath);
 		STR(szAppHistoryPath);
+		STR(szAppCommandPath);
 		STR(szAppEEPROMPath);
 
 		VAR(bEnableHighResTimer);
@@ -909,6 +910,7 @@ int ConfigAppSave()
 	STR(szAppCabinetsPath);
 	STR(szAppPCBsPath);
 	STR(szAppHistoryPath);
+	STR(szAppCommandPath);
 	STR(szAppEEPROMPath);
 
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));

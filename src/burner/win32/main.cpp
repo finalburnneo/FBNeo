@@ -1373,6 +1373,7 @@ static void CreateSupportFolders()
 		{_T("support/marquees/")},
 		{_T("support/cpanel/")},
 		{_T("support/cabinets/")},
+		{_T("support/commands/")},
 		{_T("support/pcbs/")},
 		{_T("support/history/")},
 		{_T("support/lua/")},

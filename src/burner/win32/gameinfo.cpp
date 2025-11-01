@@ -113,6 +113,7 @@ static int DisplayRomInfo()
 {
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_SHOW);
 	UpdateWindow(hGameInfoDlg);
 
@@ -123,6 +124,7 @@ static int DisplayHDDInfo()
 {
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_SHOW);
 	UpdateWindow(hGameInfoDlg);
 
@@ -133,7 +135,21 @@ static int DisplaySampleInfo()
 {
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_SHOW);
+	UpdateWindow(hGameInfoDlg);
+
+	return 0;
+}
+
+static int DisplayCommands()
+{
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_SHOW);
 	UpdateWindow(hGameInfoDlg);
 
 	return 0;
@@ -146,12 +162,225 @@ static int DisplayHistory()
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_SHOW);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 	UpdateWindow(hGameInfoDlg);
 
 	return 0;
 }
 
 #define ASCIIONLY				(1 << 31)
+
+wchar_t *repl_wcs(const wchar_t *orig, const wchar_t *search, const wchar_t *replace)
+{
+    if (!orig || !search || !replace)
+        return NULL;
+
+    size_t orig_len = wcslen(orig);
+    size_t search_len = wcslen(search);
+    size_t replace_len = wcslen(replace);
+
+    if (search_len == 0)
+        return wcsdup(orig); // nothing to replace
+
+    // Count occurrences of 'search' in 'orig'
+    size_t count = 0;
+    const wchar_t *pos = orig;
+    while ((pos = wcsstr(pos, search)) != NULL) {
+        count++;
+        pos += search_len;
+    }
+
+    // Compute final length and allocate memory
+    size_t new_len = orig_len + count * (replace_len - search_len);
+    wchar_t *result = (wchar_t*)malloc((new_len + 1) * sizeof(wchar_t));
+    if (!result)
+        return NULL;
+
+    // Build the new string
+    const wchar_t *src = orig;
+    wchar_t *dst = result;
+    while ((pos = wcsstr(src, search)) != NULL) {
+        size_t chunk_len = pos - src;
+        wmemcpy(dst, src, chunk_len);
+        dst += chunk_len;
+        wmemcpy(dst, replace, replace_len);
+        dst += replace_len;
+        src = pos + search_len;
+    }
+
+    // Copy any remaining part
+    wcscpy(dst, src);
+    return result;
+}
+
+// command.dat macro expansion blyat
+struct fooreplace {
+	TCHAR *a;
+	TCHAR *b;
+};
+
+static fooreplace foor[] = {
+	{L"_A", L" \u24B6 " }, // Circle'd A-D
+	{L"_B", L" \u24B7 " },
+	{L"_C", L" \u24B8 " },
+	{L"_D", L" \u24B9 " },
+	{L"_H", L" \u24BD " },
+	{L"_Z", L" \u24CF " },
+
+	{L"_a", L" \u2460 " }, // Circle'd 1-10
+	{L"_b", L" \u2461 " },
+	{L"_c", L" \u2462 " },
+	{L"_d", L" \u2463 " },
+	{L"_e", L" \u2464 " },
+	{L"_f", L" \u2465 " },
+	{L"_g", L" \u2466 " },
+	{L"_h", L" \u2467 " },
+	{L"_i", L" \u2468 " },
+	{L"_j", L" \u2469 " },
+
+	{L"_k", L" [Half Circle Back] " },
+	{L"_l", L" [Half Circle Front Up] " },
+	{L"_m", L" [Half Circle Front] " },
+	{L"_n", L" [Half Circle Back Up] " },
+	{L"_o", L" [1/4 Circle Forward 2 Down] " },
+	{L"_p", L" [1/4 Circle Down 2 Back] " },
+	{L"_q", L" [1/4 Circle Back 2 Up] " },
+	{L"_r", L" [1/4 Circle Up 2 Forward] " },
+	{L"_s", L" [1/4 Circle Back 2 Down] " },
+	{L"_t", L" [1/4 Circlecle Down 2 Forward] " },
+	{L"_u", L" [1/4 Circle Forward 2 Up] " },
+	{L"_v", L" [1/4 Circle Up 2 Back] " },
+	{L"_w", L" [Full Clock Forward] " },
+	{L"_x", L" [Full Clock Back] " },
+	{L"_y", L" [Full Count Forward] " },
+	{L"_z", L" [Full Count Back] " },
+	{L"_L", L" [2x Forward] " },
+	{L"_M", L" [2x Back] " },
+	{L"_Q", L" [Dragon Screw Forward] " },
+	{L"_R", L" [Dragon Screw Back] " },
+
+	{L"_S", L"[Start]" },
+	{L"_P", L"[Punch]" },
+	{L"_K", L"[Kick]" },
+	{L"_G", L"[Guard]" },
+	{L"^S", L"[Select]"},
+	{L"^s", L" \u24C8 "}, // Circle'd S
+
+	{L"@A-button", L" \u24B6 " }, // Circle'd A-Z
+	{L"@B-button", L" \u24B7 " },
+	{L"@C-button", L" \u24B8 " },
+	{L"@D-button", L" \u24B9 " },
+	{L"@E-button", L" \u24BA " },
+	{L"@F-button", L" \u24BB " },
+	{L"@G-button", L" \u24BC " },
+	{L"@H-button", L" \u24BD " },
+	{L"@I-button", L" \u24BE " },
+	{L"@J-button", L" \u24BF " },
+	{L"@K-button", L" \u24C0 " },
+	{L"@L-button", L" \u24C1 " },
+	{L"@M-button", L" \u24C2 " },
+	{L"@N-button", L" \u24C3 " },
+	{L"@O-button", L" \u24C4 " },
+	{L"@P-button", L" \u24C5 " },
+	{L"@Q-button", L" \u24C6 " },
+	{L"@R-button", L" \u24C7 " },
+	{L"@S-button", L" \u24C8 " },
+	{L"@T-button", L" \u24C9 " },
+	{L"@U-button", L" \u24CA " },
+	{L"@V-button", L" \u24CB " },
+	{L"@W-button", L" \u24CC " },
+	{L"@X-button", L" \u24CD " },
+	{L"@Y-button", L" \u24CE " },
+	{L"@Z-button", L" \u24CF " },
+
+	{L"_P", L"[Punch]" },
+	{L"_K", L"[Kick]" },
+	{L"_G", L"[Guard]" },
+
+	{L"_N", L"N" },         // Just 'N'(?)
+
+	{L"_`", L"." },         // dot .
+	{L"_)", L" \u25CB " },    // circle
+	{L"_@", L" \u25CE " },    // bullseye
+	{L"_(", L" \u25CF " },	// circle black
+	{L"_&", L" \u2605 " },    // five-pointed Star
+	{L"_*", L" \u2606 " },    // five-pointed Star
+	{L"_`", L" \u00B7 " },    // middle dot
+	{L"_#", L" \u25A3 " },    // double-square
+	{L"_]", L" \u25A1 " },    // square
+	{L"_[", L" \u25A0 " },    // square black
+	{L"_%", L" \u25B3 " },    // triangle
+	{L"_$", L" \u25B2 " },    // triangle black
+	{L"_<", L" \u25C6 " },    // diamond
+	{L"_>", L" \u25C7 " },    // diamond black
+
+	{L"_+", L" + " },
+	{L"_^", L"[air]" },
+	{L"_?", L"[dir]" },
+	{L"_X", L"[tap]" },
+	{L"_|", L"[Jump]" },
+	{L"_O", L"[Hold]" },
+	{L"_-", L"[Air]" },
+	{L"_=", L"[Squatting]" },
+	{L"_~", L"[Charge]" },
+	{L"_!", L" \u21C9 " }, // continue arrow
+
+	// arrows
+	{L"_9", L" \u2197 " },
+	{L"_8", L" \u2191 " },
+	{L"_7", L" \u2196 " },
+	{L"_6", L" \u2192 " },
+	{L"_5", L" \u25CF " }, // black dot
+	{L"_4", L" \u2190 " },
+	{L"_3", L" \u2198 " },
+	{L"_2", L" \u2193 " },
+	{L"_1", L" \u2199 " },
+	{L"_.", L" \u2026 " }, // "..."
+	// double arrows
+	{L"^9", L" \u21D7 . " },
+	{L"^8", L" \u21D1 . " },
+	{L"^7", L" \u21D6 . " },
+	{L"^6", L" \u21D2 . " },
+	{L"^4", L" \u21D0 . " },
+	{L"^3", L" \u21D8 . " },
+	{L"^2", L" \u21D3 . " },
+	{L"^1", L" \u21D9 . " },
+
+	{L"^-", L" [Close] " },
+	{L"^=", L" [Away] " },
+	{L"^*", L" [Spam Button] " },
+	{L"^?", L" [Any Button] " },
+
+	{L"^E", L"[LP]" },
+	{L"^F", L"[MP]" },
+	{L"^G", L"[SP]" },
+	{L"^H", L"[LK]" },
+	{L"^I", L"[MK]" },
+	{L"^J", L"[SK]" },
+	{L"^T", L"[3x Kick]" },
+	{L"^U", L"[3x Punch]" },
+	{L"^V", L"[2x Kick]" },
+	{L"^X", L"[2x Punch]" },
+	{L"^!", L" \u21B3 " }, // down-right arrow
+	{L"^M", L" MAX " },
+#if 0
+	{L"_", L"\u" },
+	{L"_", L"\u" },
+	{L"_", L"\u" },
+#endif
+
+	{NULL, NULL}
+
+};
+
+static void check_expands(TCHAR *str)
+{
+	for (int i = 0; foor[i].a != NULL; i++) {
+		TCHAR *sz = repl_wcs(str, foor[i].a, foor[i].b);
+		wcscpy(str, sz);
+		free(sz);
+	}
+}
 
 static int GameInfoInit()
 {
@@ -185,9 +414,9 @@ static int GameInfoInit()
     TC_ITEM TCI;
     TCI.mask = TCIF_TEXT;
 
-	UINT idsString[17] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_HDD, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
+	UINT idsString[18] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_HDD, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_COMMANDS, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
 
-	for(int i = 0; i < 17; i++) {
+	for(int i = 0; i < 18; i++) {
 		TCI.pszText = FBALoadStringEx(hAppInst, idsString[i], true);
 		SendMessage(hTabControl, TCM_INSERTITEM, (WPARAM) i, (LPARAM) &TCI);
 	}
@@ -206,6 +435,7 @@ static int GameInfoInit()
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_SHOW);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_V), SW_SHOW);
 	UpdateWindow(hGameInfoDlg);
@@ -579,7 +809,10 @@ static int GameInfoInit()
 	char to_find[255*2];
 	int inGame = 0;
 
-	TCHAR szBuffer[0x10000*2] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
+	TCHAR *szBuffer;
+	szBuffer = (TCHAR*)malloc(0x80000);
+
+	wcscpy(szBuffer, _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}"));
 
 	GetHistoryDatHardwareToken(&rom_token[0]);
 	strcpy(DRIVER_NAME, BurnDrvGetTextA(DRV_NAME));
@@ -656,6 +889,83 @@ static int GameInfoInit()
 
 	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), EM_SETTEXTEX, (WPARAM)&TextInfo, (LPARAM)pszBufferUTF8);
 	free(pszBufferUTF8);
+
+	// ------------ command.dat processing ------------
+	// Get the command.dat info
+	snprintf(szFileName, sizeof(szFileName), "%scommand.dat", TCHARToANSI(szAppCommandPath, NULL, 0));
+
+	fp = fopen(szFileName, "rt");
+	inGame = 0;
+
+	strcpy(rom_token, "$info=");
+
+//	GetHistoryDatHardwareToken(&rom_token[0]);
+	strcpy(DRIVER_NAME, BurnDrvGetTextA(DRV_NAME));
+
+	if (strncmp("$info=", rom_token, 6)) { // non-arcade game detected. (token not "$info=" !)
+		char *p = strchr(DRIVER_NAME, '_');
+		if (p) strcpy(DRIVER_NAME, p + 1); // change "nes_smb" -> "smb"
+	}
+
+	wcscpy(szBuffer, _T("{\\rtf1\\ansi\\ansicpg0{\\fonttbl(\\f0\\fnil\\fcharset0 Microsoft Sans Serif;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}"));
+
+	if (fp) {
+		while (!feof(fp)) {
+			char *Tokens;
+
+			fgets(Temp, 10000, fp);
+			if (!strncmp("$info=", Temp, 6)) {
+				Tokens = strtok(Temp, "=,\n");
+				while (Tokens != NULL) {
+					if (!strcmp(Tokens, BurnDrvGetTextA(DRV_NAME))) {
+						inGame = 1;
+						break;
+					}
+
+					Tokens = strtok(NULL, "=,\n");
+				}
+			}
+
+			if (inGame) {
+				int nTitleWrote = 0;
+				while (strncmp("$end", Temp, 4)) {
+					fgets(Temp, 10000, fp);
+
+					if (!strncmp("$", Temp, 1)) continue;
+
+					TCHAR *cnvTemp = wstring_from_utf8(Temp);
+
+					if (!nTitleWrote) {
+						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+					} else {
+						_stprintf(szBuffer, _T("%s\\line"), szBuffer);
+						if (!strncmp("- ", Temp, 2)) {
+							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+						} else {
+							_stprintf(szBuffer, _T("%s{\\f0\\fs16\\cf2\\f0 %s}"), szBuffer, cnvTemp);
+						}
+					}
+					free(cnvTemp);
+					if (strcmp("\n", Temp)) nTitleWrote = 1;
+				}
+				break;
+			}
+		}
+		fclose(fp);
+	}
+
+	_stprintf(szBuffer, _T("%s\\line}"), szBuffer);
+	check_expands(szBuffer);
+	pszBufferUTF8 = utf8_from_wstring(szBuffer);
+	TextInfo.flags = ST_SELECTION;
+	TextInfo.codepage = CP_UTF8;
+
+	//BurnDump("utf8_.bin", pszBufferUTF8, strlen(pszBufferUTF8));
+
+	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), EM_SETTEXTEX, (WPARAM)&TextInfo, (LPARAM)pszBufferUTF8);
+
+	free(pszBufferUTF8);
+	free(szBuffer);
 
 	// Make a white brush
 	hWhiteBGBrush = CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
@@ -901,6 +1211,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST3), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
+			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), SW_HIDE);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_H), SW_SHOW);
 			ShowWindow(GetDlgItem(hGameInfoDlg, IDC_SCREENSHOT_V), SW_SHOW);
 			UpdateWindow(hGameInfoDlg);
@@ -911,19 +1222,20 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (TabPage == 1) DisplayHDDInfo();
 			if (TabPage == 2) DisplaySampleInfo();
 			if (TabPage == 3) DisplayHistory();
-			if (TabPage == 4) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
-			if (TabPage == 5) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
-			if (TabPage == 6) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
-			if (TabPage == 7) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
-			if (TabPage == 8) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
-			if (TabPage == 9) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
-			if (TabPage == 10) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
-			if (TabPage == 11) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
-			if (TabPage == 12) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 13) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 14) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 15) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 16) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 4) DisplayCommands();
+			if (TabPage == 5) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
+			if (TabPage == 6) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
+			if (TabPage == 7) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
+			if (TabPage == 8) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
+			if (TabPage == 9) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
+			if (TabPage == 10) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
+			if (TabPage == 11) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
+			if (TabPage == 12) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
+			if (TabPage == 13) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 14) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 15) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 16) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 17) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
 
 			return FALSE;
 		}

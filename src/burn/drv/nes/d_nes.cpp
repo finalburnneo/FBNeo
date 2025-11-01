@@ -51063,6 +51063,24 @@ struct BurnDriver BurnDrvnes_splathou = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Splatter World (Japan, Prototype)
+static struct BurnRomInfo nes_splatworldRomDesc[] = {
+	{ "Splatter World (Japan, Proto)(1993)(Namcot).nes",          524304, 0xcb9ef0ba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_splatworld)
+STD_ROM_FN(nes_splatworld)
+
+struct BurnDriver BurnDrvnes_splatworld = {
+	"nes_splatworld", NULL, NULL, NULL, "1993",
+	"Splatter World (Japan, Prototype)\0", NULL, "Namcot", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_splatworldRomInfo, nes_splatworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Spot (USA)
 static struct BurnRomInfo nes_spotRomDesc[] = {
 	{ "Spot (USA)(1990)(Arcadia).nes",          131088, 0x1d6e0953, BRF_ESS | BRF_PRG },

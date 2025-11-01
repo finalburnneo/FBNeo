@@ -3326,6 +3326,23 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 // Aftermarket/Homebrew Games
 // --------------------------
 
+// Fruity Pals' Revenge (HB, v1.2)
+static struct BurnRomInfo ngpc_fruitypalsrRomDesc[] = {
+	{ "Fruity Pals' Revenge v1.2 (2025)(Infinite State Games).ngp", 2097152, 0xf92db309, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_fruitypalsr, ngpc_fruitypalsr, ngpc_ngp)
+STD_ROM_FN(ngpc_fruitypalsr)
+
+struct BurnDriver BurnDrvngpc_fruitypalsr = {
+	"ngp_fruitypalsr", NULL, "ngp_ngp", NULL, "2025",
+	"Fruity Pals' Revenge (HB, v1.2)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
+	NgpGetZipName, ngpc_fruitypalsrRomInfo, ngpc_fruitypalsrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
 
 // Don't Die, Mr. Robot! (HB, v2.0.3)
 static struct BurnRomInfo ngpc_ddmrRomDesc[] = {

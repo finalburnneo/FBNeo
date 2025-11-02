@@ -1,4 +1,7 @@
 #include "neogeo.h"
+#include "burn_pal.h"
+#include "resnet.h"
+#include "bitswap.h"
 // Neo Geo -- palette functions
 
 UINT8* NeoPalSrc[2];				// Pointer to input palettes
@@ -10,6 +13,9 @@ static UINT32* NeoPaletteData[2] = {NULL, NULL};
 static UINT16* NeoPaletteCopy[2] = {NULL, NULL};
 
 UINT8 NeoRecalcPalette;
+
+static double rgbweights[6];
+static double rgbweights_darken[6];
 
 INT32 NeoInitPalette()
 {
@@ -27,6 +33,18 @@ INT32 NeoInitPalette()
 	NeoRecalcPalette = 1;
 	bNeoDarkenPalette = 0;
 
+	// dinknotes:
+	// https://wiki.neogeodev.org/images/3/32/Neogeo_aes_schematics_pal_2-page-002.jpg
+	// https://wiki.neogeodev.org/images/7/72/Mv1fs-page3.jpg
+	// https://wiki.neogeodev.org/images/8/8b/MV-4_Schematics_2.jpg
+	// https://wiki.neogeodev.org/images/a/ab/MV-4F_Schematics_3.jpg
+	static const int resistances[6] = { 8200, 3900, 2200, 1000, 470, 220 };
+
+	compute_resistor_weights(0, 0xff, -1.0,
+			6, &resistances[0], rgbweights, 0, 0,
+			6, &resistances[0], rgbweights_darken, 150, 0, // "darken" (IO2 port 0x01 / 0x11) adds a 150ohm pulldown - marked "shadow" on schematics
+			0, NULL, NULL, 0, 0);
+
 	return 0;
 }
 
@@ -36,6 +54,15 @@ void NeoExitPalette()
 		BurnFree(NeoPaletteData[i]);
 		BurnFree(NeoPaletteCopy[i]);
 	}
+}
+
+static UINT8 get_weighty(UINT8 rgbval)
+{
+	rgbval >>= 2; // 0xfc [111111..] -> 0x3f [..111111] (for sanity)
+
+	UINT32 v = combine_6_weights((bNeoDarkenPalette) ? rgbweights_darken : rgbweights,
+								 BIT(rgbval, 0), BIT(rgbval, 1), BIT(rgbval, 2), BIT(rgbval, 3), BIT(rgbval, 4), BIT(rgbval, 5));
+	return (v & 0xff);
 }
 
 inline static UINT32 CalcCol(UINT16 nColour)
@@ -50,17 +77,9 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	b |= (nColour >> 9) & 8;
 	b |= (nColour >> 13) & 4;
 
-	// our current color mask is 0xfc (6 bits)
-	// shift down and OR to fill in the low 2 bits
-	r |= r >> 6;
-	g |= g >> 6;
-	b |= b >> 6;
-
-	if (bNeoDarkenPalette) {
-		r >>= 1;
-		g >>= 1;
-		b >>= 1;
-	}
+	r = get_weighty(r);
+	g = get_weighty(g);
+	b = get_weighty(b);
 
 	return BurnHighCol(r, g, b, 0);
 }

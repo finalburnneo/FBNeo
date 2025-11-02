@@ -848,7 +848,7 @@ STD_ROM_PICK(umk3wp)
 STD_ROM_FN(umk3wp)
 
 struct BurnDriver BurnDrvUmk3wp = {
-	"umk3w", "umk3", NULL, NULL, "1997",
+	"umk3wp", "umk3", NULL, NULL, "1997",
 	"Ultimate Mortal Kombat 3 WaveNet Edition + (Kano Transformations) (rev 2.03 04/01/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,

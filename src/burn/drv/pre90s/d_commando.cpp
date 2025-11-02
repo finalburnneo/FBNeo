@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvCommandou = {
 };
 
 
-// Senjou no Ookami
+// Senjou no Ookami (Japan)
 
 static struct BurnRomInfo commandojRomDesc[] = {
 	{ "so04.9m",					0x8000, 0xd3f2bfb3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code (Encrypted)
@@ -715,7 +715,7 @@ STD_ROM_FN(commandoj)
 
 struct BurnDriver BurnDrvCommandoj = {
 	"commandoj", "commando", NULL, NULL, "1985",
-	"Senjou no Ookami\0", NULL, "Capcom", "Miscellaneous",
+	"Senjou no Ookami (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, commandojRomInfo, commandojRomName, NULL, NULL, NULL, NULL, CommandoInputInfo, CommandoDIPInfo,

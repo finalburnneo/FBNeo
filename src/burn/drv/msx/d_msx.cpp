@@ -32142,6 +32142,24 @@ struct BurnDriver BurnDrvMSX_muhmourn3 = {
 	272, 228, 4, 3
 };
 
+// MultiCart 31in1 (HB)
+static struct BurnRomInfo MSX_multic31in1RomDesc[] = {
+	{ "MultiCart 31in1 (2019)(RetroHard).rom",	1048576, 0x0613d8db, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_multic31in1, MSX_multic31in1, msx_msx)
+STD_ROM_FN(MSX_multic31in1)
+
+struct BurnDriver BurnDrvMSX_multic31in1 = {
+	"msx_multic31in1", NULL, "msx_msx", NULL, "2019",
+	"MultiCart 31in1 (HB)\0", "H.E.R.O doesn't work", "RetroHard", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_multic31in1RomInfo, MSX_multic31in1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Multiverse (HB)
 static struct BurnRomInfo msx_multiverseRomDesc[] = {
 	{ "Multiverse (2019)(Hikaru Games).rom",	32768, 0x2c4cda24, BRF_PRG | BRF_ESS },
@@ -33435,6 +33453,24 @@ struct BurnDriver BurnDrvMSX_ruptus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MULTISHOOT, 0,
 	MSXGetZipName, MSX_ruptusRomInfo, MSX_ruptusRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// S H M U P S (HB)
+static struct BurnRomInfo MSX_shmupsRomDesc[] = {
+	{ "S H M U P S (2019)(RetroHard).rom",	1048576, 0x0241b504, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_shmups, MSX_shmups, msx_msx)
+STD_ROM_FN(MSX_shmups)
+
+struct BurnDriver BurnDrvMSX_shmups = {
+	"msx_shmups", NULL, "msx_msx", NULL, "2019",
+	"S H M U P S (HB)\0", "River Raid doesn't work", "RetroHard", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MULTISHOOT, 0,
+	MSXGetZipName, MSX_shmupsRomInfo, MSX_shmupsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

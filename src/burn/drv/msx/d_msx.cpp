@@ -21867,7 +21867,7 @@ STD_ROM_FN(MSX_aburner)
 
 struct BurnDriver BurnDrvMSX_aburner = {
 	"msx_aburner", NULL, "msx_msx", NULL, "1988",
-	"After Burner (Euro)\0", NULL, "Activision", "MSX",
+	"After Burner (Euro)\0", "At title screen turn the Tape to Side B", "Activision", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SHOOT, 0,
 	MSXGetZipName, MSX_aburnerRomInfo, MSX_aburnerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
@@ -29663,6 +29663,24 @@ struct BurnDriver BurnDrvMSX_dicedtour = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_CASINO, 0,
 	MSXGetZipName, MSX_dicedtourRomInfo, MSX_dicedtourRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Dinamic Treasures (Spanish) (HB)
+static struct BurnRomInfo MSX_dinamictrsRomDesc[] = {
+	{ "Dinamic Treasures ES (2025)(SMX Team).rom",	1908736, 0x1bbbc643, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dinamictrs, MSX_dinamictrs, msx_msx)
+STD_ROM_FN(MSX_dinamictrs)
+
+struct BurnDriver BurnDrvMSX_dinamictrs = {
+	"msx_dinamictrs", NULL, "msx_msx", NULL, "2025",
+	"Dinamic Treasures (Spanish) (HB)\0", "Selection of Dinamic Software games from 1985 to 1991", "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_dinamictrsRomInfo, MSX_dinamictrsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

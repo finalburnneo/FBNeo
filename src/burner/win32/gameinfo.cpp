@@ -972,9 +972,11 @@ static int GameInfoInit()
 
 	//BurnDump("utf8_.bin", pszBufferUTF8, strlen(pszBufferUTF8));
 
-	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), EM_EXLIMITTEXT, (WPARAM)0x20000, (LPARAM)0); // 128kbyte limit
+	// EM_EXLIMITTEXT doesn't always work above 90kbytes (or so),
+	// Also send EM_LIMITTEXT just-in-case! (kof2002 commands text)
+	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), EM_EXLIMITTEXT, (WPARAM)0x80000, (LPARAM)0); // 512kbyte limit
+	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), EM_LIMITTEXT, (WPARAM)0x80000, (LPARAM)0); // 512kbyte limit
 	SendMessage(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_LOCAL), EM_SETTEXTEX, (WPARAM)&TextInfo, (LPARAM)pszBufferUTF8);
-
 	free(pszBufferUTF8);
 	free(szBuffer);
 

@@ -28018,6 +28018,24 @@ struct BurnDriver BurnDrvMSX_antiair = {
 	272, 228, 4, 3
 };
 
+// Arcade Fever (HB)
+static struct BurnRomInfo MSX_arcadefeverRomDesc[] = {
+	{ "Arcade Fever (2025)(SMX Team).rom",	1998848, 0x5cc305c3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_arcadefever, MSX_arcadefever, msx_msx)
+STD_ROM_FN(MSX_arcadefever)
+
+struct BurnDriver BurnDrvMSX_arcadefever = {
+	"msx_arcadefever", NULL, "msx_msx", NULL, "2025",
+	"Arcade Fever (HB)\0", "R-Type doesn't work", "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_arcadefeverRomInfo, MSX_arcadefeverRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Arcomage (HB)
 static struct BurnRomInfo MSX_arcomageRomDesc[] = {
 	{ "Arcomage (2015)(Bitvision).rom",	65536, 0xa72794ba, BRF_PRG | BRF_ESS },
@@ -28879,6 +28897,24 @@ struct BurnDriver BurnDrvMSX_caos = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_caosRomInfo, MSX_caosRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Casio Collection (HB)
+static struct BurnRomInfo MSX_casiocollRomDesc[] = {
+	{ "Casio Collection (2025)(SMX Team).rom",	827392, 0xcb857ad7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_casiocoll, MSX_casiocoll, msx_msx)
+STD_ROM_FN(MSX_casiocoll)
+
+struct BurnDriver BurnDrvMSX_casiocoll = {
+	"msx_casiocoll", NULL, "msx_msx", NULL, "2025",
+	"Casio Collection (HB)\0", NULL, "SMX Team", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_casiocollRomInfo, MSX_casiocollRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

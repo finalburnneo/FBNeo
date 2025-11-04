@@ -614,7 +614,7 @@ STD_ROM_FN(fds_aisenshinicol)
 struct BurnDriver BurnDrvfds_aisenshinicol = {
 	"fds_aisenshinicol", "fds_wolnicol", "fds_fdsbios", NULL, "1987",
 	"Ai Senshi Nicol (Japan)\0", NULL, "Konami", "Famicom Disk System",
-	L"Ai Senshi Nicol (Japan)\u611b\u6226\u58eb\u30cb\u30b3\u30eb\0", NULL, NULL, NULL,
+	L"Ai Senshi Nicol (Japan)\0\u611b\u6226\u58eb\u30cb\u30b3\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ADV | GBF_RUNGUN, 0,
 	NESGetZipName, fds_aisenshinicolRomInfo, fds_aisenshinicolRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -3490,9 +3490,28 @@ struct BurnDriver BurnDrvfds_sectionz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)
+// Seiken Psycho Calibur (Hack, English)
+// https://www.romhacking.net/translations/8/
+static struct BurnRomInfo fds_seikepsyRomDesc[] = {
+	{ "Seiken Psycho Calibur T-Eng (2000)(The Spoony Bard).fds",          131000, 0x1ec1552b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_seikepsy, fds_seikepsy, fds_fdsbios)
+STD_ROM_FN(fds_seikepsy)
+
+struct BurnDriver BurnDrvfds_seikepsy = {
+	"fds_seikepsy", NULL, "fds_fdsbios", NULL, "2000",
+	"Seiken Psycho Calibur (Hack, English)\0", NULL, "The Spoony Bard", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, fds_seikepsyRomInfo, fds_seikepsyRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Seiken Psycho Calibur: Majuu no Mori Densetsu (Japan)
 static struct BurnRomInfo fds_seikepsyjRomDesc[] = {
-	{ "Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)(1987)(Imagineer).fds",          131000, 0xaea5691a, BRF_ESS | BRF_PRG },
+	{ "Seiken Psycho Calibur - Majuu no Mori Densetsu (Japan)(1987)(Imagineer).fds",          131000, 0xaea5691a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_seikepsyj, fds_seikepsyj, fds_fdsbios)
@@ -3500,29 +3519,10 @@ STD_ROM_FN(fds_seikepsyj)
 
 struct BurnDriver BurnDrvfds_seikepsyj = {
 	"fds_seikepsyj", "fds_seikepsy", "fds_fdsbios", NULL, "1987",
-	"Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)\0", NULL, "Imagineer", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Seiken Psycho Calibur: Majuu no Mori Densetsu (Japan)\0", NULL, "Imagineer", "Famicom Disk System",
+	L"Seiken Psycho Calibur: Majuu no Mori Densetsu (Japan)\0\u8056\u5263\u30b5\u30a4\u30b3\u30ab\u30ea\u30d0\u30fc \u9b54\u7363\u306e\u68ee\u4f1d\u8aac\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, fds_seikepsyjRomInfo, fds_seikepsyjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Seiken Psychocalibur - Majuu no Mori Densetsu (Hack, English)
-// https://www.romhacking.net/translations/8/
-static struct BurnRomInfo fds_seikepsyRomDesc[] = {
-	{ "Seiken Psychocalibur - Majuu no Mori Densetsu T-Eng (2013)(The Spoony Bard).fds",          131000, 0x1ec1552b, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(fds_seikepsy, fds_seikepsy, fds_fdsbios)
-STD_ROM_FN(fds_seikepsy)
-
-struct BurnDriver BurnDrvfds_seikepsy = {
-	"fds_seikepsy", NULL, "fds_fdsbios", NULL, "2013",
-	"Seiken Psychocalibur - Majuu no Mori Densetsu (Hack, English)\0", NULL, "The Spoony Bard", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_RPG, 0,
-	NESGetZipName, fds_seikepsyRomInfo, fds_seikepsyRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -3545,28 +3545,10 @@ struct BurnDriver BurnDrvfds_sexyinvaders = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Silviana - Ai Ippai no Little Angel (Japan)
-static struct BurnRomInfo fds_silvijRomDesc[] = {
-	{ "Silviana - Ai Ippai no Little Angel (Japan)(1988)(Pack-In-Video).fds",          131016, 0x4d721d90, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(fds_silvij, fds_silvij, fds_fdsbios)
-STD_ROM_FN(fds_silvij)
-
-struct BurnDriver BurnDrvfds_silvij = {
-	"fds_silvij", "fds_silvi", "fds_fdsbios", NULL, "1988",
-	"Silviana - Ai Ippai no Little Angel (Japan)\0", NULL, "Pack-In-Video", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, fds_silvijRomInfo, fds_silvijRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Silviana (Hack, English)
 // https://www.romhacking.net/translations/616/
 static struct BurnRomInfo fds_silviRomDesc[] = {
-	{ "Silviana - Ai Ippai no Little Angel T-Eng (2002)(Mute).fds",          131000, 0xc5b1bff7, BRF_ESS | BRF_PRG },
+	{ "Silviana T-Eng (2002)(Mute).fds",          131000, 0xc5b1bff7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(fds_silvi, fds_silvi, fds_fdsbios)
@@ -3578,6 +3560,24 @@ struct BurnDriver BurnDrvfds_silvi = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, fds_silviRomInfo, fds_silviRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sylviana: Ai Ippai no Little Angel (Japan)
+static struct BurnRomInfo fds_silvijRomDesc[] = {
+	{ "Sylviana - Ai Ippai no Little Angel (Japan)(1988)(Pack-In-Video).fds",          131016, 0x4d721d90, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_silvij, fds_silvij, fds_fdsbios)
+STD_ROM_FN(fds_silvij)
+
+struct BurnDriver BurnDrvfds_silvij = {
+	"fds_silvij", "fds_silvi", "fds_fdsbios", NULL, "1988",
+	"Sylviana: Ai Ippai no Little Angel (Japan)\0", NULL, "Pack-In-Video", "Famicom Disk System",
+	L"Sylviana: Ai Ippai no Little Angel (Japan)\0\u30b7\u30eb\u30f4\u30a3\u30a2\u30fc\u30ca \u611b\u3044\u3063\u3071\u3044\u306e\u5192\u967a\u8005\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, fds_silvijRomInfo, fds_silvijRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -3782,7 +3782,7 @@ struct BurnDriver BurnDrvfds_supermarbro2fix = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Tama & Friends - 3 Choume Daibouken (Japan)
+// Tama & Friends: 3 Choume Daibouken (Japan)
 static struct BurnRomInfo fds_tamafriRomDesc[] = {
 	{ "Tama & Friends - 3 Choume Daibouken (Japan)(1989)(Bandai).fds",          131016, 0x8751a949, BRF_ESS | BRF_PRG },
 };
@@ -3792,8 +3792,8 @@ STD_ROM_FN(fds_tamafri)
 
 struct BurnDriver BurnDrvfds_tamafri = {
 	"fds_tamafri", NULL, "fds_fdsbios", NULL, "1989",
-	"Tama & Friends - 3 Choume Daibouken (Japan)\0", NULL, "Bandai", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
+	"Tama & Friends: 3 Choume Daibouken (Japan)\0", NULL, "Bandai", "Famicom Disk System",
+	L"Tama & Friends: 3 Choume Daibouken (Japan)\0Tama & Friends 3\u4e01\u76ee\u5927\u5192\u967a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PLATFORM, 0,
 	NESGetZipName, fds_tamafriRomInfo, fds_tamafriRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -3814,6 +3814,43 @@ struct BurnDriver BurnDrvfds_tennis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_FDS, GBF_SPORTSMISC, 0,
 	NESGetZipName, fds_tennisRomInfo, fds_tennisRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Titanic Mystery: Rumblings from the Blue (Hack, English)
+// https://romhackplaza.org/translations/titanic-mystery-ao-no-senritsu-english-translation-fds/
+static struct BurnRomInfo fds_titanicRomDesc[] = {
+	{ "Titanic Mystery - Rumblings from the Blue T-Eng (2025)(BlackPaladin).fds",          131000, 0xdab26a4e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_titanic, fds_titanic, fds_fdsbios)
+STD_ROM_FN(fds_titanic)
+
+struct BurnDriver BurnDrvfds_titanic = {
+	"fds_titanic", NULL, "fds_fdsbios", NULL, "2025",
+	"Titanic Mystery: Rumblings from the Blue (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_ADV, 0,
+	NESGetZipName, fds_titanicRomInfo, fds_titanicRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Titanic Mystery: Ao no Senritsu (Japan)
+static struct BurnRomInfo fds_titanicjRomDesc[] = {
+	{ "Titanic Mystery - Ao no Senritsu (Japan)(1987)(Gakken - Activision).fds",          131000, 0xfb36075c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_titanicj, fds_titanicj, fds_fdsbios)
+STD_ROM_FN(fds_titanicj)
+
+struct BurnDriver BurnDrvfds_titanicj = {
+	"fds_titanicj", "fds_titanic", "fds_fdsbios", NULL, "1987",
+	"Titanic Mystery: Ao no Senritsu (Japan)\0", NULL, "Gakken - Activision", "Famicom Disk System",
+	L"Titanic Mystery: Ao no Senritsu (Japan)\0\u30bf\u30a4\u30bf\u30cb\u30c3\u30af\u30df\u30b9\u30c6\u30ea\u30fc \u84bc\u306e\u6226\u6144\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_ADV, 0,
+	NESGetZipName, fds_titanicjRomInfo, fds_titanicjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -3854,25 +3891,7 @@ struct BurnDriver BurnDrvfds_topplezip = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Transformers - The Headmasters (Japan)
-static struct BurnRomInfo fds_transjRomDesc[] = {
-	{ "Transformers - The Headmasters (Japan)(1987)(Takara).fds",          131016, 0x8bd904cd, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(fds_transj, fds_transj, fds_fdsbios)
-STD_ROM_FN(fds_transj)
-
-struct BurnDriver BurnDrvfds_transj = {
-	"fds_transj", "fds_trans", "fds_fdsbios", NULL, "1987",
-	"Transformers - The Headmasters (Japan)\0", NULL, "Takara", "Famicom Disk System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
-	NESGetZipName, fds_transjRomInfo, fds_transjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Transformers - The Headmasters (Hack, English)
+// Transformers: The Headmasters (Hack, English)
 // https://www.romhacking.net/translations/7412/
 static struct BurnRomInfo fds_transRomDesc[] = {
 	{ "Transformers - The Headmasters T-Eng (2025)(BlackPaladin).fds",          131000, 0xe3165537, BRF_ESS | BRF_PRG },
@@ -3882,11 +3901,29 @@ STDROMPICKEXT(fds_trans, fds_trans, fds_fdsbios)
 STD_ROM_FN(fds_trans)
 
 struct BurnDriver BurnDrvfds_trans = {
-	"fds_trans", NULL, "fds_fdsbios", NULL, "1987",
-	"Transformers - The Headmasters (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
+	"fds_trans", NULL, "fds_fdsbios", NULL, "2025",
+	"Transformers: The Headmasters (Hack, English)\0", NULL, "BlackPaladin", "Famicom Disk System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_transRomInfo, fds_transRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Transformers: The Headmasters (Japan)
+static struct BurnRomInfo fds_transjRomDesc[] = {
+	{ "Transformers - The Headmasters (Japan)(1987)(Takara).fds",          131016, 0x8bd904cd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_transj, fds_transj, fds_fdsbios)
+STD_ROM_FN(fds_transj)
+
+struct BurnDriver BurnDrvfds_transj = {
+	"fds_transj", "fds_trans", "fds_fdsbios", NULL, "1987",
+	"Transformers: The Headmasters (Japan)\0", NULL, "Takara", "Famicom Disk System",
+	L"Transformers: The Headmasters (Japan)\0\u30c8\u30e9\u30f3\u30b9\u30d5\u30a9\u30fc\u30de\u30fc \u30b6\u2606\u30d8\u30c3\u30c9\u30de\u30b9\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
+	NESGetZipName, fds_transjRomInfo, fds_transjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -28722,16 +28722,16 @@ struct BurnDriver BurnDrvFlapchck = {
 // https://tonsomo.itch.io/jurl-neo-geo-edition
 
 static struct BurnRomInfo jurlRomDesc[] = {
-	{ "202-p1.p1",    0x080000, 0x601b540e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "jurl-p1.p1",		0x080000, 0x601b540e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "202-s1.s1",    0x020000, 0xd6c058c9, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "jurl-s1.s1",		0x020000, 0xd6c058c9, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "202-c1.c1",    0x100000, 0x02811fe9, 3 | BRF_GRA },           //  2 Sprite data
-	{ "202-c2.c2",    0x100000, 0x953bb9a9, 3 | BRF_GRA },           //  3
+	{ "jurl-c1.c1",		0x100000, 0x02811fe9, 3 | BRF_GRA },           //  2 Sprite data
+	{ "jurl-c2.c2",		0x100000, 0x953bb9a9, 3 | BRF_GRA },           //  3
 
-	{ "202-m1.m1",    0x020000, 0xb758c5d2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "jurl-m1.m1",		0x020000, 0xb758c5d2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "202-v1.v1",    0x400000, 0x16db022e, 5 | BRF_SND },           //  5 Sound data
+	{ "jurl-v1.v1",		0x400000, 0x16db022e, 5 | BRF_SND },           //  5 Sound data
 };
 
 STDROMPICKEXT(jurl, jurl, neogeo)

@@ -27303,29 +27303,29 @@ struct BurnDriver BurnDrvNeodemo = {
 
 // Bang Bang Busters 2 (HB, Demo)
 
-static struct BurnRomInfo b2b2dRomDesc[] = {
-	{ "070-p1.p1",    	   0x100000, 0x3659f253, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+static struct BurnRomInfo b2b2RomDesc[] = {
+	{ "b2b2-p1.p1",    	   0x100000, 0x3659f253, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "070-s1.s1",    	   0x020000, 0xe53ef3d0, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "b2b2-s1.s1",    	   0x020000, 0xe53ef3d0, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "070-c1.c1",    	   0x800000, 0x739173e2, 3 | BRF_GRA },           //  2 Sprite data
-	{ "070-c2.c2",    	   0x800000, 0x9a439c98, 3 | BRF_GRA },           //  3
+	{ "b2b2-c1.c1",    	   0x800000, 0x739173e2, 3 | BRF_GRA },           //  2 Sprite data
+	{ "b2b2-c2.c2",    	   0x800000, 0x9a439c98, 3 | BRF_GRA },           //  3
 
-	{ "070-m1.m1",    	   0x010000, 0xbff0ad49, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "b2b2-m1.m1",    	   0x010000, 0xbff0ad49, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "070-v1.v1",    	   0x400000, 0xf1dda8dd, 5 | BRF_SND },           //  7 Sound data
+	{ "b2b2-v1.v1",    	   0x400000, 0xf1dda8dd, 5 | BRF_SND },           //  7 Sound data
 
 };
 
-STDROMPICKEXT(b2b2d, b2b2d, neogeo)
-STD_ROM_FN(b2b2d)
+STDROMPICKEXT(b2b2, b2b2, neogeo)
+STD_ROM_FN(b2b2)
 
-struct BurnDriver BurnDrvB2b2d = {
-	"b2b2d", NULL, "neogeo", NULL, "2025",
+struct BurnDriver BurnDrvB2b2 = {
+	"b2b2", NULL, "neogeo", NULL, "2025",
 	"Bang Bang Busters 2 (HB, Demo)\0", NULL, "PixelHeart", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, b2b2dRomInfo, b2b2dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, b2b2RomInfo, b2b2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

@@ -2127,12 +2127,10 @@ static void WriteIO2(INT32 nOffset, UINT8 byteValue)
 {
 	switch (nOffset) {
 		case 0x01:
-		case 0x11: // Screen Brightness
-			if (nNeoSystemType & NEO_SYS_CART) {
-				NeoRecalcPalette = 1;
-				bNeoDarkenPalette = (nOffset == 0x11) ? 1 : 0;
-				//bprintf(PRINT_NORMAL, _T("  - Darken Palette %X (0x%02X, at scanline %i).\n"), bNeoDarkenPalette, byteValue, NeoCurrentScanline());
-			}
+		case 0x11: // Shadow latch, causes the palette to nearly halfen in brightness
+			NeoRecalcPalette = 1;
+			bNeoDarkenPalette = (nOffset == 0x11) ? 1 : 0;
+			//bprintf(PRINT_NORMAL, _T("  - Darken Palette %X (0x%02X, at scanline %i).\n"), bNeoDarkenPalette, byteValue, NeoCurrentScanline());
 			break;
 
 		case 0x03:											// Select BIOS vector table

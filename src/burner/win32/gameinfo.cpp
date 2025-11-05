@@ -869,13 +869,13 @@ static int GameInfoInit()
 					tcharstrreplace(cnvTemp, _T("&lt;"), _T("<"));
 
 					if (!nTitleWrote) {
-						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1 %s}"), szBuffer, cnvTemp);
 					} else {
 						_stprintf(szBuffer, _T("%s\\line"), szBuffer);
 						if (!strncmp("- ", Temp, 2)) {
-							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1 %s}"), szBuffer, cnvTemp);
 						} else {
-							_stprintf(szBuffer, _T("%s{\\f0\\fs16\\cf2\\f0 %s}"), szBuffer, cnvTemp);
+							_stprintf(szBuffer, _T("%s{\\f0\\fs16\\cf2 %s}"), szBuffer, cnvTemp);
 						}
 					}
 					free(cnvTemp);
@@ -946,13 +946,13 @@ static int GameInfoInit()
 					TCHAR *cnvTemp = wstring_from_utf8(Temp);
 
 					if (!nTitleWrote) {
-						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1 %s}"), szBuffer, cnvTemp);
 					} else {
 						_stprintf(szBuffer, _T("%s\\line"), szBuffer);
 						if (!strncmp("- ", Temp, 2)) {
-							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1\\f0 %s}"), szBuffer, cnvTemp);
+							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1 %s}"), szBuffer, cnvTemp);
 						} else {
-							_stprintf(szBuffer, _T("%s{\\f0\\fs16\\cf2\\f0 %s}"), szBuffer, cnvTemp);
+							_stprintf(szBuffer, _T("%s{\\f0\\fs16\\cf2 %s}"), szBuffer, cnvTemp);
 						}
 					}
 					free(cnvTemp);
@@ -970,7 +970,7 @@ static int GameInfoInit()
 	TextInfo.flags = ST_SELECTION;
 	TextInfo.codepage = CP_UTF8;
 
-	//BurnDump("utf8_.bin", pszBufferUTF8, strlen(pszBufferUTF8));
+	//BurnDump("utf8.bin", pszBufferUTF8, strlen(pszBufferUTF8));
 
 	// EM_EXLIMITTEXT doesn't always work above 90kbytes (or so),
 	// Also send EM_LIMITTEXT just-in-case! (kof2002 commands text)

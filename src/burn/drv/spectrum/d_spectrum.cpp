@@ -33109,10 +33109,10 @@ struct BurnDriver BurnSpecAstrosmash = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Asymmetry (48K-128K) (HB)
+// Asymmetry (48K-128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecAsymmetryRomDesc[] = {
-	{ "Asymmetry 48K-128K (2025)(Manu & Kit).tap", 68795, 0xd3e7cb46, BRF_ESS | BRF_PRG },
+	{ "Asymmetry 48K-128K v1.1 (2025)(Manu & Kit).tap", 68794, 0x6a6c0c99, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAsymmetry, SpecAsymmetry, Spec128)
@@ -33120,7 +33120,7 @@ STD_ROM_FN(SpecAsymmetry)
 
 struct BurnDriver BurnSpecAsymmetry = {
 	"spec_asymmetry", NULL, "spec_spec128", NULL, "2025",
-	"Asymmetry (48K-128K) (HB)\0", NULL, "Manu & Kit", "ZX Spectrum",
+	"Asymmetry (48K-128K) (HB, v1.1)\0", NULL, "Manu & Kit", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecAsymmetryRomInfo, SpecAsymmetryRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34361,25 +34361,6 @@ struct BurnDriver BurnSpecBobbycarrot = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBobbycarrotRomInfo, SpecBobbycarrotRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Bodyguard (48K) (HB)
-
-static struct BurnRomInfo SpecBodyguardRomDesc[] = {
-	{ "Bodyguard 48K-AY (2025)(Delta Squad).tap", 34151, 0x1e02e3af, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecBodyguard, SpecBodyguard, Spectrum)
-STD_ROM_FN(SpecBodyguard)
-
-struct BurnDriver BurnSpecBodyguard = {
-	"spec_bodyguard", NULL, "spec_spectrum", NULL, "2025",
-	"Bodyguard (48K) (HB)\0", "AY Sound Supported", "Delta Squad", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
-	SpectrumGetZipName, SpecBodyguardRomInfo, SpecBodyguardRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -39530,6 +39511,25 @@ struct BurnDriver BurnSpecDroidbuster = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecDroidbusterRomInfo, SpecDroidbusterRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// DS.Bodyguard (48K) (HB, v1.1)
+
+static struct BurnRomInfo SpecBodyguardRomDesc[] = {
+	{ "DS.Bodyguard 48K-AY v1.1 (2025)(Delta Squad).tap", 34258, 0x513e3ccf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBodyguard, SpecBodyguard, Spectrum)
+STD_ROM_FN(SpecBodyguard)
+
+struct BurnDriver BurnSpecBodyguard = {
+	"spec_bodyguard", NULL, "spec_spectrum", NULL, "2025",
+	"DS.Bodyguard (48K) (HB, v1.1)\0", "AY Sound Supported", "Delta Squad", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecBodyguardRomInfo, SpecBodyguardRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -45176,10 +45176,10 @@ struct BurnDriver BurnSpecKuatris = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Kubanoid (English) (48K) (HB)
+// Kubanoid (English) (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecKubanoidenRomDesc[] = {
-	{ "Kubanoid EN 48K-AY (2025)(Stardust).tap", 20943, 0xda23233a, BRF_ESS | BRF_PRG },
+	{ "Kubanoid EN 48K-AY v1.1 (2025)(Stardust).tap", 23019, 0x1606464f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecKubanoiden, SpecKubanoiden, Spectrum)
@@ -45187,7 +45187,7 @@ STD_ROM_FN(SpecKubanoiden)
 
 struct BurnDriver BurnSpecKubanoiden = {
 	"spec_kubanoiden", NULL, "spec_spectrum", NULL, "2025",
-	"Kubanoid (English) (48K) (HB)\0", "AY Sound Supported", "Stardust", "ZX Spectrum",
+	"Kubanoid (English) (48K) (HB, v1.1)\0", "AY Sound Supported", "Stardust", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecKubanoidenRomInfo, SpecKubanoidenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -45195,10 +45195,10 @@ struct BurnDriver BurnSpecKubanoiden = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Kubanoid (Russian) (48K) (HB)
+// Kubanoid (Russian) (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecKubanoidruRomDesc[] = {
-	{ "Kubanoid RU 48K-AY (2025)(Stardust).tap", 21002, 0xd1f2eb52, BRF_ESS | BRF_PRG },
+	{ "Kubanoid RU 48K-AY v1.1 (2025)(Stardust).tap", 23078, 0x29ffa0da, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecKubanoidru, SpecKubanoidru, Spectrum)
@@ -45206,7 +45206,7 @@ STD_ROM_FN(SpecKubanoidru)
 
 struct BurnDriver BurnSpecKubanoidru = {
 	"spec_kubanoidru", "spec_kubanoiden", "spec_spectrum", NULL, "2025",
-	"Kubanoid (Russian) (48K) (HB)\0", "AY Sound Supported", "Stardust", "ZX Spectrum",
+	"Kubanoid (Russian) (48K) (HB, v1.1)\0", "AY Sound Supported", "Stardust", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecKubanoidruRomInfo, SpecKubanoidruRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

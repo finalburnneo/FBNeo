@@ -9533,7 +9533,7 @@ struct BurnDriver BurnDrvnes_metalgearc = {
 	"nes_metalgearc", "nes_metalgear", NULL, NULL, "2020",
 	"Metal Gear (Hack, Spanish)\0", NULL, "Wave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_RUNGUN, 0,
 	NESGetZipName, nes_metalgearcRomInfo, nes_metalgearcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9590,7 +9590,7 @@ struct BurnDriver BurnDrvnes_metroidc = {
 	"nes_metroidc", "nes_metroid", NULL, NULL, "2021",
 	"Metroid (Hack, Spanish v2.0)\0", NULL, "Wave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_metroidcRomInfo, nes_metroidcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9722,7 +9722,7 @@ struct BurnDriver BurnDrvnes_ninjagaidenc = {
 	"nes_ninjagaidenc", "nes_ninjagaiden", NULL, NULL, "2016",
 	"Ninja Gaiden (Hack, Spanish + Addendum)\0", NULL, "Terwilf", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaidencRomInfo, nes_ninjagaidencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9741,7 +9741,7 @@ struct BurnDriver BurnDrvnes_ninjagaidentp = {
 	"nes_ninjagaidentp", "nes_ninjagaiden", NULL, NULL, "2021",
 	"Ninja Gaiden (Hack, Portuguese v1.0u)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaidentpRomInfo, nes_ninjagaidentpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9760,7 +9760,7 @@ struct BurnDriver BurnDrvnes_ninjagaiiic = {
 	"nes_ninjagaiiic", "nes_ninjagaiii", NULL, NULL, "2016",
 	"Ninja Gaiden II: The Dark Sword of Chaos (Hack, Spanish + Addendum)\0", NULL, "Terwilf", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaiiicRomInfo, nes_ninjagaiiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9779,7 +9779,7 @@ struct BurnDriver BurnDrvnes_ninjagaiiitp = {
 	"nes_ninjagaiiitp", "nes_ninjagaiii", NULL, NULL, "2021",
 	"Ninja Gaiden II: A Espada Demoniaca das Trevas (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "NES / Famicom",
 	L"Ninja Gaiden II: A Espada Demon\u00edaca das Trevas (Hack, Portuguese)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaiiitpRomInfo, nes_ninjagaiiitpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9798,7 +9798,7 @@ struct BurnDriver BurnDrvnes_ninjagaiiiic = {
 	"nes_ninjagaiiiic", "nes_ninjagaiiii", NULL, NULL, "2016",
 	"Ninja Gaiden III: The Ancient Ship of Doom (Hack, Spanish + Addendum)\0", NULL, "Terwilf", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaiiiicRomInfo, nes_ninjagaiiiicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -9817,7 +9817,7 @@ struct BurnDriver BurnDrvnes_ninjagaiiiitp = {
 	"nes_ninjagaiiiitp", "nes_ninjagaiiii", NULL, NULL, "2021",
 	"Ninja Gaiden III: A Arca do Inferno (Hack, Portuguese v1.0rh + Restored)\0", NULL, "PO.B.R.E. - MottZilla", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_ninjagaiiiitpRomInfo, nes_ninjagaiiiitpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21645,6 +21645,24 @@ struct BurnDriver BurnDrvnes_novasqu = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Null the Summoner (HB)
+static struct BurnRomInfo nes_nullsummoRomDesc[] = {
+	{ "Null the Summoner (2025)(Shinryakuwu).nes",          40976, 0x73c44286, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nullsummo)
+STD_ROM_FN(nes_nullsummo)
+
+struct BurnDriver BurnDrvnes_nullsummo = {
+	"nes_nullsummo", NULL, NULL, NULL, "2025",
+	"Null the Summoner (HB)\0", NULL, "Shinryakuwu", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_nullsummoRomInfo, nes_nullsummoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Old Towers (HB, v1.1)
 static struct BurnRomInfo nes_oldtowersRomDesc[] = {
 	{ "Old Towers v1.1 (2024)(RetroSouls).nes",          262160, 0xd9b8e753, BRF_ESS | BRF_PRG },
@@ -28934,7 +28952,7 @@ struct BurnDriver BurnDrvnes_bigfoot = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Bikkuri Nekketsu Shin Kiroku! - Harukanaru Kin Medal (Japan)
+// Bikkuri Nekketsu Shin Kiroku!: Harukanaru Kin Medal (Japan)
 static struct BurnRomInfo nes_biknekirokuRomDesc[] = {
 	{ "Bikkuri Nekketsu Shin Kiroku! - Harukanaru Kin Medal (Japan)(1992)(Technos).nes",          262160, 0xf5202c9e, BRF_ESS | BRF_PRG },
 };
@@ -28944,8 +28962,8 @@ STD_ROM_FN(nes_biknekiroku)
 
 struct BurnDriver BurnDrvnes_biknekiroku = {
 	"nes_biknekiroku", "nes_crashnboy", NULL, NULL, "1992",
-	"Bikkuri Nekketsu Shin Kiroku! - Harukanaru Kin Medal (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Bikkuri Nekketsu Shin Kiroku!: Harukanaru Kin Medal (Japan)\0", NULL, "Technos Japan", "NES / Famicom",
+	L"Bikkuri Nekketsu Shin Kiroku!: Harukanaru Kin Medal (Japan)\0\u3073\u3063\u304f\u308a\u71b1\u8840\u65b0\u8a18\u9332! \u306f\u308b\u304b\u306a\u308b\u91d1\u30e1\u30c0\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_biknekirokuRomInfo, nes_biknekirokuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -31379,7 +31397,7 @@ struct BurnDriver BurnDrvnes_cowboykid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Crash 'n' the Boys - Street Challenge (USA)
+// Crash 'n' the Boys: Street Challenge (USA)
 static struct BurnRomInfo nes_crashnboyRomDesc[] = {
 	{ "Crash 'n' the Boys - Street Challenge (USA)(1992)(Technos).nes",          262160, 0xed63ccc5, BRF_ESS | BRF_PRG },
 };
@@ -31389,7 +31407,7 @@ STD_ROM_FN(nes_crashnboy)
 
 struct BurnDriver BurnDrvnes_crashnboy = {
 	"nes_crashnboy", NULL, NULL, NULL, "1992",
-	"Crash 'n' the Boys - Street Challenge (USA)\0", NULL, "Technos", "NES / Famicom",
+	"Crash 'n' the Boys: Street Challenge (USA)\0", NULL, "Technos", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_crashnboyRomInfo, nes_crashnboyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36757,7 +36775,7 @@ struct BurnDriver BurnDrvnes_goaltwo = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// God Slayer - Haruka Tenkuu no Sonata (Japan)
+// God Slayer: Haruka Tenkuu no Sonata (Japan)
 static struct BurnRomInfo nes_godslaRomDesc[] = {
 	{ "God Slayer - Haruka Tenkuu no Sonata (Japan)(1990)(SNK).nes",          393232, 0x718fd0af, BRF_ESS | BRF_PRG },
 };
@@ -36767,15 +36785,33 @@ STD_ROM_FN(nes_godsla)
 
 struct BurnDriver BurnDrvnes_godsla = {
 	"nes_godsla", "nes_crystalis", NULL, NULL, "1990",
-	"God Slayer - Haruka Tenkuu no Sonata (Japan)\0", NULL, "SNK", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"God Slayer: Haruka Tenkuu no Sonata (Japan)\0", NULL, "SNK", "NES / Famicom",
+	L"God Slayer: Haruka Tenkuu no Sonata (Japan)\0\u30b4\u30c3\u30c9\u30fb\u30b9\u30ec\u30a4\u30e4 \u306f\u308b\u304b\u5929\u7a7a\u306e\u30bd\u30ca\u30bf\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_godslaRomInfo, nes_godslaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Godzilla - Monster of Monsters! (USA)
+// Godzilla (Japan)
+static struct BurnRomInfo nes_godzijRomDesc[] = {
+	{ "Godzilla (Japan)(1988)(Toho).nes",          262160, 0xe785f399, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_godzij)
+STD_ROM_FN(nes_godzij)
+
+struct BurnDriver BurnDrvnes_godzij = {
+	"nes_godzij", "nes_godzi", NULL, NULL, "1988",
+	"Godzilla (Japan)\0", NULL, "Toho Co.", "NES / Famicom",
+	L"Godzilla (Japan)\0\u30b4\u30b8\u30e9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
+	NESGetZipName, nes_godzijRomInfo, nes_godzijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Godzilla: Monster of Monsters! (USA)
 static struct BurnRomInfo nes_godziRomDesc[] = {
 	{ "Godzilla - Monster of Monsters! (USA)(1989)(Toho).nes",          262160, 0x198b4e3b, BRF_ESS | BRF_PRG },
 };
@@ -36785,15 +36821,15 @@ STD_ROM_FN(nes_godzi)
 
 struct BurnDriver BurnDrvnes_godzi = {
 	"nes_godzi", NULL, NULL, NULL, "1989",
-	"Godzilla - Monster of Monsters! (USA)\0", NULL, "Toho Co.", "NES / Famicom",
+	"Godzilla: Monster of Monsters! (USA)\0", NULL, "Toho Co.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
 	NESGetZipName, nes_godziRomInfo, nes_godziRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Godzilla 2 - War of the Monsters (USA)
+// Godzilla 2: War of the Monsters (USA)
 static struct BurnRomInfo nes_godzi2RomDesc[] = {
 	{ "Godzilla 2 - War of the Monsters (USA)(1992)(Toho).nes",          262160, 0xf200080d, BRF_ESS | BRF_PRG },
 };
@@ -36803,7 +36839,7 @@ STD_ROM_FN(nes_godzi2)
 
 struct BurnDriver BurnDrvnes_godzi2 = {
 	"nes_godzi2", NULL, NULL, NULL, "1992",
-	"Godzilla 2 - War of the Monsters (USA)\0", NULL, "Toho Co.", "NES / Famicom",
+	"Godzilla 2: War of the Monsters (USA)\0", NULL, "Toho Co.", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_godzi2RomInfo, nes_godzi2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

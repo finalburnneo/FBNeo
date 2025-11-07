@@ -54354,6 +54354,25 @@ struct BurnDriver BurnSpecSinctoweres = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Single Dragon (128K) (HB)
+
+static struct BurnRomInfo SpecSingledragonRomDesc[] = {
+	{ "Single Dragon 128K (2025)(JuanGM).tap", 65158, 0xf22b915f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSingledragon, SpecSingledragon, Spec128)
+STD_ROM_FN(SpecSingledragon)
+
+struct BurnDriver BurnSpecSingledragon = {
+	"spec_singledragon", NULL, "spec_spec128", NULL, "2025",
+	"Single Dragon (128K) (HB)\0", NULL, "JuanGM", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSingledragonRomInfo, SpecSingledragonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Sir Ababol (48K) (HB)
 
 static struct BurnRomInfo SpecSirababolRomDesc[] = {

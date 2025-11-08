@@ -22960,6 +22960,24 @@ struct BurnDriver BurnDrvsms_linerunner = {
 	256, 192, 4, 3
 };
 
+// Little Samson Tribute (GlobalHack, v1.1, Portuguese)
+static struct BurnRomInfo sms_lilsamsonRomDesc[] = {
+	{ "Little Samson Tribute v1.1 (GlobalHack)(2025)(LMS Retro).sms",	524288, 0x17a73ba7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_lilsamson)
+STD_ROM_FN(sms_lilsamson)
+
+struct BurnDriver BurnDrvsms_lilsamson = {
+	"sms_lilsamson", NULL, NULL, NULL, "2025",
+	"Little Samson Tribute (GlobalHack, v1.1, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_lilsamsonRomInfo, sms_lilsamsonRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Lost Raider (HB, v1.01)
 static struct BurnRomInfo sms_lostraider101RomDesc[] = {
 	{ "LostRaider v1.01 (2015)(Vingazole & Ichigo Bankai).sms",	131072, 0x2553b745, BRF_PRG | BRF_ESS },
@@ -23300,6 +23318,24 @@ struct BurnDriver BurnDrvsms_noturno = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_noturnoRomInfo, sms_noturnoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Noturno Mini Game (Edição de Halloween) (HB, Portuguese)
+static struct BurnRomInfo sms_noturnomgRomDesc[] = {
+	{ "Noturno Mini Game (Edicao de Halloween) (2025)(LMS Retro).sms",	524288, 0x038489c0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_noturnomg)
+STD_ROM_FN(sms_noturnomg)
+
+struct BurnDriver BurnDrvsms_noturnomg = {
+	"sms_noturnomg", "sms_noturno", NULL, NULL, "2025",
+	"Noturno Mini Game (Edicao de Halloween) (HB, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
+	L"Noturno Mini Game (Edi\u00e7\u00e3o de Halloween) (HB, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_noturnomgRomInfo, sms_noturnomgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

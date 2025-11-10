@@ -367,7 +367,7 @@ ifdef WINDOWS
 $(NAME):	$(allobj) $(objdir)drivers.o
 	@echo
 	@echo Linking executable... $(NAME)
-	@$(LD)  -mconsole $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
+	@$(LD) -Wl,--image-base -Wl,0x10000000 -mconsole $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
 
 else
 

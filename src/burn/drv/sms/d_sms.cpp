@@ -21554,6 +21554,24 @@ struct BurnDriver BurnDrvsms_alexlostse = {
 	256, 192, 4, 3
 };
 
+// Alien Cat 2 (HB)
+static struct BurnRomInfo sms_aliencat2RomDesc[] = {
+	{ "Alien Cat 2 (2025)(PSCD Games).sms",	327680, 0x188ec6fa, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_aliencat2)
+STD_ROM_FN(sms_aliencat2)
+
+struct BurnDriver BurnDrvsms_aliencat2 = {
+	"sms_aliencat2", NULL, NULL, NULL, "2025",
+	"Alien Cat 2 (HB)\0", NULL, "PSCD Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_aliencat2RomInfo, sms_aliencat2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // AntiAir (HB)
 static struct BurnRomInfo sms_antiairRomDesc[] = {
 	{ "AntiAir (2024)(Inufuto).sms",	16384, 0xe49dfb4e, BRF_PRG | BRF_ESS },
@@ -23376,9 +23394,9 @@ struct BurnDriver BurnDrvsms_outrunch = {
 	256, 192, 4, 3
 };
 
-// Pac-Man Master Museum (HB, v2.20)
+// Pac-Man Master Museum (HB, v3.10)
 static struct BurnRomInfo sms_pacmanmmRomDesc[] = {
-	{ "Pac-Man Master Museum v2.20 (2025)(Lack of Track).sms",	131072, 0x9725b67f, BRF_PRG | BRF_ESS },
+	{ "Pac-Man Master Museum v3.10 (2025)(Lack of Track).sms",	262144, 0x75419b59, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pacmanmm)
@@ -23386,7 +23404,7 @@ STD_ROM_FN(sms_pacmanmm)
 
 struct BurnDriver BurnDrvsms_pacmanmm = {
 	"sms_pacmanmm", NULL, NULL, NULL, "2025",
-	"Pac-Man Master Museum (HB, v2.20)\0", NULL, "Lack of Track", "Sega Master System",
+	"Pac-Man Master Museum (HB, v3.10)\0", NULL, "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
 	SMSGetZipName, sms_pacmanmmRomInfo, sms_pacmanmmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

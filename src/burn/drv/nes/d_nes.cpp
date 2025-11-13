@@ -14002,6 +14002,24 @@ struct BurnDriver BurnDrvnes_alfonsarcadvr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Alien Cat 2 (HB)
+static struct BurnRomInfo nes_aliencat2RomDesc[] = {
+	{ "Alien Cat 2 (2025)(PSCD Games).nes",          262160, 0x550e30b3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aliencat2)
+STD_ROM_FN(nes_aliencat2)
+
+struct BurnDriver BurnDrvnes_aliencat2 = {
+	"nes_aliencat2", NULL, NULL, NULL, "2025",
+	"Alien Cat 2 (HB)\0", NULL, "PSCD Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
+	NESGetZipName, nes_aliencat2RomInfo, nes_aliencat2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // All Hell Unleashed (HB, v6.66)
 static struct BurnRomInfo nes_allhellunl666RomDesc[] = {
 	{ "All Hell Unleashed v6.66 (2025)(Fista Productions).nes",          524304, 0x4203e09a, BRF_ESS | BRF_PRG },
@@ -37874,7 +37892,7 @@ struct BurnDriver BurnDrvnes_hellfighter = {
 	"nes_hellfighter", NULL, NULL, NULL, "1991",
 	"Hell Fighter (Asia) (Unl)\0", NULL, "Sachen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_hellfighterRomInfo, nes_hellfighterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -38040,7 +38058,7 @@ struct BurnDriver BurnDrvnes_heroqueste = {
 	"nes_heroqueste", "nes_heroquest", NULL, NULL, "1991",
 	"Hero Quest (Euro, Prototype)\0", NULL, "Gremlin Graphics", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_BOARD | GBF_RPG, 0,
 	NESGetZipName, nes_heroquesteRomInfo, nes_heroquesteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
@@ -38058,7 +38076,7 @@ struct BurnDriver BurnDrvnes_heroquest = {
 	"nes_heroquest", NULL, NULL, NULL, "1991",
 	"Hero Quest (USA) (Prototype)\0", NULL, "Gremlin Graphics", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_BOARD | GBF_RPG, 0,
 	NESGetZipName, nes_heroquestRomInfo, nes_heroquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -38221,7 +38239,7 @@ struct BurnDriver BurnDrvnes_hiryunokenii = {
 	"nes_hiryunokenii", NULL, NULL, NULL, "1988",
 	"Hiryuu no Ken II - Dragon no Tsubasa (Japan)\0", NULL, "Culture Brain", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_RPG, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_hiryunokeniiRomInfo, nes_hiryunokeniiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -38239,7 +38257,7 @@ struct BurnDriver BurnDrvnes_hiryunokeniii = {
 	"nes_hiryunokeniii", NULL, NULL, NULL, "1990",
 	"Hiryuu no Ken III - 5 Nin no Ryuu Senshi (Japan)\0", NULL, "Culture Brain", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_RPG, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_hiryunokeniiiRomInfo, nes_hiryunokeniiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -39767,7 +39785,7 @@ STD_ROM_FN(nes_jesusj)
 struct BurnDriver BurnDrvnes_jesusj = {
 	"nes_jesusj", "nes_jesus", NULL, NULL, "1989",
 	"Jesus: Kyoufu no Bio Monster (Japan)\0", NULL, "King Records", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Jesus: Kyoufu no Bio Monster (Japan)\0Jesus \u30b8\u30fc\u30b6\u30b9 \u6050\u6016\u306e\u30d0\u30a4\u30aa\u30fb\u30e2\u30f3\u30b9\u30bf\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_jesusjRomInfo, nes_jesusjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -40421,14 +40439,14 @@ STD_ROM_FN(nes_kaguyaj)
 struct BurnDriver BurnDrvnes_kaguyaj = {
 	"nes_kaguyaj", "nes_kaguyae", NULL, NULL, "1988",
 	"Kaguya Hime Densetsu (Japan)\0", NULL, "Victor", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Kaguya Hime Densetsu (Japan)\0\u304b\u3050\u3084\u59eb\u4f1d\u8aac\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_kaguyajRomInfo, nes_kaguyajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kaguya Hime Densetsu (Hack, English)
+// Kaguya Hime Densetsu ~ Legend of Princess Kaguya, The (Hack, English)
 // https://www.romhacking.net/translations/6614/
 static struct BurnRomInfo nes_kaguyaeRomDesc[] = {
 	{ "Kaguya Hime Densetsu T-Eng (2022)(FCandChill).nes",          524304, 0x80de5290, BRF_ESS | BRF_PRG },
@@ -40439,7 +40457,7 @@ STD_ROM_FN(nes_kaguyae)
 
 struct BurnDriver BurnDrvnes_kaguyae = {
 	"nes_kaguyae", NULL, NULL, NULL, "2022",
-	"Kaguya Hime Densetsu (Hack, English)\0", NULL, "FCandChill", "NES / Famicom",
+	"Kaguya Hime Densetsu ~ Legend of Princess Kaguya, The (Hack, English)\0", NULL, "FCandChill", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_kaguyaeRomInfo, nes_kaguyaeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

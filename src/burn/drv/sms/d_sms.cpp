@@ -23304,7 +23304,7 @@ struct BurnDriver BurnDrvsms_novdmvdp = {
 	256, 192, 4, 3
 };
 
-// Noturno (HB, Portuguese)
+// Noturno (GlobalHack, Portuguese)
 static struct BurnRomInfo sms_noturnoRomDesc[] = {
 	{ "Noturno (2025)(LMS Retro).sms",	524288, 0x47be6422, BRF_PRG | BRF_ESS },
 };
@@ -23314,15 +23314,15 @@ STD_ROM_FN(sms_noturno)
 
 struct BurnDriver BurnDrvsms_noturno = {
 	"sms_noturno", NULL, NULL, NULL, "2025",
-	"Noturno (HB, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
+	"Noturno (GlobalHack, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_noturnoRomInfo, sms_noturnoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
 
-// Noturno Mini Game (Edição de Halloween) (HB, Portuguese)
+// Noturno Mini Game (Edição de Halloween) (GlobalHack, Portuguese)
 static struct BurnRomInfo sms_noturnomgRomDesc[] = {
 	{ "Noturno Mini Game (Edicao de Halloween) (2025)(LMS Retro).sms",	524288, 0x038489c0, BRF_PRG | BRF_ESS },
 };
@@ -23332,9 +23332,9 @@ STD_ROM_FN(sms_noturnomg)
 
 struct BurnDriver BurnDrvsms_noturnomg = {
 	"sms_noturnomg", "sms_noturno", NULL, NULL, "2025",
-	"Noturno Mini Game (Edicao de Halloween) (HB, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
-	L"Noturno Mini Game (Edi\u00e7\u00e3o de Halloween) (HB, Portuguese)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	"Noturno Mini Game (Edicao de Halloween) (GlobalHack, Portuguese)\0", NULL, "LMS Retro", "Sega Master System",
+	L"Noturno Mini Game (Edi\u00e7\u00e3o de Halloween) (GlobalHack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_noturnomgRomInfo, sms_noturnomgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

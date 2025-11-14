@@ -602,11 +602,13 @@ static void DrvIRQCallback(INT32, INT32 nStatus)
 	Sh2SetIRQLine(12, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvDoReset()
+static INT32 DrvDoReset(INT32 clear_mem)
 {
 	Sh2Reset();
 
-	memset (AllRam, 0, RamEnd - AllRam);
+	if (clear_mem) {
+		memset (AllRam, 0, RamEnd - AllRam);
+	}
 
 	if (EEPROMAvailable() == 0) {
 		EEPROMFill(DrvEEPROM, 0, 0x100);
@@ -790,7 +792,7 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 type, INT32 gfx_max, INT32 g
 
 	PsikyoshVideoInit(gfx_max, gfx_min);
 
-	DrvDoReset();
+	DrvDoReset(1);
 
 	return 0;
 }
@@ -815,7 +817,7 @@ static INT32 DrvExit()
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
-		DrvDoReset();
+		DrvDoReset(0);
 	}
 
 	Sh2NewFrame();

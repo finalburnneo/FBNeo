@@ -21556,7 +21556,7 @@ struct BurnDriver BurnDrvsms_alexlostse = {
 
 // Alien Cat 2 (HB)
 static struct BurnRomInfo sms_aliencat2RomDesc[] = {
-	{ "Alien Cat 2 (2025)(PSCD Games).sms",	327680, 0x188ec6fa, BRF_PRG | BRF_ESS },
+	{ "Alien Cat 2 (2025)(PSCD Games).sms",	344064, 0x7acff9b3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_aliencat2)

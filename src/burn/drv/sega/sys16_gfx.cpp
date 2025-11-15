@@ -2036,7 +2036,7 @@ static void HangonRenderSpriteLayer(INT32 Priority)
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;	
 		INT32 sprpri  = ((BURN_ENDIAN_SWAP_INT16(data[2]) >> 14) & 1) ? (1<<3) : (1<<1);
 		
-		if (sprpri != Priority) continue;
+		if (Priority && sprpri != Priority) continue;
 		
 		INT32 bottom  = (BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) + 1;
 		INT32 top     = (BURN_ENDIAN_SWAP_INT16(data[0]) & 0xff) + 1;
@@ -2146,7 +2146,7 @@ static void HangonAltRenderSpriteLayer(INT32 Priority)
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;
 		INT32 sprpri  = 1 << ((BURN_ENDIAN_SWAP_INT16(data[4]) >> 0) & 0x3);
 		
-		if (sprpri != Priority) continue;
+		if (Priority && sprpri != Priority) continue;
 		
 		INT32 bottom  = (BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) + 1;
 		INT32 top     = (BURN_ENDIAN_SWAP_INT16(data[0]) & 0xff) + 1;
@@ -3767,6 +3767,7 @@ INT32 HangonRender()
 	System16ARenderTileLayer(0, 1, 1, 0);
 	HangonRenderRoadLayer(1);
 	HangonRenderSpriteLayer(8);
+	HangonRenderSpriteLayer(0);
 	System16ARenderTextLayer(0, 0);
 	System16ARenderTextLayer(1, 0);
 	BurnTransferCopy(System16Palette);
@@ -3796,6 +3797,7 @@ INT32 HangonAltRender()
 	System16ARenderTileLayer(0, 1, 1, 0);
 	HangonRenderRoadLayer(1);
 	HangonAltRenderSpriteLayer(8);
+	HangonAltRenderSpriteLayer(0);
 	System16ARenderTextLayer(0, 0);
 	System16ARenderTextLayer(1, 0);
 	BurnTransferCopy(System16Palette);

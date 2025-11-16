@@ -1762,8 +1762,6 @@ static void DiggerSoundWrite2(UINT16 port, UINT8 data)
 	if (High & 0x20) {
 		BurnSamplePlay(5); // shovel
 		//bprintf(0, _T("shovel\n"));
-		extern int counter;
-		if (counter)
 		return; // shovel has priority, skip processing the rest of this port
 	}
 

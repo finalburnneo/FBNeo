@@ -526,7 +526,7 @@ static INT32 DrvFrame()
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
 		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x0f, 20);
-		BurnTrackballUDLR(0, DrvJoy4f[2], DrvJoy4f[3], DrvJoy4f[0], DrvJoy4f[1]);
+		BurnTrackballUDLR(0, DrvJoy4f[2], DrvJoy4f[3], DrvJoy4f[0], DrvJoy4f[1], 5);
 		BurnTrackballUpdate(0);
 
 		DrvInputs[0] = (DrvInputs[0] & 0x2f) | (DrvDips[4] & 0x10); // service mode

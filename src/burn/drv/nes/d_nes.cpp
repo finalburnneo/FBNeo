@@ -13552,24 +13552,6 @@ struct BurnDriver BurnDrvnes_5star = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// 7-Lucky Slot-A-Lot (HB)
-static struct BurnRomInfo nes_7lsalRomDesc[] = {
-	{ "7-Lucky Slot-A-Lot (2025)(Demon Ark).nes",          40976, 0x67ca711a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_7lsal)
-STD_ROM_FN(nes_7lsal)
-
-struct BurnDriver BurnDrvnes_7lsal = {
-	"nes_7lsal", NULL, NULL, NULL, "2025",
-	"7-Lucky Slot-A-Lot (HB)\0", NULL, "Demon Ark", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_7lsalRomInfo, nes_7lsalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // 8-bit Illustrations (HB)
 static struct BurnRomInfo nes_8bitpicsRomDesc[] = {
 	{ "8bit Illustrations (2015)(RIKI).nes",          524304, 0x19ca739b, BRF_ESS | BRF_PRG },

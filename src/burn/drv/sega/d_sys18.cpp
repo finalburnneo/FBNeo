@@ -3458,8 +3458,6 @@ static INT32 LghostInit()
 	sega_315_5195_custom_io_do = LghostReadIO;
 	sega_315_5195_custom_io_write_do = LghostWriteIO;
 
-	LaserGhost = true;
-
 	return System18Bank40000Init();
 }
 

@@ -2732,7 +2732,6 @@ INT32 System16Exit()
 	Shangon = false;
 	Hangon = false;
 	AlienSyndrome = false;
-	LaserGhost = false;
 	HammerAway = false;
 	Lockonph = false;
 	AltbeastMode = false;

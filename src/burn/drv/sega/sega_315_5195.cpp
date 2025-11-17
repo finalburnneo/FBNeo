@@ -3,9 +3,6 @@
 #define MAX_MIRRORS		256
 #define LOG_MAPPER		0
 
-// Laser Ghost does a write byte of 00 to fe0008 triggering IRQ7 during gun calibration - this trashes the memory map - disable it for now
-bool LaserGhost = false;
-
 typedef struct
 {
 	UINT8 regs[0x20];
@@ -1544,9 +1541,9 @@ void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d)
 	}
 	
 	if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Write Byte 0x%06X, 0x%02X\n"), a, d);
-	
-	if (LaserGhost && a == 0xfe0008 && d == 0x00) return;
-	
+
+	if ((a & 1) == 0) return; // mapper doesn't answer to msb
+
 	chip_write(a >> 1, d & 0xff);
 }
 

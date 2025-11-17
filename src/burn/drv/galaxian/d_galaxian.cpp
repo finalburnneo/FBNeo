@@ -6593,6 +6593,61 @@ static struct BurnRomInfo VectrgalRomDesc[] = {
 STD_ROM_PICK(Vectrgal)
 STD_ROM_FN(Vectrgal)
 
+// Panda Jump (set 1)
+static struct BurnRomInfo pandajumpRomDesc[] = {
+	{ "pj.u",	0x0800, 0xb2658d7d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj.v",	0x0800, 0xd47fa6c5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj.w",	0x0800, 0x12e3e07e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj.y",	0x0800, 0xee2133d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj.7l",	0x0800, 0xf1e8ba9e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "pj.1h",	0x0800, 0x6ac96510, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "pj.1k",	0x0800, 0xf2fb3d80, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "6l.bpr",	0x0020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(pandajump)
+STD_ROM_FN(pandajump)
+
+struct BurnDriver BurnDrvPandajump = {
+	"pandajump", NULL, NULL, NULL, "2022",
+	"Panda Jump (set 1)\0", NULL, "Ben Larson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
+	NULL, pandajumpRomInfo, pandajumpRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+
+// Panda Jump (set 2)
+static struct BurnRomInfo pandajump2RomDesc[] = {
+	{ "pj2.u",	0x0800, 0x239b9e2d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj2.v",	0x0800, 0xd38fa1a6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj2.w",	0x0800, 0x94b8ffd6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj2.y",	0x0800, 0xc6a9c24b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pj.7l",	0x0800, 0xf1e8ba9e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "pj.1h",	0x0800, 0x6ac96510, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "pj.1k",	0x0800, 0xf2fb3d80, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "6l.bpr",	0x0020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(pandajump2)
+STD_ROM_FN(pandajump2)
+
+struct BurnDriver BurnDrvPandajump2 = {
+	"pandajump2", "pandajump", NULL, NULL, "2022",
+	"Panda Jump (set 2)\0", NULL, "Ben Larson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
+	NULL, pandajump2RomInfo, pandajump2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvGalaxian = {
 	"galaxian", NULL, NULL, NULL, "1979",
 	"Galaxian (Namco set 1)\0", NULL, "Namco", "Galaxian",

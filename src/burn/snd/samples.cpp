@@ -885,7 +885,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 		if (length) {
 			sample_ptr->flags = si.nFlags;
-			bprintf(0, _T("Loading \"%S\": "), szSampleName);
+			bprintf(0, _T("Loading \"%S\" @ %d: "), szSampleName, i);
 			make_raw((UINT8*)destination, length);
 			free(destination);			// ZipLoadOneFile uses malloc()
 		} else {
@@ -902,7 +902,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 			if (length) {
 				sample_ptr->flags = si.nFlags;
-				bprintf(0, _T("Loading FLAC \"%S\": "), szSampleName);
+				bprintf(0, _T("Loading FLAC \"%S\" @ %d: "), szSampleName, i);
 				make_raw_flac((UINT8*)destination, length);
 				free(destination);		// ZipLoadOneFile uses malloc()
 			} else {
@@ -918,7 +918,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 				if (length) {
 					sample_ptr->flags = si.nFlags;
-					bprintf(0, _T("Loading MP3 \"%S\": "), szSampleName);
+					bprintf(0, _T("Loading MP3 \"%S\" @ %d: "), szSampleName, i);
 					make_raw_mp3((UINT8*)destination, length);
 					free(destination);	// ZipLoadOneFile uses malloc()
 				} else {
@@ -926,6 +926,7 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 				}
 			}
 #else
+				bprintf(0, _T("Loading \"%S\" @ %d: sample missing!"), szSampleName, i);
 				sample_ptr->flags = SAMPLE_IGNORE;
 #endif
 		}

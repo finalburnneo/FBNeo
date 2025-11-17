@@ -608,7 +608,8 @@ jobs:
           target_commitish: ${{ github.sha }}
           body_path: ${{ steps.store_release_body.outputs.archive_path }}
           draft: false
-          prerelease: true
+          prerelease: false
+          make_latest: true
           files: |
             ${{ steps.store_linux_sdl2_x86_64.outputs.archive_path }}
             ${{ steps.store_linux_sdl1_x86_64.outputs.archive_path }}

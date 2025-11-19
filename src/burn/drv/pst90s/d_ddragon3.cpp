@@ -723,6 +723,15 @@ static UINT8 __fastcall Ddragon368KReadByte(UINT32 a)
 	return 0;
 }
 
+static void cpu_sync() // sync z80 to 68k
+{
+	INT32 t = (UINT64)SekTotalCycles() * 3579545 / 12000000;
+
+	if (t > 0) {
+		BurnTimerUpdate(t);
+	}
+}
+
 static void __fastcall Ddragon368KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
@@ -732,6 +741,7 @@ static void __fastcall Ddragon368KWriteByte(UINT32 a, UINT8 d)
 
 		case 0x100003: {
 			DrvSoundLatch = d;
+			cpu_sync();
 			ZetNmi(0);
 			return;
 		}
@@ -811,6 +821,7 @@ static void __fastcall Ddragon368KWriteWord(UINT32 a, UINT16 d)
 
 		case 0x100002: {
 			DrvSoundLatch = d;
+			cpu_sync();
 			ZetNmi(0);
 			return;
 		}
@@ -864,6 +875,7 @@ static void __fastcall Ddragon3b68KWriteByte(UINT32 a, UINT8 d)
 	switch (a) {
 		case 0x140003: {
 			DrvSoundLatch = d;
+			cpu_sync();
 			ZetNmi(0);
 			return;
 		}
@@ -942,6 +954,7 @@ static void __fastcall Ddragon3b68KWriteWord(UINT32 a, UINT16 d)
 
 		case 0x140002: {
 			DrvSoundLatch = d;
+			cpu_sync();
 			ZetNmi(0);
 			return;
 		}
@@ -1130,6 +1143,7 @@ static void __fastcall Ctribeb68KWriteWord(UINT32 a, UINT16 d)
 
 		case 0x140002: {
 			DrvSoundLatch = d & 0xff;
+			cpu_sync();
 			ZetNmi(0);
 			return;
 		}
@@ -1919,8 +1933,10 @@ static INT32 DrvFrame()
 
 	DrvVBlank = 0;
 
+	SekOpen(0);
+	ZetOpen(0);
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		SekOpen(0);
 		if (i == 128) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
@@ -1933,12 +1949,12 @@ static INT32 DrvFrame()
 			DrvVBlank = 0;
 		}
 		CPU_RUN(0, Sek);
-		SekClose();
 
-		ZetOpen(0);
 		CPU_RUN_TIMER(1);
-		ZetClose();
 	}
+
+	SekClose();
+	ZetClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 

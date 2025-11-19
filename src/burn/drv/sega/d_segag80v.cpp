@@ -62,7 +62,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8]; // spinner left/right
 static UINT8 DrvJoy5[8]; // fake coin inputs
 static UINT8 DrvJoy6[1];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
@@ -85,7 +85,6 @@ static struct BurnInputInfo Elim2InputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Elim2)
@@ -109,7 +108,6 @@ static struct BurnInputInfo Elim2cInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Elim2c)
@@ -144,7 +142,6 @@ static struct BurnInputInfo Elim4InputList[] = {
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Elim4)
@@ -169,7 +166,6 @@ static struct BurnInputInfo SpacfuryInputList[] = {
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Spacfury)
@@ -187,7 +183,6 @@ static struct BurnInputInfo ZektorInputList[] = {
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Zektor)
@@ -205,7 +200,6 @@ static struct BurnInputInfo TacscanInputList[] = {
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Tacscan)
@@ -225,7 +219,6 @@ static struct BurnInputInfo StartrekInputList[] = {
 	{"Service Mode",    BIT_DIGITAL,	DrvJoy6 + 0,	"diag"	    },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Startrek)
@@ -291,10 +284,6 @@ static struct BurnDIPInfo Elim2DIPList[]=
 	{0x0f, 0x01, 0xf0, 0x60, "1 Coin  4 Credits"		},
 	{0x0f, 0x01, 0xf0, 0x70, "1 Coin  5 Credits"		},
 	{0x0f, 0x01, 0xf0, 0x80, "1 Coin  6 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x10, 0x01, 0x01, 0x00, "No"						},
-	{0x10, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Elim2)
@@ -334,10 +323,6 @@ static struct BurnDIPInfo Elim4DIPList[]=
 	{0x18, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"		},
 	{0x18, 0x01, 0xe0, 0x20, "2 Coins 1 Credits"		},
 	{0x18, 0x01, 0xe0, 0x00, "1 Coin  1 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x19, 0x01, 0x01, 0x00, "No"						},
-	{0x19, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Elim4)
@@ -408,10 +393,6 @@ static struct BurnDIPInfo SpacfuryDIPList[]=
 	{0x10, 0x01, 0xf0, 0x60, "1 Coin  4 Credits"		},
 	{0x10, 0x01, 0xf0, 0x70, "1 Coin  5 Credits"		},
 	{0x10, 0x01, 0xf0, 0x80, "1 Coin  6 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x11, 0x01, 0x01, 0x00, "No"						},
-	{0x11, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Spacfury)
@@ -482,10 +463,6 @@ static struct BurnDIPInfo ZektorDIPList[]=
 	{0x0a, 0x01, 0xf0, 0x60, "1 Coin  4 Credits"		},
 	{0x0a, 0x01, 0xf0, 0x70, "1 Coin  5 Credits"		},
 	{0x0a, 0x01, 0xf0, 0x80, "1 Coin  6 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x0b, 0x01, 0x01, 0x00, "No"						},
-	{0x0b, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Zektor)
@@ -556,10 +533,6 @@ static struct BurnDIPInfo TacscanDIPList[]=
 	{0x0a, 0x01, 0xf0, 0x60, "1 Coin  4 Credits"		},
 	{0x0a, 0x01, 0xf0, 0x70, "1 Coin  5 Credits"		},
 	{0x0a, 0x01, 0xf0, 0x80, "1 Coin  6 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x0b, 0x01, 0x01, 0x00, "No"						},
-	{0x0b, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Tacscan)
@@ -630,10 +603,6 @@ static struct BurnDIPInfo StartrekDIPList[]=
 	{0x0c, 0x01, 0xf0, 0x60, "1 Coin  4 Credits"		},
 	{0x0c, 0x01, 0xf0, 0x70, "1 Coin  5 Credits"		},
 	{0x0c, 0x01, 0xf0, 0x80, "1 Coin  6 Credits"		},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"				},
-	{0x0d, 0x01, 0x01, 0x00, "No"						},
-	{0x0d, 0x01, 0x01, 0x01, "Yes"						},
 };
 
 STDDIPINFO(Startrek)
@@ -848,28 +817,6 @@ static UINT8 __fastcall sega_speech_read_port(UINT32 port)
 	return 0;
 }
 
-static INT32 res_check()
-{
-	if (DrvDips[2] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 1080) {
-			vector_rescale((1080*800/600), 1080);
-			return 1;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 600) {
-			vector_rescale(800, 600);
-			return 1;
-		}
-	}
-	return 0;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -901,8 +848,6 @@ static INT32 DrvDoReset()
 	i8035_t0 = 0;
 	i8035_drq = 0;
 	i8035_latch = 0;
-
-	res_check();
 
 	HiscoreReset();
 
@@ -1244,8 +1189,6 @@ static INT32 DrvDraw()
 	}
 
 	sega_generate_vector_list();
-
-	if (res_check()) return 0;
 
 	draw_vector(DrvPalette);
 

@@ -27,7 +27,7 @@ static INT32 nExtraCycles = 0;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[5];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
@@ -57,7 +57,6 @@ static struct BurnInputInfo BwidowInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		}, // fake resolution dips
 };
 
 STDINPUTINFO(Bwidow)
@@ -77,7 +76,6 @@ static struct BurnInputInfo GravitarInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		}, // fake resolution dips
 };
 
 STDINPUTINFO(Gravitar)
@@ -96,7 +94,6 @@ static struct BurnInputInfo LunarbatInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		}, // not used
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		}, // not used
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		}, // fake resolution dips
 };
 
 STDINPUTINFO(Lunarbat)
@@ -124,7 +121,6 @@ static struct BurnInputInfo SpacduelInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // service mode
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		}, // fake resolution dips
 };
 
 STDINPUTINFO(Spacduel)
@@ -188,10 +184,6 @@ static struct BurnDIPInfo BwidowDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+3, 0x01, 0x10, 0x10, "Off"					},
 	{DO+3, 0x01, 0x10, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{DO+4, 0x01, 0x01, 0x00, "No"					},
-	{DO+4, 0x01, 0x01, 0x01, "Yes"					},
 };
 #undef DO
 STDDIPINFO(Bwidow)
@@ -247,10 +239,6 @@ static struct BurnDIPInfo GravitarDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+3, 0x01, 0x10, 0x10, "Off"					},
 	{DO+3, 0x01, 0x10, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{DO+4, 0x01, 0x01, 0x00, "No"					},
-	{DO+4, 0x01, 0x01, 0x01, "Yes"					},
 };
 #undef DO
 STDDIPINFO(Gravitar)
@@ -328,10 +316,6 @@ static struct BurnDIPInfo SpacduelDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+3, 0x01, 0x10, 0x10, "Off"					},
 	{DO+3, 0x01, 0x10, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{DO+4, 0x01, 0x01, 0x00, "No"					},
-	{DO+4, 0x01, 0x01, 0x01, "Yes"					},
 };
 #undef DO
 STDDIPINFO(Spacduel)
@@ -605,28 +589,6 @@ static INT32 port2_read(INT32 /*offset*/)
 	return DrvDips[1];
 }
 
-static INT32 res_check()
-{
-	if (DrvDips[4] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 1080) {
-			vector_rescale((1080*600/800), 1080);
-			return 1;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 800) {
-			vector_rescale(600, 800);
-			return 1;
-		}
-	}
-	return 0;
-}
-
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -649,8 +611,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	irqcnt = 0;
 	irqflip = 0;
-
-	res_check();
 
 	HiscoreReset();
 
@@ -940,8 +900,6 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
-
-	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 

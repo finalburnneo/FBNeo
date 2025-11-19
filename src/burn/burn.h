@@ -110,6 +110,9 @@ extern INT32 (__cdecl *BurnExtCartridgeSetupCallback)(BurnCartrigeCommand nComma
 // Application-defined colour conversion function
 extern UINT32 (__cdecl *BurnHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 
+// Application-defined screen resize callback function
+extern INT32 (__cdecl *BurnResizeCallback)(INT32 &width, INT32 &height);
+
 // ---------------------------------------------------------------------------
 
 extern UINT32 nCurrentFrame;

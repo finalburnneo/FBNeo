@@ -24,7 +24,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
@@ -51,7 +51,6 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 #undef A
 
@@ -89,10 +88,6 @@ static struct BurnDIPInfo QuantumDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{DO+1, 0x01, 0x80, 0x80, "Off"					},
 	{DO+1, 0x01, 0x80, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{DO+2, 0x01, 0x01, 0x00, "No"					},
-	{DO+2, 0x01, 0x01, 0x01, "Yes"					},
 };
 #undef DO
 
@@ -281,28 +276,6 @@ static INT32 dip1_read(INT32 offset)
 	return (0 << (7 - (offset))) & 0x80;
 }
 
-static INT32 res_check()
-{
-	if (DrvDips[2] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 1080) {
-			vector_rescale((1080*480/640), 1080);
-			return 1;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 640) {
-			vector_rescale(480, 640);
-			return 1;
-		}
-	}
-	return 0;
-}
-
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -317,8 +290,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	avgdvg_reset();
 
 	avgOK = 0;
-
-	res_check();
 
 
 	HiscoreReset();
@@ -455,8 +426,6 @@ static INT32 DrvDraw()
 	}
 
 	if ((~DrvDips[1] & 0x80) && avgOK) avgdvg_go(); // service mode doesn't run avgdvg_go(), so we do it manually.
-
-	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 

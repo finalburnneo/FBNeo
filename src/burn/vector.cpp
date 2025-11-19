@@ -77,15 +77,9 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
-	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-		GenericTilesSetClipRaw(0, y, 0, x);
-		BurnTransferSetDimensions(y, x);
-		BurnDrvSetVisibleSize(y, x);
-	} else {
-		GenericTilesSetClipRaw(0, x, 0, y);
-		BurnTransferSetDimensions(x, y);
-		BurnDrvSetVisibleSize(x, y);
-	}
+	GenericTilesSetClipRaw(0, x, 0, y);
+	BurnTransferSetDimensions(x, y);
+	BurnDrvSetVisibleSize(x, y);
 	Reinitialise();
 	BurnTransferRealloc();
 	BurnFree(pBitmap);
@@ -96,7 +90,7 @@ void vector_rescale(INT32 x, INT32 y)
 	vector_set_scale(vector_scaleX_int, vector_scaleY_int);
 
 	// This is bit hacky, but thicker lines are more enjoyable at 1080p -barbudreadmon
-	vector_intens = (y == 1080 ? 2.0 : 1.0);
+	vector_intens = (y >= 1080 ? 2.0 : 1.0);
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
@@ -281,6 +275,17 @@ void vector_set_pix_cb(UINT32 (*cb)(INT32 x, INT32 y, UINT32 color))
 
 void draw_vector(UINT32 *palette)
 {
+	if (BurnResizeCallback)
+	{
+		INT32 Width, Height;
+		if (BurnResizeCallback(Width, Height))
+		{
+			// resolution was changed, don't draw this frame
+			vector_rescale(Width, Height);
+			return;
+		}
+	}
+
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;

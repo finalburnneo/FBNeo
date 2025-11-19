@@ -31,7 +31,7 @@ static INT32 nExtraCycles;
 static UINT8 DrvJoy1[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy3[8] =   { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy4f[8] =  { 0, 0, 0, 0, 0, 0, 0, 0 };
-static UINT8 DrvDips[6] =   { 0, 0, 0, 0, 0, 0 };
+static UINT8 DrvDips[5] =   { 0, 0, 0, 0, 0 };
 static UINT8 DrvInputs[3] = { 0, 0, 0 };
 static UINT8 DrvReset;
 
@@ -71,7 +71,6 @@ static struct BurnInputInfo TempestInputList[] = {
 	{"Dip C",		        BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 	{"Dip D",		        BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 	{"Dip E",		        BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
-	{"Dip F",		        BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
 };
 #undef A
 STDINPUTINFO(Tempest)
@@ -155,11 +154,6 @@ static struct BurnDIPInfo TempestDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x04, 0x01, 0x10, 0x10, "Off"  		        },
 	{0x04, 0x01, 0x10, 0x00, "On"   	            },
-
-	{0   , 0xfe, 0   ,    3, "Hires Mode"			},
-	{0x05, 0x01, 0x03, 0x00, "No"  		        	},
-	{0x05, 0x01, 0x03, 0x01, "Yes (1024)"			},
-	{0x05, 0x01, 0x03, 0x02, "Yes (1080)"			},
 };
 
 STDDIPINFO(Tempest)
@@ -262,21 +256,6 @@ static void tempest_write(UINT16 address, UINT8 data)
 	}
 }
 
-static INT32 res_check()
-{
-	const INT32 reso_list[3] = { 640, 1024, 1080 };
-	INT32 Width, Height;
-	INT32 Selected = reso_list[DrvDips[5] & 3];
-	BurnDrvGetVisibleSize(&Width, &Height);
-//	bprintf(0, _T("now:  %d   Selected (dip):  %d\n"), Height, Selected);
-	if (Height != Selected) {
-		vector_rescale((Selected * 480 / 640), Selected);
-		return 1;
-	}
-
-	return 0;
-}
-
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -301,8 +280,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	earom_reset();
 
 	nExtraCycles = 0;
-
-	res_check();
 
 	HiscoreReset();
 
@@ -496,8 +473,6 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
-
-	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 

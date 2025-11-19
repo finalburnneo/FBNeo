@@ -33,7 +33,6 @@ static INT32 ycenter;
 static INT32 watchdog;
 
 static UINT8 DrvJoy1[8];
-static UINT8 DrvDips[1];
 static UINT8 DrvInputs[1];
 static UINT8 DrvReset;
 
@@ -61,24 +60,11 @@ static struct BurnInputInfo AztaracInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,		"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,		"dip"		},
 };
 
 STDINPUTINFO(Aztarac)
 
 #undef A
-
-static struct BurnDIPInfo AztaracDIPList[] =
-{
-	{0x0a, 0xf0, 0xff, 0xff, NULL},
-	{0x00, 0xff, 0xff, 0x00, NULL},
-
-	{0   , 0xfe, 0   ,    2, "Hires Mode"	},
-	{0x00, 0x01, 0x01, 0x00, "No"			},
-	{0x00, 0x01, 0x01, 0x01, "Yes"			},
-};
-
-STDDIPINFO(Aztarac)
 
 static inline void read_vectorram (INT32 addr, INT32 *x, INT32 *y, INT32 *c)
 {
@@ -270,28 +256,6 @@ static INT32 __fastcall aztarac_irq_callback(INT32)
 	return 0x0c;
 }
 
-static INT32 res_check()
-{
-	if (DrvDips[0] & 1) {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 1080) {
-			vector_rescale((1080*1024/768), 1080);
-			return 1;
-		}
-	} else {
-		INT32 Width, Height;
-		BurnDrvGetVisibleSize(&Width, &Height);
-
-		if (Height != 768) {
-			vector_rescale(1024, 768);
-			return 1;
-		}
-	}
-	return 0;
-}
-
 static INT32 DrvDoReset(INT32 reset_ram)
 {
 	if (reset_ram) {
@@ -317,8 +281,6 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	watchdog = 0;
 
 	vector_reset();
-
-	res_check();
 
 	return 0;
 }
@@ -472,8 +434,6 @@ static INT32 DrvDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
-
-	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 
@@ -650,7 +610,7 @@ struct BurnDriver BurnDrvAztarac = {
 	"Aztarac\0", "Vector graphics", "Centuri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
-	NULL, aztaracRomInfo, aztaracRomName, NULL, NULL, NULL, NULL, AztaracInputInfo, AztaracDIPInfo,
+	NULL, aztaracRomInfo, aztaracRomName, NULL, NULL, NULL, NULL, AztaracInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40 * 256,
 	1024, 768, 4, 3
 };

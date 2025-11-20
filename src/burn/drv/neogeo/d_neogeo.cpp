@@ -29559,3 +29559,33 @@ struct BurnDriver BurnDrvShinobing = {
 	0x1000, 320, 224, 4, 3
 };
 
+
+// World Racer (HB)
+// https://www.patreon.com/posts/worldracer-rom-143726462
+// 3 & 4 players not working (needs Multitap)
+
+static struct BurnRomInfo wrldracrRomDesc[] = {
+	{ "wrldracr_p1.p1",   0x100000, 0xcc59276f, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "wrldracr_s1.s1",   0x020000, 0x312508af, 2 | BRF_GRA },				//  1 Text data
+
+	{ "wrldracr_c1.c1",   0x080000, 0x44423f83, 3 | BRF_GRA },				//  2 Sprite data
+	{ "wrldracr_c2.c2",   0x080000, 0x57008242, 3 | BRF_GRA },				//  3
+
+	{ "wrldracr_m1.m1",   0x010000, 0x6178075b, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "wrldracr_v1.v1",   0x080000, 0xa4763f5d, 5 | BRF_SND },				//  5 Sound data
+};
+
+STDROMPICKEXT(wrldracr, wrldracr, neogeo)
+STD_ROM_FN(wrldracr)
+
+struct BurnDriver BurnDrvWrldracr = {
+	"wrldracr", NULL, "neogeo", NULL, "2025",
+	"World Racer (HB)\0", NULL, "Blastar", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
+	NULL, wrldracrRomInfo, wrldracrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

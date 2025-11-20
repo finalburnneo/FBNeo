@@ -13270,6 +13270,42 @@ struct BurnDriver BurnDrvnes_tekken3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tetris (Tetris Holding, 2018) (Unl)
+static struct BurnRomInfo nes_tetris18RomDesc[] = {
+	{ "Tetris (Unl)(1985-2018)(Tetris Holding).nes",          393232, 0x92591b5c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetris18)
+STD_ROM_FN(nes_tetris18)
+
+struct BurnDriver BurnDrvnes_tetris18 = {
+	"nes_tetris18", NULL, NULL, NULL, "1985-2018",
+	"Tetris (Tetris Holding, 2018) (Unl)\0", NULL, "Tetris Holding", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_tetris18RomInfo, nes_tetris18RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tetris (Tetris Holding, 2023) (Unl)
+static struct BurnRomInfo nes_tetris23RomDesc[] = {
+	{ "Tetris (Unl)(1985-2023)(Tetris Holding).nes",          393232, 0xa6d0a179, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetris23)
+STD_ROM_FN(nes_tetris23)
+
+struct BurnDriver BurnDrvnes_tetris23 = {
+	"nes_tetris23", NULL, NULL, NULL, "1985-2023",
+	"Tetris (Tetris Holding, 2023) (Unl)\0", NULL, "Tetris Holding", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_tetris23RomInfo, nes_tetris23RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Thunderbolt II (Taiwan) (Unl)
 static struct BurnRomInfo nes_thunderbolt2RomDesc[] = {
 	{ "Thunderbolt II (Taiwan)(Unl)(1993)(Gamtec).nes",          262160, 0xce1813c9, BRF_ESS | BRF_PRG },
@@ -20975,6 +21011,25 @@ struct BurnDriver BurnDrvnes_mnmayhem = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mnmayhemRomInfo, nes_mnmayhemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Minesweeper (HB, v1.2)
+// https://fireside-01.itch.io/minesweeper-nes
+static struct BurnRomInfo nes_minesweeperRomDesc[] = {
+	{ "Minesweeper v1.2 (2025)(FireSide_01).nes",          40976, 0x1e374b66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minesweeper)
+STD_ROM_FN(nes_minesweeper)
+
+struct BurnDriver BurnDrvnes_minesweeper = {
+	"nes_minesweeper", NULL, NULL, NULL, "2025",
+	"Minesweeper (HB, v1.2)\0", NULL, "FireSide_01", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_minesweeperRomInfo, nes_minesweeperRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -53705,10 +53760,10 @@ STD_ROM_PICK(nes_tetrisj)
 STD_ROM_FN(nes_tetrisj)
 
 struct BurnDriver BurnDrvnes_tetrisj = {
-	"nes_tetrisj", "nes_tetris", NULL, NULL, "1988",
+	"nes_tetrisj", NULL, NULL, NULL, "1988",
 	"Tetris (BPS) (Japan)\0", NULL, "Bullet-Proof Software", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_tetrisjRomInfo, nes_tetrisjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -53724,7 +53779,7 @@ STD_ROM_PICK(nes_tetrisjcc)
 STD_ROM_FN(nes_tetrisjcc)
 
 struct BurnDriver BurnDrvnes_tetrisjcc = {
-	"nes_tetrisjcc", "nes_tetris", NULL, NULL, "2023",
+	"nes_tetrisjcc", "nes_tetrisj", NULL, NULL, "2023",
 	"Tetris (BPS) - Conventional-Controls Edition (Hack)\0", NULL, "climax", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
@@ -53742,16 +53797,16 @@ STD_ROM_PICK(nes_tetrisu)
 STD_ROM_FN(nes_tetrisu)
 
 struct BurnDriver BurnDrvnes_tetrisu = {
-	"nes_tetrisu", "nes_tetris", NULL, NULL, "1989",
+	"nes_tetrisu", NULL, NULL, NULL, "1989",
 	"Tetris (Tengen) (USA)\0", NULL, "Tengen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_tetrisuRomInfo, nes_tetrisuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Tetris (USA)
+// Tetris (Nintendo) (USA)
 static struct BurnRomInfo nes_tetrisRomDesc[] = {
 	{ "Tetris (USA)(1989)(Nintendo).nes",          49168, 0x6d72c53a, BRF_ESS | BRF_PRG },
 };
@@ -53761,7 +53816,7 @@ STD_ROM_FN(nes_tetris)
 
 struct BurnDriver BurnDrvnes_tetris = {
 	"nes_tetris", NULL, NULL, NULL, "1989",
-	"Tetris (USA)\0", NULL, "Nintendo", "NES / Famicom",
+	"Tetris (Nintendo) (USA)\0", NULL, "Nintendo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_tetrisRomInfo, nes_tetrisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

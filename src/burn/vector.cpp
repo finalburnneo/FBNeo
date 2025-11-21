@@ -31,6 +31,8 @@ static float vector_intens      = 1.0;
 static INT32 vector_antialias   = 1;
 static INT32 vector_beam        = 0x0001f65e; // 16.16 beam width
 
+static INT32 vector_rescaled    = 0;
+
 #define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
 
 static UINT8 gammaLUT[256];
@@ -77,6 +79,7 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
+	vector_rescaled = 1;
 	GenericTilesSetClipRaw(0, x, 0, y);
 	BurnTransferSetDimensions(x, y);
 	BurnDrvSetVisibleSize(x, y);
@@ -280,6 +283,11 @@ void vector_set_pix_cb(UINT32 (*cb)(INT32 x, INT32 y, UINT32 color))
 
 void draw_vector(UINT32 *palette)
 {
+	if (vector_rescaled) {
+		// don't draw this time around
+		vector_rescaled = 0;
+		return;
+	}
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;

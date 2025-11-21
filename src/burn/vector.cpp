@@ -31,6 +31,8 @@ static float vector_intens      = 1.0;
 static INT32 vector_antialias   = 1;
 static INT32 vector_beam        = 0x0001f65e; // 16.16 beam width
 
+static INT32 vector_rescaled    = 0;
+
 #define CLAMP8(x) do { if (x > 0xff) x = 0xff; if (x < 0) x = 0; } while (0)
 
 static UINT8 gammaLUT[256];
@@ -77,15 +79,10 @@ void vector_set_scale(INT32 x, INT32 y)
 
 void vector_rescale(INT32 x, INT32 y)
 {
-	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-		GenericTilesSetClipRaw(0, y, 0, x);
-		BurnTransferSetDimensions(y, x);
-		BurnDrvSetVisibleSize(y, x);
-	} else {
-		GenericTilesSetClipRaw(0, x, 0, y);
-		BurnTransferSetDimensions(x, y);
-		BurnDrvSetVisibleSize(x, y);
-	}
+	vector_rescaled = 1;
+	GenericTilesSetClipRaw(0, x, 0, y);
+	BurnTransferSetDimensions(x, y);
+	BurnDrvSetVisibleSize(x, y);
 	Reinitialise();
 	BurnTransferRealloc();
 	BurnFree(pBitmap);
@@ -95,8 +92,13 @@ void vector_rescale(INT32 x, INT32 y)
 
 	vector_set_scale(vector_scaleX_int, vector_scaleY_int);
 
-	// This is bit hacky, but thicker lines are more enjoyable at 1080p -barbudreadmon
-	vector_intens = (y == 1080 ? 2.0 : 1.0);
+	// This is bit hacky, but thicker lines are more enjoyable at higher resolutions -barbudreadmon
+	vector_intens = (y / 480.0);
+}
+
+void vector_resize_callback(INT32 width, INT32 height)
+{
+	vector_rescale(width, height);
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
@@ -281,6 +283,11 @@ void vector_set_pix_cb(UINT32 (*cb)(INT32 x, INT32 y, UINT32 color))
 
 void draw_vector(UINT32 *palette)
 {
+	if (vector_rescaled) {
+		// don't draw this time around
+		vector_rescaled = 0;
+		return;
+	}
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;
@@ -338,6 +345,8 @@ void vector_reset()
 void vector_init()
 {
 	GenericTilesInit();
+
+	BurnResizeCallback = vector_resize_callback;
 
 	vector_set_clip(0, nScreenWidth, 0, nScreenHeight);
 

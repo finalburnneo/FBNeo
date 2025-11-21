@@ -1050,6 +1050,15 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 }
 
 // ----------------------------------------------------------------------------
+
+void (__cdecl *BurnResizeCallback)(INT32 width, INT32 height) = NULL;
+
+void BurnSetResolution(INT32 width, INT32 height)
+{
+	if (BurnResizeCallback) BurnResizeCallback(width, height);
+}
+
+// ----------------------------------------------------------------------------
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {

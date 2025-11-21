@@ -1050,6 +1050,15 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 }
 
 // ----------------------------------------------------------------------------
+
+void (__cdecl *BurnResizeCallback)(INT32 width, INT32 height) = NULL;
+
+void BurnSetResolution(INT32 width, INT32 height)
+{
+	if (BurnResizeCallback) BurnResizeCallback(width, height);
+}
+
+// ----------------------------------------------------------------------------
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
@@ -1169,9 +1178,6 @@ INT32 (__cdecl *BurnExtLoadRom)(UINT8 *Dest, INT32 *pnWrote, INT32 i) = NULL;
 // Application-defined colour conversion function
 static UINT32 __cdecl BurnHighColFiller(INT32, INT32, INT32, INT32) { return (UINT32)(~0); }
 UINT32 (__cdecl *BurnHighCol) (INT32 r, INT32 g, INT32 b, INT32 i) = BurnHighColFiller;
-
-// Application-defined screen resize callback function
-INT32 (__cdecl *BurnResizeCallback)(INT32 &width, INT32 &height) = NULL;
 
 // ----------------------------------------------------------------------------
 // Savestate support

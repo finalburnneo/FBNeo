@@ -89,8 +89,13 @@ void vector_rescale(INT32 x, INT32 y)
 
 	vector_set_scale(vector_scaleX_int, vector_scaleY_int);
 
-	// This is bit hacky, but thicker lines are more enjoyable at 1080p -barbudreadmon
-	vector_intens = (y >= 1080 ? 2.0 : 1.0);
+	// This is bit hacky, but thicker lines are more enjoyable at higher resolutions -barbudreadmon
+	vector_intens = (y / 480.0);
+}
+
+void vector_resize_callback(INT32 width, INT32 height)
+{
+	vector_rescale(width, height);
 }
 
 void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
@@ -275,17 +280,6 @@ void vector_set_pix_cb(UINT32 (*cb)(INT32 x, INT32 y, UINT32 color))
 
 void draw_vector(UINT32 *palette)
 {
-	if (BurnResizeCallback)
-	{
-		INT32 Width, Height;
-		if (BurnResizeCallback(Width, Height))
-		{
-			// resolution was changed, don't draw this frame
-			vector_rescale(Width, Height);
-			return;
-		}
-	}
-
 	struct vector_line *ptr = &vector_table[0];
 
 	INT32 prev_x = 0, prev_y = 0;
@@ -343,6 +337,8 @@ void vector_reset()
 void vector_init()
 {
 	GenericTilesInit();
+
+	BurnResizeCallback = vector_resize_callback;
 
 	vector_set_clip(0, nScreenWidth, 0, nScreenHeight);
 

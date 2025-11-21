@@ -110,9 +110,6 @@ extern INT32 (__cdecl *BurnExtCartridgeSetupCallback)(BurnCartrigeCommand nComma
 // Application-defined colour conversion function
 extern UINT32 (__cdecl *BurnHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 
-// Application-defined screen resize callback function
-extern INT32 (__cdecl *BurnResizeCallback)(INT32 &width, INT32 &height);
-
 // ---------------------------------------------------------------------------
 
 extern UINT32 nCurrentFrame;
@@ -375,6 +372,10 @@ void BurnRandomSetSeed(UINT64 nSeed);               // Set the seed - useful for
 INT32 BurnSynchroniseStream(INT32 nSoundRate);
 double BurnGetTime();
 
+// Handy functions for changing resolution
+extern void (__cdecl *BurnResizeCallback)(INT32 width, INT32 height);
+void BurnSetResolution(INT32 width, INT32 height);
+
 // Handy debug binary-file dumper
 #if defined (FBNEO_DEBUG)
 void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize, INT32 append);
@@ -439,6 +440,7 @@ INT32 BurnDrvGetSampleName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
 INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 char* BurnDrvGetSourcefile();
+
 
 void Reinitialise(); // re-inits everything, including UI window
 void ReinitialiseVideo(); // re-init's video w/ new resolution/aspect ratio (see drv/megadrive.cpp)

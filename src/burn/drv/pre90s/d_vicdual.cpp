@@ -7,6 +7,7 @@
 		heiankyo alien (w/sound)
 		nsub (w/sound)
 		digger (w/sound)
+		depthch (w/sound)
 
 	to do:
 	  	all the others
@@ -1013,10 +1014,12 @@ static UINT8 __fastcall invho2_read_port(UINT16 port)
 	return 0;
 }
 
-static void __fastcall depthch_write_port(UINT16 port, UINT8 /*data*/)
-{
+static void DepthchSoundWrite1(UINT16 port, UINT8 data); // forward for now..
+
+static void __fastcall depthch_write_port(UINT16 port, UINT8 data)
+{ //  bprintf(0, _T("wp %x  %x\n"), port, data);
 	if (port & 1) coin_status = 1;
-//	if (port & 4) depthch_audio_w
+	if (port & 4) DepthchSoundWrite1(port, data);
 }
 
 static UINT8 __fastcall depthch_read_port(UINT16 port)
@@ -1087,6 +1090,7 @@ static void HeiankyoSoundWrite1(UINT16 port, UINT8 data); // forward for now..
 static void HeiankyoSoundWrite2(UINT16 port, UINT8 data);
 static void DiggerSoundWrite1(UINT16 port, UINT8 data); // forward for now..
 static void DiggerSoundWrite2(UINT16 port, UINT8 data);
+static void DepthchSoundWrite1(UINT16 port, UINT8 data); // forward for now..
 
 static void __fastcall heiankyo_write_port(UINT16 port, UINT8 data)
 {
@@ -1721,6 +1725,41 @@ static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
 	}
 }
 
+static void DepthchSoundWrite1(UINT16 port, UINT8 data)
+{
+	UINT8 Low  = (port1_state ^ data) & ~data;
+	UINT8 High = (port1_state ^ data) & data;
+	port1_state = data;
+
+	//if (Low || High) bprintf(0, _T("p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+
+	if (High & 0x08) {
+		//bprintf(0, _T("sonar on\n"));
+		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnSamplePlay(2); // sonar
+		BurnSampleSetLoop(2, true);
+	}
+	if (Low & 0x08) {
+		//bprintf(0, _T("sonar off\n"));
+		BurnSampleStop(2); // sonar Off
+		BurnSamplePlay(3); // bonus
+	}
+
+	if (Low & 0x01) {
+		//bprintf(0, _T("underwater boom\n"));
+		BurnSamplePlay(0);
+	}
+	if (Low & 0x02) {
+		//bprintf(0, _T("abovewater boom\n"));
+		BurnSamplePlay(1);
+	}
+	if (Low & 0x04) {
+		//bprintf(0, _T("spray\n"));
+		BurnSamplePlay(4);
+	}
+}
+
 // -------------- digger sound ----------------
 static void DiggerSoundWrite1(UINT16 port, UINT8 data)
 {
@@ -2326,11 +2365,11 @@ STD_ROM_PICK(depthch)
 STD_ROM_FN(depthch)
 
 static struct BurnSampleInfo depthchSampleDesc[] = {
-	{ "bonus", SAMPLE_NOLOOP },
-	{ "longex", SAMPLE_NOLOOP },
-	{ "shortex", SAMPLE_NOLOOP },
-	{ "sonar", SAMPLE_NOLOOP },
-	{ "spray", SAMPLE_NOLOOP },
+	{ "longex", SAMPLE_NOLOOP },	// 0
+	{ "shortex", SAMPLE_NOLOOP },   // 1
+	{ "sonar", SAMPLE_NOLOOP },     // 2
+	{ "bonus", SAMPLE_NOLOOP },   	// 3
+	{ "spray", SAMPLE_NOLOOP },     // 4
 	{ "", 0 }
 };
 
@@ -2342,9 +2381,9 @@ static INT32 DepthchInit()
 	return DrvInit(0x4000, 0x8000, 0, depthch_write_port, depthch_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvDepthch = {
+struct BurnDriver BurnDrvDepthch = {
 	"depthch", NULL, NULL, "depthch", "1977",
-	"Depthcharge\0", "No sound", "Gremlin", "Vic Dual",
+	"Depthcharge\0", NULL, "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, depthchRomInfo, depthchRomName, NULL, NULL, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,
@@ -2376,9 +2415,9 @@ static struct BurnRomInfo depthchoRomDesc[] = {
 STD_ROM_PICK(depthcho)
 STD_ROM_FN(depthcho)
 
-struct BurnDriverD BurnDrvDepthcho = {
+struct BurnDriver BurnDrvDepthcho = {
 	"depthcho", "depthch", NULL, "depthch", "1977",
-	"Depthcharge (older)\0", "No sound", "Gremlin", "Vic Dual",
+	"Depthcharge (older)\0", NULL, "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, depthchoRomInfo, depthchoRomName, NULL, NULL, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,
@@ -2410,9 +2449,9 @@ static struct BurnRomInfo subhuntRomDesc[] = {
 STD_ROM_PICK(subhunt)
 STD_ROM_FN(subhunt)
 
-struct BurnDriverD BurnDrvSubhunt = {
+struct BurnDriver BurnDrvSubhunt = {
 	"subhunt", "depthch", NULL, "depthch", "1977",
-	"Sub Hunter (Gremlin / Taito)\0", "No sound", "Gremlin (Taito license)", "Vic Dual",
+	"Sub Hunter (Gremlin / Taito)\0", NULL, "Gremlin (Taito license)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, subhuntRomInfo, subhuntRomName, NULL, NULL, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,

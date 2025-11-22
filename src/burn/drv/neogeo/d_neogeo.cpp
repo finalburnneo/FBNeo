@@ -28971,6 +28971,35 @@ struct BurnDriver BurnDrvXeviousng = {
 };
 
 
+// Zetsu Xevious - Neo Geo Conversion (HB)
+
+static struct BurnRomInfo zetsuxevingRomDesc[] = {
+	{ "zetsu-p1.p1",      0x100000, 0x31092abe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "xevious-s1.s1",    0x020000, 0xf41d121a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "zetsu-c1.c1",      0x100000, 0x52ff5807, 3 | BRF_GRA },           //  2 Sprite data
+	{ "zetsu-c2.c2",      0x100000, 0x160d4ca2, 3 | BRF_GRA },           //  3
+
+	{ "xevious-m1.m1",    0x010000, 0x6f31c601, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "xevious-v1.v1",    0x100000, 0x37ef6dc5, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(zetsuxeving, zetsuxeving, neogeo)
+STD_ROM_FN(zetsuxeving)
+
+struct BurnDriver BurnDrvZetsuxeving = {
+	"zetsuxeving", "xeviousng", "neogeo", NULL, "1982-2035",
+	"Zetsu Xevious - Neo Geo Conversion (HB)\0", NULL, "Namco - zeroco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, zetsuxevingRomInfo, zetsuxevingRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	224, 304, 3, 4
+};
+
+
 // Looptris Plus (HB, ver. 20221224)
 
 static struct BurnRomInfo looptrspRomDesc[] = {

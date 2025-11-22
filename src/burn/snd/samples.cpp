@@ -1260,14 +1260,14 @@ static void BurnSampleRender_INT(UINT32 pLen)
 				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
 					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
 						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
-					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] != 0.0) {
 						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] += 0.01;
 					}
 				}
 				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
 					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
 						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
-					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] != 0.0) {
 						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] += 0.01;
 					}
 				}

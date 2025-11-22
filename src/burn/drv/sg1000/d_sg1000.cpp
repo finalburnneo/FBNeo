@@ -4282,6 +4282,42 @@ struct BurnDriver BurnDrvsg1k_hopman = {
 	272, 228, 4, 3
 };
 
+// Impetus (HB)
+static struct BurnRomInfo sg1k_impetusRomDesc[] = {
+	{ "Impetus (2022)(Inufuto).sg",	16624, 0x42179ce3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_impetus)
+STD_ROM_FN(sg1k_impetus)
+
+struct BurnDriver BurnDrvsg1k_impetus = {
+	"sg1k_impetus", NULL, NULL, NULL, "2022",
+	"Impetus (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_VERSHOOT, 0,
+	SG1KGetZipName, sg1k_impetusRomInfo, sg1k_impetusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Impetus+ (HB)
+static struct BurnRomInfo sg1k_impetusplusRomDesc[] = {
+	{ "Impetus+ (2025)(Inufuto).sg",	24576, 0x57f3ceec, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_impetusplus)
+STD_ROM_FN(sg1k_impetusplus)
+
+struct BurnDriver BurnDrvsg1k_impetusplus = {
+	"sg1k_impetusplus", NULL, NULL, NULL, "2025",
+	"Impetus+ (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_VERSHOOT, 0,
+	SG1KGetZipName, sg1k_impetusplusRomInfo, sg1k_impetusplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Jet Paco and Jet Puri (HB)
 static struct BurnRomInfo sg1k_jetpacoRomDesc[] = {
 	{ "Jet Paco and Jet Puri (2018)(The Mojon Twins).sg",	0x0c000, 0xd31c6b3b, BRF_PRG | BRF_ESS },
@@ -4459,6 +4495,24 @@ struct BurnDriver BurnDrvsg1k_pitman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_pitmanRomInfo, sg1k_pitmanRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// RetroPIPE (HB, v0.2)
+static struct BurnRomInfo sg1k_retropipeRomDesc[] = {
+	{ "RetroPIPE v0.2 (2025)(Visrealm).sg",	32768, 0x3885a1f3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_retropipe)
+STD_ROM_FN(sg1k_retropipe)
+
+struct BurnDriver BurnDrvsg1k_retropipe = {
+	"sg1k_retropipe", NULL, NULL, NULL, "2025",
+	"RetroPIPE (HB, v0.2)\0", NULL, "Visrealm", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_retropipeRomInfo, sg1k_retropipeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

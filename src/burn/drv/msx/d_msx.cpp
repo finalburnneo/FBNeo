@@ -17518,10 +17518,10 @@ struct BurnDriver BurnDrvMSX_salamand = {
 };
 
 
-// Salamander (Japan, Alt)
+// Salamander (Japan, Digi speech version)
 
 static struct BurnRomInfo MSX_salamandaRomDesc[] = {
-	{ "Salamander (Japan, Alt)(1987)(Konami).rom",	278528, 0x787a4408, BRF_PRG | BRF_ESS },
+	{ "Salamander (Japan, Digi speech version)(1987)(Konami).rom",	278528, 0x787a4408, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_salamanda, MSX_salamanda, msx_msx)
@@ -17529,10 +17529,30 @@ STD_ROM_FN(MSX_salamanda)
 
 struct BurnDriver BurnDrvMSX_salamanda = {
 	"msx_salamanda", "msx_salamand", "msx_msx", NULL, "1987",
-	"Salamander (Japan, Alt)\0", "Extra stage version", "Konami", "MSX",
-	L"Salamander (Japan, Alt)\0\u6c99\u7f85\u66fc\u86c7\0", NULL, NULL, NULL,
+	"Salamander (Japan, Digi speech version)\0", "Speech by WYZ/ARTRAG 2016", "Konami", "MSX",
+	L"Salamander (Japan, Digi speech version)\0\u6c99\u7f85\u66fc\u86c7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_salamandaRomInfo, MSX_salamandaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Salamander (Japan, Extra Stage version)
+
+static struct BurnRomInfo MSX_salamandbRomDesc[] = {
+	{ "Salamander (Japan, Extra Stage version)(1987)(Konami).rom",	262144, 0xcd646cbe, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_salamandb, MSX_salamandb, msx_msx)
+STD_ROM_FN(MSX_salamandb)
+
+struct BurnDriver BurnDrvMSX_salamandb = {
+	"msx_salamandb", "msx_salamand", "msx_msx", NULL, "1987",
+	"Salamander (Japan, Extra Stage version)\0", "?", "Konami", "MSX",
+	L"Salamander (Japan, Extra Stage version)\0\u6c99\u7f85\u66fc\u86c7\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_salamandbRomInfo, MSX_salamandbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

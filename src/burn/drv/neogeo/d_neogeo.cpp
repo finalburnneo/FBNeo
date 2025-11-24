@@ -29696,16 +29696,16 @@ struct BurnDriver BurnDrvShinobing = {
 // 3 & 4 players not working (needs Multitap)
 
 static struct BurnRomInfo wrldracrRomDesc[] = {
-	{ "wrldracr_p1.p1",   0x100000, 0xcc59276f, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+	{ "wrldracr-p1.p1",   0x100000, 0xcc59276f, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
-	{ "wrldracr_s1.s1",   0x020000, 0x312508af, 2 | BRF_GRA },				//  1 Text data
+	{ "wrldracr-s1.s1",   0x020000, 0x312508af, 2 | BRF_GRA },				//  1 Text data
 
-	{ "wrldracr_c1.c1",   0x080000, 0x44423f83, 3 | BRF_GRA },				//  2 Sprite data
-	{ "wrldracr_c2.c2",   0x080000, 0x57008242, 3 | BRF_GRA },				//  3
+	{ "wrldracr-c1.c1",   0x080000, 0x44423f83, 3 | BRF_GRA },				//  2 Sprite data
+	{ "wrldracr-c2.c2",   0x080000, 0x57008242, 3 | BRF_GRA },				//  3
 
-	{ "wrldracr_m1.m1",   0x010000, 0x6178075b, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+	{ "wrldracr-m1.m1",   0x010000, 0x6178075b, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
 
-	{ "wrldracr_v1.v1",   0x080000, 0xa4763f5d, 5 | BRF_SND },				//  5 Sound data
+	{ "wrldracr-v1.v1",   0x080000, 0xa4763f5d, 5 | BRF_SND },				//  5 Sound data
 };
 
 STDROMPICKEXT(wrldracr, wrldracr, neogeo)

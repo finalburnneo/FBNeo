@@ -43106,7 +43106,7 @@ struct BurnDriver BurnDrvmd_btomatog = {
 // Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.9B)
 // https://ssf2tnf.blogspot.com/p/releases.html
 static struct BurnRomInfo md_bssf2gqRomDesc[] = {
-	{ "Bishoujo Super Street Fighter II - Glamor Queen v2.9B (2025)(Yoni Arousement).bin", 5242880, 0x7deb6d8c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Bishoujo Super Street Fighter II - Glamor Queen v2.9B (2025)(Yoni Arousement).bin", 5242880, 0x0349ea04, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_bssf2gq)

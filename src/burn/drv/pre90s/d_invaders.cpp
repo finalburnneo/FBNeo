@@ -2,8 +2,8 @@
 // Based on MAME driver by Michael Strutts, Nicola Salmoria, Tormod Tjaberg, Mirko Buffoni,
 // Lee Taylor, Valerio Verrando, Marco Cassili, Zsolt Vasvari and others
 
-// TODINK Todo:
-//   Hook Up ozma wars samples (ow[*].wav)
+//  TODINK Todo:
+//    Hook Up ozma wars samples (ow[*].wav)
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

@@ -8817,7 +8817,7 @@ struct BurnDriver BurnDrvnes_ganbaregoemon2c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Hack, Spanish v0.98)
+// Ganbare Goemon Gaiden 2: Tenka no Zaihou (Hack, Spanish v0.98)
 // https://www.romhacking.net/translations/3965/
 static struct BurnRomInfo nes_ganbagoegai2cRomDesc[] = {
 	{ "Ganbare Goemon Gaiden 2 - Tenka no Zaihou T-Spa v0.98 (2018)(jackic).nes",          524304, 0xc2e96c08, BRF_ESS | BRF_PRG },
@@ -8828,7 +8828,7 @@ STD_ROM_FN(nes_ganbagoegai2c)
 
 struct BurnDriverD BurnDrvnes_ganbagoegai2c = {
 	"nes_ganbagoegai2c", "nes_ganbagoegai2", NULL, NULL, "2020",
-	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Hack, Spanish v0.98)\0", NULL, "jackic", "NES / Famicom",
+	"Ganbare Goemon Gaiden 2: Tenka no Zaihou (Hack, Spanish v0.98)\0", NULL, "jackic", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegai2cRomInfo, nes_ganbagoegai2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -8836,7 +8836,7 @@ struct BurnDriverD BurnDrvnes_ganbagoegai2c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon! - Karakuri Douchuu (Hack, Spanish)
+// Ganbare Goemon! Karakuri Douchuu (Hack, Spanish)
 // https://www.romhacking.net/translations/3803/
 static struct BurnRomInfo nes_ganbagoecRomDesc[] = {
 	{ "Ganbare Goemon! - Karakuri Douchuu T-Spa (2020)(jackic).nes",          262160, 0xbf99d7e4, BRF_ESS | BRF_PRG },
@@ -8847,7 +8847,7 @@ STD_ROM_FN(nes_ganbagoec)
 
 struct BurnDriver BurnDrvnes_ganbagoec = {
 	"nes_ganbagoec", "nes_ganbagoe", NULL, NULL, "2020",
-	"Ganbare Goemon! - Karakuri Douchuu (Hack, Spanish)\0", NULL, "jackic", "NES / Famicom",
+	"Ganbare Goemon! Karakuri Douchuu (Hack, Spanish)\0", NULL, "jackic", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_ganbagoecRomInfo, nes_ganbagoecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -8855,7 +8855,7 @@ struct BurnDriver BurnDrvnes_ganbagoec = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Hack, Spanish v0.99)
+// Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Hack, Spanish v0.99)
 // https://www.romhacking.net/translations/5885/
 static struct BurnRomInfo nes_ganbagoegaicRomDesc[] = {
 	{ "Ganbare Goemon Gaiden - Kieta Ougon Kiseru T-Spa v0.99 (2021)(jackic).nes",          524304, 0x90ac0bda, BRF_ESS | BRF_PRG },
@@ -8866,7 +8866,7 @@ STD_ROM_FN(nes_ganbagoegaic)
 
 struct BurnDriver BurnDrvnes_ganbagoegaic = {
 	"nes_ganbagoegaic", "nes_ganbagoegai", NULL, NULL, "2021",
-	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Hack, Spanish v0.99)\0", NULL, "jackic", "NES / Famicom",
+	"Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Hack, Spanish v0.99)\0", NULL, "jackic", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegaicRomInfo, nes_ganbagoegaicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -14381,6 +14381,24 @@ struct BurnDriver BurnDrvnes_arispidrag = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// ArkaColor (HB)
+static struct BurnRomInfo nes_arkacolorRomDesc[] = {
+	{ "ArkaColor (2025)(felpashito).nes",          40976, 0x058e51b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_arkacolor)
+STD_ROM_FN(nes_arkacolor)
+
+struct BurnDriver BurnDrvnes_arkacolor = {
+	"nes_arkacolor", NULL, NULL, NULL, "2025",
+	"ArkaColor (HB)\0", NULL, "felpashito", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_arkacolorRomInfo, nes_arkacolorRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Arkade Rush (HB)
 static struct BurnRomInfo nes_arkaderushRomDesc[] = {
 	{ "Arkade Rush (HB)(2021)(Nathan Tolbert).nes",          32784, 0xd40c212e, BRF_ESS | BRF_PRG },
@@ -17769,7 +17787,7 @@ struct BurnDriver BurnDrvnes_firerescue = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Fire 'n Ice - The Lost Levels (Hack, v1.1)
+// Fire 'n Ice: The Lost Levels (Hack, v1.1)
 static struct BurnRomInfo nes_firenicellRomDesc[] = {
 	{ "Fire 'n Ice - The Lost Levels v1.1 (2021)(Renaldo).nes",          262160, 0x99e61dff, BRF_ESS | BRF_PRG },
 };
@@ -17779,7 +17797,7 @@ STD_ROM_FN(nes_firenicell)
 
 struct BurnDriver BurnDrvnes_firenicell = {
 	"nes_firenicell", "nes_firenice", NULL, NULL, "2021",
-	"Fire 'n Ice - The Lost Levels (Hack, v1.1)\0", NULL, "Renaldo", "NES / Famicom",
+	"Fire 'n Ice: The Lost Levels (Hack, v1.1)\0", NULL, "Renaldo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
 	NESGetZipName, nes_firenicellRomInfo, nes_firenicellRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19140,7 +19158,7 @@ struct BurnDriver BurnDrvnes_isostasy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// JAMG - The Lost Coins (HB)
+// JAMG: The Lost Coins (HB)
 static struct BurnRomInfo nes_jamgRomDesc[] = {
 	{ "JAMG - The Lost Coins (2018)(OCDreproductions).nes",          262160, 0x7a8877aa, BRF_ESS | BRF_PRG },
 };
@@ -19150,7 +19168,7 @@ STD_ROM_FN(nes_jamg)
 
 struct BurnDriver BurnDrvnes_jamg = {
 	"nes_jamg", NULL, NULL, NULL, "2018",
-	"JAMG - The Lost Coins (HB)\0", NULL, "OCDreproductions", "NES / Famicom",
+	"JAMG: The Lost Coins (HB)\0", NULL, "OCDreproductions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_jamgRomInfo, nes_jamgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -19188,8 +19206,26 @@ struct BurnDriver BurnDrvnes_ja8bitadv = {
 	"nes_ja8bitadv", NULL, NULL, NULL, "2023",
 	"Jane Austen's 8-bit Adventure (HB, v1.0.538)\0", NULL, "Bitwise Reprise", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_ja8bitadvRomInfo, nes_ja8bitadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Jauntyman and the Three Pigs (HB, v0.16)
+static struct BurnRomInfo nes_jauntymanRomDesc[] = {
+	{ "Jauntyman and the Three Pigs v0.16 (2025)(spadix).nes",          696336, 0x7def9bdc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jauntyman)
+STD_ROM_FN(nes_jauntyman)
+
+struct BurnDriver BurnDrvnes_jauntyman = {
+	"nes_jauntyman", NULL, NULL, NULL, "2025",
+	"Jauntyman and the Three Pigs (HB, v0.16)\0", NULL, "spadix", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_jauntymanRomInfo, nes_jauntymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19296,7 +19332,7 @@ struct BurnDriver BurnDrvnes_jimndill2 = {
 	"nes_jimndill2", NULL, NULL, NULL, "2023",
 	"Jim & Dill II: Bobson's Revenge (HB)\0", NULL, "CalGames", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_jimndill2RomInfo, nes_jimndill2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -19320,7 +19356,7 @@ struct BurnDriver BurnDrvnes_jimndill3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Jim Power - The Lost Dimension (HB)
+// Jim Power: The Lost Dimension (HB)
 static struct BurnRomInfo nes_jimpowerRomDesc[] = {
 	{ "Jim Power - The Lost Dimension (2020)(Piko).nes",          524304, 0x3f088114, BRF_ESS | BRF_PRG },
 };
@@ -19330,7 +19366,7 @@ STD_ROM_FN(nes_jimpower)
 
 struct BurnDriver BurnDrvnes_jimpower = {
 	"nes_jimpower", NULL, NULL, NULL, "2020",
-	"Jim Power - The Lost Dimension (HB)\0", NULL, "Piko Interactive", "NES / Famicom",
+	"Jim Power: The Lost Dimension (HB)\0", NULL, "Piko Interactive", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_jimpowerRomInfo, nes_jimpowerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23496,7 +23532,7 @@ struct BurnDriver BurnDrvnes_sokobananati = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6)
+// Solomon no Kagi 2: Kitsune Attacks! (Hack, v1.6)
 // http://www.romhacking.net/hacks/5940/
 static struct BurnRomInfo nes_solonokagi2hRomDesc[] = {
 	{ "Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6).nes",          262160, 0x039d14fd, BRF_ESS | BRF_PRG },
@@ -23507,8 +23543,8 @@ STD_ROM_FN(nes_solonokagi2h)
 
 struct BurnDriver BurnDrvnes_solonokagi2h = {
 	"nes_solonokagi2h", "nes_firenice", NULL, NULL, "2022",
-	"Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6)\0", "100 new levels", "FoxyShadow", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Solomon no Kagi 2: Kitsune Attacks! (Hack, v1.6)\0", "100 new levels", "FoxyShadow", "NES / Famicom",
+	L"Solomon no Kagi 2: Kitsune Attacks! (Hack, v1.6)\0\u30bd\u30ed\u30e2\u30f3\u306e\u9375 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
 	NESGetZipName, nes_solonokagi2hRomInfo, nes_solonokagi2hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -36281,7 +36317,7 @@ STD_ROM_FN(nes_gameparty)
 struct BurnDriver BurnDrvnes_gameparty = {
 	"nes_gameparty", NULL, NULL, NULL, "1990",
 	"Game Party (Japan)\0", NULL, "Coconuts Japan", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Game Party (Japan)\0\u30b2\u30fc\u30e0\u30d1\u30fc\u30c6\u30a3\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MINIGAMES, 0,
 	NESGetZipName, nes_gamepartyRomInfo, nes_gamepartyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -36299,7 +36335,7 @@ STD_ROM_FN(nes_ganbaregoemon2j)
 struct BurnDriver BurnDrvnes_ganbaregoemon2j = {
 	"nes_ganbaregoemon2j", "nes_ganbaregoemon2", NULL, NULL, "1989",
 	"Ganbare Goemon 2 (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Ganbare Goemon 2 (Japan)\0\u304c\u3093\u3070\u308c \u30b4\u30a8\u30e2\u30f32\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
 	NESGetZipName, nes_ganbaregoemon2jRomInfo, nes_ganbaregoemon2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -36325,9 +36361,9 @@ struct BurnDriver BurnDrvnes_ganbaregoemon2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)
+// Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Japan)
 static struct BurnRomInfo nes_ganbagoegaijRomDesc[] = {
-	{ "Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan).nes",          524304, 0x1d2dbc90, BRF_ESS | BRF_PRG },
+	{ "Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)(1990)(Konami).nes",          524304, 0x1d2dbc90, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbagoegaij)
@@ -36335,15 +36371,15 @@ STD_ROM_FN(nes_ganbagoegaij)
 
 struct BurnDriver BurnDrvnes_ganbagoegaij = {
 	"nes_ganbagoegaij", "nes_ganbagoegai", NULL, NULL, "1990",
-	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Japan)\0\u304c\u3093\u3070\u308c \u30b4\u30a8\u30e2\u30f3 \u5916\u4f1d \u304d\u3048\u305f\u9ec4\u91d1\u30ad\u30bb\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegaijRomInfo, nes_ganbagoegaijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Hack, English)
+// Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Hack, English)
 // https://www.romhacking.net/translations/3079/
 static struct BurnRomInfo nes_ganbagoegaiRomDesc[] = {
 	{ "Ganbare Goemon Gaiden - Kieta Ougon Kiseru T-Eng (2017)(Adventurous Translations).nes",          524304, 0xa1c4c69e, BRF_ESS | BRF_PRG },
@@ -36354,7 +36390,7 @@ STD_ROM_FN(nes_ganbagoegai)
 
 struct BurnDriver BurnDrvnes_ganbagoegai = {
 	"nes_ganbagoegai", NULL, NULL, NULL, "2017",
-	"Ganbare Goemon Gaiden - Kieta Ougon Kiseru (Hack, English)\0", NULL, "Adventurous Translations", "NES / Famicom",
+	"Ganbare Goemon Gaiden: Kieta Ougon Kiseru (Hack, English)\0", NULL, "Adventurous Translations", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegaiRomInfo, nes_ganbagoegaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36362,9 +36398,9 @@ struct BurnDriver BurnDrvnes_ganbagoegai = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)
+// Ganbare Goemon Gaiden 2: Tenka no Zaihou (Japan)
 static struct BurnRomInfo nes_ganbagoegai2jRomDesc[] = {
-	{ "Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan).nes",          524304, 0xad961658, BRF_ESS | BRF_PRG },
+	{ "Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)(1992)(Konami).nes",          524304, 0xad961658, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbagoegai2j)
@@ -36372,15 +36408,15 @@ STD_ROM_FN(nes_ganbagoegai2j)
 
 struct BurnDriver BurnDrvnes_ganbagoegai2j = {
 	"nes_ganbagoegai2j", "nes_ganbagoegai2", NULL, NULL, "1992",
-	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Ganbare Goemon Gaiden 2: Tenka no Zaihou (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"Ganbare Goemon Gaiden 2: Tenka no Zaihou (Japan)\0\u304c\u3093\u3070\u308c \u30b4\u30a8\u30e2\u30f3 \u5916\u4f1d2 \u5929\u4e0b\u306e\u8ca1\u5b9d\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegai2jRomInfo, nes_ganbagoegai2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Hack, English)
+// Ganbare Goemon Gaiden 2: Tenka no Zaihou (Hack, English)
 // https://www.romhacking.net/translations/3748/
 static struct BurnRomInfo nes_ganbagoegai2RomDesc[] = {
 	{ "Ganbare Goemon Gaiden 2 - Tenka no Zaihou T-Eng (2019)(Adventurous Translations).nes",          524304, 0x3de94076, BRF_ESS | BRF_PRG },
@@ -36391,7 +36427,7 @@ STD_ROM_FN(nes_ganbagoegai2)
 
 struct BurnDriver BurnDrvnes_ganbagoegai2 = {
 	"nes_ganbagoegai2", NULL, NULL, NULL, "2019",
-	"Ganbare Goemon Gaiden 2 - Tenka no Zaihou (Hack, English)\0", NULL, "Adventurous Translations", "NES / Famicom",
+	"Ganbare Goemon Gaiden 2: Tenka no Zaihou (Hack, English)\0", NULL, "Adventurous Translations", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ganbagoegai2RomInfo, nes_ganbagoegai2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36399,9 +36435,9 @@ struct BurnDriver BurnDrvnes_ganbagoegai2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon! - Karakuri Douchuu (Japan)
+// Ganbare Goemon! Karakuri Douchuu (Japan)
 static struct BurnRomInfo nes_ganbagoejRomDesc[] = {
-	{ "Ganbare Goemon! - Karakuri Douchuu (Japan).nes",          262160, 0x50fdb91f, BRF_ESS | BRF_PRG },
+	{ "Ganbare Goemon! Karakuri Douchuu (Japan)(1986)(Konami).nes",          262160, 0x50fdb91f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbagoej)
@@ -36409,17 +36445,17 @@ STD_ROM_FN(nes_ganbagoej)
 
 struct BurnDriver BurnDrvnes_ganbagoej = {
 	"nes_ganbagoej", "nes_ganbagoe", NULL, NULL, "1986",
-	"Ganbare Goemon! - Karakuri Douchuu (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ADV | GBF_ACTION, 0,
+	"Ganbare Goemon! Karakuri Douchuu (Japan)\0", NULL, "Konami", "NES / Famicom",
+	L"Ganbare Goemon! Karakuri Douchuu (Japan)\0\u304c\u3093\u3070\u308c \u30b4\u30a8\u30e2\u30f3! \u304b\u3089\u304f\u308a\u9053\u4e2d\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_ganbagoejRomInfo, nes_ganbagoejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganbare Goemon! - Karakuri Douchuu (Hack, English)
+// Ganbare Goemon! Karakuri Douchuu (Hack, English)
 static struct BurnRomInfo nes_ganbagoeRomDesc[] = {
-	{ "Ganbare Goemon! - Karakuri Douchuu (T-Eng).nes",          262160, 0x83fab5ff, BRF_ESS | BRF_PRG },
+	{ "Ganbare Goemon! Karakuri Douchuu T-Eng (2010)(Spinner 8 and friends).nes",          262160, 0x83fab5ff, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbagoe)
@@ -36427,9 +36463,9 @@ STD_ROM_FN(nes_ganbagoe)
 
 struct BurnDriver BurnDrvnes_ganbagoe = {
 	"nes_ganbagoe", NULL, NULL, NULL, "2010",
-	"Ganbare Goemon! - Karakuri Douchuu (Hack, English)\0", NULL, "Spinner 8 and friends", "NES / Famicom",
+	"Ganbare Goemon! Karakuri Douchuu (Hack, English)\0", NULL, "Spinner 8 and friends", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ADV | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_ganbagoeRomInfo, nes_ganbagoeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -36437,7 +36473,7 @@ struct BurnDriver BurnDrvnes_ganbagoe = {
 
 // Ganbare Pennant Race! (Japan)
 static struct BurnRomInfo nes_ganbapenracRomDesc[] = {
-	{ "Ganbare Pennant Race! (Japan).nes",          262160, 0xd15edc9a, BRF_ESS | BRF_PRG },
+	{ "Ganbare Pennant Race! (Japan)(1989)(Konami).nes",          262160, 0xd15edc9a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_ganbapenrac)
@@ -36446,14 +36482,14 @@ STD_ROM_FN(nes_ganbapenrac)
 struct BurnDriver BurnDrvnes_ganbapenrac = {
 	"nes_ganbapenrac", NULL, NULL, NULL, "1989",
 	"Ganbare Pennant Race! (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Ganbare Pennant Race! (Japan)\0\u304c\u3093\u3070\u308c\u30da\u30ca\u30f3\u30c8\u30ec\u30fc\u30b9!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_ganbapenracRomInfo, nes_ganbapenracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganso Saiyuuki - Super Monkey Daibouken (Japan)
+// Ganso Saiyuuki: Super Monkey Daibouken (Japan)
 static struct BurnRomInfo nes_gansosaijRomDesc[] = {
 	{ "Ganso Saiyuuki - Super Monkey Daibouken (Japan)(1986)(Vap).nes",          65552, 0x74de437a, BRF_ESS | BRF_PRG },
 };
@@ -36463,15 +36499,15 @@ STD_ROM_FN(nes_gansosaij)
 
 struct BurnDriver BurnDrvnes_gansosaij = {
 	"nes_gansosaij", "nes_gansosai", NULL, NULL, "1986",
-	"Ganso Saiyuuki - Super Monkey Daibouken (Japan)\0", NULL, "Vap Inc.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Ganso Saiyuuki: Super Monkey Daibouken (Japan)\0", NULL, "Vap Inc.", "NES / Famicom",
+	L"Ganso Saiyuuki: Super Monkey Daibouken (Japan)\0\u5143\u7956\u897f\u904a\u8a18 \u30b9\u30fc\u30d1\u30fc\u30e2\u30f3\u30ad\u30fc\u5927\u5192\u967a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_gansosaijRomInfo, nes_gansosaijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ganso Saiyuuki - Super Monkey Daibouken (Hack, English)
+// Ganso Saiyuuki: Super Monkey Daibouken (Hack, English)
 // https://www.romhacking.net/translations/2471/
 static struct BurnRomInfo nes_gansosaiRomDesc[] = {
 	{ "Ganso Saiyuuki - Super Monkey Daibouken T-Eng (2015)(GAFF Translations).nes",          65552, 0xf6bc9964, BRF_ESS | BRF_PRG },
@@ -36482,7 +36518,7 @@ STD_ROM_FN(nes_gansosai)
 
 struct BurnDriver BurnDrvnes_gansosai = {
 	"nes_gansosai", NULL, NULL, NULL, "2015",
-	"Ganso Saiyuuki - Super Monkey Daibouken (Hack, English)\0", NULL, "GAFF Translations", "NES / Famicom",
+	"Ganso Saiyuuki: Super Monkey Daibouken (Hack, English)\0", NULL, "GAFF Translations", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_gansosaiRomInfo, nes_gansosaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

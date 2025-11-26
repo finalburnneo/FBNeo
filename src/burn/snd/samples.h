@@ -16,7 +16,8 @@
 void BurnSamplePlay(INT32 sample);
 void BurnSamplePause(INT32 sample);
 void BurnSampleResume(INT32 sample);
-void BurnSampleStop(INT32 sample);
+void BurnSampleStop(INT32 sample, bool softstop = false);
+void BurnSampleStopAll(bool softstop = false);
 void BurnSampleSetLoop(INT32 sample, bool dothis);
 INT32 BurnSampleGetStatus(INT32 sample);
 INT32 BurnSampleGetPosition(INT32 sample);

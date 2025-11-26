@@ -39,6 +39,8 @@ static INT32 bAddToStream = 0;
 static INT32 nTotalSamples = 0;
 INT32 bBurnSampleTrimSampleEnd = 0;
 
+enum { LATCH_NONE = 0, LATCH_STOP = 1, LATCH_RETRIG = 2 };
+
 struct sample_format
 {
 	UINT8 *data;
@@ -47,6 +49,7 @@ struct sample_format
 	UINT8 playing;
 	UINT8 loop;
 	UINT8 flags;
+	UINT8 latch;
 	INT32 playback_rate; // 100 = 100%, 200 = 200%,
 	double gain[2];
 	double gain_target[2]; // ramp gain up or down to gain_target (see BurnSampleSetRouteFade())
@@ -546,8 +549,13 @@ void BurnSamplePlay(INT32 sample)
 		BurnSampleInitOne(sample);
 	}
 
-	sample_ptr->playing = 1;
-	sample_ptr->position = 0;
+	if (BurnSampleGetStatus(sample) == SAMPLE_PLAYING) {
+		bprintf(0, _T("BurnSamplePlay(): REtrig sample %x\n"), sample);
+		sample_ptr->latch = LATCH_RETRIG;
+	} else {
+		sample_ptr->playing = 1;
+		sample_ptr->position = 0;
+	}
 }
 
 void BurnSampleChannelPlay(INT32 channel, INT32 sample, INT32 loop)
@@ -622,7 +630,7 @@ void BurnSampleStop_INT(INT32 sample) // internal use, without _SYNC
 	//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
 }
 
-void BurnSampleStop(INT32 sample)
+void BurnSampleStop(INT32 sample, bool softstop)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleStop called without init\n"));
@@ -633,9 +641,26 @@ void BurnSampleStop(INT32 sample)
 	BurnSampleSync();
 
 	sample_ptr = &samples[sample];
-	sample_ptr->playing = 0;
-	sample_ptr->position = 0;
-	//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
+
+	if (softstop && BurnSampleGetStatus(sample) == SAMPLE_PLAYING) {
+		bprintf(0, _T("BurnSampleStop(): Soft-stop sample %x\n"), sample);
+		sample_ptr->latch = LATCH_STOP;
+	} else {
+		sample_ptr->playing = 0;
+		sample_ptr->position = 0;
+		//sample_ptr->playback_rate = 100; // 100% // on load and reset, only!
+	}
+}
+
+void BurnSampleStopAll(bool softstop)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleStopAll called without init\n"));
+#endif
+
+	for (INT32 i = 0; i < nTotalSamples; i++) {
+		BurnSampleStop(i, softstop);
+	}
 }
 
 void BurnSampleChannelStop(INT32 channel)
@@ -1176,6 +1201,12 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	nPosition = 0;
 }
 
+static bool sample_low(INT32 sam)
+{
+	sam = d_abs(sam);
+	return sam < 160;
+}
+
 static void BurnSampleRender_INT(UINT32 pLen)
 {
 	if (pBurnSoundOut == NULL || soundbuf == NULL) {
@@ -1188,7 +1219,10 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
 		sample_ptr = &samples[i];
-		if (sample_ptr->playing == 0 || sample_ptr->length == 0) continue;
+		if (sample_ptr->playing == 0 || sample_ptr->length == 0) {
+			sample_ptr->latch = 0; // clear latch (for now!)
+			continue;
+		}
 
 		if (sample_ptr->data == NULL) {
 			if (sample_ptr->flags & SAMPLE_NOSTOREF) {
@@ -1256,6 +1290,46 @@ static void BurnSampleRender_INT(UINT32 pLen)
 			dst[0] = BURN_SND_CLIP(dst[0] + nLeftSample);
 			dst[1] = BURN_SND_CLIP(dst[1] + nRightSample);
 
+			if (sample_ptr->latch & (LATCH_RETRIG | LATCH_STOP)) {
+				// LATCH_RETRIG: ramp down and then re-start sample, to avoid clicks
+				// LATCH_STOP: ramp down and stop sample.
+				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] >= 0.01) {
+					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
+					bprintf(0, _T("."));
+				}
+				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] >= 0.01) {
+					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
+					bprintf(0, _T(","));
+				}
+
+				if ( (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < 0.01 &&
+					  sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < 0.01) ||
+					 (sample_low(nLeftSample) &&
+					  sample_low(nRightSample) )
+				   )
+				{
+					position = 0;
+					pos = 0;
+					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1];
+					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2];
+
+					bool lowsam = (sample_low(nLeftSample) &&
+								   sample_low(nRightSample));
+
+					if (lowsam) bprintf(0, _T("----[low sample]----"));
+
+					if (sample_ptr->latch & LATCH_STOP) {
+						BurnSampleStop_INT(i);
+						sample_ptr->latch = LATCH_NONE;
+						bprintf(0, _T("[soft-stop!]\n"));
+						break; // break out of this channel's loop
+					} else if (sample_ptr->latch & LATCH_RETRIG) {
+						bprintf(0, _T("[soft-retrig!]\n"));
+						sample_ptr->latch = LATCH_NONE;
+					}
+				}
+			} else
+
 			if (bNiceFadeVolume) {
 				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
 					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
@@ -1295,6 +1369,9 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(sample_ptr->loop);
 			SCAN_VAR(sample_ptr->position);
 			SCAN_VAR(sample_ptr->playback_rate);
+			SCAN_VAR(sample_ptr->latch);
+			SCAN_VAR(sample_ptr->gain);
+			SCAN_VAR(sample_ptr->gain_target);
 		}
 
 		SCAN_VAR(sample_channels);

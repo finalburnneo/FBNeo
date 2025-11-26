@@ -394,6 +394,11 @@ void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
 
 #endif
 
+// Handy defines
+#define d_min(a, b) (((a) < (b)) ? (a) : (b))
+#define d_max(a, b) (((a) > (b)) ? (a) : (b))
+#define d_abs(z) (((z) < 0) ? -(z) : (z))
+
 // ---------------------------------------------------------------------------
 // Retrieve driver information
 

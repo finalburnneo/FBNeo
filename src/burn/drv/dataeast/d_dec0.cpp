@@ -2307,7 +2307,7 @@ static INT32 MemIndex()
 	DrvTiles1              = Next; Next += 0x1000 * 16 * 16;
 	DrvTiles2              = Next; Next += 0x0800 * 16 * 16;
 	DrvSprites             = Next; Next += 0x1000 * 16 * 16;
-	DrvPalette             = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	DrvPalette             = (UINT32*)Next; Next += 0x00401 * sizeof(UINT32);
 
 	pCharLayerDraw         = (UINT16*)Next; Next += (1024 * 256 * sizeof(UINT16));
 	pTile1LayerDraw        = (UINT16*)Next; Next += (1024 * 256 * sizeof(UINT16));
@@ -4491,11 +4491,12 @@ static INT32 HippodrmInit()
 	for (INT32 i = 0x00000; i < 0x10000; i++) {
 		DrvH6280Rom[i] = (DrvH6280Rom[i] & 0x7e) | ((DrvH6280Rom[i] & 0x1) << 7) | ((DrvH6280Rom[i] & 0x80) >> 7);
 	}
+
 	DrvH6280Rom[0x189] = 0x60;
 	DrvH6280Rom[0x1af] = 0x60;
 	DrvH6280Rom[0x1db] = 0x60;
 	DrvH6280Rom[0x21a] = 0x60;
-	
+
 	SekOpen(0);
 	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
 	SekSetReadByteHandler(1, HippodrmShared68KReadByte);
@@ -5588,9 +5589,10 @@ static INT32 HippodrmDraw()
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
-	BurnTransferClear();
+	BurnTransferClear(0x400);
 	DrvCalcPalette();
-	
+	DrvPalette[0x400] = BurnHighCol(0xa3, 0x49, 0xa4, 0);
+
 	if (DrvPriority & 0x01) {
 		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
 		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);

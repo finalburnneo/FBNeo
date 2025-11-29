@@ -550,9 +550,10 @@ void BurnSamplePlay(INT32 sample)
 	}
 
 	if (BurnSampleGetStatus(sample) == SAMPLE_PLAYING) {
-		bprintf(0, _T("BurnSamplePlay(): REtrig sample %x\n"), sample);
+		//bprintf(0, _T("BurnSamplePlay(): REtrig sample %x\n"), sample);
 		sample_ptr->latch = LATCH_RETRIG;
 	} else {
+		//bprintf(0, _T("BurnSamplePlay(): play sample %x\n"), sample);
 		sample_ptr->playing = 1;
 		sample_ptr->position = 0;
 	}
@@ -643,7 +644,7 @@ void BurnSampleStop(INT32 sample, bool softstop)
 	sample_ptr = &samples[sample];
 
 	if (softstop && BurnSampleGetStatus(sample) == SAMPLE_PLAYING) {
-		bprintf(0, _T("BurnSampleStop(): Soft-stop sample %x\n"), sample);
+		//bprintf(0, _T("BurnSampleStop(): Soft-stop sample %x\n"), sample);
 		sample_ptr->latch = LATCH_STOP;
 	} else {
 		sample_ptr->playing = 0;
@@ -1204,7 +1205,26 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 static bool sample_low(INT32 sam)
 {
 	sam = d_abs(sam);
-	return sam < 160;
+	return ( sam == 0 );
+}
+
+static inline void latch_ramp_gain(double &gain1, double &gain2)
+{
+	// note: ramp steps larger than 0.005 will cause clicks with low frequencies.
+	if (gain1 >= 0.005) {
+		gain1 -= 0.005;
+	} else if (gain1 >= 0.001) {
+		gain1 -= 0.001;
+	} else if (gain1 < 0.001) {
+		gain1 = 0.0;
+	}
+	if (gain2 >= 0.005) {
+		gain2 -= 0.005;
+	} else if (gain2 >= 0.001) {
+		gain2 -= 0.001;
+	} else if (gain2 < 0.001) {
+		gain2 = 0.0;
+	}
 }
 
 static void BurnSampleRender_INT(UINT32 pLen)
@@ -1258,10 +1278,10 @@ static void BurnSampleRender_INT(UINT32 pLen)
 
 		length *= 2; // (stereo) used to ensure position is within bounds
 
-		for (INT32 j = 0; j < playlen; j++, dst+=2, pos+=playback_rate) {
+		for (INT32 j = 0; j < playlen; j++, dst+=2) {
 			INT32 nLeftSample = 0, nRightSample = 0;
-			UINT32 current_pos = (pos / 0x10000);
-			UINT32 position = current_pos * 2; // ~1
+			const UINT32 current_pos = (pos / 0x10000);
+			const UINT32 position = current_pos * 2;
 
 			if (sample_ptr->loop == 0) // if not looping, check to make sure sample is in bounds
 			{
@@ -1290,33 +1310,21 @@ static void BurnSampleRender_INT(UINT32 pLen)
 			dst[0] = BURN_SND_CLIP(dst[0] + nLeftSample);
 			dst[1] = BURN_SND_CLIP(dst[1] + nRightSample);
 
+			bool position_increment = true;
+
 			if (sample_ptr->latch & (LATCH_RETRIG | LATCH_STOP)) {
 				// LATCH_RETRIG: ramp down and then re-start sample, to avoid clicks
 				// LATCH_STOP: ramp down and stop sample.
-				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] >= 0.01) {
-					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
-					bprintf(0, _T("."));
-				}
-				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] >= 0.01) {
-					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
-					bprintf(0, _T(","));
-				}
 
-				if ( (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < 0.01 &&
-					  sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < 0.01) ||
-					 (sample_low(nLeftSample) &&
-					  sample_low(nRightSample) )
-				   )
+				//bprintf(0, _T("[%.15g  %.15g]\n"),sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1], sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+
+				if (sample_low(nLeftSample) &&
+					sample_low(nRightSample) )
 				{
-					position = 0;
+					position_increment = false; // we don't want to skip the first sample if starting over w/LATCH_RETRIG
 					pos = 0;
 					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1];
 					sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] = sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2];
-
-					bool lowsam = (sample_low(nLeftSample) &&
-								   sample_low(nRightSample));
-
-					if (lowsam) bprintf(0, _T("----[low sample]----"));
 
 					if (sample_ptr->latch & LATCH_STOP) {
 						BurnSampleStop_INT(i);
@@ -1328,26 +1336,27 @@ static void BurnSampleRender_INT(UINT32 pLen)
 						sample_ptr->latch = LATCH_NONE;
 					}
 				}
-			} else
-
-			if (bNiceFadeVolume) {
-				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
-					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
-						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
-					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] != 0.0) {
-						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] += 0.01;
+				latch_ramp_gain(sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1], sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+			} else {
+				if (bNiceFadeVolume) {
+					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+						if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1]) {
+							sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] -= 0.01;
+						} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_1] != 0.0) {
+							sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] += 0.01;
+						}
 					}
-				}
-				if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
-					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
-						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
-					} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] != 0.0) {
-						sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] += 0.01;
+					if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] != sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+						if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] > sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2]) {
+							sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] -= 0.01;
+						} else if (sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] < sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] && sample_ptr->gain_target[BURN_SND_SAMPLE_ROUTE_2] != 0.0) {
+							sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2] += 0.01;
+						}
 					}
 				}
 			}
+			if (position_increment) pos+=playback_rate;
 		}
-
 		sample_ptr->position = pos; // store the updated position
 	}
 }

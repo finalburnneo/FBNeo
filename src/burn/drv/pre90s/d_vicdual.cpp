@@ -1,6 +1,7 @@
 // FB Alpha Sega Vic Dual driver module
 // Based on MAME driver by Zsolt Vasvari
 
+
 /*
     finished:
 		carnival (w/sound)
@@ -8,6 +9,8 @@
 		nsub (w/sound)
 		digger (w/sound)
 		depthch (w/sound)
+		invds [invinco / deep scan] (w/sound)
+		invinco (w/sound)
 
 	to do:
 	  	all the others
@@ -31,6 +34,8 @@ static UINT8 *DrvVidRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+static ButtonToggle Select;
 
 static UINT8 coin_status;
 static INT32 coin_timer;
@@ -56,10 +61,12 @@ static INT32 nExtraCycles[1];
 
 static INT32 carnival_sound = 0;
 static INT32 is_nsub = 0;
+static INT32 is_invds = 0;
+static INT32 is_invho2 = 0;
 
 static struct BurnInputInfo Invho2InputList[] = {
-	{"Game Select",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 fire 2"	},
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Select",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 select"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
@@ -199,12 +206,14 @@ STDINPUTINFO(Digger)
 
 static struct BurnInputInfo InvdsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Select",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 select"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 start"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 5,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -219,6 +228,8 @@ static struct BurnInputInfo InvincoInputList[] = {
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -647,37 +658,39 @@ STDDIPINFO(Digger)
 
 static struct BurnDIPInfo InvdsDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0x10, NULL						},
-	{0x09, 0xff, 0xff, 0x07, NULL						},
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x08, NULL						},
+	{0x01, 0xff, 0xff, 0x08, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Unused"					},
-	{0x08, 0x01, 0x08, 0x08, "Off"						},
-	{0x08, 0x01, 0x08, 0x00, "On"						},
+	{0x00, 0x01, 0x08, 0x08, "Off"						},
+	{0x00, 0x01, 0x08, 0x00, "On"						},
 	
 	{0   , 0xfe, 0   ,    4, "Invinco Lives"			},
-	{0x09, 0x01, 0x03, 0x03, "3"						},
-	{0x09, 0x01, 0x03, 0x02, "4"						},
-	{0x09, 0x01, 0x03, 0x01, "5"						},
-	{0x09, 0x01, 0x03, 0x00, "6"						},
+	{0x01, 0x01, 0x03, 0x00, "3"						},
+	{0x01, 0x01, 0x03, 0x01, "4"						},
+	{0x01, 0x01, 0x03, 0x02, "5"						},
+	{0x01, 0x01, 0x03, 0x03, "6"						},
 
 	{0   , 0xfe, 0   ,    4, "Deep Scan Lives"			},
-	{0x09, 0x01, 0x0c, 0x08, "2"						},
-	{0x09, 0x01, 0x0c, 0x04, "3"						},
-	{0x09, 0x01, 0x0c, 0x00, "4"						},
-	{0x09, 0x01, 0x0c, 0x0c, "5"						},
+	{0x01, 0x01, 0x0c, 0x04, "2"						},
+	{0x01, 0x01, 0x0c, 0x08, "3"						},
+	{0x01, 0x01, 0x0c, 0x0c, "4"						},
+	{0x01, 0x01, 0x0c, 0x00, "5"						},
 };
 
 STDDIPINFO(Invds)
 
 static struct BurnDIPInfo InvincoDIPList[]=
 {
-	{0x06, 0xff, 0xff, 0x60, NULL						},
+	DIP_OFFSET(0x07)
+	{0x00, 0xff, 0xff, 0x60, NULL						},
 
 	{0   , 0xfe, 0   ,    4, "Lives"					},
-	{0x06, 0x01, 0x03, 0x00, "3"						},
-	{0x06, 0x01, 0x03, 0x01, "4"						},
-	{0x06, 0x01, 0x03, 0x02, "5"						},
-	{0x06, 0x01, 0x03, 0x03, "6"						},
+	{0x00, 0x01, 0x03, 0x00, "3"						},
+	{0x00, 0x01, 0x03, 0x01, "4"						},
+	{0x00, 0x01, 0x03, 0x02, "5"						},
+	{0x00, 0x01, 0x03, 0x03, "6"						},
 };
 
 STDDIPINFO(Invinco)
@@ -1014,7 +1027,9 @@ static UINT8 __fastcall invho2_read_port(UINT16 port)
 	return 0;
 }
 
+static void DeepscanSoundWrite1(UINT16 port, UINT8 data); // forward for now..
 static void DepthchSoundWrite1(UINT16 port, UINT8 data); // forward for now..
+static void InvincoSoundWrite1(UINT16 port, UINT8 data); // forward for now..
 
 static void __fastcall depthch_write_port(UINT16 port, UINT8 data)
 { //  bprintf(0, _T("wp %x  %x\n"), port, data);
@@ -1167,8 +1182,8 @@ static UINT8 __fastcall digger_read_port(UINT16 port)
 
 static void __fastcall invds_write_port(UINT16 port, UINT8 data)
 {
-//	if (port & 0x01) // audio
-//	if (port & 0x02) // audio
+	if (port & 0x01) InvincoSoundWrite1(port, data);
+	if (port & 0x02) DeepscanSoundWrite1(port, data);
 	if (port & 0x08) coin_status = 1;
 	if (port & 0x40) palette_bank = data & 3;
 }
@@ -1178,16 +1193,16 @@ static UINT8 __fastcall invds_read_port(UINT16 port)
 	switch (port & 3)
 	{
 		case 0x00:
-			return (DrvInputs[0] & ~0x0c) | ((DrvDips[0] & 1) ? 4 : 0);
+			return (DrvInputs[0] & ~0x0c) | ((DrvDips[1] & 1) ? 4 : 0) | (DrvDips[0] & 8);
 
 		case 0x01:
-			return (DrvInputs[1] & ~0x0c) | ((DrvDips[0] & 2) ? 4 : 0) | get_composite_blank_comp(8);
+			return (DrvInputs[1] & ~0x0c) | ((DrvDips[1] & 2) ? 4 : 0) | get_composite_blank_comp(8);
 
 		case 0x02:
-			return (DrvInputs[2] & ~0x0c) | ((DrvDips[0] & 4) ? 4 : 0) | get_timer_value(8);
+			return (DrvInputs[2] & ~0x0c) | ((DrvDips[1] & 4) ? 4 : 0) | get_timer_value(8);
 
 		case 0x03:
-			return (DrvInputs[3] & ~0x0c) | ((DrvDips[0] & 8) ? 4 : 0) | get_coin_status(8);
+			return (DrvInputs[3] & ~0x0c) | ((DrvDips[1] & 8) ? 4 : 0) | get_coin_status(8);
 	}
 
 	return 0;
@@ -1196,7 +1211,7 @@ static UINT8 __fastcall invds_read_port(UINT16 port)
 static void __fastcall invinco_write_port(UINT16 port, UINT8 data)
 {
 	if (port & 0x01) coin_status = 1;
-//	if (port & 0x02) // audio
+	if (port & 0x02) InvincoSoundWrite1(port, data);
 	if (port & 0x04) palette_bank = data & 3;
 }
 
@@ -1725,6 +1740,127 @@ static void HeiankyoSoundWrite2(UINT16 port, UINT8 data)
 	}
 }
 
+static void stop_nice(INT32 sam)
+{
+	BurnSampleStop(sam, true);
+}
+
+static void play_nice(INT32 sam, double vol, bool loop)
+{
+	if (!PLAYING(sam)) {
+		// don't set the volume if it's playing.  there's small a chance that
+		// it might be in a latch / could be fading.
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, vol, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, vol, BURN_SND_ROUTE_BOTH);
+	}
+	BurnSamplePlay(sam);
+	BurnSampleSetLoop(sam, loop);
+}
+
+// fades out, waits, and fades back in the sound, for a nice scene-change effect (deepscan death & game over) -dink 2025
+enum { RAMP_OFF = 0, RAMP_DOWN = 1, RAMP_WAIT = 2, RAMP_UP = 3 };
+static INT32 ramp_effect_status = RAMP_OFF;
+static INT32 ramp_vol = 100;
+static const INT32 ramp_intermission = 4*60;
+static INT32 ramp_waiting = 0;
+
+static void ramp_scan()
+{
+	SCAN_VAR(ramp_effect_status);
+	SCAN_VAR(ramp_vol);
+	SCAN_VAR(ramp_waiting);
+}
+
+static void ramp_effect(INT16 *sndout, INT32 len)
+{
+	if (ramp_effect_status == RAMP_OFF) return;
+
+	double volume = (double)ramp_vol / 100;
+
+	for (INT32 i = 0; i < (len * 2); i++) {
+		INT32 sample = sndout[i] * volume;
+		sndout[i] = BURN_SND_CLIP(sample);
+	}
+
+	switch (ramp_effect_status) {
+		case RAMP_OFF:
+			break;
+		case RAMP_WAIT:
+			ramp_waiting--;
+			if (ramp_waiting < 0) {
+				ramp_effect_status = RAMP_UP;
+			}
+			break;
+		case RAMP_DOWN:
+			ramp_vol-=2;
+			if (ramp_vol < 0) {
+				ramp_vol = 0;
+				ramp_waiting = ramp_intermission;
+				ramp_effect_status = RAMP_WAIT;
+			}
+			break;
+		case RAMP_UP:
+			ramp_vol+=2;
+			if (ramp_vol > 100) {
+				ramp_vol = 100;
+				ramp_effect_status = RAMP_OFF;
+			}
+			break;
+	}
+}
+
+static void DeepscanSoundWrite1(UINT16 port, UINT8 data)
+{
+	UINT8 Low  = (port1_state ^ data) & ~data;
+	UINT8 High = (port1_state ^ data) & data;
+	port1_state = data;
+
+	//if (Low || High) bprintf(0, _T("deepscan p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+
+	if (Low & 0x80) {
+		sound_timer = nCurrentFrame;
+	}
+	if (High & 0x80) { // Some sort of warning light on the machine?
+		if (sound_timer == nCurrentFrame) {
+			// hmmmm.
+			// Low & 80 happens when player dies or when red X sub comes onto screen
+			// High & 80 happens right after low & 80 when dies, on the same frame.
+			// Timing this can be used to do a sound fadeout effect :)
+			ramp_effect_status = RAMP_DOWN;
+			ramp_vol = 100;
+		}
+	}
+
+	if (Low & 0x40) {
+		//bprintf(0, _T("sonar on\n"));
+		play_nice(7 + 3, 0.45/2, true);
+	}
+	if (High & 0x40) {
+		//bprintf(0, _T("sonar off\n"));
+		stop_nice(7 + 3); // sonar Off
+	}
+
+	if (Low & 0x1 && !PLAYING(7 + 4)) {
+		play_nice(7 + 4, 0.50/2, false); // bonus
+	}
+
+	if (Low & 0x10) {
+		//bprintf(0, _T("abovewater boom\n"));
+		play_nice(7 + 1, 0.45/2, false);
+	}
+	if (Low & 0x04) {
+		play_nice(7 + 2, 0.50/2, false);
+	}
+	if (Low & 0x08) {
+		//bprintf(0, _T("spray\n"));
+		play_nice(7 + 5, 0.60/2, false);
+	}
+	if (Low & 0x02) {
+		//bprintf(0, _T("shiphit from invinco\n"));
+		play_nice(7 + 0, 0.50/2, false);
+	}
+}
+
 static void DepthchSoundWrite1(UINT16 port, UINT8 data)
 {
 	UINT8 Low  = (port1_state ^ data) & ~data;
@@ -1735,28 +1871,52 @@ static void DepthchSoundWrite1(UINT16 port, UINT8 data)
 
 	if (High & 0x08) {
 		//bprintf(0, _T("sonar on\n"));
-		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
-		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
-		BurnSamplePlay(2); // sonar
-		BurnSampleSetLoop(2, true);
+		play_nice(2, 0.45/2, true);
 	}
 	if (Low & 0x08) {
 		//bprintf(0, _T("sonar off\n"));
-		BurnSampleStop(2); // sonar Off
-		BurnSamplePlay(3); // bonus
+		stop_nice(2); // sonar Off
+		play_nice(3, 0.50/2, false); // bonus
 	}
 
 	if (Low & 0x01) {
 		//bprintf(0, _T("underwater boom\n"));
-		BurnSamplePlay(0);
+		play_nice(0, 0.45/2, false);
 	}
 	if (Low & 0x02) {
 		//bprintf(0, _T("abovewater boom\n"));
-		BurnSamplePlay(1);
+		play_nice(1, 0.45/2, false);
 	}
 	if (Low & 0x04) {
 		//bprintf(0, _T("spray\n"));
-		BurnSamplePlay(4);
+		play_nice(4, 0.60/2, false);
+	}
+}
+
+static void InvincoSoundWrite1(UINT16 port, UINT8 data)
+{
+	UINT8 Low  = (port2_state ^ data) & ~data;
+//	UINT8 High = (port2_state ^ data) & data;
+	port2_state = data;
+
+	//if (Low || High) bprintf(0, _T("invinco p1 low:  %x\thi:  %x\tframe:  %d\n"), Low, High, nCurrentFrame);
+
+	if (Low & 0x04 && !PLAYING(6)) {
+		//bprintf(0, _T("saucer\n"));
+		play_nice(6, 0.45/2, 0);
+	}
+	if (Low & 0x18) { // bass sound
+		play_nice(2 + (sound_timer & 3), 0.25/2, 0);
+		sound_timer++;
+	}
+	if (Low & 0x20) { // fire!
+		play_nice(0, 0.35/2, 0);
+	}
+	if (Low & 0x40) {
+		play_nice(1, 0.45/2, 0);
+	}
+	if (Low & 0x80) {
+		play_nice(7, 0.55/2, 0);
 	}
 }
 
@@ -1810,7 +1970,7 @@ static void DiggerSoundWrite2(UINT16 port, UINT8 data)
 	}
 	if (Low & 0x40) {
 		//bprintf(0, _T("crab out hole\n"));
-		BurnSamplePlay((PLAYING(2)) ? 11 : 3); // leaves hole, phased version (11) if "in hole" is playing.
+		BurnSamplePlay((PLAYING(2)) ? 11 : 3); // leaves hole : phased version (11) if "in hole" is playing.
 	}
 	if (Low & 0x80) {
 		//bprintf(0, _T("game over\n"));
@@ -1870,8 +2030,8 @@ static void NsubSoundWrite(UINT8 data)
 		BurnSampleStop(8);
 
 		// fade-in clicky sample
-		BurnSampleSetAllRoutes(7, 0.00, BURN_SND_ROUTE_BOTH);
-		BurnSampleSetAllRoutesFade(7, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetAllRoutes(7, 0.00, BURN_SND_ROUTE_BOTH); // set it to 0.00
+		BurnSampleSetAllRoutesFade(7, 0.50, BURN_SND_ROUTE_BOTH); // fade it in from 0
 	} else if (High & NSUB_EXPL_S) {
 		PLAY(8, false);
 		BurnSampleStop(7);
@@ -2114,7 +2274,7 @@ static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void (__fas
 	}
 
 	BurnSampleInit(0);
-	BurnSampleSetBuffered(ZetTotalCycles, 1933560);
+    BurnSampleSetBuffered(ZetTotalCycles, 1933560);
 
 	GenericTilesInit();
 
@@ -2136,6 +2296,8 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	is_nsub = 0;
+	is_invds = 0;
+	is_invho2 = 0;
 
 	return 0;
 }
@@ -2242,6 +2404,10 @@ static INT32 DrvFrame()
 	I8039NewFrame();
 
 	{
+		if (is_invds) {
+			Select.Toggle(DrvJoy5[4]);
+		}
+
 		memset (DrvInputs, 0xff, 4);
 
 		for (INT32 i = 0; i < 8; i++) {
@@ -2301,6 +2467,7 @@ static INT32 DrvFrame()
 	    BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		if (carnival_sound)
 			AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		ramp_effect(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;
@@ -2341,6 +2508,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_timer); // heiankyo, digger timer
 
 		SCAN_VAR(nExtraCycles);
+
+		if (is_invds || is_invho2) {
+			Select.Scan();
+		}
+		if (is_invds) {
+			ramp_scan();
+		}
 	}
 
 	return 0;
@@ -2488,7 +2662,7 @@ static struct BurnRomInfo invho2RomDesc[] = {
 STD_ROM_PICK(invho2)
 STD_ROM_FN(invho2)
 
-static struct BurnSampleInfo invdsSampleDesc[] = {
+static struct BurnSampleInfo invincoSampleDesc[] = {
 	{ "fire", SAMPLE_NOLOOP },
 	{ "invhit", SAMPLE_NOLOOP },
 	{ "move1", SAMPLE_NOLOOP },
@@ -2500,11 +2674,35 @@ static struct BurnSampleInfo invdsSampleDesc[] = {
 	{ "", 0 }
 };
 
+STD_SAMPLE_PICK(invinco)
+STD_SAMPLE_FN(invinco)
+
+// invinco + deep scan (depthch) samples
+static struct BurnSampleInfo invdsSampleDesc[] = {
+	// invinco
+	{ "fire", SAMPLE_NOLOOP },      // 0
+	{ "invhit", SAMPLE_NOLOOP },    // 1
+	{ "move1", SAMPLE_NOLOOP },     // 2
+	{ "move2", SAMPLE_NOLOOP },     // 3
+	{ "move3", SAMPLE_NOLOOP },     // 4
+	{ "move4", SAMPLE_NOLOOP },     // 5
+	{ "saucer", SAMPLE_NOLOOP },    // 6
+	{ "shiphit", SAMPLE_NOLOOP },   // 7
+	// deep scan / depth charge / sub hunter
+	{ "longex", SAMPLE_NOLOOP },	// 7 + 1
+	{ "shortex", SAMPLE_NOLOOP },   // 7 + 2
+	{ "sonar", SAMPLE_NOLOOP },     // 7 + 3
+	{ "bonus", SAMPLE_NOLOOP },   	// 7 + 4
+	{ "spray", SAMPLE_NOLOOP },     // 7 + 5
+	{ "", 0 }
+};
+
 STD_SAMPLE_PICK(invds)
 STD_SAMPLE_FN(invds)
 
 static INT32 Invho2Init()
 {
+	is_invho2 = 1;
 	return DrvInit(0x4000, 0x8000, 0, invho2_write_port, invho2_read_port, NULL, NULL);
 }
 
@@ -2513,7 +2711,7 @@ struct BurnDriverD BurnDrvInvho2 = {
 	"Invinco / Head On 2 (set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, invho2RomInfo, invho2RomName, NULL, NULL, invdsSampleInfo, invdsSampleName, Invho2InputInfo, Invho2DIPInfo,
+	NULL, invho2RomInfo, invho2RomName, NULL, NULL, invincoSampleInfo, invincoSampleName, Invho2InputInfo, Invho2DIPInfo,
 	Invho2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2889,12 +3087,13 @@ STD_ROM_FN(invds)
 
 static INT32 InvdsInit()
 {
+	is_invds = 1;
 	return DrvInit(0x4000, 0x8000, 0, invds_write_port, invds_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvInvds = {
-	"invds", NULL, NULL, "invinco", "1979",
-	"Invinco / Deep Scan\0", "No sound", "Sega", "Vic Dual",
+struct BurnDriver BurnDrvInvds = {
+	"invds", NULL, NULL, "invds", "1979",
+	"Invinco / Deep Scan\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, invdsRomInfo, invdsRomName, NULL, NULL, invdsSampleInfo, invdsSampleName, InvdsInputInfo, InvdsDIPInfo,
@@ -2927,12 +3126,12 @@ static INT32 InvincoInit()
 	return DrvInit(0x4000, 0xc000, 0, invinco_write_port, invinco_read_port, NULL, NULL);
 }
 
-struct BurnDriverD BurnDrvInvinco = {
+struct BurnDriver BurnDrvInvinco = {
 	"invinco", NULL, NULL, "invinco", "1979",
-	"Invinco\0", "No sound", "Sega", "Vic Dual",
+	"Invinco\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, invincoRomInfo, invincoRomName, NULL, NULL, invdsSampleInfo, invdsSampleName, InvincoInputInfo, InvincoDIPInfo,
+	NULL, invincoRomInfo, invincoRomName, NULL, NULL, invincoSampleInfo, invincoSampleName, InvincoInputInfo, InvincoDIPInfo,
 	InvincoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

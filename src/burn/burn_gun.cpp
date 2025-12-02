@@ -199,7 +199,7 @@ void BurnTrackballFrame(INT32 dev, INT32 PortA, INT32 PortB, INT32 VelocityStart
 
 	memset(&DrvJoyT[dev*4], 0, 4); 						// zero directional bytes
 
-	BurnPaddleMakeInputs(dev, dial, AnalogDeadZone(PortA), AnalogDeadZone(PortB)); // analog -> main accumulators
+	BurnPaddleMakeInputs(dev, dial, PortA, PortB);		// analog -> main accumulators
 
 	BurnPaddleReturn(dial, dev, 0);                     // accumulator -> directional + velocity data PortA
 	if (dial.Backward || dial.Forward) {

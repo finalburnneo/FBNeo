@@ -39,7 +39,7 @@ extern INT32 nSocd[6];
 UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax);
 UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax, UINT8 centerval);
 
-INT32 AnalogDeadZone(INT32 anaval);
+INT32 AnalogDeadZone(INT32 anaval, INT32 dz = 4);
 
 UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max);
 

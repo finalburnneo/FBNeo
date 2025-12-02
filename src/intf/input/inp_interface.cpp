@@ -334,6 +334,12 @@ INT32 InputMake(bool bCopy)
 					nJoy *= nAnalogSpeed;
 					nJoy >>= 13;
 
+					// -- Deadzone handling --
+					// Scale Deadzone to the Speed.  200 seems perfect for thumbsticks @ default speed
+					const INT32 nDeadZone = 200 * nAnalogSpeed / 256;
+
+					nJoy = AnalogDeadZone(nJoy, nDeadZone);
+
 					// Clip axis to 16 bits (signed)
 					if (nJoy < -32768) {
 						nJoy = -32768;

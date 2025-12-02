@@ -76,17 +76,17 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 }
 
 // Analog Processing
-INT32 AnalogDeadZone(INT32 anaval)
+INT32 AnalogDeadZone(INT32 anaval, INT32 dz)
 {
 	INT32 negative = (anaval < 0);
 
 	anaval = abs(anaval);
 
 	// < 4, hopefully a good value for mouse / analog [thumb]stick
-	if (anaval < 4) {
+	if (anaval < dz) {
 		anaval = 0;
 	} else {
-		anaval -= 4;
+		anaval -= dz;
 	}
 
 	return (negative) ? -anaval : anaval;

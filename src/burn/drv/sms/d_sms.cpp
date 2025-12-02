@@ -26821,7 +26821,26 @@ struct BurnDriver BurnDrvsms_wboy3c = {
 	SMSGetZipName, sms_wboy3cRomInfo, sms_wboy3cRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
-};								
+};
+
+// Wonder Boy III: The Dragon's Trap (Hack, Italian v1.2)
+// https://www.romhacking.net/translations/7292/
+static struct BurnRomInfo sms_wboy3iRomDesc[] = {
+	{ "Wonder Boy III - The Dragon's Trap T-Ita v1.2 (2024)(Michele Di Somma)",          262144, 0x6c5915d7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(sms_wboy3i)
+STD_ROM_FN(sms_wboy3i)
+
+struct BurnDriver BurnDrvsms_wboy3i = {
+	"sms_wboy3i", "sms_wboy3", NULL, NULL, "2024",
+	"Wonder Boy III: The Dragon's Trap (Hack, Italian v1.2)\0", NULL, "Michele Di Somma", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_wboy3iRomInfo, sms_wboy3iRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
 
 // Wonder Boy in Monster World (Hack, Spanish)
 // https://www.romhacking.net/translations/3735/

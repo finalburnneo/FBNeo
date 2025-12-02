@@ -26826,7 +26826,7 @@ struct BurnDriver BurnDrvsms_wboy3c = {
 // Wonder Boy III: The Dragon's Trap (Hack, Italian v1.2)
 // https://www.romhacking.net/translations/7292/
 static struct BurnRomInfo sms_wboy3iRomDesc[] = {
-	{ "Wonder Boy III - The Dragon's Trap T-Ita v1.2 (2024)(Michele Di Somma)",          262144, 0x6c5915d7, BRF_ESS | BRF_PRG },
+	{ "Wonder Boy III - The Dragon's Trap T-Ita v1.2 (2024)(Michele Di Somma).sms",          262144, 0x6c5915d7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(sms_wboy3i)

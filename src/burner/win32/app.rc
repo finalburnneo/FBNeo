@@ -46,6 +46,10 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+#ifndef TBS_NOTIFYBEFOREMOVE
+#define TBS_NOTIFYBEFOREMOVE 0x0800
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
@@ -79,7 +83,7 @@ BEGIN
     PUSHBUTTON      "Make default",IDC_INPD_DEFAULT,101,194,81,14
     PUSHBUTTON      "Use preset",IDC_INPD_USE,187,194,81,14
     CTEXT           "Analog Sensitivity",IDC_STATIC,13,215,72,10,SS_CENTERIMAGE
-	CONTROL			"Analog Sensitivity",IDC_INPD_ANSLIDER,"msctls_trackbar32",WS_TABSTOP,11,225,152,18
+	CONTROL			"Analog Sensitivity",IDC_INPD_ANSLIDER,"msctls_trackbar32",WS_TABSTOP | TBS_NOTIFYBEFOREMOVE,11,225,152,18
 	EDITTEXT		IDC_INPD_ANEDIT,167,225,20,14,SS_CENTERIMAGE
 	LTEXT			"%", IDC_STATIC,167+20, 225, 25, 10, SS_CENTERIMAGE
 END

@@ -29057,7 +29057,7 @@ STDROMPICKEXT(zetsuxeving, zetsuxeving, neogeo)
 STD_ROM_FN(zetsuxeving)
 
 struct BurnDriver BurnDrvZetsuxeving = {
-	"zetsuxeving", "xeviousng", "neogeo", NULL, "1982-2035",
+	"zetsuxeving", "xeviousng", "neogeo", NULL, "1982-2025",
 	"Zetsu Xevious - Neo Geo Conversion (HB)\0", NULL, "Namco - zeroco", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,

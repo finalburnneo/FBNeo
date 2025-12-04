@@ -21504,9 +21504,9 @@ struct BurnDriver BurnDrvnes_nalleland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nebs and Debs (HB)
+// Nebs and Debs (HB, v1.1)
 static struct BurnRomInfo nes_nebsanddebsRomDesc[] = {
-	{ "Nebs and Debs (2018)(Dullahan).nes",          40976, 0x570383a9, BRF_ESS | BRF_PRG },
+	{ "Nebs and Debs v1.1 (2018)(Dullahan).nes",          40976, 0xdb4ffebc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nebsanddebs)
@@ -21514,7 +21514,7 @@ STD_ROM_FN(nes_nebsanddebs)
 
 struct BurnDriver BurnDrvnes_nebsanddebs = {
 	"nes_nebsanddebs", NULL, NULL, NULL, "2018",
-	"Nebs and Debs (HB)\0", NULL, "Dullahan", "NES / Famicom",
+	"Nebs and Debs (HB, v1.1)\0", NULL, "Dullahan", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_nebsanddebsRomInfo, nes_nebsanddebsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23460,9 +23460,9 @@ struct BurnDriver BurnDrvnes_slowmolejr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Snail Hop (HB)
+// Snail Hop (HB, v1.1)
 static struct BurnRomInfo nes_snailhopRomDesc[] = {
-	{ "Snail Hop (2023)(Libra Bits).nes",          163856, 0xba16a036, BRF_ESS | BRF_PRG },
+	{ "Snail Hop v1.1 (2023)(Libra Bits).nes",          163856, 0xba16a036, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_snailhop)
@@ -23470,7 +23470,7 @@ STD_ROM_FN(nes_snailhop)
 
 struct BurnDriver BurnDrvnes_snailhop = {
 	"nes_snailhop", NULL, NULL, NULL, "2023",
-	"Snail Hop (HB)\0", NULL, "Libra Bits", "NES / Famicom",
+	"Snail Hop (HB, v1.1)\0", NULL, "Libra Bits", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_snailhopRomInfo, nes_snailhopRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25483,9 +25483,9 @@ struct BurnDriver BurnDrvnes_traintrain = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Trial of Kharzoid, The (HB, v1.2)
+// Trial of Kharzoid, The (HB, v1.3)
 static struct BurnRomInfo nes_kharzoidRomDesc[] = {
-	{ "Trial of Kharzoid, The v1.2 (2025)(Pascal Belisle).nes",          393232, 0x0f824e08, BRF_ESS | BRF_PRG },
+	{ "Trial of Kharzoid, The v1.3 (2025)(Pascal Belisle).nes",          393232, 0x8ab157a9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_kharzoid)
@@ -25493,7 +25493,7 @@ STD_ROM_FN(nes_kharzoid)
 
 struct BurnDriver BurnDrvnes_kharzoid = {
 	"nes_kharzoid", NULL, NULL, NULL, "2025",
-	"Trial of Kharzoid, The (HB, v1.2)\0", NULL, "Pascal Belisle", "NES / Famicom",
+	"Trial of Kharzoid, The (HB, v1.3)\0", NULL, "Pascal Belisle", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BALLPADDLE | GBF_BREAKOUT, 0,
 	NESGetZipName, nes_kharzoidRomInfo, nes_kharzoidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -38056,7 +38056,7 @@ STD_ROM_FN(nes_hellokitnooha)
 struct BurnDriver BurnDrvnes_hellokitnooha = {
 	"nes_hellokitnooha", NULL, NULL, NULL, "1992",
 	"Hello Kitty no Ohanabatake (Japan)\0", NULL, "Character Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Hello Kitty no Ohanabatake (Japan)\0\u30cf\u30ed\u30fc\u30ad\u30c6\u30a3\u306e \u304a\u306f\u306a\u3070\u305f\u3051\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_hellokitnoohaRomInfo, nes_hellokitnoohaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -38093,7 +38093,7 @@ STD_ROM_FN(nes_hellokitworj)
 struct BurnDriver BurnDrvnes_hellokitworj = {
 	"nes_hellokitworj", "nes_hellokitwor", NULL, NULL, "1992",
 	"Hello Kitty World (Japan)\0", NULL, "Character Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Hello Kitty World (Japan)\0\u30cf\u30ed\u30fc \u30ad\u30c6\u30a3 \u30ef\u30fc\u30eb\u30c9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_hellokitworjRomInfo, nes_hellokitworjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -38294,14 +38294,14 @@ STD_ROM_FN(nes_hikarnosenphoulgaonjlea)
 struct BurnDriver BurnDrvnes_hikarnosenphoulgaonjlea = {
 	"nes_hikarnosenphoulgaonjlea", "nes_hikarnosenphoulgaon", NULL, NULL, "1987",
 	"Hikari no Senshi Photon: The Ultimate Game on Planet Earth (Japan)\0", NULL, "Takara", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Hikari no Senshi Photon: The Ultimate Game on Planet Earth (Japan)\0\u30d5\u30a9\u30c8\u30f3 The Ultimate Game on Planet Earth\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_SHOOT, 0,
 	NESGetZipName, nes_hikarnosenphoulgaonjleaRomInfo, nes_hikarnosenphoulgaonjleaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Hikari no Senshi Photon: The Ultimate Game on Planet Earth (Hack, English)
+// Soldier of Light Photon: The Ultimate Game on Planet Earth (Hack, English)
 static struct BurnRomInfo nes_hikarnosenphoulgaonRomDesc[] = {
 	{ "Hikari no Senshi Photon - The Ultimate Game on Planet Earth T-Eng (2003)(KingMike's Translations).nes",          131088, 0x351a3bf3, BRF_ESS | BRF_PRG },
 };
@@ -38311,7 +38311,7 @@ STD_ROM_FN(nes_hikarnosenphoulgaon)
 
 struct BurnDriver BurnDrvnes_hikarnosenphoulgaon = {
 	"nes_hikarnosenphoulgaon", NULL, NULL, NULL, "2003",
-	"Hikari no Senshi Photon: The Ultimate Game on Planet Earth (Hack, English)\0", NULL, "KingMike's Translations", "NES / Famicom",
+	"Soldier of Light Photon: The Ultimate Game on Planet Earth (Hack, English)\0", NULL, "KingMike's Translations", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_SHOOT, 0,
 	NESGetZipName, nes_hikarnosenphoulgaonRomInfo, nes_hikarnosenphoulgaonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50956,7 +50956,7 @@ struct BurnDriver BurnDrvnes_soccelea = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Solar Jetman - Hunt for the Golden Warpship (USA)
+// Solar Jetman: Hunt for the Golden Warpship (USA)
 static struct BurnRomInfo nes_solarjetRomDesc[] = {
 	{ "Solar Jetman - Hunt for the Golden Warpship (USA)(1990)(Tradewest).nes",          262160, 0x1c17ce33, BRF_ESS | BRF_PRG },
 };
@@ -50966,7 +50966,7 @@ STD_ROM_FN(nes_solarjet)
 
 struct BurnDriver BurnDrvnes_solarjet = {
 	"nes_solarjet", NULL, NULL, NULL, "1990",
-	"Solar Jetman - Hunt for the Golden Warpship (USA)\0", NULL, "Tradewest", "NES / Famicom",
+	"Solar Jetman: Hunt for the Golden Warpship (USA)\0", NULL, "Tradewest", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_solarjetRomInfo, nes_solarjetRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -51319,19 +51319,38 @@ struct BurnDriver BurnDrvnes_splathou = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Splatter World (Japan, Prototype)
+// Splatter World: Rick to Kyoufu no Daiou (Japan, Prototype)
+static struct BurnRomInfo nes_splatworldjRomDesc[] = {
+	{ "Splatterworld - Rick to Kyoufu no Daiou (Japan, Proto)(1993)(Namcot).nes",          524304, 0xcb9ef0ba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_splatworldj)
+STD_ROM_FN(nes_splatworldj)
+
+struct BurnDriver BurnDrvnes_splatworldj = {
+	"nes_splatworldj", "nes_splatworld", NULL, NULL, "1993",
+	"Splatter World: Rick to Kyoufu no Daiou (Japan, Prototype)\0", NULL, "Namcot", "NES / Famicom",
+	L"Splatter World: Rick to Kyoufu no Daiou (Japan, Prototype)\0\u30b9\u30d7\u30e9\u30c3\u30bf\u30fc\u30ef\u30fc\u30eb\u30c9 \u30ea\u30c3\u30af\u3068\u6050\u6016\u306e\u5927\u738b\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_splatworldjRomInfo, nes_splatworldjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Splatter World: Rick vs. the King of Terror (Hack, English)
+// https://aeongenesis.net/projects/splatterworld
 static struct BurnRomInfo nes_splatworldRomDesc[] = {
-	{ "Splatter World (Japan, Proto)(1993)(Namcot).nes",          524304, 0xcb9ef0ba, BRF_ESS | BRF_PRG },
+	{ "Splatterworld - Rick vs. the King of Terror T-Eng (2025)(Aeon Genesis).nes",          786448, 0x6ab9e947, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_splatworld)
 STD_ROM_FN(nes_splatworld)
 
 struct BurnDriver BurnDrvnes_splatworld = {
-	"nes_splatworld", NULL, NULL, NULL, "1993",
-	"Splatter World (Japan, Prototype)\0", NULL, "Namcot", "NES / Famicom",
+	"nes_splatworld", NULL, NULL, NULL, "2025",
+	"Splatter World: Rick vs. the King of Terror (Hack, English)\0", NULL, "Aeon Genesis", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_splatworldRomInfo, nes_splatworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

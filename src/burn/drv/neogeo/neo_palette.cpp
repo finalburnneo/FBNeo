@@ -69,13 +69,13 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r = (nColour & 0x0F00) >> 4;	// Red
 	r |= (nColour >> 11) & 8;
-	r |= (~nColour >> 13) & 4;			// Red: add "dark" bit
+	r |= (nColour >> 13) & 4;			// Red: add "dark" bit
 	INT32 g = (nColour & 0x00F0);		// Green
 	g |= (nColour >> 10) & 8;
-	g |= (~nColour >> 13) & 4;
+	g |= (nColour >> 13) & 4;
 	INT32 b = (nColour & 0x000F) << 4;	// Blue
 	b |= (nColour >> 9) & 8;
-	b |= (~nColour >> 13) & 4;
+	b |= (nColour >> 13) & 4;
 
 	r = get_weighty(r);
 	g = get_weighty(g);

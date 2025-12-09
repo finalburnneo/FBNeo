@@ -645,7 +645,7 @@ static INT32 DrvFrame()
 		ToaClearOpposites(&DrvInput[1]);
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, DrvAnalogPort[0], DrvAnalogPort[2], 0x02, 0x0f);
+		BurnTrackballFrame(0, DrvAnalogPort[0], DrvAnalogPort[2], 0x01, 0x1f);
 		BurnTrackballUDLR(0, DrvJoy2[2], DrvJoy2[3], DrvJoy1[2], DrvJoy1[3]);
 		BurnTrackballUpdate(0);
 	}

@@ -61,7 +61,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_akazukin.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_argus.o d_armedf.o \
 			d_asteroids.o d_astrocde.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_berzerk.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
-			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
+			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_circus.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
 			d_cybertnk.o d_dacholer.o d_darkmist.o d_dday.o d_ddayjlc.o d_ddragon.o d_deadang.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
 			d_dynduke.o d_efdt.o d_epos.o d_espial.o d_ettrivia.o d_exedexes.o d_exerion.o d_exidy440.o d_exprraid.o d_exterm.o d_fantland.o d_fastfred.o d_fcombat.o d_firetrap.o d_flipjack.o d_flower.o d_foodf.o \
 			d_freekick.o d_funkybee.o d_galaga.o d_galivan.o d_gaplus.o d_ginganin.o d_gng.o d_goindol.o d_gotya.o d_gridlee.o d_gunsmoke.o d_headonb.o d_higemaru.o \

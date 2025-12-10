@@ -989,25 +989,28 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
 				}
 
-				TCHAR ips_path[MAX_PATH] = { 0 };
-				_stprintf(ips_path, _T("%s%s"), ips_name, (has_ext) ? _T("") : IPS_EXT);
+				bool bHasDir = false;	// The IPS file and DAT file are in the same directory
+				TCHAR* str = ips_name;
 
-				// Prioritize the use of ips files with custom correct paths
-				if (!FileExists(ips_path)) {
-					_stprintf(ips_path, _T(""));
-
-					// Traditional IPS path
-					if ((_T('\\') == ips_name[0]) || (_T('/') == ips_name[0])) {
-						// ips in parent's folder
-						// app_path: xxxxx/yyy/ or xxxxx\yyy\
-						// ips_name: /aaa/n.ips or \aaa\n.ips, (ips_name + 1) -> aaa/n.ips or aaa\n.ips
-						// app_path + ips_name: xxxxx/yyy/aaa/n.ips or xxxxx\yyy\aaa\n.ips
-						_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name + 1, (has_ext) ? _T("") : IPS_EXT);
-					} else {
-						// ips in drv_name's folder (Same folder as dat)
-						// xxxxx/yyy/drv_name/.../n.ips or xxxxx\yyy\drv_name\...\n.ips
-						_stprintf(ips_path, _T("%s%s\\%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
+				while (_T('\0') != *str) {
+					if ((_T('\\') == *str) || (_T('/') == *str)) {
+						bHasDir = true;	// The IPS file contains directory paths
+						str = NULL;
+						break;
 					}
+					str++;
+				}
+
+				TCHAR ips_path[MAX_PATH] = { 0 };
+
+				if (bHasDir) {
+					// Customize drv_name
+					// support/ips/ips_name
+					_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name, (has_ext) ? _T("") : IPS_EXT);
+				} else {
+					// Default drv_name
+					// support/ips/drv_name/ips_name
+					_stprintf(ips_path, _T("%s%s/%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
 				}
 
 				PatchFile(_TtoA(ips_path), base, readonly);

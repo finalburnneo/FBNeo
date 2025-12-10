@@ -213,6 +213,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_akazukin.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_astrocde.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_circus.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy440.cpp" />

@@ -1324,7 +1324,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" %(Filename).cpp
 
-%(Filename).exe &gt;../../../projectfiles/visualstudio-2019/generated/%(Filename).h
+%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1343,7 +1343,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" %(Filename).cpp
 
-%(Filename).exe &gt;../../../projectfiles/visualstudio-2019/generated/%(Filename).h
+%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1362,7 +1362,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" /D "BUILD_X64_EXE" %(Filename).cpp
 
-%(Filename).exe &gt;../../../projectfiles/visualstudio-2019/generated/%(Filename).h
+%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1381,7 +1381,7 @@ cd scripts
 
 cl.exe /D "_UNICODE" /D "BUILD_X64_EXE" %(Filename).cpp
 
-%(Filename).exe &gt;../../../projectfiles/visualstudio-2019/generated/%(Filename).h
+%(Filename).exe &gt;../../../projectfiles/visualstudio-2026/generated/%(Filename).h
 
 del %(Filename).obj
 
@@ -1430,16 +1430,41 @@ del %(Filename).exe
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx_support.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\burn\burn_sound_a.asm" />
-    <None Include="..\..\src\cpu\e132xs\e132xsop.inc" />
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt" />
-    <None Include="..\..\src\dep\libs\zlib\zconf.h.in" />
-    <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm" />
-    <None Include="..\..\src\intf\video\scalers\eagle_fm.asm" />
-    <None Include="..\..\src\intf\video\scalers\hq2x32.asm" />
-    <None Include="..\..\src\intf\video\scalers\hq3x32.asm" />
-    <None Include="..\..\src\intf\video\scalers\hq4x32.asm" />
-    <None Include="..\..\src\intf\video\scalers\superscale.asm" />
+    <NASM Include="..\..\src\burn\burn_sound_a.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\eagle_fm.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq2x32.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq3x32.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq4x32.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\superscale.asm">
+      <FileType>asm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </NASM>
     <None Include="..\..\src\intf\video\win32\resource\bicubic.fx" />
   </ItemGroup>
   <ItemGroup>
@@ -1453,39 +1478,40 @@ del %(Filename).exe
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{86D06C32-A849-4988-A176-A38D014C36C1}</ProjectGuid>
-    <RootNamespace>fbneo_vs2019</RootNamespace>
+    <RootNamespace>fbneo_vs2026</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>fbneo_vs2019</ProjectName>
+    <ProjectName>fbneo_vs2026</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\nasm.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -1556,7 +1582,7 @@ del %(Filename).exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2019.bat "$(VCInstallDir)</Command>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2026.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1585,7 +1611,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2019.bat "$(VCInstallDir)</Command>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2026.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1618,7 +1644,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2019.bat "$(VCInstallDir)</Command>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2026.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1649,7 +1675,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2019.bat "$(VCInstallDir)</Command>
+      <Command>$(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2026.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1657,5 +1683,6 @@ del %(Filename).exe
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\nasm.targets" />
   </ImportGroup>
 </Project>

@@ -310,7 +310,7 @@ static void circus_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x8000:
-			sprite_z = (is_robotbwl = 0) ? 0 : (data & 0xf);
+			sprite_z = (is_robotbwl) ? 0 : (data & 0xf);
 			if (sound_callback) {
 				sound_callback(data);
 			}
@@ -848,7 +848,7 @@ struct BurnDriver BurnDrvCircus = {
 	"circus", NULL, NULL, "circus", "1977",
 	"Circus / Acrobat TV\0", NULL, "Exidy / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, circusRomInfo, circusRomName, NULL, NULL, CircusSampleInfo, CircusSampleName, CircusInputInfo, CircusDIPInfo,
 	CircusInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
@@ -882,7 +882,7 @@ struct BurnDriver BurnDrvSpringbd = {
 	"springbd", "circus", NULL, "circus", "1977",
 	"Springboard (bootleg of Circus)\0", NULL, "bootleg (Sub-Electro)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, springbdRomInfo, springbdRomName, NULL, NULL, CircusSampleInfo, CircusSampleName, CircusInputInfo, CircusDIPInfo,
 	CircusInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
@@ -937,7 +937,7 @@ struct BurnDriver BurnDrvRobotbwl = {
 	"robotbwl", NULL, NULL, NULL, "1977",
 	"Robot Bowl\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, robotbwlRomInfo, robotbwlRomName, NULL, NULL, NULL, NULL, RobotbwlInputInfo, RobotbwlDIPInfo,
 	RobotbwlInit, DrvExit, DrvFrame, RobotbwlDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
@@ -986,14 +986,14 @@ struct BurnDriver BurnDrvCrash = {
 	"crash", NULL, NULL, "crash", "1979",
 	"Crash\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, crashRomInfo, crashRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,
 	CrashInit, DrvExit, DrvFrame, CrashDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
 };
 
 
-// Crash (alt)
+// Crash (Alt)
 
 static struct BurnRomInfo crashaRomDesc[] = {
 	{ "nsa7.a8",			0x0800, 0x2e47c5ee, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1009,9 +1009,9 @@ STD_ROM_FN(crasha)
 
 struct BurnDriver BurnDrvCrasha = {
 	"crasha", "crash", NULL, "crash", "1979",
-	"Crash (alt)\0", NULL, "Exidy", "Miscellaneous",
+	"Crash (Alt)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, crashaRomInfo, crashaRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,
 	CrashInit, DrvExit, DrvFrame, CrashDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
@@ -1045,7 +1045,7 @@ struct BurnDriver BurnDrvSmash = {
 	"smash", "crash", NULL, "crash", "1979",
 	"Smash (Crash bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, smashRomInfo, smashRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,
 	CrashInit, DrvExit, DrvFrame, CrashDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
@@ -1098,7 +1098,7 @@ struct BurnDriver BurnDrvRipcord = {
 	"ripcord", NULL, NULL, NULL, "1979",
 	"Rip Cord\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, ripcordRomInfo, ripcordRomName, NULL, NULL, NULL, NULL, RipcordInputInfo, RipcordDIPInfo,
 	RipcordInit, DrvExit, DrvFrame, RipcordDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3

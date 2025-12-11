@@ -92,8 +92,8 @@ struct Dsp {
   uint16_t sampleOffset; // current offset in samplebuffer
   uint16_t sampleCount; // samples generated since last frame
   audioQueue audioQue[MAX_AUDIOQUEUE];
-  uint16_t audioQuePos = 0;
-  uint16_t audioQueTotal = 0;
+  uint16_t audioQuePos;
+  uint16_t audioQueTotal;
 };
 
 Dsp* dsp_init(Apu* apu);

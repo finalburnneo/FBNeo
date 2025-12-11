@@ -903,10 +903,6 @@ static int encodeNES(int address, int value, int compare, char *result) {
 	return 0;
 }
 
-#ifdef _MSC_VER
-#define strtok_r strtok_s
-#endif
-
 // VirtuaNES .vct format
 static INT32 ConfigParseVCT(TCHAR* pszFilename)
 {
@@ -984,7 +980,6 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 		if (HW_GGENIE) {
 			//szGGenie "0077-01-FF" or "0077-04-80808080"
-			char *tok_main = NULL;
 			char temp2[256] = { 0, };
 			UINT32 fAddr = 0;
 			UINT32 fCount = 0;
@@ -994,18 +989,18 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			strcpy(temp2, szGGenie);
 
 			// split up "0077-01-FF" format: "address-[attribute][bytecount]-bytes_to_program"
-			char *tok = strtok_r(temp2, "-", &tok_main);
+			char *tok = strtok(temp2, "-");
 			if (!tok) continue;
 			sscanf(tok, "%x", &fAddr);
 
-			tok = strtok_r(NULL, "-", &tok_main);
+			tok = strtok(NULL, "-");
 			if (!tok) continue;
 			sscanf(tok, "%x", &fCount);
 			fAttr = (fCount & 0x30) >> 4;
 			fCount &= 0x07;
 			if (fCount < 1 || fCount > 4) fCount = 1;
 
-			tok = strtok_r(NULL, "-", &tok_main);
+			tok = strtok(NULL, "-");
 			if (!tok) continue;
 			sscanf(tok, "%x", &fBytes);
 
@@ -1051,10 +1046,6 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 	return 0;
 }
-
-#ifdef _MSC_VER
-#undef strtok_r
-#endif
 
 
 INT32 ConfigCheatLoad()

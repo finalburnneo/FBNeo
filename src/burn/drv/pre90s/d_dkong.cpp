@@ -23,6 +23,7 @@
 #include "8257dma.h"
 #include "mcs48.h"
 #include "dac.h"
+#include "burn_ym2151.h"
 #include "tms5110.h"
 #include "nes_apu.h"
 #include "resnet.h"
@@ -264,6 +265,26 @@ static struct BurnInputInfo HerodkInputList[] = {
 };
 
 STDINPUTINFO(Herodk)
+
+static struct BurnInputInfo JamminInputList[] = {
+	{"Coin",							BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
+	{"Drum 1 - Hit 1 / Start 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"},
+	{"Drum 1 - Hit 2",					BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 2"},
+	{"Drum 2 - Hit 1",					BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"},
+	{"Drum 2 - Hit 2",					BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 4"},
+	{"Center Drum Hit / Menu Select",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"},
+	{"Drum 3 - Hit 1",					BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 6"},
+	{"Drum 3 - Hit 2",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 8"},
+	{"Drum 4 - Hit 1",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 7"},
+	{"Drum 4 - Hit 2 / Start 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 9"},
+
+	{"Reset",							BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",							BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",							BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",							BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+};
+
+STDINPUTINFO(Jammin)
 
 static struct BurnDIPInfo DkongNoDipDIPList[]=
 {
@@ -696,6 +717,46 @@ static struct BurnDIPInfo DraktonDIPList[]=
 
 STDDIPINFO(Drakton)
 
+static struct BurnDIPInfo JamminDIPList[]=
+{
+	{0x0b, 0xff, 0xff, 0xff, NULL			},
+	{0x0c, 0xff, 0xff, 0x02, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x01, 0x01, "Off"			},
+	{0x0b, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x02, 0x02, "Off"			},
+	{0x0b, 0x01, 0x02, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x04, 0x04, "Off"			},
+	{0x0b, 0x01, 0x04, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x08, 0x08, "Off"			},
+	{0x0b, 0x01, 0x08, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x10, 0x10, "Off"			},
+	{0x0b, 0x01, 0x10, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x20, 0x20, "Off"			},
+	{0x0b, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x40, 0x40, "Off"			},
+	{0x0b, 0x01, 0x40, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x0b, 0x01, 0x80, 0x80, "Off"			},
+	{0x0b, 0x01, 0x80, 0x00, "On"			},
+};
+
+STDDIPINFO(Jammin)
+
 static void dkong_sample_play(INT32 offset, UINT8 data)
 {
 	INT32 sample_order[7] = { 1, 2, 1, 2, 0, 1, 0 };
@@ -843,9 +904,37 @@ static UINT8 __fastcall dkong_main_read(UINT16 address)
 			return DrvDips[0];
 	}
 
-
-
 	return 0;
+}
+
+static void __fastcall jammin_main_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x7c00 && address <= 0x7d81) return;
+
+	switch (address)
+	{
+		case 0x4000:
+		case 0x4001:
+			BurnYM2151Write(address & 1, data);
+		return;
+	}
+
+	dkong_main_write(address, data);
+}
+
+static UINT8 __fastcall jammin_main_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x4000:
+		case 0x4001:
+			return BurnYM2151Read();
+
+		case 0x7d07:
+			return DrvInputs[2];
+	}
+	
+	return dkong_main_read(address);
 }
 
 static inline void dkongjr_climb_write(UINT8 data)
@@ -2152,6 +2241,99 @@ static INT32 s2650DkongExit()
 	return 0;
 }
 
+static INT32 JamminDoReset()
+{
+	memset (AllRam, 0, RamEnd - AllRam);
+
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+
+	BurnYM2151Reset();
+
+	i8257Reset();
+
+
+	return 0;
+}
+
+static INT32 JamminInit()
+{
+	BurnAllocMemIndex();
+
+	{
+		INT32 k = 0;
+		if (BurnLoadRom(DrvZ80ROM  + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x8000, k++, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x1000, k++, 1)) return 1;
+		memcpy (DrvGfxROM0 + 0x0800, DrvGfxROM0 + 0x0000, 0x0800); // mirror
+		memcpy (DrvGfxROM0 + 0x1800, DrvGfxROM0 + 0x1000, 0x0800);
+	
+		if (BurnLoadRom(DrvGfxROM1 + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x1000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x2000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x3000, k++, 1)) return 1;
+		memcpy (DrvGfxROM1 + 0x0800, DrvGfxROM1 + 0x0000, 0x0800);
+		memcpy (DrvGfxROM1 + 0x1800, DrvGfxROM1 + 0x1000, 0x0800);
+		memcpy (DrvGfxROM1 + 0x2800, DrvGfxROM1 + 0x2000, 0x0800);
+		memcpy (DrvGfxROM1 + 0x3800, DrvGfxROM1 + 0x3000, 0x0800);
+	
+		if (BurnLoadRom(DrvColPROM + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x0100, k++, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x0200, k++, 1)) return 1;
+
+		DrvGfxDecode();
+	}
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM, 			0x0000, 0x4fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM + 0x0c00,	0x5000, 0x50ff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM, 			0x6000, 0x6bff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 			0x7000, 0x73ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 			0x7400, 0x77ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	ZetSetWriteHandler(jammin_main_write);
+	ZetSetReadHandler(jammin_main_read);
+	ZetClose();
+
+	BurnYM2151Init(3072000);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
+
+	i8257Init();
+	i8257Config(ZetReadByte, ZetWriteByte, ZetIdle, dkong_dma_read_functions, dkong_dma_write_functions);
+
+	GenericTilesInit();
+
+	palette_type = 2;
+
+	JamminDoReset();
+
+	return 0;
+}
+
+static INT32 JamminExit()
+{
+	GenericTilesExit();
+
+	ZetExit();
+	i8257Exit();
+
+	BurnYM2151Exit();
+
+	BurnFreeMemIndex();
+
+	palette_type = -1;
+
+	return 0;
+}
+
+
+
+
 inline double CD4049(double x)
 {
 	if (x>0)
@@ -2585,6 +2767,52 @@ static INT32 s2650DkongFrame()
 	return 0;
 }
 
+static INT32 JamminFrame()
+{
+	if (DrvReset) {
+		JamminDoReset();
+	}
+
+	ZetNewFrame();
+
+	{
+		memset (DrvInputs, 0, 3);
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+	}
+
+	INT32 nInterleave = 264;
+	INT32 nCyclesTotal[1] = { (INT32)((double)3072000 / 60.606061) };
+	INT32 nCyclesDone[1] = { nExtraCycles[0] };
+
+	ZetOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		CPU_RUN_SYNCINT(0, Zet);
+
+		if (i == 239 && *nmi_mask) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		if (i == 240) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+	}
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	nExtraCycles[0] = ZetTotalCycles() - nCyclesTotal[0]; // ZetTotalCycles() because _SYNCINT and calling ZetIdle() by the dma engine.
+
+	ZetClose();
+
+	if (pBurnDraw) {
+		update_palette_type(2);
+		BurnDrvRedraw();
+	}
+
+	return 0;
+}
 
 
 // Radar Scope (TRS02, rev. D)
@@ -2772,6 +3000,37 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
+
+static INT32 JamminScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029719;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA)
+	{
+		ZetScan(nAction);
+
+		i8257Scan();
+		BurnYM2151Scan(nAction, pnMin);
+
+		SCAN_VAR(dma_latch);
+		SCAN_VAR(nExtraCycles);
+	}
+
+	return 0;
+}
+
 
 static struct BurnSampleInfo RadarscpSampleDesc[] = {
 	{ "shot",		SAMPLE_NOLOOP	},
@@ -5908,5 +6167,44 @@ struct BurnDriver BurnDrvDrktnjr = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, drktnjrRomInfo, drktnjrRomName, NULL, NULL, NULL, NULL, DkongInputInfo, DraktonDIPInfo,
 	drktnjrInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Jammin' (prototype)
+
+static struct BurnRomInfo jamminRomDesc[] = {
+	{ "jammin_0000.bin",	0x4000, 0x71742497, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "jammin_8000.bin",	0x4000, 0x0a11442c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jambak.pl0",			0x0800, 0xaf808d29, 2 | BRF_GRA },           //  2 Characters
+	{ "jambak.pl1",			0x0800, 0x43eaccef, 2 | BRF_GRA },           //  3
+
+	{ "jammin.7c",			0x0800, 0x82361b24, 3 | BRF_GRA },           //  4 Sprites
+	{ "jammin.7d",			0x0800, 0x0f02eb55, 3 | BRF_GRA },           //  5
+	{ "jammin.7e",			0x0800, 0x9563c301, 3 | BRF_GRA },           //  6
+	{ "jammin.7f",			0x0800, 0x26c7f3b8, 3 | BRF_GRA },           //  7
+
+	{ "mac2e.bin",			0x0100, 0x65f57bc6, 4 | BRF_GRA },           //  8 Color PROMs
+	{ "mac2f.bin",			0x0100, 0x938955e5, 4 | BRF_GRA },           //  9
+	{ "mac2n.bin",			0x0100, 0xe8198448, 4 | BRF_GRA },           // 10
+
+	{ "jammin.int",			0x4000, 0x0f9022de, 5 | BRF_GRA | BRF_OPT }, // 11 Alternate Sprites
+
+	{ "col2e.bin",			0x0100, 0xd22fd797, 6 | BRF_GRA | BRF_OPT }, // 12 Unknown PROMs
+	{ "col2f.bin",			0x0100, 0xbf115ba7, 6 | BRF_GRA | BRF_OPT }, // 13
+	{ "col2n.bin",			0x0100, 0xc5ded6e3, 6 | BRF_GRA | BRF_OPT }, // 14
+};
+
+STD_ROM_PICK(jammin)
+STD_ROM_FN(jammin)
+
+struct BurnDriver BurnDrvJammin = {
+	"jammin", NULL, NULL, NULL, "1985",
+	"Jammin' (prototype)\0", NULL, "Atari Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, jamminRomInfo, jamminRomName, NULL, NULL, NULL, NULL, JamminInputInfo, JamminDIPInfo,
+	JamminInit, JamminExit, JamminFrame, dkongDraw, JamminScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

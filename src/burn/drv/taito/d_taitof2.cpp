@@ -7905,6 +7905,7 @@ static INT32 CameltryInit()
 
 	SpritePriWritebackMode = 0;
 	bNoClearOpposites = 1;
+	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
 
 	BurnTrackballInit(2);
 	has_dial = 1;

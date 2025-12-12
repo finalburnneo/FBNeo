@@ -29041,16 +29041,16 @@ struct BurnDriver BurnDrvXeviousng = {
 // Zetsu Xevious - Neo Geo Conversion (HB)
 
 static struct BurnRomInfo zetsuxevingRomDesc[] = {
-	{ "zetsu-p1.p1",      0x100000, 0x19025936, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "zetsu-p1.p1",      0x100000, 0x8a1e9214, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "xevious-s1.s1",    0x020000, 0xf41d121a, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "zetsu-c1.c1",      0x100000, 0x4CE910EE, 3 | BRF_GRA },           //  2 Sprite data
-	{ "zetsu-c2.c2",      0x100000, 0xD8F980CF, 3 | BRF_GRA },           //  3
+	{ "zetsu-c1.c1",      0x100000, 0x8759341e, 3 | BRF_GRA },           //  2 Sprite data
+	{ "zetsu-c2.c2",      0x100000, 0xf1c31214, 3 | BRF_GRA },           //  3
 
-	{ "xevious-m1.m1",    0x010000, 0x6f31c601, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "xevious-m1.m1",    0x010000, 0x06773aff, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "xevious-v1.v1",    0x100000, 0x37ef6dc5, 5 | BRF_SND },           //  5 Sound data
+	{ "xevious-v1.v1",    0x100000, 0x929b34ab, 5 | BRF_SND },           //  5 Sound data
 };
 
 STDROMPICKEXT(zetsuxeving, zetsuxeving, neogeo)

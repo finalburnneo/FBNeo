@@ -1813,8 +1813,9 @@ INT32 DrvCps3Draw()
 		if (Width != 496) {
 			BurnDrvSetVisibleSize(496, 224);
 			BurnDrvSetAspect(16, 9);
-			Reinitialise();
+			ReinitialiseVideo();
 			WideScreenFrameDelay = GetCurrentFrame() + 1;
+			return 1;
 		}
 	} else {
 		INT32 Width, Height;
@@ -1823,8 +1824,9 @@ INT32 DrvCps3Draw()
 		if (Width != 384) {
 			BurnDrvSetVisibleSize(384, 224);
 			BurnDrvSetAspect(4, 3);
-			Reinitialise();
+			ReinitialiseVideo();
 			WideScreenFrameDelay = GetCurrentFrame() + 1;
+			return 1;
 		}
 	}
 	

@@ -156,12 +156,14 @@ static struct BurnDIPInfo TempestDIPList[]=
 	{0x04, 0x01, 0x10, 0x10, "Off"  		        },
 	{0x04, 0x01, 0x10, 0x00, "On"   	            },
 
+#ifndef __LIBRETRO__
 	{0   , 0xfe, 0   ,    5, "Hires Mode"			},
 	{0x05, 0x01, 0x07, 0x00, "No"  		        	},
 	{0x05, 0x01, 0x07, 0x01, "Yes (1024)"			},
 	{0x05, 0x01, 0x07, 0x02, "Yes (1080)"			},
 	{0x05, 0x01, 0x07, 0x03, "Yes (1440)"			},
 	{0x05, 0x01, 0x07, 0x04, "Yes (2160)"			},
+#endif
 };
 
 STDDIPINFO(Tempest)
@@ -267,7 +269,7 @@ static void tempest_write(UINT16 address, UINT8 data)
 static INT32 res_check()
 {
 #ifdef __LIBRETRO__
-	return;
+	return 0;
 #endif
 	const INT32 reso_list[7] = { 640, 1024, 1080, 1440, 2160, 2160, 2160 };
 	INT32 Width, Height;

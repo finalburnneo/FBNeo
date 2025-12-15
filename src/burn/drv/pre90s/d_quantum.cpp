@@ -24,7 +24,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
@@ -51,45 +51,51 @@ static struct BurnInputInfo QuantumInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 #undef A
 
 STDINPUTINFO(Quantum)
 
-#define DO 0xc
 static struct BurnDIPInfo QuantumDIPList[]=
 {
-	{DO+0, 0xff, 0xff, 0x00, NULL				},
-	{DO+1, 0xff, 0xff, 0x80, NULL				},
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0x00, NULL				},
+	{0x01, 0xff, 0xff, 0x80, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"			},
-	{DO+0, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"},
-	{DO+0, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"},
-	{DO+0, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"},
-	{DO+0, 0x01, 0xc0, 0x40, "Free Play"		},
+	{0x00, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"},
+	{0x00, 0x01, 0xc0, 0x40, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin"		},
-	{DO+0, 0x01, 0x30, 0x00, "*1"				},
-	{DO+0, 0x01, 0x30, 0x20, "*4"				},
-	{DO+0, 0x01, 0x30, 0x10, "*5"				},
-	{DO+0, 0x01, 0x30, 0x30, "*6"				},
+	{0x00, 0x01, 0x30, 0x00, "*1"				},
+	{0x00, 0x01, 0x30, 0x20, "*4"				},
+	{0x00, 0x01, 0x30, 0x10, "*5"				},
+	{0x00, 0x01, 0x30, 0x30, "*6"				},
 
 	{0   , 0xfe, 0   ,    2, "Left Coin"		},
-	{DO+0, 0x01, 0x08, 0x00, "*1"				},
-	{DO+0, 0x01, 0x08, 0x08, "*2"				},
+	{0x00, 0x01, 0x08, 0x00, "*1"				},
+	{0x00, 0x01, 0x08, 0x08, "*2"				},
 
 	{0   , 0xfe, 0   ,    5, "Bonus Coins"		},
-	{DO+0, 0x01, 0x07, 0x00, "None"				},
-	{DO+0, 0x01, 0x07, 0x01, "1 each 5"			},
-	{DO+0, 0x01, 0x07, 0x02, "1 each 4"			},
-	{DO+0, 0x01, 0x07, 0x05, "1 each 3"			},
-	{DO+0, 0x01, 0x07, 0x06, "2 each 4"			},
+	{0x00, 0x01, 0x07, 0x00, "None"				},
+	{0x00, 0x01, 0x07, 0x01, "1 each 5"			},
+	{0x00, 0x01, 0x07, 0x02, "1 each 4"			},
+	{0x00, 0x01, 0x07, 0x05, "1 each 3"			},
+	{0x00, 0x01, 0x07, 0x06, "2 each 4"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{DO+1, 0x01, 0x80, 0x80, "Off"					},
-	{DO+1, 0x01, 0x80, 0x00, "On"					},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
+
+#ifndef __LIBRETRO__
+	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
+	{0x02, 0x01, 0x01, 0x00, "No"					},
+	{0x02, 0x01, 0x01, 0x01, "Yes"					},
+#endif
 };
-#undef DO
 
 STDDIPINFO(Quantum)
 
@@ -97,7 +103,7 @@ static void DrvPaletteWrite(INT32 i, UINT8 data)
 {
 	DrvColRAM[i] = data;
 	UINT32 *dst = DrvPalette + i * 256;
-	
+
 	for (INT32 j = 0; j < 256; j++) // intensity
 	{
 		int bit3 = (~data >> 3) & 1;
@@ -117,7 +123,7 @@ static void DrvPaletteWrite(INT32 i, UINT8 data)
 }
 
 static void __fastcall quantum_write_word(UINT32 address, UINT16 data)
-{	
+{
 	if ((address & 0xffffc0) == 0x840000) {
 		pokey_write((address / 0x20) & 1, address / 2, data);
 		return;
@@ -167,12 +173,12 @@ static void __fastcall quantum_write_word(UINT32 address, UINT16 data)
 }
 
 static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
-{	
+{
 	if ((address & 0xffffc0) == 0x840000) {
 		pokey_write((address / 0x20) & 1, address / 2, data);
 		return;
 	}
-	
+
 	if ((address & 0xffffe0) == 0x950000) {
 		address = (address / 2) & 0xf;
 		UINT8 p = DrvColRAM[address];
@@ -217,7 +223,7 @@ static void __fastcall quantum_write_byte(UINT32 address, UINT8 data)
 }
 
 static UINT16 __fastcall quantum_read_word(UINT32 address)
-{	
+{
 	if ((address & 0xffffc0) == 0x840000) {
 		return pokey_read((address / 0x20) & 1, address / 2);
 	}
@@ -241,7 +247,7 @@ static UINT16 __fastcall quantum_read_word(UINT32 address)
 }
 
 static UINT8 __fastcall quantum_read_byte(UINT32 address)
-{	
+{
 	if ((address & 0xffffc0) == 0x840000) {
 		return pokey_read((address / 0x20) & 1, address / 2);
 	}
@@ -254,7 +260,7 @@ static UINT8 __fastcall quantum_read_byte(UINT32 address)
 
 		case 0x948000:
 			return 0xff;
-			
+
 		case 0x948001:
 			return (DrvInputs[0] & 0x7e) | (DrvDips[1] & 0x80) | (avgdvg_done() ? 1 : 0);
 
@@ -276,6 +282,31 @@ static INT32 dip1_read(INT32 offset)
 	return (0 << (7 - (offset))) & 0x80;
 }
 
+static INT32 res_check()
+{
+#ifdef __LIBRETRO__
+	return 0;
+#endif
+	if (DrvDips[2] & 1) {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 1080) {
+			vector_rescale(1080, (1080*480/640));
+			return 1;
+		}
+	} else {
+		INT32 Width, Height;
+		BurnDrvGetVisibleSize(&Width, &Height);
+
+		if (Height != 640) {
+			vector_rescale(640, 480);
+			return 1;
+		}
+	}
+	return 0;
+}
+
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
@@ -290,6 +321,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	avgdvg_reset();
 
 	avgOK = 0;
+
+	res_check();
 
 
 	HiscoreReset();
@@ -426,6 +459,8 @@ static INT32 DrvDraw()
 	}
 
 	if ((~DrvDips[1] & 0x80) && avgOK) avgdvg_go(); // service mode doesn't run avgdvg_go(), so we do it manually.
+
+	if (res_check()) return 0; // resolution was changed
 
 	draw_vector(DrvPalette);
 

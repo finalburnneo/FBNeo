@@ -10778,6 +10778,24 @@ struct BurnDriver BurnDrvmd_garfield = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Garfield: The Lost Levels (Sega Channel)
+static struct BurnRomInfo md_garfieldllRomDesc[] = {
+	{ "Garfield - The Lost Levels (Sega Channel)(1995-96)(Sega).bin", 0x200000, 0xa9e35705, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_garfieldll)
+STD_ROM_FN(md_garfieldll)
+
+struct BurnDriver BurnDrvmd_garfieldll = {
+	"md_garfieldll", "md_garfield", NULL, NULL, "1995-96",
+	"Garfield: The Lost Levels (Sega Channel)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_garfieldllRomInfo, md_garfieldllRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Gargoyles (USA)
 static struct BurnRomInfo md_gargoyleRomDesc[] = {
 	{ "Gargoyles (USA)(1995)(Disney Interactive).bin", 0x300000, 0x2d965364, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -10790,7 +10808,7 @@ struct BurnDriver BurnDrvmd_gargoyle = {
 	"md_gargoyle", NULL, NULL, NULL, "1995",
 	"Gargoyles (USA)\0", NULL, "Disney Interactive", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_gargoyleRomInfo, md_gargoyleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -10808,7 +10826,7 @@ struct BurnDriver BurnDrvmd_gauntlt4 = {
 	"md_gauntlt4", NULL, NULL, NULL, "1993",
 	"Gauntlet IV (Euro, USA, 199309)\0", NULL, "Tengen", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_RUNGUN | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MAZE | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_gauntlt4RomInfo, md_gauntlt4RomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -10826,7 +10844,7 @@ struct BurnDriver BurnDrvmd_gauntlt4a = {
 	"md_gauntlt4a", "md_gauntlt4", NULL, NULL, "1993",
 	"Gauntlet IV (Euro, USA, 199308)\0", NULL, "Tengen", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_RUNGUN | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MAZE | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_gauntlt4aRomInfo, md_gauntlt4aRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -10844,7 +10862,7 @@ struct BurnDriver BurnDrvmd_gauntlt4j = {
 	"md_gauntlt4j", "md_gauntlt4", NULL, NULL, "1993",
 	"Gauntlet (Japan)\0", NULL, "Tengen", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_RUNGUN | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MAZE | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_gauntlt4jRomInfo, md_gauntlt4jRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -10862,7 +10880,7 @@ struct BurnDriver BurnDrvmd_gauntlt4jp = {
 	"md_gauntlt4jp", "md_gauntlt4", NULL, NULL, "1993",
 	"Gauntlet (Japan, CENSOR Prototype)\0", NULL, "Tengen", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_RUNGUN | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MAZE | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_gauntlt4jpRomInfo, md_gauntlt4jpRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -17702,7 +17720,7 @@ STD_ROM_FN(md_maouren)
 struct BurnDriver BurnDrvmd_maouren = {
 	"md_maouren", "md_mysticf", NULL, NULL, "1991",
 	"Maou Renjishi (Japan)\0", NULL, "Taito Corp.", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Maou Renjishi (Japan)\0\u9b54\u738b \u9023\u7345\u5b50\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_maourenRomInfo, md_maourenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -18307,7 +18325,7 @@ struct BurnDriver BurnDrvmd_ncaafoot = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Nekketsu Koukou Dodgeball Bu - Soccer Hen MD (Japan)
+// Nekketsu Koukou Dodgeball Bu: Soccer Hen MD (Japan)
 static struct BurnRomInfo md_neksoccrRomDesc[] = {
 	{ "Nekketsu Koukou Dodgeball Bu - Soccer Hen MD (Japan)(1992)(Palsoft).bin", 0x080000, 0xf49c3a86, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18317,15 +18335,15 @@ STD_ROM_FN(md_neksoccr)
 
 struct BurnDriver BurnDrvmd_neksoccr = {
 	"md_neksoccr", NULL, NULL, NULL, "1992",
-	"Nekketsu Koukou Dodgeball Bu - Soccer Hen MD (Japan)\0", NULL, "Palsoft", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"Nekketsu Koukou Dodgeball Bu: Soccer Hen MD (Japan)\0", NULL, "Palsoft", "Genesis / Mega Drive",
+	L"Nekketsu Koukou Dodgeball Bu: Soccer Hen MD (Japan)\0\u71b1\u8840\u9ad8\u6821\u30c9\u30c3\u30b8\u30dc\u30fc\u30eb\u90e8 \u30b5\u30c3\u30ab\u30fc\u7de8MD\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
 	MegadriveGetZipName, md_neksoccrRomInfo, md_neksoccrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// New 3D Golf Simulation - Devil's Course (Japan)
+// New 3D Golf Simulation: Devil's Course (Japan)
 static struct BurnRomInfo md_n3dgdeviRomDesc[] = {
 	{ "New 3D Golf Simulation - Devil's Course (Japan)(1994)(Sega).bin", 0x180000, 0xbd090c67, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18335,7 +18353,7 @@ STD_ROM_FN(md_n3dgdevi)
 
 struct BurnDriver BurnDrvmd_n3dgdevi = {
 	"md_n3dgdevi", NULL, NULL, NULL, "1994",
-	"New 3D Golf Simulation - Devil's Course (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	"New 3D Golf Simulation: Devil's Course (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_n3dgdeviRomInfo, md_n3dgdeviRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -18343,7 +18361,7 @@ struct BurnDriver BurnDrvmd_n3dgdevi = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// New 3D Golf Simulation - Harukanaru Augusta (Japan)
+// New 3D Golf Simulation: Harukanaru Augusta (Japan)
 static struct BurnRomInfo md_n3dgauguRomDesc[] = {
 	{ "New 3D Golf Simulation - Harukanaru Augusta (Japan)(1993)(T&E Soft).bin", 0x180000, 0xd2a9bf92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18353,15 +18371,15 @@ STD_ROM_FN(md_n3dgaugu)
 
 struct BurnDriver BurnDrvmd_n3dgaugu = {
 	"md_n3dgaugu", NULL, NULL, NULL, "1993",
-	"New 3D Golf Simulation - Harukanaru Augusta (Japan)\0", NULL, "T&E Soft", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"New 3D Golf Simulation: Harukanaru Augusta (Japan)\0", NULL, "T&E Soft", "Genesis / Mega Drive",
+	L"New 3D Golf Simulation: Harukanaru Augusta (Japan)\0\u9065\u304b\u306a\u308b\u30aa\u30fc\u30ac\u30b9\u30bf\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_n3dgauguRomInfo, md_n3dgauguRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// New 3D Golf Simulation - Waialae no Kiseki (Japan)
+// New 3D Golf Simulation: Waialae no Kiseki (Japan)
 static struct BurnRomInfo md_n3dgwaiaRomDesc[] = {
 	{ "New 3D Golf Simulation - Waialae no Kiseki (Japan)(1994)(Sega).bin", 0x180000, 0xcbe2c1f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18371,8 +18389,8 @@ STD_ROM_FN(md_n3dgwaia)
 
 struct BurnDriver BurnDrvmd_n3dgwaia = {
 	"md_n3dgwaia", NULL, NULL, NULL, "1994",
-	"New 3D Golf Simulation - Waialae no Kiseki (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"New 3D Golf Simulation: Waialae no Kiseki (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	L"New 3D Golf Simulation: Waialae no Kiseki (Japan)\0\u30ef\u30a4\u30a2\u30e9\u30a8\u306e\u5947\u8e5f\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_n3dgwaiaRomInfo, md_n3dgwaiaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -18577,7 +18595,7 @@ struct BurnDriver BurnDrvmd_nflsport = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// NHK Taiga Drama - Taiheiki (Japan)
+// NHK Taiga Drama: Taiheiki (Japan)
 static struct BurnRomInfo md_nhktaidrRomDesc[] = {
 	{ "NHK Taiga Drama - Taiheiki (Japan)(1991)(Sega).bin", 0x100000, 0x09fbb30e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -18587,8 +18605,8 @@ STD_ROM_FN(md_nhktaidr)
 
 struct BurnDriver BurnDrvmd_nhktaidr = {
 	"md_nhktaidr", NULL, NULL, NULL, "1991",
-	"NHK Taiga Drama - Taiheiki (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	"NHK Taiga Drama: Taiheiki (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
+	L"NHK Taiga Drama: Taiheiki (Japan)\0NHK\u5927\u6cb3\u30c9\u30e9\u30de \u592a\u5e73\u8a18\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_nhktaidrRomInfo, md_nhktaidrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -38490,7 +38508,7 @@ struct BurnDriver BurnDrvmd_bmarrowdm = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Brave Battle Saga - Legend of the Magic Warrior (World)
+// Brave Battle Saga: Legend of the Magic Warrior (World)
 static struct BurnRomInfo md_bravebtlRomDesc[] = {
 	{ "Brave Battle Saga - Legend of the Magic Warrior (World)(2017)(Piko Int.).bin", 2097152, 0xf4554624, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38499,10 +38517,10 @@ STD_ROM_PICK(md_bravebtl)
 STD_ROM_FN(md_bravebtl)
 
 struct BurnDriver BurnDrvmd_bravebtl = {
-	"md_bravebtl", NULL, NULL, NULL, "2017",
-	"Brave Battle Saga - Legend of the Magic Warrior (World)\0", NULL, "Piko Interactive", "Genesis / Mega Drive",
+	"md_bravebtl", "md_barver", NULL, NULL, "2017",
+	"Brave Battle Saga: Legend of the Magic Warrior (World)\0", NULL, "Piko Interactive", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_bravebtlRomInfo, md_bravebtlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40136,6 +40154,24 @@ struct BurnDriver BurnDrvmd_jurl = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Klirk, The (HB)
+static struct BurnRomInfo md_klirkRomDesc[] = {
+	{ "Klirk, The (2025)(Furmal Munky).bin", 1310720, 0x4dde4910, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_klirk)
+STD_ROM_FN(md_klirk)
+
+struct BurnDriver BurnDrvmd_klirk = {
+	"md_klirk", NULL, NULL, NULL, "2025",
+	"Klirk, The (HB)\0", NULL, "Furmal Munky", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 4, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
+	MegadriveGetZipName, md_klirkRomInfo, md_klirkRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // King & Balloon (HB)
 // https://abadede919302.itch.io/king-and-balloon-md
 static struct BurnRomInfo md_kingballRomDesc[] = {
@@ -40149,7 +40185,7 @@ struct BurnDriver BurnDrvmd_kingball = {
 	"md_kingball", NULL, NULL, NULL, "2025",
 	"King & Balloon (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_kingballRomInfo, md_kingballRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -45595,7 +45631,7 @@ STD_ROM_FN(md_nhktaidrc)
 struct BurnDriver BurnDrvmd_nhktaidrc = {
 	"md_nhktaidrc", "md_nhktaidr", NULL, NULL, "199?",
 	"NHK Taiga Drama: Taiheiki (Hack, Chinese)\0", NULL, "cslrxyz", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"NHK Taiga Drama: Taiheiki (Hack, Chinese)\0NHK\u5927\u6cb3\u30c9\u30e9\u30de \u592a\u5e73\u8a18\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_nhktaidrcRomInfo, md_nhktaidrcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,

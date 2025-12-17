@@ -47317,7 +47317,7 @@ struct BurnDriver BurnDrvnes_popeye = {
 // Portopia Renzoku Satsujin Jiken (Japan)
 
 static struct BurnRomInfo nes_portopiajRomDesc[] = {
-	{ "Portopia Renzoku Satsujin Jiken (1985)(Enix).nes",          40976, 0x9b2b749b, BRF_ESS | BRF_PRG },
+	{ "Portopia Renzoku Satsujin Jiken (Japan)(1985)(Enix).nes",          40976, 0x9b2b749b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_portopiaj)

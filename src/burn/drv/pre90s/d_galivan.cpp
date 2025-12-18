@@ -1,4 +1,4 @@
-// FB Alpha Galivan driver module
+// FB Neo Galivan driver module
 // Based on MAME driver by Luca Elia and Olivier Galibert
 
 #include "tiles_generic.h"
@@ -115,7 +115,7 @@ static struct BurnInputInfo ninjemakInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
+//	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
@@ -125,7 +125,7 @@ static struct BurnInputInfo ninjemakInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
+//	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
@@ -325,7 +325,7 @@ STDDIPINFO(Dangarb)
 
 static struct BurnDIPInfo NinjemakDIPList[]=
 {
-	DIP_OFFSET(0x14)
+	DIP_OFFSET(0x12)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x7c, NULL			},
 	{0x02, 0xff, 0xff, 0x02, NULL			},
@@ -385,7 +385,7 @@ STDDIPINFO(Ninjemak)
 
 static struct BurnDIPInfo YoumaDIPList[] =
 {
-	DIP_OFFSET(0x14)
+	DIP_OFFSET(0x12)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x7c, NULL			},
 	{0x02, 0xff, 0xff, 0x02, NULL			},

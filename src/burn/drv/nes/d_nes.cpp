@@ -9880,6 +9880,25 @@ struct BurnDriver BurnDrvnes_parodiusdac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Portopia Serial Murder Case, The (Hack, Italian v0.98)
+// https://www.romhacking.net/translations/7452/
+static struct BurnRomInfo nes_portopiatiRomDesc[] = {
+	{ "Portopia Serial Murder Case, The T-Ita v0.98 (2024)(Wolfgare).nes",          73744, 0x603731b2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_portopiati)
+STD_ROM_FN(nes_portopiati)
+
+struct BurnDriver BurnDrvnes_portopiati = {
+	"nes_portopiati", "nes_portopiate", NULL, NULL, "2024",
+	"Portopia Serial Murder Case, The (Hack, Italian v0.98)\0", NULL, "Wolfgare", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_portopiatiRomInfo, nes_portopiatiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // P.O.W. - Prisoners of War (Hack, Spanish v2.0)
 // https://www.romhacking.net/translations/2759/
 static struct BurnRomInfo nes_powcRomDesc[] = {
@@ -47291,6 +47310,44 @@ struct BurnDriver BurnDrvnes_popeye = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_popeyeRomInfo, nes_popeyeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Portopia Renzoku Satsujin Jiken (Japan)
+
+static struct BurnRomInfo nes_portopiajRomDesc[] = {
+	{ "Portopia Renzoku Satsujin Jiken (Japan)(1985)(Enix).nes",          40976, 0x9b2b749b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_portopiaj)
+STD_ROM_FN(nes_portopiaj)
+
+struct BurnDriver BurnDrvnes_portopiaj = {
+	"nes_portopiaj", "nes_portopiate", NULL, NULL, "1985",
+	"Portopia Renzoku Satsujin Jiken (Japan)\0", NULL, "Enix", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_portopiajRomInfo, nes_portopiajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Portopia Serial Murder Case, The (Hack, English Rev. B)
+// https://www.romhacking.net/translations/764/
+static struct BurnRomInfo nes_portopiateRomDesc[] = {
+	{ "Portopia Serial Murder Case, The T-Eng Rev. B (2010)(DvD Translations).nes",          73744, 0x88679d11, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_portopiate)
+STD_ROM_FN(nes_portopiate)
+
+struct BurnDriver BurnDrvnes_portopiate = {
+	"nes_portopiate", NULL, NULL, NULL, "2010",
+	"Portopia Serial Murder Case, The (Hack, English Rev. B)\0", NULL, "DvD Translations", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_portopiateRomInfo, nes_portopiateRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

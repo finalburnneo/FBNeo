@@ -1931,7 +1931,7 @@ static struct BurnDIPInfo WbmlDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
-	{0   , 0xfe, 0   ,    2, "Cabinet"                },
+	{0   , 0xfe, 0   ,    1, "Cabinet"                },
 	{0x13, 0x01, 0x01, 0x00, "Upright"                },
 	//{0x13, 0x01, 0x01, 0x01, "Cocktail"               }, no screen flipping here :)
 
@@ -1939,10 +1939,11 @@ static struct BurnDIPInfo WbmlDIPList[]=
 	{0x13, 0x01, 0x02, 0x00, "Off"		},
 	{0x13, 0x01, 0x02, 0x02, "On"		},
 
-	{0   , 0xfe, 0   ,    3, "Lives"		},
+	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x13, 0x01, 0x0c, 0x04, "3"		},
 	{0x13, 0x01, 0x0c, 0x0c, "4"		},
 	{0x13, 0x01, 0x0c, 0x08, "5"		},
+	{0x13, 0x01, 0x0c, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
 	{0x13, 0x01, 0x10, 0x10, "30000 100000 200000"		},
@@ -1956,7 +1957,7 @@ static struct BurnDIPInfo WbmlDIPList[]=
 	{0x13, 0x01, 0x40, 0x40, "Off"		},
 	{0x13, 0x01, 0x40, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0   , 0xfe, 0   ,    2, "Unused"		},
 	{0x13, 0x01, 0x80, 0x80, "Off"		},
 	{0x13, 0x01, 0x80, 0x00, "On"		},
 
@@ -8326,7 +8327,7 @@ struct BurnDriver BurnDrvWbml = {
 	"wbml", NULL, NULL, NULL, "1987",
 	"Wonder Boy: Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING/* | BDF_HISCORE_SUPPORTED*/, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3

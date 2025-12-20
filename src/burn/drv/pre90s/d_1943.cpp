@@ -119,7 +119,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x11, 0x01, 0x20, 0x20, "Off"                    },
 	{0x11, 0x01, 0x20, 0x00, "On"                     },
 
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0   , 0xfe, 0   , 2   , "Screen Stop"            },
 	{0x11, 0x01, 0x40, 0x40, "Off"                    },
 	{0x11, 0x01, 0x40, 0x00, "On"                     },
 

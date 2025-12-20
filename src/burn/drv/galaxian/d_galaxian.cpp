@@ -4215,7 +4215,7 @@ static struct BurnDIPInfo JumpbugDIPList[]=
 {
 	// Default Values
 	{0x0f, 0xff, 0xff, 0x00, NULL                     },
-	{0x10, 0xff, 0xff, 0x00, NULL                     },
+	{0x10, 0xff, 0xff, 0x40, NULL                     },
 	{0x11, 0xff, 0xff, 0x01, NULL                     },
 	
 	// Dip 1

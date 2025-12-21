@@ -5301,7 +5301,7 @@ static INT32 System1DoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
 
-	HiscoreReset();
+	HiscoreReset(1);
 
 	return 0;
 }
@@ -5337,9 +5337,6 @@ static inline void System2_videoram_bank_latch_w(UINT8 d)
 {
 	System1BgBankLatch = d;
 	System1BgBank = (d >> 1) & 0x03;
-
-	// iq_132
-	ZetMapMemory(System1VideoRam + System1BgBank * 0x1000, 0xe000, 0xefff, MAP_RAM);
 }
 
 static inline void __fastcall System1SoundLatchWrite(UINT8 d)
@@ -5738,8 +5735,29 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
+static void vram_waitstate()
+{
+	/* The main Z80's CPU clock is halted whenever an access to VRAM happens,
+	   and is only restarted by the FIXST signal, which occurs once every
+	   'n' pixel clocks. 'n' is determined by the horizontal control PAL. */
+
+	/* this assumes 4 5MHz pixel clocks per FIXST, or 3.2 4MHz CPU clocks,
+	   and is based on a dump of 315-5137 */
+	const UINT32 cpu_cycles_per_fixst = 32; // 3.2 * 10
+	const UINT32 fixst_offset = cpu_cycles_per_fixst / 2;
+	const UINT64 total_cycles = ZetTotalCycles() * 10ULL;
+	UINT32 cycles_until_next_fixst = cpu_cycles_per_fixst - ((total_cycles - fixst_offset) % cpu_cycles_per_fixst);
+	ZetIdle(((cycles_until_next_fixst + 5) / 10));
+}
+
 static void __fastcall System1Z801ProgWrite(UINT16 a, UINT8 d)
 {
+	if (a >= 0xe000 && a <= 0xefff) {
+		vram_waitstate();
+		System1VideoRam[(a & 0xfff) + System1BgBank * 0x1000] = d;
+		return;
+	}
+
 	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a & 0x3ff] = 0x7e; return; }
 	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a & 0x3ff] = 0x7e; return; }
 
@@ -5748,12 +5766,27 @@ static void __fastcall System1Z801ProgWrite(UINT16 a, UINT8 d)
 
 static void __fastcall NoboranbZ801ProgWrite(UINT16 a, UINT8 d)
 {
+	if (a >= 0xe000 && a <= 0xefff) {
+		vram_waitstate();
+		System1VideoRam[(a & 0xfff) + System1BgBank * 0x1000] = d;
+		return;
+	}
+
 	if (a >= 0xc000 && a <= 0xc3ff) { System1BgCollisionRam[a & 0x3ff] = 0x7e; return; }
 	if (a >= 0xc800 && a <= 0xcbff) { System1SprCollisionRam[a & 0x3ff] = 0x7e; return; }
 
 	bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
 }
 
+static UINT8 __fastcall System1Z801ProgRead(UINT16 a)
+{
+	if (a >= 0xe000 && a <= 0xefff) {
+		vram_waitstate();
+		return System1VideoRam[(a & 0xfff) + System1BgBank * 0x1000];
+	}
+	bprintf(0, _T("pr %x\n"), a);
+	return 0;
+}
 
 static UINT8 __fastcall System1Z802ProgRead(UINT16 a)
 {
@@ -5780,8 +5813,8 @@ static void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 			return;
 		}
 	}
-
-	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\tPC:  %x\n"), a, d, ZetGetPrevPC(-1));
+	if (a > 0x7fff)     // ignore writes to romspace
+		bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\tPC:  %x\n"), a, d, ZetGetPrevPC(-1));
 }
 
 static void System2PPI0WriteA(UINT8 data)
@@ -6131,6 +6164,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	z80_set_cycle_tables(&cc_op[0], &cc_cb[0], &cc_ed[0], &cc_xy[0], &cc_xycb[0], &cc_ex[0]);
 	if (IsSystem2) {
 		ZetSetWriteHandler(System1Z801ProgWrite);
+		ZetSetReadHandler(System1Z801ProgRead);
 		ZetSetInHandler(System2Z801PortRead);
 		ZetSetOutHandler(System2Z801PortWrite);
 
@@ -6142,6 +6176,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		}
 	} else {
 		ZetSetWriteHandler(System1Z801ProgWrite);
+		ZetSetReadHandler(System1Z801ProgRead);
 		ZetSetInHandler(System1Z801PortRead);
 		ZetSetOutHandler(System1Z801PortWrite);
 		ZetMapMemory(System1Rom1,			0x0000, 0x7fff, MAP_ROM);
@@ -7397,6 +7432,7 @@ INT32 System1Frame()
 		DrvMCUIdle(nCyclesExtra[2]);
 		mcs51Close();
 	}
+	ZetIdle(0, nCyclesExtra[0]);
 	ZetIdle(1, nCyclesExtra[1]);
 
 	INT32 nInterleave = 256;
@@ -7409,7 +7445,7 @@ INT32 System1Frame()
 			mcs51Open(0);
 		}
 
-        CPU_RUN(0, Zet);
+        CPU_RUN_SYNCINT(0, Zet);
         if (i == nInterleave-1 && (has_mcu == 0 || is_nob)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if (has_mcu) {
 			CPU_RUN_SYNCINT(2, DrvMCU);
@@ -7427,7 +7463,7 @@ INT32 System1Frame()
 		ZetClose();
 	}
 
-	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[0] = ZetTotalCycles(0) - nCyclesTotal[0];
 	nCyclesExtra[1] = ZetTotalCycles(1) - nCyclesTotal[1];
 	if (has_mcu) {
 		mcs51Open(0);

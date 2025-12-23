@@ -1,6 +1,6 @@
 // FB Neo Sega SG-1000-based arcade driver module
 // Based on MAME driver by Tomasz Slanina
-// Code by iq_132, fixups & bring up-to-date by dink Aug 18, 2014
+// Code by iq_132, fixups & bring up-to-date by dink
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -4080,6 +4080,24 @@ struct BurnDriver BurnDrvsg1k_arnodash2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_arnodash2RomInfo, sg1k_arnodash2RomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Astrododge (HB)
+static struct BurnRomInfo sg1k_astrododgeRomDesc[] = {
+	{ "Astrododge (2012)(Revival Studios).sg",	32768, 0xb895942d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_astrododge)
+STD_ROM_FN(sg1k_astrododge)
+
+struct BurnDriver BurnDrvsg1k_astrododge = {
+	"sg1k_astrododge", NULL, NULL, NULL, "2012",
+	"Astrododge (HB)\0", NULL, "Revival Studios", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_astrododgeRomInfo, sg1k_astrododgeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

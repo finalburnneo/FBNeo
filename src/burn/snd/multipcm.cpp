@@ -679,7 +679,8 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 		}
 
 		if (chip.mono) {
-			smpl = smpr;
+			smpl += smpr;
+			smpr = smpl;
 		}
 
 		*lmix++ = BURN_SND_CLIP(smpr); // why are these swapped??

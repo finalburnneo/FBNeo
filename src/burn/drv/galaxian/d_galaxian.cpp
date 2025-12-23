@@ -5701,7 +5701,7 @@ static struct BurnDIPInfo SfxDIPList[]=
 	// Default Values
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
 	{0x13, 0xff, 0xff, 0x01, NULL                     },
-	{0x14, 0xff, 0xff, 0x08, NULL                     },
+	{0x14, 0xff, 0xff, 0x28, NULL                     },
 	
 	// Dip 1
 	
@@ -5722,6 +5722,10 @@ static struct BurnDIPInfo SfxDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x14, 0x01, 0x08, 0x08, "Upright"                },
 	{0x14, 0x01, 0x08, 0x00, "Cocktail"               },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x20, 0x20, "Off"                    },
+	{0x14, 0x01, 0x20, 0x00, "On"                     },
 };
 
 STDDIPINFO(Sfx)

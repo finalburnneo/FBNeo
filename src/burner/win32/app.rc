@@ -1286,6 +1286,7 @@ BEGIN
     	BEGIN
     	    MENUITEM "DirectInput",					MENU_INP_PLUGIN_1, GRAYED
     	END
+		MENUITEM "Re-Detect Controllers",			MENU_INPUT_REDETECT
 		MENUITEM SEPARATOR
     	POPUP "&Auto-Fire Rate"
     	BEGIN

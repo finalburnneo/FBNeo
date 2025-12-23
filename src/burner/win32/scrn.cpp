@@ -1735,6 +1735,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_INPUT_REDETECT:
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_DIPSW:
 			AudBlankSound();
 			if (UseDialogs()) {

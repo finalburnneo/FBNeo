@@ -613,9 +613,9 @@ void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 	MultiPCMReset();
 }
 
-void MultiPCMSetMono(INT32 ismono)
+void MultiPCMSetMonoMode(INT32 monomode)
 {
-	chip.mono = (ismono) ? 1 : 0;
+	chip.mono = monomode & 3; // 0, 1, 2
 }
 
 //-------------------------------------------------
@@ -678,9 +678,16 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 			}
 		}
 
-		if (chip.mono) {
-			smpl += smpr;
-			smpr = smpl;
+		switch (chip.mono) {
+			case 0: // default - stereo
+				break;
+			case 1: // mix r+l
+				smpl += smpr;
+				smpr = smpl;
+				break;
+			case 2: // use left channel only (smpr is left channel in orunners)
+				smpl = smpr;
+				break;
 		}
 
 		*lmix++ = BURN_SND_CLIP(smpr); // why are these swapped??

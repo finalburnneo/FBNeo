@@ -1044,6 +1044,11 @@ static struct BurnDIPInfo setname##DIPList[]=			\
 	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},	\
 	{0x01, 0x01, 0x01, 0x01, "Disabled"				},	\
 	{0x01, 0x01, 0x01, 0x00, "Enabled"				},	\
+														\
+	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
+	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
+	{0x01, 0x01, 0x0c, 0x04, "Mono"					},	\
+	{0x01, 0x01, 0x0c, 0x08, "Left Side Only"		},	\
 };														\
 														\
 STDDIPINFO(setname)
@@ -1062,6 +1067,11 @@ static struct BurnDIPInfo setname##DIPList[]=			\
 	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},	\
 	{0x01, 0x01, 0x01, 0x01, "Disabled"				},	\
 	{0x01, 0x01, 0x01, 0x00, "Enabled"				},	\
+														\
+	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
+	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
+	{0x01, 0x01, 0x0c, 0x04, "Mono"					},	\
+	{0x01, 0x01, 0x0c, 0x08, "Left Side Only"		},	\
 														\
 	{0   , 0xfe, 0   ,    2, "Steering Response"	},  \
 	{0x01, 0x01, 0x10, 0x10, "Linear"				},  \
@@ -4228,6 +4238,9 @@ static INT32 DrvDraw()
 
 static INT32 MultiScreenCheck()
 {
+	// audio check :)
+	MultiPCMSetMonoMode((DrvDips[1] & 0xc) >> 2);
+
 	INT32 screensize = (DrvDips[1] & 1) ? 320 : 640;
 	if (screensize != nScreenWidth)
 	{
@@ -4236,10 +4249,8 @@ static INT32 MultiScreenCheck()
 		BurnDrvSetVisibleSize(screensize, 224);
 		if (screensize == 320) {
 			BurnDrvSetAspect(4, 3);
-			MultiPCMSetMono(1);
 		} else {
 			BurnDrvSetAspect(8, 3);
-			MultiPCMSetMono(0);
 		}
 		ReinitialiseVideo(); // re-inits video subsystem (pBurnDraw)
 		BurnTransferRealloc(); // re-inits pTransDraw

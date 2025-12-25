@@ -26463,17 +26463,17 @@ struct BurnDriver BurnDrvsms_ngaidenpt = {
 	256, 192, 4, 3
 };
 
-// Phantasy Star (Japan) (Hack, English v2.5)
+// Phantasy Star (Japan) (Hack, English v2.6.1)
 static struct BurnRomInfo sms_pstarjeRomDesc[] = {
-	{ "Phantasy Star T-Eng v2.5 (Japan)(2024)(SMS Power!).sms",	524288, 0x98d2b825, BRF_PRG | BRF_ESS },
+	{ "Phantasy Star T-Eng v2.6.1 (Japan)(2025)(SMS Power!).sms",	524288, 0x2cd659d4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pstarje)
 STD_ROM_FN(sms_pstarje)
 
 struct BurnDriver BurnDrvsms_pstarje = {
-	"sms_pstarje", "sms_pstar", NULL, NULL, "2024",
-	"Phantasy Star (Japan) (Hack, English v2.5)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
+	"sms_pstarje", "sms_pstar", NULL, NULL, "2025",
+	"Phantasy Star (Japan) (Hack, English v2.6.1)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_pstarjeRomInfo, sms_pstarjeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
@@ -26481,17 +26481,17 @@ struct BurnDriver BurnDrvsms_pstarje = {
 	256, 192, 4, 3
 };
 
-// Phantasy Star (Japan) (Hack, Portuguese v2.5)
+// Phantasy Star (Japan) (Hack, Portuguese v2.6.1)
 static struct BurnRomInfo sms_pstarjpRomDesc[] = {
-	{ "Phantasy Star T-Por v2.5 (Japan)(2024)(SMS Power!).sms",	524288, 0x0c8a42b3, BRF_PRG | BRF_ESS },
+	{ "Phantasy Star T-Por v2.6.1 (Japan)(2025)(SMS Power!).sms",	524288, 0xfe0d37e2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pstarjp)
 STD_ROM_FN(sms_pstarjp)
 
 struct BurnDriver BurnDrvsms_pstarjp = {
-	"sms_pstarjp", "sms_pstar", NULL, NULL, "2024",
-	"Phantasy Star (Japan) (Hack, Portuguese v2.5)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
+	"sms_pstarjp", "sms_pstar", NULL, NULL, "2025",
+	"Phantasy Star (Japan) (Hack, Portuguese v2.6.1)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_pstarjpRomInfo, sms_pstarjpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
@@ -26499,17 +26499,17 @@ struct BurnDriver BurnDrvsms_pstarjp = {
 	256, 192, 4, 3
 };
 
-// Phantasy Star (Japan) (Hack, Spanish v2.5)
+// Phantasy Star (Japan) (Hack, Spanish v2.6.1)
 static struct BurnRomInfo sms_pstarjsRomDesc[] = {
-	{ "Phantasy Star T-Spa v2.5 (Japan)(2024)(SMS Power!).sms",	524288, 0x14cdc932, BRF_PRG | BRF_ESS },
+	{ "Phantasy Star T-Spa v2.6.1 (Japan)(2025)(SMS Power!).sms",	524288, 0x04d4e21b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pstarjs)
 STD_ROM_FN(sms_pstarjs)
 
 struct BurnDriver BurnDrvsms_pstarjs = {
-	"sms_pstarjs", "sms_pstar", NULL, NULL, "2024",
-	"Phantasy Star (Japan) (Hack, Spanish v2.5)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
+	"sms_pstarjs", "sms_pstar", NULL, NULL, "2025",
+	"Phantasy Star (Japan) (Hack, Spanish v2.6.1)\0", "YM2413 FM sound chip supported", "SMS Power!", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
 	SMSGetZipName, sms_pstarjsRomInfo, sms_pstarjsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,

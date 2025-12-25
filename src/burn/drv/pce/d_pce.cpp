@@ -3918,7 +3918,7 @@ struct BurnDriver BurnDrvpce_momoktsg = {
 // Monster Pro Wrestling (Japan)
 
 static struct BurnRomInfo pce_mnstprowRomDesc[] = {
-	{ "monster Pro Wrestling (Japan)(1991)(ASK).pce", 0x080000, 0xf2e46d25, BRF_PRG | BRF_ESS },
+	{ "Monster Pro Wrestling (Japan)(1991)(ASK).pce", 0x080000, 0xf2e46d25, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_mnstprow)

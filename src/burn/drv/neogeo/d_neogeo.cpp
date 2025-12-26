@@ -29074,7 +29074,7 @@ struct BurnDriver BurnDrvXeviousng = {
 // Zetsu Xevious - Neo Geo Conversion (HB)
 
 static struct BurnRomInfo zetsuxevingRomDesc[] = {
-	{ "420.p1",				0x100000, 0x8a1e9214, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "420.p1",				0x100000, 0xdfa5538b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "xevious-s1.s1",		0x020000, 0xf41d121a, 2 | BRF_GRA },           //  1 Text layer tiles
 

@@ -55760,6 +55760,25 @@ struct BurnDriver BurnSpecSoulsrmd = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Soy Stomper Junior (48K) (HB)
+
+static struct BurnRomInfo SpecSoystompjrRomDesc[] = {
+	{ "Soy Stomper Junior 48K-AY (2025)(The Death Squad).tap", 33526, 0x82954604, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSoystompjr, SpecSoystompjr, Spectrum)
+STD_ROM_FN(SpecSoystompjr)
+
+struct BurnDriver BurnSpecSoystompjr = {
+	"spec_soystompjr", NULL, "spec_spectrum", NULL, "2025",
+	"Soy Stomper Junior (48K) (HB)\0", "AY Sound supported", "The Death Squad", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecSoystompjrRomInfo, SpecSoystompjrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Space Bros (128K) (HB, v1.2)
 
 static struct BurnRomInfo SpecSpacebrosRomDesc[] = {
@@ -55868,7 +55887,7 @@ struct BurnDriver BurnSpecSpacesludge = {
 	"spec_spacesludge", NULL, "spec_spectrum", NULL, "2019",
 	"Space Sludge (16K) (HB)\0", NULL, "Bumfun Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecSpacesludgeRomInfo, SpecSpacesludgeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -56077,7 +56096,7 @@ struct BurnDriver BurnSpecSpekkuman = {
 	"spec_spekkuman", NULL, "spec_spectrum", NULL, "2022",
 	"Spekku-man (48K) (HB)\0", NULL, "Grongy, Art-top, AER", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecSpekkumanRomInfo, SpecSpekkumanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -56248,7 +56267,7 @@ struct BurnDriver BurnSpecSqijd = {
 	"spec_sqijd", NULL, "spec_spec128", NULL, "2018",
 	"SQIJ'D (128K) (HB)\0", NULL, "Monument Microgames", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MULTISHOOT, 0,
 	SpectrumGetZipName, SpecSqijdRomInfo, SpecSqijdRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -56267,7 +56286,7 @@ struct BurnDriver BurnSpecSqijzx = {
 	"spec_sqijzx", NULL, "spec_spectrum", NULL, "2018",
 	"SQIJ! ZX (48K) (HB)\0", NULL, "Tardis Remakes", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MULTISHOOT, 0,
 	SpectrumGetZipName, SpecSqijzxRomInfo, SpecSqijzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -56288,6 +56307,25 @@ struct BurnDriver BurnSpecSquares = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecSquaresRomInfo, SpecSquaresRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Starball (48K-128K) (HB)
+
+static struct BurnRomInfo SpecStarballRomDesc[] = {
+	{ "Starball 48K-128K (2025)(Wizbit Games).tap", 42390, 0x241b841e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStarball, SpecStarball, Spec128)
+STD_ROM_FN(SpecStarball)
+
+struct BurnDriver BurnSpecStarball = {
+	"spec_starball", NULL, "spec_spec128", NULL, "2025",
+	"Starball (48K-128K) (HB)\0", NULL, "Wizbit Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_BREAKOUT, 0,
+	SpectrumGetZipName, SpecStarballRomInfo, SpecStarballRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -56343,7 +56381,7 @@ struct BurnDriver BurnSpecStarwarr2 = {
 	"spec_starwarr2", NULL, "spec_spectrum", NULL, "2021",
 	"Star Warrior (48K) (HB, v2.0)\0", NULL, "Cronosoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecStarwarr2RomInfo, SpecStarwarr2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -57407,7 +57445,7 @@ struct BurnDriver BurnSpecTerrahawks = {
 	"spec_terrahawks", NULL, "spec_spec128", NULL, "2014",
 	"Terrahawks (128K) (HB)\0", NULL, "Gary James", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecTerrahawksRomInfo, SpecTerrahawksRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -57546,10 +57584,48 @@ struct BurnDriver BurnSpec3octopuses = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Throbbing Headache (48K) (HB)
+// Throbbin' Christmas Headaches (128K) (HB)
+
+static struct BurnRomInfo SpecThrobchead128RomDesc[] = {
+	{ "Throbbin' Christmas Headaches 128K (2025)(KTB Productions).tap", 36258, 0xf91fb57e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecThrobchead128, SpecThrobchead128, Spec128)
+STD_ROM_FN(SpecThrobchead128)
+
+struct BurnDriver BurnSpecThrobchead128 = {
+	"spec_throbchead128", NULL, "spec_spec128", NULL, "2025",
+	"Throbbin' Christmas Headaches (128K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecThrobchead128RomInfo, SpecThrobchead128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Throbbin' Christmas Headaches (48K) (HB)
+
+static struct BurnRomInfo SpecThrobchead48RomDesc[] = {
+	{ "Throbbin' Christmas Headaches 48K (2025)(KTB Productions).tap", 31986, 0xc2e3c54a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecThrobchead48, SpecThrobchead48, Spectrum)
+STD_ROM_FN(SpecThrobchead48)
+
+struct BurnDriver BurnSpecThrobchead48 = {
+	"spec_throbchead48", "spec_throbchead128", "spec_spectrum", NULL, "2025",
+	"Throbbin' Christmas Headaches (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecThrobchead48RomInfo, SpecThrobchead48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Throbbin' Headache (48K) (HB)
 
 static struct BurnRomInfo SpecThrobheadRomDesc[] = {
-	{ "Throbbing Headache 48K (2025)(KTB Productions).tap", 20404, 0x51f1295d, BRF_ESS | BRF_PRG },
+	{ "Throbbin' Headache 48K (2025)(KTB Productions).tap", 20404, 0x51f1295d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecThrobhead, SpecThrobhead, Spectrum)
@@ -57557,7 +57633,7 @@ STD_ROM_FN(SpecThrobhead)
 
 struct BurnDriver BurnSpecThrobhead = {
 	"spec_throbhead", NULL, "spec_spectrum", NULL, "2025",
-	"Throbbing Headache (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	"Throbbin' Headache (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecThrobheadRomInfo, SpecThrobheadRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -57565,10 +57641,10 @@ struct BurnDriver BurnSpecThrobhead = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Throbbing Headache DX (128K) (HB)
+// Throbbin' Headache DX (128K) (HB)
 
 static struct BurnRomInfo SpecThrobheadx128RomDesc[] = {
-	{ "Throbbing Headache DX 128K (2025)(KTB Productions).tap", 34352, 0x422ec716, BRF_ESS | BRF_PRG },
+	{ "Throbbin' Headache DX 128K (2025)(KTB Productions).tap", 34352, 0x422ec716, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecThrobheadx128, SpecThrobheadx128, Spec128)
@@ -57576,7 +57652,7 @@ STD_ROM_FN(SpecThrobheadx128)
 
 struct BurnDriver BurnSpecThrobheadx128 = {
 	"spec_throbheadx128", NULL, "spec_spec128", NULL, "2025",
-	"Throbbing Headache DX (128K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	"Throbbin' Headache DX (128K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecThrobheadx128RomInfo, SpecThrobheadx128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -57584,10 +57660,10 @@ struct BurnDriver BurnSpecThrobheadx128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Throbbing Headache DX (48K) (HB)
+// Throbbin' Headache DX (48K) (HB)
 
 static struct BurnRomInfo SpecThrobheadx48RomDesc[] = {
-	{ "Throbbing Headache DX 48K (2025)(KTB Productions).tap", 38601, 0xc6d51a67, BRF_ESS | BRF_PRG },
+	{ "Throbbin' Headache DX 48K (2025)(KTB Productions).tap", 38601, 0xc6d51a67, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecThrobheadx48, SpecThrobheadx48, Spectrum)
@@ -57595,7 +57671,7 @@ STD_ROM_FN(SpecThrobheadx48)
 
 struct BurnDriver BurnSpecThrobheadx48 = {
 	"spec_throbheadx48", "spec_throbheadx128", "spec_spectrum", NULL, "2025",
-	"Throbbing Headache DX (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	"Throbbin' Headache DX (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecThrobheadx48RomInfo, SpecThrobheadx48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

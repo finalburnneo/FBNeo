@@ -3267,6 +3267,11 @@ static struct BurnRomInfo alienarRomDesc[] = {
 	{ "aarom07",			0x1000, 0xf9812be4, 1 | BRF_PRG | BRF_ESS }, //  9
 	{ "aarom08",			0x1000, 0xcd7f3a87, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "aarom09",			0x1000, 0xe6ce77b4, 1 | BRF_PRG | BRF_ESS }, // 11
+
+	{ "sg.snd",				0x0800, 0x2fcf6c4d, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+
+	{ "decoder.4",			0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
+	{ "decoder.6",			0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(alienar)
@@ -3286,46 +3291,10 @@ static INT32 AlienarInit()
 
 struct BurnDriver BurnDrvAlienar = {
 	"alienar", NULL, NULL, NULL, "1985",
-	"Alien Arena\0", "Game has no sound", "Duncan Brown", "6809 System",
+	"Alien Arena\0", NULL, "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, alienarRomInfo, alienarRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
-	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	292, 240, 4, 3
-};
-
-
-// Alien Arena (Stargate upgrade)
-
-static struct BurnRomInfo alienaruRomDesc[] = {
-	{ "aarom10",			0x1000, 0x6feb0314, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "aarom11",			0x1000, 0xae3a270e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "aarom12",			0x1000, 0x6be9f09e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "aarom01",			0x1000, 0xbb0c21be, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "aarom02",			0x1000, 0x165acd37, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "aarom03",			0x1000, 0xe5d51d92, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "aarom04",			0x1000, 0x24f6feb8, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "aarom05",			0x1000, 0x5b1ac59b, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "aarom06",			0x1000, 0xda7195a2, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "aarom07",			0x1000, 0xf9812be4, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "aarom08",			0x1000, 0xcd7f3a87, 1 | BRF_PRG | BRF_ESS }, // 10
-	{ "aarom09",			0x1000, 0xe6ce77b4, 1 | BRF_PRG | BRF_ESS }, // 11
-
-	{ "sg.snd",				0x0800, 0x2fcf6c4d, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
-
-	{ "decoder.4",			0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
-	{ "decoder.6",			0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
-};
-
-STD_ROM_PICK(alienaru)
-STD_ROM_FN(alienaru)
-
-struct BurnDriver BurnDrvAlienaru = {
-	"alienaru", "alienar", NULL, NULL, "1985",
-	"Alien Arena (Stargate upgrade)\0", NULL, "Duncan Brown", "6809 System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, alienaruRomInfo, alienaruRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
 	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };

@@ -5609,6 +5609,32 @@ STD_ROM_PICK(Vhuntjr2)
 STD_ROM_FN(Vhuntjr2)
 
 static struct BurnRomInfo ProgearRomDesc[] = {
+	{ "pgae.03",       0x080000, 0x8577bc86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgae.04",       0x080000, 0xd850da04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72D94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
+
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "progear.key",   0x000014, 0xeee6b2a8, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Progear)
+STD_ROM_FN(Progear)
+
+static struct BurnRomInfo ProgearuRomDesc[] = {
 	{ "pgau.03",       0x080000, 0x343a783e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pgau.04",       0x080000, 0x16208d79, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -5628,11 +5654,11 @@ static struct BurnRomInfo ProgearRomDesc[] = {
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 	
-	{ "progear.key",   0x000014, 0x46736b17, CPS2_ENCRYPTION_KEY },
+	{ "progearu.key",   0x000014, 0x46736b17, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Progear)
-STD_ROM_FN(Progear)
+STD_ROM_PICK(Progearu)
+STD_ROM_FN(Progearu)
 
 static struct BurnRomInfo ProgearaRomDesc[] = {
 	{ "pgaa.03",       0x080000, 0x25e6e2ce, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11417,10 +11443,20 @@ struct BurnDriver BurnDrvCpsVhuntjr2 = {
 
 struct BurnDriver BurnDrvCpsProgear = {
 	"progear", NULL, NULL, NULL, "2001",
-	"Progear (USA 010117)\0", NULL, "Cave (Capcom license)", "CPS2",
+	"Progear (Europe 010117)\0", NULL, "Cave (Capcom license)", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
 	NULL, ProgearRomInfo, ProgearRomName, NULL, NULL, NULL, NULL, ProgearInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsProgearu = {
+	"progearu", "progear", NULL, NULL, "2001",
+	"Progear (USA 010117)\0", NULL, "Cave (Capcom license)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
+	NULL, ProgearuRomInfo, ProgearuRomName, NULL, NULL, NULL, NULL, ProgearInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

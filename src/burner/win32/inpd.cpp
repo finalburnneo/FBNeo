@@ -12,6 +12,8 @@ int bClearInputIgnoreCheckboxMessage = 0;		// For clear input on afire macro.
 
 static int bInittingCheckboxes = 0;
 
+static HWND hToolTipWnd = NULL;
+
 #if 0
 // experi-mental stuff
 #define TRBN_FIRST (0U-1501U)
@@ -725,6 +727,45 @@ int UsePreset(bool bMakeDefault)
 	return 0;
 }
 
+static HICON hIcon = NULL;
+
+static void ToolTipAndIconInit()
+{
+	// re-detect controllers (magnify glass) icon
+	hIcon = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_INPD_DETECT_GAMEPADS), IMAGE_ICON, 25, 25, 0);
+	SendDlgItemMessage(hInpdDlg, IDC_INPD_DETECT_GAMEPADS, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)hIcon);
+
+	// Pop-up bubble (tooltip) for the "re-detect controllers" icon   - dink (dec. 2025)
+	hToolTipWnd = CreateWindow(TOOLTIPS_CLASS, NULL, WS_POPUP, 0,0,0,0, hInpdDlg, NULL, hAppInst, 0);
+
+	if (hToolTipWnd == NULL) return;
+
+	TOOLINFO toolinfo;
+	memset(&toolinfo, 0, sizeof(TOOLINFO));
+
+	toolinfo.cbSize = sizeof(TOOLINFO);
+	toolinfo.hwnd = hInpdDlg;
+	toolinfo.uFlags = TTF_SUBCLASS | TTF_IDISHWND;
+	toolinfo.uId = (UINT_PTR)GetDlgItem(hInpdDlg, IDC_INPD_DETECT_GAMEPADS);
+	toolinfo.hinst = NULL;
+	toolinfo.lpszText = _T("Re-Detect Controllers");
+
+	SendMessage(hToolTipWnd, TTM_ACTIVATE, TRUE, 0);
+	SendMessage(hToolTipWnd, TTM_ADDTOOL, 0, (LPARAM)&toolinfo);
+}
+
+static void ToolTipAndIconExit()
+{
+	// Icon clean-up
+	DestroyIcon((HICON)hIcon);
+
+	// ToolTip cleanup
+	// Nothing to do here!
+
+	// Note: the tooltip window handle is automatically cleaned up
+	// by the tooltip's parent window, 'hInpdDlg', is destroyed.
+}
+
 static void SliderInit() // Analog sensitivity slider
 {
 	// Initialise slider
@@ -803,6 +844,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 {
 	if (Msg == WM_INITDIALOG) {
 		hInpdDlg = hDlg;
+
+		ToolTipAndIconInit();
 		InpdInit();
 		SliderInit();
 		if (!kNetGame && bAutoPause) {
@@ -814,6 +857,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 	if (Msg == WM_CLOSE) {
 		SliderExit();
+		ToolTipAndIconExit();
 		EnableWindow(hScrnWnd, TRUE);
 		DestroyWindow(hInpdDlg);
 		return 0;
@@ -828,6 +872,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		int Id = LOWORD(wParam);
 		int Notify = HIWORD(wParam);
 
+		if (Id == IDC_INPD_DETECT_GAMEPADS && Notify == BN_CLICKED) {
+			// re-init directinput (detect gamepads)
+			InputExit();
+			InputInit();
+			return 0;
+		}
 		if (Id == IDOK && Notify == BN_CLICKED) {
 			ListItemActivate();
 			return 0;

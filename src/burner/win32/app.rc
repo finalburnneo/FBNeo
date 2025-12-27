@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
 #ifdef _WIN32
@@ -86,6 +86,7 @@ BEGIN
 	CONTROL			"Analog Sensitivity",IDC_INPD_ANSLIDER,"msctls_trackbar32",WS_TABSTOP | TBS_NOTIFYBEFOREMOVE,11,225,152,18
 	EDITTEXT		IDC_INPD_ANEDIT,167,225,20,14,SS_CENTERIMAGE
 	LTEXT			"%", IDC_STATIC,167+20, 225, 25, 10, SS_CENTERIMAGE
+	PUSHBUTTON      "", IDC_INPD_DETECT_GAMEPADS, 202, 225, 19, 15, BS_ICON
 END
 
 IDD_INPS DIALOGEX 0, 0, 195, 64
@@ -1931,8 +1932,9 @@ IDI_TV_MINUS            ICON    DISCARDABLE     "resource/TV Minus.ico"
 IDI_TV_NOTWORKING       ICON    DISCARDABLE     "resource/TV Not Working.ico"
 IDI_TV_NOTFOUND_ESS     ICON    DISCARDABLE     "resource/TV Not Found.ico"
 IDI_TV_NOTFOUND_NON     ICON    DISCARDABLE     "resource/TV Not Found Non Essential.ico"
+IDI_INPD_DETECT_GAMEPADS ICON    DISCARDABLE     "resource/detect gamepads.ico"
 
-#endif    // English (U.K.) resources
+#endif    // English resources
 /////////////////////////////////////////////////////////////////////////////
 
 

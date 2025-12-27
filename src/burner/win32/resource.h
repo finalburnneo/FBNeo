@@ -15,6 +15,8 @@
 #define IDI_TV_NOTWORKING   	            13
 #define IDI_TV_NOTFOUND_ESS     	        14
 #define IDI_TV_NOTFOUND_NON         	    15
+#define IDI_INPD_DETECT_GAMEPADS            16 // icon
+#define IDC_INPD_DETECT_GAMEPADS            17 // control
 
 #define IDD_SPLASH							50
 #define IDD_INPD                        	51

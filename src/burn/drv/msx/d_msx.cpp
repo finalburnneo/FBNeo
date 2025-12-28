@@ -30811,9 +30811,9 @@ struct BurnDriver BurnDrvMSX_grielex = {
 	272, 228, 4, 3
 };
 
-// GS Soccer (HB, v1.2)
+// GS Soccer (HB, v1.3)
 static struct BurnRomInfo MSX_gssoccerRomDesc[] = {
-	{ "GS Soccer v1.2 (2025)(Fausto Pracek).rom",	16384, 0x24f677ee, BRF_PRG | BRF_ESS },
+	{ "GS Soccer v1.3 (2025)(Fausto Pracek).rom",	16384, 0x80706f87, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_gssoccer, MSX_gssoccer, msx_msx)
@@ -30821,7 +30821,7 @@ STD_ROM_FN(MSX_gssoccer)
 
 struct BurnDriver BurnDrvMSX_gssoccer = {
 	"msx_gssoccer", NULL, "msx_msx", NULL, "2025",
-	"GS Soccer (HB, v1.2)\0", NULL, "Fausto Pracek", "MSX",
+	"GS Soccer (HB, v1.3)\0", NULL, "Fausto Pracek", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_MSX, GBF_SPORTSFOOTBALL, 0,
 	MSXGetZipName, MSX_gssoccerRomInfo, MSX_gssoccerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

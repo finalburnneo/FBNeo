@@ -912,7 +912,7 @@ int tms32010Run(int cycles)
 
 int tms32010Idle(int cycles)
 {
-	R.total_cycles + cycles;
+	R.total_cycles += cycles;
 
 	return cycles;
 }

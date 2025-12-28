@@ -52756,7 +52756,7 @@ static struct BurnRomInfo md_felixRomDesc[] = {
 STD_ROM_PICK(md_felix)
 STD_ROM_FN(md_felix)
 
-struct BurnDriverD BurnDrvmd_felix = {
+struct BurnDriver BurnDrvmd_felix = {
 	"md_felix", NULL, NULL, NULL, "2011",
 	"Felix the Cat (Russian)\0", NULL, "BMB", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,

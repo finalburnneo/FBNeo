@@ -22,7 +22,7 @@ macOS [build instructions](README-macOS.md) and [releases](https://github.com/fb
 
 For SDL1.2 builds just type `make sdl` (requires SDL1.2 and GCC, make, perl and nasm) [instructions](README-SDL.md)
 
-For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm) [instructions](README-SDL.md)
+For SDL2 builds just type `make sdl2` (requires SDL2, SDL2_image, gcc, make, perl and nasm) [instructions](README-SDL.md) 
 
 ~~Raspberry Pi [build instructions](README-PI.md).~~
 

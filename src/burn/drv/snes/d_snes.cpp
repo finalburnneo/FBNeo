@@ -30282,10 +30282,10 @@ struct BurnDriver BurnDrvsnes_Seikdens3te = {
 	512, 448, 4, 3
 };
 
-// Trials of Mana ~ Seiken Densetsu 3 (Hack, Portuguese v1.03)
+// Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)
 // https://www.romhacking.net.br/index.php?topic=2536.0
 static struct BurnRomInfo snes_Seikdens3tpRomDesc[] = {
-	{ "Trials of Mana - Seiken Densetsu 3 PT-BR v1.03 (2024)(Dindo).sfc", 4194304, 0x0c61a7bf, BRF_ESS | BRF_PRG },
+	{ "Seiken Densetsu 3 - Trials of Mana PT-BR v1.03 (2024)(Dindo).sfc", 4194304, 0x0c61a7bf, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Seikdens3tp)
@@ -30293,7 +30293,7 @@ STD_ROM_FN(snes_Seikdens3tp)
 
 struct BurnDriver BurnDrvsnes_Seikdens3tp = {
 	"snes_seikdens3tp", "snes_seikdens3te", NULL, NULL, "2024",
-	"Trials of Mana ~ Seiken Densetsu 3 (Hack, Portuguese v1.03)\0", NULL, "Dindo", "SNES / Super Famicom",
+	"Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)\0", NULL, "Dindo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Seikdens3tpRomInfo, snes_Seikdens3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

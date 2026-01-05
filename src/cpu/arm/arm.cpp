@@ -23,7 +23,7 @@
 #include "burnint.h"
 #include "arm_intf.h"
 
-#define READ8(addr)		cpu_read8(addr)
+#define READ8(addr)			cpu_read8(addr)
 #define WRITE8(addr,data)	cpu_write8(addr,data)
 #define READ32(addr)		cpu_read32(addr)
 #define WRITE32(addr,data)	cpu_write32(addr,data)
@@ -35,7 +35,7 @@
 
 enum
 {
-	ARM32_PC=0,
+	ARM32_PC = 0,
 	ARM32_R0, ARM32_R1, ARM32_R2, ARM32_R3, ARM32_R4, ARM32_R5, ARM32_R6, ARM32_R7,
 	ARM32_R8, ARM32_R9, ARM32_R10, ARM32_R11, ARM32_R12, ARM32_R13, ARM32_R14, ARM32_R15,
 	ARM32_FR8, ARM32_FR9, ARM32_FR10, ARM32_FR11, ARM32_FR12, ARM32_FR13, ARM32_FR14,
@@ -134,10 +134,10 @@ static const int sRegisterTable[kNumModes][16] =
 
 #define PSR_MASK			((UINT32) 0xf0000000u)
 #define IRQ_MASK			((UINT32) 0x0c000000u)
-#define ADDRESS_MASK			((UINT32) 0x03fffffcu)
+#define ADDRESS_MASK		((UINT32) 0x03fffffcu)
 #define MODE_MASK			((UINT32) 0x00000003u)
 
-#define R15				arm.sArmRegister[eR15]
+#define R15					arm.sArmRegister[eR15]
 #define MODE				(R15&0x03)
 #define SIGN_BIT			((UINT32)(1<<31))
 #define SIGN_BITS_DIFFER(a,b)		(((a)^(b)) >> 31)
@@ -155,8 +155,8 @@ static const int sRegisterTable[kNumModes][16] =
 #define INSN_BDT_S			((UINT32) 0x00400000u)
 #define INSN_BDT_U			((UINT32) 0x00800000u)
 #define INSN_BDT_P			((UINT32) 0x01000000u)
-#define INSN_BDT_REGS			((UINT32) 0x0000ffffu)
-#define INSN_SDT_IMM			((UINT32) 0x00000fffu)
+#define INSN_BDT_REGS		((UINT32) 0x0000ffffu)
+#define INSN_SDT_IMM		((UINT32) 0x00000fffu)
 #define INSN_MUL_A			((UINT32) 0x00200000u)
 #define INSN_MUL_RM			((UINT32) 0x0000000fu)
 #define INSN_MUL_RS			((UINT32) 0x00000f00u)
@@ -171,21 +171,21 @@ static const int sRegisterTable[kNumModes][16] =
 #define INSN_RN				((UINT32) 0x000f0000u)
 #define INSN_RD				((UINT32) 0x0000f000u)
 #define INSN_OP2			((UINT32) 0x00000fffu)
-#define INSN_OP2_SHIFT			((UINT32) 0x00000f80u)
-#define INSN_OP2_SHIFT_TYPE		((UINT32) 0x00000070u)
+#define INSN_OP2_SHIFT		((UINT32) 0x00000f80u)
+#define INSN_OP2_SHIFT_TYPE	((UINT32) 0x00000070u)
 #define INSN_OP2_RM			((UINT32) 0x0000000fu)
-#define INSN_OP2_ROTATE			((UINT32) 0x00000f00u)
-#define INSN_OP2_IMM			((UINT32) 0x000000ffu)
+#define INSN_OP2_ROTATE		((UINT32) 0x00000f00u)
+#define INSN_OP2_IMM		((UINT32) 0x000000ffu)
 #define INSN_OP2_SHIFT_TYPE_SHIFT	4
 #define INSN_OP2_SHIFT_SHIFT		7
 #define INSN_OP2_ROTATE_SHIFT		8
-#define INSN_MUL_RS_SHIFT		8
-#define INSN_MUL_RN_SHIFT		12
-#define INSN_MUL_RD_SHIFT		16
-#define INSN_OPCODE_SHIFT		21
-#define INSN_RN_SHIFT			16
-#define INSN_RD_SHIFT			12
-#define INSN_COND_SHIFT			28
+#define INSN_MUL_RS_SHIFT			8
+#define INSN_MUL_RN_SHIFT			12
+#define INSN_MUL_RD_SHIFT			16
+#define INSN_OPCODE_SHIFT			21
+#define INSN_RN_SHIFT				16
+#define INSN_RD_SHIFT				12
+#define INSN_COND_SHIFT				28
 
 #define S_CYCLE 1
 #define N_CYCLE 1
@@ -231,6 +231,8 @@ enum
 	COND_NV			/* never */
 };
 
+#define sign_extend(f, frombits) ((INT32)((f) << (32 - (frombits))) >> (32 - (frombits)))
+
 #define LSL(v,s) ((v) << (s))
 #define LSR(v,s) ((v) >> (s))
 #define ROL(v,s) (LSL((v),(s)) | (LSR((v),32u - (s))))
@@ -243,8 +245,8 @@ typedef struct
 {
 	UINT32 sArmRegister[kNumRegisters];
 	UINT32 coproRegister[16];
-	UINT8 pendingIrq;
-	UINT8 pendingFiq;
+	bool pendingIrq;
+	bool pendingFiq;
 
 	UINT32 ArmTotalCycles;
 	UINT32 ArmLeftCycles;
@@ -342,6 +344,8 @@ int ArmRun( int cycles )
 
 	do
 	{
+		arm_check_irq_state();
+
 		/* load instruction */
 		pc = R15;
 		insn = ArmFetchLong( pc & ADDRESS_MASK );
@@ -437,8 +441,6 @@ int ArmRun( int cycles )
 			R15 += 4;
 		}
 
-		arm_check_irq_state();
-
 	} while( arm_icount > 0 && !end_run );
 
 	cycles = cycles - arm_icount;
@@ -455,10 +457,10 @@ static void arm_check_irq_state(void)
 {
 	UINT32 pc = R15+4; /* save old pc (already incremented in pipeline) */;
 
-	/* Exception priorities (from ARM6, not specifically ARM2/3):
+	/* Exception priorities for ARM2/3:
 
         Reset
-        Data abort
+	    Data abort or address exception
         FIRQ
         IRQ
         Prefetch abort
@@ -469,7 +471,6 @@ static void arm_check_irq_state(void)
 		R15 = eARM_MODE_FIQ;	/* Set FIQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
 		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x1c|eARM_MODE_FIQ|I_MASK|F_MASK; /* Mask both IRQ & FIRQ, set PC=0x1c */
-		arm.pendingFiq=0;
 		return;
 	}
 
@@ -477,7 +478,6 @@ static void arm_check_irq_state(void)
 		R15 = eARM_MODE_IRQ;	/* Set IRQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
 		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x18|eARM_MODE_IRQ|I_MASK|(pc&F_MASK); /* Mask only IRQ, set PC=0x18 */
-		arm.pendingIrq=0;
 		return;
 	}
 }
@@ -491,21 +491,13 @@ void arm_set_irq_line(int irqline, int state)
 	switch (irqline) {
 
 	case ARM_IRQ_LINE: /* IRQ */
-		if (state && (R15&0x3)!=eARM_MODE_IRQ) /* Don't allow nested IRQs */
-			arm.pendingIrq=1;
-		else
-			arm.pendingIrq=0;
+		arm.pendingIrq = state ? 1 : 0;
 		break;
 
 	case ARM_FIRQ_LINE: /* FIRQ */
-		if (state && (R15&0x3)!=eARM_MODE_FIQ) /* Don't allow nested FIRQs */
-			arm.pendingFiq=1;
-		else
-			arm.pendingFiq=0;
+		arm.pendingIrq = state ? 1 : 0;
 		break;
 	}
-
-	arm_check_irq_state();
 }
 
 /***************************************************************************/
@@ -521,14 +513,7 @@ static void HandleBranch(  UINT32 insn )
 	}
 
 	/* Sign-extend the 24-bit offset in our calculations */
-	if (off & 0x2000000u)
-	{
-		R15 = ((R15 - (((~(off | 0xfc000000u)) + 1) - 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
-	}
-	else
-	{
-		R15 = ((R15 + (off + 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
-	}
+	R15 = ((R15 + (sign_extend(off, 26) + 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
 	arm_icount -= 2 * S_CYCLE + N_CYCLE;
 }
 
@@ -686,7 +671,7 @@ static void HandleMemSingle( UINT32 insn )
 		((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
 		| (((!SIGN_BITS_DIFFER(rn, op2)) && SIGN_BITS_DIFFER(rn, rd)) \
 			<< V_BIT) \
-		| (((~(rn)) < (op2)) << C_BIT) \
+		| (((IsNeg(rn) & IsNeg(op2)) | (IsNeg(rn) & IsPos(rd)) | (IsNeg(op2) & IsPos(rd))) ? C_MASK : 0) \
 		| HandleALUNZFlags(rd)) \
 		+ 4; \
 	else R15 += 4;
@@ -1028,7 +1013,8 @@ static void HandleMemBlock( UINT32 insn)
 			else
 				result = loadInc( insn & 0xffff, rbp, insn&INSN_BDT_S );
 
-			if (insn & 0x8000) {
+			if (insn & 0x8000)
+			{
 				R15-=4;
 				arm_icount -= S_CYCLE + N_CYCLE;
 			}
@@ -1082,7 +1068,8 @@ static void HandleMemBlock( UINT32 insn)
 			if (defer)
 				SetRegister(15, deferredR15);
 
-			if (insn & 0x8000) {
+			if (insn & 0x8000)
+			{
 				arm_icount -= S_CYCLE + N_CYCLE;
 				R15-=4;
 			}
@@ -1170,7 +1157,8 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 	UINT32 rm	= GetRegister( insn & INSN_OP2_RM );
 	UINT32 t	= (insn & INSN_OP2_SHIFT_TYPE) >> INSN_OP2_SHIFT_TYPE_SHIFT;
 
-	if ((insn & INSN_OP2_RM)==0xf) {
+	if ((insn & INSN_OP2_RM)==0xf)
+	{
 		/* If hardwired shift, then PC is 8 bytes ahead, else if register shift
         is used, then 12 bytes - TODO?? */
 		rm+=8;
@@ -1181,6 +1169,7 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 	{
 		// Only the least significant byte of the contents of Rs is used to determine the shift amount
 		k = GetRegister(k >> 1) & 0xff;
+
 		arm_icount -= S_CYCLE;
 		if( k == 0 ) /* Register shift by 0 is a no-op */
 		{
@@ -1202,7 +1191,7 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		{
 			*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
 		}
-		return k ? LSL(rm, k) : rm;
+		return rm << k;
 
 	case 1:                         /* LSR */
 		if (k == 0 || k == 32)
@@ -1218,7 +1207,7 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		else
 		{
 			if (pCarry) *pCarry = (rm & (1 << (k - 1)));
-			return LSR(rm, k);
+			return rm >> k;
 		}
 
 	case 2:						/* ASR */
@@ -1230,11 +1219,10 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		else
 		{
 			if (rm & SIGN_BIT)
-				return LSR(rm, k) | (0xffffffffu << (32 - k));
+				return (rm >> k) | (0xffffffffu << (32 - k));
 			else
-				return LSR(rm, k);
+				return (rm >> k);
 		}
-		break;
 
 	case 3:						/* ROR and RRX */
 		if (k)
@@ -1246,9 +1234,8 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		else
 		{
 			if (pCarry) *pCarry = (rm & 1);
-			return LSR(rm, 1) | ((R15 & C_MASK) << 2);
+			return (rm >> 1) | ((R15 & C_MASK) << 2);
 		}
-		break;
 	}
 
 	return 0;
@@ -1396,7 +1383,7 @@ unsigned int ArmRemainingCycles()
 }
 
 // get the total of cycles run
-int ArmGetTotalCycles()
+int ArmTotalCycles()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetTotalCycles called without init\n"));

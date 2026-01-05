@@ -32,7 +32,7 @@ void ArmSetSpeedHack(UINT32 address, void (*pCallback)());
 UINT32 ArmGetPC(INT32);
 
 UINT32 ArmRemainingCycles();
-INT32 ArmGetTotalCycles();
+INT32 ArmTotalCycles();
 INT32 ArmIdle(INT32 cycles);
 void ArmRunEnd();
 void ArmNewFrame();

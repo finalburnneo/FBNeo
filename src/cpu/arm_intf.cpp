@@ -41,7 +41,7 @@ cpu_core_config ArmConfig =
 	ArmReadByte,
 	Arm_write_rom_byte,
 	ArmGetActive,
-	ArmGetTotalCycles,
+	ArmTotalCycles,
 	ArmNewFrame,
 	ArmIdle,
 	core_set_irq,
@@ -233,7 +233,7 @@ UINT32 ArmFetchLong(UINT32 addr)
 
 #if 1
 	if (ArmSpeedHackAddress == addr) {
-//		bprintf (0, _T("speed hack activated! %d cycles killed!\n"), ArmRemainingCycles());
+		//bprintf (0, _T("speed hack activated! %d cycles killed!\n"), ArmRemainingCycles());
 		if (pArmSpeedHackCallback) {
 			pArmSpeedHackCallback();
 		} else {

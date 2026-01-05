@@ -4981,6 +4981,25 @@ struct BurnDriver BurnDrvsnes_Bof2j = {
 	512, 448, 4, 3
 };
 
+// Breath of Fire II (Hack, Portuguese v1.01)
+// https://www.romhacking.net.br/index.php?topic=2978.0
+static struct BurnRomInfo snes_Bof2tpRomDesc[] = {
+	{ "Breath of Fire II PT-BR v1.01 (2025)(Dindo).sfc", 4194304, 0x464a870e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Bof2tp)
+STD_ROM_FN(snes_Bof2tp)
+
+struct BurnDriver BurnDrvsnes_Bof2tp = {
+	"snes_bof2tp", "snes_bof2", NULL, NULL, "2025",
+	"Breath of Fire II (Hack, Portuguese v1.01)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Bof2tpRomInfo, snes_Bof2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Breath of Fire II (Hack, Spanish v1.2)
 // https://www.romhacking.net/translations/3241/
 static struct BurnRomInfo snes_Bof2tsRomDesc[] = {
@@ -6953,6 +6972,25 @@ struct BurnDriver BurnDrvsnes_Chaosseedte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_ChaosseedteRomInfo, snes_ChaosseedteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Chaos Seed: Cronicas do Feng Shui (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3202.0
+static struct BurnRomInfo snes_ChaosseedtpRomDesc[] = {
+	{ "Chaos Seed - Cronicas do Feng Shui PT-BR (2025)(Dindo).sfc", 3145728, 0x357e7441, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Chaosseedtp)
+STD_ROM_FN(snes_Chaosseedtp)
+
+struct BurnDriver BurnDrvsnes_Chaosseedtp = {
+	"snes_chaosseedtp", "snes_chaosseedte", NULL, NULL, "2025",
+	"Chaos Seed: Cronicas do Feng Shui (Hack, Portuguese)\0", NULL, "Dindo", "SNES / Super Famicom",
+	L"Chaos Seed: Cr\u00f4nicas do Feng Shui (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_ChaosseedtpRomInfo, snes_ChaosseedtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -21996,6 +22034,25 @@ struct BurnDriver BurnDrvsnes_Marvelousj = {
 	512, 448, 4, 3
 };
 
+// Marvelous: Outra Ilha do Tesouro (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3203.0
+static struct BurnRomInfo snes_MarveloustpRomDesc[] = {
+	{ "Marvelous - Outra Ilha do Tesouro PT-BR (2025)(Dindo).sfc", 4194304, 0xd2417812, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Marveloustp)
+STD_ROM_FN(snes_Marveloustp)
+
+struct BurnDriver BurnDrvsnes_Marveloustp = {
+	"snes_marveloustp", "snes_marvelouste", NULL, NULL, "2025",
+	"Marvelous: Outra Ilha do Tesouro (Hack, Portuguese)\0", "SA-1 enhancement CPU", "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
+	SNESGetZipName, snes_MarveloustpRomInfo, snes_MarveloustpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mark Davis' The Fishing Master (USA)
 
 static struct BurnRomInfo snes_MarkdavisfishingRomDesc[] = {
@@ -30224,6 +30281,26 @@ struct BurnDriver BurnDrvsnes_Seikdens3te = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
+
+// Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)
+// https://www.romhacking.net.br/index.php?topic=2536.0
+static struct BurnRomInfo snes_Seikdens3tpRomDesc[] = {
+	{ "Seiken Densetsu 3 - Trials of Mana PT-BR v1.03 (2024)(Dindo).sfc", 4194304, 0x0c61a7bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Seikdens3tp)
+STD_ROM_FN(snes_Seikdens3tp)
+
+struct BurnDriver BurnDrvsnes_Seikdens3tp = {
+	"snes_seikdens3tp", "snes_seikdens3te", NULL, NULL, "2024",
+	"Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_Seikdens3tpRomInfo, snes_Seikdens3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 
 // Seiken Densetsu 3 ~ Secret of Mana 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/1837/

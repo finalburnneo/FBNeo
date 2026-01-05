@@ -70,7 +70,7 @@ static UINT8 DrvJoyFS[4];
 static UINT8 DrvDips[5];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
-
+static INT32 scanline = 0;
 static INT32 uses_gun = 0;
 static INT16 DrvGun0 = 0;
 static INT16 DrvGun1 = 0;
@@ -618,7 +618,7 @@ static UINT8 deco_irq_read(INT32 offset)
 
 		case 3:
 			// ((totalcycles/fps)/scanlines)
-			INT32 hblank = ((ArmGetTotalCycles() / 256) > 145833) ? 1 : 0;
+			INT32 hblank = ((ArmTotalCycles() / 256) > 145833) ? 1 : 0;
 			UINT8 data = 0;
 			data |= 1 << 7;
 			data |= (lightgun_irq ? 1 : 0) << 6;
@@ -981,9 +981,8 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 		return; // nop;
 	}
 
-	Write16Long(DrvSprRAM2,				0x170000, 0x171fff) // 16-bit - nslasher
-
-	Write16Long(DrvSprRAM,				0x178000, 0x179fff) // 16-bit
+	Write16Long(DrvSprRAM2,					0x170000, 0x171fff) // 16-bit - nslasher
+	Write16Long(DrvSprRAM,					0x178000, 0x179fff) // 16-bit
 	Write16Long(deco16_pf_ram[0],			0x182000, 0x183fff) // 16-bit
 	Write16Long(deco16_pf_ram[1],			0x184000, 0x185fff) // 16-bit
 	Write16Long(deco16_pf_rowscroll[0],		0x192000, 0x193fff) // 16-bit
@@ -1002,7 +1001,7 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 		case 0x150000: // fghthist / nslasher / tattass
 			if (game_select == 3) {
 				tattass_control_write(data);
-				global_priority = (data & 3) | (~data & 4); // 3rd bit is inverted in tattass
+				global_priority = (data & 3) | (~data & 4); // 3rd bit is inverted in tattass (compared to nslasher)
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
 				global_priority = data & 7;
@@ -1073,9 +1072,8 @@ static UINT32 fghthist_read_long(UINT32 address)
 		return (deco146_104_prot_rw(0, (address & 0x7ffc) >> 1) << 16) | 0xffff;
 	}
 
-	Read16Long(DrvSprRAM2,				0x170000, 0x171fff) // 16-bit - nslasher
-
-	Read16Long(DrvSprRAM,				0x178000, 0x179fff) // 16-bit
+	Read16Long(DrvSprRAM2,					0x170000, 0x171fff) // 16-bit - nslasher
+	Read16Long(DrvSprRAM,					0x178000, 0x179fff) // 16-bit
 	Read16Long(deco16_pf_ram[0],			0x182000, 0x183fff) // 16-bit
 	Read16Long(deco16_pf_ram[1],			0x184000, 0x185fff) // 16-bit
 	Read16Long(deco16_pf_rowscroll[0],		0x192000, 0x193fff) // 16-bit
@@ -1087,22 +1085,23 @@ static UINT32 fghthist_read_long(UINT32 address)
 	Read16Long(deco16_pf_rowscroll[3],		0x1d4000, 0x1d5fff) // 16-bit
 	Read16Long(((UINT8*)deco16_pf_control[1]),	0x1e0000, 0x1e001f) // 16-bit
 
-	switch (address & ~3)
-	{
-		case 0x120020:
-			return DrvInputs[0];
+	if (game_select != 3) {
+		switch (address & ~3)
+		{
+			case 0x120020:
+				return DrvInputs[0];
 
-		case 0x120024:
-			return (DrvInputs[1] & ~0x10) | ((deco16_vblank) ? 0x10 : 0);
+			case 0x120024:
+				return (DrvInputs[1] & ~0x10) | ((deco16_vblank) ? 0x10 : 0);
 
-		case 0x120028:
-			return (EEPROMRead() & 1) ? 0xff : 0xfe;
+			case 0x120028:
+				return ((EEPROMRead() & 1) ? 0xff : 0xfe);
 
-		case 0x16c000:
-		case 0x17c000:
-			return 0; // nops
+			case 0x16c000:
+			case 0x17c000:
+				return 0; // nops
+		}
 	}
-
 	return 0;
 }
 
@@ -1458,9 +1457,12 @@ static INT32 DrvDoReset()
 		deco16SoundReset();
 	}
 
-	if (game_select != 3) DrvYM2151WritePort(0, 0);
+	if (game_select != 3) {
+		// tattass has neither
+		DrvYM2151WritePort(0, 0);
 
-	EEPROMReset();
+		EEPROMReset();
+	}
 
 	deco16Reset();
 
@@ -1608,7 +1610,7 @@ static INT32 FghthistCommonInit(INT32 z80_sound, UINT32 speedhack)
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,	  9, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM1 + 0x000000,	 10, 1)) return 1;
-	
+
 		deco56_decrypt_gfx(DrvGfxROM1, 0x100000);
 		deco74_decrypt_gfx(DrvGfxROM2, 0x100000);
 
@@ -2109,8 +2111,6 @@ static INT32 TattassCommonInit(INT32 has_z80, UINT32 speedhack)
 	ArmSetReadLongHandler(fghthist_read_long);
 	ArmClose();
 
-	EEPROMInit(&eeprom_interface_93C46);
-
 	deco_104_init();
 	deco_146_104_set_port_a_cb(fghthist_read_A); // inputs 0
 	deco_146_104_set_port_b_cb(tattass_read_B); // eeprom
@@ -2337,7 +2337,9 @@ static INT32 DrvExit()
 		deco16SoundExit();
 	}
 
-	EEPROMExit();
+	if (game_select != 3) {
+		EEPROMExit();
+	}
 
 	ArmExit();
 
@@ -2856,8 +2858,14 @@ static void draw_combined_playfield(INT32 color, INT32 priority) // opaque
 	UINT16 *dest = pTransDraw;
 	UINT8 *prio = deco16_prio_map;
 
+	if ((deco16_pf_control[1][5] & 0x8080) != 0x8080) {
+		memset(pTempDraw[2], 0x00, nScreenWidth * nScreenHeight * sizeof(INT16));
+		memset(pTempDraw[3], 0x00, nScreenWidth * nScreenHeight * sizeof(INT16));
+		return;
+	}
+
 	UINT8 *tptr = deco16_pf_rowscroll[3];
-	deco16_pf_rowscroll[3] = deco16_pf_rowscroll[2];
+	deco16_pf_rowscroll[3] = deco16_pf_rowscroll[2]; // use layer2's rowscroll for both layers
 
 	deco16_draw_layer(2, pTempDraw[2], DECO16_LAYER_OPAQUE);
 	deco16_draw_layer(3, pTempDraw[3], DECO16_LAYER_OPAQUE);
@@ -3722,6 +3730,7 @@ static INT32 DrvBSMTFrame()
 
 	ArmNewFrame();
 	decobsmt_new_frame();
+
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
 
@@ -3735,15 +3744,23 @@ static INT32 DrvBSMTFrame()
 	}
 
 	INT32 nInterleave = 274;
-	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
+	INT32 nCyclesTotal[3] = { (INT32)((double)7000000 / 57.79965), (INT32)((double)2000000 / 57.79965), (INT32)((double)24000000/4 / 57.79965) };
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ArmOpen(0);
-	deco16_vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = (i + 248) % 274;
+
+		deco16_vblank = (scanline < 8 && scanline > 247);
+
+		if (scanline == 248) {
+			irq_callback(1);
+		}
+
 		CPU_RUN(0, Arm);
+
 		if (bsmt_in_reset == 0) {
 			M6809Open(0);
 			CPU_RUN(1, M6809);
@@ -3757,30 +3774,21 @@ static INT32 DrvBSMTFrame()
 			CPU_RUN(2, tms32010);
 			M6809Close();
 		}
-
-		deco_irq_scanline_callback(i); // iq_132 - ok?
-
-		if (i == 8) deco16_vblank = 0;
-
-		if (i == 248) {
-			if (game_select == 1 || game_select == 2 || game_select == 3) irq_callback(1);
-			deco16_vblank = 1;
-		}
 	}
+
+	ArmClose();
 
 	if (pBurnSoundOut) {
 		decobsmt_update();
 	}
 
-	ArmClose();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
-	}
 
 	return 0;
 }
@@ -3788,7 +3796,7 @@ static INT32 DrvBSMTFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029722;
 	}

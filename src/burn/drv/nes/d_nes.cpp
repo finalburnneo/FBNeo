@@ -36289,6 +36289,23 @@ struct BurnDriver BurnDrvnes_galagaj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_galagapRomDesc[] = {
+	{ "Galaga (1983)(HAL Labs for Atari prototype).nes",          24592, 0x32ec7074, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_galagap)
+STD_ROM_FN(nes_galagap)
+
+struct BurnDriver BurnDrvnes_galagap = {
+	"nes_galagap", NULL, NULL, NULL, "1983",
+	"Galaga (Atari Prototype)\0", "Not related to Namco version at all.", "Nintendo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_galagapRomInfo, nes_galagapRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Galaxian (Japan)
 static struct BurnRomInfo nes_galaxianRomDesc[] = {
 	{ "Galaxian (Japan)(1984)(Namcot).nes",          24592, 0x6e4d873b, BRF_ESS | BRF_PRG },

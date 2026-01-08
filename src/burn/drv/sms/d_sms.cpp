@@ -1229,6 +1229,24 @@ struct BurnDriver BurnDrvsms_argosnj1 = {
 	256, 192, 4, 3
 };
 
+// Alocos (Taiwan) (Unl)
+static struct BurnRomInfo sms_alocosRomDesc[] = {
+	{ "Alocos (Taiwan) (Unl)(19xx)(Hung Tao Hsin).sms",	0x20000, 0x5e4b454e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alocos)
+STD_ROM_FN(sms_alocos)
+
+struct BurnDriver BurnDrvsms_alocos = {
+	"sms_alocos", "sms_argosnj", NULL, NULL, "19xx",
+	"Alocos (Taiwan) (Unl)\0", NULL, "Hung Tao Hsin", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_alocosRomInfo, sms_alocosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Disney's Ariel The Little Mermaid (Brazil)
 static struct BurnRomInfo sms_arielRomDesc[] = {
 	{ "Disney's Ariel The Little Mermaid (Brazil)(1997)(Tec Toy).sms",	0x40000, 0xf4b3a7bd, BRF_PRG | BRF_ESS },
@@ -23662,6 +23680,42 @@ struct BurnDriver BurnDrvsms_ruptus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MULTISHOOT, 0,
 	SMSGetZipName, sms_ruptusRomInfo, sms_ruptusRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Rygar - Arcade Title (Hack)
+static struct BurnRomInfo sms_rygaratRomDesc[] = {
+	{ "Rygar - Arcade Title (2017)(Psyklax).sms",	0x24000, 0x3bd1bd68, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_rygarat)
+STD_ROM_FN(sms_rygarat)
+
+struct BurnDriver BurnDrvsms_rygarat = {
+	"sms_rygarat", "sms_argosnj", NULL, NULL, "2017",
+	"Rygar - Arcade Title (Hack)\0", NULL, "Psyklax", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_rygaratRomInfo, sms_rygaratRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Rygar - Custom Title (Hack)
+static struct BurnRomInfo sms_rygarctRomDesc[] = {
+	{ "Rygar - Custom Title (2013)(Kevinmos3).sms",	0x20000, 0x6f197c21, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_rygarct)
+STD_ROM_FN(sms_rygarct)
+
+struct BurnDriver BurnDrvsms_rygarct = {
+	"sms_rygarct", "sms_argosnj", NULL, NULL, "2013",
+	"Rygar - Custom Title (Hack)\0", NULL, "Kevinmos3", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_rygarctRomInfo, sms_rygarctRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

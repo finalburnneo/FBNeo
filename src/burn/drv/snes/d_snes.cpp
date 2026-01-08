@@ -46146,10 +46146,10 @@ struct BurnDriver BurnDrvsnes_Supcooked = {
 	512, 448, 4, 3
 };
 
-// Super Bug Hunters (HB, v1.1)
-
+// Super Bug Hunters (HB, v1.2)
+// https://maxwelolinda.itch.io/super-bug-hunters
 static struct BurnRomInfo snes_SuperbughuntersRomDesc[] = {
-	{ "Super Bug Hunters v1.1 (2025)(Maxwel Olinda).sfc", 262144, 0xf9305a4f, BRF_ESS | BRF_PRG },
+	{ "Super Bug Hunters v1.2 (2025)(Maxwel Olinda).sfc", 262144, 0x23386931, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Superbughunters)
@@ -46157,7 +46157,7 @@ STD_ROM_FN(snes_Superbughunters)
 
 struct BurnDriver BurnDrvsnes_Superbughunters = {
 	"snes_superbughunters", NULL, NULL, NULL, "2025",
-	"Super Bug Hunters (HB, v1.1)\0", NULL, "Maxwel Olinda", "Nintendo",
+	"Super Bug Hunters (HB, v1.2)\0", NULL, "Maxwel Olinda", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_SuperbughuntersRomInfo, snes_SuperbughuntersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

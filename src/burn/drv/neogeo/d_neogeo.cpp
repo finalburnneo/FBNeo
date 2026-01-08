@@ -29724,21 +29724,21 @@ struct BurnDriver BurnDrvShinobing = {
 };
 
 
-// World Racer 32Kb (HB)
-// https://www.patreon.com/posts/its-done-is-145694400
+// World Racer 32Kb (HB, 251226)
+// https://www.patreon.com/posts/worldracer32kb-146718741
 // 3 & 4 players not working (needs Multitap)
 
 static struct BurnRomInfo wrldrc32RomDesc[] = {
-	{ "wrldrc32-p1.p1",   0x100000, 0xd9f8921c, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+	{ "wrldrc32-p1.p1",   0x100000, 0x3350fa1b, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
-	{ "wrldrc32-s1.s1",   0x020000, 0x312508af, 2 | BRF_GRA },				//  1 Text data
+	{ "wrldrc32-s1.s1",   0x020000, 0x2290a5b3, 2 | BRF_GRA },		//  1 Text data
 
-	{ "wrldrc32-c1.c1",   0x080000, 0xec05e878, 3 | BRF_GRA },				//  2 Sprite data
-	{ "wrldrc32-c2.c2",   0x080000, 0xff4755b9, 3 | BRF_GRA },				//  3
+	{ "wrldrc32-c1.c1",   0x080000, 0x51858e96, 3 | BRF_GRA },		//  2 Sprite data
+	{ "wrldrc32-c2.c2",   0x080000, 0x43dc168f, 3 | BRF_GRA },		//  3
 
-	{ "wrldrc32-m1.m1",   0x010000, 0x6178075b, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+	{ "wrldrc32-m1.m1",   0x010000, 0xf10683ac, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
 
-	{ "wrldrc32-v1.v1",   0x080000, 0xa4763f5d, 5 | BRF_SND },				//  5 Sound data
+	{ "wrldrc32-v1.v1",   0x080000, 0xa4763f5d, 5 | BRF_SND },		//  5 Sound data
 };
 
 STDROMPICKEXT(wrldrc32, wrldrc32, neogeo)
@@ -29746,7 +29746,7 @@ STD_ROM_FN(wrldrc32)
 
 struct BurnDriver BurnDrvWrldrc32 = {
 	"wrldrc32", NULL, "neogeo", NULL, "2025",
-	"World Racer 32Kb (HB)\0", NULL, "Blastar", "Neo Geo",
+	"World Racer 32Kb (HB, 251226)\0", NULL, "Blastar", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, wrldrc32RomInfo, wrldrc32RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

@@ -35281,6 +35281,25 @@ struct BurnDriver BurnDrvsnes_Superdoubledragone = {
 	512, 448, 4, 3
 };
 
+// Super Double Dragon (Euro, Prototype)
+
+static struct BurnRomInfo snes_SuperdoubledragonepRomDesc[] = {
+	{ "Super Double Dragon (E, Proto)(1992)(Tradewest - Technos).sfc", 1048576, 0x1064e0e0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superdoubledragonep)
+STD_ROM_FN(snes_Superdoubledragonep)
+
+struct BurnDriver BurnDrvsnes_Superdoubledragonep = {
+	"snes_superdoubledragonep", "snes_returndoubledragonev", NULL, NULL, "1992",
+	"Super Double Dragon (Euro, Prototype)\0", NULL, "Tradewest - Technos", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_SuperdoubledragonepRomInfo, snes_SuperdoubledragonepRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Drift Out: World Rally Championships (USA)
 
 static struct BurnRomInfo snes_SuperdriftoutRomDesc[] = {

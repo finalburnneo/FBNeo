@@ -92,8 +92,6 @@ void hc55516_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 	start_common(0x07, true);
 }
 
-#if 0
-// maybe we'll need these in the future, who knows?
 void mc3417_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 {
 	pCPUTotalCycles = pCPUCyclesCB;
@@ -109,7 +107,6 @@ void mc3418_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
 
 	start_common(0x0f, false);
 }
-#endif
 
 void hc55516_exit()
 {
@@ -139,6 +136,11 @@ void hc55516_reset()
 
 	nCurrentPosition = 0;
 	samples_from = (SAMPLE_RATE * 100 + (nBurnFPS >> 1)) / nBurnFPS;
+}
+
+void hc55516_clock(INT32 clock)
+{
+	m_clock = clock;
 }
 
 void hc55516_volume(double vol)

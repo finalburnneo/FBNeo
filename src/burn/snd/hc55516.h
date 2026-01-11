@@ -8,6 +8,9 @@
 
 
 void hc55516_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
+void mc3417_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
+void mc3418_init(INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ);
+void hc55516_clock(INT32 clock); // have the core clock itself (instead of soft-clocking with clock_w())
 
 void hc55516_exit();
 void hc55516_reset();

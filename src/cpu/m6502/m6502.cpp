@@ -183,6 +183,11 @@ void m6502_exit(void)
 	/* nothing to do yet */
 }
 
+void m6502_set_callback(int (*cb)(int))
+{
+	m6502.insn_callback = cb;
+}
+
 void m6502_get_context (void *dst)
 {
 	if( dst ) 
@@ -308,6 +313,8 @@ int m6502_execute(int cycles)
 		UINT8 op;
 		PPC = PCD;
 
+		INT32 pICOUNT = m6502.ICount;
+
 //		debugger_instruction_hook(Machine, PCD);
 
 		/* if an irq is pending, take it now */
@@ -358,6 +365,10 @@ int m6502_execute(int cycles)
 				m6502.pending_irq = 1;
 			}
 		}
+
+		if (m6502.insn_callback)
+			m6502.insn_callback(pICOUNT - m6502.ICount);
+
 	} while (m6502.ICount > 0 && !m6502.end_run);
 
 	cycles = cycles - m6502.ICount;

@@ -74,6 +74,7 @@ typedef struct
 	void	(*port_write)(UINT8 direction, UINT8 data);
 
 	int 	(*irq_callback)(int irqline);	/* IRQ callback */
+	int		(*insn_callback)(int cycles);
 
 	int     fetching_opcode; // true when fetching opcode (no stating necessary)
 
@@ -140,6 +141,7 @@ void m6502_exit(void);
 void m6502_core_exit();
 void m6502_get_context (void *dst);
 void m6502_set_context (void *src);
+void m6502_set_callback(int (*cb)(int));
 int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
 void m6502_set_irq_hold();

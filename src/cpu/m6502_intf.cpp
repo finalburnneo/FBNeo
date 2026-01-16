@@ -534,7 +534,16 @@ void M6502SetAddressMask(UINT16 RangeMask)
 #endif
 
 	pCurrentCPU->AddressMask = RangeMask;
+}
 
+void M6502SetCallback(int (*cb)(int))
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetCallback called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetCallback called with no CPU open\n"));
+#endif
+
+	m6502_set_callback(cb);
 }
 
 void M6502SetReadPortHandler(UINT8 (*pHandler)(UINT16))

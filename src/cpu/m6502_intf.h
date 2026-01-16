@@ -77,6 +77,8 @@ void M6502SetOpcodeDecode(UINT8 *table);
 
 void M6502SetAddressMask(UINT16 RangeMask);
 
+void M6502SetCallback(int (*cb)(int));
+
 void M6502SetPC(INT32 pc);
 UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);

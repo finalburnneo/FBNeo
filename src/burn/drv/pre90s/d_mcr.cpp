@@ -2766,6 +2766,86 @@ struct BurnDriver BurnDrvRbtapper = {
 };
 
 
+// Tapper (Simpsons Hack)
+
+static struct BurnRomInfo stapperRomDesc[] = {
+	{ "tappg0.bin",							0x4000, 0x127171d1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tappg1.bin",							0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tappg2.bin",							0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tappg3.bin",							0x2000, 0xe8dcdaa4, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "tapper_sound_snd_0_a7_12-7-83.a7",	0x1000, 0x0e8bb9d5, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "tapper_sound_snd_1_a8_12-7-83.a8",	0x1000, 0x0cf0e29b, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "tapper_sound_snd_2_a9_12-7-83.a9",	0x1000, 0x31eb6dc6, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "tapper_sound_snd_3_a10_12-7-83.a10",	0x1000, 0x01a9be6a, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "stapper.bg1",						0x4000, 0x1326da21, 3 | BRF_GRA },           //  8 gfx1
+	{ "stapper.bg0",						0x4000, 0x539b93c3, 3 | BRF_GRA },           //  9
+
+	{ "stapper.fg1",						0x4000, 0x29dd8e85, 4 | BRF_GRA },           // 10 gfx2
+	{ "stapper.fg2",						0x4000, 0xa8ba850f, 4 | BRF_GRA },           // 11
+	{ "stapper.fg3",						0x4000, 0x3d9133e4, 4 | BRF_GRA },           // 12
+	{ "stapper.fg4",						0x4000, 0x9254d87c, 4 | BRF_GRA },           // 13
+	{ "stapper.fg5",						0x4000, 0x5ec2544f, 4 | BRF_GRA },           // 14
+	{ "stapper.fg6",						0x4000, 0x9b970c4b, 4 | BRF_GRA },           // 15
+	{ "stapper.fg7",						0x4000, 0xa2ef5c06, 4 | BRF_GRA },           // 16
+	{ "stapper.fg8",						0x4000, 0x1baca746, 4 | BRF_GRA },           // 17
+};
+
+STDROMPICKEXT(stapper, stapper, Ssioprom)
+STD_ROM_FN(stapper)
+
+struct BurnDriver BurnDrvStapper = {
+	"stapper", "tapper", "midssio", NULL, "2002",
+	"Tapper (Simpsons Hack)\0", NULL, "hack (DC)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, stapperRomInfo, stapperRomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
+	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	512, 480, 4, 3
+};
+
+
+// Tapper (Simpsons Hack ver.81)
+
+static struct BurnRomInfo stapper1RomDesc[] = {
+	{ "stapper1.pg0",						0x4000, 0xc915f608, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tappg1.bin",							0x4000, 0x9d6a47f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tappg2.bin",							0x4000, 0x3a1f8778, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "stapper1.pg3",						0x2000, 0xdd4c785f, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "tapper_sound_snd_0_a7_12-7-83.a7",	0x1000, 0x0e8bb9d5, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "tapper_sound_snd_1_a8_12-7-83.a8",	0x1000, 0x0cf0e29b, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "tapper_sound_snd_2_a9_12-7-83.a9",	0x1000, 0x31eb6dc6, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "tapper_sound_snd_3_a10_12-7-83.a10",	0x1000, 0x01a9be6a, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "stapper.bg1",						0x4000, 0x1326da21, 3 | BRF_GRA },           //  8 gfx1
+	{ "stapper.bg0",						0x4000, 0x539b93c3, 3 | BRF_GRA },           //  9
+
+	{ "stapper.fg1",						0x4000, 0x29dd8e85, 4 | BRF_GRA },           // 10 gfx2
+	{ "stapper.fg2",						0x4000, 0xa8ba850f, 4 | BRF_GRA },           // 11
+	{ "stapper.fg3",						0x4000, 0x3d9133e4, 4 | BRF_GRA },           // 12
+	{ "stapper.fg4",						0x4000, 0x9254d87c, 4 | BRF_GRA },           // 13
+	{ "stapper.fg5",						0x4000, 0x5ec2544f, 4 | BRF_GRA },           // 14
+	{ "stapper.fg6",						0x4000, 0x9b970c4b, 4 | BRF_GRA },           // 15
+	{ "stapper.fg7",						0x4000, 0xa2ef5c06, 4 | BRF_GRA },           // 16
+	{ "stapper.fg8",						0x4000, 0x1baca746, 4 | BRF_GRA },           // 17
+};
+
+STDROMPICKEXT(stapper1, stapper1, Ssioprom)
+STD_ROM_FN(stapper1)
+
+struct BurnDriver BurnDrvStapper1 = {
+	"stapper1", "tapper", "midssio", NULL, "2002",
+	"Tapper (Simpsons Hack ver.81)\0", NULL, "hack (DC)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, stapper1RomInfo, stapper1RomName, NULL, NULL, NULL, NULL, TapperInputInfo, TapperDIPInfo,
+	TapperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	512, 480, 4, 3
+};
+
+
 // Kozmik Kroozr
 
 static struct BurnRomInfo kroozrRomDesc[] = {

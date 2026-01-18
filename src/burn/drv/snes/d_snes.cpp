@@ -9505,21 +9505,59 @@ struct BurnDriver BurnDrvsnes_Dgbattlej = {
 	512, 448, 4, 3
 };
 
-// Dossun! Ganseki Battle (Hack, English)
-// https://www.romhacking.net/translations/314/
+// Dossun! Ganseki Battle (Hack, English v1.1)
+// https://www.romhacking.net/translations/7497/
 static struct BurnRomInfo snes_DgbattleteRomDesc[] = {
-	{ "Dossun! Ganseki Battle T-Eng (2000)(Aeon Genesis).sfc", 1048576, 0x223d17d0, BRF_ESS | BRF_PRG },
+	{ "Dossun! Ganseki Battle T-Eng v1.1 (2026)(Stoneboat).sfc", 2097152, 0x1111d176, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dgbattlete)
 STD_ROM_FN(snes_Dgbattlete)
 
 struct BurnDriver BurnDrvsnes_Dgbattlete = {
-	"snes_dgbattlete", NULL, NULL, NULL, "2000",
-	"Dossun! Ganseki Battle (Hack, English)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	"snes_dgbattlete", NULL, NULL, NULL, "2026",
+	"Dossun! Ganseki Battle (Hack, English v1.1)\0", NULL, "Stoneboat", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_DgbattleteRomInfo, snes_DgbattleteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dossun! Ganseki Battle (Hack, English, Alt)
+// https://www.romhacking.net/translations/314/
+static struct BurnRomInfo snes_DgbattleteaRomDesc[] = {
+	{ "Dossun! Ganseki Battle T-Eng (Alt)(2000)(Aeon Genesis).sfc", 1048576, 0x223d17d0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dgbattletea)
+STD_ROM_FN(snes_Dgbattletea)
+
+struct BurnDriver BurnDrvsnes_Dgbattletea = {
+	"snes_dgbattletea", "snes_dgbattlete", NULL, NULL, "2000",
+	"Dossun! Ganseki Battle (Hack, English, Alt)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_DgbattleteaRomInfo, snes_DgbattleteaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Dossun! Ganseki Battle (Hack, Spanish v1.1)
+// https://www.romhacking.net/translations/2850/
+static struct BurnRomInfo snes_DgbattletsRomDesc[] = {
+	{ "Dossun! Ganseki Battle T-Spa v1.1 (2018)(Wave).sfc", 1048576, 0x8161d72e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dgbattlets)
+STD_ROM_FN(snes_Dgbattlets)
+
+struct BurnDriver BurnDrvsnes_Dgbattlets = {
+	"snes_dgbattlets", "snes_dgbattlete", NULL, NULL, "2018",
+	"Dossun! Ganseki Battle (Hack, Spanish v1.1)\0", NULL, "Wave", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_DgbattletsRomInfo, snes_DgbattletsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

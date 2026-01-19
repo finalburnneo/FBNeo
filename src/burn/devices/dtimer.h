@@ -123,7 +123,7 @@ struct dtimer
 
 			if (time_current >= time_trig) {
 				//extern int counter;
-				//if (counter) bprintf(0, _T("timer %d hits @ %d  sekcyc %d\n"), timer_param, time_current, SekTotalCycles());
+				//if (counter) bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
 
 				if (retrig == 0) {
 					running = 0;
@@ -165,6 +165,9 @@ struct dtimer
 	}
 	INT32 isrunning() {
 		return running;
+	}
+	void enable(INT32 which) {
+		running = which;
 	}
 	UINT32 timeleft() {
 		return time_trig - time_current;

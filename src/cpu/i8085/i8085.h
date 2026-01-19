@@ -1,10 +1,6 @@
 // license:BSD-3-Clause
 // copyright-holders:Juergen Buchmueller
 
-#ifndef MAME_CPU_I8085_I8085_H
-#define MAME_CPU_I8085_I8085_H
-
-
 /***************************************************************************
     CONSTANTS
 ***************************************************************************/

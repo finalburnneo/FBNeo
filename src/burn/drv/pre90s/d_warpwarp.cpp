@@ -872,7 +872,7 @@ static void warpwarp_out3_w(UINT16 offset, UINT8 data)
 	}
 }
 
-static void __fastcall main_write(UINT16 address, UINT8 data)
+static void main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf000) == 0x6000) address = (address&0xfff) + 0xc000; // bombee/cutieq map
 
@@ -894,7 +894,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall main_read(UINT16 address)
+static UINT8 main_read(UINT16 address)
 {
 	if ((address&0xf000) == 0x6000)	address = (address&0xfff) + 0xc000; // bombee/cutieq map
 
@@ -911,7 +911,7 @@ static UINT8 __fastcall main_read(UINT16 address)
 	return 0;
 }
 
-static void __fastcall geebee_write(UINT16 address, UINT8 data)
+static void geebee_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x6000 && address <= 0x6fff) {
 		geebee_out6_w(address - 0x6000, data);
@@ -923,7 +923,7 @@ static void __fastcall geebee_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall geebee_read(UINT16 address)
+static UINT8 geebee_read(UINT16 address)
 {
 	if (address >= 0x5000 && address <= 0x53ff) {
 		return geebee_in_r(address - 0x5000);
@@ -932,7 +932,7 @@ static UINT8 __fastcall geebee_read(UINT16 address)
 	return 0;
 }
 
-static void __fastcall geebee_out(UINT16 address, UINT8 data)
+static void geebee_out(UINT16 address, UINT8 data)
 {
 	address &= 0xff;
 
@@ -947,7 +947,7 @@ static void __fastcall geebee_out(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall geebee_in(UINT16 address)
+static UINT8 geebee_in(UINT16 address)
 {
 	address &= 0xff;
 

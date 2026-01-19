@@ -4,7 +4,7 @@
 
 #include "tiles_generic.h"
 #include "driver.h"
-#include "z80_intf.h"
+#include "i8085_intf.h"
 #include "bitswap.h"
 #include "resnet.h"
 #include "burn_gun.h" // paddle
@@ -863,7 +863,7 @@ static void warpwarp_out3_w(UINT16 offset, UINT8 data)
 		case 6:
 			ball_on = data & 1;
 			if (~data & 1) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+				i8080SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 			break;
 		case 7:
@@ -962,9 +962,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
+	i8080Open(0);
+	i8080Reset();
+	i8080Close();
 
 	ball_on = 0;
 	ball_h = 0;
@@ -1004,12 +1004,7 @@ static INT32 CharYOffsets[8] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 };
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "geebee", 6)) {
 		bprintf(0, _T("geebee mode"));
@@ -1072,45 +1067,45 @@ static INT32 DrvInit()
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 	}
 
-	ZetInit(0);
-	ZetOpen(0);
+	i8080Init();
+	i8080Open(0);
 	if (bombbeemode) {
 		bprintf(0, _T("mapping: bombbee/cutieq mode\n"));
-		ZetMapMemory(DrvZ80ROM,		0x0000, 0x1fff, MAP_RAM);
-		ZetMapMemory(DrvZ80RAM,		0x2000, 0x23ff, MAP_RAM);
-		ZetMapMemory(DrvVidRAM,		0x4000, 0x47ff, MAP_RAM);
-		ZetMapMemory(DrvGFX1ROM,    0x4800, 0x4fff, MAP_RAM);
-		ZetSetWriteHandler(main_write);
-		ZetSetReadHandler(main_read);
+		i8080MapMemory(DrvZ80ROM,		0x0000, 0x1fff, MAP_RAM);
+		i8080MapMemory(DrvZ80RAM,		0x2000, 0x23ff, MAP_RAM);
+		i8080MapMemory(DrvVidRAM,		0x4000, 0x47ff, MAP_RAM);
+		i8080MapMemory(DrvGFX1ROM,    0x4800, 0x4fff, MAP_RAM);
+		i8080SetWriteHandler(main_write);
+		i8080SetReadHandler(main_read);
 		ball_color = 0x200;
 		ball_size_x = 4;
 		ball_size_y = 4;
 	} else
 	if (navaronemode) {
 		bprintf(0, _T("mapping: navarone mode\n"));
-		ZetMapMemory(DrvZ80ROM,		0x0000, 0x1fff, MAP_RAM);
-		ZetMapMemory(DrvZ80RAM,		0x4000, 0x40ff, MAP_RAM);
-		ZetMapMemory(DrvVidRAM,		0x2000, 0x23ff, MAP_RAM);
-		ZetMapMemory(DrvVidRAM,		0x2400, 0x27ff, MAP_RAM);
-		ZetMapMemory(DrvGFX1ROM,    0x3000, 0x37ff, MAP_RAM);
-		ZetSetInHandler(geebee_in);
-		ZetSetOutHandler(geebee_out);
-		ZetSetWriteHandler(geebee_write);
-		ZetSetReadHandler(geebee_read);
+		i8080MapMemory(DrvZ80ROM,		0x0000, 0x1fff, MAP_RAM);
+		i8080MapMemory(DrvZ80RAM,		0x4000, 0x40ff, MAP_RAM);
+		i8080MapMemory(DrvVidRAM,		0x2000, 0x23ff, MAP_RAM);
+		i8080MapMemory(DrvVidRAM,		0x2400, 0x27ff, MAP_RAM);
+		i8080MapMemory(DrvGFX1ROM,    0x3000, 0x37ff, MAP_RAM);
+		i8080SetInHandler(geebee_in);
+		i8080SetOutHandler(geebee_out);
+		i8080SetWriteHandler(geebee_write);
+		i8080SetReadHandler(geebee_read);
 		ball_color = 7;
 	} else { //warpwarp
 		bprintf(0, _T("mapping: warpwarp mode\n"));
-		ZetMapMemory(DrvZ80ROM,		0x0000, 0x3fff, MAP_RAM);
-		ZetMapMemory(DrvZ80RAM,		0x8000, 0x83ff, MAP_RAM);
-		ZetMapMemory(DrvVidRAM,		0x4000, 0x47ff, MAP_RAM);
-		ZetMapMemory(DrvGFX1ROM,    0x4800, 0x4fff, MAP_RAM);
-		ZetSetWriteHandler(main_write);
-		ZetSetReadHandler(main_read);
+		i8080MapMemory(DrvZ80ROM,		0x0000, 0x3fff, MAP_RAM);
+		i8080MapMemory(DrvZ80RAM,		0x8000, 0x83ff, MAP_RAM);
+		i8080MapMemory(DrvVidRAM,		0x4000, 0x47ff, MAP_RAM);
+		i8080MapMemory(DrvGFX1ROM,    0x4800, 0x4fff, MAP_RAM);
+		i8080SetWriteHandler(main_write);
+		i8080SetReadHandler(main_read);
 		ball_color = 0x200;
 		ball_size_x = 4;
 		ball_size_y = 4;
 	}
-	ZetClose();
+	i8080Close();
 
 	GenericTilesInit();
 
@@ -1130,9 +1125,9 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	ZetExit();
+	i8080Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	warpwarp_sound_deinit();
 
@@ -1236,19 +1231,19 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[1] = { 2048000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 
-	ZetOpen(0);
+	i8080Open(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
-		CPU_RUN(0, Zet);
+		CPU_RUN(0, i8080);
 
 		if (i == nInterleave - 1 && ball_on)
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			i8080SetIRQLine(0, CPU_IRQSTATUS_ACK);
 
 		if (navaronemode && i == 0 && bombbeemode == 0) // weird timing.
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			i8080SetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		warpwarp_timer_tiktiktik(nCyclesTotal[0] / nInterleave);
 	}
-	ZetClose();
+	i8080Close();
 
 	if (pBurnSoundOut) {
 		warpwarp_sound_update(pBurnSoundOut, nBurnSoundLen);
@@ -1276,7 +1271,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		ZetScan(nAction);
+		i8080Scan(nAction);
 
 		warpwarp_sound_scan();
 

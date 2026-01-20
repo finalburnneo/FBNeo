@@ -36,6 +36,7 @@ void AY8910Write(INT32 chip, INT32 a, INT32 data);
 INT32 AY8910Read(INT32 chip);
 
 void AY8910Reset(INT32 chip);
+INT32 AY8910InReset(INT32 chip); // ie: check from port handler if we're in reset
 void AY8910Exit(INT32 chip);
 
 // add signal ignored for any chip but #0

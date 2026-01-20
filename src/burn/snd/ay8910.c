@@ -140,6 +140,7 @@ struct AY8910
 	UINT32 UpdateStepN;
 	INT32 SampleRate;
 	UINT32 VolTable[32];
+	INT32 in_reset;
 
 	read8_handler PortAread;
 	read8_handler PortBread;
@@ -776,6 +777,8 @@ void AY8910Reset(INT32 chip)
 #endif
 #endif
 
+	PSG->in_reset = 1;
+
 	PSG->register_latch = 0;
 	PSG->RNG = 1;
 	PSG->OutputA = 0;
@@ -793,6 +796,22 @@ void AY8910Reset(INT32 chip)
 	ay_lastout_r = 0;
 	ay_lastin_l  = 0;
 	ay_lastout_l = 0;
+
+	PSG->in_reset = 0; // done!
+}
+
+INT32 AY8910InReset(INT32 chip)
+{
+	struct AY8910 *PSG = &AYPSG[chip];
+
+#if defined FBNEO_DEBUG
+#ifdef __GNUC__
+	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910InReset() called without init\n"));
+	if (chip > num) bprintf(PRINT_ERROR, _T("AY8910InReset called with invalid chip number %x\n"), chip);
+#endif
+#endif
+
+	return (PSG->in_reset);
 }
 
 void AY8910Exit(INT32 chip)

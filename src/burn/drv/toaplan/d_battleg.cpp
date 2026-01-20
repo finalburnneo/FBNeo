@@ -26,6 +26,8 @@ INT32 Bgareggabl = 0; // used by toa_extratext.cpp
 static INT32 Bgareggabla = 0;
 static INT32 location_test = 0;
 
+static INT32 nCyclesExtra[2];
+
 // Rom information
 
 // Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)
@@ -577,6 +579,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			drvZ80Bankswitch(nBank);
 			ZetClose();
 		}
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -847,6 +851,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -854,6 +860,8 @@ static INT32 DrvDoReset()
 
 static INT32 battlegInit()
 {
+	BurnSetRefreshRate(59.637405);
+
 	INT32 nLen;
 
 #ifdef DRIVER_ROTATION
@@ -1025,9 +1033,10 @@ static INT32 DrvFrame()
 
 	SekNewFrame();
 
-	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesTotal[1] = TOA_Z80_SPEED / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesTotal[0] = (INT32)((INT64)16000000 * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS));
+	nCyclesTotal[1] = (INT32)((INT64)TOA_Z80_SPEED * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS)); // OC is required to avoid "sound error"
+	nCyclesDone[0] = nCyclesExtra[0];
+	nCyclesDone[1] = nCyclesExtra[1];
 
 	SekOpen(0);
 
@@ -1100,6 +1109,9 @@ static INT32 DrvFrame()
 	}
 	
 	ZetClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	return 0;
 }

@@ -2,7 +2,8 @@
 
 #include "burnint.h"
 #include "msm5232.h"
-
+#include "math.h"
+#include "biquad.h"
 /*
     OKI MSM5232RS
     8 channel tone generator
@@ -69,6 +70,9 @@ static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the
 
 static INT32 *sound_buffer[11];
 
+static BIQ biquad;
+static INT32 biquad_noise;
+
 //-------------------------------------------------
 //  set gate handler
 //-------------------------------------------------
@@ -128,9 +132,22 @@ void MSM5232Reset()
 	m_EN_out2[1]    = 0;
 
 	gate_update();
+
+	biquad.reset();
+	biquad_noise = 0;
 }
 
 //-------------------------------------------------
+
+void MSM5232NoiseFilter(bool onoff)
+{
+	biquad_noise = onoff;
+}
+
+static INT32 filter_noise(INT32 sample)
+{
+	return (biquad_noise) ? biquad.filter(sample) : sample;
+}
 
 void MSM5232SetCapacitors(double cap1, double cap2, double cap3, double cap4, double cap5, double cap6, double cap7, double cap8)
 {
@@ -295,6 +312,9 @@ void MSM5232Init(INT32 clock, INT32 bAdd)
 	volume[BURN_SND_MSM5232_ROUTE_SOLO8] = 0;
 	volume[BURN_SND_MSM5232_ROUTE_SOLO16] = 0;
 	volume[BURN_SND_MSM5232_ROUTE_NOISE] = 0;
+
+	biquad.init(FILT_HIGHPASS, nBurnSoundRate, 8000.00, 2.2, 0);
+	biquad_noise = 0;
 }
 
 void MSM5232Exit()
@@ -651,14 +671,17 @@ void MSM5232SetClock(INT32 clock)
 
 	if (m_chip_clock != clock)
 	{
+		INT32 old_rate = m_rate;
 		m_rate = ((clock/CLOCK_RATE_DIVIDER) * 100) / nBurnFPS;
 		m_chip_clock = (clock * 100) / nBurnFPS;
 		init_tables();
-		for (INT32 j = 0; j < 11; j++) {
-			if (sound_buffer[j]) {
-				BurnFree(sound_buffer[j]);
+		if (m_rate > old_rate) {
+			for (INT32 j = 0; j < 11; j++) {
+				if (sound_buffer[j]) {
+					BurnFree(sound_buffer[j]);
+				}
+				sound_buffer[j] = (INT32*)BurnMalloc(m_rate * sizeof(INT32));
 			}
-			sound_buffer[j] = (INT32*)BurnMalloc(m_rate * 2);
 		}
 	}
 }
@@ -745,7 +768,7 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[10][offs]) * volume[10]);
+			sample += (INT32)(double)(BURN_SND_CLIP(filter_noise(sound_buffer[10][offs])) * volume[10]);
 	
 			sample = BURN_SND_CLIP(sample);
 	
@@ -768,7 +791,7 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
 			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[10][offs]) * volume[10]);
+			sample += (INT32)(double)(BURN_SND_CLIP(filter_noise(sound_buffer[10][offs])) * volume[10]);
 	
 			sample = BURN_SND_CLIP(sample);
 	
@@ -809,6 +832,7 @@ void MSM5232Scan(INT32 nAction, INT32 *)
 		SCAN_VAR(m_gate);
 		SCAN_VAR(m_chip_clock);
 		SCAN_VAR(m_rate);
+		SCAN_VAR(biquad_noise);
 	}
 
 	if (nAction & ACB_WRITE) {

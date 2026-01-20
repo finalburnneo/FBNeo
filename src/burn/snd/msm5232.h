@@ -9,6 +9,7 @@ void MSM5232Exit();
 void MSM5232Scan(INT32 nAction, INT32 *pnMin);
 
 void MSM5232SetRoute(double volume, INT32 route);
+void MSM5232NoiseFilter(bool onoff);
 
 #define BURN_SND_MSM5232_ROUTE_0		0
 #define BURN_SND_MSM5232_ROUTE_1		1

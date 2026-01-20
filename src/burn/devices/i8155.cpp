@@ -119,6 +119,9 @@ void i8155_init()
 
 void i8155_scan()
 {
+	m_timer.scan();
+	m_timer_tc.scan();
+
 	SCAN_VAR(m_io_m);
 	SCAN_VAR(m_ad);
 	SCAN_VAR(m_command);

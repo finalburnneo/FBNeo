@@ -483,7 +483,7 @@ static void execute_set_input(int irqline, int state)
 	int hold = (state == CPU_IRQSTATUS_HOLD || state == CPU_IRQSTATUS_AUTO);
 	if (hold) {
 		state = 1;
-	}          //    xxxxdinkxxx
+	}
 	int newstate = (state != CLEAR_LINE);
 
 	// TRAP is level and edge-triggered NMI
@@ -705,7 +705,8 @@ static UINT8 read_op()
 
 static UINT8 read_inta()
 {
-	return 0xff;
+	return irq_callback(I8085_INTR_LINE); // returns vector (usually 0xff)
+
 #if 0 // dink
 	if (m_in_inta_func.isunset())
 		return standard_irq_callback(I8085_INTR_LINE, m_PC.w.l);
@@ -1003,6 +1004,7 @@ INT32 i8085Scan(INT32 nAction)
 		SCAN_VAR(m_after_ei);
 		SCAN_VAR(m_nmi_state);
 		SCAN_VAR(m_irq_state);
+		SCAN_VAR(m_irq_hold);
 		SCAN_VAR(m_trap_pending);
 		SCAN_VAR(m_trap_im_copy);
 		SCAN_VAR(m_sod_state);

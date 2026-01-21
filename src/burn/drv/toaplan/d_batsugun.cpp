@@ -17,6 +17,8 @@ static HoldCoin<2> hold_coin;
 
 static INT32 v25_reset = 0;
 
+static INT32 nCyclesExtra[2];
+
 // Rom information
 static struct BurnRomInfo batsugunRomDesc[] = {
 	{ "tp030_1a.bin", 	0x080000, 0xcb1d4554, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
@@ -317,6 +319,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(v25_reset);
 
 		hold_coin.scan();
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -583,6 +587,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -590,6 +596,8 @@ static INT32 DrvDoReset()
 
 static INT32 DrvInit(INT32 (*pRomLoad)())
 {
+	BurnSetRefreshRate(59.637405);
+
 	INT32 nLen;
 
 #ifdef DRIVER_ROTATION
@@ -728,10 +736,10 @@ static INT32 DrvFrame()
 	VezNewFrame();
 
 	INT32 nSoundBufferPos = 0;
-	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesTotal[1] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesDone[0] = 0;
-	nCyclesDone[1] = 0;
+	nCyclesTotal[0] = (INT32)((INT64)16000000 * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS));
+	nCyclesTotal[1] = (8000000 * 100) / nBurnFPS;
+	nCyclesDone[0] = nCyclesExtra[0];
+	nCyclesDone[1] = nCyclesExtra[1];
 
 	SekOpen(0);
 	
@@ -804,7 +812,10 @@ static INT32 DrvFrame()
 		DrvDraw();												// Draw screen if needed
 	}
 
-   return 0;
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	return 0;
 }
 
 struct BurnDriver BurnDrvBatsugun = {

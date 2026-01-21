@@ -24565,7 +24565,7 @@ struct BurnDriver BurnSpecScumball = {
 	"spec_scumball", NULL, "spec_spectrum", NULL, "1987",
 	"Scumball (48K)\0", NULL, "Mastertronic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecScumballRomInfo, SpecScumballRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -34383,6 +34383,63 @@ struct BurnDriver BurnSpecBiscuitsih = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// BIT 101 saves Christmas (English) (128K) (HB)
+
+static struct BurnRomInfo SpecBit101enRomDesc[] = {
+	{ "BIT 101 saves Christmas EN 128K (2026)(Isaias Diaz).tap", 58261, 0xe5189aff, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBit101en, SpecBit101en, Spec128)
+STD_ROM_FN(SpecBit101en)
+
+struct BurnDriver BurnSpecBit101en = {
+	"spec_bit101en", NULL, "spec_spec128", NULL, "2026",
+	"BIT 101 saves Christmas (English) (128K) (HB)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBit101enRomInfo, SpecBit101enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// BIT 101 saves Christmas (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecBit101esRomDesc[] = {
+	{ "BIT 101 saves Christmas ES 128K (2026)(Isaias Diaz).tap", 58264, 0xc8e18c62, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBit101es, SpecBit101es, Spec128)
+STD_ROM_FN(SpecBit101es)
+
+struct BurnDriver BurnSpecBit101es = {
+	"spec_bit101es", "spec_bit101en", "spec_spec128", NULL, "2026",
+	"BIT 101 saves Christmas (Spanish) (128K) (HB)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBit101esRomInfo, SpecBit101esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// BIT 101 saves Christmas (Portuguese) (128K) (HB)
+
+static struct BurnRomInfo SpecBit101ptRomDesc[] = {
+	{ "BIT 101 saves Christmas PT 128K (2026)(Isaias Diaz).tap", 58347, 0x179aadb9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBit101pt, SpecBit101pt, Spec128)
+STD_ROM_FN(SpecBit101pt)
+
+struct BurnDriver BurnSpecBit101pt = {
+	"spec_bit101pt", "spec_bit101en", "spec_spec128", NULL, "2026",
+	"BIT 101 saves Christmas (Portuguese) (128K) (HB)\0", NULL, "Isaias Diaz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBit101ptRomInfo, SpecBit101ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Black & White (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecbnwRomDesc[] = {
@@ -34421,7 +34478,7 @@ struct BurnDriver BurnSpecBlackhorse = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Black Sea - Treasure Hunters (48K-128K) (HB)
+// Black Sea: Treasure Hunters (48K-128K) (HB)
 
 static struct BurnRomInfo SpecBlackseaRomDesc[] = {
 	{ "Black Sea - Treasure Hunters 48K-128K (2021)(Mananuk).tap", 45089, 0x00ad4735, BRF_ESS | BRF_PRG },
@@ -34432,7 +34489,7 @@ STD_ROM_FN(SpecBlacksea)
 
 struct BurnDriver BurnSpecBlacksea = {
 	"spec_blacksea", NULL, "spec_spec128", NULL, "2021",
-	"Black Sea - Treasure Hunters (48K-128K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
+	"Black Sea: Treasure Hunters (48K-128K) (HB)\0", NULL, "Mananuk", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBlackseaRomInfo, SpecBlackseaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -45666,6 +45723,63 @@ struct BurnDriver BurnSpecKnddx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecKnddxRomInfo, SpecKnddxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Koji to the rescue of Superalloy Z (English) (128K) (HB)
+
+static struct BurnRomInfo SpecKojizenRomDesc[] = {
+	{ "Koji to the rescue of Superalloy Z EN 128K (2025)(Clanbyte).tap", 72571, 0xee3f26ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKojizen, SpecKojizen, Spec128)
+STD_ROM_FN(SpecKojizen)
+
+struct BurnDriver BurnSpecKojizen = {
+	"spec_kojizen", NULL, "spec_spec128", NULL, "2025",
+	"Koji to the rescue of Superalloy Z (English) (128K) (HB)\0", NULL, "Clanbyte", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecKojizenRomInfo, SpecKojizenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Koji al rescate de la Superaleacion Z (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecKojizesRomDesc[] = {
+	{ "Koji al rescate de la Superaleacion Z ES 128K (2025)(Clanbyte).tap", 72751, 0x9dfed9f1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKojizes, SpecKojizes, Spec128)
+STD_ROM_FN(SpecKojizes)
+
+struct BurnDriver BurnSpecKojizes = {
+	"spec_kojizes", "spec_kojizen", "spec_spec128", NULL, "2025",
+	"Koji al rescate de la Superaleacion Z (Spanish) (128K) (HB)\0", NULL, "Clanbyte", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecKojizesRomInfo, SpecKojizesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ryo in soccorso della Superlega Z (Italian) (128K) (HB)
+
+static struct BurnRomInfo SpecKojizitRomDesc[] = {
+	{ "Ryo in soccorso della Superlega Z IT 128K (2025)(Clanbyte).tap", 72683, 0xe6626e6c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKojizit, SpecKojizit, Spec128)
+STD_ROM_FN(SpecKojizit)
+
+struct BurnDriver BurnSpecKojizit = {
+	"spec_kojizit", "spec_kojizen", "spec_spec128", NULL, "2025",
+	"Ryo in soccorso della Superlega Z (Italian) (128K) (HB)\0", NULL, "Clanbyte", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecKojizitRomInfo, SpecKojizitRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -59442,6 +59556,82 @@ struct BurnDriver BurnSpecWiking128 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecWiking128RomInfo, SpecWiking128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy in the Islands of Mystery - Part 1: Exploration (English) (128K) (HB)
+
+static struct BurnRomInfo SpecWillyimp1enRomDesc[] = {
+	{ "Willy in the Islands of Mystery - Part 1 - Exploration EN 128K (2007)(Herve Ast).tap", 118898, 0x9c43df25, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWillyimp1en, SpecWillyimp1en, Spec128)
+STD_ROM_FN(SpecWillyimp1en)
+
+struct BurnDriver BurnSpecWillyimp1en = {
+	"spec_willyimp1en", NULL, "spec_spec128", NULL, "2007",
+	"Willy in the Islands of Mystery - Part 1: Exploration (English) (128K) (HB)\0", NULL, "Herve Ast", "ZX Spectrum",
+	NULL, NULL, L"Herv\u00E9 Ast", NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWillyimp1enRomInfo, SpecWillyimp1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy in the Islands of Mystery - Part 1: Exploration (French) (128K) (HB)
+
+static struct BurnRomInfo SpecWillyimp1frRomDesc[] = {
+	{ "Willy in the Islands of Mystery - Part 1 - Exploration FR 128K (2007)(Herve Ast).tap", 118898, 0xc5de41e9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWillyimp1fr, SpecWillyimp1fr, Spec128)
+STD_ROM_FN(SpecWillyimp1fr)
+
+struct BurnDriver BurnSpecWillyimp1fr = {
+	"spec_willyimp1fr", "spec_willyimp1en", "spec_spec128", NULL, "2007",
+	"Willy in the Islands of Mystery - Part 1: Exploration (French) (128K) (HB)\0", NULL, "Herve Ast", "ZX Spectrum",
+	NULL, NULL, L"Herv\u00E9 Ast", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWillyimp1frRomInfo, SpecWillyimp1frRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy in the Islands of Mystery - Part 2: The Temple (English) (128K) (HB)
+
+static struct BurnRomInfo SpecWillyimp2enRomDesc[] = {
+	{ "Willy in the Islands of Mystery - Part 2 - The Temple EN 128K (2025)(Herve Ast, Daniel Gromann).tap", 125825, 0xa9f3d888, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWillyimp2en, SpecWillyimp2en, Spec128)
+STD_ROM_FN(SpecWillyimp2en)
+
+struct BurnDriver BurnSpecWillyimp2en = {
+	"spec_willyimp2en", NULL, "spec_spec128", NULL, "2025",
+	"Willy in the Islands of Mystery - Part 2: The Temple (English) (128K) (HB)\0", NULL, "Herve Ast & Daniel Gromann", "ZX Spectrum",
+	NULL, NULL, L"Herv\u00E9 Ast & Daniel Gromann", NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWillyimp2enRomInfo, SpecWillyimp2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Willy in the Islands of Mystery - Part 2: The Temple (French) (128K) (HB)
+
+static struct BurnRomInfo SpecWillyimp2frRomDesc[] = {
+	{ "Willy in the Islands of Mystery - Part 2 - The Temple FR 128K (2025)(Herve Ast, Daniel Gromann).tap", 125825, 0x3698218a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWillyimp2fr, SpecWillyimp2fr, Spec128)
+STD_ROM_FN(SpecWillyimp2fr)
+
+struct BurnDriver BurnSpecWillyimp2fr = {
+	"spec_willyimp2fr", "spec_willyimp2en", "spec_spec128", NULL, "2025",
+	"Willy in the Islands of Mystery - Part 2: The Temple (French) (128K) (HB)\0", NULL, "Herve Ast & Daniel Gromann", "ZX Spectrum",
+	NULL, NULL, L"Herv\u00E9 Ast & Daniel Gromann", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWillyimp2frRomInfo, SpecWillyimp2frRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

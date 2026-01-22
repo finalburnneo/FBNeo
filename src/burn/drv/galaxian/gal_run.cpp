@@ -523,20 +523,20 @@ UINT8 __fastcall GalaxianZ80Read(UINT16 a)
 
 void __fastcall GalaxianZ80Write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x5800 && a <= 0x58ff) {
-		int Offset = a - 0x5800;
-		
+	if (a >= 0x5800 && a <= 0x5fff) {
+		int Offset = a & 0xff;
+
 		GalSpriteRam[Offset] = d;
-		
+
 		if (Offset < 0x40) {
 			if ((Offset & 0x01) == 0) {
 				GalScrollVals[Offset >> 1] = d;
 			}
 		}
-		
+
 		return;
 	}
-	
+
 	switch (a) {
 		case 0x6000:
 		case 0x6001: {
@@ -680,11 +680,11 @@ INT32 GalInit()
 			ZetMapArea(0x4400, 0x47ff, 0, GalZ80Ram1);
 			ZetMapArea(0x4400, 0x47ff, 1, GalZ80Ram1);
 			ZetMapArea(0x4400, 0x47ff, 2, GalZ80Ram1);
-			ZetMapArea(0x5000, 0x53ff, 0, GalVideoRam);
-			ZetMapArea(0x5000, 0x53ff, 1, GalVideoRam);
-			ZetMapArea(0x5000, 0x53ff, 2, GalVideoRam);
-			ZetMapArea(0x5800, 0x58ff, 0, GalSpriteRam);
-			ZetMapArea(0x5800, 0x58ff, 2, GalSpriteRam);
+			ZetMapMemory(GalVideoRam, 0x5000, 0x53ff, MAP_RAM);
+			ZetMapMemory(GalVideoRam, 0x5400, 0x57ff, MAP_RAM);
+			for (int i = 0; i < 8; i++) {
+				ZetMapMemory(GalSpriteRam, 0x5800 + (i * 0x100), 0x58ff + (i * 0x100), MAP_READ); // write in handler
+			}
 			ZetClose();
 		}
 	}

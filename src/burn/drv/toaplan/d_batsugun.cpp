@@ -596,7 +596,7 @@ static INT32 DrvDoReset()
 
 static INT32 DrvInit(INT32 (*pRomLoad)())
 {
-	BurnSetRefreshRate(59.637405);
+	BurnSetRefreshRate(TOA_REFRESHRATE);
 
 	INT32 nLen;
 
@@ -736,8 +736,8 @@ static INT32 DrvFrame()
 	VezNewFrame();
 
 	INT32 nSoundBufferPos = 0;
-	nCyclesTotal[0] = (INT32)((INT64)16000000 * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS));
-	nCyclesTotal[1] = (8000000 * 100) / nBurnFPS;
+	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * TOA_REFRESHRATE));
+	nCyclesTotal[1] = 8000000 / TOA_REFRESHRATE;
 	nCyclesDone[0] = nCyclesExtra[0];
 	nCyclesDone[1] = nCyclesExtra[1];
 

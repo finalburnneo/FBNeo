@@ -860,7 +860,7 @@ static INT32 DrvDoReset()
 
 static INT32 battlegInit()
 {
-	BurnSetRefreshRate(59.637405);
+	BurnSetRefreshRate(TOA_REFRESHRATE);
 
 	INT32 nLen;
 
@@ -1033,8 +1033,8 @@ static INT32 DrvFrame()
 
 	SekNewFrame();
 
-	nCyclesTotal[0] = (INT32)((INT64)16000000 * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS));
-	nCyclesTotal[1] = (INT32)((INT64)TOA_Z80_SPEED * 100 * nBurnCPUSpeedAdjust / (0x0100 * nBurnFPS)); // OC is required to avoid "sound error"
+	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * TOA_REFRESHRATE));
+	nCyclesTotal[1] = (INT32)((INT64)TOA_Z80_SPEED * nBurnCPUSpeedAdjust / (0x0100 * TOA_REFRESHRATE)); // OC is required to avoid "sound error"
 	nCyclesDone[0] = nCyclesExtra[0];
 	nCyclesDone[1] = nCyclesExtra[1];
 

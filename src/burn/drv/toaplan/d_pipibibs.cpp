@@ -2,7 +2,6 @@
 // Pipi & Bibis / Whoopee!!
 // Based on MAME driver by Quench, Yochizo, David Haywood
 
-#define REFRESHRATE 60
 #define VBLANK_LINES (32)
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -347,7 +346,7 @@ static INT32 DrvInit()
 	bToaRotateScreen = false;
 #endif
 
-	BurnSetRefreshRate(REFRESHRATE);
+	BurnSetRefreshRate(TOA_REFRESHRATE);
 
 	nGP9001ROMSize[0] = 0x200000;
 
@@ -469,8 +468,8 @@ static INT32 DrvFrame()
 	SekIdle(nCyclesDone[0]);
 	ZetIdle(nCyclesDone[1]);
 
-	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
-	nCyclesTotal[1] = (INT32)(27000000.0 / 8 / REFRESHRATE);
+	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * TOA_REFRESHRATE));
+	nCyclesTotal[1] = (INT32)(27000000.0 / 8 / TOA_REFRESHRATE);
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);

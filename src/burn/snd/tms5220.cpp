@@ -803,6 +803,11 @@ static INT32 tms5220_int_read(tms5220_state *tms)
 	return tms->irq_pin;
 }
 
+UINT8 tms5220_irq()
+{
+	tms5220_state *tms = our_chip;
+	return tms->irq_pin;
+}
 
 /**********************************************************************************************
 

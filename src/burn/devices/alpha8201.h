@@ -1,0 +1,12 @@
+void Alpha8201SetBusDir(INT32 state);
+void Alpha8201Start(INT32 state);
+UINT8 Alpha8201ReadRam(INT32 address);
+void Alpha8201WriteRam(INT32 address, UINT8 data);
+void Alpha8201Init(UINT8 *rom);
+void Alpha8201Exit();
+void Alpha8201Reset();
+INT32 Alpha8201Run(INT32 cycles);
+INT32 Alpha8201Idle(INT32 cycles);
+void Alpha8201NewFrame();
+INT32 Alpha8201TotalCycles();
+INT32 Alpha8201Scan(INT32 nAction, INT32 *pnMin);

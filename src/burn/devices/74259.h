@@ -30,7 +30,7 @@
 void ls259_init();
 void ls259_exit();
 void ls259_reset();
-void ls259_set_write_cb(INT32 index, void (*write_)(UINT8));
+void ls259_set_write_cb(void (*write_)(INT32, UINT8));
 void ls259_set_write_parallel_cb(void (*write_)(UINT8, INT32 mask));
 void ls259_write_bit(INT32 offset, bool d);
 void ls259_write_abcd(UINT8 a, bool d);

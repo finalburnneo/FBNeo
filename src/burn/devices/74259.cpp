@@ -99,7 +99,7 @@ static void update_bit();
 static void clear_outputs(UINT8 new_q);
 
 // device callbacks
-static void (*m_q_out_cb[8])(UINT8 data);      // output line callback array
+static void (*m_q_out_cb)(INT32 address, UINT8 data);      // output line callback array
 static void (*m_parallel_out_cb)(UINT8 data, INT32 mask);  // parallel output option
 
 // miscellaneous configuration
@@ -136,7 +136,7 @@ static void (*m_parallel_out_cb)(UINT8 data, INT32 mask);  // parallel output op
 
 #endif
 
-static void dummy_write(UINT8 data) { }
+static void dummy_write(INT32 address, UINT8 data) { }
 static void dummy_write_parallel(UINT8 data, INT32 mask) { }
 
 //-------------------------------------------------
@@ -156,9 +156,7 @@ void ls259_init()
 	// arbitrary initial output state
 	m_q = 0xff;
 
-	for (int i = 0; i < 8; i++) {
-		m_q_out_cb[i] = dummy_write;
-	}
+	m_q_out_cb = dummy_write;
 	m_parallel_out_cb = dummy_write_parallel;
 }
 
@@ -186,9 +184,9 @@ void ls259_exit()
 {
 }
 
-void ls259_set_write_cb(INT32 index, void (*write_)(UINT8))
+void ls259_set_write_cb(void (*write_)(INT32, UINT8))
 {
-	m_q_out_cb[index & 7] = write_;
+	m_q_out_cb = write_;
 }
 
 void ls259_set_write_parallel_cb(void (*write_)(UINT8, INT32 mask))
@@ -265,7 +263,7 @@ static void update_bit()
 	}
 
 	// update output line via callback
-	m_q_out_cb[m_address](m_data);
+	m_q_out_cb(m_address, m_data);
 
 	// update parallel output
 	m_parallel_out_cb(m_q, 1 << m_address);
@@ -417,7 +415,7 @@ static void clear_outputs(UINT8 new_q)
 	// return any previously set output lines to clear state
 	for (int bit = 0; bit < 8; bit++)
 		if (BIT(bits_changed, bit))
-			m_q_out_cb[bit](BIT(new_q, bit));
+			m_q_out_cb(bit, BIT(new_q, bit));
 
 	// update parallel output
 	m_parallel_out_cb(new_q, bits_changed);

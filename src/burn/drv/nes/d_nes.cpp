@@ -7747,7 +7747,7 @@ struct BurnDriver BurnDrvnes_battlolyc = {
 	"nes_battlolyc", "nes_battloly", NULL, NULL, "2018",
 	"Battle of Olympus, The (Hack, Spanish v1.1)\0", NULL, "dmlan2000", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_battlolycRomInfo, nes_battlolycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -14220,9 +14220,9 @@ struct BurnDriver BurnDrvnes_awakeningp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Amazons Running Diet (HB, Japan)
+// Amazon's Running Diet (HB, Japan)
 static struct BurnRomInfo nes_amazorundiejRomDesc[] = {
-	{ "Amazons Running Diet (Japan).nes",          524304, 0x1eced454, BRF_ESS | BRF_PRG },
+	{ "Amazon's Running Diet (Japan)(2017)(Ancient).nes",          524304, 0x1eced454, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_amazorundiej)
@@ -14230,17 +14230,17 @@ STD_ROM_FN(nes_amazorundiej)
 
 struct BurnDriver BurnDrvnes_amazorundiej = {
 	"nes_amazorundiej", "nes_amazorundie", NULL, NULL, "2017",
-	"Amazons Running Diet (HB, Japan)\0", NULL, "Ancient", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	"Amazon's Running Diet (HB, Japan)\0", NULL, "Ancient", "NES / Famicom",
+	L"Amazon's Running Diet (HB, Japan)\0\u30a2\u30de\u30be\u30f3\u30ba \u30e9\u30f3\u30cb\u30f3\u30b0 \u30c0\u30a4\u30a8\u30c3\u30c8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_amazorundiejRomInfo, nes_amazorundiejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Amazons Running Diet (HB, USA)
+// Amazon's Running Diet (HB, USA)
 static struct BurnRomInfo nes_amazorundieRomDesc[] = {
-	{ "Amazons Running Diet (USA).nes",          524304, 0x4db6acdd, BRF_ESS | BRF_PRG },
+	{ "Amazon's Running Diet (USA)(2017)(Ancient).nes",          524304, 0x4db6acdd, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_amazorundie)
@@ -14248,7 +14248,7 @@ STD_ROM_FN(nes_amazorundie)
 
 struct BurnDriver BurnDrvnes_amazorundie = {
 	"nes_amazorundie", NULL, NULL, NULL, "2017",
-	"Amazons Running Diet (HB, USA)\0", NULL, "Ancient", "NES / Famicom",
+	"Amazon's Running Diet (HB, USA)\0", NULL, "Ancient", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_amazorundieRomInfo, nes_amazorundieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -14929,7 +14929,7 @@ struct BurnDriver BurnDrvnes_batterychad = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Battle Kid - Fortress of Peril (HB, Japan)
+// Battle Kid: Fortress of Peril (HB, Japan)
 static struct BurnRomInfo nes_battlkidRomDesc[] = {
 	{ "Battle Kid - Fortress of Peril (Japan)(2010)(Sivak Games).nes",          524304, 0xc7f3a581, BRF_ESS | BRF_PRG },
 };
@@ -14939,7 +14939,7 @@ STD_ROM_FN(nes_battlkid)
 
 struct BurnDriver BurnDrvnes_battlkid = {
 	"nes_battlkid", NULL, NULL, NULL, "2010",
-	"Battle Kid - Fortress of Peril (HB, Japan)\0", NULL, "Sivak Games", "NES / Famicom",
+	"Battle Kid: Fortress of Peril (HB, Japan)\0", NULL, "Sivak Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkidRomInfo, nes_battlkidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -14947,7 +14947,7 @@ struct BurnDriver BurnDrvnes_battlkid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Battle Kid 2 - Mountain of Torment (HB, USA)
+// Battle Kid 2: Mountain of Torment (HB, USA)
 static struct BurnRomInfo nes_battlkid2RomDesc[] = {
 	{ "Battle Kid 2 - Mountain of Torment (USA)(2012)(Sivak Games).nes",          524304, 0x4916dc6d, BRF_ESS | BRF_PRG },
 };
@@ -14957,7 +14957,7 @@ STD_ROM_FN(nes_battlkid2)
 
 struct BurnDriver BurnDrvnes_battlkid2 = {
 	"nes_battlkid2", NULL, NULL, NULL, "2012",
-	"Battle Kid 2 - Mountain of Torment (HB, USA)\0", NULL, "Sivak Games", "NES / Famicom",
+	"Battle Kid 2: Mountain of Torment (HB, USA)\0", NULL, "Sivak Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkid2RomInfo, nes_battlkid2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -20680,6 +20680,24 @@ struct BurnDriver BurnDrvnes_meatingcp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_meatingcpRomInfo, nes_meatingcpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mega Kaiju Boom Ball (HB, v1.1)
+static struct BurnRomInfo nes_megakaijubbRomDesc[] = {
+	{ "Mega Kaiju Boom Ball v1.1 (2025)(Orebody Inc.).nes",          524304, 0x00181827, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_megakaijubb)
+STD_ROM_FN(nes_megakaijubb)
+
+struct BurnDriver BurnDrvnes_megakaijubb = {
+	"nes_megakaijubb", NULL, NULL, NULL, "2025",
+	"Mega Kaiju Boom Ball (HB, v1.1)\0", NULL, "Orebody Inc.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_megakaijubbRomInfo, nes_megakaijubbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28034,7 +28052,7 @@ struct BurnDriver BurnDrvnes_armeddrafanvil = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// ASO - Armored Scrum Object (Japan)
+// ASO: Armored Scrum Object (Japan)
 static struct BurnRomInfo nes_asojpnRomDesc[] = {
 	{ "ASO - Armored Scrum Object (Japan)(1986)(SNK).nes",          65552, 0x142a80b3, BRF_ESS | BRF_PRG },
 };
@@ -28044,7 +28062,7 @@ STD_ROM_FN(nes_asojpn)
 
 struct BurnDriver BurnDrvnes_asojpn = {
 	"nes_asojpn", "nes_alphamission", NULL, NULL, "1986",
-	"ASO - Armored Scrum Object (Japan)\0", NULL, "SNK", "NES / Famicom",
+	"ASO: Armored Scrum Object (Japan)\0", NULL, "SNK", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_asojpnRomInfo, nes_asojpnRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28950,7 +28968,7 @@ struct BurnDriver BurnDrvnes_battloly = {
 	"nes_battloly", NULL, NULL, NULL, "1989",
 	"Battle of Olympus, The (USA)\0", NULL, "Broderbund", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_battlolyRomInfo, nes_battlolyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -34249,7 +34267,7 @@ STD_ROM_FN(nes_dynamitebatman)
 struct BurnDriver BurnDrvnes_dynamitebatman = {
 	"nes_dynamitebatman", "nes_batmaretjok", NULL, NULL, "1991",
 	"Dynamite Batman (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Dynamite Batman (Japan)\0\u30c0\u30a4\u30ca\u30de\u30a4\u30c8 \u30d0\u30c3\u30c8\u30de\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_dynamitebatmanRomInfo, nes_dynamitebatmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -46128,6 +46146,24 @@ struct BurnDriver BurnDrvnes_oishinboj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Olympus no Tatakai (Japan)
+static struct BurnRomInfo nes_olytatakaiRomDesc[] = {
+	{ "Olympus no Tatakai (Japan)(1988)(Imagineer, Infinity).nes",          131088, 0xd115f85e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_olytatakai)
+STD_ROM_FN(nes_olytatakai)
+
+struct BurnDriver BurnDrvnes_olytatakai = {
+	"nes_olytatakai", "nes_battloly", NULL, NULL, "1988",
+	"Olympus no Tatakai (Japan)\0", NULL, "Imagineer, Infinity", "NES / Famicom",
+	L"Olympus no Tatakai (Japan)\0\u30aa\u30ea\u30e5\u30f3\u30dd\u30b9\u306e\u6226\u3044\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_olytatakaiRomInfo, nes_olytatakaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Onyanko Town (Japan)
 static struct BurnRomInfo nes_onyankotownRomDesc[] = {
 	{ "Onyanko Town (Japan)(1985)(Pony Canyon).nes",          40976, 0xc07cb40b, BRF_ESS | BRF_PRG },
@@ -46139,8 +46175,8 @@ STD_ROM_FN(nes_onyankotown)
 struct BurnDriver BurnDrvnes_onyankotown = {
 	"nes_onyankotown", NULL, NULL, NULL, "1985",
 	"Onyanko Town (Japan)\0", NULL, "Pony Canyon", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	L"Onyanko Town (Japan)\0\u304a\u306b\u3083\u3093\u3053 Town\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_onyankotownRomInfo, nes_onyankotownRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -54000,7 +54036,7 @@ STD_ROM_FN(nes_tetsuwanatom)
 struct BurnDriver BurnDrvnes_tetsuwanatom = {
 	"nes_tetsuwanatom", "nes_astroboy", NULL, NULL, "1988",
 	"Tetsuwan Atom (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Tetsuwan Atom (Japan)\0\u9244\u8155\u30a2\u30c8\u30e0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tetsuwanatomRomInfo, nes_tetsuwanatomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

@@ -149,7 +149,8 @@ static void i8155_pb_write(INT32 port, UINT8 data)
 
 static void i8155_pc_write(INT32 port, UINT8 data)
 {
-	MSM5232SetRoute(((data & 0x0f) / 15.0) / m5232VOLDIV, 8);
+	float bass_boost = ((data & 0xf) > 0x00) ? 0.25 : 0.00;
+	MSM5232SetRoute(((data & 0x0f) / 15.0) + bass_boost /*/ m5232VOLDIV*/, 8);
 	if (data & 0x20) {
 		MSM5232SetRoute(((data & 0x0f) / 15.0) / m5232VOLDIV, 9);
 	} else {
@@ -206,6 +207,11 @@ static void ay8910portBwrite(UINT32 /*offset*/, UINT32 data)
 	}
 
 	ay_port_b = data;
+}
+
+static void msm_gate(INT32 state)
+{
+//	bprintf(0, _T("Gate %x\n"), state);
 }
 
 #define MSM5232_MAX_CLOCK 6144000
@@ -285,6 +291,7 @@ void AD59MC07Init(UINT8 *rom)
 	MSM5232SetRoute(0.70 / m5232VOLDIV, 8);
 	MSM5232SetRoute(0.70 / m5232VOLDIV, 9);
 	MSM5232SetRoute(0.084 / m5232VOLDIV, 10);
+	MSM5232SetGateCallback(msm_gate);
 
 	BurnSampleInit(1);
 	BurnSampleSetBuffered(i8085TotalCycles, 6144000/2);

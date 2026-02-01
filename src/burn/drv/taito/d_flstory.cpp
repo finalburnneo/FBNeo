@@ -596,7 +596,7 @@ static void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 		case 0xd400:
 		{
 			*soundlatch = data;
-
+			snd_flag &= ~1;
 			if (nmi_enable) {
 				ZetNmi(1);
 			} else {
@@ -619,11 +619,11 @@ static UINT8 __fastcall flstory_main_read(UINT16 address)
 			return standard_taito_mcu_read();
 
 		case 0xd400:
-			snd_flag = 0;
+			snd_flag &= ~2;
 			return snd_data;
 
 		case 0xd401:
-			return snd_flag | 0xfd;
+			return snd_flag;
 
 		case 0xd800:
 		case 0xd801:
@@ -709,7 +709,7 @@ static void sound_volume1(UINT8 data)
 
 static void AY_ayportA_write(UINT32 /*addr*/, UINT32 data)
 {
-	if (data == 0xff) return; // ignore ay-init
+	if (AY8910InReset(0)) return; // ignore ay-init
 	m_snd_ctrl2 = data & 0xff;
 
 	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ay_vol_divider, BURN_SND_ROUTE_BOTH);
@@ -751,7 +751,7 @@ static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 
 		case 0xd800:
 			snd_data = data;
-			snd_flag = 2;
+			snd_flag |= 2;
 		return;
 
 		case 0xda00:
@@ -774,8 +774,12 @@ static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall flstory_sound_read(UINT16 address)
 {
-	if (address == 0xd800) {
-		return *soundlatch;
+	switch (address) {
+		case 0xd800:
+			snd_flag |= 1;
+			return *soundlatch;
+		case 0xda00:
+			return snd_flag;
 	}
 
 	return 0;

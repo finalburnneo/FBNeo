@@ -13441,15 +13441,15 @@ static struct BurnRomInfo Hsf2appRomDesc[] = {
 STD_ROM_PICK(Hsf2app)
 STD_ROM_FN(Hsf2app)
 
-// Street Fighter II': Prime (Ver 0.66, Hack)
+// Street Fighter II': Prime (Ver 0.71, Hack)
 // Modified by Zero800
 // https://sf2prime.github.io/
 
 static struct BurnRomInfo Sf2primeRomDesc[] = {
-	{ "sf2pr.03",		0x080000, 0x27b6ac88, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.04",		0x080000, 0x8d9baac1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.05",		0x080000, 0x15f6c1b9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.06",		0x080000, 0x095ee372, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.03",		0x080000, 0x7ce61f91, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.04",		0x080000, 0x5c5cd805, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.05",		0x080000, 0x9828b2f9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.06",		0x080000, 0xcabc33b4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 #if 0
 	// All filled with 0xFF.
 	{ "sf2pr.07",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13458,10 +13458,10 @@ static struct BurnRomInfo Sf2primeRomDesc[] = {
 	{ "sf2pr.10",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 #endif
 
-	{ "sf2pr.13m",		0x800000, 0x51b072ab, CPS2_GFX | BRF_GRA },
-	{ "sf2pr.15m",		0x800000, 0xf236c5da, CPS2_GFX | BRF_GRA },
-	{ "sf2pr.17m",		0x800000, 0xea223314, CPS2_GFX | BRF_GRA },
-	{ "sf2pr.19m",		0x800000, 0x623b6cb3, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.13m",		0x800000, 0x0ab76f89, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.15m",		0x800000, 0x33b919d6, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.17m",		0x800000, 0x5fbdf235, CPS2_GFX | BRF_GRA },
+	{ "sf2pr.19m",		0x800000, 0xb76e01da, CPS2_GFX | BRF_GRA },
 
 	{ "sf2pr.01",		0x020000, 0x6ce233a7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sf2pr.02",		0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
@@ -14950,8 +14950,8 @@ struct BurnDriver BurnDrvCpsHsf2app = {
 };
 
 struct BurnDriver BurnDrvCpsSf2prime = {
-	"sf2prime", "hsf2", NULL, NULL, "2025",
-	"Street Fighter II': Prime (Ver 0.66, Hack)\0", NULL, "Zero800", "CPS2",
+	"sf2prime", "hsf2", NULL, NULL, "2026",
+	"Street Fighter II': Prime (Ver 0.71, Hack)\0", NULL, "Zero800", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2primeRomInfo, Sf2primeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

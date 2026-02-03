@@ -2149,6 +2149,25 @@ struct BurnDriver BurnDrvsnes_Aladdinj = {
 	512, 448, 4, 3
 };
 
+// Disney's Aladdin (Hack, Portuguese)
+
+static struct BurnRomInfo snes_AladdintpRomDesc[] = {
+	{ "Disney's Aladdin PT-BR (2021)(PO.B.R.E.).sfc", 1572864, 0x050904c6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Aladdintp)
+STD_ROM_FN(snes_Aladdintp)
+
+struct BurnDriver BurnDrvsnes_Aladdintp = {
+	"snes_aladdintp", "snes_aladdin", NULL, NULL, "2021",
+	"Disney's Aladdin (Hack, Portuguese)\0", NULL, "PO.B.R.E.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_AladdintpRomInfo, snes_AladdintpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Albert Odyssey 2: Jashin no Taidou (Japan)
 
 static struct BurnRomInfo snes_Albertods2jRomDesc[] = {
@@ -7960,6 +7979,25 @@ struct BurnDriver BurnDrvsnes_Coolyskunkte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_CoolyskunkteRomInfo, snes_CoolyskunkteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Cooly Skunk (Hack, Portuguese v1.1)
+
+static struct BurnRomInfo snes_CoolyskunktpRomDesc[] = {
+	{ "Cooly Skunk PT-BR v1.1 (2022)(Breno).sfc", 2097152, 0x4cc6bd82, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Coolyskunktp)
+STD_ROM_FN(snes_Coolyskunktp)
+
+struct BurnDriver BurnDrvsnes_Coolyskunktp = {
+	"snes_coolyskunktp", "snes_coolyskunkte", NULL, NULL, "2022",
+	"Cooly Skunk (Hack, Portuguese v1.1)\0", NULL, "Breno", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_CoolyskunktpRomInfo, snes_CoolyskunktpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -15134,6 +15172,25 @@ struct BurnDriver BurnDrvsnes_Gooftroopj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_GooftroopjRomInfo, snes_GooftroopjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Disney's Goof Troop ~ A Turma do Pateta (Hack, Portuguese)
+// https://www.romhacking.net/translations/2132/
+static struct BurnRomInfo snes_GooftrooptpRomDesc[] = {
+	{ "Goof Troop - A Turma do Pateta PT-BR (2013)(Hylian, Denim).sfc", 524288, 0x094ba15f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Gooftrooptp)
+STD_ROM_FN(snes_Gooftrooptp)
+
+struct BurnDriver BurnDrvsnes_Gooftrooptp = {
+	"snes_gooftrooptp", "snes_gooftroop", NULL, NULL, "2013",
+	"Disney's Goof Troop ~ A Turma do Pateta (Hack, Portuguese)\0", NULL, "Hylian, Denim", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
+	SNESGetZipName, snes_GooftrooptpRomInfo, snes_GooftrooptpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -30623,6 +30680,25 @@ struct BurnDriver BurnDrvsnes_Sf1climitedj = {
 	SNESGetZipName, snes_Sf1climitedjRomInfo, snes_Sf1climitedjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// Super Mario So Estrelas (Hack, Portuguese v1.11)
+// https://www.romhacking.net/translations/6690/
+static struct BurnRomInfo snes_SmallstarstpRomDesc[] = {
+	{ "Super Mario So Estrelas PT-BR v1.11 (2022)(bMatSantos).sfc", 2097152, 0xc0df4bd8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smallstarstp)
+STD_ROM_FN(snes_Smallstarstp)
+
+struct BurnDriver BurnDrvsnes_Smallstarstp = {
+	"snes_smallstarstp", "snes_smallstars", NULL, NULL, "2022",
+	"Super Mario So Estrelas (Hack, Portuguese v1.11)\0", NULL, "bMatSantos", "SNES / Super Famicom",
+	L"Super Mario S\u00f3 Estrelas (Hack, Portuguese v1.11)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmallstarstpRomInfo, snes_SmallstarstpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // Steven Seagal Is The Final Option (USA, Prototype)

@@ -21478,7 +21478,7 @@ STD_ROM_FN(md_proyakyu)
 struct BurnDriver BurnDrvmd_proyakyu = {
 	"md_proyakyu", NULL, NULL, NULL, "1991",
 	"Pro Yakyuu Super League '91 (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Pro Yakyuu Super League '91 (Japan)\0\u30d7\u30ed\u91ce\u7403 Super League '91\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_proyakyuRomInfo, md_proyakyuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -21786,7 +21786,7 @@ STD_ROM_FN(md_puyopuyo)
 struct BurnDriver BurnDrvmd_puyopuyo = {
 	"md_puyopuyo", NULL, NULL, NULL, "1992",
 	"Puyo Puyo (Japan)\0", NULL, "Sega - Compile", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Puyo Puyo (Japan)\0\u3077\u3088\u3077\u3088\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_puyopuyoRomInfo, md_puyopuyoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -21842,7 +21842,7 @@ STD_ROM_FN(md_puyopuy2)
 struct BurnDriver BurnDrvmd_puyopuy2 = {
 	"md_puyopuy2", NULL, NULL, NULL, "1994",
 	"Puyo Puyo 2 (Japan, v1.1)\0", NULL, "Compile", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Puyo Puyo 2 (Japan, v1.1)\0\u3077\u3088\u3077\u3088\u901a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_puyopuy2RomInfo, md_puyopuy2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -21860,7 +21860,7 @@ STD_ROM_FN(md_puyopuy2a)
 struct BurnDriver BurnDrvmd_puyopuy2a = {
 	"md_puyopuy2a", "md_puyopuy2", NULL, NULL, "1994",
 	"Puyo Puyo 2 (Japan)\0", NULL, "Compile", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Puyo Puyo 2 (Japan)\0\u3077\u3088\u3077\u3088\u901a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_puyopuy2aRomInfo, md_puyopuy2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
@@ -38215,6 +38215,24 @@ struct BurnDriver BurnDrvmd_badapple = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_DEMO | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_badappleRomInfo, md_badappleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bailey the Brave (HB)
+static struct BurnRomInfo md_baileybraveRomDesc[] = {
+	{ "Bailey the Brave (2026)(Digital Mints).bin", 1966080, 0x983b1eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_baileybrave)
+STD_ROM_FN(md_baileybrave)
+
+struct BurnDriver BurnDrvmd_baileybrave = {
+	"md_baileybrave", NULL, NULL, NULL, "2026",
+	"Bailey the Brave (HB)\0", NULL, "Digital Mints", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_baileybraveRomInfo, md_baileybraveRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

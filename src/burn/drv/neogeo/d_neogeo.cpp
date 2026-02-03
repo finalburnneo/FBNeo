@@ -27843,30 +27843,30 @@ struct BurnDriver BurnDrvTmntia = {
 };
 
 
-// Violent Vengeance: The Universe Hero (Beta 2.5)
+// Violent Vengeance: The Universe Hero (Beta 3.28)
 // https://ozzyouzo.itch.io/violentv
 
 static struct BurnRomInfo violentvRomDesc[] = {
-	{ "violentv-p1.bin",	0x0100000, 0x9836c86f, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
-	{ "violentv-p2.bin",	0x0800000, 0x66ed28cb, 1 | BRF_ESS | BRF_PRG }, 	//  1
+	{ "violentv-p1.bin",	0x0100000, 0x59b78bc5, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "violentv-p2.bin",	0x0800000, 0xfdad36d7, 1 | BRF_ESS | BRF_PRG }, 	//  1
 
 	{ "violentv-s1.bin",	0x0020000, 0xf7302142, 2 | BRF_GRA },           	//  2 Text layer tiles
 
-	{ "violentv-c1.bin",	0x1000000, 0x261d65ae, 3 | BRF_GRA },           	//  3 Sprite data
-	{ "violentv-c2.bin",	0x1000000, 0x500965ca, 3 | BRF_GRA },           	//  4
+	{ "violentv-c1.bin",	0x1000000, 0x5b3ef4e1, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "violentv-c2.bin",	0x1000000, 0x970ba8c2, 3 | BRF_GRA },           	//  4
 
-	{ "violentv-m1.bin",	0x0010000, 0xa78e1e3f, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+	{ "violentv-m1.bin",	0x0010000, 0x2cf78121, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
 
-	{ "violentv-v1.bin",	0x0800000, 0x065669cc, 5 | BRF_SND },           	//  6 Sound data
-	{ "violentv-v2.bin",	0x0800000, 0x1e9d342d, 5 | BRF_SND },           	//  7
+	{ "violentv-v1.bin",	0x0800000, 0xdd128a57, 5 | BRF_SND },           	//  6 Sound data
+	{ "violentv-v2.bin",	0x0800000, 0xb6ff9217, 5 | BRF_SND },           	//  7
 };
 
 STDROMPICKEXT(violentv, violentv, neogeo)
 STD_ROM_FN(violentv)
 
 struct BurnDriver BurnDrvViolentv = {
-	"violentv", NULL, "neogeo", NULL, "2025",
-	"Violent Vengeance: The Universe Hero (Beta 2.5)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"violentv", NULL, "neogeo", NULL, "2025-26",
+	"Violent Vengeance: The Universe Hero (Beta 3.28)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, violentvRomInfo, violentvRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

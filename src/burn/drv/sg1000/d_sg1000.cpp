@@ -4042,7 +4042,7 @@ struct BurnDriver BurnDrvsg1k_antiair = {
 	"sg1k_antiair", NULL, NULL, NULL, "2024",
 	"AntiAir (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_VERSHOOT, 0,
 	SG1KGetZipName, sg1k_antiairRomInfo, sg1k_antiairRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -4098,6 +4098,24 @@ struct BurnDriver BurnDrvsg1k_astrododge = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_astrododgeRomInfo, sg1k_astrododgeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Awass (HB)
+static struct BurnRomInfo sg1k_awassRomDesc[] = {
+	{ "Awass (2026)(Inufuto).sg",	16384, 0xbbff7ebf, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_awass)
+STD_ROM_FN(sg1k_awass)
+
+struct BurnDriver BurnDrvsg1k_awass = {
+	"sg1k_awass", NULL, NULL, NULL, "2026",
+	"Awass (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_awassRomInfo, sg1k_awassRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -4246,6 +4264,24 @@ struct BurnDriver BurnDrvsg1k_crosstrex = {
 	272, 228, 4, 3
 };
 
+// Eye Brawls (HB, v1.2)
+static struct BurnRomInfo sg1k_eyebrawlsRomDesc[] = {
+	{ "Eye Brawls v1.2 (2026)(Jess Creations, ArugulaZ).sg",	32768, 0xe2ce44f0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_eyebrawls)
+STD_ROM_FN(sg1k_eyebrawls)
+
+struct BurnDriver BurnDrvsg1k_eyebrawls = {
+	"sg1k_eyebrawls", NULL, NULL, NULL, "2026",
+	"Eye Brawls (HB, v1.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
+	SG1KGetZipName, sg1k_eyebrawlsRomInfo, sg1k_eyebrawlsRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Foryster (HB, v00.9)
 static struct BurnRomInfo sg1k_forysterRomDesc[] = {
 	{ "Foryster v00.9 (2022)(siudym).sg",	32768, 0xf8d7fa2c, BRF_PRG | BRF_ESS },
@@ -4276,7 +4312,7 @@ struct BurnDriver BurnDrvsg1k_guntus = {
 	"sg1k_guntus", NULL, NULL, NULL, "2022",
 	"Guntus (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_VERSHOOT, 0,
 	SG1KGetZipName, sg1k_guntusRomInfo, sg1k_guntusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

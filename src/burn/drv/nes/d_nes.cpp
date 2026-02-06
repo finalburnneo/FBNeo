@@ -16875,19 +16875,19 @@ struct BurnDriver BurnDrvnes_deepdung3h = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Deja Vu: A Nightmare Comes True!! - Uncensored (Hack)
-// https://www.romhacking.net/hacks/5880/
+// Déjà Vu - Uncensored (Hack, v1.1)
+// https://www.romhacking.net/hacks/9368/
 static struct BurnRomInfo nes_dejavuhackRomDesc[] = {
-	{ "Deja Vu - A Nightmare Comes True!! - Uncensored (2021)(Zhukorop).nes",          393232, 0xd0b73a99, BRF_ESS | BRF_PRG },
+	{ "Deja Vu - Uncensored v1.1 (2026)(koda).nes",          393232, 0x71a79093, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_dejavuhack)
 STD_ROM_FN(nes_dejavuhack)
 
 struct BurnDriver BurnDrvnes_dejavuhack = {
-	"nes_dejavuhack", "nes_dejavu", NULL, NULL, "2021",
-	"Deja Vu: A Nightmare Comes True!! - Uncensored (Hack)\0", NULL, "Zhukorop", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"nes_dejavuhack", "nes_dejavu", NULL, NULL, "2026",
+	"Deja Vu - Uncensored (Hack, v1.1)\0", NULL, "koda", "NES / Famicom",
+	L"D\u00E9j\u00E0 Vu - Uncensored (Hack, v1.1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_dejavuhackRomInfo, nes_dejavuhackRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -22494,6 +22494,25 @@ struct BurnDriver BurnDrvnes_projectblue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_projectblueRomInfo, nes_projectblueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Punisher, The (Hack, in-game music)
+// https://www.romhacking.net/hacks/9391/
+static struct BurnRomInfo nes_punishermscRomDesc[] = {
+	{ "Punisher, The - ingame music (2026)(the jabu).nes",          262160, 0x9bd59301, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_punishermsc)
+STD_ROM_FN(nes_punishermsc)
+
+struct BurnDriver BurnDrvnes_punishermsc = {
+	"nes_punishermsc", "nes_punisherthe", NULL, NULL, "2026",
+	"Punisher, The (Hack, in-game music)\0", NULL, "the jabu", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_punishermscRomInfo, nes_punishermscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -32323,7 +32342,7 @@ struct BurnDriver BurnDrvnes_defendyncit = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Deja Vu: A Nightmare Comes True!! (USA)
+// Déjà Vu (USA)
 static struct BurnRomInfo nes_dejavuRomDesc[] = {
 	{ "Deja Vu - A Nightmare Comes True!! (USA)(1990)(Kemco).nes",          393232, 0x67b25db5, BRF_ESS | BRF_PRG },
 };
@@ -32333,10 +32352,28 @@ STD_ROM_FN(nes_dejavu)
 
 struct BurnDriver BurnDrvnes_dejavu = {
 	"nes_dejavu", NULL, NULL, NULL, "1990",
-	"Deja Vu: A Nightmare Comes True!! (USA)\0", NULL, "Kemco", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Deja Vu (USA)\0", NULL, "Kemco", "NES / Famicom",
+	L"D\u00E9j\u00E0 Vu (USA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_dejavuRomInfo, nes_dejavuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Déjà Vu: A Nightmare Comes True!! (Japan)
+static struct BurnRomInfo nes_dejavujRomDesc[] = {
+	{ "Deja Vu - A Nightmare Comes True!! (Japan)(1988)(Kemco).nes",          393232, 0x1ae28a7c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dejavuj)
+STD_ROM_FN(nes_dejavuj)
+
+struct BurnDriver BurnDrvnes_dejavuj = {
+	"nes_dejavuj", "nes_dejavu", NULL, NULL, "1988",
+	"Deja Vu: A Nightmare Comes True!! (Japan)\0", NULL, "Kemco", "NES / Famicom",
+	L"D\u00E9j\u00E0 Vu (Japan)\0\u30c7\u30a3\u30b8\u30e3\u30d6 A Nightmare Comes True!!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_dejavujRomInfo, nes_dejavujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -45076,6 +45113,25 @@ struct BurnDriver BurnDrvnes_mrgimmick = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Mr. Vampire (Hack, English)
+// https://romhackplaza.org/translations/reigen-doushi-mr-vampire-english-translation-nes/
+static struct BurnRomInfo nes_mrvampireRomDesc[] = {
+	{ "Mr. Vampire T-Eng (2026)(BlackPaladin).nes",          262160, 0xb758c962, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mrvampire)
+STD_ROM_FN(nes_mrvampire)
+
+struct BurnDriver BurnDrvnes_mrvampire = {
+	"nes_mrvampire", "nes_phantomfighter", NULL, NULL, "2026",
+	"Mr. Vampire (Hack, English)\0", NULL, "BlackPaladin", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_VSFIGHT, 0,
+	NESGetZipName, nes_mrvampireRomInfo, nes_mrvampireRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Ms. Pac-Man (USA) (Namco)
 static struct BurnRomInfo nes_mspacmanuRomDesc[] = {
 	{ "Ms. Pac-Man (USA)(1993)(Namco).nes",          40976, 0x51a0c9de, BRF_ESS | BRF_PRG },
@@ -47743,7 +47799,7 @@ struct BurnDriver BurnDrvnes_probotector = {
 	"nes_probotector", "nes_contra", NULL, NULL, "1990",
 	"Probotector (Euro)\0", NULL, "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_probotectorRomInfo, nes_probotectorRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
@@ -47761,7 +47817,7 @@ struct BurnDriver BurnDrvnes_probotector2 = {
 	"nes_probotector2", "nes_superc", NULL, NULL, "1992",
 	"Probotector II: Return of the Evil Forces (Euro)\0", NULL, "Konami", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_probotector2RomInfo, nes_probotector2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
@@ -48382,7 +48438,7 @@ struct BurnDriver BurnDrvnes_radrac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Radia Senki - Reimei Hen (Japan)
+// Radia Senki: Reimei Hen (Japan)
 static struct BurnRomInfo nes_radiasenjRomDesc[] = {
 	{ "Radia Senki - Reimei Hen (Japan)(1991)(Tecmo).nes",          393232, 0x3bca1cd7, BRF_ESS | BRF_PRG },
 };
@@ -48392,15 +48448,15 @@ STD_ROM_FN(nes_radiasenj)
 
 struct BurnDriver BurnDrvnes_radiasenj = {
 	"nes_radiasenj", "nes_radiasen", NULL, NULL, "1991",
-	"Radia Senki - Reimei Hen (Japan)\0", NULL, "Tecmo", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Radia Senki: Reimei Hen (Japan)\0", NULL, "Tecmo", "NES / Famicom",
+	L"Radia Senki: Reimei Hen (Japan)\0\u30e9\u30c7\u30a3\u30a2\u6226\u8a18 \u9ece\u660e\u7bc7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_radiasenjRomInfo, nes_radiasenjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Radia Senki - Reimei Hen (Hack, English)
+// Chronicle of the Radia War (Hack, English)
 // https://www.romhacking.net/translations/102/
 static struct BurnRomInfo nes_radiasenRomDesc[] = {
 	{ "Radia Senki - Reimei Hen T-Eng (1999)(Dreamless, Jair, -cx-).nes",          393232, 0x1d76af30, BRF_ESS | BRF_PRG },
@@ -48411,7 +48467,7 @@ STD_ROM_FN(nes_radiasen)
 
 struct BurnDriver BurnDrvnes_radiasen = {
 	"nes_radiasen", NULL, NULL, NULL, "1999",
-	"Radia Senki - Reimei Hen (Hack, English)\0", NULL, "Dreamless, Jair, [cx]", "NES / Famicom",
+	"Chronicle of the Radia War (Hack, English)\0", NULL, "Dreamless, Jair, [cx]", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_radiasenRomInfo, nes_radiasenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -48610,7 +48666,7 @@ STD_ROM_FN(nes_reigedoushi)
 struct BurnDriver BurnDrvnes_reigedoushi = {
 	"nes_reigedoushi", "nes_phantomfighter", NULL, NULL, "1988",
 	"Reigen Doushi (Japan)\0", NULL, "Pony Canyon", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Reigen Doushi (Japan)\0\u970a\u5e7b\u9053\u58eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_VSFIGHT, 0,
 	NESGetZipName, nes_reigedoushiRomInfo, nes_reigedoushiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

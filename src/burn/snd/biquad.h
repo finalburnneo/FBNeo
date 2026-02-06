@@ -54,12 +54,12 @@ struct BIQ {
 		reset();
 	}
 
-	void init(INT32 type, INT32 sample_rate, INT32 freqhz, double q_, double gain) {
+	void init(INT32 type, INT32 sample_rate, INT32 freqhz, double q_, double gain, bool reset_accu = true) {
 		samplerate = sample_rate;
 		frequency = freqhz;
 		q = q_;
 
-		reset();
+		if (reset_accu) reset();
 
 		double k = tan(3.14159265358979323846 * frequency / samplerate);
 		double norm = 1 / (1 + k / q + k * k);

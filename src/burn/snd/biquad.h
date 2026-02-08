@@ -50,6 +50,17 @@ struct BIQ {
 		z1 = 0.0; z2 = 0.0; output = 0.0;
 	}
 
+	void scan() {
+		SCAN_VAR(z1);
+		SCAN_VAR(z2);
+		SCAN_VAR(output);
+		SCAN_VAR(a0);
+		SCAN_VAR(a1);
+		SCAN_VAR(a2);
+		SCAN_VAR(b1);
+		SCAN_VAR(b2);
+	}
+
 	void exit() {
 		reset();
 	}

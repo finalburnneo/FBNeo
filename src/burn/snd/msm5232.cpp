@@ -4,10 +4,14 @@
 #include "msm5232.h"
 #include "math.h"
 #include "biquad.h"
+#include "stream.h"
+
 /*
     OKI MSM5232RS
     8 channel tone generator
 */
+
+static Stream stream;
 
 #define CLOCK_RATE_DIVIDER 16
 
@@ -50,7 +54,7 @@ static INT32 m_noise_rng;
 static INT32 m_noise_clocks;   /* number of the noise_rng (output) level changes */
 static UINT32 m_UpdateStep;
 
-static double volume[11];
+static double volume[11]; // (0-10 normal msm5232)
 
 /* rate tables */
 static double  m_ar_tbl[8];
@@ -68,10 +72,8 @@ static INT32     m_rate;       /* sample rate in Hz */
 static double  m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
 static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the GATE output pin changes state */
 
-static INT32 *sound_buffer[11];
-
-static BIQ biquad;
-static INT32 biquad_noise;
+static INT32 noise_mixer_cb_default(INT32 sample) { return sample; }
+static INT32 (*m_noise_mixer_cb)(INT32) = NULL;
 
 //-------------------------------------------------
 //  set gate handler
@@ -97,6 +99,19 @@ void MSM5232SetGateCallback(void (*callback)(INT32))
 	m_gate_handler_cb = callback;
 }
 
+void MSM5232SetNoiseMixerCallback(INT32 (*callback)(INT32))
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetNoiseMixerCallback called without init\n"));
+#endif
+
+	m_noise_mixer_cb = callback;
+}
+
+void MSM5232SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
+{
+	stream.set_buffered(pCPUCyclesCB, nCPUMhz);
+}
 
 //-------------------------------------------------
 //  device_reset - device-specific reset
@@ -132,22 +147,9 @@ void MSM5232Reset()
 	m_EN_out2[1]    = 0;
 
 	gate_update();
-
-	biquad.reset();
-	biquad_noise = 0;
 }
 
 //-------------------------------------------------
-
-void MSM5232NoiseFilter(bool onoff)
-{
-	biquad_noise = onoff;
-}
-
-static INT32 filter_noise(INT32 sample)
-{
-	return (biquad_noise) ? biquad.filter(sample) : sample;
-}
 
 void MSM5232SetCapacitors(double cap1, double cap2, double cap3, double cap4, double cap5, double cap6, double cap7, double cap8)
 {
@@ -274,20 +276,23 @@ static void init_voice(INT32 i)
 	m_voi[i].pitch  = -1;
 }
 
+static void stream_update(INT16 **streams, INT32 samples); // forward
+
 void MSM5232Init(INT32 clock, INT32 bAdd)
 {
 	DebugSnd_MSM5232Initted = 1;
-	
-	INT32 j, rate;
+
+	INT32 j;
 
 	m_add = bAdd;
 
-	rate = ((clock / CLOCK_RATE_DIVIDER) * 100) / nBurnFPS;
+	m_rate = clock / CLOCK_RATE_DIVIDER;
+	m_chip_clock = clock;
 
-	m_chip_clock = (clock * 100) / nBurnFPS;
-	m_rate  = rate;  /* avoid division by 0 */
+	stream.init(m_rate, nBurnSoundRate, 2, bAdd, stream_update);
+    stream.set_volume(1.00);
 
-	if (!rate) return; // freak out!
+	if (!m_rate) return; // freak out!
 
 	init_tables();
 
@@ -295,10 +300,6 @@ void MSM5232Init(INT32 clock, INT32 bAdd)
 	{
 		memset(&m_voi[j],0,sizeof(VOICE));
 		init_voice(j);
-	}
-
-	for (j = 0; j < 11; j++) {
-		sound_buffer[j] = (INT32*)BurnMalloc(m_rate * sizeof(INT32));
 	}
 
 	volume[BURN_SND_MSM5232_ROUTE_0] = 1.00;
@@ -313,8 +314,7 @@ void MSM5232Init(INT32 clock, INT32 bAdd)
 	volume[BURN_SND_MSM5232_ROUTE_SOLO16] = 0;
 	volume[BURN_SND_MSM5232_ROUTE_NOISE] = 0;
 
-	biquad.init(FILT_HIGHPASS, nBurnSoundRate, 8000.00, 2.2, 0);
-	biquad_noise = 0;
+	m_noise_mixer_cb = noise_mixer_cb_default;
 }
 
 void MSM5232Exit()
@@ -325,13 +325,10 @@ void MSM5232Exit()
 
 	if (!DebugSnd_MSM5232Initted) return;
 
-	for (INT32 j = 0; j < 11; j++) {
-		BurnFree(sound_buffer[j]);
-		sound_buffer[j] = NULL;
-	}
+	stream.exit();
 
 	m_gate_handler_cb = NULL;
-	
+
 	DebugSnd_MSM5232Initted = 0;
 }
 
@@ -341,6 +338,8 @@ void MSM5232SetRoute(double vol, INT32 route)
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetRoute called without init\n"));
 #endif
 
+	//bprintf(0, _T("msm5232 volume[%d]:  %f\n"), route, vol);
+	stream.update();
 	volume[route] = vol;
 }
 
@@ -350,6 +349,7 @@ void MSM5232Write(INT32 offset, UINT8 data)
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Write called without init\n"));
 #endif
 
+	stream.update();
 	offset &= 0x0f;
 
 	if (offset > 0x0d)
@@ -574,7 +574,7 @@ static void EG_voices_advance()
 
 }
 
-static INT32 o2,o4,o8,o16,solo8,solo16;
+static INT32 o2,o4,o8,o16,solo8,solo16,noise;
 
 static void TG_group_advance(INT32 groupidx)
 {
@@ -672,16 +672,11 @@ void MSM5232SetClock(INT32 clock)
 	if (m_chip_clock != clock)
 	{
 		INT32 old_rate = m_rate;
-		m_rate = ((clock/CLOCK_RATE_DIVIDER) * 100) / nBurnFPS;
-		m_chip_clock = (clock * 100) / nBurnFPS;
+		m_rate = clock/CLOCK_RATE_DIVIDER;
+		m_chip_clock = clock;
 		init_tables();
-		if (m_rate > old_rate) {
-			for (INT32 j = 0; j < 11; j++) {
-				if (sound_buffer[j]) {
-					BurnFree(sound_buffer[j]);
-				}
-				sound_buffer[j] = (INT32*)BurnMalloc(m_rate * sizeof(INT32));
-			}
+		if (m_rate != old_rate) {
+			stream.set_rate(m_rate);
 		}
 	}
 }
@@ -696,39 +691,39 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Update called without init\n"));
 #endif
+	if (samples != nBurnSoundLen) {
+		bprintf(0, _T("MSM5232Update(): once per frame, please!\n"));
+		return;
+	}
 
-	INT32 *buf1 = sound_buffer[0];
-	INT32 *buf2 = sound_buffer[1];
-	INT32 *buf3 = sound_buffer[2];
-	INT32 *buf4 = sound_buffer[3];
-	INT32 *buf5 = sound_buffer[4];
-	INT32 *buf6 = sound_buffer[5];
-	INT32 *buf7 = sound_buffer[6];
-	INT32 *buf8 = sound_buffer[7];
-	INT32 *bufsolo1 = sound_buffer[8];
-	INT32 *bufsolo2 = sound_buffer[9];
-	INT32 *bufnoise = sound_buffer[10];
-	INT32 i;
+	stream.render(buffer, samples);
+}
 
-	for (i = 0; i < m_rate; i++)
+static void stream_update(INT16 **streams, INT32 samples)
+{
+	INT16 *buf_l = streams[0];
+	INT16 *buf_r = streams[1];
+
+	for (INT32 i = 0; i < samples; i++)
 	{
+		INT32 sample = 0;
 		/* calculate all voices' envelopes */
 		EG_voices_advance();
 
 		TG_group_advance(0);   /* calculate tones group 1 */
-		buf1[i] = o2;
-		buf2[i] = o4;
-		buf3[i] = o8;
-		buf4[i] = o16;
+		sample += (INT32)(double)(BURN_SND_CLIP(o2) * volume[0]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o4) * volume[1]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o8) * volume[2]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o16) * volume[3]);
 
 		TG_group_advance(1);   /* calculate tones group 2 */
-		buf5[i] = o2;
-		buf6[i] = o4;
-		buf7[i] = o8;
-		buf8[i] = o16;
+		sample += (INT32)(double)(BURN_SND_CLIP(o2) * volume[4]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o4) * volume[5]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o8) * volume[6]);
+		sample += (INT32)(double)(BURN_SND_CLIP(o16) * volume[7]);
 
-		bufsolo1[i] = solo8;
-		bufsolo2[i] = solo16;
+		sample += (INT32)(double)(BURN_SND_CLIP(solo8) * volume[8]);
+		sample += (INT32)(double)(BURN_SND_CLIP(solo16) * volume[9]);
 
 		/* update noise generator */
 		{
@@ -749,56 +744,12 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 			}
 		}
 
-		bufnoise[i] = (m_noise_rng & (1<<16)) ? 32767 : 0;
-	}
+		noise = (m_noise_rng & (1<<16)) ? 32767 : 0;
+		sample += (INT32)(double)(BURN_SND_CLIP(m_noise_mixer_cb(noise)) * volume[10]);
 
-	if (!m_add)
-	{
-		for (i = 0; i < samples; i++) {
-			INT32 offs = (i * m_rate) / samples;
-			if (offs >= m_rate) offs = m_rate - 1;
-	
-			INT32 sample = (INT32)(double)(BURN_SND_CLIP(sound_buffer[0][offs]) * volume[0]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[1][offs]) * volume[1]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[2][offs]) * volume[2]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[3][offs]) * volume[3]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[4][offs]) * volume[4]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[5][offs]) * volume[5]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[6][offs]) * volume[6]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
-			sample += (INT32)(double)(BURN_SND_CLIP(filter_noise(sound_buffer[10][offs])) * volume[10]);
-	
-			sample = BURN_SND_CLIP(sample);
-	
-			buffer[0] = sample;
-			buffer[1] = sample;
-			buffer += 2;
-		}
-	} else {
-		for (i = 0; i < samples; i++) {
-			INT32 offs = (i * m_rate) / samples;
-			if (offs >= m_rate) offs = m_rate - 1;
-	
-			INT32 sample = (INT32)(double)(BURN_SND_CLIP(sound_buffer[0][offs]) * volume[0]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[1][offs]) * volume[1]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[2][offs]) * volume[2]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[3][offs]) * volume[3]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[4][offs]) * volume[4]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[5][offs]) * volume[5]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[6][offs]) * volume[6]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
-			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
-			sample += (INT32)(double)(BURN_SND_CLIP(filter_noise(sound_buffer[10][offs])) * volume[10]);
-	
-			sample = BURN_SND_CLIP(sample);
-	
-			buffer[0] = BURN_SND_CLIP(buffer[0]+sample);
-			buffer[1] = BURN_SND_CLIP(buffer[1]+sample);
-			buffer += 2;
-		}
+		sample = BURN_SND_CLIP(sample);
+		buf_l[i] = sample;
+		buf_r[i] = sample;
 	}
 }
 
@@ -808,16 +759,8 @@ void MSM5232Scan(INT32 nAction, INT32 *)
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
-
 	if (nAction & ACB_DRIVER_DATA) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = m_voi;
-		ba.nLen	  = sizeof(VOICE) * 8;
-		ba.szName = "Voice data";
-		BurnAcb(&ba);
-
+		SCAN_VAR(m_voi);
 		SCAN_VAR(m_EN_out16);
 		SCAN_VAR(m_EN_out8);
 		SCAN_VAR(m_EN_out4);
@@ -832,7 +775,6 @@ void MSM5232Scan(INT32 nAction, INT32 *)
 		SCAN_VAR(m_gate);
 		SCAN_VAR(m_chip_clock);
 		SCAN_VAR(m_rate);
-		SCAN_VAR(biquad_noise);
 	}
 
 	if (nAction & ACB_WRITE) {

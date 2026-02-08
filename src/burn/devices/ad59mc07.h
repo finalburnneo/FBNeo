@@ -2,6 +2,7 @@
 void AD59MC07Init(UINT8 *rom); // pass rom data
 void AD59MC07Reset();
 void AD59MC07Command(UINT8 data);
+void AD59MC07SetRate(INT32 rate);
 void AD59MC07Exit();
 INT32 AD59MC07Scan(INT32 nAction, INT32 *pnMin);
 

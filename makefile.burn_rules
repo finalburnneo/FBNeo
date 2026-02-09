@@ -70,7 +70,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_metlfrzr.o d_mhavoc.o d_miconkit.o d_millipede.o d_mirax.o d_mitchell.o d_mjkjidai.o d_mole.o d_momoko.o d_mmagic.o d_mouser.o d_mrdo.o d_mrflea.o d_mrjong.o d_munchmo.o \
 			d_mustache.o d_mystston.o d_namcona1.o d_namconb1.o d_namcos1.o d_namcos86.o d_ninjakd2.o d_nitedrvr.o d_naughtyb.o d_olibochu.o d_omegrace.o d_pacland.o d_pacman.o \
 			d_pbaction.o d_pac2650.o d_pengadvb.o d_phoenix.o d_pitnrun.o d_pkunwar.o d_popeye.o d_popper.o d_prehisle.o d_psychic5.o d_pturn.o d_punchout.o \
-			d_qbert.o d_quizo.o d_rallyx.o d_redclash.o d_renegade.o d_quantum.o d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_senjyo.o d_sf.o d_shangkid.o d_shisen.o \
+			d_qbert.o d_quizo.o d_r2dtank.o d_rallyx.o d_redclash.o d_renegade.o d_quantum.o d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_senjyo.o d_sf.o d_shangkid.o d_shisen.o \
 			d_sidearms.o d_skyarmy.o d_skyfox.o d_skykid.o d_snk.o d_snk6502.o d_snk68.o d_solomon.o d_sonson.o d_spacefb.o d_spdodgeb.o d_speedbal.o d_splndrbt.o d_sprcros2.o \
 			d_srumbler.o d_ssozumo.o d_sstrangr.o d_starwars.o d_stfight.o d_stuntair.o d_sub.o d_suna8.o d_tagteam.o d_tankbust.o d_taxidriv.o d_tail2nose.o d_tbowl.o d_tceptor.o \
 			d_tecmo.o d_tehkanwc.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tiamc1.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_tubep.o d_usgames.o \

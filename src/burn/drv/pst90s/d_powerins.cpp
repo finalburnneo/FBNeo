@@ -54,6 +54,8 @@ static INT32 game_drv = 0;
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
 
+static ClearOpposite<2, UINT8> clear_opposite;
+
 inline static void CalcCol(INT32 idx)
 {
 	/* RRRR GGGG BBBB RGBx */
@@ -716,6 +718,8 @@ static INT32 DrvDoReset()
 	tile_bank = 0;
 	soundlatch = 0;
 
+	clear_opposite.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -1366,6 +1370,9 @@ static INT32 powerinsFrame()
 		DrvInput[0] |= (DrvButton[i] & 1) << i;
 	}
 
+	for (INT32 i = 0; i < 2; i++)
+		clear_opposite.check(i, DrvInput[i+2], 0x08, 0x04, 0x02, 0x01, nSocd[i]);
+
 	nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 56));
 	if (game_drv == GAME_POWERINB) nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 6000000 / 60;
@@ -1485,6 +1492,8 @@ static INT32 powerinsScan(INT32 nAction, INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			if (game_drv == GAME_POWERINA)  MSM6295SetBank(0, MSM6295ROM + 0x30000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
 		}
+
+		clear_opposite.scan();
 	}
 
 	return 0;

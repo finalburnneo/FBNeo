@@ -33471,6 +33471,25 @@ struct BurnDriver BurnSpecAutocavexpl = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Awass (48K) (HB)
+
+static struct BurnRomInfo SpecAwassRomDesc[] = {
+	{ "Awass 48K-AY (2026)(Inufuto).tzx", 11355, 0x211c14bf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAwass, SpecAwass, Spectrum)
+STD_ROM_FN(SpecAwass)
+
+struct BurnDriver BurnSpecAwass = {
+	"spec_awass", NULL, "spec_spectrum", NULL, "2026",
+	"Awass (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecAwassRomInfo, SpecAwassRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Aztec (48K) (HB, pre-release)
 
 static struct BurnRomInfo SpecAztecRomDesc[] = {
@@ -38732,6 +38751,25 @@ struct BurnDriver BurnSpecDefender = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MULTISHOOT, 0,
 	SpectrumGetZipName, SpecDefenderRomInfo, SpecDefenderRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Demon Pages (128K) (HB)
+
+static struct BurnRomInfo SpecDemonpagesRomDesc[] = {
+	{ "Demon Pages 128K (2026)(JuanGM).tap", 75671, 0xadc661dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDemonpages, SpecDemonpages, Spec128)
+STD_ROM_FN(SpecDemonpages)
+
+struct BurnDriver BurnSpecDemonpages = {
+	"spec_demonpages", NULL, "spec_spec128", NULL, "2026",
+	"Demon Pages (128K) (HB)\0", NULL, "JuanGM", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecDemonpagesRomInfo, SpecDemonpagesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -60431,6 +60469,25 @@ struct BurnDriver BurnSpecZquest2p1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecZquest2p1RomInfo, SpecZquest2p1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ziona Quest II - Part 2 (128K) (HB)
+
+static struct BurnRomInfo SpecZquest2p2RomDesc[] = {
+	{ "Ziona Quest II - Part 2 128K (2026)(IAMAI Creation).tap", 56617, 0xbedf5bee, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZquest2p2, SpecZquest2p2, Spec128)
+STD_ROM_FN(SpecZquest2p2)
+
+struct BurnDriver BurnSpecZquest2p2 = {
+	"spec_zquest2p2", NULL, "spec_spec128", NULL, "2025-26",
+	"Ziona Quest II - Part 2 (128K) (HB)\0", NULL, "IAMAI Creation", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecZquest2p2RomInfo, SpecZquest2p2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

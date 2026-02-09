@@ -6373,7 +6373,7 @@ struct BurnDriver BurnDrvMSX_cbilliar = {
 };
 
 
-// Computer Nyuumon ~ Computer Lessons (Japan)
+// Computer Nyuumon (Japan)
 
 static struct BurnRomInfo MSX_cnyumonRomDesc[] = {
 	{ "Computer Nyuumon - Computer Lessons (Japan)(1985)(Casio).rom",	0x08000, 0x50bb1930, BRF_PRG | BRF_ESS },
@@ -6384,8 +6384,8 @@ STD_ROM_FN(MSX_cnyumon)
 
 struct BurnDriver BurnDrvMSX_cnyumon = {
 	"msx_cnyumon", NULL, "msx_msx", NULL, "1985",
-	"Computer Nyuumon ~ Computer Lessons (Japan)\0", NULL, "Casio", "MSX",
-	NULL, NULL, NULL, NULL,
+	"Computer Nyuumon (Japan)\0", NULL, "Casio", "MSX",
+	L"Computer Nyuumon (Japan)\0\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf \u5165\u9580\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_cnyumonRomInfo, MSX_cnyumonRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJapanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
@@ -6965,7 +6965,7 @@ STD_ROM_FN(MSX_daiva4)
 struct BurnDriver BurnDrvMSX_daiva4 = {
 	"msx_daiva4", NULL, "msx_msx", NULL, "1987",
 	"Daiva Story 4: Asura's Bloodfeud (Japan)\0", NULL, "T&E Soft", "MSX",
-	NULL, NULL, NULL, NULL,
+	L"Daiva Story 4: Asura's Bloodfeud (Japan)\0\u30c7\u30a3\u30fc\u30f4\u30a1\u30a2\u30b9\u30e9\u306e\u8840\u6d41\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_STRATEGY, 0,
 	MSXGetZipName, MSX_daiva4RomInfo, MSX_daiva4RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
@@ -6983,10 +6983,10 @@ STDROMPICKEXT(MSX_dskeiba, MSX_dskeiba, msx_msx)
 STD_ROM_FN(MSX_dskeiba)
 
 struct BurnDriver BurnDrvMSX_dskeiba = {
-	"msx_dskeiba", NULL, "msx_msx", NULL, "1984",
+	"msx_dskeiba", "msx_exjockey", "msx_msx", NULL, "1984",
 	"Dai Shougai Keiba (Japan)\0", NULL, "Casio", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MSX, GBF_SPORTSMISC | GBF_CASINO, 0,
+	L"Dai Shougai Keiba (Japan)\0\u5927\u969c\u5bb3\u7af6\u99ac\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MSX, GBF_CASINO | GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_dskeibaRomInfo, MSX_dskeibaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -7005,7 +7005,7 @@ STD_ROM_FN(MSX_daidasso)
 struct BurnDriver BurnDrvMSX_daidasso = {
 	"msx_daidasso", NULL, "msx_msx", NULL, "1985",
 	"Dai Dassou (Japan)\0", NULL, "Carry Lab", "MSX",
-	NULL, NULL, NULL, NULL,
+	L"Dai Dassou (Japan)\0\u5927\u8131\u8d70\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_daidassoRomInfo, MSX_daidassoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
@@ -8146,7 +8146,7 @@ struct BurnDriver BurnDrvMSX_exjockey = {
 	"msx_exjockey", NULL, "msx_msx", NULL, "1984",
 	"Exciting Jockey (Japan)\0", NULL, "Casio", "MSX",
 	L"Exciting Jockey (Japan)\0\u5927\u969c\u5bb3\u7af6\u99ac\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MSX, GBF_SPORTSMISC | GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MSX, GBF_CASINO | GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_exjockeyRomInfo, MSX_exjockeyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -10383,7 +10383,7 @@ STD_ROM_FN(MSX_hitsuji)
 struct BurnDriver BurnDrvMSX_hitsuji = {
 	"msx_hitsuji", NULL, "msx_msx", NULL, "1984",
 	"Hitsuji Yai ~ Pretty Sheep (Japan)\0", NULL, "Hudson Soft", "MSX",
-	NULL, NULL, NULL, NULL,
+	L"Hitsuji Yai ~ Pretty Sheep (Japan)\0\u3072\u3064\u3058 \u3084\u30fc\u3044\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_hitsujiRomInfo, MSX_hitsujiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
@@ -28147,6 +28147,24 @@ struct BurnDriver BurnDrvMSX_automaniav2 = {
 	272, 228, 4, 3
 };
 
+// Awass (HB)
+static struct BurnRomInfo MSX_awassRomDesc[] = {
+	{ "Awass (2026)(Inufuto).cas",	9356, 0x01a17136, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_awass, MSX_awass, msx_msx)
+STD_ROM_FN(MSX_awass)
+
+struct BurnDriver BurnDrvMSX_awass = {
+	"msx_awass", NULL, "msx_msx", NULL, "2026",
+	"Awass (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_awassRomInfo, MSX_awassRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Azzurro 8bit Jam (HB, v1.1)
 static struct BurnRomInfo MSX_a8bitjamRomDesc[] = {
 	{ "Azzurro 8bit Jam v1.1 (2011)(RELEVO).rom",	32768, 0x5b58c730, BRF_PRG | BRF_ESS },
@@ -30107,6 +30125,24 @@ struct BurnDriver BurnDrvMSX_exoticales = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_HORSHOOT, 0,
 	MSXGetZipName, MSX_exoticalesRomInfo, MSX_exoticalesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Eye Brawls (HB)
+static struct BurnRomInfo MSX_eyebrawlsRomDesc[] = {
+	{ "Eye Brawls (2026)(Jess Creations).rom",	32768, 0xc1a37604, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_eyebrawls, MSX_eyebrawls, msx_msx)
+STD_ROM_FN(MSX_eyebrawls)
+
+struct BurnDriver BurnDrvMSX_eyebrawls = {
+	"msx_eyebrawls", NULL, "msx_msx", NULL, "2026",
+	"Eye Brawls (HB)\0", NULL, "Jess Creations", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
+	MSXGetZipName, MSX_eyebrawlsRomInfo, MSX_eyebrawlsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

@@ -94,6 +94,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 
 		unzGetGlobalInfo(Zip, &ZipGlobalInfo);
 		INT32 nListLen = ZipGlobalInfo.number_entry;
+		//bprintf(0, _T("nListLen-zip %d\n"), nListLen);
 
 		// Make an array of File Entries
 		struct ZipEntry* List = (struct ZipEntry *)malloc(nListLen * sizeof(struct ZipEntry));
@@ -126,6 +127,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 			List[nCurrFile].szName = szName;
 			List[nCurrFile].nLen = FileInfo.uncompressed_size;
 			List[nCurrFile].nCrc = FileInfo.crc;
+			//bprintf(0, _T("zip-list: [%S] len %x  crc %x\n"), szName, List[nCurrFile].nLen, List[nCurrFile].nCrc);
 		}
 
 		// return the file list
@@ -142,6 +144,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 		size_t tempSize = 0;
 
 		INT32 nListLen = _7ZipFile->db.NumFiles;
+		//bprintf(0, _T("nListLen-7z %d\n"), nListLen);
 
 		// Make an array of File Entries
 		struct ZipEntry* List = (struct ZipEntry *)malloc(nListLen * sizeof(struct ZipEntry));
@@ -150,9 +153,6 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 
 		for (UINT32 i = 0; i < _7ZipFile->db.NumFiles; i++) {
 			size_t len = SzArEx_GetFileNameUtf16(&_7ZipFile->db, i, NULL);
-
-			// if it's a directory entry we don't care about it..
-			if (SzArEx_IsDir(&_7ZipFile->db, i)) continue;
 
 			if (len > tempSize) {
 				SZipFree(NULL, temp);
@@ -180,6 +180,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 				szFileName[j + 1] = temp[j] >> 8;
 			}
 
+			//bprintf(0, _T("7z-list: [%S] len %I64x  crc %x\n"), szFileName, size, crc);
 			List[nCurrFile].szName = szFileName;
 			List[nCurrFile].nLen = size;
 			List[nCurrFile].nCrc = crc;

@@ -5347,6 +5347,21 @@ static INT32 PicoLine(INT32 /*scan*/)
 static INT32 screen_width = 0;
 static INT32 screen_height = 0;
 const INT32 v_res[2] = { 224, 240 };
+
+static void get_size(INT32 &s_width, INT32 &s_height)
+{
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&s_height, &s_width);
+	} else {
+		BurnDrvGetVisibleSize(&s_width, &s_height);
+	}
+}
+
+static void set_size(INT32 s_width, INT32 s_height)
+{
+	BurnDrvSetVisibleSize(s_width, s_height);
+}
+
 static INT32 res_check()
 {
 	if (pBurnDraw == NULL) return 1; // Don't try to change modes if display not active.
@@ -5354,11 +5369,11 @@ static INT32 res_check()
 	INT32 v_idx = (RamVReg->reg[1] & 8) >> 3;
 
 	if ((RamVReg->reg[12] & (4|2)) == (4|2)) { // interlace mode 2
-		BurnDrvGetVisibleSize(&screen_width, &screen_height);
+		get_size(screen_width, screen_height);
 
 		if (screen_height != (v_res[v_idx]*2)) {
-			bprintf(0, _T("switching to 320 x (%d*2) mode\n"), v_res[v_idx]);
-			BurnDrvSetVisibleSize(320, (v_res[v_idx]*2));
+			bprintf(0, _T("switching to 320 x (%d*2) mode (from %d x %d)\n"), v_res[v_idx], screen_width, screen_height);
+			set_size(320, (v_res[v_idx]*2));
 			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;
@@ -5366,21 +5381,19 @@ static INT32 res_check()
 	}
 	else
 	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
-		BurnDrvGetVisibleSize(&screen_width, &screen_height);
-
+		get_size(screen_width, screen_height);
 		if (screen_width != 256 || screen_height != 224) {
-			bprintf(0, _T("switching to 256 x 224 mode\n"));
-			BurnDrvSetVisibleSize(256, 224);
+			bprintf(0, _T("switching to 256 x 224 mode (from %d x %d)\n"), screen_width, screen_height);
+			set_size(256, 224);
 			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;
 		}
 	} else {
-		BurnDrvGetVisibleSize(&screen_width, &screen_height);
-
+		get_size(screen_width, screen_height);
 		if (screen_width != 320 || screen_height != 224) {
-			bprintf(0, _T("switching to 320 x 224 mode\n"));
-			BurnDrvSetVisibleSize(320, 224);
+			bprintf(0, _T("switching to 320 x 224 mode (from %d x %d)\n"), screen_width, screen_height);
+			set_size(320, 224);
 			if (has_gun) BurnGunResolutionChanged();
 			ReinitialiseVideo();
 			return 1;

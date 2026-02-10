@@ -39825,6 +39825,42 @@ struct BurnDriver BurnDrvmd_fxunyuki = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Galaga (Pocket Player Pro)
+static struct BurnRomInfo md_galagappRomDesc[] = {
+	{ "Galaga (2023)(My Arcade).bin", 131072, 0xeeca829d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_galagapp)
+STD_ROM_FN(md_galagapp)
+
+struct BurnDriver BurnDrvmd_galagapp = {
+	"md_galagapp", NULL, NULL, NULL, "2023",
+	"Galaga (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_galagappRomInfo, md_galagappRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
+};
+
+// Galaxian (Pocket Player Pro)
+static struct BurnRomInfo md_galaxianppRomDesc[] = {
+	{ "Galaxian (Rev 1)(2023)(My Arcade).bin", 65536, 0x1608a3a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_galaxianpp)
+STD_ROM_FN(md_galaxianpp)
+
+struct BurnDriver BurnDrvmd_galaxianpp = {
+	"md_galaxianpp", NULL, NULL, NULL, "2023",
+	"Galaxian (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_galaxianppRomInfo, md_galaxianppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
+};
+
 // Gemesis (HB, v1.1)
 static struct BurnRomInfo md_gemesisRomDesc[] = {
 	{ "Gemesis v1.1 (2026)(NoutsteW).bin", 376832, 0xa091aabe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -40987,6 +41023,24 @@ struct BurnDriver BurnDrvmd_misplacedr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ms. Pac-Man (Pocket Player Pro)
+static struct BurnRomInfo md_mspacmanppRomDesc[] = {
+	{ "Ms. Pac-Man (2023)(My Arcade).bin", 524288, 0x9638da23, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mspacmanpp)
+STD_ROM_FN(md_mspacmanpp)
+
+struct BurnDriver BurnDrvmd_mspacmanpp = {
+	"md_mspacmanpp", NULL, NULL, NULL, "2023",
+	"Ms. Pac-Man (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_MAZE, 0,
+	MegadriveGetZipName, md_mspacmanppRomInfo, md_mspacmanppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
+};
+
 // NavaBarone (HB)
 static struct BurnRomInfo md_navabaroneRomDesc[] = {
 	{ "NavaBarone (2017)(neko800, kunukunu777).bin", 524288, 0xa4dc99ac, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41129,6 +41183,24 @@ struct BurnDriver BurnDrvmd_pacman = {
 	MegadriveGetZipName, md_pacmanRomInfo, md_pacmanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Pac-Man (Pocket Player Pro)
+static struct BurnRomInfo md_pacmanppRomDesc[] = {
+	{ "Pac-Man (2023)(My Arcade).bin", 262144, 0xc6f8d28c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pacmanpp)
+STD_ROM_FN(md_pacmanpp)
+
+struct BurnDriver BurnDrvmd_pacmanpp = {
+	"md_pacmanpp", NULL, NULL, NULL, "2023",
+	"Pac-Man (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_MAZE, 0,
+	MegadriveGetZipName, md_pacmanppRomInfo, md_pacmanppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
 };
 
 // Pantufa the Cat - Extended Edition (GlobalHack)
@@ -41777,6 +41849,24 @@ struct BurnDriver BurnDrvmd_spaceinv = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Space Invaders (Pocket Player Pro)
+static struct BurnRomInfo md_spaceinvppRomDesc[] = {
+	{ "Space Invaders (2023)(My Arcade).bin", 131072, 0x39b16291, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_spaceinvpp)
+STD_ROM_FN(md_spaceinvpp)
+
+struct BurnDriver BurnDrvmd_spaceinvpp = {
+	"md_spaceinvpp", NULL, NULL, NULL, "2023",
+	"Space Invaders (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_spaceinvppRomInfo, md_spaceinvppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
+};
+
 // Spatter (Mega Drive Mini 2 Edition)
 static struct BurnRomInfo md_spatterRomDesc[] = {
 	{ "Spatter (2022)(Mega Drive Mini 2 Ed.).bin", 524288, 0x84081204, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42122,6 +42212,25 @@ struct BurnDriver BurnDrvmd_telehugs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_telehugsRomInfo, md_telehugsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// DINKNOTE/tofix: try to fix this one
+// Tetris (Pocket Player Pro)
+static struct BurnRomInfo md_tetrisppRomDesc[] = {
+	{ "Tetris (2023)(My Arcade).bin", 2097152, 0xeea3028b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tetrispp)
+STD_ROM_FN(md_tetrispp)
+
+struct BurnDriver BurnDrvmd_tetrispp = {
+	"md_tetrispp", NULL, NULL, NULL, "2023",
+	"Tetris (Pocket Player Pro)\0", NULL, "My Arcade", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_tetrisppRomInfo, md_tetrisppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

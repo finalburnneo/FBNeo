@@ -29,7 +29,7 @@ static INT32 nCyclesExtra[2];
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
@@ -207,7 +207,7 @@ static void pia1_port_B_write(UINT16, UINT8 data)
 
 static UINT8 AY8910_0_portA_read(UINT32)
 {
-	return DrvDips[2];
+	return DrvDips[1];
 }
 
 static UINT8 AY8910_1_portA_read(UINT32)
@@ -217,7 +217,7 @@ static UINT8 AY8910_1_portA_read(UINT32)
 
 static UINT8 AY8910_1_portB_read(UINT32)
 {
-	return DrvDips[1];
+	return DrvDips[0];
 }
 
 static INT32 DrvDoReset()

@@ -296,6 +296,10 @@ INT32 VidInit()
 			free(pLineBuffer);
 			pLineBuffer = NULL;
 		}
+
+		INT32 tmp = VidPaint(1);
+
+		bprintf(0, _T("VidPaint(validate): rc %d\n"), tmp);
 	}
 
 	if (hbitmap) {

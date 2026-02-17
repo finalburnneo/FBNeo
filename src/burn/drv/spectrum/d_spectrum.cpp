@@ -3445,7 +3445,7 @@ struct BurnDriver BurnSpecbatmanpe = {
 // Batman (48K-128K)
 
 static struct BurnRomInfo SpecbatmanRomDesc[] = {
-	{ "Batman 48K-128K (1986)(Ocean).tap", 47819, 0x898d7592, BRF_ESS | BRF_PRG },
+	{ "Batman 48K-128K (1986)(Ocean).tzx", 49822, 0xec8eac1f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specbatman, Specbatman, Spec128)

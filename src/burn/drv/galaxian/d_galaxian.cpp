@@ -6789,6 +6789,22 @@ static struct BurnRomInfo SupergRomDesc[] = {
 STD_ROM_PICK(Superg)
 STD_ROM_FN(Superg)
 
+static struct BurnRomInfo spacian2RomDesc[] = {
+	{ "an1.7k",		   0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "an2.7j",		   0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "an3.7h",		   0x00800, 0xddeabdae, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "an4.7f",		   0x00800, 0x232dd045, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "an5.7l",		   0x00800, 0xe80fec29, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "an-2g.1k",	   0x00800, 0xb4784fac, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "an-1g.1h",	   0x00800, 0xa32b7270, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "6l.bpr",		   0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(spacian2)
+STD_ROM_FN(spacian2)
+
 static struct BurnRomInfo GalturboRomDesc[] = {
 	{ "galturbo.u",    0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "galx.v",        0x00800, 0xbc16064e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7370,6 +7386,16 @@ struct BurnDriver BurnDrvSuperg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SupergRomInfo, SupergRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvSpacian2 = {
+	"spacian2", "galaxian", NULL, NULL, "1979",
+	"T.T Spacian Part-2\0", NULL, "Namco / Taito", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, spacian2RomInfo, spacian2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

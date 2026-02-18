@@ -418,9 +418,9 @@ jobs:
 #          path: ${{ steps.create_macos_arm64_archive.outputs.archive_file }}
 #          retention-days: 1
 
-  cleanup:
+  release:
     needs: [ create_release_body, build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64 ] # , build_macos_x86_64, build_macos_arm64
-    name: Cleanup
+    name: Release
     runs-on: ubuntu-latest
     steps:
       # Delete old nightly
@@ -432,11 +432,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  release:
-    needs: [ cleanup ]
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
       # Release body
       - name: Download Artifact (Release body)
         uses: actions/download-artifact@v4

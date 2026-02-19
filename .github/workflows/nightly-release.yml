@@ -423,14 +423,10 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      # Delete old nightly
-      - name: Delete previous nightly
-        uses: ClementTsang/delete-tag-and-release@v0.3.1
+      # We'll need the repo if we want to use gh command line later
+      - uses: actions/checkout@v4
         with:
-          delete_release: true
-          tag_name: latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       # Release body
       - name: Download Artifact (Release body)
@@ -601,22 +597,16 @@ jobs:
 
       # Create new nightly
       - name: Release new nightly
-        uses: softprops/action-gh-release@v2.2.2
-        with:
-          name: nightly builds
-          tag_name: latest
-          target_commitish: ${{ github.sha }}
-          body_path: ${{ steps.store_release_body.outputs.archive_path }}
-          draft: false
-          prerelease: false
-          make_latest: true
-          files: |
-            ${{ steps.store_linux_sdl2_x86_64.outputs.archive_path }}
-            ${{ steps.store_linux_sdl1_x86_64.outputs.archive_path }}
-            ${{ steps.store_windows_x86_64.outputs.archive_path }}
-            ${{ steps.store_windows_x86_32.outputs.archive_path }}
-            ${{ steps.store_windows_x86_64_debug.outputs.archive_path }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "latest" > /dev/null 2>&1; then
+            gh release delete "latest" --cleanup-tag --yes
+          fi
+          gh release create "latest" --title "nightly release" --latest --target "${{ github.sha }}" --notes-file "${{ steps.store_release_body.outputs.archive_path }}" \
+            ${{ steps.store_linux_sdl2_x86_64.outputs.archive_path }} \
+            ${{ steps.store_linux_sdl1_x86_64.outputs.archive_path }} \
+            ${{ steps.store_windows_x86_64.outputs.archive_path }} \
+            ${{ steps.store_windows_x86_32.outputs.archive_path }} \
+            ${{ steps.store_windows_x86_64_debug.outputs.archive_path }} \
             ${{ steps.store_windows_x86_32_debug.outputs.archive_path }}
-#            ${{ steps.store_macos_x86_64.outputs.archive_path }}
-#            ${{ steps.store_macos_arm64.outputs.archive_path }}
-          token: ${{ secrets.GITHUB_TOKEN }}

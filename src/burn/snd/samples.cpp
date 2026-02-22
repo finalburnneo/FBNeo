@@ -780,7 +780,9 @@ void BurnSampleReset()
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleReset called without init\n"));
 #endif
 
-	memset (sample_channels, 0, sizeof(sample_channels));
+	for (INT32 i = 0; i < MAX_CHANNEL; i++) {
+		sample_channels[i] = MAX_CHANNEL-1;
+	}
 
 	IN_RESET = 1;
 
@@ -1332,7 +1334,7 @@ static void BurnSampleRender_INT(UINT32 pLen)
 						bprintf(0, _T("[soft-stop!]\n"));
 						break; // break out of this channel's loop
 					} else if (sample_ptr->latch & LATCH_RETRIG) {
-						bprintf(0, _T("[soft-retrig!]\n"));
+						//bprintf(0, _T("[soft-retrig!]\n"));
 						sample_ptr->latch = LATCH_NONE;
 					}
 				}

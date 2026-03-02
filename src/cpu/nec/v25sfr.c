@@ -8,7 +8,7 @@
 //#include "nec.h"
 //#include "v25priv.h"
 
-static UINT8 read_irqcontrol(v25_state_t *nec_state, INTSOURCES source, UINT8 priority)
+static UINT8 read_irqcontrol(v25_state_t *nec_state, V25_INTSOURCES source, UINT8 priority)
 {
 	return	(((nec_state->pending_irq & source)		? 0x80 : 0x00)
 			| ((nec_state->unmasked_irq & source)	? 0x00 : 0x40)
@@ -135,7 +135,7 @@ static UINT16 read_sfr_word(v25_state_t *nec_state, unsigned o)
 	return ret;
 }
 
-static void write_irqcontrol(v25_state_t *nec_state, INTSOURCES source, UINT8 d)
+static void write_irqcontrol(v25_state_t *nec_state, V25_INTSOURCES source, UINT8 d)
 {
 	if(d & 0x80)
 		nec_state->pending_irq |= source;

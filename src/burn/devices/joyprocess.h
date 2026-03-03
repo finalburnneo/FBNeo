@@ -42,6 +42,7 @@ UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, U
 INT32 AnalogDeadZone(INT32 anaval, INT32 dz = 4);
 
 UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max);
+INT32 scalerangei(INT32 x, INT32 in_min, INT32 in_max, INT32 out_min, INT32 out_max);
 
 // ButtonToggle, an easy-to-use state-scannable togglebutton
 struct ButtonToggle {

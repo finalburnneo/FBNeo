@@ -98,6 +98,12 @@ UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+INT32 scalerangei(INT32 x, INT32 in_min, INT32 in_max, INT32 out_min, INT32 out_max) {
+	if (x < in_min) return out_min;
+	if (x > in_max) return out_max;
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 flags, UINT8 scalemin, UINT8 scalemax)
 {
 	return ProcessAnalog(anaval, reversed, flags, scalemin, scalemax, 0x80);

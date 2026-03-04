@@ -10218,11 +10218,30 @@ STD_ROM_PICK(snes_Doraemonj)
 STD_ROM_FN(snes_Doraemonj)
 
 struct BurnDriver BurnDrvsnes_Doraemonj = {
-	"snes_doraemonj", NULL, NULL, NULL, "1993",
+	"snes_doraemonj", "snes_doraemonte", NULL, NULL, "1993",
 	"Doraemon - Nobita to Yousei no Kuni (Japan, Rev. 1)\0", NULL, "Epoch Co.", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_DoraemonjRomInfo, snes_DoraemonjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Doraemon - Nobita to Yousei no Kuni (Hack, English v0.98)
+// https://www.romhacking.net/translations/7524/
+static struct BurnRomInfo snes_DoraemonteRomDesc[] = {
+	{ "Doraemon - Nobita to Yousei no Kuni T-Eng v0.98 (2026)(torvusY).sfc", 524288, 0x19d069a2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Doraemonte)
+STD_ROM_FN(snes_Doraemonte)
+
+struct BurnDriver BurnDrvsnes_Doraemonte = {
+	"snes_doraemonte", NULL, NULL, NULL, "2026",
+	"Doraemon - Nobita to Yousei no Kuni (Hack, English v0.98)\0", NULL, "torvusY", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
+	SNESGetZipName, snes_DoraemonteRomInfo, snes_DoraemonteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

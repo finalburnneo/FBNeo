@@ -1030,6 +1030,23 @@ static struct BurnDIPInfo RadrDIPList[]=
 
 STDDIPINFO(Radr)
 
+static struct BurnDIPInfo SlipstrmDIPList[]=
+{
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x0f, NULL					},
+	{0x01, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Freeze Frame"			},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+
+	{0   , 0xfe, 0   ,    2, "Steering Response"	},
+	{0x01, 0x01, 0x10, 0x10, "Linear"				},
+	{0x01, 0x01, 0x10, 0x00, "Logarithmic"			},
+};
+
+STDDIPINFO(Slipstrm)
+
 #define DEFAULT_UNUSED_DIPS_MS(setname, offs)			\
 static struct BurnDIPInfo setname##DIPList[]=			\
 {														\
@@ -1125,7 +1142,6 @@ DEFAULT_UNUSED_DIPS(Holo, 0x15)
 DEFAULT_UNUSED_DIPS(Dbzvrvs, 0x17)
 DEFAULT_UNUSED_DIPS(Spidmanu, 0x25)
 DEFAULT_UNUSED_DIPS(Sonic, 0x14)
-DEFAULT_UNUSED_DIPS_WHEEL(Slipstrm, 0x0b)
 DEFAULT_UNUSED_DIPS_WHEEL(Radm, 0x0c)
 DEFAULT_UNUSED_DIPS_WHEEL(F1en, 0x0c)
 DEFAULT_UNUSED_DIPS_WHEEL(F1lap, 0x0d)

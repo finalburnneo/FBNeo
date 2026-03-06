@@ -343,7 +343,7 @@ static void Cps2Layers()
 		Draw[nSlice][0] = (LayerCont >> 6) & 3;				// bottom layer (most covered up)
 
 		// Determine layer-sprite priority (layer >= sprites -> layer on top)
-		INT32 nLayPri = (CpsSaveFrg[nSlice][4] << 8) | CpsSaveFrg[nSlice][5];	// Layer priority register at word (400004)
+		INT32 nLayPri = (CpsSaveFrg[0][4] << 8) | CpsSaveFrg[0][5];	// Layer priority register at word (400004)
 		Prio[nSlice][3] = (nLayPri >> 12) & 7;
 		Prio[nSlice][2] = (nLayPri >> 8) & 7;
 		Prio[nSlice][1] = (nLayPri >> 4) & 7;

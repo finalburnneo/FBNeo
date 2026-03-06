@@ -188,7 +188,7 @@ extern UINT8 *CpsZRamC0,*CpsZRamF0;
 extern UINT8 *CpsSavePal;
 extern UINT8 *CpsRam708,*CpsReg,*CpsFrg;
 extern UINT8 *CpsSaveReg[MAX_RASTER + 1];
-extern UINT8 *CpsSaveFrg[MAX_RASTER + 1];
+extern UINT8 *CpsSaveFrg[2];
 extern UINT8 *CpsRamFF;
 void CpsMapObjectBanks(INT32 nBank);
 INT32 CpsMemInit();

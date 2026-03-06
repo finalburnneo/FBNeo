@@ -9,7 +9,7 @@ UINT8 *CpsRam90=NULL;
 UINT8 *CpsZRamC0=NULL,*CpsZRamF0=NULL,*CpsEncZRom=NULL;
 UINT8 *CpsSavePal=NULL;
 UINT8 *CpsSaveReg[MAX_RASTER + 1];
-UINT8 *CpsSaveFrg[MAX_RASTER + 1];
+UINT8 *CpsSaveFrg[2];
 static UINT8 *CpsSaveRegData = NULL;
 static UINT8 *CpsSaveFrgData = NULL;
 UINT8 *CpsRam660=NULL,*CpsRam708=NULL,*CpsReg=NULL,*CpsFrg=NULL;
@@ -42,11 +42,12 @@ static INT32 CpsMemIndex()
 		ZBuf      = (UINT16*)Next; Next += nCpsScreenWidth * nCpsScreenHeight * 2;	// Sprite Masking Z buffer
 
 		CpsSaveRegData = Next; Next += 0x0100 * (MAX_RASTER + 1);	// Draw Copy of registers
-		CpsSaveFrgData = Next; Next += 0x0010 * (MAX_RASTER + 1);	// Draw Copy of 'Four' Registers
+		CpsSaveFrgData = Next; Next += 0x0010 * 2;					// Draw Copy of 'Four' Registers
+		CpsSaveFrg[0] = CpsSaveFrgData;
+		CpsSaveFrg[1] = CpsSaveFrgData + 0x10;
 
 		for (INT32 i = 0; i < MAX_RASTER + 1; i++) {
 			CpsSaveReg[i] = CpsSaveRegData + i * 0x0100;
-			CpsSaveFrg[i] = CpsSaveFrgData + i * 0x0010;
 		}
 
 	} else {
@@ -55,6 +56,7 @@ static INT32 CpsMemIndex()
 
 		CpsSaveReg[0] = CpsSaveRegData;
 		CpsSaveFrg[0] = CpsSaveFrgData;
+		CpsSaveFrg[1] = CpsSaveFrgData + 0x10;
 	}
 
 	CpsMemEnd = Next;

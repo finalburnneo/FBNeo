@@ -256,9 +256,17 @@ inline static void CopyCpsReg(INT32 i)
 	memcpy(CpsSaveReg[i], CpsReg, 0x0100);
 }
 
-inline static void CopyCpsFrg(INT32 i)
+// At VBL, latch the F-regs.  Don't make them active yet
+// (we don't want re-draws / etc using them yet)
+static void LatchCpsFrg()
 {
-	memcpy(CpsSaveFrg[i], CpsFrg, 0x0010);
+	memcpy(CpsSaveFrg[1], CpsFrg, 0x0010);
+}
+
+// Begining of frame, make them active
+static void UnLatchCpsFrg()
+{
+	memcpy(CpsSaveFrg[0], CpsSaveFrg[1], 0x0010);
 }
 
 // Schedule a beam-synchronized interrupt
@@ -301,7 +309,6 @@ static void DoIRQ()
 	SekRun(nCpsCycles * 0x01 / nCpsNumScanlines);
 	if (nRasterline[nInterrupt] < 224) {
 		CopyCpsReg(nInterrupt);
-		CopyCpsFrg(nInterrupt);
 	} else {
 		nRasterline[nInterrupt] = 0;
 	}
@@ -495,7 +502,7 @@ INT32 Cps2Frame()
 	}
 
 	CopyCpsReg(0);										// Get inititial copy of registers
-	CopyCpsFrg(0);										//
+	UnLatchCpsFrg();
 
 	if (nIrqLine >= nCpsNumScanlines && (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
 		nIrqLine50 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x01FF;
@@ -522,6 +529,9 @@ INT32 Cps2Frame()
 	if (pBurnDraw) {
 		CpsDraw();
 	}
+
+	LatchCpsFrg();										// Latch the f-regs
+
 	SekRun(nCpsCycles - SekTotalCycles());
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;

@@ -12301,7 +12301,7 @@ struct BurnDriver BurnDrvsnes_Fatalfuryspe = {
 // Feudal Bros - Tonosama 1 (World)
 
 static struct BurnRomInfo snes_FeudalbrosRomDesc[] = {
-	{ "Feudal Bros - Tonosama 1 (J)(1995-2025)(Sunsoft).sfc", 2097152, 0xd283f4e9, BRF_ESS | BRF_PRG },
+	{ "Feudal Bros - Tonosama 1 (W)(1995-2025)(Sunsoft).sfc", 2097152, 0xd283f4e9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Feudalbros)

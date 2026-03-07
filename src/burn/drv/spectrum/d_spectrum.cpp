@@ -17639,7 +17639,7 @@ struct BurnDriver BurnSpecmanutdeu = {
 // Manic Miner (Bug-Byte) (48K)
 
 static struct BurnRomInfo SpecmminerRomDesc[] = {
-	{ "Manic Miner 48K (1983)(Bug-Byte).tap", 33689, 0xe6bac4e8, BRF_ESS | BRF_PRG },
+	{ "Manic Miner 48K (1983)(Bug-Byte).tzx", 33205, 0xf89b74af, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmminer, Specmminer, Spectrum)
@@ -17658,7 +17658,7 @@ struct BurnDriver BurnSpecmminer = {
 // Manic Miner (Software Projects) (48K)
 
 static struct BurnRomInfo SpecmminerspRomDesc[] = {
-	{ "Manic Miner 48K (1983)(Software Projects).tap", 33317, 0xeac88ad3, BRF_ESS | BRF_PRG },
+	{ "Manic Miner 48K (1983)(Software Projects).tzx", 33299, 0x3b212860, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Specmminersp, Specmminersp, Spectrum)

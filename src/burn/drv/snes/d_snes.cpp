@@ -5513,6 +5513,25 @@ struct BurnDriver BurnDrvsnes_Brainlordj = {
 	512, 448, 4, 3
 };
 
+// Brain Lord (Hack, Portuguese v1.05)
+// https://www.romhacking.net/translations/7525/
+static struct BurnRomInfo snes_BrainlordtpRomDesc[] = {
+	{ "Brain Lord PT-BR v1.05 (2024-26)(Dindo - Mumble).sfc", 2097152, 0x7ce76c1b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Brainlordtp)
+STD_ROM_FN(snes_Brainlordtp)
+
+struct BurnDriver BurnDrvsnes_Brainlordtp = {
+	"snes_brainlordtp", "snes_brainlord", NULL, NULL, "2024-26",
+	"Brain Lord (Hack, Portuguese v1.05)\0", NULL, "Dindo - Mumble", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_BrainlordtpRomInfo, snes_BrainlordtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Brandish (USA)
 
 static struct BurnRomInfo snes_BrandishRomDesc[] = {
@@ -10721,6 +10740,25 @@ struct BurnDriver BurnDrvsnes_Dragballzhdte = {
 	512, 448, 4, 3
 };
 
+// Dragon Ball Z: Hiper Dimensao (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=2749.0
+static struct BurnRomInfo snes_DragballzhdtpRomDesc[] = {
+	{ "Dragon Ball Z - Hiper Dimensao PT-BR (2024)(Vila Oculta do Romhacking).sfc", 3670016, 0xd319b002, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dragballzhdtp)
+STD_ROM_FN(snes_Dragballzhdtp)
+
+struct BurnDriver BurnDrvsnes_Dragballzhdtp = {
+	"snes_dragballzhdtp", "snes_dragballzhdte", NULL, NULL, "2024",
+	"Dragon Ball Z: Hiper Dimensao (Hack, Portuguese)\0", "SA-1 enhancement CPU", "Vila Oculta do Romhacking", "SNES / Super Famicom",
+	L"Dragon Ball Z: Hiper Dimens\u00e3o (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_DragballzhdtpRomInfo, snes_DragballzhdtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dragon Ball Z - Chou Gokuuden - Totsugeki Hen (Japan)
 
 static struct BurnRomInfo snes_DragballzrpgjRomDesc[] = {
@@ -14412,6 +14450,25 @@ struct BurnDriver BurnDrvsnes_Ganbgoemon2ts = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Ganbgoemon2tsRomInfo, snes_Ganbgoemon2tsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Manda Ver! Goemon II: O Estranho General MacGuiness (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=2893.0
+static struct BurnRomInfo snes_Ganbgoemon2tpRomDesc[] = {
+	{ "Manda Ver! Goemon II - O Estranho General MacGuiness PT-BR (2024)(Maverick Blue Warrior).sfc", 4194304, 0x297329d2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ganbgoemon2tp)
+STD_ROM_FN(snes_Ganbgoemon2tp)
+
+struct BurnDriver BurnDrvsnes_Ganbgoemon2tp = {
+	"snes_ganbgoemon2tp", "snes_ganbgoemon2te", NULL, NULL, "2024",
+	"Manda Ver! Goemon II: O Estranho General MacGuiness (Hack, Portuguese)\0", NULL, "Maverick Blue Warrior", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Ganbgoemon2tpRomInfo, snes_Ganbgoemon2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -35034,6 +35091,25 @@ struct BurnDriver BurnDrvsnes_Superadvisland2e = {
 	512, 448, 4, 3
 };
 
+// Super Adventure Island II (Hack, Portuguese v1.01)
+// https://www.romhacking.net.br/index.php?topic=3142.0
+static struct BurnRomInfo snes_Superadvisland2tpRomDesc[] = {
+	{ "Super Adventure Island II PT-BR v1.01(2025)(Patryckpo).sfc", 2097152, 0x6a33ddd7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superadvisland2tp)
+STD_ROM_FN(snes_Superadvisland2tp)
+
+struct BurnDriver BurnDrvsnes_Superadvisland2tp = {
+	"snes_superadvisland2tp", "snes_superadvisland2", NULL, NULL, "2025",
+	"Super Adventure Island II (Hack, Portuguese v1.01)\0", NULL, "Patryckpo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Superadvisland2tpRomInfo, snes_Superadvisland2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Air Diver 2 (Japan)
 
 static struct BurnRomInfo snes_Superairdiver2RomDesc[] = {
@@ -44074,7 +44150,7 @@ struct BurnDriver BurnDrvsnes_Crashbanden = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot e a Dimensão Retrô (GlobalHack, Portuguese)
+// Crash Bandicoot e a Dimensao Retro (GlobalHack, Portuguese)
 
 static struct BurnRomInfo snes_CrashbandptRomDesc[] = {
 	{ "Crash Bandicoot e a Dimensao Retro (Portuguese)(2025)(Bandicoot).sfc", 4194304, 0x49118dcf, BRF_ESS | BRF_PRG },

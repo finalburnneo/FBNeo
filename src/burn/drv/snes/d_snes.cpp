@@ -38777,18 +38777,18 @@ struct BurnDriver BurnDrvsnes_Terranigmati = {
 	512, 448, 4, 3
 };
 
-// Terranigma (Hack, Portuguese v1.01)
+// Terranigma (Hack, Portuguese v2.0)
 // https://www.romhacking.net/translations/7276/
 static struct BurnRomInfo snes_TerranigmatpRomDesc[] = {
-	{ "Terranigma PT-BR v1.01 (2024)(Dindo).sfc", 4194304, 0x66350def, BRF_ESS | BRF_PRG },
+	{ "Terranigma PT-BR v2.0 (2024-26)(Dindo).sfc", 6291456, 0x867a6c06, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Terranigmatp)
 STD_ROM_FN(snes_Terranigmatp)
 
 struct BurnDriver BurnDrvsnes_Terranigmatp = {
-	"snes_terranigmatp", "snes_terranigmae", NULL, NULL, "2024",
-	"Terranigma (Hack, Portuguese v1.01)\0", NULL, "Dindo", "SNES / Super Famicom",
+	"snes_terranigmatp", "snes_terranigmae", NULL, NULL, "2024-26",
+	"Terranigma (Hack, Portuguese v2.0)\0", NULL, "Dindo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_TerranigmatpRomInfo, snes_TerranigmatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

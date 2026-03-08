@@ -4145,7 +4145,7 @@ struct BurnDriver BurnDrvsnes_Battlesoccerte = {
 	512, 448, 4, 3
 };
 
-// Battle Soccer ~ Futebol dos Heróis (Hack, Portuguese)
+// Battle Soccer ~ Futebol dos Herois (Hack, Portuguese)
 
 static struct BurnRomInfo snes_BattlesoccertpRomDesc[] = {
 	{ "Battle Soccer - Futebol dos Herois T-Por (2003)(Trans-Center).sfc", 1048576, 0x8e06ca02, BRF_ESS | BRF_PRG },
@@ -9182,7 +9182,7 @@ struct BurnDriver BurnDrvsnes_Demolmane = {
 	512, 448, 4, 3
 };
 
-// Demônio Rei (Hack, Portuguese)
+// Demonio Rei (Hack, Portuguese)
 // https://www.romhacking.net/translations/7237/
 static struct BurnRomInfo snes_DemonioreitpRomDesc[] = {
 	{ "Demonio Rei PT-BR (2024)(Dindo).sfc", 1572864, 0xb39d5fd8, BRF_ESS | BRF_PRG },
@@ -24809,7 +24809,7 @@ struct BurnDriver BurnDrvsnes_Neugierte = {
 	512, 448, 4, 3
 };
 
-// Neugier: De Volta à Casa (Hack, Portuguese)
+// Neugier: De Volta a Casa (Hack, Portuguese)
 // https://www.romhacking.net/translations/7144/
 static struct BurnRomInfo snes_NeugiertpRomDesc[] = {
 	{ "Neugier - De Volta a Casa PT-BR (2023)(Dindo, Taihen).sfc", 1572864, 0xdf345666, BRF_ESS | BRF_PRG },

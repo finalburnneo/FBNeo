@@ -5339,7 +5339,7 @@ struct BurnDriver BurnDrvnes_astyanaxc = {
 	"nes_astyanaxc", "nes_astyanax", NULL, NULL, "2021",
 	"Astyanax (Hack, Chinese v1.1)\0", NULL, "Ni You De Wu Cai Yu", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_astyanaxcRomInfo, nes_astyanaxcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15146,7 +15146,7 @@ struct BurnDriver BurnDrvnes_blackboxcha = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Black Hole - Czarna Dziura (HB, v0.20)
+// Black Hole ~ Czarna Dziura (HB, v0.20)
 static struct BurnRomInfo nes_blackholRomDesc[] = {
 	{ "Black Hole - Czarna Dziura v0.20 (2021)(Siudym).nes",          131088, 0x8fd3a9a7, BRF_ESS | BRF_PRG },
 };
@@ -15156,9 +15156,9 @@ STD_ROM_FN(nes_blackhol)
 
 struct BurnDriver BurnDrvnes_blackhol = {
 	"nes_blackhol", NULL, NULL, NULL, "2021",
-	"Black Hole - Czarna Dziura (HB, v0.20)\0", NULL, "Siudym", "NES / Famicom",
+	"Black Hole ~ Czarna Dziura (HB, v0.20)\0", NULL, "Siudym", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_blackholRomInfo, nes_blackholRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15200,7 +15200,7 @@ struct BurnDriver BurnDrvnes_bladebuster = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Blaster Master - The Lost Key (Hack, v1.06)
+// Blaster Master: The Lost Key (Hack, v1.06)
 // https://www.romhacking.net/hacks/8494/
 static struct BurnRomInfo nes_blastermasterlkRomDesc[] = {
 	{ "Blaster Master - The Lost Key v1.06 (2014-2024)(climax, HalDanGhor).nes",          262160, 0x56935623, BRF_ESS | BRF_PRG },
@@ -15211,9 +15211,9 @@ STD_ROM_FN(nes_blastermasterlk)
 
 struct BurnDriver BurnDrvnes_blastermasterlk = {
 	"nes_blastermasterlk", "nes_blastermaster", NULL, NULL, "2014-2024",
-	"Blaster Master - The Lost Key (Hack, v1.06)\0", NULL, "climax, HalDanGhor", "NES / Famicom",
+	"Blaster Master: The Lost Key (Hack, v1.06)\0", NULL, "climax, HalDanGhor", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_blastermasterlkRomInfo, nes_blastermasterlkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -28228,10 +28228,28 @@ struct BurnDriver BurnDrvnes_astyanax = {
 	"nes_astyanax", NULL, NULL, NULL, "1990",
 	"Astyanax (USA)\0", NULL, "Jaleco", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_astyanaxRomInfo, nes_astyanaxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Astyanax (Euro)
+static struct BurnRomInfo nes_astyanaxeRomDesc[] = {
+	{ "Astyanax (Euro)(1990)(Jaleco).nes",          262160, 0xc9d85c8e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_astyanaxe)
+STD_ROM_FN(nes_astyanaxe)
+
+struct BurnDriver BurnDrvnes_astyanaxe = {
+	"nes_astyanaxe", "nes_astyanax", NULL, NULL, "1990",
+	"Astyanax (Euro)\0", NULL, "Jaleco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_astyanaxeRomInfo, nes_astyanaxeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
 // Athena (USA)
@@ -28968,8 +28986,8 @@ STD_ROM_FN(nes_battleformula)
 struct BurnDriver BurnDrvnes_battleformula = {
 	"nes_battleformula", NULL, NULL, NULL, "1991",
 	"Battle Formula (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	L"Battle Formula (Japan)\0\u30d0\u30c8\u30eb\u30d5\u30a9\u30fc\u30df\u30e5\u30e9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_VERSHOOT, 0,
 	NESGetZipName, nes_battleformulaRomInfo, nes_battleformulaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -29456,15 +29474,15 @@ struct BurnDriver BurnDrvnes_blastermaster = {
 	"nes_blastermaster", NULL, NULL, NULL, "1988",
 	"Blaster Master (USA)\0", NULL, "Sunsoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_blastermasterRomInfo, nes_blastermasterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Blaster Master ~ Chou-Wakusei Senki - MetaFight (Japan)
+// Chou-Wakusei Senki MetaFight (Japan)
 static struct BurnRomInfo nes_blastermasterjRomDesc[] = {
-	{ "Chou-Wakusei Senki - MetaFight (Japan)(1988)(Sunsoft).nes",          262160, 0x6e286bb2, BRF_ESS | BRF_PRG },
+	{ "Chou-Wakusei Senki MetaFight (Japan)(1988)(Sunsoft).nes",          262160, 0x6e286bb2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_blastermasterj)
@@ -29472,9 +29490,9 @@ STD_ROM_FN(nes_blastermasterj)
 
 struct BurnDriver BurnDrvnes_blastermasterj = {
 	"nes_blastermasterj", "nes_blastermaster", NULL, NULL, "1988",
-	"Blaster Master ~ Chou-Wakusei Senki - MetaFight (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	"Chou-Wakusei Senki MetaFight (Japan)\0", NULL, "Sunsoft", "NES / Famicom",
+	L"Chou-Wakusei Senki MetaFight (Japan)\0\u8d85\u60d1\u661f\u6226\u8a18 \u30e1\u30bf\u30d5\u30a1\u30a4\u30c8\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_blastermasterjRomInfo, nes_blastermasterjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -29509,7 +29527,7 @@ STD_ROM_FN(nes_blodilan)
 struct BurnDriver BurnDrvnes_blodilan = {
 	"nes_blodilan", NULL, NULL, NULL, "1990",
 	"Blodia Land: Puzzle Quest (Japan)\0", NULL, "Tonkin House", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Blodia Land: Puzzle Quest (Japan)\0\u30d6\u30ed\u30c7\u30a3\u30a2\u30e9\u30f3\u30c9 Puzzle Quest\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_blodilanRomInfo, nes_blodilanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -29527,7 +29545,7 @@ STD_ROM_FN(nes_bloodwarj)
 struct BurnDriver BurnDrvnes_bloodwarj = {
 	"nes_bloodwarj", "nes_bloodwar", NULL, NULL, "1990",
 	"Bloody Warriors: Shan-Go no Gyakushuu (Japan)\0", NULL, "Toei Animation", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Bloody Warriors: Shan-Go no Gyakushuu (Japan)\0Bloody Warriors\u30fc\u30b7\u30e3\u30f3\u30b4\u30fc\u306e\u9006\u8972\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_bloodwarjRomInfo, nes_bloodwarjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -32997,18 +33015,37 @@ struct BurnDriver BurnDrvnes_doordoor = {
 };
 
 // Doraemon (Japan, Rev. A)
-static struct BurnRomInfo nes_doraemonRomDesc[] = {
+static struct BurnRomInfo nes_doraemonjRomDesc[] = {
 	{ "Doraemon (Japan, Rev A)(1986)(Hudson Soft).nes",          163856, 0x2768309d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_doraemonj)
+STD_ROM_FN(nes_doraemonj)
+
+struct BurnDriver BurnDrvnes_doraemonj = {
+	"nes_doraemonj", "nes_doraemon", NULL, NULL, "1986",
+	"Doraemon (Japan, Rev. A)\0", NULL, "Hudson Soft", "NES / Famicom",
+	L"Doraemon (Japan, Rev. A)\0\u30c9\u30e9\u3048\u3082\u3093\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_MULTISHOOT, 0,
+	NESGetZipName, nes_doraemonjRomInfo, nes_doraemonjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Doraemon (Hack, English)
+// https://www.romhacking.net/translations/2629/
+static struct BurnRomInfo nes_doraemonRomDesc[] = {
+	{ "Doraemon T-Eng (2016)(Sky Yoshi).nes",          163856, 0x0192b04d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_doraemon)
 STD_ROM_FN(nes_doraemon)
 
 struct BurnDriver BurnDrvnes_doraemon = {
-	"nes_doraemon", NULL, NULL, NULL, "1986",
-	"Doraemon (Japan, Rev. A)\0", NULL, "Hudson Soft", "NES / Famicom",
-	L"Doraemon (Japan, Rev. A)\0\u30c9\u30e9\u3048\u3082\u3093\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
+	"nes_doraemon", NULL, NULL, NULL, "2016",
+	"Doraemon (Hack, English)\0", NULL, "Sky Yoshi", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_doraemonRomInfo, nes_doraemonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -36772,7 +36809,7 @@ STD_ROM_FN(nes_gekistadium)
 struct BurnDriver BurnDrvnes_gekistadium = {
 	"nes_gekistadium", "nes_badnewbas", NULL, NULL, "1989",
 	"Gekitou Stadium!! (Japan)\0", NULL, "Tecmo", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Gekitou Stadium!! (Japan)\0\u6fc0\u95d8 \u30b9\u30bf\u30b8\u30a2\u30e0!!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_gekistadiumRomInfo, nes_gekistadiumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -42605,6 +42642,43 @@ struct BurnDriver BurnDrvnes_loopz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_loopzRomInfo, nes_loopzRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Lord of King, The (Hack, English v2.01)
+// https://romhackplaza.org/translations/the-lord-of-king-english-translation-nes/
+static struct BurnRomInfo nes_lordkingRomDesc[] = {
+	{ "Lord of King, The T-Eng v2.01 (2025)(BlackPaladin).nes",          262160, 0xfa2eb072, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lordking)
+STD_ROM_FN(nes_lordking)
+
+struct BurnDriver BurnDrvnes_lordking = {
+	"nes_lordking", "nes_astyanax", NULL, NULL, "2025",
+	"Lord of King, The (Hack, English v2.01)\0", NULL, "BlackPaladin", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_lordkingRomInfo, nes_lordkingRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Lord of King, The (Japan)
+static struct BurnRomInfo nes_lordkingjRomDesc[] = {
+	{ "Lord of King, The (Japan)(1989)(Jaleco).nes",          262160, 0x3e0c98bb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lordkingj)
+STD_ROM_FN(nes_lordkingj)
+
+struct BurnDriver BurnDrvnes_lordkingj = {
+	"nes_lordkingj", "nes_astyanax", NULL, NULL, "1989",
+	"Lord of King, The (Japan)\0", NULL, "Jaleco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_lordkingjRomInfo, nes_lordkingjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

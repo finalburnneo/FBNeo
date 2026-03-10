@@ -5640,19 +5640,19 @@ struct BurnDriver BurnDrvsms_lordswrdj = {
 };
 
 // Loretta no Shouzou: Sherlock Holmes (Japan)
-static struct BurnRomInfo sms_lorettajRomDesc[] = {
+static struct BurnRomInfo sms_lorettaRomDesc[] = {
 	{ "Loretta no Shouzou - Sherlock Holmes (Japan)(1987)(Sega).sms",	0x20000, 0x323f357f, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(sms_lorettaj)
-STD_ROM_FN(sms_lorettaj)
+STD_ROM_PICK(sms_loretta)
+STD_ROM_FN(sms_loretta)
 
-struct BurnDriver BurnDrvsms_lorettaj = {
-	"sms_lorettaj", "sms_loretta", NULL, NULL, "1987",
+struct BurnDriver BurnDrvsms_loretta = {
+	"sms_loretta", "sms_lorettate", NULL, NULL, "1987",
 	"Loretta no Shouzou: Sherlock Holmes (Japan)\0", NULL, "Sega", "Sega Master System",
 	L"Loretta no Shouzou: Sherlock Holmes (Japan)\0\u30ed\u30ec\u30c3\u30bf\u306e\u8096\u50cf\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
-	SMSGetZipName, sms_lorettajRomInfo, sms_lorettajRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_lorettaRomInfo, sms_lorettaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26252,19 +26252,19 @@ struct BurnDriver BurnDrvsms_krustyfhc = {
 
 // Loretta's Portrait (Hack, English)
 // https://www.romhacking.net/translations/7526/
-static struct BurnRomInfo sms_lorettaRomDesc[] = {
+static struct BurnRomInfo sms_lorettateRomDesc[] = {
 	{ "Loretta's Portrait T-Eng (2026)(Jamiras).sms",	131072, 0xe8ec97d2, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(sms_loretta)
-STD_ROM_FN(sms_loretta)
+STD_ROM_PICK(sms_lorettate)
+STD_ROM_FN(sms_lorettate)
 
-struct BurnDriver BurnDrvsms_loretta = {
-	"sms_loretta", NULL, NULL, NULL, "2026",
+struct BurnDriver BurnDrvsms_lorettate = {
+	"sms_lorettate", NULL, NULL, NULL, "2026",
 	"Loretta's Portrait (Hack, English)\0", NULL, "Jamiras", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
-	SMSGetZipName, sms_lorettaRomInfo, sms_lorettaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_lorettateRomInfo, sms_lorettateRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

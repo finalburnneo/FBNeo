@@ -46887,6 +46887,25 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	512, 448, 4, 3
 };
 
+// Super Ghouls'n Ghosts Enhanced (Hack)
+// https://www.romhacking.net/hacks/9480/
+static struct BurnRomInfo snes_SupergngenhRomDesc[] = {
+	{ "Super Ghouls'n Ghosts Enhanced Hack (2026)(Tiken).sfc", 1048576, 0xebb9c790, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supergngenh)
+STD_ROM_FN(snes_Supergngenh)
+
+struct BurnDriver BurnDrvsnes_Supergngenh = {
+	"snes_supergngenh", "snes_supergng", NULL, NULL, "2026",
+	"Super Ghouls'n Ghosts Enhanced (Hack)\0", "Air control while jumping & FastROM & more...", "Tiken", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SNESGetZipName, snes_SupergngenhRomInfo, snes_SupergngenhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Ghouls'n Ghosts Restoration (Hack)
 // https://www.romhacking.net/hacks/3473/
 static struct BurnRomInfo snes_SupergngrRomDesc[] = {

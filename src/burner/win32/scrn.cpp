@@ -202,7 +202,7 @@ static char* CreateKailleraList()
 					if (pNewList == NULL) {
 						return NULL;
 					}
-					pName -= (INT_PTR)pList;
+					pName -= (INT_PTR)pList; // this pointer-math is OK, don't worry.
 					pList = pNewList;
 					pName += (INT_PTR)pList;
 				}

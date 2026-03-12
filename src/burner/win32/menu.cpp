@@ -1307,18 +1307,25 @@ void MenuUpdate()
 		menuItemInfo.fMask = MIIM_TYPE;
 
 		if (_tcslen(szPrevGames[i])) {
-			// Find RomData directory (recursive or not depending on settings)
-			TCHAR szDatFile[MAX_PATH] = { 0 };
-			if (FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[i], NULL, 0), szDatFile)) {
-				_stprintf(szText, _T("%s\t%s"), RomdataGetFullName(szDatFile), szPrevGames[i]);
-			} else {
-				for (unsigned int j = 0; j < nBurnDrvCount; j++) {
-					nBurnDrvActive = j;
-					if (!_tcsicmp(szPrevGames[i], BurnDrvGetText(DRV_NAME))) {
-						_stprintf(szText, _T("%s\t%s"), BurnDrvGetText(DRV_FULLNAME), BurnDrvGetText(DRV_NAME));
 
-						break;
-					}
+			// First we'll check the internal fbneo-database for szPrevGames[] resolution
+			bool found = false;
+			for (unsigned int j = 0; j < nBurnDrvCount; j++) {
+				nBurnDrvActive = j;
+				if (!_tcsicmp(szPrevGames[i], BurnDrvGetText(DRV_NAME))) {
+					_stprintf(szText, _T("%s\t%s"), BurnDrvGetText(DRV_FULLNAME), BurnDrvGetText(DRV_NAME));
+					found = true;
+					break;
+				}
+			}
+			nBurnDrvActive = OldDrvSelect;
+
+			// If it's not found, attempt to resolve via RomData
+			if (found == false) {
+				// Find RomData directory (recursive or not depending on settings)
+				TCHAR szDatFile[MAX_PATH] = { 0 };
+				if (FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[i], NULL, 0), szDatFile)) {
+					_stprintf(szText, _T("%s\t%s"), RomdataGetFullName(szDatFile), szPrevGames[i]);
 				}
 			}
 

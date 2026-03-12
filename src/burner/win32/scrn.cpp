@@ -1017,6 +1017,8 @@ static void UpdatePreviousGameList()
 			}
 			break;
 	}
+
+	szPrevGamesNeedsUpdate = true;
 }
 
 static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is called from StartFromReset()

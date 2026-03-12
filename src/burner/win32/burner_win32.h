@@ -268,6 +268,8 @@ extern bool bRescanRoms;
 extern bool bMenuEnabled;
 extern INT32 nQuickOpen;
 
+extern bool szPrevGamesNeedsUpdate;
+
 extern RECT SystemWorkArea;							// The full screen area
 extern int nWindowPosX, nWindowPosY;
 

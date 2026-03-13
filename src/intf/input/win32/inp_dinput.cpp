@@ -36,6 +36,10 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 		unsigned char readStatus;
 	} keyboardProperties[MAX_KEYBOARD];
 
+	struct devEnumGuids {
+		GUID guid;
+	} devGuids[MAX_GAMEPAD];
+
 	struct gamepadData {
 		IDirectInputDevice8W* lpdid;
 		DIJOYSTATE2 dijs;
@@ -56,13 +60,17 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 		unsigned char readStatus;
 	} mouseProperties[MAX_MOUSE];
 
-	int keyboardCount;		// Number of keyboards connected to this machine
-	int gamepadCount;		// Number of gamepads connected to this machine
-	int mouseCount;			// Number of mice connected to this machine
+	// Number of usable Keyboards, gamepads & mice on this machine
+	int keyboardCount = 0;
+	int gamepadCount = 0;
+	int mouseCount = 0;
+
+	// Number of GUIDS enumerated for mouse, gamepad
+	int guidCount = 0;
 
 	IDirectInput8W* pDI;
 	HWND hDinpWnd;
-	
+
 	int gamepadInitSingle()
 	{
 		gamepadData* gamepad = &gamepadProperties[gamepadCount];
@@ -124,18 +132,12 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 			return DIENUM_CONTINUE;
 		}
 
-		if (mouseCount >= MAX_MOUSE) {
+		if (guidCount >= MAX_MOUSE) {
 			return DIENUM_STOP;
 		}
 
-		// Create the DirectInput interface
-		if (FAILED(pDI->CreateDevice(instance->guidInstance, &mouseProperties[mouseCount].lpdid, NULL))) {
-			return DIENUM_CONTINUE;
-		}
-
-		if (!mouseInitSingle()) {
-			mouseCount++;
-		}
+		devGuids[guidCount].guid = instance->guidInstance;
+		guidCount++;
 
 		return DIENUM_CONTINUE;
 	}
@@ -146,18 +148,12 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 			return DIENUM_CONTINUE;
 		}
 
-		if (gamepadCount >= MAX_GAMEPAD) {
+		if (guidCount >= MAX_GAMEPAD) {
 			return DIENUM_STOP;
 		}
 
-		// Create the DirectInput interface
-		if (FAILED(pDI->CreateDevice(instance->guidInstance, &gamepadProperties[gamepadCount].lpdid, NULL))) {
-			return DIENUM_CONTINUE;
-		}
-
-		if (gamepadInitSingle() == 0) {
-			gamepadCount++;
-		}
+		devGuids[guidCount].guid = instance->guidInstance;
+		guidCount++;
 
 		return DIENUM_CONTINUE;
 	}
@@ -244,19 +240,28 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 	int exit()
 	{
 		// Release the keyboard interface
-		for (int i = 0; i < MAX_KEYBOARD; i++) {
+		for (int i = 0; i < keyboardCount; i++) {
+			if (keyboardProperties[i].lpdid) {
+				keyboardProperties[i].lpdid->Unacquire();
+			}
 			RELEASE(keyboardProperties[i].lpdid)
 		}
 		keyboardCount = 0;
 
 		// Release the gamepad interfaces
-		for (int i = 0; i < MAX_GAMEPAD; i++) {
+		for (int i = 0; i < gamepadCount; i++) {
+			if (gamepadProperties[i].lpdid) {
+				gamepadProperties[i].lpdid->Unacquire();
+			}
 			RELEASE(gamepadProperties[i].lpdid)
 		}
 		gamepadCount = 0;
 
 		// Release the mouse interface
-		for (int i = 0; i < MAX_MOUSE; i++) {
+		for (int i = 0; i < mouseCount; i++) {
+			if (mouseProperties[i].lpdid) {
+				mouseProperties[i].lpdid->Unacquire();
+			}
 			RELEASE(mouseProperties[i].lpdid)
 		}
 		mouseCount = 0;
@@ -290,15 +295,41 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 		keyboardProperties[0].lpdid->Acquire();
 		keyboardCount = 1;
 
+		guidCount = 0;
+
 		// Enumerate and set up the mice connected to the system
 		// Note that under Win2K/WinXP only one mouse device will be enumerated
 		if (FAILED(pDI->EnumDevices(DI8DEVTYPE_MOUSE, mouseEnumCallback, /*(void*)this*/pDI, DIEDFL_ATTACHEDONLY))) {
 			return 1;
 		}
 
-		// Enumerate and set up the gamepads connected to the system
+		for (int i = 0; i < guidCount; i++) {
+			if (SUCCEEDED(pDI->CreateDevice(devGuids[i].guid, &mouseProperties[mouseCount].lpdid, NULL))) {
+				if (!mouseInitSingle()) {
+					mouseCount++;
+				} else {
+					RELEASE(mouseProperties[mouseCount].lpdid)
+				}
+			}
+		}
+
+		guidCount = 0;
+
+		// Enumerate the gamepads connected to the system
 		if (FAILED(pDI->EnumDevices(DI8DEVCLASS_GAMECTRL, gamepadEnumCallback, /*(void*)this*/pDI, DIEDFL_ATTACHEDONLY))) {
 			return 1;
+		}
+
+		// Set Up gamepads
+		for (int i = 0; i < guidCount; i++) {
+			// Create the DirectInput interface
+			if (SUCCEEDED(pDI->CreateDevice(devGuids[i].guid, &gamepadProperties[gamepadCount].lpdid, NULL))) {
+				if (!gamepadInitSingle()) {
+					gamepadCount++;
+				} else {
+					RELEASE(gamepadProperties[gamepadCount].lpdid)
+				}
+			}
 		}
 
 		return 0;

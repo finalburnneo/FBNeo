@@ -29156,7 +29156,7 @@ struct BurnDriver BurnDrvMSX_chimneyman = {
 	272, 228, 4, 3
 };
 
-// Chrono Runner v1.1 (HB)
+// Chrono Runner (HB, v1.1)
 static struct BurnRomInfo MSX_chronorunnerRomDesc[] = {
 	{ "Chrono Runner v1.1 (2026)(MSX Italia Association).rom",	131072, 0x5652e7a1, BRF_PRG | BRF_ESS },
 };

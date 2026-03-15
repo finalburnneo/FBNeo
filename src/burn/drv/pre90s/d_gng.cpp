@@ -1527,7 +1527,7 @@ static struct BurnRomInfo MakmaidenRomDesc[] = {
 	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
 	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
 
-	{ "gg17maiden.bin",0x04000, 0x9fb0faaf, BRF_GRA },	     //  11	Sprites
+	{ "gg13maiden.bin",0x04000, 0x041de541, BRF_GRA },	     //  11	Sprites
 	{ "gng16maiden.l4",0x04000, 0x2eeb6ef5, BRF_GRA },	     //  12
 	{ "gg15maiden.bin",0x04000, 0xd6827437, BRF_GRA },	     //  13
 	{ "gg14maiden.bin",0x04000, 0x2eeb6ef5, BRF_GRA },	     //  14
@@ -1611,7 +1611,7 @@ static struct BurnRomInfo MakknightRomDesc[] = {
 	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
 	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
 
-	{ "gg17knight.bin",0x04000, 0xa0713571, BRF_GRA },	     //  11	Sprites
+	{ "gg13knight.bin",0x04000, 0x75211c8b, BRF_GRA },	     //  11	Sprites
 	{ "gng16knight.l4",0x04000, 0x01d9a306, BRF_GRA },	     //  12
 	{ "gg15knight.bin",0x04000, 0x4b9933df, BRF_GRA },	     //  13
 	{ "gg14knight.bin",0x04000, 0x01d9a306, BRF_GRA },	     //  14

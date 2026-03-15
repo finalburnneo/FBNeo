@@ -29156,9 +29156,9 @@ struct BurnDriver BurnDrvMSX_chimneyman = {
 	272, 228, 4, 3
 };
 
-// Chrono Runner (HB)
+// Chrono Runner v1.1 (HB)
 static struct BurnRomInfo MSX_chronorunnerRomDesc[] = {
-	{ "Chrono Runner (2026)(MSX Italia Association).rom",	131072, 0xd7879f27, BRF_PRG | BRF_ESS },
+	{ "Chrono Runner v1.1 (2026)(MSX Italia Association).rom",	131072, 0x5652e7a1, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_chronorunner, MSX_chronorunner, msx_msx)
@@ -29166,7 +29166,7 @@ STD_ROM_FN(MSX_chronorunner)
 
 struct BurnDriver BurnDrvMSX_chronorunner = {
 	"msx_chronorunner", NULL, "msx_msx", NULL, "2026",
-	"Chrono Runner (HB)\0", NULL, "MSX Italia Association", "MSX",
+	"Chrono Runner (HB, v1.1)\0", NULL, "MSX Italia Association", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_chronorunnerRomInfo, MSX_chronorunnerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

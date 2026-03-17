@@ -41665,6 +41665,51 @@ struct BurnDriver BurnDrvmd_sacredline2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Death & Lead (HB)
+static struct BurnSampleInfo DeathnleadSampleDesc[] = {
+	{ "01 1_1 o 5_1 glory salicornia bona loop", SAMPLE_AUTOLOOP },
+	{ "02 1_2 The talking stone told the truths", SAMPLE_AUTOLOOP },
+	{ "03 2_1 yerky and smoke", SAMPLE_AUTOLOOP },
+	{ "04 2_2 CAT SOUP", SAMPLE_AUTOLOOP },
+	{ "05 3_1 pendeja mescalera", SAMPLE_AUTOLOOP },
+	{ "06 3_2 o 5_2 fuentealegre rage", SAMPLE_AUTOLOOP },
+	{ "07 4_1 general desertor plan", SAMPLE_AUTOLOOP },
+	{ "08 4_2 flamenco kenneth", SAMPLE_AUTOLOOP },
+	{ "09 BOSS_LOOP", SAMPLE_AUTOLOOP },
+	{ "10 BOSS_LOOPv1", SAMPLE_AUTOLOOP },
+	{ "11 BOSS_LOOPv2", SAMPLE_AUTOLOOP },
+	{ "12 BOSS_LOOPv3", SAMPLE_AUTOLOOP },
+	{ "13 BOSS_LOOPv4", SAMPLE_AUTOLOOP },
+	{ "14 FINAL_BOSS_LOOP", SAMPLE_AUTOLOOP },
+	{ "15 STAGE_COMPLETE", SAMPLE_AUTOLOOP },
+	{ "16 stage_start2", SAMPLE_AUTOLOOP },
+	{ "17 TUTORIAL", SAMPLE_AUTOLOOP },
+	{ "18 INTRO", SAMPLE_AUTOLOOP },
+	{ "19 ENDING", SAMPLE_AUTOLOOP },
+	{ "20 ending2", SAMPLE_AUTOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(Deathnlead)
+STD_SAMPLE_FN(Deathnlead)
+
+static struct BurnRomInfo md_DeathnleadRomDesc[] = {
+	{ "Death & Lead (2025)(Kai Magazine).bin", 4194304, 0xe1b3ee1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_Deathnlead)
+STD_ROM_FN(md_Deathnlead)
+
+struct BurnDriver Burnmd_Deathnlead = {
+	"md_deathnlead", NULL, NULL, "deathnlead", "2025",
+	"Death & Lead (HB)\0", NULL, "Kai Magazine", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_DeathnleadRomInfo, md_DeathnleadRomName, NULL, NULL, DeathnleadSampleInfo, DeathnleadSampleName, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInitSot4w, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Secret of the 4 Winds, The (HB)
 static struct BurnSampleInfo Sot4wSampleDesc[] = {
 	{ "01", SAMPLE_AUTOLOOP },

@@ -22648,19 +22648,19 @@ static void kof95PatchCallback()
 	UINT16* rom = (UINT16*)Neo68KROMActive;
 
 	for (INT32 i = 0; i < 0x100000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 
-	rom[0x1f3a8] = 0x2b7c; // 4ef9
-	rom[0x1f3a9] = 0x0003; // 0090
-	rom[0x1f3aa] = 0xe7fa; // 16be
+	rom[0x1f3a8] = BURN_ENDIAN_SWAP_INT16(0x2b7c); // 4ef9
+	rom[0x1f3a9] = BURN_ENDIAN_SWAP_INT16(0x0003); // 0090
+	rom[0x1f3aa] = BURN_ENDIAN_SWAP_INT16(0xe7fa); // 16be
 
 	rom = (UINT16*)(Neo68KROMActive + 0x200000);
 
 	for (INT32 i = 0; i < 0x20000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 }
 

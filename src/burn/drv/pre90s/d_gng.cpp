@@ -1471,7 +1471,7 @@ struct BurnDriver BurnDrvMakaimug = {
 static struct BurnRomInfo GngmaidenRomDesc[] = {
 	{ "gg4maiden.bin", 0x04000, 0x0f6f2987, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "gg3.bin",       0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5maiden.bin", 0x08000, 0x857ef9e5, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg5maiden.bin", 0x08000, 0xabb6534a, BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
@@ -1514,7 +1514,7 @@ struct BurnDriver BurnDrvGngmaiden = {
 static struct BurnRomInfo MakmaidenRomDesc[] = {
 	{ "10nmaiden.rom", 0x04000, 0x6f73c922, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "8n.rom",        0x08000, 0x9612d66c, BRF_ESS | BRF_PRG }, //	 1
-	{ "12nmaiden.rom", 0x08000, 0x4258a50a, BRF_ESS | BRF_PRG }, //	 2
+	{ "12nmaiden.rom", 0x08000, 0x6c900fa5, BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
@@ -1555,7 +1555,7 @@ struct BurnDriver BurnDrvMakmaiden = {
 static struct BurnRomInfo GngknightRomDesc[] = {
 	{ "gg4knight.bin", 0x04000, 0x909a6024, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "gg3.bin",       0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5knight.bin", 0x08000, 0xcf8a073e, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg5knight.bin", 0x08000, 0xca671053, BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
@@ -1598,7 +1598,7 @@ struct BurnDriver BurnDrvGngknight = {
 static struct BurnRomInfo MakknightRomDesc[] = {
 	{ "10nknight.rom", 0x04000, 0xf0868081, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "8n.rom",        0x08000, 0x9612d66c, BRF_ESS | BRF_PRG }, //	 1
-	{ "12nknight.rom", 0x08000, 0x08ac5bd1, BRF_ESS | BRF_PRG }, //	 2
+	{ "12nknight.rom", 0x08000, 0x0d414cbc, BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
 

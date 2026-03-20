@@ -19,8 +19,7 @@ static UINT8 *DrvFgVideoRAM;
 static UINT8 *DrvBgVideoRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprRAMBuf;
-static UINT8 *DrvPalRAM0;
-static UINT8 *DrvPalRAM1;
+static UINT8 *DrvPalRAM[2];
 static UINT8 *DrvChars;
 static UINT8 *DrvTiles;
 static UINT8 *DrvSprites;
@@ -39,6 +38,10 @@ static UINT8 rom_bank;
 static UINT8 scrollx[2];
 static UINT8 scrolly[2];
 static UINT8 soundlatch;
+
+static INT32 scanline;
+
+static bool frame_lightning;
 
 static INT32 nExtraCycles;
 
@@ -163,6 +166,10 @@ static struct BurnDIPInfo GngDIPList[]=
 	{0x02, 0x01, 0x03, 0x00, "8-Way"				},
 	{0x02, 0x01, 0x03, 0x01, "4-Way"				},
 	{0x02, 0x01, 0x03, 0x02, "4-Way Alt."			},
+
+	{0   , 0xfe, 0   , 2   , "Lightning Effect (PCB Accurate)" },
+	{0x02, 0x01, 0x04, 0x00, "On"					},
+	{0x02, 0x01, 0x04, 0x04, "Off"					},
 };
 
 STDDIPINFO(Gng)
@@ -238,6 +245,10 @@ static struct BurnDIPInfo MakaimurDIPList[]=
 	{0x02, 0x01, 0x03, 0x00, "8-Way"				},
 	{0x02, 0x01, 0x03, 0x01, "4-Way"				},
 	{0x02, 0x01, 0x03, 0x02, "4-Way Alt."			},
+
+	{0   , 0xfe, 0   , 2   , "Lightning Effect (PCB Accurate)" },
+	{0x02, 0x01, 0x04, 0x00, "On"					},
+	{0x02, 0x01, 0x04, 0x04, "Off"					},
 };
 
 STDDIPINFO(Makaimur)
@@ -338,15 +349,59 @@ static UINT8 main_read(UINT16 address)
 	return 0;
 }
 
+static void lightning_effect(INT32 pal, UINT8 data)
+{
+	// gng "lightning" effect 						-dink March 2026
+	// aka. when vblank spills into the active display and a palette
+	// write occurs:
+	// The data bus is getting get read from (rendering) and written
+	// to (palette write) at the same time causing an OR'd values
+	// to be written back to the palette, instead of read.
+	// note: about 4 pixels are rendererd in 1 cpu cycle (pre-divided, aka 25152 cycles per frame)
+
+	// Step 1: calculate which pixels are being rendered
+	INT32 scroll_x = (scrollx[0] | (scrollx[1] << 8));
+	INT32 scroll_y = (scrolly[0] | (scrolly[1] << 8));
+
+	INT32 cycle = M6809TotalCycles() % 96; // 96 cycles per line
+	INT32 y = scanline - 38; // vblank ends here (adjusted frame boundary)
+	INT32 x = cycle * 384 / 96; // 1 video line is 384 clocks, 0-255 are pixels, 256+ hblank
+
+	if (x >= 256) return; // in hblank
+
+	if (!bBurnRunAheadFrame) frame_lightning = true;
+
+//	bprintf(0, _T("lightning! fr: %d  sl: %d\n"), nCurrentFrame, y);
+
+	y += scroll_y;
+	x += scroll_x;
+	y &= 0x1ff; x &= 0x1ff;
+
+	INT32 offs = y/16 + x/16;
+	INT32 attr = DrvBgVideoRAM[offs + 0x400] & 7;
+	INT32 tile = DrvBgVideoRAM[offs] + ((attr & 0xc0) << 2);
+	UINT8 *gfx = DrvTiles + tile * (16 * 16);
+
+	// Step 2: pick 4 pixels around that cycle, OR it with the data
+	//   that's being written to the palette RAM
+	for (int i = 0; i < 4; i++) {
+		INT32 color = (attr << 3) + (gfx[i + cycle] & 7);
+		DrvPalRAM[pal][color] |= data;
+		calc_color(color & 0xff);
+	}
+}
+
 static void main_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xff00) == 0x3800) { // 0x38xx (second write)
-		DrvPalRAM1[address & 0xff] = data;
+	if ((address & 0xfe00) == 0x3800) { // 0x38xx (rg), 0x39xx (b.)
+		const INT32 pal_idx = (~address & 0x100) >> 8;
+		DrvPalRAM[pal_idx][address & 0xff] = data;
+
+		if (scanline >= 38 && (DrvDips[2] & 4) == 0) {
+			lightning_effect(pal_idx, data);
+		}
+
 		calc_color(address & 0xff);
-		return;
-	}
-	if ((address & 0xff00) == 0x3900) { // 0x39xx (first write)
-		DrvPalRAM0[address & 0xff] = data;
 		return;
 	}
 
@@ -412,13 +467,14 @@ static void __fastcall sound_write(UINT16 address, UINT8 data)
 
 static void DrvRandPalette()
 { // On first boot we fill the palette with some arbitrary values to see the boot-up messages
-	DrvPalRAM0[0] = 0x00;
-	DrvPalRAM1[0] = 0x00;
+	DrvPalRAM[0][0] = 0x00;
+	DrvPalRAM[1][0] = 0x00;
 	for (INT32 i = 1; i < 0x100; i++) {
-		DrvPalRAM0[i] = 0xaf;
-		DrvPalRAM1[i] = 0x5a;
+		DrvPalRAM[0][i] = 0xaf;
+		DrvPalRAM[1][i] = 0x5a;
 	}
 }
+
 
 static tilemap_callback( bg )
 {
@@ -452,8 +508,8 @@ static INT32 MemIndex()
 	DrvSprRAMBuf		= Next; Next += 0x00200;
 	DrvFgVideoRAM		= Next; Next += 0x00800;
 	DrvBgVideoRAM		= Next; Next += 0x00800;
-	DrvPalRAM0			= Next; Next += 0x00100;
-	DrvPalRAM1			= Next; Next += 0x00100;
+	DrvPalRAM[0]		= Next; Next += 0x00100;
+	DrvPalRAM[1]		= Next; Next += 0x00100;
 
 	RamEnd				= Next;
 
@@ -485,6 +541,8 @@ static INT32 DrvDoReset()
 	scrolly[0] = scrolly[1] = 0;
 	soundlatch = 0;
 	nExtraCycles = 0;
+
+	frame_lightning = false;
 
 	return 0;
 }
@@ -529,8 +587,6 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 
 	{
 		if (game < 3) {
-			UINT8 *tmp = (UINT8 *)BurnMalloc(0x8000);
-
 			INT32 k = 0;
 			if (game == 2) {
 				if (BurnLoadRom(DrvM6809ROM + 0x00000, k++, 1)) return 1;
@@ -546,12 +602,7 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 
 			if (BurnLoadRom(DrvZ80ROM + 0x00000, k++, 1)) return 1;
 
-			if (game == 0) {
-				if (BurnLoadRom(tmp     , k++, 1)) return 1;
-				memcpy(DrvChars + 0x00000, tmp + 0x00000, 0x4000);
-			} else {
-				if (BurnLoadRom(DrvChars, k++, 1)) return 1;
-			}
+			if (BurnLoadRom(DrvChars, k++, 1)) return 1;
 
 			if (game == 0) {
 				if (BurnLoadRom(DrvTiles + 0x00000, k++, 1)) return 1;
@@ -569,11 +620,9 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 			memset(DrvSprites, 0xff, 0x20000);
 			if (game == 0) {
 				if (BurnLoadRom(DrvSprites + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(tmp                 , k++, 1)) return 1;
-				memcpy(DrvSprites + 0x08000, tmp + 0x00000, 0x4000);
+				if (BurnLoadRom(DrvSprites + 0x08000, k++, 1)) return 1;
 				if (BurnLoadRom(DrvSprites + 0x10000, k++, 1)) return 1;
-				if (BurnLoadRom(tmp                 , k++, 1)) return 1;
-				memcpy(DrvSprites + 0x18000, tmp + 0x00000, 0x4000);
+				if (BurnLoadRom(DrvSprites + 0x18000, k++, 1)) return 1;
 			} else {
 				if (BurnLoadRom(DrvSprites + 0x00000, k++, 1)) return 1;
 				if (BurnLoadRom(DrvSprites + 0x04000, k++, 1)) return 1;
@@ -582,8 +631,6 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 				if (BurnLoadRom(DrvSprites + 0x14000, k++, 1)) return 1;
 				if (BurnLoadRom(DrvSprites + 0x18000, k++, 1)) return 1;
 			}
-
-			BurnFree(tmp);
 		} else {
 			if (BurnLoadRom(DrvM6809ROM + 0x00000, 0, 1)) return 1;
 			if (BurnLoadRom(DrvM6809ROM + 0x04000, 1, 1)) return 1;
@@ -617,8 +664,8 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 	M6809MapMemory(DrvSprRAM,				0x1e00, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvFgVideoRAM,			0x2000, 0x27ff, MAP_RAM);
 	M6809MapMemory(DrvBgVideoRAM,			0x2800, 0x2fff, MAP_RAM);
-//	M6809MapMemory(DrvPalRAM1,				0x3800, 0x38ff, MAP_RAM); // handler
-//	M6809MapMemory(DrvPalRAM0,				0x3900, 0x39ff, MAP_RAM); // handler
+//	M6809MapMemory(DrvPalRAM[1],			0x3800, 0x38ff, MAP_RAM); // handler
+//	M6809MapMemory(DrvPalRAM[0],			0x3900, 0x39ff, MAP_RAM); // handler
 	M6809MapMemory(DrvM6809ROM,				0x4000, 0x5fff, MAP_ROM);
 	M6809MapMemory(DrvM6809ROM + 0x2000,	0x6000, 0xffff, MAP_ROM);
 	M6809SetReadHandler(main_read);
@@ -705,11 +752,9 @@ static INT32 DrvExit()
 
 static void calc_color(INT32 index)
 {
-	INT32 Val = DrvPalRAM0[index] + (DrvPalRAM1[index] << 8);
-
-	INT32 r = pal4bit(Val >> 12);
-	INT32 g = pal4bit(Val >>  8);
-	INT32 b = pal4bit(Val >>  4);
+	INT32 r = pal4bit(DrvPalRAM[1][index] >> 4);
+	INT32 g = pal4bit(DrvPalRAM[1][index] >> 0);
+	INT32 b = pal4bit(DrvPalRAM[0][index] >> 4);
 
 	DrvPalette[index] = BurnHighCol(r, g, b, 0);
 }
@@ -773,7 +818,7 @@ static INT32 DrvFrame()
 		UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
 
 		UINT8 joy_type = 0;
-		switch (DrvDips[2]) {
+		switch (DrvDips[2] & 3) {
 			case 1: joy_type = INPUT_4WAY; break;
 			case 2: joy_type = INPUT_4WAY_ALT; break;
 		}
@@ -783,7 +828,7 @@ static INT32 DrvFrame()
 		ProcessJoystick(&DrvInputs[2], 1, 3,2,1,0, INPUT_CLEAROPPOSITES | INPUT_ISACTIVELOW | joy_type);
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { (INT32)(1500000 / 59.637405), (INT32)(3000000 / 59.637405) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
@@ -792,6 +837,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
 		CPU_RUN(0, M6809);
 		if (i == nInterleave-1) {
 			if (pBurnDraw) DrvDraw();
@@ -815,6 +861,12 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
+
+	if (frame_lightning) {
+		frame_lightning = false;
+
+		bprintf(0, _T("** gng Lightning effect, frame %d\n"), nCurrentFrame);
+	}
 
 	return 0;
 }

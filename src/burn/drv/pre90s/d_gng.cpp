@@ -874,6 +874,49 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 static struct BurnRomInfo GngRomDesc[] = {
+	{ "mm_c_04",       0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_03",       0x08000, 0x1def138a, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_05",       0x08000, 0xed28e86e, 1 | BRF_ESS | BRF_PRG }, //	 2
+
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
+
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
+
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
+
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
+
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
+};
+
+STD_ROM_PICK(Gng)
+STD_ROM_FN(Gng)
+
+struct BurnDriver BurnDrvGng = {
+	"gng", NULL, NULL, NULL, "1985",
+	"Ghosts'n Goblins (World? set 1)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, GngRomInfo, GngRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
+static struct BurnRomInfo GngaRomDesc[] = {
 	{ "mjg_04.10n",                           0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0 M6809 Program Code
 	{ "mjg_03.8n",                            0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "mjg_05.12n",                           0x08000, 0xd6397b2b, 1 | BRF_ESS | BRF_PRG }, //  2
@@ -897,21 +940,21 @@ static struct BurnRomInfo GngRomDesc[] = {
 	{ "gg-pal10l8.bin",                       0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
-STD_ROM_PICK(Gng)
-STD_ROM_FN(Gng)
+STD_ROM_PICK(Gnga)
+STD_ROM_FN(Gnga)
 
-struct BurnDriver BurnDrvGng = {
-	"gng", NULL, NULL, NULL, "1985",
-	"Ghosts'n Goblins (World? set 1)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvGnga = {
+	"gnga", "gng", NULL, NULL, "1985",
+	"Ghosts'n Goblins (World? set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngRomInfo, GngRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, GngaRomInfo, GngaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
-static struct BurnRomInfo GngaRomDesc[] = {
+static struct BurnRomInfo GngbRomDesc[] = {
 	{ "gg4.bin",       0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
 	{ "gg5.bin",       0x08000, 0xd6397b2b, 1 | BRF_ESS | BRF_PRG }, //	 2
@@ -940,21 +983,21 @@ static struct BurnRomInfo GngaRomDesc[] = {
 	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
-STD_ROM_PICK(Gnga)
-STD_ROM_FN(Gnga)
+STD_ROM_PICK(Gngb)
+STD_ROM_FN(Gngb)
 
-struct BurnDriver BurnDrvGnga = {
-	"gnga", "gng", NULL, NULL, "1985",
-	"Ghosts'n Goblins (World? set 2)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvGngb = {
+	"gngb", "gng", NULL, NULL, "1985",
+	"Ghosts'n Goblins (World? set 3)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngaRomInfo, GngaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	NULL, GngbRomInfo, GngbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
-static struct BurnRomInfo GngbRomDesc[] = {
+static struct BurnRomInfo GngcRomDesc[] = {
 	{ "gng.n10",       0x04000, 0x60343188, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "gng.n9",        0x04000, 0xb6b91cfb, 1 | BRF_ESS | BRF_PRG }, //	 1
 	{ "gng.n8",        0x04000, 0xa5cfa928, 1 | BRF_ESS | BRF_PRG }, //	 2
@@ -983,15 +1026,15 @@ static struct BurnRomInfo GngbRomDesc[] = {
 	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  20
 };
 
-STD_ROM_PICK(Gngb)
-STD_ROM_FN(Gngb)
+STD_ROM_PICK(Gngc)
+STD_ROM_FN(Gngc)
 
-struct BurnDriver BurnDrvGngb = {
-	"gngb", "gng", NULL, NULL, "1985",
-	"Ghosts'n Goblins (World? set 3)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvGngc = {
+	"gngc", "gng", NULL, NULL, "1985",
+	"Ghosts'n Goblins (World? set 4)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngbRomInfo, GngbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	NULL, GngcRomInfo, GngcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -1236,47 +1279,6 @@ struct BurnDriver BurnDrvGngt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngtRomInfo, GngtRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngcRomDesc[] = {
-	{ "mm_c_04",       0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_03",       0x08000, 0x1def138a, 1 | BRF_ESS | BRF_PRG }, //	 1
-	{ "mm_c_05",       0x08000, 0xed28e86e, 1 | BRF_ESS | BRF_PRG }, //	 2
-
-	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
-
-	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
-
-	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
-
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
-};
-
-STD_ROM_PICK(Gngc)
-STD_ROM_FN(Gngc)
-
-struct BurnDriver BurnDrvGngc = {
-	"gngc", "gng", NULL, NULL, "1985",
-	"Ghosts'n Goblins (World? set 4)\0", NULL, "Capcom", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngcRomInfo, GngcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

@@ -1492,13 +1492,13 @@ struct BurnDriver BurnDrvMakaimug = {
 
 
 static struct BurnRomInfo GngmaidenRomDesc[] = {
-	{ "gg4maiden.bin", 0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5maiden.bin", 0x08000, 0xabb6534a, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "mm_c_maiden_04",       0x04000, 0x269b5163, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_03",       0x08000, 0x1def138a, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_maiden_05",       0x08000, 0x90a7c00f, 1 | BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
+	{ "gg1maiden.bin",       0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
 
 	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
 	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
@@ -1507,17 +1507,17 @@ static struct BurnRomInfo GngmaidenRomDesc[] = {
 	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
 	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17maiden.bin",0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
-	{ "gg16maiden.bin",0x04000, 0x44ba9a8f, 5 | BRF_GRA },	     //  12
-	{ "gg15maiden.bin",0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
-	{ "gg14maiden.bin",0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
-	{ "gg13maiden.bin",0x04000, 0x041de541, 5 | BRF_GRA },	     //  15
-	{ "gg12maiden.bin",0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
+	{ "gg17maiden.bin",      0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16maiden.bin",      0x04000, 0x44ba9a8f, 5 | BRF_GRA },	     //  12
+	{ "gg15maiden.bin",      0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
+	{ "gg14maiden.bin",      0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
+	{ "gg13maiden.bin",      0x04000, 0x41de541, 5 | BRF_GRA },	     //  15
+	{ "gg12maiden.bin",      0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
 
 	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
 	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
 STD_ROM_PICK(Gngmaiden)
@@ -1576,13 +1576,13 @@ struct BurnDriver BurnDrvMakmaiden = {
 
 
 static struct BurnRomInfo GngknightRomDesc[] = {
-	{ "gg4knight.bin", 0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5knight.bin", 0x08000, 0xca671053, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "mm_c_knight_04",       0x04000, 0xb96e18c0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_03",       0x08000, 0x1def138a, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_knight_05",       0x08000, 0xf1768316, 1 | BRF_ESS | BRF_PRG }, //	 2
 
 	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
+	{ "gg1knight.bin",       0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
 
 	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
 	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
@@ -1591,17 +1591,17 @@ static struct BurnRomInfo GngknightRomDesc[] = {
 	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
 	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17knight.bin",0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
-	{ "gg16knight.bin",0x04000, 0x5b0a5995, 5 | BRF_GRA },	     //  12
-	{ "gg15knight.bin",0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
-	{ "gg14knight.bin",0x04000, 0x01d9a306, 5 | BRF_GRA },	     //  14
-	{ "gg13knight.bin",0x04000, 0x75211c8b, 5 | BRF_GRA },	     //  15
-	{ "gg12knight.bin",0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
+	{ "gg17knight.bin",      0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16knight.bin",      0x04000, 0x5b0a5995, 5 | BRF_GRA },	     //  12
+	{ "gg15knight.bin",      0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
+	{ "gg14knight.bin",      0x04000, 0x1d9a306, 5 | BRF_GRA },	     //  14
+	{ "gg13knight.bin",      0x04000, 0x75211c8b, 5 | BRF_GRA },	     //  15
+	{ "gg12knight.bin",      0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
 
 	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
 	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
 STD_ROM_PICK(Gngknight)

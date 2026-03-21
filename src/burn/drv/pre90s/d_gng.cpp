@@ -578,85 +578,64 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static INT32 LoadRoms()
+{
+	char* pRomName;
+	struct BurnRomInfo ri;
+	UINT32 pOffset = 0;
+	UINT32 tOffset = 0;
+	UINT32 sOffset = 0;
 
-static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamrun
+	memset(DrvSprites, 0xff, 0x20000);
+
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
+	{
+		BurnDrvGetRomInfo(&ri, i);
+
+		if ((ri.nType & 0xf) == 1) {
+			if (BurnLoadRom(DrvM6809ROM + pOffset, i, 1)) return 1;
+			pOffset += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 0xf) == 2) {
+			if (BurnLoadRom(DrvZ80ROM, i, 1)) return 1;
+			continue;
+		}
+
+		if ((ri.nType & 0xf) == 3) {
+			if (BurnLoadRom(DrvChars, i, 1)) return 1;
+			continue;
+		}
+
+		if ((ri.nType & 0xf) == 4) {
+			if (BurnLoadRom(DrvTiles + tOffset, i, 1)) return 1;
+			tOffset += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 0xf) == 5) {
+			if (BurnLoadRom(DrvSprites + sOffset, i, 1)) return 1;
+			sOffset += ri.nLen;
+			if (sOffset == 0xc000) sOffset = 0x10000;
+			continue;
+		}
+	}
+
+	if (is_game) DrvM6809ROM[0x2000] = 0x00; // crash patch (diamrun)
+
+	DrvGfxDecode();
+
+	return 0;
+}
+
+static INT32 DrvCommonInit()
 {
 	BurnAllocMemIndex();
 
 	BurnSetRefreshRate(59.64);
 
-	{
-		if (game < 3) {
-			INT32 k = 0;
-			if (game == 2) {
-				if (BurnLoadRom(DrvM6809ROM + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x04000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x08000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x0c000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x10000, k++, 1)) return 1;
-			} else {
-				if (BurnLoadRom(DrvM6809ROM + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x04000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvM6809ROM + 0x0c000, k++, 1)) return 1;
-			}
-
-			if (BurnLoadRom(DrvZ80ROM + 0x00000, k++, 1)) return 1;
-
-			if (BurnLoadRom(DrvChars, k++, 1)) return 1;
-
-			if (game == 0) {
-				if (BurnLoadRom(DrvTiles + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x08000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x10000, k++, 1)) return 1;
-			} else {
-				if (BurnLoadRom(DrvTiles + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x04000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x08000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x0c000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x10000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvTiles + 0x14000, k++, 1)) return 1;
-			}
-
-			memset(DrvSprites, 0xff, 0x20000);
-			if (game == 0) {
-				if (BurnLoadRom(DrvSprites + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x08000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x10000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x18000, k++, 1)) return 1;
-			} else {
-				if (BurnLoadRom(DrvSprites + 0x00000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x04000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x08000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x10000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x14000, k++, 1)) return 1;
-				if (BurnLoadRom(DrvSprites + 0x18000, k++, 1)) return 1;
-			}
-		} else {
-			if (BurnLoadRom(DrvM6809ROM + 0x00000, 0, 1)) return 1;
-			if (BurnLoadRom(DrvM6809ROM + 0x04000, 1, 1)) return 1;
-			if (BurnLoadRom(DrvM6809ROM + 0x0c000, 2, 1)) return 1;
-			if (BurnLoadRom(DrvM6809ROM + 0x14000, 3, 1)) return 1;
-
-			if (BurnLoadRom(DrvZ80ROM + 0x00000, 4, 1)) return 1;
-
-			if (BurnLoadRom(DrvChars, 5, 1)) return 1;
-
-			if (BurnLoadRom(DrvTiles + 0x00000,  6, 1)) return 1;
-			if (BurnLoadRom(DrvTiles + 0x04000,  7, 1)) return 1;
-			if (BurnLoadRom(DrvTiles + 0x08000,  8, 1)) return 1;
-			if (BurnLoadRom(DrvTiles + 0x0c000,  9, 1)) return 1;
-			if (BurnLoadRom(DrvTiles + 0x10000, 10, 1)) return 1;
-			if (BurnLoadRom(DrvTiles + 0x14000, 11, 1)) return 1;
-
-			memset(DrvSprites, 0xff, 0x20000);
-			if (BurnLoadRom(DrvSprites + 0x00000, 12, 1)) return 1;
-			if (BurnLoadRom(DrvSprites + 0x10000, 13, 1)) return 1;
-
-			DrvM6809ROM[0x2000] = 0x00; // crash patch (diamrun)
-		}
-
-		DrvGfxDecode();
-	}
+	if (LoadRoms()) return 1;
 
 	M6809Init(0);
 	M6809Open(0);
@@ -701,7 +680,7 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 	GenericTilemapSetTransparent(1, 3);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
-	if (game != 3) DrvRandPalette(); // only gng
+	if (!is_game) DrvRandPalette(); // only gng
 
 	DrvDoReset();
 
@@ -710,23 +689,13 @@ static INT32 DrvCommonInit(INT32 game) // 0 = gng, 1 = gnga, 2 = gngb, 3 = diamr
 
 static INT32 GngInit()
 {
-	return DrvCommonInit(0);
-}
-
-static INT32 GngaInit()
-{
-	return DrvCommonInit(1);
-}
-
-static INT32 GngbInit()
-{
-	return DrvCommonInit(2);
+	return DrvCommonInit();
 }
 
 static INT32 DiamrunInit()
 {
 	is_game = 1;
-	return DrvCommonInit(3);
+	return DrvCommonInit();
 }
 
 static INT32 DrvExit()
@@ -905,27 +874,27 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 static struct BurnRomInfo GngRomDesc[] = {
-	{ "mjg_04.10n",                           0x04000, 0x66606beb, BRF_ESS | BRF_PRG }, //  0 M6809 Program Code
-	{ "mjg_03.8n",                            0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //  1
-	{ "mjg_05.12n",                           0x08000, 0xd6397b2b, BRF_ESS | BRF_PRG }, //  2
+	{ "mjg_04.10n",                           0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0 M6809 Program Code
+	{ "mjg_03.8n",                            0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "mjg_05.12n",                           0x08000, 0xd6397b2b, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3 Z80 Program
+	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 Program
 
-	{ "capsom_m5m23256p_p_616105_mjg_01.11e", 0x08000, 0x1ab9038a, BRF_GRA },           //  4 Characters
+	{ "capsom_m5m23256p_p_616105_mjg_01.11e", 0x08000, 0x1ab9038a, 3 | BRF_GRA },           //  4 Characters
 
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e",  0x08000, 0xc09a716f, BRF_GRA },           //  5 Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c",  0x08000, 0x0b92b129, BRF_GRA },           //  6
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b",  0x08000, 0x830176af, BRF_GRA },           //  7
+	{ "capsom_m5m23256p_p_616105_mmg_08.3e",  0x08000, 0xc09a716f, 4 | BRF_GRA },           //  5 Tiles
+	{ "capsom_m5m23256p_p_61710z_mmg_07.3c",  0x08000, 0x0b92b129, 4 | BRF_GRA },           //  6
+	{ "capsom_m5m23256p_p_616105_mmg_06.3b",  0x08000, 0x830176af, 4 | BRF_GRA },           //  7
 
-	{ "capsom_m5m23256p_p_61710g_mjg_12.4n",  0x08000, 0xdbf05081, BRF_GRA },           //  8 Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11.3n",  0x08000, 0xcf533077, BRF_GRA },           //  9
-	{ "capsom_m5m23256p_p_62410p_mjg_10.4l",  0x08000, 0x5f36734e, BRF_GRA },           // 10
-	{ "capsom_m5m23256p_p_61710g_mjg_09.3l",  0x08000, 0x89c71940, BRF_GRA },           // 11
+	{ "capsom_m5m23256p_p_61710g_mjg_12.4n",  0x08000, 0xdbf05081, 5 | BRF_GRA },           //  8 Sprites
+	{ "capsom_m5m23256p_p_620108_mjg_11.3n",  0x08000, 0xcf533077, 5 | BRF_GRA },           //  9
+	{ "capsom_m5m23256p_p_62410p_mjg_10.4l",  0x08000, 0x5f36734e, 5 | BRF_GRA },           // 10
+	{ "capsom_m5m23256p_p_61710g_mjg_09.3l",  0x08000, 0x89c71940, 5 | BRF_GRA },           // 11
 
-	{ "m-02_63s141.14k",                      0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT }, // 12 PROMs
-	{ "m-01_63s141.2e",                       0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT }, // 13
+	{ "m-02_63s141.14k",                      0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, // 12 PROMs
+	{ "m-01_63s141.2e",                       0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT }, // 13
 
-	{ "gg-pal10l8.bin",                       0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT }, // 14 PLDs
+	{ "gg-pal10l8.bin",                       0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
 STD_ROM_PICK(Gng)
@@ -943,32 +912,32 @@ struct BurnDriver BurnDrvGng = {
 
 
 static struct BurnRomInfo GngaRomDesc[] = {
-	{ "gg4.bin",       0x04000, 0x66606beb, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3.bin",       0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5.bin",       0x08000, 0xd6397b2b, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg4.bin",       0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gg5.bin",       0x08000, 0xd6397b2b, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17.bin",      0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gnga)
@@ -980,38 +949,38 @@ struct BurnDriver BurnDrvGnga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngaRomInfo, GngaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngbRomDesc[] = {
-	{ "gng.n10",       0x04000, 0x60343188, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gng.n9",        0x04000, 0xb6b91cfb, BRF_ESS | BRF_PRG }, //	 1
-	{ "gng.n8",        0x04000, 0xa5cfa928, BRF_ESS | BRF_PRG }, //	 2
-	{ "gng.n13",       0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
-	{ "gng.n12",       0x04000, 0x13cf6238, BRF_ESS | BRF_PRG }, //	 4
+	{ "gng.n10",       0x04000, 0x60343188, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gng.n9",        0x04000, 0xb6b91cfb, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gng.n8",        0x04000, 0xa5cfa928, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "gng.n13",       0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "gng.n12",       0x04000, 0x13cf6238, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  6	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  6	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  7	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  8
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  9
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  10
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  11
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  12
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  7	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  8
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  9
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  10
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  11
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  12
 
-	{ "gg17.bin",      0x04000, 0x93e50a8f, BRF_GRA },	     //  13	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  14
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	     //  16
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  17
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  18
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  13	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  14
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  15
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  16
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  17
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  18
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  19	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  20
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  19	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  20
 };
 
 STD_ROM_PICK(Gngb)
@@ -1023,35 +992,35 @@ struct BurnDriver BurnDrvGngb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngbRomInfo, GngbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngblRomDesc[] = {
-	{ "5.84490.10n",   0x04000, 0x66606beb, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "4.84490.9n",    0x04000, 0x527f5c39, BRF_ESS | BRF_PRG }, //	 1
-	{ "3.84490.8n",    0x04000, 0x1c5175d5, BRF_ESS | BRF_PRG }, //	 2
-	{ "7.84490.13n",   0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
-	{ "6.84490.12n",   0x04000, 0xc83dbd10, BRF_ESS | BRF_PRG }, //	 4
+	{ "5.84490.10n",   0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "4.84490.9n",    0x04000, 0x527f5c39, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "3.84490.8n",    0x04000, 0x1c5175d5, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "7.84490.13n",   0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "6.84490.12n",   0x04000, 0xc83dbd10, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "2.8529.13h",    0x08000, 0x55cfb196, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "2.8529.13h",    0x08000, 0x55cfb196, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "1.84490.11e",   0x04000, 0xecfccf07, BRF_GRA },	     //  6	Characters
+	{ "1.84490.11e",   0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  6	Characters
 
-	{ "13.84490.3e",   0x04000, 0xddd56fa9, BRF_GRA },	     //  7	Tiles
-	{ "12.84490.1e",   0x04000, 0x7302529d, BRF_GRA },	     //  8
-	{ "11.84490.3c",   0x04000, 0x20035bda, BRF_GRA },	     //  9
-	{ "10.84490.1c",   0x04000, 0xf12ba271, BRF_GRA },	     //  10
-	{ "9.84490.3b",    0x04000, 0xe525207d, BRF_GRA },	     //  11
-	{ "8.84490.1b",    0x04000, 0x2d77e9b2, BRF_GRA },	     //  12
+	{ "13.84490.3e",   0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  7	Tiles
+	{ "12.84490.1e",   0x04000, 0x7302529d, 4 | BRF_GRA },	     //  8
+	{ "11.84490.3c",   0x04000, 0x20035bda, 4 | BRF_GRA },	     //  9
+	{ "10.84490.1c",   0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  10
+	{ "9.84490.3b",    0x04000, 0xe525207d, 4 | BRF_GRA },	     //  11
+	{ "8.84490.1b",    0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  12
 
-	{ "19.84472.4n",   0x04000, 0x4613afdc, BRF_GRA },	     //  13	Sprites
-	{ "18.84472.3n",   0x04000, 0x06d7e5ca, BRF_GRA },	     //  14
-	{ "17.84472.1n",   0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
-	{ "16.84472.4l",   0x04000, 0x608d68d5, BRF_GRA },	     //  16
-	{ "15.84490.3l",   0x04000, 0xe80c3fca, BRF_GRA },	     //  17
-	{ "14.84490.1l",   0x04000, 0x7780a925, BRF_GRA },	     //  18
+	{ "19.84472.4n",   0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  13	Sprites
+	{ "18.84472.3n",   0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  14
+	{ "17.84472.1n",   0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  15
+	{ "16.84472.4l",   0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  16
+	{ "15.84490.3l",   0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  17
+	{ "14.84490.1l",   0x04000, 0x7780a925, 5 | BRF_GRA },	     //  18
 };
 
 STD_ROM_PICK(Gngbl)
@@ -1063,35 +1032,35 @@ struct BurnDriver BurnDrvGngbl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngblRomInfo, GngblRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngblaRomDesc[] = {
-	{ "3.10n",         0x04000, 0x4f94130f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "4.9n",          0x04000, 0x08322bef, BRF_ESS | BRF_PRG }, //	 1
-	{ "5.8n",          0x04000, 0xb6582167, BRF_ESS | BRF_PRG }, //	 2
-	{ "1.13n",         0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
-	{ "2.12n",         0x04000, 0xf32c2e55, BRF_ESS | BRF_PRG }, //	 4
+	{ "3.10n",         0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "4.9n",          0x04000, 0x08322bef, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "5.8n",          0x04000, 0xb6582167, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "1.13n",         0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "2.12n",         0x04000, 0xf32c2e55, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "6.13h",         0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "6.13h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "7.10e",         0x04000, 0xecfccf07, BRF_GRA },	     //  5	Characters
+	{ "7.10e",         0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  5	Characters
 
-	{ "19.e3",         0x04000, 0xddd56fa9, BRF_GRA },	     //  7	Tiles
-	{ "12.e1",         0x04000, 0x7302529d, BRF_GRA },	     //  8
-	{ "11.c3",         0x04000, 0x20035bda, BRF_GRA },	     //  9
-	{ "10.c1",         0x04000, 0xf12ba271, BRF_GRA },	     //  10
-	{ "9.b3",          0x04000, 0xe525207d, BRF_GRA },	     //  11
-	{ "8.1b",          0x04000, 0x2d77e9b2, BRF_GRA },	     //  12
+	{ "19.e3",         0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  7	Tiles
+	{ "12.e1",         0x04000, 0x7302529d, 4 | BRF_GRA },	     //  8
+	{ "11.c3",         0x04000, 0x20035bda, 4 | BRF_GRA },	     //  9
+	{ "10.c1",         0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  10
+	{ "9.b3",          0x04000, 0xe525207d, 4 | BRF_GRA },	     //  11
+	{ "8.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  12
 
-	{ "13.n4",   	   0x04000, 0x4613afdc, BRF_GRA },	     //  13	Sprites
-	{ "14.n3",         0x04000, 0x06d7e5ca, BRF_GRA },	     //  14
-	{ "15.n1",   	   0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
-	{ "16.l4",   	   0x04000, 0x608d68d5, BRF_GRA },	     //  16
-	{ "17.l3",   	   0x04000, 0xe80c3fca, BRF_GRA },	     //  17
-	{ "18.l1",   	   0x04000, 0x7780a925, BRF_GRA },	     //  18
+	{ "13.n4",   	   0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  13	Sprites
+	{ "14.n3",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  14
+	{ "15.n1",   	   0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  15
+	{ "16.l4",   	   0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  16
+	{ "17.l3",   	   0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  17
+	{ "18.l1",   	   0x04000, 0x7780a925, 5 | BRF_GRA },	     //  18
 };
 
 STD_ROM_PICK(Gngbla)
@@ -1103,35 +1072,35 @@ struct BurnDriver BurnDrvGngbla = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngblaRomInfo, GngblaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngblbRomDesc[] = {
-	{ "3.bin",         0x04000, 0x4859d068, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "4.bin",         0x04000, 0x08322bef, BRF_ESS | BRF_PRG }, //	 1
-	{ "5.bin",         0x04000, 0x888d7764, BRF_ESS | BRF_PRG }, //	 2
-	{ "gng.n13",       0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
-	{ "2.bin",         0x04000, 0xf32c2e55, BRF_ESS | BRF_PRG }, //	 4
+	{ "3.bin",         0x04000, 0x4859d068, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "4.bin",         0x04000, 0x08322bef, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "5.bin",         0x04000, 0x888d7764, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "gng.n13",       0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "2.bin",         0x04000, 0xf32c2e55, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  5	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  5	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  7	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  8
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  9
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  10
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  11
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  12
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  7	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  8
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  9
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  10
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  11
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  12
 
-	{ "19.84472.4n",   0x04000, 0x4613afdc, BRF_GRA },	     //  13	Sprites
-	{ "18.84472.3n",   0x04000, 0x06d7e5ca, BRF_GRA },	     //  14
-	{ "17.84472.1n",   0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
-	{ "16.84472.4l",   0x04000, 0x608d68d5, BRF_GRA },	     //  16
-	{ "15.84490.3l",   0x04000, 0xe80c3fca, BRF_GRA },	     //  17
-	{ "14.84490.1l",   0x04000, 0x7780a925, BRF_GRA },	     //  18
+	{ "19.84472.4n",   0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  13	Sprites
+	{ "18.84472.3n",   0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  14
+	{ "17.84472.1n",   0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  15
+	{ "16.84472.4l",   0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  16
+	{ "15.84490.3l",   0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  17
+	{ "14.84490.1l",   0x04000, 0x7780a925, 5 | BRF_GRA },	     //  18
 };
 
 STD_ROM_PICK(Gngblb)
@@ -1143,38 +1112,38 @@ struct BurnDriver BurnDrvGngblb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngblbRomInfo, GngblbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngblitaRomDesc[] = {
-	{ "3",             0x04000, 0x4859d068, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "4-5",           0x08000, 0x233a4589, BRF_ESS | BRF_PRG }, //	 1
-	{ "1-2",           0x08000, 0xed28e86e, BRF_ESS | BRF_PRG }, //	 2
+	{ "3",             0x04000, 0x4859d068, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "4-5",           0x08000, 0x233a4589, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "1-2",           0x08000, 0xed28e86e, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17.bin",      0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gngblita)
@@ -1186,35 +1155,35 @@ struct BurnDriver BurnDrvGngblita = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngblitaRomInfo, GngblitaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngprotRomDesc[] = {
-	{ "gg10n.bin",     0x04000, 0x5d2a2c90, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg9n.bin",      0x04000, 0x30eb183d, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg8n.bin",      0x04000, 0x4b5e2145, BRF_ESS | BRF_PRG }, //	 2
-	{ "gg13n.bin",     0x04000, 0x2664aae6, BRF_ESS | BRF_PRG }, //	 3
-	{ "gg12n.bin",     0x04000, 0xc7ef4ae8, BRF_ESS | BRF_PRG }, //	 4
+	{ "gg10n.bin",     0x04000, 0x5d2a2c90, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg9n.bin",      0x04000, 0x30eb183d, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gg8n.bin",      0x04000, 0x4b5e2145, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "gg13n.bin",     0x04000, 0x2664aae6, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "gg12n.bin",     0x04000, 0xc7ef4ae8, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "gg14h.bin",     0x08000, 0x55cfb196, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "gg14h.bin",     0x08000, 0x55cfb196, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "gg11e.bin",	   0x04000, 0xccea9365, BRF_GRA },	     //  6	Characters
+	{ "gg11e.bin",	   0x04000, 0xccea9365, 3 | BRF_GRA },	     //  6	Characters
 
-	{ "gg3e.bin",      0x04000, 0x68db22c8, BRF_GRA },	     //  7	Tiles
-	{ "gg1e.bin",      0x04000, 0xdad8dd2f, BRF_GRA },	     //  8
-	{ "gg3c.bin",      0x04000, 0x7a158323, BRF_GRA },	     //  9
-	{ "gg1c.bin",      0x04000, 0x7314d095, BRF_GRA },	     //  10
-	{ "gg3b.bin",      0x04000, 0x03a96d9b, BRF_GRA },	     //  11
-	{ "gg1b.bin",      0x04000, 0x7b9899bc, BRF_GRA },	     //  12
+	{ "gg3e.bin",      0x04000, 0x68db22c8, 4 | BRF_GRA },	     //  7	Tiles
+	{ "gg1e.bin",      0x04000, 0xdad8dd2f, 4 | BRF_GRA },	     //  8
+	{ "gg3c.bin",      0x04000, 0x7a158323, 4 | BRF_GRA },	     //  9
+	{ "gg1c.bin",      0x04000, 0x7314d095, 4 | BRF_GRA },	     //  10
+	{ "gg3b.bin",      0x04000, 0x03a96d9b, 4 | BRF_GRA },	     //  11
+	{ "gg1b.bin",      0x04000, 0x7b9899bc, 4 | BRF_GRA },	     //  12
 
-	{ "gg4l.bin",      0x04000, 0x49cf81b4, BRF_GRA },	     //  13	Sprites
-	{ "gg3l.bin",      0x04000, 0xe61437b1, BRF_GRA },	     //  14
-	{ "gg1l.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
-	{ "gg4n.bin",      0x04000, 0xd5aff5a7, BRF_GRA },	     //  16
-	{ "gg3n.bin",      0x04000, 0xd589caeb, BRF_GRA },	     //  17
-	{ "gg1n.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  18
+	{ "gg4l.bin",      0x04000, 0x49cf81b4, 5 | BRF_GRA },	     //  13	Sprites
+	{ "gg3l.bin",      0x04000, 0xe61437b1, 5 | BRF_GRA },	     //  14
+	{ "gg1l.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  15
+	{ "gg4n.bin",      0x04000, 0xd5aff5a7, 5 | BRF_GRA },	     //  16
+	{ "gg3n.bin",      0x04000, 0xd589caeb, 5 | BRF_GRA },	     //  17
+	{ "gg1n.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  18
 };
 
 STD_ROM_PICK(Gngprot)
@@ -1226,36 +1195,36 @@ struct BurnDriver BurnDrvGngprot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngprotRomInfo, GngprotRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngtRomDesc[] = {
-	{ "mmt04d.10n",    0x04000, 0x652406f6, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03d.8n",     0x08000, 0xfb040b42, BRF_ESS | BRF_PRG }, //	 1
-	{ "mmt05d.13n",    0x08000, 0x8f7cff61, BRF_ESS | BRF_PRG }, //	 2
+	{ "mmt04d.10n",    0x04000, 0x652406f6, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mmt03d.8n",     0x08000, 0xfb040b42, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mmt05d.13n",    0x08000, 0x8f7cff61, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "mm02.14h",      0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "mm02.14h",      0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "mm01.11e",      0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "mm01.11e",      0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "mm11.3e",       0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "mm10.1e",       0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "mm09.3c",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "mm08.1c",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "mm07.3b",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "mm06.1b",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "mm11.3e",       0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "mm10.1e",       0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "mm09.3c",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "mm08.1c",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "mm07.3b",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "mm06.1b",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "mm17.4n",       0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
-	{ "mm16.3n",       0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "mm15.1n",       0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "mm14.4l",       0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
-	{ "mm13.3l",       0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "mm12.1l",       0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "mm17.4n",       0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "mm16.3n",       0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "mm15.1n",       0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "mm14.4l",       0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "mm13.3l",       0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "mm12.1l",       0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "m-02.14k",      0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "m-01.2e",       0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "m-02.14k",      0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "m-01.2e",       0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Gngt)
@@ -1267,36 +1236,36 @@ struct BurnDriver BurnDrvGngt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngtRomInfo, GngtRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngcRomDesc[] = {
-	{ "mm_c_04",       0x04000, 0x4f94130f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_03",       0x08000, 0x1def138a, BRF_ESS | BRF_PRG }, //	 1
-	{ "mm_c_05",       0x08000, 0xed28e86e, BRF_ESS | BRF_PRG }, //	 2
+	{ "mm_c_04",       0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_03",       0x08000, 0x1def138a, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_05",       0x08000, 0xed28e86e, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17.bin",      0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Gngc)
@@ -1308,36 +1277,36 @@ struct BurnDriver BurnDrvGngc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngcRomInfo, GngcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakaimurRomDesc[] = {
-	{ "10n.rom",       0x04000, 0x81e567e0, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8n.rom",        0x08000, 0x9612d66c, BRF_ESS | BRF_PRG }, //	 1
-	{ "12n.rom",       0x08000, 0x65a6a97b, BRF_ESS | BRF_PRG }, //	 2
+	{ "10n.rom",       0x04000, 0x81e567e0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8n.rom",        0x08000, 0x9612d66c, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12n.rom",       0x08000, 0x65a6a97b, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13.n4",      0x04000, 0x4613afdc, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gng16.l4",      0x04000, 0x608d68d5, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gng13.n4",      0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gng16.l4",      0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimur)
@@ -1349,36 +1318,36 @@ struct BurnDriver BurnDrvMakaimur = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimurRomInfo, MakaimurRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakaimubRomDesc[] = {
-	{ "mj04b.10n",     0x04000, 0xf8bda78f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03b.8n",      0x08000, 0x0ba14114, BRF_ESS | BRF_PRG }, //	 1
-	{ "mj05b.12n",     0x08000, 0x3040a574, BRF_ESS | BRF_PRG }, //	 2
+	{ "mj04b.10n",     0x04000, 0xf8bda78f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mj03b.8n",      0x08000, 0x0ba14114, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mj05b.12n",     0x08000, 0x3040a574, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "mm02.14h",      0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "mm02.14h",      0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "mj01.11e",      0x04000, 0x178366b4, BRF_GRA },	     //  4	Characters
+	{ "mj01.11e",      0x04000, 0x178366b4, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "mm11.3e",       0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "mm10.1e",       0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "mm09.3c",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "mm08.1c",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "mm07.3b",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "mm06.1b",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "mm11.3e",       0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "mm10.1e",       0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "mm09.3c",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "mm08.1c",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "mm07.3b",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "mm06.1b",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "mj17.4n",       0x04000, 0x4613afdc, BRF_GRA },	     //  11	Sprites
-	{ "mj16.3n",       0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "mj15.1n",       0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "mj14.4l",       0x04000, 0x608d68d5, BRF_GRA },	     //  14
-	{ "mj13.3l",       0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "mj12.1l",       0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "mj17.4n",       0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  11	Sprites
+	{ "mj16.3n",       0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "mj15.1n",       0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "mj14.4l",       0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  14
+	{ "mj13.3l",       0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "mj12.1l",       0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimub)
@@ -1390,38 +1359,38 @@ struct BurnDriver BurnDrvMakaimub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimubRomInfo, MakaimubRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakaimubblRomDesc[] = {
-	{ "gg5.bin",       0x04000, 0xf8bda78f, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg4.bin",       0x04000, 0xac0b25fb, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg3.bin",       0x04000, 0x762b5af0, BRF_ESS | BRF_PRG }, //	 2
-	{ "gg7.bin",       0x04000, 0xfd9a8dda, BRF_ESS | BRF_PRG }, //	 3
-	{ "gg6.bin",       0x04000, 0x2e44634f, BRF_ESS | BRF_PRG }, //	 4
+	{ "gg5.bin",       0x04000, 0xf8bda78f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg4.bin",       0x04000, 0xac0b25fb, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gg3.bin",       0x04000, 0x762b5af0, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "gg7.bin",       0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG }, //	 3
+	{ "gg6.bin",       0x04000, 0x2e44634f, 1 | BRF_ESS | BRF_PRG }, //	 4
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  5	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	         //  6	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	         //  6	Characters
 
-	{ "gg13.bin",      0x04000, 0xddd56fa9, BRF_GRA },	         //  7	Tiles
-	{ "gg12.bin",      0x04000, 0x7302529d, BRF_GRA },	         //  8
-	{ "gg11.bin",      0x04000, 0x20035bda, BRF_GRA },	         //  9
-	{ "gg10.bin",      0x04000, 0xf12ba271, BRF_GRA },	         //  10
-	{ "gg9.bin",       0x04000, 0xe525207d, BRF_GRA },	         //  11
-	{ "gg8.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	         //  12
+	{ "gg13.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	         //  7	Tiles
+	{ "gg12.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	         //  8
+	{ "gg11.bin",      0x04000, 0x20035bda, 4 | BRF_GRA },	         //  9
+	{ "gg10.bin",      0x04000, 0xf12ba271, 4 | BRF_GRA },	         //  10
+	{ "gg9.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	         //  11
+	{ "gg8.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	         //  12
 
-	{ "gg19.bin",      0x04000, 0x93e50a8f, BRF_GRA },	         //  13	Sprites
-	{ "gg18.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	         //  14
-	{ "gg17.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	         //  15
-	{ "gg16.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	         //  16
-	{ "gg15.bin",      0x04000, 0xe80c3fca, BRF_GRA },	         //  17
-	{ "gg14.bin",      0x04000, 0x7780a925, BRF_GRA },	         //  18
+	{ "gg19.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	         //  13	Sprites
+	{ "gg18.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	         //  14
+	{ "gg17.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	         //  15
+	{ "gg16.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	         //  16
+	{ "gg15.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	         //  17
+	{ "gg14.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	         //  18
 
-	{ "prom1",         0x00100, 0x00000000, BRF_GRA | BRF_NODUMP },	     //  19	PROMs
-	{ "prom2",         0x00100, 0x00000000, BRF_GRA | BRF_NODUMP },	     //  20
+	{ "prom1",         0x00100, 0x00000000, 0 | BRF_GRA | BRF_NODUMP },	     //  19	PROMs
+	{ "prom2",         0x00100, 0x00000000, 0 | BRF_GRA | BRF_NODUMP },	     //  20
 };
 
 STD_ROM_PICK(Makaimubbl)
@@ -1433,36 +1402,36 @@ struct BurnDriver BurnDrvMakaimubbl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimubblRomInfo, MakaimubblRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakaimucRomDesc[] = {
-	{ "mj04c.bin",     0x04000, 0x1294edb1, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03c.bin",     0x08000, 0xd343332d, BRF_ESS | BRF_PRG }, //	 1
-	{ "mj05c.bin",     0x08000, 0x535342c2, BRF_ESS | BRF_PRG }, //	 2
+	{ "mj04c.bin",     0x04000, 0x1294edb1, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mj03c.bin",     0x08000, 0xd343332d, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mj05c.bin",     0x08000, 0x535342c2, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13.n4",      0x04000, 0x4613afdc, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gng16.l4",      0x04000, 0x608d68d5, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gng13.n4",      0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gng16.l4",      0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimuc)
@@ -1474,36 +1443,36 @@ struct BurnDriver BurnDrvMakaimuc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimucRomInfo, MakaimucRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakaimugRomDesc[] = {
-	{ "mj04g.bin",     0x04000, 0x757c94d3, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03g.bin",     0x08000, 0x61b043bb, BRF_ESS | BRF_PRG }, //	 1
-	{ "mj05g.bin",     0x08000, 0xf2fdccf5, BRF_ESS | BRF_PRG }, //	 2
+	{ "mj04g.bin",     0x04000, 0x757c94d3, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mj03g.bin",     0x08000, 0x61b043bb, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mj05g.bin",     0x08000, 0xf2fdccf5, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13.n4",      0x04000, 0x4613afdc, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gng16.l4",      0x04000, 0x608d68d5, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "gng13.n4",      0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gng16.l4",      0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimug)
@@ -1515,38 +1484,38 @@ struct BurnDriver BurnDrvMakaimug = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimugRomInfo, MakaimugRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngmaidenRomDesc[] = {
-	{ "gg4maiden.bin", 0x04000, 0x0f6f2987, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3.bin",       0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5maiden.bin", 0x08000, 0xabb6534a, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg4maiden.bin", 0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gg5maiden.bin", 0x08000, 0xabb6534a, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, BRF_GRA },	     //  4	Characters
+	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17maiden.bin",0x04000, 0x9fb0faaf, BRF_GRA },	     //  11	Sprites
-	{ "gg16maiden.bin",0x04000, 0x44ba9a8f, BRF_GRA },	     //  12
-	{ "gg15maiden.bin",0x04000, 0xd6827437, BRF_GRA },	     //  13
-	{ "gg14maiden.bin",0x04000, 0x2eeb6ef5, BRF_GRA },	     //  14
-	{ "gg13maiden.bin",0x04000, 0x041de541, BRF_GRA },	     //  15
-	{ "gg12maiden.bin",0x04000, 0x83f8a22c, BRF_GRA },	     //  16
+	{ "gg17maiden.bin",0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16maiden.bin",0x04000, 0x44ba9a8f, 5 | BRF_GRA },	     //  12
+	{ "gg15maiden.bin",0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
+	{ "gg14maiden.bin",0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
+	{ "gg13maiden.bin",0x04000, 0x041de541, 5 | BRF_GRA },	     //  15
+	{ "gg12maiden.bin",0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gngmaiden)
@@ -1558,36 +1527,36 @@ struct BurnDriver BurnDrvGngmaiden = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngmaidenRomInfo, GngmaidenRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakmaidenRomDesc[] = {
-	{ "10nmaiden.rom", 0x04000, 0x6f73c922, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8n.rom",        0x08000, 0x9612d66c, BRF_ESS | BRF_PRG }, //	 1
-	{ "12nmaiden.rom", 0x08000, 0x6c900fa5, BRF_ESS | BRF_PRG }, //	 2
+	{ "10nmaiden.rom", 0x04000, 0x6f73c922, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8n.rom",        0x08000, 0x9612d66c, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12nmaiden.rom", 0x08000, 0x6c900fa5, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, BRF_GRA },	     //  4	Characters
+	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13maiden.n4",0x04000, 0x9fb0faaf, BRF_GRA },	     //  11	Sprites
-	{ "gg16maiden.bin",0x04000, 0x44ba9a8f, BRF_GRA },	     //  12
-	{ "gg15maiden.bin",0x04000, 0xd6827437, BRF_GRA },	     //  13
-	{ "gng16maiden.l4",0x04000, 0x2eeb6ef5, BRF_GRA },	     //  14
-	{ "gg13maiden.bin",0x04000, 0x041de541, BRF_GRA },	     //  15
-	{ "gg12maiden.bin",0x04000, 0x83f8a22c, BRF_GRA },	     //  16
+	{ "gng13maiden.n4",0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16maiden.bin",0x04000, 0x44ba9a8f, 5 | BRF_GRA },	     //  12
+	{ "gg15maiden.bin",0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
+	{ "gng16maiden.l4",0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
+	{ "gg13maiden.bin",0x04000, 0x041de541, 5 | BRF_GRA },	     //  15
+	{ "gg12maiden.bin",0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makmaiden)
@@ -1599,38 +1568,38 @@ struct BurnDriver BurnDrvMakmaiden = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakmaidenRomInfo, MakmaidenRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo GngknightRomDesc[] = {
-	{ "gg4knight.bin", 0x04000, 0x909a6024, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3.bin",       0x08000, 0x9e01c65e, BRF_ESS | BRF_PRG }, //	 1
-	{ "gg5knight.bin", 0x08000, 0xca671053, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg4knight.bin", 0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg3.bin",       0x08000, 0x9e01c65e, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "gg5knight.bin", 0x08000, 0xca671053, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, BRF_GRA },	     //  4	Characters
+	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17knight.bin",0x04000, 0xa0713571, BRF_GRA },	     //  11	Sprites
-	{ "gg16knight.bin",0x04000, 0x5b0a5995, BRF_GRA },	     //  12
-	{ "gg15knight.bin",0x04000, 0x4b9933df, BRF_GRA },	     //  13
-	{ "gg14knight.bin",0x04000, 0x01d9a306, BRF_GRA },	     //  14
-	{ "gg13knight.bin",0x04000, 0x75211c8b, BRF_GRA },	     //  15
-	{ "gg12knight.bin",0x04000, 0x7c6e8878, BRF_GRA },	     //  16
+	{ "gg17knight.bin",0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16knight.bin",0x04000, 0x5b0a5995, 5 | BRF_GRA },	     //  12
+	{ "gg15knight.bin",0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
+	{ "gg14knight.bin",0x04000, 0x01d9a306, 5 | BRF_GRA },	     //  14
+	{ "gg13knight.bin",0x04000, 0x75211c8b, 5 | BRF_GRA },	     //  15
+	{ "gg12knight.bin",0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 
-	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, BRF_GRA | BRF_OPT },	     //  19	PLDs
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },	     //  19	PLDs
 };
 
 STD_ROM_PICK(Gngknight)
@@ -1642,36 +1611,36 @@ struct BurnDriver BurnDrvGngknight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngknightRomInfo, GngknightRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakknightRomDesc[] = {
-	{ "10nknight.rom", 0x04000, 0xf0868081, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8n.rom",        0x08000, 0x9612d66c, BRF_ESS | BRF_PRG }, //	 1
-	{ "12nknight.rom", 0x08000, 0x0d414cbc, BRF_ESS | BRF_PRG }, //	 2
+	{ "10nknight.rom", 0x04000, 0xf0868081, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8n.rom",        0x08000, 0x9612d66c, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12nknight.rom", 0x08000, 0x0d414cbc, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, BRF_GRA },	     //  4	Characters
+	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13knight.n4",0x04000, 0xa0713571, BRF_GRA },	     //  11	Sprites
-	{ "gg16knight.bin",0x04000, 0x5b0a5995, BRF_GRA },	     //  12
-	{ "gg15knight.bin",0x04000, 0x4b9933df, BRF_GRA },	     //  13
-	{ "gng16knight.l4",0x04000, 0x01d9a306, BRF_GRA },	     //  14
-	{ "gg13knight.bin",0x04000, 0x75211c8b, BRF_GRA },	     //  15
-	{ "gg12knight.bin",0x04000, 0x7c6e8878, BRF_GRA },	     //  16
+	{ "gng13knight.n4",0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16knight.bin",0x04000, 0x5b0a5995, 5 | BRF_GRA },	     //  12
+	{ "gg15knight.bin",0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
+	{ "gng16knight.l4",0x04000, 0x01d9a306, 5 | BRF_GRA },	     //  14
+	{ "gg13knight.bin",0x04000, 0x75211c8b, 5 | BRF_GRA },	     //  15
+	{ "gg12knight.bin",0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  18
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makknight)
@@ -1683,33 +1652,33 @@ struct BurnDriver BurnDrvMakknight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakknightRomInfo, MakknightRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo DiamrunRomDesc[] = {
-	{ "d3o",           0x04000, 0xba4bf9f1, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "d3",            0x08000, 0xf436d6fa, BRF_ESS | BRF_PRG }, //	 1
-	{ "d5o",           0x08000, 0xae58bd3a, BRF_ESS | BRF_PRG }, //	 2
-	{ "d5",            0x08000, 0x453f3f9e, BRF_ESS | BRF_PRG }, //	 3
+	{ "d3o",           0x04000, 0xba4bf9f1, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "d3",            0x08000, 0xf436d6fa, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "d5o",           0x08000, 0xae58bd3a, 1 | BRF_ESS | BRF_PRG }, //	 2
+	{ "d5",            0x08000, 0x453f3f9e, 1 | BRF_ESS | BRF_PRG }, //	 3
 
-	{ "d2",            0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  4	Z80 Program
+	{ "d2",            0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  4	Z80 Program
 
-	{ "d1",            0x04000, 0x3a24e504, BRF_GRA },	     //  5	Characters
+	{ "d1",            0x04000, 0x3a24e504, 3 | BRF_GRA },	     //  5	Characters
 
-	{ "d11",           0x04000, 0x754357d7, BRF_GRA },	     //  6	Tiles
-	{ "d10",           0x04000, 0x7531edcd, BRF_GRA },	     //  7
-	{ "d9",            0x04000, 0x22eeca08, BRF_GRA },	     //  8
-	{ "d8",            0x04000, 0x6b61be60, BRF_GRA },	     //  9
-	{ "d7",            0x04000, 0xfd595274, BRF_GRA },	     //  10
-	{ "d6",            0x04000, 0x7f51dcd2, BRF_GRA },	     //  11
+	{ "d11",           0x04000, 0x754357d7, 4 | BRF_GRA },	     //  6	Tiles
+	{ "d10",           0x04000, 0x7531edcd, 4 | BRF_GRA },	     //  7
+	{ "d9",            0x04000, 0x22eeca08, 4 | BRF_GRA },	     //  8
+	{ "d8",            0x04000, 0x6b61be60, 4 | BRF_GRA },	     //  9
+	{ "d7",            0x04000, 0xfd595274, 4 | BRF_GRA },	     //  10
+	{ "d6",            0x04000, 0x7f51dcd2, 4 | BRF_GRA },	     //  11
 
-	{ "d17",           0x04000, 0x8164b005, BRF_GRA },	     //  12	Sprites
-	{ "d14",           0x04000, 0x6f132163, BRF_GRA },	     //  13
+	{ "d17",           0x04000, 0x8164b005, 5 | BRF_GRA },	     //  12	Sprites
+	{ "d14",           0x04000, 0x6f132163, 5 | BRF_GRA },	     //  13
 
-	{ "prom1",         0x00100, 0x0eaf5158, BRF_GRA | BRF_OPT },	     //  14	PROMs
-	{ "prom2",         0x00100, 0x4a1285a4, BRF_GRA | BRF_OPT },	     //  15
+	{ "prom1",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  14	PROMs
+	{ "prom2",         0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  15
 };
 
 STD_ROM_PICK(Diamrun)

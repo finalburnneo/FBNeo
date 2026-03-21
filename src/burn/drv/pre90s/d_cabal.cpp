@@ -1186,3 +1186,63 @@ struct BurnDriver BurnDrvCabalus2 = {
 	Cabalus2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
+
+
+// Cabal (Ex Super Version 2009-03-09) (Hack)
+
+static struct BurnRomInfo cabalexsvRomDesc[] = {
+	{ "s01.13.7h",		0x10000, 0x7f257b0a, 1 | BRF_PRG | BRF_ESS }, //  0 M68k Codc
+	{ "s01.11.6h",		0x10000, 0x59cee043, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.7j",			0x10000, 0xd763a47c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.6j",			0x10000, 0x96d5e8af, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "4-3n",			0x02000, 0x4038eff2, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "3-3p",			0x08000, 0xd9defcbf, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "5-6s",			0x04000, 0x6a76955a, 3 | BRF_GRA },           //  6 Characters
+
+	{ "bg_rom1.bin",	0x10000, 0x1023319b, 4 | BRF_GRA },           //  7 Background Tiles
+	{ "bg_rom2.bin",	0x10000, 0x3b6d2b09, 4 | BRF_GRA },           //  8
+	{ "bg_rom3.bin",	0x10000, 0x420b0801, 4 | BRF_GRA },           //  9
+	{ "bg_rom4.bin",	0x10000, 0x77bc7a60, 4 | BRF_GRA },           // 10
+	{ "bg_rom5.bin",	0x10000, 0x543fcb37, 4 | BRF_GRA },           // 11
+	{ "bg_rom6.bin",	0x10000, 0x0bc50075, 4 | BRF_GRA },           // 12
+	{ "bg_rom7.bin",	0x10000, 0xd28d921e, 4 | BRF_GRA },           // 13
+	{ "bg_rom8.bin",	0x10000, 0x67e4fe47, 4 | BRF_GRA },           // 14
+
+	{ "sp_rom1.bin",	0x10000, 0x34d3cac8, 5 | BRF_GRA },           // 15 Sprites
+	{ "sp_rom2.bin",	0x10000, 0x4e49c28e, 5 | BRF_GRA },           // 16
+	{ "sp_rom3.bin",	0x10000, 0x7065e840, 5 | BRF_GRA },           // 17
+	{ "sp_rom4.bin",	0x10000, 0x6a0e739d, 5 | BRF_GRA },           // 18
+	{ "sp_rom5.bin",	0x10000, 0x0e1ec30e, 5 | BRF_GRA },           // 19
+	{ "sp_rom6.bin",	0x10000, 0x581a50c1, 5 | BRF_GRA },           // 20
+	{ "sp_rom7.bin",	0x10000, 0x55c44764, 5 | BRF_GRA },           // 21
+	{ "sp_rom8.bin",	0x10000, 0x702735c9, 5 | BRF_GRA },           // 22
+
+	{ "2-1s",			0x10000, 0x850406b4, 6 | BRF_SND },           // 23 ADPCM #0 Code
+
+	{ "1-1u",			0x10000, 0x8b3e0789, 7 | BRF_SND },           // 24 ADPCM #1 Code
+
+	{ "prom05.8e",		0x00100, 0xa94b18c2, 8 | BRF_OPT },           // 25 Proms
+	{ "prom10.4j",		0x00100, 0x261c93bc, 8 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(cabalexsv)
+STD_ROM_FN(cabalexsv)
+
+static INT32 CabalexsvInit()
+{
+	is_joyver = 1;
+
+	return DrvInit(0);
+}
+
+struct BurnDriver BurnDrvCabalexsv = {
+	"cabalexsv", "cabal", NULL, NULL, "2009",
+	"Cabal (Ex Super Version 2009-03-09) (Hack)\0", NULL, "Pipi899", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cabalexsvRomInfo, cabalexsvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	CabalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};

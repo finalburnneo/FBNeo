@@ -14619,19 +14619,19 @@ struct BurnDriver BurnDrvnes_astrosmash = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Assimilate (HB)
+// Assimilate (HB, v1.1)
 static struct BurnRomInfo nes_assimilateRomDesc[] = {
-	{ "Assimilate (2012)(Nessylum).nes",          262160, 0xa2d504a8, BRF_ESS | BRF_PRG },
+	{ "Assimilate v1.1 (2012-15)(Nessylum).nes",          262160, 0x53ae35b7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_assimilate)
 STD_ROM_FN(nes_assimilate)
 
 struct BurnDriver BurnDrvnes_assimilate = {
-	"nes_assimilate", NULL, NULL, NULL, "2012",
-	"Assimilate (HB)\0", NULL, "Nessylum", "NES / Famicom",
+	"nes_assimilate", NULL, NULL, NULL, "2012-15",
+	"Assimilate (HB, v1.1)\0", NULL, "Nessylum", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_assimilateRomInfo, nes_assimilateRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15581,9 +15581,9 @@ struct BurnDriver BurnDrvnes_burndown = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Bustina (HB, v1.04)
+// Bustina and the Search for Booty! (HB, v1.04)
 static struct BurnRomInfo nes_bustinaRomDesc[] = {
-	{ "Bustina v1.04 (2022-24)(Adam Holmes).nes",          524304, 0xb82ed907, BRF_ESS | BRF_PRG },
+	{ "Bustina and the Search for Booty! v1.04 (2022-24)(Adam Holmes).nes",          524304, 0xb82ed907, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bustina)
@@ -15591,7 +15591,7 @@ STD_ROM_FN(nes_bustina)
 
 struct BurnDriver BurnDrvnes_bustina = {
 	"nes_bustina", NULL, NULL, NULL, "2022-24",
-	"Bustina (HB, v1.04)\0", NULL, "Adam Holmes", "NES / Famicom",
+	"Bustina and the Search for Booty! (HB, v1.04)\0", NULL, "Adam Holmes", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_bustinaRomInfo, nes_bustinaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18239,7 +18239,7 @@ struct BurnDriver BurnDrvnes_garbpailkids = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Garfield - A Week of Garfield OVERHAUL Project (Hack)
+// Garfield: A Week of Garfield OVERHAUL Project (Hack)
 static struct BurnRomInfo nes_garfiopRomDesc[] = {
 	{ "Garfield - A Week of Garfield OVERHAUL Project (2022)(Rani Baker).nes",          163856, 0x46f0726f, BRF_ESS | BRF_PRG },
 };
@@ -18249,7 +18249,7 @@ STD_ROM_FN(nes_garfiop)
 
 struct BurnDriver BurnDrvnes_garfiop = {
 	"nes_garfiop", "nes_garfi", NULL, NULL, "2022",
-	"Garfield - A Week of Garfield OVERHAUL Project (Hack)\0", "Graphics improvement", "Rani Baker", "NES / Famicom",
+	"Garfield: A Week of Garfield OVERHAUL Project (Hack)\0", "Graphics improvement", "Rani Baker", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_garfiopRomInfo, nes_garfiopRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18419,7 +18419,7 @@ struct BurnDriver BurnDrvnes_gggg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Gradius II - Arrangement Chronicle Death (Hack, v2.0)
+// Gradius II: Arrangement Chronicle Death (Hack, v2.0)
 // https://www.romhacking.net/hacks/1574/
 static struct BurnRomInfo nes_gradiusiiacdRomDesc[] = {
 	{ "Gradius II - Arrangement Chronicle Death v2.0 (2019)(Messatu).nes",          524304, 0xe27f3192, BRF_ESS | BRF_PRG },
@@ -18430,7 +18430,7 @@ STD_ROM_FN(nes_gradiusiiacd)
 
 struct BurnDriver BurnDrvnes_gradiusiiacd = {
 	"nes_gradiusiiacd", "nes_gradiusii", NULL, NULL, "2019",
-	"Gradius II - Arrangement Chronicle Death (Hack, v2.0)\0", NULL, "Messatu", "NES / Famicom",
+	"Gradius II: Arrangement Chronicle Death (Hack, v2.0)\0", NULL, "Messatu", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_gradiusiiacdRomInfo, nes_gradiusiiacdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -18542,6 +18542,24 @@ struct BurnDriver BurnDrvnes_gunhawk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_gunhawkRomInfo, nes_gunhawkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Guns and Dust (HB, v3)
+static struct BurnRomInfo nes_gunsdustRomDesc[] = {
+	{ "Guns and Dust v3 (2025)(5cinq).nes",          524304, 0xe0da2187, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gunsdust)
+STD_ROM_FN(nes_gunsdust)
+
+struct BurnDriver BurnDrvnes_gunsdust = {
+	"nes_gunsdust", NULL, NULL, NULL, "2025",
+	"Guns and Dust (HB, v3)\0", NULL, "5cinq", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_gunsdustRomInfo, nes_gunsdustRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19245,6 +19263,24 @@ struct BurnDriver BurnDrvnes_jauntyman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_jauntymanRomInfo, nes_jauntymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Jaws: Enhanced Edition (USA)
+static struct BurnRomInfo nes_jawseeRomDesc[] = {
+	{ "Jaws - Enhanced Edition (USA)(2026)(Limited Run Games).nes",          196624, 0x3ea0d8a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jawsee)
+STD_ROM_FN(nes_jawsee)
+
+struct BurnDriver BurnDrvnes_jawsee = {
+	"nes_jawsee", "nes_jaws", NULL, NULL, "2026",
+	"Jaws: Enhanced Edition (USA)\0", "Official Hack", "Limited Run Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_MULTISHOOT, 0,
+	NESGetZipName, nes_jawseeRomInfo, nes_jawseeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -20998,17 +21034,17 @@ struct BurnDriver BurnDrvnes_micromages2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Mid-Night Yammy (HB)
+// Mid-Night Yammy (HB, v1.1.1)
 static struct BurnRomInfo nes_midyammyRomDesc[] = {
-	{ "Mid-Night Yammy (2025)(Kanno Develop).nes",          40976, 0x9778af48, BRF_ESS | BRF_PRG },
+	{ "Mid-Night Yammy v1.1.1 (2025-26)(Kanno Develop).nes",          40976, 0x61730698, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_midyammy)
 STD_ROM_FN(nes_midyammy)
 
 struct BurnDriver BurnDrvnes_midyammy = {
-	"nes_midyammy", NULL, NULL, NULL, "2025",
-	"Mid-Night Yammy (HB)\0", NULL, "Kanno Develop", "NES / Famicom",
+	"nes_midyammy", NULL, NULL, NULL, "2025-26",
+	"Mid-Night Yammy (HB, v1.1.1)\0", NULL, "Kanno Develop", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
 	NESGetZipName, nes_midyammyRomInfo, nes_midyammyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22495,6 +22531,24 @@ struct BurnDriver BurnDrvnes_projectblue = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_projectblueRomInfo, nes_projectblueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Pteropus (HB, v2.1)
+static struct BurnRomInfo nes_pteropusRomDesc[] = {
+	{ "Pteropus v2.1 (2025-26)(Retroplasmid).nes",          524304, 0x5905a4c1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pteropus)
+STD_ROM_FN(nes_pteropus)
+
+struct BurnDriver BurnDrvnes_pteropus = {
+	"nes_pteropus", NULL, NULL, NULL, "2025-26",
+	"Pteropus (HB, v2.1)\0", "Zapper compatible game", "Retroplasmid", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_pteropusRomInfo, nes_pteropusRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
+	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -25523,14 +25577,14 @@ struct BurnDriver BurnDrvnes_towerofturmoil = {
 
 // Train! Train! (HB)
 static struct BurnRomInfo nes_traintrainRomDesc[] = {
-	{ "Train! Train! (2025)(kn56k).nes",          524304, 0x5c06e6ce, BRF_ESS | BRF_PRG },
+	{ "Train! Train! (2025-26)(kn56k).nes",          524304, 0x7d7530ef, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_traintrain)
 STD_ROM_FN(nes_traintrain)
 
 struct BurnDriver BurnDrvnes_traintrain = {
-	"nes_traintrain", NULL, NULL, NULL, "2025",
+	"nes_traintrain", NULL, NULL, NULL, "2025-26",
 	"Train! Train! (HB)\0", NULL, "kn56k", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
@@ -40043,7 +40097,7 @@ struct BurnDriver BurnDrvnes_jaws = {
 	"nes_jaws", NULL, NULL, NULL, "1987",
 	"Jaws (USA)\0", NULL, "Ljn", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_jawsRomInfo, nes_jawsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -41096,14 +41150,14 @@ STD_ROM_FN(nes_kerokerkernodaj)
 struct BurnDriver BurnDrvnes_kerokerkernodaj = {
 	"nes_kerokerkernodaj", "nes_kerokerkernoda", NULL, NULL, "1991",
 	"Kero Kero Keroppi no Daibouken (Japan)\0", NULL, "Character Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Kero Kero Keroppi no Daibouken (Japan)\0\u3051\u308d\u3051\u308d\u3051\u308d\u3063\u3074\u306e\u5927\u5192\u967a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_kerokerkernodajRomInfo, nes_kerokerkernodajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kero Kero Keroppi no Daibouken (Hack, English)
+// Kero Kero Keroppi's Big Adventure 1 (Hack, English)
 // https://www.romhacking.net/translations/165/
 static struct BurnRomInfo nes_kerokerkernodaRomDesc[] = {
 	{ "Kero Kero Keroppi no Daibouken T-Eng (2016)(Gaijin Productions).nes",          65552, 0x0dfbda9c, BRF_ESS | BRF_PRG },
@@ -41114,7 +41168,7 @@ STD_ROM_FN(nes_kerokerkernoda)
 
 struct BurnDriver BurnDrvnes_kerokerkernoda = {
 	"nes_kerokerkernoda", NULL, NULL, NULL, "2016",
-	"Kero Kero Keroppi no Daibouken (Hack, English)\0", NULL, "Gaijin Productions", "NES / Famicom",
+	"Kero Kero Keroppi's  Big Adventure 1 (Hack, English)\0", NULL, "Gaijin Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_kerokerkernodaRomInfo, nes_kerokerkernodaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -41122,7 +41176,7 @@ struct BurnDriver BurnDrvnes_kerokerkernoda = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Japan)
+// Kero Kero Keroppi no Daibouken 2: Donuts Ike wa Oosawagi! (Japan)
 static struct BurnRomInfo nes_kerokerkernoda2jRomDesc[] = {
 	{ "Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Japan)(1993)(Character Soft).nes",          262160, 0x2c46f2a3, BRF_ESS | BRF_PRG },
 };
@@ -41132,15 +41186,15 @@ STD_ROM_FN(nes_kerokerkernoda2j)
 
 struct BurnDriver BurnDrvnes_kerokerkernoda2j = {
 	"nes_kerokerkernoda2j", "nes_kerokerkernoda2", NULL, NULL, "1993",
-	"Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Japan)\0", NULL, "Character Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"Kero Kero Keroppi no Daibouken 2: Donuts Ike wa Oosawagi! (Japan)\0", NULL, "Character Soft", "NES / Famicom",
+	L"Kero Kero Keroppi no Daibouken 2: Donuts Ike wa Oosawagi! (Japan)\0\u3051\u308d\u3051\u308d\u3051\u308d\u3063\u3074\u306e\u5927\u5192\u967a 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kerokerkernoda2jRomInfo, nes_kerokerkernoda2jRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Hack, English)
+// Kero Kero Keroppi's Great Big Adventure 2: Trouble in Donut Pond (Hack, English)
 // https://www.romhacking.net/translations/166/
 static struct BurnRomInfo nes_kerokerkernoda2RomDesc[] = {
 	{ "Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! T-Eng (2016)(The Spoony Bard).nes",          262160, 0x8b3c7d79, BRF_ESS | BRF_PRG },
@@ -41151,7 +41205,7 @@ STD_ROM_FN(nes_kerokerkernoda2)
 
 struct BurnDriver BurnDrvnes_kerokerkernoda2 = {
 	"nes_kerokerkernoda2", NULL, NULL, NULL, "2016",
-	"Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Hack, English)\0", NULL, "The Spoony Bard", "NES / Famicom",
+	"Kero Kero Keroppi's Great Big Adventure 2: Trouble in Donut Pond (Hack, English)\0", NULL, "The Spoony Bard", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kerokerkernoda2RomInfo, nes_kerokerkernoda2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -41170,14 +41224,14 @@ STD_ROM_FN(nes_keropkernosplboj)
 struct BurnDriver BurnDrvnes_keropkernosplboj = {
 	"nes_keropkernosplboj", "nes_keropkernosplbo", NULL, NULL, "1993",
 	"Keroppi to Keroriinu no Splash Bomb! (Japan)\0", NULL, "Character Soft", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	L"Keroppi to Keroriinu no Splash Bomb! (Japan)\0\u3051\u308d\u3063\u3074\u3068\u3051\u308d\u308a\u30fc\u306c\u306e\u30b9\u30d7\u30e9\u30c3\u30b7\u30e5\u30dc\u30e0!\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_keropkernosplbojRomInfo, nes_keropkernosplbojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Keroppi to Keroriinu no Splash Bomb! (Hack, English)
+// Keroppi & Keroleen's Splash Bomb! (Hack, English)
 // https://www.romhacking.net/translations/167/
 static struct BurnRomInfo nes_keropkernosplboRomDesc[] = {
 	{ "Keroppi to Keroriinu no Splash Bomb! T-Eng (2016)(Suicidal Translations).nes",          163856, 0xd7039620, BRF_ESS | BRF_PRG },
@@ -41188,9 +41242,9 @@ STD_ROM_FN(nes_keropkernosplbo)
 
 struct BurnDriver BurnDrvnes_keropkernosplbo = {
 	"nes_keropkernosplbo", NULL, NULL, NULL, "2016",
-	"Keroppi to Keroriinu no Splash Bomb! (Hack, English)\0", NULL, "Suicidal Translations", "NES / Famicom",
+	"Keroppi & Keroleen's Splash Bomb! (Hack, English)\0", NULL, "Suicidal Translations", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_keropkernosplboRomInfo, nes_keropkernosplboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -41576,7 +41630,7 @@ struct BurnDriver BurnDrvnes_kirbysadv = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kiteretsu Daihyakka (Hack, English)
+// Kiteretsu Encyclopedia (Hack, English)
 // https://www.romhacking.net/translations/2581/
 static struct BurnRomInfo nes_kiterdaiRomDesc[] = {
 	{ "Kiteretsu Daihyakka T-Eng (2016)(Zynk Oxhyde).nes",          262160, 0xac9a9381, BRF_ESS | BRF_PRG },
@@ -41587,7 +41641,7 @@ STD_ROM_FN(nes_kiterdai)
 
 struct BurnDriver BurnDrvnes_kiterdai = {
 	"nes_kiterdai", NULL, NULL, NULL, "2016",
-	"Kiteretsu Daihyakka (Hack, English)\0", NULL, "Zynk Oxhyde", "NES / Famicom",
+	"Kiteretsu Encyclopedia (Hack, English)\0", NULL, "Zynk Oxhyde", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kiterdaiRomInfo, nes_kiterdaiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -41606,7 +41660,7 @@ STD_ROM_FN(nes_kiterdaij)
 struct BurnDriver BurnDrvnes_kiterdaij = {
 	"nes_kiterdaij", "nes_kiterdai", NULL, NULL, "1990",
 	"Kiteretsu Daihyakka (Japan)\0", NULL, "Epoch Co.", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Kiteretsu Daihyakka (Japan)\0\u30ad\u30c6\u30ec\u30c4\u5927\u767e\u79d1\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kiterdaijRomInfo, nes_kiterdaijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -41750,7 +41804,7 @@ STD_ROM_FN(nes_konamspoinseo)
 struct BurnDriver BurnDrvnes_konamspoinseo = {
 	"nes_konamspoinseo", NULL, NULL, NULL, "1989",
 	"Konamic Sports in Seoul (Japan)\0", NULL, "Konami", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Konamic Sports in Seoul (Japan)\0\u30b3\u30ca\u30df\u30c3\u30af \u30b9\u30dd\u30fc\u30c4 \u30a4\u30f3 \u30bd\u30a6\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_konamspoinseoRomInfo, nes_konamspoinseoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,

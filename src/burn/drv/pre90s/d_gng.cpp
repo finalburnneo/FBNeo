@@ -1316,7 +1316,7 @@ STD_ROM_FN(Makaimur)
 
 struct BurnDriver BurnDrvMakaimur = {
 	"makaimur", "gng", NULL, NULL, "1985",
-	"Makaimura (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan revision A?)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimurRomInfo, MakaimurRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1360,7 +1360,7 @@ struct BurnDriver BurnDrvMakaimub = {
 	"Makaimura (Japan revision B)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimubRomInfo, MakaimubRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	NULL, MakaimubRomInfo, MakaimubRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -1403,7 +1403,7 @@ struct BurnDriver BurnDrvMakaimubbl = {
 	"Makaimura (Japan revision B bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimubblRomInfo, MakaimubblRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	NULL, MakaimubblRomInfo, MakaimubblRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -1444,7 +1444,7 @@ struct BurnDriver BurnDrvMakaimuc = {
 	"Makaimura (Japan revision C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimucRomInfo, MakaimucRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	NULL, MakaimucRomInfo, MakaimucRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -1485,7 +1485,7 @@ struct BurnDriver BurnDrvMakaimug = {
 	"Makaimura (Japan revision G)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimugRomInfo, MakaimugRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	NULL, MakaimugRomInfo, MakaimugRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

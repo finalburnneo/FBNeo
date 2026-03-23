@@ -1759,7 +1759,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 
 		case MENU_MEMCARD_CREATE:
-			if (bDrvOkay && UseDialogs() && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && UseDialogs() && !kNetGame && HasMemCard()) {
 				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 				AudBlankSound();
 				MemCardEject();
@@ -1769,7 +1769,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		case MENU_MEMCARD_SELECT:
-			if (bDrvOkay && UseDialogs() && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && UseDialogs() && !kNetGame && HasMemCard()) {
 				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 				AudBlankSound();
 				MemCardEject();
@@ -1779,18 +1779,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		case MENU_MEMCARD_INSERT:
-			if (!kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (!kNetGame && HasMemCard()) {
 				MemCardInsert();
 			}
 			break;
 		case MENU_MEMCARD_EJECT:
-			if (!kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (!kNetGame && HasMemCard()) {
 				MemCardEject();
 			}
 			break;
 
 		case MENU_MEMCARD_TOGGLE:
-			if (bDrvOkay && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && !kNetGame && HasMemCard()) {
 				MemCardToggle();
 			}
 			break;

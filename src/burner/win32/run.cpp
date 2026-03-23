@@ -232,6 +232,20 @@ int RunFrame(int bDraw, int bPause)
 	static int bPrevPause = 0;
 	static int bPrevDraw = 0;
 
+	// DIAGNOSTIC: log RunFrame calls
+	{
+		static int __rf_cnt = 0;
+		__rf_cnt++;
+		if (__rf_cnt <= 30) {
+			FILE *__rf = fopen("C:\\Users\\HogenWang\\Desktop\\pgm2_runframe_diag.txt", "a");
+			if (__rf) {
+				fprintf(__rf, "RunFrame #%d bDraw=%d bPause=%d bDrvOkay=%d bPrevDraw=%d flippy=%d\n",
+					__rf_cnt, bDraw, bPause, (int)bDrvOkay, bPrevDraw, flippy);
+				fclose(__rf);
+			}
+		}
+	}
+
 	if (bPrevDraw && !bPause) {
 		VidPaint(0);							// paint the screen (no need to validate)
 
@@ -333,6 +347,20 @@ int RunFrame(int bDraw, int bPause)
 			BurnDrvFrame();
 		}
 
+		// DIAGNOSTIC: log post-BurnDrvFrame
+		{
+			static int __pf_cnt = 0;
+			__pf_cnt++;
+			if (__pf_cnt <= 30) {
+				FILE *__pf = fopen("C:\\Users\\HogenWang\\Desktop\\pgm2_postframe_diag.txt", "a");
+				if (__pf) {
+					fprintf(__pf, "PostBurnDrvFrame #%d bDraw=%d bDrvOkay=%d\n",
+						__pf_cnt, bDraw, (int)bDrvOkay);
+					fclose(__pf);
+				}
+			}
+		}
+
 		if (kNetGame == 0) {                    // Rewind Implementation
 			StateRewindDoFrame(macroSystemRewind || bAppDoRewind, macroSystemRewindCancel, bRunPause);
 		}
@@ -366,6 +394,20 @@ int RunFrame(int bDraw, int bPause)
 // Callback used when DSound needs more sound
 static int RunGetNextSound(int bDraw)
 {
+	// DIAGNOSTIC: log callback entry
+	{
+		static int __cb_cnt = 0;
+		__cb_cnt++;
+		if (__cb_cnt <= 30) {
+			FILE *__cf = fopen("C:\\Users\\HogenWang\\Desktop\\pgm2_callback_diag.txt", "a");
+			if (__cf) {
+				fprintf(__cf, "RunGetNextSound #%d bDraw=%d nAudNextSound=%p bRunPause=%d bAppDoFast=%d\n",
+					__cb_cnt, bDraw, (void*)nAudNextSound, bRunPause, (int)bAppDoFast);
+				fclose(__cf);
+			}
+		}
+	}
+
 	if (nAudNextSound == NULL) {
 		return 1;
 	}
@@ -426,6 +468,20 @@ static int RunGetNextSound(int bDraw)
 int RunIdle()
 {
 	int nTime, nCount;
+
+	// DIAGNOSTIC: log RunIdle state
+	{
+		static int __ri_cnt = 0;
+		__ri_cnt++;
+		if (__ri_cnt <= 20 || (__ri_cnt % 1000) == 0) {
+			FILE *__rf = fopen("C:\\Users\\HogenWang\\Desktop\\pgm2_runidle_diag.txt", "a");
+			if (__rf) {
+				fprintf(__rf, "RunIdle #%d bAudPlaying=%d bDrvOkay=%d bRunPause=%d bVidOkay=%d\n",
+					__ri_cnt, (int)bAudPlaying, (int)bDrvOkay, bRunPause, (int)bVidOkay);
+				fclose(__rf);
+			}
+		}
+	}
 
 	if (bAudPlaying) {
 		// Run with sound

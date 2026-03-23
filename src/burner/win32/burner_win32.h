@@ -525,6 +525,12 @@ int	MemCardInsert();
 int	MemCardEject();
 int	MemCardToggle();
 
+// Returns true if the current driver supports memory card / IC card
+static inline bool HasMemCard() {
+	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	return (hw == HARDWARE_SNK_NEOGEO || hw == HARDWARE_IGS_PGM2);
+}
+
 // progress.cpp
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs);
 int ProgressCreate();

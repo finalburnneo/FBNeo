@@ -63,6 +63,7 @@ UINT8 DebugSnd_X1010Initted;
 UINT8 DebugSnd_YMZ280BInitted;
 
 UINT8 DebugCPU_ARM7Initted;
+UINT8 DebugCPU_ARM9Initted;
 UINT8 DebugCPU_ARMInitted;
 UINT8 DebugCPU_H6280Initted;
 UINT8 DebugCPU_HD6309Initted;
@@ -141,6 +142,7 @@ void DebugTrackerExit()
 	if (DebugSnd_YMZ280BInitted) 		bprintf(PRINT_ERROR, _T("Sound Module YMZ280B Not Exited\n"));
 	
 	if (DebugCPU_ARM7Initted) 			bprintf(PRINT_ERROR, _T("CPU ARM7 Not Exited\n"));
+	if (DebugCPU_ARM9Initted) 			bprintf(PRINT_ERROR, _T("CPU ARM9 Not Exited\n"));
 	if (DebugCPU_ARMInitted) 			bprintf(PRINT_ERROR, _T("CPU ARM Not Exited\n"));
 	if (DebugCPU_H6280Initted) 			bprintf(PRINT_ERROR, _T("CPU H6280 Not Exited\n"));
 	if (DebugCPU_HD6309Initted) 		bprintf(PRINT_ERROR, _T("CPU HD6309 Not Exited\n"));

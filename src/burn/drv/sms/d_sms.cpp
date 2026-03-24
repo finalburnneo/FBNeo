@@ -21428,6 +21428,24 @@ struct BurnDriver BurnDrvsms_aerial = {
 	256, 192, 4, 3
 };
 
+// Laranja Mecanico (HB)
+static struct BurnRomInfo sms_larmecanicoRomDesc[] = {
+	{ "Laranja Mecanico (2023)(Jaguarete Retro Games).sms",	524288, 0x8126ac1a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_larmecanico)
+STD_ROM_FN(sms_larmecanico)
+
+struct BurnDriver BurnDrvsms_larmecanico = {
+	"sms_larmecanico", NULL, NULL, NULL, "2023",
+	"Laranja Mecanico (HB)\0", NULL, "Jaguarete Retro Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_larmecanicoRomInfo, sms_larmecanicoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Aleste II (Hack, GG2SMS Conversion)
 static struct BurnRomInfo sms_aleste2gg2smsRomDesc[] = {
 	{ "Aleste II GG2SMS (2014)(ccovell, Vingazole).sms",	0x40000, 0x516d899d, BRF_PRG | BRF_ESS },

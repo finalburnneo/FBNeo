@@ -10318,14 +10318,14 @@ struct BurnDriver BurnDrvcv_superpac = {
 
 // Super Space Acer (HB)
 static struct BurnRomInfo cv_suprspacRomDesc[] = {
-    { "Super Space Acer (2015)(Mike Brent).rom",	0x20000, 0xae209065, BRF_PRG | BRF_ESS },
+    { "Super Space Acer (1989-2023)(Mike Brent).rom",	0x40000, 0x9e92c874, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_suprspac, cv_suprspac, cv_coleco)
 STD_ROM_FN(cv_suprspac)
 
 struct BurnDriver BurnDrvcv_suprspac = {
-    "cv_suprspac", NULL, "cv_coleco", NULL, "2015",
+    "cv_suprspac", NULL, "cv_coleco", NULL, "1989-2023",
     "Super Space Acer (HB)\0", NULL, "Mike Brent", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,

@@ -21428,24 +21428,6 @@ struct BurnDriver BurnDrvsms_aerial = {
 	256, 192, 4, 3
 };
 
-// Laranja Mecanico (HB)
-static struct BurnRomInfo sms_larmecanicoRomDesc[] = {
-	{ "Laranja Mecanico (2023)(Jaguarete Retro Games).sms",	524288, 0x8126ac1a, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_larmecanico)
-STD_ROM_FN(sms_larmecanico)
-
-struct BurnDriver BurnDrvsms_larmecanico = {
-	"sms_larmecanico", NULL, NULL, NULL, "2023",
-	"Laranja Mecanico (HB)\0", NULL, "Jaguarete Retro Games", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
-	SMSGetZipName, sms_larmecanicoRomInfo, sms_larmecanicoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Aleste II (Hack, GG2SMS Conversion)
 static struct BurnRomInfo sms_aleste2gg2smsRomDesc[] = {
 	{ "Aleste II GG2SMS (2014)(ccovell, Vingazole).sms",	0x40000, 0x516d899d, BRF_PRG | BRF_ESS },
@@ -22961,7 +22943,7 @@ struct BurnDriver BurnDrvsms_lambo = {
 	256, 192, 4, 3
 };
 
-// Laranja Mecânico (HB, Portuguese)
+// Laranja Mecanico (HB, Portuguese)
 static struct BurnRomInfo sms_laranjamecRomDesc[] = {
 	{ "Laranja Mecanico (2023)(Jaguarete Retro Games).sms",	524288, 0x8126ac1a, BRF_PRG | BRF_ESS },
 };
@@ -23395,7 +23377,7 @@ struct BurnDriver BurnDrvsms_noturno = {
 	256, 192, 4, 3
 };
 
-// Noturno Mini Game (Edição de Halloween) (GlobalHack, Portuguese)
+// Noturno Mini Game (Edicao de Halloween) (GlobalHack, Portuguese)
 static struct BurnRomInfo sms_noturnomgRomDesc[] = {
 	{ "Noturno Mini Game (Edicao de Halloween) (2025)(LMS Retro).sms",	524288, 0x038489c0, BRF_PRG | BRF_ESS },
 };
@@ -26646,7 +26628,7 @@ struct BurnDriver BurnDrvsms_ppersiac = {
 	256, 192, 4, 3
 };
 
-// Psychic World ~ Mundo Psíquico (Hack, Portuguese)
+// Psychic World ~ Mundo Psiquico (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/psychic-world-po.b.r.e
 static struct BurnRomInfo sms_psychicwptRomDesc[] = {
 	{ "Psychic World - Mundo Psiquico T-Por (2019)(PO.B.R.E.).sms",	262144, 0xb9f22a5e, BRF_PRG | BRF_ESS },

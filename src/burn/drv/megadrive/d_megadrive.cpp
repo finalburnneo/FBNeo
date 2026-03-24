@@ -37986,14 +37986,14 @@ struct BurnDriver BurnDrvmd_abyssal = {
 
 // Alice Sisters (HB)
 static struct BurnRomInfo md_alicesistersRomDesc[] = {
-	{ "Alice Sisters (2022)(PixelHeart).bin", 4194304, 0xd5b794ed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Alice Sisters (2024)(PixelHeart).bin", 4194304, 0x49025566, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_alicesisters)
 STD_ROM_FN(md_alicesisters)
 
 struct BurnDriver BurnDrvmd_alicesisters = {
-	"md_alicesisters", NULL, NULL, NULL, "2022",
+	"md_alicesisters", NULL, NULL, NULL, "2024",
 	"Alice Sisters (HB)\0", NULL, "PixelHeart", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,

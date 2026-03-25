@@ -405,7 +405,7 @@ static void pgm2DoDecrypt(const char* source)
     //
     // orleg2 example: 0x3C44=BL(verify), 0x3C48=BL(init), 0x3C4C=B(continue)
     // kov2nl etc.: different addresses (0x3C44 area is zeros in their ROMs)
-    if (Pgm2IntROM && Pgm2IntROMLen >= 0x100) {
+    if (0 && Pgm2IntROM && Pgm2IntROMLen >= 0x100) {
         INT32 patchAddr = -1;
         // Scan the ROM for pattern: BL(xxx), BL(xxx), B(xxx) — three consecutive words
         // BL encoding: 0xEB______ (condition AL=0xE, opcode=101, L=1)

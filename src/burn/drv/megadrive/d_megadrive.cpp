@@ -38399,6 +38399,25 @@ struct BurnDriver BurnDrvmd_batmanrnmd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Battle Women (HB)
+// https://pscdgames.itch.io/battlewomen
+static struct BurnRomInfo md_battlewomenRomDesc[] = {
+	{ "Battle Women (2023)(PSCD Games).bin", 3014656, 0xb15a50fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_battlewomen)
+STD_ROM_FN(md_battlewomen)
+
+struct BurnDriver BurnDrvmd_battlewomen = {
+	"md_battlewomen", "md_huntergirls", NULL, NULL, "2023",
+	"Battle Women (HB)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_battlewomenRomInfo, md_battlewomenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // BCD Verifier (HB, Test)
 static struct BurnRomInfo md_bcdverifierRomDesc[] = {
 	{ "BCD Verifier (2016)(Flamewing).bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -39177,6 +39196,51 @@ struct BurnDriver BurnDrvmd_dariusev = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Death & Lead (HB)
+static struct BurnSampleInfo DeathnleadSampleDesc[] = {
+	{ "01 1_1 o 5_1 glory salicornia bona loop", SAMPLE_AUTOLOOP },
+	{ "02 1_2 The talking stone told the truths", SAMPLE_AUTOLOOP },
+	{ "03 2_1 yerky and smoke", SAMPLE_AUTOLOOP },
+	{ "04 2_2 CAT SOUP", SAMPLE_AUTOLOOP },
+	{ "05 3_1 pendeja mescalera", SAMPLE_AUTOLOOP },
+	{ "06 3_2 o 5_2 fuentealegre rage", SAMPLE_AUTOLOOP },
+	{ "07 4_1 general desertor plan", SAMPLE_AUTOLOOP },
+	{ "08 4_2 flamenco kenneth", SAMPLE_AUTOLOOP },
+	{ "09 BOSS_LOOP", SAMPLE_AUTOLOOP },
+	{ "10 BOSS_LOOPv1", SAMPLE_AUTOLOOP },
+	{ "11 BOSS_LOOPv2", SAMPLE_AUTOLOOP },
+	{ "12 BOSS_LOOPv3", SAMPLE_AUTOLOOP },
+	{ "13 BOSS_LOOPv4", SAMPLE_AUTOLOOP },
+	{ "14 FINAL_BOSS_LOOP", SAMPLE_AUTOLOOP },
+	{ "15 STAGE_COMPLETE", SAMPLE_AUTOLOOP },
+	{ "16 stage_start2", SAMPLE_AUTOLOOP },
+	{ "17 TUTORIAL", SAMPLE_AUTOLOOP },
+	{ "18 INTRO", SAMPLE_AUTOLOOP },
+	{ "19 ENDING", SAMPLE_AUTOLOOP },
+	{ "20 ending2", SAMPLE_AUTOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(Deathnlead)
+STD_SAMPLE_FN(Deathnlead)
+
+static struct BurnRomInfo md_DeathnleadRomDesc[] = {
+	{ "Death & Lead (2025)(Kai Magazine).bin", 4194304, 0xe1b3ee1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_Deathnlead)
+STD_ROM_FN(md_Deathnlead)
+
+struct BurnDriver Burnmd_Deathnlead = {
+	"md_deathnlead", NULL, NULL, "deathnlead", "2025",
+	"Death & Lead (HB)\0", NULL, "Kai Magazine", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_DeathnleadRomInfo, md_DeathnleadRomName, NULL, NULL, DeathnleadSampleInfo, DeathnleadSampleName, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInitSot4w, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Debtor (HB)
 static struct BurnRomInfo md_debtorRomDesc[] = {
 	{ "Debtor (2020)(PSCD Games).bin", 2228224, 0xc16c2aa4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -39371,6 +39435,25 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_doroppuRomInfo, md_doroppuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Double Symbol (HB, v1.34)
+// https://gcup.itch.io/double-symbol
+static struct BurnRomInfo md_dsymbolRomDesc[] = {
+	{ "Double Symbol v1.34 (2018-2019)(T-Arts Studios).bin", 476774, 0xa06fb574, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_dsymbol)
+STD_ROM_FN(md_dsymbol)
+
+struct BurnDriver BurnDrvmd_dsymbol = {
+	"md_dsymbol", NULL, NULL, NULL, "2018-2019",
+	"Double Symbol (HB, v1.34)\0", NULL, "T-Arts Studios", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_dsymbolRomInfo, md_dsymbolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -40128,7 +40211,7 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 	"md_huntergirls", NULL, NULL, NULL, "2023",
 	"Hunter Girls (HB)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_huntergirlsRomInfo, md_huntergirlsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41077,6 +41160,25 @@ struct BurnDriver BurnDrvmd_navabarone = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Nuts & Milk (HB)
+// https://romhackplaza.org/homebrew/nuts-milk-md-genesis/
+static struct BurnRomInfo md_nutsmilkRomDesc[] = {
+	{ "Nuts & Milk (2025)(Mairtrus - YoSoyNacho).bin", 62188, 0xc4eedd94, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nutsmilk)
+STD_ROM_FN(md_nutsmilk)
+
+struct BurnDriver BurnDrvmd_nutsmilk = {
+	"md_nutsmilk", NULL, NULL, NULL, "2025",
+	"Nuts & Milk (HB)\0", NULL, "Mairtrus - YoSoyNacho", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ACTION, 0,
+	MegadriveGetZipName, md_nutsmilkRomInfo, md_nutsmilkRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Odeio Carros (HB)
 static struct BurnRomInfo md_odecarrosRomDesc[] = {
 	{ "Odeio Carros (2020)(Menos Playstation).bin", 917504, 0x770969b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41683,48 +41785,22 @@ struct BurnDriver BurnDrvmd_sacredline2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Death & Lead (HB)
-static struct BurnSampleInfo DeathnleadSampleDesc[] = {
-	{ "01 1_1 o 5_1 glory salicornia bona loop", SAMPLE_AUTOLOOP },
-	{ "02 1_2 The talking stone told the truths", SAMPLE_AUTOLOOP },
-	{ "03 2_1 yerky and smoke", SAMPLE_AUTOLOOP },
-	{ "04 2_2 CAT SOUP", SAMPLE_AUTOLOOP },
-	{ "05 3_1 pendeja mescalera", SAMPLE_AUTOLOOP },
-	{ "06 3_2 o 5_2 fuentealegre rage", SAMPLE_AUTOLOOP },
-	{ "07 4_1 general desertor plan", SAMPLE_AUTOLOOP },
-	{ "08 4_2 flamenco kenneth", SAMPLE_AUTOLOOP },
-	{ "09 BOSS_LOOP", SAMPLE_AUTOLOOP },
-	{ "10 BOSS_LOOPv1", SAMPLE_AUTOLOOP },
-	{ "11 BOSS_LOOPv2", SAMPLE_AUTOLOOP },
-	{ "12 BOSS_LOOPv3", SAMPLE_AUTOLOOP },
-	{ "13 BOSS_LOOPv4", SAMPLE_AUTOLOOP },
-	{ "14 FINAL_BOSS_LOOP", SAMPLE_AUTOLOOP },
-	{ "15 STAGE_COMPLETE", SAMPLE_AUTOLOOP },
-	{ "16 stage_start2", SAMPLE_AUTOLOOP },
-	{ "17 TUTORIAL", SAMPLE_AUTOLOOP },
-	{ "18 INTRO", SAMPLE_AUTOLOOP },
-	{ "19 ENDING", SAMPLE_AUTOLOOP },
-	{ "20 ending2", SAMPLE_AUTOLOOP },
-	{ "", 0 }
+// Satan Claus (HB, v1.23)
+// https://gcup.itch.io/satanclaus
+static struct BurnRomInfo md_satanclausRomDesc[] = {
+	{ "Satan Claus v1.23 (2022-2024)(T-Arts Studios).bin", 3058530, 0xf6b9aea0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_SAMPLE_PICK(Deathnlead)
-STD_SAMPLE_FN(Deathnlead)
+STD_ROM_PICK(md_satanclaus)
+STD_ROM_FN(md_satanclaus)
 
-static struct BurnRomInfo md_DeathnleadRomDesc[] = {
-	{ "Death & Lead (2025)(Kai Magazine).bin", 4194304, 0xe1b3ee1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
-};
-
-STD_ROM_PICK(md_Deathnlead)
-STD_ROM_FN(md_Deathnlead)
-
-struct BurnDriver Burnmd_Deathnlead = {
-	"md_deathnlead", NULL, NULL, "deathnlead", "2025",
-	"Death & Lead (HB)\0", NULL, "Kai Magazine", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_satanclaus = {
+	"md_satanclaus", NULL, NULL, NULL, "2022-2024",
+	"Satan Claus (HB, v1.23)\0", NULL, "T-Arts Studios", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV | GBF_RUNGUN, 0,
-	MegadriveGetZipName, md_DeathnleadRomInfo, md_DeathnleadRomName, NULL, NULL, DeathnleadSampleInfo, DeathnleadSampleName, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInitSot4w, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_satanclausRomInfo, md_satanclausRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
@@ -42142,6 +42218,25 @@ struct BurnDriver BurnDrvmd_smoverkill = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_smoverkillRomInfo, md_smoverkillRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Robin (HB)
+// https://camdentowngames.itch.io/super-robin
+static struct BurnRomInfo md_srobinRomDesc[] = {
+	{ "Super Robin (2025)(Camden Town Games).bin", 1441792, 0x3cfc7b64, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_srobin)
+STD_ROM_FN(md_srobin)
+
+struct BurnDriver BurnDrvmd_srobin = {
+	"md_srobin", NULL, NULL, NULL, "2025",
+	"Super Robin (HB)\0", NULL, "Camden Town Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_srobinRomInfo, md_srobinRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

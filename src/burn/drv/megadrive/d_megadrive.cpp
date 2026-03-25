@@ -40924,17 +40924,17 @@ struct BurnDriver BurnDrvmd_megaxmas = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Metal Blast 2277 (HB)
+// Metal Blast 2277 (HB, v1.25)
 static struct BurnRomInfo md_mb2277RomDesc[] = {
-	{ "Metal Blast 2277 (rev01-2019)(T-Arts Studio).bin", 2647322, 0xdfd4fe49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Metal Blast 2277 v1.25 (2017-2019)(T-Arts Studio).bin", 2647322, 0xdfd4fe49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mb2277)
 STD_ROM_FN(md_mb2277)
 
 struct BurnDriver BurnDrvmd_mb2277 = {
-	"md_mb2277", NULL, NULL, NULL, "2019",
-	"Metal Blast 2277 (HB)\0", NULL, "T-Arts Studio", "Genesis / Mega Drive",
+	"md_mb2277", NULL, NULL, NULL, "2017-2019",
+	"Metal Blast 2277 (HB, v1.25)\0", NULL, "T-Arts Studio", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mb2277RomInfo, md_mb2277RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

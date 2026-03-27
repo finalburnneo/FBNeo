@@ -9489,6 +9489,24 @@ struct BurnDriver BurnDrvcv_sasa = {
     272, 228, 4, 3
 };
 
+// Scramble (HB)
+static struct BurnRomInfo cv_scrambleRomDesc[] = {
+    { "Scramble (2024)(CollectorVision).rom",	27902, 0xfc65fcd0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_scramble, cv_scramble, cv_coleco)
+STD_ROM_FN(cv_scramble)
+
+struct BurnDriver BurnDrvcv_scramble = {
+    "cv_scramble", NULL, "cv_coleco", NULL, "2024",
+    "Scramble (HB)\0", "Published by CollectorVision Games", "Charles Spencer", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_scrambleRomInfo, cv_scrambleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Search For The Stolen Crown Jewels (HB)
 static struct BurnRomInfo cv_sftscjRomDesc[] = {
     { "Search for the Stolen Crown Jewels (2006)(Philipp Klaus Krause).rom",	32768, 0x889f5b98, BRF_PRG | BRF_ESS },

@@ -38399,10 +38399,10 @@ struct BurnDriver BurnDrvmd_batmanrnmd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Battle Women (HB)
+// Battlewomen (HB)
 // https://pscdgames.itch.io/battlewomen
 static struct BurnRomInfo md_battlewomenRomDesc[] = {
-	{ "Battle Women (2023)(PSCD Games).bin", 3014656, 0xb15a50fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Battlewomen (2023)(PSCD Games).bin", 3014656, 0xb15a50fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_battlewomen)
@@ -38410,7 +38410,7 @@ STD_ROM_FN(md_battlewomen)
 
 struct BurnDriver BurnDrvmd_battlewomen = {
 	"md_battlewomen", "md_huntergirls", NULL, NULL, "2023",
-	"Battle Women (HB)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+	"Battlewomen (HB)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_battlewomenRomInfo, md_battlewomenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

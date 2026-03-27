@@ -28852,6 +28852,36 @@ struct BurnDriver BurnDrvGalaxianng = {
 };
 
 
+// Halo Zero (HB, Demo)
+// https://earok.itch.io/halo-zero-unofficial-remake
+
+static struct BurnRomInfo halozeroRomDesc[] = {
+	{ "halozero-p1.p1",    0x040000, 0x472205ad, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "halozero-s1.s1",    0x020000, 0x9c8d137f, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "halozero-c1.c1",    0x080000, 0x4749a9b0, 3 | BRF_GRA },           //  2 Sprite data
+	{ "halozero-c2.c2",    0x080000, 0xaced4adc, 3 | BRF_GRA },           //  3
+
+	{ "halozero-m1.m1",    0x008000, 0x61463826, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "halozero-v1.v1",    0x020000, 0x293cf59b, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(halozero, halozero, neogeo)
+STD_ROM_FN(halozero)
+
+struct BurnDriver BurnDrvHalozero = {
+	"halozero", NULL, "neogeo", NULL, "2025",
+	"Halo Zero (HB, Demo)\0", NULL, "earok - misentropy", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
+	NULL, halozeroRomInfo, halozeroRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
 // Jurl (HB, v0.3c)
 // https://tonsomo.itch.io/jurl-neo-geo-edition
 

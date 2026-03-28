@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------
 // Internal sprite render buffer
 //   0x8000 = transparent
-//   bit 12 = priority (1=hi/foreground, 0=lo/behind BG)
+//   bit 12 = priority (1=behind BG, 0=in front of BG)
 //   bits 11:0 = direct index into Pgm2SpPal[]
 // ---------------------------------------------------------------------------
 #define PGM2_SPRBUF_W   512

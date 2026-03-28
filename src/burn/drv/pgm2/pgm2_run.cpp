@@ -1445,7 +1445,6 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
         pgm2AicWrite(addr - 0x7FFFF000, data);
         return;
     }
-    // PIO SODR/CODR (kov3 module GPIO)
     // PIO SODR/CODR (kov3 module GPIO) — also log any PIO-range writes for diag
     if (addr >= 0x7FFFF400 && addr <= 0x7FFFF5FF) {
         static INT32 pioLogCount = 0;

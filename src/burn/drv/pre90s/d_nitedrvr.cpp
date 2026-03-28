@@ -107,13 +107,7 @@ static INT32 nitedrvr_steering()
 
 	last_steering_val = val;
 
-	if (delta > 128)
-		delta -= 256;
-	else if (delta < -128)
-		delta += 256;
-
-	// Divide by four to make steering less sensitive
-	steering_buf += (delta / 4);
+	steering_buf += (delta / 2);
 
 	if (steering_buf > 0)
 	{

@@ -10766,6 +10766,24 @@ struct BurnDriver BurnDrvcv_victorysce = {
 	272, 228, 4, 3
 };
 
+// Virix (HB)
+static struct BurnRomInfo cv_virixRomDesc[] = {
+    { "Virix (2024)(8 bit Milli Games).rom",	0x20000, 0xc68d3768, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_virix, cv_virix, cv_coleco)
+STD_ROM_FN(cv_virix)
+
+struct BurnDriver BurnDrvcv_virix = {
+    "cv_virix", NULL, "cv_coleco", NULL, "2024",
+    "Virix (HB)\0", NULL, "8 bit Milli Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+    CVGetZipName, cv_virixRomInfo, cv_virixRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Void, The (HB)
 static struct BurnRomInfo cv_voidRomDesc[] = {
 	{ "Void, The (2010)(Atari2600.com).rom",	32768, 0x67311b7e, BRF_PRG | BRF_ESS },

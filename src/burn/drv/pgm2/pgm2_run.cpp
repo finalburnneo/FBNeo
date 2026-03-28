@@ -215,7 +215,7 @@ static void pgm2DecryptKov3Module(UINT32 addrXor, UINT16 dataXor)
     BurnFree(buffer);
 
     Pgm2HasDecryptedKov3Module = 1;
-    PGM2_LOG(PGM2_LOG_SYS, "kov3 module decrypted addrXor=%06X dataXor=%04X", addrXor, dataXor);
+    PGM2_LOG(PGM2_LOG_MODULE, "kov3 module decrypted addrXor=%06X dataXor=%04X", addrXor, dataXor);
 }
 
 static void pgm2ModuleDataW(INT32 state)
@@ -237,17 +237,17 @@ static void pgm2ModuleClkW(INT32 state)
                 case 0x0d: // init/status check
                     Pgm2ModuleSendBuf[0] = Pgm2ModuleSendBuf[1] = Pgm2ModuleSendBuf[2] = Pgm2ModuleSendBuf[3] = 0xa3;
                     Pgm2ModuleSendBuf[4] = Pgm2ModuleSendBuf[5] = Pgm2ModuleSendBuf[6] = Pgm2ModuleSendBuf[7] = 0x6d;
-                    PGM2_LOG(PGM2_LOG_SYS, "FPGA command 0x0d (init) -> A3A3A3A36D6D6D6D");
+                    PGM2_LOG(PGM2_LOG_MODULE, "FPGA command 0x0d (init) -> A3A3A3A36D6D6D6D");
                     break;
                 case 0x25: // get key
                     for (INT32 i = 0; i < 8; i++)
                         Pgm2ModuleSendBuf[i] = Pgm2ModuleKey[i ^ 3] ^ Pgm2ModuleRcvBuf[i + 1];
-                    PGM2_LOG(PGM2_LOG_SYS, "FPGA command 0x25 (get key) -> %02X %02X %02X %02X %02X %02X %02X %02X",
+                    PGM2_LOG(PGM2_LOG_MODULE, "FPGA command 0x25 (get key) -> %02X %02X %02X %02X %02X %02X %02X %02X",
                         Pgm2ModuleSendBuf[0], Pgm2ModuleSendBuf[1], Pgm2ModuleSendBuf[2], Pgm2ModuleSendBuf[3],
                         Pgm2ModuleSendBuf[4], Pgm2ModuleSendBuf[5], Pgm2ModuleSendBuf[6], Pgm2ModuleSendBuf[7]);
                     break;
                 default:
-                    PGM2_LOG(PGM2_LOG_SYS, "unknown FPGA command %02X", Pgm2ModuleRcvBuf[0]);
+                    PGM2_LOG(PGM2_LOG_MODULE, "unknown FPGA command %02X", Pgm2ModuleRcvBuf[0]);
                     break;
                 }
                 Pgm2ModuleSendBuf[8] = 0;
@@ -961,14 +961,14 @@ static void pgm2McuCommand(bool isCommand)
         }
         Pgm2McuIrq3 = 0;
         pgm2AicSetIrq(3, 0);
-        PGM2_LOG(PGM2_LOG_SYS, "MCU ack/done status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
+        PGM2_LOG(PGM2_LOG_MCU, "MCU ack/done status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
     }
 }
 
 static inline UINT32 pgm2McuRead(INT32 reg)
 {
     if (Pgm2McuReadLogCount < 24) {
-        PGM2_LOG(PGM2_LOG_SYS, "MCU reg%d read=%08X", reg & 7, Pgm2McuRegs[reg & 7]);
+        PGM2_LOG(PGM2_LOG_MCU, "MCU reg%d read=%08X", reg & 7, Pgm2McuRegs[reg & 7]);
         Pgm2McuReadLogCount++;
     }
     return Pgm2McuRegs[reg & 7];
@@ -980,7 +980,7 @@ static inline void pgm2McuWrite(INT32 reg, UINT32 data)
     Pgm2McuRegs[reg] = data;
 
     if (reg == 2 || reg == 5) {
-        PGM2_LOG(PGM2_LOG_SYS, "MCU reg%d write=%08X reg0=%08X reg1=%08X reg3=%08X", reg, data, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2McuRegs[3]);
+        PGM2_LOG(PGM2_LOG_MCU, "MCU reg%d write=%08X reg0=%08X reg1=%08X reg3=%08X", reg, data, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2McuRegs[3]);
     }
 
     if (reg == 2 && data) {
@@ -2027,6 +2027,7 @@ INT32 pgm2Frame()
 
     // Boot PC diagnostic: log to file so we can see output even if game crashes
     // Log first 10 frames, then every 100th frame, plus detect key transitions
+    if (PGM2_LOG_ENABLED)
     {
         static UINT32 prevPcRegion = 0xFFFFFFFF;
         Arm9Open(0);

@@ -1890,19 +1890,23 @@ INT32 pgm2Init()
 }
 INT32 pgm2DoReset()
 {
-	if (Pgm2ArmROMEncrypted&&Pgm2ArmROM)
-            memcpy( Pgm2ArmROM,Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
-	Pgm2HasKov3Module = 1;
-    Pgm2HasDecryptedKov3Module = 0;
-	if((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3")))
-		pgm2DecryptKov3Module(0x18ec71, 0xb89d);
-	else if((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_102")))
-		pgm2DecryptKov3Module(0x021d37, 0x81d0);
-	else if((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_101")))
-		pgm2DecryptKov3Module(0x000000, 0xffff);
-	else if((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_100")))
-		pgm2DecryptKov3Module(0x3e8aa8, 0xc530);
-    Pgm2HasDecryptedKov3Module = 1;
+	if (Pgm2ArmROMEncrypted && Pgm2ArmROM)
+		memcpy(Pgm2ArmROM, Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
+
+	// Decrypt KOV3 module ROM if this game uses it
+	Pgm2HasDecryptedKov3Module = 0;
+	if (Pgm2HasKov3Module) {
+		if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3")))
+			pgm2DecryptKov3Module(0x18ec71, 0xb89d);
+		else if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_102")))
+			pgm2DecryptKov3Module(0x021d37, 0x81d0);
+		else if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_101")))
+			pgm2DecryptKov3Module(0x000000, 0xffff);
+		else if ((0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov3_100")))
+			pgm2DecryptKov3Module(0x3e8aa8, 0xc530);
+		Pgm2HasDecryptedKov3Module = 1;
+	}
+
 	Pgm2HasDecrypted = 0;
 	pgm2DoDecrypt(0);
 	Pgm2HasDecrypted = 1;

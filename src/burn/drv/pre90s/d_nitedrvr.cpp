@@ -1,9 +1,6 @@
 // FB Alpha Atari Nite Driver Module
 // Based on MAME driver by Mike Balfour
 
-// to do:
-//	hook up samples?
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "watchdog.h"
@@ -41,16 +38,16 @@ static INT32 sound_disable;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2f[8];
-static UINT8 DrvJoy3f[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[2];
+static INT16 Analog[1];
 static UINT8 DrvReset;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo NitedrvrInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3f + 1,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy3f + 0,	"p1 right"	},
+	A("P1 Wheel", 		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Accelerator",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Gear Up",		BIT_DIGITAL,	DrvJoy2f + 0,	"p1 fire 2"	},
 	{"P1 Gear Down",	BIT_DIGITAL,	DrvJoy2f + 1,	"p1 fire 3"	},
@@ -63,53 +60,63 @@ static struct BurnInputInfo NitedrvrInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Nitedrvr)
 
 static struct BurnDIPInfo NitedrvrDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x90, NULL					},
-	{0x0c, 0xff, 0xff, 0xa0, NULL					},
-	{0x0d, 0xff, 0xff, 0x00, NULL					},
+	{0x0a, 0xff, 0xff, 0x90, NULL					},
+	{0x0b, 0xff, 0xff, 0xa0, NULL					},
+	{0x0c, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    3, "Coinage"				},
-	{0x0b, 0x01, 0x30, 0x30, "2 Coins 1 Credits"	},
-	{0x0b, 0x01, 0x30, 0x10, "1 Coin  1 Credits"	},
-	{0x0b, 0x01, 0x30, 0x00, "1 Coin  2 Credits"	},
+	{0x0a, 0x01, 0x30, 0x30, "2 Coins 1 Credits"	},
+	{0x0a, 0x01, 0x30, 0x10, "1 Coin  1 Credits"	},
+	{0x0a, 0x01, 0x30, 0x00, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Playing Time"			},
-	{0x0b, 0x01, 0xc0, 0x00, "50"					},
-	{0x0b, 0x01, 0xc0, 0x40, "75"					},
-	{0x0b, 0x01, 0xc0, 0x80, "100"					},
-	{0x0b, 0x01, 0xc0, 0xc0, "125"					},
+	{0x0a, 0x01, 0xc0, 0x00, "50"					},
+	{0x0a, 0x01, 0xc0, 0x40, "75"					},
+	{0x0a, 0x01, 0xc0, 0x80, "100"					},
+	{0x0a, 0x01, 0xc0, 0xc0, "125"					},
 
 	{0   , 0xfe, 0   ,    2, "Track Set"			},
-	{0x0c, 0x01, 0x10, 0x00, "Normal"				},
-	{0x0c, 0x01, 0x10, 0x10, "Reverse"				},
+	{0x0b, 0x01, 0x10, 0x00, "Normal"				},
+	{0x0b, 0x01, 0x10, 0x10, "Reverse"				},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Time"			},
-	{0x0c, 0x01, 0x20, 0x00, "No"					},
-	{0x0c, 0x01, 0x20, 0x20, "Score = 350"			},
+	{0x0b, 0x01, 0x20, 0x00, "No"					},
+	{0x0b, 0x01, 0x20, 0x20, "Score = 350"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x0c, 0x01, 0x80, 0x00, "On"					},
-	{0x0c, 0x01, 0x80, 0x80, "Off"					},
+	{0x0b, 0x01, 0x80, 0x00, "On"					},
+	{0x0b, 0x01, 0x80, 0x80, "Off"					},
 
 	{0   , 0xfe, 0   ,    2, "Difficult Bonus"		},
-	{0x0d, 0x01, 0x20, 0x00, "Normal"				},
-	{0x0d, 0x01, 0x20, 0x20, "Difficult"			},
+	{0x0c, 0x01, 0x20, 0x00, "Normal"				},
+	{0x0c, 0x01, 0x20, 0x20, "Difficult"			},
 };
 
 STDDIPINFO(Nitedrvr)
 
 static INT32 nitedrvr_steering()
 {
-	if (DrvJoy3f[0])
+	UINT8 val = ProcessAnalog(Analog[0], 0, INPUT_DEADZONE, 0x00, 0xff);
+	INT32 delta = val - last_steering_val;
+
+	last_steering_val = val;
+
+	steering_buf += (delta / 2);
+
+	if (steering_buf > 0)
 	{
+		steering_buf--;
 		steering_val = 0xc0;
 	}
-	else if (DrvJoy3f[1])
+	else if (steering_buf < 0)
 	{
+		steering_buf++;
 		steering_val = 0x80;
 	}
 	else
@@ -339,7 +346,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ac_line = 0;
 	m_track = 0;
 	steering_val = 0;
-	last_steering_val = 0;
+	last_steering_val = 0x80;
 	m_gear = 1;
 	last = 0;
 

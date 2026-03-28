@@ -1013,7 +1013,6 @@ static void pgm2SetVidSubPtrs()
 static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
 {
     addr &= 0x7FFFFFFF; // IGS036 uses 31-bit address bus; mask bit 31
-    UINT32 pc = Arm9DbgGetPC() & 0x7fffffff;
 
     // External Flash ROM 0x10000000-0x10FFFFFF (pgm2_rom_map)
     if (addr >= 0x10000000 && addr <= 0x10FFFFFF) {
@@ -1030,6 +1029,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
         UINT32 v = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2ArmRAM + (addr - 0x20000000)));
         // Speed hack: detect busy-loop reads and eat remaining cycles
         if (Pgm2SpeedHackAddr && (addr & ~3) == Pgm2SpeedHackAddr) {
+            UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
             bool pcMatch = false;
             for (INT32 i = 0; i < 4; i++) {
                 if (Pgm2SpeedHackPC[i] && pc == Pgm2SpeedHackPC[i]) {
@@ -1094,10 +1094,12 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
              | ((UINT32)pgm2SharedReadByte((addr & ~3) + 1) << 8)
              | ((UINT32)pgm2SharedReadByte((addr & ~3) + 2) << 16)
              | ((UINT32)pgm2SharedReadByte((addr & ~3) + 3) << 24);
+#if PGM2_LOG_ENABLED
         if (Pgm2SharedLogCount < 24) {
             PGM2_LOG(PGM2_LOG_SYS, "shared read addr=%08X val=%08X bank=%u", addr & ~3, val, Pgm2ShareBank & 1);
             Pgm2SharedLogCount++;
         }
+#endif
         return val;
     }
 
@@ -1105,10 +1107,12 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     if (addr >= 0x30120000 && addr <= 0x3012003F)
     {
         UINT32 val = BURN_ENDIAN_SWAP_INT32(*(UINT32*)((UINT8*)Pgm2VideoRegs + (addr - 0x30120000)));
+#if PGM2_LOG_ENABLED
         if (Pgm2VideoRegLogCount < 24) {
             PGM2_LOG(PGM2_LOG_SYS, "vreg read addr=%08X off=%02X val=%08X", addr, addr - 0x30120000, val);
             Pgm2VideoRegLogCount++;
         }
+#endif
         return val;
     }
 
@@ -1181,6 +1185,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     }
     // PIO read (kov3 module GPIO)
     if (addr == 0x7FFFF43C && Pgm2HasKov3Module) {
+#if PGM2_LOG_ENABLED
         static INT32 pioRdLogCount = 0;
         if (pioRdLogCount < 50) {
             UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
@@ -1188,6 +1193,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
                 addr, pc, Pgm2RtcFrameCounter, Pgm2ModuleOutLatch);
             pioRdLogCount++;
         }
+#endif
         return (UINT32)(Pgm2ModuleOutLatch ? (1 << 8) : 0);
     }
     if (addr >= 0x7FFFF000 && addr <= 0x7FFFFFFF)
@@ -1196,13 +1202,16 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     }
 
     // Log unmapped reads in the video/peripheral range during boot
+#if PGM2_LOG_ENABLED
     if (Pgm2HasDecrypted && addr >= 0x30000000 && addr <= 0x30FFFFFF) {
         static INT32 unmapLogCount = 0;
         if (unmapLogCount < 50) {
+            UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
             PGM2_LOG(PGM2_LOG_SYS, "UNMAPPED READ addr=%08X pc=%08X", addr, pc);
             unmapLogCount++;
         }
     }
+#endif
 
     return 0x00000000;
 }

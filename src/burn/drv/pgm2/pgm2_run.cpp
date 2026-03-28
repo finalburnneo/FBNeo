@@ -34,6 +34,29 @@
 #include <time.h>
 
 // ---------------------------------------------------------------------------
+// PGM2 Logging System
+// ---------------------------------------------------------------------------
+#define PGM2_LOG_ENABLED 1
+
+// Unified category logging macro
+#if PGM2_LOG_ENABLED
+    #define PGM2_LOG(category, format, ...) bprintf(PRINT_NORMAL, _T("[PGM2][%s] " format _T("\n")), _T(category), ##__VA_ARGS__)
+#else
+    #define PGM2_LOG(category, format, ...) ((void)0)
+#endif
+
+// Logging categories
+#define PGM2_LOG_SYS     "SYS"
+#define PGM2_LOG_CARD    "CARD"
+#define PGM2_LOG_BOOT    "BOOT"
+#define PGM2_LOG_AIC     "AIC"
+#define PGM2_LOG_MCU     "MCU"
+#define PGM2_LOG_PIO     "PIO"
+#define PGM2_LOG_MODULE  "MODULE"
+#define PGM2_LOG_FRAME   "FRAME"
+#define PGM2_LOG_DIAG    "DIAG"
+
+// ---------------------------------------------------------------------------
 // Public memory areas
 // ---------------------------------------------------------------------------
 UINT8 *Pgm2IntROM        = NULL;
@@ -116,19 +139,6 @@ static UINT8  Pgm2ModuleSendBuf[10] = {0};
 static INT32  Pgm2ModuleSumRead = 0;
 static UINT32 Pgm2PioOutData = 0;
 
-// Debug logging — enabled for boot diagnosis
-static void pgm2Log(const char *fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    char buf[512];
-    vsnprintf(buf, sizeof(buf), fmt, args);
-    va_end(args);
-    bprintf(0, _T("PGM2: %hs\n"), buf);
-}
-
-// Card debug logging (uses bprintf for debug console output)
-#define pgm2CardLog(...) do { bprintf(0, __VA_ARGS__); bprintf(0, _T("\n")); } while(0)
 
 // Per-game refresh rate (default 59.08 Hz; kof98umh uses 59.19 Hz per MAME pgm2_lores)
 static double Pgm2RefreshRate = 59.08;
@@ -205,7 +215,7 @@ static void pgm2DecryptKov3Module(UINT32 addrXor, UINT16 dataXor)
     BurnFree(buffer);
 
     Pgm2HasDecryptedKov3Module = 1;
-    pgm2Log("kov3 module decrypted addrXor=%06X dataXor=%04X", addrXor, dataXor);
+    PGM2_LOG(PGM2_LOG_SYS, "kov3 module decrypted addrXor=%06X dataXor=%04X", addrXor, dataXor);
 }
 
 static void pgm2ModuleDataW(INT32 state)
@@ -227,17 +237,17 @@ static void pgm2ModuleClkW(INT32 state)
                 case 0x0d: // init/status check
                     Pgm2ModuleSendBuf[0] = Pgm2ModuleSendBuf[1] = Pgm2ModuleSendBuf[2] = Pgm2ModuleSendBuf[3] = 0xa3;
                     Pgm2ModuleSendBuf[4] = Pgm2ModuleSendBuf[5] = Pgm2ModuleSendBuf[6] = Pgm2ModuleSendBuf[7] = 0x6d;
-                    pgm2Log("FPGA command 0x0d (init) -> A3A3A3A36D6D6D6D");
+                    PGM2_LOG(PGM2_LOG_SYS, "FPGA command 0x0d (init) -> A3A3A3A36D6D6D6D");
                     break;
                 case 0x25: // get key
                     for (INT32 i = 0; i < 8; i++)
                         Pgm2ModuleSendBuf[i] = Pgm2ModuleKey[i ^ 3] ^ Pgm2ModuleRcvBuf[i + 1];
-                    pgm2Log("FPGA command 0x25 (get key) -> %02X %02X %02X %02X %02X %02X %02X %02X",
+                    PGM2_LOG(PGM2_LOG_SYS, "FPGA command 0x25 (get key) -> %02X %02X %02X %02X %02X %02X %02X %02X",
                         Pgm2ModuleSendBuf[0], Pgm2ModuleSendBuf[1], Pgm2ModuleSendBuf[2], Pgm2ModuleSendBuf[3],
                         Pgm2ModuleSendBuf[4], Pgm2ModuleSendBuf[5], Pgm2ModuleSendBuf[6], Pgm2ModuleSendBuf[7]);
                     break;
                 default:
-                    pgm2Log("unknown FPGA command %02X", Pgm2ModuleRcvBuf[0]);
+                    PGM2_LOG(PGM2_LOG_SYS, "unknown FPGA command %02X", Pgm2ModuleRcvBuf[0]);
                     break;
                 }
                 Pgm2ModuleSendBuf[8] = 0;
@@ -363,9 +373,9 @@ static void pgm2DoDecrypt(const char* source)
     if (Pgm2HasDecrypted) return;  // prevent double decryption (MAME: m_has_decrypted)
 
     // Log full 256-byte encryption key for debugging
-    pgm2Log("decrypt trigger %s romLen=0x%X fileLen=0x%X", source, Pgm2ArmROMLen, Pgm2ArmROMFileLen);
+    PGM2_LOG(PGM2_LOG_SYS, "decrypt trigger %s romLen=0x%X fileLen=0x%X", source, Pgm2ArmROMLen, Pgm2ArmROMFileLen);
     for (int row = 0; row < 256; row += 16) {
-        pgm2Log("  key[%02X]: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+        PGM2_LOG(PGM2_LOG_SYS, "  key[%02X]: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
             row,
             Pgm2EncryptTable[row+0],  Pgm2EncryptTable[row+1],  Pgm2EncryptTable[row+2],  Pgm2EncryptTable[row+3],
             Pgm2EncryptTable[row+4],  Pgm2EncryptTable[row+5],  Pgm2EncryptTable[row+6],  Pgm2EncryptTable[row+7],
@@ -379,13 +389,13 @@ static void pgm2DoDecrypt(const char* source)
     // buffers need decrypting.  MAME decrypts RAM at offset 0 and ROM at
     // offset = ramSize/2 (word index within the combined program space).
     if (Pgm2RomBoardRAM && Pgm2RomBoardRAMSize > 0) {
-        pgm2Log("decrypting RAM board %d bytes (0x%X) offset=0", Pgm2RomBoardRAMSize, Pgm2RomBoardRAMSize);
+        PGM2_LOG(PGM2_LOG_SYS, "decrypting RAM board %d bytes (0x%X) offset=0", Pgm2RomBoardRAMSize, Pgm2RomBoardRAMSize);
         pgm2_igs036_decrypt(Pgm2RomBoardRAM, Pgm2RomBoardRAMSize, Pgm2EncryptTable, 0);
     }
     if (Pgm2ArmROM && Pgm2ArmROMLen > 0) {
         // Decrypt only the actual ROM file size, matching MAME's m_mainrom.bytes()
         INT32 decryptLen = (Pgm2ArmROMFileLen > 0) ? Pgm2ArmROMFileLen : Pgm2ArmROMLen;
-        pgm2Log("decrypting ROM %d bytes (0x%X) offset=%d", decryptLen, decryptLen, Pgm2DecryptWordOffset);
+        PGM2_LOG(PGM2_LOG_SYS, "decrypting ROM %d bytes (0x%X) offset=%d", decryptLen, decryptLen, Pgm2DecryptWordOffset);
         pgm2_igs036_decrypt(Pgm2ArmROM, decryptLen, Pgm2EncryptTable, Pgm2DecryptWordOffset);
     }
 
@@ -422,32 +432,26 @@ static void pgm2DoDecrypt(const char* source)
             }
         }
         {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                if (patchAddr >= 0) {
-                    Pgm2IntRomOriginal3C44 = *(UINT32*)(Pgm2IntROM + patchAddr);
-                    *(UINT32*)(Pgm2IntROM + patchAddr) = 0xE1A00000; // NOP verify BL
-                    fprintf(flog, "[BOOT] Patched verify BL at 0x%04X (was %08X) -> NOP\n", patchAddr, Pgm2IntRomOriginal3C44);
-                    fprintf(flog, "[BOOT]   init BL at 0x%04X: %08X\n", patchAddr + 4, *(UINT32*)(Pgm2IntROM + patchAddr + 4));
-                    fprintf(flog, "[BOOT]   cont B  at 0x%04X: %08X\n", patchAddr + 8, *(UINT32*)(Pgm2IntROM + patchAddr + 8));
-                } else {
-                    fprintf(flog, "[BOOT] No BL,BL,B pattern found in internal ROM — no verify patch applied\n");
-                }
-                // Dump exception vectors
-                fprintf(flog, "[BOOT] Exception vectors:\n");
-                for (int i = 0; i < 0x20; i += 4) {
-                    UINT32 instr = *(UINT32*)(Pgm2IntROM + i);
-                    fprintf(flog, "  0x%04X: %08X\n", i, instr);
-                }
-                // Dump code around 0xE0-0xFF (potential reset/abort handler)
-                fprintf(flog, "[BOOT] IntROM 0xE0-0xFF:\n");
-                for (int i = 0xE0; i < 0x100 && i < Pgm2IntROMLen; i += 4) 
-				{
-                    UINT32 instr = *(UINT32*)(Pgm2IntROM + i);
-                    fprintf(flog, "  0x%04X: %08X\n", i, instr);
-                }
-                fflush(flog);
-                fclose(flog);
+            if (patchAddr >= 0) {
+                Pgm2IntRomOriginal3C44 = *(UINT32*)(Pgm2IntROM + patchAddr);
+                *(UINT32*)(Pgm2IntROM + patchAddr) = 0xE1A00000; // NOP verify BL
+                PGM2_LOG(PGM2_LOG_BOOT, "Patched verify BL at 0x%04X (was %08X) -> NOP", patchAddr, Pgm2IntRomOriginal3C44);
+                PGM2_LOG(PGM2_LOG_BOOT, "  init BL at 0x%04X: %08X", patchAddr + 4, *(UINT32*)(Pgm2IntROM + patchAddr + 4));
+                PGM2_LOG(PGM2_LOG_BOOT, "  cont B  at 0x%04X: %08X", patchAddr + 8, *(UINT32*)(Pgm2IntROM + patchAddr + 8));
+            } else {
+                PGM2_LOG(PGM2_LOG_BOOT, "No BL,BL,B pattern found in internal ROM — no verify patch applied");
+            }
+            // Dump exception vectors
+            PGM2_LOG(PGM2_LOG_BOOT, "Exception vectors:");
+            for (int i = 0; i < 0x20; i += 4) {
+                UINT32 instr = *(UINT32*)(Pgm2IntROM + i);
+                PGM2_LOG(PGM2_LOG_BOOT, "  0x%04X: %08X", i, instr);
+            }
+            // Dump code around 0xE0-0xFF (potential reset/abort handler)
+            PGM2_LOG(PGM2_LOG_BOOT, "IntROM 0xE0-0xFF:");
+            for (int i = 0xE0; i < 0x100 && i < Pgm2IntROMLen; i += 4) {
+                UINT32 instr = *(UINT32*)(Pgm2IntROM + i);
+                PGM2_LOG(PGM2_LOG_BOOT, "  0x%04X: %08X", i, instr);
             }
         }
     }
@@ -590,7 +594,7 @@ static void pgm2AicSetIrq(int source, int state)
         static INT32 irq3TraceCount = 0;
         if (irq3TraceCount < 200) {
             UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-            pgm2Log("IRQ3 %s pending=%08X enabled=%08X coreStatus=%X pc=%08X mcuStatus=%08X countdown=%d",
+            PGM2_LOG(PGM2_LOG_SYS, "IRQ3 %s pending=%08X enabled=%08X coreStatus=%X pc=%08X mcuStatus=%08X countdown=%d",
                 state ? "ASSERT" : "CLEAR", Pgm2AicPending, Pgm2AicEnabled, Pgm2AicCoreStatus, pc,
                 Pgm2McuRegs[3], Pgm2McuDoneCountdown);
             irq3TraceCount++;
@@ -641,23 +645,18 @@ static UINT32 pgm2AicRead(UINT32 offset)
                         Pgm2AicPending ^= (1u << midx);
                 }
             }
-            // File-based IVR trace
+            // IVR trace
             {
                 static INT32 ivrLogCount = 0;
                 if (ivrLogCount < 60) {
-                    FILE *flog = fopen("pgm2_boot.log", "a");
-                    if (flog) {
-                        UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                        UINT32 cpsr = Arm9DbgGetCPSR();
-                        UINT32 sp = Arm9DbgGetRegister(eR13);
-                        UINT32 lr = Arm9DbgGetRegister(eR14);
-                        UINT32 spsr = Arm9DbgGetRegister(eSPSR_IRQ);
-                        UINT32 sp_irq = Arm9DbgGetRegister(eR13_IRQ);
-                        fprintf(flog, "[AIC] IVR read pc=%08X result=%08X midx=%d mask=%08X lvl=%d frame=%d cpsr=%08X sp=%08X lr=%08X sp_irq=%08X spsr_irq=%08X\n",
-                            pc, result, midx, mask, pgm2AicGetLevel(), Pgm2RtcFrameCounter, cpsr, sp, lr, sp_irq, spsr);
-                        fflush(flog);
-                        fclose(flog);
-                    }
+                    UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+                    UINT32 cpsr = Arm9DbgGetCPSR();
+                    UINT32 sp = Arm9DbgGetRegister(eR13);
+                    UINT32 lr = Arm9DbgGetRegister(eR14);
+                    UINT32 spsr = Arm9DbgGetRegister(eSPSR_IRQ);
+                    UINT32 sp_irq = Arm9DbgGetRegister(eR13_IRQ);
+                    PGM2_LOG(PGM2_LOG_AIC, "IVR read pc=%08X result=%08X midx=%d mask=%08X lvl=%d frame=%d cpsr=%08X sp=%08X lr=%08X sp_irq=%08X spsr_irq=%08X",
+                        pc, result, midx, mask, pgm2AicGetLevel(), Pgm2RtcFrameCounter, cpsr, sp, lr, sp_irq, spsr);
                     ivrLogCount++;
                 }
             }
@@ -692,12 +691,7 @@ static void pgm2AicWrite(UINT32 offset, UINT32 data)
             UINT32 newBits = data & ~Pgm2AicEnabled;
             Pgm2AicEnabled |= data;
             if (newBits) {
-                FILE *flog = fopen("pgm2_boot.log", "a");
-                if (flog) {
-                    fprintf(flog, "[AIC] IECR enable new=%08X total=%08X frame=%d\n", newBits, Pgm2AicEnabled, Pgm2RtcFrameCounter);
-                    fflush(flog);
-                    fclose(flog);
-                }
+                PGM2_LOG(PGM2_LOG_AIC, "IECR enable new=%08X total=%08X frame=%d", newBits, Pgm2AicEnabled, Pgm2RtcFrameCounter);
             }
             break;
         }
@@ -711,13 +705,8 @@ static void pgm2AicWrite(UINT32 offset, UINT32 data)
                 UINT32 sp = Arm9DbgGetRegister(eR13);
                 static INT32 idcrLogCount = 0;
                 if (idcrLogCount < 20) {
-                    FILE *flog = fopen("pgm2_boot.log", "a");
-                    if (flog) {
-                        fprintf(flog, "[AIC] IDCR=FFFFFFFF DISABLE ALL pc=%08X cpsr=%08X mode=%02X lr=%08X sp=%08X frame=%d\n",
-                            pc, cpsr, cpsr & 0x1F, lr, sp, Pgm2RtcFrameCounter);
-                        fflush(flog);
-                        fclose(flog);
-                    }
+                    PGM2_LOG(PGM2_LOG_AIC, "IDCR=FFFFFFFF DISABLE ALL pc=%08X cpsr=%08X mode=%02X lr=%08X sp=%08X frame=%d",
+                        pc, cpsr, cpsr & 0x1F, lr, sp, Pgm2RtcFrameCounter);
                     idcrLogCount++;
                 }
             }
@@ -727,14 +716,9 @@ static void pgm2AicWrite(UINT32 offset, UINT32 data)
         {
             static INT32 iccrLogCount = 0;
             if (iccrLogCount < 60) {
-                FILE *flog = fopen("pgm2_boot.log", "a");
-                if (flog) {
-                    UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                    fprintf(flog, "[AIC] ICCR data=%08X pc=%08X lvl=%d frame=%d\n",
+                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+                PGM2_LOG(PGM2_LOG_AIC, "ICCR data=%08X pc=%08X lvl=%d frame=%d",
                         data, pc, pgm2AicGetLevel(), Pgm2RtcFrameCounter);
-                    fflush(flog);
-                    fclose(flog);
-                }
                 iccrLogCount++;
             }
             Pgm2AicPending &= ~data;
@@ -745,14 +729,9 @@ static void pgm2AicWrite(UINT32 offset, UINT32 data)
         {
             static INT32 eoicrLogCount = 0;
             if (eoicrLogCount < 60) {
-                FILE *flog = fopen("pgm2_boot.log", "a");
-                if (flog) {
-                    UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                    fprintf(flog, "[AIC] EOICR pc=%08X lvl=%d->%d frame=%d\n",
-                        pc, pgm2AicGetLevel(), Pgm2AicLvlIdx > 0 ? Pgm2AicLevelStack[Pgm2AicLvlIdx - 1] : -1, Pgm2RtcFrameCounter);
-                    fflush(flog);
-                    fclose(flog);
-                }
+                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+                PGM2_LOG(PGM2_LOG_AIC, "EOICR pc=%08X lvl=%d->%d frame=%d",
+                    pc, pgm2AicGetLevel(), Pgm2AicLvlIdx > 0 ? Pgm2AicLevelStack[Pgm2AicLvlIdx - 1] : -1, Pgm2RtcFrameCounter);
                 eoicrLogCount++;
             }
             pgm2AicPopLevel();
@@ -798,18 +777,12 @@ static void pgm2McuCommand(bool isCommand)
         UINT8 arg3 = (UINT8)((Pgm2McuRegs[0] >> 24) & 0xff);
         UINT32 status = 0x00f70000; // accepted
 
-        // File-based MCU diagnostic
-        {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                fprintf(flog, "[MCU] CMD cmd=%02X arg=%02X,%02X,%02X reg0=%08X reg1=%08X frame=%d\n",
-                    cmd, arg1, arg2, arg3, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2RtcFrameCounter);
-                fflush(flog);
-                fclose(flog);
-            }
-        }
+        // MCU diagnostic
+        PGM2_LOG(PGM2_LOG_MCU, "CMD cmd=%02X arg=%02X,%02X,%02X reg0=%08X reg1=%08X frame=%d",
+            cmd, arg1, arg2, arg3, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2RtcFrameCounter);
 
-        pgm2Log("MCU cmd=%02X reg0=%08X reg1=%08X sharebank=%u", cmd, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2ShareBank & 1);
+
+        PGM2_LOG(PGM2_LOG_SYS, "MCU cmd=%02X reg0=%08X reg1=%08X sharebank=%u", cmd, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2ShareBank & 1);
 
         Pgm2McuLastCmd = cmd;
         // DO NOT set Pgm2McuResult0/1 here — MAME sets them per-command.
@@ -844,7 +817,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD cmd=%02X slot=%d present=%d"), cmd, arg1 & 3, pgm2CardPresent(arg1) ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD cmd=%02X slot=%d present=%d"), cmd, arg1 & 3, pgm2CardPresent(arg1) ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -859,7 +832,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2SharedRAM2[i + ((~Pgm2ShareBank & 1) * 0x80)] = pgm2CardReadData(arg1, arg2 + i);
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD read slot=%d offset=%02X len=%d first=%02X"), arg1 & 3, arg2, arg3, arg3 > 0 ? pgm2CardReadData(arg1, arg2) : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD read slot=%d offset=%02X len=%d first=%02X"), arg1 & 3, arg2, arg3, arg3 > 0 ? pgm2CardReadData(arg1, arg2) : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -874,7 +847,7 @@ static void pgm2McuCommand(bool isCommand)
                     pgm2CardWriteData(arg1, arg2 + i, Pgm2SharedRAM2[i + ((~Pgm2ShareBank & 1) * 0x80)]);
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD write slot=%d offset=%02X len=%d auth=%d"), arg1 & 3, arg2, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD write slot=%d offset=%02X len=%d auth=%d"), arg1 & 3, arg2, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -887,7 +860,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD read_sec slot=%d result=%06X auth=%d"), arg1 & 3, Pgm2McuResult1 & 0xFFFFFF, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD read_sec slot=%d result=%06X auth=%d"), arg1 & 3, Pgm2McuResult1 & 0xFFFFFF, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -900,7 +873,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD write_sec slot=%d idx=%d val=%02X auth=%d"), arg1 & 3, arg2 & 3, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD write_sec slot=%d idx=%d val=%02X auth=%d"), arg1 & 3, arg2 & 3, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -913,7 +886,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD write_prot slot=%d idx=%d val=%02X auth=%d"), arg1 & 3, arg2 & 3, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD write_prot slot=%d idx=%d val=%02X auth=%d"), arg1 & 3, arg2 & 3, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -926,7 +899,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD read_prot slot=%d result=%08X"), arg1 & 3, Pgm2McuResult1);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD read_prot slot=%d result=%08X"), arg1 & 3, Pgm2McuResult1);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -939,7 +912,7 @@ static void pgm2McuCommand(bool isCommand)
                     status = 0x00f40000;
                 }
                 if (Pgm2CardLogCount < 200) {
-                    pgm2CardLog(_T("CARD write_byte slot=%d offset=%02X val=%02X auth=%d"), arg1 & 3, arg2, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD write_byte slot=%d offset=%02X val=%02X auth=%d"), arg1 & 3, arg2, arg3, Pgm2CardAuthenticated[arg1 & 3] ? 1 : 0);
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
@@ -953,7 +926,7 @@ static void pgm2McuCommand(bool isCommand)
                 }
                 if (Pgm2CardLogCount < 200) {
                     UINT8 s = arg1 & 3;
-                    pgm2CardLog(_T("CARD auth slot=%d psc=%02X,%02X,%02X result=%d sec0=%02X"), s, arg2, arg3, Pgm2McuRegs[1] & 0xff,
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD auth slot=%d psc=%02X,%02X,%02X result=%d sec0=%02X"), s, arg2, arg3, Pgm2McuRegs[1] & 0xff,
                         Pgm2CardAuthenticated[s] ? 1 : 0,
                         Pgm2Cards[s] ? Pgm2Cards[s][PGM2_CARD_DATA_SIZE + 4] : 0);
                     Pgm2CardLogCount++;
@@ -988,14 +961,14 @@ static void pgm2McuCommand(bool isCommand)
         }
         Pgm2McuIrq3 = 0;
         pgm2AicSetIrq(3, 0);
-        pgm2Log("MCU ack/done status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
+        PGM2_LOG(PGM2_LOG_SYS, "MCU ack/done status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
     }
 }
 
 static inline UINT32 pgm2McuRead(INT32 reg)
 {
     if (Pgm2McuReadLogCount < 24) {
-        pgm2Log("MCU reg%d read=%08X", reg & 7, Pgm2McuRegs[reg & 7]);
+        PGM2_LOG(PGM2_LOG_SYS, "MCU reg%d read=%08X", reg & 7, Pgm2McuRegs[reg & 7]);
         Pgm2McuReadLogCount++;
     }
     return Pgm2McuRegs[reg & 7];
@@ -1007,7 +980,7 @@ static inline void pgm2McuWrite(INT32 reg, UINT32 data)
     Pgm2McuRegs[reg] = data;
 
     if (reg == 2 || reg == 5) {
-        pgm2Log("MCU reg%d write=%08X reg0=%08X reg1=%08X reg3=%08X", reg, data, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2McuRegs[3]);
+        PGM2_LOG(PGM2_LOG_SYS, "MCU reg%d write=%08X reg0=%08X reg1=%08X reg3=%08X", reg, data, Pgm2McuRegs[0], Pgm2McuRegs[1], Pgm2McuRegs[3]);
     }
 
     if (reg == 2 && data) {
@@ -1122,7 +1095,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
              | ((UINT32)pgm2SharedReadByte((addr & ~3) + 2) << 16)
              | ((UINT32)pgm2SharedReadByte((addr & ~3) + 3) << 24);
         if (Pgm2SharedLogCount < 24) {
-            pgm2Log("shared read addr=%08X val=%08X bank=%u", addr & ~3, val, Pgm2ShareBank & 1);
+            PGM2_LOG(PGM2_LOG_SYS, "shared read addr=%08X val=%08X bank=%u", addr & ~3, val, Pgm2ShareBank & 1);
             Pgm2SharedLogCount++;
         }
         return val;
@@ -1133,7 +1106,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     {
         UINT32 val = BURN_ENDIAN_SWAP_INT32(*(UINT32*)((UINT8*)Pgm2VideoRegs + (addr - 0x30120000)));
         if (Pgm2VideoRegLogCount < 24) {
-            pgm2Log("vreg read addr=%08X off=%02X val=%08X", addr, addr - 0x30120000, val);
+            PGM2_LOG(PGM2_LOG_SYS, "vreg read addr=%08X off=%02X val=%08X", addr, addr - 0x30120000, val);
             Pgm2VideoRegLogCount++;
         }
         return val;
@@ -1210,13 +1183,9 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     if (addr == 0x7FFFF43C && Pgm2HasKov3Module) {
         static INT32 pioRdLogCount = 0;
         if (pioRdLogCount < 50) {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                fprintf(flog, "[PIO] READ PDSR addr=%08X pc=%08X frame=%d outLatch=%d\n",
-                    addr, pc, Pgm2RtcFrameCounter, Pgm2ModuleOutLatch);
-                fflush(flog); fclose(flog);
-            }
+            UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+            PGM2_LOG(PGM2_LOG_PIO, "READ PDSR addr=%08X pc=%08X frame=%d outLatch=%d",
+                addr, pc, Pgm2RtcFrameCounter, Pgm2ModuleOutLatch);
             pioRdLogCount++;
         }
         return (UINT32)(Pgm2ModuleOutLatch ? (1 << 8) : 0);
@@ -1230,7 +1199,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     if (Pgm2HasDecrypted && addr >= 0x30000000 && addr <= 0x30FFFFFF) {
         static INT32 unmapLogCount = 0;
         if (unmapLogCount < 50) {
-            pgm2Log("UNMAPPED READ addr=%08X pc=%08X", addr, pc);
+            PGM2_LOG(PGM2_LOG_SYS, "UNMAPPED READ addr=%08X pc=%08X", addr, pc);
             unmapLogCount++;
         }
     }
@@ -1322,13 +1291,9 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
         {
             static INT32 modRomWrLogCount = 0;
             if (modRomWrLogCount < 20) {
-                FILE *flog = fopen("pgm2_boot.log", "a");
-                if (flog) {
-                    UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                    fprintf(flog, "[MODULE] ROM_WRITE addr=%08X data=%08X pc=%08X frame=%d\n",
-                        addr, data, pc, Pgm2RtcFrameCounter);
-                    fflush(flog); fclose(flog);
-                }
+                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+                PGM2_LOG(PGM2_LOG_MODULE, "ROM_WRITE addr=%08X data=%08X pc=%08X frame=%d",
+                    addr, data, pc, Pgm2RtcFrameCounter);
                 modRomWrLogCount++;
             }
         }
@@ -1386,7 +1351,7 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
     // Shared RAM (banked, byte-lane masked)
     if (addr >= 0x30100000 && addr <= 0x301000FF) {
         if (Pgm2SharedLogCount < 24) {
-            pgm2Log("shared write addr=%08X data=%08X bank=%u", addr & ~3, data, Pgm2ShareBank & 1);
+            PGM2_LOG(PGM2_LOG_SYS, "shared write addr=%08X data=%08X bank=%u", addr & ~3, data, Pgm2ShareBank & 1);
             Pgm2SharedLogCount++;
         }
         pgm2SharedWriteByte(addr + 0, (UINT8)(data >> 0));
@@ -1398,7 +1363,7 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
     // Video regs
     if (addr >= 0x30120000 && addr <= 0x3012003F) {
         if (Pgm2VideoRegLogCount < 48) {
-            pgm2Log("vreg write addr=%08X off=%02X data=%08X", addr, addr - 0x30120000, data);
+            PGM2_LOG(PGM2_LOG_SYS, "vreg write addr=%08X off=%02X data=%08X", addr, addr - 0x30120000, data);
             Pgm2VideoRegLogCount++;
         }
 
@@ -1445,7 +1410,7 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
         Pgm2EncryptTable[(off + 2) & 0xFF] = (UINT8)(data >> 16);
         Pgm2EncryptTable[(off + 3) & 0xFF] = (UINT8)(data >> 24);
         if (Pgm2EncWriteCount < 16) {
-            pgm2Log("enc write32 off=%02X data=%08X", off, data);
+            PGM2_LOG(PGM2_LOG_SYS, "enc write32 off=%02X data=%08X", off, data);
         }
         Pgm2EncWriteCount++;
         return;
@@ -1462,14 +1427,9 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
         {
             static INT32 aicWriteLogCount = 0;
             if (aicWriteLogCount < 500) {
-                FILE *flog = fopen("pgm2_boot.log", "a");
-                if (flog) {
-                    UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                    fprintf(flog, "[AIC] WRITE32 addr=%08X off=%03X data=%08X pc=%08X frame=%d\n",
-                        addr, addr - 0x7FFFF000, data, pc, Pgm2RtcFrameCounter);
-                    fflush(flog);
-                    fclose(flog);
-                }
+                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+                PGM2_LOG(PGM2_LOG_AIC, "WRITE32 addr=%08X off=%03X data=%08X pc=%08X frame=%d",
+                    addr, addr - 0x7FFFF000, data, pc, Pgm2RtcFrameCounter);
                 aicWriteLogCount++;
             }
         }
@@ -1481,13 +1441,9 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
     if (addr >= 0x7FFFF400 && addr <= 0x7FFFF5FF) {
         static INT32 pioLogCount = 0;
         if (pioLogCount < 100) {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
-                fprintf(flog, "[PIO] WRITE addr=%08X data=%08X pc=%08X frame=%d hasModule=%d\n",
-                    addr, data, pc, Pgm2RtcFrameCounter, Pgm2HasKov3Module);
-                fflush(flog); fclose(flog);
-            }
+            UINT32 pc = Arm9DbgGetPC() & 0x7FFFFFFF;
+            PGM2_LOG(PGM2_LOG_PIO, "WRITE addr=%08X data=%08X pc=%08X frame=%d hasModule=%d",
+                addr, data, pc, Pgm2RtcFrameCounter, Pgm2HasKov3Module);
             pioLogCount++;
         }
     }
@@ -1507,7 +1463,7 @@ static void pgm2WriteLongDirect(UINT32 addr, UINT32 data)
         static INT32 unmapWrLogCount = 0;
         if (unmapWrLogCount < 50) {
             UINT32 pc = Arm9DbgGetPC() & 0x7fffffff;
-            pgm2Log("UNMAPPED WRITE addr=%08X data=%08X pc=%08X", addr, data, pc);
+            PGM2_LOG(PGM2_LOG_SYS, "UNMAPPED WRITE addr=%08X data=%08X pc=%08X", addr, data, pc);
             unmapWrLogCount++;
         }
     }
@@ -1527,7 +1483,7 @@ static void pgm2WriteByte(UINT32 addr, UINT8 data)
     if (addr >= 0x7FFFFC00 && addr <= 0x7FFFFCFF) {
         Pgm2EncryptTable[addr - 0x7FFFFC00] = data;
         if (Pgm2EncWriteCount < 16) {
-            pgm2Log("enc write8 off=%02X data=%02X", addr - 0x7FFFFC00, data);
+            PGM2_LOG(PGM2_LOG_SYS, "enc write8 off=%02X data=%02X", addr - 0x7FFFFC00, data);
         }
         Pgm2EncWriteCount++;
         return;
@@ -1589,7 +1545,7 @@ static void pgm2WriteWord(UINT32 addr, UINT16 data)
         if (off < 0x100) Pgm2EncryptTable[off] = (UINT8)(data >> 0);
         if (off + 1 < 0x100) Pgm2EncryptTable[off + 1] = (UINT8)(data >> 8);
         if (Pgm2EncWriteCount < 16) {
-            pgm2Log("enc write16 off=%02X data=%04X", off, data);
+            PGM2_LOG(PGM2_LOG_SYS, "enc write16 off=%02X data=%04X", off, data);
         }
         Pgm2EncWriteCount++;
         return;
@@ -1645,7 +1601,7 @@ static INT32 pgm2CpuCycles()
 INT32 pgm2Init()
 {
     BurnSetRefreshRate(Pgm2RefreshRate);
-    pgm2Log("==== PGM2 init ====");
+    PGM2_LOG(PGM2_LOG_SYS, "==== PGM2 init ====");
     Pgm2RtcBase = (INT32)time(NULL);
 
     // Main RAM 0x20000000 - 512 KB
@@ -1729,7 +1685,7 @@ INT32 pgm2Init()
         memset(&armri, 0, sizeof(armri));
         if (BurnDrvGetRomInfo(&armri, 1) == 0 && armri.nLen > 0) {
             Pgm2ArmROMFileLen = armri.nLen;
-            pgm2Log("arm rom file size=%d (0x%X) buffer=%d (0x%X)", armri.nLen, armri.nLen, Pgm2ArmROMLen, Pgm2ArmROMLen);
+            PGM2_LOG(PGM2_LOG_SYS, "arm rom file size=%d (0x%X) buffer=%d (0x%X)", armri.nLen, armri.nLen, Pgm2ArmROMLen, Pgm2ArmROMLen);
             // Fill unloaded tail with 0x00 to match MAME's ROM_REGION default zero-fill.
             // Module XOR operates on the full buffer; fill value matters for correct XOR results.
             if (armri.nLen < Pgm2ArmROMLen) {
@@ -1743,19 +1699,19 @@ INT32 pgm2Init()
         memset(&ri, 0, sizeof(ri));
         if (BurnDrvGetRomInfo(&ri, Pgm2CardRomIndex) == 0 && ri.nLen == PGM2_CARD_SIZE) {
             if (BurnLoadRom(Pgm2Cards[0], Pgm2CardRomIndex, 1) == 0) {
-                pgm2CardLog(_T("CARD init: loaded default card rom index=%d len=%d"), Pgm2CardRomIndex, ri.nLen);
-                pgm2CardLog(_T("CARD init: data[0..7]=%02X %02X %02X %02X %02X %02X %02X %02X"),
+                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: loaded default card rom index=%d len=%d"), Pgm2CardRomIndex, ri.nLen);
+                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: data[0..7]=%02X %02X %02X %02X %02X %02X %02X %02X"),
                     Pgm2Cards[0][0], Pgm2Cards[0][1], Pgm2Cards[0][2], Pgm2Cards[0][3],
                     Pgm2Cards[0][4], Pgm2Cards[0][5], Pgm2Cards[0][6], Pgm2Cards[0][7]);
-                pgm2CardLog(_T("CARD init: prot=%02X %02X %02X %02X sec=%02X %02X %02X %02X"),
+                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: prot=%02X %02X %02X %02X sec=%02X %02X %02X %02X"),
                     Pgm2Cards[0][0x100], Pgm2Cards[0][0x101], Pgm2Cards[0][0x102], Pgm2Cards[0][0x103],
                     Pgm2Cards[0][0x104], Pgm2Cards[0][0x105], Pgm2Cards[0][0x106], Pgm2Cards[0][0x107]);
             } else {
-                pgm2CardLog(_T("CARD init: default card rom index=%d not present, keeping blank card"), Pgm2CardRomIndex);
+                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: default card rom index=%d not present, keeping blank card"), Pgm2CardRomIndex);
                 Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
             }
         } else {
-            pgm2CardLog(_T("CARD init: no default card configured for rom index=%d riLen=%d, keeping blank card"), Pgm2CardRomIndex, ri.nLen);
+            PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: no default card configured for rom index=%d riLen=%d, keeping blank card"), Pgm2CardRomIndex, ri.nLen);
             Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
         }
         // Copy slot 0 template to all other slots
@@ -1771,9 +1727,9 @@ INT32 pgm2Init()
         memset(&ri, 0, sizeof(ri));
         if (BurnDrvGetRomInfo(&ri, Pgm2SramRomIndex) == 0 && ri.nLen > 0 && ri.nLen <= 0x10000) {
             if (BurnLoadRom(Pgm2ExtRAM, Pgm2SramRomIndex, 1) == 0) {
-                pgm2Log("loaded optional sram rom index=%d len=%d", Pgm2SramRomIndex, ri.nLen);
+                PGM2_LOG(PGM2_LOG_SYS, "loaded optional sram rom index=%d len=%d", Pgm2SramRomIndex, ri.nLen);
             } else {
-                pgm2Log("optional sram rom index=%d not present, using zero-filled sram", Pgm2SramRomIndex);
+                PGM2_LOG(PGM2_LOG_SYS, "optional sram rom index=%d not present, using zero-filled sram", Pgm2SramRomIndex);
             }
         }
     }
@@ -1810,12 +1766,12 @@ INT32 pgm2Init()
         if (insn0 == 0xE1A00000) {  // Verify entry is NOP
             Pgm2IntRomOriginal27F0 = insn0;
             *(UINT32*)(Pgm2IntROM + 0x27F0) = 0xE3A00000;  // MOV R0, #0
-            pgm2Log("patched delay entry at 0x27F0: NOP -> MOV R0, #0");
+            PGM2_LOG(PGM2_LOG_SYS, "patched delay entry at 0x27F0: NOP -> MOV R0, #0");
         }
         if (insn3 == 0x1AFFFFFC) {  // Verify BNE 0x27F4
             Pgm2IntRomOriginal27FC = insn3;
             *(UINT32*)(Pgm2IntROM + 0x27FC) = 0xE1A00000;  // NOP
-            pgm2Log("patched delay branch at 0x27FC: BNE -> NOP");
+            PGM2_LOG(PGM2_LOG_SYS, "patched delay branch at 0x27FC: BNE -> NOP");
         }
     }
 
@@ -1828,7 +1784,7 @@ INT32 pgm2Init()
         Arm9MapMemory(Pgm2IntROM, 0x00000000, (UINT32)(Pgm2IntROMLen - 1), MAP_ROM);
         // Dump exception vector table for debugging
         if (Pgm2IntROMLen >= 0x20) {
-            pgm2Log("exception vectors: [00]=%08X [04]=%08X [08]=%08X [0C]=%08X [10]=%08X [14]=%08X [18]=%08X [1C]=%08X",
+            PGM2_LOG(PGM2_LOG_SYS, "exception vectors: [00]=%08X [04]=%08X [08]=%08X [0C]=%08X [10]=%08X [14]=%08X [18]=%08X [1C]=%08X",
                 *(UINT32*)(Pgm2IntROM + 0x00), *(UINT32*)(Pgm2IntROM + 0x04),
                 *(UINT32*)(Pgm2IntROM + 0x08), *(UINT32*)(Pgm2IntROM + 0x0C),
                 *(UINT32*)(Pgm2IntROM + 0x10), *(UINT32*)(Pgm2IntROM + 0x14),
@@ -1851,7 +1807,7 @@ INT32 pgm2Init()
             //   — both reads AND writes go through handlers in MAME.
             Arm9MapMemory(Pgm2ArmROM, 0x10000000, 0x10000FFF, (1 << 2)); // FETCH only
             Arm9MapMemory(Pgm2ArmROM + 0x1000, 0x10001000, romEnd, MAP_ROM);
-            pgm2Log("mapped ext ROM: 0x10000000-0x10000FFF FETCH-only, 0x10001000-0x%08X MAP_ROM", romEnd);
+            PGM2_LOG(PGM2_LOG_SYS, "mapped ext ROM: 0x10000000-0x10000FFF FETCH-only, 0x10001000-0x%08X MAP_ROM", romEnd);
         } else if (Pgm2RomBoardRAMSize > 0 && Pgm2RomBoardRAM) {
             // RAM/ROM board (ddpdojt): writable RAM at 0x10000000, ROM at 0x10000000+ramSize
             UINT32 ramEnd = 0x10000000 + (UINT32)Pgm2RomBoardRAMSize - 1;
@@ -1860,10 +1816,10 @@ INT32 pgm2Init()
             if (romMapEnd > 0x10FFFFFF) romMapEnd = 0x10FFFFFF;
             Arm9MapMemory(Pgm2RomBoardRAM, 0x10000000, ramEnd, MAP_RAM);
             Arm9MapMemory(Pgm2ArmROM, romStart, romMapEnd, MAP_ROM);
-            pgm2Log("mapped RAM/ROM board: RAM 0x10000000-0x%08X, ROM 0x%08X-0x%08X", ramEnd, romStart, romMapEnd);
+            PGM2_LOG(PGM2_LOG_SYS, "mapped RAM/ROM board: RAM 0x10000000-0x%08X, ROM 0x%08X-0x%08X", ramEnd, romStart, romMapEnd);
         } else {
             Arm9MapMemory(Pgm2ArmROM, 0x10000000, romEnd, MAP_ROM);
-            pgm2Log("mapped ext ROM at 0x10000000-0x%08X as MAP_ROM (buffer=%08X)", romEnd, Pgm2ArmROMLen);
+            PGM2_LOG(PGM2_LOG_SYS, "mapped ext ROM at 0x10000000-0x%08X as MAP_ROM (buffer=%08X)", romEnd, Pgm2ArmROMLen);
         }
     }
     // Map main RAM at 0x20000000.
@@ -1884,7 +1840,7 @@ INT32 pgm2Init()
         if (hackPageEnd < ramEnd) {
             Arm9MapMemory(Pgm2ArmRAM + (hackPageEnd + 1 - ramStart), hackPageEnd + 1, ramEnd, MAP_RAM);
         }
-        pgm2Log("speedhack active addr=%08X pcs=%08X,%08X,%08X,%08X page=%08X-%08X read-unmapped",
+        PGM2_LOG(PGM2_LOG_SYS, "speedhack active addr=%08X pcs=%08X,%08X,%08X,%08X page=%08X-%08X read-unmapped",
             Pgm2SpeedHackAddr,
             Pgm2SpeedHackPC[0], Pgm2SpeedHackPC[1], Pgm2SpeedHackPC[2], Pgm2SpeedHackPC[3],
             hackPageStart, hackPageEnd);
@@ -1989,7 +1945,7 @@ INT32 pgm2Exit()
     Pgm2SpOAM = Pgm2BgVRAM = Pgm2FgVRAM = Pgm2LineRAM = Pgm2SharedRAM2 = NULL;
     Pgm2SpPal = Pgm2BgPal = Pgm2TxPal = Pgm2SpZoom = Pgm2VideoRegs = NULL;
 
-    pgm2Log("==== PGM2 exit ====");
+    PGM2_LOG(PGM2_LOG_SYS, "==== PGM2 exit ====");
 
     pPgm2InitCallback = NULL;
     pPgm2ResetCallback = NULL;
@@ -2075,18 +2031,13 @@ INT32 pgm2Frame()
                        (pc >= 0x3C40 && pc <= 0x3C50) ||
                        (pc >= 0x3760 && pc <= 0x3770);
         if (logThis) {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                UINT32 sp_irq = Arm9DbgGetRegister(eR13_IRQ);
-                UINT32 lr_irq = Arm9DbgGetRegister(eR14_IRQ);
-                UINT32 sp_svc = Arm9DbgGetRegister(eR13_SVC);
-                fprintf(flog, "[PGM2] frame %d START pc=%08X cpsr=%08X lr=%08X aicEn=%08X aicPend=%08X lvl=%d sp_irq=%08X lr_irq=%08X sp_svc=%08X\n",
-                    Pgm2RtcFrameCounter, pc, cpsr, lr,
-                    Pgm2AicEnabled, Pgm2AicPending, pgm2AicGetLevel(),
-                    sp_irq, lr_irq, sp_svc);
-                fflush(flog);
-                fclose(flog);
-            }
+            UINT32 sp_irq = Arm9DbgGetRegister(eR13_IRQ);
+            UINT32 lr_irq = Arm9DbgGetRegister(eR14_IRQ);
+            UINT32 sp_svc = Arm9DbgGetRegister(eR13_SVC);
+            PGM2_LOG(PGM2_LOG_FRAME, "frame %d START pc=%08X cpsr=%08X lr=%08X aicEn=%08X aicPend=%08X lvl=%d sp_irq=%08X lr_irq=%08X sp_svc=%08X",
+                Pgm2RtcFrameCounter, pc, cpsr, lr,
+                Pgm2AicEnabled, Pgm2AicPending, pgm2AicGetLevel(),
+                sp_irq, lr_irq, sp_svc);
         }
         prevPcRegion = pcRegion;
         Arm9Close();
@@ -2110,11 +2061,8 @@ INT32 pgm2Frame()
             if (Pgm2McuDoneCountdown == 0) {
                 Pgm2McuIrq3 = 1;
                 pgm2AicSetIrq(3, 1);
-                {
-                    FILE *flog = fopen("pgm2_boot.log", "a");
-                    if (flog) { fprintf(flog, "[MCU] IRQ3 fire frame=%d status=%08X\n", Pgm2RtcFrameCounter, Pgm2McuRegs[3]); fflush(flog); fclose(flog); }
-                }
-                pgm2Log("MCU timer-fire IRQ3 assert status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
+                PGM2_LOG(PGM2_LOG_MCU, "IRQ3 fire frame=%d status=%08X", Pgm2RtcFrameCounter, Pgm2McuRegs[3]);
+                PGM2_LOG(PGM2_LOG_SYS, "MCU timer-fire IRQ3 assert status=%08X result0=%08X result1=%08X", Pgm2McuRegs[3], Pgm2McuResult0, Pgm2McuResult1);
             }
         }
 
@@ -2155,48 +2103,43 @@ INT32 pgm2Frame()
         bool logThis = (Pgm2RtcFrameCounter <= 10) ||
                        (Pgm2RtcFrameCounter % 100 == 0);
         if (logThis) {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) { fprintf(flog, "[PGM2] frame %d END pc=%08X\n", Pgm2RtcFrameCounter, pc); fflush(flog); fclose(flog); }
+            PGM2_LOG(PGM2_LOG_FRAME, "frame %d END pc=%08X", Pgm2RtcFrameCounter, pc);
         }
         // One-time video memory check
         if (Pgm2RtcFrameCounter == 500 || Pgm2RtcFrameCounter == 1500 || Pgm2RtcFrameCounter == 3000) {
-            FILE *flog = fopen("pgm2_boot.log", "a");
-            if (flog) {
-                // Check sprite OAM for non-zero
-                INT32 sprNonZero = 0;
-                for (INT32 j = 0; j < 0x2000; j += 4) {
-                    if (*(UINT32*)(Pgm2SpOAM + j) != 0) sprNonZero++;
-                }
-                // Check BG VRAM for non-zero
-                INT32 bgNonZero = 0;
-                for (INT32 j = 0; j < 0x2000; j += 4) {
-                    if (*(UINT32*)(Pgm2BgVRAM + j) != 0) bgNonZero++;
-                }
-                // Check FG VRAM for non-zero
-                INT32 fgNonZero = 0;
-                for (INT32 j = 0; j < 0x6000; j += 4) {
-                    if (*(UINT32*)(Pgm2FgVRAM + j) != 0) fgNonZero++;
-                }
-                // Check sprite palette
-                INT32 spPalNonZero = 0;
-                for (INT32 j = 0; j < 0x4000; j += 4) {
-                    if (*(UINT32*)((UINT8*)Pgm2SpPal + j) != 0) spPalNonZero++;
-                }
-                // Check main RAM usage
-                INT32 ramNonZero = 0;
-                for (INT32 j = 0; j < 0x80000; j += 4) {
-                    if (*(UINT32*)(Pgm2ArmRAM + j) != 0) ramNonZero++;
-                }
-                // Video regs
-                UINT32 *vr = (UINT32*)Pgm2VideoRegs;
-                fprintf(flog, "[DIAG] frame %d: sprOAM_nz=%d bgVRAM_nz=%d fgVRAM_nz=%d spPal_nz=%d mainRAM_nz=%d\n",
-                    Pgm2RtcFrameCounter, sprNonZero, bgNonZero, fgNonZero, spPalNonZero, ramNonZero);
-                fprintf(flog, "[DIAG] videoRegs: %08X %08X %08X %08X %08X %08X %08X %08X\n",
-                    vr[0], vr[1], vr[2], vr[3], vr[4], vr[5], vr[6], vr[7]);
-                fprintf(flog, "[DIAG] videoRegs+: %08X %08X %08X %08X %08X %08X %08X %08X\n",
-                    vr[8], vr[9], vr[10], vr[11], vr[12], vr[13], vr[14], vr[15]);
-                fflush(flog); fclose(flog);
+            // Check sprite OAM for non-zero
+            INT32 sprNonZero = 0;
+            for (INT32 j = 0; j < 0x2000; j += 4) {
+                if (*(UINT32*)(Pgm2SpOAM + j) != 0) sprNonZero++;
             }
+            // Check BG VRAM for non-zero
+            INT32 bgNonZero = 0;
+            for (INT32 j = 0; j < 0x2000; j += 4) {
+                if (*(UINT32*)(Pgm2BgVRAM + j) != 0) bgNonZero++;
+            }
+            // Check FG VRAM for non-zero
+            INT32 fgNonZero = 0;
+            for (INT32 j = 0; j < 0x6000; j += 4) {
+                if (*(UINT32*)(Pgm2FgVRAM + j) != 0) fgNonZero++;
+            }
+            // Check sprite palette
+            INT32 spPalNonZero = 0;
+            for (INT32 j = 0; j < 0x4000; j += 4) {
+                if (*(UINT32*)((UINT8*)Pgm2SpPal + j) != 0) spPalNonZero++;
+            }
+            // Check main RAM usage
+            INT32 ramNonZero = 0;
+            for (INT32 j = 0; j < 0x80000; j += 4) {
+                if (*(UINT32*)(Pgm2ArmRAM + j) != 0) ramNonZero++;
+            }
+            // Video regs
+            UINT32 *vr = (UINT32*)Pgm2VideoRegs;
+            PGM2_LOG(PGM2_LOG_DIAG, "frame %d: sprOAM_nz=%d bgVRAM_nz=%d fgVRAM_nz=%d spPal_nz=%d mainRAM_nz=%d",
+                Pgm2RtcFrameCounter, sprNonZero, bgNonZero, fgNonZero, spPalNonZero, ramNonZero);
+            PGM2_LOG(PGM2_LOG_DIAG, "videoRegs: %08X %08X %08X %08X %08X %08X %08X %08X",
+                vr[0], vr[1], vr[2], vr[3], vr[4], vr[5], vr[6], vr[7]);
+            PGM2_LOG(PGM2_LOG_DIAG, "videoRegs+: %08X %08X %08X %08X %08X %08X %08X %08X",
+                vr[8], vr[9], vr[10], vr[11], vr[12], vr[13], vr[14], vr[15]);
         }
     }
 

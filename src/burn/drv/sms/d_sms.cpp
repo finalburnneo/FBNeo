@@ -24192,6 +24192,24 @@ struct BurnDriver BurnDrvsms_stalactites = {
 	256, 192, 4, 3
 };
 
+// Stella in Adventure World (GlobalHack)
+static struct BurnRomInfo sms_stellaRomDesc[] = {
+	{ "Stella in Adventure World (2024-25)(TSP).sms",	524288, 0x2efda49b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_stella)
+STD_ROM_FN(sms_stella)
+
+struct BurnDriver BurnDrvsms_stella = {
+	"sms_stella", NULL, NULL, NULL, "2024-25",
+	"Stella in Adventure World (GlobalHack)\0", NULL, "TSP", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_stellaRomInfo, sms_stellaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Stygian Quest (HB, v1.2)
 static struct BurnRomInfo sms_stygianquestRomDesc[] = {
 	{ "Stygian Quest v1.2 (2024)(Naarshakta).sms",	573440, 0xb6c9a3c5, BRF_PRG | BRF_ESS },

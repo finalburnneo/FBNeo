@@ -46734,6 +46734,25 @@ struct BurnDriver BurnDrvmd_quackshtpt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Linda Guerreira Sailor Moon (Hack, Portuguese)
+// https://www.romhacking.net/translations/5838/
+static struct BurnRomInfo md_sailormnptRomDesc[] = {
+	{ "Linda Guerreira Sailor Moon PT-BR (2020)(Anime_World).bin", 4194304, 0xcf90364b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sailormnpt)
+STD_ROM_FN(md_sailormnpt)
+
+struct BurnDriver BurnDrvmd_sailormnpt = {
+	"md_sailormnpt", "md_sailormn", NULL, NULL, "2020",
+	"Linda Guerreira Sailor Moon (Hack, Portuguese)\0", NULL, "Anime_World", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sailormnptRomInfo, md_sailormnptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining Force (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/shining-force-lobo-ff/
 static struct BurnRomInfo md_shinfrceptRomDesc[] = {

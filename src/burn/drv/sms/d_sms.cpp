@@ -21717,9 +21717,9 @@ struct BurnDriver BurnDrvsms_astforce = {
 	256, 192, 4, 3
 };
 
-// Atoms! (HB)
+// Atoms! (HB, v1.1)
 static struct BurnRomInfo sms_atomsRomDesc[] = {
-	{ "Atoms (2026)(The Gould Fish).sms",	180224, 0xaf761cd0, BRF_PRG | BRF_ESS },
+	{ "Atoms v1.1 (2026)(The Gould Fish).sms",	180224, 0x87d98e15, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_atoms)
@@ -21727,7 +21727,7 @@ STD_ROM_FN(sms_atoms)
 
 struct BurnDriver BurnDrvsms_atoms = {
 	"sms_atoms", NULL, NULL, NULL, "2026",
-	"Atoms! (HB)\0", NULL, "The Gould Fish", "Sega Master System",
+	"Atoms! (HB, v1.1)\0", NULL, "The Gould Fish", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BOARD | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_atomsRomInfo, sms_atomsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

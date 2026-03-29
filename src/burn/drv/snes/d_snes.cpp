@@ -10838,7 +10838,7 @@ struct BurnDriver BurnDrvsnes_Dragballzrpgte = {
 // Dragon Ball Z - A Lenda de Goku - Embate (Hack, Portuguese)
 // https://www.romhacking.net/translations/7297/
 static struct BurnRomInfo snes_DragballzrpgtpRomDesc[] = {
-	{ "Dragon Ball Z - A Lenda de Goku - Embate Hen PT-BR (2024)(Nathan).sfc", 2097152, 0x6e20d7eb, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball Z - A Lenda de Goku - Embate PT-BR (2024)(Nathan).sfc", 2097152, 0x6e20d7eb, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dragballzrpgtp)

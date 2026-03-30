@@ -16384,7 +16384,7 @@ struct BurnDriver BurnDrvnes_copjack = {
 // Contra Gender Swap (Hack)
 // https://www.romhacking.net/hacks/8989/
 static struct BurnRomInfo nes_contragsRomDesc[] = {
-	{ "Contra Gender Swap (2025)(tavuntu).nes",          262160, 0xf7fac010, BRF_ESS | BRF_PRG },
+	{ "Contra Gender Swap (2025)(tavuntu).nes",          262160, 0x94708583, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_contrags)
@@ -24274,6 +24274,25 @@ struct BurnDriver BurnDrvnes_superbatpun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_superbatpunRomInfo, nes_superbatpunRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super C Gender Swap (Hack)
+// https://www.romhacking.net/hacks/9529/
+static struct BurnRomInfo nes_supercgsRomDesc[] = {
+	{ "Super C Gender Swap (2026)(Tobi522 - tavuntu).nes",          262160, 0x5b2fda42, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_supercgs)
+STD_ROM_FN(nes_supercgs)
+
+struct BurnDriver BurnDrvnes_supercgs = {
+	"nes_supercgs", "nes_superc", NULL, NULL, "2026",
+	"Super C Gender Swap (Hack)\0", NULL, "Tobi522 - tavuntu", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_supercgsRomInfo, nes_supercgsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

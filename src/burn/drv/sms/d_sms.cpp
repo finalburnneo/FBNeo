@@ -21717,9 +21717,9 @@ struct BurnDriver BurnDrvsms_astforce = {
 	256, 192, 4, 3
 };
 
-// Atoms! (HB)
+// Atoms! (HB, v1.1)
 static struct BurnRomInfo sms_atomsRomDesc[] = {
-	{ "Atoms (2026)(The Gould Fish).sms",	180224, 0xaf761cd0, BRF_PRG | BRF_ESS },
+	{ "Atoms v1.1 (2026)(The Gould Fish).sms",	180224, 0x87d98e15, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_atoms)
@@ -21727,7 +21727,7 @@ STD_ROM_FN(sms_atoms)
 
 struct BurnDriver BurnDrvsms_atoms = {
 	"sms_atoms", NULL, NULL, NULL, "2026",
-	"Atoms! (HB)\0", NULL, "The Gould Fish", "Sega Master System",
+	"Atoms! (HB, v1.1)\0", NULL, "The Gould Fish", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BOARD | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_atomsRomInfo, sms_atomsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -24192,6 +24192,24 @@ struct BurnDriver BurnDrvsms_stalactites = {
 	256, 192, 4, 3
 };
 
+// Stella in Adventure World (GlobalHack)
+static struct BurnRomInfo sms_stellaRomDesc[] = {
+	{ "Stella in Adventure World (2024-25)(TSP).sms",	524288, 0x2efda49b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_stella)
+STD_ROM_FN(sms_stella)
+
+struct BurnDriver BurnDrvsms_stella = {
+	"sms_stella", NULL, NULL, NULL, "2024-25",
+	"Stella in Adventure World (GlobalHack)\0", NULL, "TSP", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_stellaRomInfo, sms_stellaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Stygian Quest (HB, v1.2)
 static struct BurnRomInfo sms_stygianquestRomDesc[] = {
 	{ "Stygian Quest v1.2 (2024)(Naarshakta).sms",	573440, 0xb6c9a3c5, BRF_PRG | BRF_ESS },
@@ -24282,9 +24300,9 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	256, 192, 4, 3
 };
 
-// Super Mario Bros. (HB, v0.10)
+// Super Mario Bros. (HB, v0.11)
 static struct BurnRomInfo sms_smbRomDesc[] = {
-	{ "Super Mario Bros. v0.10 (2026)(Lack of Track).sms",	262144, 0x5ca26ac5, BRF_PRG | BRF_ESS },
+	{ "Super Mario Bros. v0.11 (2026)(Lack of Track).sms",	262144, 0xf0cac76b, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_smb)
@@ -24292,7 +24310,7 @@ STD_ROM_FN(sms_smb)
 
 struct BurnDriver BurnDrvsms_smb = {
 	"sms_smb", NULL, NULL, NULL, "2026",
-	"Super Mario Bros. (HB, v0.10)\0", "Unofficial Port", "Lack of Track", "Sega Master System",
+	"Super Mario Bros. (HB, v0.11)\0", "Unofficial Port - only the first level is available", "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -44074,10 +44074,10 @@ struct BurnDriver BurnDrvsnes_Bofwofg = {
 	512, 448, 4, 3
 };
 
-// Bubsy: Less Bad Edition (Hack, v1.3)
+// Bubsy: Less Bad Edition (Hack, v2.11)
 // https://www.romhacking.net/hacks/9453/
 static struct BurnRomInfo snes_BubsylbeRomDesc[] = {
-	{ "Bubsy - Less Bad Edition v1.3 (2026)(NoPLo).sfc", 2097152, 0x72f7fc86, BRF_ESS | BRF_PRG },
+	{ "Bubsy - Less Bad Edition v2.11 (2026)(NoPLo).sfc", 2097152, 0x4837d7de, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Bubsylbe)
@@ -44085,7 +44085,7 @@ STD_ROM_FN(snes_Bubsylbe)
 
 struct BurnDriver BurnDrvsnes_Bubsylbe = {
 	"snes_bubsylbe", "snes_bubsy", NULL, NULL, "2026",
-	"Bubsy: Less Bad Edition (Hack, v1.3)\0", NULL, "NoPLo", "Nintendo",
+	"Bubsy: Less Bad Edition (Hack, v2.11)\0", NULL, "NoPLo", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BubsylbeRomInfo, snes_BubsylbeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

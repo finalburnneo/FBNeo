@@ -458,6 +458,8 @@ static m68705_interface maniach_m68705_interface = {
 
 static INT32 DrvInit(INT32 game)
 {
+	BurnSetRefreshRate((12000000.0 / 2.0) / (384.0 * 264.0));
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;

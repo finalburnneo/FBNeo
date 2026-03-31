@@ -1372,7 +1372,7 @@
                     }
                     else
                     /* ARMv5TE: Enhanced DSP multiply instructions */
-                    if ((insn & 0x0f900090) == 0x01000080)  /* SMLAxy / SMLAWy */
+                    if ((insn & 0x0ff00090) == 0x01000080)  /* SMLAxy */
                     {
                         UINT32 rm = insn & 0x0f;
                         UINT32 rs = (insn >> 8) & 0x0f;
@@ -1381,43 +1381,15 @@
                         INT32 rm_val = (INT32)GET_REGISTER(rm);
                         INT32 rs_val = (INT32)GET_REGISTER(rs);
                         INT32 rn_val = (INT32)GET_REGISTER(rn);
-                        INT64 result;
                         INT16 operand1, operand2;
 
-                        if (insn & 0x00200000) { /* SMLAWy */
-                            operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
-                            result = (INT64)rm_val * operand2;
-                            result = (result >> 16) + rn_val;
-                        } else { /* SMLAxy */
-                            operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
-                            operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
-                            result = (INT64)operand1 * operand2 + rn_val;
-                        }
+                        operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT64 result = (INT64)operand1 * operand2 + rn_val;
                         SET_REGISTER(rd, (UINT32)result);
                         R15 += 4;
                     }
-                    else if ((insn & 0x0f900090) == 0x01600080)  /* SMULxy */
-                    {
-                        UINT32 rm = insn & 0x0f;
-                        UINT32 rs = (insn >> 8) & 0x0f;
-                        UINT32 rd = (insn >> 16) & 0x0f;
-                        INT32 rm_val = (INT32)GET_REGISTER(rm);
-                        INT32 rs_val = (INT32)GET_REGISTER(rs);
-                        INT16 operand1, operand2;
-                        INT32 result;
-
-                        if (insn & 0x00200000) { /* SMULWy */
-                            operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
-                            result = (INT32)(((INT64)rm_val * operand2) >> 16);
-                        } else { /* SMULxy */
-                            operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
-                            operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
-                            result = (INT32)operand1 * operand2;
-                        }
-                        SET_REGISTER(rd, (UINT32)result);
-                        R15 += 4;
-                    }
-                    else if ((insn & 0x0f900090) == 0x01400080)  /* SMLALxy */
+                    else if ((insn & 0x0ff00090) == 0x01400080)  /* SMLALxy */
                     {
                         UINT32 rm = insn & 0x0f;
                         UINT32 rs = (insn >> 8) & 0x0f;
@@ -1429,6 +1401,53 @@
                         INT64 result = acc + (INT64)operand1 * operand2;
                         SET_REGISTER(rdlo, (UINT32)(result & 0xffffffff));
                         SET_REGISTER(rdhi, (UINT32)(result >> 32));
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff00090) == 0x01600080)  /* SMULxy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT16 operand1, operand2;
+                        INT32 result;
+
+                        operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        result = (INT32)operand1 * operand2;
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff000b0) == 0x012000a0)  /* SMULWy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT16 operand2;
+
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT32 result = (INT32)(((INT64)rm_val * operand2) >> 16);
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff000b0) == 0x01200080)  /* SMLAWy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rn = (insn >> 12) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT32 rn_val = (INT32)GET_REGISTER(rn);
+                        INT16 operand2;
+
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT64 result = (INT64)rm_val * operand2;
+                        result = (result >> 16) + rn_val;
+                        SET_REGISTER(rd, (UINT32)result);
                         R15 += 4;
                     }
                     else

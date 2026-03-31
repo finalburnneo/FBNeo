@@ -753,15 +753,17 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] = { 1500000 / 60, 1200000 / 60, 3000000 / 4 / 60 };
+	INT32 nInterleave = 264;
+	double dRefresh = (12000000.0 / 2.0) / (384.0 * 264.0); // ~59.185606 Hz
+	INT32 nCyclesTotal[3] = { (INT32)(1500000 / dRefresh), (INT32)(1200000 / dRefresh), (INT32)(3000000 / 4 / dRefresh) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 7) vblank = 0;
+		if (i == 128) vblank = 0;
+		if (i == 132) vblank = 1;
 		M6502Open(0);
 		CPU_RUN(0, M6502);
 		if (i == nInterleave-1) {

@@ -1,0 +1,19 @@
+main:
+  push:
+    - stages:
+        - name: build
+          image: ubuntu:latest
+          script:
+            - apt update && apt install -y mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 nasm make perl gcc g++ zip
+            - make mingwcc -j$(nproc) RELEASEBUILD=1
+            - make mingwcc64 -j$(nproc) RELEASEBUILD=1
+            - zip fbneo.zip fbneo.exe
+            - zip fbneo64.zip fbneo64.exe
+
+        - name: upload_release
+          image: cnbcool/attachments:latest
+          settings:
+            tag: release_test
+            attachments:
+              - fbneo.zip
+              - fbneo64.zip

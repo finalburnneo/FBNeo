@@ -36,7 +36,7 @@
 // ---------------------------------------------------------------------------
 // PGM2 Logging System
 // ---------------------------------------------------------------------------
-#define PGM2_LOG_ENABLED 1
+#define PGM2_LOG_ENABLED 0
 
 // Unified category logging macro
 #if PGM2_LOG_ENABLED

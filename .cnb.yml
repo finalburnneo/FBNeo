@@ -10,6 +10,12 @@ master:
             - zip fbneo.zip fbneo.exe
             - zip fbneo64.zip fbneo64.exe
 
+        - name: git release
+          type: git:release
+          options:
+            tag: release_test
+            description: 自动构建测试版本
+
         - name: upload_release
           image: cnbcool/attachments:latest
           settings:

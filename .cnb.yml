@@ -1,4 +1,4 @@
-main:
+master:
   push:
     - stages:
         - name: build

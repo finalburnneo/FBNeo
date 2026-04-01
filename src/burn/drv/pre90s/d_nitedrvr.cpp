@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "watchdog.h"
+#include "burn_gun.h" // for dial
 #include "samples.h"
 
 static UINT8 *AllMem;
@@ -102,10 +103,15 @@ STDDIPINFO(Nitedrvr)
 
 static INT32 nitedrvr_steering()
 {
-	UINT8 val = ProcessAnalog(Analog[0], 0, INPUT_DEADZONE, 0x00, 0xff);
+	UINT8 val = BurnTrackballRead(0);
 	INT32 delta = val - last_steering_val;
 
 	last_steering_val = val;
+
+	if (delta > 128)
+		delta -= 256;
+	else if (delta < -128)
+		delta += 256;
 
 	steering_buf += (delta / 2);
 
@@ -885,6 +891,8 @@ static INT32 DrvInit()
 	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
 	BurnSampleSetBuffered(M6502TotalCycles, 1008000);
 
+	BurnTrackballInit(1);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -897,6 +905,8 @@ static INT32 DrvExit()
 	M6502Exit();
 
 	BurnSampleExit();
+
+	BurnTrackballExit();
 
 	BurnFreeMemIndex();
 
@@ -1029,6 +1039,10 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2f[i] & 1) << i;
 		}
+
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, Analog[0], 0, 0, 0x3f);
+		BurnTrackballUpdate(0);
 	}
 	INT32 nInterleave = 128; // 256/2
 	INT32 nCyclesTotal[1] = { 1008000 / 57 };
@@ -1072,22 +1086,17 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029702;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 
 		M6502Scan(nAction);
 		BurnWatchdogScan(nAction);;
+
+		BurnTrackballScan();
 
 		SCAN_VAR(crash_en);
 		SCAN_VAR(crash_data_en);

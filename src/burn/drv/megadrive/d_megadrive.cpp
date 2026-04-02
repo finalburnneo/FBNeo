@@ -46718,7 +46718,7 @@ struct BurnDriver BurnDrvmd_pulsemanpt = {
 // Punisher, The (Hack, Portuguese)
 // https://www.romhacking.net/translations/1557/
 static struct BurnRomInfo md_punisherptRomDesc[] = {
-	{ "Punisher, The PT-BR (Euro)(1994)(Capcom).bin", 2097386, 0xb9483d26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Punisher, The PT-BR (2010)(Monkey's Traducoes).bin", 2097386, 0xb9483d26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_punisherpt)

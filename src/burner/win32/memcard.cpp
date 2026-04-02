@@ -2,10 +2,20 @@
 
 #include "burner.h"
 
+// PGM2 card slot variables (defined in pgm2_run.cpp)
+extern INT32 Pgm2MaxCardSlots;
+extern INT32 Pgm2ActiveCardSlot;
+extern bool  Pgm2CardInserted[4];
+extern INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize);
+
 static TCHAR szMemoryCardFile[MAX_PATH];
 
 int nMemoryCardStatus = 0;
 int nMemoryCardSize;
+
+// PGM2 per-slot state
+TCHAR szPgm2CardFile[4][MAX_PATH];
+int nPgm2CardStatus[4] = {0, 0, 0, 0};  // per-slot: bit0=file selected, bit1=inserted
 
 static int nMinVersion;
 static bool bMemCardFC1Format;
@@ -70,22 +80,41 @@ static int MemCardRead(TCHAR* szFilename, unsigned char* pData, int nSize)
 		fread(pData, 1, nChunkSize - 32, fp);		// Read the data
 	} else {
 
-		// MAME or old FB Alpha memory card file
-
-		unsigned char* pTemp = (unsigned char*)malloc(nSize >> 1);
-
-		memset(pData, 0, nSize);
+		// Check for raw binary card file (MAME PGM2 SLE4442 format: 264 or 256 bytes)
+		fseek(fp, 0, SEEK_END);
+		long nFileSize = ftell(fp);
 		fseek(fp, 0x00, SEEK_SET);
 
-		if (pTemp) {
-			fread(pTemp, 1, nSize >> 1, fp);
-
-			for (int i = 1; i < nSize; i += 2) {
-				pData[i] = pTemp[i >> 1];
+		if (nFileSize == 0x108 || nFileSize == 0x100) {
+			// Raw binary card: read directly
+			bMemCardFC1Format = false;
+			memset(pData, 0xFF, nSize);
+			int nReadSize = (nFileSize <= nSize) ? (int)nFileSize : nSize;
+			fread(pData, 1, nReadSize, fp);
+			// If only 256 bytes (main data), init protection/security to defaults
+			if (nFileSize == 0x100 && nSize >= 0x108) {
+				memset(pData + 0x100, 0xFF, 4);   // protection: all writable
+				pData[0x104] = 0x07;               // sec[0]: 3 auth attempts
+				pData[0x105] = 0xFF;               // sec[1]: default PSC
+				pData[0x106] = 0xFF;               // sec[2]: default PSC
+				pData[0x107] = 0xFF;               // sec[3]: default PSC
 			}
+		} else {
+			// MAME Neo Geo or old FB Alpha memory card file (half-size interleaved)
+			unsigned char* pTemp = (unsigned char*)malloc(nSize >> 1);
 
-			free(pTemp);
-			pTemp = NULL;
+			memset(pData, 0, nSize);
+
+			if (pTemp) {
+				fread(pTemp, 1, nSize >> 1, fp);
+
+				for (int i = 1; i < nSize; i += 2) {
+					pData[i] = pTemp[i >> 1];
+				}
+
+				free(pTemp);
+				pTemp = NULL;
+			}
 		}
 	}
 
@@ -101,7 +130,19 @@ static int MemCardWrite(TCHAR* szFilename, unsigned char* pData, int nSize)
 		return 1;
 	}
 
-	if (bMemCardFC1Format) {
+	// Check if filename ends with .bin — write raw binary (MAME-compatible)
+	bool bRawBin = false;
+	if (szFilename) {
+		int len = (int)_tcslen(szFilename);
+		if (len >= 4 && _tcsicmp(szFilename + len - 4, _T(".bin")) == 0) {
+			bRawBin = true;
+		}
+	}
+
+	if (bRawBin) {
+		// Raw binary format (MAME PGM2 compatible)
+		fwrite(pData, 1, nSize, fp);
+	} else if (bMemCardFC1Format) {
 
 		// FB Alpha memory card file
 
@@ -306,4 +347,213 @@ int	MemCardToggle()
 	}
 
 	return 1;
+}
+
+// PGM2-specific: capture current card data from driver
+static unsigned char* pCapturedCardData;
+static int nCapturedCardSize;
+
+static int __cdecl MemCardDoCapture(struct BurnArea* pba)
+{
+	if (pba->Data && pba->nLen > 0 && nCapturedCardSize == 0) {
+		pCapturedCardData = (unsigned char*)malloc(pba->nLen);
+		if (pCapturedCardData) {
+			memcpy(pCapturedCardData, pba->Data, pba->nLen);
+			nCapturedCardSize = pba->nLen;
+		}
+	}
+	return 0;
+}
+
+// PGM2-specific: auto-create a card file for the current game
+// Uses the game's blank card data loaded from .pg2 ROM
+int	MemCardCreatePGM2()
+{
+	TCHAR* gameName = BurnDrvGetText(DRV_NAME);
+	if (!gameName) return 1;
+
+	// Ensure directory exists
+	CreateDirectory(_T("config"), NULL);
+	CreateDirectory(_T("config\\memcards"), NULL);
+
+	// Use .bin (MAME-compatible raw binary format)
+	_stprintf(szMemoryCardFile, _T("config\\memcards\\%s_card.bin"), gameName);
+
+	// Always load fresh ROM template
+	unsigned char cardData[0x108];
+	int cardLen = pgm2GetCardRomTemplate(cardData, sizeof(cardData));
+	if (cardLen <= 0) return 1;
+
+	// Write raw binary
+	FILE* fp = _tfopen(szMemoryCardFile, _T("wb"));
+	if (!fp) return 1;
+	fwrite(cardData, 1, cardLen, fp);
+	fclose(fp);
+
+	nMemoryCardStatus = 1;
+	MenuEnableItems();
+
+	return 0;
+}
+
+// PGM2-specific: select a card file from the memcards directory
+int	MemCardSelectPGM2()
+{
+	TCHAR szFilter[1024];
+	TCHAR* pszTemp = szFilter;
+	int nRet;
+
+	pszTemp += _stprintf(pszTemp, FBALoadStringEx(hAppInst, IDS_DISK_ALL_CARD, true));
+	memcpy(pszTemp, _T(" (*.fc, *.bin)\0*.fc;*.bin\0\0"), 28 * sizeof(TCHAR));
+
+	MakeOfn();
+	ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_MEMCARD_SELECT, true);
+	ofn.lpstrFilter = szFilter;
+	ofn.lpstrInitialDir = _T("config\\memcards");
+
+	int bOldPause = bRunPause;
+	bRunPause = 1;
+	nRet = GetOpenFileName(&ofn);
+	bRunPause = bOldPause;
+
+	if (nRet == 0) return 1;
+
+	MemCardGetSize();
+	if (nMemoryCardSize <= 0) return 1;
+
+	nMemoryCardStatus = 1;
+	MenuEnableItems();
+
+	return 0;
+}
+
+// ---------------------------------------------------------------------------
+// PGM2 per-slot card operations
+// ---------------------------------------------------------------------------
+
+int MemCardCreatePGM2Slot(int slot)
+{
+	if (slot < 0 || slot >= 4) return 1;
+
+	TCHAR* gameName = BurnDrvGetText(DRV_NAME);
+	if (!gameName) return 1;
+
+	CreateDirectory(_T("config"), NULL);
+	CreateDirectory(_T("config\\memcards"), NULL);
+
+	// Use .bin (MAME-compatible raw binary format)
+	_stprintf(szPgm2CardFile[slot], _T("config\\memcards\\%s_card_p%d.bin"), gameName, slot + 1);
+
+	// Always load fresh ROM template — not the current in-memory card data
+	unsigned char cardData[0x108];
+	int cardLen = pgm2GetCardRomTemplate(cardData, sizeof(cardData));
+	if (cardLen <= 0) {
+		// Fallback: blank SLE4442 card
+		memset(cardData, 0xFF, sizeof(cardData));
+		cardData[0x104] = 0x07;
+		cardLen = 0x108;
+	}
+
+	// Write raw binary (MAME-compatible .bin format)
+	FILE* fp = _tfopen(szPgm2CardFile[slot], _T("wb"));
+	if (!fp) return 1;
+	fwrite(cardData, 1, cardLen, fp);
+	fclose(fp);
+
+	nPgm2CardStatus[slot] |= 1;
+	MenuEnableItems();
+	return 0;
+}
+
+int MemCardSelectPGM2Slot(int slot)
+{
+	if (slot < 0 || slot >= 4) return 1;
+
+	TCHAR szFilter[1024];
+	TCHAR* pszTemp = szFilter;
+
+	pszTemp += _stprintf(pszTemp, FBALoadStringEx(hAppInst, IDS_DISK_ALL_CARD, true));
+	memcpy(pszTemp, _T(" (*.fc, *.bin)\0*.fc;*.bin\0\0"), 28 * sizeof(TCHAR));
+
+	_tcscpy(szPgm2CardFile[slot], _T(""));
+	MakeOfn();
+	ofn.lpstrFile = szPgm2CardFile[slot];
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_MEMCARD_SELECT, true);
+	ofn.lpstrFilter = szFilter;
+	ofn.lpstrInitialDir = _T("config\\memcards");
+
+	int bOldPause = bRunPause;
+	bRunPause = 1;
+	int nRet = GetOpenFileName(&ofn);
+	bRunPause = bOldPause;
+
+	if (nRet == 0) return 1;
+
+	// Verify the file has valid size
+	Pgm2ActiveCardSlot = slot;
+	MemCardGetSize();
+	if (nMemoryCardSize <= 0) {
+		szPgm2CardFile[slot][0] = _T('\0');
+		return 1;
+	}
+
+	nPgm2CardStatus[slot] |= 1;
+	MenuEnableItems();
+	return 0;
+}
+
+static int __cdecl MemCardDoInsertSlot(struct BurnArea* pba)
+{
+	// Determine which slot this is for (stored in global)
+	int slot = Pgm2ActiveCardSlot;
+	if (slot < 0 || slot >= 4) return 1;
+
+	if (MemCardRead(szPgm2CardFile[slot], (unsigned char*)pba->Data, pba->nLen)) {
+		return 1;
+	}
+
+	nPgm2CardStatus[slot] |= 2;
+	MenuEnableItems();
+	return 0;
+}
+
+int MemCardInsertPGM2Slot(int slot)
+{
+	if (slot < 0 || slot >= 4) return 1;
+	if (!(nPgm2CardStatus[slot] & 1)) return 1;  // no file selected
+	if (nPgm2CardStatus[slot] & 2) return 1;      // already inserted
+
+	Pgm2ActiveCardSlot = slot;
+	BurnAcb = MemCardDoInsertSlot;
+	nMinVersion = 0;
+	BurnAreaScan(ACB_WRITE | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
+
+	return 0;
+}
+
+static int __cdecl MemCardDoEjectSlot(struct BurnArea* pba)
+{
+	int slot = Pgm2ActiveCardSlot;
+	if (slot < 0 || slot >= 4) return 1;
+
+	if (MemCardWrite(szPgm2CardFile[slot], (unsigned char*)pba->Data, pba->nLen) == 0) {
+		nPgm2CardStatus[slot] &= ~2;
+		MenuEnableItems();
+	}
+	return 0;
+}
+
+int MemCardEjectPGM2Slot(int slot)
+{
+	if (slot < 0 || slot >= 4) return 1;
+	if (!(nPgm2CardStatus[slot] & 1)) return 1;
+	if (!(nPgm2CardStatus[slot] & 2)) return 1;  // not inserted
+
+	Pgm2ActiveCardSlot = slot;
+	BurnAcb = MemCardDoEjectSlot;
+	nMinVersion = 0;
+	BurnAreaScan(ACB_READ | ACB_MEMCARD | ACB_MEMCARD_ACTION, &nMinVersion);
+
+	return 0;
 }

@@ -92,8 +92,16 @@ void pgm2SetSpeedhack(UINT32 addr, UINT32 pc1, UINT32 pc2 = 0, UINT32 pc3 = 0, U
 void pgm2EnableKov3Module(const UINT8 *key, const UINT8 *sum, UINT32 addrXor, UINT16 dataXor);
 void pgm2DisableKov3Module();
 void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex);
+void pgm2SetCardRomIndex(INT32 slot, INT32 index);
+void pgm2SetMaxCardSlots(INT32 count);
+INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize);
 void pgm2SetRamRomBoard(INT32 ramSize);
 void pgm2SetRefreshRate(double hz);
+
+// Per-slot card state (exported for memcard UI)
+extern INT32  Pgm2MaxCardSlots;
+extern INT32  Pgm2ActiveCardSlot;
+extern bool   Pgm2CardInserted[4];
 
 // pgm2_draw.cpp
 void pgm2InitDraw();

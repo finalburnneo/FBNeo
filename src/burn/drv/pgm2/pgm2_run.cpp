@@ -102,12 +102,16 @@ static INT32  Pgm2IntRomNeedRestore = 0;       // 1 = need to restore all patche
 static INT32  Pgm2ArmROMFileLen = 0;          // actual ROM file size (e.g. 0x800000)
 static INT32  Pgm2CardRomIndex = -1;
 static INT32  Pgm2SramRomIndex = 10;
+static INT32  Pgm2PerSlotCardIndex[4] = {-1, -1, -1, -1};
 static INT32  Pgm2CardLogCount = 0;
 
 static const INT32 PGM2_NUM_CARD_SLOTS = 4;
 static const INT32 PGM2_CARD_SIZE = 0x108;
 static const INT32 PGM2_CARD_DATA_SIZE = 0x100;
 static bool Pgm2CardAuthenticated[4] = {false, false, false, false};
+INT32  Pgm2MaxCardSlots = 0;
+INT32  Pgm2ActiveCardSlot = 0;
+bool   Pgm2CardInserted[4] = {false, false, false, false};
 
 // Speed hack variables
 static UINT32 Pgm2SpeedHackAddr = 0;
@@ -152,6 +156,31 @@ void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex)
 {
     Pgm2CardRomIndex = cardRomIndex;
     Pgm2SramRomIndex = sramRomIndex;
+}
+
+void pgm2SetCardRomIndex(INT32 slot, INT32 index)
+{
+    if (slot >= 0 && slot < 4) Pgm2PerSlotCardIndex[slot] = index;
+}
+
+void pgm2SetMaxCardSlots(INT32 count)
+{
+    Pgm2MaxCardSlots = count;
+}
+
+INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize)
+{
+    if (Pgm2CardRomIndex < 0 || !buffer || maxSize < PGM2_CARD_SIZE) return 0;
+    struct BurnRomInfo ri;
+    memset(&ri, 0, sizeof(ri));
+    if (BurnDrvGetRomInfo(&ri, Pgm2CardRomIndex) != 0 || ri.nLen <= 0) return 0;
+    memset(buffer, 0xFF, maxSize);
+    BurnLoadRom(buffer, Pgm2CardRomIndex, 1);
+    // Ensure security area defaults for short ROMs
+    if ((INT32)ri.nLen <= PGM2_CARD_DATA_SIZE) {
+        buffer[PGM2_CARD_DATA_SIZE + 4] = 0x07;  // sec[0] = 3 auth attempts
+    }
+    return PGM2_CARD_SIZE;
 }
 
 void pgm2SetSpeedhack(UINT32 addr, UINT32 pc1, UINT32 pc2, UINT32 pc3, UINT32 pc4)
@@ -299,7 +328,7 @@ static void pgm2ModuleRomW(UINT32 offset, UINT16 data)
 
 static inline bool pgm2CardPresent(UINT8 slot)
 {
-    return (slot & 3) < PGM2_NUM_CARD_SLOTS && Pgm2Cards[slot & 3] != NULL;
+    return (slot & 3) < PGM2_NUM_CARD_SLOTS && Pgm2Cards[slot & 3] != NULL && Pgm2CardInserted[slot & 3];
 }
 
 static inline UINT8 pgm2CardReadData(UINT8 slot, UINT32 offset)
@@ -1625,10 +1654,12 @@ INT32 pgm2Init()
     if (Pgm2ExtRAM) memset(Pgm2ExtRAM, 0, 0x10000);
 
     if (Pgm2CardRomIndex >= 0) {
+        if (Pgm2MaxCardSlots <= 0) Pgm2MaxCardSlots = 4; // default: 4 slots
         for (int i = 0; i < PGM2_NUM_CARD_SLOTS; i++) {
             Pgm2Cards[i] = (UINT8*)BurnMalloc(PGM2_CARD_SIZE);
             if (Pgm2Cards[i]) memset(Pgm2Cards[i], 0xff, PGM2_CARD_SIZE);
             Pgm2CardAuthenticated[i] = false;
+            Pgm2CardInserted[i] = false;  // cards start not-inserted; user must create/select+insert
         }
     }
 
@@ -1703,28 +1734,43 @@ INT32 pgm2Init()
     }
 
     if (Pgm2Cards[0] && Pgm2CardRomIndex >= 0) {
-        struct BurnRomInfo ri;
-        memset(&ri, 0, sizeof(ri));
-        if (BurnDrvGetRomInfo(&ri, Pgm2CardRomIndex) == 0 && ri.nLen == PGM2_CARD_SIZE) {
-            if (BurnLoadRom(Pgm2Cards[0], Pgm2CardRomIndex, 1) == 0) {
-                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: loaded default card rom index=%d len=%d"), Pgm2CardRomIndex, ri.nLen);
-                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: data[0..7]=%02X %02X %02X %02X %02X %02X %02X %02X"),
-                    Pgm2Cards[0][0], Pgm2Cards[0][1], Pgm2Cards[0][2], Pgm2Cards[0][3],
-                    Pgm2Cards[0][4], Pgm2Cards[0][5], Pgm2Cards[0][6], Pgm2Cards[0][7]);
-                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: prot=%02X %02X %02X %02X sec=%02X %02X %02X %02X"),
-                    Pgm2Cards[0][0x100], Pgm2Cards[0][0x101], Pgm2Cards[0][0x102], Pgm2Cards[0][0x103],
-                    Pgm2Cards[0][0x104], Pgm2Cards[0][0x105], Pgm2Cards[0][0x106], Pgm2Cards[0][0x107]);
+        // Load per-slot card ROMs first
+        for (int i = 0; i < PGM2_NUM_CARD_SLOTS; i++) {
+            if (Pgm2PerSlotCardIndex[i] >= 0) {
+                struct BurnRomInfo ri;
+                memset(&ri, 0, sizeof(ri));
+                if (BurnDrvGetRomInfo(&ri, Pgm2PerSlotCardIndex[i]) == 0 && ri.nLen == PGM2_CARD_SIZE) {
+                    if (BurnLoadRom(Pgm2Cards[i], Pgm2PerSlotCardIndex[i], 1) == 0) {
+                        PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: loaded slot %d from rom index=%d len=%d"), i, Pgm2PerSlotCardIndex[i], ri.nLen);
+                    }
+                }
+            }
+        }
+        // Load slot 0 template (if not already loaded per-slot)
+        if (Pgm2PerSlotCardIndex[0] < 0) {
+            struct BurnRomInfo ri;
+            memset(&ri, 0, sizeof(ri));
+            if (BurnDrvGetRomInfo(&ri, Pgm2CardRomIndex) == 0 && ri.nLen == PGM2_CARD_SIZE) {
+                if (BurnLoadRom(Pgm2Cards[0], Pgm2CardRomIndex, 1) == 0) {
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: loaded default card rom index=%d len=%d"), Pgm2CardRomIndex, ri.nLen);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: data[0..7]=%02X %02X %02X %02X %02X %02X %02X %02X"),
+                        Pgm2Cards[0][0], Pgm2Cards[0][1], Pgm2Cards[0][2], Pgm2Cards[0][3],
+                        Pgm2Cards[0][4], Pgm2Cards[0][5], Pgm2Cards[0][6], Pgm2Cards[0][7]);
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: prot=%02X %02X %02X %02X sec=%02X %02X %02X %02X"),
+                        Pgm2Cards[0][0x100], Pgm2Cards[0][0x101], Pgm2Cards[0][0x102], Pgm2Cards[0][0x103],
+                        Pgm2Cards[0][0x104], Pgm2Cards[0][0x105], Pgm2Cards[0][0x106], Pgm2Cards[0][0x107]);
+                } else {
+                    PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: default card rom index=%d not present, keeping blank card"), Pgm2CardRomIndex);
+                    Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
+                }
             } else {
-                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: default card rom index=%d not present, keeping blank card"), Pgm2CardRomIndex);
+                PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: no default card configured for rom index=%d riLen=%d, keeping blank card"), Pgm2CardRomIndex, ri.nLen);
                 Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
             }
-        } else {
-            PGM2_LOG(PGM2_LOG_CARD, _T("CARD init: no default card configured for rom index=%d riLen=%d, keeping blank card"), Pgm2CardRomIndex, ri.nLen);
-            Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
         }
-        // Copy slot 0 template to all other slots
+        // Copy slot 0 template only to slots that weren't loaded per-slot
         for (int i = 1; i < PGM2_NUM_CARD_SLOTS; i++) {
-            if (Pgm2Cards[i]) {
+            if (Pgm2PerSlotCardIndex[i] < 0 && Pgm2Cards[i]) {
                 memcpy(Pgm2Cards[i], Pgm2Cards[0], PGM2_CARD_SIZE);
             }
         }
@@ -1948,8 +1994,11 @@ INT32 pgm2Exit()
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
     Pgm2CardRomIndex = -1;
+    for (int i = 0; i < 4; i++) Pgm2PerSlotCardIndex[i] = -1;
     memset(Pgm2CardAuthenticated, 0, sizeof(Pgm2CardAuthenticated));
     Pgm2SramRomIndex = 10;
+    Pgm2MaxCardSlots = 0;
+    Pgm2ActiveCardSlot = 0;
 
     // Reset speed hack
     Pgm2SpeedHackAddr = 0;
@@ -2216,37 +2265,42 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
     }
 
     if ((nAction & ACB_MEMCARD) && Pgm2CardRomIndex >= 0) {
-        // Handle card insertion/ejection actions for slot 0 (menu compatibility)
+        INT32 slot = Pgm2ActiveCardSlot;
+        if (slot < 0 || slot >= PGM2_NUM_CARD_SLOTS) slot = 0;
+
+        // Handle card insertion/ejection actions for active slot
         if (nAction & ACB_MEMCARD_ACTION) {
             if (nAction & ACB_WRITE) {
-                if (!Pgm2Cards[0]) {
-                    Pgm2Cards[0] = (UINT8*)BurnMalloc(PGM2_CARD_SIZE);
+                if (!Pgm2Cards[slot]) {
+                    Pgm2Cards[slot] = (UINT8*)BurnMalloc(PGM2_CARD_SIZE);
                 }
-                Pgm2CardAuthenticated[0] = false;
+                Pgm2CardAuthenticated[slot] = false;
+                Pgm2CardInserted[slot] = true;  // mark card as present
             }
             if (nAction & ACB_READ) {
-                Pgm2CardAuthenticated[0] = false;
+                Pgm2CardAuthenticated[slot] = false;
+                Pgm2CardInserted[slot] = false;  // mark card as ejected
             }
         }
 
-        // Report slot 0 card area (for MemCardGetSize and menu operations)
+        // Report active slot card area (for MemCardGetSize and menu operations)
         memset(&ba, 0, sizeof(ba));
-        if (Pgm2Cards[0]) {
-            ba.Data = Pgm2Cards[0];
+        if (Pgm2Cards[slot]) {
+            ba.Data = Pgm2Cards[slot];
         }
         ba.nLen   = PGM2_CARD_SIZE;
         ba.szName = "PGM2 IC Card";
         BurnAcb(&ba);
 
         // Fix blank cards after insert
-        if ((nAction & ACB_MEMCARD_ACTION) && (nAction & ACB_WRITE) && Pgm2Cards[0]) {
+        if ((nAction & ACB_MEMCARD_ACTION) && (nAction & ACB_WRITE) && Pgm2Cards[slot]) {
             bool allZero = true;
             for (int i = 0; i < PGM2_CARD_SIZE; i++) {
-                if (Pgm2Cards[0][i] != 0) { allZero = false; break; }
+                if (Pgm2Cards[slot][i] != 0) { allZero = false; break; }
             }
             if (allZero) {
-                memset(Pgm2Cards[0], 0xFF, PGM2_CARD_SIZE);
-                Pgm2Cards[0][PGM2_CARD_DATA_SIZE + 4] = 0x07;
+                memset(Pgm2Cards[slot], 0xFF, PGM2_CARD_SIZE);
+                Pgm2Cards[slot][PGM2_CARD_DATA_SIZE + 4] = 0x07;
             }
         }
     }
@@ -2266,6 +2320,7 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
         SCAN_VAR(Pgm2McuIrq3);
         SCAN_VAR(Pgm2McuDoneCountdown);
         SCAN_VAR(Pgm2CardAuthenticated);
+        SCAN_VAR(Pgm2CardInserted);
 
         SCAN_VAR(Pgm2AicSmr);
         SCAN_VAR(Pgm2AicSvr);

@@ -185,7 +185,62 @@ static void kov3LoadRoms()
 
 static INT32 orleg2InitCommon()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(-1, 11);
+    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pPgm2InitCallback = orleg2LoadRoms;
+    pPgm2ResetCallback = NULL;
+    pPgm2ScanCallback = NULL;
+    return pgm2Init();
+}
+
+static INT32 orleg2CnInitCommon()
+{
+    pgm2SetStorageRomIndices(10, 14);
+    pgm2SetMaxCardSlots(4);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
+    pgm2SetCardRomIndex(2, 12);
+    pgm2SetCardRomIndex(3, 13);
+    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pPgm2InitCallback = orleg2LoadRoms;
+    pPgm2ResetCallback = NULL;
+    pPgm2ScanCallback = NULL;
+    return pgm2Init();
+}
+
+static INT32 orleg2HkInitCommon()
+{
+    pgm2SetStorageRomIndices(10, 14);
+    pgm2SetMaxCardSlots(4);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
+    pgm2SetCardRomIndex(2, 12);
+    pgm2SetCardRomIndex(3, 13);
+    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pPgm2InitCallback = orleg2LoadRoms;
+    pPgm2ResetCallback = NULL;
+    pPgm2ScanCallback = NULL;
+    return pgm2Init();
+}
+
+static INT32 orleg2JpInitCommon()
+{
+    pgm2SetStorageRomIndices(-1, 14);
+    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pPgm2InitCallback = orleg2LoadRoms;
+    pPgm2ResetCallback = NULL;
+    pPgm2ScanCallback = NULL;
+    return pgm2Init();
+}
+
+static INT32 orleg2TwInitCommon()
+{
+    pgm2SetStorageRomIndices(10, 14);
+    pgm2SetMaxCardSlots(4);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
+    pgm2SetCardRomIndex(2, 12);
+    pgm2SetCardRomIndex(3, 13);
     pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
@@ -195,7 +250,12 @@ static INT32 orleg2InitCommon()
 
 static INT32 kov2nlInitCommon()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(10, 14);
+    pgm2SetMaxCardSlots(4);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
+    pgm2SetCardRomIndex(2, 12);
+    pgm2SetCardRomIndex(3, 13);
     pgm2SetSpeedhack(0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
     pPgm2InitCallback = kov2nlLoadRoms;
     pPgm2ResetCallback = NULL;
@@ -214,7 +274,10 @@ static const UINT8 kov3_100_sum[8] = { 0x96, 0xf0, 0x91, 0xe1, 0xb3, 0xf1, 0xef,
 
 static INT32 kov3Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(10, 12);
+    pgm2SetMaxCardSlots(2);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_104_key, kov3_104_sum, 0x18ec71, 0xb89d);
     pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
@@ -225,7 +288,10 @@ static INT32 kov3Init()
 
 static INT32 kov3_102Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(10, 12);
+    pgm2SetMaxCardSlots(2);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_102_key, kov3_102_sum, 0x021d37, 0x81d0);
     pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
@@ -236,7 +302,10 @@ static INT32 kov3_102Init()
 
 static INT32 kov3_101Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(10, 12);
+    pgm2SetMaxCardSlots(2);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_101_key, kov3_101_sum, 0x000000, 0xffff);
     pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
@@ -247,7 +316,10 @@ static INT32 kov3_101Init()
 
 static INT32 kov3_100Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
+    pgm2SetStorageRomIndices(10, 12);
+    pgm2SetMaxCardSlots(2);
+    pgm2SetCardRomIndex(0, 10);
+    pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_100_key, kov3_100_sum, 0x3e8aa8, 0xc530);
     pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
@@ -411,6 +483,9 @@ static struct BurnRomInfo orleg2_104cnRomDesc[] = {
     { "ig-a_cgh.u26",          0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",            0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",            0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_104cn)
@@ -427,6 +502,9 @@ static struct BurnRomInfo orleg2_103cnRomDesc[] = {
     { "ig-a_cgl.u18",          0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",          0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",            0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",            0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -445,6 +523,9 @@ static struct BurnRomInfo orleg2_101cnRomDesc[] = {
     { "ig-a_cgh.u26",          0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",            0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",            0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_101cn)
@@ -461,6 +542,9 @@ static struct BurnRomInfo orleg2_104hkRomDesc[] = {
     { "ig-a_cgl.u18",   0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",   0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",     0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",     0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -479,6 +563,9 @@ static struct BurnRomInfo orleg2_103hkRomDesc[] = {
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_103hk)
@@ -495,6 +582,9 @@ static struct BurnRomInfo orleg2_101hkRomDesc[] = {
     { "ig-a_cgl.u18",    0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -513,6 +603,9 @@ static struct BurnRomInfo orleg2_104jpRomDesc[] = {
     { "ig-a_cgh.u26",   0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",     0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",     0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_104jp)
@@ -529,6 +622,9 @@ static struct BurnRomInfo orleg2_103jpRomDesc[] = {
     { "ig-a_cgl.u18",    0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -547,6 +643,9 @@ static struct BurnRomInfo orleg2_101jpRomDesc[] = {
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_101jp)
@@ -563,6 +662,9 @@ static struct BurnRomInfo orleg2_104twRomDesc[] = {
     { "ig-a_cgl.u18",    0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -581,6 +683,9 @@ static struct BurnRomInfo orleg2_103twRomDesc[] = {
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
 STD_ROM_PICK(orleg2_103tw)
@@ -597,6 +702,9 @@ static struct BurnRomInfo orleg2_101twRomDesc[] = {
     { "ig-a_cgl.u18",    0x2000000, 0x43501fa6, BRF_GRA },
     { "ig-a_cgh.u26",    0x2000000, 0x7051d020, BRF_GRA },
     { "ig-a_sp.u2",      0x1000000, 0x8250688c, BRF_SND },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
     { "xyj2_nvram",      0x0010000, 0xccccc71c, BRF_OPT },
 };
@@ -616,6 +724,9 @@ static struct BurnRomInfo kov2nlRomDesc[] = {
     { "ig-a3_cgh.u26",             0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",              0x2000000, 0x45cdf422, BRF_SND },
     { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",                0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl)
@@ -632,6 +743,9 @@ static struct BurnRomInfo kov2nl_301RomDesc[] = {
     { "ig-a3_cgl.u18",             0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",             0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",              0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
     { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",                0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -650,6 +764,9 @@ static struct BurnRomInfo kov2nl_300RomDesc[] = {
     { "ig-a3_cgh.u26",             0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",              0x2000000, 0x45cdf422, BRF_SND },
     { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_kov2nl_overseas_card.pg2", 0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",                0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_300)
@@ -666,6 +783,9 @@ static struct BurnRomInfo kov2nl_302cnRomDesc[] = {
     { "ig-a3_cgl.u18",         0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",         0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",          0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
     { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",            0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -684,6 +804,9 @@ static struct BurnRomInfo kov2nl_301cnRomDesc[] = {
     { "ig-a3_cgh.u26",         0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",          0x2000000, 0x45cdf422, BRF_SND },
     { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",            0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_301cn)
@@ -700,6 +823,9 @@ static struct BurnRomInfo kov2nl_300cnRomDesc[] = {
     { "ig-a3_cgl.u18",         0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",         0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",          0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
     { "blank_kov2nl_china_card.pg2", 0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",            0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -718,6 +844,9 @@ static struct BurnRomInfo kov2nl_302hkRomDesc[] = {
     { "ig-a3_cgh.u26",            0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",             0x2000000, 0x45cdf422, BRF_SND },
     { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",               0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_302hk)
@@ -734,6 +863,9 @@ static struct BurnRomInfo kov2nl_301hkRomDesc[] = {
     { "ig-a3_cgl.u18",            0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",            0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",             0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
     { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",               0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -752,6 +884,9 @@ static struct BurnRomInfo kov2nl_300hkRomDesc[] = {
     { "ig-a3_cgh.u26",            0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",             0x2000000, 0x45cdf422, BRF_SND },
     { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
+    { "blank_gsyx_hongkong.pg2",  0x0000108, 0x02842ae8, BRF_OPT },
     { "gsyx_nvram",               0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_300hk)
@@ -768,6 +903,9 @@ static struct BurnRomInfo kov2nl_302jpRomDesc[] = {
     { "ig-a3_cgl.u18",          0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -786,6 +924,9 @@ static struct BurnRomInfo kov2nl_301jpRomDesc[] = {
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_301jp)
@@ -802,6 +943,9 @@ static struct BurnRomInfo kov2nl_300jpRomDesc[] = {
     { "ig-a3_cgl.u18",          0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -820,6 +964,9 @@ static struct BurnRomInfo kov2nl_302twRomDesc[] = {
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_302tw)
@@ -837,6 +984,9 @@ static struct BurnRomInfo kov2nl_301twRomDesc[] = {
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
 STD_ROM_PICK(kov2nl_301tw)
@@ -853,6 +1003,9 @@ static struct BurnRomInfo kov2nl_300twRomDesc[] = {
     { "ig-a3_cgl.u18",          0x2000000, 0x8d923e1f, BRF_GRA },
     { "ig-a3_cgh.u26",          0x2000000, 0x5b6fbf3f, BRF_GRA },
     { "ig-a3_sp.u37",           0x2000000, 0x45cdf422, BRF_SND },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
+    { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "blank_gsyx_taiwan.pg2",  0x0000108, 0x1155f01f, BRF_OPT },
     { "gsyx_nvram",             0x0010000, 0x22400c16, BRF_OPT },
 };
@@ -872,6 +1025,7 @@ static struct BurnRomInfo kov3RomDesc[] = {
     { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
     { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
     { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3)
@@ -888,6 +1042,7 @@ static struct BurnRomInfo kov3_102RomDesc[] = {
     { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
     { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
     { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
@@ -906,6 +1061,7 @@ static struct BurnRomInfo kov3_101RomDesc[] = {
     { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
     { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
     { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3_101)
@@ -922,6 +1078,7 @@ static struct BurnRomInfo kov3_100RomDesc[] = {
     { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
     { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
     { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
     { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
@@ -1003,10 +1160,10 @@ struct BurnDriver BurnDrvorleg2_104cn = {
     "Xiyou Shi E Zhuan 2 (V104, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_104cnRomInfo, orleg2_104cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2CnInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1015,10 +1172,10 @@ struct BurnDriver BurnDrvorleg2_103cn = {
     "Xiyou Shi E Zhuan 2 (V103, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_103cnRomInfo, orleg2_103cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2CnInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1027,10 +1184,10 @@ struct BurnDriver BurnDrvorleg2_101cn = {
     "Xiyou Shi E Zhuan 2 (V101, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_101cnRomInfo, orleg2_101cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2CnInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1039,10 +1196,10 @@ struct BurnDriver BurnDrvorleg2_104hk = {
     "Oriental Legend 2 (V104, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_104hkRomInfo, orleg2_104hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2HkInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1051,10 +1208,10 @@ struct BurnDriver BurnDrvorleg2_103hk = {
     "Oriental Legend 2 (V103, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_103hkRomInfo, orleg2_103hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2HkInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1063,10 +1220,10 @@ struct BurnDriver BurnDrvorleg2_101hk = {
     "Oriental Legend 2 (V101, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_101hkRomInfo, orleg2_101hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2HkInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1075,10 +1232,10 @@ struct BurnDriver BurnDrvorleg2_104jp = {
     "Oriental Legend 2 (V104, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_104jpRomInfo, orleg2_104jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2JpInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1087,10 +1244,10 @@ struct BurnDriver BurnDrvorleg2_103jp = {
     "Oriental Legend 2 (V103, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_103jpRomInfo, orleg2_103jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2JpInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1099,10 +1256,10 @@ struct BurnDriver BurnDrvorleg2_101jp = {
     "Oriental Legend 2 (V101, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_101jpRomInfo, orleg2_101jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2JpInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1111,10 +1268,10 @@ struct BurnDriver BurnDrvorleg2_104tw = {
     "Oriental Legend 2 (V104, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_104twRomInfo, orleg2_104twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2TwInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1123,10 +1280,10 @@ struct BurnDriver BurnDrvorleg2_103tw = {
     "Oriental Legend 2 (V103, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_103twRomInfo, orleg2_103twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2TwInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1135,10 +1292,10 @@ struct BurnDriver BurnDrvorleg2_101tw = {
     "Oriental Legend 2 (V101, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, orleg2_101twRomInfo, orleg2_101twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+    orleg2TwInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
     NULL, 0x4000, 448, 224, 4, 3
 };
 
@@ -1147,7 +1304,7 @@ struct BurnDriver BurnDrvkov2nl = {
     "Knights of Valour 2 New Legend (V302, Overseas)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nlRomInfo, kov2nlRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1159,7 +1316,7 @@ struct BurnDriver BurnDrvkov2nl_301 = {
     "Knights of Valour 2 New Legend (V301, Overseas)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_301RomInfo, kov2nl_301RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1171,7 +1328,7 @@ struct BurnDriver BurnDrvkov2nl_300 = {
     "Knights of Valour 2 New Legend (V300, Overseas)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_300RomInfo, kov2nl_300RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1183,7 +1340,7 @@ struct BurnDriver BurnDrvkov2nl_302cn = {
     "Sanguo Zhan Ji 2 Gaishi Yingxiong (V302, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_302cnRomInfo, kov2nl_302cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1195,7 +1352,7 @@ struct BurnDriver BurnDrvkov2nl_301cn = {
     "Sanguo Zhan Ji 2 Gaishi Yingxiong (V301, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_301cnRomInfo, kov2nl_301cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1207,7 +1364,7 @@ struct BurnDriver BurnDrvkov2nl_300cn = {
     "Sanguo Zhan Ji 2 Gaishi Yingxiong (V300, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_300cnRomInfo, kov2nl_300cnRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1219,7 +1376,7 @@ struct BurnDriver BurnDrvkov2nl_302hk = {
     "Knights of Valour 2 New Legend (V302, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_302hkRomInfo, kov2nl_302hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1231,7 +1388,7 @@ struct BurnDriver BurnDrvkov2nl_301hk = {
     "Knights of Valour 2 New Legend (V301, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_301hkRomInfo, kov2nl_301hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1243,7 +1400,7 @@ struct BurnDriver BurnDrvkov2nl_300hk = {
     "Knights of Valour 2 New Legend (V300, Hong Kong)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_300hkRomInfo, kov2nl_300hkRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1255,7 +1412,7 @@ struct BurnDriver BurnDrvkov2nl_302jp = {
     "Knights of Valour 2 New Legend (V302, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_302jpRomInfo, kov2nl_302jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1267,7 +1424,7 @@ struct BurnDriver BurnDrvkov2nl_301jp = {
     "Knights of Valour 2 New Legend (V301, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_301jpRomInfo, kov2nl_301jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1279,7 +1436,7 @@ struct BurnDriver BurnDrvkov2nl_300jp = {
     "Knights of Valour 2 New Legend (V300, Japan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_300jpRomInfo, kov2nl_300jpRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1291,7 +1448,7 @@ struct BurnDriver BurnDrvkov2nl_302tw = {
     "Knights of Valour 2 New Legend (V302, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_302twRomInfo, kov2nl_302twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1303,7 +1460,7 @@ struct BurnDriver BurnDrvkov2nl_301tw = {
     "Knights of Valour 2 New Legend (V301, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_301twRomInfo, kov2nl_301twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1315,7 +1472,7 @@ struct BurnDriver BurnDrvkov2nl_300tw = {
     "Knights of Valour 2 New Legend (V300, Taiwan)\0", NULL,
     "IGS", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov2nl_300twRomInfo, kov2nl_300twRomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1327,7 +1484,7 @@ struct BurnDriver BurnDrvkov3 = {
     "Knights of Valour 3 (V104, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov3RomInfo, kov3RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov3Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1339,7 +1496,7 @@ struct BurnDriver BurnDrvkov3_102 = {
     "Knights of Valour 3 (V102, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov3_102RomInfo, kov3_102RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov3_102Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1351,7 +1508,7 @@ struct BurnDriver BurnDrvkov3_101 = {
     "Knights of Valour 3 (V101, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov3_101RomInfo, kov3_101RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov3_101Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
@@ -1363,7 +1520,7 @@ struct BurnDriver BurnDrvkov3_100 = {
     "Knights of Valour 3 (V100, China)\0", NULL,
     "IGS (Huatong license)", "PGM2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
     NULL, kov3_100RomInfo, kov3_100RomName, NULL, NULL, NULL, NULL,
     pgm2InputInfo, pgm2DIPInfo,
     kov3_100Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,

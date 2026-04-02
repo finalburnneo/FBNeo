@@ -567,6 +567,11 @@
 #define MENU_MEMCARD_INSERT					10022
 #define MENU_MEMCARD_EJECT 					10023
 #define MENU_MEMCARD_TOGGLE					10024
+
+// PGM2 per-slot card menu IDs: base + slot*4 + action (action: 0=Create, 1=Select, 2=Insert, 3=Eject)
+#define MENU_MEMCARD_PGM2_BASE				10040
+#define MENU_MEMCARD_PGM2_ID(slot, action)	(MENU_MEMCARD_PGM2_BASE + (slot) * 4 + (action))
+
 #define MENU_STATE_LOAD_DIALOG          	10030
 #define MENU_STATE_SAVE_DIALOG          	10031
 #define MENU_STATE_LOAD_SLOT            	10032

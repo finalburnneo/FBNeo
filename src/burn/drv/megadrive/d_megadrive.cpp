@@ -46715,6 +46715,25 @@ struct BurnDriver BurnDrvmd_pulsemanpt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Punisher, The (Hack, Portuguese v2.0)
+// https://www.romhacking.net/translations/1557/
+static struct BurnRomInfo md_punisherptRomDesc[] = {
+	{ "Punisher, The PT-BR v2.0 (Euro)(1994)(Capcom).bin", 2097386, 0xb9483d26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_punisherpt)
+STD_ROM_FN(md_punisherpt)
+
+struct BurnDriver BurnDrvmd_punisherpt = {
+	"md_punisherpt", "md_punisher", NULL, NULL, "2010",
+	"Punisher, The (Hack, Portuguese v2.0)\0", NULL, "Monkey's Traducoes", "Genesis / Mega Drive",
+	NULL, NULL, L"Monkey's Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_punisherptRomInfo, md_punisherptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // QuackShot Starring Donald Duck (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/quack-shot-starring-donald-duck-monkeys-traducoes/
 static struct BurnRomInfo md_quackshtptRomDesc[] = {

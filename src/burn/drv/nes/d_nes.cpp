@@ -7452,7 +7452,7 @@ struct BurnDriver BurnDrvnes_addamfampugsschuts = {
 // Addams Family, The (Hack, Portuguese)
 
 static struct BurnRomInfo nes_addamfamtpRomDesc[] = {
-	{ "Addams Family, The BR-PT (2001)(Kaji).nes",          262160, 0x3db484d4, BRF_ESS | BRF_PRG },
+	{ "Addams Family, The PT-BR (2001)(Kaji).nes",          262160, 0x3db484d4, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_addamfamtp)
@@ -7927,7 +7927,7 @@ struct BurnDriver BurnDrvnes_castlevaniac = {
 // Castlevania II: Simon's Quest (Hack, Portuguese)
 
 static struct BurnRomInfo nes_castliitpRomDesc[] = {
-	{ "Castlevania II - Simon's Quest BR-PT (2000)(Jackal).nes",          262160, 0x2b3f7cd5, BRF_ESS | BRF_PRG },
+	{ "Castlevania II - Simon's Quest PT-BR (2000)(Jackal).nes",          262160, 0x2b3f7cd5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_castliitp)
@@ -9048,7 +9048,7 @@ struct BurnDriver BurnDrvnes_grandmasterjc = {
 // Hokuto no Ken: O punho da estrela do norte (Hack, Portuguese)
 
 static struct BurnRomInfo nes_hokutonokentpRomDesc[] = {
-	{ "Hokuto no Ken BR-PT (2009)(Trans-Center).nes",          65552, 0x8eef5d74, BRF_ESS | BRF_PRG },
+	{ "Hokuto no Ken PT-BR (2009)(Trans-Center).nes",          65552, 0x8eef5d74, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_hokutonokentp)
@@ -9067,7 +9067,7 @@ struct BurnDriver BurnDrvnes_hokutonokentp = {
 // Hokuto no Ken 2: A lenda do salvador do fim do século (Hack, Portuguese)
 
 static struct BurnRomInfo nes_hokutonoken2tpRomDesc[] = {
-	{ "Hokuto no Ken 2 BR-PT (2009)(Trans-Center).nes",          131088, 0xaff39071, BRF_ESS | BRF_PRG },
+	{ "Hokuto no Ken 2 PT-BR (2009)(Trans-Center).nes",          131088, 0xaff39071, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_hokutonoken2tp)

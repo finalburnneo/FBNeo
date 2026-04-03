@@ -6483,6 +6483,24 @@ struct BurnDriver BurnDrvcv_ddash2 = {
 	272, 228, 4, 3
 };
 
+// Dig Dug (SGM) (HB)
+static struct BurnRomInfo cv_digdugsgmRomDesc[] = {
+    { "Dig Dug SGM (1982-2017)(Opcode Games).rom",	32768, 0x59d08879, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_digdugsgm, cv_digdugsgm, cv_coleco)
+STD_ROM_FN(cv_digdugsgm)
+
+struct BurnDriver BurnDrvcv_digdugsgm = {
+    "cv_digdugsgm", NULL, "cv_coleco", NULL, "1982-2017",
+    "Dig Dug (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Namcot", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_digdugsgmRomInfo, cv_digdugsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Digger (HB)
 static struct BurnRomInfo cv_diggerRomDesc[] = {
 	{ "Digger (2015)(CollectorVision).rom",	0x06000, 0x77088cab, BRF_PRG | BRF_ESS },
@@ -8821,6 +8839,24 @@ struct BurnDriver BurnDrvcv_pang = {
 	CVGetZipName, cv_pangRomInfo, cv_pangRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Parsec (HB)
+static struct BurnRomInfo cv_parsecRomDesc[] = {
+    { "Parsec (1982-2024)(CollectorVision).rom",	32768, 0x2eee537a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_parsec, cv_parsec, cv_coleco)
+STD_ROM_FN(cv_parsec)
+
+struct BurnDriver BurnDrvcv_parsec = {
+    "cv_parsec", NULL, "cv_coleco", NULL, "1982-2024",
+    "Parsec (HB)\0", "Published by CollectorVision Games", "Texas Instruments", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_parsecRomInfo, cv_parsecRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Peek-A-Boo Elmo (HB)

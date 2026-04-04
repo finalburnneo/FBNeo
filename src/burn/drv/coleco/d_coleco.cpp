@@ -6105,6 +6105,24 @@ struct BurnDriver BurnDrvcv_challenger = {
     272, 228, 4, 3
 };
 
+// Champion Ice Hockey (HB)
+static struct BurnRomInfo cv_cicehockeyRomDesc[] = {
+    { "Champion Ice Hockey (1985-20XX)(Team Pixelboy).rom",	32768, 0x76fa4fa1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_cicehockey, cv_cicehockey, cv_coleco)
+STD_ROM_FN(cv_cicehockey)
+
+struct BurnDriver BurnDrvcv_cicehockey = {
+    "cv_cicehockey", NULL, "cv_coleco", NULL, "1985-20XX",
+    "Champion Ice Hockey (HB)\0", NULL, "Team Pixelboy - Sega", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_cicehockeyRomInfo, cv_cicehockeyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Champion Pro Wrestling (HB)
 static struct BurnRomInfo cv_chprowresRomDesc[] = {
     { "Champion Pro Wrestling (2020)(Team Pixelboy).rom",	32768, 0x045c54d6, BRF_PRG | BRF_ESS },
@@ -6303,9 +6321,9 @@ struct BurnDriver BurnDrvcv_cracky = {
 	272, 228, 4, 3
 };
 
-// Crazy Chicky Junior (HB)
+// Crazy Chicky Junior (HB, v1.1)
 static struct BurnRomInfo cv_CrazychickyjrRomDesc[] = {
-	{ "Crazy Chicky Junior (2023)(8 bit Milli Games).rom", 32768, 0x1bdca585, BRF_ESS | BRF_PRG },
+	{ "Crazy Chicky Junior v1.1 (2023)(8 bit Milli Games).rom", 32768, 0x1bdca585, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(cv_Crazychickyjr, cv_Crazychickyjr, cv_coleco)
@@ -6313,7 +6331,7 @@ STD_ROM_FN(cv_Crazychickyjr)
 
 struct BurnDriver BurnDrvcv_Crazychickyjr = {
 	"cv_crazychickyjr", NULL, "cv_coleco", NULL, "2023",
-	"Crazy Chicky Junior (HB)\0", NULL, "8 bit Milli Games", "ColecoVision",
+	"Crazy Chicky Junior (HB, v1.1)\0", NULL, "8 bit Milli Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
 	CVGetZipName, cv_CrazychickyjrRomInfo, cv_CrazychickyjrRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -6877,6 +6895,24 @@ struct BurnDriver BurnDrvcv_flora = {
     CVGetZipName, cv_floraRomInfo, cv_floraRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
+};
+
+// Flux (HB)
+static struct BurnRomInfo cv_fluxRomDesc[] = {
+	{ "Flux (2026)(8 bit Milli Games).rom", 32768, 0x1cd587b9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_flux, cv_flux, cv_coleco)
+STD_ROM_FN(cv_flux)
+
+struct BurnDriver BurnDrvcv_flux = {
+	"cv_flux", NULL, "cv_coleco", NULL, "2026",
+	"Flux (HB)\0", NULL, "8 bit Milli Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+	CVGetZipName, cv_fluxRomInfo, cv_fluxRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
 };
 
 // Food Fight (HB)

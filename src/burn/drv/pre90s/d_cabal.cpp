@@ -1243,6 +1243,6 @@ struct BurnDriver BurnDrvCabalexsv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalexsvRomInfo, cabalexsvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	CabalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	CabalexsvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

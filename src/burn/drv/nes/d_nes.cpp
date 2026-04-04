@@ -19741,9 +19741,9 @@ struct BurnDriver BurnDrvnes_kirbyshlw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kitty (HB, v1.0.3)
+// Kitty (HB, v1.0.4)
 static struct BurnRomInfo nes_kittyRomDesc[] = {
-	{ "Kitty v1.0.3 (2024)(Mileco).nes",          524304, 0x86250822, BRF_ESS | BRF_PRG },
+	{ "Kitty v1.0.4 (2024)(Mileco).nes",          524304, 0x9bfd02df, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_kitty)
@@ -19751,7 +19751,7 @@ STD_ROM_FN(nes_kitty)
 
 struct BurnDriver BurnDrvnes_kitty = {
 	"nes_kitty", NULL, NULL, NULL, "2024",
-	"Kitty (HB, v1.0.3)\0", NULL, "Mileco", "NES / Famicom",
+	"Kitty (HB, v1.0.4)\0", NULL, "Mileco", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kittyRomInfo, nes_kittyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -19162,6 +19162,25 @@ struct BurnDriver BurnDrvnes_hurdles = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ignizol Combusts Literally Everything (HB)
+// https://captainpretzel.itch.io/ignizol-combusts-literally-everything
+static struct BurnRomInfo nes_ignizolRomDesc[] = {
+	{ "Ignizol Combusts Literally Everything (2026)(Captain Pretzel).nes",          40976, 0xae64a40f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ignizol)
+STD_ROM_FN(nes_ignizol)
+
+struct BurnDriver BurnDrvnes_ignizol = {
+	"nes_ignizol", NULL, NULL, NULL, "2026",
+	"Ignizol Combusts Literally Everything (HB, 1.0.0)\0", NULL, "Nintendo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ignizolRomInfo, nes_ignizolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Indivisible (HB)
 static struct BurnRomInfo nes_indivisibleRomDesc[] = {
 	{ "Indivisible (2017)(Lab Zero Games).nes",          262160, 0x9f304e88, BRF_ESS | BRF_PRG },

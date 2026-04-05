@@ -22665,9 +22665,9 @@ struct BurnDriver BurnDrvnes_projectblue = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Pteropus (HB, v2.1)
+// Pteropus (HB, v2.2)
 static struct BurnRomInfo nes_pteropusRomDesc[] = {
-	{ "Pteropus v2.1 (2025-26)(Retroplasmid).nes",          524304, 0x5905a4c1, BRF_ESS | BRF_PRG },
+	{ "Pteropus v2.2 (2025-26)(Retroplasmid).nes",          524304, 0xbe77ec1f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_pteropus)
@@ -22675,7 +22675,7 @@ STD_ROM_FN(nes_pteropus)
 
 struct BurnDriver BurnDrvnes_pteropus = {
 	"nes_pteropus", NULL, NULL, NULL, "2025-26",
-	"Pteropus (HB, v2.1)\0", "Zapper compatible game", "Retroplasmid", "NES / Famicom",
+	"Pteropus (HB, v2.2)\0", "Zapper compatible game", "Retroplasmid", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_pteropusRomInfo, nes_pteropusRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,

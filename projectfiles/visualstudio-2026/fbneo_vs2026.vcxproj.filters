@@ -3664,6 +3664,54 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_circus.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_musclem.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_r2dtank.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_champbas.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_equites.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_splndrbt.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\ad59mc07.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\alpha8201.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\hmcs40\hmcs40.cpp">
+      <Filter>cpus\hmcs40</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\74259.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\i8155.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\i8085\i8085.cpp">
+      <Filter>cpus\i8085</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_miconkit.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\beep.cpp">
+      <Filter>burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_wink.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -3929,6 +3977,12 @@
     </Filter>
     <Filter Include="burn\drv\snes">
       <UniqueIdentifier>{de563016-fc13-46ea-8db4-9281899087b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\hmcs40">
+      <UniqueIdentifier>{65a8b668-d26a-49cf-9326-8cf520b8ff07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\i8085">
+      <UniqueIdentifier>{e0ac366b-11fb-4430-938e-4f632743540c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

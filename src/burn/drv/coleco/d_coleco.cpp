@@ -5475,6 +5475,24 @@ struct BurnDriver BurnDrvcv_bankbuild = {
     272, 228, 4, 3
 };
 
+// BarnBuster (HB)
+static struct BurnRomInfo cv_barnbusterRomDesc[] = {
+    { "BarnBuster (2026)(DiRoccoVision).rom",	32768, 0x75a4713d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_barnbuster, cv_barnbuster, cv_coleco)
+STD_ROM_FN(cv_barnbuster)
+
+struct BurnDriver BurnDrvcv_barnbuster = {
+    "cv_barnbuster", NULL, "cv_coleco", NULL, "2026",
+    "BarnBuster (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_barnbusterRomInfo, cv_barnbusterRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Battle of Hoth (HB)
 static struct BurnRomInfo cv_bofhothRomDesc[] = {
     { "Battle of Hoth (2013)(Team Pixelboy).rom",	0x8000, 0xb2ef6386, BRF_PRG | BRF_ESS },
@@ -5561,6 +5579,24 @@ struct BurnDriver BurnDrvcv_bejeweled = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
     CVGetZipName, cv_bejeweledRomInfo, cv_bejeweledRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Big Catch (HB)
+static struct BurnRomInfo cv_bigcatchRomDesc[] = {
+    { "Big Catch (2026)(DiRoccoVision).rom",	32768, 0x9ea3a524, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_bigcatch, cv_bigcatch, cv_coleco)
+STD_ROM_FN(cv_bigcatch)
+
+struct BurnDriver BurnDrvcv_bigcatch = {
+    "cv_bigcatch", NULL, "cv_coleco", NULL, "2026",
+    "Big Catch (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_bigcatchRomInfo, cv_bigcatchRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
@@ -6933,6 +6969,24 @@ struct BurnDriver BurnDrvcv_eggerland = {
     272, 228, 4, 3
 };
 
+// Electronic Quarterback (HB)
+static struct BurnRomInfo cv_elecquartRomDesc[] = {
+    { "Electronic Quarterback (2026)(DiRoccoVision).rom",	32768, 0x722f7376, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_elecquart, cv_elecquart, cv_coleco)
+STD_ROM_FN(cv_elecquart)
+
+struct BurnDriver BurnDrvcv_elecquart = {
+    "cv_elecquart", NULL, "cv_coleco", NULL, "2026",
+    "Electronic Quarterback (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_elecquartRomInfo, cv_elecquartRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Elevator Action (HB)
 static struct BurnRomInfo cv_elevactionRomDesc[] = {
 	{ "Elevator Action (1985-2012)(CollectorVision).rom",	32768, 0x4bb8dc2a, BRF_PRG | BRF_ESS },
@@ -6967,6 +7021,60 @@ struct BurnDriver BurnDrvcv_elevactionsgm = {
 	CVGetZipName, cv_elevactionsgmRomInfo, cv_elevactionsgmRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Face to Face Football (HB)
+static struct BurnRomInfo cv_f2ffootballRomDesc[] = {
+    { "Face to Face Football (2026)(DiRoccoVision).rom",	32768, 0xf56f48f3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_f2ffootball, cv_f2ffootball, cv_coleco)
+STD_ROM_FN(cv_f2ffootball)
+
+struct BurnDriver BurnDrvcv_f2ffootball = {
+    "cv_f2ffootball", NULL, "cv_coleco", NULL, "2026",
+    "Face to Face Football (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_f2ffootballRomInfo, cv_f2ffootballRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Face to Face Hockey (HB)
+static struct BurnRomInfo cv_f2fhockeyRomDesc[] = {
+    { "Face to Face Hockey (2026)(DiRoccoVision).rom",	32768, 0xacd9d815, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_f2fhockey, cv_f2fhockey, cv_coleco)
+STD_ROM_FN(cv_f2fhockey)
+
+struct BurnDriver BurnDrvcv_f2fhockey = {
+    "cv_f2fhockey", NULL, "cv_coleco", NULL, "2026",
+    "Face to Face Hockey (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_f2fhockeyRomInfo, cv_f2fhockeyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Face to Face Soccer (HB)
+static struct BurnRomInfo cv_f2fsoccerRomDesc[] = {
+    { "Face to Face Soccer (2026)(DiRoccoVision).rom",	32768, 0xd7002128, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_f2fsoccer, cv_f2fsoccer, cv_coleco)
+STD_ROM_FN(cv_f2fsoccer)
+
+struct BurnDriver BurnDrvcv_f2fsoccer = {
+    "cv_f2fsoccer", NULL, "cv_coleco", NULL, "2026",
+    "Face to Face Soccer (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSFOOTBALL, 0,
+    CVGetZipName, cv_f2fsoccerRomInfo, cv_f2fsoccerRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Fairyland Story, The (SGM) (HB)
@@ -11105,6 +11213,24 @@ struct BurnDriver BurnDrvcv_trafcjam = {
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
     CVGetZipName, cv_trafcjamRomInfo, cv_trafcjamRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Trail Drive (HB)
+static struct BurnRomInfo cv_traildriveRomDesc[] = {
+    { "Trail Drive (2026)(DiRoccoVision).rom",	131072, 0x0a334c0e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_traildrive, cv_traildrive, cv_coleco)
+STD_ROM_FN(cv_traildrive)
+
+struct BurnDriver BurnDrvcv_traildrive = {
+    "cv_traildrive", NULL, "cv_coleco", NULL, "2026",
+    "Trail Drive (HB)\0", NULL, "DiRoccoVision", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
+    CVGetZipName, cv_traildriveRomInfo, cv_traildriveRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 

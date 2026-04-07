@@ -601,6 +601,18 @@
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_run.cpp">
       <Filter>burn\drv\pgm</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\d_pgm2.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_crypt.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_draw.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_run.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_1942.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
@@ -3711,6 +3723,9 @@
     <Filter Include="burn\drv\pgm">
       <UniqueIdentifier>{14559fe7-78ad-4e5d-9fde-0a27cfebe3f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="burn\drv\pgm2">
+      <UniqueIdentifier>{36f1cf44-cad2-4b2b-844a-6e8cafb6f8f1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="burn\drv\pre90s">
       <UniqueIdentifier>{1ee2e0f5-6bec-41dd-8b09-f110a36e0fbd}</UniqueIdentifier>
     </Filter>
@@ -3932,30 +3947,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <NASM Include="..\..\src\burn\burn_sound_a.asm">
+    <None Include="..\..\src\burn\burn_sound_a.asm">
       <Filter>burn</Filter>
-    </NASM>
+    </None>
     <None Include="..\..\src\intf\video\win32\resource\bicubic.fx">
       <Filter>interfaces\video\win32\resource</Filter>
     </None>
-    <NASM Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
+    <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
-    <NASM Include="..\..\src\intf\video\scalers\eagle_fm.asm">
+    </None>
+    <None Include="..\..\src\intf\video\scalers\eagle_fm.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
-    <NASM Include="..\..\src\intf\video\scalers\hq2x32.asm">
+    </None>
+    <None Include="..\..\src\intf\video\scalers\hq2x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
-    <NASM Include="..\..\src\intf\video\scalers\hq3x32.asm">
+    </None>
+    <None Include="..\..\src\intf\video\scalers\hq3x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
-    <NASM Include="..\..\src\intf\video\scalers\hq4x32.asm">
+    </None>
+    <None Include="..\..\src\intf\video\scalers\hq4x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
-    <NASM Include="..\..\src\intf\video\scalers\superscale.asm">
+    </None>
+    <None Include="..\..\src\intf\video\scalers\superscale.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </NASM>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">

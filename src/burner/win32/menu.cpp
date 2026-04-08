@@ -1571,15 +1571,103 @@ void MenuEnableItems()
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
 			EnableMenuItem(hMenu, MENU_INTERPOLATE_1,				MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_INTERPOLATE_3,				MF_GRAYED | MF_BYCOMMAND);
+		}
 
+		if (HasMemCard()) {
 			if (!kNetGame) {
-				EnableMenuItem(hMenu, MENU_MEMCARD_CREATE,			MF_ENABLED | MF_BYCOMMAND);
-				EnableMenuItem(hMenu, MENU_MEMCARD_SELECT,			MF_ENABLED | MF_BYCOMMAND);
-				if (nMemoryCardStatus & 1) {
-					if (nMemoryCardStatus & 2) {
-						EnableMenuItem(hMenu, MENU_MEMCARD_EJECT,	MF_ENABLED | MF_BYCOMMAND);
-					} else {
-						EnableMenuItem(hMenu, MENU_MEMCARD_INSERT,	MF_ENABLED | MF_BYCOMMAND);
+				if (IsPGM2WithCards()) {
+					// PGM2 per-slot: dynamically rebuild "Memory Card..." submenu
+					static HMENU hPgm2CardPopup = NULL;
+
+					// Find the Memory Card popup (first time or after menu reset)
+					if (!hPgm2CardPopup || !IsMenu(hPgm2CardPopup)) {
+						hPgm2CardPopup = NULL;
+						HMENU hGameMenu = GetSubMenu(hMenu, 0);
+						if (hGameMenu) {
+							int nItems = GetMenuItemCount(hGameMenu);
+							for (int i = 0; i < nItems && !hPgm2CardPopup; i++) {
+								HMENU hSub = GetSubMenu(hGameMenu, i);
+								if (!hSub) continue;
+								int nSubItems = GetMenuItemCount(hSub);
+								for (int j = 0; j < nSubItems; j++) {
+									UINT nID = GetMenuItemID(hSub, j);
+									if (nID == MENU_MEMCARD_CREATE || nID == MENU_MEMCARD_PGM2_ID(0, 0)) {
+										hPgm2CardPopup = hSub;
+										break;
+									}
+									// Check nested submenus
+									HMENU hSub2 = GetSubMenu(hSub, j);
+									if (hSub2) {
+										int nSub2Items = GetMenuItemCount(hSub2);
+										for (int k = 0; k < nSub2Items; k++) {
+											UINT nID2 = GetMenuItemID(hSub2, k);
+											if (nID2 == MENU_MEMCARD_CREATE || nID2 == MENU_MEMCARD_PGM2_ID(0, 0)) {
+												hPgm2CardPopup = hSub2;
+												break;
+											}
+										}
+									}
+									if (hPgm2CardPopup) break;
+								}
+							}
+						}
+					}
+
+					if (hPgm2CardPopup) {
+						// Clear existing items
+						while (GetMenuItemCount(hPgm2CardPopup) > 0) {
+							DeleteMenu(hPgm2CardPopup, 0, MF_BYPOSITION);
+						}
+
+						// Build per-player submenus
+						TCHAR szBuf[128];
+						for (int s = 0; s < Pgm2MaxCardSlots; s++) {
+							HMENU hSlotMenu = CreatePopupMenu();
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 0), _T("Create new card..."));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 1), _T("Select card file..."));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 2), _T("Insert card"));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 3), _T("Eject card"));
+
+							// Enable/disable based on per-slot state
+							if (nPgm2CardStatus[s] & 1) {
+								if (nPgm2CardStatus[s] & 2) {
+									// Inserted: gray Insert, enable Eject
+									EnableMenuItem(hSlotMenu, MENU_MEMCARD_PGM2_ID(s, 2), MF_GRAYED | MF_BYCOMMAND);
+								} else {
+									// File selected but not inserted: enable Insert, gray Eject
+									EnableMenuItem(hSlotMenu, MENU_MEMCARD_PGM2_ID(s, 3), MF_GRAYED | MF_BYCOMMAND);
+								}
+							} else {
+								// No file: gray both Insert and Eject
+								EnableMenuItem(hSlotMenu, MENU_MEMCARD_PGM2_ID(s, 2), MF_GRAYED | MF_BYCOMMAND);
+								EnableMenuItem(hSlotMenu, MENU_MEMCARD_PGM2_ID(s, 3), MF_GRAYED | MF_BYCOMMAND);
+							}
+
+							// Build menu title with card filename if available
+							if (nPgm2CardStatus[s] & 1) {
+								TCHAR* pFileName = _tcsrchr(szPgm2CardFile[s], _T('\\'));
+								if (!pFileName) pFileName = _tcsrchr(szPgm2CardFile[s], _T('/'));
+								if (pFileName) pFileName++; else pFileName = szPgm2CardFile[s];
+								if (nPgm2CardStatus[s] & 2) {
+									_stprintf(szBuf, _T("P%d Card [%s] *"), s + 1, pFileName);
+								} else {
+									_stprintf(szBuf, _T("P%d Card [%s]"), s + 1, pFileName);
+								}
+							} else {
+								_stprintf(szBuf, _T("P%d Card"), s + 1);
+							}
+							AppendMenu(hPgm2CardPopup, MF_POPUP, (UINT_PTR)hSlotMenu, szBuf);
+						}
+					}
+				} else {
+					EnableMenuItem(hMenu, MENU_MEMCARD_CREATE,			MF_ENABLED | MF_BYCOMMAND);
+					EnableMenuItem(hMenu, MENU_MEMCARD_SELECT,			MF_ENABLED | MF_BYCOMMAND);
+					if (nMemoryCardStatus & 1) {
+						if (nMemoryCardStatus & 2) {
+							EnableMenuItem(hMenu, MENU_MEMCARD_EJECT,	MF_ENABLED | MF_BYCOMMAND);
+						} else {
+							EnableMenuItem(hMenu, MENU_MEMCARD_INSERT,	MF_ENABLED | MF_BYCOMMAND);
+						}
 					}
 				}
 			}

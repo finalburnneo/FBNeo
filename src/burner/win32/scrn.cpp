@@ -1761,7 +1761,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 
 		case MENU_MEMCARD_CREATE:
-			if (bDrvOkay && UseDialogs() && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && UseDialogs() && !kNetGame && HasMemCard()) {
 				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 				AudBlankSound();
 				MemCardEject();
@@ -1771,7 +1771,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		case MENU_MEMCARD_SELECT:
-			if (bDrvOkay && UseDialogs() && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && UseDialogs() && !kNetGame && HasMemCard()) {
 				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 				AudBlankSound();
 				MemCardEject();
@@ -1781,19 +1781,53 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		case MENU_MEMCARD_INSERT:
-			if (!kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (!kNetGame && HasMemCard()) {
 				MemCardInsert();
 			}
 			break;
 		case MENU_MEMCARD_EJECT:
-			if (!kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (!kNetGame && HasMemCard()) {
 				MemCardEject();
 			}
 			break;
 
 		case MENU_MEMCARD_TOGGLE:
-			if (bDrvOkay && !kNetGame && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
+			if (bDrvOkay && !kNetGame && HasMemCard()) {
 				MemCardToggle();
+			}
+			break;
+
+		// PGM2 per-slot card operations (IDs 10040..10055)
+		default:
+			if (id >= MENU_MEMCARD_PGM2_BASE && id < MENU_MEMCARD_PGM2_BASE + 16) {
+				int slot = (id - MENU_MEMCARD_PGM2_BASE) / 4;
+				int action = (id - MENU_MEMCARD_PGM2_BASE) % 4;
+				if (bDrvOkay && !kNetGame && IsPGM2WithCards() && slot < Pgm2MaxCardSlots) {
+					switch (action) {
+					case 0: // Create
+						InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+						AudBlankSound();
+						MemCardEjectPGM2Slot(slot);
+						MemCardCreatePGM2Slot(slot);
+						MemCardInsertPGM2Slot(slot);
+						GameInpCheckMouse();
+						break;
+					case 1: // Select
+						InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+						AudBlankSound();
+						MemCardEjectPGM2Slot(slot);
+						MemCardSelectPGM2Slot(slot);
+						MemCardInsertPGM2Slot(slot);
+						GameInpCheckMouse();
+						break;
+					case 2: // Insert
+						MemCardInsertPGM2Slot(slot);
+						break;
+					case 3: // Eject
+						MemCardEjectPGM2Slot(slot);
+						break;
+					}
+				}
 			}
 			break;
 

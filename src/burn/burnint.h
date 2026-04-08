@@ -271,6 +271,7 @@ extern UINT8 DebugSnd_X1010Initted;
 extern UINT8 DebugSnd_YMZ280BInitted;
 
 extern UINT8 DebugCPU_ARM7Initted;
+extern UINT8 DebugCPU_ARM9Initted;
 extern UINT8 DebugCPU_ARMInitted;
 extern UINT8 DebugCPU_H6280Initted;
 extern UINT8 DebugCPU_HD6309Initted;

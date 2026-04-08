@@ -165,6 +165,7 @@ BEGIN
 	IDS_SEL_CPS3				"CPS-3"
 	IDS_SEL_NEOGEO				"Neo Geo"
 	IDS_SEL_PGM					"PGM"
+	IDS_SEL_PGM2				"PGM2"
 	IDS_SEL_PSIKYO				"Psikyo"
 	IDS_SEL_SEGA				"Sega Arcade"
 	IDS_SEL_TAITO				"Taito"

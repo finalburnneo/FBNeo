@@ -122,9 +122,9 @@ ARM7_INLINE UINT8 arm7_cpu_read8(UINT32 addr);
 
 /* Static Vars */
 // Note: for multi-cpu implementation, this approach won't work w/o modification
-void((*arm7_coproc_do_callback)(unsigned int, unsigned int));    // holder for the co processor Data Operations Callback func.
-unsigned int((*arm7_coproc_rt_r_callback)(unsigned int));   // holder for the co processor Register Transfer Read Callback func.
-void((*arm7_coproc_rt_w_callback)(unsigned int, unsigned int));  // holder for the co processor Register Transfer Write Callback Callback func.
+void (*arm7_coproc_do_callback)(unsigned int, unsigned int);    // holder for the co processor Data Operations Callback func.
+unsigned int (*arm7_coproc_rt_r_callback)(unsigned int);   // holder for the co processor Register Transfer Read Callback func.
+void (*arm7_coproc_rt_w_callback)(unsigned int, unsigned int);  // holder for the co processor Register Transfer Write Callback Callback func.
 // holder for the co processor Data Transfer Read & Write Callback funcs
 void (*arm7_coproc_dt_r_callback)(UINT32 insn, UINT32 *prn, UINT32 (*read32)(UINT32 addr));
 void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32 *prn, void (*write32)(UINT32 addr, UINT32 data));
@@ -307,6 +307,23 @@ ARM7_INLINE void SwitchMode(int cpsr_mode_val)
 }
 
 
+ARM7_INLINE UINT32 BranchLoadPC(UINT32 addr)
+{
+#if ARM9_MODE
+    if (addr & 1)
+    {
+        SET_CPSR(GET_CPSR | T_MASK);
+        return addr & ~1;
+    }
+
+    SET_CPSR(GET_CPSR & ~T_MASK);
+    return addr & ~3;
+#else
+    return addr;
+#endif
+}
+
+
 /* Decodes an Op2-style shifted-register form.  If @carry@ is non-zero the
  * shifter carry output will manifest itself as @*carry == 0@ for carry clear
  * and @*carry != 0@ for carry set.
@@ -350,11 +367,10 @@ static UINT32 decodeShift(UINT32 insn, UINT32 *pCarry)
         // Keep only the bottom 8 bits for a Register Shift
         k = GET_REGISTER(k >> 1) & 0xff;
 
-        if (k == 0) /* Register shift by 0 is a no-op */
+        if (k == 0) /* Register shift by 0 is a no-op for all shift types */
         {
 //          LOG(("%08x:  NO-OP Regshift\n", R15));
-            /* TODO this is wrong for at least ROR by reg with lower
-             *      5 bits 0 but lower 8 bits non zero */
+            /* k[7:0]==0: result = Rm, carry = old C (correct per ARM ARM) */
             if (pCarry)
                 *pCarry = GET_CPSR & C_MASK;
             return rm;
@@ -425,8 +441,14 @@ static UINT32 decodeShift(UINT32 insn, UINT32 *pCarry)
     case 3:                     /* ROR and RRX */
         if (k)
         {
-            while (k > 32)
-                k -= 32;
+            k &= 0x1fu;  /* ROR amount mod 32; ROR(x,0) = identity */
+            if (k == 0)
+            {
+                /* k was a non-zero multiple of 32: result = rm, carry = bit 31 */
+                if (pCarry)
+                    *pCarry = rm & SIGN_BIT;
+                return rm;
+            }
             if (pCarry)
                 *pCarry = rm & (1 << (k - 1));
             return ROR(rm, k);
@@ -449,6 +471,7 @@ static UINT32 decodeShift(UINT32 insn, UINT32 *pCarry)
 static int loadInc(UINT32 pat, UINT32 rbv, UINT32 s)
 {
     int i, result;
+    UINT32 value;
 
     result = 0;
     rbv &= ~3;
@@ -457,10 +480,11 @@ static int loadInc(UINT32 pat, UINT32 rbv, UINT32 s)
         if ((pat >> i) & 1)
         {
             if (i == 15) {
+                value = READ32(rbv += 4);
                 if (s) /* Pull full contents from stack */
-                    SET_REGISTER(15, READ32(rbv += 4));
+                    SET_REGISTER(15, value);
                 else /* Pull only address, preserve mode & status flags */
-                    SET_REGISTER(15, READ32(rbv += 4));
+                    SET_REGISTER(15, BranchLoadPC(value));
             } else
                 SET_REGISTER(i, READ32(rbv += 4));
 
@@ -473,6 +497,7 @@ static int loadInc(UINT32 pat, UINT32 rbv, UINT32 s)
 static int loadDec(UINT32 pat, UINT32 rbv, UINT32 s)
 {
     int i, result;
+    UINT32 value;
 
     result = 0;
     rbv &= ~3;
@@ -481,10 +506,11 @@ static int loadDec(UINT32 pat, UINT32 rbv, UINT32 s)
         if ((pat >> i) & 1)
         {
             if (i == 15) {
+                value = READ32(rbv -= 4);
                 if (s) /* Pull full contents from stack */
-                    SET_REGISTER(15, READ32(rbv -= 4));
+                    SET_REGISTER(15, value);
                 else /* Pull only address, preserve mode & status flags */
-                    SET_REGISTER(15, READ32(rbv -= 4));
+                    SET_REGISTER(15, BranchLoadPC(value));
             }
             else
                 SET_REGISTER(i, READ32(rbv -= 4));
@@ -726,15 +752,29 @@ static void HandleCoProcRT(UINT32 insn)
             SET_REGISTER((insn >> 12) & 0xf, res);
         }
         else
-            LOG(("%08x: Co-Processor Register Transfer executed, but no RT Read callback defined!\n", R15));
+        {
+            /* ARM9 default CP15 handling (no external callback needed for basic operation) */
+            UINT32 cp_num = (insn >> 8) & 0xf;
+            if (cp_num == 15) /* CP15 system control */
+            {
+                UINT32 crn = (insn >> 16) & 0xf;
+                UINT32 op1 = (insn >> 21) & 7;
+                UINT32 crm = insn & 0xf;
+                if (crn == 0 && op1 == 0 && crm == 0) /* CPU ID register */
+                    SET_REGISTER((insn >> 12) & 0xf, 0x41069265); /* ARM946E-S */
+                else
+                    SET_REGISTER((insn >> 12) & 0xf, 0);
+            }
+            else
+                LOG(("%08x: Co-Processor Register Transfer executed, but no RT Read callback defined!\n", R15));
+        }
     }
     // Store (MCR) data from ARM7 to Co-Proc register
     else
     {
-        if (arm7_coproc_rt_r_callback)
-         ; //  arm7_coproc_rt_w_callback(insn, GET_REGISTER((insn >> 12) & 0xf), 0);
-        else
-            LOG(("%08x: Co-Processor Register Transfer executed, but no RT Write callback defined!\n", R15));
+        if (arm7_coproc_rt_w_callback)
+            arm7_coproc_rt_w_callback(insn, GET_REGISTER((insn >> 12) & 0xf));
+        /* else: ARM9 CP15 writes (cache control etc) are safely ignored in stub mode */
     }
 }
 
@@ -892,7 +932,7 @@ static void HandleMemSingle(UINT32 insn)
         {
             if (rd == eR15)
             {
-                R15 = READ32(rnv);
+                R15 = BranchLoadPC(READ32(rnv));
                 R15 -= 4;
            //     change_pc(R15);
                 // LDR, PC takes 2S + 2N + 1I (5 total cycles)
@@ -1024,6 +1064,42 @@ static void HandleHalfWordDT(UINT32 insn)
 
     /* Do the transfer */
     rd = (insn & INSN_RD) >> INSN_RD_SHIFT;
+
+
+#if ARM9_MODE
+    /* ARMv5TE: LDRD (L=0 SH=10) / STRD (L=0 SH=11) -- doubleword load/store
+       These reuse the previously-undefined L=0 SH!=01 encoding space. */
+    if (!(insn & INSN_SDT_L)) {
+        UINT32 sh = (insn >> 5) & 3;
+        if (sh == 2) {
+            /* LDRD Rd, [Rn, #off] -- load 64 bits into Rd and Rd+1 */
+            SET_REGISTER(rd,     READ32(rnv));
+            SET_REGISTER(rd + 1, READ32(rnv + 4));
+            R15 += 4;
+            /* Post-indexed writeback */
+            if (!(insn & INSN_SDT_P)) {
+                if (insn & INSN_SDT_U)
+                    SET_REGISTER(rn, GET_REGISTER(rn) + off);
+                else
+                    SET_REGISTER(rn, GET_REGISTER(rn) - off);
+            }
+            return;
+        } else if (sh == 3) {
+            /* STRD Rd, [Rn, #off] -- store Rd and Rd+1 as 64 bits */
+            WRITE32(rnv,     GET_REGISTER(rd));
+            WRITE32(rnv + 4, GET_REGISTER(rd + 1));
+            R15 += 4;
+            if (!(insn & INSN_SDT_P)) {
+                if (insn & INSN_SDT_U)
+                    SET_REGISTER(rn, GET_REGISTER(rn) + off);
+                else
+                    SET_REGISTER(rn, GET_REGISTER(rn) - off);
+            }
+            return;
+        }
+        /* sh == 1: STRH -- fall through to existing code */
+    }
+#endif
 
     /* Load */
     if (insn & INSN_SDT_L)

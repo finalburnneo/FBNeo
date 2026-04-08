@@ -43,6 +43,10 @@
 {
     UINT32 pc;
     UINT32 insn;
+    /* ARM9_MODE is defined by the including file (arm9.cpp sets it to 1, arm7.cpp to 0) */
+#ifndef ARM9_MODE
+#define ARM9_MODE 0
+#endif
 
     ARM7_ICOUNT = cycles;
     curr_cycles = cycles;
@@ -629,7 +633,7 @@
                                 case 0x3:
                                     switch ((insn & THUMB_HIREG_H) >> THUMB_HIREG_H_SHIFT)
                                     {
-                                        case 0x0:
+                                        case 0x0: /* BX Rs */
                                             rd = (insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT;
                                             addr = GET_REGISTER(rd);
                                             if (addr & 1)
@@ -646,12 +650,51 @@
                                             }
                                             R15 = addr;
                                             break;
-                                        case 0x1:
+                                        case 0x1: /* BX Hs */
                                             addr = GET_REGISTER(((insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT) + 8);
                                             if ((((insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT) + 8) == 15)
                                             {
                                                 addr += 2;
                                             }
+                                            if (addr & 1)
+                                            {
+                                                addr &= ~1;
+                                            }
+                                            else
+                                            {
+                                                SET_CPSR(GET_CPSR & ~T_MASK);
+                                                if (addr & 2)
+                                                {
+                                                    addr += 2;
+                                                }
+                                            }
+                                            R15 = addr;
+                                            break;
+                                        case 0x2: /* BLX Rs (ARMv5T) */
+                                            rd = (insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT;
+                                            addr = GET_REGISTER(rd);
+                                            SET_REGISTER(14, (R15 + 2) | 1);
+                                            if (addr & 1)
+                                            {
+                                                addr &= ~1;
+                                            }
+                                            else
+                                            {
+                                                SET_CPSR(GET_CPSR & ~T_MASK);
+                                                if (addr & 2)
+                                                {
+                                                    addr += 2;
+                                                }
+                                            }
+                                            R15 = addr;
+                                            break;
+                                        case 0x3: /* BLX Hs (ARMv5T) */
+                                            addr = GET_REGISTER(((insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT) + 8);
+                                            if ((((insn & THUMB_HIREG_RS) >> THUMB_HIREG_RS_SHIFT) + 8) == 15)
+                                            {
+                                                addr += 2;
+                                            }
+                                            SET_REGISTER(14, (R15 + 2) | 1);
                                             if (addr & 1)
                                             {
                                                 addr &= ~1;
@@ -916,8 +959,16 @@
                                     SET_REGISTER(13, GET_REGISTER(13) + 4);
                                 }
                             }
-                            R15 = READ32(GET_REGISTER(13)) & ~1;
-                            SET_REGISTER(13, GET_REGISTER(13) + 4);
+                            {
+                                UINT32 val = READ32(GET_REGISTER(13));
+                                SET_REGISTER(13, GET_REGISTER(13) + 4);
+                                R15 = val & ~1;
+#if ARM9_MODE
+                                /* ARMv5TE interworking: switch to ARM if bit 0 clear */
+                                if (!(val & 1))
+                                    SET_CPSR(GET_CPSR & ~T_MASK);
+#endif
+                            }
                             break;
                         default:
                             fatalerror("%08x: Gb Undefined Thumb instruction: %04x\n", pc, insn);
@@ -1118,14 +1169,16 @@
                             break;
                     }
                     break;
-                case 0xe: /* B #offs */
+                case 0xe: /* B #offs or BLX (long branch low half) */
                     if (insn & THUMB_BLOP_LO)
                     {
+                        /* BLX long branch low half - switch to ARM mode */
                         addr = GET_REGISTER(14);
                         addr += (insn & THUMB_BLOP_OFFS) << 1;
                         addr &= 0xfffffffc;
-                        SET_REGISTER(14, (R15 + 4) | 1);
+                        SET_REGISTER(14, (R15 + 2) | 1);
                         R15 = addr;
+                        SET_CPSR(GET_CPSR & ~T_MASK);
                     }
                     else
                     {
@@ -1170,6 +1223,21 @@
             /* load 32 bit instruction */
             pc = R15;
             insn = cpu_readop32(pc);
+
+#if ARM9_MODE
+            /* ARMv5TE: BLX (immediate) uses condition field = 0xF (NV space re-used)
+               Encoding: 1111 101H offset_24  -- unconditional branch with link, switch to THUMB */
+            if ((insn >> 28) == 0xf && ((insn >> 25) & 7) == 5)
+            {
+                INT32 offset = ((insn & 0x00ffffff) << 2) | ((insn >> 24) & 1) << 1;
+                if (offset & 0x02000000) offset |= 0xfc000000; /* sign extend 26-bit */
+                SET_REGISTER(14, R15 + 4);
+                R15 = (R15 + 8 + offset) & ~1;
+                SET_CPSR(GET_CPSR | T_MASK); /* switch to THUMB */
+                ARM7_ICOUNT -= 3;
+                goto L_EndInstruction;
+            }
+#endif
 
             /* process condition codes for this instruction */
             switch (insn >> INSN_COND_SHIFT)
@@ -1231,7 +1299,23 @@
                   goto L_Next;
                 break;
             case COND_NV:
+#if ARM9_MODE
+                /* ARMv5: condition 0xF encodes unconditional instructions */
+                /* BLX (immediate): 1111 101H offset_24 */
+                if ((insn & 0x0E000000) == 0x0A000000) {
+                    /* H bit (bit 24) adds 2 to target for Thumb halfword alignment */
+                    INT32 off = (INT32)(insn << 8) >> 6;  /* sign-extend 24-bit offset, x4 */
+                    if (insn & 0x01000000) off |= 2;      /* H bit */
+                    SET_REGISTER(14, (R15 + 4));           /* LR = return address */
+                    R15 = (R15 + 8 + off);                 /* target = PC+8+offset */
+                    SET_CPSR(GET_CPSR | T_MASK);           /* switch to Thumb mode */
+                } else {
+                    /* PLD, CDP2, MCR2, MRC2, STC2, LDC2: treat as NOP */
+                }
                 goto L_Next;
+#else
+                goto L_Next;
+#endif
             }
             /*******************************************************************/
             /* If we got here - condition satisfied, so decode the instruction */
@@ -1242,6 +1326,173 @@
                 case 1:
                 case 2:
                 case 3:
+#if ARM9_MODE
+                    /* ARMv5TE: BLX Rm - Branch with Link and Exchange (register) */
+                    /* Encoding: cond 0001 0010 1111 1111 1111 0011 Rm */
+                    if ((insn & 0x0ffffff0) == 0x012fff30)
+                    {
+                        UINT32 rm_val = GET_REGISTER(insn & 0x0f);
+                        /* LR = addr of next instruction (PC+4, no thumb adjustment) */
+                        SET_REGISTER(14, (R15 + 4) & ~1);
+                        /* Switch to THUMB if bit 0 of Rm is set */
+                        if (rm_val & 1) {
+                            SET_CPSR(GET_CPSR | T_MASK);
+                            R15 = rm_val & ~1;
+                        } else {
+                            SET_CPSR(GET_CPSR & ~T_MASK);
+                            R15 = rm_val & ~3;
+                        }
+                    }
+                    /* ARMv5TE: CLZ Rd, Rm - Count Leading Zeros */
+                    /* Encoding: cond 0001 0110 1111 Rd 1111 0001 Rm */
+                    else if ((insn & 0x0fff0ff0) == 0x016f0f10)
+                    {
+                        UINT32 rm_val = GET_REGISTER(insn & 0x0f);
+                        UINT32 rd = (insn >> 12) & 0x0f;
+                        UINT32 count = 0;
+                        if (rm_val == 0) {
+                            count = 32;
+                        } else {
+                            while ((rm_val & 0x80000000) == 0) { count++; rm_val <<= 1; }
+                        }
+                        SET_REGISTER(rd, count);
+                        R15 += 4;
+                    }
+                    /* Branch and Exchange (BX) */
+                    else if ((insn & 0x0ffffff0) == 0x012fff10)
+                    {
+                        UINT32 rm_val = GET_REGISTER(insn & 0x0f);
+                        if (rm_val & 1) {
+                            SET_CPSR(GET_CPSR | T_MASK);
+                            R15 = rm_val & ~1;
+                        } else {
+                            SET_CPSR(GET_CPSR & ~T_MASK);
+                            R15 = rm_val & ~3;
+                        }
+                    }
+                    else
+                    /* ARMv5TE: Enhanced DSP multiply instructions */
+                    if ((insn & 0x0ff00090) == 0x01000080)  /* SMLAxy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rn = (insn >> 12) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT32 rn_val = (INT32)GET_REGISTER(rn);
+                        INT16 operand1, operand2;
+
+                        operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT64 result = (INT64)operand1 * operand2 + rn_val;
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff00090) == 0x01400080)  /* SMLALxy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rdlo = (insn >> 12) & 0x0f;
+                        UINT32 rdhi = (insn >> 16) & 0x0f;
+                        INT16 operand1 = (insn & 0x20) ? (INT16)(GET_REGISTER(rm) >> 16) : (INT16)(GET_REGISTER(rm) & 0xffff);
+                        INT16 operand2 = (insn & 0x40) ? (INT16)(GET_REGISTER(rs) >> 16) : (INT16)(GET_REGISTER(rs) & 0xffff);
+                        INT64 acc = ((INT64)(INT32)GET_REGISTER(rdhi) << 32) | GET_REGISTER(rdlo);
+                        INT64 result = acc + (INT64)operand1 * operand2;
+                        SET_REGISTER(rdlo, (UINT32)(result & 0xffffffff));
+                        SET_REGISTER(rdhi, (UINT32)(result >> 32));
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff00090) == 0x01600080)  /* SMULxy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT16 operand1, operand2;
+                        INT32 result;
+
+                        operand1 = (insn & 0x20) ? (INT16)(rm_val >> 16) : (INT16)(rm_val & 0xffff);
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        result = (INT32)operand1 * operand2;
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff000b0) == 0x012000a0)  /* SMULWy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT16 operand2;
+
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT32 result = (INT32)(((INT64)rm_val * operand2) >> 16);
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else if ((insn & 0x0ff000b0) == 0x01200080)  /* SMLAWy */
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rs = (insn >> 8) & 0x0f;
+                        UINT32 rn = (insn >> 12) & 0x0f;
+                        UINT32 rd = (insn >> 16) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rs_val = (INT32)GET_REGISTER(rs);
+                        INT32 rn_val = (INT32)GET_REGISTER(rn);
+                        INT16 operand2;
+
+                        operand2 = (insn & 0x40) ? (INT16)(rs_val >> 16) : (INT16)(rs_val & 0xffff);
+                        INT64 result = (INT64)rm_val * operand2;
+                        result = (result >> 16) + rn_val;
+                        SET_REGISTER(rd, (UINT32)result);
+                        R15 += 4;
+                    }
+                    else
+                    /* ARMv5TE: Saturated arithmetic: QADD, QSUB, QDADD, QDSUB */
+                    if ((insn & 0x0f9000f0) == 0x01000050)
+                    {
+                        UINT32 rm = insn & 0x0f;
+                        UINT32 rn = (insn >> 16) & 0x0f;
+                        UINT32 rd = (insn >> 12) & 0x0f;
+                        INT32 rm_val = (INT32)GET_REGISTER(rm);
+                        INT32 rn_val = (INT32)GET_REGISTER(rn);
+                        INT64 result;
+                        INT32 doubled;
+
+                        switch ((insn >> 21) & 3) {
+                            case 0: /* QADD */
+                                result = (INT64)rm_val + rn_val;
+                                if (result > 0x7fffffffLL) result = 0x7fffffff;
+                                else if (result < -0x80000000LL) result = (INT32)0x80000000u;
+                                break;
+                            case 1: /* QSUB */
+                                result = (INT64)rm_val - rn_val;
+                                if (result > 0x7fffffffLL) result = 0x7fffffff;
+                                else if (result < -0x80000000LL) result = (INT32)0x80000000u;
+                                break;
+                            case 2: /* QDADD */
+                                doubled = rn_val * 2;
+                                if ((INT64)rn_val * 2 != doubled) doubled = (rn_val < 0) ? (INT32)0x80000000u : 0x7fffffff;
+                                result = (INT64)rm_val + doubled;
+                                if (result > 0x7fffffffLL) result = 0x7fffffff;
+                                else if (result < -0x80000000LL) result = (INT32)0x80000000u;
+                                break;
+                            default: /* QDSUB */
+                                doubled = rn_val * 2;
+                                if ((INT64)rn_val * 2 != doubled) doubled = (rn_val < 0) ? (INT32)0x80000000u : 0x7fffffff;
+                                result = (INT64)rm_val - doubled;
+                                if (result > 0x7fffffffLL) result = 0x7fffffff;
+                                else if (result < -0x80000000LL) result = (INT32)0x80000000u;
+                                break;
+                        }
+                        SET_REGISTER(rd, (UINT32)(INT32)result);
+                        R15 += 4;
+                    }
+                    else
+#else
                     /* Branch and Exchange (BX) */
                     if ((insn & 0x0ffffff0) == 0x012fff10)     // bits 27-4 == 000100101111111111110001
                     {
@@ -1253,6 +1504,7 @@
                         }
                     }
                     else
+#endif
                     /* Multiply OR Swap OR Half Word Data Transfer */
                     if ((insn & 0x0e000000) == 0 && (insn & 0x80) && (insn & 0x10))  // bits 27-25=000 bit 7=1 bit 4=1
                     {
@@ -1356,6 +1608,7 @@
             }
         }
 
+        L_EndInstruction:
         ARM7_CHECKIRQ;
 
         /* All instructions remove 3 cycles.. Others taking less / more will have adjusted this # prior to here */

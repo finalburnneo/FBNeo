@@ -546,6 +546,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_PREFIX_NGP                             (0x20000000)
 #define HARDWARE_PREFIX_CHANNELF                        (0x21000000)
 #define HARDWARE_PREFIX_SNES                            (0x22000000)
+#define HARDWARE_PREFIX_IGS_PGM2						(0x23000000)
 
 #define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_NGP | 0x00000000)
 #define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_NGP | 0x00000001) // must not be 0x10000
@@ -637,6 +638,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_CAVE_CV1000							(HARDWARE_PREFIX_CAVE | 0x00010000)
 
 #define HARDWARE_IGS_PGM								(HARDWARE_PREFIX_IGS_PGM)
+#define HARDWARE_IGS_PGM2								(HARDWARE_PREFIX_IGS_PGM2)
 #define HARDWARE_IGS_USE_ARM_CPU						(0x0001)
 
 #define HARDWARE_CAPCOM_CPS3							(HARDWARE_PREFIX_CPS3)

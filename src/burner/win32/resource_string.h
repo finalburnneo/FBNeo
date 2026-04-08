@@ -163,6 +163,7 @@
 #define IDS_SEL_CPS3					(IDS_STRING +  570)
 #define IDS_SEL_NEOGEO					(IDS_STRING +  572)
 #define IDS_SEL_PGM						(IDS_STRING +  574)
+#define IDS_SEL_PGM2					(IDS_STRING +  710)
 #define IDS_SEL_PSIKYO					(IDS_STRING +  576)
 #define IDS_SEL_SEGA					(IDS_STRING +  578)
 #define IDS_SEL_TAITO					(IDS_STRING +  580)

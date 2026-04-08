@@ -120,6 +120,7 @@ HTREEITEM hFilterKonami				= NULL;
 HTREEITEM hFilterNeogeo				= NULL;
 HTREEITEM hFilterPacman				= NULL;
 HTREEITEM hFilterPgm				= NULL;
+HTREEITEM hFilterPgm2				= NULL;
 HTREEITEM hFilterPsikyo				= NULL;
 HTREEITEM hFilterSega				= NULL;
 HTREEITEM hFilterSeta				= NULL;
@@ -244,6 +245,8 @@ static UINT64 PacmanValue			= HARDWARE_PREFIX_PACMAN >> 24;
 static UINT64 MASKPACMAN			= 1 << PacmanValue;
 static UINT64 PgmValue				= HARDWARE_PREFIX_IGS_PGM >> 24;
 static UINT64 MASKPGM				= 1 << PgmValue;
+static UINT64 Pgm2Value			= HARDWARE_PREFIX_IGS_PGM2 >> 24;
+static UINT64 MASKPGM2				= (UINT64)1 << Pgm2Value;
 static UINT64 PsikyoValue			= HARDWARE_PREFIX_PSIKYO >> 24;
 static UINT64 MASKPSIKYO			= 1 << PsikyoValue;
 static UINT64 SegaValue				= HARDWARE_PREFIX_SEGA >> 24;
@@ -291,7 +294,7 @@ static UINT64 MASKNGP				= (UINT64)1 << NgpValue;
 static UINT64 ChannelFValue			= (UINT64)HARDWARE_PREFIX_CHANNELF >> 24;
 static UINT64 MASKCHANNELF			= (UINT64)1 << ChannelFValue;
 
-static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
+static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPGM2 | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
 
 #define SEARCHSUBDIRS			(1 << 26)
 #define UNAVAILABLE				(1 << 27)
@@ -1489,6 +1492,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NEOGEO		, hFilterNeogeo			, nLoadMenuShowX & MASKNEOGEO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM2			, hFilterPgm2			, nLoadMenuShowX & MASKPGM2							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PSIKYO		, hFilterPsikyo			, nLoadMenuShowX & MASKPSIKYO						);
 
 	_TVCreateFiltersD(hHardware		, IDS_SEL_SEGA_GRP		, hFilterSegaGrp				, nLoadMenuShowX & MASKSEGAGRP				);
@@ -2025,6 +2029,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPgm, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterPgm2, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPsikyo, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSega, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSeta, FALSE);
@@ -2067,6 +2072,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPgm, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterPgm2, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPsikyo, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSega, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSeta, TRUE);
@@ -2315,6 +2321,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterNeogeo)			_ToggleGameListing(nLoadMenuShowX, MASKNEOGEO);
 		if (hItemChanged == hFilterPacman)			_ToggleGameListing(nLoadMenuShowX, MASKPACMAN);
 		if (hItemChanged == hFilterPgm)				_ToggleGameListing(nLoadMenuShowX, MASKPGM);
+		if (hItemChanged == hFilterPgm2)			_ToggleGameListing(nLoadMenuShowX, MASKPGM2);
 		if (hItemChanged == hFilterPsikyo)			_ToggleGameListing(nLoadMenuShowX, MASKPSIKYO);
 		if (hItemChanged == hFilterSega)			_ToggleGameListing(nLoadMenuShowX, MASKSEGA);
 		if (hItemChanged == hFilterSeta)			_ToggleGameListing(nLoadMenuShowX, MASKSETA);

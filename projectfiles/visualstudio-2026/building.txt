@@ -5,7 +5,7 @@ Pre-Building:
 1) download and run visual studio 2026 IDE community edition installer from https://visualstudio.microsoft.com/ 
 2) select Desktop development with C++
 3) next you will need a perl interpreter for windows. I recommend ActivePerl (https://www.activestate.com/products/activeperl/downloads/). I usually use the oldest version available. Make sure that you have enabled the checkbox to add perl to the current path.
-4) Then you need NASM for the assembly files. Go here: https://github.com/ShiftMediaProject/VSNASM. Simple configuration of NASM compilation environment.
+4) Then you need NASM for the assembly file (https://www.nasm.us/). Place the downloaded nasm.exe into the root directory of the project.
 
 Building
 1) checkout the code using git (Optionally: fork it first!)

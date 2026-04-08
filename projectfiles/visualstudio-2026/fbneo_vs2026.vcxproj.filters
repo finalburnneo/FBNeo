@@ -3724,6 +3724,8 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp" />
+    <ClCompile Include="..\..\src\cpu\arm9_intf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -3999,32 +4001,35 @@
     <Filter Include="cpus\i8085">
       <UniqueIdentifier>{e0ac366b-11fb-4430-938e-4f632743540c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cpus\arm9">
+      <UniqueIdentifier>{49209c37-c5b6-44a8-9441-0e9e5fad12ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\burn\burn_sound_a.asm">
+    <NASM Include="..\..\src\burn\burn_sound_a.asm">
       <Filter>burn</Filter>
-    </None>
+    </NASM>
     <None Include="..\..\src\intf\video\win32\resource\bicubic.fx">
       <Filter>interfaces\video\win32\resource</Filter>
     </None>
-    <None Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
+    <NASM Include="..\..\src\intf\video\scalers\2xsaimmx.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\eagle_fm.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\eagle_fm.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq2x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq2x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq3x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq3x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\hq4x32.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\hq4x32.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
-    <None Include="..\..\src\intf\video\scalers\superscale.asm">
+    </NASM>
+    <NASM Include="..\..\src\intf\video\scalers\superscale.asm">
       <Filter>interfaces\video\scalers</Filter>
-    </None>
+    </NASM>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\dep\libs\lib7z\7zVersion.rc">

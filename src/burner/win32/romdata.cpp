@@ -1903,11 +1903,10 @@ bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect)
 	ofn.hwndOwner = hWnd;
 	ofn.lpstrFilter = szFilter;
 	ofn.lpstrFile = szChoice;
-	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T(".");
-	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrInitialDir = NULL;
+	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
 	ofn.lpstrDefExt = _T("dat");
-	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
 	if (0 == GetOpenFileName(&ofn)) {
 		nBurnDrvActive = nOldDrvSel;

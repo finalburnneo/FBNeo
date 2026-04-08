@@ -1,4 +1,4 @@
-// FB Alpha Mat Mania driver module
+// FB Neo Mat Mania driver module
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"
@@ -39,13 +39,15 @@ static UINT8 scroll;
 static UINT8 soundlatch;
 
 static INT32 vblank;
-static INT32 maniach;
+static INT32 has_mcu;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
+
+#define MATMANIA_REFRESHRATE ((12000000.0 / 2.0) / (384.0 * 264.0))  // ~59.185606 Hz
 
 static struct BurnInputInfo MatmaniaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
@@ -75,88 +77,90 @@ STDINPUTINFO(Matmania)
 
 static struct BurnDIPInfo MatmaniaDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x5f, NULL					},
-	{0x12, 0xff, 0xff, 0xfe, NULL					},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x5f, NULL					},
+	{0x01, 0xff, 0xff, 0xfe, NULL					},
 	
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x11, 0x01, 0x10, 0x00, "Off"					},
-	{0x11, 0x01, 0x10, 0x10, "On"					},
+	{0x00, 0x01, 0x10, 0x00, "Off"					},
+	{0x00, 0x01, 0x10, 0x10, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x11, 0x01, 0x20, 0x00, "Upright"				},
-	{0x11, 0x01, 0x20, 0x20, "Cocktail"				},
+	{0x00, 0x01, 0x20, 0x00, "Upright"				},
+	{0x00, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x40, 0x40, "Off"					},
-	{0x11, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0x03, 0x03, "Easy"					},
-	{0x12, 0x01, 0x03, 0x02, "Medium"				},
-	{0x12, 0x01, 0x03, 0x01, "Hard"					},
-	{0x12, 0x01, 0x03, 0x00, "Hardest"				},
+	{0x01, 0x01, 0x03, 0x03, "Easy"					},
+	{0x01, 0x01, 0x03, 0x02, "Medium"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    4, "Tournament Time"		},
-	{0x12, 0x01, 0x0c, 0x00, "2:12"					},
-	{0x12, 0x01, 0x0c, 0x04, "2:24"					},
-	{0x12, 0x01, 0x0c, 0x08, "2:30"					},
-	{0x12, 0x01, 0x0c, 0x0c, "2:36"					},
+	{0x01, 0x01, 0x0c, 0x00, "2:12"					},
+	{0x01, 0x01, 0x0c, 0x04, "2:24"					},
+	{0x01, 0x01, 0x0c, 0x08, "2:30"					},
+	{0x01, 0x01, 0x0c, 0x0c, "2:36"					},
 };
 
 STDDIPINFO(Matmania)
 
 static struct BurnDIPInfo ManiachDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x5f, NULL					},
-	{0x12, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x5f, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x11, 0x01, 0x10, 0x00, "Off"					},
-	{0x11, 0x01, 0x10, 0x10, "On"					},
+	{0x00, 0x01, 0x10, 0x00, "Off"					},
+	{0x00, 0x01, 0x10, 0x10, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x11, 0x01, 0x20, 0x00, "Upright"				},
-	{0x11, 0x01, 0x20, 0x20, "Cocktail"				},
+	{0x00, 0x01, 0x20, 0x00, "Upright"				},
+	{0x00, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x40, 0x40, "Off"					},
-	{0x11, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0x03, 0x03, "Easy"					},
-	{0x12, 0x01, 0x03, 0x02, "Medium"				},
-	{0x12, 0x01, 0x03, 0x01, "Hard"					},
-	{0x12, 0x01, 0x03, 0x00, "Hardest"				},
+	{0x01, 0x01, 0x03, 0x03, "Easy"					},
+	{0x01, 0x01, 0x03, 0x02, "Medium"				},
+	{0x01, 0x01, 0x03, 0x01, "Hard"					},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    4, "Tournament Time"		},
-	{0x12, 0x01, 0x0c, 0x00, "2:12"					},
-	{0x12, 0x01, 0x0c, 0x04, "2:24"					},
-	{0x12, 0x01, 0x0c, 0x08, "2:30"					},
-	{0x12, 0x01, 0x0c, 0x0c, "2:36"					},
+	{0x01, 0x01, 0x0c, 0x00, "2:12"					},
+	{0x01, 0x01, 0x0c, 0x04, "2:24"					},
+	{0x01, 0x01, 0x0c, 0x08, "2:30"					},
+	{0x01, 0x01, 0x0c, 0x0c, "2:36"					},
 };
 
 STDDIPINFO(Maniach)
@@ -176,7 +180,7 @@ static void matmania_main_write(UINT16 address, UINT8 data)
 
 		case 0x3010:
 			soundlatch = data;
-			if (maniach) {
+			if (has_mcu) {
 				M6809SetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
 			} else {
 				M6502SetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
@@ -456,120 +460,51 @@ static m68705_interface maniach_m68705_interface = {
 	NULL, NULL, standard_m68705_portC_in
 };
 
-static INT32 DrvInit(INT32 game)
+static INT32 LoadRoms()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	char* pRomName;
+	struct BurnRomInfo ri;
+	UINT8 *pLoad[3] = { DrvMainROM + 0x4000, DrvSndROM + 0x8000, DrvMCUROM };
+	UINT8 *gLoad[4] = { DrvGfxROM0, DrvGfxROM1, DrvGfxROM2, DrvColPROM };
 
-	maniach = game;
-
-	if (game == 0) // matmania
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
 	{
-		if (BurnLoadRom(DrvMainROM + 0x04000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvMainROM + 0x08000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvMainROM + 0x0c000,  2, 1)) return 1;
+		BurnDrvGetRomInfo(&ri, i);
 
-		if (BurnLoadRom(DrvSndROM  + 0x08000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x0c000,  4, 1)) return 1;
+		if (ri.nType & BRF_PRG) {
+			INT32 type = (ri.nType & 7) - 1;
+			if (type == 2) has_mcu = 1;
+			if (BurnLoadRom(pLoad[type], i, 1)) return 1;
+			pLoad[type] += ri.nLen;
+			continue;
+		}
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  7, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x08000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x10000, 10, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x0c000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x14000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x18000, 17, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x1c000, 18, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x20000, 19, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x24000, 20, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x28000, 21, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x2c000, 22, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x30000, 23, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x34000, 24, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x38000, 25, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x3c000, 26, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x40000, 27, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x44000, 28, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x48000, 29, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x4c000, 30, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x50000, 31, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x00000, 32, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00020, 33, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00080, 34, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x000a0, 35, 1)) return 1;
-
-		DrvGfxDecode();
-
-		for (INT32 i = 0; i < 0x40; i++) {
-			DrvColPROM[0x40 + i] = DrvColPROM[i] >> 4;
+		if (ri.nType & BRF_GRA) {
+			INT32 type = (ri.nType & 7) - 4;
+			if (BurnLoadRom(gLoad[type], i, 1)) return 1;
+			gLoad[type] += (type == 1 ? 0x8000 : ri.nLen);
+			continue;
 		}
 	}
-	else // maniach
-	{
-		if (BurnLoadRom(DrvMainROM + 0x04000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvMainROM + 0x08000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvMainROM + 0x0c000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x04000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x08000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x0c000,  5, 1)) return 1;
+	DrvGfxDecode();
 
-		if (BurnLoadRom(DrvMCUROM  + 0x00000,  6, 1)) return 1;
+	memcpy(DrvColPROM + 0x80, DrvColPROM + 0x40, 0x40);
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  9, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x08000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x10000, 12, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x0c000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 17, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x14000, 18, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x18000, 19, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x1c000, 20, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x20000, 21, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x24000, 22, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x28000, 23, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x2c000, 24, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x30000, 25, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x34000, 26, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x38000, 27, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x3c000, 28, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x40000, 29, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x44000, 30, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x48000, 31, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x4c000, 32, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x50000, 33, 1)) return 1;
-
-		if (BurnLoadRom(DrvColPROM + 0x00000, 34, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00020, 35, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00080, 36, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x000a0, 37, 1)) return 1;
-
-		DrvGfxDecode();
-
-		for (INT32 i = 0; i < 0x40; i++) {
-			DrvColPROM[0x40 + i] = DrvColPROM[i] >> 4;
-		}
+	for (INT32 i = 0; i < 0x40; i++) {
+		DrvColPROM[0x40 + i] = DrvColPROM[i] >> 4;
 	}
+
+	return 0;
+}
+
+static INT32 DrvInit()
+{
+	BurnSetRefreshRate(MATMANIA_REFRESHRATE);
+
+	BurnAllocMemIndex();
+
+	if (LoadRoms()) return 1;
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
@@ -619,7 +554,7 @@ static INT32 DrvInit(INT32 game)
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// both
-	if (maniach) {
+	if (has_mcu) {
 		DACInit(0, 0, 1, M6809TotalCycles, 1500000);
 	} else {
 		DACInit(0, 0, 1, M6502TotalCycles, 1200000);
@@ -627,10 +562,10 @@ static INT32 DrvInit(INT32 game)
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_COLS, (maniach) ? maniach_bg0_map_callback : bg0_map_callback, 16, 16, 16, 32);
-	GenericTilemapInit(1, TILEMAP_SCAN_COLS, (maniach) ? maniach_bg1_map_callback : bg1_map_callback, 16, 16, 16, 32);
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, (has_mcu) ? maniach_bg0_map_callback : bg0_map_callback, 16, 16, 16, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, (has_mcu) ? maniach_bg1_map_callback : bg1_map_callback, 16, 16, 16, 32);
 	GenericTilemapInit(2, TILEMAP_SCAN_COLS, fg_map_callback,   8,  8, 32, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 16, 16, 0x20000 << maniach, 0x20, 3);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 16, 16, 0x20000 << has_mcu, 0x20, 3);
 	GenericTilemapSetGfx(1, DrvGfxROM0, 3,  8,  8, 0x10000, 0x00, 3);
 	GenericTilemapSetTransparent(2, 0);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
@@ -654,6 +589,8 @@ static INT32 DrvExit()
 	DACExit();
 
 	BurnFree(AllMem);
+
+	has_mcu = 0;
 
 	return 0;
 }
@@ -753,15 +690,17 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] = { 1500000 / 60, 1200000 / 60, 3000000 / 4 / 60 };
+	INT32 nInterleave = 264;
+	double dRefresh = MATMANIA_REFRESHRATE;
+	INT32 nCyclesTotal[3] = { (INT32)(1500000 / dRefresh), (INT32)(1200000 / dRefresh), (INT32)(3000000 / 4 / dRefresh) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 7) vblank = 0;
+		if (i == 128) vblank = 0;
+		if (i == 132) vblank = 1;
 		M6502Open(0);
 		CPU_RUN(0, M6502);
 		if (i == nInterleave-1) {
@@ -770,7 +709,7 @@ static INT32 DrvFrame()
 		}
 		M6502Close();
 
-		if (maniach)
+		if (has_mcu)
 		{
 			M6809Open(0);
 			CPU_RUN_TIMER(0); // 1, but running at 1500000
@@ -790,7 +729,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		if (maniach) {
+		if (has_mcu) {
 			BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		} else {
@@ -848,49 +787,44 @@ static struct BurnRomInfo matmaniaRomDesc[] = {
 	{ "k4-0",			0x4000, 0x86dab489, 2 | BRF_PRG | BRF_ESS }, //  3 M6502 #1 Code
 	{ "k5-0",			0x4000, 0x4c41cdba, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "ku-02",			0x2000, 0x613c8698, 3 | BRF_GRA },           //  5 Characters
-	{ "kv-02",			0x2000, 0x274ce14b, 3 | BRF_GRA },           //  6
-	{ "kw-02",			0x2000, 0x7588a9c4, 3 | BRF_GRA },           //  7
+	{ "ku-02",			0x2000, 0x613c8698, 4 | BRF_GRA },           //  5 Characters
+	{ "kv-02",			0x2000, 0x274ce14b, 4 | BRF_GRA },           //  6
+	{ "kw-02",			0x2000, 0x7588a9c4, 4 | BRF_GRA },           //  7
 
-	{ "kt-02",			0x4000, 0x5d817c70, 4 | BRF_GRA },           //  8 Tiles
-	{ "ks-02",			0x4000, 0x2e9f3ba0, 4 | BRF_GRA },           //  9
-	{ "kr-02",			0x4000, 0xb057d3e3, 4 | BRF_GRA },           // 10
+	{ "kt-02",			0x4000, 0x5d817c70, 5 | BRF_GRA },           //  8 Tiles
+	{ "ks-02",			0x4000, 0x2e9f3ba0, 5 | BRF_GRA },           //  9
+	{ "kr-02",			0x4000, 0xb057d3e3, 5 | BRF_GRA },           // 10
 
-	{ "k6-00",			0x4000, 0x294d0878, 5 | BRF_GRA },           // 11 Sprites
-	{ "k7-00",			0x4000, 0x0908c2f5, 5 | BRF_GRA },           // 12
-	{ "k8-00",			0x4000, 0xae8341e1, 5 | BRF_GRA },           // 13
-	{ "k9-00",			0x4000, 0x752ac2c6, 5 | BRF_GRA },           // 14
-	{ "ka-00",			0x4000, 0x46a9cb16, 5 | BRF_GRA },           // 15
-	{ "kb-00",			0x4000, 0xbf016772, 5 | BRF_GRA },           // 16
-	{ "kc-00",			0x4000, 0x8d08bce7, 5 | BRF_GRA },           // 17
-	{ "kd-00",			0x4000, 0xaf1d6a60, 5 | BRF_GRA },           // 18
-	{ "ke-00",			0x4000, 0x614f19b0, 5 | BRF_GRA },           // 19
-	{ "kf-00",			0x4000, 0xbdf58c18, 5 | BRF_GRA },           // 20
-	{ "kg-00",			0x4000, 0x2189f5cf, 5 | BRF_GRA },           // 21
-	{ "kh-00",			0x4000, 0x6b11ed1f, 5 | BRF_GRA },           // 22
-	{ "ki-00",			0x4000, 0xd7ac4ec5, 5 | BRF_GRA },           // 23
-	{ "kj-00",			0x4000, 0x2caee05d, 5 | BRF_GRA },           // 24
-	{ "kk-00",			0x4000, 0xeb54f010, 5 | BRF_GRA },           // 25
-	{ "kl-00",			0x4000, 0xfa4c7e0c, 5 | BRF_GRA },           // 26
-	{ "km-00",			0x4000, 0x6d2369b6, 5 | BRF_GRA },           // 27
-	{ "kn-00",			0x4000, 0xc55733e2, 5 | BRF_GRA },           // 28
-	{ "ko-00",			0x4000, 0xed3c3476, 5 | BRF_GRA },           // 29
-	{ "kp-00",			0x4000, 0x9c84a969, 5 | BRF_GRA },           // 30
-	{ "kq-00",			0x4000, 0xfa2f0003, 5 | BRF_GRA },           // 31
+	{ "k6-00",			0x4000, 0x294d0878, 6 | BRF_GRA },           // 11 Sprites
+	{ "k7-00",			0x4000, 0x0908c2f5, 6 | BRF_GRA },           // 12
+	{ "k8-00",			0x4000, 0xae8341e1, 6 | BRF_GRA },           // 13
+	{ "k9-00",			0x4000, 0x752ac2c6, 6 | BRF_GRA },           // 14
+	{ "ka-00",			0x4000, 0x46a9cb16, 6 | BRF_GRA },           // 15
+	{ "kb-00",			0x4000, 0xbf016772, 6 | BRF_GRA },           // 16
+	{ "kc-00",			0x4000, 0x8d08bce7, 6 | BRF_GRA },           // 17
+	{ "kd-00",			0x4000, 0xaf1d6a60, 6 | BRF_GRA },           // 18
+	{ "ke-00",			0x4000, 0x614f19b0, 6 | BRF_GRA },           // 19
+	{ "kf-00",			0x4000, 0xbdf58c18, 6 | BRF_GRA },           // 20
+	{ "kg-00",			0x4000, 0x2189f5cf, 6 | BRF_GRA },           // 21
+	{ "kh-00",			0x4000, 0x6b11ed1f, 6 | BRF_GRA },           // 22
+	{ "ki-00",			0x4000, 0xd7ac4ec5, 6 | BRF_GRA },           // 23
+	{ "kj-00",			0x4000, 0x2caee05d, 6 | BRF_GRA },           // 24
+	{ "kk-00",			0x4000, 0xeb54f010, 6 | BRF_GRA },           // 25
+	{ "kl-00",			0x4000, 0xfa4c7e0c, 6 | BRF_GRA },           // 26
+	{ "km-00",			0x4000, 0x6d2369b6, 6 | BRF_GRA },           // 27
+	{ "kn-00",			0x4000, 0xc55733e2, 6 | BRF_GRA },           // 28
+	{ "ko-00",			0x4000, 0xed3c3476, 6 | BRF_GRA },           // 29
+	{ "kp-00",			0x4000, 0x9c84a969, 6 | BRF_GRA },           // 30
+	{ "kq-00",			0x4000, 0xfa2f0003, 6 | BRF_GRA },           // 31
 
-	{ "matmania.1",		0x0020, 0x1b58f01f, 6 | BRF_GRA },           // 32 Color Data
-	{ "matmania.5",		0x0020, 0x2029f85f, 6 | BRF_GRA },           // 33
-	{ "matmania.2",		0x0020, 0xb6ac1fd5, 6 | BRF_GRA },           // 34
-	{ "matmania.16",	0x0020, 0x09325dc2, 6 | BRF_GRA },           // 35
+	{ "matmania.1",		0x0020, 0x1b58f01f, 7 | BRF_GRA },           // 32 Color Data
+	{ "matmania.5",		0x0020, 0x2029f85f, 7 | BRF_GRA },           // 33
+	{ "matmania.2",		0x0020, 0xb6ac1fd5, 7 | BRF_GRA },           // 34
+	{ "matmania.16",	0x0020, 0x09325dc2, 7 | BRF_GRA },           // 35
 };
 
 STD_ROM_PICK(matmania)
 STD_ROM_FN(matmania)
-
-static INT32 MatmaniaInit()
-{
-	return DrvInit(0);
-}
 
 struct BurnDriver BurnDrvMatmania = {
 	"matmania", NULL, NULL, NULL, "1985",
@@ -898,7 +832,7 @@ struct BurnDriver BurnDrvMatmania = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, matmaniaRomInfo, matmaniaRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, MatmaniaDIPInfo,
-	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
 
@@ -913,40 +847,40 @@ static struct BurnRomInfo excthourRomDesc[] = {
 	{ "k4-0",			0x4000, 0x86dab489, 2 | BRF_PRG | BRF_ESS }, //  3 M6502 #1 Code
 	{ "k5-0",			0x4000, 0x4c41cdba, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "e30",			0x2000, 0xb2875329, 3 | BRF_GRA },           //  5 Characters
-	{ "e31",			0x2000, 0xc9506de8, 3 | BRF_GRA },           //  6
-	{ "e32",			0x2000, 0x00d1635f, 3 | BRF_GRA },           //  7
+	{ "e30",			0x2000, 0xb2875329, 4 | BRF_GRA },           //  5 Characters
+	{ "e31",			0x2000, 0xc9506de8, 4 | BRF_GRA },           //  6
+	{ "e32",			0x2000, 0x00d1635f, 4 | BRF_GRA },           //  7
 
-	{ "e5",				0x4000, 0x0604dc55, 4 | BRF_GRA },           //  8 Tiles
-	{ "ks-02",			0x4000, 0x2e9f3ba0, 4 | BRF_GRA },           //  9
-	{ "e3",				0x4000, 0xebd273c6, 4 | BRF_GRA },           // 10
+	{ "e5",				0x4000, 0x0604dc55, 5 | BRF_GRA },           //  8 Tiles
+	{ "ks-02",			0x4000, 0x2e9f3ba0, 5 | BRF_GRA },           //  9
+	{ "e3",				0x4000, 0xebd273c6, 5 | BRF_GRA },           // 10
 
-	{ "k6-00",			0x4000, 0x294d0878, 5 | BRF_GRA },           // 11 Sprites
-	{ "k7-00",			0x4000, 0x0908c2f5, 5 | BRF_GRA },           // 12
-	{ "k8-00",			0x4000, 0xae8341e1, 5 | BRF_GRA },           // 13
-	{ "k9-00",			0x4000, 0x752ac2c6, 5 | BRF_GRA },           // 14
-	{ "ka-00",			0x4000, 0x46a9cb16, 5 | BRF_GRA },           // 15
-	{ "kb-00",			0x4000, 0xbf016772, 5 | BRF_GRA },           // 16
-	{ "kc-00",			0x4000, 0x8d08bce7, 5 | BRF_GRA },           // 17
-	{ "kd-00",			0x4000, 0xaf1d6a60, 5 | BRF_GRA },           // 18
-	{ "ke-00",			0x4000, 0x614f19b0, 5 | BRF_GRA },           // 19
-	{ "kf-00",			0x4000, 0xbdf58c18, 5 | BRF_GRA },           // 20
-	{ "kg-00",			0x4000, 0x2189f5cf, 5 | BRF_GRA },           // 21
-	{ "kh-00",			0x4000, 0x6b11ed1f, 5 | BRF_GRA },           // 22
-	{ "ki-00",			0x4000, 0xd7ac4ec5, 5 | BRF_GRA },           // 23
-	{ "kj-00",			0x4000, 0x2caee05d, 5 | BRF_GRA },           // 24
-	{ "kk-00",			0x4000, 0xeb54f010, 5 | BRF_GRA },           // 25
-	{ "kl-00",			0x4000, 0xfa4c7e0c, 5 | BRF_GRA },           // 26
-	{ "km-00",			0x4000, 0x6d2369b6, 5 | BRF_GRA },           // 27
-	{ "kn-00",			0x4000, 0xc55733e2, 5 | BRF_GRA },           // 28
-	{ "ko-00",			0x4000, 0xed3c3476, 5 | BRF_GRA },           // 29
-	{ "kp-00",			0x4000, 0x9c84a969, 5 | BRF_GRA },           // 30
-	{ "kq-00",			0x4000, 0xfa2f0003, 5 | BRF_GRA },           // 31
+	{ "k6-00",			0x4000, 0x294d0878, 6 | BRF_GRA },           // 11 Sprites
+	{ "k7-00",			0x4000, 0x0908c2f5, 6 | BRF_GRA },           // 12
+	{ "k8-00",			0x4000, 0xae8341e1, 6 | BRF_GRA },           // 13
+	{ "k9-00",			0x4000, 0x752ac2c6, 6 | BRF_GRA },           // 14
+	{ "ka-00",			0x4000, 0x46a9cb16, 6 | BRF_GRA },           // 15
+	{ "kb-00",			0x4000, 0xbf016772, 6 | BRF_GRA },           // 16
+	{ "kc-00",			0x4000, 0x8d08bce7, 6 | BRF_GRA },           // 17
+	{ "kd-00",			0x4000, 0xaf1d6a60, 6 | BRF_GRA },           // 18
+	{ "ke-00",			0x4000, 0x614f19b0, 6 | BRF_GRA },           // 19
+	{ "kf-00",			0x4000, 0xbdf58c18, 6 | BRF_GRA },           // 20
+	{ "kg-00",			0x4000, 0x2189f5cf, 6 | BRF_GRA },           // 21
+	{ "kh-00",			0x4000, 0x6b11ed1f, 6 | BRF_GRA },           // 22
+	{ "ki-00",			0x4000, 0xd7ac4ec5, 6 | BRF_GRA },           // 23
+	{ "kj-00",			0x4000, 0x2caee05d, 6 | BRF_GRA },           // 24
+	{ "kk-00",			0x4000, 0xeb54f010, 6 | BRF_GRA },           // 25
+	{ "kl-00",			0x4000, 0xfa4c7e0c, 6 | BRF_GRA },           // 26
+	{ "km-00",			0x4000, 0x6d2369b6, 6 | BRF_GRA },           // 27
+	{ "kn-00",			0x4000, 0xc55733e2, 6 | BRF_GRA },           // 28
+	{ "ko-00",			0x4000, 0xed3c3476, 6 | BRF_GRA },           // 29
+	{ "kp-00",			0x4000, 0x9c84a969, 6 | BRF_GRA },           // 30
+	{ "kq-00",			0x4000, 0xfa2f0003, 6 | BRF_GRA },           // 31
 
-	{ "matmania.1",		0x0020, 0x1b58f01f, 6 | BRF_GRA },           // 32 Color Data
-	{ "matmania.5",		0x0020, 0x2029f85f, 6 | BRF_GRA },           // 33
-	{ "matmania.2",		0x0020, 0xb6ac1fd5, 6 | BRF_GRA },           // 34
-	{ "matmania.16",	0x0020, 0x09325dc2, 6 | BRF_GRA },           // 35
+	{ "matmania.1",		0x0020, 0x1b58f01f, 7 | BRF_GRA },           // 32 Color Data
+	{ "matmania.5",		0x0020, 0x2029f85f, 7 | BRF_GRA },           // 33
+	{ "matmania.2",		0x0020, 0xb6ac1fd5, 7 | BRF_GRA },           // 34
+	{ "matmania.16",	0x0020, 0x09325dc2, 7 | BRF_GRA },           // 35
 };
 
 STD_ROM_PICK(excthour)
@@ -958,7 +892,7 @@ struct BurnDriver BurnDrvExcthour = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, excthourRomInfo, excthourRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
-	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
 
@@ -974,7 +908,7 @@ static struct BurnRomInfo maniachRomDesc[] = {
 	{ "mc-m40.bin",		0x4000, 0x2a217ed0, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "mc-m30.bin",		0x4000, 0x95af1723, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "01",				0x0800, 0x00c7f80c, 3 | BRF_GRA },           //  6 M68705 #0 Code
+	{ "01",				0x0800, 0x00c7f80c, 3 | BRF_PRG | BRF_ESS }, //  6 M68705 #0 Code
 
 	{ "mc-m60.bin",		0x2000, 0x1cdbb117, 4 | BRF_GRA },           //  7 Characters
 	{ "mc-m70.bin",		0x2000, 0x553f0780, 4 | BRF_GRA },           //  8
@@ -1020,18 +954,13 @@ static struct BurnRomInfo maniachRomDesc[] = {
 STD_ROM_PICK(maniach)
 STD_ROM_FN(maniach)
 
-static INT32 ManiachInit()
-{
-	return DrvInit(1);
-}
-
 struct BurnDriver BurnDrvManiach = {
 	"maniach", NULL, NULL, NULL, "1986",
 	"Mania Challenge (set 1)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniachRomInfo, maniachRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
-	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };
 
@@ -1047,7 +976,7 @@ static struct BurnRomInfo maniach2RomDesc[] = {
 	{ "mc-m40.bin",		0x4000, 0x2a217ed0, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "mc-m30.bin",		0x4000, 0x95af1723, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "01",				0x0800, 0x00c7f80c, 3 | BRF_GRA },           //  6 M68705 #0 Code
+	{ "01",				0x0800, 0x00c7f80c, 3 | BRF_PRG | BRF_ESS }, //  6 M68705 #0 Code
 
 	{ "mc-m60.bin",		0x2000, 0x1cdbb117, 4 | BRF_GRA },           //  7 Characters
 	{ "mc-m70.bin",		0x2000, 0x553f0780, 4 | BRF_GRA },           //  8
@@ -1099,6 +1028,6 @@ struct BurnDriver BurnDrvManiach2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniach2RomInfo, maniach2RomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
-	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
 };

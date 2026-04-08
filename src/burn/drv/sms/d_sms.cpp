@@ -5648,10 +5648,10 @@ STD_ROM_PICK(sms_loretta)
 STD_ROM_FN(sms_loretta)
 
 struct BurnDriver BurnDrvsms_loretta = {
-	"sms_loretta", NULL, NULL, NULL, "1987",
+	"sms_loretta", "sms_lorettate", NULL, NULL, "1987",
 	"Loretta no Shouzou: Sherlock Holmes (Japan)\0", NULL, "Sega", "Sega Master System",
 	L"Loretta no Shouzou: Sherlock Holmes (Japan)\0\u30ed\u30ec\u30c3\u30bf\u306e\u8096\u50cf\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
 	SMSGetZipName, sms_lorettaRomInfo, sms_lorettaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -21717,6 +21717,42 @@ struct BurnDriver BurnDrvsms_astforce = {
 	256, 192, 4, 3
 };
 
+// Atoms! (HB, v1.1)
+static struct BurnRomInfo sms_atomsRomDesc[] = {
+	{ "Atoms v1.1 (2026)(The Gould Fish).sms",	180224, 0x87d98e15, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_atoms)
+STD_ROM_FN(sms_atoms)
+
+struct BurnDriver BurnDrvsms_atoms = {
+	"sms_atoms", NULL, NULL, NULL, "2026",
+	"Atoms! (HB, v1.1)\0", NULL, "The Gould Fish", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BOARD | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_atomsRomInfo, sms_atomsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Awass (HB)
+static struct BurnRomInfo sms_awassRomDesc[] = {
+	{ "Awass (2026)(Inufuto).sms",	16384, 0xf0af51d6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_awass)
+STD_ROM_FN(sms_awass)
+
+struct BurnDriver BurnDrvsms_awass = {
+	"sms_awass", NULL, NULL, NULL, "2026",
+	"Awass (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_awassRomInfo, sms_awassRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Bad Apple (HB, Tech-Demo)
 static struct BurnRomInfo sms_badappleRomDesc[] = {
 	{ "Bad Apple (2017)(Tech-Demo).sms",	4194304, 0x38434560, BRF_PRG | BRF_ESS },
@@ -22021,6 +22057,24 @@ struct BurnDriver BurnDrvsms_candykid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_candykidRomInfo, sms_candykidRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Capture Go (HB)
+static struct BurnRomInfo sms_capturegoRomDesc[] = {
+	{ "Capture Go (2026)(raphnet).sms",	262144, 0xb36c9f41, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_capturego)
+STD_ROM_FN(sms_capturego)
+
+struct BurnDriver BurnDrvsms_capturego = {
+	"sms_capturego", NULL, NULL, NULL, "2026",
+	"Capture Go (HB)\0", NULL, "raphnet", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BOARD, 0,
+	SMSGetZipName, sms_capturegoRomInfo, sms_capturegoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -22367,6 +22421,24 @@ struct BurnDriver BurnDrvsms_forestescape = {
 	256, 192, 4, 3
 };
 
+// Fridge Fury (HB, v34c)
+static struct BurnRomInfo sms_fridgefuryRomDesc[] = {
+	{ "Fridge Fury v34c (2026)(MikGames).sms",	425984, 0xfed2b034, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_fridgefury)
+STD_ROM_FN(sms_fridgefury)
+
+struct BurnDriver BurnDrvsms_fridgefury = {
+	"sms_fridgefury", NULL, NULL, NULL, "2026",
+	"Fridge Fury (HB, v34c)\0", NULL, "MikGames", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_fridgefuryRomInfo, sms_fridgefuryRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Frontier Force (HB, v1.1)
 static struct BurnRomInfo sms_frontierforceRomDesc[] = {
 	{ "Frontier Force v1.1 (2025)(BadComputer).sms",	524288, 0xfd09f46d, BRF_PRG | BRF_ESS },
@@ -22491,6 +22563,24 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	SMSGetZipName, sms_gemitasRomInfo, sms_gemitasRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
+};
+
+// GLUF Tesla Frog (HB)
+static struct BurnRomInfo sms_glufRomDesc[] = {
+	{ "GLUF Tesla Frog (2026)(Tony & Co.).sms",	131072, 0x219439e7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_gluf)
+STD_ROM_FN(sms_gluf)
+
+struct BurnDriver BurnDrvsms_gluf = {
+	"sms_gluf", NULL, NULL, NULL, "2026",
+	"GLUF Tesla Frog (HB)\0", NULL, "Tony & Co.", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_glufRomInfo, sms_glufRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
 };
 
 // Goblin Kart Rescue (HB, v1.0.3)
@@ -22943,7 +23033,7 @@ struct BurnDriver BurnDrvsms_lambo = {
 	256, 192, 4, 3
 };
 
-// Laranja Mecânico (HB, Portuguese)
+// Laranja Mecanico (HB, Portuguese)
 static struct BurnRomInfo sms_laranjamecRomDesc[] = {
 	{ "Laranja Mecanico (2023)(Jaguarete Retro Games).sms",	524288, 0x8126ac1a, BRF_PRG | BRF_ESS },
 };
@@ -23377,7 +23467,7 @@ struct BurnDriver BurnDrvsms_noturno = {
 	256, 192, 4, 3
 };
 
-// Noturno Mini Game (Edição de Halloween) (GlobalHack, Portuguese)
+// Noturno Mini Game (Edicao de Halloween) (GlobalHack, Portuguese)
 static struct BurnRomInfo sms_noturnomgRomDesc[] = {
 	{ "Noturno Mini Game (Edicao de Halloween) (2025)(LMS Retro).sms",	524288, 0x038489c0, BRF_PRG | BRF_ESS },
 };
@@ -23644,6 +23734,24 @@ struct BurnDriver BurnDrvsms_raymanrr = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
     SMSGetZipName, sms_raymanrrRomInfo, sms_raymanrrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+    SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+    256, 192, 4, 3
+};
+
+// Road Fighter (HB, v1.2)
+static struct BurnRomInfo sms_roadfightRomDesc[] = {
+    { "Road Fighter v1.2 (2026)(BadComputer, Chirinea).sms",    524288, 0x31035323, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_roadfight)
+STD_ROM_FN(sms_roadfight)
+
+struct BurnDriver BurnDrvsms_roadfight = {
+    "sms_roadfight", NULL, NULL, NULL, "2026",
+    "Road Fighter (HB, v1.2)\0", NULL, "BadComputer, Chirinea", "Sega Master System",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+    SMSGetZipName, sms_roadfightRomInfo, sms_roadfightRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
     SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
     256, 192, 4, 3
 };
@@ -24066,6 +24174,24 @@ struct BurnDriver BurnDrvsms_sptonbow = {
 	256, 192, 4, 3
 };
 
+// Stalactites (HB, v0.7)
+static struct BurnRomInfo sms_stalactitesRomDesc[] = {
+	{ "Stalactites v0.7 (2026)(haroldoop).sms",	32768, 0xf28cd77c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_stalactites)
+STD_ROM_FN(sms_stalactites)
+
+struct BurnDriver BurnDrvsms_stalactites = {
+	"sms_stalactites", NULL, NULL, NULL, "2026",
+	"Stalactites (HB, v0.7)\0", NULL, "haroldoop", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_stalactitesRomInfo, sms_stalactitesRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Stella in Adventure World (GlobalHack)
 static struct BurnRomInfo sms_stellaRomDesc[] = {
 	{ "Stella in Adventure World (2024-25)(TSP).sms",	524288, 0x2efda49b, BRF_PRG | BRF_ESS },
@@ -24170,6 +24296,24 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
 	SMSGetZipName, sms_sumgamesfmRomInfo, sms_sumgamesfmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Super Mario Bros. (HB, v0.12)
+static struct BurnRomInfo sms_smbRomDesc[] = {
+	{ "Super Mario Bros. v0.12 (2026)(Lack of Track).sms",	262144, 0x03cfb75f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_smb)
+STD_ROM_FN(sms_smb)
+
+struct BurnDriver BurnDrvsms_smb = {
+	"sms_smb", NULL, NULL, NULL, "2026",
+	"Super Mario Bros. (HB, v0.12)\0", "Unofficial Port - only the first level is available", "Lack of Track", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24866,6 +25010,24 @@ struct BurnDriver BurnDrvgg_antiairm = {
 	256, 192, 4, 3
 };
 
+// Awass Micro (HB)
+static struct BurnRomInfo gg_awassmRomDesc[] = {
+	{ "Awass Micro (2026)(Inufuto).gg",	16384, 0xeb97874d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_awassm)
+STD_ROM_FN(gg_awassm)
+
+struct BurnDriver BurnDrvgg_awassm = {
+	"gg_awassm", NULL, NULL, NULL, "2026",
+	"Awass Micro (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_PUZZLE, 0,
+	GGGetZipName, gg_awassmRomInfo, gg_awassmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Battle Marine (HB)
 static struct BurnRomInfo gg_battlemarineRomDesc[] = {
 	{ "Battle Marine (2024)(Suzuki Plan).gg",	524288, 0xf49a00ba, BRF_PRG | BRF_ESS },
@@ -25060,6 +25222,24 @@ struct BurnDriver BurnDrvgg_ggtrcn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN | GBF_PLATFORM, 0,
 	GGGetZipName, gg_ggtrcnRomInfo, gg_ggtrcnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// GLUF Tesla Frog (HB)
+static struct BurnRomInfo gg_glufRomDesc[] = {
+	{ "GLUF Tesla Frog (2026)(Tony & Co.).gg",	131072, 0x1afb1281, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_gluf)
+STD_ROM_FN(gg_gluf)
+
+struct BurnDriver BurnDrvgg_gluf = {
+	"gg_gluf", NULL, NULL, NULL, "2026",
+	"GLUF Tesla Frog (HB)\0", NULL, "Tony & Co.", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_PUZZLE, 0,
+	GGGetZipName, gg_glufRomInfo, gg_glufRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26250,6 +26430,25 @@ struct BurnDriver BurnDrvsms_krustyfhc = {
 	256, 192, 4, 3
 };
 
+// Loretta's Portrait (Hack, English)
+// https://www.romhacking.net/translations/7526/
+static struct BurnRomInfo sms_lorettateRomDesc[] = {
+	{ "Loretta's Portrait T-Eng (2026)(Jamiras).sms",	131072, 0xe8ec97d2, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_lorettate)
+STD_ROM_FN(sms_lorettate)
+
+struct BurnDriver BurnDrvsms_lorettate = {
+	"sms_lorettate", NULL, NULL, NULL, "2026",
+	"Loretta's Portrait (Hack, English)\0", NULL, "Jamiras", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	SMSGetZipName, sms_lorettateRomInfo, sms_lorettateRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Master of Darkness ~ Mestre das Trevas (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/master-of-darkness-po.b.r.e
 
@@ -26609,7 +26808,7 @@ struct BurnDriver BurnDrvsms_ppersiac = {
 	256, 192, 4, 3
 };
 
-// Psychic World ~ Mundo Psíquico (Hack, Portuguese)
+// Psychic World ~ Mundo Psiquico (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/psychic-world-po.b.r.e
 static struct BurnRomInfo sms_psychicwptRomDesc[] = {
 	{ "Psychic World - Mundo Psiquico T-Por (2019)(PO.B.R.E.).sms",	262144, 0xb9f22a5e, BRF_PRG | BRF_ESS },

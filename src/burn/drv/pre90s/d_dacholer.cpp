@@ -1,4 +1,4 @@
-// FB Alpha Kick Boy / Dacholer / Itazura Tenshi driver module
+// FB Neo Kick Boy / Dacholer / Itazura Tenshi driver module
 // Based on MAME driver by Pierpaolo Prazzoli
 
 #include "tiles_generic.h"
@@ -40,7 +40,7 @@ static UINT8 sound_ack;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
@@ -70,6 +70,7 @@ static struct BurnInputInfo DacholerInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Dacholer)
@@ -95,6 +96,7 @@ static struct BurnInputInfo ItatenInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Itaten)
@@ -104,6 +106,7 @@ static struct BurnDIPInfo DacholerDIPList[]=
 	DIP_OFFSET(0x12)
 	{0x00, 0xff, 0xff, 0x0f, NULL				},
 	{0x01, 0xff, 0xff, 0x3d, NULL				},
+	{0x02, 0xff, 0xff, 0x08, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
@@ -145,6 +148,10 @@ static struct BurnDIPInfo DacholerDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x01, 0x01, 0x80, 0x00, "Upright"			},
 	{0x01, 0x01, 0x80, 0x80, "Cocktail"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x02, 0x01, 0x08, 0x00, "On"					},
+	{0x02, 0x01, 0x08, 0x08, "Off"					},
 };
 
 STDDIPINFO(Dacholer)
@@ -154,6 +161,7 @@ static struct BurnDIPInfo KickboyDIPList[]=
 	DIP_OFFSET(0x12)
 	{0x00, 0xff, 0xff, 0x0f, NULL				},
 	{0x01, 0xff, 0xff, 0x7d, NULL				},
+	{0x02, 0xff, 0xff, 0x08, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
@@ -195,6 +203,10 @@ static struct BurnDIPInfo KickboyDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x01, 0x01, 0x80, 0x00, "Upright"			},
 	{0x01, 0x01, 0x80, 0x80, "Cocktail"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x02, 0x01, 0x08, 0x00, "On"					},
+	{0x02, 0x01, 0x08, 0x08, "Off"					},
 };
 
 STDDIPINFO(Kickboy)
@@ -203,7 +215,8 @@ static struct BurnDIPInfo ItatenDIPList[]=
 {
 	DIP_OFFSET(0x10)
 	{0x00, 0xff, 0xff, 0xff, NULL				},
-	{0x01, 0xff, 0xff, 0x3f, NULL				},
+	{0x01, 0xff, 0xff, 0x3e, NULL				},
+	{0x02, 0xff, 0xff, 0x08, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
@@ -242,6 +255,10 @@ static struct BurnDIPInfo ItatenDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x01, 0x01, 0x80, 0x00, "Upright"			},
 	{0x01, 0x01, 0x80, 0x80, "Cocktail"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x02, 0x01, 0x08, 0x00, "On"					},
+	{0x02, 0x01, 0x08, 0x08, "Off"					},
 };
 
 STDDIPINFO(Itaten)
@@ -286,8 +303,10 @@ static UINT8 __fastcall dacholer_main_read_port(UINT16 port)
 	{
 		case 0x00:
 		case 0x01:
+			return DrvInputs[port & 1];
+
 		case 0x02:
-			return DrvInputs[port & 3];
+			return (DrvInputs[2] & ~8) | (DrvDips[2] & 0x08);
 
 		case 0x03:
 			return (DrvDips[0] & 0xef) | (sound_ack ? 0x10 : 0); // correct???

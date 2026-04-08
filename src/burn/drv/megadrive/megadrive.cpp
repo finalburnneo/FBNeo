@@ -2825,7 +2825,7 @@ static UINT8 __fastcall sot4w_readbyte(UINT32 address)
 	return rc;
 }
 
-// vx5200 mp3 player chip
+// yx5200/vx5200 mp3 player chip
 static UINT8 vx_cmd[10] = { 0, };
 static UINT8 vx_cmdnum = 0;
 static UINT8 vx_serialnum = 0;

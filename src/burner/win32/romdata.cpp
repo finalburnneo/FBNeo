@@ -1470,6 +1470,7 @@ TCHAR* RomdataGetFullName(const TCHAR* pszFileName)
 					nAdd = _tcslen(szMerger);
 				}
 				szMerger[nAdd - 1] = _T('\0');
+				fclose(fp);
 				return szMerger;
 			}
 		}

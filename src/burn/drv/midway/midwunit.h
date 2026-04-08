@@ -4,7 +4,7 @@
 extern UINT8 nWolfUnitJoy1[32];
 extern UINT8 nWolfUnitJoy2[32];
 extern UINT8 nWolfUnitJoy3[32];
-extern UINT8 nWolfUnitDSW[2];
+extern UINT8 nWolfUnitDSW[3];
 extern UINT8 nWolfReset;
 extern UINT8 nWolfUnitRecalc;
 
@@ -22,6 +22,7 @@ extern UINT8 nWolfUnitRecalc;
 #endif
 
 INT32 WolfUnitInit();
+INT32 WolfUnitInitUMK3Patch();
 INT32 WolfUnitFrame();
 INT32 WolfUnitExit();
 INT32 WolfUnitDraw();

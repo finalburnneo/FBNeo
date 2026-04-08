@@ -1402,7 +1402,7 @@ struct BurnDriver BurnDrvpce_daisenpu = {
 // Daichi Kun Crisis - Do Natural (Japan)
 
 static struct BurnRomInfo pce_donaturlRomDesc[] = {
-	{ "daichi kun crisis - do natural (japan).pce", 0x060000, 0x61a2935f, BRF_PRG | BRF_ESS },
+	{ "Daichi Kun Crisis - Do Natural (Japan)(1989)(Salio).pce", 0x060000, 0x61a2935f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_donaturl)
@@ -1414,6 +1414,26 @@ struct BurnDriver BurnDrvpce_donaturl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV, 0,
 	PceGetZipName, pce_donaturlRomInfo, pce_donaturlRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+
+// Daichi Kun Crisis - Do Natural (Hack, English)
+// https://github.com/alarixnia/daichikun-crisis-en
+static struct BurnRomInfo pce_donaturlteRomDesc[] = {
+	{ "Daichi Kun Crisis - Do Natural T-Eng (2026)(washbear).pce", 393216, 0xd5060220, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_donaturlte)
+STD_ROM_FN(pce_donaturlte)
+
+struct BurnDriver BurnDrvpce_donaturlte = {
+	"pce_donaturlte", "pce_donaturl", NULL, NULL, "2026",
+	"Daichi Kun Crisis - Do Natural (Hack, English)\0", NULL, "washbear", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV, 0,
+	PceGetZipName, pce_donaturlteRomInfo, pce_donaturlteRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
@@ -4175,18 +4195,18 @@ struct BurnDriver BurnDrvpce_necros = {
 };
 
 
-// Fortress of Necros (Hack, English v1.1)
+// Fortress of Necros (Hack, English v1.2)
 // https://romhackplaza.org/translations/fortress-of-necros-eng-hack-english-translation-turbografx-16/
 static struct BurnRomInfo pce_necrosteRomDesc[] = {
-	{ "Fortress of Necros T-Eng v1.1 (2025)(washbear).pce", 524288, 0xe9138d89, BRF_PRG | BRF_ESS },
+	{ "Fortress of Necros T-Eng v1.2 (2025-26)(washbear).pce", 524288, 0x6cebf8b7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_necroste)
 STD_ROM_FN(pce_necroste)
 
 struct BurnDriver BurnDrvpce_necroste = {
-	"pce_necroste", "pce_necros", NULL, NULL, "2025",
-	"Fortress of Necros (Hack, English v1.1)\0", NULL, "washbear", "PC Engine",
+	"pce_necroste", "pce_necros", NULL, NULL, "2025-26",
+	"Fortress of Necros (Hack, English v1.2)\0", NULL, "washbear", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_necrosteRomInfo, pce_necrosteRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,

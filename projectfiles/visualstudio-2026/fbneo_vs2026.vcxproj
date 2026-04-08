@@ -100,6 +100,7 @@
     <ClCompile Include="..\..\src\burn\devices\74259.cpp" />
     <ClCompile Include="..\..\src\burn\devices\6821pia.cpp" />
     <ClCompile Include="..\..\src\burn\devices\6840ptm.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\74259.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8255ppi.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8257dma.cpp" />
     <ClCompile Include="..\..\src\burn\devices\ad59mc07.cpp" />
@@ -217,9 +218,12 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_akazukin.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_astrocde.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_champbas.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_circus.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_equites.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy440.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exterm.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fcombat.cpp" />
@@ -232,16 +236,20 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr68.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_miconkit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mjkjidai.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_r2dtank.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_redclash.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_shangkid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_splndrbt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tiamc1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_vampire.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_wink.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_zaccaria.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_zwackery.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_artmagic.cpp" />
@@ -265,6 +273,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_musclem.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_namconb1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
@@ -278,6 +287,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_x2222.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_119.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp" />
@@ -330,7 +340,9 @@
     <ClCompile Include="..\..\src\burn\snd\ymf271.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />
     <ClCompile Include="..\..\src\cpu\f8\f8.cpp" />
+    <ClCompile Include="..\..\src\cpu\hmcs40\hmcs40.cpp" />
     <ClCompile Include="..\..\src\cpu\i386\i386.cpp" />
+    <ClCompile Include="..\..\src\cpu\i8085\i8085.cpp" />
     <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp" />
     <ClCompile Include="..\..\src\cpu\m377\m37710.cpp" />
     <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp" />

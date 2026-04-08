@@ -8877,6 +8877,25 @@ struct BurnDriver BurnDrvsnes_Darkhalfte = {
 	512, 448, 4, 3
 };
 
+// Dark Half (Hack, Portuguese v1.3)
+// https://www.romhacking.net/translations/6804/
+static struct BurnRomInfo snes_DarkhalftpRomDesc[] = {
+	{ "Dark Half PT-BR v1.3 (2024)(PSGM).sfc", 4194304, 0x1fd2bafe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Darkhalftp)
+STD_ROM_FN(snes_Darkhalftp)
+
+struct BurnDriver BurnDrvsnes_Darkhalftp = {
+	"snes_darkhalftp", "snes_darkhalfte", NULL, NULL, "2024",
+	"Dark Half (Hack, Portuguese v1.3)\0", NULL, "PSGM", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_DarkhalftpRomInfo, snes_DarkhalftpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dark Half (Hack, Spanish)
 // https://www.romhacking.net/translations/7247/
 static struct BurnRomInfo snes_DarkhalftsRomDesc[] = {
@@ -10474,6 +10493,25 @@ struct BurnDriver BurnDrvsnes_Dquest3te = {
 	512, 448, 4, 3
 };
 
+// Dragon Quest III (Hack, Portuguese v1.01)
+// https://www.romhacking.net.br/index.php?topic=2440.0
+static struct BurnRomInfo snes_Dquest3tpRomDesc[] = {
+	{ "Dragon Quest III PT-BR v1.01 (2023)(Dindo).sfc", 6291456, 0x602c21d9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dquest3tp)
+STD_ROM_FN(snes_Dquest3tp)
+
+struct BurnDriver BurnDrvsnes_Dquest3tp = {
+	"snes_dquest3tp", "snes_dquest3te", NULL, NULL, "2023",
+	"Dragon Quest III (Hack, Portuguese v1.01)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Dquest3tpRomInfo, snes_Dquest3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dragon Quest III (Hack, Spanish v1.05rtm)
 
 static struct BurnRomInfo snes_Dquest3tsRomDesc[] = {
@@ -10797,10 +10835,10 @@ struct BurnDriver BurnDrvsnes_Dragballzrpgte = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Gokuuden - Totsugeki Hen (Hack, Portuguese)
+// Dragon Ball Z - A Lenda de Goku - Embate (Hack, Portuguese)
 // https://www.romhacking.net/translations/7297/
 static struct BurnRomInfo snes_DragballzrpgtpRomDesc[] = {
-	{ "Dragon Ball Z - Super Gokuuden - Totsugeki Hen PT-BR (2024)(Nathan).sfc", 2097152, 0x6e20d7eb, BRF_ESS | BRF_PRG },
+	{ "Dragon Ball Z - A Lenda de Goku - Embate PT-BR (2024)(Nathan).sfc", 2097152, 0x6e20d7eb, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Dragballzrpgtp)
@@ -10808,7 +10846,7 @@ STD_ROM_FN(snes_Dragballzrpgtp)
 
 struct BurnDriver BurnDrvsnes_Dragballzrpgtp = {
 	"snes_dragballzrpgtp", "snes_dragballzrpgte", NULL, NULL, "2024",
-	"Dragon Ball Z - Super Gokuuden - Totsugeki Hen (Hack, Portuguese)\0", NULL, "Nathan", "SNES / Super Famicom",
+	"Dragon Ball Z - A Lenda de Goku - Embate (Hack, Portuguese)\0", NULL, "Nathan", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_DragballzrpgtpRomInfo, snes_DragballzrpgtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -15100,6 +15138,25 @@ struct BurnDriver BurnDrvsnes_Goackman3te = {
 	512, 448, 4, 3
 };
 
+// Go Go Ackman 3 (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=2012.0
+static struct BurnRomInfo snes_Goackman3tpRomDesc[] = {
+	{ "Go Go Ackman 3 PT-BR (2021)(Linconlln).sfc", 2097152, 0x07379672, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Goackman3tp)
+STD_ROM_FN(snes_Goackman3tp)
+
+struct BurnDriver BurnDrvsnes_Goackman3tp = {
+	"snes_goackman3tp", "snes_goackman3te", NULL, NULL, "2021",
+	"Go Go Ackman 3 (Hack, Portuguese)\0", NULL, "Linconlln", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Goackman3tpRomInfo, snes_Goackman3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Goal! (USA)
 
 static struct BurnRomInfo snes_GoalRomDesc[] = {
@@ -16711,6 +16768,25 @@ struct BurnDriver BurnDrvsnes_Hookj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_HookjRomInfo, snes_HookjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Hook (Hack, Portuguese v2.0)
+// https://www.romhacking.net.br/index.php?topic=3291.0
+static struct BurnRomInfo snes_HooktpRomDesc[] = {
+	{ "Hook PT-BR v2.0 (2026)(juliano_did).sfc", 1048576, 0xd6ca1fad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hooktp)
+STD_ROM_FN(snes_Hooktp)
+
+struct BurnDriver BurnDrvsnes_Hooktp = {
+	"snes_hooktp", "snes_hook", NULL, NULL, "2026",
+	"Hook (Hack, Portuguese v2.0)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_HooktpRomInfo, snes_HooktpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -43998,10 +44074,10 @@ struct BurnDriver BurnDrvsnes_Bofwofg = {
 	512, 448, 4, 3
 };
 
-// Bubsy: Less Bad Edition (Hack, v1.3)
+// Bubsy: Less Bad Edition (Hack, v2.11)
 // https://www.romhacking.net/hacks/9453/
 static struct BurnRomInfo snes_BubsylbeRomDesc[] = {
-	{ "Bubsy - Less Bad Edition v1.3 (2026)(NoPLo).sfc", 2097152, 0x72f7fc86, BRF_ESS | BRF_PRG },
+	{ "Bubsy - Less Bad Edition v2.11 (2026)(NoPLo).sfc", 2097152, 0x4837d7de, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Bubsylbe)
@@ -44009,7 +44085,7 @@ STD_ROM_FN(snes_Bubsylbe)
 
 struct BurnDriver BurnDrvsnes_Bubsylbe = {
 	"snes_bubsylbe", "snes_bubsy", NULL, NULL, "2026",
-	"Bubsy: Less Bad Edition (Hack, v1.3)\0", NULL, "NoPLo", "Nintendo",
+	"Bubsy: Less Bad Edition (Hack, v2.11)\0", NULL, "NoPLo", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BubsylbeRomInfo, snes_BubsylbeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -46883,6 +46959,25 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Supercastlevania4uhRomInfo, snes_Supercastlevania4uhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Ghouls'n Ghosts Enhanced (Hack)
+// https://www.romhacking.net/hacks/9480/
+static struct BurnRomInfo snes_SupergngenhRomDesc[] = {
+	{ "Super Ghouls'n Ghosts Enhanced Hack (2026)(Tiken).sfc", 1048576, 0xebb9c790, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supergngenh)
+STD_ROM_FN(snes_Supergngenh)
+
+struct BurnDriver BurnDrvsnes_Supergngenh = {
+	"snes_supergngenh", "snes_supergng", NULL, NULL, "2026",
+	"Super Ghouls'n Ghosts Enhanced (Hack)\0", "Air control while jumping & FastROM & more...", "Tiken", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SNESGetZipName, snes_SupergngenhRomInfo, snes_SupergngenhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

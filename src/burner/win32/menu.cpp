@@ -19,6 +19,9 @@ static HMENU hAudioPluginMenu[8] = {NULL, };
 bool bMenuDisplayed = false;
 bool bModelessMenu  = false;
 bool bAdaptivepopup = false;
+
+bool szPrevGamesNeedsUpdate = true;
+
 int nLastMenu = 0;
 static int nRecursions = -1;
 static HMENU hCurrentMenu;
@@ -489,6 +492,8 @@ int MenuCreate()
 	TCHAR szButtonText[32];
 	MENUITEMINFO menuItemInfo;
 	MENUINFO menu;
+
+	szPrevGamesNeedsUpdate = true;
 
 	if (hMenu == NULL) {
 		hMenu = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU));					// Main application menu
@@ -1295,66 +1300,77 @@ void MenuUpdate()
 	var = (bIconsByHardwares) ? MENU_ICONS_BY_HARDWARE : MENU_ICONS_BY_GAME;
 	CheckMenuRadioItem(hMenu, MENU_ICONS_BY_GAME, MENU_ICONS_BY_HARDWARE, var, MF_BYCOMMAND);
 
-	// Previous games list
-	for (int i = 0; i < SHOW_PREV_GAMES; i++) {
-		MENUITEMINFO menuItemInfo;
-		TCHAR szText[256] = _T("");
-		int OldDrvSelect = nBurnDrvActive;
+	if (szPrevGamesNeedsUpdate) {
+		szPrevGamesNeedsUpdate = false;
 
-		memset(&menuItemInfo, 0, sizeof(MENUITEMINFO));
-		menuItemInfo.cbSize = sizeof(MENUITEMINFO);
-		menuItemInfo.fType = MFT_STRING;
-		menuItemInfo.fMask = MIIM_TYPE;
+		// Previous games list
+		for (int i = 0; i < SHOW_PREV_GAMES; i++) {
+			MENUITEMINFO menuItemInfo;
+			TCHAR szText[256] = _T("");
+			int OldDrvSelect = nBurnDrvActive;
 
-		if (_tcslen(szPrevGames[i])) {
-			// Find RomData directory (recursive or not depending on settings)
-			TCHAR szDatFile[MAX_PATH] = { 0 };
-			if (FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[i], NULL, 0), szDatFile)) {
-				_stprintf(szText, _T("%s\t%s"), RomdataGetFullName(szDatFile), szPrevGames[i]);
-			} else {
+			memset(&menuItemInfo, 0, sizeof(MENUITEMINFO));
+			menuItemInfo.cbSize = sizeof(MENUITEMINFO);
+			menuItemInfo.fType = MFT_STRING;
+			menuItemInfo.fMask = MIIM_TYPE;
+
+			if (_tcslen(szPrevGames[i])) {
+
+				// First we'll check the internal fbneo-database for szPrevGames[] resolution
+				bool found = false;
 				for (unsigned int j = 0; j < nBurnDrvCount; j++) {
 					nBurnDrvActive = j;
 					if (!_tcsicmp(szPrevGames[i], BurnDrvGetText(DRV_NAME))) {
 						_stprintf(szText, _T("%s\t%s"), BurnDrvGetText(DRV_FULLNAME), BurnDrvGetText(DRV_NAME));
-
+						found = true;
 						break;
 					}
 				}
-			}
+				nBurnDrvActive = OldDrvSelect;
 
-			// Check for &s and change to &&
-			TCHAR szText2[256] = _T("");
-			TCHAR *Tokens = NULL;
-			int NumTokens = 0;
-
-			Tokens = _tcstok(szText, _T("&"));
-			while (Tokens != NULL) {
-				if (NumTokens) {
-					_stprintf(szText2, _T("%s&&%s"), szText2, Tokens);
-				} else {
-					_stprintf(szText2, _T("%s"), Tokens);
+				// If it's not found, attempt to resolve via RomData
+				if (found == false) {
+					// Find RomData directory (recursive or not depending on settings)
+					TCHAR szDatFile[MAX_PATH] = { 0 };
+					if (FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[i], NULL, 0), szDatFile)) {
+						_stprintf(szText, _T("%s\t%s"), RomdataGetFullName(szDatFile), szPrevGames[i]);
+					}
 				}
 
-				Tokens = _tcstok(NULL, _T("&"));
-				NumTokens++;
+				// Check for &s and change to &&
+				TCHAR szText2[256] = _T("");
+				TCHAR *Tokens = NULL;
+				int NumTokens = 0;
+
+				Tokens = _tcstok(szText, _T("&"));
+				while (Tokens != NULL) {
+					if (NumTokens) {
+						_stprintf(szText2, _T("%s&&%s"), szText2, Tokens);
+					} else {
+						_stprintf(szText2, _T("%s"), Tokens);
+					}
+
+					Tokens = _tcstok(NULL, _T("&"));
+					NumTokens++;
+				}
+
+				menuItemInfo.dwTypeData = szText2;
+				menuItemInfo.cch = _tcslen(szText2);
+
+				SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
+				EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_ENABLED | MF_BYCOMMAND);
+			} else {
+				_tcscpy(szText, FBALoadStringEx(hAppInst, IDS_MENU_6, true));
+
+				menuItemInfo.dwTypeData = szText;
+				menuItemInfo.cch = _tcslen(szText);
+
+				SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
+				EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_GRAYED | MF_BYCOMMAND);
 			}
 
-			menuItemInfo.dwTypeData = szText2;
-			menuItemInfo.cch = _tcslen(szText2);
-
-			SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
-			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_ENABLED | MF_BYCOMMAND);
-		} else {
-			_tcscpy(szText, FBALoadStringEx(hAppInst, IDS_MENU_6, true));
-
-			menuItemInfo.dwTypeData = szText;
-			menuItemInfo.cch = _tcslen(szText);
-
-			SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
-			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_GRAYED | MF_BYCOMMAND);
+			nBurnDrvActive = OldDrvSelect;
 		}
-
-		nBurnDrvActive = OldDrvSelect;
 	}
 
 #if !defined BUILD_X86_ASM

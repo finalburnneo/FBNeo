@@ -15166,6 +15166,25 @@ struct BurnDriver BurnSpecInvforce = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Invasion (48K)
+
+static struct BurnRomInfo SpecInvmastRomDesc[] = {
+	{ "Invasion 48K (1987)(Mastertronic).tzx", 41093, 0xc62ab4b2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecInvmast, SpecInvmast, Spectrum)
+STD_ROM_FN(SpecInvmast)
+
+struct BurnDriver BurnSpecInvmast = {
+	"spec_invmast", NULL, "spec_spectrum", NULL, "1987",
+	"Invasion (48K)\0", NULL, "Mastertronic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_STRATEGY, 0,
+	SpectrumGetZipName, SpecInvmastRomInfo, SpecInvmastRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Iron Lord (128K)
 
 static struct BurnRomInfo SpecIronlordRomDesc[] = {
@@ -20996,6 +21015,25 @@ struct BurnDriver BurnSpecpandizzy = {
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecpandizzyRomInfo, SpecpandizzyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Panther (48K)
+
+static struct BurnRomInfo SpecPantherRomDesc[] = {
+	{ "Panther 48K (1989)(Mastertronic).tap", 34670, 0xd613f908, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPanther, SpecPanther, Spectrum)
+STD_ROM_FN(SpecPanther)
+
+struct BurnDriver BurnSpecPanther = {
+	"spec_panther", NULL, "spec_spectrum", NULL, "1989",
+	"Panther (48K)\0", "Define keys to use controller - SPACE: reset game", "Mastertronic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecPantherRomInfo, SpecPantherRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -47817,6 +47855,25 @@ struct BurnDriver BurnSpecManicrobot = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Manokone no densetsu (48K-128K) (HB)
+
+static struct BurnRomInfo SpecManokoneRomDesc[] = {
+	{ "Manokone no densetsu 48K-128K (2026)(KrappyGamez).tap", 42659, 0x34900aae, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecManokone, SpecManokone, Spec128)
+STD_ROM_FN(SpecManokone)
+
+struct BurnDriver BurnSpecManokone = {
+	"spec_manokone", NULL, "spec_spec128", NULL, "2026",
+	"Manokone no densetsu (48K-128K) (HB)\0", NULL, "KrappyGamez", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecManokoneRomInfo, SpecManokoneRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Manula 2, La (48K) (HB)
 
 static struct BurnRomInfo SpecManula2RomDesc[] = {
@@ -49562,6 +49619,25 @@ struct BurnDriver BurnSpecMoritzstkbck = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecMoritzstkbckRomInfo, SpecMoritzstkbckRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Moritz at the Tea Party (48K) (HB)
+
+static struct BurnRomInfo SpecMoritzteaRomDesc[] = {
+	{ "Moritz at the Tea Party 48K (2026)(ZXAMAZE).tap", 47777, 0x3d196761, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMoritztea, SpecMoritztea, Spectrum)
+STD_ROM_FN(SpecMoritztea)
+
+struct BurnDriver BurnSpecMoritztea = {
+	"spec_moritztea", NULL, "spec_spectrum", NULL, "2026",
+	"Moritz at the Tea Party (48K) (HB)\0", "Set '1.Keyboard' to use controller", "ZXAMAZE", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecMoritzteaRomInfo, SpecMoritzteaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -52283,6 +52359,25 @@ struct BurnDriver BurnSpecPrimaderezx = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Priss Triss (48K-128K) (HB)
+
+static struct BurnRomInfo SpecPrisstrissRomDesc[] = {
+	{ "Priss Triss 48K-128K (2026)(KTB Productions).tap", 32587, 0x70b3dd6c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPrisstriss, SpecPrisstriss, Spec128)
+STD_ROM_FN(SpecPrisstriss)
+
+struct BurnDriver BurnSpecPrisstriss = {
+	"spec_prisstriss", NULL, "spec_spec128", NULL, "2026",
+	"Priss Triss (48K-128K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecPrisstrissRomInfo, SpecPrisstrissRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Project Re.Ve.La.Tion (48K) (HB)
 
 static struct BurnRomInfo SpecPrjrevRomDesc[] = {
@@ -53685,6 +53780,25 @@ struct BurnDriver BurnSpecRescmarte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecRescmarteRomInfo, SpecRescmarteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Rescue Rocket (48K) (HB)
+
+static struct BurnRomInfo SpecRescuerocketRomDesc[] = {
+	{ "Rescue Rocket 48K (2026)(KTB Productions).tap", 45453, 0x40e72923, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRescuerocket, SpecRescuerocket, Spectrum)
+STD_ROM_FN(SpecRescuerocket)
+
+struct BurnDriver BurnSpecRescuerocket = {
+	"spec_rescuerocket", NULL, "spec_spectrum", NULL, "2026",
+	"Rescue Rocket (48K) (HB)\0", NULL, "KTB Productions", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecRescuerocketRomInfo, SpecRescuerocketRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

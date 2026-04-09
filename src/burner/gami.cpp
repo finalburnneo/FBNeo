@@ -2175,6 +2175,7 @@ tIniStruct gamehw_cfg[] = {
 	{_T("SNES hardware"),				_T("config/presets/snes.ini"),		true,	{ HARDWARE_SNES, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
 	{_T("SNES w/Scope hardware"),		_T("config/presets/snes_scope.ini"),true,	{ HARDWARE_SNES_ZAPPER, 0 },				"\t\t\t<item list=\"snes\" name=\""			},
 	{_T("PGM hardware"),				_T("config/presets/pgm.ini"),		false,	{ HARDWARE_IGS_PGM, 0 },			"\t\t\t<system name=\""        				},
+	{_T("PGM2 hardware"),				_T("config/presets/pgm2.ini"),		false,	{ HARDWARE_IGS_PGM2, 0 },			"\t\t\t<system name=\""        				},
 	{_T("MegaDrive hardware"),			_T("config/presets/megadrive.ini"),	true,	{ HARDWARE_SEGA_MEGADRIVE, 0 },		"\t\t\t<item list=\"megadriv\" name=\""		},
 	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_PCENGINE, HARDWARE_PCENGINE_SGX, 0 },	"\t\t\t<item list=\"pce\" name=\""			},
 	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_TG16, 0 },		"\t\t\t<item list=\"tg16\" name=\""			},

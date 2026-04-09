@@ -1908,7 +1908,7 @@ bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect)
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
 	ofn.lpstrDefExt = _T("dat");
 
-	if (0 == GetOpenFileName(&ofn)) {
+	if (0 == GetSaveFileName(&ofn)) {
 		nBurnDrvActive = nOldDrvSel;
 		return false;
 	}

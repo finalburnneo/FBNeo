@@ -12,10 +12,3 @@ Building
 2) in the checked out code, open projectfiles then visualstudio-2026, then open fbneo_vs2026.sln
 3) select the correctly platform and build type. 
 4) hit build!
-
-
-
-
-
-
-

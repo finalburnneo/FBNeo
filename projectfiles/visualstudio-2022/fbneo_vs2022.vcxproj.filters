@@ -601,6 +601,18 @@
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_run.cpp">
       <Filter>burn\drv\pgm</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\d_pgm2.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_crypt.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_draw.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pgm2\pgm2_run.cpp">
+      <Filter>burn\drv\pgm2</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_1942.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
@@ -3709,7 +3721,11 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_wink.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pst
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp" />
+    <ClCompile Include="..\..\src\cpu\arm9_intf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -3756,6 +3772,9 @@
     </Filter>
     <Filter Include="burn\drv\pgm">
       <UniqueIdentifier>{14559fe7-78ad-4e5d-9fde-0a27cfebe3f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="burn\drv\pgm2">
+      <UniqueIdentifier>{36f1cf44-cad2-4b2b-844a-6e8cafb6f8f1}</UniqueIdentifier>
     </Filter>
     <Filter Include="burn\drv\pre90s">
       <UniqueIdentifier>{1ee2e0f5-6bec-41dd-8b09-f110a36e0fbd}</UniqueIdentifier>
@@ -3981,6 +4000,9 @@
     </Filter>
     <Filter Include="cpus\i8085">
       <UniqueIdentifier>{e0ac366b-11fb-4430-938e-4f632743540c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\arm9">
+      <UniqueIdentifier>{49209c37-c5b6-44a8-9441-0e9e5fad12ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

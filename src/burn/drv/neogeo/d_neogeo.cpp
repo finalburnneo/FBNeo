@@ -17116,19 +17116,19 @@ struct BurnDriver BurnDrvMatrimbh = {
 // Neo Turf Masters / Big Tournament Golf: Scotland Course
 
 static struct BurnRomInfo turfmastscRomDesc[] = {
-	{ "200-p1sc.p1",	0x200000, 0x6361a52f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
+	{ "200-p1sc.p1",	0x200000, 0x6361a52f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1
 
-	{ "200-c1sc.c1",	0x400000, 0x5fccd812, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
-	{ "200-c2sc.c2",	0x400000, 0x5f589076, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "200-c1sc.c1",	0x400000, 0x5fccd812, 3 | BRF_GRA },           //  2 Sprite data
+	{ "200-c2sc.c2",	0x400000, 0x5f589076, 3 | BRF_GRA },           //  3
 
-	{ "200-m1sc.m1",	0x020000, 0xc6a6c686, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ mask rom TC531001
+	{ "200-m1sc.m1",	0x020000, 0xc6a6c686, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "200-v1.v1",		0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data		/ mask rom TC5316200
-	{ "200-v2sc.v2",	0x200000, 0xcaf341a8, 5 | BRF_SND },           //  6 					/ mask rom TC5316200
-	{ "200-v3.v3",		0x200000, 0x7abca053, 5 | BRF_SND },           //  7 					/ mask rom TC5316200
-	{ "200-v4.v4",		0x200000, 0x6c7b4902, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
+	{ "200-v1.v1",		0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data
+	{ "200-v2sc.v2",	0x200000, 0xcaf341a8, 5 | BRF_SND },           //  6
+	{ "200-v3.v3",		0x200000, 0x7abca053, 5 | BRF_SND },           //  7
+	{ "200-v4.v4",		0x200000, 0x6c7b4902, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(turfmastsc, turfmastsc, neogeo)

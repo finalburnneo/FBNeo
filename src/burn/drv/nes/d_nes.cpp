@@ -9729,18 +9729,18 @@ struct BurnDriver BurnDrvnes_nekkestrbascastc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nightshade (Hack, Portuguese v2.01)
+// Nightshade (Hack, Portuguese v3.0)
 // https://www.romhacking.net/translations/3518/
 static struct BurnRomInfo nes_nightshadetpRomDesc[] = {
-	{ "Nightshade T-Por v2.01 (2022)(ajkmetiuk).nes",          524304, 0x90f8d346, BRF_ESS | BRF_PRG },
+	{ "Nightshade T-Por v3.0 (2022-25)(ajkmetiuk).nes",          524304, 0x96e977f8, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nightshadetp)
 STD_ROM_FN(nes_nightshadetp)
 
 struct BurnDriver BurnDrvnes_nightshadetp = {
-	"nes_nightshadetp", "nes_nightshade", NULL, NULL, "2022",
-	"Nightshade (Hack, Portuguese v2.01)\0", NULL, "ajkmetiuk", "NES / Famicom",
+	"nes_nightshadetp", "nes_nightshade", NULL, NULL, "2022-25",
+	"Nightshade (Hack, Portuguese v3.0)\0", NULL, "ajkmetiuk", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_nightshadetpRomInfo, nes_nightshadetpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

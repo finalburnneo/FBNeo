@@ -186,7 +186,7 @@ static void kov3LoadRoms()
 static INT32 orleg2InitCommon()
 {
     pgm2SetStorageRomIndices(-1, 11);
-    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -201,7 +201,7 @@ static INT32 orleg2CnInitCommon()
     pgm2SetCardRomIndex(1, 11);
     pgm2SetCardRomIndex(2, 12);
     pgm2SetCardRomIndex(3, 13);
-    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -216,7 +216,7 @@ static INT32 orleg2HkInitCommon()
     pgm2SetCardRomIndex(1, 11);
     pgm2SetCardRomIndex(2, 12);
     pgm2SetCardRomIndex(3, 13);
-    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -226,7 +226,7 @@ static INT32 orleg2HkInitCommon()
 static INT32 orleg2JpInitCommon()
 {
     pgm2SetStorageRomIndices(-1, 14);
-    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -241,7 +241,7 @@ static INT32 orleg2TwInitCommon()
     pgm2SetCardRomIndex(1, 11);
     pgm2SetCardRomIndex(2, 12);
     pgm2SetCardRomIndex(3, 13);
-    pgm2SetSpeedhack(0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
     pPgm2InitCallback = orleg2LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -256,7 +256,7 @@ static INT32 kov2nlInitCommon()
     pgm2SetCardRomIndex(1, 11);
     pgm2SetCardRomIndex(2, 12);
     pgm2SetCardRomIndex(3, 13);
-    pgm2SetSpeedhack(0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
+    pgm2SetSpeedhack(0, 0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
     pPgm2InitCallback = kov2nlLoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -279,7 +279,7 @@ static INT32 kov3Init()
     pgm2SetCardRomIndex(0, 10);
     pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_104_key, kov3_104_sum, 0x18ec71, 0xb89d);
-    pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -293,7 +293,7 @@ static INT32 kov3_102Init()
     pgm2SetCardRomIndex(0, 10);
     pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_102_key, kov3_102_sum, 0x021d37, 0x81d0);
-    pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -307,7 +307,7 @@ static INT32 kov3_101Init()
     pgm2SetCardRomIndex(0, 10);
     pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_101_key, kov3_101_sum, 0x000000, 0xffff);
-    pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -321,7 +321,7 @@ static INT32 kov3_100Init()
     pgm2SetCardRomIndex(0, 10);
     pgm2SetCardRomIndex(1, 11);
     pgm2EnableKov3Module(kov3_100_key, kov3_100_sum, 0x3e8aa8, 0xc530);
-    pgm2SetSpeedhack(0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
     pPgm2InitCallback = kov3LoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -365,7 +365,8 @@ static INT32 ddpdojtInit()
 {
     pgm2SetStorageRomIndices(-1, 10);
     pgm2SetRamRomBoard(0x200000);  // 2MB RAM before ROM
-    pgm2SetSpeedhack(0x20000060, 0x10001a7e, 0, 0, 0);
+	pgm2SetSpeedhack(0, 0x20000060, 0x10001a7e, 0, 0, 0);
+	pgm2SetSpeedhack(1, 0x20021e04, 0x1008fefe, 0x1008fbe8, 0, 0);
     pPgm2InitCallback = ddpdojtLoadRoms;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
@@ -411,7 +412,7 @@ static void kof98umhLoadRoms()
 static INT32 kof98umhInit()
 {
     pgm2SetStorageRomIndices(-1, 11);
-    pgm2SetSpeedhack(0x20000060, 0x100028f6, 0, 0, 0);
+    pgm2SetSpeedhack(0, 0x20000060, 0x100028f6, 0, 0, 0);
     pgm2SetRefreshRate(15625.0 / 264.0);  // ~59.19 Hz (MAME pgm2_lores config)
     pPgm2InitCallback = kof98umhLoadRoms;
     pPgm2ResetCallback = NULL;

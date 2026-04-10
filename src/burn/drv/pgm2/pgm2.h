@@ -88,7 +88,7 @@ INT32 pgm2Exit();
 INT32 pgm2Frame();
 INT32 pgm2DoReset();
 INT32 pgm2Scan(INT32 nAction, INT32 *pnMin);
-void pgm2SetSpeedhack(UINT32 addr, UINT32 pc1, UINT32 pc2 = 0, UINT32 pc3 = 0, UINT32 pc4 = 0);
+void pgm2SetSpeedhack(UINT32 id, UINT32 addr, UINT32 pc1, UINT32 pc2 = 0, UINT32 pc3 = 0, UINT32 pc4 = 0);
 void pgm2EnableKov3Module(const UINT8 *key, const UINT8 *sum, UINT32 addrXor, UINT16 dataXor);
 void pgm2DisableKov3Module();
 void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex);

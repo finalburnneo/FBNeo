@@ -87,6 +87,7 @@ UINT8  Pgm2Reset           = 0;
 // Encryption support (runtime decryption via internal boot ROM)
 static UINT8 *Pgm2ArmROMEncrypted = NULL;     // encrypted backup for reset
 static INT32  Pgm2HasDecrypted = 0;            // prevents double decryption
+static INT32  Pgm2HasDecrypted_Cached = 0;     // prevents double decryption
 static UINT8  Pgm2EncryptTable[0x100] = {0};  // captured from writes to 0xFFFFFC00
 static INT32  Pgm2RtcBase = 0;
 static INT32  Pgm2EncWriteCount = 0;
@@ -130,6 +131,7 @@ INT32  Pgm2ColourROMOffset = 0;  // byte offset in SprROM where colour data star
 // KOV3 module support
 static INT32  Pgm2HasKov3Module = 0;
 static INT32  Pgm2HasDecryptedKov3Module = 0;
+static INT32  Pgm2HasDecryptedKov3Module_Cached = 0;
 static const UINT8 *Pgm2ModuleKey = NULL;
 static const UINT8 *Pgm2ModuleSum = NULL;
 static UINT32 Pgm2ModuleAddrXor = 0;
@@ -243,7 +245,8 @@ static void pgm2DecryptKov3Module(UINT32 addrXor, UINT16 dataXor)
     memcpy(rom, buffer, Pgm2ArmROMLen);
     BurnFree(buffer);
 
-    Pgm2HasDecryptedKov3Module = 1;
+	Pgm2HasDecryptedKov3Module = 1;
+	Pgm2HasDecryptedKov3Module_Cached = 1;
     PGM2_LOG(PGM2_LOG_MODULE, "kov3 module decrypted addrXor=%06X dataXor=%04X", addrXor, dataXor);
 }
 
@@ -485,7 +488,8 @@ static void pgm2DoDecrypt(const char* source)
         }
     }
 
-    Pgm2HasDecrypted = 1;
+	Pgm2HasDecrypted = 1;
+	Pgm2HasDecrypted_Cached = 1;
 }
 
 // ---------------------------------------------------------------------------
@@ -1821,6 +1825,7 @@ INT32 pgm2Init()
     }
 
     Pgm2HasDecrypted = 0;
+	Pgm2HasDecrypted_Cached = 0;
 
     // Initialize KOV3 module clock counter to 151 (matches MAME machine_reset).
     // This skips the false clock pulse that occurs during GPIO initialization.
@@ -1950,7 +1955,9 @@ INT32 pgm2DoReset()
 		memcpy(Pgm2ArmROM, Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
 
 	Pgm2HasDecryptedKov3Module = 0;
+	Pgm2HasDecryptedKov3Module_Cached = 0;
 	Pgm2HasDecrypted = 0;
+	Pgm2HasDecrypted_Cached = 0;
 	Pgm2ModuleClkCnt = 151; // MAME: prevents false clock pulse during GPIO init
 	Pgm2ModulePrevState = 0;
 	Pgm2ModuleInLatch = 0;
@@ -2027,7 +2034,8 @@ INT32 pgm2Exit()
 
     // Reset kov3 module state
     Pgm2HasKov3Module = 0;
-    Pgm2HasDecryptedKov3Module = 0;
+	Pgm2HasDecryptedKov3Module = 0;
+	Pgm2HasDecryptedKov3Module_Cached = 0;
     Pgm2ModuleKey = NULL;
     Pgm2ModuleSum = NULL;
     Pgm2ModuleAddrXor = 0;
@@ -2345,12 +2353,12 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
         SCAN_VAR(Pgm2AicLevelStack);
         SCAN_VAR(Pgm2AicLvlIdx);
 
-        SCAN_VAR(Pgm2HasDecrypted);
+        SCAN_VAR(Pgm2HasDecrypted); // do _not_ scan "Pgm2HasDecrypted_Cached" - internal cached value!
         SCAN_VAR(Pgm2EncryptTable);
 
-        if (Pgm2HasKov3Module) 
+		if (Pgm2HasKov3Module)
 		{
-            SCAN_VAR(Pgm2HasDecryptedKov3Module);
+            SCAN_VAR(Pgm2HasDecryptedKov3Module); // do _not_ scan "Pgm2HasDecryptedKov3Module_Cached" - internal cached value!
             SCAN_VAR(Pgm2ModuleClkCnt);
             SCAN_VAR(Pgm2ModulePrevState);
             SCAN_VAR(Pgm2ModuleInLatch);
@@ -2362,20 +2370,29 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
         }
     }
 
-    // After loading a savestate, restore encrypted ROM and re-decrypt if needed
-    // (MAME: device_post_load — module XOR first, then table decrypt)
-    if (nAction & ACB_WRITE) {
-        if (Pgm2ArmROMEncrypted && Pgm2ArmROM)
-            memcpy(Pgm2ArmROM, Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
-        if (Pgm2HasDecryptedKov3Module) {
-            pgm2DecryptKov3Module(Pgm2ModuleAddrXor, Pgm2ModuleDataXor);
-        }
-        if (Pgm2HasDecrypted) {
-            if (Pgm2ArmROM && Pgm2ArmROMLen > 0) {
-                INT32 decryptLen = (Pgm2ArmROMFileLen > 0) ? Pgm2ArmROMFileLen : Pgm2ArmROMLen;
-                pgm2_igs036_decrypt(Pgm2ArmROM, decryptLen, Pgm2EncryptTable, Pgm2DecryptWordOffset);
-            }
-        }
+    // After loading a savestate, restore encrypted ROM and re-decrypt if
+	// Decryption values in state do not match internal cached value
+	if (nAction & ACB_WRITE) {
+		const bool pgm2_decr_check = Pgm2HasDecrypted != Pgm2HasDecrypted_Cached;
+		const bool kov3_decr_check = Pgm2HasKov3Module && (Pgm2HasDecryptedKov3Module != Pgm2HasDecryptedKov3Module_Cached);
+		if (pgm2_decr_check || kov3_decr_check) {
+			Pgm2HasDecrypted_Cached = 0;
+			Pgm2HasDecryptedKov3Module_Cached = 0;
+
+			if (Pgm2ArmROMEncrypted && Pgm2ArmROM)
+				memcpy(Pgm2ArmROM, Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
+			if (Pgm2HasDecryptedKov3Module) {
+				pgm2DecryptKov3Module(Pgm2ModuleAddrXor, Pgm2ModuleDataXor);
+				Pgm2HasDecryptedKov3Module_Cached = 1;
+			}
+			if (Pgm2HasDecrypted) {
+				if (Pgm2ArmROM && Pgm2ArmROMLen > 0) {
+					INT32 decryptLen = (Pgm2ArmROMFileLen > 0) ? Pgm2ArmROMFileLen : Pgm2ArmROMLen;
+					pgm2_igs036_decrypt(Pgm2ArmROM, decryptLen, Pgm2EncryptTable, Pgm2DecryptWordOffset);
+					Pgm2HasDecrypted_Cached = 1;
+				}
+			}
+		}
     }
 
     if (pPgm2ScanCallback)

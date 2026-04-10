@@ -42447,6 +42447,24 @@ struct BurnDriver BurnDrvmd_threestooges = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Toogle (HB, Rev 01)
+static struct BurnRomInfo md_toogleRomDesc[] = {
+	{ "Toogle - Rev 01 (2025)(Dune).bin", 786432, 0x793b87c5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_toogle)
+STD_ROM_FN(md_toogle)
+
+struct BurnDriver BurnDrvmd_toogle = {
+	"md_toogle", NULL, NULL, NULL, "2025",
+	"Toogle (HB, Rev 01)\0", NULL, "Dune", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_toogleRomInfo, md_toogleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Tourmaline (HB)
 static struct BurnRomInfo md_tourmalineRomDesc[] = {
 	{ "Tourmaline (2021)(RetroSouls).bin", 786432, 0x437aeb56, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

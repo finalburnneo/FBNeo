@@ -41605,17 +41605,17 @@ struct BurnDriver BurnDrvmd_puzzli = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// PuzzuL SwaP (HB, Final Beta)
+// PuzzuL SwaP (HB, Rev. 02)
 static struct BurnRomInfo md_puzzulswapRomDesc[] = {
-	{ "PuzzuL SwaP - final beta (2023)(GF64).bin", 288320, 0x22072371, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "PuzzuL SwaP - Rev. 02 (2023-24)(GF64).bin", 524288, 0x4e1660f2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_puzzulswap)
 STD_ROM_FN(md_puzzulswap)
 
 struct BurnDriver BurnDrvmd_puzzulswap = {
-	"md_puzzulswap", NULL, NULL, NULL, "2023",
-	"PuzzuL SwaP (HB, Final Beta)\0", NULL, "GF64", "Genesis / Mega Drive",
+	"md_puzzulswap", NULL, NULL, NULL, "2023-24",
+	"PuzzuL SwaP (HB, Rev. 02)\0", NULL, "GF64", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_puzzulswapRomInfo, md_puzzulswapRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -48,6 +48,11 @@
 #define ARM9_MODE 0
 #endif
 
+	if (burn_until_irq) {
+		total_cycles += cycles;
+		return cycles;
+	}
+
     ARM7_ICOUNT = cycles;
     curr_cycles = cycles;
 	end_run = 0;

@@ -143,6 +143,11 @@ void Arm9RunEndEatCycles()
 	arm9_icount = 0;
 }
 
+void Arm9BurnUntilInterrupt()
+{
+	arm7_burn_until_irq(1);
+}
+
 void Arm9RunEnd()
 {
 #if defined FBNEO_DEBUG
@@ -202,6 +207,8 @@ void arm9_set_irq_line(int irqline, int state)
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_ARM9Initted) bprintf(PRINT_ERROR, _T("arm9_set_irq_line called without init\n"));
 #endif
+
+	arm7_burn_until_irq(0);
 	arm7_core_set_irq_line(irqline, state);
 }
 
@@ -253,6 +260,7 @@ int Arm9Scan(int nAction)
 		SCAN_VAR(arm9_total_cycles);
 		SCAN_VAR(arm9_curr_cycles);
 		SCAN_VAR(arm9_cp15_regs);
+		SCAN_VAR(burn_until_irq);
 	}
 
 	return 0;

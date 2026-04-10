@@ -130,6 +130,9 @@ void (*arm7_coproc_dt_r_callback)(UINT32 insn, UINT32 *prn, UINT32 (*read32)(UIN
 void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32 *prn, void (*write32)(UINT32 addr, UINT32 data));
 
 
+static int burn_until_irq = 0;
+
+
 /***************************************************************************
  * Default Memory Handlers
  ***************************************************************************/
@@ -693,6 +696,11 @@ static void arm7_check_irq_state(void)
         ARM7.pendingSwi = 0;
         return;
     }
+}
+
+static void arm7_burn_until_irq(int state)
+{
+	burn_until_irq = state;
 }
 
 // CPU - SET IRQ LINE

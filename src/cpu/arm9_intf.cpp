@@ -82,6 +82,24 @@ void Arm9Exit()
 	DebugCPU_ARM9Initted = 0;
 }
 
+void Arm9UnmapMemory(UINT32 start, UINT32 finish, INT32 type)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ARM9Initted) bprintf(PRINT_ERROR, _T("Arm9UnmapMemory called without init\n"));
+	if (start >= MAX_MEMORY || finish >= MAX_MEMORY) bprintf(PRINT_ERROR, _T("Arm9UnmapMemory memory range unsupported 0x%8.8x-0x%8.8x\n"), start, finish);
+#endif
+
+	UINT32 len = (finish - start) >> PAGE_SHIFT;
+
+	for (UINT32 i = 0; i < len + 1; i++)
+	{
+		UINT32 offset = i + (start >> PAGE_SHIFT);
+		if (type & (1 <<  READ)) membase[ READ][offset] = NULL;
+		if (type & (1 << WRITE)) membase[WRITE][offset] = NULL;
+		if (type & (1 << FETCH)) membase[FETCH][offset] = NULL;
+	}
+}
+
 void Arm9MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type)
 {
 #if defined FBNEO_DEBUG

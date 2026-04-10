@@ -14,6 +14,7 @@ UINT32 Arm9FetchLong(UINT32 addr);
 
 void Arm9RunEnd();
 void Arm9RunEndEatCycles();
+void Arm9BurnUntilInterrupt();
 void Arm9BurnCycles(INT32 cycles);
 INT32 Arm9Idle(int cycles);
 INT32 Arm9TotalCycles();
@@ -32,6 +33,7 @@ INT32 Arm9Scan(INT32 nAction);
 void Arm9SetIRQLine(INT32 line, INT32 state);
 
 void Arm9MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type);
+void Arm9UnmapMemory(UINT32 start, UINT32 finish, INT32 type);
 
 void Arm9SetWriteByteHandler(void (*write)(UINT32, UINT8));
 void Arm9SetWriteWordHandler(void (*write)(UINT32, UINT16));

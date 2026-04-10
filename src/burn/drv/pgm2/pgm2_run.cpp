@@ -841,7 +841,13 @@ static void pgm2McuCommand(bool isCommand)
             break;
 
             case 0xc0: // insert card / check card presence
-            case 0xc1: // check ready/busy
+                if (!pgm2CardPresent(arg1 & 3)) {
+                    status = 0x00f70000;
+                }
+                Pgm2McuResult0 = cmd;
+			break;
+
+			case 0xc1: // check ready/busy
                 if (!pgm2CardPresent(arg1)) {
                     status = 0x00f40000;
                 }

@@ -4195,10 +4195,10 @@ struct BurnDriver BurnDrvpce_necros = {
 };
 
 
-// Fortress of Necros (Hack, English v1.2)
+// Fortress of Necros (Hack, English v1.3)
 // https://romhackplaza.org/translations/fortress-of-necros-eng-hack-english-translation-turbografx-16/
 static struct BurnRomInfo pce_necrosteRomDesc[] = {
-	{ "Fortress of Necros T-Eng v1.2 (2025-26)(washbear).pce", 524288, 0x6cebf8b7, BRF_PRG | BRF_ESS },
+	{ "Fortress of Necros T-Eng v1.3 (2025-26)(washbear).pce", 524288, 0xe4965ab6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_necroste)
@@ -4206,7 +4206,7 @@ STD_ROM_FN(pce_necroste)
 
 struct BurnDriver BurnDrvpce_necroste = {
 	"pce_necroste", "pce_necros", NULL, NULL, "2025-26",
-	"Fortress of Necros (Hack, English v1.2)\0", NULL, "washbear", "PC Engine",
+	"Fortress of Necros (Hack, English v1.3)\0", NULL, "washbear", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_necrosteRomInfo, pce_necrosteRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,

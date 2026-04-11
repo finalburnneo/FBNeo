@@ -1623,10 +1623,10 @@ void MenuEnableItems()
 						TCHAR szBuf[128];
 						for (int s = 0; s < Pgm2MaxCardSlots; s++) {
 							HMENU hSlotMenu = CreatePopupMenu();
-							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 0), _T("Create new card..."));
-							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 1), _T("Select card file..."));
-							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 2), _T("Insert card"));
-							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 3), _T("Eject card"));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 0), FBALoadStringEx(hAppInst, IDS_MEMCARD_CREATE, true));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 1), FBALoadStringEx(hAppInst, IDS_MEMCARD_SELECT, true));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 2), FBALoadStringEx(hAppInst, IDS_MEMCARD_INSERT, true));
+							AppendMenu(hSlotMenu, MF_STRING, MENU_MEMCARD_PGM2_ID(s, 3), FBALoadStringEx(hAppInst, IDS_MEMCARD_EJECT,  true));
 
 							// Enable/disable based on per-slot state
 							if (nPgm2CardStatus[s] & 1) {
@@ -1649,12 +1649,12 @@ void MenuEnableItems()
 								if (!pFileName) pFileName = _tcsrchr(szPgm2CardFile[s], _T('/'));
 								if (pFileName) pFileName++; else pFileName = szPgm2CardFile[s];
 								if (nPgm2CardStatus[s] & 2) {
-									_stprintf(szBuf, _T("P%d Card [%s] *"), s + 1, pFileName);
+									_stprintf(szBuf, _T("P%d %s [%s] *"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true), pFileName);
 								} else {
-									_stprintf(szBuf, _T("P%d Card [%s]"), s + 1, pFileName);
+									_stprintf(szBuf, _T("P%d %s [%s] *"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true), pFileName);
 								}
 							} else {
-								_stprintf(szBuf, _T("P%d Card"), s + 1);
+								_stprintf(szBuf, _T("P%d %s"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true));
 							}
 							AppendMenu(hPgm2CardPopup, MF_POPUP, (UINT_PTR)hSlotMenu, szBuf);
 						}

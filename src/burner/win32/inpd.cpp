@@ -748,7 +748,7 @@ static void ToolTipAndIconInit()
 	toolinfo.uFlags = TTF_SUBCLASS | TTF_IDISHWND;
 	toolinfo.uId = (UINT_PTR)GetDlgItem(hInpdDlg, IDC_INPD_DETECT_GAMEPADS);
 	toolinfo.hinst = NULL;
-	toolinfo.lpszText = _T("Re-Detect Controllers");
+	toolinfo.lpszText = FBALoadStringEx(hAppInst, IDS_INPUT_DETECT_GAMEPADS, true);
 
 	SendMessage(hToolTipWnd, TTM_ACTIVATE, TRUE, 0);
 	SendMessage(hToolTipWnd, TTM_ADDTOOL, 0, (LPARAM)&toolinfo);

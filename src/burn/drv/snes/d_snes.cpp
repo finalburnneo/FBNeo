@@ -6881,6 +6881,25 @@ struct BurnDriver BurnDrvsnes_Castlevaniavk = {
 	512, 448, 4, 3
 };
 
+// Castlevania Dracula X (Hack, Portuguese v3.0)
+// https://www.romhacking.net.br/index.php?topic=2356.0
+static struct BurnRomInfo snes_CastlevaniadxtpRomDesc[] = {
+	{ "Castlevania Dracula X PT-BR v3.0 (2023)(ByFTR).sfc", 2097152, 0xb82c9024, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Castlevaniadxtp)
+STD_ROM_FN(snes_Castlevaniadxtp)
+
+struct BurnDriver BurnDrvsnes_Castlevaniadxtp = {
+	"snes_castlevaniadxtp", "snes_castlevaniadx", NULL, NULL, "2023",
+	"Castlevania Dracula X (Hack, Portuguese v3.0)\0", NULL, "ByFTR", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_CastlevaniadxtpRomInfo, snes_CastlevaniadxtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // CB Chara Wars: Ushinawareta Gag (Japan)
 
 static struct BurnRomInfo snes_CbwarsjRomDesc[] = {
@@ -8378,6 +8397,25 @@ struct BurnDriver BurnDrvsnes_Cutthroate = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_CutthroateRomInfo, snes_CutthroateRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// CutThroat Island (Hack, Portuguese)
+// https://www.romhacking.net/translations/1558/
+static struct BurnRomInfo snes_CutthroattpRomDesc[] = {
+	{ "CutThroat Island PT-BR (2010)(Monkey's Traducoes).sfc", 2097152, 0xeaa49af7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Cutthroattp)
+STD_ROM_FN(snes_Cutthroattp)
+
+struct BurnDriver BurnDrvsnes_Cutthroattp = {
+	"snes_cutthroattp", "snes_cutthroat",	 NULL, NULL, "2010",
+	"CutThroat Island (Hack, Portuguese)\0", NULL, "Monkey's Traducoes", "SNES / Super Famicom",
+	NULL, NULL, L"Monkey's Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_CutthroattpRomInfo, snes_CutthroattpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -19907,6 +19945,25 @@ struct BurnDriver BurnDrvsnes_Knightsrounde = {
 	512, 448, 4, 3
 };
 
+// Knights of the Round ~ Cavaleiros da Tavola Redonda (Hack, Portuguese v1.1)
+// https://www.romhacking.net/translations/1559/
+static struct BurnRomInfo snes_KnightsroundtpRomDesc[] = {
+	{ "Cavaleiros da Tavola Redonda PT-BR v1.1 (2010)(Denim).sfc", 2097151, 0x0ee54922, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Knightsroundtp)
+STD_ROM_FN(snes_Knightsroundtp)
+
+struct BurnDriver BurnDrvsnes_Knightsroundtp = {
+	"snes_knightsroundtp", "snes_knightsround", NULL, NULL, "2010",
+	"Knights of the Round ~ Cavaleiros da Tavola Redonda (Hack, Portuguese v1.1)\0", NULL, "Denim", "SNES / Super Famicom",
+	L"Knights of the Round ~ Cavaleiros da T\u00e1vola Redonda (Hack, Portuguese v1.1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_KnightsroundtpRomInfo, snes_KnightsroundtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // King of the Monsters (USA)
 
 static struct BurnRomInfo snes_KotmRomDesc[] = {
@@ -23304,6 +23361,25 @@ struct BurnDriver BurnDrvsnes_Mickeytokyote = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MickeytokyoteRomInfo, snes_MickeytokyoteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Grande Aventura de Mickey na Disneylandia de Toquio, A (Hack, Portuguese v1.4)
+// https://www.romhacking.net.br/index.php?topic=2153.0
+static struct BurnRomInfo snes_MickeytokyotpRomDesc[] = {
+	{ "Grande Aventura de Mickey na Disneylandia de Toquio, A PT-BR v1.4 (2022)(Svambo, Maverick B. Warrior).sfc", 1572864, 0xbcc63775, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mickeytokyotp)
+STD_ROM_FN(snes_Mickeytokyotp)
+
+struct BurnDriver BurnDrvsnes_Mickeytokyotp = {
+	"snes_mickeytokyotp", "snes_mickeytokyote", NULL, NULL, "2022",
+	"Grande Aventura de Mickey na Disneylandia de Toquio, A (Hack, Portuguese v1.4)\0", NULL, "Svambo, Maverick Blue Warrior", "SNES / Super Famicom",
+	L"Grande Aventura de Mickey na Disneyl\u00e2ndia de T\u00f3quio, A\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MickeytokyotpRomInfo, snes_MickeytokyotpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

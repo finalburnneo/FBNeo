@@ -4569,7 +4569,7 @@ struct BurnDriver BurnDrvcv_ssketch = {
 	272, 228, 4, 3
 };
 
-// Sword and The Sorcerer, The (USA, Prototype)
+// Sword and Sorcerer (USA, Prototype)
 static struct BurnRomInfo cv_swordRomDesc[] = {
 	{ "Sword and the Sorcerer, The (USA, Proto)(1983)(Coleco).rom",	16384, 0x8bda7c48, BRF_PRG | BRF_ESS },
 };
@@ -4579,7 +4579,7 @@ STD_ROM_FN(cv_sword)
 
 struct BurnDriver BurnDrvcv_sword = {
 	"cv_sword", NULL, "cv_coleco", NULL, "1983",
-	"Sword and The Sorcerer, The (USA, Prototype)\0", "Not playable Demo", "Coleco", "ColecoVision",
+	"Sword and Sorcerer (USA, Prototype)\0", "Not playable Demo", "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_swordRomInfo, cv_swordRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

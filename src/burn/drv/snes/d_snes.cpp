@@ -19958,7 +19958,7 @@ struct BurnDriver BurnDrvsnes_Knightsroundtp = {
 	"snes_knightsroundtp", "snes_knightsround", NULL, NULL, "2010",
 	"Knights of the Round ~ Cavaleiros da Tavola Redonda (Hack, Portuguese v1.1)\0", NULL, "Denim", "SNES / Super Famicom",
 	L"Knights of the Round ~ Cavaleiros da T\u00e1vola Redonda (Hack, Portuguese v1.1)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_KnightsroundtpRomInfo, snes_KnightsroundtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

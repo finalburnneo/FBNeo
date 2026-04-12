@@ -19615,6 +19615,24 @@ struct BurnDriver BurnDrvnes_junglebooktheb = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Jurl (HB)
+static struct BurnRomInfo nes_jurlRomDesc[] = {
+	{ "Jurl (2025)(Tonsomo Entertainment).nes",          40976, 0x800b021f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jurl)
+STD_ROM_FN(nes_jurl)
+
+struct BurnDriver BurnDrvnes_jurl = {
+	"nes_jurl", NULL, NULL, NULL, "2025",
+	"Jurl (HB)\0", NULL, "Tonsomo Entertainment", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_jurlRomInfo, nes_jurlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Justice (HB)
 static struct BurnRomInfo nes_justiceRomDesc[] = {
 	{ "Justice (2020)(Unknown).nes",          196624, 0x5a8b8f13, BRF_ESS | BRF_PRG },

@@ -45882,7 +45882,7 @@ struct BurnDriver BurnSpecJunglequeen = {
 // Jurl (48K) (HB)
 
 static struct BurnRomInfo SpecJurlRomDesc[] = {
-	{ "Jurl 48K (2025)(Tonsomo Entertainment).tap", 34891, 0xd8c5b97e, BRF_ESS | BRF_PRG },
+	{ "Jurl 48K (2025)(Tonsomo Entertainment).tap", 34433, 0xea757683, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJurl, SpecJurl, Spectrum)
@@ -56364,6 +56364,25 @@ struct BurnDriver BurnSpecSnowund48 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecSnowund48RomInfo, SpecSnowund48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// SOKO64+ (48K) (HB)
+
+static struct BurnRomInfo SpecSoko64pRomDesc[] = {
+	{ "SOKO64+ 48K (2024)(Marco Spedaletti).tap", 20470, 0xccbd5bc9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSoko64p, SpecSoko64p, Spectrum)
+STD_ROM_FN(SpecSoko64p)
+
+struct BurnDriver BurnSpecSoko64p = {
+	"spec_soko64p", NULL, "spec_spectrum", NULL, "2024",
+	"SOKO64+ (48K) (HB)\0", NULL, "Marco Spedaletti", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecSoko64pRomInfo, SpecSoko64pRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

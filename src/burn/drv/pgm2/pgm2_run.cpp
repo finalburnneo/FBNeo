@@ -115,6 +115,8 @@ INT32  Pgm2MaxCardSlots = 0;
 INT32  Pgm2ActiveCardSlot = 0;
 bool   Pgm2CardInserted[4] = {false, false, false, false};
 
+UINT8 CardlessHack = 0;
+
 // Speed hack variables
 static UINT32 Pgm2SpeedHackAddr[2] = { 0, 0 };
 static UINT32 Pgm2SpeedHackPC[2][4] = {0};
@@ -835,12 +837,12 @@ static void pgm2McuCommand(bool isCommand)
                 Pgm2McuRegs[3] = Pgm2McuResult0;
                 Pgm2McuRegs[4] = Pgm2McuResult1;
                 Pgm2McuLastCmd = 0;
-            break;
+                break;
 
             case 0xe0: // startup/self-test echo
                 Pgm2McuResult0 = Pgm2McuRegs[0];
                 Pgm2McuResult1 = Pgm2McuRegs[1];
-            break;
+                break;
 
             case 0xe1: // shared RAM fill helper used by boot code
                 // MCU sees the opposite bank while CPU accesses the selected one.
@@ -848,16 +850,17 @@ static void pgm2McuCommand(bool isCommand)
                     memset(Pgm2SharedRAM2 + ((~Pgm2ShareBank & 1) * 0x80), arg3, 0x80);
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc0: // insert card / check card presence
-                if (!pgm2CardPresent(arg1 & 3)) {
-                    status = 0x00f70000;
+            case 0xc1: // check ready/busy
+                if ((CardlessHack & 1) && (0xc0 == cmd)) {  // Cardless mode
+                    if (!pgm2CardPresent(arg1 & 3)) {
+                        status = 0x00f70000;
+                    }
+                    Pgm2McuResult0 = cmd;
+                    break;
                 }
-                Pgm2McuResult0 = cmd;
-			break;
-
-			case 0xc1: // check ready/busy
                 if (!pgm2CardPresent(arg1)) {
                     status = 0x00f40000;
                 }
@@ -866,7 +869,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc2: // read card data to shared RAM
                 for (INT32 i = 0; i < arg3; i++) {
@@ -881,7 +884,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc3: // save shared RAM to card data
                 for (INT32 i = 0; i < arg3; i++) {
@@ -896,7 +899,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc4: // read security bytes 1..3
                 if (pgm2CardPresent(arg1)) {
@@ -909,7 +912,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc5: // write security byte
                 if (pgm2CardPresent(arg1)) {
@@ -922,7 +925,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc6: // write protection byte
                 if (pgm2CardPresent(arg1)) {
@@ -935,7 +938,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc7: // read protection bytes
                 if (pgm2CardPresent(arg1)) {
@@ -948,7 +951,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc8: // write one card data byte
                 if (pgm2CardPresent(arg1)) {
@@ -961,7 +964,7 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             case 0xc9: // card authentication (SLE4442 PSC verification)
                 if (pgm2CardPresent(arg1)) {
@@ -977,13 +980,13 @@ static void pgm2McuCommand(bool isCommand)
                     Pgm2CardLogCount++;
                 }
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
 
             default:
                 // Match MAME: unknown commands report error status (0xF4).
                 status = 0x00f40000;
                 Pgm2McuResult0 = cmd;
-            break;
+                break;
         }
 
         // Status is exposed in bits [23:16].
@@ -2022,7 +2025,6 @@ INT32 pgm2Exit()
     pPgm2InitCallback = NULL;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
-    Pgm2ArmRomIndex = 1;
     Pgm2CardRomIndex = -1;
     for (int i = 0; i < 4; i++) Pgm2PerSlotCardIndex[i] = -1;
     memset(Pgm2CardAuthenticated, 0, sizeof(Pgm2CardAuthenticated));

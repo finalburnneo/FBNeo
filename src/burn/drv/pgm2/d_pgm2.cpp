@@ -52,8 +52,9 @@ static struct BurnInputInfo pgm2InputList[] = {
     { "Test Key P3 & P4", BIT_DIGITAL, Pgm2InputPort1 + 19, "diag"      },
     { "Service P1 & P2",  BIT_DIGITAL, Pgm2InputPort1 + 20, "service"   },
     { "Service P3 & P4",  BIT_DIGITAL, Pgm2InputPort1 + 21, "service"   },
-    { "ResetGame",        BIT_DIGITAL, &Pgm2Reset,           "reset"     },
-    { "Dip A",            BIT_DIPSWITCH, Pgm2Dip + 0,        "dip"       },
+    { "ResetGame",        BIT_DIGITAL, &Pgm2Reset,          "reset"     },
+    { "Dip A",            BIT_DIPSWITCH, Pgm2Dip + 0,       "dip"       },
+    { "Dip B",            BIT_DIPSWITCH, &CardlessHack,     "dip"       },
 };
 STDINPUTINFO(pgm2)
 
@@ -84,6 +85,9 @@ static struct BurnDIPInfo pgm2DIPList[] = {
     { 0   , 0xfe, 0   ,    2, "Debug" },
     { 0x00, 0x01, 0x80, 0x80, "Off" },
     { 0x00, 0x01, 0x80, 0x00, "On" },
+    { 0   , 0xfe, 0   ,    2, "Cardless Mode" },
+    { 0x01, 0x01, 0x01, 0x00, "Off" },
+    { 0x01, 0x01, 0x01, 0x01, "On" },
 };
 STDDIPINFO(pgm2)
 

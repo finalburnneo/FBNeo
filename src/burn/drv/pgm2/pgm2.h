@@ -104,6 +104,8 @@ extern INT32  Pgm2MaxCardSlots;
 extern INT32  Pgm2ActiveCardSlot;
 extern bool   Pgm2CardInserted[4];
 
+extern UINT8  CardlessHack;
+
 // pgm2_draw.cpp
 void pgm2InitDraw();
 void pgm2ExitDraw();

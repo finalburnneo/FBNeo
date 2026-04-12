@@ -463,6 +463,14 @@ void m68k_set_pc_changed_cb(void (*cbf)(UINT32)) {
 }
 #endif	
 
+static int dummy_insn_cb(int) { return 0; }
+static int (*insn_cb)(int) = dummy_insn_cb;
+
+// caveat: only works on singular 68k.  stops on: address error, cpu sleeps / timeslice hacking
+void m68k_set_insn_cb(int (*cbf)(int)) {
+	insn_cb = (!cbf) ? dummy_insn_cb : cbf;
+}
+
 /* Interrupt acknowledge */
 static int default_int_ack_callback_data;
 static int default_int_ack_callback(int int_level)
@@ -817,8 +825,13 @@ int m68k_execute(int num_cycles)
 	SET_CYCLES(num_cycles);
 	m68ki_cpu.initial_cycles = num_cycles;
 
+	int insn_cycles = GET_CYCLES();
+
 	/* See if interrupts came in */
 	m68ki_check_interrupts();
+
+
+	insn_cb(insn_cycles - GET_CYCLES());
 
 	/* Make sure we're not stopped */
 	if(!CPU_STOPPED)
@@ -829,6 +842,8 @@ int m68k_execute(int num_cycles)
 		/* Main loop.  Keep going until we run out of clock cycles */
 		do
 		{
+			insn_cycles = GET_CYCLES(); // dink
+
 			/* Set tracing accodring to T1. (T0 is done inside instruction) */
 			m68ki_trace_t1(); /* auto-disable (see m68kcpu.h) */
 
@@ -852,6 +867,8 @@ int m68k_execute(int num_cycles)
 
 			/* Trace m68k_exception, if necessary */
 			m68ki_exception_if_trace(); /* auto-disable (see m68kcpu.h) */
+
+			insn_cb(insn_cycles - GET_CYCLES()); // dink
 		} while(GET_CYCLES() > 0 && !m68ki_cpu.end_run);
 
 		/* set previous PC to current PC for the next entry into the loop */
@@ -1031,6 +1048,8 @@ void m68k_init(void)
 	m68k_set_pc_changed_callback(NULL);
 	m68k_set_fc_callback(NULL);
 	m68k_set_instr_hook_callback(NULL);
+
+	m68k_set_insn_cb(NULL); // dink
 
 	megadrive_sr_checkint_mode = 0;
 }

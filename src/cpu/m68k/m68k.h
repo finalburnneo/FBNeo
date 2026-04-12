@@ -318,6 +318,8 @@ void m68k_modify_timeslice(int cycles); /* Modify cycles left */
 void m68k_end_timeslice(void);          /* End timeslice now */
 void m68k_burn_until_irq(int enabled);  /* Sleep until INT (speedhacks) */
 
+void m68k_set_insn_cb(int (*cbf)(int));
+
 /* Set the IPL0-IPL2 pins on the CPU (IRQ).
  * A transition from < 7 to 7 will cause a non-maskable interrupt (NMI).
  * Setting IRQ to 0 will clear an interrupt request.

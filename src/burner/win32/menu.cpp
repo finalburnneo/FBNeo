@@ -1651,7 +1651,7 @@ void MenuEnableItems()
 								if (nPgm2CardStatus[s] & 2) {
 									_stprintf(szBuf, _T("P%d %s [%s] *"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true), pFileName);
 								} else {
-									_stprintf(szBuf, _T("P%d %s [%s] *"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true), pFileName);
+									_stprintf(szBuf, _T("P%d %s [%s]"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true), pFileName);
 								}
 							} else {
 								_stprintf(szBuf, _T("P%d %s"), s + 1, FBALoadStringEx(hAppInst, IDS_MEMCARD, true));

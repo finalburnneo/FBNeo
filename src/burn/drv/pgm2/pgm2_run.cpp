@@ -103,6 +103,7 @@ static INT32  Pgm2IntRomNeedRestore = 0;       // 1 = need to restore all patche
 static INT32  Pgm2ArmROMFileLen = 0;          // actual ROM file size (e.g. 0x800000)
 static INT32  Pgm2CardRomIndex = -1;
 static INT32  Pgm2SramRomIndex = 10;
+static INT32  Pgm2ArmRomIndex = 1;
 static INT32  Pgm2PerSlotCardIndex[4] = {-1, -1, -1, -1};
 static INT32  Pgm2CardLogCount = 0;
 
@@ -158,6 +159,11 @@ void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex)
 {
     Pgm2CardRomIndex = cardRomIndex;
     Pgm2SramRomIndex = sramRomIndex;
+}
+
+void pgm2SetArmRomIndex(INT32 armRomIndex)
+{
+    Pgm2ArmRomIndex = armRomIndex;
 }
 
 void pgm2SetCardRomIndex(INT32 slot, INT32 index)
@@ -1738,14 +1744,13 @@ INT32 pgm2Init()
     // Game-specific ROM load + decrypt callback
     if (pPgm2InitCallback)
         pPgm2InitCallback();
-	
 
     // Detect actual ROM file size for correct decrypt length and MAP_ROM range
     Pgm2ArmROMFileLen = Pgm2ArmROMLen;  // default to buffer size
     if (Pgm2ArmROM && Pgm2ArmROMLen > 0) {
         struct BurnRomInfo armri;
         memset(&armri, 0, sizeof(armri));
-        if (BurnDrvGetRomInfo(&armri, 1) == 0 && armri.nLen > 0) {
+        if (BurnDrvGetRomInfo(&armri, Pgm2ArmRomIndex) == 0 && armri.nLen > 0) {
             Pgm2ArmROMFileLen = armri.nLen;
             PGM2_LOG(PGM2_LOG_SYS, "arm rom file size=%d (0x%X) buffer=%d (0x%X)", armri.nLen, armri.nLen, Pgm2ArmROMLen, Pgm2ArmROMLen);
             // Fill unloaded tail with 0x00 to match MAME's ROM_REGION default zero-fill.

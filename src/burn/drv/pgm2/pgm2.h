@@ -92,6 +92,7 @@ void pgm2SetSpeedhack(UINT32 id, UINT32 addr, UINT32 pc1, UINT32 pc2 = 0, UINT32
 void pgm2EnableKov3Module(const UINT8 *key, const UINT8 *sum, UINT32 addrXor, UINT16 dataXor);
 void pgm2DisableKov3Module();
 void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex);
+void pgm2SetArmRomIndex(INT32 armRomIndex);
 void pgm2SetCardRomIndex(INT32 slot, INT32 index);
 void pgm2SetMaxCardSlots(INT32 count);
 INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize);

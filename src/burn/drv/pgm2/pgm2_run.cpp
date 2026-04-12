@@ -2016,6 +2016,7 @@ INT32 pgm2Exit()
     pPgm2InitCallback = NULL;
     pPgm2ResetCallback = NULL;
     pPgm2ScanCallback = NULL;
+    Pgm2ArmRomIndex = 1;
     Pgm2CardRomIndex = -1;
     for (int i = 0; i < 4; i++) Pgm2PerSlotCardIndex[i] = -1;
     memset(Pgm2CardAuthenticated, 0, sizeof(Pgm2CardAuthenticated));

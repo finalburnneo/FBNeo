@@ -463,7 +463,12 @@ void m68k_set_pc_changed_cb(void (*cbf)(UINT32)) {
 }
 #endif	
 
+#if defined(_MSC_VER) && !defined(__cplusplus)
+// MSVC error C2055 is a syntax error that cannot be suppressed via compiler options
+static int dummy_insn_cb(int unused) { (void)unused; return 0; }
+#else
 static int dummy_insn_cb(int) { return 0; }
+#endif
 static int (*insn_cb)(int) = dummy_insn_cb;
 
 // caveat: only works on singular 68k.  stops on: address error, cpu sleeps / timeslice hacking

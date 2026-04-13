@@ -31390,6 +31390,24 @@ struct BurnDriver BurnDrvMSX_jumpjosen = {
 	272, 228, 4, 3
 };
 
+// Jurl (HB, v1.1a)
+static struct BurnRomInfo MSX_jurlRomDesc[] = {
+	{ "Jurl v1.1a (2025)(Tonsomo Entertainment).rom",	16384, 0x7e34d5b7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jurl, MSX_jurl, msx_msx)
+STD_ROM_FN(MSX_jurl)
+
+struct BurnDriver BurnDrvMSX_jurl = {
+	"msx_jurl", NULL, "msx_msx", NULL, "2025",
+	"Jurl (HB, v1.1a)\0", NULL, "Tonsomo Entertainment", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_jurlRomInfo, MSX_jurlRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Joselin El Saltarin (Spanish) (HB)
 static struct BurnRomInfo MSX_jumpjosesRomDesc[] = {
 	{ "Joselin El Saltarin ES (2026)(joesg).rom",	32768, 0x1cfe705d, BRF_PRG | BRF_ESS },
@@ -34214,6 +34232,24 @@ struct BurnDriver BurnDrvMSX_snowboard = {
 	NULL, NULL, L"RELEVO ~ REL\u018eVO", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
 	MSXGetZipName, MSX_snowboardRomInfo, MSX_snowboardRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// SOKO64+ (HB)
+static struct BurnRomInfo MSX_soko64pRomDesc[] = {
+	{ "SOKO64+ (2024)(Marco Spedaletti).rom",	32768, 0x03004fd4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_soko64p, MSX_soko64p, msx_msx)
+STD_ROM_FN(MSX_soko64p)
+
+struct BurnDriver BurnDrvMSX_soko64p = {
+	"msx_soko64p", NULL, "msx_msx", NULL, "2024",
+	"SOKO64+ (HB)\0", NULL, "Marco Spedaletti", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_soko64pRomInfo, MSX_soko64pRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

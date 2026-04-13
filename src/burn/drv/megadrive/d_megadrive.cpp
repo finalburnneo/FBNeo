@@ -41934,6 +41934,25 @@ struct BurnDriver BurnDrvmd_shylax = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sir Ababol (HB, v1.01)
+// https://old-pirate.itch.io/sir-ababol
+static struct BurnRomInfo md_sirababolRomDesc[] = {
+	{ "Sir Ababol v1.01 (2025)(The Mojon Twins - Tzar).bin", 655360, 0x45875ed8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sirababol)
+STD_ROM_FN(md_sirababol)
+
+struct BurnDriver BurnDrvmd_sirababolx = {
+	"md_sirababol", NULL, NULL, NULL, "2025",
+	"Sir Ababol (HB, v1.01)\0", NULL, "The Mojon Twins - Tzar", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_sirababolRomInfo, md_sirababolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Smart Mouse (HB)
 static struct BurnRomInfo md_smartmouseRomDesc[] = {
 	{ "Smart Mouse (2017)(Piko Interactive).bin", 524288, 0xfb01c832, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

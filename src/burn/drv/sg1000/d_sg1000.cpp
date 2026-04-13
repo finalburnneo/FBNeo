@@ -4174,6 +4174,24 @@ struct BurnDriver BurnDrvsg1k_camknights = {
 	272, 228, 4, 3
 };
 
+// Cavit (HB)
+static struct BurnRomInfo sg1k_cavitRomDesc[] = {
+	{ "Cavit (2021)(Inufuto).sg",	9984, 0x421d3f26, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_cavit)
+STD_ROM_FN(sg1k_cavit)
+
+struct BurnDriver BurnDrvsg1k_cavit = {
+	"sg1k_cavit", NULL, NULL, NULL, "2021",
+	"Cavit (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_cavitRomInfo, sg1k_cavitRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Che-Man (HB)
 static struct BurnRomInfo sg1k_chemanRomDesc[] = {
 	{ "Che-Man (2018)(The Mojon Twins).sg",	49152, 0x477a5d75, BRF_PRG | BRF_ESS },

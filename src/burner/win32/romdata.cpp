@@ -1833,6 +1833,7 @@ static void RomdataListFindDats(const TCHAR* dirPath)
 	} while (FindNextFile(hFind, &findFileData));
 
 	FindClose(hFind);
+	memset(szRomdataName, 0, sizeof(szRomdataName));	// Clear szRomdataName to prevent accidental use in other places
 }
 
 bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat)

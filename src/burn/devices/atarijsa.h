@@ -11,6 +11,8 @@ void AtariJSAResetWrite(UINT8 data);
 
 void AtariJSAExit();
 void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1);
+void AtariSys1JSAInit(UINT8 *rom, void (*int_cb)());
+
 void AtariJSAReset();
 void AtariJSAScan(INT32 nAction, INT32 *pnMin);
 

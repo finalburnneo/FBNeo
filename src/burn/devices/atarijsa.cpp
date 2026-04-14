@@ -30,6 +30,11 @@ UINT8 atarijsa_test_mask;
 static INT32 atarijsa_sound_timer;
 INT32 atarijsa_int_state;
 
+static UINT8 via6522_dra = 0, via6522_drb = 0;
+static UINT8 via6522_ddra = 0, via6522_ddrb = 0;
+static UINT8 via6522_regs[16];
+
+static INT32 is_sys1 = 0;
 static INT32 has_pokey = 0;
 static INT32 has_tms5220 = 0;
 static UINT8 *samples[2] = { NULL, NULL };
@@ -180,7 +185,7 @@ static void atarijsa_write(UINT16 address, UINT8 data)
 }
 
 static UINT8 atarijsa_read(UINT16 address)
-{	
+{
 	if ((address & 0xfc00) == 0x2c00) { // jsai only!
 		return has_pokey ? pokey_read(0, address & 0xf) : 0xff;
 	}
@@ -243,6 +248,156 @@ static UINT8 atarijsa_read(UINT16 address)
 	return 0xff;
 }
 
+// this 6522(via) simulation is just a subset, lacking timers
+static UINT8 via6522_read(UINT8 offset)
+{
+	switch (offset)
+	{
+		case 0x00:
+			return (via6522_drb & via6522_ddrb) | (!tms5220_ready() << 2) | (!tms5220_irq() << 3); // tms5220_int_r() -> tms5220_irq() ?
+
+		case 0x01:
+		case 0x0f:
+			return (via6522_dra & via6522_ddra);
+
+		case 0x02:
+			return via6522_ddrb;
+
+		case 0x03:
+			return via6522_ddra;
+
+		default:
+			return via6522_regs[offset & 0xf];
+	}
+}
+
+static void via6522_write(UINT8 offset, UINT8 data)
+{
+	INT32 old;
+
+	switch (offset)
+	{
+		case 0x00:
+		{
+			old = via6522_drb;
+			via6522_drb = (via6522_drb & ~via6522_ddrb) | (data & via6522_ddrb);
+
+			if (!(old & 1) && (via6522_drb & 1))
+				tms5220_write(via6522_dra);
+
+			if (!(old & 2) && (via6522_drb & 2))
+				via6522_dra = (via6522_dra & via6522_ddra) | (tms5220_status() & ~via6522_ddra);
+
+			data = 5 | ((data >> 3) & 2);
+
+			tms5220_set_frequency(7159090 / (16 - data));
+		}
+		break;
+
+		case 0x01:
+		case 0x0f:
+			via6522_dra = (via6522_dra & ~via6522_ddra) | (data & via6522_ddra);
+			break;
+
+		case 0x02:
+			via6522_ddrb = data;
+			break;
+
+		case 0x03:
+			via6522_ddra = data;
+			break;
+
+		default:
+			via6522_regs[offset & 0xf] = data;
+			break;
+	}
+}
+
+static void atarijsa_sys1_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0xfff0) == 0x1870) {
+		pokey_write(0, address & 0xf, data);
+		return;
+	}
+
+	if ((address & 0xfff0) == 0x1000) {
+		via6522_write(address & 0xf, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x1800:
+			BurnYM2151SelectRegister(data);
+		return;
+
+		case 0x1801:
+			BurnYM2151WriteRegister(data);
+		return;
+
+		case 0x1810:
+		{
+			atarigen_sound_to_cpu = data;
+			atarigen_sound_to_cpu_ready = 1;
+			atarijsa_int_state = 1;
+			(*update_int_callback)();
+		}
+		return;
+
+		case 0x1820:
+			if (~data & 0x01) BurnYM2151Reset();
+		return;
+
+		case 0x1824: // led0
+		case 0x1825: // led1
+		case 0x1826: // coin counter right
+		case 0x1827: // coin counter left
+		return;
+	}
+
+	bprintf (0, _T("MISS JSA W: %4.4x, %2.2x\n"), address, data);
+}
+
+static UINT8 atarijsa_sys1_read(UINT16 address)
+{	
+	if ((address & 0xfff0) == 0x1870) {
+		return pokey_read(0, address & 0xf);
+	}
+
+	if ((address & 0xfff0) == 0x1000) {
+		return via6522_read(address & 0xf);
+	}
+
+	switch (address)
+	{
+		case 0x1800:
+			return 0xff;
+
+		case 0x1801:
+			return BurnYM2151Read();
+
+		case 0x1810:
+		{
+			atarigen_cpu_to_sound_ready = 0;
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+			return atarigen_cpu_to_sound;
+		}
+
+		case 0x1820:
+		{
+			UINT8 result = atarijsa_input_port & ~0x78;
+			if (atarigen_cpu_to_sound_ready) result ^= 0x08;
+			if (atarigen_sound_to_cpu_ready) result ^= 0x10;
+			if (!(atarijsa_test_port & atarijsa_test_mask)) result ^= 0x80;
+			return result;
+		}
+	}
+
+	bprintf (0, _T("MISS JSA R: %4.4x\n"), address);
+
+	return 0xff;
+}
+
 static void JsaYM2151IrqHandler(INT32 nStatus)
 {
 	ym2151_int = nStatus;
@@ -295,6 +450,9 @@ void AtariJSAReset()
 	atarigen_sound_to_cpu_ready = 0;
 
 	atarijsa_int_state = 0;
+
+	via6522_dra = via6522_drb = via6522_ddra = via6522_ddrb = 0;
+	memset(via6522_regs, 0, sizeof(via6522_regs));
 }
 
 void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1)
@@ -345,6 +503,47 @@ void AtariJSAInit(UINT8 *rom, void (*int_cb)(), UINT8 *samples0, UINT8 *samples1
     tms5220_volume(1.50);
 }
 
+void AtariSys1JSAInit(UINT8 *rom, void (*int_cb)())
+{
+	atarijsa_rom = rom;
+	atarijsa_ram = (UINT8*)BurnMalloc(0x2000);
+
+	update_int_callback = int_cb;
+
+	samples[0] = NULL;
+	samples[1] = NULL;
+
+	has_tms5220 = (samples[0] == NULL) && (samples[1] == NULL);
+	has_pokey = has_tms5220;
+
+	M6502Init(0, TYPE_M6502);
+	M6502Open(0);
+	M6502MapMemory(atarijsa_ram,			0x0000, 0x0fff, MAP_RAM);
+	M6502MapMemory(atarijsa_rom + 0x4000,	0x4000, 0xffff, MAP_ROM);
+	M6502SetWriteHandler(atarijsa_sys1_write);
+	M6502SetReadHandler(atarijsa_sys1_read);
+	M6502Close();
+
+	BurnYM2151InitBuffered(3579545, 1, NULL, 1);
+	BurnTimerAttachM6502(1789773);
+	BurnYM2151SetIrqHandler(&JsaYM2151IrqHandler);
+	YM2151SetPortWriteHandler(0, &JsaYM2151Write);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
+
+	MSM6295Init(0, (3579545/3) / MSM6295_PIN7_HIGH, 1);
+	MSM6295Init(1, (3579545/3) / MSM6295_PIN7_HIGH, 1);
+	MSM6295SetRoute(0, 0.0, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.0, BURN_SND_ROUTE_BOTH);
+
+	PokeyInit(3579545/2, 1, 0.40, 1);
+	PokeySetTotalCyclesCB(M6502TotalCycles);
+
+	tms5220c_init((3579545*2)/11, M6502TotalCycles, 1789773);
+    tms5220_volume(1.50);
+}
+
+
 void AtariJSAExit()
 {
 	BurnYM2151Exit();
@@ -358,6 +557,7 @@ void AtariJSAExit()
 
 	has_tms5220 = 0;
 	MSM6295ROM = NULL;
+	is_sys1 = 0;
 }
 
 void AtariJSAScan(INT32 nAction, INT32 *pnMin)
@@ -399,15 +599,22 @@ void AtariJSAScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(atarigen_sound_to_cpu);
 		SCAN_VAR(atarigen_sound_to_cpu_ready);
 
-		SCAN_VAR(atarijsa_int_state);
-		SCAN_VAR(atarijsa_sound_timer);
 		SCAN_VAR(atarijsa_input_port);
 		SCAN_VAR(atarijsa_test_port);
 		SCAN_VAR(atarijsa_test_mask);
 		SCAN_VAR(atarijsa_sound_timer);
 		SCAN_VAR(atarijsa_int_state);
 
+		if (is_sys1)
+		{
+			SCAN_VAR(via6522_dra);
+			SCAN_VAR(via6522_drb);
+			SCAN_VAR(via6522_ddra);
+			SCAN_VAR(via6522_ddrb);
+			SCAN_VAR(via6522_regs);
+		}
 	}
+
 	if (nAction & ACB_WRITE)
 	{
 		M6502Open(0);

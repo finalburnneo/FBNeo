@@ -1414,10 +1414,16 @@ static INT32 DrvDraw()
 
 	pBurnDrvPalette = DrvPalette;
 
+	BurnTransferClear();
+
 	memset (bitmap[2], 0, 256 * 256 * sizeof(UINT16)); // clear sprite bitmap
 
 	if (nBurnLayer & 1) draw_layer(bitmap[0], (UINT16*)DrvVidRAM2, DrvGfxROM1, 0x000, bg_scroll_x, (bg_scroll_y - bg_offset_y) & 0x1ff, -1);
+	if (~nBurnLayer & 1) memset(bitmap[0], 0, 256*256*sizeof(UINT16));
+
 	if (nBurnLayer & 2) draw_layer(bitmap[1], (UINT16*)DrvVidRAM1, DrvGfxROM2, 0x000, fg_scroll_x, (fg_scroll_y - fg_offset_y) & 0x1ff, -1);
+	if (~nBurnLayer & 2) memset(bitmap[1], 0, 256*256*sizeof(UINT16));
+
 	if (nBurnLayer & 4) gaiden_draw_sprites(sprite_sizey, sproffsety);
 	if (nBurnLayer & 8) draw_text(0x100,-1);
 

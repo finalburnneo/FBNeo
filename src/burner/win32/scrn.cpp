@@ -838,6 +838,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
 	{ "cps3",		{ HARDWARE_CAPCOM_CPS3, 0 } },
 	{ "pgm",		{ HARDWARE_IGS_PGM, 0 } },
+	{ "pgm2",		{ HARDWARE_IGS_PGM2, 0 } },
 	{ "neogeo",		{ HARDWARE_SNK_NEOGEO, HARDWARE_SNK_MVS, HARDWARE_SNK_DEDICATED_PCB, 0 } },
 	{ "neogeocd",	{ HARDWARE_SNK_NEOCD, 0 } },
 	{ "arcade",		{ ~0, 0 } }, // default, if not found above

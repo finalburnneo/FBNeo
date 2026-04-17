@@ -148,6 +148,7 @@ static UINT8  Pgm2ModuleSendBuf[10] = {0};
 static INT32  Pgm2ModuleSumRead = 0;
 static UINT32 Pgm2PioOutData = 0;
 
+static INT32 nCyclesExtra;
 
 // Per-game refresh rate (default 59.08 Hz; kof98umh uses 59.19 Hz per MAME pgm2_lores)
 static double Pgm2RefreshRate = 59.08;
@@ -1084,7 +1085,7 @@ static void checkSpeedhack(UINT32 addr, UINT32 v)
 			}
 
 			if ((v == 0 || shId == 1) && next == 0) {
-				Arm9RunEndEatCycles();
+				Arm9BurnUntilInterrupt();
 			}
 		}
 	}
@@ -1986,9 +1987,10 @@ INT32 pgm2DoReset()
 	ymz770_reset();
 	Pgm2Reset = 0;
 	Pgm2RtcFrameCounter = 0;
-	HiscoreReset();
+	nCyclesExtra = 0;
 	if(pPgm2ResetCallback)
 		pPgm2ResetCallback();
+	HiscoreReset();
 	return 0;
 }
 INT32 pgm2Exit()
@@ -2127,14 +2129,15 @@ INT32 pgm2Frame()
     // 100 MHz ARM9 / Pgm2RefreshRate fps / 264 total lines (224 active + 40 vblank)
     static const INT32 PGM2_TOTAL_LINES  = 264;
     static const INT32 PGM2_VBLANK_START = 224;
-    static const INT32 PGM2_CPU_HZ       = 100000000;
-    INT32 nCyclesPerLine = (INT32)((double)PGM2_CPU_HZ / ((double)PGM2_TOTAL_LINES * Pgm2RefreshRate));
-
+	static const INT32 PGM2_CPU_HZ       = 100000000;
+	INT32 nInterleave = PGM2_TOTAL_LINES;
+	INT32 nCyclesTotal[1] = { (INT32)((double)PGM2_CPU_HZ / (double)Pgm2RefreshRate) };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
     Arm9Open(0);
     Arm9NewFrame();
 
     for (INT32 i = 0; i < PGM2_TOTAL_LINES; i++) {
-        Arm9Run(nCyclesPerLine);
+		CPU_RUN(0, Arm9);
         // We approximate with scanline countdowns.  When the countdown expires
         // we assert IRQ3 — matching MAME's mcu_interrupt() callback.
         if (Pgm2McuDoneCountdown > 0) {
@@ -2225,6 +2228,8 @@ INT32 pgm2Frame()
     }
 
     Arm9Close();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
     // Render after all scanlines (using snapshotted OAM from vblank start)
     if (pBurnDraw) {
@@ -2382,7 +2387,9 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
             SCAN_VAR(Pgm2ModuleSendBuf);
             SCAN_VAR(Pgm2ModuleSumRead);
             SCAN_VAR(Pgm2PioOutData);
-        }
+		}
+
+		SCAN_VAR(nCyclesExtra);
     }
 
     // After loading a savestate, restore encrypted ROM and re-decrypt if

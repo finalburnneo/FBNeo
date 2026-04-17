@@ -208,7 +208,6 @@ void arm9_set_irq_line(int irqline, int state)
 	if (!DebugCPU_ARM9Initted) bprintf(PRINT_ERROR, _T("arm9_set_irq_line called without init\n"));
 #endif
 
-	arm7_burn_until_irq(0);
 	arm7_core_set_irq_line(irqline, state);
 }
 

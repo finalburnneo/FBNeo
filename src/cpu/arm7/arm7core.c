@@ -591,6 +591,7 @@ static void arm7_core_reset(void)
     SET_CPSR(GET_CPSR | I_MASK | F_MASK | 0x10);
     R15 = 0;
 //    change_pc(R15);
+	burn_until_irq = 0;
 }
 
 // Execute used to be here.. moved to separate file (arm7exec.c) to be included by cpu cores separately

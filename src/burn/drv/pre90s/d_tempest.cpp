@@ -564,7 +564,7 @@ static INT32 DrvFrame()
 	}
 	M6502Close();
 
-	nExtraCycles = nCyclesDone - nCyclesTotal;
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {

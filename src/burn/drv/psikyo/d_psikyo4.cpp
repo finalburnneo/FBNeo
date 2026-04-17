@@ -652,6 +652,7 @@ static void MultiScreenCheck()
 			BurnDrvSetAspect(8, 3);
 		}
 		Reinitialise();
+		BurnTransferRealloc();
 	}
 	EEPROMWriteByte(gamemode_eeprom_offset, DrvDips[loderndf ? 2 : 1]);
 }
@@ -1098,7 +1099,7 @@ struct BurnDriver BurnDrvHotgmck = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, hotgmckRomInfo, hotgmckRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckDIPInfo,
 	HotgmckInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -1171,7 +1172,7 @@ struct BurnDriver BurnDrvHgkairak = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, hgkairakRomInfo, hgkairakRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckDIPInfo,
 	HgkairakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -1252,7 +1253,7 @@ struct BurnDriver BurnDrvHotgmck3 = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, hotgmck3RomInfo, hotgmck3RomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckDIPInfo,
 	Hotgmck3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -1294,7 +1295,7 @@ struct BurnDriver BurnDrvHotgm4ev = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, hotgm4evRomInfo, hotgm4evRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckDIPInfo,
 	Hotgmck3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -1358,7 +1359,7 @@ struct BurnDriver BurnDrvHotgmcki = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, hotgmckiRomInfo, hotgmckiRomName, NULL, NULL, NULL, NULL, HotgmckInputInfo, HotgmckiDIPInfo,
 	HotgmckiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -1416,7 +1417,7 @@ struct BurnDriver BurnDrvLoderndf = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_PLATFORM, 0,
 	NULL, loderndfRomInfo, loderndfRomName, NULL, NULL, NULL, NULL, LoderndfInputInfo, LoderndfDIPInfo,
 	LoderndfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 240, 8, 3
+	320, 240, 4, 3
 };
 
 
@@ -1458,7 +1459,7 @@ struct BurnDriver BurnDrvLoderndfa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PSIKYO, GBF_PLATFORM, 0,
 	NULL, loderndfaRomInfo, loderndfaRomName, NULL, NULL, NULL, NULL, LoderndfInputInfo, LoderndfDIPInfo,
 	LoderndfaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 240, 8, 3
+	320, 240, 4, 3
 };
 
 
@@ -1517,5 +1518,5 @@ struct BurnDriver BurnDrvHotdebut = {
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_QUIZ, 0,
 	NULL, hotdebutRomInfo, hotdebutRomName, NULL, NULL, NULL, NULL, HotdebutInputInfo, HotdebutDIPInfo,
 	HotdebutInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1002,
-	640, 240, 8, 3
+	320, 240, 4, 3
 };

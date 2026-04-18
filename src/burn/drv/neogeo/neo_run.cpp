@@ -4767,6 +4767,12 @@ INT32 NeoFrame()
 		}
 	}
 
+	// note: Many neogeo games will be blocked on an anti-piracy screen or a black screen when the cpu is overclocked,
+	//       this is especially true for mslug games, one such case is mslug2 at both 0x200 and 0x400.
+	//       This seems directly related to SRAM writing, because getting the SRAM generated once at 0x100
+	//       and overclocking later works fine, meaning booting games with a forced overclock as it was done prior to
+	//       https://github.com/finalburnneo/FBNeo/commit/600088b8122d9977d3ae020dcd4101a3d5092a4d is not acceptable
+	//       (dozens of those mslug hacks wouldn't boot)
 	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
 		bprintf(0, _T("\n---init cycles etc ---\n"));
 		// 68K CPU clock is 12MHz, modified by nBurnCPUSpeedAdjust

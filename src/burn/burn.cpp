@@ -1355,6 +1355,7 @@ static UINT8 *pRewindBuffer = NULL;
 static INT32 nRewindFrames = 0;       // # of rewind states we have (index)
 static INT32 nRewindFramesLast = 0;   // last state added to rewind buffer (index)
 static INT32 nRewindFrameCounter = 0; // counter incremented every frame
+static bool bRewindRepacking = false;
 
 static void StateRewind_Repack(); // forward
 
@@ -1371,6 +1372,7 @@ void StateRewindInit()
 	nRewindFrames = 0;
 	nRewindFramesLast = 0;
 	nRewindFrameCounter = 0;
+	bRewindRepacking = false;
 
 	thready.init(StateRewind_Repack);
 
@@ -1449,10 +1451,12 @@ void StateRewindReset()
 	nRewindFrames = 0;
 	nRewindFramesLast = 0;
 	nRewindFrameCounter = 0;
+	bRewindRepacking = false;
 }
 
 static void StateRewind_Repack()
 {
+	bRewindRepacking = true;
 	bprintf(0, _T("*** Rewind memory exhausted, increasing granularity to free up space.\n"), nRewindFrames);
 
 	// Increase granularity of old rewind to make room for new
@@ -1472,16 +1476,23 @@ static void StateRewind_Repack()
 	nRewindFrames /= nQuantLevel;
 	pRewindIndex[nRewindFrames].granulated = 0; // prevent derp rewinding packed rewind entry
 	bprintf(0, _T("    Rewind frames before / after: %d / %d\n"), nRewindFramesBefore, nRewindFrames);
+	bRewindRepacking = false;
 }
 
 static void StateRewindFrame() // called once per frame (see burner/win32/run.cpp)
 {
 	if (bRewindStatus >= REWINDSTATUS_BROKEN) return; // broken or disabled
 
-	// capture a rewind state every x'th frame
+	// capture a rewind state every 8'th frame
 	if ((nRewindFrameCounter++ % 8) != 0) return;
 
-	thready.notify_wait(); // wait, just in-case we're repacking.
+	// if we're repacking the rewind buffer, skip this rewind frame to
+	// avoid hiccups in emulation - especially during fast-forward
+	if (bRewindRepacking) return;
+
+	// We break-out with the "if" statement above, but we still have to reset Thready's
+	// event semaphore.
+	thready.notify_wait();
 
 	if (bRewindStatus == REWINDSTATUS_PREINIT) { // Initialise on first frame instead of driver init, to ensure emulation is ready
 		// Query machine's state size

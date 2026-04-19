@@ -23777,6 +23777,44 @@ struct BurnDriver BurnDrvKof97ae = {
 	0x1000, 304, 224, 4, 3
 };
 
+
+// The King of Fighters '97 (Anniversary 2.3.0625, Hack)
+// 20200625
+
+static struct BurnRomInfo kof97ae230625RomDesc[] = {
+	/* Build 2.1.0212 */
+	{ "232-p1ae23.p1",	0x100000, 0x0bb4f8f5, 1 | BRF_ESS | BRF_PRG },
+	{ "232-p2ae23.sp2",	0x400000, 0x197c7d8f, 1 | BRF_ESS | BRF_PRG },
+
+	{ "232-s1ae23.s1",	0x020000, 0x9b83a96c, 2 | BRF_GRA },
+
+	{ "232-c1ae23.c1",	0x800000, 0xf4c756ff, 3 | BRF_GRA },
+	{ "232-c2ae23.c2",	0x800000, 0x4f2fa6d9, 3 | BRF_GRA },
+	KOF97_SPR2
+	{ "232-c5ae23.c5",	0x800000, 0x7b19f0ef, 3 | BRF_GRA },
+	{ "232-c6ae23.c6",	0x800000, 0xa4310993, 3 | BRF_GRA },
+	{ "232-c7ae23.c7",	0x800000, 0xc14642c2, 3 | BRF_GRA },
+	{ "232-c8ae23.c8",	0x800000, 0x4c0f8fa8, 3 | BRF_GRA },
+
+	{ "232-m1ae23.m1",	0x020000, 0x0fd97b3b, 4 | BRF_ESS | BRF_PRG },
+
+	KOF97_SND
+	{ "232-v4ae23.v4",	0x200000, 0x7d37caa0, 5 | BRF_SND },
+};
+
+STDROMPICKEXT(kof97ae230625, kof97ae230625, neogeo)
+STD_ROM_FN(kof97ae230625)
+
+struct BurnDriver BurnDrvkof97ae230625 = {
+	"kof97ae230625", "kof97", "neogeo", NULL, "2020",
+	"The King of Fighters '97 (Anniversary 2.3.0625, Hack)\0", NULL, "EGHT", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof97ae230625RomInfo, kof97ae230625RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '97 (Invincible Plus!, B2.1.2107, Hack)
 // Modified by Ice Flame Fantasy
 // 20210709

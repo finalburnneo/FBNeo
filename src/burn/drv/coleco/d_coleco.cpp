@@ -6573,6 +6573,24 @@ struct BurnDriver BurnDrvcv_cure = {
     272, 228, 4, 3
 };
 
+// Cye (HB)
+static struct BurnRomInfo cv_cyeRomDesc[] = {
+    { "Cye (2007)(Philipp Klaus Krause).rom",	32768, 0x483c85b1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_cye, cv_cye, cv_coleco)
+STD_ROM_FN(cv_cye)
+
+struct BurnDriver BurnDrvcv_cye = {
+    "cv_cye", NULL, "cv_coleco", NULL, "2007",
+    "Cye (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_cyeRomInfo, cv_cyeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // C_So! (HB)
 static struct BurnRomInfo cv_csoRomDesc[] = {
     { "C-So (2018)(Team Pixelboy).rom",	0x8000, 0xd182812a, BRF_PRG | BRF_ESS },
@@ -6931,6 +6949,24 @@ struct BurnDriver BurnDrvcv_dorodon = {
 	CVGetZipName, cv_dorodonRomInfo, cv_dorodonRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Double Breakout (HB)
+static struct BurnRomInfo cv_dbreakoutRomDesc[] = {
+    { "Double Breakout (2001-03) (Daniel Bienvenu).rom",	31232, 0x92127c60, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_dbreakout, cv_dbreakout, cv_coleco)
+STD_ROM_FN(cv_dbreakout)
+
+struct BurnDriver BurnDrvcv_dbreakout = {
+    "cv_dbreakout", NULL, "cv_coleco", NULL, "2001-03",
+    "Double Breakout (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_BREAKOUT, 0,
+    CVGetZipName, cv_dbreakoutRomInfo, cv_dbreakoutRomName, NULL, NULL, NULL, NULL, SACInputInfo, SACDIPInfo,
+    DrvInitSAC, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Dragon's Lair (SGM) (HB)
@@ -7435,6 +7471,42 @@ struct BurnDriver BurnDrvcv_galaga = {
     CVGetZipName, cv_galagaRomInfo, cv_galagaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
+};
+
+// GamePack 1 (HB)
+static struct BurnRomInfo cv_gamepack1RomDesc[] = {
+	{ "GamePack 1 (2002)(Daniel Bienvenu).rom",	32768, 0x9a02fba5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_gamepack1, cv_gamepack1, cv_coleco)
+STD_ROM_FN(cv_gamepack1)
+
+struct BurnDriver BurnDrvcv_gamepack1 = {
+	"cv_gamepack1", NULL, "cv_coleco", NULL, "2002",
+	"GamePack 1 (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MINIGAMES, 0,
+	CVGetZipName, cv_gamepack1RomInfo, cv_gamepack1RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// GamePack 2 (HB)
+static struct BurnRomInfo cv_gamepack2RomDesc[] = {
+	{ "GamePack 2 (2004)(Daniel Bienvenu).rom",	32128, 0xeab0ddd6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_gamepack2, cv_gamepack2, cv_coleco)
+STD_ROM_FN(cv_gamepack2)
+
+struct BurnDriver BurnDrvcv_gamepack2 = {
+	"cv_gamepack2", NULL, "cv_coleco", NULL, "2004",
+	"GamePack 2 (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MINIGAMES, 0,
+	CVGetZipName, cv_gamepack2RomInfo, cv_gamepack2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
 };
 
 // GamePack Vic-20 (HB)
@@ -9108,6 +9180,24 @@ struct BurnDriver BurnDrvcv_monsthouse = {
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_monsthouseRomInfo, cv_monsthouseRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Monster Masher (HB)
+static struct BurnRomInfo cv_monstmasherRomDesc[] = {
+    { "Monster Masher (2006)(Philipp Klaus Krause).rom",	30475, 0xc212599a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_monstmasher, cv_monstmasher, cv_coleco)
+STD_ROM_FN(cv_monstmasher)
+
+struct BurnDriver BurnDrvcv_monstmasher = {
+    "cv_monstmasher", NULL, "cv_coleco", NULL, "2006",
+    "Monster Masher (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_monstmasherRomInfo, cv_monstmasherRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 

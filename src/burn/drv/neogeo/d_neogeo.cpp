@@ -25828,46 +25828,46 @@ struct BurnDriver BurnDrvKf2k1pkz = {
 
 // The King of Fighters 2001 (All Boss Plus, Hack)
 // Modified by 西岐赏金猎人, 臂力哥
-// GOTVG 20251021
+// 20260409
 
 static struct BurnRomInfo kf2k1ultRomDesc[] = {
-	{ "262-p1ult.p1",		0x100000, 0x890d6430, 1 | BRF_ESS | BRF_PRG },
-	{ "262-p2ult.sp2",		0x500000, 0x5c68722f, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p1ult.p1",		0x100000, 0x034b41a5, 1 | BRF_ESS | BRF_PRG },
+	{ "262-p2ult.sp2",		0x500000, 0x245b84ae, 1 | BRF_ESS | BRF_PRG },
 
-	{ "262-s1ult.s1",		0x020000, 0x0d40cbd7, 2 | BRF_GRA },
+	{ "262-s1ult.s1",		0x020000, 0x6efe7dc8, 2 | BRF_GRA },
 
-	{ "262-c1ult.c1",		0x800000, 0x0bbc2797, 3 | BRF_GRA },
-	{ "262-c2ult.c2",		0x800000, 0xae956e69, 3 | BRF_GRA },
-	{ "262-c3ult.c3",		0x800000, 0xcaedac56, 3 | BRF_GRA },
-	{ "262-c4ult.c4",		0x800000, 0x4326b247, 3 | BRF_GRA },
-	{ "262-c5ult.c5",		0x800000, 0xf4524440, 3 | BRF_GRA },
-	{ "262-c6ult.c6",		0x800000, 0xb53fac2e, 3 | BRF_GRA },
-	{ "262-c7ult.c7",		0x800000, 0x05989309, 3 | BRF_GRA },
-	{ "262-c8ult.c8",		0x800000, 0x04c029ec, 3 | BRF_GRA },
-	{ "262-c9ult.c9",		0x800000, 0xb0bba382, 3 | BRF_GRA },
-	{ "262-c10ult.c10",		0x800000, 0x056b86e0, 3 | BRF_GRA },
+	{ "262-c1ult.c1",		0x800000, 0x6a3a091c, 3 | BRF_GRA },
+	{ "262-c2ult.c2",		0x800000, 0xd4ee100d, 3 | BRF_GRA },
+	{ "262-c3ult.c3",		0x800000, 0xe68f1a56, 3 | BRF_GRA },
+	{ "262-c4ult.c4",		0x800000, 0x733f8f29, 3 | BRF_GRA },
+	{ "262-c5ult.c5",		0x800000, 0x421278cf, 3 | BRF_GRA },
+	{ "262-c6ult.c6",		0x800000, 0x9e8fa8b5, 3 | BRF_GRA },
+	{ "262-c7ult.c7",		0x800000, 0x2078f017, 3 | BRF_GRA },
+	{ "262-c8ult.c8",		0x800000, 0x89a56587, 3 | BRF_GRA },
+	{ "262-c9ult.c9",		0x800000, 0x8ca54442, 3 | BRF_GRA },
+	{ "262-c10ult.c10",		0x800000, 0x37a0d99d, 3 | BRF_GRA },
 	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 3 | BRF_GRA },
 	{ "265-c8d.c8",			0x800000, 0xbef667a3, 3 | BRF_GRA },
-	{ "262-c13ult.c13",		0x800000, 0x421998ab, 3 | BRF_GRA },
-	{ "262-c14ult.c14",		0x800000, 0x9b169e23, 3 | BRF_GRA },
+	{ "262-c13ult.c13",		0x800000, 0x2a3a1468, 3 | BRF_GRA },
+	{ "262-c14ult.c14",		0x800000, 0xee0e5d28, 3 | BRF_GRA },
 
-	{ "262-m1ult.m1",		0x020000, 0xaadfddc9, 4 | BRF_ESS | BRF_PRG },
+	{ "262-m1ult.m1",		0x020000, 0x2a8352f6, 4 | BRF_ESS | BRF_PRG },
 
-	{ "262-v1ult-08-e0.v1",	0x400000, 0xe9ce9305, 5 | BRF_SND },
-	{ "262-v2ult-08-e0.v2",	0x400000, 0x1c65cdc7, 5 | BRF_SND },
-	{ "262-v3ult-08-e0.v3",	0x400000, 0x24d04db1, 5 | BRF_SND },
-	{ "262-v4ult-08-e0.v4",	0x400000, 0xcba0f4af, 5 | BRF_SND },
-	{ "262-v5ult-08-e0.v5",	0x400000, 0x84d06192, 5 | BRF_SND },
-	{ "262-v6ult-08-e0.v6",	0x400000, 0xdd2704e5, 5 | BRF_SND },
-	{ "262-v7ult-08-e0.v7",	0x400000, 0x0d22f0f0, 5 | BRF_SND },
-//	{ "262-v8ult-08-e0.v8",	0x400000, 0x7d5b6975, 5 | BRF_SND },	0xFFFFFFF fill
+	{ "262-v1ult-08-e0.v1",	0x400000, 0x164d1b2a, 5 | BRF_SND },
+	{ "262-v2ult-08-e0.v2",	0x400000, 0x7cc9251e, 5 | BRF_SND },
+	{ "262-v3ult-08-e0.v3",	0x400000, 0x5dd46eb9, 5 | BRF_SND },
+	{ "262-v4ult-08-e0.v4",	0x400000, 0x8e651432, 5 | BRF_SND },
+	{ "262-v5ult-08-e0.v5",	0x400000, 0xd65f6522, 5 | BRF_SND },
+	{ "262-v6ult-08-e0.v6",	0x400000, 0x7b72324c, 5 | BRF_SND },
+	{ "262-v7ult-08-e0.v7",	0x400000, 0x2bc74bd0, 5 | BRF_SND },
+	{ "262-v8ult-08-e0.v8",	0x400000, 0x3988bee9, 5 | BRF_SND },
 };
 
 STDROMPICKEXT(kf2k1ult, kf2k1ult, neogeo)
 STD_ROM_FN(kf2k1ult)
 
 struct BurnDriver BurnDrvKf2k1ult = {
-	"kf2k1ult", "kof2001", "neogeo", NULL, "2025",
+	"kf2k1ult", "kof2001", "neogeo", NULL, "2026",
 	"The King of Fighters 2001 (All Boss Plus, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, L"\u897f\u5c90\u8d4f\u91d1\u730e\u4eba, \u81c2\u529b\u54e5", NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,

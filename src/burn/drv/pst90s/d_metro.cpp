@@ -4733,7 +4733,7 @@ STD_ROM_FN(gstrik2)
 
 struct BurnDriver BurnDrvGstrik2 = {
 	"gstrik2", NULL, NULL, NULL, "1996",
-	"Grand Striker 2 (Europe and Oceania)\0", "ROZ layer broken", "Human Amusement", "Miscellaneous",
+	"Grand Striker 2 (Europe and Oceania)\0", NULL, "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, gstrik2RomInfo, gstrik2RomName, NULL, NULL, NULL, NULL, Gstrik2InputInfo, Gstrik2DIPInfo,
@@ -4773,7 +4773,7 @@ STD_ROM_FN(gstrik2j)
 
 struct BurnDriverD BurnDrvGstrik2j = {
 	"gstrik2j", "gstrik2", NULL, NULL, "1996",
-	"Grand Striker 2 (Japan)\0", "ROZ layer broken", "Human Amusement", "Miscellaneous",
+	"Grand Striker 2 (Japan)\0", NULL, "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, gstrik2jRomInfo, gstrik2jRomName, NULL, NULL, NULL, NULL, Gstrik2InputInfo, Gstrik2DIPInfo,

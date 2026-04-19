@@ -3961,7 +3961,7 @@ struct BurnDriver BurnDrvHamaway = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_837_7525, GBF_PUZZLE, 0,
 	NULL, HamawayRomInfo, HamawayRomName, NULL, NULL, NULL, NULL, System18InputInfo, HamawayDIPInfo,
-	HamawayInit, WwallyExit, System18Frame, System18Render, WwallyScan,
+	HamawayInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

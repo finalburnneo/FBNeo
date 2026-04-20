@@ -39121,7 +39121,7 @@ struct BurnDriver BurnDrvmd_cursedlegacy = {
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_cursedlegacyRomInfo, md_cursedlegacyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 240, 4, 3
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
 // Curse of Illmoore Bay, the (HB)
@@ -41284,7 +41284,7 @@ struct BurnDriver BurnDrvmd_p47iimd = {
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_p47iimdRomInfo, md_p47iimdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 240, 4, 3
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
 // Pac-Man (World)

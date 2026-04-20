@@ -281,24 +281,24 @@ static struct BurnInputInfo Megadrive5pInputList[] = {
 STDINPUTINFO(Megadrive5p)
 
 static struct BurnDIPInfo MegadriveDIPList[] = {
-	{0x1a,	0xff, 0xff, 0x03,  NULL               },
+	DIP_OFFSET(0x19)
 
-	{0,	0xfe, 0,       5, "Hardware"          },
-	{0x19,	0x01, 0xc1, 0x01, "Auto Detect"       },
-	{0x19,	0x01, 0xc1, 0x00, "Japan NTSC"        },
-	{0x19,	0x01, 0xc1, 0x40, "Japan PAL"         },
-	{0x19,	0x01, 0xc1, 0x80, "USA"               },
-	{0x19,	0x01, 0xc1, 0xc0, "Europe"            },
+	{0,	0xfe, 0,       5, "Hardware"              },
+	{0x00,	0x01, 0xc1, 0x01, "Auto Detect"       },
+	{0x00,	0x01, 0xc1, 0x00, "Japan NTSC"        },
+	{0x00,	0x01, 0xc1, 0x40, "Japan PAL"         },
+	{0x00,	0x01, 0xc1, 0x80, "USA"               },
+	{0x00,	0x01, 0xc1, 0xc0, "Europe"            },
 #if 0
-	{0,	0xfe, 0,       2, "CD-ROM"            },
-	{0x19,	0x01, 0x20, 0x20, "No"                },
-	{0x19,	0x01, 0x20, 0x00, "Yes"               },
+	{0,	0xfe, 0,       2, "CD-ROM"                },
+	{0x00,	0x01, 0x20, 0x20, "No"                },
+	{0x00,	0x01, 0x20, 0x00, "Yes"               },
 #endif
-	{0,	0xfe, 0,       4, "32-Col Mode Draw"  },
-	{0x1a,	0x01, 0x03, 0x00, "No Change"         },
-	{0x1a,	0x01, 0x03, 0x01, "Center"            },
-	{0x1a,	0x01, 0x03, 0x02, "Inner Zoom"        },
-	{0x1a,  0x01, 0x03, 0x03, "Resize Screen/Window"},
+	{0,	0xfe, 0,       4, "32-Col Mode Draw"      },
+	{0x01,	0x01, 0x03, 0x00, "No Change"         },
+	{0x01,	0x01, 0x03, 0x01, "Center"            },
+	{0x01,	0x01, 0x03, 0x02, "Inner Zoom"        },
+	{0x01,  0x01, 0x03, 0x03, "Resize Screen/Window"},
 };
 
 static struct BurnDIPInfo MegadriveMenacerDIPList[] = {
@@ -344,19 +344,33 @@ static struct BurnDIPInfo MegadriveJustifierDIPList[] = {
 STDDIPINFO(MegadriveJustifier)
 
 static struct BurnDIPInfo AutoDetectRegionDIPList[] = {
-	{0x19,	0xff,  0xff,	0x21,   NULL},
+	DIP_OFFSET(0x19)
+	{0x00,	0xff,  0xff,	0x21,   NULL},
+	{0x01,	0xff,  0xff,	0x03,   NULL},
 };
 
 static struct BurnDIPInfo PALRegionDIPList[] = {
-	{0x19,	0xff,  0xff,	0xe0,   NULL},
+	DIP_OFFSET(0x19)
+	{0x00,	0xff,  0xff,	0xe0,   NULL},
+	{0x01,	0xff,  0xff,	0x03,   NULL},
 };
 
 static struct BurnDIPInfo JNTSCRegionDIPList[] = {
-	{0x19,	0xff,  0xff,	0x20,   NULL},
+	DIP_OFFSET(0x19)
+	{0x00,	0xff,  0xff,	0x20,   NULL},
+	{0x01,	0xff,  0xff,	0x03,   NULL},
 };
 
 static struct BurnDIPInfo UNTSCRegionDIPList[] = {
-	{0x19,	0xff,  0xff,	0x20|0x80,   NULL},
+	DIP_OFFSET(0x19)
+	{0x00,	0xff,  0xff,	0x20|0x80,   NULL},
+	{0x01,	0xff,  0xff,	0x03,        NULL},
+};
+
+static struct BurnDIPInfo InnerZoomDIPList[] = {
+	DIP_OFFSET(0x19)
+	{0x00,	0xff,  0xff,	0x21,   NULL},
+	{0x01,	0xff,  0xff,	0x02,   NULL},
 };
 
 static struct BurnDIPInfo Megadrive3pDIPList[] = {
@@ -447,6 +461,7 @@ STDDIPINFOEXT(Megadrive, AutoDetectRegion, Megadrive)
 STDDIPINFOEXT(MegadrivePAL, PALRegion, Megadrive)
 STDDIPINFOEXT(MegadriveJNTSC, JNTSCRegion, Megadrive)
 STDDIPINFOEXT(MegadriveUSANTSC, UNTSCRegion, Megadrive)
+STDDIPINFOEXT(MegadriveIZ, InnerZoom, Megadrive)
 STDDIPINFOEXT(Megadrive3p, AutoDetectRegion3p, Megadrive3p)
 STDDIPINFOEXT(MegadrivePaprium, AutoDetectRegion3pPaprium, Megadrive3p)
 STDDIPINFOEXT(Megadrive4p, AutoDetectRegion4p, Megadrive4p)
@@ -19598,7 +19613,7 @@ struct BurnDriver BurnDrvmd_pacman2 = {
 	"Pac-Man 2: The New Adventures (USA)\0", NULL, "Namco", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_pacman2RomInfo, md_pacman2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_pacman2RomInfo, md_pacman2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24366,7 +24381,7 @@ struct BurnDriver BurnDrvmd_shinfrce = {
 	"Shining Force (USA)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrceRomInfo, md_shinfrceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrceRomInfo, md_shinfrceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24384,7 +24399,7 @@ struct BurnDriver BurnDrvmd_shinfrcep = {
 	"Shining Force (USA, Prototype)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrcepRomInfo, md_shinfrcepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrcepRomInfo, md_shinfrcepRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24402,7 +24417,7 @@ struct BurnDriver BurnDrvmd_shinfrcej = {
 	"Shining Force: Kamigami no Isan (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	L"Shining Force: Kamigami no Isan (Japan)\0\u30b7\u30e3\u30a4\u30cb\u30f3\u30b0\u30fb\u30d5\u30a9\u30fc\u30b9 \u795e\u3005\u306e\u907a\u7523\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrcejRomInfo, md_shinfrcejRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrcejRomInfo, md_shinfrcejRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24420,7 +24435,7 @@ struct BurnDriver BurnDrvmd_shinfrc2 = {
 	"Shining Force II (Euro)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2RomInfo, md_shinfrc2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2RomInfo, md_shinfrc2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24438,7 +24453,7 @@ struct BurnDriver BurnDrvmd_shinfrc2j = {
 	"Shining Force II: Koe no Fuuin (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	L"Shining Force II: Koe no Fuuin (Japan)\0\u30b7\u30e3\u30a4\u30cb\u30f3\u30b0\u30fb\u30d5\u30a9\u30fc\u30b9 II \u53e4\u3048\u306e\u5c01\u5370\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2jRomInfo, md_shinfrc2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2jRomInfo, md_shinfrc2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24457,7 +24472,7 @@ struct BurnDriver BurnDrvmd_shinfrc2i = {
 	"Shining Force II (Hack, Italian v1.1)\0", NULL, "Raviolo", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2iRomInfo, md_shinfrc2iRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2iRomInfo, md_shinfrc2iRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24475,7 +24490,7 @@ struct BurnDriver BurnDrvmd_shinfrc2p1 = {
 	"Shining Force II (USA, Prototype)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2p1RomInfo, md_shinfrc2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2p1RomInfo, md_shinfrc2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24494,7 +24509,7 @@ struct BurnDriver BurnDrvmd_shinfrc2p3 = {
 	"Shining Force II (Prototype, Earlier)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2p3RomInfo, md_shinfrc2p3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2p3RomInfo, md_shinfrc2p3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24512,7 +24527,7 @@ struct BurnDriver BurnDrvmd_shinfrc2p4 = {
 	"Shining Force II (Prototype B)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2p4RomInfo, md_shinfrc2p4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2p4RomInfo, md_shinfrc2p4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24530,7 +24545,7 @@ struct BurnDriver BurnDrvmd_shinfrc2u = {
 	"Shining Force II (USA)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2uRomInfo, md_shinfrc2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2uRomInfo, md_shinfrc2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -26583,7 +26598,7 @@ struct BurnDriver BurnDrvmd_splatth3 = {
 	"Splatterhouse 3 (USA)\0", NULL, "Namco", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_splatth3RomInfo, md_splatth3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_splatth3RomInfo, md_splatth3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -26601,7 +26616,7 @@ struct BurnDriver BurnDrvmd_splatth3j = {
 	"Splatterhouse Part 3 (Japan, Korea)\0", NULL, "Namcot", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_splatth3jRomInfo, md_splatth3jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_splatth3jRomInfo, md_splatth3jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -27232,7 +27247,7 @@ struct BurnDriver BurnDrvmd_sf2 = {
 	"Street Fighter II' - Special Champion Edition (Euro)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2RomInfo, md_sf2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2RomInfo, md_sf2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -27250,7 +27265,7 @@ struct BurnDriver BurnDrvmd_sf2j = {
 	"Street Fighter II' Plus (Japan, Asia, Korea)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2jRomInfo, md_sf2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2jRomInfo, md_sf2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -27268,7 +27283,7 @@ struct BurnDriver BurnDrvmd_sf2pir = {
 	"Street Fighter II' Turbo (Pirate)\0", NULL, "<unknown>", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2pirRomInfo, md_sf2pirRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2pirRomInfo, md_sf2pirRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -27286,7 +27301,7 @@ struct BurnDriver BurnDrvmd_sf2u = {
 	"Street Fighter II' - Special Champion Edition (USA)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2uRomInfo, md_sf2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2uRomInfo, md_sf2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -27304,7 +27319,7 @@ struct BurnDriver BurnDrvmd_sf2p1 = {
 	"Street Fighter II' - Champion Edition (Prototype)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2p1RomInfo, md_sf2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2p1RomInfo, md_sf2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -28386,7 +28401,7 @@ struct BurnDriver BurnDrvmd_ssf2 = {
 	"Super Street Fighter II - The New Challengers (Euro)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2RomInfo, md_ssf2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2RomInfo, md_ssf2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -28404,7 +28419,7 @@ struct BurnDriver BurnDrvmd_ssf2j = {
 	"Super Street Fighter II - The New Challengers (Japan)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2jRomInfo, md_ssf2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2jRomInfo, md_ssf2jRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -28422,7 +28437,7 @@ struct BurnDriver BurnDrvmd_ssf2u = {
 	"Super Street Fighter II - The New Challengers (USA)\0", NULL, "Capcom", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2uRomInfo, md_ssf2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2uRomInfo, md_ssf2uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -31009,7 +31024,7 @@ struct BurnDriver BurnDrvmd_umk3 = {
 	"Ultimate Mortal Kombat 3 (Euro)\0", NULL, "Acclaim Entertainment", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3RomInfo, md_umk3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3RomInfo, md_umk3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -31027,7 +31042,7 @@ struct BurnDriver BurnDrvmd_umk3u = {
 	"Ultimate Mortal Kombat 3 (USA)\0", NULL, "Williams", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3uRomInfo, md_umk3uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3uRomInfo, md_umk3uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -41491,7 +41506,7 @@ struct BurnDriver BurnDrvmd_papriumini = {
 	"Paprium Minigame (HB)\0", NULL, "WaterMelon", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43583,7 +43598,7 @@ struct BurnDriver BurnDrvmd_bssf2gq = {
 	"Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.9C)\0", "NB: also applied 'NoPause' patch.", "Yoni Arousement", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_bssf2gqRomInfo, md_bssf2gqRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_bssf2gqRomInfo, md_bssf2gqRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43602,7 +43617,7 @@ struct BurnDriver BurnDrvmd_bssf2gqc = {
 	"Bishoujo Super Street Fighter II: Glamor Queen (Hack, v2.9C Censored)\0", "NB: also applied 'NoPause' patch.", "Yoni Arousement", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_bssf2gqcRomInfo, md_bssf2gqcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_bssf2gqcRomInfo, md_bssf2gqcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44771,7 +44786,7 @@ struct BurnDriver BurnDrvmd_shinfrc2t = {
 	"Shining Tactics Absolute Final Edition (Hack)\0", NULL, "Dark Claw", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2tRomInfo, md_shinfrc2tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2tRomInfo, md_shinfrc2tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44845,7 +44860,7 @@ struct BurnDriver BurnDrvmd_sf2hce2 = {
 	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44863,7 +44878,7 @@ struct BurnDriver BurnDrvmd_sf2re = {
 	"Street Fighter II' - Remastered Edition (Hack)\0", NULL, "Pyron", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2reRomInfo, md_sf2reRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2reRomInfo, md_sf2reRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44881,7 +44896,7 @@ struct BurnDriver BurnDrvmd_sf2ics = {
 	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "Pyron & Stephane.D", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44899,7 +44914,7 @@ struct BurnDriver BurnDrvmd_sf2wwp = {
 	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45287,7 +45302,7 @@ struct BurnDriver BurnDrvmd_ssf2cg = {
 	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45307,7 +45322,7 @@ struct BurnDriver BurnDrvmd_ssf2ics = {
 	"Super Street Fighter II (Hack, Color and Sound)\0", NULL, "2014 Pyron (color), Stephane D. (sound)", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2icsRomInfo, md_ssf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2icsRomInfo, md_ssf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45327,7 +45342,7 @@ struct BurnDriver BurnDrvmd_ssf2rstn = {
 	"Super Street Fighter II - Restoration (Hack)\0", NULL, "Lord Hiryu, Aeronius", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2rstnRomInfo, md_ssf2rstnRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2rstnRomInfo, md_ssf2rstnRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45662,7 +45677,7 @@ struct BurnDriver BurnDrvmd_umk3mh = {
 	"Ultimate Mortal Kombat 3 Mini (Hack, v13)\0", NULL, "Nemesis_c, r57shell", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3mhRomInfo, md_umk3mhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3mhRomInfo, md_umk3mhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45681,7 +45696,7 @@ struct BurnDriver BurnDrvmd_umk3h06 = {
 	"Ultimate Mortal Kombat 3 Arcade (Hack, v0.6)\0", NULL, "Nemesis_c", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3h06RomInfo, md_umk3h06RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3h06RomInfo, md_umk3h06RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45699,7 +45714,7 @@ struct BurnDriver BurnDrvmd_umk3h = {
 	"Ultimate Mortal Kombat 3 Arcade (Hack, v0.71)\0", NULL, "Nemesis_c", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3hRomInfo, md_umk3hRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3hRomInfo, md_umk3hRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45717,7 +45732,7 @@ struct BurnDriver BurnDrvmd_umk3osc = {
 	"Ultimate Mortal Kombat 3 OSC (Hack, v31a)\0", NULL, "Bonus", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3oscRomInfo, md_umk3oscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_umk3oscRomInfo, md_umk3oscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46139,7 +46154,7 @@ struct BurnDriver BurnDrvmd_pacman2c = {
 	"Pac-Man 2: The New Adventures (Hack, Chinese v1.1)\0", NULL, "Axi", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
-	MegadriveGetZipName, md_pacman2cRomInfo, md_pacman2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_pacman2cRomInfo, md_pacman2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46176,7 +46191,7 @@ struct BurnDriver BurnDrvmd_shinfrcetsc = {
 	"Shining Force: Kamigami no Isan (Hack, Simplified Chinese)\0", NULL, "zymgundam", "Genesis / Mega Drive",
 	L"Shining Force: Kamigami no Isan (Hack, Simpl. Chinese)\0\u5149\u660e\u4e0e\u9ed1\u6697 \u7eed\u6218: \u8bf8\u795e\u7684\u9057\u4ea7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrcetscRomInfo, md_shinfrcetscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrcetscRomInfo, md_shinfrcetscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46194,7 +46209,7 @@ struct BurnDriver BurnDrvmd_shinfrcettc = {
 	"Shining Force: Kamigami no Isan (Hack, Traditional Chinese)\0", NULL, "<unknown>", "Genesis / Mega Drive",
 	L"Shining Force: Kamigami no Isan (Hack, Trad. Chinese)\0\u5149\u660e\u8207\u9ed1\u6697 \u7e8c\u6230: \u8af8\u795e\u7684\u907a\u7522\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrcettcRomInfo, md_shinfrcettcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrcettcRomInfo, md_shinfrcettcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46213,7 +46228,7 @@ struct BurnDriver BurnDrvmd_shinfrc2c = {
 	"Shining Force II: Koe no Fuuin (Hack, Chinese v2)\0", NULL, "Ken_Tse", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46841,7 +46856,7 @@ struct BurnDriver BurnDrvmd_shinfrcept = {
 	"Shining Force (Hack, Portuguese)\0", NULL, "Lobo-FF", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrceptRomInfo, md_shinfrceptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrceptRomInfo, md_shinfrceptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46860,7 +46875,7 @@ struct BurnDriver BurnDrvmd_shinfrc2pt = {
 	"Shining Force II (Hack, Portuguese)\0", NULL, "hack (Various)", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2ptRomInfo, md_shinfrc2ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrc2ptRomInfo, md_shinfrc2ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -47912,7 +47927,7 @@ struct BurnDriver BurnDrvmd_charnegoforce2s = {
 	"Charnego Force II (Hack, Spanish)\0", NULL, "Charnego Translations", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_charnegoforce2sRomInfo, md_charnegoforce2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_charnegoforce2sRomInfo, md_charnegoforce2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -51142,7 +51157,7 @@ struct BurnDriver BurnDrvmd_shinfrces = {
 	"Shining Force (Hack, Spanish)\0", NULL, "RMGlitch", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrcesRomInfo, md_shinfrcesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_shinfrcesRomInfo, md_shinfrcesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -51389,7 +51404,7 @@ struct BurnDriver BurnDrvmd_splatth3s = {
 	"Splatterhouse 3 (Hack, Spanish)\0", NULL, "Wave", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_splatth3sRomInfo, md_splatth3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_splatth3sRomInfo, md_splatth3sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -51427,7 +51442,7 @@ struct BurnDriver BurnDrvmd_sf2s = {
 	"Street Fighter II' - Special Champion Edition (Hack, Spanish)\0", NULL, "pepodmc", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2sRomInfo, md_sf2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_sf2sRomInfo, md_sf2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -51674,7 +51689,7 @@ struct BurnDriver BurnDrvmd_ssf2s = {
 	"Super Street Fighter II - The New Challengers (Hack, Spanish v2.0)\0", NULL, "Wave", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2sRomInfo, md_ssf2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ssf2sRomInfo, md_ssf2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -53211,7 +53226,7 @@ struct BurnDriver BurnDrvmd_splatth3be = {
 	"Splatterhouse 3 Bloody Edition (USA) (Hack, v1.2)\0", NULL, "CRT_rex", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_splatth3beRomInfo, md_splatth3beRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_splatth3beRomInfo, md_splatth3beRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -53230,7 +53245,7 @@ struct BurnDriver BurnDrvmd_splatth3jbe = {
 	"Splatterhouse Part 3 Bloody Edition (Japan, Korea) (Hack, v1.2)\0", NULL, "CRT_rex", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_splatth3jbeRomInfo, md_splatth3jbeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_splatth3jbeRomInfo, md_splatth3jbeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveIZDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

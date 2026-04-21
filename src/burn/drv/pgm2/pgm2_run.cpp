@@ -84,6 +84,8 @@ UINT8  Pgm2InputPort1[32] = { 0 };
 UINT8  Pgm2Dip[1]         = { 0xff };
 UINT8  Pgm2Reset           = 0;
 
+static ClearOpposite<4, UINT8> Pgm2ClearOpposite;
+
 // Encryption support (runtime decryption via internal boot ROM)
 static UINT8 *Pgm2ArmROMEncrypted = NULL;     // encrypted backup for reset
 static INT32  Pgm2HasDecrypted = 0;            // prevents double decryption
@@ -1990,6 +1992,7 @@ INT32 pgm2DoReset()
 	nCyclesExtra = 0;
 	if(pPgm2ResetCallback)
 		pPgm2ResetCallback();
+	Pgm2ClearOpposite.reset();
 	HiscoreReset();
 	return 0;
 }
@@ -2080,6 +2083,12 @@ static void pgm2MakeInputs()
     for (INT32 i = 0; i < 24; i++) {
         Pgm2Input[4 + i / 8] |= (Pgm2InputPort1[i] & 1) << (i & 7);
     }
+
+	Pgm2ClearOpposite.check(0, Pgm2Input[0], 0x01, 0x02, 0x04, 0x08, nSocd[0]);
+	Pgm2ClearOpposite.check(1, Pgm2Input[1], 0x04, 0x08, 0x10, 0x20, nSocd[1]);
+	Pgm2ClearOpposite.check(2, Pgm2Input[2], 0x10, 0x20, 0x40, 0x80, nSocd[2]);
+	Pgm2ClearOpposite.check(3, Pgm2Input[4], 0x01, 0x02, 0x04, 0x08, nSocd[3]);
+
     // DIP switches: pre-invert because the read handler applies ~ to the
     // whole 32-bit value.  ~(~Pgm2Dip[0]) restores the correct polarity.
     Pgm2Input[7] = ~Pgm2Dip[0];
@@ -2421,6 +2430,8 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
         pPgm2ScanCallback(nAction, pnMin);
 
     pgm2ScanDraw(nAction);
+
+	Pgm2ClearOpposite.scan();
 
     return 0;
 }

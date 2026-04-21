@@ -38,6 +38,8 @@ static INT16 Analog[2];
 static INT32 is_ripcord = 0;
 static INT32 is_robotbwl = 0;
 
+static bool audio_mute = false;
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo CircusInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
@@ -245,24 +247,34 @@ static void circus_sound_write(INT32 data)
 
 static void ripcord_sound_write(INT32 data)
 {
-	if ((data & 0x70) == 0x70) {
-		playif(3, 0.75);
-		return;
+	if ((data & 0x80) == 0) { // audio enable
+		audio_mute = false;
+		switch ((data >> 4) & 7)
+		{
+			case 0: DACWrite(0, 0); break;
+			case 1: DACWrite(0, 0x80); break;
+			case 2: play(0, 0.25); break; // ripcord - splash
+			case 3: break; // video - normal
+			case 4: playif(1, 0.25); break; // ripcord - scream
+			case 5: break; // video - inverted
+			case 6: playif(2, 0.25); break; // ripcord - chute open
+			case 7: playif(3, 0.25); break; // ripcord - whistle
+		}
+	} else {
+		audio_mute = true;
 	}
-
-	circus_sound_write(data);
 }
 
 static void robotbwl_sound_write(INT32 data)
 {
 	if ((data & 0x80) == 0) { // audio enable
-		if (data & 0x01) BurnSamplePlay(4); // reward
-		if (data & 0x02) BurnSamplePlay(3); // demerit
+		if (data & 0x01) play(4, 0.25); // reward
+		if (data & 0x02) play(3, 0.55); // demerit
 		//	if (data & 0x04) // invert
-		//	if (data & 0x08) // discrete music bit off
-		if (data & 0x10) BurnSamplePlay(2); // ball drop
-		if (data & 0x20) BurnSamplePlay(1); // roll
-		if (data & 0x40) BurnSamplePlay(0); //
+		DACWrite(0, (data & 0x08) ? 0x10 : 0x00); // footsteps
+		if (data & 0x10) play(2, 0.15); // ball drop
+		if (data & 0x20) play(1, 0.25); // roll
+		if (data & 0x40) play(0, 0.25); // hit
 	}
 }
 
@@ -357,6 +369,7 @@ static INT32 DrvDoReset()
 	sprite_x = 0;
 	sprite_y = 0;
 	sprite_z = 0;
+	audio_mute = false;
 
 	return 0;
 }
@@ -769,6 +782,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		if (audio_mute) BurnSoundClear();
 	}
 
 	BurnDrvRedraw(); // pBurnDraw check in *draw() :) (needed for collision det. / irq generation)
@@ -778,19 +792,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029702;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 
 		M6502Scan(nAction);
 		BurnSampleScan(nAction, pnMin);
@@ -800,6 +807,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sprite_x);
 		SCAN_VAR(sprite_y);
 		SCAN_VAR(sprite_z);
+		SCAN_VAR(audio_mute);
 	}
 
 	return 0;
@@ -912,8 +920,6 @@ static struct BurnRomInfo robotbwlRomDesc[] = {
 STD_ROM_PICK(robotbwl)
 STD_ROM_FN(robotbwl)
 
-/*
-samples don't exist yet.
 static struct BurnSampleInfo RobotbwlSampleDesc[] = {
 	{ "hit", 		SAMPLE_NOLOOP },
 	{ "roll", 		SAMPLE_NOLOOP },
@@ -925,7 +931,6 @@ static struct BurnSampleInfo RobotbwlSampleDesc[] = {
 
 STD_SAMPLE_PICK(Robotbwl)
 STD_SAMPLE_FN(Robotbwl)
-*/
 
 static INT32 RobotbwlInit()
 {
@@ -934,11 +939,11 @@ static INT32 RobotbwlInit()
 }
 
 struct BurnDriver BurnDrvRobotbwl = {
-	"robotbwl", NULL, NULL, NULL, "1977",
+	"robotbwl", NULL, NULL, "robotbwl", "1977",
 	"Robot Bowl\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
-	NULL, robotbwlRomInfo, robotbwlRomName, NULL, NULL, NULL, NULL, RobotbwlInputInfo, RobotbwlDIPInfo,
+	NULL, robotbwlRomInfo, robotbwlRomName, NULL, NULL, RobotbwlSampleInfo, RobotbwlSampleName, RobotbwlInputInfo, RobotbwlDIPInfo,
 	RobotbwlInit, DrvExit, DrvFrame, RobotbwlDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
 };
@@ -1074,8 +1079,7 @@ static struct BurnRomInfo ripcordRomDesc[] = {
 
 STD_ROM_PICK(ripcord)
 STD_ROM_FN(ripcord)
-/*
-samples don't exist.
+
 static struct BurnSampleInfo RipcordSampleDesc[] = {
 	{ "splash", 	SAMPLE_NOLOOP },
 	{ "scream", 	SAMPLE_NOLOOP },
@@ -1086,7 +1090,6 @@ static struct BurnSampleInfo RipcordSampleDesc[] = {
 
 STD_SAMPLE_PICK(Ripcord)
 STD_SAMPLE_FN(Ripcord)
-*/
 
 static INT32 RipcordInit()
 {
@@ -1095,11 +1098,11 @@ static INT32 RipcordInit()
 }
 
 struct BurnDriver BurnDrvRipcord = {
-	"ripcord", NULL, NULL, NULL, "1979",
+	"ripcord", NULL, NULL, "ripcord", "1979",
 	"Rip Cord\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
-	NULL, ripcordRomInfo, ripcordRomName, NULL, NULL, NULL, NULL, RipcordInputInfo, RipcordDIPInfo,
+	NULL, ripcordRomInfo, ripcordRomName, NULL, NULL, RipcordSampleInfo, RipcordSampleName, RipcordInputInfo, RipcordDIPInfo,
 	RipcordInit, DrvExit, DrvFrame, RipcordDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
 };

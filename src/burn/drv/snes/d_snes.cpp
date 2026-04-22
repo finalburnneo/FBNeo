@@ -4256,7 +4256,7 @@ struct BurnDriver BurnDrvsnes_Bazooblitz = {
 	BDF_GAME_WORKING, 4, HARDWARE_SNES_ZAPPER, GBF_SHOOT, 0,
 	SNESGetZipName, snes_BazooblitzRomInfo, snes_BazooblitzRomName, NULL, NULL, NULL, NULL, SNESZapperInputInfo, SNESZapperDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Bill Walsh College Football (USA)
@@ -4902,7 +4902,7 @@ struct BurnDriver BurnDrvsnes_Bluesbros = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BluesbrosRomInfo, snes_BluesbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Blues Brothers, The (Euro)
@@ -4940,7 +4940,7 @@ struct BurnDriver BurnDrvsnes_Bluesbrosj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_BluesbrosjRomInfo, snes_BluesbrosjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // B.O.B. (USA)
@@ -8741,7 +8741,7 @@ struct BurnDriver BurnDrvsnes_Daikojidai = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_DaikojidaiRomInfo, snes_DaikojidaiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Daikoukai Jidai II (Japan)
@@ -9559,7 +9559,7 @@ struct BurnDriver BurnDrvsnes_Destruct = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SNES_ZAPPER, GBF_SHOOT, 0,
 	SNESGetZipName, snes_DestructRomInfo, snes_DestructRomName, NULL, NULL, NULL, NULL, SNESZapperInputInfo, SNESZapperDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // New 3D Golf Simulation - Devil's Course (Japan)
@@ -9635,7 +9635,7 @@ struct BurnDriver BurnDrvsnes_Dforce = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_VERSHOOT, 0,
 	SNESGetZipName, snes_DforceRomInfo, snes_DforceRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Dimension-Force (Japan)
@@ -9654,7 +9654,7 @@ struct BurnDriver BurnDrvsnes_Dforcej = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_VERSHOOT, 0,
 	SNESGetZipName, snes_DforcejRomInfo, snes_DforcejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Dossun! Ganseki Battle (Japan)
@@ -10433,7 +10433,7 @@ struct BurnDriver BurnDrvsnes_Drmario = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_DrmarioRomInfo, snes_DrmarioRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Dragon Quest I & II (Japan)
@@ -15211,7 +15211,7 @@ struct BurnDriver BurnDrvsnes_Goal = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_GoalRomInfo, snes_GoalRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // G.O.D: Mezame yo to Yobu Koe ga Kikoe (Japan)
@@ -17624,7 +17624,7 @@ struct BurnDriver BurnDrvsnes_Inindo = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_InindoRomInfo, snes_InindoRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Inindou - Datou Nobunaga (Japan)
@@ -17643,7 +17643,7 @@ struct BurnDriver BurnDrvsnes_Inindoj = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_InindojRomInfo, snes_InindojRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Inspector Gadget (USA)
@@ -17966,7 +17966,7 @@ struct BurnDriver BurnDrvsnes_Jbondjr = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	SNESGetZipName, snes_JbondjrRomInfo, snes_JbondjrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // James Bond Jr. (Euro)
@@ -25452,7 +25452,7 @@ struct BurnDriver BurnDrvsnes_Nigelmansell = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_NigelmansellRomInfo, snes_NigelmansellRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Nigel Mansell's World Championship Racing (Euro, Rev. 1)
@@ -25642,7 +25642,7 @@ struct BurnDriver BurnDrvsnes_Nobunagalod = {
 	BDF_GAME_WORKING, 8, HARDWARE_SNES, GBF_STRATEGY, 0,
 	SNESGetZipName, snes_NobunagalodRomInfo, snes_NobunagalodRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Nobunaga no Yabou - Bushou Fuuunroku (Japan, Rev. 1)
@@ -25661,7 +25661,7 @@ struct BurnDriver BurnDrvsnes_Nobunagalodj = {
 	BDF_GAME_WORKING | BDF_CLONE, 8, HARDWARE_SNES, GBF_STRATEGY, 0,
 	SNESGetZipName, snes_NobunagalodjRomInfo, snes_NobunagalodjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Nobunaga no Yabou - Zenkoku Ban (Japan, Rev. 1)
@@ -26079,7 +26079,7 @@ struct BurnDriver BurnDrvsnes_Ossukarate = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_OssukarateRomInfo, snes_OssukarateRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Othello World (Japan)
@@ -26478,7 +26478,7 @@ struct BurnDriver BurnDrvsnes_Pagemaster = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_PagemasterRomInfo, snes_PagemasterRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Pagemaster, The (Euro)
@@ -26782,7 +26782,7 @@ struct BurnDriver BurnDrvsnes_Pgatgolf = {
 	BDF_GAME_WORKING, 4, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_PgatgolfRomInfo, snes_PgatgolfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // PGA Tour Golf (Euro)
@@ -29614,7 +29614,7 @@ struct BurnDriver BurnDrvsnes_Rssfiredogs = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_RssfiredogsRomInfo, snes_RssfiredogsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Ren & Stimpy Show, The - Time Warp (USA)
@@ -30127,7 +30127,7 @@ struct BurnDriver BurnDrvsnes_Sbloaded = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_SbloadedRomInfo, snes_SbloadedRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Bases Loaded II (USA)
@@ -31002,7 +31002,7 @@ struct BurnDriver BurnDrvsnes_Sf1circus2j = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Sf1circus2jRomInfo, snes_Sf1circus2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super F1 Circus 3 (Japan)
@@ -31040,7 +31040,7 @@ struct BurnDriver BurnDrvsnes_Sf1circusj = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Sf1circusjRomInfo, snes_Sf1circusjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super F1 Circus Limited (Japan)
@@ -31059,7 +31059,7 @@ struct BurnDriver BurnDrvsnes_Sf1climitedj = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_Sf1climitedjRomInfo, snes_Sf1climitedjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Mario So Estrelas (Hack, Portuguese v1.11)
@@ -31401,7 +31401,7 @@ struct BurnDriver BurnDrvsnes_Sgodzilla = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_STRATEGY, 0,
 	SNESGetZipName, snes_SgodzillaRomInfo, snes_SgodzillaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Godzilla (Japan)
@@ -31420,7 +31420,7 @@ struct BurnDriver BurnDrvsnes_Sgodzillaj = {
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_STRATEGY, 0,
 	SNESGetZipName, snes_SgodzillajRomInfo, snes_SgodzillajRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Shadow, The (Prototype)
@@ -33378,7 +33378,7 @@ struct BurnDriver BurnDrvsnes_Spbaseball = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_SpbaseballRomInfo, snes_SpbaseballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Spectre (USA)
@@ -35012,7 +35012,7 @@ struct BurnDriver BurnDrvsnes_Supchiworld2j = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RPG | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Supchiworld2jRomInfo, snes_Supchiworld2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Chinese World 2 - The Interstellar Battle Arena (Hack, English v2)
@@ -35031,7 +35031,7 @@ struct BurnDriver BurnDrvsnes_Supchiworld2te = {
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_RPG | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Supchiworld2teRomInfo, snes_Supchiworld2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Chinese World 3 (Japan)
@@ -35050,7 +35050,7 @@ struct BurnDriver BurnDrvsnes_Supchiworld3j = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RPG | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Supchiworld3jRomInfo, snes_Supchiworld3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Chinese World 3 (Hack, English v2)
@@ -35069,7 +35069,7 @@ struct BurnDriver BurnDrvsnes_Supchiworld3te = {
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Supchiworld3teRomInfo, snes_Supchiworld3teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Chinese World (Japan)
@@ -35088,7 +35088,7 @@ struct BurnDriver BurnDrvsnes_Supchiworldj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_SupchiworldjRomInfo, snes_SupchiworldjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Chinese World (Hack, English)
@@ -35107,7 +35107,7 @@ struct BurnDriver BurnDrvsnes_Supchiworldte = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
 	SNESGetZipName, snes_SupchiworldteRomInfo, snes_SupchiworldteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Copa (USA)
@@ -35145,7 +35145,7 @@ struct BurnDriver BurnDrvsnes_Supcupsoccer = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
 	SNESGetZipName, snes_SupcupsoccerRomInfo, snes_SupcupsoccerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Super Drakkhen (Japan)
@@ -38546,7 +38546,7 @@ struct BurnDriver BurnDrvsnes_Tecmosnbana = {
 	BDF_GAME_WORKING  | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_TecmosnbanaRomInfo, snes_TecmosnbanaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Tecmo Super NBA Basketball (USA, SNS-XM)
@@ -38565,7 +38565,7 @@ struct BurnDriver BurnDrvsnes_Tecmosnbaxm = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_TecmosnbaxmRomInfo, snes_TecmosnbaxmRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Tecmo Super Bowl (USA)
@@ -39192,7 +39192,7 @@ struct BurnDriver BurnDrvsnes_Tetrisdrmario = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_TetrisdrmarioRomInfo, snes_TetrisdrmarioRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Tetris & Dr. Mario (Euro)
@@ -39857,7 +39857,7 @@ struct BurnDriver BurnDrvsnes_Tomjerry = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_TomjerryRomInfo, snes_TomjerryRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Tomorrow's Joe (Hack, English v0.99)
@@ -40810,7 +40810,7 @@ struct BurnDriver BurnDrvsnes_Unchwaters = {
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_UnchwatersRomInfo, snes_UnchwatersRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // U.N. Squadron (USA)
@@ -42767,7 +42767,7 @@ struct BurnDriver BurnDrvsnes_Yoshicookie = {
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_YoshicookieRomInfo, snes_YoshicookieRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Yoshi's Cookie (Euro)
@@ -42805,7 +42805,7 @@ struct BurnDriver BurnDrvsnes_Yoshicookiej = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_YoshicookiejRomInfo, snes_YoshicookiejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Yoshi no Road Hunting (Japan)
@@ -43533,7 +43533,7 @@ struct BurnDriver BurnDrvsnes_Meninblack = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MeninblackRomInfo, snes_MeninblackRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Mortal Kombat Mythologies - Gold 2000 (USA) (Unl)
@@ -45459,7 +45459,7 @@ struct BurnDriver BurnDrvsnes_Lizard = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_LizardRomInfo, snes_LizardRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Lost Vikings, The - Ragnarok Edition (Hack)
@@ -45725,7 +45725,7 @@ struct BurnDriver BurnDrvsnes_Micromages = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MicromagesRomInfo, snes_MicromagesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Micro Mages - Second Quest (NES2SNES) (HB)
@@ -45744,7 +45744,7 @@ struct BurnDriver BurnDrvsnes_Micromages2 = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Micromages2RomInfo, snes_Micromages2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Legend of Zelda, The - The Mini Quest (GlobalHack, v1.1)
@@ -47723,7 +47723,7 @@ struct BurnDriver BurnDrvsnes_Witchnwiz = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE | GBF_ADV, 0,
 	SNESGetZipName, snes_WitchnwizRomInfo, snes_WitchnwizRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 478, 4, 3
+	512, 448, 4, 3
 };
 
 // Wolfchild - FastROM (Hack)

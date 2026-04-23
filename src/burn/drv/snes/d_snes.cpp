@@ -12412,25 +12412,6 @@ struct BurnDriver BurnDrvsnes_Fatalfuryspe = {
 	512, 448, 4, 3
 };
 
-// Feudal Bros - Tonosama 1 (World)
-
-static struct BurnRomInfo snes_FeudalbrosRomDesc[] = {
-	{ "Feudal Bros - Tonosama 1 (W)(1995-2025)(Sunsoft).sfc", 2097152, 0xd283f4e9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Feudalbros)
-STD_ROM_FN(snes_Feudalbros)
-
-struct BurnDriver BurnDrvsnes_Feudalbros = {
-	"snes_feudalbros", NULL, NULL, NULL, "1995-2025",
-	"Feudal Bros - Tonosama 1 (World)\0", "Official English Translation", "Sunsoft", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
-	SNESGetZipName, snes_FeudalbrosRomInfo, snes_FeudalbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Fever Pitch Soccer (Euro)
 
 static struct BurnRomInfo snes_FpitchsoccerRomDesc[] = {
@@ -28799,25 +28780,6 @@ struct BurnDriver BurnDrvsnes_Riddickbb = {
 	512, 448, 4, 3
 };
 
-// Rider's Spirits (World)
-
-static struct BurnRomInfo snes_RiderspiritsRomDesc[] = {
-	{ "Rider's Spirits (W)(1994-2024)(NCS - Masaya).sfc", 1048576, 0xe5d5fa92, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(snes_Riderspirits, snes_Riderspirits, snes_dsp1)
-STD_ROM_FN(snes_Riderspirits)
-
-struct BurnDriver BurnDrvsnes_Riderspirits = {
-	"snes_riderspirits", NULL, "snes_dsp1", NULL, "1994-2024",
-	"Rider's Spirits (World)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
-	SNESGetZipName, snes_RiderspiritsRomInfo, snes_RiderspiritsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Ring ni Kakero (Japan)
 
 static struct BurnRomInfo snes_RingkakeroRomDesc[] = {
@@ -44625,6 +44587,25 @@ struct BurnDriver BurnDrvsnes_Eyratp = {
 	512, 448, 4, 3
 };
 
+// Feudal Bros - Tonosama 1 (World)
+
+static struct BurnRomInfo snes_FeudalbrosRomDesc[] = {
+	{ "Feudal Bros - Tonosama 1 (W)(1995-2025)(Sunsoft).sfc", 2097152, 0xd283f4e9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Feudalbros)
+STD_ROM_FN(snes_Feudalbros)
+
+struct BurnDriver BurnDrvsnes_Feudalbros = {
+	"snes_feudalbros", NULL, NULL, NULL, "1995-2025",
+	"Feudal Bros - Tonosama 1 (World)\0", "Official English Translation", "Sunsoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
+	SNESGetZipName, snes_FeudalbrosRomInfo, snes_FeudalbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Final Fantasy V - FF5R (Hack,v1.4, English v1.0c)
 // https://www.romhacking.net/hacks/1408/
 // https://www.romhacking.net/hacks/7972/
@@ -46488,6 +46469,25 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonte7 = {
 	512, 448, 4, 3
 };
 
+// Rider's Spirits (World)
+
+static struct BurnRomInfo snes_RiderspiritsRomDesc[] = {
+	{ "Rider's Spirits (W)(1994-2024)(NCS - Masaya).sfc", 1048576, 0xe5d5fa92, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_Riderspirits, snes_Riderspirits, snes_dsp1)
+STD_ROM_FN(snes_Riderspirits)
+
+struct BurnDriver BurnDrvsnes_Riderspirits = {
+	"snes_riderspirits", NULL, "snes_dsp1", NULL, "1994-2024",
+	"Rider's Spirits (World)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RiderspiritsRomInfo, snes_RiderspiritsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Rock N' Roll Racing (USA, Demo)
 
 static struct BurnRomInfo snes_RrracingdemoRomDesc[] = {
@@ -46659,6 +46659,25 @@ struct BurnDriver BurnDrvsnes_Secretmanaplus = {
 	512, 448, 4, 3
 };
 
+// Shockman Zero (World)
+
+static struct BurnRomInfo snes_Shockman0RomDesc[] = {
+	{ "Shockman Zero (W) (1997-2025)(Masaya - Retro-bit).sfc", 2097152, 0xfcb661e6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Shockman0)
+STD_ROM_FN(snes_Shockman0)
+
+struct BurnDriver BurnDrvsnes_Shockman0 = {
+	"snes_shockman0", NULL, NULL, NULL, "1997-2025",
+	"Shockman Zero (World)\0", "Official English Translation", "Masaya Games - Retro-bit", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Shockman0RomInfo, snes_Shockman0RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Shockman Zero (Hack, English)
 // https://www.romhacking.net/translations/6807/
 static struct BurnRomInfo snes_Shockman0teRomDesc[] = {
@@ -46669,10 +46688,10 @@ STD_ROM_PICK(snes_Shockman0te)
 STD_ROM_FN(snes_Shockman0te)
 
 struct BurnDriver BurnDrvsnes_Shockman0te = {
-	"snes_shockman0te", NULL, NULL, NULL, "2023",
+	"snes_shockman0te", "snes_shockman0", NULL, NULL, "2023",
 	"Shockman Zero (Hack, English)\0", NULL, "Svambo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Shockman0teRomInfo, snes_Shockman0teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -46681,14 +46700,14 @@ struct BurnDriver BurnDrvsnes_Shockman0te = {
 // Kaizou Choujin Shubibinman Zero (Japan)
 
 static struct BurnRomInfo snes_ShubibinmanRomDesc[] = {
-	{ "Kaizou Choujin Shubibinman Zero (J)(1997-2017)(Masaya - Columbus Circle).sfc", 1048576, 0xe59e1096, BRF_ESS | BRF_PRG },
+	{ "Kaizou Choujin Shubibinman Zero (J)(1997-2017)(Masaya - Columbus Circle).sfc", 1048576, 0x26509904, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Shubibinman)
 STD_ROM_FN(snes_Shubibinman)
 
 struct BurnDriver BurnDrvsnes_Shubibinman = {
-	"snes_shubibinman", "snes_shockman0te", NULL, NULL, "1997-2017",
+	"snes_shubibinman", "snes_shockman0", NULL, NULL, "1997-2017",
 	"Kaizou Choujin Shubibinman Zero (Japan)\0", NULL, "Masaya Games - Columbus Circle", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_PLATFORM | GBF_SCRFIGHT, 0,

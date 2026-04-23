@@ -44321,6 +44321,25 @@ struct BurnDriver BurnDrvsnes_Creepybird = {
 	512, 448, 4, 3
 };
 
+// Cyber Citizen Shockman Zero (World)
+
+static struct BurnRomInfo snes_Ccshockman0RomDesc[] = {
+	{ "Cyber Citizen Shockman Zero (W) (1997-2024)(Extreme - Ratalaika).sfc", 1048576, 0x2b74f389, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ccshockman0)
+STD_ROM_FN(snes_Ccshockman0)
+
+struct BurnDriver BurnDrvsnes_Ccshockman0 = {
+	"snes_ccshockman0", "snes_shockman0", NULL, NULL, "1997-2024",
+	"Cyber Citizen Shockman Zero (World)\0", "Official English Translation", "Extreme - Ratalaika Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Ccshockman0RomInfo, snes_Ccshockman0RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Deflektor (HB, v1.1)
 
 static struct BurnRomInfo snes_DeflektorRomDesc[] = {
@@ -46662,15 +46681,15 @@ struct BurnDriver BurnDrvsnes_Secretmanaplus = {
 // Shockman Zero (World)
 
 static struct BurnRomInfo snes_Shockman0RomDesc[] = {
-	{ "Shockman Zero (W) (1997-2025)(Masaya - Retro-bit).sfc", 2097152, 0xfcb661e6, BRF_ESS | BRF_PRG },
+	{ "Shockman Zero (W) (1997-2024)(Extreme - Retro-bit).sfc", 2097152, 0xfcb661e6, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Shockman0)
 STD_ROM_FN(snes_Shockman0)
 
 struct BurnDriver BurnDrvsnes_Shockman0 = {
-	"snes_shockman0", NULL, NULL, NULL, "1997-2025",
-	"Shockman Zero (World)\0", "Official English Translation", "Masaya Games - Retro-bit", "SNES / Super Famicom",
+	"snes_shockman0", NULL, NULL, NULL, "1997-2024",
+	"Shockman Zero (World)\0", "Official English Translation", "Extreme - Retro-bit", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Shockman0RomInfo, snes_Shockman0RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

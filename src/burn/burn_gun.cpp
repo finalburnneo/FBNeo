@@ -724,6 +724,7 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 
 	if (bBurnGunDrawTargets == false) return; // game-configured setting
 	if (bBurnGunDrawReticles == false) return; // UI-configured setting
+	if (pBurnDraw == NULL) return; // nothing to draw to
 
 	if (num > MAX_GUNS - 1) return;
 

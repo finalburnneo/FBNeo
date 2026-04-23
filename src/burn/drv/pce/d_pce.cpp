@@ -3046,10 +3046,10 @@ STD_ROM_PICK(pce_shubibi)
 STD_ROM_FN(pce_shubibi)
 
 struct BurnDriver BurnDrvpce_shubibi = {
-	"pce_shubibi", NULL, NULL, NULL, "1989",
-	"Kaizou Choujin Shubibinman (Japan)\0", NULL, "NCS - Masaya", "PC Engine",
+	"pce_shubibi", "pce_ccshockman", NULL, NULL, "1989",
+	"Kaizou Choujin Shubibinman (Japan)\0", NULL, "NCS - Masaya Games", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	PceGetZipName, pce_shubibiRomInfo, pce_shubibiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
@@ -3058,20 +3058,20 @@ struct BurnDriver BurnDrvpce_shubibi = {
 
 // Kaizou Choujin Shubibinman 2: Aratanaru Teki (Japan)
 
-static struct BurnRomInfo pce_shubibi2RomDesc[] = {
-	{ "Kaizou Choujin Shubibinman 2 - Aratanaru Teki (Japan)(1991)(Masaya).pce", 0x080000, 0x109ba474, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo tg_shubibi2RomDesc[] = {
+	{ "Kaizou Choujin Shubibinman 2 - Aratanaru Teki (Japan)(1991)(NCS - Masaya).pce", 0x080000, 0x109ba474, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_shubibi2)
-STD_ROM_FN(pce_shubibi2)
+STD_ROM_PICK(tg_shubibi2)
+STD_ROM_FN(tg_shubibi2)
 
-struct BurnDriver BurnDrvpce_shubibi2 = {
-	"pce_shubibi2", NULL, NULL, NULL, "1991",
-	"Kaizou Choujin Shubibinman 2: Aratanaru Teki (Japan)\0", NULL, "Masaya", "PC Engine",
+struct BurnDriver BurnDrvtg_shubibi2 = {
+	"tg_shubibi2", "tg_ccshockman2", NULL, NULL, "1991",
+	"Kaizou Choujin Shubibinman 2: Aratanaru Teki (Japan)\0", NULL, "NCS - Masaya Games", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN | GBF_PLATFORM, 0,
-	PceGetZipName, pce_shubibi2RomInfo, pce_shubibi2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PCENGINE_TG16, GBF_RUNGUN | GBF_PLATFORM, 0,
+	TgGetZipName, tg_shubibi2RomInfo, tg_shubibi2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
@@ -8430,17 +8430,17 @@ struct BurnDriver BurnDrvtg_samuraig = {
 // Shockman (USA)
 
 static struct BurnRomInfo tg_shockmanRomDesc[] = {
-	{ "Shockman (USA)(1992)(NEC).pce", 0x080000, 0x2774462c, BRF_PRG | BRF_ESS },
+	{ "Shockman (USA)(1992)(NCS - Masaya).pce", 0x080000, 0x2774462c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(tg_shockman)
 STD_ROM_FN(tg_shockman)
 
 struct BurnDriver BurnDrvtg_shockman = {
-	"tg_shockman", NULL, NULL, NULL, "1992",
-	"Shockman (USA)\0", NULL, "NEC", "TurboGrafx 16",
+	"tg_shockman", "tg_ccshockman2", NULL, NULL, "1992",
+	"Shockman (USA)\0", NULL, "NCS - Masaya Games", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PCENGINE_TG16, GBF_RUNGUN | GBF_PLATFORM, 0,
 	TgGetZipName, tg_shockmanRomInfo, tg_shockmanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
@@ -9174,6 +9174,44 @@ struct BurnDriver BurnDrvpce_bughunt = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ACTION, 0,
 	PceGetZipName, pce_bughuntRomInfo, pce_bughuntRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Cyber Citizen Shockman (World)
+
+static struct BurnRomInfo pce_ccshockmanRomDesc[] = {
+	{ "Cyber Citizen Shockman (World)(1989-2024)(Extreme - Ratalaika).pce", 0x080000, 0x5842f0ca, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_ccshockman)
+STD_ROM_FN(pce_ccshockman)
+
+struct BurnDriver BurnDrvpce_ccshockman = {
+	"pce_ccshockman", NULL, NULL, NULL, "1989-2024",
+	"Cyber Citizen Shockman (World)\0", "Official English Translation", "Extreme - Ratalaika Games", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	PceGetZipName, pce_ccshockmanRomInfo, pce_ccshockmanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Cyber Citizen Shockman 2: A New Menace (World)
+
+static struct BurnRomInfo tg_ccshockman2RomDesc[] = {
+	{ "Cyber Citizen Shockman 2 - A New Menace (World)(1991-2024)(NCS - Masaya).pce", 0x100000, 0xc1972779, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(tg_ccshockman2)
+STD_ROM_FN(tg_ccshockman2)
+
+struct BurnDriver BurnDrvtg_ccshockman2 = {
+	"tg_ccshockman2", NULL, NULL, NULL, "1991-2024",
+	"Cyber Citizen Shockman 2: A New Menace (World)\0", "Official English Translation", "NCS - Masaya Games", "TurboGrafx 16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_RUNGUN | GBF_PLATFORM, 0,
+	TgGetZipName, tg_ccshockman2RomInfo, tg_ccshockman2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 

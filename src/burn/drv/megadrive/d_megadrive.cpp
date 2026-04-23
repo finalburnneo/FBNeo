@@ -47020,7 +47020,7 @@ struct BurnDriver BurnDrvmd_tintinpt = {
 // Wonder Boy in Monster World (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/wonder-boy-in-monster-world-leandro-tavares-de-melo/
 static struct BurnRomInfo md_wboymwptRomDesc[] = {
-	{ "Wonder Boy in Monster World PT-BR (2008)(Nenhum).bin", 786432, 0x31ca316a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Wonder Boy in Monster World PT-BR (2008)(Leandro Tavares de Melo).bin", 786432, 0x31ca316a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_wboymwpt)
@@ -47028,7 +47028,7 @@ STD_ROM_FN(md_wboymwpt)
 
 struct BurnDriver BurnDrvmd_wboymwpt = {
 	"md_wboymwpt", "md_wboymw", NULL, NULL, "2008",
-	"Wonder Boy in Monster World (Hack, Portuguese)\0", NULL, "Nenhum", "Genesis / Mega Drive",
+	"Wonder Boy in Monster World (Hack, Portuguese)\0", NULL, "Leandro Tavares de Melo", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM, GBF_ADV | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_wboymwptRomInfo, md_wboymwptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -4554,10 +4554,10 @@ STDROMPICKEXT(snes_Bikedaisuki, snes_Bikedaisuki, snes_dsp1)
 STD_ROM_FN(snes_Bikedaisuki)
 
 struct BurnDriver BurnDrvsnes_Bikedaisuki = {
-	"snes_bikedaisuki", NULL, "snes_dsp1", NULL, "1994",
+	"snes_bikedaisuki", "snes_riderspirits", "snes_dsp1", NULL, "1994",
 	"Bike Daisuki! Hashiriya Tamashii (Japan)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_BikedaisukiRomInfo, snes_BikedaisukiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -12423,7 +12423,7 @@ STD_ROM_FN(snes_Feudalbros)
 
 struct BurnDriver BurnDrvsnes_Feudalbros = {
 	"snes_feudalbros", NULL, NULL, NULL, "1995-2025",
-	"Feudal Bros - Tonosama 1 (World)\0", NULL, "Sunsoft", "SNES / Super Famicom",
+	"Feudal Bros - Tonosama 1 (World)\0", "Official English Translation", "Sunsoft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_FeudalbrosRomInfo, snes_FeudalbrosRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -28795,6 +28795,25 @@ struct BurnDriver BurnDrvsnes_Riddickbb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT | GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_RiddickbbRomInfo, snes_RiddickbbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rider's Spirits (World)
+
+static struct BurnRomInfo snes_RiderspiritsRomDesc[] = {
+	{ "Rider's Spirits (W)(1994-2024)(NCS - Masaya).sfc", 1048576, 0xe5d5fa92, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_Riderspirits, snes_Riderspirits, snes_dsp1)
+STD_ROM_FN(snes_Riderspirits)
+
+struct BurnDriver BurnDrvsnes_Riderspirits = {
+	"snes_riderspirits", NULL, "snes_dsp1", NULL, "1994-2024",
+	"Rider's Spirits (World)\0", "DSP-1 enhancement chip", "NCS - Masaya", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_RiderspiritsRomInfo, snes_RiderspiritsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

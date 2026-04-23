@@ -6996,7 +6996,7 @@ static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 
 	SpriteOnScreenMap[(y * width) + x] = SpriteNum;
 
-	if (pBurnDraw && dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
+	if (pTransDraw && dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
 		UINT16 *pPixel = pTransDraw + (dy * nScreenWidth);
 		pPixel[dx] = Colour;
 	}
@@ -7005,8 +7005,7 @@ static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 	yr = ((y - System1BgScrollY) & 0xff) / 8;
 
 	if (IsSystem2 == 0) {
-		if (System1BgRam[2 * (32 * yr + xr) + 1] & 0x10)
-		{
+		if (System1BgRam[2 * (32 * yr + xr) + 1] & 0x10) {
 			System1BgCollisionRam[0x20 + SpriteNum] = 0xff;
 		}
 	}
@@ -7160,11 +7159,6 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 				Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 				Colour = ((Code >> 5) & 0x3f);
 
-				INT32 ColourOffs = 0x40;
-				if (Colour >= 0x10 && Colour <= 0x1f) ColourOffs += 0x10;
-				if (Colour >= 0x20 && Colour <= 0x2f) ColourOffs += 0x20;
-				if (Colour >= 0x30 && Colour <= 0x3f) ColourOffs += 0x30;
-
 				sx = (Offs >> 1) % 32;
 				sy = (Offs >> 1) / 32;
 
@@ -7305,7 +7299,9 @@ static INT32 System1Render()
 	if (nBurnLayer & 8) System1DrawBgLayer(1);
 	if (nSpriteEnable & 2) System1DrawFgLayer(1);
 	if (System1VideoMode & 0x10) BurnTransferClear();
-	BurnTransferCopy(System1Palette);
+
+	if (pBurnDraw)
+		BurnTransferCopy(System1Palette);
 
 	return 0;
 }
@@ -7399,13 +7395,17 @@ static INT32 System2Render()
 {
 	BurnTransferClear();
 	System1CalcPalette();
+
 	if (nBurnLayer & 1) System2DrawBgLayer(0);
 	if (nBurnLayer & 2) System1DrawSprites();
 	if (nBurnLayer & 4) System2DrawBgLayer(1);
 	if (nBurnLayer & 8) System2DrawFgLayer();
 	if (System1VideoMode & 0x10) BurnTransferClear();
 	if (EnforceBars) enforce_bars();
-	BurnTransferCopy(System1Palette);
+
+	if (pBurnDraw) {
+		BurnTransferCopy(System1Palette);
+	}
 
 	return 0;
 }
@@ -7477,16 +7477,11 @@ INT32 System1Frame()
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
-		BurnDrvRedraw();
+	// due to hw sprite/bg collision, we have run this even if pBurnDraw == NULL.
+	BurnDrvRedraw();
 
-		if (is_shtngmst) {
-			BurnGunDrawTargets();
-		}
-	} else {
-		// if video output disabled, we still have to draw sprites for HW
-		// collisions to work
-		System1DrawSprites();
+	if (is_shtngmst) {
+		BurnGunDrawTargets();
 	}
 
 	return 0;
@@ -7498,21 +7493,13 @@ Scan Driver
 
 static INT32 System1Scan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin != NULL) {
 		*pnMin = 0x029736;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = RamStart;
-		ba.nLen	  = RamEnd-RamStart;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
-	}
+	if (nAction & ACB_VOLATILE) {
+		ScanVar(RamStart, RamEnd-RamStart, "All Ram");
 
-	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 
 		if (has_mcu) {

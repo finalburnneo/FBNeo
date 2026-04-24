@@ -145,7 +145,8 @@ static struct BurnInputInfo neoForceAESInputList[] = {
 	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      // 18
 
 	{"Fake Dip 1",	BIT_DIPSWITCH,	&VerSwitcher,	"dip"       },      // 19
-	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoOverscan,	"dip"       },      // 20
+	{"Fake Dip 2",	BIT_DIPSWITCH,	&NeoUniHW,		"dip"       },      // 20
+	{"Fake Dip 3",	BIT_DIPSWITCH,	&NeoOverscan,	"dip"       },      // 21
 };
 
 STDINPUTINFO(neoForceAES)
@@ -1112,7 +1113,8 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 	{0x01,	0xFF, 0x7F,	0x00, NULL              }, // DIP 2
 	{0x02,	0xFF, 0xFF,	0x8f, NULL              }, // System [AES Japan] [Memory card = Writable]
 	{0x03,	0xFF, 0xFF,	0x03, NULL              }, // Slots [3]
-	{0x05,	0xFF, 0xFF,	0x00, NULL              }, // Fake DIP (Overscan)
+	{0x05,	0xFF, 0xFF,	0x01, NULL              }, // Fake DIP [Unibios mode = AES]
+	{0x06,	0xFF, 0xFF,	0x00, NULL              }, // Fake DIP
 
 	// DIP 1
 	{0,		0xFE, 0,	2,	  "Autofire"        },
@@ -1124,9 +1126,17 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 	{0x00,	0x01, 0x40,	0x40, "On"              },
 
 	// System - BIOS
-	{0,		0xFD, 0,	2,    "BIOS"            },
+	{0,		0xFD, 0,	10,    "BIOS"            },
 	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"       },
 	{0x02,	0x01, 0x3f,	0x10, "AES Asia"        },
+	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS (Hack, Ver. 4.0)"			},
+	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS (Hack, Ver. 3.3)"			},
+	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS (Hack, Ver. 3.2)"			},
+	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS (Hack, Ver. 3.1)"			},
+	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS (Hack, Ver. 3.0)"			},
+	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS (Hack, Ver. 2.3)"			},
+	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS (Hack, Ver. 2.3, older?)"	},
+	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS (Hack, Ver. 2.2)"			},
 
 	// System - Memory card
 	{0,		0xFD, 0,	2,	  "Memory card"     },
@@ -1139,9 +1149,9 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 
 	// Overscan
 	{0,		0xFE, 0,	3,	  "Overscan"},
-	{0x05,	0x01, 0x03,	0x00, "Auto"},
-	{0x05,	0x01, 0x03,	0x01, "Cropped"},
-	{0x05,	0x01, 0x03,	0x02, "Visible"},
+	{0x06,	0x01, 0x03,	0x00, "Auto"},
+	{0x06,	0x01, 0x03,	0x01, "Cropped"},
+	{0x06,	0x01, 0x03,	0x02, "Visible"},
 };
 
 STDDIPINFO(neoForceAES)
@@ -23432,7 +23442,7 @@ struct BurnDriver BurnDrvKof97plc = {
 	"The King of Fighters '97 Plus (Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof97plcRomInfo, kof97plcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeojpnDIPInfo,
+	NULL, kof97plcRomInfo, kof97plcRomName, NULL, NULL, NULL, NULL, neoForceAESInputInfo, neoForceAESDIPInfo,
 	kof97plcInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

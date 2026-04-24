@@ -40002,7 +40002,7 @@ struct BurnDriver BurnDrvmd_genmtetris = {
 // Ghost Baseball (HB)
 // https://infinitestategames.itch.io/ghost-baseball
 static struct BurnRomInfo md_ghbaseballRomDesc[] = {
-	{ "Ghost Baseball (2026)(Infinite State Games).bin", 262144, 0xddf2fc4a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ghost Baseball (2026)(Infinite State Games).bin", 262144, 0x8171276a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ghbaseball)
@@ -41782,6 +41782,42 @@ struct BurnDriver BurnDrvmd_runes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_runesRomInfo, md_runesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sacred Line: Genesis (HB, v1.1.9 Digital)
+static struct BurnRomInfo md_sacredlinegRomDesc[] = {
+	{ "Sacred Line - Genesis v1.1.9 Digital (2015)(Sasha Darko).bin", 3534836, 0x2e029ab4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sacredlineg)
+STD_ROM_FN(md_sacredlineg)
+
+struct BurnDriver BurnDrvmd_sacredlineg = {
+	"md_sacredlineg", NULL, NULL, NULL, "2015",
+	"Sacred Line: Genesis (HB, v1.1.9 Digital)\0", NULL, "Sasha Darko", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_sacredlinegRomInfo, md_sacredlinegRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sacred Line: Genesis (WaterMelon) (HB)
+static struct BurnRomInfo md_sacredlinegwmRomDesc[] = {
+	{ "Sacred Line - Genesis (Watermelon) (2014)(Sasha Darko).bin", 4194304, 0x06b219c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sacredlinegwm)
+STD_ROM_FN(md_sacredlinegwm)
+
+struct BurnDriver BurnDrvmd_sacredlinegwm = {
+	"md_sacredlinegwm", "md_sacredlineg", NULL, NULL, "2014",
+	"Sacred Line: Genesis (WaterMelon) (HB)\0", "Published by WaterMelon", "Sasha Darko", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_sacredlinegwmRomInfo, md_sacredlinegwmRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

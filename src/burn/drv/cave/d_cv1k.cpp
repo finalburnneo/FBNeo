@@ -434,6 +434,7 @@ struct speedy_s {
 
 static speedy_s gamelist[] = {
 	{ {"mushisam", "mushisamb", "\0", }, 				0xc04a2aa, 0xc0024d8 },
+	{ {"matsuri15", "\0", },			 				0xc04a2aa, 0xc0024d8 },
 	{ {"ibara", "ibarao", "mushisama", "\0", }, 		0xc04a0aa, 0xc0022f0 },
 	{ {"espgal2", "espgal2a", "espgal2b", "\0", }, 		0xc05177a, 0xc002310 },
 	{ {"mushitam", "mushitama", "\0", }, 				0xc04a0da, 0xc0022f0 },
@@ -988,6 +989,30 @@ struct BurnDriver BurnDrvFutariblj = {
 	240, 320, 3, 4
 };
 
+
+// Mushihime-Sama Matsuri Ver 1.5 (2011/05/23)
+
+static struct BurnRomInfo matsuri15RomDesc[] = {
+	{ "matsuri15_u4",	0x0200000, 0x6af99f0e, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "matsuri15_u2",	0x8400000, 0xfbc6f3c1, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0x6dff634f, 3 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0xf228b801, 3 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(matsuri15)
+STD_ROM_FN(matsuri15)
+
+struct BurnDriver BurnDrvMatsuri15 = {
+	"matsuri15", NULL, NULL, NULL, "2011",
+	"Mushihime-Sama Matsuri Ver 1.5 (2011/05/23)\0", NULL, "Cave (AMI license)", "CA0??",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, matsuri15RomInfo, matsuri15RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
 
 // Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)
 

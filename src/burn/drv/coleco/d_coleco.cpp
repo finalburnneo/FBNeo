@@ -5325,7 +5325,7 @@ struct BurnDriver BurnDrvcv_ascend = {
 	"cv_ascend", NULL, "cv_coleco", NULL, "2022",
 	"Ascend (HB)\0", NULL, "Inufuto", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
 	CVGetZipName, cv_ascendRomInfo, cv_ascendRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -5399,6 +5399,24 @@ struct BurnDriver BurnDrvcv_astorm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MULTISHOOT, 0,
 	CVGetZipName, cv_astormRomInfo, cv_astormRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Awass (HB)
+static struct BurnRomInfo cv_awassRomDesc[] = {
+	{ "Awass (2026)(Inufuto).rom",	9341, 0xc38cdf41, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_awass, cv_awass, cv_coleco)
+STD_ROM_FN(cv_awass)
+
+struct BurnDriver BurnDrvcv_awass = {
+	"cv_awass", NULL, "cv_coleco", NULL, "2026",
+	"Awass (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM | GBF_PUZZLE, 0,
+	CVGetZipName, cv_awassRomInfo, cv_awassRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -6513,7 +6531,7 @@ struct BurnDriver BurnDrvcv_cracky = {
 	"cv_cracky", NULL, "cv_coleco", NULL, "2023",
 	"Cracky (HB)\0", NULL, "Inufuto", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
 	CVGetZipName, cv_crackyRomInfo, cv_crackyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -8067,6 +8085,24 @@ struct BurnDriver BurnDrvcv_impetus = {
 	272, 228, 4, 3
 };
 
+// Impetus+ (HB)
+static struct BurnRomInfo cv_impetusplusRomDesc[] = {
+	{ "Impetus+ (2025)(Inufuto).rom",	17919, 0x08e88ad2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_impetusplus, cv_impetusplus, cv_coleco)
+STD_ROM_FN(cv_impetusplus)
+
+struct BurnDriver BurnDrvcv_impetusplus = {
+	"cv_impetusplus", NULL, "cv_coleco", NULL, "2025",
+	"Impetus+ (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_impetusplusRomInfo, cv_impetusplusRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Insane Pickin' Sticks VIII (HB)
 static struct BurnRomInfo cv_insanepickRomDesc[] = {
     { "Insane Pickin' Sticks VIII (2010)(Daniel Bienvenu).rom",	0x7890, 0x5a6c2d2f, BRF_PRG | BRF_ESS },
@@ -8583,7 +8619,7 @@ struct BurnDriver BurnDrvcv_lift = {
 	"cv_lift", NULL, "cv_coleco", NULL, "2022",
 	"Lift (HB)\0", NULL, "Inufuto", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
 	CVGetZipName, cv_liftRomInfo, cv_liftRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -9053,6 +9089,24 @@ struct BurnDriver BurnDrvcv_mmtxvol2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_mmtxvol2RomInfo, cv_mmtxvol2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Mieyen (HB)
+static struct BurnRomInfo cv_mieyenRomDesc[] = {
+	{ "Mieyen (2025)(Inufuto).rom",	8361, 0xf47e5bf5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mieyen, cv_mieyen, cv_coleco)
+STD_ROM_FN(cv_mieyen)
+
+struct BurnDriver BurnDrvcv_mieyen = {
+	"cv_mieyen", NULL, "cv_coleco", NULL, "2025",
+	"Mieyen (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
+	CVGetZipName, cv_mieyenRomInfo, cv_mieyenRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -9555,7 +9609,7 @@ struct BurnDriver BurnDrvcv_osotos = {
 	"cv_osotos", NULL, "cv_coleco", NULL, "2024",
 	"Osotos (HB)\0", NULL, "Inufuto", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
 	CVGetZipName, cv_osotosRomInfo, cv_osotosRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -11396,9 +11450,9 @@ struct BurnDriver BurnDrvcv_swtacorn = {
     272, 228, 4, 3
 };
 
-// Sword Work (HB)
+// SwordWork (HB)
 static struct BurnRomInfo cv_swordworkRomDesc[] = {
-	{ "Sword Work (2026)(Inufuto).rom",	16384, 0xc4a13993, BRF_PRG | BRF_ESS },
+	{ "SwordWork (2026)(Inufuto).rom",	16384, 0xc4a13993, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_swordwork, cv_swordwork, cv_coleco)
@@ -11406,9 +11460,9 @@ STD_ROM_FN(cv_swordwork)
 
 struct BurnDriver BurnDrvcv_swordwork = {
 	"cv_swordwork", NULL, "cv_coleco", NULL, "2026",
-	"Sword Work (HB)\0", NULL, "Inufuto", "ColecoVision",
+	"SwordWork (HB)\0", NULL, "Inufuto", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
 	CVGetZipName, cv_swordworkRomInfo, cv_swordworkRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

@@ -4084,6 +4084,24 @@ struct BurnDriver BurnDrvsg1k_arnodash2 = {
 	272, 228, 4, 3
 };
 
+// Ascend (HB)
+static struct BurnRomInfo sg1k_ascendRomDesc[] = {
+	{ "Ascend (2022)(Inufuto).sg",	9451, 0x69e60ce5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_ascend)
+STD_ROM_FN(sg1k_ascend)
+
+struct BurnDriver BurnDrvsg1k_ascend = {
+	"sg1k_ascend", NULL, NULL, NULL, "2022",
+	"Ascend (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_ascendRomInfo, sg1k_ascendRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Astrododge (HB)
 static struct BurnRomInfo sg1k_astrododgeRomDesc[] = {
 	{ "Astrododge (2012)(Revival Studios).sg",	32768, 0xb895942d, BRF_PRG | BRF_ESS },
@@ -4120,6 +4138,24 @@ struct BurnDriver BurnDrvsg1k_awass = {
 	272, 228, 4, 3
 };
 
+// Battlot (HB)
+static struct BurnRomInfo sg1k_battlotRomDesc[] = {
+	{ "Battlot (2021)(Inufuto).sg",	9745, 0x90532d80, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_battlot)
+STD_ROM_FN(sg1k_battlot)
+
+struct BurnDriver BurnDrvsg1k_battlot = {
+	"sg1k_battlot", NULL, NULL, NULL, "2021",
+	"Battlot (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_MAZE | GBF_RUNGUN, 0,
+	SG1KGetZipName, sg1k_battlotRomInfo, sg1k_battlotRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Bloktris (HB)
 static struct BurnRomInfo sg1k_bloktrisRomDesc[] = {
 	{ "Bloktris (2023)(Under4Mhz).sg",	49152, 0x7febcd40, BRF_PRG | BRF_ESS },
@@ -4134,6 +4170,24 @@ struct BurnDriver BurnDrvsg1k_bloktris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_bloktrisRomInfo, sg1k_bloktrisRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Bootskell (HB)
+static struct BurnRomInfo sg1k_bootskellRomDesc[] = {
+	{ "Bootskell (2021)(Inufuto).sg",	9448, 0xc2413720, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_bootskell)
+STD_ROM_FN(sg1k_bootskell)
+
+struct BurnDriver BurnDrvsg1k_bootskell = {
+	"sg1k_bootskell", NULL, NULL, NULL, "2021",
+	"Bootskell (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
+	SG1KGetZipName, sg1k_bootskellRomInfo, sg1k_bootskellRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -4240,7 +4294,7 @@ struct BurnDriver BurnDrvsg1k_cracky = {
 	"sg1k_cracky", NULL, NULL, NULL, "2023",
 	"Cracky (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_crackyRomInfo, sg1k_crackyRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -4426,6 +4480,24 @@ struct BurnDriver BurnDrvsg1k_ksolitaire = {
 	272, 228, 4, 3
 };
 
+// Lift (HB)
+static struct BurnRomInfo sg1k_liftRomDesc[] = {
+	{ "Lift (2022)(Inufuto).sg",	8297, 0xf5e62875, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_lift)
+STD_ROM_FN(sg1k_lift)
+
+struct BurnDriver BurnDrvsg1k_lift = {
+	"sg1k_lift", NULL, NULL, NULL, "2022",
+	"Lift (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_liftRomInfo, sg1k_liftRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Mahjong Solitaire (HB, v1.16)
 static struct BurnRomInfo sg1k_msolitaireRomDesc[] = {
 	{ "Mahjong Solitaire v1.16 (2023)(Under4Mhz).sg",	32768, 0xd07afa95, BRF_PRG | BRF_ESS },
@@ -4498,6 +4570,24 @@ struct BurnDriver BurnDrvsg1k_mieyen = {
 	272, 228, 4, 3
 };
 
+// Neuras (HB)
+static struct BurnRomInfo sg1k_neurasRomDesc[] = {
+	{ "Neuras (2021)(Inufuto).sg",	8373, 0xbeb45e42, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_neuras)
+STD_ROM_FN(sg1k_neuras)
+
+struct BurnDriver BurnDrvsg1k_neuras = {
+	"sg1k_neuras", NULL, NULL, NULL, "2021",
+	"Neuras (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
+	SG1KGetZipName, sg1k_neurasRomInfo, sg1k_neurasRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Operation Hibernation Plus (HB, Rev.2)
 static struct BurnRomInfo sg1k_ophibernplusRomDesc[] = {
 	{ "Operation Hibernation Plus Rev.2 (2025)(Jess Creations - ArugulaZ).sg",	49152, 0xd4b2189a, BRF_PRG | BRF_ESS },
@@ -4512,6 +4602,24 @@ struct BurnDriver BurnDrvsg1k_ophibernplus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_ophibernplusRomInfo, sg1k_ophibernplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Osotos (HB)
+static struct BurnRomInfo sg1k_osotosRomDesc[] = {
+	{ "Osotos (2024)(Inufuto).sg",	16384, 0x5e4238de, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_osotos)
+STD_ROM_FN(sg1k_osotos)
+
+struct BurnDriver BurnDrvsg1k_osotos = {
+	"sg1k_osotos", NULL, NULL, NULL, "2024",
+	"Osotos (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_osotosRomInfo, sg1k_osotosRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -4585,6 +4693,24 @@ struct BurnDriver BurnDrvsg1k_retropipe = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_retropipeRomInfo, sg1k_retropipeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Ruptus (HB)
+static struct BurnRomInfo sg1k_ruptusRomDesc[] = {
+	{ "Ruptus (2021)(Inufuto).sg",	12455, 0x61b4a940, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_ruptus)
+STD_ROM_FN(sg1k_ruptus)
+
+struct BurnDriver BurnDrvsg1k_ruptus = {
+	"sg1k_ruptus", NULL, NULL, NULL, "2021",
+	"Ruptus (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_MULTISHOOT, 0,
+	SG1KGetZipName, sg1k_ruptusRomInfo, sg1k_ruptusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -4697,9 +4823,9 @@ struct BurnDriver BurnDrvsg1k_svellas = {
 	272, 228, 4, 3
 };
 
-// Sword Work (HB)
+// SwordWork (HB)
 static struct BurnRomInfo sg1k_swordworkRomDesc[] = {
-	{ "Sword Work (2026)(Inufuto).sg",	16384, 0x1bfc657f, BRF_PRG | BRF_ESS },
+	{ "SwordWork (2026)(Inufuto).sg",	16384, 0x1bfc657f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_swordwork)
@@ -4707,9 +4833,9 @@ STD_ROM_FN(sg1k_swordwork)
 
 struct BurnDriver BurnDrvsg1k_swordwork = {
 	"sg1k_swordwork", NULL, NULL, NULL, "2026",
-	"Sword Work (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	"SwordWork (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
 	SG1KGetZipName, sg1k_swordworkRomInfo, sg1k_swordworkRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

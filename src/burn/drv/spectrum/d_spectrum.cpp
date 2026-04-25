@@ -33578,7 +33578,7 @@ struct BurnDriver BurnSpecAscend = {
 	"spec_ascend", NULL, "spec_spectrum", NULL, "2022",
 	"Ascend (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecAscendRomInfo, SpecAscendRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -37801,6 +37801,25 @@ struct BurnDriver BurnSpecCrabby2 = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecCrabby2RomInfo, SpecCrabby2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cracky (48K) (HB)
+
+static struct BurnRomInfo SpecCrackyRomDesc[] = {
+	{ "Cracky 48K-AY (2023)(Inufuto).tzx", 8623, 0x9c444d38, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCracky, SpecCracky, Spectrum)
+STD_ROM_FN(SpecCracky)
+
+struct BurnDriver BurnSpecCracky = {
+	"spec_cracky", NULL, "spec_spectrum", NULL, "2023",
+	"Cracky (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecCrackyRomInfo, SpecCrackyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -43409,6 +43428,25 @@ struct BurnDriver BurnSpecGunsngears = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Guntus (48K) (HB)
+
+static struct BurnRomInfo SpecGuntusRomDesc[] = {
+	{ "Guntus 48K-AY (2022)(Inufuto).tzx", 12386, 0x9fd62800, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGuntus, SpecGuntus, Spectrum)
+STD_ROM_FN(SpecGuntus)
+
+struct BurnDriver BurnSpecGuntus = {
+	"spec_guntus", NULL, "spec_spectrum", NULL, "2022",
+	"Guntus (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecGuntusRomInfo, SpecGuntusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // GVolcano (128K) (HB)
 
 static struct BurnRomInfo SpecGvolcanoRomDesc[] = {
@@ -44697,6 +44735,25 @@ struct BurnDriver BurnSpecImpetus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecImpetusRomInfo, SpecImpetusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Impetus+ (48K) (HB)
+
+static struct BurnRomInfo SpecImpetusplusRomDesc[] = {
+	{ "Impetus+ 48K-AY (2025)(Inufuto).tzx", 15492, 0x998812f7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecImpetusplus, SpecImpetusplus, Spectrum)
+STD_ROM_FN(SpecImpetusplus)
+
+struct BurnDriver BurnSpecImpetusplus = {
+	"spec_impetusplus", NULL, "spec_spectrum", NULL, "2025",
+	"Impetus+ (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecImpetusplusRomInfo, SpecImpetusplusRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -46899,7 +46956,7 @@ struct BurnDriver BurnSpecLift = {
 	"spec_lift", NULL, "spec_spectrum", NULL, "2021",
 	"Lift (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecLiftRomInfo, SpecLiftRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -51387,6 +51444,25 @@ struct BurnDriver BurnSpecOrvol128es = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecOrvol128esRomInfo, SpecOrvol128esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Osotos (HB)
+
+static struct BurnRomInfo SpecOsotosRomDesc[] = {
+	{ "Osotos 48K-AY (2024)(Inufuto).tzx", 10250, 0x3269cf11, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOsotos, SpecOsotos, Spectrum)
+STD_ROM_FN(SpecOsotos)
+
+struct BurnDriver BurnSpecOsotos = {
+	"spec_osotos", NULL, "spec_spectrum", NULL, "2024",
+	"Osotos (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecOsotosRomInfo, SpecOsotosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -58230,10 +58306,10 @@ struct BurnDriver BurnSpecSwordofianna = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Sword Work (48K) (HB)
+// SwordWork (48K) (HB)
 
 static struct BurnRomInfo SpecSwordworkRomDesc[] = {
-	{ "Sword Work 48K-AY (2026)(Inufuto).tzx", 16384, 0x3f805434, BRF_ESS | BRF_PRG },
+	{ "SwordWork 48K-AY (2026)(Inufuto).tzx", 16384, 0x3f805434, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSwordwork, SpecSwordwork, Spectrum)
@@ -58241,7 +58317,7 @@ STD_ROM_FN(SpecSwordwork)
 
 struct BurnDriver BurnSpecSwordwork = {
 	"spec_swordwork", NULL, "spec_spectrum", NULL, "2026",
-	"Sword Work (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	"SwordWork (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecSwordworkRomInfo, SpecSwordworkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -61217,7 +61293,7 @@ struct BurnDriver BurnSpecyazzie = {
 // Yewdow (48K) (HB)
 
 static struct BurnRomInfo SpecYewdowRomDesc[] = {
-	{ "Yewdow 48K (2023)(Inufuto).tap", 9818, 0xfaf70151, BRF_ESS | BRF_PRG },
+	{ "Yewdow 48K-AY (2023)(Inufuto).tap", 9818, 0xfaf70151, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecYewdow, SpecYewdow, Spectrum)

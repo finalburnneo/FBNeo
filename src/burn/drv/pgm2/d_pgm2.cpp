@@ -49,9 +49,9 @@ static struct BurnInputInfo pgm2InputList[] = {
     { "P4 Button 4",      BIT_DIGITAL, Pgm2InputPort1 + 7,  "p4 fire 4" },
 
     { "Test Key P1 & P2", BIT_DIGITAL, Pgm2InputPort1 + 18, "diag"      },
-    { "Test Key P3 & P4", BIT_DIGITAL, Pgm2InputPort1 + 19, "diag"      },
+    { "Test Key P3 & P4", BIT_DIGITAL, Pgm2InputPort1 + 19, "diag 2"    },
     { "Service P1 & P2",  BIT_DIGITAL, Pgm2InputPort1 + 20, "service"   },
-    { "Service P3 & P4",  BIT_DIGITAL, Pgm2InputPort1 + 21, "service"   },
+    { "Service P3 & P4",  BIT_DIGITAL, Pgm2InputPort1 + 21, "service 2" },
     { "ResetGame",        BIT_DIGITAL, &Pgm2Reset,          "reset"     },
     { "Dip A",            BIT_DIPSWITCH, Pgm2Dip + 0,       "dip"       },
     { "Dip B",            BIT_DIPSWITCH, &CardlessHack,     "dip"       },

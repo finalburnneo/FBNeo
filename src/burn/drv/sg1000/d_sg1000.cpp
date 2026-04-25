@@ -4697,9 +4697,9 @@ struct BurnDriver BurnDrvsg1k_svellas = {
 	272, 228, 4, 3
 };
 
-// SwordWork (HB)
+// Sword Work (HB)
 static struct BurnRomInfo sg1k_swordworkRomDesc[] = {
-	{ "SwordWork (2026)(Inufuto).sg",	16384, 0x1bfc657f, BRF_PRG | BRF_ESS },
+	{ "Sword Work (2026)(Inufuto).sg",	16384, 0x1bfc657f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_swordwork)
@@ -4707,7 +4707,7 @@ STD_ROM_FN(sg1k_swordwork)
 
 struct BurnDriver BurnDrvsg1k_swordwork = {
 	"sg1k_swordwork", NULL, NULL, NULL, "2026",
-	"SwordWork (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	"Sword Work (HB)\0", NULL, "Inufuto", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_swordworkRomInfo, sg1k_swordworkRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,

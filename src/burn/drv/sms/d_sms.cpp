@@ -24408,6 +24408,24 @@ struct BurnDriver BurnDrvsms_svellas = {
 	256, 192, 4, 3
 };
 
+// SwordWork (HB)
+static struct BurnRomInfo sms_swordworkRomDesc[] = {
+	{ "SwordWork (2026)(Inufuto).sms",	16384, 0x3936e21c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_swordwork)
+STD_ROM_FN(sms_swordwork)
+
+struct BurnDriver BurnDrvsms_swordwork = {
+	"sms_swordwork", NULL, NULL, NULL, "2026",
+	"SwordWork (HB)\0", NULL, "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_swordworkRomInfo, sms_swordworkRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Sydney Hunter and the Sacred Tribe (HB)
 static struct BurnRomInfo sms_sydhuntRomDesc[] = {
 	{ "Sydney Hunter (2017)(Oscar Toledo G.).sms",	131072, 0xe3060500, BRF_PRG | BRF_ESS },

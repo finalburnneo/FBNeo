@@ -11396,6 +11396,24 @@ struct BurnDriver BurnDrvcv_swtacorn = {
     272, 228, 4, 3
 };
 
+// SwordWork (HB)
+static struct BurnRomInfo cv_swordworkRomDesc[] = {
+	{ "SwordWork (2026)(Inufuto).rom",	16384, 0xc4a13993, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_swordwork, cv_swordwork, cv_coleco)
+STD_ROM_FN(cv_swordwork)
+
+struct BurnDriver BurnDrvcv_swordwork = {
+	"cv_swordwork", NULL, "cv_coleco", NULL, "2026",
+	"SwordWork (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_swordworkRomInfo, cv_swordworkRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Sydney Hunter and the Caverns of Death (HB)
 static struct BurnRomInfo cv_sydneyhunt2RomDesc[] = {
 	{ "Sydney Hunter and the Caverns of Death (2019)(CollectorVision).rom",	131072, 0x81bfb02d, BRF_PRG | BRF_ESS },

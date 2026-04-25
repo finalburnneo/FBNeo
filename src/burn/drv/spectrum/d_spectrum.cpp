@@ -58078,6 +58078,25 @@ struct BurnDriver BurnSpecSwordofianna = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// SwordWork (48K) (HB)
+
+static struct BurnRomInfo SpecSwordworkRomDesc[] = {
+	{ "SwordWork 48K (2026)(Inufuto).tzx", 16384, 0x3f805434, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSwordwork, SpecSwordwork, Spectrum)
+STD_ROM_FN(SpecSwordwork)
+
+struct BurnDriver BurnSpecSwordwork = {
+	"spec_swordwork", NULL, "spec_spectrum", NULL, "2026",
+	"SwordWork (48K) (HB)\0", NULL, "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecSwordworkRomInfo, SpecSwordworkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Syrion: The Time of the Dragon (English) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecSyrionenRomDesc[] = {

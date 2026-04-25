@@ -41842,7 +41842,7 @@ struct BurnDriver BurnDrvmd_sacredline2 = {
 
 // Sacred Line II: A Distant Light (HB)
 static struct BurnRomInfo md_sacredline2adlRomDesc[] = {
-	{ "Sacred Line II: A Distant Light (2024)(Sasha Darko).bin", 1147448, 0x8e84c7bd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sacred Line II - A Distant Light (2024)(Sasha Darko).bin", 1147448, 0x8e84c7bd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sacredline2adl)

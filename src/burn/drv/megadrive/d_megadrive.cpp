@@ -41840,6 +41840,60 @@ struct BurnDriver BurnDrvmd_sacredline2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sacred Line II: A Distant Light (HB)
+static struct BurnRomInfo md_sacredline2adlRomDesc[] = {
+	{ "Sacred Line II: A Distant Light (2024)(Sasha Darko).bin", 1147448, 0x8e84c7bd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sacredline2adl)
+STD_ROM_FN(md_sacredline2adl)
+
+struct BurnDriver BurnDrvmd_sacredline2adl = {
+	"md_sacredline2adl", NULL, NULL, NULL, "2024",
+	"Sacred Line II: A Distant Light (HB)\0", "Addendum to Sacred Line II", "Sasha Darko", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_sacredline2adlRomInfo, md_sacredline2adlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sacred Line III (HB, v1.04)
+static struct BurnRomInfo md_sacredline3RomDesc[] = {
+	{ "Sacred Line III v1.04 (2025)(Sasha Darko).bin", 2897824, 0xbd4e551e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sacredline3)
+STD_ROM_FN(md_sacredline3)
+
+struct BurnDriver BurnDrvmd_sacredline3 = {
+	"md_sacredline3", NULL, NULL, NULL, "2025",
+	"Sacred Line III (HB, v1.04)\0", NULL, "Sasha Darko", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_sacredline3RomInfo, md_sacredline3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sacred Line Zero (HB, v2, Prototype)
+static struct BurnRomInfo md_sacredline0RomDesc[] = {
+	{ "Sacred Line Zero v2 (Proto)(2015-18)(Sasha Darko).bin", 2171696, 0xd8a662af, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sacredline0)
+STD_ROM_FN(md_sacredline0)
+
+struct BurnDriver BurnDrvmd_sacredline0 = {
+	"md_sacredline0", NULL, NULL, NULL, "2015-18",
+	"Sacred Line Zero (HB, v2, Prototype)\0", NULL, "Sasha Darko", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_sacredline0RomInfo, md_sacredline0RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Satan Claus (HB, v1.23)
 // https://gcup.itch.io/satanclaus
 static struct BurnRomInfo md_satanclausRomDesc[] = {

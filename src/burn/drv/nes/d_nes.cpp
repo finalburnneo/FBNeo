@@ -10300,38 +10300,38 @@ struct BurnDriver BurnDrvnes_saintseicdzldftp = {
 
 // Caballeros del Zodiaco, Los: La Leyenda del Oro (Hack, Spanish)
 // https://www.romhacking.net/translations/1025/
-static struct BurnRomInfo nes_saintseiougdencRomDesc[] = {
+static struct BurnRomInfo nes_saintseiougdentsRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu T-Spa (2004)(Juan).nes",          262160, 0x2abdcc86, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_saintseiougdenc)
-STD_ROM_FN(nes_saintseiougdenc)
+STD_ROM_PICK(nes_saintseiougdents)
+STD_ROM_FN(nes_saintseiougdents)
 
-struct BurnDriver BurnDrvnes_saintseiougdenc = {
-	"nes_saintseiougdenc", "nes_saintseiougden", NULL, NULL, "2004",
+struct BurnDriver BurnDrvnes_saintseiougdents = {
+	"nes_saintseiougdents", "nes_saintseiougden", NULL, NULL, "2004",
 	"Caballeros del Zodiaco, Los: La Leyenda del Oro (Hack, Spanish)\0", NULL, "Juan", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
-	NESGetZipName, nes_saintseiougdencRomInfo, nes_saintseiougdencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_saintseiougdentsRomInfo, nes_saintseiougdentsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam - Gachapon Soldier 2 - Capsule War (Hack, Spanish)
+// SD Gundam: Gachapon Soldier 2 - Capsule War (Hack, Spanish)
 // https://www.romhacking.net/translations/5828/
-static struct BurnRomInfo nes_sdgundgs2cRomDesc[] = {
+static struct BurnRomInfo nes_sdgundgs2tsRomDesc[] = {
 	{ "SD Gundam - Gachapon Senshi 2 - Capsule Senki T-Spa (2020)(Max1323).nes",          262160, 0x86274ffd, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_sdgundgs2c)
-STD_ROM_FN(nes_sdgundgs2c)
+STD_ROM_PICK(nes_sdgundgs2ts)
+STD_ROM_FN(nes_sdgundgs2ts)
 
-struct BurnDriver BurnDrvnes_sdgundgs2c = {
-	"nes_sdgundgs2c", "nes_sdgundgs2", NULL, NULL, "2020",
-	"SD Gundam - Gachapon Soldier 2 - Capsule War (Hack, Spanish)\0", NULL, "Max1323", "NES / Famicom",
+struct BurnDriver BurnDrvnes_sdgundgs2ts = {
+	"nes_sdgundgs2ts", "nes_sdgundgs2", NULL, NULL, "2020",
+	"SD Gundam: Gachapon Soldier 2 - Capsule War (Hack, Spanish)\0", NULL, "Max1323", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
-	NESGetZipName, nes_sdgundgs2cRomInfo, nes_sdgundgs2cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_sdgundgs2tsRomInfo, nes_sdgundgs2tsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -10370,6 +10370,25 @@ struct BurnDriver BurnDrvnes_sdhstangc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sdhstangcRomInfo, nes_sdhstangcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Shadowgate (Hack, Portuguese)
+// https://www.romhacking.net/translations/2802/
+static struct BurnRomInfo nes_shadowgatetpRomDesc[] = {
+	{ "Shadowgate T-Por (2015)(Zafarion).nes",          262160, 0xfa1ca914, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadowgatetp)
+STD_ROM_FN(nes_shadowgatetp)
+
+struct BurnDriver BurnDrvnes_shadowgatetp = {
+	"nes_shadowgatetp", "nes_shadowgate", NULL, NULL, "2015",
+	"Shadowgate (Hack, Portuguese)\0", NULL, "Zafarion", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_shadowgatetpRomInfo, nes_shadowgatetpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -19780,6 +19799,24 @@ struct BurnDriver BurnDrvnes_kamimariodx = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Katango (HB)
+static struct BurnRomInfo nes_katangoRomDesc[] = {
+	{ "Katango (2024)(Snauts).nes",          40976, 0x2d0aaf0c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_katango)
+STD_ROM_FN(nes_katango)
+
+struct BurnDriver BurnDrvnes_katango = {
+	"nes_katango", NULL, NULL, NULL, "2024",
+	"Katango (HB)\0", NULL, "Snauts", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_katangoRomInfo, nes_katangoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Kira Kira Star Night AC (HB)
 static struct BurnRomInfo nes_kirakirstanigacRomDesc[] = {
 	{ "Kira Kira Star Night AC (2017)(RiKi).nes",          524304, 0x9e650f69, BRF_ESS | BRF_PRG },
@@ -22353,7 +22390,7 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	"nes_pacmance", NULL, NULL, NULL, "2020",
 	"Pac-Man Championship Edition (World)\0", NULL, "Namco - BNEI", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_pacmanceRomInfo, nes_pacmanceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -22371,8 +22408,26 @@ struct BurnDriver BurnDrvnes_pacmanx = {
 	"nes_pacmanx", NULL, NULL, NULL, "2016",
 	"Pac-Man Xtreme (Hack)\0", NULL, "KaBooM!", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_pacmanxRomInfo, nes_pacmanxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Pac-Mania Arcade (Hack)
+static struct BurnRomInfo nes_pacmaniarcadeRomDesc[] = {
+	{ "Pac-Mania Arcade (2026)(125scratch).nes",          163856, 0xa822d9b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pacmaniarcade)
+STD_ROM_FN(nes_pacmaniarcade)
+
+struct BurnDriver BurnDrvnes_pacmaniarcade = {
+	"nes_pacmaniarcade", "nes_pacmania", NULL, NULL, "2026",
+	"Pac-Mania Arcade (Hack)\0", NULL, "125scratch", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
+	NESGetZipName, nes_pacmaniarcadeRomInfo, nes_pacmaniarcadeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -47019,7 +47074,7 @@ struct BurnDriver BurnDrvnes_pacmania = {
 	"nes_pacmania", NULL, NULL, NULL, "1990",
 	"Pac-Mania (USA)\0", NULL, "Tengen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_pacmaniaRomInfo, nes_pacmaniaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50297,7 +50352,7 @@ struct BurnDriver BurnDrvnes_sansaranaga = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Battle Oozumou - Heisei Hero Basho (Japan)
+// SD Battle Oozumou: Heisei Hero Basho (Japan)
 static struct BurnRomInfo nes_sdbttloozumouRomDesc[] = {
 	{ "SD Battle Oozumou - Heisei Hero Basho (Japan)(1990)(Banpresto).nes",          262160, 0xcd1931de, BRF_ESS | BRF_PRG },
 };
@@ -50307,15 +50362,15 @@ STD_ROM_FN(nes_sdbttloozumou)
 
 struct BurnDriver BurnDrvnes_sdbttloozumou = {
 	"nes_sdbttloozumou", NULL, NULL, NULL, "1990",
-	"SD Battle Oozumou - Heisei Hero Basho (Japan)\0", NULL, "Banpresto", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"SD Battle Oozumou: Heisei Hero Basho (Japan)\0", NULL, "Banpresto", "NES / Famicom",
+	L"SD Battle Oozumou: Heisei Hero Basho (Japan)\0SD\u30d0\u30c8\u30eb \u5927\u76f8\u64b2 \u5e73\u6210\u30d2\u30fc\u30ed\u30fc\u5834\u6240\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_sdbttloozumouRomInfo, nes_sdbttloozumouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan)
+// SD Gundam: Gachapon Senshi 2 - Capsule Senki (Japan)
 static struct BurnRomInfo nes_sdgundgs2RomDesc[] = {
 	{ "SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan)(1989)(Bandai).nes",          262160, 0x88641b52, BRF_ESS | BRF_PRG },
 };
@@ -50325,15 +50380,15 @@ STD_ROM_FN(nes_sdgundgs2)
 
 struct BurnDriver BurnDrvnes_sdgundgs2 = {
 	"nes_sdgundgs2", NULL, NULL, NULL, "1989",
-	"SD Gundam - Gachapon Senshi 2 - Capsule Senki (Japan)\0", NULL, "Bandai", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	"SD Gundam: Gachapon Senshi 2 - Capsule Senki (Japan)\0", NULL, "Bandai", "NES / Famicom",
+	L"SD Gundam: Gachapon Senshi 2 - Capsule Senki (Japan)\0SD\u30ac\u30f3\u30c0\u30e0\u30ef\u30fc\u30eb\u30c9 \u30ac\u30c1\u30e3\u30dd\u30f3\u6226\u58eb2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sdgundgs2RomInfo, nes_sdgundgs2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam - Gachapon Senshi 3 - Eiyuu Senki (Japan)
+// SD Gundam: Gachapon Senshi 3 - Eiyuu Senki (Japan)
 static struct BurnRomInfo nes_sdgundgs3RomDesc[] = {
 	{ "SD Gundam - Gachapon Senshi 3 - Eiyuu Senki (Japan)(1990)(Yutaka).nes",          262160, 0x3af5beff, BRF_ESS | BRF_PRG },
 };
@@ -50343,15 +50398,15 @@ STD_ROM_FN(nes_sdgundgs3)
 
 struct BurnDriver BurnDrvnes_sdgundgs3 = {
 	"nes_sdgundgs3", NULL, NULL, NULL, "1990",
-	"SD Gundam - Gachapon Senshi 3 - Eiyuu Senki (Japan)\0", NULL, "Yutaka", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	"SD Gundam: Gachapon Senshi 3 - Eiyuu Senki (Japan)\0", NULL, "Yutaka", "NES / Famicom",
+	L"SD Gundam: Gachapon Senshi 3 - Eiyuu Senki (Japan)\0SD\u30ac\u30f3\u30c0\u30e0\u30ef\u30fc\u30eb\u30c9 \u30ac\u30c1\u30e3\u30dd\u30f3\u6226\u58eb3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sdgundgs3RomInfo, nes_sdgundgs3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam - Gachapon Senshi 4 - New Type Story (Japan)
+// SD Gundam: Gachapon Senshi 4 - New Type Story (Japan)
 static struct BurnRomInfo nes_sdgundgs4RomDesc[] = {
 	{ "SD Gundam - Gachapon Senshi 4 - New Type Story (Japan)(1991)(Yutaka).nes",          524304, 0x078b916e, BRF_ESS | BRF_PRG },
 };
@@ -50361,15 +50416,15 @@ STD_ROM_FN(nes_sdgundgs4)
 
 struct BurnDriver BurnDrvnes_sdgundgs4 = {
 	"nes_sdgundgs4", NULL, NULL, NULL, "1991",
-	"SD Gundam - Gachapon Senshi 4 - New Type Story (Japan)\0", NULL, "Yutaka", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_NES, GBF_STRATEGY, 0,
+	"SD Gundam: Gachapon Senshi 4 - New Type Story (Japan)\0", NULL, "Yutaka", "NES / Famicom",
+	L"SD Gundam: Gachapon Senshi 4 - New Type Story (Japan)\0SD\u30ac\u30f3\u30c0\u30e0\u30ef\u30fc\u30eb\u30c9 \u30ac\u30c1\u30e3\u30dd\u30f3\u6226\u58eb4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sdgundgs4RomInfo, nes_sdgundgs4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// SD Gundam - Gachapon Senshi 5 - Battle of Universal Century (Japan)
+// SD Gundam: Gachapon Senshi 5 - Battle of Universal Century (Japan)
 static struct BurnRomInfo nes_sdgachapon5RomDesc[] = {
 	{ "SD Gundam - Gachapon Senshi 5 - Battle of Universal Century (Japan)(1992)(Yutaka).nes",          262160, 0x971d0527, BRF_ESS | BRF_PRG },
 };
@@ -50379,9 +50434,9 @@ STD_ROM_FN(nes_sdgachapon5)
 
 struct BurnDriver BurnDrvnes_sdgachapon5 = {
 	"nes_sdgachapon5", NULL, NULL, NULL, "1992",
-	"SD Gundam - Gachapon Senshi 5 - Battle of Universal Century (Japan)\0", NULL, "Yutaka", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_STRATEGY, 0,
+	"SD Gundam: Gachapon Senshi 5 - Battle of Universal Century (Japan)\0", NULL, "Yutaka", "NES / Famicom",
+	L"SD Gundam: Gachapon Senshi 5 - Battle of Universal Century (Japan)\0SD\u30ac\u30f3\u30c0\u30e0\u30ef\u30fc\u30eb\u30c9 \u30ac\u30c1\u30e3\u30dd\u30f3\u6226\u58eb5\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sdgachapon5RomInfo, nes_sdgachapon5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50744,8 +50799,81 @@ struct BurnDriver BurnDrvnes_shadowgate = {
 	"nes_shadowgate", NULL, NULL, NULL, "1989",
 	"Shadowgate (USA)\0", NULL, "Kemco", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_shadowgateRomInfo, nes_shadowgateRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Shadowgate (Euro)
+static struct BurnRomInfo nes_shadowgateeRomDesc[] = {
+	{ "Shadowgate (Euro)(1991)(Kemco).nes",          262160, 0x0d359f20, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadowgatee)
+STD_ROM_FN(nes_shadowgatee)
+
+struct BurnDriver BurnDrvnes_shadowgatee = {
+	"nes_shadowgatee", "nes_shadowgate", NULL, NULL, "1991",
+	"Shadowgate (Euro)\0", NULL, "Kemco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_shadowgateeRomInfo, nes_shadowgateeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+// Shadowgate (France)
+static struct BurnRomInfo nes_shadowgatefRomDesc[] = {
+	{ "Shadowgate (France)(1991)(Kemco).nes",          262160, 0x81d4e114, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadowgatef)
+STD_ROM_FN(nes_shadowgatef)
+
+struct BurnDriver BurnDrvnes_shadowgatef = {
+	"nes_shadowgatef", "nes_shadowgate", NULL, NULL, "1991",
+	"Shadowgate (France)\0", NULL, "Kemco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_shadowgatefRomInfo, nes_shadowgatefRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+};
+
+// Shadowgate (Germany)
+static struct BurnRomInfo nes_shadowgategRomDesc[] = {
+	{ "Shadowgate (Germany)(1991)(Kemco).nes",          262160, 0xa895f19a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadowgateg)
+STD_ROM_FN(nes_shadowgateg)
+
+struct BurnDriver BurnDrvnes_shadowgateg = {
+	"nes_shadowgateg", "nes_shadowgate", NULL, NULL, "1991",
+	"Shadowgate (Germany)\0", NULL, "Kemco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_shadowgategRomInfo, nes_shadowgategRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
+
+};
+
+// Shadowgate (Japan)
+static struct BurnRomInfo nes_shadowgatejRomDesc[] = {
+	{ "Shadowgate (Japan)(1989)(Kemco).nes",          262160, 0xd19538ac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shadowgatej)
+STD_ROM_FN(nes_shadowgatej)
+
+struct BurnDriver BurnDrvnes_shadowgatej = {
+	"nes_shadowgatej", "nes_shadowgate", NULL, NULL, "1989",
+	"Shadowgate (Japan)\0", NULL, "Kemco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_shadowgatejRomInfo, nes_shadowgatejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

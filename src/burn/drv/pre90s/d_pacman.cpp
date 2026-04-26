@@ -9140,7 +9140,7 @@ struct BurnDriver BurnDrvzolapac = {
 
 static struct BurnRomInfo ChuckieeggRomDesc[] = {
 	{ "ppokoj1.bin",    0x1000, 0xf2ba04fd, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "ppokoj2.bin",    0x1000, 0x161510d3, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "ppokoj2.bin",    0x1000, 0x80285be4, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "ppokoj3.bin",    0x1000, 0x5c594671, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "ppokoj4.bin",    0x1000, 0x25d4fc4f, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "ppoko5.bin",     0x1000, 0x54ca3d7d, 1 | BRF_ESS | BRF_PRG },	//  4

@@ -3614,6 +3614,24 @@ struct BurnDriver BurnDrvngpc_impetuspm = {
 	160, 152, 4, 3
 };
 
+// Jurl (HB)
+static struct BurnRomInfo ngpc_jurlRomDesc[] = {
+	{ "Jurl (2025)(Tonsomo Entertainment).ngp", 524288, 0xaf434981, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_jurl, ngpc_jurl, ngpc_ngp)
+STD_ROM_FN(ngpc_jurl)
+
+struct BurnDriver BurnDrvngpc_jurl = {
+	"ngp_jurl", NULL, "ngp_ngp", NULL, "2025",
+	"Jurl (HB)\0", NULL, "Tonsomo Entertainment", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_jurlRomInfo, ngpc_jurlRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Lift Mini (HB)
 static struct BurnRomInfo ngpc_liftmRomDesc[] = {
 	{ "Lift Mini (2025)(Inufuto).ngp", 524288, 0x09ef36ea, 1 | BRF_PRG | BRF_ESS }, // Cartridge

@@ -17123,22 +17123,22 @@ struct BurnDriver BurnDrvMatrimbh = {
 };
 
 
-// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.05)
+// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.08)
 
 static struct BurnRomInfo turfmastscRomDesc[] = {
-	{ "200-p1sc.p1",	0x200000, 0x2afa257b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "200-p1sc.p1",	0x200000, 0xc1c9751c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1
 
-	{ "200-c1sc.c1",	0x400000, 0x31b37bde, 3 | BRF_GRA },           //  2 Sprite data
-	{ "200-c2sc.c2",	0x400000, 0x924aaad5, 3 | BRF_GRA },           //  3
+	{ "200-c1sc.c1",	0x400000, 0xbb2a69a7, 3 | BRF_GRA },           //  2 Sprite data
+	{ "200-c2sc.c2",	0x400000, 0x443e13c5, 3 | BRF_GRA },           //  3
 
-	{ "200-m1sc.m1",	0x020000, 0x455fedf8, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "200-m1sc.m1",	0x020000, 0x932b54e8, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "200-v1.v1",		0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data
-	{ "200-v2sc.v2",	0x200000, 0xcaf341a8, 5 | BRF_SND },           //  6
+	{ "200-v2sc.v2",	0x200000, 0x8be97582, 5 | BRF_SND },           //  6
 	{ "200-v3.v3",		0x200000, 0x7abca053, 5 | BRF_SND },           //  7
-	{ "200-v4sc.v4",	0x200000, 0x3ee02c5f, 5 | BRF_SND },           //  8
+	{ "200-v4sc.v4",	0x200000, 0xe894954f, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(turfmastsc, turfmastsc, neogeo)
@@ -17146,7 +17146,7 @@ STD_ROM_FN(turfmastsc)
 
 struct BurnDriver BurnDrvTurfmastsc = {
 	"turfmastsc", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.05)\0", NULL, "dericmiller", "Neo Geo MVS",
+	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.08)\0", NULL, "dericmiller", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastscRomInfo, turfmastscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

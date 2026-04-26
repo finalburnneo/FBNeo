@@ -3726,6 +3726,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp" />
     <ClCompile Include="..\..\src\cpu\arm9_intf.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy1.cpp">
+      <Filter>burn\drv\atari</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

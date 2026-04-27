@@ -82,11 +82,11 @@ void img_free(IMAGE* img);
 INT32 img_alloc(IMAGE* img);
 
 bool PNGIsImage(FILE* fp);
-bool PNGIsImageBuffer(unsigned char* buffer, int bufferLength);
+bool PNGIsImageBuffer(void* buffer, int bufferLength);
 INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset);
-INT32 PNGLoadBuffer(IMAGE* img, unsigned char* buffer, int bufferLength, INT32 nPreset);
+INT32 PNGLoadBuffer(IMAGE* img, void* buffer, int bufferLength, INT32 nPreset);
 INT32 PNGGetInfo(IMAGE* img, FILE *fp);
-INT32 PNGGetInfoBuffer(IMAGE* img, unsigned char* buffer, int bufferLength);
+INT32 PNGGetInfoBuffer(IMAGE* img, void* buffer, int bufferLength);
 
 // gami.cpp
 extern struct GameInp* GameInp;

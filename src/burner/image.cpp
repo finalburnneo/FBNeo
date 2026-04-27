@@ -1,3 +1,8 @@
+// FBNeo PNG Load & rescale
+// History:
+// convert to libspng				-dink nov '23
+// load png from buffer				-dink april '26
+
 #include "burner.h"
 #include "spng.h"
 
@@ -409,6 +414,15 @@ int png_sig_check(UINT8 *sig)
 	return memcmp(sig, PNG_SIG, PNG_SIG_LEN);
 }
 
+bool PNGIsImageBuffer(void* buffer, int bufferLength)
+{
+	if (png_sig_check((UINT8*)buffer) == 0) {
+		return true;
+	}
+
+	return false;
+}
+
 bool PNGIsImage(FILE* fp)
 {
 	if (fp) {
@@ -587,6 +601,151 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 	return 0;
 }
 
+INT32 PNGLoadBuffer(IMAGE* img, void* buffer, int bufferLength, INT32 nPreset)
+{
+	IMAGE temp_img;
+	INT32 width = 0, height = 0;
+	int ret;
+
+	if (buffer) {
+		// check signature
+		if (png_sig_check((UINT8*)buffer)) {
+			return 1;
+		}
+
+		spng_ctx *ctx = NULL;
+		struct spng_ihdr ihdr;
+
+		ctx = spng_ctx_new(0);
+		spng_set_crc_action(ctx, SPNG_CRC_USE, SPNG_CRC_USE);
+		size_t limit = 1024 * 1024 * 64;
+		spng_set_chunk_limits(ctx, limit, limit);
+		spng_set_png_buffer(ctx, buffer, bufferLength);
+		ret = spng_get_ihdr(ctx, &ihdr);
+
+		if (ret) {
+			spng_ctx_free(ctx);
+			return 1;
+		}
+
+#if 0
+		// debuggy stuff
+		const char *color_name = color_type_str(ihdr.color_type);
+
+		bprintf(0, _T("width: %u\n"
+			   "height: %u\n"
+			   "bit depth: %u\n"
+			   "color type: %u - %S\n"),
+			   ihdr.width, ihdr.height, ihdr.bit_depth, ihdr.color_type, color_name);
+
+		bprintf(0, _T("compression method: %u\n"
+			   "filter method: %u\n"
+			   "interlace method: %u\n"),
+			   ihdr.compression_method, ihdr.filter_method, ihdr.interlace_method);
+
+		struct spng_plte plte = { 0 };
+		ret = spng_get_plte(ctx, &plte);
+		if (!ret) bprintf(0, _T("palette entries: %u\n"), plte.n_entries);
+#endif
+
+		size_t image_size = 0, image_width_bytes = 0;
+		int fmt = SPNG_FMT_RGB8;
+
+		ret = spng_decoded_image_size(ctx, fmt, &image_size);
+		ret = spng_decode_image(ctx, NULL, 0, fmt, SPNG_DECODE_PROGRESSIVE | SPNG_DECODE_TRNS );
+
+		image_width_bytes = image_size / ihdr.height; // it's the width * 3 (1 for each RGB)
+
+		memset(&temp_img, 0, sizeof(IMAGE));
+		temp_img.width  = ihdr.width;
+		temp_img.height = ihdr.height;
+
+		if (img_alloc(&temp_img)) {
+			spng_ctx_free(ctx);
+			return 1;
+		}
+
+		struct spng_row_info row_info = {0};
+
+		// deal with transparency that decodes to non-black
+		// testcases: dacholer, dowild, ...
+		int trans_to_black = 0;
+		struct spng_plte plte;
+		struct spng_trns trns;
+
+		trans_to_black =
+			(ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) &&
+			(spng_get_plte(ctx, &plte) == 0) &&
+			(spng_get_trns(ctx, &trns) == 0);
+
+		do {
+			if ((ret = spng_get_row_info(ctx, &row_info)) != 0) break;
+
+			ret = spng_decode_row(ctx, temp_img.rowptr[row_info.row_num], image_width_bytes);
+
+			for (int i = 0; i < temp_img.width * 3; i += 3) {
+				int r = temp_img.rowptr[row_info.row_num][i + 0];
+				int g = temp_img.rowptr[row_info.row_num][i + 1];
+				int b = temp_img.rowptr[row_info.row_num][i + 2];
+
+				if (trans_to_black) {
+					for(int j = 0; j < trns.n_type3_entries; j++)
+					{
+						if(trns.type3_alpha[j] < 20 &&
+						   plte.entries[trns.type3_alpha[j]].red == r &&
+						   plte.entries[trns.type3_alpha[j]].green == g &&
+						   plte.entries[trns.type3_alpha[j]].blue == b)
+						{
+							r = r * trns.type3_alpha[j] / 20;
+							g = g * trns.type3_alpha[j] / 20;
+							b = b * trns.type3_alpha[j] / 20;
+						}
+					}
+				}
+
+				temp_img.rowptr[row_info.row_num][i + 0] = b;
+				temp_img.rowptr[row_info.row_num][i + 1] = g;
+				temp_img.rowptr[row_info.row_num][i + 2] = r;
+			}
+		} while (ret == 0);
+
+		spng_ctx_free(ctx);
+	} else {
+
+#ifdef BUILD_WIN32
+		// Find resource
+		HRSRC hrsrc = FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
+		HGLOBAL hglobal = LoadResource(NULL, (HRSRC)hrsrc);
+		BYTE* pResourceData = (BYTE*)LockResource(hglobal);
+
+		BITMAPINFOHEADER* pbmih = (BITMAPINFOHEADER*)LockResource(hglobal);
+
+		// Allocate a new image
+		memset(&temp_img, 0, sizeof(IMAGE));
+		temp_img.width   = pbmih->biWidth;
+		temp_img.height  = pbmih->biHeight;
+		temp_img.bmpbits = pResourceData + pbmih->biSize;
+		img_alloc(&temp_img);
+
+#else
+		return 1;
+#endif
+
+	}
+
+	if (img_process(&temp_img, img->width ? img->width : temp_img.width, img->height ? img->height : temp_img.height, nPreset, false)) {
+		img_free(&temp_img);
+		return 1;
+	}
+
+	bPngImageOrientation = 0;
+	if (height && width && height > width) bPngImageOrientation = 1;
+
+	memcpy(img, &temp_img, sizeof(IMAGE));
+
+	return 0;
+}
+
 INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 {
 	IMAGE temp_img = { 0, 0, 0, 0, NULL, NULL, 0 };
@@ -608,6 +767,44 @@ INT32 PNGGetInfo(IMAGE* img, FILE *fp)
 		size_t limit = 1024 * 1024 * 64;
 		spng_set_chunk_limits(ctx, limit, limit);
 		spng_set_png_file(ctx, fp);
+		int ret = spng_get_ihdr(ctx, &ihdr);
+
+		if (ret) {
+			// can't decode header info's - bad png
+			return 1;
+		}
+
+		memset(&temp_img, 0, sizeof(IMAGE));
+		temp_img.width = ihdr.width;
+		temp_img.height = ihdr.height;
+
+		spng_ctx_free(ctx);
+	}
+
+	memcpy(img, &temp_img, sizeof(IMAGE));
+	img_free(&temp_img);
+
+	return 0;
+}
+
+INT32 PNGGetInfoBuffer(IMAGE* img, void* buffer, int bufferLength)
+{
+	IMAGE temp_img = { 0, 0, 0, 0, NULL, NULL, 0 };
+
+	if (buffer) {
+		// check signature
+		if (png_sig_check((UINT8*)buffer)) {
+			return 1;
+		}
+
+		spng_ctx *ctx = NULL;
+		struct spng_ihdr ihdr;
+
+		ctx = spng_ctx_new(0);
+		spng_set_crc_action(ctx, SPNG_CRC_USE, SPNG_CRC_USE);
+		size_t limit = 1024 * 1024 * 64;
+		spng_set_chunk_limits(ctx, limit, limit);
+		spng_set_png_buffer(ctx, buffer, bufferLength);
 		int ret = spng_get_ihdr(ctx, &ihdr);
 
 		if (ret) {

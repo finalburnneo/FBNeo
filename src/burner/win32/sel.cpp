@@ -2,6 +2,7 @@
 // TreeView Version by HyperYagami
 #include "burner.h"
 #include <process.h>
+#include "zip.h" // zipped titles & previews -dink '26
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, spec1282a, decocass, midssio, cchip, fdsbios, ngp, bubsys, channelf, namcoc69, namcoc70, namcoc75, snes stuff)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
@@ -39,7 +40,7 @@ static HICON hDrvIconMiss;
 static char TreeBuilding		= 0;										// if 1, ignore TVN_SELCHANGED messages
 
 static int bImageOrientation;
-static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCrtl);
+static int UpdatePreview(bool bReset, bool isPreview, TCHAR *szPath, int HorCtrl, int VerCrtl);
 
 int	nIconsSize					= ICON_16x16;
 int	nIconsSizeXY				= 16;
@@ -1079,12 +1080,12 @@ FILE* OpenPreview(int nIndex, TCHAR *szPath)
 
 static VOID CALLBACK PreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 {
-	UpdatePreview(false, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+	UpdatePreview(false, true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 }
 
 static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 {
-	UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+	UpdatePreview(true, true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 
 	if (GetIpsNumPatches()) {
 		if (!nShowMVSCartsOnly) {
@@ -1105,7 +1106,46 @@ static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 	nInitPreviewTimer = 0;
 }
 
-static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
+// unzip()'s buf must be free()'d after use.
+bool unzip(char *szZipFn, char *szFn, void **buf, size_t *bufsize)
+{
+	bool retval = false;
+
+	// read ZIP
+	zip_t *zip = zip_open(szZipFn, 0, 'r');
+	if (zip != NULL) {
+		if (!zip_entry_open(zip, szFn)) {
+			retval = zip_entry_read(zip, buf, bufsize) >= 0;
+		} else {
+			bprintf(0, _T("unzip: not found [%S][%S]\n"), szZipFn, szFn);
+		}
+		zip_entry_close(zip);
+	} else {
+		bprintf(0, _T("unzip: .zip not found [%S][%S]\n"), szZipFn, szFn);
+	}
+	zip_close(zip);
+
+	return retval;
+}
+
+bool unzip_file_exists(char *szZipFn, char *szFn)
+{
+	bool retval = false;
+
+	// read ZIP
+	zip_t *zip = zip_open(szZipFn, 0, 'r');
+	if (zip != NULL) {
+		if (!zip_entry_open(zip, szFn)) {
+			retval = true;
+		}
+		zip_entry_close(zip);
+	}
+	zip_close(zip);
+
+	return retval;
+}
+
+static int UpdatePreview(bool bReset, bool isPreview, TCHAR *szPath, int HorCtrl, int VerCtrl)
 {
 	static int nIndex;
 	int nOldIndex = 0;
@@ -1127,6 +1167,10 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 	}
 
 	nBurnDrvActive = nDialogSelect;
+
+	bool bFromZip = false;
+	size_t pngbufsize = 0;
+	void *pngbuf = NULL;
 
 	if ((nIndex != nOldIndex) || (HorCtrl == IDC_SCREENSHOT2_H)) {
 		int x, y, ax, ay;
@@ -1174,7 +1218,21 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 			nIndex = 1;
 			fp = OpenPreview(nIndex, szPath);
 		}
-		if (fp) {
+
+		if (!fp) { // no file?  dink says: get from zip!
+
+			char szImageName[MAX_PATH];
+			char szZipName[MAX_PATH];
+			char *szAnsiPath = TCHARToANSI(szPath, NULL, 0);
+
+			snprintf(szImageName, sizeof(szImageName), isPreview ? "previews/%s.png" : "titles/%s.png", BurnDrvGetTextA(DRV_NAME));
+			snprintf(szZipName, sizeof(szZipName), "%s%s", szAnsiPath, isPreview ? "previews.zip" : "titles.zip");
+			//bprintf(0, _T("szImageName [%S]  szZipName [%S]\n"), szImageName, szZipName);
+
+			bFromZip = unzip(szZipName, szImageName, &pngbuf, &pngbufsize);
+
+		}
+		if (fp || bFromZip) {
 			if (ax > 4) {
 				// Check if title/preview image is captured from 1 monitor on a
 				// multi-monitor game, then make the proper adjustments so it
@@ -1182,8 +1240,12 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 				IMAGE img;
 				INT32 game_x, game_y;
 
-				PNGGetInfo(&img, fp);
-				rewind(fp);
+				if (fp) {
+					PNGGetInfo(&img, fp);
+					rewind(fp);
+				} else {
+					PNGGetInfoBuffer(&img, pngbuf, pngbufsize);
+				}
 
 				BurnDrvGetFullSize(&game_x, &game_y);
 
@@ -1194,12 +1256,17 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 					y = x * ay / ax;
 				}
 			}
-			hNewImage = PNGLoadBitmap(hSelDlg, fp, x, y, 3);
+			if (fp) {
+				hNewImage = PNGLoadBitmap(hSelDlg, fp, x, y, 3);
+			} else {
+				hNewImage = PNGLoadBitmapBuffer(hSelDlg, pngbuf, pngbufsize, x, y, 3);
+				free(pngbuf);
+			}
 		}
 	}
 
-	if (fp) {
-		fclose(fp);
+	if (fp || bFromZip) {
+		if (fp) fclose(fp);
 
 		if (HorCtrl == IDC_SCREENSHOT_H) nTimer = SetTimer(hSelDlg, 1, 2500, PreviewTimerProc);
 	} else {
@@ -2880,9 +2947,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 						bool bParentExp = false;	// If true, Item is clone and parent is expanded
 						if (!((NODEINFO*)TvItem.lParam)->bIsParent) {
-							HTREEITEM hParent = TreeView_GetParent(hSelList, TvItem.hItem);
-							if (NULL != hParent) {
-								bParentExp = (TreeView_GetItemState(hSelList, hParent, TVIS_EXPANDED) & TVIS_EXPANDED);
+							HTREEITEM hParentTmp = TreeView_GetParent(hSelList, TvItem.hItem);
+							if (NULL != hParentTmp) {
+								bParentExp = (TreeView_GetItemState(hSelList, hParentTmp, TVIS_EXPANDED) & TVIS_EXPANDED);
 							}
 						}
 
@@ -3008,8 +3075,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nBurnDrvActive	= nBurnDrv[i].nBurnDrvNo;
 					nDialogSelect	= nBurnDrvActive;
 					bDrvSelected	= true;
-					UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
-					UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
+					UpdatePreview(true, true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+					UpdatePreview(false, false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
 					break;
 				}
 			}
@@ -3193,8 +3260,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			nDialogSelect	= nBurnDrvSelect[0];
 			bDrvSelected	= true;
-			UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
-			UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
+			UpdatePreview(true, true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+			UpdatePreview(false, false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
 
 			// Menu
 			POINT oPoint;
@@ -3376,10 +3443,34 @@ static int MVSpreviewUpdateSlot(int nSlot, HWND hDlg)
 		nBurnDrvActive = nBurnDrvSelect[nSlot];
 		if (nBurnDrvActive < nBurnDrvCount) {
 
+			bool bFromZip = false;
+			size_t pngbufsize = 0;
+			void *pngbuf = NULL;
+
 			FILE* fp = OpenPreview(0, szAppTitlesPath);
-			if (fp) {
-				hMVSpreview[nSlot] = PNGLoadBitmap(hDlg, fp, 72, 54, 5);
-				fclose(fp);
+
+			if (!fp) { // no file?  dink says: get from zip!
+				char szImageName[MAX_PATH];
+				char szZipName[MAX_PATH];
+				char *szAnsiPath = TCHARToANSI(szAppTitlesPath, NULL, 0);
+
+				snprintf(szImageName, sizeof(szImageName), "titles/%s.png", BurnDrvGetTextA(DRV_NAME));
+				snprintf(szZipName, sizeof(szZipName), "%s%s", szAnsiPath, "titles.zip");
+				//bprintf(0, _T("szImageName [%S]  szZipName [%S]\n"), szImageName, szZipName);
+
+				bFromZip = unzip(szZipName, szImageName, &pngbuf, &pngbufsize);
+			}
+
+
+			if (fp || bFromZip) {
+				if (fp) {
+					hMVSpreview[nSlot] = PNGLoadBitmap(hDlg, fp, 72, 54, 5);
+					fclose(fp);
+				} else {
+					hMVSpreview[nSlot] = PNGLoadBitmapBuffer(hDlg, pngbuf, pngbufsize, 72, 54, 5);
+					free(pngbuf);
+				}
+
 			} else {
 				hMVSpreview[nSlot] = PNGLoadBitmap(hDlg, NULL, 72, 54, 4);
 			}

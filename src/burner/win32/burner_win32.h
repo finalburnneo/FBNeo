@@ -334,6 +334,11 @@ bool MenuHandleKeyboard(MSG*);
 void MenuRemoveTheme();
 
 // sel.cpp
+
+  // unzip()'s buf must be free()'d after use.
+bool unzip(char *szZipFn, char *szFn, void **buf, size_t *bufsize);
+bool unzip_file_exists(char *szZipFn, char *szFn);
+
 extern UINT64 nLoadMenuShowX;
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;

@@ -36,6 +36,8 @@
 #include <unistd.h>
 #endif
 
+#define ZIP_ENABLE_SHARABLE_FILE_OPEN
+
 #include "miniz.h"
 #include "zip.h"
 

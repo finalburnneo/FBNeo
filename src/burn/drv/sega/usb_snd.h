@@ -8,6 +8,6 @@ void usb_sound_exit();
 void usb_sound_scan(INT32 nAction, INT32 *);
 
 void usb_timer_t1_clock(); // 7812.5 per sec / 195.3125 per frame (40hz)
-INT32 usb_sound_run(INT32 cycles);
+INT32 usbSoundRun(INT32 cycles);
 void segausb_update(INT16 *outputs, INT32 sample_len);
 

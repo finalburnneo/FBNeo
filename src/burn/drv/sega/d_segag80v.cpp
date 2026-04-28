@@ -1360,7 +1360,8 @@ static INT32 DrvFrame()
 		}
 
 		if (has_usb) {
-			nCyclesDone[2] += usb_sound_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			CPU_RUN(2, usbSound);
+//			nCyclesDone[2] += usb_sound_run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 			if ((i % 6) != 4) usb_timer_t1_clock();
 		}
 	}

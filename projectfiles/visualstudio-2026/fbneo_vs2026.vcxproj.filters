@@ -3724,10 +3724,17 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp" />
-    <ClCompile Include="..\..\src\cpu\arm9_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy1.cpp">
       <Filter>burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp">
+      <Filter>cpus\arm9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\arm9_intf.cpp">
+      <Filter>cpus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\zip\zip.c">
+      <Filter>libs\zip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4006,6 +4013,9 @@
     </Filter>
     <Filter Include="cpus\arm9">
       <UniqueIdentifier>{49209c37-c5b6-44a8-9441-0e9e5fad12ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\zip">
+      <UniqueIdentifier>{f2b6c5f4-1682-4590-965b-cbc71fb3d78f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

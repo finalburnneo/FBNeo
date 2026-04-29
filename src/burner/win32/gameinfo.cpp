@@ -33,6 +33,31 @@ static FILE* OpenPreview(TCHAR *szPath)
 	return fp;
 }
 
+static size_t pngbufsize = 0;
+static void *pngbuf = NULL;
+
+static bool OpenPreviewZip(TCHAR *szPath, char *szPrefix)
+{
+	char szImageName[MAX_PATH];
+	char szZipName[MAX_PATH];
+	char *szAnsiPath = TCHARToANSI(szPath, NULL, 0);
+
+	snprintf(szImageName, sizeof(szImageName), "%s/%s.png", szPrefix, BurnDrvGetTextA(DRV_NAME));
+	snprintf(szZipName, sizeof(szZipName), "%s%s.zip", szAnsiPath, szPrefix);
+	bprintf(0, _T("szImageName [%S]  szZipName [%S]\n"), szImageName, szZipName);
+
+	bool bExists = unzip_file_exists(szZipName, szImageName);
+	if (bExists == false && BurnDrvGetText(DRV_PARENT)) {
+		// try parent
+		snprintf(szImageName, sizeof(szImageName), "%s/%s.png", szPrefix, BurnDrvGetTextA(DRV_PARENT));
+		bprintf(0, _T("TryParent: szImageName [%S]  szZipName [%S]\n"), szImageName, szZipName);
+		bExists = unzip_file_exists(szZipName, szImageName);
+	}
+	if (bExists) bprintf(0, _T("yay! works.\n"));
+
+	return unzip(szZipName, szImageName, &pngbuf, &pngbufsize);
+}
+
 #define IMG_MAX_HEIGHT			380
 #define IMG_MAX_WIDTH			700
 #define IMG_DEFAULT_WIDTH		506
@@ -40,7 +65,7 @@ static FILE* OpenPreview(TCHAR *szPath)
 #define IMG_ASPECT_4_3			1
 #define IMG_ASPECT_PRESERVE		2
 
-static void SetPreview(TCHAR* szPreviewDir, int nAspectFlag)
+static void SetPreview(TCHAR* szPreviewDir, char *szPrefix, int nAspectFlag)
 {
 	HWND hDlg = hGameInfoDlg;
 
@@ -57,8 +82,15 @@ static void SetPreview(TCHAR* szPreviewDir, int nAspectFlag)
 	int img_height = IMG_MAX_HEIGHT;
 
 	FILE *fp = OpenPreview(szPreviewDir);
-	if (fp) {
-		PNGGetInfo(&img, fp);
+
+	bool bFromZip = (!fp) && OpenPreviewZip(szPreviewDir, szPrefix);
+
+	if (fp || bFromZip) {
+		if (fp) {
+			PNGGetInfo(&img, fp);
+		} else {
+			PNGGetInfoBuffer(&img, pngbuf, pngbufsize);
+		}
 
 		// vertical 3:4
 		if (img.height > img.width) {
@@ -77,13 +109,23 @@ static void SetPreview(TCHAR* szPreviewDir, int nAspectFlag)
 		}
 
 		img_free(&img);
-		fclose(fp);
+		if (fp) fclose(fp);
 	}
 
-	fp = OpenPreview(szPreviewDir);
-	if (fp) {
-		hNewImage = PNGLoadBitmap(hDlg, fp, img_width, img_height, 3);
-		fclose(fp);
+	if (bFromZip) {
+		hNewImage = PNGLoadBitmapBuffer(hDlg, pngbuf, pngbufsize, img_width, img_height, 3);
+
+		// cleanup
+		free(pngbuf);
+		pngbuf = NULL;
+		pngbufsize = 0;
+
+	} else {
+		fp = OpenPreview(szPreviewDir);
+		if (fp) {
+			hNewImage = PNGLoadBitmap(hDlg, fp, img_width, img_height, 3);
+			fclose(fp);
+		}
 	}
 
 	if (hNewImage) {
@@ -1236,19 +1278,19 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (TabPage == 2) DisplaySampleInfo();
 			if (TabPage == 3) DisplayHistory();
 			if (TabPage == 4) DisplayCommands();
-			if (TabPage == 5) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
-			if (TabPage == 6) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
-			if (TabPage == 7) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
-			if (TabPage == 8) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
-			if (TabPage == 9) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
-			if (TabPage == 10) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
-			if (TabPage == 11) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
-			if (TabPage == 12) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
-			if (TabPage == 13) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 14) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 15) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 16) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
-			if (TabPage == 17) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 5) SetPreview(szAppPreviewsPath, "previews", IMG_ASPECT_4_3);
+			if (TabPage == 6) SetPreview(szAppTitlesPath, "titles", IMG_ASPECT_4_3);
+			if (TabPage == 7) SetPreview(szAppSelectPath, "select", IMG_ASPECT_4_3);
+			if (TabPage == 8) SetPreview(szAppVersusPath, "versus", IMG_ASPECT_4_3);
+			if (TabPage == 9) SetPreview(szAppHowtoPath, "howto", IMG_ASPECT_4_3);
+			if (TabPage == 10) SetPreview(szAppScoresPath, "scores", IMG_ASPECT_4_3);
+			if (TabPage == 11) SetPreview(szAppBossesPath, "bosses", IMG_ASPECT_4_3);
+			if (TabPage == 12) SetPreview(szAppGameoverPath, "gameover", IMG_ASPECT_4_3);
+			if (TabPage == 13) SetPreview(szAppFlyersPath, "flyers", IMG_ASPECT_PRESERVE);
+			if (TabPage == 14) SetPreview(szAppCabinetsPath, "cabinets", IMG_ASPECT_PRESERVE);
+			if (TabPage == 15) SetPreview(szAppMarqueesPath, "marquees", IMG_ASPECT_PRESERVE);
+			if (TabPage == 16) SetPreview(szAppControlsPath, "controls", IMG_ASPECT_PRESERVE);
+			if (TabPage == 17) SetPreview(szAppPCBsPath, "pcbs", IMG_ASPECT_PRESERVE);
 
 			return FALSE;
 		}

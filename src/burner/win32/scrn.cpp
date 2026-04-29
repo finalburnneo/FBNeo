@@ -917,12 +917,57 @@ static void HandleBezelLoading(HWND hWnd, int cx, int cy)
 			}
 		}
 
-		if (fp) {
+		bool bFromZip = false;
+		size_t pngbufsize = 0;
+		void *pngbuf = NULL;
+
+		if (!fp) {
+			char szImageName[MAX_PATH];
+			char szZipName[MAX_PATH];
+			//char *szAnsiPath = TCHARToANSI(szPath, NULL, 0);
+
+			snprintf(szZipName, sizeof(szZipName), "support/bezel/bezel.zip");
+			snprintf(szImageName, sizeof(szImageName), "bezel/%s.png", BurnDrvGetTextA(DRV_NAME));
+			strcpy(szName, szImageName);
+
+			bool bExists = unzip_file_exists(szZipName, szImageName);
+
+			if (bExists == false && BurnDrvGetText(DRV_PARENT)) {
+				// try parent
+				snprintf(szImageName, sizeof(szImageName), "bezel/%s.png", BurnDrvGetTextA(DRV_PARENT));
+				strcpy(szName, szImageName);
+				bExists = unzip_file_exists(szZipName, szImageName);
+			}
+			if (bExists == false) {
+				// File doesn't exist, try to use system bezel
+				pszName = ScrnGetHWString(BurnDrvGetHardwareCode());
+
+				if (pszName != NULL) {
+					if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+						snprintf(szImageName, sizeof(szImageName), "bezel/%s_v.png", pszName);
+					} else {
+						snprintf(szImageName, sizeof(szImageName), "bezel/%s.png", pszName);
+					}
+					strcpy(szName, szImageName);
+				}
+			}
+
+			bFromZip = unzip(szZipName, szImageName, &pngbuf, &pngbufsize);
+		}
+
+		if (fp || bFromZip) {
 			bprintf(0, _T("Loading bezel \"%S\"\n"), szName);
-			hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);
+			if (fp) {
+				hBezelBitmap = PNGLoadBitmap(hWnd, fp, cx, cy - nMenuHeight, 0);
+			} else {
+				hBezelBitmap = PNGLoadBitmapBuffer(hWnd, pngbuf, pngbufsize, cx, cy - nMenuHeight, 0);
+				free(pngbuf);
+				pngbuf = NULL;
+				pngbufsize = 0;
+			}
 			nBezelCacheX = cx;
 			nBezelCacheY = cy - nMenuHeight;
-			fclose(fp);
+			if (fp) fclose(fp);
 		}
 	}
 }

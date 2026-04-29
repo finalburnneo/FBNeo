@@ -897,6 +897,20 @@ static char *strqtoken(char *s, const char *delims)
 	return token;
 }
 
+// Helper function: Get path separator (auto append / if needed)
+static inline const TCHAR* GetPathSeparator(const TCHAR* path)
+{
+	if (!path || !*path)
+		return _T("");
+
+	UINT32 len = _tcslen(path);
+	TCHAR last = path[len - 1];
+	if (last != _T('\\') && last != _T('/'))
+		return _T("/");
+
+	return _T("");
+}
+
 static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const UINT32 crc, UINT8* base, bool readonly)
 {
 	TCHAR s[MAX_PATH] = { 0 };
@@ -911,7 +925,8 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
 	const TCHAR* pszReadMode = AdaptiveEncodingReads(patch_name);
-	if (NULL == pszReadMode) return;
+	if (!pszReadMode)
+		return;
 
 	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
 	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
@@ -965,7 +980,7 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 					}
 				}
 
-				if ((ips_offs != NULL) && stristr_int(_TtoA(ips_offs), "crc")) {
+				if (ips_offs && stristr_int(_TtoA(ips_offs), "crc")) {
 					ips_crc = _strqtoken(NULL, DELIM_TOKENS);
 					if (ips_crc) {
 						nIps_crc = hexto32(_TtoA(ips_crc));
@@ -988,7 +1003,7 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 					bprintf(0, _T("rom name:[%S]\n"), rom_name);
 					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
 				}
-
+#if 0
 				bool bHasDir = false;	// The IPS file and DAT file are in the same directory
 				TCHAR* str = ips_name;
 
@@ -1000,17 +1015,73 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 					}
 					str++;
 				}
+#endif // 0
 
 				TCHAR ips_path[MAX_PATH] = { 0 };
+				bool bIsAbsolutePath = false;
+				bool bHasDir = false;
 
-				if (bHasDir) {
-					// Customize drv_name
-					// support/ips/ips_name
-					_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name, (has_ext) ? _T("") : IPS_EXT);
-				} else {
-					// Default drv_name
-					// support/ips/drv_name/ips_name
-					_stprintf(ips_path, _T("%s%s/%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
+				// Check if path contains directory separators
+				for (const TCHAR* str = ips_name; *str; str++) {
+					if (*str == _T('\\') || *str == _T('/')) {
+						bHasDir = true;
+						break;
+					}
+				}
+
+				// Detect absolute path (Windows / UNC / Linux)
+				if ((ips_name[0] == _T('\\') && ips_name[1] == _T('\\')) ||
+					(ips_name[0] == _T('/') && ips_name[1] == _T('/'))) {
+					bIsAbsolutePath = true;
+				} else if (ips_name[0] != _T('\0') && ips_name[1] == _T(':')) {
+					if (ips_name[2] == _T('\\') || ips_name[2] == _T('/'))
+						bIsAbsolutePath = true;
+				} else if (ips_name[0] == _T('\\') || ips_name[0] == _T('/')) {
+					bIsAbsolutePath = true;
+				}
+
+				if (bIsAbsolutePath) {
+					// Absolute path: use directly
+					_sntprintf(ips_path, MAX_PATH, _T("%s%s"),
+						ips_name, has_ext ? _T("") : IPS_EXT);
+				}
+				// RULE: ../ or ..\ → REMOVE ../ , append rest to pszAppRomPaths
+				else if ((ips_name[0] == _T('.') && ips_name[1] == _T('.') &&
+					(ips_name[2] == _T('/') || ips_name[2] == _T('\\')))) {
+					const TCHAR* sep = GetPathSeparator(pszAppRomPaths);
+					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
+						pszAppRomPaths, sep,
+						ips_name + 3,  // skip ..\ or ../
+						has_ext ? _T("") : IPS_EXT);
+				}
+				// RULE: ./ or .\ → REMOVE . , append to pszAppRomPaths/pszDriverName
+				else if ((ips_name[0] == _T('.') &&
+					(ips_name[1] == _T('/') || ips_name[1] == _T('\\')))) {
+					const TCHAR* sep1 = GetPathSeparator(pszAppRomPaths);
+					const TCHAR* sep2 = GetPathSeparator(pszDriverName);
+					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
+						pszAppRomPaths, sep1,
+						pszDriverName,  sep2,
+						ips_name + 2,  // skip  .\ or./
+						has_ext ? _T("") : IPS_EXT);
+				}
+				// Relative path with directory
+				else if (bHasDir) {
+					const TCHAR* sep = GetPathSeparator(pszAppRomPaths);
+					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
+						pszAppRomPaths, sep,
+						ips_name,
+						has_ext ? _T("") : IPS_EXT);
+				}
+				// Plain filename
+				else {
+					const TCHAR* sep1 = GetPathSeparator(pszAppRomPaths);
+					const TCHAR* sep2 = GetPathSeparator(pszDriverName);
+					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
+						pszAppRomPaths, sep1,
+						pszDriverName,  sep2,
+						ips_name,
+						has_ext ? _T("") : IPS_EXT);
 				}
 
 				PatchFile(_TtoA(ips_path), base, readonly);

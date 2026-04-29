@@ -5549,7 +5549,7 @@ struct BurnDriver BurnDrvsms_lemmingsp = {
 	256, 192, 4, 3
 };
 
-// Lemmings 2 - The Tribes (Euro, Prototype)
+// Lemmings 2: The Tribes (Euro, Prototype)
 static struct BurnRomInfo sms_lemming2RomDesc[] = {
 	{ "Lemmings 2 - The Tribes (Euro, Proto)(1994)(Psygnosis).sms",	0x80000, 0xcf5aecca, BRF_PRG | BRF_ESS },
 };
@@ -5559,7 +5559,7 @@ STD_ROM_FN(sms_lemming2)
 
 struct BurnDriver BurnDrvsms_lemming2 = {
 	"sms_lemming2", NULL, NULL, NULL, "1994",
-	"Lemmings 2 - The Tribes (Euro, Prototype)\0", NULL, "Psygnosis", "Sega Master System",
+	"Lemmings 2: The Tribes (Euro, Prototype)\0", NULL, "Psygnosis", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_lemming2RomInfo, sms_lemming2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -21591,6 +21591,25 @@ struct BurnDriver BurnDrvsms_aliencat2 = {
 	256, 192, 4, 3
 };
 
+// Altered Beast - Arcade Voices (Hack, v1.2)
+// https://romhackplaza.org/romhacks/altered-beast-arcade-voices-hack-v1-2-sms/
+static struct BurnRomInfo sms_altbeastavRomDesc[] = {
+	{ "Altered Beast - Arcade Voices v1.2 (2018)(Maxim).sms",	524288, 0x69fb5775, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_altbeastav)
+STD_ROM_FN(sms_altbeastav)
+
+struct BurnDriver BurnDrvsms_altbeastav = {
+	"sms_altbeastav", "sms_altbeast", NULL, NULL, "2018",
+	"Altered Beast - Arcade Voices (Hack, v1.2)\0", NULL, "Maxim", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_altbeastavRomInfo, sms_altbeastavRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // AntiAir (HB)
 static struct BurnRomInfo sms_antiairRomDesc[] = {
 	{ "AntiAir (2024)(Inufuto).sms",	16384, 0xe49dfb4e, BRF_PRG | BRF_ESS },
@@ -21717,9 +21736,9 @@ struct BurnDriver BurnDrvsms_astforce = {
 	256, 192, 4, 3
 };
 
-// Atoms! (HB, v1.1)
+// Atoms! (HB, v1.2)
 static struct BurnRomInfo sms_atomsRomDesc[] = {
-	{ "Atoms v1.1 (2026)(The Gould Fish).sms",	180224, 0x87d98e15, BRF_PRG | BRF_ESS },
+	{ "Atoms v1.2 (2026)(The Gould Fish).sms",	180224, 0xd6b7a3a2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_atoms)
@@ -21727,7 +21746,7 @@ STD_ROM_FN(sms_atoms)
 
 struct BurnDriver BurnDrvsms_atoms = {
 	"sms_atoms", NULL, NULL, NULL, "2026",
-	"Atoms! (HB, v1.1)\0", NULL, "The Gould Fish", "Sega Master System",
+	"Atoms! (HB, v1.2)\0", NULL, "The Gould Fish", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BOARD | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_atomsRomInfo, sms_atomsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22421,9 +22440,9 @@ struct BurnDriver BurnDrvsms_forestescape = {
 	256, 192, 4, 3
 };
 
-// Fridge Fury (HB, v34c)
+// Fridge Fury (HB, v36c)
 static struct BurnRomInfo sms_fridgefuryRomDesc[] = {
-	{ "Fridge Fury v34c (2026)(MikGames).sms",	425984, 0xfed2b034, BRF_PRG | BRF_ESS },
+	{ "Fridge Fury v36c (2026)(MikGames).sms",	425984, 0x51dcda45, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_fridgefury)
@@ -22431,7 +22450,7 @@ STD_ROM_FN(sms_fridgefury)
 
 struct BurnDriver BurnDrvsms_fridgefury = {
 	"sms_fridgefury", NULL, NULL, NULL, "2026",
-	"Fridge Fury (HB, v34c)\0", NULL, "MikGames", "Sega Master System",
+	"Fridge Fury (HB, v36c)\0", NULL, "MikGames", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_fridgefuryRomInfo, sms_fridgefuryRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22565,9 +22584,9 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	256, 224, 4, 3
 };
 
-// GLUF Tesla Frog (HB)
+// GLUF Tesla Frog (HB, v1.2)
 static struct BurnRomInfo sms_glufRomDesc[] = {
-	{ "GLUF Tesla Frog (2026)(Tony & Co.).sms",	131072, 0x219439e7, BRF_PRG | BRF_ESS },
+	{ "GLUF Tesla Frog v1.2 (2026)(Tony & Co.).sms",	131072, 0xfbda1873, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_gluf)
@@ -22575,7 +22594,7 @@ STD_ROM_FN(sms_gluf)
 
 struct BurnDriver BurnDrvsms_gluf = {
 	"sms_gluf", NULL, NULL, NULL, "2026",
-	"GLUF Tesla Frog (HB)\0", NULL, "Tony & Co.", "Sega Master System",
+	"GLUF Tesla Frog (HB, v1.2)\0", NULL, "Tony & Co.", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_PUZZLE, 0,
 	SMSGetZipName, sms_glufRomInfo, sms_glufRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22795,6 +22814,24 @@ struct BurnDriver BurnDrvsms_guntus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_guntusRomInfo, sms_guntusRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Hang-On - Enhanced (Hack, v1.1)
+static struct BurnRomInfo sms_hangonenhRomDesc[] = {
+	{ "Hang-On - Enhanced v1.1 (2026)(chirinea, Maxim).sms",	32768, 0x37c2e336, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hangonenh)
+STD_ROM_FN(sms_hangonenh)
+
+struct BurnDriver BurnDrvsms_hangonenh = {
+	"sms_hangonenh", "sms_hangon", NULL, NULL, "2026",
+	"Hang-On - Enhanced (Hack, v1.1)\0", NULL, "chirinea, Maxim", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	SMSGetZipName, sms_hangonenhRomInfo, sms_hangonenhRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -23065,6 +23102,25 @@ struct BurnDriver BurnDrvsms_laranjamec = {
 	L"Laranja Mec\u00e2nico (HB, Portuguese)", NULL, L"Jaguaret\u00ea Retro Games", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	SMSGetZipName, sms_laranjamecRomInfo, sms_laranjamecRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Lemmings - Restored (Hack, v1.2)
+// https://romhackplaza.org/romhacks/lemmings-restored-sms/
+static struct BurnRomInfo sms_lemmingsrstdRomDesc[] = {
+	{ "Lemmings - Restored v1.2 (2026)(SquidgySquared).sms",	524288, 0x226dbdb3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_lemmingsrstd)
+STD_ROM_FN(sms_lemmingsrstd)
+
+struct BurnDriver BurnDrvsms_lemmingsrstd = {
+	"sms_lemmingsrstd", "sms_lemmings", NULL, NULL, "2026",
+	"Lemmings - Restored (Hack, v1.2)\0", NULL, "SquidgySquared", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_lemmingsrstdRomInfo, sms_lemmingsrstdRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -25352,9 +25408,9 @@ struct BurnDriver BurnDrvgg_ggtrcn = {
 	256, 192, 4, 3
 };
 
-// GLUF Tesla Frog (HB)
+// GLUF Tesla Frog (HB, v1.2)
 static struct BurnRomInfo gg_glufRomDesc[] = {
-	{ "GLUF Tesla Frog (2026)(Tony & Co.).gg",	131072, 0x1afb1281, BRF_PRG | BRF_ESS },
+	{ "GLUF Tesla Frog v1.2 (2026)(Tony & Co.).gg",	131072, 0x2acb2043, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_gluf)
@@ -25362,7 +25418,7 @@ STD_ROM_FN(gg_gluf)
 
 struct BurnDriver BurnDrvgg_gluf = {
 	"gg_gluf", NULL, NULL, NULL, "2026",
-	"GLUF Tesla Frog (HB)\0", NULL, "Tony & Co.", "Sega Game Gear",
+	"GLUF Tesla Frog (HB, v1.2)\0", NULL, "Tony & Co.", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM | GBF_PUZZLE, 0,
 	GGGetZipName, gg_glufRomInfo, gg_glufRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

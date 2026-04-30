@@ -5477,7 +5477,7 @@ struct BurnDriver BurnDrvcv_bankpanic = {
 
 // Bankruptcy Builder (HB)
 static struct BurnRomInfo cv_bankbuildRomDesc[] = {
-    { "Bankruptcy Builder (2013)(Good Deal Games).rom",	0x8000, 0xb153c849, BRF_PRG | BRF_ESS },
+    { "Bankruptcy Builder (2013)(Philipp Klaus Krause).rom",	0x8000, 0xb153c849, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_bankbuild, cv_bankbuild, cv_coleco)
@@ -5485,9 +5485,9 @@ STD_ROM_FN(cv_bankbuild)
 
 struct BurnDriver BurnDrvcv_bankbuild = {
     "cv_bankbuild", NULL, "cv_coleco", NULL, "2013",
-    "Bankruptcy Builder (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    "Bankruptcy Builder (HB)\0", "Published by Good Deal Games", "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_STRATEGY, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_STRATEGY, 0,
     CVGetZipName, cv_bankbuildRomInfo, cv_bankbuildRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -6413,7 +6413,7 @@ struct BurnDriver BurnDrvcv_ccharlie = {
 
 // Cix (HB)
 static struct BurnRomInfo cv_cixRomDesc[] = {
-    { "Cix (2013)(Good Deal Games).rom",	32768, 0xfea0da6d, BRF_PRG | BRF_ESS },
+    { "Cix (2013)(Philipp Klaus Krause).rom",	32768, 0xfea0da6d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_cix, cv_cix, cv_coleco)
@@ -6421,7 +6421,7 @@ STD_ROM_FN(cv_cix)
 
 struct BurnDriver BurnDrvcv_cix = {
     "cv_cix", NULL, "cv_coleco", NULL, "2013",
-    "Cix (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    "Cix (HB)\0", "Published by Good Deal Games", "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_cixRomInfo, cv_cixRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -6591,9 +6591,9 @@ struct BurnDriver BurnDrvcv_cure = {
     272, 228, 4, 3
 };
 
-// Cye (HB)
+// Cye (HB, v1.1)
 static struct BurnRomInfo cv_cyeRomDesc[] = {
-    { "Cye (2007)(Philipp Klaus Krause).rom",	32768, 0x483c85b1, BRF_PRG | BRF_ESS },
+    { "Cye v1.1 (2007)(Philipp Klaus Krause).rom",	31351, 0x0eaec351, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_cye, cv_cye, cv_coleco)
@@ -6601,7 +6601,7 @@ STD_ROM_FN(cv_cye)
 
 struct BurnDriver BurnDrvcv_cye = {
     "cv_cye", NULL, "cv_coleco", NULL, "2007",
-    "Cye (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+    "Cye (HB, v1.1)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_cyeRomInfo, cv_cyeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -9239,7 +9239,7 @@ struct BurnDriver BurnDrvcv_monsthouse = {
 
 // Monster Masher (HB)
 static struct BurnRomInfo cv_monstmasherRomDesc[] = {
-    { "Monster Masher (2006)(Philipp Klaus Krause).rom",	30475, 0xc212599a, BRF_PRG | BRF_ESS },
+    { "Monster Masher (2006)(Philipp Klaus Krause).rom",	30542, 0xc9647af5, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_monstmasher, cv_monstmasher, cv_coleco)
@@ -9251,6 +9251,24 @@ struct BurnDriver BurnDrvcv_monstmasher = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_monstmasherRomInfo, cv_monstmasherRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Monster Masher (Good Deals Games) (HB)
+static struct BurnRomInfo cv_monstmashergdgRomDesc[] = {
+    { "Monster (Good Deals Games) (2006)(Philipp Klaus Krause).rom",	30475, 0xc212599a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_monstmashergdg, cv_monstmashergdg, cv_coleco)
+STD_ROM_FN(cv_monstmashergdg)
+
+struct BurnDriver BurnDrvcv_monstmashergdg = {
+    "cv_monstmashergdg", "cv_monstmasher", "cv_coleco", NULL, "2006",
+    "Monster Masher (Good Deals Games) (HB)\0", "Published by Good Deals Games", "Philipp Klaus Krause", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_monstmashergdgRomInfo, cv_monstmashergdgRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
@@ -10425,6 +10443,24 @@ struct BurnDriver BurnDrvcv_sasa = {
     272, 228, 4, 3
 };
 
+// Schelange CV (HB)
+static struct BurnRomInfo cv_schelangecvRomDesc[] = {
+    { "Schelange CV (2003-06)(Philipp Klaus Krause).rom",	32768, 0x0ecdd112, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_schelangecv, cv_schelangecv, cv_coleco)
+STD_ROM_FN(cv_schelangecv)
+
+struct BurnDriver BurnDrvcv_schelangecv = {
+    "cv_schelangecv", NULL, "cv_coleco", NULL, "2003-06",
+    "Schelange CV (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_schelangecvRomInfo, cv_schelangecvRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Scramble (HB)
 static struct BurnRomInfo cv_scrambleRomDesc[] = {
     { "Scramble (2024)(CollectorVision).rom",	27902, 0xfc65fcd0, BRF_PRG | BRF_ESS },
@@ -10445,7 +10481,7 @@ struct BurnDriver BurnDrvcv_scramble = {
 
 // Search For The Stolen Crown Jewels (HB)
 static struct BurnRomInfo cv_sftscjRomDesc[] = {
-    { "Search for the Stolen Crown Jewels (2006)(Philipp Klaus Krause).rom",	32768, 0x889f5b98, BRF_PRG | BRF_ESS },
+    { "Search for the Stolen Crown Jewels (2006)(Philipp Klaus Krause).rom",	32721, 0x4ad21572, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_sftscj, cv_sftscj, cv_coleco)
@@ -10455,7 +10491,7 @@ struct BurnDriver BurnDrvcv_sftscj = {
     "cv_sftscj", NULL, "cv_coleco", NULL, "2006",
     "Search For The Stolen Crown Jewels (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_sftscjRomInfo, cv_sftscjRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -10473,7 +10509,7 @@ struct BurnDriver BurnDrvcv_sftscj2 = {
     "cv_sftscj2", NULL, "cv_coleco", NULL, "2007",
     "Search For The Stolen Crown Jewels 2 (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_sftscj2RomInfo, cv_sftscj2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -10481,17 +10517,17 @@ struct BurnDriver BurnDrvcv_sftscj2 = {
 
 // Search For The Stolen Crown Jewels 3 (HB)
 static struct BurnRomInfo cv_sftscj3RomDesc[] = {
-    { "Search for the Stolen Crown Jewels 3 (2013)(Phillipp Klaus Krause).rom",	32768, 0x1f3981fc, BRF_PRG | BRF_ESS },
+    { "Search for the Stolen Crown Jewels 3 (2008-13)(Phillipp Klaus Krause).rom",	32768, 0x1f3981fc, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_sftscj3, cv_sftscj3, cv_coleco)
 STD_ROM_FN(cv_sftscj3)
 
 struct BurnDriver BurnDrvcv_sftscj3 = {
-    "cv_sftscj3", NULL, "cv_coleco", NULL, "2013",
+    "cv_sftscj3", NULL, "cv_coleco", NULL, "2008-13",
     "Search For The Stolen Crown Jewels 3 (HB)\0", NULL, "Phillipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
     CVGetZipName, cv_sftscj3RomInfo, cv_sftscj3RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -10585,6 +10621,24 @@ struct BurnDriver BurnDrvcv_shouganai = {
 	CVGetZipName, cv_shouganaiRomInfo, cv_shouganaiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Shunting Puzzle (HB)
+static struct BurnRomInfo cv_shpuzzleRomDesc[] = {
+    { "Shunting Puzzle (2009)(Philipp Klaus Krause).rom",	32115, 0x2b85fbbc, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_shpuzzle, cv_shpuzzle, cv_coleco)
+STD_ROM_FN(cv_shpuzzle)
+
+struct BurnDriver BurnDrvcv_shpuzzle = {
+    "cv_shpuzzle", NULL, "cv_coleco", NULL, "2009",
+    "Shunting Puzzle (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_shpuzzleRomInfo, cv_shpuzzleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Side Trak (HB)

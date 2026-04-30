@@ -6015,6 +6015,24 @@ struct BurnDriver BurnDrvcv_brubber = {
 	272, 228, 4, 3
 };
 
+// BUSTin-Out Vol. 0 (HB)
+static struct BurnRomInfo cv_bustinout0RomDesc[] = {
+    { "BUSTin-Out Vol. 0 (2000)(Daniel Bienvenu).rom",	32768, 0xedca3a1f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_bustinout0, cv_bustinout0, cv_coleco)
+STD_ROM_FN(cv_bustinout0)
+
+struct BurnDriver BurnDrvcv_bustinout0 = {
+    "cv_bustinout0", NULL, "cv_coleco", NULL, "2000-2016",
+    "BUSTin-Out Vol. 0 (HB)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_BREAKOUT, 0,
+    CVGetZipName, cv_bustinout0RomInfo, cv_bustinout0RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // BUSTin-Out Vol. 1 (HB)
 static struct BurnRomInfo cv_bustinout1RomDesc[] = {
     { "BUSTin-Out Vol. 1 (2000-2016)(CollectorVision Games).rom",	32768, 0x97b601a2, BRF_PRG | BRF_ESS },
@@ -9345,6 +9363,24 @@ struct BurnDriver BurnDrvcv_mrchin = {
 	272, 228, 4, 3
 };
 
+// Mr. Do! Arcade (HB)
+static struct BurnRomInfo cv_mrdoarcadeRomDesc[] = {
+	{ "Mr. Do! Arcade (2026)(Scott Moschella).rom",	32695, 0xa06edcb1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_mrdoarcade, cv_mrdoarcade, cv_coleco)
+STD_ROM_FN(cv_mrdoarcade)
+
+struct BurnDriver BurnDrvcv_mrdoarcade = {
+	"cv_mrdoarcade", NULL, "cv_coleco", NULL, "2026",
+	"Mr. Do! Arcade (HB)\0", NULL, "Scott Moschella", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_mrdoarcadeRomInfo, cv_mrdoarcadeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Mr. Do! Run Run (SGM) (HB)
 static struct BurnRomInfo cv_mrdorunrunRomDesc[] = {
     { "Mr. Do! Run Run SGM (2022)(CollectorVision).rom",	131072, 0x13d53b3c, BRF_PRG | BRF_ESS },
@@ -10443,20 +10479,20 @@ struct BurnDriver BurnDrvcv_sasa = {
     272, 228, 4, 3
 };
 
-// Schelange CV (HB)
-static struct BurnRomInfo cv_schelangecvRomDesc[] = {
-    { "Schelange CV (2003-06)(Philipp Klaus Krause).rom",	32768, 0x0ecdd112, BRF_PRG | BRF_ESS },
+// Schlange CV (HB)
+static struct BurnRomInfo cv_schlangecvRomDesc[] = {
+    { "Schlange CV (2003-06)(Philipp Klaus Krause).rom",	32768, 0x0ecdd112, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(cv_schelangecv, cv_schelangecv, cv_coleco)
-STD_ROM_FN(cv_schelangecv)
+STDROMPICKEXT(cv_schlangecv, cv_schlangecv, cv_coleco)
+STD_ROM_FN(cv_schlangecv)
 
-struct BurnDriver BurnDrvcv_schelangecv = {
-    "cv_schelangecv", NULL, "cv_coleco", NULL, "2003-06",
-    "Schelange CV (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
+struct BurnDriver BurnDrvcv_schlangecv = {
+    "cv_schlangecv", NULL, "cv_coleco", NULL, "2003-06",
+    "Schlange CV (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
-    CVGetZipName, cv_schelangecvRomInfo, cv_schelangecvRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    CVGetZipName, cv_schlangecvRomInfo, cv_schlangecvRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

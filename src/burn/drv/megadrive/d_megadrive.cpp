@@ -46765,6 +46765,25 @@ struct BurnDriver BurnDrvmd_insectxpt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Kid Camaleao (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3338.0
+static struct BurnRomInfo md_kidchamptRomDesc[] = {
+	{ "Kid Camaleao PT-BR (2026)(Solid One).bin", 2097152, 0x405d52bf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_kidchampt)
+STD_ROM_FN(md_kidchampt)
+
+struct BurnDriver BurnDrvmd_kidchampt = {
+	"md_kidchampt", "md_kidcham", NULL, NULL, "2026",
+	"Kid Camaleao (Hack, Portuguese)\0", NULL, "Solid One", "Genesis / Mega Drive",
+	L"Kid Camale\u00e3o (Hack, Portuguese)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_kidchamptRomInfo, md_kidchamptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Landstalker: O Tesouro do Rei Nole (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/mega-drive/landstalker-the-treasures-of-king-nole-monkeys-traducoes/
 static struct BurnRomInfo md_landstlkptRomDesc[] = {

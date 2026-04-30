@@ -1199,21 +1199,81 @@ struct BurnDriver BurnDrvpce_circusld = {
 };
 
 
-// City Hunter (Japan)
+// City Hunter (World)
 
 static struct BurnRomInfo pce_cityhuntRomDesc[] = {
-	{ "City Hunter (Japan)(1989)(Sunsoft).pce", 0x060000, 0xf91b055f, BRF_PRG | BRF_ESS },
+	{ "City Hunter (World)(1989-2026)(Sunsoft - Red Art).pce", 0x100000, 0x7e9c2c7e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_cityhunt)
 STD_ROM_FN(pce_cityhunt)
 
 struct BurnDriver BurnDrvpce_cityhunt = {
-	"pce_cityhunt", NULL, NULL, NULL, "1989",
-	"City Hunter (Japan)\0", NULL, "Sunsoft", "PC Engine",
+	"pce_cityhunt", NULL, NULL, NULL, "1989-2026",
+	"City Hunter (World)\0", "Official English Translation", "Sunsoft - Red Art Games", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
 	PceGetZipName, pce_cityhuntRomInfo, pce_cityhuntRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+
+// City Hunter (Enhanced Version) (World)
+
+static struct BurnRomInfo pce_cityhunteeRomDesc[] = {
+	{ "City Hunter (Enhanced Version) (World)(1989-2026)(Sunsoft - Red Art).pce", 0x100000, 0x18d09c0f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_cityhuntee)
+STD_ROM_FN(pce_cityhuntee)
+
+struct BurnDriver BurnDrvpce_cityhuntee = {
+	"pce_cityhuntee", "pce_cityhunt", NULL, NULL, "1989-2026",
+	"City Hunter (Enhanced Version) (World)\0", "Official English Translation", "Sunsoft - Red Art Games", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
+	PceGetZipName, pce_cityhunteeRomInfo, pce_cityhunteeRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+
+// City Hunter (Hard Mode) (World)
+
+static struct BurnRomInfo pce_cityhunthmRomDesc[] = {
+	{ "City Hunter (Hard Mode) (World)(1989-2026)(Sunsoft - Red Art).pce", 0x100000, 0x5d79e930, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_cityhunthm)
+STD_ROM_FN(pce_cityhunthm)
+
+struct BurnDriver BurnDrvpce_cityhunthm = {
+	"pce_cityhunthm", "pce_cityhunt", NULL, NULL, "1989-2026",
+	"City Hunter (Hard Mode) (World)\0", "Official English Translation", "Sunsoft - Red Art Games", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
+	PceGetZipName, pce_cityhunthmRomInfo, pce_cityhunthmRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+
+// City Hunter (Japan)
+
+static struct BurnRomInfo pce_cityhuntjRomDesc[] = {
+	{ "City Hunter (Japan)(1989)(Sunsoft).pce", 0x060000, 0xf91b055f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_cityhuntj)
+STD_ROM_FN(pce_cityhuntj)
+
+struct BurnDriver BurnDrvpce_cityhuntj = {
+	"pce_cityhuntj", "pce_cityhunt", NULL, NULL, "1989",
+	"City Hunter (Japan)\0", NULL, "Sunsoft", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
+	PceGetZipName, pce_cityhuntjRomInfo, pce_cityhuntjRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };

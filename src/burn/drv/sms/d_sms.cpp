@@ -23812,6 +23812,24 @@ struct BurnDriver BurnDrvsms_raymanrr = {
     256, 192, 4, 3
 };
 
+// Ring Dash SMS (HB)
+static struct BurnRomInfo sms_ringdashsmsRomDesc[] = {
+    { "Ring Dash SMS (2025)(Brig78).sms",    131072, 0xa1e883fc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_ringdashsms)
+STD_ROM_FN(sms_ringdashsms)
+
+struct BurnDriver BurnDrvsms_ringdashsms = {
+    "sms_ringdashsms", NULL, NULL, NULL, "2025",
+    "Ring Dash SMS (HB)\0", NULL, "Brig78", "Sega Master System",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_MAZE, 0,
+    SMSGetZipName, sms_ringdashsmsRomInfo, sms_ringdashsmsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+    SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+    256, 192, 4, 3
+};
+
 // Road Fighter (HB, v1.2)
 static struct BurnRomInfo sms_roadfightRomDesc[] = {
     { "Road Fighter v1.2 (2026)(BadComputer, Chirinea).sms",    524288, 0x31035323, BRF_PRG | BRF_ESS },
@@ -25692,6 +25710,24 @@ struct BurnDriver BurnDrvgg_prgarden = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
 	GGGetZipName, gg_prgardenRomInfo, gg_prgardenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Ring Dash GG (HB)
+static struct BurnRomInfo gg_ringdashggRomDesc[] = {
+	{ "Ring Dash GG (2025)(Brig78).gg",	131072, 0x471c09b7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_ringdashgg)
+STD_ROM_FN(gg_ringdashgg)
+
+struct BurnDriver BurnDrvgg_ringdashgg = {
+	"gg_ringdashgg", NULL, NULL, NULL, "2025",
+	"Ring Dash GG (HB)\0", NULL, "Brig78", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_ringdashggRomInfo, gg_ringdashggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

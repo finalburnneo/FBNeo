@@ -43695,6 +43695,25 @@ struct BurnDriver BurnDrvmd_sor3bk3p = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Bare Knuckle III - Definitive Patch (Hack)
+// https://romhackplaza.org/romhacks/bare-knuckle-iii-definitive-patch-genesis/
+static struct BurnRomInfo md_bk3defpatRomDesc[] = {
+	{ "Bare Knuckle III - Definitive Patch (2026)(GSaurus, LoneGamer88, Twilight Translations).bin", 3146096, 0x16b323ae, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bk3defpat)
+STD_ROM_FN(md_bk3defpat)
+
+struct BurnDriver BurnDrvmd_bk3defpat = {
+	"md_bk3defpat", "md_sor3", NULL, NULL, "2026",
+	"Bare Knuckle III - Definitive Patch (Hack)\0", NULL, "GSaurus, LoneGamer88, Twilight Translations", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK| BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_bk3defpatRomInfo, md_bk3defpatRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Bill's Tomato Game (Prototype)
 
 static struct BurnRomInfo md_btomatogRomDesc[] = {

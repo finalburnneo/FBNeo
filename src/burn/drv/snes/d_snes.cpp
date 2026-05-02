@@ -13466,6 +13466,26 @@ struct BurnDriver BurnDrvsnes_Fireemblem4te = {
 	512, 448, 4, 3
 };
 
+// Fire Emblem - Seisen no Keifu (Hack, Portuguese v1.13)
+// https://www.romhacking.net.br/index.php?topic=3136.0
+
+static struct BurnRomInfo snes_Fireemblem4tpRomDesc[] = {
+	{ "Fire Emblem - Genealogy of the Holy War PT-BR v1.13 (2025)(Escribas da Espada).sfc", 6926955, 0x328f3d50, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fireemblem4tp)
+STD_ROM_FN(snes_Fireemblem4tp)
+
+struct BurnDriver BurnDrvsnes_Fireemblem4tp = {
+	"snes_fireemblem4tp", "snes_fireemblem4te", NULL, NULL, "2025",
+	"Fire Emblem - Genealogy of the Holy War (Hack, Portuguese v1.13)\0", NULL, "Escribas da Espada", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Fireemblem4tpRomInfo, snes_Fireemblem4tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Fire Emblem - Seisen no Keifu (Hack, Simplified Chinese v1.1)
 
 static struct BurnRomInfo snes_Fireemblem4tscRomDesc[] = {
@@ -18425,6 +18445,25 @@ struct BurnDriver BurnDrvsnes_Joemac2j = {
 	512, 448, 4, 3
 };
 
+// Joe & Mac 2 - Lost in the Tropics (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/joe-and-mac-2-lost-in-the-tropics-darklink-e-denim
+static struct BurnRomInfo snes_Joemac2tpRomDesc[] = {
+	{ "Joe & Mac 2 - Lost in the Tropics PT-BR (2015)(DarkLink, Denim).sfc", 1048576, 0x2831dd78, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Joemac2tp)
+STD_ROM_FN(snes_Joemac2tp)
+
+struct BurnDriver BurnDrvsnes_Joemac2tp = {
+	"snes_joemac2tp", "snes_joemac2", NULL, NULL, "2015",
+	"Joe & Mac 2 - Lost in the Tropics (Hack, Portuguese)\0", NULL, "DarkLink, Denim", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Joemac2tpRomInfo, snes_Joemac2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Joe & Mac - Caveman Ninja (Euro)
 
 static struct BurnRomInfo snes_JoemaceRomDesc[] = {
@@ -22072,6 +22111,25 @@ struct BurnDriver BurnDrvsnes_Magkrayte = {
 	512, 448, 4, 3
 };
 
+// Magic Knight Rayearth (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/magic-knight-rayearth-monkeys-traducoes/
+static struct BurnRomInfo snes_MagkraytpRomDesc[] = {
+	{ "Magic Knight Rayearth PT-BR (2013)(Monkey's Traducoes).sfc", 1572864, 0x79767b74, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Magkraytp)
+STD_ROM_FN(snes_Magkraytp)
+
+struct BurnDriver BurnDrvsnes_Magkraytp = {
+	"snes_magkraytp", "snes_magkrayte", NULL, NULL, "1995",
+	"Magic Knight Rayearth (Hack, Portuguese)\0", NULL, "Monkey's Traducoes", "SNES / Super Famicom",
+	NULL, NULL, L"Monkey's Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_MagkraytpRomInfo, snes_MagkraytpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mahjong Club (Japan)
 
 static struct BurnRomInfo snes_MahjongclubRomDesc[] = {
@@ -22981,6 +23039,26 @@ struct BurnDriver BurnDrvsnes_Megamanx3e = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Megamanx3eRomInfo, snes_Megamanx3eRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man X3 (Hack, Portuguese)
+// https://www.romhacking.net/translations/5289/
+
+static struct BurnRomInfo snes_Megamanx3tpRomDesc[] = {
+	{ "Mega Man X3 PT-BR (2019)(Solid One).sfc", 4194304, 0x51c4afcf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanx3tp)
+STD_ROM_FN(snes_Megamanx3tp)
+
+struct BurnDriver BurnDrvsnes_Megamanx3tp = {
+	"snes_megamanx3tp", "snes_megamanx3", NULL, NULL, "2019",
+	"Mega Man X3 (Hack, Portuguese)\0", "CX4 enhancement chip", "Solid One", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megamanx3tpRomInfo, snes_Megamanx3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -36322,6 +36400,26 @@ struct BurnDriver BurnDrvsnes_Supermetroide = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermetroideRomInfo, snes_SupermetroideRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Metroide (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/super-metroid-denim-e-spyblack/
+
+static struct BurnRomInfo snes_SupermetroidtpRomDesc[] = {
+	{ "Super Metroide PT-BR (2013)(Denim, Spyblack).sfc", 3145728, 0xf064cc3d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supermetroidtp)
+STD_ROM_FN(snes_Supermetroidtp)
+
+struct BurnDriver BurnDrvsnes_Supermetroidtp = {
+	"snes_supermetroidtp", "snes_supermetroid", NULL, NULL, "2013",
+	"Super Metroide (Hack, Portuguese)\0", NULL, "Denim, Spyblack", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SupermetroidtpRomInfo, snes_SupermetroidtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

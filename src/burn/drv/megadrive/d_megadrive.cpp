@@ -40035,10 +40035,10 @@ struct BurnDriver BurnDrvmd_genmtetris = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Ghost Baseball (HB, v1.3)
+// Ghost Baseball (HB, v2.0)
 // https://infinitestategames.itch.io/ghost-baseball
 static struct BurnRomInfo md_ghbaseballRomDesc[] = {
-	{ "Ghost Baseball v1.3 (2026)(Infinite State Games).bin", 262144, 0x2b95120a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ghost Baseball v2.0 (2026)(Infinite State Games).bin", 524288, 0x02d25abd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ghbaseball)
@@ -40046,7 +40046,7 @@ STD_ROM_FN(md_ghbaseball)
 
 struct BurnDriver BurnDrvmd_ghbaseball = {
 	"md_ghbaseball", NULL, NULL, NULL, "2026",
-	"Ghost Baseball (HB, v1.3)\0", NULL, "Infinite State Games", "Genesis / Mega Drive",
+	"Ghost Baseball (HB, v2.0)\0", NULL, "Infinite State Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_ghbaseballRomInfo, md_ghbaseballRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -5764,6 +5764,40 @@ struct BurnDriver BurnDrvmspacmap = {
 };
 
 
+// Man-Pac
+
+static struct BurnRomInfo manpacRomDesc[] = {
+	{ "manpac.1",     0x1000, 0xf5c9570a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "manpac.2",     0x1000, 0x508e2275, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "manpac.3",     0x1000, 0xdc293d68, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "manpac.4",     0x1000, 0x1c2a3102, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "manpac.5",     0x1000, 0xa88fd7cf, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "manpac.6",     0x1000, 0x47aae27e, 1 | BRF_ESS | BRF_PRG },	//  5
+
+	{ "manpac.5e",    0x1000, 0x0f2493ad, 2 | BRF_GRA },			//  6 Graphics
+	{ "manpac.5f",    0x1000, 0xdde2fba2, 2 | BRF_GRA },			//  7
+
+	{ "manpac.7f",    0x0020, 0x1b75882b, 3 | BRF_GRA },			//  8 Color Proms
+	{ "manpac.4a",    0x0100, 0x25987267, 3 | BRF_GRA },			//  9
+
+	{ "manpac.1m",    0x0100, 0xc310be6c, 4 | BRF_SND },			// 10 Sound Prom
+	{ "manpac.3m",    0x0100, 0x8e84bdc1, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(manpac)
+STD_ROM_FN(manpac)
+
+struct BurnDriver BurnDrvmanpac = {
+	"manpac", "mspacman", NULL, NULL, "2020-2024",
+	"Man-Pac\0", NULL, "hack (Screw)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, manpacRomInfo, manpacRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Crush Roller (set 1)
 
 static struct BurnRomInfo crushRomDesc[] = {

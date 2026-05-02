@@ -2,7 +2,6 @@
 // TreeView Version by HyperYagami
 #include "burner.h"
 #include <process.h>
-#include "zip.h" // zipped titles & previews -dink '26
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, spec1282a, decocass, midssio, cchip, fdsbios, ngp, bubsys, channelf, namcoc69, namcoc70, namcoc75, snes stuff)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
@@ -1109,20 +1108,20 @@ static VOID CALLBACK InitPreviewTimerProc(HWND, UINT, UINT_PTR, DWORD)
 // NOTE: unzip()'s buf must be free()'d after use.
 
 // context-based version, keeps .zip open the entire time until closed.
-static bool unzip_open_context(zip_t **zip_context, char *szZipFn)
+bool unzip_open_context(zip_t **zip_context, char *szZipFn)
 {
 	*zip_context = zip_open(szZipFn, 0, 'r');
 
 	return (*zip_context != NULL);
 }
 
-static void unzip_close_context(zip_t **zip_context)
+void unzip_close_context(zip_t **zip_context)
 {
 	zip_close(*zip_context);
 	*zip_context = NULL;
 }
 
-static bool unzip_unzip_context(zip_t **zip_context, char *szFn, void **buf, size_t *bufsize)
+bool unzip_unzip_context(zip_t **zip_context, char *szFn, void **buf, size_t *bufsize)
 {
 	bool retval = false;
 
@@ -1140,9 +1139,7 @@ static bool unzip_unzip_context(zip_t **zip_context, char *szFn, void **buf, siz
 	return retval;
 }
 
-#if 0
-// un-#if this block if you need to use this function
-static bool unzip_exists_context(zip_t **zip_context,char *szFn, void **buf, size_t *bufsize)
+bool unzip_exists_context(zip_t **zip_context, char *szFn)
 {
 	bool retval = false;
 
@@ -1153,7 +1150,6 @@ static bool unzip_exists_context(zip_t **zip_context,char *szFn, void **buf, siz
 
 	return retval;
 }
-#endif
 
 // unzip a single file from a zip
 bool unzip(char *szZipFn, char *szFn, void **buf, size_t *bufsize)

@@ -976,6 +976,71 @@ void make_sha1_database(bool snes)
 	return;
 }
 
+static void tp_validate()
+{
+	bNoPopups = true;
+	bDontInitMedia = true;
+
+	char szZipTitles[MAX_PATH];
+	char szZipPreviews[MAX_PATH];
+	char szTmp[MAX_PATH];
+
+	char *szPreviewsPath = TCHARToANSI(szAppPreviewsPath, NULL, 0);
+	snprintf(szZipPreviews, sizeof(szZipPreviews), "%s%s", szPreviewsPath, "previews.zip");
+	char *szTitlesPath = TCHARToANSI(szAppTitlesPath, NULL, 0);
+	snprintf(szZipTitles, sizeof(szZipTitles), "%s%s", szTitlesPath, "titles.zip");
+
+	FILE *p_fp = fopen("tp_validate_parents.txt", "w");
+	FILE *pc_fp = fopen("tp_validate_parentsclones.txt", "w");
+
+	snprintf(szTmp, sizeof(szTmp), "\nValidating titles & previews w/ %s  &  %s\n", szZipTitles, szZipPreviews);
+	fprintf(p_fp, "%s", szTmp); // to files
+	fprintf(pc_fp, "%s", szTmp);
+	bprintf(0, _T("%S"), szTmp); // to debug console
+	bprintf(0, _T("Outputting results to: tp_validate_parents.txt  &  tp_validate_parentsclones.txt\n"));
+	fprintf(p_fp, "Mode: Parents only.\n\n"); // to files
+	fprintf(pc_fp, "Mode: Parents & Clones.\n\n");
+
+	zip_t *titles_zip = NULL;
+	zip_t *previews_zip = NULL;
+	if (unzip_open_context(&titles_zip, szZipTitles) == false) bprintf(0, _T("can't open titles.zip!\n"));
+	if (unzip_open_context(&previews_zip, szZipPreviews) == false) bprintf(0, _T("can't open previews.zip!\n"));
+
+	for (int i = 0; i < nBurnDrvCount; i++)
+		for (int isPreview = 0; isPreview < 2; isPreview++)
+		{
+			nBurnDrvActive = i; // set game.
+
+			char szImageName[MAX_PATH];
+			char szCloneOf[MAX_PATH] = { '\0', };
+
+			if (BurnDrvGetFlags() & BDF_BOARDROM) {
+				continue; // ignore bios / boardrom
+			}
+			bool bClone = false;
+			if (BurnDrvGetFlags() & BDF_CLONE) {
+				bClone = true;
+
+				snprintf(szCloneOf, sizeof(szCloneOf), " - Clone of %s", BurnDrvGetTextA(DRV_PARENT));
+			}
+
+			snprintf(szImageName, sizeof(szImageName), isPreview ? "previews/%s.png" : "titles/%s.png", BurnDrvGetTextA(DRV_NAME));
+
+			if (unzip_exists_context(isPreview ? &previews_zip : &titles_zip, szImageName) == false) {
+				snprintf(szTmp, sizeof(szTmp), "missing %s: %s\t%s\n", isPreview ? "preview.zip" : " titles.zip", szImageName, szCloneOf);
+				if (bClone == false) fprintf(p_fp, "%s", szTmp); // to files
+				fprintf(pc_fp, "%s", szTmp);
+			}
+		}
+
+	fclose(p_fp);
+	fclose(pc_fp);
+
+	unzip_close_context(&titles_zip);
+	unzip_close_context(&previews_zip);
+	return;
+}
+
 int ProcessCmdLine()
 {
 	unsigned int i;
@@ -1015,6 +1080,11 @@ int ProcessCmdLine()
 
 		if (_tcscmp(szName, _T("-snessha1")) == 0) {
 			make_sha1_database(1);
+			return 1;
+		}
+
+		if (_tcscmp(szName, _T("-tpvalidate")) == 0) {
+			tp_validate();
 			return 1;
 		}
 

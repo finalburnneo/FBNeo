@@ -51,6 +51,7 @@ static UINT8 system_identify;
 static INT32 pce_sf2 = 0;
 static INT32 pce_sf2_bank;
 static UINT8 bram_locked = 1;
+static UINT8 bram_kludge = 0;
 static INT32 wondermomohack = 0;
 
 INT32 PceGetZipName(char** pszName, UINT32 i)
@@ -231,7 +232,7 @@ static void pce_write(UINT32 address, UINT8 data)
 	
 	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
 //		bprintf(0,_T("bram write %x:%x\n"), address & 0x7ff, data );
-		if (!bram_locked)
+		if (!bram_locked && !bram_kludge)
 		{
 			PCECDBRAM[address & 0x7FF] = data;
 		}
@@ -495,6 +496,9 @@ static INT32 CommonInit(int type)
 			h6280SetVDCPenalty(0);
 		}
 
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "tg_forevbox") == 0)
+			bram_kludge = 1;
+
 		h6280Close();
 
 		interrupt = pce_interrupt;
@@ -587,6 +591,7 @@ INT32 PCEExit()
 
 	pce_sf2 = 0;
 	wondermomohack = 0;
+	bram_kludge = 0;
 
 	return 0;
 }

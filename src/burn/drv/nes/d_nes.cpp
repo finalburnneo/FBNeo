@@ -22287,6 +22287,25 @@ struct BurnDriver BurnDrvnes_oldoaklane = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Old Oak Lane (Easy Reading Mod) (HB)
+// https://romhackplaza.org/romhacks/easy-reading-mod-for-old-oak-lane-nes/
+static struct BurnRomInfo nes_oldoaklaneermRomDesc[] = {
+	{ "Old Oak Lane (Easy Reading Mod) (2025)(grendell).nes",          393232, 0x43ab500b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_oldoaklaneerm)
+STD_ROM_FN(nes_oldoaklaneerm)
+
+struct BurnDriver BurnDrvnes_oldoaklaneerm = {
+	"nes_oldoaklaneerm", "nes_oldoaklane", NULL, NULL, "2025",
+	"Old Oak Lane (Easy Reading Mod) (HB)\0", NULL, "grendell", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_oldoaklaneermRomInfo, nes_oldoaklaneermRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Oopi's Quest (HB, v1.2.0)
 static struct BurnRomInfo nes_oopiquestRomDesc[] = {
 	{ "Oopi's Quest v1.2.0 (2022)(Kenney).nes",          40976, 0x34de6da0, BRF_ESS | BRF_PRG },
@@ -23644,6 +23663,42 @@ struct BurnDriver BurnDrvnes_saturnsmash = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_saturnsmashRomInfo, nes_saturnsmashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Save the Kuin (HB)
+static struct BurnRomInfo nes_savekuinRomDesc[] = {
+	{ "Save the Kuin (2023)(Yukahu Games).nes",          262160, 0x832e87a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_savekuin)
+STD_ROM_FN(nes_savekuin)
+
+struct BurnDriver BurnDrvnes_savekuin = {
+	"nes_savekuin", NULL, NULL, NULL, "2023",
+	"Save the Kuin (HB)\0", NULL, "Yukahu Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_savekuinRomInfo, nes_savekuinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Save the Kuin (Grass Mini Game) (HB)
+static struct BurnRomInfo nes_savekuingmgRomDesc[] = {
+	{ "Save the Kuin (Grass Mini Game) (2023)(Yukahu Games).nes",          262160, 0xeff7c5e7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_savekuingmg)
+STD_ROM_FN(nes_savekuingmg)
+
+struct BurnDriver BurnDrvnes_savekuingmg = {
+	"nes_savekuingmg", "nes_savekuin", NULL, NULL, "2023",
+	"Save the Kuin (Grass Mini Game) (HB)\0", NULL, "Yukahu Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_savekuingmgRomInfo, nes_savekuingmgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

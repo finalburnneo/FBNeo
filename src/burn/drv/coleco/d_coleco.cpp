@@ -6141,6 +6141,24 @@ struct BurnDriver BurnDrvcv_camknights = {
     272, 228, 4, 3
 };
 
+// Camelot Knights (HB, Prototype)
+static struct BurnRomInfo cv_camknightsbRomDesc[] = {
+    { "Camelot Knights (Proto) (1988-2024)(Nanochess).rom",	10197, 0x445046d6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_camknightsb, cv_camknightsb, cv_coleco)
+STD_ROM_FN(cv_camknightsb)
+
+struct BurnDriver BurnDrvcv_camknightsb = {
+    "cv_camknightsb", "cv_camknights", "cv_coleco", NULL, "1988-2024",
+    "Camelot Knights (HB, Prototype)\0", NULL, "Nanochess", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+    CVGetZipName, cv_camknightsbRomInfo, cv_camknightsbRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Canadian Minigames (HB)
 static struct BurnRomInfo cv_canaminiRomDesc[] = {
     { "Canadian Minigames (2008)(Wick-Foster-Bienvenu).rom",	0x8000, 0x99f3cbc9, BRF_PRG | BRF_ESS },
@@ -8805,9 +8823,9 @@ struct BurnDriver BurnDrvcv_magtree = {
     272, 228, 4, 3
 };
 
-// Magical Tree (Prototype) (HB)
+// Magical Tree (HB, Prototype)
 static struct BurnRomInfo cv_magtreepRomDesc[] = {
-    { "Magical Tree (1984-2004)(Opcode Games).rom",	32768, 0x9f53f9cc, BRF_PRG | BRF_ESS },
+    { "Magical Tree (Proto) (1984-2004)(Opcode Games).rom",	32768, 0x9f53f9cc, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_magtreep, cv_magtreep, cv_coleco)
@@ -8815,7 +8833,7 @@ STD_ROM_FN(cv_magtreep)
 
 struct BurnDriver BurnDrvcv_magtreep = {
     "cv_magtreep", "cv_magtree", "cv_coleco", NULL, "1984-2004",
-    "Magical Tree (Prototype) (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    "Magical Tree (HB, Prototype)\0", "Published by Opcode Games", "Konami", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
     CVGetZipName, cv_magtreepRomInfo, cv_magtreepRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -11260,6 +11278,42 @@ struct BurnDriver BurnDrvcv_starjump = {
     272, 228, 4, 3
 };
 
+// Star Ocean - The Missed Hope (HB)
+static struct BurnRomInfo cv_staroceanRomDesc[] = {
+    { "Star Ocean - The Missed Hope (2015)(Kiwi).rom",	31869, 0x08e7df91, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_starocean, cv_starocean, cv_coleco)
+STD_ROM_FN(cv_starocean)
+
+struct BurnDriver BurnDrvcv_starocean = {
+    "cv_starocean", NULL, "cv_coleco", NULL, "2015",
+    "Star Ocean - The Missed Hope (HB)\0", NULL, "Kiwi", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+    CVGetZipName, cv_staroceanRomInfo, cv_staroceanRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Star Ocean - The Missed Hope (HB, Alt)
+static struct BurnRomInfo cv_staroceanaRomDesc[] = {
+    { "Star Ocean - The Missed Hope (Alt)(2015)(Kiwi).rom",	31873, 0xd3f3d2a1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_staroceana, cv_staroceana, cv_coleco)
+STD_ROM_FN(cv_staroceana)
+
+struct BurnDriver BurnDrvcv_staroceana = {
+    "cv_staroceana", "cv_starocean", "cv_coleco", NULL, "2015",
+    "Star Ocean - The Missed Hope (HB, Alt)\0", NULL, "Kiwi", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+    CVGetZipName, cv_staroceanaRomInfo, cv_staroceanaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Starship Defence Force (HB)
 static struct BurnRomInfo cv_starshipdfRomDesc[] = {
     { "Starship Defence Force (2015)(CollectorVision).rom",	0x08000, 0x160dda58, BRF_PRG | BRF_ESS },
@@ -11698,6 +11752,42 @@ struct BurnDriver BurnDrvcv_terrattak = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
     CVGetZipName, cv_terrattakRomInfo, cv_terrattakRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Text Adventure - Part 1 (HB)
+static struct BurnRomInfo cv_textadv1RomDesc[] = {
+    { "Text Adventure - Part 1 (2015)(Kiwi).rom",	32724, 0x17d6ab67, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_textadv1, cv_textadv1, cv_coleco)
+STD_ROM_FN(cv_textadv1)
+
+struct BurnDriver BurnDrvcv_textadv1 = {
+    "cv_textadv1", NULL, "cv_coleco", NULL, "2015",
+    "Text Adventure - Part 1 (HB)\0", NULL, "Kiwi", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+    CVGetZipName, cv_textadv1RomInfo, cv_textadv1RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Text Adventure - Part 1 (Cheat to Ending) (HB)
+static struct BurnRomInfo cv_textadv1ceRomDesc[] = {
+    { "Text Adventure - Part 1 (Cheat to Ending) (2015)(Kiwi).rom",	32618, 0x7f20b2a1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_textadv1ce, cv_textadv1ce, cv_coleco)
+STD_ROM_FN(cv_textadv1ce)
+
+struct BurnDriver BurnDrvcv_textadv1ce = {
+    "cv_textadv1ce", "cv_textadv1", "cv_coleco", NULL, "2015",
+    "Text Adventure - Part 1 (Cheat to Ending) (HB)\0", NULL, "Kiwi", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+    CVGetZipName, cv_textadv1ceRomInfo, cv_textadv1ceRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

@@ -500,8 +500,10 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0x45b1869a) ? APU_HACKERY : 0; // rgbleek
-	NESMode |= (ROMCRC == 0xa94b4cbb) ? APU_HACKERY : 0; // famidash
-	NESMode |= (ROMCRC == 0x6a90da54) ? APU_HACKERY : 0; // famidashb
+	NESMode |= (ROMCRC == 0x5bf705b3) ? APU_HACKERY : 0; // famidash
+	NESMode |= (ROMCRC == 0x9baf3585) ? APU_HACKERY : 0; // famidashb
+	NESMode |= (ROMCRC == 0x7556930c) ? APU_HACKERY : 0; // famidashc
+	NESMode |= (ROMCRC == 0x9fc1c56f) ? APU_HACKERY : 0; // famidashd
 	NESMode |= (ROMCRC == 0xc00c4ea5) ? APU_HACKERY : 0; // Sam's Journey
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x2d826113) ? ALT_MMC3 : 0; // cybercoaster

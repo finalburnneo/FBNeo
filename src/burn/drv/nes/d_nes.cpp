@@ -16081,6 +16081,24 @@ struct BurnDriver BurnDrvnes_cerealcafe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Chew Chew Mimic (HB)
+static struct BurnRomInfo nes_chewchewmRomDesc[] = {
+	{ "Chew Chew Mimic (2025)(Lowtek Games, Rigg'd Games).nes",          262160, 0x8f8e5d67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chewchewm)
+STD_ROM_FN(nes_chewchewm)
+
+struct BurnDriver BurnDrvnes_chewchewm = {
+	"nes_chewchewm", NULL, NULL, NULL, "2025",
+	"Chew Chew Mimic (HB)\0", NULL, "Lowtek Games, Rigg'd Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_STRATEGY, 0,
+	NESGetZipName, nes_chewchewmRomInfo, nes_chewchewmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Changeable Guardian ESTIQUE (USA)
 static struct BurnRomInfo nes_estiqueRomDesc[] = {
 	{ "Changeable Guardian ESTIQUE (USA)(2023)(Cat Hui Trading).nes",          524304, 0x6944469b, BRF_ESS | BRF_PRG },

@@ -50193,10 +50193,10 @@ struct BurnDriver BurnSpecMouselife = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Mouse Life 2, A: Escape from Science Lab (128K) (HB)
+// Mouse Life 2, A: Escape from Science Lab (128K) (HB, v1.2)
 
 static struct BurnRomInfo SpecMouselife2RomDesc[] = {
-	{ "Mouse Life 2, A - Escape from Science Lab 128K (2026)(BAD BITS).tap", 43402, 0xe2bfd806, BRF_ESS | BRF_PRG },
+	{ "Mouse Life 2, A - Escape from Science Lab v1.2 128K (2026)(BAD BITS).tap", 43483, 0x968a5570, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMouselife2, SpecMouselife2, Spec128)
@@ -50204,7 +50204,7 @@ STD_ROM_FN(SpecMouselife2)
 
 struct BurnDriver BurnSpecMouselife2 = {
 	"spec_mouselife2", NULL, "spec_spec128", NULL, "2026",
-	"Mouse Life 2, A: Escape from Science Lab (128K) (HB)\0", NULL, "BAD BITS", "ZX Spectrum",
+	"Mouse Life 2, A: Escape from Science Lab (128K) (HB, v1.2)\0", NULL, "BAD BITS", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecMouselife2RomInfo, SpecMouselife2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,

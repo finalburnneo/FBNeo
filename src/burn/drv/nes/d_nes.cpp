@@ -17830,17 +17830,17 @@ struct BurnDriver BurnDrvnes_fallingtiles = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Famidash (HB, 1.2.1 release)
+// Famidash (HB, 1.2.8 release)
 static struct BurnRomInfo nes_famidashRomDesc[] = {
-	{ "Famidash v1.2.1 (2024)(TFDSoft).nes",          786448, 0xa94b4cbb, BRF_ESS | BRF_PRG },
+	{ "Famidash v1.2.8 (2024-26)(TFDSoft).nes",          786448, 0x5bf705b3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_famidash)
 STD_ROM_FN(nes_famidash)
 
 struct BurnDriver BurnDrvnes_famidash = {
-	"nes_famidash", NULL, NULL, NULL, "2024",
-	"Famidash (HB, v1.2.1)\0", NULL, "TFDSoft", "NES / Famicom",
+	"nes_famidash", NULL, NULL, NULL, "2024-26",
+	"Famidash (HB, v1.2.8)\0", NULL, "TFDSoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_famidashRomInfo, nes_famidashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -17848,20 +17848,56 @@ struct BurnDriver BurnDrvnes_famidash = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Famidash - Side B (HB, 1.2.1 release)
+// Famidash - Side B (HB, 1.2.8 release)
 static struct BurnRomInfo nes_famidashbRomDesc[] = {
-	{ "Famidash - Side B v1.2.1 (2024)(TFDSoft).nes", 786448, 0x6a90da54, BRF_ESS | BRF_PRG },
+	{ "Famidash - Side B v1.2.8 (2024-26)(TFDSoft).nes", 786448, 0x9baf3585, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_famidashb)
 STD_ROM_FN(nes_famidashb)
 
 struct BurnDriver BurnDrvnes_famidashb = {
-	"nes_famidashb", "nes_famidash", NULL, NULL, "2024",
-	"Famidash - Side B (HB, v1.2.1)\0", NULL, "TFDSoft", "NES / Famicom",
+	"nes_famidashb", "nes_famidash", NULL, NULL, "2024-26",
+	"Famidash - Side B (HB, v1.2.8)\0", NULL, "TFDSoft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_famidashbRomInfo, nes_famidashbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Famidash - Side C (HB, 1.2.8 release)
+static struct BurnRomInfo nes_famidashcRomDesc[] = {
+	{ "Famidash - Side C v1.2.8 (2024-26)(TFDSoft).nes", 786448, 0x7556930c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_famidashc)
+STD_ROM_FN(nes_famidashc)
+
+struct BurnDriver BurnDrvnes_famidashc = {
+	"nes_famidashc", "nes_famidash", NULL, NULL, "2024-26",
+	"Famidash - Side C (HB, v1.2.8)\0", NULL, "TFDSoft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_famidashcRomInfo, nes_famidashcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Famidash - Side D (HB, 1.2.8 release)
+static struct BurnRomInfo nes_famidashdRomDesc[] = {
+	{ "Famidash - Side D v1.2.8 (2024-26)(TFDSoft).nes", 786448, 0x9fc1c56f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_famidashd)
+STD_ROM_FN(nes_famidashd)
+
+struct BurnDriver BurnDrvnes_famidashd = {
+	"nes_famidashd", "nes_famidash", NULL, NULL, "2024-26",
+	"Famidash - Side D (HB, v1.2.8)\0", NULL, "TFDSoft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_famidashdRomInfo, nes_famidashdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

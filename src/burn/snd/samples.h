@@ -29,10 +29,11 @@ void BurnSampleChannelStop(INT32 channel);
 INT32 BurnSampleGetChannelStatus(INT32 channel);
 INT32 BurnSampleChannelGetPosition(INT32 channel);
 void BurnSampleChannelSetPosition(INT32 channel, UINT32 position);
-INT32 BurnSampleGetChannelSample(); // which sample is playing in this channel?
+INT32 BurnSampleGetChannelSample(INT32 channel); // which sample is playing in this channel?
 
 // how fast is playback for this sample? (0-400%)
 void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate); 
+void BurnSampleChannelSetPlaybackRate(INT32 channel, INT32 rate);
 void BurnSampleReset();
 
 void BurnSampleInit(INT32 bAdd);

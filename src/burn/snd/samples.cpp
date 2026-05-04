@@ -759,6 +759,15 @@ void BurnSampleChannelSetPosition(INT32 channel, UINT32 position)
 	BurnSampleSetPosition(sample_channels[channel], position);
 }
 
+void BurnSampleChannelSetPlaybackRate(INT32 channel, INT32 rate)
+{
+#if defined FBNEO_DEBUG
+	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelSetPlaybackRate called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
+#endif
+
+	BurnSampleSetPlaybackRate(sample_channels[channel], rate);
+}
+
 void BurnSampleSetPlaybackRate(INT32 sample, INT32 rate)
 {
 #if defined FBNEO_DEBUG

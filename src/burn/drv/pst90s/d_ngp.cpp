@@ -47,7 +47,7 @@ static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo NgpInputList[] = {
-	{"Power",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
+	{"Power",		BIT_DIGITAL,	DrvJoy2 + 0,	"powerbtn"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},

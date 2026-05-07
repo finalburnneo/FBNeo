@@ -990,7 +990,7 @@ struct BurnDriver BurnDrvFutariblj = {
 };
 
 
-// Mushihime-Sama Matsuri Ver 1.5 (2011/05/23)
+// Mushihime-Sama Matsuri Ver 1.5 (2011/5/23 CAVEMATSURI VER1.5)
 
 static struct BurnRomInfo matsuri15RomDesc[] = {
 	{ "matsuri15_u4",	0x0200000, 0x6af99f0e, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1006,7 +1006,7 @@ STD_ROM_FN(matsuri15)
 
 struct BurnDriver BurnDrvMatsuri15 = {
 	"matsuri15", NULL, NULL, NULL, "2011",
-	"Mushihime-Sama Matsuri Ver 1.5 (2011/05/23)\0", NULL, "Cave (AMI license)", "CA0??",
+	"Mushihime-Sama Matsuri Ver 1.5 (2011/5/23 CAVEMATSURI VER1.5)\0", NULL, "Cave (AMI license)", "CA0??",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, matsuri15RomInfo, matsuri15RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,

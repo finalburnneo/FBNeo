@@ -386,7 +386,7 @@ INT32 QuickVerifyZip(const char* noextPath, const TCHAR* pszSelArc)
 	const char* pFileName = strrchr(noextPath, '\\');
 	pFileName = pFileName ? pFileName + 1 : strrchr(noextPath, '/');
 	pFileName = pFileName ? pFileName + 1 : noextPath;
-	UINT32 nameCopyLen = min((UINT32)strlen(pFileName), 31U);
+	UINT32 nameCopyLen = min((UINT32)strlen(pFileName), 99U);
 	strncpy(noextArc, pFileName, nameCopyLen);
 	noextArc[nameCopyLen] = '\0';
 

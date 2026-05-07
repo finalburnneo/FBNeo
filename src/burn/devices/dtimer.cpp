@@ -112,3 +112,7 @@ INT32 clockscale_cycles(INT32 host_clock, INT32 cycles, INT32 clock_scaleto)
 	return (clock_scaleto) * (cycles * (1.0 / host_clock));
 }
 
+float hz_to_cycles(float period, INT32 clock)
+{
+	return clock * (1.0 / period);
+}

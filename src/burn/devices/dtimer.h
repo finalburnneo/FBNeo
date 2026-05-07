@@ -189,3 +189,4 @@ INT32 msec_to_cycles(INT32 mhz, double msec);
 INT32 usec_to_cycles(INT32 mhz, double usec);
 INT32 nsec_to_cycles(INT32 mhz, double nsec);
 INT32 clockscale_cycles(INT32 host_clock, INT32 cycles, INT32 clock_scaleto);
+float hz_to_cycles(float period, INT32 clock);

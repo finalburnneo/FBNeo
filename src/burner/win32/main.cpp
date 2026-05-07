@@ -789,6 +789,9 @@ static int AppInit()
 	// Init the Burn library
 	BurnLibInit();
 
+	// Init the ROM data system
+	RomDataInit();
+
 	// Load config for the application
 	ConfigAppLoad();
 	LookupSubDirThreads();
@@ -893,6 +896,7 @@ static int AppExit()
 	DestroySubDir();
 	MediaExit();
 	BurnLibExit();					// Exit the Burn library
+	RomDataExit();					// Exit the ROM data system
 
 	DisableHighResolutionTiming();
 
@@ -1255,45 +1259,6 @@ int ProcessCmdLine()
 			// Command: lua file
 			FBA_LoadLuaCode(TCHARToANSI(szName, NULL, 0));
 			//bVidAutoSwitchFullDisable = true;
-		} else if (_tcscmp(szName, _T("-romdata")) == 0) {	// cmdline for romdata
-			TCHAR* szPoint = NULL;
-			if (NULL != (szPoint = _tcsstr(szCmdLine, _T("-romdata")))) {
-				szPoint += _tcslen(_T("-romdata"));
-
-				while (szPoint[0] != _T('\0')) {
-					if (szPoint[0] == _T(' ')) {
-						szPoint++;
-					} else { break; }
-				}
-
-				TCHAR* szExt = _tcsstr(szCmdLine, _T(".dat"));
-				if (NULL != szExt) {
-					szExt[0] = _T('\0');
-				}
-				szExt = NULL;
-
-				TCHAR* szDatName = _tcstok(szPoint, _T("\""));
-
-				memset(szRomdataName, '\0', sizeof(szRomdataName));
-				_stprintf(szRomdataName, _T("%s%s%s"), szAppRomdataPath, szDatName, _T(".dat"));
-
-				szDatName = NULL;
-				szPoint = NULL;
-
-				char* szDrvName = RomdataGetDrvName();
-				INT32 nGame = BurnDrvGetIndex(szDrvName);
-
-				if ((NULL == szDrvName) || (-1 == nGame)) {
-					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
-					FBAPopupDisplay(PUF_TYPE_WARNING);
-
-					return 1;
-				}
-
-				if (DrvInit(nGame, true)) {	// failed (bad romset, etc.)
-					nVidFullscreen = 0;		// Don't get stuck in fullscreen mode
-				}
-			}
 		} else {
 			bQuietLoading = true;
 			bDoIpsPatch   = false;

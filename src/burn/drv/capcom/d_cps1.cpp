@@ -17607,7 +17607,7 @@ static char* szGameName = NULL;
 
 static void SetGameConfig()
 {
-	const char* GameName = (NULL != szGameName) ? szGameName : (((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) ? pRDI->szDrvName : BurnDrvGetTextA(DRV_NAME));
+	const char* GameName = szGameName ? szGameName : (IsRomDataDrv() ? RomDataDrvGetDrvName() : BurnDrvGetTextA(DRV_NAME));
 	const struct GameConfig *k = &ConfigTable[0];
 
 	while (k->DriverName) {
@@ -18028,7 +18028,8 @@ static INT32 DrvExit()
 	
 	Cps1GfxLoadCallbackFunction = NULL;
 
-	if (NULL != szGameName) szGameName = NULL;
+	if (szGameName)
+		szGameName = NULL;
 	
 	BurnFree(CpsBootlegSpriteRam);
 	CpsBootlegSpriteRam = NULL;

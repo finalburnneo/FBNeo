@@ -564,6 +564,10 @@ static int GameInfoInit()
 		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
+	if (BurnDrvGetFlags() & BDF_ROMDATA_DRIVER) {
+		_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""),FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
+		bUseInfo = true;
+	}
 	TCHAR szPlayersMax[100];
 	_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
 	_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
@@ -1289,7 +1293,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (TabPage == 13) SetPreview(szAppFlyersPath, "flyers", IMG_ASPECT_PRESERVE);
 			if (TabPage == 14) SetPreview(szAppCabinetsPath, "cabinets", IMG_ASPECT_PRESERVE);
 			if (TabPage == 15) SetPreview(szAppMarqueesPath, "marquees", IMG_ASPECT_PRESERVE);
-			if (TabPage == 16) SetPreview(szAppControlsPath, "controls", IMG_ASPECT_PRESERVE);
+			if (TabPage == 16) SetPreview(szAppControlsPath, "cpanel", IMG_ASPECT_PRESERVE);
 			if (TabPage == 17) SetPreview(szAppPCBsPath, "pcbs", IMG_ASPECT_PRESERVE);
 
 			return FALSE;

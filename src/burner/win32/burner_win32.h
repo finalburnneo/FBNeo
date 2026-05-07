@@ -292,11 +292,10 @@ void ScrnInitLua();
 void ScrnExitLua();
 char* DecorateKailleraGameName(UINT32 nBurnDrv);
 INT32 CreateAllDatfilesWindows(bool bSilent = false, const TCHAR* pszSpecDir = NULL);
-INT32 RomDataLoadDriver(const TCHAR* pszSelDat);
 INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect);
 
 // bzip.cpp
-INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc);
+INT32 QuickVerifyZip(const char* noextPath, const TCHAR* pszSelArc);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -398,18 +397,14 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
 // romdata.cpp
 extern bool bRDListScanSub;
-TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
-INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName);
-TCHAR* RomdataGetZipName(const TCHAR* pszFileName);
-TCHAR* RomdataGetDrvName(const TCHAR* pszFileName);
-TCHAR* RomdataGetFullName(const TCHAR* pszFileName);
-bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat);
-INT32 RomDataManagerInit();
-bool RomDataSetQuickPath(const TCHAR* pszSelDat);
-INT32 RomDataCheck(const TCHAR* pszDatFile);
-void RomDataStateBackup();
-void RomDataStateRestore();
-bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
+
+INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt = NULL);
+INT32 OpenDirectoryLoadRomData(HWND hWnd);
+void  TraverseDirectoryFiles(const TCHAR* dirPath, void (*pFoundCallBack)(const TCHAR*), bool scanSubdirs = bRDListScanSub);
+bool  RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
+
+INT32 tchar_to_ansi(const TCHAR* src, char** dst);
+INT32 ansi_to_tchar(const char* src, TCHAR** dst);
 
 // cona.cpp
 struct SubDirInfo {

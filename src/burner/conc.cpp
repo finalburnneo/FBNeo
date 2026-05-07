@@ -102,102 +102,96 @@ static void CheatLinkNewNode(TCHAR *szDerp)
 	_tcsncpy (pCurrentCheat->szCheatName, szDerp, QUOTE_MAX);
 }
 
-static INT32 ConfigParseFile(TCHAR* pszFilename)
+//=========================================================================
+// Forward declaration for safe recursive calls
+//=========================================================================
+static INT32 ConfigParseFile(TCHAR* pszFilename);
+
+struct ConfigParseContext {
+	INT32  result;		// 0 = success, 1 = error
+	TCHAR* filename;	// Target cheat file path
+	INT32  is_wayder;	// Flag for wayder cheat set
+};
+
+//=========================================================================
+// Callback: Main config file parsing logic
+//=========================================================================
+static void ConfigParseFileCallback(const TCHAR* inputFile, FILE* h, void* userData)
 {
 #define INSIDE_NOTHING (0xFFFF & (1 << ((sizeof(TCHAR) * 8) - 1)))
 
+	ConfigParseContext* ctx = (ConfigParseContext*)userData;
+	ctx->result = 1;	// Default to error
+
+	// Fail if file handle is invalid
+	if (!h)
+		return;
+
 	TCHAR szLine[8192];
-	TCHAR* s;
-	TCHAR* t;
+	TCHAR* s, * t;
 	INT32 nLen;
 	bool bFirst = true;
 
 	INT32 nLine = 0;
 	TCHAR nInside = INSIDE_NOTHING;
 
-	TCHAR* pszReadMode = AdaptiveEncodingReads(pszFilename);
-	if (NULL == pszReadMode) pszReadMode = _T("rt");
+	// Get display name from file path
+	TCHAR* pszFileHeading = getFilenameFromPath(ctx->filename);
 
-	FILE* h = _tfopen(pszFilename, pszReadMode);
-	TCHAR* pszFileHeading = getFilenameFromPath(pszFilename);
-	if (h == NULL) {
-		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			TCHAR szAlternative[MAX_PATH] = { 0 };
-			_stprintf(szAlternative, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
-
-			pszReadMode = AdaptiveEncodingReads(szAlternative);
-			if (NULL == pszReadMode) pszReadMode = _T("rt");
-
-			if (NULL == (h = _tfopen(szAlternative, pszReadMode)))
-				return 1;
-			pszFileHeading = getFilenameFromPath(szAlternative);
-		} else {
-			return 1;	// Parent driver
-		}
-	}
-
-	while (1) {
-		if (_fgetts(szLine, 8192, h) == NULL) {
-			break;
-		}
-
+	// Read each line of the file
+	while (_fgetts(szLine, 8192, h)) {
 		nLine++;
-
 		nLen = _tcslen(szLine);
 
-		// Get rid of the linefeed at the end
-		while ((nLen > 0) && (szLine[nLen - 1] == 0x0A || szLine[nLen - 1] == 0x0D)) {
-			szLine[nLen - 1] = 0;
-			nLen--;
+		// Strip line breaks (CR/LF)
+		while (nLen > 0 && (szLine[nLen - 1] == _T('\n') || szLine[nLen - 1] == _T('\r'))) {
+			szLine[--nLen] = 0;
 		}
 
-		s = szLine;													// Start parsing
+		s = szLine;
 
-		if (s[0] == _T('/') && s[1] == _T('/')) {					// Comment
+		// Skip comment lines (// ...)
+		if (s[0] == _T('/') && s[1] == _T('/'))
 			continue;
-		}
 
-		if ((t = LabelCheck(s, _T("include"))) != 0) {				// Include a file
+		// Parse [include] directive - recursively load another file
+		if ((t = LabelCheck(s, _T("include"))) != NULL) {
 			s = t;
-
-			TCHAR szFilename[MAX_PATH] = _T("");
-
-			// Read name of the cheat file
+			TCHAR szFilename[MAX_PATH] = { 0 };
 			TCHAR* szQuote = NULL;
 			QuoteRead(&szQuote, NULL, s);
 
+			// Try .dat first
 			_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, szQuote);
-
 			if (ConfigParseFile(szFilename)) {
+				// If failed, try .ini
 				_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, szQuote);
 				if (ConfigParseFile(szFilename)) {
-					CheatError(pszFilename, nLine, NULL, _T("included file doesn't exist"), szLine);
+					CheatError(ctx->filename, nLine, NULL, _T("included file doesn't exist"), szLine);
 				}
 			}
-
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("cheat"))) != 0) {				// Add new cheat
+		// Parse [cheat] entry start
+		if ((t = LabelCheck(s, _T("cheat"))) != 0) {
 			s = t;
-
-			// Read cheat name
 			TCHAR* szQuote = NULL;
 			TCHAR* szEnd = NULL;
-
 			QuoteRead(&szQuote, &szEnd, s);
-
 			s = szEnd;
 
-			if ((t = LabelCheck(s, _T("advanced"))) != 0) {			// Advanced cheat
+			// Check for advanced modifier
+			if ((t = LabelCheck(s, _T("advanced"))) != 0)
 				s = t;
-			}
 
 			SKIP_WS(s);
 
+			// Missing closing bracket from previous cheat
 			if (nInside == _T('{')) {
-				CheatError(pszFilename, nLine, pCurrentCheat, _T("missing closing bracket"), NULL);
-				break;
+				CheatError(ctx->filename, nLine, pCurrentCheat, _T("missing closing bracket"), NULL);
+				ctx->result = 1;
+				return;
 			}
 #if 0
 			if (*s != _T('\0') && *s != _T('{')) {
@@ -207,6 +201,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 #endif
 			nInside = *s;
 
+			// Create cheat list header once
 #ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
@@ -215,68 +210,64 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 				bFirst = false;
 			}
 #endif
-
+			// Create new cheat node
 			CheatLinkNewNode(szQuote);
-
 			continue;
 		}
 
+		// Set cheat source filename (LibRetro)
 #ifdef __LIBRETRO__
-		_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+		_tcsncpy(pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
 #endif
 
-		if ((t = LabelCheck(s, _T("type"))) != 0) {					// Cheat type
+		// Parse cheat [type]
+		if ((t = LabelCheck(s, _T("type"))) != 0) {
 			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
-				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue cheat type"), szLine);
-				break;
+				CheatError(ctx->filename, nLine, pCurrentCheat, _T("rogue cheat type"), szLine);
+				ctx->result = 1;
+				return;
 			}
 			s = t;
-
-			// Set type
 			pCurrentCheat->nType = _tcstol(s, NULL, 0);
-
 			continue;
 		}
 
-		if ((t = LabelCheck(s, _T("default"))) != 0) {				// Default option
+		// Parse cheat [default] selection
+		if ((t = LabelCheck(s, _T("default"))) != 0) {
 			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
-				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue default"), szLine);
-				break;
+				CheatError(ctx->filename, nLine, pCurrentCheat, _T("rogue default"), szLine);
+				ctx->result = 1;
+				return;
 			}
 			s = t;
-
-			// Set default option
 			pCurrentCheat->nDefault = _tcstol(s, NULL, 0);
-
 			continue;
 		}
 
+		// Parse cheat option (numeric index followed by name)
 		INT32 n = _tcstol(s, &t, 0);
-		if (t != s) {				   								// New option
-
+		if (t != s) {
 			if (nInside == INSIDE_NOTHING || pCurrentCheat == NULL) {
-				CheatError(pszFilename, nLine, pCurrentCheat, _T("rogue option"), szLine);
-				break;
+				CheatError(ctx->filename, nLine, pCurrentCheat, _T("rogue option"), szLine);
+				ctx->result = 1;
+				return;
 			}
 
-			// Link a new Option structure to the cheat
 			if (n < CHEAT_MAX_OPTIONS) {
 				s = t;
-
-				// Read option name
 				TCHAR* szQuote = NULL;
 				TCHAR* szEnd = NULL;
 				if (QuoteRead(&szQuote, &szEnd, s)) {
-					CheatError(pszFilename, nLine, pCurrentCheat, _T("option name omitted"), szLine);
-					break;
+					CheatError(ctx->filename, nLine, pCurrentCheat, _T("option name omitted"), szLine);
+					ctx->result = 1;
+					return;
 				}
 				s = szEnd;
 
-				if (pCurrentCheat->pOption[n] == NULL) {
+				// Allocate new option if needed
+				if (pCurrentCheat->pOption[n] == NULL)
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
-				}
 				memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));
-
 				memcpy(pCurrentCheat->pOption[n]->szOptionName, szQuote, QUOTE_MAX * sizeof(TCHAR));
 
 				INT32 nCurrentAddress = 0;
@@ -285,6 +276,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 					INT32 nCPU = 0, nAddress = 0, nValue = 0;
 
 					if (SkipComma(&s)) {
+						// Game Genie code parsing
 						if (HW_GGENIE) {
 							t = s;
 							INT32 newlen = 0;
@@ -294,135 +286,127 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 							for (INT32 z = 0; z < strlen(t); z++) {
 #endif
 								char c = toupper((char)*s);
-								if ( ((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (c == '-' || c == ':')) && newlen < 10)
+								if (((c >= _T('A') && c <= _T('Z')) || (c >= _T('0') && c <= _T('9') || c == _T('-') || c == _T(':'))) && newlen < 10)
 									pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode[newlen++] = c;
 								s++;
 								if (*s == _T(',')) break;
 							}
-							nAddress = 0xffff; // nAddress not used, but needs to be nonzero (NES/Game Genie)
+							nAddress = 0xFFFF;
 						} else {
-							nCPU = _tcstol(s, &t, 0);		// CPU number
-							if (t == s) {
-								CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU number omitted"), szLine);
-								bOK = false;
-								break;
-							}
+							// Read CPU, address, value
+							nCPU = _tcstol(s, &t, 0);
+							if (t == s) { bOK = false; break; }
 							s = t;
 
 							SkipComma(&s);
-							nAddress = _tcstol(s, &t, 0);	// Address
-							if (t == s) {
-								bOK = false;
-								CheatError(pszFilename, nLine, pCurrentCheat, _T("address omitted"), szLine);
-								break;
-							}
+							nAddress = _tcstol(s, &t, 0);
+							if (t == s) { bOK = false; break; }
 							s = t;
 
 							SkipComma(&s);
-							nValue = _tcstol(s, &t, 0);		// Value
-							if (t == s) {
-								bOK = false;
-								CheatError(pszFilename, nLine, pCurrentCheat, _T("value omitted"), szLine);
-								break;
-							}
+							nValue = _tcstol(s, &t, 0);
+							if (t == s) { bOK = false; break; }
 						}
 					} else {
-						if (nCurrentAddress) {			// Only the first option is allowed no address
-							break;
-						}
-						if (n) {
-							bOK = false;
-							CheatError(pszFilename, nLine, pCurrentCheat, _T("CPU / address / value omitted"), szLine);
-							break;
-						}
+						if (nCurrentAddress) break;
+						if (n) { bOK = false; break; }
 					}
 
+					// Store parsed address info
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = nCPU;
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress;
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = nValue;
 					nCurrentAddress++;
 				}
 
-				if (!bOK) {
-					break;
-				}
-
+				if (!bOK) { ctx->result = 1; return; }
 			}
-
 			continue;
 		}
 
 		SKIP_WS(s);
+
+		// Closing bracket for cheat entry
 		if (*s == _T('}')) {
 			if (nInside != _T('{')) {
-				CheatError(pszFilename, nLine, pCurrentCheat, _T("missing opening bracket"), NULL);
-				break;
+				CheatError(ctx->filename, nLine, pCurrentCheat, _T("missing opening bracket"), NULL);
+				ctx->result = 1;
+				return;
 			}
-
 			nInside = INSIDE_NOTHING;
 		}
-
-		// Line isn't (part of) a valid cheat
-#if 0
-		if (*s) {
-			CheatError(pszFilename, nLine, NULL, _T("rogue line"), szLine);
-			break;
-		}
-#endif
-
 	}
 
-	if (h) {
-		fclose(h);
-	}
-
-	return 0;
+	// Parsing completed successfully
+	ctx->result = 0;
 }
 
-
-//TODO: make cross platform
-static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
+//=========================================================================
+// Main API: Safe wrapper for config file parsing
+//=========================================================================
+static INT32 ConfigParseFile(TCHAR* pszFilename)
 {
-	TCHAR* pszReadMode = AdaptiveEncodingReads(pszFilename);
-	if (NULL == pszReadMode) pszReadMode = _T("rt");
+	ConfigParseContext ctx = { 0 };
+	ctx.filename = pszFilename;
 
-	FILE *fp = _tfopen(pszFilename, pszReadMode);
-	TCHAR* pszFileHeading = getFilenameFromPath(pszFilename);
-	if (fp == NULL) {
-		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			TCHAR szAlternative[MAX_PATH] = { 0 };
-			_stprintf(szAlternative, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
+	// Safe auto open/process/close
+	SafeProcessTextFile(pszFilename, ConfigParseFileCallback, &ctx);
+	if (ctx.result == 0)
+		return 0;
 
-			pszReadMode = AdaptiveEncodingReads(szAlternative);
-			if (NULL == pszReadMode) pszReadMode = _T("rt");
+	// Fallback: try parent driver file if this is a clone
+	if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
+		TCHAR szAlternative[MAX_PATH] = { 0 };
+		_stprintf(szAlternative, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
 
-			if (NULL == (fp = _tfopen(szAlternative, pszReadMode)))
-				return 1;
-			pszFileHeading = getFilenameFromPath(szAlternative);
-		} else {
-			return 1;	// Parent driver
-		}
+		ctx.result = 1;
+		ctx.filename = szAlternative;
+
+		SafeProcessTextFile(szAlternative, ConfigParseFileCallback, &ctx);
+		return ctx.result;
 	}
 
-	INT32 nLen;
-	INT32 i, j, n = 0;
+	return 1;
+}
+
+//=========================================================================
+// Forward Declaration for safe recursion
+//=========================================================================
+static INT32 ConfigParseNebulaFile(TCHAR* pszFilename);
+
+//=========================================================================
+// Callback: Nebula cheat file parsing logic
+//=========================================================================
+static void ConfigParseNebulaFileCallback(const TCHAR* inputFile, FILE* fp, void* userData)
+{
+	ConfigParseContext* ctx = (ConfigParseContext*)userData;
+	ctx->result = 1;	// Default to error state
+	
+	// Exit if file handle is invalid
+	if (!fp)
+		return;
+
+	INT32 nLen, i, j, n = 0;
 	TCHAR tmp[32];
 	TCHAR szLine[1024];
 	bool bFirst = true;
 
-	while (1)
-	{
-		if (_fgetts(szLine, 1024, fp) == NULL)
-			break;
+	// Extract the filename for the header display
+	TCHAR* pszFileHeading = getFilenameFromPath(ctx->filename);
 
+	// Read file line by line
+	while (_fgetts(szLine, 1024, fp)) {
 		nLen = _tcslen(szLine);
 
-		if (nLen < 3 || szLine[0] == '[') continue;
+		// Skip short lines and section headers [..]
+		if (nLen < 3 || szLine[0] == _T('['))
+			continue;
 
-		if (!_tcsncmp (_T("Name="), szLine, 5))
-		{
-			n = 0;
+		// Parse cheat name (starts with "Name=")
+		if (!_tcsncmp(_T("Name="), szLine, 5)) {
+			n = 0; // Reset option index
 
+			// Add header node for the cheat list
 #ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
@@ -431,92 +415,120 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 				bFirst = false;
 			}
 #endif
-
+			// Create new cheat entry
 			CheatLinkNewNode(szLine + 5);
-
-			pCurrentCheat->szCheatName[nLen-6] = '\0';
-
+			pCurrentCheat->szCheatName[nLen - 6] = _T('\0');
 			continue;
 		}
 
+		// Set filename for LibRetro context
 #ifdef __LIBRETRO__
-		_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+		_tcsncpy(pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
 #endif
 
-		if (!_tcsncmp (_T("Default="), szLine, 8) && n >= 0)
-		{
-			_tcsncpy (tmp, szLine + 8, nLen-9);
-			tmp[nLen-9] = '\0';
+		// Parse default selection index
+		if (!_tcsncmp(_T("Default="), szLine, 8) && n >= 0) {
+			_tcsncpy(tmp, szLine + 8, nLen - 9);
+			tmp[nLen - 9] = _T('\0');
 #if defined(BUILD_WIN32)
-			_stscanf (tmp, _T("%d"), &(pCurrentCheat->nDefault));
+			_stscanf(tmp, _T("%d"), &(pCurrentCheat->nDefault));
 #else
-			sscanf (tmp, _T("%d"), &(pCurrentCheat->nDefault));
+			sscanf(  tmp, _T("%d"), &(pCurrentCheat->nDefault));
 #endif
 			continue;
 		}
 
-
+		// Parse cheat option name
 		i = 0, j = 0;
-		while (i < nLen)
-		{
-			if (szLine[i] == '=' && i < 4) j = i+1;
-			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
-			{
+		while (i < nLen) {
+			if (szLine[i] == _T('=') && i < 4) j = i + 1;
+			if (szLine[i] == _T(',') || szLine[i] == _T('\r') || szLine[i] == _T('\n')) {
+				// Allocate memory for a new option if needed
 				if (pCurrentCheat->pOption[n] == NULL) {
 					pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));
 				}
 				memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));
 
-				_tcsncpy (pCurrentCheat->pOption[n]->szOptionName, szLine + j, QUOTE_MAX * sizeof(TCHAR));
-				pCurrentCheat->pOption[n]->szOptionName[i-j] = '\0';
+				// Copy the option name
+				_tcsncpy(pCurrentCheat->pOption[n]->szOptionName, szLine + j, QUOTE_MAX * sizeof(TCHAR));
+				pCurrentCheat->pOption[n]->szOptionName[i - j] = _T('\0');
 
-				i++; j = i;
+				i++;
+				j = i;
 				break;
 			}
 			i++;
 		}
 
+		// Parse hex address and value pairs
 		INT32 nAddress = -1, nValue = 0, nCurrentAddress = 0;
-		while (nCurrentAddress < CHEAT_MAX_ADDRESS)
-		{
+		while (nCurrentAddress < CHEAT_MAX_ADDRESS) {
 			if (i == nLen) break;
 
-			if (szLine[i] == ',' || szLine[i] == '\r' || szLine[i] == '\n')
-			{
-				_tcsncpy (tmp, szLine + j, i-j);
-				tmp[i-j] = '\0';
+			if (szLine[i] == _T(',') || szLine[i] == _T('\r') || szLine[i] == _T('\n')) {
+				_tcsncpy(tmp, szLine + j, i - j);
+				tmp[i - j] = _T('\0');
 
+				// First value is Address, second is Value
 				if (nAddress == -1) {
 #if defined(BUILD_WIN32)
-					_stscanf (tmp, _T("%x"), &nAddress);
+					_stscanf(tmp, _T("%x"), &nAddress);
 #else
-					sscanf (tmp, _T("%x"), &nAddress);
+					sscanf(  tmp, _T("%x"), &nAddress);
 #endif
 				} else {
 #if defined(BUILD_WIN32)
-					_stscanf (tmp, _T("%x"), &nValue);
+					_stscanf(tmp, _T("%x"), &nValue);
 #else
-					sscanf (tmp, _T("%x"), &nValue);
+					sscanf(  tmp, _T("%x"), &nValue);
 #endif
-
-					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0; 	// Always
+					// Set cheat data (CPU 0, address XOR 1 for Nebula format)
+					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = 0;
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = nAddress ^ 1;
 					pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = nValue;
 					nCurrentAddress++;
 
+					// Reset for next pair
 					nAddress = -1;
-					nValue = 0;
+					nValue   = 0;
 				}
-				j = i+1;
+				j = i + 1;
 			}
 			i++;
 		}
-		n++;
+		n++; // Move to next option index
 	}
 
-	fclose (fp);
+	// Parsing completed successfully
+	ctx->result = 0;
+}
 
-	return 0;
+//=========================================================================
+// Main function: Safe wrapper for Nebula file parsing
+//=========================================================================
+static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
+{
+	ConfigParseContext ctx = { 0 };
+	ctx.filename = pszFilename;
+
+	// Safely open file, process, and clean up
+	SafeProcessTextFile(pszFilename, ConfigParseNebulaFileCallback, &ctx);
+	if (ctx.result == 0)
+		return 0;
+
+	// Fallback: Try parent driver file if current is a clone
+	if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
+		TCHAR szAlternative[MAX_PATH] = { 0 };
+		_stprintf(szAlternative, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
+
+		ctx.result   = 1;
+		ctx.filename = szAlternative;
+
+		SafeProcessTextFile(szAlternative, ConfigParseNebulaFileCallback, &ctx);
+		return ctx.result;
+	}
+
+	return 1;
 }
 
 #define IS_MIDWAY ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_MIDWAY) == HARDWARE_PREFIX_MIDWAY)
@@ -809,43 +821,75 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *pszFileHeading,
 	return 0;
 }
 
+//=========================================================================
+// Forward Declaration for safe internal calls
+//=========================================================================
+static INT32 ConfigParseMAMEFile(int is_wayder);
+
+//=========================================================================
+// Callback: MAME file processing logic (safe handle, auto clean-up)
+//=========================================================================
+static void ConfigParseMAMEFileCallback(const TCHAR* inputFile, FILE* fz, void* userData)
+{
+	ConfigParseContext* ctx = (ConfigParseContext*)userData;
+	ctx->result = 1;	// Default to error state
+
+	// Exit if file handle is invalid
+	if (!fz)
+		return;
+
+	// Extract filename for UI header display
+	TCHAR* pszFileHeading   = getFilenameFromPath(ctx->filename);
+	const TCHAR* pszDrvName = BurnDrvGetText(DRV_NAME);
+
+	// First pass: parse using current driver name
+	ctx->result = ConfigParseMAMEFile_internal(fz, pszFileHeading, pszDrvName);
+
+	// Fallback: if failed and this is a clone, retry with parent driver name
+	if (ctx->result != 0 &&
+		(BurnDrvGetFlags() & BDF_CLONE) &&
+		BurnDrvGetText(DRV_PARENT)) {
+		// Reset file pointer to start
+		fseek(fz, 0, SEEK_SET);
+		ctx->result = ConfigParseMAMEFile_internal(fz, pszFileHeading, BurnDrvGetText(DRV_PARENT));
+	}
+
+	// SafeProcessTextFile will auto-close the file, no need to call fclose() here
+}
+
+//=========================================================================
+// Main API: Safe MAME cheat file loader (cross-platform)
+//=========================================================================
 static INT32 ConfigParseMAMEFile(int is_wayder)
 {
 	TCHAR szFileName[MAX_PATH] = _T("");
 
+	// Build target cheat file path
 	if (is_wayder) {
-		if (HW_NES || HW_SNES) return 1;
+		// Skip wayder cheats for NES/SNES
+		if (HW_NES || HW_SNES)
+			return 1;
+
 		_stprintf(szFileName, _T("%swayder_cheat.dat"), szAppCheatsPath);
 	} else {
-		if (HW_NES) {
+		// Use platform-specific cheat file
+		if (HW_NES)
 			_stprintf(szFileName, _T("%scheatnes.dat"), szAppCheatsPath);
-		} else if (HW_SNES) {
+		else if (HW_SNES)
 			_stprintf(szFileName, _T("%scheatsnes.dat"), szAppCheatsPath);
-		} else {
+		else
 			_stprintf(szFileName, _T("%scheat.dat"), szAppCheatsPath);
-		}
 	}
+	
+	// Initialize context
+	ConfigParseContext ctx = { 0 };
+	ctx.filename  = szFileName;
+	ctx.is_wayder = is_wayder;
 
-	TCHAR* pszReadMode = AdaptiveEncodingReads(szFileName);
-	if (NULL == pszReadMode) pszReadMode = _T("rt");
+	// Safely open, process, and clean up the file
+	SafeProcessTextFile(szFileName, ConfigParseMAMEFileCallback, &ctx);
 
-	FILE *fz = _tfopen(szFileName, pszReadMode);
-	TCHAR* pszFileHeading = getFilenameFromPath(szFileName);
-
-	INT32 ret = 1;
-
-	if (fz) {
-		ret = ConfigParseMAMEFile_internal(fz, pszFileHeading, BurnDrvGetText(DRV_NAME));
-		// let's try using parent entry as a fallback if no cheat was found for this romset
-		if (ret && (BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			fseek(fz, 0, SEEK_SET);
-			ret = ConfigParseMAMEFile_internal(fz, pszFileHeading, BurnDrvGetText(DRV_PARENT));
-		}
-
-		fclose(fz);
-	}
-
-	return ret;
+	return ctx.result;
 }
 
 static int encodeNES(int address, int value, int compare, char *result) {
@@ -904,92 +948,84 @@ static int encodeNES(int address, int value, int compare, char *result) {
 }
 
 // VirtuaNES .vct format
-static INT32 ConfigParseVCT(TCHAR* pszFilename)
+//=========================================================================
+// Forward Declaration for safe recursion
+//=========================================================================
+static INT32 ConfigParseVCT(TCHAR* pszFilename);
+
+//=========================================================================
+// Callback: VCT cheat file parsing logic
+//=========================================================================
+static void ConfigParseVCTCallback(const TCHAR* inputFile, FILE* h, void* userData)
 {
-#define AddressInfoGameGenie() { \
-		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nTotalByte = 1;	\
-		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = 0xffff; \
-		strcpy(pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode, szGGenie); \
-		nCurrentAddress++;	\
-	}
+#define AddressInfoGameGenie() {															\
+    pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nTotalByte = 1;					\
+    pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = 0xffff;				\
+    strcpy(pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].szGenieCode, szGGenie);	\
+    nCurrentAddress++;																		\
+}
 
-#define OptionName(a)	\
-	if (pCurrentCheat->pOption[n] == NULL) {						\
-		pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));		\
-	}											\
-	memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));				\
-	_tcsncpy (pCurrentCheat->pOption[n]->szOptionName, a, QUOTE_MAX * sizeof(TCHAR));	\
+#define OptionName(a)																		\
+    if (pCurrentCheat->pOption[n] == NULL) {												\
+        pCurrentCheat->pOption[n] = (CheatOption*)malloc(sizeof(CheatOption));				\
+    }																						\
+    memset(pCurrentCheat->pOption[n], 0, sizeof(CheatOption));								\
+    _tcsncpy (pCurrentCheat->pOption[n]->szOptionName, a, QUOTE_MAX * sizeof(TCHAR));		\
 
-#define tmpcpy(a)	\
-	_tcsncpy (tmp, szLine + c0[a] + 1, c0[a+1] - (c0[a]+1));	\
-	tmp[c0[a+1] - (c0[a]+1)] = '\0';				\
+#define tmpcpy(a)																			\
+    _tcsncpy (tmp, szLine + c0[a] + 1, c0[a+1] - (c0[a]+1));								\
+    tmp[c0[a+1] - (c0[a]+1)] = '\0';														\
+
+	ConfigParseContext* ctx = (ConfigParseContext*)userData;
+	ctx->result = 1;	// Default to error state
+
+	if (!h)
+		return;
 
 	TCHAR tmp[256];
 	TCHAR szLine[1024];
-	char szGGenie[256] = { 0, };
+	char szGGenie[256] = { 0 };
 
 	INT32 nLen;
 	INT32 n = 0;
 	INT32 nCurrentAddress = 0;
-
 	bool bFirst = true;
+	TCHAR* pszFileHeading = getFilenameFromPath(ctx->filename);
 
-	TCHAR* pszReadMode = AdaptiveEncodingReads(pszFilename);
-	if (NULL == pszReadMode) pszReadMode = _T("rt");
+	// Read file line by line
+	while (_fgetts(szLine, 1024, h) != NULL) {
+		nLen = _tcslen(szLine);
 
-	FILE* h = _tfopen(pszFilename, pszReadMode);
-	TCHAR* pszFileHeading = getFilenameFromPath(pszFilename);
-	if (h == NULL) {
-		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			TCHAR szAlternative[MAX_PATH] = { 0 };
-			_stprintf(szAlternative, _T("%s%s.vct"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
+		// Skip comment lines
+		if (szLine[0] == ';')
+			continue;
 
-			pszReadMode = AdaptiveEncodingReads(szAlternative);
-			if (NULL == pszReadMode) pszReadMode = _T("rt");
-
-			if (NULL == (h = _tfopen(szAlternative, pszReadMode)))
-				return 1;
-			pszFileHeading = getFilenameFromPath(szAlternative);
-		} else {
-			return 1;	// Parent driver
-		}
-	}
-
-
-	while (1)
-	{
-		if (_fgetts(szLine, 1024, h) == NULL)
-			break;
-
-		nLen = _tcslen (szLine);
-
-		if (szLine[0] == ';') continue;
-
-		INT32 c0[16], c1 = 0, cprev = 0; // find columns / break
-		for (INT32 i = 0; i < nLen; i++)
-			if ((szLine[i] == ' ' && c1 < 2) || szLine[i] == '\t' || szLine[i] == '\r' || szLine[i] == '\n')
-			{
-				if (cprev + 1 != i) c0[c1++] = i;
+		INT32 c0[16], c1 = 0, cprev = 0;
+		for (INT32 i = 0; i < nLen; i++) {
+			if ((szLine[i] == ' ' && c1 < 2) || szLine[i] == '\t' || szLine[i] == '\r' || szLine[i] == '\n') {
+				if (cprev + 1 != i)
+					c0[c1++] = i;
 				cprev = i;
 			}
+		}
 
+		// Parse Game Genie code and description
 		tmpcpy(0);
 		strcpy(szGGenie, TCHARToANSI(tmp, NULL, 0));
 		szGGenie[255] = '\0';
 		tmpcpy(1);
 
 		if (HW_GGENIE) {
-			//szGGenie "0077-01-FF" or "0077-04-80808080"
-			char temp2[256] = { 0, };
+			char temp2[256] = { 0 };
 			UINT32 fAddr = 0;
 			UINT32 fCount = 0;
-			UINT32 fAttr = 0; // always = 0, oneshot = 1, greater = 2 (mem[addr] > bytes), less = 3 (mem[addr] < bytes)
+			UINT32 fAttr = 0;
 			UINT32 fBytes = 0;
 
 			strcpy(temp2, szGGenie);
 
-			// split up "0077-01-FF" format: "address-[attribute][bytecount]-bytes_to_program"
-			char *tok = strtok(temp2, "-");
+			// Parse "address-count-bytes" format
+			char* tok = strtok(temp2, "-");
 			if (!tok) continue;
 			sscanf(tok, "%x", &fAddr);
 
@@ -998,14 +1034,14 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			sscanf(tok, "%x", &fCount);
 			fAttr = (fCount & 0x30) >> 4;
 			fCount &= 0x07;
-			if (fCount < 1 || fCount > 4) fCount = 1;
+			if (fCount < 1 || fCount > 4)
+				fCount = 1;
 
 			tok = strtok(NULL, "-");
 			if (!tok) continue;
 			sscanf(tok, "%x", &fBytes);
 
-			//bprintf(0, _T(".vct: addr[%x] count[%x] bytes[%x]\n"), fAddr, fCount, fBytes);
-
+			// Create cheat list header
 #ifndef __LIBRETRO__
 			if (bFirst) {
 				TCHAR szHeading[256];
@@ -1015,36 +1051,65 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 			}
 #endif
 
-			// -- add to cheat engine --
+			// Initialize new cheat entry
 			n = 0;
 			nCurrentAddress = 0;
-
 			CheatLinkNewNode(tmp);
 
 #ifdef __LIBRETRO__
-			_tcsncpy (pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
+			_tcsncpy(pCurrentCheat->szCheatFilename, pszFileHeading, QUOTE_MAX);
 #endif
 
+			// Add default options
 			OptionName(_T("Disabled"));
 			n++;
 			OptionName(_T("Enabled"));
 
+			// Encode and add Game Genie codes
 			for (int i = 0; i < fCount; i++) {
 				memset(szGGenie, 0, sizeof(szGGenie));
-				encodeNES(fAddr + i, fBytes >> (i*8), -1, szGGenie);
+				encodeNES(fAddr + i, fBytes >> (i * 8), -1, szGGenie);
 				INT32 cLen = strlen(szGGenie);
-				szGGenie[cLen] = '0' + fAttr; // append the attribute to the end of the GameGenie code (handled in drv/nes/nes.cpp)
+				szGGenie[cLen] = '0' + fAttr;
 				AddressInfoGameGenie();
 			}
 		}
-
-		continue;
 	}
 
-	// if no cheat was found, don't return success code
-	if (pCurrentCheat == NULL) return 1;
+	// Return error if no cheats were loaded
+	if (pCurrentCheat == NULL)
+		ctx->result = 1;
+	else
+		ctx->result = 0;
+}
 
-	return 0;
+//=========================================================================
+// Main API: Safe VCT file parser
+//=========================================================================
+static INT32 ConfigParseVCT(TCHAR* pszFilename)
+{
+	ConfigParseContext ctx = { 0 };
+	ctx.filename = pszFilename;
+
+	// Safe open, process, auto clean-up
+	SafeProcessTextFile(pszFilename, ConfigParseVCTCallback, &ctx);
+	if (ctx.result == 0)
+		return 0;
+
+	// Fallback to parent driver file
+	if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT))
+	{
+		TCHAR szAlternative[MAX_PATH] = { 0 };
+		_stprintf(szAlternative, _T("%s%s.vct"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
+
+		ctx.result = 1;
+		ctx.filename = szAlternative;
+
+		SafeProcessTextFile(szAlternative, ConfigParseVCTCallback, &ctx);
+		return ctx.result;
+	}
+
+	return 1;
 }
 
 

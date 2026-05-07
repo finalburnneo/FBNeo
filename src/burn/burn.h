@@ -156,9 +156,17 @@ struct BurnHDDInfo {
 };
 
 // ---------------------------------------------------------------------------
-
 // Rom Data
 
+void free_s(void** p);
+void RomDataInit();
+void RomDataExit();
+bool IsRomDataDrv();
+char* RomDataDrvGetDrvName();
+struct BurnRomInfo* RomDataDrvGetRomInfo(UINT32* pRomCount = NULL);
+void NeoProcessExtraRom(UINT8* rom);
+
+// Deprecated in the Windows version, but still used in the Libretro version for now. Will be removed eventually.
 struct RomDataInfo {
 	char szZipName[MAX_PATH];
 	char szDrvName[MAX_PATH];
@@ -174,8 +182,6 @@ extern BurnRomInfo* pDataRomDesc;
 
 char* RomdataGetDrvName();
 void RomDataSetFullName();
-void RomDataInit();
-void RomDataExit();
 
 // ---------------------------------------------------------------------------
 
@@ -289,7 +295,8 @@ extern bool bBurnUseBlend;
 extern INT32 nBurnFPS;
 extern INT32 nBurnCPUSpeedAdjust;
 
-extern UINT32 nBurnDrvCount;		// Count of game drivers
+extern UINT32 nIntlDrvCount;		// Count of built-in game drivers (BurnDrvGetFlags() without BDF_ROMDATA_DRIVER)
+extern UINT32 nBurnDrvCount;		// Count of game drivers (BurnDrvGetFlags() with BDF_ROMDATA_DRIVER)
 extern UINT32 nBurnDrvActive;		// Which game driver is selected
 extern INT32 nBurnDrvSubActive;		// Which sub-game driver is selected
 extern UINT32 nBurnDrvSelect[8];	// Which games are selected (i.e. loaded but not necessarily active)
@@ -421,7 +428,9 @@ TCHAR* BurnDrvGetText(UINT32 i);
 char* BurnDrvGetTextA(UINT32 i);
 wchar_t* BurnDrvGetFullNameW(UINT32 i);
 
-INT32 BurnDrvGetIndex(char* szName);
+struct BurnDriver* BurnGetDriver(const char* szName);
+UINT32 LinkExtlDrivers(struct BurnDriver* drv, UINT32 * pallCount);
+INT32 BurnDrvGetIndex(const char* szName);
 INT32 BurnDrvGetZipName(char** pszName, UINT32 i);
 INT32 BurnDrvSetZipName(char* szName, INT32 i);
 INT32 BurnDrvGetRomInfo(struct BurnRomInfo *pri, UINT32 i);
@@ -446,7 +455,6 @@ INT32 BurnDrvGetSampleName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
 INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 char* BurnDrvGetSourcefile();
-
 
 void Reinitialise(); // re-inits everything, including UI window
 void ReinitialiseVideo(); // re-init's video w/ new resolution/aspect ratio (see drv/megadrive.cpp)
@@ -498,11 +506,12 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define BDF_HACK										(1 << 7)
 #define BDF_HOMEBREW									(1 << 8)
 #define BDF_DEMO										(1 << 9)
-#define BDF_16BIT_ONLY									(1 << 10)
-#define BDF_32BIT_ONLY									(1 << 11)
-#define BDF_HISCORE_SUPPORTED							(1 << 12)
-#define BDF_RUNAHEAD_DRAWSYNC							(1 << 13)
-#define BDF_RUNAHEAD_DISABLED							(1 << 14)
+#define BDF_ROMDATA_DRIVER								(1 << 10)
+#define BDF_16BIT_ONLY									(1 << 11)
+#define BDF_32BIT_ONLY									(1 << 12)
+#define BDF_HISCORE_SUPPORTED							(1 << 13)
+#define BDF_RUNAHEAD_DRAWSYNC							(1 << 14)
+#define BDF_RUNAHEAD_DISABLED							(1 << 15)
 
 // Flags for the hardware member
 // Format: 0xDDEEFFFF, where DD: Manufacturer, EE: Hardware platform, FFFF: Flags (used by driver)

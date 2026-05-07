@@ -161,143 +161,190 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, INT32 nLang)
 		return NULL;
 }
 
+//=========================================================================
+// Unified Context Structure - Shared by FillListBox and RefreshPatch
+//=========================================================================
+struct PatchDescContext {
+	TCHAR* patchDesc;	// Pointer to store the retrieved patch description
+	INT32  langCode;	// Target language code for description lookup
+};
+
+//=========================================================================
+// Unified Callback - Reads patch description with language fallbacks
+// Follows your original logic exactly: Selected -> English -> Chinese
+//=========================================================================
+static void PatchDescriptionCallback(const TCHAR* inputFile, FILE* fp, void* userData)
+{
+	PatchDescContext* ctx = (PatchDescContext*)userData;
+	ctx->patchDesc = NULL;
+
+	// Return NULL if file handle is invalid
+	if (!fp)
+		return;
+
+	// 1. Try to get description using the currently selected language
+	ctx->patchDesc = GetPatchDescByLangcode(fp, ctx->langCode);
+
+	// 2. Fallback: Use English (lang 0) if selected language not found
+	if (!ctx->patchDesc)
+		ctx->patchDesc = GetPatchDescByLangcode(fp, 0);
+
+	// 3. Final fallback: Use Simplified Chinese (lang 1) - reference language
+	if (!ctx->patchDesc)
+		ctx->patchDesc = GetPatchDescByLangcode(fp, 1);
+}
+
+//=========================================================================
+// Unified Safe Wrapper - Call this to read patch descriptions
+//=========================================================================
+static TCHAR* SafeReadPatchDescription(TCHAR* szFileName, int langCode)
+{
+	PatchDescContext ctx = { 0 };
+	ctx.langCode = langCode;
+
+	// Safe auto open, process, and close file
+	SafeProcessTextFile(szFileName, PatchDescriptionCallback, &ctx);
+	return ctx.patchDesc;
+}
+
+//=========================================================================
+// Function: FillListBox
+// Purpose:  Load IPS patch files and populate the tree view
+//=========================================================================
 static void FillListBox()
 {
 	WIN32_FIND_DATA wfd;
 	HANDLE hSearch;
-	TCHAR szFilePath[MAX_PATH]       = { 0 };
+	TCHAR szFilePath[MAX_PATH] = { 0 };
 	TCHAR szFilePathSearch[MAX_PATH] = { 0 };
-	TCHAR szFileName[MAX_PATH]       = { 0 };
-	TCHAR PatchName[256]             = { 0 };
+	TCHAR szFileName[MAX_PATH] = { 0 };
+	TCHAR PatchName[256] = { 0 };
 	TCHAR* PatchDesc = NULL;
 	INT32 nHandlePos = 0;
 
 	TV_INSERTSTRUCT TvItem;
-
 	memset(&TvItem, 0, sizeof(TvItem));
-	TvItem.item.mask    = TVIF_TEXT | TVIF_PARAM;
+	TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 	TvItem.hInsertAfter = TVI_LAST;
 
+	// Build the path for patch files
 	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, szDriverName);
 	_stprintf(szFilePathSearch, _T("%s*.dat"), szFilePath);
 
+	// Search for all .dat patch files
 	hSearch = FindFirstFile(szFilePathSearch, &wfd);
 
 	if (hSearch != INVALID_HANDLE_VALUE) {
 		INT32 Done = 0;
 
-		while (!Done ) {
-			memset(szFileName, '\0', MAX_PATH * sizeof(TCHAR));
+		while (!Done) {
+			memset(szFileName, 0, MAX_PATH * sizeof(TCHAR));
 			_stprintf(szFileName, _T("%s%s"), szFilePath, wfd.cFileName);
 
-			const TCHAR* pszReadMode = AdaptiveEncodingReads(szFileName);
-			if (NULL == pszReadMode) continue;
+			// Safely read patch description using the unified function
+			PatchDesc = SafeReadPatchDescription(szFileName, nIpsSelectedLanguage);
 
-			FILE *fp = _tfopen(szFileName, pszReadMode);
-			if (fp) {
-				PatchDesc = NULL;
-				memset(PatchName, '\0', 256 * sizeof(TCHAR));
+			// Fallback: Use filename if no description was found
+			if (!PatchDesc) {
+				PatchDesc = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+				if (!PatchDesc) {
+					Done = !FindNextFile(hSearch, &wfd);
+					continue;
+				}
+				memset(PatchDesc, 0, MAX_PATH * sizeof(TCHAR));
+				_tcscpy(PatchDesc, wfd.cFileName);
+			}
 
-				PatchDesc = GetPatchDescByLangcode(fp, nIpsSelectedLanguage);
-				// If not available - try English first
-				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 0);
-				// Simplified Chinese is the reference language (should always be available!!)
-				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 1);
-				if (PatchDesc == NULL) {
-					PatchDesc = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-					if (NULL == PatchDesc) {
-						fclose(fp); fp = NULL;
-						continue;
+			// Extract patch name (remove line breaks)
+			memset(PatchName, 0, 256 * sizeof(TCHAR));
+			for (UINT32 i = 0; i < _tcslen(PatchDesc); i++) {
+				if (PatchDesc[i] == _T('\r') || PatchDesc[i] == _T('\n'))
+					break;
+				PatchName[i] = PatchDesc[i];
+			}
+			free(PatchDesc);
+			PatchDesc = NULL;
+
+			// Parse categories delimited by '/'
+			TCHAR* Tokens;
+			INT32 nNumTokens = 0;
+			TCHAR szCategory[256] = { 0 };
+			UINT32 nPatchNameLen = _tcslen(PatchName);
+
+			Tokens = _tcstok(PatchName, _T("/"));
+			while (Tokens != NULL) {
+				if (nNumTokens == 0) {
+					// Check if root category already exists
+					INT32 bAddItem = 1;
+					INT32 nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, 0, 0);
+
+					for (INT32 i = 0; i < nNumNodes; i++) {
+						TCHAR Temp[256];
+						TVITEM Tvi;
+						memset(&Tvi, 0, sizeof(Tvi));
+						Tvi.hItem = hItemHandles[i];
+						Tvi.mask = TVIF_TEXT | TVIF_HANDLE;
+						Tvi.pszText = Temp;
+						Tvi.cchTextMax = 256;
+						SendMessage(hIpsList, TVM_GETITEM, 0, (LPARAM)&Tvi);
+
+						if (!_tcsicmp(Tvi.pszText, Tokens))
+							bAddItem = 0;
 					}
-					memset(PatchDesc, 0, MAX_PATH * sizeof(TCHAR));
-					_tcscpy(PatchDesc, wfd.cFileName);
-				}
 
-				bprintf(0, _T("PatchDesc [%s]\n"), PatchDesc);
-
-				for (UINT32 i = 0; i < _tcslen(PatchDesc); i++) {
-					if (PatchDesc[i] == _T('\r') || PatchDesc[i] == _T('\n')) break;
-					PatchName[i] = PatchDesc[i];
-				}
-				if (NULL != PatchDesc) {
-					free(PatchDesc); PatchDesc = NULL;
-				}
-
-				// Check for categories
-				TCHAR *Tokens;
-				INT32 nNumTokens = 0, nNumNodes = 0;
-				TCHAR szCategory[256];
-				UINT32 nPatchNameLength = _tcslen(PatchName);
-
-				Tokens = _tcstok(PatchName, _T("/"));
-				while (Tokens != NULL) {
-					if (nNumTokens == 0) {
-						INT32 bAddItem = 1;
-						// Check if item already exists
-						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (INT32 i = 0; i < nNumNodes; i++) {
-							TCHAR Temp[256];
-							TVITEM Tvi;
-							memset(&Tvi, 0, sizeof(Tvi));
-							Tvi.hItem      = hItemHandles[i];
-							Tvi.mask       = TVIF_TEXT | TVIF_HANDLE;
-							Tvi.pszText    = Temp;
-							Tvi.cchTextMax = 256;
-							SendMessage(hIpsList, TVM_GETITEM, (WPARAM)0, (LPARAM)&Tvi);
-
-							if (!_tcsicmp(Tvi.pszText, Tokens)) bAddItem = 0;
-						}
-						if (bAddItem) {
-							TvItem.hParent           = TVI_ROOT;
-							TvItem.item.pszText      = Tokens;
-							hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
-							nHandlePos++;
-						}
-						if (_tcslen(Tokens) == nPatchNameLength) {
-							hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos - 1];
-							_tcscpy(szPatchFileNames[nPatchIndex], szFileName);
-
-							nPatchIndex++;
-						}
-						_tcscpy(szCategory, Tokens);
-					} else {
-						HTREEITEM hNode = TVI_ROOT;
-						// See which category we should be in
-						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (INT32 i = 0; i < nNumNodes; i++) {
-							TCHAR Temp[256];
-							TVITEM Tvi;
-							memset(&Tvi, 0, sizeof(Tvi));
-							Tvi.hItem      = hItemHandles[i];
-							Tvi.mask       = TVIF_TEXT | TVIF_HANDLE;
-							Tvi.pszText    = Temp;
-							Tvi.cchTextMax = 256;
-							SendMessage(hIpsList, TVM_GETITEM, (WPARAM)0, (LPARAM)&Tvi);
-
-							if (!_tcsicmp(Tvi.pszText, szCategory)) hNode = Tvi.hItem;
-						}
-
-						TvItem.hParent           = hNode;
-						TvItem.item.pszText      = Tokens;
+					// Add new root category if needed
+					if (bAddItem) {
+						TvItem.hParent = TVI_ROOT;
+						TvItem.item.pszText = Tokens;
 						hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
-
-						hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos];
-						_tcscpy(szPatchFileNames[nPatchIndex], szFileName);
-
 						nHandlePos++;
+					}
+
+					// Bind patch if this is a single-level entry
+					if (_tcslen(Tokens) == nPatchNameLen) {
+						hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos - 1];
+						_tcscpy(szPatchFileNames[nPatchIndex], szFileName);
 						nPatchIndex++;
 					}
 
-					// Only one file path can be bound to a DAT file.
-					// A maximum of root and secondary nodes are required.
-					// The use of '/' here will potentially create useless multi-level nodes.
-					Tokens = _tcstok(NULL, _T("\0"));
-					nNumTokens++;
+					_tcscpy(szCategory, Tokens);
+				} else {
+					// Find the parent category node
+					HTREEITEM hNode = TVI_ROOT;
+					INT32 nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, 0, 0);
+
+					for (INT32 i = 0; i < nNumNodes; i++) {
+						TCHAR Temp[256];
+						TVITEM Tvi;
+						memset(&Tvi, 0, sizeof(Tvi));
+						Tvi.hItem = hItemHandles[i];
+						Tvi.mask = TVIF_TEXT | TVIF_HANDLE;
+						Tvi.pszText = Temp;
+						Tvi.cchTextMax = 256;
+						SendMessage(hIpsList, TVM_GETITEM, 0, (LPARAM)&Tvi);
+
+						if (!_tcsicmp(Tvi.pszText, szCategory))
+							hNode = Tvi.hItem;
+					}
+
+					// Add sub-item to the category
+					TvItem.hParent = hNode;
+					TvItem.item.pszText = Tokens;
+					hItemHandles[nHandlePos] = (HTREEITEM)SendMessage(hIpsList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
+
+					// Associate patch file with this node
+					hPatchHandlesIndex[nPatchIndex] = hItemHandles[nHandlePos];
+					_tcscpy(szPatchFileNames[nPatchIndex], szFileName);
+
+					nHandlePos++;
+					nPatchIndex++;
 				}
 
-				fclose(fp);
+				Tokens = _tcstok(NULL, _T("\0"));
+				nNumTokens++;
 			}
 
+			// Proceed to next file
 			Done = !FindNextFile(hSearch, &wfd);
 		}
 
@@ -306,8 +353,8 @@ static void FillListBox()
 
 	nNumPatches = nPatchIndex;
 
-	// Expand all branches
-	INT32 nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);;
+	// Expand all nodes in the tree view
+	INT32 nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, 0, 0);
 	for (INT32 i = 0; i < nNumNodes; i++) {
 		SendMessage(hIpsList, TVM_EXPAND, TVE_EXPAND, (LPARAM)hItemHandles[i]);
 	}
@@ -438,69 +485,71 @@ static INT32 IpsManagerInit()
 	return 0;
 }
 
+//=========================================================================
+// Function: RefreshPatch
+// Purpose:  Show details for the selected patch (description + preview)
+//=========================================================================
 static void RefreshPatch()
 {
-	szPngName[0] = _T('\0');  // Reset the file name of the preview picture
+	// Reset preview image filename
+	szPngName[0] = _T('\0');
+
+	// Clear comment text and reset preview image
 	SendMessage(GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT), WM_SETTEXT, (WPARAM)0, (LPARAM)NULL);
 	SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPreview);
 
+	// Get currently selected item in the tree view
 	HTREEITEM hSelectHandle = (HTREEITEM)SendMessage(hIpsList, TVM_GETNEXTITEM, TVGN_CARET, ~0U);
 
+	// Release previous bitmap resource
 	if (hBmp) {
 		DeleteObject((HGDIOBJ)hBmp);
 		hBmp = NULL;
 	}
 
+	// Find the selected patch and display its information
 	for (INT32 i = 0; i < nNumPatches; i++) {
 		if (hSelectHandle == hPatchHandlesIndex[i]) {
-			TCHAR *PatchDesc = NULL;
+			// Safely read patch description using the unified function
+			TCHAR* PatchDesc = SafeReadPatchDescription(szPatchFileNames[i], nIpsSelectedLanguage);
 
-			const TCHAR* pszReadMode = AdaptiveEncodingReads(szPatchFileNames[i]);
-			if (NULL == pszReadMode) continue;
+			// Fallback: Use filename if no description was found
+			if (!PatchDesc) {
+				PatchDesc = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+				if (!PatchDesc)
+					continue;
 
-			FILE *fp = _tfopen(szPatchFileNames[i], pszReadMode);
-			if (fp) {
-				PatchDesc = GetPatchDescByLangcode(fp, nIpsSelectedLanguage);
-				// If not available - try English first
-				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 0);
-				// Simplified Chinese is the reference language (should always be available!!)
-				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 1);
-				if (PatchDesc == NULL) {
-					PatchDesc = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-					if (NULL == PatchDesc) {
-						fclose(fp); fp = NULL;
-						continue;
-					}
-					memset(PatchDesc, 0, MAX_PATH * sizeof(TCHAR));
-					_tcscpy(PatchDesc, szPatchFileNames[i]);
-				}
-
-				SendMessage(GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT), WM_SETTEXT, (WPARAM)0, (LPARAM)PatchDesc);
-
-				if (NULL != PatchDesc) {
-					free(PatchDesc); PatchDesc = NULL;
-				}
-				fclose(fp);
+				memset(PatchDesc, 0, MAX_PATH * sizeof(TCHAR));
+				_tcscpy(PatchDesc, szPatchFileNames[i]);
 			}
-			fp = NULL;
 
-			TCHAR szImageFileName[MAX_PATH];
-			szImageFileName[0] = _T('\0');
+			// Display patch description
+			SendMessage(GetDlgItem(hIpsDlg, IDC_TEXTCOMMENT), WM_SETTEXT, (WPARAM)0, (LPARAM)PatchDesc);
+			free(PatchDesc);
+			PatchDesc = NULL;
 
+			// Build corresponding PNG image filename
+			TCHAR szImageFileName[MAX_PATH] = { 0 };
 			_tcscpy(szImageFileName, szPatchFileNames[i]);
-			szImageFileName[_tcslen(szImageFileName) - 3] = _T('p');
-			szImageFileName[_tcslen(szImageFileName) - 2] = _T('n');
-			szImageFileName[_tcslen(szImageFileName) - 1] = _T('g');
 
-			fp = _tfopen(szImageFileName, _T("rb"));
+			// Replace file extension from .dat to .png
+			INT32 len = _tcslen(szImageFileName);
+			szImageFileName[len - 3] = _T('p');
+			szImageFileName[len - 2] = _T('n');
+			szImageFileName[len - 1] = _T('g');
+
+			// Try to load preview PNG
+			FILE* fp = _tfopen(szImageFileName, _T("rb"));
 			HBITMAP hNewImage = NULL;
+
 			if (fp) {
-				_tcscpy(szPngName, szImageFileName);  // Associated preview picture
+				_tcscpy(szPngName, szImageFileName);
 				hNewImage = PNGLoadBitmap(hIpsDlg, fp, 304, 228, 3);
 				fclose(fp);
 			}
+
+			// Update UI with the new image or use default preview
 			if (hNewImage) {
-				DeleteObject((HGDIOBJ)hBmp);
 				hBmp = hNewImage;
 				SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBmp);
 			} else {
@@ -911,8 +960,25 @@ static inline const TCHAR* GetPathSeparator(const TCHAR* path)
 	return _T("");
 }
 
-static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const UINT32 crc, UINT8* base, bool readonly)
+//=========================================================================
+// Context for DoPatchGame
+//=========================================================================
+struct DoPatchContext {
+	const TCHAR* game_name;
+	UINT32 crc;
+	UINT8* base;
+	bool readonly;
+	const TCHAR* pszAppRomPaths;
+	const TCHAR* pszDriverName;
+	bool bTarget;
+};
+
+//=========================================================================
+// Safe callback for reading patch file
+//=========================================================================
+static void DoPatchGameCallback(const TCHAR* inputFile, FILE* fp, void* userData)
 {
+	DoPatchContext* ctx = (DoPatchContext*)userData;
 	TCHAR s[MAX_PATH] = { 0 };
 	TCHAR* p          = NULL;
 	TCHAR* rom_name   = NULL;
@@ -920,217 +986,19 @@ static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const U
 	TCHAR* ips_offs   = NULL;
 	TCHAR* ips_crc    = NULL;
 	UINT32 nIps_crc   = 0;
-	FILE* fp          = NULL;
 
-	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
-
-	const TCHAR* pszReadMode = AdaptiveEncodingReads(patch_name);
-	if (!pszReadMode)
+	if (!fp)
 		return;
 
-	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
-	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
-
-	if ((fp = _tfopen(patch_name, pszReadMode)) != NULL) {
-		bool bTarget = false;
-
-		while (!feof(fp)) {
-			if (_fgetts(s, sizeof(s), fp) != NULL) {
-				p = s;
-#if 0
-				// skip UTF-8 sig
-				if (strncmp(p, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)) == 0)
-					p += strlen(UTF8_SIGNATURE);
-#endif // 0
-				if (p[0] == _T('['))	// reached info-section of .dat file, time to leave.
-					break;
-
-				// Can support linetypes: (space or tab)
-				// "rom name.bin" "patch file.ips" CRC(abcd1234)
-				// romname.bin patchfile CRC(abcd1234)
-#define DELIM_TOKENS_NAME _T(" \t\r\n")
-#define DELIM_TOKENS      _T(" \t\r\n()")
-
-				rom_name = _strqtoken(p, DELIM_TOKENS_NAME);
-
-				if (!rom_name)
-					continue;
-				if (*rom_name == _T('#'))
-					continue;
-
-				ips_name = _strqtoken(NULL, DELIM_TOKENS_NAME);
-				if (!ips_name)
-					continue;
-
-				nIps_crc = 0;
-				nRomOffset = 0; // Reset to 0
-				if (NULL != (ips_offs = _strqtoken(NULL, DELIM_TOKENS))) {	// Parameters of the offset increment
-					if (     0 == _tcscmp(ips_offs, _T("IPS_OFFSET_016"))) nRomOffset = 0x1000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_032"))) nRomOffset = 0x2000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_048"))) nRomOffset = 0x3000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_064"))) nRomOffset = 0x4000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_080"))) nRomOffset = 0x5000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_096"))) nRomOffset = 0x6000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_112"))) nRomOffset = 0x7000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_128"))) nRomOffset = 0x8000000;
-					else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_144"))) nRomOffset = 0x9000000;
-
-					if (nRomOffset != 0) { // better get next token (crc)
-						ips_offs = _strqtoken(NULL, DELIM_TOKENS);
-					}
-				}
-
-				if (ips_offs && stristr_int(_TtoA(ips_offs), "crc")) {
-					ips_crc = _strqtoken(NULL, DELIM_TOKENS);
-					if (ips_crc) {
-						nIps_crc = hexto32(_TtoA(ips_crc));
-					}
-				}
-
-#undef DELIM_TOKENS_NAME
-#undef DELIM_TOKENS
-
-				char* has_ext = stristr_int(_TtoA(ips_name), ".ips");
-
-				if (_tcsicmp(rom_name, game_name))	// name don't match?
-					if (nIps_crc != crc)			// crc don't match?
-						continue;					// not our file. next!
-
-				bTarget = true;
-
-				if (!readonly) {
-					bprintf(0, _T("ips name:[%S]\n"), ips_name);
-					bprintf(0, _T("rom name:[%S]\n"), rom_name);
-					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
-				}
-#if 0
-				bool bHasDir = false;	// The IPS file and DAT file are in the same directory
-				TCHAR* str = ips_name;
-
-				while (_T('\0') != *str) {
-					if ((_T('\\') == *str) || (_T('/') == *str)) {
-						bHasDir = true;	// The IPS file contains directory paths
-						str = NULL;
-						break;
-					}
-					str++;
-				}
-#endif // 0
-
-				TCHAR ips_path[MAX_PATH] = { 0 };
-				bool bIsAbsolutePath = false;
-				bool bHasDir = false;
-
-				// Check if path contains directory separators
-				for (const TCHAR* str = ips_name; *str; str++) {
-					if (*str == _T('\\') || *str == _T('/')) {
-						bHasDir = true;
-						break;
-					}
-				}
-
-				// Detect absolute path (Windows / UNC / Linux)
-				if ((ips_name[0] == _T('\\') && ips_name[1] == _T('\\')) ||
-					(ips_name[0] == _T('/') && ips_name[1] == _T('/'))) {
-					bIsAbsolutePath = true;
-				} else if (ips_name[0] != _T('\0') && ips_name[1] == _T(':')) {
-					if (ips_name[2] == _T('\\') || ips_name[2] == _T('/'))
-						bIsAbsolutePath = true;
-				} else if (ips_name[0] == _T('\\') || ips_name[0] == _T('/')) {
-					bIsAbsolutePath = true;
-				}
-
-				if (bIsAbsolutePath) {
-					// Absolute path: use directly
-					_sntprintf(ips_path, MAX_PATH, _T("%s%s"),
-						ips_name, has_ext ? _T("") : IPS_EXT);
-				}
-				// RULE: ../ or ..\ → REMOVE ../ , append rest to pszAppRomPaths
-				else if ((ips_name[0] == _T('.') && ips_name[1] == _T('.') &&
-					(ips_name[2] == _T('/') || ips_name[2] == _T('\\')))) {
-					const TCHAR* sep = GetPathSeparator(pszAppRomPaths);
-					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
-						pszAppRomPaths, sep,
-						ips_name + 3,  // skip ..\ or ../
-						has_ext ? _T("") : IPS_EXT);
-				}
-				// RULE: ./ or .\ → REMOVE . , append to pszAppRomPaths/pszDriverName
-				else if ((ips_name[0] == _T('.') &&
-					(ips_name[1] == _T('/') || ips_name[1] == _T('\\')))) {
-					const TCHAR* sep1 = GetPathSeparator(pszAppRomPaths);
-					const TCHAR* sep2 = GetPathSeparator(pszDriverName);
-					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
-						pszAppRomPaths, sep1,
-						pszDriverName,  sep2,
-						ips_name + 2,  // skip  .\ or./
-						has_ext ? _T("") : IPS_EXT);
-				}
-				// Relative path with directory
-				else if (bHasDir) {
-					const TCHAR* sep = GetPathSeparator(pszAppRomPaths);
-					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
-						pszAppRomPaths, sep,
-						ips_name,
-						has_ext ? _T("") : IPS_EXT);
-				}
-				// Plain filename
-				else {
-					const TCHAR* sep1 = GetPathSeparator(pszAppRomPaths);
-					const TCHAR* sep2 = GetPathSeparator(pszDriverName);
-					_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
-						pszAppRomPaths, sep1,
-						pszDriverName,  sep2,
-						ips_name,
-						has_ext ? _T("") : IPS_EXT);
-				}
-
-				PatchFile(_TtoA(ips_path), base, readonly);
-			}
-		}
-		fclose(fp);
-
-		if (!bTarget && (0 == nIpsMemExpLen[EXP_FLAG])) {
-			// Must be reset to 0!
-			nIpsMemExpLen[LOAD_ROM] = 0;
-		}
-	}
-}
-
-static INT32 IpsVerifyDat(const TCHAR* pszDatFile)
-{
-	TCHAR s[MAX_PATH] = { 0 }, * p = NULL, * rom_name = NULL, * ips_name = NULL;
-	FILE* fp = NULL;
-
-	const TCHAR* pszReadMode = AdaptiveEncodingReads(pszDatFile);
-	if (NULL == pszReadMode) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_ENCODING), pszDatFile);
-		FBAPopupDisplay(PUF_TYPE_ERROR);
-		return -1;
-	}
-	if (NULL== (fp = _tfopen(pszDatFile, pszReadMode))) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_OPEN), pszDatFile);
-		FBAPopupDisplay(PUF_TYPE_ERROR);
-		return -2;
-	}
-
-	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
-	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
-	INT32 nLoop = 0, nError = 0, nFind = 0;
+	ctx->bTarget = false;
 
 	while (!feof(fp)) {
-		if (_fgetts(s, sizeof(s), fp) != NULL) {
+		if (_fgetts(s, sizeof(s) / sizeof(TCHAR), fp) != NULL) {
 			p = s;
 
-			if (p[0] == _T('[')) {
-				if (0 == nLoop) {
-					nError++;
-					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
-					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_CONTENT), pszDatFile);
-				}
+			// Stop at [info] section
+			if (p[0] == _T('['))
 				break;
-			}
 
 #define DELIM_TOKENS_NAME _T(" \t\r\n")
 #define DELIM_TOKENS      _T(" \t\r\n()")
@@ -1145,43 +1013,281 @@ static INT32 IpsVerifyDat(const TCHAR* pszDatFile)
 			if (!ips_name)
 				continue;
 
+			nIps_crc   = 0;
+			nRomOffset = 0;
+
+			// Read offset parameter
+			if (NULL != (ips_offs = _strqtoken(NULL, DELIM_TOKENS))) {
+				if (     0 == _tcscmp(ips_offs, _T("IPS_OFFSET_016"))) nRomOffset = 0x1000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_032"))) nRomOffset = 0x2000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_048"))) nRomOffset = 0x3000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_064"))) nRomOffset = 0x4000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_080"))) nRomOffset = 0x5000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_096"))) nRomOffset = 0x6000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_112"))) nRomOffset = 0x7000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_128"))) nRomOffset = 0x8000000;
+				else if (0 == _tcscmp(ips_offs, _T("IPS_OFFSET_144"))) nRomOffset = 0x9000000;
+
+				if (nRomOffset != 0)
+					ips_offs = _strqtoken(NULL, DELIM_TOKENS);
+			}
+
+			// Read CRC
+			if ((ips_offs != NULL) && stristr_int(_TtoA(ips_offs), "crc")) {
+				ips_crc = _strqtoken(NULL, DELIM_TOKENS);
+				if (ips_crc) {
+					nIps_crc = hexto32(_TtoA(ips_crc));
+				}
+			}
+
 #undef DELIM_TOKENS_NAME
 #undef DELIM_TOKENS
 
 			char* has_ext = stristr_int(_TtoA(ips_name), ".ips");
+
+			if (_tcsicmp(rom_name, ctx->game_name))	// name don't match?
+				if (nIps_crc != ctx->crc)			// crc don't match?
+					continue;					// not our file. next!
+
+			ctx->bTarget = true;
+
+			if (!ctx->readonly) {
+				bprintf(0, _T("ips name:[%S]\n"), ips_name);
+				bprintf(0, _T("rom name:[%S]\n"), rom_name);
+				bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
+			}
+#if 0
+			bool bHasDir = false;	// The IPS file and DAT file are in the same directory
+			TCHAR* str = ips_name;
+
+			while (_T('\0') != *str) {
+				if ((_T('\\') == *str) || (_T('/') == *str)) {
+					bHasDir = true;	// The IPS file contains directory paths
+					str = NULL;
+					break;
+				}
+				str++;
+			}
+#endif // 0
+
+			TCHAR ips_path[MAX_PATH] = { 0 };
+			bool bIsAbsolutePath = false;
+			bool bHasDir = false;
+
+			// Check if path contains directory separators
+			for (const TCHAR* str = ips_name; *str; str++) {
+				if (*str == _T('\\') || *str == _T('/')) {
+					bHasDir = true;
+					break;
+				}
+			}
+
+			// Detect absolute path (Windows / UNC / Linux)
+			if ((ips_name[0] == _T('\\') && ips_name[1] == _T('\\')) ||
+				(ips_name[0] == _T('/')  && ips_name[1] == _T('/'))) {
+				bIsAbsolutePath = true;
+			}
+			else if (ips_name[0] != _T('\0') && ips_name[1] == _T(':')) {
+				 if (ips_name[2] == _T('\\') || ips_name[2] == _T('/'))
+					bIsAbsolutePath = true;
+			}
+			else if (ips_name[0] == _T('\\') || ips_name[0] == _T('/')) {
+				bIsAbsolutePath = true;
+			}
+
+			if (bIsAbsolutePath) {
+				// Absolute path: use directly
+				_sntprintf(ips_path, MAX_PATH, _T("%s%s"),
+					ips_name, has_ext ? _T("") : IPS_EXT);
+			}
+			// RULE: ../ or ..\ → REMOVE ../ , append rest to pszAppRomPaths
+			else if ((ips_name[0] == _T('.') && ips_name[1] == _T('.') &&
+				(ips_name[2] == _T('/') || ips_name[2] == _T('\\')))) {
+				const TCHAR* sep = GetPathSeparator(ctx->pszAppRomPaths);
+				_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
+					ctx->pszAppRomPaths, sep,
+					ips_name + 3,  // skip ..\ or ../
+					has_ext ? _T("") : IPS_EXT);
+			}
+			// RULE: ./ or .\ → REMOVE . , append to pszAppRomPaths/pszDriverName
+			else if ((ips_name[0] == _T('.') &&
+				(ips_name[1] == _T('/') || ips_name[1] == _T('\\')))) {
+				const TCHAR* sep1 = GetPathSeparator(ctx->pszAppRomPaths);
+				const TCHAR* sep2 = GetPathSeparator(ctx->pszDriverName);
+				_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
+					ctx->pszAppRomPaths, sep1,
+					ctx->pszDriverName,  sep2,
+					ips_name + 2,  // skip  .\ or./
+					has_ext ? _T("") : IPS_EXT);
+			}
+			// Relative path with directory
+			else if (bHasDir) {
+				const TCHAR* sep = GetPathSeparator(ctx->pszAppRomPaths);
+				_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s"),
+					ctx->pszAppRomPaths, sep,
+					ips_name,
+					has_ext ? _T("") : IPS_EXT);
+			}
+			// Plain filename
+			else {
+				const TCHAR* sep1 = GetPathSeparator(ctx->pszAppRomPaths);
+				const TCHAR* sep2 = GetPathSeparator(ctx->pszDriverName);
+				_sntprintf(ips_path, MAX_PATH, _T("%s%s%s%s%s%s"),
+					ctx->pszAppRomPaths, sep1,
+					ctx->pszDriverName,  sep2,
+					ips_name,
+					has_ext ? _T("") : IPS_EXT);
+			}
+
+			PatchFile(_TtoA(ips_path), ctx->base, ctx->readonly);
+		}
+	}
+}
+
+//=========================================================================
+// Main: DoPatchGame (safe, original logic, no changes)
+//=========================================================================
+static void DoPatchGame(const TCHAR* patch_name, const TCHAR* game_name, const UINT32 crc, UINT8* base, bool readonly)
+{
+	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
+	const TCHAR* pszDriverName = (2 == nQuickOpen) ? szDriverName : BurnDrvGetText(DRV_NAME);
+
+	DoPatchContext ctx = { 0 };
+	ctx.game_name      = game_name;
+	ctx.crc            = crc;
+	ctx.base           = base;
+	ctx.readonly       = readonly;
+	ctx.pszAppRomPaths = pszAppRomPaths;
+	ctx.pszDriverName  = pszDriverName;
+
+	// Safe read with auto encoding + auto close
+	SafeProcessTextFile(patch_name, DoPatchGameCallback, &ctx);
+
+	if (!ctx.bTarget && (0 == nIpsMemExpLen[EXP_FLAG])) {
+		nIpsMemExpLen[LOAD_ROM] = 0;
+	}
+}
+
+//=========================================================================
+// Context structure for IPS DAT verification
+//=========================================================================
+struct  IpsVerifyContext{
+	const TCHAR* pszDatFile;
+	const TCHAR* pszAppRomPaths;
+	const TCHAR* pszDriverName;
+	INT32 nError;
+	INT32 nFind;
+	INT32 nLoop;
+};
+
+//=========================================================================
+// Callback: Safely parse IPS DAT file entries
+//=========================================================================
+static void IpsVerifyDatCallback(const TCHAR* inputFile, FILE* fp, void* userData)
+{
+	IpsVerifyContext* ctx = (IpsVerifyContext*)userData;
+	TCHAR s[MAX_PATH] = { 0 };
+	TCHAR* p          = NULL;
+	TCHAR* rom_name   = NULL;
+	TCHAR* ips_name   = NULL;
+
+	if (!fp)
+		return;
+
+	ctx->nLoop  = 0;
+	ctx->nError = 0;
+	ctx->nFind  = 0;
+
+	// Read file line by line
+	while (!feof(fp)) {
+		if (_fgetts(s, sizeof(s) / sizeof(TCHAR), fp) != NULL) {
+			p = s;
+
+			// Stop parsing when encountering section header
+			if (p[0] == _T('[')) {
+				if (0 == ctx->nLoop) {
+					ctx->nError++;
+					FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), ctx->pszDatFile);
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_CONTENT), ctx->pszDatFile);
+				}
+				break;
+			}
+
+#define DELIM_TOKENS_NAME _T(" \t\r\n")
+#define DELIM_TOKENS      _T(" \t\r\n()")
+
+			// Parse ROM name token
+			rom_name = _strqtoken(p, DELIM_TOKENS_NAME);
+			if (!rom_name)
+				continue;
+			if (*rom_name == _T('#'))
+				continue;
+
+			// Parse IPS patch name token
+			ips_name = _strqtoken(NULL, DELIM_TOKENS_NAME);
+			if (!ips_name)
+				continue;
+
+#undef DELIM_TOKENS_NAME
+#undef DELIM_TOKENS
+
+			// ORIGINAL CODE - NO CHANGES
+			char* has_ext = stristr_int(_TtoA(ips_name), ".ips");
+
 			TCHAR ips_path[MAX_PATH] = { 0 };
 			_stprintf(ips_path, _T("%s%s"), ips_name, (has_ext) ? _T("") : IPS_EXT);
 
+			// Check if the IPS file exists
 			if (!FileExists(ips_path)) {
 				_stprintf(ips_path, _T(""));
 
+				// Handle path with or without directory prefix
 				if ((_T('\\') == ips_name[0]) || (_T('/') == ips_name[0])) {
-					_stprintf(ips_path, _T("%s%s%s"), pszAppRomPaths, ips_name + 1, (has_ext) ? _T("") : IPS_EXT);
+					_stprintf(ips_path, _T("%s%s%s"), ctx->pszAppRomPaths, ips_name + 1, (has_ext) ? _T("") : IPS_EXT);
 				} else {
-					_stprintf(ips_path, _T("%s%s\\%s%s"), pszAppRomPaths, pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
+					_stprintf(ips_path, _T("%s%s\\%s%s"), ctx->pszAppRomPaths, ctx->pszDriverName, ips_name, (has_ext) ? _T("") : IPS_EXT);
 				}
+
 				if (!FileExists(ips_path)) {
-					nError++;
-					if (1 == nError) {
-						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), pszDatFile);
+					ctx->nError++;
+					if (1 == ctx->nError) {
+						FBAPopupAddText(PUF_TEXT_DEFAULT, _T("IPS: %s\n\n"), ctx->pszDatFile);
 					}
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), ips_path);
 				} else {
-					nFind++;
+					ctx->nFind++;
 				}
 			} else {
-				nFind++;
+				ctx->nFind++;
 			}
 		}
-		nLoop++;
+		ctx->nLoop++;
 	}
-	fclose(fp);
+}
 
-	if (nError > 0) {
+//=========================================================================
+// Main: IpsVerifyDat
+// Purpose: Verify that all IPS files referenced in a .dat file exist
+//=========================================================================
+static INT32 IpsVerifyDat(const TCHAR* pszDatFile)
+{
+	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
+	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
+
+	IpsVerifyContext ctx = { 0 };
+	ctx.pszDatFile = pszDatFile;
+	ctx.pszAppRomPaths = pszAppRomPaths;
+	ctx.pszDriverName = pszDriverName;
+
+	// Safe file processing (auto open, auto close, auto encoding)
+	SafeProcessTextFile(pszDatFile, IpsVerifyDatCallback, &ctx);
+
+	// Show error messages if any files are missing
+	if (ctx.nError > 0) {
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 	}
 
-	return (nFind > 0) ? 0 : -3;
+	return (ctx.nFind > 0) ? 0 : -3;
 }
 
 #undef IPS_EXT
@@ -1391,78 +1497,224 @@ INT32 IpsGetDrvForQuickOpen(const TCHAR* pszSelDat)
 	return nDrvIdx;
 }
 
+//=========================================================================
+// Context for ExtraPatchesInit safe file processing
+//=========================================================================
+typedef struct {
+	const TCHAR* pszAppRomPaths;
+	const TCHAR* pszDriverName;
+} ExtraPatchContext;
+
+//=========================================================================
+// Callback
+//=========================================================================
+static void ExtraPatchesInitCallback(const TCHAR* inputFile, FILE* fp, void* userData)
+{
+	ExtraPatchContext* ctx = (ExtraPatchContext*)userData;
+	TCHAR str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL;
+	INT32 nNumbers = 0;
+
+	if (!fp) return;
+
+	while (!feof(fp)) {
+		if (NULL != _fgetts(str, sizeof(str), fp)) {
+			ptr = str;
+
+			if (NULL == (tmp = _strqtoken(ptr, _T(" \t\r\n"))))
+				continue;
+			if (_T('[') == tmp[0])
+				break;
+			if ((_T('/') == tmp[0]) && (_T('/') == tmp[1]))
+				continue;
+			if ((0 != _tcscmp(tmp, _T("#define"))) && (0 != _tcscmp(tmp, _T("#include")))) {
+				nNumbers++;
+				continue;
+			} else {
+				if (0 == _tcscmp(tmp, _T("#define")))
+					continue;
+				if (0 == _tcscmp(tmp, _T("#include"))) {
+					if (NULL == (tmp = _strqtoken(NULL, _T(" \t\r\n"))))
+						continue;
+
+					// Only dat files in the same directory are allowed
+					// Only accepts ips with the same driver
+					if ((NULL != _tcsrchr(tmp, _T('/'))) || (NULL != _tcsrchr(tmp, _T('\\'))))
+						continue;
+
+					// ips_path/drv_name/game.dat
+					TCHAR szInclde[MAX_PATH] = { 0 };
+					const TCHAR* pszFormat = (NULL == _tcsrchr(tmp, _T('.'))) ? _T("%s%s\\%s.dat") : _T("%s%s\\%s");
+					_stprintf(szInclde, pszFormat, ctx->pszAppRomPaths, ctx->pszDriverName, tmp);
+
+					// Check if the file exists
+					if (!FileExists(szInclde))
+						continue;
+
+					TCHAR** newArray = (TCHAR**)realloc(((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat), (((nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount) + 1) * sizeof(TCHAR*));
+					((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat) = newArray;
+
+					((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat)[(nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+					_tcscpy(((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat)[(nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount], szInclde);
+					((nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount)++;
+				}
+			}
+		}
+	}
+}
+
+//=========================================================================
+// Main：ExtraPatchesInit
+//=========================================================================
 static void ExtraPatchesInit(const INT32 nActivePatches)
 {
 	ExtraPatchesExit();
 
 	const TCHAR* pszAppRomPaths = (2 == nQuickOpen) ? szAppQuickPath : szAppIpsPath;
-	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName   : BurnDrvGetText(DRV_NAME);
+	const TCHAR* pszDriverName  = (2 == nQuickOpen) ? szDriverName : BurnDrvGetText(DRV_NAME);
+
+	ExtraPatchContext ctx = { 0 };
+	ctx.pszAppRomPaths = pszAppRomPaths;
+	ctx.pszDriverName = pszDriverName;
 
 	for (INT32 i = 0; i < nActivePatches; i++) {
-		TCHAR str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL;
-		FILE* fp = NULL;
-		INT32 nNumbers = 0;
+		// 安全打开、自动关闭
+		SafeProcessTextFile(szIpsActivePatches[i], ExtraPatchesInitCallback, &ctx);
+	}
+}
 
-		const TCHAR* pszReadMode = AdaptiveEncodingReads(szIpsActivePatches[i]);
-		if (NULL == pszReadMode) continue;
+//=========================================================================
+// Context for GetIpsDrvDefine safe file processing
+//=========================================================================
+typedef struct {
+	TCHAR* pszDatName;
+} IpsDefineContext;
 
-		if (NULL != (fp = _tfopen(szIpsActivePatches[i], pszReadMode))) {
-			while (!feof(fp)) {
-				if (NULL != _fgetts(str, sizeof(str), fp)) {
-					ptr = str;
+//=========================================================================
+// Callback: Parse #define directives from IPS DAT file
+// Original logic preserved 1:1, NO internal changes
+//=========================================================================
+static void GetIpsDrvDefineCallback(const TCHAR* inputFile, FILE* fp, void* userData)
+{
+	IpsDefineContext* ctx = (IpsDefineContext*)userData;
+	TCHAR str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL;
+	UINT32 nNewValue = 0;
 
-					if (NULL == (tmp = _strqtoken(ptr, _T(" \t\r\n"))))
-						continue;
-					if (_T('[') == tmp[0])
-						break;
-					if ((_T('/') == tmp[0]) && (_T('/') == tmp[1]))
-						continue;
-					if ((0 != _tcscmp(tmp, _T("#define"))) && (0 != _tcscmp(tmp, _T("#include")))) {
-						nNumbers++;
-						continue;
-					} else {
-						if (0 == _tcscmp(tmp, _T("#define"))) {
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("#include"))) {
-							if (NULL == (tmp = _strqtoken(NULL, _T(" \t\r\n"))))
-								continue;
-							/*
-								#inclede "kof97"
-								#inclede "kof97.dat"
-							*/
-							// Only dat files in the same directory are allowed
-							// Only accepts ips with the same driver
-							if ((NULL != _tcsrchr(tmp, _T('/'))) || (NULL != _tcsrchr(tmp, _T('\\'))))
-								continue;
+	if (!fp)
+		return;
 
-							// ips_path/drv_name/game.dat
-							TCHAR szInclde[MAX_PATH] = { 0 };
-							const TCHAR* pszFormat = (NULL == _tcsrchr(tmp, _T('.'))) ? _T("%s%s\\%s.dat") : _T("%s%s\\%s");
-							_stprintf(szInclde, pszFormat, pszAppRomPaths, pszDriverName, tmp);
+	while (!feof(fp)) {
+		if (NULL != _fgetts(str, sizeof(str), fp)) {
+			ptr = str;
+#if 0
+			// skip UTF-8 sig
+			if (0 == strncmp(ptr, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)))
+				ptr += strlen(UTF8_SIGNATURE);
+#endif	// 0
+			if (NULL == (tmp = _strqtoken(ptr, _T(" \t\r\n"))))
+				continue;
+			if (_T('[') == tmp[0])
+				break;
+			if ((_T('/') == tmp[0]) && (_T('/') == tmp[1]))
+				continue;
+			if (0 == _tcscmp(tmp, _T("#define"))) {
+				if (NULL == (tmp = _strqtoken(NULL, _T(" \t\r\n"))))
+					continue;
 
-							// Check if the file exists
-							if (!FileExists(szInclde))
-								continue;
-
-							TCHAR** newArray = (TCHAR**)realloc((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat, (((nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount) + 1) * sizeof(TCHAR*));
-							((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat) = newArray;
-
-							((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat)[(nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-							_tcscpy(((nNumbers > 0) ? _IpsLast.pszDat : _IpsEarly.pszDat)[(nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount], szInclde);
-							((nNumbers > 0) ? _IpsLast.nCount : _IpsEarly.nCount)++;
-						}
-					}
+				if (0 == _tcscmp(tmp, _T("IPS_NOT_PROTECT"))) {
+					nIpsDrvDefine |= IPS_NOT_PROTECT;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_PGM_SPRHACK"))) {
+					nIpsDrvDefine |= IPS_PGM_SPRHACK;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_PGM_MAPHACK"))) {
+					nIpsDrvDefine |= IPS_PGM_MAPHACK;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_PGM_SNDOFFS"))) {
+					nIpsDrvDefine |= IPS_PGM_SNDOFFS;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_SNES_VRAMHK"))) {
+					nIpsDrvDefine |= IPS_SNES_VRAMHK;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_NEO_RAMHACK"))) {
+					nIpsDrvDefine |= IPS_NEO_RAMHACK;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_LOAD_EXPAND"))) {
+					nIpsDrvDefine |= IPS_LOAD_EXPAND;
+					nIpsMemExpLen[EXP_FLAG] = 1;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[LOAD_ROM])
+						nIpsMemExpLen[LOAD_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_EXTROM_INCL"))) {
+					nIpsDrvDefine |= IPS_EXTROM_INCL;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[EXTR_ROM])
+						nIpsMemExpLen[EXTR_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_PRG1_EXPAND"))) {
+					nIpsDrvDefine |= IPS_PRG1_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG1_ROM])
+						nIpsMemExpLen[PRG1_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_PRG2_EXPAND"))) {
+					nIpsDrvDefine |= IPS_PRG2_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG2_ROM])
+						nIpsMemExpLen[PRG2_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_GRA1_EXPAND"))) {
+					nIpsDrvDefine |= IPS_GRA1_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA1_ROM])
+						nIpsMemExpLen[GRA1_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_GRA2_EXPAND"))) {
+					nIpsDrvDefine |= IPS_GRA2_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA2_ROM])
+						nIpsMemExpLen[GRA2_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_GRA3_EXPAND"))) {
+					nIpsDrvDefine |= IPS_GRA3_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA3_ROM])
+						nIpsMemExpLen[GRA3_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_ACPU_EXPAND"))) {
+					nIpsDrvDefine |= IPS_ACPU_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[ACPU_ROM])
+						nIpsMemExpLen[ACPU_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_SND1_EXPAND"))) {
+					nIpsDrvDefine |= IPS_SND1_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND1_ROM])
+						nIpsMemExpLen[SND1_ROM] = nNewValue;
+					continue;
+				}
+				if (0 == _tcscmp(tmp, _T("IPS_SND2_EXPAND"))) {
+					nIpsDrvDefine |= IPS_SND2_EXPAND;
+					if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND2_ROM])
+						nIpsMemExpLen[SND2_ROM] = nNewValue;
+					continue;
 				}
 			}
-			fclose(fp);
 		}
 	}
 }
 
+//=========================================================================
 // Run once to get the definition & definition values of the DAT files.
 // Suppress CPU usage caused by multiple runs.
 // Two entry points: cmdline Launch & SelOkay.
+//=========================================================================
 static void GetIpsDrvDefine()
 {
 	if (!bDoIpsPatch)
@@ -1476,11 +1728,12 @@ static void GetIpsDrvDefine()
 
 	INT32 nCount = _IpsEarly.nCount + nActivePatches + _IpsLast.nCount;
 
-	for (INT32 i = 0; i < nCount; i++) {
-		TCHAR str[MAX_PATH] = { 0 }, * ptr = NULL, * tmp = NULL, * pszDatName = szIpsActivePatches[i];
-		FILE* fp = NULL;
+	IpsDefineContext ctx = { 0 };
 
-		if ((_IpsEarly.nCount) > 0 || (_IpsLast.nCount > 0)) {
+	for (INT32 i = 0; i < nCount; i++) {
+		TCHAR* pszDatName = szIpsActivePatches[i];
+
+		if ((_IpsEarly.nCount > 0) || (_IpsLast.nCount > 0)) {
 			if ((i >= 0) && (i < _IpsEarly.nCount)) {
 				pszDatName = _IpsEarly.pszDat[i];
 			}
@@ -1492,120 +1745,10 @@ static void GetIpsDrvDefine()
 			}
 		}
 
-		const TCHAR* pszReadMode = AdaptiveEncodingReads(pszDatName);
-		if (NULL == pszReadMode) continue;
+		ctx.pszDatName = pszDatName;
 
-		if (NULL != (fp = _tfopen(pszDatName, pszReadMode))) {
-			while (!feof(fp)) {
-				if (NULL != _fgetts(str, sizeof(str), fp)) {
-					ptr = str;
-#if 0
-					// skip UTF-8 sig
-					if (0 == strncmp(ptr, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)))
-						ptr += strlen(UTF8_SIGNATURE);
-#endif // 0
-					if (NULL == (tmp = _strqtoken(ptr,  _T(" \t\r\n"))))
-						continue;
-					if (_T('[') == tmp[0])
-						break;
-					if ((_T('/') == tmp[0]) && (_T('/') == tmp[1]))
-						continue;
-					if (0 == _tcscmp(tmp, _T("#define"))) {
-						if (NULL == (tmp = _strqtoken(NULL, _T(" \t\r\n"))))
-							continue;
-
-						UINT32 nNewValue = 0;
-
-						if (0 == _tcscmp(tmp, _T("IPS_NOT_PROTECT"))) {
-							nIpsDrvDefine |= IPS_NOT_PROTECT;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_PGM_SPRHACK"))) {
-							nIpsDrvDefine |= IPS_PGM_SPRHACK;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_PGM_MAPHACK"))) {
-							nIpsDrvDefine |= IPS_PGM_MAPHACK;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_PGM_SNDOFFS"))) {
-							nIpsDrvDefine |= IPS_PGM_SNDOFFS;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_SNES_VRAMHK"))) {
-							nIpsDrvDefine |= IPS_SNES_VRAMHK;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_NEO_RAMHACK"))) {
-							nIpsDrvDefine |= IPS_NEO_RAMHACK;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_LOAD_EXPAND"))) {
-							nIpsDrvDefine |= IPS_LOAD_EXPAND;
-							nIpsMemExpLen[EXP_FLAG] = 1;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[LOAD_ROM])
-								nIpsMemExpLen[LOAD_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_EXTROM_INCL"))) {
-							nIpsDrvDefine |= IPS_EXTROM_INCL;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[EXTR_ROM])
-								nIpsMemExpLen[EXTR_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_PRG1_EXPAND"))) {
-							nIpsDrvDefine |= IPS_PRG1_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG1_ROM])
-								nIpsMemExpLen[PRG1_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_PRG2_EXPAND"))) {
-							nIpsDrvDefine |= IPS_PRG2_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG2_ROM])
-								nIpsMemExpLen[PRG2_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_GRA1_EXPAND"))) {
-							nIpsDrvDefine |= IPS_GRA1_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA1_ROM])
-								nIpsMemExpLen[GRA1_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_GRA2_EXPAND"))) {
-							nIpsDrvDefine |= IPS_GRA2_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA2_ROM])
-								nIpsMemExpLen[GRA2_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_GRA3_EXPAND"))) {
-							nIpsDrvDefine |= IPS_GRA3_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA3_ROM])
-								nIpsMemExpLen[GRA3_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_ACPU_EXPAND"))) {
-							nIpsDrvDefine |= IPS_ACPU_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[ACPU_ROM])
-								nIpsMemExpLen[ACPU_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_SND1_EXPAND"))) {
-							nIpsDrvDefine |= IPS_SND1_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND1_ROM])
-								nIpsMemExpLen[SND1_ROM] = nNewValue;
-							continue;
-						}
-						if (0 == _tcscmp(tmp, _T("IPS_SND2_EXPAND"))) {
-							nIpsDrvDefine |= IPS_SND2_EXPAND;
-							if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND2_ROM])
-								nIpsMemExpLen[SND2_ROM] = nNewValue;
-							continue;
-						}
-					}
-				}
-			}
-			fclose(fp);
-		}
+		// Safe file read with auto encoding and auto close
+		SafeProcessTextFile(pszDatName, GetIpsDrvDefineCallback, &ctx);
 	}
 }
 

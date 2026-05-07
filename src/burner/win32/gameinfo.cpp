@@ -565,7 +565,7 @@ static int GameInfoInit()
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_ROMDATA_DRIVER) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""),FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
 		bUseInfo = true;
 	}
 	TCHAR szPlayersMax[100];

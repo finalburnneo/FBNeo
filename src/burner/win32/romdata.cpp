@@ -1795,8 +1795,6 @@ static void LoadRomdataCallback(const TCHAR* inputFile, FILE* fp, void* userData
 		return;
 
 	UINT32 nRet = 0U;
-	INT32 nType = 0x01;
-
 	struct BurnRomInfo** pri = NULL;
 	UINT32 pri_count = 0;
 
@@ -1900,18 +1898,18 @@ static INT32 LoadRomdata(const TCHAR* pszFileName)
 INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 {
 	TCHAR szBuffer[BUFFER_SIZE] = { 0 };
-	OPENFILENAME ofn = { 0 };
+	OPENFILENAME ofname = { 0 };
 
 	// Initialize OPENFILENAME structure for multi-select dialog
-	ofn.lStructSize = sizeof(OPENFILENAME);
-	ofn.hwndOwner   = hWnd;
-	ofn.lpstrFile   = szBuffer;
-	ofn.nMaxFile    = BUFFER_SIZE;
-	ofn.lpstrFilter = _T("RomData (*.dat)\0*.dat\0");
-	ofn.Flags       = OFN_ALLOWMULTISELECT | OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
+	ofname.lStructSize = sizeof(OPENFILENAME);
+	ofname.hwndOwner   = hWnd;
+	ofname.lpstrFile   = szBuffer;
+	ofname.nMaxFile    = BUFFER_SIZE;
+	ofname.lpstrFilter = _T("RomData (*.dat)\0*.dat\0");
+	ofname.Flags       = OFN_ALLOWMULTISELECT | OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
 
 	// Return 0 if dialog canceled or failed
-	if (!GetOpenFileName(&ofn)) {
+	if (!GetOpenFileName(&ofname)) {
 		if (perrCnt)
 			*perrCnt = 0;
 
@@ -2073,7 +2071,7 @@ INT32 OpenDirectoryLoadRomData(HWND hWnd)
 	// Initialize folder dialog
 	BROWSEINFO bi = { 0 };
 	bi.hwndOwner = hWnd;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;	// Allow folders only
+	bi.ulFlags   = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;	// Allow folders only
 
 	// Show folder selection dialog
 	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
@@ -2091,6 +2089,8 @@ INT32 OpenDirectoryLoadRomData(HWND hWnd)
 	CoTaskMemFree(pidl);
 
 	ScanDirectoryLoadRomdata(szDirPath, bRDListScanSub);
+
+	return 1;
 }
 
 // Initializes RomData system by loading all ROM data files from the specified directory

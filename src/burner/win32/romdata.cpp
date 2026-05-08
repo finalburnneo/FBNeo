@@ -1577,7 +1577,6 @@ static INT32 ParseRomDataLabel(const TCHAR* pszLabel, char* szZipName, char* szD
 		INT32 nAdd = 0;
 		TCHAR* pszInfo;
 		while (pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME)) {
-//			MessageBox(NULL, pszInfo, _T("Encoding Error"), MB_OK | MB_ICONERROR);
 			INT32 nRem = MAX_PATH - nAdd - 1;
 			if (0 >= nRem)
 				break;									// Buffer full, stop adding

@@ -1483,7 +1483,8 @@ static INT32 ParseRomDataLabel(const TCHAR* pszLabel, char* szZipName, char* szD
 		if (0 == _tcsicmp(_T("System"), pszLabel))
 			return 1;									// End parsing marker found
 
-		_tcsncpy(szRomMask, pszLabel, sizeof(szRomMask) / sizeof(TCHAR) - 1);
+		_tcsncpy(szRomMask, pszLabel, 99U);
+		szRomMask[99U] = _T('\0');						// Ensure null-termination
 		return 0;										// Section header processed
 	}
 
@@ -1576,6 +1577,7 @@ static INT32 ParseRomDataLabel(const TCHAR* pszLabel, char* szZipName, char* szD
 		INT32 nAdd = 0;
 		TCHAR* pszInfo;
 		while (pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME)) {
+//			MessageBox(NULL, pszInfo, _T("Encoding Error"), MB_OK | MB_ICONERROR);
 			INT32 nRem = MAX_PATH - nAdd - 1;
 			if (0 >= nRem)
 				break;									// Buffer full, stop adding

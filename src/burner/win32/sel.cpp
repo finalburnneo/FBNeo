@@ -1854,6 +1854,8 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 				bLoadOK = LoadFileToBuffer(szIcon, &mBuffer, &mBufferSize);
 			}
 
+			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
+
 			if (bLoadOK) {
 				pCache[nDrvIndex] = LoadIconFromMemory(mBuffer, mBufferSize, nIconsSizeXY, nIconsSizeXY);
 				free(mBuffer);
@@ -1900,6 +1902,8 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 			} else {
 				bLoadOK = LoadFileToBuffer(szIcon, &mBuffer, &mBufferSize);
 			}
+
+			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
 
 			if (bLoadOK) {
 				pCache[nDrvIndex] = LoadIconFromMemory(mBuffer, mBufferSize, nIconsSizeXY, nIconsSizeXY);

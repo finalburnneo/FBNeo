@@ -1,5 +1,6 @@
 // Misc functions module
 #include <math.h>
+#include <locale.h>
 #include "burner.h"
 
 // ---------------------------------------------------------------------------
@@ -977,8 +978,8 @@ static TCHAR* SmartOpenTextFile(const TCHAR* inputText, FILE** file, EncodingTyp
 		*encType = ENCODING_ERROR;
 
 	bool bConverted = false;
-	TCHAR* convertedFilePath = NULL;
-	const TCHAR* pszReadMode = NULL;
+	TCHAR* convertedFilePath   = NULL;
+	const TCHAR* pszReadMode   = NULL;
 	const TCHAR* pszTargetFile = inputText;
 
 	// Detect file encoding type
@@ -988,31 +989,32 @@ static TCHAR* SmartOpenTextFile(const TCHAR* inputText, FILE** file, EncodingTyp
 
 	// Configure file open mode based on encoding
 	switch (detectedType) {
-	case ENCODING_ANSI:
-		pszReadMode = _T("rt");
-		break;
+		case ENCODING_ANSI:
+			pszReadMode = _T("rt");
+			setlocale(LC_ALL, "");		// Use system locale for ANSI encoding
+			break;
 
-	case ENCODING_UTF8:
-	case ENCODING_UTF8_BOM:
-		pszReadMode = _T("rt, ccs=UTF-8");
-		break;
+		case ENCODING_UTF8:
+		case ENCODING_UTF8_BOM:
+			pszReadMode = _T("rt, ccs=UTF-8");
+			break;
 
-	case ENCODING_UTF16_LE:
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
+		case ENCODING_UTF16_LE:
+			pszReadMode = _T("rt, ccs=UTF-16LE");
+			break;
 
-	case ENCODING_UTF16_BE:
-		// Windows does not support UTF-16BE natively, convert to UTF-16LE first
-		if (!Utf16beToUtf16le(inputText, &convertedFilePath))
+		case ENCODING_UTF16_BE:
+			// Windows does not support UTF-16BE natively, convert to UTF-16LE first
+			if (!Utf16beToUtf16le(inputText, &convertedFilePath))
+				return NULL;
+
+			bConverted = true;
+			pszReadMode = _T("rt, ccs=UTF-16LE");
+			break;
+
+		default:
+			// Unsupported encoding type
 			return NULL;
-
-		bConverted = true;
-		pszReadMode = _T("rt, ccs=UTF-16LE");
-		break;
-
-	default:
-		// Unsupported encoding type
-		return NULL;
 	}
 
 	// Use converted temporary file if conversion was performed

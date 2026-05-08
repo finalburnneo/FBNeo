@@ -3149,9 +3149,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 						bool bParentExp = false;	// If true, Item is clone and parent is expanded
 						if (!((NODEINFO*)TvItem.lParam)->bIsParent) {
-							HTREEITEM hParent = TreeView_GetParent(hSelList, TvItem.hItem);
-							if (NULL != hParent) {
-								bParentExp = (TreeView_GetItemState(hSelList, hParent, TVIS_EXPANDED) & TVIS_EXPANDED);
+							HTREEITEM hParentTmp = TreeView_GetParent(hSelList, TvItem.hItem);
+							if (NULL != hParentTmp) {
+								bParentExp = (TreeView_GetItemState(hSelList, hParentTmp, TVIS_EXPANDED) & TVIS_EXPANDED);
 							}
 						}
 						// Draw icons if needed
@@ -3360,7 +3360,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 						}
 						if (BurnDrvGetFlags() & BDF_ROMDATA_DRIVER) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(") ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
 							bUseInfo = true;
 						}
 						TCHAR szPlayersMax[100];

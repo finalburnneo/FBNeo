@@ -5648,10 +5648,10 @@ STD_ROM_PICK(sms_loretta)
 STD_ROM_FN(sms_loretta)
 
 struct BurnDriver BurnDrvsms_loretta = {
-	"sms_loretta", "sms_lorettate", NULL, NULL, "1987",
+	"sms_loretta", NULL, NULL, NULL, "1987",
 	"Loretta no Shouzou: Sherlock Holmes (Japan)\0", NULL, "Sega", "Sega Master System",
 	L"Loretta no Shouzou: Sherlock Holmes (Japan)\0\u30ed\u30ec\u30c3\u30bf\u306e\u8096\u50cf\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
 	SMSGetZipName, sms_lorettaRomInfo, sms_lorettaRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -26488,6 +26488,25 @@ struct BurnDriver BurnDrvgg_eternlege = {
 	256, 192, 4, 3
 };
 
+// Fray: Shugyouhen (Hack, English)
+// https://www.romhacking.net/translations/7577/
+static struct BurnRomInfo gg_frayteRomDesc[] = {
+	{ "Fray - Shugyou Hen T-Eng (2026)(BacklogOddy).gg",	262144, 0x3ac4575b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_frayte)
+STD_ROM_FN(gg_frayte)
+
+struct BurnDriver BurnDrvgg_frayte = {
+	"gg_frayte", "gg_fray", NULL, NULL, "2026",
+	"Fray: Shugyouhen (Hack, English)\0", NULL, "BacklogOddy", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_frayteRomInfo, gg_frayteRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Genius Bakabon, The (Hack, English v1.2)
 // https://www.romhacking.net/translations/6544/
 static struct BurnRomInfo sms_bakabonenRomDesc[] = {
@@ -26765,10 +26784,10 @@ STD_ROM_PICK(sms_lorettate)
 STD_ROM_FN(sms_lorettate)
 
 struct BurnDriver BurnDrvsms_lorettate = {
-	"sms_lorettate", NULL, NULL, NULL, "2026",
+	"sms_lorettate", "sms_loretta", NULL, NULL, "2026",
 	"Loretta's Portrait (Hack, English)\0", NULL, "Jamiras", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV, 0,
 	SMSGetZipName, sms_lorettateRomInfo, sms_lorettateRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

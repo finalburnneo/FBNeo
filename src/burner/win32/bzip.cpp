@@ -15,34 +15,35 @@ static struct SubDirsZip _SubDirsZip;
 
 // ----------------------------------------------------------------------------
 
-// Release all memory allocated for Bzip list
 static void BzipListFree()
 {
-	// Free each name string in the list
-	for (INT32 i = 0; i < nListCount; i++) {
-		free_s((void**)&List[i].szName);
+	if (List) {
+		for (INT32 i = 0; i < nListCount; i++) {
+			if (List[i].szName) {
+				free(List[i].szName);
+				List[i].szName = NULL;
+			}
+		}
+		free(List);
+		List = NULL;
 	}
 
-	// Free the list array and reset pointer
-	free_s((void**)&List);
-
-	// Reset list count
 	nListCount = 0;
 }
 
-// Release all memory allocated for subdirectory zip list
 static void SubDirsListFree()
 {
-	// Free each zip name string
-	for (INT32 i = 0; i < _SubDirsZip.nCount; i++) {
-		free_s((void**)&_SubDirsZip.pszZipName[i]);
+	if (NULL != _SubDirsZip.pszZipName) {
+		for (INT32 i = 0; i < _SubDirsZip.nCount; i++) {
+			if (NULL != _SubDirsZip.pszZipName[i]) {
+				free(_SubDirsZip.pszZipName[i]);
+				_SubDirsZip.pszZipName[i] = NULL;
+			}
+		}
+		free(_SubDirsZip.pszZipName);
+		_SubDirsZip.pszZipName = NULL;
+		_SubDirsZip.nCount = 0;
 	}
-
-	// Free the pointer array itself
-	free_s((void**)&_SubDirsZip.pszZipName);
-
-	// Reset entry count
-	_SubDirsZip.nCount = 0;
 }
 
 static char* GetFilenameA(char* szFull)
@@ -351,6 +352,9 @@ static INT32 __cdecl BzipBurnLoadRom(UINT8* Dest, INT32* pnWrote, INT32 i)
 #endif
 
 	if (RomFind[i].nState == 0) {							// Rom not found in zip at all
+		// Error not found in the zip file
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_DISK), pszRomName, GetFilenameW(szBzipName[nCurrentZip]));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n\n"));
 		return 1;
 	}
 
@@ -379,56 +383,58 @@ static INT32 __cdecl BzipBurnLoadRom(UINT8* Dest, INT32* pnWrote, INT32 i)
 	return 0;
 }
 
-INT32 QuickVerifyZip(const char* noextPath, const TCHAR* pszSelArc)
+INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc)
 {
-	// Extract filename only once (fast path processing)
-	char noextArc[32] = { 0 };
-	const char* pFileName = strrchr(noextPath, '\\');
-	pFileName = pFileName ? pFileName + 1 : strrchr(noextPath, '/');
-	pFileName = pFileName ? pFileName + 1 : noextPath;
-	UINT32 nameCopyLen = min((UINT32)strlen(pFileName), 99U);
-	strncpy(noextArc, pFileName, nameCopyLen);
-	noextArc[nameCopyLen] = '\0';
-
-	const UINT32 nOldDrvSel = nBurnDrvActive;
+	const UINT32 nOldDrvSel = nBurnDrvActive, nArcNameLen = _tcslen(szAppQuickPath);
+	const TCHAR* p = pszSelArc + nArcNameLen, * pszExt = _tcsrchr((TCHAR*)pszSelArc, _T('.'));
 	INT32 nDrvIdx = -1;
 
-	// Single condition for loop -> faster execution
-	for (UINT32 i = 0; i < nBurnDrvCount && nDrvIdx < 0; i++) {
+	TCHAR szArcName[64] = { 0 }, szArcNoExt[MAX_PATH] = { 0 };
+	_tcsncpy(szArcName,  p,         pszExt - p);
+	_tcsncpy(szArcNoExt, pszSelArc, pszExt - pszSelArc);
+
+	for (UINT32 i = 0; (i < nBurnDrvCount) && (nDrvIdx < 0); i++) {
 		nBurnDrvActive = i;
+		const UINT32 nFlag = BurnDrvGetFlags();
 
-		char* szName = NULL;
-		// Merge all checks into one line, reduce branch miss
-		if (0 != BurnDrvGetZipName(&szName, 0) || !szName || 0 != strcmp(noextArc, szName))
+		if (nFlag & BDF_BOARDROM)
 			continue;
 
-		// Open ZIP only when name matches (huge performance gain)
-		if (0 != ZipOpen((char*)noextPath))
-			continue;
-
-		ZipGetList(&List, &nListCount);
-		// Early exit loop when found
-		for (INT32 y = 0; y < nListCount && nDrvIdx < 0; y++) {
-			struct BurnRomInfo ri = { 0 };
-			if (0 != BurnDrvGetRomInfo(&ri, y))
+		for (int z = 0; z < BZIP_MAX; z++) {
+			char* szName = NULL;
+			if (BurnDrvGetZipName(&szName, z))
 				break;
 
-			// Fast match CRC or filename
-			if ((ri.nCrc && List[y].nCrc == ri.nCrc) || (0 == strcmp(szName, List[y].szName))) {
-				nDrvIdx = (INT32)i;
-				break;
+			const TCHAR* pszName = _AtoT(szName);
+			if (0 != _tcsicmp(szArcName, pszName))
+				continue;
+
+			if (nFlag & BDF_CLONE) {
+				const TCHAR* pszParent = BurnDrvGetText(DRV_PARENT);
+				if ((NULL != pszParent) && (0 == _tcsicmp(szArcName, pszParent)))
+					continue;
 			}
-		}
 
-		// Fast resource release
-		BzipListFree();
-		ZipClose();
+			char* pszArcNoExt = _TtoA(szArcNoExt);
+			if (0 != ZipOpen(pszArcNoExt))
+				continue;	// Make sure nothing is open
+
+			ZipGetList(&List, &nListCount);
+			for (INT32 y = 0; 0 == BurnDrvGetRomInfo(NULL, y); y++) {
+				if (FindRom(y) >= 0) {
+					nDrvIdx = i;
+					z = BZIP_MAX;
+					break;
+				}
+			}
+			BzipListFree();
+			ZipClose();
+		}
 	}
 
 	nBurnDrvActive = nOldDrvSel;
 
-	// Error popup only if not found
-	if (0 > nDrvIdx && pszSelArc) {
+	if (nDrvIdx < 0) {
 		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Zip / 7z:\n\n"));
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_CONTENT), pszSelArc);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
@@ -487,7 +493,7 @@ INT32 BzipOpen(bool bootApp)
 
 	SubDirsListFree();
 
-	const char* pszDrvName   = IsRomDataDrv() ? RomDataDrvGetDrvName() : NULL;
+	const char* pszDrvName = (NULL != pDataRomDesc) ? pRDI->szDrvName : NULL;	// romdata mode, let's pick up the forgotten DrvName ROMs again.
 	const INT32 nAppRomPaths = (nQuickOpen > 0) ? DIRS_MAX + 1 : DIRS_MAX;
 
 	// Locate each zip file
@@ -509,7 +515,7 @@ INT32 BzipOpen(bool bootApp)
 					if ((_tcslen(_SubDirInfo[d].SubDirs[nCount]) + strlen(szName)) > (MAX_PATH - 5))
 						continue;
 					_stprintf(szFullName, _T("%s%hs"), _SubDirInfo[d].SubDirs[nCount], szName);
-					if (pszDrvName) {
+					if (NULL != pszDrvName) {
 						_stprintf(szDrvName, _T("%s%hs"), _SubDirInfo[d].SubDirs[nCount], pszDrvName);
 					}
 
@@ -547,7 +553,7 @@ INT32 BzipOpen(bool bootApp)
 			}
 
 			_stprintf(szFullName, _T("%s%hs"), pszAppRomPaths, szName);
-			if (pszDrvName) {
+			if (NULL != pszDrvName) {
 				_stprintf(szDrvName, _T("%s%hs"), pszAppRomPaths, pszDrvName);
 			}
 

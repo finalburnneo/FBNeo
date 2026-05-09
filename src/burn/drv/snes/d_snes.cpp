@@ -44933,6 +44933,25 @@ struct BurnDriver BurnDrvsnes_Fruelufia = {
 	512, 448, 4, 3
 };
 
+// F-Zero: Max League (Hack)
+// https://romhackplaza.org/romhacks/f-zero-max-league-snes/
+static struct BurnRomInfo snes_FzeromlRomDesc[] = {
+	{ "F-Zero - MAX League (2026)(PowerPanda, Zephyrum25).sfc", 1048576, 0x0539686b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fzeroml)
+STD_ROM_FN(snes_Fzeroml)
+
+struct BurnDriver BurnDrvsnes_Fzeroml = {
+	"snes_fzeroml", "snes_fzero", NULL, NULL, "2026",
+	"F-Zero: Max League (Hack)\0", NULL, "PowerPanda, Zephyrum25", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_FzeromlRomInfo, snes_FzeromlRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Ganbare Goemon 4 - Time Pilot (Hack)
 // https://www.romhacking.net/hacks/7066/
 static struct BurnRomInfo snes_Ganbgoemon4tpRomDesc[] = {

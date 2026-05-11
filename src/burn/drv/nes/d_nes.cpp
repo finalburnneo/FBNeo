@@ -9254,6 +9254,44 @@ struct BurnDriver BurnDrvnes_justbreedc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ninja Radical Yanchamaru 2: O Parque Karakuri (Hack, Portuguese v1.0.1)
+// https://www.romhacking.net.br/index.php?topic=1936.0
+static struct BurnRomInfo nes_kaikeyanmar2tpRomDesc[] = {
+	{ "Ninja Radical Yanchamaru 2 - O Parque Karakuri T-Por v1.0.1 (2021)(Green Jerry).nes",          262160, 0xc207523c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kaikeyanmar2tp)
+STD_ROM_FN(nes_kaikeyanmar2tp)
+
+struct BurnDriver BurnDrvnes_kaikeyanmar2tp = {
+	"nes_kaikeyanmar2tp", "nes_kaikeyanmar2", NULL, NULL, "2021",
+	"Ninja Radical Yanchamaru 2: O Parque Karakuri (Hack, Portuguese v1.0.1)\0", NULL, "Green Jerry", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kaikeyanmar2tpRomInfo, nes_kaikeyanmar2tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ninja Radical Yanchamaru 3: O Confronto Contra Zouringen! (Hack, Portuguese)
+// http://romhacking.net.br/index.php?topic=3349.0
+static struct BurnRomInfo nes_kaikeyanmar3tpRomDesc[] = {
+	{ "Ninja Radical Yanchamaru 3 - O Confronto Contra Zouringen! T-Por (2026)(Green Jerry).nes",          262160, 0x03d68a5b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kaikeyanmar3tp)
+STD_ROM_FN(nes_kaikeyanmar3tp)
+
+struct BurnDriver BurnDrvnes_kaikeyanmar3tp = {
+	"nes_kaikeyanmar3tp", "nes_kaikeyanmar3", NULL, NULL, "2026",
+	"Ninja Radical Yanchamaru 3: O Confronto Contra Zouringen! (Hack, Portuguese)\0", NULL, "Irem Corp.", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kaikeyanmar3tpRomInfo, nes_kaikeyanmar3tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Karate Kid, The (Hack, Spanish)
 // https://www.romhacking.net/translations/5346/
 static struct BurnRomInfo nes_karatekidthecRomDesc[] = {

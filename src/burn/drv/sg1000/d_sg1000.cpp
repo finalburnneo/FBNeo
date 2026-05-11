@@ -1755,6 +1755,25 @@ struct BurnDriver BurnDrvsg1k_girlgardt = {
 	272, 228, 4, 3
 };
 
+// Girl's Garden ~ Jardim do Amor (Hack, Portuguese v2.0)
+// https://www.romhacking.net.br/index.php?topic=23.0
+static struct BurnRomInfo sg1k_girlgardptRomDesc[] = {
+	{ "Jardim do Amor T-Por v2.0 (2016-26)(Patryckpo).sg",	32768, 0x149ef6b1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_girlgardpt)
+STD_ROM_FN(sg1k_girlgardpt)
+
+struct BurnDriver BurnDrvsg1k_girlgardpt = {
+	"sg1k_girlgardpt", "sg1k_girlgard", NULL, NULL, "2016-26",
+	"Girl's Garden ~ Jardim do Amor (Hack, Portuguese v2.0)\0", NULL, "Patryckpo", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_girlgardptRomInfo, sg1k_girlgardptRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Golgo 13 (Japan)
 static struct BurnRomInfo sg1k_golgo13RomDesc[] = {
 	{ "Golgo 13 (Japan)(1984)(Sega).sg",	0x08000, 0x0d159ed0, BRF_PRG | BRF_ESS },

@@ -11424,10 +11424,10 @@ struct BurnDriver BurnDrvsnes_Earthwormjimj = {
 	512, 448, 4, 3
 };
 
-// Earthworm Jim (Hack, Portuguese)
+// Earthworm Jim (Hack, Portuguese v2.0)
 // https://www.romhacking.net.br/index.php?topic=3350.0
 static struct BurnRomInfo snes_EarthwormjimtpRomDesc[] = {
-	{ "Earthworm Jim PT-BR (2026)(juliano_did).sfc", 3145728, 0x5b989e82, BRF_ESS | BRF_PRG },
+	{ "Earthworm Jim PT-BR v2.0 (2026)(juliano_did).sfc", 3145728, 0x5e4fe99e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Earthwormjimtp)
@@ -11435,7 +11435,7 @@ STD_ROM_FN(snes_Earthwormjimtp)
 
 struct BurnDriver BurnDrvsnes_Earthwormjimtp = {
 	"snes_earthwormjimtp", "snes_earthwormjim", NULL, NULL, "2026",
-	"Earthworm Jim (Hack, Portuguese)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	"Earthworm Jim (Hack, Portuguese v2.0)\0", NULL, "juliano_did", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_EarthwormjimtpRomInfo, snes_EarthwormjimtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

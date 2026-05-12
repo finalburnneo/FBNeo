@@ -44742,10 +44742,10 @@ struct BurnDriver BurnDrvsnes_Eekcatce = {
 	512, 448, 4, 3
 };
 
-// Eyra: The Crow Maiden (HB)
+// Eyra: The Crow Maiden (HB, v1.1)
 
 static struct BurnRomInfo snes_EyraRomDesc[] = {
-	{ "Eyra - The Crow Maiden (2022-23)(Second Dimension).sfc", 2097152, 0x891c5bad, BRF_ESS | BRF_PRG },
+	{ "Eyra - The Crow Maiden v1.1 (2022-23)(Second Dimension).sfc", 2097152, 0x891c5bad, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Eyra)
@@ -44753,7 +44753,7 @@ STD_ROM_FN(snes_Eyra)
 
 struct BurnDriver BurnDrvsnes_Eyra = {
 	"snes_eyra", NULL, NULL, NULL, "2022-23",
-	"Eyra: The Crow Maiden (HB)\0", NULL, "Second Dimension", "SNES / Super Famicom",
+	"Eyra: The Crow Maiden (HB, v1.1)\0", NULL, "Second Dimension", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_EyraRomInfo, snes_EyraRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -45651,6 +45651,44 @@ struct BurnDriver BurnDrvsnes_Littlemedusa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_LittlemedusaRomInfo, snes_LittlemedusaRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lieutenant Gourmet (NTSC) (HB, Beta v25.12.31-2)
+// https://retroantho.itch.io/lieutenant-gourmet
+static struct BurnRomInfo snes_LieutenantgnRomDesc[] = {
+	{ "Lieutenant Gourmet Beta v25.12.31-2 (NTSC)(2025)(RetroAntho).sfc", 1048576, 0x0dfab242, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lieutenantgn)
+STD_ROM_FN(snes_Lieutenantgn)
+
+struct BurnDriver BurnDrvsnes_Lieutenantgn = {
+	"snes_lieutenantgn", NULL, NULL, NULL, "2025",
+	"Lieutenant Gourmet (NTSC) (HB, Beta v25.12.31-2)\0", NULL, "RetroAntho", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LieutenantgnRomInfo, snes_LieutenantgnRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lieutenant Gourmet (PAL) (HB, Beta v25.12.31-2)
+// https://retroantho.itch.io/lieutenant-gourmet
+static struct BurnRomInfo snes_LieutenantgpRomDesc[] = {
+	{ "Lieutenant Gourmet Beta v25.12.31-2 (PAL)(2025)(RetroAntho).sfc", 1048576, 0x67d43bc0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lieutenantgp)
+STD_ROM_FN(snes_Lieutenantgp)
+
+struct BurnDriver BurnDrvsnes_Lieutenantgp = {
+	"snes_lieutenantgp", "snes_lieutenantgn", NULL, NULL, "2025",
+	"Lieutenant Gourmet (PAL) (HB, Beta v25.12.31-2)\0", NULL, "RetroAntho", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_LieutenantgpRomInfo, snes_LieutenantgpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -46871,10 +46909,10 @@ struct BurnDriver BurnDrvsnes_Saunamarioworld = {
 	512, 448, 4, 3
 };
 
-// Super Boss Gaiden (HB, v1.2)
-
+// Super Boss Gaiden (HB, v1.2b)
+// https://superbossgaiden.superfamicom.org/
 static struct BurnRomInfo snes_SbgaidenRomDesc[] = {
-	{ "Super Boss Gaiden v1.2 (2018)(ChronoMoogle).sfc", 524288, 0xc9a8412d, BRF_ESS | BRF_PRG },
+	{ "Super Boss Gaiden v1.2b (2018)(ChronoMoogle).sfc", 524288, 0x2b2857f0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Sbgaiden)
@@ -46882,7 +46920,7 @@ STD_ROM_FN(snes_Sbgaiden)
 
 struct BurnDriver BurnDrvsnes_Sbgaiden = {
 	"snes_sbgaiden", NULL, NULL, NULL, "2018",
-	"Super Boss Gaiden (HB, v1.2)\0", NULL, "ChronoMoogle", "SNES / Super Famicom",
+	"Super Boss Gaiden (HB, v1.2b)\0", NULL, "ChronoMoogle", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SbgaidenRomInfo, snes_SbgaidenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -47781,6 +47819,25 @@ struct BurnDriver BurnDrvsnes_Teenagequeene = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_CARD, 0,
 	SNESGetZipName, snes_TeenagequeeneRomInfo, snes_TeenagequeeneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Till & Hat (HB, Demo v11-03d)
+// https://woodfrogofficial.itch.io/till-hat-demo
+static struct BurnRomInfo snes_TillandhatRomDesc[] = {
+	{ "Till & Hat Demo v11-03d (2026)(Woodfrog).sfc", 2097152, 0x1d4266ee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tillandhat)
+STD_ROM_FN(snes_Tillandhat)
+
+struct BurnDriver BurnDrvsnes_Tillandhat = {
+	"snes_tillandhat", NULL, NULL, NULL, "2026",
+	"Till & Hat (HB, Demo v11-03d)\0", NULL, "Woodfrog", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_TillandhatRomInfo, snes_TillandhatRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

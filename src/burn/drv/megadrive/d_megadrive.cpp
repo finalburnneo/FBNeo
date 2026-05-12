@@ -40890,9 +40890,28 @@ struct BurnDriver BurnDrvmd_mmworld2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mega Meat Boy (HB, v0.31)
+// https://jungrock.itch.io/mega-meat-boy
+static struct BurnRomInfo md_megameatboyRomDesc[] = {
+	{ "Mega Meat Boy v0.31 (2025-26)(jungrock).bin", 917504, 0x88620f2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megameatboy)
+STD_ROM_FN(md_megameatboy)
+
+struct BurnDriver BurnDrvmd_megameatboy = {
+	"md_megameatboy", NULL, NULL, NULL, "2025-26",
+	"Mega Meat Boy (HB, v0.31)\0", NULL, "jungrock", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_megameatboyRomInfo, md_megameatboyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mega Mindtris (HB, v1.2)
 static struct BurnRomInfo md_mindtrisRomDesc[] = {
-	{ "megamindtris (2018)(1985 alternativo)(v1.2).bin", 1114112, 0xbef5482f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Mindtris v1.2 (2018)(1985 alternativo).bin", 1114112, 0xbef5482f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mindtris)
@@ -40904,6 +40923,25 @@ struct BurnDriver BurnDrvmd_mindtris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_mindtrisRomInfo, md_mindtrisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Pang (HB, v0.3 Beta)
+// https://rcampeador.itch.io/megapang
+static struct BurnRomInfo md_megapangRomDesc[] = {
+	{ "Mega Pang v0.3 Beta (2025-26)(RCampeador).bin", 1572864, 0xedc09063, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megapang)
+STD_ROM_FN(md_megapang)
+
+struct BurnDriver BurnDrvmd_megapang = {
+	"md_megapang", NULL, NULL, NULL, "2025-26",
+	"Mega Pang (HB, v0.3 Beta)\0", NULL, "RCampeador", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_megapangRomInfo, md_megapangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

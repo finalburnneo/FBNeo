@@ -18426,6 +18426,25 @@ struct BurnDriver BurnDrvsnes_Joemac = {
 	512, 448, 4, 3
 };
 
+// Joe & Mac (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3318.0
+static struct BurnRomInfo snes_JoemactpRomDesc[] = {
+	{ "Joe & Mac PT-BR (2026)(juliano_did).sfc", 1048576, 0x8393e8ff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Joemactp)
+STD_ROM_FN(snes_Joemactp)
+
+struct BurnDriver BurnDrvsnes_Joemactp = {
+	"snes_joemactp", "snes_joemac", NULL, NULL, "2026",
+	"Joe & Mac (Hack, Portuguese)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_JoemactpRomInfo, snes_JoemactpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Joe & Mac 2 - Lost in the Tropics (USA)
 
 static struct BurnRomInfo snes_Joemac2RomDesc[] = {
@@ -21646,11 +21665,48 @@ STD_ROM_PICK(snes_Lupinsansei)
 STD_ROM_FN(snes_Lupinsansei)
 
 struct BurnDriver BurnDrvsnes_Lupinsansei = {
-	"snes_lupinsansei", NULL, NULL, NULL, "1994",
+	"snes_lupinsansei", "snes_lupinsanseite", NULL, NULL, "1994",
 	"Lupin Sansei - Densetsu no Hihou o Oe! (Japan)\0", NULL, "Epoch Co.", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_LupinsanseiRomInfo, snes_LupinsanseiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lupin Sansei - Densetsu no Hihou o Oe! (Hack, English v0.8)
+// https://romhackplaza.org/translations/lupin-the-third-super-famicom-spanish-english-translation-english-spanish-translation-snes/
+static struct BurnRomInfo snes_LupinsanseiteRomDesc[] = {
+	{ "Lupin Sansei - Densetsu no Hihou o Oe! T-Eng v0.8 (2026)(Bunkai, Jackic).sfc", 1572864, 0x11596ecc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lupinsanseite)
+STD_ROM_FN(snes_Lupinsanseite)
+
+struct BurnDriver BurnDrvsnes_Lupinsanseite = {
+	"snes_lupinsanseite", NULL, NULL, NULL, "2026",
+	"Lupin Sansei - Densetsu no Hihou o Oe! (Hack, English v0.8)\0", NULL, "Bunkai, Jackic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_LupinsanseiteRomInfo, snes_LupinsanseiteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lupin Sansei - Densetsu no Hihou o Oe! (Hack, Spanish v0.8)
+static struct BurnRomInfo snes_LupinsanseitsRomDesc[] = {
+	{ "Lupin Sansei - Densetsu no Hihou o Oe! T-Spa v0.8 (2026)(Bunkai, Jackic).sfc", 1572864, 0x71c9c650, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lupinsanseits)
+STD_ROM_FN(snes_Lupinsanseits)
+
+struct BurnDriver BurnDrvsnes_Lupinsanseits = {
+	"snes_lupinsanseits", "snes_lupinsanseite", NULL, NULL, "2026",
+	"Lupin Sansei - Densetsu no Hihou o Oe! (Hack, Spanish v0.8)\0", NULL, "Bunkai, Jackic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_LupinsanseitsRomInfo, snes_LupinsanseitsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -35340,6 +35396,25 @@ struct BurnDriver BurnDrvsnes_Superadvislande = {
 	512, 448, 4, 3
 };
 
+// Super Aventura na Ilha (Hack, Portuguese v3.0)
+// https://www.romhacking.net.br/index.php?topic=3329.0
+static struct BurnRomInfo snes_SuperadvislandtpRomDesc[] = {
+	{ "Super Aventura na Ilha PT-BR v3.0 (2026)(juliano_did).sfc", 1048576, 0x86507fe8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superadvislandtp)
+STD_ROM_FN(snes_Superadvislandtp)
+
+struct BurnDriver BurnDrvsnes_Superadvislandtp = {
+	"snes_superadvislandtp", "snes_superadvisland", NULL, NULL, "2026",
+	"Super Aventura na Ilha (Hack, Portuguese v3.0)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SuperadvislandtpRomInfo, snes_SuperadvislandtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Adventure Island II (USA)
 
 static struct BurnRomInfo snes_Superadvisland2RomDesc[] = {
@@ -47479,18 +47554,18 @@ struct BurnDriver BurnDrvsnes_Supermetroidasc = {
 	512, 448, 4, 3
 };
 
-// Super Metroid X-Fusion (Hack, v1.2)
+// Super Metroid X-Fusion (Hack, v1.3)
 // https://metroidconstruction.com/hack.php?id=837
 static struct BurnRomInfo snes_SupermetroidxfRomDesc[] = {
-	{ "Super Metroid X-Fusion v1.2 (2025)(Metaquarius).sfc", 4194304, 0x0526898e, BRF_ESS | BRF_PRG },
+	{ "Super Metroid X-Fusion v1.3 (2025-26)(Metaquarius).sfc", 4194304, 0xcb4a6685, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supermetroidxf)
 STD_ROM_FN(snes_Supermetroidxf)
 
 struct BurnDriver BurnDrvsnes_Supermetroidxf = {
-	"snes_supermetroidxf", "snes_supermetroid", NULL, NULL, "2025",
-	"Super Metroid X-Fusion (Hack, v1.2)\0", NULL, "Metaquarius", "SNES / Super Famicom",
+	"snes_supermetroidxf", "snes_supermetroid", NULL, NULL, "2025-26",
+	"Super Metroid X-Fusion (Hack, v1.3)\0", NULL, "Metaquarius", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermetroidxfRomInfo, snes_SupermetroidxfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

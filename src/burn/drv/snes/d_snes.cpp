@@ -47557,14 +47557,14 @@ struct BurnDriver BurnDrvsnes_Supermetroidasc = {
 // Super Metroid X-Fusion (Hack, v1.3)
 // https://metroidconstruction.com/hack.php?id=837
 static struct BurnRomInfo snes_SupermetroidxfRomDesc[] = {
-	{ "Super Metroid X-Fusion v1.3 (2025-26)(Metaquarius).sfc", 4194304, 0xcb4a6685, BRF_ESS | BRF_PRG },
+	{ "Super Metroid X-Fusion v1.3 (2025)(Metaquarius).sfc", 4194304, 0xcb4a6685, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supermetroidxf)
 STD_ROM_FN(snes_Supermetroidxf)
 
 struct BurnDriver BurnDrvsnes_Supermetroidxf = {
-	"snes_supermetroidxf", "snes_supermetroid", NULL, NULL, "2025-26",
+	"snes_supermetroidxf", "snes_supermetroid", NULL, NULL, "2025",
 	"Super Metroid X-Fusion (Hack, v1.3)\0", NULL, "Metaquarius", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,

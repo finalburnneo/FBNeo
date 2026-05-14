@@ -27206,6 +27206,24 @@ struct BurnDriver BurnDrvsms_ppersiac = {
 	256, 192, 4, 3
 };
 
+// Psychic World (Hack, Portuguese v1.08)
+static struct BurnRomInfo gg_psychicwptRomDesc[] = {
+	{ "Psychic World T-Por v1.08 (2019)(Antigeno).gg",	131072, 0xe8cf96ad, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_psychicwpt)
+STD_ROM_FN(gg_psychicwpt)
+
+struct BurnDriver BurnDrvgg_psychicwpt = {
+	"gg_psychicwpt", "gg_psychicw", NULL, NULL, "2019",
+	"Psychic World (Hack, Portuguese v1.08)\0", NULL, "Antigeno", "Sega Game Gear",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PLATFORM, 0,
+	GGGetZipName, gg_psychicwptRomInfo, gg_psychicwptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Psychic World ~ Mundo Psiquico (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/psychic-world-po.b.r.e
 static struct BurnRomInfo sms_psychicwptRomDesc[] = {
@@ -27448,6 +27466,24 @@ struct BurnDriver BurnDrvgg_sylvane = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_sylvaneRomInfo, gg_sylvaneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tarzan: Lord of the Jungle (Hack, Portuguese v1.03)
+static struct BurnRomInfo gg_tarzanptRomDesc[] = {
+	{ "Tarzan - Lord of the Jungle T-Por v1.03 (2026)(Antigeno).gg",	262144, 0x88e1a294, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_tarzanpt)
+STD_ROM_FN(gg_tarzanpt)
+
+struct BurnDriver BurnDrvgg_tarzanpt = {
+	"gg_tarzanpt", "gg_tarzan", NULL, NULL, "2026",
+	"Tarzan: Lord of the Jungle (Hack, Portuguese v1.03)\0", NULL, "Antigeno", "Sega Game Gear",
+	NULL, NULL, L"Ant\u00EDgeno", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_DISPLAY_PAL, GBF_PLATFORM, 0,
+	GGGetZipName, gg_tarzanptRomInfo, gg_tarzanptRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

@@ -46690,6 +46690,25 @@ struct BurnDriver BurnDrvmd_alien3pt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Altered Beast (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3325.0
+static struct BurnRomInfo md_altbeastptRomDesc[] = {
+	{ "Altered Beast PT-BR (2026)(CEGA Traducoes).bin", 524288, 0x2676ef61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_altbeastpt)
+STD_ROM_FN(md_altbeastpt)
+
+struct BurnDriver BurnDrvmd_altbeastpt = {
+	"md_altbeastpt", "md_altbeast", NULL, NULL, "2026",
+	"Altered Beast (Hack, Portuguese)\0", NULL, "CEGA Traducoes", "Genesis / Mega Drive",
+	NULL, NULL, L"CEGA Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_altbeastptRomInfo, md_altbeastptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Atomic Robo-Kid (Hack, Portuguese v1.11)
 static struct BurnRomInfo md_atomroboptRomDesc[] = {
 	{ "Atomic Robo-Kid PT-BR v1.11 (2019)(Antigeno).bin", 524288, 0xc0cbbca8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

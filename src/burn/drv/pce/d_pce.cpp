@@ -9199,21 +9199,135 @@ struct BurnDriver BurnDrvpce_atlantean = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
-// Barbarian (HB)
+// Barbarian: The Ultimate Warrior - Amiga (HB)
 
-static struct BurnRomInfo pce_barbarianRomDesc[] = {
-	{ "Barbarian (2017)(F.L).pce", 0x0b8200, 0x42d3c3f9, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo pce_barbarianamiRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - Amiga (2017)(F.L).pce", 0x0b8200, 0x42d3c3f9, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_barbarian)
-STD_ROM_FN(pce_barbarian)
+STD_ROM_PICK(pce_barbarianami)
+STD_ROM_FN(pce_barbarianami)
 
-struct BurnDriver BurnDrvpce_barbarian = {
-	"pce_barbarian", NULL, NULL, NULL, "2017",
-	"Barbarian (HB)\0", NULL, "F.L", "PC Engine",
+struct BurnDriver BurnDrvpce_barbarianami = {
+	"pce_barbarianami", NULL, NULL, NULL, "2017",
+	"Barbarian: The Ultimate Warrior - Amiga (HB)\0", NULL, "F.L", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ACTION, 0,
-	PceGetZipName, pce_barbarianRomInfo, pce_barbarianRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianamiRomInfo, pce_barbarianamiRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - Amstrad CPC (HB)
+
+static struct BurnRomInfo pce_barbariancpcRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - Amstrad CPC (2017)(F.L).pce", 0x0b2200, 0x7e8670d1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbariancpc)
+STD_ROM_FN(pce_barbariancpc)
+
+struct BurnDriver BurnDrvpce_barbariancpc = {
+	"pce_barbariancpc", "pce_barbarianami", NULL, NULL, "2017",
+	"Barbarian: The Ultimate Warrior - Amstrad CPC (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbariancpcRomInfo, pce_barbariancpcRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - Atari ST (HB)
+
+static struct BurnRomInfo pce_barbarianstRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - Atari ST (2017)(F.L).pce", 0x0b2200, 0xb9424bb0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbarianst)
+STD_ROM_FN(pce_barbarianst)
+
+struct BurnDriver BurnDrvpce_barbarianst = {
+	"pce_barbarianst", "pce_barbarianami", NULL, NULL, "2017",
+	"Barbarian: The Ultimate Warrior - Atari ST (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianstRomInfo, pce_barbarianstRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - C64 (HB)
+
+static struct BurnRomInfo pce_barbarianc64RomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - C64 (2017)(F.L).pce", 0x0b2200, 0xc6c6f05b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbarianc64)
+STD_ROM_FN(pce_barbarianc64)
+
+struct BurnDriver BurnDrvpce_barbarianc64 = {
+	"pce_barbarianc64", "pce_barbarianami", NULL, NULL, "2017",
+	"Barbarian: The Ultimate Warrior - C64 (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianc64RomInfo, pce_barbarianc64RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - ZX Spectrum (HB)
+
+static struct BurnRomInfo pce_barbarianzxsRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - ZX Spectrum (2017)(F.L).pce", 0x0da200, 0xaffadae5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbarianzxs)
+STD_ROM_FN(pce_barbarianzxs)
+
+struct BurnDriver BurnDrvpce_barbarianzxs = {
+	"pce_barbarianzxs", "pce_barbarianami", NULL, NULL, "2017",
+	"Barbarian: The Ultimate Warrior - ZX Spectrum (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianzxsRomInfo, pce_barbarianzxsRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Death Sword - Apple II (HB)
+
+static struct BurnRomInfo pce_barbarianap2RomDesc[] = {
+	{ "Death Sword - Apple II (2017)(F.L).pce", 0x0c4200, 0x221793a6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbarianap2)
+STD_ROM_FN(pce_barbarianap2)
+
+struct BurnDriver BurnDrvpce_barbarianap2 = {
+	"pce_barbarianap2", "pce_barbarianami", NULL, NULL, "2017",
+	"Death Sword - Apple II (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianap2RomInfo, pce_barbarianap2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+// Death Sword - PC CGA (HB)
+
+static struct BurnRomInfo pce_barbarianpcRomDesc[] = {
+	{ "Death Sword - PC CGA (2017)(F.L).pce", 0x0c4200, 0xaae0a16e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_barbarianpc)
+STD_ROM_FN(pce_barbarianpc)
+
+struct BurnDriver BurnDrvpce_barbarianpc = {
+	"pce_barbarianpc", "pce_barbarianami", NULL, NULL, "2017",
+	"Death Sword - PC CGA (HB)\0", NULL, "F.L", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
+	PceGetZipName, pce_barbarianpcRomInfo, pce_barbarianpcRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };

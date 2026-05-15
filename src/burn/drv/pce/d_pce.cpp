@@ -1661,19 +1661,19 @@ struct BurnDriver BurnDrvpce_diehardte = {
 
 // Die Hard (Hack, Portuguese)
 // https://www.romhacking.net.br/index.php?topic=730.0
-static struct BurnRomInfo pce_diehardptRomDesc[] = {
+static struct BurnRomInfo pce_diehardtpRomDesc[] = {
 	{ "Die Hard T-Por (2018)(Patryckpo).pce", 524288, 0x6634dc79, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_diehardpt)
-STD_ROM_FN(pce_diehardpt)
+STD_ROM_PICK(pce_diehardtp)
+STD_ROM_FN(pce_diehardtp)
 
-struct BurnDriver BurnDrvpce_diehardpt = {
-	"pce_diehardpt", "pce_diehard", NULL, NULL, "2018",
+struct BurnDriver BurnDrvpce_diehardtp = {
+	"pce_diehardtp", "pce_diehard", NULL, NULL, "2018",
 	"Die Hard (Hack, Portuguese)\0", NULL, "Patryckpo", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN, 0,
-	PceGetZipName, pce_diehardptRomInfo, pce_diehardptRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_diehardtpRomInfo, pce_diehardtpRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
@@ -8150,19 +8150,19 @@ struct BurnDriver BurnDrvtg_legaxe = {
 
 // Legendary Axe, The (Hack, Portuguese)
 // https://www.romhacking.net.br/index.php?topic=854.0
-static struct BurnRomInfo tg_legaxeptRomDesc[] = {
+static struct BurnRomInfo tg_legaxetpRomDesc[] = {
 	{ "Legendary Axe, The T-Por (2018)(Patryckpo).pce", 262144, 0x3682e4e1, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(tg_legaxept)
-STD_ROM_FN(tg_legaxept)
+STD_ROM_PICK(tg_legaxetp)
+STD_ROM_FN(tg_legaxetp)
 
-struct BurnDriver BurnDrvtg_legaxept = {
-	"tg_legaxept", "tg_legaxe", NULL, NULL, "2018",
+struct BurnDriver BurnDrvtg_legaxetp = {
+	"tg_legaxetp", "tg_legaxe", NULL, NULL, "2018",
 	"Legendary Axe, The (Hack, Portuguese)\0", NULL, "Patryckpo", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_TG16, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	TgGetZipName, tg_legaxeptRomInfo, tg_legaxeptRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TgGetZipName, tg_legaxetpRomInfo, tg_legaxetpRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
@@ -8549,19 +8549,19 @@ struct BurnDriver BurnDrvtg_shockman = {
 
 // Shockman (Hack, Portuguese v0.95)
 // https://www.romhacking.net.br/index.php?topic=120.0
-static struct BurnRomInfo tg_shockmanptRomDesc[] = {
+static struct BurnRomInfo tg_shockmantpRomDesc[] = {
 	{ "Shockman T-Por v0.95 (2017)(Maverick Blue Warrior).pce", 524288, 0x6059ae18, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(tg_shockmanpt)
-STD_ROM_FN(tg_shockmanpt)
+STD_ROM_PICK(tg_shockmantp)
+STD_ROM_FN(tg_shockmantp)
 
-struct BurnDriver BurnDrvtg_shockmanpt = {
-	"tg_shockmanpt", "tg_ccshockman2", NULL, NULL, "2017",
+struct BurnDriver BurnDrvtg_shockmantp = {
+	"tg_shockmantp", "tg_ccshockman2", NULL, NULL, "2017",
 	"Shockman (Hack, Portuguese v0.95)\0", NULL, "Maverick Blue Warrior", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PCENGINE_TG16, GBF_RUNGUN | GBF_PLATFORM, 0,
-	TgGetZipName, tg_shockmanptRomInfo, tg_shockmanptRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TgGetZipName, tg_shockmantpRomInfo, tg_shockmantpRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };

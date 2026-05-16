@@ -171,142 +171,238 @@ static long unsigned int __stdcall ThreadyProc(void*) {
 
 
 #if (THREADY == THREADY_WINDOWSVC)
+#include <atomic>
 static long unsigned int __stdcall ThreadyProc(void*);
-/*
-	Because these two variables (our_event / wait_event) are not properly synchronized, the thread locks upand is hung indefinitely.
-	The vc compiler doesn't seem to be able to automatically add/unlock static variables of classes in threads when handling them,
-	as the gcc compiler does, thus ensuring the security of data in threads.
-*/
-static HANDLE our_event;
-static HANDLE wait_event;
-static INT32 end_thread;
-static void (*our_callback)();
 
 struct threadystruct
 {
-	INT32 thready_ok;
-	INT32 ok_to_thread;
-	INT32 ok_to_wait;
-	HANDLE our_thread;
-	DWORD our_threadid;
-	INT32 startup_frame;
+private:
+	// Atomic variables for thread-safe state management
+	std::atomic<INT32> thready_ok{ 0 };
+	std::atomic<INT32> ok_to_thread{ 0 };
+	std::atomic<INT32> ok_to_wait{ 0 };
+	std::atomic<INT32> end_thread{ 0 };
+	std::atomic<INT32> init_complete{ 0 };
 
-	void init(void (*thread_callback)()) {
-		thready_ok = 0;
-		ok_to_thread = 0;
-		ok_to_wait = 0;
+	// Windows kernel objects for thread and synchronization
+	HANDLE our_thread{ nullptr };
+	HANDLE our_event{ nullptr };
+	HANDLE wait_event{ nullptr };
+	DWORD  our_threadid{ 0 };
+
+	// Thread-safe callback function pointer
+	std::atomic<void(*)()> our_callback{ nullptr };
+
+	// Frame counter for synchronous startup phase
+	INT32 startup_frame{ 0 };
+
+	// Check if the component is fully initialized and valid
+	bool is_fully_initialized() const {
+		return (0 != init_complete.load(std::memory_order_acquire) && nullptr != our_event && nullptr != wait_event && nullptr != our_thread);
+	}
+
+	// Allow the thread procedure to access private members
+	friend long unsigned int __stdcall ThreadyProc(void*);
+
+public:
+	// Default constructor
+	threadystruct() = default;
+
+	// Initialize the thread system with a user callback
+	void init(void(*thread_callback)()) {
+		// If already initialized, attempt safe cleanup before reinitializing
+		if (thready_ok.load(std::memory_order_acquire)) {
+			end_thread.store(1, std::memory_order_release);
+			if (our_event)
+				SetEvent(our_event);
+			if (our_thread)
+				WaitForSingleObject(our_thread, 200);	// Short wait for safe thread exit
+		}
+
+		// Reset all states to initial values
+		thready_ok.store(   0, std::memory_order_relaxed);
+		ok_to_thread.store( 0, std::memory_order_relaxed);
+		ok_to_wait.store(   0, std::memory_order_relaxed);
+		end_thread.store(   0, std::memory_order_relaxed);
+		init_complete.store(0, std::memory_order_relaxed);
 		startup_frame = 0;
 
-		our_callback = thread_callback;
+		// Store the user callback atomically
+		our_callback.store(thread_callback, std::memory_order_relaxed);
 
-#if 0
-		SYSTEM_INFO info;
-		GetSystemInfo(&info);
-		INT32 maxproc = (info.dwNumberOfProcessors > 4) ? 4 : info.dwNumberOfProcessors;
-		INT32 thready_proc = rand() % maxproc;
-#endif
+		// Create auto-reset events for task signaling
+		our_event  = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+		wait_event = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 
-		//bprintf(0, _T("Thready: processors available: %d, blitter processor: %d\n"), info.dwNumberOfProcessors, thready_proc);
+		if (!our_event || !wait_event) {
+			if (our_event)
+				CloseHandle(our_event);
+			if (wait_event)
+				CloseHandle(wait_event);
+			our_event = wait_event = nullptr;
+			return;
+		}
 
-		end_thread = 0; // good to go!
+		// Create thread in suspended state to avoid race conditions during init
+		our_thread = CreateThread(nullptr, 0, ThreadyProc, this, CREATE_SUSPENDED, &our_threadid);
 
-		our_event	= CreateEvent(NULL, FALSE, FALSE, NULL);
-		wait_event	= CreateEvent(NULL, FALSE, FALSE, NULL);
-		our_thread	= CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
-		// bprintf(0, _T("Init: our_event: %d, wait_event: %d\n"), our_event, wait_event);
+		if (!our_thread) {
+			CloseHandle(our_event);
+			CloseHandle(wait_event);
+			our_event = wait_event = nullptr;
+			return;
+		}
 
-#if 0
-		SetThreadIdealProcessor(our_thread, thready_proc);
-#endif
+		// Memory barrier to ensure all writes are visible to the worker thread
+		std::atomic_thread_fence(std::memory_order_release);
 
-		if (our_event && wait_event && our_thread) {
-			//bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
-			CloseHandle(our_thread); // After that, no operation of this handle is required.
+		// Mark initialization complete and start the thread
+		init_complete.store(1, std::memory_order_release);
+		ResumeThread(our_thread);
 
-			thready_ok = 1;
-			ok_to_thread = 1;
-		} else {
-			//bprintf(0, _T("Thready: failure to create thread!\n"));
+		if (is_fully_initialized()) {
+			thready_ok.store(  1, std::memory_order_release);
+			ok_to_thread.store(1, std::memory_order_release);
 		}
 	}
 
+	// Safely shut down the thread and release all resources
 	void exit() {
-		if (thready_ok) {
-			if (0x0101 != end_thread) {
-				end_thread = 1;
-				SetEvent(our_event);
-			} else {																// ThreadyProc has returned 0
-				if (INVALID_HANDLE_VALUE != our_event) CloseHandle(our_event);		// Close it before it becomes an invalid handle.
-				if (INVALID_HANDLE_VALUE != wait_event) CloseHandle(wait_event);	// Id.
-			}
-			do {
-				Sleep(42);					// let thread realize it's time to die
-			} while (~end_thread & 0x100);
-			thready_ok = 0;
+		INT32 ok = thready_ok.load(std::memory_order_acquire);
+		if (!ok)
+			return;
+
+		// Signal thread to exit
+		end_thread.store(1, std::memory_order_release);
+
+		// Wake up the thread to process the exit signal
+		if (our_event)
+			SetEvent(our_event);
+
+		// Wait for thread to exit with timeout to prevent hanging
+		if (our_thread) {
+			const DWORD timeout_ms = 5000;
+			DWORD wait_result = WaitForSingleObject(our_thread, timeout_ms);
+
+			if (WAIT_TIMEOUT == wait_result)
+				TerminateThread(our_thread, 0);			// Last-resort termination
+
+			CloseHandle(our_thread);
+			our_thread = nullptr;
 		}
+
+		// Release event handles
+		if (our_event) {
+			CloseHandle(our_event);
+			our_event = nullptr;
+		}
+		if (wait_event) {
+			CloseHandle(wait_event);
+			wait_event = nullptr;
+		}
+
+		// Reset state flags
+		thready_ok.store(   0, std::memory_order_release);
+		init_complete.store(0, std::memory_order_release);
 	}
 
+	// Serialization helper for state saving
 	void scan() {
 		SCAN_VAR(startup_frame);
 	}
 
-	void reset() { // only call this if using for epic12
+	// Reset the startup frame counter
+	void reset() {
 		startup_frame = STARTUP_FRAMES;
 	}
 
-	void set_threading(INT32 value)	{
-		ok_to_thread = value;
+	// Enable or disable threaded execution mode
+	void set_threading(INT32 value) {
+		ok_to_thread.store(value ? 1 : 0, std::memory_order_release);
 	}
 
+	// Notify the worker thread to execute the callback
 	void notify() {
 		if (startup_frame > 0) {
-			// run in synchronous mode for startup_frame frames
 			startup_frame--;
-			our_callback();
+			void(*cb)() = our_callback.load(std::memory_order_acquire);
+			if (cb)
+				cb();
 			return;
 		}
-		if (thready_ok && ok_to_thread) {
+
+		if (thready_ok.load(std::memory_order_acquire) && ok_to_thread.load(std::memory_order_acquire) && our_event) {
 			SetEvent(our_event);
-			ok_to_wait = 1;
+			ok_to_wait.store(1, std::memory_order_release);
 		} else {
-			// fallback to single-threaded mode
-			our_callback();
+			void(*cb)() = our_callback.load(std::memory_order_acquire);
+			if (cb)
+				cb();
 		}
 	}
+
+	// Wait until the worker thread completes the current task
 	void notify_wait() {
-		if (ok_to_thread && ok_to_wait) {
+		if (ok_to_wait.load(std::memory_order_acquire) && wait_event) {
 			WaitForSingleObject(wait_event, INFINITE);
-			ok_to_wait = 0;
+			ok_to_wait.store(0, std::memory_order_release);
 		}
 	}
+
+	// Destructor ensures safe cleanup
+	~threadystruct() {
+		exit();
+	}
+
+	// Disable copy and move to prevent handle duplication and undefined behavior
+	threadystruct(const threadystruct&)            = delete;
+	threadystruct& operator=(const threadystruct&) = delete;
+	threadystruct(threadystruct&&)                 = delete;
+	threadystruct& operator=(threadystruct&&)      = delete;
 };
 
+// Global singleton instance
 static threadystruct thready;
 
-static long unsigned int __stdcall ThreadyProc(void*) {
+// Main worker thread procedure
+static long unsigned int __stdcall ThreadyProc(void* param) {
+	threadystruct* pThready = static_cast<threadystruct*>(param);
+	if (!pThready)
+		return 0;
+
+	// Wait until initialization is fully complete
+	while (!pThready->init_complete)
+		Sleep(1);
+
 	do {
-		// bprintf(0, _T("Proc: our_event: %d, wait_event: %d\n"), our_event, wait_event);
-		if ((WAIT_OBJECT_0 == WaitForSingleObject(our_event, INFINITE)) && (end_thread == 0)) {
-#if THREADY_CHECK_CB_TIME
-			time_t begin_time = clock();
-#endif
-			our_callback();
-#if THREADY_CHECK_CB_TIME
-			time_t end_time = clock();
-			double duration = (double)(end_time - begin_time) / CLOCKS_PER_SEC;
-			bprintf(0, _T("thready: callback took %2.3f seconds\n"), duration);
-#endif
-			SetEvent(wait_event);
-		} else {
-			SetEvent(wait_event);
-			end_thread |= 0x100;
-			//bprintf(0, _T("Thready: thread-event thread ending..\n"));
-			return 0;
-		}
-	} while (1);
+		// Defensive check: exit immediately if shutdown is requested
+		if (0 != pThready->end_thread)
+			break;
+
+		// Wait indefinitely for a task signal (0% CPU idle)
+		DWORD dwWaitResult = WaitForSingleObject(pThready->our_event, INFINITE);
+
+		if (WAIT_OBJECT_0 == dwWaitResult && 0 == pThready->end_thread) {
+			// Execute the user callback safely
+			void(*cb)() = pThready->our_callback.load(std::memory_order_acquire);
+			if (cb)
+				cb();
+
+			// Signal task completion
+			if (pThready->wait_event)
+				SetEvent(pThready->wait_event);
+		} else
+			// Exit on signal or error
+			break;
+	} while (true);
+
+	// Ensure no waiting thread is left blocked
+	if (pThready->wait_event)
+		SetEvent(pThready->wait_event);
 
 	return 0;
 }
+
 #endif // THREADY_WINDOWSVC
 
 

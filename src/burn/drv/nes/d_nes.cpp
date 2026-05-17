@@ -24196,18 +24196,18 @@ struct BurnDriver BurnDrvnes_sonicboom = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Sonic the Hedgehog (Hack, v1.7)
+// Sonic the Hedgehog (Hack, v1.7b)
 // http://www.romhacking.net/hacks/5026/
 static struct BurnRomInfo nes_sonicRomDesc[] = {
-	{ "Sonic the Hedgehog v1.7 (Hack)(2025)(Terwilf).nes",          786448, 0x9ea1ffbe, BRF_ESS | BRF_PRG },
+	{ "Sonic the Hedgehog v1.7b (Hack)(2025-26)(Terwilf).nes",          786448, 0x67cc7c0a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_sonic)
 STD_ROM_FN(nes_sonic)
 
 struct BurnDriver BurnDrvnes_sonic = {
-	"nes_sonic", "nes_somari", NULL, NULL, "2025",
-	"Sonic the Hedgehog (Hack, v1.7)\0", NULL, "Terwilf", "NES / Famicom",
+	"nes_sonic", "nes_somari", NULL, NULL, "2025-26",
+	"Sonic the Hedgehog (Hack, v1.7b)\0", NULL, "Terwilf", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_sonicRomInfo, nes_sonicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

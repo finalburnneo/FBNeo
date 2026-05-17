@@ -25004,20 +25004,20 @@ struct BurnDriver BurnDrvsms_wingwarriors = {
 	256, 192, 4, 3
 };
 
-// Wolfstein (HB, v1.16)
-static struct BurnRomInfo sms_wolfsteinRomDesc[] = {
-	{ "Wolfstein v1.16 (2023)(Under4Mhz).sms",	524288, 0xdd940cdf, BRF_PRG | BRF_ESS },
+// Wolfenstein (HB, v1.16)
+static struct BurnRomInfo sms_wolfensteinRomDesc[] = {
+	{ "Wolfenstein v1.16 (2023)(Under4Mhz).sms",	524288, 0xdd940cdf, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(sms_wolfstein)
-STD_ROM_FN(sms_wolfstein)
+STD_ROM_PICK(sms_wolfenstein)
+STD_ROM_FN(sms_wolfenstein)
 
-struct BurnDriver BurnDrvsms_wolfstein = {
-	"sms_wolfstein", NULL, NULL, NULL, "2023",
-	"Wolfstein (HB, v1.16)\0", NULL, "Under4Mhz", "Sega Master System",
+struct BurnDriver BurnDrvsms_wolfenstein = {
+	"sms_wolfenstein", NULL, NULL, NULL, "2023",
+	"Wolfenstein (HB, v1.16)\0", NULL, "Under4Mhz", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
-	SMSGetZipName, sms_wolfsteinRomInfo, sms_wolfsteinRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_wolfensteinRomInfo, sms_wolfensteinRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26002,20 +26002,20 @@ struct BurnDriver BurnDrvgg_wingwarriors = {
 	256, 192, 4, 3
 };
 
-// Wolfstein (HB, v1.16)
-static struct BurnRomInfo gg_wolfsteinRomDesc[] = {
-	{ "Wolfstein v1.16 (2023)(Under4Mhz).gg",	524288, 0xc2760884, BRF_PRG | BRF_ESS },
+// Wolfenstein (HB, v1.16)
+static struct BurnRomInfo gg_wolfensteinRomDesc[] = {
+	{ "Wolfenstein v1.16 (2023)(Under4Mhz).gg",	524288, 0xc2760884, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(gg_wolfstein)
-STD_ROM_FN(gg_wolfstein)
+STD_ROM_PICK(gg_wolfenstein)
+STD_ROM_FN(gg_wolfenstein)
 
-struct BurnDriver BurnDrvgg_wolfstein = {
-	"gg_wolfstein", NULL, NULL, NULL, "2023",
-	"Wolfstein (HB, v1.16)\0", NULL, "Under4Mhz", "Sega Game Gear",
+struct BurnDriver BurnDrvgg_wolfenstein = {
+	"gg_wolfenstein", NULL, NULL, NULL, "2023",
+	"Wolfenstein (HB, v1.16)\0", NULL, "Under4Mhz", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_SHOOT, 0,
-	GGGetZipName, gg_wolfsteinRomInfo, gg_wolfsteinRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	GGGetZipName, gg_wolfensteinRomInfo, gg_wolfensteinRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

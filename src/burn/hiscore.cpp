@@ -1,4 +1,5 @@
 #include "burnint.h"
+//#include "hiscore.h"
 
 // A hiscore.dat support module for FB Neo - written by Barry Manilow, Feb 2009
 // Updates & fixes by dink and iq_132
@@ -7,7 +8,7 @@
 
 #define HISCORE_MAX_RANGES		64
 
-UINT32 nHiscoreNumRanges;
+static UINT32 nHiscoreNumRanges;
 
 #define APPLIED_STATE_NONE		0
 #define APPLIED_STATE_ATTEMPTED		1
@@ -20,7 +21,7 @@ struct _HiscoreMemRange
 	UINT8 *Data;
 };
 
-_HiscoreMemRange HiscoreMemRange[HISCORE_MAX_RANGES];
+static _HiscoreMemRange HiscoreMemRange[HISCORE_MAX_RANGES];
 
 INT32 EnableHiscores;
 static INT32 HiscoresInUse;
@@ -464,7 +465,7 @@ void HiscoreInit()
 	WriteCheck1 = 0;
 }
 
-void HiscoreReset(INT32 bDisableInversionWriteback)
+void HiscoreReset(INT32 nHiscoreOptions)
 {
 #if defined FBNEO_DEBUG
 	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreReset called without init\n"));
@@ -479,17 +480,21 @@ void HiscoreReset(INT32 bDisableInversionWriteback)
 	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;
-		
+		if (nHiscoreOptions & HI_NOCONFIRM) {
+			bprintf(0, _T("-- Hiscore NoConfirm configured for address range %x\n"), HiscoreMemRange[i].Address);
+			HiscoreMemRange[i].NoConfirm = 1;
+		}
+
 		if (HiscoreMemRange[i].Loaded) {
 			cpu_open(HiscoreMemRange[i].nCpu);
 			// in some games, system16b (aliensyn, everything else) rom is mapped (for cheats)
 			// on reset where the hiscore should be.  Writing here is bad.
-			if (bDisableInversionWriteback == 0) {
+			if ((nHiscoreOptions & HI_NOCOMPLIMENTWB) == 0) {
 				cheat_subptr->write(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
 				if (HiscoreMemRange[i].NumBytes > 1) cheat_subptr->write(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
 			}
 			cheat_subptr->close();
-			
+
 #if 1 && defined FBNEO_DEBUG
 			bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Initted\n"), i);
 #endif

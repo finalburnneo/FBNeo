@@ -26471,6 +26471,24 @@ struct BurnDriver BurnDrvnes_veggieinvaders = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Vexed (HB, v1.15)
+static struct BurnRomInfo nes_vexedRomDesc[] = {
+	{ "Vexed v1.15 (2023-24)(Under4Mhz).nes",          32784, 0x7a1f3f2c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vexed)
+STD_ROM_FN(nes_vexed)
+
+struct BurnDriver BurnDrvnes_vexed = {
+	"nes_vexed", NULL, NULL, NULL, "2023-24",
+	"Vexed (HB, v1.15)\0", NULL, "Under4Mhz", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_vexedRomInfo, nes_vexedRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Vigilante Ninja II (HB)
 static struct BurnRomInfo nes_vigninja2RomDesc[] = {
 	{ "Vigilante Ninja II (2018)(Doug Fraker).nes",          196624, 0xcdd3c07e, BRF_ESS | BRF_PRG },

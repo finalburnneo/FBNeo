@@ -4046,6 +4046,24 @@ struct BurnDriver BurnDrvngpc_svellasm = {
 	160, 152, 4, 3
 };
 
+// SwordWork Micro (HB)
+static struct BurnRomInfo ngpc_swordworkmRomDesc[] = {
+	{ "SwordWork Micro (2026)(Inufuto).ngp", 524288, 0xd7130cdf, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_swordworkm, ngpc_swordworkm, ngpc_ngp)
+STD_ROM_FN(ngpc_swordworkm)
+
+struct BurnDriver BurnDrvngpc_swordworkm = {
+	"ngp_swordworkm", NULL, "ngp_ngp", NULL, "2026",
+	"SwordWork Micro (HB)\0", NULL, "Inufuto", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_MAZE, 0,
+	NgpGetZipName, ngpc_swordworkmRomInfo, ngpc_swordworkmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Thieves (HB)
 static struct BurnRomInfo ngpc_thievesRomDesc[] = {
 	{ "Thieves (2000)(Ivan Mackintosh).ngp", 524288, 0x68242322, 1 | BRF_PRG | BRF_ESS }, // Cartridge

@@ -1666,7 +1666,7 @@ static struct BurnRomInfo condorbemRomDesc[] = {
 STD_ROM_PICK(condorbem)
 STD_ROM_FN(condorbem)
 
-struct BurnDriver BurnDrvCondorbem = {
+struct BurnDriverD BurnDrvCondorbem = {
 	"condorbem", "phoenix", NULL, NULL, "1981",
 	"Condor (BEM Mi Italy bootleg of Phoenix)\0", NULL, "bootleg (BEM Mi Italy)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

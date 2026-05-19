@@ -42263,6 +42263,24 @@ struct BurnDriver BurnDrvmd_spax = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Square Brothers (HB)
+static struct BurnRomInfo md_squarebrothersRomDesc[] = {
+	{ "Square Brothers (2025)(Ratalaika Games, 9Ratones, Two Black Cats).bin", 1048576, 0x3e866383, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_squarebrothers)
+STD_ROM_FN(md_squarebrothers)
+
+struct BurnDriver BurnDrvmd_squarebrothers = {
+	"md_squarebrothers", NULL, NULL, NULL, "2025",
+	"Square Brothers (HB)\0", NULL, "Ratalaika Games, 9Ratones, Two Black Cats", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_squarebrothersRomInfo, md_squarebrothersRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Star Chaser (HB)
 static struct BurnRomInfo md_starchaserRomDesc[] = {
 	{ "Star Chaser (2014-07-05)(Sik).bin", 0x00b240, 0xfadd25a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

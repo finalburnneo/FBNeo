@@ -9633,9 +9633,9 @@ struct BurnDriver BurnDrvcv_nsub = {
     272, 228, 4, 3
 };
 
-// Operation Hibernation (HB)
+// Operation Hibernation (HB, 10-11-25)
 static struct BurnRomInfo cv_ophibernRomDesc[] = {
-	{ "Operation Hibernation (2025)(Jess Creations).rom",	32768, 0x028809f5, BRF_PRG | BRF_ESS },
+	{ "Operation Hibernation 10-11-25 (2025)(Jess Creations).rom",	32768, 0x39ed33ed, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_ophibern, cv_ophibern, cv_coleco)
@@ -9643,7 +9643,7 @@ STD_ROM_FN(cv_ophibern)
 
 struct BurnDriver BurnDrvcv_ophibern = {
 	"cv_ophibern", NULL, "cv_coleco", NULL, "2025",
-	"Operation Hibernation (HB)\0", NULL, "Jess Creations", "ColecoVision",
+	"Operation Hibernation (HB, 10-11-25)\0", NULL, "Jess Creations", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_ophibernRomInfo, cv_ophibernRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

@@ -30130,6 +30130,24 @@ struct BurnDriver BurnDrvMSX_eatblue = {
 	272, 228, 4, 3
 };
 
+// Endurance (HB)
+static struct BurnRomInfo MSX_enduranceRomDesc[] = {
+	{ "Endurance (2020)(Fabio Ritter).rom",	49120, 0x13caaac6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_endurance, MSX_endurance, msx_msx)
+STD_ROM_FN(MSX_endurance)
+
+struct BurnDriver BurnDrvMSX_endurance = {
+	"msx_endurance", NULL, "msx_msx", NULL, "2020",
+	"Endurance (HB)\0", NULL, "Fabio Ritter", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RACING, 0,
+	MSXGetZipName, MSX_enduranceRomInfo, MSX_enduranceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Entombed (HB, v1.1)
 static struct BurnRomInfo MSX_entombedRomDesc[] = {
 	{ "Entombed v1.1 (2021)(Amaury Carvalho).rom",	32768, 0x0dd59289, BRF_PRG | BRF_ESS },

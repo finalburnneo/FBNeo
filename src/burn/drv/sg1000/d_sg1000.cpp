@@ -4607,17 +4607,17 @@ struct BurnDriver BurnDrvsg1k_neuras = {
 	272, 228, 4, 3
 };
 
-// Operation Hibernation Plus (HB, Rev.2)
+// Operation Hibernation Plus (HB, 02-15-26)
 static struct BurnRomInfo sg1k_ophibernplusRomDesc[] = {
-	{ "Operation Hibernation Plus Rev.2 (2025)(Jess Creations - ArugulaZ).sg",	49152, 0xd4b2189a, BRF_PRG | BRF_ESS },
+	{ "Operation Hibernation Plus 02-15-26 (2025-26)(Jess Creations - ArugulaZ).sg",	49152, 0xabc33998, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ophibernplus)
 STD_ROM_FN(sg1k_ophibernplus)
 
 struct BurnDriver BurnDrvsg1k_ophibernplus = {
-	"sg1k_ophibernplus", NULL, NULL, NULL, "2025",
-	"Operation Hibernation Plus (HB, Rev.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"sg1k_ophibernplus", NULL, NULL, NULL, "2025-26",
+	"Operation Hibernation Plus (HB, 02-15-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_ophibernplusRomInfo, sg1k_ophibernplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,

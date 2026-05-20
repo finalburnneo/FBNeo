@@ -4355,9 +4355,9 @@ struct BurnDriver BurnDrvsg1k_crosstrex = {
 	272, 228, 4, 3
 };
 
-// Eye Brawls (HB, v1.2)
+// Eye Brawls (HB, 1-30-26)
 static struct BurnRomInfo sg1k_eyebrawlsRomDesc[] = {
-	{ "Eye Brawls v1.2 (2026)(Jess Creations, ArugulaZ).sg",	32768, 0xe2ce44f0, BRF_PRG | BRF_ESS },
+	{ "Eye Brawls 1-30-26 (2026)(Jess Creations, ArugulaZ).sg",	32768, 0x3ea1da76, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_eyebrawls)
@@ -4365,7 +4365,7 @@ STD_ROM_FN(sg1k_eyebrawls)
 
 struct BurnDriver BurnDrvsg1k_eyebrawls = {
 	"sg1k_eyebrawls", NULL, NULL, NULL, "2026",
-	"Eye Brawls (HB, v1.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"Eye Brawls (HB, 1-30-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
 	SG1KGetZipName, sg1k_eyebrawlsRomInfo, sg1k_eyebrawlsRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4770,9 +4770,9 @@ struct BurnDriver BurnDrvsg1k_sgthelmet = {
 	272, 228, 4, 3
 };
 
-// Solar Fox II (HB)
+// Solar Fox II (HB, 21-10-25)
 static struct BurnRomInfo sg1k_solarfoxiiRomDesc[] = {
-	{ "Solar Fox II (2025)(Jess Creations - ArugulaZ).sg",	40960, 0x2ce5cf6f, BRF_PRG | BRF_ESS },
+	{ "Solar Fox II 21-10-25 (2025)(Jess Creations - ArugulaZ).sg",	40960, 0x7886d024, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_solarfoxii)
@@ -4780,7 +4780,7 @@ STD_ROM_FN(sg1k_solarfoxii)
 
 struct BurnDriver BurnDrvsg1k_solarfoxii = {
 	"sg1k_solarfoxii", NULL, NULL, NULL, "2025",
-	"Solar Fox II (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"Solar Fox II (HB, 21-10-25)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_solarfoxiiRomInfo, sg1k_solarfoxiiRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4898,7 +4898,7 @@ struct BurnDriver BurnDrvsg1k_vexed = {
 
 // Whack 'Em Smack 'Em Byrons (HB)
 static struct BurnRomInfo sg1k_wsbyronsRomDesc[] = {
-	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations - ArugulaZ).sg",	32706, 0xa444660d, BRF_PRG | BRF_ESS },
+	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations - ArugulaZ).sg",	31770, 0x073dd0e9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_wsbyrons)

@@ -24916,7 +24916,7 @@ struct BurnDriver BurnDrvsms_wekainvaders = {
 
 // Whack 'Em Smack 'Em Byrons Remarked (HB)
 static struct BurnRomInfo sms_wsbyronsrRomDesc[] = {
-	{ "Whack 'Em Smack 'Em Byrons Remarked (2025)(ArugulaZ).sms",	131072, 0xbe34ae87, BRF_PRG | BRF_ESS },
+	{ "Whack 'Em Smack 'Em Byrons Remarked (2025)(Jess Creations - ArugulaZ).sms",	131072, 0xbe34ae87, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_wsbyronsr)
@@ -24924,7 +24924,7 @@ STD_ROM_FN(sms_wsbyronsr)
 
 struct BurnDriver BurnDrvsms_wsbyronsr = {
 	"sms_wsbyronsr", NULL, NULL, NULL, "2025",
-	"Whack 'Em Smack 'Em Byrons Remarked (HB)\0", NULL, "ArugulaZ", "Sega Master System",
+	"Whack 'Em Smack 'Em Byrons Remarked (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_wsbyronsrRomInfo, sms_wsbyronsrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

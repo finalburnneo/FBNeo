@@ -117,7 +117,7 @@ ARM7_INLINE void arm7_cpu_write32(UINT32 addr, UINT32 data);
 ARM7_INLINE void arm7_cpu_write16(UINT32 addr, UINT16 data);
 ARM7_INLINE void arm7_cpu_write8(UINT32 addr, UINT8 data);
 ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr);
-ARM7_INLINE UINT16 arm7_cpu_read16(UINT32 addr);
+ARM7_INLINE UINT32 arm7_cpu_read16(UINT32 addr);
 ARM7_INLINE UINT8 arm7_cpu_read8(UINT32 addr);
 
 /* Static Vars */
@@ -171,15 +171,19 @@ ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr)
     return result;
 }
 
-ARM7_INLINE UINT16 arm7_cpu_read16(UINT32 addr)
+ARM7_INLINE UINT32 arm7_cpu_read16(UINT32 addr)
 {
-    UINT16 result;
+    UINT32 result;
 
     result = Arm7ReadWord(addr & ~1);
 
     if (addr & 1)
     {
+#if ARM9_MODE
+        result = ((result >> 8) & 0xff) | ((result & 0xff) << 24);
+#else
         result = ((result >> 8) & 0xff) | ((result & 0xff) << 8);
+#endif
     }
 
     return result;
@@ -1124,10 +1128,14 @@ static void HandleHalfWordDT(UINT32 insn)
 
             // Signed Half Word?
             if (insn & 0x20) {
+#if ARM9_MODE
+                newval = (UINT32)(INT32)(INT16)(UINT16)READ16(rnv & ~1);
+#else
                 UINT16 signbyte, databyte;
                 databyte = READ16(rnv) & 0xFFFF;
                 signbyte = (databyte & 0x8000) ? 0xffff : 0;
                 newval = (UINT32)(signbyte << 16)|databyte;
+#endif
             }
             // Signed Byte
             else {

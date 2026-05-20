@@ -810,11 +810,15 @@
                             rn = (insn & THUMB_GROUP5_RN) >> THUMB_GROUP5_RN_SHIFT;
                             rd = (insn & THUMB_GROUP5_RD) >> THUMB_GROUP5_RD_SHIFT;
                             addr = GET_REGISTER(rn) + GET_REGISTER(rm);
+#if ARM9_MODE
+                            op2 = (UINT32)(INT32)(INT16)(UINT16)READ16(addr & ~1);
+#else
                             op2 = READ16(addr);
                             if (op2 & 0x00008000)
                             {
                                 op2 |= 0xffff0000;
                             }
+#endif
                             SET_REGISTER(rd, op2);
                             R15 += 2;
                             break;

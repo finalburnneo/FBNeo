@@ -47975,10 +47975,10 @@ struct BurnDriver BurnDrvsnes_Tmntfightce = {
 	512, 448, 4, 3
 };
 
-// TMNT: Tournament Fighters - Grandmasters Edition (Hack, v3.7)
+// TMNT: Tournament Fighters - Grandmasters Edition (Hack, v3.8)
 // https://www.romhacking.net/hacks/8894/
 static struct BurnRomInfo snes_TmntfightgmeRomDesc[] = {
-	{ "TMNT Tournament Fighters - Grandmasters Edition v3.7 (2025-26)(Allo).sfc", 4194304, 0x33f03afd, BRF_ESS | BRF_PRG },
+	{ "TMNT Tournament Fighters - Grandmasters Edition v3.8 (2025-26)(Allo).sfc", 4194304, 0x0db1d35e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Tmntfightgme)
@@ -47986,7 +47986,7 @@ STD_ROM_FN(snes_Tmntfightgme)
 
 struct BurnDriver BurnDrvsnes_Tmntfightgme = {
 	"snes_tmntfightgme", "snes_tmntfight", NULL, NULL, "2025-26",
-	"TMNT: Tournament Fighters - Grandmasters Edition (Hack, v3.7)\0", NULL, "Allo", "SNES / Super Famicom",
+	"TMNT: Tournament Fighters - Grandmasters Edition (Hack, v3.8)\0", NULL, "Allo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightgmeRomInfo, snes_TmntfightgmeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

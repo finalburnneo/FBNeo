@@ -268,10 +268,12 @@ int RunFrame(int bDraw, int bPause)
 			if (nReplayStatus == 2) {
 				GetInput(false);				// Update burner inputs, but not game inputs
 				if (ReplayInput()) {			// Read input from file
+					SetPauseMode(1);            // Replay has finished
 					bAppDoFast = 0;
-					bAppDoFasttoggled = 0;      // Replay has finished, disable FFWD
+					bAppDoFasttoggled = 0;      // Disable FFWD
 					MenuEnableItems();
 					InputSetCooperativeLevel(false, false);
+					return 0;
 				}
 			} else {
 				GetInput(true);					// Update inputs

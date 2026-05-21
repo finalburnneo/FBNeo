@@ -91,7 +91,6 @@ static UINT8 *Pgm2ArmROMEncrypted = NULL;     // encrypted backup for reset
 static INT32  Pgm2HasDecrypted = 0;            // prevents double decryption
 static INT32  Pgm2HasDecrypted_Cached = 0;     // prevents double decryption
 static UINT8  Pgm2EncryptTable[0x100] = {0};  // captured from writes to 0xFFFFFC00
-static INT32  Pgm2RtcBase = 0;
 static INT32  Pgm2EncWriteCount = 0;
 static INT32  Pgm2VideoRegLogCount = 0;
 static INT32  Pgm2SharedLogCount = 0;
@@ -234,6 +233,12 @@ void pgm2SetRamRomBoard(INT32 ramSize)
 void pgm2SetRefreshRate(double hz)
 {
     Pgm2RefreshRate = hz;
+}
+
+static UINT32 pgm2RtcRead()
+{
+    // MAME exposes the IGS036 RTTC as elapsed machine time in seconds.
+    return (UINT32)(Pgm2RtcFrameCounter / Pgm2RefreshRate);
 }
 
 // ---------------------------------------------------------------------------
@@ -560,6 +565,11 @@ static UINT32 Pgm2AicCoreStatus = 0;    // AIC_CISR: bit1=nIRQ, bit0=nFIQ
 static INT32  Pgm2AicLevelStack[9] = {-1,0,0,0,0,0,0,0,0}; // Priority nesting stack (sentinel=-1, matches MAME)
 static INT32  Pgm2AicLvlIdx    = 0;     // Current stack index
 
+static inline void pgm2AicSetLines()
+{
+    Arm9SetIRQLine(ARM7_IRQ_LINE, (Pgm2AicCoreStatus & ~Pgm2AicDebug & 2) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
 // Get current interrupt priority level from stack
 static inline INT32 pgm2AicGetLevel()
 {
@@ -621,12 +631,7 @@ static void pgm2AicCheckIrqs()
     if (Pgm2AicPending & Pgm2AicEnabled & Pgm2AicFastIrqs)
         Pgm2AicCoreStatus |= 1;
 
-    // Assert/deassert the CPU IRQ line based on core status
-    if (Pgm2AicCoreStatus & 2) {
-        Arm9SetIRQLine(ARM7_IRQ_LINE, CPU_IRQSTATUS_ACK);
-    } else {
-        Arm9SetIRQLine(ARM7_IRQ_LINE, CPU_IRQSTATUS_NONE);
-    }
+    pgm2AicSetLines();
 }
 
 static void pgm2AicSetIrq(int source, int state)
@@ -679,7 +684,7 @@ static UINT32 pgm2AicRead(UINT32 offset)
                     }
                     tmp ^= (1u << idx);
                 }
-                if (midx >= 0) {
+                if (midx > 0) {
                     Pgm2AicStatus = midx;
                     result = Pgm2AicSvr[midx];
                     // Push current priority level (nesting)
@@ -706,7 +711,7 @@ static UINT32 pgm2AicRead(UINT32 offset)
             }
             Pgm2AicCoreStatus &= ~2;
             // Match MAME: only update IRQ line here, do NOT re-evaluate (set_lines, not check_irqs)
-            Arm9SetIRQLine(ARM7_IRQ_LINE, (Pgm2AicCoreStatus & 2) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+            pgm2AicSetLines();
             return result;
         }
         case 0x104: // AIC_FVR
@@ -778,6 +783,7 @@ static void pgm2AicWrite(UINT32 offset, UINT32 data)
                     pc, pgm2AicGetLevel(), Pgm2AicLvlIdx > 0 ? Pgm2AicLevelStack[Pgm2AicLvlIdx - 1] : -1, Pgm2RtcFrameCounter);
                 eoicrLogCount++;
             }
+            Pgm2AicStatus = 0;
             pgm2AicPopLevel();
             break;
         }
@@ -795,8 +801,9 @@ static inline UINT8 pgm2SharedReadByte(UINT32 addr)
     UINT32 lo = addr - 0x30100000;
     if (lo > 0xff) return 0xff;
 
-    // umask32(0x00ff00ff): only byte lanes 0/2 are connected => even addresses.
-    if (lo & 1) return 0xff;
+    // MAME maps this through umask32(0x00ff00ff): only byte lanes 0/2
+    // reach the 8-bit shared RAM handler.  Masked lanes read as zero.
+    if (lo & 1) return 0x00;
 
     UINT32 offs = (lo >> 1) & 0x7f;
     return Pgm2SharedRAM2[offs + ((Pgm2ShareBank & 1) * 0x80)];
@@ -853,6 +860,7 @@ static void pgm2McuCommand(bool isCommand)
                     memset(Pgm2SharedRAM2 + ((~Pgm2ShareBank & 1) * 0x80), arg3, 0x80);
                 }
                 Pgm2McuResult0 = cmd;
+                Pgm2McuResult1 = 0;
                 break;
 
             case 0xc0: // insert card / check card presence
@@ -988,7 +996,6 @@ static void pgm2McuCommand(bool isCommand)
             default:
                 // Match MAME: unknown commands report error status (0xF4).
                 status = 0x00f40000;
-                Pgm2McuResult0 = cmd;
                 break;
         }
 
@@ -1000,7 +1007,7 @@ static void pgm2McuCommand(bool isCommand)
         // asserted only when the countdown expires (in pgm2Frame), NOT
         // immediately — the game must have time to finish setting up AIC
         // SVR vectors before the first MCU interrupt fires.
-        Pgm2McuDoneCountdown = 8;
+        Pgm2McuDoneCountdown = 16;
     } else {
         // ACK: MAME sets status F2 and starts another short timer (100μs),
         // then clears IRQ3 immediately on the ACK write.
@@ -1228,7 +1235,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     // Advance this from emulated frame time so timeout loops can progress.
     if (addr == 0x7FFFFD28)
     {
-        return (UINT32)(Pgm2RtcBase + (Pgm2RtcFrameCounter / 60));
+        return pgm2RtcRead();
     }
 
     // IGS036 internal peripherals (high addresses, bit 31 masked by ARM9 to 0x7Fxxxxxx)
@@ -1680,8 +1687,6 @@ INT32 pgm2Init()
 {
     BurnSetRefreshRate(Pgm2RefreshRate);
     PGM2_LOG(PGM2_LOG_SYS, "==== PGM2 init ====");
-    Pgm2RtcBase = (INT32)time(NULL);
-
     // Main RAM 0x20000000 - 512 KB
     Pgm2ArmRAM    = (UINT8*)BurnMalloc(0x80000);
     if (Pgm2ArmRAM) memset(Pgm2ArmRAM, 0, 0x80000);
@@ -2359,6 +2364,8 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
         Arm9Close();
 
         ymz770_scan(nAction, pnMin);
+
+        SCAN_VAR(Pgm2RtcFrameCounter);
 
         SCAN_VAR(Pgm2McuRegs);
         SCAN_VAR(Pgm2McuResult0);

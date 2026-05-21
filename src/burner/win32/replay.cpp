@@ -313,11 +313,6 @@ INT32 ReplayInput()
 		PrintInputs();
 	}
 
-	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) ) {
-		bprintf(0, _T("*** Replay: pausing before end of video!  Input-eof?: %x\n"), inputbuf_eof());
-		SetPauseMode(1);
-	}
-
 	if (inputbuf_eof()) {
 		StopReplay();
 		return 1;

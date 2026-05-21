@@ -32,7 +32,7 @@ bool bSearchStringInit          = false;                                    // U
 
 static HBRUSH hWhiteBGBrush;
 static HICON hExpand, hCollapse;
-static HICON hNotWorking, hNotFoundEss, hNotFoundNonEss;
+static HICON hNotWorking, hNotFoundEss, hNotFoundNonEss, hRomDataDrv;
 
 static HICON hDrvIconMiss;
 
@@ -148,6 +148,7 @@ HTREEITEM hFilterDemo				= NULL;
 HTREEITEM hFilterHack				= NULL;
 HTREEITEM hFilterHomebrew			= NULL;
 HTREEITEM hFilterPrototype			= NULL;
+HTREEITEM hFilterRomData			= NULL;
 HTREEITEM hFilterGenuine			= NULL;
 HTREEITEM hFilterHorshoot			= NULL;
 HTREEITEM hFilterVershoot			= NULL;
@@ -308,7 +309,7 @@ static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 
 
 #define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_MULTISHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY | GBF_RPG | GBF_SIM | GBF_ADV | GBF_CARD | GBF_BOARD)
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC | FBF_DONPACHI | FBF_MAHOU)
-#define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
+#define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE | BDF_ROMDATA_DRIVER)
 
 #define MASKCAPGRP				(MASKCAPMISC | MASKCPS | MASKCPS2 | MASKCPS3)
 #define MASKSEGAGRP				(MASKSEGA | MASKSG1000 | MASKSMS | MASKMEGADRIVE | MASKGG)
@@ -553,18 +554,39 @@ static int DoExtraFilters()
 
 	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE)) return 1;
 
-	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)				&& (BurnDrvGetFlags() & BDF_DEMO))					return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_HACK)				&& (BurnDrvGetFlags() & BDF_HACK))					return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_HOMEBREW)			&& (BurnDrvGetFlags() & BDF_HOMEBREW))				return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_PROTOTYPE)			&& (BurnDrvGetFlags() & BDF_PROTOTYPE))				return 1;
+// RomData must be combined with one of the following flags: BDF_BOOTLEG, BDF_DEMO, BDF_HACK, BDF_HOMEBREW, BDF_PROTOTYPE & MASKBOARDTYPEGENUINE
+#define NON_GENUINE_MASK (MASKALLBOARD & ~(MASKBOARDTYPEGENUINE | BDF_ROMDATA_DRIVER));
+	const INT32 drvFlags   = BurnDrvGetFlags();
+	const INT32 rdFlag     = drvFlags & BDF_ROMDATA_DRIVER;
+	const INT32 nonGenuine = drvFlags & NON_GENUINE_MASK;
+	const INT32 filter     = nLoadMenuBoardTypeFilter;
+
+	// ROMDATA driver
+	if (rdFlag) {
+		if ((filter & BDF_ROMDATA_DRIVER) && ((nonGenuine && (filter & nonGenuine)) ||
+			(!nonGenuine && (filter & MASKBOARDTYPEGENUINE))))													return 1;
+	}
+	// Non-ROMDATA driver
+	else {
+		if ((filter & nonGenuine) || ((filter & MASKBOARDTYPEGENUINE) && !nonGenuine))							return 1;
+	}
+#undef NON_GENUINE_MASK
+
+#if 0
+	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG)	&& !rdFlag)	return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)				&& (BurnDrvGetFlags() & BDF_DEMO)		&& !rdFlag)	return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_HACK)				&& (BurnDrvGetFlags() & BDF_HACK)		&& !rdFlag)	return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_HOMEBREW)			&& (BurnDrvGetFlags() & BDF_HOMEBREW)	&& !rdFlag)	return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_PROTOTYPE)			&& (BurnDrvGetFlags() & BDF_PROTOTYPE)	&& !rdFlag)	return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_ROMDATA_DRIVER)												&&  rdFlag)	return 1;
 
 	if ((nLoadMenuBoardTypeFilter & MASKBOARDTYPEGENUINE)	&& (!(BurnDrvGetFlags() & BDF_BOOTLEG))
 															&& (!(BurnDrvGetFlags() & BDF_DEMO))
 															&& (!(BurnDrvGetFlags() & BDF_HACK))
 															&& (!(BurnDrvGetFlags() & BDF_HOMEBREW))
-															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE)))	return 1;
-
+															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE))
+															&& (!rdFlag))										return 1;
+#endif // 0
 	if ((nLoadMenuFamilyFilter & FBF_MSLUG)					&& (BurnDrvGetFamilyFlags() & FBF_MSLUG))			return 1;
 	if ((nLoadMenuFamilyFilter & FBF_SF)					&& (BurnDrvGetFamilyFlags() & FBF_SF))				return 1;
 	if ((nLoadMenuFamilyFilter & FBF_KOF)					&& (BurnDrvGetFamilyFlags() & FBF_KOF))				return 1;
@@ -940,16 +962,16 @@ static void MyEndDialog()
 		DestroyIcon(hDrvIconMiss);
 		hDrvIconMiss = NULL;
 	}
+	if (hRomDataDrv) {
+		DestroyIcon(hRomDataDrv);
+		hRomDataDrv = NULL;
+	}
 
 	RECT rect;
 
 	GetWindowRect(hSelDlg, &rect);
 	nSelDlgWidth  = rect.right - rect.left;
 	nSelDlgHeight = rect.bottom - rect.top;
-
-	if (!bSelOkay) {
-		RomDataStateRestore();
-	}
 	bSelOkay = false;
 
 	EndDialog(hSelDlg, 0);
@@ -1537,6 +1559,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_HACK			, hFilterHack			, nLoadMenuBoardTypeFilter & BDF_HACK				);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_HOMEBREW		, hFilterHomebrew		, nLoadMenuBoardTypeFilter & BDF_HOMEBREW			);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_PROTOTYPE		, hFilterPrototype		, nLoadMenuBoardTypeFilter & BDF_PROTOTYPE			);
+	_TVCreateFiltersA(hBoardType	, IDS_SEL_ROMDATA		, hFilterRomData		, nLoadMenuBoardTypeFilter & BDF_ROMDATA_DRIVER		);
 
 	_TVCreateFiltersC(hRoot			, IDS_FAMILY			, hFamily				, nLoadMenuFamilyFilter & MASKALLFAMILY	);
 
@@ -1882,6 +1905,8 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 			
 			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
 
+			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
+
 			if (bLoadOK) {
 				pCache[nDrvIndex] = LoadIconFromMemory(mBuffer, mBufferSize, nIconsSizeXY, nIconsSizeXY);
 				free(mBuffer);
@@ -2163,7 +2188,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		hNotWorking		= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTWORKING),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		hNotFoundEss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_ESS),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		hNotFoundNonEss = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_NON),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
-
+		hRomDataDrv		= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_ROMDATA_DRV),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		hDrvIconMiss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_APP),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 
 		TCHAR szOldTitle[1024] = _T(""), szNewTitle[1024] = _T("");
@@ -2349,25 +2374,27 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		if (hItemChanged == hBoardType) {
 			if ((nLoadMenuBoardTypeFilter & MASKALLBOARD) == 0) {
-				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
+				_TreeView_SetCheckState(hFilterList, hItemChanged,     FALSE);
 
-				_TreeView_SetCheckState(hFilterList, hFilterBootleg, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterDemo, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterHack, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterHomebrew, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterBootleg,   FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterDemo,      FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterHack,      FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterHomebrew,  FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPrototype, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterGenuine, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterRomData,   FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterGenuine,   FALSE);
 
 				nLoadMenuBoardTypeFilter = MASKALLBOARD;
 			} else {
-				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
+				_TreeView_SetCheckState(hFilterList, hItemChanged,     TRUE);
 
-				_TreeView_SetCheckState(hFilterList, hFilterBootleg, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterDemo, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterHack, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterHomebrew, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterBootleg,   TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterDemo,      TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterHack,      TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterHomebrew,  TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPrototype, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterGenuine, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterRomData,   TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterGenuine,   TRUE);
 
 				nLoadMenuBoardTypeFilter = 0;
 			}
@@ -2597,6 +2624,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterHack)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HACK);
 		if (hItemChanged == hFilterHomebrew)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HOMEBREW);
 		if (hItemChanged == hFilterPrototype)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_PROTOTYPE);
+		if (hItemChanged == hFilterRomData)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_ROMDATA_DRIVER);
 		if (hItemChanged == hFilterGenuine)			_ToggleGameListing(nLoadMenuBoardTypeFilter, MASKBOARDTYPEGENUINE);
 
 		if (hItemChanged == hFilterOtherFamily)		_ToggleGameListing(nLoadMenuFamilyFilter, MASKFAMILYOTHER);
@@ -3132,69 +3160,60 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 								bParentExp = (TreeView_GetItemState(hSelList, hParentTmp, TVIS_EXPANDED) & TVIS_EXPANDED);
 							}
 						}
-
-						{
-							// Draw icons if needed
-							if (((NODEINFO*)TvItem.lParam)->bIsParent || bParentExp) {
-								if (!CheckWorkingStatus(nBurnDrvActive)) {
-									DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hNotWorking, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-									rect.left += nIconsSizeXY + 4;
-								} else {
-									if (!(gameAv[nBurnDrvActive]) && !bSkipStartupCheck) {
-										DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-										rect.left += nIconsSizeXY + 4;
-									} else {
-										if (!(nLoadMenuShowY & AVAILABLE) && !(gameAv[nBurnDrvActive] & 2)) {
-											DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hNotFoundNonEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-											rect.left += nIconsSizeXY + 4;
-										}
-									}
-								}
+						// Draw icons if needed
+						if (((NODEINFO*)TvItem.lParam)->bIsParent || bParentExp) {
+							HICON hDrawIcon = NULL;
+							if (!CheckWorkingStatus(nBurnDrvActive)) {
+								hDrawIcon = hNotWorking;
+							} else if (!(gameAv[nBurnDrvActive]) && !bSkipStartupCheck) {
+								hDrawIcon = hNotFoundEss;
+							} else if (!(nLoadMenuShowY & AVAILABLE) && !(gameAv[nBurnDrvActive] & 2)) {
+								hDrawIcon = hNotFoundNonEss;
+							}
+							if (hDrawIcon) {
+								DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hDrawIcon, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+								rect.left += nIconsSizeXY + 4;
 							}
 						}
 
 						// Driver Icon drawing code...
 						if (bEnableIcons && bIconsLoaded && (((NODEINFO*)TvItem.lParam)->bIsParent || bParentExp)) {
+							HICON hDrawIcon = NULL;
+							HICON hTmpIcon  = NULL;
+
 							// Windows GDI limitation, can not cache all icons, can only cache the following icons
 							// All hardware icon exist (By hardware)
 							// All non-Clone icon exist (By game)
 							// When the Clone icon option is turned on, the parent item has an icon and Clone does not (By game, They do not take up GDI resources)
 							if (hDrvIcon[nBurnDrvActive]) {
-								DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hDrvIcon[nBurnDrvActive], nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-							}
+								hDrawIcon = hDrvIcon[nBurnDrvActive];
+							} else {
+								BOOL bIsNonClone = !BurnDrvGetText(DRV_PARENT) && !(BurnDrvGetFlags() & BDF_CLONE);
 
-							if (!hDrvIcon[nBurnDrvActive]) {
-								// Non-Clone
-								if ((NULL == BurnDrvGetText(DRV_PARENT)) && !(BurnDrvGetFlags() & BDF_CLONE)) {
-									DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-								}
-								// Clone
-								else {
-									if (!bIconsOnlyParents) {
-										// By hardware
-										if (bIconsByHardwares) {
-											DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-										}
-										// By game
-										else {
-											TCHAR szIcon[MAX_PATH] = { 0 };
-											_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
+								if (bIsNonClone) {
+									hDrawIcon = hDrvIconMiss;
+								} else if (!bIconsOnlyParents) {
+									if (bIconsByHardwares) {
+										hDrawIcon = hDrvIconMiss;
+									} else {
+										TCHAR szIcon[MAX_PATH] = { 0 };
+										_sntprintf(szIcon, MAX_PATH, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
 
-											// Find the icons that meet the conditions, load and redraw them one by one and then recycle the resources to avoid memory leakage due to GDI resource overflow
-											// Exclude all parent set
-											// Exclude all hardware icons
-											// All the Clones where you can find icons
-											// Creates a temporary HICON object, which is destroyed immediately upon completion of the redraw.
-											HICON hTempIcon = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-											HICON hGameIcon = (NULL != hTempIcon) ? hTempIcon : hDrvIconMiss;
-											DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hGameIcon, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
-
-											if (NULL != hTempIcon) {	// Clone icon exist (By game)
-												DestroyIcon(hTempIcon); hTempIcon = NULL;
-											}
-										}
+										// Find the icons that meet the conditions, load and redraw them one by one and then recycle the resources to avoid memory leakage due to GDI resource overflow
+										// Exclude all parent set
+										// Exclude all hardware icons
+										// All the Clones where you can find icons
+										// Creates a temporary HICON object, which is destroyed immediately upon completion of the redraw.
+										hTmpIcon = (HICON)LoadImage(NULL, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+										hDrawIcon = hTmpIcon ? hTmpIcon : IsRomDataDrv() ? hRomDataDrv : hDrvIconMiss;
 									}
 								}
+							}
+							if (hDrawIcon) {
+								DrawIconEx(lptvcd->nmcd.hdc, rect.left, rect.top, hDrawIcon, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+							}
+							if (hTmpIcon) {
+								DestroyIcon(hTmpIcon);
 							}
 							rect.left += nIconsSizeXY + 4;
 						}
@@ -3345,6 +3364,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						}
 						if (BurnDrvGetFlags() & BDF_DEMO) {
 							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
+						}
+						if (BurnDrvGetFlags() & BDF_ROMDATA_DRIVER) {
+							_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
 							bUseInfo = true;
 						}
 						TCHAR szPlayersMax[100];
@@ -3471,7 +3493,6 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 
 	hParent = hParentWND;
 	nShowMVSCartsOnly = nMVSCartsOnly;
-	RomDataStateBackup();
 
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);
 

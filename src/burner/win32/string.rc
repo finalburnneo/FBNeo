@@ -93,7 +93,6 @@ BEGIN
 	IDS_DISK_ALL_CARD			"All Memory Card Files"
 	IDS_DISK_ALL_DAT			"All Dat Files"
 	IDS_DISK_TEXT				"Text Files"
-	IDS_DISK_FILE_ROMDATA		"%s RomData Type"
 	IDS_DISK_FILE_IPSPATCH		"%s IPS Type"
 	IDS_DISK_FILE_NEOGEOCD		"%s NeoGeo-CD Type"
 	IDS_DISK_FILE_ARCHIVE		"%s Archive Types"
@@ -188,6 +187,7 @@ BEGIN
 	IDS_SEL_HOMEBREW			"Homebrew"
 	IDS_SEL_DEMO				"Demo"
 	IDS_SEL_GENUINE				"Genuine"
+	IDS_SEL_ROMDATA				"RomData"
 	IDS_SEL_SETSTATUS			"Showing %i of %i sets [%i Unavailable sets]"
 	IDS_SEL_KANEKO				"Kaneko"
 	IDS_SEL_DATAEAST			"Data East"
@@ -265,13 +265,6 @@ BEGIN
 	IDS_NGCD_TITLE				"Title"
 	IDS_NGCD_NGCDID				"NGCD-ID"
 
-	IDS_ROMDATAMANAGER_TITLE	"%s%sRomData Manager%sSelect Game"
-	IDS_ROMDATA_DATPATH			"Dat path"
-	IDS_ROMDATA_ROMSET			"Romset"
-	IDS_ROMDATA_DRIVER			"Driver"
-	IDS_ROMDATA_HARDWARE_DESC	"%s"
-	IDS_ROMDATA_FULLNAME		"Game"
-
 	IDS_MENU_0 					"&Arcade"
     IDS_MENU_1 					"&Other..."
     IDS_MENU_2 					"&Other Gamma value..."
@@ -324,6 +317,7 @@ BEGIN
 	IDS_GAMEINFO_COMMANDS		"Commands"
 	IDS_GAMEINFO_SAMPLES		"Sample Info"
 	IDS_GAMEINFO_HDD			"HDD Info"
+	IDS_GAMEINFO_DERIVED		"Derived from "
 
 	IDS_PLACEHOLDER_LOAD		"Select Skin"
 

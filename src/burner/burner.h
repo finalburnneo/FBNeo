@@ -23,6 +23,10 @@
  #define DIRS_MAX (20)								// Maximum number of directories to search
 #endif
 
+#ifndef min
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#endif // !min
+
 #include "title.h"
 #include "burn.h"
 #include "joyprocess.h"
@@ -191,8 +195,10 @@ INT32 GamcPlayer(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
 INT32 GamcPlayerHotRod(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nFlags, INT32 nSlide);
 
 // misc.cpp
+void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const TCHAR*, FILE*, void*), void* userData);
+
 #define QUOTE_MAX (128)															// Maximum length of "quoted strings"
-INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);					// Read a quoted string from szSrc and poINT32 to the end
+INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);				// Read a quoted string from szSrc and poINT32 to the end
 TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel);
 
 TCHAR* ExtractFilename(TCHAR* fullname);
@@ -213,6 +219,12 @@ char* DecorateGameName(UINT32 nBurnDrv);
 TCHAR* DecorateGenreInfo();
 void ComputeGammaLUT();
 
+bool IsStrEmpty(const TCHAR* s);
+bool IsStrEmptyA(const char* s);
+
+bool IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext);
+TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
+
 // dat.cpp
 #define DAT_ARCADE_ONLY			0
 #define DAT_MEGADRIVE_ONLY		1
@@ -231,6 +243,8 @@ void ComputeGammaLUT();
 #define DAT_SNES_ONLY			14
 #define DAT_NGP_ONLY			15
 #define DAT_CHANNELF_ONLY		16
+
+//#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);
@@ -263,6 +277,7 @@ INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry);
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
 
 // romdata.cpp
+// Deprecated in the Windows version, but still used in the Libretro version for now. Will be removed eventually.
 extern TCHAR szRomdataName[MAX_PATH];
 TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName);
 

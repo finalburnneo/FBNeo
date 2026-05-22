@@ -593,7 +593,7 @@ static INT32 PathCombine_s(TCHAR** dest, const TCHAR* dir, const TCHAR* file)
 	*dest = NULL;
 	TCHAR* pTemp = NULL;
 
-	INT32 dirLen   = (INT32)_tcslen(IsStrEmpty(dir) ? _T("") : dir);
+	INT32 dirLen   = (INT32)_tcslen(IsStrEmpty(dir)  ? _T("") : dir);
 	INT32 fileLen  = (INT32)_tcslen(IsStrEmpty(file) ? _T("") : file);
 	INT32 totalLen = 0;
 
@@ -838,7 +838,7 @@ static INT32 GetDirectoryFromFilePath(const TCHAR* szFilePath, TCHAR** pszDir)
 }
 
 // Normalize to absolute path, unified slashes, no trailing slash, lowercase
-static INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput)
+INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput)
 {
 	// Validate input parameters
 	if (IsStrEmpty(szInput) || (!pszOutput))
@@ -863,13 +863,12 @@ static INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput)
 		return -1;
 
 	// Remove trailing backslash for consistent path comparison
-	INT32 len = (INT32)_tcslen(szAbs);
+	size_t len = _tcslen(szAbs);
 	while ((len > 0) && (_T('\\') == szAbs[len - 1]))
 		szAbs[--len] = _T('\0');
 
 	// Convert to lowercase for case-insensitive comparison
-	_tcslwr(szAbs);
-	len = (INT32)_tcslen(szAbs);
+	CharLowerBuff(szAbs, (INT32)_tcslen(szAbs));
 
 	// Allocate final buffer and return
 	TCHAR* pBuf = (TCHAR*)malloc((len + 1) * sizeof(TCHAR));
@@ -1990,23 +1989,41 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 }
 #undef BUFFER_SIZE
 
+// Cross-platform thread-local storage
+#if defined(__cplusplus) && __cplusplus >= 201103L
+#define THREAD_LOCAL thread_local
+#elif defined(_MSC_VER)
+#define THREAD_LOCAL __declspec(thread)
+#elif defined(__GNUC__)
+#define THREAD_LOCAL __thread
+#else
+#define THREAD_LOCAL _Thread_local
+#endif
+
 // Traverses a directory and invokes a callback for each file found
-void TraverseDirectoryFiles(const TCHAR* dirPath, void (*pFoundCallBack)(const TCHAR*), bool scanSubdirs)
+INT32 TraverseDirectoryFiles(const TCHAR* dirPath, INT32 (*pFoundCallBack)(const TCHAR*), bool scanSubdirs)
 {
+	// Add recursion depth limit to prevent stack overflow
+	static const INT32 MAX_RECURSION_DEPTH   = 256;		// Reasonable depth limit
+	THREAD_LOCAL static INT32 recursionDepth = 0;
+
+	if (recursionDepth > MAX_RECURSION_DEPTH)
+		return 0;
+
 	// Check if input directory path is invalid
 	if (IsStrEmpty(dirPath))
-		return;
+		return 0;
 
 	TCHAR searchPath[MAX_PATH] = { 0 };
 
 	// Build search path: "dir\\*" or "dir*"
 	const TCHAR* searchFormat = ends_with_slash(dirPath) ? _T("%s*") : _T("%s\\*");
-	int result = _sntprintf(searchPath, MAX_PATH, searchFormat, dirPath);
+	int result = _sntprintf(searchPath, ARRAY_SIZE(searchPath), searchFormat, dirPath);
 
 	// Handle buffer overflow safely
-	if (result < 0 || result >= MAX_PATH) {
-		searchPath[MAX_PATH - 1] = _T('\0');
-		return;
+	if (result < 0 || result >= ARRAY_SIZE(searchPath)) {
+		searchPath[ARRAY_SIZE(searchPath) - 1] = _T('\0');
+		return 0;
 	}
 
 	WIN32_FIND_DATA findData = { 0 };
@@ -2014,49 +2031,59 @@ void TraverseDirectoryFiles(const TCHAR* dirPath, void (*pFoundCallBack)(const T
 
 	// Exit if no files found or error
 	if (INVALID_HANDLE_VALUE == hFind)
-		return;
+		return 0;
 
-	BOOL bContinue = TRUE;
-	while (bContinue) {
-		// Skip current directory "." and parent directory ".."
-		if (0 == _tcscmp(findData.cFileName, _T(".")) || 0 == _tcscmp(findData.cFileName, _T(".."))) {
-			bContinue = FindNextFile(hFind, &findData);
-			continue;
-		}
+	INT32 fileCount = 0;
 
+	do {
 		TCHAR* fullPath = NULL;
-		INT32 pathLen = PathCombine_s(&fullPath, dirPath, findData.cFileName);
-		if (pathLen < 0) {
-			bContinue = FindNextFile(hFind, &findData);
-			continue;
+		// Skip current directory "." and parent directory ".."
+		if (0 != _tcscmp(findData.cFileName, _T(".")) && 0 != _tcscmp(findData.cFileName, _T(".."))) {
+			INT32 pathLen = PathCombine_s(&fullPath, dirPath, findData.cFileName);
+			if (pathLen >= 0 && fullPath != NULL) {
+				// Process directory or file
+				if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+					// Skip reparse points (junctions/symlinks), scan subdirs if enabled
+					if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) && scanSubdirs) {
+						// Increase recursion depth before processing nested file
+						recursionDepth++;
+						// Accumulate the return value from recursive call
+						fileCount += TraverseDirectoryFiles(fullPath, pFoundCallBack, scanSubdirs);
+						// Decrease recursion depth after returning from nested file
+						recursionDepth--;
+					}
+				} else {
+					// Call callback and accumulate its return value
+					if (pFoundCallBack)
+						fileCount += pFoundCallBack(fullPath);
+				}
+			}
 		}
-
-		// Process directory or file
-		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-			// Skip reparse points(junctions/symlinks), scan subdirs if enabled
-			if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) && scanSubdirs)
-				TraverseDirectoryFiles(fullPath, pFoundCallBack, scanSubdirs);
-		} else {
-			// Invoke the user-defined callback for regular files
-			// or others
-			if (pFoundCallBack)
-				pFoundCallBack(fullPath);
-		}
-
 		free_s((void**)&fullPath);
 
-		// Get next file
-		bContinue = FindNextFile(hFind, &findData);
-	}
+	} while (0 != FindNextFile(hFind, &findData));
 
-	// Close search handle to avoid resource leak
-	FindClose(hFind);
+	// Check for errors, but don't reset fileCount
+	// Only set error flag, but keep the count of already processed files
+	bool bTraversalError = false;
+	DWORD dwError = GetLastError();
+	if (ERROR_NO_MORE_FILES != dwError)
+		// Set error flag, but don't reset fileCount
+		bTraversalError = true;
+
+	// Ensure handle is closed (avoid leakage)
+	if (INVALID_HANDLE_VALUE != hFind)
+		FindClose(hFind);
+
+	return fileCount;
 }
+#undef THREAD_LOCAL
 
 // Callback that loads ROM data from a given file path
-static void RomdataLoadCallback(const TCHAR* filePath)
+static INT32 RomdataLoadCallback(const TCHAR* filePath)
 {
-	LoadRomdata(filePath);
+	INT32 result = LoadRomdata(filePath);
+	return (0x3fu == (((UINT32)result >> 8) & 0x3fu));
 }
 
 // Scans a directory (and optional subdirectories) and loads all ROM data files
@@ -2076,7 +2103,7 @@ INT32 OpenDirectoryLoadRomData(HWND hWnd)
 
 	// Show folder selection dialog
 	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
-	if (pidl == NULL)
+	if (!pidl)
 		return 0;										// User canceled the dialog
 
 
@@ -2088,7 +2115,6 @@ INT32 OpenDirectoryLoadRomData(HWND hWnd)
 
 	// Free allocated PIDL memory
 	CoTaskMemFree(pidl);
-
 	ScanDirectoryLoadRomdata(szDirPath, bRDListScanSub);
 
 	return 1;

@@ -351,9 +351,6 @@ static INT32 __cdecl BzipBurnLoadRom(UINT8* Dest, INT32* pnWrote, INT32 i)
 #endif
 
 	if (RomFind[i].nState == 0) {							// Rom not found in zip at all
-		// Error not found in the zip file
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_DISK), pszRomName, GetFilenameW(szBzipName[nCurrentZip]));
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n\n"));
 		return 1;
 	}
 

@@ -400,7 +400,8 @@ extern bool bRDListScanSub;
 
 INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt = NULL);
 INT32 OpenDirectoryLoadRomData(HWND hWnd);
-void  TraverseDirectoryFiles(const TCHAR* dirPath, void (*pFoundCallBack)(const TCHAR*), bool scanSubdirs = bRDListScanSub);
+INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput);
+INT32 TraverseDirectoryFiles(const TCHAR* dirPath, INT32 (*pFoundCallBack)(const TCHAR*), bool scanSubdirs = bRDListScanSub);
 bool  RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
 INT32 tchar_to_ansi(const TCHAR* src, char** dst);

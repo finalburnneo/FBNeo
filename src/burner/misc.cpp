@@ -556,14 +556,29 @@ bool IsFileExt(TCHAR *str, TCHAR *ext)
 	return (_tcsicmp(ext, FileExt(str)) == 0);
 }
 
+// Replace a single character in string (in-place), safe & robust
 TCHAR *StrReplace(TCHAR *str, TCHAR find, TCHAR replace)
 {
+/*
 	INT32 length = _tcslen(str);
 
 	for (INT32 i = 0; i < length; i++) {
 		if (str[i] == find) str[i] = replace;
 	}
 
+	return str;
+*/
+	// Safe guard: NULL pointer check
+	if (!str)
+		return NULL;
+
+	// Single pass: no need to pre-calculate length (faster)
+	TCHAR* p = str;
+	while (_T('\0') != *p) {
+		if (*p == find)
+			*p = replace;
+		p++;
+	}
 	return str;
 }
 
@@ -606,55 +621,84 @@ bool IsStrEmptyA(const char* s)
 	return (!s || '\0' == *s);
 }
 
+// Extract filename from a full path
+const TCHAR* ExtractFileNameFromPath(const TCHAR* filePath)
+{
+	if (IsStrEmpty(filePath))
+		return NULL;
+
+	// Find last backslash or forward slash
+	const TCHAR* pLastSlash        = _tcsrchr(filePath, _T('\\'));
+	const TCHAR* pLastForwardSlash = _tcsrchr(filePath, _T('/'));
+
+	// Take the last slash position
+	const TCHAR* pLastSeparator = pLastSlash;
+	if (pLastForwardSlash > pLastSeparator)
+		pLastSeparator = pLastForwardSlash;
+
+	// If no slash found, return the whole string
+	if (!pLastSeparator)
+		return filePath;
+
+	// Return part after the slash
+	return pLastSeparator + 1;
+}
+
 // Check if the file name has the specified extension (case-insensitive, with or without leading dot)
-bool IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext)
+BOOL IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext)
 {
 	// Null check
-	if (IsStrEmpty(fileName) || IsStrEmpty(ext))
-		return false;
+	if (IsStrEmpty(ext))
+		return FALSE;
+
+	// First extract pure filename from path
+	// ExtractFileNameFromPath already includes a check for IsStrEmpty(fileName)
+	const TCHAR* pureFileName = ExtractFileNameFromPath(fileName);
+	if (IsStrEmpty(pureFileName))
+		return FALSE;
 
 	// Get lengths
-	INT32 fileNameLen = (INT32)_tcslen(fileName);
-	INT32 extLen      = (INT32)_tcslen(ext);
+	size_t nameLen = _tcslen(pureFileName);
+	size_t extLen  = _tcslen(ext);
 
 	// Empty extension
 	if (extLen <= 0)
-		return false;
+		return FALSE;
 
 	// Handle dot in extension parameter
 	const TCHAR* actualExt = ext;
-	INT32 actualExtLen     = extLen;
+	size_t actualExtLen    = extLen;
 
 	// Skip leading dot if present
 	if (_T('.') == ext[0]) {
 		// If extension is just a dot, return false
 		if (1 == extLen)
-			return false;
+			return FALSE;
 
 		actualExt    = ext + 1;
 		actualExtLen = extLen - 1;
 	}
 
 	// Extension longer than file name, cannot match
-	if (actualExtLen >= fileNameLen)
-		return false;
+	if (actualExtLen >= nameLen)
+		return FALSE;
 
 	// Calculate where extension should start in file name
-	const TCHAR* fileExtStart = fileName + (fileNameLen - actualExtLen);
+	const TCHAR* fileExtStart = pureFileName + (nameLen - actualExtLen);
 
 	// Case-insensitive comparison
 	if (0 != _tcsicmp(fileExtStart, actualExt))
-		return false;
+		return FALSE;
 
 	// Verify there's a dot before the extension
 	// (unless the whole file name is the extension, e.g., ".gitignore")
-	if (fileNameLen > actualExtLen) {
+	if (nameLen > actualExtLen) {
 		TCHAR charBeforeExt = *(fileExtStart - 1);
 		if (_T('.') != charBeforeExt)
-			return false;
+			return FALSE;
 	}
 
-	return true;
+	return TRUE;
 }
 
 // Cross-platform thread-local storage
@@ -1063,7 +1107,7 @@ void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const T
 	if (IsStrEmpty(inputText) || !TextFileProcess)
 		return;
 
-	FILE*  file = NULL;
+	FILE*  file     = NULL;
 	TCHAR* tempFile = NULL;
 
 	// Open file with auto encoding detection; encoding output is NULL

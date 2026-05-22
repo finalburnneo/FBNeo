@@ -1243,6 +1243,7 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 			}
 			break;
 
+
 		case 3:
 			if (!ArchiveSetQuickPath(pszSelect)) {
 				QuickOpenExit();
@@ -1497,13 +1498,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR szSelect[MAX_PATH] = { 0 };
 
 			memset(&ofn, 0, sizeof(OPENFILENAME));
-			ofn.lStructSize = sizeof(OPENFILENAME);
-			ofn.hwndOwner = hScrnWnd;
-			ofn.lpstrFilter = szFilter;
-			ofn.lpstrFile = StrReplace(szSelect, _T('/'), _T('\\'));
-			ofn.nMaxFile = ARRAY_SIZE(szSelect);
+			ofn.lStructSize     = sizeof(OPENFILENAME);
+			ofn.hwndOwner       = hScrnWnd;
+			ofn.lpstrFilter     = szFilter;
+			ofn.lpstrFile       = StrReplace(szSelect, _T('/'), _T('\\'));
+			ofn.nMaxFile        = ARRAY_SIZE(szSelect);
 			ofn.lpstrInitialDir = _T(".");
-			ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+			ofn.Flags           = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 
 			if (!GetOpenFileName(&ofn))
 				break;

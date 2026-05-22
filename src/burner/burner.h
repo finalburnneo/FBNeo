@@ -195,8 +195,6 @@ INT32 GamcPlayer(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
 INT32 GamcPlayerHotRod(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nFlags, INT32 nSlide);
 
 // misc.cpp
-void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const TCHAR*, FILE*, void*), void* userData);
-
 #define QUOTE_MAX (128)															// Maximum length of "quoted strings"
 INT32 QuoteRead(TCHAR** ppszQuote, TCHAR** ppszEnd, TCHAR* pszSrc);				// Read a quoted string from szSrc and poINT32 to the end
 TCHAR* LabelCheck(TCHAR* s, TCHAR* pszLabel);
@@ -221,9 +219,10 @@ void ComputeGammaLUT();
 
 bool IsStrEmpty(const TCHAR* s);
 bool IsStrEmptyA(const char* s);
-
-bool IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext);
+const TCHAR* ExtractFileNameFromPath(const TCHAR* filePath);
+BOOL IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext);
 TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
+void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const TCHAR*, FILE*, void*), void* userData);
 
 // dat.cpp
 #define DAT_ARCADE_ONLY			0

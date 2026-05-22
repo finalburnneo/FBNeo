@@ -55,6 +55,21 @@ static struct BurnInputInfo CircusInputList[] = {
 
 STDINPUTINFO(Circus)
 
+static struct BurnInputInfo TrapezeInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	A("P1 Spinner",     BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+};
+
+STDINPUTINFO(Trapeze)
+
 static struct BurnInputInfo RobotbwlInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -129,6 +144,20 @@ static struct BurnDIPInfo CircusDIPList[]=
 };
 
 STDDIPINFO(Circus)
+
+static struct BurnDIPInfo TrapezeDIPList[]=
+{
+	DIP_OFFSET(0x07)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x00, 0x01, 0x03, 0x00, "3"					},
+	{0x00, 0x01, 0x03, 0x08, "5"					},
+	{0x00, 0x01, 0x03, 0x10, "7"					},
+	{0x00, 0x01, 0x03, 0x18, "9"					},
+};
+
+STDDIPINFO(Trapeze)
 
 static struct BurnDIPInfo RobotbwlDIPList[]=
 {
@@ -817,7 +846,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Circus / Acrobat TV
 
 static struct BurnRomInfo circusRomDesc[] = {
-	{ "9004.1a",			0x0200, 0x7654ea75, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "9004a.1a",			0x0200, 0x7654ea75, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
 	{ "9005.2a",			0x0200, 0xb8acdbc5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "9006.3a",			0x0200, 0x901dfff6, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "9007.5a",			0x0200, 0x9dfdae38, 1 | BRF_PRG | BRF_ESS }, //  3
@@ -832,6 +861,9 @@ static struct BurnRomInfo circusRomDesc[] = {
 	{ "9000.1c",			0x0200, 0x1f954bb3, 2 | BRF_GRA },           // 11
 
 	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(circus)
@@ -863,6 +895,43 @@ struct BurnDriver BurnDrvCircus = {
 };
 
 
+// Circus / Acrobat TV (older)
+
+static struct BurnRomInfo circusoRomDesc[] = {
+	{ "9004.1a",			0x0200, 0x68e710ba, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "9005.2a",			0x0200, 0xb8acdbc5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9006.3a",			0x0200, 0x901dfff6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "9007.5a",			0x0200, 0x9dfdae38, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "9008.6a",			0x0200, 0xc8681cf6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "9009.7a",			0x0200, 0x585f633e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "9010.8a",			0x0200, 0x69cc409f, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9011.9a",			0x0200, 0xaff835eb, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "9003.4c",			0x0200, 0x6efc315a, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "9002.3c",			0x0200, 0x30d72ef5, 2 | BRF_GRA },           //  9
+	{ "9001.2c",			0x0200, 0x361da7ee, 2 | BRF_GRA },           // 10
+	{ "9000.1c",			0x0200, 0x1f954bb3, 2 | BRF_GRA },           // 11
+
+	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(circuso)
+STD_ROM_FN(circuso)
+
+struct BurnDriver BurnDrvCircuso = {
+	"circuso", "circus", NULL, "circus", "1977",
+	"Circus / Acrobat TV (older)\0", NULL, "Exidy / Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, circusoRomInfo, circusoRomName, NULL, NULL, CircusSampleInfo, CircusSampleName, CircusInputInfo, CircusDIPInfo,
+	CircusInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
+	248, 256, 4, 3
+};
+
+
 // Springboard (bootleg of Circus)
 
 static struct BurnRomInfo springbdRomDesc[] = {
@@ -881,6 +950,9 @@ static struct BurnRomInfo springbdRomDesc[] = {
 	{ "93448.1c",			0x0200, 0x1f954bb3, 2 | BRF_GRA },           // 11
 
 	{ "93448.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(springbd)
@@ -900,21 +972,21 @@ struct BurnDriver BurnDrvSpringbd = {
 // Robot Bowl
 
 static struct BurnRomInfo robotbwlRomDesc[] = {
-	{ "robotbwl.1a",		0x0200, 0xdf387a0b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
-	{ "robotbwl.2a",		0x0200, 0xc948274d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "robotbwl.3a",		0x0200, 0x8fdb3ec5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "robotbwl.5a",		0x0200, 0xba9a6929, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "robotbwl.6a",		0x0200, 0x16fd8480, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "robotbwl.7a",		0x0200, 0x4cadbf06, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "robotbwl.8a",		0x0200, 0xbc809ed3, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "robotbwl.9a",		0x0200, 0x07487e27, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "4020.1a",		0x0200, 0xdf387a0b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "4021.2a",		0x0200, 0xc948274d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4022.3a",		0x0200, 0x8fdb3ec5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4023.5a",		0x0200, 0xba9a6929, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4024.6a",		0x0200, 0x16fd8480, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "4025.7a",		0x0200, 0x4cadbf06, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "4026a.8a",		0x0200, 0xbc809ed3, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "4027b.9a",		0x0200, 0x07487e27, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "robotbwl.4c",		0x0200, 0xa5f7acb9, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "robotbwl.3c",		0x0200, 0xd5380c9b, 2 | BRF_GRA },           //  9
-	{ "robotbwl.2c",		0x0200, 0x47b3e39c, 2 | BRF_GRA },           // 10
-	{ "robotbwl.1c",		0x0200, 0xb2991e7e, 2 | BRF_GRA },           // 11
+	{ "4010.4c",		0x0200, 0xa5f7acb9, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "4011.3c",		0x0200, 0xd5380c9b, 2 | BRF_GRA },           //  9
+	{ "4012.2c",		0x0200, 0x47b3e39c, 2 | BRF_GRA },           // 10
+	{ "4013.1c",		0x0200, 0xb2991e7e, 2 | BRF_GRA },           // 11
 
-	{ "robotbwl.14d",		0x0020, 0xa402ac06, 3 | BRF_GRA },           // 12 Sprites
+	{ "6000.14d",		0x0020, 0xa402ac06, 3 | BRF_GRA },           // 12 Sprites
 };
 
 STD_ROM_PICK(robotbwl)
@@ -949,7 +1021,44 @@ struct BurnDriver BurnDrvRobotbwl = {
 };
 
 
-// Crash
+// Trapeze / Trampoline
+
+static struct BurnRomInfo trapezeRomDesc[] = {
+	{ "9004.1a",			0x0200, 0xfe55a601, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "9005.2a",			0x0200, 0x37948b8d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9008.3a",			0x0200, 0xb6c2e1cb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "9009.5a",			0x0200, 0x875fd035, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "9006.6a",			0x0200, 0x3572445f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "9007.7a",			0x0200, 0x7d26899b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "9010.8a",			0x0200, 0x7114d163, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9011.9a",			0x0200, 0x325a2b38, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "9003.4c",			0x0200, 0xe46eae6c, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "9002.3c",			0x0200, 0x5f139f8c, 2 | BRF_GRA },           //  9
+	{ "9001.2c",			0x0200, 0x0ddc4b45, 2 | BRF_GRA },           // 10
+	{ "9000.1c",			0x0200, 0x0ddc4b45, 2 | BRF_GRA },           // 11
+
+	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(trapeze)
+STD_ROM_FN(trapeze)
+
+struct BurnDriverD BurnDrvTrapeze = {
+	"trapeze", NULL, NULL, "circus", "1978",
+	"Trapeze / Trampoline\0", NULL, "Exidy / Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, trapezeRomInfo, trapezeRomName, NULL, NULL, CircusSampleInfo, CircusSampleName, TrapezeInputInfo, TrapezeDIPInfo,
+	CircusInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
+	248, 256, 4, 3
+};
+
+
+// Crash (set 1)
 
 static struct BurnRomInfo crashRomDesc[] = {
 	{ "crash.a1",			0x0200, 0xb9571203, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -989,7 +1098,7 @@ static INT32 CrashInit()
 
 struct BurnDriver BurnDrvCrash = {
 	"crash", NULL, NULL, "crash", "1979",
-	"Crash\0", NULL, "Exidy", "Miscellaneous",
+	"Crash (set 1)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, crashRomInfo, crashRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,
@@ -998,7 +1107,7 @@ struct BurnDriver BurnDrvCrash = {
 };
 
 
-// Crash (Alt)
+// Crash (set 2)
 
 static struct BurnRomInfo crashaRomDesc[] = {
 	{ "nsa7.a8",			0x0800, 0x2e47c5ee, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1014,7 +1123,7 @@ STD_ROM_FN(crasha)
 
 struct BurnDriver BurnDrvCrasha = {
 	"crasha", "crash", NULL, "crash", "1979",
-	"Crash (Alt)\0", NULL, "Exidy", "Miscellaneous",
+	"Crash (set 2)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, crashaRomInfo, crashaRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,
@@ -1023,7 +1132,7 @@ struct BurnDriver BurnDrvCrasha = {
 };
 
 
-// Smash (Crash bootleg)
+// Smash (bootleg of Crash)
 
 static struct BurnRomInfo smashRomDesc[] = {
 	{ "smash.a1",			0x0200, 0xb9571203, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1048,7 +1157,7 @@ STD_ROM_FN(smash)
 
 struct BurnDriver BurnDrvSmash = {
 	"smash", "crash", NULL, "crash", "1979",
-	"Smash (Crash bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Smash (bootleg of Crash)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, smashRomInfo, smashRomName, NULL, NULL, CrashSampleInfo, CrashSampleName, CrashInputInfo, CrashDIPInfo,

@@ -1168,7 +1168,7 @@ static struct BurnRomInfo karnovjRomDesc[] = {
 	{ "dn-21.k8",		0x00400, 0xaab0bb93, 6 | BRF_GRA },           // 20 Color Proms
 	{ "dn-20.l6",		0x00400, 0x02f78ffb, 6 | BRF_GRA },           // 21
 
-	{ "dn-3.k14",  0x01000, 0x5a8c4d28,  7 | BRF_PRG }, 	  // 22 i8751 microcontroller
+	{ "dn-1.k14",		0x01000, 0x24a8261b,  7 | BRF_PRG }, 	  // 22 i8751 microcontroller
 };
 
 STD_ROM_PICK(karnovj)

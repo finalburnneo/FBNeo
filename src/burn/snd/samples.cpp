@@ -1404,3 +1404,72 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sample_channels);
 	}
 }
+
+// dink's super handy macros
+void splay(INT32 sam, double volume, bool checkplay, bool loop)
+{
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+	BurnSampleSetLoop(sam, loop);
+
+	if ( (checkplay && BurnSampleGetStatus(sam) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSamplePlay(sam);
+	}
+}
+
+void splayex(INT32 sam, double volume, INT32 rate, bool checkplay, bool loop)
+{
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+	BurnSampleSetLoop(sam, loop);
+	BurnSampleSetPlaybackRate(sam, rate);
+
+	if ( (checkplay && BurnSampleGetStatus(sam) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSamplePlay(sam);
+	}
+}
+
+void splaych(INT32 ch, INT32 sam, double volume, bool checkplay, bool loop)
+{
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+	if ( (checkplay && BurnSampleGetChannelStatus(ch) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleChannelPlay(ch, sam, loop);
+	}
+}
+
+void splayexch(INT32 ch, INT32 sam, double volume, INT32 rate, bool checkplay, bool loop)
+{
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+	BurnSampleSetPlaybackRate(sam, rate);
+
+	if ( (checkplay && BurnSampleGetChannelStatus(ch) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleChannelPlay(ch, sam, loop);
+	}
+}
+
+void sstop(INT32 sam)
+{
+	BurnSampleStop(sam, true); // +softstop
+}
+
+void sstopch(INT32 ch)
+{
+	BurnSampleChannelStop(ch, true);
+}
+
+bool splaying(INT32 sam)
+{
+	return (BurnSampleGetStatus(sam) == SAMPLE_PLAYING);
+}
+
+bool splayingch(INT32 ch)
+{
+	return (BurnSampleGetChannelStatus(ch) == SAMPLE_PLAYING);
+}
+

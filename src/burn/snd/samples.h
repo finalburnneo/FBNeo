@@ -74,3 +74,14 @@ extern INT32 bBurnSampleTrimSampleEnd; // set before BurnSampleInit();
 	BurnSampleSetRouteAllSamples(BURN_SND_SAMPLE_ROUTE_1, v, d);	\
 	BurnSampleSetRouteAllSamples(BURN_SND_SAMPLE_ROUTE_2, v, d);    \
 }
+
+// dink's super handy macros
+void splay(INT32 sam, double volume, bool checkplay = false, bool loop = false);
+void splayex(INT32 sam, double volume, INT32 rate = 100, bool checkplay = false, bool loop = false);
+void splaych(INT32 ch, INT32 sam, double volume, bool checkplay = false, bool loop = false);
+void splayexch(INT32 ch, INT32 sam, double volume, INT32 rate = 100, bool checkplay = false, bool loop = false);
+void sstop(INT32 sam);
+void sstopch(INT32 ch);
+bool splaying(INT32 sam);
+bool splayingch(INT32 ch);
+

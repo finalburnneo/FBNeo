@@ -318,7 +318,15 @@ int DrvExit()
 		DestroyWindow(hInpCheatDlg);	// Make sure the Cheat Dialog is exited
 
 		if (nBurnDrvActive < nBurnDrvCount) {
-			MemCardEject();				// Eject memory card if present
+			{
+				// Eject memory card(s) if present
+				MemCardEject();             // NeoGeo MVS
+
+				MemCardEjectPGM2Slot(0);    // PGM2
+				MemCardEjectPGM2Slot(1);
+				MemCardEjectPGM2Slot(2);
+				MemCardEjectPGM2Slot(3);
+			}
 
 			if (bSaveRAM) {
 				StatedAuto(1);			// Save NV (or full) RAM

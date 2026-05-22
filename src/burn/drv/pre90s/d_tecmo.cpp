@@ -863,7 +863,7 @@ static INT32 GeminiInit()
 {
 	tecmo_video_type = 2;
 	DrvHasADPCM = 1;
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "backfirt")) DrvHasADPCM = 0;
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "backfirtb")) DrvHasADPCM = 0;
 	if (DrvHasADPCM) adpcm_size = 0x8000;
 
 	AllMem = NULL;
@@ -1654,6 +1654,7 @@ struct BurnDriver BurnDrvSilkwrmj = {
 	256, 224, 4, 3
 };
 
+
 // Silk Worm (prototype)
 // 6217A
 // SILKWORM H T737
@@ -1700,6 +1701,7 @@ struct BurnDriver BurnDrvSilkwrmp = {
 	256, 224, 4, 3
 };
 
+
 // Silk Worm (bootleg, set 1)
 
 static struct BurnRomInfo silkwormbRomDesc[] = {
@@ -1739,6 +1741,7 @@ struct BurnDriver BurnDrvSilkwormb = {
 	SilkwormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
+
 
 // Silk Worm (bootleg, set 2)
 
@@ -1780,11 +1783,54 @@ struct BurnDriver BurnDrvSilkwormb2 = {
 	256, 224, 4, 3
 };
 
-// Back Fire (Tecmo, bootleg)
+
+// Back Fire (Tecmo)
 
 static struct BurnRomInfo backfirtRomDesc[] = {
+	{ "4.5s",		0x10000, 0x0ab3bd4d, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "5.6s",		0x10000, 0x150b6949, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "3.5j",		0x08000, 0xeb932b62, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "2.3j",		0x08000, 0x08ce729f, 3 | BRF_GRA },	      //  3 - Characters
+
+	{ "6.2c",		0x10000, 0xc8c25e45, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "7.2d",		0x10000, 0x25fb6a57, 4 | BRF_GRA },	      //  5
+	{ "8.2e",		0x10000, 0x6bccac4e, 4 | BRF_GRA },	      //  6
+	{ "9.2h",		0x10000, 0x566a99b8, 4 | BRF_GRA },	      //  7
+
+	{ "10.1p",		0x10000, 0x8c7138bb, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "11.2p",		0x10000, 0x6c03c476, 5 | BRF_GRA },	      //  9
+	{ "12.3p",		0x10000, 0x0bc84b4b, 5 | BRF_GRA },	      // 10
+	{ "13.4p",		0x10000, 0xec149ec3, 5 | BRF_GRA },	      // 11
+
+	{ "14.1s",		0x10000, 0x409df64b, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "15.2s",		0x10000, 0x6e4052c9, 6 | BRF_GRA },	      // 13
+	{ "16.3s",		0x10000, 0x2b6cc20e, 6 | BRF_GRA },	      // 14
+	{ "17.4s",		0x10000, 0xafea5323, 6 | BRF_GRA },	      // 15
+
+	{ "1.6b",		0x08000, 0x7d25ad01, 7 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(backfirt)
+STD_ROM_FN(backfirt)
+
+struct BurnDriver BurnDrvbackfirt = {
+	"backfirt", NULL, NULL, NULL, "1988",
+	"Back Fire (Tecmo)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, backfirtRomInfo, backfirtRomName, NULL, NULL, NULL, NULL, BackfirtInputInfo, BackfirtDIPInfo,
+	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Back Fire (Tecmo, bootleg)
+
+static struct BurnRomInfo backfirtbRomDesc[] = {
 	{ "b5-e3.bin",		0x10000, 0x0ab3bd4d, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
-	{ "b4-f3.bin",		0x10000, 0x150B6949, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b4-f3.bin",		0x10000, 0x150b6949, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b2-e10.bin",		0x08000, 0x9b2ac54f, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
@@ -1806,15 +1852,15 @@ static struct BurnRomInfo backfirtRomDesc[] = {
 	{ "b14-s3.bin",		0x08000, 0x4d29637a, 6 | BRF_GRA },	      // 15
 };
 
-STD_ROM_PICK(backfirt)
-STD_ROM_FN(backfirt)
+STD_ROM_PICK(backfirtb)
+STD_ROM_FN(backfirtb)
 
-struct BurnDriver BurnDrvbackfirt = {
-	"backfirt", NULL, NULL, NULL, "1988",
-	"Back Fire (Tecmo, bootleg)\0", NULL, "Tecmo", "Miscellaneous",
+struct BurnDriver BurnDrvbackfirtb = {
+	"backfirtb", "backfirt", NULL, NULL, "1988",
+	"Back Fire (Tecmo, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, backfirtRomInfo, backfirtRomName, NULL, NULL, NULL, NULL, BackfirtInputInfo, BackfirtDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, backfirtbRomInfo, backfirtbRomName, NULL, NULL, NULL, NULL, BackfirtInputInfo, BackfirtDIPInfo,
 	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

@@ -37,6 +37,7 @@ static INT16 Analog[2];
 
 static INT32 is_ripcord = 0;
 static INT32 is_robotbwl = 0;
+static INT32 is_trapeze = 0;
 
 static bool audio_mute = false;
 
@@ -383,6 +384,7 @@ static UINT8 circus_read(UINT16 address)
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
+	memset(DrvM6502RAM, 0xff, 0x200);
 
 	M6502Open(0);
 	M6502Reset();
@@ -498,6 +500,7 @@ static INT32 DrvInit(void (*sound_cb)(INT32), void (*scanline_cb)(INT32))
 	M6502MapMemory(DrvM6502RAM,					0x0000, 0x01ff, MAP_RAM);
 	M6502MapMemory(DrvM6502ROM,					0x1000, 0x1fff, MAP_ROM);
 	M6502MapMemory(DrvVidRAM,					0x4000, 0x43ff, MAP_RAM);
+	M6502MapMemory(DrvVidRAM,					0x5000, 0x53ff, MAP_RAM);
 	M6502MapMemory(DrvM6502ROM,					0xf000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(circus_write);
 	M6502SetReadHandler(circus_read);
@@ -519,6 +522,8 @@ static INT32 DrvInit(void (*sound_cb)(INT32), void (*scanline_cb)(INT32))
 
 	sound_callback = sound_cb;
 	scanline_callback = scanline_cb;
+
+	memset(DrvM6502RAM, 0xff, 0x200);
 
 	DrvDoReset();
 
@@ -543,6 +548,7 @@ static INT32 DrvExit()
 
 	is_ripcord = 0;
 	is_robotbwl = 0;
+	is_trapeze = 0;
 
 	return 0;
 }
@@ -697,7 +703,7 @@ static INT32 CircusDraw()
 
 	if ( nSpriteEnable & 1) circus_draw_sprite();
 
-	if (nBurnLayer & 8) circus_colorize();
+	if (nBurnLayer & 8 && is_trapeze == 0) circus_colorize();
 
 	if (pBurnDraw) BurnTransferCopy(DrvPalette);
 
@@ -1047,13 +1053,19 @@ static struct BurnRomInfo trapezeRomDesc[] = {
 STD_ROM_PICK(trapeze)
 STD_ROM_FN(trapeze)
 
-struct BurnDriverD BurnDrvTrapeze = {
+static INT32 TrapezeInit()
+{
+	is_trapeze = 1;
+	return DrvInit(circus_sound_write, NULL);
+}
+
+struct BurnDriver BurnDrvTrapeze = {
 	"trapeze", NULL, NULL, "circus", "1978",
 	"Trapeze / Trampoline\0", NULL, "Exidy / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, trapezeRomInfo, trapezeRomName, NULL, NULL, CircusSampleInfo, CircusSampleName, TrapezeInputInfo, TrapezeDIPInfo,
-	CircusInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
+	TrapezeInit, DrvExit, DrvFrame, CircusDraw, DrvScan, &DrvRecalc, 2,
 	248, 256, 4, 3
 };
 

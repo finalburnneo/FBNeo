@@ -566,9 +566,12 @@ void BurnSampleChannelPlay(INT32 channel, INT32 sample, INT32 loop)
 	if (channel >= MAX_CHANNEL) bprintf(PRINT_ERROR, _T("BurnSampleChannelPlay called with invalid channel (%d), max is %d\n"), channel, MAX_CHANNEL);
 #endif
 
-	if (sample >= nTotalSamples) return;
+	if (sample >= nTotalSamples || channel >= MAX_CHANNEL) return;
 
-	BurnSampleChannelStop(channel);
+	if (sample_channels[channel] != sample) {
+		// different sample on this channel, stop previous sample first
+		BurnSampleChannelStop(channel);
+	}
 
 	sample_channels[channel] = sample;
 
@@ -1344,7 +1347,7 @@ static void BurnSampleRender_INT(UINT32 pLen)
 					if (sample_ptr->latch & LATCH_STOP) {
 						BurnSampleStop_INT(i);
 						sample_ptr->latch = LATCH_NONE;
-						bprintf(0, _T("[soft-stop!]\n"));
+						//bprintf(0, _T("[soft-stop!]\n"));
 						break; // break out of this channel's loop
 					} else if (sample_ptr->latch & LATCH_RETRIG) {
 						//bprintf(0, _T("[soft-retrig!]\n"));

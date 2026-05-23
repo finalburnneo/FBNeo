@@ -16387,7 +16387,7 @@ struct BurnDriver BurnDrvCrswd2bl = {
 // https://www.arcade-projects.com/threads/crossed-sword-ii-mvs-full-cd-audio-release.37356/
 
 static struct BurnRomInfo crswd2blpRomDesc[] = {
-	{ "054-p1.p1",    0x200000, 0xaa14d534, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "054.P1",       0x200000, 0xaa14d534, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "054-s1.s1",    0x020000, 0x22e02ddd, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -16449,7 +16449,7 @@ struct BurnDriver BurnDrvFroman2b = {
 // https://www.arcade-projects.com/threads/idol-mahjong-final-romance-2-mvs-conversion-full-audio-release.37331/
 
 static struct BurnRomInfo froman2bpRomDesc[] = {
-	{ "098.p1", 0x080000, 0xe86a3e80, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "098.P1", 0x080000, 0xe86a3e80, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "098.s1", 0x020000, 0x0e6a7c73, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -16701,14 +16701,14 @@ struct BurnDriver BurnDrvSamSho3en = {
 // https://www.arcade-projects.com/threads/zintrick-with-tracks.36825/
 
 static struct BurnRomInfo zintrckbpRomDesc[] = {
-	{ "zin-p1.bin",   0x100000, 0x654342e6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "zin.P1",   	  0x100000, 0x654342e6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "zin-s1.bin",   0x020000, 0x56d16afa, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "zin-c1.bin",   0x200000, 0x76aee189, 3 | BRF_GRA },           //  2 Sprite data
 	{ "zin-c2.bin",   0x200000, 0x844ed4b3, 3 | BRF_GRA },           //  3
 
-	{ "zin-m1.M1",    0x020000, 0xa1c68361, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "zin.M1",    	  0x020000, 0xa1c68361, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "zin.V1",   	  0x400000, 0xcd257055, 5 | BRF_SND },           //  5 Sound data
 	{ "zin.V2",   	  0x400000, 0x5d8f89ab, 5 | BRF_SND },           //  6

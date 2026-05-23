@@ -365,8 +365,38 @@ static struct BurnDIPInfo RallysDIPList[]=
 {
 	DIP_OFFSET(0x09)
 	{0x00, 0xff, 0xff, 0x21, NULL							},
-	{0x01, 0xff, 0xff, 0x03, NULL							},
+	{0x01, 0xff, 0xff, 0x00, NULL							},
 	{0x02, 0xff, 0xff, 0xff, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Quarter Coinage"				},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins/1 Credit"				},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin/1 Credit"				},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin/2 Credits"				},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin/3 Credits"				},
+
+/*
+	{0,    0xfe, 0   , 4   , "Pence Coinage"				},
+	{0x00, 0x01, 0x03, 0x00, "2C/1P, 50P Coin/3P"			},
+	{0x00, 0x01, 0x03, 0x01, "1C/1P, 50P Coin/6P"			},
+	{0x00, 0x01, 0x03, 0x02, "1C/2P, 50P Coin/12P"			},
+	{0x00, 0x01, 0x03, 0x03, "1C/3P, 50P Coin/18P"			},
+*/
+
+	{0   , 0xfe, 0   ,    2, "Top Score Award"				},
+	{0x00, 0x01, 0x04, 0x00, "Credit"						},
+	{0x00, 0x01, 0x04, 0x04, "Extended Play"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x00, 0x01, 0x60, 0x00, "2"							},
+	{0x00, 0x01, 0x60, 0x20, "3"							},
+	{0x00, 0x01, 0x60, 0x40, "4"							},
+	{0x00, 0x01, 0x60, 0x60, "5"							},
+
+/*
+	{0,    0xfe, 0   , 2   , "Currency"						},
+	{0x00, 0x01, 0x80, 0x00, "Quarters"						},
+	{0x00, 0x01, 0x80, 0x80, "Pence"						},
+*/
 
 	{0   , 0xfe, 0   ,    4, "Language"						},
 	{0x01, 0x01, 0x03, 0x00, "English"						},
@@ -656,6 +686,16 @@ static void rallys_main_write(UINT16 address, UINT8 data)
 	}
 }
 
+static UINT8 rallys_main_read(UINT16 address)
+{
+	switch (address & 0xff03)
+	{
+		case 0x5100: return (DrvDips[0] & 0xfe) | (DrvInputs[1] & 0x01);
+	}
+
+	return exidy_main_read(address);
+}
+
 static UINT8 venture_main_read(UINT16 address)
 {
 	switch (address & 0xff03)
@@ -777,9 +817,9 @@ static UINT8 targ_intsource()
 static UINT8 rallys_intsource()
 {
 	UINT8 ret = 0;
-	ret |= 0x1f;
-	ret |= (DrvInputs[1] & 0x01) ? 0x00 : 0x20; // coin2
-	ret |= (DrvInputs[0] & 0x80) ? 0x00 : 0x40;
+//	ret |= (DrvDips[1] & 0x1f);
+	ret |= (DrvInputs[1] & 0x01) ? 0x20 : 0x00; // coin2
+	ret |= (DrvInputs[0] & 0x80) ? 0x40 : 0x00;
 	return ret;
 }
 
@@ -896,6 +936,13 @@ static INT32 DrvLoadROMs(INT32 prg_load, INT32 snd_load)
 		BurnDrvGetRomInfo(&ri, i);
 
 		if ((ri.nType & 7) == 1) {
+			if (BurnLoadRom(pLoad, i, 1)) return 1;
+			pLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 7) == 5) {
+			pLoad += 0x400;
 			if (BurnLoadRom(pLoad, i, 1)) return 1;
 			pLoad += ri.nLen;
 			continue;
@@ -1478,7 +1525,7 @@ static INT32 SpectarCommonInit(INT32 load_addr, INT32 is_rallys)
 	{
 		if (DrvLoadROMs(load_addr, 0)) return 1;
 
-		memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
+		if (!is_rallys) memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
 
 		DrvGfxDecode();
 	}
@@ -1492,7 +1539,7 @@ static INT32 SpectarCommonInit(INT32 load_addr, INT32 is_rallys)
 	M6502MapMemory(DrvCharacterRAM,			0x4800, 0x4fff, MAP_RAM);
 	M6502MapMemory(DrvM6502ROM + 0x3f00,	0xff00, 0xffff, MAP_ROM); // vectors
 	M6502SetWriteHandler(is_rallys ? rallys_main_write : spectar_main_write);
-	M6502SetReadHandler(targ_main_read);
+	M6502SetReadHandler(is_rallys ? rallys_main_read : targ_main_read);
 	M6502Close();
 
 	pia_init(); // not in this set
@@ -3213,8 +3260,8 @@ static struct BurnRomInfo rallysRomDesc[] = {
 	{ "rallys.06",		0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "rallys.07",		0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "rallys.08",		0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "rallys.10",		0x0400, 0x46f473d2, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "rallys.09",		0x0400, 0x56ce8a94, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "rallys.10",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "rallys.09",		0x0400, 0x56ce8a94, 5 | BRF_PRG | BRF_ESS }, //  9
 
 	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
 
@@ -3224,11 +3271,11 @@ static struct BurnRomInfo rallysRomDesc[] = {
 STD_ROM_PICK(rallys)
 STD_ROM_FN(rallys)
 
-struct BurnDriverD BurnDrvRallys = {
+struct BurnDriver BurnDrvRallys = {
 	"rallys", "spectar", NULL, "targ", "1980",
 	"Rallys (bootleg of Spectar, set 1)\0", NULL, "bootleg (Novar)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
 	NULL, rallysRomInfo, rallysRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
 	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3

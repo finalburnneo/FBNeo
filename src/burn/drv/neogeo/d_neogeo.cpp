@@ -16711,9 +16711,9 @@ static struct BurnRomInfo zintrckbpRomDesc[] = {
 	{ "zin-m1.M1",    0x020000, 0xa1c68361, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "zin.V1",   	  0x400000, 0xcd257055, 5 | BRF_SND },           //  5 Sound data
-	{ "zin.V2",   	  0x400000, 0x5d8f89ab, 5 | BRF_SND },           //  5 Sound data
-	{ "zin.V3",   	  0x400000, 0x4626b4ff, 5 | BRF_SND },           //  5 Sound data
-	{ "zin.V4",   	  0x400000, 0x48666336, 5 | BRF_SND },           //  5 Sound data
+	{ "zin.V2",   	  0x400000, 0x5d8f89ab, 5 | BRF_SND },           //  6
+	{ "zin.V3",   	  0x400000, 0x4626b4ff, 5 | BRF_SND },           //  7
+	{ "zin.V4",   	  0x400000, 0x48666336, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(zintrckbp, zintrckbp, neogeo)

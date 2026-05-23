@@ -8665,6 +8665,25 @@ struct BurnDriver BurnDrvnes_elevatoractionc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Exodus: Journey to the Promised Land (Hack, Portuguese v1.1) (Unl)
+// https://www.romhacking.net/translations/7008/
+static struct BurnRomInfo nes_exodustpRomDesc[] = {
+	{ "Exodus - Journey to the Promised Land T-Por v1.1 (Unl)(2023)(Moises).nes",          262160, 0x4cc80e8b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_exodustp)
+STD_ROM_FN(nes_exodustp)
+
+struct BurnDriver BurnDrvnes_exodustp = {
+	"nes_exodustp", "nes_exodus", NULL, NULL, "2023",
+	"Exodus: Journey to the Promised Land (Hack, Portuguese v1.1) (Unl)\0", NULL, "Moises", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_exodustpRomInfo, nes_exodustpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Faxanadu (Hack, Spanish)
 // https://www.romhacking.net/translations/6901/
 static struct BurnRomInfo nes_faxanaducRomDesc[] = {
@@ -9535,6 +9554,25 @@ struct BurnDriver BurnDrvnes_magicschc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_magicschcRomInfo, nes_magicschcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Makai Island (Hack, Portuguese)
+
+static struct BurnRomInfo nes_makaiislandptpRomDesc[] = {
+	{ "Makai Island T-Por (2022)(SatY Traducoes).nes",          131088, 0xfd49c774, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_makaiislandptp)
+STD_ROM_FN(nes_makaiislandptp)
+
+struct BurnDriver BurnDrvnes_makaiislandptp = {
+	"nes_makaiislandptp", "nes_higemte", NULL, NULL, "2022",
+	"Makai Island (Hack, Portuguese)\0", NULL, "SatY Traducoes", "NES / Famicom",
+	NULL, NULL, L"SatY Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_makaiislandptpRomInfo, nes_makaiislandptpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -38972,11 +39010,30 @@ STD_ROM_PICK(nes_higem)
 STD_ROM_FN(nes_higem)
 
 struct BurnDriver BurnDrvnes_higem = {
-	"nes_higem", NULL, NULL, NULL, "1987",
+	"nes_higem", "nes_higemte", NULL, NULL, "1987",
 	"Higemaru Makaijima: Nanatsu no Shima Daibouken (Japan)\0", NULL, "Capcom", "NES / Famicom",
 	L"Higemaru Makaijima: Nanatsu no Shima Daibouken (Japan)\0\u9b54\u754c\u5cf6 \u4e03\u3064\u306e\u5cf6\u5927\u5192\u967a\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_higemRomInfo, nes_higemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Higemaru: Seven Islands Adventure (Hack, English)
+// https://www.romhacking.net/translations/1278/
+static struct BurnRomInfo nes_higemteRomDesc[] = {
+	{ "Higemaru - Seven Islands Adventure T-Eng (2007)(snark).nes",          131088, 0x1934ed15, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_higemte)
+STD_ROM_FN(nes_higemte)
+
+struct BurnDriver BurnDrvnes_higemte = {
+	"nes_higemte", NULL, NULL, NULL, "2007",
+	"Higemaru: Seven Islands Adventure (Hack, English)\0", NULL, "snark", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_higemteRomInfo, nes_higemteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43394,6 +43451,25 @@ struct BurnDriver BurnDrvnes_lupinsan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_lupinsanRomInfo, nes_lupinsanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Makai Island (USA, Prototype)
+
+static struct BurnRomInfo nes_makaiislandpRomDesc[] = {
+	{ "Makai Island (USA, Proto)(1987)(Capcom).nes",          131088, 0xf17a09c3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_makaiislandp)
+STD_ROM_FN(nes_makaiislandp)
+
+struct BurnDriver BurnDrvnes_makaiislandp = {
+	"nes_makaiislandp", "nes_higemte", NULL, NULL, "1987",
+	"Makai Island (USA, Prototype)\0", NULL, "Capcom", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_makaiislandpRomInfo, nes_makaiislandpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

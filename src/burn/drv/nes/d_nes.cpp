@@ -9559,7 +9559,7 @@ struct BurnDriver BurnDrvnes_magicschc = {
 };
 
 // Makai Island (Hack, Portuguese)
-// https://www.romhacking.net/translations/6500/
+
 static struct BurnRomInfo nes_makaiislandptpRomDesc[] = {
 	{ "Makai Island T-Por (2022)(SatY Traducoes).nes",          131088, 0xfd49c774, BRF_ESS | BRF_PRG },
 };

@@ -1081,18 +1081,26 @@ STD_ROM_PICK(Packbangp)
 STD_ROM_FN(Packbangp)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
-	{ "bz-prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "bz-prg2.u81",       	0x040000, 0xa16d3b1e, BRF_ESS | BRF_PRG }, //  1
+	{ "bz-prg1.u80",        0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz-prg2.u81",        0x040000, 0xa16d3b1e, BRF_ESS | BRF_PRG }, //  1
 
-	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
-	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3
+	{ "bz_sp1.u20",         0x100000, 0x0d5809a1, BRF_GRA },           //  2 Sprites
+	{ "bz_sp2.u21",         0x100000, 0x56ead2bd, BRF_GRA },           //  3
 
-	{ "bz_bg.u2",          	0x100000, 0xfc67f19f, BRF_GRA },	   	   //  4 Tiles (scrambled)
+	{ "bz_bg.u2",           0x100000, 0xfc67f19f, BRF_GRA },           //  4 Tiles (scrambled)
 
-	{ "3.u45",             	0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
+	{ "3.u45",              0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
 
-	{ "bz_sp1.u68",        	0x100000, 0x0d5809a1, BRF_OPT },
-	{ "bz_sp2.u86",        	0x100000, 0x56ead2bd, BRF_OPT },
+	{ "bz_sp1.u68",         0x100000, 0x0d5809a1, BRF_OPT },           //  6 Sprites (duplicate - unused)
+	{ "bz_sp2.u86",         0x100000, 0x56ead2bd, BRF_OPT },           //  7
+
+	{ "peel18cv8.u37",      0x000155, 0xf79332f9, BRF_OPT },           //  8 Plds
+	{ "gal22v10.u38",       0x0002e5, 0x115012a0, BRF_OPT },           //  9
+	{ "peel18cv8.u66",      0x000155, 0x7e53ea83, BRF_OPT },           // 10
+	{ "peel18cv8.u76",      0x000155, 0xeb390e91, BRF_OPT },           // 11
+	{ "peel18cv8.u77",      0x000155, 0x5c0a5843, BRF_OPT },           // 12
+	{ "peel18cv8.u78",      0x000155, 0xf2cec7c6, BRF_OPT },           // 13
+	{ "peel18cv8.u79",      0x000155, 0x9d7ce11d, BRF_OPT },           // 14
 };
 
 
@@ -1100,18 +1108,18 @@ STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
 
 static struct BurnRomInfo BlazeonjRomDesc[] = {
-	{ "bz_prg1.u80",       	0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "bz_prg2.u81",       	0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1
+	{ "bz_prg1.u80",        0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz_prg2.u81",        0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1
 
-	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
-	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3
+	{ "bz_sp1.u20",         0x100000, 0x0d5809a1, BRF_GRA },           //  2 Sprites
+	{ "bz_sp2.u21",         0x100000, 0x56ead2bd, BRF_GRA },           //  3
 
-	{ "bz_bg.u2",          	0x100000, 0xfc67f19f, BRF_GRA },	   	   //  4 Tiles (scrambled)
+	{ "bz_bg.u2",           0x100000, 0xfc67f19f, BRF_GRA },           //  4 Tiles (scrambled)
 
-	{ "3.u45",             	0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
+	{ "3.u45",              0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
 
-	{ "bz_sp1.u68",        	0x100000, 0x0d5809a1, BRF_OPT },
-	{ "bz_sp2.u86",        	0x100000, 0x56ead2bd, BRF_OPT },
+	{ "bz_sp1.u68",         0x100000, 0x0d5809a1, BRF_OPT },           //  6 Sprites (duplicate - unused)
+	{ "bz_sp2.u86",         0x100000, 0x56ead2bd, BRF_OPT },           //  7
 };
 
 
@@ -7907,7 +7915,7 @@ struct BurnDriver BurnDrvOedfighta = {
 
 struct BurnDriver BurnDrvBonkadv = {
 	"bonkadv", NULL, NULL, NULL, "1994",
-	"B.C. Kid / Bonk's Adventure / Kyukyoku!! PC Genjin\0", NULL, "Kaneko", "Kaneko16",
+	"B.C. Kid (Europe) / Bonk's Adventure: Arcade Version (US, China, Korea) / Kyukyoku!! PC Genjin: Special Arcade Version (Japan)\0", NULL, "Kaneko (Hudson Soft / Red license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BonkadvRomInfo, BonkadvRomName, NULL, NULL, NULL, NULL, BonkadvInputInfo, BonkadvDIPInfo,

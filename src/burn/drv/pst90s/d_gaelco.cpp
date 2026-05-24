@@ -1447,6 +1447,8 @@ static struct BurnRomInfo biomtoyRomDesc[] = {
 
 	{ "c1",			0x80000, 0x0f02de7e, 3 | BRF_SND },           // 10 M6295 Samples
 	{ "c3",			0x80000, 0x914e4bbc, 3 | BRF_SND },           // 11
+
+	{ "biomtoy_tibpal20l8_25cnt.d21", 0x002e5, 0x212604ea, 5 | BRF_OPT }, //  12 plds
 };
 
 STD_ROM_PICK(biomtoy)
@@ -1481,6 +1483,8 @@ static struct BurnRomInfo biomtoyaRomDesc[] = {
 
 	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
 	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+
+	{ "biomtoy_tibpal20l8_25cnt.d21", 0x002e5, 0x212604ea, 5 | BRF_OPT }, //  12 plds
 };
 
 STD_ROM_PICK(biomtoya)
@@ -1515,6 +1519,8 @@ static struct BurnRomInfo biomtoybRomDesc[] = {
 
 	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
 	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+
+	{ "biomtoy_tibpal20l8_25cnt.d21", 0x002e5, 0x212604ea, 5 | BRF_OPT }, //  12 plds
 };
 
 STD_ROM_PICK(biomtoyb)
@@ -1549,6 +1555,8 @@ static struct BurnRomInfo biomtoycRomDesc[] = {
 
 	{ "sound1.c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
 	{ "sound2.c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+
+	{ "biomtoy_tibpal20l8_25cnt.d21", 0x002e5, 0x212604ea, 5 | BRF_OPT }, //  12 plds
 };
 
 STD_ROM_PICK(biomtoyc)
@@ -1584,6 +1592,8 @@ static struct BurnRomInfo bioplaycRomDesc[] = {
 
 	{ "c1",					0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
 	{ "c3",					0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+
+	{ "biomtoy_tibpal20l8_25cnt.d21", 0x002e5, 0x212604ea, 5 | BRF_OPT }, //  12 plds
 };
 
 STD_ROM_PICK(bioplayc)

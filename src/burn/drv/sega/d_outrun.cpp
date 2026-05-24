@@ -2052,7 +2052,7 @@ static void OutrunWriteIO(UINT32 offset, UINT8 d)
 			return;
 		}
 	}
-	
+
 	sega_315_5195_io_write(offset, d);
 }
 
@@ -2385,6 +2385,65 @@ static INT32 ToutrunInit()
 	return System16Init();
 }
 
+// Outrun "Music Added" version, with "Added Music"
+// Neat info's:
+// https://www.ukvac.com/forum/threads/secret-extra-tune-found-in-out-run.32254/page-2#post-187668
+// https://www.ukvac.com/forum/threads/interest-check-out-run-music-extender.32384/
+
+static INT32 z80_bank;
+
+static void outrunm_bank(INT32 bank)
+{
+	z80_bank = bank;
+	ZetMapMemory(System16Z80Rom + (bank * 0x10000), 0x0000, 0xefff, MAP_ROM);
+}
+
+void __fastcall OutrunmPortWrite(UINT16 port, UINT8 data)
+{
+	if (port & 0x80) outrunm_bank((port >> 6) & 1);
+
+	System16Z80PortWrite(port, data);
+}
+
+static void OutrunmResetCallback()
+{
+	ZetOpen(0);
+	outrunm_bank(0);
+	ZetClose();
+}
+
+static INT32 OutrunmInit()
+{
+	INT32 rc = OutrunInit();
+
+	System16ResetCallbackDo = OutrunmResetCallback;
+	z80_bank = 0;
+
+	if (!rc) {
+		bprintf(0, _T("**  Outrun: with banked music!\n"));
+		ZetOpen(0);
+		ZetSetOutHandler(OutrunmPortWrite);
+		ZetClose();
+	}
+
+	return rc;
+}
+
+static INT32 OutrunmScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(z80_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		outrunm_bank(z80_bank);
+		ZetClose();
+	}
+
+	return System16Scan(nAction, pnMin);
+}
+
 /*====================================================
 Driver Defs
 ====================================================*/
@@ -2505,7 +2564,7 @@ struct BurnDriver BurnDrvOutrunm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrunmRomInfo, OutrunmRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
-	OutrunInit, System16Exit, OutrunFrame, OutrunRender, System16Scan,
+	OutrunmInit, System16Exit, OutrunFrame, OutrunRender, OutrunmScan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 

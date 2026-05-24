@@ -10829,6 +10829,44 @@ struct BurnDriver BurnDrvnes_swordmasterc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Takahashi Meijin no Bouken-jima III (Hack, Portuguese)
+
+static struct BurnRomInfo nes_takahashi3tpRomDesc[] = {
+	{ "Takahashi Meijin no Bouken-jima III T-Por (2021)(Patryckpo).nes",          262160, 0x423ad762, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_takahashi3tp)
+STD_ROM_FN(nes_takahashi3tp)
+
+struct BurnDriver BurnDrvnes_takahashi3tp = {
+	"nes_takahashi3tp", "nes_advenisl3", NULL, NULL, "2021",
+	"Takahashi Meijin no Bouken-jima III (Hack, Portuguese)\0", NULL, "Patryckpo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_takahashi3tpRomInfo, nes_takahashi3tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Takahashi Meijin no Bouken-jima IV (Hack, Portuguese)
+
+static struct BurnRomInfo nes_takahashi4tpRomDesc[] = {
+	{ "Takahashi Meijin no Bouken-jima IV T-Por (2023)(Patryckpo).nes",          393232, 0x9fc2fe68, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_takahashi4tp)
+STD_ROM_FN(nes_takahashi4tp)
+
+struct BurnDriver BurnDrvnes_takahashi4tp = {
+	"nes_takahashi4tp", "nes_advenisliv", NULL, NULL, "2023",
+	"Takahashi Meijin no Bouken-jima IV (Hack, Portuguese)\0", NULL, "Patryckpo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_takahashi4tpRomInfo, nes_takahashi4tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Target Renegade (Hack, Spanish)
 // https://www.romhacking.net/translations/3041/
 static struct BurnRomInfo nes_targetrenegadecRomDesc[] = {
@@ -20087,6 +20125,63 @@ struct BurnDriver BurnDrvnes_knightmoon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_knightmoonRomInfo, nes_knightmoonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Koopa in a Hurry (GlobalHack, English v1.2)
+// https://www.romhacking.net/hacks/7117/
+static struct BurnRomInfo nes_koopainahurryeRomDesc[] = {
+	{ "Koopa in a Hurry EN v1.2 (2022-26)(Green Jerry).nes",          40976, 0xfe02a2db, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_koopainahurrye)
+STD_ROM_FN(nes_koopainahurrye)
+
+struct BurnDriver BurnDrvnes_koopainahurrye = {
+	"nes_koopainahurrye", NULL, NULL, NULL, "2022-26",
+	"Koopa in a Hurry (GlobalHack, English v1.2)\0", "GlobalHack of Super Mario Bros.", "Green Jerry", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_koopainahurryeRomInfo, nes_koopainahurryeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Koopa com Pressa (GlobalHack, Portuguese v1.2)
+
+static struct BurnRomInfo nes_koopainahurrypRomDesc[] = {
+	{ "Koopa com Pressa PT v1.2 (2022-26)(Green Jerry).nes",          40976, 0x4c0b1068, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_koopainahurryp)
+STD_ROM_FN(nes_koopainahurryp)
+
+struct BurnDriver BurnDrvnes_koopainahurryp = {
+	"nes_koopainahurryp", "nes_koopainahurrye", NULL, NULL, "2022-26",
+	"Koopa com Pressa (GlobalHack, Portuguese v1.2)\0", "GlobalHack of Super Mario Bros.", "Green Jerry", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_koopainahurrypRomInfo, nes_koopainahurrypRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Koopa con Prisa (GlobalHack, Spanish v1.2)
+
+static struct BurnRomInfo nes_koopainahurrysRomDesc[] = {
+	{ "Koopa con Prisa SP v1.2 (2022-26)(Green Jerry).nes",          40976, 0xb0cfe3a5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_koopainahurrys)
+STD_ROM_FN(nes_koopainahurrys)
+
+struct BurnDriver BurnDrvnes_koopainahurrys = {
+	"nes_koopainahurrys", "nes_koopainahurrye", NULL, NULL, "2022-26",
+	"Koopa con Prisa (GlobalHack, Spanish v1.2)\0", "GlobalHack of Super Mario Bros.", "Green Jerry", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_koopainahurrysRomInfo, nes_koopainahurrysRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -411,6 +411,56 @@ static struct BurnDIPInfo RallysDIPList[]=
 
 STDDIPINFO(Rallys)
 
+static struct BurnDIPInfo PhantomaDIPList[]=
+{
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x21, NULL							},
+	{0x01, 0xff, 0xff, 0x00, NULL							},
+	{0x02, 0xff, 0xff, 0xff, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x82, 0x03, 0x00, "2 Coins/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x01, "1 Coin/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x02, "1 Coin/2 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x03, "1 Coin/3 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x02, 0x03, 0x00, "2F/1P, 5F Coin/3P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x01, "1F/1P, 5F Coin/6P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x02, "1F/2P, 5F Coin/12P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x03, "1F/3P, 5F Coin/18P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0   , 0xfe, 0   ,    2, "Top Score Award"				},
+	{0x00, 0x01, 0x04, 0x00, "Credit"						},
+	{0x00, 0x01, 0x04, 0x04, "Extended Play"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x00, 0x01, 0x60, 0x00, "2"							},
+	{0x00, 0x01, 0x60, 0x20, "3"							},
+	{0x00, 0x01, 0x60, 0x40, "4"							},
+	{0x00, 0x01, 0x60, 0x60, "5"							},
+
+	{0,    0xfe, 0   , 2   , "Coin Mode"					},
+	{0x00, 0x01, 0x80, 0x00, "Mode 1"						},
+	{0x00, 0x01, 0x80, 0x80, "Mode 2"						},
+
+	{0   , 0xfe, 0   ,    4, "Language"						},
+	{0x01, 0x01, 0x03, 0x00, "English"						},
+	{0x01, 0x01, 0x03, 0x01, "French"						},
+	{0x01, 0x01, 0x03, 0x02, "German"						},
+	{0x01, 0x01, 0x03, 0x03, "Spanish"						},
+};
+
+STDDIPINFO(Phantoma)
+
 static struct BurnDIPInfo VentureDIPList[]=
 {
 	DIP_OFFSET(0x09)
@@ -947,6 +997,13 @@ static INT32 DrvLoadROMs(INT32 prg_load, INT32 snd_load)
 
 		if ((ri.nType & 7) == 5) {
 			pLoad += 0x400;
+			if (BurnLoadRom(pLoad, i, 1)) return 1;
+			pLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 7) == 6) {
+			pLoad += 0xc800;
 			if (BurnLoadRom(pLoad, i, 1)) return 1;
 			pLoad += ri.nLen;
 			continue;
@@ -1522,14 +1579,15 @@ static INT32 TargInit()
 	return 0;
 }
 
-static INT32 SpectarCommonInit(INT32 load_addr, INT32 is_rallys)
+static INT32 SpectarCommonInit(INT32 load_addr, INT32 type)
 {
+	// type : 0=spectar 1=rallys 2=phantoma
 	BurnAllocMemIndex();
 
 	{
 		if (DrvLoadROMs(load_addr, 0)) return 1;
 
-		if (!is_rallys) memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
+		if (type != 1) memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
 
 		DrvGfxDecode();
 	}
@@ -1541,16 +1599,19 @@ static INT32 SpectarCommonInit(INT32 load_addr, INT32 is_rallys)
 	M6502MapMemory(DrvVideoRAM,				0x4000, 0x43ff, MAP_RAM);
 	M6502MapMemory(DrvVideoRAM,				0x4400, 0x47ff, MAP_RAM); // mirror
 	M6502MapMemory(DrvCharacterRAM,			0x4800, 0x4fff, MAP_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x3f00,	0xff00, 0xffff, MAP_ROM); // vectors
-	M6502SetWriteHandler(is_rallys ? rallys_main_write : spectar_main_write);
-	M6502SetReadHandler(is_rallys ? rallys_main_read : targ_main_read);
+	if (type == 2)
+		M6502MapMemory(DrvM6502ROM + 0xf800,	0xf800, 0xffff, MAP_ROM); // vectors
+	else
+		M6502MapMemory(DrvM6502ROM + 0x3f00,	0xff00, 0xffff, MAP_ROM); // vectors
+	M6502SetWriteHandler(type != 0 ? rallys_main_write : spectar_main_write);
+	M6502SetReadHandler(type != 0 ? rallys_main_read : targ_main_read);
 	M6502Close();
 
 	pia_init(); // not in this set
 
 	cheese_soundsystem_init(0);
 
-	ExidyCommonInit((is_rallys ? rallys_intsource : targ_intsource), 0, 0, 0, 0x2000, 0xda, 0xee, 0x61);
+	ExidyCommonInit((type != 0 ? rallys_intsource : targ_intsource), 0, 0, 0, 0x2000, 0xda, 0xee, 0x61);
 
 	DrvDoReset();
 
@@ -1570,6 +1631,11 @@ static INT32 Spectar1Init()
 static INT32 RallysInit()
 {
 	return SpectarCommonInit(0x1000, 1);
+}
+
+static INT32 PhantomaInit()
+{
+	return SpectarCommonInit(0x1000, 2);
 }
 
 // sound custom jib (c) Aaron Giles
@@ -3282,6 +3348,128 @@ struct BurnDriver BurnDrvRallys = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
 	NULL, rallysRomInfo, rallysRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
 	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Rallys (bootleg of Spectar, set 2)
+
+static struct BurnRomInfo rallysaRomDesc[] = {
+	{ "rallys.01",		0x0400, 0xa192b22b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "rallys.02",		0x0400, 0x19e730aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rallys.03",		0x0400, 0x2a3e7b69, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rallys.04",		0x0400, 0x6d224696, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rallys.05",		0x0400, 0xaf943b5e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rallys.06",		0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rallys.07",		0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rallys.08",		0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rallys.10",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "unk.c13",		0x0400, 0x57527332, 5 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
+
+	{ "6331.f6",		0x0020, 0x9fb1daee, 0 | BRF_OPT },           // 11 PROMs
+};
+
+STD_ROM_PICK(rallysa)
+STD_ROM_FN(rallysa)
+
+struct BurnDriver BurnDrvRallysa = {
+	"rallysa", "spectar", NULL, "targ", "1980",
+	"Rallys (bootleg of Spectar, set 2)\0", NULL, "bootleg (Musik Box Brescia)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, rallysaRomInfo, rallysaRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
+	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Panzer (bootleg of Spectar)
+
+static struct BurnRomInfo panzerRomDesc[] = {
+	{ "p1.1a",			0x0400, 0xa192b22b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "p2.2a",			0x0400, 0x19e730aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "p3.3a",			0x0400, 0x2a3e7b69, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "p4.4a",			0x0400, 0x6d224696, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "p5.5a",			0x0400, 0xaf943b5e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "p6.6a",			0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "p7.7a",			0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "p8.8a",			0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "p10.15b",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "p9.13b",			0x0400, 0xf01e474e, 5 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "sc.4d",			0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
+
+	{ "targ82s.123",	0x0020, 0x9eb9125c, 0 | BRF_OPT },           // 11 PROMs
+};
+
+STD_ROM_PICK(panzer)
+STD_ROM_FN(panzer)
+
+struct BurnDriver BurnDrvPanzer = {
+	"panzer", "spectar", NULL, "targ", "1980",
+	"Panzer (bootleg of Spectar)\0", NULL, "bootleg (Proel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, panzerRomInfo, panzerRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
+	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Phantomas (bootleg of Spectar)
+
+static struct BurnRomInfo phantomaRomDesc[] = {
+	{ "156_a2",		0x0800, 0xc5af9d34, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "156_a3",		0x0800, 0x30121e69, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "156_a4",		0x0800, 0x02d7fb94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "156_a5",		0x0800, 0x0127bc8d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "156_a1",		0x0800, 0x26292c0a, 6 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "156_d1",		0x0800, 0xd18e5f14, 2 | BRF_GRA },           //  5 Sprites
+
+	{ "156_pal",	0x0020, 0x9fb1daee, 0 | BRF_OPT },           //  6 PROMs
+};
+
+STD_ROM_PICK(phantoma)
+STD_ROM_FN(phantoma)
+
+struct BurnDriver BurnDrvPhantoma = {
+	"phantoma", "spectar", NULL, "targ", "1980",
+	"Phantomas (bootleg of Spectar)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, phantomaRomInfo, phantomaRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, PhantomaDIPInfo,
+	PhantomaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Phantom (bootleg of Spectar)
+
+static struct BurnRomInfo phantomRomDesc[] = {
+	{ "156_a2",		0x0800, 0xc5af9d34, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "156_a3",		0x0800, 0x30121e69, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "156_a4",		0x0800, 0x02d7fb94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "156_a5",		0x0800, 0x0127bc8d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1a.bin",		0x0800, 0xa4e40b67, 6 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "156_d1",		0x0800, 0xd18e5f14, 2 | BRF_GRA },           //  5 Sprites
+
+	{ "156_pal",	0x0020, 0x9fb1daee, 0 | BRF_OPT },           //  6 PROMs
+};
+
+STD_ROM_PICK(phantom)
+STD_ROM_FN(phantom)
+
+struct BurnDriver BurnDrvPhantom = {
+	"phantom", "spectar", NULL, "targ", "1980",
+	"Phantom (bootleg of Spectar)\0", NULL, "bootleg (Proel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, phantomRomInfo, phantomRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, PhantomaDIPInfo,
+	PhantomaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3
 };
 

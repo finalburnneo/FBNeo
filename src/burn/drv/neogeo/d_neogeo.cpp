@@ -6844,9 +6844,8 @@ STD_ROM_FN(mslug2)
 
 static void Mslug2PatchCallback()
 {
-
 	// 24-bit address array
-	const uint32_t patch_address[] = {
+	const UINT32 patch_address[] = {
 		0x001450, 0x001451, 0x001452, 0x001453, 0x001454, 0x001455, 0x001456, 0x001457, 0x001458, 0x001459,
 
 		0x001464, 0x001465, 0x001466, 0x001467, 0x001468, 0x001469, 0x00146a, 0x00146b, 0x00146c, 0x00146d,
@@ -6864,7 +6863,7 @@ static void Mslug2PatchCallback()
 	};
 
 	// 8-bit data value array
-	const uint8_t patch_data[2][62] = {
+	const UINT8 patch_data[2][62] = {
 		{
 			// original_data
 			0x2d, 0x10, 0x8a, 0x80, 0x00, 0x52, 0x00, 0x65, 0x0c, 0x00,
@@ -6901,7 +6900,7 @@ static void Mslug2PatchCallback()
 		}
 	};
 
-	const INT32 nIndex = (VerSwitcher & 1) ? 1 : 0;
+	const INT32 nIndex  = (VerSwitcher & 1) ? 1 : 0;
 	const size_t nCount = (sizeof(patch_address) / sizeof(patch_address[0]));
 
 	for (size_t i = 0; i < nCount; i++)
@@ -28461,30 +28460,31 @@ struct BurnDriver BurnDrvNeogalaga = {
 };
 
 
-// Shadow Gangs Zero (Backers Demo V1.0)
+// Shadow Gangs Zero (Kick Demo ver2.0)
 // https://www.kickstarter.com/projects/jkmcorp/shadow-gangs-zero
 
 static struct BurnRomInfo sgzRomDesc[] = {
-	{ "shadowgangs-p1.bin",  0x0100000, 0xd82b221c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "shadowgangs-p2.bin",  0x0200000, 0x29d808db, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "shadowgangs-p1.bin",  0x100000, 0x825d0989, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "shadowgangs-p2.bin",  0x100000, 0x3d1f0314, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "shadowgangs-s1.bin",  0x0020000, 0x0129953c, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "shadowgangs-s1.bin",  0x020000, 0x2e4238d1, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "shadowgangs-c1.bin",  0x1000000, 0x389f2418, 3 | BRF_GRA },           //  3 Sprite data
-	{ "shadowgangs-c2.bin",  0x1000000, 0x0e80f762, 3 | BRF_GRA },           //  4
+	{ "shadowgangs-c1.bin",  0x200000, 0x7679fe24, 3 | BRF_GRA },           //  3 Sprite data
+	{ "shadowgangs-c2.bin",  0x200000, 0x5374cdad, 3 | BRF_GRA },           //  4
 
-	{ "shadowgangs-m1.bin",  0x0080000, 0xd8b119ee, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "shadowgangs-m1.bin",  0x020000, 0x11c56b34, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
-	{ "shadowgangs-v1.bin",  0x1000000, 0x3feb9e9b, 5 | BRF_SND },           //  6 Sound data
+	{ "shadowgangs-v1.bin",  0x200000, 0x8928bcf2, 5 | BRF_SND },           //  6 Sound data
+	{ "shadowgangs-v2.bin",  0x200000, 0x8928bcf2, 5 | BRF_SND },           //  7
 };
 
 STDROMPICKEXT(sgz, sgz, neogeo)
 STD_ROM_FN(sgz)
 
 struct BurnDriver BurnDrvSgz = {
-	"sgz", NULL, "neogeo", NULL, "2026",
-	"Shadow Gangs Zero (Backers Demo V1.0)\0", NULL, "JKM Corp.", "Neo Geo MVS",
-	L"Shadow Gangs Zero (Backers Demo V1.0)\0\u5f71\u306e\u30ae\u30e3\u30f3\u30b0 ZERO\0", NULL, NULL, NULL,
+	"sgz", NULL, "neogeo", NULL, "2024",
+	"Shadow Gangs Zero (Kick Demo ver2.0)\0", NULL, "JKM Corp.", "Neo Geo MVS",
+	L"Shadow Gangs Zero (Kick Demo ver2.0)\0\u5f71\u306e\u30ae\u30e3\u30f3\u30b0 ZERO\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, sgzRomInfo, sgzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

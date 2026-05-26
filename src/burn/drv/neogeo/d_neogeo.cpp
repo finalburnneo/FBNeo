@@ -6846,7 +6846,7 @@ static void Mslug2PatchCallback()
 {
 
 	// 24-bit address array
-	const uint32_t patch_address[] = {
+	const UINT32 patch_address[] = {
 		0x001450, 0x001451, 0x001452, 0x001453, 0x001454, 0x001455, 0x001456, 0x001457, 0x001458, 0x001459,
 
 		0x001464, 0x001465, 0x001466, 0x001467, 0x001468, 0x001469, 0x00146a, 0x00146b, 0x00146c, 0x00146d,
@@ -6864,7 +6864,7 @@ static void Mslug2PatchCallback()
 	};
 
 	// 8-bit data value array
-	const uint8_t patch_data[2][62] = {
+	const UINT8 patch_data[2][62] = {
 		{
 			// original_data
 			0x2d, 0x10, 0x8a, 0x80, 0x00, 0x52, 0x00, 0x65, 0x0c, 0x00,
@@ -6901,11 +6901,11 @@ static void Mslug2PatchCallback()
 		}
 	};
 
-	const INT32 nIndex = (VerSwitcher & 1) ? 1 : 0;
+	const INT32 nIndex  = (VerSwitcher & 1) ? 1 : 0;
 	const size_t nCount = (sizeof(patch_address) / sizeof(patch_address[0]));
 
 	for (size_t i = 0; i < nCount; i++)
-		Neo68KROMActive[patch_address[i]] = (UINT8)patch_data[nIndex][i];
+		Neo68KROMActive[patch_address[i]] = patch_data[nIndex][i];
 }
 
 static INT32 mslug2Init()

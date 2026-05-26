@@ -34,8 +34,8 @@ static INT32 lastline;
 static void partial_update_dummy() { };
 static void DrvDrawBegin_dummy() { };
 
-static void (*pDrvDrawBegin)() = NULL;
-static void (*partial_update)() = NULL;
+void (*pDrvDrawBegin)() = NULL;
+void (*partial_update)() = NULL;
 // end partials
 
 static UINT8 DrvJoy1[8];

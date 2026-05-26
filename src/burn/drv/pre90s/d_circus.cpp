@@ -27,6 +27,16 @@ static INT32 sprite_z;
 static INT32 vblank;
 static void (*sound_callback)(INT32 data) = NULL;
 static void (*scanline_callback)(INT32 line) = NULL;
+// partials
+static INT32 scanline;
+static INT32 lastline;
+
+static void partial_update_dummy() { };
+static void DrvDrawBegin_dummy() { };
+
+void (*pDrvDrawBegin)() = NULL;
+void (*partial_update)() = NULL;
+// end partials
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvDips[1];
@@ -229,35 +239,6 @@ static struct BurnDIPInfo RipcordDIPList[]=
 
 STDDIPINFO(Ripcord)
 
-static void play(INT32 sam, double volume)
-{
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	BurnSamplePlay(sam);
-}
-
-static void playif(INT32 sam, double volume)
-{
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	if (BurnSampleGetStatus(sam) == SAMPLE_STOPPED)
-		BurnSamplePlay(sam);
-}
-
-static void playifloop(INT32 sam, double volume, INT32 rate)
-{
-	BurnSampleSetRouteFade(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRouteFade(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	BurnSampleSetLoop(sam, true);
-	BurnSampleSetPlaybackRate(sam, rate);
-
-	if (BurnSampleGetStatus(sam) == SAMPLE_STOPPED)
-		BurnSamplePlay(sam);
-}
-
 static void circus_sound_write(INT32 data)
 {
 	if ((data & 0x80) == 0) { // audio enable
@@ -265,11 +246,11 @@ static void circus_sound_write(INT32 data)
 		{
 			case 0: DACWrite(0, 0); break;
 			case 1: DACWrite(0, 0x80); break;
-			case 2: play(0, 0.55); break; // circus - pop, ripcord - splash
+			case 2: splay(0, 0.55); break; // circus - pop, ripcord - splash
 			case 3: break; // video - normal
-			case 4: playif(1, 0.45); break; // circus - miss, ripcord - scream
+			case 4: splay(1, 0.45, true); break; // circus - miss, ripcord - scream
 			case 5: break; // video - inverted
-			case 6: playif(2, 0.45); break; // circus - bounce - ripcord - chute open
+			case 6: splay(2, 0.45, true); break; // circus - bounce - ripcord - chute open
 			case 7: break; // circus - not used, ripcord see below
 		}
 	}
@@ -283,12 +264,12 @@ static void ripcord_sound_write(INT32 data)
 		{
 			case 0: DACWrite(0, 0); break;
 			case 1: DACWrite(0, 0x80); break;
-			case 2: play(0, 0.25); break; // ripcord - splash
+			case 2: splay(0, 0.25); break; // ripcord - splash
 			case 3: break; // video - normal
-			case 4: playif(1, 0.25); break; // ripcord - scream
+			case 4: splay(1, 0.25, true); break; // ripcord - scream
 			case 5: break; // video - inverted
-			case 6: playif(2, 0.25); break; // ripcord - chute open
-			case 7: playif(3, 0.25); break; // ripcord - whistle
+			case 6: splay(2, 0.25, true); break; // ripcord - chute open
+			case 7: splay(3, 0.25, true); break; // ripcord - whistle
 		}
 	} else {
 		audio_mute = true;
@@ -298,13 +279,13 @@ static void ripcord_sound_write(INT32 data)
 static void robotbwl_sound_write(INT32 data)
 {
 	if ((data & 0x80) == 0) { // audio enable
-		if (data & 0x01) play(4, 0.25); // reward
-		if (data & 0x02) play(3, 0.55); // demerit
+		if (data & 0x01) splay(4, 0.25); // reward
+		if (data & 0x02) splay(3, 0.55); // demerit
 		//	if (data & 0x04) // invert
 		DACWrite(0, (data & 0x08) ? 0x10 : 0x00); // footsteps
-		if (data & 0x10) play(2, 0.15); // ball drop
-		if (data & 0x20) play(1, 0.25); // roll
-		if (data & 0x40) play(0, 0.25); // hit
+		if (data & 0x10) splay(2, 0.15); // ball drop
+		if (data & 0x20) splay(1, 0.25); // roll
+		if (data & 0x40) splay(0, 0.25); // hit
 	}
 }
 
@@ -317,12 +298,12 @@ static void crash_sound_write(INT32 data)
 		{
 			case 0: DACWrite(0, 0); break;
 			case 1: DACWrite(0, 0x80); break;
-			case 2: playif(0, 0.75); break; // crash
-			case 3: playif(1, 1.75); break; // bip
+			case 2: splay(0, 0.75, true); break; // crash
+			case 3: splay(1, 1.75, true); break; // bip
 			case 4: break; // skid
-			case 5: playif(1, 1.75); break; // bip
-			case 6: playifloop(2, 0.75, 100); has_motor = true; break; // hi motor
-			case 7: playifloop(2, 0.75, 125); has_motor = true; break; // lo motor
+			case 5: splay(1, 1.75, true); break; // bip
+			case 6: splayex(2, 0.75, 100, true, true); has_motor = true; break; // hi motor
+			case 7: splayex(2, 0.75, 125, true, true); has_motor = true; break; // lo motor
 		}
 	}
 	if (has_motor == false) {
@@ -344,11 +325,12 @@ static void circus_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x2000:
-			sprite_x = 240 - data;
+			sprite_y = 240 - data;
+			if (sprite_y < 0) sprite_y += 256;
 		return;
 
 		case 0x3000:
-			sprite_y = 240 - data;
+			sprite_x = 240 - data;
 		return;
 
 		case 0x8000:
@@ -487,7 +469,7 @@ static tilemap_callback( bg )
 	TILE_SET_INFO(0, code, 0, 0);
 }
 
-static INT32 DrvInit(void (*sound_cb)(INT32), void (*scanline_cb)(INT32))
+static INT32 DrvInit(void (*sound_cb)(INT32), void (*scanline_cb)(INT32), void (*draw_begin_cb)(), void (*partial_cb)())
 {
 	BurnSetRefreshRate(60.00); // 60hz for proper sound sync in circus. 57 fks up, do not touch -dink
 
@@ -522,6 +504,9 @@ static INT32 DrvInit(void (*sound_cb)(INT32), void (*scanline_cb)(INT32))
 
 	sound_callback = sound_cb;
 	scanline_callback = scanline_cb;
+
+	pDrvDrawBegin = (draw_begin_cb != NULL) ? draw_begin_cb : DrvDrawBegin_dummy;
+	partial_update = (partial_cb != NULL) ? partial_cb : partial_update_dummy;
 
 	memset(DrvM6502RAM, 0xff, 0x200);
 
@@ -569,13 +554,13 @@ static void draw_line(INT32 x1, INT32 y1, INT32 x2, INT32 y2, INT32 dotted)
 	if (x1 == x2) {
 		if (x1 >= 0 && x1 < nScreenWidth) {
 			for (INT32 count = y2; count >= y1; count -= skip) {
-				if (count >= 0 && count < nScreenHeight) {
+				if (count >= lastline && count < scanline) {
 					pTransDraw[count * nScreenWidth + x1] = 1;
 				}
 			}
 		}
 	} else {
-		if (y1 >= 0 && y1 < nScreenHeight) {
+		if (y1 >= lastline && y1 < scanline) {
 			for (INT32 count = x2; count >= x1; count -= skip) {
 				if (count >= 0 && count <= nScreenWidth) {
 					pTransDraw[y1 * nScreenWidth + count] = 1;
@@ -637,13 +622,12 @@ static void robotbwl_draw_bowling_alley()
 static void circus_draw_sprite()
 {
 	INT32 collision = 0;
-
 	for (INT32 sy = 0; sy < 16; sy++) {
-		INT32 dy = sprite_x + sy-1;
+		INT32 dy = sprite_y + sy-1;
 
-		if (dy >= 0 && dy < nScreenHeight) {
+		if (dy >= lastline && dy < scanline) {
 			for (INT32 sx = 0; sx < 16; sx++) {
-				INT32 dx = sprite_y + sx;
+				INT32 dx = sprite_x + sx;
 
 				if (dx >= 0 && dx < nScreenWidth) {
 					INT32 pixel = DrvSprROM[(sprite_z * 16 * 16) + sy * 16 + sx];
@@ -656,17 +640,14 @@ static void circus_draw_sprite()
 			}
 		}
 	}
-
-	if (collision) {  // plays hell with synchronicity DINKFIXME
-		M6502Open(0);
-		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		M6502Close();
+	if (collision) {
+		M6502SetIRQLine(0, 0, CPU_IRQSTATUS_ACK);
 	}
 }
 
 static void draw_sprite(INT32 size, INT32 xadj, INT32 yadj)
 {
-	DrawCustomMaskTile(pTransDraw, size, size, sprite_z, sprite_y + xadj, sprite_x + yadj, 0, 0, 0, 1, 0, 0, DrvSprROM);
+	DrawCustomMaskTile(pTransDraw, size, size, sprite_z, sprite_x + xadj, sprite_y + yadj, 0, 0, 0, 1, 0, 0, DrvSprROM);
 }
 
 static void do_color(INT32 x, INT32 y, INT32 color, INT32 bgcolor)
@@ -687,7 +668,7 @@ static void circus_colorize()
 	}
 }
 
-static INT32 CircusDraw()
+static void CircusDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvPaletteUpdate();
@@ -697,13 +678,67 @@ static INT32 CircusDraw()
 	}
 
 	if (~nBurnLayer & 1) BurnTransferClear();
+}
+
+static void circus_partial_update()
+{
+	if (scanline < 0 || scanline >= nScreenHeight || scanline == lastline || lastline > scanline) return;
+
+	//bprintf(0, _T("%07d: partial %d - %d. \n"), nCurrentFrame, lastline, scanline);
+
+	GenericTilesSetClip(0, nScreenWidth, lastline, scanline);
+
 	if ( nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if ( nBurnLayer & 2) circus_draw_fg();
+	if ( nBurnLayer & 2 && is_trapeze == 0) circus_draw_fg();
 
 	if ( nSpriteEnable & 1) circus_draw_sprite();
 
+	GenericTilesClearClip();
+
+	lastline = scanline;
+}
+
+static INT32 CircusDraw()
+{
+	lastline = nScreenHeight;
+	circus_partial_update();
+
 	if (nBurnLayer & 8 && is_trapeze == 0) circus_colorize();
+
+	if (pBurnDraw) BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
+static void RipcordDrawBegin()
+{
+	DrvPaletteUpdate();
+
+	if (~nBurnLayer & 1) BurnTransferClear();
+}
+
+static void ripcord_partial_update()
+{
+	if (scanline < 0 || scanline > nScreenHeight || scanline == lastline || lastline > scanline) return;
+
+	//bprintf(0, _T("%07d: partial %d - %d. \n"), nCurrentFrame, lastline, scanline);
+
+	GenericTilesSetClip(0, nScreenWidth, lastline, scanline);
+
+	if ( nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+
+	if ( nSpriteEnable & 1) circus_draw_sprite();
+
+	GenericTilesClearClip();
+
+	lastline = scanline;
+}
+
+static INT32 RipcordDraw()
+{
+	lastline = nScreenHeight;
+	ripcord_partial_update();
 
 	if (pBurnDraw) BurnTransferCopy(DrvPalette);
 
@@ -734,7 +769,6 @@ static void crash_colorize()
 			if (y <= 85 || y >= 171) do_color(x, y, 4, 0);
 			else if (x <= 85 || x >= 161) do_color(x, y, 4, 0);
 			else do_color(x, y, 5, 6);
-
 		}
 	}
 }
@@ -760,20 +794,6 @@ static INT32 CrashDraw()
 	return 0;
 }
 
-static INT32 RipcordDraw()
-{
-	DrvPaletteUpdate();
-
-	if (~nBurnLayer & 1) BurnTransferClear();
-	if ( nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
-
-	if ( nSpriteEnable & 1) circus_draw_sprite();
-
-	if (pBurnDraw) BurnTransferCopy(DrvPalette);
-
-	return 0;
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -790,22 +810,29 @@ static INT32 DrvFrame()
 		}
 
 		BurnTrackballConfig(0, (is_ripcord) ? AXIS_REVERSED : AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballConfigStartStopPoints(0, 64, 167, 64, 167);
+		BurnTrackballConfigStartStopPoints(0, 64, 168, 64, 168);
 		BurnTrackballFrame(0, Analog[0], 0, 0, 0x3f);
 		BurnTrackballUpdate(0);
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 280;
 	INT32 nCyclesTotal[1] = { 705562 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 
 	M6502Open(0);
 
+	pDrvDrawBegin();
+	lastline = 0;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		vblank = (i >= 240) ? 1 : 0;
+		scanline = (i < nScreenHeight) ? i : nScreenHeight;
+
+		vblank = (i >= 256) ? 1 : 0;
 
 		CPU_RUN(0, M6502);
+
+		partial_update();
 
 		if (scanline_callback) {
 			scanline_callback(i);
@@ -887,7 +914,7 @@ STD_SAMPLE_FN(Circus)
 
 static INT32 CircusInit()
 {
-	return DrvInit(circus_sound_write, NULL);
+	return DrvInit(circus_sound_write, NULL, CircusDrawBegin, circus_partial_update);
 }
 
 struct BurnDriver BurnDrvCircus = {
@@ -1013,7 +1040,7 @@ STD_SAMPLE_FN(Robotbwl)
 static INT32 RobotbwlInit()
 {
 	is_robotbwl = 1;
-	return DrvInit(robotbwl_sound_write, NULL);
+	return DrvInit(robotbwl_sound_write, NULL, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvRobotbwl = {
@@ -1056,7 +1083,7 @@ STD_ROM_FN(trapeze)
 static INT32 TrapezeInit()
 {
 	is_trapeze = 1;
-	return DrvInit(circus_sound_write, NULL);
+	return DrvInit(circus_sound_write, NULL, CircusDrawBegin, circus_partial_update);
 }
 
 struct BurnDriver BurnDrvTrapeze = {
@@ -1105,7 +1132,7 @@ STD_SAMPLE_FN(Crash)
 
 static INT32 CrashInit()
 {
-	return DrvInit(crash_sound_write, crash_scanline_callback);
+	return DrvInit(crash_sound_write, crash_scanline_callback, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvCrash = {
@@ -1215,7 +1242,7 @@ STD_SAMPLE_FN(Ripcord)
 static INT32 RipcordInit()
 {
 	is_ripcord = 1;
-	return DrvInit(ripcord_sound_write, NULL);
+	return DrvInit(ripcord_sound_write, NULL, RipcordDrawBegin, ripcord_partial_update);
 }
 
 struct BurnDriver BurnDrvRipcord = {

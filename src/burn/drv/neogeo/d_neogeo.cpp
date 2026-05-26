@@ -1593,6 +1593,15 @@ static struct BurnDIPInfo mslugLvxDIPList[] = {
 	{0x06, 0x01, 0x01, 0x01, "On"                           },
 };
 
+static struct BurnDIPInfo mslug2DIPList[] = {
+	// Fake DIPs
+	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Off
+
+	{0,    0xFE, 0,    2,    "Turbo hack"                   },
+	{0x06, 0x01, 0x01, 0x00, "Off"                          },
+	{0x06, 0x01, 0x01, 0x01, "On"                           },
+};
+
 STDDIPINFOEXT(mslug3x,		neoForceAES,	mslug3x		)
 STDDIPINFOEXT(sengk3eb,		ngdefault,		sengk3eb	)
 STDDIPINFOEXT(kof96ae,		ngdefault,		kof96ae		)
@@ -1607,6 +1616,7 @@ STDDIPINFOEXT(kf10thuo,		ngdefault,		kf10thuo	)
 STDDIPINFOEXT(lastblad,		ngdefault,		lastblad	)
 STDDIPINFOEXT(nam1975,		ngdefault,		nam1975		)
 STDDIPINFOEXT(mslugLvx,		ngdefault,		mslugLvx	)
+STDDIPINFOEXT(mslug2,		ngdefault,		mslug2		)
 
 
 // Rom information
@@ -6832,13 +6842,86 @@ static struct BurnRomInfo mslug2RomDesc[] = {
 STDROMPICKEXT(mslug2, mslug2, neogeo)
 STD_ROM_FN(mslug2)
 
+static void Mslug2PatchCallback()
+{
+
+	// 24-bit address array
+	const uint32_t patch_address[] = {
+		0x001450, 0x001451, 0x001452, 0x001453, 0x001454, 0x001455, 0x001456, 0x001457, 0x001458, 0x001459,
+
+		0x001464, 0x001465, 0x001466, 0x001467, 0x001468, 0x001469, 0x00146a, 0x00146b, 0x00146c, 0x00146d,
+
+		0x00147c, 0x001486,
+
+		0x0014d2, 0x0014d3, 0x0014d4, 0x0014d5, 0x0014d6, 0x0014d7,
+
+		0x001650, 0x001651, 0x001652, 0x001653, 0x001654, 0x001655, 0x001656, 0x001657,
+
+		0x00165e, 0x00165f, 0x001660, 0x001661, 0x001662, 0x001663,
+
+		0x0d8000, 0x0d8001, 0x0d8002, 0x0d8003, 0x0d8004, 0x0d8005, 0x0d8006, 0x0d8007, 0x0d8008, 0x0d8009,
+		0x0d800a, 0x0d800b, 0x0d800c, 0x0d800d, 0x0d800e, 0x0d800f, 0x0d8010, 0x0d8011, 0x0d8012, 0x0d8013
+	};
+
+	// 8-bit data value array
+	const uint8_t patch_data[2][62] = {
+		{
+			// original_data
+			0x2d, 0x10, 0x8a, 0x80, 0x00, 0x52, 0x00, 0x65, 0x0c, 0x00,
+
+			0xed, 0x08, 0x07, 0x00, 0x8c, 0x80, 0x00, 0x66, 0x78, 0x00,
+
+			0x5c, 0x52,
+
+			0x7c, 0x1b, 0xff, 0x00, 0x8d, 0x80,
+
+			0xad, 0x08, 0x07, 0x00, 0x8d, 0x80, 0xf8, 0x67,
+
+			0x7c, 0x1b, 0x00, 0x00, 0x8a, 0x80,
+
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		},
+		{
+			// turbo_data
+			0x02, 0x70, 0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e,
+
+			0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e,
+
+			0x50, 0x46,
+
+			0x2d, 0x52, 0x8d, 0x80, 0x71, 0x4e,
+
+			0xf9, 0x4e, 0x0d, 0x00, 0x00, 0x80, 0x71, 0x4e,
+
+			0x71, 0x4e, 0x71, 0x4e, 0x71, 0x4e,
+
+			0x2d, 0x0c, 0x02, 0x00, 0x8d, 0x80, 0xf8, 0x65, 0x7c, 0x1b,
+			0x00, 0x00, 0x8d, 0x80, 0xf9, 0x4e, 0x00, 0x00, 0x58, 0x16
+		}
+	};
+
+	const INT32 nIndex = (VerSwitcher & 1) ? 1 : 0;
+	const size_t nCount = (sizeof(patch_address) / sizeof(patch_address[0]));
+
+	for (size_t i = 0; i < nCount; i++)
+		Neo68KROMActive[patch_address[i]] = (UINT8)patch_data[nIndex][i];
+}
+
+static INT32 mslug2Init()
+{
+	NeoCallbackActive->pResetCallback = Mslug2PatchCallback; // Turbo hack
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvMSlug2 = {
 	"mslug2", NULL, "neogeo", NULL, "1998",
 	"Metal Slug 2 - Super Vehicle-001/II (NGM-2410 ~ NGH-2410)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug2RomInfo, mslug2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, mslug2RomInfo, mslug2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, mslug2DIPInfo,
+	mslug2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -28403,7 +28486,7 @@ struct BurnDriver BurnDrvSgz = {
 	"Shadow Gangs Zero (Backers Demo V1.0)\0", NULL, "JKM Corp.", "Neo Geo MVS",
 	L"Shadow Gangs Zero (Backers Demo V1.0)\0\u5f71\u306e\u30ae\u30e3\u30f3\u30b0 ZERO\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
-	NULL, sgzRomInfo, sgzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
+	NULL, sgzRomInfo, sgzRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

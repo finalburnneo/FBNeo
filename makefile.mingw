@@ -491,7 +491,9 @@ $(objdir)/drivers.o:		$(autdrv)
 ifdef BUILD_X64_EXE
 	@$(LD) -m64 -r -nostdlib -o $@ $^
 else
-	$(LD) -m32 -Wl,-verbose -r -nostdlib -o $@ $^
+	$(file >$@.in,$^)
+	$(LD) -m32 -r -nostdlib -o $@ @$@.in
+	rm $@.in
 endif
 
 $(NAME).exe:	$(allobj) $(objdir)/drivers.o

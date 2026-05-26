@@ -488,18 +488,18 @@ ifeq ($(MAKELEVEL),2)
 
 $(objdir)/drivers.o:		$(autdrv)
 	@echo Linking drivers...
-ifdef BUILD_X64_EXE
-	@$(LD) -m64 -r -nostdlib -o $@ $^
-else
 	$(file >$@.in,$^)
-	$(LD) -m32 -r -nostdlib -o $@ @$@.in
-	rm $@.in
+ifdef BUILD_X64_EXE
+	@$(LD) -m64 -r -nostdlib -o $@ @$@.in
+else
+	@$(LD) -m32 -r -nostdlib -o $@ @$@.in
 endif
+	rm $@.in
 
 $(NAME).exe:	$(allobj) $(objdir)/drivers.o
 	@echo
 	@echo Linking executable... $(NAME).exe
-	@$(LD) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
+	$(LD) $(CFLAGS) $(LDFLAGS) -Wl,-verbose -o $@ $^ $(lib)
 
 ifdef	DEBUG
 

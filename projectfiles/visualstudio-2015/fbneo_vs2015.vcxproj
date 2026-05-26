@@ -290,6 +290,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_119.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segag80r.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />

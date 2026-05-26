@@ -3739,6 +3739,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segag80r.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

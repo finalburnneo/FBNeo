@@ -6384,7 +6384,7 @@ struct BurnDriver BurnDrvKetb = {
 };
 
 
-// Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)
+// Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.)
 
 /* - The coloring of A-TYPE and B-TYPE are reversed. (A is blue and B is red)
    - The hitboxes are pretty little, your helicopter is godly
@@ -6441,8 +6441,8 @@ static INT32 ketmatsuriInit()
 
 struct BurnDriver BurnDrvketmatsuri = {
 	"ketmatsuri", "ket", NULL, NULL, "2007",
-	"Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
-	L"Ketsui: Kizuna Jigoku Tachi\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
+	"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, ketmatsuriRomInfo, ketmatsuriRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketmatsuriInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -6450,14 +6450,8 @@ struct BurnDriver BurnDrvketmatsuri = {
 };
 
 
-// Ketsui: Kizuna Jigoku Tachi (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)
-
-/* aka Ketsui Blue Label or Sports Ketsui
-   - More aggressive bullet patterns (some parts are similar to second loop patterns)
-   - One loop.
-   - Doom appears at the end every time.
-   - Extends are at different point values.
-   - Chip values have been tweaked. */
+// Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.) (encrypted)
+// Above set but somebody byteswapped and encrypted it
  
  struct BurnRomInfo ketikdRomDesc[] = {
 	 { "ketsui_v100_ikd.u38",		0x0200000, 0xdfa8a180, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -6479,13 +6473,29 @@ struct BurnDriver BurnDrvketmatsuri = {
 STDROMPICKEXT(ketikd, ketikd, ketsuiBios) // custom bios
 STD_ROM_FN(ketikd)
 
+static void ketikd_patch()
+{
+	// decrypt romset
+	pgm_decrypt_ketsui();
+	// softpatch orange helicopter bug
+	ketmatsuri_patch();
+}
+
+static INT32 ketikdInit()
+{
+	pPgmInitCallback = ketikd_patch;
+	pPgmProtCallback = install_protection_asic27a_ketsui;  // simulation
+
+	return pgmInit();
+}
+
 struct BurnDriver BurnDrvketikd = {
 	"ketikd", "ket", NULL, NULL, "2007",
-	"Ketsui: Kizuna Jigoku Tachi (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
-	L"Ketsui: Kizuna Jigoku Tachi\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (IKD 2007 Special - 2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
+	"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.) (encrypted)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.) (encrypted)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, ketikdRomInfo, ketikdRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
-	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	ketikdInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
 

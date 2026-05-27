@@ -14,6 +14,7 @@
 ** limitations under the License.
 **/
 
+#include <stdlib.h>
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 #include <gbm.h>

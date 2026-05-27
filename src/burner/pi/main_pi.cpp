@@ -2,6 +2,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
+{
+	return NULL;
+}
+
 extern int nExitEmulator;
 extern int nEnableFreeplayHack;
 
@@ -264,3 +269,4 @@ bool AppProcessKeyboardInput()
 {
 	return true;
 }
+

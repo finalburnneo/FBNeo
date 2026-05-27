@@ -69,7 +69,7 @@ depobj += neocdlist.o \
 		inp_pi.o aud_sdl.o support_paths.o \
 		ips_manager.o scrn.o config.o \
 		main_pi.o run_pi.o stringset.o bzip.o drv.o media.o inpdipsw.o \
-		matrix.o vid_pi.o inputbuf.o replay.o cd_sdl2.o
+		matrix.o vid_pi.o inputbuf.o replay.o cd_sdl2.o romdata.o crt.o
 
 ifdef BUILD_DRM
   depobj += pigl_drm.o
@@ -81,7 +81,8 @@ ifdef INCLUDE_7Z_SUPPORT
 	depobj	+= un7z.o 7zArcIn.o 7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o \
 		7zDec.o 7zFile.o 7zStream.o Alloc.o Bcj2.o Bra.o Bra86.o BraIA64.o \
 		CpuArch.o Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o \
-		Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
+		Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o \
+		Sha256Opt.o MtDec.o MtCoder.o Lzma2DecMt.o Threads.o
 endif
 
 autobj += $(depobj)
@@ -181,8 +182,9 @@ CFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   -Wno-pedantic -Wno-conversion -Wno-attributes -Wno-unused-but-set-variable \
 	   -Wno-unused-parameter -Wno-unused-value \
+	   -include unistd.h -D_GNU_SOURCE \
 	   $(DEF) $(incdir)
-
+	   
 CXXFLAGS = -O2 -fomit-frame-pointer -Wno-write-strings \
 	   -Wall -W -pedantic -Wno-long-long \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \

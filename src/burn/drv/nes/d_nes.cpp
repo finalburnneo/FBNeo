@@ -52521,18 +52521,18 @@ struct BurnDriver BurnDrvnes_splatworldj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Splatter World: Rick vs. the King of Terror (Hack, English)
+// Splatter World: Rick vs. the King of Terror (Hack, English v1.10)
 // https://aeongenesis.net/projects/splatterworld
 static struct BurnRomInfo nes_splatworldRomDesc[] = {
-	{ "Splatterworld - Rick vs. the King of Terror T-Eng (2025)(Aeon Genesis).nes",          786448, 0x6ab9e947, BRF_ESS | BRF_PRG },
+	{ "Splatterworld - Rick vs. the King of Terror T-Eng v1.10 (2025-26)(Aeon Genesis).nes",          786448, 0x1bad1f2a, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_splatworld)
 STD_ROM_FN(nes_splatworld)
 
 struct BurnDriver BurnDrvnes_splatworld = {
-	"nes_splatworld", NULL, NULL, NULL, "2025",
-	"Splatter World: Rick vs. the King of Terror (Hack, English)\0", NULL, "Aeon Genesis", "NES / Famicom",
+	"nes_splatworld", NULL, NULL, NULL, "2025-26",
+	"Splatter World: Rick vs. the King of Terror (Hack, English v1.10)\0", NULL, "Aeon Genesis", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_splatworldRomInfo, nes_splatworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

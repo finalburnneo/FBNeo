@@ -5499,6 +5499,37 @@ struct BurnDriver BurnDrvmspacmanblt2 = {
 };
 
 
+// Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 3)
+// Only some text strings altered (ghost names, etc.)
+
+static struct BurnRomInfo mspacmanblt3RomDesc[] = {
+	{ "11.bin",       0x8000, 0x3e2fb093, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "13.bin",       0x8000, 0xf2c5da43, 2 | BRF_GRA },			//  1 Graphics
+
+	// not dumped for this set
+	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+
+	// sound PROMs, not dumped for this set
+	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanblt3)
+STD_ROM_FN(mspacmanblt3)
+
+struct BurnDriver BurnDrvmspacmanblt3 = {
+	"mspacmanblt3", "mspacman", NULL, NULL, "1992",
+	"Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 3)\0", NULL, "bootleg (Triunvi)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmanblt3RomInfo, mspacmanblt3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Come-Cocos (Ms. Pac-Man) ('Made in Greece' Tecnausa bootleg)
 
 static struct BurnRomInfo mspacmanbccRomDesc[] = {

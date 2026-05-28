@@ -2071,13 +2071,13 @@ static struct BurnRomInfo raigaaRomDesc[] = {
 	{ "6299-b.3r",		0x20000, 0x1fbe9e5f, 6 | BRF_GRA },           // 14
 	{ "6299-b.3t",		0x20000, 0xe6c88497, 6 | BRF_GRA },           // 15
 	{ "6299-b.1m",		0x20000, 0xa31e251d, 6 | BRF_GRA },           // 16
-	{ "6299-b.1p",		0x20000, 0xc0d2cf20, 6 | BRF_GRA },           // 18
-	{ "6299-b.1r",		0x20000, 0xb3ede4fd, 6 | BRF_GRA },           // 19
-	{ "6299-b.1t",		0x20000, 0xf2480160, 6 | BRF_GRA },           // 20
+	{ "6299-b.1p",		0x20000, 0xc0d2cf20, 6 | BRF_GRA },           // 17
+	{ "6299-b.1r",		0x20000, 0xb3ede4fd, 6 | BRF_GRA },           // 18
+	{ "6299-b.1t",		0x20000, 0xf2480160, 6 | BRF_GRA },           // 19
 
-	{ "6299-a.4a",		0x20000, 0xef9acdcf, 7 | BRF_SND },           // 21 MSM6295 Samples
+	{ "6299-a.4a",		0x20000, 0xef9acdcf, 7 | BRF_SND },           // 20 MSM6295 Samples
 
-	{ "6299-a.6v",		0x01000, 0x00000000, 0 | BRF_NODUMP },	      // 22 MCU
+	{ "6299-a.6v",		0x01000, 0x00000000, 0 | BRF_NODUMP },	      // 21 MCU
 };
 
 STD_ROM_PICK(raigaa)

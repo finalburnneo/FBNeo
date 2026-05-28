@@ -550,10 +550,10 @@ void BurnSamplePlay(INT32 sample)
 	}
 
 	if (BurnSampleGetStatus(sample) == SAMPLE_PLAYING) {
-		//bprintf(0, _T("BurnSamplePlay(): REtrig sample %x\n"), sample);
+		//bprintf(0, _T("BurnSamplePlay(): REtrig sample %x  fr %d\n"), sample, nCurrentFrame);
 		sample_ptr->latch = LATCH_RETRIG;
 	} else {
-		//bprintf(0, _T("BurnSamplePlay(): play sample %x\n"), sample);
+		//bprintf(0, _T("BurnSamplePlay(): play sample %x  fr %d\n"), sample, nCurrentFrame);
 		sample_ptr->playing = 1;
 		sample_ptr->position = 0;
 	}
@@ -1275,24 +1275,8 @@ static void BurnSampleRender_INT(UINT32 pLen)
 		INT32 length = sample_ptr->length;
 		UINT64 pos = sample_ptr->position;
 		INT32 playback_rate = (0x10000 * sample_ptr->playback_rate) / 100;
-
 		INT16 *dst = pDest;
 		INT16 *dat = (INT16*)sample_ptr->data;
-		
-		if (sample_ptr->loop == 0) // if not looping, check to make sure sample is in bounds
-		{
-			INT32 current_pos = (pos / 0x10000);
-			// if sample position is greater than length, stop playback
-			if ((length - current_pos) <= 0) {
-				BurnSampleStop_INT(i);
-				pos = 0;
-				continue;
-			}
-
-			// if samples remaining are less than playlen, set playlen to samples remaining
-			//if (playlen > (length - current_pos)) playlen = length - current_pos;
-			// commented above line oct.2022 (dink) - causes end of sample to be delayed until next sync
-		}
 
 		length *= 2; // (stereo) used to ensure position is within bounds
 
@@ -1304,7 +1288,7 @@ static void BurnSampleRender_INT(UINT32 pLen)
 			if (sample_ptr->loop == 0) // if not looping, check to make sure sample is in bounds
 			{
 				// if sample position is greater than length, stop playback
-				if ((sample_ptr->length - current_pos) <= 0) {
+				if (current_pos >= sample_ptr->length) {
 					BurnSampleStop_INT(i);
 					pos = 0;
 					break;
@@ -1347,10 +1331,11 @@ static void BurnSampleRender_INT(UINT32 pLen)
 					if (sample_ptr->latch & LATCH_STOP) {
 						BurnSampleStop_INT(i);
 						sample_ptr->latch = LATCH_NONE;
-						//bprintf(0, _T("[soft-stop!]\n"));
+						//bprintf(0, _T("[soft-stop %d!]\n"), i);
 						break; // break out of this channel's loop
 					} else if (sample_ptr->latch & LATCH_RETRIG) {
-						//bprintf(0, _T("[soft-retrig!]\n"));
+						position_increment = false; // we don't want to skip the first sample if starting over w/LATCH_RETRIG
+						//bprintf(0, _T("[soft-retrig %d!]\n"), i);
 						sample_ptr->latch = LATCH_NONE;
 					}
 				}
@@ -1408,47 +1393,47 @@ void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 // dink's super handy macros
 void splay(INT32 sam, double volume, bool checkplay, bool loop)
 {
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	BurnSampleSetLoop(sam, loop);
-
 	if ( (checkplay && BurnSampleGetStatus(sam) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+		BurnSampleSetLoop(sam, loop);
+
 		BurnSamplePlay(sam);
 	}
 }
 
 void splayex(INT32 sam, double volume, INT32 rate, bool checkplay, bool loop)
 {
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	BurnSampleSetLoop(sam, loop);
-	BurnSampleSetPlaybackRate(sam, rate);
-
 	if ( (checkplay && BurnSampleGetStatus(sam) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+		BurnSampleSetLoop(sam, loop);
+		BurnSampleSetPlaybackRate(sam, rate);
+
 		BurnSamplePlay(sam);
 	}
 }
 
 void splaych(INT32 ch, INT32 sam, double volume, bool checkplay, bool loop)
 {
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
 	if ( (checkplay && BurnSampleGetChannelStatus(ch) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
 		BurnSampleChannelPlay(ch, sam, loop);
 	}
 }
 
 void splayexch(INT32 ch, INT32 sam, double volume, INT32 rate, bool checkplay, bool loop)
 {
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
-
-	BurnSampleSetPlaybackRate(sam, rate);
-
 	if ( (checkplay && BurnSampleGetChannelStatus(ch) == SAMPLE_STOPPED) || !checkplay ) {
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, volume, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, volume, BURN_SND_ROUTE_BOTH);
+
+		BurnSampleSetPlaybackRate(sam, rate);
+
 		BurnSampleChannelPlay(ch, sam, loop);
 	}
 }

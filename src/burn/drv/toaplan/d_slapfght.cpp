@@ -1614,7 +1614,7 @@ STD_ROM_FN(tigerhbt)
 
 struct BurnDriver BurnDrvTigerhbt = {
 	"tigerhbt", "tigerh", NULL, NULL, "1985",
-	"Tiger-Heli (Tecfri bootleg)\0", NULL, "bootleg(Tecfri)", "Miscellaneous",
+	"Tiger-Heli (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhbtRomInfo, tigerhbtRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,

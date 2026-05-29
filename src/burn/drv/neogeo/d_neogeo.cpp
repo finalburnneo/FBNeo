@@ -28062,7 +28062,7 @@ struct BurnDriver BurnDrvTmntia = {
 };
 
 
-// Violent Vengeance: The Universe Hero (Beta 3.28)
+// Violent Vengeance: The Universe Hero (Beta 3.28, FEB 1 2026)
 // https://ozzyouzo.itch.io/violentv
 
 static struct BurnRomInfo violentvRomDesc[] = {
@@ -28084,8 +28084,8 @@ STDROMPICKEXT(violentv, violentv, neogeo)
 STD_ROM_FN(violentv)
 
 struct BurnDriver BurnDrvViolentv = {
-	"violentv", NULL, "neogeo", NULL, "2025-26",
-	"Violent Vengeance: The Universe Hero (Beta 3.28)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"violentv", NULL, "neogeo", NULL, "2026",
+	"Violent Vengeance: The Universe Hero (Beta 3.28, FEB 1 2026)\0", NULL, "Balek Corp.", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, violentvRomInfo, violentvRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

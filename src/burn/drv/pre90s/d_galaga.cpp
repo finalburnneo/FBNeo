@@ -19,7 +19,6 @@ enum
 struct CPU_Control_Def
 {
 	UINT8 fireIRQ;
-	UINT8 halt;
 };
 
 struct CPU_Def
@@ -408,6 +407,8 @@ static INT32 DrvFrame(void);
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin);
 
+static INT32 nCyclesExtra[3];
+
 /* === Common === */
 
 static INT32 namcoInitBoard(void)
@@ -468,14 +469,13 @@ static void machineReset()
 	cpus.CPU[CPU1].fireIRQ = 0;
 	cpus.CPU[CPU2].fireIRQ = 0;
 	cpus.CPU[CPU3].fireIRQ = 0;
-	cpus.CPU[CPU2].halt = 0;
-	cpus.CPU[CPU3].halt = 0;
 
 	machine.flipScreen = 0;
 
 	namcoCustomReset();
 	namco51xxReset();
 
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 }
 
 static INT32 DrvDoReset(void)
@@ -1148,18 +1148,16 @@ static void namcoZ80WriteCPUReset(UINT16 Offset, UINT8 dta)
 {
 	if (!(dta & 0x01))
 	{
-		ZetReset(CPU2);
-		ZetReset(CPU3);
-		cpus.CPU[CPU2].halt = 1;
-		cpus.CPU[CPU3].halt = 1;
+		ZetSetRESETLine(CPU2, 1);
+		ZetSetRESETLine(CPU3, 1);
 		namcoCustomReset();
 		namco51xxReset();
 		return;
 	}
 	else
 	{
-		cpus.CPU[CPU2].halt = 0;
-		cpus.CPU[CPU3].halt = 0;
+		ZetSetRESETLine(CPU2, 0);
+		ZetSetRESETLine(CPU3, 0);
 	}
 }
 
@@ -1299,7 +1297,8 @@ static INT32 DrvDraw(void)
 	{
 		for (UINT32 drawLayer = 0; drawLayer < machine.config->drawTableSize; drawLayer ++)
 		{
-			machine.config->drawLayerTable[drawLayer]();
+			if (drawLayer == 0 || nBurnLayer & (1<<(drawLayer-1)))
+				machine.config->drawLayerTable[drawLayer]();
 		}
 
 		BurnTransferCopy(graphics.palette);
@@ -1320,7 +1319,7 @@ static INT32 DrvFrame(void)
 
 	INT32 nInterleave = 400;
 	INT32 nCyclesTotal[3];
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
 	nCyclesTotal[1] = (18432000 / 6) / 60;
@@ -1342,29 +1341,27 @@ static INT32 DrvFrame(void)
 		}
 		ZetClose();
 
-		if (!cpus.CPU[CPU2].halt)
+		ZetOpen(CPU2);
+		CPU_RUN(1, Zet);
+		if (i == (nInterleave-1) && cpus.CPU[CPU2].fireIRQ)
 		{
-			ZetOpen(CPU2);
-			CPU_RUN(1, Zet);
-			if (i == (nInterleave-1) && cpus.CPU[CPU2].fireIRQ)
-			{
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			}
-			ZetClose();
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+		ZetClose();
 
-		if (!cpus.CPU[CPU3].halt)
+		ZetOpen(CPU3);
+		CPU_RUN(2, Zet);
+		if ( ((i == ((64 + 000) * nInterleave) / 272) ||
+			  (i == ((64 + 128) * nInterleave) / 272))   && cpus.CPU[CPU3].fireIRQ)
 		{
-			ZetOpen(CPU3);
-			CPU_RUN(2, Zet);
-			if ( ((i == ((64 + 000) * nInterleave) / 272) ||
-				  (i == ((64 + 128) * nInterleave) / 272))   && cpus.CPU[CPU3].fireIRQ)
-			{
-				ZetNmi();
-			}
-			ZetClose();
+			ZetNmi();
 		}
+		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut)
 	{
@@ -1407,8 +1404,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cpus.CPU[CPU1].fireIRQ);
 		SCAN_VAR(cpus.CPU[CPU2].fireIRQ);
 		SCAN_VAR(cpus.CPU[CPU3].fireIRQ);
-		SCAN_VAR(cpus.CPU[CPU2].halt);
-		SCAN_VAR(cpus.CPU[CPU3].halt);
+//		SCAN_VAR(cpus.CPU[CPU2].halt);
+//		SCAN_VAR(cpus.CPU[CPU3].halt);
 		SCAN_VAR(machine.flipScreen);
 		SCAN_VAR(namcoCustomIC.n06xx.customCommand);
 		SCAN_VAR(namcoCustomIC.n06xx.CPU1FireNMI);
@@ -1430,6 +1427,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(namcoCustomIC.n54xx.config1);
 		SCAN_VAR(namcoCustomIC.n54xx.config2);
 		SCAN_VAR(namcoCustomIC.n54xx.config3);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -4796,7 +4794,8 @@ static UINT32 xeviousGetSpriteParams(struct Namco_Sprite_Params *spriteParams, U
 			sprite &= 0x3f;
 			sprite += 0x100;
 		}
-		spriteParams->sprite = sprite;
+
+		spriteParams->sprite = sprite & ~(spriteRam3[offset + 0] & 0x03);
 		spriteParams->colour = spriteRam1[offset + 1] & 0x7f;
 
 		spriteParams->xStart = ((spriteRam2[offset + 1] - 40) + (spriteRam3[offset + 1] & 1 ) * 0x100);

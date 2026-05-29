@@ -707,6 +707,81 @@ static struct BurnDIPInfo StrkforcDIPList[]=
 
 STDDIPINFO(Strkforc)
 
+static struct BurnDIPInfo SaurnfrntDIPList[]=
+{
+	DIP_OFFSET(0x16)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x36, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Coin Meter"			},
+	{0x00, 0x01, 0x01, 0x01, "Shared"				},
+	{0x00, 0x01, 0x01, 0x00, "Independent"			},
+
+	{0   , 0xfe, 0   ,    2, "Credits to Start"		},
+	{0x00, 0x01, 0x02, 0x02, "1"					},
+	{0x00, 0x01, 0x02, 0x00, "2"					},
+
+	{0   , 0xfe, 0   ,    4, "Points for Ship"		},
+	{0x00, 0x01, 0x0c, 0x04, "40000"				},
+	{0x00, 0x01, 0x0c, 0x00, "50000"				},
+	{0x00, 0x01, 0x0c, 0x08, "750000"				},
+	{0x00, 0x01, 0x0c, 0x0c, "100000"				},
+
+	{0   , 0xfe, 0   ,    2, "Lives"				},
+	{0x00, 0x01, 0x10, 0x00, "3"					},
+	{0x00, 0x01, 0x10, 0x10, "4"					},
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"			},
+	{0x00, 0x01, 0xe0, 0x60, "Level 0"				},
+	{0x00, 0x01, 0xe0, 0x20, "Level 1"				},
+	{0x00, 0x01, 0xe0, 0x40, "Level 2"				},
+	{0x00, 0x01, 0xe0, 0x00, "Level 3"				},
+	{0x00, 0x01, 0xe0, 0x80, "Level 4"				},
+	{0x00, 0x01, 0xe0, 0xa0, "Level 5"				},
+	{0x00, 0x01, 0xe0, 0xc0, "Level 6"				},
+	{0x00, 0x01, 0xe0, 0xe0, "Level 7"				},
+
+	{0   , 0xfe, 0   ,   28, "Coinage"				},
+	{0x01, 0x01, 0x3f, 0x36, "USA 1"				},
+	{0x01, 0x01, 0x3f, 0x37, "USA 2"				},
+	{0x01, 0x01, 0x3f, 0x38, "USA 3"				},
+	{0x01, 0x01, 0x3f, 0x2a, "Australia 1"			},
+	{0x01, 0x01, 0x3f, 0x2d, "Austria"				},
+	{0x01, 0x01, 0x3f, 0x2e, "Belgium 1"			},
+	{0x01, 0x01, 0x3f, 0x2f, "Belgium 2"			},
+	{0x01, 0x01, 0x3f, 0x35, "Denmark"				},
+	{0x01, 0x01, 0x3f, 0x3c, "France 1"				},
+	{0x01, 0x01, 0x3f, 0x3d, "France 2"				},
+	{0x01, 0x01, 0x3f, 0x3e, "France 3"				},
+	{0x01, 0x01, 0x3f, 0x33, "Findland"				},
+	{0x01, 0x01, 0x3f, 0x39, "German 1"				},
+	{0x01, 0x01, 0x3f, 0x3a, "German 2"				},
+	{0x01, 0x01, 0x3f, 0x3b, "German 3"				},
+	{0x01, 0x01, 0x3f, 0x25, "Italy 1"				},
+	{0x01, 0x01, 0x3f, 0x2b, "Japan 1"				},
+	{0x01, 0x01, 0x3f, 0x2c, "Japan 2"				},
+	{0x01, 0x01, 0x3f, 0x32, "Netherlands"			},
+	{0x01, 0x01, 0x3f, 0x31, "New Zealand"			},
+	{0x01, 0x01, 0x3f, 0x34, "Norway"				},
+	{0x01, 0x01, 0x3f, 0x29, "Spain 1"				},
+	{0x01, 0x01, 0x3f, 0x30, "Sweden 1"				},
+	{0x01, 0x01, 0x3f, 0x3f, "Swiss 1"				},
+	{0x01, 0x01, 0x3f, 0x26, "U.K. 1"				},
+	{0x01, 0x01, 0x3f, 0x27, "U.K. 2"				},
+	{0x01, 0x01, 0x3f, 0x28, "U.K. 3"				},
+	{0x01, 0x01, 0x3f, 0x24, "Swiss 2"				},
+
+	{0   , 0xfe, 0   ,    2, "Test Switch"			},
+	{0x01, 0x01, 0x40, 0x00, "Off"					},
+	{0x01, 0x01, 0x40, 0x40, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
+	{0x01, 0x01, 0x80, 0x00, "Off"					},
+	{0x01, 0x01, 0x80, 0x80, "On"					},
+};
+
+STDDIPINFO(Saurnfrnt)
+
 static struct BurnDIPInfo TotcarnDIPList[]=
 {
 	DIP_OFFSET(0x1b)
@@ -4268,15 +4343,15 @@ struct BurnDriver BurnDrvHiimpactp = {
 };
 
 
-// Super High Impact (rev LA1 09/30/91)
+// Super High Impact (rev LA2 10/22/91)
 
 static struct BurnRomInfo shimpactRomDesc[] = {
 	{ "sl1_super_high_impact_u4_sound_rom.u4",			0x20000, 0x1e5a012c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 	{ "sl1_super_high_impact_u19_sound_rom.u19",		0x20000, 0x10f9684e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "sl1_super_high_impact_u20_sound_rom.u20",		0x20000, 0x1b4a71c1, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "la1_super_high_impact_game_rom_u105.u105",		0x20000, 0xf2cf8de3, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
-	{ "la1_super_high_impact_game_rom_u89.u89",			0x20000, 0xf97d9b01, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "la2_super_high_impact_game_rom_u105.u105",		0x20000, 0x7f1a1d1c, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "la2_super_high_impact_game_rom_u89.u89",			0x20000, 0xa348fcb9, 3 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "la1_super_high_impact_game_rom_u111.u111",		0x40000, 0x80ae2a86, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
 	{ "la1_super_high_impact_game_rom_u112.u112",		0x40000, 0x3ffc27e9, 4 | BRF_GRA },           //  6
@@ -4309,10 +4384,48 @@ static INT32 ShimpactInit()
 
 struct BurnDriver BurnDrvShimpact = {
 	"shimpact", NULL, NULL, NULL, "1991",
-	"Super High Impact (rev LA1 09/30/91)\0", NULL, "Midway", "Y Unit",
+	"Super High Impact (rev LA2 10/22/91)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_MIDWAY, GBF_SPORTSFOOTBALL, 0,
 	NULL, shimpactRomInfo, shimpactRomName, NULL, NULL, NULL, NULL, HiimpactInputInfo, ShimpactDIPInfo,
+	ShimpactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	396, 256, 4, 3
+};
+
+
+// Super High Impact (rev LA1 09/30/91)
+
+static struct BurnRomInfo shimpactl1RomDesc[] = {
+	{ "sl1_super_high_impact_u4_sound_rom.u4",			0x20000, 0x1e5a012c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "sl1_super_high_impact_u19_sound_rom.u19",		0x20000, 0x10f9684e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sl1_super_high_impact_u20_sound_rom.u20",		0x20000, 0x1b4a71c1, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "la1_super_high_impact_game_rom_u105.u105",		0x20000, 0xf2cf8de3, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "la1_super_high_impact_game_rom_u89.u89",			0x20000, 0xf97d9b01, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "la1_super_high_impact_game_rom_u111.u111",		0x40000, 0x80ae2a86, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "la1_super_high_impact_game_rom_u112.u112",		0x40000, 0x3ffc27e9, 4 | BRF_GRA },           //  6
+	{ "la1_super_high_impact_game_rom_u113.u113",		0x40000, 0x01549d00, 4 | BRF_GRA },           //  7
+	{ "la1_super_high_impact_game_rom_u114.u114",		0x40000, 0xa68af319, 4 | BRF_GRA },           //  8
+	{ "la1_super_high_impact_game_rom_u95.u95",			0x40000, 0xe8f56ef5, 4 | BRF_GRA },           //  9
+	{ "la1_super_high_impact_game_rom_u96.u96",			0x40000, 0x24ed04f9, 4 | BRF_GRA },           // 10
+	{ "la1_super_high_impact_game_rom_u97.u97",			0x40000, 0xdd7f41a9, 4 | BRF_GRA },           // 11
+	{ "la1_super_high_impact_game_rom_u98.u98",			0x40000, 0x23ef65dd, 4 | BRF_GRA },           // 12
+	{ "la1_super_high_impact_game_rom_u106.u106",		0x40000, 0x6f5bf337, 4 | BRF_GRA },           // 13
+	{ "la1_super_high_impact_game_rom_u107.u107",		0x40000, 0xa8815dad, 4 | BRF_GRA },           // 14
+	{ "la1_super_high_impact_game_rom_u108.u108",		0x40000, 0xd39685a3, 4 | BRF_GRA },           // 15
+	{ "la1_super_high_impact_game_rom_u109.u109",		0x40000, 0x36e0b2b2, 4 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(shimpactl1)
+STD_ROM_FN(shimpactl1)
+
+struct BurnDriver BurnDrvShimpactl1 = {
+	"shimpactl1", "shimpact", NULL, NULL, "1991",
+	"Super High Impact (rev LA1 09/30/91)\0", NULL, "Midway", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_MIDWAY, GBF_SPORTSFOOTBALL, 0,
+	NULL, shimpactl1RomInfo, shimpactl1RomName, NULL, NULL, NULL, NULL, HiimpactInputInfo, ShimpactDIPInfo,
 	ShimpactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	396, 256, 4, 3
 };
@@ -4476,6 +4589,44 @@ struct BurnDriver BurnDrvStrkforc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_MIDWAY, GBF_HORSHOOT, 0,
 	NULL, strkforcRomInfo, strkforcRomName, NULL, NULL, NULL, NULL, StrkforcInputInfo, StrkforcDIPInfo,
+	StrkforcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	400, 256, 4, 3
+};
+
+
+// Saurian Front (proto v5.0 8/07/90)
+
+static struct BurnRomInfo saurnfrntRomDesc[] = {
+	{ "pa1_saurian_front_sound_rom_u4.u4",				0x10000, 0xf22a09b8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+	{ "pa1_saurian_front_sound_rom_u19.u19",			0x10000, 0xa2dfce0f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pa1_saurian_front_sound_rom_u20.u20",			0x10000, 0xb0e8f6fd, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pa1_saurian_front_game_rom_u105.u105",			0x20000, 0x6cd469f3, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "pa1_saurian_front_game_rom_u89.u89",				0x20000, 0xbf5188df, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "pa1_saurian_front_game_rom_u111.u111",			0x20000, 0xee7a733d, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "pa1_saurian_front_game_rom_u112.u112",			0x20000, 0x3a1a0656, 4 | BRF_GRA },           //  6
+	{ "pa1_saurian_front_game_rom_u113.u113",			0x20000, 0x0cba3a22, 4 | BRF_GRA },           //  7
+	{ "pa1_saurian_front_game_rom_u114.u114",			0x20000, 0x1cce75a8, 4 | BRF_GRA },           //  8
+	{ "pa1_saurian_front_game_rom_u106.u106",			0x20000, 0x5d6a6c39, 4 | BRF_GRA },           //  9
+	{ "pa1_saurian_front_game_rom_u107.u107",			0x20000, 0x5d178b62, 4 | BRF_GRA },           // 10
+	{ "pa1_saurian_front_game_rom_u95.u95",				0x20000, 0x8918d0c3, 4 | BRF_GRA },           // 11
+	{ "pa1_saurian_front_game_rom_u96.u96",				0x20000, 0x6de6e648, 4 | BRF_GRA },           // 12
+	{ "pa1_saurian_front_game_rom_u97.u97",				0x20000, 0x6fba9290, 4 | BRF_GRA },           // 13
+	{ "pa1_saurian_front_game_rom_u98.u98",				0x20000, 0x298939f9, 4 | BRF_GRA },           // 14
+	{ "pa1_saurian_front_game_rom_u90.u90",				0x20000, 0xff87ab13, 4 | BRF_GRA },           // 15
+	{ "pa1_saurian_front_game_rom_u91.u91",				0x20000, 0x67bd128a, 4 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(saurnfrnt)
+STD_ROM_FN(saurnfrnt)
+
+struct BurnDriver BurnDrvSaurnfrnt = {
+	"saurnfrnt", "strkforc", NULL, NULL, "1991",
+	"Saurian Front (proto v5.0 8/07/90)\0", NULL, "Williams", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_MIDWAY, GBF_HORSHOOT, 0,
+	NULL, saurnfrntRomInfo, saurnfrntRomName, NULL, NULL, NULL, NULL, StrkforcInputInfo, SaurnfrntDIPInfo,
 	StrkforcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	400, 256, 4, 3
 };

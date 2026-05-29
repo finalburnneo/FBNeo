@@ -6112,6 +6112,7 @@ struct BurnDriver BurnDrvGt3dv14 = {
 
 
 // Golden Tee 3D Golf Tournament (v2.31)
+// Version 2.31 Tournament Edition (PCB P/N 1083 Rev 2)
 
 static struct BurnRomInfo gt3dt231RomDesc[] = {
 	{ "gtg3_prom0_v2.31t.prom0",			0x100000, 0x92a5c3e9, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -6156,6 +6157,48 @@ struct BurnDriver BurnDrvGt3dt231 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dt231RomInfo, gt3dt231RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
+	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 240, 4, 3
+};
+
+
+// Golden Tee 3D Golf Tournament (v2.30)
+// Version 2.30 Tournament Edition (PCB P/N 1083 Rev 2)
+
+static struct BurnRomInfo gt3dt230RomDesc[] = {
+	{ "gtg3_prom0_v2.30t.prom0",			0x100000, 0x4c658915, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "gtg3_prom1_v2.30t.prom1",			0x100000, 0xf79fd0aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gtg3_prom2_v2.30t.prom2",			0x100000, 0x372d24d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gtg3_prom3_v2.30t.prom3",			0x100000, 0x82392f2c, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "gtg3nr_u88_v1.0.u88",				0x020000, 0x2cee9e98, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "gtg3_grom0_0.grm0_0",				0x080000, 0x1b10379d, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "gtg3_grom0_1.grm0_1",				0x080000, 0x3b852e1a, 3 | BRF_GRA },           //  6
+	{ "gtg3_grom0_2.grm0_2",				0x080000, 0xd43ffb35, 3 | BRF_GRA },           //  7
+	{ "gtg3_grom0_3.grm0_3",				0x080000, 0x2d24e93e, 3 | BRF_GRA },           //  8
+	{ "gtg3_grom1_0.grm1_0",				0x080000, 0x4476b239, 3 | BRF_GRA },           //  9
+	{ "gtg3_grom1_1.grm1_1",				0x080000, 0x0aadfad2, 3 | BRF_GRA },           // 10
+	{ "gtg3_grom1_2.grm1_2",				0x080000, 0x27871980, 3 | BRF_GRA },           // 11
+	{ "gtg3_grom1_3.grm1_3",				0x080000, 0x7dbc242b, 3 | BRF_GRA },           // 12
+	{ "gtg3_grom2_0_t.grm2_0",				0x080000, 0x80ae7148, 3 | BRF_GRA },           // 13
+	{ "gtg3_grom2_1_t.grm2_1",				0x080000, 0x0f85a618, 3 | BRF_GRA },           // 14
+	{ "gtg3_grom2_2_t.grm2_2",				0x080000, 0x09ca5fbf, 3 | BRF_GRA },           // 15
+	{ "gtg3_grom2_3_t.grm2_3",				0x080000, 0xd136853a, 3 | BRF_GRA },           // 16
+
+	{ "gtg3_srom0_nr.srom0",				0x100000, 0x44983bd7, 4 | BRF_SND },           // 17 Ensoniq Bank 0
+	{ "gtg3_srom1_nr.srom1",				0x080000, 0x1b3f18b6, 4 | BRF_SND },           // 18
+};
+
+STD_ROM_PICK(gt3dt230)
+STD_ROM_FN(gt3dt230)
+
+struct BurnDriver BurnDrvGt3dt230 = {
+	"gt3dt230", "gt3d", NULL, NULL, "1995",
+	"Golden Tee 3D Golf Tournament (v2.30)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, gt3dt230RomInfo, gt3dt230RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };

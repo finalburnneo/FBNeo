@@ -7002,6 +7002,39 @@ struct BurnDriver BurnDrvRedhawkk = {
 };
 
 
+// Red Hawk (China & Hong Kong)
+
+static struct BurnRomInfo redhawkcRomDesc[] = {
+	{ "afega_2.bin",	0x020000, 0x34356a0f, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega_3.bin",	0x020000, 0xcbaa0229, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	// same as all Red Hawk sets
+	{ "afega_1.bin",	0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	// == 4 from redhawk (US)
+	{ "afega_4.bin",	0x080000, 0xd6427b8a, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "afega_7.bin",	0x080000, 0x45d000e6, 5 | BRF_GRA },           //  4 Characters
+	{ "afega_6.bin",	0x080000, 0x5a505a56, 5 | BRF_GRA },           //  5
+
+	// same as all Red Hawk sets
+	{ "afega_5.bin",	0x040000, 0xe911ce33, 6 | BRF_GRA },           //  6 OKI1 Samples
+};
+
+STD_ROM_PICK(redhawkc)
+STD_ROM_FN(redhawkc)
+
+struct BurnDriver BurnDrvRedhawkc = {
+	"redhawkc", "stagger1", NULL, NULL, "1997",
+	"Red Hawk (China & Hong Kong)\0", NULL, "Afega (Zhuojia Co. license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, redhawkcRomInfo, redhawkcRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
+	Stagger1Init, AfegaExit, AfegaFrame, AfegaDraw, DrvScan, NULL, 0x300,
+	224, 256, 3, 4
+};
+
+
 // Red Hawk (horizontal, Italy)
 
 static struct BurnRomInfo redhawkiRomDesc[] = {

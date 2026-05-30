@@ -2463,6 +2463,48 @@ struct BurnDriver BurnDrvGalpani4j = {
 };
 
 
+// Gals Panic 4 (Asia)
+// ROM-BOARD NEP-16 part number GP04A00068 with extra sound sample ROM at U7
+
+static struct BurnRomInfo galpani4aRomDesc[] = {
+	{ "gp4a1_u10.u10",	0x080000, 0xb14adfbb, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gp4a1_u8.u8",	0x080000, 0x77fe1f40, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gp4-100-00.u24",	0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 Sprites
+	{ "gp4-101-00.u20",	0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
+
+	{ "gp4-200-00.u16",	0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
+
+	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
+	{ "gp4-301-00.u7",	0x200000, 0x53e9f8fb, 5 | BRF_SND },           //  7
+	
+	{ "skns-r09.u9",	0x000117, 0xb02058d9, 0 | BRF_OPT },           //  8 plds
+	{ "skns-r11.u11",	0x000117, 0xa9f05af4, 0 | BRF_OPT },           //  9
+};
+
+STDROMPICKEXT(galpani4a, galpani4a, skns)
+STD_ROM_FN(galpani4a)
+
+static INT32 Galpani4aInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriver BurnDrvGalpani4a = {
+	"galpani4a", "galpani4", "skns", NULL, "1996",
+	"Gals Panic 4 (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpani4aRomInfo, galpani4aRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	Galpani4aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
 // Gals Panic 4 (Korea)
 
 static struct BurnRomInfo galpani4kRomDesc[] = {

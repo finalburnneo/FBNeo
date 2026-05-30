@@ -3272,6 +3272,38 @@ static struct BurnRomInfo DstlkaRomDesc[] = {
 STD_ROM_PICK(Dstlka)
 STD_ROM_FN(Dstlka)
 
+static struct BurnRomInfo DstlkbRomDesc[] = {
+	// just the region byte changed if compared to the Hispanic version
+	{ "vamb.03a",      0x080000, 0x48831596, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.04a",      0x080000, 0x2217e9a0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.05a",      0x080000, 0x3a05b13c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.06a",      0x080000, 0x11d70a1c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.07a",      0x080000, 0xdb5a8767, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.08a",      0x080000, 0x2a4fd79b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.09a",      0x080000, 0x15187632, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamb.10a",      0x080000, 0x192d2d81, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "vam.13m",       0x400000, 0xc51baf99, CPS2_GFX | BRF_GRA },
+	{ "vam.15m",       0x400000, 0x3ce83c77, CPS2_GFX | BRF_GRA },
+	{ "vam.17m",       0x400000, 0x4f2408e0, CPS2_GFX | BRF_GRA },
+	{ "vam.19m",       0x400000, 0x9ff60250, CPS2_GFX | BRF_GRA },
+	{ "vam.14m",       0x100000, 0xbd87243c, CPS2_GFX | BRF_GRA },
+	{ "vam.16m",       0x100000, 0xafec855f, CPS2_GFX | BRF_GRA },
+	{ "vam.18m",       0x100000, 0x3a033625, CPS2_GFX | BRF_GRA },
+	{ "vam.20m",       0x100000, 0x2bff6a89, CPS2_GFX | BRF_GRA },
+
+	{ "vam.01",        0x020000, 0x64b685d5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vam.02",        0x020000, 0xcf7c97c7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
+	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "dstlkb.key",    0x000014, 0xd748cb77, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Dstlkb)
+STD_ROM_FN(Dstlkb)
+
 static struct BurnRomInfo DstlkhRomDesc[] = {
 	{ "vamh.03c",      0x080000, 0x4d7b9e8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "vamh.04c",      0x080000, 0x2217e9a0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -10627,6 +10659,16 @@ struct BurnDriver BurnDrvCpsDstlka = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, DstlkaRomInfo, DstlkaRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDstlkb = {
+	"dstlkb", "dstlk", NULL, NULL, "1994",
+	"Darkstalkers: The Night Warriors (Brazil 940818)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, DstlkbRomInfo, DstlkbRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

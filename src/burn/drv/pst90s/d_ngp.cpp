@@ -3704,6 +3704,24 @@ struct BurnDriver BurnDrvngpc_hopmanm = {
 	160, 152, 4, 3
 };
 
+// Horatio Goes Snowboarding (HB)
+static struct BurnRomInfo ngpc_horatiogsbRomDesc[] = {
+	{ "Horatio Goes Snowboarding (2026)(Chris Ahchay - Infinite State Games).ngp", 2097152, 0xc959fe3c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_horatiogsb, ngpc_horatiogsb, ngpc_ngp)
+STD_ROM_FN(ngpc_horatiogsb)
+
+struct BurnDriver BurnDrvngpc_horatiogsb = {
+	"ngp_horatiogsb", NULL, "ngp_ngp", NULL, "2026",
+	"Horatio Goes Snowboarding (HB)\0", NULL, "Chris Ahchay - Infinite State Games", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_SPORTSMISC, 0,
+	NgpGetZipName, ngpc_horatiogsbRomInfo, ngpc_horatiogsbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Impetus Mini (HB)
 static struct BurnRomInfo ngpc_impetusmRomDesc[] = {
 	{ "Impetus Mini (2025)(Inufuto).ngp", 524288, 0x0bef4816, 1 | BRF_PRG | BRF_ESS }, // Cartridge

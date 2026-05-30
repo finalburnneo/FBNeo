@@ -23775,9 +23775,9 @@ struct BurnDriver BurnDrvsms_psychicwen = {
 	256, 192, 4, 3
 };
 
-// Pyramid Escape (HB)
+// Pyramid Escape (HB, v1.2.1)
 static struct BurnRomInfo sms_pyramidescapeRomDesc[] = {
-	{ "Pyramid Escape (2025)(IrataHack).sms",	114688, 0x705c8342, BRF_PRG | BRF_ESS },
+	{ "Pyramid Escape v1.2.1 (2025)(IrataHack).sms",	114688, 0x9bb83ea6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pyramidescape)
@@ -23785,7 +23785,7 @@ STD_ROM_FN(sms_pyramidescape)
 
 struct BurnDriver BurnDrvsms_pyramidescape = {
 	"sms_pyramidescape", NULL, NULL, NULL, "2025",
-	"Pyramid Escape (HB)\0", NULL, "IrataHack", "Sega Master System",
+	"Pyramid Escape (HB, v1.2.1)\0", NULL, "IrataHack", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_pyramidescapeRomInfo, sms_pyramidescapeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

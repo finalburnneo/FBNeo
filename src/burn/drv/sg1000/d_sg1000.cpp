@@ -4157,6 +4157,24 @@ struct BurnDriver BurnDrvsg1k_awass = {
 	272, 228, 4, 3
 };
 
+// Barbarricade (HB, 05-30-26)
+static struct BurnRomInfo sg1k_barbarricadeRomDesc[] = {
+	{ "Barbarricade 05-30-26 (2026)(Jess Creations, ArugulaZ).sg",	40960, 0x9adbeec7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_barbarricade)
+STD_ROM_FN(sg1k_barbarricade)
+
+struct BurnDriver BurnDrvsg1k_barbarricade = {
+	"sg1k_barbarricade", NULL, NULL, NULL, "2026",
+	"Barbarricade (HB, 05-30-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_BREAKOUT, 0,
+	SG1KGetZipName, sg1k_barbarricadeRomInfo, sg1k_barbarricadeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Battlot (HB)
 static struct BurnRomInfo sg1k_battlotRomDesc[] = {
 	{ "Battlot (2021)(Inufuto).sg",	9745, 0x90532d80, BRF_PRG | BRF_ESS },

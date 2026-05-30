@@ -7774,7 +7774,7 @@ struct BurnDriver BurnDrvsprglbpg = {
 };
 
 
-// Beastie Feastie (Pac-Man conversion)
+// Beastie Feastie (Pac-Man conversion, set 1)
 
 static struct BurnRomInfo beastfpRomDesc[] = {
 	{ "bf-u2.bin",    			0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -7797,7 +7797,7 @@ STD_ROM_FN(beastfp)
 
 struct BurnDriver BurnDrvbeastfp = {
 	"beastfp", "suprglob", NULL, NULL, "1984",
-	"Beastie Feastie (Pac-Man conversion)\0", NULL, "Epos Corporation", "Pac-man",
+	"Beastie Feastie (Pac-Man conversion, set 1)\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
 	NULL, beastfpRomInfo, beastfpRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
@@ -7806,7 +7806,41 @@ struct BurnDriver BurnDrvbeastfp = {
 };
 
 
+// Beastie Feastie (Pac-Man conversion, set 2)
+// just the CPU board available, so only the program ROMs were dumped for this set.
+
+static struct BurnRomInfo beastfpaRomDesc[] = {
+	{ "u2_beastie_feastie_pb02864.u2",  0x2000, 0x97a2041b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u3_beastie_feastie_pb02864.u3",  0x2000, 0xd379bbeb, 1 | BRF_ESS | BRF_PRG },	//  1
+
+	{ "beastf.5e",    					0x1000, 0x5654dc34, 2 | BRF_GRA },				//  2 Graphics
+	{ "beastf.5f",    					0x1000, 0x1b30ca61, 2 | BRF_GRA },				//  3
+
+	{ "7_f_the_glob.7f",      			0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Proms
+	{ "4_a_the_glob.4a",      			0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
+
+	{ "82s126.1m",    					0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
+	{ "82s126.3m"  ,  					0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
+	
+	{ "beastf.ic4",   					0x002c, 0xa6ab926d, 0 | BRF_OPT },				//  8 PAL
+};
+
+STD_ROM_PICK(beastfpa)
+STD_ROM_FN(beastfpa)
+
+struct BurnDriver BurnDrvbeastfpa = {
+	"beastfpa", "suprglob", NULL, NULL, "1984",
+	"Beastie Feastie (Pac-Man conversion, set 2)\0", NULL, "Epos Corporation", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
+	NULL, beastfpaRomInfo, beastfpaRomName, NULL, NULL, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
+	theglobpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Eeekk! (Pac-Man conversion)
+// Pac-Man PCB conversion kit. Includes a small daughtercard (2 roms + 4 PLDs, plugs in through the Z80 socket), 2 roms + 2 BPROMs
 
 static struct BurnRomInfo eeekkpRomDesc[] = {
 	{ "u_2_eeekk_pg03094.u2",	0x2000, 0x701e37f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code

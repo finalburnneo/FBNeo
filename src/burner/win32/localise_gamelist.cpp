@@ -1,7 +1,7 @@
 #include "burner.h"
 #include <string.h>
 
-#define MAX_LST_GAMES		25000
+#define MAX_LST_GAMES		35000
 #define MAX_LST_LINE_LEN	256
 
 TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");

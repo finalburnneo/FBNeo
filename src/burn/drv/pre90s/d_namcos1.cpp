@@ -2603,25 +2603,25 @@ struct BurnDriver BurnDrvQuesters = {
 // Pac-Mania
 
 static struct BurnRomInfo pacmaniaRomDesc[] = {
-	{ "pn2_s0.bin",		0x10000, 0xc10370fa, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
-	{ "pn2_s1.bin",		0x10000, 0xf761ed5a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pn2_s0.a10",		0x10000, 0xc10370fa, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
+	{ "pn2_s1.b10",		0x10000, 0xf761ed5a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pn_prg-6.bin",	0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
-	{ "pn2_p7.bin",		0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "pn1_p6.s10",		0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
+	{ "pn2_p7.t10",		0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
+	{ "cus64-64a1.m4",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 
-	{ "pn2_v0.bin",		0x10000, 0x1ad5788f, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
+	{ "pn2_v0.a4",		0x10000, 0x1ad5788f, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
 
-	{ "pn2_c8.bin",		0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
+	{ "pn1_c8.t8",		0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
 
-	{ "pn_chr-0.bin",	0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
-	{ "pn_chr-1.bin",	0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
-	{ "pn_chr-2.bin",	0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
-	{ "pn_chr-3.bin",	0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
+	{ "pn1_c0.a8",		0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
+	{ "pn1_c1.b8",		0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
+	{ "pn1_c2.e8",		0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
+	{ "pn1_c3.f8",		0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
 
-	{ "pn_obj-0.bin",	0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
-	{ "pnx_obj1.bin",	0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
+	{ "pn1_o0.a9",		0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
+	{ "pn1_o1.b9",		0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(pacmania)
@@ -2651,22 +2651,22 @@ static struct BurnRomInfo pacmaniaoRomDesc[] = {
 	{ "pac-mania_111187.sound0",	0x10000, 0x845d6a2e, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
 	{ "pac-mania_111187.sound1",	0x10000, 0x411bc134, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pn_prg-6.bin",		0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
-	{ "pn2_p7.bin",			0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "pn1_p6.s10",			0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
+	{ "pn2_p7.t10",			0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cus64-64a1.mcu",		0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
+	{ "cus64-64a1.m4",		0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 
 	{ "pac-mania_111187.voice0",	0x10000, 0x1ad5788f, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
 
-	{ "pn1_c8.bin",			0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
+	{ "pn1_c8.t8",			0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
 
-	{ "pn_chr-0.bin",		0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
-	{ "pn_chr-1.bin",		0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
-	{ "pn_chr-2.bin",		0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
-	{ "pn_chr-3.bin",		0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
+	{ "pn1_c0.a8",			0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
+	{ "pn1_c1.b8",			0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
+	{ "pn1_c2.e8",			0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
+	{ "pn1_c3.f8",			0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
 
-	{ "pn_obj-0.bin",		0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
-	{ "pnx_obj1.bin",		0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
+	{ "pn1_o0.a9",			0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
+	{ "pn1_o1.b9",			0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(pacmaniao)
@@ -2686,25 +2686,25 @@ struct BurnDriver BurnDrvPacmaniao = {
 // Pac-Mania (Japan)
 
 static struct BurnRomInfo pacmaniajRomDesc[] = {
-	{ "pn1_s0.bin",		0x10000, 0xd5ef5eee, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
-	{ "pn1_s1.bin",		0x10000, 0x411bc134, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pn1_s0.a10",		0x10000, 0xd5ef5eee, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
+	{ "pn1_s1.b10",		0x10000, 0x411bc134, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pn_prg-6.bin",	0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
-	{ "pn1_p7.bin",		0x10000, 0x2aa99e2b, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "pn1_p6.s10",		0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
+	{ "pn2_p7.t10",		0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
+	{ "cus64-64a1.m4",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 
-	{ "pn1_v0.bin",		0x10000, 0xe2689f79, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
+	{ "pn1_v0.a4",		0x10000, 0xe2689f79, 4 | BRF_PRG | BRF_ESS }, //  5 External MCU Code
 
-	{ "pn1_c8.bin",		0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
+	{ "pn1_c8.t8",		0x10000, 0xf3afd65d, 5 | BRF_GRA },           //  6 Character Pixel Masks
 
-	{ "pn_chr-0.bin",	0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
-	{ "pn_chr-1.bin",	0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
-	{ "pn_chr-2.bin",	0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
-	{ "pn_chr-3.bin",	0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
+	{ "pn1_c0.a8",		0x20000, 0x7c57644c, 6 | BRF_GRA },           //  7 Characters
+	{ "pn1_c1.b8",		0x20000, 0x7eaa67ed, 6 | BRF_GRA },           //  8
+	{ "pn1_c2.e8",		0x20000, 0x27e739ac, 6 | BRF_GRA },           //  9
+	{ "pn1_c3.f8",		0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
 
-	{ "pn_obj-0.bin",	0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
-	{ "pn_obj-1.bin",	0x20000, 0x27bdf440, 7 | BRF_GRA },           // 12
+	{ "pn1_o0.a9",		0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
+	{ "pn1_o1.b9",		0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(pacmaniaj)

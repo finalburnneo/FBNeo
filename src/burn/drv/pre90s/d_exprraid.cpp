@@ -835,11 +835,11 @@ static struct BurnRomInfo exprraidblRomDesc[] = {
 
 	{ "1.12f",			0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
 
-	{ "5b",				0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
-	{ "6b",				0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
-	{ "7b",				0x0100, 0xa6168d7f, 7 | BRF_GRA },           // 16
+	{ "prom.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
+	{ "prom.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
+	{ "prom.7b",		0x0100, 0xa6168d7f, 7 | BRF_GRA },           // 16
 	
-	{ "9b",				0x0100, 0x52aad300, 0 | BRF_OPT },           // 17 Unknown PROM
+	{ "prom.9b",		0x0100, 0x52aad300, 0 | BRF_OPT },           // 17 Unknown PROM
 };
 
 STD_ROM_PICK(exprraidbl)

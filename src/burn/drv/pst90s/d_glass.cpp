@@ -1105,3 +1105,39 @@ struct BurnDriver BurnDrvGlass10d = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
 };
+
+
+// Glass (ver 1.0, Break Edition, checksum 13BE832C)
+
+static struct BurnRomInfo glass10eRomDesc[] = {
+	{ "pic_3.c23", 						   0x040000, 0x96b1e125, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "pic_2.c22", 						   0x040000, 0x6816d508, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "al_d0-d7_27c4001.bin",              0x080000, 0xc668caad, 3 | BRF_GRA },           //  2 Graphics
+	{ "bl_d8-d15_27c4001.bin",             0x080000, 0x7a6cb91f, 3 | BRF_GRA },           //  3
+	{ "ah_d0-d7_27c4001.bin",              0x080000, 0xde27b785, 3 | BRF_GRA },           //  4
+	{ "bh_d8-d15_27c4001.bin",             0x080000, 0xe9aa45d3, 3 | BRF_GRA },           //  5
+	{ "cl_d0-d7_27c4001.bin",              0x080000, 0xe32639be, 3 | BRF_GRA },           //  6
+	{ "dl_d8-d15_27c4001.bin",             0x080000, 0xb56eb8a4, 3 | BRF_GRA },           //  7
+	{ "ch_d0-d7_27c4001.bin",              0x080000, 0x1b3f148d, 3 | BRF_GRA },           //  8
+	{ "dh_d8-d15_27c4001.bin",             0x080000, 0xf3638123, 3 | BRF_GRA },           //  9
+
+	{ "h9.bin",                            0x100000, 0xb9492557, 4 | BRF_GRA },           // 10 Blitter data
+
+	{ "c1.bin",                            0x100000, 0xd9f075a2, 5 | BRF_SND },           // 11 Samples
+
+	{ "glass_ds5002fp_sram.bin",           0x008000, 0x47c9df4c, 6 | BRF_PRG | BRF_ESS }, // 12 Dallas MCU
+};
+
+STD_ROM_PICK(glass10e)
+STD_ROM_FN(glass10e)
+
+struct BurnDriver BurnDrvGlass10e = {
+	"glass10e", "glass", NULL, NULL, "1993",
+	"Glass (ver 1.0, Break Edition, checksum 13BE832C)\0", NULL, "OMK / Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, glass10eRomInfo, glass10eRomName, NULL, NULL, NULL, NULL, GlassInputInfo, GlassDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	368, 240, 4, 3
+};

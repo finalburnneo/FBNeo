@@ -986,6 +986,46 @@ struct BurnDriver BurnDrvMarioj = {
 };
 
 
+// Mario Bros. (Japan, older)
+// TMA1-02 CPU, TMA1-02-VIDEO
+
+static struct BurnRomInfo mariojaRomDesc[] = {
+	{ "tma1-c-7f.7f",	0x2000, 0x797770a3, 1 }, //  0 maincpu
+	{ "tma1-c-7e.7e",	0x2000, 0x35ef2dc6, 1 }, //  1
+	{ "tma1-c-7d.7d",	0x2000, 0x6e25d1a8, 1 }, //  2
+	{ "tma1-c-7c.7c",	0x1000, 0x4b588f4b, 1 }, //  3
+
+	{ "tma1-c-6k.6k",	0x1000, 0x06b9ff85, 2 }, //  4 audiocpu
+
+	{ "tma1-v-3f_c.3f",	0x1000, 0xadf49ee0, 3 }, //  5 gfx1
+	{ "tma1-v-3j_c.3j",	0x1000, 0xa5318f2d, 3 }, //  6
+
+	{ "tma1-v-7m_c.7m",	0x1000, 0xeacc5bfa, 4 }, //  7 gfx2
+	{ "tma1-v-7n_c.7n",	0x1000, 0xe0e08bba, 4 }, //  8
+	{ "tma1-v-7p_c.7p",	0x1000, 0x7b27c8c1, 4 }, //  9
+	{ "tma1-v-7s_c.7s",	0x1000, 0x385f1076, 4 }, // 10
+	{ "tma1-v-7t_c.7t",	0x1000, 0x5cbb92a5, 4 }, // 11
+	{ "tma1-v-7u_c.7u",	0x1000, 0xbadb0191, 4 }, // 12
+
+	{ "tma1-c-4p.4p",	0x0200, 0x8187d286, 5 }, // 13 proms
+
+	{ "tma1-c-5p.5p",	0x0020, 0x58d86098, 6 }, // 14 unk_proms
+};
+
+STD_ROM_PICK(marioja)
+STD_ROM_FN(marioja)
+
+struct BurnDriver BurnDrvMarioja = {
+	"marioja", "mario", NULL, "mario", "1983",
+	"Mario Bros. (Japan, older)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, mariojaRomInfo, mariojaRomName, NULL, NULL, MarioSampleInfo, MarioSampleName, MarioInputInfo, MariojDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
 static INT32 DrvInitmasao()
 {
 	masao = 1;

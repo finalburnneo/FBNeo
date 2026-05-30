@@ -2176,7 +2176,7 @@ struct BurnDriver BurnDrvBigtwin = {
 };
 
 
-// Big Twin (No Girls Conversion)
+// Big Twin (No Girls Conversion,  set 1)
 
 static struct BurnRomInfo bigtwinbRomDesc[] = {
 	{ "2.u67",							0x20000, 0xf5cdf1a9, 1 | BRF_PRG | BRF_ESS }, //  0 68000 Program Code
@@ -2202,10 +2202,45 @@ STD_ROM_FN(bigtwinb)
 
 struct BurnDriver BurnDrvBigtwinb = {
 	"bigtwinb", "bigtwin", NULL, NULL, "1995",
-	"Big Twin (No Girls Conversion)\0", NULL, "Playmark", "Miscellaneous",
+	"Big Twin (No Girls Conversion, set 1)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bigtwinbRomInfo, bigtwinbRomName, NULL, NULL, NULL, NULL, BigtwinbInputInfo, BigtwinbDIPInfo,
+	BigtwinbInit, DrvExit, DrvFrame, BigtwinbRender, DrvScan, &BurnRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Big Twin (No Girls Conversion,  set 2)
+
+static struct BurnRomInfo bigtwincRomDesc[] = {
+	{ "2.u67",							0x20000, 0x0fdfeaef, 1 | BRF_PRG | BRF_ESS }, //  0 68000 Program Code
+	{ "3.u66",							0x20000, 0x67464a4e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pic16c57-hs_bigtwin_015.hex",	0x02d4c, 0xc07e9375, 2 | BRF_PRG | BRF_ESS }, //  2 PIC16C57 HEX
+
+	{ "4.u36",							0x40000, 0x99aaeacc, 6 | BRF_GRA },           //  3 Tiles
+	{ "5.u42",							0x40000, 0x5c1dfd72, 6 | BRF_GRA },           //  4
+	{ "6.u39",							0x40000, 0x788f2df6, 6 | BRF_GRA },           //  5
+	{ "7.u45",							0x40000, 0xaedb2e6d, 6 | BRF_GRA },           //  6
+
+	{ "11.u86",							0x20000, 0x2749644d, 4 | BRF_GRA },           //  7 Sprites
+	{ "10.u85",							0x20000, 0x1d1897af, 4 | BRF_GRA },           //  8
+	{ "9.u84",							0x20000, 0x2a03432e, 4 | BRF_GRA },           //  9
+	{ "8.u83",							0x20000, 0x2c980c4c, 4 | BRF_GRA },           // 10
+
+	{ "io13.bin",						0x40000, 0xff6671dc, 5 | BRF_SND },           // 11 Samples
+};
+
+STD_ROM_PICK(bigtwinc)
+STD_ROM_FN(bigtwinc)
+
+struct BurnDriver BurnDrvBigtwinc = {
+	"bigtwinc", "bigtwin", NULL, NULL, "1995",
+	"Big Twin (No Girls Conversion, set 2)\0", NULL, "Playmark", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, bigtwincRomInfo, bigtwincRomName, NULL, NULL, NULL, NULL, BigtwinbInputInfo, BigtwinbDIPInfo,
 	BigtwinbInit, DrvExit, DrvFrame, BigtwinbRender, DrvScan, &BurnRecalc, 0x400,
 	320, 240, 4, 3
 };
@@ -2289,7 +2324,7 @@ struct BurnDriver BurnDrvExcelsra = {
 };
 
 
-// Hot Mind (Hard Times hardware)
+// Hot Mind (Hard Times hardware, set 1)
 
 static struct BurnRomInfo HotmindRomDesc[] = {
 	{ "21.u67",            				0x20000, 0xe9000f7f, 1 | BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -2323,10 +2358,54 @@ STD_ROM_FN(Hotmind)
 
 struct BurnDriver BurnDrvHotmind = {
 	"hotmind", NULL, NULL, NULL, "1995",
-	"Hot Mind (Hard Times hardware)\0", NULL, "Playmark", "Misc",
+	"Hot Mind (Hard Times hardware, set 1)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, HotmindRomInfo, HotmindRomName, NULL, NULL, NULL, NULL, HotmindInputInfo, HotmindDIPInfo,
+	HotmindInit, DrvExit, DrvFrame, HotmindRender, DrvScan, &BurnRecalc, 0x400,
+	320, 224, 4, 3
+};
+
+
+// Hot Mind (Hard Times hardware, set 2)
+// PCB marked Hard Times 28-06-94
+
+static struct BurnRomInfo HotmindcRomDesc[] = {
+	{ "1.u67",            				0x20000, 0x35b0f62d, 1 | BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "2.u66",            				0x20000, 0x1a27033f, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "hotmind_pic16c57.hex", 			0x02d4c, 0x11957803, 2 | BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
+
+	{ "23.u36",            				0x20000, 0xddcf60b9, 6 | BRF_GRA },			  //  3	Tiles
+	{ "27.u42",            				0x20000, 0x413bbcf4, 6 | BRF_GRA },			  //  4
+	{ "24.u39",            				0x20000, 0x4baa5b4c, 6 | BRF_GRA },			  //  5
+	{ "28.u45",            				0x20000, 0x8df34d6a, 6 | BRF_GRA },			  //  6
+
+	{ "26.u86",            				0x20000, 0xff8d3b75, 7 | BRF_GRA },			  //  7	Sprites
+	{ "30.u85",            				0x20000, 0x87a640c7, 7 | BRF_GRA },			  //  8
+	{ "25.u84",            				0x20000, 0xc4fd4445, 7 | BRF_GRA },			  //  9
+	{ "29.u83",           				0x20000, 0x0bebfb53, 7 | BRF_GRA },			  // 10
+
+	{ "20.io13",           				0x40000, 0x0bf3a3e5, 5 | BRF_SND },			  // 11	Samples
+
+	{ "hotmind_pic16c57-hs_io15.hex", 	0x02d4c, 0xf3300d13, 0 | BRF_OPT },			  // 12 PALs
+	{ "palce16v8h-25-pc4_u58.jed",    	0x00b89, 0xba88c1da, 0 | BRF_OPT },			  // 13
+	{ "palce16v8h-25-pc4_u182.jed",   	0x00b89, 0xba88c1da, 0 | BRF_OPT },			  // 14
+	{ "palce16v8h-25-pc4_jamma.jed",  	0x00b89, 0xba88c1da, 0 | BRF_OPT },			  // 15
+	{ "tibpal22v10acnt_u113.jed",     	0x01e84, 0x94106c63, 0 | BRF_OPT },			  // 16
+	{ "tibpal22v10acnt_u183.jed",     	0x01e84, 0x95a446b6, 0 | BRF_OPT },			  // 17
+	{ "tibpal22v10acnt_u211.jed",     	0x01e84, 0x94106c63, 0 | BRF_OPT },			  // 18
+}; 
+
+STD_ROM_PICK(Hotmindc)
+STD_ROM_FN(Hotmindc)
+
+struct BurnDriver BurnDrvHotmindc = {
+	"hotmindc", "hotmind", NULL, NULL, "1995",
+	"Hot Mind (Hard Times hardware, set 2)\0", NULL, "Playmark", "Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, HotmindcRomInfo, HotmindcRomName, NULL, NULL, NULL, NULL, HotmindInputInfo, HotmindDIPInfo,
 	HotmindInit, DrvExit, DrvFrame, HotmindRender, DrvScan, &BurnRecalc, 0x400,
 	320, 224, 4, 3
 };

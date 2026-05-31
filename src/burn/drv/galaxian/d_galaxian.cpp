@@ -7965,6 +7965,22 @@ static struct BurnRomInfo TdpgalRomDesc[] = {
 STD_ROM_PICK(Tdpgal)
 STD_ROM_FN(Tdpgal)
 
+static struct BurnRomInfo TdpgalaRomDesc[] = {
+	{ "g8",            0x00800, 0x7be819fe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "f8",            0x00800, 0xd6641a10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "e8",            0x00800, 0xe6c85dca, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "d8",            0x00800, 0xa7dfcfe7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "c8",            0x01000, 0x01484c16, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "j1",            0x00800, 0x39eec13f, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "k1",            0x00800, 0x3113bcfd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "74s472.gg",     0x00020, 0x2b4cf53f, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Tdpgala)
+STD_ROM_FN(Tdpgala)
+
 static struct BurnRomInfo AzurianRomDesc[] = {
 	{ "pgm.1",         0x01000, 0x17a0fca7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "pgm.2",         0x01000, 0x14659848, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9097,10 +9113,20 @@ struct BurnDriver BurnDrvExodus = {
 
 struct BurnDriver BurnDrvTdpgal = {
 	"tdpgal", NULL, NULL, NULL, "1983",
-	"Triple Draw Poker\0", NULL, "Design Labs / Thomas Automatics", "Galaxian",
+	"Triple Draw Poker (Design Labs / Thomas Automatics)\0", NULL, "Design Labs / Thomas Automatics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_CASINO, 0,
 	NULL, TdpgalRomInfo, TdpgalRomName, NULL, NULL, NULL, NULL, TdpgalInputInfo, NULL,
+	TdpgalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTdpgala = {
+	"tdpgala", "tdpgal", NULL, NULL, "1983",
+	"Triple Draw Poker (Video Village)\0", NULL, "Video Village", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_CASINO, 0,
+	NULL, TdpgalaRomInfo, TdpgalaRomName, NULL, NULL, NULL, NULL, TdpgalInputInfo, NULL,
 	TdpgalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

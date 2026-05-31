@@ -6478,6 +6478,30 @@ static struct BurnRomInfo CawingjRomDesc[] = {
 STD_ROM_PICK(Cawingj)
 STD_ROM_FN(Cawingj)
 
+static struct BurnRomInfo CawingjrRomDesc[] = {
+	{ "usnj_23.8f",    0x080000, 0xbbe45b1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "usnj_22.7f",    0x080000, 0x54872f9f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "usn_01.3a",     0x080000, 0xc08ffb8b, BRF_GRA | CPS1_TILES },
+	{ "usn_02.4a",     0x080000, 0x37b1b27a, BRF_GRA | CPS1_TILES },
+	{ "usn_03.5a",     0x080000, 0x9f89a540, BRF_GRA | CPS1_TILES },
+	{ "usn_04.6a",     0x080000, 0x1f31f1d0, BRF_GRA | CPS1_TILES },
+
+	{ "usn_09.12f",    0x020000, 0x0eb8a1d4, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "usn_18.11c",    0x020000, 0x4a613a2c, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "usn_19.12c",    0x020000, 0x74584493, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "ara63b.1a",     0x000117, 0x3e049379, BRF_OPT },	// b-board PLDs
+	{ "ca24b.1a",      0x000117, 0x76ec0b1c, BRF_OPT },	 
+	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Cawingjr)
+STD_ROM_FN(Cawingjr)
+
 static struct BurnRomInfo CawingblRomDesc[] = {
 	{ "caw2.bin",      0x080000, 0x8125d3f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
 	{ "caw1.bin",      0x080000, 0xb19b10ce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
@@ -16133,7 +16157,7 @@ static struct BurnRomInfo Area88rRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "ara63b.1a",     0x000117, 0xf5569c93, BRF_OPT },// b-board PLDs
+	{ "ara63b.1a",     0x000117, 0x3e049379, BRF_OPT },// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	
@@ -17244,6 +17268,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "cawingu"       , CPS_B_05    , mapper_CA22B , 0, NULL                },
 	{ "cawingur1"     , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingj"       , CPS_B_16    , mapper_CA22B , 0, NULL                },
+	{ "cawingjr"      , CPS_B_21_DEF, mapper_ARA63B, 0, NULL                },
 	{ "cawingbl"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingb2"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cworld2j"      , CPS_B_21_BT6, mapper_Q522B , 0, NULL                },
@@ -17535,7 +17560,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "striderfix"    , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "unsquad"       , CPS_B_11    , mapper_AR24B , 0, NULL                },
 	{ "area88"        , CPS_B_11    , mapper_AR22B , 0, NULL                },
-	{ "area88r"       , CPS_B_21_DEF, mapper_AR22B , 0, NULL                },
+	{ "area88r"       , CPS_B_21_DEF, mapper_ARA63B, 0, NULL                },
 	{ "varth"         , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthr1"       , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthu"        , CPS_B_04    , mapper_VA63B , 0, NULL                },
@@ -22909,6 +22934,16 @@ struct BurnDriver BurnDrvCpsCawingj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
 	NULL, CawingjRomInfo, CawingjRomName, NULL, NULL, NULL, NULL, CawingInputInfo, CawingDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCawingjr = {
+	"cawingjr", "cawing", NULL, NULL, "1990",
+	"U.S. Navy (Japan Resale Ver. 901130)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
+	NULL, CawingjrRomInfo, CawingjrRomName, NULL, NULL, NULL, NULL, CawingInputInfo, CawingDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

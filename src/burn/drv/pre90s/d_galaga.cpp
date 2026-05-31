@@ -3860,6 +3860,44 @@ static struct BurnRomInfo XeviouscRomDesc[] = {
 STD_ROM_PICK(Xeviousc)
 STD_ROM_FN(Xeviousc)
 
+static struct BurnRomInfo XeviousdRomDesc[] = {
+	{ "1983_atari_8309_136018_218.1m",     0x02000, 0xcf690308, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "1983_atari_8307_136018_219.1l",     0x02000, 0x408c4b64, BRF_ESS | BRF_PRG   }, //  1
+	
+	{ "1983_atari_8306_136018_120.4c",     0x02000, 0x14d8fa03, BRF_ESS | BRF_PRG   }, //  2 Z80 #2 Program Code
+	
+	{ "1983_atari_8306_136018_127.2c",     0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  3 Z80 #3 Program Code
+
+	{ "1983_atari_8307_136018_104.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  4 background characters
+	{ "1983_atari_8307_136018_105.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  5 bg pattern B0
+	{ "1983_atari_8307_136018_106.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  6 bg pattern B1
+
+	{ "1983_atari_8307_136018_107.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, //  7 sprite set #1, planes 0/1
+	{ "1983_atari_8307_136018_109.4p",     0x02000, 0x02417d19, BRF_GRA             }, //  8 sprite set #1, plane 2, set #2, plane 0
+	{ "1983_atari_8307_136018_108.4n",     0x02000, 0xdfb587ce, BRF_GRA             }, //  9 sprite set #2, planes 1/2
+	{ "1983_atari_8307_136018_110.4r",     0x01000, 0x605ca889, BRF_GRA             }, // 10 sprite set #3, planes 0/1
+
+	{ "1983_atari_8307_136018_101.2a",     0x01000, 0x57ed9879, BRF_GRA             }, // 11
+	{ "1983_atari_8307_136018_102.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 12
+	{ "1983_atari_8307_136018_103.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 13
+
+	{ "1983_atari_136018_115.6a",      	   0x00100, 0x5cc2727f, BRF_GRA             }, // 14 palette red component
+	{ "1983_atari_136018_116.6d",          0x00100, 0x5c8796cc, BRF_GRA             }, // 15 palette green component
+	{ "1983_atari_136018_117.6e",          0x00100, 0x3cb60975, BRF_GRA             }, // 16 palette blue component
+	{ "1983_atari_136018_114.4h",          0x00200, 0x22d98032, BRF_GRA             }, // 17 bg tiles lookup table low bits
+	{ "1983_atari_136018_113.4f",          0x00200, 0x3a7599f0, BRF_GRA             }, // 18 bg tiles lookup table high bits
+	{ "1983_atari_136018_111.3l",          0x00200, 0xfd8b9d91, BRF_GRA             }, // 19 sprite lookup table low bits
+	{ "1983_atari_136018_112.3m",          0x00200, 0xbf906d82, BRF_GRA             }, // 20 sprite lookup table high bits
+
+	{ "1983_atari_136018_129.8m",          0x00100, 0x550f06bc, BRF_GRA             }, // 21
+	{ "1983_atari_136018_128.6m",          0x00100, 0x77245b66, BRF_GRA             }, // 22 timing - not used
+
+	{ "n82s153n.1f",      				   0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
+};
+
+STD_ROM_PICK(Xeviousd)
+STD_ROM_FN(Xeviousd)
+
 static struct BurnRomInfo SxeviousRomDesc[] = {
 	{ "cpu_3p.rom",    0x01000, 0x1c8d27d5, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
 	{ "cpu_3m.rom",    0x01000, 0xfd04e615, BRF_ESS | BRF_PRG   }, //  1
@@ -4857,6 +4895,16 @@ struct BurnDriver BurnDrvXeviousc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, XeviouscRomInfo, XeviouscRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousaDIPInfo,
 	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvXeviousd = {
+	"xeviousd", "xevious", NULL, "xevious", "1982",
+	"Xevious (Atari, set 4)\0", NULL, "Namco (Atari license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviousdRomInfo, XeviousdRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousaDIPInfo,
+	xeviousaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 

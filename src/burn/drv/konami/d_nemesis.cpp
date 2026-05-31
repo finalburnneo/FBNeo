@@ -4616,7 +4616,7 @@ STDROMPICKEXT(gwarriorb, gwarriorb, bubsys)
 STD_ROM_FN(gwarriorb)
 
 struct BurnDriver BurnDrvGwarriorb = {
-	"gwarriorb", "bubsys", NULL, NULL, "1985",
+	"gwarriorb", NULL, "bubsys", NULL, "1985",
 	"Galactic Warriors (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VSFIGHT, 0,
@@ -4643,7 +4643,7 @@ STDROMPICKEXT(rf2b, rf2b, bubsys)
 STD_ROM_FN(rf2b)
 
 struct BurnDriver BurnDrvRf2b = {
-	"rf2b", "bubsys", NULL, NULL, "1985",
+	"rf2b", NULL, "bubsys", NULL, "1985",
 	"Konami RF2 - Red Fighter (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,

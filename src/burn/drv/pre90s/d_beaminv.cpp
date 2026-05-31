@@ -357,3 +357,28 @@ struct BurnDriverD BurnDrvPacominv = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	216, 248, 3, 4
 };
+
+
+// Pacom Invader (set 2)
+
+static struct BurnRomInfo pacominvaRomDesc[] = {
+	{ "0.bin",	0x0400, 0x67e100dd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "1.bin",	0x0400, 0x442bbe98, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",	0x0400, 0x5d5d2f68, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.bin",	0x0400, 0x527906b8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.bin",	0x0400, 0x920bb3f0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "5.bin",	0x0400, 0x72972e81, 1 | BRF_PRG | BRF_ESS }, //  5
+};
+
+STD_ROM_PICK(pacominva)
+STD_ROM_FN(pacominva)
+
+struct BurnDriverD BurnDrvPacominva = {
+	"pacominva", "beaminv", NULL, NULL, "1979",
+	"Pacom Invader (set 2)\0", "No sound", "Pacom Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, pacominvaRomInfo, pacominvaRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, PacominvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
+	216, 248, 3, 4
+};

@@ -22372,20 +22372,20 @@ struct BurnDriver BurnDrvnes_nessyrobotv2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Nights City (HB)
-static struct BurnRomInfo nes_nightscityRomDesc[] = {
-	{ "Nights City (2026)(Foko Games).nes",          40976, 0x39dd25fa, BRF_ESS | BRF_PRG },
+// Night City (HB)
+static struct BurnRomInfo nes_nightcityRomDesc[] = {
+	{ "Night City (2026)(Foko Games).nes",          40976, 0x39dd25fa, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_nightscity)
-STD_ROM_FN(nes_nightscity)
+STD_ROM_PICK(nes_nightcity)
+STD_ROM_FN(nes_nightcity)
 
-struct BurnDriver BurnDrvnes_nightscity = {
-	"nes_nightscity", NULL, NULL, NULL, "2026",
-	"Nights City (HB)\0", NULL, "Foko Games", "NES / Famicom",
+struct BurnDriver BurnDrvnes_nightcity = {
+	"nes_nightcity", NULL, NULL, NULL, "2026",
+	"Night City (HB)\0", NULL, "Foko Games", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
-	NESGetZipName, nes_nightscityRomInfo, nes_nightscityRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESGetZipName, nes_nightcityRomInfo, nes_nightcityRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

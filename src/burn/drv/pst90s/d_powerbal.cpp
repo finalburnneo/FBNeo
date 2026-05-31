@@ -882,7 +882,7 @@ struct BurnDriver BurnDrvMagicstk = {
 };
 
 
-// Hot Mind (adjustable prize)
+// Hot Mind (adjustable prize, set 1)
 
 static struct BurnRomInfo hotmindaRomDesc[] = {
 	// reverse order from MAME!
@@ -907,10 +907,45 @@ STD_ROM_FN(hotminda)
 
 struct BurnDriver BurnDrvHotminda = {
 	"hotminda", "hotmind", NULL, NULL, "1995",
-	"Hot Mind (adjustable prize)\0", NULL, "Playmark", "Miscellaneous",
+	"Hot Mind (adjustable prize, set 1)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hotmindaRomInfo, hotmindaRomName, NULL, NULL, NULL, NULL, HotmindaInputInfo, HotmindaDIPInfo,
+	MagicstkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
+	320, 240, 4, 3
+};
+
+
+// Hot Mind (adjustable prize, set 2)
+// possible bug fix version of the above? Just a couple of data table changes, but they match what's in hotmind (d_playmark.cpp)
+
+static struct BurnRomInfo hotmindbRomDesc[] = {
+	// reverse order from MAME!
+	{ "2.u77",				0x20000, 0xf5accd9f, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "1.u66",				0x20000, 0x24b1a1df, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "13.u36",				0x20000, 0x18d22109, 2 | BRF_GRA },           //  2 Background Tiles
+	{ "14.u42",				0x20000, 0xf95a1ff6, 2 | BRF_GRA },           //  3
+	{ "15.u39",				0x20000, 0x8a9ea7ed, 2 | BRF_GRA },           //  4
+	{ "16.u45",				0x20000, 0xdf63b642, 2 | BRF_GRA },           //  5
+
+	{ "17.u86",				0x20000, 0x805002cf, 3 | BRF_GRA },           //  6 Sprites
+	{ "18.u85",				0x20000, 0x6a9d896b, 3 | BRF_GRA },           //  7
+	{ "19.u84",				0x20000, 0x223ad90f, 3 | BRF_GRA },           //  8
+	{ "20.u83",				0x20000, 0xab37a273, 3 | BRF_GRA },           //  9
+
+	{ "10.u16",				0x40000, 0x0bf3a3e5, 4 | BRF_SND },           // 10 Samples
+};
+
+STD_ROM_PICK(hotmindb)
+STD_ROM_FN(hotmindb)
+
+struct BurnDriver BurnDrvHotmindb = {
+	"hotmindb", "hotmind", NULL, NULL, "1995",
+	"Hot Mind (adjustable prize, set 2)\0", NULL, "Playmark", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, hotmindbRomInfo, hotmindbRomName, NULL, NULL, NULL, NULL, HotmindaInputInfo, HotmindaDIPInfo,
 	MagicstkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	320, 240, 4, 3
 };

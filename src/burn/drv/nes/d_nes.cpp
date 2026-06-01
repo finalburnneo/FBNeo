@@ -21300,6 +21300,24 @@ struct BurnDriver BurnDrvnes_mawthornej = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mawthorne I Reborn (World) (HB, v2.0)
+static struct BurnRomInfo nes_mawthorne1rbRomDesc[] = {
+	{ "Mawthorne I Reborn v2.0 (World)(2022-25)(CGT Games).nes",          524304, 0x6429fac5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mawthorne1rb)
+STD_ROM_FN(nes_mawthorne1rb)
+
+struct BurnDriver BurnDrvnes_mawthorne1rb = {
+	"nes_mawthorne1rb", NULL, NULL, NULL, "2022-25",
+	"Mawthorne I Reborn (World) (HB, v2.0)\0", NULL, "CGT Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_mawthorne1rbRomInfo, nes_mawthorne1rbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Mawthorne II (USA) (HB)
 static struct BurnRomInfo nes_mawthorne2RomDesc[] = {
 	{ "Mawthorne II (USA)(2022)(CGT Games).nes",          524304, 0x769bde92, BRF_ESS | BRF_PRG },
@@ -26319,9 +26337,9 @@ struct BurnDriver BurnDrvnes_tombice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Tortoises (HB)
+// Tortoises (HB, v1.2)
 static struct BurnRomInfo nes_tortoisesRomDesc[] = {
-	{ "Tortoises (2017)(FG Software).nes",          65552, 0x05f4f4e2, BRF_ESS | BRF_PRG },
+	{ "Tortoises v1.2 (2017)(FG Software).nes",          65552, 0xb629ec45, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tortoises)
@@ -26329,7 +26347,7 @@ STD_ROM_FN(nes_tortoises)
 
 struct BurnDriver BurnDrvnes_tortoises = {
 	"nes_tortoises", NULL, NULL, NULL, "2017",
-	"Tortoises (HB)\0", NULL, "FG Software", "NES / Famicom",
+	"Tortoises (HB, v1.2)\0", NULL, "FG Software", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
 	NESGetZipName, nes_tortoisesRomInfo, nes_tortoisesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

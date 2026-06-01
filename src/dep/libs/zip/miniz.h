@@ -5099,8 +5099,8 @@ static int mz_mkdir(const char *pDirname) {
 #define MZ_FCLOSE fclose
 #define MZ_FREAD fread
 #define MZ_FWRITE fwrite
-#define MZ_FTELL64 _ftelli64
-#define MZ_FSEEK64 _fseeki64
+#define MZ_FTELL64 ftello64
+#define MZ_FSEEK64 fseeko64
 #if defined(__MINGW32__)
 #define MZ_FILE_STAT_STRUCT _stat
 #define MZ_FILE_STAT mz_stat

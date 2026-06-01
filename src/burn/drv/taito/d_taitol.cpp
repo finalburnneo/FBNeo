@@ -4270,10 +4270,10 @@ struct BurnDriver BurnDrvLagirl = {
 };
 
 
-// Play Girls 2
+// Play Girls 2 (Europe)
 
 static struct BurnRomInfo plgirls2RomDesc[] = {
-	{ "pg2_1j.ic6",		0x40000, 0xf924197a, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "pg2_1e.ic6",		0x40000, 0xb279990b, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
 	{ "cho-l.ic9",		0x80000, 0x956384ec, 4 | BRF_GRA },           //  1 graphics data
 	{ "cho-h.ic7",		0x80000, 0x992f99b1, 4 | BRF_GRA },           //  2
@@ -4284,7 +4284,7 @@ STD_ROM_FN(plgirls2)
 
 struct BurnDriver BurnDrvPlgirls2 = {
 	"plgirls2", NULL, NULL, NULL, "1993",
-	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
+	"Play Girls 2 (Europe)\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, plgirls2RomInfo, plgirls2RomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
@@ -4293,7 +4293,31 @@ struct BurnDriver BurnDrvPlgirls2 = {
 };
 
 
+// Play Girls 2 (Japan)
+
+static struct BurnRomInfo plgirls2jRomDesc[] = {
+	{ "pg2_1j.ic6",		0x40000, 0xf924197a, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "cho-l.ic9",		0x80000, 0x956384ec, 4 | BRF_GRA },           //  1 graphics data
+	{ "cho-h.ic7",		0x80000, 0x992f99b1, 4 | BRF_GRA },           //  2
+};
+
+STD_ROM_PICK(plgirls2j)
+STD_ROM_FN(plgirls2j)
+
+struct BurnDriver BurnDrvPlgirls2j = {
+	"plgirls2j", "plgirls2", NULL, NULL, "1993",
+	"Play Girls 2 (Japan)\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, plgirls2jRomInfo, plgirls2jRomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
+	PalamedInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 320, 3, 4
+};
+
+
 // Play Girls 2 (bootleg)
+// bootleg based on Europe version
 
 static struct BurnRomInfo plgirls2bRomDesc[] = {
 	{ "playgirls2b.d1",	0x40000, 0xd58159fa, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code

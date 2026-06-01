@@ -35466,10 +35466,10 @@ struct BurnDriver BurnSpecBloodraces = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Bloodstone (English) (128K) (HB, v1.4)
+// Bloodstone (English) (128K) (HB, v1.6)
 
 static struct BurnRomInfo SpecBloodstoneRomDesc[] = {
-	{ "Bloodstone EN v1.4 128K (2026)(Romancha, Jerri, DaRkHoRaCe).tap", 72379, 0x3b36644c, BRF_ESS | BRF_PRG },
+	{ "Bloodstone EN v1.6 128K (2026)(Romancha, Jerri, DaRkHoRaCe).tap", 72055, 0x2c4340f3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBloodstone, SpecBloodstone, Spec128)
@@ -35477,7 +35477,7 @@ STD_ROM_FN(SpecBloodstone)
 
 struct BurnDriver BurnSpecBloodstone = {
 	"spec_bloodstone", NULL, "spec_spec128", NULL, "2026",
-	"Bloodstone (English) (128K) (HB, v1.4)\0", NULL, "Romancha, Jerri, DaRkHoRaCe", "ZX Spectrum",
+	"Bloodstone (English) (128K) (HB, v1.6)\0", NULL, "Romancha, Jerri, DaRkHoRaCe", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBloodstoneRomInfo, SpecBloodstoneRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -35485,10 +35485,10 @@ struct BurnDriver BurnSpecBloodstone = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Bloodstone (Russian) (128K) (HB, v1.4)
+// Bloodstone (Russian) (128K) (HB, v1.6)
 
 static struct BurnRomInfo SpecBloodstoneruRomDesc[] = {
-	{ "Bloodstone RU v1.2 128K (2026)(Romancha, Jerri, DaRkHoRaCe).tap", 72640, 0x9ec27d60, BRF_ESS | BRF_PRG },
+	{ "Bloodstone RU v1.6 128K (2026)(Romancha, Jerri, DaRkHoRaCe).tap", 72710, 0x5458ef6a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBloodstoneru, SpecBloodstoneru, Spec128)
@@ -35496,10 +35496,29 @@ STD_ROM_FN(SpecBloodstoneru)
 
 struct BurnDriver BurnSpecBloodstoneru = {
 	"spec_bloodstoneru", "spec_bloodstone", "spec_spec128", NULL, "2026",
-	"Bloodstone (Russian) (128K) (HB, v1.4)\0", NULL, "Romancha, Jerri, DaRkHoRaCe", "ZX Spectrum",
+	"Bloodstone (Russian) (128K) (HB, v1.6)\0", NULL, "Romancha, Jerri, DaRkHoRaCe", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBloodstoneruRomInfo, SpecBloodstoneruRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Bloodstone (Spanish) (128K) (HB, v1.6)
+
+static struct BurnRomInfo SpecBloodstonespRomDesc[] = {
+	{ "Bloodstone ES v1.6 128K (2026)(Romancha, Jerri, DaRkHoRaCe).tap", 72100, 0x4f8132fd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBloodstonesp, SpecBloodstonesp, Spec128)
+STD_ROM_FN(SpecBloodstonesp)
+
+struct BurnDriver BurnSpecBloodstonesp = {
+	"spec_bloodstonesp", "spec_bloodstone", "spec_spec128", NULL, "2026",
+	"Bloodstone (Spanish) (128K) (HB, v1.6)\0", NULL, "Romancha, Jerri, DaRkHoRaCe", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBloodstonespRomInfo, SpecBloodstonespRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

@@ -25,7 +25,7 @@ static HBRUSH hWhiteBGBrush;
 
 bool bNeoCDListScanSub			= false;
 bool bNeoCDListScanOnlyISO		= false;
-TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdz/");
+TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdzcovers/");
 TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/neocdzpreviews/");
 TCHAR szNeoCDGamesDir[MAX_PATH] = _T("neocdiso/");
 
@@ -739,7 +739,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					size_t pngbsize = 0;
 
 					if (!LoadFileToBuffer(szFront, &pngf, &pngfsize)) {
-						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nItem].szShortName, ".png", &pngf, &pngfsize);
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdzcovers", ngcd_list[nItem].szShortName, ".png", &pngf, &pngfsize);
 					}
 					if (!LoadFileToBuffer(szBack, &pngb, &pngbsize)) {
 						const bool bFromZip = LoadZipToBuffer(szNeoCDPreviewDir, "neocdzpreviews", ngcd_list[nItem].szShortName, ".png", &pngb, &pngbsize);
@@ -808,7 +808,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					nZoomPngSize = 0;
 
 					if (!LoadFileToBuffer(szFront, &pZoomPng, &nZoomPngSize)) {
-						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdzcovers", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
 					}
 
 					if (pZoomPng != NULL && nZoomPngSize > 0) {

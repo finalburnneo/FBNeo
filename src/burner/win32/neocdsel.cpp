@@ -723,7 +723,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					TCHAR szFront[512];
 					TCHAR szBack[512];
 
-					_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
+					_stprintf(szFront, _T("%s%s.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
 
 					_stprintf(szBack, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nItem].szShortName );
 					if (!FileExists(szBack)) {
@@ -739,7 +739,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					size_t pngbsize = 0;
 
 					if (!LoadFileToBuffer(szFront, &pngf, &pngfsize)) {
-						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nItem].szShortName, "-front.png", &pngf, &pngfsize);
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nItem].szShortName, ".png", &pngf, &pngfsize);
 					}
 					if (!LoadFileToBuffer(szBack, &pngb, &pngbsize)) {
 						const bool bFromZip = LoadZipToBuffer(szNeoCDPreviewDir, "neocdzpreviews", ngcd_list[nItem].szShortName, ".png", &pngb, &pngbsize);
@@ -802,13 +802,13 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				if(nSelectedItem >= 0)
 				{
 					TCHAR szFront[512];
-					_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
+					_stprintf(szFront, _T("%s%s.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
 
 					pZoomPng = NULL;
 					nZoomPngSize = 0;
 
 					if (!LoadFileToBuffer(szFront, &pZoomPng, &nZoomPngSize)) {
-						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nSelectedItem].szShortName, "-front.png", &pZoomPng, &nZoomPngSize);
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdz", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
 					}
 
 					if (pZoomPng != NULL && nZoomPngSize > 0) {

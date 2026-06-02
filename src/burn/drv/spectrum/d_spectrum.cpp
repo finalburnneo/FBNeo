@@ -34839,10 +34839,10 @@ struct BurnDriver BurnSpecBeltalowda2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Beltalowda - Part 1 (English) (128K) (HB, v1.4)
+// Beltalowda - Part 1 (English) (128K) (HB, v1.5)
 
 static struct BurnRomInfo SpecBeltalowda1enRomDesc[] = {
-	{ "Beltalowda - Part 1 EN v1.4 128K (2026)(Molisoft).tap", 122263, 0x161c7cd9, BRF_ESS | BRF_PRG },
+	{ "Beltalowda - Part 1 EN v1.5 128K (2026)(Molisoft).tap", 122306, 0xb885f0bb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBeltalowda1en, SpecBeltalowda1en, Spec128)
@@ -34850,7 +34850,7 @@ STD_ROM_FN(SpecBeltalowda1en)
 
 struct BurnDriver BurnSpecBeltalowda1en = {
 	"spec_beltalowda1en", NULL, "spec_spec128", NULL, "2026",
-	"Beltalowda - Part 1 (English) (128K) (HB, v1.4)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Beltalowda - Part 1 (English) (128K) (HB, v1.5)\0", NULL, "Molisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecBeltalowda1enRomInfo, SpecBeltalowda1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34858,10 +34858,10 @@ struct BurnDriver BurnSpecBeltalowda1en = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Beltalowda - Part 2 (English) (128K) (HB, v1.4)
+// Beltalowda - Part 2 (English) (128K) (HB, v1.5)
 
 static struct BurnRomInfo SpecBeltalowda2enRomDesc[] = {
-	{ "Beltalowda - Part 2 EN v1.4 128K (2026)(Molisoft).tap", 124565, 0x9f54dec0, BRF_ESS | BRF_PRG },
+	{ "Beltalowda - Part 2 EN v1.5 128K (2026)(Molisoft).tap", 124565, 0x9f54dec0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBeltalowda2en, SpecBeltalowda2en, Spec128)
@@ -34869,7 +34869,7 @@ STD_ROM_FN(SpecBeltalowda2en)
 
 struct BurnDriver BurnSpecBeltalowda2en = {
 	"spec_beltalowda2en", "spec_beltalowda1en", "spec_spec128", NULL, "2026",
-	"Beltalowda - Part 2 (English) (128K) (HB, v1.4)\0", "Password: inyalowda", "Molisoft", "ZX Spectrum",
+	"Beltalowda - Part 2 (English) (128K) (HB, v1.5)\0", "Password: inyalowda", "Molisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecBeltalowda2enRomInfo, SpecBeltalowda2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

@@ -6494,10 +6494,14 @@ static struct BurnRomInfo CawingjrRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "ara63b.1a",     0x000117, 0x3e049379, BRF_OPT },	// b-board PLDs
-	{ "ca24b.1a",      0x000117, 0x76ec0b1c, BRF_OPT },	 
-	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ara63b.1a",     0x000117, 0x3e049379, BRF_OPT },// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
+
 
 STD_ROM_PICK(Cawingjr)
 STD_ROM_FN(Cawingjr)

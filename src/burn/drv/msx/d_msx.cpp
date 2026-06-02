@@ -32201,6 +32201,24 @@ struct BurnDriver BurnDrvMSX_minefind = {
 	272, 228, 4, 3
 };
 
+// Minesweeper (HB, v1.03)
+static struct BurnRomInfo MSX_minesweeperRomDesc[] = {
+	{ "Minesweeper v1.03 (2023)(Under4Mhz).rom",	16384, 0x6aa779ac, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_minesweeper, MSX_minesweeper, msx_msx)
+STD_ROM_FN(MSX_minesweeper)
+
+struct BurnDriver BurnDrvMSX_minesweeper = {
+	"msx_minesweeper", NULL, "msx_msx", NULL, "2023",
+	"Minesweeper (HB, v1.03)\0", NULL, "Under4Mhz", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_minesweeperRomInfo, MSX_minesweeperRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // MiniMagos (HB)
 static struct BurnRomInfo MSX_minimagosRomDesc[] = {
 	{ "MiniMagos (2017)(Fran Games).rom",	24576, 0xd8a841ed, BRF_PRG | BRF_ESS },

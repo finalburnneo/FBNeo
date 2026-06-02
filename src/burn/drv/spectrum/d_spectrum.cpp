@@ -49926,6 +49926,44 @@ struct BurnDriver BurnSpecMin128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Minesweeper (128K) (HB, v1.03)
+
+static struct BurnRomInfo SpecMinesweeper128RomDesc[] = {
+	{ "Minesweeper v1.03 128K (2023)(Under4Mhz).tap", 15851, 0x1e27e992, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMinesweeper128, SpecMinesweeper128, Spec128)
+STD_ROM_FN(SpecMinesweeper128)
+
+struct BurnDriver BurnSpecMinesweeper128 = {
+	"spec_minesweeper128", NULL, "spec_spec128", NULL, "2023",
+	"Minesweeper (128K) (HB, v1.03)\0", NULL, "Under4Mhz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecMinesweeper128RomInfo, SpecMinesweeper128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Minesweeper (48K) (HB, v1.03)
+
+static struct BurnRomInfo SpecMinesweeper48RomDesc[] = {
+	{ "Minesweeper v1.03 48K (2023)(Under4Mhz).tap", 16439, 0x44a3f73e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMinesweeper48, SpecMinesweeper48, Spectrum)
+STD_ROM_FN(SpecMinesweeper48)
+
+struct BurnDriver BurnSpecMinesweeper48 = {
+	"spec_minesweeper48", "spec_minesweeper128", "spec_spectrum", NULL, "2023",
+	"Minesweeper (48K) (HB, v1.03)\0", NULL, "Under4Mhz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecMinesweeper48RomInfo, SpecMinesweeper48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Mire Mare (48K) (HB, v1.09)
 
 static struct BurnRomInfo SpecMiremareRomDesc[] = {

@@ -733,6 +733,14 @@ typedef int mz_bool;
 #define MZ_FILE FILE
 #endif /* #ifdef MINIZ_NO_STDIO */
 
+// fix for older mingw (iq_132)
+#ifndef _fseeki64
+#define	_fseeki64	fseek
+#endif
+#ifndef	_ftelli64
+#define	_ftelli64	ftell
+#endif
+
 #ifdef MINIZ_NO_TIME
 typedef struct mz_dummy_time_t_tag {
   mz_uint32 m_dummy1;
@@ -5095,25 +5103,12 @@ static int mz_mkdir(const char *pDirname) {
 #ifndef MINIZ_NO_TIME
 #include <sys/utime.h>
 #endif
-
 #define MZ_FOPEN mz_fopen
 #define MZ_FCLOSE fclose
 #define MZ_FREAD fread
 #define MZ_FWRITE fwrite
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1400) && (!(defined(NO_MSCVER_FILE64_FUNC)))
-#define ftello64 _ftelli64
-#define fseeko64 _fseeki64
-#else	// Old MSC
-#define ftello64 ftell
-#define fseeko64 fseek
-#endif	// Old MSC
-#endif	// _MSC_VER
-
-#define MZ_FTELL64 ftello64
-#define MZ_FSEEK64 fseeko64
-
+#define MZ_FTELL64 _ftelli64
+#define MZ_FSEEK64 _fseeki64
 #if defined(__MINGW32__)
 #define MZ_FILE_STAT_STRUCT _stat
 #define MZ_FILE_STAT mz_stat
@@ -5121,7 +5116,6 @@ static int mz_mkdir(const char *pDirname) {
 #define MZ_FILE_STAT_STRUCT _stat64
 #define MZ_FILE_STAT mz_stat64
 #endif
-
 #define MZ_FFLUSH fflush
 #define MZ_FREOPEN mz_freopen
 #define MZ_DELETE_FILE remove

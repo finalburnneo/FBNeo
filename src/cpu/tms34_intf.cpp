@@ -320,6 +320,11 @@ void TMS34010HostWrite(INT32 reg, UINT16 data)
 	tms34010_host_w(reg, data);
 }
 
+void TMS34010HostWriteMask(INT32 reg, UINT16 data, UINT16 mask)
+{
+	tms34010_host_w_mask(reg, data, mask);
+}
+
 UINT16 TMS34010HostRead(INT32 reg)
 {
 	return tms34010_host_r(reg);

@@ -127,6 +127,7 @@ void tms34010_timer_arm(int cycle);
 #define TMS34010_HOST_DATA			2
 #define TMS34010_HOST_CONTROL		3
 
+void tms34010_host_w_mask(INT32 reg, UINT16 data, UINT16 mask = 0xffff);
 void tms34010_host_w(INT32 reg, UINT16 data);
 UINT16 tms34010_host_r(INT32 reg);
 

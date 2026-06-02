@@ -38020,6 +38020,25 @@ struct BurnDriver BurnDrvmd_aliencat2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Alien Cat 2 (HB, Alt)
+// https://pscdgames.itch.io/alien-cat-2-sega-mega-drive-genesis
+static struct BurnRomInfo md_aliencat2aRomDesc[] = {
+	{ "Alien Cat 2 (Alt) (2020)(PSCD Games).bin", 1310720, 0x159b1da2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aliencat2a)
+STD_ROM_FN(md_aliencat2a)
+
+struct BurnDriver BurnDrvmd_aliencat2a = {
+	"md_aliencat2a", "md_aliencat2", NULL, NULL, "2020",
+	"Alien Cat 2 (HB, Alt)\0", NULL, "PSCD Games, Repa Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_aliencat2aRomInfo, md_aliencat2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Altered Beast II: The Seven Depths of Hell (HB, Alpha-4)
 // https://fabianodigital.itch.io/altered-beast-2-genesis
 static struct BurnRomInfo md_altbeast2RomDesc[] = {
@@ -39944,6 +39963,25 @@ struct BurnDriver BurnDrvmd_foxyland = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Foxy Land (HB, Alt)
+// https://pscdgames.itch.io/foxyland-sega-mega-drive-genesis
+static struct BurnRomInfo md_foxylandaRomDesc[] = {
+	{ "Foxy Land (Alt) (2020)(PSCD-Bug Studio).bin", 3014656, 0x0ba40013, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_foxylanda)
+STD_ROM_FN(md_foxylanda)
+
+struct BurnDriver BurnDrvmd_foxylanda = {
+	"md_foxylanda", "md_foxyland", NULL, NULL, "2020",
+	"Foxy Land (HB, Alt)\0", NULL, "PSCD Games, Bug Studio", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_foxylandaRomInfo, md_foxylandaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // FX Unit Yuki - The Henshin Engine (World) (Unl)
 static struct BurnRomInfo md_fxunyukiRomDesc[] = {
 	{ "FX Unit Yuki - The Henshin Engine (World)(Unl)(2018)(Sarupro).bin", 6291456, 0x2906876b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -40709,10 +40747,10 @@ struct BurnDriver BurnDrvmd_mainurse = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Maldita Castilla: Requiem (HB, Demo v1.0)
+// Maldita Castilla: Requiem (HB, Demo v1.2)
 // https://playonretro.itch.io/maldita-castilla-megadrive-demo
 static struct BurnRomInfo md_mcastillaRomDesc[] = {
-	{ "Maldita Castilla - Requiem Demo v1.0 (2026)(PlayOnRetro).bin", 2780014, 0x5a33b0c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Maldita Castilla - Requiem Demo v1.2 (2026)(PlayOnRetro).bin", 2779849, 0x0f65836e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcastilla)
@@ -40720,7 +40758,7 @@ STD_ROM_FN(md_mcastilla)
 
 struct BurnDriver BurnDrvmd_mcastilla = {
 	"md_mcastilla", NULL, NULL, NULL, "2026",
-	"Maldita Castilla: Requiem (HB, Demo v1.0)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
+	"Maldita Castilla: Requiem (HB, Demo v1.2)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mcastillaRomInfo, md_mcastillaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41091,9 +41129,10 @@ struct BurnDriver BurnDrvmd_metaldragon = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Metal Gear (HB, v1.1)
+// Metal Gear (HB, v1.2)
+// https://h0ffman.itch.io/metal-gear-md
 static struct BurnRomInfo md_metalgearRomDesc[] = {
-	{ "Metal Gear v1.1 (2025)(h0ffman).bin", 1572864, 0x724fe7b3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Metal Gear v1.2 (2025)(h0ffman).bin", 2097152, 0x68ec8c19, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_metalgear)
@@ -41101,7 +41140,7 @@ STD_ROM_FN(md_metalgear)
 
 struct BurnDriver BurnDrvmd_metalgear = {
 	"md_metalgear", NULL, NULL, NULL, "2025",
-	"Metal Gear (HB, v1.1)\0", NULL, "h0ffman", "Genesis / Mega Drive",
+	"Metal Gear (HB, v1.2)\0", NULL, "h0ffman", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_ADV, 0,
 	MegadriveGetZipName, md_metalgearRomInfo, md_metalgearRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42683,6 +42722,25 @@ struct BurnDriver BurnDrvmd_thundpaw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_thundpawRomInfo, md_thundpawRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunder Paw (HB, Alt)
+// https://pscdgames.itch.io/thunder-paw-sega-mega-drive-genesis
+static struct BurnRomInfo md_thundpawaRomDesc[] = {
+	{ "Thunder Paw (Alt) (2021)(PSCD Games).bin", 3014656, 0x3455d75c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_thundpawa)
+STD_ROM_FN(md_thundpawa)
+
+struct BurnDriver BurnDrvmd_thundpawa = {
+	"md_thundpawa", "md_thundpaw", NULL, NULL, "2021",
+	"Thunder Paw (HB, Alt)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_thundpawaRomInfo, md_thundpawaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

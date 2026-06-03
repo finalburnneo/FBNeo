@@ -10374,6 +10374,44 @@ struct BurnDriver BurnDrvnes_rockm4tp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rockman 5: A Armadilha do Blues!? (Hack, Portuguese)
+// https://www.romhacking.net/translations/7081/
+static struct BurnRomInfo nes_rockm5tpRomDesc[] = {
+	{ "Rockman 5 - A Armadilha do Blues! T-Por (2023)(ajkmetiuk, Sliter).nes",          524304, 0x16e3b087, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm5tp)
+STD_ROM_FN(nes_rockm5tp)
+
+struct BurnDriver BurnDrvnes_rockm5tp = {
+	"nes_rockm5tp", "nes_megaman5", NULL, NULL, "2023",
+	"Rockman 5: A Armadilha do Blues!? (Hack, Portuguese)\0", NULL, "ajkmetiuk, Sliter", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_rockm5tpRomInfo, nes_rockm5tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Rockman 6: A Maior Batalha de Todas!! (Hack, Portuguese)
+
+static struct BurnRomInfo nes_rockm6tpRomDesc[] = {
+	{ "Rockman 6 - A Maior Batalha de Todas!! T-Por (2023)(ajkmetiuk).nes",          524304, 0xb109d230, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm6tp)
+STD_ROM_FN(nes_rockm6tp)
+
+struct BurnDriver BurnDrvnes_rockm6tp = {
+	"nes_rockm6tp", "nes_megaman6", NULL, NULL, "2023",
+	"Rockman 6: A Maior Batalha de Todas!! (Hack, Portuguese)\0", NULL, "ajkmetiuk", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_rockm6tpRomInfo, nes_rockm6tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Rollergames (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/nes/rollergames-po.b.r.e
 static struct BurnRomInfo nes_rollergamestpRomDesc[] = {

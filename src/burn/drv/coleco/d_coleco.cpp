@@ -5511,9 +5511,9 @@ struct BurnDriver BurnDrvcv_bankbuild = {
     272, 228, 4, 3
 };
 
-// Barbarricade (HB, 05-31-26)
+// Barbarricade (HB, 06-02-26)
 static struct BurnRomInfo cv_barbarricadeRomDesc[] = {
-	{ "Barbarricade 05-31-26 (2026)(Jess Creations).rom",	32768, 0x804c27ae, BRF_PRG | BRF_ESS },
+	{ "Barbarricade 06-02-26 (2026)(Jess Creations).rom",	32768, 0x0327148b, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_barbarricade, cv_barbarricade, cv_coleco)
@@ -5521,7 +5521,7 @@ STD_ROM_FN(cv_barbarricade)
 
 struct BurnDriver BurnDrvcv_barbarricade = {
 	"cv_barbarricade", NULL, "cv_coleco", NULL, "2026",
-	"Barbarricade (HB, 05-31-26)\0", NULL, "Jess Creations", "ColecoVision",
+	"Barbarricade (HB, 06-02-26)\0", NULL, "Jess Creations", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_BREAKOUT, 0,
 	CVGetZipName, cv_barbarricadeRomInfo, cv_barbarricadeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -7599,6 +7599,24 @@ struct BurnDriver BurnDrvcv_frostbite = {
 	272, 228, 4, 3
 };
 
+// Fruit Panic (HB)
+static struct BurnRomInfo cv_fruitpanicRomDesc[] = {
+	{ "Fruit Panic (2023)(CollectorVision).rom",	0x10000, 0xa554fdd3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_fruitpanic, cv_fruitpanic, cv_coleco)
+STD_ROM_FN(cv_fruitpanic)
+
+struct BurnDriver BurnDrvcv_fruitpanic = {
+	"cv_fruitpanic", NULL, "cv_coleco", NULL, "2023",
+	"Fruit Panic (HB)\0", "Published by CollectorVision Games", "Crazy Boss", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_fruitpanicRomInfo, cv_fruitpanicRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Galaga (SGM) (HB)
 static struct BurnRomInfo cv_galagaRomDesc[] = {
     { "Galaga SGM (2014)(CollectorVision).rom",	32768, 0x9f1045e6, BRF_PRG | BRF_ESS },
@@ -7704,6 +7722,24 @@ struct BurnDriver BurnDrvcv_gauntlet = {
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MAZE | GBF_RUNGUN, 0,
     CVGetZipName, cv_gauntletRomInfo, cv_gauntletRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Gerbils (HB)
+static struct BurnRomInfo cv_gerbilsRomDesc[] = {
+    { "Gerbils (2021)(Under4Mhz).rom",	0x8000, 0x53441bc3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_gerbils, cv_gerbils, cv_coleco)
+STD_ROM_FN(cv_gerbils)
+
+struct BurnDriver BurnDrvcv_gerbils = {
+    "cv_gerbils", NULL, "cv_coleco", NULL, "2021",
+    "Gerbils (HB)\0", NULL, "Under4Mhz", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_gerbilsRomInfo, cv_gerbilsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
 
@@ -8731,6 +8767,42 @@ struct BurnDriver BurnDrvcv_labbaye = {
 	CVGetZipName, cv_labbayeRomInfo, cv_labbayeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Learning with FuzzyWOMP (HB)
+static struct BurnRomInfo cv_fuzzywompRomDesc[] = {
+	{ "Learning with FuzzyWOMP (2022)(CollectorVision).rom",	32768, 0x697f56da, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_fuzzywomp, cv_fuzzywomp, cv_coleco)
+STD_ROM_FN(cv_fuzzywomp)
+
+struct BurnDriver BurnDrvcv_fuzzywomp = {
+	"cv_fuzzywomp", NULL, "cv_coleco", NULL, "2022",
+	"Learning with FuzzyWOMP (HB)\0", "Published by CollectorVision Games", "Nice Ideas", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MINIGAMES, 0,
+	CVGetZipName, cv_fuzzywompRomInfo, cv_fuzzywompRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Legacy of the Wizard (SGM) (HB)
+static struct BurnRomInfo cv_legacwizRomDesc[] = {
+    { "Legacy of the Wizard SGM (2024)(CollectorVision).rom",	262144, 0x6ed07ac1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_legacwiz, cv_legacwiz, cv_coleco)
+STD_ROM_FN(cv_legacwiz)
+
+struct BurnDriver BurnDrvcv_legacwiz= {
+    "cv_legacwiz", NULL, "cv_coleco", NULL, "2024",
+    "Legacy of the Wizard (SGM) (HB)\0", "SGM - Published by CollectorVision Games", "<unknown>", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM | GBF_ADV, 0,
+    CVGetZipName, cv_legacwizRomInfo, cv_legacwizRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };
 
 // Lift (HB)
@@ -10583,6 +10655,24 @@ struct BurnDriver BurnDrvcv_ruptus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MULTISHOOT, 0,
 	CVGetZipName, cv_ruptusRomInfo, cv_ruptusRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// S.A.M. The Software Automatic Mouth (HB, Demo)
+static struct BurnRomInfo cv_samRomDesc[] = {
+	{ "S.A.M. The Software Automatic Mouth (Demo) (2025)(Digital Fluff).rom",	32768, 0xa6c4db2a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sam, cv_sam, cv_coleco)
+STD_ROM_FN(cv_sam)
+
+struct BurnDriver BurnDrvcv_sam = {
+	"cv_sam", NULL, "cv_coleco", NULL, "2025",
+	"S.A.M. The Software Automatic Mouth (HB, Demo)\0", "Demo, not the finally released game", "Digital Fluff", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_samRomInfo, cv_samRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

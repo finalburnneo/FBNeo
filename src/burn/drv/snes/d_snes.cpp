@@ -23041,6 +23041,25 @@ struct BurnDriver BurnDrvsnes_Megaman7e = {
 	512, 448, 4, 3
 };
 
+// Mega Man VII (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/mega-man-vii-trans-center-e-monkeys-traducoes/
+static struct BurnRomInfo snes_Megaman7tpRomDesc[] = {
+	{ "Mega Man VII PT-BR (2015)(Trans-Center, Monkey's Traducoes).sfc", 4194304, 0xfa0da7cd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megaman7tp)
+STD_ROM_FN(snes_Megaman7tp)
+
+struct BurnDriver BurnDrvsnes_Megaman7tp = {
+	"snes_megaman7tp", "snes_megaman7", NULL, NULL, "2015",
+	"Mega Man VII (Hack, Portuguese)\0", NULL, "Trans-Center, Monkey's Traducoes", "SNES / Super Famicom",
+	NULL, NULL, L"Trans-Center, Monkey's Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megaman7tpRomInfo, snes_Megaman7tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mega Man & Bass (Hack, English v1.1)
 // https://www.romhacking.net/translations/621/
 // https://www.romhacking.net/translations/6128/
@@ -23057,6 +23076,25 @@ struct BurnDriver BurnDrvsnes_Megamanbass = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MegamanbassRomInfo, snes_MegamanbassRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man & Bass (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/rockman-and-forte-trans-center-e-monkeys-traducoes/
+static struct BurnRomInfo snes_MegamanbasstpRomDesc[] = {
+	{ "Mega Man & Bass PT-BR (2014)(Trans-Center, Monkey's Traducoes).sfc", 4194304, 0x3a52b550, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanbasstp)
+STD_ROM_FN(snes_Megamanbasstp)
+
+struct BurnDriver BurnDrvsnes_Megamanbasstp = {
+	"snes_megamanbasstp", "snes_megamanbass", NULL, NULL, "2014",
+	"Mega Man & Bass (Hack, Portuguese)\0", NULL, "Trans-Center, Monkey's Traducoes", "SNES / Super Famicom",
+	NULL, NULL, L"Trans-Center, Monkey's Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_MegamanbasstpRomInfo, snes_MegamanbasstpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

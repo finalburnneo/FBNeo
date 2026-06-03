@@ -32957,6 +32957,24 @@ struct BurnDriver BurnDrvMSX_numberman = {
 	272, 228, 4, 3
 };
 
+// Obake 2 (HB)
+static struct BurnRomInfo MSX_obake2RomDesc[] = {
+	{ "Obake 2 (2026)(Andrs Soft).rom",	16384, 0xb1899bee, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_obake2, MSX_obake2, msx_msx)
+STD_ROM_FN(MSX_obake2)
+
+struct BurnDriver BurnDrvMSX_obake2 = {
+	"msx_obake2", NULL, "msx_msx", NULL, "2026",
+	"Obake 2 (HB)\0", NULL, "Andrs Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_obake2RomInfo, MSX_obake2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Obake-Chan (HB)
 static struct BurnRomInfo MSX_obakechanRomDesc[] = {
 	{ "Obake-Chan (2025)(Meichnpp).rom",	753664, 0xf077d5c9, BRF_PRG | BRF_ESS },
@@ -34088,6 +34106,24 @@ struct BurnDriver BurnDrvMSX_sampr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
 	MSXGetZipName, MSX_samprRomInfo, MSX_samprRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// S.D.O.: Star Defence Operation (HB)
+static struct BurnRomInfo MSX_sdoRomDesc[] = {
+	{ "Star Defence Operation (2026)(Xevimet4l).rom",	65536, 0xf46b2a95, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sdo, MSX_sdo, msx_msx)
+STD_ROM_FN(MSX_sdo)
+
+struct BurnDriver BurnDrvMSX_sdo = {
+	"msx_sdo", NULL, "msx_msx", NULL, "2026",
+	"S.D.O.: Star Defence Operation (HB)\0", NULL, "Xevimet4l", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_sdoRomInfo, MSX_sdoRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

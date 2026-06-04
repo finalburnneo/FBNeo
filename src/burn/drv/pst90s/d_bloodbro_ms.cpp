@@ -760,14 +760,14 @@ static struct BurnRomInfo bloodbromRomDesc[] = {
 	{ "2_202_82s129.ic12",				0x00100, 0xe434128a, 7 | BRF_GRA | BRF_OPT }, // 37
 	{ "51-1_p0502_82s129n.ic10",		0x00100, 0x15085e44, 7 | BRF_GRA | BRF_OPT }, // 38
 
-	{ "6-1_606_gal16v8-20hb1.ic13",		0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 39 PLDs
-	{ "6-1_646_gal16v8-20hb1.ic7",		0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 40
-	{ "4-3_403_gal16v8-25hb1.ic29",		0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 41
+	{ "6-1_606_gal16v8-20hb1.ic13",		0x00117, 0x6fc7e412, 8 | BRF_OPT },           // 39 PLDs
+	{ "6-1_646_gal16v8-20hb1.ic7",		0x00117, 0x902b39f3, 8 | BRF_OPT },           // 40
+	{ "4-3_403_gal16v8-25hb1.ic29",		0x00117, 0xc136de93, 8 | BRF_OPT },           // 41
 	{ "4-3-a_p0403_pal16r8acn.ic29",	0x00104, 0x506156cc, 8 | BRF_OPT },           // 42
-	{ "4-3-b_403_gal16v8-25hb1.ic19",	0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 43
-	{ "51-1_503_gal16v8-25lp.ic48",		0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 44
-	{ "51-1-b_5146_gal16v8-20hb1.ic9",	0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 45
-	{ "51-1-b_5246_gal16v8-20hb1.ic8",	0x00117, 0x00000000, 8 | BRF_NODUMP | BRF_OPT },           // 46
+	{ "4-3-b_403_gal16v8-25hb1.ic19",	0x00117, 0xc136de93, 8 | BRF_OPT },           // 43
+	{ "51-1_503_gal16v8-25lp.ic48",		0x00117, 0x11470ea1, 8 | BRF_OPT },           // 44
+	{ "51-1-b_5146_gal16v8-20hb1.ic9",	0x00117, 0xd6f2587a, 8 | BRF_OPT },           // 45
+	{ "51-1-b_5246_gal16v8-20hb1.ic8",	0x00117, 0x4f43db92, 8 | BRF_OPT },           // 46
 };
 
 STD_ROM_PICK(bloodbrom)

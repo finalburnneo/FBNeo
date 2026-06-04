@@ -3791,7 +3791,7 @@ struct BurnDriver BurnDrvKurikintj = {
 };
 
 
-// Kuri Kinton (World, prototype?)
+// Kuri Kinton (World, prototype)
 
 static struct BurnRomInfo kurikintaRomDesc[] = {
 	{ "kk_ic2.ic2",		0x20000, 0x908603f2, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
@@ -3814,7 +3814,7 @@ STD_ROM_FN(kurikinta)
 
 struct BurnDriver BurnDrvKurikinta = {
 	"kurikinta", "kurikint", NULL, NULL, "1988",
-	"Kuri Kinton (World, prototype?)\0", NULL, "Taito Corporation Japan", "Taito L System",
+	"Kuri Kinton (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintaRomInfo, kurikintaRomName, NULL, NULL, NULL, NULL, FhawkInputInfo, KurikintaDIPInfo,

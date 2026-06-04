@@ -686,10 +686,9 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM + 0xc00002, k++, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0xc00003, k++, 4)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM + 0xe00000, k++, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0xe00001, k++, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0xe00002, k++, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0xe00003, k++, 4)) return 1;
+		// MAME is reloading the program roms here, but there are no duplicate ROMs on the real PCB,
+		// so let's simplify this with a memcpy. Is this even useful ? Games are seemingly working fine without it.
+		memcpy(DrvGfxROM + 0xe00000, DrvTMSROM, 0x200000);
 	}
 
 	TMS34020Init(0);
@@ -900,7 +899,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-// Revolution X (rev 1.0 6/16/94)
+// Revolution X (revision 2.0 9/8/94)
 
 static struct BurnRomInfo revxRomDesc[] = {
 	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0xd2ed9f5e, 1 | BRF_SND },           //  0 DCS Sound Data
@@ -912,12 +911,12 @@ static struct BurnRomInfo revxRomDesc[] = {
 	{ "l1_revolution_x_sound_rom_u8.u8",	0x80000, 0x793a7eb5, 1 | BRF_SND },           //  6
 	{ "l1_revolution_x_sound_rom_u9.u9",	0x80000, 0x14ddbea1, 1 | BRF_SND },           //  7
 
-	{ "l1_revolution_x_game_rom_u51.u51",	0x80000, 0x9960ac7c, 2 | BRF_PRG | BRF_ESS }, //  8 TMS34020 Code
-	{ "l1_revolution_x_game_rom_u52.u52",	0x80000, 0xfbf55510, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "l1_revolution_x_game_rom_u53.u53",	0x80000, 0xa045b265, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "l1_revolution_x_game_rom_u54.u54",	0x80000, 0x24471269, 2 | BRF_PRG | BRF_ESS }, // 11
+	{ "revx_l2.0_u51.u51",					0x80000, 0x2c996003, 2 | BRF_PRG | BRF_ESS }, //  8 TMS34020 Code
+	{ "revx_l2.0_u52.u52",					0x80000, 0xf1d4d6fb, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "revx_l2.0_u53.u53",					0x80000, 0x59ca7084, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "revx_l2.0_u54.u54",					0x80000, 0x4f577dd9, 2 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "419_revolution-x_u444.u444",			0x02000, 0x517e0110, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
+	{ "419_revolution-x_u444.u444",			0x02000, 0x7df57330, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
 
 	{ "p5_revolution_x_game_rom_u120.u120",	0x80000, 0x523af1f0, 4 | BRF_GRA },           // 13 Graphics Data
 	{ "p5_revolution_x_game_rom_u121.u121",	0x80000, 0x78201d93, 4 | BRF_GRA },           // 14
@@ -947,10 +946,6 @@ static struct BurnRomInfo revxRomDesc[] = {
 	{ "p5_revolution_x_game_rom_u64.u64",	0x80000, 0xc33f5309, 4 | BRF_GRA },           // 38
 	{ "p5_revolution_x_game_rom_u65.u65",	0x80000, 0x6eee3e71, 4 | BRF_GRA },           // 39
 	{ "p5_revolution_x_game_rom_u66.u66",	0x80000, 0xb43d6fff, 4 | BRF_GRA },           // 40
-	{ "revx.u51",							0x80000, 0x9960ac7c, 4 | BRF_GRA },           // 41
-	{ "revx.u52",							0x80000, 0xfbf55510, 4 | BRF_GRA },           // 42
-	{ "revx.u53",							0x80000, 0xa045b265, 4 | BRF_GRA },           // 43
-	{ "revx.u54",							0x80000, 0x24471269, 4 | BRF_GRA },           // 44
 
 	{ "a-17722.u1",							0x00117, 0x054de7a3, 5 | BRF_OPT },           // 45 PLDs
 	{ "a-17721.u955",						0x00117, 0x033fe902, 5 | BRF_OPT },           // 46
@@ -962,7 +957,7 @@ STD_ROM_FN(revx)
 
 struct BurnDriver BurnDrvRevx = {
 	"revx", NULL, NULL, NULL, "1994",
-	"Revolution X (rev 1.0 6/16/94)\0", NULL, "Midway", "X Unit",
+	"Revolution X (revision 2.0 9/8/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxRomInfo, revxRomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
@@ -970,8 +965,74 @@ struct BurnDriver BurnDrvRevx = {
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
 };
 
+// Revolution X (revision 1.0 6/16/94)
 
-// Revolution X (prototype, rev 5.0 5/23/94)
+static struct BurnRomInfo revx1RomDesc[] = {
+	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0xd2ed9f5e, 1 | BRF_SND },           //  0 DCS Sound Data
+	{ "l1_revolution_x_sound_rom_u3.u3",	0x80000, 0xaf8f253b, 1 | BRF_SND },           //  1
+	{ "l1_revolution_x_sound_rom_u4.u4",	0x80000, 0x3ccce59c, 1 | BRF_SND },           //  2
+	{ "l1_revolution_x_sound_rom_u5.u5",	0x80000, 0xa0438006, 1 | BRF_SND },           //  3
+	{ "l1_revolution_x_sound_rom_u6.u6",	0x80000, 0xb7b34f60, 1 | BRF_SND },           //  4
+	{ "l1_revolution_x_sound_rom_u7.u7",	0x80000, 0x6795fd88, 1 | BRF_SND },           //  5
+	{ "l1_revolution_x_sound_rom_u8.u8",	0x80000, 0x793a7eb5, 1 | BRF_SND },           //  6
+	{ "l1_revolution_x_sound_rom_u9.u9",	0x80000, 0x14ddbea1, 1 | BRF_SND },           //  7
+
+	{ "l1_revolution_x_game_rom_u51.u51",	0x80000, 0x9960ac7c, 2 | BRF_PRG | BRF_ESS }, //  8 TMS34020 Code
+	{ "l1_revolution_x_game_rom_u52.u52",	0x80000, 0xfbf55510, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "l1_revolution_x_game_rom_u53.u53",	0x80000, 0xa045b265, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "l1_revolution_x_game_rom_u54.u54",	0x80000, 0x24471269, 2 | BRF_PRG | BRF_ESS }, // 11
+
+	{ "419_revolution-x_u444.u444",			0x02000, 0x7df57330, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
+
+	{ "p5_revolution_x_game_rom_u120.u120",	0x80000, 0x523af1f0, 4 | BRF_GRA },           // 13 Graphics Data
+	{ "p5_revolution_x_game_rom_u121.u121",	0x80000, 0x78201d93, 4 | BRF_GRA },           // 14
+	{ "p5_revolution_x_game_rom_u122.u122",	0x80000, 0x2cf36144, 4 | BRF_GRA },           // 15
+	{ "p5_revolution_x_game_rom_u123.u123",	0x80000, 0x6912e1fb, 4 | BRF_GRA },           // 16
+	{ "p5_revolution_x_game_rom_u110.u110",	0x80000, 0xe3f7f0af, 4 | BRF_GRA },           // 17
+	{ "p5_revolution_x_game_rom_u111.u111",	0x80000, 0x49fe1a69, 4 | BRF_GRA },           // 18
+	{ "p5_revolution_x_game_rom_u112.u112",	0x80000, 0x7e3ba175, 4 | BRF_GRA },           // 19
+	{ "p5_revolution_x_game_rom_u113.u113",	0x80000, 0xc0817583, 4 | BRF_GRA },           // 20
+	{ "p5_revolution_x_game_rom_u101.u101",	0x80000, 0x5a08272a, 4 | BRF_GRA },           // 21
+	{ "p5_revolution_x_game_rom_u102.u102",	0x80000, 0x11d567d2, 4 | BRF_GRA },           // 22
+	{ "p5_revolution_x_game_rom_u103.u103",	0x80000, 0xd338e63b, 4 | BRF_GRA },           // 23
+	{ "p5_revolution_x_game_rom_u104.u104",	0x80000, 0xf7b701ee, 4 | BRF_GRA },           // 24
+	{ "p5_revolution_x_game_rom_u91.u91",	0x80000, 0x52a63713, 4 | BRF_GRA },           // 25
+	{ "p5_revolution_x_game_rom_u92.u92",	0x80000, 0xfae3621b, 4 | BRF_GRA },           // 26
+	{ "p5_revolution_x_game_rom_u93.u93",	0x80000, 0x7065cf95, 4 | BRF_GRA },           // 27
+	{ "p5_revolution_x_game_rom_u94.u94",	0x80000, 0x600d5b98, 4 | BRF_GRA },           // 28
+	{ "p5_revolution_x_game_rom_u81.u81",	0x80000, 0x729eacb1, 4 | BRF_GRA },           // 29
+	{ "p5_revolution_x_game_rom_u82.u82",	0x80000, 0x19acb904, 4 | BRF_GRA },           // 30
+	{ "p5_revolution_x_game_rom_u83.u83",	0x80000, 0x0e223456, 4 | BRF_GRA },           // 31
+	{ "p5_revolution_x_game_rom_u84.u84",	0x80000, 0xd3de0192, 4 | BRF_GRA },           // 32
+	{ "p5_revolution_x_game_rom_u71.u71",	0x80000, 0x2b29fddb, 4 | BRF_GRA },           // 33
+	{ "p5_revolution_x_game_rom_u72.u72",	0x80000, 0x2680281b, 4 | BRF_GRA },           // 34
+	{ "p5_revolution_x_game_rom_u73.u73",	0x80000, 0x420bde4d, 4 | BRF_GRA },           // 35
+	{ "p5_revolution_x_game_rom_u74.u74",	0x80000, 0x26627410, 4 | BRF_GRA },           // 36
+	{ "p5_revolution_x_game_rom_u63.u63",	0x80000, 0x3066e3f3, 4 | BRF_GRA },           // 37
+	{ "p5_revolution_x_game_rom_u64.u64",	0x80000, 0xc33f5309, 4 | BRF_GRA },           // 38
+	{ "p5_revolution_x_game_rom_u65.u65",	0x80000, 0x6eee3e71, 4 | BRF_GRA },           // 39
+	{ "p5_revolution_x_game_rom_u66.u66",	0x80000, 0xb43d6fff, 4 | BRF_GRA },           // 40
+
+	{ "a-17722.u1",							0x00117, 0x054de7a3, 5 | BRF_OPT },           // 45 PLDs
+	{ "a-17721.u955",						0x00117, 0x033fe902, 5 | BRF_OPT },           // 46
+	{ "snd-gal16v8a.u17",					0x00117, 0x00000000, 5 | BRF_NODUMP | BRF_OPT },           // 47
+};
+
+STD_ROM_PICK(revx1)
+STD_ROM_FN(revx1)
+
+struct BurnDriver BurnDrvRevx1 = {
+	"revx1", "revx", NULL, NULL, "1994",
+	"Revolution X (revision 1.0 6/16/94)\0", NULL, "Midway", "X Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	NULL, revx1RomInfo, revx1RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
+	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
+};
+
+
+// Revolution X (prototype, revision 5.0 5/23/94)
 
 static struct BurnRomInfo revxp5RomDesc[] = {
 	{ "p5_revolution_x_sound_rom_u2.u2",	0x80000, 0x4ed9e803, 1 | BRF_SND },           //  0 DCS Sound Data
@@ -988,7 +1049,7 @@ static struct BurnRomInfo revxp5RomDesc[] = {
 	{ "p5_revolution_x_game_rom_u53.u53",	0x80000, 0xfcfcf72a, 2 | BRF_PRG | BRF_ESS }, // 10
 	{ "p5_revolution_x_game_rom_u54.u54",	0x80000, 0xfd684c31, 2 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "419_revolution-x_u444.u444",			0x02000, 0x517e0110, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
+	{ "419_revolution-x_u444.u444",			0x02000, 0x7df57330, 3 | BRF_PRG | BRF_OPT }, // 12 PIC Code
 
 	{ "p5_revolution_x_game_rom_u120.u120",	0x80000, 0x523af1f0, 4 | BRF_GRA },           // 13 Graphics Data
 	{ "p5_revolution_x_game_rom_u121.u121",	0x80000, 0x78201d93, 4 | BRF_GRA },           // 14
@@ -1018,10 +1079,6 @@ static struct BurnRomInfo revxp5RomDesc[] = {
 	{ "p5_revolution_x_game_rom_u64.u64",	0x80000, 0xc33f5309, 4 | BRF_GRA },           // 38
 	{ "p5_revolution_x_game_rom_u65.u65",	0x80000, 0x6eee3e71, 4 | BRF_GRA },           // 39
 	{ "p5_revolution_x_game_rom_u66.u66",	0x80000, 0xb43d6fff, 4 | BRF_GRA },           // 40
-	{ "p5_revolution_x_game_rom_u51.u51",	0x80000, 0xf3877eee, 4 | BRF_GRA },           // 41
-	{ "p5_revolution_x_game_rom_u52.u52",	0x80000, 0x199a54d8, 4 | BRF_GRA },           // 42
-	{ "p5_revolution_x_game_rom_u53.u53",	0x80000, 0xfcfcf72a, 4 | BRF_GRA },           // 43
-	{ "p5_revolution_x_game_rom_u54.u54",	0x80000, 0xfd684c31, 4 | BRF_GRA },           // 44
 
 	{ "a-17722.u1",							0x00117, 0x054de7a3, 5 | BRF_OPT },           // 45 PLDs
 	{ "a-17721.u955",						0x00117, 0x033fe902, 5 | BRF_OPT },           // 46
@@ -1033,7 +1090,7 @@ STD_ROM_FN(revxp5)
 
 struct BurnDriver BurnDrvRevxp5 = {
 	"revxp5", "revx", NULL, NULL, "1994",
-	"Revolution X (prototype, rev 5.0 5/23/94)\0", NULL, "Midway", "X Unit",
+	"Revolution X (prototype, revision 5.0 5/23/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxp5RomInfo, revxp5RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,

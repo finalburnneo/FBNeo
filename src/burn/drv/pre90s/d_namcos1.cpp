@@ -2690,7 +2690,7 @@ static struct BurnRomInfo pacmaniajRomDesc[] = {
 	{ "pn1_s1.b10",		0x10000, 0x411bc134, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "pn1_p6.s10",		0x20000, 0xfe94900c, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
-	{ "pn2_p7.t10",		0x10000, 0x462fa4fd, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "pn1_p7.t10",		0x10000, 0x2aa99e2b, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "cus64-64a1.m4",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  4 Internal MCU Code
 
@@ -2704,7 +2704,7 @@ static struct BurnRomInfo pacmaniajRomDesc[] = {
 	{ "pn1_c3.f8",		0x20000, 0x1dfda293, 6 | BRF_GRA },           // 10
 
 	{ "pn1_o0.a9",		0x20000, 0xfda57e8b, 7 | BRF_GRA },           // 11 Sprites
-	{ "pn1_o1.b9",		0x20000, 0x4c08affe, 7 | BRF_GRA },           // 12
+	{ "pnx_o1.b9",		0x20000, 0x27bdf440, 7 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(pacmaniaj)
@@ -3244,7 +3244,7 @@ struct BurnDriver BurnDrvWldcourt = {
 };
 
 
-// Splatter House (World, new version (SH3))
+// Splatterhouse (World, new version (SH3))
 
 static struct BurnRomInfo splatterRomDesc[] = {
 	{ "sh1_snd0b.bin",	0x10000, 0x03b47a5c, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3297,7 +3297,7 @@ static INT32 SplatterInit()
 
 struct BurnDriver BurnDrvSplatter = {
 	"splatter", NULL, NULL, NULL, "1988",
-	"Splatter House (World, new version (SH3))\0", NULL, "Namco", "System 1",
+	"Splatterhouse (World, new version (SH3))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, splatterRomInfo, splatterRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Splatter3DIPInfo,
@@ -3306,7 +3306,7 @@ struct BurnDriver BurnDrvSplatter = {
 };
 
 
-// Splatter House (World, old version (SH2))
+// Splatterhouse (World, old version (SH2))
 
 static struct BurnRomInfo splatter2RomDesc[] = {
 	{ "sh1_snd0.bin",	0x10000, 0x90abd4ad, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3352,7 +3352,7 @@ STD_ROM_FN(splatter2)
 
 struct BurnDriver BurnDrvSplatter2 = {
 	"splatter2", "splatter", NULL, NULL, "1988",
-	"Splatter House (World, old version (SH2))\0", NULL, "Namco", "System 1",
+	"Splatterhouse (World, old version (SH2))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, splatter2RomInfo, splatter2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -3361,7 +3361,7 @@ struct BurnDriver BurnDrvSplatter2 = {
 };
 
 
-// Splatter House (Japan, SH1)
+// Splatterhouse (Japan, SH1)
 
 static struct BurnRomInfo splatterjRomDesc[] = {
 	{ "sh1_snd0.bin",	0x10000, 0x90abd4ad, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -3407,7 +3407,7 @@ STD_ROM_FN(splatterj)
 
 struct BurnDriver BurnDrvSplatterj = {
 	"splatterj", "splatter", NULL, NULL, "1988",
-	"Splatter House (Japan, SH1)\0", NULL, "Namco", "System 1",
+	"Splatterhouse (Japan, SH1)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, splatterjRomInfo, splatterjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -4553,6 +4553,24 @@ struct BurnDriver BurnDrvsg1k_msolitaire = {
 	272, 228, 4, 3
 };
 
+// Manhole (HB, v0.6b)
+static struct BurnRomInfo sg1k_manholeRomDesc[] = {
+	{ "Manhole v0.6b (2024)(Electric Dreams).sg",	12276, 0xe96272f6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_manhole)
+STD_ROM_FN(sg1k_manhole)
+
+struct BurnDriver BurnDrvsg1k_manhole = {
+	"sg1k_manhole", NULL, NULL, NULL, "2024",
+	"Manhole (HB, v0.6b)\0", NULL, "Electric Dreams", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_manholeRomInfo, sg1k_manholeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Mazy (HB)
 static struct BurnRomInfo sg1k_mazyRomDesc[] = {
 	{ "Mazy (2022)(Inufuto).sg",	7058, 0x8f972417, BRF_PRG | BRF_ESS },

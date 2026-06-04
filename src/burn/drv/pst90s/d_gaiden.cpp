@@ -1637,27 +1637,21 @@ static struct BurnRomInfo shadowwaRomDesc[] = {
 
 	{ "gaiden_5.7a",	0x10000, 0x8d4035f7, 3 | BRF_GRA },           //  3 Characters
 
-	{ "14.3a",       	0x20000, 0x1ecfddaa, 4 | BRF_GRA },           //  4 Foreground Tiles
-	{ "15.3b",       	0x20000, 0x1291a696, 4 | BRF_GRA },           //  5
-	{ "16.1a",       	0x20000, 0x140b47ca, 4 | BRF_GRA },           //  6
-	{ "17.1b",       	0x20000, 0x7638cccb, 4 | BRF_GRA },           //  7
+	{ "d23c4001.4b",    0x80000, 0x0f98e0d5, 4 | BRF_GRA },           //  4 Foreground Tiles
 
-	{ "18.6a",       	0x20000, 0x3fadafd6, 5 | BRF_GRA },           //  8 Background Tiles
-	{ "19.6b",       	0x20000, 0xddae9d5b, 5 | BRF_GRA },           //  9
-	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
-	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11
+	{ "d23c4001.1b",    0x80000, 0xeed595e5, 5 | BRF_GRA },           //  5 Background Tiles
 
 	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
-	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
-	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
-	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           // 15
-	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
-	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
-	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
-	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 19
+	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           //  6 Sprites
+	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           //  7
+	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           //  8
+	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           //  9
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 10
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 11
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 12
+	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 13
 
-	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 14 MSM6295 Samples
 };
 
 STD_ROM_PICK(shadowwa)

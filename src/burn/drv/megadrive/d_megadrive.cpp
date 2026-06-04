@@ -40747,10 +40747,10 @@ struct BurnDriver BurnDrvmd_mainurse = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Maldita Castilla: Requiem (HB, Demo v1.2)
+// Maldita Castilla: Requiem (HB, Demo v1.3)
 // https://playonretro.itch.io/maldita-castilla-megadrive-demo
 static struct BurnRomInfo md_mcastillaRomDesc[] = {
-	{ "Maldita Castilla - Requiem Demo v1.2 (2026)(PlayOnRetro).bin", 2779849, 0x0f65836e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Maldita Castilla - Requiem Demo v1.3 (2026)(PlayOnRetro).bin", 2780135, 0x662d3b1d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcastilla)
@@ -40758,7 +40758,7 @@ STD_ROM_FN(md_mcastilla)
 
 struct BurnDriver BurnDrvmd_mcastilla = {
 	"md_mcastilla", NULL, NULL, NULL, "2026",
-	"Maldita Castilla: Requiem (HB, Demo v1.2)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
+	"Maldita Castilla: Requiem (HB, Demo v1.3)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mcastillaRomInfo, md_mcastillaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

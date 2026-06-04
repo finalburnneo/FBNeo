@@ -4810,6 +4810,8 @@ static struct BurnRomInfo valkyrieRomDesc[] = {
 
 	{ "wd1voi1.bin",	0x40000, 0xf1ace193, 0x0a | BRF_SND },           // 28 C140 Samples Samples
 	{ "wd1voi2.bin",	0x20000, 0xe95c5cf3, 0x0a | BRF_SND },           // 29
+
+	{ "valkyrie.nv",	0x02000, 0xd5ce4069, 0x0b | BRF_PRG | BRF_ESS},  // 30 nvram
 };
 
 STD_ROM_PICK(valkyrie)
@@ -7101,46 +7103,46 @@ struct BurnDriver BurnDrvFinalap2 = {
 // Final Lap 2 (Japan)
 
 static struct BurnRomInfo finalap2jRomDesc[] = {
-	{ "fls1_mp0.bin",	0x20000, 0x05ea8090, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "fls1_mp1.bin",	0x20000, 0xfb189f50, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fls1_mp0.11d",	0x20000, 0x05ea8090, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "fls1_mp1.13d",	0x20000, 0xfb189f50, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fls1sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "fls1sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "fls1_sp0b.11k",	0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fls1_sp1b.13k",	0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "fls1_s0.7j",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 #if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 #endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "fl2obj0",		0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
-	{ "fl2obj2",		0x80000, 0x8ac933fd, 0x05 | BRF_GRA },           //  8
-	{ "fl2obj4",		0x80000, 0xe7b989e6, 0x05 | BRF_GRA },           //  9
-	{ "fl2obj6",		0x80000, 0x4936583d, 0x05 | BRF_GRA },           // 10
-	{ "fl2obj1",		0x80000, 0x3cebf419, 0x05 | BRF_GRA },           // 11
-	{ "fl2obj3",		0x80000, 0x0959ed55, 0x05 | BRF_GRA },           // 12
-	{ "fl2obj5",		0x80000, 0xd74ae0d3, 0x05 | BRF_GRA },           // 13
-	{ "fl2obj7",		0x80000, 0x5ca68c93, 0x05 | BRF_GRA },           // 14
+	{ "fls_obj-0.4c",	0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "fls_obj-2.4a",	0x80000, 0x8ac933fd, 0x05 | BRF_GRA },           //  8
+	{ "fls_obj-4.8c",	0x80000, 0xe7b989e6, 0x05 | BRF_GRA },           //  9
+	{ "fls_obj-6.8a",	0x80000, 0x4936583d, 0x05 | BRF_GRA },           // 10
+	{ "fls_obj-1.2c",	0x80000, 0x3cebf419, 0x05 | BRF_GRA },           // 11
+	{ "fls_obj-3.2a",	0x80000, 0x0959ed55, 0x05 | BRF_GRA },           // 12
+	{ "fls_obj-5.5c",	0x80000, 0xd74ae0d3, 0x05 | BRF_GRA },           // 13
+	{ "fls_obj-7.6a",	0x80000, 0x5ca68c93, 0x05 | BRF_GRA },           // 14
 
-	{ "fls2chr0",		0x40000, 0x7bbda499, 0x16 | BRF_GRA },           // 15 Layer Tiles
-	{ "fls2chr1",		0x40000, 0xac8940e5, 0x16 | BRF_GRA },           // 16
-	{ "fls2chr2",		0x40000, 0x1756173d, 0x16 | BRF_GRA },           // 17
-	{ "fls2chr3",		0x40000, 0x69032785, 0x16 | BRF_GRA },           // 18
-	{ "fls2chr4",		0x40000, 0x8216cf42, 0x16 | BRF_GRA },           // 19
-	{ "fls2chr5",		0x40000, 0xdc3e8e1c, 0x16 | BRF_GRA },           // 20
-	{ "fls2chr6",		0x40000, 0x1ef4bdde, 0x16 | BRF_GRA },           // 21
-	{ "fls2chr7",		0x40000, 0x53dafcde, 0x16 | BRF_GRA },           // 22
+	{ "fls_chr-0.11n",	0x40000, 0xfdc8f3b6, 0x16 | BRF_GRA },           // 15 Layer Tiles
+	{ "fls_chr-1.11p",	0x40000, 0xdd5917d9, 0x16 | BRF_GRA },           // 16
+	{ "fls_chr-2.11r",	0x40000, 0x1756173d, 0x16 | BRF_GRA },           // 17
+	{ "fls_chr-3.11s",	0x40000, 0x69032785, 0x16 | BRF_GRA },           // 18
+	{ "fls_chr-4.9n",	0x40000, 0x8216cf42, 0x16 | BRF_GRA },           // 19
+	{ "fls_chr-5.9p",	0x40000, 0x099e704c, 0x16 | BRF_GRA },           // 20
+	{ "fls_chr-6.9r",	0x40000, 0xd97fe308, 0x16 | BRF_GRA },           // 21
+	{ "fls_chr-7.9s",	0x40000, 0xcc43dea8, 0x16 | BRF_GRA },           // 22
 
-	{ "fls2sha",		0x40000, 0xf7b40a85, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
+	{ "fls_sha.7n",		0x40000, 0xf9ca8962, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
-	{ "fls2dat0.13s",	0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
-	{ "fls2dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
+	{ "fls1_dat0.13s",	0x40000, 0x2f993682, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "fls1_dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
 
-	{ "flsvoi1",		0x80000, 0x590be52f, 0x0a | BRF_SND },           // 27 C140 Samples
-	{ "flsvoi2",		0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
+	{ "fls_voi-1.3m",	0x80000, 0x590be52f, 0x0a | BRF_SND },           // 27 C140 Samples
+	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
 
 	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
 };
@@ -7154,6 +7156,67 @@ struct BurnDriver BurnDrvFinalap2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2jRomInfo, finalap2jRomName, NULL, NULL, NULL, NULL, FinallapInputInfo, FinallapDIPInfo,
+	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
+	288, 224, 4, 3
+};
+
+
+// Final Lap 2 (Japan, Rev B)
+
+static struct BurnRomInfo finalap2jbRomDesc[] = {
+	{ "fls1_mp0b.11d",	0x20000, 0xea09d01b, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "fls_mp1b.13d",	0x20000, 0x5e20b03a, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "fls1_sp0b.11k",	0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fls1_sp1b.13k",	0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "fls1_s0.7j",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+#if !defined ROM_VERIFY
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "fls_obj-0.4c",	0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "fls_obj-2.4a",	0x80000, 0x8ac933fd, 0x05 | BRF_GRA },           //  8
+	{ "fls_obj-4.8c",	0x80000, 0xe7b989e6, 0x05 | BRF_GRA },           //  9
+	{ "fls_obj-6.8a",	0x80000, 0x4936583d, 0x05 | BRF_GRA },           // 10
+	{ "fls_obj-1.2c",	0x80000, 0x3cebf419, 0x05 | BRF_GRA },           // 11
+	{ "fls_obj-3.2a",	0x80000, 0x0959ed55, 0x05 | BRF_GRA },           // 12
+	{ "fls_obj-5.5c",	0x80000, 0xd74ae0d3, 0x05 | BRF_GRA },           // 13
+	{ "fls_obj-7.6a",	0x80000, 0x5ca68c93, 0x05 | BRF_GRA },           // 14
+
+	{ "fls_chr-0.11n",	0x40000, 0xfdc8f3b6, 0x16 | BRF_GRA },           // 15 Layer Tiles
+	{ "fls_chr-1.11p",	0x40000, 0xdd5917d9, 0x16 | BRF_GRA },           // 16
+	{ "fls_chr-2.11r",	0x40000, 0x1756173d, 0x16 | BRF_GRA },           // 17
+	{ "fls_chr-3.11s",	0x40000, 0x69032785, 0x16 | BRF_GRA },           // 18
+	{ "fls_chr-4.9n",	0x40000, 0x8216cf42, 0x16 | BRF_GRA },           // 19
+	{ "fls_chr-5.9p",	0x40000, 0x099e704c, 0x16 | BRF_GRA },           // 20
+	{ "fls_chr-6.9r",	0x40000, 0xd97fe308, 0x16 | BRF_GRA },           // 21
+	{ "fls_chr-7.9s",	0x40000, 0xcc43dea8, 0x16 | BRF_GRA },           // 22
+
+	{ "fls_sha.7n",		0x40000, 0xf9ca8962, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
+
+	{ "fls1_dat0.13s",	0x40000, 0x2f993682, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
+	{ "fls1_dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
+
+	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
+
+	{ "fls_voi-1.3m",	0x80000, 0x590be52f, 0x0a | BRF_SND },           // 27 C140 Samples
+	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
+
+	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
+};
+
+STD_ROM_PICK(finalap2jb)
+STD_ROM_FN(finalap2jb)
+
+struct BurnDriver BurnDrvFinalap2jb = {
+	"finalap2jb", "finalap2", NULL, NULL, "1990",
+	"Final Lap 2 (Japan, Rev B)\0", "Imperfect graphics", "Namco", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, finalap2jbRomInfo, finalap2jbRomName, NULL, NULL, NULL, NULL, FinallapInputInfo, FinallapDIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

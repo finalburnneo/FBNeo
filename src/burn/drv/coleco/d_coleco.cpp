@@ -8067,6 +8067,24 @@ struct BurnDriver BurnDrvcv_hangon2 = {
     272, 228, 4, 3
 };
 
+// Hard Hat (HB)
+static struct BurnRomInfo cv_hardhatRomDesc[] = {
+    { "Hard Hat (2022)(CollectorVision).rom",	32768, 0x221fbcfa, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_hardhat, cv_hardhat, cv_coleco)
+STD_ROM_FN(cv_hardhat)
+
+struct BurnDriver BurnDrvcv_hardhat = {
+    "cv_hardhat", NULL, "cv_coleco", NULL, "1982-2022",
+    "Hard Hat (HB)\0", "Published by CollectorVision Games", "Exidy", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
+    CVGetZipName, cv_hardhatRomInfo, cv_hardhatRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Hard Hat Mack (SGM) (HB)
 static struct BurnRomInfo cv_hardhatmackRomDesc[] = {
 	{ "Hard Hat Mack SGM (1983-2023)(CollectorVision).rom",	32768, 0xeaf5c5e1, BRF_PRG | BRF_ESS },
@@ -8153,6 +8171,24 @@ struct BurnDriver BurnDrvcv_hopman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_hopmanRomInfo, cv_hopmanRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Hustle (HB)
+static struct BurnRomInfo cv_hustleRomDesc[] = {
+	{ "Hustle (2023)(CollectorVision).rom",	16384, 0xc8f7d8c5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_hustle, cv_hustle, cv_coleco)
+STD_ROM_FN(cv_hustle)
+
+struct BurnDriver BurnDrvcv_hustle = {
+	"cv_hustle", NULL, "cv_coleco", NULL, "2023",
+	"Hustle (HB)\0", "In the Game Over screen push 5 (keypad) and then push 1 or 2 to play", "CollectorVision - Gremlin", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_hustleRomInfo, cv_hustleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

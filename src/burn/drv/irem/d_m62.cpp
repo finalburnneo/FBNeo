@@ -1141,7 +1141,7 @@ static struct BurnRomInfo Kungfub3sRomDesc[] = {
 	{ "4.bin",		0x04000, 0x9f49bdcd, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
 	{ "5.bin",		0x04000, 0x8e7e4c56, BRF_ESS | BRF_PRG }, //  1
 
-	{ "3.bin",		0x02000, 0xb4293435, BRF_ESS | BRF_PRG }, //  2	M6803 Program Code
+	{ "3.bin",		0x02000, 0x58e87ab0, BRF_ESS | BRF_PRG }, //  2	M6803 Program Code
 	{ "2.bin",		0x02000, 0xc81e31ea, BRF_ESS | BRF_PRG }, //  3
 	{ "1.bin",		0x02000, 0xd99fb995, BRF_ESS | BRF_PRG }, //  4
 

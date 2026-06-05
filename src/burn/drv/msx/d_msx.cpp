@@ -31913,6 +31913,24 @@ struct BurnDriver BurnDrvMSX_mandarin2 = {
 	272, 228, 4, 3
 };
 
+// Manhole (HB, v0.6b)
+static struct BurnRomInfo MSX_manholeRomDesc[] = {
+	{ "Manhole v0.6b (2024)(Electric Dreams).rom",	16384, 0x64e525ef, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_manhole, MSX_manhole, msx_msx)
+STD_ROM_FN(MSX_manhole)
+
+struct BurnDriver BurnDrvMSX_manhole = {
+	"msx_manhole", NULL, "msx_msx", NULL, "2024",
+	"Manhole (HB, v0.6b)\0", NULL, "Electric Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_manholeRomInfo, MSX_manholeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Mars Lander (HB)
 static struct BurnRomInfo MSX_marslandRomDesc[] = {
 	{ "Mars Lander (2006)(crappysoft).rom",	16384, 0xec316a71, BRF_PRG | BRF_ESS },

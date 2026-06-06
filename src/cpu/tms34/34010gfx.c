@@ -111,7 +111,7 @@ static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *d
 		if (diff > 0)
 		{
 			if (srcaddr)
-				*srcaddr += diff * SPTCH;
+				*srcaddr += diff * state.convsp;
 			sy += diff;
 			SET_V_LOG(1);
 		}
@@ -1082,11 +1082,13 @@ static void FUNCTION_NAME(pixblt)(int src_is_linear, int dst_is_linear)
 		/* handle flipping the addresses */
 		yreverse = (IOREG(REG_CONTROL) >> 9) & 1;
 		if (!src_is_linear || !dst_is_linear)
+		{
 			if (yreverse)
 			{
-				saddr += (dy - 1) * SPTCH;
-				daddr += (dy - 1) * DPTCH;
+				saddr += (dy - 1) * state.convsp;
+				daddr += (dy - 1) * state.convsp;
 			}
+		}
 
 		state.st |= STBIT_P;
 
@@ -1437,8 +1439,8 @@ static void FUNCTION_NAME(pixblt_r)(int src_is_linear, int dst_is_linear)
 			daddr += dx * BITS_PER_PIXEL;
 			if (yreverse)
 			{
-				saddr += (dy - 1) * SPTCH;
-				daddr += (dy - 1) * DPTCH;
+				saddr += (dy - 1) * state.convsp;
+				daddr += (dy - 1) * state.convsp;
 			}
 		}
 

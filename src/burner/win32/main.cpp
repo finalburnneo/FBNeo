@@ -1430,7 +1430,7 @@ static void CreateSupportFolders()
 		{_T("support/hdd/")},
 		{_T("support/ips/")},
 		{_T("support/romdata/")},
-		{_T("support/neocdz/")},
+		{_T("support/neocdzcovers/")},
 		{_T("support/neocdzpreviews/")},
 		{_T("support/blend/")},
 		{_T("support/select/")},

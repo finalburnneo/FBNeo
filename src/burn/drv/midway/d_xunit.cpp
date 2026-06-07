@@ -703,7 +703,7 @@ static INT32 DrvInit()
 		TMS34010UnmapMemory(0x20d22000, 0x20d22fff, MAP_ROM); // unmap page w/bad opcode
 		TMS34010SetReadHandler(1, midxunit_romredirectp5);      // replace with a handler to dish out proper opcode when needed
 		TMS34010MapHandler(1, 0x20d22000, 0x20d22fff, MAP_ROM);
-	} else {
+	} else if (strstr(BurnDrvGetTextA(DRV_NAME), "revx1")) {
 		TMS34010UnmapMemory(0x20d31000, 0x20d31fff, MAP_ROM); // unmap page w/bad opcode
 		TMS34010SetReadHandler(1, midxunit_romredirect);      // replace with a handler to dish out proper opcode when needed
 		TMS34010MapHandler(1, 0x20d31000, 0x20d31fff, MAP_ROM);

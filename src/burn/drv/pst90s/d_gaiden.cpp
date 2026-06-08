@@ -1637,9 +1637,9 @@ static struct BurnRomInfo shadowwaRomDesc[] = {
 
 	{ "gaiden_5.7a",	0x10000, 0x8d4035f7, 3 | BRF_GRA },           //  3 Characters
 
-	{ "d23c4001.4b",    0x80000, 0x0f98e0d5, 4 | BRF_GRA },           //  4 Foreground Tiles
+	{ "d23c4001.4b",    0x80000, 0x0f98e0d5, 5 | BRF_GRA },           //  4 Foreground Tiles
 
-	{ "d23c4001.1b",    0x80000, 0xeed595e5, 5 | BRF_GRA },           //  5 Background Tiles
+	{ "d23c4001.1b",    0x80000, 0xeed595e5, 4 | BRF_GRA },           //  5 Background Tiles
 
 	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
 	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           //  6 Sprites

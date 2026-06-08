@@ -25776,37 +25776,19 @@ struct BurnDriver BurnDrvnes_studyhall = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Super Tilt Bro. (HB, v2 RC3)
-static struct BurnRomInfo nes_supertiltbrorc3RomDesc[] = {
-	{ "Super Tilt Bro. v2 RC3 (2023)(Broke Studio).nes",          524304, 0x5802cf20, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_supertiltbrorc3)
-STD_ROM_FN(nes_supertiltbrorc3)
-
-struct BurnDriver BurnDrvnes_supertiltbrorc3 = {
-	"nes_supertiltbrorc3", NULL, NULL, NULL, "2023",
-	"Super Tilt Bro. (HB, v2 RC3)\0", NULL, "Broke Studio", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
-	NESGetZipName, nes_supertiltbrorc3RomInfo, nes_supertiltbrorc3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Super Tilt Bro. (HB, v2 alpha1)
+// Super Tilt Bro. (HB, v2.6)
 static struct BurnRomInfo nes_supertiltbroRomDesc[] = {
-	{ "Super Tilt Bro v2 alpha1 (2018)(Broke Studio).nes",          524304, 0x58829008, BRF_ESS | BRF_PRG },
+	{ "Super Tilt Bro v2.6 (2016-26)(Sylvain Gadrat).nes",          524304, 0xfa4edd45, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_supertiltbro)
 STD_ROM_FN(nes_supertiltbro)
 
 struct BurnDriver BurnDrvnes_supertiltbro = {
-	"nes_supertiltbro", "nes_supertiltbrorc3", NULL, NULL, "2018",
-	"Super Tilt Bro. (HB, v2 alpha1)\0", NULL, "Broke Studio", "NES / Famicom",
+	"nes_supertiltbro", NULL, NULL, NULL, "2016-26",
+	"Super Tilt Bro. (HB, v2.6)\0", NULL, "Sylvain Gadrat", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_supertiltbroRomInfo, nes_supertiltbroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

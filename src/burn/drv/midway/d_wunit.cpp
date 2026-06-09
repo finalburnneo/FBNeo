@@ -1201,7 +1201,7 @@ struct BurnDriver BurnDrvUmk3p = {
 };
 
 
-// 2 On 2 Open Ice Challenge (rev 1.21)
+// NHL Open Ice: 2 on 2 Challenge (rev 1.21)
 
 static struct BurnRomInfo openiceRomDesc[] = {
 	{ "open_ice_l1.21.u54",	0x080000, 0xe4225284, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
@@ -1238,7 +1238,7 @@ STD_ROM_FN(openice)
 
 struct BurnDriver BurnDrvOpenice = {
 	"openice", NULL, NULL, NULL, "1995",
-	"2 On 2 Open Ice Challenge (rev 1.21)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"NHL Open Ice: 2 on 2 Challenge (rev 1.21)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceRomInfo, openiceRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
@@ -1247,7 +1247,7 @@ struct BurnDriver BurnDrvOpenice = {
 };
 
 
-// 2 On 2 Open Ice Challenge (rev 1.2A)
+// NHL Open Ice: 2 on 2 Challenge (rev 1.2A)
 /* PCB had alternate ROM labels showing the dates & checksums */
 
 static struct BurnRomInfo openiceaRomDesc[] = {
@@ -1285,7 +1285,7 @@ STD_ROM_FN(openicea)
 
 struct BurnDriver BurnDrvOpenicea = {
 	"openicea", "openice", NULL, NULL, "1995",
-	"2 On 2 Open Ice Challenge (rev 1.2A)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"NHL Open Ice: 2 on 2 Challenge (rev 1.2A)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceaRomInfo, openiceaRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
@@ -1331,6 +1331,8 @@ static struct BurnRomInfo nbahangtRomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangt)
@@ -1384,6 +1386,8 @@ static struct BurnRomInfo nbahangtm13RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangtm13)
@@ -1437,6 +1441,8 @@ static struct BurnRomInfo nbahangtl12RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangtl12)
@@ -1490,6 +1496,8 @@ static struct BurnRomInfo nbahangtm12RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangtm12)
@@ -1543,6 +1551,8 @@ static struct BurnRomInfo nbahangtl11RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangtl11)
@@ -1596,6 +1606,8 @@ static struct BurnRomInfo nbahangtm11RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",	0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",	0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",	0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",				0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbahangtm11)
@@ -1656,6 +1668,8 @@ static struct BurnRomInfo nbamhtRomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",					0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbamht)
@@ -1709,6 +1723,8 @@ static struct BurnRomInfo nbamhtl10RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",					0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbamhtl10)
@@ -1762,6 +1778,8 @@ static struct BurnRomInfo nbamhtm10RomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",					0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbamhtm10)
@@ -1815,6 +1833,8 @@ static struct BurnRomInfo nbamhtpRomDesc[] = {
 	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+
+	{ "459_nba_hang_time_u64.u64",					0x002000, 0x0e642b39, 0 | BRF_OPT }, // 26 security PIC
 };
 
 STD_ROM_PICK(nbamhtp)

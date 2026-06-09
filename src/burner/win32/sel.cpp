@@ -1958,6 +1958,8 @@ static UINT32 __stdcall CacheDrvIconsProc(void* lpParam)
 			} else {
 				bLoadOK = LoadFileToBuffer(szIcon, &mBuffer, &mBufferSize);
 			}
+			
+			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
 
 			pCache[nDrvIndex] = NULL;	// default to NULL if load fails
 

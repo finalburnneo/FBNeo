@@ -1904,7 +1904,7 @@ static struct BurnRomInfo archrivlRomDesc[] = {
 	{ "pls153.11j",					0x000eb, 0x761c3b56, 0 | BRF_OPT },           // 13 PLDs
 	{ "pls153.12j",					0x000eb, 0x48eed036, 0 | BRF_OPT },           // 14
 	{ "pls153.14h",					0x000eb, 0xd4203273, 0 | BRF_OPT },           // 15
-	{ "pal12h6.14e",				0x00034, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "pal12h6.14e",				0x00034, 0xa42d769e, 0 | BRF_OPT },           // 16
 	{ "pal16r4a.14k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 17
 	{ "pal16r4a.2k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 18
 	{ "pal16r6a.15e",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 19
@@ -1978,7 +1978,7 @@ static struct BurnRomInfo archrivlaRomDesc[] = {
 	{ "pls153.11j",					0x000eb, 0x761c3b56, 0 | BRF_OPT },           // 13 PLDs
 	{ "pls153.12j",					0x000eb, 0x48eed036, 0 | BRF_OPT },           // 14
 	{ "pls153.14h",					0x000eb, 0xd4203273, 0 | BRF_OPT },           // 15
-	{ "pal12h6.14e",				0x00034, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "pal12h6.14e",				0x00034, 0xa42d769e, 0 | BRF_OPT },           // 16
 	{ "pal16r4a.14k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 17
 	{ "pal16r4a.2k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 18
 	{ "pal16r6a.15e",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 19
@@ -2026,7 +2026,7 @@ static struct BurnRomInfo archrivlbRomDesc[] = {
 	{ "pls153.11j",					0x000eb, 0x761c3b56, 0 | BRF_OPT },           // 13 PLDs
 	{ "pls153.12j",					0x000eb, 0x48eed036, 0 | BRF_OPT },           // 14
 	{ "pls153.14h",					0x000eb, 0xd4203273, 0 | BRF_OPT },           // 15
-	{ "pal12h6.14e",				0x00034, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "pal12h6.14e",				0x00034, 0xa42d769e, 0 | BRF_OPT },           // 16
 	{ "pal16r4a.14k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 17
 	{ "pal16r4a.2k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 18
 	{ "pal16r6a.15e",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 19

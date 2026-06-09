@@ -9,9 +9,7 @@ static void		NeoCDList_InitListView();
 static int		NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID);
 static void		NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory);
 static TCHAR*	NeoCDList_ParseCUE(TCHAR* pszFile);
-static void		NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFrameCtrID, float maxw, float maxh);
 struct PNGRESOLUTION { int nWidth; int nHeight; };
-static PNGRESOLUTION GetPNGResolution(TCHAR* szFile);
 
 static INT_PTR	CALLBACK	NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
 static unsigned __stdcall	NeoCDList_DoProc(void*);
@@ -20,14 +18,14 @@ static HWND		hNeoCDWnd			= NULL;
 static HWND		hListView			= NULL;
 static HWND		hProcParent			= NULL;
 static bool		bProcessingList		= false;
-static HANDLE   hProcessThread = NULL;
-static unsigned ProcessThreadID = 0;
-
+static HANDLE   hProcessThread		= NULL;
+static unsigned ProcessThreadID		= 0;
+static HBITMAP hCoverBMPs[3] 		= { 0, 0 };
 static HBRUSH hWhiteBGBrush;
 
 bool bNeoCDListScanSub			= false;
 bool bNeoCDListScanOnlyISO		= false;
-TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdz/");
+TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdzcovers/");
 TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/neocdzpreviews/");
 TCHAR szNeoCDGamesDir[MAX_PATH] = _T("neocdiso/");
 
@@ -273,6 +271,8 @@ static void NeoCDList_ScanDir_Internal(HWND hList, TCHAR* pszDirectory)
 
 					TCHAR *pszISO = NeoCDList_ParseCUE( szParse );
 
+					NeoCDList_ParseCUE( szParse );
+
 					TCHAR szISO[512] =_T("\0");
 					_stprintf(szISO, _T("%s%s"), pszDirectory, pszISO);
 					free(pszISO);
@@ -281,9 +281,8 @@ static void NeoCDList_ScanDir_Internal(HWND hList, TCHAR* pszDirectory)
 				}
 			}
 		} while (FindNextFile(hDirectory, &ffdDirectory));
-
-		FindClose(hDirectory);
 	}
+	FindClose(hDirectory);
 
 	ScanDir_RecursionCount--;
 }
@@ -399,31 +398,27 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 	return szISO;
 }
 
-static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
+static PNGRESOLUTION GetPNGResolutionBuf(void *pPngBuf, size_t nPngSize)
 {
 	PNGRESOLUTION nResolution = { 0, 0 };
 	IMAGE img = { 0, 0, 0, 0, NULL, NULL, 0 };
 
-	FILE *fp = _tfopen(szFile, _T("rb"));
-
-	if (!fp) {
+	if (!pPngBuf || !nPngSize) {
 		return nResolution;
 	}
 
-	PNGGetInfo(&img, fp);
+	PNGGetInfoBuffer(&img, pPngBuf, nPngSize);
 
 	nResolution.nWidth = img.width;
 	nResolution.nHeight = img.height;
 
-	fclose(fp);
-
 	return nResolution;
 }
 
-static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFrameCtrID, float maxw, float maxh)
+static void NeoCDList_ShowPreviewBuf(HWND hDlg, void *pPngBuf, size_t nPngSize, int nCtrID, int nFrameCtrID, float maxw, float maxh)
 {
 	PNGRESOLUTION PNGRes = { 0, 0 };
-	if(!FileExists(szFile))
+	if(!pPngBuf || !nPngSize)
 	{
 		HRSRC hrsrc			= FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
 		HGLOBAL hglobal		= LoadResource(NULL, (HRSRC)hrsrc);
@@ -436,7 +431,7 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 		FreeResource(hglobal);
 
 	} else {
-		PNGRes = GetPNGResolution(szFile);
+		PNGRes = GetPNGResolutionBuf(pPngBuf, nPngSize);
 	}
 
 	// ------------------------------------------------------
@@ -504,26 +499,44 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 
 	// ------------------------------------------------------
 
-	FILE* fp = _tfopen(szFile, _T("rb"));
+	int cover_idx = nCtrID - IDC_NCD_FRONT_PIC;
+	if (cover_idx != 0 && cover_idx != 1) cover_idx = 2; // for IDC_NCD_COVER_PREVIEW_PIC
 
-	HBITMAP hCoverBmp = PNGLoadBitmap(hDlg, fp, (int)w, (int)h, 0);
+	bprintf(0, _T("cover_idx %d\n"), cover_idx);
+	if (hCoverBMPs[cover_idx]) {
+		DeleteObject(hCoverBMPs[cover_idx]);
+		hCoverBMPs[cover_idx] = 0;
+	}
+
+	HBITMAP hCoverBmp = PNGLoadBitmapBuffer(hDlg, pPngBuf, nPngSize, (int)w, (int)h, 0);
+	hCoverBMPs[cover_idx] = hCoverBmp;
+	if (pPngBuf) free(pPngBuf);
 
 	SetWindowPos(GetDlgItem(hDlg, nCtrID), NULL, (int)(pt.x + x), (int)(pt.y + y), 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW);
 	SendDlgItemMessage(hDlg, nCtrID, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hCoverBmp);
-
-	if(fp) fclose(fp);
-
 }
 
-static void NeoCDList_Clean()
-{
-	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
-	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
+//#define IDC_NCD_FRONT_PIC					20801
+//#define IDC_NCD_BACK_PIC					20802
 
-	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
-	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
-	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE), _T(""));
-	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTAUDIO), _T(""));
+static void NeoCDList_Clean(bool bExit)
+{
+	if (bExit == false) {
+		NeoCDList_ShowPreviewBuf(hNeoCDWnd, NULL, 0, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+		NeoCDList_ShowPreviewBuf(hNeoCDWnd, NULL, 0, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
+
+		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
+		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
+		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTIMAGE), _T(""));
+		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTAUDIO), _T(""));
+	} else {
+		for (int i = 0; i < 3; i++) {
+			if (hCoverBMPs[i]) {
+				DeleteObject(hCoverBMPs[i]);
+				hCoverBMPs[i] = 0;
+			}
+		}
+	}
 
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
@@ -538,8 +551,10 @@ static void NeoCDList_Clean()
 	nSelectedItem = -1;
 }
 
+// Zoom the cover / preview image
 static HWND hNeoCDList_CoverDlg = NULL;
-TCHAR szBigCover[512] = _T("");
+static void  *pZoomPng = NULL;
+static size_t nZoomPngSize = 0;
 
 static INT_PTR CALLBACK NeoCDList_CoverWndProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM /*lParam*/)
 {
@@ -547,7 +562,7 @@ static INT_PTR CALLBACK NeoCDList_CoverWndProc(HWND hDlg, UINT Msg, WPARAM wPara
 	{
 		hNeoCDList_CoverDlg = hDlg;
 
-		NeoCDList_ShowPreview(hDlg, szBigCover, IDC_NCD_COVER_PREVIEW_PIC, IDC_NCD_COVER_PREVIEW_PIC, 580, 415);
+		NeoCDList_ShowPreviewBuf(hDlg, pZoomPng, nZoomPngSize, IDC_NCD_COVER_PREVIEW_PIC, IDC_NCD_COVER_PREVIEW_PIC, 580, 415);
 
 		return TRUE;
 	}
@@ -568,6 +583,50 @@ static INT_PTR CALLBACK NeoCDList_CoverWndProc(HWND hDlg, UINT Msg, WPARAM wPara
 	return 0;
 }
 
+static bool LoadZipToBuffer(TCHAR *szDir, char *szName, TCHAR *szDrvName, char *szPngExt, void **buf, size_t *bufsize)
+{
+	char szImageName[MAX_PATH];
+	char szZipName[MAX_PATH];
+
+	char aszDir[MAX_PATH];
+	strcpy(aszDir, TCHARToANSI(szDir, NULL, 0));
+
+	char aszDrvName[MAX_PATH];
+	strcpy(aszDrvName, TCHARToANSI(szDrvName, NULL, 0));
+
+	snprintf(szImageName, sizeof(szImageName), "%s/%s%s", szName, aszDrvName, szPngExt);
+	snprintf(szZipName, sizeof(szZipName), "%s%s.zip", aszDir, szName);
+
+	const bool retval = unzip(szZipName, szImageName, buf, bufsize);
+	bprintf(0, _T("%S:  bFromZip %d  %S  %S\n"), szName, retval, szZipName, szImageName);
+
+	return retval;
+}
+
+static bool LoadFileToBuffer(TCHAR *szName, void **buf, size_t *bufsize)
+{
+	bool retval = false;
+
+	FILE *fp = _tfopen(szName, _T("rb"));
+
+	if (fp) {
+		// get size
+		fseek(fp, 0, SEEK_END);
+		UINT32 nLen = ftell(fp);
+		rewind(fp);
+		if (nLen > 0) {
+			// alloc & load it up!
+			*bufsize = nLen;
+			*buf = (char*)malloc(nLen);
+			fread(*buf, 1, nLen, fp);
+			retval = true;
+		}
+		fclose(fp);
+	}
+
+	return retval;
+}
+
 void NeoCDList_InitCoverDlg()
 {
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_COVER_DLG), hNeoCDWnd, (DLGPROC)NeoCDList_CoverWndProc);
@@ -586,8 +645,8 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		hWhiteBGBrush	= CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
 
-		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
-		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
+		NeoCDList_ShowPreviewBuf(hNeoCDWnd, NULL, 0, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+		NeoCDList_ShowPreviewBuf(hNeoCDWnd, NULL, 0, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
 
 		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
 		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
@@ -613,7 +672,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 	if(Msg == WM_CLOSE)
 	{
-		NeoCDList_Clean();
+		NeoCDList_Clean(true);
 
 		DeleteObject(hWhiteBGBrush);
 
@@ -686,7 +745,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					TCHAR szFront[512];
 					TCHAR szBack[512];
 
-					_stprintf(szFront, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
+					_stprintf(szFront, _T("%s%s.png"), szNeoCDCoverDir, ngcd_list[nItem].szShortName );
 
 					_stprintf(szBack, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nItem].szShortName );
 					if (!FileExists(szBack)) {
@@ -694,16 +753,32 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nItem].szShortName );
 					}
 
+					// Load up the data, first checking for file presence, then zip presence.
+					void *pngf = NULL;
+					size_t pngfsize = 0;
+
+					void *pngb = NULL;
+					size_t pngbsize = 0;
+
+					if (!LoadFileToBuffer(szFront, &pngf, &pngfsize)) {
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdzcovers", ngcd_list[nItem].szShortName, ".png", &pngf, &pngfsize);
+					}
+					if (!LoadFileToBuffer(szBack, &pngb, &pngbsize)) {
+						const bool bFromZip = LoadZipToBuffer(szNeoCDPreviewDir, "neocdzpreviews", ngcd_list[nItem].szShortName, ".png", &pngb, &pngbsize);
+
+						if (!bFromZip) {
+							LoadZipToBuffer(szAppPreviewsPath, "previews", ngcd_list[nItem].szShortName, ".png", &pngb, &pngbsize);
+						}
+					}
+
 					// Front / Back Cover preview
-					NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
-					NeoCDList_ShowPreview(hNeoCDWnd, szBack, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
+					NeoCDList_ShowPreviewBuf(hNeoCDWnd, pngf, pngfsize, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+					NeoCDList_ShowPreviewBuf(hNeoCDWnd, pngb, pngbsize, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
 
 					nSelectedItem = nItem;
 					break;
 				}
 			}
-
-
 		}
 
 		// Sort Change
@@ -727,7 +802,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				return 0;
 			}
 
-			NeoCDList_Clean();
+			NeoCDList_Clean(true);
 
 			hNeoCDWnd	= NULL;
 			hListView	= NULL;
@@ -746,34 +821,50 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 			if(nCtrlID == IDC_NCD_FRONT_PIC)
 			{
-				if(nSelectedItem >= 0) {
-					_stprintf(szBigCover, _T("%s%s-front.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
+				if(nSelectedItem >= 0)
+				{
+					TCHAR szFront[512];
+					_stprintf(szFront, _T("%s%s.png"), szNeoCDCoverDir, ngcd_list[nSelectedItem].szShortName );
 
-					if(!FileExists(szBigCover)) {
-						szBigCover[0] = 0;
-						return 0;
+					pZoomPng = NULL;
+					nZoomPngSize = 0;
+
+					if (!LoadFileToBuffer(szFront, &pZoomPng, &nZoomPngSize)) {
+						LoadZipToBuffer(szNeoCDCoverDir, "neocdzcovers", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
 					}
 
-					NeoCDList_InitCoverDlg();
+					if (pZoomPng != NULL && nZoomPngSize > 0) {
+						NeoCDList_InitCoverDlg();
+					}
 				}
 				return 0;
 			}
 
 			if(nCtrlID == IDC_NCD_BACK_PIC)
 			{
-				if(nSelectedItem >= 0) {
-					_stprintf(szBigCover, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nSelectedItem].szShortName );
-					if (!FileExists(szBigCover)) {
+				if(nSelectedItem >= 0)
+				{
+					TCHAR szBack[512];
+					_stprintf(szBack, _T("%s%s.png"), szNeoCDPreviewDir, ngcd_list[nSelectedItem].szShortName );
+					if (!FileExists(szBack)) {
 						// no neocd-specific preview? fall-back to regular previews
-						_stprintf(szBigCover, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nSelectedItem].szShortName );
+						_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nSelectedItem].szShortName );
 					}
 
-					if(!FileExists(szBigCover)) {
-						szBigCover[0] = 0;
-						return 0;
+					pZoomPng = NULL;
+					nZoomPngSize = 0;
+
+					if (!LoadFileToBuffer(szBack, &pZoomPng, &nZoomPngSize)) {
+						const bool bFromZip = LoadZipToBuffer(szNeoCDPreviewDir, "neocdzpreviews", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
+
+						if (!bFromZip) {
+							LoadZipToBuffer(szAppPreviewsPath, "previews", ngcd_list[nSelectedItem].szShortName, ".png", &pZoomPng, &nZoomPngSize);
+						}
 					}
 
-					NeoCDList_InitCoverDlg();
+					if (pZoomPng != NULL && nZoomPngSize > 0) {
+						NeoCDList_InitCoverDlg();
+					}
 				}
 				return 0;
 			}
@@ -802,7 +893,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						break;
 					}
 
-					NeoCDList_Clean();
+					NeoCDList_Clean(true);
 
 					DeleteObject(hWhiteBGBrush);
 
@@ -819,7 +910,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				{
 					if(bProcessingList) break;
 
-					NeoCDList_Clean();
+					NeoCDList_Clean(false);
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
 					break;
@@ -829,7 +920,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				{
 					if(bProcessingList) break;
 
-					NeoCDList_Clean();
+					NeoCDList_Clean(false);
 
 					SupportDirCreate(hNeoCDWnd);
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
@@ -847,7 +938,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 					if(bProcessingList) break;
 
-					NeoCDList_Clean();
+					NeoCDList_Clean(false);
 
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
@@ -864,7 +955,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 					if(bProcessingList) break;
 
-					NeoCDList_Clean();
+					NeoCDList_Clean(false);
 
 					hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 					SetFocus(hListView);
@@ -873,7 +964,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 #endif
 				case IDC_NCD_CANCEL_BUTTON:
 				{
-					NeoCDList_Clean();
+					NeoCDList_Clean(true);
 
 					DeleteObject(hWhiteBGBrush);
 
@@ -906,6 +997,7 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 	SetFocus(hListView);
 
 	bProcessingList = false;
+	CloseHandle(hProcessThread);
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
 

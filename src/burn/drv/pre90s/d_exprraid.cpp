@@ -764,6 +764,7 @@ struct BurnDriver BurnDrvExprraidu = {
 
 
 // Express Raider (Italy)
+// PCB manufactured in Italy by Gecas under Data East lic
 
 static struct BurnRomInfo exprraidiRomDesc[] = {
 	{ "cz01-2e.16b",	0x4000, 0xa0ae6756, 1 | BRF_PRG | BRF_ESS }, //  0 DECO16 CPU Code
@@ -806,6 +807,57 @@ struct BurnDriver BurnDrvExprraidi = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, exprraidiRomInfo, exprraidiRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 240, 4, 3
+};
+
+
+// Express Raider (bootleg)
+// basically wexpress3 with Express Raider tilemap ROMs
+
+static struct BurnRomInfo exprraidblRomDesc[] = {
+	{ "2.15b",			0x4000, 0x40d70fcb, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "3.15a",			0x8000, 0xd983e9b8, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "7.1a",			0x8000, 0x552e6112, 2 | BRF_GRA },           //  2 M6809 Code
+
+	{ "5b",				0x4000, 0x686bac23, 3 | BRF_GRA },           //  3 Characters
+
+	{ "16h",			0x8000, 0x1ed250d1, 4 | BRF_GRA },           //  4 Sprites
+	{ "14h",			0x8000, 0x2293fc61, 4 | BRF_GRA },           //  5
+	{ "16k",			0x8000, 0x7c3bfd00, 4 | BRF_GRA },           //  6
+	{ "14k",			0x8000, 0xea2294c8, 4 | BRF_GRA },           //  7
+	{ "13k",			0x8000, 0xb7418335, 4 | BRF_GRA },           //  8
+	{ "11k",			0x8000, 0x2f611978, 4 | BRF_GRA },           //  9
+
+	{ "6.8e",			0x8000, 0x643a1bd3, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "5.8f",			0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
+	{ "4.8g",			0x8000, 0xb9bb448b, 5 | BRF_GRA },           // 12
+
+	{ "1.12f",			0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
+
+	{ "prom.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
+	{ "prom.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
+	{ "prom.7b",		0x0100, 0xa6168d7f, 7 | BRF_GRA },           // 16
+	
+	{ "prom.9b",		0x0100, 0x52aad300, 0 | BRF_OPT },           // 17 Unknown PROM
+};
+
+STD_ROM_PICK(exprraidbl)
+STD_ROM_FN(exprraidbl)
+
+static INT32 ExprraidblInit()
+{
+	bootleg_type = 3;
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvExprraidbl = {
+	"exprraidbl", "exprraid", NULL, NULL, "1986",
+	"Express Raider (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, exprraidblRomInfo, exprraidblRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
+	ExprraidblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 

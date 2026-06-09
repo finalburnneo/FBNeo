@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "pic16c5x_intf.h"
+#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -39,6 +40,8 @@ static UINT8 snd_flag;
 static UINT8 oki_bank0;
 static UINT8 oki_bank1;
 static UINT8 oki_command;
+
+static INT32 mastfury = 0;
 
 static UINT8 DrvReset;
 static UINT8 DrvJoy1[16];
@@ -178,6 +181,21 @@ static void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
+	if (mastfury)
+	{
+		switch (address)
+		{
+			case 0x800181:
+			case 0x800183:
+				BurnYM2151Write((address >> 1) & 1, data);
+			return;
+
+			case 0x800189:
+				MSM6295Write(0, data);
+			return;
+		}
+	}
+
 	switch (address)
 	{
 		case 0x800030:
@@ -193,6 +211,7 @@ static void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 			snd_flag = 1;
 		return;
 	}
+	bprintf(0, _T("wb  %x  %x\n"), address, data);
 }
 
 static void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
@@ -203,8 +222,8 @@ static void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if (address >= 0x800100 && address <= 0x80011f) {
-		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = BURN_ENDIAN_SWAP_INT16(data);
+	if (address >= 0x800100 && address <= 0x800121) {
+		*((UINT16*)(DrvVidRegs + (address & 0x3e))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -214,10 +233,28 @@ static void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 			priority_control = data;
 		return;
 	}
+
+	if ((address & 0xfff800) == 0x930800) return; // nop
+
+	if (address != 0x80014a && address != 0x8001e0) // also nops
+		bprintf(0, _T("ww  %x  %x\n"), address, data);
 }
 
 static UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 {	
+	if (mastfury)
+	{
+		switch (address)
+		{
+			case 0x800181:
+			case 0x800183:
+				return BurnYM2151Read();
+
+			case 0x800189:
+				return MSM6295Read(0);
+		}
+	}
+
 	switch (address)
 	{
 		case 0x800000:
@@ -238,6 +275,8 @@ static UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 		case 0x800176:
 			return DrvInputs[2] >> 8;
 	}
+
+	bprintf (0, _T("rb: %5.5x\n"), address);
 
 	return 0;
 }
@@ -348,22 +387,28 @@ static void drgnmst_sound_writeport(UINT16 port, UINT8 data)
 static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)(DrvBgRAM + offs * 4);
-	
-	TILE_SET_INFO(0, (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x1fff) + 0x0800, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
+
+	INT32 code = (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x13ff) ^ 0x1c00;
+
+	TILE_SET_INFO(0, code, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
 }
 
 static tilemap_callback( mg )
 {
 	UINT16 *ram = (UINT16*)(DrvMidRAM + offs * 4);
-	
-	TILE_SET_INFO(1, (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x7fff) - 0x2000, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
+
+	INT32 code = (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x7fff) ^ 0x6000;
+
+	TILE_SET_INFO(1, code, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
 }
 
 static tilemap_callback( fg )
 {
 	UINT16 *ram = (UINT16*)(DrvFgRAM + offs * 4);
-	
-	TILE_SET_INFO(2, (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xfff) | ((offs & 0x20) << 10), BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
+
+	INT32 bank = ((~ram[0] & 0x4000) << 2) | (~ram[0] & 0x8000);
+
+	TILE_SET_INFO(2, (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xfff) | bank, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
 }
 
 static tilemap_scan( fg )
@@ -394,11 +439,13 @@ static INT32 DrvDoReset()
 	set_oki_bank0(0);
 	set_oki_bank1(0);
 
+	BurnYM2151Reset();
+
 	MSM6295Reset();
-	
+
 	priority_control = 0;
 	coin_lockout = 0;
-	
+
 	pic16c5x_port0 = 0;
 	oki_control = 0;
 	snd_command = 0;
@@ -423,9 +470,9 @@ static INT32 MemIndex()
 	DrvSndROM1			= Next; Next += 0x200000;
 
 	DrvGfxROM0			= Next; Next += 0x1000000;
-	DrvGfxROM1			= Next; Next += 0x400000;
-	DrvGfxROM2			= Next; Next += 0x400000;
-	DrvGfxROM3			= Next; Next += 0x400000;
+	DrvGfxROM1			= Next; Next += 0x800000;
+	DrvGfxROM2			= Next; Next += 0x800000;
+	DrvGfxROM3			= Next; Next += 0x800000;
 
 	DrvPalette			= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
@@ -440,7 +487,7 @@ static INT32 MemIndex()
 	DrvFgRAM			= Next; Next += 0x004000;
 	DrvRowScroll		= Next; Next += 0x004000;
 
-	DrvVidRegs			= Next; Next += 0x000020;
+	DrvVidRegs			= Next; Next += 0x000040;
 
 	RamEnd				= Next;
 
@@ -449,10 +496,10 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
+static INT32 DrvGfxDecode(int bgsize)
 {
 	INT32 Plane[4]   = { 24, 8, 16, 0 };
-	INT32 XOffs0[32] = { STEP8(0x800000,1), STEP8(0,1), STEP8(0x800020,1), STEP8(0x20,1) };
+	INT32 XOffs0[32] = { STEP8((bgsize*8/2),1), STEP8(0,1), STEP8((bgsize*8/2)+0x20,1), STEP8(0x20,1) };
 	INT32 YOffs0[16] = { STEP16(0,32) };
 	INT32 XOffs1[16] = { STEP8(0x2000000,1), STEP8(0,1) };
 	INT32 YOffs1[32] = { STEP32(0,64) };
@@ -466,11 +513,11 @@ static INT32 DrvGfxDecode()
 
 	GfxDecode(0x10000, 4, 16, 16, Plane, XOffs1 + 0, YOffs0, 0x200, tmp, DrvGfxROM0);
 
-	memcpy (tmp, DrvGfxROM1, 0x200000);
+	memcpy (tmp, DrvGfxROM1, 0x400000);
 
-	GfxDecode(0x10000, 4,  8,  8, Plane, XOffs0 + 8, YOffs0, 0x100, tmp, DrvGfxROM1);
-	GfxDecode(0x04000, 4, 16, 16, Plane, XOffs0 + 0, YOffs0, 0x200, tmp, DrvGfxROM2);
-	GfxDecode(0x01000, 4, 32, 32, Plane, XOffs0 + 0, YOffs1, 0x800, tmp, DrvGfxROM3);
+	GfxDecode(0x20000, 4,  8,  8, Plane, XOffs0 + 8, YOffs0, 0x100, tmp, DrvGfxROM1);
+	GfxDecode(0x08000, 4, 16, 16, Plane, XOffs0 + 0, YOffs0, 0x200, tmp, DrvGfxROM2);
+	GfxDecode(0x02000, 4, 32, 32, Plane, XOffs0 + 0, YOffs1, 0x800, tmp, DrvGfxROM3);
 
 	BurnFree (tmp);
 
@@ -479,38 +526,33 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
 		if (BurnLoadRom(Drv68KROM  + 0x000001, k++, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x000000, k++, 2)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000, k++, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000001, k++, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x000000, k++, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x000001, k++, 2)) return 1;
-		memcpy (DrvGfxROM0 + 0x000000, DrvGfxROM1 + 0x000000, 0x100000);
-		memcpy (DrvGfxROM0 + 0x400000, DrvGfxROM1 + 0x100000, 0x100000);
-		memcpy (DrvGfxROM0 + 0x100000, DrvGfxROM1 + 0x200000, 0x100000);
-		memcpy (DrvGfxROM0 + 0x500000, DrvGfxROM1 + 0x300000, 0x100000);
-		memcpy (DrvGfxROM0 + 0x200000, DrvGfxROM2 + 0x000000, 0x080000);
-		memcpy (DrvGfxROM0 + 0x600000, DrvGfxROM2 + 0x080000, 0x080000);
+		if (BurnLoadRom(DrvGfxROM3 + 0x000000, k++, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x400000, k++, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x400001, k++, 2)) return 1;
+		memcpy (DrvGfxROM0 + 0x000000, DrvGfxROM3 + 0x000000, 0x100000);
+		memcpy (DrvGfxROM0 + 0x400000, DrvGfxROM3 + 0x100000, 0x100000);
+		memcpy (DrvGfxROM0 + 0x100000, DrvGfxROM3 + 0x200000, 0x100000);
+		memcpy (DrvGfxROM0 + 0x500000, DrvGfxROM3 + 0x300000, 0x100000);
+		memcpy (DrvGfxROM0 + 0x200000, DrvGfxROM3 + 0x400000, 0x100000);
+		memcpy (DrvGfxROM0 + 0x600000, DrvGfxROM3 + (mastfury ? 0x500000 : 0x480000), 0x100000);
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x000001, k++, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x000000, k++, 2)) return 1;
-
-		if (BurnLoadPicROM(DrvPicROM, k++, 0xb7b)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x000000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM1 + 0x000000, k++, 1)) return 1;
 
-		DrvGfxDecode();
+		if (BurnLoadPicROM(DrvPicROM, k++, 0xb7b)) return 1;
+
+		DrvGfxDecode(mastfury ? 0x400000 : 0x200000);
 	}
 
 	SekInit(0, 0x68000);
@@ -533,18 +575,22 @@ static INT32 DrvInit()
 	pic16c5xSetReadPortHandler(drgnmst_sound_readport);
 	pic16c5xSetWritePortHandler(drgnmst_sound_writeport);
 
-	MSM6295Init(0, 1000000 / 132, 0);
-	MSM6295Init(1, 1000000 / 132, 0);
-	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.08, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.08, BURN_SND_ROUTE_RIGHT);
+
+	MSM6295Init(0, 1000000 / MSM6295_PIN7_HIGH, 1);
+	MSM6295Init(1, 1000000 / MSM6295_PIN7_HIGH, 1);
+	MSM6295SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.90, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 32, 32, 64, 64);
 	GenericTilemapInit(1, mg_map_scan, mg_map_callback, 16, 16, 64, 64);
 	GenericTilemapInit(2, fg_map_scan, fg_map_callback,  8,  8, 64, 64);
-	GenericTilemapSetGfx(0, DrvGfxROM3, 4, 32, 32, 0x400000, 0x600, 0x1f);
-	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, 0x400000, 0x400, 0x1f);
-	GenericTilemapSetGfx(2, DrvGfxROM1, 4,  8,  8, 0x400000, 0x200, 0x1f);
+	GenericTilemapSetGfx(0, DrvGfxROM3, 4, 32, 32, mastfury ? 0x800000 : 0x400000, 0x600, 0x1f);
+	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, mastfury ? 0x800000 : 0x400000, 0x400, 0x1f);
+	GenericTilemapSetGfx(2, DrvGfxROM1, 4,  8,  8, mastfury ? 0x800000 : 0x400000, 0x200, 0x1f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, -64, -16);
 	GenericTilemapSetOffsets(1, -64, 0); // line scrolling in generic tilemaps needs this fixed!!
 	GenericTilemapSetScrollRows(1, 1024);
@@ -561,11 +607,14 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	BurnYM2151Exit();
 	SekExit();
 	pic16c5xExit();
 	MSM6295Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
+
+	mastfury = 0;
 
 	return 0;
 }
@@ -596,18 +645,18 @@ static void draw_sprites()
 		{
 			for (INT32 x = 0; x <= wide; x++)
 			{
-				INT32 sx = (xpos+incx*x);
-				INT32 sy = (ypos+incy*y);
-				INT32 code = number+x+y*16;
+				INT32 sx = xpos + incx * x;
+				INT32 sy = ypos + incy * y;
+				UINT16 code = number + x + y * 16;
 
-				Draw16x16MaskTile(pTransDraw, code & 0xffff, sx, sy, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM0);
+				Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM0);
 			}
 		}
 	}
 }
 
 static INT32 DrvDraw()
-{	
+{
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x4000; i+=2) {
 			palette_write(i);
@@ -618,57 +667,61 @@ static INT32 DrvDraw()
 	BurnTransferClear(0xf);
 
 	UINT16 *vreg = (UINT16*)DrvVidRegs;
+	UINT16 *rs = (UINT16*)(DrvRowScroll + ((BURN_ENDIAN_SWAP_INT16(vreg[0x08/2]) & 0x30) << 8));
+	INT32 linescroll_adjust = 0;
 
-	GenericTilemapSetScrollX(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0c/2]) - 18);
-	GenericTilemapSetScrollY(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0e/2]));
-//	GenericTilemapSetScrollX(1, vreg[0x10/2] - 16);
-	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(vreg[0x12/2]) + 16);
-	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(vreg[0x14/2]) - 18);
-	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(vreg[0x16/2]));
-
+	if (mastfury)
 	{
-		UINT16 *rs = (UINT16*)(DrvRowScroll + ((BURN_ENDIAN_SWAP_INT16(vreg[0x08/2]) & 0x30) << 8));
-
-		for (INT32 y = 0; y < 1024; y++) {
-			GenericTilemapSetScrollRow(1, y, (BURN_ENDIAN_SWAP_INT16(vreg[0x10/2]) - 16) + BURN_ENDIAN_SWAP_INT16(rs[y]));
-		}
+		GenericTilemapSetScrollX(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0c/2]) - 14);
+		GenericTilemapSetScrollY(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0e/2]));
+		linescroll_adjust         = BURN_ENDIAN_SWAP_INT16(vreg[0x12/2]) - 14;
+		GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(vreg[0x10/2]) + 16);
+		GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(vreg[0x14/2]) - 18);
+		GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(vreg[0x20/2]));
 	}
-	
+	else
+	{
+		GenericTilemapSetScrollX(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0c/2]) - 18);
+		GenericTilemapSetScrollY(2, BURN_ENDIAN_SWAP_INT16(vreg[0x0e/2]));
+		linescroll_adjust         = BURN_ENDIAN_SWAP_INT16(vreg[0x10/2]) - 16;
+		GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(vreg[0x12/2]) + 16);
+		GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(vreg[0x14/2]) - 18);
+		GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(vreg[0x16/2]));
+	}
+
+	for (INT32 y = 0; y < 1024; y++) {
+		GenericTilemapSetScrollRow(1, y, linescroll_adjust + BURN_ENDIAN_SWAP_INT16(rs[y]));
+	}
+
 	GenericTilemapSetEnable(0, (nBurnLayer >> 0) & 1);
 	GenericTilemapSetEnable(1, (nBurnLayer >> 1) & 1);
 	GenericTilemapSetEnable(2, (nBurnLayer >> 2) & 1);
-	
+
+	INT32 prio = 0x120; // each nibble represents a layer, top,middle,bottom
+
 	switch (priority_control)
 	{
-		case 0x2451:
-		case 0x2d9a:
-		case 0x2440:
-		case 0x245a:
-			GenericTilemapDraw(2, pTransDraw, 0);
-			GenericTilemapDraw(1, pTransDraw, 0);
-			GenericTilemapDraw(0, pTransDraw, 0);
-		break;
-
-		case 0x23c0:
-			GenericTilemapDraw(0, pTransDraw, 0);
-			GenericTilemapDraw(2, pTransDraw, 0);
-			GenericTilemapDraw(1, pTransDraw, 0);
-		break;
-
-		case 0x38da:
-		case 0x215a:
-		case 0x2140:
-			GenericTilemapDraw(2, pTransDraw, 0);
-			GenericTilemapDraw(0, pTransDraw, 0);
-			GenericTilemapDraw(1, pTransDraw, 0);
-		break;
-
-		case 0x2d80:
-			GenericTilemapDraw(1, pTransDraw, 0);
-			GenericTilemapDraw(0, pTransDraw, 0);
-			GenericTilemapDraw(2, pTransDraw, 0);
-		break;
+		case 0x23c0: prio = 0x120; break;
+		case 0x2cc0: prio = 0x210; break;
+		case 0x38c0: prio = 0x210; break;
+		case 0x2780: prio = 0x021; break;
+		case 0x279a: prio = 0x021; break;
+		case 0x2d80: prio = 0x201; break;
+		case 0x2cda: prio = 0x201; break;
+		case 0x38da: prio = 0x102; break;
+		case 0x215a: prio = 0x102; break;
+		case 0x2140: prio = 0x102; break;
+		case 0x2451: prio = 0x012; break;
+		case 0x2d9a: prio = 0x012; break;
+		case 0x2440: prio = 0x012; break;
+		case 0x245a: prio = 0x012; break;
 	}
+
+	BurnTransferClear();
+
+	GenericTilemapDraw((prio >> 0) & 0xf, pTransDraw, TMAP_FORCEOPAQUE);
+	GenericTilemapDraw((prio >> 4) & 0xf, pTransDraw, 0);
+	GenericTilemapDraw((prio >> 8) & 0xf, pTransDraw, 0);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
@@ -704,19 +757,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		if (i == 240) {
+
+		if (i == 240)
+		{
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
 		}
 
-		CPU_RUN(1, pic16c5x);
+		if (mastfury == 0) CPU_RUN(1, pic16c5x);
 	}
 
 	SekClose();
 
 	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -725,19 +782,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029697;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -745,6 +795,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		pic16c5xScan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
+
+		if (mastfury) BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(pic16c5x_port0);
 		SCAN_VAR(oki_control);
@@ -756,7 +808,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(priority_control);
 		SCAN_VAR(coin_lockout);
 	}
-	
+
 	if (nAction & ACB_WRITE) {
 		set_oki_bank0(oki_bank0);
 		set_oki_bank1(oki_bank1);
@@ -765,25 +817,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
+
 // Dragon Master (set 1)
 
 static struct BurnRomInfo drgnmstRomDesc[] = {
-	{ "dm1000e",		0x080000, 0x29467dac, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "dm1000o",		0x080000, 0xba48e9cf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dm1000e",			0x080000, 0x29467dac, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "dm1000o",			0x080000, 0xba48e9cf, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "dm1003",			0x200000, 0x0ca10e81, 2 | BRF_GRA },           //  2 Sprites
-	{ "dm1005",			0x200000, 0x4c2b1db5, 2 | BRF_GRA },           //  3
-	{ "dm1004",			0x080000, 0x1a9ac249, 2 | BRF_GRA },           //  4
-	{ "dm1006",			0x080000, 0xc46da6fc, 2 | BRF_GRA },           //  5
+	{ "dm1003",				0x200000, 0x0ca10e81, 2 | BRF_GRA },           //  2 Sprites
+	{ "dm1005",				0x200000, 0x4c2b1db5, 2 | BRF_GRA },           //  3
+	{ "dm1004",				0x080000, 0x1a9ac249, 2 | BRF_GRA },           //  4
+	{ "dm1006",				0x080000, 0xc46da6fc, 2 | BRF_GRA },           //  5
 
-	{ "dm1007",			0x100000, 0xd5ad81c4, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "dm1008",			0x100000, 0xb8572be3, 3 | BRF_GRA },           //  7
+	{ "dm1007",				0x100000, 0xd5ad81c4, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "dm1008",				0x100000, 0xb8572be3, 3 | BRF_GRA },           //  7
 
-	{ "pic16c55.hex",	0x000b7b, 0xf17011e7, 4 | BRF_PRG | BRF_ESS }, //  8 pic16c55 Hex data
+	{ "dm1001",				0x100000, 0x63566f7f, 4 | BRF_SND },           //  8 OKI6295 #0 Samples
 
-	{ "dm1001",			0x100000, 0x63566f7f, 5 | BRF_SND },           //  9 OKI6295 #0 Samples
+	{ "dm1002",				0x200000, 0x0f1a874e, 5 | BRF_SND },           //  9 OKI6295 #1 Samples
 
-	{ "dm1002",			0x200000, 0x0f1a874e, 6 | BRF_SND },           // 10 OKI6295 #1 Samples
+	{ "pic16c55.hex",		0x000b7b, 0xf17011e7, 6 | BRF_PRG | BRF_ESS }, // 10 pic16c55 Hex data
 };
 
 STD_ROM_PICK(drgnmst)
@@ -803,22 +856,22 @@ struct BurnDriver BurnDrvDrgnmst = {
 // Dragon Master (set 2)
 
 static struct BurnRomInfo drgnmst2RomDesc[] = {
-	{ "even",			0x080000, 0x63eae56a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "odd",			0x080000, 0x35734a49, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "even",				0x080000, 0x63eae56a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "odd",				0x080000, 0x35734a49, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "dm1003",			0x200000, 0x0ca10e81, 2 | BRF_GRA },           //  2 Sprites
-	{ "dm1005",			0x200000, 0x4c2b1db5, 2 | BRF_GRA },           //  3
-	{ "dm1004",			0x080000, 0x1a9ac249, 2 | BRF_GRA },           //  4
-	{ "dm1006",			0x080000, 0xc46da6fc, 2 | BRF_GRA },           //  5
+	{ "dm1003",				0x200000, 0x0ca10e81, 2 | BRF_GRA },           //  2 Sprites
+	{ "dm1005",				0x200000, 0x4c2b1db5, 2 | BRF_GRA },           //  3
+	{ "dm1004",				0x080000, 0x1a9ac249, 2 | BRF_GRA },           //  4
+	{ "dm1006",				0x080000, 0xc46da6fc, 2 | BRF_GRA },           //  5
 
-	{ "dm1007",			0x100000, 0xd5ad81c4, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "dm1008",			0x100000, 0xb8572be3, 3 | BRF_GRA },           //  7
+	{ "dm1007",				0x100000, 0xd5ad81c4, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "dm1008",				0x100000, 0xb8572be3, 3 | BRF_GRA },           //  7
 
-	{ "pic16c55.hex",	0x000b7b, 0xf17011e7, 4 | BRF_PRG | BRF_ESS }, //  8 pic16c55 Hex data
+	{ "dm1001",				0x100000, 0x63566f7f, 4 | BRF_SND },           //  8 OKI6295 #0 Samples
 
-	{ "dm1001",			0x100000, 0x63566f7f, 5 | BRF_SND },           //  9 OKI6295 #0 Samples
+	{ "dm1002",				0x200000, 0x0f1a874e, 5 | BRF_SND },           //  9 OKI6295 #1 Samples
 
-	{ "dm1002",			0x200000, 0x0f1a874e, 6 | BRF_SND },           // 10 OKI6295 #1 Samples
+	{ "pic16c55.hex",		0x000b7b, 0xf17011e7, 6 | BRF_PRG | BRF_ESS }, // 10 pic16c55 Hex data
 };
 
 STD_ROM_PICK(drgnmst2)
@@ -831,5 +884,43 @@ struct BurnDriver BurnDrvDrgnmst2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, drgnmst2RomInfo, drgnmst2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	384, 224, 4, 3
+};
+
+
+// Master's Fury
+
+static struct BurnRomInfo mastfuryRomDesc[] = {
+	{ "master012.4m",		0x080000, 0x020a3c50,  1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "master013.4m",		0x080000, 0x1e7dd287,  1 | BRF_PRG | BRF_ESS },	//  1 
+
+	{ "dmast96_mvo1x",		0x200000, 0x9a597497,  2 | BRF_GRA },			//  2 Sprites
+	{ "dmast96_mvo3x",		0x200000, 0xbe01b829,  2 | BRF_GRA },			//  3
+	{ "dmast96_mvo2x",		0x100000, 0x3eab296c,  2 | BRF_GRA },			//  4 
+	{ "dmast96_mvo4x",		0x100000, 0xd870b6ce,  2 | BRF_GRA },			//  5 
+
+	{ "mf0016-4",			0x200000, 0x8f5b7c82,  3 | BRF_GRA },			//  6 Background Tiles
+	{ "mf0016-3",			0x200000, 0x0946bc61,  3 | BRF_GRA },			//  7
+
+	{ "dmast96_voi1x",		0x040000, 0xfc5161a1,  4 | BRF_SND },			//  8 OKI6295 #0 Samples
+};
+
+STD_ROM_PICK(mastfury)
+STD_ROM_FN(mastfury)
+
+static INT32 MastfuryInit()
+{
+	mastfury = 1;
+
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvMastfury = {
+	"mastfury", NULL, NULL, NULL, "1996",
+	"Master's Fury\0", NULL, "Unico", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	NULL, mastfuryRomInfo, mastfuryRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	MastfuryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3
 };

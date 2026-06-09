@@ -3736,6 +3736,12 @@
     <ClCompile Include="..\..\src\dep\libs\zip\zip.c">
       <Filter>libs\zip</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segag80r.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

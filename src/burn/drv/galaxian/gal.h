@@ -162,6 +162,7 @@ void GalaxianDrawBackground();
 void RockclimDrawBackground();
 void JumpbugDrawBackground();
 void FroggerDrawBackground();
+void FantastcDrawBackground();
 void TurtlesDrawBackground();
 void ScrambleDrawBackground();
 void AnteaterDrawBackground();

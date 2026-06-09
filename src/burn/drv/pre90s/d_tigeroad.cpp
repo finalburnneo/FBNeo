@@ -1233,51 +1233,51 @@ struct BurnDriver BurnDrvTigeroadb = {
 
 // Tiger Road (US bootleg, set 2)
 
-static struct BurnRomInfo tigeroadb2RomDesc[] = {
-	{ "2.bin",		0x10000, 0x14c87e07, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "5.bin",		0x10000, 0x0904254c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.bin",		0x10000, 0xcedb1f46, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "6.bin",		0x10000, 0xe117f0b1, 1 | BRF_PRG | BRF_ESS }, //  3
+static struct BurnRomInfo tigeroadbaRomDesc[] = {
+	{ "cpu.ic18",		0x10000, 0x14c87e07, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "cpu.ic5",		0x10000, 0x0904254c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cpu.ic19",		0x10000, 0xcedb1f46, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cpu.ic6",		0x10000, 0xe117f0b1, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "4.bin",		0x08000, 0xf9a7c9bf, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "cpu.ic12",		0x08000, 0xf9a7c9bf, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "1.bin",		0x08000, 0x74a9f08c, 3 | BRF_GRA },           //  5 Character Tiles
+	{ "cpu.ic60",		0x08000, 0x74a9f08c, 3 | BRF_GRA },           //  5 Character Tiles
 
-	{ "15.bin",		0x10000, 0x3db68b96, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "17.bin",		0x10000, 0xa12fa19d, 4 | BRF_GRA },           //  7 
-	{ "19.bin",		0x10000, 0xc9c396aa, 4 | BRF_GRA },           //  8 
-	{ "21.bin",		0x10000, 0x6bfc90a4, 4 | BRF_GRA },           //  9 
-	{ "23.bin",		0x10000, 0xdccf34bb, 4 | BRF_GRA },           // 10
-	{ "25.bin",		0x10000, 0xa1cee4cd, 4 | BRF_GRA },           // 11
-	{ "28.bin",		0x10000, 0x7266e3ad, 4 | BRF_GRA },           // 12
-	{ "30.bin",		0x10000, 0x5ec867a6, 4 | BRF_GRA },           // 13
-	{ "16.bin",		0x10000, 0x95c69541, 4 | BRF_GRA },           // 14 
-	{ "18.bin",		0x10000, 0xecb67157, 4 | BRF_GRA },           // 15  
-	{ "20.bin",		0x10000, 0x53f24910, 4 | BRF_GRA },           // 16 
-	{ "22.bin",		0x10000, 0x5a309d8b, 4 | BRF_GRA },           // 17 
-	{ "24.bin",		0x10000, 0x710feda8, 4 | BRF_GRA },           // 18
-	{ "26.bin",		0x10000, 0x24b08a7e, 4 | BRF_GRA },           // 19
-	{ "29.bin",		0x10000, 0x3f7539cc, 4 | BRF_GRA },           // 20
-	{ "31.bin",		0x10000, 0xe2e053cb, 4 | BRF_GRA },           // 21
+	{ "gfx.ic84",		0x10000, 0x3db68b96, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "gfx.ic82",		0x10000, 0xa12fa19d, 4 | BRF_GRA },           //  7 
+	{ "gfx.ic115",		0x10000, 0xc9c396aa, 4 | BRF_GRA },           //  8 
+	{ "gfx.ic113",		0x10000, 0x6bfc90a4, 4 | BRF_GRA },           //  9 
+	{ "gfx.ic132",		0x10000, 0xdccf34bb, 4 | BRF_GRA },           // 10
+	{ "gfx.ic130",		0x10000, 0xa1cee4cd, 4 | BRF_GRA },           // 11
+	{ "gfx.ic171",		0x10000, 0x7266e3ad, 4 | BRF_GRA },           // 12
+	{ "gfx.ic169",		0x10000, 0x5ec867a6, 4 | BRF_GRA },           // 13
+	{ "gfx.ic83",		0x10000, 0x95c69541, 4 | BRF_GRA },           // 14 
+	{ "gfx.ic81",		0x10000, 0xecb67157, 4 | BRF_GRA },           // 15  
+	{ "gfx.ic114",		0x10000, 0x53f24910, 4 | BRF_GRA },           // 16 
+	{ "gfx.ic112",		0x10000, 0x5a309d8b, 4 | BRF_GRA },           // 17 
+	{ "gfx.ic131",		0x10000, 0x710feda8, 4 | BRF_GRA },           // 18
+	{ "gfx.ic129",		0x10000, 0x24b08a7e, 4 | BRF_GRA },           // 19
+	{ "gfx.ic170",		0x10000, 0x3f7539cc, 4 | BRF_GRA },           // 20
+	{ "gfx.ic168",		0x10000, 0xe2e053cb, 4 | BRF_GRA },           // 21
 
-	{ "7.bin",		0x10000, 0x12437511, 5 | BRF_GRA },           // 22 Sprites
-	{ "9.bin",		0x10000, 0x9207b4eb, 5 | BRF_GRA },           // 23 
-	{ "8.bin",		0x10000, 0x1e8eb4be, 5 | BRF_GRA },           // 24
-	{ "10.bin",		0x10000, 0x486a7528, 5 | BRF_GRA },           // 25
-	{ "11.bin",		0x10000, 0xffb2c34c, 5 | BRF_GRA },           // 26
-	{ "13.bin",		0x10000, 0x312a40e9, 5 | BRF_GRA },           // 27
-	{ "12.bin",		0x10000, 0xe5039e3b, 5 | BRF_GRA },           // 28
-	{ "14.bin",		0x10000, 0x5e564954, 5 | BRF_GRA },           // 29
+	{ "ib.bin",			0x10000, 0x12437511, 5 | BRF_GRA },           // 22 Sprites
+	{ "gb.bin",			0x10000, 0x9207b4eb, 5 | BRF_GRA },           // 23 
+	{ "sb.bin",			0x10000, 0x1e8eb4be, 5 | BRF_GRA },           // 24
+	{ "hb.bin",			0x10000, 0x486a7528, 5 | BRF_GRA },           // 25
+	{ "vb.bin",			0x10000, 0xffb2c34c, 5 | BRF_GRA },           // 26
+	{ "tb.bin",			0x10000, 0x312a40e9, 5 | BRF_GRA },           // 27
+	{ "wb.bin",			0x10000, 0xe5039e3b, 5 | BRF_GRA },           // 28
+	{ "ub.bin",			0x10000, 0x5e564954, 5 | BRF_GRA },           // 29
 
-	{ "27.bin",		0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 30 Background Tilemaps
+	{ "gfx.ic175",		0x08000, 0xa79be1eb, 6 | BRF_GRA },           // 30 Background Tilemaps
 
-	{ "trprom.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 31 Priority Proms (unused)
+	{ "82s129.ic74",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 31 Priority Proms (unused)
 };
 
-STD_ROM_PICK(tigeroadb2)
-STD_ROM_FN(tigeroadb2)
+STD_ROM_PICK(tigeroadba)
+STD_ROM_FN(tigeroadba)
 
-static INT32 Tigeroadb2LoadRoms()
+static INT32 TigeroadbaLoadRoms()
 {
 	if (BurnLoadRom(Drv68KROM + 0x000001,  0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x000000,  1, 2)) return 1;
@@ -1301,28 +1301,28 @@ static INT32 Tigeroadb2LoadRoms()
 	return 0;
 }
 
-static INT32 Tigeroadb2Init()
+static INT32 TigeroadbaInit()
 {
-	return DrvInit(Tigeroadb2LoadRoms);
+	return DrvInit(TigeroadbaLoadRoms);
 }
 
-struct BurnDriver BurnDrvTigeroadb2 = {
-	"tigeroadb2", "tigeroad", NULL, NULL, "1987",
+struct BurnDriver BurnDrvTigeroadba = {
+	"tigeroadba", "tigeroad", NULL, NULL, "1987",
 	"Tiger Road (US bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, tigeroadb2RomInfo, tigeroadb2RomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
-	Tigeroadb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
+	NULL, tigeroadbaRomInfo, tigeroadbaRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, TigeroadDIPInfo,
+	TigeroadbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
 
 
-// F-1 Dream
+// F-1 Dream (set 1)
 /* N86614A-5 + N86614B-6 board combo */
 
 static struct BurnRomInfo f1dreamRomDesc[] = {
-	{ "f1_02.6j",	0x20000, 0x3c2ec697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "f1_03.6k",	0x20000, 0x85ebad91, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "f1_hi.6j",	0x20000, 0xc94f9c7d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "f1_lo.6k",	0x20000, 0x28bb2b3d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "f1_04.12k",	0x08000, 0x4b9a7524, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -1384,10 +1384,54 @@ static INT32 F1dreamInit()
 
 struct BurnDriver BurnDrvF1dream = {
 	"f1dream", NULL, NULL, NULL, "1988",
-	"F-1 Dream\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	"F-1 Dream (set 1)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, f1dreamRomInfo, f1dreamRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
+	F1dreamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
+	256, 224, 4, 3
+};
+
+
+// F-1 Dream (set 2)
+/* N86614A-5 + N86614B-6 board combo */
+
+static struct BurnRomInfo f1dreamaRomDesc[] = {
+	{ "f1_02.6j",	0x20000, 0x3c2ec697, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "f1_03.6k",	0x20000, 0x85ebad91, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "f1_04.12k",	0x08000, 0x4b9a7524, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "f1_01.10d",	0x08000, 0x361caf00, 3 | BRF_GRA },           //  3 Character Tiles
+
+	{ "f1_12.3f",	0x10000, 0xbc13e43c, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "f1_10.1f",	0x10000, 0xf7617ad9, 4 | BRF_GRA },           //  5
+	{ "f1_14.3h",	0x10000, 0xe33cd438, 4 | BRF_GRA },           //  6
+	{ "f1_11.2f",	0x10000, 0x4aa49cd7, 4 | BRF_GRA },           //  7
+	{ "f1_09.17f",	0x10000, 0xca622155, 4 | BRF_GRA },           //  8
+	{ "f1_13.2h",	0x10000, 0x2a63961e, 4 | BRF_GRA },           //  9
+
+	{ "f1_06.3b",	0x10000, 0x5e54e391, 5 | BRF_GRA },           // 10 Sprites
+	{ "f1_05.2b",	0x10000, 0xcdd119fd, 5 | BRF_GRA },           // 11
+	{ "f1_08.3d",	0x10000, 0x811f2e22, 5 | BRF_GRA },           // 12
+	{ "f1_07.2d",	0x10000, 0xaa9a1233, 5 | BRF_GRA },           // 13
+
+	{ "f1_15.7l",	0x08000, 0x978758b7, 6 | BRF_GRA },           // 14 Background Tilemaps
+
+	{ "tr.9e",		0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 15 Priority Proms (unused)
+	
+	{ "f1.9j",   	0x01000, 0xc8e6075c, 0 | BRF_PRG | BRF_ESS }, // 16 Protection MCU
+};
+
+STD_ROM_PICK(f1dreama)
+STD_ROM_FN(f1dreama)
+
+struct BurnDriver BurnDrvF1dreama = {
+	"f1dreama", "f1dream", NULL, NULL, "1988",
+	"F-1 Dream (set 2)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
+	NULL, f1dreamaRomInfo, f1dreamaRomName, NULL, NULL, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };

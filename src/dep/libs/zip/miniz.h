@@ -733,6 +733,14 @@ typedef int mz_bool;
 #define MZ_FILE FILE
 #endif /* #ifdef MINIZ_NO_STDIO */
 
+// fix for older mingw (iq_132)
+#ifndef _fseeki64
+#define	_fseeki64	fseek
+#endif
+#ifndef	_ftelli64
+#define	_ftelli64	ftell
+#endif
+
 #ifdef MINIZ_NO_TIME
 typedef struct mz_dummy_time_t_tag {
   mz_uint32 m_dummy1;

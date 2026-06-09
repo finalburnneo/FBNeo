@@ -19,7 +19,6 @@ enum
 struct CPU_Control_Def
 {
 	UINT8 fireIRQ;
-	UINT8 halt;
 };
 
 struct CPU_Def
@@ -408,6 +407,8 @@ static INT32 DrvFrame(void);
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin);
 
+static INT32 nCyclesExtra[3];
+
 /* === Common === */
 
 static INT32 namcoInitBoard(void)
@@ -468,14 +469,13 @@ static void machineReset()
 	cpus.CPU[CPU1].fireIRQ = 0;
 	cpus.CPU[CPU2].fireIRQ = 0;
 	cpus.CPU[CPU3].fireIRQ = 0;
-	cpus.CPU[CPU2].halt = 0;
-	cpus.CPU[CPU3].halt = 0;
 
 	machine.flipScreen = 0;
 
 	namcoCustomReset();
 	namco51xxReset();
 
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 }
 
 static INT32 DrvDoReset(void)
@@ -1148,18 +1148,16 @@ static void namcoZ80WriteCPUReset(UINT16 Offset, UINT8 dta)
 {
 	if (!(dta & 0x01))
 	{
-		ZetReset(CPU2);
-		ZetReset(CPU3);
-		cpus.CPU[CPU2].halt = 1;
-		cpus.CPU[CPU3].halt = 1;
+		ZetSetRESETLine(CPU2, 1);
+		ZetSetRESETLine(CPU3, 1);
 		namcoCustomReset();
 		namco51xxReset();
 		return;
 	}
 	else
 	{
-		cpus.CPU[CPU2].halt = 0;
-		cpus.CPU[CPU3].halt = 0;
+		ZetSetRESETLine(CPU2, 0);
+		ZetSetRESETLine(CPU3, 0);
 	}
 }
 
@@ -1299,7 +1297,8 @@ static INT32 DrvDraw(void)
 	{
 		for (UINT32 drawLayer = 0; drawLayer < machine.config->drawTableSize; drawLayer ++)
 		{
-			machine.config->drawLayerTable[drawLayer]();
+			if (drawLayer == 0 || nBurnLayer & (1<<(drawLayer-1)))
+				machine.config->drawLayerTable[drawLayer]();
 		}
 
 		BurnTransferCopy(graphics.palette);
@@ -1320,7 +1319,7 @@ static INT32 DrvFrame(void)
 
 	INT32 nInterleave = 400;
 	INT32 nCyclesTotal[3];
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
 	nCyclesTotal[1] = (18432000 / 6) / 60;
@@ -1342,29 +1341,27 @@ static INT32 DrvFrame(void)
 		}
 		ZetClose();
 
-		if (!cpus.CPU[CPU2].halt)
+		ZetOpen(CPU2);
+		CPU_RUN(1, Zet);
+		if (i == (nInterleave-1) && cpus.CPU[CPU2].fireIRQ)
 		{
-			ZetOpen(CPU2);
-			CPU_RUN(1, Zet);
-			if (i == (nInterleave-1) && cpus.CPU[CPU2].fireIRQ)
-			{
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			}
-			ZetClose();
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+		ZetClose();
 
-		if (!cpus.CPU[CPU3].halt)
+		ZetOpen(CPU3);
+		CPU_RUN(2, Zet);
+		if ( ((i == ((64 + 000) * nInterleave) / 272) ||
+			  (i == ((64 + 128) * nInterleave) / 272))   && cpus.CPU[CPU3].fireIRQ)
 		{
-			ZetOpen(CPU3);
-			CPU_RUN(2, Zet);
-			if ( ((i == ((64 + 000) * nInterleave) / 272) ||
-				  (i == ((64 + 128) * nInterleave) / 272))   && cpus.CPU[CPU3].fireIRQ)
-			{
-				ZetNmi();
-			}
-			ZetClose();
+			ZetNmi();
 		}
+		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut)
 	{
@@ -1407,8 +1404,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cpus.CPU[CPU1].fireIRQ);
 		SCAN_VAR(cpus.CPU[CPU2].fireIRQ);
 		SCAN_VAR(cpus.CPU[CPU3].fireIRQ);
-		SCAN_VAR(cpus.CPU[CPU2].halt);
-		SCAN_VAR(cpus.CPU[CPU3].halt);
+//		SCAN_VAR(cpus.CPU[CPU2].halt);
+//		SCAN_VAR(cpus.CPU[CPU3].halt);
 		SCAN_VAR(machine.flipScreen);
 		SCAN_VAR(namcoCustomIC.n06xx.customCommand);
 		SCAN_VAR(namcoCustomIC.n06xx.CPU1FireNMI);
@@ -1430,6 +1427,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(namcoCustomIC.n54xx.config1);
 		SCAN_VAR(namcoCustomIC.n54xx.config2);
 		SCAN_VAR(namcoCustomIC.n54xx.config3);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -3862,6 +3860,44 @@ static struct BurnRomInfo XeviouscRomDesc[] = {
 STD_ROM_PICK(Xeviousc)
 STD_ROM_FN(Xeviousc)
 
+static struct BurnRomInfo XeviousdRomDesc[] = {
+	{ "1983_atari_8309_136018_218.1m",     0x02000, 0xcf690308, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "1983_atari_8307_136018_219.1l",     0x02000, 0x408c4b64, BRF_ESS | BRF_PRG   }, //  1
+	
+	{ "1983_atari_8306_136018_120.4c",     0x02000, 0x14d8fa03, BRF_ESS | BRF_PRG   }, //  2 Z80 #2 Program Code
+	
+	{ "1983_atari_8306_136018_127.2c",     0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  3 Z80 #3 Program Code
+
+	{ "1983_atari_8307_136018_104.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  4 background characters
+	{ "1983_atari_8307_136018_105.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  5 bg pattern B0
+	{ "1983_atari_8307_136018_106.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  6 bg pattern B1
+
+	{ "1983_atari_8307_136018_107.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, //  7 sprite set #1, planes 0/1
+	{ "1983_atari_8307_136018_109.4p",     0x02000, 0x02417d19, BRF_GRA             }, //  8 sprite set #1, plane 2, set #2, plane 0
+	{ "1983_atari_8307_136018_108.4n",     0x02000, 0xdfb587ce, BRF_GRA             }, //  9 sprite set #2, planes 1/2
+	{ "1983_atari_8307_136018_110.4r",     0x01000, 0x605ca889, BRF_GRA             }, // 10 sprite set #3, planes 0/1
+
+	{ "1983_atari_8307_136018_101.2a",     0x01000, 0x57ed9879, BRF_GRA             }, // 11
+	{ "1983_atari_8307_136018_102.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 12
+	{ "1983_atari_8307_136018_103.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 13
+
+	{ "1983_atari_136018_115.6a",      	   0x00100, 0x5cc2727f, BRF_GRA             }, // 14 palette red component
+	{ "1983_atari_136018_116.6d",          0x00100, 0x5c8796cc, BRF_GRA             }, // 15 palette green component
+	{ "1983_atari_136018_117.6e",          0x00100, 0x3cb60975, BRF_GRA             }, // 16 palette blue component
+	{ "1983_atari_136018_114.4h",          0x00200, 0x22d98032, BRF_GRA             }, // 17 bg tiles lookup table low bits
+	{ "1983_atari_136018_113.4f",          0x00200, 0x3a7599f0, BRF_GRA             }, // 18 bg tiles lookup table high bits
+	{ "1983_atari_136018_111.3l",          0x00200, 0xfd8b9d91, BRF_GRA             }, // 19 sprite lookup table low bits
+	{ "1983_atari_136018_112.3m",          0x00200, 0xbf906d82, BRF_GRA             }, // 20 sprite lookup table high bits
+
+	{ "1983_atari_136018_129.8m",          0x00100, 0x550f06bc, BRF_GRA             }, // 21
+	{ "1983_atari_136018_128.6m",          0x00100, 0x77245b66, BRF_GRA             }, // 22 timing - not used
+
+	{ "n82s153n.1f",      				   0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
+};
+
+STD_ROM_PICK(Xeviousd)
+STD_ROM_FN(Xeviousd)
+
 static struct BurnRomInfo SxeviousRomDesc[] = {
 	{ "cpu_3p.rom",    0x01000, 0x1c8d27d5, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
 	{ "cpu_3m.rom",    0x01000, 0xfd04e615, BRF_ESS | BRF_PRG   }, //  1
@@ -3939,6 +3975,45 @@ static struct BurnRomInfo SxeviousjRomDesc[] = {
 
 STD_ROM_PICK(Sxeviousj)
 STD_ROM_FN(Sxeviousj)
+
+static struct BurnRomInfo HyxeviousRomDesc[] = {
+	{ "hx_cpu_3p.rom", 0x01000, 0x3083987b, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "hx_cpu_3m.rom", 0x01000, 0xb6afb51a, BRF_ESS | BRF_PRG   }, //  1
+	{ "hx_xv3_3.2m",   0x01000, 0x06a7b52d, BRF_ESS | BRF_PRG   }, //  2
+	{ "hx_xv3_4.2l",   0x01000, 0xbed75de8, BRF_ESS | BRF_PRG   }, //  3
+
+	{ "hx_xv3_5.3f",   0x01000, 0xd921841a, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
+	{ "hx_xv3_6.3j",   0x01000, 0x51d1339f, BRF_ESS | BRF_PRG   }, //  5
+
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
+
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  7 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  8 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  9 bg pattern B1
+
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, // 10 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, // 11 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, // 12 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 13 sprite set #3, planes 0/1
+
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 14
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 15
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 16
+
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 17 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 18 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 19 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 20 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 21 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 22 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 23 sprite lookup table high bits
+
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 24
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 25 timing - not used
+};
+
+STD_ROM_PICK(Hyxevious)
+STD_ROM_FN(Hyxevious)
 
 
 static struct BurnSampleInfo XeviousSampleDesc[] = {
@@ -4796,7 +4871,8 @@ static UINT32 xeviousGetSpriteParams(struct Namco_Sprite_Params *spriteParams, U
 			sprite &= 0x3f;
 			sprite += 0x100;
 		}
-		spriteParams->sprite = sprite;
+
+		spriteParams->sprite = sprite & ~(spriteRam3[offset + 0] & 0x03);
 		spriteParams->colour = spriteRam1[offset + 1] & 0x7f;
 
 		spriteParams->xStart = ((spriteRam2[offset + 1] - 40) + (spriteRam3[offset + 1] & 1 ) * 0x100);
@@ -4861,6 +4937,16 @@ struct BurnDriver BurnDrvXeviousc = {
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
+struct BurnDriver BurnDrvXeviousd = {
+	"xeviousd", "xevious", NULL, "xevious", "1982",
+	"Xevious (Atari, set 4)\0", NULL, "Namco (Atari license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviousdRomInfo, XeviousdRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousaDIPInfo,
+	xeviousaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
 struct BurnDriver BurnDrvSxevious = {
 	"sxevious", NULL, NULL, "xevious", "1984",
 	"Super Xevious\0", NULL, "Namco", "Miscellaneous",
@@ -4877,6 +4963,16 @@ struct BurnDriver BurnDrvSxeviousj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, SxeviousjRomInfo, SxeviousjRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,
+	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvHyxevious = {
+	"hyxevious", "sxevious", NULL, "xevious", "2026",
+	"Hyper Xevious (Hack)\0", "High difficulty level hack", "zeroco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, HyxeviousRomInfo, HyxeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,
 	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };

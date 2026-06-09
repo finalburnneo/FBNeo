@@ -1799,14 +1799,15 @@ static void cps3_draw_tilemapsprite_line(INT32 drawline, UINT32 * regs )
 	}
 }
 
-static INT32 WideScreenFrameDelay = 0;
-
 INT32 DrvCps3Draw()
 {
 	UINT32 fullscreenzoom = RamVReg[ 6 * 4 + 3 ] & 0xff;
 	UINT32 fullscreenzoomwidecheck = RamVReg[6 * 4 + 1];
-	
-	if (((fullscreenzoomwidecheck & 0xffff0000) >> 16) == 0x0265 || strcmp(BurnDrvGetTextA(DRV_NAME), "sfiii3ws") == 0) {
+
+	BurnDrvGetVisibleSize(&cps3_gfx_width, &cps3_gfx_height);
+
+	if (((fullscreenzoomwidecheck & 0xffff0000) >> 16) == 0x0265 || strcmp(BurnDrvGetTextA(DRV_NAME), "sfiii3ws") == 0)
+	{
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 		
@@ -1814,7 +1815,6 @@ INT32 DrvCps3Draw()
 			BurnDrvSetVisibleSize(496, 224);
 			BurnDrvSetAspect(16, 9);
 			ReinitialiseVideo();
-			WideScreenFrameDelay = GetCurrentFrame() + 1;
 			return 1;
 		}
 	} else {
@@ -1825,7 +1825,6 @@ INT32 DrvCps3Draw()
 			BurnDrvSetVisibleSize(384, 224);
 			BurnDrvSetAspect(4, 3);
 			ReinitialiseVideo();
-			WideScreenFrameDelay = GetCurrentFrame() + 1;
 			return 1;
 		}
 	}
@@ -2096,12 +2095,7 @@ INT32 cps3Frame()
 		}
 		cps3_palette_change = 0;
 	}
-	
-	if (WideScreenFrameDelay == GetCurrentFrame()) {
-		BurnDrvGetVisibleSize(&cps3_gfx_width, &cps3_gfx_height);
-		WideScreenFrameDelay = 0;
-	}
-	
+
 //	EEPROM[0x11] = 0x100 + (EEPROM[0x11] & 0xff);
 //	EEPROM[0x29] = 0x100 + (EEPROM[0x29] & 0xff);
 
@@ -2291,9 +2285,6 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(lastb2);
 		
 		SCAN_VAR(cps_int10_cnt);
-
-		SCAN_VAR(cps3_gfx_width);  // must be scanned (for rewind!)
-		SCAN_VAR(cps3_gfx_height); // ""
 
 		SCAN_VAR(nExtraCycles);
 

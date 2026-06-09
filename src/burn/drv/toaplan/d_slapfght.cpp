@@ -1581,6 +1581,48 @@ struct BurnDriver BurnDrvTigerhb3 = {
 };
 
 
+// Tiger-Heli (Tecfri bootleg)
+// Tecfri bootleg
+
+static struct BurnRomInfo tigerhbtRomDesc[] = {
+	{ "1.bin",				0x4000, 0xef738c68, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.bin",				0x4000, 0x65df2152, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",				0x4000, 0x4144d9e7, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a47_03.12d",			0x2000, 0xd105260f, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "a47_05.6f",			0x2000, 0xc5325b49, 4 | BRF_GRA },           //  4 Characters
+	{ "a47_04.6g",			0x2000, 0xcd59628e, 4 | BRF_GRA },           //  5
+
+	{ "a47_09.4m",			0x4000, 0x31fae8a8, 5 | BRF_GRA },           //  6 Background Tiles
+	{ "a47_08.6m",			0x4000, 0xe539af2b, 5 | BRF_GRA },           //  7
+	{ "a47_07.6n",			0x4000, 0x02fdd429, 5 | BRF_GRA },           //  8
+	{ "a47_06.6p",			0x4000, 0x11fbcc8c, 5 | BRF_GRA },           //  9
+
+	{ "a47_13.8j",			0x4000, 0x739a7e7e, 6 | BRF_GRA },           // 10 Sprites
+	{ "a47_12.6j",			0x4000, 0xc064ecdb, 6 | BRF_GRA },           // 11
+	{ "a47_11.8h",			0x4000, 0x744fae9b, 6 | BRF_GRA },           // 12
+	{ "a47_10.6h",			0x4000, 0xe1cf844e, 6 | BRF_GRA },           // 13
+
+	{ "82s129.12q",			0x0100, 0x2c69350d, 7 | BRF_GRA },           // 14 Color Data
+	{ "82s129.12m",			0x0100, 0x7142e972, 7 | BRF_GRA },           // 15
+	{ "82s129.12n",			0x0100, 0x25f273f2, 7 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(tigerhbt)
+STD_ROM_FN(tigerhbt)
+
+struct BurnDriver BurnDrvTigerhbt = {
+	"tigerhbt", "tigerh", NULL, NULL, "1985",
+	"Tiger-Heli (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	NULL, tigerhbtRomInfo, tigerhbtRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
+	TigerhInit, DrvExit, DrvFrame, SlapfighDraw, DrvScan, &DrvRecalc, 0x100,
+	240, 280, 3, 4
+};
+
+
 // Alcon (US)
 
 static struct BurnRomInfo alconRomDesc[] = {

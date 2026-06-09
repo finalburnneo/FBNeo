@@ -4323,6 +4323,7 @@ INT32 NeoInit()
 
 	nBIOS = 9999;
 	if (NeoLoad68KBIOS(NeoSystem & 0x3f)) {
+		bprintf(0, _T("Error loading bios!\n"));
 		return 1;
 	}
 

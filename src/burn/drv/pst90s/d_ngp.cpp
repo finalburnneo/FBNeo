@@ -3344,6 +3344,42 @@ struct BurnDriver BurnDrvngpc_aerialm = {
 	160, 152, 4, 3
 };
 
+// Another Day in Hell (HB, v1.1)
+static struct BurnRomInfo ngpc_anotherdihRomDesc[] = {
+	{ "Another Day in Hell v1.1 (200x)(Thor & Iceman).ngp", 1494817, 0xb7c6cf0a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_anotherdih, ngpc_anotherdih, ngpc_ngp)
+STD_ROM_FN(ngpc_anotherdih)
+
+struct BurnDriver BurnDrvngpc_anotherdih = {
+	"ngp_anotherdih", NULL, "ngp_ngp", NULL, "200x",
+	"Another Day in Hell (HB, v1.1)\0", NULL, "Thor & Iceman", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VERSHOOT, 0,
+	NgpGetZipName, ngpc_anotherdihRomInfo, ngpc_anotherdihRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Another Day in Hell (HB, v1.1, Alt)
+static struct BurnRomInfo ngpc_anotherdihaRomDesc[] = {
+	{ "Another Day in Hell v1.1 (Alt) (200x)(Thor & Iceman).ngp", 1494777, 0x73d4c2a4, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_anotherdiha, ngpc_anotherdiha, ngpc_ngp)
+STD_ROM_FN(ngpc_anotherdiha)
+
+struct BurnDriver BurnDrvngpc_anotherdiha = {
+	"ngp_anotherdiha", "ngp_anotherdih", "ngp_ngp", NULL, "200x",
+	"Another Day in Hell (HB, v1.1, Alt)\0", NULL, "Thor & Iceman", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VERSHOOT, 0,
+	NgpGetZipName, ngpc_anotherdihaRomInfo, ngpc_anotherdihaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // AntiAir Mini (HB)
 static struct BurnRomInfo ngpc_antiairmRomDesc[] = {
 	{ "AntiAir Mini (2025)(Inufuto).ngp", 524288, 0x5b006870, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -3398,6 +3434,42 @@ struct BurnDriver BurnDrvngpc_awassm = {
 	160, 152, 4, 3
 };
 
+// Barbarian: The Ultimate Warrior (HB)
+static struct BurnRomInfo ngpc_barbarianRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior (200x)(Loic Julien).ngp", 524288, 0x32a50499, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_barbarian, ngpc_barbarian, ngpc_ngp)
+STD_ROM_FN(ngpc_barbarian)
+
+struct BurnDriver BurnDrvngpc_barbarian = {
+	"ngp_barbarian", NULL, "ngp_ngp", NULL, "200x",
+	"Barbarian: The Ultimate Warrior (HB)\0", NULL, "Loic Julien", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
+	NgpGetZipName, ngpc_barbarianRomInfo, ngpc_barbarianRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Barbarian Invaders (HB, v1.01)
+static struct BurnRomInfo ngpc_barbinvRomDesc[] = {
+	{ "Barbarian Invaders v1.01 (200x)(Chris Ahchay).ngp", 524288, 0x85dc10f7, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_barbinv, ngpc_barbinv, ngpc_ngp)
+STD_ROM_FN(ngpc_barbinv)
+
+struct BurnDriver BurnDrvngpc_barbinv = {
+	"ngp_barbinv", NULL, "ngp_ngp", NULL, "200x",
+	"Barbarian Invaders (HB, v1.01)\0", NULL, "Chris Ahchay", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_SHOOT, 0,
+	NgpGetZipName, ngpc_barbinvRomInfo, ngpc_barbinvRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Battlot Mini (HB)
 static struct BurnRomInfo ngpc_battlotmRomDesc[] = {
 	{ "Battlot Mini (2025)(Inufuto).ngp", 524288, 0x694eed46, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -3412,6 +3484,24 @@ struct BurnDriver BurnDrvngpc_battlotm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_MAZE | GBF_RUNGUN, 0,
 	NgpGetZipName, ngpc_battlotmRomInfo, ngpc_battlotmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Bomberman (HB, v1.1)
+static struct BurnRomInfo ngpc_bombermanRomDesc[] = {
+	{ "Bomberman v1.1 (200x)(Thor).ngp", 1910804, 0x61b14431, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_bomberman, ngpc_bomberman, ngpc_ngp)
+STD_ROM_FN(ngpc_bomberman)
+
+struct BurnDriver BurnDrvngpc_bomberman = {
+	"ngp_bomberman", NULL, "ngp_ngp", NULL, "200x",
+	"Bomberman (HB, v1.1)\0", NULL, "Thor", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_MAZE | GBF_ACTION, 0,
+	NgpGetZipName, ngpc_bombermanRomInfo, ngpc_bombermanRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
@@ -3488,9 +3578,27 @@ struct BurnDriver BurnDrvngpc_crackym = {
 	160, 152, 4, 3
 };
 
+// Diamond Run (HB)
+static struct BurnRomInfo ngpc_diamondrunRomDesc[] = {
+	{ "Diamond Run (200x)(Ivan Mackintosh).ngp", 32768, 0x97c58fd0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_diamondrun, ngpc_diamondrun, ngpc_ngp)
+STD_ROM_FN(ngpc_diamondrun)
+
+struct BurnDriver BurnDrvngpc_diamondrun = {
+	"ngp_diamondrun", NULL, "ngp_ngp", NULL, "200x",
+	"Diamond Run (HB)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_MAZE | GBF_ACTION, 0,
+	NgpGetZipName, ngpc_diamondrunRomInfo, ngpc_diamondrunRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Don't Die, Mr. Robot! (HB, v2.0.3)
 static struct BurnRomInfo ngpc_ddmrRomDesc[] = {
-	{ "Don't Die, Mr. Robot! v2.0.3 (2025)(Infinite State Games).ngp", 2097152, 0x0c36f0f3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Don't Die, Mr. Robot! v2.0.3 (2025)(Chris Ahchay - Infinite State Games).ngp", 2097152, 0x0c36f0f3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_ddmr, ngpc_ddmr, ngpc_ngp)
@@ -3498,7 +3606,7 @@ STD_ROM_FN(ngpc_ddmr)
 
 struct BurnDriver BurnDrvngpc_ddmr = {
 	"ngp_ddmr", NULL, "ngp_ngp", NULL, "2025",
-	"Don't Die, Mr. Robot! (HB, v2.0.3)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
+	"Don't Die, Mr. Robot! (HB, v2.0.3)\0", NULL, "Chris Ahchay - Infinite State Games", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
 	NgpGetZipName, ngpc_ddmrRomInfo, ngpc_ddmrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3506,9 +3614,27 @@ struct BurnDriver BurnDrvngpc_ddmr = {
 	160, 152, 4, 3
 };
 
+// Fantasy World Dizzy (HB, v0.02)
+static struct BurnRomInfo ngpc_fwdizzyRomDesc[] = {
+	{ "Fantasy World Dizzy (HB, v0.02) (2004)(Soft'n Fuzzy).ngp", 524288, 0x5912804e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_fwdizzy, ngpc_fwdizzy, ngpc_ngp)
+STD_ROM_FN(ngpc_fwdizzy)
+
+struct BurnDriver BurnDrvngpc_fwdizzy = {
+	"ngp_fwdizzy", NULL, "ngp_ngp", NULL, "2004",
+	"Fantasy World Dizzy (HB, v0.02)\0", NULL, "Soft'n Fuzzy", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM | GBF_ADV, 0,
+	NgpGetZipName, ngpc_fwdizzyRomInfo, ngpc_fwdizzyRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Fruity Pals' Revenge (HB, v1.2)
 static struct BurnRomInfo ngpc_fruitypalsrRomDesc[] = {
-	{ "Fruity Pals' Revenge v1.2 (2025)(Infinite State Games).ngp", 2097152, 0xf92db309, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Fruity Pals' Revenge v1.2 (2025)(Chris Ahchay - Infinite State Games).ngp", 2097152, 0xf92db309, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_fruitypalsr, ngpc_fruitypalsr, ngpc_ngp)
@@ -3516,7 +3642,7 @@ STD_ROM_FN(ngpc_fruitypalsr)
 
 struct BurnDriver BurnDrvngpc_fruitypalsr = {
 	"ngp_fruitypalsr", NULL, "ngp_ngp", NULL, "2025",
-	"Fruity Pals' Revenge (HB, v1.2)\0", NULL, "Infinite State Games", "NeoGeo Pocket Color",
+	"Fruity Pals' Revenge (HB, v1.2)\0", NULL, "Chris Ahchay - Infinite State Games", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_fruitypalsrRomInfo, ngpc_fruitypalsrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3574,6 +3700,24 @@ struct BurnDriver BurnDrvngpc_hopmanm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
 	NgpGetZipName, ngpc_hopmanmRomInfo, ngpc_hopmanmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Horatio Goes Snowboarding (HB)
+static struct BurnRomInfo ngpc_horatiogsbRomDesc[] = {
+	{ "Horatio Goes Snowboarding (2026)(Chris Ahchay - Infinite State Games).ngp", 2097152, 0xc959fe3c, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_horatiogsb, ngpc_horatiogsb, ngpc_ngp)
+STD_ROM_FN(ngpc_horatiogsb)
+
+struct BurnDriver BurnDrvngpc_horatiogsb = {
+	"ngp_horatiogsb", NULL, "ngp_ngp", NULL, "2026",
+	"Horatio Goes Snowboarding (HB)\0", NULL, "Chris Ahchay - Infinite State Games", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_SPORTSMISC, 0,
+	NgpGetZipName, ngpc_horatiogsbRomInfo, ngpc_horatiogsbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
@@ -3722,6 +3866,42 @@ struct BurnDriver BurnDrvngpc_mieyenm = {
 	160, 152, 4, 3
 };
 
+// Mine (HB)
+static struct BurnRomInfo ngpc_mineRomDesc[] = {
+	{ "Mine (2000)(Ivan Mackintosh).ngp", 32768, 0x4b687e99, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_mine, ngpc_mine, ngpc_ngp)
+STD_ROM_FN(ngpc_mine)
+
+struct BurnDriver BurnDrvngpc_mine = {
+	"ngp_mine", NULL, "ngp_ngp", NULL, "2000",
+	"Mine (HB)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE | GBF_STRATEGY, 0,
+	NgpGetZipName, ngpc_mineRomInfo, ngpc_mineRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Mr. Do! (HB)
+static struct BurnRomInfo ngpc_mrdoRomDesc[] = {
+	{ "Mr. Do! (200x)(Chris Ahchay).ngp", 524288, 0x43c2e978, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_mrdo, ngpc_mrdo, ngpc_ngp)
+STD_ROM_FN(ngpc_mrdo)
+
+struct BurnDriver BurnDrvngpc_mrdo = {
+	"ngp_mrdo", NULL, "ngp_ngp", NULL, "200x",
+	"Mr. Do! (HB)\0", NULL, "Chris Ahchay", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_mrdoRomInfo, ngpc_mrdoRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Neuras Mini (HB)
 static struct BurnRomInfo ngpc_neurasmRomDesc[] = {
 	{ "Neuras Mini (2025)(Inufuto).ngp", 524288, 0xf03b93fe, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -3776,6 +3956,96 @@ struct BurnDriver BurnDrvngpc_ruptusm = {
 	160, 152, 4, 3
 };
 
+// Snake (HB, v1.2)
+static struct BurnRomInfo ngpc_snakeRomDesc[] = {
+	{ "Snake v1.2 (2000)(Ivan Mackintosh).ngp", 524288, 0x82510aa9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_snake, ngpc_snake, ngpc_ngp)
+STD_ROM_FN(ngpc_snake)
+
+struct BurnDriver BurnDrvngpc_snake = {
+	"ngp_snake", NULL, "ngp_ngp", NULL, "2000",
+	"Snake (HB, v1.2)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_snakeRomInfo, ngpc_snakeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Snake (HB, v1.2, Alt)
+static struct BurnRomInfo ngpc_snakeaRomDesc[] = {
+	{ "Snake v1.2 (Alt) (2000)(Ivan Mackintosh).ngp", 524288, 0xda7890ca, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_snakea, ngpc_snakea, ngpc_ngp)
+STD_ROM_FN(ngpc_snakea)
+
+struct BurnDriver BurnDrvngpc_snakea = {
+	"ngp_snakea", "ngp_snake", "ngp_ngp", NULL, "2000",
+	"Snake (HB, v1.2, Alt)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION, 0,
+	NgpGetZipName, ngpc_snakeaRomInfo, ngpc_snakeaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// SOD Chess (HB, v1.02)
+static struct BurnRomInfo ngpc_sodchessRomDesc[] = {
+	{ "SOD Chess v1.02 (2002)(Thor).ngp", 442759, 0xec1bb549, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_sodchess, ngpc_sodchess, ngpc_ngp)
+STD_ROM_FN(ngpc_sodchess)
+
+struct BurnDriver BurnDrvngpc_sodchess = {
+	"ngp_sodchess", NULL, "ngp_ngp", NULL, "2002",
+	"SOD Chess (HB, v1.02)\0", NULL, "Thor", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_BOARD | GBF_STRATEGY, 0,
+	NgpGetZipName, ngpc_sodchessRomInfo, ngpc_sodchessRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Solitaire (HB)
+static struct BurnRomInfo ngpc_solitaireRomDesc[] = {
+	{ "Solitaire (2000)(Ivan Mackintosh).ngp", 32768, 0x412be1aa, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_solitaire, ngpc_solitaire, ngpc_ngp)
+STD_ROM_FN(ngpc_solitaire)
+
+struct BurnDriver BurnDrvngpc_solitaire = {
+	"ngp_solitaire", NULL, "ngp_ngp", NULL, "2000",
+	"Solitaire (HB)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_CARD, 0,
+	NgpGetZipName, ngpc_solitaireRomInfo, ngpc_solitaireRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Space Invaders (HB)
+static struct BurnRomInfo ngpc_spaceinvRomDesc[] = {
+	{ "Space Invaders (200x)(Jim Bagley).ngp", 524288, 0x22ac8a4a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_spaceinv, ngpc_spaceinv, ngpc_ngp)
+STD_ROM_FN(ngpc_spaceinv)
+
+struct BurnDriver BurnDrvngpc_spaceinv = {
+	"ngp_spaceinv", NULL, "ngp_ngp", NULL, "200x",
+	"Space Invaders (HB)\0", NULL, "Jim Bagley", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VERSHOOT, 0,
+	NgpGetZipName, ngpc_spaceinvRomInfo, ngpc_spaceinvRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Svellas Micro (HB)
 static struct BurnRomInfo ngpc_svellasmRomDesc[] = {
 	{ "Svellas Micro (2025)(Inufuto).ngp", 524288, 0xc10d5ff6, 1 | BRF_PRG | BRF_ESS }, // Cartridge
@@ -3790,6 +4060,42 @@ struct BurnDriver BurnDrvngpc_svellasm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_MAZE, 0,
 	NgpGetZipName, ngpc_svellasmRomInfo, ngpc_svellasmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// SwordWork Micro (HB)
+static struct BurnRomInfo ngpc_swordworkmRomDesc[] = {
+	{ "SwordWork Micro (2026)(Inufuto).ngp", 524288, 0xd7130cdf, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_swordworkm, ngpc_swordworkm, ngpc_ngp)
+STD_ROM_FN(ngpc_swordworkm)
+
+struct BurnDriver BurnDrvngpc_swordworkm = {
+	"ngp_swordworkm", NULL, "ngp_ngp", NULL, "2026",
+	"SwordWork Micro (HB)\0", NULL, "Inufuto", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_MAZE, 0,
+	NgpGetZipName, ngpc_swordworkmRomInfo, ngpc_swordworkmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Thieves (HB)
+static struct BurnRomInfo ngpc_thievesRomDesc[] = {
+	{ "Thieves (2000)(Ivan Mackintosh).ngp", 524288, 0x68242322, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_thieves, ngpc_thieves, ngpc_ngp)
+STD_ROM_FN(ngpc_thieves)
+
+struct BurnDriver BurnDrvngpc_thieves = {
+	"ngp_thieves", NULL, "ngp_ngp", NULL, "2000",
+	"Thieves (HB)\0", NULL, "Ivan Mackintosh", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_CARD, 0,
+	NgpGetZipName, ngpc_thievesRomInfo, ngpc_thievesRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };

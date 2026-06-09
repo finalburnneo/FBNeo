@@ -73,6 +73,7 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvFakeInput[8]; // fake inputs for rotate buttons
 
 static UINT8 DrvDip[2] = { 0, 0  };
+static UINT8 DrvFakeDip = 0;
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
 
@@ -108,6 +109,7 @@ static struct BurnInputInfo QbertInputList[] = {
 	{"Select",			BIT_DIGITAL,	DrvJoy1 + 7,    "diag"      },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,     "dip"       },
 	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,     "dip"       },
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,    "dip"       },
 };
 
 STDINPUTINFO(Qbert)
@@ -144,6 +146,7 @@ static struct BurnInputInfo QbertqubInputList[] = {
 	{"Select",			BIT_DIGITAL,	DrvJoy1 + 7,    "diag"      },
 	{"Dip A",			BIT_DIPSWITCH,	DrvDip + 0,     "dip"       },
 	{"Dip B",			BIT_DIPSWITCH,	DrvDip + 1,     "dip"       },
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,    "dip"       },
 };
 
 STDINPUTINFO(Qbertqub)
@@ -377,6 +380,7 @@ static struct BurnDIPInfo QbertDIPList[]=
 	DIP_OFFSET(0x0e)
 	{0x00, 0xff, 0xff, 0x02, NULL		        		},
 	{0x01, 0xff, 0xff, 0x40, NULL	                	},
+	{0x02, 0xff, 0xff, 0x00, NULL	                	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
 	{0x00, 0x01, 0x01, 0x01, "Off"		        		},
@@ -413,6 +417,10 @@ static struct BurnDIPInfo QbertDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service"	        		},
 	{0x01, 0x01, 0x40, 0x40, "Off"		        		},
 	{0x01, 0x01, 0x40, 0x00, "On"		        		},
+
+	{0   , 0xfe, 0   ,    2, "Turn stick 45 degrees"	},
+	{0x02, 0x01, 0x01, 0x00, "Off"		        		},
+	{0x02, 0x01, 0x01, 0x01, "On"	                	},
 };
 
 STDDIPINFO(Qbert)
@@ -463,6 +471,7 @@ static struct BurnDIPInfo QbertqubDIPList[]=
 	DIP_OFFSET(0x08)
 	{0x00, 0xff, 0xff, 0x00, NULL		        		},
 	{0x01, 0xff, 0xff, 0x40, NULL	                	},
+	{0x02, 0xff, 0xff, 0x00, NULL	                	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
 	{0x00, 0x01, 0x08, 0x08, "Off"		        		},
@@ -498,6 +507,10 @@ static struct BurnDIPInfo QbertqubDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service"	        		},
 	{0x01, 0x01, 0x40, 0x40, "Off"		        		},
 	{0x01, 0x01, 0x40, 0x00, "On"		        		},
+
+	{0   , 0xfe, 0   ,    2, "Turn stick 45 degrees"	},
+	{0x02, 0x01, 0x01, 0x00, "Off"		        		},
+	{0x02, 0x01, 0x01, 0x01, "On"	                	},
 
 };
 
@@ -1886,6 +1899,21 @@ static void DrvMakeInputs()
 	DrvInput[2] = 0; // 3stooges
 	DrvInput[3] = 0; // & reactor
 	DrvInput[4] = 0;
+
+	// Turn stick 45 degrees (Q*Bert)
+	if (DrvFakeDip & 1) {
+		UINT8 Tmp[8] = {0, };
+		// Compute new values
+		for (INT32 i = 0; i < 2; i++) {
+			if (DrvJoy2[(i*4)+0] && DrvJoy2[(i*4)+2]) Tmp[(i*4)+2] = 1; // R+U = U
+			if (DrvJoy2[(i*4)+1] && DrvJoy2[(i*4)+2]) Tmp[(i*4)+1] = 1; // L+U = L
+			if (DrvJoy2[(i*4)+3] && DrvJoy2[(i*4)+1]) Tmp[(i*4)+3] = 1; // D+L = D
+			if (DrvJoy2[(i*4)+0] && DrvJoy2[(i*4)+3]) Tmp[(i*4)+0] = 1; // R+D = R
+		}
+		// Overwrite original values
+		for (INT32 i = 0; i < 8; i++)
+			DrvJoy2[i] = Tmp[i];
+	}
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {

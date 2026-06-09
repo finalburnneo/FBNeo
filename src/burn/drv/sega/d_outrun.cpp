@@ -1022,6 +1022,52 @@ static struct BurnRomInfo OutrunbRomDesc[] = {
 STD_ROM_PICK(Outrunb)
 STD_ROM_FN(Outrunb)
 
+
+static struct BurnRomInfo OutrunmRomDesc[] = {
+	{ "music-epr-10380b.133",   0x10000, 0x9bf1d4df, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "music-epr-10382b.118",   0x10000, 0x86f90666, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "music-epr-10381b.132",   0x10000, 0xcbec3f7e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "music-epr-10383b.117",   0x10000, 0xe3c5cdca, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10327a.76",    0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10329a.58",    0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328a.75",    0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330a.57",    0x10000, 0xba9ec82a, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-10268.99",     0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",    0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10267.100",    0x08000, 0xa85bb823, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",    0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10266.101",    0x08000, 0x9f6f1a74, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",    0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10371.9",      0x20000, 0x7cc86208, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10373.10",     0x20000, 0xb0d26ac9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10375.11",     0x20000, 0x59b60bd7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10377.12",     0x20000, 0x17a1b04a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10372.13",     0x20000, 0xb557078c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10374.14",     0x20000, 0x8051e517, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10376.15",     0x20000, 0xf3b8f318, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10378.16",     0x20000, 0xa1062984, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "music-epr-10187.88",     0x20000, 0x9f89439e, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",     0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",     0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",     0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",     0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10188.71a",     0x08000, 0xc2de09b2, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Outrunm)
+STD_ROM_FN(Outrunm)
+
+
 static struct BurnRomInfo ShangonRomDesc[] = {
 	{ "epr-10886.133",    0x10000, 0x8be3cd36, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10884.118",    0x10000, 0xcb06150d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2006,7 +2052,7 @@ static void OutrunWriteIO(UINT32 offset, UINT8 d)
 			return;
 		}
 	}
-	
+
 	sega_315_5195_io_write(offset, d);
 }
 
@@ -2339,6 +2385,65 @@ static INT32 ToutrunInit()
 	return System16Init();
 }
 
+// Outrun "Music Added" version, with "Added Music"
+// Neat info's:
+// https://www.ukvac.com/forum/threads/secret-extra-tune-found-in-out-run.32254/page-2#post-187668
+// https://www.ukvac.com/forum/threads/interest-check-out-run-music-extender.32384/
+
+static INT32 z80_bank;
+
+static void outrunm_bank(INT32 bank)
+{
+	z80_bank = bank;
+	ZetMapMemory(System16Z80Rom + (bank * 0x10000), 0x0000, 0xefff, MAP_ROM);
+}
+
+void __fastcall OutrunmPortWrite(UINT16 port, UINT8 data)
+{
+	if (port & 0x80) outrunm_bank((port >> 6) & 1);
+
+	System16Z80PortWrite(port, data);
+}
+
+static void OutrunmResetCallback()
+{
+	ZetOpen(0);
+	outrunm_bank(0);
+	ZetClose();
+}
+
+static INT32 OutrunmInit()
+{
+	INT32 rc = OutrunInit();
+
+	System16ResetCallbackDo = OutrunmResetCallback;
+	z80_bank = 0;
+
+	if (!rc) {
+		bprintf(0, _T("**  Outrun: with banked music!\n"));
+		ZetOpen(0);
+		ZetSetOutHandler(OutrunmPortWrite);
+		ZetClose();
+	}
+
+	return rc;
+}
+
+static INT32 OutrunmScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(z80_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		outrunm_bank(z80_bank);
+		ZetClose();
+	}
+
+	return System16Scan(nAction, pnMin);
+}
+
 /*====================================================
 Driver Defs
 ====================================================*/
@@ -2450,6 +2555,16 @@ struct BurnDriver BurnDrvOutrunb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrunbRomInfo, OutrunbRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
 	OutrunbInit, System16Exit, OutrunFrame, OutrunRender, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOutrunm = {
+	"outrunm", "outrun", NULL, NULL, "2016",
+	"Out Run (sitdown/upright, Rev B) (added music)\0", NULL, "cmonkey", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrunmRomInfo, OutrunmRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
+	OutrunmInit, System16Exit, OutrunFrame, OutrunRender, OutrunmScan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 

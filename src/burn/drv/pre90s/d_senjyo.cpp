@@ -1323,6 +1323,10 @@ static struct BurnRomInfo starforcbRomDesc[] = {
 	{ "b10.8l",			0x2000, 0x6ea27bec, 7 | BRF_GRA },           // 22
 
 	{ "a18s030.7b",		0x0020, 0x68db8300, 0 | BRF_SND },           // 23 Unused PROM
+	
+	// on a piggyback PCB with a standard D780C and logic, to mimic the SEGA encrypted CPU behavior
+	{ "tbp21s10n.bin",	0x0100, 0xa439a677, 0 | BRF_OPT },           // 24 Decryption PROMS
+	{ "tbp18s030n.bin",	0x0020, 0xd74eb481, 0 | BRF_OPT },           // 25
 };
 
 STD_ROM_PICK(starforcb)

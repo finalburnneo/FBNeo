@@ -6384,7 +6384,7 @@ struct BurnDriver BurnDrvKetb = {
 };
 
 
-// Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)
+// Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.)
 
 /* - The coloring of A-TYPE and B-TYPE are reversed. (A is blue and B is red)
    - The hitboxes are pretty little, your helicopter is godly
@@ -6441,11 +6441,61 @@ static INT32 ketmatsuriInit()
 
 struct BurnDriver BurnDrvketmatsuri = {
 	"ketmatsuri", "ket", NULL, NULL, "2007",
-	"Ketsui: Kizuna Jigoku Tachi (2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
-	L"Ketsui: Kizuna Jigoku Tachi\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
+	"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, ketmatsuriRomInfo, ketmatsuriRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketmatsuriInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.) (encrypted)
+// Above set but somebody byteswapped and encrypted it
+ 
+ struct BurnRomInfo ketikdRomDesc[] = {
+	 { "ketsui_v100_ikd.u38",		0x0200000, 0xdfa8a180, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	 
+	 { "cave_t04701w064.u19",		0x0800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+	 
+	 { "cave_a04701w064.u7", 		0x0800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	 { "cave_a04702w064.u8", 		0x0800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+	 
+	 { "cave_b04701w064.u1",		0x0800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	 
+	 { "cave_m04701b032.u17",		0x0400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+	 
+	 { "ket_igs027a.bin",		 	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	 
+	 { "ket_defaults.nv",		 	0x0020000, 0x3ca892d8, 0xA | BRF_PRG },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ketikd, ketikd, ketsuiBios) // custom bios
+STD_ROM_FN(ketikd)
+
+static void ketikd_patch()
+{
+	// decrypt romset
+	pgm_decrypt_ketsui();
+	// softpatch orange helicopter bug
+	ketmatsuri_patch();
+}
+
+static INT32 ketikdInit()
+{
+	pPgmInitCallback = ketikd_patch;
+	pPgmProtCallback = install_protection_asic27a_ketsui;  // simulation
+
+	return pgmInit();
+}
+
+struct BurnDriver BurnDrvketikd = {
+	"ketikd", "ket", NULL, NULL, "2007",
+	"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special (2007/09/22 CAVEMATSURI VER.) (encrypted)\0", NULL, "Cave (AMI license)", "PolyGame Master based",
+	L"Ketsui: Kizuna Jigoku Tachi - IKD 2007 Special\0\u30b1\u30c4\u30a4: \u7d46\u5730\u7344\u305f\u3061 (2007/09/22 CAVEMATSURI VER.) (encrypted)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketikdRomInfo, ketikdRomName, NULL, NULL, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketikdInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
 
@@ -7112,11 +7162,10 @@ struct BurnDriver BurnDrvPgemeni = {
 // Bootlegs & hacks
 
 
-// Gai Shi Xing Xiong (bootleg of Knights of Valour Super Heroes Plus, V302CN)
+// Gai Shi Ying Xiong Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN)
 
-/*
-   QCPASS: 2011-04-28
-   SN:  WDF*ZSCS-0459
+/* QCPASS: 2011-02-15
+   SN:  WDF*ZSCS-0257
    VER: V300CN  V302CN
    DATE: DEC 29 2010
    TIME: 16:31:32
@@ -7139,7 +7188,7 @@ static struct BurnRomInfo kovgsyxRomDesc[] = {
 
 	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
 
-	{ "qhsg_prot.c51",				0x0004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+	{ "gsyx_prot.c51",				0x0010000, 0x0c381ff4, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovgsyx, kovgsyx, pgm)
@@ -7163,10 +7212,49 @@ static INT32 kovgsyxInit()
 
 struct BurnDriverD BurnDrvKovgsyx = {
 	"kovgsyx", "kovshp", "pgm", NULL, "2010",
-	"Gai Shi Xing Xiong (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
-	L"Gai Shi Xing Xiong\0\u76D6\u4E16\u82F1\u96C4\u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", NULL, NULL, NULL,
+	"Gai Shi Ying Xiong Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
+	L"Gai Shi Ying Xiong Jia Qiang Ban\0\u76D6\u4E16\u82F1\u96C4\u52A0\u5F3A\u7248 (bootleg of Knights of Valour Super Heroes Plus, V302CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovgsyxRomInfo, kovgsyxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovgsyxInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Zhan Shen Chuan Shuo 2 Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V201CN)
+
+/* QCPASS: 2011-02-15
+   SN:  WDF*ZSCS-0257
+   VER: V300CN  V201CN
+   DATE: MAR 17 2010
+   TIME: 10:43:09
+   CREDITS TO: Mr .Qin */
+
+static struct BurnRomInfo kovzscsRomDesc[] = {
+	{ "27c322.u3",					0x0400000, 0x8f58939b, 1 | BRF_PRG | BRF_ESS }, // 0 68K Code
+
+	{ "t01.u8",      				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a01.u8",						0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a23.u9",						0x1000000, 0x1f51c140, 3 | BRF_GRA },			//  3
+	{ "a45.u10",					0x1000000, 0x5e44fd82, 3 | BRF_GRA },			//  4
+
+	{ "b01.u6",						0x1000000, 0x779825d3, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "m01.u5",						0x1000000, 0xaf5e9be0, 5 | BRF_SND },			//  6 Samples
+
+	{ "gsyx_prot.c51",				0x0010000, 0x0c381ff4, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovzscs, kovzscs, pgm)
+STD_ROM_FN(kovzscs)
+
+struct BurnDriverD BurnDrvKovzscs = {
+	"kovzscs", "kovshp", "pgm", NULL, "2010",
+	"Zhan Shen Chuan Shuo 2 Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V201CN)\0", "Imperfect Protection Emulation", "bootleg (WDF)", "PolyGame Master",
+	L"Zhan Shen Chuan Shuo 2 Te Bie Ban\0\u6218\u795E\u4F20\u8BF4 2 \u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V201CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovzscsRomInfo, kovzscsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovgsyxInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -7175,8 +7263,8 @@ struct BurnDriverD BurnDrvKovgsyx = {
 // Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V303CN, set 1)
 
 /* SN: WDF-QHSG-0097
-   VER: V300CN  V303CN
-   DATE: NOV 21  2008
+   VER: V300CN V303CN
+   DATE: NOV 21 2008
    TIME: 19:03:49 */
    
 static struct BurnRomInfo kovqhsgsRomDesc[] = {
@@ -7228,8 +7316,8 @@ struct BurnDriver BurnDrvkovqhsgs = {
 // Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V303CN, set 2)
 
 /* SN: WDF-QHSG-0097
-   VER: V300CN  V303CN
-   DATE: NOV 21  2008
+   VER: V300CN V303CN
+   DATE: NOV 21 2008
    TIME: 19:03:49 */
    
 static struct BurnRomInfo kovqhsgsaRomDesc[] = {
@@ -7252,7 +7340,7 @@ STDROMPICKEXT(kovqhsgsa, kovqhsgsa, pgm)
 STD_ROM_FN(kovqhsgsa)
 
 struct BurnDriver BurnDrvkovqhsgsa = {
-	"kovqhsgsa", "kovsh", "pgm", NULL, "1999",
+	"kovqhsgsa", "kovsh", "pgm", NULL, "2008",
 	"Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V303CN, set 2)\0", NULL, "bootleg (WDF)", "PolyGame Master",
 	L"Quan Huang San Guo Te Bie Ban\0\u4e09\u56fd\u6218 \u62f3\u7687\u4e09\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V303CN, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
@@ -7301,7 +7389,7 @@ static INT32 kovqhsgsdInit()
 }
 
 struct BurnDriver BurnDrvkovqhsgsd = {
-	"kovqhsgsd", "kovsh", "pgm", NULL, "1999",
+	"kovqhsgsd", "kovsh", "pgm", NULL, "2008",
 	"Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V303CN, unencrypted)\0", NULL, "bootleg (WDF)", "PolyGame Master",
 	L"Quan Huang San Guo Te Bie Ban\0\u4e09\u56fd\u6218 \u62f3\u7687\u4e09\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V303CN, unencrypted)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
@@ -7311,7 +7399,44 @@ struct BurnDriver BurnDrvkovqhsgsd = {
 };
 
 
-// Luan Shi Quan Huang 2 (bootleg of Knights of Valour Super Heroes Plus, ver. 200CN)
+// Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V305CN)
+
+/* SN: WDF*QHSG-0001
+   VER: V300CN  V305CN
+   DATE: FEB 7 2009
+   TIME: 16:52:18 */
+   
+static struct BurnRomInfo kovqhsgs305RomDesc[] = {
+	{ "kovqhsgs_v305cn.rom",  		0x0400000, 0x412eee8a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "lsqh2_t01.rom",      		0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+
+	{ "kovqhsgs_v300_china.asic",	0x0008000, 0x63bf6925, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovqhsgs305, kovqhsgs305, pgm)
+STD_ROM_FN(kovqhsgs305)
+
+struct BurnDriverD BurnDrvkovqhsgs305 = {
+	"kovqhsgs305", "kovsh", "pgm", NULL, "2009",
+	"Quan Huang San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes, V305CN)\0", NULL, "bootleg (WDF)", "PolyGame Master",
+	L"Quan Huang San Guo Te Bie Ban\0\u4e09\u56fd\u6218 \u62f3\u7687\u4e09\u7279\u522b\u7248 (bootleg of Knights of Valour Super Heroes, V305CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovqhsgs305RomInfo, kovqhsgs305RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovqhsgsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Luan Shi Quan Huang 2 (bootleg of Knights of Valour Super Heroes Plus, V200CN)
 
 static struct BurnRomInfo kovlsqh2RomDesc[] = {
 	{ "lsqh2_prg.rom",				0x0400000, 0xd71e3d50, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -7351,11 +7476,53 @@ static INT32 kovlsqh2Init()
 }
 
 struct BurnDriverD BurnDrvkovlsqh2 = {
-	"kovlsqh2", "kovshp", "pgm", NULL, "200?",
-	"Luan Shi Quan Huang 2 (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", "Incomplete dump", "bootleg", "PolyGame Master",
+	"kovlsqh2", "kovshp", "pgm", NULL, "2009",
+	"Luan Shi Quan Huang 2 (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
 	L"Luan Shi Quan Huang II\0\u4E71\u4E16\u62F3\u7687 II (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
 	NULL, kovlsqh2RomInfo, kovlsqh2RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Luan Shi Quan Huang 2 Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V200CN)
+
+/* QCPASS: 2009-09-21
+   SN:  WDFLSQH2-0102
+   VER: V100CN  V200CN
+   DATE: SEP 3 2009
+   TIME: 13:18:50 */
+   
+static struct BurnRomInfo kovlsqh2pRomDesc[] = {
+	{ "kovlsqh2p_v200cn.rom",		0x0400000, 0x265ab14b, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+
+#if !defined ROM_VERIFY
+	{ "lsqh2p_prot.c51",			0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
+#else
+	{ "kovshp_v100_china.asic",		0x0004000, 0x106820a0, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+#endif
+};
+
+STDROMPICKEXT(kovlsqh2p, kovlsqh2p, pgm)
+STD_ROM_FN(kovlsqh2p)
+
+struct BurnDriverD BurnDrvkovlsqh2p = {
+	"kovlsqh2p", "kovshp", "pgm", NULL, "2009",
+	"Luan Shi Quan Huang 2 Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
+	L"Luan Shi Quan Huang 2 Jia Qiang Ban\0\u4E71\u4E16\u62F3\u7687 2 \u52A0\u5F3A\u7248(bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
+	NULL, kovlsqh2pRomInfo, kovlsqh2pRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -7402,8 +7569,8 @@ static INT32 kovlsqhInit()
 }
 
 struct BurnDriverD BurnDrvkovlsqh = {
-	"kovlsqh", "kovshp", "pgm", NULL, "200?",
-	"Luan Shi Quan Huang (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", "Incomplete dump", "bootleg", "PolyGame Master",
+	"kovlsqh", "kovshp", "pgm", NULL, "2009",
+	"Luan Shi Quan Huang (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
 	L"Luan Shi Quan Huang\0\u4E71\u4E16\u62F3\u7687 (bootleg of Knights of Valour Super Heroes Plus, V200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
 	NULL, kovlsqhRomInfo, kovlsqhRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
@@ -7472,7 +7639,49 @@ struct BurnDriver BurnDrvkovlsqho = {
 };
 
 
-// Luan Shi Jie Ba (bootleg of Knights of Valour Super Heroes Plus, ver. 200CN, set 1)
+// Luan Shi Quan Huang Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V113CN)
+
+/* SN: WDF*LSQH-0086
+   VER: V110CN  V113CN
+   DATE: NOV 28 2008
+   TIME: 20:19:39 */
+
+static struct BurnRomInfo kovlsqhpRomDesc[] = {
+	{ "kovlsqhp_v113cn.rom",  		0x0400000, 0x7149e05e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+//	these were not dumped
+	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+
+#if !defined ROM_VERIFY
+	{ "lsqhp_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
+#else
+	{ "kovlsqhp_v110_china.asic",	0x0008000, 0x87a898e1, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+#endif
+};
+
+STDROMPICKEXT(kovlsqhp, kovlsqhp, pgm)
+STD_ROM_FN(kovlsqhp)
+
+struct BurnDriverD BurnDrvkovlsqhp = {
+	"kovlsqhp", "kovshp", "pgm", NULL, "2009",
+	"Luan Shi Quan Huang Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V113CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
+	L"Luan Shi Quan Huang Jia Qiang Ban\0\u4E71\u4E16\u62F3\u7687 \u52A0\u5F3A\u7248 (bootleg of Knights of Valour Super Heroes Plus, V113CN)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsqhpRomInfo, kovlsqhpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovlsqhoInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Luan Shi Jie Ba (bootleg of Knights of Valour Super Heroes Plus, V200CN, set 1)
 
 static struct BurnRomInfo kovlsjbRomDesc[] = {
 	{ "lsjb_prg.rom",  				0x0400000, 0xadf06b37, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -7508,7 +7717,7 @@ struct BurnDriverD BurnDrvkovlsjb = {
 };
 
 
-// Luan Shi Jie Ba (bootleg of Knights of Valour Super Heroes Plus, ver. 200CN, set 2)
+// Luan Shi Jie Ba (bootleg of Knights of Valour Super Heroes Plus, V200CN, set 2)
 
 static struct BurnRomInfo kovlsjbaRomDesc[] = {
 	{ "lsjba_prg.rom",  			0x0400000, 0x8b42f456, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -7544,10 +7753,51 @@ struct BurnDriverD BurnDrvkovlsjba = {
 };
 
 
-// Ao Shi San Guo Plus (bootleg of Knights of Valour Super Heroes Plus, V315CN)
+// Luan Shi VS Jie Ba Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V203CN)
+
+static struct BurnRomInfo kovlsvsjbsRomDesc[] = {
+	{ "kovlsvsjbs_v203cn.rom",  	0x0400000, 0x4336e4cb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+
+#if !defined ROM_VERIFY
+	{ "lsvsjbs_prot.c51",			0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 Rom
+#else
+	{ "kovshp_v100_china.asic",		0x0004000, 0x106820a0, 7 | BRF_PRG | BRF_ESS }, //  7 Internal ARM7 Rom
+#endif
+};
+
+STDROMPICKEXT(kovlsvsjbs, kovlsvsjbs, pgm)
+STD_ROM_FN(kovlsvsjbs)
+
+struct BurnDriverD BurnDrvkovlsvsjbs = {
+	"kovlsvsjbs", "kovshp", "pgm", NULL, "2009",
+	"Luan Shi VS Jie Ba Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V200CN, set 1)\0", NULL, "bootleg (WDF)", "PolyGame Master",
+	L"Luan Shi VS Jie Ba Te Bie Ban\0\u4e71\u4e16 VS \u8857\u9738 \u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V200CN, set 1)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	NULL, kovlsvsjbsRomInfo, kovlsvsjbsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Ao Shi San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V315CN)
 
 // listed as assgplus in code
 
+/* SN: WDF-ASSG-0076
+   VER: V310CN  V315CN
+   DATE: NOV 20 2008
+   TIME: 19:40:39 */
+   
 static struct BurnRomInfo kovassgplusRomDesc[] = {
 	{ "assgplus_v315cn.rom",  		0x0400000, 0xb9885d5c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
@@ -7560,8 +7810,11 @@ static struct BurnRomInfo kovassgplusRomDesc[] = {
 	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
 
 	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
-
+#if !defined ROM_VERIFY
 	{ "assg_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 7 Internal ARM7 Rom
+#else
+	{ "assgplus_v310_china.asic",	0x0008000, 0x72b3589c, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovassgplus, kovassgplus, pgm)
@@ -7583,10 +7836,50 @@ static INT32 kovassgplusInit()
 
 struct BurnDriverD BurnDrvkovassgplus = {
 	"kovassgplus", "kovshp", "pgm", NULL, "2008",
-	"Aoshi Sanguo Plus (bootleg of Knights of Valour Super Heroes Plus, V315CN)\0", "Incomplete dump", "bootleg", "PolyGame Master",
-	L"Ao Shi San Guo Plus\0\u50B2\u4E16\u4E09\u56FD Plus (bootleg of Knights of Valour Super Heroes Plus, V315CN)\0", NULL, NULL, NULL,
+	"Ao Shi San Guo Te Bie Ban (bootleg of Knights of Valour Super Heroes Plus, V315CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
+	L"Ao Shi San Guo Te Bie Ban\0\u50B2\u4E16\u4E09\u56FD \u7279\u522B\u7248 (bootleg of Knights of Valour Super Heroes Plus, V315CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
 	NULL, kovassgplusRomInfo, kovassgplusRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovassgplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Ao Shi San Guo Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V314CN)
+
+/* SN: WDF-ASSG-0076
+   VER: V310CN  V314CN
+   DATE: NOV 21 2008
+   TIME: 19:09:10 */
+   
+static struct BurnRomInfo kovassgpRomDesc[] = {
+	{ "igs_p0608.rom",  			0x0400000, 0x6c5d7eb9, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "lsqh2_t01.rom",				0x1000000, 0xd498d97f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "lsqh2_a01.rom",				0x1000000, 0x25ae3efd, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "lsqh2_a23.rom",				0x1000000, 0x7a779112, 3 | BRF_GRA },			//  3
+	{ "lsqh2_a45.rom",				0x1000000, 0x5d7de052, 3 | BRF_GRA },			//  4
+
+	{ "lsqh2_b01.rom",				0x1000000, 0xdf7ca696, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+
+	{ "lsqh2_m01.rom",				0x1000000, 0x01af1b65, 5 | BRF_SND },			//  6 Samples
+#if !defined ROM_VERIFY
+	{ "assg_prot.c51",				0x0010000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 7 Internal ARM7 Rom
+#else
+	{ "kovshp_v100_china.asic",		0x0004000, 0x106820a0, 7 | BRF_PRG | BRF_ESS },	//  7 Internal ARM7 Rom
+#endif
+};
+
+STDROMPICKEXT(kovassgp, kovassgp, pgm)
+STD_ROM_FN(kovassgp)
+
+struct BurnDriverD BurnDrvkovassgp = {
+	"kovassgp", "kovshp", "pgm", NULL, "2008",
+	"Ao Shi San Guo Jia Qiang Ban (bootleg of Knights of Valour Super Heroes Plus, V314CN)\0", "Incomplete dump", "bootleg (WDF)", "PolyGame Master",
+	L"Ao Shi San Guo Jia Qiang Ban\0\u50B2\u4E16\u4E09\u56FD \u52A0\u5F3A\u7248 (bootleg of Knights of Valour Super Heroes Plus, V314CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
+	NULL, kovassgpRomInfo, kovassgpRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovassgplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -7744,6 +8037,43 @@ struct BurnDriver BurnDrvkovassgn = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovassgnRomInfo, kovassgnRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov115DIPInfo,
 	kovassgnInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Ao Shi San Guo (bootleg of Knights of Valour Super Heroes Plus, V203CN)
+
+/* VER: V203CN
+   DATE: OCT 17 2008
+   TIME: 10:54:36 */
+   
+static struct BurnRomInfo kovassg203RomDesc[] = {
+	{ "assg_v203cn.rom",  			0x0400000, 0x1a274524, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",     				0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600.rom",	   				0x0800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601.rom",	   				0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.rom",	   				0x0800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a0603as.rom",  				0x0800000, 0x7057b37e, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.rom",	  				0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b0601as.rom",  				0x0800000, 0x3784fb49, 4 | BRF_GRA },			//  7
+
+	{ "m0600.rom",	   				0x0400000, 0x3ada4fd6, 5 | BRF_SND },	        //  8 Samples
+
+	{ "kovassg_v100_china.asic",	0x0008000, 0x6aa77aba, 7 | BRF_PRG | BRF_ESS }, //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovassg203, kovassg203, pgm)
+STD_ROM_FN(kovassg203)
+
+struct BurnDriverD BurnDrvkovassg203 = {
+	"kovassg203", "kovshp", "pgm", NULL, "2008",
+	"Ao Shi San Guo (bootleg of Knights of Valour Super Heroes Plus, V203CN)\0", "Imperfect Protection Emulation", "bootleg", "PolyGame Master",
+	L"Ao Shi San Guo\0\u50B2\u4E16\u4E09\u56FD (bootleg of Knights of Valour Super Heroes Plus, V203CN)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovassg203RomInfo, kovassg203RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovassgeInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

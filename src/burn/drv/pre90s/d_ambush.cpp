@@ -31,6 +31,8 @@ static UINT8 DrvDips[1];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static HoldCoin<2> hold_coin;
+
 static struct BurnInputInfo AmbushInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"		},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"		},
@@ -374,6 +376,8 @@ static INT32 DrvDoReset(INT32 nClearMem)
 	AY8910Reset(0);
 	AY8910Reset(1);
 	BurnWatchdogReset();
+
+	hold_coin.reset();
 
 	HiscoreReset();
 
@@ -816,6 +820,9 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		hold_coin.checklow(0, DrvInputs[0], 1 << 7, 2);
+		hold_coin.checklow(1, DrvInputs[0], 1 << 6, 2);
 	}
 
 	ZetOpen(0);
@@ -852,6 +859,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
+
+		hold_coin.scan();
 	}
 
 	return 0;
@@ -916,7 +925,7 @@ struct BurnDriver BurnDrvAmbushj = {
 	"Ambush (Japan)\0", NULL, "Tecfri (Nippon Amuse license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ambushjRomInfo, ambushjRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushtDIPInfo,
+	NULL, ambushjRomInfo, ambushjRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -948,7 +957,7 @@ struct BurnDriver BurnDrvAmbushh = {
 	"Ambush (hack?)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, ambushhRomInfo, ambushhRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
+	NULL, ambushhRomInfo, ambushhRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
 };

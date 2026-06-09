@@ -539,6 +539,30 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					}
 
 					nBurnDrvActive=nGameSelect;						// Switch back to game
+
+					if (nMerged&2) {
+						nRetTmp=0;
+
+						// Go over each of the files needed for this game (upto 0x0100)
+						for (j=0; nRetTmp==0 && j<0x100; j++)
+						{
+							memset(&riTmp,0,sizeof(riTmp));
+
+							nRetTmp+=BurnDrvGetRomInfo(&riTmp,j);
+							nRetTmp+=BurnDrvGetRomName(&szPossibleNameTmp,j,0);
+
+							if (nRetTmp==0)
+							{
+								if (strcmp(szPossibleName, szPossibleNameTmp) == 0 && riTmp.nCrc != nCrc)
+								{
+									// If a file is from the boardrom, but there is a file with the same name and a different crc
+									// within the romset itself, it seems we don't want the file from the boardrom
+									nMerged|=4;
+									nRetTmp++;
+								}
+							}
+						}
+					}
 				}
 
 				char szPossibleNameBuffer[255];
@@ -562,7 +586,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 						fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, ri.nLen);
 					} else {
 						if (nMerged) {
-							fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szMergeNameBuffer, ri.nLen, ri.nCrc);
+							if (!(nMerged&4)) fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szMergeNameBuffer, ri.nLen, ri.nCrc);
 						} else {
 							fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, ri.nLen, ri.nCrc);
 						}

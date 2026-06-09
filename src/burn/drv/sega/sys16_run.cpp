@@ -956,6 +956,7 @@ static INT32 System16MemIndex()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
+		Z80RomSize = 0x20000; // outrunm
 		System16PaletteEntries = 0x1000;
 		System16RamSize = 0x8000;
 		System16ExtraRamSize = 0x8000;

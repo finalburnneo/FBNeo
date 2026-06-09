@@ -2519,7 +2519,7 @@ static struct BurnRomInfo robokidj3RomDesc[] = {
 	{ "robokid.17a",	0x10000, 0xf0863106, 7 | BRF_GRA },           // 29
 	{ "robokid.18a",	0x10000, 0xfdff7441, 7 | BRF_GRA },           // 30
 	
-	{ "prom82s129.cpu",	0x00100, 0x4dd96f67, 0 | BRF_OPT },
+	{ "prom82s129.cpu",	0x00100, 0x4dd96f67, 0 | BRF_OPT },			  // 31 Proms
 };
 
 STD_ROM_PICK(robokidj3)
@@ -2536,10 +2536,10 @@ struct BurnDriver BurnDrvRobokidj3 = {
 };
 
 
-// Omega Fighter
+// Omega Fighter (set 1)
 
 static struct BurnRomInfo omegafRomDesc[] = {
-	{ "1.5",		0x20000, 0x57a7fd96, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1.5.3l",		0x20000, 0x57a7fd96, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "6.4l",		0x20000, 0x6277735c, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "7.7m",		0x10000, 0xd40fc8d5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
@@ -2548,11 +2548,14 @@ static struct BurnRomInfo omegafRomDesc[] = {
 
 	{ "8.23m",		0x20000, 0x0bd2a5d1, 4 | BRF_GRA },           //  4 Sprite Tiles
 
-	{ "2back1.27b",		0x80000, 0x21f8a32e, 5 | BRF_GRA },           //  5 Background Layer 0 Tiles
+	{ "2back1.27b",	0x80000, 0x21f8a32e, 5 | BRF_GRA },           //  5 Background Layer 0 Tiles
 
-	{ "1back2.15b",		0x80000, 0x6210ddcc, 6 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "1back2.15b",	0x80000, 0x6210ddcc, 6 | BRF_GRA },           //  6 Background Layer 1 Tiles
 
-	{ "3back3.5f",		0x80000, 0xc31cae56, 7 | BRF_GRA },           //  7 Background Layer 2 Tiles
+	{ "3back3.5f",	0x80000, 0xc31cae56, 7 | BRF_GRA },           //  7 Background Layer 2 Tiles
+	
+	{ "10.20l",		0x00100, 0x89e0763f, 0 | BRF_OPT },			  //  8 Proms
+	{ "11.27n",		0x00400, 0x59e44236, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(omegaf)
@@ -2560,10 +2563,46 @@ STD_ROM_FN(omegaf)
 
 struct BurnDriver BurnDrvOmegaf = {
 	"omegaf", NULL, NULL, NULL, "1989",
-	"Omega Fighter\0", NULL, "UPL", "Miscellaneous",
+	"Omega Fighter (set 1)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, omegafRomInfo, omegafRomName, NULL, NULL, NULL, NULL, OmegafInputInfo, OmegafDIPInfo,
+	OmegafInit, DrvExit, DrvFrame, OmegafDraw, OmegafScan, &DrvRecalc, 0x400,
+	192, 256, 3, 4
+};
+
+
+// Omega Fighter (set 2)
+
+static struct BurnRomInfo omegafaRomDesc[] = {
+	{ "5_1.3l",		0x20000, 0xf53acd66, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "6.4l",		0x20000, 0x6277735c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "7.7m",		0x10000, 0xd40fc8d5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "4.18h",		0x08000, 0x9e2d8152, 3 | BRF_GRA },           //  3 Foreground Tiles
+
+	{ "8.23m",		0x20000, 0x0bd2a5d1, 4 | BRF_GRA },           //  4 Sprite Tiles
+
+	{ "2back1.27b",	0x80000, 0x21f8a32e, 5 | BRF_GRA },           //  5 Background Layer 0 Tiles
+
+	{ "1back2.15b",	0x80000, 0x6210ddcc, 6 | BRF_GRA },           //  6 Background Layer 1 Tiles
+
+	{ "3back3.5f",	0x80000, 0xc31cae56, 7 | BRF_GRA },           //  7 Background Layer 2 Tiles
+	
+	{ "10.20l",		0x00100, 0x89e0763f, 0 | BRF_OPT },			  //  8 Proms
+	{ "11.27n",		0x00400, 0x59e44236, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(omegafa)
+STD_ROM_FN(omegafa)
+
+struct BurnDriver BurnDrvOmegafa = {
+	"omegafa", "omegaf", NULL, NULL, "1989",
+	"Omega Fighter (set 2)\0", NULL, "UPL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, omegafaRomInfo, omegafaRomName, NULL, NULL, NULL, NULL, OmegafInputInfo, OmegafDIPInfo,
 	OmegafInit, DrvExit, DrvFrame, OmegafDraw, OmegafScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };
@@ -2581,11 +2620,14 @@ static struct BurnRomInfo omegafsRomDesc[] = {
 
 	{ "8.23m",		0x20000, 0x0bd2a5d1, 4 | BRF_GRA },           //  4 Sprite Tiles
 
-	{ "2back1.27b",		0x80000, 0x21f8a32e, 5 | BRF_GRA },           //  5 Background Layer 0 Tiles
+	{ "2back1.27b",	0x80000, 0x21f8a32e, 5 | BRF_GRA },           //  5 Background Layer 0 Tiles
 
-	{ "1back2.15b",		0x80000, 0x6210ddcc, 6 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "1back2.15b",	0x80000, 0x6210ddcc, 6 | BRF_GRA },           //  6 Background Layer 1 Tiles
 
-	{ "3back3.5f",		0x80000, 0xc31cae56, 7 | BRF_GRA },           //  7 Background Layer 2 Tiles
+	{ "3back3.5f",	0x80000, 0xc31cae56, 7 | BRF_GRA },           //  7 Background Layer 2 Tiles
+	
+	{ "10.20l",		0x00100, 0x89e0763f, 0 | BRF_OPT },			  //  8 Proms
+	{ "11.27n",		0x00400, 0x59e44236, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(omegafs)

@@ -1358,12 +1358,15 @@ static struct BurnRomInfo f1gpblRomDesc[] = {
 	{ "15.ic153",	0x080000, 0xc2867d7f, 3 | BRF_GRA }, 	       // 14
 	{ "14.ic154",	0x080000, 0x0cd20423, 3 | BRF_GRA }, 	       // 15
 
-	{ "rom21",		0x080000, 0x7a08c3b7, 4 | BRF_GRA }, 	       // 16 Sprite Banks
-	{ "rom20",		0x080000, 0xbd1273d0, 4 | BRF_GRA }, 	       // 17
+	{ "21.ic143",	0x080000, 0x7a08c3b7, 4 | BRF_GRA }, 	       // 16 Sprite Banks
+	{ "20.ic142",	0x080000, 0xbd1273d0, 4 | BRF_GRA }, 	       // 17
 	{ "19.ic141",	0x080000, 0xaa4ebdfe, 4 | BRF_GRA }, 	       // 18
 	{ "18.ic140",	0x080000, 0x9b2a4325, 4 | BRF_GRA }, 	       // 19
-
-	{ "6.ic13",		0x080000, 0x6e83ffd8, 5 | BRF_SND }, 	       // 20 OKI MSM6295 Samples
+	
+	// 0x40 instead at 0x54cbc has been confirmed by multiple dumps from different PCBs.
+	// there is a dump with 0x44 but given it was on only one PCB and with the only difference a single bit of a single byte,
+	// it is almost surely a bad read
+	{ "6.ic13",		0x080000, 0x469f3ee1, 5 | BRF_SND }, 	       // 20 OKI MSM6295 Samples
 };
 
 STD_ROM_PICK(f1gpbl)

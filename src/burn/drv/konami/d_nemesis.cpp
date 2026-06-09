@@ -3085,10 +3085,10 @@ static INT32 BubsysInit()
 	{
 		if (BurnLoadRom(Drv68KROM, 1, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM, 2, 1)) return 1;
 
-		if (BurnLoadRom(K005289ROM + 0x000, 4, 1)) return 1;
-		if (BurnLoadRom(K005289ROM + 0x100, 5, 1)) return 1;
+		if (BurnLoadRom(K005289ROM + 0x000, 3, 1)) return 1;
+		if (BurnLoadRom(K005289ROM + 0x100, 4, 1)) return 1;
 	}
 
 	SekInit(0, 0x68000);
@@ -3125,7 +3125,7 @@ static INT32 BubsysInit()
 	SekSetWriteByteHandler(2, 			nemesis_palette_write_byte);
 	SekClose();
 
-	Gx400SoundInit(0);
+	Gx400SoundInit((strstr(BurnDrvGetTextA(DRV_NAME), "gwarr")) ? 1 : 0);
 
 	palette_write = nemesis_palette_update;
 
@@ -4523,14 +4523,12 @@ struct BurnDriver BurnDrvHcrashc = {
 static struct BurnRomInfo emptyRomDesc[] = { { "", 0, 0, 0 }, }; // For BIOS handling
 
 static struct BurnRomInfo bubsysRomDesc[] = {
-	{ "boot.bin",		0x01e0, 0xf0774fc2, 1 | BRF_PRG | BRF_ESS | BRF_BIOS },              //  0 m68000 Vectors
+	{ "boot.bin",				0x01e0, 0xf0774fc2, 1 | BRF_PRG | BRF_ESS | BRF_BIOS },              //  0 m68000 Vectors
 
-	{ "mcu",			0x1000, 0x00000000, 2 | BRF_PRG | BRF_ESS | BRF_BIOS | BRF_NODUMP }, //  1 MCU Code
+	{ "400b03.8g",				0x2000, 0x85c2afc5, 3 | BRF_PRG | BRF_ESS | BRF_BIOS },              //  1 Z80 Code
 
-	{ "400b03.8g",		0x2000, 0x85c2afc5, 3 | BRF_PRG | BRF_ESS | BRF_BIOS },              //  2 Z80 Code
-
-	{ "400a1.2b",		0x0100, 0x5827b1e8, 4 | BRF_SND | BRF_BIOS },                        //  3 K005289 Wavetables 
-	{ "400a2.1b",		0x0100, 0x2f44f970, 4 | BRF_SND | BRF_BIOS },                        //  4
+	{ "400a1.2b",				0x0100, 0x5827b1e8, 4 | BRF_SND | BRF_BIOS },                        //  2 K005289 Wavetables 
+	{ "400a2.1b",				0x0100, 0x2f44f970, 4 | BRF_SND | BRF_BIOS },                        //  3
 };
 
 STD_ROM_PICK(bubsys)
@@ -4550,16 +4548,14 @@ struct BurnDriver BurnDrvBubsys = {
 // Gradius (Bubble System)
 
 static struct BurnRomInfo gradiusbRomDesc[] = {
-	{ "boot.bin",		0x001e0, 0xf0774fc2, 1 | BRF_PRG | BRF_ESS },              //  0 m68000 Vectors
+	{ "boot.bin",				0x001e0, 0xf0774fc2, 1 | BRF_PRG | BRF_ESS },              //  0 m68000 Vectors
 
-	{ "gradius.bin",	0x48360, 0xf83b9607, 2 | BRF_PRG | BRF_ESS },              //  1 Bubble Memory Data
+	{ "gradius.bin",			0x48360, 0xf83b9607, 2 | BRF_PRG | BRF_ESS },              //  1 Bubble Memory Data
 
-	{ "mcu",			0x01000, 0x00000000, 3 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  2 MCU COde
+	{ "400b03.8g",				0x02000, 0x85c2afc5, 3 | BRF_PRG | BRF_ESS },              //  2 Z80 Code
 
-	{ "400b03.8g",		0x02000, 0x85c2afc5, 4 | BRF_PRG | BRF_ESS },              //  3 Z80 Code
-
-	{ "400a1.2b",		0x00100, 0x5827b1e8, 5 | BRF_SND },                        //  4 K005289 Wavetables
-	{ "400a2.1b",		0x00100, 0x2f44f970, 5 | BRF_SND },                        //  5
+	{ "400a1.2b",				0x00100, 0x5827b1e8, 4 | BRF_SND },                        //  3 K005289 Wavetables
+	{ "400a2.1b",				0x00100, 0x2f44f970, 4 | BRF_SND },                        //  4
 };
 
 STDROMPICKEXT(gradiusb, gradiusb, bubsys)
@@ -4579,27 +4575,79 @@ struct BurnDriver BurnDrvGradiusb = {
 // TwinBee (Bubble System)
 
 static struct BurnRomInfo twinbeebRomDesc[] = {
-	{ "boot.bin",		0x001e0, 0xee6e93d7, 1 | BRF_PRG | BRF_ESS },              //  0 m68000 Vectors
+	{ "boot.bin",				0x0001e0, 0xee6e93d7, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Vectors
 
-	{ "twinbee.bin",	0x40300, 0x4d396a0a, 2 | BRF_PRG | BRF_ESS },              //  1 Bubble Memory Data
+	{ "twinbee.bin",			0x040300, 0x4d396a0a, 2 | BRF_PRG | BRF_ESS }, //  1 Bubble Memory Data
 
-	{ "mcu",			0x01000, 0x00000000, 3 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  2 MCU Code
+	{ "400-e03.5l",				0x002000, 0xa5a8e57d, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "400-e03.5l",		0x02000, 0xa5a8e57d, 4 | BRF_PRG | BRF_ESS },              //  3 Z80 Code
-
-	{ "400-a01.fse",	0x00100, 0x5827b1e8, 5 | BRF_SND },                        //  4 K005289 Wavetables
-	{ "400-a02.fse",	0x00100, 0x2f44f970, 5 | BRF_SND },                        //  5
+	{ "400-a01.fse",			0x000100, 0x5827b1e8, 4 | BRF_SND },           //  4 K005289 Wavetables
+	{ "400-a02.fse",			0x000100, 0x2f44f970, 4 | BRF_SND },           //  5
 };
 
-STD_ROM_PICK(twinbeeb)
+STDROMPICKEXT(twinbeeb, twinbeeb, bubsys)
 STD_ROM_FN(twinbeeb)
 
 struct BurnDriver BurnDrvTwinbeeb = {
-	"twinbeeb", NULL, NULL, NULL, "1985",
+	"twinbeeb", NULL, "bubsys", NULL, "1985",
 	"TwinBee (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, twinbeebRomInfo, twinbeebRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	TwinbeebInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
+};
+
+
+// Galactic Warriors (Bubble System)
+
+static struct BurnRomInfo gwarriorbRomDesc[] = {
+	{ "boot.bin",				0x0001e0, 0x728263bd, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Vectors
+
+	{ "gwarriorb.bin",			0x048360, 0xa10e1b62, 2 | BRF_PRG | BRF_ESS }, //  1 Bubble Memory Data
+
+	{ "400b03.8g",				0x002000, 0x85c2afc5, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "400a1.2b",				0x000100, 0x5827b1e8, 4 | BRF_SND  },		   //  3 K005289 Wavetables
+	{ "400a2.1b",				0x000100, 0x2f44f970, 4 | BRF_SND  },		   //  4 
+};
+
+STDROMPICKEXT(gwarriorb, gwarriorb, bubsys)
+STD_ROM_FN(gwarriorb)
+
+struct BurnDriver BurnDrvGwarriorb = {
+	"gwarriorb", NULL, "bubsys", NULL, "1985",
+	"Galactic Warriors (Bubble System)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VSFIGHT, 0,
+	NULL, gwarriorbRomInfo, gwarriorbRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// Konami RF2 - Red Fighter (Bubble System)
+
+static struct BurnRomInfo rf2bRomDesc[] = {
+	{ "boot.bin",				0x0001e0, 0xee6e93d7, 1 | BRF_PRG | BRF_ESS },	//  0 m68000 Vectors
+
+	{ "rf2b.bin",				0x048360, 0x7ee7acc5, 2 | BRF_PRG | BRF_ESS },	//  1 Bubble Memory Data
+
+	{ "400b03.8g",				0x002000, 0x85c2afc5, 3 | BRF_PRG | BRF_ESS },	//  2 Z80 Code
+
+	{ "400a1.2b",				0x000100, 0x5827b1e8, 4 | BRF_SND },			//  3 K005289 Wavetables
+	{ "400a2.1b",				0x000100, 0x2f44f970, 4 | BRF_SND },			//  4 
+};
+
+STDROMPICKEXT(rf2b, rf2b, bubsys)
+STD_ROM_FN(rf2b)
+
+struct BurnDriver BurnDrvRf2b = {
+	"rf2b", NULL, "bubsys", NULL, "1985",
+	"Konami RF2 - Red Fighter (Bubble System)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
+	NULL, rf2bRomInfo, rf2bRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 224, 4, 3
 };

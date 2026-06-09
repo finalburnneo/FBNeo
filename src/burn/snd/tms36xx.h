@@ -14,6 +14,7 @@ void tms3617_enable(INT32 enable);
 
 void tms36xx_init(INT32 clock, INT32 subtype, double *decay, double speed);
 void tms36xx_deinit();
+void tms36xx_exit();
 void tms36xx_reset();
 void tms36xx_sound_update(INT16 *buffer, INT32 length);
 void tms36xx_scan(INT32 nAction, INT32 *pnMin);

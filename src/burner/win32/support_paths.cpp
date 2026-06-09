@@ -42,7 +42,7 @@ static TCHAR* pszSupportPath[][2] = {
 	{ szAppIpsPath,      _T("support/ips/")      },
 	{ szAppRomdataPath,  _T("support/romdata/")  },
 	{ szNeoCDGamesDir,   _T("neocdiso/")         },
-	{ szNeoCDCoverDir,   _T("support/neocdz/")   },
+	{ szNeoCDCoverDir,   _T("support/neocdzcovers/")   },
 	{ szNeoCDPreviewDir, _T("support/neocdzpreviews/") },
 	{ szAppBlendPath,    _T("support/blend/")    },
 	{ szAppSelectPath,   _T("support/select/")   },

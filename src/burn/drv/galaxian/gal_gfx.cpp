@@ -656,6 +656,17 @@ void FroggerDrawBackground()
 	}
 }
 
+void FantastcDrawBackground()
+{
+	GalPalette[GAL_PALETTE_BACKGROUND_OFFSET] = BurnHighCol(0x00, 0x00, 0x00, 0);
+	
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			pTransDraw[(y * nScreenWidth) + x] = GAL_PALETTE_BACKGROUND_OFFSET;
+		}
+	}
+}
+
 void TurtlesDrawBackground()
 {
 	GalPalette[GAL_PALETTE_BACKGROUND_OFFSET] = BurnHighCol(GalBackgroundRed * 0x55, GalBackgroundGreen * 0x47, GalBackgroundBlue * 0x55, 0);

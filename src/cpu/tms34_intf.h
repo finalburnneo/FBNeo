@@ -64,6 +64,7 @@ register defines: (from tms34/tms34010.h)
 */
 
 void TMS34010HostWrite(INT32 reg, UINT16 data);
+void TMS34010HostWriteMask(INT32 reg, UINT16 data, UINT16 mask);
 UINT16 TMS34010HostRead(INT32 reg);
 
 #endif // TMS34010_INTF_H

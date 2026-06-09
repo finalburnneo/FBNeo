@@ -1637,27 +1637,21 @@ static struct BurnRomInfo shadowwaRomDesc[] = {
 
 	{ "gaiden_5.7a",	0x10000, 0x8d4035f7, 3 | BRF_GRA },           //  3 Characters
 
-	{ "14.3a",       	0x20000, 0x1ecfddaa, 4 | BRF_GRA },           //  4 Foreground Tiles
-	{ "15.3b",       	0x20000, 0x1291a696, 4 | BRF_GRA },           //  5
-	{ "16.1a",       	0x20000, 0x140b47ca, 4 | BRF_GRA },           //  6
-	{ "17.1b",       	0x20000, 0x7638cccb, 4 | BRF_GRA },           //  7
+	{ "d23c4001.4b",    0x80000, 0x0f98e0d5, 5 | BRF_GRA },           //  4 Foreground Tiles
 
-	{ "18.6a",       	0x20000, 0x3fadafd6, 5 | BRF_GRA },           //  8 Background Tiles
-	{ "19.6b",       	0x20000, 0xddae9d5b, 5 | BRF_GRA },           //  9
-	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
-	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11
+	{ "d23c4001.1b",    0x80000, 0xeed595e5, 4 | BRF_GRA },           //  5 Background Tiles
 
 	// sprite roms also seen on daughterboard "4M512" with 16 0x10000-sized roms
-	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
-	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
-	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
-	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           // 15
-	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
-	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
-	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
-	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 19
+	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           //  6 Sprites
+	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           //  7
+	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           //  8
+	{ "12.3s", 			0x20000, 0x94a836d8, 6 | BRF_GRA },           //  9
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 10
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 11
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 12
+	{ "13.1s", 			0x20000, 0xe9caea3b, 6 | BRF_GRA },           // 13
 
-	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 14 MSM6295 Samples
 };
 
 STD_ROM_PICK(shadowwa)
@@ -2010,7 +2004,7 @@ struct BurnDriver BurnDrvStratof = {
 };
 
 
-// Raiga - Strato Fighter (Japan)
+// Raiga - Strato Fighter (Japan, set 1)
 
 static struct BurnRomInfo raigaRomDesc[] = {
 	{ "a-3s.1",		  	0x20000, 0x303c2a6c, 1 | BRF_PRG | BRF_ESS }, // 0 68k Code
@@ -2037,10 +2031,58 @@ STD_ROM_FN(raiga)
 
 struct BurnDriver BurnDrvRaiga = {
 	"raiga", "stratof", NULL, NULL, "1991",
-	"Raiga - Strato Fighter (Japan)\0", NULL, "Tecmo", "Miscellaneous",
-	L"\u96F7\u7259 Strato Fighter (Japan)\0", NULL, NULL, NULL,
+	"Raiga - Strato Fighter (Japan, set 1)\0", NULL, "Tecmo", "Miscellaneous",
+	L"\u96F7\u7259 Strato Fighter (Japan, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, raigaRomInfo, raigaRomName, NULL, NULL, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
+	stratofInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	256, 224, 4, 3
+};
+
+
+// Raiga - Strato Fighter (Japan, set 2)
+
+static struct BurnRomInfo raigaaRomDesc[] = {
+	{ "6299-a.3s",		0x20000, 0x20d00c38, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "6299-a.4s",		0x20000, 0x6f129e5f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "6299-a.4b",		0x10000, 0x18655c95, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "6299-b.7a",		0x10000, 0x6d2e4bf1, 3 | BRF_GRA },           //  3 Characters
+
+	{ "6299-b.3a",		0x20000, 0x41fee9a9, 4 | BRF_GRA },           //  4 Foreground Tiles
+	{ "6299-b.3c",		0x20000, 0x365ac6e9, 4 | BRF_GRA },           //  5 
+	{ "6299-b.1a",		0x20000, 0x70939226, 4 | BRF_GRA },           //  6 
+	{ "6299-b.1c",		0x20000, 0x118adc77, 4 | BRF_GRA },           //  7 
+
+	{ "6299-b.6a",		0x20000, 0x23531bf0, 5 | BRF_GRA },           //  8
+	{ "6299-b.6c",		0x20000, 0x59a1a0ca, 5 | BRF_GRA },           //  9
+	{ "6299-b.4a",		0x20000, 0x1651cf8d, 5 | BRF_GRA },           // 10
+	{ "6299-b.4c",		0x20000, 0xbbb38435, 5 | BRF_GRA },           // 11
+
+	{ "6299-b.3m",		0x20000, 0x1cc5f809, 6 | BRF_GRA },           // 12 Sprites
+	{ "6299-b.3p",		0x20000, 0x2f38d008, 6 | BRF_GRA },           // 13
+	{ "6299-b.3r",		0x20000, 0x1fbe9e5f, 6 | BRF_GRA },           // 14
+	{ "6299-b.3t",		0x20000, 0xe6c88497, 6 | BRF_GRA },           // 15
+	{ "6299-b.1m",		0x20000, 0xa31e251d, 6 | BRF_GRA },           // 16
+	{ "6299-b.1p",		0x20000, 0xc0d2cf20, 6 | BRF_GRA },           // 17
+	{ "6299-b.1r",		0x20000, 0xb3ede4fd, 6 | BRF_GRA },           // 18
+	{ "6299-b.1t",		0x20000, 0xf2480160, 6 | BRF_GRA },           // 19
+
+	{ "6299-a.4a",		0x20000, 0xef9acdcf, 7 | BRF_SND },           // 20 MSM6295 Samples
+
+	{ "6299-a.6v",		0x01000, 0x00000000, 0 | BRF_NODUMP },	      // 21 MCU
+};
+
+STD_ROM_PICK(raigaa)
+STD_ROM_FN(raigaa)
+
+struct BurnDriver BurnDrvRaigaa = {
+	"raigaa", "stratof", NULL, NULL, "1991",
+	"Raiga - Strato Fighter (Japan, set 2)\0", NULL, "Tecmo", "Miscellaneous",
+	L"\u96F7\u7259 Strato Fighter (Japan, set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	NULL, raigaaRomInfo, raigaaRomName, NULL, NULL, NULL, NULL, RaigaInputInfo, RaigaDIPInfo,
 	stratofInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

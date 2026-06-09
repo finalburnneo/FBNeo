@@ -1233,6 +1233,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 // Prebillian
+// M6100211A PCB
 
 static struct BurnRomInfo pbillianRomDesc[] = {
 	{ "mitsubishi__electric__1.m5l27256k.6bc",			0x8000, 0xd379fe23, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1287,6 +1288,7 @@ struct BurnDriver BurnDrvPbillian = {
 
 
 // Prebillian (bootleg)
+// EV-97 PCB
 
 static struct BurnRomInfo pbillianbRomDesc[] = {
 	{ "1",												0x8000, 0xcd8e34f0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1336,17 +1338,18 @@ struct BurnDriver BurnDrvPbillianb = {
 
 
 // Vs. Hot Smash
+// M6100211A PCB
 
 static struct BurnRomInfo hotsmashRomDesc[] = {
-	{ "b18-04",											0x8000, 0x981bde2c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "b18-04.6bc",										0x8000, 0x981bde2c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 
-	{ "b18-05",											0x8000, 0xdab5e718, 2 | BRF_SND },           //  1 Samples
+	{ "b18-05.7h",										0x8000, 0xdab5e718, 2 | BRF_SND },           //  1 Samples
 
-	{ "b18-01",											0x8000, 0x870a4c04, 3 | BRF_GRA },           //  2 Tiles
-	{ "b18-02",											0x8000, 0x4e625cac, 3 | BRF_GRA },           //  3
-	{ "b18-03",											0x4000, 0x1c82717d, 3 | BRF_GRA },           //  4
+	{ "b18-01.1n",										0x8000, 0x870a4c04, 3 | BRF_GRA },           //  2 Tiles
+	{ "b18-02.1r",										0x8000, 0x4e625cac, 3 | BRF_GRA },           //  3
+	{ "b18-03.1t",										0x4000, 0x1c82717d, 3 | BRF_GRA },           //  4
 
-	{ "b18-06.mcu",										0x0800, 0x67c0920a, 9 | BRF_PRG | BRF_ESS }, //  5 M68705 MCU
+	{ "b18-06.7k",										0x0800, 0x67c0920a, 9 | BRF_PRG | BRF_ESS }, //  5 M68705 MCU
 };
 
 STD_ROM_PICK(hotsmash)
@@ -1390,6 +1393,7 @@ struct BurnDriver BurnDrvHotsmash = {
 
 
 // Super Qix (World/Japan, V1.2)
+// It is unclear what this set fixes vs 1.1 below, but the 'rug pattern' on the bitmap test during POST has the left edge entirely black, unlike v1.0 or v1.1, but like sqixu
 
 static struct BurnRomInfo sqixRomDesc[] = {
 	{ "b03__01-2.ef3",									0x08000, 0x5ded636b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1441,6 +1445,7 @@ struct BurnDriver BurnDrvSqix = {
 
 
 // Super Qix (World/Japan, V1.1)
+// This set has the coin lockout polarity inverted, and also fixes the 10 vs 9 lockout bug
 
 static struct BurnRomInfo sqixr1RomDesc[] = {
 	{ "b03__01-1.ef3",									0x08000, 0xad614117, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1469,6 +1474,7 @@ struct BurnDriver BurnDrvSqixr1 = {
 
 
 // Super Qix (World/Japan, V1.0)
+// This set is older than the above two: it has the coin lockout only trigger after 10 coins (causing the last coin to be lost), and the coin lockout polarity is not inverted
 
 static struct BurnRomInfo sqixr0RomDesc[] = {
 	{ "b03__01.ef3",									0x08000, 0x0888b7de, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1525,6 +1531,7 @@ struct BurnDriver BurnDrvSqixu = {
 
 
 // Super Qix (bootleg of V1.0, 8031 MCU)
+// formerly 'sqixa'
 
 static struct BurnRomInfo sqixb1RomDesc[] = {
 	{ "sq01.97",										0x08000, 0x0888b7de, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1577,6 +1584,7 @@ struct BurnDriverD BurnDrvSqixb1 = {
 
 
 // Super Qix (bootleg, No MCU)
+// this bootleg set has been extensively hacked to avoid using the MCU at all, though a few checks for the semaphore flags were never patched out
 
 static struct BurnRomInfo sqixb2RomDesc[] = {
 	{ "cpu.2",											0x08000, 0x682e28e3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code

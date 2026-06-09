@@ -2318,11 +2318,12 @@ struct BurnDriver BurnDrvikari3k = {
 };
 
 // Ikari III - The Rescue (World, Rotary Joystick)
-/* Initial boot shows Ikari III The Rescue, then the title changes to the Japanese title - No demo play - proto or test set?? */
+// A7007-SUB4M ROM board
 
 static struct BurnRomInfo ikari3wRomDesc[] = {
-	{ "ik_2.c10", 			0x20000, 0xd0b690d3, 1 | BRF_PRG }, //  0 68k Code
-	{ "ik_3.c9",  			0x20000, 0x11a9e664, 1 | BRF_PRG }, //  1
+	/* Initial boot shows Ikari III The Rescue, then the title changes to the Japanese title - No demo play - proto or test set?? */
+	{ "ik_e2.c10", 			0x20000, 0xd0b690d3, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik_e3.c9",  			0x20000, 0x11a9e664, 1 | BRF_PRG }, //  1
 	{ "ik3-1.c8",       	0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",      	0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 

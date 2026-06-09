@@ -619,13 +619,13 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 						// ...
 					}
 				} else {
-
+					if(fp) fclose(fp);
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Not Found, cannot continue. \n"));
 					return 0;
 				}
 			}
 		} else {
-
+			if(fp) fclose(fp);
 			//bprintf(PRINT_NORMAL, _T("    Couldn't open %s \n"), GetIsoPath());
 			return 0;
 		}
@@ -651,8 +651,10 @@ int GetNeoGeoCD_Identifier()
 	// Make sure we have a valid ISO file extension...
 	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin")))
 	{
-		if(_tfopen(GetIsoPath(), _T("rb")))
+		FILE *fp = _tfopen(GetIsoPath(), _T("rb"));
+		if(fp)
 		{
+			fclose(fp);
 			bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)

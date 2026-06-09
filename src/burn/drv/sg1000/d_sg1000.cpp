@@ -1755,6 +1755,25 @@ struct BurnDriver BurnDrvsg1k_girlgardt = {
 	272, 228, 4, 3
 };
 
+// Girl's Garden ~ Jardim do Amor (Hack, Portuguese v2.0)
+// https://www.romhacking.net.br/index.php?topic=23.0
+static struct BurnRomInfo sg1k_girlgardptRomDesc[] = {
+	{ "Jardim do Amor T-Por v2.0 (2016-26)(Patryckpo).sg",	32768, 0x149ef6b1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_girlgardpt)
+STD_ROM_FN(sg1k_girlgardpt)
+
+struct BurnDriver BurnDrvsg1k_girlgardpt = {
+	"sg1k_girlgardpt", "sg1k_girlgard", NULL, NULL, "2016-26",
+	"Girl's Garden ~ Jardim do Amor (Hack, Portuguese v2.0)\0", NULL, "Patryckpo", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_girlgardptRomInfo, sg1k_girlgardptRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Golgo 13 (Japan)
 static struct BurnRomInfo sg1k_golgo13RomDesc[] = {
 	{ "Golgo 13 (Japan)(1984)(Sega).sg",	0x08000, 0x0d159ed0, BRF_PRG | BRF_ESS },
@@ -4138,6 +4157,24 @@ struct BurnDriver BurnDrvsg1k_awass = {
 	272, 228, 4, 3
 };
 
+// Barbarricade (HB, 06-02-26)
+static struct BurnRomInfo sg1k_barbarricadeRomDesc[] = {
+	{ "Barbarricade 06-02-26 (2026)(Jess Creations, ArugulaZ).sg",	40960, 0xe8b1959c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_barbarricade)
+STD_ROM_FN(sg1k_barbarricade)
+
+struct BurnDriver BurnDrvsg1k_barbarricade = {
+	"sg1k_barbarricade", NULL, NULL, NULL, "2026",
+	"Barbarricade (HB, 06-02-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_BREAKOUT, 0,
+	SG1KGetZipName, sg1k_barbarricadeRomInfo, sg1k_barbarricadeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Battlot (HB)
 static struct BurnRomInfo sg1k_battlotRomDesc[] = {
 	{ "Battlot (2021)(Inufuto).sg",	9745, 0x90532d80, BRF_PRG | BRF_ESS },
@@ -4336,9 +4373,9 @@ struct BurnDriver BurnDrvsg1k_crosstrex = {
 	272, 228, 4, 3
 };
 
-// Eye Brawls (HB, v1.2)
+// Eye Brawls (HB, 1-30-26)
 static struct BurnRomInfo sg1k_eyebrawlsRomDesc[] = {
-	{ "Eye Brawls v1.2 (2026)(Jess Creations, ArugulaZ).sg",	32768, 0xe2ce44f0, BRF_PRG | BRF_ESS },
+	{ "Eye Brawls 1-30-26 (2026)(Jess Creations, ArugulaZ).sg",	32768, 0x3ea1da76, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_eyebrawls)
@@ -4346,7 +4383,7 @@ STD_ROM_FN(sg1k_eyebrawls)
 
 struct BurnDriver BurnDrvsg1k_eyebrawls = {
 	"sg1k_eyebrawls", NULL, NULL, NULL, "2026",
-	"Eye Brawls (HB, v1.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"Eye Brawls (HB, 1-30-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_MAZE, 0,
 	SG1KGetZipName, sg1k_eyebrawlsRomInfo, sg1k_eyebrawlsRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4516,6 +4553,24 @@ struct BurnDriver BurnDrvsg1k_msolitaire = {
 	272, 228, 4, 3
 };
 
+// Manhole (HB, v0.6b)
+static struct BurnRomInfo sg1k_manholeRomDesc[] = {
+	{ "Manhole v0.6b (2024)(Electric Dreams).sg",	12276, 0xe96272f6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_manhole)
+STD_ROM_FN(sg1k_manhole)
+
+struct BurnDriver BurnDrvsg1k_manhole = {
+	"sg1k_manhole", NULL, NULL, NULL, "2024",
+	"Manhole (HB, v0.6b)\0", NULL, "Electric Dreams", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_manholeRomInfo, sg1k_manholeRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Mazy (HB)
 static struct BurnRomInfo sg1k_mazyRomDesc[] = {
 	{ "Mazy (2022)(Inufuto).sg",	7058, 0x8f972417, BRF_PRG | BRF_ESS },
@@ -4588,17 +4643,17 @@ struct BurnDriver BurnDrvsg1k_neuras = {
 	272, 228, 4, 3
 };
 
-// Operation Hibernation Plus (HB, Rev.2)
+// Operation Hibernation Plus (HB, 02-15-26)
 static struct BurnRomInfo sg1k_ophibernplusRomDesc[] = {
-	{ "Operation Hibernation Plus Rev.2 (2025)(Jess Creations - ArugulaZ).sg",	49152, 0xd4b2189a, BRF_PRG | BRF_ESS },
+	{ "Operation Hibernation Plus 02-15-26 (2025-26)(Jess Creations - ArugulaZ).sg",	49152, 0xabc33998, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_ophibernplus)
 STD_ROM_FN(sg1k_ophibernplus)
 
 struct BurnDriver BurnDrvsg1k_ophibernplus = {
-	"sg1k_ophibernplus", NULL, NULL, NULL, "2025",
-	"Operation Hibernation Plus (HB, Rev.2)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"sg1k_ophibernplus", NULL, NULL, NULL, "2025-26",
+	"Operation Hibernation Plus (HB, 02-15-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PLATFORM, 0,
 	SG1KGetZipName, sg1k_ophibernplusRomInfo, sg1k_ophibernplusRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4751,9 +4806,9 @@ struct BurnDriver BurnDrvsg1k_sgthelmet = {
 	272, 228, 4, 3
 };
 
-// Solar Fox II (HB)
+// Solar Fox II (HB, 21-10-25)
 static struct BurnRomInfo sg1k_solarfoxiiRomDesc[] = {
-	{ "Solar Fox II (2025)(Jess Creations - ArugulaZ).sg",	40960, 0x2ce5cf6f, BRF_PRG | BRF_ESS },
+	{ "Solar Fox II 21-10-25 (2025)(Jess Creations - ArugulaZ).sg",	40960, 0x7886d024, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_solarfoxii)
@@ -4761,7 +4816,7 @@ STD_ROM_FN(sg1k_solarfoxii)
 
 struct BurnDriver BurnDrvsg1k_solarfoxii = {
 	"sg1k_solarfoxii", NULL, NULL, NULL, "2025",
-	"Solar Fox II (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
+	"Solar Fox II (HB, 21-10-25)\0", NULL, "Jess Creations - ArugulaZ", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION, 0,
 	SG1KGetZipName, sg1k_solarfoxiiRomInfo, sg1k_solarfoxiiRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -4879,7 +4934,7 @@ struct BurnDriver BurnDrvsg1k_vexed = {
 
 // Whack 'Em Smack 'Em Byrons (HB)
 static struct BurnRomInfo sg1k_wsbyronsRomDesc[] = {
-	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations - ArugulaZ).sg",	32706, 0xa444660d, BRF_PRG | BRF_ESS },
+	{ "Whack 'Em Smack 'Em Byrons (2024)(Jess Creations - ArugulaZ).sg",	31770, 0x073dd0e9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_wsbyrons)

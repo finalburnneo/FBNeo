@@ -38020,6 +38020,25 @@ struct BurnDriver BurnDrvmd_aliencat2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Alien Cat 2 (HB, Alt)
+// https://pscdgames.itch.io/alien-cat-2-sega-mega-drive-genesis
+static struct BurnRomInfo md_aliencat2aRomDesc[] = {
+	{ "Alien Cat 2 (Alt) (2020)(PSCD Games).bin", 1310720, 0x159b1da2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aliencat2a)
+STD_ROM_FN(md_aliencat2a)
+
+struct BurnDriver BurnDrvmd_aliencat2a = {
+	"md_aliencat2a", "md_aliencat2", NULL, NULL, "2020",
+	"Alien Cat 2 (HB, Alt)\0", NULL, "PSCD Games, Repa Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_aliencat2aRomInfo, md_aliencat2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Altered Beast II: The Seven Depths of Hell (HB, Alpha-4)
 // https://fabianodigital.itch.io/altered-beast-2-genesis
 static struct BurnRomInfo md_altbeast2RomDesc[] = {
@@ -38255,17 +38274,17 @@ struct BurnDriver BurnDrvmd_baileybrave = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Barbarian - Amiga (HB)
+// Barbarian: The Ultimate Warrior - Amiga (HB)
 static struct BurnRomInfo md_barbarianamiRomDesc[] = {
-	{ "Barbarian AMIGA (2017)(F.L).bin", 1031574, 0x4fc515f5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Barbarian - The Ultimate Warrior - Amiga (2015)(F.L).bin", 1031574, 0x4fc515f5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_barbarianami)
 STD_ROM_FN(md_barbarianami)
 
 struct BurnDriver BurnDrvmd_barbarianami = {
-	"md_barbarianami", NULL, NULL, NULL, "2017",
-	"Barbarian the Ultimate Warrior - Amiga (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	"md_barbarianami", NULL, NULL, NULL, "2015	",
+	"Barbarian: The Ultimate Warrior - Amiga (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_barbarianamiRomInfo, md_barbarianamiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -38273,63 +38292,9 @@ struct BurnDriver BurnDrvmd_barbarianami = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Barbarian - Atari ST (HB)
-static struct BurnRomInfo md_barbarianstRomDesc[] = {
-	{ "Barbarian Atari ST (2014)(F.L).bin", 2487416, 0xfec97705, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_barbarianst)
-STD_ROM_FN(md_barbarianst)
-
-struct BurnDriver BurnDrvmd_barbarianst = {
-	"md_barbarianst", "md_barbarianami", NULL, NULL, "2014",
-	"Barbarian the Ultimate Warrior - Atari ST (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_barbarianstRomInfo, md_barbarianstRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Barbarian - C64 (HB)
-static struct BurnRomInfo md_barbarianc64RomDesc[] = {
-	{ "Barbarian C64 (2014)(F.L).bin", 3028428, 0xd37f9af0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_barbarianc64)
-STD_ROM_FN(md_barbarianc64)
-
-struct BurnDriver BurnDrvmd_barbarianc64 = {
-	"md_barbarianc64", "md_barbarianami", NULL, NULL, "2014",
-	"Barbarian the Ultimate Warrior - C64 (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_barbarianc64RomInfo, md_barbarianc64RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Barbarian - ZX Spectrum (HB)
-static struct BurnRomInfo md_barbarianzxsRomDesc[] = {
-	{ "Barbarian ZX Spectrum (2015)(F.L).bin", 1432448, 0x5360129d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_barbarianzxs)
-STD_ROM_FN(md_barbarianzxs)
-
-struct BurnDriver BurnDrvmd_barbarianzxs = {
-	"md_barbarianzxs", "md_barbarianami", NULL, NULL, "2015",
-	"Barbarian the Ultimate Warrior - ZX Spectrum (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_barbarianzxsRomInfo, md_barbarianzxsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Barbarian - Amstrad CPC (HB)
+// Barbarian: The Ultimate Warrior - Amstrad CPC (HB)
 static struct BurnRomInfo md_barbariancpcRomDesc[] = {
-	{ "Barbarian Amstrad CPC (2014)(F.L).bin", 2296122, 0xd63f8446, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Barbarian - The Ultimate Warrior - Amstrad CPC (2014)(F.L).bin", 2296122, 0xd63f8446, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_barbariancpc)
@@ -38337,7 +38302,7 @@ STD_ROM_FN(md_barbariancpc)
 
 struct BurnDriver BurnDrvmd_barbariancpc = {
 	"md_barbariancpc", "md_barbarianami", NULL, NULL, "2014",
-	"Barbarian the Ultimate Warrior - Amstrad CPC (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	"Barbarian: The Ultimate Warrior - Amstrad CPC (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_barbariancpcRomInfo, md_barbariancpcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -38345,9 +38310,63 @@ struct BurnDriver BurnDrvmd_barbariancpc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Barbarian: The Ultimate Warrior - Atari ST (HB)
+static struct BurnRomInfo md_barbarianstRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - Atari ST (2014)(F.L).bin", 2487416, 0xfec97705, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_barbarianst)
+STD_ROM_FN(md_barbarianst)
+
+struct BurnDriver BurnDrvmd_barbarianst = {
+	"md_barbarianst", "md_barbarianami", NULL, NULL, "2014",
+	"Barbarian: The Ultimate Warrior - Atari ST (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_barbarianstRomInfo, md_barbarianstRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - C64 (HB)
+static struct BurnRomInfo md_barbarianc64RomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - C64 (2014)(F.L).bin", 3028428, 0xd37f9af0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_barbarianc64)
+STD_ROM_FN(md_barbarianc64)
+
+struct BurnDriver BurnDrvmd_barbarianc64 = {
+	"md_barbarianc64", "md_barbarianami", NULL, NULL, "2014",
+	"Barbarian: The Ultimate Warrior - C64 (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_barbarianc64RomInfo, md_barbarianc64RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Barbarian: The Ultimate Warrior - ZX Spectrum (HB)
+static struct BurnRomInfo md_barbarianzxsRomDesc[] = {
+	{ "Barbarian - The Ultimate Warrior - ZX Spectrum (2015)(F.L).bin", 1432448, 0x5360129d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_barbarianzxs)
+STD_ROM_FN(md_barbarianzxs)
+
+struct BurnDriver BurnDrvmd_barbarianzxs = {
+	"md_barbarianzxs", "md_barbarianami", NULL, NULL, "2015",
+	"Barbarian: The Ultimate Warrior - ZX Spectrum (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_barbarianzxsRomInfo, md_barbarianzxsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Death Sword - Apple II (HB)
 static struct BurnRomInfo md_barbarianap2RomDesc[] = {
-	{ "Death Sword Apple II (2014)(F.L).bin", 425616, 0x12a01f70, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Death Sword - Apple II (2014)(F.L).bin", 425616, 0x12a01f70, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_barbarianap2)
@@ -38355,7 +38374,7 @@ STD_ROM_FN(md_barbarianap2)
 
 struct BurnDriver BurnDrvmd_barbarianap2 = {
 	"md_barbarianap2", "md_barbarianami", NULL, NULL, "2014",
-	"Death Sword - Apple II (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	"Death Sword - Apple II (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_barbarianap2RomInfo, md_barbarianap2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -38365,7 +38384,7 @@ struct BurnDriver BurnDrvmd_barbarianap2 = {
 
 // Death Sword - PC CGA (HB)
 static struct BurnRomInfo md_barbarianpcRomDesc[] = {
-	{ "Death Sword PC CGA (2014)(F.L).bin", 446380, 0xaaeaeb87, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Death Sword - PC CGA (2014)(F.L).bin", 446380, 0xaaeaeb87, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_barbarianpc)
@@ -38373,7 +38392,7 @@ STD_ROM_FN(md_barbarianpc)
 
 struct BurnDriver BurnDrvmd_barbarianpc = {
 	"md_barbarianpc", "md_barbarianami", NULL, NULL, "2014",
-	"Death Sword - PC CGA (HB)\0", "raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
+	"Death Sword - PC CGA (HB)\0", "Raw conversion - no improvements", "F.L", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_barbarianpcRomInfo, md_barbarianpcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39944,6 +39963,25 @@ struct BurnDriver BurnDrvmd_foxyland = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Foxy Land (HB, Alt)
+// https://pscdgames.itch.io/foxyland-sega-mega-drive-genesis
+static struct BurnRomInfo md_foxylandaRomDesc[] = {
+	{ "Foxy Land (Alt) (2020)(PSCD-Bug Studio).bin", 3014656, 0x0ba40013, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_foxylanda)
+STD_ROM_FN(md_foxylanda)
+
+struct BurnDriver BurnDrvmd_foxylanda = {
+	"md_foxylanda", "md_foxyland", NULL, NULL, "2020",
+	"Foxy Land (HB, Alt)\0", NULL, "PSCD Games, Bug Studio", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_foxylandaRomInfo, md_foxylandaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // FX Unit Yuki - The Henshin Engine (World) (Unl)
 static struct BurnRomInfo md_fxunyukiRomDesc[] = {
 	{ "FX Unit Yuki - The Henshin Engine (World)(Unl)(2018)(Sarupro).bin", 6291456, 0x2906876b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -39958,6 +39996,25 @@ struct BurnDriver BurnDrvmd_fxunyuki = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_fxunyukiRomInfo, md_fxunyukiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// G-ZERO (HB, beta 4)
+// https://gasega68k.itch.io/g-zero
+static struct BurnRomInfo md_gzeroRomDesc[] = {
+	{ "G-ZERO (2025)(gasega68k).bin", 524288, 0xe9d0c3f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gzero)
+STD_ROM_FN(md_gzero)
+
+struct BurnDriver BurnDrvmd_gzero = {
+	"md_gzero", NULL, NULL, NULL, "2025",
+	"G-ZERO (HB, beta 4)\0", NULL, "gasega68k", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_gzeroRomInfo, md_gzeroRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -40690,6 +40747,25 @@ struct BurnDriver BurnDrvmd_mainurse = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Maldita Castilla: Requiem (HB, Demo v1.4)
+// https://playonretro.itch.io/maldita-castilla-megadrive-demo
+static struct BurnRomInfo md_mcastillaRomDesc[] = {
+	{ "Maldita Castilla - Requiem Demo v1.4 (2026)(PlayOnRetro).bin", 2779803, 0x6e43f5e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mcastilla)
+STD_ROM_FN(md_mcastilla)
+
+struct BurnDriver BurnDrvmd_mcastilla = {
+	"md_mcastilla", NULL, NULL, NULL, "2026",
+	"Maldita Castilla: Requiem (HB, Demo v1.4)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_mcastillaRomInfo, md_mcastillaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Masiaka (HB, Tech-Demo)
 static struct BurnRomInfo md_masiakaRomDesc[] = {
 	{ "Masiaka Tech-Demo (2017)(Resistance).bin", 0x300000, 0xd237b970, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -40871,9 +40947,28 @@ struct BurnDriver BurnDrvmd_mmworld2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mega Meat Boy (HB, v0.31)
+// https://jungrock.itch.io/mega-meat-boy
+static struct BurnRomInfo md_megameatboyRomDesc[] = {
+	{ "Mega Meat Boy v0.31 (2025-26)(jungrock).bin", 917504, 0x88620f2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megameatboy)
+STD_ROM_FN(md_megameatboy)
+
+struct BurnDriver BurnDrvmd_megameatboy = {
+	"md_megameatboy", NULL, NULL, NULL, "2025-26",
+	"Mega Meat Boy (HB, v0.31)\0", NULL, "jungrock", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_megameatboyRomInfo, md_megameatboyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mega Mindtris (HB, v1.2)
 static struct BurnRomInfo md_mindtrisRomDesc[] = {
-	{ "megamindtris (2018)(1985 alternativo)(v1.2).bin", 1114112, 0xbef5482f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Mindtris v1.2 (2018)(1985 alternativo).bin", 1114112, 0xbef5482f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mindtris)
@@ -40885,6 +40980,25 @@ struct BurnDriver BurnDrvmd_mindtris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_mindtrisRomInfo, md_mindtrisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Pang (HB, v0.3 Beta)
+// https://rcampeador.itch.io/megapang
+static struct BurnRomInfo md_megapangRomDesc[] = {
+	{ "Mega Pang v0.3 Beta (2025-26)(RCampeador).bin", 1572864, 0xedc09063, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megapang)
+STD_ROM_FN(md_megapang)
+
+struct BurnDriver BurnDrvmd_megapang = {
+	"md_megapang", NULL, NULL, NULL, "2025-26",
+	"Mega Pang (HB, v0.3 Beta)\0", NULL, "RCampeador", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_megapangRomInfo, md_megapangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -41015,9 +41129,10 @@ struct BurnDriver BurnDrvmd_metaldragon = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Metal Gear (HB, v1.1)
+// Metal Gear (HB, v1.2)
+// https://h0ffman.itch.io/metal-gear-md
 static struct BurnRomInfo md_metalgearRomDesc[] = {
-	{ "Metal Gear v1.1 (2025)(h0ffman).bin", 1572864, 0x724fe7b3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Metal Gear v1.2 (2025)(h0ffman).bin", 2097152, 0x68ec8c19, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_metalgear)
@@ -41025,7 +41140,7 @@ STD_ROM_FN(md_metalgear)
 
 struct BurnDriver BurnDrvmd_metalgear = {
 	"md_metalgear", NULL, NULL, NULL, "2025",
-	"Metal Gear (HB, v1.1)\0", NULL, "h0ffman", "Genesis / Mega Drive",
+	"Metal Gear (HB, v1.2)\0", NULL, "h0ffman", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_ADV, 0,
 	MegadriveGetZipName, md_metalgearRomInfo, md_metalgearRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42206,6 +42321,24 @@ struct BurnDriver BurnDrvmd_spax = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Square Brothers (HB)
+static struct BurnRomInfo md_squarebrothersRomDesc[] = {
+	{ "Square Brothers (2025)(Ratalaika Games, 9Ratones, Two Black Cats).bin", 1048576, 0x3e866383, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_squarebrothers)
+STD_ROM_FN(md_squarebrothers)
+
+struct BurnDriver BurnDrvmd_squarebrothers = {
+	"md_squarebrothers", NULL, NULL, NULL, "2025",
+	"Square Brothers (HB)\0", NULL, "Ratalaika Games, 9Ratones, Two Black Cats", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_squarebrothersRomInfo, md_squarebrothersRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Star Chaser (HB)
 static struct BurnRomInfo md_starchaserRomDesc[] = {
 	{ "Star Chaser (2014-07-05)(Sik).bin", 0x00b240, 0xfadd25a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42589,6 +42722,25 @@ struct BurnDriver BurnDrvmd_thundpaw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_thundpawRomInfo, md_thundpawRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunder Paw (HB, Alt)
+// https://pscdgames.itch.io/thunder-paw-sega-mega-drive-genesis
+static struct BurnRomInfo md_thundpawaRomDesc[] = {
+	{ "Thunder Paw (Alt) (2021)(PSCD Games).bin", 3014656, 0x3455d75c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_thundpawa)
+STD_ROM_FN(md_thundpawa)
+
+struct BurnDriver BurnDrvmd_thundpawa = {
+	"md_thundpawa", "md_thundpaw", NULL, NULL, "2021",
+	"Thunder Paw (HB, Alt)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_thundpawaRomInfo, md_thundpawaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44131,10 +44283,10 @@ struct BurnDriver BurnDrvmd_ghostbstse = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Golden Axe - Arcade Colors (Hack, v1.3)
+// Golden Axe - Arcade Colors (Hack, v1.4)
 // https://www.romhacking.net/hacks/7004/
 static struct BurnRomInfo md_goldnaxeacRomDesc[] = {
-	{ "Golden Axe - Arcade Colors v1.3 (2026)(SCD).bin", 590842, 0x0f0f9154, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Golden Axe - Arcade Colors v1.4 (2026)(SCD).bin", 590842, 0xe19b97c4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_goldnaxeac)
@@ -44142,7 +44294,7 @@ STD_ROM_FN(md_goldnaxeac)
 
 struct BurnDriver BurnDrvmd_goldnaxeac = {
 	"md_goldnaxeac", "md_goldnaxe", NULL, NULL, "2026",
-	"Golden Axe - Arcade Colors (Hack, v1.3)\0", NULL, "SCD", "Genesis / Mega Drive",
+	"Golden Axe - Arcade Colors (Hack, v1.4)\0", NULL, "SCD", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_goldnaxeacRomInfo, md_goldnaxeacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44433,18 +44585,18 @@ struct BurnDriver BurnDrvmd_mkae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Arcade Edition (Hack, v2.2)
+// Mortal Kombat Arcade Edition (Hack, v2.4)
 // https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-genesis-2/
 static struct BurnRomInfo md_mkaeeRomDesc[] = {
-	{ "Mortal Kombat Arcade Edition Enhanced v2.2 (2025)(Rael G.C.).bin", 4194304, 0xe0b10bf3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat Arcade Edition Enhanced v2.4 (2026)(Rael G.C.).bin", 4194304, 0x20e1378c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mkaee)
 STD_ROM_FN(md_mkaee)
 
 struct BurnDriver BurnDrvmd_mkaee = {
-	"md_mkaee", "md_mk", NULL, NULL, "2025",
-	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.2)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
+	"md_mkaee", "md_mk", NULL, NULL, "2026",
+	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.4)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkaeeRomInfo, md_mkaeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46629,6 +46781,25 @@ struct BurnDriver BurnDrvmd_alien3pt = {
 	L"Alien\u00b3 (Hack, Portuguese)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_alien3ptRomInfo, md_alien3ptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Altered Beast (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3325.0
+static struct BurnRomInfo md_altbeastptRomDesc[] = {
+	{ "Altered Beast PT-BR (2026)(CEGA Traducoes).bin", 524288, 0x2676ef61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_altbeastpt)
+STD_ROM_FN(md_altbeastpt)
+
+struct BurnDriver BurnDrvmd_altbeastpt = {
+	"md_altbeastpt", "md_altbeast", NULL, NULL, "2026",
+	"Altered Beast (Hack, Portuguese)\0", NULL, "CEGA Traducoes", "Genesis / Mega Drive",
+	NULL, NULL, L"CEGA Tradu\u00e7\u00f5es", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_altbeastptRomInfo, md_altbeastptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

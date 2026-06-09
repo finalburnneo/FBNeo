@@ -495,6 +495,8 @@ static INT32 DrvInit(INT32 drv_select)
 {
 	game_drv = drv_select;
 
+	BurnSetRefreshRate(59.6);
+
 	Mem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;

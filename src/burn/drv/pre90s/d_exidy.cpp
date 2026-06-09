@@ -127,6 +127,24 @@ static struct BurnInputInfo TargInputList[] = {
 
 STDINPUTINFO(Targ)
 
+static struct BurnInputInfo RallysInputList[] = {
+	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"Coin 2",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Rallys)
+
 static struct BurnInputInfo MtrapInputList[] = {
 	{"Coin 1",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"Coin 2",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
@@ -342,6 +360,106 @@ static struct BurnDIPInfo SpectarrfDIPList[]=
 };
 
 STDDIPINFO(Spectarrf)
+
+static struct BurnDIPInfo RallysDIPList[]=
+{
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x21, NULL							},
+	{0x01, 0xff, 0xff, 0x00, NULL							},
+	{0x02, 0xff, 0xff, 0xff, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x82, 0x03, 0x00, "2 Coins/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x01, "1 Coin/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x02, "1 Coin/2 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x03, "1 Coin/3 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x02, 0x03, 0x00, "2C/1P, 50P Coin/3P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x01, "1C/1P, 50P Coin/6P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x02, "1C/2P, 50P Coin/12P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x03, "1C/3P, 50P Coin/18P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0   , 0xfe, 0   ,    2, "Top Score Award"				},
+	{0x00, 0x01, 0x04, 0x00, "Credit"						},
+	{0x00, 0x01, 0x04, 0x04, "Extended Play"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x00, 0x01, 0x60, 0x00, "2"							},
+	{0x00, 0x01, 0x60, 0x20, "3"							},
+	{0x00, 0x01, 0x60, 0x40, "4"							},
+	{0x00, 0x01, 0x60, 0x60, "5"							},
+
+	{0,    0xfe, 0   , 2   , "Coin Mode"					},
+	{0x00, 0x01, 0x80, 0x00, "Mode 1"						},
+	{0x00, 0x01, 0x80, 0x80, "Mode 2"						},
+
+	{0   , 0xfe, 0   ,    4, "Language"						},
+	{0x01, 0x01, 0x03, 0x00, "English"						},
+	{0x01, 0x01, 0x03, 0x01, "French"						},
+	{0x01, 0x01, 0x03, 0x02, "German"						},
+	{0x01, 0x01, 0x03, 0x03, "Spanish"						},
+};
+
+STDDIPINFO(Rallys)
+
+static struct BurnDIPInfo PhantomaDIPList[]=
+{
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0x21, NULL							},
+	{0x01, 0xff, 0xff, 0x00, NULL							},
+	{0x02, 0xff, 0xff, 0xff, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x82, 0x03, 0x00, "2 Coins/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x01, "1 Coin/1 Credit"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x02, "1 Coin/2 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x82, 0x03, 0x03, "1 Coin/3 Credits"				},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0,    0xfe, 0   ,    4, "Coinage"						},
+	{0x00, 0x02, 0x03, 0x00, "2F/1P, 5F Coin/3P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x01, "1F/1P, 5F Coin/6P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x02, "1F/2P, 5F Coin/12P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+	{0x00, 0x02, 0x03, 0x03, "1F/3P, 5F Coin/18P"			},
+	{0x00, 0x00, 0x80, 0x80, NULL							},
+
+	{0   , 0xfe, 0   ,    2, "Top Score Award"				},
+	{0x00, 0x01, 0x04, 0x00, "Credit"						},
+	{0x00, 0x01, 0x04, 0x04, "Extended Play"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x00, 0x01, 0x60, 0x00, "2"							},
+	{0x00, 0x01, 0x60, 0x20, "3"							},
+	{0x00, 0x01, 0x60, 0x40, "4"							},
+	{0x00, 0x01, 0x60, 0x60, "5"							},
+
+	{0,    0xfe, 0   , 2   , "Coin Mode"					},
+	{0x00, 0x01, 0x80, 0x00, "Mode 1"						},
+	{0x00, 0x01, 0x80, 0x80, "Mode 2"						},
+
+	{0   , 0xfe, 0   ,    4, "Language"						},
+	{0x01, 0x01, 0x03, 0x00, "English"						},
+	{0x01, 0x01, 0x03, 0x01, "French"						},
+	{0x01, 0x01, 0x03, 0x02, "German"						},
+	{0x01, 0x01, 0x03, 0x03, "Spanish"						},
+};
+
+STDDIPINFO(Phantoma)
 
 static struct BurnDIPInfo VentureDIPList[]=
 {
@@ -598,6 +716,40 @@ static void spectar_main_write(UINT16 address, UINT8 data)
 	exidy_main_write(address, data);
 }
 
+static void rallys_main_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x5000: sprite1_xpos = data; return;
+		case 0x5001: sprite1_ypos = data; return;
+		case 0x5300: sprite2_xpos = data; return;
+		case 0x5301: sprite2_ypos = data; return;
+		case 0x5200: spectar_audio_1_w(data); return;
+		case 0x5201: spectar_audio_2_w(data); return;
+		case 0x5210:
+		case 0x5211:
+		case 0x5212:
+			color_latch[address & 3] = data;
+		return;
+	}
+
+	switch (address & 0xff03)
+	{
+		case 0x5100: spriteno = data; return;
+		case 0x5101: sprite_enable = data; return;
+	}
+}
+
+static UINT8 rallys_main_read(UINT16 address)
+{
+	switch (address & 0xff03)
+	{
+		case 0x5100: return (DrvDips[0] & 0xfe) | (DrvInputs[1] & 0x01);
+	}
+
+	return exidy_main_read(address);
+}
+
 static UINT8 venture_main_read(UINT16 address)
 {
 	switch (address & 0xff03)
@@ -716,6 +868,15 @@ static UINT8 targ_intsource()
 	return ret;
 }
 
+static UINT8 rallys_intsource()
+{
+	UINT8 ret = 0;
+//	ret |= (DrvDips[1] & 0x1f);
+	ret |= (DrvInputs[1] & 0x01) ? 0x20 : 0x00; // coin2
+	ret |= (DrvInputs[0] & 0x80) ? 0x40 : 0x00;
+	return ret;
+}
+
 static void cheese_soundsystem_reset(); // forward;
 
 static INT32 DrvDoReset()
@@ -829,6 +990,20 @@ static INT32 DrvLoadROMs(INT32 prg_load, INT32 snd_load)
 		BurnDrvGetRomInfo(&ri, i);
 
 		if ((ri.nType & 7) == 1) {
+			if (BurnLoadRom(pLoad, i, 1)) return 1;
+			pLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 7) == 5) {
+			pLoad += 0x400;
+			if (BurnLoadRom(pLoad, i, 1)) return 1;
+			pLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 7) == 6) {
+			pLoad += 0xc800;
 			if (BurnLoadRom(pLoad, i, 1)) return 1;
 			pLoad += ri.nLen;
 			continue;
@@ -1404,14 +1579,15 @@ static INT32 TargInit()
 	return 0;
 }
 
-static INT32 SpectarCommonInit(INT32 load_addr)
+static INT32 SpectarCommonInit(INT32 load_addr, INT32 type)
 {
+	// type : 0=spectar 1=rallys 2=phantoma
 	BurnAllocMemIndex();
 
 	{
 		if (DrvLoadROMs(load_addr, 0)) return 1;
 
-		memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
+		if (type != 1) memcpy (DrvGfxROM, DrvGfxROM + 0x400, 0x400); // top is blank
 
 		DrvGfxDecode();
 	}
@@ -1423,16 +1599,19 @@ static INT32 SpectarCommonInit(INT32 load_addr)
 	M6502MapMemory(DrvVideoRAM,				0x4000, 0x43ff, MAP_RAM);
 	M6502MapMemory(DrvVideoRAM,				0x4400, 0x47ff, MAP_RAM); // mirror
 	M6502MapMemory(DrvCharacterRAM,			0x4800, 0x4fff, MAP_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x3f00,	0xff00, 0xffff, MAP_ROM); // vectors
-	M6502SetWriteHandler(spectar_main_write);
-	M6502SetReadHandler(targ_main_read);
+	if (type == 2)
+		M6502MapMemory(DrvM6502ROM + 0xf800,	0xf800, 0xffff, MAP_ROM); // vectors
+	else
+		M6502MapMemory(DrvM6502ROM + 0x3f00,	0xff00, 0xffff, MAP_ROM); // vectors
+	M6502SetWriteHandler(type != 0 ? rallys_main_write : spectar_main_write);
+	M6502SetReadHandler(type != 0 ? rallys_main_read : targ_main_read);
 	M6502Close();
 
 	pia_init(); // not in this set
 
 	cheese_soundsystem_init(0);
 
-	ExidyCommonInit(targ_intsource, 0, 0, 0, 0x2000, 0xda, 0xee, 0x61);
+	ExidyCommonInit((type != 0 ? rallys_intsource : targ_intsource), 0, 0, 0, 0x2000, 0xda, 0xee, 0x61);
 
 	DrvDoReset();
 
@@ -1441,12 +1620,22 @@ static INT32 SpectarCommonInit(INT32 load_addr)
 
 static INT32 SpectarInit()
 {
-	return SpectarCommonInit(0x1000);
+	return SpectarCommonInit(0x1000, 0);
 }
 
 static INT32 Spectar1Init()
 {
-	return SpectarCommonInit(0x0800);
+	return SpectarCommonInit(0x0800, 0);
+}
+
+static INT32 RallysInit()
+{
+	return SpectarCommonInit(0x1000, 1);
+}
+
+static INT32 PhantomaInit()
+{
+	return SpectarCommonInit(0x1000, 2);
 }
 
 // sound custom jib (c) Aaron Giles
@@ -2975,19 +3164,19 @@ struct BurnDriver BurnDrvSidetrac = {
 // Targ
 
 static struct BurnRomInfo targRomDesc[] = {
-	{ "hrl10a-1",		0x0800, 0x969744e1, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
-	{ "hrl9a-1",		0x0800, 0xa177a72d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "hrl8a-1",		0x0800, 0x6e6928a5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "hrl7a-1",		0x0800, 0xe2f37f93, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "hrl6a-1",		0x0800, 0xa60a1bfc, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "hrl_10a1.10a",	0x0800, 0x969744e1, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "hrl_9a1.9a",		0x0800, 0xa177a72d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "hrl_8a1.8a",		0x0800, 0x6e6928a5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "hrl_7a4.7a",		0x0800, 0xe2f37f93, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "hrl_6a3.6a",		0x0800, 0xa60a1bfc, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           //  5 Sprites
+	{ "hrl_11d-1.11d",	0x0400, 0x9f03513e, 2 | BRF_GRA },           //  5 Sprites
 
 	{ "hra2b-1",		0x0020, 0x38e8024b, 3 | BRF_SND },           //  6 Sound PROM
 
-	{ "hrl5c-1",		0x0100, 0xa24290d0, 0 | BRF_OPT },           //  7 PROMs
-	{ "stl6d-1",		0x0020, 0xe26f9053, 0 | BRF_OPT },           //  8
-	{ "hrl14h-1",		0x0020, 0xf76b4fcf, 0 | BRF_OPT },           //  9
+	{ "hrl_5c-1.5c",	0x0100, 0xa24290d0, 0 | BRF_OPT },           //  7 PROMs
+	{ "stl_6d-1.6d",	0x0020, 0xe26f9053, 0 | BRF_OPT },           //  8
+	{ "hrl_14h-1.14h",	0x0020, 0xf76b4fcf, 0 | BRF_OPT },           //  9
 };
 
 STD_ROM_PICK(targ)
@@ -3007,15 +3196,19 @@ struct BurnDriver BurnDrvTarg = {
 // Targ (cocktail?)
 
 static struct BurnRomInfo targcRomDesc[] = {
-	{ "ctl.10a",		0x0800, 0x058b3983, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
-	{ "ctl.9a1",		0x0800, 0x3ac44b6b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ctl.8a1",		0x0800, 0x5c470021, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ctl.7a1",		0x0800, 0xc774fd9b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ctl.6a1",		0x0800, 0x3d020439, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "358_ctl_10a-1_tsv_11-10-80.10a",	0x0800, 0x058b3983, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "358_ctl_9a-1_tsv_11-10-80.9a",	0x0800, 0x3ac44b6b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "358_ctl_8a-1_tsv_11-10-80.8a",	0x0800, 0x5c470021, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "358_ctl_7a-1_tsv_11-10-80.7a",	0x0800, 0xc774fd9b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "358_ctl_6a-1_tsv_11-10-80.6a",	0x0800, 0x3d020439, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           //  5 Sprites
+	{ "hrl_11d-1.11d",					0x0400, 0x9f03513e, 2 | BRF_GRA },           //  5 Sprites
 
-	{ "hra2b-1",		0x0020, 0x38e8024b, 3 | BRF_GRA },           //  6 Sound PROM
+	{ "hra2b-1",						0x0020, 0x38e8024b, 3 | BRF_GRA },           //  6 Sound PROM
+
+	{ "hrl_5c-1.5c",					0x0100, 0xa24290d0, 0 | BRF_OPT },           //  7 PROMs
+	{ "stl_6d-1.6d",					0x0020, 0xe26f9053, 0 | BRF_OPT },           //  8
+	{ "hrl_14h-1.14h",					0x0020, 0xf76b4fcf, 0 | BRF_OPT },           //  9
 };
 
 STD_ROM_PICK(targc)
@@ -3032,21 +3225,21 @@ struct BurnDriver BurnDrvTargc = {
 };
 
 
-// Spectar (rev. 3)
+// Spectar (revision 3)
 
 static struct BurnRomInfo spectarRomDesc[] = {
-	{ "spl11a-3",		0x0800, 0x08880aff, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
-	{ "spl10a-2",		0x0800, 0xfca667c1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "spl9a-3",		0x0800, 0x9d4ce8ba, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "spl8a-2",		0x0800, 0xcfacbadf, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "spl7a-2",		0x0800, 0x4c4741ff, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "spl6a-2",		0x0800, 0x0cb46b25, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "spl11a-3.11a",	0x0800, 0x08880aff, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "spl10a-2.10a",	0x0800, 0xfca667c1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "spl9a-3.9a",		0x0800, 0x9d4ce8ba, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "spl8a-2.8a",		0x0800, 0xcfacbadf, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "spl7a-2.7a",		0x0800, 0x4c4741ff, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "spl6a-2.6a",		0x0800, 0x0cb46b25, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "hrl11d-2",		0x0800, 0xc55b645d, 2 | BRF_GRA },           //  6 Sprites
+	{ "hrl11d-2.11d",	0x0800, 0xc55b645d, 2 | BRF_GRA },           //  6 Sprites
 
-	{ "prom.5c",		0x0100, 0x9ca2e061, 0 | BRF_OPT },           //  7 PROMs
-	{ "prom.6d",		0x0020, 0xe26f9053, 0 | BRF_OPT },           //  8
-	{ "hrl14h-1",		0x0020, 0xf76b4fcf, 0 | BRF_OPT },           //  9
+	{ "spl5c-2.5c",		0x0100, 0x9ca2e061, 0 | BRF_OPT },           //  7 PROMs
+	{ "hrl6d-1.6d",		0x0020, 0xe26f9053, 0 | BRF_OPT },           //  8
+	{ "hrl14h-1.14h",	0x0020, 0xf76b4fcf, 0 | BRF_OPT },           //  9
 };
 
 STD_ROM_PICK(spectar)
@@ -3054,7 +3247,7 @@ STD_ROM_FN(spectar)
 
 struct BurnDriver BurnDrvSpectar = {
 	"spectar", NULL, NULL, "targ", "1980",
-	"Spectar (rev. 3)\0", NULL, "Exidy", "Miscellaneous",
+	"Spectar (revision 3)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
 	NULL, spectarRomInfo, spectarRomName, NULL, NULL, TargSampleInfo, TargSampleName, TargInputInfo, SpectarDIPInfo,
@@ -3063,22 +3256,22 @@ struct BurnDriver BurnDrvSpectar = {
 };
 
 
-// Spectar (rev. 1?)
+// Spectar (revision 1?)
 
 static struct BurnRomInfo spectar1RomDesc[] = {
-	{ "spl12a1",		0x0800, 0x7002efb4, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
-	{ "spl11a1",		0x0800, 0x8eb8526a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "spl10a1",		0x0800, 0x9d169b3d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "spl9a1",			0x0800, 0x40e3eba1, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "spl8a1",			0x0800, 0x64d8eb84, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "spl7a1",			0x0800, 0xe08b0d8d, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "spl6a1",			0x0800, 0xf0e4e71a, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "spl12a-1.12a",	0x0800, 0x7002efb4, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "spl11a-1.11a",	0x0800, 0x8eb8526a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "spl10a-1.10a",	0x0800, 0x9d169b3d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "spl9a-1.9a",		0x0800, 0x40e3eba1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "spl8a-1.8a",		0x0800, 0x64d8eb84, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "spl7a-1.7a",		0x0800, 0xe08b0d8d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "spl6a-1.6a",		0x0800, 0xf0e4e71a, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "hrl11d-2",		0x0800, 0xc55b645d, 2 | BRF_GRA },           //  7 Sprites
+	{ "hrl11d-2.11d",	0x0800, 0xc55b645d, 2 | BRF_GRA },           //  7 Sprites
 
-	{ "prom.5c",		0x0100, 0x9ca2e061, 0 | BRF_OPT },           //  8 PROMs
-	{ "prom.6d",		0x0020, 0xe26f9053, 0 | BRF_OPT },           //  9
-	{ "hrl14h-1",		0x0020, 0xf76b4fcf, 0 | BRF_OPT },           // 10
+	{ "spl5c-2.5c",		0x0100, 0x9ca2e061, 0 | BRF_OPT },           //  8 PROMs
+	{ "hrl6d-1.6d",		0x0020, 0xe26f9053, 0 | BRF_OPT },           //  9
+	{ "hrl14h-1.14h",	0x0020, 0xf76b4fcf, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(spectar1)
@@ -3086,7 +3279,7 @@ STD_ROM_FN(spectar1)
 
 struct BurnDriver BurnDrvSpectar1 = {
 	"spectar1", "spectar", NULL, "targ", "1980",
-	"Spectar (rev. 1?)\0", NULL, "Exidy", "Miscellaneous",
+	"Spectar (revision 1?)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
 	NULL, spectar1RomInfo, spectar1RomName, NULL, NULL, TargSampleInfo, TargSampleName, TargInputInfo, SpectarDIPInfo,
@@ -3095,7 +3288,7 @@ struct BurnDriver BurnDrvSpectar1 = {
 };
 
 
-// Spectar (rev. 2, bootleg)
+// Spectar (revision 2, bootleg)
 
 static struct BurnRomInfo spectarrfRomDesc[] = {
 	{ "spl11a-2",		0x0800, 0x0a0ea985, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3117,16 +3310,171 @@ STD_ROM_FN(spectarrf)
 
 struct BurnDriver BurnDrvSpectarrf = {
 	"spectarrf", "spectar", NULL, "targ", "1984",
-	"Spectar (rev. 2, bootleg)\0", NULL, "bootleg (Recreativos Franco)", "Miscellaneous",
+	"Spectar (revision 2, bootleg)\0", NULL, "bootleg (Recreativos Franco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
 	NULL, spectarrfRomInfo, spectarrfRomName, NULL, NULL, TargSampleInfo, TargSampleName, TargInputInfo, SpectarrfDIPInfo,
 	SpectarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3
 };
 
 
-// Venture (ver. 5 Set 1)
+// Rallys (bootleg of Spectar, set 1)
+
+static struct BurnRomInfo rallysRomDesc[] = {
+	{ "rallys.01",		0x0400, 0xa192b22b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "rallys.02",		0x0400, 0x19e730aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rallys.03",		0x0400, 0x2a3e7b69, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rallys.04",		0x0400, 0x6d224696, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rallys.05",		0x0400, 0xaf943b5e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rallys.06",		0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rallys.07",		0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rallys.08",		0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rallys.10",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "rallys.09",		0x0400, 0x56ce8a94, 5 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
+
+	{ "targ82s.123",	0x0020, 0x9eb9125c, 0 | BRF_OPT },           // 11 PROMs
+};
+
+STD_ROM_PICK(rallys)
+STD_ROM_FN(rallys)
+
+struct BurnDriver BurnDrvRallys = {
+	"rallys", "spectar", NULL, "targ", "1980",
+	"Rallys (bootleg of Spectar, set 1)\0", NULL, "bootleg (Novar)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, rallysRomInfo, rallysRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
+	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Rallys (bootleg of Spectar, set 2)
+
+static struct BurnRomInfo rallysaRomDesc[] = {
+	{ "rallys.01",		0x0400, 0xa192b22b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "rallys.02",		0x0400, 0x19e730aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rallys.03",		0x0400, 0x2a3e7b69, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rallys.04",		0x0400, 0x6d224696, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rallys.05",		0x0400, 0xaf943b5e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rallys.06",		0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rallys.07",		0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rallys.08",		0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rallys.10",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "unk.c13",		0x0400, 0x57527332, 5 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "hrl11d-1",		0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
+
+	{ "6331.f6",		0x0020, 0x9fb1daee, 0 | BRF_OPT },           // 11 PROMs
+};
+
+STD_ROM_PICK(rallysa)
+STD_ROM_FN(rallysa)
+
+struct BurnDriver BurnDrvRallysa = {
+	"rallysa", "spectar", NULL, "targ", "1980",
+	"Rallys (bootleg of Spectar, set 2)\0", NULL, "bootleg (Musik Box Brescia)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, rallysaRomInfo, rallysaRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
+	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Panzer (bootleg of Spectar)
+
+static struct BurnRomInfo panzerRomDesc[] = {
+	{ "p1.1a",			0x0400, 0xa192b22b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "p2.2a",			0x0400, 0x19e730aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "p3.3a",			0x0400, 0x2a3e7b69, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "p4.4a",			0x0400, 0x6d224696, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "p5.5a",			0x0400, 0xaf943b5e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "p6.6a",			0x0400, 0x9b3d9e61, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "p7.7a",			0x0400, 0x8ef8bc67, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "p8.8a",			0x0400, 0x243c54f2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "p10.15b",		0x0400, 0x46f473d2, 5 | BRF_PRG | BRF_ESS }, //  8
+	{ "p9.13b",			0x0400, 0xf01e474e, 5 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "sc.4d",			0x0400, 0x9f03513e, 2 | BRF_GRA },           // 10 Sprites
+
+	{ "targ82s.123",	0x0020, 0x9eb9125c, 0 | BRF_OPT },           // 11 PROMs
+};
+
+STD_ROM_PICK(panzer)
+STD_ROM_FN(panzer)
+
+struct BurnDriver BurnDrvPanzer = {
+	"panzer", "spectar", NULL, "targ", "1980",
+	"Panzer (bootleg of Spectar)\0", NULL, "bootleg (Proel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, panzerRomInfo, panzerRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, RallysDIPInfo,
+	RallysInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Phantomas (bootleg of Spectar)
+
+static struct BurnRomInfo phantomaRomDesc[] = {
+	{ "156_a2",		0x0800, 0xc5af9d34, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "156_a3",		0x0800, 0x30121e69, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "156_a4",		0x0800, 0x02d7fb94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "156_a5",		0x0800, 0x0127bc8d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "156_a1",		0x0800, 0x26292c0a, 6 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "156_d1",		0x0800, 0xd18e5f14, 2 | BRF_GRA },           //  5 Sprites
+
+	{ "156_pal",	0x0020, 0x9fb1daee, 0 | BRF_OPT },           //  6 PROMs
+};
+
+STD_ROM_PICK(phantoma)
+STD_ROM_FN(phantoma)
+
+struct BurnDriver BurnDrvPhantoma = {
+	"phantoma", "spectar", NULL, "targ", "1980",
+	"Phantomas (bootleg of Spectar)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, phantomaRomInfo, phantomaRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, PhantomaDIPInfo,
+	PhantomaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Phantom (bootleg of Spectar)
+
+static struct BurnRomInfo phantomRomDesc[] = {
+	{ "156_a2",		0x0800, 0xc5af9d34, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "156_a3",		0x0800, 0x30121e69, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "156_a4",		0x0800, 0x02d7fb94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "156_a5",		0x0800, 0x0127bc8d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1a.bin",		0x0800, 0xa4e40b67, 6 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "156_d1",		0x0800, 0xd18e5f14, 2 | BRF_GRA },           //  5 Sprites
+
+	{ "156_pal",	0x0020, 0x9fb1daee, 0 | BRF_OPT },           //  6 PROMs
+};
+
+STD_ROM_PICK(phantom)
+STD_ROM_FN(phantom)
+
+struct BurnDriver BurnDrvPhantom = {
+	"phantom", "spectar", NULL, "targ", "1980",
+	"Phantom (bootleg of Spectar)\0", NULL, "bootleg (Proel)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_MULTISHOOT, 0,
+	NULL, phantomRomInfo, phantomRomName, NULL, NULL, TargSampleInfo, TargSampleName, RallysInputInfo, PhantomaDIPInfo,
+	PhantomaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	256, 256, 4, 3
+};
+
+
+// Venture (version 5 set 1)
 
 static struct BurnRomInfo ventureRomDesc[] = {
 	{ "13a-cpu",		0x1000, 0xf4e4d991, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3156,7 +3504,7 @@ STD_ROM_FN(venture)
 
 struct BurnDriver BurnDrvVenture = {
 	"venture", NULL, NULL, NULL, "1981",
-	"Venture (ver. 5 Set 1)\0", NULL, "Exidy", "Miscellaneous",
+	"Venture (version 5 set 1)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, ventureRomInfo, ventureRomName, NULL, NULL, NULL, NULL, TargInputInfo, VentureDIPInfo,
@@ -3165,7 +3513,7 @@ struct BurnDriver BurnDrvVenture = {
 };
 
 
-// Venture (ver. 5 Set 2)
+// Venture (version 5 set 2)
 
 static struct BurnRomInfo venture5aRomDesc[] = {
 	{ "vel_13a-57e.a13",0x1000, 0x4c833f99, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3195,7 +3543,7 @@ STD_ROM_FN(venture5a)
 
 struct BurnDriver BurnDrvVenture5a = {
 	"venture5a", "venture", NULL, NULL, "1981",
-	"Venture (ver. 5 Set 2)\0", NULL, "Exidy", "Miscellaneous",
+	"Venture (version 5 set 2)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, venture5aRomInfo, venture5aRomName, NULL, NULL, NULL, NULL, TargInputInfo, VentureDIPInfo,
@@ -3204,7 +3552,7 @@ struct BurnDriver BurnDrvVenture5a = {
 };
 
 
-// Venture (ver. 4)
+// Venture (version 4)
 
 static struct BurnRomInfo venture4RomDesc[] = {
 	{ "vel_13a-4.13a",	0x1000, 0x1c5448f9, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3234,7 +3582,7 @@ STD_ROM_FN(venture4)
 
 struct BurnDriver BurnDrvVenture4 = {
 	"venture4", "venture", NULL, NULL, "1981",
-	"Venture (ver. 4)\0", NULL, "Exidy", "Miscellaneous",
+	"Venture (version 4)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, venture4RomInfo, venture4RomName, NULL, NULL, NULL, NULL, TargInputInfo, VentureDIPInfo,
@@ -3243,7 +3591,7 @@ struct BurnDriver BurnDrvVenture4 = {
 };
 
 
-// Venture (ver. 5 Set 2, bootleg)
+// Venture (version 5 set 2, bootleg)
 
 static struct BurnRomInfo venture5bRomDesc[] = {
 	{ "d2732.2s",		0x1000, 0x87d69fe9, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3269,16 +3617,16 @@ STD_ROM_FN(venture5b)
 
 struct BurnDriver BurnDrvVenture5b = {
 	"venture5b", "venture", NULL, NULL, "1981",
-	"Venture (ver. 5 Set 2, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Venture (version 5 set 2, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, venture5bRomInfo, venture5bRomName, NULL, NULL, NULL, NULL, TargInputInfo, VentureDIPInfo,
 	VentureInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3
 };
 
 
-// Mouse Trap (ver. 5)
+// Mouse Trap (version 5)
 
 static struct BurnRomInfo mtrapRomDesc[] = {
 	{ "mtl-5_11a.11a",	0x1000, 0xbd6c3eb5, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3314,7 +3662,7 @@ static INT32 MtrapInit()
 
 struct BurnDriver BurnDrvMtrap = {
 	"mtrap", NULL, NULL, NULL, "1981",
-	"Mouse Trap (ver. 5)\0", NULL, "Exidy", "Miscellaneous",
+	"Mouse Trap (version 5)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrapRomInfo, mtrapRomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
@@ -3323,7 +3671,7 @@ struct BurnDriver BurnDrvMtrap = {
 };
 
 
-// Mouse Trap (ver. 4)
+// Mouse Trap (version 4)
 
 static struct BurnRomInfo mtrap4RomDesc[] = {
 	{ "mtl-4_11a.11a",	0x1000, 0x2879cb8d, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3354,7 +3702,7 @@ STD_ROM_FN(mtrap4)
 
 struct BurnDriver BurnDrvMtrap4 = {
 	"mtrap4", "mtrap", NULL, NULL, "1981",
-	"Mouse Trap (ver. 4)\0", NULL, "Exidy", "Miscellaneous",
+	"Mouse Trap (version 4)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrap4RomInfo, mtrap4RomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
@@ -3363,7 +3711,7 @@ struct BurnDriver BurnDrvMtrap4 = {
 };
 
 
-// Mouse Trap (German, ver. 4)
+// Mouse Trap (German, version 4)
 
 static struct BurnRomInfo mtrap4gRomDesc[] = {
 	{ "gmtl-4_11a.11a",	0x1000, 0xd84aa55e, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3375,14 +3723,14 @@ static struct BurnRomInfo mtrap4gRomDesc[] = {
 
 	{ "mtl-1_11d.11d",	0x0800, 0xc6e4d339, 2 | BRF_GRA },           //  6 Sprites
 
-	{ "mta_5a.5a",		0x0800, 0xdbe4ec02, 3 | BRF_PRG | BRF_ESS }, //  7 Sound CPU Code
-	{ "mta_6a.6a",		0x0800, 0xc00f0c05, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "mta_7a.7a",		0x0800, 0xf3f16ca7, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "mta-1_5a.5a",	0x0800, 0xdbe4ec02, 3 | BRF_PRG | BRF_ESS }, //  7 Sound CPU Code
+	{ "mta-1_6a.6a",	0x0800, 0xc00f0c05, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "mta-1_7a.7a",	0x0800, 0xf3f16ca7, 3 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "mta_2a.2a",		0x1000, 0x13db8ed3, 4 | BRF_PRG | BRF_ESS }, // 10 CVSD
-	{ "mta_3a.3a",		0x1000, 0x31bdfe5c, 4 | BRF_PRG | BRF_ESS }, // 11
-	{ "mta_4a.4a",		0x1000, 0x1502d0e8, 4 | BRF_PRG | BRF_ESS }, // 12
-	{ "mta_1a.1a",		0x1000, 0x658482a6, 4 | BRF_PRG | BRF_ESS }, // 13
+	{ "mta-1_2a.2a",	0x1000, 0x13db8ed3, 4 | BRF_PRG | BRF_ESS }, // 10 CVSD
+	{ "mta-1_3a.3a",	0x1000, 0x31bdfe5c, 4 | BRF_PRG | BRF_ESS }, // 11
+	{ "mta-1_4a.4a",	0x1000, 0x1502d0e8, 4 | BRF_PRG | BRF_ESS }, // 12
+	{ "mta-1_1a.1a",	0x1000, 0x658482a6, 4 | BRF_PRG | BRF_ESS }, // 13
 
 	{ "hrl14h.h14",		0x0020, 0xf76b4fcf, 0 | BRF_OPT },           // 14 PROMs
 	{ "vel5c-11.c5",	0x0100, 0x43b35bb7, 0 | BRF_OPT },           // 15
@@ -3394,7 +3742,7 @@ STD_ROM_FN(mtrap4g)
 
 struct BurnDriver BurnDrvMtrap4g = {
 	"mtrap4g", "mtrap", NULL, NULL, "1981",
-	"Mouse Trap (German, ver. 4)\0", NULL, "Exidy", "Miscellaneous",
+	"Mouse Trap (German, version 4)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrap4gRomInfo, mtrap4gRomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
@@ -3403,7 +3751,7 @@ struct BurnDriver BurnDrvMtrap4g = {
 };
 
 
-// Mouse Trap (ver. 3)
+// Mouse Trap (version 3)
 
 static struct BurnRomInfo mtrap3RomDesc[] = {
 	{ "mtl-3_11a.11a",	0x1000, 0x4091be6e, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3434,7 +3782,7 @@ STD_ROM_FN(mtrap3)
 
 struct BurnDriver BurnDrvMtrap3 = {
 	"mtrap3", "mtrap", NULL, NULL, "1981",
-	"Mouse Trap (ver. 3)\0", NULL, "Exidy", "Miscellaneous",
+	"Mouse Trap (version 3)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrap3RomInfo, mtrap3RomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
@@ -3443,7 +3791,7 @@ struct BurnDriver BurnDrvMtrap3 = {
 };
 
 
-// Mouse Trap (ver. 2)
+// Mouse Trap (version 2)
 
 static struct BurnRomInfo mtrap2RomDesc[] = {
 	{ "mtl-2_11a.11a",	0x1000, 0xa8cc3a18, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3474,7 +3822,7 @@ STD_ROM_FN(mtrap2)
 
 struct BurnDriver BurnDrvMtrap2 = {
 	"mtrap2", "mtrap", NULL, NULL, "1981",
-	"Mouse Trap (ver. 2)\0", NULL, "Exidy", "Miscellaneous",
+	"Mouse Trap (version 2)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrap2RomInfo, mtrap2RomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
@@ -3519,14 +3867,14 @@ struct BurnDriver BurnDrvMtrapb = {
 	"mtrapb", "mtrap", NULL, NULL, "1981",
 	"Mouse Trap (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrapbRomInfo, mtrapbRomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
 	MtrapbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3
 };
 
 
-// Mouse Trap (ver. 4, bootleg)
+// Mouse Trap (version 4, bootleg)
 
 static struct BurnRomInfo mtrapb2RomDesc[] = {
 	{ "ms11.2p",		0x1000, 0x2879cb8d, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3555,16 +3903,16 @@ STD_ROM_FN(mtrapb2)
 
 struct BurnDriver BurnDrvMtrapb2 = {
 	"mtrapb2", "mtrap", NULL, NULL, "1981",
-	"Mouse Trap (ver. 4, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Mouse Trap (version 4, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, mtrapb2RomInfo, mtrapb2RomName, NULL, NULL, NULL, NULL, MtrapInputInfo, MtrapDIPInfo,
 	MtrapbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 256, 4, 3
 };
 
 
-// Teeter Torture (Prototype, ver. 1)
+// Teeter Torture (prototype)
 
 static struct BurnRomInfo teetertRomDesc[] = {
 	{ "13a-cpu",		0x1000, 0xf4e4d991, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3594,7 +3942,7 @@ STD_ROM_FN(teetert)
 
 struct BurnDriver BurnDrvTeetert = {
 	"teetert", NULL, NULL, NULL, "1982",
-	"Teeter Torture (Prototype, ver. 1)\0", NULL, "Exidy", "Miscellaneous",
+	"Teeter Torture (prototype)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, teetertRomInfo, teetertRomName, NULL, NULL, NULL, NULL, TeetertInputInfo, TeetertDIPInfo,
@@ -3603,7 +3951,7 @@ struct BurnDriver BurnDrvTeetert = {
 };
 
 
-// Pepper II (ver. 8)
+// Pepper II (version 8)
 
 static struct BurnRomInfo pepper2RomDesc[] = {
 	{ "p2l-8_12a.12a",	0x1000, 0x33db4737, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3630,7 +3978,7 @@ STD_ROM_FN(pepper2)
 
 struct BurnDriver BurnDrvPepper2 = {
 	"pepper2", NULL, NULL, NULL, "1982",
-	"Pepper II (ver. 8)\0", NULL, "Exidy", "Miscellaneous",
+	"Pepper II (version 8)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, pepper2RomInfo, pepper2RomName, NULL, NULL, NULL, NULL, Pepper2InputInfo, Pepper2DIPInfo,
@@ -3639,7 +3987,7 @@ struct BurnDriver BurnDrvPepper2 = {
 };
 
 
-// Pepper II (ver. 7)
+// Pepper II (version 7)
 
 static struct BurnRomInfo pepper27RomDesc[] = {
 	{ "p2l-7_12a.12a",	0x1000, 0xb3bc51cd, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3666,7 +4014,7 @@ STD_ROM_FN(pepper27)
 
 struct BurnDriver BurnDrvPepper27 = {
 	"pepper27", "pepper2", NULL, NULL, "1982",
-	"Pepper II (ver. 7)\0", NULL, "Exidy", "Miscellaneous",
+	"Pepper II (version 7)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, pepper27RomInfo, pepper27RomName, NULL, NULL, NULL, NULL, Pepper2InputInfo, Pepper2DIPInfo,
@@ -3675,7 +4023,7 @@ struct BurnDriver BurnDrvPepper27 = {
 };
 
 
-// Hard Hat (ver. 2)
+// Hard Hat
 
 static struct BurnRomInfo hardhatRomDesc[] = {
 	{ "hhl-2.11a",		0x1000, 0x7623deea, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3697,7 +4045,7 @@ STD_ROM_FN(hardhat)
 
 struct BurnDriver BurnDrvHardhat = {
 	"hardhat", NULL, NULL, NULL, "1982",
-	"Hard Hat (ver. 2)\0", NULL, "Exidy", "Miscellaneous",
+	"Hard Hat\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, hardhatRomInfo, hardhatRomName, NULL, NULL, NULL, NULL, Pepper2InputInfo, Pepper2DIPInfo,
@@ -3705,7 +4053,7 @@ struct BurnDriver BurnDrvHardhat = {
 	256, 256, 4, 3
 };
 
-// FAX (ver. 8)
+// FAX
 
 static struct BurnRomInfo faxRomDesc[] = {
 	{ "fxl8-13a.32",	0x1000, 0x8e30bf6b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3756,7 +4104,7 @@ STD_ROM_FN(fax)
 
 struct BurnDriver BurnDrvFax = {
 	"fax", NULL, NULL, NULL, "1983",
-	"FAX (ver. 8)\0", NULL, "Exidy", "Miscellaneous",
+	"FAX\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, faxRomInfo, faxRomName, NULL, NULL, NULL, NULL, FaxInputInfo, FaxDIPInfo,
@@ -3765,7 +4113,7 @@ struct BurnDriver BurnDrvFax = {
 };
 
 
-// FAX 2 (ver. 8)
+// FAX 2
 
 static struct BurnRomInfo fax2RomDesc[] = {
 	{ "fxl8-13a.32",	0x1000, 0x8e30bf6b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -3818,7 +4166,7 @@ STD_ROM_FN(fax2)
 
 struct BurnDriver BurnDrvFax2 = {
 	"fax2", "fax", NULL, NULL, "1983",
-	"FAX 2 (ver. 8)\0", NULL, "Exidy", "Miscellaneous",
+	"FAX 2\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, fax2RomInfo, fax2RomName, NULL, NULL, NULL, NULL, FaxInputInfo, FaxDIPInfo,

@@ -2829,6 +2829,34 @@ struct BurnDriver BurnDrvArlingtn = {
 };
 
 
+// Arlington Horse Racing (v1.21-I)
+
+static struct BurnRomInfo arlingtniRomDesc[] = {
+	{ "ahr-1_1.21_u5.u5",					0x10000, 0x0708b36a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+
+	{ "bin.u27",							0x08000, 0xeba70650, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+
+	{ "ahr_grom0.grom0",					0x20000, 0x5ef57fe5, 3 | BRF_GRA },           //  2 Blitter Graphics
+	{ "ahr_grom1.grom1",					0x20000, 0x6aca95c0, 3 | BRF_GRA },           //  3
+	{ "ahr_grom2.grom2",					0x10000, 0x6d6fde1b, 3 | BRF_GRA },           //  4
+
+	{ "ahr_srom0.srom0",					0x40000, 0x56087f81, 4 | BRF_SND },           //  5 Samples
+};
+
+STD_ROM_PICK(arlingtni)
+STD_ROM_FN(arlingtni)
+
+struct BurnDriver BurnDrvArlingtni = {
+	"arlingtni", "arlingtn", NULL, NULL, "1991",
+	"Arlington Horse Racing (v1.21-I)\0", NULL, "Strata / Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, arlingtniRomInfo, arlingtniRomName, NULL, NULL, NULL, NULL, ArlingtnInputInfo, ArlingtnDIPInfo,
+	ArlingtnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
+	400, 240, 4, 3
+};
+
+
 // Arlington Horse Racing (v1.21-D)
 
 static struct BurnRomInfo arlingtnaRomDesc[] = {

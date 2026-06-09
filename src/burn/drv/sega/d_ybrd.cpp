@@ -1413,6 +1413,7 @@ static struct BurnRomInfo PdriftjRomDesc[] = {
 	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
 
+	// These are mpr-11754.107 split into 4 ROMs. They would be located on a Sega 839-0221 daughter card.
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
@@ -1484,6 +1485,7 @@ static struct BurnRomInfo PdriftjbRomDesc[] = {
 	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
 
+	// These are mpr-11754.107 split into 4 ROMs. They would be located on a Sega 839-0221 daughter card.
 	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
 	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
@@ -1495,6 +1497,78 @@ static struct BurnRomInfo PdriftjbRomDesc[] = {
 
 STD_ROM_PICK(Pdriftjb)
 STD_ROM_FN(Pdriftjb)
+
+static struct BurnRomInfo PdriftjaRomDesc[] = {
+	{ "epr-11746.25",     0x20000, 0xd8c4b0ef, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11745.24",     0x20000, 0x100bce7b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11748.27",     0x20000, 0x82a76cab, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11747.26",     0x20000, 0x9796ece5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-11752.81",     0x20000, 0xb6bb8111, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-11751.80",     0x20000, 0x7f0d0311, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-11750a.54",    0x20000, 0x46e649f1, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+	{ "epr-11749a.53",    0x20000, 0xd3882b03, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+
+	{ "epr-11791.14",     0x20000, 0x36b2910a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11789.16",     0x20000, 0xb86f8d2b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11792.15",     0x20000, 0xc85caf6e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11790.17",     0x20000, 0x2a564e66, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-11757.67",     0x20000, 0xe46dc478, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11758.75",     0x20000, 0x5b435c87, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11773.63",     0x20000, 0x1b5d5758, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11774.71",     0x20000, 0x2ca0c170, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11759.86",     0x20000, 0xac8111f6, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11760.114",    0x20000, 0x91282af9, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11775.82",     0x20000, 0x48225793, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11776.110",    0x20000, 0x78c46198, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "epr-11761.66",     0x20000, 0xbaa5d065, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11762.74",     0x20000, 0x1d1af7a5, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11777.62",     0x20000, 0x9662dd32, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11778.70",     0x20000, 0x2dfb7494, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11763.85",     0x20000, 0x1ee23407, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11764.113",    0x20000, 0xe859305e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11779.81",     0x20000, 0xa49cd793, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11780.109",    0x20000, 0xd514ed81, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "epr-11765.65",     0x20000, 0x649e2dff, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11766.73",     0x20000, 0xd92fb7fc, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11781.61",     0x20000, 0x9692d4cd, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11782.69",     0x20000, 0xc913bb43, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11767.84",     0x20000, 0x1f8ad054, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11768.112",    0x20000, 0xdb2c4053, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11783.80",     0x20000, 0x6d189007, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11784.108",    0x20000, 0x57f5fd64, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "epr-11769.64",     0x20000, 0x28f0ab51, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11770.72",     0x20000, 0xd7557ea9, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11785.60",     0x20000, 0xe6ef32c4, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11786.68",     0x20000, 0x2066b49d, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11771.83",     0x20000, 0x67635618, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11772.111",    0x20000, 0x0f798d3a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11787.79",     0x20000, 0xe631dc12, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11788.107",    0x20000, 0x8464c66e, SYS16_ROM_SPRITES2 | BRF_GRA },
+
+	{ "epr-11753.ic102",  0x10000, 0xe81f5748, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
+
+	// These are mpr-11754.107 split into 4 ROMs. They would be located on a Sega 839-0221 daughter card.
+	{ "epr-11895.ic1",    0x20000, 0xee99a6fd, SYS16_ROM_PROM | BRF_OPT },
+	{ "epr-11896.ic2",    0x20000, 0x4bebc015, SYS16_ROM_PROM | BRF_OPT },
+	{ "epr-11897.ic3",    0x20000, 0x4463cb95, SYS16_ROM_PROM | BRF_OPT },
+	{ "epr-11898.ic4",    0x20000, 0x5d19d767, SYS16_ROM_PROM | BRF_OPT },
+
+	{ "epr-11485.ic27",   0x08000, 0x069b4201, BRF_OPT },
+};
+
+
+STD_ROM_PICK(Pdriftja)
+STD_ROM_FN(Pdriftja)
 
 static struct BurnRomInfo RchaseRomDesc[] = {
 	{ "epr-13986.25",     0x20000, 0x388b2365, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2453,7 +2527,7 @@ struct BurnDriver BurnDrvPdrifta = {
 
 struct BurnDriver BurnDrvPdrifte = {
 	"pdrifte", "pdrift", NULL, NULL, "1988",
-	"Power Drift (World, Earlier)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
+	"Power Drift (World, earlier)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdrifteRomInfo, PdrifteRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdrifteDIPInfo,
@@ -2477,6 +2551,16 @@ struct BurnDriver BurnDrvPdriftjb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftjbRomInfo, PdriftjbRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
+	PdriftjInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPdriftja = {
+	"pdriftja", "pdrift", NULL, NULL, "1988",
+	"Power Drift (Japan, Rev A)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
+	NULL, PdriftjaRomInfo, PdriftjaRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
 	PdriftjInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

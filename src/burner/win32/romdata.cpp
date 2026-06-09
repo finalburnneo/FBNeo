@@ -462,79 +462,87 @@ static bool StrToUint(const TCHAR* str, UINT32* result)
 	return true;										// Successful conversion
 }
 
-// Convert TCHAR string to ANSI (MBCS) string with safe buffer check
+// Convert TCHAR string to ANSI (MBCS) string with safe buffer validation
+// Return value: >= 0 = length of ANSI string (excluding null terminator), -1 = failure
+// Output buffer: must be freed with free_s() after use
 INT32 tchar_to_ansi(const TCHAR* src, char** dst)
 {
-	// Input validation
+	// Validate input parameters
 	if (IsStrEmpty(src) || !dst)
-		return 0;
+		return -1;
 
-	*dst      = NULL;
-	char* buf = NULL;
+	// Initialize output pointer to NULL for safety
+	*dst = NULL;
 
 #if defined(UNICODE)
-	// Get required buffer size
+	// Get required buffer size for conversion (including null terminator)
 	INT32 size = WideCharToMultiByte(CP_ACP, 0, src, -1, NULL, 0, NULL, NULL);
 	if (size <= 0)
-		return 0;
+		return -1;
 
-	// Allocate temporary buffer
-	buf = (char*)malloc(size);
+	// Allocate buffer (zero-initialized for safety)
+	char* buf = (char*)calloc(size, sizeof(char));
 	if (!buf)
-		return 0;
-	memset(buf, 0, size);
+		return -1;
 
-	// Perform conversion
+	// Perform Unicode to ANSI conversion
 	if (WideCharToMultiByte(CP_ACP, 0, src, -1, buf, size, NULL, NULL) <= 0) {
 		free_s((void**)&buf);
-		return 0;
+		return -1;
 	}
 #else
-	// For ANSI projects, simply copy the string
+	// For ANSI projects, directly duplicate the string
 	buf = strdup(src);
 	if (!buf)
-		return 0;
+		return -1;
 #endif
-	// Return the result
+
+	// Assign output buffer pointer
 	* dst = buf;
+
+	// Return length of converted ANSI string (excluding null terminator)
 	return (INT32)strlen(buf);
 }
 
-// Convert ANSI string to TCHAR string with safe buffer check
+// Convert ANSI (MBCS) string to TCHAR string with safe buffer validation
+// Return value: >= 0 = length of TCHAR string (excluding null terminator), -1 = failure
+// Output buffer: must be freed with free_s() after use
 INT32 ansi_to_tchar(const char* src, TCHAR** dst)
 {
-	// Input validation
+	// Validate input parameters
 	if (IsStrEmptyA(src) || !dst)
-		return 0;
+		return -1;
 
-	*dst       = NULL;
-	TCHAR* buf = NULL;
+	// Initialize output pointer to NULL for safety
+	*dst = NULL;
 
 #if defined(UNICODE)
-	// Get required wide character length
+	// Get required buffer size for conversion (including null terminator)
 	INT32 size = MultiByteToWideChar(CP_ACP, 0, src, -1, NULL, 0);
 	if (size <= 0)
-		return 0;
+		return -1;
 
-	// Allocate memory
-	buf = (TCHAR*)malloc(size * sizeof(TCHAR));
+	// Allocate buffer (zero-initialized for safety)
+	TCHAR* buf = (TCHAR*)calloc(size, sizeof(TCHAR));
 	if (!buf)
-		return 0;
-	memset(buf, 0, size * sizeof(TCHAR));
+		return -1;
 
-	// Perform conversion
+	// Perform ANSI to Unicode conversion
 	if (MultiByteToWideChar(CP_ACP, 0, src, -1, buf, size) <= 0) {
 		free_s((void**)&buf);
-		return 0;
+		return -1;
 	}
 #else
-	// For ANSI projects, simply copy the string
+	// For ANSI projects, directly duplicate the string
 	buf = strdup(src);
 	if (!buf)
-		return 0;
+		return -1;
 #endif
-	// Return the result
+
+	// Assign output buffer pointer
 	* dst = buf;
+
+	// Return length of converted TCHAR string (excluding null terminator)
 	return (INT32)_tcslen(buf);
 }
 
@@ -768,11 +776,11 @@ static INT32 GetUniqueFileName(const TCHAR* szDir, const TCHAR* szSrcFile, TCHAR
 		TCHAR buf[MAX_PATH] = { 0 };
 
 		// First try: original filename
-		if (i == 0)
-			_sntprintf(buf, MAX_PATH - 1, _T("%s%s"), base, ext);
+		if (i == 0) {
+			_sntprintf(buf, MAX_PATH, _T("%s%s"), base, ext);}
 		// Subsequent tries: filename_1, filename_2, ...
 		else
-			_sntprintf(buf, MAX_PATH - 1, _T("%s_%d%s"), base, i, ext);
+			_sntprintf(buf, MAX_PATH, _T("%s_%d%s"), base, i, ext);
 		buf[MAX_PATH - 1] = _T('\0');
 
 		// Build full path
@@ -1072,6 +1080,7 @@ bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect)
 
 	TCHAR strFile[MAX_PATH] = { 0 };
 	_sntprintf(strFile, MAX_PATH, _T("template_%s.dat"), BurnDrvGetText(DRV_NAME));
+	strFile[MAX_PATH - 1] = _T('\0');
 
 	memset(&ofn, 0, sizeof(OPENFILENAME));
 	ofn.lStructSize     = sizeof(OPENFILENAME);
@@ -1460,6 +1469,7 @@ do {													\
 #define STR_COPY_AND_FREE(dst, size)					\
 do {													\
 	strncpy(dst, p##dst, size - 1);						\
+	dst[size - 1] = '\0';								\
 	free_s((void**)&p##dst);							\
 } while (0)
 
@@ -1688,12 +1698,11 @@ static INT32 BuildRomDataDrv(struct BurnRomInfo** pri, UINT32 pri_count, char* s
 	if (!new_drv)
 		return 0x04;									// Memory allocation error
 
-	struct RomDataDrv* tmp = (struct RomDataDrv*)malloc(sizeof(struct RomDataDrv));
+	struct RomDataDrv* tmp = (struct RomDataDrv*)calloc(1, sizeof(struct RomDataDrv));
 	if (!tmp) {
 		free(new_drv);
 		return 0x04;									// Memory allocation error
 	}
-	memset(tmp, 0, sizeof(struct RomDataDrv));
 
 	UINT32 nOldDrvActive  = nBurnDrvActive;
 	nBurnDrvActive        = nIndex;						// Temporarily switch active driver
@@ -1705,8 +1714,8 @@ static INT32 BuildRomDataDrv(struct BurnRomInfo** pri, UINT32 pri_count, char* s
 	tmp->pszParent   = strdup(pszParent);
 	tmp->pszDrvName  = strdup(szDrvName);
 	tmp->pszFullName = (TCHAR*)malloc((nfullName + 2) * sizeof(TCHAR));
-	tmp->pDriver     = (struct BurnDriver*)malloc(sizeof(struct BurnDriver));
-	tmp->pRomInfo    = (struct BurnRomInfo*)malloc(pri_count * sizeof(struct BurnRomInfo));
+	tmp->pDriver     = (struct BurnDriver*) calloc(1,         sizeof(struct BurnDriver));
+	tmp->pRomInfo    = (struct BurnRomInfo*)calloc(pri_count, sizeof(struct BurnRomInfo));
 	if ('\0' != szDate[0])
 		tmp->pszDate = strdup(szDate);
 	if ('\0' != szExtraRom[0])
@@ -1916,9 +1925,17 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 		return 0;
 	}
 
-	TCHAR* pBuf  = szBuffer;
+	// Backup current driver count for later comparison
+	nPrevCount = nBurnDrvCount;
+
+	TCHAR* pBuf      = szBuffer;
+	TCHAR* pNextChar = NULL;
+	TCHAR* pszFullPath;
 	INT32 nCount = 0;
 	INT32 errCnt = 0;
+
+	// Multiple files selected
+	const TCHAR* pFolder = NULL;
 
 	UINT32 firstLen = _tcslen(pBuf);
 
@@ -1930,10 +1947,10 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 		if (perrCnt)
 			*perrCnt = errCnt;
 
-		return nCount;
+		goto OPEN_END;
 	}
 
-	TCHAR* pNextChar = pBuf + firstLen + 1;
+	pNextChar = pBuf + firstLen + 1;
 
 	// Single file selected
 	if (_T('\0') == *pNextChar) {
@@ -1943,16 +1960,16 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 		if (perrCnt)
 			*perrCnt = errCnt;
 
-		return nCount;
+		goto OPEN_END;
 	}
 
 	// Multiple files selected
-	const TCHAR* const pFolder = pBuf;
-	pBuf = pNextChar;
+	pFolder = pBuf;
+	pBuf    = pNextChar;
 
 	// Iterate all selected files
 	while (_T('\0') != *pBuf) {
-		TCHAR* pszFullPath = NULL;
+		pszFullPath = NULL;
 
 		// Safe path concatenation (allocates memory)
 		INT32 pathLen = PathCombine_s(&pszFullPath, pFolder, pBuf);
@@ -1985,6 +2002,8 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 	if (perrCnt)
 		*perrCnt = errCnt;
 
+OPEN_END:
+	CreateROMInfo(NULL);
 	return nCount;
 }
 #undef BUFFER_SIZE
@@ -2000,82 +2019,114 @@ INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt)
 #define THREAD_LOCAL _Thread_local
 #endif
 
-// Traverses a directory and invokes a callback for each file found
-INT32 TraverseDirectoryFiles(const TCHAR* dirPath, INT32 (*pFoundCallBack)(const TCHAR*), bool scanSubdirs)
+// Generic directory traversal function
+// - bDirectoriesOnly: true = traverse directories only
+// - bDirectoriesOnly: false = traverse files only
+// Callback return:
+//   >= 0 : continue, add to count
+//   < 0  : stop immediately
+INT32 TraverseDirectoryEx(const TCHAR* dirPath, INT32(*pFoundCallBack)(const TCHAR*), bool bDirectoriesOnly, bool scanSubdirs)
 {
-	// Add recursion depth limit to prevent stack overflow
-	static const INT32 MAX_RECURSION_DEPTH   = 256;		// Reasonable depth limit
+	// Recursion depth limit to prevent stack overflow (4 levels = sufficient for real-world usage)
+	static const INT32 MAX_RECURSION_DEPTH   = 4;
 	THREAD_LOCAL static INT32 recursionDepth = 0;
 
+
+	// Recursion depth protection
 	if (recursionDepth > MAX_RECURSION_DEPTH)
 		return 0;
 
-	// Check if input directory path is invalid
+	// Invalid path check
 	if (IsStrEmpty(dirPath))
 		return 0;
 
 	TCHAR searchPath[MAX_PATH] = { 0 };
-
-	// Build search path: "dir\\*" or "dir*"
+	// Build search path
 	const TCHAR* searchFormat = ends_with_slash(dirPath) ? _T("%s*") : _T("%s\\*");
 	int result = _sntprintf(searchPath, ARRAY_SIZE(searchPath), searchFormat, dirPath);
+	searchPath[ARRAY_SIZE(searchPath) - 1] = _T('\0');
 
-	// Handle buffer overflow safely
-	if (result < 0 || result >= ARRAY_SIZE(searchPath)) {
-		searchPath[ARRAY_SIZE(searchPath) - 1] = _T('\0');
+	// Buffer overflow protection
+	if (result < 0 || (size_t)result >= ARRAY_SIZE(searchPath))
 		return 0;
-	}
 
 	WIN32_FIND_DATA findData = { 0 };
-	HANDLE hFind = FindFirstFile(searchPath, &findData);
+	INT32 itemCount = 0;
 
-	// Exit if no files found or error
+	// Start file search
+	HANDLE hFind = FindFirstFile(searchPath, &findData);
 	if (INVALID_HANDLE_VALUE == hFind)
 		return 0;
 
-	INT32 fileCount = 0;
-
-	do {
+	// Main loop with early termination support
+	while (TRUE) {
 		TCHAR* fullPath = NULL;
-		// Skip current directory "." and parent directory ".."
+
+		// Skip current directory "." and parent directory ".." entries
 		if (0 != _tcscmp(findData.cFileName, _T(".")) && 0 != _tcscmp(findData.cFileName, _T(".."))) {
 			INT32 pathLen = PathCombine_s(&fullPath, dirPath, findData.cFileName);
-			if (pathLen >= 0 && fullPath != NULL) {
-				// Process directory or file
-				if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-					// Skip reparse points (junctions/symlinks), scan subdirs if enabled
-					if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) && scanSubdirs) {
-						// Increase recursion depth before processing nested file
-						recursionDepth++;
-						// Accumulate the return value from recursive call
-						fileCount += TraverseDirectoryFiles(fullPath, pFoundCallBack, scanSubdirs);
-						// Decrease recursion depth after returning from nested file
-						recursionDepth--;
+			if (pathLen >= 0 && fullPath) {
+				BOOL isDir =     (0 != (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY));
+				BOOL isReparse = (0 != (findData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT));
+
+				if (isDir) {
+					// Skip junction points and symbolic links to avoid infinite loops
+					if (!isReparse) {
+						// Invoke callback for directories in directory-only mode
+						if (bDirectoriesOnly && pFoundCallBack) {
+							INT32 cbRet = pFoundCallBack(fullPath);
+							itemCount++;
+
+							if (cbRet < 0)
+								goto CLEANUP_EXIT;		// early exit
+						}
+
+						// Recurse into subdirectories if enabled
+						if (scanSubdirs) {
+							recursionDepth++;
+							INT32 subRet = TraverseDirectoryEx(fullPath, pFoundCallBack, bDirectoriesOnly, scanSubdirs);
+							recursionDepth--;
+
+							if (subRet < 0)
+								goto CLEANUP_EXIT;		// propagate exit
+						}
 					}
 				} else {
-					// Call callback and accumulate its return value
-					if (pFoundCallBack)
-						fileCount += pFoundCallBack(fullPath);
+					// Invoke callback for files in standard (files) mode
+					if (!bDirectoriesOnly && pFoundCallBack) {
+						INT32 cbRet = pFoundCallBack(fullPath);
+						itemCount += cbRet;
+
+						if (cbRet < 0)
+							goto CLEANUP_EXIT;
+					}
 				}
 			}
 		}
+
+		// Free allocated path buffer
 		free_s((void**)&fullPath);
 
-	} while (0 != FindNextFile(hFind, &findData));
+		// Next entry
+		if (0 == FindNextFile(hFind, &findData))
+			break;
+	}
 
-	// Check for errors, but don't reset fileCount
-	// Only set error flag, but keep the count of already processed files
-	bool bTraversalError = false;
+// Unified cleanup and exit point (standard for safe resource management in C)
+CLEANUP_EXIT:
+	// Preserve original error behavior
 	DWORD dwError = GetLastError();
-	if (ERROR_NO_MORE_FILES != dwError)
-		// Set error flag, but don't reset fileCount
-		bTraversalError = true;
+	if (ERROR_NO_MORE_FILES != dwError) {
+		// You can choose to set itemCount to a specific error code if desired, e.g.:
+	}
 
-	// Ensure handle is closed (avoid leakage)
-	if (INVALID_HANDLE_VALUE != hFind)
+	// Close search handle to prevent resource leaks
+	if (INVALID_HANDLE_VALUE != hFind) {
 		FindClose(hFind);
+		hFind = INVALID_HANDLE_VALUE;
+	}
 
-	return fileCount;
+	return itemCount;
 }
 #undef THREAD_LOCAL
 
@@ -2087,9 +2138,16 @@ static INT32 RomdataLoadCallback(const TCHAR* filePath)
 }
 
 // Scans a directory (and optional subdirectories) and loads all ROM data files
-void ScanDirectoryLoadRomdata(const TCHAR* dirPath, bool scanSubdirs)
+static INT32 ScanDirectoryLoadRomdata(const TCHAR* dirPath, bool scanSubdirs)
 {
-	TraverseDirectoryFiles(dirPath, RomdataLoadCallback, scanSubdirs);
+	// Store current driver count to detect how many new drivers are added by this scan
+	nPrevCount = nBurnDrvCount;
+	const INT32 nRet = TraverseDirectoryFiles(dirPath, RomdataLoadCallback, scanSubdirs);
+
+	if (nRet > 0 && nRet == nBurnDrvCount - nPrevCount)
+		CreateROMInfo(NULL);							// Refresh ROM info list if new drivers were added
+
+	return nRet;
 }
 
 INT32 OpenDirectoryLoadRomData(HWND hWnd)
@@ -2115,9 +2173,7 @@ INT32 OpenDirectoryLoadRomData(HWND hWnd)
 
 	// Free allocated PIDL memory
 	CoTaskMemFree(pidl);
-	ScanDirectoryLoadRomdata(szDirPath, bRDListScanSub);
-
-	return 1;
+	return ScanDirectoryLoadRomdata(szDirPath, bRDListScanSub);
 }
 
 // Initializes RomData system by loading all ROM data files from the specified directory

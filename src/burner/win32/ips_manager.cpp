@@ -181,8 +181,6 @@ static TCHAR* GameIpsConfigName()
 		return NULL;
 	}
 
-	// Success - _sntprintf doesn't guarantee null termination, so ensure it
-	pszConfigPath[nRequiredSize - 1] = _T('\0');
 	return pszConfigPath;
 }
 
@@ -205,10 +203,10 @@ INT32 GetIpsNumPatches()
 	TCHAR filePath[MAX_PATH] = { 0 };
 
 	// Safely concatenate the path
-	INT32 nResult = _sntprintf(filePath, ARRAY_SIZE(filePath), _T("%s%s\\"), szAppIpsPath, pszDrvName);
+	INT32 nResult = _sntprintf(filePath, MAX_PATH, _T("%s%s\\"), szAppIpsPath, pszDrvName);
 
 	// Path truncation/failure check
-	if (nResult < 0 || nResult >= ARRAY_SIZE(filePath))
+	if (nResult < 0 || nResult >= MAX_PATH)
 		return 0;
 
 	return TraverseDirectoryFiles(filePath, IsDatFile, false);
@@ -252,11 +250,10 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, INT32 nLang)
 	if (!fp || nLang < 0 || nLang >= NUM_LANGUAGES)
 		return NULL;
 
-	TCHAR  langtag[32] = { 0 };
+	TCHAR langtag[32] = { 0 };
 	// Construct language tag
 	INT32 written = _sntprintf(langtag, ARRAY_SIZE(langtag), _T("[%s]"), szLanguageCodes[nLang]);
-	if (written < 0 || written >= (INT32)ARRAY_SIZE(langtag))
-		langtag[ARRAY_SIZE(langtag) - 1] = _T('\0');
+	langtag[ARRAY_SIZE(langtag) - 1] = _T('\0');
 
 	size_t tagLen = _tcslen(langtag);
 
@@ -285,17 +282,17 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, INT32 nLang)
 				break;
 
 			// Check if this is the target language tag
-			if (0 == _tcsncmp(langtag, line_buffer, tagLen)) {
+			if (0 == _tcsncmp(langtag, line_buffer, tagLen))
 				found = in_target_section = true;
-				continue;
-			}
+
+			continue;
 		}
 
 		// Read target section content
 		if (in_target_section) {
 			size_t current_len = (desc)        ? _tcslen(desc)        : 0;
 			size_t line_len    = (line_buffer) ? _tcslen(line_buffer) : 0;
-			size_t new_len     = current_len + line_len + ((current_len > 0) ? 2 : 1);
+			size_t new_len     = current_len + line_len + ((current_len > 0) ? 3 : 1);
 
 			TCHAR* new_desc = (TCHAR*)malloc(new_len * sizeof(TCHAR));
 			if (!new_desc) {
@@ -306,7 +303,8 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, INT32 nLang)
 			if (desc)
 				_sntprintf(new_desc, new_len, _T("%s\r\n%s"), desc, line_buffer);
 			else
-				_tcsncpy(new_desc, line_buffer, new_len);
+				_tcsncpy(new_desc, line_buffer, new_len - 1);
+
 			new_desc[new_len - 1] = _T('\0');
 
 			free_s((void**)&desc);
@@ -321,12 +319,9 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, INT32 nLang)
 	}
 
 	// Return empty string for empty content
-	if (!desc) {
-		desc = (TCHAR*)malloc(sizeof(TCHAR));
-		if (desc)
-			desc[0] = _T('\0');
-	}
-
+	if (!desc)
+		desc = (TCHAR*)calloc(1, sizeof(TCHAR));
+	
 	return desc;		// Caller must free with free(_s)
 }
 
@@ -375,12 +370,12 @@ static TCHAR* SafeReadPatchDescription(TCHAR* fileName, INT32 langCode)
 }
 
 // Find child node under specified parent
-static HTREEITEM FindChildNode(HWND hTree, HTREEITEM hParent, const TCHAR* pszText)
+static HTREEITEM FindChildNode(HWND hTree, HTREEITEM hParentItem, const TCHAR* pszText)
 {
 	if (!hTree || IsStrEmpty(pszText))
 		return NULL;
 
-	HTREEITEM hChild = TreeView_GetChild(hTree, hParent);
+	HTREEITEM hChild = TreeView_GetChild(hTree, hParentItem);
 	TCHAR szBuf[256] = { 0 };
 
 	while (hChild) {
@@ -479,8 +474,7 @@ static void FillListBox()
 {
 	TCHAR dir[MAX_PATH] = { 0 };
 	INT32 nLen = _sntprintf(dir, MAX_PATH, _T("%s%s\\"), szAppIpsPath, szDriverName);
-	if ((nLen < 0) || (nLen >= MAX_PATH))
-		dir[MAX_PATH - 1] = _T('\0');
+	dir[MAX_PATH - 1] = _T('\0');
 
 	DWORD attr = GetFileAttributes(dir);
 	if ((INVALID_FILE_ATTRIBUTES == attr) || !(attr & FILE_ATTRIBUTE_DIRECTORY)) {
@@ -1665,8 +1659,8 @@ static void ProcessIncludeDirective(TCHAR* tkInclude, void (*ProcessCallback)(co
 
 						if (nDrvIdx >= 0) {
 							*pFileSep = _T('\\');
-							_tcsncpy(szTargetPath, szNormalizedPath, ARRAY_SIZE(szTargetPath) - 1);
-							szTargetPath[ARRAY_SIZE(szTargetPath) - 1] = _T('\0');
+							_tcsncpy(szTargetPath, szNormalizedPath, MAX_PATH - 1);
+							szTargetPath[MAX_PATH - 1] = _T('\0');
 							bValidPath = true;
 						}
 					}
@@ -1682,13 +1676,12 @@ static void ProcessIncludeDirective(TCHAR* tkInclude, void (*ProcessCallback)(co
 		if (IsStrEmpty(pszDrv))
 			return;
 
-		const bool hasDat = IsFileExtensionMatch(tkInclude, _T(".dat"));
+		const BOOL hasDat = IsDatFile(tkInclude);
 
 		// First priority: QuickOpen path
 		if (1 == nQuickOpen) {
-			_sntprintf(szTargetPath, ARRAY_SIZE(szTargetPath), hasDat ? _T("%s%s\\%s") : _T("%s%s\\%s.dat"), szAppQuickPath, pszDrv, tkInclude);
-			szTargetPath[ARRAY_SIZE(szTargetPath) - 1] = _T('\0');
-
+			_sntprintf(szTargetPath, MAX_PATH, hasDat ? _T("%s%s\\%s") : _T("%s%s\\%s.dat"), szAppQuickPath, pszDrv, tkInclude);
+			szTargetPath[MAX_PATH - 1] = _T('\0');
 			if (FileExists(szTargetPath)) {
 				bValidPath = true;
 				goto process_include;
@@ -1696,9 +1689,8 @@ static void ProcessIncludeDirective(TCHAR* tkInclude, void (*ProcessCallback)(co
 		}
 
 		// Fallback: default IPS path
-		_sntprintf(szTargetPath, ARRAY_SIZE(szTargetPath), hasDat ? _T("%s%s\\%s") : _T("%s%s\\%s.dat"), szAppIpsPath, pszDrv, tkInclude);
-		szTargetPath[ARRAY_SIZE(szTargetPath) - 1] = _T('\0');
-
+		_sntprintf(szTargetPath, MAX_PATH, hasDat ? _T("%s%s\\%s") : _T("%s%s\\%s.dat"), szAppIpsPath, pszDrv, tkInclude);
+		szTargetPath[MAX_PATH - 1] = _T('\0');
 		bValidPath = true;
 	}
 

@@ -176,8 +176,8 @@ extern bool nGamelistLocalisationActive;
 
 void BurnerDoGameListLocalisation();
 void BurnerExitGameListLocalisation();
-int FBALocaliseGamelistLoadTemplate();
-int FBALocaliseGamelistCreateTemplate();
+INT32 FBALocaliseGamelistLoadTemplate();
+INT32 FBALocaliseGamelistCreateTemplate();
 
 INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i = nBurnDrvActive);
 
@@ -398,10 +398,13 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 // romdata.cpp
 extern bool bRDListScanSub;
 
+INT32 TraverseDirectoryEx(const TCHAR* dirPath, INT32(*pFoundCallBack)(const TCHAR*), bool bDirectoriesOnly, bool scanSubdirs);
+#define TraverseDirectoryFiles( dir, cb, sub)  TraverseDirectoryEx(dir, cb, false, sub)		// For files: keep subdir control
+#define TraverseDirectoriesOnly(dir, cb)       TraverseDirectoryEx(dir, cb, true, true)		// For directories: always scan subdirs, and ignore files
+
 INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt = NULL);
 INT32 OpenDirectoryLoadRomData(HWND hWnd);
 INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput);
-INT32 TraverseDirectoryFiles(const TCHAR* dirPath, INT32 (*pFoundCallBack)(const TCHAR*), bool scanSubdirs = bRDListScanSub);
 bool  RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
 INT32 tchar_to_ansi(const TCHAR* src, char** dst);
@@ -424,9 +427,6 @@ extern struct VidPresetData VidPreset[4];
 struct VidPresetDataVer { int nWidth; int nHeight; };
 extern struct VidPresetDataVer VidPresetVer[4];
 
-INT32 LookupSubDirThreads();
-void SubDirThreadExit();
-void DestroySubDir();
 int ConfigAppLoad();
 int ConfigAppSave();
 
@@ -495,6 +495,7 @@ extern INT32 nRomsDlgHeight;
 extern char* gameAv;
 extern bool avOk;
 extern bool bSkipStartupCheck;
+extern UINT32 nPrevCount;
 INT32 RomsDirCreate(HWND hParentWND);
 INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();

@@ -23,10 +23,6 @@
  #define DIRS_MAX (20)								// Maximum number of directories to search
 #endif
 
-#ifndef min
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#endif // !min
-
 #include "title.h"
 #include "burn.h"
 #include "joyprocess.h"
@@ -217,8 +213,6 @@ char* DecorateGameName(UINT32 nBurnDrv);
 TCHAR* DecorateGenreInfo();
 void ComputeGammaLUT();
 
-bool IsStrEmpty(const TCHAR* s);
-bool IsStrEmptyA(const char* s);
 const TCHAR* ExtractFileNameFromPath(const TCHAR* filePath);
 BOOL IsFileExtensionMatch(const TCHAR* fileName, const TCHAR* ext);
 TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
@@ -292,9 +286,12 @@ void IpsPatchExit();
 
 INT32 BzipOpen(bool);
 INT32 BzipClose();
+INT32 BzipStatus();
+
+// --------- Not in the Windows version ---------
 INT32 BzipInit();
 INT32 BzipExit();
-INT32 BzipStatus();
+// ----------------------------------------------
 
 // support_paths.cpp
 extern TCHAR szAppPreviewsPath[MAX_PATH];

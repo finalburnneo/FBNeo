@@ -109,54 +109,99 @@ bool BurnCheckMMXSupport()
 #endif
 }
 
-static void BurnGameListInit()
-{	// Avoid broken references, RomData requires separate string storage
-	if (0 == nIntlDrvCount) return;
-	
-		pszShortName = (char**   )malloc(nIntlDrvCount * sizeof(char*));
-		pszFullNameA = (char**   )malloc(nIntlDrvCount * sizeof(char*));
-		pszFullNameW = (wchar_t**)malloc(nIntlDrvCount * sizeof(wchar_t*));
+// Storage for default game list data, used to preserve original driver names and track changes
+struct DefaultGameListData {
+	wchar_t** pLongNames;			// Original full names from static pDriver
+	bool*     pFound;				// Tracks if the game was found during scanning
+	bool*     pChanged;				// Tracks if the game name was changed (for localization or user edits)
+};
 
-		if ((NULL != pszShortName) && (NULL != pszFullNameA) && (NULL != pszFullNameW)) {
-			for (UINT32 i = 0; i < nIntlDrvCount; i++) {
-				pszShortName[i] = (char*   )malloc(100      * sizeof(char));
-				pszFullNameA[i] = (char*   )malloc(MAX_PATH * sizeof(char));
-				pszFullNameW[i] = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
-
-				memset(pszShortName[i], '\0', 100      * sizeof(char));
-				memset(pszFullNameA[i], '\0', MAX_PATH * sizeof(char));
-				memset(pszFullNameW[i], '\0', MAX_PATH * sizeof(wchar_t));
-
-				if (NULL != pszShortName[i]) {
-					strcpy(pszShortName[i], pDriver[i]->szShortName);
-					pDriver[i]->szShortName = pszShortName[i];
-				}
-				if (NULL != pszFullNameA[i]) {
-					strcpy(pszFullNameA[i], pDriver[i]->szFullNameA);
-					pDriver[i]->szFullNameA = pszFullNameA[i];
-				}
-#if defined (_UNICODE)
-				if (NULL != pDriver[i]->szFullNameW) {
-					wmemcpy(pszFullNameW[i], pDriver[i]->szFullNameW, MAX_PATH);	// Include '\0'
-				}
-				pDriver[i]->szFullNameW = pszFullNameW[i];
-#endif
-			}
-		}
-
-}
+static struct DefaultGameListData* pDefaultGameListData = NULL;
 
 static void BurnGameListExit()
 {
-	// Release of storage space
-	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
-		if ((NULL != pszShortName) && (NULL != pszShortName[i])) free(pszShortName[i]);
-		if ((NULL != pszFullNameA) && (NULL != pszFullNameA[i])) free(pszFullNameA[i]);
-		if ((NULL != pszFullNameW) && (NULL != pszFullNameW[i])) free(pszFullNameW[i]);
+	// Clean up default game list data
+	if (pDefaultGameListData) {
+		for (UINT32 i = 0; i < nIntlDrvCount; i++) {
+			free_s((void**)&pDefaultGameListData->pLongNames[i]);
+		}
+		free_s((void**)&pDefaultGameListData->pLongNames);
+		free_s((void**)&pDefaultGameListData->pFound);
+		free_s((void**)&pDefaultGameListData->pChanged);
+
+		free_s((void**)&pDefaultGameListData);
 	}
-	if (NULL != pszShortName) free(pszShortName);
-	if (NULL != pszFullNameA) free(pszFullNameA);
-	if (NULL != pszFullNameW) free(pszFullNameW);
+
+	// Clean up duplicated string buffers for driver structs
+	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
+		free_s((void**)&pszShortName[i]);
+		free_s((void**)&pszFullNameA[i]);
+		free_s((void**)&pszFullNameW[i]);
+	}
+	free_s((void**)&pszShortName);
+	free_s((void**)&pszFullNameA);
+	free_s((void**)&pszFullNameW);
+}
+
+static void BurnGameListInit()
+{	// Avoid broken references, RomData requires separate string storage
+	if (0 == nIntlDrvCount) return;
+
+	// Allocate main structure for default game list data
+	pDefaultGameListData = (struct DefaultGameListData*)malloc(sizeof(struct DefaultGameListData));
+	if (!pDefaultGameListData) return;
+
+	// Allocate arrays for default data storage
+	pDefaultGameListData->pLongNames  = (wchar_t**)calloc(nIntlDrvCount, sizeof(wchar_t*));
+	pDefaultGameListData->pFound      = (bool*    )calloc(nIntlDrvCount, sizeof(bool));
+	pDefaultGameListData->pChanged    = (bool*    )calloc(nIntlDrvCount, sizeof(bool));
+
+	// Allocate arrays for driver string replacement buffers
+	pszShortName = (char**   )calloc(nIntlDrvCount, sizeof(char*));
+	pszFullNameA = (char**   )calloc(nIntlDrvCount, sizeof(char*));
+	pszFullNameW = (wchar_t**)calloc(nIntlDrvCount, sizeof(wchar_t*));
+
+	// If any allocation fails, clean up and exit
+	if (!pDefaultGameListData->pLongNames || !pDefaultGameListData->pFound || !pDefaultGameListData->pChanged || !pszShortName || !pszFullNameA || !pszFullNameW) {
+		BurnGameListExit();
+		return;
+	}
+
+	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
+		// Allocate buffer for original long name storage
+		pDefaultGameListData->pLongNames[ i] = (wchar_t*)calloc(MAX_PATH, sizeof(wchar_t));
+
+		// Allocate safe buffers for driver struct string replacement
+		pszShortName[i] = (char*   )calloc(100,      sizeof(char));
+		pszFullNameA[i] = (char*   )calloc(MAX_PATH, sizeof(char));
+		pszFullNameW[i] = (wchar_t*)calloc(MAX_PATH, sizeof(wchar_t));
+
+		// Check for allocation failures
+		if (!pDefaultGameListData->pLongNames[i] || !pszShortName[i] || !pszFullNameA[i] || !pszFullNameW[i]) {
+			BurnGameListExit();
+			return;
+		}
+
+		// Safely copy ANSI strings with null termination
+		strncpy(pszShortName[i], pDriver[i]->szShortName, 99);
+		pszShortName[i][          99] = '\0';
+		strncpy(pszFullNameA[i], pDriver[i]->szFullNameA, MAX_PATH - 1);
+		pszFullNameA[i][MAX_PATH - 1] = '\0';
+
+#if defined (_UNICODE)
+		// Copy original wide string data if it exists
+		if (!IsStrEmpty(pDriver[i]->szFullNameW)) {
+			pDefaultGameListData->pChanged[i] = true;											// Mark as changed if the original full name is not empty (indicates potential use of wide characters)
+			wmemcpy(pDefaultGameListData->pLongNames[i], pDriver[i]->szFullNameW, MAX_PATH);	// Include '\0'
+			wmemcpy(pszFullNameW[                    i], pDriver[i]->szFullNameW, MAX_PATH);	// Include '\0'
+		}
+		// Assign new safe buffer to driver struct
+		pDriver[i]->szFullNameW = pszFullNameW[i];
+#endif
+		// Assign new safe buffers to driver struct
+		pDriver[i]->szShortName = pszShortName[i];
+		pDriver[i]->szFullNameA = pszFullNameA[i];
+	}
 }
 
 // A dynamically created `pDriverEx` will directly reference the static `pDriver`
@@ -587,17 +632,61 @@ INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i = nBurnDrvActive)
 }
 
 #if defined (_UNICODE)
-void BurnLocalisationSetName(char* szName, TCHAR* szLongName)
+
+// Set localized long name for a specific driver by short name
+void BurnLocalisationSetName(const char* szName, const wchar_t* szLongName)
 {
+	// RomData has its own game name list system
+	// This module only handles the built-in game drivers
 	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
 		nBurnDrvActive = i;
-		if (!strcmp(szName, pDriver[i]->szShortName)) {
+
+		// Skip if this game has already been found and processed
+		if (pDefaultGameListData->pFound[i])
+			continue; 
+
+		// Find matching driver by short name
+		if (0 == strcmp(szName, pDriver[i]->szShortName)) {
 //			pDriver[i]->szFullNameW = szLongName;
-			memset(pszFullNameW[i], '\0', MAX_PATH * sizeof(wchar_t));
-			_tcscpy(pszFullNameW[i], szLongName);
+
+			// Safely copy new localized wide string
+			wcsncpy(pszFullNameW[i], szLongName, MAX_PATH - 1);
+			pszFullNameW[i][MAX_PATH - 1] = L'\0';
+
+			// Mark this game as found and changed for localization
+			pDefaultGameListData->pFound[i] = true;
+
+			// Stop searching after the first match
+			break;
 		}
 	}
 }
+
+// Clear cached game translation list markers for acceleration
+void BurnLocalisationResetFound()
+{
+	memset(pDefaultGameListData->pFound, 0, nIntlDrvCount * sizeof(bool));
+}
+
+// Reset driver long names back to original default values
+void BurnLocalisationResetName()
+{
+	if (!pDefaultGameListData)
+		return;
+
+	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
+		// Restore original name if it was modified
+		if (pDefaultGameListData->pChanged[i]) {
+			wmemcpy(pszFullNameW[i], pDefaultGameListData->pLongNames[i], MAX_PATH);
+		} else {
+			// Clear name if no custom change was made
+			pszFullNameW[i][0] = L'\0';
+		}
+	}
+	// Clear cached game translation list markers for acceleration
+	BurnLocalisationResetFound();
+}
+
 #endif
 
 static void BurnLocalisationSetNameEx()

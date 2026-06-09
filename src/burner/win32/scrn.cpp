@@ -71,7 +71,7 @@ HWND hwndChat = NULL;
 WNDPROC pOldWndProc = NULL;
 
 bool bRescanRoms   = false;
-INT32 nQuickOpen = 0;									// 0 Disable, 1 RomData, 2 IPS, 3 NeoGeo-CD, 4 Zip / 7z
+INT32 nQuickOpen = 0;									// 0 Disable, 1 IPS, 2 NeoGeo-CD, 3 Zip / 7z
 
 static bool bDrag  = false;
 static int nDragX, nDragY;
@@ -1215,17 +1215,19 @@ INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc, INT32(*pVerifyZipCallback)(cons
 
 	char* arcFull = NULL;
 	INT32 arcLen  = tchar_to_ansi(pszSelArc, &arcFull);
-	if (0 >= arcLen || !arcFull)
+	if (arcLen <= 0 || !arcFull)
 		return -1;
 
 	const char* ext = strrchr(arcFull, '.');
 	if (!ext || !*(ext + 1))
 		ext = arcFull + arcLen;
 
+	size_t extPos  = (size_t)(ext - arcFull);
+	size_t copyLen = (extPos < MAX_PATH - 1) ? extPos : (MAX_PATH - 1);
+
 	char noextPath[MAX_PATH] = { 0 };
-	UINT32 pathCopyLen = min((UINT32)(ext - arcFull), (UINT32)(MAX_PATH - 1));
-	strncpy(noextPath, arcFull, pathCopyLen);
-	noextPath[pathCopyLen] = '\0';
+	strncpy(noextPath, arcFull, copyLen);
+	noextPath[copyLen] = '\0';
 
 	INT32 nDrvIdx = pVerifyZipCallback(noextPath, NULL);
 
@@ -2680,14 +2682,20 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				FBALocaliseGamelistLoadTemplate();
 			}
 			break;
+
 		case MENU_LANGUAGE_GL_EXPORT:
 			if (UseDialogs()) {
 				FBALocaliseGamelistCreateTemplate();
 			}
 			break;
+
 		case MENU_LANGUAGE_GL_RESET:
-			szGamelistLocalisationTemplate[0] = _T('\0');
-			nGamelistLocalisationActive = false;
+			if (nGamelistLocalisationActive) {
+				BurnLocalisationResetName();
+				szGamelistLocalisationTemplate[0] = _T('\0');
+				nGamelistLocalisationActive = false;
+
+			}
 			break;
 
 		case MENU_ENABLEICONS: {

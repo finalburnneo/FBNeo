@@ -158,7 +158,27 @@ struct BurnHDDInfo {
 // ---------------------------------------------------------------------------
 // Rom Data
 
-void free_s(void** p);
+// Safe free function: frees memory and sets pointer to NULL to prevent dangling pointers
+static inline void free_s(void** p)
+{
+	if (p && *p) {
+		free(*p);
+		*p = NULL;
+	}
+}
+
+// Check if a TCHAR string is null or empty
+static inline bool IsStrEmpty(const TCHAR* s)
+{
+	return (!s || _T('\0') == *s);
+}
+
+// ANSI version of IsStrEmpty
+static inline bool IsStrEmptyA(const char* s)
+{
+	return (!s || '\0' == *s);
+}
+
 void RomDataInit();
 void RomDataExit();
 bool IsRomDataDrv();
@@ -367,7 +387,9 @@ INT32 BurnDrvGetPaletteEntries();
 INT32 BurnSetProgressRange(double dProgressRange);
 INT32 BurnUpdateProgress(double dProgressStep, const TCHAR* pszText, bool bAbs);
 
-void BurnLocalisationSetName(char *szName, TCHAR *szLongName);
+void BurnLocalisationSetName(const char* szName, const wchar_t* szLongName);
+void BurnLocalisationResetFound();
+void BurnLocalisationResetName();
 
 void BurnGetLocalTime(tm *nTime);                   // Retrieve local-time of machine w/tweaks for netgame and input recordings
 UINT16 BurnRandom();                                // State-able Random Number Generator (0-32767)

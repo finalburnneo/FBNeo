@@ -601,26 +601,6 @@ TCHAR *StrLower(TCHAR *str)
 	return &szBuffer[0];
 }
 
-// Safe free function that checks for null pointers and sets them to null after freeing
-void free_s(void** p)
-{
-	if (p && *p) {
-		free(*p); *p = NULL;
-	}
-}
-
-// Check if a TCHAR string is null or empty
-bool IsStrEmpty(const TCHAR* s)
-{
-	return (!s || _T('\0') == *s);
-}
-
-// ANSI version of IsStrEmpty
-bool IsStrEmptyA(const char* s)
-{
-	return (!s || '\0' == *s);
-}
-
 // Extract filename from a full path
 const TCHAR* ExtractFileNameFromPath(const TCHAR* filePath)
 {
@@ -893,8 +873,11 @@ static EncodingType DetectEncoding(const TCHAR* pszFileName)
 // Returns true if successful, pszConv receives the path of the converted temp file
 static bool Utf16beToUtf16le(const TCHAR* pszFileName, TCHAR** pszConv)
 {
-	if (IsStrEmpty(pszFileName))
+	if (IsStrEmpty(pszFileName) || !pszConv)
 		return false;					// Invalid filename parameter
+
+	if (*pszConv)
+		*pszConv = NULL;				// Ensure output pointer is initialized to NULL
 
 	FILE* fpRead   = NULL, * fpWrite = NULL;
 	UINT8* pBuffer = NULL;
@@ -966,6 +949,7 @@ static bool Utf16beToUtf16le(const TCHAR* pszFileName, TCHAR** pszConv)
 		}
 		// Create temp converted file: "xxx.conv"
 		_sntprintf(pOut, totalLen, _T("%s.conv"), pszFileName);
+		pOut[totalLen - 1] = 0;
 	}
 
 	const TCHAR* pWriteFile = pszConv ? pOut : pszFileName;
@@ -1100,7 +1084,6 @@ static void SafeCloseTextFile(FILE** file, TCHAR** tempText)
 	}
 }
 
-// ==================== Safe Process Text File (Wrapper) ====================
 // Automatically opens file, invokes callback, then cleans up
 void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const TCHAR*, FILE*, void*), void* userData)
 {
@@ -1112,6 +1095,10 @@ void SafeProcessTextFile(const TCHAR* inputText, void (*TextFileProcess)(const T
 
 	// Open file with auto encoding detection; encoding output is NULL
 	tempFile = SmartOpenTextFile(inputText, &file, NULL);
+	if (!file) {
+		SafeCloseTextFile(&file, &tempFile);
+		return;
+	}
 
 	// Invoke callback regardless of open result (file may be NULL)
 	TextFileProcess(inputText, file, userData);

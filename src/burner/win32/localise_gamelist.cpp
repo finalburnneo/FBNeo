@@ -1,7 +1,8 @@
 #include "burner.h"
+#include "burnint.h"
 #include <string.h>
 
-#define MAX_LST_GAMES		25000
+#define MAX_LST_GAMES		35000
 #define MAX_LST_LINE_LEN	256
 
 TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");
@@ -9,333 +10,483 @@ bool nGamelistLocalisationActive = false;
 static INT32 nCodePage = CP_ACP;
 static TCHAR* szLongNamesArray[MAX_LST_GAMES];
 
-static void BurnerDoGameListExLocalisation()
+// Structure for passing game list data to the parsing callback
+struct GameListParseData {
+	char** pShortNames;		// Pointer to array of ANSI driver names (char*)
+	TCHAR** pLongNames;		// Pointer to array of localized game names (TCHAR*)
+	INT32 nTotalGames;		// Total number of valid game entries
+};
+
+// Callback: Count valid game list lines using existing parse data structure
+static void GameListCountLineCallback(const TCHAR*, FILE* file, void* pData)
 {
-	if (!nGamelistLocalisationActive) return;
+	struct GameListParseData* pParseData = (struct GameListParseData*)pData;
 
-	TCHAR szGamelistExLocalisationTemplate[MAX_PATH] = _T(""), szGamelistEx[MAX_PATH] = _T(""), * pszPos = NULL;
+	// Safety checks
+	if (!file || !pParseData)
+		return;
 
-	_tcscpy(szGamelistExLocalisationTemplate, szGamelistLocalisationTemplate);
-	pszPos = _tcsstr(szGamelistExLocalisationTemplate, _T(".glt"));
+	// Move file pointer to the beginning
+	fseek(file, 0, SEEK_SET);
 
-	if (NULL != pszPos) {
-		pszPos[0] = _T('\0');
-		pszPos = NULL;
-	}
+	TCHAR szTemp[MAX_LST_LINE_LEN];
 
-	_stprintf(szGamelistEx, _T("%sex.glt"), szGamelistExLocalisationTemplate);
-
-	FILE* gl = _tfopen(szGamelistEx, _T("rt"));
-
-	if (NULL == gl) return;
-
-	INT32 nArrayPos = 0;
-	INT32 nTokenPos = 0;
-	char szTemp[MAX_LST_LINE_LEN] = { '\0' };
-
-	while (fgets(szTemp, sizeof(szTemp), gl)) {
-		if (szTemp[0] == '/' && szTemp[1] == '/') {
+	// Read and validate each line
+	while (_fgetts(szTemp, ARRAY_SIZE(szTemp), file)) {
+		// Skip comment lines starting with "//"
+		if (_T('/') == szTemp[0] && _T('/') == szTemp[1])
 			continue;
-		}
 
-		if (!strncmp(szTemp, "codepage=", 9)) {
-			if ((strlen(szTemp) - 10) == 4) {
-				nCodePage =  (szTemp[ 9] - '0') * 1000;
-				nCodePage += (szTemp[10] - '0') * 100;
-				nCodePage += (szTemp[11] - '0') * 10;
-				nCodePage += (szTemp[12] - '0');
-			}
-			if ((strlen(szTemp) - 10) == 3) {
-				nCodePage =  (szTemp[ 9] - '0') * 100;
-				nCodePage += (szTemp[10] - '0') * 10;
-				nCodePage += (szTemp[11] - '0');
-			}
+		// Skip codepage definition line
+		// This is a legacy issue. It should no longer exist after the new code is adopted
+		if (0 == _tcsncmp(szTemp, _T("codepage="), 9))
 			continue;
-		}
 
-		// Get rid of the linefeed at the end
-		INT32 nLen = strlen(szTemp);
-		if ((nLen > 0) && (szTemp[nLen - 1] == 10)) {
-			szTemp[nLen - 1] = 0;
-			nLen--;
-		}
+		// Skip empty lines and line breaks
+		TCHAR c = szTemp[0];
+		if (_T('\n') == c || _T('\r') == c || 0 == c)
+			continue;
 
-		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
-
-		MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
-
-		TCHAR* Tokens = _tcstok(szLine, _T("\t"));
-		while (Tokens != NULL) {
-			Tokens = _tcstok(NULL, _T("\t"));
-		}
-		nArrayPos++;
-	}
-	nNamesExArray = nArrayPos;
-	nArrayPos = 0;
-	rewind(gl);
-	memset(szTemp, 0, sizeof(szTemp));
-
-	szShortNamesExArray = (char** )malloc(nNamesExArray * sizeof(char*));
-	szLongNamesExArray  = (TCHAR**)malloc(nNamesExArray * sizeof(TCHAR*));
-
-	if ((NULL != szShortNamesExArray) && (NULL != szLongNamesExArray)) {
-		// Allocate arrays to read the file into
-		for (INT32 i = 0; i < nNamesExArray; i++) {
-			szShortNamesExArray[i] = (char* )malloc(100);
-			szLongNamesExArray[i]  = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesExArray[i], '\0', 100);
-			memset(szLongNamesExArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
-		}
-		while (NULL != fgets(szTemp, sizeof(szTemp), gl)) {
-			if (szTemp[0] == '/' && szTemp[1] == '/') {
-				continue;
-			}
-
-			// Get rid of the linefeed at the end
-			INT32 nLen = strlen(szTemp);
-			if ((nLen > 0) && (szTemp[nLen - 1] == 10)) {
-				szTemp[nLen - 1] = 0;
-				nLen--;
-			}
-
-			TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
-
-			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
-
-			// Read the file into arrays
-			TCHAR* Tokens = _tcstok(szLine, _T("\t"));
-			while (NULL != Tokens) {
-				if (nTokenPos == 0) {
-					szShortNamesExArray[nArrayPos] = (char*)malloc(100);
-					memset(szShortNamesExArray[nArrayPos], '\0', 100);
-					strcpy(szShortNamesExArray[nArrayPos], TCHARToANSI(Tokens, NULL, 0));
-				}
-
-				if (nTokenPos == 1) {
-					szLongNamesExArray[nArrayPos] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-					memset(szLongNamesExArray[nArrayPos], '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
-					wcscpy(szLongNamesExArray[nArrayPos], Tokens);
-				}
-
-				Tokens = _tcstok(NULL, _T("\t"));
-				nTokenPos++;
-			}
-			nTokenPos = 0;
-			nArrayPos++;
-		}
+		// Increment count for valid data line
+		pParseData->nTotalGames++;
 	}
 
-	fclose(gl);
+	// Reset file pointer to the beginning for later operations
+	fseek(file, 0, SEEK_SET);
 }
 
-void BurnerDoGameListLocalisation()
+// Count valid lines in gamelist translation file
+static INT32 GetGamelistValidLineCount(const TCHAR* pszFilePath)
 {
-	if (!nGamelistLocalisationActive) return;
+	if (IsStrEmpty(pszFilePath))
+		return 0;
+	
+	// Reuse existing parse structure for line counting
+	struct GameListParseData parseData = { 0 };
 
-	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("rt"));
-	if (fp) {
-		TCHAR *szShortNamesArray[MAX_LST_GAMES];
-		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
-		int nTokenPos = 0;
-		int nArrayPos = 0;
-		int nNumGames = 0;
+	// Process file with auto encoding detection and resource management
+	SafeProcessTextFile(pszFilePath, GameListCountLineCallback, &parseData);
 
-		// Allocate arrays to read the file into
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			szLongNamesArray[i]  = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i] = (TCHAR*)malloc( 100              * sizeof(TCHAR));
-			memset(szLongNamesArray[i],  '\0', MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i], '\0', 100              * sizeof(TCHAR));
-		}
+	// Return total count of valid game entries
+	return parseData.nTotalGames;
+}
 
-		char szTemp[MAX_LST_LINE_LEN];
+// Extended game list localization parsing callback
+static void GameListParse(const TCHAR*, FILE* fp, void* userData)
+{
+	struct GameListParseData* pData = (struct GameListParseData*)userData;
 
-		while (fgets(szTemp, sizeof(szTemp), fp)) {
-			if (szTemp[0] == '/' && szTemp[1] == '/') {
-				continue;
-			}
+	// Validate input pointers and state
+	if (!fp || !pData || !pData->pShortNames || !pData->pLongNames || pData->nTotalGames <= 0)
+		return;
 
-			if (!strncmp(szTemp, "codepage=", 9)) {
-				if ((strlen(szTemp) - 10) == 4) {
-					nCodePage  = (szTemp[ 9] - '0') * 1000;
-					nCodePage += (szTemp[10] - '0') * 100;
-					nCodePage += (szTemp[11] - '0') * 10;
-					nCodePage += (szTemp[12] - '0');
-				}
-				if ((strlen(szTemp) - 10) == 3) {
-					nCodePage  = (szTemp[ 9] - '0') * 100;
-					nCodePage += (szTemp[10] - '0') * 10;
-					nCodePage += (szTemp[11] - '0');
-				}
-				continue;
-			}
+	TCHAR szLine[MAX_LST_LINE_LEN] = { 0 };
+	INT32 nIndex = 0;
 
-			// Get rid of the linefeed at the end
-			int nLen = strlen(szTemp);
-			if (nLen > 0 && szTemp[nLen - 1] == 10) {
-				szTemp[nLen - 1] = 0;
-				nLen--;
-			}
+	// Read lines until buffer full or end of file
+	while (_fgetts(szLine, ARRAY_SIZE(szLine), fp) && nIndex < pData->nTotalGames)
+	{
+		TCHAR* pCurr = szLine;
 
-			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
+		// Skip comment lines
+		if (_T('/') == pCurr[0] && _T('/') == pCurr[1])
+			continue;
 
-			TCHAR *Tokens;
+		// Skip codepage definition
+		if (!_tcsncmp(pCurr, _T("codepage="), 9))
+			continue;
 
-			// Read the file into arrays
-			Tokens = _tcstok(szLine, _T("\t"));
-			while (Tokens != NULL) {
-				if (nTokenPos == 0) {
-					wcscpy(szShortNamesArray[nArrayPos], Tokens);
-//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
-				}
+		// Skip leading whitespace (spaces / tabs)
+		while (_T(' ') == *pCurr || _T('\t') == *pCurr)
+			pCurr++;
 
-				if (nTokenPos == 1) {
-					wcscpy(szLongNamesArray[nArrayPos], Tokens);
-//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
-				}
+		// Skip empty lines
+		if (!*pCurr)
+			continue;
 
-				Tokens = _tcstok(NULL, _T("\t"));
-				nTokenPos++;
-			}
+		// Extract short name (continuous non-whitespace)
+		TCHAR* pShortPart = pCurr;
+		while (*pCurr && _T(' ') != *pCurr && _T('\t') != *pCurr)
+			pCurr++;
 
-			nTokenPos = 0;
-			nArrayPos++;
-		}
-		nNumGames = nArrayPos;
+		// Terminate short name string
+		if (*pCurr)
+			*pCurr++ = _T('\0');
 
-		for (int i = 0; i < nNumGames; i++) {
-			BurnLocalisationSetName(TCHARToANSI(szShortNamesArray[i], NULL, 0), szLongNamesArray[i]);
-		}
+		// Skip delimiters between short and long name
+		while (_T(' ') == *pCurr || _T('\t') == *pCurr)
+			pCurr++;
 
-		// tidy up
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			if (szShortNamesArray[i]) {
-				free(szShortNamesArray[i]);
-				szShortNamesArray[i] = NULL;
-			}
-		}
+		// Point to long name start
+		TCHAR* pLongPart = pCurr;
 
-		fclose(fp);
+		// Trim trailing whitespace from long name
+		TCHAR* pLongEnd = pLongPart + _tcslen(pLongPart);
+		while (pLongEnd > pLongEnd && (_T(' ') == *(pLongEnd - 1) || _T('\t') == *(pLongEnd - 1) || _T('\n') == *(pLongEnd - 1) || _T('\r') == *(pLongEnd - 1)))
+			*(--pLongEnd) = _T('\0');
+
+		// Skip invalid entries
+		if (!*pShortPart || !*pLongPart)
+			continue;
+
+		char*  pTmpShort = NULL;
+		TCHAR* pTmpLong  = NULL;
+
+		// Convert short name to ANSI
+		if (tchar_to_ansi(pShortPart, &pTmpShort) <= 0)
+			goto CLEANUP;
+
+		// Duplicate long name string
+		pTmpLong = _tcsdup(pLongPart);
+		if (!pTmpLong)
+			goto CLEANUP;
+
+		// Store valid entries
+		pData->pShortNames[nIndex] = pTmpShort;
+		pData->pLongNames[ nIndex] = pTmpLong;
+		nIndex++;
+		continue;
+
+	CLEANUP:
+		// Release allocated resources on failure
+		free_s((void**)&pTmpShort);
+		free_s((void**)&pTmpLong);
+	}
+}
+
+// Load extended game list localization (ex.glt)
+void BurnerDoGameListExLocalisation()
+{
+	if (!nGamelistLocalisationActive)
+		return;
+
+	TCHAR szBasePath[MAX_PATH]   = { 0 };
+	TCHAR szGamelistEx[MAX_PATH] = { 0 };
+
+	// Safely copy base template path
+	_tcsncpy(szBasePath, szGamelistLocalisationTemplate, MAX_PATH - 1);
+	szBasePath[MAX_PATH - 1] = _T('\0');
+
+	// Remove .glt extension if present
+	TCHAR* pszExt = _tcsstr(szBasePath, _T(".glt"));
+	if (pszExt)
+		*pszExt = _T('\0');
+
+	// Build full path to ex.glt
+	_sntprintf(szGamelistEx, ARRAY_SIZE(szGamelistEx), _T("%sex.glt"), szBasePath);
+	szGamelistEx[ARRAY_SIZE(szGamelistEx) - 1] = _T('\0');
+
+	INT32 nGameCount = GetGamelistValidLineCount(szGamelistEx);
+	if (nGameCount <= 0)
+		return;
+
+	// Allocate arrays for parsed strings
+	char**  pShortNames = (char** )calloc(nGameCount, sizeof(char*));
+	TCHAR** pLongNames  = (TCHAR**)calloc(nGameCount, sizeof(TCHAR*));
+
+	if (!pShortNames || !pLongNames) {
+		free_s((void**)&pShortNames);
+		free_s((void**)&pLongNames);
+		return;
 	}
 
+	// Parse the file
+	struct GameListParseData parseData = {
+		pShortNames,
+		pLongNames,
+		nGameCount
+	};
+
+	SafeProcessTextFile(szGamelistEx, GameListParse, &parseData);
+
+	// Free OLD global buffers safely
+	if (szShortNamesExArray && szLongNamesExArray && nNamesExArray > 0) {
+		for (INT32 i = 0; i < nNamesExArray; i++) {
+			free_s((void**)&szShortNamesExArray[i]);
+			free_s((void**)&szLongNamesExArray[i]);
+		}
+		free_s((void**)&szShortNamesExArray);
+		free_s((void**)&szLongNamesExArray);
+	}
+
+	// Assign new parsed data to global variables
+	szShortNamesExArray = pShortNames;
+	szLongNamesExArray  = pLongNames;
+	nNamesExArray       = nGameCount;
+}
+
+// Main function to load and apply game list localization
+void BurnerDoGameListLocalisation()
+{
+	if (!nGamelistLocalisationActive)
+		return;
+
+	INT32 nGameCount = GetGamelistValidLineCount(szGamelistLocalisationTemplate);
+	if (nGameCount <= 0)
+		return;
+
+	// Allocate pointer arrays with zero initialization
+	// Prevent dirty data from interfering with memory deallocation
+	char**  pShortNames = (char** )calloc(nGameCount, sizeof(char*));
+	TCHAR** pLongNames  = (TCHAR**)calloc(nGameCount, sizeof(TCHAR*));
+
+	if (!pShortNames || !pLongNames) {
+		free_s((void**)&pShortNames);
+		free_s((void**)&pLongNames);
+		return;
+	}
+
+	// Fill parse data structure
+	struct GameListParseData parseData = {
+		pShortNames,
+		pLongNames,
+		nGameCount
+	};
+
+	// Parse file with automatic encoding detection
+	SafeProcessTextFile(szGamelistLocalisationTemplate, GameListParse, &parseData);
+
+	// Reset found markers to ensure all entries are applied correctly
+	BurnLocalisationResetFound();
+
+	// Apply localized names to drivers
+	for (INT32 i = 0; i < nGameCount; i++) {
+		char*  pShort = pShortNames[i];
+		TCHAR* pLong  = pLongNames[i];
+
+		if (pShort && pLong)
+			BurnLocalisationSetName(pShort, pLong);
+	}
+
+	// Safe memory cleanup
+	for (INT32 i = 0; i < nGameCount; i++) {
+		free_s((void**)&pShortNames[i]);
+		free_s((void**)&pLongNames[i]);
+	}
+
+	free_s((void**)&pShortNames);
+	free_s((void**)&pLongNames);
+
+	// Process additional localization
 	BurnerDoGameListExLocalisation();
 }
 
+// Convert TCHAR (Unicode) to UTF-8 encoded string
+// Return value: >= 0 = length of UTF-8 string (excluding null terminator), -1 = failure
+// Output buffer: must be freed with free_s() after use
+static INT32 unicode_to_utf8(const TCHAR* src, char** dst)
+{
+	// Validate input parameters
+	if (IsStrEmpty(src) || !dst)
+		return -1;
+
+	// Initialize output pointer to NULL for safety
+	*dst = NULL;
+
+	// Get required buffer size for conversion (including null terminator)
+	INT32 len = WideCharToMultiByte(CP_UTF8, 0, src, -1, NULL, 0, NULL, NULL);
+	if (len <= 0)
+		return -1;
+
+	// Allocate buffer (zero-initialized for safety)
+	char* pBuf = (char*)calloc(1, len);
+	if (!pBuf)
+		return -1;
+
+	// Perform Unicode to UTF-8 conversion
+	if (WideCharToMultiByte(CP_UTF8, 0, src, -1, pBuf, len, NULL, NULL) <= 0) {
+		free_s((void**)&pBuf);
+		return -1;
+	}
+
+	// Assign output buffer pointer
+	*dst = pBuf;
+
+	// Return length of converted UTF-8 string (excluding null terminator)
+	return (len - 1);
+}
+
+// Create UTF-8 game list translation template file
+// ANSI combined with code pages is an absolute disaster for non-English environments
+// Moreover, no one on Windows wants to use code pages outside the system default — they only cause garbled text
 static void BurnerGameListCreateTemplate()
 {
 	unsigned int nOldDrvSelect = nBurnDrvActive;
 
-	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("wt"));
-	if (fp) {
-		_ftprintf(fp, _T("// game list translation template for FinalBurn Neo version 0x%06X\n\n"), nBurnVer);
-		_ftprintf(fp, _T("// codepage=1252\n\n"));
+	// Open file in BINARY mode (critical for UTF-8, no CRLF mangling)
+	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("wb"));
+	if (!fp)
+		return;
 
-		for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-			nBurnDrvActive = i;
-			_ftprintf(fp, _T("%s\t%s\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+	// Write UTF-8 header (NO BOM)
+	const char* szHeaderVersion  = "// game list translation template for FinalBurn Neo version 0x%06X\n\n";
+	const char* szHeaderCodepage = "// Note: Formats such as [codepage=65001] are deprecated. Please use UTF-8 or UTF-16LE encoding instead.\n\n";
+	const char* szLineFormat     = "%s\t%s\n";
+
+	fprintf(fp, szHeaderVersion, nBurnVer);
+	fprintf(fp, szHeaderCodepage);
+
+	// Temporarily disable localization to export ORIGINAL driver names
+	bool nOldLocalizeEnabled = nGamelistLocalisationActive;
+	nGamelistLocalisationActive = false;
+
+	// Iterate over all built-in drivers (exclude RomData drivers)
+	for (UINT32 i = 0; i < nIntlDrvCount; i++) {
+		nBurnDrvActive = i;
+
+		// Get original (non-localized) driver names
+		const TCHAR* pShortName = BurnDrvGetText(DRV_NAME);
+		const TCHAR* pLongName  = BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME);
+
+		char* pShortUTF8 = NULL;
+		char* pLongUTF8  = NULL;
+
+		if (unicode_to_utf8(pShortName, &pShortUTF8) <= 0 || unicode_to_utf8(pLongName, &pLongUTF8) <= 0) {
+			free_s((void**)&pShortUTF8);
+			free_s((void**)&pLongUTF8);
+			continue;
 		}
 
-		fclose(fp);
+		// Write UTF-8 encoded line to file
+		fprintf(fp, szLineFormat, pShortUTF8, pLongUTF8);
+
+		// Safe cleanup
+		free_s((void**)&pShortUTF8);
+		free_s((void**)&pLongUTF8);
 	}
 
+	// Restore localization state
+	nGamelistLocalisationActive = nOldLocalizeEnabled;
+
+	// Cleanup
+	fclose(fp);
 	nBurnDrvActive = nOldDrvSelect;
 }
 
 void BurnerExitGameListLocalisation()
 {
 	for (int i = 0; i < MAX_LST_GAMES; i++) {
-		if (NULL != szLongNamesArray[i]) {
-			free(szLongNamesArray[i]);
-			szLongNamesArray[i] = NULL;
-		}
+		free_s((void**)&szLongNamesArray[i]);
 		if (i < nNamesExArray) {
-			if (NULL != szShortNamesExArray[i]) {
-				free(szShortNamesExArray[i]);
-				szShortNamesExArray[i] = NULL;
-			}
-			if (NULL != szLongNamesExArray[i]) {
-				free(szLongNamesExArray[i]);
-				szLongNamesExArray[i] = NULL;
-			}
+			free_s((void**)&szShortNamesExArray[i]);
+			free_s((void**)&szLongNamesExArray[i]);
 		}
 	}
-	if (NULL != szShortNamesExArray) {
-		free(szShortNamesExArray);
-		szShortNamesExArray = NULL;
-	}
-	if (NULL != szLongNamesExArray) {
-		free(szLongNamesExArray);
-		szLongNamesExArray = NULL;
-	}
-
-	nCodePage = CP_ACP;
+	free_s((void**)&szShortNamesExArray);
+	free_s((void**)&szLongNamesExArray);
 }
 
 // ----------------------------------------------------------------------------
 // Dialog box to load/save a template
 
-static TCHAR szFilter[100];
-
+// Initialize OPENFILENAME structure for game localization file save dialog
 static void MakeOfn()
 {
-	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
-	memcpy(szFilter + _tcslen(szFilter), _T(" (*.glt)\0*.glt\0\0"), 16 * sizeof(TCHAR));
+	// Filter buffer for OPENFILENAME. Must be static/global to stay valid for the dialog.
+	static TCHAR szFilter[256];
+	_sntprintf(szFilter, ARRAY_SIZE(szFilter), _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_FILTER, true));
+	szFilter[ARRAY_SIZE(szFilter) - 1] = _T('\0');
 
-	memset(&ofn, 0, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = hScrnWnd;
-	ofn.lpstrFilter = szFilter;
-	ofn.lpstrFile = szGamelistLocalisationTemplate;
-	ofn.nMaxFile = sizeof(szGamelistLocalisationTemplate) / sizeof(TCHAR);
+	// Locate end of the current string
+	TCHAR* pEnd = szFilter + _tcslen(szFilter);
+	size_t remainingChars = ARRAY_SIZE(szFilter) - _tcslen(szFilter);
+
+	// Filter suffix format: " (*.glt)\0*.glt\0\0" (required by Windows)
+	const TCHAR szFilterSuffix[] = _T(" (*.glt)\0*.glt\0");
+
+	// Safely append filter pattern with proper double null terminator
+	size_t suffixLength = ARRAY_SIZE(szFilterSuffix);
+	if (remainingChars > suffixLength)
+		memcpy(pEnd, szFilterSuffix, suffixLength * sizeof(TCHAR));
+
+	// Initialize OPENFILENAME structure
+	memset(&ofn, 0, sizeof(OPENFILENAME));
+	ofn.lStructSize     = sizeof(OPENFILENAME);
+	ofn.hwndOwner       = hScrnWnd;
+	ofn.lpstrFilter     = szFilter;
+	ofn.lpstrFile       = szGamelistLocalisationTemplate;
+	ofn.nMaxFile        = ARRAY_SIZE(szGamelistLocalisationTemplate);
 	ofn.lpstrInitialDir = _T(".\\config\\localisation");
-	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = _T("glt");
-
-	return;
+	ofn.Flags           = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+	ofn.lpstrDefExt     = _T("glt");
 }
 
-int FBALocaliseGamelistLoadTemplate()
+// Load game list translation template file
+INT32 FBALocaliseGamelistLoadTemplate()
 {
-	_stprintf(szGamelistLocalisationTemplate, _T("template"));
+	// Safely set default file name (GCC compatible, no unsafe functions)
+	_sntprintf(szGamelistLocalisationTemplate, ARRAY_SIZE(szGamelistLocalisationTemplate), _T("template"));
+	szGamelistLocalisationTemplate[ARRAY_SIZE(szGamelistLocalisationTemplate) - 1] = _T('\0');
+
+	// Initialize OPENFILENAME structure
 	MakeOfn();
-	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
+
+	// STATIC buffer for dialog title (must stay valid during dialog lifetime)
+	static TCHAR szTitle[256];
+	_sntprintf(szTitle, ARRAY_SIZE(szTitle), _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_SELECT, true));
+	szTitle[ARRAY_SIZE(szTitle) - 1] = _T('\0');
+
 	ofn.lpstrTitle = szTitle;
+
+	// Enable overwrite prompt if needed
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
-	int bOldPause = bRunPause;
+	// Pause emulation during dialog operation
+	INT32 bOldPause = bRunPause;
 	bRunPause = 1;
-	int nRet = GetOpenFileName(&ofn);
+
+	// Open file dialog (correct for loading template)
+	INT32 nRet = GetOpenFileName(&ofn);
+
+	// Restore emulation state
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	// Return if user cancelled the dialog
+	if (0 == nRet)
 		return 1;
-	}
 
+	// Activate game list localization and reload
 	nGamelistLocalisationActive = true;
 	BurnerDoGameListLocalisation();
 
 	return 0;
 }
 
-int FBALocaliseGamelistCreateTemplate()
+// Create game list translation template file
+INT32 FBALocaliseGamelistCreateTemplate()
 {
-	_stprintf(szGamelistLocalisationTemplate, _T("template"));
+	// Safe filename initialization (TCHAR compatible, no overflow)
+	_sntprintf(szGamelistLocalisationTemplate, ARRAY_SIZE(szGamelistLocalisationTemplate), _T("template"));
+	szGamelistLocalisationTemplate[ARRAY_SIZE(szGamelistLocalisationTemplate) - 1] = _T('\0');
+
+	// Initialize OPENFILENAME structure
 	MakeOfn();
-	TCHAR szTitle[100];
-	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_CREATE, true));
+
+	// STATIC buffer: safe for system dialog (no dangling pointer)
+	static TCHAR szTitle[256];
+	_sntprintf(szTitle, ARRAY_SIZE(szTitle), _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_GL_CREATE, true));
+	szTitle[ARRAY_SIZE(szTitle) - 1] = _T('\0');
+
 	ofn.lpstrTitle = szTitle;
+
+	// Enable overwrite prompt
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
-	int bOldPause = bRunPause;
+	// Pause emulation during dialog
+	INT32 bOldPause = bRunPause;
 	bRunPause = 1;
-	int nRet = GetSaveFileName(&ofn);
+
+	// Show save file dialog (CORRECT for creating template)
+	INT32 nRet = GetSaveFileName(&ofn);
+
+	// Restore emulation state
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	// Canceled by user
+	if (0 == nRet)
 		return 1;
-	}
 
+	// Create the actual template file
 	BurnerGameListCreateTemplate();
 
 	return 0;

@@ -794,7 +794,6 @@ static int AppInit()
 
 	// Load config for the application
 	ConfigAppLoad();
-	LookupSubDirThreads();
 
 #if defined (FBNEO_DEBUG)
 	OpenDebugLog();
@@ -893,10 +892,9 @@ static int AppExit()
 
 	DrvExit();						// Make sure any game driver is exitted
 	FreeROMInfo();
-	DestroySubDir();
 	MediaExit();
-	BurnLibExit();					// Exit the Burn library
 	RomDataExit();					// Exit the ROM data system
+	BurnLibExit();					// Exit the Burn library
 
 	DisableHighResolutionTiming();
 

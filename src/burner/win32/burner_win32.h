@@ -51,6 +51,7 @@ INT32 Dx9Core_Init();
 #include "resource_string.h"
 #include "net.h"
 #include "zip.h" // unzip*() in sel.cpp
+#include <chd.h>
 
 // ---------------------------------------------------------------------------
 
@@ -576,6 +577,26 @@ INT32 CheckFavorites(char *name);
 // luaconsole.cpp
 extern HWND LuaConsoleHWnd;
 void UpdateLuaConsole(const wchar_t* fname);
+
+// cd_img.cpp
+
+// CHD extended metadata structure
+// Stores additional info parsed from CHD metadata tags
+struct CHD_EXT_META {
+	TCHAR szSerial[64];			// SERIAL: Game serial number
+	TCHAR szName[128];			// NAME: Game title
+	TCHAR szPublisher[128];		// PUBLISHER: Publisher name
+	TCHAR szManufacturer[128];	// MANUFACTURER: Manufacturer name
+	TCHAR szOemId[64];			// OEMID: OEM identifier
+	TCHAR szVersion[32];		// VERSION: Version info
+	TCHAR szLanguages[64];		// LANGUAGES: Supported languages
+	TCHAR szYear[32];			// YEAR: Release year
+	INT32 nTrackCount;			// Total track number in CHD
+	bool  bValid;				// Flag: true if metadata parsed successfully
+};
+
+// Parse extended metadata from opened CHD file
+INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta);
 
 // ---------------------------------------------------------------------------
 // Debugger

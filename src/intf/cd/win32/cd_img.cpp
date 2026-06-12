@@ -6,6 +6,7 @@
 // exposed to upper layers as 2352-byte raw mode-1 sectors.
 
 #include "burner.h"
+#include "burnint.h"
 #include "chd.h"
 #include <stdlib.h>
 #include <string.h>
@@ -133,8 +134,7 @@ static INT32 dinkMSFToLBA(const UINT8* address)
 
 static void cdimgExitStream()
 {
-	free(cdimgOutputbuffer);
-	cdimgOutputbuffer = NULL;
+	free_s((void**)&cdimgOutputbuffer);
 }
 
 static INT32 cdimgInitStream()
@@ -237,8 +237,7 @@ static INT32 cdimgParseSubFile()
 
 	INT32 subQidx   = 0;
 	UINT32 subQsize = ftell(h);
-	UINT8 *subQdata = (UINT8*)malloc(subQsize);
-	memset(subQdata, 0, subQsize);
+	UINT8 *subQdata = (UINT8*)calloc(subQsize, sizeof(UINT8));
 
 	//bprintf(0, _T("raw .sub data size: %d\n"), subQsize);
 	fseek(h, 0, SEEK_SET);
@@ -246,8 +245,7 @@ static INT32 cdimgParseSubFile()
 	fclose(h);
 
 	Qsize = (subQsize + 95) / 96 * sizeof(QData);
-	Q = QChannel = (QData*)malloc(Qsize);
-	memset(Q, 0, Qsize);
+	Q = QChannel = (QData*)calloc(Qsize, sizeof(QData));
 
 	INT32 track_linear = 1;
 
@@ -282,7 +280,7 @@ static INT32 cdimgParseSubFile()
 
 	cdimgTOC->LastTrack = track;
 
-	free(subQdata);
+	free_s((void**)&subQdata);
 
 	cd_pregap = QChannel[0].MSFabs.F + QChannel[0].MSFabs.S * CD_FRAMES_SECOND + QChannel[0].MSFabs.M * CD_FRAMES_MINUTE;
 	//bprintf(0, _T("pregap lba: %d MSF: %d:%d:%d\n"), cd_pregap, QChannel[0].MSFabs.M, QChannel[0].MSFabs.S, QChannel[0].MSFabs.F);
@@ -456,19 +454,14 @@ static INT32 cdimgExit()
 		chd_close(cdimgChdFile);
 	cdimgChdFile = NULL;
 
-	if (cdimgChdHunkBuf)
-		free(cdimgChdHunkBuf);
-	cdimgChdHunkBuf = NULL;
+	free_s((void**)&cdimgChdHunkBuf);
 	cdimgChdCurHunk = -1;
 
 	cdimgTrack = 0;
-	cdimgLBA = 0;
+	cdimgLBA   = 0;
 
-	if (cdimgTOC)
-		free(cdimgTOC);
-	cdimgTOC = NULL;
-
-	free(QChannel);
+	free_s((void**)&cdimgTOC);
+	free_s((void**)&QChannel);
 	QChannel = NULL;
 
 	return 0;
@@ -497,7 +490,7 @@ static INT32 cdimgChdReadSector(INT32 sector, UINT8* dest)
 
 	// One-slot hunk cache: decompress on miss, reuse on hit.
 	if (cdimgChdCurHunk != hunk) {
-		chd_error err = chd_read(cdimgChdFile, (uint32_t)hunk, cdimgChdHunkBuf);
+		chd_error err = chd_read(cdimgChdFile, (UINT32)hunk, cdimgChdHunkBuf);
 		if (err != CHDERR_NONE)
 			return 1;
 		cdimgChdCurHunk = hunk;
@@ -582,6 +575,107 @@ static INT32 chd_meta_get_postgap(const char* meta)
 	return atoi(p + 7);
 }
 
+// Parse key-value string, convert multi-byte to wide char and write to target buffer
+// src		Source multi-byte string buffer
+// key		Target key (e.g. "SERIAL:", "NAME:")
+// dst		Destination TCHAR buffer
+// dstMax	Max valid length of destination buffer (ARRAY_SIZE(buf) - 1)
+static void ParseChdMetaStr(const char* src, const char* key, TCHAR* dst, size_t dstMax)
+{
+	// Guard: null pointer check
+	if (IsStrEmptyA(src) || IsStrEmptyA(key) || !dst) {
+		if (dst) dst[0] = _T('\0');
+		return;
+	}
+
+	const char* pKey = strstr(src, key);
+	if (IsStrEmptyA(pKey)) {
+		dst[0] = _T('\0');
+		return;
+	}
+
+	// Skip key prefix
+	const char* pVal = pKey + strlen(key);
+	// Trim leading spaces
+	while (*pVal == ' ' && *pVal != '\0')
+		pVal++;
+
+	// Convert UTF-8 multi-byte to wide char
+	MultiByteToWideChar(CP_UTF8, 0, pVal, -1, dst, (INT32)dstMax);
+	// Force string terminator
+	dst[dstMax] = _T('\0');
+}
+
+// Parse extended metadata from opened CHD file
+// CDROM_TRACK_METADATA2 first, fallback to CDROM_TRACK_METADATA
+// pChdFile  Valid opened chd_file handle
+// pOutMeta  Output structure to store parsed metadata
+// return 0 on success, non-zero on failure
+INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta)
+{
+	if (!pChdFile || !pOutMeta)
+		return 1;
+
+	// Clear entire structure and initialize status
+	memset(pOutMeta, 0, sizeof(CHD_EXT_META));
+
+	char metaBuf[256] = { 0 };
+	const size_t metaBufMax = ARRAY_SIZE(metaBuf) - 1;
+	UINT32 metaLen    = 0;
+	UINT8 metaFlags   = 0;
+	chd_error err;
+	INT32 trackIdx    = 0;
+	const char* pPos  = NULL;
+
+	// Pre-calculate buffer max length (calculate once, reuse everywhere)
+	const size_t serialMax = ARRAY_SIZE(pOutMeta->szSerial)       - 1;
+	const size_t nameMax   = ARRAY_SIZE(pOutMeta->szName)         - 1;
+	const size_t pubMax    = ARRAY_SIZE(pOutMeta->szPublisher)    - 1;
+	const size_t manuMax   = ARRAY_SIZE(pOutMeta->szManufacturer) - 1;
+	const size_t oemMax    = ARRAY_SIZE(pOutMeta->szOemId)        - 1;
+	const size_t verMax    = ARRAY_SIZE(pOutMeta->szVersion)      - 1;
+	const size_t langMax   = ARRAY_SIZE(pOutMeta->szLanguages)    - 1;
+	const size_t yearMax   = ARRAY_SIZE(pOutMeta->szYear)         - 1;
+
+	// Traverse all track metadata (max 99 tracks for standard CD)
+	for (trackIdx = 0; trackIdx < 99; trackIdx++) {
+		metaBuf[0] = '\0';
+		metaLen = 0;
+
+		// Try V2 metadata tag first
+		err = chd_get_metadata(pChdFile, CDROM_TRACK_METADATA2_TAG, trackIdx,
+			metaBuf, (UINT32)metaBufMax, &metaLen, NULL, &metaFlags);
+		if (err != CHDERR_NONE || metaLen == 0) {
+			// Fallback to V1 metadata tag
+			err = chd_get_metadata(pChdFile, CDROM_TRACK_METADATA_TAG, trackIdx,
+				metaBuf, (UINT32)metaBufMax, &metaLen, NULL, &metaFlags);
+			if (err != CHDERR_NONE || metaLen == 0)
+				break;
+		}
+
+		// Ensure string terminator
+		metaBuf[metaLen] = '\0';
+		pOutMeta->nTrackCount++;
+		pPos = metaBuf;
+
+		// Parse all metadata fields via universal helper function
+		ParseChdMetaStr(pPos, "NAME:",         pOutMeta->szName,         nameMax);
+		ParseChdMetaStr(pPos, "SERIAL:",       pOutMeta->szSerial,       serialMax);
+		ParseChdMetaStr(pPos, "PUBLISHER:",    pOutMeta->szPublisher,    pubMax);
+		ParseChdMetaStr(pPos, "MANUFACTURER:", pOutMeta->szManufacturer, manuMax);
+		ParseChdMetaStr(pPos, "OEMID:",        pOutMeta->szOemId,        oemMax);
+		ParseChdMetaStr(pPos, "VERSION:",      pOutMeta->szVersion,      verMax);
+		ParseChdMetaStr(pPos, "LANGUAGES:",    pOutMeta->szLanguages,    langMax);
+		ParseChdMetaStr(pPos, "YEAR:",         pOutMeta->szYear,         yearMax);
+	}
+
+	// Mark parse result as valid if at least one track metadata exists
+	if (pOutMeta->nTrackCount > 0)
+		pOutMeta->bValid = true;
+
+	return 0;
+}
+
 static INT32 cdimgParseChdFile()
 {
 	char szPath[MAX_PATH];
@@ -636,7 +730,7 @@ static INT32 cdimgParseChdFile()
 	// Parse CHD metadata to build the CD TOC, mirroring the approach
 	// used by neocd_libretro.  Try V2 metadata first, fall back to V1.
 	// ----------------------------------------------------------------
-	char meta_buf[256];
+	char   meta_buf[256];
 	UINT32 meta_resultlen = 0;
 	UINT8  meta_flags     = 0;
 	INT32  total_sectors  = 0;
@@ -766,11 +860,9 @@ static INT32 cdimgInit()
 {
 	re_sync = 0;
 
-	cdimgTOC = (cdimgCDROM_TOC*)malloc(sizeof(cdimgCDROM_TOC));
+	cdimgTOC = (cdimgCDROM_TOC*)calloc(1, sizeof(cdimgCDROM_TOC));
 	if (!cdimgTOC)
 		return 1;
-
-	memset(cdimgTOC, 0, sizeof(cdimgCDROM_TOC));
 
 	cdimgTOC->ImageType = CD_TYPE_NONE;
 
@@ -858,7 +950,7 @@ static INT32 cdimgInit()
 		}
 	}
 
-	free(buf);
+	free_s((void**)&buf);
 	//CDEmuPrintCDName();
 
 	return 0;

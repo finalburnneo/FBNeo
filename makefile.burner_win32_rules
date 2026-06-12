@@ -1,4 +1,4 @@
-alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libspng dep/libs/lib7z dep/libs/zlib intf intf/video \
+alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libspng dep/libs/lib7z dep/libs/zlib dep/libs/lzma dep/libs/zstd intf intf/video \
 			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 \
 			intf/perfcount intf/perfcount/win32 dep/generated dep/libs/lua dep/libs/zip
 

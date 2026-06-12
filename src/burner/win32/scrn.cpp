@@ -1215,9 +1215,9 @@ static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 	}
 
 	const TCHAR* pszExt = _tcsrchr(pszSelCue, _T('.'));
-	if (NULL == pszExt || (0 != _tcsicmp(_T(".cue"), pszExt))) {
+	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)))) {
 		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD: %s\n\n"), pszSelCue);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .chd"));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
 	}
@@ -1564,8 +1564,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					break;
 
 				case 3:
-					pszFilter = _T(" (*.cue)\0*.cue\0\0");
+					pszFilter = _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0");
 					nStringID = IDS_DISK_FILE_NEOGEOCD;
+					nStrLen   = 28;
 					break;
 
 				case 4:
@@ -1641,10 +1642,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_CDIMAGE: {
 			nCDEmuSelect = 0;
-			TCHAR szFilter[100];
+			TCHAR szFilter[100] = { 0 };
 			_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
-			memcpy(szFilter + _tcslen(szFilter), _T(" (*.ccd,*.cue)\0*.ccd;*.cue\0\0"), 28 * sizeof(TCHAR));
-			TCHAR szTitle[100];
+			memcpy(szFilter + _tcslen(szFilter), _T(" (*.ccd,*.cue,*.chd)\0*.ccd;*.cue;*.chd\0\0"), 39 * sizeof(TCHAR));
+			TCHAR szTitle[100] = { 0 };
 			_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
 			if (UseDialogs() && !bDrvOkay) {
 				memset(&ofn, 0, sizeof(ofn));

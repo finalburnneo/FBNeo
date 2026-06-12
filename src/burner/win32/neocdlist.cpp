@@ -3,10 +3,11 @@
 // ---------------------------------------------------------------------------------------
 #include "burner.h"
 #include "neocdlist.h"
+#include "chd.h"
 
 #define DEBUG_CD    0
 
-const int nSectorLength = 2352;
+const INT32 nSectorLength = 2352;
 
 NGCDGAME* game;
 
@@ -174,9 +175,9 @@ struct NGCDGAME games[] =
 
 static char szVolumeID[64];
 
-NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
+NGCDGAME* GetNeoGeoCDInfo(UINT32 nID)
 {
-	for(unsigned int nGame = 0; nGame < (sizeof(games) / sizeof(NGCDGAME)); nGame++) {
+	for(UINT32 nGame = 0; nGame < (sizeof(games) / sizeof(NGCDGAME)); nGame++) {
 		if(nID == games[nGame].id ) {
 			return &games[nGame];
 		}
@@ -204,7 +205,7 @@ void NeoCDInfo_SetTitle()
 }
 
 // Get the title
-int GetNeoCDTitle(unsigned int nGameID)
+INT32 GetNeoCDTitle(UINT32 nGameID)
 {
 	game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
 	memset(game, 0, sizeof(NGCDGAME));
@@ -229,7 +230,7 @@ int GetNeoCDTitle(unsigned int nGameID)
 	return 0;
 }
 
-void iso9660_ReadOffset(UINT8 *Dest, FILE* fp, unsigned int lOffset, unsigned int lSize, unsigned int lLength)
+void iso9660_ReadOffset(UINT8 *Dest, FILE* fp, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {
 	if (fp == NULL || Dest == NULL) return;
 
@@ -237,15 +238,71 @@ void iso9660_ReadOffset(UINT8 *Dest, FILE* fp, unsigned int lOffset, unsigned in
 	fread(Dest, lLength, lSize, fp);
 }
 
-static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHAR*), TCHAR *pszFile, FILE* fp, int nSector)
+static void iso9660_ReadOffset_CHD(UINT8 *Dest, chd_file* chd, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {
-	unsigned int	lBytesRead			= 0;
-	unsigned int	lOffset				= 0;
-	bool	bNewSector			= false;
-	bool	bRevisionQueve		= false;
-	int		nRevisionQueveID	= 0;
+	// Preconditions (enforced by callers — NeoCDList_CheckISO opens and
+	// validates the CHD before invoking any read helper here):
+	//   chd != NULL, chd_get_header(chd) returns a valid header,
+	//   Dest points to a writable buffer of at least lSize * lLength bytes.
+	if (!Dest) return;
 
-	bool    bGotDDPRG_ACM = false;
+	const chd_header* header = chd_get_header(chd);
+	UINT32 hunkbytes = header->hunkbytes;
+
+	// Determine actual bytes per sector in the CHD. We need to know this
+	// because lOffset counts bytes in a 2352-byte-sector layout; the CHD
+	// may add sub-channel data on top (pushing sector bytes to 2448).
+	UINT32 chd_bytes_per_sector;
+	if (     hunkbytes == 2448 * 8)
+		chd_bytes_per_sector = 2448;
+	else if (hunkbytes == 2352 * 8)
+		chd_bytes_per_sector = 2352;
+	else
+		chd_bytes_per_sector = 2352;
+
+	// Translate byte offset to (sector + sub-sector offset) in the raw image.
+	UINT32 sector_num = lOffset / nSectorLength;
+	UINT32 offset_in_sector = lOffset % nSectorLength;
+
+	// +16 to skip sync (12 bytes) + header (4 bytes) of a raw mode-1 sector.
+	UINT32 raw_byte_position = sector_num * chd_bytes_per_sector + offset_in_sector + 16;
+
+	UINT32 hunk = raw_byte_position / hunkbytes;
+	UINT32 hunk_offset = raw_byte_position % hunkbytes;
+
+	// A single static hunk cache: reuse the last decompressed hunk for
+	// sequential reads — the overwhelmingly common access pattern.
+	static UINT8* sector_buf = NULL;
+	static UINT32 current_hunk = (UINT32)-1;
+	static UINT32 sector_buf_size = 0;
+
+	if (!sector_buf || sector_buf_size != hunkbytes) {
+		free(sector_buf);
+		sector_buf = (UINT8*)malloc(hunkbytes);
+		sector_buf_size = hunkbytes;
+		current_hunk = (UINT32)-1;
+	}
+	if (!sector_buf) return;
+	if (current_hunk != hunk) {
+		chd_error err = chd_read(chd, hunk, sector_buf);
+		if (err != CHDERR_NONE) { memset(Dest, 0, lSize * lLength); return; }
+		current_hunk = hunk;
+	}
+	UINT32 avail = hunkbytes - hunk_offset;
+	UINT32 to_read = lSize * lLength;
+	if (to_read > avail) to_read = avail;
+	memcpy(Dest, sector_buf + hunk_offset, to_read);
+}
+
+static void NeoCDList_iso9660_CheckDirRecordCHD(void (*pfEntryCallBack)(INT32, TCHAR*), TCHAR *pszFile, chd_file* chd, INT32 nSector)
+{
+	UINT32 lBytesRead       = 0;
+	UINT32 lOffset          = 0;
+	bool   bNewSector       = false;
+	bool   bRevisionQueve   = false;
+	INT32  nRevisionQueveID = 0;
+
+	bool   bGotDDPRG_ACM    = false;
 
 	lOffset = (nSector * nSectorLength);
 
@@ -253,11 +310,247 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 	UINT8 Flags;
 	UINT8 LEN_FI;
 	UINT8* ExtentLoc = (UINT8*)malloc(8 + 64 + 32);
-	UINT8* Data = (UINT8*)malloc(0x10b + 32);
-	char *File = (char*)malloc(32 + 32);
+	UINT8* Data      = (UINT8*)malloc(0x10b + 32);
+	char *File       = (char* )malloc(32 + 32);
 
-	while(1)
-	{
+	while(1) {
+		iso9660_ReadOffset_CHD(&nLenDR, chd, lOffset, 1, sizeof(UINT8));
+
+		if(nLenDR == 0x22) {
+			lOffset		+= nLenDR;
+			lBytesRead	+= nLenDR;
+			continue;
+		}
+
+		if(nLenDR < 0x22) {
+			if(bNewSector) {
+				if(bRevisionQueve) {
+					bRevisionQueve = false;
+					pfEntryCallBack(nRevisionQueveID, pszFile);
+				}
+				return;
+			}
+
+			nLenDR = 0;
+			iso9660_ReadOffset_CHD(&nLenDR, chd, lOffset + 1, 1, sizeof(UINT8));
+
+			if(nLenDR < 0x22) {
+				lOffset += (nSectorLength - lBytesRead);
+				lBytesRead = 0;
+				bNewSector = true;
+				continue;
+			}
+		}
+
+		bNewSector = false;
+
+		iso9660_ReadOffset_CHD(&Flags, chd, lOffset + 25, 1, sizeof(UINT8));
+
+		if(!(Flags & (1 << 1))) {
+			iso9660_ReadOffset_CHD(ExtentLoc, chd, lOffset + 2, 54, sizeof(UINT8));
+
+			char szFname[64];
+			UINT8 nDate[3] = { 0, 0, 0 };
+			memset(szFname, 0, sizeof(szFname));
+			INT32 fname_len = (ExtentLoc[30] < 32) ? ExtentLoc[30] : 32;
+			strncpy(szFname, (char*)&ExtentLoc[31], fname_len);
+
+			if (!strcmp(szFname, "DDPRG.ACM")) bGotDDPRG_ACM = true;
+
+			if (fname_len == 0) break;
+
+			nDate[0] = ExtentLoc[16];
+			nDate[1] = ExtentLoc[17];
+			nDate[2] = ExtentLoc[18];
+#if DEBUG_CD
+			bprintf(0, _T("Checking File  [%S]  %d-%d-%d\n"), szFname, nDate[0],nDate[1],nDate[2]);
+#endif
+			char szValue[32];
+			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
+
+			UINT32 nValue = 0;
+			sscanf(szValue, "%x", &nValue);
+
+			iso9660_ReadOffset_CHD(Data, chd, nValue * nSectorLength, 0x10a, sizeof(UINT8));
+
+			char szData[32];
+			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
+
+			if(!strncmp(szData, "NEO-GEO", 7)) {
+				char id[32];
+				sprintf(id, "%02X%02X",  Data[0x108], Data[0x109]);
+
+				UINT32 nID = 0;
+				sscanf(id, "%x", &nID);
+#if DEBUG_CD
+				bprintf(0, _T("----- ID:  %x\n"), nID);
+#endif
+				iso9660_ReadOffset_CHD(&LEN_FI, chd, lOffset + 32, 1, sizeof(UINT8));
+
+				iso9660_ReadOffset_CHD((UINT8*)File, chd, lOffset + 33, LEN_FI, sizeof(UINT8));
+				File[LEN_FI] = 0;
+
+				if (nID == 0x0016 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0025 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0076 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0062 && nDate[0]==94 && nDate[1]==12 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0059 && nDate[0]==95 && nDate[1]==6 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0066 && nDate[0] == 125 && nDate[1] == 4 && nDate[2] == 10) {
+					nID |= 0x1200;
+				}
+
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==4 && nDate[2]==29) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==6 && nDate[2]==1) {
+					nID |= 0x2000;
+				}
+
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==7 && nDate[2]==10) {
+					nID |= 0x3000;
+				}
+
+				if (nID == 0x0090 && nDate[0]==95 && nDate[1]==7 && nDate[2]==21) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0058 && nDate[0]==94 && nDate[1]==10 && nDate[2]==14) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0085) {
+					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29) {
+						nID |= 0x1000;
+					}
+					else
+					if (nDate[0] == 124 && nDate[1] ==  1 && nDate[2] == 26) {
+						nID |= 0x3000;
+					}
+					else
+					if (nDate[0] == 125 && nDate[1] ==  3 && nDate[2] ==  6) {
+						nID |= 0x4000;
+					}
+					else {};
+				}
+
+				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14) {
+					nID = 0x7778;
+				}
+
+				if (nID == 0x0082 && bGotDDPRG_ACM) {
+					nID |= 0x1000;
+				}
+
+				if (nID == 0x0082 && wcsstr(pszFile, _T("OST"))) {
+					nID |= 0x2000;
+				}
+
+				if (nID == 0x2019 && !strcmp(szVolumeID, "LOOPTRSP")) {
+					nID |= 0x0100;
+				}
+
+				if (nID == 0x0085 && wcsstr(pszFile, _T("(FR)"))) {
+					nID |= 0x2000;
+				}
+
+				if(nID == 0x0048 && Data[0x67] == 0x08) {
+					nID |= 0x1000;
+				}
+
+				if(nID == 0x0055 && Data[0x67] == 0xDE) {
+					// ...continue
+				}
+
+				if(nID == 0x0055 && Data[0x67] == 0xE6) {
+					nID |= 0x1000;
+				}
+
+				if(nID == 0x0084 && Data[0x6C] == 0xC0) {
+					// ... continue
+				}
+
+				if(nID == 0x0084 && Data[0x6C] == 0xFF) {
+					nID |= 0x1000;
+				}
+
+				if(nID == 0x0229) {
+					bRevisionQueve = false;
+
+					pfEntryCallBack(nID, pszFile);
+					break;
+				}
+
+				if (nID == 0x0214
+					|| (nID == 0x0058 && !(nDate[0]==94 && nDate[1]==8 && nDate[2]==5)) )
+					{
+					bRevisionQueve		= true;
+					nRevisionQueveID	= nID;
+					lOffset		+= nLenDR;
+					lBytesRead	+= nLenDR;
+					continue;
+				}
+
+				pfEntryCallBack(nID, pszFile);
+				break;
+			}
+		}
+
+		lOffset		+= nLenDR;
+		lBytesRead	+= nLenDR;
+	}
+
+	if (ExtentLoc) {
+		free(ExtentLoc);
+		ExtentLoc = NULL;
+	}
+
+	if (Data) {
+		free(Data);
+		Data = NULL;
+	}
+
+	if (File) {
+		free(File);
+		File = NULL;
+	}
+}
+
+static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHAR*), TCHAR *pszFile, FILE* fp, INT32 nSector)
+{
+	UINT32 lBytesRead       = 0;
+	UINT32 lOffset          = 0;
+	bool   bNewSector       = false;
+	bool   bRevisionQueve   = false;
+	INT32  nRevisionQueveID = 0;
+
+	bool   bGotDDPRG_ACM    = false;
+
+	lOffset = (nSector * nSectorLength);
+
+	UINT8 nLenDR;
+	UINT8 Flags;
+	UINT8 LEN_FI;
+	UINT8* ExtentLoc = (UINT8*)malloc(8 + 64 + 32);
+	UINT8* Data      = (UINT8*)malloc(0x10b + 32);
+	char *File       = (char* )malloc(32 + 32);
+
+	while(1) {
 		iso9660_ReadOffset(&nLenDR, fp, lOffset, 1, sizeof(UINT8));
 
 		if(nLenDR == 0x22) {
@@ -266,10 +559,8 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 			continue;
 		}
 
-		if(nLenDR < 0x22)
-		{
-			if(bNewSector)
-			{
+		if(nLenDR < 0x22) {
+			if(bNewSector) {
 				if(bRevisionQueve) {
 					bRevisionQueve = false;
 					pfEntryCallBack(nRevisionQueveID, pszFile);
@@ -292,8 +583,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 
 		iso9660_ReadOffset(&Flags, fp, lOffset + 25, 1, sizeof(UINT8));
 
-		if(!(Flags & (1 << 1)))
-		{
+		if(!(Flags & (1 << 1))) {
 			// each file entry record(struct) is 54 bytes
 			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 54, sizeof(UINT8));
 
@@ -301,7 +591,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 			char szFname[64];
 			UINT8 nDate[3] = { 0, 0, 0 };
 			memset(szFname, 0, sizeof(szFname));
-			int fname_len = (ExtentLoc[30] < 32) ? ExtentLoc[30] : 32;
+			INT32 fname_len = (ExtentLoc[30] < 32) ? ExtentLoc[30] : 32;
 			strncpy(szFname, (char*)&ExtentLoc[31], fname_len);
 
 			// detecting doubledr rev 1
@@ -319,7 +609,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 			char szValue[32];
 			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
 
-			unsigned int nValue = 0;
+			UINT32 nValue = 0;
 			sscanf(szValue, "%x", &nValue);
 
 			iso9660_ReadOffset(Data, fp, nValue * nSectorLength, 0x10a, sizeof(UINT8));
@@ -327,12 +617,11 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 			char szData[32];
 			sprintf(szData, "%c%c%c%c%c%c%c", Data[0x100], Data[0x101], Data[0x102], Data[0x103], Data[0x104], Data[0x105], Data[0x106]);
 
-			if(!strncmp(szData, "NEO-GEO", 7))
-			{
+			if(!strncmp(szData, "NEO-GEO", 7)) {
 				char id[32];
 				sprintf(id, "%02X%02X",  Data[0x108], Data[0x109]);
 
-				unsigned int nID = 0;
+				UINT32 nID = 0;
 				sscanf(id, "%x", &nID);
 #if DEBUG_CD
 				bprintf(0, _T("----- ID:  %x\n"), nID);
@@ -522,7 +811,7 @@ static void NeoCDList_Callback(INT32 nID, TCHAR *pszFile)
 
 
 // Check the specified ISO, and proceed accordingly
-int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
+INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 {
 	if(!pszFile) {
 		// error
@@ -530,24 +819,21 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if (IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin")))
-	{
+	if (IsFileExt(pszFile, _T(".img")) || IsFileExt(pszFile, _T(".bin"))) {
 		FILE* fp = _tfopen(pszFile, _T("rb"));
-		if(fp)
-		{
+		if(fp) {
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
 			// it just read each sector first 264 bytes aproximately only.
 
 			// Get ISO Size (bytes)
 			fseek(fp, 0, SEEK_END);
-			unsigned int lSize = 0;
+			UINT32 lSize = 0;
 			lSize = ftell(fp);
 			fseek(fp, 0, SEEK_SET);
 
 			// If it has at least 16 sectors proceed
-			if(lSize > (nSectorLength * 16))
-			{
+			if(lSize > (nSectorLength * 16)) {
 				// Check for Standard ISO9660 Identifier
 				UINT8 IsoCheck[64];
 				memset(IsoCheck, 0, sizeof(IsoCheck));
@@ -557,11 +843,10 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 				iso9660_ReadOffset(&IsoCheck[0], fp, nSectorLength * 16 + 1, 1, sizeof(IsoCheck));//5); // get Standard Identifier Field from PVD
 
 				// Verify that we have indeed a valid ISO9660 MODE1/2352
-				if(!memcmp(IsoCheck, "CD001", 5))
-				{
+				if(!memcmp(IsoCheck, "CD001", 5)) {
 					// copy out volume ID & trim ending whitespace
 					strncpy(szVolumeID, (char*)&IsoCheck[39], 24);
-					int l = strlen(szVolumeID);
+					INT32 l = strlen(szVolumeID);
 					while (l > 0 && szVolumeID[l - 1] == ' ') szVolumeID[l - 1] = '\0', l--;
 #if DEBUG_CD
 					bprintf(0, _T("VolumeID is [%S]\n"), szVolumeID);
@@ -575,8 +860,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 					iso9660_ReadOffset((UINT8*)&vdh, fp, 16 * nSectorLength, 1, sizeof(vdh));
 
 					// Check for a valid Volume Descriptor Type
-					if(vdh.vdtype == 0x01)
-					{
+					if(vdh.vdtype == 0x01) {
 #if 0
 // This will fail on 64-bit due to differing variable sizes in the pvd struct
 						// Get Primary Volume Descriptor
@@ -589,7 +873,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 
 						// Handle Path Table Location
 						char szRootSector[32];
-						unsigned int nRootSector = 0;
+						UINT32 nRootSector = 0;
 
 						sprintf(szRootSector, "%02X%02X%02X%02X",
 							pvd.root_directory_record.location_of_extent[4],
@@ -603,7 +887,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 // Just read from the file directly at the correct offset (SECTOR_SIZE * 16 + 0x9e for the start of the root directory record)
 						UINT8 buffer[32];
 						char szRootSector[32];
-						unsigned int nRootSector = 0;
+						UINT32 nRootSector = 0;
 
 						iso9660_ReadOffset(&buffer[0], fp, nSectorLength * 16 + 0x9e, 1, 8);
 
@@ -632,6 +916,66 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 
 		if(fp) fclose(fp);
 
+	} else if (IsFileExt(pszFile, _T(".chd"))) {
+		// CHD compressed CD image - read through the CHD API
+		char szPath[MAX_PATH];
+		wcstombs(szPath, pszFile, MAX_PATH - 1);
+		szPath[MAX_PATH - 1] = '\0';
+
+		chd_file* chd = NULL;
+		chd_error err = chd_open(szPath, CHD_OPEN_READ, NULL, &chd);
+		if (err != CHDERR_NONE) {
+			return 0;
+		}
+
+		const chd_header* header = chd_get_header(chd);
+		if (!header || header->totalhunks == 0) {
+			chd_close(chd);
+			return 0;
+		}
+
+		// Check if we have at least 16 sectors worth of data
+		UINT32 sectors_per_hunk = header->hunkbytes / nSectorLength;
+		if (sectors_per_hunk == 0 || header->totalhunks * sectors_per_hunk <= 16) {
+			chd_close(chd);
+			return 0;
+		}
+
+		// Check for Standard ISO9660 Identifier (same as .img/.bin path)
+		UINT8 IsoCheck[64];
+		memset(IsoCheck, 0, sizeof(IsoCheck));
+		memset(szVolumeID, 0, sizeof(szVolumeID));
+
+		// advance to sector 16 and PVD Field 2
+		iso9660_ReadOffset_CHD(&IsoCheck[0], chd, nSectorLength * 16 + 1, 1, sizeof(IsoCheck));
+
+		// Verify that we have indeed a valid ISO9660 MODE1/2352
+		if (!memcmp(IsoCheck, "CD001", 5)) {
+			// copy out volume ID & trim ending whitespace
+			strncpy(szVolumeID, (char*)&IsoCheck[39], 24);
+			INT32 l = strlen(szVolumeID);
+			while (l > 0 && szVolumeID[l - 1] == ' ') szVolumeID[l - 1] = '\0', l--;
+#if DEBUG_CD
+			bprintf(0, _T("VolumeID is [%S]\n"), szVolumeID);
+#endif
+			// Read root directory record location
+			UINT8 buffer[32];
+			char szRootSector[32];
+			UINT32 nRootSector = 0;
+
+			iso9660_ReadOffset_CHD(&buffer[0], chd, nSectorLength * 16 + 0x9e, 1, 8);
+
+			sprintf(szRootSector, "%02x%02x%02x%02x", buffer[4], buffer[5], buffer[6], buffer[7]);
+			sscanf(szRootSector, "%x", &nRootSector);
+
+			// Process the Root Directory Records
+			NeoCDList_iso9660_CheckDirRecordCHD(pfEntryCallBack, pszFile, chd, nRootSector);
+		} else {
+			chd_close(chd);
+			return 0;
+		}
+
+		chd_close(chd);
 	} else {
 
 		//bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .iso / .ISO ] \n"));
@@ -642,18 +986,16 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 }
 
 // This will do everything
-int GetNeoGeoCD_Identifier()
+INT32 GetNeoGeoCD_Identifier()
 {
 	if(!GetIsoPath() || !IsNeoGeoCD()) {
 		return 0;
 	}
 
 	// Make sure we have a valid ISO file extension...
-	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin")))
-	{
+	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin"))) {
 		FILE *fp = _tfopen(GetIsoPath(), _T("rb"));
-		if(fp)
-		{
+		if(fp) {
 			fclose(fp);
 			bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
 			// Read ISO and look for 68K ROM standard program header, ID is always there
@@ -667,6 +1009,9 @@ int GetNeoGeoCD_Identifier()
 			return 0;
 		}
 
+	} else if (IsFileExt(GetIsoPath(), _T(".chd"))) {
+		bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
+		NeoCDList_CheckISO(GetIsoPath(), NeoCDList_Callback);
 	} else {
 
 		bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .img / .bin ] \n"));
@@ -676,18 +1021,17 @@ int GetNeoGeoCD_Identifier()
 	return 1;
 }
 
-int NeoCDInfo_Init()
+INT32 NeoCDInfo_Init()
 {
 	NeoCDInfo_Exit();
 	return GetNeoGeoCD_Identifier();
 }
 
-TCHAR* NeoCDInfo_Text(int nText)
+TCHAR* NeoCDInfo_Text(INT32 nText)
 {
 	if(!game || !IsNeoGeoCD()) return NULL;
 
-	switch(nText)
-	{
+	switch(nText) {
 		case DRV_NAME:			return game->pszName;
 		case DRV_FULLNAME:		return game->pszTitle;
 		case DRV_MANUFACTURER:	return game->pszCompany;
@@ -697,7 +1041,7 @@ TCHAR* NeoCDInfo_Text(int nText)
 	return NULL;
 }
 
-int NeoCDInfo_ID()
+INT32 NeoCDInfo_ID()
 {
 	if(!game || !IsNeoGeoCD()) return 0;
 	return game->id;

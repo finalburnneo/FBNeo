@@ -279,6 +279,13 @@ static void NeoCDList_ScanDir_Internal(HWND hList, TCHAR* pszDirectory)
 
 					NeoCDList_CheckISO(szISO, NeoCDSel_Callback);
 				}
+				else if (IsFileExt(ffdDirectory.cFileName, _T(".chd")))
+				{
+					// Found CHD file
+					TCHAR szFile[512] = _T("\0");
+					_stprintf(szFile, _T("%s%s"), pszDirectory, ffdDirectory.cFileName);
+					NeoCDSel_Callback(-1, szFile);
+				}
 			}
 		} while (FindNextFile(hDirectory, &ffdDirectory));
 	}

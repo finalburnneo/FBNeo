@@ -38783,7 +38783,7 @@ struct BurnDriver BurnDrvmd_cascade = {
 
 // Castlevania: Circle of the Moon (HB, Demo)
 static struct BurnRomInfo md_cvaniacotmRomDesc[] = {
-	{ "Castlevania: Circle of the Moon (Demo) (2026)(Andor).bin", 3932160, 0x6d9ece0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Castlevania - Circle of the Moon (Demo) (2026)(Andor).bin", 3932160, 0x6d9ece0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cvaniacotm)

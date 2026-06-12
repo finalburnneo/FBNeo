@@ -11990,6 +11990,24 @@ struct BurnDriver BurnDrvcv_tankmission = {
     272, 228, 4, 3
 };
 
+// Taz (HB, v0.97f)
+static struct BurnRomInfo cv_tazRomDesc[] = {
+	{ "Taz v0.97f (2026)(Electric Dreams).rom",	32768, 0xaf106afb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_taz, cv_taz, cv_coleco)
+STD_ROM_FN(cv_taz)
+
+struct BurnDriver BurnDrvcv_taz = {
+	"cv_taz", NULL, "cv_coleco", NULL, "2026",
+	"Taz (HB, v0.97f)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_tazRomInfo, cv_tazRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Telebunny (HB)
 static struct BurnRomInfo cv_telebunnyRomDesc[] = {
     { "Telebunny (2014)(CollectorVision).rom",	0x08000, 0x26e2a8ec, BRF_PRG | BRF_ESS },

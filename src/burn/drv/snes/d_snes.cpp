@@ -47478,6 +47478,24 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	512, 448, 4, 3
 };
 
+// Super Guitar - Rock the SNES! (HB)
+static struct BurnRomInfo snes_SuperguitarRomDesc[] = {
+	{ "Super Guitar - Rock the SNES! (2026)(RheoGamer).sfc", 262144, 0xe4b3c892, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superguitar)
+STD_ROM_FN(snes_Superguitar)
+
+struct BurnDriver BurnDrvsnes_Superguitar = {
+	"snes_superguitar", NULL, NULL, NULL, "2026",
+	"Super Guitar - Rock the SNES! (HB)\0", NULL, "RheoGamer", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_SuperguitarRomInfo, snes_SuperguitarRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Ghouls'n Ghosts Enhanced (Hack)
 // https://www.romhacking.net/hacks/9480/
 static struct BurnRomInfo snes_SupergngenhRomDesc[] = {

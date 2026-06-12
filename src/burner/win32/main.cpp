@@ -1211,7 +1211,8 @@ int ProcessCmdLine()
 		}
 	}
 
-	if (_tcsicmp(&szName[_tcslen(szName) - 4], _T(".cue")) == 0) {
+	if ((_tcsicmp(&szName[_tcslen(szName) - 4], _T(".cue")) == 0) ||
+		(_tcsicmp(&szName[_tcslen(szName) - 4], _T(".chd")) == 0)) {
 		// Neogeo CD Handling
 		_tcscpy(CDEmuImage, szName);
 		_tcscpy(szName, _T("neocdz"));

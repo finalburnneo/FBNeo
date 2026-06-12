@@ -10,10 +10,9 @@
 
 #ifdef INCLUDE_FLACMP3_SUPPORT
 
-#ifndef DR_FLAC_IMPLEMENTATION
-#define DR_FLAC_IMPLEMENTATION
+// dr_flac implementation is now in dep/libs/libchdr/libchdr_flac.c
+// Only include header here (no DR_FLAC_IMPLEMENTATION)
 #include "dr_flac.h"
-#endif
 
 #ifndef DR_MP3_IMPLEMENTATION
 #define DR_MP3_IMPLEMENTATION

@@ -38998,17 +38998,17 @@ struct BurnDriver BurnDrvmd_chipsch = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Citadel of Chaos, The (HB, v2.23)
+// Citadel of Chaos, The (HB, v3.0)
 static struct BurnRomInfo md_citadelRomDesc[] = {
-	{ "Citadel of Chaos, The v2.23 (2021)(Studio Vetea).bin", 3809298, 0xfac49e30, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Citadel of Chaos, The v3.0 (2021-25)(Studio Vetea).bin", 4095552, 0xaef2ea1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_citadel)
 STD_ROM_FN(md_citadel)
 
 struct BurnDriver BurnDrvmd_citadel = {
-	"md_citadel", NULL, NULL, NULL, "2021",
-	"Citadel of Chaos, The (HB, v2.23)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
+	"md_citadel", NULL, NULL, NULL, "2021-25",
+	"Citadel of Chaos, The (HB, v3.0)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_citadelRomInfo, md_citadelRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -3736,6 +3736,54 @@
     <ClCompile Include="..\..\src\dep\libs\zip\zip.c">
       <Filter>libs\zip</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_bitstream.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_cdrom.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_chd.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_cdfl.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_cdlz.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_cdzl.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_cdzs.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_flac.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_huff.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_lzma.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_zlib.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_codec_zstd.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_flac.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_huffman.c">
+      <Filter>libs\libchdr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\zstd\zstddeclib.c">
+      <Filter>libs\zstd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lzma\src\libchdr_lzma.c">
+      <Filter>libs\lzma</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
@@ -4022,6 +4070,18 @@
     </Filter>
     <Filter Include="libs\zip">
       <UniqueIdentifier>{f2b6c5f4-1682-4590-965b-cbc71fb3d78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\libchdr">
+      <UniqueIdentifier>{B084F0D2-9E05-488F-959B-D6189CE63224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\lzma">
+      <UniqueIdentifier>{2b9d8e3c-5f7a-4e2d-9a1e-8f7b3c2d1e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\libchdr\deps\miniz-3.1.1">
+      <UniqueIdentifier>{BE634BC7-AB73-4858-B0AA-CAF4C0ADFB88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\zstd">
+      <UniqueIdentifier>{3c0e9f4d-6a8b-4f3c-8b2f-9c8c4d3e3a11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

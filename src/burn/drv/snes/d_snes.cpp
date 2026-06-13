@@ -30074,6 +30074,25 @@ struct BurnDriver BurnDrvsnes_Rushbeat = {
 	512, 448, 4, 3
 };
 
+// Rushing Beat (Hack, English)
+// https://www.romhacking.net/translations/2739/
+static struct BurnRomInfo snes_RushbeatteRomDesc[] = {
+	{ "Rushing Beat T-Eng (2016)(FlashPV).sfc", 1048576, 0xe50381bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rushbeatte)
+STD_ROM_FN(snes_Rushbeatte)
+
+struct BurnDriver BurnDrvsnes_Rushbeatte = {
+	"snes_rushbeatte", "snes_rivalturf", NULL, NULL, "2016",
+	"Rushing Beat (Hack, English)\0", NULL, "FlashPV", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_RushbeatteRomInfo, snes_RushbeatteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Rushing Beat Ran: Fukusei Toshi (Japan)
 
 static struct BurnRomInfo snes_RushbeatranRomDesc[] = {
@@ -30112,21 +30131,21 @@ struct BurnDriver BurnDrvsnes_Rushbeatshura = {
 	512, 448, 4, 3
 };
 
-// Rushing Beat (Hack, English)
-// https://www.romhacking.net/translations/2739/
-static struct BurnRomInfo snes_RushbeatteRomDesc[] = {
-	{ "Rushing Beat T-Eng (2016)(FlashPV).sfc", 1048576, 0xe50381bf, BRF_ESS | BRF_PRG },
+// Rushing Beat Shura: The Eternal Conflict (Hack, English v1.2)
+// https://www.romhacking.net/translations/7596/
+static struct BurnRomInfo snes_RushbeatshurateRomDesc[] = {
+	{ "Rushing Beat Shura - The Eternal Conflict T-Eng v1.2 (2026)(DackR).sfc", 4194304, 0x634eda5c, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Rushbeatte)
-STD_ROM_FN(snes_Rushbeatte)
+STD_ROM_PICK(snes_Rushbeatshurate)
+STD_ROM_FN(snes_Rushbeatshurate)
 
-struct BurnDriver BurnDrvsnes_Rushbeatte = {
-	"snes_rushbeatte", "snes_rivalturf", NULL, NULL, "2016",
-	"Rushing Beat (Hack, English)\0", NULL, "FlashPV", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Rushbeatshurate = {
+	"snes_rushbeatshurate", "snes_peacekeepers", NULL, NULL, "2026",
+	"Rushing Beat Shura: The Eternal Conflict (Hack, English v1.2)\0", NULL, "DackR", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
-	SNESGetZipName, snes_RushbeatteRomInfo, snes_RushbeatteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_RushbeatshurateRomInfo, snes_RushbeatshurateRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -47474,6 +47493,24 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Supercastlevania4uhRomInfo, snes_Supercastlevania4uhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Guitar - Rock the SNES! (HB)
+static struct BurnRomInfo snes_SuperguitarRomDesc[] = {
+	{ "Super Guitar - Rock the SNES! (2026)(RheoGamer).sfc", 262144, 0xe4b3c892, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superguitar)
+STD_ROM_FN(snes_Superguitar)
+
+struct BurnDriver BurnDrvsnes_Superguitar = {
+	"snes_superguitar", NULL, NULL, NULL, "2026",
+	"Super Guitar - Rock the SNES! (HB)\0", NULL, "RheoGamer", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_MISC, 0,
+	SNESGetZipName, snes_SuperguitarRomInfo, snes_SuperguitarRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

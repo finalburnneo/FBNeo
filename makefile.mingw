@@ -396,6 +396,9 @@ endif
 # For zlib
 DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
 
+# For libchdr
+DEF := $(DEF) -DCHDR_SYSTEM_ZLIB
+
 # For lib7z
 ifdef INCLUDE_7Z_SUPPORT
 DEF := $(DEF) -D_7ZIP_PPMD_SUPPPORT -D_7ZIP_ST
@@ -494,7 +497,7 @@ else
 	@$(LD) -m32 -r -nostdlib -o $@ $^
 endif
 
-$(NAME).exe:	$(allobj) $(objdir)/drivers.o
+$(NAME).exe:	$(allobj) $(objdir)/drivers.o $(depobj)
 	@echo
 	@echo Linking executable... $(NAME).exe
 	@$(LD) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
@@ -746,6 +749,10 @@ ifeq ($(MAKELEVEL),1)
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/src/libchdr_lzma.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 %.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
@@ -757,6 +764,10 @@ else
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.o:	%.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/src/libchdr_lzma.c
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 

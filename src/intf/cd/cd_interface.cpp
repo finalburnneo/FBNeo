@@ -50,6 +50,10 @@ INT32 CDEmuInit()
 {
 	INT32 nRet;
 
+	// Always use cdimgDo (index 0) backend - it handles all formats:
+	// .cue/.bin, .ccd/.img/.sub, and .chd files
+	nCDEmuSelect = 0;
+
 	if (nCDEmuSelect >= CDEMU_LEN) {
 		return 1;
 	}

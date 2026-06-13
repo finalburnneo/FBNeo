@@ -156,8 +156,28 @@ struct BurnHDDInfo {
 };
 
 // ---------------------------------------------------------------------------
-
 // Rom Data
+
+// Safe free function: frees memory and sets pointer to NULL to prevent dangling pointers
+static inline void free_s(void** p)
+{
+	if (p && *p) {
+		free(*p);
+		*p = NULL;
+	}
+}
+
+// Check if a TCHAR string is null or empty
+static inline bool IsStrEmpty(const TCHAR* s)
+{
+	return (!s || _T('\0') == *s);
+}
+
+// ANSI version of IsStrEmpty
+static inline bool IsStrEmptyA(const char* s)
+{
+	return (!s || '\0' == *s);
+}
 
 struct RomDataInfo {
 	char szZipName[MAX_PATH];

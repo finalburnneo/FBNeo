@@ -7,14 +7,22 @@
 #define __MACTYPES__
 #endif
 #ifdef CHDR_SYSTEM_ZLIB
+#ifdef _MSC_VER
+// Some MSVC users reported missing header files. This is a compromise solution.
+#include "zlib.h"
+#else
 #include <zlib.h>
+#endif // _MSC_VER
 typedef uInt zlib_alloc_size;
 #else
-// miniz 已移除，libchdr 在 CHDR_SYSTEM_ZLIB 模式下使用系统 zlib
+// miniz 3.1.1 removed (already included in project); libchdr uses system zlib under CHDR_SYSTEM_ZLIB mode
+// Keep it for form only, do not remove it entirely
+#include "../zip/miniz.h"
 typedef uint32_t zlib_alloc_size;
 #endif
 
 #include "include/chd.h"
+
 
 /* codec-private data for the ZLIB codec */
 #define MAX_ZLIB_ALLOCS				64

@@ -43016,6 +43016,25 @@ struct BurnDriver BurnDrvmd_xenocrisis = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Xevious (HB, alpha-0.02)
+// https://sirvh.itch.io/xevious-genesis
+static struct BurnRomInfo md_xeviousRomDesc[] = {
+	{ "Xevious alpha-0.02 (2026)(SirVH).bin", 1048576, 0xc18f33f2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_xevious)
+STD_ROM_FN(md_xevious)
+
+struct BurnDriver BurnDrvmd_xevious = {
+	"md_xevious", NULL, NULL, NULL, "2026",
+	"Xevious (HB, alpha-0.02)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_xeviousRomInfo, md_xeviousRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Xiaomei and the Flame Dragon's Fist (HB, Japan)
 static struct BurnRomInfo md_xiaomeiRomDesc[] = {
 	{ "Xiaomei and the Flame Dragon's Fist (J)(2023)(Pixel Co.).bin", 4194304, 0xd7dd3791, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

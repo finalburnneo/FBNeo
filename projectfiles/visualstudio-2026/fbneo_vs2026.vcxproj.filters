@@ -3790,6 +3790,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_segag80r.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_littlerb.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -4076,9 +4079,6 @@
     </Filter>
     <Filter Include="libs\lzma">
       <UniqueIdentifier>{2b9d8e3c-5f7a-4e2d-9a1e-8f7b3c2d1e22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libs\libchdr\deps\miniz-3.1.1">
-      <UniqueIdentifier>{BE634BC7-AB73-4858-B0AA-CAF4C0ADFB88}</UniqueIdentifier>
     </Filter>
     <Filter Include="libs\zstd">
       <UniqueIdentifier>{3c0e9f4d-6a8b-4f3c-8b2f-9c8c4d3e3a11}</UniqueIdentifier>

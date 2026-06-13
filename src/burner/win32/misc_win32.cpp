@@ -85,13 +85,7 @@ void UpdatePath(TCHAR* path)
 		TCHAR curdir[MAX_PATH] = _T("");
 		int curlen = 0;
 
-		// avoid popup if location is on unmounted drive
-		DWORD pdwOldMode = 0;
-		SetThreadErrorMode(SEM_FAILCRITICALERRORS, &pdwOldMode);
-
 		attrib = GetFileAttributes(path);
-
-		SetThreadErrorMode(pdwOldMode, NULL);
 
 		if (attrib != INVALID_FILE_ATTRIBUTES && (attrib & FILE_ATTRIBUTE_DIRECTORY) && path[pathlen - 1] != _T('\\')) {
 			path[pathlen] = _T('\\');

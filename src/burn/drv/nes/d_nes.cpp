@@ -16706,6 +16706,25 @@ struct BurnDriver BurnDrvnes_citytrouble = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Clash of Courts (HB, v1.0.2)
+// https://kn56k.itch.io/clash-of-courts
+static struct BurnRomInfo nes_clashcourtsRomDesc[] = {
+	{ "Clash of Courts v1.0.2 (2026)(kn56k).nes",          524304, 0x9a914504, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_clashcourts)
+STD_ROM_FN(nes_clashcourts)
+
+struct BurnDriver BurnDrvnes_clashcourts = {
+	"nes_clashcourts", NULL, NULL, NULL, "2026",
+	"Clash of Courts (HB, v1.0.2)\0", NULL, "kn56k", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 6, HARDWARE_NES, GBF_PLATFORM | GBF_ACTION, 0,
+	NESGetZipName, nes_clashcourtsRomInfo, nes_clashcourtsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // CMC 80's Demo (HB, Tech-Demo)
 static struct BurnRomInfo nes_cmc80sdemoRomDesc[] = {
 	{ "CMC 80's Demo (2000)(Chris Covell).nes",          49168, 0x0135b0e8, BRF_ESS | BRF_PRG },

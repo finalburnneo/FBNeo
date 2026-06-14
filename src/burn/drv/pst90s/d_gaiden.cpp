@@ -1762,12 +1762,10 @@ struct BurnDriver BurnDrvRyukendn = {
 
 
 // Ninja Ryukenden (Japan, set 2)
-// Dumped from an original Tecmo board. Board No. 6215-A. Serial A-59488.
 
 static struct BurnRomInfo ryukendnaRomDesc[] = {
 	{ "1.3s",  		    0x20000, 0x5532e302, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	//	{ "1.3s",  		    0x20000, 0x5532e302, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	//	 2 bytes different ( 022a : 50 instead of 51, 12f9 : 6b instead of 6a) - possible bad rom
+	
 	{ "2.4s",  		    0x20000, 0xa93a8256, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "3.4b",   		0x10000, 0x6b686b69, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
@@ -1805,6 +1803,55 @@ struct BurnDriver BurnDrvRyukendna = {
 	L"\u5FCD\u8005 \u9F8D\u5263\u4F1D (Japan, set 2)\0Ninja Ryukenden\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ryukendnaRomInfo, ryukendnaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	256, 224, 4, 3
+};
+
+
+// Ninja Ryukenden (Japan, set 3)
+// Dumped from an original Tecmo board. Board No. 6215-A. Serial A-59488.
+
+static struct BurnRomInfo ryukendnbRomDesc[] = {
+	// 2 bytes different ( 022a : 50 instead of 51, 12f9 : 6b instead of 6a)
+	{ "1.3s",  		    0x20000, 0x0ed5464c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	
+	{ "2.4s",  		    0x20000, 0xa93a8256, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "3.4b",   		0x10000, 0x6b686b69, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "hn27512p.7a",   	0x10000, 0x765e7baa, 3 | BRF_GRA },           //  3 Characters
+
+	{ "14.3a",       	0x20000, 0x1ecfddaa, 4 | BRF_GRA },           //  4 Foreground Tiles
+	{ "15.3b",       	0x20000, 0x1291a696, 4 | BRF_GRA },           //  5
+	{ "16.1a",       	0x20000, 0x140b47ca, 4 | BRF_GRA },           //  6
+	{ "17.1b",       	0x20000, 0x7638cccb, 4 | BRF_GRA },           //  7
+
+	{ "18.6a",          0x20000, 0x3fadafd6, 5 | BRF_GRA },           //  8 Background Tiles
+	{ "19.6b",       	0x20000, 0xddae9d5b, 5 | BRF_GRA },           //  9
+	{ "20.4b",       	0x20000, 0x08cf7a93, 5 | BRF_GRA },           // 10
+	{ "21.4b",       	0x20000, 0x1ac892f5, 5 | BRF_GRA },           // 11
+
+	{ "6.3m",         	0x20000, 0xe7ccdf9f, 6 | BRF_GRA },           // 12 Sprites
+	{ "8.3n",         	0x20000, 0x7ef7f880, 6 | BRF_GRA },           // 13
+	{ "10.3r",        	0x20000, 0xa6451dec, 6 | BRF_GRA },           // 14
+	{ "12.3s", 			0x20000, 0x277204f0, 6 | BRF_GRA },           // 15
+	{ "7.1m",         	0x20000, 0x016bec95, 6 | BRF_GRA },           // 16
+	{ "9.1n",         	0x20000, 0x6e9b7fd3, 6 | BRF_GRA },           // 17
+	{ "11.1r",        	0x20000, 0x7fbfdf5e, 6 | BRF_GRA },           // 18
+	{ "13.1s", 			0x20000, 0x4e56a508, 6 | BRF_GRA },           // 19
+
+	{ "4.4a",     		0x20000, 0xb0e0faf9, 7 | BRF_SND },           // 20 MSM6295 Samples
+};
+
+STD_ROM_PICK(ryukendnb)
+STD_ROM_FN(ryukendnb)
+
+struct BurnDriver BurnDrvRyukendnb = {
+	"ryukendnb", "shadoww", NULL, NULL, "1989",
+	"Ninja Ryukenden (Japan, set 3)\0", NULL, "Tecmo", "Miscellaneous",
+	L"\u5FCD\u8005 \u9F8D\u5263\u4F1D (Japan, set 3)\0Ninja Ryukenden\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, ryukendnbRomInfo, ryukendnbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, GaidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

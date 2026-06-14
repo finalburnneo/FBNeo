@@ -1,4 +1,6 @@
+// Burner cheat-file loader
 #include "burner.h"
+#include "neocdlist.h"
 
 // GameGenie stuff is handled a little differently..
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
@@ -1051,12 +1053,20 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 INT32 ConfigCheatLoad()
 {
 	TCHAR szFilename[MAX_PATH] = _T("");
+	TCHAR szDrvName[MAX_PATH] = _T("");
+
+	if (NeoCDInfo_ID()) {
+		_stprintf(szDrvName, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
+	} else {
+		_stprintf(szDrvName, _T("%s"), BurnDrvGetText(DRV_NAME));
+	}
+	bprintf(0, _T("Cheat engine, game name: %s\n"), szDrvName);
 
 	pCurrentCheat = NULL;
 	pPreviousCheat = NULL;
 
 	if (HW_NES) { // only for NES/FC!
-		_stprintf(szFilename, _T("%s%s.vct"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+		_stprintf(szFilename, _T("%s%s.vct"), szAppCheatsPath, szDrvName);
 		ConfigParseVCT(szFilename);
 	} // keep loading & adding stuff even if .vct file loads.
 
@@ -1065,11 +1075,11 @@ INT32 ConfigCheatLoad()
 	ConfigParseMAMEFile(1 /* wayder */);
 
 	// ini-style file
-	_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+	_stprintf(szFilename, _T("%s%s.ini"), szAppCheatsPath, szDrvName);
 	ConfigParseFile(szFilename);
 
 	// nebula-format .dat file
-	_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_NAME));
+	_stprintf(szFilename, _T("%s%s.dat"), szAppCheatsPath, szDrvName);
 	ConfigParseNebulaFile(szFilename);
 
 	if (pCheatInfo) {

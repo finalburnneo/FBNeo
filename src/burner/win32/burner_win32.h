@@ -580,23 +580,25 @@ void UpdateLuaConsole(const wchar_t* fname);
 
 // cd_img.cpp
 
-// CHD extended metadata structure
-// Stores additional info parsed from CHD metadata tags
+// Extended metadata container for CHD disk image
+// Stores parsed key-value tag information extracted from CHD track metadata
+// All text fields are dynamically allocated heap pointers, must be released by FreeChdExtMeta()
 struct CHD_EXT_META {
-	TCHAR szSerial[64];			// SERIAL: Game serial number
-	TCHAR szName[128];			// NAME: Game title
-	TCHAR szPublisher[128];		// PUBLISHER: Publisher name
-	TCHAR szManufacturer[128];	// MANUFACTURER: Manufacturer name
-	TCHAR szOemId[64];			// OEMID: OEM identifier
-	TCHAR szVersion[32];		// VERSION: Version info
-	TCHAR szLanguages[64];		// LANGUAGES: Supported languages
-	TCHAR szYear[32];			// YEAR: Release year
-	INT32 nTrackCount;			// Total track number in CHD
-	bool  bValid;				// Flag: true if metadata parsed successfully
+	TCHAR* szSerial;			// SERIAL tag: unique game serial number, heap allocated
+	TCHAR* szName;			    // NAME tag: full game title, heap allocated
+	TCHAR* szPublisher;		    // PUBLISHER tag: game publisher name, heap allocated
+	TCHAR* szManufacturer;	    // MANUFACTURER tag: hardware manufacturer, heap allocated
+	TCHAR* szOemId;			    // OEMID tag: OEM identification string, heap allocated
+	TCHAR* szVersion;		    // VERSION tag: game revision / build version, heap allocated
+	TCHAR* szLanguages;		    // LANGUAGES tag: supported language list, heap allocated
+	TCHAR* szYear;			    // YEAR tag: official release year, heap allocated
+	INT32 nTrackCount;			// Total physical tracks contained inside CHD image
+	bool  bValid;				// Validity flag; TRUE if metadata parsing succeeded
 };
 
 // Parse extended metadata from opened CHD file
-INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta);
+INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META** ppOutMeta);
+void FreeChdExtMeta(CHD_EXT_META* pMeta);
 
 // ---------------------------------------------------------------------------
 // Debugger

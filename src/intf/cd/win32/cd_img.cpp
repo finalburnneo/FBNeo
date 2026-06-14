@@ -30,18 +30,19 @@ struct cdimgCDROM_TOC { UINT8 FirstTrack; UINT8 LastTrack; UINT8 ImageType; TCHA
 
 static cdimgCDROM_TOC* cdimgTOC;
 
-static FILE*  cdimgFile = NULL;
+static FILE*  cdimgFile  = NULL;
+static FILE*  cdimgChdFp = NULL;
 static chd_file* cdimgChdFile = NULL;
 static UINT32 cdimgChdBytesPerSector = 0;  // bytes per CD sector in CHD (2352 or 2448)
 static UINT32 cdimgChdSectorsPerHunk = 0;  // number of CD sectors per hunk
 static UINT8* cdimgChdHunkBuf = NULL;      // cached hunk buffer
 static INT32  cdimgChdCurHunk = -1;        // currently cached hunk, -1 = none
 static INT32  cdimgTrack = 0;
-static INT32  cdimgLBA = 0;
+static INT32  cdimgLBA   = 0;
 
-static INT32    cdimgSamples = 0;
+static INT32  cdimgSamples = 0;
 
-static INT32    re_sync = 0;
+static INT32  re_sync = 0;
 
 // identical to the format used in clonecd .sub files, can use memcpy
 struct QData { UINT8 Control; char track; char index; MSF MSFrel; char unused; MSF MSFabs; UINT16 CRC; };
@@ -454,6 +455,10 @@ static INT32 cdimgExit()
 		chd_close(cdimgChdFile);
 	cdimgChdFile = NULL;
 
+	if (cdimgChdFp)
+		fclose(cdimgChdFp);
+	cdimgChdFp = NULL;
+
 	free_s((void**)&cdimgChdHunkBuf);
 	cdimgChdCurHunk = -1;
 
@@ -468,7 +473,7 @@ static INT32 cdimgExit()
 }
 
 // ---------------------------------------------------------------------------
-// Low-level CHD sector decompressor.  Uses libchdr (chd_open / chd_read /
+// Low-level CHD sector decompressor.  Uses libchdr (chd_open_file / chd_read /
 // chd_close / chd_get_header) to translate a CHD-relative sector index into
 // a 2352-byte raw mode-1 sector.  The caller is responsible for translating
 // system LBAs to CHD-relative sector offsets.
@@ -575,49 +580,113 @@ static INT32 chd_meta_get_postgap(const char* meta)
 	return atoi(p + 7);
 }
 
-// Parse key-value string, convert multi-byte to wide char and write to target buffer
-// src		Source multi-byte string buffer
-// key		Target key (e.g. "SERIAL:", "NAME:")
-// dst		Destination TCHAR buffer
-// dstMax	Max valid length of destination buffer (ARRAY_SIZE(buf) - 1)
-static void ParseChdMetaStr(const char* src, const char* key, TCHAR* dst, size_t dstMax)
+// TCHAR safe string duplicate (ANSI / Unicode auto-adaptive)
+// Allocates heap memory and copies source TCHAR string safely
+// pSrc Pointer to source TCHAR string
+// return Pointer to newly allocated heap string; returns NULL if pSrc is NULL or malloc failed
+// note Uses _tcsncpy to prevent buffer overflow, manually appends string terminator _T('\0')
+// Allocated memory must be released by free() or free_s()
+static TCHAR* _tcsdup_s(const TCHAR* pSrc)
 {
-	// Guard: null pointer check
-	if (IsStrEmptyA(src) || IsStrEmptyA(key) || !dst) {
-		if (dst) dst[0] = _T('\0');
-		return;
-	}
+	if (IsStrEmpty(pSrc))
+		return NULL;
 
-	const char* pKey = strstr(src, key);
-	if (IsStrEmptyA(pKey)) {
-		dst[0] = _T('\0');
-		return;
-	}
+	size_t srcLen = _tcslen(pSrc);
+	size_t allocSize = (srcLen + 1) * sizeof(TCHAR);
+	TCHAR* pDst = (TCHAR*)malloc(allocSize);
 
-	// Skip key prefix
-	const char* pVal = pKey + strlen(key);
-	// Trim leading spaces
-	while (*pVal == ' ' && *pVal != '\0')
-		pVal++;
+	if (!pDst)
+		return NULL;
 
-	// Convert UTF-8 multi-byte to wide char
-	MultiByteToWideChar(CP_UTF8, 0, pVal, -1, dst, (INT32)dstMax);
-	// Force string terminator
-	dst[dstMax] = _T('\0');
+	_tcsncpy(pDst, pSrc, srcLen);
+	pDst[srcLen] = _T('\0');
+
+	return pDst;
 }
 
-// Parse extended metadata from opened CHD file
-// CDROM_TRACK_METADATA2 first, fallback to CDROM_TRACK_METADATA
-// pChdFile  Valid opened chd_file handle
-// pOutMeta  Output structure to store parsed metadata
-// return 0 on success, non-zero on failure
-INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta)
+// Release all dynamically allocated string members inside CHD_EXT_META
+// Set all pointers to NULL after deallocation, safe for repeated calls
+// pMeta Pointer to CHD_EXT_META structure to clean up
+void FreeChdExtMeta(CHD_EXT_META* pMeta)
 {
-	if (!pChdFile || !pOutMeta)
+	if (!pMeta)
+		return;
+
+	// Step1: free inner dynamic strings
+	free_s((void**)&pMeta->szSerial);
+	free_s((void**)&pMeta->szName);
+	free_s((void**)&pMeta->szPublisher);
+	free_s((void**)&pMeta->szManufacturer);
+	free_s((void**)&pMeta->szOemId);
+	free_s((void**)&pMeta->szVersion);
+	free_s((void**)&pMeta->szLanguages);
+	free_s((void**)&pMeta->szYear);
+
+	// Step2: free struct body itself
+	free(pMeta);
+}
+
+// Parse single key-value metadata pair from UTF-8 ANSI source buffer
+// Extract value substring after matched key, convert to wide TCHAR
+// Allocates heap memory via _tcsdup_s; caller must release returned pointer with free_s()
+// src ANSI source metadata buffer (UTF-8 encoded)
+// key Target lookup key prefix (e.g. "SERIAL:", "NAME:")
+// Valid heap TCHAR pointer if key found; returns NULL on missing key/empty value/conversion failure
+static TCHAR* ParseChdMetaStr(const char* src, const char* key)
+{
+	if (IsStrEmptyA(src) || IsStrEmptyA(key))
+		return NULL;
+
+	const char* pKey = strstr(src, key);
+	if (IsStrEmptyA(pKey))
+		return NULL;
+
+	// Skip matched key prefix
+	const char* pVal = pKey + strlen(key);
+	// Trim leading whitespace characters
+	while (*pVal == ' ' && *pVal != '\0')
+		pVal++;
+	if (*pVal == '\0')
+		return NULL;
+
+	// Query required wide char buffer size
+	int wcharLen = MultiByteToWideChar(CP_UTF8, 0, pVal, -1, NULL, 0);
+	if (wcharLen <= 0)
+		return NULL;
+
+	// Temporary stack buffer for conversion
+	TCHAR* pTmpBuf = (TCHAR*)alloca(wcharLen * sizeof(TCHAR));
+	if (!pTmpBuf)
+		return NULL;
+
+	// Actual UTF-8 to wide char conversion
+	MultiByteToWideChar(CP_UTF8, 0, pVal, -1, pTmpBuf, wcharLen);
+
+	// Heap duplicate and return
+	return _tcsdup_s(pTmpBuf);
+}
+
+// Allocate & build complete CHD extended metadata inside function
+// Entire CHD_EXT_META object is created on heap internally;
+// Pass back object address via double pointer output parameter
+// pChdFile Valid opened chd_file handle
+// ppOutMeta Double pointer to receive heap-allocated metadata object
+// return 0 = build success, non-zero = failure
+// note Caller must invoke FreeChdExtMetaFull() to release returned object,
+// otherwise memory leak occurs. If return code != 0, *ppOutMeta is guaranteed NULL.
+INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META** ppOutMeta)
+{
+	// Outer parameter validation
+	if (!pChdFile || !ppOutMeta)
 		return 1;
 
-	// Clear entire structure and initialize status
-	memset(pOutMeta, 0, sizeof(CHD_EXT_META));
+	// Reset output parameter to NULL
+	*ppOutMeta = NULL;
+
+	// 1. Internally allocate entire metadata structure on heap
+	CHD_EXT_META* pNewMeta = (CHD_EXT_META*)calloc(1, sizeof(CHD_EXT_META));
+	if (!pNewMeta)
+		return 2;
 
 	char metaBuf[256] = { 0 };
 	const size_t metaBufMax = ARRAY_SIZE(metaBuf) - 1;
@@ -625,74 +694,74 @@ INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta)
 	UINT8 metaFlags   = 0;
 	chd_error err;
 	INT32 trackIdx    = 0;
-	const char* pPos  = NULL;
 
-	// Pre-calculate buffer max length (calculate once, reuse everywhere)
-	const size_t serialMax = ARRAY_SIZE(pOutMeta->szSerial)       - 1;
-	const size_t nameMax   = ARRAY_SIZE(pOutMeta->szName)         - 1;
-	const size_t pubMax    = ARRAY_SIZE(pOutMeta->szPublisher)    - 1;
-	const size_t manuMax   = ARRAY_SIZE(pOutMeta->szManufacturer) - 1;
-	const size_t oemMax    = ARRAY_SIZE(pOutMeta->szOemId)        - 1;
-	const size_t verMax    = ARRAY_SIZE(pOutMeta->szVersion)      - 1;
-	const size_t langMax   = ARRAY_SIZE(pOutMeta->szLanguages)    - 1;
-	const size_t yearMax   = ARRAY_SIZE(pOutMeta->szYear)         - 1;
-
-	// Traverse all track metadata (max 99 tracks for standard CD)
+	// Traverse maximum 99 CD tracks
 	for (trackIdx = 0; trackIdx < 99; trackIdx++) {
 		metaBuf[0] = '\0';
-		metaLen = 0;
+		metaLen    = 0;
 
-		// Try V2 metadata tag first
 		err = chd_get_metadata(pChdFile, CDROM_TRACK_METADATA2_TAG, trackIdx,
 			metaBuf, (UINT32)metaBufMax, &metaLen, NULL, &metaFlags);
 		if (err != CHDERR_NONE || metaLen == 0) {
-			// Fallback to V1 metadata tag
 			err = chd_get_metadata(pChdFile, CDROM_TRACK_METADATA_TAG, trackIdx,
 				metaBuf, (UINT32)metaBufMax, &metaLen, NULL, &metaFlags);
 			if (err != CHDERR_NONE || metaLen == 0)
 				break;
 		}
 
-		// Ensure string terminator
 		metaBuf[metaLen] = '\0';
-		pOutMeta->nTrackCount++;
-		pPos = metaBuf;
+		pNewMeta->nTrackCount++;
 
-		// Parse all metadata fields via universal helper function
-		ParseChdMetaStr(pPos, "NAME:",         pOutMeta->szName,         nameMax);
-		ParseChdMetaStr(pPos, "SERIAL:",       pOutMeta->szSerial,       serialMax);
-		ParseChdMetaStr(pPos, "PUBLISHER:",    pOutMeta->szPublisher,    pubMax);
-		ParseChdMetaStr(pPos, "MANUFACTURER:", pOutMeta->szManufacturer, manuMax);
-		ParseChdMetaStr(pPos, "OEMID:",        pOutMeta->szOemId,        oemMax);
-		ParseChdMetaStr(pPos, "VERSION:",      pOutMeta->szVersion,      verMax);
-		ParseChdMetaStr(pPos, "LANGUAGES:",    pOutMeta->szLanguages,    langMax);
-		ParseChdMetaStr(pPos, "YEAR:",         pOutMeta->szYear,         yearMax);
+		// Fill fields only if pointer is still NULL, avoid overwriting valid data
+		if (!pNewMeta->szName)
+			pNewMeta->szName =         ParseChdMetaStr(metaBuf, "NAME:");
+		if (!pNewMeta->szSerial)
+			pNewMeta->szSerial =       ParseChdMetaStr(metaBuf, "SERIAL:");
+		if (!pNewMeta->szPublisher)
+			pNewMeta->szPublisher =    ParseChdMetaStr(metaBuf, "PUBLISHER:");
+		if (!pNewMeta->szManufacturer)
+			pNewMeta->szManufacturer = ParseChdMetaStr(metaBuf, "MANUFACTURER:");
+		if (!pNewMeta->szOemId)
+			pNewMeta->szOemId =        ParseChdMetaStr(metaBuf, "OEMID:");
+		if (!pNewMeta->szVersion)
+			pNewMeta->szVersion =      ParseChdMetaStr(metaBuf, "VERSION:");
+		if (!pNewMeta->szLanguages)
+			pNewMeta->szLanguages =    ParseChdMetaStr(metaBuf, "LANGUAGES:");
+		if (!pNewMeta->szYear)
+			pNewMeta->szYear =         ParseChdMetaStr(metaBuf, "YEAR:");
 	}
 
-	// Mark parse result as valid if at least one track metadata exists
-	if (pOutMeta->nTrackCount > 0)
-		pOutMeta->bValid = true;
+	if (pNewMeta->nTrackCount > 0)
+		pNewMeta->bValid = true;
 
+	// Success: pass new heap object address back to outer caller
+	*ppOutMeta = pNewMeta;
 	return 0;
 }
 
 static INT32 cdimgParseChdFile()
 {
-	char szPath[MAX_PATH];
-	wcstombs(szPath, CDEmuImage, MAX_PATH - 1);
-	szPath[MAX_PATH - 1] = '\0';
-
-	chd_error err = chd_open(szPath, CHD_OPEN_READ, NULL, &cdimgChdFile);
-	if (err != CHDERR_NONE) {
+	FILE* fp = _tfopen(CDEmuImage, _T("rb"));
+	if (!fp) {
 		dprintf(_T("*** Couldn't open .chd file\n"));
 		return 1;
 	}
+	chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &cdimgChdFile);
+	if (err != CHDERR_NONE) {
+		dprintf(_T("*** Couldn't open .chd file\n"));
+		fclose(fp);
+		return 1;
+	}
+	cdimgChdFp = fp;
 
 	const chd_header* header = chd_get_header(cdimgChdFile);
 	if (!header) {
 		dprintf(_T("*** Couldn't read CHD header\n"));
 		chd_close(cdimgChdFile);
 		cdimgChdFile = NULL;
+		if (cdimgChdFp)
+			fclose(cdimgChdFp);
+		cdimgChdFp = NULL;
 		return 1;
 	}
 
@@ -722,6 +791,10 @@ static INT32 cdimgParseChdFile()
 		dprintf(_T("*** Out of memory for CHD hunk buffer\n"));
 		chd_close(cdimgChdFile);
 		cdimgChdFile = NULL;
+		
+		if (cdimgChdFp)
+			fclose(cdimgChdFp);
+		cdimgChdFp = NULL;
 		return 1;
 	}
 	cdimgChdCurHunk = -1;

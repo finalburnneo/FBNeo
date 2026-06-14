@@ -7189,6 +7189,33 @@ static struct BurnRomInfo Galaxianbl3RomDesc[] = {
 STD_ROM_PICK(Galaxianbl3)
 STD_ROM_FN(Galaxianbl3)
 
+static struct BurnRomInfo GalaxianolyRomDesc[] = {
+	/* 10-50051 PCB
+
+	Dumper's notes:
+	Gameplay is identical to "Galaxian".
+	No game name in attract mode, "OLYMPIA" instead.
+	Slightly more difficult in the first 2 levels, no extra ship at 7000 (only from 10000 upward). */
+	{ "20.bin",   	   0x00400, 0x164b5c73, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "21.bin",   	   0x00400, 0xcad1e702, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "22.bin",        0x00400, 0x30e28016, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "23.bin",        0x00400, 0xde7e7770, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "24.bin",        0x00400, 0xa916c919, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "25.bin",        0x00400, 0x9175882b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "26.bin",        0x00400, 0x5af35f13, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "27.bin",        0x00400, 0x47f0d18a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "28.bin",        0x00400, 0x44b93d2e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "29.bin",        0x00400, 0xad127c30, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1h.bin",   	   0x00800, 0x724a2044, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1k.bin",   	   0x00800, 0x656000a7, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianoly)
+STD_ROM_FN(Galaxianoly)
+
 static struct BurnRomInfo Kamakazi3RomDesc[] = {
 	{ "f_r_a.bin",     0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "f_a.bin",       0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7616,6 +7643,16 @@ struct BurnDriver BurnDrvGalaxianbl3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Galaxianbl3RomInfo, Galaxianbl3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianoly = {
+	"galaxianoly", "galaxian", NULL, NULL, "1979",
+	"Galaxian (Olympia bootleg)\0", NULL, "bootleg (Olympia)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxianolyRomInfo, GalaxianolyRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianblDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

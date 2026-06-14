@@ -7,12 +7,7 @@
 #define __MACTYPES__
 #endif
 #ifdef CHDR_SYSTEM_ZLIB
-#ifdef _MSC_VER
-// Some MSVC users reported missing header files. This is a compromise solution.
-#include "zlib.h"
-#else
 #include <zlib.h>
-#endif // _MSC_VER
 typedef uInt zlib_alloc_size;
 #else
 // miniz 3.1.1 removed (already included in project); libchdr uses system zlib under CHDR_SYSTEM_ZLIB mode

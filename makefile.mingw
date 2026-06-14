@@ -749,7 +749,7 @@ ifeq ($(MAKELEVEL),1)
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
-$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/src/libchdr_lzma.c
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/libchdr_lzma.c
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -767,7 +767,7 @@ else
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/src/libchdr_lzma.c
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/libchdr_lzma.c
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) -c $< -o $@
 

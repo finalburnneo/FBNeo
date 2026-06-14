@@ -428,7 +428,7 @@
     <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_flac.c" />
     <ClCompile Include="..\..\src\dep\libs\libchdr\libchdr_huffman.c" />
     <ClCompile Include="..\..\src\dep\libs\zstd\zstddeclib.c" />
-    <ClCompile Include="..\..\src\dep\libs\lzma\src\libchdr_lzma.c" />
+    <ClCompile Include="..\..\src\dep\libs\lzma\libchdr_lzma.c" />
     <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp" />
     <ClCompile Include="..\..\src\intf\video\scalers\crt.cpp" />
     <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp" />

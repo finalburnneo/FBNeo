@@ -3781,7 +3781,7 @@
     <ClCompile Include="..\..\src\dep\libs\zstd\zstddeclib.c">
       <Filter>libs\zstd</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\lzma\src\libchdr_lzma.c">
+    <ClCompile Include="..\..\src\dep\libs\lzma\libchdr_lzma.c">
       <Filter>libs\lzma</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">

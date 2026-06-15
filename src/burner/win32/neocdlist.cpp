@@ -11,6 +11,8 @@ const INT32 nSectorLength = 2352;
 
 NGCDGAME* game;
 
+#include "neocdlist_games.h"
+
 static char szVolumeID[64];
 
 NGCDGAME* GetNeoGeoCDInfo(UINT32 nID)

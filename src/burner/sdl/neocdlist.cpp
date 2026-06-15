@@ -8,6 +8,8 @@ const int nSectorLength = 2352;
 
 NGCDGAME* game;
 
+#include "neocdlist_games.h"
+
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
 {
 	for (unsigned int nGame = 0; nGame < (sizeof(games) / sizeof(NGCDGAME)); nGame++) {

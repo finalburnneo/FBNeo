@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------------------
 #include "burner.h"
 #include "../neocdlist.h"
+#include "../neocdlist_games.h"
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
 {

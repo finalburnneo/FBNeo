@@ -21392,6 +21392,24 @@ struct BurnDriver BurnDrvsms_4lexkiddnw = {
 	256, 192, 4, 3
 };
 
+// 2048-SMS! (HB)
+static struct BurnRomInfo sms_2048smsRomDesc[] = {
+	{ "2048-SMS! (2014)(Sanqui).sms",	32768, 0x4b7a237d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_2048sms)
+STD_ROM_FN(sms_2048sms)
+
+struct BurnDriver BurnDrvsms_2048sms = {
+	"sms_2048sms", NULL, NULL, NULL, "2014",
+	"2048-SMS! (HB)\0", NULL, "Sanqui", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_2048smsRomInfo, sms_2048smsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Acid Reflux (HB, v1.10)
 static struct BurnRomInfo sms_acrefluxRomDesc[] = {
 	{ "Acid Reflux v1.10 (2016)(Furrtek & Robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
@@ -23319,6 +23337,24 @@ struct BurnDriver BurnDrvsms_mainurse = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_mainurseRomInfo, sms_mainurseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Master Barbarricade (HB)
+static struct BurnRomInfo sms_mbarbarricadeRomDesc[] = {
+	{ "Master Barbarricade (2026)(Jess Creations - ArugulaZ).sms",	40960, 0xcc629243, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mbarbarricade)
+STD_ROM_FN(sms_mbarbarricade)
+
+struct BurnDriver BurnDrvsms_mbarbarricade = {
+	"sms_mbarbarricade", NULL, NULL, NULL, "2026",
+	"Master Barbarricade (HB)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_BREAKOUT, 0,
+	SMSGetZipName, sms_mbarbarricadeRomInfo, sms_mbarbarricadeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

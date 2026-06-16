@@ -11,6 +11,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _MSC_VER
+#include <malloc.h>
+#endif
+
 const INT32 MAXIMUM_NUMBER_TRACKS = 100;
 
 const INT32 CD_FRAMES_MINUTE = 60 * 75;

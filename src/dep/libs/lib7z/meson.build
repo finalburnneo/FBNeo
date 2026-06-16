@@ -1,0 +1,45 @@
+lib7z_sources = [
+    '7zArcIn.c',
+    '7zBuf.c',
+    '7zBuf2.c',
+    '7zCrc.c',
+    '7zCrcOpt.c',
+    '7zDec.c',
+    '7zFile.c',
+    '7zStream.c',
+    'Alloc.c',
+    'Bcj2.c',
+    'Bra.c',
+    'Bra86.c',
+    'BraIA64.c',
+    'CpuArch.c',
+    'Delta.c',
+    'LzFindOpt.c',
+    'Lzma2Dec.c',
+    'LzmaDec.c',
+    'MtDec.c',
+    'Ppmd7.c',
+    'Ppmd7Dec.c',
+    'Ppmd7aDec.c',
+    'Sha1Opt.c',
+    'Sha256.c',
+    'Sha256Opt.c',
+    'Threads.c',
+    'Xxh64.c',
+    'Xz.c',
+    'XzCrc64.c',
+    'XzCrc64Opt.c',
+    'XzDec.c',
+    'ZstdDec.c',
+]
+
+lib7z_lib = static_library(
+    'lib7z',
+    lib7z_sources,
+    c_args: ['-D_7ZIP_PPMD_SUPPPORT', '-D_7ZIP_ST'],
+)
+
+lib7z_dep = declare_dependency(
+    link_with: lib7z_lib,
+    include_directories: include_directories('.'),
+)

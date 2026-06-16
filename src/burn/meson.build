@@ -12,7 +12,6 @@ burn_sources = [
     'cheat.cpp',
     'debug_track.cpp',
     'hiscore.cpp',
-    'joyprocess.cpp',
     'load.cpp',
     'tilemap_generic.cpp',
     'tiles_generic.cpp',

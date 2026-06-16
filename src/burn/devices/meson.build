@@ -1,4 +1,4 @@
-burn_devices_sources = []
+burn_devices_sources = ['joyprocess.cpp']
 
 all_burn_devices = {
     '6821pia': {'desc': 'Motorola 6821 PIA', 'sources': ['6821pia.cpp']},

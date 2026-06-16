@@ -158,13 +158,12 @@ static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 	}
 
 	// Allocate CHD context
-	struct CHD_CTX* pChdCtx = (struct CHD_CTX*)malloc(sizeof(struct CHD_CTX));
+	struct CHD_CTX* pChdCtx = (struct CHD_CTX*)calloc(1, sizeof(struct CHD_CTX));
 	if (!pChdCtx) {
 		chd_close(chd);
 		fclose(fp);
 		return 0;
 	}
-	memset(pChdCtx, 0, sizeof(struct CHD_CTX));
 
 	pChdCtx->pChd      = chd;
 	pChdCtx->pHeader   = chd_get_header(chd);
@@ -224,7 +223,6 @@ static const struct IO_STRATEGY ioStrategyList[] =
 	{ IO_TYPE_FILE,  FileIO_Open,  FileIO_Close,  FileIO_Read },
 	{ IO_TYPE_CHD,   ChdIO_Open,   ChdIO_Close,   ChdIO_Read  }
 };
-#define STRATEGY_COUNT ARRAY_SIZE(ioStrategyList)
 
 static void IsoRead(struct ISO_CTX* pIsoCtx, UINT8* Dest, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {

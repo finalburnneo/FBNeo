@@ -950,16 +950,14 @@ all_burn_driver_source_names = all_burn_drivers.keys()
 foreach name : burn_driver_list
     assert(
         all_burn_driver_source_names.contains(name),
-        'Missing burn driver source metadata for burn_driver_list entry: '
-        + name,
+        'Missing burn driver source metadata for burn_driver_list entry: ' + name,
     )
 endforeach
 
 foreach name : burn_driver_dependencies.keys()
     assert(
         all_burn_driver_source_names.contains(name),
-        'Missing burn driver source metadata for burn_driver_dependencies entry: '
-        + name,
+        'Missing burn driver source metadata for burn_driver_dependencies entry: ' + name,
     )
 endforeach
 
@@ -1044,10 +1042,6 @@ burn_drv_sources += [
 ]
 
 burn_drv_defs = []
-foreach name : burn_driver_list
-    burn_drv_defs += '-DBUILD_' + name.to_upper()
-endforeach
-
 if host_machine.system() == 'windows'
     burn_drv_defs += '-D_USE_MATH_DEFINES'
     burn_drv_defs += '-DUSE_SPEEDHACKS'
@@ -1094,5 +1088,4 @@ burn_drv_lib = static_library(
 burn_drv_dep = declare_dependency(
     link_with: burn_drv_lib,
     include_directories: include_directories('.'),
-    compile_args: burn_drv_defs,
 )

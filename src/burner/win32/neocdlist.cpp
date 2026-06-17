@@ -1,8 +1,6 @@
 // ---------------------------------------------------------------------------------------
 // NeoGeo CD Game Info Module (by CaptainCPS-X)
 // ---------------------------------------------------------------------------------------
-#ifdef BUILD_NEOGEO
-
 #include "burner.h"
 #include "neocdlist.h"
 #include "burnint.h"
@@ -651,5 +649,3 @@ void NeoCDInfo_Exit()
 		free_s((void**)&game);
 	}
 }
-
-#endif

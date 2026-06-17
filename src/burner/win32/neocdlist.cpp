@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------------------
 // NeoGeo CD Game Info Module (by CaptainCPS-X)
 // ---------------------------------------------------------------------------------------
-#ifdef BUILD_NEOGEO
-
 #include "burner.h"
 #include "neocdlist.h"
 #include "burnint.h"
 #include "chd.h"
+
+#ifdef BUILD_NEOGEO
 
 #define DEBUG_CD    0
 

@@ -3,95 +3,6 @@
 #include "burner.h"
 #include <process.h>
 
-#if defined(BUILD_CAPCOM)
-#define INCLUDE_HW_CAPCOM
-#endif
-#if defined(BUILD_CAVE)
-#define INCLUDE_HW_CAVE
-#endif
-#if defined(BUILD_CPS3)
-#define INCLUDE_HW_CPS3
-#endif
-#if defined(BUILD_DATAEAST)
-#define INCLUDE_HW_DATAEAST
-#endif
-#if defined(BUILD_GALAXIAN)
-#define INCLUDE_HW_GALAXIAN
-#endif
-#if defined(BUILD_IREM)
-#define INCLUDE_HW_IREM
-#endif
-#if defined(BUILD_KONAMI)
-#define INCLUDE_HW_KONAMI
-#endif
-#if defined(BUILD_MEGADRIVE)
-#define INCLUDE_HW_MEGADRIVE
-#endif
-#if defined(BUILD_MIDWAY)
-#define INCLUDE_HW_MIDWAY
-#endif
-#if defined(BUILD_MSX)
-#define INCLUDE_HW_MSX
-#endif
-#if defined(BUILD_NEOGEO)
-#define INCLUDE_HW_NEOGEO
-#endif
-#if defined(BUILD_NES)
-#define INCLUDE_HW_NES
-#define INCLUDE_HW_FDS
-#endif
-#if defined(BUILD_PCE)
-#define INCLUDE_HW_PCENGINE
-#endif
-#if defined(BUILD_PGM)
-#define INCLUDE_HW_PGM
-#endif
-#if defined(BUILD_PGM2)
-#define INCLUDE_HW_PGM2
-#endif
-#if defined(BUILD_PRE90S)
-#define INCLUDE_HW_MISCPRE90S
-#define INCLUDE_HW_PACMAN
-#define INCLUDE_HW_TECHNOS
-#endif
-#if defined(BUILD_PSIKYO)
-#define INCLUDE_HW_PSIKYO
-#endif
-#if defined(BUILD_PST90S)
-#define INCLUDE_HW_KANEKO
-#define INCLUDE_HW_MISCPOST90S
-#define INCLUDE_HW_NGP
-#define INCLUDE_HW_SETA
-#endif
-#if defined(BUILD_SEGA)
-#define INCLUDE_HW_SEGA
-#endif
-#if defined(BUILD_SG1000)
-#define INCLUDE_HW_SG1000
-#endif
-#if defined(BUILD_SMS)
-#define INCLUDE_HW_GG
-#define INCLUDE_HW_SMS
-#endif
-#if defined(BUILD_SNES)
-#define INCLUDE_HW_SNES
-#endif
-#if defined(BUILD_TAITO)
-#define INCLUDE_HW_TAITO
-#endif
-#if defined(BUILD_TOAPLAN)
-#define INCLUDE_HW_TOAPLAN
-#endif
-#if defined(BUILD_CHANNELF)
-#define INCLUDE_HW_CHANNELF
-#endif
-#if defined(BUILD_COLECO)
-#define INCLUDE_HW_COLECO
-#endif
-#if defined(BUILD_SPECTRUM)
-#define INCLUDE_HW_SPECTRUM
-#endif
-
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, spec1282a, decocass, midssio, cchip, fdsbios, ngp, bubsys, channelf, namcoc69, namcoc70, namcoc75, atarisy1, snes stuff)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
 #define REDUCE_TOTAL_SETS_BIOS      29
@@ -209,9 +120,7 @@ HTREEITEM hFilterKonami				= NULL;
 HTREEITEM hFilterNeogeo				= NULL;
 HTREEITEM hFilterPacman				= NULL;
 HTREEITEM hFilterPgm				= NULL;
-#ifdef BUILD_PGM2
 HTREEITEM hFilterPgm2				= NULL;
-#endif
 HTREEITEM hFilterPsikyo				= NULL;
 HTREEITEM hFilterSega				= NULL;
 HTREEITEM hFilterSeta				= NULL;
@@ -303,225 +212,87 @@ HTREEITEM hHardware					= NULL;
 }
 
 #define _TreeView_SetCheckState(hwndTV, hti, fCheck) \
-  if (hti) _TreeView_SetItemState(hwndTV, hti, INDEXTOSTATEIMAGEMASK((fCheck)?2:1), TVIS_STATEIMAGEMASK)
+  _TreeView_SetItemState(hwndTV, hti, INDEXTOSTATEIMAGEMASK((fCheck)?2:1), TVIS_STATEIMAGEMASK)
 
 // -----------------------------------------------------------------------------------------------------------------
 
 #define DISABLE_NON_AVAILABLE_SELECT	0						// Disable selecting non-available sets
 #define NON_WORKING_PROMPT_ON_LOAD		1						// Prompt user on loading non-working sets
 
-#ifdef INCLUDE_HW_CAPCOM
 static UINT64 CapcomMiscValue		= HARDWARE_PREFIX_CAPCOM_MISC >> 24;
 static UINT64 MASKCAPMISC			= 1 << CapcomMiscValue;
+static UINT64 CaveValue				= HARDWARE_PREFIX_CAVE >> 24;
+static UINT64 MASKCAVE				= 1 << CaveValue;
 static UINT64 CpsValue				= HARDWARE_PREFIX_CAPCOM >> 24;
 static UINT64 MASKCPS				= 1 << CpsValue;
 static UINT64 Cps2Value				= HARDWARE_PREFIX_CPS2 >> 24;
 static UINT64 MASKCPS2				= 1 << Cps2Value;
-#else
-static UINT64 MASKCAPMISC			= 0;
-static UINT64 MASKCPS				= 0;
-static UINT64 MASKCPS2				= 0;
-#endif
-#ifdef INCLUDE_HW_CAVE
-static UINT64 CaveValue				= HARDWARE_PREFIX_CAVE >> 24;
-static UINT64 MASKCAVE				= 1 << CaveValue;
-#else
-static UINT64 MASKCAVE				= 0;
-#endif
-#ifdef INCLUDE_HW_CPS3
 static UINT64 Cps3Value				= HARDWARE_PREFIX_CPS3 >> 24;
 static UINT64 MASKCPS3				= 1 << Cps3Value;
-#else
-static UINT64 MASKCPS3				= 0;
-#endif
-#ifdef INCLUDE_HW_DATAEAST
 static UINT64 DataeastValue			= HARDWARE_PREFIX_DATAEAST >> 24;
 static UINT64 MASKDATAEAST			= 1 << DataeastValue;
-#else
-static UINT64 MASKDATAEAST			= 0;
-#endif
-#ifdef INCLUDE_HW_GALAXIAN
 static UINT64 GalaxianValue			= HARDWARE_PREFIX_GALAXIAN >> 24;
 static UINT64 MASKGALAXIAN			= 1 << GalaxianValue;
-#else
-static UINT64 MASKGALAXIAN			= 0;
-#endif
-#ifdef INCLUDE_HW_IREM
 static UINT64 IremValue				= HARDWARE_PREFIX_IREM >> 24;
 static UINT64 MASKIREM				= 1 << IremValue;
-#else
-static UINT64 MASKIREM				= 0;
-#endif
-#ifdef INCLUDE_HW_KANEKO
 static UINT64 KanekoValue			= HARDWARE_PREFIX_KANEKO >> 24;
 static UINT64 MASKKANEKO			= 1 << KanekoValue;
-#else
-static UINT64 MASKKANEKO			= 0;
-#endif
-#ifdef INCLUDE_HW_KONAMI
 static UINT64 KonamiValue			= HARDWARE_PREFIX_KONAMI >> 24;
 static UINT64 MASKKONAMI			= 1 << KonamiValue;
-#else
-static UINT64 MASKKONAMI			= 0;
-#endif
-#ifdef INCLUDE_HW_NEOGEO
 static UINT64 NeogeoValue			= HARDWARE_PREFIX_SNK >> 24;
 static UINT64 MASKNEOGEO			= 1 << NeogeoValue;
-#else
-static UINT64 MASKNEOGEO			= 0;
-#endif
-#ifdef INCLUDE_HW_PACMAN
 static UINT64 PacmanValue			= HARDWARE_PREFIX_PACMAN >> 24;
 static UINT64 MASKPACMAN			= 1 << PacmanValue;
-#else
-static UINT64 MASKPACMAN			= 0;
-#endif
-#ifdef INCLUDE_HW_PGM
 static UINT64 PgmValue				= HARDWARE_PREFIX_IGS_PGM >> 24;
 static UINT64 MASKPGM				= 1 << PgmValue;
-#else
-static UINT64 MASKPGM				= 0;
-#endif
-#ifdef INCLUDE_HW_PGM2
-static UINT64 Pgm2Value			    = HARDWARE_PREFIX_IGS_PGM2 >> 24;
+static UINT64 Pgm2Value			= HARDWARE_PREFIX_IGS_PGM2 >> 24;
 static UINT64 MASKPGM2				= (UINT64)1 << Pgm2Value;
-#else
-static UINT64 MASKPGM2 = 0;
-#endif
-#ifdef INCLUDE_HW_PSIKYO
 static UINT64 PsikyoValue			= HARDWARE_PREFIX_PSIKYO >> 24;
 static UINT64 MASKPSIKYO			= 1 << PsikyoValue;
-#else
-static UINT64 MASKPSIKYO			= 0;
-#endif
-#ifdef INCLUDE_HW_SEGA
 static UINT64 SegaValue				= HARDWARE_PREFIX_SEGA >> 24;
 static UINT64 MASKSEGA				= 1 << SegaValue;
-#else
-static UINT64 MASKSEGA				= 0;
-#endif
-#ifdef INCLUDE_HW_SETA
 static UINT64 SetaValue				= HARDWARE_PREFIX_SETA >> 24;
 static UINT64 MASKSETA				= 1 << SetaValue;
-#else
-static UINT64 MASKSETA				= 0;
-#endif
-#ifdef INCLUDE_HW_TAITO
 static UINT64 TaitoValue			= HARDWARE_PREFIX_TAITO >> 24;
 static UINT64 MASKTAITO				= 1 << TaitoValue;
-#else
-static UINT64 MASKTAITO				= 0;
-#endif
-#ifdef INCLUDE_HW_TECHNOS
 static UINT64 TechnosValue			= HARDWARE_PREFIX_TECHNOS >> 24;
 static UINT64 MASKTECHNOS			= 1 << TechnosValue;
-#else
-static UINT64 MASKTECHNOS			= 0;
-#endif
-#ifdef INCLUDE_HW_TOAPLAN
 static UINT64 ToaplanValue			= HARDWARE_PREFIX_TOAPLAN >> 24;
 static UINT64 MASKTOAPLAN			= 1 << ToaplanValue;
-#else
-static UINT64 MASKTOAPLAN			= 0;
-#endif
-#ifdef INCLUDE_HW_MISCPRE90S
 static UINT64 MiscPre90sValue		= HARDWARE_PREFIX_MISC_PRE90S >> 24;
 static UINT64 MASKMISCPRE90S		= 1 << MiscPre90sValue;
-#else
-static UINT64 MASKMISCPRE90S		= 0;
-#endif
-#ifdef INCLUDE_HW_MISCPOST90S
 static UINT64 MiscPost90sValue		= HARDWARE_PREFIX_MISC_POST90S >> 24;
 static UINT64 MASKMISCPOST90S		= 1 << MiscPost90sValue;
-#else
-static UINT64 MASKMISCPOST90S		= 0;
-#endif
-#ifdef INCLUDE_HW_MEGADRIVE
 static UINT64 MegadriveValue		= HARDWARE_PREFIX_SEGA_MEGADRIVE >> 24;
 static UINT64 MASKMEGADRIVE			= 1 << MegadriveValue;
-#else
-static UINT64 MASKMEGADRIVE			= 0;
-#endif
-#ifdef INCLUDE_HW_PCENGINE
 static UINT64 PCEngineValue			= HARDWARE_PREFIX_PCENGINE >> 24;
 static UINT64 MASKPCENGINE			= 1 << PCEngineValue;
-#else
-static UINT64 MASKPCENGINE			= 0;
-#endif
-#ifdef INCLUDE_HW_SMS
 static UINT64 SmsValue				= HARDWARE_PREFIX_SEGA_MASTER_SYSTEM >> 24;
 static UINT64 MASKSMS				= 1 << SmsValue;
-#else
-static UINT64 MASKSMS				= 0;
-#endif
-#ifdef INCLUDE_HW_GG
 static UINT64 GgValue				= HARDWARE_PREFIX_SEGA_GAME_GEAR >> 24;
 static UINT64 MASKGG				= 1 << GgValue;
-#else
-static UINT64 MASKGG				= 0;
-#endif
-#ifdef INCLUDE_HW_SG1000
 static UINT64 Sg1000Value			= HARDWARE_PREFIX_SEGA_SG1000 >> 24;
 static UINT64 MASKSG1000			= 1 << Sg1000Value;
-#else
-static UINT64 MASKSG1000			= 0;
-#endif
-#ifdef INCLUDE_HW_COLECO
 static UINT64 ColecoValue			= HARDWARE_PREFIX_COLECO >> 24;
 static UINT64 MASKCOLECO			= 1 << ColecoValue;
-#else
-static UINT64 MASKCOLECO			= 0;
-#endif
-#ifdef INCLUDE_HW_MSX
 static UINT64 MsxValue				= HARDWARE_PREFIX_MSX >> 24;
 static UINT64 MASKMSX				= 1 << MsxValue;
-#else
-static UINT64 MASKMSX				= 0;
-#endif
-#ifdef INCLUDE_HW_SPECTRUM
 static UINT64 SpecValue				= HARDWARE_PREFIX_SPECTRUM >> 24;
 static UINT64 MASKSPECTRUM			= 1 << SpecValue;
-#else
-static UINT64 MASKSPECTRUM			= 0;
-#endif
-#ifdef INCLUDE_HW_MIDWAY
 static UINT64 MidwayValue			= HARDWARE_PREFIX_MIDWAY >> 24;
 static UINT64 MASKMIDWAY			= 1 << MidwayValue;
-#else
-static UINT64 MASKMIDWAY			= 0;
-#endif
-#ifdef INCLUDE_HW_NES
 static UINT64 NesValue				= HARDWARE_PREFIX_NES >> 24;
 static UINT64 MASKNES				= 1 << NesValue;
-#else
-static UINT64 MASKNES				= 0;
-#endif
 
 // this is where things start going above the 32bit-zone. *solved w/64bit UINT?*
-#ifdef INCLUDE_HW_FDS
 static UINT64 FdsValue				= (UINT64)HARDWARE_PREFIX_FDS >> 24;
 static UINT64 MASKFDS				= (UINT64)1 << FdsValue;            // 1 << 0x1f - needs casting or.. bonkers!
-#else
-static UINT64 MASKFDS				= 0;
-#endif
-#ifdef INCLUDE_HW_SNES
 static UINT64 SnesValue				= (UINT64)HARDWARE_PREFIX_SNES >> 24;
 static UINT64 MASKSNES				= (UINT64)1 << SnesValue;
-#else
-static UINT64 MASKSNES				= 0;
-#endif
-#ifdef INCLUDE_HW_NGP
 static UINT64 NgpValue				= (UINT64)HARDWARE_PREFIX_NGP >> 24;
 static UINT64 MASKNGP				= (UINT64)1 << NgpValue;
-#else
-static UINT64 MASKNGP				= 0;
-#endif
-#ifdef INCLUDE_HW_CHANNELF
 static UINT64 ChannelFValue			= (UINT64)HARDWARE_PREFIX_CHANNELF >> 24;
 static UINT64 MASKCHANNELF			= (UINT64)1 << ChannelFValue;
-#else
-static UINT64 MASKCHANNELF			= 0;
-#endif
 
 static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPGM2 | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKMIDWAY | MASKNES | MASKFDS | MASKSNES | MASKNGP | MASKCHANNELF );
 
@@ -1817,119 +1588,49 @@ static void CreateFilters()
 
 	_TVCreateFiltersC(hRoot			, IDS_SEL_HARDWARE		, hHardware				, nLoadMenuShowX & MASKALL					);
 
-#if defined(INCLUDE_HW_CAPCOM) || defined(INCLUDE_HW_CPS3)
 	_TVCreateFiltersD(hHardware		, IDS_SEL_CAPCOM_GRP	, hFilterCapcomGrp			, nLoadMenuShowX & MASKCAPGRP				);
-#ifdef INCLUDE_HW_CAPCOM
+
 	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS1			, hFilterCps1			, nLoadMenuShowX & MASKCPS							);
 	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS2			, hFilterCps2			, nLoadMenuShowX & MASKCPS2							);
-	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CAPCOM_MISC	, hFilterCapcomMisc		, nLoadMenuShowX & MASKCAPMISC						);
-#endif
-#ifdef INCLUDE_HW_CPS3
 	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CPS3			, hFilterCps3			, nLoadMenuShowX & MASKCPS3							);
-#endif
-#endif
+	_TVCreateFiltersA(hFilterCapcomGrp	, IDS_SEL_CAPCOM_MISC	, hFilterCapcomMisc		, nLoadMenuShowX & MASKCAPMISC						);
 
-#ifdef INCLUDE_HW_CAVE
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CAVE			, hFilterCave			, nLoadMenuShowX & MASKCAVE							);
-#endif
-#ifdef INCLUDE_HW_DATAEAST
 	_TVCreateFiltersA(hHardware		, IDS_SEL_DATAEAST		, hFilterDataeast		, nLoadMenuShowX & MASKDATAEAST						);
-#endif
-#ifdef INCLUDE_HW_GALAXIAN
 	_TVCreateFiltersA(hHardware		, IDS_SEL_GALAXIAN		, hFilterGalaxian		, nLoadMenuShowX & MASKGALAXIAN						);
-#endif
-#ifdef INCLUDE_HW_IREM
 	_TVCreateFiltersA(hHardware		, IDS_SEL_IREM			, hFilterIrem			, nLoadMenuShowX & MASKIREM							);
-#endif
-#ifdef INCLUDE_HW_KANEKO
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KANEKO		, hFilterKaneko			, nLoadMenuShowX & MASKKANEKO						);
-#endif
-#ifdef INCLUDE_HW_KONAMI
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KONAMI		, hFilterKonami			, nLoadMenuShowX & MASKKONAMI						);
-#endif
-#ifdef INCLUDE_HW_MIDWAY
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MIDWAY		, hFilterMidway			, nLoadMenuShowX & MASKMIDWAY						);
-#endif
-#ifdef INCLUDE_HW_NEOGEO
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NEOGEO		, hFilterNeogeo			, nLoadMenuShowX & MASKNEOGEO						);
-#endif
-#ifdef INCLUDE_HW_PACMAN
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
-#endif
-#ifdef INCLUDE_HW_PGM
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
-#endif
-#ifdef INCLUDE_HW_PGM2
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM2			, hFilterPgm2			, nLoadMenuShowX & MASKPGM2							);
-#endif
-#ifdef INCLUDE_HW_PSIKYO
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PSIKYO		, hFilterPsikyo			, nLoadMenuShowX & MASKPSIKYO						);
-#endif
 
-#if defined(INCLUDE_HW_SEGA) || defined(INCLUDE_HW_SG1000) || defined(INCLUDE_HW_SMS) || defined(INCLUDE_HW_MEGADRIVE) || defined(INCLUDE_HW_GG)
 	_TVCreateFiltersD(hHardware		, IDS_SEL_SEGA_GRP		, hFilterSegaGrp				, nLoadMenuShowX & MASKSEGAGRP				);
-#ifdef INCLUDE_HW_SG1000
-	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
-#endif
-#ifdef INCLUDE_HW_SMS
-	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SMS			, hFilterSms			, nLoadMenuShowX & MASKSMS							);
-#endif
-#ifdef INCLUDE_HW_MEGADRIVE
-	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_MEGADRIVE		, hFilterMegadrive		, nLoadMenuShowX & MASKMEGADRIVE					);
-#endif
-#ifdef INCLUDE_HW_GG
-	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_GG			, hFilterGg				, nLoadMenuShowX & MASKGG							);
-#endif
-#ifdef INCLUDE_HW_SEGA
-	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SEGA			, hFilterSega			, nLoadMenuShowX & MASKSEGA							);
-#endif
-#endif
 
-#ifdef INCLUDE_HW_SETA
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SMS			, hFilterSms			, nLoadMenuShowX & MASKSMS							);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_MEGADRIVE		, hFilterMegadrive		, nLoadMenuShowX & MASKMEGADRIVE					);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_GG			, hFilterGg				, nLoadMenuShowX & MASKGG							);
+	_TVCreateFiltersA(hFilterSegaGrp	, IDS_SEL_SEGA			, hFilterSega			, nLoadMenuShowX & MASKSEGA							);
+
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SETA			, hFilterSeta			, nLoadMenuShowX & MASKSETA							);
-#endif
-#ifdef INCLUDE_HW_TAITO
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TAITO			, hFilterTaito			, nLoadMenuShowX & MASKTAITO						);
-#endif
-#ifdef INCLUDE_HW_TECHNOS
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TECHNOS		, hFilterTechnos		, nLoadMenuShowX & MASKTECHNOS						);
-#endif
-#ifdef INCLUDE_HW_TOAPLAN
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TOAPLAN		, hFilterToaplan		, nLoadMenuShowX & MASKTOAPLAN						);
-#endif
-#ifdef INCLUDE_HW_PCENGINE
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PCE			, hFilterPce			, nLoadMenuShowX & MASKPCENGINE						);
-#endif
-#ifdef INCLUDE_HW_COLECO
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
-#endif
-#ifdef INCLUDE_HW_MSX
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
-#endif
-#ifdef INCLUDE_HW_SPECTRUM
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
-#endif
-#ifdef INCLUDE_HW_NES
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NES			, hFilterNes			, nLoadMenuShowX & MASKNES							);
-#endif
-#ifdef INCLUDE_HW_FDS
 	_TVCreateFiltersA(hHardware		, IDS_SEL_FDS			, hFilterFds			, nLoadMenuShowX & MASKFDS							);
-#endif
-#ifdef INCLUDE_HW_SNES
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
-#endif
-#ifdef INCLUDE_HW_NGP
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NGP			, hFilterNgp			, nLoadMenuShowX & MASKNGP							);
-#endif
-#ifdef INCLUDE_HW_CHANNELF
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CHANNELF		, hFilterChannelF		, nLoadMenuShowX & MASKCHANNELF						);
-#endif
-#ifdef INCLUDE_HW_MISCPRE90S
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
-#endif
-#ifdef INCLUDE_HW_MISCPOST90S
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
-#endif
 
 	// restore expanded filter nodes
 	for (INT32 i = 0; i < 16; i++)

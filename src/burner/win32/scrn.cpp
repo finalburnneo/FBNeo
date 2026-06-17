@@ -818,61 +818,29 @@ struct t_hw_Struct {
 };
 
 static t_hw_Struct scrn_gamehw_cfg[] = {
-#ifdef BUILD_MEGADRIVE
 	{ "megadrive",	{ HARDWARE_SEGA_MEGADRIVE, 0 } },
-#endif
-#ifdef BUILD_PCE
 	{ "pce",		{ HARDWARE_PCENGINE_PCENGINE, 0 } },
 	{ "tg16",		{ HARDWARE_PCENGINE_TG16, 0 } },
 	{ "sgx",		{ HARDWARE_PCENGINE_SGX, 0 } },
-#endif
-#ifdef BUILD_SG1000
 	{ "sg1000",		{ HARDWARE_SEGA_SG1000, 0 } },
-#endif
-#ifdef BUILD_COLECO
 	{ "coleco",		{ HARDWARE_COLECO, 0 } },
-#endif
-#ifdef BUILD_SMS
 	{ "sms",		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 } },
 	{ "gamegear",	{ HARDWARE_SEGA_GAME_GEAR, 0 } },
-#endif
-#ifdef BUILD_MSX
 	{ "msx",		{ HARDWARE_MSX, 0 } },
-#endif
-#ifdef BUILD_SPECTRUM
 	{ "spectrum",	{ HARDWARE_SPECTRUM, 0 } },
-#endif
-#ifdef BUILD_NES
 	{ "nes",		{ HARDWARE_NES, 0 } },
 	{ "fds",		{ HARDWARE_FDS, 0 } },
-#endif
-#ifdef BUILD_SNES
 	{ "snes",		{ HARDWARE_SNES, 0 } },
-#endif
-#ifdef BUILD_PST90S
 	{ "ngp",		{ HARDWARE_SNK_NGP, 0 } },
 	{ "ngpc",		{ HARDWARE_SNK_NGP | 0x10000, 0 } },
-#endif
-#ifdef BUILD_CHANNELF
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
-#endif
-#ifdef BUILD_CAPCOM
 	{ "cps1",		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, 0 } },
 	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
-#endif
-#ifdef BUILD_CPS3
 	{ "cps3",		{ HARDWARE_CAPCOM_CPS3, 0 } },
-#endif
-#ifdef BUILD_PGM
 	{ "pgm",		{ HARDWARE_IGS_PGM, 0 } },
-#endif
-#ifdef BUILD_PGM2
 	{ "pgm2",		{ HARDWARE_IGS_PGM2, 0 } },
-#endif
-#ifdef BUILD_NEOGEO
 	{ "neogeo",		{ HARDWARE_SNK_NEOGEO, HARDWARE_SNK_MVS, HARDWARE_SNK_DEDICATED_PCB, 0 } },
 	{ "neogeocd",	{ HARDWARE_SNK_NEOCD, 0 } },
-#endif
 	{ "arcade",		{ ~0, 0 } }, // default, if not found above
 	{ "\0", { 0 } } // end
 };

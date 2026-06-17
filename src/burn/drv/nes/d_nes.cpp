@@ -26615,7 +26615,7 @@ struct BurnDriver BurnDrvnes_tryptic = {
 
 // Tuki & Paco Adventures (HB, Demo)
 static struct BurnRomInfo nes_tukipacoRomDesc[] = {
-	{ "Tuki & Paco Adventures (Demo)(2026)(Pixelis Software).nes",          524304, 0xf5cb1867, BRF_ESS | BRF_PRG },
+	{ "Tuki & Paco Adventures (Demo)(2026)(Pixelis Software).nes",          524304, 0xb1c6e9fc, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_tukipaco)

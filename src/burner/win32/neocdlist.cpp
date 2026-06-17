@@ -252,6 +252,7 @@ static INT32 IsoCheckAndReadLabel(struct ISO_CTX* pIsoCtx)
 	if (!memcmp(IsoCheck, "CD001", 5)) {
 		// Read and trim the volume label (stored in ISO_CTX)
 		strncpy(pIsoCtx->szVolumeID, (char*)&IsoCheck[39], 24);
+		pIsoCtx->szVolumeID[sizeof(pIsoCtx->szVolumeID) - 1] = '\0';
 		INT32 l = strlen(pIsoCtx->szVolumeID);
 		while (l > 0 && pIsoCtx->szVolumeID[l - 1] == ' ')
 			pIsoCtx->szVolumeID[--l] = '\0';
@@ -293,8 +294,8 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 	UINT8  Flags;
 	UINT8  LEN_FI;
 	UINT8* ExtentLoc = (UINT8*)malloc(8 + 64 + 32);
-	UINT8* Data      = (UINT8*)malloc(0x10b + 32);
-	char*  File      = (char*)malloc(32 + 32);
+	UINT8* Data      = (UINT8*)malloc(0x10b  + 32);
+	char*  File      = (char* )malloc(32     + 32);
 
 	if (!ExtentLoc || !Data || !File) {
 		free_s((void**)&ExtentLoc);
@@ -377,42 +378,46 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 				IsoRead(pIsoCtx, (UINT8*)File, lOffset + 33, LEN_FI, sizeof(UINT8));
 				File[LEN_FI] = 0;
 
-				if (nID == 0x0016 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }
-				if (nID == 0x0025 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }
-				if (nID == 0x0076 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }
-				if (nID == 0x0062 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }
-				if (nID == 0x0059 && nDate[0] ==  95 && nDate[1] ==  6 && nDate[2] == 20) { nID |= 0x1000; }
-				if (nID == 0x0066 && nDate[0] == 125 && nDate[1] ==  4 && nDate[2] == 10) { nID |= 0x1200; }
-				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  4 && nDate[2] == 29) { nID |= 0x1000; }
-				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  6 && nDate[2] ==  1) { nID |= 0x2000; }
-				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 10) { nID |= 0x3000; }
-				if (nID == 0x0090 && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 21) { nID |= 0x1000; }
-				if (nID == 0x0058 && nDate[0] ==  94 && nDate[1] == 10 && nDate[2] == 14) { nID |= 0x1000; }
+				if (nID == 0x0016 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }	// Justin Gibbons Hacks (kotm)
+				if (nID == 0x0025 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }	// Justin Gibbons Hacks (eightman)
+				if (nID == 0x0076 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }	// Justin Gibbons Hacks (zedblade)
+				if (nID == 0x0062 && nDate[0] ==  94 && nDate[1] == 12 && nDate[2] == 20) { nID |= 0x1000; }	// Justin Gibbons Hacks (spinmast)
+				if (nID == 0x0059 && nDate[0] ==  95 && nDate[1] ==  6 && nDate[2] == 20) { nID |= 0x1000; }	// Savage Reign Rev 1
+				if (nID == 0x0066 && nDate[0] == 125 && nDate[1] ==  4 && nDate[2] == 10) { nID |= 0x1200; }	// Digger Man (Prototype)
+				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  4 && nDate[2] == 29) { nID |= 0x1000; }	// Fatal Fury 3 Rev 1
+				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  6 && nDate[2] ==  1) { nID |= 0x2000; }	// Fatal Fury 3 Rev 2
+				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 10) { nID |= 0x3000; }	// Fatal Fury 3 Rev 3
+				if (nID == 0x0090 && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 21) { nID |= 0x1000; }	// World Heroes Perfect
+				if (nID == 0x0058 && nDate[0] ==  94 && nDate[1] == 10 && nDate[2] == 14) { nID |= 0x1000; }	// Fatal Fury Special Rev 1
 				if (nID == 0x0085) {
-					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }
-					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }
-					else if (nDate[0] == 125 && nDate[1] == 3 && nDate[2] == 6)           { nID |= 0x4000; }
+					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
+					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
+					else if (nDate[0] == 125 && nDate[1] == 3 && nDate[2] == 6)           { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
+					if (_tcsstr(pszFile, _T("(FR)")))                                     { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
 				}
-				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14)  { nID  = 0x7778; }
-				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }
-				if (nID == 0x0082 && _tcsstr(pszFile, _T("OST")))                         { nID |= 0x2000; }
-				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }
-				if (nID == 0x0085 && _tcsstr(pszFile, _T("(FR)")))                        { nID |= 0x2000; }
-				if (nID == 0x0048 && Data[0x67] == 0x08)                                  { nID |= 0x1000; }
-				if (nID == 0x0055 && Data[0x67] == 0xDE)                                  {                }
-				if (nID == 0x0055 && Data[0x67] == 0xE6)                                  { nID |= 0x1000; }
-				if (nID == 0x0084 && Data[0x6C] == 0xC0)                                  {                }
-				if (nID == 0x0084 && Data[0x6C] == 0xFF)                                  { nID |= 0x1000; }
-
-				if (nID == 0x0229) {
+				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14)  { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
+				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }	// Double Dragon Rev 1
+				if (nID == 0x0082 && _tcsstr(pszFile, _T("OST")))                         { nID |= 0x2000; }	// Double Dragon PS1 OST
+				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }	// Looptris Plus
+				if (nID == 0x0048 && Data[0x67] == 0x08)                                  { nID |= 0x1000; }	// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
+				if (nID == 0x0055 && Data[0x67] == 0xDE)	/* 10-6-1994 (P1.PRG)  */     {/* ...continue*/}	// King of Fighters '94, The (1994)(SNK)(JP)
+				if (nID == 0x0055 && Data[0x67] == 0xE6)	/* 11-21-1994 (P1.PRG) */     { nID |= 0x1000; }	// King of Fighters '94, The (1994)(SNK)(JP-US)
+				if (nID == 0x0084 && Data[0x6C] == 0xC0)	/* 9-11-1995 (P1.PRG)  */     {/* ...continue*/}	// King of Fighters '95, The (1995)(SNK)(JP-US)[!][NGCD-084 MT B01, B03-B06, NGCD-084E MT B01]
+				if (nID == 0x0084 && Data[0x6C] == 0xFF)	/* 10-5-1995 (P1.PRG)  */     { nID |= 0x1000; }	// King of Fighters '95, The (1995)(SNK)(JP-US)[!][NGCD-084 MT B10, NGCD-084E MT B03]
+				if (nID == 0x0229) {																			// King of Fighters '96 NEOGEO Collection, The
 					bRevisionQueve = false;
 					pfEntryCallBack(nID, pszFile);
 					break;
 				}
-				if (nID == 0x0214 || (nID == 0x0058 && !(nDate[0] == 94 && nDate[1] == 8 && nDate[2] == 5))) {
-					bRevisionQueve = true;
+				// Sometimes there's multiple .prg entries in the
+				// list, .old / .bak files which preceed the proper one..
+				// For these, we have to keep searching the file list:
+				if (nID == 0x0214																				// King of Fighters '96, The
+					|| (nID == 0x0058 && !(nDate[0] == 94 && nDate[1] == 8 && nDate[2] == 5))) {				// !Fatal Fury Special Rev 0
+					// continue checking other files...
+					bRevisionQueve   = true;
 					nRevisionQueveID = nID;
-					lOffset += nLenDR;
+					lOffset    += nLenDR;
 					lBytesRead += nLenDR;
 					continue;
 				}
@@ -508,14 +513,47 @@ void NeoCDInfo_SetTitle()
 	}
 }
 
+// TCHAR safe string duplicate (ANSI / Unicode auto-adaptive)
+// Allocates heap memory and copies source TCHAR string safely
+// Allocated memory must be released by free() or free_s()
+static TCHAR* _tcsdup_s(const TCHAR* pSrc)
+{
+	if (IsStrEmpty(pSrc))
+		return NULL;
+
+	size_t srcLen    = _tcslen(pSrc);
+	size_t allocSize = (srcLen + 1) * sizeof(TCHAR);
+	TCHAR* pDst      = (TCHAR*)malloc(allocSize);
+
+	if (!pDst)
+		return NULL;
+
+	_tcsncpy(pDst, pSrc, srcLen);
+	pDst[srcLen] = _T('\0');
+
+	return pDst;
+}
+
 // Get the title
 INT32 GetNeoCDTitle(UINT32 nGameID)
 {
-	game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
-	memset(game, 0, sizeof(NGCDGAME));
-
+	game = (NGCDGAME*)calloc(1, sizeof(NGCDGAME));
+	if (!game) return 0;
+/*
+*	// GetNeoGeoCDInfo(nGameID) has been called twice.
+*	// The use of memcpy here does not comply with best practices for memory management
+* 
 	if(GetNeoGeoCDInfo(nGameID)) {
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
+*/
+	NGCDGAME* pGameInfo = GetNeoGeoCDInfo(nGameID);
+	if (pGameInfo) {
+		// Deep copy to avoid pointer aliasing issues
+		game->id         = pGameInfo->id;
+		game->pszName    = _tcsdup_s(pGameInfo->pszName);
+		game->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
+		game->pszYear    = _tcsdup_s(pGameInfo->pszYear);
+		game->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
 
 		bprintf(PRINT_NORMAL, _T("    Title: %s \n")		, game->pszTitle);
 		bprintf(PRINT_NORMAL, _T("    Shortname: %s \n")	, game->pszName);
@@ -601,5 +639,13 @@ INT32 NeoCDInfo_ID()
 
 void NeoCDInfo_Exit()
 {
-	free_s((void**)&game);
+	if (game) {
+		// Free string allocations before freeing the struct
+		free_s((void**)&game->pszName);
+		free_s((void**)&game->pszTitle);
+		free_s((void**)&game->pszYear);
+		free_s((void**)&game->pszCompany);
+		// Free the struct itself
+		free_s((void**)&game);
+	}
 }

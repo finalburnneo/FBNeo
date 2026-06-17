@@ -2,20 +2,10 @@
 
 #include "burner.h"
 
-// PGM2 card slot variables (defined in pgm2_run.cpp)
-extern INT32 Pgm2MaxCardSlots;
-extern INT32 Pgm2ActiveCardSlot;
-extern bool  Pgm2CardInserted[4];
-extern INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize);
-
 static TCHAR szMemoryCardFile[MAX_PATH];
 
 int nMemoryCardStatus = 0;
 int nMemoryCardSize;
-
-// PGM2 per-slot state
-TCHAR szPgm2CardFile[4][MAX_PATH];
-int nPgm2CardStatus[4] = {0, 0, 0, 0};  // per-slot: bit0=file selected, bit1=inserted
 
 static int nMinVersion;
 static bool bMemCardFC1Format;
@@ -349,6 +339,17 @@ int	MemCardToggle()
 	return 1;
 }
 
+// PGM2 card slot variables (defined in pgm2_run.cpp)
+#ifdef BUILD_PGM2
+extern INT32 Pgm2MaxCardSlots;
+extern INT32 Pgm2ActiveCardSlot;
+extern bool  Pgm2CardInserted[4];
+extern INT32 pgm2GetCardRomTemplate(UINT8* buffer, INT32 maxSize);
+
+// PGM2 per-slot state
+TCHAR szPgm2CardFile[4][MAX_PATH];
+int nPgm2CardStatus[4] = {0, 0, 0, 0};  // per-slot: bit0=file selected, bit1=inserted
+
 // PGM2-specific: capture current card data from driver
 static unsigned char* pCapturedCardData;
 static int nCapturedCardSize;
@@ -557,3 +558,4 @@ int MemCardEjectPGM2Slot(int slot)
 
 	return 0;
 }
+#endif

@@ -46,7 +46,7 @@ driverlist_h = custom_target(
 
 burn_sources += driverlist_h
 
-burn_defs = []
+burn_defs = ['-DSUPPORT_SPLIT_DRIVER']
 if host_machine.endian() == 'little'
     burn_defs += '-DLSB_FIRST'
 endif

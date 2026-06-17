@@ -4,6 +4,8 @@
 #include "neocdlist.h"
 #include <process.h>
 
+#ifdef BUILD_NEOGEO
+
 int				NeoCDList_Init();
 static void		NeoCDList_InitListView();
 static int		NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID);
@@ -1015,3 +1017,18 @@ int NeoCDList_Init()
 {
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_NCD_DLG), hScrnWnd, (DLGPROC)NeoCDList_WndProc);
 }
+
+#else
+
+bool bNeoCDListScanSub			= false;
+bool bNeoCDListScanOnlyISO		= false;
+TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdzcovers/");
+TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/neocdzpreviews/");
+TCHAR szNeoCDGamesDir[MAX_PATH] = _T("neocdiso/");
+
+int NeoCDList_Init()
+{
+	return 0;
+}
+
+#endif

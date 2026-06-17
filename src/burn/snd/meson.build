@@ -3,21 +3,11 @@ burn_snd_sources = []
 all_burn_sounds = {
     'asteroids': {'desc': 'Atari Asteroids discrete sound', 'sources': ['asteroids.cpp']},
     'astrocde': {'desc': 'Bally Astrocade sound', 'sources': ['astrocde_snd.cpp']},
-    'ay8910': {'desc': 'AY-3-8910 PSG', 'sources': ['ay8910.c']},
+    'ay8910': {'desc': 'AY-3-8910 PSG', 'sources': []},
     'beep': {'desc': 'Beep speaker', 'sources': ['beep.cpp']},
     'burn_md2612': {'desc': 'Mega Drive YM2612 wrapper', 'sources': ['burn_md2612.cpp']},
-    'burn_y8950': {'desc': 'Yamaha Y8950 wrapper', 'sources': ['burn_y8950.cpp']},
-    'burn_ym2151': {'desc': 'Yamaha YM2151 wrapper', 'sources': ['burn_ym2151.cpp']},
-    'burn_ym2203': {'desc': 'Yamaha YM2203 wrapper', 'sources': ['burn_ym2203.cpp']},
-    'burn_ym2413': {'desc': 'Yamaha YM2413 wrapper', 'sources': ['burn_ym2413.cpp']},
-    'burn_ym2608': {'desc': 'Yamaha YM2608 wrapper', 'sources': ['burn_ym2608.cpp']},
-    'burn_ym2610': {'desc': 'Yamaha YM2610 wrapper', 'sources': ['burn_ym2610.cpp']},
-    'burn_ym2612': {'desc': 'Yamaha YM2612 wrapper', 'sources': ['burn_ym2612.cpp']},
-    'burn_ym3526': {'desc': 'Yamaha YM3526 wrapper', 'sources': ['burn_ym3526.cpp']},
-    'burn_ym3812': {'desc': 'Yamaha YM3812 wrapper', 'sources': ['burn_ym3812.cpp']},
     'burn_ymf262': {'desc': 'Yamaha YMF262 wrapper', 'sources': ['burn_ymf262.cpp']},
     'burn_ymf271': {'desc': 'Yamaha YMF271 wrapper', 'sources': ['burn_ymf271.cpp']},
-    'burn_ymf278b': {'desc': 'Yamaha YMF278B wrapper', 'sources': ['burn_ymf278b.cpp']},
     'bzone': {'desc': 'Atari Battlezone discrete sound', 'sources': ['bzone.cpp']},
     'c140': {'desc': 'Namco C140 PCM', 'sources': ['c140.cpp']},
     'c352': {'desc': 'Namco C352 PCM', 'sources': ['c352.cpp']},
@@ -29,7 +19,6 @@ all_burn_sounds = {
     'exidy440': {'desc': 'Exidy 440 sound', 'sources': ['exidy440_snd.cpp']},
     'flower': {'desc': 'Flower custom sound', 'sources': ['flower.cpp']},
     'flt_rc': {'desc': 'RC filter', 'sources': ['flt_rc.cpp']},
-    'fm': {'desc': 'Yamaha FM core', 'sources': ['fm.c']},
     'fmopl': {'desc': 'Yamaha OPL core', 'sources': ['fmopl.c']},
     'gaelco': {'desc': 'Gaelco sound', 'sources': ['gaelco.cpp']},
     'hc55516': {'desc': 'HC55516 CVSD decoder', 'sources': ['hc55516.cpp']},
@@ -79,18 +68,25 @@ all_burn_sounds = {
     'votrax': {'desc': 'Votrax SC-01 speech', 'sources': ['votrax.cpp']},
     'wiping': {'desc': 'Wiping custom sound', 'sources': ['wiping.cpp']},
     'x1010': {'desc': 'Namco CUS30/X1010 sound', 'sources': ['x1010.cpp']},
-    'ym2151': {'desc': 'Yamaha YM2151 core', 'sources': ['ym2151.c']},
-    'ym2413': {'desc': 'Yamaha YM2413 core', 'sources': ['ym2413.c']},
-    'ym2612': {'desc': 'Yamaha YM2612 core', 'sources': ['ym2612.c']},
-    'ymdeltat': {'desc': 'Yamaha Delta-T ADPCM core', 'sources': ['ymdeltat.c']},
+    'y8950': {'desc': 'Yamaha Y8950 core', 'sources': []},
+    'ym2151': {'desc': 'Yamaha YM2151 core', 'sources': []},
+    'ym2203': {'desc': 'Yamaha YM2203 core', 'sources': []},
+    'ym2413': {'desc': 'Yamaha YM2413 core', 'sources': []},
+    'ym2608': {'desc': 'Yamaha YM2608 core', 'sources': []},
+    'ym2610': {'desc': 'Yamaha YM2610 core', 'sources': []},
+    'ym2612': {'desc': 'Yamaha YM2612 core', 'sources': []},
+    'ym3438': {'desc': 'Yamaha YM3438 core', 'sources': []},
+    'ym3526': {'desc': 'Yamaha YM3526 core', 'sources': []},
+    'ym3812': {'desc': 'Yamaha YM3812 core', 'sources': []},
     'ymf262': {'desc': 'Yamaha YMF262 core', 'sources': ['ymf262.cpp']},
     'ymf271': {'desc': 'Yamaha YMF271 core', 'sources': ['ymf271.cpp']},
-    'ymf278b': {'desc': 'Yamaha YMF278B core', 'sources': ['ymf278b.c']},
+    'ymf278b': {'desc': 'Yamaha YMF278B core', 'sources': []},
     'ymz280b': {'desc': 'Yamaha YMZ280B PCM', 'sources': ['ymz280b.cpp']},
-    'ymz770': {'desc': 'Yamaha YMZ770 sound', 'sources': ['ymz770.cpp']},
+    'ymz770': {'desc': 'Yamaha YMZ770 sound', 'sources': []},
 }
 
 burn_sound_status = {}
+burn_snd_defs = []
 all_burn_sound_names = all_burn_sounds.keys()
 foreach name : burn_sound_list
     assert(
@@ -101,20 +97,170 @@ endforeach
 
 foreach name, sound : all_burn_sounds
     enabled = burn_sound_list.contains(name)
+    set_variable('snd_@0@_enable'.format(name), enabled)
     burn_sound_status += {sound['desc']: enabled ? 'ON' : 'OFF'}
     if enabled
         burn_snd_sources += sound['sources']
     endif
 endforeach
+
 summary(burn_sound_status, section: 'Burn sound devices', list_sep: '')
+
+snd_fm_enable = false
+snd_fmopl_enable = false
+snd_mpeg_audio_enable = false
+
+# ---------------------------------------------------------------------------
+# Yamaha Y8950
+# ---------------------------------------------------------------------------
+if snd_y8950_enable
+    burn_snd_sources += 'burn_y8950.cpp'
+    snd_fmopl_enable = true
+    burn_snd_defs += '-DHAS_Y8950=1'
+else
+    burn_snd_defs += '-DHAS_Y8950=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2151
+# ---------------------------------------------------------------------------
+if snd_ym2151_enable
+    burn_snd_sources += ['burn_ym2151.cpp', 'ym2151.c']
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2203
+# ---------------------------------------------------------------------------
+if snd_ym2203_enable
+    burn_snd_sources += 'burn_ym2203.cpp'
+    snd_fm_enable = true
+    burn_snd_defs += '-DHAS_YM2203=1'
+else
+    burn_snd_defs += '-DHAS_YM2203=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2413
+# ---------------------------------------------------------------------------
+if snd_ym2413_enable
+    burn_snd_sources += ['burn_ym2413.cpp', 'ym2413.c']
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2608
+# ---------------------------------------------------------------------------
+if snd_ym2608_enable
+    burn_snd_sources += 'burn_ym2608.cpp'
+    snd_fm_enable = true
+    burn_snd_defs += '-DHAS_YM2608=1'
+else
+    burn_snd_defs += '-DHAS_YM2608=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2610
+# ---------------------------------------------------------------------------
+if snd_ym2610_enable
+    burn_snd_sources += 'burn_ym2610.cpp'
+    snd_fm_enable = true
+    burn_snd_defs += ['-DHAS_YM2610=1', '-DHAS_YM2610B=1']
+else
+    burn_snd_defs += ['-DHAS_YM2610=0', '-DHAS_YM2610B=0']
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM2612
+# ---------------------------------------------------------------------------
+if snd_ym2612_enable or snd_ym3438_enable
+    burn_snd_sources += ['ym2612.c', 'burn_ym2612.cpp']
+    snd_fm_enable = true
+    burn_snd_defs += '-DHAS_YM2612=1'
+    burn_snd_defs += '-DHAS_YM3438=1'
+else
+    burn_snd_defs += '-DHAS_YM2612=0'
+    burn_snd_defs += '-DHAS_YM3438=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM3526
+# ---------------------------------------------------------------------------
+if snd_ym3526_enable
+    burn_snd_sources += 'burn_ym3526.cpp'
+    snd_fmopl_enable = true
+    burn_snd_defs += '-DHAS_YM3526=1'
+else
+    burn_snd_defs += '-DHAS_YM3526=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YM3812
+# ---------------------------------------------------------------------------
+if snd_ym3812_enable
+    burn_snd_sources += 'burn_ym3812.cpp'
+    snd_fmopl_enable = true
+    burn_snd_defs += '-DHAS_YM3812=1'
+else
+    burn_snd_defs += '-DHAS_YM3812=0'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YMF278B
+# ---------------------------------------------------------------------------
+if snd_ymf278b_enable
+    burn_snd_sources += ['burn_ymf278b.cpp', 'ymf278b.c']
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha YMZ770
+# ---------------------------------------------------------------------------
+if snd_ymz770_enable
+    burn_snd_sources += 'ymz770.cpp'
+    snd_mpeg_audio_enable = true
+endif
+
+# ---------------------------------------------------------------------------
+# AY-3-8910 PSG
+# ---------------------------------------------------------------------------
+if snd_ay8910_enable or snd_fm_enable
+    burn_snd_sources += 'ay8910.c'
+    snd_fm_enable = true
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha FM core
+# ---------------------------------------------------------------------------
+if snd_fm_enable
+    burn_snd_sources += 'fm.c'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha OPL core
+# ---------------------------------------------------------------------------
+if snd_fmopl_enable
+    burn_snd_sources += 'fmopl.c'
+endif
+
+# ---------------------------------------------------------------------------
+# Yamaha Delta-T ADPCM core
+# ---------------------------------------------------------------------------
+if snd_fm_enable or snd_fmopl_enable
+    burn_snd_sources += 'ymdeltat.c'
+endif
+
+# ---------------------------------------------------------------------------
+# MPEG audio decoder
+# ---------------------------------------------------------------------------
+if snd_mpeg_audio_enable
+    burn_snd_sources += 'mpeg_audio.cpp'
+endif
 
 burn_snd_inc = ['../../dep/libs/dr_libs']
 
-burn_snd_defs = []
 if host_machine.system() == 'windows'
     burn_snd_defs += '-D_USE_MATH_DEFINES'
 endif
 
+burn_snd_c_args = burn_snd_defs
 burn_snd_cpp_args = burn_snd_defs
 
 burn_snd_lib = static_library(
@@ -122,6 +268,7 @@ burn_snd_lib = static_library(
     burn_snd_sources,
     dependencies: [burn_dep, cpu_dep],
     include_directories: include_directories(burn_snd_inc),
+    c_args: burn_snd_c_args,
     cpp_args: burn_snd_cpp_args,
 )
 

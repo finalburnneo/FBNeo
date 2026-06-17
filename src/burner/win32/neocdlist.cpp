@@ -6,6 +6,8 @@
 #include "burnint.h"
 #include "chd.h"
 
+#ifdef BUILD_NEOGEO
+
 #define DEBUG_CD    0
 
 const INT32 nSectorLength = 2352;
@@ -649,3 +651,5 @@ void NeoCDInfo_Exit()
 		free_s((void**)&game);
 	}
 }
+
+#endif

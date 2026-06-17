@@ -1846,6 +1846,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		// PGM2 per-slot card operations (IDs 10040..10055)
 		default:
+#ifdef BUILD_PGM2
 			if (id >= MENU_MEMCARD_PGM2_BASE && id < MENU_MEMCARD_PGM2_BASE + 16) {
 				int slot = (id - MENU_MEMCARD_PGM2_BASE) / 4;
 				int action = (id - MENU_MEMCARD_PGM2_BASE) % 4;
@@ -1876,6 +1877,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					}
 				}
 			}
+#endif
 			break;
 
 		case MENU_STATE_LOAD_DIALOG:

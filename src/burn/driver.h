@@ -59,16 +59,34 @@ __extension__ typedef long long				INT64;
 #endif
 
 /* OPN */
+#ifndef HAS_YM2203
 #define HAS_YM2203  1
+#endif
+#ifndef HAS_YM2608
 #define HAS_YM2608  1
+#endif
+#ifndef HAS_YM2610
 #define HAS_YM2610  1
+#endif
+#ifndef HAS_YM2610B
 #define HAS_YM2610B 1
+#endif
+#ifndef HAS_YM2612
 #define HAS_YM2612  1
+#endif
+#ifndef HAS_YM3438
 #define HAS_YM3438  1
+#endif
 /* OPL */
+#ifndef HAS_YM3812
 #define HAS_YM3812  1
+#endif
+#ifndef HAS_YM3526
 #define HAS_YM3526  1
+#endif
+#ifndef HAS_Y8950
 #define HAS_Y8950   1
+#endif
 
 enum {
 	CLEAR_LINE = 0,

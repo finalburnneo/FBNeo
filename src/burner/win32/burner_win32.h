@@ -535,7 +535,6 @@ void DisplayReplayProperties(HWND hDlg, bool bClear);
 
 // memcard.cpp
 extern int nMemoryCardStatus;						// & 1 = file selected, & 2 = inserted
-extern INT32 Pgm2MaxCardSlots;						// PGM2: number of card slots (0 = no cards)
 
 int	MemCardCreate();
 int	MemCardSelect();
@@ -543,7 +542,26 @@ int	MemCardInsert();
 int	MemCardEject();
 int	MemCardToggle();
 
+// Returns true if the current driver supports memory card / IC card
+static inline bool HasMemCard() {
+	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	
+#ifdef BUILD_NEOGEO
+	if (hw == HARDWARE_SNK_NEOGEO)
+	    return true;
+#endif
+
+#ifdef BUILD_PGM2
+    if (hw == HARDWARE_IGS_PGM2)
+	    return true;
+#endif
+	
+	return false;
+}
+
+#ifdef BUILD_PGM2
 // PGM2 per-slot card operations
+extern INT32 Pgm2MaxCardSlots;						// PGM2: number of card slots (0 = no cards)
 extern int nPgm2CardStatus[4];
 extern TCHAR szPgm2CardFile[4][MAX_PATH];
 int MemCardCreatePGM2Slot(int slot);
@@ -551,17 +569,12 @@ int MemCardSelectPGM2Slot(int slot);
 int MemCardInsertPGM2Slot(int slot);
 int MemCardEjectPGM2Slot(int slot);
 
-// Returns true if the current driver supports memory card / IC card
-static inline bool HasMemCard() {
-	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
-	return (hw == HARDWARE_SNK_NEOGEO || hw == HARDWARE_IGS_PGM2);
-}
-
 // Returns true if the current driver is PGM2 with card support
 static inline bool IsPGM2WithCards() {
 	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
 	return (hw == HARDWARE_IGS_PGM2 && Pgm2MaxCardSlots > 0);
 }
+#endif
 
 // progress.cpp
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs);

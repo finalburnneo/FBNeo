@@ -322,10 +322,12 @@ int DrvExit()
 				// Eject memory card(s) if present
 				MemCardEject();             // NeoGeo MVS
 
+#ifdef BUILD_PGM2
 				MemCardEjectPGM2Slot(0);    // PGM2
 				MemCardEjectPGM2Slot(1);
 				MemCardEjectPGM2Slot(2);
 				MemCardEjectPGM2Slot(3);
+#endif
 			}
 
 			if (bSaveRAM) {

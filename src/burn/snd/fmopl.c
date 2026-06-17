@@ -2522,15 +2522,25 @@ void Y8950SetKeyboardHandler(int which,OPL_PORTHANDLER_W KeyboardHandler_w,OPL_P
 
 void FMOPLScan(INT32 nType, INT32 which, INT32 nAction, INT32 *pnMin)
 {
-	FM_OPL *OPL = OPL_YM3812[which];
+	FM_OPL *OPL = NULL;
+
+#if BUILD_YM3812
+	OPL = OPL_YM3812[which];
+#endif
 	
+#if BUILD_YM3526
 	if (nType == FM_OPL_SAVESTATE_YM3526) {
 		OPL = OPL_YM3526[which];
 	}
-	
+#endif
+
+#if BUILD_Y8950
 	if (nType == FM_OPL_SAVESTATE_Y8950) {
 		OPL = OPL_Y8950[which];
 	}
+#endif
+
+    if (OPL == NULL) return;
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		INT32 ch;

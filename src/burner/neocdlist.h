@@ -14,6 +14,7 @@ NGCDGAME*	GetNeoGeoCDInfo(unsigned int nID);
 int			GetNeoCDTitle(unsigned int nGameID);
 int			GetNeoGeoCD_Identifier();
 
+#ifdef BUILD_NEOGEO
 bool	IsNeoGeoCD();		// neo_run.cpp
 TCHAR*	GetIsoPath();	// cd_isowav.cpp
 
@@ -22,6 +23,15 @@ TCHAR*	NeoCDInfo_Text(int nText);
 int		NeoCDInfo_ID();
 void    NeoCDInfo_SetTitle();
 void	NeoCDInfo_Exit();
+#else
+static inline bool IsNeoGeoCD() { return false; }
+static inline TCHAR* GetIsoPath() { return NULL; }
+static inline int NeoCDInfo_Init() { return 0; }
+static inline TCHAR* NeoCDInfo_Text(int) { return NULL; }
+static inline int NeoCDInfo_ID() { return 0; }
+static inline void NeoCDInfo_SetTitle() { }
+static inline void NeoCDInfo_Exit() { }
+#endif
 
 // ------------------------------------------------------
 // ISO9660 STUFF

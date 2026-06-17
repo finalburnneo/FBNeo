@@ -24,6 +24,37 @@
 
 #include <time.h>
 
+#ifndef SUPPORT_SPLIT_DRIVER
+ #define BUILD_ATARI
+ #define BUILD_CAPCOM
+ #define BUILD_CAVE
+ #define BUILD_CHANNELF
+ #define BUILD_COLECO
+ #define BUILD_CPS3
+ #define BUILD_DATAEAST
+ #define BUILD_GALAXIAN
+ #define BUILD_IREM
+ #define BUILD_KONAMI
+ #define BUILD_MEGADRIVE
+ #define BUILD_MIDWAY
+ #define BUILD_MSX
+ #define BUILD_NEOGEO
+ #define BUILD_NES
+ #define BUILD_PCE
+ #define BUILD_PGM
+ #define BUILD_PGM2
+ #define BUILD_PRE90S
+ #define BUILD_PSIKYO
+ #define BUILD_PST90S
+ #define BUILD_SEGA
+ #define BUILD_SG1000
+ #define BUILD_SMS
+ #define BUILD_SNES
+ #define BUILD_SPECTRUM
+ #define BUILD_TAITO
+ #define BUILD_TOAPLAN
+#endif
+
 extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppHDDPath[MAX_PATH];

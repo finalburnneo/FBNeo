@@ -3978,12 +3978,12 @@ STD_ROM_FN(Sxeviousj)
 
 static struct BurnRomInfo HyxeviousRomDesc[] = {
 	{ "hx_cpu_3p.rom", 0x01000, 0x3083987b, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
-	{ "hx_cpu_3m.rom", 0x01000, 0xb6afb51a, BRF_ESS | BRF_PRG   }, //  1
-	{ "hx_xv3_3.2m",   0x01000, 0x06a7b52d, BRF_ESS | BRF_PRG   }, //  2
-	{ "hx_xv3_4.2l",   0x01000, 0xbed75de8, BRF_ESS | BRF_PRG   }, //  3
+	{ "hx_cpu_3m.rom", 0x01000, 0xdd07d018, BRF_ESS | BRF_PRG   }, //  1
+	{ "hx_xv3_3.2m",   0x01000, 0x79c0fb2f, BRF_ESS | BRF_PRG   }, //  2
+	{ "hx_xv3_4.2l",   0x01000, 0xec88d2bc, BRF_ESS | BRF_PRG   }, //  3
 
 	{ "hx_xv3_5.3f",   0x01000, 0xd921841a, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
-	{ "hx_xv3_6.3j",   0x01000, 0x51d1339f, BRF_ESS | BRF_PRG   }, //  5
+	{ "hx_xv3_6.3j",   0x01000, 0xc13e8374, BRF_ESS | BRF_PRG   }, //  5
 
 	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
 
@@ -4969,7 +4969,7 @@ struct BurnDriver BurnDrvSxeviousj = {
 
 struct BurnDriver BurnDrvHyxevious = {
 	"hyxevious", "sxevious", NULL, "xevious", "2026",
-	"Hyper Xevious (Hack)\0", "High difficulty level hack", "zeroco", "Miscellaneous",
+	"Hyper Xevious (Hack, 2026-06-18)\0", "High difficulty level hack", "zeroco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, HyxeviousRomInfo, HyxeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,

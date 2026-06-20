@@ -51,7 +51,8 @@ INT32 Dx9Core_Init();
 #include "resource_string.h"
 #include "net.h"
 #include "zip.h" // unzip*() in sel.cpp
-#include <chd.h>
+#include "chd.h"
+#include "neocdlist.h"
 
 // ---------------------------------------------------------------------------
 
@@ -383,18 +384,22 @@ void LoadDrvIcons();
 void UnloadDrvIcons();
 
 // neocdsel.cpp
-extern int NeoCDList_Init();
-extern bool bNeoCDListScanSub;
-extern bool bNeoCDListScanOnlyISO;
+int NeoCDList_Init();
+extern bool  bNeoCDListScanSub;
+extern bool  bNeoCDListScanOnlyISO;
 extern TCHAR szNeoCDCoverDir[MAX_PATH];
 extern TCHAR szNeoCDPreviewDir[MAX_PATH];
 extern TCHAR szNeoCDGamesDir[MAX_PATH];
+
 
 HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img);
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 HBITMAP PNGLoadBitmapBuffer(HWND hWnd, void *buffer, int bufferLength, int nWidth, int nHeight, int nPreset);
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
+TCHAR* ParseCueGetImageFile(const TCHAR* cueFullPath);
+void  FreeNGCDGame(NGCDGAME** ppGame);
+INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog = false);
 
 // romdata.cpp
 extern bool bRDListScanSub;
@@ -532,7 +537,6 @@ void DisplayReplayProperties(HWND hDlg, bool bClear);
 
 // memcard.cpp
 extern int nMemoryCardStatus;						// & 1 = file selected, & 2 = inserted
-extern INT32 Pgm2MaxCardSlots;						// PGM2: number of card slots (0 = no cards)
 
 int	MemCardCreate();
 int	MemCardSelect();
@@ -540,7 +544,26 @@ int	MemCardInsert();
 int	MemCardEject();
 int	MemCardToggle();
 
+// Returns true if the current driver supports memory card / IC card
+static inline bool HasMemCard() {
+	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	
+#ifdef BUILD_NEOGEO
+	if (hw == HARDWARE_SNK_NEOGEO)
+	    return true;
+#endif
+
+#ifdef BUILD_PGM2
+    if (hw == HARDWARE_IGS_PGM2)
+	    return true;
+#endif
+	
+	return false;
+}
+
+#ifdef BUILD_PGM2
 // PGM2 per-slot card operations
+extern INT32 Pgm2MaxCardSlots;						// PGM2: number of card slots (0 = no cards)
 extern int nPgm2CardStatus[4];
 extern TCHAR szPgm2CardFile[4][MAX_PATH];
 int MemCardCreatePGM2Slot(int slot);
@@ -548,17 +571,12 @@ int MemCardSelectPGM2Slot(int slot);
 int MemCardInsertPGM2Slot(int slot);
 int MemCardEjectPGM2Slot(int slot);
 
-// Returns true if the current driver supports memory card / IC card
-static inline bool HasMemCard() {
-	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
-	return (hw == HARDWARE_SNK_NEOGEO || hw == HARDWARE_IGS_PGM2);
-}
-
 // Returns true if the current driver is PGM2 with card support
 static inline bool IsPGM2WithCards() {
 	UINT32 hw = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
 	return (hw == HARDWARE_IGS_PGM2 && Pgm2MaxCardSlots > 0);
 }
+#endif
 
 // progress.cpp
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs);
@@ -577,23 +595,25 @@ void UpdateLuaConsole(const wchar_t* fname);
 
 // cd_img.cpp
 
-// CHD extended metadata structure
-// Stores additional info parsed from CHD metadata tags
+// Extended metadata container for CHD disk image
+// Stores parsed key-value tag information extracted from CHD track metadata
+// All text fields are dynamically allocated heap pointers, must be released by FreeChdExtMeta()
 struct CHD_EXT_META {
-	TCHAR szSerial[64];			// SERIAL: Game serial number
-	TCHAR szName[128];			// NAME: Game title
-	TCHAR szPublisher[128];		// PUBLISHER: Publisher name
-	TCHAR szManufacturer[128];	// MANUFACTURER: Manufacturer name
-	TCHAR szOemId[64];			// OEMID: OEM identifier
-	TCHAR szVersion[32];		// VERSION: Version info
-	TCHAR szLanguages[64];		// LANGUAGES: Supported languages
-	TCHAR szYear[32];			// YEAR: Release year
-	INT32 nTrackCount;			// Total track number in CHD
-	bool  bValid;				// Flag: true if metadata parsed successfully
+	TCHAR* szSerial;			// SERIAL tag: unique game serial number, heap allocated
+	TCHAR* szName;			    // NAME tag: full game title, heap allocated
+	TCHAR* szPublisher;		    // PUBLISHER tag: game publisher name, heap allocated
+	TCHAR* szManufacturer;	    // MANUFACTURER tag: hardware manufacturer, heap allocated
+	TCHAR* szOemId;			    // OEMID tag: OEM identification string, heap allocated
+	TCHAR* szVersion;		    // VERSION tag: game revision / build version, heap allocated
+	TCHAR* szLanguages;		    // LANGUAGES tag: supported language list, heap allocated
+	TCHAR* szYear;			    // YEAR tag: official release year, heap allocated
+	INT32 nTrackCount;			// Total physical tracks contained inside CHD image
+	bool  bValid;				// Validity flag; TRUE if metadata parsing succeeded
 };
 
 // Parse extended metadata from opened CHD file
-INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META* pOutMeta);
+INT32 GetChdExtMeta(chd_file* pChdFile, CHD_EXT_META** ppOutMeta);
+void FreeChdExtMeta(CHD_EXT_META* pMeta);
 
 // ---------------------------------------------------------------------------
 // Debugger

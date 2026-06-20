@@ -1566,6 +1566,7 @@ void MenuEnableItems()
 
 		if (HasMemCard()) {
 			if (!kNetGame) {
+#ifdef BUILD_PGM2
 				if (IsPGM2WithCards()) {
 					// PGM2 per-slot: dynamically rebuild "Memory Card..." submenu
 					static HMENU hPgm2CardPopup = NULL;
@@ -1650,7 +1651,9 @@ void MenuEnableItems()
 							AppendMenu(hPgm2CardPopup, MF_POPUP, (UINT_PTR)hSlotMenu, szBuf);
 						}
 					}
-				} else {
+				} else
+#endif
+				{
 					EnableMenuItem(hMenu, MENU_MEMCARD_CREATE,			MF_ENABLED | MF_BYCOMMAND);
 					EnableMenuItem(hMenu, MENU_MEMCARD_SELECT,			MF_ENABLED | MF_BYCOMMAND);
 					if (nMemoryCardStatus & 1) {

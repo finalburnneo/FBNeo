@@ -2809,26 +2809,26 @@ struct BurnDriver BurnDrvngpc_rockmanb = {
 	"ngp_rockmanb", NULL, "ngp_ngp", NULL, "2000",
 	"Rockman: Battle & Fighters (Japan)\0", NULL, "Capcom", "NeoGeo Pocket Color",
 	L"Rockman: Battle & Fighters (Japan)\0\u30ed\u30c3\u30af\u30de\u30f3 \u30d0\u30c8\u30eb & \u30d5\u30a1\u30a4\u30bf\u30fc\u30ba\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_rockmanbRomInfo, ngpc_rockmanbRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };
 
-// Rockman: Battle & Fighters (Hack, English v0.9)
-// https://www.romhacking.net/translations/3925/
+// Rockman: Battle & Fighters (Hack, English v1.0)
+// https://romhackplaza.org/translations/mega-man-battle-fighters-translation-english-translation-neo-geo-pocket-color/
 static struct BurnRomInfo ngpc_rockmanbeRomDesc[] = {
-	{ "Rockman - Battle & Fighters T-Eng v0.9 (2018)(marc_max).ngp", 0x200000, 0x65985356, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Rockman - Battle & Fighters T-Eng v1.0 (2018-22)(marc_max & RyuHayabusa).ngp", 0x200000, 0x9322629e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_rockmanbe, ngpc_rockmanbe, ngpc_ngp)
 STD_ROM_FN(ngpc_rockmanbe)
 
 struct BurnDriver BurnDrvngpc_rockmanbe = {
-	"ngp_rockmanbe", "ngp_rockmanb", "ngp_ngp", NULL, "2018",
-	"Rockman: Battle & Fighters (Hack, English v0.9)\0", NULL, "marc_max", "NeoGeo Pocket Color",
+	"ngp_rockmanbe", "ngp_rockmanb", "ngp_ngp", NULL, "2018-22",
+	"Rockman: Battle & Fighters (Hack, English v1.0)\0", NULL, "marc_max & RyuHayabusa", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNK_NGPC, GBF_VSFIGHT, 0,
 	NgpGetZipName, ngpc_rockmanbeRomInfo, ngpc_rockmanbeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3

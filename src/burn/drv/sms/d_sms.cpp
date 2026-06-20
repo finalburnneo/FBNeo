@@ -21392,6 +21392,24 @@ struct BurnDriver BurnDrvsms_4lexkiddnw = {
 	256, 192, 4, 3
 };
 
+// 2048-SMS! (HB)
+static struct BurnRomInfo sms_2048smsRomDesc[] = {
+	{ "2048-SMS! (2014)(Sanqui).sms",	32768, 0x4b7a237d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_2048sms)
+STD_ROM_FN(sms_2048sms)
+
+struct BurnDriver BurnDrvsms_2048sms = {
+	"sms_2048sms", NULL, NULL, NULL, "2014",
+	"2048-SMS! (HB)\0", NULL, "Sanqui", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_2048smsRomInfo, sms_2048smsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Acid Reflux (HB, v1.10)
 static struct BurnRomInfo sms_acrefluxRomDesc[] = {
 	{ "Acid Reflux v1.10 (2016)(Furrtek & Robotwo).sms",	32768, 0x9d9919df, BRF_PRG | BRF_ESS },
@@ -23323,6 +23341,24 @@ struct BurnDriver BurnDrvsms_mainurse = {
 	256, 192, 4, 3
 };
 
+// Master Barbarricade (HB, RC2)
+static struct BurnRomInfo sms_mbarbarricadeRomDesc[] = {
+	{ "Master Barbarricade RC2 (2026)(Jess Creations - ArugulaZ).sms",	49152, 0x12ab8665, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mbarbarricade)
+STD_ROM_FN(sms_mbarbarricade)
+
+struct BurnDriver BurnDrvsms_mbarbarricade = {
+	"sms_mbarbarricade", NULL, NULL, NULL, "2026",
+	"Master Barbarricade (HB, RC2)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_BREAKOUT, 0,
+	SMSGetZipName, sms_mbarbarricadeRomInfo, sms_mbarbarricadeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Mazy (HB)
 static struct BurnRomInfo sms_mazyRomDesc[] = {
 	{ "Mazy (2022)(Inufuto).sms",	10992, 0xcb5c20fd, BRF_PRG | BRF_ESS },
@@ -24484,7 +24520,7 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 
 // Super Mario Bros. (HB, v0.12)
 static struct BurnRomInfo sms_smbRomDesc[] = {
-	{ "Super Mario Bros. v0.12 (2026)(Lack of Track).sms",	262144, 0x03cfb75f, BRF_PRG | BRF_ESS },
+	{ "Super Mario Bros. v0.12 (2026)(Lack of Track).sms",	262144, 0xb1928f81, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_smb)
@@ -24492,7 +24528,7 @@ STD_ROM_FN(sms_smb)
 
 struct BurnDriver BurnDrvsms_smb = {
 	"sms_smb", NULL, NULL, NULL, "2026",
-	"Super Mario Bros. (HB, v0.12)\0", "Unofficial Port - only the first level is available", "Lack of Track", "Sega Master System",
+	"Super Mario Bros. (HB, v0.12)\0", NULL, "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

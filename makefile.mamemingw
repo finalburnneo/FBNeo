@@ -199,7 +199,7 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 #       D3DUtils & D3DMath need these
 #       DEF     = -Dsinf=\(float\)sin -Dcosf=\(float\)cos -Dasinf=\(float\)asin -Dacosf=\(float\)acos -Dsqrtf=\(float\)sqrt
 
-	DEF	:= -DBUILD_WIN32 -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DMMX=$(MMX)
+	DEF	:= -DBUILD_WIN32 -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DMMX=$(MMX) -DZLIB_WINAPI -DCHDR_SYSTEM_ZLIB
 
 ifdef UNICODE
 	DEF	:= $(DEF) -D_UNICODE
@@ -581,6 +581,10 @@ ifeq ($(MAKELEVEL),1)
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/libchdr_lzma.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) -c $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F)
+
 else
 
 %.o:	%.c
@@ -594,6 +598,10 @@ else
 %.o:
 	@echo Compiling $<...
 	@$(CC) $(CXXFLAGS) -c $< -o $@
+
+$(objdir)dep/libs/lzma/libchdr_lzma.o: $(srcdir)dep/libs/lzma/libchdr_lzma.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 endif
 

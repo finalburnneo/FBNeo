@@ -1113,7 +1113,7 @@ static INT32 DrvInit(INT32 sound_system)
 	ZetSetOutHandler(mcrmono_write_port);
 
     ZetDaisyInit(Z80_CTC, 0);
-	z80ctc_init(5000000, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
+	z80ctc_init(5000000, 5000000, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
 	ZetClose();
 
 	sound_system_init(sound_system);
@@ -1160,7 +1160,7 @@ static INT32 SpyhuntCommonInit(INT32 sound_system)
 	ZetSetInHandler(spyhunt_read_port);
 
     ZetDaisyInit(Z80_CTC, 0);
-	z80ctc_init(5000000, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
+	z80ctc_init(5000000, 5000000, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
 	ZetClose();
 
     if (is_spyhunt) {

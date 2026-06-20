@@ -239,12 +239,14 @@ INT32 z80ctc_getperiod(int ch)
 	if ((channel->mode & MODE) == MODE_COUNTER)
 	{
 		//logerror("CTC %d is CounterMode : Can't calculate period\n", ch );
-		return 0; //attotime_zero;
+		//bprintf(0, _T("CTC %d countermode, %d cycles\n"), ch, channel->tconst);
+		return channel->tconst; //attotime_zero;
 	}
 
 	/* compute the period */
 	INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
 	//return attotime_mul(period, channel->tconst);
+	//bprintf(0, _T("CTC %d - %d cycles\n"), ch, period * channel->tconst);
 	return period * channel->tconst;   // tih?-timmy?  (dink)
 }
 
@@ -267,7 +269,7 @@ void z80ctc_write(int offset, UINT8 data)
 	if ((mode & CONSTANT) == CONSTANT_LOAD)
 	{
 		VPRINTF(("CTC ch.%d constant = %02x\n", ch, data));
-
+		//bprintf(0, _T("z80 ctc constant load, ch %x - %d\n"), ch, data);
 		/* set the time constant (0 -> 0x100) */
 		channel->tconst = data ? data : 0x100;
 
@@ -287,6 +289,7 @@ void z80ctc_write(int offset, UINT8 data)
 				{
 					INT32 period = ((mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
 					period *= channel->tconst;
+					//bprintf(0, _T("z80ctc %d, start timer cycles: %d\n"), ch, period);
 					//period = attotime_mul(period, channel->tconst);
 					timer_start(ch, period, timercallback, ch, 1);
 					//timer_adjust_periodic(channel->timer, period, ch, period);
@@ -330,7 +333,7 @@ void z80ctc_write(int offset, UINT8 data)
 		/* set the new mode */
 		channel->mode = data;
 		VPRINTF(("CTC ch.%d mode = %02x\n", ch, data));
-
+		//bprintf(0, _T("z80ctc %d, mode = %x\n"), ch, data);
 		/* if we're being reset, clear out any pending timers for this channel */
 		if ((data & RESET) == RESET_ACTIVE)
 		{
@@ -357,7 +360,10 @@ UINT8 z80ctc_read(int offset)
 
 	/* if we're in counter mode, just return the count */
 	if ((channel->mode & MODE) == MODE_COUNTER || (channel->mode & WAITING_FOR_TRIG))
+	{
+//		bprintf(0, _T("z80ctc %x: read downcounter %d\n"), ch, channel->down);
 		return channel->down;
+	}
 
 	/* else compute the down counter value */
 	else
@@ -365,11 +371,16 @@ UINT8 z80ctc_read(int offset)
 		INT32 period = ((channel->mode & PRESCALER) == PRESCALER_16) ? ctc->period16 : ctc->period256;
 
 		//VPRINTF(("CTC clock %f\n",ATTOSECONDS_TO_HZ(period.attoseconds)));
+		if (timer_isrunning(ch)) {
+			//bprintf(0, _T("ctc timer %d running, left: %d\n"),((int)timer_timeleft(ch) / period + 1) & 0xff);
 
-        if (timer_isrunning(ch))
-            return ((int)timer_timeleft(ch) / period + 1) & 0xff;
-        else
-            return 0;
+			return ((int)timer_timeleft(ch) / period + 1) & 0xff;
+		}
+		else {
+			//bprintf(0, _T("ctc timer %d zero??\n"));
+
+			return channel->down;
+		}
 #if 0
 		if (channel->timer != NULL)
 			return ((int)(attotime_to_double(timer_timeleft(channel->timer)) * attotime_to_double(period)) + 1) & 0xff;
@@ -387,7 +398,7 @@ UINT8 z80ctc_read(int offset)
 
 void z80ctc_trg_write(int ch, UINT8 data)
 {
-	ctc_channel *channel = &ctc->channel[ch];
+	ctc_channel *channel = &ctc->channel[ch & 3];
 
 	/* normalize data */
 	data = data ? 1 : 0;
@@ -519,12 +530,13 @@ void z80ctc_irq_reti()
 	//logerror("z80ctc_irq_reti: failed to find an interrupt to clear IEO on!\n");
 }
 
-void z80ctc_init(INT32 clock, INT32 notimer, void (*intr)(int), void (*zc0)(int, UINT8), void (*zc1)(int, UINT8), void (*zc2)(int, UINT8))
+void z80ctc_init(INT32 ctcclock, INT32 z80clock, INT32 notimer, void (*intr)(int), void (*zc0)(int, UINT8), void (*zc1)(int, UINT8), void (*zc2)(int, UINT8))
 {
 	ctc = (z80ctc *)BurnMalloc(sizeof(z80ctc));
-	ctc->clock = clock;
-	ctc->period16 = 16;
-	ctc->period256 = 256;
+	ctc->clock = ctcclock;
+	ctc->period16 = 16 * z80clock / ctcclock;
+	ctc->period256 = 256 * z80clock / ctcclock;;
+	bprintf(0, _T("Z80 CTC: %dhz, Z80: %dhz.  16: %d cycles, 256: %d cycles.\n"), ctcclock, z80clock, ctc->period16, ctc->period256);
 	//ctc->period16 = attotime_mul(ATTOTIME_IN_HZ(ctc->clock), 16);
 	//ctc->period256 = attotime_mul(ATTOTIME_IN_HZ(ctc->clock), 256);
 	for (int ch = 0; ch < 4; ch++)

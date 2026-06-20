@@ -5511,9 +5511,9 @@ struct BurnDriver BurnDrvcv_bankbuild = {
     272, 228, 4, 3
 };
 
-// Barbarricade (HB, 06-03-26)
+// Barbarricade (HB, 06-17-26)
 static struct BurnRomInfo cv_barbarricadeRomDesc[] = {
-	{ "Barbarricade 06-03-26 (2026)(Jess Creations).rom",	32768, 0xbf40aaf7, BRF_PRG | BRF_ESS },
+	{ "Barbarricade 06-17-26 (2026)(Jess Creations).rom",	32768, 0xad6630ce, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_barbarricade, cv_barbarricade, cv_coleco)
@@ -5521,7 +5521,7 @@ STD_ROM_FN(cv_barbarricade)
 
 struct BurnDriver BurnDrvcv_barbarricade = {
 	"cv_barbarricade", NULL, "cv_coleco", NULL, "2026",
-	"Barbarricade (HB, 06-03-26)\0", NULL, "Jess Creations", "ColecoVision",
+	"Barbarricade (HB, 06-17-26)\0", NULL, "Jess Creations", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_BREAKOUT, 0,
 	CVGetZipName, cv_barbarricadeRomInfo, cv_barbarricadeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

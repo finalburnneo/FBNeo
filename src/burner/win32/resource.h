@@ -18,6 +18,8 @@
 #define IDI_INPD_DETECT_GAMEPADS            16 // icon
 #define IDC_INPD_DETECT_GAMEPADS            17 // control
 #define IDI_TV_ROMDATA_DRV                  18
+#define IDI_LV_CDIMAGE_CUE                  19
+#define IDI_LV_CDIMAGE_CHD                  20
 
 #define IDD_SPLASH							50
 #define IDD_INPD                        	51

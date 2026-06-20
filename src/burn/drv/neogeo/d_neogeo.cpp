@@ -27752,21 +27752,21 @@ struct BurnDriver BurnDrvInthehunt = {
 };
 
 
-// Blue And Red - Fight The Robots! (HB, v1.5 NTSC)
+// Blue And Red - Fight The Robots! (HB, v1.6 NTSC)
 // https://kaijuwasp.itch.io/blue-and-red-fight-the-robots-arcade-edition
 
 static struct BurnRomInfo blueandrRomDesc[] = {
-	{ "blueandr-p1.bin",		0x0100000, 0x32b764e1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "blueandr-p1.bin",		0x0100000, 0x6e4f71aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	
 	{ "blueandr-s1.bin",		0x0020000, 0x0d0067f5, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "blueandr-c1.bin",		0x0040000, 0xc1554b81, 3 | BRF_GRA },           //  2 Sprite data
-	{ "blueandr-c2.bin",		0x0040000, 0x83a9c206, 3 | BRF_GRA },           //  3
+	{ "blueandr-c1.bin",		0x0040000, 0x79b934a5, 3 | BRF_GRA },           //  2 Sprite data
+	{ "blueandr-c2.bin",		0x0040000, 0x47647e8d, 3 | BRF_GRA },           //  3
 
-	{ "blueandr-m1.bin",		0x0040000, 0x864a8cf8, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "blueandr-m1.bin",		0x0040000, 0x19f32974, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "blueandr-v1.bin",		0x0040000, 0x7d5535dd, 5 | BRF_SND },           //  5 Sound data
-	{ "blueandr-v2.bin",		0x0b80000, 0xd6308621, 5 | BRF_SND },           //  6
+	{ "blueandr-v2.bin",		0x0b80000, 0xd52a3036, 5 | BRF_SND },           //  6
 };
 
 STDROMPICKEXT(blueandr, blueandr, neogeo)
@@ -27774,7 +27774,7 @@ STD_ROM_FN(blueandr)
 
 struct BurnDriver BurnDrvblueandr = {
 	"blueandr", NULL, "neogeo", NULL, "2026",
-	"Blue And Red - Fight The Robots! (HB, v1.5 NTSC)\0", NULL, "Kaiju Wasp", "Neo Geo MVS",
+	"Blue And Red - Fight The Robots! (HB, v1.6 NTSC)\0", NULL, "Kaiju Wasp", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, blueandrRomInfo, blueandrRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

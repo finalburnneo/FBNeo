@@ -1117,7 +1117,7 @@ static INT32 DrvInit(INT32 cpu_board)
 	ZetOpen(0);
 
     ZetDaisyInit(Z80_CTC, 0);
-	z80ctc_init(nMainClock, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
+	z80ctc_init(nMainClock, nMainClock, 0, ctc_interrupt, ctc_trigger, NULL, NULL);
 
 	switch (cpu_board)
 	{

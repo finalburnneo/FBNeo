@@ -26045,6 +26045,26 @@ struct BurnDriver BurnDrvsnes_Ogrebattle = {
 	512, 448, 4, 3
 };
 
+// Ogre Battle - The March of the Black Queen (Hack, English v1.2)
+// https://www.romhacking.net/translations/3807/
+// https://www.romhacking.net/hacks/9733/
+static struct BurnRomInfo snes_OgrebattleteRomDesc[] = {
+	{ "Ogre Battle - The March of the Black Queen T-Eng v1.2 (2018)(FinS).sfc", 2097152, 0x7514efdf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ogrebattlete)
+STD_ROM_FN(snes_Ogrebattlete)
+
+struct BurnDriver BurnDrvsnes_Ogrebattlete = {
+	"snes_ogrebattlete", "snes_ogrebattle", NULL, NULL, "2018",
+	"Ogre Battle - The March of the Black Queen (Hack, English v1.2)\0", "Herostar Fix v0.1.0 by songbirder included", "FinS", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_OgrebattleteRomInfo, snes_OgrebattleteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Olivia no Mystery (Japan)
 
 static struct BurnRomInfo snes_OlivmystjRomDesc[] = {
@@ -47625,6 +47645,25 @@ struct BurnDriver BurnDrvsnes_Supermetroidasc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermetroidascRomInfo, snes_SupermetroidascRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Metroid: Fix Collection Patch (Hack, v1.1)
+// https://www.romhacking.net/hacks/9732/
+static struct BurnRomInfo snes_SupermetroidfcpRomDesc[] = {
+	{ "Super Metroid - Fix Collection Patch v1.1 (2026)(Furo_19).sfc", 3145728, 0x3f8f3eaa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supermetroidfcp)
+STD_ROM_FN(snes_Supermetroidfcp)
+
+struct BurnDriver BurnDrvsnes_Supermetroidfcp = {
+	"snes_supermetroidfcp", "snes_supermetroid", NULL, NULL, "2026",
+	"Super Metroid: Fix Collection Patch (Hack, v1.1)\0", NULL, "Furo_19", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SupermetroidfcpRomInfo, snes_SupermetroidfcpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

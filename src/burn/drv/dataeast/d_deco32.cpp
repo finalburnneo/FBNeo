@@ -1715,7 +1715,7 @@ static INT32 CaptavenCommonInit(INT32 has_z80, UINT32 speedhack)
 	game_select = 0;
 	speedhack_address = speedhack;
 
-	BurnSetRefreshRate(57.79965);
+	BurnSetRefreshRate(57.44485); // 7MHz / 448 / 272 = 57.44485Hz (15.625kHz horizontal)
 
 	gfxlen[0] = 0x100000;
 	gfxlen[1] = 0x100000;
@@ -2762,7 +2762,7 @@ static INT32 CaptavenStartDraw()
 
 	deco16_clear_prio_map();
 
-	BurnTransferClear();
+	BurnTransferClear(0x400); // PF3 base / pen 0x400 backdrop (matches hardware comp_pal_addr {1'b1,2'b00,8'h00})
 
 	return 0;
 }
@@ -3595,6 +3595,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
+	if (game_select == 0) { // captaven: 7MHz / 448 / 272 = 57.44485Hz (15.625kHz horizontal)
+		nInterleave = 272;
+		nCyclesTotal[0] = (INT32)((double)7000000 / 57.44485);
+		nCyclesTotal[1] = (INT32)((double)deco16_sound_cpuclock / 57.44485);
+	}
 	if (game_select == 2) { // nslasher
 		nCyclesTotal[0] = (INT32)((double)7080500 / 58.464346);
 		nCyclesTotal[1] = (INT32)((double)deco16_sound_cpuclock / 58.464346);

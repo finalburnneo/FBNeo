@@ -557,7 +557,7 @@ static void MachineInit()
 
     ZetDaisyInit(Z80_PIO, Z80_CTC);
 	z80pio_init(pioctc_intr, NULL, NULL, NULL, NULL, NULL, NULL);
-	z80ctc_init(2000000, 0, pioctc_intr, ctc_trigger, NULL, ctc_clockdac);
+	z80ctc_init(2000000, 2000000, 0, pioctc_intr, ctc_trigger, NULL, ctc_clockdac);
 
     ZetMapMemory(DrvZ80ROM1,		0x0000, 0x1fff, MAP_ROM);
 	ZetMapMemory(DrvZ80RAM1,		0x4000, 0x43ff, MAP_RAM);

@@ -1989,6 +1989,9 @@ IDI_TV_MINUS            ICON    DISCARDABLE     "resource/TV Minus.ico"
 IDI_TV_NOTWORKING       ICON    DISCARDABLE     "resource/TV Not Working.ico"
 IDI_TV_NOTFOUND_ESS     ICON    DISCARDABLE     "resource/TV Not Found.ico"
 IDI_TV_NOTFOUND_NON     ICON    DISCARDABLE     "resource/TV Not Found Non Essential.ico"
+IDI_TV_ROMDATA_DRV      ICON    DISCARDABLE     "resource/TV RomData Driver.ico"
+IDI_LV_CDIMAGE_CUE      ICON    DISCARDABLE     "resource/LV Cue Image.ico"
+IDI_LV_CDIMAGE_CHD      ICON    DISCARDABLE     "resource/LV Chd Image.ico"
 IDI_INPD_DETECT_GAMEPADS ICON    DISCARDABLE     "resource/detect gamepads.ico"
 
 #endif    // English resources

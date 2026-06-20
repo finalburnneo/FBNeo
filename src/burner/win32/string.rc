@@ -283,6 +283,8 @@ BEGIN
 	IDS_NUMDIAL_NUM_FRAMES		"Number of Frames"
 	IDS_NUMDIAL_FILTER_SHARP	"Select desired filter sharpness"
 
+	IDS_SCANNING_IMGS			"Scanning CD Images..."
+
 	IDS_SCANNING_ROMS			"Scanning ROMs..."
 
 	IDS_CACHING_ICONS			"Loading Icons..."

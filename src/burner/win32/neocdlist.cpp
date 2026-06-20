@@ -7,12 +7,11 @@
 #include "chd.h"
 
 #ifdef BUILD_NEOGEO
-
 #define DEBUG_CD    0
 
 const INT32 nSectorLength = 2352;
 
-NGCDGAME* game;
+static NGCDGAME* game;
 
 #include "neocdlist_games.h"
 
@@ -292,6 +291,20 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 	INT32  nRevisionQueveID = 0;
 	bool   bGotDDPRG_ACM    = false;
 
+	TCHAR* pIsoPath = NULL;
+	if (IsFileExt(pszFile, _T(".cue"))) {
+		pIsoPath = ParseCueGetImageFile(pszFile);
+		if (!pIsoPath) return;
+
+		TCHAR szIsoPath[MAX_PATH] = { 0 };
+		_tcsncpy(szIsoPath, pIsoPath, MAX_PATH - 1);
+		szIsoPath[MAX_PATH - 1] = _T('\0');
+		free_s((void**)&pIsoPath);
+		pIsoPath = szIsoPath;
+	}
+
+	pIsoPath = pszFile;
+
 	UINT8  nLenDR;
 	UINT8  Flags;
 	UINT8  LEN_FI;
@@ -318,7 +331,7 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 			if (bNewSector) {
 				if (bRevisionQueve) {
 					bRevisionQueve = false;
-					pfEntryCallBack(nRevisionQueveID, pszFile);
+					pfEntryCallBack(nRevisionQueveID, pIsoPath);
 				}
 				return;
 			}
@@ -395,11 +408,11 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
 					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
 					else if (nDate[0] == 125 && nDate[1] == 3 && nDate[2] == 6)           { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
-					if (_tcsstr(pszFile, _T("(FR)")))                                     { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
+					if (_tcsstr(pIsoPath, _T("(FR)")))                                    { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
 				}
 				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14)  { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
 				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }	// Double Dragon Rev 1
-				if (nID == 0x0082 && _tcsstr(pszFile, _T("OST")))                         { nID |= 0x2000; }	// Double Dragon PS1 OST
+				if (nID == 0x0082 && _tcsstr(pIsoPath, _T("OST")))                        { nID |= 0x2000; }	// Double Dragon PS1 OST
 				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }	// Looptris Plus
 				if (nID == 0x0048 && Data[0x67] == 0x08)                                  { nID |= 0x1000; }	// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
 				if (nID == 0x0055 && Data[0x67] == 0xDE)	/* 10-6-1994 (P1.PRG)  */     {/* ...continue*/}	// King of Fighters '94, The (1994)(SNK)(JP)
@@ -437,30 +450,45 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 	free_s((void**)&File);
 }
 
+
 INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 {
-	if (!pszFile) return 0;
+	if (!pszFile)
+		return 0;
+
+	TCHAR* pIsoPath = NULL;
+	if (IsFileExt(pszFile, _T(".cue"))) {
+		pIsoPath = ParseCueGetImageFile(pszFile);
+		if (!pIsoPath) return 0;
+
+		TCHAR szIsoPath[MAX_PATH] = { 0 };
+		_tcsncpy(szIsoPath, pIsoPath, MAX_PATH - 1);
+		szIsoPath[MAX_PATH - 1] = _T('\0');
+		free_s((void**)&pIsoPath);
+		pIsoPath = szIsoPath;
+	}
+
+	if (!pIsoPath) pIsoPath = pszFile;
+
+	INT32 ret = 0;
+	// Match I/O strategy
+	const struct IO_STRATEGY* pStrategy = NULL;
+	if (       IsFileExt(pIsoPath, _T(".img")) ||
+		       IsFileExt(pIsoPath, _T(".bin"))) {
+		pStrategy = &ioStrategyList[0];
+	} else if (IsFileExt(pIsoPath, _T(".chd"))) {
+		pStrategy = &ioStrategyList[1];
+	} else {
+		// Unsupported format, exit directly
+		return 0;
+	}
 
 	// Allocate top-level context
 	struct ISO_CTX* pIsoCtx = (struct ISO_CTX*)calloc(1, sizeof(struct ISO_CTX));
 	if (!pIsoCtx) return 0;
 
-	INT32 ret = 0;
-	// Match I/O strategy
-	const struct IO_STRATEGY* pStrategy = NULL;
-	if (       IsFileExt(pszFile, _T(".img")) ||
-		       IsFileExt(pszFile, _T(".bin"))) {
-		pStrategy = &ioStrategyList[0];
-	} else if (IsFileExt(pszFile, _T(".chd"))) {
-		pStrategy = &ioStrategyList[1];
-	} else {
-		// Unsupported format, exit directly
-		free_s((void**)&pIsoCtx);
-		return 0;
-	}
-
 	// Open image and initialize context
-	if (!pStrategy->fnOpen(pIsoCtx, pszFile)) {
+	if (!pStrategy->fnOpen(pIsoCtx, pIsoPath)) {
 		free_s((void**)&pIsoCtx);
 		return 0;
 	}
@@ -536,42 +564,68 @@ static TCHAR* _tcsdup_s(const TCHAR* pSrc)
 	return pDst;
 }
 
+void FreeNGCDGame(NGCDGAME** ppGame)
+{
+	if (!ppGame || !*ppGame)
+		return;
+
+	NGCDGAME* pTarget = *ppGame;
+	free_s((void**)&pTarget->pszName);
+	free_s((void**)&pTarget->pszTitle);
+	free_s((void**)&pTarget->pszYear);
+	free_s((void**)&pTarget->pszCompany);
+	free_s((void**)ppGame);
+}
+
+static void PrintNGCDGameInfo(const NGCDGAME* pGame)
+{
+	if (!pGame) return;
+	bprintf(PRINT_NORMAL, _T("    Title: %s \n"),     pGame->pszTitle);
+	bprintf(PRINT_NORMAL, _T("    Shortname: %s \n"), pGame->pszName);
+	bprintf(PRINT_NORMAL, _T("    Year: %s \n"),      pGame->pszYear);
+	bprintf(PRINT_NORMAL, _T("    Company: %s \n"),   pGame->pszCompany);
+}
+
+// Internal reusable tool: deep copy game meta by ID, output via ppOutGame
+// Return 1 success, 0 fail
+INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog)
+{
+	if (!ppOutGame)
+		return 0;
+
+	*ppOutGame = NULL;
+	NGCDGAME* pGameInfo = GetNeoGeoCDInfo(nGameID);
+	if (!pGameInfo) {
+		bprintf(0, _T("NeoGeoCD Unknown GAME ID %x\n"), nGameID);
+		return 0;
+	}
+
+	NGCDGAME* pnew = (NGCDGAME*)calloc(1, sizeof(NGCDGAME));
+	if (!pnew)
+		return 0;
+
+	// Deep copy all fields
+	pnew->id         = pGameInfo->id;
+	pnew->pszName    = _tcsdup_s(pGameInfo->pszName);
+	pnew->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
+	pnew->pszYear    = _tcsdup_s(pGameInfo->pszYear);
+	pnew->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
+
+	// Print only when switch enabled
+	if (bPrintLog)
+		PrintNGCDGameInfo(pnew);
+
+	*ppOutGame = pnew;
+	return 1;
+}
+
 // Get the title
 INT32 GetNeoCDTitle(UINT32 nGameID)
 {
-	game = (NGCDGAME*)calloc(1, sizeof(NGCDGAME));
-	if (!game) return 0;
-/*
-*	// GetNeoGeoCDInfo(nGameID) has been called twice.
-*	// The use of memcpy here does not comply with best practices for memory management
-* 
-	if(GetNeoGeoCDInfo(nGameID)) {
-		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
-*/
-	NGCDGAME* pGameInfo = GetNeoGeoCDInfo(nGameID);
-	if (pGameInfo) {
-		// Deep copy to avoid pointer aliasing issues
-		game->id         = pGameInfo->id;
-		game->pszName    = _tcsdup_s(pGameInfo->pszName);
-		game->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
-		game->pszYear    = _tcsdup_s(pGameInfo->pszYear);
-		game->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
-
-		bprintf(PRINT_NORMAL, _T("    Title: %s \n")		, game->pszTitle);
-		bprintf(PRINT_NORMAL, _T("    Shortname: %s \n")	, game->pszName);
-		bprintf(PRINT_NORMAL, _T("    Year: %s \n")			, game->pszYear);
-		bprintf(PRINT_NORMAL, _T("    Company: %s \n")		, game->pszCompany);
-
-		// Update the main window title
-		//SetNeoCDTitle(game->pszTitle);
-
-		return 1;
-	} else {
-		bprintf(0, _T("NeoGeoCD Unknown GAME ID %x\n"), nGameID);
-		//SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
-	}
-
-	return 0;
+	// Release previous global data first to avoid memory leak
+	FreeNGCDGame(&game);
+	// Global scene needs log output, pass true
+	return GetNGCDGameTitle(nGameID, &game, true);
 }
 
 static void NeoCDList_Callback(INT32 nID, TCHAR *pszFile)
@@ -579,38 +633,35 @@ static void NeoCDList_Callback(INT32 nID, TCHAR *pszFile)
 	GetNeoCDTitle(nID);
 }
 
-// This will do everything
+void NeoCDInfo_Exit()
+{
+	FreeNGCDGame(&game);
+}
+
+// This function scans and identifies NeoGeo CD game information from supported image files
 INT32 GetNeoGeoCD_Identifier()
 {
-	if(!GetIsoPath() || !IsNeoGeoCD()) {
+	TCHAR* szIsoPath = GetIsoPath();
+	// Skip if ISO path is empty or NeoGeo CD mode is disabled
+	if (!szIsoPath || !IsNeoGeoCD())
 		return 0;
-	}
 
-	// Make sure we have a valid ISO file extension...
-	if (IsFileExt(GetIsoPath(), _T(".img")) || IsFileExt(GetIsoPath(), _T(".bin"))) {
-		FILE *fp = _tfopen(GetIsoPath(), _T("rb"));
-		if(fp) {
-			fclose(fp);
-			bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
-			// Read ISO and look for 68K ROM standard program header, ID is always there
-			// Note: This function works very quick, doesn't compromise performance :)
-			// it just read each sector first 264 bytes aproximately only.
-			NeoCDList_CheckISO(GetIsoPath(), NeoCDList_Callback);
+	// Clear previous game global data to avoid old info pollution
+	NeoCDInfo_Exit();
 
-		} else {
-			bprintf(PRINT_NORMAL, _T("    Couldn't open %s \n"), GetIsoPath());
+	// Check supported image extensions: img / bin / chd
+	if (IsFileExt(szIsoPath, _T(".img")) || IsFileExt(szIsoPath, _T(".bin")) || IsFileExt(szIsoPath, _T(".chd"))) {
+		bprintf(0, _T("NeoCDList: checking %s\n"), szIsoPath);
+		INT32 ret = NeoCDList_CheckISO(szIsoPath, NeoCDList_Callback);
+		if (!ret) {
+			bprintf(PRINT_NORMAL, _T("    Failed to parse image file %s\n"), szIsoPath);
 			return 0;
 		}
-
-	} else if (IsFileExt(GetIsoPath(), _T(".chd"))) {
-		bprintf(0, _T("NeoCDList: checking %s\n"), GetIsoPath());
-		NeoCDList_CheckISO(GetIsoPath(), NeoCDList_Callback);
+		return 1;
 	} else {
-		bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [ .img / .bin ] \n"));
+		bprintf(PRINT_NORMAL, _T("    File doesn't have a valid ISO extension [.img / .bin / .chd]\n"));
 		return 0;
 	}
-
-	return 1;
 }
 
 INT32 NeoCDInfo_Init()
@@ -637,19 +688,6 @@ INT32 NeoCDInfo_ID()
 {
 	if(!game || !IsNeoGeoCD()) return 0;
 	return game->id;
-}
-
-void NeoCDInfo_Exit()
-{
-	if (game) {
-		// Free string allocations before freeing the struct
-		free_s((void**)&game->pszName);
-		free_s((void**)&game->pszTitle);
-		free_s((void**)&game->pszYear);
-		free_s((void**)&game->pszCompany);
-		// Free the struct itself
-		free_s((void**)&game);
-	}
 }
 
 #endif

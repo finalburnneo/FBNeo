@@ -1626,7 +1626,8 @@ del %(Filename).exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH% $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
+      <Command>set PATH=$(PerlPath);%PATH%
+	  $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1655,7 +1656,8 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH% $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
+      <Command>set PATH=$(PerlPath);%PATH%
+	  $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1688,7 +1690,8 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH% $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
+      <Command>set PATH=$(PerlPath);%PATH%
+	  $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1719,7 +1722,8 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH% $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
+      <Command>set PATH=$(PerlPath);%PATH%
+	  $(MSBuildProjectDirectory)/../../src/dep/visualstudio/pre2022.bat "$(VCInstallDir)</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>

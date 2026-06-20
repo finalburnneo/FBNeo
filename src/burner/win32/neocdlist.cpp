@@ -450,6 +450,38 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 	free_s((void**)&File);
 }
 
+// Internal reusable tool: deep copy game meta by ID, output via ppOutGame
+// Return 1 success, 0 fail
+INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog)
+{
+	if (!ppOutGame)
+		return 0;
+
+	*ppOutGame = NULL;
+	NGCDGAME* pGameInfo = GetNeoGeoCDInfo(nGameID);
+	if (!pGameInfo) {
+		bprintf(0, _T("NeoGeoCD Unknown GAME ID %x\n"), nGameID);
+		return 0;
+	}
+
+	NGCDGAME* pnew = (NGCDGAME*)calloc(1, sizeof(NGCDGAME));
+	if (!pnew)
+		return 0;
+
+	// Deep copy all fields
+	pnew->id = pGameInfo->id;
+	pnew->pszName = _tcsdup_s(pGameInfo->pszName);
+	pnew->pszTitle = _tcsdup_s(pGameInfo->pszTitle);
+	pnew->pszYear = _tcsdup_s(pGameInfo->pszYear);
+	pnew->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
+
+	// Print only when switch enabled
+	if (bPrintLog)
+		PrintNGCDGameInfo(pnew);
+
+	*ppOutGame = pnew;
+	return 1;
+}
 
 INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 {
@@ -584,39 +616,6 @@ static void PrintNGCDGameInfo(const NGCDGAME* pGame)
 	bprintf(PRINT_NORMAL, _T("    Shortname: %s \n"), pGame->pszName);
 	bprintf(PRINT_NORMAL, _T("    Year: %s \n"),      pGame->pszYear);
 	bprintf(PRINT_NORMAL, _T("    Company: %s \n"),   pGame->pszCompany);
-}
-
-// Internal reusable tool: deep copy game meta by ID, output via ppOutGame
-// Return 1 success, 0 fail
-INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog)
-{
-	if (!ppOutGame)
-		return 0;
-
-	*ppOutGame = NULL;
-	NGCDGAME* pGameInfo = GetNeoGeoCDInfo(nGameID);
-	if (!pGameInfo) {
-		bprintf(0, _T("NeoGeoCD Unknown GAME ID %x\n"), nGameID);
-		return 0;
-	}
-
-	NGCDGAME* pnew = (NGCDGAME*)calloc(1, sizeof(NGCDGAME));
-	if (!pnew)
-		return 0;
-
-	// Deep copy all fields
-	pnew->id         = pGameInfo->id;
-	pnew->pszName    = _tcsdup_s(pGameInfo->pszName);
-	pnew->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
-	pnew->pszYear    = _tcsdup_s(pGameInfo->pszYear);
-	pnew->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
-
-	// Print only when switch enabled
-	if (bPrintLog)
-		PrintNGCDGameInfo(pnew);
-
-	*ppOutGame = pnew;
-	return 1;
 }
 
 // Get the title

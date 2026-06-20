@@ -68,6 +68,27 @@ struct IO_STRATEGY
 	void  (*fnRead )(struct ISO_CTX* pIsoCtx, UINT8* Dest, UINT32 lOffset, UINT32 lSize, UINT32 lLength);
 };
 
+// TCHAR safe string duplicate (ANSI / Unicode auto-adaptive)
+// Allocates heap memory and copies source TCHAR string safely
+// Allocated memory must be released by free() or free_s()
+static TCHAR* _tcsdup_s(const TCHAR* pSrc)
+{
+	if (IsStrEmpty(pSrc))
+		return NULL;
+
+	size_t srcLen = _tcslen(pSrc);
+	size_t allocSize = (srcLen + 1) * sizeof(TCHAR);
+	TCHAR* pDst = (TCHAR*)malloc(allocSize);
+
+	if (!pDst)
+		return NULL;
+
+	_tcsncpy(pDst, pSrc, srcLen);
+	pDst[srcLen] = _T('\0');
+
+	return pDst;
+}
+
 static void iso9660_ReadOffset(FILE* fp, UINT8* Dest, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {
 	if (!fp || !Dest) return;
@@ -450,6 +471,15 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 	free_s((void**)&File);
 }
 
+static void PrintNGCDGameInfo(const NGCDGAME* pGame)
+{
+	if (!pGame) return;
+	bprintf(PRINT_NORMAL, _T("    Title: %s \n"), pGame->pszTitle);
+	bprintf(PRINT_NORMAL, _T("    Shortname: %s \n"), pGame->pszName);
+	bprintf(PRINT_NORMAL, _T("    Year: %s \n"), pGame->pszYear);
+	bprintf(PRINT_NORMAL, _T("    Company: %s \n"), pGame->pszCompany);
+}
+
 // Internal reusable tool: deep copy game meta by ID, output via ppOutGame
 // Return 1 success, 0 fail
 INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog)
@@ -575,27 +605,6 @@ void NeoCDInfo_SetTitle()
 	}
 }
 
-// TCHAR safe string duplicate (ANSI / Unicode auto-adaptive)
-// Allocates heap memory and copies source TCHAR string safely
-// Allocated memory must be released by free() or free_s()
-static TCHAR* _tcsdup_s(const TCHAR* pSrc)
-{
-	if (IsStrEmpty(pSrc))
-		return NULL;
-
-	size_t srcLen    = _tcslen(pSrc);
-	size_t allocSize = (srcLen + 1) * sizeof(TCHAR);
-	TCHAR* pDst      = (TCHAR*)malloc(allocSize);
-
-	if (!pDst)
-		return NULL;
-
-	_tcsncpy(pDst, pSrc, srcLen);
-	pDst[srcLen] = _T('\0');
-
-	return pDst;
-}
-
 void FreeNGCDGame(NGCDGAME** ppGame)
 {
 	if (!ppGame || !*ppGame)
@@ -607,15 +616,6 @@ void FreeNGCDGame(NGCDGAME** ppGame)
 	free_s((void**)&pTarget->pszYear);
 	free_s((void**)&pTarget->pszCompany);
 	free_s((void**)ppGame);
-}
-
-static void PrintNGCDGameInfo(const NGCDGAME* pGame)
-{
-	if (!pGame) return;
-	bprintf(PRINT_NORMAL, _T("    Title: %s \n"),     pGame->pszTitle);
-	bprintf(PRINT_NORMAL, _T("    Shortname: %s \n"), pGame->pszName);
-	bprintf(PRINT_NORMAL, _T("    Year: %s \n"),      pGame->pszYear);
-	bprintf(PRINT_NORMAL, _T("    Company: %s \n"),   pGame->pszCompany);
 }
 
 // Get the title

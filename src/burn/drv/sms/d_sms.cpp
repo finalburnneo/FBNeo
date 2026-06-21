@@ -24518,9 +24518,9 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	256, 192, 4, 3
 };
 
-// Super Mario Bros. (HB, v0.12)
+// Super Mario Bros. (HB, v0.12.e83b808)
 static struct BurnRomInfo sms_smbRomDesc[] = {
-	{ "Super Mario Bros. v0.12 (2026)(Lack of Track).sms",	262144, 0xb1928f81, BRF_PRG | BRF_ESS },
+	{ "Super Mario Bros. v0.12.e83b808 (2026)(Lack of Track).sms",	262144, 0xb209d7a8, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_smb)
@@ -24528,10 +24528,10 @@ STD_ROM_FN(sms_smb)
 
 struct BurnDriver BurnDrvsms_smb = {
 	"sms_smb", NULL, NULL, NULL, "2026",
-	"Super Mario Bros. (HB, v0.12)\0", NULL, "Lack of Track", "Sega Master System",
+	"Super Mario Bros. (HB, v0.12.e83b808)\0", "YM2413 FM sound chip supported", "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
-	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

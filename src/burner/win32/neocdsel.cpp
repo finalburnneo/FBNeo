@@ -249,7 +249,7 @@ static INT32 TraverseDirectoryRecurse(const TCHAR* dirPath, INT32(*pFoundCallBac
 	WIN32_FIND_DATA findData = { 0 };
 	INT32 itemCount = 0;
 
-	HANDLE hFind = FindFirstFile(searchPath, &findData);
+	HANDLE hFind = FindFirstFileEx(searchPath, FindExInfoBasic, &findData, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
 	if (hFind == INVALID_HANDLE_VALUE)
 		return 0;
 
@@ -1145,10 +1145,10 @@ static int CALLBACK ListViewCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM l
 	ListView_GetItemText(lpsd->hWnd, (int)lParam2, lpsd->nColumn, buf2, sizeof(buf2));
 
 	switch (lpsd->bAscending) {
-	case SORT_ASCENDING:
-		return (_tcsicmp(buf1, buf2));
-	case SORT_DESCENDING:
-		return (0 - _tcsicmp(buf1, buf2));
+		case SORT_ASCENDING:
+			return (_tcsicmp(buf1, buf2));
+		case SORT_DESCENDING:
+			return (0 - _tcsicmp(buf1, buf2));
 	}
 
 	return 0;
@@ -1157,8 +1157,8 @@ static int CALLBACK ListViewCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM l
 static void ListViewSort(int nDirection, int nColumn)
 {
 	// sort the list
-	lv_compare.hWnd = hListView;
-	lv_compare.nColumn = nColumn;
+	lv_compare.hWnd       = hListView;
+	lv_compare.nColumn    = nColumn;
 	lv_compare.bAscending = nDirection;
 	ListView_SortItemsEx(hListView, ListViewCompareFunc, &lv_compare);
 }
@@ -1197,8 +1197,11 @@ void CreateNGCDListCache()
 
 	LeaveCriticalSection(&pGameLib->csLock);
 
+	// Keep the modal window always on top
+	HWND hParent = hNeoCDWnd ? hNeoCDWnd : hScrnWnd;
+
 	// Step3: Pop modal progress dialog to start brand new full scan
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), NULL, (DLGPROC)CacheGameLibWaitProc);
+	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)CacheGameLibWaitProc);
 	NeoCDList_AddGame(pGameLib);
 	ListViewSort(SORT_ASCENDING, 0);
 }
@@ -2087,6 +2090,9 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 				case IDC_NCD_SEL_DIR_BUTTON:
 				{
+					if (pGameLib && pGameLib->hGLDlg)
+						return TRUE;
+
 					TCHAR szBackup[MAX_PATH] = { 0 };
 					_tcsncpy(szBackup, szNeoCDGamesDir, MAX_PATH - 1);
 					szBackup[MAX_PATH - 1] = _T('\0');

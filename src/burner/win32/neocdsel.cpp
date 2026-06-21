@@ -332,13 +332,22 @@ static INT32 TraverseDirectoryRecurse(const TCHAR* dirPath, INT32(*pFoundCallBac
 static INT32 TraverseDirectoryExt(const TCHAR* dirPath, INT32(*pFoundCallBack)(const TCHAR*), bool bDirectoriesOnly, bool bScanSubdirs)
 {
 	const INT32 MAX_RECURSION_DEPTH = 4;
-
-	// Reject empty path
 	if (IsStrEmpty(dirPath))
 		return 0;
 
+	TCHAR normRoot[MAX_PATH] = { 0 };
+	_tcsncpy(normRoot, dirPath, MAX_PATH - 1);
+	normRoot[MAX_PATH - 1] = _T('\0');
+	size_t len = _tcslen(normRoot);
+	if (len > 0 && normRoot[len - 1] == _T('/'))
+		normRoot[len - 1] = _T('\\');
+
+	DWORD dwAttr = GetFileAttributes(normRoot);
+	if (dwAttr == INVALID_FILE_ATTRIBUTES || !(dwAttr & FILE_ATTRIBUTE_DIRECTORY))
+		return 0;
+
 	// Start recursive traversal with initial depth 0
-	return TraverseDirectoryRecurse(dirPath, pFoundCallBack, bDirectoriesOnly, bScanSubdirs, 0, MAX_RECURSION_DEPTH);
+	return TraverseDirectoryRecurse(normRoot, pFoundCallBack, bDirectoriesOnly, bScanSubdirs, 0, MAX_RECURSION_DEPTH);
 }
 
 // For files: keep subdir control
@@ -1112,6 +1121,48 @@ static void NeoCDList_AddGame(struct GAME_LIB* pLib)
 	bprintf(PRINT_NORMAL, _T("NeoCDList_AddGame: Render total %d games\n"), total);
 }
 
+static INT32 sort_direction = 0;
+enum {
+	SORT_ASCENDING = 0,
+	SORT_DESCENDING = 1
+};
+
+struct LVCOMPAREINFO {
+	HWND  hWnd;
+	INT32 nColumn;
+	BOOL  bAscending;
+};
+
+static LVCOMPAREINFO lv_compare;
+
+static int CALLBACK ListViewCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+{
+	TCHAR buf1[MAX_PATH];
+	TCHAR buf2[MAX_PATH];
+	LVCOMPAREINFO* lpsd = (struct LVCOMPAREINFO*)lParamSort;
+
+	ListView_GetItemText(lpsd->hWnd, (int)lParam1, lpsd->nColumn, buf1, sizeof(buf1));
+	ListView_GetItemText(lpsd->hWnd, (int)lParam2, lpsd->nColumn, buf2, sizeof(buf2));
+
+	switch (lpsd->bAscending) {
+	case SORT_ASCENDING:
+		return (_tcsicmp(buf1, buf2));
+	case SORT_DESCENDING:
+		return (0 - _tcsicmp(buf1, buf2));
+	}
+
+	return 0;
+}
+
+static void ListViewSort(int nDirection, int nColumn)
+{
+	// sort the list
+	lv_compare.hWnd = hListView;
+	lv_compare.nColumn = nColumn;
+	lv_compare.bAscending = nDirection;
+	ListView_SortItemsEx(hListView, ListViewCompareFunc, &lv_compare);
+}
+
 // Trigger full rescan when binary verification fails, wipe all invalid partial scan data
 void CreateNGCDListCache()
 {
@@ -1149,48 +1200,7 @@ void CreateNGCDListCache()
 	// Step3: Pop modal progress dialog to start brand new full scan
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), NULL, (DLGPROC)CacheGameLibWaitProc);
 	NeoCDList_AddGame(pGameLib);
-}
-
-static INT32 sort_direction = 0;
-enum {
-	SORT_ASCENDING = 0,
-	SORT_DESCENDING = 1
-};
-
-struct LVCOMPAREINFO {
-	HWND  hWnd;
-	INT32 nColumn;
-	BOOL  bAscending;
-};
-
-static LVCOMPAREINFO lv_compare;
-
-static int CALLBACK ListViewCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
-{
-	TCHAR buf1[MAX_PATH];
-	TCHAR buf2[MAX_PATH];
-	LVCOMPAREINFO* lpsd = (struct LVCOMPAREINFO*)lParamSort;
-
-	ListView_GetItemText(lpsd->hWnd, (int)lParam1, lpsd->nColumn, buf1, sizeof(buf1));
-	ListView_GetItemText(lpsd->hWnd, (int)lParam2, lpsd->nColumn, buf2, sizeof(buf2));
-
-	switch (lpsd->bAscending) {
-		case SORT_ASCENDING:
-			return (_tcsicmp(buf1, buf2));
-		case SORT_DESCENDING:
-			return (0 - _tcsicmp(buf1, buf2));
-		}
-
-	return 0;
-}
-
-static void ListViewSort(int nDirection, int nColumn)
-{
-	// sort the list
-	lv_compare.hWnd       = hListView;
-	lv_compare.nColumn    = nColumn;
-	lv_compare.bAscending = nDirection;
-	ListView_SortItemsEx(hListView, ListViewCompareFunc, &lv_compare);
+	ListViewSort(SORT_ASCENDING, 0);
 }
 
 static void NeoCDList_InitListView()
@@ -1758,8 +1768,6 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		NeoCDList_InitListView();
 
 		CreateNGCDListCache();
-		// Scan finished, render cached game data directly
-//		NeoCDList_AddGame(pGameLib);
 
 		HICON hIcon   = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);		// Set the Game Selection dialog icon.

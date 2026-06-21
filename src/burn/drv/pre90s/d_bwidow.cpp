@@ -1049,7 +1049,7 @@ static struct BurnRomInfo bwidowRomDesc[] = {
 	{ "136017-105.kl1",	0x1000, 0x1fdf801c, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "136017-106.m1",	0x1000, 0xccc9b26c, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, // 10 AVG PROM
 };
 
 STD_ROM_PICK(bwidow)
@@ -1077,7 +1077,7 @@ static struct BurnRomInfo bwidowpRomDesc[] = {
 	{ "d000",			0x1000, 0x10ac77c3, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "e000",			0x1000, 0xdfdda385, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "avgsmr",			0x0100, 0x5903af03, 2 | BRF_GRA },           //  7 AVG PROM
+	{ "avgsmr",			0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  7 AVG PROM
 
 	{ "negrom.lo",		0x0100, 0xaeb9cde1, 0 | BRF_OPT },           //  8 PROMs
 	{ "negrom.hi",		0x0100, 0x08f0112b, 0 | BRF_OPT },           //  9
@@ -1111,7 +1111,7 @@ static struct BurnRomInfo gravitarRomDesc[] = {
 	{ "136010-305.kl1",	0x1000, 0x840603af, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "136010-306.m1",	0x1000, 0x3f3805ad, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, // 10 AVG PROM
 
 	{ "136010-111.r1",	0x0020, 0x6bf2dc46, 0 | BRF_OPT },           // 11 PROMs
 	{ "136010-112.r2",	0x0020, 0xb6af29d1, 0 | BRF_OPT },           // 12
@@ -1145,7 +1145,7 @@ static struct BurnRomInfo gravitar2RomDesc[] = {
 	{ "136010-205.kl1",	0x1000, 0x0db1ff34, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "136010-206.m1",	0x1000, 0x4521ca48, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, // 10 AVG PROM
 
 	{ "136010-111.r1",	0x0020, 0x6bf2dc46, 0 | BRF_OPT },           // 11 PROMs
 	{ "136010-112.r2",	0x0020, 0xb6af29d1, 0 | BRF_OPT },           // 12
@@ -1179,7 +1179,7 @@ static struct BurnRomInfo gravitar1RomDesc[] = {
 	{ "136010-105.kl1",	0x1000, 0x032b5806, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "136010-106.m1",	0x1000, 0x47fe97a0, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, // 10 AVG PROM
 
 	{ "136010-111.r1",	0x0020, 0x6bf2dc46, 0 | BRF_OPT },           // 11 PROMs
 	{ "136010-112.r2",	0x0020, 0xb6af29d1, 0 | BRF_OPT },           // 12
@@ -1212,7 +1212,7 @@ static struct BurnRomInfo lunarbatRomDesc[] = {
 	{ "136010-005.kl1",	0x1000, 0x4feb6f81, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "136010-006.m1",	0x1000, 0xf8ad139d, 1 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  9 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  9 AVG PROM
 
 	{ "136010-011.r1",	0x0020, 0x6bf2dc46, 0 | BRF_OPT },           // 10 PROMs
 	{ "136010-012.r2",	0x0020, 0xb6af29d1, 0 | BRF_OPT },           // 11
@@ -1244,7 +1244,7 @@ static struct BurnRomInfo lunarba1RomDesc[] = {
 	{ "rom4.bin",		0x1000, 0x788bf976, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "rom5.bin",		0x1000, 0x16121e13, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  8 AVG PROM
 
 	{ "136010-111.r1",	0x0020, 0x6bf2dc46, 0 | BRF_OPT },           //  9 PROMs
 	{ "136010-112.r2",	0x0020, 0xb6af29d1, 0 | BRF_OPT },           // 10
@@ -1275,7 +1275,7 @@ static struct BurnRomInfo spacduelRomDesc[] = {
 	{ "136006-104.kl1",	0x1000, 0xe41b38a3, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "136006-105.j1",	0x1000, 0x5652710f, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  7 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  7 AVG PROM
 };
 
 STD_ROM_PICK(spacduel)
@@ -1303,7 +1303,7 @@ static struct BurnRomInfo spacduel1RomDesc[] = {
 	{ "136006-104.kl1",	0x1000, 0xe41b38a3, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "136006-105.j1",	0x1000, 0x5652710f, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  7 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  7 AVG PROM
 };
 
 STD_ROM_PICK(spacduel1)
@@ -1331,7 +1331,7 @@ static struct BurnRomInfo spacduel0RomDesc[] = {
 	{ "136006-004.kl1",	0x1000, 0xb322bf0b, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "136006-005.j1",	0x1000, 0x0edb1242, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA },           //  7 AVG PROM
+	{ "136002-125.n4",	0x0100, 0x5903af03, 2 | BRF_GRA | BRF_OPT }, //  7 AVG PROM
 };
 
 STD_ROM_PICK(spacduel0)

@@ -161,6 +161,7 @@ struct NGCDGAME games[] =
 	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo")	, 0x14A1 },		//
 	{ _T("yoyoshkn")	, _T("Yo-Yo Shuriken")										, _T("2023")	, _T("Dr. Ludos")	, 0xdad1 },		//
 	{ _T("flipshot")	, _T("Battle Flip Shot")									, _T("2022")	, _T("Visco (Pixel Heart)")	, 0x247 },		//
+	{ _T("pbobble2")	, _T("Puzzle Bobble 2")										, _T("202x")	, _T("??")	, 0x0248 },		//
 };
 
 

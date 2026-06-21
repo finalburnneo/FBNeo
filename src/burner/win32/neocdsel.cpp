@@ -2202,7 +2202,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					break;
 				}
 #endif
-				case IDC_NCD_CANCEL_BUTTON:
+				case IDCANCEL:
 				{
 					PostMessage(hDlg, WM_CLOSE, 0, 0);
 					break;

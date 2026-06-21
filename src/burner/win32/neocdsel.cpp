@@ -368,79 +368,6 @@ static TCHAR* _tcsdup_s(const TCHAR* pSrc)
 
 // --- End: Functions to be removed in the future ---
 
-
-// Check if current track is CD-DA audio track from CHD metadata.
-// Track type starts with "AUDIO" -> CD digital audio track.
-// Other types (MODE/unknown) are treated as data track.
-// meta	CHD track metadata buffer
-// return true = audio track, false = data track / invalid metadata
-static bool chd_meta_is_audio_track(const char* meta)
-{
-	if (!meta)
-		return false;
-
-	const char* p = strstr(meta, "TYPE:");
-	if (!p)
-		return false;
-
-	const char* type_start = p + 5;
-	// Match AUDIO / VAUDIO etc.
-	if (strncmp(type_start, "AUDIO", 5) == 0)
-		return true;
-	// All other types are data track
-	return false;
-}
-
-// Macro: Read CHD track metadata (V2 first, fallback to V1).
-// Reuse local buffer/variables inside current function to reduce parameters.
-// Exit loop if no valid metadata found.
-// chd  Opened CHD file handle
-// idx  Current track index
-#define CHD_READ_META(chd, idx, meta_buf, p_resultlen, p_flags)						\
-do {																				\
-	chd_error err = chd_get_metadata((chd), CDROM_TRACK_METADATA2_TAG, (idx),		\
-		meta_buf, sizeof(meta_buf) - 1, &meta_resultlen, NULL, &meta_flags);		\
-	if (err != CHDERR_NONE || meta_resultlen == 0) {								\
-		err = chd_get_metadata((chd), CDROM_TRACK_METADATA_TAG, (idx),				\
-			meta_buf, sizeof(meta_buf) - 1, &meta_resultlen, NULL, &meta_flags);	\
-		if (err != CHDERR_NONE || meta_resultlen == 0) {							\
-			break;																	\
-		}																			\
-	}																				\
-} while(0)
-
-// Get total number of CD-DA audio tracks from opened CHD file.
-// Iterate CHD metadata to distinguish data track and audio track.
-// return Count of audio tracks; 0 = invalid chd / no audio tracks
-INT32 GetChdAudioTracks(chd_file* chd)
-{
-	// Check if CHD handle is valid
-	if (!chd)
-		return 0;
-
-	char   meta_buf[256]   = { 0 };
-	const INT32 metaBufMax = ARRAY_SIZE(meta_buf) - 1;
-	UINT32 meta_resultlen  = 0;
-	UINT8  meta_flags      = 0;
-	INT32  audio_cnt       = 0;
-
-	// CD standard: maximum 99 tracks for a single disc
-	for (INT32 idx = 0; idx < 99; idx++) {
-		// Read track metadata (V2 -> V1 auto fallback inside macro)
-		CHD_READ_META(chd, idx, meta_buf, &meta_resultlen, &meta_flags);
-
-		// Clamp length to avoid buffer overflow, force null terminator
-		UINT32 safeLen = (meta_resultlen > metaBufMax) ? metaBufMax : meta_resultlen;
-		meta_buf[safeLen] = '\0';
-
-		// Count track if marked as CD-DA audio type
-		if (chd_meta_is_audio_track(meta_buf))
-			audio_cnt++;
-	}
-
-	return audio_cnt;
-}
-
 // Release all dynamic TCHAR string members inside one GAMELIST entry
 static void FreeGameItem(struct GAMELIST* pItem)
 {
@@ -785,13 +712,7 @@ static struct GAMELIST* CreateChdBaseGameItem(TCHAR* chdFullPath)
 		return pItem;
 
 	// Step 2: open CHD via FILE handle
-	INT32 nAudioTracks = 0;
-	chd_file* chd = NULL;
-	chd_error err = chd_open_file(fpChd, CHD_OPEN_READ, NULL, &chd);
-	if (err== CHDERR_NONE && chd) {
-		nAudioTracks = GetChdAudioTracks(chd);
-		chd_close(chd);
-	}
+	const INT32 nAudioTracks = cdimgCountChdAudioTracks(chdFullPath);
 
 	TCHAR szBuffer[10] = { 0 };
 	size_t nSize = ARRAY_SIZE(szBuffer);

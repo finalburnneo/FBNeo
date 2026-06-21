@@ -41,6 +41,7 @@ static UINT32 cdimgChdBytesPerSector = 0;  // bytes per CD sector in CHD (2352 o
 static UINT32 cdimgChdSectorsPerHunk = 0;  // number of CD sectors per hunk
 static UINT8* cdimgChdHunkBuf = NULL;      // cached hunk buffer
 static INT32  cdimgChdCurHunk = -1;        // currently cached hunk, -1 = none
+static INT32  cdimgChdTrackStart[MAXIMUM_NUMBER_TRACKS];  // CHD start sector for each track
 static INT32  cdimgTrack = 0;
 static INT32  cdimgLBA   = 0;
 
@@ -745,6 +746,11 @@ static INT32 cdimgParseChdFile()
 		cdimgTOC->TrackData[trk].Control     = is_data ? 0x41 : 0x01;
 		cdimgTOC->TrackData[trk].TrackNumber = tobcd(trk + 1);
 
+		// Record the CHD file position (sector index) for this track so that
+		// audio/data playback can translate disc-LBA to CHD-sector correctly,
+		// accounting for per-track pregaps/postgaps that only advance cd_lba.
+		cdimgChdTrackStart[trk] = (INT32)chd_sector_pos;
+
 		const UINT8* track_start_msf = cdimgLBAToMSF(cd_lba);
 		cdimgTOC->TrackData[trk].Address[0] = 0;
 		cdimgTOC->TrackData[trk].Address[1] = track_start_msf[1];
@@ -773,6 +779,7 @@ static INT32 cdimgParseChdFile()
 
 		cdimgTOC->TrackData[0].Control     = 0x41;
 		cdimgTOC->TrackData[0].TrackNumber = tobcd(1);
+		cdimgChdTrackStart[0] = 0;
 		const UINT8* start_msf = cdimgLBAToMSF(cd_pregap);
 		cdimgTOC->TrackData[0].Address[0]  = 0;
 		cdimgTOC->TrackData[0].Address[1]  = start_msf[1];
@@ -977,8 +984,21 @@ static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
 	// the same regardless of image container (stereo 16-bit PCM).  The
 	// only difference is how we source the raw bytes.
 	// ------------------------------------------------------------------
-	INT32 base = cdimgLBA - cd_pregap;
 	INT32 sectors_to_read = (cdimgOUT_SIZE * 4) / 2352;
+	INT32 base;
+
+	if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+		// CHD: translate disc LBA to CHD sector using per-track start.
+		// Simply subtracting cd_pregap is wrong for tracks 2+ because
+		// pregap/postgap entries only advance cd_lba (disc) without
+		// advancing chd_sector_pos (CHD file position).
+		INT32 track_start_lba = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address);
+		INT32 offset_in_track = cdimgLBA - track_start_lba;
+		base = cdimgChdTrackStart[cdimgTrack] + offset_in_track;
+	} else {
+		// .bin/.cue — file-relative sector index
+		base = cdimgLBA - cd_pregap;
+	}
 
 	// Initialize audio file position tracker for subsequent buffer refills
 	cdimgAudioFilePos = base;

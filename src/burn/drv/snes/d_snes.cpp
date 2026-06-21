@@ -952,22 +952,22 @@ struct BurnDriver BurnDrvsnes_7thsaga = {
 	512, 448, 4, 3
 };
 
-// 7th Saga, The (Hack Portuguese v1.0)
+// 7th Saga, The (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/the-7th-saga-bocafig-translations/
 
-static struct BurnRomInfo snes_7thsagapRomDesc[] = {
-	{ "7th Saga, The (Hack Portuguese v1.0).sfc", 1572864, 0x29BDE67C, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_7thsagatpRomDesc[] = {
+	{ "7th Saga, The PT-BR (2002)(Wanzeler).sfc", 1572864, 0x29bde67c, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_7thsagap)
-STD_ROM_FN(snes_7thsagap)
+STD_ROM_PICK(snes_7thsagatp)
+STD_ROM_FN(snes_7thsagatp)
 
-struct BurnDriver BurnDrvsnes_7thsagap = {
-	"snes_7thsagap", "snes_7thsaga", NULL, NULL, "2002",
-	"7th Saga, The (Hack Portuguese v1.0)\0", NULL, "Wanzeler", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_7thsagatp = {
+	"snes_7thsagatp", "snes_7thsaga", NULL, NULL, "2002",
+	"7th Saga, The (Hack, Portuguese)\0", NULL, "Wanzeler", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
-	SNESGetZipName, snes_7thsagapRomInfo, snes_7thsagapRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_7thsagatpRomInfo, snes_7thsagatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -1108,19 +1108,19 @@ struct BurnDriver BurnDrvsnes_Aaahhrme = {
 // Aaahh!!! Real Monsters (Hack Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/aaahh-real-monsters-tecno-tradu-br/
 
-static struct BurnRomInfo snes_AaahhrmpRomDesc[] = {
-	{ "Aaahh!!! Real Monsters (Hack Portuguese).sfc", 2097152, 0x13ACBC83, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_AaahhrmtpRomDesc[] = {
+	{ "Aaahh!!! Real Monsters PT-BR (2011)(Ruhan7).sfc", 2097152, 0x13acbc83, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Aaahhrmp)
-STD_ROM_FN(snes_Aaahhrmp)
+STD_ROM_PICK(snes_Aaahhrmtp)
+STD_ROM_FN(snes_Aaahhrmtp)
 
-struct BurnDriver BurnDrvsnes_Aaahhrmp = {
-	"snes_aaahhrmp", "snes_aaahhrm", NULL, NULL, "2011",
-	"Aaahh!!! Real Monsters (Hack Portuguese)\0", NULL, "Ruhan7", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Aaahhrmtp = {
+	"snes_aaahhrmtp", "snes_aaahhrm", NULL, NULL, "2011",
+	"Aaahh!!! Real Monsters (Hack, Portuguese)\0", NULL, "Ruhan7", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_AaahhrmpRomInfo, snes_AaahhrmpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_AaahhrmtpRomInfo, snes_AaahhrmtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -5382,22 +5382,22 @@ struct BurnDriver BurnDrvsnes_Bonkersj = {
 	512, 448, 4, 3
 };
 
-// Disney's Bonkers (Hack Portuguese v.Beta 1.0)
+// Disney's Bonkers (Hack, Portuguese v.Beta 1.0)
 // https://joao13traducoes.com/2021/10/snes-bonkers-ripman/
 
-static struct BurnRomInfo snes_BonkerspRomDesc[] = {
-	{ "Disney's Bonkers (Hack Portuguese v.Beta 1.0 Ripman).sfc", 1048576, 0xCB7558F2, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_BonkerstpRomDesc[] = {
+	{ "Disney's Bonkers PT-BR v.Beta 1.0 (2017)(Ripman).sfc", 1048576, 0xcb7558f2, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Bonkersp)
-STD_ROM_FN(snes_Bonkersp)
+STD_ROM_PICK(snes_Bonkerstp)
+STD_ROM_FN(snes_Bonkerstp)
 
-struct BurnDriver BurnDrvsnes_Bonkersp = {
-	"snes_bonkersp", "snes_bonkers", NULL, NULL, "2017",
-	"Disney's Bonkers (Hack Portuguese v.Beta 1.0)\0", NULL, "Capcom", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Bonkerstp = {
+	"snes_bonkerstp", "snes_bonkers", NULL, NULL, "2017",
+	"Disney's Bonkers (Hack, Portuguese v.Beta 1.0)\0", NULL, "Ripman", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_BonkerspRomInfo, snes_BonkerspRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_BonkerstpRomInfo, snes_BonkerstpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -6143,22 +6143,22 @@ struct BurnDriver BurnDrvsnes_Bugsbunnyj = {
 	512, 448, 4, 3
 };
 
-// Bugs Bunny - Rabbit Rampage (Portuguese)
+// Bugs Bunny - Rabbit Rampage (Hack, Portuguese v.Beta 2.0)
 // https://romhackers.org/traducoes/console/super-nes/bugs-bunny-rabbit-rampage-ripman/
 
-static struct BurnRomInfo snes_BugsbunnypRomDesc[] = {
-	{ "Bugs Bunny - Rabbit Rampage ( Hack Portuguese v.Beta 2.0 ).sfc", 1572864, 0xFD2324CB, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_BugsbunnytpRomDesc[] = {
+	{ "Bugs Bunny - Rabbit Rampage PT-BR v.Beta 2.0 (2018)(Ripman).sfc", 1572864, 0xfd2724cb, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Bugsbunnyp)
-STD_ROM_FN(snes_Bugsbunnyp)
+STD_ROM_PICK(snes_Bugsbunnytp)
+STD_ROM_FN(snes_Bugsbunnytp)
 
-struct BurnDriver BurnDrvsnes_Bugsbunnyp = {
-	"snes_bugsbunnyp", "snes_bugsbunny", NULL, NULL, "2018",
-	"Bugs Bunny - Rabbit Rampage ( Hack Portuguese v.Beta 2.0 )\0", NULL, "Ripman", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Bugsbunnytp = {
+	"snes_bugsbunnytp", "snes_bugsbunny", NULL, NULL, "2018",
+	"Bugs Bunny - Rabbit Rampage (Hack, Portuguese v.Beta 2.0)\0", NULL, "Ripman", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_BugsbunnypRomInfo, snes_BugsbunnypRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_BugsbunnytpRomInfo, snes_BugsbunnytpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -7534,7 +7534,7 @@ struct BurnDriver BurnDrvsnes_Chronotriggerts = {
 // Chrono Trigger (Hack, Portuguese v1.05)
 // https://joao13traducoes.com/2018/04/snes-chrono-trigger-ips-center/
 static struct BurnRomInfo snes_ChronotriggertpRomDesc[] = {
-	{ "Chrono Trigger T-Bra v1.05 (2004)(Lynx).sfc", 4194304, 0xD1A61235, BRF_ESS | BRF_PRG },
+	{ "Chrono Trigger PT-BR v1.05 (2004)(Lynx).sfc", 4194304, 0xd1a61235, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Chronotriggertp)
@@ -8767,22 +8767,22 @@ struct BurnDriver BurnDrvsnes_Daffyducktmme = {
 	512, 448, 4, 3
 };
 
-// Daffy Duck - The Marvin Missions (Hack Portuguese)
+// Daffy Duck - The Marvin Missions (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/daffy-duck-the-marvin-missions-emuroms-translations/
 
-static struct BurnRomInfo snes_DaffyducktmmpRomDesc[] = {
-	{ "Daffy Duck - The Marvin Missions (Hack Portuguese).sfc", 1048576, 0x077FF056E, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_DaffyducktmmtpRomDesc[] = {
+	{ "Daffy Duck - The Marvin Missions PT-BR (2000)(Venom Total).sfc", 1048576, 0x077ff056e, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Daffyducktmmp)
-STD_ROM_FN(snes_Daffyducktmmp)
+STD_ROM_PICK(snes_Daffyducktmmtp)
+STD_ROM_FN(snes_Daffyducktmmtp)
 
-struct BurnDriver BurnDrvsnes_Daffyducktmmp = {
-	"snes_daffyducktmmp", "snes_daffyducktmm", NULL, NULL, "2000",
-	"Daffy Duck - The Marvin Missions (Hack Portuguese)\0", NULL, "Venom Total", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Daffyducktmmtp = {
+	"snes_daffyducktmmtp", "snes_daffyducktmm", NULL, NULL, "2000",
+	"Daffy Duck - The Marvin Missions (Hack, Portuguese)\0", NULL, "Venom Total", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_DaffyducktmmpRomInfo, snes_DaffyducktmmpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_DaffyducktmmtpRomInfo, snes_DaffyducktmmtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -11600,21 +11600,21 @@ struct BurnDriver BurnDrvsnes_Earthwormjim2e = {
 	512, 448, 4, 3
 };
 
-// Earthworm Jim 2 (Portuguese)
+// Earthworm Jim 2 (Hack, Portuguese)
 
-static struct BurnRomInfo snes_Earthwormjim2pRomDesc[] = {
-	{ "Earthworm Jim 2(Hack, Portuguese v1.0).sfc", 3145728, 0x96FEC634, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_Earthwormjim2tpRomDesc[] = {
+	{ "Earthworm Jim 2 PT-BR (2017)(ripman).sfc", 3145728, 0x96fec634, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Earthwormjim2p)
-STD_ROM_FN(snes_Earthwormjim2p)
+STD_ROM_PICK(snes_Earthwormjim2tp)
+STD_ROM_FN(snes_Earthwormjim2tp)
 
-struct BurnDriver BurnDrvsnes_Earthwormjim2p = {
-	"snes_earthwormjim2p", "snes_earthwormjim2", NULL, NULL, "2017",
-	"Earthworm Jim 2 (Portuguese)\0", NULL, "ripman", "SNES / Super Famicom",
+struct BurnDriver BurnDrvsnes_Earthwormjim2tp = {
+	"snes_earthwormjim2tp", "snes_earthwormjim2", NULL, NULL, "2017",
+	"Earthworm Jim 2 (Hack, Portuguese)\0", NULL, "ripman", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
-	SNESGetZipName, snes_Earthwormjim2pRomInfo, snes_Earthwormjim2pRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_Earthwormjim2tpRomInfo, snes_Earthwormjim2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -20919,10 +20919,10 @@ struct BurnDriver BurnDrvsnes_Legendofzeldats = {
 	512, 448, 4, 3
 };
 
-// Legend of Zelda, The: A Link to the Past (Hack, Portuguese vBeta 1.0)
+// Lenda de Zelda, A: Um Elo com o Passado (Hack, Portuguese v.Beta 1.0)
 // https://romhackers.org/traducoes/console/super-nes/the-legend-of-zelda-a-link-to-the-past-hyrule-legends-trans-center-e-monkeys-traducoes/
 static struct BurnRomInfo snes_LegendofzeldatpRomDesc[] = {
-	{ "Legend of Zelda, The - A Link to the Past T-Bra v1.0 (2014)(spyblack).sfc", 2097152, 0x69f58bba, BRF_ESS | BRF_PRG },
+	{ "Lenda de Zelda, A - Um Elo com o Passado PT-BR v.Beta 1.0 (2014)(spyblack, Denim).sfc", 2097152, 0xe6d69a29, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Legendofzeldatp)
@@ -20930,7 +20930,7 @@ STD_ROM_FN(snes_Legendofzeldatp)
 
 struct BurnDriver BurnDrvsnes_Legendofzeldatp = {
 	"snes_legendofzeldatp", "snes_legendofzelda", NULL, NULL, "2014",
-	"Legend of Zelda, The: A Link to the Past (Hack, Portuguese v1.0)\0", NULL, "spyblack", "SNES / Super Famicom",
+	"Lenda de Zelda, A: Um Elo com o Passado (Hack, Portuguese v.Beta 1.0)\0", NULL, "spyblack, Denim", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
 	SNESGetZipName, snes_LegendofzeldatpRomInfo, snes_LegendofzeldatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

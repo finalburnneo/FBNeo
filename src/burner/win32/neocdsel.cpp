@@ -239,7 +239,7 @@ static INT32 TraverseDirectoryRecurse(const TCHAR* dirPath, INT32(*pFoundCallBac
 	const TCHAR* searchFormat = ends_with_slash(dirPath) ? _T("%s*") : _T("%s\\*");
 
 	// Build search pattern string
-	int retPrint = _sntprintf(searchPath, MAX_PATH, searchFormat, dirPath);
+	INT32 retPrint = _sntprintf(searchPath, MAX_PATH, searchFormat, dirPath);
 	// Check format failure or buffer overflow
 	if (retPrint < 0 || (size_t)retPrint >= MAX_PATH - 1)
 		return 0;
@@ -249,9 +249,16 @@ static INT32 TraverseDirectoryRecurse(const TCHAR* dirPath, INT32(*pFoundCallBac
 	WIN32_FIND_DATA findData = { 0 };
 	INT32 itemCount = 0;
 
-	HANDLE hFind = FindFirstFileEx(searchPath, FindExInfoBasic, &findData, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
-	if (hFind == INVALID_HANDLE_VALUE)
-		return 0;
+	HANDLE hFind = FindFirstFileEx(searchPath, FindExInfoBasic,    &findData, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		hFind    = FindFirstFileEx(searchPath, FindExInfoStandard, &findData, FindExSearchNameMatch, NULL, 0);
+
+		if (hFind == INVALID_HANDLE_VALUE) {
+			return 0;
+		} else {
+			bprintf(PRINT_ERROR, _T("TraverseDirectoryRecurse: Is Windows XP\n"));
+		}
+	}
 
 	bool bInterrupted = false;
 
@@ -953,8 +960,15 @@ static void GameLibThreadExit()
 static void NeoCD_ScanWithProgress(HWND hDlg)
 {
 	// Initialize global game library singleton if not created
-	if (!NeoCD_GameLibInit() || !pGameLib)
+	if (!NeoCD_GameLibInit() || !pGameLib) {
+		if (!pGameLib)
+		{
+			bprintf(PRINT_ERROR, _T("NeoCD_ScanWithProgress: Invalid game library\n"));
+		} else {
+			bprintf(PRINT_ERROR, _T("NeoCD_ScanWithProgress: NeoCD_GameLibInit failed\n"));
+		}
 		return;
+	}
 
 	// Bind current dialog handle to library for progress message sending
 	pGameLib->hGLDlg = hDlg;
@@ -1070,7 +1084,19 @@ static INT_PTR CALLBACK CacheGameLibWaitProc(HWND hDlg, UINT Msg, WPARAM wParam,
 static void NeoCDList_AddGame(struct GAME_LIB* pLib)
 {
 	if (!pLib || pLib->dataCount <= 0 || !hListView) {
-		bprintf(PRINT_ERROR, _T("NeoCDList_Add: Empty game library or invalid ListView handle\n"));
+		if (!pLib)
+		{
+			bprintf(PRINT_ERROR, _T("NeoCDList_Add: Invalid game library\n"));
+		}
+		if (pLib->dataCount <= 0)
+		{
+			bprintf(PRINT_ERROR, _T("NeoCDList_Add: Empty game library\n"));
+		}
+		if (!hListView)
+		{
+			bprintf(PRINT_ERROR, _T("NeoCDList_Add: Invalid ListView handle\n"));
+		}
+//		bprintf(PRINT_ERROR, _T("NeoCDList_Add: Empty game library or invalid ListView handle\n"));
 		return;
 	}
 	const INT32 total = pLib->dataCount;

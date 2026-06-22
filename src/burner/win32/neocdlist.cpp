@@ -35,6 +35,7 @@ struct CHD_CTX {
 	UINT32					hunkbytes;			// bytes per hunk
 	UINT32					chdSectorBytes;		// CHD bytes per sector
 	struct CHD_READ_CACHE	cache;				// hunk cache
+	FILE					*fp;				// FILE handle (core_stdio_nonowner does not close it)
 
 	// Parsed-once metadata (computed during Open phase, reused throughout)
 	UINT32                  sectorsPerHunk;		// sectors per hunk
@@ -169,7 +170,10 @@ static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 	if (!pIsoCtx || !pszFile) return 0;
 
 	FILE* fp = _tfopen(pszFile, _T("rb"));
-	if (!fp) return 0;
+	if (!fp) {
+		bprintf(PRINT_ERROR, _T("ChdIO_Open: _tfopen failed for %s\n"), pszFile);
+		return 0;
+	}
 
 	chd_file* chd = NULL;
 	chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &chd);
@@ -190,6 +194,7 @@ static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 	pChdCtx->pChd      = chd;
 	pChdCtx->pHeader   = chd_get_header(chd);
 	pChdCtx->hunkbytes = pChdCtx->pHeader->hunkbytes;
+	pChdCtx->fp        = fp;					// Save FILE* for later close (core_stdio_nonowner)
 
 	if (     pChdCtx->hunkbytes % 2448 == 0)
 		pChdCtx->chdSectorBytes = 2448;
@@ -223,7 +228,9 @@ static void ChdIO_Close(struct ISO_CTX* pIsoCtx)
 	struct CHD_CTX* pChdCtx = pIsoCtx->ioUnion.pChdCtx;
 	if (pChdCtx) {
 		if (pChdCtx->pChd)
-			chd_close(pChdCtx->pChd);			// chd_close internally closes the original FILE*
+			chd_close(pChdCtx->pChd);
+		if (pChdCtx->fp)
+			fclose(pChdCtx->fp);				// core_stdio_nonowner: chd_close does NOT close FILE*
 		free_s((void**)&pChdCtx);
 		pIsoCtx->ioUnion.pChdCtx = NULL;
 	}
@@ -499,11 +506,22 @@ INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLo
 		return 0;
 
 	// Deep copy all fields
-	pnew->id = pGameInfo->id;
-	pnew->pszName = _tcsdup_s(pGameInfo->pszName);
-	pnew->pszTitle = _tcsdup_s(pGameInfo->pszTitle);
-	pnew->pszYear = _tcsdup_s(pGameInfo->pszYear);
+	pnew->id         = pGameInfo->id;
+	pnew->pszName    = _tcsdup_s(pGameInfo->pszName);
+	if (!pnew->pszName)
+		goto CLEAN_FAIL;
+
+	pnew->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
+	if (!pnew->pszTitle)
+		goto CLEAN_FAIL;
+
+	pnew->pszYear    = _tcsdup_s(pGameInfo->pszYear);
+	if (!pnew->pszYear)
+		goto CLEAN_FAIL;
+
 	pnew->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
+	if (!pnew->pszCompany)
+		goto CLEAN_FAIL;
 
 	// Print only when switch enabled
 	if (bPrintLog)
@@ -511,6 +529,14 @@ INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLo
 
 	*ppOutGame = pnew;
 	return 1;
+
+CLEAN_FAIL:
+	free_s((void**)&pnew->pszName);
+	free_s((void**)&pnew->pszTitle);
+	free_s((void**)&pnew->pszYear);
+	free_s((void**)&pnew->pszCompany);
+	free_s((void**)&pnew);
+	return 0;
 }
 
 INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
@@ -610,11 +636,11 @@ void FreeNGCDGame(NGCDGAME** ppGame)
 	if (!ppGame || !*ppGame)
 		return;
 
-	NGCDGAME* pTarget = *ppGame;
-	free_s((void**)&pTarget->pszName);
-	free_s((void**)&pTarget->pszTitle);
-	free_s((void**)&pTarget->pszYear);
-	free_s((void**)&pTarget->pszCompany);
+	NGCDGAME* p = *ppGame;
+	free_s((void**)&p->pszName);
+	free_s((void**)&p->pszTitle);
+	free_s((void**)&p->pszYear);
+	free_s((void**)&p->pszCompany);
 	free_s((void**)ppGame);
 }
 

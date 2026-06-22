@@ -1,4 +1,4 @@
-// FBAlpha cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
+// FBNeo cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
 // .bin/.cue re-work by dink
 // .chd support: compressed CD image backend via libchdr (MAME project, BSD-3-Clause).
 // The image IS the .chd file; no CUE parsing required.  Sector layout is
@@ -577,14 +577,21 @@ static bool chd_meta_is_data_track(const char* meta)
 INT32 cdimgCountChdAudioTracks(TCHAR* pszFile)
 {
     TCHAR* pszPath = pszFile ? pszFile : CDEmuImage;
-    if (!pszPath || _tcslen(pszPath) < 5) return 0;
+    if (!pszPath || _tcslen(pszPath) < 5) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: invalid path\n"));
+        return 0;
+    }
 
     FILE* fp = _tfopen(pszPath, _T("rb"));
-    if (!fp) return 0;
+    if (!fp) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: _tfopen failed for %s\n"), pszPath);
+        return 0;
+    }
 
     chd_file* chd = NULL;
     chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &chd);
     if (err != CHDERR_NONE) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: chd_open_file failed for %s, error=%d\n"), pszPath, (int)err);
         fclose(fp);
         return 0;
     }
@@ -616,6 +623,7 @@ INT32 cdimgCountChdAudioTracks(TCHAR* pszFile)
     }
 
     chd_close(chd);
+    fclose(fp);  // core_stdio_nonowner: chd_close does not close FILE*, we must
     return audio_track_count;
 }
 

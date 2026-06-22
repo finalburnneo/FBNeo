@@ -491,20 +491,17 @@ static void GameLib_Destroy(struct GAME_LIB* pLib)
 	pLib->hGLDlg = NULL;
 
 	// Step 4: Safely acquire critical section to release game data memory
-	BOOL bLockAcquired = TryEnterCriticalSection(&pLib->csLock);
-	if (bLockAcquired) {
-		// Free all heap string members inside every GAMELIST entry
-		for (INT32 i = 0; i < pLib->dataCount; i++)
-			FreeGameItem(&pLib->pGameData[i]);
+	EnterCriticalSection(&pLib->csLock);
+	// Free all heap string members inside every GAMELIST entry
+	for (INT32 i = 0; i < pLib->dataCount; i++)
+		FreeGameItem(&pLib->pGameData[i]);
 
-		// Release dynamic game data array buffer
-		free_s((void**)&pLib->pGameData);
-		pLib->pGameData     = NULL;
-		pLib->dataCount     = 0;
-		pLib->progressCount = 0;
-
-		LeaveCriticalSection(&pLib->csLock);
-	}
+	// Release dynamic game data array buffer
+	free_s((void**)&pLib->pGameData);
+	pLib->pGameData     = NULL;
+	pLib->dataCount     = 0;
+	pLib->progressCount = 0;
+	LeaveCriticalSection(&pLib->csLock);
 	// Critical section can be deleted safely whether locked or not
 	DeleteCriticalSection(&pLib->csLock);
 
@@ -722,12 +719,7 @@ static struct GAMELIST* CreateChdBaseGameItem(TCHAR* chdFullPath)
 
 	pItem->bFoundCUE = FALSE;
 
-	// Step 1: open stdio file stream
-	FILE* fpChd = _tfopen(chdFullPath, _T("rb"));
-	if (!fpChd)
-		return pItem;
-
-	// Step 2: open CHD via FILE handle
+	// Get audio track count from CHD metadata
 	const INT32 nAudioTracks = cdimgCountChdAudioTracks(chdFullPath);
 
 	TCHAR szBuffer[10] = { 0 };
@@ -736,8 +728,6 @@ static struct GAMELIST* CreateChdBaseGameItem(TCHAR* chdFullPath)
 	szBuffer[nSize - 1] = _T('\0');
 	pItem->szAudioTracks = _tcsdup_s(szBuffer);
 
-	// core_stdio_nonowner: CHD will not close FILE*, we must close it manually
-	fclose(fpChd);
 	return pItem;
 }
 
@@ -779,20 +769,43 @@ static BOOL NeoCD_BuildGameEntry(UINT32 nGameID, TCHAR* filePath, struct GAMELIS
 	_sntprintf(szBuffer, nLen, _T("%s (%s)"), pMeta->pszCompany, pMeta->pszYear);
 	szBuffer[nLen - 1] = _T('\0');
 	pItem->szPublisher = _tcsdup_s(szBuffer);
-	memset(szBuffer, 0, sizeof(szBuffer));
+	if (!pItem->szPublisher) {
+		FreeNGCDGame(&pMeta);
+		FreeGameItem(pItem);
+		free_s((void**)&pItem);
+		return FALSE;
+	}
 
 	// Fill game identity & display text fields
 	pItem->szShortName = _tcsdup_s(pMeta->pszName);
+	if (!pItem->szShortName) {
+		FreeNGCDGame(&pMeta);
+		FreeGameItem(pItem);
+		free_s((void**)&pItem);
+		return FALSE;
+	}
 
 	if (nGameID == 0x0000)
 		pItem->szTitle = _tcsdup_s(pItem->szPath);
 	else
 		pItem->szTitle = _tcsdup_s(pMeta->pszTitle);
+	if (!pItem->szTitle) {
+		FreeNGCDGame(&pMeta);
+		FreeGameItem(pItem);
+		free_s((void**)&pItem);
+		return FALSE;
+	}
 
 	memset(szBuffer, 0, sizeof(szBuffer));
 	_sntprintf(szBuffer, nLen, _T("%04X"), nGameID);
 	szBuffer[nLen - 1] = _T('\0');
 	pItem->szGameId    = _tcsdup_s(szBuffer);
+	if (!pItem->szGameId) {
+		FreeNGCDGame(&pMeta);
+		FreeGameItem(pItem);
+		free_s((void**)&pItem);
+		return FALSE;
+	}
 
 	// Assign icon index based on file type
 	pItem->nIconIdx    = nImgIdx;
@@ -1788,7 +1801,8 @@ void NeoCDList_InitCoverDlg()
 
 static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	static bool bNeedRun = false;
+	static bool  bNeedRun = false;
+	static HICON hDlgIcon = NULL;
 
 	if(Msg == WM_INITDIALOG)
 	{
@@ -1798,8 +1812,8 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		CreateNGCDListCache();
 
-		HICON hIcon   = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
-		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);		// Set the Game Selection dialog icon.
+		hDlgIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
+		SendMessage(hDlg, WM_SETICON, ICON_SMALL, (LPARAM)hDlgIcon);		// Set the Game Selection dialog icon.
 
 		hWhiteBGBrush = CreateSolidBrush(RGB(0xFF, 0xFF, 0xFF));
 
@@ -1831,7 +1845,6 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 	if(Msg == WM_CLOSE)
 	{
 		NeoCDList_Clean(true);
-		DeleteObject(hWhiteBGBrush);
 
 		hNeoCDWnd	= NULL;
 		hListView	= NULL;
@@ -1842,6 +1855,18 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			bNeedRun = false;
 			BurnerLoadDriver(_T("neocdz"));
 		}
+		return TRUE;
+	}
+
+	if (Msg == WM_DESTROY)
+	{
+		NeoCDList_Clean(true);
+
+		if (hDlgIcon) {
+			DestroyIcon(hDlgIcon);
+			hDlgIcon = NULL;
+		}
+		return TRUE;
 	}
 
 	if (Msg == WM_CTLCOLORSTATIC)
@@ -1984,6 +2009,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 			// Save currently selected game array index globally
 			nSelectedItem = nArrIdx;
+			return TRUE;
 		}
 
 		// Sort Change
@@ -1991,6 +2017,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		{
 			sort_direction ^= 1;
 			ListViewSort(sort_direction, pNMLV->iSubItem);
+			return TRUE;
 		}
 
 
@@ -2005,10 +2032,11 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				CDEmuImage[MAX_PATH - 1]= _T('\0');
 				bNeedRun = true;
 			} else {
-				return 0;
+				return TRUE;
 			}
 
 			PostMessage(hDlg, WM_CLOSE, 0, 0);
+			return TRUE;
 		}
 	}
 
@@ -2039,7 +2067,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						NeoCDList_InitCoverDlg();
 					}
 				}
-				return 0;
+				return TRUE;
 			}
 
 			if(nCtrlID == IDC_NCD_BACK_PIC)
@@ -2072,7 +2100,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						NeoCDList_InitCoverDlg();
 					}
 				}
-				return 0;
+				return TRUE;
 			}
 		}
 
@@ -2102,7 +2130,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					}
 
 					PostMessage(hDlg, WM_CLOSE, 0, 0);
-					break;
+					return TRUE;
 				}
 
 				case IDC_NCD_SCAN_BUTTON:
@@ -2111,7 +2139,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					CreateNGCDListCache();
 //					NeoCDList_AddGame(pGameLib);
 					SetFocus(hListView);
-					break;
+					return TRUE;
 				}
 
 				case IDC_NCD_SEL_DIR_BUTTON:
@@ -2132,7 +2160,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 //					NeoCDList_AddGame(pGameLib);
 					SetFocus(hListView);
-					break;
+					return TRUE;
 				}
 
 				case IDC_NCD_SSUBDIR_CHECK:
@@ -2143,7 +2171,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						bNeoCDListScanSub = false;
 					}
 					SetFocus(hListView);
-					break;
+					return TRUE;
 				}
 #if 0
 				case IDC_NCD_SISO_ONLY_CHECK:
@@ -2166,12 +2194,12 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				case IDCANCEL:
 				{
 					PostMessage(hDlg, WM_CLOSE, 0, 0);
-					break;
+					return TRUE;
 				}
 			}
 		}
 	}
-	return 0;
+	return FALSE;
 }
 
 /*

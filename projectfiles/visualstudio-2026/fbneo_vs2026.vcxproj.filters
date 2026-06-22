@@ -3781,6 +3781,9 @@
     <ClCompile Include="..\..\src\dep\libs\zstd\zstddeclib.c">
       <Filter>libs\zstd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\lzma\libchdr_lzma.c">
+      <Filter>libs\lzma</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
@@ -3790,8 +3793,8 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_littlerb.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\lzma\libchdr_lzma.c">
-      <Filter>libs\lzma</Filter>
+    <ClCompile Include="..\..\src\burn\devices\i8255.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

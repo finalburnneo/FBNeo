@@ -47,7 +47,7 @@ unsigned char switchres_switch_resolution(int& w, int& h, double& rr, unsigned c
 	unsigned char ret;
 	sr_mode srm;
 
-	printf("Orignial resolution expected: %dx%d@%f-%d\n", w, h, rr, interlace);
+	printf("Original resolution expected: %dx%d@%f-%d\n", w, h, rr, interlace);
 	ret = SRobj->sr_add_mode(w, h, rr, interlace, &srm);
 	if(!ret)
 	{

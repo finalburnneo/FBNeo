@@ -8044,6 +8044,25 @@ struct BurnDriver BurnDrvsnes_Congocapere = {
 	512, 448, 4, 3
 };
 
+// Congo's Caper (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3303.0
+static struct BurnRomInfo snes_CongocapertpRomDesc[] = {
+	{ "Congo's Caper PT-BR (2026)(juliano_did).sfc", 524288, 0xace9b6b4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Congocapertp)
+STD_ROM_FN(snes_Congocapertp)
+
+struct BurnDriver BurnDrvsnes_Congocapertp = {
+	"snes_congocapertp", "snes_congocaper", NULL, NULL, "2026",
+	"Congo's Caper (Hack, Portuguese)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_CongocapertpRomInfo, snes_CongocapertpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Contra III - The Alien Wars (USA)
 
 static struct BurnRomInfo snes_ContraiiiRomDesc[] = {
@@ -11448,6 +11467,25 @@ struct BurnDriver BurnDrvsnes_Earthbound = {
 	512, 448, 4, 3
 };
 
+// EarthBound (Hack, Portuguese)
+// https://romhackers.org/traducoes/console/super-nes/earthbound-earthbound-brasil/
+static struct BurnRomInfo snes_EarthboundtpRomDesc[] = {
+	{ "EarthBound PT-BR (2015)(EarthBound Brasil).sfc", 4194304, 0xa19f1c1c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Earthboundtp)
+STD_ROM_FN(snes_Earthboundtp)
+
+struct BurnDriver BurnDrvsnes_Earthboundtp = {
+	"snes_earthboundtp", "snes_earthbound", NULL, NULL, "2015",
+	"EarthBound (Hack, Portuguese)\0", NULL, "EarthBound Brasil", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_EarthboundtpRomInfo, snes_EarthboundtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Earth Light (Japan)
 
 static struct BurnRomInfo snes_EarthlightjRomDesc[] = {
@@ -13962,6 +14000,25 @@ struct BurnDriver BurnDrvsnes_Flintstonese = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_FlintstoneseRomInfo, snes_FlintstoneseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Flintstones, Os (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3366.0
+static struct BurnRomInfo snes_FlintstonestpRomDesc[] = {
+	{ "Flintstones, Os PT-BR (2026)(juliano_did).sfc", 2621440, 0x54b43c19, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Flintstonestp)
+STD_ROM_FN(snes_Flintstonestp)
+
+struct BurnDriver BurnDrvsnes_Flintstonestp = {
+	"snes_flintstonestp", "snes_flintstones", NULL, NULL, "2026",
+	"Flintstones, Os (Hack, Portuguese)\0", NULL, "juliano_did", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_FlintstonestpRomInfo, snes_FlintstonestpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

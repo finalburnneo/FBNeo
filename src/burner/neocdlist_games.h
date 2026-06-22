@@ -162,6 +162,8 @@ struct NGCDGAME games[] =
 	{ _T("yoyoshkn")	, _T("Yo-Yo Shuriken")										, _T("2023")	, _T("Dr. Ludos")	, 0xdad1 },		//
 	{ _T("flipshot")	, _T("Battle Flip Shot")									, _T("2022")	, _T("Visco (Pixel Heart)")	, 0x247 },		//
 	{ _T("pbobble2")	, _T("Puzzle Bobble 2")										, _T("202x")	, _T("??")	, 0x0248 },		//
+	{ _T("popbounc")	, _T("Pop 'n Bounce / Gapporin")							, _T("202x")	, _T("Video System (?? conversion)")	, 0x0237 },		//
+	{ _T("minasan")		, _T("Minasan no Okagesamadesu! Dai Sugoroku Taikai")		, _T("202x")	, _T("Monolith (?? conversion)")	, 0x0027 },		//
 };
 
 

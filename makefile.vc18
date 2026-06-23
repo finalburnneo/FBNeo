@@ -302,7 +302,7 @@ vpath %.res	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
 ifeq ($(MAKELEVEL),1)
 
 all:	init $(autdrv) $(autobj) resource.res
-	$(MAKE) -f makefile.vc
+	$(MAKE) -f makefile.vc18
 
 else
 

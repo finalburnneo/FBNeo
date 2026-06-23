@@ -11,6 +11,9 @@ endif
 
 unexport
 
+# Prevent MSYS2 from converting compiler /flags into Windows paths
+export MSYS2_ARG_CONV_EXCL = *
+
 #
 #	Declare variables
 #
@@ -174,10 +177,7 @@ endif
 
 ASFLAGS	=  -O1 -f coff -w-orphan-labels
 
-DEF		=  /D_USE_MATH_DEFINES /DBUILD_WIN32 /DUSE_SPEEDHACKS /DFILENAME=$(NAME) /DMMX=$(MMX) /DZLIB_WINAPI /DDECL_SPEC=__cdecl
-
-# For libchdr
-DEF := $(DEF) -DCHDR_SYSTEM_ZLIB
+DEF		=  /D_USE_MATH_DEFINES /DBUILD_WIN32 /DUSE_SPEEDHACKS /DFILENAME=$(NAME) /DMMX=$(MMX) /DZLIB_WINAPI /DDECL_SPEC=__cdecl /DCHDR_SYSTEM_ZLIB
 
 # For lib7z
 ifdef INCLUDE_7Z_SUPPORT
@@ -253,8 +253,8 @@ else
 endif
 
 else
-	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Zc:forScope /MT /EHsc
-	LDFLAGS += /LTCG:STATUS
+	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Zc:forScope /MT /EHsc /FS
+	LDFLAGS += /LTCG /CGTHREADS:4
 endif
 
 ifdef BUILD_VS_XP_TARGET
@@ -318,7 +318,7 @@ endif
 
 ifeq ($(MAKELEVEL),2)
 
-$(objdir)/drivers.lib:		$(autdrv)
+$(objdir)/drivers.lib:		$(autdrv) | init
 	@echo Linking drivers...
 ifdef BUILD_X64_EXE
 	@LIB /MACHINE:X64 /LTCG /OUT:$@ $^
@@ -410,7 +410,7 @@ resource.rc: app.rc $(license.rc) $(srcdir)burner/resource/fba.ico $(srcdir)burn
 
 about.o about.d systeminfo.o systeminfo.d: $(build_details.h)
 
-$(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
+$(build_details.h):	$(srcdir)dep/scripts/build_details.cpp | init
 	$(CC) $(CFLAGS) $< /Fo$(objdir)dep/generated/ /Fe$(objdir)dep/generated/build_details.exe
 	$(objdir)dep/generated/build_details.exe >$@
 
@@ -421,7 +421,7 @@ $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
 # A68K
 
 ifdef BUILD_A68K
-$(a68k.o):	fba_make68k.c
+$(a68k.o):	fba_make68k.c | init
 	echo "Compiling A68K MC68000 core... "
 	$(CC) $(CFLAGS) -DWIN32 $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
 	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) $(@:.o=.asm) $(@D)/a68k_tab.asm 00 $(ppro)
@@ -431,30 +431,46 @@ endif
 
 # Musashi
 
-$(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)dep/generated/m68kops.h $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)dep/generated/m68kops.h $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(srcdir)cpu/m68k/m68kcpu.c /Fo$(objdir)cpu/m68k/m68kcpu.o
 
-$(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)dep/generated/m68kops.c /Fo$(objdir)cpu/m68k/m68kops.o
 
-$(objdir)cpu/m68k/m68kopac.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopac.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kopac.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopac.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)dep/generated/m68kopac.c /Fo$(objdir)cpu/m68k/m68kopac.o
 
-$(objdir)cpu/m68k/m68kopdm.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopdm.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kopdm.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopdm.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)dep/generated/m68kopdm.c /Fo$(objdir)cpu/m68k/m68kopdm.o
 
-$(objdir)cpu/m68k/m68kopnz.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopnz.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+$(objdir)cpu/m68k/m68kopnz.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kopnz.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)dep/generated/m68kopnz.c /Fo$(objdir)cpu/m68k/m68kopnz.o
 
-$(objdir)dep/generated/m68kops.h: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
-	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+$(objdir)dep/generated/m68kops.h: $(objdir)dep/generated/.m68kmake_stamp
+	@true
 
-$(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
+$(objdir)dep/generated/m68kops.c: $(objdir)dep/generated/.m68kmake_stamp
+	@true
+
+$(objdir)dep/generated/m68kopac.c: $(objdir)dep/generated/.m68kmake_stamp
+	@true
+
+$(objdir)dep/generated/m68kopdm.c: $(objdir)dep/generated/.m68kmake_stamp
+	@true
+
+$(objdir)dep/generated/m68kopnz.c: $(objdir)dep/generated/.m68kmake_stamp
+	@true
+
+$(objdir)dep/generated/.m68kmake_stamp: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c | init
+	$(objdir)/cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+	@touch $@
+
+$(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c | init
 	@echo "Compiling Musashi MC680x0 core... "
 	$(CC) $(CFLAGS) /DINLINE="__inline static" $(srcdir)cpu/m68k/m68kmake.c /Fo$(objdir)cpu/m68k/ /Fe$(objdir)cpu/m68k/m68kmake.exe /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
 
@@ -465,7 +481,7 @@ $(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
 
 ctv.o:	$(ctv.h)
 
-$(ctv.h):	ctv_make.cpp
+$(ctv.h):	ctv_make.cpp | init
 	@echo Generating... $(srcdir)dep/generated/$(@F)
 	$(CC) $(CXXFLAGS) $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
 	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
@@ -521,7 +537,7 @@ $(psikyo_tile_func.h):	$(srcdir)dep/scripts/psikyo_tile_func.pl
 
 pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
-$(pgm_sprite.h):	pgm_sprite_create.cpp
+$(pgm_sprite.h):	pgm_sprite_create.cpp | init
 	@echo Generating... $(srcdir)dep/generated/$(@F)
 	$(CC) $(CXXFLAGS) $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
 	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
@@ -530,7 +546,7 @@ $(pgm_sprite.h):	pgm_sprite_create.cpp
 #	Generic rule for resource files
 #
 
-%.res:	%.rc
+%.res:	%.rc | init
 	@echo Compiling resource file... $(<F)
 	rc $(DEF) /n /Fo $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(incdir) $<
 
@@ -540,29 +556,29 @@ $(pgm_sprite.h):	pgm_sprite_create.cpp
 
 ifeq ($(MAKELEVEL),1)
 
-%.o:	%.cpp
+%.o:	%.cpp | init
 	@echo Compiling $<...
 	@$(CC) $(CXXFLAGS) /c $< /Fo$(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
-%.o:	%.c
+%.o:	%.c | init
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) /c /Dinline=__inline $< /Fo$(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o$(subst $(srcdir),$(objdir),$(<D))/$(@F)
 
 else
 
-%.o:	%.c
+%.o:	%.c | init
 	@echo Compiling $<...
 	@$(CC) $(CFLAGS) /c /Dinline=__inline $< /Fo $@
 
-%.o:	%.asm
+%.o:	%.asm | init
 	@echo Assembling $<...
 	@$(AS) $(ASFLAGS) $< -o $@
 
-%.o:
+%.o: | init
 	@echo Compiling $<...
 	@$(CC) $(CXXFLAGS) /c $< /Fo $@
 

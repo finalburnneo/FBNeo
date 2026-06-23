@@ -432,13 +432,19 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 10) { nID |= 0x3000; }	// Fatal Fury 3 Rev 3
 				if (nID == 0x0090 && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 21) { nID |= 0x1000; }	// World Heroes Perfect
 				if (nID == 0x0058 && nDate[0] ==  94 && nDate[1] == 10 && nDate[2] == 14) { nID |= 0x1000; }	// Fatal Fury Special Rev 1
+				if (nID == 0x0052 && nDate[0] == 123 && nDate[1] ==  7 && nDate[2] ==  1) { nID |= 0x1000; }	// Abyssal Infants
+				if (nID == 0x0052 && nDate[0] == 123 && nDate[1] ==  6 && nDate[2] == 20) { nID |= 0x1001; }	// Neo Fight
 				if (nID == 0x0085) {
 					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
 					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
 					else if (nDate[0] == 125 && nDate[1] == 3 && nDate[2] == 6)           { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
 					if (_tcsstr(pIsoPath, _T("(FR)")))                                    { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
 				}
-				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14)  { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
+				if (nID == 0x1234 && nDate[0] == 105 && nDate[1] ==  4 && nDate[2] == 25) { nID  = 0x2234; }	// Neo Puzzle League
+				if (nID == 0x1234 && nDate[0] == 124 && nDate[1] == 12 && nDate[2] ==  2) { nID  = 0x2235; }	// Neo Tetris
+				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] ==  3 && nDate[2] ==  4) { nID  = 0x2236; }	// NGD::ARK
+				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] == 12 && nDate[2] ==  4) { nID  = 0x2237; }	// Santa Ball
+				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] ==  8 && nDate[2] == 14) { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
 				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }	// Double Dragon Rev 1
 				if (nID == 0x0082 && _tcsstr(pIsoPath, _T("OST")))                        { nID |= 0x2000; }	// Double Dragon PS1 OST
 				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }	// Looptris Plus

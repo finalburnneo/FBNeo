@@ -119,10 +119,10 @@ struct NGCDGAME games[] =
 	{ _T("kof98")		, _T("The King of Fighters '98 - The Slugfest")				, _T("1998")	, _T("SNK")					, 0x0242 },		//
 	{ _T("lastbld2")	, _T("The Last Blade 2")									, _T("1998")	, _T("SNK")					, 0x0243 },		//
 	{ _T("kof99")		, _T("The King of Fighters '99 - Millennium Battle")		, _T("1999")	, _T("SNK")					, 0x0251 },		//
-	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3"), _T("1995"), _T("SNK"), 0x069c },		//
-	{ _T("fatfury3r1")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 1)"), _T("1995"), _T("SNK"), 0x169c },		//
-	{ _T("fatfury3r2")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 2)"), _T("1995"), _T("SNK"), 0x269c },		//
-	{ _T("fatfury3r3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 3)"), _T("1995"), _T("SNK"), 0x369c },		//
+	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3"), _T("1995"), _T("SNK")				, 0x069c },		//
+	{ _T("fatfury3r1")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 1)"), _T("1995"), _T("SNK")		, 0x169c },		//
+	{ _T("fatfury3r2")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 2)"), _T("1995"), _T("SNK")		, 0x269c },		//
+	{ _T("fatfury3r3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 3)"), _T("1995"), _T("SNK")		, 0x369c },		//
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
@@ -158,12 +158,18 @@ struct NGCDGAME games[] =
 	{ _T("diggerma")	, _T("Digger Man (Prototype)")								, _T("2025")	, _T("Kyle Hodgetts (iq_132 conversion)")	, 0x1266 },		// it's really 0x0066, but this conflicts with karnovr.
 	{ _T("shinobi")		, _T("Shinobi")												, _T("2024")	, _T("(Hoffman conversion)")	, 0x1337 },		//
 	{ _T("goldnaxe")	, _T("Golden Axe")											, _T("2025")	, _T("(Hoffman conversion)")	, 0x1338 },		//
-	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo")	, 0x14A1 },		//
-	{ _T("yoyoshkn")	, _T("Yo-Yo Shuriken")										, _T("2023")	, _T("Dr. Ludos")	, 0xdad1 },		//
+	{ _T("cbarrel")		, _T("Captain Barrel")										, _T("2024")	, _T("Ozzy Ouzo")			, 0x14A1 },		//
+	{ _T("yoyoshkn")	, _T("Yo-Yo Shuriken")										, _T("2023")	, _T("Dr. Ludos")			, 0xdad1 },		//
 	{ _T("flipshot")	, _T("Battle Flip Shot")									, _T("2022")	, _T("Visco (Pixel Heart)")	, 0x247 },		//
-	{ _T("pbobble2")	, _T("Puzzle Bobble 2")										, _T("202x")	, _T("??")	, 0x0248 },		//
+	{ _T("pbobble2")	, _T("Puzzle Bobble 2")										, _T("202x")	, _T("??")					, 0x0248 },		//
 	{ _T("popbounc")	, _T("Pop 'n Bounce / Gapporin")							, _T("202x")	, _T("Video System (?? conversion)")	, 0x0237 },		//
 	{ _T("minasan")		, _T("Minasan no Okagesamadesu! Dai Sugoroku Taikai")		, _T("202x")	, _T("Monolith (?? conversion)")	, 0x0027 },		//
+	{ _T("neopuzleg")	, _T("Neo Puzzle League")									, _T("202x")	, _T("Blastar")				, 0x2234 },		//
+	{ _T("neotetris")	, _T("Neo Tetris")											, _T("202x")	, _T("Blastar")				, 0x2235 },		//
+	{ _T("ngdark")		, _T("NGD::ARK")											, _T("2011")	, _T("NG.DEV.TEAM")			, 0x2236 },		//
+	{ _T("santaball")	, _T("Santa Ball")											, _T("2012")	, _T("NeoHomeBrew.com")		, 0x2237 },		//
+	{ _T("abyssali")	, _T("Abyssal Infants")										, _T("2021")	, _T("Kako Eimon")			, 0x1052 },		//
+	{ _T("neofight")	, _T("Neo Fight")											, _T("20xx")	, _T("Unknown")				, 0x1053 },		//
 };
 
 

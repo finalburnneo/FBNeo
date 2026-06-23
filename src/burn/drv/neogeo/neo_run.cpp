@@ -2767,7 +2767,7 @@ static void NeoCDProcessCommand()
 					// CDZ copy protection / disc recognition response
 					// Most games need 0x02, but Twinkle Star Sprites needs 0x0F
 					INT32 nGameID = SekReadWord(0x108);
-					if (nGameID == 0x20A) {				// Twinkle Star Sprites CD (TSS)
+					if (nGameID == 0x0224) {			// Twinkle Star Sprites CD (TSS)
 						NeoCDCommsStatusFIFO[3] = 0x0F;
 					} else {
 						NeoCDCommsStatusFIFO[3] = 0x02;	// must be 02, 0E, 0F, or 05

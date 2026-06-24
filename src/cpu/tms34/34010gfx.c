@@ -1349,7 +1349,7 @@ static void FUNCTION_NAME(pixblt)(int src_is_linear, int dst_is_linear)
 	{
 		state.gfxcycles -= tms34010_ICount;
 		COUNT_CYCLES(tms34010_ICount);
-		tms34010_ICount = 0;
+//		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
@@ -1615,7 +1615,7 @@ static void FUNCTION_NAME(pixblt_r)(int src_is_linear, int dst_is_linear)
 	{
 		state.gfxcycles -= tms34010_ICount;
 		COUNT_CYCLES(tms34010_ICount);
-		tms34010_ICount = 0;
+//		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
@@ -1835,7 +1835,7 @@ static void FUNCTION_NAME(pixblt_b)(int dst_is_linear)
 	{
 		state.gfxcycles -= tms34010_ICount;
 		COUNT_CYCLES(tms34010_ICount);
-		tms34010_ICount = 0;
+//		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else
@@ -2018,7 +2018,7 @@ static void FUNCTION_NAME(fill)(int dst_is_linear)
 	{
 		state.gfxcycles -= tms34010_ICount;
 		COUNT_CYCLES(tms34010_ICount);
-		tms34010_ICount = 0;
+//		tms34010_ICount = 0;
 		PC -= 0x10;
 	}
 	else

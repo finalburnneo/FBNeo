@@ -830,8 +830,10 @@ static void internal_interrupt_callback(INT32 type)
 int tms34010_run(int cycles)
 {
 	/* Get out if CPU is halted. Absolutely no interrupts must be taken!!! */
-	if (IOREG(REG_HSTCTLH) & 0x8000)
+	if (IOREG(REG_HSTCTLH) & 0x8000) {
+		state.total_cycles += cycles;
 		return cycles;
+	}
 
 	/* if the CPU's reset was deferred, do it now */
 	if (state.reset_deferred)

@@ -1,6 +1,8 @@
 // FinalBurn Neo Mega Phoenix driver module
 // Based on MAME driver by David Haywood, Dirk Best
 
+// note: tms overclocked by 1mhz (8mhz / 8) to mitigate flickering (megaphx)
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "pic16c5x_intf.h"
@@ -919,7 +921,7 @@ static INT32 MegaphxInit()
 	TMS34010SetToShift(tms_to_shift);
 	TMS34010SetFromShift(tms_from_shift);
 	TMS34010SetOutputINT(m68k_gen_int);
-	TMS34010SetPixClock(48000000 / 12, 2); // probably wrong
+	TMS34010SetPixClock(48000000 / 12, 2); // slightly overclocked to get rid of flickering
 	TMS34010SetCpuCyclesPerFrame((INT32)(48000000 / 8 / 52.63));
 	TMS34010SetHaltOnReset(1);
 	TMS34010Close();

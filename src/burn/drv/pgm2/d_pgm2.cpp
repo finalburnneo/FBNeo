@@ -4,259 +4,259 @@
 #include "pgm2_crypt.h"
 
 static struct BurnInputInfo pgm2InputList[] = {
-    { "P1 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 14, "p1 coin"   },
-    { "P1 Start",         BIT_DIGITAL, Pgm2InputPort1 + 10, "p1 start"  },
-    { "P1 Up",            BIT_DIGITAL, Pgm2InputPort0 + 0,  "p1 up"     },
-    { "P1 Down",          BIT_DIGITAL, Pgm2InputPort0 + 1,  "p1 down"   },
-    { "P1 Left",          BIT_DIGITAL, Pgm2InputPort0 + 2,  "p1 left"   },
-    { "P1 Right",         BIT_DIGITAL, Pgm2InputPort0 + 3,  "p1 right"  },
-    { "P1 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 4,  "p1 fire 1" },
-    { "P1 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 5,  "p1 fire 2" },
-    { "P1 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 6,  "p1 fire 3" },
-    { "P1 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 7,  "p1 fire 4" },
+	{ "P1 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 14, "p1 coin"   },
+	{ "P1 Start",         BIT_DIGITAL, Pgm2InputPort1 + 10, "p1 start"  },
+	{ "P1 Up",            BIT_DIGITAL, Pgm2InputPort0 + 0,  "p1 up"     },
+	{ "P1 Down",          BIT_DIGITAL, Pgm2InputPort0 + 1,  "p1 down"   },
+	{ "P1 Left",          BIT_DIGITAL, Pgm2InputPort0 + 2,  "p1 left"   },
+	{ "P1 Right",         BIT_DIGITAL, Pgm2InputPort0 + 3,  "p1 right"  },
+	{ "P1 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 4,  "p1 fire 1" },
+	{ "P1 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 5,  "p1 fire 2" },
+	{ "P1 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 6,  "p1 fire 3" },
+	{ "P1 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 7,  "p1 fire 4" },
 
-    { "P2 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 15, "p2 coin"   },
-    { "P2 Start",         BIT_DIGITAL, Pgm2InputPort1 + 11, "p2 start"  },
-    { "P2 Up",            BIT_DIGITAL, Pgm2InputPort0 + 10, "p2 up"     },
-    { "P2 Down",          BIT_DIGITAL, Pgm2InputPort0 + 11, "p2 down"   },
-    { "P2 Left",          BIT_DIGITAL, Pgm2InputPort0 + 12, "p2 left"   },
-    { "P2 Right",         BIT_DIGITAL, Pgm2InputPort0 + 13, "p2 right"  },
-    { "P2 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 14, "p2 fire 1" },
-    { "P2 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 15, "p2 fire 2" },
-    { "P2 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 16, "p2 fire 3" },
-    { "P2 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 17, "p2 fire 4" },
+	{ "P2 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 15, "p2 coin"   },
+	{ "P2 Start",         BIT_DIGITAL, Pgm2InputPort1 + 11, "p2 start"  },
+	{ "P2 Up",            BIT_DIGITAL, Pgm2InputPort0 + 10, "p2 up"     },
+	{ "P2 Down",          BIT_DIGITAL, Pgm2InputPort0 + 11, "p2 down"   },
+	{ "P2 Left",          BIT_DIGITAL, Pgm2InputPort0 + 12, "p2 left"   },
+	{ "P2 Right",         BIT_DIGITAL, Pgm2InputPort0 + 13, "p2 right"  },
+	{ "P2 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 14, "p2 fire 1" },
+	{ "P2 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 15, "p2 fire 2" },
+	{ "P2 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 16, "p2 fire 3" },
+	{ "P2 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 17, "p2 fire 4" },
 
-    { "P3 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 16, "p3 coin"   },
-    { "P3 Start",         BIT_DIGITAL, Pgm2InputPort1 + 12, "p3 start"  },
-    { "P3 Up",            BIT_DIGITAL, Pgm2InputPort0 + 20, "p3 up"     },
-    { "P3 Down",          BIT_DIGITAL, Pgm2InputPort0 + 21, "p3 down"   },
-    { "P3 Left",          BIT_DIGITAL, Pgm2InputPort0 + 22, "p3 left"   },
-    { "P3 Right",         BIT_DIGITAL, Pgm2InputPort0 + 23, "p3 right"  },
-    { "P3 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 24, "p3 fire 1" },
-    { "P3 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 25, "p3 fire 2" },
-    { "P3 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 26, "p3 fire 3" },
-    { "P3 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 27, "p3 fire 4" },
+	{ "P3 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 16, "p3 coin"   },
+	{ "P3 Start",         BIT_DIGITAL, Pgm2InputPort1 + 12, "p3 start"  },
+	{ "P3 Up",            BIT_DIGITAL, Pgm2InputPort0 + 20, "p3 up"     },
+	{ "P3 Down",          BIT_DIGITAL, Pgm2InputPort0 + 21, "p3 down"   },
+	{ "P3 Left",          BIT_DIGITAL, Pgm2InputPort0 + 22, "p3 left"   },
+	{ "P3 Right",         BIT_DIGITAL, Pgm2InputPort0 + 23, "p3 right"  },
+	{ "P3 Button 1",      BIT_DIGITAL, Pgm2InputPort0 + 24, "p3 fire 1" },
+	{ "P3 Button 2",      BIT_DIGITAL, Pgm2InputPort0 + 25, "p3 fire 2" },
+	{ "P3 Button 3",      BIT_DIGITAL, Pgm2InputPort0 + 26, "p3 fire 3" },
+	{ "P3 Button 4",      BIT_DIGITAL, Pgm2InputPort0 + 27, "p3 fire 4" },
 
-    { "P4 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 17, "p4 coin"   },
-    { "P4 Start",         BIT_DIGITAL, Pgm2InputPort1 + 13, "p4 start"  },
-    { "P4 Up",            BIT_DIGITAL, Pgm2InputPort1 + 0,  "p4 up"     },
-    { "P4 Down",          BIT_DIGITAL, Pgm2InputPort1 + 1,  "p4 down"   },
-    { "P4 Left",          BIT_DIGITAL, Pgm2InputPort1 + 2,  "p4 left"   },
-    { "P4 Right",         BIT_DIGITAL, Pgm2InputPort1 + 3,  "p4 right"  },
-    { "P4 Button 1",      BIT_DIGITAL, Pgm2InputPort1 + 4,  "p4 fire 1" },
-    { "P4 Button 2",      BIT_DIGITAL, Pgm2InputPort1 + 5,  "p4 fire 2" },
-    { "P4 Button 3",      BIT_DIGITAL, Pgm2InputPort1 + 6,  "p4 fire 3" },
-    { "P4 Button 4",      BIT_DIGITAL, Pgm2InputPort1 + 7,  "p4 fire 4" },
+	{ "P4 Coin",          BIT_DIGITAL, Pgm2InputPort1 + 17, "p4 coin"   },
+	{ "P4 Start",         BIT_DIGITAL, Pgm2InputPort1 + 13, "p4 start"  },
+	{ "P4 Up",            BIT_DIGITAL, Pgm2InputPort1 + 0,  "p4 up"     },
+	{ "P4 Down",          BIT_DIGITAL, Pgm2InputPort1 + 1,  "p4 down"   },
+	{ "P4 Left",          BIT_DIGITAL, Pgm2InputPort1 + 2,  "p4 left"   },
+	{ "P4 Right",         BIT_DIGITAL, Pgm2InputPort1 + 3,  "p4 right"  },
+	{ "P4 Button 1",      BIT_DIGITAL, Pgm2InputPort1 + 4,  "p4 fire 1" },
+	{ "P4 Button 2",      BIT_DIGITAL, Pgm2InputPort1 + 5,  "p4 fire 2" },
+	{ "P4 Button 3",      BIT_DIGITAL, Pgm2InputPort1 + 6,  "p4 fire 3" },
+	{ "P4 Button 4",      BIT_DIGITAL, Pgm2InputPort1 + 7,  "p4 fire 4" },
 
-    { "Test Key P1 & P2", BIT_DIGITAL, Pgm2InputPort1 + 18, "diag"      },
-    { "Test Key P3 & P4", BIT_DIGITAL, Pgm2InputPort1 + 19, "diag 2"    },
-    { "Service P1 & P2",  BIT_DIGITAL, Pgm2InputPort1 + 20, "service"   },
-    { "Service P3 & P4",  BIT_DIGITAL, Pgm2InputPort1 + 21, "service 2" },
-    { "ResetGame",        BIT_DIGITAL, &Pgm2Reset,          "reset"     },
-    { "Dip A",            BIT_DIPSWITCH, Pgm2Dip + 0,       "dip"       },
-    { "Dip B",            BIT_DIPSWITCH, &CardlessHack,     "dip"       },
+	{ "Test Key P1 & P2", BIT_DIGITAL, Pgm2InputPort1 + 18, "diag"      },
+	{ "Test Key P3 & P4", BIT_DIGITAL, Pgm2InputPort1 + 19, "diag 2"    },
+	{ "Service P1 & P2",  BIT_DIGITAL, Pgm2InputPort1 + 20, "service"   },
+	{ "Service P3 & P4",  BIT_DIGITAL, Pgm2InputPort1 + 21, "service 2" },
+	{ "ResetGame",        BIT_DIGITAL, &Pgm2Reset,          "reset"     },
+	{ "Dip A",            BIT_DIPSWITCH, Pgm2Dip + 0,       "dip"       },
+	{ "Dip B",            BIT_DIPSWITCH, &CardlessHack,     "dip"       },
 };
 STDINPUTINFO(pgm2)
 
 static struct BurnDIPInfo pgm2DIPList[] = {
-    DIP_OFFSET(0x2d)
-    { 0x00, 0xff, 0xff, 0xff, NULL },
-    { 0   , 0xfe, 0   ,    2, "Service Mode" },
-    { 0x00, 0x01, 0x01, 0x01, "Off" },
-    { 0x00, 0x01, 0x01, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Music" },
-    { 0x00, 0x01, 0x02, 0x00, "Off" },
-    { 0x00, 0x01, 0x02, 0x02, "On" },
-    { 0   , 0xfe, 0   ,    2, "Voice" },
-    { 0x00, 0x01, 0x04, 0x00, "Off" },
-    { 0x00, 0x01, 0x04, 0x04, "On" },
-    { 0   , 0xfe, 0   ,    2, "Free Play" },
-    { 0x00, 0x01, 0x08, 0x08, "Off" },
-    { 0x00, 0x01, 0x08, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Stop" },
-    { 0x00, 0x01, 0x10, 0x10, "Off" },
-    { 0x00, 0x01, 0x10, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Unused SW1:6" },
-    { 0x00, 0x01, 0x20, 0x20, "Off" },
-    { 0x00, 0x01, 0x20, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Unused SW1:7" },
-    { 0x00, 0x01, 0x40, 0x40, "Off" },
-    { 0x00, 0x01, 0x40, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Debug" },
-    { 0x00, 0x01, 0x80, 0x80, "Off" },
-    { 0x00, 0x01, 0x80, 0x00, "On" },
-    { 0   , 0xfe, 0   ,    2, "Cardless Mode" },
-    { 0x01, 0x01, 0x01, 0x00, "Off" },
-    { 0x01, 0x01, 0x01, 0x01, "On" },
+	DIP_OFFSET(0x2d)
+	{ 0x00, 0xff, 0xff, 0xff, NULL },
+	{ 0   , 0xfe, 0   ,    2, "Service Mode" },
+	{ 0x00, 0x01, 0x01, 0x01, "Off" },
+	{ 0x00, 0x01, 0x01, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Music" },
+	{ 0x00, 0x01, 0x02, 0x00, "Off" },
+	{ 0x00, 0x01, 0x02, 0x02, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Voice" },
+	{ 0x00, 0x01, 0x04, 0x00, "Off" },
+	{ 0x00, 0x01, 0x04, 0x04, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Free Play" },
+	{ 0x00, 0x01, 0x08, 0x08, "Off" },
+	{ 0x00, 0x01, 0x08, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Stop" },
+	{ 0x00, 0x01, 0x10, 0x10, "Off" },
+	{ 0x00, 0x01, 0x10, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Unused SW1:6" },
+	{ 0x00, 0x01, 0x20, 0x20, "Off" },
+	{ 0x00, 0x01, 0x20, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Unused SW1:7" },
+	{ 0x00, 0x01, 0x40, 0x40, "Off" },
+	{ 0x00, 0x01, 0x40, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Debug" },
+	{ 0x00, 0x01, 0x80, 0x80, "Off" },
+	{ 0x00, 0x01, 0x80, 0x00, "On" },
+	{ 0   , 0xfe, 0   ,    2, "Cardless Mode" },
+	{ 0x01, 0x01, 0x01, 0x00, "Off" },
+	{ 0x01, 0x01, 0x01, 0x01, "On" },
 };
 STDDIPINFO(pgm2)
 
 static bool pgm2LoadRom(UINT8 **pBuf, INT32 *pLen, INT32 nLen, INT32 nRomIdx)
 {
-    *pLen = nLen;
-    *pBuf = (UINT8*)BurnMalloc(nLen);
-    if (!*pBuf) return false;
-    memset(*pBuf, 0x00, nLen);
-    return BurnLoadRom(*pBuf, nRomIdx, 1) == 0;
+	*pLen = nLen;
+	*pBuf = (UINT8*)BurnMalloc(nLen);
+	if (!*pBuf) return false;
+	memset(*pBuf, 0x00, nLen);
+	return BurnLoadRom(*pBuf, nRomIdx, 1) == 0;
 }
 
 static void orleg2LoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
 
-    Pgm2SndROMLen = 0x1000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
+	Pgm2SndROMLen = 0x1000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
-    Pgm2BgROMLen = 0x1000000;
-    Pgm2MaskROMOffset  = 0x1000000;
-    Pgm2MaskROMLen     = 0x2000000;
-    Pgm2ColourROMOffset = 0x3000000;
-    Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000000, 5, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000002, 6, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000000, 7, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000002, 8, 4, LD_GROUP(2));
-    pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
+	Pgm2BgROMLen = 0x1000000;
+	Pgm2MaskROMOffset  = 0x1000000;
+	Pgm2MaskROMLen     = 0x2000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 5, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000002, 6, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000000, 7, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000002, 8, 4, LD_GROUP(2));
+	pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
 }
 
 static void orleg2CardLoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 2)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 3)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 3)) return;
 
-    Pgm2SndROMLen = 0x1000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
+	Pgm2SndROMLen = 0x1000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
 
-    Pgm2BgROMLen = 0x1000000;
-    Pgm2MaskROMOffset  = 0x1000000;
-    Pgm2MaskROMLen     = 0x2000000;
-    Pgm2ColourROMOffset = 0x3000000;
-    Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000002, 7, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000000, 8, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000002, 9, 4, LD_GROUP(2));
-    pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
+	Pgm2BgROMLen = 0x1000000;
+	Pgm2MaskROMOffset  = 0x1000000;
+	Pgm2MaskROMLen     = 0x2000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000002, 7, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000000, 8, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000002, 9, 4, LD_GROUP(2));
+	pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
 }
 
 static void kov2nlLoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 2)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 3)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 3)) return;
 
-    Pgm2SndROMLen = 0x2000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
+	Pgm2SndROMLen = 0x2000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
 
-    Pgm2BgROMLen = 0x1000000;
-    Pgm2MaskROMOffset  = 0x1000000;
-    Pgm2MaskROMLen     = 0x2000000;
-    Pgm2ColourROMOffset = 0x3000000;
-    Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x1000002, 7, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000000, 8, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000002, 9, 4, LD_GROUP(2));
-    pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
+	Pgm2BgROMLen = 0x1000000;
+	Pgm2MaskROMOffset  = 0x1000000;
+	Pgm2MaskROMLen     = 0x2000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x1000002, 7, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000000, 8, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000002, 9, 4, LD_GROUP(2));
+	pgm2_decode_sprite_data(0x1000000, 0x2000000, 0x3000000, 0x4000000);
 }
 
 static void kov3LoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
 
-    Pgm2SndROMLen = 0x4000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
+	Pgm2SndROMLen = 0x4000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
-    Pgm2BgROMLen = 0x2000000;
-    Pgm2MaskROMOffset  = 0x2000000;
-    Pgm2MaskROMLen     = 0x4000000;
-    Pgm2ColourROMOffset = 0x6000000;
-    Pgm2SprROMLen = 0x2000000 + 0x4000000 + 0x8000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x2000002, 6, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x6000000, 7, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x6000002, 8, 4, LD_GROUP(2));
-    pgm2_decode_sprite_data(0x2000000, 0x4000000, 0x6000000, 0x8000000);
+	Pgm2BgROMLen = 0x2000000;
+	Pgm2MaskROMOffset  = 0x2000000;
+	Pgm2MaskROMLen     = 0x4000000;
+	Pgm2ColourROMOffset = 0x6000000;
+	Pgm2SprROMLen = 0x2000000 + 0x4000000 + 0x8000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x2000002, 6, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x6000000, 7, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x6000002, 8, 4, LD_GROUP(2));
+	pgm2_decode_sprite_data(0x2000000, 0x4000000, 0x6000000, 0x8000000);
 }
 
 static INT32 orleg2InitCommon()
 {
-    pgm2SetStorageRomIndices(-1, 10);
-    pgm2SetArmRomIndex(1);
-    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
-    pPgm2InitCallback = orleg2LoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(-1, 10);
+	pgm2SetArmRomIndex(1);
+	pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+	pPgm2InitCallback = orleg2LoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static INT32 orleg2CardInitCommon()
 {
-    pgm2SetStorageRomIndices(1, 11);
-    pgm2SetMaxCardSlots(4);
-    pgm2SetCardRomIndex(0, 1);
-    pgm2SetCardRomIndex(1, 1);
-    pgm2SetCardRomIndex(2, 1);
-    pgm2SetCardRomIndex(3, 1);
-    pgm2SetArmRomIndex(2);
-    pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
-    pPgm2InitCallback = orleg2CardLoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(1, 11);
+	pgm2SetMaxCardSlots(4);
+	pgm2SetCardRomIndex(0, 1);
+	pgm2SetCardRomIndex(1, 1);
+	pgm2SetCardRomIndex(2, 1);
+	pgm2SetCardRomIndex(3, 1);
+	pgm2SetArmRomIndex(2);
+	pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+	pPgm2InitCallback = orleg2CardLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static INT32 kov2nlInitCommon()
 {
-    pgm2SetStorageRomIndices(1, 11);
-    pgm2SetMaxCardSlots(4);
-    pgm2SetCardRomIndex(0, 1);
-    pgm2SetCardRomIndex(1, 1);
-    pgm2SetCardRomIndex(2, 1);
-    pgm2SetCardRomIndex(3, 1);
-    pgm2SetArmRomIndex(2);
-    pgm2SetSpeedhack(0, 0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
-    pPgm2InitCallback = kov2nlLoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(1, 11);
+	pgm2SetMaxCardSlots(4);
+	pgm2SetCardRomIndex(0, 1);
+	pgm2SetCardRomIndex(1, 1);
+	pgm2SetCardRomIndex(2, 1);
+	pgm2SetCardRomIndex(3, 1);
+	pgm2SetArmRomIndex(2);
+	pgm2SetSpeedhack(0, 0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
+	pPgm2InitCallback = kov2nlLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static const UINT8 kov3_104_key[8] = { 0x40, 0xac, 0x30, 0x00, 0x47, 0x49, 0x00, 0x00 };
@@ -270,301 +270,301 @@ static const UINT8 kov3_100_sum[8] = { 0x96, 0xf0, 0x91, 0xe1, 0xb3, 0xf1, 0xef,
 
 static INT32 kov3Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
-    pgm2SetMaxCardSlots(2);
-    pgm2SetCardRomIndex(0, 10);
-    pgm2SetCardRomIndex(1, 10);
-    pgm2EnableKov3Module(kov3_104_key, kov3_104_sum, 0x18ec71, 0xb89d);
-    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
-    pPgm2InitCallback = kov3LoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(10, 11);
+	pgm2SetMaxCardSlots(2);
+	pgm2SetCardRomIndex(0, 10);
+	pgm2SetCardRomIndex(1, 10);
+	pgm2EnableKov3Module(kov3_104_key, kov3_104_sum, 0x18ec71, 0xb89d);
+	pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+	pPgm2InitCallback = kov3LoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static INT32 kov3_102Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
-    pgm2SetMaxCardSlots(2);
-    pgm2SetCardRomIndex(0, 10);
-    pgm2SetCardRomIndex(1, 10);
-    pgm2EnableKov3Module(kov3_102_key, kov3_102_sum, 0x021d37, 0x81d0);
-    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
-    pPgm2InitCallback = kov3LoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(10, 11);
+	pgm2SetMaxCardSlots(2);
+	pgm2SetCardRomIndex(0, 10);
+	pgm2SetCardRomIndex(1, 10);
+	pgm2EnableKov3Module(kov3_102_key, kov3_102_sum, 0x021d37, 0x81d0);
+	pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+	pPgm2InitCallback = kov3LoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static INT32 kov3_101Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
-    pgm2SetMaxCardSlots(2);
-    pgm2SetCardRomIndex(0, 10);
-    pgm2SetCardRomIndex(1, 10);
-    pgm2EnableKov3Module(kov3_101_key, kov3_101_sum, 0x000000, 0xffff);
-    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
-    pPgm2InitCallback = kov3LoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(10, 11);
+	pgm2SetMaxCardSlots(2);
+	pgm2SetCardRomIndex(0, 10);
+	pgm2SetCardRomIndex(1, 10);
+	pgm2EnableKov3Module(kov3_101_key, kov3_101_sum, 0x000000, 0xffff);
+	pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+	pPgm2InitCallback = kov3LoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 static INT32 kov3_100Init()
 {
-    pgm2SetStorageRomIndices(10, 11);
-    pgm2SetMaxCardSlots(2);
-    pgm2SetCardRomIndex(0, 10);
-    pgm2SetCardRomIndex(1, 10);
-    pgm2EnableKov3Module(kov3_100_key, kov3_100_sum, 0x3e8aa8, 0xc530);
-    pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
-    pPgm2InitCallback = kov3LoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(10, 11);
+	pgm2SetMaxCardSlots(2);
+	pgm2SetCardRomIndex(0, 10);
+	pgm2SetCardRomIndex(1, 10);
+	pgm2EnableKov3Module(kov3_100_key, kov3_100_sum, 0x3e8aa8, 0xc530);
+	pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+	pPgm2InitCallback = kov3LoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 // ddpdojt ROM loading
 static void ddpdojtLoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x0200000, 1)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x0200000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
 
-    Pgm2SndROMLen = 0x1000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
+	Pgm2SndROMLen = 0x1000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
-    // BG: bgl(0x1000000)+bgh(0x1000000) = 0x2000000 interleaved
-    // Mask: mapl0(0x800000)+maph0(0x800000) = 0x1000000 interleaved
-    // Colour: spa0(0x1000000)+spb0(0x1000000) = 0x2000000 interleaved
-    Pgm2BgROMLen = 0x2000000;
-    Pgm2MaskROMOffset  = 0x2000000;
-    Pgm2MaskROMLen     = 0x1000000;
-    Pgm2ColourROMOffset = 0x3000000;
-    Pgm2SprROMLen = 0x2000000 + 0x1000000 + 0x2000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x2000002, 6, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000000, 7, 4, LD_GROUP(2));
-    BurnLoadRomExt(Pgm2SprROM + 0x3000002, 8, 4, LD_GROUP(2));
-    pgm2_decode_sprite_data(0x2000000, 0x1000000, 0x3000000, 0x2000000);
+	// BG: bgl(0x1000000)+bgh(0x1000000) = 0x2000000 interleaved
+	// Mask: mapl0(0x800000)+maph0(0x800000) = 0x1000000 interleaved
+	// Colour: spa0(0x1000000)+spb0(0x1000000) = 0x2000000 interleaved
+	Pgm2BgROMLen = 0x2000000;
+	Pgm2MaskROMOffset  = 0x2000000;
+	Pgm2MaskROMLen     = 0x1000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen = 0x2000000 + 0x1000000 + 0x2000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x2000002, 6, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000000, 7, 4, LD_GROUP(2));
+	BurnLoadRomExt(Pgm2SprROM + 0x3000002, 8, 4, LD_GROUP(2));
+	pgm2_decode_sprite_data(0x2000000, 0x1000000, 0x3000000, 0x2000000);
 }
 
 static INT32 ddpdojtInit()
 {
-    pgm2SetStorageRomIndices(-1, 10);
-    pgm2SetRamRomBoard(0x200000);  // 2MB RAM before ROM
+	pgm2SetStorageRomIndices(-1, 10);
+	pgm2SetRamRomBoard(0x200000);  // 2MB RAM before ROM
 	pgm2SetSpeedhack(0, 0x20000060, 0x10001a7e, 0, 0, 0);
 	pgm2SetSpeedhack(1, 0x20021e04, 0x1008fefe, 0x1008fbe8, 0, 0);
-    pPgm2InitCallback = ddpdojtLoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pPgm2InitCallback = ddpdojtLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 // kof98umh ROM loading
 static void kof98umhLoadRoms()
 {
-    if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
-    if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
-    if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x0004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x1000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x0200000, 2)) return;
 
-    // Two sound ROMs concatenated
-    Pgm2SndROMLen = 0x8000000;
-    Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
-    if (!Pgm2SndROM) return;
-    memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
-    if (BurnLoadRomExt(Pgm2SndROM + 0x0000000, 9,  1, LD_BYTESWAP)) return;
-    if (BurnLoadRomExt(Pgm2SndROM + 0x4000000, 10, 1, LD_BYTESWAP)) return;
+	// Two sound ROMs concatenated
+	Pgm2SndROMLen = 0x8000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
+	if (BurnLoadRomExt(Pgm2SndROM + 0x0000000, 9,  1, LD_BYTESWAP)) return;
+	if (BurnLoadRomExt(Pgm2SndROM + 0x4000000, 10, 1, LD_BYTESWAP)) return;
 
-    // No BG tiles (MAME: bgtile region is ERASE00 with nothing loaded)
-    // Mask: mapl0(0x4000000)+maph0(0x4000000) = 0x8000000 interleaved
-    // Colour: spa0+spb0 at 0, spa2+spb2 at 0x10000000 = 0x18000000 with gap
-    Pgm2BgROMLen = 0;
-    Pgm2MaskROMOffset  = 0;
-    Pgm2MaskROMLen     = 0x8000000;
-    Pgm2ColourROMOffset = 0x8000000;
-    Pgm2SprROMLen = 0x8000000 + 0x18000000;
-    Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
-    if (!Pgm2SprROM) return;
-    memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
-    BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));  // mapl0
-    BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));  // maph0
-    BurnLoadRomExt(Pgm2SprROM + 0x8000000, 5, 4, LD_GROUP(2));  // spa0
-    BurnLoadRomExt(Pgm2SprROM + 0x8000002, 6, 4, LD_GROUP(2));  // spb0
-    // spa1/spb1 unpopulated (gap at offset 0x10000000)
-    BurnLoadRomExt(Pgm2SprROM + 0x18000000, 7, 4, LD_GROUP(2)); // spa2
-    BurnLoadRomExt(Pgm2SprROM + 0x18000002, 8, 4, LD_GROUP(2)); // spb2
-    pgm2_decode_sprite_data(0x0, 0x8000000, 0x8000000, 0x18000000);
+	// No BG tiles (MAME: bgtile region is ERASE00 with nothing loaded)
+	// Mask: mapl0(0x4000000)+maph0(0x4000000) = 0x8000000 interleaved
+	// Colour: spa0+spb0 at 0, spa2+spb2 at 0x10000000 = 0x18000000 with gap
+	Pgm2BgROMLen = 0;
+	Pgm2MaskROMOffset  = 0;
+	Pgm2MaskROMLen     = 0x8000000;
+	Pgm2ColourROMOffset = 0x8000000;
+	Pgm2SprROMLen = 0x8000000 + 0x18000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));  // mapl0
+	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));  // maph0
+	BurnLoadRomExt(Pgm2SprROM + 0x8000000, 5, 4, LD_GROUP(2));  // spa0
+	BurnLoadRomExt(Pgm2SprROM + 0x8000002, 6, 4, LD_GROUP(2));  // spb0
+	// spa1/spb1 unpopulated (gap at offset 0x10000000)
+	BurnLoadRomExt(Pgm2SprROM + 0x18000000, 7, 4, LD_GROUP(2)); // spa2
+	BurnLoadRomExt(Pgm2SprROM + 0x18000002, 8, 4, LD_GROUP(2)); // spb2
+	pgm2_decode_sprite_data(0x0, 0x8000000, 0x8000000, 0x18000000);
 }
 
 static INT32 kof98umhInit()
 {
-    pgm2SetStorageRomIndices(-1, 11);
-    pgm2SetSpeedhack(0, 0x20000060, 0x100028f6, 0, 0, 0);
-    pgm2SetRefreshRate(15625.0 / 264.0);  // ~59.19 Hz (MAME pgm2_lores config)
-    pPgm2InitCallback = kof98umhLoadRoms;
-    pPgm2ResetCallback = NULL;
-    pPgm2ScanCallback = NULL;
-    return pgm2Init();
+	pgm2SetStorageRomIndices(-1, 11);
+	pgm2SetSpeedhack(0, 0x20000060, 0x100028f6, 0, 0, 0);
+	pgm2SetRefreshRate(15625.0 / 264.0);  // ~59.19 Hz (MAME pgm2_lores config)
+	pPgm2InitCallback = kof98umhLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback = NULL;
+	return pgm2Init();
 }
 
 // orleg2 family
 #define ORLEG2_INTERNAL_CHINA \
-    { "xyj2_igs036_china.rom",       0x0004000, 0xbcce7641, BRF_PRG | BRF_ESS }, \
-    { "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
+	{ "xyj2_igs036_china.rom",       0x0004000, 0xbcce7641, BRF_PRG | BRF_ESS }, \
+	{ "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
 #define ORLEG2_INTERNAL_HONGKONG \
-    { "xyj2_hk.igs036",               0x0004000, 0xee7343c6, BRF_PRG | BRF_ESS }, \
-    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+	{ "xyj2_hk.igs036",               0x0004000, 0xee7343c6, BRF_PRG | BRF_ESS }, \
+	{ "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
 #define ORLEG2_INTERNAL_TAIWAN \
-    { "xyj2_tw.igs036",               0x0004000, 0x3b8a6703, BRF_PRG | BRF_ESS }, \
-    { "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
+	{ "xyj2_tw.igs036",               0x0004000, 0x3b8a6703, BRF_PRG | BRF_ESS }, \
+	{ "blank_orleg2_taiwan_card.pg2", 0x0000108, 0xcff88f98, BRF_OPT },
 #define ORLEG2_INTERNAL_OVERSEAS \
-    { "ol2_fa.igs036",                0x0004000, 0xcc4d398a, BRF_PRG | BRF_ESS },
+	{ "ol2_fa.igs036",                0x0004000, 0xcc4d398a, BRF_PRG | BRF_ESS },
 #define ORLEG2_INTERNAL_JAPAN \
-    { "ol2_a10.igs036",               0x0004000, 0x69375284, BRF_PRG | BRF_ESS },
+	{ "ol2_a10.igs036",               0x0004000, 0x69375284, BRF_PRG | BRF_ESS },
 
 #define ORLEG2_PROGRAM_104(prefix, extension) \
-    { #prefix "_v104" #extension ".u7", 0x0800000, 0x7c24a4f5, BRF_PRG | BRF_ESS }, // V104 08-03-03 13:25:37
+	{ #prefix "_v104" #extension ".u7", 0x0800000, 0x7c24a4f5, BRF_PRG | BRF_ESS }, // V104 08-03-03 13:25:37
 #define ORLEG2_PROGRAM_103(prefix, extension) \
-    { #prefix "_v103" #extension ".u7", 0x0800000, 0x21c1fae8, BRF_PRG | BRF_ESS }, // V103 08-01-30 14:45:17
+	{ #prefix "_v103" #extension ".u7", 0x0800000, 0x21c1fae8, BRF_PRG | BRF_ESS }, // V103 08-01-30 14:45:17
 #define ORLEG2_PROGRAM_101(prefix, extension) \
-    { #prefix "_v101" #extension ".u7", 0x0800000, 0x45805b53, BRF_PRG | BRF_ESS }, // V101 07-12-24 09:32:32
+	{ #prefix "_v101" #extension ".u7", 0x0800000, 0x45805b53, BRF_PRG | BRF_ESS }, // V101 07-12-24 09:32:32
 
 #define ORLEG2_COMMON_ROMS \
-    { "ig-a_text.u4",  0x0200000, 0xfa444c32, BRF_GRA }, \
-    { "ig-a_bgl.u35",  0x0800000, 0x083a8315, BRF_GRA }, \
-    { "ig-a_bgh.u36",  0x0800000, 0xe197221d, BRF_GRA }, \
-    { "ig-a_bml.u12",  0x1000000, 0x113a331c, BRF_GRA }, \
-    { "ig-a_bmh.u16",  0x1000000, 0xfbf411c8, BRF_GRA }, \
-    { "ig-a_cgl.u18",  0x2000000, 0x43501fa6, BRF_GRA }, \
-    { "ig-a_cgh.u26",  0x2000000, 0x7051d020, BRF_GRA }, \
-    { "ig-a_sp.u2",    0x1000000, 0x8250688c, BRF_SND }, \
-    { "xyj2_nvram",    0x0010000, 0xccccc71c, BRF_OPT },
+	{ "ig-a_text.u4",  0x0200000, 0xfa444c32, BRF_GRA }, \
+	{ "ig-a_bgl.u35",  0x0800000, 0x083a8315, BRF_GRA }, \
+	{ "ig-a_bgh.u36",  0x0800000, 0xe197221d, BRF_GRA }, \
+	{ "ig-a_bml.u12",  0x1000000, 0x113a331c, BRF_GRA }, \
+	{ "ig-a_bmh.u16",  0x1000000, 0xfbf411c8, BRF_GRA }, \
+	{ "ig-a_cgl.u18",  0x2000000, 0x43501fa6, BRF_GRA }, \
+	{ "ig-a_cgh.u26",  0x2000000, 0x7051d020, BRF_GRA }, \
+	{ "ig-a_sp.u2",    0x1000000, 0x8250688c, BRF_SND }, \
+	{ "xyj2_nvram",    0x0010000, 0xccccc71c, BRF_OPT },
 
 static struct BurnRomInfo orleg2RomDesc[] = {
-    ORLEG2_INTERNAL_OVERSEAS
-    ORLEG2_PROGRAM_104(ol2,fa)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_OVERSEAS
+	ORLEG2_PROGRAM_104(ol2,fa)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2)
 STD_ROM_FN(orleg2)
 
 static struct BurnRomInfo orleg2_103RomDesc[] = {
-    ORLEG2_INTERNAL_OVERSEAS
-    ORLEG2_PROGRAM_103(ol2,fa)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_OVERSEAS
+	ORLEG2_PROGRAM_103(ol2,fa)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_103)
 STD_ROM_FN(orleg2_103)
 
 static struct BurnRomInfo orleg2_101RomDesc[] = {
-    ORLEG2_INTERNAL_OVERSEAS
-    ORLEG2_PROGRAM_101(ol2,fa)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_OVERSEAS
+	ORLEG2_PROGRAM_101(ol2,fa)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_101)
 STD_ROM_FN(orleg2_101)
 
 static struct BurnRomInfo orleg2_104cnRomDesc[] = {
-    ORLEG2_INTERNAL_CHINA
-    ORLEG2_PROGRAM_104(xyj2,cn)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_CHINA
+	ORLEG2_PROGRAM_104(xyj2,cn)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_104cn)
 STD_ROM_FN(orleg2_104cn)
 
 static struct BurnRomInfo orleg2_103cnRomDesc[] = {
-    ORLEG2_INTERNAL_CHINA
-    ORLEG2_PROGRAM_103(xyj2,cn)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_CHINA
+	ORLEG2_PROGRAM_103(xyj2,cn)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_103cn)
 STD_ROM_FN(orleg2_103cn)
 
 static struct BurnRomInfo orleg2_101cnRomDesc[] = {
-    ORLEG2_INTERNAL_CHINA
-    ORLEG2_PROGRAM_101(xyj2,cn)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_CHINA
+	ORLEG2_PROGRAM_101(xyj2,cn)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_101cn)
 STD_ROM_FN(orleg2_101cn)
 
 static struct BurnRomInfo orleg2_104hkRomDesc[] = {
-    ORLEG2_INTERNAL_HONGKONG
-    ORLEG2_PROGRAM_104(xyj2,hk)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_HONGKONG
+	ORLEG2_PROGRAM_104(xyj2,hk)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_104hk)
 STD_ROM_FN(orleg2_104hk)
 
 static struct BurnRomInfo orleg2_103hkRomDesc[] = {
-    ORLEG2_INTERNAL_HONGKONG
-    ORLEG2_PROGRAM_103(xyj2,hk)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_HONGKONG
+	ORLEG2_PROGRAM_103(xyj2,hk)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_103hk)
 STD_ROM_FN(orleg2_103hk)
 
 static struct BurnRomInfo orleg2_101hkRomDesc[] = {
-    ORLEG2_INTERNAL_HONGKONG
-    ORLEG2_PROGRAM_101(xyj2,hk)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_HONGKONG
+	ORLEG2_PROGRAM_101(xyj2,hk)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_101hk)
 STD_ROM_FN(orleg2_101hk)
 
 static struct BurnRomInfo orleg2_104jpRomDesc[] = {
-    ORLEG2_INTERNAL_JAPAN
-    ORLEG2_PROGRAM_104(ol2,a10)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_JAPAN
+	ORLEG2_PROGRAM_104(ol2,a10)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_104jp)
 STD_ROM_FN(orleg2_104jp)
 
 static struct BurnRomInfo orleg2_103jpRomDesc[] = {
-    ORLEG2_INTERNAL_JAPAN
-    ORLEG2_PROGRAM_103(ol2,a10)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_JAPAN
+	ORLEG2_PROGRAM_103(ol2,a10)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_103jp)
 STD_ROM_FN(orleg2_103jp)
 
 static struct BurnRomInfo orleg2_101jpRomDesc[] = {
-    ORLEG2_INTERNAL_JAPAN
-    ORLEG2_PROGRAM_101(ol2,a10)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_JAPAN
+	ORLEG2_PROGRAM_101(ol2,a10)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_101jp)
 STD_ROM_FN(orleg2_101jp)
 
 static struct BurnRomInfo orleg2_104twRomDesc[] = {
-    ORLEG2_INTERNAL_TAIWAN
-    ORLEG2_PROGRAM_104(xyj2,tw)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_TAIWAN
+	ORLEG2_PROGRAM_104(xyj2,tw)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_104tw)
 STD_ROM_FN(orleg2_104tw)
 
 static struct BurnRomInfo orleg2_103twRomDesc[] = {
-    ORLEG2_INTERNAL_TAIWAN
-    ORLEG2_PROGRAM_103(xyj2,tw)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_TAIWAN
+	ORLEG2_PROGRAM_103(xyj2,tw)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_103tw)
 STD_ROM_FN(orleg2_103tw)
 
 static struct BurnRomInfo orleg2_101twRomDesc[] = {
-    ORLEG2_INTERNAL_TAIWAN
-    ORLEG2_PROGRAM_101(xyj2,tw)
-    ORLEG2_COMMON_ROMS
+	ORLEG2_INTERNAL_TAIWAN
+	ORLEG2_PROGRAM_101(xyj2,tw)
+	ORLEG2_COMMON_ROMS
 };
 STD_ROM_PICK(orleg2_101tw)
 STD_ROM_FN(orleg2_101tw)
@@ -729,535 +729,1055 @@ STD_ROM_FN(kov2nl_300tw)
 
 // kov3 family
 static struct BurnRomInfo kov3RomDesc[] = {
-    { "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
-    { "kov3_v104cn_raw.bin",   0x0800000, 0x1b5cbd24, BRF_PRG | BRF_ESS },
-    { "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
-    { "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
-    { "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
-    { "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
-    { "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
-    { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
-    { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
-    { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
-    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
-    { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
+	{ "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
+	{ "kov3_v104cn_raw.bin",   0x0800000, 0x1b5cbd24, BRF_PRG | BRF_ESS },
+	{ "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
+	{ "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
+	{ "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
+	{ "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
+	{ "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
+	{ "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
+	{ "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
+	{ "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+	{ "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+	{ "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3)
 STD_ROM_FN(kov3)
 
 static struct BurnRomInfo kov3_102RomDesc[] = {
-    { "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
-    { "kov3_v102cn_raw.bin",   0x0800000, 0x61d0dabd, BRF_PRG | BRF_ESS },
-    { "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
-    { "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
-    { "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
-    { "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
-    { "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
-    { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
-    { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
-    { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
-    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
-    { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
+	{ "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
+	{ "kov3_v102cn_raw.bin",   0x0800000, 0x61d0dabd, BRF_PRG | BRF_ESS },
+	{ "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
+	{ "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
+	{ "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
+	{ "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
+	{ "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
+	{ "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
+	{ "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
+	{ "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+	{ "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+	{ "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3_102)
 STD_ROM_FN(kov3_102)
 
 static struct BurnRomInfo kov3_101RomDesc[] = {
-    { "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
-    { "kov3_v101.bin",         0x0800000, 0xd6664449, BRF_PRG | BRF_ESS },
-    { "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
-    { "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
-    { "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
-    { "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
-    { "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
-    { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
-    { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
-    { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
-    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
-    { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
+	{ "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
+	{ "kov3_v101.bin",         0x0800000, 0xd6664449, BRF_PRG | BRF_ESS },
+	{ "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
+	{ "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
+	{ "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
+	{ "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
+	{ "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
+	{ "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
+	{ "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
+	{ "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+	{ "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+	{ "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3_101)
 STD_ROM_FN(kov3_101)
 
 static struct BurnRomInfo kov3_100RomDesc[] = {
-    { "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
-    { "kov3_v100cn_raw.bin",   0x0800000, 0x93bca924, BRF_PRG | BRF_ESS },
-    { "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
-    { "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
-    { "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
-    { "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
-    { "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
-    { "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
-    { "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
-    { "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
-    { "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
-    { "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
+	{ "kov3_igs036_china.rom", 0x0004000, 0xc7d33764, BRF_PRG | BRF_ESS },
+	{ "kov3_v100cn_raw.bin",   0x0800000, 0x93bca924, BRF_PRG | BRF_ESS },
+	{ "kov3_text.u1",          0x0200000, 0x198b52d6, BRF_GRA },
+	{ "kov3_bgl.u6",           0x1000000, 0x49a4c5bc, BRF_GRA },
+	{ "kov3_bgh.u7",           0x1000000, 0xadc1aff1, BRF_GRA },
+	{ "kov3_mapl0.u15",        0x2000000, 0x9e569bf7, BRF_GRA },
+	{ "kov3_maph0.u16",        0x2000000, 0x6f200ad8, BRF_GRA },
+	{ "kov3_spa0.u17",         0x4000000, 0x3a1e58a9, BRF_GRA },
+	{ "kov3_spb0.u10",         0x4000000, 0x90396065, BRF_GRA },
+	{ "kov3_wave0.u13",        0x4000000, 0xaa639152, BRF_SND },
+	{ "blank_kov3_china_card.pg2", 0x0000108, 0xbd5a968f, BRF_OPT },
+	{ "kov3_sram",             0x0010000, 0xd9608102, BRF_OPT },
 };
 STD_ROM_PICK(kov3_100)
 STD_ROM_FN(kov3_100)
 
 static struct BurnRomInfo ddpdojtRomDesc[] = {
-    { "ddpdoj_igs036_china.rom", 0x0004000, 0x5db91464, BRF_PRG | BRF_ESS },
-    { "ddpdoj_v201cn.u4",        0x0200000, 0x89e4b760, BRF_PRG | BRF_ESS },
-    { "ddpdoj_text.u1",          0x0200000, 0xf18141d1, BRF_GRA },
-    { "ddpdoj_bgl.u23",          0x1000000, 0xff65fdab, BRF_GRA },
-    { "ddpdoj_bgh.u24",          0x1000000, 0xbb84d2a6, BRF_GRA },
-    { "ddpdoj_mapl0.u13",        0x0800000, 0xbcfbb0fc, BRF_GRA },
-    { "ddpdoj_maph0.u15",        0x0800000, 0x0cc75d4e, BRF_GRA },
-    { "ddpdoj_spa0.u9",          0x1000000, 0x1232c1b4, BRF_GRA },
-    { "ddpdoj_spb0.u18",         0x1000000, 0x6a9e2cbf, BRF_GRA },
-    { "ddpdoj_wave0.u12",        0x1000000, 0x2b71a324, BRF_SND },
-    { "ddpdojh_sram",            0x0010000, 0xaf99e304, BRF_OPT },
+	{ "ddpdoj_igs036_china.rom", 0x0004000, 0x5db91464, BRF_PRG | BRF_ESS },
+	{ "ddpdoj_v201cn.u4",        0x0200000, 0x89e4b760, BRF_PRG | BRF_ESS },
+	{ "ddpdoj_text.u1",          0x0200000, 0xf18141d1, BRF_GRA },
+	{ "ddpdoj_bgl.u23",          0x1000000, 0xff65fdab, BRF_GRA },
+	{ "ddpdoj_bgh.u24",          0x1000000, 0xbb84d2a6, BRF_GRA },
+	{ "ddpdoj_mapl0.u13",        0x0800000, 0xbcfbb0fc, BRF_GRA },
+	{ "ddpdoj_maph0.u15",        0x0800000, 0x0cc75d4e, BRF_GRA },
+	{ "ddpdoj_spa0.u9",          0x1000000, 0x1232c1b4, BRF_GRA },
+	{ "ddpdoj_spb0.u18",         0x1000000, 0x6a9e2cbf, BRF_GRA },
+	{ "ddpdoj_wave0.u12",        0x1000000, 0x2b71a324, BRF_SND },
+	{ "ddpdojh_sram",            0x0010000, 0xaf99e304, BRF_OPT },
 };
 STD_ROM_PICK(ddpdojt)
 STD_ROM_FN(ddpdojt)
 
 static struct BurnRomInfo kof98umhRomDesc[] = {
-    { "kof98umh_internal_rom.bin", 0x0004000, 0x3ed2e50f, BRF_PRG | BRF_ESS },
-    { "kof98umh_v100cn.u4",        0x1000000, 0x2ea91e3b, BRF_PRG | BRF_ESS },
-    { "ig-d3_text.u1",             0x0200000, 0x9a0ea82e, BRF_GRA },
-    { "ig-d3_mapl0.u13",           0x4000000, 0x5571d63e, BRF_GRA },
-    { "ig-d3_maph0.u15",           0x4000000, 0x0da7b1b8, BRF_GRA },
-    { "ig-d3_spa0.u9",             0x4000000, 0xcfef8f7d, BRF_GRA },
-    { "ig-d3_spb0.u18",            0x4000000, 0xf199d5c8, BRF_GRA },
-    { "ig-d3_spa2.u10",            0x4000000, 0x03bfd35c, BRF_GRA },
-    { "ig-d3_spb2.u20",            0x4000000, 0x9aaa840b, BRF_GRA },
-    { "ig-d3_wave0.u12",           0x4000000, 0xedf2332d, BRF_SND },
-    { "ig-d3_wave1.u11",           0x4000000, 0x62321b20, BRF_SND },
-    { "kof98umh_sram",             0x0010000, 0x60460ed9, BRF_OPT },
+	{ "kof98umh_internal_rom.bin", 0x0004000, 0x3ed2e50f, BRF_PRG | BRF_ESS },
+	{ "kof98umh_v100cn.u4",        0x1000000, 0x2ea91e3b, BRF_PRG | BRF_ESS },
+	{ "ig-d3_text.u1",             0x0200000, 0x9a0ea82e, BRF_GRA },
+	{ "ig-d3_mapl0.u13",           0x4000000, 0x5571d63e, BRF_GRA },
+	{ "ig-d3_maph0.u15",           0x4000000, 0x0da7b1b8, BRF_GRA },
+	{ "ig-d3_spa0.u9",             0x4000000, 0xcfef8f7d, BRF_GRA },
+	{ "ig-d3_spb0.u18",            0x4000000, 0xf199d5c8, BRF_GRA },
+	{ "ig-d3_spa2.u10",            0x4000000, 0x03bfd35c, BRF_GRA },
+	{ "ig-d3_spb2.u20",            0x4000000, 0x9aaa840b, BRF_GRA },
+	{ "ig-d3_wave0.u12",           0x4000000, 0xedf2332d, BRF_SND },
+	{ "ig-d3_wave1.u11",           0x4000000, 0x62321b20, BRF_SND },
+	{ "kof98umh_sram",             0x0010000, 0x60460ed9, BRF_OPT },
 };
 STD_ROM_PICK(kof98umh)
 STD_ROM_FN(kof98umh)
 
 // BurnDriver declarations
 struct BurnDriver BurnDrvorleg2 = {
-    "orleg2", NULL, NULL, NULL, "2007",
-    "Oriental Legend 2 (V104, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2RomInfo, orleg2RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2", NULL, NULL, NULL, "2007",
+	"Oriental Legend 2 (V104, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2RomInfo, orleg2RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_103 = {
-    "orleg2_103", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V103, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_103RomInfo, orleg2_103RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_103", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V103, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_103RomInfo, orleg2_103RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_101 = {
-    "orleg2_101", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V101, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_101RomInfo, orleg2_101RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_101", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V101, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_101RomInfo, orleg2_101RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_104cn = {
-    "orleg2_104cn", "orleg2", NULL, NULL, "2007",
-    "Xiyou Shi E Zhuan 2 (V104, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_104cnRomInfo, orleg2_104cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_104cn", "orleg2", NULL, NULL, "2007",
+	"Xiyou Shi E Zhuan 2 (V104, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_104cnRomInfo, orleg2_104cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_103cn = {
-    "orleg2_103cn", "orleg2", NULL, NULL, "2007",
-    "Xiyou Shi E Zhuan 2 (V103, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_103cnRomInfo, orleg2_103cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_103cn", "orleg2", NULL, NULL, "2007",
+	"Xiyou Shi E Zhuan 2 (V103, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_103cnRomInfo, orleg2_103cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_101cn = {
-    "orleg2_101cn", "orleg2", NULL, NULL, "2007",
-    "Xiyou Shi E Zhuan 2 (V101, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_101cnRomInfo, orleg2_101cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_101cn", "orleg2", NULL, NULL, "2007",
+	"Xiyou Shi E Zhuan 2 (V101, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_101cnRomInfo, orleg2_101cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_104hk = {
-    "orleg2_104hk", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V104, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_104hkRomInfo, orleg2_104hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_104hk", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V104, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_104hkRomInfo, orleg2_104hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_103hk = {
-    "orleg2_103hk", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V103, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_103hkRomInfo, orleg2_103hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_103hk", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V103, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_103hkRomInfo, orleg2_103hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_101hk = {
-    "orleg2_101hk", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V101, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_101hkRomInfo, orleg2_101hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_101hk", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V101, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_101hkRomInfo, orleg2_101hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_104jp = {
-    "orleg2_104jp", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V104, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_104jpRomInfo, orleg2_104jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_104jp", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V104, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_104jpRomInfo, orleg2_104jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_103jp = {
-    "orleg2_103jp", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V103, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_103jpRomInfo, orleg2_103jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_103jp", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V103, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_103jpRomInfo, orleg2_103jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_101jp = {
-    "orleg2_101jp", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V101, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_101jpRomInfo, orleg2_101jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_101jp", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V101, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_101jpRomInfo, orleg2_101jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2InitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_104tw = {
-    "orleg2_104tw", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V104, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_104twRomInfo, orleg2_104twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_104tw", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V104, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_104twRomInfo, orleg2_104twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_103tw = {
-    "orleg2_103tw", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V103, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_103twRomInfo, orleg2_103twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_103tw", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V103, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_103twRomInfo, orleg2_103twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvorleg2_101tw = {
-    "orleg2_101tw", "orleg2", NULL, NULL, "2007",
-    "Oriental Legend 2 (V101, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, orleg2_101twRomInfo, orleg2_101twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"orleg2_101tw", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 (V101, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2_101twRomInfo, orleg2_101twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2CardInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl = {
-    "kov2nl", NULL, NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V302, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nlRomInfo, kov2nlRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl", NULL, NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V302, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nlRomInfo, kov2nlRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_301 = {
-    "kov2nl_301", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V301, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_301RomInfo, kov2nl_301RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_301", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V301, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_301RomInfo, kov2nl_301RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_300 = {
-    "kov2nl_300", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V300, Overseas)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_300RomInfo, kov2nl_300RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_300", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V300, Overseas)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_300RomInfo, kov2nl_300RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_302cn = {
-    "kov2nl_302cn", "kov2nl", NULL, NULL, "2008",
-    "Sanguo Zhan Ji 2 Gaishi Yingxiong (V302, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_302cnRomInfo, kov2nl_302cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_302cn", "kov2nl", NULL, NULL, "2008",
+	"Sanguo Zhan Ji 2 Gaishi Yingxiong (V302, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_302cnRomInfo, kov2nl_302cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_301cn = {
-    "kov2nl_301cn", "kov2nl", NULL, NULL, "2008",
-    "Sanguo Zhan Ji 2 Gaishi Yingxiong (V301, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_301cnRomInfo, kov2nl_301cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_301cn", "kov2nl", NULL, NULL, "2008",
+	"Sanguo Zhan Ji 2 Gaishi Yingxiong (V301, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_301cnRomInfo, kov2nl_301cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_300cn = {
-    "kov2nl_300cn", "kov2nl", NULL, NULL, "2008",
-    "Sanguo Zhan Ji 2 Gaishi Yingxiong (V300, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_300cnRomInfo, kov2nl_300cnRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_300cn", "kov2nl", NULL, NULL, "2008",
+	"Sanguo Zhan Ji 2 Gaishi Yingxiong (V300, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_300cnRomInfo, kov2nl_300cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_302hk = {
-    "kov2nl_302hk", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V302, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_302hkRomInfo, kov2nl_302hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_302hk", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V302, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_302hkRomInfo, kov2nl_302hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_301hk = {
-    "kov2nl_301hk", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V301, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_301hkRomInfo, kov2nl_301hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_301hk", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V301, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_301hkRomInfo, kov2nl_301hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_300hk = {
-    "kov2nl_300hk", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V300, Hong Kong)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_300hkRomInfo, kov2nl_300hkRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_300hk", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V300, Hong Kong)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_300hkRomInfo, kov2nl_300hkRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_302jp = {
-    "kov2nl_302jp", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V302, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_302jpRomInfo, kov2nl_302jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_302jp", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V302, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_302jpRomInfo, kov2nl_302jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_301jp = {
-    "kov2nl_301jp", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V301, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_301jpRomInfo, kov2nl_301jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_301jp", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V301, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_301jpRomInfo, kov2nl_301jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_300jp = {
-    "kov2nl_300jp", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V300, Japan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_300jpRomInfo, kov2nl_300jpRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_300jp", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V300, Japan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_300jpRomInfo, kov2nl_300jpRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_302tw = {
-    "kov2nl_302tw", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V302, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_302twRomInfo, kov2nl_302twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_302tw", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V302, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_302twRomInfo, kov2nl_302twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_301tw = {
-    "kov2nl_301tw", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V301, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_301twRomInfo, kov2nl_301twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_301tw", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V301, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_301twRomInfo, kov2nl_301twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov2nl_300tw = {
-    "kov2nl_300tw", "kov2nl", NULL, NULL, "2008",
-    "Knights of Valour 2 New Legend (V300, Taiwan)\0", NULL,
-    "IGS", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov2nl_300twRomInfo, kov2nl_300twRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 448, 224, 4, 3
+	"kov2nl_300tw", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend (V300, Taiwan)\0", NULL,
+	"IGS", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nl_300twRomInfo, kov2nl_300twRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nlInitCommon, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvkov3 = {
-    "kov3", NULL, NULL, NULL, "2011",
-    "Knights of Valour 3 (V104, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov3RomInfo, kov3RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov3Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 512, 240, 4, 3
+	"kov3", NULL, NULL, NULL, "2011",
+	"Knights of Valour 3 (V104, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3RomInfo, kov3RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvkov3_102 = {
-    "kov3_102", "kov3", NULL, NULL, "2011",
-    "Knights of Valour 3 (V102, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov3_102RomInfo, kov3_102RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov3_102Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 512, 240, 4, 3
+	"kov3_102", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 (V102, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3_102RomInfo, kov3_102RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3_102Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvkov3_101 = {
-    "kov3_101", "kov3", NULL, NULL, "2011",
-    "Knights of Valour 3 (V101, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov3_101RomInfo, kov3_101RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov3_101Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 512, 240, 4, 3
+	"kov3_101", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 (V101, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3_101RomInfo, kov3_101RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3_101Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvkov3_100 = {
-    "kov3_100", "kov3", NULL, NULL, "2011",
-    "Knights of Valour 3 (V100, China)\0", NULL,
-    "IGS (Huatong license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
-    NULL, kov3_100RomInfo, kov3_100RomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kov3_100Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 512, 240, 4, 3
+	"kov3_100", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 (V100, China)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3_100RomInfo, kov3_100RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3_100Init, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvddpdojt = {
-    "ddpdojt", NULL, NULL, NULL, "2010",
-    "DoDonPachi Dai-Ou-Jou Tamashii (V201, China)\0", NULL,
-    "IGS / Cave (Tong Li Animation license)", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IGS_PGM2, GBF_VERSHOOT, FBF_DONPACHI,
-    NULL, ddpdojtRomInfo, ddpdojtRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    ddpdojtInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 224, 448, 3, 4
+	"ddpdojt", NULL, NULL, NULL, "2010",
+	"DoDonPachi Dai-Ou-Jou Tamashii (V201, China)\0", NULL,
+	"IGS / Cave (Tong Li Animation license)", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IGS_PGM2, GBF_VERSHOOT, FBF_DONPACHI,
+	NULL, ddpdojtRomInfo, ddpdojtRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	ddpdojtInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 224, 448, 3, 4
 };
 
 struct BurnDriver BurnDrvkof98umh = {
-    "kof98umh", NULL, NULL, NULL, "2009",
-    "The King of Fighters '98: Ultimate Match HERO (China, V100)\0", NULL,
-    "IGS / SNK Playmore / New Channel", "PGM2",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_VSFIGHT, FBF_KOF,
-    NULL, kof98umhRomInfo, kof98umhRomName, NULL, NULL, NULL, NULL,
-    pgm2InputInfo, pgm2DIPInfo,
-    kof98umhInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
-    NULL, 0x4000, 320, 240, 4, 3
+	"kof98umh", NULL, NULL, NULL, "2009",
+	"The King of Fighters '98: Ultimate Match HERO (China, V100)\0", NULL,
+	"IGS / SNK Playmore / New Channel", "PolyGame Master 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98umhRomInfo, kof98umhRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kof98umhInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 320, 240, 4, 3
+};
+
+// ===========================================================================
+// Decrypted ROM versions
+// Decrypted's text.bin is 8bpp (4MB) while original is 4bpp packed (2MB)
+// Decrypted's sprite_mask.bin may need byte-order adjustment
+// ===========================================================================
+
+// Convert 8bpp text format to 4bpp packed format
+// Source: 8bpp, 64 bytes/tile (8x8 pixels, 1 byte/pixel)
+// Dest:   4bpp packed, 32 bytes/tile (8x8 pixels, 2 pixels/byte)
+static void pgm2_decrypt_text_8bpp_to_4bpp(UINT8 *buf, INT32 len)
+{
+	if (len <= 0 || (len & 1)) return;
+	
+	INT32 outLen = len / 2;
+	for (INT32 i = 0; i < outLen; i++) {
+		UINT8 src0 = buf[i * 2 + 0];
+		UINT8 src1 = buf[i * 2 + 1];
+		buf[i] = (src0 & 0x0f) | ((src1 & 0x0f) << 4);
+	}
+}
+
+// Swap endianness of 32-bit values for sprite mask
+static void pgm2_decrypt_mask_swap_endian(UINT8 *buf, INT32 len)
+{
+	UINT32 *p = (UINT32*)buf;
+	INT32 count = len / 4;
+	for (INT32 i = 0; i < count; i++) {
+		UINT32 v = p[i];
+		v = ((v & 0xff000000) >> 24) | ((v & 0x00ff0000) >>  8) |
+			((v & 0x0000ff00) <<  8) | ((v & 0x000000ff) << 24);
+		p[i] = v;
+	}
+}
+
+// ---------------------------------------------------------------------------
+// orleg2d (Oriental Legend 2 - Decrypted)
+// ---------------------------------------------------------------------------
+#define ORLEG2_ROMSD( Driver, Program, Crc32 )										\
+static struct BurnRomInfo Driver##RomDesc[] = {										\
+	{ "orleg2_core_v100.rom",		0x00004000, 0xcc4d398a,	BRF_PRG | BRF_ESS },	\
+	{ Program,						0x00800000, Crc32,		BRF_PRG | BRF_ESS },	\
+	{ "orleg2_blank_card.pg2",		0x00000108, 0xdc29556f,	BRF_PRG | BRF_ESS },	\
+	{ "orleg2_text.bin",			0x00400000, 0x8c4094da,	BRF_GRA },				\
+	{ "orleg2_map.bin",				0x01000000, 0x48a752ab,	BRF_GRA },				\
+	{ "orleg2_sprite_mask.bin",		0x02000000, 0x62f6a5ce,	BRF_GRA },				\
+	{ "orleg2_sprite_colour.bin",	0x04000000, 0xe7a8612e,	BRF_GRA },				\
+	{ "orleg2_wave.bin",			0x01000000, 0x96aa34da,	BRF_SND },				\
+	{ "orleg2_nvram.bin",			0x00010000, 0xccccc71c,	BRF_PRG | BRF_ESS },	\
+};																					\
+STD_ROM_PICK(Driver)																\
+STD_ROM_FN(Driver)
+
+ORLEG2_ROMSD( orleg2d_101cn, "orleg2_main_v101.rom", 0x9df7ab6f )
+ORLEG2_ROMSD( orleg2d_103cn, "orleg2_main_v103.rom", 0xeec442b4 )
+ORLEG2_ROMSD( orleg2d_104cn, "orleg2_main_v104.rom", 0x9a4101ac )
+#undef ORLEG2_ROMSD
+
+static void orleg2dLoadRoms()
+{
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x00004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x01000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x00400000, 3)) return;
+	pgm2_decrypt_text_8bpp_to_4bpp(Pgm2TileROM, Pgm2TileROMLen);
+	Pgm2TileROMLen      = 0x0200000;
+
+	Pgm2SndROMLen       = 0x1000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	BurnLoadRom(Pgm2SndROM, 7, 1);
+
+	Pgm2BgROMLen        = 0x1000000;
+	Pgm2MaskROMOffset   = 0x1000000;
+	Pgm2MaskROMLen      = 0x2000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen       = 0x1000000 + 0x2000000 + 0x4000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
+	BurnLoadRom(Pgm2SprROM + 0x1000000, 5, 1);
+	BurnLoadRom(Pgm2SprROM + 0x3000000, 6, 1);
+	pgm2_decrypt_mask_swap_endian(Pgm2SprROM + 0x1000000, 0x2000000);
+
+	UINT32 *introm = (UINT32*)Pgm2IntROM;
+	// bprintf(0, _T("orleg2d: IntROM[0x2DB0] before patch = %08X\n"), BURN_ENDIAN_SWAP_INT32(introm[0x2DB0 / 4]));
+	introm[0x2db0 / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+	// bprintf(0, _T("orleg2d: IntROM[0x2DB0] after patch  = %08X\n"), BURN_ENDIAN_SWAP_INT32(introm[0x2DB0 / 4]));
+}
+
+static INT32 orleg2dInit()
+{
+	Pgm2RomPreDecrypted = 1;
+	pgm2SetStorageRomIndices(2, 8);
+	pgm2SetMaxCardSlots(4);
+	pgm2SetCardRomIndex(0, 2);
+	pgm2SetCardRomIndex(1, 2);
+	pgm2SetCardRomIndex(2, 2);
+	pgm2SetCardRomIndex(3, 2);
+	pgm2SetArmRomIndex(1);
+	pgm2SetRegionHack(0x00003cb8);
+	pgm2SetSpeedhack(0, 0x20020114, 0x1002faec, 0x1002f9b8, 0, 0);
+	pPgm2InitCallback  = orleg2dLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback  = NULL;
+	return pgm2Init();
+}
+
+struct BurnDriver BurnDrvorleg2d_101cn = {
+	"orleg2d_101cn", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V101, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Oriental Legend 2 (V101, China, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2d_101cnRomInfo, orleg2d_101cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvorleg2d_103cn = {
+	"orleg2d_103cn", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V103, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Oriental Legend 2 (V103, China, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2d_103cnRomInfo, orleg2d_103cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvororleg2d_104cn = {
+	"orleg2d_104cn", "orleg2", NULL, NULL, "2007",
+	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V104, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Oriental Legend 2 (V104, China, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, orleg2d_104cnRomInfo, orleg2d_104cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	orleg2dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+// ---------------------------------------------------------------------------
+// kov2nld (Knights of Valour 2 New Legend - Decrypted)
+// ---------------------------------------------------------------------------
+#define KOV2NL_ROMS( Driver, Program, Crc32 )										\
+static struct BurnRomInfo Driver##RomDesc[] = {										\
+	{ "kov2nl_core_v100.rom",		0x00004000, 0x25ec60cd,	BRF_PRG | BRF_ESS },	\
+	{ Program,						0x00800000, Crc32,		BRF_PRG | BRF_ESS },	\
+	{ "kov2nl_blank_card.pg2",		0x00000108, 0x02842ae8,	BRF_PRG | BRF_ESS },	\
+	{ "kov2nl_text.bin",			0x00400000, 0x59595b6b,	BRF_GRA },				\
+	{ "kov2nl_map.bin",				0x01000000, 0xf77c7eac,	BRF_GRA },				\
+	{ "kov2nl_sprite_mask.bin",		0x02000000, 0x738d88ae,	BRF_GRA },				\
+	{ "kov2nl_sprite_colour.bin",	0x04000000, 0xdd113257,	BRF_GRA },				\
+	{ "kov2nl_wave.bin",			0x02000000, 0xb5213efe,	BRF_SND },				\
+	{ "kov2nl_nvram.bin",			0x00010000, 0x22400c16,	BRF_PRG | BRF_ESS },	\
+};																					\
+STD_ROM_PICK(Driver)																\
+STD_ROM_FN(Driver)
+
+KOV2NL_ROMS( kov2nld_300cn, "kov2nl_main_v300.rom", 0xbdd9e53a )
+KOV2NL_ROMS( kov2nld_301cn, "kov2nl_main_v301.rom", 0xb82ab911 )
+KOV2NL_ROMS( kov2nld_302cn, "kov2nl_main_v302.rom", 0x91febfd1 )
+#undef KOV2NL_ROMS
+
+static void kov2nldLoadRoms()
+{
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x00004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x01000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x00400000, 3)) return;
+	pgm2_decrypt_text_8bpp_to_4bpp(Pgm2TileROM, Pgm2TileROMLen);
+	Pgm2TileROMLen      = 0x0200000;
+
+	Pgm2SndROMLen       = 0x2000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	BurnLoadRom(Pgm2SndROM, 7, 1);
+
+	Pgm2BgROMLen        = 0x1000000;
+	Pgm2MaskROMOffset   = 0x1000000;
+	Pgm2MaskROMLen      = 0x2000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen       = 0x1000000 + 0x2000000 + 0x4000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
+	BurnLoadRom(Pgm2SprROM + 0x1000000, 5, 1);
+	BurnLoadRom(Pgm2SprROM + 0x3000000, 6, 1);
+	pgm2_decrypt_mask_swap_endian(Pgm2SprROM + 0x1000000, 0x2000000);
+
+	UINT32 *introm = (UINT32*)Pgm2IntROM;
+	// bprintf(0, _T("kov2nld: IntROM[0x0DA8] before patch = %08X\n"), BURN_ENDIAN_SWAP_INT32(introm[0x0DA8 / 4]));
+	introm[0x0da8 / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+	// bprintf(0, _T("kov2nld: IntROM[0x0DA8] after patch = %08X\n"), BURN_ENDIAN_SWAP_INT32(introm[0x0DA8 / 4]));
+}
+
+static INT32 kov2nldInit()
+{
+	Pgm2RomPreDecrypted = 1;
+	pgm2SetStorageRomIndices(2, 8);
+	pgm2SetMaxCardSlots(4);
+	pgm2SetCardRomIndex(0, 2);
+	pgm2SetCardRomIndex(1, 2);
+	pgm2SetCardRomIndex(2, 2);
+	pgm2SetCardRomIndex(3, 2);
+	pgm2SetArmRomIndex(1);
+	pgm2SetRegionHack(0x00001cbc);
+	pgm2SetSpeedhack(0, 0x20020470, 0x10053a94, 0x1005332c, 0x1005327c, 0);
+	pPgm2InitCallback  = kov2nldLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback  = NULL;
+	return pgm2Init();
+}
+
+struct BurnDriver BurnDrvkov2nld_300cn = {
+	"kov2nld_300cn", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Gaishi Yingxiong (V300, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 2 New Legend (V300, China, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u76d6\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nld_300cnRomInfo, kov2nld_300cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nldInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvkov2nld_301cn = {
+	"kov2nld_301cn", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Gaishi Yingxiong (V301, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 2 New Legend (V301, China, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u76d6\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nld_301cnRomInfo, kov2nld_301cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nldInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvkov2nld_302cn = {
+	"kov2nld_302cn", "kov2nl", NULL, NULL, "2008",
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Gaishi Yingxiong (V302, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 2 New Legend (V302, China, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u76d6\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov2nld_302cnRomInfo, kov2nld_302cnRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov2nldInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 448, 224, 4, 3
+};
+
+// ---------------------------------------------------------------------------
+// kov3d (Knights of Valour 3 - Decrypted)
+// ---------------------------------------------------------------------------
+#define KOV3_ROMS( Driver, Program, Crc32 )											\
+static struct BurnRomInfo Driver##RomDesc[] = {										\
+	{ "kov3_core_v100.rom",			0x00004000, 0xc7d33764,	BRF_PRG | BRF_ESS },	\
+	{ Program,						0x00800000, Crc32,		BRF_PRG | BRF_ESS },	\
+	{ "kov3_blank_card.pg2",		0x00000108, 0xbd5a968f,	BRF_PRG },				\
+	{ "kov3_text.bin",				0x00400000, 0x0112648a,	BRF_GRA },				\
+	{ "kov3_map.bin",				0x02000000, 0x13e8519a,	BRF_GRA },				\
+	{ "kov3_sprite_mask.bin",		0x04000000, 0x6f2e52f4,	BRF_GRA },				\
+	{ "kov3_sprite_colour.bin",		0x08000000, 0x8d9cdfc0,	BRF_GRA },				\
+	{ "kov3_wave.bin",				0x04000000, 0x635f2a0e,	BRF_SND },				\
+	{ "kov3_nvram.bin",				0x00010000, 0xd9608102,	BRF_PRG | BRF_ESS },	\
+};																					\
+STD_ROM_PICK(Driver)																	\
+STD_ROM_FN(Driver)
+
+KOV3_ROMS( kov3d,     "kov3_main_v104.rom", 0x727c7638 )
+KOV3_ROMS( kov3d_100, "kov3_main_v100.rom", 0x6bd53c57 )
+KOV3_ROMS( kov3d_101, "kov3_main_v101.rom", 0x52be5340 )
+KOV3_ROMS( kov3d_102, "kov3_main_v102.rom", 0xd17d698f )
+#undef KOV3_ROMS
+
+static void kov3dLoadRoms()
+{
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x00004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x01000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x00400000, 3)) return;
+	pgm2_decrypt_text_8bpp_to_4bpp(Pgm2TileROM, Pgm2TileROMLen);
+	Pgm2TileROMLen      = 0x0200000;
+
+	Pgm2SndROMLen       = 0x4000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	BurnLoadRom(Pgm2SndROM, 7, 1);
+
+	Pgm2BgROMLen        = 0x2000000;
+	Pgm2MaskROMOffset   = 0x2000000;
+	Pgm2MaskROMLen      = 0x4000000;
+	Pgm2ColourROMOffset = 0x6000000;
+	Pgm2SprROMLen       = 0x2000000 + 0x4000000 + 0x8000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
+	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
+	BurnLoadRom(Pgm2SprROM + 0x2000000, 5, 1);
+	BurnLoadRom(Pgm2SprROM + 0x6000000, 6, 1);
+	pgm2_decrypt_mask_swap_endian(Pgm2SprROM + 0x2000000, 0x4000000);
+
+	UINT32 *introm = (UINT32*)Pgm2IntROM;
+	introm[0x2a8c / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+	introm[0x2a90 / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+}
+
+static INT32 kov3dInit()
+{
+	Pgm2RomPreDecrypted = 1;
+	pgm2SetStorageRomIndices(2, 8);
+	pgm2SetMaxCardSlots(2);
+	pgm2SetCardRomIndex(0, 2);
+	pgm2SetCardRomIndex(1, 2);
+	pgm2EnableKov3Module(kov3_104_key, kov3_104_sum, 0x18ec71, 0xb89d);
+	pgm2SetSpeedhack(0, 0x200000b4, 0x1000729a, 0x1000729e, 0, 0);
+	pPgm2InitCallback   = kov3dLoadRoms;
+	pPgm2ResetCallback  = NULL;
+	pPgm2ScanCallback   = NULL;
+	return pgm2Init();
+}
+
+struct BurnDriver BurnDrvkov3d = {
+	"kov3d", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V104, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 3 (V104, China, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3dRomInfo, kov3dRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvkov3d_100 = {
+	"kov3d_100", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V100, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 3 (V100, China, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3d_100RomInfo, kov3d_100RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvkov3d_101 = {
+	"kov3d_101", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V101, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 3 (V101, China, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3d_101RomInfo, kov3d_101RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvkov3d_102 = {
+	"kov3d_102", "kov3", NULL, NULL, "2011",
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V102, China, Decrypted)\0", NULL,
+	"IGS (Huatong license)", "PolyGame Master 2",
+	L"Knights of Valour 3 (V102, China, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
+	NULL, kov3d_102RomInfo, kov3d_102RomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kov3dInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 512, 240, 4, 3
+};
+
+// ---------------------------------------------------------------------------
+// ddpdojtd (DoDonPachi Dai-Ou-Jou Tamashii - Decrypted)
+// ---------------------------------------------------------------------------
+static struct BurnRomInfo ddpdojtdRomDesc[] = {
+	{ "ddpdoj_core_v100cn.rom",		0x00004000, 0x5db91464, BRF_PRG | BRF_ESS },
+	{ "ddpdoj_board_v201cn.rom",	0x00200000, 0x94ccee1c, BRF_PRG | BRF_ESS },
+	{ "ddpdoj_main_v201cn.rom",		0x00200000, 0x5361f0f2, BRF_PRG | BRF_ESS },
+	{ "ddpdoj_text.bin",			0x00400000, 0x442f9b01, BRF_GRA },
+	{ "ddpdoj_map.bin",				0x02000000, 0x4fe25bbc, BRF_GRA },
+	{ "ddpdoj_sprite_mask.bin",		0x01000000, 0x16a4ec9e, BRF_GRA },
+	{ "ddpdoj_sprite_colour.bin",	0x02000000, 0xb08d7891, BRF_GRA },
+	{ "ddpdoj_wave.bin",			0x01000000, 0xe2f1745a, BRF_SND },
+	{ "ddpdoj_nvram.bin",			0x00010000, 0xaf99e304, BRF_PRG | BRF_ESS },
+};
+STD_ROM_PICK(ddpdojtd)
+STD_ROM_FN(ddpdojtd)
+
+static void ddpdojtdLoadRoms()
+{
+// bprintf(0, _T("ddpdojtdLoadRoms: start, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x00004000, 0)) return;
+	if (Pgm2RomBoardRAM && Pgm2RomBoardRAMSize >= 0x00200000) {
+		BurnLoadRom(Pgm2RomBoardRAM, 1, 1);
+// bprintf(0, _T("ddpdojtdLoadRoms: board ROM loaded, first 4 bytes: %02X %02X %02X %02X\n"),
+//		 Pgm2RomBoardRAM[0], Pgm2RomBoardRAM[1], Pgm2RomBoardRAM[2], Pgm2RomBoardRAM[3]);
+	}
+	Pgm2ArmROMLen       = 0x00200000;
+	Pgm2ArmROM = (UINT8*)BurnMalloc(Pgm2ArmROMLen);
+	if (!Pgm2ArmROM) return;
+	BurnLoadRom(Pgm2ArmROM + 0x00000000, 2, 1);
+// bprintf(0, _T("ddpdojtdLoadRoms: main ROM loaded, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x00400000, 3)) return;
+	pgm2_decrypt_text_8bpp_to_4bpp(Pgm2TileROM, Pgm2TileROMLen);
+	Pgm2TileROMLen      = 0x0200000;
+
+	Pgm2SndROMLen       = 0x1000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	BurnLoadRom(Pgm2SndROM, 7, 1);
+
+	Pgm2BgROMLen        = 0x2000000;
+	Pgm2MaskROMOffset   = 0x2000000;
+	Pgm2MaskROMLen      = 0x1000000;
+	Pgm2ColourROMOffset = 0x3000000;
+	Pgm2SprROMLen       = 0x2000000 + 0x1000000 + 0x2000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
+	BurnLoadRom(Pgm2SprROM + 0x2000000, 5, 1);
+	BurnLoadRom(Pgm2SprROM + 0x3000000, 6, 1);
+	pgm2_decrypt_mask_swap_endian(Pgm2SprROM + 0x2000000, 0x1000000);
+
+	UINT32 *introm = (UINT32*)Pgm2IntROM;
+	introm[0x0B5C / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+	introm[0x0B94 / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+}
+
+static INT32 ddpdojtdInit()
+{
+// bprintf(0, _T("ddpdojtdInit: setting Pgm2RomPreDecrypted=1\n"));
+	Pgm2RomPreDecrypted = 1;
+	pgm2SetStorageRomIndices(-1, 8);
+	pgm2SetRamRomBoard(0x200000);
+	pgm2SetRegionHack(0x0000201c);
+	pgm2SetSpeedhack(0, 0x20000060, 0x10001a7e, 0, 0, 0);
+	pPgm2InitCallback  = ddpdojtdLoadRoms;
+	pPgm2ResetCallback = NULL;
+	pPgm2ScanCallback  = NULL;
+	return pgm2Init();
+}
+
+struct BurnDriver BurnDrvddpdojtd = {
+	"ddpdojtd", "ddpdojt", NULL, NULL, "2010",
+	"DoDonPachi Dai-Ou-Jou Tamashii (V201, China, Decrypted)\0", NULL,
+	"IGS / Cave (Tong Li Animation license)", "PolyGame Master 2",
+	L"DoDonPachi Dai-Ou-Jou Tamashii (V201, China, Decrypted)\0\u6012\u9996\u9818\u8702 \u5927\u5f80\u751f \u9b42\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IGS_PGM2, GBF_VERSHOOT, FBF_DONPACHI,
+	NULL, ddpdojtdRomInfo, ddpdojtdRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	ddpdojtdInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 224, 448, 3, 4
+};
+
+// ---------------------------------------------------------------------------
+// kof98umhd (King of Fighters '98 Ultimate Match HERO - Decrypted)
+// ---------------------------------------------------------------------------
+static struct BurnRomInfo kof98umhdRomDesc[] = {
+	{ "kof98umh_core_v100cn.rom",	0x00004000, 0x3ed2e50f, BRF_PRG | BRF_ESS },
+	{ "kof98umh_main_v100cn.rom",	0x01000000, 0x034c9064, BRF_PRG | BRF_ESS },
+	{ "kof98umh_text.bin",			0x00400000, 0x26f75482, BRF_GRA },
+	{ "kof98umh_map.bin",			0x02000000, 0x59450445, BRF_GRA },
+	{ "kof98umh_sprite_mask.bin",	0x08000000, 0xdc203df4, BRF_GRA },
+	{ "kof98umh_sprite_colour.bin", 0x20000000, 0x7f523802, BRF_GRA },
+	{ "kof98umh_wave.bin",			0x08000000, 0x3b0747c1, BRF_SND },
+	{ "kof98umh_nvram.bin",			0x00010000, 0x60460ed9, BRF_PRG | BRF_ESS },
+};
+STD_ROM_PICK(kof98umhd)
+STD_ROM_FN(kof98umhd)
+
+static void kof98umhdLoadRoms()
+{
+	if (!pgm2LoadRom(&Pgm2IntROM,  &Pgm2IntROMLen,  0x00004000, 0)) return;
+	if (!pgm2LoadRom(&Pgm2ArmROM,  &Pgm2ArmROMLen,  0x01000000, 1)) return;
+	if (!pgm2LoadRom(&Pgm2TileROM, &Pgm2TileROMLen, 0x00400000, 2)) return;
+	pgm2_decrypt_text_8bpp_to_4bpp(Pgm2TileROM, Pgm2TileROMLen);
+	Pgm2TileROMLen      = 0x0200000;
+
+	Pgm2SndROMLen       = 0x8000000;
+	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
+	if (!Pgm2SndROM) return;
+	BurnLoadRom(Pgm2SndROM, 6, 1);
+
+	Pgm2BgROMLen        = 0;
+	Pgm2MaskROMOffset   = 0;
+	Pgm2MaskROMLen      = 0x8000000;
+	Pgm2ColourROMOffset = 0x8000000;
+	Pgm2SprROMLen       = 0x8000000 + 0x20000000;
+	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
+	if (!Pgm2SprROM) return;
+	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
+	BurnLoadRom(Pgm2SprROM + 0x8000000, 5, 1);
+	pgm2_decrypt_mask_swap_endian(Pgm2SprROM + 0x0000000, 0x8000000);
+
+	UINT32 *introm = (UINT32*)Pgm2IntROM;
+	introm[0x0b40 / 4] = BURN_ENDIAN_SWAP_INT32(0x00000000);
+}
+
+static INT32 kof98umhdInit()
+{
+	Pgm2RomPreDecrypted = 1;
+	pgm2SetStorageRomIndices(-1, 7);
+	pgm2SetRegionHack(0x00001e5c);
+	pgm2SetSpeedhack(0, 0x20000060, 0x100028f6, 0, 0, 0);
+	pgm2SetRefreshRate(15625.0 / 264.0);
+	pPgm2InitCallback   = kof98umhdLoadRoms;
+	pPgm2ResetCallback  = NULL;
+	pPgm2ScanCallback   = NULL;
+	return pgm2Init();
+}
+
+struct BurnDriver BurnDrvkof98umhd = {
+	"kof98umhd", "kof98umh", NULL, NULL, "2009",
+	"The King of Fighters '98: Ultimate Match HERO (V100, China, Decrypted)\0", NULL,
+	"IGS / SNK Playmore / New Channel", "PolyGame Master 2",
+	L"The King of Fighters '98: Ultimate Match HERO (V100, China, Decrypted)\0The King of Fighters '98: \u7ec8\u6781\u4e4b\u6218 \u82f1\u96c4\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98umhdRomInfo, kof98umhdRomName, NULL, NULL, NULL, NULL,
+	pgm2InputInfo, pgm2DIPInfo,
+	kof98umhdInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
+	NULL, 0x4000, 320, 240, 4, 3
 };

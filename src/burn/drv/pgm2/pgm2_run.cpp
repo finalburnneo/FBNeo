@@ -86,6 +86,11 @@ UINT8  Pgm2Reset           = 0;
 
 static ClearOpposite<4, UINT8> Pgm2ClearOpposite;
 
+INT32  Pgm2RomPreDecrypted          = 0;	// 1 = original ROM is pre-decrypted (persists across reset)
+
+// Region hack address - some games need this set before reset
+static UINT32 Pgm2RegionHackAddress = 0;
+
 // Encryption support (runtime decryption via internal boot ROM)
 static UINT8 *Pgm2ArmROMEncrypted = NULL;     // encrypted backup for reset
 static INT32  Pgm2HasDecrypted = 0;            // prevents double decryption
@@ -123,8 +128,8 @@ static UINT32 Pgm2SpeedHackAddr[2] = { 0, 0 };
 static UINT32 Pgm2SpeedHackPC[2][4] = {0};
 
 // RAM/ROM board (ddpdojt) — 2MB of writable RAM at 0x10000000, ROM at 0x10200000
-static UINT8 *Pgm2RomBoardRAM = NULL;
-static INT32  Pgm2RomBoardRAMSize = 0;
+UINT8 *Pgm2RomBoardRAM     = NULL;
+INT32  Pgm2RomBoardRAMSize = 0;
 static INT32  Pgm2DecryptWordOffset = 0;
 
 // Sprite layout offsets (set by ROM loader, used by pgm2_draw.cpp)
@@ -202,6 +207,11 @@ void pgm2SetSpeedhack(UINT32 id, UINT32 addr, UINT32 pc1, UINT32 pc2, UINT32 pc3
     Pgm2SpeedHackPC[id][1] = pc2;
     Pgm2SpeedHackPC[id][2] = pc3;
     Pgm2SpeedHackPC[id][3] = pc4;
+}
+
+void pgm2SetRegionHack(UINT32 address)
+{
+    Pgm2RegionHackAddress = address;
 }
 
 void pgm2EnableKov3Module(const UINT8 *key, const UINT8 *sum, UINT32 addrXor, UINT16 dataXor)
@@ -506,6 +516,158 @@ static void pgm2DoDecrypt(const char* source)
 
 	Pgm2HasDecrypted = 1;
 	Pgm2HasDecrypted_Cached = 1;
+}
+
+// ---------------------------------------------------------------------------
+// Decrypted ROM detection heuristic
+// ---------------------------------------------------------------------------
+static INT32 pgm2IsArmBranch(UINT32 opcode)
+{
+	if (((opcode >> 28) & 0xf) != 0xe) return 0;
+	if (((opcode >> 25) & 0x7) != 0x5) return 0;
+	return 1;
+}
+
+static INT32 pgm2ArmBranchTarget(UINT32 opcode, INT32 pcOffset)
+{
+	INT32 offset = (INT32)(opcode & 0x00ffffff);
+	if (offset & 0x00800000) offset |= ~0x00ffffff;
+	return (offset + 2 + pcOffset) * 4;
+}
+
+// Check if a 32-bit ARM opcode is permitted by PGM2 crypto hardware
+static INT32 pgm2IsArmInstructionValid(UINT32 opcode)
+{
+	// Extract 4-bit condition code (bits 28–31)
+	UINT32 cond = (opcode >> 28) & 0xf;
+	if (cond == 0xf) {
+		// Special unconditional instruction group (cond=0xF)
+		// Only allowed if top nibble of bits 24–27 equals 0xF
+		if (((opcode >> 24) & 0xf) == 0xf)
+			return 1;
+		return 0;
+	}
+
+	// Get ARM instruction group identifier (bits 25–27)
+	UINT32 opcode27_25 = (opcode >> 25) & 0x7;
+    if (opcode27_25 == 0x0) {
+		// Data processing / immediate instruction class
+		UINT32 opcode24_21 = (opcode >> 21) & 0xf;
+		// Block undefined/reserved opcodes 0x6 and 0x7 in this group
+		if (opcode24_21 == 0x6 || opcode24_21 == 0x7)
+			return 0;
+		return 1;
+    }
+
+	// All other ARM instruction groups (0x1 ~ 0x6) are fully permitted
+	if (opcode27_25 == 0x1) return 1;
+	if (opcode27_25 == 0x2) return 1;
+	if (opcode27_25 == 0x3) return 1;
+	if (opcode27_25 == 0x4) return 1;
+	if (opcode27_25 == 0x5) return 1;
+	if (opcode27_25 == 0x6) return 1;
+
+	// Fallback: any remaining opcode group is allowed
+	return 1;
+}
+
+static INT32 pgm2IsRomDecrypted()
+{
+	UINT8 *checkRom      = NULL;
+	INT32 checkRomLen    = 0;
+	const TCHAR *romName = _T("ARM ROM");
+
+	if (Pgm2RomBoardRAM && Pgm2RomBoardRAMSize > 0x100) {
+		checkRom    = Pgm2RomBoardRAM;
+		checkRomLen = Pgm2RomBoardRAMSize;
+		romName     = _T("Board ROM");
+//		bprintf(0, _T("PGM2: rom decrypt check: using Board ROM (RAM/ROM board detected)\n"));
+	} else if (Pgm2ArmROM && Pgm2ArmROMLen > 0x100) {
+		checkRom    = Pgm2ArmROM;
+		checkRomLen = (Pgm2ArmROMFileLen > 0 && Pgm2ArmROMFileLen < Pgm2ArmROMLen) ? Pgm2ArmROMFileLen : Pgm2ArmROMLen;
+		romName     = _T("ARM ROM");
+	} else {
+//		bprintf(0, _T("PGM2: rom decrypt check: fail - no valid ROM found\n"));
+		return 0;
+	}
+
+	if (checkRomLen > 0x1000) checkRomLen = 0x1000;
+/*
+	bprintf(0, _T("PGM2: rom decrypt check start: %s len=0x%X\n"), romName, checkRomLen);
+
+	bprintf(0, _T("PGM2: %s first 32 bytes:\n"), romName);
+	for (INT32 i = 0; i < 32; i += 16) {
+		bprintf(0, _T("  0x%04X: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n"),
+				i,
+				checkRom[i +  0], checkRom[i +  1], checkRom[i +  2], checkRom[i +  3],
+				checkRom[i +  4], checkRom[i +  5], checkRom[i +  6], checkRom[i +  7],
+				checkRom[i +  8], checkRom[i +  9], checkRom[i + 10], checkRom[i + 11],
+				checkRom[i + 12], checkRom[i + 13], checkRom[i + 14], checkRom[i + 15]);
+	}
+*/
+	UINT32 firstInstr = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(checkRom + 0));
+    
+	if ((firstInstr & 0xffff0000) == 0xe92d0000) {
+//		bprintf(0, _T("PGM2: rom decrypt check: PASSED - first instruction is STMDB SP! (0x%08X)\n"), firstInstr);
+		return 1;
+	}
+    
+	if ((firstInstr & 0xfffffff0) == 0xe59ff010 || (firstInstr & 0xfffffff0) == 0xe51ff010) {
+//		bprintf(0, _T("PGM2: rom decrypt check: PASSED - first instruction is LDR PC (0x%08X)\n"), firstInstr);
+		return 1;
+    }
+
+//	bprintf(0, _T("PGM2: rom decrypt check: FAILED - first instruction 0x%08X is not a decrypted ROM pattern\n"), firstInstr);
+	return 0;
+}
+
+// ---------------------------------------------------------------------------
+// Boot ROM patching for decrypted ROMs
+//
+// Finds the "BL<verify>, BL<init>, B<continue>" sequence in the internal
+// boot ROM and NOPs out the verify BL. The verify function checks ROM
+// integrity and would hang/fail on pre-decrypted ROMs. The init BL (AIC
+// setup) and continue B (jump to external ROM) are preserved.
+//
+// This is the same pattern scanner already present in pgm2DoDecrypt()
+// (currently under if(0)), enabled here only for decrypted ROM detection.
+// ---------------------------------------------------------------------------
+static void pgm2PatchBootRomForDecrypted()
+{
+	if (!Pgm2IntROM || Pgm2IntROMLen < 0x100) {
+ //		bprintf(0, _T("PGM2: boot ROM patch: fail - no IntROM or too small\n"));
+		return;
+    }
+
+	INT32 patchAddr = -1;
+
+	for (INT32 off = 0x20; off < Pgm2IntROMLen - 12; off += 4) {
+		UINT32 w0 = *(UINT32*)(Pgm2IntROM + off + 0);
+		UINT32 w1 = *(UINT32*)(Pgm2IntROM + off + 4);
+		UINT32 w2 = *(UINT32*)(Pgm2IntROM + off + 8);
+		if ((w0 & 0xff000000) == 0xeb000000 &&
+			(w1 & 0xff000000) == 0xeb000000 &&
+			(w2 & 0xff000000) == 0xea000000) {
+			patchAddr = off;
+			break;
+		}
+	}
+
+	if (patchAddr >= 0) {
+        Pgm2IntRomOriginal3C44 = *(UINT32*)(Pgm2IntROM + patchAddr);
+        *(UINT32*)(Pgm2IntROM + patchAddr) = 0xe1a00000;		// MOV R0, R0
+/*
+		bprintf(0, _T("PGM2: boot ROM patch: SUCCESS - patched verify BL at 0x%04X (was %08X) -> NOP\n"),
+				patchAddr, Pgm2IntRomOriginal3C44);
+		bprintf(0, _T("PGM2: init BL at 0x%04X: %08X\n"),
+				patchAddr + 4, *(UINT32*)(Pgm2IntROM + patchAddr + 4));
+		bprintf(0, _T("PGM2: cont B  at 0x%04X: %08X\n"),
+				patchAddr + 8, *(UINT32*)(Pgm2IntROM + patchAddr + 8));
+*/
+		Pgm2IntRomNeedRestore = 1;
+	} else {
+//		bprintf(0, _T("PGM2: boot ROM patch: FAILED - no BL,BL,B verify pattern found in boot ROM\n"));
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -1685,6 +1847,7 @@ static INT32 pgm2CpuCycles()
 // ---------------------------------------------------------------------------
 INT32 pgm2Init()
 {
+//	bprintf(0, _T("PGM2: pgm2Init() start, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
     BurnSetRefreshRate(Pgm2RefreshRate);
     PGM2_LOG(PGM2_LOG_SYS, "==== PGM2 init ====");
     // Main RAM 0x20000000 - 512 KB
@@ -1759,8 +1922,10 @@ INT32 pgm2Init()
     Pgm2AicCoreStatus = 0;
 
     // Game-specific ROM load + decrypt callback
+//	bprintf(0, _T("PGM2: before pPgm2InitCallback, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
     if (pPgm2InitCallback)
         pPgm2InitCallback();
+//	bprintf(0, _T("PGM2: after pPgm2InitCallback, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
 
     // Detect actual ROM file size for correct decrypt length and MAP_ROM range
     Pgm2ArmROMFileLen = Pgm2ArmROMLen;  // default to buffer size
@@ -1848,6 +2013,21 @@ INT32 pgm2Init()
 
     Pgm2HasDecrypted = 0;
 	Pgm2HasDecrypted_Cached = 0;
+
+	// bprintf(0, _T("PGM2: before decrypt check: Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
+	if (Pgm2RomPreDecrypted || pgm2IsRomDecrypted()) {
+		Pgm2RomPreDecrypted     = 1;
+		Pgm2HasDecrypted        = 1;
+		Pgm2HasDecrypted_Cached = 1;
+		if (Pgm2HasKov3Module) {
+			Pgm2HasDecryptedKov3Module        = 1;
+			Pgm2HasDecryptedKov3Module_Cached = 1;
+		}
+		pgm2PatchBootRomForDecrypted();
+ //		bprintf(0, _T("PGM2: Detected pre-decrypted ROM, bypassing decryption\n"));
+	} else {
+		Pgm2RomPreDecrypted = 0;
+	}
 
     // Initialize KOV3 module clock counter to 151 (matches MAME machine_reset).
     // This skips the false clock pulse that occurs during GPIO initialization.
@@ -1980,6 +2160,15 @@ INT32 pgm2DoReset()
 	Pgm2HasDecryptedKov3Module_Cached = 0;
 	Pgm2HasDecrypted = 0;
 	Pgm2HasDecrypted_Cached = 0;
+
+	if (Pgm2RomPreDecrypted) {
+		Pgm2HasDecrypted        = 1;
+		Pgm2HasDecrypted_Cached = 1;
+		if (Pgm2HasKov3Module) {
+			Pgm2HasDecryptedKov3Module        = 1;
+			Pgm2HasDecryptedKov3Module_Cached = 1;
+		}
+	}
 	Pgm2ModuleClkCnt = 151; // MAME: prevents false clock pulse during GPIO init
 	Pgm2ModulePrevState = 0;
 	Pgm2ModuleInLatch = 0;
@@ -1988,6 +2177,11 @@ INT32 pgm2DoReset()
 	Pgm2PioOutData = 0;
 	memset(Pgm2ModuleRcvBuf, 0, sizeof(Pgm2ModuleRcvBuf));
 	memset(Pgm2ModuleSendBuf, 0, sizeof(Pgm2ModuleSendBuf));
+	// Apply region hack before reset (to internal boot ROM)
+	if (Pgm2RegionHackAddress && Pgm2IntROM && Pgm2RegionHackAddress < (UINT32)Pgm2IntROMLen) {
+		Pgm2IntROM[Pgm2RegionHackAddress] = Pgm2Input[8];
+//		bprintf(0, _T("PGM2: region hack applied at 0x%08X (IntROM) = 0x%02X\n"), Pgm2RegionHackAddress, Pgm2Input[8]);
+	}
 	Arm9Open(0);
 	Arm9Reset();
 	Arm9Close();
@@ -2003,6 +2197,7 @@ INT32 pgm2DoReset()
 }
 INT32 pgm2Exit()
 {
+//	bprintf(0, _T("PGM2: pgm2Exit() start, Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
     Arm9Open(0);
     Arm9Exit();
 
@@ -2061,6 +2256,9 @@ INT32 pgm2Exit()
     Pgm2HasKov3Module = 0;
 	Pgm2HasDecryptedKov3Module = 0;
 	Pgm2HasDecryptedKov3Module_Cached = 0;
+	Pgm2HasDecrypted        = 0;
+	Pgm2HasDecrypted_Cached = 0;
+	Pgm2RomPreDecrypted     = 0;
     Pgm2ModuleKey = NULL;
     Pgm2ModuleSum = NULL;
     Pgm2ModuleAddrXor = 0;

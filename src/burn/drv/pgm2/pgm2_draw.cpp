@@ -190,7 +190,9 @@ static void pgm2_draw_sprite_line(UINT32 mask_base, UINT32 mask_mask,
 			| ((UINT32)Pgm2SprROM[moff + 1] << 16)
 			| ((UINT32)Pgm2SprROM[moff + 2] << 8)
 			| ((UINT32)Pgm2SprROM[moff + 3]);
-		maskdata ^= realspritekey;
+		if (!Pgm2RomPreDecrypted) {
+			maskdata ^= realspritekey;
+		}
 
 		if (reverse) mask_offset -= 4;
 		else         mask_offset += 4;

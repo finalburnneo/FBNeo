@@ -23,12 +23,17 @@ extern UINT8 *Pgm2VidRAM;          // Combined video RAM block (0x130000 bytes)
 extern UINT8 *Pgm2SharedRAM;       // (legacy, NULL — inside VidRAM)
 extern UINT8 *Pgm2ExtRAM;          // Battery SRAM (64 KB at 0x02000000)
 extern UINT8 *Pgm2Cards[4];          // IC card images (0x108 bytes each, 4 player slots)
+extern UINT8 *Pgm2RomBoardRAM;       // RAM/ROM board writable RAM (before ROM area)
 
 extern INT32  Pgm2ArmROMLen;
 extern INT32  Pgm2BgROMLen;
 extern INT32  Pgm2SprROMLen;
 extern INT32  Pgm2TileROMLen;
 extern INT32  Pgm2SndROMLen;
+extern INT32  Pgm2RomBoardRAMSize;   // size of RAM/ROM board RAM area
+
+// Decryption state
+extern INT32  Pgm2RomPreDecrypted;  // 1 = original ROM is pre-decrypted (skip runtime decrypt + mask xor)
 
 // Sprite layout offsets (set by ROM loader, used by pgm2_draw.cpp)
 extern INT32  Pgm2MaskROMOffset;   // byte offset in SprROM where mask data starts
@@ -89,6 +94,7 @@ INT32 pgm2Frame();
 INT32 pgm2DoReset();
 INT32 pgm2Scan(INT32 nAction, INT32 *pnMin);
 void pgm2SetSpeedhack(UINT32 id, UINT32 addr, UINT32 pc1, UINT32 pc2 = 0, UINT32 pc3 = 0, UINT32 pc4 = 0);
+void pgm2SetRegionHack(UINT32 address);
 void pgm2EnableKov3Module(const UINT8 *key, const UINT8 *sum, UINT32 addrXor, UINT16 dataXor);
 void pgm2DisableKov3Module();
 void pgm2SetStorageRomIndices(INT32 cardRomIndex, INT32 sramRomIndex);

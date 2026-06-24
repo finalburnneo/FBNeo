@@ -28526,7 +28526,7 @@ struct BurnDriver BurnSpecSuperseymoursavestheplanet = {
 // Super Space Invaders (128K)
 
 static struct BurnRomInfo SpecSsinvadersRomDesc[] = {
-	{ "Super Space Invaders 128K (1991)(Domark).z80", 104637, 0x2a36ad52, BRF_ESS | BRF_PRG },
+	{ "Super Space Invaders 128K (1991)(Domark).tzx", 119931, 0x9e5ce705, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSsinvaders, SpecSsinvaders, Spec128)
@@ -28534,7 +28534,7 @@ STD_ROM_FN(SpecSsinvaders)
 
 struct BurnDriver BurnSpecSsinvaders = {
 	"spec_ssinvaders", NULL, "spec_spec128", NULL, "1991",
-	"Super Space Invaders (128K)\0", "In main menu: 'A' to move - 'Q' to select", "Domark", "ZX Spectrum",
+	"Super Space Invaders (128K)\0", "Options menu: use 'A' to move and 'Q' to select", "Domark", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecSsinvadersRomInfo, SpecSsinvadersRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -58207,6 +58207,44 @@ struct BurnDriver BurnSpecSpacebros = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecSpacebrosRomInfo, SpecSpacebrosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Space invaders (48K-128K) (HB, v1.4.1)
+
+static struct BurnRomInfo SpecSpacinvRomDesc[] = {
+	{ "Space invaders v1.4.1 48K-128K (2021)(SplinterGU).tzx", 29436, 0x61582cb7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSpacinv, SpecSpacinv, Spec128)
+STD_ROM_FN(SpecSpacinv)
+
+struct BurnDriver BurnSpecSpacinv = {
+	"spec_spacinv", NULL, "spec_spec128", NULL, "2021",
+	"Space invaders (48K-128K) (HB, v1.4.1)\0", "K: insert coins - 1or2: start - P1/P2: O/P and A", "SplinterGU", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecSpacinvRomInfo, SpecSpacinvRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Space Invaders Co-Op (48K-128K) (HB, v2.0.1)
+
+static struct BurnRomInfo SpecSpacinvcoopRomDesc[] = {
+	{ "Space Invaders Co-Op v2.0.1 48K-128K (2026)(SplinterGU).tzx", 32554, 0x19f54c9f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSpacinvcoop, SpecSpacinvcoop, Spec128)
+STD_ROM_FN(SpecSpacinvcoop)
+
+struct BurnDriver BurnSpecSpacinvcoop = {
+	"spec_spacinvcoop", NULL, "spec_spec128", NULL, "2026",
+	"Space Invaders Co-Op (48K-128K) (HB, v2.0.1)\0", "K: insert coins - 1or2: start - P1: Q/W and X - P2: O/P and SPACE", "SplinterGU", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecSpacinvcoopRomInfo, SpecSpacinvcoopRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

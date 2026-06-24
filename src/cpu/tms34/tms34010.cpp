@@ -997,6 +997,8 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 	vtotal = SMART_IOREG(VTOTAL);
 
 #if 0  // for driver debug -dink
+	// how to find the refresh:
+	// 1 / ((1.0/(pixel_clock)) * (htotal * vtotal))
 	if (line == 1) {
 		bprintf(0, _T("vsblnk %x\n"), vsblnk);
 		bprintf(0, _T("veblnk %x\n"), veblnk);

@@ -45131,18 +45131,56 @@ struct BurnDriver BurnDrvsnes_Cosmogangpzlh = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot and the Retro Dimension (GlobalHack, English)
+// Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.01)
+
+static struct BurnRomInfo snes_Crashband2enRomDesc[] = {
+	{ "Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt EN v1.01 (2026)(Bandicoot).sfc", 4194304, 0xa5ff4437, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Crashband2en)
+STD_ROM_FN(snes_Crashband2en)
+
+struct BurnDriver BurnDrvsnes_Crashband2en = {
+	"snes_crashband2en", NULL, NULL, NULL, "2026",
+	"Crash Bandicoot and the Retro Dimension 2 - The Crystal Hunt (GlobalHack, English v1.01)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Crashband2enRomInfo, snes_Crashband2enRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.01)
+
+static struct BurnRomInfo snes_Crashband2ptRomDesc[] = {
+	{ "Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais PT v1.01 (2026)(Bandicoot).sfc", 4194304, 0x64549c57, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Crashband2pt)
+STD_ROM_FN(snes_Crashband2pt)
+
+struct BurnDriver BurnDrvsnes_Crashband2pt = {
+	"snes_crashband2pt", "snes_crashband2en", NULL, NULL, "2026",
+	"Crash Bandicoot e a Dimensao Retro 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.01)\0", "GlobalHack of Super Mario World", "Bandicoot", "SNES / Super Famicom",
+	L"Crash Bandicoot e a Dimens\u00e3o Retr\u00f4 2 - A Busca pelos Cristais (GlobalHack, Portuguese v1.01)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Crashband2ptRomInfo, snes_Crashband2ptRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Crash Bandicoot and the Retro Dimension Enhanced (GlobalHack, English v1.22)
 
 static struct BurnRomInfo snes_CrashbandenRomDesc[] = {
-	{ "Crash Bandicoot and the Retro Dimension (English)(2025)(Bandicoot).sfc", 4194304, 0xce281f37, BRF_ESS | BRF_PRG },
+	{ "Crash Bandicoot and the Retro Dimension Enhanced EN v1.22 (2025-26)(Bandicoot).sfc", 4194304, 0x601eb065, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Crashbanden)
 STD_ROM_FN(snes_Crashbanden)
 
 struct BurnDriver BurnDrvsnes_Crashbanden = {
-	"snes_crashbanden", NULL, NULL, NULL, "2025",
-	"Crash Bandicoot and the Retro Dimension (GlobalHack, English)\0", "GlobalHack of Super Mario World", "Bindicoot", "Nintendo",
+	"snes_crashbanden", NULL, NULL, NULL, "2025-26",
+	"Crash Bandicoot and the Retro Dimension Enhanced (GlobalHack, English v1.22)\0", "GlobalHack of Super Mario World", "Bindicoot", "Nintendo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_CrashbandenRomInfo, snes_CrashbandenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -45150,19 +45188,19 @@ struct BurnDriver BurnDrvsnes_Crashbanden = {
 	512, 448, 4, 3
 };
 
-// Crash Bandicoot e a Dimensao Retro (GlobalHack, Portuguese)
+// Crash Bandicoot e a Dimensao Retro Versao Melhorada (GlobalHack, Portuguese v1.22)
 
 static struct BurnRomInfo snes_CrashbandptRomDesc[] = {
-	{ "Crash Bandicoot e a Dimensao Retro (Portuguese)(2025)(Bandicoot).sfc", 4194304, 0x49118dcf, BRF_ESS | BRF_PRG },
+	{ "Crash Bandicoot e a Dimensao Retro Versao Melhorada PT v1.22 (2025-26)(Bandicoot).sfc", 4194304, 0x2dd84a5c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Crashbandpt)
 STD_ROM_FN(snes_Crashbandpt)
 
 struct BurnDriver BurnDrvsnes_Crashbandpt = {
-	"snes_crashbandpt", "snes_crashbanden", NULL, NULL, "2025",
-	"Crash Bandicoot e a Dimensao Retro (GlobalHack, Portuguese)\0", "GlobalHack of Super Mario World", "Bandicoot", "Nintendo",
-	L"Crash Bandicoot e a Dimens\u00e3o Retr\u00f4 (GlobalHack, Portuguese)\0", NULL, NULL, NULL,
+	"snes_crashbandpt", "snes_crashbanden", NULL, NULL, "2025-26",
+	"Crash Bandicoot e a Dimensao Retro Versao Melhorada (GlobalHack, Portuguese v1.22)\0", "GlobalHack of Super Mario World", "Bandicoot", "Nintendo",
+	L"Crash Bandicoot e a Dimens\u00e3o Retr\u00f4 Vers\u00e3o Melhorada (GlobalHack, Portuguese v1.22)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_CrashbandptRomInfo, snes_CrashbandptRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,

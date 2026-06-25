@@ -3796,6 +3796,9 @@
     <ClCompile Include="..\..\src\burn\devices\i8255.cpp">
       <Filter>burn\devices</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_megaphx.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

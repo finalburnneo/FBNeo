@@ -274,6 +274,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_littlerb.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_megaphx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_musclem.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_namcona1.cpp" />
@@ -1598,7 +1599,7 @@ del %(Filename).exe
       <IgnoreSpecificDefaultLibraries>winspool.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH%&#x0A;call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
+      <Command>set PATH=$(PerlPath);%PATH%call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1627,7 +1628,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH%&#x0A;call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
+      <Command>set PATH=$(PerlPath);%PATH%call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>FBNEO_DEBUG;INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1660,7 +1661,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH%&#x0A;call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
+      <Command>set PATH=$(PerlPath);%PATH%call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1691,7 +1692,7 @@ del %(Filename).exe
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>set PATH=$(PerlPath);%PATH%&#x0A;call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
+      <Command>set PATH=$(PerlPath);%PATH%call "$(MSBuildProjectDirectory)\..\..\src\dep\visualstudio\pre2019.bat" "$(VCInstallDir)"</Command>
     </PreBuildEvent>
     <ResourceCompile>
       <PreprocessorDefinitions>INCLUDE_AVI_RECORDING;%(PreprocessorDefinitions)</PreprocessorDefinitions>

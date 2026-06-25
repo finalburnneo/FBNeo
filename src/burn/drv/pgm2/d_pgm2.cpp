@@ -153,13 +153,14 @@ static struct BurnDIPInfo pgm2dcDIPList[] = {
 };
 
 // Knights of Valour 2 New Legend
+// Includes Korea
 static struct BurnDIPInfo pgm2dkcDIPList[] = {
 	{ REGSW_IDX,	0xFF, 0xFF,	0x05, NULL				},
 	{ 0,			0xFE, 0,	6,    "Region (Fake)"	},
 	{ REGSW_IDX,	0x01, 0x0F,	0x00, "China"			},
 	{ REGSW_IDX,	0x01, 0x0F,	0x01, "Taiwan"			},
 	{ REGSW_IDX,	0x01, 0x0F,	0x02, "Japan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x03, "Korea"			},	// Includes Korea
+	{ REGSW_IDX,	0x01, 0x0F,	0x03, "Korea"			},
 	{ REGSW_IDX,	0x01, 0x0F,	0x04, "Hong Kong"		},
 	{ REGSW_IDX,	0x01, 0x0F,	0x05, "Overseas"		},
 
@@ -181,7 +182,6 @@ static bool pgm2LoadRom(UINT8 **pBuf, INT32 *pLen, INT32 nLen, INT32 nRomIdx)
 	*pLen = nLen;
 	*pBuf = (UINT8*)BurnMalloc(nLen);
 	if (!*pBuf) return false;
-	memset(*pBuf, 0x00, nLen);
 	return BurnLoadRom(*pBuf, nRomIdx, 1) == 0;
 }
 
@@ -194,7 +194,6 @@ static void orleg2LoadRoms()
 	Pgm2SndROMLen = 0x1000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
 	Pgm2BgROMLen = 0x1000000;
@@ -204,7 +203,6 @@ static void orleg2LoadRoms()
 	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 5, 4, LD_GROUP(2));
@@ -223,7 +221,6 @@ static void orleg2CardLoadRoms()
 	Pgm2SndROMLen = 0x1000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
 
 	Pgm2BgROMLen = 0x1000000;
@@ -233,7 +230,6 @@ static void orleg2CardLoadRoms()
 	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
@@ -252,7 +248,6 @@ static void kov2nlLoadRoms()
 	Pgm2SndROMLen = 0x2000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM, 10, 1, LD_BYTESWAP)) return;
 
 	Pgm2BgROMLen = 0x1000000;
@@ -262,7 +257,6 @@ static void kov2nlLoadRoms()
 	Pgm2SprROMLen = 0x1000000 + 0x2000000 + 0x4000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 4, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 5, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x1000000, 6, 4, LD_GROUP(2));
@@ -281,7 +275,6 @@ static void kov3LoadRoms()
 	Pgm2SndROMLen = 0x4000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
 	Pgm2BgROMLen = 0x2000000;
@@ -291,7 +284,6 @@ static void kov3LoadRoms()
 	Pgm2SprROMLen = 0x2000000 + 0x4000000 + 0x8000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
@@ -419,7 +411,6 @@ static void ddpdojtLoadRoms()
 	Pgm2SndROMLen = 0x1000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM, 9, 1, LD_BYTESWAP)) return;
 
 	// BG: bgl(0x1000000)+bgh(0x1000000) = 0x2000000 interleaved
@@ -432,7 +423,6 @@ static void ddpdojtLoadRoms()
 	Pgm2SprROMLen = 0x2000000 + 0x1000000 + 0x2000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));
 	BurnLoadRomExt(Pgm2SprROM + 0x2000000, 5, 4, LD_GROUP(2));
@@ -465,7 +455,6 @@ static void kof98umhLoadRoms()
 	Pgm2SndROMLen = 0x8000000;
 	Pgm2SndROM = (UINT8*)BurnMalloc(Pgm2SndROMLen);
 	if (!Pgm2SndROM) return;
-	memset(Pgm2SndROM, 0x00, Pgm2SndROMLen);
 	if (BurnLoadRomExt(Pgm2SndROM + 0x0000000, 9,  1, LD_BYTESWAP)) return;
 	if (BurnLoadRomExt(Pgm2SndROM + 0x4000000, 10, 1, LD_BYTESWAP)) return;
 
@@ -479,7 +468,6 @@ static void kof98umhLoadRoms()
 	Pgm2SprROMLen = 0x8000000 + 0x18000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRomExt(Pgm2SprROM + 0x0000000, 3, 4, LD_GROUP(2));  // mapl0
 	BurnLoadRomExt(Pgm2SprROM + 0x0000002, 4, 4, LD_GROUP(2));  // maph0
 	BurnLoadRomExt(Pgm2SprROM + 0x8000000, 5, 4, LD_GROUP(2));  // spa0
@@ -1342,7 +1330,7 @@ struct BurnDriver BurnDrvkof98umh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98umhRomInfo, kof98umhRomName, NULL, NULL, NULL, NULL,
-	pgm2dInputInfo, pgm2dDIPInfo,
+	pgm2InputInfo, pgm2DIPInfo,
 	kof98umhInit, pgm2Exit, pgm2Frame, pgm2DoDraw, pgm2Scan,
 	NULL, 0x4000, 320, 240, 4, 3
 };
@@ -1644,7 +1632,6 @@ static void kov3dLoadRoms()
 	Pgm2SprROMLen       = 0x2000000 + 0x4000000 + 0x8000000;
 	Pgm2SprROM = (UINT8*)BurnMalloc(Pgm2SprROMLen);
 	if (!Pgm2SprROM) return;
-	memset(Pgm2SprROM, 0x00, Pgm2SprROMLen);
 	BurnLoadRom(Pgm2SprROM + 0x0000000, 4, 1);
 	BurnLoadRom(Pgm2SprROM + 0x2000000, 5, 1);
 	BurnLoadRom(Pgm2SprROM + 0x6000000, 6, 1);

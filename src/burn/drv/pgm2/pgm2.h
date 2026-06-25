@@ -75,7 +75,7 @@ extern UINT16 Pgm2VideoReg14Hi;
 // ---------------------------------------------------------------------------
 extern UINT8 Pgm2InputPort0[32];
 extern UINT8 Pgm2InputPort1[32];
-extern UINT8 Pgm2Dip[1];
+extern UINT8 Pgm2Dip[3];     // [0]=DipA, [1]=DipB(Region), [2]=DipC(Cardless)
 extern UINT8 Pgm2Reset;
 
 // ---------------------------------------------------------------------------
@@ -109,8 +109,6 @@ void pgm2SetRefreshRate(double hz);
 extern INT32  Pgm2MaxCardSlots;
 extern INT32  Pgm2ActiveCardSlot;
 extern bool   Pgm2CardInserted[4];
-
-extern UINT8  CardlessHack;
 
 // pgm2_draw.cpp
 void pgm2InitDraw();

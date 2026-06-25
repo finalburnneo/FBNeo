@@ -78,10 +78,10 @@ INT32  Pgm2SprROMLen  = 0;
 INT32  Pgm2TileROMLen = 0;
 INT32  Pgm2SndROMLen  = 0;
 
-UINT8  Pgm2Input[8]       = { 0 };
+UINT8  Pgm2Input[10]      = { 0 };					// [0-3]=P1, [4-6]=P2/P3, [7-9]=DipA-DipC
 UINT8  Pgm2InputPort0[32] = { 0 };
 UINT8  Pgm2InputPort1[32] = { 0 };
-UINT8  Pgm2Dip[1]         = { 0xff };
+UINT8  Pgm2Dip[3]         = { 0xff, 0x00, 0x00 };	// [0]=DipA, [1]=DipB(Region), [2]=DipC(Cardless)
 UINT8  Pgm2Reset           = 0;
 
 static ClearOpposite<4, UINT8> Pgm2ClearOpposite;
@@ -121,10 +121,8 @@ INT32  Pgm2MaxCardSlots = 0;
 INT32  Pgm2ActiveCardSlot = 0;
 bool   Pgm2CardInserted[4] = {false, false, false, false};
 
-UINT8 CardlessHack = 0;
-
 // Speed hack variables
-static UINT32 Pgm2SpeedHackAddr[2] = { 0, 0 };
+static UINT32 Pgm2SpeedHackAddr[2]  = { 0, 0 };
 static UINT32 Pgm2SpeedHackPC[2][4] = {0};
 
 // RAM/ROM board (ddpdojt) — 2MB of writable RAM at 0x10000000, ROM at 0x10200000
@@ -1027,7 +1025,7 @@ static void pgm2McuCommand(bool isCommand)
 
             case 0xc0: // insert card / check card presence
             case 0xc1: // check ready/busy
-                if ((CardlessHack & 1) && (0xc0 == cmd)) {  // Cardless mode
+                if ((Pgm2Dip[2] & 1) && (0xc0 == cmd)) {  // Cardless mode
                     if (!pgm2CardPresent(arg1 & 3)) {
                         status = 0x00f70000;
                     }
@@ -2149,10 +2147,40 @@ INT32 pgm2Init()
     // Init video
     pgm2InitDraw();
 
+    pgm2DoReset();
+
     return 0;
 }
+
+// ---------------------------------------------------------------------------
+// Pack per-bit input arrays into byte registers for hardware read
+static void pgm2MakeInputs()
+{
+    memset(Pgm2Input, 0, sizeof(Pgm2Input));
+    for (INT32 i = 0; i < 32; i++) {
+        Pgm2Input[i / 8] |= (Pgm2InputPort0[i] & 1) << (i & 7);
+    }
+    for (INT32 i = 0; i < 24; i++) {
+        Pgm2Input[4 + i / 8] |= (Pgm2InputPort1[i] & 1) << (i & 7);
+    }
+
+	Pgm2ClearOpposite.check(0, Pgm2Input[0], 0x01, 0x02, 0x04, 0x08, nSocd[0]);
+	Pgm2ClearOpposite.check(1, Pgm2Input[1], 0x04, 0x08, 0x10, 0x20, nSocd[1]);
+	Pgm2ClearOpposite.check(2, Pgm2Input[2], 0x10, 0x20, 0x40, 0x80, nSocd[2]);
+	Pgm2ClearOpposite.check(3, Pgm2Input[4], 0x01, 0x02, 0x04, 0x08, nSocd[3]);
+
+    // DIP switches: pre-invert because the read handler applies ~ to the
+    // whole 32-bit value.  ~(~Pgm2Dip[0]) restores the correct polarity.
+    Pgm2Input[7] = ~Pgm2Dip[0];
+    // Dip B (Region switch) and Dip C (Cardless mode)
+    Pgm2Input[8] = Pgm2Dip[1];
+    Pgm2Input[9] = Pgm2Dip[2];
+}
+
 INT32 pgm2DoReset()
 {
+	pgm2MakeInputs();
+
 	if (Pgm2ArmROMEncrypted && Pgm2ArmROM)
 		memcpy(Pgm2ArmROM, Pgm2ArmROMEncrypted, Pgm2ArmROMLen);
 
@@ -2273,28 +2301,6 @@ INT32 pgm2Exit()
     memset(Pgm2ModuleSendBuf, 0, sizeof(Pgm2ModuleSendBuf));
 
     return 0;
-}
-
-// ---------------------------------------------------------------------------
-// Pack per-bit input arrays into byte registers for hardware read
-static void pgm2MakeInputs()
-{
-    memset(Pgm2Input, 0, sizeof(Pgm2Input));
-    for (INT32 i = 0; i < 32; i++) {
-        Pgm2Input[i / 8] |= (Pgm2InputPort0[i] & 1) << (i & 7);
-    }
-    for (INT32 i = 0; i < 24; i++) {
-        Pgm2Input[4 + i / 8] |= (Pgm2InputPort1[i] & 1) << (i & 7);
-    }
-
-	Pgm2ClearOpposite.check(0, Pgm2Input[0], 0x01, 0x02, 0x04, 0x08, nSocd[0]);
-	Pgm2ClearOpposite.check(1, Pgm2Input[1], 0x04, 0x08, 0x10, 0x20, nSocd[1]);
-	Pgm2ClearOpposite.check(2, Pgm2Input[2], 0x10, 0x20, 0x40, 0x80, nSocd[2]);
-	Pgm2ClearOpposite.check(3, Pgm2Input[4], 0x01, 0x02, 0x04, 0x08, nSocd[3]);
-
-    // DIP switches: pre-invert because the read handler applies ~ to the
-    // whole 32-bit value.  ~(~Pgm2Dip[0]) restores the correct polarity.
-    Pgm2Input[7] = ~Pgm2Dip[0];
 }
 
 // pgm2Frame

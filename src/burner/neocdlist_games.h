@@ -76,10 +76,10 @@ struct NGCDGAME games[] =
 	{ _T("pbobblen")	, _T("Puzzle Bobble / Bust-A-Move")							, _T("1994")	, _T("SNK")					, 0x0083 },		//
 	{ _T("kof95")		, _T("The King of Fighters '95 (JP-US)")					, _T("1995")	, _T("SNK")					, 0x0084 },		//
 	{ _T("kof95r1")		, _T("The King of Fighters '95 (JP-US)(Rev 1)")				, _T("1995")	, _T("SNK")					, 0x1084 },		//
-	{ _T("ssrpg")		, _T("Samurai Shodown RPG / Shinsetsu Samurai Spirits - Bushidohretsuden")		, _T("1997")	, _T("SNK")					, 0x0085 },		//
+	{ _T("ssrpg")		, _T("Samurai Shodown RPG / Shinsetsu Samurai Spirits - Bushidohretsuden")	, _T("1997")	, _T("SNK")	, 0x0085 },		//
 	{ _T("ssrpgen")		, _T("Samurai Shodown RPG (English Translation)")			, _T("1997")	, _T("SNK")					, 0x1085 },		//
 	{ _T("ssrpgen11")	, _T("Samurai Shodown RPG (English Translation v1.1)")		, _T("1997")	, _T("SNK")					, 0x3085 },		//
-	{ _T("ssrpgchs")	, _T("Samurai Shodown RPG (Simplified Chinese Translation, Public beta)"), _T("2025"), _T("SGGG Team")	, 0x4085 },		// custom id
+	{ _T("ssrpgchs")	, _T("Samurai Shodown RPG (Simplified Chinese Translation v1.1)"), _T("2026"), _T("SGGG Team")			, 0x4085 },		// custom id
 	{ _T("ssrpgfr")		, _T("Samurai Shodown RPG (French Translation)")			, _T("1997")	, _T("SNK")					, 0x2085 },		//
 	{ _T("samsho3")		, _T("Samurai Shodown 3 / Samurai Spirits 3")				, _T("1995")	, _T("SNK")					, 0x0087 },		//
 	{ _T("stakwin")		, _T("Stakes Winner - GI Kanzen Seiha Heno Machi")			, _T("1995")	, _T("Saurus")				, 0x0088 },		//

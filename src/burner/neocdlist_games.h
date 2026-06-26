@@ -109,9 +109,12 @@ struct NGCDGAME games[] =
 	{ _T("samsho4")		, _T("Samurai Shodown IV - Amakusa's Revenge")				, _T("1996")	, _T("SNK")					, 0x0222 },		//
 	{ _T("rbffspec")	, _T("Real Bout Fatal Fury Special")						, _T("1996")	, _T("SNK")					, 0x0223 },		//
 	{ _T("twinspri")	, _T("Twinkle Star Sprites")								, _T("1996")	, _T("ADK")					, 0x0224 },		//
+	{ _T("ghostlop")	, _T("Ghostlop")											, _T("1996")	, _T("Data East")			, 0x0228 },		// Texture mapping error
 	{ _T("kof96ngc")	, _T("The King of Fighters '96 NEOGEO Collection")			, _T("1996")	, _T("SNK")					, 0x0229 },		//
 	{ _T("breakers")	, _T("Breakers")											, _T("1996")	, _T("Visco")				, 0x0230 },		//
+	{ _T("miexchng")	, _T("Money Puzzle Exchanger / Money Idol Exchanger")		, _T("1997")	, _T("Face")				, 0x0231 },		//
 	{ _T("kof97")		, _T("The King of Fighters '97")							, _T("1997")	, _T("SNK")					, 0x0232 },		//
+	{ _T("magdrop3")	, _T("Magical Drop III")									, _T("1997")	, _T("Data East")			, 0x0233 },		//  Texture mapping error
 	{ _T("lastblad")	, _T("The Last Blade / Bakumatsu Roman - Gekka no Kenshi")	, _T("1997")	, _T("SNK")					, 0x0234 },		//
 	{ _T("rbff2")		, _T("Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers"), _T("1998"), _T("SNK") , 0x0240 },		//
 	{ _T("mslug2")		, _T("Metal Slug 2 - Super Vehicle-001/II")					, _T("1998")	, _T("SNK")					, 0x0241 },		//
@@ -128,13 +131,19 @@ struct NGCDGAME games[] =
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 	{ _T("puzzldpc")	, _T("Puzzle de Pon! CD Collection")						, _T("1997")	, _T("Visco")				, 0x7778 },		//
 	{ _T("neothndr")	, _T("Neo Thunder")											, _T("2012")	, _T("Sebastian Mihai")		, 0x1234 },		//
+	{ _T("neonopon")	, _T("Neo No Panepon")										, _T("20xx")	, _T("Blastar")				, 0x2000 },		//
+	{ _T("poknight")	, _T("Poker Night")											, _T("199x")	, _T("Jeff Kurtz")			, 0x2003 },		//
 	{ _T("jumpnrun")	, _T("Jump & Run")											, _T("2020")	, _T("Blastar")				, 0x2006 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
 	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//
 	{ _T("blockpanicdx"), _T("Block Panic DX")										, _T("2025")	, _T("Blastar")				, 0x2023 },		//
 	{ _T("hypernoid")	, _T("Hypernoid")											, _T("2022")	, _T("NeoHomeBrew.com")		, 0x0600 },		//
+	{ _T("ngfrog")		, _T("Neo Frog Feast")										, _T("2012")	, _T("Rastersoft")			, 0x0273 },		//
+	{ _T("neopong")		, _T("Neo Pong")											, _T("2002")	, _T("Neo Dev Corporation")	, 0x0275 },		//
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
+	{ _T("xeviousng")	, _T("Xevious")												, _T("2023")	, _T("Namco - tcdev")		, 0x0420 },		//
+	{ _T("galaxianng")	, _T("Galaxian (Beta2)")									, _T("2023")	, _T("Namco - tcdev")		, 0x0422 },		//
 	{ _T("pow")			, _T("P.O.W. - Prisoners of War")							, _T("2024")	, _T("SNK (iq_132 conversion)")	, 0x1324 },		//
 	{ _T("karnov")		, _T("Karnov")												, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0283 },		//
 	{ _T("spinmast")	, _T("Spin Master")											, _T("2024")	, _T("Data East (iq_132 conversion)")	, 0x0062 },		//
@@ -164,12 +173,16 @@ struct NGCDGAME games[] =
 	{ _T("pbobble2")	, _T("Puzzle Bobble 2")										, _T("202x")	, _T("??")					, 0x0248 },		//
 	{ _T("popbounc")	, _T("Pop 'n Bounce / Gapporin")							, _T("202x")	, _T("Video System (?? conversion)")	, 0x0237 },		//
 	{ _T("minasan")		, _T("Minasan no Okagesamadesu! Dai Sugoroku Taikai")		, _T("202x")	, _T("Monolith (?? conversion)")	, 0x0027 },		//
+	{ _T("columnsn")	, _T("Columns")												, _T("2002")	, _T("Blastar")				, 0x3000 },		// szVolumeID
 	{ _T("neopuzleg")	, _T("Neo Puzzle League")									, _T("202x")	, _T("Blastar")				, 0x2234 },		//
 	{ _T("neotetris")	, _T("Neo Tetris")											, _T("202x")	, _T("Blastar")				, 0x2235 },		//
 	{ _T("ngdark")		, _T("NGD::ARK")											, _T("2011")	, _T("NG.DEV.TEAM")			, 0x2236 },		//
 	{ _T("santaball")	, _T("Santa Ball")											, _T("2012")	, _T("NeoHomeBrew.com")		, 0x2237 },		//
 	{ _T("abyssali")	, _T("Abyssal Infants")										, _T("2021")	, _T("Kako Eimon")			, 0x1052 },		//
 	{ _T("neofight")	, _T("Neo Fight")											, _T("20xx")	, _T("Unknown")				, 0x1053 },		//
+	{ _T("foodfight")	, _T("Food Fight")											, _T("2025")	, _T("Atari (iq_132 conversion)")	, 0xF00D },		//
+	{ _T("cnbe")		, _T("Codename - Blut Engel")								, _T("2006")	, _T("Blastar")				, 0xFFFE },		//
+	{ _T("ltorb")		, _T("Jonas Indiana and the Lost Temple of RA")				, _T("2005")	, _T("Blastar")				, 0xFFFF },		//
 };
 
 

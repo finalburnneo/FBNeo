@@ -1,11 +1,12 @@
-Exclude NASM version, please use visualstudio-2019
+Exclude NASM version, please use visualstudio-2019/2015
 
 Pre-Building:
-
 1) download and run visual studio 2026 IDE community edition installer from https://visualstudio.microsoft.com/ 
 2) select Desktop development with C++
-3) next you will need a perl interpreter for windows. I recommend ActivePerl (https://www.activestate.com/products/activeperl/downloads/). I usually use the oldest version available. Make sure that you have enabled the checkbox to add perl to the current path.
-4) Then you need NASM for the assembly file (https://www.nasm.us/). Place the downloaded nasm.exe into the root directory of the project.
+3) next you will need a perl interpreter for windows. I recommend Compact Portable Perl for Windows (https://www.southsoftware.com/perl.html). select the version compatible with your operating system.
+4) Then you need NASM for the assembly file (https://www.nasm.us/).
+5) Place the downloaded perl.exe & nasm.exe into the root directory of the project.
+6) If you have MSYS2 installed with the corresponding Perl and NASM toolchains, you can skip steps 3 to 5 above and add [installation path]\msys64\usr\bin\ to your system PATH environment variable.
 
 Building
 1) checkout the code using git (Optionally: fork it first!)

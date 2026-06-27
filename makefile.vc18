@@ -20,7 +20,7 @@ export MSYS2_ARG_CONV_EXCL = *
 
 # Specify the name of the executable file, without ".exe"
 NAME = fbneo
-COMPILENAME = 3
+COMPILENAME = vs2026/x86
 
 ifdef BUILD_X64_EXE
 ifdef BUILD_A68K
@@ -51,7 +51,7 @@ ifndef BUILD_X86_ASM
 endif
 ifdef BUILD_X64_EXE
 	NAME = fbneo64
-	COMPILENAME = 6
+	COMPILENAME = vs2026/x64
 endif
 ifdef	DEBUG
 	NAME := $(NAME)d

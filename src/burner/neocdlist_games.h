@@ -64,6 +64,7 @@ struct NGCDGAME games[] =
 	{ _T("karnovr")		, _T("Karnov's Revenge / Fighters History Dynamite")		, _T("1994")	, _T("Data East")			, 0x0066 },		//
 	{ _T("pspikes2")	, _T("Power Spikes II")										, _T("1994")	, _T("Video System")		, 0x0068 },		//
 	{ _T("b2b")			, _T("Bang Bang Busters")									, _T("2000")	, _T("Visco")				, 0x0071 },		//
+	{ _T("panicbom")	, _T("Panic Bomber")										, _T("1994")	, _T("Eighting/Hudson")		, 0x0073 },		//
 	{ _T("aodk")		, _T("Aggressors of Dark Kombat / Tsuukai GanGan Koushinkyoku")	, _T("1994"), _T("SNK/ADK")				, 0x0074 },		//
 	{ _T("sonicwi2")	, _T("Aero Fighters 2 / Sonic Wings 2")						, _T("1994")	, _T("Video System")		, 0x0075 },		//
 	{ _T("galaxyfg")	, _T("Galaxy Fight - Universal Warriors")					, _T("1995")	, _T("Sunsoft")				, 0x0078 },		//
@@ -128,6 +129,8 @@ struct NGCDGAME games[] =
 	{ _T("fatfury3r3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 3)"), _T("1995"), _T("SNK")		, 0x369c },		//
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
+	{ _T("blueandrpal")	, _T("Blue And Red - Fight The Robots! (PAL)")				, _T("2026")	, _T("Kaiju Wasp")			, 0x5345 },		//
+	{ _T("blueandr")	, _T("Blue And Red - Fight The Robots! (NTSC)")				, _T("2026")	, _T("Kaiju Wasp")			, 0x5346 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 	{ _T("puzzldpc")	, _T("Puzzle de Pon! CD Collection")						, _T("1997")	, _T("Visco")				, 0x7778 },		//
 	{ _T("neothndr")	, _T("Neo Thunder")											, _T("2012")	, _T("Sebastian Mihai")		, 0x1234 },		//

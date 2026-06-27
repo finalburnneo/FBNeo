@@ -445,6 +445,7 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] ==  3 && nDate[2] ==  4) { nID  = 0x2236; }	// NGD::ARK
 				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] == 12 && nDate[2] ==  4) { nID  = 0x2237; }	// Santa Ball
 				if (nID == 0x2000 && !strcmp(pIsoCtx->szVolumeID, "COLUMNS"))             { nID |= 0x1000; }	// Columns
+				if (nID == 0x5345 && !strcmp(pIsoCtx->szVolumeID, "BLUEANDREDFIGHTTHEROBOTS")) { nID  = 0x5346; }	// Blue And Red - Fight The Robots! (NTSC)
 				if (nID == 0xFFFF && !strcmp(pIsoCtx->szVolumeID, "CODENAME BLUT ENGEL")) { nID  = 0xFFFE; }	// Codename Blut Engel
 				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] ==  8 && nDate[2] == 14) { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
 				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }	// Double Dragon Rev 1

@@ -438,8 +438,8 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
 					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
 					else if (nDate[0] == 126 && nDate[1] == 6 && nDate[2] ==  1)          { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
-					else if (nDate[0] ==  97 && nDate[1] == 6 && nDate[2] ==  8 ||
-						_tcsstr(pIsoPath, _T("(FR)")))                                    { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
+					else if (_tcsstr(pIsoPath, _T("FR")) ||
+						     _tcsstr(pIsoPath, _T("French")))                             { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
 				}
 				if (nID == 0x1234 && nDate[0] == 105 && nDate[1] ==  4 && nDate[2] == 25) { nID  = 0x2234; }	// Neo Puzzle League
 				if (nID == 0x1234 && nDate[0] == 124 && nDate[1] == 12 && nDate[2] ==  2) { nID  = 0x2235; }	// Neo Tetris

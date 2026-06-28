@@ -143,7 +143,7 @@ struct NGCDGAME games[] =
 	{ _T("blockpanicdx"), _T("Block Panic DX")										, _T("2025")	, _T("Blastar")				, 0x2023 },		//
 	{ _T("hypernoid")	, _T("Hypernoid")											, _T("2022")	, _T("NeoHomeBrew.com")		, 0x0600 },		//
 	{ _T("ngfrog")		, _T("Neo Frog Feast")										, _T("2012")	, _T("Rastersoft")			, 0x0273 },		//
-	{ _T("neopong")		, _T("Neo Pong")											, _T("2002")	, _T("Neo Dev Corporation")	, 0x0275 },		//
+	{ _T("neopang")		, _T("Neo Pang")											, _T("2010")	, _T("CeL")					, 0x0275 },		//
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
 	{ _T("xeviousng")	, _T("Xevious")												, _T("2023")	, _T("Namco - tcdev")		, 0x0420 },		//
 	{ _T("galaxianng")	, _T("Galaxian (Beta2)")									, _T("2023")	, _T("Namco - tcdev")		, 0x0422 },		//

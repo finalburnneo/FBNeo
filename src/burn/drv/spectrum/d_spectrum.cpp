@@ -58591,41 +58591,41 @@ struct BurnDriver BurnSpecSpherical128rm = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Spider Blast (128K) (HB)
+// Spider Blast (English) (48K-128K) (HB)
 
-static struct BurnRomInfo SpecSpiderblast128RomDesc[] = {
-	{ "Spider Blast 128K (2026)(Wizbit Games).tap", 44915, 0x9f770dd7, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecSpiderblastenRomDesc[] = {
+	{ "Spider Blast EN 48K-128K (2026)(Wizbit Games).tap", 44915, 0xd6d49818, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSpiderblast128, SpecSpiderblast128, Spec128)
-STD_ROM_FN(SpecSpiderblast128)
+STDROMPICKEXT(SpecSpiderblasten, SpecSpiderblasten, Spec128)
+STD_ROM_FN(SpecSpiderblasten)
 
-struct BurnDriver BurnSpecSpiderblast128 = {
-	"spec_spiderblast128", NULL, "spec_spec128", NULL, "2026",
-	"Spider Blast (128K) (HB)\0", NULL, "Wizbit Games", "ZX Spectrum",
+struct BurnDriver BurnSpecSpiderblasten = {
+	"spec_spiderblasten", NULL, "spec_spec128", NULL, "2026",
+	"Spider Blast (English) (48K-128K) (HB)\0", NULL, "Wizbit Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
-	SpectrumGetZipName, SpecSpiderblast128RomInfo, SpecSpiderblast128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecSpiderblastenRomInfo, SpecSpiderblastenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Spider Blast (48K) (HB)
+// Spider Blast (Spanish) (48K-128K) (HB)
 
-static struct BurnRomInfo SpecSpiderblast48RomDesc[] = {
-	{ "Spider Blast 48K (2026)(Wizbit Games).tap", 35478, 0xa18607bc, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecSpiderblastesRomDesc[] = {
+	{ "Spider Blast ES (48K-128K) (2026)(Wizbit Games).tap", 44915, 0xa509a830, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecSpiderblast48, SpecSpiderblast48, Spectrum)
-STD_ROM_FN(SpecSpiderblast48)
+STDROMPICKEXT(SpecSpiderblastes, SpecSpiderblastes, Spec128)
+STD_ROM_FN(SpecSpiderblastes)
 
-struct BurnDriver BurnSpecSpiderblast48 = {
-	"spec_spiderblast48", "spec_spiderblast128", "spec_spectrum", NULL, "2026",
-	"Spider Blast (48K) (HB)\0", NULL, "Wizbit Games", "ZX Spectrum",
+struct BurnDriver BurnSpecSpiderblastes = {
+	"spec_spiderblastes", "spec_spiderblasten", "spec_spec128", NULL, "2026",
+	"Spider Blast (Spanish) (48K-128K) (HB)\0", NULL, "Wizbit Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
-	SpectrumGetZipName, SpecSpiderblast48RomInfo, SpecSpiderblast48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpectrumGetZipName, SpecSpiderblastesRomInfo, SpecSpiderblastesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

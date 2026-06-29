@@ -18468,10 +18468,11 @@ static INT32 DinopicInit()
 		Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	}
 	if (Cps1Qs) {
-		Cps1DisablePSnd      = 1;
 		CRI.nCpsZRomLen      = 0x020000;
 		CRI.nCpsQSamLen      = 0x200000;
 		AmendProgRomCallback = Jurassic99PatchCallback;
+	} else {
+		Cps1DisablePSnd      = 1;
 	}
 	Cps1ObjGetCallbackFunction  = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
@@ -18613,6 +18614,8 @@ static INT32 DinotpicInit()
 		CRI.nCpsZRomLen      = 0x020000;
 		CRI.nCpsQSamLen      = 0x200000;
 		AmendProgRomCallback = DinotpicPatchCallback;
+	} else {
+		Cps1DisablePSnd      = 1;
 	}
 	
 	INT32 nRet = TwelveMhzInit();

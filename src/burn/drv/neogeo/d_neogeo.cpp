@@ -21820,8 +21820,8 @@ struct BurnDriver BurnDrvSamsh2jq = {
 // 20260629
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0xdac75ab0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0x59ca0bee, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p1pe.p1",	0x100000, 0xc47446f7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x269e9be3, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "063-p3pe.p3",	0x020000, 0x7e9083e9, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	SAMSHO2_COMPONENTS

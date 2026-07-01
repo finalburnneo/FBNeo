@@ -178,8 +178,8 @@ extern bool nGamelistLocalisationActive;
 
 void BurnerDoGameListLocalisation();
 void BurnerExitGameListLocalisation();
-int FBALocaliseGamelistLoadTemplate();
-int FBALocaliseGamelistCreateTemplate();
+INT32 FBALocaliseGamelistLoadTemplate();
+INT32 FBALocaliseGamelistCreateTemplate();
 
 INT32 BurnDrvSetFullNameW(TCHAR* szName, INT32 i = nBurnDrvActive);
 
@@ -294,11 +294,10 @@ void ScrnInitLua();
 void ScrnExitLua();
 char* DecorateKailleraGameName(UINT32 nBurnDrv);
 INT32 CreateAllDatfilesWindows(bool bSilent = false, const TCHAR* pszSpecDir = NULL);
-INT32 RomDataLoadDriver(const TCHAR* pszSelDat);
 INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect);
 
 // bzip.cpp
-INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc);
+INT32 QuickVerifyZip(const char* noextPath, const TCHAR* pszSelArc);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -405,18 +404,18 @@ INT32 cdimgCountChdAudioTracks(TCHAR* pszFile);
 
 // romdata.cpp
 extern bool bRDListScanSub;
-TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
-INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName);
-TCHAR* RomdataGetZipName(const TCHAR* pszFileName);
-TCHAR* RomdataGetDrvName(const TCHAR* pszFileName);
-TCHAR* RomdataGetFullName(const TCHAR* pszFileName);
-bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat);
-INT32 RomDataManagerInit();
-bool RomDataSetQuickPath(const TCHAR* pszSelDat);
-INT32 RomDataCheck(const TCHAR* pszDatFile);
-void RomDataStateBackup();
-void RomDataStateRestore();
-bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
+
+INT32 TraverseDirectoryEx(const TCHAR* dirPath, INT32(*pFoundCallBack)(const TCHAR*), bool bDirectoriesOnly, bool scanSubdirs);
+#define TraverseDirectoryFiles( dir, cb, sub)  TraverseDirectoryEx(dir, cb, false, sub)		// For files: keep subdir control
+#define TraverseDirectoriesOnly(dir, cb)       TraverseDirectoryEx(dir, cb, true, true)		// For directories: always scan subdirs, and ignore files
+
+INT32 OpenFilesLoadRomData(HWND hWnd, INT32* perrCnt = NULL);
+INT32 OpenDirectoryLoadRomData(HWND hWnd);
+INT32 NormalizeAbsolute(const TCHAR* szInput, TCHAR** pszOutput);
+bool  RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
+
+INT32 tchar_to_ansi(const TCHAR* src, char** dst);
+INT32 ansi_to_tchar(const char* src, TCHAR** dst);
 
 // cona.cpp
 struct SubDirInfo {
@@ -435,9 +434,6 @@ extern struct VidPresetData VidPreset[4];
 struct VidPresetDataVer { int nWidth; int nHeight; };
 extern struct VidPresetDataVer VidPresetVer[4];
 
-INT32 LookupSubDirThreads();
-void SubDirThreadExit();
-void DestroySubDir();
 int ConfigAppLoad();
 int ConfigAppSave();
 
@@ -506,6 +502,7 @@ extern INT32 nRomsDlgHeight;
 extern char* gameAv;
 extern bool avOk;
 extern bool bSkipStartupCheck;
+extern UINT32 nPrevCount;
 INT32 RomsDirCreate(HWND hParentWND);
 INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();

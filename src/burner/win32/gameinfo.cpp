@@ -564,6 +564,16 @@ static int GameInfoInit()
 		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
+	if (BurnDrvGetFlags() & BDF_ROMDATA_DRIVER) {
+#ifdef FBNEO_DEBUG
+		TCHAR* pszDrvName = NULL;
+		if (ansi_to_tchar(RomDataDrvGetDrvName(), &pszDrvName) > 0)
+			_stprintf(szItemText + _tcslen(szItemText), _T("%s%s | %s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), FBALoadStringEx(hAppInst, IDS_GAMEINFO_DERIVED, true), pszDrvName, bUseInfo ? _T(")") : _T(""));
+		else
+#endif
+		_stprintf(szItemText + _tcslen(szItemText), _T("%s%s%s"), bUseInfo ? _T(" (") : _T(""), FBALoadStringEx(hAppInst, IDS_SEL_ROMDATA, true), bUseInfo ? _T(")") : _T(""));
+		bUseInfo = true;
+	}
 	TCHAR szPlayersMax[100];
 	_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
 	_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));

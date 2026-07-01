@@ -284,7 +284,7 @@ static void DrvDoReset()
 {
 	snes_reset(snes, true);
 
-	if ((nIpsDrvDefine & IPS_SNES_VRAMHK) || (NULL != pDataRomDesc))
+	if ((nIpsDrvDefine & IPS_SNES_VRAMHK) || IsRomDataDrv())
 		DrvDips[0] = 1;
 
 	snes->vramhack = (snes->vramhack & ~1) + (DrvDips[0] & 1);
@@ -13759,7 +13759,7 @@ STD_ROM_FN(snes_Fireemblem776tsc)
 
 static INT32 VRAMHackInit()
 {
-	if (!bDoIpsPatch && (NULL == pDataRomDesc))
+	if (!bDoIpsPatch && !IsRomDataDrv())
 		DrvDips[0] = 1;
 
 	return DrvInit();

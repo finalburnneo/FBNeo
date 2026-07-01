@@ -12,9 +12,11 @@ bool avOk    = false;
 
 bool bSkipStartupCheck = false;
 
+UINT32 nPrevCount = 0;
+
 static UINT32 ScanThreadId = 0;
 static HANDLE hScanThread  = NULL;
-static INT32 nOldSelect    = 0;
+static INT32  nOldSelect   = 0;
 
 static HANDLE hEvent = NULL;
 
@@ -435,10 +437,12 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				CreateROMInfo(hDlg);
 			}
 			if (NULL != hFont) {
-				DeleteObject(hFont);         hFont         = NULL;
+				DeleteObject(hFont);         
+				hFont = NULL;
 			}
 			if (NULL != hWhiteBGBrush) {
-				DeleteObject(hWhiteBGBrush); hWhiteBGBrush = NULL;
+				DeleteObject(hWhiteBGBrush);
+				hWhiteBGBrush = NULL;
 			}
 			hParent  = NULL;
 			hRomsDlg = NULL;
@@ -628,7 +632,7 @@ static unsigned __stdcall AnalyzingRoms(void*)
 
 		SendDlgItemMessage(hRomsDlg, IDC_WAIT_PROG, PBM_STEPIT, 0, 0);
 
-		switch (BzipOpen(TRUE))	{
+		switch (BzipOpen(true))	{
 			case 0:
 				gameAv[z] = 3;
 				break;
@@ -744,20 +748,31 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 INT32 CreateROMInfo(HWND hParentWND)
 {
-	SubDirThreadExit();
-
 	hParent = hParentWND;
 	bool bStarting = 0;
 
-	if (gameAv == NULL) {
+	if (!gameAv) {
 		gameAv = (char*)malloc(nBurnDrvCount);
 		memset(gameAv, 0, nBurnDrvCount);
 		bStarting = 1;
-	}
+	} else {
+		// Game count has increased since last check, resize the gameAv array
+		if (nPrevCount < nBurnDrvCount) {
+			char* newchar = (char*)realloc(gameAv, nBurnDrvCount * sizeof(char));
+			if (!newchar)
+				return 0;
 
-	if (gameAv) {
+			gameAv = newchar;
+
+			// Clear new entries in the gameAv array
+			const INT32 nCount = nBurnDrvCount - nPrevCount;
+			memset(gameAv + nPrevCount, 0, nCount);
+
+			nPrevCount = 0;
+		}
+
 		if (CheckGameAvb() || bRescanRoms) {
-			if ((bStarting && bSkipStartupCheck == false) || bRescanRoms) {
+			if ((bStarting && !bSkipStartupCheck) || bRescanRoms) {
 				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
 			}
 		}
@@ -768,8 +783,5 @@ INT32 CreateROMInfo(HWND hParentWND)
 
 void FreeROMInfo()
 {
-	if (gameAv) {
-		free(gameAv);
-		gameAv = NULL;
-	}
+	free_s((void**)&gameAv);
 }

@@ -1,5 +1,6 @@
 // Screen Window
 #include "burner.h"
+#include "stdfunc.h"
 #include <process.h>
 #include <shlobj.h>
 
@@ -70,7 +71,7 @@ HWND hwndChat = NULL;
 WNDPROC pOldWndProc = NULL;
 
 bool bRescanRoms   = false;
-INT32 nQuickOpen = 0;									// 0 Disable, 1 RomData, 2 IPS, 3 NeoGeo-CD, 4 Zip / 7z
+INT32 nQuickOpen = 0;									// 0 Disable, 1 IPS, 2 NeoGeo-CD, 3 Zip / 7z
 
 static bool bDrag  = false;
 static int nDragX, nDragY;
@@ -404,7 +405,7 @@ static int CreateDatfileWindows(int bType)
 	ofn.hwndOwner = hScrnWnd;
 	ofn.lpstrFilter = szFilter;
 	ofn.lpstrFile = szChoice;
-	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
+	ofn.nMaxFile = ARRAY_SIZE(szChoice);
 	ofn.lpstrInitialDir = _T(".");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("dat");
@@ -1033,11 +1034,6 @@ static void UpdatePreviousGameList()
 	// check if this game is identical to any of the listed in the recent menu
 	for (INT32 x = 0; x < SHOW_PREV_GAMES; x++) {
 		if(!_tcscmp(BurnDrvGetText(DRV_NAME), szPrevGames[x])) {
-			if (NULL != pDataRomDesc) {
-				// Disables RomData games that are not in the RomData directory from being added to the list
-				if (!FindZipNameFromDats(szAppRomdataPath, TCHARToANSI(szPrevGames[x], NULL, 0), szDatFile))
-					return;
-			}
 			nRecentIdenticalTo = x;
 		}
 	}
@@ -1100,89 +1096,19 @@ static void QuitGame()
 }
 
 // Compact driver loading module
-int BurnerLoadDriver(TCHAR *pszDriverName)
+INT32 BurnerLoadDriver(TCHAR *pszDriverName)
 {
-	INT32 nDrvIdx = -1;
-	bool bCurrentRD = (NULL != pDataRomDesc), bRDMode = false, bFinder = false;
-	TCHAR szBackup[MAX_PATH] = { 0 }, szRDDatBackup[MAX_PATH] = { 0 };
-
-	if (bCurrentRD) {
-		_tcscpy(szBackup, szRomdataName);
-		RomDataExit();
-	}
-	if (bFinder = FindZipNameFromDats(szAppRomdataPath, _TtoA(pszDriverName), szRDDatBackup)) {
-		if ((nDrvIdx = RomDataCheck(szRDDatBackup)) >= 0) {
-			bRDMode = true;
-		}
-	}
-	if (!bFinder || !bRDMode) {
-		nDrvIdx = RomdataGetDrvIndex(pszDriverName);
-	}
-	if (nDrvIdx < 0)
-		return -1;
-
-	memset(szRomdataName, 0, sizeof(szRomdataName));
-	if (bCurrentRD) {
-		_tcscpy(szRomdataName, szBackup);
-		RomDataInit();
-	}
-
 	QuitGame();
 
-	if (bRDMode) {
-		_tcscpy(szRomdataName, szRDDatBackup);
-	}
-
-	nDialogSelect = nOldDlgSelected = nBurnDrvActive = nDrvIdx;
+	nDialogSelect = nOldDlgSelected = nBurnDrvActive = NameToDriver(pszDriverName);
 	bLoading = 1;
 	SplashDestroy(1);
 	StopReplay();
-	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
+	DrvInit(nDialogSelect, bSramLoad);	// Init the game driver
 	MenuEnableItems();
 	bAltPause = 0;
-	AudSoundPlay();					// Restart sound
+	AudSoundPlay();						// Restart sound
 	bLoading = 0;
-	UpdatePreviousGameList();
-	if (bVidAutoSwitchFull) {
-		nVidFullscreen = 1;
-		POST_INITIALISE_MESSAGE;
-	}
-
-	return 0;
-}
-
-INT32 RomDataLoadDriver(const TCHAR* pszSelDat)
-{
-	bool bRDMode = (NULL != pDataRomDesc);
-	TCHAR szBackup[MAX_PATH] = { 0 };
-
-	if (bRDMode) {
-		_tcscpy(szBackup, szRomdataName);
-		RomDataExit();				// Before handling RomDataCheck, exit RDMode
-	}
-
-	INT32 nDrvIdx = -1;
-
-	if ((nDrvIdx = RomDataCheck(pszSelDat)) < 0)
-		return -1;
-	if (bRDMode) {
-		_tcscpy(szRomdataName, szBackup);
-		RomDataInit();				// Restore state
-	}
-
-	QuitGame();						// Quit the game completely
-
-	_tcscpy(szRomdataName, pszSelDat);
-
-	nDialogSelect = nOldDlgSelected = nBurnDrvActive = nDrvIdx;
-	bLoading  = 1;
-	SplashDestroy(1);
-	StopReplay();
-	DrvInit(nDrvIdx, bSramLoad);	// Init the game driver
-	MenuEnableItems();
-	bAltPause = 0;
-	AudSoundPlay();					// Restart sound
-	bLoading  = 0;
 	UpdatePreviousGameList();
 	if (bVidAutoSwitchFull) {
 		nVidFullscreen = 1;
@@ -1202,7 +1128,7 @@ static INT32 FileExists(const TCHAR* pszName)
 static void QuickOpenExit()
 {
 	nQuickOpen = 0;
-	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
+	szAppQuickPath[0] = 0;
 }
 
 static bool NgcdVerifyPath(const TCHAR* pszSelCue)
@@ -1282,27 +1208,45 @@ static bool ArchiveSetQuickPath(const TCHAR* pszSelArc)
 	return true;
 }
 
+INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc, INT32(*pVerifyZipCallback)(const char*, const TCHAR*))
+{
+	if (!pVerifyZipCallback)
+		return -1;
+
+	char* arcFull = NULL;
+	INT32 arcLen  = tchar_to_ansi(pszSelArc, &arcFull);
+	if (arcLen <= 0 || !arcFull)
+		return -1;
+
+	const char* ext = strrchr(arcFull, '.');
+	if (!ext || !*(ext + 1))
+		ext = arcFull + arcLen;
+
+	size_t extPos  = (size_t)(ext - arcFull);
+	size_t copyLen = (extPos < MAX_PATH - 1) ? extPos : (MAX_PATH - 1);
+
+	char noextPath[MAX_PATH] = { 0 };
+	strncpy(noextPath, arcFull, copyLen);
+	noextPath[copyLen] = '\0';
+
+	INT32 nDrvIdx = pVerifyZipCallback(noextPath, NULL);
+
+	free_s((void**)&arcFull);
+	return nDrvIdx;
+}
+
 INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 {
 	nQuickOpen = nMode;
-
-	bool bRDMode = (NULL != pDataRomDesc);
-
 	switch (nMode) {
-		case 1:
-			if (!RomDataSetQuickPath(pszSelect)) {
-				QuickOpenExit();
-				return -1;
-			}
-			break;
-
-		case 3:
+		case 2:
 			if (!NgcdVerifyPath(pszSelect)) {
 				return -1;
 			}
 			break;
 
-		case 4:
+
+		case 3:
 			if (!ArchiveSetQuickPath(pszSelect)) {
 				QuickOpenExit();
 				return -1;
@@ -1312,32 +1256,21 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 		default:
 			break;
 	}
-
-	TCHAR szBackup[MAX_PATH] = { 0 };
-
-	if (bRDMode) {
-		_tcscpy(szBackup, szRomdataName);
-		RomDataExit();				// Before handling RomDataCheck, exit RDMode
-	}
-
+	
 	INT32 nDrvIdx = -1;
-
 	switch (nMode) {
 		case 1:
-			nDrvIdx = RomDataCheck(pszSelect);
-			break;
-
-		case 2:
 			nDrvIdx = IpsGetDrvForQuickOpen(pszSelect);
 			break;
 
-		case 3:
-			nDrvIdx = RomdataGetDrvIndex(_T("neocdz"));
+		case 2:
+			nDrvIdx = BurnDrvGetIndex("neocdz");
 			break;
 
-		case 4:
-			nDrvIdx = ArchiveNameFindDrv(pszSelect);
-
+		case 3:
+			nDrvIdx = ArchiveNameFindDrv(pszSelect, QuickVerifyZip);
+			break;
+			
 		default:
 			break;
 	}
@@ -1345,31 +1278,16 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 		QuickOpenExit();
 		return -1;
 	}
-	if (bRDMode) {
-		_tcscpy(szRomdataName, szBackup);
-		RomDataInit();				// Restore state
-	}
-
-/*
-	This process may occur during gameplay.
-	All of the above checks must be completed before resetting the game:
-	[1] If the check fails, the current game will continue;
-	[2] If the check passes, the game will quit completely (Enter a new game).
-*/
 
 	QuitGame();						// Quit the game completely
 
 	switch (nMode) {
 		case 1:
-			_tcscpy(szRomdataName, pszSelect);
-			break;
-
-		case 2:
 			bDoIpsPatch = true;
 			IpsPatchInit();
 			break;
 
-		case 3:
+		case 2:
 			memset(CDEmuImage, 0, sizeof(CDEmuImage));
 			_tcscpy(CDEmuImage, pszSelect);
 			break;
@@ -1392,7 +1310,7 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 		nVidFullscreen = 1;
 		POST_INITIALISE_MESSAGE;
 	}
-	if (3 == nMode) {
+	if (2 == nMode) {
 		memset(CDEmuImage, 0, sizeof(CDEmuImage));
 	}
 
@@ -1411,21 +1329,8 @@ int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 	//if(nBurnDrvActive < 1) return 0;
 
 	INT32 nOldDrvSelect = nBurnDrvActive;
-	bool bRDMode = (NULL != pDataRomDesc);
-	TCHAR szRDDatBackup[MAX_PATH] = { 0 };
-
-	if (bRDMode) {
-		_tcscpy(szRDDatBackup, szRomdataName);
-	}
-
 	DrvExit();
 	bLoading = 1;
-
-	if (bRDMode) {
-		_tcscpy(szRomdataName, szRDDatBackup);
-		nOldDrvSelect = BurnDrvGetIndex(RomdataGetDrvName());
-	}
-
 	nBurnDrvActive = nOldDrvSelect;
 	nDialogSelect = nOldDlgSelected = nOldDrvSelect;
 	SplashDestroy(1);
@@ -1544,22 +1449,30 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				break;
 			}
 		}
+		case MENU_PREVIOUSGAMES1:
+		case MENU_PREVIOUSGAMES2:
+		case MENU_PREVIOUSGAMES3:
+		case MENU_PREVIOUSGAMES4:
+		case MENU_PREVIOUSGAMES5:
+		case MENU_PREVIOUSGAMES6:
+		case MENU_PREVIOUSGAMES7:
+		case MENU_PREVIOUSGAMES8:
+		case MENU_PREVIOUSGAMES9:
+		case MENU_PREVIOUSGAMES10: {
+			BurnerLoadDriver(szPrevGames[id - MENU_PREVIOUSGAMES1]);
+			break;
+		}
 
-		case MENU_LOAD_ROMDATA:
 		case MENU_LOAD_IPSPATCH:
 		case MENU_LOAD_NEOGEOCD:
 		case MENU_LOAD_ARCHIVE: {
-			nQuickOpen = id - MENU_LOAD_ROMDATA + 1;
+			nQuickOpen = id - MENU_LOAD_IPSPATCH + 1;
 
 			const TCHAR* pszFilter = _T(" (*.dat)\0*.dat\0\0");
 			INT32 nStringID = 0, nStrLen = 16;
 
 			switch (nQuickOpen) {
 				case 1:
-					nStringID = IDS_DISK_FILE_ROMDATA;
-					break;
-
-				case 2:
 					nStringID = IDS_DISK_FILE_IPSPATCH;
 					break;
 
@@ -1569,10 +1482,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					nStrLen   = 28;
 					break;
 
-				case 4:
+				case 3:
 					pszFilter = _T(" (*.zip;*7z)\0*.zip;*7z\0\0");
 					nStringID = IDS_DISK_FILE_ARCHIVE;
-					nStrLen   = 24;
+					nStrLen = 24;
 					break;
 
 				default:
@@ -1592,7 +1505,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			ofn.hwndOwner       = hScrnWnd;
 			ofn.lpstrFilter     = szFilter;
 			ofn.lpstrFile       = StrReplace(szSelect, _T('/'), _T('\\'));
-			ofn.nMaxFile        = sizeof(szSelect) / sizeof(TCHAR);
+			ofn.nMaxFile        = ARRAY_SIZE(szSelect);
 			ofn.lpstrInitialDir = _T(".");
 			ofn.Flags           = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 
@@ -1602,23 +1515,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			BurnerQuickLoad(nQuickOpen, szSelect);
 			break;
 		}
-
-		case MENU_ROMDATA_MANAGER: {
-			RomDataManagerInit();
+		case MENU_ROMDATA_DIRSEARCH: {
+			OpenDirectoryLoadRomData(hScrnWnd);
 			break;
 		}
 
-		case MENU_PREVIOUSGAMES1:
-		case MENU_PREVIOUSGAMES2:
-		case MENU_PREVIOUSGAMES3:
-		case MENU_PREVIOUSGAMES4:
-		case MENU_PREVIOUSGAMES5:
-		case MENU_PREVIOUSGAMES6:
-		case MENU_PREVIOUSGAMES7:
-		case MENU_PREVIOUSGAMES8:
-		case MENU_PREVIOUSGAMES9:
-		case MENU_PREVIOUSGAMES10: {
-			BurnerLoadDriver(szPrevGames[id - MENU_PREVIOUSGAMES1]);
+		case MENU_ROMDATA_OPENFILES: {
+			OpenFilesLoadRomData(hScrnWnd);
+			break;
+		}
+
+		case MENU_ROMDATA_RESEARCH: {
+			RomDataInit();
 			break;
 		}
 
@@ -2777,14 +2685,20 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				FBALocaliseGamelistLoadTemplate();
 			}
 			break;
+
 		case MENU_LANGUAGE_GL_EXPORT:
 			if (UseDialogs()) {
 				FBALocaliseGamelistCreateTemplate();
 			}
 			break;
+
 		case MENU_LANGUAGE_GL_RESET:
-			szGamelistLocalisationTemplate[0] = _T('\0');
-			nGamelistLocalisationActive = false;
+			if (nGamelistLocalisationActive) {
+				BurnLocalisationResetName();
+				szGamelistLocalisationTemplate[0] = _T('\0');
+				nGamelistLocalisationActive = false;
+
+			}
 			break;
 
 		case MENU_ENABLEICONS: {
@@ -2931,13 +2845,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_INPUT_P6_SOCDF:
 		case MENU_INPUT_P6_SOCDU:
 		case MENU_INPUT_P6_SOCDDL: {
-			const INT32 nOffset = id - MENU_INPUT_P1_DISABLE, nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_DISABLE + 1) / (sizeof(nSocd) / sizeof(nSocd[0]));
+			const INT32 nOffset = id - MENU_INPUT_P1_DISABLE, nCount = (MENU_INPUT_P6_SOCDDL - MENU_INPUT_P1_DISABLE + 1) / ARRAY_SIZE(nSocd);
 			nSocd[nOffset / nCount] = nOffset % nCount;
 			break;
 		}
 
 		case MENU_INPUT_ALL_DEFAULT: {
-			const INT32 nCount = sizeof(nSocd) / sizeof(nSocd[0]);
+			const INT32 nCount = ARRAY_SIZE(nSocd);
 			for (INT32 i = 0; i < nCount; i++) {
 				nSocd[i] = 3;
 			}

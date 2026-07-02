@@ -579,43 +579,26 @@ static INT32 pgm2IsRomDecrypted()
 		checkRom    = Pgm2RomBoardRAM;
 		checkRomLen = Pgm2RomBoardRAMSize;
 		romName     = _T("Board ROM");
-//		bprintf(0, _T("PGM2: rom decrypt check: using Board ROM (RAM/ROM board detected)\n"));
 	} else if (Pgm2ArmROM && Pgm2ArmROMLen > 0x100) {
 		checkRom    = Pgm2ArmROM;
 		checkRomLen = (Pgm2ArmROMFileLen > 0 && Pgm2ArmROMFileLen < Pgm2ArmROMLen) ? Pgm2ArmROMFileLen : Pgm2ArmROMLen;
 		romName     = _T("ARM ROM");
 	} else {
-//		bprintf(0, _T("PGM2: rom decrypt check: fail - no valid ROM found\n"));
 		return 0;
 	}
 
 	if (checkRomLen > 0x1000) checkRomLen = 0x1000;
-/*
-	bprintf(0, _T("PGM2: rom decrypt check start: %s len=0x%X\n"), romName, checkRomLen);
 
-	bprintf(0, _T("PGM2: %s first 32 bytes:\n"), romName);
-	for (INT32 i = 0; i < 32; i += 16) {
-		bprintf(0, _T("  0x%04X: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n"),
-				i,
-				checkRom[i +  0], checkRom[i +  1], checkRom[i +  2], checkRom[i +  3],
-				checkRom[i +  4], checkRom[i +  5], checkRom[i +  6], checkRom[i +  7],
-				checkRom[i +  8], checkRom[i +  9], checkRom[i + 10], checkRom[i + 11],
-				checkRom[i + 12], checkRom[i + 13], checkRom[i + 14], checkRom[i + 15]);
-	}
-*/
 	UINT32 firstInstr = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(checkRom + 0));
     
 	if ((firstInstr & 0xffff0000) == 0xe92d0000) {
-//		bprintf(0, _T("PGM2: rom decrypt check: PASSED - first instruction is STMDB SP! (0x%08X)\n"), firstInstr);
 		return 1;
 	}
     
 	if ((firstInstr & 0xfffffff0) == 0xe59ff010 || (firstInstr & 0xfffffff0) == 0xe51ff010) {
-//		bprintf(0, _T("PGM2: rom decrypt check: PASSED - first instruction is LDR PC (0x%08X)\n"), firstInstr);
 		return 1;
     }
 
-//	bprintf(0, _T("PGM2: rom decrypt check: FAILED - first instruction 0x%08X is not a decrypted ROM pattern\n"), firstInstr);
 	return 0;
 }
 
@@ -637,8 +620,8 @@ static void pgm2PatchBootRomForDecrypted()
 		return;
     }
 
-	INT32 patchAddr = -1;
-
+	// Scan and patch all BL,BL,B verify patterns in boot ROM
+	INT32 patchedCount = 0;
 	for (INT32 off = 0x20; off < Pgm2IntROMLen - 12; off += 4) {
 		UINT32 w0 = *(UINT32*)(Pgm2IntROM + off + 0);
 		UINT32 w1 = *(UINT32*)(Pgm2IntROM + off + 4);
@@ -646,25 +629,22 @@ static void pgm2PatchBootRomForDecrypted()
 		if ((w0 & 0xff000000) == 0xeb000000 &&
 			(w1 & 0xff000000) == 0xeb000000 &&
 			(w2 & 0xff000000) == 0xea000000) {
-			patchAddr = off;
-			break;
+			bprintf(0, _T("PGM2: boot ROM verify pattern #%d at 0x%04X: %08X %08X %08X\n"),
+				patchedCount + 1, off, w0, w1, w2);
+			UINT32 original = w0;
+			*(UINT32*)(Pgm2IntROM + off) = 0xe1a00000;		// MOV R0, R0 (NOP)
+			bprintf(0, _T("PGM2: boot ROM patch: patched verify BL at 0x%04X (was %08X) -> NOP\n"),
+				off, original);
+			patchedCount++;
 		}
 	}
 
-	if (patchAddr >= 0) {
-        Pgm2IntRomOriginal3C44 = *(UINT32*)(Pgm2IntROM + patchAddr);
-        *(UINT32*)(Pgm2IntROM + patchAddr) = 0xe1a00000;		// MOV R0, R0
-/*
-		bprintf(0, _T("PGM2: boot ROM patch: SUCCESS - patched verify BL at 0x%04X (was %08X) -> NOP\n"),
-				patchAddr, Pgm2IntRomOriginal3C44);
-		bprintf(0, _T("PGM2: init BL at 0x%04X: %08X\n"),
-				patchAddr + 4, *(UINT32*)(Pgm2IntROM + patchAddr + 4));
-		bprintf(0, _T("PGM2: cont B  at 0x%04X: %08X\n"),
-				patchAddr + 8, *(UINT32*)(Pgm2IntROM + patchAddr + 8));
-*/
+	if (patchedCount > 0) {
+		bprintf(0, _T("PGM2: boot ROM patch: SUCCESS - patched %d verify BL(s)\n"),
+				patchedCount);
 		Pgm2IntRomNeedRestore = 1;
 	} else {
-//		bprintf(0, _T("PGM2: boot ROM patch: FAILED - no BL,BL,B verify pattern found in boot ROM\n"));
+		bprintf(0, _T("PGM2: boot ROM patch: FAILED - no BL,BL,B verify pattern found in boot ROM\n"));
 	}
 }
 
@@ -1274,6 +1254,7 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
         UINT32 b1 = (off + 1 < (UINT32)Pgm2ArmROMLen) ? Pgm2ArmROM[off + 1] : 0;
         UINT32 b2 = (off + 2 < (UINT32)Pgm2ArmROMLen) ? Pgm2ArmROM[off + 2] : 0;
         UINT32 b3 = (off + 3 < (UINT32)Pgm2ArmROMLen) ? Pgm2ArmROM[off + 3] : 0;
+        
         return b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
     }
 
@@ -1381,8 +1362,9 @@ static inline UINT32 pgm2ReadLongDirect(UINT32 addr)
     }
 
     // SRAM (battery) 0x02000000-0x0200FFFF
-    if (addr >= 0x02000000 && addr <= 0x0200FFFF)
+    if (addr >= 0x02000000 && addr <= 0x0200FFFF) {
         return BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2ExtRAM + (addr - 0x02000000)));
+    }
 
     // MPU MCU registers: 128KB per register, reg = byte_offset >> 17
     // MAME: (word_offset >> 15) & 7, equivalent to (byte_offset >> 17) & 7
@@ -2012,7 +1994,6 @@ INT32 pgm2Init()
     Pgm2HasDecrypted = 0;
 	Pgm2HasDecrypted_Cached = 0;
 
-	// bprintf(0, _T("PGM2: before decrypt check: Pgm2RomPreDecrypted=%d\n"), Pgm2RomPreDecrypted);
 	if (Pgm2RomPreDecrypted || pgm2IsRomDecrypted()) {
 		Pgm2RomPreDecrypted     = 1;
 		Pgm2HasDecrypted        = 1;
@@ -2022,7 +2003,6 @@ INT32 pgm2Init()
 			Pgm2HasDecryptedKov3Module_Cached = 1;
 		}
 		pgm2PatchBootRomForDecrypted();
- //		bprintf(0, _T("PGM2: Detected pre-decrypted ROM, bypassing decryption\n"));
 	} else {
 		Pgm2RomPreDecrypted = 0;
 	}
@@ -2195,6 +2175,11 @@ INT32 pgm2DoReset()
 		if (Pgm2HasKov3Module) {
 			Pgm2HasDecryptedKov3Module        = 1;
 			Pgm2HasDecryptedKov3Module_Cached = 1;
+			// Re-apply IntROM patches for KOV3 module on each reset
+			if (Pgm2IntROM && Pgm2IntROMLen > 0x2a94) {
+				*(UINT32*)(Pgm2IntROM + 0x2a8c) = BURN_ENDIAN_SWAP_INT32(0x00000000);
+				*(UINT32*)(Pgm2IntROM + 0x2a90) = BURN_ENDIAN_SWAP_INT32(0x00000000);
+			}
 		}
 	}
 	Pgm2ModuleClkCnt = 151; // MAME: prevents false clock pulse during GPIO init
@@ -2614,7 +2599,7 @@ INT32 pgm2Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nCyclesExtra);
     }
 
-    // After loading a savestate, restore encrypted ROM and re-decrypt if
+	// After loading a savestate, restore encrypted ROM and re-decrypt if
 	// Decryption values in state do not match internal cached value
 	if (nAction & ACB_WRITE) {
 		const bool pgm2_decr_check = Pgm2HasDecrypted != Pgm2HasDecrypted_Cached;

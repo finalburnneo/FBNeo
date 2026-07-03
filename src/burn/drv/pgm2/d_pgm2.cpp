@@ -1771,6 +1771,7 @@ static INT32 ddpdojtdInit()
 	pgm2SetRamRomBoard(0x200000);
 	pgm2SetRegionHack(0x0000201c);
 	pgm2SetSpeedhack(0, 0x20000060, 0x10001a7e, 0, 0, 0);
+	pgm2SetSpeedhack(1, 0x20021e04, 0x1008fefe, 0x1008fbe8, 0, 0);
 	pPgm2InitCallback  = ddpdojtdLoadRoms;
 	pPgm2ResetCallback = NULL;
 	pPgm2ScanCallback  = NULL;

@@ -15309,18 +15309,18 @@ struct BurnDriver BurnDrvnes_batmavidgambe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Batman: Return of the Joker - Black Edition (Hack, Ver. Ultima)
+// Batman: Return of the Joker - Black Edition (Hack, Ver. 30-06-26)
 // https://romhackplaza.org/romhacks/batman-return-of-the-joker-black-edition-nes/
 static struct BurnRomInfo nes_batmaretjokbeRomDesc[] = {
-	{ "Batman Return of the Joker Black Edition - Ver. Ultima (2025)(DarthVaderX).nes",          393232, 0xd5e0d8f9, BRF_ESS | BRF_PRG },
+	{ "Batman Return of the Joker Black Edition - Ver. 30-06-26 (2025-26)(DarthVaderX).nes",          393232, 0x56e5bca9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_batmaretjokbe)
 STD_ROM_FN(nes_batmaretjokbe)
 
 struct BurnDriver BurnDrvnes_batmaretjokbe = {
-	"nes_batmaretjokbe", "nes_batmaretjok", NULL, NULL, "2025",
-	"Batman: Return of the Joker - Black Edition (Hack, Ver. Ultima)\0", NULL, "DarthVaderX", "NES / Famicom",
+	"nes_batmaretjokbe", "nes_batmaretjok", NULL, NULL, "2025-26",
+	"Batman: Return of the Joker - Black Edition (Hack, Ver. 30-06-26)\0", NULL, "DarthVaderX", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmaretjokbeRomInfo, nes_batmaretjokbeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

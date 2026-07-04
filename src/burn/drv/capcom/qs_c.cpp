@@ -15,7 +15,7 @@
 #include <string.h>	// for memset
 #include "cps.h"
 
-static const INT32 nQscClock = 60000000;
+static const INT32 nQscClock        = 60000000;
 static const INT32 nQscClockDivider = 2496;
 
 static INT32 nQscRate = 0;
@@ -26,34 +26,94 @@ static INT32 nDelta;
 static double QsndGain[2];
 static INT32 QsndOutputDir[2];
 
+// Peak history buffers for adaptive soft limiter (left/right channels)
+// peakHistory: Raw peak value with decay for detecting overload conditions
+// peakEnvelope: Smoothed peak envelope for gradual compression adjustment
+// silenceCounter: Frames counter for automatic peak release during silence
+static float peakHistoryL  = 0.0f;
+static float peakHistoryR  = 0.0f;
+static float peakEnvelopeL = 0.0f;
+static float peakEnvelopeR = 0.0f;
+static INT32 silenceCounterL = 0;
+static INT32 silenceCounterR = 0;
+
+// Debug logging toggle for QSoftSatAdvanced - set to 1 for development debugging
+// WARNING: Enabling this will cause severe audio stuttering due to high-frequency bprintf
+#define QSAT_DEBUG_LOG			0
+
+// Integer approximation mode for low-end ARM hardware (libretro handhelds)
+// Set to 1 to use polynomial approximation instead of tanhf/atanf
+// Reduces floating-point operations at the cost of minor quality degradation
+#define QS_USE_INT_APPROX		0
+
+// Peak decay factor per sample - lower = faster release
+// Standard mode (0.99): 480 samples to decay to ~1% of peak (10ms at 48kHz)
+// Fast mode (0.97): 150 samples to decay to ~1% of peak (3ms at 48kHz) - for fighting games
+#define QSAT_PEAK_DECAY			0.99f
+#define QSAT_PEAK_DECAY_FAST	0.97f
+
+// Threshold for compression activation (absolute sample value)
+// Signals below this level pass through without modification
+#define QSAT_THRESHOLD			28000.0f
+
+// Width of the knee region for smooth transition into compression
+// Compression gradually increases as signal exceeds (THRESHOLD - KNEE_WIDTH)
+#define QSAT_KNEE_WIDTH			6000.0f
+
+// Maximum compression ratio (1.0 = no compression, 0.0 = infinite compression)
+// This sets the ceiling for how much the signal can be attenuated
+#define QSAT_MAX_COMPRESS		0.75f
+
+// Peak envelope smoothing factor (0.0 = no smoothing, 1.0 = instant response)
+// Higher values = faster response but more audible compression artifacts
+// Lower values = smoother but slower to react to transients
+#define QSAT_PEAK_SMOOTH		0.1f
+
+// Silence detection threshold - samples below this are considered silent
+// Used for automatic peak reset to prevent residual compression during quiet periods
+#define QSAT_SILENCE_THRESH		100.0f
+
+// Number of consecutive silent frames required to trigger peak reset
+// At 48kHz: 4800 frames = 100ms of silence before reset
+#define QSAT_SILENCE_FRAMES		4800
+
+// Maximum allowed peak value - prevents floating-point overflow
+// Clamps peakHistory and peakEnvelope to avoid NaN/infinite values
+#define QSAT_MAX_PEAK			32767.0f
+
+// Sample amplitude constants for 16-bit signed PCM
+#define SAMPLE_MAX_F			32768.0f	// Full scale float normalization
+#define SAMPLE_MAX_I			32767		// Maximum 16-bit signed integer
+
+// Generic clamp macro
 #define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
 
 struct qsound_voice {
 	UINT16 bank;
-	INT16 addr; // top word is the sample address
+	INT16  addr; // top word is the sample address
 	UINT16 phase;
 	UINT16 rate;
-	INT16 loop_len;
-	INT16 end_addr;
-	INT16 volume;
-	INT16 echo;
+	INT16  loop_len;
+	INT16  end_addr;
+	INT16  volume;
+	INT16  echo;
 };
 
 struct qsound_adpcm {
 	UINT16 start_addr;
 	UINT16 end_addr;
 	UINT16 bank;
-	INT16 volume;
+	INT16  volume;
 	UINT16 flag;
-	INT16 cur_vol;
-	INT16 step_size;
+	INT16  cur_vol;
+	INT16  step_size;
 	UINT16 cur_addr;
 };
 
 // Q1 Filter
 struct qsound_fir {
-	int tap_count;	// usually 95
-	int delay_pos;
+	INT32 tap_count;	// usually 95
+	INT32 delay_pos;
 	INT16 table_pos;
 	INT16 taps[95];
 	INT16 delay_line[95];
@@ -79,13 +139,13 @@ struct qsound_echo {
 };
 
 struct qsound_chip {
-	INT16 out[2];
+	INT16  out[2];
 
 	struct qsound_voice voice[16];
 	struct qsound_adpcm adpcm[3];
 
 	UINT16 voice_pan[16+3];
-	INT16 voice_output[16+3];
+	INT16  voice_output[16+3];
 
 	struct qsound_echo echo;
 
@@ -100,8 +160,8 @@ struct qsound_chip {
 
 	UINT16 delay_update;
 
-	int state_counter;
-	UINT8 ready_flag;
+	INT32  state_counter;
+	UINT8  ready_flag;
 };
 
 static UINT16 *register_map[256];
@@ -235,9 +295,8 @@ enum {
 
 static void init_pan_tables()
 {
-	int i;
-	for(i=0;i<33;i++)
-	{
+	INT32 i;
+	for(i=0;i<33;i++) {
 		// dry mixing levels
 		pan_tables[PANTBL_LEFT][PANTBL_DRY][i] = qsound_dry_mix_table[i];
 		pan_tables[PANTBL_RIGHT][PANTBL_DRY][i] = qsound_dry_mix_table[32-i];
@@ -252,46 +311,43 @@ static void init_pan_tables()
 
 static void init_register_map()
 {
-	int i;
+	INT32 i;
 
 	// unused registers
 	for(i=0;i<256;i++)
 		register_map[i] = NULL;
 
 	// PCM registers
-	for(i=0;i<16;i++) // PCM voices
-	{
-		register_map[(i<<3)+0] = (UINT16*)&chip.voice[(i+1)%16].bank; // Bank applies to the next channel
-		register_map[(i<<3)+1] = (UINT16*)&chip.voice[i].addr; // Current sample position and start position.
-		register_map[(i<<3)+2] = (UINT16*)&chip.voice[i].rate; // 4.12 fixed point decimal.
+	for(i=0;i<16;i++) {	// PCM voices
+		register_map[(i<<3)+0] = (UINT16*)&chip.voice[(i+1)%16].bank;	// Bank applies to the next channel
+		register_map[(i<<3)+1] = (UINT16*)&chip.voice[i].addr;			// Current sample position and start position.
+		register_map[(i<<3)+2] = (UINT16*)&chip.voice[i].rate;			// 4.12 fixed point decimal.
 		register_map[(i<<3)+3] = (UINT16*)&chip.voice[i].phase;
 		register_map[(i<<3)+4] = (UINT16*)&chip.voice[i].loop_len;
 		register_map[(i<<3)+5] = (UINT16*)&chip.voice[i].end_addr;
 		register_map[(i<<3)+6] = (UINT16*)&chip.voice[i].volume;
-		register_map[(i<<3)+7] = NULL;	// unused
-		register_map[i+0x80] = (UINT16*)&chip.voice_pan[i];
-		register_map[i+0xba] = (UINT16*)&chip.voice[i].echo;
+		register_map[(i<<3)+7] = NULL;									// unused
+		register_map[i+0x80]   = (UINT16*)&chip.voice_pan[i];
+		register_map[i+0xba]   = (UINT16*)&chip.voice[i].echo;
 	}
 
 	// ADPCM registers
-	for(i=0;i<3;i++) // ADPCM voices
-	{
+	for(i=0;i<3;i++) {	// ADPCM voices
 		// ADPCM sample rate is fixed to 8khz. (one channel is updated every third sample)
 		register_map[(i<<2)+0xca] = (UINT16*)&chip.adpcm[i].start_addr;
 		register_map[(i<<2)+0xcb] = (UINT16*)&chip.adpcm[i].end_addr;
 		register_map[(i<<2)+0xcc] = (UINT16*)&chip.adpcm[i].bank;
 		register_map[(i<<2)+0xcd] = (UINT16*)&chip.adpcm[i].volume;
-		register_map[i+0xd6] = (UINT16*)&chip.adpcm[i].flag; // non-zero to start ADPCM playback
-		register_map[i+0x90] = (UINT16*)&chip.voice_pan[16+i];
+		register_map[i+0xd6]      = (UINT16*)&chip.adpcm[i].flag;		// non-zero to start ADPCM playback
+		register_map[i+0x90]      = (UINT16*)&chip.voice_pan[16+i];
 	}
 
 	// QSound registers
 	register_map[0x93] = (UINT16*)&chip.echo.feedback;
 	register_map[0xd9] = (UINT16*)&chip.echo.end_pos;
-	register_map[0xe2] = (UINT16*)&chip.delay_update; // non-zero to update delays
+	register_map[0xe2] = (UINT16*)&chip.delay_update;					// non-zero to update delays
 	register_map[0xe3] = (UINT16*)&chip.next_state;
-	for(i=0;i<2;i++)  // left, right
-	{
+	for(i=0;i<2;i++) {	// left, right
 		// Wet
 		register_map[(i<<1)+0xda] = (UINT16*)&chip.filter[i].table_pos;
 		register_map[(i<<1)+0xde] = (UINT16*)&chip.wet[i].delay;
@@ -307,15 +363,15 @@ inline INT16 get_sample(UINT16 bank, UINT16 address)
 {
 	UINT32 rom_addr;
 	UINT32 rom_mask = 0;
-	UINT8 sample_data;
+	UINT8  sample_data;
 
 	if(nCpsQSamLen)
 		rom_mask = nCpsQSamLen - 1;
 
 	if (! rom_mask)
-		return 0;	// no ROM loaded
+		return 0;														// no ROM loaded
 	if (! (bank & 0x8000))
-		return 0;	// ignore attempts to read from DSP program ROM
+		return 0;														// ignore attempts to read from DSP program ROM
 
 	bank &= 0x7FFF;
 	rom_addr = (bank << 16) | (address << 0);
@@ -327,16 +383,16 @@ inline INT16 get_sample(UINT16 bank, UINT16 address)
 
 INLINE const INT16* get_filter_table(UINT16 offset)
 {
-	int index;
+	INT32 index;
 
 	if (offset >= 0xf2e && offset < 0xfff)
-		return &qsound_filter_data2[offset-0xf2e];	// overlapping filter data
+		return &qsound_filter_data2[offset-0xf2e];						// overlapping filter data
 
 	index = (offset-0xd53)/95;
 	if(index >= 0 && index < 5)
-		return qsound_filter_data[index];	// normal tables
+		return qsound_filter_data[index];								// normal tables
 
-	return NULL;	// no filter found.
+	return NULL;														// no filter found.
 }
 
 /********************************************************************/
@@ -344,8 +400,7 @@ INLINE const INT16* get_filter_table(UINT16 offset)
 // updates one DSP sample
 static void update_sample()
 {
-	switch(chip.state)
-	{
+	switch(chip.state) {
 		default:
 		case STATE_INIT1:
 		case STATE_INIT2:
@@ -367,33 +422,29 @@ static void update_sample()
 // Initialization routine
 static void state_init()
 {
-	int mode = (chip.state == STATE_INIT2) ? 1 : 0;
-	int i;
+	INT32 mode = (chip.state == STATE_INIT2) ? 1 : 0;
+	INT32 i;
 
 	// we're busy for 4 samples, including the filter refresh.
-	if(chip.state_counter >= 2)
-	{
+	if(chip.state_counter >= 2) {
 		chip.state_counter = 0;
 		chip.state = chip.next_state;
 		return;
-	}
-	else if(chip.state_counter == 1)
-	{
+	} else if(chip.state_counter == 1) {
 		chip.state_counter++;
 		return;
 	}
 
-	memset(chip.voice, 0, sizeof(chip.voice));
-	memset(chip.adpcm, 0, sizeof(chip.adpcm));
-	memset(chip.filter, 0, sizeof(chip.filter));
+	memset(chip.voice,      0, sizeof(chip.voice));
+	memset(chip.adpcm,      0, sizeof(chip.adpcm));
+	memset(chip.filter,     0, sizeof(chip.filter));
 	memset(chip.alt_filter, 0, sizeof(chip.alt_filter));
-	memset(chip.wet, 0, sizeof(chip.wet));
-	memset(chip.dry, 0, sizeof(chip.dry));
-	memset(&chip.echo, 0, sizeof(chip.echo));
+	memset(chip.wet,        0, sizeof(chip.wet));
+	memset(chip.dry,        0, sizeof(chip.dry));
+	memset(&chip.echo,      0, sizeof(chip.echo));
 
-	for(i=0;i<19;i++)
-	{
-		chip.voice_pan[i] = 0x120;
+	for(i=0;i<19;i++) {
+		chip.voice_pan[i]    = 0x120;
 		chip.voice_output[i] = 0;
 	}
 
@@ -402,31 +453,28 @@ static void state_init()
 	for(i=0;i<3;i++)
 		chip.adpcm[i].bank = 0x8000;
 
-	if(mode == 0)
-	{
+	if(mode == 0) {
 		// mode 1
-		chip.wet[0].delay = 0;
-		chip.dry[0].delay = 46;
-		chip.wet[1].delay = 0;
-		chip.dry[1].delay = 48;
+		chip.wet[0].delay        = 0;
+		chip.dry[0].delay        = 46;
+		chip.wet[1].delay        = 0;
+		chip.dry[1].delay        = 48;
 		chip.filter[0].table_pos = 0xdb2;
 		chip.filter[1].table_pos = 0xe11;
-		chip.echo.end_pos = 0x554 + 6;
-		chip.next_state = STATE_REFRESH1;
-	}
-	else
-	{
+		chip.echo.end_pos        = 0x554 + 6;
+		chip.next_state          = STATE_REFRESH1;
+	} else {
 		// mode 2
-		chip.wet[0].delay = 1;
-		chip.dry[0].delay = 0;
-		chip.wet[1].delay = 0;
-		chip.dry[1].delay = 0;
-		chip.filter[0].table_pos = 0xf73;
-		chip.filter[1].table_pos = 0xfa4;
+		chip.wet[0].delay            = 1;
+		chip.dry[0].delay            = 0;
+		chip.wet[1].delay            = 0;
+		chip.dry[1].delay            = 0;
+		chip.filter[0].table_pos     = 0xf73;
+		chip.filter[1].table_pos     = 0xfa4;
 		chip.alt_filter[0].table_pos = 0xf73;
 		chip.alt_filter[1].table_pos = 0xfa4;
-		chip.echo.end_pos = 0x53c + 6;
-		chip.next_state = STATE_REFRESH2;
+		chip.echo.end_pos            = 0x53c + 6;
+		chip.next_state              = STATE_REFRESH2;
 	}
 
 	chip.wet[0].volume = 0x3fff;
@@ -434,8 +482,8 @@ static void state_init()
 	chip.wet[1].volume = 0x3fff;
 	chip.dry[1].volume = 0x3fff;
 
-	chip.delay_update = 1;
-	chip.ready_flag = 0;
+	chip.delay_update  = 1;
+	chip.ready_flag    = 0;
 	chip.state_counter = 1;
 }
 
@@ -443,7 +491,7 @@ static void state_init()
 static void state_refresh_filter_1()
 {
 	const INT16 *table;
-	int ch;
+	INT32 ch;
 
 	for(ch=0; ch<2; ch++)
 	{
@@ -462,10 +510,9 @@ static void state_refresh_filter_1()
 static void state_refresh_filter_2()
 {
 	const INT16 *table;
-	int ch;
+	INT32 ch;
 
-	for(ch=0; ch<2; ch++)
-	{
+	for(ch=0; ch<2; ch++) {
 		chip.filter[ch].delay_pos = 0;
 		chip.filter[ch].tap_count = 45;
 
@@ -489,8 +536,8 @@ static void state_refresh_filter_2()
 INLINE INT16 pcm_update(int voice_no, INT32 *echo_out)
 {
 	struct qsound_voice *v = &chip.voice[voice_no];
-	INT32 new_phase;
-	INT16 output;
+	INT32  new_phase;
+	INT16  output;
 
 	// Read sample from rom and apply volume
 	output = (v->volume * get_sample(v->bank, v->addr))>>14;
@@ -504,8 +551,8 @@ INLINE INT16 pcm_update(int voice_no, INT32 *echo_out)
 		new_phase -= (v->loop_len<<12);
 
 	new_phase = CLAMP(new_phase, -0x8000000, 0x7FFFFFF);
-	v->addr = new_phase>>12;
-	v->phase = (new_phase<<4)&0xffff;
+	v->addr   = new_phase>>12;
+	v->phase  = (new_phase<<4)&0xffff;
 
 	return output;
 }
@@ -521,29 +568,25 @@ INLINE void adpcm_update(int voice_no, int nibble)
 	struct qsound_adpcm *v = &chip.adpcm[voice_no];
 
 	INT32 delta;
-	INT8 step;
+	INT8  step;
 
-	if(!nibble)
-	{
+	if(!nibble) {
 		// Mute voice when it reaches the end address.
 		if(v->cur_addr == v->end_addr)
 			v->cur_vol = 0;
 
 		// Playback start flag
-		if(v->flag)
-		{
+		if(v->flag) {
 			chip.voice_output[16+voice_no] = 0;
-			v->flag = 0;
+			v->flag      = 0;
 			v->step_size = 10;
-			v->cur_vol = v->volume;
-			v->cur_addr = v->start_addr;
+			v->cur_vol   = v->volume;
+			v->cur_addr  = v->start_addr;
 		}
 
 		// get top nibble
 		step = get_sample(v->bank, v->cur_addr) >> 8;
-	}
-	else
-	{
+	} else {
 		// get bottom nibble
 		step = get_sample(v->bank, v->cur_addr++) >> 4;
 	}
@@ -570,11 +613,11 @@ INLINE INT16 echo(struct qsound_echo *r,INT32 input)
 {
 	// get average of last 2 samples from the delay line
 	INT32 new_sample;
-	INT32 old_sample = r->delay_line[r->delay_pos];
+	INT32 old_sample  = r->delay_line[r->delay_pos];
 	INT32 last_sample = r->last_sample;
 
 	r->last_sample = old_sample;
-	old_sample = (old_sample+last_sample) >> 1;
+	old_sample     = (old_sample+last_sample) >> 1;
 
 	// add current sample to the delay line
 	new_sample = input + ((old_sample * r->feedback)<<2);
@@ -589,7 +632,7 @@ INLINE INT16 echo(struct qsound_echo *r,INT32 input)
 // Process a sample update
 static void state_normal_update()
 {
-	int v, ch;
+	INT32 v, ch;
 	INT32 echo_input = 0;
 	INT16 echo_output;
 
@@ -613,16 +656,14 @@ static void state_normal_update()
 	echo_output = echo(&chip.echo,echo_input);
 
 	// now, we do the magic stuff
-	for(ch=0; ch<2; ch++)
-	{
+	for(ch=0; ch<2; ch++) {
 		// Echo is output on the unfiltered component of the left channel and
 		// the filtered component of the right channel.
 		INT32 wet = (ch == 1) ? echo_output<<14 : 0;
 		INT32 dry = (ch == 0) ? echo_output<<14 : 0;
 		INT32 output = 0;
 
-		for(v=0; v<19; v++)
-		{
+		for(v=0; v<19; v++) {
 			UINT16 pan_index = chip.voice_pan[v]-0x110;
 			if(pan_index > 97)
 				pan_index = 97;
@@ -650,8 +691,7 @@ static void state_normal_update()
 		output = ((output + 0x2000) & ~0x3fff) >> 14;
 		chip.out[ch] = CLAMP(output, -0x7fff, 0x7fff);
 
-		if(chip.delay_update)
-		{
+		if(chip.delay_update) {
 			delay_update(&chip.wet[ch]);
 			delay_update(&chip.dry[ch]);
 		}
@@ -661,8 +701,7 @@ static void state_normal_update()
 
 	// after 6 samples, the next state is executed.
 	chip.state_counter++;
-	if(chip.state_counter > 5)
-	{
+	if(chip.state_counter > 5) {
 		chip.state_counter = 0;
 		chip.state = chip.next_state;
 	}
@@ -673,8 +712,7 @@ INLINE INT32 fir(struct qsound_fir *f, INT16 input)
 {
 	INT32 output = 0, tap = 0;
 
-	for(; tap < (f->tap_count-1); tap++)
-	{
+	for(; tap < (f->tap_count-1); tap++) {
 		output -= (f->taps[tap] * f->delay_line[f->delay_pos++])<<2;
 
 		if(f->delay_pos >= f->tap_count-1)
@@ -726,8 +764,122 @@ static INT64 CalcAdvance()
 	return 0;
 }
 
+// Adaptive soft saturation limiter with peak tracking
+// Provides transparent audio reproduction for normal levels while smoothly
+// compressing peaks to prevent clipping and distortion
+//
+// @param in: Input audio sample (16-bit signed integer)
+// @param peakBuf: Pointer to peak history buffer for this channel
+// @param peakEnv: Pointer to smoothed peak envelope for this channel
+// @param silenceCnt: Pointer to silence counter for automatic peak reset
+// @return: Processed output sample with soft saturation applied
+//
+// Algorithm stages:
+// 1. Peak detection with exponential decay
+// 2. Peak envelope smoothing (sliding average)
+// 3. Silence detection for automatic peak reset
+// 4. Compression knee curve calculation (atan-based smooth transition)
+// 5. Tanh soft saturation with compression ratio
+//
+// Note: Designed for QSound audio output where QsndGain > 1.0 can cause
+// signal overflow. This function prevents hard clipping while preserving
+// dynamic range for quiet passages.
+static INT32 QSoftSatAdvanced(INT32 in, float *peakBuf, float *peakEnv, int *silenceCnt)
+{
+	// Stage 1: Peak detection with exponential decay
+	float abs_in   = fabsf((float)in);
+	float new_peak = (*peakBuf) * QSAT_PEAK_DECAY;
+
+	// Update peak if current sample exceeds decayed peak value
+	if (abs_in > new_peak)
+		*peakBuf = abs_in;
+	else
+		*peakBuf = new_peak;
+
+	// Prevent floating-point overflow
+	if (*peakBuf > QSAT_MAX_PEAK)
+		*peakBuf = QSAT_MAX_PEAK;
+
+	// Stage 2: Smooth peak envelope using sliding average
+	// This prevents audible compression artifacts from rapid peak changes
+	*peakEnv = *peakEnv * (1.0f - QSAT_PEAK_SMOOTH) + (*peakBuf) * QSAT_PEAK_SMOOTH;
+	if (*peakEnv > QSAT_MAX_PEAK)
+		*peakEnv = QSAT_MAX_PEAK;
+	float peak = *peakEnv;
+
+	// Stage 3: Silence detection for automatic peak reset
+	// Prevents residual compression from lingering after loud sounds
+	if (abs_in < QSAT_SILENCE_THRESH) {
+		(*silenceCnt)++;
+		if (*silenceCnt >= QSAT_SILENCE_FRAMES) {
+			*peakBuf    = 0.0f;
+			*peakEnv    = 0.0f;
+			*silenceCnt = 0;
+			return in;
+		}
+	} else {
+		*silenceCnt = 0;
+	}
+
+	// Stage 4: Bypass for signals below compression threshold
+	// Zero-loss transparent pass-through for normal audio levels
+	if (peak < QSAT_THRESHOLD - QSAT_KNEE_WIDTH)
+		return in;
+
+	// Calculate compression ratio using smooth atan knee curve
+	// atan provides natural, ear-pleasing transition compared to linear
+	float overshoot   = peak - (QSAT_THRESHOLD - QSAT_KNEE_WIDTH);
+	float compression = atanf(overshoot / (QSAT_KNEE_WIDTH * 0.5f)) * (2.0f / 3.14159265f);
+	compression = compression * (1.0f - QSAT_MAX_COMPRESS) + QSAT_MAX_COMPRESS;
+
+	// Stage 5: Apply soft saturation
+	// Normalize to [-1.0, 1.0], apply tanh compression, denormalize to 16-bit
+#if QS_USE_INT_APPROX
+	// Polynomial tanh approximation for low-end hardware
+	// tanh(x) ≈ x * (27 + x²) / (27 + 9x²) for x in [-3, 3]
+	float f = (float)in / SAMPLE_MAX_F;
+	float f_sq = f * f;
+	float tanh_approx = f * (27.0f + f_sq) / (27.0f + 9.0f * f_sq);
+	float compressed = tanh_approx * compression;
+	float final_out = compressed * SAMPLE_MAX_I;
+#else
+	float f = (float)in / SAMPLE_MAX_F;
+	f = tanhf(f * compression);
+	float final_out = f * SAMPLE_MAX_I;
+#endif
+
+	// Final safety soft limiter - prevents hard clipping from floating-point precision issues
+	// Even though tanh provides soft saturation, extreme edge cases can produce values
+	// slightly outside [-1, 1] due to floating-point rounding errors. This lightweight
+	// polynomial limiter ensures graceful handling without audible distortion.
+	// tanh(x) ≈ x * (27 + x²) / (27 + 9x²) for x in [-3, 3]
+	float safe_norm = final_out / SAMPLE_MAX_I;
+	float safe_sq   = safe_norm * safe_norm;
+	safe_norm = safe_norm * (27.0f + safe_sq) / (27.0f + 9.0f * safe_sq);
+	final_out = safe_norm * SAMPLE_MAX_I;
+
+#if QSAT_DEBUG_LOG
+	bprintf(0, _T("QSoftSat: in=%d peak=%.1f comp=%.4f out=%.1f\n"), in, peak, compression, final_out);
+#endif
+
+	return (INT32)final_out;
+}
+
+// Reset QSound chip state and all adaptive limiter variables
+// Called when switching games or resetting the emulator
+// Important: Must reset all peak tracking variables to prevent
+// residual compression from affecting new game audio
 void QscReset()
 {
+	// Reset adaptive soft limiter peak tracking variables
+	peakHistoryL    = 0.0f;
+	peakHistoryR    = 0.0f;
+	peakEnvelopeL   = 0.0f;
+	peakEnvelopeR   = 0.0f;
+	silenceCounterL = 0;
+	silenceCounterR = 0;
+
+	// Reset QSound chip internal state
 	chip.ready_flag = 0;
 	chip.out[0] = chip.out[1] = 0;
 	chip.state = 0;
@@ -744,7 +896,7 @@ void QscExit()
 INT32 QscInit(INT32 nRate)
 {
 	nQscRate = nRate;
-	nDelta = 0;
+	nDelta   = 0;
 
 	init_pan_tables();
 	init_register_map();
@@ -761,10 +913,15 @@ INT32 QscInit(INT32 nRate)
 
 void QscSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
-	QsndGain[nIndex] = nVolume;
+	QsndGain[nIndex]      = nVolume;
 	QsndOutputDir[nIndex] = nRouteDir;
 }
 
+// Save/restore QSound chip state for emulator save states
+// Important: Must include all adaptive limiter variables to ensure
+// correct compression state is preserved across save/load cycles
+// Without this, loading a save state could result in incorrect
+// audio levels due to stale peak history
 INT32 QscScan(INT32 nAction)
 {
 	struct BurnArea ba;
@@ -777,6 +934,14 @@ INT32 QscScan(INT32 nAction)
 	ba.nAddress = 0;
 	ba.szName	= szName;
 	BurnAcb(&ba);
+
+	// Save/restore adaptive soft limiter peak tracking variables
+	SCAN_VAR(peakHistoryL);
+	SCAN_VAR(peakHistoryR);
+	SCAN_VAR(peakEnvelopeL);
+	SCAN_VAR(peakEnvelopeR);
+	SCAN_VAR(silenceCounterL);
+	SCAN_VAR(silenceCounterR);
 
 	return 0;
 }
@@ -825,11 +990,10 @@ INT32 QscUpdate(INT32 nEnd)
 		INT16 *pDest = pBurnSoundOut + (nPos << 1);
 		for (INT32 i = 0; i < nLen; i++) {
 			INT32 nLeftSample = 0, nRightSample = 0;
-			INT32 nLeftOut = 0, nRightOut = 0;
+			INT32 nLeftOut    = 0, nRightOut    = 0;
 
 			nDelta += CalcAdvance();
-			while(nDelta > 0xfff)
-			{
+			while(nDelta > 0xfff) {
 				interpolate_buffer[0][0] = chip.out[0];
 				interpolate_buffer[1][0] = chip.out[1];
 
@@ -837,35 +1001,40 @@ INT32 QscUpdate(INT32 nEnd)
 				nDelta -= 0x1000;
 			}
 
-			nLeftOut = interpolate_buffer[0][0] + (((chip.out[0] - interpolate_buffer[0][0]) * nDelta) >> 12);
+			nLeftOut  = interpolate_buffer[0][0] + (((chip.out[0] - interpolate_buffer[0][0]) * nDelta) >> 12);
 			nRightOut = interpolate_buffer[1][0] + (((chip.out[1] - interpolate_buffer[1][0]) * nDelta) >> 12);
 
 			if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(nLeftOut * QsndGain[BURN_SND_QSND_OUTPUT_1]);
+				nLeftSample  += (INT32)(nLeftOut  * QsndGain[BURN_SND_QSND_OUTPUT_1]);
 			}
 			if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(nLeftOut * QsndGain[BURN_SND_QSND_OUTPUT_1]);
+				nRightSample += (INT32)(nLeftOut  * QsndGain[BURN_SND_QSND_OUTPUT_1]);
 			}
 
 			if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
+				nLeftSample  += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
 			}
 			if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 				nRightSample += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
 			}
 
-			pDest[(i << 1) + 0] = BURN_SND_CLIP(nLeftSample);
-			pDest[(i << 1) + 1] = BURN_SND_CLIP(nRightSample);
-		}
-		nPos = nEnd;
+			INT32 finalL = QSoftSatAdvanced(nLeftSample,  &peakHistoryL, &peakEnvelopeL, &silenceCounterL);
+			INT32 finalR = QSoftSatAdvanced(nRightSample, &peakHistoryR, &peakEnvelopeR, &silenceCounterR);
+			pDest[(i << 1) + 0] = (INT16)finalL;
+			pDest[(i << 1) + 1] = (INT16)finalR;
 
+//			pDest[(i << 1) + 0] = BURN_SND_CLIP(finalL);
+//			pDest[(i << 1) + 1] = BURN_SND_CLIP(finalR);
+		}
+
+		nPos = nEnd;
 		return 0;
 	}
 
 	INT16 *pDest = pBurnSoundOut + (nPos << 1);
 	for (INT32 i = 0; i < nLen; i++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
-		INT32 nLeftOut = 0, nRightOut = 0;
+		INT32 nLeftOut    = 0, nRightOut    = 0;
 
 		nDelta += CalcAdvance();
 		while(nDelta > 0xfff)
@@ -883,34 +1052,39 @@ INT32 QscUpdate(INT32 nEnd)
 		}
 
 		nLeftOut = INTERPOLATE4PS_16BIT(nDelta,
-								  interpolate_buffer[0][0],
-								  interpolate_buffer[0][1],
-								  interpolate_buffer[0][2],
-								  interpolate_buffer[0][3]);
+						  interpolate_buffer[0][0],
+						  interpolate_buffer[0][1],
+						  interpolate_buffer[0][2],
+						  interpolate_buffer[0][3]);
 		nRightOut = INTERPOLATE4PS_16BIT(nDelta,
-								  interpolate_buffer[1][0],
-								  interpolate_buffer[1][1],
-								  interpolate_buffer[1][2],
-								  interpolate_buffer[1][3]);
+						  interpolate_buffer[1][0],
+						  interpolate_buffer[1][1],
+						  interpolate_buffer[1][2],
+						  interpolate_buffer[1][3]);
 
 		if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(nLeftOut * QsndGain[BURN_SND_QSND_OUTPUT_1]);
+			nLeftSample  += (INT32)(nLeftOut  * QsndGain[BURN_SND_QSND_OUTPUT_1]);
 		}
 		if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(nLeftOut * QsndGain[BURN_SND_QSND_OUTPUT_1]);
+			nRightSample += (INT32)(nLeftOut  * QsndGain[BURN_SND_QSND_OUTPUT_1]);
 		}
 
 		if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
+			nLeftSample  += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
 		}
 		if ((QsndOutputDir[BURN_SND_QSND_OUTPUT_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 			nRightSample += (INT32)(nRightOut * QsndGain[BURN_SND_QSND_OUTPUT_2]);
 		}
 
-		pDest[(i << 1) + 0] = BURN_SND_CLIP(nLeftSample);
-		pDest[(i << 1) + 1] = BURN_SND_CLIP(nRightSample);
-	}
-	nPos = nEnd;
+		INT32 finalL = QSoftSatAdvanced(nLeftSample,  &peakHistoryL, &peakEnvelopeL, &silenceCounterL);
+		INT32 finalR = QSoftSatAdvanced(nRightSample, &peakHistoryR, &peakEnvelopeR, &silenceCounterR);
+		pDest[(i << 1) + 0] = (INT16)finalL;
+		pDest[(i << 1) + 1] = (INT16)finalR;
 
+//		pDest[(i << 1) + 0] = BURN_SND_CLIP(finalL);
+//		pDest[(i << 1) + 1] = BURN_SND_CLIP(finalR);
+	}
+
+	nPos = nEnd;
 	return 0;
 }

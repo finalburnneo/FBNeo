@@ -38783,7 +38783,7 @@ struct BurnDriver BurnDrvmd_cascade = {
 
 // Castlevania: Circle of the Moon (HB, Demo)
 static struct BurnRomInfo md_cvaniacotmRomDesc[] = {
-	{ "Castlevania - Circle of the Moon (Demo) (2026)(Andor).bin", 3932160, 0x6d9ece0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Castlevania - Circle of the Moon (Demo) (2026)(Andor).bin", 7077888, 0x92137666, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cvaniacotm)
@@ -38793,7 +38793,7 @@ struct BurnDriver BurnDrvmd_cvaniacotm = {
 	"md_cvaniacotm", NULL, NULL, NULL, "2026",
 	"Castlevania: Circle of the Moon (HB, Demo)\0", NULL, "Andor", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_cvaniacotmRomInfo, md_cvaniacotmRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40343,6 +40343,25 @@ struct BurnDriver BurnDrvmd_heroloot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_herolootRomInfo, md_herolootRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Hong Kong '97 (HB, Beta 01)
+// https://sirvh.itch.io/hong-kong-97-genesis
+static struct BurnRomInfo md_hongkong97RomDesc[] = {
+	{ "Hong Kong '97 Beta 01 (2026)(SirVH).bin", 524288, 0x36f90806, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hongkong97)
+STD_ROM_FN(md_hongkong97)
+
+struct BurnDriver BurnDrvmd_hongkong97 = {
+	"md_hongkong97", NULL, NULL, NULL, "2026",
+	"Hong Kong '97 (HB, Beta 01)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_hongkong97RomInfo, md_hongkong97RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

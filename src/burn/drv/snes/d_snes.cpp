@@ -44612,6 +44612,25 @@ struct BurnDriver BurnDrvsnes_Hercules = {
 	512, 448, 4, 3
 };
 
+// Hong Kong '97 (Japan) (Unl)
+
+static struct BurnRomInfo snes_Hongkong97RomDesc[] = {
+	{ "Hong Kong '97 (J)(Unl)(1995)(HappySoft).sfc", 524288, 0xc6a95816, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Hongkong97)
+STD_ROM_FN(snes_Hongkong97)
+
+struct BurnDriver BurnDrvsnes_Hongkong97 = {
+	"snes_hongkong97", NULL, NULL, NULL, "1995",
+	"Hong Kong '97 (Japan) (Unl)\0", NULL, "HappySoft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_VERSHOOT, 0,
+	SNESGetZipName, snes_Hongkong97RomInfo, snes_Hongkong97RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // King of Fighters '98, The (USA) (Unl)
 
 static struct BurnRomInfo snes_Kof98RomDesc[] = {

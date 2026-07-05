@@ -1,4 +1,4 @@
-// FBAlpha cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
+// FBNeo cd-img, TruRip .ccd/.sub/.img support by Jan Klaassen
 // .bin/.cue re-work by dink
 // .chd support: compressed CD image backend via libchdr (MAME project, BSD-3-Clause).
 // The image IS the .chd file; no CUE parsing required.  Sector layout is
@@ -41,6 +41,7 @@ static UINT32 cdimgChdBytesPerSector = 0;  // bytes per CD sector in CHD (2352 o
 static UINT32 cdimgChdSectorsPerHunk = 0;  // number of CD sectors per hunk
 static UINT8* cdimgChdHunkBuf = NULL;      // cached hunk buffer
 static INT32  cdimgChdCurHunk = -1;        // currently cached hunk, -1 = none
+static INT32  cdimgChdTrackStart[MAXIMUM_NUMBER_TRACKS];  // CHD start sector for each track
 static INT32  cdimgTrack = 0;
 static INT32  cdimgLBA   = 0;
 
@@ -552,6 +553,7 @@ static INT32 chd_meta_get_frames(const char* meta)
 	return atoi(p + 7);
 }
 
+// Determ
 // Determine if a track described by CHD metadata is a data track.
 // TYPE field starting with "MODE" (e.g. "MODE1_RAW", "MODE1/2352") = data track.
 // TYPE = "AUDIO" = audio track.  Defaults to data track on parse error.
@@ -563,9 +565,66 @@ static bool chd_meta_is_data_track(const char* meta)
 	// Audio tracks: TYPE=AUDIO (or VAUDIO, etc.)
 	if (strncmp(type_start, "AUDIO", 5) == 0) return false;
 	// Data tracks: TYPE starts with "MODE"
-	if (strncmp(type_start, "MODE",  4) == 0) return true;
+	if (strncmp(type_start, "MODE", 4) == 0) return true;
 	// Fallback: treat unknown types as data tracks
 	return true;
+}
+
+// Count the number of audio tracks (TYPE:AUDIO) in a CHD file.
+// pszFile — TCHAR path to the .chd file (pass NULL to use CDEmuImage)
+// Returns the number of audio tracks found in the CHD metadata.
+// Returns 0 if no audio tracks are found or if the file cannot be opened.
+INT32 cdimgCountChdAudioTracks(TCHAR* pszFile)
+{
+    TCHAR* pszPath = pszFile ? pszFile : CDEmuImage;
+    if (!pszPath || _tcslen(pszPath) < 5) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: invalid path\n"));
+        return 0;
+    }
+
+    FILE* fp = _tfopen(pszPath, _T("rb"));
+    if (!fp) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: _tfopen failed for %s\n"), pszPath);
+        return 0;
+    }
+
+    chd_file* chd = NULL;
+    chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &chd);
+    if (err != CHDERR_NONE) {
+        bprintf(PRINT_ERROR, _T("cdimgCountChdAudioTracks: chd_open_file failed for %s, error=%d\n"), pszPath, (int)err);
+        fclose(fp);
+        return 0;
+    }
+
+    INT32 audio_track_count = 0;
+    char meta_buf[256];
+    UINT32 meta_resultlen = 0;
+    UINT8  meta_flags = 0;
+
+    for (int idx = 0; idx < 99; idx++) {
+        err = chd_get_metadata(chd, CDROM_TRACK_METADATA2_TAG, idx,
+            meta_buf, sizeof(meta_buf) - 1, &meta_resultlen, NULL, &meta_flags);
+        if (err != CHDERR_NONE || meta_resultlen == 0) {
+            err = chd_get_metadata(chd, CDROM_TRACK_METADATA_TAG, idx,
+                meta_buf, sizeof(meta_buf) - 1, &meta_resultlen, NULL, &meta_flags);
+        }
+		// GDROM Reserved
+        if (err != CHDERR_NONE || meta_resultlen == 0) {
+            err = chd_get_metadata(chd, GDROM_TRACK_METADATA_TAG, idx,
+                meta_buf, sizeof(meta_buf) - 1, &meta_resultlen, NULL, &meta_flags);
+        }
+        if (err != CHDERR_NONE || meta_resultlen == 0)
+            break;
+
+        meta_buf[meta_resultlen] = '\0';
+
+        if (!chd_meta_is_data_track(meta_buf))
+            audio_track_count++;
+    }
+
+    chd_close(chd);
+    fclose(fp);  // core_stdio_nonowner: chd_close does not close FILE*, we must
+    return audio_track_count;
 }
 
 // Parse a "PREGAP:%d" pattern.  Returns 0 if not present.
@@ -695,6 +754,11 @@ static INT32 cdimgParseChdFile()
 		cdimgTOC->TrackData[trk].Control     = is_data ? 0x41 : 0x01;
 		cdimgTOC->TrackData[trk].TrackNumber = tobcd(trk + 1);
 
+		// Record the CHD file position (sector index) for this track so that
+		// audio/data playback can translate disc-LBA to CHD-sector correctly,
+		// accounting for per-track pregaps/postgaps that only advance cd_lba.
+		cdimgChdTrackStart[trk] = (INT32)chd_sector_pos;
+
 		const UINT8* track_start_msf = cdimgLBAToMSF(cd_lba);
 		cdimgTOC->TrackData[trk].Address[0] = 0;
 		cdimgTOC->TrackData[trk].Address[1] = track_start_msf[1];
@@ -723,6 +787,7 @@ static INT32 cdimgParseChdFile()
 
 		cdimgTOC->TrackData[0].Control     = 0x41;
 		cdimgTOC->TrackData[0].TrackNumber = tobcd(1);
+		cdimgChdTrackStart[0] = 0;
 		const UINT8* start_msf = cdimgLBAToMSF(cd_pregap);
 		cdimgTOC->TrackData[0].Address[0]  = 0;
 		cdimgTOC->TrackData[0].Address[1]  = start_msf[1];
@@ -927,8 +992,21 @@ static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
 	// the same regardless of image container (stereo 16-bit PCM).  The
 	// only difference is how we source the raw bytes.
 	// ------------------------------------------------------------------
-	INT32 base = cdimgLBA - cd_pregap;
 	INT32 sectors_to_read = (cdimgOUT_SIZE * 4) / 2352;
+	INT32 base;
+
+	if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+		// CHD: translate disc LBA to CHD sector using per-track start.
+		// Simply subtracting cd_pregap is wrong for tracks 2+ because
+		// pregap/postgap entries only advance cd_lba (disc) without
+		// advancing chd_sector_pos (CHD file position).
+		INT32 track_start_lba = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address);
+		INT32 offset_in_track = cdimgLBA - track_start_lba;
+		base = cdimgChdTrackStart[cdimgTrack] + offset_in_track;
+	} else {
+		// .bin/.cue — file-relative sector index
+		base = cdimgLBA - cd_pregap;
+	}
 
 	// Initialize audio file position tracker for subsequent buffer refills
 	cdimgAudioFilePos = base;

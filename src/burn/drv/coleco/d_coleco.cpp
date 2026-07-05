@@ -5511,9 +5511,9 @@ struct BurnDriver BurnDrvcv_bankbuild = {
     272, 228, 4, 3
 };
 
-// Barbarricade (HB, 06-17-26)
+// Barbarricade (HB, 06-25-26)
 static struct BurnRomInfo cv_barbarricadeRomDesc[] = {
-	{ "Barbarricade 06-17-26 (2026)(Jess Creations).rom",	32768, 0xad6630ce, BRF_PRG | BRF_ESS },
+	{ "Barbarricade 06-25-26 (2026)(Jess Creations).rom",	32768, 0xe5d8753d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_barbarricade, cv_barbarricade, cv_coleco)
@@ -5521,7 +5521,7 @@ STD_ROM_FN(cv_barbarricade)
 
 struct BurnDriver BurnDrvcv_barbarricade = {
 	"cv_barbarricade", NULL, "cv_coleco", NULL, "2026",
-	"Barbarricade (HB, 06-17-26)\0", NULL, "Jess Creations", "ColecoVision",
+	"Barbarricade (HB, 06-25-26)\0", NULL, "Jess Creations", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_BREAKOUT, 0,
 	CVGetZipName, cv_barbarricadeRomInfo, cv_barbarricadeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -6623,6 +6623,24 @@ struct BurnDriver BurnDrvcv_cracky = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
 	CVGetZipName, cv_crackyRomInfo, cv_crackyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// CrackPots (HB)
+static struct BurnRomInfo cv_crackpotsRomDesc[] = {
+	{ "CrackPots (2026)(Electric Dreams).rom",	131072, 0x91e0fa0f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_crackpots, cv_crackpots, cv_coleco)
+STD_ROM_FN(cv_crackpots)
+
+struct BurnDriver BurnDrvcv_crackpots = {
+	"cv_crackpots", NULL, "cv_coleco", NULL, "2026",
+	"CrackPots (HB)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_crackpotsRomInfo, cv_crackpotsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

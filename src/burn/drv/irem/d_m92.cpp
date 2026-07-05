@@ -1920,10 +1920,27 @@ static void draw_sprites()
 
 	for (INT32 k=0; k<8; k++)
 	{
-		for (INT32 offs = 0; offs < m92_sprite_list; )
+		INT32 start_offs = (m92_kludge == 3) ? 4 : 0; // ppan: first word is sprite count
+		INT32 end_offs = m92_sprite_list;
+		if (m92_kludge == 3) {
+			end_offs = (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xff) * 4 + 4; // +4 because offs <= amount in MAME
+		}
+
+		for (INT32 offs = start_offs; offs < end_offs; )
 		{
-			INT32 y = (((384 - 16 - (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x1ff)) - nScreenOffsets[1]) & 0x1ff) - 8;
-			INT32 x = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x1ff) - 96;
+			INT32 y;
+			INT32 x;
+
+			if (m92_kludge == 3) { // ppan - independent sprite offsets
+				y = ((384 - 16 - (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x1ff)) & 0x1ff) - 8;
+				x = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x1ff) - 96;
+				y -= 135; // relative to background: up 15 pixels (matches MAME ppan)
+				x += 18;  // +5 relative offset + 13 global shift right
+				y &= 0x1ff;
+			} else {
+				y = (((384 - 16 - (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x1ff)) - nScreenOffsets[1]) & 0x1ff) - 8;
+				x = ((BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x1ff) - nScreenOffsets[0]) - 96;
+			}
 
 			INT32 pri_s  = (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0xe000) >> 13;
 			INT32 pri_b  = (~BURN_ENDIAN_SWAP_INT16(ram[offs+2]) >> 6) & 2;
@@ -1970,6 +1987,8 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 	INT32 wide = ptr->wide;
 	INT32 scrolly = (ptr->scrolly + 136 - nScreenOffsets[1]) & 0x1ff;
 	INT32 scrollx = ((((ptr->enable_rowscroll) ? 0 : ptr->scrollx) - nScreenOffsets[0]) - (2 * layer - ((wide & 0x80)<<1))) + 80;
+
+	if (m92_kludge == 3) scrollx -= 13; // ppan - shift background right a bit more
 
 	const UINT16 transmask[3][3][2] = { // layer, group, value
 		{ { 0xffff, 0x0001 }, { 0x00ff, 0xff01 }, { 0x0001, 0xffff } },
@@ -2508,7 +2527,8 @@ static INT32 ppanRomLoad()
 static INT32 PpanInit()
 {
 	m92_kludge = 3;
-	nScreenOffsets[1] = 120; // ?
+	nScreenOffsets[0] = 0;
+	nScreenOffsets[1] = 120;
 	return DrvInit(ppanRomLoad, NULL, 1, 0x100000, 0x400000);
 }
 

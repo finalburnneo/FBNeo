@@ -370,7 +370,11 @@
 #define IDC_NCD_SCAN_BUTTON					20811
 #define IDC_NCD_SEL_DIR_BUTTON				20812
 #define IDC_NCD_PLAY_BUTTON					20813
+/*
+*	Use the IDCANCEL control (standard value 2);
+	otherwise, the ESC key cannot be responded to and the modal dialog window cannot be closed.
 #define IDC_NCD_CANCEL_BUTTON				20814
+*/
 #define IDC_NCD_COVER_PREVIEW_PIC			20815
 #define IDC_NCD_LABELSHORT					20816
 #define IDC_NCD_LABELPUBLISHER				20817

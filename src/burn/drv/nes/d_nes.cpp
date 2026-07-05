@@ -5364,6 +5364,26 @@ struct BurnDriver BurnDrvnes_avmahjongclubc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bananan Ouji no Daibouken (Hack, Chinese)
+// https://www.nesbbs.com/bbs/thread-60069-1-1.html
+// mapper 195
+static struct BurnRomInfo nes_bananaprincecRomDesc[] = {
+	{ "Bananan Ouji no Daibouken T-Chi (2026)(HHNM Team).nes",          524304, 0x5aaba618, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bananaprincec)
+STD_ROM_FN(nes_bananaprincec)
+
+struct BurnDriver BurnDrvnes_bananaprincec = {
+	"nes_bananaprincec", "nes_bananaprince", NULL, NULL, "2026",
+	"Bananan Ouji no Daibouken (Hack, Chinese)\0", NULL, "HHNM Team", "NES / Famicom",
+	L"Bananan Ouji no Daibouken (Hack, Chinese)\0\u9999\u8549\u738b\u5b50\u7684\u5927\u5192\u9669\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_bananaprincecRomInfo, nes_bananaprincecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Batman: The Video Game (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-48898-1-1.html
 static struct BurnRomInfo nes_batmavidgamcRomDesc[] = {
@@ -15289,18 +15309,18 @@ struct BurnDriver BurnDrvnes_batmavidgambe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Batman: Return of the Joker - Black Edition (Hack, Ver. Ultima)
+// Batman: Return of the Joker - Black Edition (Hack, Ver. 30-06-26)
 // https://romhackplaza.org/romhacks/batman-return-of-the-joker-black-edition-nes/
 static struct BurnRomInfo nes_batmaretjokbeRomDesc[] = {
-	{ "Batman Return of the Joker Black Edition - Ver. Ultima (2025)(DarthVaderX).nes",          393232, 0xd5e0d8f9, BRF_ESS | BRF_PRG },
+	{ "Batman Return of the Joker Black Edition - Ver. 30-06-26 (2025-26)(DarthVaderX).nes",          393232, 0x56e5bca9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_batmaretjokbe)
 STD_ROM_FN(nes_batmaretjokbe)
 
 struct BurnDriver BurnDrvnes_batmaretjokbe = {
-	"nes_batmaretjokbe", "nes_batmaretjok", NULL, NULL, "2025",
-	"Batman: Return of the Joker - Black Edition (Hack, Ver. Ultima)\0", NULL, "DarthVaderX", "NES / Famicom",
+	"nes_batmaretjokbe", "nes_batmaretjok", NULL, NULL, "2025-26",
+	"Batman: Return of the Joker - Black Edition (Hack, Ver. 30-06-26)\0", NULL, "DarthVaderX", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_batmaretjokbeRomInfo, nes_batmaretjokbeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

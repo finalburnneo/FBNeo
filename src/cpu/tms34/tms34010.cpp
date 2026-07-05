@@ -830,8 +830,10 @@ static void internal_interrupt_callback(INT32 type)
 int tms34010_run(int cycles)
 {
 	/* Get out if CPU is halted. Absolutely no interrupts must be taken!!! */
-	if (IOREG(REG_HSTCTLH) & 0x8000)
+	if (IOREG(REG_HSTCTLH) & 0x8000) {
+		state.total_cycles += cycles;
 		return cycles;
+	}
 
 	/* if the CPU's reset was deferred, do it now */
 	if (state.reset_deferred)
@@ -995,6 +997,8 @@ void tms34010_generate_scanline(INT32 line, scanline_render_t render)
 	vtotal = SMART_IOREG(VTOTAL);
 
 #if 0  // for driver debug -dink
+	// how to find the refresh:
+	// 1 / ((1.0/(pixel_clock)) * (htotal * vtotal))
 	if (line == 1) {
 		bprintf(0, _T("vsblnk %x\n"), vsblnk);
 		bprintf(0, _T("veblnk %x\n"), veblnk);

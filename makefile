@@ -113,6 +113,9 @@ sdl2: FORCE
 
 vc: FORCE
 	@$(MAKE) -s -f makefile.vc
+	
+vc18: FORCE
+	@$(MAKE) -s -f makefile.vc18
 
 pi: FORCE
 	@$(MAKE) -s -f makefile.pi

@@ -47,34 +47,35 @@ static INT32 silenceCounterR = 0;
 #define QS_USE_INT_APPROX		0
 
 // Peak decay factor per sample - lower = faster release
-// Optimized value (0.84): ~28 samples to decay to ~1% of peak (~0.6ms at 48kHz)
-// Provides fast recovery for fighting game audio with minimal pumping artifacts
-#define QSAT_PEAK_DECAY			0.84f
+// Standard mode (0.99): 480 samples to decay to ~1% of peak (10ms at 48kHz)
+// Fast mode (0.97): 150 samples to decay to ~1% of peak (3ms at 48kHz) - for fighting games
+#define QSAT_PEAK_DECAY			0.99f
+#define QSAT_PEAK_DECAY_FAST	0.97f
 
 // Threshold for compression activation (absolute sample value)
 // Signals below this level pass through without modification
-#define QSAT_THRESHOLD			30000.0f
+#define QSAT_THRESHOLD			28000.0f
 
 // Width of the knee region for smooth transition into compression
 // Compression gradually increases as signal exceeds (THRESHOLD - KNEE_WIDTH)
-#define QSAT_KNEE_WIDTH			4000.0f
+#define QSAT_KNEE_WIDTH			6000.0f
 
 // Maximum compression ratio (1.0 = no compression, 0.0 = infinite compression)
 // This sets the ceiling for how much the signal can be attenuated
-#define QSAT_MAX_COMPRESS		0.66f
+#define QSAT_MAX_COMPRESS		0.75f
 
 // Peak envelope smoothing factor (0.0 = no smoothing, 1.0 = instant response)
 // Higher values = faster response but more audible compression artifacts
 // Lower values = smoother but slower to react to transients
-#define QSAT_PEAK_SMOOTH		0.21f
+#define QSAT_PEAK_SMOOTH		0.1f
 
 // Silence detection threshold - samples below this are considered silent
 // Used for automatic peak reset to prevent residual compression during quiet periods
 #define QSAT_SILENCE_THRESH		100.0f
 
 // Number of consecutive silent frames required to trigger peak reset
-// At 48kHz: 800 frames = ~16.7ms of silence before reset
-#define QSAT_SILENCE_FRAMES		800
+// At 48kHz: 4800 frames = 100ms of silence before reset
+#define QSAT_SILENCE_FRAMES		4800
 
 // Maximum allowed peak value - prevents floating-point overflow
 // Clamps peakHistory and peakEnvelope to avoid NaN/infinite values
@@ -1087,17 +1088,3 @@ INT32 QscUpdate(INT32 nEnd)
 	nPos = nEnd;
 	return 0;
 }
-
-#undef QSAT_DEBUG_LOG
-#undef QS_USE_INT_APPROX
-#undef QSAT_PEAK_DECAY
-#undef QSAT_THRESHOLD
-#undef QSAT_KNEE_WIDTH
-#undef QSAT_MAX_COMPRESS
-#undef QSAT_PEAK_SMOOTH
-#undef QSAT_SILENCE_THRESH
-#undef QSAT_SILENCE_FRAMES
-#undef QSAT_MAX_PEAK
-#undef SAMPLE_MAX_F
-#undef SAMPLE_MAX_I
-#undef CLAMP

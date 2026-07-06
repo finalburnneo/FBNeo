@@ -1,10 +1,7 @@
 #include "burnint.h"
 #include "pic16c5x_intf.h"
 
-void pic16c5xDoReset(INT32 type, INT32 *rom, INT32 *ram);
-extern INT32 pic16c5xScanCpu(INT32 nAction, INT32* pnMin);
-
-// masks
+// masks (changes with init, depending on chip)
 static INT32 rom_address_mask = 0x7ff;
 static INT32 ram_address_mask = 0x07f;
 
@@ -48,10 +45,8 @@ UINT16 pic16c5xFetch(UINT16 address)
 #endif
 
 	UINT16 *ROM = (UINT16*)pic16c5x_rom;
-	
-	address &= rom_address_mask;
-	
-	return ROM[address];
+
+	return ROM[address & rom_address_mask];
 }
 
 UINT8 pic16c5xRead(UINT16 address)
@@ -60,15 +55,7 @@ UINT8 pic16c5xRead(UINT16 address)
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_byte called without init\n"));
 #endif
 
-	address &= ram_address_mask;
-
-	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
-		if (address >= 0x60 && address <= 0x6f) {
-			// mirror
-			return pic16c5x_ram[address & 0x0f];
-		}
-	}
-	return pic16c5x_ram[address];
+	return pic16c5x_ram[address & ram_address_mask];
 }
 
 void pic16c5xWrite(UINT16 address, UINT8 data)
@@ -77,17 +64,7 @@ void pic16c5xWrite(UINT16 address, UINT8 data)
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_byte called without init\n"));
 #endif
 
-	address &= ram_address_mask;
-
-	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
-		if (address >= 0x60 && address <= 0x6f) {
-			// mirror
-			pic16c5x_ram[address & 0x0f] = data;
-			return;
-		}
-	}
-
-	pic16c5x_ram[address] = data;
+	pic16c5x_ram[address & ram_address_mask] = data;
 }
 
 UINT8 pic16c5xReadPort(UINT16 port)
@@ -149,16 +126,19 @@ void pic16c5xCheatWrite(UINT32 address, UINT8 data)
 	pic16c5xWrite(address, data);
 }
 
+static INT32 dummy_cb(INT32) { return 0; }
+
 void pic16c5xInit(INT32 /*nCPU*/, INT32 type, UINT8 *mem)
 {
 	DebugCPU_PIC16C5XInitted = 1;
-	
+
 	nPic16c5xCpuType = type;
 
+	pic16c5xSetCallback(dummy_cb);
 	pic16c5xDoReset(type, &rom_address_mask, &ram_address_mask);
 
 	pic16c5x_rom = mem;
-	
+
 	pic16c5x_ram = (UINT8*)BurnMalloc(ram_address_mask + 1);
 
 	CpuCheatRegister(0/*nCPU*/, &pic16c5xConfig);
@@ -172,7 +152,7 @@ void pic16c5xExit()
 
 	pic16c5x_rom = NULL;
 	nPic16c5xCpuType = -1;
-	
+
 	if (pic16c5x_ram) {
 		BurnFree(pic16c5x_ram);
 		pic16c5x_ram = NULL;
@@ -231,8 +211,6 @@ static UINT8 asciitohex(UINT8 data)
 	return data;
 }
 
-extern void pic16c5x_config(INT32 data);
-
 INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len)
 {
 	UINT8 *PICROM_HEX = (UINT8*)BurnMalloc(len);
@@ -288,7 +266,7 @@ INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len)
 				data_lo = asciitohex((PICROM_HEX[src_pos + 3]));
 				data |= (data_hi << 12) | (data_lo << 8);
 
-				pic16c5x_config(data);
+				pic16c5xSetConfig(data);
 				src_pos = 0x7fff;		/* Force Exit */
 		}
 		src_pos += 1;

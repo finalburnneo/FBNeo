@@ -35,6 +35,11 @@
 #endif
 
 #include <shlwapi.h>
+
+#ifdef _MSC_VER
+#pragma comment(lib, "shlwapi.lib")
+#endif
+
 #include "d3dkmt_sync.h"
 
 INT32 DSCore_Init();

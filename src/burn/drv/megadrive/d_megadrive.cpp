@@ -38783,7 +38783,7 @@ struct BurnDriver BurnDrvmd_cascade = {
 
 // Castlevania: Circle of the Moon (HB, Demo)
 static struct BurnRomInfo md_cvaniacotmRomDesc[] = {
-	{ "Castlevania - Circle of the Moon (Demo) (2026)(Andor).bin", 3932160, 0x6d9ece0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Castlevania - Circle of the Moon (Demo) (2026)(Andor).bin", 7077888, 0x92137666, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cvaniacotm)
@@ -38793,7 +38793,7 @@ struct BurnDriver BurnDrvmd_cvaniacotm = {
 	"md_cvaniacotm", NULL, NULL, NULL, "2026",
 	"Castlevania: Circle of the Moon (HB, Demo)\0", NULL, "Andor", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_cvaniacotmRomInfo, md_cvaniacotmRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40347,6 +40347,25 @@ struct BurnDriver BurnDrvmd_heroloot = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Hong Kong '97 (HB, Beta 01)
+// https://sirvh.itch.io/hong-kong-97-genesis
+static struct BurnRomInfo md_hongkong97RomDesc[] = {
+	{ "Hong Kong '97 Beta 01 (2026)(SirVH).bin", 524288, 0x36f90806, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_hongkong97)
+STD_ROM_FN(md_hongkong97)
+
+struct BurnDriver BurnDrvmd_hongkong97 = {
+	"md_hongkong97", NULL, NULL, NULL, "2026",
+	"Hong Kong '97 (HB, Beta 01)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_hongkong97RomInfo, md_hongkong97RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Hunter Girls (HB)
 static struct BurnRomInfo md_huntergirlsRomDesc[] = {
 	{ "Hunter Girls (2023)(PSCD Games).bin", 3014656, 0xad9c96d3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41529,6 +41548,25 @@ struct BurnDriver BurnDrvmd_pacmanpp = {
 	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
 };
 
+// Panda Jump (HB)
+// https://abadede919302.itch.io/panda-jump
+static struct BurnRomInfo md_pandajumpRomDesc[] = {
+	{ "Panda Jump (2026)(abadede919302).bin", 262144, 0x164e8dfa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pandajump)
+STD_ROM_FN(md_pandajump)
+
+struct BurnDriver BurnDrvmd_pandajump = {
+	"md_pandajump", NULL, NULL, NULL, "2026",
+	"Panda Jump (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_pandajumpRomInfo, md_pandajumpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pantufa the Cat - Extended Edition (GlobalHack)
 static struct BurnRomInfo md_pantufaeeRomDesc[] = {
 	{ "Pantufa the Cat - Extended Edition (2020)(VAdaPEGA).bin", 2652230, 0x8639aea0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41699,6 +41737,25 @@ struct BurnDriver BurnDrvmd_papriumini = {
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium (Unlocked) (World) (HB, Hack)
+// https://archive.org/details/paprium-custom-ver.-7z
+static struct BurnRomInfo md_papriumunlckRomDesc[] = {
+	{ "Paprium (unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_papriumunlck)
+STD_ROM_FN(md_papriumunlck)
+
+struct BurnDriver BurnDrvmd_papriumunlck = {
+	"md_papriumunlck", "md_paprium", NULL, "paprium", "2025",
+	"Paprium (Unlocked) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "knightofthewind89", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriumunlckRomInfo, md_papriumunlckRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
+	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
@@ -43034,10 +43091,10 @@ struct BurnDriver BurnDrvmd_xenocrisis = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Xevious (HB, alpha-0.02)
+// Xevious (HB, alpha-0.03)
 // https://sirvh.itch.io/xevious-genesis
 static struct BurnRomInfo md_xeviousRomDesc[] = {
-	{ "Xevious alpha-0.02 (2026)(SirVH).bin", 1048576, 0xc18f33f2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Xevious alpha-0.03 (2026)(SirVH).bin", 1048576, 0x0e2511a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_xevious)
@@ -43045,7 +43102,7 @@ STD_ROM_FN(md_xevious)
 
 struct BurnDriver BurnDrvmd_xevious = {
 	"md_xevious", NULL, NULL, NULL, "2026",
-	"Xevious (HB, alpha-0.02)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	"Xevious (HB, alpha-0.03)\0", NULL, "SirVH", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_xeviousRomInfo, md_xeviousRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44677,10 +44734,10 @@ struct BurnDriver BurnDrvmd_mkae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Arcade Edition (Hack, v2.4)
-// https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-genesis-2/
+// Mortal Kombat Arcade Edition (Hack, v2.6)
+// https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-sega-genesis-romhack
 static struct BurnRomInfo md_mkaeeRomDesc[] = {
-	{ "Mortal Kombat Arcade Edition Enhanced v2.4 (2026)(Rael G.C.).bin", 4194304, 0x20e1378c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat Arcade Edition Enhanced v2.6 (2026)(Rael G.C.).bin", 4194304, 0xd42cd074, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mkaee)
@@ -44688,7 +44745,7 @@ STD_ROM_FN(md_mkaee)
 
 struct BurnDriver BurnDrvmd_mkaee = {
 	"md_mkaee", "md_mk", NULL, NULL, "2026",
-	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.4)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
+	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.6)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkaeeRomInfo, md_mkaeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -47232,25 +47289,6 @@ struct BurnDriver BurnDrvmd_nadiapt = {
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_nadiaptRomInfo, md_nadiaptRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Paprium (Unlocked) (World) (HB, Hack)
-// https://archive.org/details/paprium-custom-ver.-7z
-static struct BurnRomInfo md_papriumunlckRomDesc[] = {
-	{ "Paprium (unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_papriumunlck)
-STD_ROM_FN(md_papriumunlck)
-
-struct BurnDriver BurnDrvmd_papriumunlck = {
-	"md_papriumunlck", "md_paprium", NULL, "paprium", "2025",
-	"Paprium (Unlocked) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "knightofthewind89", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriumunlckRomInfo, md_papriumunlckRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
-	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 

@@ -23341,9 +23341,9 @@ struct BurnDriver BurnDrvsms_mainurse = {
 	256, 192, 4, 3
 };
 
-// Master Barbarricade (HB, RC2)
+// Master Barbarricade (HB, 06-25-26)
 static struct BurnRomInfo sms_mbarbarricadeRomDesc[] = {
-	{ "Master Barbarricade RC2 (2026)(Jess Creations - ArugulaZ).sms",	49152, 0x12ab8665, BRF_PRG | BRF_ESS },
+	{ "Master Barbarricade 06-25-26 (2026)(Jess Creations - ArugulaZ).sms",	49152, 0x2426d6ea, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_mbarbarricade)
@@ -23351,7 +23351,7 @@ STD_ROM_FN(sms_mbarbarricade)
 
 struct BurnDriver BurnDrvsms_mbarbarricade = {
 	"sms_mbarbarricade", NULL, NULL, NULL, "2026",
-	"Master Barbarricade (HB, RC2)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
+	"Master Barbarricade (HB, 06-25-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_BREAKOUT, 0,
 	SMSGetZipName, sms_mbarbarricadeRomInfo, sms_mbarbarricadeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -23829,9 +23829,9 @@ struct BurnDriver BurnDrvsms_psychicwen = {
 	256, 192, 4, 3
 };
 
-// Pyramid Escape (HB, v1.2.2)
+// Pyramid Escape (HB, v1.2.3)
 static struct BurnRomInfo sms_pyramidescapeRomDesc[] = {
-	{ "Pyramid Escape v1.2.2 (2025)(IrataHack).sms",	114688, 0x313f00bd, BRF_PRG | BRF_ESS },
+	{ "Pyramid Escape v1.2.3 (2025)(IrataHack).sms",	114688, 0x74e741dd, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pyramidescape)
@@ -23839,7 +23839,7 @@ STD_ROM_FN(sms_pyramidescape)
 
 struct BurnDriver BurnDrvsms_pyramidescape = {
 	"sms_pyramidescape", NULL, NULL, NULL, "2025",
-	"Pyramid Escape (HB, v1.2.2)\0", NULL, "IrataHack", "Sega Master System",
+	"Pyramid Escape (HB, v1.2.3)\0", NULL, "IrataHack", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_pyramidescapeRomInfo, sms_pyramidescapeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

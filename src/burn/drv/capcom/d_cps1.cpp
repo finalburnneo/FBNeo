@@ -13936,7 +13936,7 @@ static struct BurnRomInfo Sf2amf12RomDesc[] = {
 	{ "tat-10.bin",   	0x0080000, 0x0c638630, BRF_GRA | CPS1_TILES }, // == mask10.bin
 	{ "tat-11.bin",   	0x0080000, 0x32a3a841, BRF_GRA | CPS1_TILES }, // == mask11.bin
 	{ "tat-12.bin",   	0x0080000, 0x6ee19b94, BRF_GRA | CPS1_TILES }, // == mask12.bin 
-    /* Original GFX dumps for this set: same content as TAT-GFX ROMs but ordered in different way 
+	/* Original GFX dumps for this set: same content as TAT-GFX ROMs but ordered in different way 
 	   Using instead TAT-GFX ROMs until we find a proper loading routine.
 	{ "mask01.bin",   	0x0080000, 0x5733d44e, BRF_GRA | CPS1_TILES }, 
 	{ "mask05.bin",   	0x0080000, 0x42d7635d, BRF_GRA | CPS1_TILES }, 
@@ -13950,7 +13950,7 @@ static struct BurnRomInfo Sf2amf12RomDesc[] = {
 	{ "mask10.bin",     0x0080000, 0x0c638630, BRF_GRA | CPS1_TILES },
 	{ "mask11.bin",     0x0080000, 0x32a3a841, BRF_GRA | CPS1_TILES },
 	{ "mask12.bin",     0x0080000, 0x6ee19b94, BRF_GRA | CPS1_TILES }, */
-    	
+		
 	{ "2.bin",        	0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "1.bin",        	0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -18460,10 +18460,6 @@ static void DinotpicPatchCallback()
 static INT32 DinopicInit()
 {
 	Cps1Qs = Cps1QSDip & 1;
-
-	if (!Cps1Qs) {
-		Cps1DisablePSnd = 1;
-	}
 	
 	CpsBootlegEEPROM = 1;
 	if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "dinopic3")) {
@@ -18472,29 +18468,31 @@ static INT32 DinopicInit()
 		Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	}
 	if (Cps1Qs) {
-		CRI.nCpsZRomLen = 0x020000;
-		CRI.nCpsQSamLen = 0x200000;
+		CRI.nCpsZRomLen      = 0x020000;
+		CRI.nCpsQSamLen      = 0x200000;
 		AmendProgRomCallback = Jurassic99PatchCallback;
 	} else {
-		Cps1ObjGetCallbackFunction = DinopicObjGet;
-		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+		Cps1DisablePSnd      = 1;
 	}
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	Cps1ObjGetCallbackFunction  = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction  = CpsBootlegSpriteRamScanCallback;
 		
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (!Cps1Qs) {
-		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
-		SekOpen(0);
-		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	if (!Cps1Qs) {
+		// Abnormal music when QSound is enabled
 		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
 		SekSetWriteWordHandler(1, DinopicScrollWrite);
-		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-		SekSetWriteWordHandler(2, DinopicLayerWrite);
-		SekClose();
 	}
+	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
+	SekClose();
 	return nRet;
 }
 
@@ -18604,37 +18602,37 @@ static INT32 DinotpicInit()
 {
 	Cps1Qs = Cps1QSDip & 1;
 
-	if (!Cps1Qs) {
-		Cps1DisablePSnd = 1;
-	}
-
-	Jurassic99 = 1;
-	CpsBootlegEEPROM = 1;
+	Jurassic99                  = 1;
+	CpsBootlegEEPROM            = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
+	Cps1ObjGetCallbackFunction  = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction  = CpsBootlegSpriteRamScanCallback;
+
 	if (Cps1Qs) {
-		CRI.nCpsZRomLen = 0x020000;
-		CRI.nCpsQSamLen = 0x200000;
+		Cps1DisablePSnd      = 1;
+		CRI.nCpsZRomLen      = 0x020000;
+		CRI.nCpsQSamLen      = 0x200000;
 		AmendProgRomCallback = DinotpicPatchCallback;
 	} else {
-		Cps1ObjGetCallbackFunction = DinopicObjGet;
-		Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+		Cps1DisablePSnd      = 1;
 	}
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (!Cps1Qs) {
-		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
-		SekOpen(0);
-		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
+	if (!Cps1Qs) {
+		// Abnormal music when QSound is enabled
 		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
 		SekSetWriteWordHandler(1, DinopicScrollWrite);
-		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
-		SekSetWriteWordHandler(2, DinopicLayerWrite);
-		SekClose();
 	}
+	SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
+	SekClose();
 	return nRet;
 }
 

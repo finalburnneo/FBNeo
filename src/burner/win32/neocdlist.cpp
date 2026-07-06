@@ -35,6 +35,7 @@ struct CHD_CTX {
 	UINT32					hunkbytes;			// bytes per hunk
 	UINT32					chdSectorBytes;		// CHD bytes per sector
 	struct CHD_READ_CACHE	cache;				// hunk cache
+	FILE					*fp;				// FILE handle (core_stdio_nonowner does not close it)
 
 	// Parsed-once metadata (computed during Open phase, reused throughout)
 	UINT32                  sectorsPerHunk;		// sectors per hunk
@@ -169,7 +170,10 @@ static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 	if (!pIsoCtx || !pszFile) return 0;
 
 	FILE* fp = _tfopen(pszFile, _T("rb"));
-	if (!fp) return 0;
+	if (!fp) {
+		bprintf(PRINT_ERROR, _T("ChdIO_Open: _tfopen failed for %s\n"), pszFile);
+		return 0;
+	}
 
 	chd_file* chd = NULL;
 	chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &chd);
@@ -190,6 +194,7 @@ static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 	pChdCtx->pChd      = chd;
 	pChdCtx->pHeader   = chd_get_header(chd);
 	pChdCtx->hunkbytes = pChdCtx->pHeader->hunkbytes;
+	pChdCtx->fp        = fp;					// Save FILE* for later close (core_stdio_nonowner)
 
 	if (     pChdCtx->hunkbytes % 2448 == 0)
 		pChdCtx->chdSectorBytes = 2448;
@@ -223,7 +228,9 @@ static void ChdIO_Close(struct ISO_CTX* pIsoCtx)
 	struct CHD_CTX* pChdCtx = pIsoCtx->ioUnion.pChdCtx;
 	if (pChdCtx) {
 		if (pChdCtx->pChd)
-			chd_close(pChdCtx->pChd);			// chd_close internally closes the original FILE*
+			chd_close(pChdCtx->pChd);
+		if (pChdCtx->fp)
+			fclose(pChdCtx->fp);				// core_stdio_nonowner: chd_close does NOT close FILE*
 		free_s((void**)&pChdCtx);
 		pIsoCtx->ioUnion.pChdCtx = NULL;
 	}
@@ -425,15 +432,29 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 				if (nID == 0x069c && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 10) { nID |= 0x3000; }	// Fatal Fury 3 Rev 3
 				if (nID == 0x0090 && nDate[0] ==  95 && nDate[1] ==  7 && nDate[2] == 21) { nID |= 0x1000; }	// World Heroes Perfect
 				if (nID == 0x0058 && nDate[0] ==  94 && nDate[1] == 10 && nDate[2] == 14) { nID |= 0x1000; }	// Fatal Fury Special Rev 1
+				if (nID == 0x0052 && nDate[0] == 123 && nDate[1] ==  7 && nDate[2] ==  1) { nID |= 0x1000; }	// Abyssal Infants
+				if (nID == 0x0052 && nDate[0] == 123 && nDate[1] ==  6 && nDate[2] == 20) { nID |= 0x1001; }	// Neo Fight
+				if (nID == 0x0082) {
+					if (bGotDDPRG_ACM)                                                    { nID |= 0x1000; }	// Double Dragon Rev 1
+					else if (StrStrI(pIsoPath, _T("OST")) ||
+						     StrStrI(pIsoPath, _T("PS"))  ||
+						     StrStrI(pIsoPath, _T("PlayStation")))                        { nID |= 0x2000; }	// Double Dragon PS1 OST
+				}
 				if (nID == 0x0085) {
 					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
 					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
-					else if (nDate[0] == 125 && nDate[1] == 3 && nDate[2] == 6)           { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
-					if (_tcsstr(pIsoPath, _T("(FR)")))                                    { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
+					else if (nDate[0] == 126 && nDate[1] == 6 && nDate[2] ==  1)          { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
+					else if (StrStrI(pIsoPath, _T("FR")) ||
+						     StrStrI(pIsoPath, _T("French")))                             { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
 				}
-				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] == 8 && nDate[2] == 14)  { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
-				if (nID == 0x0082 && bGotDDPRG_ACM)                                       { nID |= 0x1000; }	// Double Dragon Rev 1
-				if (nID == 0x0082 && _tcsstr(pIsoPath, _T("OST")))                        { nID |= 0x2000; }	// Double Dragon PS1 OST
+				if (nID == 0x1234 && nDate[0] == 105 && nDate[1] ==  4 && nDate[2] == 25) { nID  = 0x2234; }	// Neo Puzzle League
+				if (nID == 0x1234 && nDate[0] == 124 && nDate[1] == 12 && nDate[2] ==  2) { nID  = 0x2235; }	// Neo Tetris
+				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] ==  3 && nDate[2] ==  4) { nID  = 0x2236; }	// NGD::ARK
+				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] == 12 && nDate[2] ==  4) { nID  = 0x2237; }	// Santa Ball
+				if (nID == 0x2000 && !strcmp(pIsoCtx->szVolumeID, "COLUMNS"))             { nID |= 0x1000; }	// Columns
+				if (nID == 0x5345 && !strcmp(pIsoCtx->szVolumeID, "BLUEANDREDFIGHTTHEROBOTS")) { nID  = 0x5346; }	// Blue And Red - Fight The Robots! (NTSC)
+				if (nID == 0xFFFF && !strcmp(pIsoCtx->szVolumeID, "CODENAME BLUT ENGEL")) { nID  = 0xFFFE; }	// Codename Blut Engel
+				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] ==  8 && nDate[2] == 14) { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
 				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }	// Looptris Plus
 				if (nID == 0x0048 && Data[0x67] == 0x08)                                  { nID |= 0x1000; }	// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
 				if (nID == 0x0055 && Data[0x67] == 0xDE)	/* 10-6-1994 (P1.PRG)  */     {/* ...continue*/}	// King of Fighters '94, The (1994)(SNK)(JP)
@@ -499,11 +520,22 @@ INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLo
 		return 0;
 
 	// Deep copy all fields
-	pnew->id = pGameInfo->id;
-	pnew->pszName = _tcsdup_s(pGameInfo->pszName);
-	pnew->pszTitle = _tcsdup_s(pGameInfo->pszTitle);
-	pnew->pszYear = _tcsdup_s(pGameInfo->pszYear);
+	pnew->id         = pGameInfo->id;
+	pnew->pszName    = _tcsdup_s(pGameInfo->pszName);
+	if (!pnew->pszName)
+		goto CLEAN_FAIL;
+
+	pnew->pszTitle   = _tcsdup_s(pGameInfo->pszTitle);
+	if (!pnew->pszTitle)
+		goto CLEAN_FAIL;
+
+	pnew->pszYear    = _tcsdup_s(pGameInfo->pszYear);
+	if (!pnew->pszYear)
+		goto CLEAN_FAIL;
+
 	pnew->pszCompany = _tcsdup_s(pGameInfo->pszCompany);
+	if (!pnew->pszCompany)
+		goto CLEAN_FAIL;
 
 	// Print only when switch enabled
 	if (bPrintLog)
@@ -511,6 +543,14 @@ INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLo
 
 	*ppOutGame = pnew;
 	return 1;
+
+CLEAN_FAIL:
+	free_s((void**)&pnew->pszName);
+	free_s((void**)&pnew->pszTitle);
+	free_s((void**)&pnew->pszYear);
+	free_s((void**)&pnew->pszCompany);
+	free_s((void**)&pnew);
+	return 0;
 }
 
 INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
@@ -610,11 +650,11 @@ void FreeNGCDGame(NGCDGAME** ppGame)
 	if (!ppGame || !*ppGame)
 		return;
 
-	NGCDGAME* pTarget = *ppGame;
-	free_s((void**)&pTarget->pszName);
-	free_s((void**)&pTarget->pszTitle);
-	free_s((void**)&pTarget->pszYear);
-	free_s((void**)&pTarget->pszCompany);
+	NGCDGAME* p = *ppGame;
+	free_s((void**)&p->pszName);
+	free_s((void**)&p->pszTitle);
+	free_s((void**)&p->pszYear);
+	free_s((void**)&p->pszCompany);
 	free_s((void**)ppGame);
 }
 

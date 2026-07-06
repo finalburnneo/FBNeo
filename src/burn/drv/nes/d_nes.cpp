@@ -12349,6 +12349,42 @@ struct BurnDriver BurnDrvnes_dringle = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Earthworm Jim 2 (Taiwan) (Unl)
+static struct BurnRomInfo nes_ewjim2RomDesc[] = {
+	{ "Earthworm Jim 2 (Taiwan)(Unl)(1997)(Realtec).nes",          524304, 0x34023f7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ewjim2)
+STD_ROM_FN(nes_ewjim2)
+
+struct BurnDriver BurnDrvnes_ewjim2 = {
+	"nes_ewjim2", NULL, NULL, NULL, "1997",
+	"Earthworm Jim 2 (Taiwan) (Unl)\0", NULL, "Realtec", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_ewjim2RomInfo, nes_ewjim2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Earthworm Jim 3 (Taiwan) (Unl)
+static struct BurnRomInfo nes_ewjim3RomDesc[] = {
+	{ "Earthworm Jim 3 (Taiwan)(Unl)(1997)(Ka Sheng).nes",          524304, 0x2b5130d1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ewjim3)
+STD_ROM_FN(nes_ewjim3)
+
+struct BurnDriver BurnDrvnes_ewjim3 = {
+	"nes_ewjim3", NULL, NULL, NULL, "1997",
+	"Earthworm Jim 3 (Taiwan) (Unl)\0", NULL, "Ka Sheng", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_ewjim3RomInfo, nes_ewjim3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Echo Chamber (Unl)
 static struct BurnRomInfo nes_echocambRomDesc[] = {
 	{ "Echo Chamber (Unl)(200x)(Nice Code).nes",          40976, 0xc2aa9dc8, BRF_ESS | BRF_PRG },
@@ -12414,7 +12450,7 @@ STD_ROM_FN(nes_famikan)
 
 struct BurnDriver BurnDrvnes_famikan = {
 	"nes_famikan", NULL, NULL, NULL, "2005",
-	"Famikan (Japan) (Unl)\0", "Adult Only", "Dengakudou", "NES / Famicom",
+	"Famikan (Japan) (Unl)\0", "Adult Game", "Dengakudou", "NES / Famicom",
 	L"Famikan (Japan) (Unl)\0\u30d5\u30a1\u30df\u59e6\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_famikanRomInfo, nes_famikanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -12470,7 +12506,7 @@ struct BurnDriver BurnDrvnes_finalcombat = {
 	"nes_finalcombat", NULL, NULL, NULL, "1992",
 	"Final Combat (Asia) (Unl)\0", NULL, "Sachen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_finalcombatRomInfo, nes_finalcombatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -12875,18 +12911,18 @@ struct BurnDriver BurnDrvnes_triforceg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Lei Dian Huang Bi Ka Qiu Chuan Shuo (China)
+// Lei Dian Huang Bi Ka Qiu Chuan Shuo (China) (Unl)
 static struct BurnRomInfo nes_leidiahuabikaqiuchsRomDesc[] = {
-	{ "Lei Dian Huang Bi Ka Qiu Chuan Shuo (China)(199x).nes",          2097168, 0xf4ebe9b2, BRF_ESS | BRF_PRG },
+	{ "Lei Dian Huang Bi Ka Qiu Chuan Shuo (China)(Unl)(2004)(Shenzhen Nanjing Technology).nes",          2097168, 0xf4ebe9b2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_leidiahuabikaqiuchs)
 STD_ROM_FN(nes_leidiahuabikaqiuchs)
 
 struct BurnDriver BurnDrvnes_leidiahuabikaqiuchs = {
-	"nes_leidiahuabikaqiuchs", NULL, NULL, NULL, "199?",
-	"Lei Dian Huang Bi Ka Qiu Chuan Shuo (China)\0", NULL, "<unknown>", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
+	"nes_leidiahuabikaqiuchs", NULL, NULL, NULL, "2004",
+	"Lei Dian Huang Bi Ka Qiu Chuan Shuo (China) (Unl)\0", NULL, "Shenzhen Nanjing Technology", "NES / Famicom",
+	L"Lei Dian Huang Bi Ka Qiu Chuan Shuo (China) (Unl)\0\u96f7\u7535\u7687 \u6bd4\u5361\u4e18\u4f20\u8bf4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_leidiahuabikaqiuchsRomInfo, nes_leidiahuabikaqiuchsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -13755,7 +13791,7 @@ struct BurnDriver BurnDrvnes_titanic = {
 	"nes_titanic", NULL, NULL, NULL, "2022",
 	"Titanic (Hack, English v2.1)\0", NULL, "pacnsacdave", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_titanicRomInfo, nes_titanicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -13773,7 +13809,7 @@ struct BurnDriver BurnDrvnes_titanicc = {
 	"nes_titanicc", "nes_titanic", NULL, NULL, "2005",
 	"Titanic (China) (Unl)\0", NULL, "Shenzhen Nanjing Technology", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
 	NESGetZipName, nes_titaniccRomInfo, nes_titaniccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15413,7 +15449,7 @@ struct BurnDriver BurnDrvnes_battler = {
 	"nes_battler", NULL, NULL, NULL, "2015",
 	"Battler (HB)\0", NULL, "Karu Gamo", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_battlerRomInfo, nes_battlerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15429,7 +15465,7 @@ STD_ROM_FN(nes_beee)
 
 struct BurnDriver BurnDrvnes_beee = {
 	"nes_beee", NULL, NULL, NULL, "2014",
-	"Beat 'Em & Eat 'Em (HB)\0", "Adult game", "FG Software", "NES / Famicom",
+	"Beat 'Em & Eat 'Em (HB)\0", "Adult Game", "FG Software", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_beeeRomInfo, nes_beeeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -17949,6 +17985,25 @@ struct BurnDriver BurnDrvnes_earthboundb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_earthboundbRomInfo, nes_earthboundbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Earthworm Jim NES Edition (Hack)
+// https://www.romhacking.net/hacks/9776/
+static struct BurnRomInfo nes_ewjimnesRomDesc[] = {
+	{ "EarthWorm Jim NES Edition (2026)(Ti).nes",          786448, 0x5bf76773, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ewjimnes)
+STD_ROM_FN(nes_ewjimnes)
+
+struct BurnDriver BurnDrvnes_ewjimnes = {
+	"nes_ewjimnes", "nes_ewjim3", NULL, NULL, "2026",
+	"Earthworm Jim NES Edition (Hack)\0", NULL, "Ti", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_ewjimnesRomInfo, nes_ewjimnesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43645,8 +43700,8 @@ STD_ROM_FN(nes_littlmerj)
 struct BurnDriver BurnDrvnes_littlmerj = {
 	"nes_littlmerj", "nes_littlmer", NULL, NULL, "1991",
 	"Little Mermaid, The (Japan)\0", NULL, "Capcom", "NES / Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
+	L"Little Mermaid, The (Japan)\0\u30ea\u30c8\u30eb\u30fb\u30de\u30fc\u30e1\u30a4\u30c9 \u4eba\u9b5a\u59eb\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV | GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_littlmerjRomInfo, nes_littlmerjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -43664,7 +43719,7 @@ struct BurnDriver BurnDrvnes_littlmer = {
 	"nes_littlmer", NULL, NULL, NULL, "1991",
 	"Little Mermaid, The (USA)\0", NULL, "Capcom", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV | GBF_MULTISHOOT, 0,
 	NESGetZipName, nes_littlmerRomInfo, nes_littlmerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

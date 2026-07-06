@@ -1853,7 +1853,7 @@ struct BurnDriver BurnDrvNbamhtp = {
 
 // NBA Super Maximum Hangtime (ver M1.03 06/02/26)
 /*
-Romhack from Asure's NBA Hangtime Rebuild Repo
+Romhack from Asure's NBA Hangtime Rebuild Repo-  https://github.com/Asure/nba-hangtime-rebuild
 */
 static struct BurnRomInfo nbamhtxRomDesc[] = {
 	{ "l1.03_maximum_hangtime_u54_l_version.u54",	0x080000, 0x9fcf1f48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010 CPU

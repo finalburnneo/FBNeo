@@ -106,6 +106,11 @@ static void arm9_cp15_write(UINT32 insn, UINT32 value)
 	UINT32 cp_num = (insn >> 8) & 0x0f;
 	if (cp_num != 15) return;
 
+	UINT32 crn = (insn >> 16) & 0x0f;
+	UINT32 op1 = (insn >> 21) & 0x07;
+	UINT32 crm = insn & 0x0f;
+	UINT32 op2 = (insn >> 5) & 0x07;
+	
 	arm9_cp15_regs[arm9_cp15_index(insn)] = value;
 }
 

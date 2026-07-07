@@ -43656,6 +43656,44 @@ struct BurnDriver BurnSpecGlazx48 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// GlitchSist (English) (128K) (HB)
+
+static struct BurnRomInfo SpecGlitchsistenRomDesc[] = {
+	{ "GlitchSist EN 128K (2026)(Tartessos Games).tap", 90656, 0xbbd36c0d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGlitchsisten, SpecGlitchsisten, Spec128)
+STD_ROM_FN(SpecGlitchsisten)
+
+struct BurnDriver BurnSpecGlitchsisten = {
+	"spec_glitchsisten", NULL, "spec_spec128", NULL, "2026",
+	"GlitchSist (English) (128K) (HB)\0", NULL, "Tartessos Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SpectrumGetZipName, SpecGlitchsistenRomInfo, SpecGlitchsistenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// GlitchSist (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecGlitchsistesRomDesc[] = {
+	{ "GlitchSist ES 128K (2026)(Tartessos Games).tap", 90943, 0x024a7842, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGlitchsistes, SpecGlitchsistes, Spec128)
+STD_ROM_FN(SpecGlitchsistes)
+
+struct BurnDriver BurnSpecGlitchsistes = {
+	"spec_glitchsistes", "spec_glitchsisten", "spec_spec128", NULL, "2026",
+	"GlitchSist (Spanish) (128K) (HB)\0", NULL, "Tartessos Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SpectrumGetZipName, SpecGlitchsistesRomInfo, SpecGlitchsistesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Globus (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecGlobusRomDesc[] = {
@@ -62768,6 +62806,25 @@ struct BurnDriver BurnSpecyazzie = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecyazzieRomInfo, SpecyazzieRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Yazzie Junior (128K) (HB)
+
+static struct BurnRomInfo SpecYazziejrRomDesc[] = {
+	{ "Yazzie Junior 128K (2026)(RetroSouls).tap", 128672, 0xbd3699dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecYazziejr, SpecYazziejr, Spec128)
+STD_ROM_FN(SpecYazziejr)
+
+struct BurnDriver BurnSpecYazziejr = {
+	"spec_yazziejr", NULL, "spec_spec128", NULL, "2026",
+	"Yazzie Junior (128K) (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecYazziejrRomInfo, SpecYazziejrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

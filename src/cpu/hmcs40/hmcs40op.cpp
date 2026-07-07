@@ -6,7 +6,6 @@
 //#include "emu.h"
 //#include "hmcs40.h"
 
-
 // internal helpers
 
 static UINT8 ram_r()

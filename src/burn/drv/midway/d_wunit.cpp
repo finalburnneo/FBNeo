@@ -1851,6 +1851,66 @@ struct BurnDriver BurnDrvNbamhtp = {
 };
 
 
+// NBA Super Maximum Hangtime (Custom Rebuild 07/02/26)
+// Romhack from Asure's NBA Hangtime Rebuild Repo
+// https://github.com/Asure/nba-hangtime-rebuild
+
+static struct BurnRomInfo nbamhtxRomDesc[] = {
+	{ "l1.03_maximum_hangtime_u54_l_version.u54",	0x080000, 0x9fcf1f48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010 CPU
+	{ "l1.03_maximum_hangtime_u63_l_version.u63",	0x080000, 0x29530746, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "l1.0_nba_hangtime_u_2_music_spch.u2",		0x100000, 0x3f0b0d0a, 2 | BRF_PRG | BRF_ESS }, //  2 DCS Sound Banks
+	{ "l1.0_nba_hangtime_u_3_music_spch.u3",		0x100000, 0xec1db988, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "l1.0_nba_hangtime_u_4_music_spch.u4",		0x100000, 0xc7f847a3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1.0_nba_hangtime_u_5_music_spch.u5",		0x100000, 0xef19316a, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "l1.0_nba_hangtime_u_133_image_rom.u133",		0x100000, 0x3163feed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX Bank 0
+	{ "l1.0_nba_hangtime_u_132_image_rom.u132",		0x100000, 0x428eaf44, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "l1.0_nba_hangtime_u_131_image_rom.u131",		0x100000, 0x5f7c5111, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "l1.0_nba_hangtime_u_130_image_rom.u130",		0x100000, 0xc7c0c514, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+
+	{ "l1.0_nba_hangtime_u_129_image_rom.u129",		0x100000, 0xb3d0daa0, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10 GFX Bank 1
+	{ "l1.0_nba_hangtime_u_128_image_rom.u128",		0x100000, 0x3704ee69, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "l1.0_nba_hangtime_u_127_image_rom.u127",		0x100000, 0x4ea64d5a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "l1.0_nba_hangtime_u_126_image_rom.u126",		0x100000, 0x0c5c19b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+
+	{ "l1.0_nba_hangtime_u_125_image_rom.u125",		0x100000, 0x46c43d67, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14 GFX Bank 2
+	{ "l1.0_nba_hangtime_u_124_image_rom.u124",		0x100000, 0xed495156, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "l1.0_nba_hangtime_u_123_image_rom.u123",		0x100000, 0xb48aa5da, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "l1.0_nba_hangtime_u_122_image_rom.u122",		0x100000, 0xb18cd181, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+
+	{ "l1.0_nba_hangtime_u_121_image_rom.u121",		0x100000, 0x5acb267a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18 GFX Bank 3
+	{ "l1.0_nba_hangtime_u_120_image_rom.u120",		0x100000, 0x28e05f86, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "l1.0_nba_hangtime_u_119_image_rom.u119",		0x100000, 0xb4f604ea, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "l1.0_nba_hangtime_u_118_image_rom.u118",		0x100000, 0xa257b973, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+
+	{ "l1.0_nba_hangtime_u_117_image_rom.u117",		0x100000, 0x6cf2e7b5, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22 GFX Bank 4 (Fixed from 0x0c)
+	{ "l1.0_nba_hangtime_u_116_image_rom.u116",		0x100000, 0xb19a5771, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "l1.0_nba_hangtime_u_115_image_rom.u115",		0x100000, 0x3a6dd372, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "l1.0_nba_hangtime_u_114_image_rom.u114",		0x100000, 0x23dbb571, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	
+	{ "l1.0_nba_hangtime_u_113_image_rom.u113",		0x100000, 0xd712a779, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26 GFX Bank 5
+	{ "l1.0_nba_hangtime_u_112_image_rom.u112",		0x100000, 0x644e1bca, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
+	{ "l1.0_nba_hangtime_u_111_image_rom.u111",		0x100000, 0x10d3b768, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 28
+	{ "l1.0_nba_hangtime_u_110_image_rom.u110",		0x100000, 0x8575aeb2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 29
+
+	{ "459_nba_hang_time_u64.u64",					0x002000, 0x0e642b39, 0 | BRF_OPT }, // 30 Security PIC
+};
+
+STD_ROM_PICK(nbamhtx)
+STD_ROM_FN(nbamhtx)
+
+struct BurnDriver BurnDrvNbamhtx = {
+	"nbamhtx", "nbahangt", NULL, NULL, "2026",
+	"NBA Super Maximum Hangtime (Custom Rebuild 07/02/26)\0", NULL, "hack", "MIDWAY Wolf-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbamhtxRomInfo, nbamhtxRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
+	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+	WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
+};
+
+
 // Rampage: World Tour (rev 1.3)
 
 static struct BurnRomInfo rmpgwtRomDesc[] = {

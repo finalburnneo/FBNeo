@@ -1851,10 +1851,10 @@ struct BurnDriver BurnDrvNbamhtp = {
 };
 
 
-// NBA Super Maximum Hangtime (ver M1.03 06/02/26)
-/*
-Romhack from Asure's NBA Hangtime Rebuild Repo-  https://github.com/Asure/nba-hangtime-rebuild
-*/
+// NBA Super Maximum Hangtime (Custom Rebuild 07/02/26)
+// Romhack from Asure's NBA Hangtime Rebuild Repo
+// https://github.com/Asure/nba-hangtime-rebuild
+
 static struct BurnRomInfo nbamhtxRomDesc[] = {
 	{ "l1.03_maximum_hangtime_u54_l_version.u54",	0x080000, 0x9fcf1f48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010 CPU
 	{ "l1.03_maximum_hangtime_u63_l_version.u63",	0x080000, 0x29530746, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1902,13 +1902,14 @@ STD_ROM_FN(nbamhtx)
 
 struct BurnDriver BurnDrvNbamhtx = {
 	"nbamhtx", "nbahangt", NULL, NULL, "2026",
-	"NBA Super Maximum Hangtime (Custom Rebuild 07/02/26)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"NBA Super Maximum Hangtime (Custom Rebuild 07/02/26)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtxRomInfo, nbamhtxRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
-    WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
-    WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
+	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
+	WUNIT_SCREEN_WIDTH, WUNIT_SCREEN_HEIGHT, 4, 3
 };
+
 
 // Rampage: World Tour (rev 1.3)
 

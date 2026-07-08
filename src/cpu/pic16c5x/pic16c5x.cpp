@@ -245,9 +245,12 @@ static void c55_write(INT32 address, UINT8 data)
 // 16c57
 static UINT8 c57_read(INT32 address)
 {
-	if (address >= 0x60 && address <= 0x6f) {
-		address &= ~0x60; // mirror
+	if ((address & 0x10) == 0) address &= 0x0f;
+
+	if (address < 0x5) {
+		return core_read(address & 0xf); // mirror
 	}
+
 	switch (address) {
 		case 0x05: return porta_r();
 		case 0x06: return portb_r();
@@ -258,9 +261,13 @@ static UINT8 c57_read(INT32 address)
 
 static void c57_write(INT32 address, UINT8 data)
 {
-	if (address >= 0x60 && address <= 0x6f) {
-		address &= ~0x60; // mirror
+	if ((address & 0x10) == 0) address &= 0x0f;
+
+	if (address < 0x5) {
+		core_write(address & 0xf, data);
+		return;
 	}
+
 	switch (address) {
 		case 0x05: porta_w(data); return;
 		case 0x06: portb_w(data); return;
@@ -272,9 +279,10 @@ static void c57_write(INT32 address, UINT8 data)
 // 16c58
 static UINT8 c58_read(INT32 address)
 {
-	if (address >= 0x60 && address <= 0x6f) {
-		address &= ~0x60; // mirror
-	}
+	if ((address & 0x10) == 0) address &= 0x0f;
+
+	if (address < 0x5) return core_read(address & 0xf); // mirror
+
 	switch (address) {
 		case 0x05: return porta_r();
 		case 0x06: return portb_r();
@@ -284,9 +292,13 @@ static UINT8 c58_read(INT32 address)
 
 static void c58_write(INT32 address, UINT8 data)
 {
-	if (address >= 0x60 && address <= 0x6f) {
-		address &= ~0x60; // mirror
+	if ((address & 0x10) == 0) address &= 0x0f;
+
+	if (address < 0x5) {
+		core_write(address & 0xf, data);
+		return;
 	}
+
 	switch (address) {
 		case 0x05: porta_w(data); return;
 		case 0x06: portb_w(data); return;

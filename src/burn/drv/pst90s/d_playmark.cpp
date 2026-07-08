@@ -228,7 +228,7 @@ static struct BurnInputInfo WbeachvlInputList[] = {
 
 	{"Reset",		       BIT_DIGITAL,	 &DrvReset,			 "reset"	 },
 	{"Service",		       BIT_DIGITAL,	  DrvInputPort0 + 4, "service"	 },
-	{"Dip A",		       BIT_DIPSWITCH, DrvDip + 0,		 "dip"		 },
+	{"Service Mode",       BIT_DIGITAL,   DrvInputPort0 + 5, "diag"      },
 };
 
 STDINPUTINFO(Wbeachvl)
@@ -574,17 +574,6 @@ static struct BurnDIPInfo HrdtimesDIPList[]=
 
 STDDIPINFO(Hrdtimes)
 
-static struct BurnDIPInfo WbeachvlDIPList[]=
-{
-	{0x26, 0xff, 0xff, 0xff, NULL					  },
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"			  },
-	{0x26, 0x01, 0x20, 0x20, "Off"					  },
-	{0x26, 0x01, 0x20, 0x00, "On"					  },
-};
-
-STDDIPINFO(Wbeachvl)
-
 static struct BurnDIPInfo LuckboomhDIPList[]=
 {
 	{0x09, 0xff, 0xff, 0xff, NULL					 },
@@ -892,6 +881,9 @@ static UINT8 __fastcall WbeachvlReadByte(UINT32 a)
 		case 0x71001b:
 			return DrvInput[4];
 
+		case 0x71001d:
+			return 0; //?
+
 		default:
 			bprintf(PRINT_NORMAL, _T("Read byte -> %06X\n"), a);
 	}
@@ -944,6 +936,16 @@ static void __fastcall WbeachvlWriteWord(UINT32 a, UINT16 d)
 	}
 
 	switch (a) {
+
+		case 0x441002:
+		case 0x441004:
+		case 0x441006:
+		case 0x441008:
+		case 0x44100a:
+		case 0x44100c:
+		case 0x44100e:
+			return; // ?
+
 		case 0x510000:
 			DrvCharScrollX = d + 2;
 		return;
@@ -971,6 +973,11 @@ static void __fastcall WbeachvlWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0x51000c: // nop
+		return;
+
+		case 0x71001e:
+			// sound command in service mode comes from word write
+            WbeachvlWriteByte(0x71001f, d & 0xff);
 		return;
 
 		default:
@@ -2545,7 +2552,7 @@ struct BurnDriver BurnDrvWbeachvl = {
 	"World Beach Volley (set 1, PIC16C57 audio CPU)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, wbeachvlRomInfo, wbeachvlRomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
+	NULL, wbeachvlRomInfo, wbeachvlRomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, NULL,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2585,7 +2592,7 @@ struct BurnDriverX BurnDrvWbeachvla = {
 	"World Beach Volley (set 1, S87C751 audio CPU)\0", "No sound, use parent!", "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, wbeachvlaRomInfo, wbeachvlaRomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
+	NULL, wbeachvlaRomInfo, wbeachvlaRomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, NULL,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2623,7 +2630,7 @@ struct BurnDriver BurnDrvWbeachvl2 = {
 	"World Beach Volley (set 2)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, wbeachvl2RomInfo, wbeachvl2RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
+	NULL, wbeachvl2RomInfo, wbeachvl2RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, NULL,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -2661,7 +2668,7 @@ struct BurnDriver BurnDrvWbeachvl3 = {
 	"World Beach Volley (set 3)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, wbeachvl3RomInfo, wbeachvl3RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
+	NULL, wbeachvl3RomInfo, wbeachvl3RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, NULL,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
 };

@@ -10273,8 +10273,6 @@ static void PacmanblaRearrangeRom()
 
 static INT32 PacmanblaInit()
 {
-	INT32 nRet;
-	
 	GalPostLoadCallbackFunction = PacmanblaRearrangeRom;
 	
 	return PacmanblbInit();

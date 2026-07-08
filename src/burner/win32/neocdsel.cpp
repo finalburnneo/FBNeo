@@ -736,7 +736,7 @@ static struct GAMELIST* CreateChdBaseGameItem(TCHAR* chdFullPath)
 static BOOL NeoCD_BuildGameEntry(UINT32 nGameID, TCHAR* filePath, struct GAMELIST** ppOutItem)
 {
 	if (IsStrEmpty(filePath) || !ppOutItem)
-		return NULL;
+		return FALSE;
 
 	*ppOutItem = NULL;
 	INT32 nImgIdx = -1;
@@ -1296,13 +1296,13 @@ static void NeoCDList_InitListView()
 		// Load cue icon
 		hIconCue = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_LV_CDIMAGE_CUE), IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		if (hIconCue) {
-			INT32 idx = ImageList_AddIcon(NeoCD_ImageList, hIconCue);
+			ImageList_AddIcon(NeoCD_ImageList, hIconCue);
 			DestroyIcon(hIconCue);
 		}
 		// Load chd icon
 		hIconChd = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_LV_CDIMAGE_CHD), IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		if (hIconChd) {
-			INT32 idx = ImageList_AddIcon(NeoCD_ImageList, hIconChd);
+			ImageList_AddIcon(NeoCD_ImageList, hIconChd);
 			DestroyIcon(hIconChd);
 		}
 		// Bind imagelist to listview icon slot

@@ -804,10 +804,12 @@ void SlapsticReset(void)
 void SlapsticInit(INT32 chip)
 {
 	DebugDev_SlapsticInitted = 1;
-	
+
 	/* only a small number of chips are known to exist */
-	if (chip < 101 || chip > 118)
+	if (chip < 101 || chip > 118) {
+		bprintf(0, _T("SlapStic: bad chip id, %d.  Time to fail!\n"), chip);
 		return;
+	}
 
 	/* set up the parameters */
 	if (!slapstic_table[chip - 101])
@@ -821,6 +823,8 @@ void SlapsticInit(INT32 chip)
 	/* see if we're 68k or 6502/6809 based */
 	extern INT32 nSekCount;
 	access_68k = (nSekCount != -1); // Ok?
+
+	bprintf(0, _T("Atari SlapStic: chip id %d.  68k mode access stylee: %x\n"), chip, access_68k);
 }
 
 void SlapsticExit()

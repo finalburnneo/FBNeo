@@ -437,6 +437,7 @@ static INT32 DrvDoReset()
 	K007232Reset(1);
 
 	KonamiICReset();
+	K051316Reset();
 
 	bottom9_video_enable = 0;
 	zoomreadroms = 0;
@@ -594,6 +595,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	KonamiICExit();
+	K051316Exit();
 
 	M6809Exit();
 	ZetExit();
@@ -614,6 +616,7 @@ static INT32 DrvDraw()
 	KonamiClearBitmaps(0);
 
 	K051960SpritesRender(1, 1);
+	K051316SetRenderTarget(konami_bitmap32, konami_palette32, konami_priority_bitmap);
 	K051316_zoom_draw(0, 0);
 	K051960SpritesRender(0, 0);
 	K052109RenderLayer(2, 0, 0);
@@ -705,6 +708,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+		K051316Scan(nAction);
 
 		SCAN_VAR(bottom9_video_enable);
 		SCAN_VAR(zoomreadroms);

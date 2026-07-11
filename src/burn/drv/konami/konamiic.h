@@ -1,8 +1,12 @@
+// K051316 is now a standalone device (src/burn/devices); its declarations live
+// in k051316.h. Included here so existing konami drivers keep getting the API
+// (and the SetRenderTarget hook) through konamiic.h.
+#include "k051316.h"
+
 // konamiic.cpp
 //---------------------------------------------------------------------------------------------------------------
 extern UINT32 KonamiIC_K051960InUse;
 extern UINT32 KonamiIC_K052109InUse;
-extern UINT32 KonamiIC_K051316InUse;
 extern UINT32 KonamiIC_K053245InUse;
 extern UINT32 KonamiIC_K053247InUse;
 extern UINT32 KonamiIC_K053936InUse;
@@ -208,27 +212,7 @@ void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority);
 INT32 K056832GetLayerAssociation();
 void K056832Metamorphic_Fixup();
 
-// K051316.cpp
-//---------------------------------------------------------------------------------------------------------------
-void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *flags), INT32 bpp, INT32 transp);
-void K051316Reset();
-void K051316Exit();
-
-#define K051316_16BIT	(1<<8)
-#define K051316_OPAQUE  (2<<8)
-
-void K051316RedrawTiles(INT32 chip);
-
-UINT8 K051316ReadRom(INT32 chip, INT32 offset);
-UINT8 K051316Read(INT32 chip, INT32 offset);
-void K051316Write(INT32 chip, INT32 offset, INT32 data);
-
-void K051316WriteCtrl(INT32 chip, INT32 offset, INT32 data);
-UINT8 K051316ReadCtrl(INT32 chip, INT32 offset);
-void K051316WrapEnable(INT32 chip, INT32 status);
-void K051316SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
-void K051316_zoom_draw(INT32 chip, INT32 flags);
-void K051316Scan(INT32 nAction);
+// K051316 declarations moved to k051316.h (included at the top of this header).
 
 // K053245 / k053247 shared
 //---------------------------------------------------------------------------------------------------------------

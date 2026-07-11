@@ -164,7 +164,7 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_ultraman.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_vendetta.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_xmen.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\k051316.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\k051316.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k051733.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k051960.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k052109.cpp" />

@@ -213,7 +213,7 @@ drivers = {
     'd_sub.cpp': ['ay8910', 'z80'],
     'd_suna8.cpp': ['ay8910', 'dac', 'ym2203', 'ym3812', 'z80'],
     'd_tagteam.cpp': ['ay8910', 'dac', 'm6502', 'resnet'],
-    'd_tail2nose.cpp': ['ay8910', 'm68000', 'ym2608', 'z80'],
+    'd_tail2nose.cpp': ['ay8910', 'k051316', 'm68000', 'ym2608', 'z80'],
     'd_tankbust.cpp': ['ay8910', 'z80'],
     'd_taxidriv.cpp': ['8255ppi', 'ay8910', 'z80'],
     'd_tbowl.cpp': ['msm5205', 'ym3812', 'z80'],

@@ -467,8 +467,8 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_xmen.cpp">
       <Filter>Source Files\burn\drv\konami</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\konami\k051316.cpp">
-      <Filter>Source Files\burn\drv\konami</Filter>
+    <ClCompile Include="..\..\src\burn\devices\k051316.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\konami\k051733.cpp">
       <Filter>Source Files\burn\drv\konami</Filter>

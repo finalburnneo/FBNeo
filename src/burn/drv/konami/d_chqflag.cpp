@@ -457,6 +457,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	K007232Reset(1);
 
 	KonamiICReset();
+	K051316Reset();
 	K051316WrapEnable(1, 1);
 
 	nDrvRamBank = 0;
@@ -596,6 +597,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	KonamiICExit();
+	K051316Exit();
 
 	konamiExit();
 	ZetExit();
@@ -645,6 +647,7 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 	KonamiClearBitmaps(0);
 
+	K051316SetRenderTarget(konami_bitmap32, konami_palette32, konami_priority_bitmap);
 	if (nBurnLayer & 1) K051316_zoom_draw(1, 0 | K051316_OPAQUE);
 
 	if (nBurnLayer & 2) K051316_zoom_draw(1, 1);
@@ -750,6 +753,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+		K051316Scan(nAction);
 
 		BurnShiftScan(nAction);
 

@@ -481,7 +481,7 @@ $$DRV_KONAMI {
 	    ../../src/burn/drv/konami/d_ultraman.cpp \
 	    ../../src/burn/drv/konami/d_vendetta.cpp \
 	    ../../src/burn/drv/konami/d_xmen.cpp \
-	    ../../src/burn/drv/konami/k051316.cpp \
+	    ../../src/burn/devices/k051316.cpp \
 	    ../../src/burn/drv/konami/k051733.cpp \
 	    ../../src/burn/drv/konami/k051960.cpp \
 	    ../../src/burn/drv/konami/k052109.cpp \

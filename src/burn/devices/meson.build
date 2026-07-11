@@ -27,6 +27,10 @@ all_burn_devices = {
     'i4x00': {'desc': 'I4X00 custom video device', 'sources': ['i4x00.cpp']},
     'i8155': {'desc': 'Intel 8155 RAM/I/O/timer', 'sources': ['i8155.cpp']},
     'intelfsh': {'desc': 'Intel/AMD flash memory', 'sources': ['intelfsh.cpp']},
+    'k051316': {
+        'desc': 'Konami K051316 zoom/rotation tilemap',
+        'sources': ['k051316.cpp'],
+    },
     'k1ge': {'desc': 'SNK K1GE/K2GE video device', 'sources': ['k1ge.cpp']},
     'kaneko_hit': {'desc': 'Kaneko HIT protection', 'sources': ['kaneko_hit.cpp']},
     'kaneko_tmap': {'desc': 'Kaneko tilemap device', 'sources': ['kaneko_tmap.cpp']},

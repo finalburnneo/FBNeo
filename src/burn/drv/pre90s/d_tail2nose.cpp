@@ -5,7 +5,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ym2608.h"
-#include "konamiic.h"
+#include "k051316.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -558,7 +558,7 @@ static INT32 DrvExit()
 	BurnYM2608Exit();
 	ZetClose();
 
-	KonamiICExit(); // K051316
+	K051316Exit();
 
 	SekExit();
 	ZetExit();

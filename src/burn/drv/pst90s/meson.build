@@ -74,7 +74,6 @@ drivers = {
     'd_mcatadv.cpp': ['ay8910', 'm68000', 'watchdog', 'ym2610', 'z80'],
     'd_metro.cpp': ['ay8910', 'es8712', 'i4x00', 'm68000', 'msm6295', 'upd7810', 'ym2151', 'ym2413', 'ym2610', 'ymf278b', 'z80'],
     'd_midas.cpp': ['eeprom', 'm68000', 'ymz280b'],
-    'd_mirage.cpp': ['eeprom', 'm68000', 'msm6295'],
     'd_missb2.cpp': ['msm6295', 'ym3526', 'z80'],
     'd_mosaic.cpp': ['ay8910', 'ym2203', 'z180', 'z80'],
     'd_ms32.cpp': ['burn_ymf271', 'v60', 'ymf271', 'z80'],

@@ -653,8 +653,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_meijinsn.cpp">
       <Filter>Source Files\burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mitchell.cpp">
-      <Filter>Source Files\burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_mitchell.cpp">
+      <Filter>burn\drv\capcom</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mole.cpp">
       <Filter>Source Files\burn\drv\pre90s</Filter>

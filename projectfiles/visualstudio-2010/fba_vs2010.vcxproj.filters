@@ -1689,8 +1689,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_meijinsn.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mitchell.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_mitchell.cpp">
+      <Filter>burn\drv\capcom</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mole.cpp">
       <Filter>Burn\drv\pre90s</Filter>
@@ -3102,8 +3102,8 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_metro.cpp">
       <Filter>Burn\drv\pst90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_mirage.cpp">
-      <Filter>Burn\drv\pst90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_mirage.cpp">
+      <Filter>burn\drv\dataeast</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_missb2.cpp">
       <Filter>Burn\drv\pst90s</Filter>
@@ -3363,8 +3363,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lastduel.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_madmotor.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_madmotor.cpp">
+      <Filter>burn\drv\dataeast</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mainsnk.cpp">
       <Filter>Burn\drv\pre90s</Filter>
@@ -3546,8 +3546,8 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toypop.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_travrusa.cpp">
-      <Filter>Burn\drv\pre90s</Filter>
+    <ClCompile Include="..\..\src\burn\drv\irem\d_travrusa.cpp">
+      <Filter>burn\drv\irem</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tsamurai.cpp">
       <Filter>Burn\drv\pre90s</Filter>

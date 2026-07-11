@@ -19,5 +19,6 @@ drivers = {
     'd_m72.cpp': ['ay8910', 'dac', 'i8051', 'm6800', 'msm5205', 'nec', 'ym2151', 'z80'],
     'd_m90.cpp': ['ay8910', 'dac', 'm6800', 'msm5205', 'nec', 'ym2151', 'z80'],
     'd_m92.cpp': ['ay8910', 'iremga20', 'm6800', 'msm5205', 'msm6295', 'nec', 'pic8259', 'ym2151', 'z80'],
+    'd_travrusa.cpp': ['ay8910', 'm6800', 'msm5205', 'z80'],
     'd_vigilant.cpp': ['ay8910', 'dac', 'm6800', 'msm5205', 'ym2151', 'ym2203', 'z80'],
 }

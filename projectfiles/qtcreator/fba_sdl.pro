@@ -605,7 +605,7 @@ $$DRV_PRE90S {
 	    ../../src/burn/drv/pre90s/d_marineb.cpp \
 	    ../../src/burn/drv/pre90s/d_markham.cpp \
 	    ../../src/burn/drv/pre90s/d_meijinsn.cpp \
-	    ../../src/burn/drv/pre90s/d_mitchell.cpp \
+	    ../../src/burn/drv/capcom/d_mitchell.cpp \
 	    ../../src/burn/drv/pre90s/d_mole.cpp \
 	    ../../src/burn/drv/pre90s/d_momoko.cpp \
 	    ../../src/burn/drv/pre90s/d_mrdo.cpp \

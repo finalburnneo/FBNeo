@@ -18,7 +18,6 @@ group_srcs = [
     'usb_snd.cpp',
 ]
 drivers = {
-    'd_119.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_angelkds.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_appoooh.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm5205', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sn76496', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_bankp.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sn76496', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],

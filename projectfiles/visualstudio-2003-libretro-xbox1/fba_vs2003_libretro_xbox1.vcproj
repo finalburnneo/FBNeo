@@ -912,7 +912,7 @@
 							RelativePath="..\..\src\burn\drv\pre90s\d_meijinsn.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\pre90s\d_mitchell.cpp">
+							RelativePath="..\..\src\burn\drv\capcom\d_mitchell.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_mole.cpp">

@@ -840,7 +840,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lasso.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lastduel.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lwings.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_madmotor.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_madmotor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mainsnk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mappy.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_marineb.cpp" />
@@ -854,7 +854,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mhavoc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_millipede.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mirax.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mitchell.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_mitchell.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mmagic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mole.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_momoko.cpp" />
@@ -933,7 +933,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_timelimt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toki.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toypop.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_travrusa.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\irem\d_travrusa.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tsamurai.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_usgames.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_vastar.cpp" />
@@ -1005,7 +1005,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mcatadv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_metro.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_midas.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_mirage.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_mirage.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_missb2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mosaic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mugsmash.cpp" />

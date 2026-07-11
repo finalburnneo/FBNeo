@@ -16,9 +16,5 @@ group_srcs = [
     'smsvdp.cpp',
 ]
 drivers = {
-    'd_sms.cpp': [
-        'sn76496',
-        'ym2413',
-        'z80',
-    ],
+    'd_sms.cpp': ['sn76496', 'ym2413', 'z80'],
 }

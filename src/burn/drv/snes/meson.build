@@ -23,7 +23,5 @@ group_srcs = [
     'statehandler.cpp',
 ]
 drivers = {
-    'd_snes.cpp': [
-        'upd7725',
-    ],
+    'd_snes.cpp': ['upd7725'],
 }

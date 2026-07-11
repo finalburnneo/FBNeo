@@ -9,8 +9,5 @@ group_srcs = [
     'spectrum.cpp',
 ]
 drivers = {
-    'd_spectrum.cpp': [
-        'ay8910',
-        'z80',
-    ],
+    'd_spectrum.cpp': ['ay8910', 'z80'],
 }

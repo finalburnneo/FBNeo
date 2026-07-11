@@ -16,11 +16,5 @@ group_srcs = [
     'pgm_run.cpp',
 ]
 drivers = {
-    'd_pgm.cpp': [
-        'arm7',
-        'ics2115',
-        'm68000',
-        'v3021',
-        'z80',
-    ],
+    'd_pgm.cpp': ['arm7', 'ics2115', 'm68000', 'v3021', 'z80'],
 }

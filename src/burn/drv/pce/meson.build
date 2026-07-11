@@ -9,9 +9,5 @@ group_srcs = [
     'pce.cpp',
 ]
 drivers = {
-    'd_pce.cpp': [
-        'c6280',
-        'h6280',
-        'vdc',
-    ],
+    'd_pce.cpp': ['c6280', 'h6280', 'vdc'],
 }

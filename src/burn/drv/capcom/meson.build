@@ -31,27 +31,6 @@ group_srcs = [
     'sf2mdt_snd.cpp',
 ]
 drivers = {
-    'd_cps1.cpp': [
-        'ay8910',
-        'eeprom',
-        'm68000',
-        'msm5205',
-        'msm6295',
-        'samples',
-        'timekpr',
-        'ym2151',
-        'ym2203',
-        'z80',
-    ],
-    'd_cps2.cpp': [
-        'ay8910',
-        'eeprom',
-        'm68000',
-        'msm5205',
-        'msm6295',
-        'samples',
-        'ym2151',
-        'ym2203',
-        'z80',
-    ],
+    'd_cps1.cpp': ['ay8910', 'eeprom', 'm68000', 'msm5205', 'msm6295', 'samples', 'timekpr', 'ym2151', 'ym2203', 'z80'],
+    'd_cps2.cpp': ['ay8910', 'eeprom', 'm68000', 'msm5205', 'msm6295', 'samples', 'ym2151', 'ym2203', 'z80'],
 }

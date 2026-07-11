@@ -10,7 +10,5 @@ group_srcs = [
     'cps3snd.cpp',
 ]
 drivers = {
-    'd_cps3.cpp': [
-        'sh2',
-    ],
+    'd_cps3.cpp': ['sh2'],
 }

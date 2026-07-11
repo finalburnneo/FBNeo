@@ -3,14 +3,22 @@
 # group's file names are relative to its own dir, so re-add the group prefix.
 # Enabled/disabled selection already happened during collection in the root.
 burn_drv_sources = ['d_parent.cpp']
+# Per-group summary: the folder (group_desc) is the label; its value lists the
+# individual drivers actually built in that folder. burn_drivers only holds
+# groups with >=1 enabled driver, so an all-OFF folder is absent here and no
+# per-driver detail is printed for it.
 burn_driver_status = {}
 foreach name, g : burn_drivers
-    burn_driver_status += {g['desc']: 'ON'}
+    driver_names = []
+    foreach src : g['drivers']
+        driver_names += src.substring(2).replace('.cpp', '')
+    endforeach
+    burn_driver_status += {g['desc']: driver_names}
     foreach src : g['drivers'] + g['srcs']
         burn_drv_sources += name / src
     endforeach
 endforeach
-summary(burn_driver_status, section: 'Burn drivers', list_sep: '')
+summary(burn_driver_status, section: 'Burn drivers', list_sep: ', ')
 
 ctv_make = executable('ctv_make', 'capcom/ctv_make.cpp', native: true)
 pgm_sprite_create = executable(

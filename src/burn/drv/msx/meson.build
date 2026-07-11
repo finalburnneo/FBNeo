@@ -7,12 +7,5 @@
 group_desc = 'MSX drivers'
 group_srcs = []
 drivers = {
-    'd_msx.cpp': [
-        '8255ppi',
-        'ay8910',
-        'dac',
-        'k051649',
-        'tms9928a',
-        'z80',
-    ],
+    'd_msx.cpp': ['8255ppi', 'ay8910', 'dac', 'k051649', 'tms9928a', 'z80'],
 }

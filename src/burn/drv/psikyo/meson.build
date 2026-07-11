@@ -12,24 +12,7 @@ group_srcs = [
     'psikyosh_render.cpp',
 ]
 drivers = {
-    'd_psikyo.cpp': [
-        'ay8910',
-        'm68000',
-        'msm6295',
-        'ym2610',
-        'ymf278b',
-        'z80',
-    ],
-    'd_psikyo4.cpp': [
-        'eeprom',
-        'm68000',
-        'sh2',
-        'ymf278b',
-    ],
-    'd_psikyosh.cpp': [
-        'eeprom',
-        'm68000',
-        'sh2',
-        'ymf278b',
-    ],
+    'd_psikyo.cpp': ['ay8910', 'm68000', 'msm6295', 'ym2610', 'ymf278b', 'z80'],
+    'd_psikyo4.cpp': ['eeprom', 'm68000', 'sh2', 'ymf278b'],
+    'd_psikyosh.cpp': ['eeprom', 'm68000', 'sh2', 'ymf278b'],
 }

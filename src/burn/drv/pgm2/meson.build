@@ -11,8 +11,5 @@ group_srcs = [
     'pgm2_run.cpp',
 ]
 drivers = {
-    'd_pgm2.cpp': [
-        'arm9',
-        'ymz770',
-    ],
+    'd_pgm2.cpp': ['arm9', 'ymz770'],
 }

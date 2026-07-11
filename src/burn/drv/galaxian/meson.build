@@ -12,15 +12,5 @@ group_srcs = [
     'gal_stars.cpp',
 ]
 drivers = {
-    'd_galaxian.cpp': [
-        '8255ppi',
-        'ay8910',
-        'dac',
-        'digitalk',
-        'flt_rc',
-        'resnet',
-        's2650',
-        'sn76496',
-        'z80',
-    ],
+    'd_galaxian.cpp': ['8255ppi', 'ay8910', 'dac', 'digitalk', 'flt_rc', 'resnet', 's2650', 'sn76496', 'z80'],
 }

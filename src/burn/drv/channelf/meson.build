@@ -7,7 +7,5 @@
 group_desc = 'Fairchild Channel F drivers'
 group_srcs = []
 drivers = {
-    'd_channelf.cpp': [
-        'f8',
-    ],
+    'd_channelf.cpp': ['f8'],
 }

@@ -97,24 +97,8 @@ endif
 
 cpu_lib_inc = ['..', '../burn'] + cpu_include_dirs
 
-cpu_defs = []
-if host_machine.system() == 'windows'
-    cpu_defs += '-D_USE_MATH_DEFINES'
-endif
-
-cpu_cpp_warning_args = []
-if cpp.get_id() in ['gcc', 'clang']
-    cpu_cpp_warning_args = [
-        '-Wno-sequence-point',
-        '-Wno-sign-compare',
-        '-Wno-unused-but-set-variable',
-        '-Wno-unused-parameter',
-        '-Wno-unused-value',
-        '-Wno-unused-variable',
-    ]
-endif
-
-cpu_cpp_args = cpu_defs + cpu_cpp_warning_args
+cpu_defs = platform_math_defs
+cpu_cpp_args = cpu_defs + common_cpp_warning_args
 cpu_lib = static_library(
     'cpu',
     cpu_sources,

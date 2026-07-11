@@ -88,24 +88,12 @@ foreach name : burn_driver_list
     burn_drv_defs += '-DBUILD_' + name.to_upper()
 endforeach
 
+burn_drv_defs += platform_math_defs
 if host_machine.system() == 'windows'
-    burn_drv_defs += '-D_USE_MATH_DEFINES'
     burn_drv_defs += '-DUSE_SPEEDHACKS'
 endif
 
-burn_drv_cpp_warning_args = []
-if cpp.get_id() in ['gcc', 'clang']
-    burn_drv_cpp_warning_args = [
-        '-Wno-sequence-point',
-        '-Wno-sign-compare',
-        '-Wno-unused-but-set-variable',
-        '-Wno-unused-parameter',
-        '-Wno-unused-value',
-        '-Wno-unused-variable',
-    ]
-endif
-
-burn_drv_cpp_args = burn_drv_defs + burn_drv_cpp_warning_args
+burn_drv_cpp_args = burn_drv_defs + common_cpp_warning_args
 
 burn_drv_lib = static_library(
     'burn_drv',

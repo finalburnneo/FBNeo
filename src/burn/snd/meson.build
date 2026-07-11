@@ -250,9 +250,7 @@ endif
 
 burn_snd_inc = ['../../dep/libs/dr_libs']
 
-if host_machine.system() == 'windows'
-    burn_snd_defs += '-D_USE_MATH_DEFINES'
-endif
+burn_snd_defs += platform_math_defs
 
 burn_snd_c_args = burn_snd_defs
 burn_snd_cpp_args = burn_snd_defs

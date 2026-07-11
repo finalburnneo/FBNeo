@@ -63,21 +63,8 @@ if get_option('buildtype').contains('debug')
     burn_defs += '-DFBNEO_DEBUG'
 endif
 
-if frontend == 'win32'
-    burn_defs += '-DBUILD_WIN32'
-    burn_defs += '-DUNICODE'
-    burn_defs += '-D_UNICODE'
-elif frontend == 'macos'
-    burn_defs += '-DBUILD_MACOS'
-elif frontend == 'sdl2'
-    burn_defs += '-DBUILD_SDL2'
-elif frontend == 'qt'
-    burn_defs += '-DBUILD_QT'
-elif frontend == 'pi'
-    burn_defs += '-DBUILD_PI'
-elif frontend == 'psp'
-    burn_defs += '-DBUILD_PSP'
-endif
+# Active-frontend build macro(s), computed once in the root meson.build.
+burn_defs += frontend_defs
 
 burn_c_args = burn_defs
 burn_cpp_args = burn_defs

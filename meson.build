@@ -35,6 +35,39 @@ if frontend == 'auto'
 endif
 
 message('FBNeo frontend: ' + frontend)
+
+# frontend -> source subdir (used for the subdir dispatch below)
+frontend_dirs = {
+    'win32': 'win32',
+    'sdl2': 'sdl',
+    'qt': 'qt',
+    'macos': 'macos',
+    'pi': 'pi',
+    'psp': 'psp',
+}
+
+# Build-selection macro for the active frontend, defined once here and threaded
+# through the burn static library (and its dependents) via burn_defs.
+frontend_defs = ['-DBUILD_' + frontend.to_upper()]
+if frontend == 'win32'
+    frontend_defs += ['-DUNICODE', '-D_UNICODE']
+endif
+
+# Warning flags shared by the cpu and burn_drv static libraries (identical set).
+common_cpp_warning_args = []
+if cpp.get_id() in ['gcc', 'clang']
+    common_cpp_warning_args = [
+        '-Wno-sequence-point',
+        '-Wno-sign-compare',
+        '-Wno-unused-but-set-variable',
+        '-Wno-unused-parameter',
+        '-Wno-unused-value',
+        '-Wno-unused-variable',
+    ]
+endif
+
+# Platform math macro reused by cpu / snd / burn_drv on Windows.
+platform_math_defs = host_machine.system() == 'windows' ? ['-D_USE_MATH_DEFINES'] : []
 force_pulse_audio = get_option('force_pulse_audio')
 rom_verify = get_option('rom_verify')
 fastcall_support = get_option('fastcall_support')
@@ -163,19 +196,12 @@ build_details_h = custom_target(
 )
 fbneo_sources += build_details_h
 
-if frontend == 'sdl2'
-    subdir('src/burner/sdl')
-elif frontend == 'win32'
-    subdir('src/burner/win32')
-elif frontend == 'qt'
-    subdir('src/burner/qt')
-elif frontend == 'macos'
-    subdir('src/burner/macos')
-elif frontend == 'pi'
-    subdir('src/burner/pi')
-elif frontend == 'psp'
-    subdir('src/burner/psp')
-endif
+subdir('src/burner' / frontend_dirs[frontend])
+
+# Each frontend fragment must export these (implicit contract).
+assert(is_variable('frontend_sources'), 'frontend must define frontend_sources')
+assert(is_variable('frontend_dep'), 'frontend must define frontend_dep')
+assert(is_variable('frontend_link_args'), 'frontend must define frontend_link_args')
 
 fbneo_sources += frontend_sources
 

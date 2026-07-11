@@ -535,6 +535,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	KonamiICReset();
+	K053936Reset();
 
 	MSM6295Reset();
 	BurnYM2151Reset();
@@ -818,6 +819,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	KonamiICExit();
+	K053936Exit();
 
 	BurnYM2151Exit();
 	MSM6295Exit();
@@ -881,6 +883,8 @@ static INT32 DrvDraw()
 	layerpri[4] = K053251GetPriority(1);
 
 	konami_sortlayers5(layer, layerpri);
+
+	K053936SetRenderTarget(konami_bitmap32, konami_palette32, konami_priority_bitmap);
 
 	for (plane = 0; plane < 5; plane++)
 	{
@@ -993,6 +997,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+		K053936Scan(nAction);
 
 		SCAN_VAR(control_data);
 	}

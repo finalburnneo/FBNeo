@@ -1527,8 +1527,8 @@
     <ClCompile Include="..\..\src\burn\drv\konami\k053251.cpp">
       <Filter>Burn\drv\konami</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\konami\k053936.cpp">
-      <Filter>Burn\drv\konami</Filter>
+    <ClCompile Include="..\..\src\burn\devices\k053936.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\konami\k054000.cpp">
       <Filter>Burn\drv\konami</Filter>

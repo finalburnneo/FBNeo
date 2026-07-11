@@ -2,7 +2,20 @@
 // copyright-holders:David Haywood
 
 #include "tiles_generic.h"
-#include "konamiic.h"
+#include "k053936.h"
+
+// Render target for the high-color (32-bit) paths; set by the driver via
+// K053936SetRenderTarget(). NULL -> the 32-bit paths are skipped.
+static UINT32 *k053936_bitmap32 = NULL;
+static UINT32 *k053936_palette32 = NULL;
+static UINT8  *k053936_priority_bitmap = NULL;
+
+void K053936SetRenderTarget(UINT32 *bitmap32, UINT32 *palette32, UINT8 *priority_bitmap)
+{
+	k053936_bitmap32 = bitmap32;
+	k053936_palette32 = palette32;
+	k053936_priority_bitmap = priority_bitmap;
+}
 
 #define MAX_K053936	2
 
@@ -58,10 +71,6 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 	if (chip == 1) {
 		pTileCallback1 = pCallback;
 	}
-
-	KonamiAllocateBitmaps();
-
-	KonamiIC_K053936InUse = 1;
 }
 
 void K053936Exit()
@@ -76,8 +85,6 @@ void K053936Exit()
 		K053936Wrap[i] = 0;
 		K053936Offset[i][0] = K053936Offset[i][1] = 0;
 	}
-
-	KonamiIC_K053936InUse = 0;
 }
 
 void K053936PredrawTiles3(INT32 chip, UINT8 *gfx, INT32 tile_size_x, INT32 tile_size_y, INT32 transparent)
@@ -229,30 +236,32 @@ void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 
 static inline void copy_roz32(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 transp, INT32 priority)
 {
+	if (k053936_bitmap32 == NULL) return; // no high-color render target set
+
 	if (incxx == (1 << 16) && incxy == 0 && incyx == 0 && incyy == (1 << 16) && K053936Wrap[chip])
 	{
 		INT32 scrollx = startx >> 16;
 		INT32 scrolly = starty >> 16;
 
 		for (INT32 sy = 0; sy < nScreenHeight; sy++) {
-			UINT8  *pri = konami_priority_bitmap + (sy * nScreenWidth);
+			UINT8  *pri = k053936_priority_bitmap + (sy * nScreenWidth);
 			UINT16 *src = tscreen[chip] + (((scrolly + sy) % nHeight[chip]) * nWidth[chip]);
-			UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth);
+			UINT32 *dst = k053936_bitmap32 + (sy * nScreenWidth);
 
 			for (INT32 sx = 0; sx < nScreenWidth; sx++) {
 				INT32 pxl = src[(scrollx+sx)%nWidth[chip]];
 				if ((pxl & 0x8000)!=0 && transp) continue;
 
-				dst[sx] = konami_palette32[pxl & 0x7fff];
+				dst[sx] = k053936_palette32[pxl & 0x7fff];
 				pri[sx] = priority;
 			}
 		}
 		return;
 	}
 
-	UINT8  *pri = konami_priority_bitmap;
-	UINT32 *dst = konami_bitmap32;
-	UINT32 *pal = konami_palette32;
+	UINT8  *pri = k053936_priority_bitmap;
+	UINT32 *dst = k053936_bitmap32;
+	UINT32 *pal = k053936_palette32;
 	UINT16 *src = tscreen[chip];
 
 	INT32 width = nWidth[chip];
@@ -606,6 +615,8 @@ void K053936GP_set_cliprect(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32 *my_clip, UINT32 _startx,UINT32 _starty,INT32 _incxx,INT32 _incxy,INT32 _incyx,INT32 _incyy,
 		INT32 tilebpp, INT32 blend, INT32 alpha, INT32 clip, INT32 pixeldouble_output)
 {
+	if (k053936_bitmap32 == NULL) return; // no high-color render target set
+
 	static const INT32 colormask[8]={1,3,7,0xf,0x1f,0x3f,0x7f,0xff};
 	INT32 cy, cx;
 	INT32 ecx;
@@ -649,12 +660,12 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 
 	// adjust entry points and other loop constants
 	dst_pitch = nScreenWidth;
-	dst_base = konami_bitmap32;
+	dst_base = k053936_bitmap32;
 	dst_base2 = sy * dst_pitch + sx + tx;
 	ecx = tx = -tx;
 
 	tilebpp = (tilebpp-1) & 7;
-	pal_base = konami_palette32;
+	pal_base = k053936_palette32;
 	cmask = colormask[tilebpp];
 
 	src_pitch = 0x2000;

@@ -1,7 +1,8 @@
-// K051316 is now a standalone device (src/burn/devices); its declarations live
-// in k051316.h. Included here so existing konami drivers keep getting the API
-// (and the SetRenderTarget hook) through konamiic.h.
+// K051316 and K053936 are now standalone devices (src/burn/devices); their
+// declarations live in k051316.h / k053936.h. Included here so existing konami
+// drivers keep getting the API (and the SetRenderTarget hook) through konamiic.h.
 #include "k051316.h"
+#include "k053936.h"
 
 // konamiic.cpp
 //---------------------------------------------------------------------------------------------------------------
@@ -9,7 +10,6 @@ extern UINT32 KonamiIC_K051960InUse;
 extern UINT32 KonamiIC_K052109InUse;
 extern UINT32 KonamiIC_K053245InUse;
 extern UINT32 KonamiIC_K053247InUse;
-extern UINT32 KonamiIC_K053936InUse;
 extern UINT32 KonamiIC_K053250InUse;
 extern UINT32 KonamiIC_K055555InUse;
 extern UINT32 KonamiIC_K054338InUse;
@@ -309,36 +309,7 @@ UINT8 K051733Read(INT32 offset);
 UINT8 K051733nmi_ok();
 void K051733Scan(INT32 nAction);
 
-// K053936.cpp
-//------------------------------------------------------------------------------------------
-
-void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCallback)(INT32 offset, UINT16 *ram, INT32 *code, INT32 *color, INT32 *sx, INT32 *sy, INT32 *fx, INT32 *fy));
-
-void K053936Reset();
-void K053936Exit();
-void K053936Scan(INT32 nAction);
-
-void K053936EnableWrap(INT32 chip, INT32 status);
-void K053936SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
-void K053936PredrawTiles3(INT32 chip, UINT8 *gfx, INT32 tile_size_x, INT32 tile_size_y, INT32 transparent);
-void K053936PredrawTiles2(INT32 chip, UINT8 *gfx);
-void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol /*transparent color*/);
-void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp);
-
-extern UINT16 *m_k053936_0_ctrl_16;
-extern UINT16 *m_k053936_0_linectrl_16;
-extern UINT16 *m_k053936_0_ctrl;
-extern UINT16 *m_k053936_0_linectrl;
-extern UINT16 *K053936_external_bitmap;
-
-void K053936GP_set_colorbase(INT32 chip, INT32 color_base);
-void K053936GP_enable(int chip, int enable);
-void K053936GP_set_offset(int chip, int xoffs, int yoffs);
-void K053936GP_clip_enable(int chip, int status);
-void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy);
-void K053936GP_0_zoom_draw(UINT16 *bitmap, int tilebpp, int blend, int alpha, int pixeldouble_output, UINT16* temp_m_k053936_0_ctrl_16, UINT16* temp_m_k053936_0_linectrl_16,UINT16* temp_m_k053936_0_ctrl, UINT16* temp_m_k053936_0_linectrl);
-void K053936GpInit();
-void K053936GPExit();
+// K053936 declarations moved to k053936.h (included at the top of this header).
 
 // k053250.cpp
 //------------------------------------------------------------------------------------------

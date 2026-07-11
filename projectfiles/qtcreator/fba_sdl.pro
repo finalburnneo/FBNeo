@@ -488,7 +488,7 @@ $$DRV_KONAMI {
 	    ../../src/burn/drv/konami/k053245.cpp \
 	    ../../src/burn/drv/konami/k053247.cpp \
 	    ../../src/burn/drv/konami/k053251.cpp \
-	    ../../src/burn/drv/konami/k053936.cpp \
+	    ../../src/burn/devices/k053936.cpp \
 	    ../../src/burn/drv/konami/k054000.cpp \
 	    ../../src/burn/drv/konami/konamiic.cpp
 }

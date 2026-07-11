@@ -693,7 +693,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\konami\k053247.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k053250.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k053251.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\k053936.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\k053936.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k054000.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k054338.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k055555.cpp" />

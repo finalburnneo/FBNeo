@@ -31,6 +31,10 @@ all_burn_devices = {
         'desc': 'Konami K051316 zoom/rotation tilemap',
         'sources': ['k051316.cpp'],
     },
+    'k053936': {
+        'desc': 'Konami K053936 zoom/rotation (ROZ+) tilemap',
+        'sources': ['k053936.cpp'],
+    },
     'k1ge': {'desc': 'SNK K1GE/K2GE video device', 'sources': ['k1ge.cpp']},
     'kaneko_hit': {'desc': 'Kaneko HIT protection', 'sources': ['kaneko_hit.cpp']},
     'kaneko_tmap': {'desc': 'Kaneko tilemap device', 'sources': ['kaneko_tmap.cpp']},

@@ -688,7 +688,7 @@
 							RelativePath="..\..\src\burn\drv\konami\k053251.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\konami\k053936.cpp">
+							RelativePath="..\..\src\burn\devices\k053936.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\konami\k054000.cpp">

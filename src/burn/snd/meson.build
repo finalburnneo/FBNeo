@@ -259,7 +259,7 @@ burn_snd_lib = static_library(
     'burn_snd',
     burn_snd_sources,
     dependencies: [burn_dep, cpu_dep],
-    include_directories: include_directories(burn_snd_inc),
+    include_directories: [include_directories(burn_snd_inc), global_inc],
     c_args: burn_snd_c_args,
     cpp_args: burn_snd_cpp_args,
 )

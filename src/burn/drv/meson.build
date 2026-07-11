@@ -98,22 +98,23 @@ burn_drv_cpp_args = burn_drv_defs + common_cpp_warning_args
 burn_drv_lib = static_library(
     'burn_drv',
     burn_drv_sources,
-    # TODO: cd deps split
+    # Cross-group driver headers stay local; intf/audio, intf/cd and burner
+    # headers come from the global include set.
     include_directories: [
-        'capcom',
-        'cave',
-        'dataeast',
-        'galaxian',
-        'irem',
-        'konami',
-        'neogeo',
-        'psikyo',
-        'sega',
-        'taito',
-        'toaplan',
-        '../../intf/audio',
-        '../../intf/cd',
-        '../../burner',
+        include_directories(
+            'capcom',
+            'cave',
+            'dataeast',
+            'galaxian',
+            'irem',
+            'konami',
+            'neogeo',
+            'psikyo',
+            'sega',
+            'taito',
+            'toaplan',
+        ),
+        global_inc,
     ],
     dependencies: [burn_dep, burn_devices_dep, burn_snd_dep, cpu_dep],
     cpp_args: burn_drv_cpp_args,

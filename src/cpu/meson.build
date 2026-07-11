@@ -102,7 +102,7 @@ cpu_cpp_args = cpu_defs + common_cpp_warning_args
 cpu_lib = static_library(
     'cpu',
     cpu_sources,
-    include_directories: include_directories(cpu_lib_inc),
+    include_directories: [include_directories(cpu_lib_inc), global_inc],
     dependencies: burn_dep,
     cpp_args: cpu_cpp_args,
     c_args: cpu_defs,

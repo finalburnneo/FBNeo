@@ -68,6 +68,27 @@ endif
 
 # Platform math macro reused by cpu / snd / burn_drv on Windows.
 platform_math_defs = host_machine.system() == 'windows' ? ['-D_USE_MATH_DEFINES'] : []
+
+# Cross-cutting header directories made globally visible to every internal
+# library and the final executable. Code includes these bare (e.g. "z80_intf.h",
+# "msm6295.h", "eeprom.h", "burnint.h"), so exposing the directories globally
+# removes the per-library include juggling and the reverse-include hacks.
+# (Verified: no duplicate header basenames across this set.) cpu core and driver
+# group subdirectories stay local to their own libraries on purpose.
+global_inc = include_directories(
+    'src/burn',
+    'src/burn/devices',
+    'src/burn/snd',
+    'src/cpu',
+    'src/burner',
+    'src/burner' / frontend_dirs[frontend],
+    'src/intf',
+    'src/intf/audio',
+    'src/intf/video',
+    'src/intf/input',
+    'src/intf/cd',
+    'src/intf/perfcount',
+)
 force_pulse_audio = get_option('force_pulse_audio')
 rom_verify = get_option('rom_verify')
 fastcall_support = get_option('fastcall_support')
@@ -281,7 +302,7 @@ link_args += frontend_link_args
 executable(
     'fbneo',
     fbneo_sources,
-    include_directories: [fbneo_includes],
+    include_directories: [fbneo_includes, global_inc],
     dependencies: deps
     + [
         cpu_dep,

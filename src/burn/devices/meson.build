@@ -90,8 +90,8 @@ summary(burn_device_status, section: 'Burn devices', list_sep: '')
 burn_devices_lib = static_library(
     'burn_devices',
     burn_devices_sources,
-    # TODO: snd/pce dep must split
-    include_directories: include_directories(['../drv/pce', '../snd']),
+    # snd headers come from global_inc; pce stays local for the VDC device.
+    include_directories: [include_directories(['../drv/pce']), global_inc],
     dependencies: [burn_dep, cpu_dep],
 )
 

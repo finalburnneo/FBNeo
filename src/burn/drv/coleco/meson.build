@@ -8,10 +8,10 @@ group_desc = 'ColecoVision drivers'
 group_srcs = []
 drivers = {
     'd_coleco.cpp': [
-        'z80',
-        'i2ceeprom',
-        'tms9928a',
         'ay8910',
+        'i2ceeprom',
         'sn76496',
+        'tms9928a',
+        'z80',
     ],
 }

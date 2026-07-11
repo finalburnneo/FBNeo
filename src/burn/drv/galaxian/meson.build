@@ -13,18 +13,14 @@ group_srcs = [
 ]
 drivers = {
     'd_galaxian.cpp': [
-        'm6809',
-        's2650',
-        'z80',
         '8255ppi',
-        'resnet',
-        'watchdog',
         'ay8910',
         'dac',
         'digitalk',
         'flt_rc',
-        'samples',
-        'sn76477',
+        'resnet',
+        's2650',
         'sn76496',
+        'z80',
     ],
 }

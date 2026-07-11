@@ -17,9 +17,8 @@ group_srcs = [
 ]
 drivers = {
     'd_sms.cpp': [
-        'z80',
-        'tms9928a',
         'sn76496',
         'ym2413',
+        'z80',
     ],
 }

@@ -12,8 +12,5 @@ group_srcs = [
 drivers = {
     'd_cps3.cpp': [
         'sh2',
-        'eeprom',
-        'intelfsh',
-        'dac',
     ],
 }

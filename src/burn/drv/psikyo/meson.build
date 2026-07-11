@@ -13,33 +13,23 @@ group_srcs = [
 ]
 drivers = {
     'd_psikyo.cpp': [
+        'ay8910',
         'm68000',
-        'sh2',
-        'z80',
-        'eeprom',
         'msm6295',
-        'ym2151',
         'ym2610',
         'ymf278b',
+        'z80',
     ],
     'd_psikyo4.cpp': [
+        'eeprom',
         'm68000',
         'sh2',
-        'z80',
-        'eeprom',
-        'msm6295',
-        'ym2151',
-        'ym2610',
         'ymf278b',
     ],
     'd_psikyosh.cpp': [
+        'eeprom',
         'm68000',
         'sh2',
-        'z80',
-        'eeprom',
-        'msm6295',
-        'ym2151',
-        'ym2610',
         'ymf278b',
     ],
 }

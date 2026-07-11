@@ -9,6 +9,5 @@ group_srcs = []
 drivers = {
     'd_channelf.cpp': [
         'f8',
-        'dac',
     ],
 }

@@ -24,8 +24,6 @@ group_srcs = [
 ]
 drivers = {
     'd_snes.cpp': [
-        'm6502',
         'upd7725',
-        'dac',
     ],
 }

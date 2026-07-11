@@ -8,8 +8,8 @@ group_desc = 'Sega SG-1000 drivers'
 group_srcs = []
 drivers = {
     'd_sg1000.cpp': [
-        'z80',
-        'tms9928a',
         'sn76496',
+        'tms9928a',
+        'z80',
     ],
 }

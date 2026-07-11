@@ -16,14 +16,10 @@ group_srcs = [
 ]
 drivers = {
     'd_neogeo.cpp': [
-        'm68000',
-        'z80',
-        'eeprom',
-        'resnet',
-        'watchdog',
         'ay8910',
-        'dac',
+        'm68000',
+        'resnet',
         'ym2610',
-        'ym2612',
+        'z80',
     ],
 }

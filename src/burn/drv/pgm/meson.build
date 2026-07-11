@@ -18,13 +18,9 @@ group_srcs = [
 drivers = {
     'd_pgm.cpp': [
         'arm7',
-        'm68000',
-        'z80',
-        'eeprom',
-        'i2ceeprom',
-        'v3021',
-        'watchdog',
         'ics2115',
-        'msm6295',
+        'm68000',
+        'v3021',
+        'z80',
     ],
 }

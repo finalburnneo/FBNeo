@@ -11,25 +11,21 @@ group_srcs = [
 ]
 drivers = {
     'd_mdarcbl.cpp': [
-        'm68000',
-        'z80',
-        'eeprom',
-        'i2ceeprom',
         'burn_md2612',
-        'dac',
+        'i2ceeprom',
+        'm68000',
         'samples',
         'sn76496',
         'ym2612',
+        'z80',
     ],
     'd_megadrive.cpp': [
-        'm68000',
-        'z80',
-        'eeprom',
-        'i2ceeprom',
         'burn_md2612',
-        'dac',
+        'i2ceeprom',
+        'm68000',
         'samples',
         'sn76496',
         'ym2612',
+        'z80',
     ],
 }

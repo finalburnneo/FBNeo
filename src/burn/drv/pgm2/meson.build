@@ -13,9 +13,6 @@ group_srcs = [
 drivers = {
     'd_pgm2.cpp': [
         'arm9',
-        'eeprom',
-        'i2ceeprom',
-        'ics2115',
         'ymz770',
     ],
 }

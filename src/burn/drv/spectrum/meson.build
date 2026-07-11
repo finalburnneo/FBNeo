@@ -10,8 +10,7 @@ group_srcs = [
 ]
 drivers = {
     'd_spectrum.cpp': [
-        'z80',
         'ay8910',
-        'beep',
+        'z80',
     ],
 }

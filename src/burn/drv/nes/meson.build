@@ -10,8 +10,8 @@ group_srcs = [
 ]
 drivers = {
     'd_nes.cpp': [
-        'm6502',
         'ay8910',
+        'm6502',
         'nes_apu',
         'ym2413',
     ],

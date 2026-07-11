@@ -1425,8 +1425,8 @@ static void mapperFDS_reset()
 
 	// Init 2khz lp filter coefficient @ 1.786mhz
 	double omeg = exp(-2.0 * 3.1415926 * 2000 / (29781 * 60));
-    fds.filt_sa = (INT32)(omeg * (double)(1 << 12));
-    fds.filt_sb = (1 << 12) - fds.filt_sa;
+	fds.filt_sa = (INT32)(omeg * (double)(1 << 12));
+	fds.filt_sb = (1 << 12) - fds.filt_sa;
 }
 
 static void mapperFDS_scan()
@@ -1907,7 +1907,7 @@ static void mapper01_write(UINT16 address, UINT8 data)
 			mapper01_last_cyc[0] = mega_cyc_counter;
 			return;
 		}
-        if (data & 0x80) { // bit 7, mapper reset
+		if (data & 0x80) { // bit 7, mapper reset
 			mapper01_bitcount = 0;
 			mapper01_serialbyte = 0;
 			mapper_regs[0] |= 0x0c;
@@ -1923,13 +1923,13 @@ static void mapper01_write(UINT16 address, UINT8 data)
 					case 1: mapper01_lastwrite = 0; break;
 					case 2: mapper01_lastwrite = 1; break;
 				}
-                mapper01_bitcount = 0;
-                mapper01_serialbyte = 0;
-                if (mapper_map) mapper_map();
+				mapper01_bitcount = 0;
+				mapper01_serialbyte = 0;
+				if (mapper_map) mapper_map();
 			}
 		}
 		mapper01_last_cyc[0] = mega_cyc_counter;
-    }
+	}
 }
 
 static void mapper105_map()
@@ -2019,32 +2019,32 @@ static void mapper01_map()
 
 	if (mapper_regs[0] & 0x8) {
 		if (mapper_regs[0] & 0x4) {
-            mapper_map_prg(16, 0, (mapper_regs[3] & 0xf) | mapper01_prg2x);
+			mapper_map_prg(16, 0, (mapper_regs[3] & 0xf) | mapper01_prg2x);
 			if (bigcart) {
 				mapper_map_prg(16, 1, 0xf | mapper01_prg2x);
 			} else {
 				mapper_map_prg(16, 1, -1);
 			}
-        } else {
-            mapper_map_prg(16, 0, 0 | mapper01_prg2x);
-            mapper_map_prg(16, 1, (mapper_regs[3] & 0xf) | mapper01_prg2x);
-        }
+		} else {
+			mapper_map_prg(16, 0, 0 | mapper01_prg2x);
+			mapper_map_prg(16, 1, (mapper_regs[3] & 0xf) | mapper01_prg2x);
+		}
 	} else {
 		mapper_map_prg(32, 0, ((mapper_regs[3] & 0xf) | mapper01_prg2x) >> 1);
 	}
 
 	if (mapper_regs[0] & 0x10) {
-        mapper_map_chr( 4, 0, mapper_regs[1]);
-        mapper_map_chr( 4, 1, mapper_regs[2]);
+		mapper_map_chr( 4, 0, mapper_regs[1]);
+		mapper_map_chr( 4, 1, mapper_regs[2]);
 	} else {
 		mapper_map_chr( 8, 0, mapper_regs[1] >> 1);
 	}
 
 	switch (mapper_regs[0] & 3) {
-        case 0: set_mirroring(SINGLE_LOW); break;
-        case 1: set_mirroring(SINGLE_HIGH); break;
-        case 2: set_mirroring(VERTICAL); break;
-        case 3: set_mirroring(HORIZONTAL); break;
+		case 0: set_mirroring(SINGLE_LOW); break;
+		case 1: set_mirroring(SINGLE_HIGH); break;
+		case 2: set_mirroring(VERTICAL); break;
+		case 3: set_mirroring(HORIZONTAL); break;
 	}
 }
 #undef mapper01_serialbyte
@@ -2061,9 +2061,9 @@ static void mapper02_write(UINT16 address, UINT8 data)
 
 static void mapper02_map()
 {
-    mapper_map_prg(16, 0, mapper_regs[0] & 0xff);
-    mapper_map_prg(16, 1, -1);
-    mapper_map_chr( 8, 0, 0);
+	mapper_map_prg(16, 0, mapper_regs[0] & 0xff);
+	mapper_map_prg(16, 1, -1);
+	mapper_map_chr( 8, 0, 0);
 }
 
 // ---[ mapper 41 Caltron 6-in-1
@@ -2178,8 +2178,8 @@ static void mapper190_write(UINT16 address, UINT8 data)
 
 static void mapper190_map()
 {
-    mapper_map_prg(16, 0, mapper190_prg);
-    mapper_map_prg(16, 1, 0); // second 16k bank mapped to first prg bank
+	mapper_map_prg(16, 0, mapper190_prg);
+	mapper_map_prg(16, 1, 0); // second 16k bank mapped to first prg bank
 
 	mapper_map_chr( 2, 0, mapper190_chr(0));
 	mapper_map_chr( 2, 1, mapper190_chr(1));
@@ -2372,7 +2372,7 @@ static UINT8 mapper216_read(UINT16 address)
 
 static void mapper216_map()
 {
-    mapper_map_prg(32, 0, mapper216_prg);
+	mapper_map_prg(32, 0, mapper216_prg);
 	mapper_map_chr( 8, 0, mapper216_chr);
 }
 #undef mapper216_prg
@@ -2404,7 +2404,7 @@ static UINT8 mapper132_read(UINT16 address)
 
 static void mapper132_map()
 {
-    mapper_map_prg(32, 0, (mapper132_reg(2) >> 2) & 1);
+	mapper_map_prg(32, 0, (mapper132_reg(2) >> 2) & 1);
 	mapper_map_chr( 8, 0, mapper132_reg(2) & 3);
 }
 #undef mapper132_reg
@@ -2622,8 +2622,8 @@ static void mapper30_write(UINT16 address, UINT8 data)
 
 static void mapper30_map()
 {
-    mapper_map_prg(16, 0, mapper_regs[0] & 0x1f);
-    mapper_map_prg(16, 1, -1);
+	mapper_map_prg(16, 0, mapper_regs[0] & 0x1f);
+	mapper_map_prg(16, 1, -1);
 	mapper_map_chr( 8, 0, (mapper_regs[0] >> 5) & 0x03);
 	if (mapper30_mirroring_en) {
 		set_mirroring((mapper_regs[0] & 0x80) ? SINGLE_HIGH : SINGLE_LOW);
@@ -2648,7 +2648,7 @@ static void mapper03_write(UINT16 address, UINT8 data)
 
 static void mapper03_map()
 {
-    mapper_map_chr( 8, 0, mapper_regs[0]);
+	mapper_map_chr( 8, 0, mapper_regs[0]);
 }
 
 // dropzone likes to change the chr bank too soon sometimes, this causes a line
@@ -2729,35 +2729,35 @@ static UINT8 mapper04_vs_rbi_tko_prot(UINT16 address)
 static void mapper04_write(UINT16 address, UINT8 data)
 {
 	if (address & 0x8000) {
-        switch (address & 0xE001) {
-            case 0x8000: mapper4_banksel = data; break;
-            case 0x8001: mapper_regs[(mapper4_banksel & 0x7)] = data; break;
+		switch (address & 0xE001) {
+			case 0x8000: mapper4_banksel = data; break;
+			case 0x8001: mapper_regs[(mapper4_banksel & 0x7)] = data; break;
 			case 0xA000: mapper4_mirror = ~data & 1; break;
 			case 0xA001: mapper4_writeprotect = data; break;
-            case 0xC000: mapper4_irqlatch = data; break;
-            case 0xC001: mapper4_irqreload = 1; break;
-            case 0xE000: mapper4_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
-            case 0xE001: mapper4_irqenable = 1; break;
-        }
+			case 0xC000: mapper4_irqlatch = data; break;
+			case 0xC001: mapper4_irqreload = 1; break;
+			case 0xE000: mapper4_irqenable = 0; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+			case 0xE001: mapper4_irqenable = 1; break;
+		}
 		mapper_map();
-    }
+	}
 }
 
 static void mapper04_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, (mapper_regs[0] + mapper12_lowchr) >> 1);
-        mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
+		mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
 
 		mapper_map_chr(1, 4, mapper_regs[2] + mapper12_highchr);
 		mapper_map_chr(1, 5, mapper_regs[3] + mapper12_highchr);
@@ -2906,9 +2906,9 @@ static void mapper258_map()
 		mapper_map_prg(8, 3, -1);
 	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, (mapper_regs[0] + mapper12_lowchr) >> 1);
-        mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
+		mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
 
 		mapper_map_chr(1, 4, mapper_regs[2] + mapper12_highchr);
 		mapper_map_chr(1, 5, mapper_regs[3] + mapper12_highchr);
@@ -2947,7 +2947,7 @@ static void mapper258_write(UINT16 address, UINT8 data)
 static void mapper76_map()
 {
 	mapper_map_prg(8, 0, mapper_regs[6]);
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 	mapper_map_prg(8, 2, -2);
 
 	mapper_map_chr(2, 0, mapper_regs[2]);
@@ -2961,7 +2961,7 @@ static void mapper76_map()
 
 static void mapper95_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
 	mapper_map_prg(8, 0, mapper_regs[6]);
 	mapper_map_prg(8, 2, -2);
@@ -3006,13 +3006,13 @@ static void mapper268_map()
 
 	mapper268_prg(1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
+	if (~mapper4_banksel & 0x40) {
 		mapper268_prg(0, mapper_regs[6]);
 		mapper268_prg(2, -2);
-    } else {
+	} else {
 		mapper268_prg(0, -2);
 		mapper268_prg(2, mapper_regs[6]);
-    }
+	}
 	mapper268_prg(3, -1);
 
 	// chr - only mmc3 for now! -dink feb3. 2022
@@ -3021,7 +3021,7 @@ static void mapper268_map()
 
 	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, ((mapper_regs[0] & chrmask) + chrbase) >> 1);
-        mapper_map_chr(2, 1, ((mapper_regs[1] & chrmask) + chrbase) >> 1);
+		mapper_map_chr(2, 1, ((mapper_regs[1] & chrmask) + chrbase) >> 1);
 
 		mapper_map_chr(1, 4, (mapper_regs[2] & chrmask) + chrbase);
 		mapper_map_chr(1, 5, (mapper_regs[3] & chrmask) + chrbase);
@@ -3114,9 +3114,9 @@ static void mapper115_map()
 		mapper_map_prg( 8, 3, -1);
 	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, (mapper_regs[0] + mapper12_lowchr) >> 1);
-        mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
+		mapper_map_chr(2, 1, (mapper_regs[1] + mapper12_lowchr) >> 1);
 
 		mapper_map_chr(1, 4, mapper_regs[2] + mapper12_highchr);
 		mapper_map_chr(1, 5, mapper_regs[3] + mapper12_highchr);
@@ -3175,19 +3175,19 @@ static void mapper115_write(UINT16 address, UINT8 data)
 
 static void mapper118_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, mapper_regs[0] >> 1);
-        mapper_map_chr(2, 1, mapper_regs[1] >> 1);
+		mapper_map_chr(2, 1, mapper_regs[1] >> 1);
 		nametable_map(0, (mapper_regs[0] >> 7) & 1);
 		nametable_map(1, (mapper_regs[0] >> 7) & 1);
 		nametable_map(2, (mapper_regs[1] >> 7) & 1);
@@ -3222,9 +3222,9 @@ static void mapper189_map()
 {
 	mapper_map_prg(32, 0, mapper189_reg & 0x07);
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, mapper_regs[0] >> 1);
-        mapper_map_chr(2, 1, mapper_regs[1] >> 1);
+		mapper_map_chr(2, 1, mapper_regs[1] >> 1);
 
 		mapper_map_chr(1, 4, mapper_regs[2]);
 		mapper_map_chr(1, 5, mapper_regs[3]);
@@ -3246,17 +3246,17 @@ static void mapper189_map()
 
 static void mapper119_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr_ramrom(2, 0, (mapper_regs[0] >> 1) & 0x1f, ((mapper_regs[0]) & 0x40) ? MEM_RAM : MEM_ROM);
 		mapper_map_chr_ramrom(2, 1, (mapper_regs[1] >> 1) & 0x1f, ((mapper_regs[1]) & 0x40) ? MEM_RAM : MEM_ROM);
 
@@ -3358,15 +3358,15 @@ static void mapper165_chrmap(INT32 slot, INT32 bank)
 
 static void mapper165_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
 	mapper165_chrmap(0, mapper_regs[mapper165_chrlatch(0)]);
 	mapper165_chrmap(1, mapper_regs[mapper165_chrlatch(1)]);
@@ -3427,21 +3427,21 @@ static void mapper194_chrmap(INT32 slot, INT32 bank)
 
 static void mapper194_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper194_chrmap(0, mapper_regs[0] & 0xfe);
 		mapper194_chrmap(1, mapper_regs[0] | 0x01);
-        mapper194_chrmap(2, mapper_regs[1] & 0xfe);
-        mapper194_chrmap(3, mapper_regs[1] | 0x01);
+		mapper194_chrmap(2, mapper_regs[1] & 0xfe);
+		mapper194_chrmap(3, mapper_regs[1] | 0x01);
 
 		mapper194_chrmap(4, mapper_regs[2]);
 		mapper194_chrmap(5, mapper_regs[3]);
@@ -3470,21 +3470,21 @@ static void mapper192_chrmap(INT32 slot, INT32 bank)
 
 static void mapper192_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper192_chrmap(0, mapper_regs[0] & 0xfe);
 		mapper192_chrmap(1, mapper_regs[0] | 0x01);
-        mapper192_chrmap(2, mapper_regs[1] & 0xfe);
-        mapper192_chrmap(3, mapper_regs[1] | 0x01);
+		mapper192_chrmap(2, mapper_regs[1] & 0xfe);
+		mapper192_chrmap(3, mapper_regs[1] | 0x01);
 
 		mapper192_chrmap(4, mapper_regs[2]);
 		mapper192_chrmap(5, mapper_regs[3]);
@@ -3515,21 +3515,21 @@ static void mapper195_chrmap(INT32 slot, INT32 bank)
 
 static void mapper195_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper195_chrmap(0, mapper_regs[0] & 0xfe);
 		mapper195_chrmap(1, mapper_regs[0] | 0x01);
-        mapper195_chrmap(2, mapper_regs[1] & 0xfe);
-        mapper195_chrmap(3, mapper_regs[1] | 0x01);
+		mapper195_chrmap(2, mapper_regs[1] & 0xfe);
+		mapper195_chrmap(3, mapper_regs[1] | 0x01);
 
 		mapper195_chrmap(4, mapper_regs[2]);
 		mapper195_chrmap(5, mapper_regs[3]);
@@ -3576,15 +3576,15 @@ static UINT8 mapper195_read(UINT16 address)
 
 static void mapper262_map()
 {
-    mapper_map_prg(8, 1, mapper_regs[7]);
+	mapper_map_prg(8, 1, mapper_regs[7]);
 
-    if (~mapper4_banksel & 0x40) {
-        mapper_map_prg(8, 0, mapper_regs[6]);
-        mapper_map_prg(8, 2, -2);
-    } else {
-        mapper_map_prg(8, 0, -2);
-        mapper_map_prg(8, 2, mapper_regs[6]);
-    }
+	if (~mapper4_banksel & 0x40) {
+		mapper_map_prg(8, 0, mapper_regs[6]);
+		mapper_map_prg(8, 2, -2);
+	} else {
+		mapper_map_prg(8, 0, -2);
+		mapper_map_prg(8, 2, mapper_regs[6]);
+	}
 
 	if (mapper262_reg & 0x40) {
 	   mapper_map_chr_ramrom(8, 0, 0, MEM_RAM);
@@ -3646,7 +3646,7 @@ static void mapper451_write(UINT16 address, UINT8 data)
 	flashrom_write(address, data);
 
 	if (address & 0x8000) {
-        switch (address & 0xe000) {
+		switch (address & 0xe000) {
 			case 0xa000: {
 				mapper4_mirror = ~address & 1;
 				mapper_map();
@@ -3669,8 +3669,8 @@ static void mapper451_write(UINT16 address, UINT8 data)
 				mapper_map();
 				break;
 			}
-        }
-    }
+		}
+	}
 }
 
 static void mapper451_map()
@@ -3678,7 +3678,7 @@ static void mapper451_map()
 	mapper_map_prg(8, 0, (0x00) );
 	mapper_map_prg(8, 1, (0x10 + (mapper451_bank & 1) + ((mapper451_bank & 2) << 2)) );
 	mapper_map_prg(8, 2, (0x20 + (mapper451_bank & 1) + ((mapper451_bank & 2) << 2)) );
-    mapper_map_prg(8, 3, (0x30) );
+	mapper_map_prg(8, 3, (0x30) );
 
 	mapper_map_chr(8, 0, mapper451_bank & 1);
 
@@ -3800,9 +3800,9 @@ static void mapper114_map()
 	mapper114_map_prg(2, -2);
 	mapper114_map_prg(3, -1);
 
-    if (~mapper4_banksel & 0x80) {
+	if (~mapper4_banksel & 0x80) {
 		mapper_map_chr(2, 0, (mapper_regs[0] + (mapper114_chr << 8)) >> 1);
-        mapper_map_chr(2, 1, (mapper_regs[1] + (mapper114_chr << 8)) >> 1);
+		mapper_map_chr(2, 1, (mapper_regs[1] + (mapper114_chr << 8)) >> 1);
 
 		mapper_map_chr(1, 4, mapper_regs[2] + (mapper114_chr << 8));
 		mapper_map_chr(1, 5, mapper_regs[3] + (mapper114_chr << 8));
@@ -3824,6 +3824,149 @@ static void mapper114_map()
 
 #undef mapper114_prg
 #undef mapper114_chr
+
+// ---[ mapper 215 (UNL-8237 multigame cart) ]---
+// Extension registers (upper slots of mapper_regs[], auto-saved via SCAN_VAR)
+#define mapper215_exreg0        (mapper_regs[0x1f - 7])
+#define mapper215_exreg1        (mapper_regs[0x1f - 8])
+#define mapper215_exreg2        (mapper_regs[0x1f - 9])
+
+// Bank-select register remap table (8 modes x 8 registers)
+static const UINT8 mapper215_lutreg[8][8] = {
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 0, 2, 6, 1, 7, 3, 4, 5 },
+	{ 0, 5, 4, 1, 7, 2, 6, 3 },
+	{ 0, 6, 3, 7, 5, 2, 4, 1 },
+	{ 0, 2, 5, 3, 6, 1, 7, 4 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+};
+
+// Port address remap table (8 modes x 8 ports: 8000/8001/A000/A001/C000/C001/E000/E001)
+static const UINT8 mapper215_lutaddr[8][8] = {
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 3, 2, 0, 4, 1, 5, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 5, 0, 1, 2, 3, 7, 6, 4 },
+	{ 3, 1, 0, 5, 2, 4, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+	{ 0, 1, 2, 3, 4, 5, 6, 7 },
+};
+
+static void mapper215_map()
+{
+	// ---- PRG banking ----
+	if (mapper215_exreg0 & 0x80) {
+		// NROM-style override: flat PRG banking across all 4 slots
+		UINT8 bank;
+		if (mapper215_exreg0 & 0x40) {
+			// 256K mode: mask 0x0F, sbank bit from exreg1
+			UINT8 sbank = (mapper215_exreg1 & 0x10);
+			bank = ((mapper215_exreg1 & 0x03) << 4) | (mapper215_exreg0 & 0x07) | (sbank >> 1);
+		} else {
+			// 512K mode: mask 0x1F
+			bank = ((mapper215_exreg1 & 0x03) << 4) | (mapper215_exreg0 & 0x0F);
+		}
+		bank <<= 1; // convert to 8K units
+		if (mapper215_exreg0 & 0x20) {
+			// 32K contiguous (NROM-256)
+			mapper_map_prg(8, 0, bank + 0);
+			mapper_map_prg(8, 1, bank + 1);
+			mapper_map_prg(8, 2, bank + 2);
+			mapper_map_prg(8, 3, bank + 3);
+		} else {
+			// 16K mirrored (NROM-128)
+			mapper_map_prg(8, 0, bank + 0);
+			mapper_map_prg(8, 1, bank + 1);
+			mapper_map_prg(8, 2, bank + 0);
+			mapper_map_prg(8, 3, bank + 1);
+		}
+	} else {
+		// Standard MMC3 banking with 215 base/mask/sbank transforms
+		const INT32 mask  = (mapper215_exreg0 & 0x40) ? 0x0F : 0x1F;
+		const INT32 sbank = (mapper215_exreg0 & 0x40) ? (mapper215_exreg1 & 0x10) : 0;
+		const INT32 base  = (mapper215_exreg1 & 0x03) << 5;
+
+		INT32 p0, p1, p2, p3;
+		if (~mapper4_banksel & 0x40) {
+			p0 = mapper_regs[6]; p1 = mapper_regs[7]; p2 = -2; p3 = -1;
+		} else {
+			p0 = -2; p1 = mapper_regs[7]; p2 = mapper_regs[6]; p3 = -1;
+		}
+
+		mapper_map_prg(8, 0, base | (p0 & mask) | sbank);
+		mapper_map_prg(8, 1, base | (p1 & mask) | sbank);
+		mapper_map_prg(8, 2, base | (p2 & mask) | sbank);
+		mapper_map_prg(8, 3, base | (p3 & mask) | sbank);
+	}
+
+	// ---- CHR banking ----
+	// 1K granularity across all 8 slots
+	UINT8 c[8];
+	if (~mapper4_banksel & 0x80) {
+		// CHR mode 0: first 4K = two 2K banks, last 4K = four 1K banks
+		c[0] = mapper_regs[0] & 0xFE;
+		c[1] = mapper_regs[0] | 0x01;
+		c[2] = mapper_regs[1] & 0xFE;
+		c[3] = mapper_regs[1] | 0x01;
+		c[4] = mapper_regs[2];
+		c[5] = mapper_regs[3];
+		c[6] = mapper_regs[4];
+		c[7] = mapper_regs[5];
+	} else {
+		// CHR mode 1: swap first/last 4K
+		c[0] = mapper_regs[2];
+		c[1] = mapper_regs[3];
+		c[2] = mapper_regs[4];
+		c[3] = mapper_regs[5];
+		c[4] = mapper_regs[0] & 0xFE;
+		c[5] = mapper_regs[0] | 0x01;
+		c[6] = mapper_regs[1] & 0xFE;
+		c[7] = mapper_regs[1] | 0x01;
+	}
+
+	for (INT32 i = 0; i < 8; i++) {
+		INT32 page;
+		if (mapper215_exreg0 & 0x40) {
+			// External mode: high base + low 7 bits + bit5 lift
+			page = ((mapper215_exreg1 & 0x0C) << 6) | (c[i] & 0x7F) | ((mapper215_exreg1 & 0x20) << 2);
+		} else {
+			page = ((mapper215_exreg1 & 0x0C) << 6) | c[i];
+		}
+		mapper_map_chr(1, i, page);
+	}
+
+	// ---- Mirroring ---- (A000 bit0)
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper215_write(UINT16 address, UINT8 data)
+{
+	if (address < 0x8000) {
+		// Extension registers: 0x5000 / 0x5001 / 0x5007
+		switch (address) {
+			case 0x5000: mapper215_exreg0 = data; mapper_map(); break;
+			case 0x5001: mapper215_exreg1 = data; mapper_map(); break;
+			case 0x5007: mapper215_exreg2 = data; break;
+		}
+	} else {
+		// 0x8000-0xFFFF: remap port + register, then delegate to standard MMC3
+		const UINT8 mode    = mapper215_exreg2 & 0x07;
+		const UINT8 lutval  = mapper215_lutaddr[mode][((address >> 12) & 0x06) | (address & 0x01)];
+		const UINT16 newaddr = (lutval & 0x01) | ((lutval & 0x06) << 12) | 0x8000;
+
+		if (lutval == 0) {
+			// Bank-select write: preserve mode bits, remap low 3 register bits
+			data = (data & 0xC0) | mapper215_lutreg[mode][data & 0x07];
+		}
+		mapper04_write(newaddr, data);
+	}
+}
+
+// mapper215_exreg0/1/2 macros are also used in mapper_init() case 215, so do not #undef here.
 
 //#undef mapper4_mirror // used in mapper_init()
 #undef mapper4_irqlatch
@@ -4158,12 +4301,12 @@ static UINT8 mapper5_ntread(UINT16 address)
 		if ((address & 0x3c0) < 0x3c0) {
 			UINT8 temp = mmc5_expram[(32 * ((address >> 5) & 0x1f)) + (address & 0x1f)];
 			mmc5_expramattr = (temp & 0xc0) >> 6;
-            mapper_map_chr(4, 0, (mmc5_upperchr << 6) | (temp & 0x3f));
-            mapper_map_chr(4, 1, (mmc5_upperchr << 6) | (temp & 0x3f));
-        } else {
+			mapper_map_chr(4, 0, (mmc5_upperchr << 6) | (temp & 0x3f));
+			mapper_map_chr(4, 1, (mmc5_upperchr << 6) | (temp & 0x3f));
+		} else {
 			return (mmc5_expramattr << 6) | (mmc5_expramattr << 4) | (mmc5_expramattr << 2) | mmc5_expramattr;
-        }
-    }
+		}
+	}
 
 	if (mmc5_split && mmc5_expram_mode < 2) {
 		UINT8 cur_tile = ((pixel >> 3) + 2) % 32;
@@ -4275,7 +4418,7 @@ static void mapper07_write(UINT16 address, UINT8 data)
 static void mapper07_map()
 {
 	set_mirroring((mapper_regs[0] & 0x10) ? SINGLE_HIGH : SINGLE_LOW);
-    mapper_map_prg(32, 0, mapper_regs[0] & 0x7);
+	mapper_map_prg(32, 0, mapper_regs[0] & 0x7);
 }
 
 // ---[ mapper 09 (mmc2) / 10 (mmc4) Mike Tyson's Punch-Out!!, Fire Emblem
@@ -5220,8 +5363,8 @@ static INT16 vrc6_saw()
 static INT16 vrc6_mixer()
 {
 	INT32 sum = vrc6_saw();
-    sum += vrc6_pulse(0);
-    sum += vrc6_pulse(1);
+	sum += vrc6_pulse(0);
+	sum += vrc6_pulse(1);
 	return (INT16)((sum * 0xc00) >> 12); //(INT16)(sum * 0.75); avoid flop in such a heated place.
 }
 
@@ -6581,9 +6724,9 @@ static UINT8 mapper120_exp_read(UINT16 address)
 static void mapper64_write(UINT16 address, UINT8 data)
 {
 	if (address & 0x8000) {
-        switch (address & 0xe001) {
+		switch (address & 0xe001) {
 			case 0xA000: mapper64_mirror = data & 1; mapper_map(); break;
-            case 0x8000: mapper64_regnum = data; break;
+			case 0x8000: mapper64_regnum = data; break;
 			case 0x8001:
 				mapper_regs[(mapper64_regnum & 0xf)] = data;
 				mapper_map();
@@ -6605,7 +6748,7 @@ static void mapper64_write(UINT16 address, UINT8 data)
 				mapper64_irqenable = 1;
 				M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				break;
-        }
+		}
 	}
 }
 
@@ -7083,10 +7226,10 @@ static void mapper69_map()
 	mapper_map_chr(1, 7, mapper_regs[7]);
 
 	switch (mapper69_mirror) {
-        case 0: set_mirroring(VERTICAL); break;
-        case 1: set_mirroring(HORIZONTAL); break;
-        case 2: set_mirroring(SINGLE_LOW); break;
-        case 3: set_mirroring(SINGLE_HIGH); break;
+		case 0: set_mirroring(VERTICAL); break;
+		case 1: set_mirroring(HORIZONTAL); break;
+		case 2: set_mirroring(SINGLE_LOW); break;
+		case 3: set_mirroring(SINGLE_HIGH); break;
 	}
 }
 
@@ -7757,9 +7900,9 @@ static void mapper81_write(UINT16 address, UINT8 data)
 
 static void mapper81_map()
 {
-    mapper_map_prg(16, 0, (mapper_regs[0] >> 2) & 0x03);
-    mapper_map_prg(16, 1, -1);
-    mapper_map_chr( 8, 0, mapper_regs[0] & 0x03);
+	mapper_map_prg(16, 0, (mapper_regs[0] >> 2) & 0x03);
+	mapper_map_prg(16, 1, -1);
+	mapper_map_chr( 8, 0, mapper_regs[0] & 0x03);
 }
 
 // --[ mapper 82: Taito X1-017
@@ -8904,7 +9047,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 7: { // AxROM: Battle Toads, Marble Madness, RC Pro-Am
 			mapper_write = mapper07_write;
 			mapper_map   = mapper07_map;
-		    mapper_map_chr( 8, 0, 0);
+			mapper_map_chr( 8, 0, 0);
 			mapper_map();
 			retval = 0;
 			break;
@@ -9325,7 +9468,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper64_scanline;
 			mapper_cycle = mapper64_cycle;
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9345,7 +9488,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 70: {
 			mapper_write = mapper70_write; // 8000 - ffff
 			mapper_map   = mapper70_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9353,7 +9496,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 71: { // camerica (codemasters) misc
 			mapper_write = mapper71_write; // 8000 - ffff
 			mapper_map   = mapper71_map;
-		    mapper_map();
+			mapper_map();
 			if (Cart.Crc == 0xa64e926a && Cart.PRGRom[0xc4c1] == 0xa5) {
 				bprintf(0, _T("Applied Hot-Patch: Quattro Sports / BMX Simulator start fix..\n"));
 				Cart.PRGRom[0xc4c1] = 0xa9; // make ctrlr-debounce read happy
@@ -9366,7 +9509,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_write = mapper73_write;
 			mapper_map   = mapper73_map;
 			mapper_cycle = mapper73_cycle;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9374,7 +9517,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 75: { // Konami vrc1
 			mapper_write = mapper75_write; // 8000 - ffff
 			mapper_map   = mapper75_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9384,7 +9527,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = vrc7_map;
 			mapper_cycle = vrc7_cycle;
 			BurnYM2413VRC7Reset();
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9404,7 +9547,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 77: { // Irem? Napoleon Senki
 			mapper_write = mapper77_write; // 8000 - ffff
 			mapper_map   = mapper77_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9412,7 +9555,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 78: { // Jaleco JF16
 			mapper_write = mapper78_write; // 8000 - ffff
 			mapper_map   = mapper78_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9461,7 +9604,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 87: {
 			cart_exp_write = mapper87_write; // 6000 - 7fff!
 			mapper_map   = mapper87_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9469,7 +9612,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 88: {
 			mapper_write = mapper88_write;
 			mapper_map   = mapper88_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9478,7 +9621,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_write = mapper88_write;
 			mapper_map   = mapper88_map;
 			mapper154 = 1;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9487,7 +9630,7 @@ static INT32 mapper_init(INT32 mappernum)
 			cart_exp_write = mapper101_write; // 6000 - 7fff!
 			mapper_map   = mapper101_map;
 			mapper_regs[0] = 0xff;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9496,7 +9639,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_write = mapper107_write;
 			mapper_map   = mapper107_map;
 			mapper_regs[0] = 0xff;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9504,7 +9647,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 38: {
 			cart_exp_write = mapper38_write; // 6000 - 7fff
 			mapper_map   = mapper38_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9512,7 +9655,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 66: {
 			mapper_write = mapper140_write; // 8000 - ffff
 			mapper_map   = mapper140_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9520,7 +9663,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 11: {
 			mapper_write = mapper11_write; // 8000 - ffff
 			mapper_map   = mapper11_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9528,7 +9671,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 144: { // similar to 11
 			mapper_write = mapper144_write; // 8000 - ffff
 			mapper_map   = mapper11_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9539,7 +9682,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper112_map;
 			mapper_map_prg(8, 2, -2);
 			mapper_map_prg(8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9549,7 +9692,7 @@ static INT32 mapper_init(INT32 mappernum)
 			psg_area_write = mapper471_write; // 4020 - 5fff (need this to get rid of unmapped debug spam)
 			mapper_map   = mapper471_map;
 			mapper_scanline = mapper471_scanline;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9558,7 +9701,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 79: { // NINA-03 / NINA-06
 			psg_area_write = mapper79_write; // 4020 - 5fff
 			mapper_map     = mapper79_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9566,7 +9709,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 113: { // NINA-03 / NINA-06 extended / Mojon Twins Multicart
 			psg_area_write = mapper113_write; // 4020 - 5fff
 			mapper_map     = mapper113_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9580,7 +9723,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map     = mapper8259_map;
 			mapper_regs[0x1f] = mappernum;
 			mapper_map_chr( 8, 0, 0);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9591,7 +9734,7 @@ static INT32 mapper_init(INT32 mappernum)
 			cart_exp_write = mapper150_write; // 6000 - 7fff
 			cart_exp_read  = mapper150_read;
 			mapper_map     = mapper150_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9602,7 +9745,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper162_reg(0) = 0x03;
 			mapper162_reg(3) = 0x07;
 			mapper_map_chr( 8, 0, 0);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9612,7 +9755,7 @@ static INT32 mapper_init(INT32 mappernum)
 			psg_area_read  = mapper163_read;
 			mapper_map     = mapper163_map;
 			mapper_ppu_clock = mapper163_cycle;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9620,7 +9763,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 140: {
 			cart_exp_write = mapper140_write; // 6000 - 7fff!
 			mapper_map     = mapper140_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9628,7 +9771,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 180: { // crazy climber
 			mapper_write = mapper180_write;
 			mapper_map   = mapper180_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9636,7 +9779,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 184: {
 			cart_exp_write = mapper184_write; // 6000 - 7fff!
 			mapper_map     = mapper184_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9644,7 +9787,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 152: {
 			mapper_write = mapper152_write;
 			mapper_map   = mapper152_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9652,7 +9795,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 156: {
 			mapper_write = mapper156_write;
 			mapper_map   = mapper156_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9660,7 +9803,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 89: {
 			mapper_write = mapper89_write;
 			mapper_map   = mapper89_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9668,7 +9811,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 93: { // Sunsoft-1/2: Fantasy Zone, Shanghai
 			mapper_write = mapper93_write;
 			mapper_map   = mapper93_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9676,7 +9819,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 94: { // Senjou no Ookami (Commando)
 			mapper_write = mapper94_write;
 			mapper_map   = mapper94_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9684,7 +9827,7 @@ static INT32 mapper_init(INT32 mappernum)
 		case 97: { // Kaiketsu Yanchamaru (Kid Niki)
 			mapper_write = mapper97_write;
 			mapper_map   = mapper97_map;
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9724,7 +9867,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[7] = 1;
 
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9759,7 +9902,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[6] = 0;
 			mapper_regs[7] = 1;
 
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9803,7 +9946,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9814,7 +9957,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring;
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9839,7 +9982,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper95_map;
 			mapper_scanline = mapper04_scanline;
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9855,7 +9998,34 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper115_map;
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
-		    mapper_map();
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 215: { // UNL-8237 multigame cart (MMC3 variant)
+			mapper_write   = mapper215_write;
+			psg_area_write = mapper215_write;
+			mapper_map      = mapper215_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror  = Cart.Mirroring;
+
+			mapper215_exreg0 = 0;
+			mapper215_exreg1 = 3;
+			mapper215_exreg2 = 0;
+
+			// Standard MMC3 power-on defaults
+			mapper_regs[0] = 0;
+			mapper_regs[1] = 2;
+			mapper_regs[2] = 4;
+			mapper_regs[3] = 5;
+			mapper_regs[4] = 6;
+			mapper_regs[5] = 7;
+			// prg
+			mapper_regs[6] = 0;
+			mapper_regs[7] = 1;
+
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9867,7 +10037,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper116_map;
 			mapper_scanline = mapper116_mmc3_scanline;
 			mapper116_defaults();
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9879,7 +10049,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper14_map; // difference from 116
 			mapper_scanline = mapper116_mmc3_scanline;
 			mapper116_defaults();
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9889,7 +10059,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper118_map;
 			mapper_scanline = mapper04_scanline;
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9900,7 +10070,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9935,7 +10105,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9957,7 +10127,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9968,7 +10138,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9981,7 +10151,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -9993,7 +10163,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper189_map;
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -10019,7 +10189,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_regs[7] = 1;
 
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -10032,7 +10202,7 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror = Cart.Mirroring; // wagyan land doesn't set the mapper bit!
 			mapper_map_prg( 8, 3, -1);
-		    mapper_map();
+			mapper_map();
 			retval = 0;
 			break;
 		}
@@ -10255,9 +10425,9 @@ static void nametable_mapall(INT32 ntbank0, INT32 ntbank1, INT32 ntbank2, INT32 
 static void set_mirroring(INT32 mode)
 {
 	switch (mode)
-    {
-        case HORIZONTAL:  nametable_mapall(0, 0, 1, 1); break;
-        case VERTICAL:	  nametable_mapall(0, 1, 0, 1); break;
+	{
+		case HORIZONTAL:  nametable_mapall(0, 0, 1, 1); break;
+		case VERTICAL:	  nametable_mapall(0, 1, 0, 1); break;
 		case SINGLE_LOW:  nametable_mapall(0, 0, 0, 0); break;
 		case SINGLE_HIGH: nametable_mapall(1, 1, 1, 1); break;
 		case FOUR_SCREEN: nametable_mapall(0, 1, 2, 3); break;
@@ -10540,10 +10710,10 @@ static void v_scroll()
 static void reload_shifters()
 {
 	at_latchL = at_byte & 1;
-    at_latchH = (at_byte & 2) >> 1;
+	at_latchH = (at_byte & 2) >> 1;
 
 	bg_shiftL = (bg_shiftL & 0xff00) | bgL;
-    bg_shiftH = (bg_shiftH & 0xff00) | bgH;
+	bg_shiftH = (bg_shiftH & 0xff00) | bgH;
 }
 
 static void evaluate_sprites()
@@ -10551,18 +10721,18 @@ static void evaluate_sprites()
 	INT32 cur_line = (scanline == prerender_line) ? -1 : scanline;
 	oam2_cnt = 0;
 
-    for (INT32 i = oamAddr; i < 0x40; i++) {
-        INT32 line = cur_line - oam_ram[(i << 2) + 0];
-        if (line >= 0 && line < sprite_height) {
+	for (INT32 i = oamAddr; i < 0x40; i++) {
+		INT32 line = cur_line - oam_ram[(i << 2) + 0];
+		if (line >= 0 && line < sprite_height) {
 			if (oam2_cnt == 8) {
 				ppu_status |= status_spovrf;
 				if (~NESDips[0] & 1) // DIP option: disable sprite limit
 					break;
 			}
 			oam2[oam2_cnt].idx  = i;
-            oam2[oam2_cnt].y    = oam_ram[(i << 2) + 0];
-            oam2[oam2_cnt].tile = oam_ram[(i << 2) + 1];
-            oam2[oam2_cnt].attr = oam_ram[(i << 2) + 2];
+			oam2[oam2_cnt].y    = oam_ram[(i << 2) + 0];
+			oam2[oam2_cnt].tile = oam_ram[(i << 2) + 1];
+			oam2[oam2_cnt].attr = oam_ram[(i << 2) + 2];
 			oam2[oam2_cnt++].x  = oam_ram[(i << 2) + 3];
 		}
 	}
@@ -10600,7 +10770,7 @@ static void load_sprites()
 			oam[i].tileL = bitrev_table[oam[i].tileL];
 			oam[i].tileH = bitrev_table[oam[i].tileH];
 		}
-    }
+	}
 }
 
 static void draw_and_shift()
@@ -10626,7 +10796,7 @@ static void draw_and_shift()
 				pix |= ((get_bit(at_shiftH, 7 ^ fine_x) << 1) |
 						(get_bit(at_shiftL, 7 ^ fine_x) << 0)) << 2;
 			}
-        }
+		}
 
 		if (sprite_cache[x] && x >= spritemasklimit) {
 			for (INT32 i = oam_cnt - 1; i >= 0; i--) {
@@ -10648,22 +10818,22 @@ static void draw_and_shift()
 //					ppu_status |= status_sp0hit;
 				}
 
-                spr |= (oam[i].attr & 3) << 2; // add color (attr), 2bpp shift
-                sprPal = spr + 0x10; // add sprite color palette-offset
-                sprPri = ~oam[i].attr & 0x20; // sprite over bg?
-            }
+				spr |= (oam[i].attr & 3) << 2; // add color (attr), 2bpp shift
+				sprPal = spr + 0x10; // add sprite color palette-offset
+				sprPri = ~oam[i].attr & 0x20; // sprite over bg?
+			}
 		}
 
 		if (~nBurnLayer & 1) pix = 0; // if tile layer disabled, clear pixel.
-        if (sprPal && (pix == 0 || sprPri) && nSpriteEnable & 1) pix = sprPal;
+		if (sprPal && (pix == 0 || sprPri) && nSpriteEnable & 1) pix = sprPal;
 
 		screen[scanline_row + x] = (pal_ram[pix & 0x1f] & ppu_pal_mask) | ppu_pal_emphasis;
-    }
+	}
 
 	bg_shiftL <<= 1;
 	bg_shiftH <<= 1;
-    at_shiftL = (at_shiftL << 1) | at_latchL;
-    at_shiftH = (at_shiftH << 1) | at_latchH;
+	at_shiftL = (at_shiftL << 1) | at_latchL;
+	at_shiftH = (at_shiftH << 1) | at_latchH;
 }
 
 static inline void scanlinestate(INT32 state)
@@ -10795,7 +10965,7 @@ static inline void scanlinestate(INT32 state)
 		if (pixel == (260+18) /*&& RENDERING*/ && mapper_scanline) mapper_scanline();
 		// Mapper callback w/ppu_bus_address - used by mmc2/mmc4 (mapper9/mapper10)
 		if (mapper_ppu_clock) mapper_ppu_clock(ppu_bus_address); // ppu callback (visible lines)
-    }
+	}
 }
 
 static void set_scanline(INT32 sl)
@@ -10822,7 +10992,7 @@ void ppu_cycle()
 				// sync. and isn't really necessary w/emu, let's disable it. -dink
 				//pixel++;
 			}
-        }
+		}
 	}
 
 	if (scanline >= 0 && scanline <= 239)
@@ -10964,9 +11134,9 @@ static void ppu_reset()
 
 	ppu_framecycles = 0; // total ran cycles this frame
 
-    memset(nt_ram, 0x00, sizeof(nt_ram));
+	memset(nt_ram, 0x00, sizeof(nt_ram));
 	memset(pal_ram, 0x00, sizeof(pal_ram));
-    memset(oam_ram, 0xff, sizeof(oam_ram));
+	memset(oam_ram, 0xff, sizeof(oam_ram));
 
 	memset(oam, 0xff, sizeof(oam));
 	memset(oam2, 0xff, sizeof(oam2));

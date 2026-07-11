@@ -12350,6 +12350,7 @@ struct BurnDriver BurnDrvnes_dringle = {
 };
 
 // Earthworm Jim 2 (Taiwan) (Unl)
+// mapper 215 (MMC3 variant)
 static struct BurnRomInfo nes_ewjim2RomDesc[] = {
 	{ "Earthworm Jim 2 (Taiwan)(Unl)(1997)(Realtec).nes",          524304, 0x34023f7d, BRF_ESS | BRF_PRG },
 };

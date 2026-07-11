@@ -138,40 +138,93 @@ burn_driver_list = get_option('driver_list')
 
 fs = import('fs')
 
-# Collect each enabled hardware group's self-describing fragment.
-# Each src/burn/drv/<group>/meson.build sets (data only, no targets):
-#   group_desc / group_use (flat component names) / group_drivers (d_*.cpp) / group_srcs
-driver_disable = get_option('driver_disable')
-enabled_components = []
-burn_drivers = {}                 # name -> { 'desc', 'drivers', 'srcs' }
-driver_files_abs = []             # explicit d_*.cpp paths fed to gamelist.pl
-seen_drivers = []                 # for driver_disable validation
-foreach name : burn_driver_list
-    assert(
-        fs.is_dir('src/burn/drv' / name),
-        'Unknown driver group in driver_list: ' + name,
-    )
-    subdir('src/burn/drv' / name)
-    enabled_drivers = []
-    foreach d : group_drivers
-        seen_drivers += name / d
-        if not driver_disable.contains(name / d)
-            enabled_drivers += d
-            driver_files_abs += meson.current_source_dir() / 'src/burn/drv' / name / d
+# driver_list selects what to build at driver granularity. Each
+# entry is one of:
+#   capcom                 -> the whole capcom group
+#   capcom/d_cps1.cpp      -> just that driver
+#   -capcom                -> exclude the whole capcom group
+#   -capcom/d_cps1.cpp     -> exclude that driver
+# First pass: positives -> full_groups (whole group) or partial (specific
+# drivers); negatives -> exclusion sets. (Kept as separate lists rather than a
+# mixed-type value because meson forbids comparing an array with a string.)
+full_groups = []                  # groups selected in full
+partial = {}                      # group -> [specific driver files]
+group_exclude = []
+driver_exclude = []
+foreach entry : burn_driver_list
+    if entry.startswith('-')
+        item = entry.substring(1)
+        if item.contains('/')
+            driver_exclude += item
+        else
+            group_exclude += item
         endif
-    endforeach
-    burn_drivers += {
-        name: {'desc': group_desc, 'drivers': enabled_drivers, 'srcs': group_srcs},
-    }
-    foreach c : group_use
-        if not enabled_components.contains(c)
-            enabled_components += c
+    elif entry.contains('/')
+        parts = entry.split('/')
+        g = parts[0]
+        if not full_groups.contains(g)
+            partial += {g: partial.get(g, []) + [parts[1]]}
         endif
-    endforeach
+    elif not full_groups.contains(entry)
+        full_groups += entry      # whole group wins over specific drivers
+    endif
 endforeach
 
-foreach dd : driver_disable
-    assert(seen_drivers.contains(dd), 'Unknown driver in driver_disable: ' + dd)
+# Unique list of selected groups (full first, then partial-only).
+selected_groups = full_groups
+foreach g, _drv : partial
+    if not selected_groups.contains(g)
+        selected_groups += g
+    endif
+endforeach
+
+# Collect each selected group's self-describing fragment. Each
+# src/burn/drv/<group>/meson.build sets (data only, no targets):
+#   group_desc / group_srcs (shared support) / drivers ({file: [components]})
+enabled_components = []
+burn_drivers = {}                 # group -> { 'desc', 'drivers', 'srcs' }
+driver_files_abs = []             # explicit d_*.cpp paths fed to gamelist.pl
+seen_drivers = []                 # for exclusion validation
+foreach g : selected_groups
+    assert(
+        fs.is_dir('src/burn/drv' / g),
+        'Unknown driver group in driver_list: ' + g,
+    )
+    if group_exclude.contains(g)
+        continue
+    endif
+    subdir('src/burn/drv' / g)
+    chosen = full_groups.contains(g) ? drivers.keys() : partial[g]
+    enabled_drivers = []
+    foreach d : chosen
+        assert(
+            drivers.has_key(d),
+            'Unknown driver "' + d + '" in group ' + g,
+        )
+        seen_drivers += g / d
+        if not driver_exclude.contains(g / d)
+            enabled_drivers += d
+            driver_files_abs += meson.current_source_dir() / 'src/burn/drv' / g / d
+            foreach c : drivers[d]
+                if not enabled_components.contains(c)
+                    enabled_components += c
+                endif
+            endforeach
+        endif
+    endforeach
+    # group_srcs only compiles when at least one driver in the group is built.
+    if enabled_drivers.length() > 0
+        burn_drivers += {
+            g: {'desc': group_desc, 'drivers': enabled_drivers, 'srcs': group_srcs},
+        }
+    endif
+endforeach
+
+foreach ge : group_exclude
+    assert(fs.is_dir('src/burn/drv' / ge), 'Unknown group in exclusion: -' + ge)
+endforeach
+foreach de : driver_exclude
+    assert(seen_drivers.contains(de), 'Unknown driver in exclusion: -' + de)
 endforeach
 
 # win32 always needs the 68000 core (matches original build)

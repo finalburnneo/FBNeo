@@ -1,24 +1,35 @@
 # Sega Mega Drive drivers - self-describing driver group fragment.
-# Sets group_desc/group_use/group_drivers/group_srcs (data only, no targets).
-# Add a driver: drop d_<name>.cpp here and add one line to group_drivers.
+# group_srcs: shared support compiled whenever any driver here is selected.
+# drivers: per-driver component lists (seeded from the old group set;
+#          refine individually, then verify with test_per_driver.py).
+# Add a driver: drop d_<name>.cpp here and add a 'd_<name>.cpp': [...] entry.
 
-group_desc    = 'Sega Mega Drive drivers'
-group_use     = [
-    'm68000',
-    'z80',
-    'eeprom',
-    'i2ceeprom',
-    'burn_md2612',
-    'dac',
-    'samples',
-    'sn76496',
-    'ym2612',
-]
-group_drivers = [
-    'd_mdarcbl.cpp',
-    'd_megadrive.cpp',
-]
-group_srcs    = [
+group_desc = 'Sega Mega Drive drivers'
+group_srcs = [
     'megadrive.cpp',
     'stm95.cpp',
 ]
+drivers = {
+    'd_mdarcbl.cpp': [
+        'm68000',
+        'z80',
+        'eeprom',
+        'i2ceeprom',
+        'burn_md2612',
+        'dac',
+        'samples',
+        'sn76496',
+        'ym2612',
+    ],
+    'd_megadrive.cpp': [
+        'm68000',
+        'z80',
+        'eeprom',
+        'i2ceeprom',
+        'burn_md2612',
+        'dac',
+        'samples',
+        'sn76496',
+        'ym2612',
+    ],
+}

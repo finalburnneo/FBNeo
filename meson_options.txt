@@ -42,8 +42,4 @@ option('driver_list',
         'taito',
         'toaplan',
     ],
-    description: 'Burn driver list to build; empty builds all groups')
-option('driver_disable',
-    type: 'array',
-    value: [],
-    description: 'Individual drivers to exclude, e.g. capcom/d_cps1.cpp (path relative to src/burn/drv)')
+    description: 'Drivers to build: group (capcom), driver (capcom/d_cps1.cpp), or exclusion (-capcom, -capcom/d_cps1.cpp)')

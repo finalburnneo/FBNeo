@@ -83,8 +83,12 @@ burn_drv_sources += [
     psikyo_tile_func_h,
 ]
 
+# One -DBUILD_<GROUP> per actually-selected group (burn_drivers only contains
+# groups that have at least one driver built). Deriving from burn_drivers.keys()
+# rather than the raw driver_list keeps this correct when driver_list entries are
+# individual driver paths (e.g. capcom/d_cps1.cpp) or exclusions.
 burn_drv_defs = []
-foreach name : burn_driver_list
+foreach name : burn_drivers.keys()
     burn_drv_defs += '-DBUILD_' + name.to_upper()
 endforeach
 

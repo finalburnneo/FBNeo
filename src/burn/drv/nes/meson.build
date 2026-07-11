@@ -1,17 +1,18 @@
 # Nintendo NES drivers - self-describing driver group fragment.
-# Sets group_desc/group_use/group_drivers/group_srcs (data only, no targets).
-# Add a driver: drop d_<name>.cpp here and add one line to group_drivers.
+# group_srcs: shared support compiled whenever any driver here is selected.
+# drivers: per-driver component lists (seeded from the old group set;
+#          refine individually, then verify with test_per_driver.py).
+# Add a driver: drop d_<name>.cpp here and add a 'd_<name>.cpp': [...] entry.
 
-group_desc    = 'Nintendo NES drivers'
-group_use     = [
-    'm6502',
-    'ay8910',
-    'nes_apu',
-    'ym2413',
-]
-group_drivers = [
-    'd_nes.cpp',
-]
-group_srcs    = [
+group_desc = 'Nintendo NES drivers'
+group_srcs = [
     'nes.cpp',
 ]
+drivers = {
+    'd_nes.cpp': [
+        'm6502',
+        'ay8910',
+        'nes_apu',
+        'ym2413',
+    ],
+}

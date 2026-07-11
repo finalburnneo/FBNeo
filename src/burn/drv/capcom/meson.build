@@ -1,35 +1,11 @@
 # Capcom drivers - self-describing driver group fragment.
-# Sets group_desc/group_use/group_drivers/group_srcs (data only, no targets).
-# Add a driver: drop d_<name>.cpp here and add one line to group_drivers.
+# group_srcs: shared support compiled whenever any driver here is selected.
+# drivers: per-driver component lists (seeded from the old group set;
+#          refine individually, then verify with test_per_driver.py).
+# Add a driver: drop d_<name>.cpp here and add a 'd_<name>.cpp': [...] entry.
 
-group_desc    = 'Capcom drivers'
-group_use     = [
-    'm68000',
-    'z80',
-    'eeprom',
-    'resnet',
-    'timekpr',
-    'watchdog',
-    'ay8910',
-    'dac',
-    'fmopl',
-    'msm5205',
-    'msm6295',
-    'samples',
-    'y8950',
-    'ym2151',
-    'ym2203',
-    'ym2413',
-    'ym3526',
-    'ym3812',
-    'ym2610',
-    'ym2612',
-]
-group_drivers = [
-    'd_cps1.cpp',
-    'd_cps2.cpp',
-]
-group_srcs    = [
+group_desc = 'Capcom drivers'
+group_srcs = [
     'cps.cpp',
     'cps2_crpt.cpp',
     'cps_config.cpp',
@@ -54,3 +30,49 @@ group_srcs    = [
     'qs_z.cpp',
     'sf2mdt_snd.cpp',
 ]
+drivers = {
+    'd_cps1.cpp': [
+        'm68000',
+        'z80',
+        'eeprom',
+        'resnet',
+        'timekpr',
+        'watchdog',
+        'ay8910',
+        'dac',
+        'fmopl',
+        'msm5205',
+        'msm6295',
+        'samples',
+        'y8950',
+        'ym2151',
+        'ym2203',
+        'ym2413',
+        'ym3526',
+        'ym3812',
+        'ym2610',
+        'ym2612',
+    ],
+    'd_cps2.cpp': [
+        'm68000',
+        'z80',
+        'eeprom',
+        'resnet',
+        'timekpr',
+        'watchdog',
+        'ay8910',
+        'dac',
+        'fmopl',
+        'msm5205',
+        'msm6295',
+        'samples',
+        'y8950',
+        'ym2151',
+        'ym2203',
+        'ym2413',
+        'ym3526',
+        'ym3812',
+        'ym2610',
+        'ym2612',
+    ],
+}

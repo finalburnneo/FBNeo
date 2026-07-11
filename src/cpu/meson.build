@@ -1,7 +1,7 @@
 # =============================================================================
 # CPU emulation core selection & static library
 #
-# The parent meson.build provides a `cpu_driver_list` array listing which
+# The parent meson.build provides a `cpu_list` array listing which
 # CPUs should be compiled.  This file checks every known CPU name against
 # that list, sets a `cpu_<name>_enable` boolean for each, accumulates
 # source / include lists, and finally builds them as a static library.
@@ -62,7 +62,7 @@ all_cpu_names = all_cpu.keys()
 foreach name : cpu_list
     assert(
         all_cpu_names.contains(name),
-        'Missing cpu metabata for cpu_driver_list entry: ' + name,
+        'Missing cpu metadata for cpu_list entry: ' + name,
     )
 endforeach
 
@@ -262,10 +262,6 @@ if cpu_m68000_enable
         'm68k/m68kdasm.c',
     ]
     cpu_include_dirs += ['m68k']
-
-    if get_option('buildtype').contains('debug')
-        cpu_sources += 'm68k/m68kdasm.c'
-    endif
 
     # Native helper to generate the 68000 opcode table
     m68kmake = executable('m68kmake', 'm68k/m68kmake.c', native: true)

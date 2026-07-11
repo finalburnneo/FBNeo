@@ -75,17 +75,11 @@ all_burn_devices = {
     'x2212': {'desc': 'Xicor X2212 NVRAM', 'sources': ['x2212.cpp']},
 }
 
+# Enablement is derived from the parent's flat `enabled_components` set
+# (device names are unique across cpu/device/sound namespaces).
 burn_device_status = {}
-all_burn_device_names = all_burn_devices.keys()
-foreach name : burn_device_list
-    assert(
-        all_burn_device_names.contains(name),
-        'Unknown burn device in burn_device_list: ' + name,
-    )
-endforeach
-
 foreach name, device : all_burn_devices
-    enabled = burn_device_list.contains(name)
+    enabled = enabled_components.contains(name)
     burn_device_status += {device['desc']: enabled ? 'ON' : 'OFF'}
     if enabled
         burn_devices_sources += device['sources']

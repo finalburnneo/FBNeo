@@ -85,18 +85,12 @@ all_burn_sounds = {
     'ymz770': {'desc': 'Yamaha YMZ770 sound', 'sources': []},
 }
 
+# Enablement is derived from the parent's flat `enabled_components` set
+# (sound names are unique across cpu/device/sound namespaces).
 burn_sound_status = {}
 burn_snd_defs = []
-all_burn_sound_names = all_burn_sounds.keys()
-foreach name : burn_sound_list
-    assert(
-        all_burn_sound_names.contains(name),
-        'Unknown burn sound in burn_sound_list: ' + name,
-    )
-endforeach
-
 foreach name, sound : all_burn_sounds
-    enabled = burn_sound_list.contains(name)
+    enabled = enabled_components.contains(name)
     set_variable('snd_@0@_enable'.format(name), enabled)
     burn_sound_status += {sound['desc']: enabled ? 'ON' : 'OFF'}
     if enabled

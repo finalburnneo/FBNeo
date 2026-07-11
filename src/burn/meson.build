@@ -27,10 +27,18 @@ elif frontend == 'sdl2'
     burn_inc += '../burner/sdl'
 endif
 
-driver_dirs_abs = []
-foreach dir : burn_driver_list
-    driver_dirs_abs += meson.current_source_dir() / 'drv' / dir
-endforeach
+# driver_files_abs is the explicit list of enabled d_*.cpp files collected by
+# the root meson.build (respecting driver_list + driver_disable). gamelist.pl
+# reads them from a manifest file (-f) rather than as command-line arguments,
+# both to stay under the OS command-line length limit and to avoid any
+# directory globbing.
+driverlist_manifest_cd = configuration_data()
+driverlist_manifest_cd.set('DRIVER_FILES', '\n'.join(driver_files_abs))
+driverlist_manifest = configure_file(
+    input: 'driverlist_manifest.txt.in',
+    output: 'driverlist_manifest.txt',
+    configuration: driverlist_manifest_cd,
+)
 
 driverlist_h = custom_target(
     'driverlist_h',
@@ -40,8 +48,8 @@ driverlist_h = custom_target(
         meson.current_source_dir() / '..' / 'dep' / 'scripts' / 'gamelist.pl',
         '-o', '@OUTPUT@',
         '-l', meson.current_build_dir() / 'gamelist.txt',
-    ]
-    + driver_dirs_abs,
+        '-f', driverlist_manifest,
+    ],
 )
 
 burn_sources += driverlist_h

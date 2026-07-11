@@ -1386,6 +1386,9 @@
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_gfx.cpp">
       <Filter>Burn\drv\galaxian</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\galaxian\cclimber_audio.cpp">
+      <Filter>Burn\drv\galaxian</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_run.cpp">
       <Filter>Burn\drv\galaxian</Filter>
     </ClCompile>

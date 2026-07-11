@@ -15319,93 +15319,6 @@ static struct BurnRomInfo Mshuttlej2RomDesc[] = {
 STD_ROM_PICK(Mshuttlej2)
 STD_ROM_FN(Mshuttlej2)
 
-// cclimber sample player
-static INT32 sample_num = 0;
-static INT32 sample_freq = 0;
-static INT32 sample_vol = 0;
-
-static INT32 sample_len = 0;
-static INT32 sample_pos = -1; // -1 not playing, 0 start
-
-static INT16 *samplebuf = NULL;
-static UINT8 *mshuttle_samples = NULL;
-
-void cclimber_sample_num(UINT32, UINT32 data)
-{
-	sample_num = data;
-}
-
-void cclimber_sample_scan()
-{
-	SCAN_VAR(sample_num);
-	SCAN_VAR(sample_freq);
-	SCAN_VAR(sample_vol);
-	SCAN_VAR(sample_len);
-	SCAN_VAR(sample_pos);
-}
-
-void cclimber_sample_render(INT16 *buffer, INT32 nLen)
-{
-	if (sample_pos < 0) return; // stopped
-
-	if ((sample_pos >> 16) >= 0x10000 ) {
-		sample_pos = -1; // stop
-		return;
-	}
-
-	INT32 step = (sample_freq << 16) / nBurnSoundRate;
-	INT32 pos = 0;
-	INT16 *rom = samplebuf;
-
-	while (pos < nLen)
-	{
-		INT32 sample = (INT32)(rom[(sample_pos >> 16)] * 0.2);
-
-		buffer[0] = BURN_SND_CLIP((INT32)(buffer[0] + sample));
-		buffer[1] = BURN_SND_CLIP((INT32)(buffer[1] + sample));
-
-		sample_pos += step;
-
-		buffer+=2;
-		pos++;
-
-		if (sample_pos >= 0xfff0000 || (sample_pos >> 16) >= sample_len) {
-			sample_pos = -1; // stop
-			break;
-		}
-	}
-}
-
-// 4bit decodMshuttleExiter from mame
-#define SAMPLE_CONV4(a) (0x1111*((a&0x0f))-0x8000)
-
-static void cclimber_sample_start()
-{
-	const UINT8 *rom = mshuttle_samples;
-
-	if (!rom) return;
-
-	INT32 len = 0;
-	INT32 start = 32 * sample_num;
-
-	while (start + len < 0x2000 && rom[start+len] != 0x70)
-	{
-		INT32 sample;
-
-		sample = (rom[start + len] & 0xf0) >> 4;
-		samplebuf[2*len] = SAMPLE_CONV4(sample) * sample_vol / 31;
-
-		sample = rom[start + len] & 0x0f;
-		samplebuf[2*len + 1] = SAMPLE_CONV4(sample) * sample_vol / 31;
-
-		len++;
-	}
-	sample_len = len * 2;
-	sample_pos = 0;
-}
-
-// end sample player
-
 UINT8 __fastcall MshuttleZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
@@ -15485,12 +15398,12 @@ void __fastcall MshuttleZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xa800: {
-			sample_freq = 3072000 / 4 / (256 - d);
+			cclimber_sample_w_freq(d);
 			return;
 		}
 		
 		case 0xb000: {
-			sample_vol = d & 0x1f;
+			cclimber_sample_w_vol(d);
 			return;
 		}
 	}
@@ -15560,10 +15473,9 @@ static void MShuttleCommonInit()
 
 	GalScreenUnflipper = 1; // coctail unflipping not needed
 
-	samplebuf = (INT16*)BurnMalloc(0x10000 * sizeof(INT16));
-	mshuttle_samples = BurnMalloc(0x2000);
-	BurnLoadRom(mshuttle_samples + 0x0000, 10, 1);
-	BurnLoadRom(mshuttle_samples + 0x1000, 11, 1);
+	cclimber_sample_init();
+	BurnLoadRom(cclimber_sample_rom() + 0x0000, 10, 1);
+	BurnLoadRom(cclimber_sample_rom() + 0x1000, 11, 1);
 }
 
 static INT32 MshuttleInit()
@@ -15627,8 +15539,7 @@ static INT32 MshuttlejInit()
 
 static INT32 MshuttleExit()
 {
-	BurnFree(mshuttle_samples);
-	BurnFree(samplebuf);
+	cclimber_sample_exit();
 
 	return GalExit();
 }
@@ -20489,57 +20400,6 @@ static INT32 ScorpionmcInit()
 	return nRet;
 }
 
-static INT32 harem_decrypt_mode = 0;
-static INT32 harem_decrypt_count = 0;
-static INT32 harem_decrypt_clk = 0;
-static INT32 harem_decrypt_bit = 0;
-static INT32 harem_bank = 0;
-
-static void harem_bankswitch(INT32 bank)
-{
-	UINT8 *data = GalZ80Rom1Op + 0x0000 + (0x2000 * bank);
-	UINT8 *opcodes = GalZ80Rom1Op + 0x6000 + (0x2000 * bank);
-
-	harem_bank = bank;
-
-	ZetMapMemory(data	, 0x8000, 0x9fff, MAP_READ | MAP_FETCHARG);
-	ZetMapMemory(opcodes, 0x8000, 0x9fff, MAP_FETCHOP);
-}
-
-void harem_decrypt_bit_write(UINT8 data)
-{
-	harem_decrypt_bit = data;
-}
-
-void harem_decrypt_rst_write(UINT8 data)
-{
-	harem_decrypt_mode = 0;
-	harem_decrypt_count = 0;
-}
-
-void harem_decrypt_clk_write(UINT8 data)
-{
-	if (data & 1 && ~harem_decrypt_clk & 1) {
-		harem_decrypt_mode = ((harem_decrypt_mode >> 1) | ((harem_decrypt_bit & 1) << 3)) & 0x0f;
-		harem_decrypt_count++;
-	}
-
-	harem_decrypt_clk = data;
-
-	if (harem_decrypt_count == 4) {
-		INT32 bank = 0;
-		switch (harem_decrypt_mode) {
-			case 0x03: bank = 0; break;
-			case 0x09: bank = 1; break;
-			case 0x0a: bank = 2; break;
-		}
-
-		harem_bankswitch(bank);
-
-		harem_decrypt_rst_write(0);
-	}
-}
-
 static void HaremPostLoad()
 {
 	GalZ80Rom1Op = (UINT8*)BurnMalloc(0x2000 * 3 * 2);
@@ -20566,19 +20426,7 @@ static void HaremPostLoad()
 
 static INT32 HaremScan(INT32 nAction, INT32 *pnMin)
 {
-	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(harem_decrypt_mode);
-		SCAN_VAR(harem_decrypt_count);
-		SCAN_VAR(harem_decrypt_clk);
-		SCAN_VAR(harem_decrypt_bit);
-		SCAN_VAR(harem_bank);
-	}
-
-	if (nAction & ACB_WRITE) {
-		ZetOpen(0);
-		harem_bankswitch(harem_bank);
-		ZetClose();
-	}
+	harem_decrypt_scan(nAction);
 
 	return GalScan(nAction, pnMin);
 }

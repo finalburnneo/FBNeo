@@ -6,6 +6,7 @@
 
 group_desc = 'Galaxian hardware drivers'
 group_srcs = [
+    'cclimber_audio.cpp',
     'gal_gfx.cpp',
     'gal_run.cpp',
     'gal_sound.cpp',

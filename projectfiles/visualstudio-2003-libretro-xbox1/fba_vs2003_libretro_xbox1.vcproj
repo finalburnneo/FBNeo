@@ -539,6 +539,9 @@
 							RelativePath="..\..\src\burn\drv\galaxian\gal_gfx.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\galaxian\cclimber_audio.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\galaxian\gal_run.cpp">
 						</File>
 						<File

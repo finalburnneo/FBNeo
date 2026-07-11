@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_vaportra.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\d_galaxian.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_gfx.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\galaxian\cclimber_audio.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_run.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_stars.cpp" />

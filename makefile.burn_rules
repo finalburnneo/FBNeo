@@ -136,7 +136,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			deco16ic.o deco146.o decobac06.o \
 			\
-			gal_gfx.o gal_run.o gal_sound.o gal_stars.o \
+			cclimber_audio.o gal_gfx.o gal_run.o gal_sound.o gal_stars.o \
 			\
 			irem_cpu.o irem_sound.o \
 			\

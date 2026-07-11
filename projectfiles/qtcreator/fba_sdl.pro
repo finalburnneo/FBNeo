@@ -414,6 +414,7 @@ $$DRV_GALAXIAN {
 	SOURCES += \
 	    ../../src/burn/drv/galaxian/d_galaxian.cpp \
 	    ../../src/burn/drv/galaxian/gal_gfx.cpp \
+	    ../../src/burn/drv/galaxian/cclimber_audio.cpp \
 	    ../../src/burn/drv/galaxian/gal_run.cpp \
 	    ../../src/burn/drv/galaxian/gal_sound.cpp \
 	    ../../src/burn/drv/galaxian/gal_stars.cpp

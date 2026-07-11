@@ -422,8 +422,8 @@ $$DRV_PRE90S {
         HEADERS += $$files(../../src/burn/drv/pre90s/*.h)
         SOURCES += $$files(../../src/burn/drv/pre90s/*.cpp)
 
-        HEADERS *= ../../src/burn/drv/sega/mc8123.h
-        SOURCES *= ../../src/burn/drv/sega/mc8123.cpp
+        HEADERS *= ../../src/burn/devices/mc8123.h
+        SOURCES *= ../../src/burn/devices/mc8123.cpp
         # CAPCOM deps...
         HEADERS *= $$files(../../src/burn/drv/capcom/*.h)
         SOURCES *= $$files(../../src/burn/drv/capcom/*.cpp)

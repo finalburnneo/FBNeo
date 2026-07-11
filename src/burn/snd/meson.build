@@ -60,6 +60,10 @@ all_burn_sounds = {
     'sp0256': {'desc': 'GI SP0256 speech', 'sources': ['sp0256.cpp']},
     't6w28': {'desc': 'Toshiba T6W28 PSG', 'sources': ['t6w28.cpp']},
     'tiamc1': {'desc': 'TI AMC1 sound hardware', 'sources': ['tiamc1_snd.cpp']},
+    'timeplt_snd': {
+        'desc': 'Time Pilot/Pooyan/Rally-X sound board',
+        'sources': ['timeplt_snd.cpp'],
+    },
     'tms36xx': {'desc': 'TI TMS36xx melody generator', 'sources': ['tms36xx.cpp']},
     'tms5110': {'desc': 'TI TMS5110 speech', 'sources': ['tms5110.cpp']},
     'tms5220': {'desc': 'TI TMS5220 speech', 'sources': ['tms5220.cpp']},

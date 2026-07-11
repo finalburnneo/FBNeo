@@ -27,7 +27,7 @@ drivers = {
     'd_mahoudai.cpp': ['m68000', 'msm6295', 'ym2151', 'z80'],
     'd_pipibibs.cpp': ['m68000', 'ym3812', 'z80'],
     'd_shippumd.cpp': ['m68000', 'msm6295', 'ym2151', 'z80'],
-    'd_slapfght.cpp': ['ay8910', 'm68000', 'm6805', 'z80'],
+    'd_slapfght.cpp': ['ay8910', 'm68000', 'm6805', 'taito_m68705', 'z80'],
     'd_snowbro2.cpp': ['m68000', 'msm6295', 'ym2151', 'z80'],
     'd_tekipaki.cpp': ['m68000', 'ym3812', 'z80'],
     'd_toaplan1.cpp': ['m68000', 'tms32010', 'ym3812', 'z80'],

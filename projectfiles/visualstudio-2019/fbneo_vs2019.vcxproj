@@ -639,7 +639,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\konami\k056832.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\konamigx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\konamiic.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\timeplt_snd.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\timeplt_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_megadrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\megadrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp" />
@@ -1033,7 +1033,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sega\fd1089.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\sega\mc8123.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\mc8123.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5195.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
@@ -1090,7 +1090,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\taito\taitof3_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taitof3_video.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taito_ic.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\taito\taito_m68705.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\taito_m68705.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0100scn.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0110pcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0140syt.cpp" />

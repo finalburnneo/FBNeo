@@ -995,8 +995,8 @@
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp">
       <Filter>Source Files\burn\drv\sega</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\sega\mc8123.cpp">
-      <Filter>Source Files\burn\drv\sega</Filter>
+    <ClCompile Include="..\..\src\burn\devices\mc8123.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp">
       <Filter>Source Files\burn\drv\sega</Filter>
@@ -1079,8 +1079,8 @@
     <ClCompile Include="..\..\src\burn\drv\taito\taito_ic.cpp">
       <Filter>Source Files\burn\drv\taito</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\taito\taito_m68705.cpp">
-      <Filter>Source Files\burn\drv\taito</Filter>
+    <ClCompile Include="..\..\src\burn\devices\taito_m68705.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\tc0100scn.cpp">
       <Filter>Source Files\burn\drv\taito</Filter>

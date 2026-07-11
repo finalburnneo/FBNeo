@@ -752,7 +752,7 @@ $$DRV_SEGA {
 	HEADERS += \
 	    ../../src/burn/drv/sega/fd1094.h \
 	    ../../src/burn/drv/sega/genesis_vid.h \
-	    ../../src/burn/drv/sega/mc8123.h \
+	    ../../src/burn/devices/mc8123.h \
 	    ../../src/burn/drv/sega/sys16.h
 	
 	SOURCES += \
@@ -771,7 +771,7 @@ $$DRV_SEGA {
 	    ../../src/burn/drv/sega/fd1089.cpp \
 	    ../../src/burn/drv/sega/fd1094.cpp \
 	    ../../src/burn/drv/sega/genesis_vid.cpp \
-	    ../../src/burn/drv/sega/mc8123.cpp \
+	    ../../src/burn/devices/mc8123.cpp \
 	    ../../src/burn/drv/sega/sys16_fd1094.cpp \
 	    ../../src/burn/drv/sega/sys16_gfx.cpp \
 	    ../../src/burn/drv/sega/sys16_run.cpp
@@ -800,7 +800,7 @@ $$DRV_TAITO {
 
 	HEADERS += \
 	    ../../src/burn/drv/taito/taito_ic.h \
-	    ../../src/burn/drv/taito/taito_m68705.h \
+	    ../../src/burn/devices/taito_m68705.h \
 	    ../../src/burn/drv/taito/taito.h \
 	    ../../src/burn/drv/taito/tnzs_prot.h
 	
@@ -831,7 +831,7 @@ $$DRV_TAITO {
 	    ../../src/burn/drv/taito/pc080sn.cpp \
 	    ../../src/burn/drv/taito/pc090oj.cpp \
 	    ../../src/burn/drv/taito/taito_ic.cpp \
-	    ../../src/burn/drv/taito/taito_m68705.cpp \
+	    ../../src/burn/devices/taito_m68705.cpp \
 	    ../../src/burn/drv/taito/taito.cpp \
 	    ../../src/burn/drv/taito/tc0100scn.cpp \
 	    ../../src/burn/drv/taito/tc0110pcr.cpp \

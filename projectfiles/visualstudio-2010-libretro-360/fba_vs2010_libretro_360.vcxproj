@@ -346,7 +346,7 @@
     <ClCompile Include="..\..\src\burn\drv\sega\fd1089.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\sega\mc8123.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\mc8123.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp" />
@@ -374,7 +374,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\pc090oj.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taito.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taito_ic.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\taito\taito_m68705.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\taito_m68705.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0100scn.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0110pcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0140syt.cpp" />

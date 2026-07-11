@@ -1066,8 +1066,8 @@
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\sega\mc8123.cpp">
-      <Filter>burn\drv\sega</Filter>
+    <ClCompile Include="..\..\src\burn\devices\mc8123.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp">
       <Filter>burn\drv\sega</Filter>
@@ -1150,8 +1150,8 @@
     <ClCompile Include="..\..\src\burn\drv\taito\taito_ic.cpp">
       <Filter>burn\drv\taito</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\taito\taito_m68705.cpp">
-      <Filter>burn\drv\taito</Filter>
+    <ClCompile Include="..\..\src\burn\devices\taito_m68705.cpp">
+      <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\tc0100scn.cpp">
       <Filter>burn\drv\taito</Filter>
@@ -2011,8 +2011,8 @@
     <ClCompile Include="..\..\src\burn\drv\konami\konamigx.cpp">
       <Filter>burn\drv\konami</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\konami\timeplt_snd.cpp">
-      <Filter>burn\drv\konami</Filter>
+    <ClCompile Include="..\..\src\burn\snd\timeplt_snd.cpp">
+      <Filter>burn\snd</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp">
       <Filter>burn\drv\megadrive</Filter>

@@ -108,14 +108,14 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			load.o burn_sha1.o tilemap_generic.o tiles_generic.o timer.o vector.o \
 			\
 			6821pia.o 6840ptm.o 74259.o i8255.o 8255ppi.o 8257dma.o alpha8201.o ad59mc07.o c169.o atariic.o atarijsa.o atarimo.o atarirle.o atarivad.o avgdvg.o bsmt2000.o decobsmt.o ds2404.o dtimer.o earom.o eeprom.o epic12.o gaelco_crypt.o i2ceeprom.o i4x00.o i8155.o i8255.o intelfsh.o \
-			joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o k1ge.o kaneko_hit.o kaneko_tmap.o mathbox.o mb87078.o mermaid.o midcsd.o midsat.o midsg.o midcvsd.o midssio.o midtcs.o \
-			namco_c45.o namcoio.o pandora.o pic8259.o pit8253.o poly.o qs1000.o resnet.o rtc9701.o seibucop.o seibusnd.o serflash.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tlc34076.o tms34061.o v3021.o vdc.o \
+			joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o k1ge.o kaneko_hit.o kaneko_tmap.o mathbox.o mb87078.o mc8123.o mermaid.o midcsd.o midsat.o midsg.o midcvsd.o midssio.o midtcs.o \
+			namco_c45.o namcoio.o pandora.o pic8259.o pit8253.o poly.o qs1000.o resnet.o rtc9701.o seibucop.o seibusnd.o serflash.o sknsspr.o slapstic.o st0020.o t5182.o taito_m68705.o timekpr.o tlc34076.o tms34061.o v3021.o vdc.o \
 			tms9928a.o watchdog.o x2212.o \
 			\
 			asteroids.o astrocde_snd.o ay8910.o beep.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o burn_md2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf262.o burn_ymf271.o burn_ymf278b.o bzone.o c6280.o dac.o digitalk.o es5506.o es8712.o exidy440_snd.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o \
 			i5000.o ics2115.o iremga20.o k005289.o k007232.o k051649.o k053260.o k054539.o llander.o mpeg_audio.o msm5205.o msm5232.o msm6295.o multipcm.o namco_snd.o c140.o c352.o nes_apu.o \
-			t6w28.o tiamc1_snd.o tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o s14001a.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
+			t6w28.o tiamc1_snd.o timeplt_snd.o tms5110.o tms5220.o tms36xx.o phoenixsound.o pleiadssound.o pokey.o redbaron.o rf5c68.o s14001a.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o \
 			upd7759.o vlm5030.o votrax.o wiping.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf262.o ymf271.o ymf278b.o ymz280b.o ymz770.o snk6502_sound.o sp0250.o sp0256.o \
 			\
 			adsp2100.o adsp2100_intf.o arm7_intf.o arm9_intf.o arm_intf.o f8.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \
@@ -141,7 +141,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			irem_cpu.o irem_sound.o \
 			\
 			k007121.o k007342_k007420.o k007452.o k051316.o k051733.o k051960.o k052109.o k053245.o k053247.o k053250.o k053251.o k053936.o k054000.o k054338.o \
-			k055555.o k056832.o konamigx.o konamiic.o timeplt_snd.o \
+			k055555.o k056832.o konamigx.o konamiic.o \
 			\
 			dcs2k.o ide.o midwayic.o midtunit.o midwunit.o narc_sound.o williams_adpcm.o williams_cvsd.o yawdim_sound.o \
 			\
@@ -151,9 +151,9 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			psikyo_palette.o psikyo_sprite.o psikyo_tile.o psikyosh_render.o \
 			\
-			fd1089.o fd1094.o fd1094_intf.o genesis_vid.o mc8123.o sega_315_5195.o sega_speech.o sys16_fd1094.o sys16_gfx.o sys16_run.o usb_snd.o \
+			fd1089.o fd1094.o fd1094_intf.o genesis_vid.o sega_315_5195.o sega_speech.o sys16_fd1094.o sys16_gfx.o sys16_run.o usb_snd.o \
 			\
-			cchip.o pc080sn.o pc090oj.o taito.o taito_ic.o taitof3_snd.o taitof3_video.o taito_m68705.o tc0100scn.o tc0110pcr.o tc0140syt.o tc0150rod.o \
+			cchip.o pc080sn.o pc090oj.o taito.o taito_ic.o taitof3_snd.o taitof3_video.o tc0100scn.o tc0110pcr.o tc0140syt.o tc0150rod.o \
 			tc0180vcu.o tc0220ioc.o tc0280grd.o tc0360pri.o tc0480scp.o tc0510nio.o tc0640fio.o tnzs_prot.o \
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \

@@ -35,6 +35,7 @@ all_burn_devices = {
         'desc': 'Fujitsu MB87078 volume controller',
         'sources': ['mb87078.cpp'],
     },
+    'mc8123': {'desc': 'MC-8123 Z80 encryption device', 'sources': ['mc8123.cpp']},
     'mermaid': {'desc': 'Mermaid video device', 'sources': ['mermaid.cpp']},
     'midcsd': {'desc': 'Midway CSD sound board', 'sources': ['midcsd.cpp']},
     'midcvsd': {'desc': 'Midway CVSD sound board', 'sources': ['midcvsd.cpp']},
@@ -65,6 +66,10 @@ all_burn_devices = {
     'slapstic': {'desc': 'Atari Slapstic protection', 'sources': ['slapstic.cpp']},
     'st0020': {'desc': 'Seta ST-0020 sprite device', 'sources': ['st0020.cpp']},
     't5182': {'desc': 'Toshiba T5182 sound MCU interface', 'sources': ['t5182.cpp']},
+    'taito_m68705': {
+        'desc': 'Taito M68705 MCU interface',
+        'sources': ['taito_m68705.cpp'],
+    },
     'timekpr': {'desc': 'M48T02 Timekeeper NVRAM', 'sources': ['timekpr.cpp']},
     'tlc34076': {'desc': 'TI TLC34076 RAMDAC', 'sources': ['tlc34076.cpp']},
     'tms34061': {'desc': 'TI TMS34061 video controller', 'sources': ['tms34061.cpp']},

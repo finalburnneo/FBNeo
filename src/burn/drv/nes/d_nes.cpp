@@ -11952,6 +11952,26 @@ struct BurnDriver BurnDrvnes_chinarabbab = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// City Fighter IV - The World Warrior
+// mapper 266
+// UNIF does not have an iNES header
+static struct BurnRomInfo nes_cityfigivRomDesc[] = {
+	{ "City Fighter IV - The World Warrior (Unl)(1993)(Towa Soft).unf",          262263, 0xf6ecda86, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cityfigiv)
+STD_ROM_FN(nes_cityfigiv)
+
+struct BurnDriver BurnDrvnes_cityfigiv = {
+	"nes_cityfigiv", "nes_streefigii", NULL, NULL, "1993",
+	"City Fighter IV - The World Warrior\0", NULL, "Towa Soft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_cityfigivRomInfo, nes_cityfigivRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Contra 2-in-1 (Hack)
 static struct BurnRomInfo nes_contra2in1RomDesc[] = {
 	{ "Contra 2-in-1 (2023)(FlameCyclone).nes",          524304, 0xdb96ef78, BRF_ESS | BRF_PRG },
@@ -58207,4 +58227,3 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
-

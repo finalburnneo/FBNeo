@@ -260,14 +260,17 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		return 1;
 	}
 
-	if (memcmp("NES\x1a", &ROMData[0], 4)) {
+	INT32 has_header = !memcmp("NES\x1a", &ROMData[0], 4);
+	INT32 is_unif    = !memcmp("UNIF",    &ROMData[0], 4);
+	
+	if (!has_header && !is_unif) {
 		bprintf(0, _T("Invalid ROM header!\n"));
 		return 1;
 	}
 
 	NESMode = 0;
 
-	INT32 nes20 = (ROMData[7] & 0xc) == 0x8;
+	INT32 nes20 = has_header && ((ROMData[7] & 0xc) == 0x8);
 
 	memset(&Cart, 0, sizeof(Cart));
 
@@ -277,12 +280,53 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	memcpy(Cart.CartOrig, Cart.Cart, ROMSize);
 
 	Cart.Crc = ROMCRC;
-	Cart.PRGRomSize = ROMData[4] * 0x4000;
-	Cart.CHRRomSize = ROMData[5] * 0x2000;
+	
+	if (has_header) {
+		Cart.PRGRomSize = ROMData[4] * 0x4000;
+		Cart.CHRRomSize = ROMData[5] * 0x2000;
+	} else if (is_unif) {
+		bprintf(0, _T("UNIF format detected\n"));
+		UINT32 offset = 8;
+		while (offset + 8 <= ROMSize) {
+			char chunkName[5];
+			memcpy(chunkName, &ROMData[offset], 4);
+			chunkName[4] = 0;
+			UINT32 chunkSize = ROMData[offset + 4] | (ROMData[offset + 5] << 8) | (ROMData[offset + 6] << 16) | (ROMData[offset + 7] << 24);
+			offset += 8;
+			if (offset + chunkSize > ROMSize) break;
+			
+			if (!strcmp(chunkName, "MAPR")) {
+				if (!strncmp((char*)&ROMData[offset], "CITYFIGHT", 9)) {
+					Cart.Mapper = 266;
+					bprintf(0, _T("UNIF board: CITYFIGHT (mapper 266)\n"));
+				}
+			} else if (!strcmp(chunkName, "PRG0")) {
+				Cart.PRGRomSize = chunkSize;
+				Cart.PRGRom = &ROMData[offset];
+				bprintf(0, _T("UNIF PRG0 chunk: %d bytes\n"), chunkSize);
+			} else if (!strcmp(chunkName, "CHR0")) {
+				Cart.CHRRomSize = chunkSize;
+				Cart.CHRRom = &ROMData[offset];
+				bprintf(0, _T("UNIF CHR0 chunk: %d bytes\n"), chunkSize);
+			} else if (!strcmp(chunkName, "NAME")) {
+				bprintf(0, _T("UNIF NAME: %s\n"), &ROMData[offset]);
+			}
+			
+			offset += chunkSize;
+		}
+	} else {
+		Cart.PRGRomSize = 0;
+		Cart.CHRRomSize = 0;
+	}
 
 	if (Cart.Crc == 0x2a798367) {
 		// JY 45-in-1 can't be represented by regular nes header.
 		Cart.CHRRomSize = 128 * 0x4000;
+	}
+
+	if (Cart.Crc == 0x787fbe6d) { // City Fighter IV
+		Cart.Mapper = 266;
+		NESMode |= NO_WORKRAM;
 	}
 
 	PPUType = RP2C02;
@@ -314,35 +358,42 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	bprintf(0, _T("PRG Size: %d\n"), Cart.PRGRomSize);
 	bprintf(0, _T("CHR Size: %d\n"), Cart.CHRRomSize);
 
-	if (ROMData[6] & 0x8)
-		Cart.Mirroring = 4;
-	else
-		Cart.Mirroring = ROMData[6] & 1;
+	if (has_header) {
+		if (ROMData[6] & 0x8)
+			Cart.Mirroring = 4;
+		else
+			Cart.Mirroring = ROMData[6] & 1;
 
-	switch (Cart.Mirroring) {
-		case 0: set_mirroring(HORIZONTAL); break;
-		case 1: set_mirroring(VERTICAL); break;
-		case 4: set_mirroring(FOUR_SCREEN); break;
+		switch (Cart.Mirroring) {
+			case 0: set_mirroring(HORIZONTAL);  break;
+			case 1: set_mirroring(VERTICAL);    break;
+			case 4: set_mirroring(FOUR_SCREEN); break;
+		}
+
+		// Parse MAPPER iNES + NES 2.0
+		Cart.Mapper = (ROMData[6] >> 4) | (ROMData[7] & 0xf0);
+
+		if (!memcmp("DiskDude!", &ROMData[7], 9)) {
+			bprintf(PRINT_ERROR, _T("``DiskDude!'' spam, ignoring upper bits of mapper.\n"));
+
+			Cart.Mapper &= 0x0f; // remove spam from upper bits of mapper
+		}
+
+		if (nes20) {
+			Cart.Mapper   |= (ROMData[8] & 0x0f) << 8;
+			Cart.SubMapper = (ROMData[8] & 0xf0) >> 4;
+
+			if (Cart.Mapper & 0xf00 || Cart.SubMapper != 0)
+				bprintf(0, _T("NES 2.0 Extended Mapper: %d\tSub: %d\n"), Cart.Mapper, Cart.SubMapper);
+		}
+
+		Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
+	} else {
+		Cart.Mirroring = 1; // Vertical mirroring
+		set_mirroring(VERTICAL);
+		Cart.Mapper    = 266;
+		Cart.BatteryBackedSRAM = 0;
 	}
-
-	// Parse MAPPER iNES + NES 2.0
-	Cart.Mapper = (ROMData[6] >> 4) | (ROMData[7] & 0xf0);
-
-	if (!memcmp("DiskDude!", &ROMData[7], 9)) {
-		bprintf(PRINT_ERROR, _T("``DiskDude!'' spam, ignoring upper bits of mapper.\n"));
-
-		Cart.Mapper &= 0x0f; // remove spam from upper bits of mapper
-	}
-
-	if (nes20) {
-		Cart.Mapper |= (ROMData[8] & 0x0f) << 8;
-		Cart.SubMapper = (ROMData[8] & 0xf0) >> 4;
-
-		if (Cart.Mapper & 0xf00 || Cart.SubMapper != 0)
-			bprintf(0, _T("NES 2.0 Extended Mapper: %d\tSub: %d\n"), Cart.Mapper, Cart.SubMapper);
-	}
-
-	Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
 
 	// Mapper EXT-hardware inits
 	// Initted here, because mapper_init() is called on reset
@@ -372,8 +423,13 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		BurnYM2413SetAllRoutes(2.00, BURN_SND_ROUTE_BOTH);
 	}
 
-	Cart.Trainer = (ROMData[6] & 0x4) >> 2;
-	Cart.PRGRom = ROMData + 0x10 + (Cart.Trainer ? 0x200 : 0);
+	if (has_header) {
+		Cart.Trainer = (ROMData[6] & 0x4) >> 2;
+		Cart.PRGRom  = ROMData + 0x10 + (Cart.Trainer ? 0x200 : 0);
+	} else if (!is_unif) {
+		Cart.Trainer = 0;
+		Cart.PRGRom  = ROMData;
+	}
 
 	// Default CHR-Ram size (8k), always set-up (for advanced mappers, etc)
 	Cart.CHRRamSize = 0x2000;
@@ -407,7 +463,9 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	Cart.CHRRam = (UINT8*)BurnMalloc(Cart.CHRRamSize);
 
 	if (Cart.CHRRomSize) {
-		Cart.CHRRom = Cart.PRGRom + Cart.PRGRomSize;
+		if (!is_unif) {
+			Cart.CHRRom = Cart.PRGRom + Cart.PRGRomSize;
+		}
 		mapper_set_chrtype(MEM_ROM);
 		bprintf(0, _T("Using ROM-supplied CHR data\n"));
 	} else {
@@ -5279,6 +5337,112 @@ static void mapper23_write(UINT16 address, UINT8 data)
 
 #define mapper25_write		mapper22_write   // same address line hookup/swapping
 
+// --[ mapper 266 (UNL-CITYFIGHT / City Fighter IV)
+static UINT8 mapper266_prgReg;
+static UINT8 mapper266_prgMode;
+static UINT8 mapper266_mirroring;
+static UINT8 mapper266_chrRegs[8];
+static UINT8 mapper266_irqEnabled;
+static UINT16 mapper266_irqCounter;
+
+static void mapper266_map()
+{
+	UINT8 prg = mapper266_prgReg & 0x0C;
+
+	mapper_map_prg(8, 0, prg + 0);
+	mapper_map_prg(8, 1, prg + 1);
+	mapper_map_prg(8, 2, mapper266_prgMode ? (prg + 2) : prg);
+	mapper_map_prg(8, 3, prg + 3);
+
+	for (INT32 i = 0; i < 8; i++) {
+		mapper_map_chr(1, i, mapper266_chrRegs[i]);
+	}
+
+	switch (mapper266_mirroring & 3) {
+		case 0: set_mirroring(VERTICAL);    break;
+		case 1: set_mirroring(HORIZONTAL);  break;
+		case 2: set_mirroring(SINGLE_LOW);  break;
+		case 3: set_mirroring(SINGLE_HIGH); break;
+	}
+}
+
+static void mapper266_write(UINT16 address, UINT8 data)
+{
+	switch (address & 0xF00C) {
+		case 0x9000:
+			mapper266_prgReg    = data & 0x0C;
+			mapper266_mirroring = data & 0x03;
+			break;
+
+		case 0x9004:
+		case 0x9008:
+		case 0x900C:
+			if (address & 0x0800) {
+				nesapuWrite(0, 0x11, (data & 0x0F) << 3);
+			} else {
+				mapper266_prgReg = data & 0x0C;
+			}
+			break;
+
+		case 0xC000:
+		case 0xC004:
+		case 0xC008:
+		case 0xC00C:
+			mapper266_prgMode = data & 0x01;
+			break;
+
+		case 0xD000: mapper266_chrRegs[0] = (mapper266_chrRegs[0] & 0xF0) | (data & 0x0F); break;
+		case 0xD004: mapper266_chrRegs[0] = (mapper266_chrRegs[0] & 0x0F) | (data << 4);   break;
+		case 0xD008: mapper266_chrRegs[1] = (mapper266_chrRegs[1] & 0xF0) | (data & 0x0F); break;
+		case 0xD00C: mapper266_chrRegs[1] = (mapper266_chrRegs[1] & 0x0F) | (data << 4);   break;
+		case 0xA000: mapper266_chrRegs[2] = (mapper266_chrRegs[2] & 0xF0) | (data & 0x0F); break;
+		case 0xA004: mapper266_chrRegs[2] = (mapper266_chrRegs[2] & 0x0F) | (data << 4);   break;
+		case 0xA008: mapper266_chrRegs[3] = (mapper266_chrRegs[3] & 0xF0) | (data & 0x0F); break;
+		case 0xA00C: mapper266_chrRegs[3] = (mapper266_chrRegs[3] & 0x0F) | (data << 4);   break;
+		case 0xB000: mapper266_chrRegs[4] = (mapper266_chrRegs[4] & 0xF0) | (data & 0x0F); break;
+		case 0xB004: mapper266_chrRegs[4] = (mapper266_chrRegs[4] & 0x0F) | (data << 4);   break;
+		case 0xB008: mapper266_chrRegs[5] = (mapper266_chrRegs[5] & 0xF0) | (data & 0x0F); break;
+		case 0xB00C: mapper266_chrRegs[5] = (mapper266_chrRegs[5] & 0x0F) | (data << 4);   break;
+		case 0xE000: mapper266_chrRegs[6] = (mapper266_chrRegs[6] & 0xF0) | (data & 0x0F); break;
+		case 0xE004: mapper266_chrRegs[6] = (mapper266_chrRegs[6] & 0x0F) | (data << 4);   break;
+		case 0xE008: mapper266_chrRegs[7] = (mapper266_chrRegs[7] & 0xF0) | (data & 0x0F); break;
+		case 0xE00C: mapper266_chrRegs[7] = (mapper266_chrRegs[7] & 0x0F) | (data << 4);   break;
+
+		case 0xF000:
+			mapper266_irqCounter = (mapper266_irqCounter & 0x01E0) | ((data & 0x0F) << 1);
+			break;
+		case 0xF004:
+			mapper266_irqCounter = (mapper266_irqCounter & 0x001E) | ((data & 0x0F) << 5);
+			break;
+		case 0xF008:
+			mapper266_irqEnabled = (data & 0x02) ? 1 : 0;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			break;
+	}
+
+	mapper_map();
+}
+
+static void mapper266_cycle()
+{
+	if (mapper266_irqEnabled) {
+		mapper266_irqCounter--;
+		if (mapper266_irqCounter == 0) {
+			mapper_irq(0);
+		}
+	}
+}
+
+static void mapper266_reset()
+{
+	mapper266_prgReg     = 0;
+	mapper266_prgMode    = 0;
+	mapper266_mirroring  = 0;
+	memset(mapper266_chrRegs, 0, sizeof(mapper266_chrRegs));
+	mapper266_irqEnabled = 0;
+	mapper266_irqCounter = 0;
+}
+
 // --[ mapper 24, 26 (Konami VRC6)
 #define mapper24_prg(x)		(mapper_regs[0x00 + x])
 #define mapper24_chr(x)		(mapper_regs[0x02 + x])
@@ -6083,63 +6247,86 @@ static void mapper90_map()
 // --[ mapper 91: older JyCompany/Hummer
 #define mapper91_prg(x)		(mapper_regs[0x00 + (x)])
 #define mapper91_chr(x)		(mapper_regs[0x04 + (x)])
-#define mapper91_irqcount   (mapper_regs[0x1f - 0x00])
-#define mapper91_irqenable	(mapper_regs[0x1f - 0x01])
+#define mapper91_obank		(mapper_regs[0x10])
+#define mapper91_irqlatch   (mapper_regs[0x1f - 0x00])
+#define mapper91_irqcount	(mapper_regs[0x1f - 0x01])
+#define mapper91_irqenable	(mapper_regs[0x1f - 0x02])
+#define mapper91_irqreload	(mapper_regs[0x1f - 0x03])
 
-static void mapper91_write(UINT16 address, UINT8 data)
+static void mapper91_write_low(UINT16 address, UINT8 data)
 {
-	switch (address & 0xf000) {
+	switch (address & 0x7003) {
 		case 0x6000:
+		case 0x6001:
+		case 0x6002:
+		case 0x6003:
 			mapper91_chr(address & 3) = data;
 			break;
 		case 0x7000:
-			switch (address & 3) {
-				case 0:
-				case 1:
-					mapper91_prg(address & 1) = data;
-					break;
-				case 2:
-					mapper91_irqenable = 0;
-					mapper91_irqcount = 0;
-					M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
-					break;
-				case 3:
-					mapper91_irqenable = 1;
-					break;
-			}
+		case 0x7001:
+			mapper91_prg(address & 1) = data & 0x0f;
+			break;
+		case 0x7002:
+			mapper91_irqenable = 0;
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+			break;
+		case 0x7003:
+			mapper91_irqlatch  = 7;
+			mapper91_irqreload = 1;
+			mapper91_irqenable = 1;
 			break;
 	}
 
+	cart_exp_write_abort = 1;
 	mapper_map();
+}
+
+static void mapper91_write_high(UINT16 address, UINT8 data)
+{
+	if ((address & 0xe000) == 0x8000) {
+		mapper91_obank = data;
+		mapper_map();
+	}
 }
 
 static void mapper91_scanline()
 {
 	if (mapper91_irqenable && RENDERING) {
-		mapper91_irqcount++;
-		if (mapper91_irqcount == 8) {
-			mapper_irq(0x14); // 0x14 - gets rid of artefacts in "dragon ball z - super butouden 2"
-			mapper91_irqenable = 0;
+		INT32 cnt = mapper91_irqcount;
+		if (mapper91_irqcount == 0 || mapper91_irqreload) {
+			mapper91_irqcount = mapper91_irqlatch;
+		} else {
+			mapper91_irqcount--;
 		}
+		if ((cnt || mapper91_irqreload) && mapper91_irqenable && mapper91_irqcount == 0) {
+			mapper_irq(0x14);
+		}
+		mapper91_irqreload = 0;
 	}
 }
 
 static void mapper91_map()
 {
-	mapper_map_prg( 8, 0, mapper91_prg(0));
-	mapper_map_prg( 8, 1, mapper91_prg(1));
+	INT32 prg_obank = (mapper91_obank >> 1) & 0x03;
+	INT32 chr_obank = (mapper91_obank >> 0) & 0x01;
+
+	mapper_map_prg( 8, 0, (prg_obank * 16) + mapper91_prg(0));
+	mapper_map_prg( 8, 1, (prg_obank * 16) + mapper91_prg(1));
 	mapper_map_prg( 8, 2, -2);
 	mapper_map_prg( 8, 3, -1);
 
-	mapper_map_chr( 2, 0, mapper91_chr(0));
-	mapper_map_chr( 2, 1, mapper91_chr(1));
-	mapper_map_chr( 2, 2, mapper91_chr(2));
-	mapper_map_chr( 2, 3, mapper91_chr(3));
+	mapper_map_chr( 2, 0, (chr_obank * 256) + mapper91_chr(0));
+	mapper_map_chr( 2, 1, (chr_obank * 256) + mapper91_chr(1));
+	mapper_map_chr( 2, 2, (chr_obank * 256) + mapper91_chr(2));
+	mapper_map_chr( 2, 3, (chr_obank * 256) + mapper91_chr(3));
 }
 #undef mapper91_prg
 #undef mapper91_chr
+#undef mapper91_obank
+#undef mapper91_irqlatch
 #undef mapper91_irqcount
 #undef mapper91_irqenable
+#undef mapper91_irqreload
 
 // --[ mapper 17: FFE / Front Far East SMC (type 17)
 #define mapper17_prg(x)		(mapper_regs[0x00 + (x)])
@@ -9255,8 +9442,9 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 91: { // Older JY Company/Hummer
-			cart_exp_write = mapper91_write; // 6000 - 7fff
-			mapper_map = mapper91_map;
+			cart_exp_write  = mapper91_write_low;	// 6000 - 7fff
+			mapper_write    = mapper91_write_high;	// 8000 - ffff
+			mapper_map      = mapper91_map;
 			mapper_scanline = mapper91_scanline;
 			mapper_map();
 			retval = 0;
@@ -10227,6 +10415,18 @@ static INT32 mapper_init(INT32 mappernum)
 			// prg
 			mapper_regs[6] = 0;
 			mapper_regs[7] = 1;
+
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 266: { // UNL-CITYFIGHT / City Fighter IV
+			mapper_write = mapper266_write;
+			mapper_map   = mapper266_map;
+			mapper_cycle = mapper266_cycle;
+
+			mapper266_reset();
 
 			mapper_map();
 			retval = 0;

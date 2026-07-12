@@ -10,7 +10,7 @@
 #define OOB_CHECKER         1
 #define OOB_CHECK			0x200 // default oob detection range (512bytes)
 
-#define MAX_MEM_PTR	0x400 // more than 1024 malloc calls should be insane...
+#define MAX_MEM_PTR	2048 // more than 1024 malloc calls should be insane... (fm.c needs a _lot_ for state-ing, increased to 2k)
 
 static UINT8 *memptr[MAX_MEM_PTR]; // pointer to allocated memory
 static INT32 memsize[MAX_MEM_PTR];

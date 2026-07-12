@@ -443,16 +443,19 @@ static void NeoCDList_CheckDirCommon(void (*pfEntryCallBack)(INT32, TCHAR*), TCH
 				if (nID == 0x0085) {
 					if (nDate[0] == 123 && nDate[1] == 11 && nDate[2] == 29)              { nID |= 0x1000; }	// Samurai Shodown RPG (English Translation)
 					else if (nDate[0] == 124 && nDate[1] == 1 && nDate[2] == 26)          { nID |= 0x3000; }	// Samurai Shodown RPG (English Translation v1.1)
-					else if (nDate[0] == 126 && nDate[1] == 6 && nDate[2] ==  1)          { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation, Public beta)
+					else if (nDate[0] == 126 && nDate[1] == 6 && nDate[2] ==  1)          { nID |= 0x4000; }	// Samurai Shodown RPG (Simplified Chinese Translation v1.1)
 					else if (StrStrI(pIsoPath, _T("FR")) ||
 						     StrStrI(pIsoPath, _T("French")))                             { nID |= 0x2000; }	// Samurai Shodown RPG (FR)
+				}
+				if (nID == 0x5345) {
+					if (!strcmp(pIsoCtx->szVolumeID, "BLUEANDREDFIGHTTHEROBOTS") ||
+						(StrStrI(pIsoPath, _T("NTSC"))))                                  { nID  = 0x5346; }	// Blue And Red - Fight The Robots! (NTSC)
 				}
 				if (nID == 0x1234 && nDate[0] == 105 && nDate[1] ==  4 && nDate[2] == 25) { nID  = 0x2234; }	// Neo Puzzle League
 				if (nID == 0x1234 && nDate[0] == 124 && nDate[1] == 12 && nDate[2] ==  2) { nID  = 0x2235; }	// Neo Tetris
 				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] ==  3 && nDate[2] ==  4) { nID  = 0x2236; }	// NGD::ARK
 				if (nID == 0x1234 && nDate[0] == 112 && nDate[1] == 12 && nDate[2] ==  4) { nID  = 0x2237; }	// Santa Ball
 				if (nID == 0x2000 && !strcmp(pIsoCtx->szVolumeID, "COLUMNS"))             { nID |= 0x1000; }	// Columns
-				if (nID == 0x5345 && !strcmp(pIsoCtx->szVolumeID, "BLUEANDREDFIGHTTHEROBOTS")) { nID  = 0x5346; }	// Blue And Red - Fight The Robots! (NTSC)
 				if (nID == 0xFFFF && !strcmp(pIsoCtx->szVolumeID, "CODENAME BLUT ENGEL")) { nID  = 0xFFFE; }	// Codename Blut Engel
 				if (nID == 0x7777 && nDate[0] == 114 && nDate[1] ==  8 && nDate[2] == 14) { nID  = 0x7778; }	// Puzzle de Pon! CD Collection
 				if (nID == 0x2019 && !strcmp(pIsoCtx->szVolumeID, "LOOPTRSP"))            { nID |= 0x0100; }	// Looptris Plus

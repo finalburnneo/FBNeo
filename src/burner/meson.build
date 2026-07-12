@@ -27,6 +27,8 @@ fbneo_burner_sources = [
     '../intf/video/vid_support.cpp',
 ]
 
+# intf/* headers come from the global include set; only third-party dep
+# include dirs need listing here.
 burner_lib_inc = [
     '../dep/libs/dr_libs',
     '../dep/libs/libspng',
@@ -34,12 +36,6 @@ burner_lib_inc = [
     '../dep/libs/lzma/include',
     '../dep/libs/zip',
     '../dep/libs/zstd',
-    '../intf',
-    '../intf/audio',
-    '../intf/video',
-    '../intf/input',
-    '../intf/cd',
-    '../intf/perfcount',
 ]
 
 burner_lib_deps = [
@@ -56,7 +52,6 @@ if include_7z
 endif
 
 if frontend == 'win32'
-    burner_lib_inc += 'win32'
     burner_lib_inc += '../dep/kaillera/client'
     if cpp.get_id() == 'msvc'
         burner_lib_inc += '../dep/vc/include'
@@ -65,7 +60,6 @@ if frontend == 'win32'
     endif
     burner_lib_deps += lua_dep
 elif frontend == 'sdl2'
-    burner_lib_inc += 'sdl'
     burner_lib_deps += dependency('sdl2')
 endif
 
@@ -77,7 +71,7 @@ endif
 burner_lib = static_library(
     'burner',
     fbneo_burner_sources,
-    include_directories: [include_directories(burner_lib_inc)],
+    include_directories: [include_directories(burner_lib_inc), global_inc],
     dependencies: burner_lib_deps,
     c_args: burner_lib_defs,
     cpp_args: burner_lib_defs,

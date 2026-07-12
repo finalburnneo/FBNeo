@@ -42,4 +42,4 @@ option('driver_list',
         'taito',
         'toaplan',
     ],
-    description: 'Burn driver list to build; empty builds all groups')
+    description: 'Drivers to build: group (capcom), driver (capcom/d_cps1.cpp), or exclusion (-capcom, -capcom/d_cps1.cpp)')

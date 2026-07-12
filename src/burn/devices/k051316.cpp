@@ -2,7 +2,20 @@
 // copyright-holders:Fabio Priuli,Acho A. Tang, R. Belmont
 
 #include "tiles_generic.h"
-#include "konamiic.h"
+#include "k051316.h"
+
+// Render target for the high-color (32-bit) path; set by the driver via
+// K051316SetRenderTarget(). NULL -> the 32-bit path is skipped.
+static UINT32 *k051316_bitmap32 = NULL;
+static UINT32 *k051316_palette32 = NULL;
+static UINT8  *k051316_priority_bitmap = NULL;
+
+void K051316SetRenderTarget(UINT32 *bitmap32, UINT32 *palette32, UINT8 *priority_bitmap)
+{
+	k051316_bitmap32 = bitmap32;
+	k051316_palette32 = palette32;
+	k051316_priority_bitmap = priority_bitmap;
+}
 
 static UINT16 *K051316TileMap[3];
 static void (*K051316Callback[3])(INT32 *code,INT32 *color,INT32 *flags);
@@ -38,10 +51,6 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 	if (bpp == 4) {
 		BurnNibbleExpand(gfx, gfxexp, mask+1, 0, 0);
 	}
-
-	KonamiAllocateBitmaps();
-
-	KonamiIC_K051316InUse = 1;
 
 	K051316Offs[chip][0] = K051316Offs[chip][1] = 0;
 
@@ -244,10 +253,12 @@ static inline void copy_roz(INT32 chip, UINT32 startx, UINT32 starty, INT32 incx
 	}
 	else	// 32-bit colors
 	{
-		UINT32 *dst = konami_bitmap32;
-		UINT8 *pri = konami_priority_bitmap;
+		if (k051316_bitmap32 == NULL) return; // no high-color render target set
+
+		UINT32 *dst = k051316_bitmap32;
+		UINT8 *pri = k051316_priority_bitmap;
 		UINT16 *src = K051316TileMap[chip];
-		UINT32 *pal = konami_palette32;
+		UINT32 *pal = k051316_palette32;
 
 		for (INT32 sy = 0; sy < nScreenHeight; sy++, startx+=incyx, starty+=incyy)
 		{

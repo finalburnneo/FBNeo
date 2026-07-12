@@ -43,6 +43,27 @@ for ( my $i = 0; $i < scalar @ARGV; $i++ ) {{
 		next;
 	}
 
+	# Manifest file: a newline-separated list of input files.  Used to pass a
+	# large explicit driver-file list without hitting command-line length limits.
+	if ( $ARGV[$i] =~ /^-f/i ) {
+		my $manifest;
+		if ( $ARGV[$i] =~ /^-f$/i ) {
+			$i++;
+			$manifest = $ARGV[$i] if ( $i < scalar @ARGV );
+		} else {
+			$ARGV[$i] =~ /(?<=-f)(.*)/i;
+			$manifest = $1;
+		}
+		open( MANIFEST, $manifest ) or die "\nError: Couldn't read manifest $manifest $!";
+		while ( my $mline = <MANIFEST> ) {
+			$mline =~ s/^\s+//;
+			$mline =~ s/\s+$//;
+			push( @Filelist, $mline ) if ( $mline ne '' );
+		}
+		close( MANIFEST );
+		next;
+	}
+
 	if ( opendir( INDIR, $ARGV[$i] ) ) {;
 		# Argument is a dir
 		my @dirlist = readdir( INDIR ) or die "\nError: Couldn't read directory $ARGV[$i] $!";

@@ -539,6 +539,9 @@
 							RelativePath="..\..\src\burn\drv\galaxian\gal_gfx.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\galaxian\cclimber_audio.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\galaxian\gal_run.cpp">
 						</File>
 						<File
@@ -664,7 +667,7 @@
 							RelativePath="..\..\src\burn\drv\konami\d_xmen.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\konami\k051316.cpp">
+							RelativePath="..\..\src\burn\devices\k051316.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\konami\k051733.cpp">
@@ -685,7 +688,7 @@
 							RelativePath="..\..\src\burn\drv\konami\k053251.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\konami\k053936.cpp">
+							RelativePath="..\..\src\burn\devices\k053936.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\konami\k054000.cpp">
@@ -912,7 +915,7 @@
 							RelativePath="..\..\src\burn\drv\pre90s\d_meijinsn.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\pre90s\d_mitchell.cpp">
+							RelativePath="..\..\src\burn\drv\capcom\d_mitchell.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_mole.cpp">
@@ -1244,7 +1247,7 @@
 							RelativePath="..\..\src\burn\drv\sega\genesis_vid.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\sega\mc8123.cpp">
+							RelativePath="..\..\src\burn\devices\mc8123.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\sega\sys16_fd1094.cpp">
@@ -1332,7 +1335,7 @@
 							RelativePath="..\..\src\burn\drv\taito\taito_ic.cpp">
 						</File>
 						<File
-							RelativePath="..\..\src\burn\drv\taito\taito_m68705.cpp">
+							RelativePath="..\..\src\burn\devices\taito_m68705.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\taito\tc0100scn.cpp">

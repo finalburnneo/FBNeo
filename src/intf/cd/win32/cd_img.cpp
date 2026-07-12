@@ -66,6 +66,11 @@ static INT32 cdimgAudioFilePos;  // Track audio read position within file (file 
 
 // -----------------------------------------------------------------------------
 
+// neocdlist.h declares GetIsoPath() extern only under BUILD_NEOGEO and provides
+// a static-inline stub otherwise. Guard the definition to match, so a build
+// without the Neo Geo driver (e.g. a single non-neogeo driver) does not hit a
+// redefinition. All callers live in BUILD_NEOGEO-guarded code.
+#ifdef BUILD_NEOGEO
 TCHAR* GetIsoPath()
 {
 	if (cdimgTOC) {
@@ -79,6 +84,7 @@ TCHAR* GetIsoPath()
 
 	return NULL;
 }
+#endif
 
 static inline UINT8 bcd(const UINT8 v)
 {

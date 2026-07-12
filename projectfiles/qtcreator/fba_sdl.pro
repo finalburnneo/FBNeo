@@ -414,6 +414,7 @@ $$DRV_GALAXIAN {
 	SOURCES += \
 	    ../../src/burn/drv/galaxian/d_galaxian.cpp \
 	    ../../src/burn/drv/galaxian/gal_gfx.cpp \
+	    ../../src/burn/drv/galaxian/cclimber_audio.cpp \
 	    ../../src/burn/drv/galaxian/gal_run.cpp \
 	    ../../src/burn/drv/galaxian/gal_sound.cpp \
 	    ../../src/burn/drv/galaxian/gal_stars.cpp
@@ -480,14 +481,14 @@ $$DRV_KONAMI {
 	    ../../src/burn/drv/konami/d_ultraman.cpp \
 	    ../../src/burn/drv/konami/d_vendetta.cpp \
 	    ../../src/burn/drv/konami/d_xmen.cpp \
-	    ../../src/burn/drv/konami/k051316.cpp \
+	    ../../src/burn/devices/k051316.cpp \
 	    ../../src/burn/drv/konami/k051733.cpp \
 	    ../../src/burn/drv/konami/k051960.cpp \
 	    ../../src/burn/drv/konami/k052109.cpp \
 	    ../../src/burn/drv/konami/k053245.cpp \
 	    ../../src/burn/drv/konami/k053247.cpp \
 	    ../../src/burn/drv/konami/k053251.cpp \
-	    ../../src/burn/drv/konami/k053936.cpp \
+	    ../../src/burn/devices/k053936.cpp \
 	    ../../src/burn/drv/konami/k054000.cpp \
 	    ../../src/burn/drv/konami/konamiic.cpp
 }
@@ -605,7 +606,7 @@ $$DRV_PRE90S {
 	    ../../src/burn/drv/pre90s/d_marineb.cpp \
 	    ../../src/burn/drv/pre90s/d_markham.cpp \
 	    ../../src/burn/drv/pre90s/d_meijinsn.cpp \
-	    ../../src/burn/drv/pre90s/d_mitchell.cpp \
+	    ../../src/burn/drv/capcom/d_mitchell.cpp \
 	    ../../src/burn/drv/pre90s/d_mole.cpp \
 	    ../../src/burn/drv/pre90s/d_momoko.cpp \
 	    ../../src/burn/drv/pre90s/d_mrdo.cpp \
@@ -752,7 +753,7 @@ $$DRV_SEGA {
 	HEADERS += \
 	    ../../src/burn/drv/sega/fd1094.h \
 	    ../../src/burn/drv/sega/genesis_vid.h \
-	    ../../src/burn/drv/sega/mc8123.h \
+	    ../../src/burn/devices/mc8123.h \
 	    ../../src/burn/drv/sega/sys16.h
 	
 	SOURCES += \
@@ -771,7 +772,7 @@ $$DRV_SEGA {
 	    ../../src/burn/drv/sega/fd1089.cpp \
 	    ../../src/burn/drv/sega/fd1094.cpp \
 	    ../../src/burn/drv/sega/genesis_vid.cpp \
-	    ../../src/burn/drv/sega/mc8123.cpp \
+	    ../../src/burn/devices/mc8123.cpp \
 	    ../../src/burn/drv/sega/sys16_fd1094.cpp \
 	    ../../src/burn/drv/sega/sys16_gfx.cpp \
 	    ../../src/burn/drv/sega/sys16_run.cpp
@@ -800,7 +801,7 @@ $$DRV_TAITO {
 
 	HEADERS += \
 	    ../../src/burn/drv/taito/taito_ic.h \
-	    ../../src/burn/drv/taito/taito_m68705.h \
+	    ../../src/burn/devices/taito_m68705.h \
 	    ../../src/burn/drv/taito/taito.h \
 	    ../../src/burn/drv/taito/tnzs_prot.h
 	
@@ -831,7 +832,7 @@ $$DRV_TAITO {
 	    ../../src/burn/drv/taito/pc080sn.cpp \
 	    ../../src/burn/drv/taito/pc090oj.cpp \
 	    ../../src/burn/drv/taito/taito_ic.cpp \
-	    ../../src/burn/drv/taito/taito_m68705.cpp \
+	    ../../src/burn/devices/taito_m68705.cpp \
 	    ../../src/burn/drv/taito/taito.cpp \
 	    ../../src/burn/drv/taito/tc0100scn.cpp \
 	    ../../src/burn/drv/taito/tc0110pcr.cpp \

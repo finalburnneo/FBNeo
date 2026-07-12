@@ -421,6 +421,7 @@ static INT32 DrvDoReset()
 	BurnYM2151Reset();
 
 	KonamiICReset();
+	K051316Reset();
 
 	firq_enable = 0;
 	ajax_priority = 0;
@@ -615,6 +616,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	KonamiICExit();
+	K051316Exit();
 
 	M6809Exit();
 	konamiExit();
@@ -640,6 +642,7 @@ static INT32 DrvDraw()
 
 	if (ajax_priority)
 	{
+		K051316SetRenderTarget(konami_bitmap32, konami_palette32, konami_priority_bitmap);
 		if (nBurnLayer & 2) K051316_zoom_draw(0, 4);
 		if (nBurnLayer & 4) K052109RenderLayer(1, 0, 2);
 	}
@@ -738,6 +741,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+		K051316Scan(nAction);
 
 		SCAN_VAR(firq_enable);
 		SCAN_VAR(ajax_priority);

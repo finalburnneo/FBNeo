@@ -27,6 +27,14 @@ all_burn_devices = {
     'i4x00': {'desc': 'I4X00 custom video device', 'sources': ['i4x00.cpp']},
     'i8155': {'desc': 'Intel 8155 RAM/I/O/timer', 'sources': ['i8155.cpp']},
     'intelfsh': {'desc': 'Intel/AMD flash memory', 'sources': ['intelfsh.cpp']},
+    'k051316': {
+        'desc': 'Konami K051316 zoom/rotation tilemap',
+        'sources': ['k051316.cpp'],
+    },
+    'k053936': {
+        'desc': 'Konami K053936 zoom/rotation (ROZ+) tilemap',
+        'sources': ['k053936.cpp'],
+    },
     'k1ge': {'desc': 'SNK K1GE/K2GE video device', 'sources': ['k1ge.cpp']},
     'kaneko_hit': {'desc': 'Kaneko HIT protection', 'sources': ['kaneko_hit.cpp']},
     'kaneko_tmap': {'desc': 'Kaneko tilemap device', 'sources': ['kaneko_tmap.cpp']},
@@ -35,6 +43,7 @@ all_burn_devices = {
         'desc': 'Fujitsu MB87078 volume controller',
         'sources': ['mb87078.cpp'],
     },
+    'mc8123': {'desc': 'MC-8123 Z80 encryption device', 'sources': ['mc8123.cpp']},
     'mermaid': {'desc': 'Mermaid video device', 'sources': ['mermaid.cpp']},
     'midcsd': {'desc': 'Midway CSD sound board', 'sources': ['midcsd.cpp']},
     'midcvsd': {'desc': 'Midway CVSD sound board', 'sources': ['midcvsd.cpp']},
@@ -65,6 +74,10 @@ all_burn_devices = {
     'slapstic': {'desc': 'Atari Slapstic protection', 'sources': ['slapstic.cpp']},
     'st0020': {'desc': 'Seta ST-0020 sprite device', 'sources': ['st0020.cpp']},
     't5182': {'desc': 'Toshiba T5182 sound MCU interface', 'sources': ['t5182.cpp']},
+    'taito_m68705': {
+        'desc': 'Taito M68705 MCU interface',
+        'sources': ['taito_m68705.cpp'],
+    },
     'timekpr': {'desc': 'M48T02 Timekeeper NVRAM', 'sources': ['timekpr.cpp']},
     'tlc34076': {'desc': 'TI TLC34076 RAMDAC', 'sources': ['tlc34076.cpp']},
     'tms34061': {'desc': 'TI TMS34061 video controller', 'sources': ['tms34061.cpp']},
@@ -75,17 +88,11 @@ all_burn_devices = {
     'x2212': {'desc': 'Xicor X2212 NVRAM', 'sources': ['x2212.cpp']},
 }
 
+# Enablement is derived from the parent's flat `enabled_components` set
+# (device names are unique across cpu/device/sound namespaces).
 burn_device_status = {}
-all_burn_device_names = all_burn_devices.keys()
-foreach name : burn_device_list
-    assert(
-        all_burn_device_names.contains(name),
-        'Unknown burn device in burn_device_list: ' + name,
-    )
-endforeach
-
 foreach name, device : all_burn_devices
-    enabled = burn_device_list.contains(name)
+    enabled = enabled_components.contains(name)
     burn_device_status += {device['desc']: enabled ? 'ON' : 'OFF'}
     if enabled
         burn_devices_sources += device['sources']
@@ -96,8 +103,8 @@ summary(burn_device_status, section: 'Burn devices', list_sep: '')
 burn_devices_lib = static_library(
     'burn_devices',
     burn_devices_sources,
-    # TODO: snd/pce dep must split
-    include_directories: include_directories(['../drv/pce', '../snd']),
+    # snd headers come from global_inc; pce stays local for the VDC device.
+    include_directories: [include_directories(['../drv/pce']), global_inc],
     dependencies: [burn_dep, cpu_dep],
 )
 

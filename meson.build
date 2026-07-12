@@ -35,6 +35,60 @@ if frontend == 'auto'
 endif
 
 message('FBNeo frontend: ' + frontend)
+
+# frontend -> source subdir (used for the subdir dispatch below)
+frontend_dirs = {
+    'win32': 'win32',
+    'sdl2': 'sdl',
+    'qt': 'qt',
+    'macos': 'macos',
+    'pi': 'pi',
+    'psp': 'psp',
+}
+
+# Build-selection macro for the active frontend, defined once here and threaded
+# through the burn static library (and its dependents) via burn_defs.
+frontend_defs = ['-DBUILD_' + frontend.to_upper()]
+if frontend == 'win32'
+    frontend_defs += ['-DUNICODE', '-D_UNICODE']
+endif
+
+# Warning flags shared by the cpu and burn_drv static libraries (identical set).
+common_cpp_warning_args = []
+if cpp.get_id() in ['gcc', 'clang']
+    common_cpp_warning_args = [
+        '-Wno-sequence-point',
+        '-Wno-sign-compare',
+        '-Wno-unused-but-set-variable',
+        '-Wno-unused-parameter',
+        '-Wno-unused-value',
+        '-Wno-unused-variable',
+    ]
+endif
+
+# Platform math macro reused by cpu / snd / burn_drv on Windows.
+platform_math_defs = host_machine.system() == 'windows' ? ['-D_USE_MATH_DEFINES'] : []
+
+# Cross-cutting header directories made globally visible to every internal
+# library and the final executable. Code includes these bare (e.g. "z80_intf.h",
+# "msm6295.h", "eeprom.h", "burnint.h"), so exposing the directories globally
+# removes the per-library include juggling and the reverse-include hacks.
+# (Verified: no duplicate header basenames across this set.) cpu core and driver
+# group subdirectories stay local to their own libraries on purpose.
+global_inc = include_directories(
+    'src/burn',
+    'src/burn/devices',
+    'src/burn/snd',
+    'src/cpu',
+    'src/burner',
+    'src/burner' / frontend_dirs[frontend],
+    'src/intf',
+    'src/intf/audio',
+    'src/intf/video',
+    'src/intf/input',
+    'src/intf/cd',
+    'src/intf/perfcount',
+)
 force_pulse_audio = get_option('force_pulse_audio')
 rom_verify = get_option('rom_verify')
 fastcall_support = get_option('fastcall_support')
@@ -81,603 +135,114 @@ if fastcall_support
 endif
 
 burn_driver_list = get_option('driver_list')
-burn_driver_dependencies = {
-    'atari': {
-        'cpus': ['adsp2100', 'm6502', 'm68000', 'm6809', 'tms34010'],
-        'devices': [
-            'atariic',
-            'atarijsa',
-            'atarimo',
-            'atarirle',
-            'atarivad',
-            'avgdvg',
-            'dtimer',
-            'earom',
-            'eeprom',
-            'slapstic',
-            'tms34061',
-            'watchdog',
-        ],
-        'sounds': [
-            'asteroids',
-            'ay8910',
-            'bzone',
-            'dac',
-            'llander',
-            'msm6295',
-            'pokey',
-            'redbaron',
-            'samples',
-            'tms5220',
-            'ym2151',
-            'ym2413',
-        ],
-    },
-    'capcom': {
-        'cpus': ['m68000', 'z80'],
-        'devices': ['eeprom', 'resnet', 'timekpr', 'watchdog'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'fmopl',
-            'msm5205',
-            'msm6295',
-            'samples',
-            'y8950',
-            'ym2151',
-            'ym2203',
-            'ym2413',
-            'ym3526',
-            'ym3812',
-            'ym2610',
-            'ym2612',
-        ],
-    },
-    'cave': {
-        'cpus': ['m68000', 'sh2', 'sh4', 'z80'],
-        'devices': ['eeprom', 'epic12', 'nmk112', 'rtc9701', 'serflash', 'watchdog'],
-        'sounds': [
-            'msm6295',
-            'samples',
-            'ym2151',
-            'ym2203',
-            'ym2610',
-            'ymz280b',
-            'ymz770',
-        ],
-    },
-    'channelf': {
-        'cpus': ['f8'],
-        'devices': [],
-        'sounds': ['dac'],
-    },
-    'coleco': {
-        'cpus': ['z80'],
-        'devices': ['i2ceeprom', 'tms9928a'],
-        'sounds': ['ay8910', 'sn76496'],
-    },
-    'cps3': {
-        'cpus': ['sh2'],
-        'devices': ['eeprom', 'intelfsh'],
-        'sounds': ['dac'],
-    },
-    'dataeast': {
-        'cpus': [
-            'arm',
-            'h6280',
-            'hd6309',
-            'i8051',
-            'i8x41',
-            'm6502',
-            'm68000',
-            'm6809',
-            'sh2',
-            'tms32010',
-            'z80',
-        ],
-        'devices': ['bsmt2000', 'decobsmt', 'eeprom'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'fmopl',
-            'msm5205',
-            'msm6295',
-            'ym2151',
-            'ym2203',
-            'ym3526',
-            'ym3812',
-            'ymz280b',
-        ],
-    },
-    'galaxian': {
-        'cpus': ['m6809', 's2650', 'z80'],
-        'devices': ['8255ppi', 'resnet', 'watchdog'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'digitalk',
-            'flt_rc',
-            'samples',
-            'sn76477',
-            'sn76496',
-        ],
-    },
-    'irem': {
-        'cpus': ['i8039', 'i8051', 'm6800', 'm68000', 'm6809', 'nec', 'z80'],
-        'devices': ['eeprom', 'pic8259', 'resnet', 'watchdog'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'iremga20',
-            'msm5205',
-            'msm6295',
-            'samples',
-            'ym2151',
-            'ym2203',
-        ],
-    },
-    'konami': {
-        'cpus': [
-            'hd6309',
-            'i8039',
-            'i8x41',
-            'konami',
-            'm6800',
-            'm68000',
-            'm6805',
-            'm6809',
-            'z80',
-        ],
-        'devices': ['dtimer', 'eeprom', 'resnet', 'watchdog'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'flt_rc',
-            'k005289',
-            'k007232',
-            'k051649',
-            'k053260',
-            'k054539',
-            'msm6295',
-            'samples',
-            'sn76496',
-            'upd7759',
-            'vlm5030',
-            'ym2151',
-            'ym2203',
-            'ym3812',
-            'ymz280b',
-        ],
-    },
-    'megadrive': {
-        'cpus': ['m68000', 'z80'],
-        'devices': ['eeprom', 'i2ceeprom'],
-        'sounds': ['burn_md2612', 'dac', 'samples', 'sn76496', 'ym2612'],
-    },
-    'midway': {
-        'cpus': [
-            'adsp2100',
-            'i386',
-            'm6502',
-            'm68000',
-            'm6809',
-            'mips3',
-            'tms34010',
-            'z80',
-        ],
-        'devices': [
-            '6821pia',
-            '6840ptm',
-            '8255ppi',
-            'eeprom',
-            'midcsd',
-            'midcvsd',
-            'midsat',
-            'midsg',
-            'midssio',
-            'midtcs',
-            'pic8259',
-            'pit8253',
-            'tms34061',
-            'watchdog',
-        ],
-        'sounds': ['ay8910', 'dac', 'hc55516', 'msm6295', 'samples', 'ym2151'],
-    },
-    'msx': {
-        'cpus': ['z80'],
-        'devices': ['8255ppi', 'tms9928a'],
-        'sounds': ['ay8910', 'dac', 'k051649', 'ym2413'],
-    },
-    'neogeo': {
-        'cpus': ['m68000', 'z80'],
-        'devices': ['eeprom', 'resnet', 'watchdog'],
-        'sounds': ['ay8910', 'dac', 'ym2610', 'ym2612'],
-    },
-    'nes': {
-        'cpus': ['m6502'],
-        'devices': [],
-        'sounds': ['ay8910', 'nes_apu', 'ym2413'],
-    },
-    'pce': {
-        'cpus': ['h6280'],
-        'devices': ['vdc'],
-        'sounds': ['c6280'],
-    },
-    'pgm': {
-        'cpus': ['arm7', 'm68000', 'z80'],
-        'devices': ['eeprom', 'i2ceeprom', 'v3021', 'watchdog'],
-        'sounds': ['ics2115', 'msm6295'],
-    },
-    'pgm2': {
-        'cpus': ['arm9'],
-        'devices': ['eeprom', 'i2ceeprom'],
-        'sounds': ['ics2115', 'ymz770'],
-    },
-    'pre90s': {
-        'cpus': [
-            'adsp2100',
-            'h6280',
-            'hd6309',
-            'hmcs40',
-            'i8039',
-            'i8051',
-            'i8085',
-            'i8x41',
-            'konami',
-            'm6502',
-            'm6800',
-            'm68000',
-            'm6805',
-            'm6809',
-            'mb88xx',
-            'nec',
-            'pic16c5x',
-            's2650',
-            'tms32010',
-            'tms34010',
-            'z80',
-        ],
-        'devices': [
-            '6821pia',
-            '6840ptm',
-            '74259',
-            '8255ppi',
-            '8257dma',
-            'ad59mc07',
-            'alpha8201',
-            'avgdvg',
-            'bsmt2000',
-            'ds2404',
-            'dtimer',
-            'earom',
-            'eeprom',
-            'i8155',
-            'mathbox',
-            'mermaid',
-            'midcsd',
-            'midcvsd',
-            'midsat',
-            'midsg',
-            'midssio',
-            'midtcs',
-            'namco_c45',
-            'namcoio',
-            'nb1414m4',
-            'nb1414m4_8bit',
-            'nmk004',
-            'pandora',
-            'pit8253',
-            'poly',
-            'resnet',
-            'seibusnd',
-            'slapstic',
-            't5182',
-            'timekpr',
-            'tlc34076',
-            'tms34061',
-            'tms9928a',
-            'v3021',
-            'watchdog',
-            'x2212',
-        ],
-        'sounds': [
-            'asteroids',
-            'astrocde',
-            'ay8910',
-            'beep',
-            'bzone',
-            'dac',
-            'digitalk',
-            'exidy440',
-            'flower',
-            'flt_rc',
-            'fmopl',
-            'hc55516',
-            'k005289',
-            'k007232',
-            'llander',
-            'msm5205',
-            'msm5232',
-            'msm6295',
-            'namco_snd',
-            'nes_apu',
-            'phoenixsound',
-            'pleiadssound',
-            'pokey',
-            'redbaron',
-            's14001a',
-            'saa1099',
-            'samples',
-            'sn76477',
-            'sn76496',
-            'snk6502_sound',
-            'sp0250',
-            'sp0256',
-            't6w28',
-            'tiamc1',
-            'tms36xx',
-            'tms5110',
-            'tms5220',
-            'upd7759',
-            'vlm5030',
-            'votrax',
-            'wiping',
-            'x1010',
-            'y8950',
-            'ym2151',
-            'ym2203',
-            'ym2413',
-            'ym2608',
-            'ym2610',
-            'ym2612',
-            'ym3526',
-            'ym3812',
-        ],
-    },
-    'psikyo': {
-        'cpus': ['m68000', 'sh2', 'z80'],
-        'devices': ['eeprom'],
-        'sounds': ['msm6295', 'ym2151', 'ym2610', 'ymf278b'],
-    },
-    'pst90s': {
-        'cpus': [
-            'arm7',
-            'arm9',
-            'e132xs',
-            'hd6309',
-            'i386',
-            'i8051',
-            'm377',
-            'm6502',
-            'm68000',
-            'm6805',
-            'm6809',
-            'mips3',
-            'nec',
-            'pic16c5x',
-            'sh2',
-            'sh4',
-            'tlcs90',
-            'tlcs900',
-            'tms32010',
-            'tms34010',
-            'upd7725',
-            'upd7810',
-            'v60',
-            'z180',
-            'z80',
-        ],
-        'devices': [
-            '6821pia',
-            '8255ppi',
-            'bsmt2000',
-            'c169',
-            'ds2404',
-            'dtimer',
-            'eeprom',
-            'epic12',
-            'gaelco_crypt',
-            'i2ceeprom',
-            'i4x00',
-            'intelfsh',
-            'k1ge',
-            'kaneko_hit',
-            'kaneko_tmap',
-            'mb87078',
-            'mermaid',
-            'namco_c45',
-            'nmk004',
-            'nmk112',
-            'pandora',
-            'qs1000',
-            'rtc9701',
-            'seibucop',
-            'seibusnd',
-            'serflash',
-            'sknsspr',
-            'st0020',
-            'timekpr',
-            'tlc34076',
-            'tms34061',
-            'watchdog',
-        ],
-        'sounds': [
-            'ay8910',
-            'burn_ymf262',
-            'burn_ymf271',
-            'c140',
-            'c352',
-            'dac',
-            'es5506',
-            'es8712',
-            'gaelco',
-            'i5000',
-            'ics2115',
-            'mpeg_audio',
-            'msm5205',
-            'msm5232',
-            'msm6295',
-            'multipcm',
-            'namco_snd',
-            'rf5c68',
-            'saa1099',
-            'samples',
-            'segapcm',
-            't6w28',
-            'upd7759',
-            'x1010',
-            'ym2151',
-            'ym2203',
-            'ym2413',
-            'ym2608',
-            'ym2610',
-            'ym2612',
-            'ym3526',
-            'ym3812',
-            'ymf262',
-            'ymf271',
-            'ymf278b',
-            'ymz280b',
-            'ymz770',
-        ],
-    },
-    'sega': {
-        'cpus': [
-            'i8039',
-            'i8051',
-            'i8x41',
-            'm6502',
-            'm68000',
-            'm6809',
-            'nec',
-            'sh2',
-            'v60',
-            'z80',
-        ],
-        'devices': ['8255ppi', 'dtimer', 'eeprom', 'seibusnd', 'resnet', 'watchdog'],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'msm5205',
-            'msm6295',
-            'multipcm',
-            'rf5c68',
-            'samples',
-            'segapcm',
-            'sn76496',
-            'sp0250',
-            'tms36xx',
-            'upd7759',
-            'ym2151',
-            'ym2203',
-            'ym2413',
-            'ym2610',
-            'ym2612',
-        ],
-    },
-    'sg1000': {
-        'cpus': ['z80'],
-        'devices': ['tms9928a'],
-        'sounds': ['sn76496'],
-    },
-    'sms': {
-        'cpus': ['z80'],
-        'devices': ['tms9928a'],
-        'sounds': ['sn76496', 'ym2413'],
-    },
-    'snes': {
-        'cpus': ['m6502', 'upd7725'],
-        'devices': [],
-        'sounds': ['dac'],
-    },
-    'spectrum': {
-        'cpus': ['z80'],
-        'devices': [],
-        'sounds': ['ay8910', 'beep'],
-    },
-    'taito': {
-        'cpus': [
-            'hd6309',
-            'i8051',
-            'i8x41',
-            'm6800',
-            'm68000',
-            'm6805',
-            'm6809',
-            'upd7810',
-            'z80',
-        ],
-        'devices': [
-            '6821pia',
-            'dtimer',
-            'eeprom',
-            'mb87078',
-            'poly',
-            'timekpr',
-            'watchdog',
-        ],
-        'sounds': [
-            'ay8910',
-            'dac',
-            'es5506',
-            'msm5205',
-            'msm5232',
-            'msm6295',
-            'samples',
-            'sn76477',
-            'sn76496',
-            'ym2151',
-            'ym2203',
-            'ym2610',
-            'ym2612',
-            'ym3526',
-        ],
-    },
-    'toaplan': {
-        'cpus': [
-            'i8x41',
-            'm68000',
-            'm6805',
-            'nec',
-            'tms32010',
-            'z180',
-            'z80',
-        ],
-        'devices': ['eeprom', 'nmk112', 'watchdog'],
-        'sounds': ['ay8910', 'dac', 'msm6295', 'ym2151', 'ym3812', 'ymz280b'],
-    },
-}
 
-cpu_list = []
-burn_device_list = []
-burn_sound_list = []
-foreach name : burn_driver_list
-    deps = burn_driver_dependencies[name]
-    foreach cpu_name : deps['cpus']
-        if not cpu_list.contains(cpu_name)
-            cpu_list += cpu_name
+fs = import('fs')
+
+# driver_list selects what to build at driver granularity. Each
+# entry is one of:
+#   capcom                 -> the whole capcom group
+#   capcom/d_cps1.cpp      -> just that driver
+#   -capcom                -> exclude the whole capcom group
+#   -capcom/d_cps1.cpp     -> exclude that driver
+# First pass: positives -> full_groups (whole group) or partial (specific
+# drivers); negatives -> exclusion sets. (Kept as separate lists rather than a
+# mixed-type value because meson forbids comparing an array with a string.)
+full_groups = []                  # groups selected in full
+partial = {}                      # group -> [specific driver files]
+group_exclude = []
+driver_exclude = []
+foreach entry : burn_driver_list
+    if entry.startswith('-')
+        item = entry.substring(1)
+        if item.contains('/')
+            driver_exclude += item
+        else
+            group_exclude += item
         endif
-    endforeach
-    foreach device_name : deps['devices']
-        if not burn_device_list.contains(device_name)
-            burn_device_list += device_name
+    elif entry.contains('/')
+        parts = entry.split('/')
+        g = parts[0]
+        if not full_groups.contains(g)
+            partial += {g: partial.get(g, []) + [parts[1]]}
         endif
-    endforeach
-    foreach sound_name : deps['sounds']
-        if not burn_sound_list.contains(sound_name)
-            burn_sound_list += sound_name
-        endif
-    endforeach
+    elif not full_groups.contains(entry)
+        full_groups += entry      # whole group wins over specific drivers
+    endif
 endforeach
 
-if frontend == 'win32' and not cpu_list.contains('m68000')
-    cpu_list += 'm68000'
+# Unique list of selected groups (full first, then partial-only).
+selected_groups = full_groups
+foreach g, _drv : partial
+    if not selected_groups.contains(g)
+        selected_groups += g
+    endif
+endforeach
+
+# Collect each selected group's self-describing fragment. Each
+# src/burn/drv/<group>/meson.build sets (data only, no targets):
+#   group_desc / group_srcs (shared support) / drivers ({file: [components]})
+enabled_components = []
+burn_drivers = {}                 # group -> { 'desc', 'drivers', 'srcs' }
+driver_files_abs = []             # explicit d_*.cpp paths fed to gamelist.pl
+seen_drivers = []                 # for exclusion validation
+foreach g : selected_groups
+    assert(
+        fs.is_dir('src/burn/drv' / g),
+        'Unknown driver group in driver_list: ' + g,
+    )
+    if group_exclude.contains(g)
+        continue
+    endif
+    subdir('src/burn/drv' / g)
+    chosen = full_groups.contains(g) ? drivers.keys() : partial[g]
+    enabled_drivers = []
+    foreach d : chosen
+        assert(
+            drivers.has_key(d),
+            'Unknown driver "' + d + '" in group ' + g,
+        )
+        seen_drivers += g / d
+        if not driver_exclude.contains(g / d)
+            enabled_drivers += d
+            driver_files_abs += meson.current_source_dir() / 'src/burn/drv' / g / d
+            foreach c : drivers[d]
+                if not enabled_components.contains(c)
+                    enabled_components += c
+                endif
+            endforeach
+        endif
+    endforeach
+    # group_srcs only compiles when at least one driver in the group is built.
+    if enabled_drivers.length() > 0
+        burn_drivers += {
+            g: {'desc': group_desc, 'drivers': enabled_drivers, 'srcs': group_srcs},
+        }
+    endif
+endforeach
+
+foreach ge : group_exclude
+    assert(fs.is_dir('src/burn/drv' / ge), 'Unknown group in exclusion: -' + ge)
+endforeach
+foreach de : driver_exclude
+    assert(seen_drivers.contains(de), 'Unknown driver in exclusion: -' + de)
+endforeach
+
+# win32 always needs the 68000 core (matches original build)
+if frontend == 'win32' and not enabled_components.contains('m68000')
+    enabled_components += 'm68000'
 endif
 
 subdir('src/burn')
 subdir('src/cpu')
 subdir('src/burn/devices')
 subdir('src/burn/snd')
+
+# Every component named in a group_use must resolve to a known cpu/device/sound.
+known_components = all_cpu.keys() + all_burn_devices.keys() + all_burn_sounds.keys()
+foreach c : enabled_components
+    assert(known_components.contains(c), 'Unknown component in a group_use: ' + c)
+endforeach
+
 subdir('src/burn/drv')
 
 subdir('src/dep/libs/zlib')
@@ -705,19 +270,12 @@ build_details_h = custom_target(
 )
 fbneo_sources += build_details_h
 
-if frontend == 'sdl2'
-    subdir('src/burner/sdl')
-elif frontend == 'win32'
-    subdir('src/burner/win32')
-elif frontend == 'qt'
-    subdir('src/burner/qt')
-elif frontend == 'macos'
-    subdir('src/burner/macos')
-elif frontend == 'pi'
-    subdir('src/burner/pi')
-elif frontend == 'psp'
-    subdir('src/burner/psp')
-endif
+subdir('src/burner' / frontend_dirs[frontend])
+
+# Each frontend fragment must export these (implicit contract).
+assert(is_variable('frontend_sources'), 'frontend must define frontend_sources')
+assert(is_variable('frontend_dep'), 'frontend must define frontend_dep')
+assert(is_variable('frontend_link_args'), 'frontend must define frontend_link_args')
 
 fbneo_sources += frontend_sources
 
@@ -797,7 +355,7 @@ link_args += frontend_link_args
 executable(
     'fbneo',
     fbneo_sources,
-    include_directories: [fbneo_includes],
+    include_directories: [fbneo_includes, global_inc],
     dependencies: deps
     + [
         cpu_dep,

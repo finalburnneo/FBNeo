@@ -22,7 +22,7 @@
 #include "upd7810_intf.h"
 #include "i4x00.h"
 #include "eeprom.h"
-#include "konamiic.h"
+#include "k053936.h"
 #include "burn_ym2610.h"
 #include "burn_ym2413.h"
 #include "burn_ym2151.h"
@@ -3878,7 +3878,6 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 	blitter_bit = 2;
 
 	GenericTilesInit();
-	KonamiAllocateBitmaps();
 
 	DrvDoReset();
 
@@ -4266,7 +4265,7 @@ static INT32 DrvExit()
 		break;
 	}
 
-	KonamiICExit();
+	K053936Exit();
 	GenericTilesExit();
 
 	SekExit();
@@ -4641,7 +4640,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 			break;
 		}
 
-		KonamiICScan(nAction);
+		K053936Scan(nAction);
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(requested_int);

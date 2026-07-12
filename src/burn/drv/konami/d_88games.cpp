@@ -333,6 +333,7 @@ static INT32 DrvDoReset()
 	BurnYM2151Reset();
 
 	KonamiICReset();
+	K051316Reset();
 
 	UPD7759Reset();
 
@@ -485,6 +486,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	KonamiICExit();
+	K051316Exit();
 
 	konamiExit();
 	ZetExit();
@@ -510,6 +512,7 @@ static INT32 DrvDraw()
 		if (nBurnLayer & 2) K052109RenderLayer(2, 0, 0);
 		if (nBurnLayer & 4) K052109RenderLayer(1, 0, 0);
 		if (nSpriteEnable & 2) K051960SpritesRender(0, 0);
+		K051316SetRenderTarget(konami_bitmap32, konami_palette32, konami_priority_bitmap);
 		if (nBurnLayer & 8) K051316_zoom_draw(0, 0);
 	}
 	else
@@ -598,6 +601,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		UPD7759Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+		K051316Scan(nAction);
 
 		SCAN_VAR(videobank);
 		SCAN_VAR(zoomreadroms);

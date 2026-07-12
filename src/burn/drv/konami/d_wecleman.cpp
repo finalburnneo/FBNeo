@@ -1875,6 +1875,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K007452Scan(nAction);
 
 		KonamiICScan(nAction);
+		K051316Scan(nAction);
 
 		BurnLEDScan(nAction, pnMin);
 		BurnShiftScan(nAction);

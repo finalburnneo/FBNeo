@@ -60,6 +60,10 @@ all_burn_sounds = {
     'sp0256': {'desc': 'GI SP0256 speech', 'sources': ['sp0256.cpp']},
     't6w28': {'desc': 'Toshiba T6W28 PSG', 'sources': ['t6w28.cpp']},
     'tiamc1': {'desc': 'TI AMC1 sound hardware', 'sources': ['tiamc1_snd.cpp']},
+    'timeplt_snd': {
+        'desc': 'Time Pilot/Pooyan/Rally-X sound board',
+        'sources': ['timeplt_snd.cpp'],
+    },
     'tms36xx': {'desc': 'TI TMS36xx melody generator', 'sources': ['tms36xx.cpp']},
     'tms5110': {'desc': 'TI TMS5110 speech', 'sources': ['tms5110.cpp']},
     'tms5220': {'desc': 'TI TMS5220 speech', 'sources': ['tms5220.cpp']},
@@ -85,18 +89,12 @@ all_burn_sounds = {
     'ymz770': {'desc': 'Yamaha YMZ770 sound', 'sources': []},
 }
 
+# Enablement is derived from the parent's flat `enabled_components` set
+# (sound names are unique across cpu/device/sound namespaces).
 burn_sound_status = {}
 burn_snd_defs = []
-all_burn_sound_names = all_burn_sounds.keys()
-foreach name : burn_sound_list
-    assert(
-        all_burn_sound_names.contains(name),
-        'Unknown burn sound in burn_sound_list: ' + name,
-    )
-endforeach
-
 foreach name, sound : all_burn_sounds
-    enabled = burn_sound_list.contains(name)
+    enabled = enabled_components.contains(name)
     set_variable('snd_@0@_enable'.format(name), enabled)
     burn_sound_status += {sound['desc']: enabled ? 'ON' : 'OFF'}
     if enabled
@@ -256,9 +254,7 @@ endif
 
 burn_snd_inc = ['../../dep/libs/dr_libs']
 
-if host_machine.system() == 'windows'
-    burn_snd_defs += '-D_USE_MATH_DEFINES'
-endif
+burn_snd_defs += platform_math_defs
 
 burn_snd_c_args = burn_snd_defs
 burn_snd_cpp_args = burn_snd_defs
@@ -267,7 +263,7 @@ burn_snd_lib = static_library(
     'burn_snd',
     burn_snd_sources,
     dependencies: [burn_dep, cpu_dep],
-    include_directories: include_directories(burn_snd_inc),
+    include_directories: [include_directories(burn_snd_inc), global_inc],
     c_args: burn_snd_c_args,
     cpp_args: burn_snd_cpp_args,
 )

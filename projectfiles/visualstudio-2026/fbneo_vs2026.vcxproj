@@ -291,7 +291,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_x2222.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_xorworld_ms.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\sega\d_119.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\galaxian\d_119.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segag80r.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segas32.cpp" />
@@ -540,6 +540,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\d_parent.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\d_galaxian.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_gfx.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\galaxian\cclimber_audio.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_run.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_stars.cpp" />
@@ -624,7 +625,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\konami\d_yiear.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k007121.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k007342_k007420.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\k051316.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\k051316.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k051733.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k051960.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k052109.cpp" />
@@ -632,14 +633,14 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\konami\k053247.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k053250.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k053251.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\k053936.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\k053936.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k054000.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k054338.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k055555.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\k056832.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\konamigx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\konamiic.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\konami\timeplt_snd.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\timeplt_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_megadrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\megadrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp" />
@@ -796,7 +797,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lasso.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lastduel.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lwings.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_madmotor.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_madmotor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mainsnk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mappy.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_marineb.cpp" />
@@ -810,7 +811,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mhavoc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_millipede.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mirax.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mitchell.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_mitchell.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mmagic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mole.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_momoko.cpp" />
@@ -890,7 +891,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_timelimt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toki.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_toypop.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pre90s\d_travrusa.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\irem\d_travrusa.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tsamurai.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_usgames.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_vastar.cpp" />
@@ -963,7 +964,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mcatadv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_metro.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_midas.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\pst90s\d_mirage.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_mirage.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_missb2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mosaic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_mugsmash.cpp" />
@@ -1033,7 +1034,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sega\fd1089.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\sega\mc8123.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\mc8123.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5195.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
@@ -1090,7 +1091,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\taito\taitof3_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taitof3_video.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\taito_ic.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\taito\taito_m68705.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\taito_m68705.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0100scn.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0110pcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\tc0140syt.cpp" />

@@ -1,5 +1,79 @@
 #include "gal.h"
 
+// Harem (Galaxian bootleg) protection: an opcode/data ROM bankswitch driven by
+// a 4-bit shift register clocked through 0x5801-0x5803 (dispatched in the write
+// handler below). Kept here in the shared machine code that references it so a
+// single galaxian driver builds standalone without the whole game driver; the
+// game driver sets up GalZ80Rom1Op then drives it via harem_bankswitch() /
+// harem_decrypt_scan() (declared in gal.h).
+static INT32 harem_decrypt_mode = 0;
+static INT32 harem_decrypt_count = 0;
+static INT32 harem_decrypt_clk = 0;
+static INT32 harem_decrypt_bit = 0;
+static INT32 harem_bank = 0;
+
+void harem_bankswitch(INT32 bank)
+{
+	UINT8 *data = GalZ80Rom1Op + 0x0000 + (0x2000 * bank);
+	UINT8 *opcodes = GalZ80Rom1Op + 0x6000 + (0x2000 * bank);
+
+	harem_bank = bank;
+
+	ZetMapMemory(data	, 0x8000, 0x9fff, MAP_READ | MAP_FETCHARG);
+	ZetMapMemory(opcodes, 0x8000, 0x9fff, MAP_FETCHOP);
+}
+
+void harem_decrypt_bit_write(UINT8 data)
+{
+	harem_decrypt_bit = data;
+}
+
+void harem_decrypt_rst_write(UINT8 data)
+{
+	harem_decrypt_mode = 0;
+	harem_decrypt_count = 0;
+}
+
+void harem_decrypt_clk_write(UINT8 data)
+{
+	if (data & 1 && ~harem_decrypt_clk & 1) {
+		harem_decrypt_mode = ((harem_decrypt_mode >> 1) | ((harem_decrypt_bit & 1) << 3)) & 0x0f;
+		harem_decrypt_count++;
+	}
+
+	harem_decrypt_clk = data;
+
+	if (harem_decrypt_count == 4) {
+		INT32 bank = 0;
+		switch (harem_decrypt_mode) {
+			case 0x03: bank = 0; break;
+			case 0x09: bank = 1; break;
+			case 0x0a: bank = 2; break;
+		}
+
+		harem_bankswitch(bank);
+
+		harem_decrypt_rst_write(0);
+	}
+}
+
+void harem_decrypt_scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(harem_decrypt_mode);
+		SCAN_VAR(harem_decrypt_count);
+		SCAN_VAR(harem_decrypt_clk);
+		SCAN_VAR(harem_decrypt_bit);
+		SCAN_VAR(harem_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		harem_bankswitch(harem_bank);
+		ZetClose();
+	}
+}
+
 UINT8 GalInputPort0[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalInputPort1[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 GalInputPort2[8]       = {0, 0, 0, 0, 0, 0, 0, 0};

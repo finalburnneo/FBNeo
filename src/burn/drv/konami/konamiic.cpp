@@ -3,10 +3,8 @@
 
 UINT32 KonamiIC_K051960InUse = 0;
 UINT32 KonamiIC_K052109InUse = 0;
-UINT32 KonamiIC_K051316InUse = 0;
 UINT32 KonamiIC_K053245InUse = 0;
 UINT32 KonamiIC_K053247InUse = 0;
-UINT32 KonamiIC_K053936InUse = 0;
 UINT32 KonamiIC_K053250InUse = 0;
 UINT32 KonamiIC_K055555InUse = 0;
 UINT32 KonamiIC_K054338InUse = 0;
@@ -139,10 +137,8 @@ void KonamiICReset()
 {
 	if (KonamiIC_K051960InUse) K051960Reset();
 	if (KonamiIC_K052109InUse) K052109Reset();
-	if (KonamiIC_K051316InUse) K051316Reset();
 	if (KonamiIC_K053245InUse) K053245Reset();
 	if (KonamiIC_K053247InUse) K053247Reset();
-	if (KonamiIC_K053936InUse) K053936Reset();
 	if (KonamiIC_K053250InUse) K053250Reset();
 	if (KonamiIC_K055555InUse) K055555Reset();
 	if (KonamiIC_K054338InUse) K054338Reset();
@@ -173,10 +169,8 @@ void KonamiICExit()
 
 	if (KonamiIC_K051960InUse) K051960Exit();
 	if (KonamiIC_K052109InUse) K052109Exit();
-	if (KonamiIC_K051316InUse) K051316Exit();
 	if (KonamiIC_K053245InUse) K053245Exit();
 	if (KonamiIC_K053247InUse) K053247Exit();
-	if (KonamiIC_K053936InUse) K053936Exit();
 	if (KonamiIC_K053250InUse) K053250Exit();
 	if (KonamiIC_K055555InUse) K055555Exit();
 	if (KonamiIC_K054338InUse) K054338Exit();
@@ -185,7 +179,6 @@ void KonamiICExit()
 
 	KonamiIC_K051960InUse = 0;
 	KonamiIC_K052109InUse = 0;
-	KonamiIC_K051316InUse = 0;
 	KonamiIC_K053245InUse = 0;
 	KonamiIC_K053247InUse = 0;
 	KonamiIC_K053250InUse = 0;
@@ -208,10 +201,8 @@ void KonamiICScan(INT32 nAction)
 {
 	if (KonamiIC_K051960InUse) K051960Scan(nAction);
 	if (KonamiIC_K052109InUse) K052109Scan(nAction);
-	if (KonamiIC_K051316InUse) K051316Scan(nAction);
 	if (KonamiIC_K053245InUse) K053245Scan(nAction);
 	if (KonamiIC_K053247InUse) K053247Scan(nAction);
-	if (KonamiIC_K053936InUse) K053936Scan(nAction);
 	if (KonamiIC_K053250InUse) K053250Scan(nAction);
 	if (KonamiIC_K055555InUse) K055555Scan(nAction);
 	if (KonamiIC_K054338InUse) K054338Scan(nAction);

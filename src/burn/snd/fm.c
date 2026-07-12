@@ -119,6 +119,15 @@
 #undef AY8910_CORE
 #include "fm.h"
 
+#if defined FBNEO_DEBUG
+#ifdef __GNUC__
+	// MSVC doesn't like this - this module only supports debug tracking with GCC only
+	#include <tchar.h>
+	extern INT32 (__cdecl *bprintf) (INT32 nStatus, TCHAR* szFormat, ...);
+	#define PRINT_ERROR		(3)
+#endif
+#endif
+
 
 #ifndef PI
 #define PI 3.14159265358979323846
@@ -573,6 +582,7 @@ static FILE *sample[1];
 typedef struct
 {
 	INT32	*DT;		/* detune          :dt_tab[DT] */
+	UINT8   dt_val;     /* detune value (to calculate pointer above) */
 	UINT8	KSR;		/* key scale rate  :3-KSR */
 	UINT32	ar;			/* attack rate  */
 	UINT32	d1r;		/* decay rate   */
@@ -1052,6 +1062,7 @@ INLINE void set_det_mul(FM_ST *ST,FM_CH *CH,FM_SLOT *SLOT,int v)
 {
 	SLOT->mul = (v&0x0f)? (v&0x0f)*2 : 1;
 	SLOT->DT  = ST->dt_tab[(v>>4)&7];
+	SLOT->dt_val = (v>>4)&7;
 	CH->SLOT[SLOT1].Incr=-1;
 }
 
@@ -1858,20 +1869,41 @@ static void FMsave_state_channel(const char *name,int num,FM_CH *CH,int num_ch)
 	{
 		/* channel */
 		sprintf(state_name,"%s.CH%d",name,ch);
-		state_save_register_INT32(state_name, num, "feedback" , CH->op1_out , 2);
+		state_save_register_INT32 (state_name, num, "feedback" , CH->op1_out , 2);
 		state_save_register_UINT32(state_name, num, "phasestep"   , &CH->fc , 1);
+		state_save_register_UINT8 (state_name, num, "ALGO"   , &CH->ALGO , 1);
+		state_save_register_UINT8 (state_name, num, "FB"   , &CH->FB , 1);
+
+		state_save_register_INT32 (state_name, num, "mem_value" , &CH->mem_value , 1);
+		state_save_register_INT32 (state_name, num, "pms" , &CH->pms , 1);
+		state_save_register_UINT8 (state_name, num, "ams"   , &CH->ams , 1);
+		state_save_register_UINT8 (state_name, num, "kcode"   , &CH->kcode , 1);
+		state_save_register_UINT32(state_name, num, "block_fnum"   , &CH->block_fnum , 1);
+
 		/* slots */
 		for(slot=0;slot<4;slot++)
 		{
 			FM_SLOT *SLOT = &CH->SLOT[slot];
 
 			sprintf(state_name,"%s.CH%d.SLOT%d",name,ch,slot_array[slot]);
+			state_save_register_UINT8 (state_name, num, "dt_val"      , &SLOT->dt_val, 1);
+			state_save_register_UINT8 (state_name, num, "KSR"      	  , &SLOT->KSR, 1);
+			state_save_register_UINT32(state_name, num, "ar" 		  , &SLOT->ar, 1);
+			state_save_register_UINT32(state_name, num, "d1r" 		  , &SLOT->d1r, 1);
+			state_save_register_UINT32(state_name, num, "d2r" 		  , &SLOT->d2r, 1);
+			state_save_register_UINT32(state_name, num, "rr" 		  , &SLOT->rr, 1);
+			state_save_register_UINT8 (state_name, num, "ksr"      	  , &SLOT->ksr, 1);
+			state_save_register_UINT32(state_name, num, "mul" 		  , &SLOT->mul, 1);
+
 			state_save_register_UINT32(state_name, num, "phasecount" , &SLOT->phase, 1);
+			state_save_register_INT32 (state_name, num, "Incr" 		 , &SLOT->Incr, 1);
 			state_save_register_UINT8 (state_name, num, "state"      , &SLOT->state, 1);
+			state_save_register_UINT32(state_name, num, "tl" 		 , &SLOT->tl, 1);
 			state_save_register_INT32 (state_name, num, "volume"     , &SLOT->volume, 1);
+			state_save_register_UINT32(state_name, num, "sl" 		 , &SLOT->sl, 1);
+			state_save_register_UINT32(state_name, num, "vol_out" 	 , &SLOT->vol_out, 1);
 
 			// must scan all dynamic registers of the channel - dink (July 20, 2020)
-			state_save_register_UINT32(state_name, num, "vol_out"    , &SLOT->vol_out, 1);
 			state_save_register_UINT8 (state_name, num, "eg_sh_ar"   , &SLOT->eg_sh_ar, 1);
 			state_save_register_UINT8 (state_name, num, "eg_sel_ar"  , &SLOT->eg_sel_ar, 1);
 			state_save_register_UINT8 (state_name, num, "eg_sh_d1r"  , &SLOT->eg_sh_d1r, 1);
@@ -1883,6 +1915,7 @@ static void FMsave_state_channel(const char *name,int num,FM_CH *CH,int num_ch)
 			state_save_register_UINT8 (state_name, num, "ssg"        , &SLOT->ssg, 1); // note: also set in postload
 			state_save_register_UINT8 (state_name, num, "ssgn"       , &SLOT->ssgn, 1);
 			state_save_register_UINT32(state_name, num, "key"        , &SLOT->key, 1);
+			state_save_register_UINT32(state_name, num, "ammask"     , &SLOT->AMmask, 1);
 		}
 	}
 }
@@ -4335,7 +4368,6 @@ void YM2612UpdateOne(int num, INT16 **buffer, int length)
 		dacen = F2612->dacen;
 
 	}
-
 	/* refresh PG and EG */
 	refresh_fc_eg_chan( OPN, cch[0] );
 	refresh_fc_eg_chan( OPN, cch[1] );
@@ -4350,6 +4382,7 @@ void YM2612UpdateOne(int num, INT16 **buffer, int length)
 			refresh_fc_eg_slot(OPN, &cch[2]->SLOT[SLOT4] , cch[2]->fc , cch[2]->kcode );
 		}
 	}else refresh_fc_eg_chan( OPN, cch[2] );
+
 	refresh_fc_eg_chan( OPN, cch[3] );
 	refresh_fc_eg_chan( OPN, cch[4] );
 	refresh_fc_eg_chan( OPN, cch[5] );
@@ -4441,9 +4474,11 @@ static void YM2612_postload(void)
 
 	for(num=0;num<YM2612NumChips;num++)
 	{
+#if 0
+		// NOTE: this DOESN'T WORK -dink 2026
 		/* DAC data & port */
-		FM2612[num].dacout = ((int)FM2612[num].REGS[0x2a] - 0x80) << 6;	/* level unknown */
-		FM2612[num].dacen  = FM2612[num].REGS[0x2b] & 0x80;
+		//FM2612[num].dacout = ((int)FM2612[num].REGS[0x2a] - 0x80) << 6;	/* level unknown */
+		//FM2612[num].dacen  = FM2612[num].REGS[0x2b] & 0x80;
 		/* OPN registers */
 		/* DT / MULTI , TL , KS / AR , AMON / DR , SR , SL / RR , SSG-EG */
 		for(r=0x30;r<0x9e;r++)
@@ -4461,6 +4496,24 @@ static void YM2612_postload(void)
 			}
 		/* channels */
 		/*FM_channel_postload(FM2612[num].CH,6);*/
+		  /* restore outputs connections */
+#endif
+		/* restore DT table address pointer for each channel slots */
+		for (int c=0; c<6; c++)
+		{
+			for (int s=0; s<4; s++)            //ST->dt_tab[(v>>4)&7];
+			{
+				FM2612[num].CH[c].SLOT[s].DT = FM2612[num].OPN.ST.dt_tab[FM2612[num].CH[c].SLOT[s].dt_val];
+			}
+		}
+
+		/* hook-up channel pointers and stuff */
+		setup_connection(&FM2612[num].CH[0],0);
+		setup_connection(&FM2612[num].CH[1],1);
+		setup_connection(&FM2612[num].CH[2],2);
+		setup_connection(&FM2612[num].CH[3],3);
+		setup_connection(&FM2612[num].CH[4],4);
+		setup_connection(&FM2612[num].CH[5],5);
 	}
 
 	FM_IS_POSTLOADING = 0;
@@ -4475,13 +4528,25 @@ static void YM2612_save_state(void)
 
 	for(num=0;num<YM2612NumChips;num++)
 	{
-		state_save_register_UINT8 (statename, num, "regs"   , FM2612[num].REGS   , 512);
+		state_save_register_INT32  (statename, num, "dacout"  , &FM2612[num].dacout   , 1);
+		state_save_register_int    (statename, num, "dacen"   , &FM2612[num].dacen );
 		FMsave_state_st(statename,num,&FM2612[num].OPN.ST);
 		FMsave_state_channel(statename,num,FM2612[num].CH,6);
 		/* 3slots */
 		state_save_register_UINT32 (statename, num, "slot3fc" , FM2612[num].OPN.SL3.fc ,   3);
 		state_save_register_UINT8  (statename, num, "slot3fh" , &FM2612[num].OPN.SL3.fn_h, 1);
 		state_save_register_UINT8  (statename, num, "slot3kc" , FM2612[num].OPN.SL3.kcode, 3);
+		state_save_register_UINT32 (statename, num, "slot3block_fnum" , FM2612[num].OPN.SL3.block_fnum, 3);
+		// pan blyat
+		state_save_register_UINT32 (statename, num, "peetapan" , FM2612[num].OPN.pan, (6*2));
+		state_save_register_UINT32 (statename, num, "lfo_cnt" , &FM2612[num].OPN.lfo_cnt , 1);
+		state_save_register_UINT32 (statename, num, "lfo_inc" , &FM2612[num].OPN.lfo_inc , 1);
+
+		state_save_register_UINT32 (statename, num, "eg_cnt" , &FM2612[num].OPN.eg_cnt , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer" , &FM2612[num].OPN.eg_timer , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer_add" , &FM2612[num].OPN.eg_timer_add , 1);
+		state_save_register_UINT32 (statename, num, "eg_timer_overflow" , &FM2612[num].OPN.eg_timer_overflow , 1);
+
 		/* address register1 */
 		state_save_register_UINT8 (statename, num, "addr_A1" , &FM2612[num].addr_A1, 1);
 	}

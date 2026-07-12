@@ -3675,18 +3675,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-	
 	if (pnMin != NULL) {
 		*pnMin = 0x029709;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd-AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd-AllRam, "All Ram");
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {

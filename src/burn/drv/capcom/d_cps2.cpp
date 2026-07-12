@@ -16287,7 +16287,7 @@ struct BurnDriver BurnDrvCpsVampjbh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Vampire Hunter 2: Darkstalkers Revenge (Hack, English RC1)
+// Night Warriors 2: Darkstalkers Revenge (Hack, English RC1)
 // https://strygo.github.io/arcade-patches/
 // 2026-07-10
 static struct BurnRomInfo Vhunt2teRomDesc[] = {
@@ -16323,7 +16323,7 @@ STD_ROM_FN(Vhunt2te)
 
 struct BurnDriver BurnDrvCpsVhunt2te = {
 	"vhunt2te", "vhunt2", NULL, NULL, "2026",
-	"Vampire Hunter 2: Darkstalkers Revenge (Hack, English RC1)\0", NULL, "Strygo", "CPS2",
+	"Night Warriors 2: Darkstalkers Revenge (Hack, English RC1)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, Vhunt2teRomInfo, Vhunt2teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

@@ -45058,7 +45058,7 @@ struct BurnDriver BurnDrvsnes_Aliencat2 = {
 // Alisha's Adventure (HB)
 // https://aaendi.itch.io/alishas-adventure
 static struct BurnRomInfo snes_AlishaadvRomDesc[] = {
-	{ "Alisha's Adventure (2026)(Andy Koening).sfc", 1310720, 0xc728f10b, BRF_ESS | BRF_PRG },
+	{ "Alisha's Adventure (2026)(Andy Koenigs).sfc", 1310720, 0xc728f10b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Alishaadv)
@@ -45066,7 +45066,7 @@ STD_ROM_FN(snes_Alishaadv)
 
 struct BurnDriver BurnDrvsnes_Alishaadv = {
 	"snes_alishaadv", NULL, NULL, NULL, "2026",
-	"Alisha's Adventure (HB)\0", NULL, "Andy Koening", "SNES / Super Famicom",
+	"Alisha's Adventure (HB)\0", NULL, "Andy Koenigs", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_RUNGUN, 0,
 	SNESGetZipName, snes_AlishaadvRomInfo, snes_AlishaadvRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

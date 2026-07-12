@@ -21793,40 +21793,21 @@ struct BurnDriver BurnDrvmd_puyopuyo = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Puyo Puyo (Hack, English UK)
-// https://romhackplaza.org/translations/puyo-puyo-english-translation-genesis/
-static struct BurnRomInfo md_puyopuyoukRomDesc[] = {
-	{ "Puyo Puyo T-Eng UK (2025)(RadioTails).bin", 1048576, 0xa682cd9f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Puyo Puyo (Hack, English v1.1)
+// https://www.romhacking.net/translations/7626/
+static struct BurnRomInfo md_puyopuyoteRomDesc[] = {
+	{ "Puyo Puyo T-Eng v1.1 (2025)(RadioShadow).bin", 1048576, 0xc081a1ff, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_puyopuyouk)
-STD_ROM_FN(md_puyopuyouk)
+STD_ROM_PICK(md_puyopuyote)
+STD_ROM_FN(md_puyopuyote)
 
-struct BurnDriver BurnDrvmd_puyopuyouk = {
-	"md_puyopuyouk", "md_puyopuyo", NULL, NULL, "2025",
-	"Puyo Puyo (Hack, English UK)\0", NULL, "RadioTails", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_puyopuyote = {
+	"md_puyopuyote", "md_puyopuyo", NULL, NULL, "2025",
+	"Puyo Puyo (Hack, English v1.1)\0", NULL, "RadioShadow", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_puyopuyoukRomInfo, md_puyopuyoukRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Puyo Puyo (Hack, English US)
-// https://romhackplaza.org/translations/puyo-puyo-english-translation-genesis/
-static struct BurnRomInfo md_puyopuyousRomDesc[] = {
-	{ "Puyo Puyo T-Eng US (2025)(RadioTails).bin", 1048576, 0x6b5ebd1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_puyopuyous)
-STD_ROM_FN(md_puyopuyous)
-
-struct BurnDriver BurnDrvmd_puyopuyous = {
-	"md_puyopuyous", "md_puyopuyo", NULL, NULL, "2025",
-	"Puyo Puyo (Hack, English US)\0", NULL, "RadioTails", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_puyopuyousRomInfo, md_puyopuyousRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_puyopuyoteRomInfo, md_puyopuyoteRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -4248,6 +4248,40 @@ struct BurnDriver BurnDrvSengoku2 = {
 };
 
 
+// Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood)
+// https://github.com/Raphael-Boichot/Neo-Geo-Sengoku-2-Red-Blood
+
+static struct BurnRomInfo sengoku2rbRomDesc[] = {
+	{ "sengoku2rb-p1.p1",    0x100000, 0xb26122f7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "040-s1.s1",    0x020000, 0xcd9802a3, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "sengoku2rb-c1.c1",    0x200000, 0x137b21f9, 3 | BRF_GRA },           //  2 Sprite data
+	{ "sengoku2rb-c2.c2",    0x200000, 0x4ad35858, 3 | BRF_GRA },           //  3
+	{ "sengoku2rb-c3.c3",    0x080000, 0x2d59c0f4, 3 | BRF_GRA },           //  4
+	{ "sengoku2rb-c4.c4",    0x080000, 0x9aad51a1, 3 | BRF_GRA },           //  5
+
+	{ "040-m1.m1",    0x020000, 0xd4de4bca, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "040-v1.v1",    0x200000, 0x71cb4b5d, 5 | BRF_SND },           //  7 Sound data
+	{ "040-v2.v2",    0x100000, 0xc5cece01, 5 | BRF_SND },           //  8
+	
+};
+
+STDROMPICKEXT(sengoku2rb, sengoku2rb, neogeo)
+STD_ROM_FN(sengoku2rb)
+
+struct BurnDriver BurnDrvSengoku2rb = {
+	"sengoku2rb", "sengoku2", "neogeo", NULL, "2026",
+	"Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood)\0", NULL, "Raphael-Boichot", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_SCRFIGHT, 0,
+	NULL, sengoku2rbRomInfo, sengoku2rbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // Baseball Stars 2
 
 static struct BurnRomInfo bstars2RomDesc[] = {

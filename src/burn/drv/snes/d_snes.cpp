@@ -45796,6 +45796,47 @@ struct BurnDriver BurnDrvsnes_Dottieflowers = {
 	512, 448, 4, 3
 };
 
+
+
+
+// EarthBound Beginnings Remake (Hack, v1.2)
+// https://ebbr.neocities.org/
+static struct BurnRomInfo snes_EarthboundbrRomDesc[] = {
+	{ "EarthBound Beginnings Remake v1.2 (2026)(The EBBR Team & PK Hack).sfc", 4194304, 0x51bc901b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Earthboundbr)
+STD_ROM_FN(snes_Earthboundbr)
+
+struct BurnDriver BurnDrvsnes_Earthboundbr = {
+	"snes_earthboundbr", "snes_earthbound", NULL, NULL, "2026",
+	"EarthBound Beginnings Remake (Hack, v1.2)\0", NULL, "The EBBR Team & PK Hack", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_EarthboundbrRomInfo, snes_EarthboundbrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// EarthBound: Giygas Strikes Back! (Hack)
+// https://ebbr.neocities.org/
+static struct BurnRomInfo snes_EarthboundgsbRomDesc[] = {
+	{ "EarthBound - Giygas Strikes Back! (2026)(The EBBR Team & PK Hack).sfc", 4194304, 0xf096a9ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Earthboundgsb)
+STD_ROM_FN(snes_Earthboundgsb)
+
+struct BurnDriver BurnDrvsnes_Earthboundgsb = {
+	"snes_earthboundgsb", "snes_earthbound", NULL, NULL, "2026",
+	"EarthBound: Giygas Strikes Back! (Hack)\0", NULL, "The EBBR Team & PK Hack", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_EarthboundgsbRomInfo, snes_EarthboundgsbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Eek! The Cat - Color Enhancement (Hack)
 // https://www.romhacking.net/hacks/6336/
 static struct BurnRomInfo snes_EekcatceRomDesc[] = {
@@ -47826,6 +47867,25 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonte7 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_Returndoubledragonh7RomInfo, snes_Returndoubledragonh7RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Rick Dangerous (HB)
+
+static struct BurnRomInfo snes_RickdangRomDesc[] = {
+	{ "Rick Dangerous (2014)(Alekmaul).sfc", 524288, 0x21c09a2d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Rickdang)
+STD_ROM_FN(snes_Rickdang)
+
+struct BurnDriver BurnDrvsnes_Rickdang = {
+	"snes_rickdang", NULL, NULL, NULL, "2014",
+	"Rick Dangerous (HB)\0", NULL, "Alekmaul", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_RickdangRomInfo, snes_RickdangRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

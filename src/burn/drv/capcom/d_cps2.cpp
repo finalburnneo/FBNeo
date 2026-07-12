@@ -16287,6 +16287,94 @@ struct BurnDriver BurnDrvCpsVampjbh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Vampire Hunter 2: Darkstalkers Revenge (Hack, English RC1)
+// https://strygo.github.io/arcade-patches/
+// 2026-07-10
+static struct BurnRomInfo Vhunt2teRomDesc[] = {
+	{ "vh2jte.03a",	0x080000, 0x1ce8d926, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2jte.04a",	0x080000, 0x6b232eae, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2j.05",	0x080000, 0xde34f624, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2j.06",	0x080000, 0x6a3b9897, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2j.07",	0x080000, 0xb021c029, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2jte.08",	0x080000, 0xbe9d8a6c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2j.09",	0x080000, 0xeaefce9c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vh2j.10",	0x080000, 0x11730952, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "vh2.13m",	0x400000, 0x3b02ddaa, CPS2_GFX | BRF_GRA },
+	{ "vh2.15m",	0x400000, 0x4e40de66, CPS2_GFX | BRF_GRA },
+	{ "vh2.17m",	0x400000, 0xb31d00c9, CPS2_GFX | BRF_GRA },
+	{ "vh2.19m",	0x400000, 0x149be3ab, CPS2_GFX | BRF_GRA },
+	{ "vh2.14m",	0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vh2.16m",	0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vh2.18m",	0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vh2.20m",	0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+
+	{ "vh2.01",		0x020000, 0x67b9f779, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vh2.02",		0x020000, 0xaaf15fcb, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vh2.11m",	0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
+	{ "vh2.12m",	0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	
+	{ "vhunt2.key",	0x000014, 0x61306b20, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vhunt2te)
+STD_ROM_FN(Vhunt2te)
+
+struct BurnDriver BurnDrvCpsVhunt2te = {
+	"vhunt2te", "vhunt2", NULL, NULL, "2026",
+	"Vampire Hunter 2: Darkstalkers Revenge (Hack, English RC1)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vhunt2teRomInfo, Vhunt2teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+
+// Vampire Savior 2: The Lord of Vampire (Hack, English RC1)
+// 2026-07-10
+static struct BurnRomInfo Vsav2teRomDesc[] = {
+	{ "vs2jte.03",	0x080000, 0xa211712c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2jte.04",	0x080000, 0x974896f9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.05",	0x080000, 0x61979638, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.06",	0x080000, 0xf37c5bc2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.07",	0x080000, 0x8f885809, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2jte.08",	0x080000, 0xcb8b85c6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.09",	0x080000, 0xfac3c217, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.10",	0x080000, 0xeb490213, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "vs2.13m",	0x400000, 0x5c852f52, CPS2_GFX | BRF_GRA },
+	{ "vs2.15m",	0x400000, 0xa20f58af, CPS2_GFX | BRF_GRA },
+	{ "vs2.17m",	0x400000, 0x39db59ad, CPS2_GFX | BRF_GRA },
+	{ "vs2.19m",	0x400000, 0x00c763a7, CPS2_GFX | BRF_GRA },
+	{ "vs2.14m",	0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vs2.16m",	0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vs2.18m",	0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vs2.20m",	0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+
+	{ "vs2.01",		0x020000, 0x35190139, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vs2.02",		0x020000, 0xc32dba09, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vs2.11m",	0x400000, 0xd67e47b7, CPS2_QSND | BRF_SND },
+	{ "vs2.12m",	0x400000, 0x6d020a14, CPS2_QSND | BRF_SND },
+	
+	{ "vsav2.key",	0x000014, 0x289028ce, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsav2te)
+STD_ROM_FN(Vsav2te)
+
+struct BurnDriver BurnDrvCpsVsav2te = {
+	"vsav2te", "vsav2", NULL, NULL, "2026",
+	"Vampire Savior 2: The Lord of Vampire (Hack, English RC1)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vsav2teRomInfo, Vsav2teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // X-Men Vs. Street Fighter (Coop, Hack)
 // Modified by bankbank
 // 202205

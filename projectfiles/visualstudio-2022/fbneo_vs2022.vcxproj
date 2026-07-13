@@ -326,6 +326,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_nycaptor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_sbowling.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\astrocde_snd.cpp" />

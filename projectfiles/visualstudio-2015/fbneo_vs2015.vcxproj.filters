@@ -3802,6 +3802,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_megaphx.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_sbowling.cpp">
+      <Filter>burn\drv\taito</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">

@@ -113,6 +113,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define HACK_B_4		29
 #define HACK_B_5		30
 #define HACK_B_6		31
+#define HACK_B_7		32
 
 #define GFXTYPE_SPRITES		(1<<0)
 #define GFXTYPE_SCROLL1		(1<<1)
@@ -171,6 +172,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_CP1B1F_boot	47
 #define mapper_pang3b4		48
 #define mapper_TKSGZB		49
+#define mapper_varthb2		50
 extern void SetGfxMapper(INT32 MapperId);
 extern INT32 GfxRomBankMapper(INT32 Type, INT32 Code);
 extern void SetCpsBId(INT32 CpsBId, INT32 bStars);

@@ -1772,6 +1772,38 @@ static struct BurnInputInfo VarthInputList[] =
 
 STDINPUTINFO(Varth)
 
+static struct BurnInputInfo Varthb2InputList[] =
+{
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp019+0, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp019+4, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"P1 Shot"          , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"P1 Bomb"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp019+1, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp019+5, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+	{"P2 Shot"          , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+	{"P2 Bomb"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp019+6, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp019+2, "service"   },
+	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Varthb2)
+
 static struct BurnInputInfo WillowInputList[] =
 {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
@@ -16352,6 +16384,24 @@ static struct BurnRomInfo VarthbRomDesc[] = {
 STD_ROM_PICK(Varthb)
 STD_ROM_FN(Varthb)
 
+static struct BurnRomInfo Varthb2RomDesc[] = {
+	{ "varth-u222",    0x080000, 0xfd2f93a8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "varth-u196",    0x080000, 0x3b187dc3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "va-5m.7a",      0x080000, 0xb1fb726e, BRF_GRA | CPS1_TILES },
+	{ "va-7m.9a",      0x080000, 0x4c6588cd, BRF_GRA | CPS1_TILES },
+	{ "va-1m.3a",      0x080000, 0x0b1ace37, BRF_GRA | CPS1_TILES },
+	{ "va-3m.5a",      0x080000, 0x44dfe706, BRF_GRA | CPS1_TILES },
+
+	{ "va_09.12b",     0x010000, 0x7a99446e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "va_18.11c",     0x020000, 0xde30510e, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "va_19.12c",     0x020000, 0x0610a4ac, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Varthb2)
+STD_ROM_FN(Varthb2)
+
 static struct BurnRomInfo WillowRomDesc[] = {
 	// No "Warning" (c) Capcom U.S.A., genuine export ROM labels
 	{ "wle_30.11f",    0x020000, 0x15372aa2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -17571,6 +17621,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "varthj"        , CPS_B_21_BT5, mapper_VA22B , 0, NULL                },
 	{ "varthjr"       , CPS_B_21_BT5, mapper_VA63B , 0, NULL                }, // CPSB test has been patched out (72=0001) register is also written to, possibly leftover from development */   
 	{ "varthb"        , CPS_B_04    , mapper_VA63B , 0, NULL                },
+	{ "varthb2"       , HACK_B_7    , mapper_varthb2, 0, NULL               },
 	{ "willow"        , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowu"       , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowuo"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
@@ -17787,6 +17838,14 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
+
+		// varthb2: bootleg references sprite tiles from 0x8000 upwards; triple
+		// the gfx length so the 0x200000 of tiles can be mirrored at 0x400000
+		// (done in Varthb2Init) and addressed via the widened gfx mask.
+		if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "varthb2")) {
+			nCpsGfxLen *= 3;
+		}
+
 		if (nCpsPicRomNum && !Cps1Qs) Cps1DisablePSnd = 1;
 		
 #if 1 && defined FBNEO_DEBUG
@@ -21830,6 +21889,65 @@ static INT32 VarthbInit()
 	return nRet;
 }
 
+void __fastcall Varthb2RegWriteWord(UINT32 a, UINT16 d)
+{
+	// cps-a regs are updated as normal by original code,
+	// but bootleg code ignores them and uses these regions instead:
+	switch (a) {
+		case 0x800100: {
+			*((UINT16*)(CpsReg + 0x00)) = BURN_ENDIAN_SWAP_INT16(0x9100);	// OBJ base
+			return;
+		}
+		case 0x800102: {
+			*((UINT16*)(CpsReg + 0x02)) = BURN_ENDIAN_SWAP_INT16(0x90c0);	// Scroll1 base
+			return;
+		}
+		case 0x800104: {
+			*((UINT16*)(CpsReg + 0x04)) = BURN_ENDIAN_SWAP_INT16(0x9040);	// Scroll2 base
+			return;
+		}
+		case 0x800106: {
+			*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9080);	// Scroll3 base
+			return;
+		}
+		case 0x80010a: {
+			*((UINT16*)(CpsReg + 0x0a)) = BURN_ENDIAN_SWAP_INT16(0x9000);	// Palette base
+			GetPalette(0, 6);
+			CpsPalUpdate(CpsSavePal);
+			return;
+		}
+	}
+
+	SEK_DEF_WRITE_WORD(2, a, d);
+}
+
+static void Varthb2Callback()
+{
+	// bootleg sprites index tiles from 0x8000 upwards; mirror the graphics
+	// so those tiles resolve into a valid copy at 0x400000
+	memcpy(CpsGfx + 0x400000, CpsGfx, 0x200000);
+};
+
+static INT32 Varthb2Init()
+{
+	CpsLayer1XOffs = -0x0c;
+	CpsLayer2XOffs = -0x0e;
+	CpsLayer3XOffs = -0x10;
+	CpsDrawSpritesInReverse = 1;
+	AmendProgRomCallback = Varthb2Callback;
+
+	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
+
+	SekOpen(0);
+	SekMapHandler(2, 0x800000, 0x807fff, MAP_WRITE);	// Install memory write interception handler for Varthb2 (bootleg) registers
+	SekSetWriteByteHandler(2, VarthbRegWriteByte);
+	SekSetWriteWordHandler(2, Varthb2RegWriteWord);
+	SekClose();
+
+	return nRet;
+}
+
 static INT32 WofchInit()
 {
 	INT32 nRet = 0;
@@ -25867,6 +25985,16 @@ struct BurnDriver BurnDrvCpsVarthb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, VarthbRomInfo, VarthbRomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthDIPInfo,
 	VarthbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCpsVarthb2 = {
+	"varthb2", "varth", NULL, NULL, "1992",
+	"Varth: Operation Thunderstorm (bootleg, set 2)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
+	NULL, Varthb2RomInfo, Varthb2RomName, NULL, NULL, NULL, NULL, Varthb2InputInfo, VarthDIPInfo,
+	Varthb2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 

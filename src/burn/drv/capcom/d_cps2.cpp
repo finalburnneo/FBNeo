@@ -13483,15 +13483,15 @@ static struct BurnRomInfo Hsf2appRomDesc[] = {
 STD_ROM_PICK(Hsf2app)
 STD_ROM_FN(Hsf2app)
 
-// Street Fighter II': Prime (Ver 0.77, Hack)
+// Street Fighter II': Prime (Ver 0.78, Hack)
 // Modified by Zero800
 // https://sf2prime.github.io/
 
 static struct BurnRomInfo Sf2primeRomDesc[] = {
-	{ "sf2pr.03",		0x080000, 0xcac7f8f4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.04",		0x080000, 0x7aa47f60, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.05",		0x080000, 0xc084d994, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sf2pr.06",		0x080000, 0x8d40069e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.03",		0x080000, 0xe9373532, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.04",		0x080000, 0xda5242e6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.05",		0x080000, 0x9ac4ae99, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sf2pr.06",		0x080000, 0xe871b3e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 #if 0
 	// All filled with 0xFF.
 	{ "sf2pr.07",		0x080000, 0x504bf849, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13508,7 +13508,7 @@ static struct BurnRomInfo Sf2primeRomDesc[] = {
 	{ "sf2pr.01",		0x020000, 0x6ce233a7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sf2pr.02",		0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sf2pr.11m",		0x800000, 0xa940d07c, CPS2_QSND | BRF_SND },
+	{ "sf2pr.11m",		0x800000, 0xbe977f70, CPS2_QSND | BRF_SND },
 
 	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
@@ -14993,7 +14993,7 @@ struct BurnDriver BurnDrvCpsHsf2app = {
 
 struct BurnDriver BurnDrvCpsSf2prime = {
 	"sf2prime", "hsf2", NULL, NULL, "2026",
-	"Street Fighter II': Prime (Ver 0.77, Hack)\0", NULL, "Zero800", "CPS2",
+	"Street Fighter II': Prime (Ver 0.78, Hack)\0", NULL, "Zero800", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2primeRomInfo, Sf2primeRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

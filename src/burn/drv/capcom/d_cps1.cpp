@@ -16402,6 +16402,25 @@ static struct BurnRomInfo Varthb2RomDesc[] = {
 STD_ROM_PICK(Varthb2)
 STD_ROM_FN(Varthb2)
 
+static struct BurnRomInfo Varthb3RomDesc[] = {
+	{ "pd1.bin",       0x080000, 0x8208c0d7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "c6.bin",        0x080000, 0x7f654421, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "pd2.bin",       0x020000, 0xd8325c94, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "c5.bin",        0x020000, 0x6152277d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "rom1.bin",      0x080000, 0x473961b3, BRF_GRA | CPS1_TILES },
+	{ "rom3.bin",      0x080000, 0x9b50384f, BRF_GRA | CPS1_TILES },
+	{ "rom5.bin",      0x080000, 0x516a4eea, BRF_GRA | CPS1_TILES },
+	{ "rom7.bin",      0x080000, 0x81023052, BRF_GRA | CPS1_TILES },
+
+	{ "j4.bin",        0x010000, 0x7a99446e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "j1.bin",        0x040000, 0x1547e595, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Varthb3)
+STD_ROM_FN(Varthb3)
+
 static struct BurnRomInfo WillowRomDesc[] = {
 	// No "Warning" (c) Capcom U.S.A., genuine export ROM labels
 	{ "wle_30.11f",    0x020000, 0x15372aa2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -17622,6 +17641,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "varthjr"       , CPS_B_21_BT5, mapper_VA63B , 0, NULL                }, // CPSB test has been patched out (72=0001) register is also written to, possibly leftover from development */   
 	{ "varthb"        , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthb2"       , HACK_B_7    , mapper_varthb2, 0, NULL               },
+	{ "varthb3"       , HACK_B_6    , mapper_RT24B , 0, NULL                },
 	{ "willow"        , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowu"       , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowuo"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
@@ -21800,7 +21820,7 @@ static INT32 StriderjInit()
 	return nRet;
 }
 
-void __fastcall VarthbScrollWriteWord(UINT32 a, UINT16 d)
+static void __fastcall VarthbScrollWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x980000: {
@@ -21845,12 +21865,12 @@ void __fastcall VarthbScrollWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall VarthbRegWriteByte(UINT32 a, UINT8 d)
+static void __fastcall VarthbRegWriteByte(UINT32 a, UINT8 d)
 {
 	CpsWritePort(a & 0x1ff, d);
 }
 
-void __fastcall VarthbRegWriteWord(UINT32 a, UINT16 d)
+static void __fastcall VarthbRegWriteWord(UINT32 a, UINT16 d)
 {
 	if (a == 0x800188) {
 		if (d > 0x9000) {
@@ -21889,7 +21909,7 @@ static INT32 VarthbInit()
 	return nRet;
 }
 
-void __fastcall Varthb2RegWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Varthb2RegWriteWord(UINT32 a, UINT16 d)
 {
 	// cps-a regs are updated as normal by original code,
 	// but bootleg code ignores them and uses these regions instead:
@@ -21943,6 +21963,92 @@ static INT32 Varthb2Init()
 	SekMapHandler(2, 0x800000, 0x807fff, MAP_WRITE);	// Install memory write interception handler for Varthb2 (bootleg) registers
 	SekSetWriteByteHandler(2, VarthbRegWriteByte);
 	SekSetWriteWordHandler(2, Varthb2RegWriteWord);
+	SekClose();
+
+	return nRet;
+}
+
+static UINT8 __fastcall Varthb3InputReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return ~Inp000;
+		}
+
+		case 0x880001: {
+			return ~Inp001;
+		}
+
+		case 0x880008: {
+			return ~Inp018;
+		}
+
+		case 0x88000a: {
+			return ~Cpi01A;
+		}
+
+		case 0x88000c: {
+			return ~Cpi01C;
+		}
+
+		case 0x88000e: {
+			return ~Cpi01E;
+		}
+	}
+
+	return 0;
+}
+
+static UINT16 __fastcall Varthb3InputReadWord(UINT32 a)
+{
+	SEK_DEF_READ_WORD(1, a);
+}
+
+static void __fastcall Varthb3InputWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x880006: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			PsndCode = d;
+			return;
+		}
+	}
+}
+
+static void __fastcall Varthb3InputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x880006: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			PsndCode = d & 0xff;
+			return;
+		}
+	}
+}
+
+// Scroll 1: The manufacturer logo (hollow CAPCOM text), along with in-game score,
+// status fonts and text boxes cannot maintain consistent horizontal alignment.
+// The current priority is to align the latter elements.
+// 
+// Scroll 3: The Find pointer exists but contains no valid content.
+// Entering the test menu via F2 also shows nothing for Scroll 3.
+static INT32 Varthb3Init()
+{
+	CpsLayer2XOffs              = -0x40;
+	bCpsUpdatePalEveryFrame     = 1;
+	Cps1ObjGetCallbackFunction  = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
+
+	INT32 nRet = TwelveMhzInit();
+	if (nRet) return nRet;
+
+	SekOpen(0);
+	SekMapHandler(1, 0x880000, 0x88000f, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler( 1, Varthb3InputReadByte);
+	SekSetReadWordHandler( 1, Varthb3InputReadWord);
+	SekSetWriteByteHandler(1, Varthb3InputWriteByte);
+	SekSetWriteWordHandler(1, Varthb3InputWriteWord);
 	SekClose();
 
 	return nRet;
@@ -25995,6 +26101,16 @@ struct BurnDriver BurnDrvCpsVarthb2 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, Varthb2RomInfo, Varthb2RomName, NULL, NULL, NULL, NULL, Varthb2InputInfo, VarthDIPInfo,
 	Varthb2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCpsVarthb3 = {
+	"varthb3", "varth", NULL, NULL, "1992",
+	"Varth: Operation Thunderstorm (bootleg, set 3)\0", "Imperfect rendering", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
+	NULL, Varthb3RomInfo, Varthb3RomName, NULL, NULL, NULL, NULL, VarthInputInfo, VarthDIPInfo,
+	Varthb3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 

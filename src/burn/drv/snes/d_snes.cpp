@@ -30474,7 +30474,7 @@ STD_ROM_PICK(snes_Rrracingtp)
 STD_ROM_FN(snes_Rrracingtp)
 
 struct BurnDriver BurnDrvsnes_Rrracingtp = {
-	"snes_rrracingtp", "snes_rrracing", NULL, NULL, "1993",
+	"snes_rrracingtp", "snes_rrracing", NULL, NULL, "2018",
 	"Rock N' Roll Racing (Hack, Portuguese v.Beta)\0", NULL, "Brazilian Warriors", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
@@ -35026,18 +35026,18 @@ struct BurnDriver BurnDrvsnes_Stargatej = {
 	512, 448, 4, 3
 };
 
-// Stargate (Hack, Portuguese v.77b rev.30)
+// Stargate (Hack, Portuguese v1.0a)
 // https://www.romhacking.net.br/index.php?topic=3101.0
 static struct BurnRomInfo snes_StargatetpRomDesc[] = {
-	{ "Stargate PT-BR v.77b rev.30 (2025)(Neodash).sfc", 2097152, 0x74598268, BRF_ESS | BRF_PRG },
+	{ "Stargate PT-BR v1.0a (2025-26)(Neodash).sfc", 2097152, 0x5884863f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Stargatetp)
 STD_ROM_FN(snes_Stargatetp)
 
 struct BurnDriver BurnDrvsnes_Stargatetp = {
-	"snes_stargatetp", "snes_stargate", NULL, NULL, "1994",
-	"Stargate (Hack, Portuguese v.77b rev.30)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
+	"snes_stargatetp", "snes_stargate", NULL, NULL, "2025-26",
+	"Stargate (Hack, Portuguese v1.0a)\0", NULL, "Acclaim Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SNESGetZipName, snes_StargatetpRomInfo, snes_StargatetpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -41022,7 +41022,7 @@ STD_ROM_PICK(snes_Topgeartp)
 STD_ROM_FN(snes_Topgeartp)
 
 struct BurnDriver BurnDrvsnes_Topgeartp = {
-	"snes_topgeartp", "snes_topgear", NULL, NULL, "1992",
+	"snes_topgeartp", "snes_topgear", NULL, NULL, "2018",
 	"Top Gear (Hack, Portuguese)\0", NULL, "BlackThorne", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,

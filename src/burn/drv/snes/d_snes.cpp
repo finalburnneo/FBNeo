@@ -28781,7 +28781,7 @@ STD_ROM_PICK(snes_powerhir)
 STD_ROM_FN(snes_powerhir)
 
 struct BurnDriver BurnDrvsnes_powerhir = {
-	"snes_powerhir", "snes_powerhire", NULL, NULL, "1994",
+	"snes_powerhir", "snes_powerhirte", NULL, NULL, "1994",
 	"Power of the Hired (Japan)\0", NULL, "NCS", "SNES / Super Famicom",
 	L"Power of the Hired (Japan)\0\u30d1\u30ef\u30fc \u30aa\u30d6 \u30b6 \u30cf\u30a4\u30a2\u30fc\u30c9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
@@ -28793,19 +28793,19 @@ struct BurnDriver BurnDrvsnes_powerhir = {
 // Power of the Hired (Hack, English v0.75)
 // https://www.romhacking.net/translations/6031/
 
-static struct BurnRomInfo snes_powerhireRomDesc[] = {
+static struct BurnRomInfo snes_powerhirteRomDesc[] = {
 	{ "Power of the Hired T-Eng v0.75 (2021)(Dynamic-Designs).sfc", 1572864, 0xd7659c54, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_powerhire)
-STD_ROM_FN(snes_powerhire)
+STD_ROM_PICK(snes_powerhirte)
+STD_ROM_FN(snes_powerhirte)
 
-struct BurnDriver BurnDrvsnes_powerhire = {
-	"snes_powerhire", NULL, NULL, NULL, "2021",
+struct BurnDriver BurnDrvsnes_powerhirte = {
+	"snes_powerhirte", NULL, NULL, NULL, "2021",
 	"Power of the Hired (Hack, English v0.75)\0", NULL, "Dynamic-Designs", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
-	SNESGetZipName, snes_powerhireRomInfo, snes_powerhireRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_powerhirteRomInfo, snes_powerhirteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -28813,19 +28813,19 @@ struct BurnDriver BurnDrvsnes_powerhire = {
 // Power of the Hired(Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-60305-1-1.html
 
-static struct BurnRomInfo snes_powerhirscRomDesc[] = {
+static struct BurnRomInfo snes_powerhirtscRomDesc[] = {
 	{ "Power of the Hired T-Chs (2026)(XiaoGuihun).sfc", 2097152, 0xce52c28d, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_powerhirsc)
-STD_ROM_FN(snes_powerhirsc)
+STD_ROM_PICK(snes_powerhirtsc)
+STD_ROM_FN(snes_powerhirtsc)
 
-struct BurnDriver BurnDrvsnes_powerhirsc = {
-	"snes_powerhirsc", "snes_powerhire", NULL, NULL, "2026",
+struct BurnDriver BurnDrvsnes_powerhirtsc = {
+	"snes_powerhirtsc", "snes_powerhirte", NULL, NULL, "2026",
 	"Power of the Hired (Hack, Chinese)\0", NULL, "XiaoGuihun", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY | GBF_RPG, 0,
-	SNESGetZipName, snes_powerhirscRomInfo, snes_powerhirscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_powerhirtscRomInfo, snes_powerhirtscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

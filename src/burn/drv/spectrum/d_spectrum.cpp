@@ -34310,7 +34310,7 @@ struct BurnDriver BurnSpecA8bitjam = {
 // Baby-man Vs Man-baby (48K) (HB)
 
 static struct BurnRomInfo SpecBabymanRomDesc[] = {
-	{ "Baby-man Vs Man-baby 48K (2023)(PuttyCAD, Tin Soldiers).tap", 41891, 0x7562acb5, BRF_ESS | BRF_PRG },
+	{ "Baby-man Vs Man-baby 48K (2023)(PuttyCAD, 100 Tin Soldiers).tap", 41891, 0x7562acb5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman, SpecBabyman, Spectrum)
@@ -34318,7 +34318,7 @@ STD_ROM_FN(SpecBabyman)
 
 struct BurnDriver BurnSpecBabyman = {
 	"spec_babyman", NULL, "spec_spectrum", NULL, "2023",
-	"Baby-man Vs Man-baby (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-man Vs Man-baby (48K) (HB)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecBabymanRomInfo, SpecBabymanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34329,7 +34329,7 @@ struct BurnDriver BurnSpecBabyman = {
 // Baby-man Vs Nappy Bird (48K) (HB, v1.02)
 
 static struct BurnRomInfo SpecBabyman2RomDesc[] = {
-	{ "Baby-man Vs Nappy Bird v1.02 48K (2023)(PuttyCAD, Tin Soldiers).tap", 23108, 0xd1433065, BRF_ESS | BRF_PRG },
+	{ "Baby-man Vs Nappy Bird v1.02 48K (2023)(PuttyCAD, 100 Tin Soldiers).tap", 23108, 0xd1433065, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman2, SpecBabyman2, Spectrum)
@@ -34337,7 +34337,7 @@ STD_ROM_FN(SpecBabyman2)
 
 struct BurnDriver BurnSpecBabyman2 = {
 	"spec_babyman2", NULL, "spec_spectrum", NULL, "2023",
-	"Baby-man Vs Nappy Bird (48K) (HB, v1.02)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-man Vs Nappy Bird (48K) (HB, v1.02)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBabyman2RomInfo, SpecBabyman2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34348,7 +34348,7 @@ struct BurnDriver BurnSpecBabyman2 = {
 // Baby-Man Vs Terminatots PT1 (48K) (HB, v1.01)
 
 static struct BurnRomInfo SpecBabyman3RomDesc[] = {
-	{ "Baby-Man Vs Terminatots PT1 v1.01 48K (2025)(PuttyCAD, Tin Soldiers).tap", 44968, 0x4520df8c, BRF_ESS | BRF_PRG },
+	{ "Baby-Man Vs Terminatots PT1 v1.01 48K (2025)(PuttyCAD, 100 Tin Soldiers).tap", 44968, 0x4520df8c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman3, SpecBabyman3, Spectrum)
@@ -34356,7 +34356,7 @@ STD_ROM_FN(SpecBabyman3)
 
 struct BurnDriver BurnSpecBabyman3 = {
 	"spec_babyman3", NULL, "spec_spectrum", NULL, "2025",
-	"Baby-Man Vs Terminatots PT1 (48K) (HB, v1.01)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-Man Vs Terminatots PT1 (48K) (HB, v1.01)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBabyman3RomInfo, SpecBabyman3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34367,7 +34367,7 @@ struct BurnDriver BurnSpecBabyman3 = {
 // Baby-Man Vs Terminatots PT2 - Game (48K) (HB)
 
 static struct BurnRomInfo SpecBabyman4gmRomDesc[] = {
-	{ "Baby-Man Vs Terminatots PT2 - Game 48K (2026)(PuttyCAD, Tin Soldiers).tap", 46230, 0xdb090c28, BRF_ESS | BRF_PRG },
+	{ "Baby-Man Vs Terminatots PT2 - Game 48K (2026)(PuttyCAD, 100 Tin Soldiers).tap", 46230, 0xdb090c28, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman4gm, SpecBabyman4gm, Spectrum)
@@ -34375,7 +34375,7 @@ STD_ROM_FN(SpecBabyman4gm)
 
 struct BurnDriver BurnSpecBabyman4gm = {
 	"spec_babyman4gm", NULL, "spec_spectrum", NULL, "2026",
-	"Baby-Man Vs Terminatots PT2 - Game (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-Man Vs Terminatots PT2 - Game (48K) (HB)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecBabyman4gmRomInfo, SpecBabyman4gmRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34386,7 +34386,7 @@ struct BurnDriver BurnSpecBabyman4gm = {
 // Baby-Man Vs Terminatots PT2 - Intro (48K) (HB)
 
 static struct BurnRomInfo SpecBabyman4inRomDesc[] = {
-	{ "Baby-Man Vs Terminatots PT2 - Intro 48K (2026)(PuttyCAD, Tin Soldiers).tap", 33040, 0xb0cac1f9, BRF_ESS | BRF_PRG },
+	{ "Baby-Man Vs Terminatots PT2 - Intro 48K (2026)(PuttyCAD, 100 Tin Soldiers).tap", 33040, 0xb0cac1f9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman4in, SpecBabyman4in, Spectrum)
@@ -34394,7 +34394,7 @@ STD_ROM_FN(SpecBabyman4in)
 
 struct BurnDriver BurnSpecBabyman4in = {
 	"spec_babyman4in", "spec_babyman4gm", "spec_spectrum", NULL, "2026",
-	"Baby-Man Vs Terminatots PT2 - Intro (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-Man Vs Terminatots PT2 - Intro (48K) (HB)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, SpecBabyman4inRomInfo, SpecBabyman4inRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -47820,7 +47820,7 @@ struct BurnDriver BurnSpecLjcj = {
 // Lockdown Town ZX (48K) (HB, v1.02)
 
 static struct BurnRomInfo SpecLockdownzxRomDesc[] = {
-	{ "Lockdown Town ZX v1.02 48K (2022)(PuttyCAD, Tin Soldiers).tap", 30174, 0x2ee0a21e, BRF_ESS | BRF_PRG },
+	{ "Lockdown Town ZX v1.02 48K (2022)(PuttyCAD, 100 Tin Soldiers).tap", 30174, 0x2ee0a21e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLockdownzx, SpecLockdownzx, Spectrum)
@@ -47828,7 +47828,7 @@ STD_ROM_FN(SpecLockdownzx)
 
 struct BurnDriver BurnSpecLockdownzx = {
 	"spec_lockdownzx", NULL, "spec_spectrum", NULL, "2022",
-	"Lockdown Town ZX (48K) (HB, v1.02)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Lockdown Town ZX (48K) (HB, v1.02)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecLockdownzxRomInfo, SpecLockdownzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -47839,7 +47839,7 @@ struct BurnDriver BurnSpecLockdownzx = {
 // Lockdown Town ZXMas (48K) (HB, v1.03)
 
 static struct BurnRomInfo SpecLockdownzxmasRomDesc[] = {
-	{ "Lockdown Town ZXMas v1.03 48K (2022)(PuttyCAD, Tin Soldiers).tap", 30975, 0xbc1f2f4a, BRF_ESS | BRF_PRG },
+	{ "Lockdown Town ZXMas v1.03 48K (2022)(PuttyCAD, 100 Tin Soldiers).tap", 30975, 0xbc1f2f4a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLockdownzxmas, SpecLockdownzxmas, Spectrum)
@@ -47847,7 +47847,7 @@ STD_ROM_FN(SpecLockdownzxmas)
 
 struct BurnDriver BurnSpecLockdownzxmas = {
 	"spec_lockdownzxmas", "spec_lockdownzx", "spec_spectrum", NULL, "2022",
-	"Lockdown Town ZXMas (48K) (HB, v1.03)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Lockdown Town ZXMas (48K) (HB, v1.03)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecLockdownzxmasRomInfo, SpecLockdownzxmasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -47858,7 +47858,7 @@ struct BurnDriver BurnSpecLockdownzxmas = {
 // Lockdown Town ZXMas - Crash Exclusive (48K) (HB, v1.01)
 
 static struct BurnRomInfo SpecLockdownzxmasceRomDesc[] = {
-	{ "Lockdown Town ZXMAS - Crash Exclusive v1.01 48K (2023)(PuttyCAD).tap", 32868, 0x8cfbb3e5, BRF_ESS | BRF_PRG },
+	{ "Lockdown Town ZXMAS - Crash Exclusive v1.01 48K (2023)(PuttyCAD, 100 Tin Soldiers).tap", 32868, 0x8cfbb3e5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLockdownzxmasce, SpecLockdownzxmasce, Spectrum)
@@ -47866,7 +47866,7 @@ STD_ROM_FN(SpecLockdownzxmasce)
 
 struct BurnDriver BurnSpecLockdownzxmasce = {
 	"spec_lockdownzxmasce", "spec_lockdownzx", "spec_spectrum", NULL, "2023",
-	"Lockdown Town ZXMas - Crash Exclusive (48K) (HB, v1.01)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Lockdown Town ZXMas - Crash Exclusive (48K) (HB, v1.01)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecLockdownzxmasceRomInfo, SpecLockdownzxmasceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -47877,7 +47877,7 @@ struct BurnDriver BurnSpecLockdownzxmasce = {
 // Lockdown Town ZXWeen (48K) (HB, v1.02)
 
 static struct BurnRomInfo SpecLockdownzxweenRomDesc[] = {
-	{ "Lockdown Town ZXWeen v1.02 48K (2022)(PuttyCAD, Tin Soldiers).tap", 30441, 0x4d6a99cf, BRF_ESS | BRF_PRG },
+	{ "Lockdown Town ZXWeen v1.02 48K (2022)(PuttyCAD, 100 Tin Soldiers).tap", 30441, 0x4d6a99cf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLockdownzxween, SpecLockdownzxween, Spectrum)
@@ -47885,7 +47885,7 @@ STD_ROM_FN(SpecLockdownzxween)
 
 struct BurnDriver BurnSpecLockdownzxween = {
 	"spec_lockdownzxween", "spec_lockdownzx", "spec_spectrum", NULL, "2022",
-	"Lockdown Town ZXWeen (48K) (HB, v1.02)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Lockdown Town ZXWeen (48K) (HB, v1.02)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecLockdownzxweenRomInfo, SpecLockdownzxweenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -50991,6 +50991,25 @@ struct BurnDriver BurnSpecMoritztea = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Morning Star, The (128K) (HB)
+
+static struct BurnRomInfo SpecMorningstarRomDesc[] = {
+	{ "Morning Star, The 128K (2026)(Dareint).tap", 105577, 0x5224d856, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMorningstar, SpecMorningstar, Spec128)
+STD_ROM_FN(SpecMorningstar)
+
+struct BurnDriver BurnSpecMorningstar = {
+	"spec_morningstar", NULL, "spec_spec128", NULL, "2026",
+	"Morning Star, The (128K) (HB)\0", NULL, "Dareint", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecMorningstarRomInfo, SpecMorningstarRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Mouse Life, A (48K) (HB)
 
 static struct BurnRomInfo SpecMouselifeRomDesc[] = {
@@ -53780,6 +53799,25 @@ struct BurnDriver BurnSpecPoppy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPoppyRomInfo, SpecPoppyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Poopy Platforms (48K) (HB, v1.1)
+
+static struct BurnRomInfo SpecPoopypltRomDesc[] = {
+	{ "Poopy Platforms v1.1 48K (2026)(PuttyCAD, 100 Tin Soldiers).tap", 35299, 0x6922e2af, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPoopyplt, SpecPoopyplt, Spectrum)
+STD_ROM_FN(SpecPoopyplt)
+
+struct BurnDriver BurnSpecPoopyplt = {
+	"spec_poopyplt", NULL, "spec_spectrum", NULL, "2026",
+	"Poopy Platforms (48K) (HB, v1.1)\0", NULL, "PuttyCAD, 100 Tin Soldiers", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecPoopypltRomInfo, SpecPoopypltRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -58382,10 +58420,10 @@ struct BurnDriver BurnSpecSpacinv = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Space Invaders Co-Op (48K-128K) (HB, v2.0.1)
+// Space Invaders Co-Op (48K-128K) (HB, v2.1)
 
 static struct BurnRomInfo SpecSpacinvcoopRomDesc[] = {
-	{ "Space Invaders Co-Op v2.0.1 48K-128K (2026)(SplinterGU).tzx", 32554, 0x19f54c9f, BRF_ESS | BRF_PRG },
+	{ "Space Invaders Co-Op v2.1 48K-128K (2026)(SplinterGU).tzx", 32851, 0xadf3ac99, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSpacinvcoop, SpecSpacinvcoop, Spec128)
@@ -58393,7 +58431,7 @@ STD_ROM_FN(SpecSpacinvcoop)
 
 struct BurnDriver BurnSpecSpacinvcoop = {
 	"spec_spacinvcoop", NULL, "spec_spec128", NULL, "2026",
-	"Space Invaders Co-Op (48K-128K) (HB, v2.0.1)\0", "K: insert coins - 1or2: start - P1: Q/W and X - P2: O/P and SPACE", "SplinterGU", "ZX Spectrum",
+	"Space Invaders Co-Op (48K-128K) (HB, v2.1)\0", "K: insert coins - 1or2: start - P1: Q/W and X - P2: O/P and SPACE", "SplinterGU", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
 	SpectrumGetZipName, SpecSpacinvcoopRomInfo, SpecSpacinvcoopRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

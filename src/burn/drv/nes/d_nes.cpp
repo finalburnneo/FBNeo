@@ -21108,9 +21108,9 @@ struct BurnDriver BurnDrvnes_lupin3gt = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Machine Cave (HB, v1.9)
+// Machine Cave (HB, v1.19)
 static struct BurnRomInfo nes_machinecaveRomDesc[] = {
-	{ "Machine Cave v1.9 (2018)(Simo Sievanen).nes",          40976, 0x2d904baf, BRF_ESS | BRF_PRG },
+	{ "Machine Cave v1.19 (2018)(Simo Sievanen).nes",          40976, 0x2d904baf, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_machinecave)
@@ -21118,7 +21118,7 @@ STD_ROM_FN(nes_machinecave)
 
 struct BurnDriver BurnDrvnes_machinecave = {
 	"nes_machinecave", NULL, NULL, NULL, "2018",
-	"Machine Cave (HB, v1.9)\0", NULL, "Simo Sievanen", "NES / Famicom",
+	"Machine Cave (HB, v1.19)\0", NULL, "Simo Sievanen", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MULTISHOOT | GBF_PUZZLE, 0,
 	NESGetZipName, nes_machinecaveRomInfo, nes_machinecaveRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -196,8 +196,6 @@ frontend_inc = [
 frontend_dep = declare_dependency(
     include_directories: include_directories(frontend_inc),
     compile_args: [
-        '-DWIN32',
-        '-D_WIN32',
         '-DINCLUDE_AVI_RECORDING',
         '-D_USE_MATH_DEFINES',
     ],

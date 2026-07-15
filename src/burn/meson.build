@@ -62,6 +62,13 @@ endif
 # Active-frontend build macro(s), computed once in the root meson.build.
 burn_defs += frontend_defs
 
+if frontend == 'win32'
+    burn_defs += [
+        '-DWIN32',
+        '-D_WIN32',
+    ]
+endif
+
 burn_c_args = burn_defs
 burn_cpp_args = burn_defs
 

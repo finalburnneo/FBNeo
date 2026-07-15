@@ -183,7 +183,10 @@ endforeach
 #   group_desc / group_srcs (shared support) / drivers ({file: [components]})
 enabled_components = []
 burn_drivers = {}                 # group -> { 'desc', 'drivers', 'srcs' }
-driver_files_abs = []             # explicit d_*.cpp paths fed to gamelist.pl
+# d_parent.cpp lives outside the group dirs and is always compiled (see
+# src/burn/drv/meson.build); feed it to gamelist.pl too, otherwise its parent
+# drivers are missing from driverlist.h and their clones show up orphaned.
+driver_files_abs = [meson.current_source_dir() / 'src/burn/drv/d_parent.cpp']
 seen_drivers = []                 # for exclusion validation
 foreach g : selected_groups
     assert(

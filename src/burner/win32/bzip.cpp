@@ -1,4 +1,4 @@
-\// Burner Zip module
+// Burner Zip module
 #include "burner.h"
 
 INT32 nBzipError = 0;												// non-zero if there is a problem with the opened romset
@@ -361,11 +361,12 @@ static INT32 __cdecl BzipBurnLoadRom(UINT8* Dest, INT32* pnWrote, INT32 i)
 	if (RomFind[i].nState == 0) {							// Rom not found in zip at all
 		// Error not found in the zip file
 
-		if (nCurrentZip != -1) {
-			// Warning for bios file(s) missing
-			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_DISK), pszRomName, (nCurrentZip == -1) ? _AtoT(szName) : GetFilenameW(szBzipName[nCurrentZip]));
-			FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n\n"));
-		}
+		// if "nCurrentZip == -1", fall back to BurnDrvGetZipName() for the rom name in this dialog
+		char *szName;
+		BurnDrvGetZipName(&szName, 0);
+
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_DISK), pszRomName, (nCurrentZip == -1) ? _AtoT(szName) : GetFilenameW(szBzipName[nCurrentZip]));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n\n"));
 		return 1;
 	}
 

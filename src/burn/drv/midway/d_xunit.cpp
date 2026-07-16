@@ -956,10 +956,10 @@ STD_ROM_PICK(revx)
 STD_ROM_FN(revx)
 
 struct BurnDriver BurnDrvRevx = {
-	"revx", NULL, NULL, NULL, "1994",
+	"revx", "revx1", NULL, NULL, "1994",
 	"Revolution X (revision 2.0 9/8/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxRomInfo, revxRomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
@@ -1022,10 +1022,10 @@ STD_ROM_PICK(revx1)
 STD_ROM_FN(revx1)
 
 struct BurnDriver BurnDrvRevx1 = {
-	"revx1", "revx", NULL, NULL, "1994",
+	"revx1", NULL, NULL, NULL, "1994",
 	"Revolution X (revision 1.0 6/16/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revx1RomInfo, revx1RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
@@ -1089,7 +1089,7 @@ STD_ROM_PICK(revxp5)
 STD_ROM_FN(revxp5)
 
 struct BurnDriver BurnDrvRevxp5 = {
-	"revxp5", "revx", NULL, NULL, "1994",
+	"revxp5", "revx1", NULL, NULL, "1994",
 	"Revolution X (prototype, revision 5.0 5/23/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,

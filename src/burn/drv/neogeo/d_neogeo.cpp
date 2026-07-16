@@ -17483,14 +17483,14 @@ struct BurnDriver BurnDrvRotddh = {
 // 20260714
 
 static struct BurnRomInfo sengoku2rbRomDesc[] = {
-	{ "040rb-p1.p1",	0x100000, 0xb26122f7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "040-p1rb.p1",	0x100000, 0xb26122f7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "040-s1.s1",		0x020000, 0xcd9802a3, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "040rb-c1.c1",	0x200000, 0x414b1c85, 3 | BRF_GRA },           //  2 Sprite data
-	{ "040rb-c2.c2",	0x200000, 0x86b929ad, 3 | BRF_GRA },           //  3
-	{ "040rb-c3.c3",	0x080000, 0x327e432f, 3 | BRF_GRA },           //  4
-	{ "040rb-c4.c4",	0x080000, 0x4c6d8667, 3 | BRF_GRA },           //  5
+	{ "040-c1rb.c1",	0x200000, 0x414b1c85, 3 | BRF_GRA },           //  2 Sprite data
+	{ "040-c2rb.c2",	0x200000, 0x86b929ad, 3 | BRF_GRA },           //  3
+	{ "040-c3rb.c3",	0x080000, 0x327e432f, 3 | BRF_GRA },           //  4
+	{ "040-c4rb.c4",	0x080000, 0x4c6d8667, 3 | BRF_GRA },           //  5
 
 	{ "040-m1.m1",		0x020000, 0xd4de4bca, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 

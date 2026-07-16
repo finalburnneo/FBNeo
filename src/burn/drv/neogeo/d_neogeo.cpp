@@ -29225,6 +29225,36 @@ struct BurnDriver BurnDrvjurl = {
 };
 
 
+// Midnight Wanderers: Quest for the Chariot (HB, Demo)
+// https://z-team.itch.io/midnight-wanderers
+
+static struct BurnRomInfo midnightRomDesc[] = {
+	{ "midnight-p1.p1",	0x080000, 0x92fdb042, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "midnight-s1.s1",	0x020000, 0x6f97ae2e, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "midnight-c1.c1",	0x0e0000, 0xd3a28f25, 3 | BRF_GRA },           //  2 Sprite data
+	{ "midnight-c2.c2",	0x0e0000, 0x99a44023, 3 | BRF_GRA },           //  3
+
+	{ "midnight-m1.m1",	0x040000, 0x64f774ea, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "midnight-v1.v1",	0xa40000, 0xf9506ce5, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(midnight, midnight, neogeo)
+STD_ROM_FN(midnight)
+
+struct BurnDriver midnight = {
+	"midnight", NULL, "neogeo", NULL, "2026",
+	"Midnight Wanderers: Quest for the Chariot (HB, Demo)\0", NULL, "Z-Team", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NULL, midnightRomInfo, midnightRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // NeoTRIS (HB, Free beta 2 ver. 202009)
 // https://www.chipsonsteroids.com/
 // 3 & 4 players not working (needs Multitap)
@@ -29843,7 +29873,7 @@ struct BurnDriver BurnDrvgladmort = {
 	"gladmort", NULL, "neogeo", NULL, "2025",
 	"GladMort (HB)\0", NULL, "PixelHeart", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NULL, gladmortRomInfo, gladmortRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
@@ -29875,7 +29905,7 @@ struct BurnDriver BurnDrvgladmortcm = {
 	"gladmortcm", "gladmort", "neogeo", NULL, "2025",
 	"GladMort (Caravan Mode) (HB)\0", NULL, "PixelHeart", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NULL, gladmortcmRomInfo, gladmortcmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3

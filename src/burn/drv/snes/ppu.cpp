@@ -142,6 +142,10 @@ static uint8_t brightness;
 static uint8_t mode;
 static bool bg3priority;
 static bool evenFrame;
+// Parity of the buffer half to PRESENT, latched at vblank-start (frame complete).
+// Decouples DrvDraw from the live evenFrame, which a large end-of-frame DMA can
+// toggle by overshooting past vPos 0 into the next frame (NTSC: short vblank).
+static bool displayEvenFrame;
 static bool pseudoHires;
 static bool overscan;
 static bool frameOverscan; // if we are overscanning this frame (determined at 0,225)
@@ -287,6 +291,7 @@ void ppu_reset() {
   mode = 0;
   bg3priority = false;
   evenFrame = false;
+  displayEvenFrame = false;
   pseudoHires = false;
   overscan = false;
   frameOverscan = false;
@@ -373,6 +378,10 @@ void ppu_handleVblank() {
     oamSecondWrite = false;
   }
   frameInterlace = interlace; // set if we have a interlaced frame
+  // Latch presentation parity now (active display is complete). A subsequent
+  // end-of-frame DMA may overshoot past vPos 0 and toggle evenFrame before
+  // DrvDraw runs; presenting via this latch keeps the correct buffer half.
+  displayEvenFrame = evenFrame;
   ppu_latchScopeCheck(true); // reset scope latch if it was not hit this frame
 }
 
@@ -1359,7 +1368,7 @@ void ppu_putPixels(uint8_t* pixels, int height) {
     int dest = y * 2;// + (frameOverscan ? 2 : 16);
     int y1 = y, y2 = y + 239;
     if(!frameInterlace) {
-      y1 = y + (evenFrame ? 0 : 239);
+      y1 = y + (displayEvenFrame ? 0 : 239);
       y2 = y1;
 	}
 	if (dest + 1 >= height) continue;

@@ -900,6 +900,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 // Revolution X (revision 2.0 9/8/94)
+// temporarily relegated to clone and marked as not working due to some issues
 
 static struct BurnRomInfo revxRomDesc[] = {
 	{ "l1_revolution_x_sound_rom_u2.u2",	0x80000, 0xd2ed9f5e, 1 | BRF_SND },           //  0 DCS Sound Data
@@ -959,7 +960,7 @@ struct BurnDriver BurnDrvRevx = {
 	"revx", "revx1", NULL, NULL, "1994",
 	"Revolution X (revision 2.0 9/8/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxRomInfo, revxRomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3

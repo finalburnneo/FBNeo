@@ -139,6 +139,9 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
   }
 
   switch (headers[used].coprocessor) {
+	  case 1:
+		  headers[used].cartType = CART_SUPERFX;		// SuperFX / GSU ($ffd6.hi == 1)
+		  break;
 	  case 2:
 		  headers[used].cartType = CART_LOROMOBC1;
 		  break;
@@ -147,6 +150,43 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 		  break;
 	  case 4:
 		  headers[used].cartType = CART_LOROMSDD1;
+  }
+
+  // SuperFX work/save-RAM: the GSU plots into this RAM (bus $70-71:0000-ffff),
+  // so it must always exist.  RAM size is not reliably encoded in the ROM header
+  // (most GSU games lack a V3 header, so exRamSize reads 0).  ares and
+  // bsnes-mercury resolve this with a per-game board database; replicate the
+  // needed subset with a name-based lookup, then fall back to the V3 header and
+  // finally a ROM-size heuristic.  GSU-2 (128KB): Yoshi's Island, Star Fox 2,
+  // Doom, Winter Gold.  GSU-1 (64KB): Star Fox/Star Wing, Stunt Race FX, Vortex,
+  // Dirt Trax FX, Dirt Racer, Power Slide (proto).
+  UINT32 superfx_ramSize = 0;
+  if (headers[used].cartType == CART_SUPERFX) {
+	  const char* sfxname = headers[used].name;
+	  if (!strcmp(sfxname, "YOSSY'S ISLAND")        ||	// Yoshi's Island (Japan)
+	      !strcmp(sfxname, "YOSHI'S ISLAND")        ||	// Yoshi's Island (USA/EUR)
+	      !strcmp(sfxname, "STAR FOX 2")            ||	// Star Fox 2 (Classic Mini, Switch Online)
+	      !strcmp(sfxname, "DOOM")                  ||
+	      !strcmp(sfxname, "FX SKIING NINTENDO 96")) {	// Winter Gold (PAL, GSU-2)
+		  superfx_ramSize = 0x20000;					// GSU-2: 128KB
+	  } else if (!strcmp(sfxname, "STAR WING")      ||	// Star Fox (PAL)
+		  !strcmp(sfxname, "STAR FOX")              ||	// Star Fox (NTSC)
+		  !strcmp(sfxname, "STUNT RACE FX")         ||
+		  !strcmp(sfxname, "VORTEX")                ||
+		  !strcmp(sfxname, "DIRT TRAX FX")          ||
+		  !strcmp(sfxname, "DIRT RACER")            ||	// Dirt Racer (PAL, GSU-1)
+		  !strcmp(sfxname, "POWERSLIDE")) {				// Power Slide (PAL proto, GSU-1)
+		  superfx_ramSize = 0x10000;					// GSU-1: 64KB
+	  }
+	  // Fall back to V3 header exRamSize, then a ROM-size heuristic.
+	  if (superfx_ramSize == 0) {
+		  superfx_ramSize = headers[used].exRamSize;
+	  }
+	  if (superfx_ramSize < 0x10000 || superfx_ramSize > 0x20000) {
+		  superfx_ramSize = (newLength > 0x200000) ? 0x20000 : 0x10000;
+	  }
+	  headers[used].hasBattery = true; // SuperFX RAM is battery-backed
+	  bprintf(0, _T("superfx: gsu ram size %x\n"), superfx_ramSize);
   }
 
   switch (bioslength) {
@@ -190,12 +230,18 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 
   cart_load(
     snes->cart, headers[used].cartType,
-    newData, newLength, biosdata, bioslength, headers[used].chips > 0 ? headers[used].ramSize : 0, cartRamFill,
+    newData, newLength, biosdata, bioslength,
+    (headers[used].cartType == CART_SUPERFX) ? superfx_ramSize : (headers[used].chips > 0 ? headers[used].ramSize : 0),
+    cartRamFill,
     headers[used].hasBattery
   );
 
+  if (headers[used].cartType == CART_SUPERFX) {
+    snes->cart->oscillator = 21440000u;
+  }
+
+  snes->palTiming = headers[used].pal; // set region before reset, so co-processors see correct timing
   snes_reset(snes, true); // reset after loading
-  snes->palTiming = headers[used].pal; // set region
   BurnFree(newData);
   return true;
 }

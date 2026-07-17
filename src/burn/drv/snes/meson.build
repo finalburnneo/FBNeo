@@ -13,6 +13,7 @@ group_srcs = [
     'cx4.cpp',
     'dma.cpp',
     'dsp.cpp',
+    'gsu.cpp',
     'input.cpp',
     'ppu.cpp',
     'sa1.cpp',

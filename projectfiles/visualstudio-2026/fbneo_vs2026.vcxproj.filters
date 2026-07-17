@@ -3610,7 +3610,10 @@
     <ClCompile Include="..\..\src\burn\drv\snes\cpu_sa1.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\cx4.cpp">
+    <ClCompile Include="..\..\src\burn\drv\snes\dsp.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\gsu.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp">

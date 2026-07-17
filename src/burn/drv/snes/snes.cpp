@@ -83,6 +83,7 @@ void snes_reset(Snes* snes, bool hard) {
   snes->inNmi = false;
   snes->irqCondition = false;
   snes->inIrq = false;
+  snes->superfxIrq = false;
   snes->inVblank = false;
   snes->inRefresh = false;
   memset(snes->portAutoRead, 0, sizeof(snes->portAutoRead));
@@ -104,7 +105,7 @@ void snes_reset(Snes* snes, bool hard) {
 void snes_handleState(Snes* snes, StateHandler* sh) {
   sh_handleBools(sh,
     &snes->palTiming, &snes->hIrqEnabled, &snes->vIrqEnabled, &snes->nmiEnabled, &snes->inNmi, &snes->irqCondition,
-    &snes->inIrq, &snes->inVblank, &snes->autoJoyRead, &snes->ppuLatch, &snes->fastMem, NULL
+    &snes->inIrq, &snes->superfxIrq, &snes->inVblank, &snes->autoJoyRead, &snes->ppuLatch, &snes->fastMem, NULL
   );
   sh_handleBytes(sh, &snes->multiplyA, &snes->openBus, NULL);
   sh_handleWords(sh,
@@ -431,7 +432,7 @@ static uint8_t snes_readReg(Snes* snes, uint16_t adr) {
 //	bprintf(0, _T("TIMEUP 0x%x @ %d  %d  inirq %x\n"), adr, snes->hPos, snes->vPos,snes->inIrq);
       uint8_t val = snes->inIrq << 7;
       snes->inIrq = false;
-      cpu_setIrq(false);
+      if(!snes->superfxIrq) cpu_setIrq(false); // don't clear if GSU has a pending IRQ
       return val | (snes->openBus & 0x7f);
     }
     case 0x4212: {
@@ -483,7 +484,7 @@ static void snes_writeReg(Snes* snes, uint16_t adr, uint8_t val) {
       snes->vIrqEnabled = val & 0x20;
       if(!snes->hIrqEnabled && !snes->vIrqEnabled) {
         snes->inIrq = false;
-        cpu_setIrq(false);
+        if(!snes->superfxIrq) cpu_setIrq(false); // don't clear if GSU has a pending IRQ
       }
       // if nmi is enabled while inNmi is still set, immediately generate nmi
       if(!snes->nmiEnabled && (val & 0x80) && snes->inNmi) {

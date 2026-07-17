@@ -14,6 +14,7 @@
 #include "upd7725.h"
 #include "sa1.h"
 #include "sdd1.h"
+#include "gsu.h"
 
 static uint8_t cart_readDummy(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeDummy(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
@@ -37,6 +38,8 @@ static uint8_t cart_readLoromOBC1(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeLoromOBC1(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
 static uint8_t cart_readLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
+static uint8_t cart_readSuperFX(Cart* cart, uint8_t bank, uint16_t adr);
+static void cart_writeSuperFX(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
 
 uint8_t (*cart_read)(Cart* cart, uint8_t bank, uint16_t adr) = NULL;
 void (*cart_write)(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) = NULL;
@@ -45,7 +48,7 @@ void cart_run_dummy() { }
 void cart_mapRun(Cart* cart);
 
 const char *cart_gettype(int ctype) {
-  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1"};
+  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX"};
   return cartTypeNames[(ctype < CART_MAXENTRY) ? ctype : 0];
 }
 
@@ -64,6 +67,7 @@ static void cart_mapRwHandlers(Cart* cart) {
     case CART_LOROMSA1: cart_read = cart_readLoromSA1; cart_write = cart_writeLoromSA1; break;
     case CART_LOROMOBC1: cart_read = cart_readLoromOBC1; cart_write = cart_writeLoromOBC1; break;
     case CART_LOROMSDD1: cart_read = cart_readLoromSDD1; cart_write = cart_writeLoromSDD1; break;
+	case CART_SUPERFX: cart_read = cart_readSuperFX; cart_write = cart_writeSuperFX; break;
 	default:
 	  bprintf(0, _T("cart_mapRwHandlers(): invalid type specified: %x\n"), cart->type); break;
   }
@@ -80,6 +84,7 @@ Cart* cart_init(Snes* snes) {
   cart->romSize = 0;
   cart->ram = NULL;
   cart->ramSize = 0;
+  cart->oscillator = 0;
   return cart;
 }
 
@@ -104,6 +109,7 @@ void cart_free(Cart* cart) {
   switch (cart->type) {
     case CART_LOROMSA1: snes_sa1_exit(); break;
     case CART_LOROMSDD1: snes_sdd1_exit(); break;
+	case CART_SUPERFX: snes_gsu_exit(); break;
   }
 
   if(cart->rom != NULL) BurnFree(cart->rom);
@@ -119,6 +125,8 @@ void cart_mapRun(Cart* cart) {
     case CART_CX4: cart_run = cx4_run; break;
 
 	case CART_LOROMSA1: cart_run = snes_sa1_run; cart->heavySync = true; break;
+
+	case CART_SUPERFX: cart_run = snes_gsu_run; cart->heavySync = true; break;
 
 	case CART_LOROMDSP:
 	case CART_HIROMDSP:
@@ -142,6 +150,16 @@ void cart_reset(Cart* cart) {
 	  snes_sdd1_reset();
 	  bprintf(0, _T("init/reset sdd-1\n"));
 	break;
+	case CART_SUPERFX:
+		// GSU-1 boards (Star Fox, Stunt Race FX) use the 00-1f/80-9f ROM window and
+		// no extended 40-5f/c0-df window; GSU-2 boards (Yoshi's Island, Doom, Star
+		// Fox 2) add the extended window.  RAM size is the reliable discriminator
+		// (128KB -> GSU-2, 64KB -> GSU-1); ROM size is not, since both GSU-1 and
+		// GSU-2 titles can be exactly 2MB.
+		snes_gsu_init(cart->snes, cart->rom, cart->romSize, cart->ram, cart->ramSize, (cart->ramSize > 0x10000) ? 1 : 0, cart->oscillator);
+		snes_gsu_reset();
+		bprintf(0, _T("init/reset superfx (gsu)\n"));
+		break;
     case CART_CX4: // capcom cx4
       cx4_init(cart->snes);
       cx4_reset();
@@ -208,6 +226,7 @@ void cart_handleState(Cart* cart, StateHandler* sh) {
 	  case CART_HIROMDSP:
 	  case CART_LOROMSETA: upd_handleState(sh, cart->type); break;
 	  case CART_LOROMSDD1: snes_sdd1_handleState(sh); break;
+	  case CART_SUPERFX: snes_gsu_handleState(sh); break;
   }
 }
 
@@ -609,4 +628,14 @@ static uint8_t cart_readLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr) {
 
 static void cart_writeLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) {
   snes_sdd1_cart_write(bank << 16 | adr, val);
+}
+
+// SuperFX (GSU): the whole cart bus (MMIO / ROM / Save-RAM window decode) lives
+// in gsu.cpp, matching how sa1 / sdd1 forward the full 24-bit address.
+static uint8_t cart_readSuperFX(Cart* cart, uint8_t bank, uint16_t adr) {
+	return snes_gsu_cart_read(bank << 16 | adr);
+}
+
+static void cart_writeSuperFX(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) {
+	snes_gsu_cart_write(bank << 16 | adr, val);
 }

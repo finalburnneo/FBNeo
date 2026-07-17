@@ -45,6 +45,7 @@ struct Snes {
   bool inNmi;
   bool irqCondition;
   bool inIrq;
+  bool superfxIrq;	// GSU (SuperFX) coprocessor IRQ line, latched separately from the SNES h/v line-IRQ
   bool inVblank;
   bool inRefresh;
   // joypad handling

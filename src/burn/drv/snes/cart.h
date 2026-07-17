@@ -10,7 +10,7 @@ typedef struct Cart Cart;
 #include "snes.h"
 #include "statehandler.h"
 
-enum { CART_NONE = 0, CART_LOROM, CART_HIROM, CART_EXLOROM, CART_EXHIROM, CART_CX4, CART_LOROMDSP, CART_HIROMDSP, CART_LOROMSETA, CART_LOROMSA1, CART_LOROMOBC1, CART_LOROMSDD1, CART_MAXENTRY };
+enum { CART_NONE = 0, CART_LOROM, CART_HIROM, CART_EXLOROM, CART_EXHIROM, CART_CX4, CART_LOROMDSP, CART_HIROMDSP, CART_LOROMSETA, CART_LOROMSA1, CART_LOROMOBC1, CART_LOROMSDD1, CART_SUPERFX, CART_MAXENTRY };
 
 struct Cart {
   Snes* snes;
@@ -23,6 +23,7 @@ struct Cart {
   uint32_t ramSize;
   uint8_t* bios;
   uint32_t biosSize;
+  uint32_t oscillator;
 };
 
 Cart* cart_init(Snes* snes);

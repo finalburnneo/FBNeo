@@ -305,6 +305,7 @@
     <ClCompile Include="..\..\src\burn\drv\snes\cx4.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\dma.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\dsp.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\snes\gsu.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\input.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\ppu.cpp" />

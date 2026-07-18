@@ -33860,6 +33860,27 @@ struct BurnDriver BurnDrvsnes_smw2j = {
 	512, 448, 4, 3
 };
 
+// Super Mario: A Ilha do Yoshi (Hack, Portuguese)
+// https://www.romhacking.net/translations/6981/
+// GSU‑2‑SP1
+
+static struct BurnRomInfo snes_smw2tpRomDesc[] = {
+	{ "Super Mario - A Ilha do Yoshi PT-BR (2023)(Grupo Atlas).sfc", 2097152, 0x243bf28a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_smw2tp)
+STD_ROM_FN(snes_smw2tp)
+
+struct BurnDriver BurnDrvsnes_smw2tp = {
+	"snes_smw2tp", "snes_smw2", NULL, NULL, "2023",
+	"Super Mario: A Ilha do Yoshi (Hack, Portuguese)\0", NULL, "Grupo Atlas", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_smw2tpRomInfo, snes_smw2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Mario World 2: Yoshi's Island (Hack, Traditional Chinese)
 // GSU‑2‑SP1
 
@@ -48897,6 +48918,63 @@ struct BurnDriver BurnDrvsnes_Smw4magicwandsp = {
 	L"Super Mundo Mario: As 4 Varinhas M\u00e1gicas (GlobalHack, Portuguese v1.0.2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Smw4magicwandspRomInfo, snes_Smw4magicwandspRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario World: The Magical Golden Mushroom (GlobalHack, English v1.2)
+// https://www.smwcentral.net/?p=section&a=details&id=42564
+static struct BurnRomInfo snes_SmwmagomuenRomDesc[] = {
+	{ "Super Mario World - The Magical Golden Mushroom EN v1.2 (2026)(Green Jerry).sfc", 2097152, 0x4c531651, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smwmagomuen)
+STD_ROM_FN(snes_Smwmagomuen)
+
+struct BurnDriver BurnDrvsnes_Smwmagomuen = {
+	"snes_smwmagomuen", NULL, NULL, NULL, "2026",
+	"Super Mario World: The Magical Golden Mushroom (GlobalHack, English v1.2)\0", NULL, "Green Jerry", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmwmagomuenRomInfo, snes_SmwmagomuenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mundo Mario: El Champinon Dorado Magico (GlobalHack, Spanish v1.2)
+// https://www.smwcentral.net/?p=section&a=details&id=42564
+static struct BurnRomInfo snes_SmwmagomuesRomDesc[] = {
+	{ "Super Mundo Mario - El Champinon Dorado Magico ES v1.2 (2026)(Green Jerry).sfc", 2097152, 0x5dc236b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smwmagomues)
+STD_ROM_FN(snes_Smwmagomues)
+
+struct BurnDriver BurnDrvsnes_Smwmagomues = {
+	"snes_smwmagomues", "snes_smwmagomuen", NULL, NULL, "2026",
+	"Super Mundo Mario: El Champinon Dorado Magico (GlobalHack, Spanish v1.2)\0", NULL, "Green Jerry", "SNES / Super Famicom",
+	L"Super Mundo Mario: El Champi\u00f1\u00f3n Dorado M\u00e1gico (GlobalHack, Spanish v1.2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmwmagomuesRomInfo, snes_SmwmagomuesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mundo Mario: O Cogumelo Dourado Magico (GlobalHack, Portuguese v1.2)
+// https://www.smwcentral.net/?p=section&a=details&id=42564
+static struct BurnRomInfo snes_SmwmagomuptRomDesc[] = {
+	{ "Super Mundo Mario - O Cogumelo Dourado Magico PT v1.2 (2026)(Green Jerry).sfc", 2097152, 0xce056e71, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smwmagomupt)
+STD_ROM_FN(snes_Smwmagomupt)
+
+struct BurnDriver BurnDrvsnes_Smwmagomupt = {
+	"snes_smwmagomupt", "snes_smwmagomuen", NULL, NULL, "2026",
+	"Super Mundo Mario: O Cogumelo Dourado Magico (GlobalHack, Portuguese v1.2)\0", NULL, "Green Jerry", "SNES / Super Famicom",
+	L"Super Mundo Mario: O Cogumelo Dourado M\u00e1gico (GlobalHack, Portuguese v1.2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmwmagomuptRomInfo, snes_SmwmagomuptRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

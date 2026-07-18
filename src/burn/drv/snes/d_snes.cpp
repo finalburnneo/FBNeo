@@ -40524,6 +40524,27 @@ struct BurnDriver BurnDrvsnes_tengaim0te = {
 	512, 448, 4, 3
 };
 
+// Far East of Eden Zero (Hack, Portuguese)
+// https://www.romhacking.net/translations/7471/
+// EXSPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0tpRomDesc[] = {
+	{ "Far East of Eden Zero PT-BR (2026)(Dindo).sfc", 7340032, 0xa6c370b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0tp)
+STD_ROM_FN(snes_tengaim0tp)
+
+struct BurnDriver BurnDrvsnes_tengaim0tp = {
+	"snes_tengaim0tp", "snes_tengaim0te", NULL, NULL, "2026",
+	"Tengai Makyou Zero (Hack, Portuguese)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0tpRomInfo, snes_tengaim0tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Tengai Makyou Zero (Hack, Simplified Chinese v1.0)
 // SPC7110-RAM-EPSONRTC
 

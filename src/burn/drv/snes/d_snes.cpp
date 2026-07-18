@@ -12467,7 +12467,7 @@ struct BurnDriver BurnDrvsnes_Evo = {
 // E.V.O. - Em Busca do Paraiso (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/e.v.o.-search-for-eden-po.b.r.e
 static struct BurnRomInfo snes_EvotpRomDesc[] = {
-	{ "E.V.O. - Em Busca do Paraiso PR-BR (2011)(PO.B.R.E.).sfc", 2097152, 0x6291ff7c, BRF_ESS | BRF_PRG },
+	{ "E.V.O. - Em Busca do Paraiso PT-BR (2011)(PO.B.R.E.).sfc", 2097152, 0x6291ff7c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Evotp)

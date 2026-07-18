@@ -48942,7 +48942,7 @@ struct BurnDriver BurnDrvsnes_Smwmagomuen = {
 };
 
 // Super Mundo Mario: El Champinon Dorado Magico (GlobalHack, Spanish v1.2)
-// https://www.smwcentral.net/?p=section&a=details&id=42564
+
 static struct BurnRomInfo snes_SmwmagomuesRomDesc[] = {
 	{ "Super Mundo Mario - El Champinon Dorado Magico ES v1.2 (2026)(Green Jerry).sfc", 2097152, 0x5dc236b7, BRF_ESS | BRF_PRG },
 };
@@ -48961,7 +48961,7 @@ struct BurnDriver BurnDrvsnes_Smwmagomues = {
 };
 
 // Super Mundo Mario: O Cogumelo Dourado Magico (GlobalHack, Portuguese v1.2)
-// https://www.smwcentral.net/?p=section&a=details&id=42564
+
 static struct BurnRomInfo snes_SmwmagomuptRomDesc[] = {
 	{ "Super Mundo Mario - O Cogumelo Dourado Magico PT v1.2 (2026)(Green Jerry).sfc", 2097152, 0xce056e71, BRF_ESS | BRF_PRG },
 };

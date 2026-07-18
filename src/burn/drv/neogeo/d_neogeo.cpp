@@ -16466,31 +16466,31 @@ struct BurnDriver BurnDrvCrswd2bl = {
 };
 
 
-// Crossed Swords 2 (bootleg of CD version, full CD audio)
+// Crossed Swords 2 (bootleg of CD version, full CD audio v2)
 // https://www.arcade-projects.com/threads/crossed-sword-ii-mvs-full-cd-audio-release.37356/
 
 static struct BurnRomInfo crswd2blpRomDesc[] = {
-	{ "054.P1",       0x200000, 0xaa14d534, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "054-p1blp.p1",    0x200000, 0x3e77a96f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "054-s1.s1",    0x020000, 0x22e02ddd, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "054-s1blp.s1",    0x020000, 0x7ddb9c7e, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "054-c1.c1",    0x400000, 0x8221b712, 3 | BRF_GRA },           //  2 Sprite data
-	{ "054-c2.c2",    0x400000, 0xd6c6183d, 3 | BRF_GRA },           //  3
+	{ "054-c1blp.c1",    0x400000, 0x8404780c, 3 | BRF_GRA },           //  2 Sprite data
+	{ "054-c2blp.c2",    0x400000, 0xd8016890, 3 | BRF_GRA },           //  3
 
-	{ "054.M1",    	  0x020000, 0x53412b7a, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "054-m1blp.m1",    0x020000, 0xf8fda0dd, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "054.V1",    	  0x400000, 0x72364102, 5 | BRF_SND },           //  5 Sound data
-	{ "054.V2",    	  0x400000, 0x501d65cc, 5 | BRF_SND },           //  6 
-	{ "054.V3",       0x400000, 0x913be857, 5 | BRF_SND },           //  7 
-	{ "054.V4",       0x400000, 0x278220ce, 5 | BRF_SND },           //  8 
+	{ "054-v1blp.v1",    0x400000, 0xe2592de1, 5 | BRF_SND },           //  5 Sound data
+	{ "054-v2blp.v2",    0x400000, 0xa6c27244, 5 | BRF_SND },           //  6 
+	{ "054-v3blp.v3",    0x400000, 0xde506a5b, 5 | BRF_SND },           //  7 
+	{ "054-v4blp.v4",    0x400000, 0xd3aa8645, 5 | BRF_SND },           //  8 
 };
 
 STDROMPICKEXT(crswd2blp, crswd2blp, neogeo)
 STD_ROM_FN(crswd2blp)
 
 struct BurnDriver BurnDrvCrswd2blp = {
-	"crswd2blp", "crswd2bl", "neogeo", NULL, "1996",
-	"Crossed Swords 2 (bootleg of CD version, full CD audio)\0", NULL, "bootleg (Razoola)", "Neo Geo MVS",
+	"crswd2blp", "crswd2bl", "neogeo", NULL, "2026",
+	"Crossed Swords 2 (bootleg of CD version, full CD audio v2)\0", NULL, "bootleg (pierpa86)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SCRFIGHT, 0,
 	NULL, crswd2blpRomInfo, crswd2blpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

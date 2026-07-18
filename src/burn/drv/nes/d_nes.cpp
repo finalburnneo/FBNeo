@@ -26547,6 +26547,25 @@ struct BurnDriver BurnDrvnes_tola = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tony: Montezuma's Gold (HB)
+// https://monochrome-productions.itch.io/tony-montezumas-gold-nes
+static struct BurnRomInfo nes_tonymontRomDesc[] = {
+	{ "Tony - Montezuma's Gold (2026)(Monochrome Productions).nes",          524304, 0xc9e4180b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tonymont)
+STD_ROM_FN(nes_tonymont)
+
+struct BurnDriver BurnDrvnes_tonymont = {
+	"nes_tonymont", NULL, NULL, NULL, "2026",
+	"Tony: Montezuma's Gold (HB)\0", NULL, "Monochrome Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tonymontRomInfo, nes_tonymontRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Tomb of Ice (HB)
 static struct BurnRomInfo nes_tombiceRomDesc[] = {
 	{ "Tomb of Ice (2020)(FG Software).nes",          40976, 0x426d3439, BRF_ESS | BRF_PRG },

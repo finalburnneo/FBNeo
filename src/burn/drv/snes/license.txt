@@ -21,13 +21,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ================================================================================
-Third-party notice: SuperFX (GSU) coprocessor core
+Third-party notice: SuperFX (GSU), SPC7110 & Epson RTC-4513 Cores
 ================================================================================
-
+1. SuperFX (GSU) coprocessor
 The SuperFX (GSU) coprocessor emulation in gsu.cpp / gsu.h / gsu_ops.h /
 gsu_table.h is a clean-room C re-implementation derived from the open-source
-ares emulator (component/processor/gsu and sfc/coprocessor/superfx).  ares is
-distributed under the ISC licence, reproduced below:
+ares emulator (component/processor/gsu and sfc/coprocessor/superfx).
+
+2. SPC7110 coprocessor & Epson RTC-4513 real-time clock
+The SPC7110 (Hudson) coprocessor emulation in spc7110.cpp / spc7110.h and the
+Epson RTC-4513 real-time clock in epsonrtc.cpp / epsonrtc.h are clean-room C
+re-implementations derived from the open-source ares emulator
+(sfc/coprocessor/spc7110 and sfc/coprocessor/epsonrtc), cross-checked against
+bsnes-mercury. The SPC7110 arithmetic-coder decompressor is based on the
+original reverse-engineering work by neviksti and the optimised implementation
+by talarubi.
+
+All above modules are ported from ares, which is distributed under the ISC licence:
 
   ares
 

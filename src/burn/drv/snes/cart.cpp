@@ -15,6 +15,7 @@
 #include "sa1.h"
 #include "sdd1.h"
 #include "gsu.h"
+#include "spc7110.h"
 
 static uint8_t cart_readDummy(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeDummy(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
@@ -40,6 +41,8 @@ static uint8_t cart_readLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeLoromSDD1(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
 static uint8_t cart_readSuperFX(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeSuperFX(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
+static uint8_t cart_readSPC7110(Cart* cart, uint8_t bank, uint16_t adr);
+static void cart_writeSPC7110(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
 
 uint8_t (*cart_read)(Cart* cart, uint8_t bank, uint16_t adr) = NULL;
 void (*cart_write)(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) = NULL;
@@ -48,7 +51,7 @@ void cart_run_dummy() { }
 void cart_mapRun(Cart* cart);
 
 const char *cart_gettype(int ctype) {
-  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX"};
+  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX", "SPC7110"};
   return cartTypeNames[(ctype < CART_MAXENTRY) ? ctype : 0];
 }
 
@@ -68,6 +71,7 @@ static void cart_mapRwHandlers(Cart* cart) {
     case CART_LOROMOBC1: cart_read = cart_readLoromOBC1; cart_write = cart_writeLoromOBC1; break;
     case CART_LOROMSDD1: cart_read = cart_readLoromSDD1; cart_write = cart_writeLoromSDD1; break;
 	case CART_SUPERFX: cart_read = cart_readSuperFX; cart_write = cart_writeSuperFX; break;
+	case CART_SPC7110: cart_read = cart_readSPC7110; cart_write = cart_writeSPC7110; break;
 	default:
 	  bprintf(0, _T("cart_mapRwHandlers(): invalid type specified: %x\n"), cart->type); break;
   }
@@ -82,9 +86,13 @@ Cart* cart_init(Snes* snes) {
   cart->hasBattery = 0;
   cart->rom = NULL;
   cart->romSize = 0;
+  cart->romTrueSize = 0;
   cart->ram = NULL;
   cart->ramSize = 0;
   cart->oscillator = 0;
+  cart->promSize = 0;
+  cart->eromSize = 0;
+  cart->hasRTC = false;
   return cart;
 }
 
@@ -110,6 +118,7 @@ void cart_free(Cart* cart) {
     case CART_LOROMSA1: snes_sa1_exit(); break;
     case CART_LOROMSDD1: snes_sdd1_exit(); break;
 	case CART_SUPERFX: snes_gsu_exit(); break;
+	case CART_SPC7110: snes_spc7110_exit(); break;
   }
 
   if(cart->rom != NULL) BurnFree(cart->rom);
@@ -160,6 +169,11 @@ void cart_reset(Cart* cart) {
 		snes_gsu_reset();
 		bprintf(0, _T("init/reset superfx (gsu)\n"));
 		break;
+	case CART_SPC7110:
+	  snes_spc7110_init(cart->rom, cart->romTrueSize, cart->ram, cart->ramSize, cart->promSize, cart->eromSize, cart->hasRTC);
+	  snes_spc7110_reset();
+	  bprintf(0, _T("init/reset spc7110 (prom %x drom %x erom %x ram %x rtc %d)\n"), cart->promSize, cart->romTrueSize - cart->promSize - cart->eromSize, cart->eromSize, cart->ramSize, cart->hasRTC);
+	  break;
     case CART_CX4: // capcom cx4
       cx4_init(cart->snes);
       cx4_reset();
@@ -227,6 +241,7 @@ void cart_handleState(Cart* cart, StateHandler* sh) {
 	  case CART_LOROMSETA: upd_handleState(sh, cart->type); break;
 	  case CART_LOROMSDD1: snes_sdd1_handleState(sh); break;
 	  case CART_SUPERFX: snes_gsu_handleState(sh); break;
+	  case CART_SPC7110: snes_spc7110_handleState(sh); break;
   }
 }
 
@@ -262,6 +277,7 @@ void cart_load(Cart* cart, int type, uint8_t* rom, int romSize, uint8_t* biosrom
   if(cart->bios != NULL) BurnFree(cart->bios);
   cart->rom = BurnMalloc(romSize);
   cart->romSize = romSize;
+  cart->romTrueSize = romSize; // default: no padding; SPC7110 overrides with the pre-padding size
   if(ramSize > 0) {
     cart->ram = BurnMalloc(ramSize);
 	memset(cart->ram, ramFill, ramSize);
@@ -638,4 +654,15 @@ static uint8_t cart_readSuperFX(Cart* cart, uint8_t bank, uint16_t adr) {
 
 static void cart_writeSuperFX(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) {
 	snes_gsu_cart_write(bank << 16 | adr, val);
+}
+
+// SPC7110: registers ($4800-483f, $50/$58), MCU ROM ($8000-ffff / $c0-ff),
+// Save-RAM ($6000-7fff) and Epson RTC ($4840-4842) are decoded in spc7110.cpp;
+// forward the full 24-bit address (openBus for unmapped reads, like the dummy handler).
+static uint8_t cart_readSPC7110(Cart* cart, uint8_t bank, uint16_t adr) {
+	return snes_spc7110_cart_read(bank << 16 | adr, cart->snes->openBus);
+}
+
+static void cart_writeSPC7110(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) {
+	snes_spc7110_cart_write(bank << 16 | adr, val);
 }

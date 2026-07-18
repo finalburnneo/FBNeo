@@ -3610,7 +3610,10 @@
     <ClCompile Include="..\..\src\burn\drv\snes\cpu_sa1.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\dsp.cpp">
+    <ClCompile Include="..\..\src\burn\drv\snes\cx4.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\epsonrtc.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\gsu.cpp">
@@ -3644,6 +3647,9 @@
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\spc.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\spc7110.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\statehandler.cpp">

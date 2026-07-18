@@ -10,7 +10,7 @@ typedef struct Cart Cart;
 #include "snes.h"
 #include "statehandler.h"
 
-enum { CART_NONE = 0, CART_LOROM, CART_HIROM, CART_EXLOROM, CART_EXHIROM, CART_CX4, CART_LOROMDSP, CART_HIROMDSP, CART_LOROMSETA, CART_LOROMSA1, CART_LOROMOBC1, CART_LOROMSDD1, CART_SUPERFX, CART_MAXENTRY };
+enum { CART_NONE = 0, CART_LOROM, CART_HIROM, CART_EXLOROM, CART_EXHIROM, CART_CX4, CART_LOROMDSP, CART_HIROMDSP, CART_LOROMSETA, CART_LOROMSA1, CART_LOROMOBC1, CART_LOROMSDD1, CART_SUPERFX, CART_SPC7110, CART_MAXENTRY };
 
 struct Cart {
   Snes* snes;
@@ -19,11 +19,15 @@ struct Cart {
   bool heavySync;
   uint8_t* rom;
   uint32_t romSize;
+  uint32_t romTrueSize; // true image size before power-of-2 mirror padding (SPC7110 drom/erom split)
   uint8_t* ram;
   uint32_t ramSize;
   uint8_t* bios;
   uint32_t biosSize;
   uint32_t oscillator;
+  uint32_t promSize; // SPC7110: program-ROM size (data-ROM = romSize - promSize - eromSize)
+  uint32_t eromSize; // SPC7110: expansion-ROM size (EXSPC7110 board, mapped $40-4f); 0 = absent
+  bool hasRTC;       // SPC7110: Epson RTC-4513 present (Tengai Makyou Zero)
 };
 
 Cart* cart_init(Snes* snes);

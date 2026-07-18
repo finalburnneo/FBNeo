@@ -25244,6 +25244,26 @@ struct BurnDriver BurnDrvsnes_Mshwargemsj = {
 	512, 448, 4, 3
 };
 
+// Momotarou Dentetsu Happy (Japan)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_momohappyRomDesc[] = {
+	{ "Momotarou Dentetsu Happy (J)(1996)(Hudson).sfc", 3145728, 0x0b8d1474, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_momohappy)
+STD_ROM_FN(snes_momohappy)
+
+struct BurnDriver BurnDrvsnes_momohappy = {
+	"snes_momohappy", NULL, NULL, NULL, "1996",
+	"Momotarou Dentetsu Happy (Japan)\0", NULL, "Hudson Soft", "SNES / Super Famicom",
+	L"Momotarou Dentetsu Happy (Japan)\0\u6843\u592a\u90ce\u96fb\u9244 Happy\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SIM, 0,
+	SNESGetZipName, snes_momohappyRomInfo, snes_momohappyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Ms. Pac-Man (USA)
 
 static struct BurnRomInfo snes_MspacmanRomDesc[] = {
@@ -30474,6 +30494,63 @@ struct BurnDriver BurnDrvsnes_Romasagate = {
 	512, 448, 4, 3
 };
 
+// Romancing Sa-Ga 2 (Japan)
+
+static struct BurnRomInfo snes_romsaga2RomDesc[] = {
+	{ "Romancing Sa-Ga 2 (J)(1993)(Squaresoft).sfc", 2097152, 0x54a585bc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_romsaga2)
+STD_ROM_FN(snes_romsaga2)
+
+struct BurnDriver BurnDrvsnes_romsaga2 = {
+	"snes_romsaga2", NULL, NULL, NULL, "1993",
+	"Romancing Sa-Ga 2 (Japan)\0", NULL, "Squaresoft", "SNES / Super Famicom",
+	L"Romancing Sa-Ga 2 (Japan)\0\u30ed\u30de\u30f3\u30b7\u30f3\u30b0 \u30b5\u30fb\u30ac 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_romsaga2RomInfo, snes_romsaga2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Romancing Sa-Ga 2 (Hack, Simplified Chinese v1.1)
+
+static struct BurnRomInfo snes_romsaga2tscRomDesc[] = {
+	{ "Romancing Sa-Ga 2 T-Chs v1.1 (2026)(Meltina).smc", 2621440, 0xc61dc65e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_romsaga2tsc)
+STD_ROM_FN(snes_romsaga2tsc)
+
+struct BurnDriver BurnDrvsnes_romsaga2tsc = {
+	"snes_romsaga2tsc", "snes_romsaga2", NULL, NULL, "2026",
+	"Romancing Sa-Ga 2 (Hack, Simplified Chinese v1.1)\0", NULL, "Meltina", "SNES / Super Famicom",
+	L"Romancing Sa-Ga 2 (Hack, Simplified Chinese v1.1)\0\u6d6a\u6f2b\u4f20\u8bf4 2 (\u7b80\u4e2d\u7ffb\u8bd1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_romsaga2tscRomInfo, snes_romsaga2tscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Romancing Sa-Ga 2 (Hack, Traditional Chinese v1.1)
+
+static struct BurnRomInfo snes_romsaga2ttcRomDesc[] = {
+	{ "Romancing Sa-Ga 2 T-Cht v1.1 (2026)(Meltina).smc", 2621440, 0x4211bff7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_romsaga2ttc)
+STD_ROM_FN(snes_romsaga2ttc)
+
+struct BurnDriver BurnDrvsnes_romsaga2ttc = {
+	"snes_romsaga2ttc", "snes_romsaga2", NULL, NULL, "2026",
+	"Romancing Sa-Ga 2 (Hack, Traditional Chinese v1.1)\0", NULL, "Meltina", "SNES / Super Famicom",
+	L"Romancing Sa-Ga 2 (Hack, Traditional Chinese v1.1)\0\u6d6a\u6f2b\u50b3\u8aaa 2 (\u7e41\u4e2d\u7ffb\u8b6f)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_romsaga2ttcRomInfo, snes_romsaga2ttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Romancing Sa-Ga 3 (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_Romasaga3jRomDesc[] = {
@@ -31825,38 +31902,38 @@ struct BurnDriver BurnDrvsnes_Secrevertp = {
 
 // Secret of Evermore (Hack, Simplified Chinese v1.01)
 
-static struct BurnRomInfo snes_SecrevertscRomDesc[] = {
-	{ "Secret of Evermore T-Chs v1.01 (2025)(aGuGu).sfc", 4194304, 0x94A99E3B, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo snes_evermoretscRomDesc[] = {
+	{ "Secret of Evermore T-Chs v1.01 (2025)(aGuGu).sfc", 4194304, 0x94a99e3b, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Secrevertsc)
-STD_ROM_FN(snes_Secrevertsc)
+STD_ROM_PICK(snes_evermoretsc)
+STD_ROM_FN(snes_evermoretsc)
 
-struct BurnDriver BurnDrvsnes_Secrevertsc = {
-	"snes_secrevertsc", "snes_secrever", NULL, NULL, "2025",
+struct BurnDriver BurnDrvsnes_evermoretsc = {
+	"snes_evermoretsc", "snes_secrever", NULL, NULL, "2025",
 	"Secret of Evermore (Hack, Simplified Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
-	L"Secret of Evermore (Hack, Simplified Chinese v1.01)\0\u6c38\u6052\u5883\u4e4b\u8c1c\0", NULL, NULL, NULL,
+	L"Secret of Evermore (Hack, Simplified Chinese v1.01)\0\u6c38\u6052\u5883\u4e4b\u8c1c (\u7b80\u4e2d\u7ffb\u8bd1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
-	SNESGetZipName, snes_SecrevertscRomInfo, snes_SecrevertscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_evermoretscRomInfo, snes_evermoretscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
 // Secret of Evermore (Hack, Traditional Chinese v1.01)
 
-static struct BurnRomInfo snes_SecreverttcRomDesc[] = {
+static struct BurnRomInfo snes_evermorettcRomDesc[] = {
 	{ "Secret of Evermore T-Cht v1.01 (2025)(aGuGu).sfc", 4194304, 0x5c293311, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Secreverttc)
-STD_ROM_FN(snes_Secreverttc)
+STD_ROM_PICK(snes_evermorettc)
+STD_ROM_FN(snes_evermorettc)
 
-struct BurnDriver BurnDrvsnes_Secreverttc = {
-	"snes_secreverttc", "snes_secrever", NULL, NULL, "2025",
+struct BurnDriver BurnDrvsnes_evermorettc = {
+	"snes_evermorettc", "snes_secrever", NULL, NULL, "2025",
 	"Secret of Evermore (Hack, Traditional Chinese v1.01)\0", NULL, "aGuGu", "SNES / Super Famicom",
-	L"Secret of Evermore (Hack, Traditional Chinese v1.01)\0\u6c38\u6046\u5883\u4e4b\u8b0e\0", NULL, NULL, NULL,
+	L"Secret of Evermore (Hack, Traditional Chinese v1.01)\0\u6c38\u6046\u5883\u4e4b\u8b0e (\u7e41\u4e2d\u7ffb\u8b6f)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
-	SNESGetZipName, snes_SecreverttcRomInfo, snes_SecreverttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_evermorettcRomInfo, snes_evermorettcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -37897,6 +37974,44 @@ struct BurnDriver BurnDrvsnes_Supermetroidtp = {
 	512, 448, 4, 3
 };
 
+// Super Metroid (Hack, Simplified Chinese v1.00)
+
+static struct BurnRomInfo snes_smetroidtscRomDesc[] = {
+	{ "Super Metroid T-Chs v1.0 (2025)(aGuGu).sfc", 4194304, 0x84d1428a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_smetroidtsc)
+STD_ROM_FN(snes_smetroidtsc)
+
+struct BurnDriver BurnDrvsnes_smetroidtsc = {
+	"snes_smetroidtsc", "snes_supermetroid", NULL, NULL, "2025",
+	"Super Metroid (Hack, Simplified Chinese v1.00)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_smetroidtscRomInfo, snes_smetroidtscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Metroid (Hack, Traditional Chinese v1.0)
+
+static struct BurnRomInfo snes_smetroidttcRomDesc[] = {
+	{ "Super Metroid T-Cht v1.0 (2025)(aGuGu).sfc", 4194304, 0x283eced5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_smetroidttc)
+STD_ROM_FN(snes_smetroidttc)
+
+struct BurnDriver BurnDrvsnes_smetroidttc = {
+	"snes_smetroidttc", "snes_supermetroid", NULL, NULL, "2025",
+	"Super Metroid (Hack, Traditional Chinese v1.00)\0", NULL, "aGuGu", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_smetroidttcRomInfo, snes_smetroidttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Mario Kart (USA)
 
 static struct BurnRomInfo snes_SupermkartRomDesc[] = {
@@ -38178,6 +38293,26 @@ struct BurnDriver BurnDrvsnes_Splayactionfootball = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_SplayactionfootballRomInfo, snes_SplayactionfootballRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Power League 4 (Japan)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_spl4RomDesc[] = {
+	{ "Super Power League 4 (J)(1996)(Hudson).sfc", 2097152, 0xc07f099d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_spl4)
+STD_ROM_FN(snes_spl4)
+
+struct BurnDriver BurnDrvsnes_spl4 = {
+	"snes_spl4", NULL, NULL, NULL, "1996",
+	"Super Power League 4 (Japan)\0", NULL, "Hudson Soft", "SNES / Super Famicom",
+	L"Super Power League 4 (Japan)\0\u30b9\u30fc\u30d1\u30fc\u30d1\u30ef\u30fc\u30ea\u30fc\u30b04\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
+	SNESGetZipName, snes_spl4RomInfo, snes_spl4RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -40326,6 +40461,106 @@ struct BurnDriver BurnDrvsnes_Tenshinoutats = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_TenshinoutatsRomInfo, snes_TenshinoutatsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tengai Makyou Zero (Japan)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0RomDesc[] = {
+	{ "Tengai Makyou Zero (J)(1995)(Hudson).sfc", 5242880, 0x1e327bd9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0)
+STD_ROM_FN(snes_tengaim0)
+
+struct BurnDriver BurnDrvsnes_tengaim0 = {
+	"snes_tengaim0", "snes_tengaim0te", NULL, NULL, "1995",
+	"Tengai Makyou Zero (Japan)\0", NULL, "Hudson Soft", "SNES / Super Famicom",
+	L"Tengai Makyou Zero (Japan)\0\u5929\u5916\u9b54\u5883 Zero\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0RomInfo, snes_tengaim0RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tengai Makyou Zero: Shonen Jump no Shou (Japan)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0sjRomDesc[] = {
+	{ "Tengai Makyou Zero - Shonen Jump no Shou (J)(1995)(Hudson).sfc", 5242880, 0xbf8fef7a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0sj)
+STD_ROM_FN(snes_tengaim0sj)
+
+struct BurnDriver BurnDrvsnes_tengaim0sj = {
+	"snes_tengaim0sj", "snes_tengaim0te", NULL, NULL, "1995",
+	"Tengai Makyou Zero: Shonen Jump no Shou (Japan)\0", NULL, "Hudson Soft", "SNES / Super Famicom",
+	L"Tengai Makyou Zero: Shonen Jump no Shou (Japan)\0\u5929\u5916\u9b54\u5883 Zero: \u5c11\u5e74\u30b8\u30e3\u30f3\u30d7\u306e\u7ae0\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0sjRomInfo, snes_tengaim0sjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Far East of Eden Zero (Hack, English v7.0)
+// EXSPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0teRomDesc[] = {
+	{ "Far East of Eden Zero T-Eng v7.0 (2021)(Tom).sfc", 7340032, 0x3a39548a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0te)
+STD_ROM_FN(snes_tengaim0te)
+
+struct BurnDriver BurnDrvsnes_tengaim0te = {
+	"snes_tengaim0te", NULL, NULL, NULL, "2021",
+	"Far East of Eden Zero (Hack, English v7.0)\0", NULL, "Tom", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0teRomInfo, snes_tengaim0teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tengai Makyou Zero (Hack, Simplified Chinese v1.0)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0tscRomDesc[] = {
+	{ "Tengai Makyou Zero T-Chs v1.0 (hlken & ACG & Star Team)(2026).sfc", 5242880, 0x91003230, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0tsc)
+STD_ROM_FN(snes_tengaim0tsc)
+
+struct BurnDriver BurnDrvsnes_tengaim0tsc = {
+	"snes_tengaim0tsc", "snes_tengaim0te", NULL, NULL, "2026",
+	"Tengai Makyou Zero (Hack, Simplified Chinese v1.0)\0", NULL, "hlken & ACG & Star Team", "SNES / Super Famicom",
+	L"Tengai Makyou Zero (Hack, Simplified Chinese v1.0)\0\u5929\u5916\u9b54\u5883: Zero (\u7b80\u4e2d\u7ffb\u8bd1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0tscRomInfo, snes_tengaim0tscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Tengai Makyou Zero (Hack, Traditional Chinese v1.0)
+// SPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0ttcRomDesc[] = {
+	{ "Tengai Makyou Zero T-Cht v1.0 (ACG & Star Team)(2013).sfc", 5242880, 0x57e5939b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0ttc)
+STD_ROM_FN(snes_tengaim0ttc)
+
+struct BurnDriver BurnDrvsnes_tengaim0ttc = {
+	"snes_tengaim0ttc", "snes_tengaim0te", NULL, NULL, "2013",
+	"Tengai Makyou Zero (Hack, Traditional Chinese v1.0)\0", NULL, "ACG & Star Team", "SNES / Super Famicom",
+	L"Tengai Makyou Zero (Hack, Traditional Chinese v1.0)\0\u5929\u5916\u9b54\u5883 Zero (\u7e41\u4e2d\u7ffb\u8b6f)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0ttcRomInfo, snes_tengaim0ttcRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESVRAMHackDIPInfo,
+	VRAMHackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 

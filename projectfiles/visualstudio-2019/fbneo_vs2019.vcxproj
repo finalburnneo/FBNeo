@@ -305,6 +305,7 @@
     <ClCompile Include="..\..\src\burn\drv\snes\cx4.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\dma.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\dsp.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\snes\epsonrtc.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\gsu.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\input.cpp" />
@@ -314,6 +315,7 @@
     <ClCompile Include="..\..\src\burn\drv\snes\snes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_other.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\spc.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\snes\spc7110.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\statehandler.cpp" />
     <ClCompile Include="..\..\src\burn\drv\spectrum\spectrum.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_buggychl.cpp" />

@@ -10,6 +10,12 @@
 #include <string.h>
 #include <math.h>
 
+#if defined(__cplusplus)
+#include <cstddef>
+#else
+#include <stddef.h>
+#endif
+
 #if !defined (_WIN32)
  #define __cdecl
 #endif

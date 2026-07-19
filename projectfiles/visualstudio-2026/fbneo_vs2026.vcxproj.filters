@@ -3814,6 +3814,12 @@
     <ClCompile Include="..\..\src\dep\kaillera\client\net.cpp">
       <Filter>shitty networking code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11\t11.cpp">
+      <Filter>cpus\t11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11_intf.cpp">
+      <Filter>cpus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="burn">
@@ -4103,6 +4109,9 @@
     </Filter>
     <Filter Include="libs\zstd">
       <UniqueIdentifier>{3c0e9f4d-6a8b-4f3c-8b2f-9c8c4d3e3a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\t11">
+      <UniqueIdentifier>{2052bdad-8829-4317-854f-037d938e8428}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

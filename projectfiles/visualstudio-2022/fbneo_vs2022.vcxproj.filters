@@ -1297,6 +1297,9 @@
     <ClCompile Include="..\..\src\cpu\s2650_intf.cpp">
       <Filter>cpus</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11_intf.cpp">
+      <Filter>cpus</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\cpu\arm7\arm7.cpp">
       <Filter>cpus\arm7</Filter>
     </ClCompile>
@@ -1341,6 +1344,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\m6809\m6809.cpp">
       <Filter>cpus\m6809</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11\t11.cpp">
+      <Filter>cpus\t11</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\f8\f8.cpp">
       <Filter>cpus\f8</Filter>
@@ -4103,6 +4109,9 @@
     </Filter>
     <Filter Include="libs\zstd">
       <UniqueIdentifier>{3c0e9f4d-6a8b-4f3c-8b2f-9c8c4d3e3a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\t11">
+      <UniqueIdentifier>{2052bdad-8829-4317-854f-037d938e8428}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

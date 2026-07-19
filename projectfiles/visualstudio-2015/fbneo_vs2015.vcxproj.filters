@@ -1330,6 +1330,12 @@
     <ClCompile Include="..\..\src\cpu\s2650\s2650.cpp">
       <Filter>cpus\s2650</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11\t11.cpp">
+      <Filter>cpus\t11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\t11_intf.cpp">
+      <Filter>cpus</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\cpu\sh2\sh2.cpp">
       <Filter>cpus\sh2</Filter>
     </ClCompile>
@@ -4091,6 +4097,9 @@
     </Filter>
     <Filter Include="cpus\arm9">
       <UniqueIdentifier>{49209c37-c5b6-44a8-9441-0e9e5fad12ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\t11">
+      <UniqueIdentifier>{2052bdad-8829-4317-854f-037d938e8428}</UniqueIdentifier>
     </Filter>
     <Filter Include="libs\zip">
       <UniqueIdentifier>{f2b6c5f4-1682-4590-965b-cbc71fb3d78f}</UniqueIdentifier>

@@ -12467,7 +12467,7 @@ struct BurnDriver BurnDrvsnes_Evo = {
 // E.V.O. - Em Busca do Paraiso (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/e.v.o.-search-for-eden-po.b.r.e
 static struct BurnRomInfo snes_EvotpRomDesc[] = {
-	{ "E.V.O. - Em Busca do Paraiso PR-BR (2011)(PO.B.R.E.).sfc", 2097152, 0x6291ff7c, BRF_ESS | BRF_PRG },
+	{ "E.V.O. - Em Busca do Paraiso PT-BR (2011)(PO.B.R.E.).sfc", 2097152, 0x6291ff7c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Evotp)
@@ -40524,6 +40524,27 @@ struct BurnDriver BurnDrvsnes_tengaim0te = {
 	512, 448, 4, 3
 };
 
+// Far East of Eden Zero (Hack, Portuguese)
+// https://www.romhacking.net/translations/7471/
+// EXSPC7110-RAM-EPSONRTC
+
+static struct BurnRomInfo snes_tengaim0tpRomDesc[] = {
+	{ "Far East of Eden Zero PT-BR (2026)(Dindo).sfc", 7340032, 0xa6c370b7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_tengaim0tp)
+STD_ROM_FN(snes_tengaim0tp)
+
+struct BurnDriver BurnDrvsnes_tengaim0tp = {
+	"snes_tengaim0tp", "snes_tengaim0te", NULL, NULL, "2026",
+	"Tengai Makyou Zero (Hack, Portuguese)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_tengaim0tpRomInfo, snes_tengaim0tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Tengai Makyou Zero (Hack, Simplified Chinese v1.0)
 // SPC7110-RAM-EPSONRTC
 
@@ -49100,6 +49121,26 @@ struct BurnDriver BurnDrvsnes_Skippfrds = {
 	512, 448, 4, 3
 };
 
+// Star Fox EX (Hack, v1.11.02b)
+// https://romhackplaza.org/romhacks/star-fox-ex-super-nintendo-romhack
+
+static struct BurnRomInfo snes_starfoxexRomDesc[] = {
+	{ "Star Fox EX v1.11.02b (2025)(kandowontu, Sunlitspace542).sfc", 2097152, 0x667bea0d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfoxex)
+STD_ROM_FN(snes_starfoxex)
+
+struct BurnDriver BurnDrvsnes_starfoxex = {
+	"snes_starfoxex", NULL, NULL, NULL, "2025",
+	"Star Fox EX (Hack, v1.11.02b)\0", NULL, "kandowontu, Sunlitspace542", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfoxexRomInfo, snes_starfoxexRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Mario Horizons (GlobalHack, v1.0b)
 // https://www.smwcentral.net/?p=section&a=details&id=35232
 static struct BurnRomInfo snes_SmhorizonsRomDesc[] = {
@@ -49115,6 +49156,27 @@ struct BurnDriver BurnDrvsnes_Smhorizons = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SmhorizonsRomInfo, snes_SmhorizonsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario World 2: Yoshi's Island - The Definitive Edition (USA, Rev 1)
+// https://romhackplaza.org/romhacks/yoshis-island-the-definitive-edition-snes
+// GSU‑2‑SP1
+
+static struct BurnRomInfo snes_smw2deRomDesc[] = {
+	{ "Super Mario World 2 - Yoshi's Island - The Definitive Edition v0.5 (2026)(T-Bone).sfc", 2097152, 0x0c46bc60, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_smw2de)
+STD_ROM_FN(snes_smw2de)
+
+struct BurnDriver BurnDrvsnes_smw2de = {
+	"snes_smw2de", "snes_smw2", NULL, NULL, "2026",
+	"Super Mario World 2: Yoshi's Island - The Definitive Edition (Hack, v0.5)\0", NULL, "T-Bone", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_smw2deRomInfo, snes_smw2deRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

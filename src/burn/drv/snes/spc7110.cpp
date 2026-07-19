@@ -727,6 +727,29 @@ void snes_spc7110_cart_write(UINT32 addr, UINT8 data)
 // init / reset / state
 //=====================
 
+void snes_spc7110_init_default_ram()
+{
+	memset(s_ram + 0x000, 0xff, 0x2000);
+	memset(s_ram + 0x020, 0x00, 0x0004);
+	memset(s_ram + 0x100, 0x00, 0x0100);
+	s_ram[0x1ff0] = 0x53;
+	s_ram[0x1ff1] = 0x50;
+	s_ram[0x1ff2] = 0x43;
+	s_ram[0x1ff3] = 0x37;
+	s_ram[0x1ff4] = 0x31;
+	s_ram[0x1ff5] = 0x31;
+	s_ram[0x1ff6] = 0x30;
+	s_ram[0x1ff7] = 0x20;
+	s_ram[0x1ff8] = 0x43;
+	s_ram[0x1ff9] = 0x48;
+	s_ram[0x1ffa] = 0x45;
+	s_ram[0x1ffb] = 0x43;
+	s_ram[0x1ffc] = 0x4b;
+	s_ram[0x1ffd] = 0x20;
+	s_ram[0x1ffe] = 0x4f;
+	s_ram[0x1fff] = 0x4b;
+}
+
 void snes_spc7110_init(UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT32 promSize, INT32 eromSize, INT32 hasRTC)
 {
 	// ROM image = [ program ROM (promSize) | data ROM | expansion ROM (eromSize) ]
@@ -745,6 +768,11 @@ void snes_spc7110_init(UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT
 	s_ram  = ram;
 	s_ramSize  = (UINT32)ramSize;
 	s_hasRTC = hasRTC;
+
+	// prefill battery ram to skip first boot steps
+	// if a saved battery ram exists, it'll override this one when the scan function is called later
+	snes_spc7110_init_default_ram();
+
 	// The Epson RTC is coin-cell backed: power it on (clear + seed the clock)
 	// exactly once per cartridge insertion.  cart_reset() re-runs init on every
 	// console reset, but the calendar must survive those, so guard on s_rtcPowered.

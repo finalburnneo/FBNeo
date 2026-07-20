@@ -32880,6 +32880,45 @@ struct BurnDriver BurnDrvsnes_Shinkouhate = {
 	512, 448, 4, 3
 };
 
+// Shodai Nekketsu Kouha Kunio-kun (Hack, English，v1.00)
+// https://www.romhacking.net/translations/893/
+
+static struct BurnRomInfo snes_shodanekteRomDesc[] = {
+	{ "Shodai Nekketsu Kouha Kunio-kun T-Eng v1.00 (2007)(Aeon Genesis).smc", 1179648, 0x293279af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_shodanekte)
+STD_ROM_FN(snes_shodanekte)
+
+struct BurnDriver BurnDrvsnes_shodanekte = {
+	"snes_shodanekte", NULL, NULL, NULL, "2007",
+	"Shodai Nekketsu Kouha Kunio-kun (Hack, English，v1.00)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
+	SNESGetZipName, snes_shodanekteRomInfo, snes_shodanekteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Shodai Nekketsu Kouha Kunio-kun (Japan, Rev 1)
+
+static struct BurnRomInfo snes_shodanekRomDesc[] = {
+	{ "Shodai Nekketsu Kouha Kunio-kun (J, Rev 1)(1992)(Technos).sfc", 1048576, 0x5df55465, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_shodanek)
+STD_ROM_FN(snes_shodanek)
+
+struct BurnDriver BurnDrvsnes_shodanek = {
+	"snes_shodanek", "snes_shodanekte", NULL, NULL, "1992",
+	"Shodai Nekketsu Kouha Kunio-kun (Japan, Rev 1)\0", NULL, "Technos", "SNES / Super Famicom",
+	L"Shodai Nekketsu Kouha Kunio-kun (Japan, Rev 1)\0\u521d\u4ee3\u71b1\u8840\u786c\u6d3e\u304f\u306b\u304a\u304f\u3093\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
+	SNESGetZipName, snes_shodanekRomInfo, snes_shodanekRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Shounen Ashibe: Goma-chan no Yuuenchi Daibouken (Japan)
 
 static struct BurnRomInfo snes_ShouashibeRomDesc[] = {

@@ -32865,7 +32865,7 @@ struct BurnDriver BurnDrvsnes_Shinkouhate = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
-// Shodai Nekketsu Kouha Kunio-kun (Hack, English，v1.00)
+// Shodai Nekketsu Kouha Kunio-kun (Hack, English, v1.00)
 // https://www.romhacking.net/translations/893/
 
 static struct BurnRomInfo snes_shodanekteRomDesc[] = {
@@ -32877,7 +32877,7 @@ STD_ROM_FN(snes_shodanekte)
 
 struct BurnDriver BurnDrvsnes_shodanekte = {
 	"snes_shodanekte", NULL, NULL, NULL, "2007",
-	"Shodai Nekketsu Kouha Kunio-kun (Hack, English，v1.00)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	"Shodai Nekketsu Kouha Kunio-kun (Hack, English, v1.00)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT | GBF_ADV, 0,
 	SNESGetZipName, snes_shodanekteRomInfo, snes_shodanekteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -36067,11 +36067,11 @@ struct BurnDriver BurnDrvsnes_Ststarfleetg = {
 	512, 448, 4, 3
 };
 
-// Stunt Race FX (USA，Rev 1)
+// Stunt Race FX (USA, Rev 1)
 // GSU-1
 
 static struct BurnRomInfo snes_stuntfxRomDesc[] = {
-	{ "Stunt Race FX (U，Rev 1)(1994)(Nintendo).sfc", 1048576, 0x380c2635, BRF_ESS | BRF_PRG },
+	{ "Stunt Race FX (U, Rev 1)(1994)(Nintendo).sfc", 1048576, 0x380c2635, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_stuntfx)
@@ -36079,7 +36079,7 @@ STD_ROM_FN(snes_stuntfx)
 
 struct BurnDriver BurnDrvsnes_stuntfx = {
 	"snes_stuntfx", NULL, NULL, NULL, "1994",
-	"Stunt Race FX (USA，Rev 1)\0", NULL, "Nintendo", "SNES / Super Famicom",
+	"Stunt Race FX (USA, Rev 1)\0", NULL, "Nintendo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_stuntfxRomInfo, snes_stuntfxRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

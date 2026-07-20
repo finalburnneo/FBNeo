@@ -1,4 +1,4 @@
-// FinalBurn Neo Super Bowling driver module
+// FinalBurn Neo Strike Bowling driver module
 // Based on MAME driver by Jarek Burczynski, Tomasz Slanina
 
 // dink-notes: game writes past vram in the ball-test :)

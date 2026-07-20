@@ -15,10 +15,6 @@ void  snes_spc7110_exit();
 void  snes_spc7110_reset();
 void  snes_spc7110_handleState(StateHandler* sh);
 
-// Pre-seed the "SPC7110 CHECK OK" SRAM marker so the boot self-test is skipped.
-// enable == 0 is a no-op (pass a DIP value here later). Call after SRAM load.
-void  snes_spc7110_skipSelfTest(INT32 enable);
-
 UINT8 snes_spc7110_cart_read(UINT32 address, UINT8 openbus);
 void  snes_spc7110_cart_write(UINT32 address, UINT8 data);
 

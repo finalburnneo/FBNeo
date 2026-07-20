@@ -34,11 +34,6 @@ static INT32 snes_batterysize = 0; // filled-in DoReset()
 static UINT8 *snes_batterydata = NULL;
 static UINT32 *snes_framebuffer = NULL;
 
-// SPC7110 self-test skip: run once after the first frame's SRAM is in place.
-// Set to 1 to enable (later drive from a DIP - see NETPLAY/DIP NOTE in DrvFrame).
-// Guard resets per game in DrvInit.
-static INT32 snes_spc7110_seeded  = 0;
-
 static struct BurnInputInfo SNESInputList[] = {
 	{"P1 Up",		BIT_DIGITAL,	snesInputPort0 + 4,		"p1 up"     },
 	{"P1 Down",		BIT_DIGITAL,	snesInputPort0 + 5,		"p1 down"   },
@@ -339,7 +334,7 @@ static INT32 DrvInit()
 	UINT32 bios_len = 0;
 	rom_bios = NULL;
 	if (bios) {
-		rom_bios = BurnMalloc(0x18000); // usually 0x2800 for dsp*, 0x11000 for Seta ST010/ST011
+		rom_bios = BurnMalloc(0x28000); // 0x2800 dsp*, 0x11000 Seta ST010/ST011, 0x28000 Seta ST018
 
 		BurnDrvGetRomInfo(&ri, 0x80);
 		bios_len = ri.nLen;
@@ -354,8 +349,6 @@ static INT32 DrvInit()
 	GenericTilesInit();
 	snes = snes_init();
 	snes_loadRom(snes, rom, length, rom_bios, bios_len);
-
-	snes_spc7110_seeded = 0;	// re-seed self-test marker on the first frame of this game
 
 	BurnSetRefreshRate(snes_isPal(snes) ? 50.00 : 60.00);
 	bprintf(0, _T("*** snes running @ %dhz"), snes_isPal(snes) ? 50 : 60);
@@ -478,26 +471,6 @@ static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
-	}
-
-	// First frame is the ONLY point that is both after the battery SRAM (.fs) has
-	// been loaded and before the game's boot code reads/validates it - and it is
-	// platform-independent, since it depends only on "the game's first CPU frame
-	// has not run yet", not on any front-end's load ordering. Earlier points
-	// (spc7110 init/reset in cart_reset) run BEFORE the .fs load and would be
-	// overwritten by it. Runs once per game load; no-op for non-SPC7110 carts or
-	// when the save already carries the marker.
-	//
-	// NETPLAY / DIP NOTE: this seeds SRAM deterministically, so it is netplay-safe
-	// ONLY while both sides pass the same enable value. If this is ever wired to a
-	// DIP, both peers MUST agree on it (force-sync or disable in netplay), or the
-	// differing SRAM seed will desync the session.
-	if (!snes_spc7110_seeded) {
-		snes_spc7110_seeded = 1;
-		// Explicitly gate on cart type so this only ever touches SPC7110 games;
-		// other carts are skipped here (the function also self-guards on s_ram).
-		if (snes && snes->cart && snes->cart->type == CART_SPC7110)
-			snes_spc7110_skipSelfTest(DrvDips[1] & 0x1);
 	}
 
 	{
@@ -644,6 +617,25 @@ struct BurnDriver BurnDrvsnes_st011 = {
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 1, HARDWARE_SNES, GBF_BIOS, 0,
 	SNESGetZipName, snes_st011RomInfo, snes_st011RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Seta ST018
+
+static struct BurnRomInfo snes_st018RomDesc[] = {
+	{ "st018.bin", 0x28000, 0x5c403cc5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_st018)
+STD_ROM_FN(snes_st018)
+
+struct BurnDriver BurnDrvsnes_st018 = {
+	"snes_st018", NULL, NULL, NULL, "x",
+	"Seta ST018\0", NULL, "ST018 microcode", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 1, HARDWARE_SNES, GBF_BIOS, 0,
+	SNESGetZipName, snes_st018RomInfo, snes_st018RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -25547,7 +25539,27 @@ struct BurnDriver BurnDrvsnes_Natsumechampwrestling = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
+#if 0
+// Hayazashi Nidan Morita Shougi 2 (Japan)
+// sns_rom_st018
 
+static struct BurnRomInfo snes_moritash2RomDesc[] = {
+	{ "Hayazashi Nidan Morita Shougi 2 (J)(1995)(Seta).sfc", 524288, 0xdd852671, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_moritash2, snes_moritash2, snes_st018)
+STD_ROM_FN(snes_moritash2)
+
+struct BurnDriver BurnDrvsnes_moritash2 = {
+	"snes_moritash2", NULL, "snes_st018", NULL, "1995",
+	"Hayazashi Nidan Morita Shougi 2 (Japan)\0", NULL, "Seta", "SNES / Super Famicom",
+	L"Hayazashi Nidan Morita Shougi 2 (Japan)\0\u65e9\u6307\u3057\u4e8c\u6bb5\u68ee\u7530\u5c06\u68cb 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_BOARD, 0,
+	SNESGetZipName, snes_moritash2RomInfo, snes_moritash2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+#endif
 // NBA All-Star Challenge (USA)
 
 static struct BurnRomInfo snes_NbaallstarsRomDesc[] = {

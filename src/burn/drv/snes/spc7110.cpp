@@ -723,6 +723,29 @@ void snes_spc7110_cart_write(UINT32 addr, UINT8 data)
 	}
 }
 
+void snes_spc7110_init_default_ram()
+{
+//	memset(s_ram + 0x000, 0xff, 0x2000);
+//	memset(s_ram + 0x020, 0x00, 0x0004);
+//	memset(s_ram + 0x100, 0x00, 0x0100);
+	s_ram[0x1ff0] = 0x53;
+	s_ram[0x1ff1] = 0x50;
+	s_ram[0x1ff2] = 0x43;
+	s_ram[0x1ff3] = 0x37;
+	s_ram[0x1ff4] = 0x31;
+	s_ram[0x1ff5] = 0x31;
+	s_ram[0x1ff6] = 0x30;
+	s_ram[0x1ff7] = 0x20;
+	s_ram[0x1ff8] = 0x43;
+	s_ram[0x1ff9] = 0x48;
+	s_ram[0x1ffa] = 0x45;
+	s_ram[0x1ffb] = 0x43;
+	s_ram[0x1ffc] = 0x4b;
+	s_ram[0x1ffd] = 0x20;
+	s_ram[0x1ffe] = 0x4f;
+	s_ram[0x1fff] = 0x4b;
+}
+
 //=====================
 // init / reset / state
 //=====================
@@ -745,6 +768,11 @@ void snes_spc7110_init(UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT
 	s_ram  = ram;
 	s_ramSize  = (UINT32)ramSize;
 	s_hasRTC = hasRTC;
+
+	// prefill battery ram to skip first boot steps
+	// if a saved battery ram exists, it'll override this one when the scan function is called later
+	snes_spc7110_init_default_ram();
+
 	// The Epson RTC is coin-cell backed: power it on (clear + seed the clock)
 	// exactly once per cartridge insertion.  cart_reset() re-runs init on every
 	// console reset, but the calendar must survive those, so guard on s_rtcPowered.
@@ -786,34 +814,6 @@ void snes_spc7110_reset()
 	dec_output = 0; dec_pixels = 0; dec_colormap = 0; dec_result = 0;
 
 	if (s_hasRTC) snes_epsonrtc_reset();
-}
-
-// Skip the SPC7110 boot self-test.
-//
-// SPC7110 titles run a power-on self-test that, on a blank (first-boot) SRAM,
-// forces the player through the test screens before the game starts.  Once the
-// test passes, the game writes a 16-byte ASCII marker "SPC7110 CHECK OK" to the
-// tail of save SRAM; on later boots it reads that marker and skips the test.
-//
-// Pre-seeding the marker into a fresh SRAM therefore makes the very first boot
-// behave like a subsequent one - the self-test is skipped.  We only write when
-// the marker is absent, so a real save (which already carries it) is untouched.
-//
-// enable == false is a no-op, so this can be gated on a DIP later by passing the
-// switch value.  Must be called AFTER battery SRAM has been loaded.
-void snes_spc7110_skipSelfTest(INT32 enable)
-{
-	static const UINT8 marker[16] = {
-		0x53,0x50,0x43,0x37,0x31,0x31,0x30,0x20,	// "SPC7110 "
-		0x43,0x48,0x45,0x43,0x4b,0x20,0x4f,0x4b		// "CHECK OK"
-	};
-
-	if (!enable) return;
-	if (s_ram == NULL || s_ramSize < sizeof(marker)) return;
-
-	UINT8* tail = s_ram + (s_ramSize - sizeof(marker));
-	if (memcmp(tail, marker, sizeof(marker)) != 0)
-		memcpy(tail, marker, sizeof(marker));
 }
 
 void snes_spc7110_handleState(StateHandler* sh)

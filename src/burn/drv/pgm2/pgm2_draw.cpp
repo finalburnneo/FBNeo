@@ -398,7 +398,7 @@ static void pgm2_draw_bg(INT32 w, INT32 h)
 			UINT32 entry = BURN_ENDIAN_SWAP_INT32(vram[ty * MAP_W + tx]);
 			UINT32 tileno = entry & 0x3FFFFu;
 			UINT8  colour = (entry >> 18) & 0xFu;
-			UINT8  flipxy = (entry >> 24) & 3u;
+			UINT8  flipxy = (entry >> 23) & 3u;	// flip bits are 24:23
 
 			if (tile_count_pow2) tileno &= (bg_tile_count - 1);
 			else                 tileno %= bg_tile_count;
@@ -468,7 +468,7 @@ static void pgm2_draw_fg(INT32 w, INT32 h)
 			UINT32 entry = BURN_ENDIAN_SWAP_INT32(vram[ty * MAP_W + tx]);
 			UINT32 tileno = entry & 0x3FFFFu;
 			UINT8  colour = (entry >> 18) & 0x1Fu;
-			UINT8  flipxy = (entry >> 24) & 3u;
+			UINT8  flipxy = (entry >> 23) & 3u;	// flip bits are 24:23
 
 			if (tile_count_pow2) tileno &= (fg_tile_count - 1);
 			else                 tileno %= fg_tile_count;

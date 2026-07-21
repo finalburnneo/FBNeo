@@ -177,13 +177,14 @@ ARM7_INLINE UINT32 arm7_cpu_read16(UINT32 addr)
 
     result = Arm7ReadWord(addr & ~1);
 
+#if ARM9_MODE
+	// igs036 / arm946es makes no rotation to the result for byte-unaligned read16
+	return result;
+#endif
+
     if (addr & 1)
     {
-#if ARM9_MODE
-        result = ((result >> 8) & 0xff) | ((result & 0xff) << 24);
-#else
         result = ((result >> 8) & 0xff) | ((result & 0xff) << 8);
-#endif
     }
 
     return result;

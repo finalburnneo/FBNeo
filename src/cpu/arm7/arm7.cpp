@@ -203,7 +203,7 @@ int Arm7Scan(int nAction)
 #endif
 
 	struct BurnArea ba;
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = (unsigned char*)&ARM7;
@@ -218,3 +218,10 @@ int Arm7Scan(int nAction)
 
 	return 0;
 }
+
+void arm7_get_context(void** pContext, INT32* pSize)
+{
+	if (pContext) *pContext = (void*)&ARM7;
+	if (pSize)    *pSize    = (INT32)sizeof(ARM7);
+}
+

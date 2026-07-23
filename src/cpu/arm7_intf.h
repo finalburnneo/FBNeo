@@ -25,6 +25,8 @@ void Arm7Close();
 
 INT32 Arm7Scan(INT32 nAction);
 
+void arm7_get_context(void** pContext, INT32* pSize);
+
 #define ARM7_IRQ_LINE		0
 #define ARM7_FIRQ_LINE		1
 

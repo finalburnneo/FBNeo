@@ -17030,6 +17030,27 @@ struct BurnDriver BurnDrvsnes_Hayazashi = {
 	512, 462, 4, 3
 };
 
+// Hayazashi Nidan Morita Shougi 2 (Japan)
+// sns_rom_st018
+
+static struct BurnRomInfo snes_moritash2RomDesc[] = {
+	{ "Hayazashi Nidan Morita Shougi 2 (J)(1995)(Seta).sfc", 524288, 0xdd852671, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_moritash2, snes_moritash2, snes_st018)
+STD_ROM_FN(snes_moritash2)
+
+struct BurnDriver BurnDrvsnes_moritash2 = {
+	"snes_moritash2", NULL, "snes_st018", NULL, "1995",
+	"Hayazashi Nidan Morita Shougi 2 (Japan)\0", NULL, "Seta", "SNES / Super Famicom",
+	L"Hayazashi Nidan Morita Shougi 2 (Japan)\0\u65e9\u6307\u3057\u4e8c\u6bb5\u68ee\u7530\u5c06\u68cb 2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_BOARD, 0,
+	SNESGetZipName, snes_moritash2RomInfo, snes_moritash2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+
 // Head-On Soccer (USA)
 
 static struct BurnRomInfo snes_HeadonsoccerRomDesc[] = {
@@ -32865,6 +32886,7 @@ struct BurnDriver BurnDrvsnes_Shinkouhate = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
+
 // Shodai Nekketsu Kouha Kunio-kun (Hack, English, v1.00)
 // https://www.romhacking.net/translations/893/
 

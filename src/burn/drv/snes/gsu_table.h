@@ -1,18 +1,6 @@
 // =============================================================================
 //  FBNeo SNES  -  SuperFX (GSU) opcode dispatch
 // =============================================================================
-//  Derived from ares/component/processor/gsu/instruction.cpp (ISC, see
-//  license.txt).  ares dispatched with a preprocessor-expanded switch (op/op4/
-//  op6/op12/op15/op16 macros) over templated member functions; the identical
-//  grouping is reproduced here over the file-scope snes_gsu_i_* statics, passing
-//  the low nibble of the opcode as the explicit register index.
-//
-//  Unlike mercury's 1024-entry ALT-prefixed table, ALT0..3 decoding stays inside
-//  each instruction (it reads gsu.sfr_alt1/alt2), matching ares 1:1 - so this is
-//  a flat switch over the raw 8-bit opcode.
-//
-//  Included by gsu.cpp.  Not a standalone translation unit.
-// =============================================================================
 
 static void snes_gsu_execute(UINT8 opcode) {
 #define op(id, call)  case id: call; return;

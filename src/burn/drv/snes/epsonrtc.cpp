@@ -1,19 +1,6 @@
 // =============================================================================
 //  Epson RTC-4513 Real-Time Clock for FBNeo
 // =============================================================================
-// Ported from ares (ares/sfc/coprocessor/epsonrtc).
-//
-// The ares implementation runs a 32768*64 Hz clock thread that ticks the BCD
-// registers second-by-second.  Here we drop the thread and instead catch up to
-// the host wall-clock on each bus access (rtc_advance), reusing the exact same
-// bit-perfect tick*() BCD logic so invalid-BCD behaviour matches hardware.
-//
-// The serial interface uses an immediate-ready model: ares clears "ready" for a
-// few clock-thread cycles after each command byte, but with no clock thread here
-// there is nothing to re-assert it, and the self-test polls "ready" before every
-// access, so we keep ready asserted.  This is functionally equivalent for all
-// known software and avoids carrying a wait counter in save states.
-// =============================================================================
 
 #include "epsonrtc.h"
 #include <time.h>
@@ -381,11 +368,11 @@ static void rtc_advance()
 	while (diff >= 86400) { tickDay();    diff -= 86400; }
 	while (diff >= 3600)  { tickHour();   diff -= 3600;  }
 	while (diff >= 60)    { tickMinute(); diff -= 60;    }
-	while (diff-- > 0)    { tickSecond();               }
+	while (diff-- > 0)    { tickSecond();                }
 }
 
 //=====================
-// bus interface (verbatim protocol from ares epsonrtc.cpp, immediate-ready model)
+// bus interface
 //=====================
 
 UINT8 snes_epsonrtc_read(UINT8 address)
@@ -451,12 +438,6 @@ void snes_epsonrtc_write(UINT8 address, UINT8 data)
 //=====================
 // init / reset / state
 //=====================
-
-// Cold power-on (cartridge inserted / hard boot with a fresh RTC).  On real
-// hardware the RTC-4513 is kept alive by its own coin cell, so the calendar
-// registers survive console reset and power-off; only inserting the cartridge
-// (or a dead battery) starts them from scratch.  We model "battery good" by
-// seeding the calendar from the host wall-clock, so batteryfailure stays clear.
 void snes_epsonrtc_power()
 {
 	//power-on defaults (ares initialize())
@@ -481,8 +462,6 @@ void snes_epsonrtc_power()
 	seedFromHost();  //seed calendar from host wall clock
 }
 
-// Warm reset (console reset button / soft reset).  The coin-cell-backed clock
-// registers are untouched; only the serial bus interface returns to idle.
 void snes_epsonrtc_reset()
 {
 	chipselect = 0;

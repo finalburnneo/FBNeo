@@ -1,16 +1,6 @@
 // =============================================================================
 //  SPC7110 coprocessor (Hudson) for FBNeo
 // =============================================================================
-// Ported from ares (ares/sfc/coprocessor/spc7110), cross-checked with bsnes-mercury.
-//   decompressor: original neviksti, optimized talarubi
-// FBNeo flat-C port / integration: (this file)
-//
-// Model: the ares/mercury cores run the chip as a clock-stepped thread and defer
-// decompress/multiply/divide to a pending flag consumed by main().  Here we run the
-// operations immediately inside the register write, which is functionally identical
-// for software that polls the status/busy bits (they are set then cleared within the
-// same access), and avoids pulling in a scheduler thread.
-// =============================================================================
 
 #include "spc7110.h"
 #include "epsonrtc.h"
@@ -93,7 +83,7 @@ static UINT8 r4833;		//bank 3 mapping
 static UINT8 r4834;		//bank mapping settings
 
 //=====================
-// bus mirror (ares Bus::mirror)
+// bus mirror
 //=====================
 
 static UINT32 bus_mirror(UINT32 addr, UINT32 size)
@@ -176,8 +166,6 @@ static UINT8 dec_read()
 	return datarom_read(dec_offset++);
 }
 
-//inverse morton code transform: unpack big-endian packed pixels
-//returns odd bits in lower half; even bits in upper half
 static UINT64 dec_deinterleave(UINT64 data, UINT32 bits)
 {
 	data = data & ((1ull << bits) - 1);
@@ -189,7 +177,6 @@ static UINT64 dec_deinterleave(UINT64 data, UINT32 bits)
 	return data | data >> 16;
 }
 
-//extract a nibble and move it to the low four bits
 static UINT64 dec_moveToFront(UINT64 list, UINT32 nibble)
 {
 	UINT64 mask = ~15ull;
@@ -258,7 +245,7 @@ static void dec_decode()
 			DecContext* ctx = &dec_context[set][bit + history - 1];
 			const ModelState* model = &dec_evolution[ctx->prediction];
 			UINT8 lps_offset = dec_range - model->probability;
-			INT32 symbol = dec_input >= (lps_offset << 8);  //test only the MSB
+			INT32 symbol = dec_input >= (lps_offset << 8);	//test only the MSB
 
 			dec_output = dec_output << 1 | (symbol ^ ctx->swap);
 
@@ -591,7 +578,7 @@ static void reg_write(UINT32 addr, UINT8 data)
 		//data port unit
 		case 0x4811: r4811 = data; break;
 		case 0x4812: r4812 = data; break;
-		case 0x4813: r4813 = data & 0x7f; data_port_read(); break;
+		case 0x4813: r4813 = data & 0x7f; data_port_read();    break;
 		case 0x4814: r4814 = data; data_port_increment_4814(); break;
 		case 0x4815: r4815 = data; if (r4818 & 2) data_port_read(); data_port_increment_4815(); break;
 		case 0x4816: r4816 = data; break;
@@ -606,7 +593,7 @@ static void reg_write(UINT32 addr, UINT8 data)
 		case 0x4824: r4824 = data; break;
 		case 0x4825: r4825 = data; r482f |= 0x81; alu_multiply(); break;		//immediate
 		case 0x4826: r4826 = data; break;
-		case 0x4827: r4827 = data; r482f |= 0x80; alu_divide(); break;			//immediate
+		case 0x4827: r4827 = data; r482f |= 0x80; alu_divide();   break;		//immediate
 		case 0x482e: r482e = data & 0x01; break;
 
 		//memory control unit
@@ -706,7 +693,7 @@ UINT8 snes_spc7110_cart_read(UINT32 addr, UINT8 openbus)
 		return openbus;
 	}
 
-	if (bank >= 0xc0) return mcurom_read(addr);  //$c0-ff:0000-ffff
+	if (bank >= 0xc0) return mcurom_read(addr);		//$c0-ff:0000-ffff
 
 	return openbus;
 }
@@ -773,9 +760,6 @@ void snes_spc7110_init(UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT
 	// if a saved battery ram exists, it'll override this one when the scan function is called later
 	snes_spc7110_init_default_ram();
 
-	// The Epson RTC is coin-cell backed: power it on (clear + seed the clock)
-	// exactly once per cartridge insertion.  cart_reset() re-runs init on every
-	// console reset, but the calendar must survive those, so guard on s_rtcPowered.
 	if (hasRTC && !s_rtcPowered) {
 		snes_epsonrtc_power();
 		s_rtcPowered = 1;
@@ -787,7 +771,7 @@ void snes_spc7110_exit()
 	s_prom = s_drom = s_erom = s_ram = NULL;
 	s_promSize = s_dromSize = s_eromSize = s_ramSize = 0;
 	s_hasRTC = 0;
-	s_rtcPowered = 0;  // cartridge removed: next insertion cold-powers the RTC again
+	s_rtcPowered = 0;	// cartridge removed: next insertion cold-powers the RTC again
 }
 
 void snes_spc7110_reset()

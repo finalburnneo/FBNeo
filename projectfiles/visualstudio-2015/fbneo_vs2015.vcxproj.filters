@@ -3637,6 +3637,15 @@
     <ClCompile Include="..\..\src\burn\drv\snes\input.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\msu1.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\msu1_backend.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\msu1_decoders.c">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\ppu.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
@@ -3656,6 +3665,9 @@
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\spc7110.cpp">
+      <Filter>burn\drv\snes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\snes\st018.cpp">
       <Filter>burn\drv\snes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\statehandler.cpp">

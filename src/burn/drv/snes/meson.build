@@ -16,15 +16,19 @@ group_srcs = [
     'epsonrtc.cpp',
     'gsu.cpp',
     'input.cpp',
+    'msu1.cpp',
+    'msu1_backend.cpp',
+    'msu1_decoders.c',
     'ppu.cpp',
     'sa1.cpp',
     'sdd1.cpp',
     'spc7110.cpp',
+    'st018.cpp',
     'snes.cpp',
     'snes_other.cpp',
     'spc.cpp',
     'statehandler.cpp',
 ]
 drivers = {
-    'd_snes.cpp': ['upd7725'],
+    'd_snes.cpp': ['upd7725', 'arm7'],
 }

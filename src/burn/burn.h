@@ -60,6 +60,7 @@ extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppHDDPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];
 extern TCHAR szAppEEPROMPath[MAX_PATH];
+extern TCHAR szAppSnesMsu1Path[MAX_PATH];	// SNES MSU-1 media root
 
 // Macro to determine the size of a struct up to and including "member"
 #define STRUCT_SIZE_HELPER(type, member) offsetof(type, member) + sizeof(((type*)0)->member)

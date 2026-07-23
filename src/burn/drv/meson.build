@@ -125,6 +125,9 @@ burn_drv_lib = static_library(
             'sega',
             'taito',
             'toaplan',
+            # SNES MSU-1 media backend audio decoders (dr_wav/dr_mp3/dr_flac, stb_vorbis)
+            '../../dep/libs/dr_libs',
+            '../../dep/libs/stb_vorbis',
         ),
         global_inc,
     ],

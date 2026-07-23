@@ -569,7 +569,7 @@ void BurnSampleChannelPlay(INT32 channel, INT32 sample, INT32 loop)
 
 	if (sample_channels[channel] != sample) {
 		// different sample on this channel, stop previous sample first
-		BurnSampleChannelStop(channel);
+		BurnSampleChannelStop(channel, true);
 	}
 
 	sample_channels[channel] = sample;

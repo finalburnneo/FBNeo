@@ -3,7 +3,6 @@
 #include "burner.h"
 #include "burnint.h"
 #include "neocdlist.h"
-#include "chd.h"
 #include <process.h>
 
 #ifdef BUILD_NEOGEO
@@ -653,14 +652,17 @@ static struct GAMELIST* ParseCueCreateGameItem(const TCHAR* cueFullPath)
 			_tcstol(s, &t, 10);
 			s = t;
 
-			// Data track MODE1/2352, skip audio counter
-			if ((t = LabelCheck(s, _T("MODE1/2352"))))
-				continue;
+			// Skip leading spaces to reach the type field
+			while (*s == _T(' ')) s++;
+
 			// CD-DA audio track, increment counter
-			if ((t = LabelCheck(s, _T("AUDIO")))) {
+			if (!_tcsncmp(s, _T("AUDIO"), 5)) {
 				nAudioTracks++;
 				continue;
 			}
+			// Any MODE* type (MODE1/2048, MODE1/2352, MODE2/xxxx ...) is a data track
+			if (!_tcsncmp(s, _T("MODE"), 4))
+				continue;
 		}
 	}
 	fclose(fp);

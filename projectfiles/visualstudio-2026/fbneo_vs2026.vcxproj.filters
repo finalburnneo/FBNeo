@@ -3358,6 +3358,9 @@
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp">
       <Filter>interfaces\cd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\intf\cd\cd_chd.cpp">
+      <Filter>interfaces\cd</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp">
       <Filter>interfaces\cd\win32</Filter>
     </ClCompile>

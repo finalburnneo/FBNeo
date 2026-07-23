@@ -21,6 +21,7 @@ fbneo_burner_sources = [
     '../intf/audio/aud_interface.cpp',
     '../intf/audio/lowpass2.cpp',
     '../intf/cd/cd_interface.cpp',
+    '../intf/cd/cd_chd.cpp',
     '../intf/input/inp_interface.cpp',
     '../intf/interface.cpp',
     '../intf/video/vid_interface.cpp',

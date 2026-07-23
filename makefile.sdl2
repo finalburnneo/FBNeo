@@ -63,7 +63,7 @@ depobj	+= 	neocdlist.o \
 			\
 			spng.o \
 			\
-			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
+			aud_dsp.o aud_interface.o cd_interface.o cd_chd.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_support.o \
 			\
 			inp_sdl2.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o romdata.o \

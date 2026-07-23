@@ -1452,6 +1452,7 @@ del %(Filename).exe
     <ClCompile Include="..\..\src\intf\audio\win32\aud_xaudio2.cpp" />
     <ClCompile Include="..\..\src\intf\audio\win32\dsound_core.cpp" />
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp" />
+    <ClCompile Include="..\..\src\intf\cd\cd_chd.cpp" />
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\dinput_core.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\inp_dinput.cpp" />

@@ -62,7 +62,7 @@ depobj	+= 	neocdlist.o \
 			\
 			spng.o \
 			\
-			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
+			aud_dsp.o aud_interface.o cd_interface.o cd_chd.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
 			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \

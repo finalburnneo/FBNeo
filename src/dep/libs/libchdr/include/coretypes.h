@@ -45,12 +45,12 @@ typedef struct chd_core_file_callbacks_and_argp {
 
 /* Legacy API */
 
-typedef struct chd_core_file {
+typedef struct chd_core_file_legacy {
 	void *argp;
-	uint64_t(*fsize)(struct chd_core_file*);
-	size_t(*fread)(void*,size_t,size_t,struct chd_core_file*);
-	int (*fclose)(struct chd_core_file*);
-	int (*fseek)(struct chd_core_file*, int64_t, int);
+	uint64_t(*fsize)(struct chd_core_file_legacy*);
+	size_t(*fread)(void*,size_t,size_t,struct chd_core_file_legacy*);
+	int (*fclose)(struct chd_core_file_legacy*);
+	int (*fseek)(struct chd_core_file_legacy*, int64_t, int);
 } core_file;
 
 /* File IO shortcuts */

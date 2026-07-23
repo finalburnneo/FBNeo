@@ -4,7 +4,7 @@
 #include "burner.h"
 #include "neocdlist.h"
 #include "burnint.h"
-#include "chd.h"
+#include "cd_chd.h"
 
 #ifdef BUILD_NEOGEO
 #define DEBUG_CD    0
@@ -22,29 +22,9 @@ enum IO_TYPE {
 	IO_TYPE_CHD
 };
 
-// CHD single-read temporary cache (non-static, lifetime tied to CHD context)
-struct CHD_READ_CACHE {
-	UINT8					*pBuf;
-	UINT32					bufSize;
-	UINT32					curHunk;
-};
-
-struct CHD_CTX {
-	chd_file				*pChd;				// CHD handle
-	const chd_header		*pHeader;			// CHD header
-	UINT32					hunkbytes;			// bytes per hunk
-	UINT32					chdSectorBytes;		// CHD bytes per sector
-	struct CHD_READ_CACHE	cache;				// hunk cache
-	FILE					*fp;				// FILE handle (core_stdio_nonowner does not close it)
-
-	// Parsed-once metadata (computed during Open phase, reused throughout)
-	UINT32                  sectorsPerHunk;		// sectors per hunk
-	UINT32                  totalSectors;		// total CHD sectors
-};
-
 union IO_UNION {
 	FILE					*pFile;				// plain file handle
-	struct CHD_CTX			*pChdCtx;			// CHD context pointer
+	ChdImage				*pChd;				// CHD image (cd_chd module)
 };
 
 struct ISO_CTX {
@@ -131,108 +111,76 @@ static void FileIO_Read(struct ISO_CTX* pIsoCtx, UINT8* Dest, UINT32 lOffset, UI
 	iso9660_ReadOffset(pIsoCtx->ioUnion.pFile, Dest, lOffset, lSize, lLength);
 }
 
-static void iso9660_ReadOffset_CHD(UINT8* Dest, chd_file* chd, UINT32 lOffset, UINT32 lSize, UINT32 lLength, UINT32 chd_bytes_per_sector)
+// Read from a CHD via cd_chd.  lOffset uses the 2352-stride convention shared
+// with the FileIO path (sector*2352 + in-sector byte offset), but the offset
+// always lands inside the 2048-byte user area.  We translate to a logical LBA
+// and read the mode-1 user data, so both 2048 and 2352 source CHDs work.
+static void iso9660_ReadOffset_CHD(UINT8* Dest, ChdImage* pChd, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {
-	if (!Dest) return;
+	if (!Dest || !pChd) return;
 
-	const chd_header* header = chd_get_header(chd);
-	UINT32 hunkbytes         = header->hunkbytes;
-	UINT32 sync_header_skip  = (chd_bytes_per_sector >= 2352) ? 16 : 0;
-	UINT32 sector_num        = lOffset / nSectorLength;
-	UINT32 offset_in_sector  = lOffset % nSectorLength;
-	UINT32 raw_byte_position = sector_num * chd_bytes_per_sector + offset_in_sector + sync_header_skip;
-	UINT32 total_bytes       = lSize * lLength;
-	UINT32 bytes_read        = 0;
-
-	UINT8* hunk_buf = (UINT8*)malloc(hunkbytes);
-	if (!hunk_buf) return;
+	UINT32 total_bytes = lSize * lLength;
+	UINT32 bytes_read  = 0;
+	UINT8  sector[2048];
 
 	while (bytes_read < total_bytes) {
-		UINT32 hunk        = (raw_byte_position + bytes_read) / hunkbytes;
-		UINT32 hunk_offset = (raw_byte_position + bytes_read) % hunkbytes;
-		chd_error err      = chd_read(chd, hunk, hunk_buf);
-		if (err != CHDERR_NONE) {
+		UINT32 lba             = lOffset / nSectorLength;
+		UINT32 offset_in_user  = lOffset % nSectorLength;
+		if (offset_in_user >= 2048) {
+			// beyond the user data area (raw sync/ECC region) - pad with zero
 			memset(Dest + bytes_read, 0, total_bytes - bytes_read);
-			free(hunk_buf);
 			return;
 		}
-		UINT32 avail   = hunkbytes - hunk_offset;
+
+		if (ChdReadSector(pChd, (INT32)lba, CHD_TRACK_MODE1, sector) != 0) {
+			memset(Dest + bytes_read, 0, total_bytes - bytes_read);
+			return;
+		}
+
+		UINT32 avail   = 2048 - offset_in_user;
 		UINT32 to_read = total_bytes - bytes_read;
 		if (to_read > avail) to_read = avail;
-		memcpy(Dest + bytes_read, hunk_buf + hunk_offset, to_read);
+		memcpy(Dest + bytes_read, sector + offset_in_user, to_read);
+
 		bytes_read += to_read;
+		lOffset    += to_read;
 	}
-	free(hunk_buf);
 }
 
 static INT32 ChdIO_Open(struct ISO_CTX* pIsoCtx, TCHAR* pszFile)
 {
 	if (!pIsoCtx || !pszFile) return 0;
 
-	FILE* fp = _tfopen(pszFile, _T("rb"));
-	if (!fp) {
-		bprintf(PRINT_ERROR, _T("ChdIO_Open: _tfopen failed for %s\n"), pszFile);
+	ChdImage* pChd = ChdOpenFile(pszFile);
+	if (!pChd) {
+		bprintf(PRINT_ERROR, _T("ChdIO_Open: ChdOpenFile failed for %s\n"), pszFile);
 		return 0;
 	}
 
-	chd_file* chd = NULL;
-	chd_error err = chd_open_file(fp, CHD_OPEN_READ, NULL, &chd);
-	// Open failed: only close the file handle in this case
-	if (err != CHDERR_NONE) {
-		fclose(fp);
+	INT32 nContainer = ChdGetContainerType(pChd);
+	if (nContainer != CHD_CONTAINER_CD && nContainer != CHD_CONTAINER_GDROM) {
+		ChdClose(pChd);
 		return 0;
 	}
 
-	// Allocate CHD context
-	struct CHD_CTX* pChdCtx = (struct CHD_CTX*)calloc(1, sizeof(struct CHD_CTX));
-	if (!pChdCtx) {
-		chd_close(chd);
-		fclose(fp);
-		return 0;
-	}
+	pIsoCtx->ioType       = IO_TYPE_CHD;
+	pIsoCtx->ioUnion.pChd = pChd;
+	pIsoCtx->bValid       = 1;
 
-	pChdCtx->pChd      = chd;
-	pChdCtx->pHeader   = chd_get_header(chd);
-	pChdCtx->hunkbytes = pChdCtx->pHeader->hunkbytes;
-	pChdCtx->fp        = fp;					// Save FILE* for later close (core_stdio_nonowner)
+	// Report user-data sector size and total logical sectors.
+	pIsoCtx->sectorSize   = 2048;
+	pIsoCtx->totalSectors = (UINT32)ChdGetTotalFrames(pChd);
 
-	if (     pChdCtx->hunkbytes % 2448 == 0)
-		pChdCtx->chdSectorBytes = 2448;
-	else if (pChdCtx->hunkbytes % 2352 == 0)
-		pChdCtx->chdSectorBytes = 2352;
-	else if (pChdCtx->hunkbytes % 2048 == 0)
-		pChdCtx->chdSectorBytes = 2048;
-	else
-		pChdCtx->chdSectorBytes = pChdCtx->hunkbytes;
-
-	pChdCtx->sectorsPerHunk = pChdCtx->hunkbytes / nSectorLength;
-	pChdCtx->totalSectors   = pChdCtx->pHeader->totalhunks * pChdCtx->sectorsPerHunk;
-
-	// Bind to top-level context
-	pIsoCtx->ioType          = IO_TYPE_CHD;
-	pIsoCtx->ioUnion.pChdCtx = pChdCtx;
-	pIsoCtx->bValid          = 1;
-
-	pIsoCtx->sectorSize   = pChdCtx->chdSectorBytes;
-	pIsoCtx->totalSectors = pChdCtx->totalSectors;
-
-	// Open succeeded: do not fclose manually; chd_close takes ownership of the handle
 	return 1;
 }
 
-// CHD close
 static void ChdIO_Close(struct ISO_CTX* pIsoCtx)
 {
 	if (!pIsoCtx || pIsoCtx->ioType != IO_TYPE_CHD) return;
 
-	struct CHD_CTX* pChdCtx = pIsoCtx->ioUnion.pChdCtx;
-	if (pChdCtx) {
-		if (pChdCtx->pChd)
-			chd_close(pChdCtx->pChd);
-		if (pChdCtx->fp)
-			fclose(pChdCtx->fp);				// core_stdio_nonowner: chd_close does NOT close FILE*
-		free_s((void**)&pChdCtx);
-		pIsoCtx->ioUnion.pChdCtx = NULL;
+	if (pIsoCtx->ioUnion.pChd) {
+		ChdClose(pIsoCtx->ioUnion.pChd);
+		pIsoCtx->ioUnion.pChd = NULL;
 	}
 	pIsoCtx->bValid = 0;
 }
@@ -240,10 +188,7 @@ static void ChdIO_Close(struct ISO_CTX* pIsoCtx)
 static void ChdIO_Read(struct ISO_CTX* pIsoCtx, UINT8* Dest, UINT32 lOffset, UINT32 lSize, UINT32 lLength)
 {
 	if (!pIsoCtx || pIsoCtx->ioType != IO_TYPE_CHD) return;
-	struct CHD_CTX* pChdCtx = pIsoCtx->ioUnion.pChdCtx;
-
-	// Reuse sector size computed during the Open phase; avoid redundant checks
-	iso9660_ReadOffset_CHD(Dest, pChdCtx->pChd, lOffset, lSize, lLength, pChdCtx->chdSectorBytes);
+	iso9660_ReadOffset_CHD(Dest, pIsoCtx->ioUnion.pChd, lOffset, lSize, lLength);
 }
 
 // Match I/O strategy by file extension

@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "snes.h"
-#include "spc7110.h"		// SPC7110 self-test skip
 #include "burn_gun.h"		// zapper games
 
 static UINT8 snesInputPort0[12];

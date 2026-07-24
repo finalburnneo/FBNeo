@@ -24740,6 +24740,24 @@ struct BurnDriver BurnDrvnes_sokobananati = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Soldam (World)
+static struct BurnRomInfo nes_soldamRomDesc[] = {
+	{ "Soldam (World) (1992-2025)(Jaleco).nes",          196624, 0x1dfd9206, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_soldam)
+STD_ROM_FN(nes_soldam)
+
+struct BurnDriver BurnDrvnes_soldam = {
+	"nes_soldam", NULL, NULL, NULL, "1992-2025",
+	"Soldam (World)\0", "Published by Homebrew Factory", "Jaleco", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_soldamRomInfo, nes_soldamRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Solomon no Kagi 2: Kitsune Attacks! (Hack, v1.6)
 // http://www.romhacking.net/hacks/5940/
 static struct BurnRomInfo nes_solonokagi2hRomDesc[] = {

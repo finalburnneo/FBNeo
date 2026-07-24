@@ -38527,6 +38527,25 @@ struct BurnDriver BurnDrvmd_blowemout = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Blue And Red - Fight The Robots! (HB, v1.7 NTSC)
+// https://kaijuwasp.itch.io/blue-and-red-fight-the-robots-arcade-edition
+static struct BurnRomInfo md_blueandrRomDesc[] = {
+	{ "Blue And Red - Fight The Robots! v1.7 NTSC (2026)(Kaiju Wasp).bin", 2359296, 0xa3bef481, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_blueandr)
+STD_ROM_FN(md_blueandr)
+
+struct BurnDriver BurnDrvmd_blueandr = {
+	"md_blueandr", NULL, NULL, NULL, "2026",
+	"Blue And Red - Fight The Robots! (HB, v1.7 NTSC)\0", NULL, "Kaiju Wasp", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ACTION, 0,
+	MegadriveGetZipName, md_blueandrRomInfo, md_blueandrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Bomb on Basic City (HB, v2.06)
 static struct BurnRomInfo md_bobc206RomDesc[] = {
 	{ "Bomb on Basic City v2.06 (2016)(Studio Vetea).bin", 0x1160a6, 0x8f4ac700, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41035,6 +41054,25 @@ struct BurnDriver BurnDrvmd_megapang = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_megapangRomInfo, md_megapangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega Pushori (HB)
+// https://abadede919302.itch.io/mega-pushori
+static struct BurnRomInfo md_megapushoriRomDesc[] = {
+	{ "Mega Pushori (2026)(abadede919302).bin", 262144, 0x2f60ad1d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megapushori)
+STD_ROM_FN(md_megapushori)
+
+struct BurnDriver BurnDrvmd_megapushori = {
+	"md_megapushori", NULL, NULL, NULL, "2026",
+	"Mega Pushori (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_megapushoriRomInfo, md_megapushoriRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

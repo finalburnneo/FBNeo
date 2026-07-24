@@ -17338,10 +17338,10 @@ struct BurnDriver BurnDrvMatrimbh = {
 };
 
 
-// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.08)
+// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.09)
 
 static struct BurnRomInfo turfmastscRomDesc[] = {
-	{ "200-p1sc.p1",	0x200000, 0xc1c9751c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "200-p1sc.p1",	0x200000, 0xefd0ef14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1
 
@@ -17361,7 +17361,7 @@ STD_ROM_FN(turfmastsc)
 
 struct BurnDriver BurnDrvTurfmastsc = {
 	"turfmastsc", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.08)\0", NULL, "dericmiller", "Neo Geo MVS",
+	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.09)\0", NULL, "dericmiller", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastscRomInfo, turfmastscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

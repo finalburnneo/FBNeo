@@ -54003,6 +54003,24 @@ struct BurnDriver BurnDrvnes_smb2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Mario Bros. 2 (USA, Prototype)
+static struct BurnRomInfo nes_smb2pRomDesc[] = {
+	{ "Super Mario Bros. 2 (USA, Proto)(1988)(Nintendo).nes",          131088, 0x4a8a2e84	, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb2p)
+STD_ROM_FN(nes_smb2p)
+
+struct BurnDriver BurnDrvnes_smb2p = {
+	"nes_smb2p", "nes_smb2", NULL, NULL, "1988",
+	"Super Mario Bros. 2 (USA, Prototype)\0", NULL, "Nintendo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smb2pRomInfo, nes_smb2pRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Mario Bros. 2: The Lost Levels (Japan, MMC3 Conversion)
 static struct BurnRomInfo nes_smb2jRomDesc[] = {
 	{ "Super Mario Bros. 2 - The Lost Levels (Japan, MMC3 Conversion)(1986-2020)(Nintendo - Loopy).nes",          81936, 0x0133ebf9, BRF_ESS | BRF_PRG },

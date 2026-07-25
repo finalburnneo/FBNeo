@@ -41799,6 +41799,25 @@ struct BurnDriver BurnDrvsnes_Tomjerry = {
 	512, 448, 4, 3
 };
 
+// Tom vs Jerry - The Chase Is On! (Euro, Prototype)
+
+static struct BurnRomInfo snes_TomvsjerrypRomDesc[] = {
+	{ "Tom vs Jerry - The Chase Is On! (E, Proto) (1995)(Software Creations).sfc", 2097152, 0x690b8c85, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tomvsjerryp)
+STD_ROM_FN(snes_Tomvsjerryp)
+
+struct BurnDriver BurnDrvsnes_Tomvsjerryp = {
+	"snes_tomvsjerryp", NULL, NULL, NULL, "1995",
+	"Tom vs Jerry - The Chase Is On! (Euro, Prototype)\0", NULL, "Software Creations", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_TomvsjerrypRomInfo, snes_TomvsjerrypRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Tomorrow's Joe (Hack, English v0.99)
 // https://www.romhacking.net/translations/1272/
 static struct BurnRomInfo snes_TomorrowjoeRomDesc[] = {

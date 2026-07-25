@@ -16937,7 +16937,7 @@ struct BurnDriver BurnDrvAdkw = {
 	"adkw", NULL, "neogeo", NULL, "1995",
 	"ADK World (Neo CD conversion)\0", NULL, "Alpha Denshi Co.", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_MINIGAMES, 0,
 	NULL, adkwRomInfo, adkwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3

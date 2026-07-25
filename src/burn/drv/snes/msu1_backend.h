@@ -7,8 +7,8 @@
 
 #include "burnint.h"
 
-void  snes_msu1_backend_setGame(const char* shortName, const char* parentName);
-INT32 snes_msu1_backend_detect(const char* shortName);
+void  snes_msu1_backend_setGame(const TCHAR* shortName, const TCHAR* parentName);
+INT32 snes_msu1_backend_detect(const TCHAR* shortName);
 void  snes_msu1_backend_install();
 void  snes_msu1_backend_free();
 

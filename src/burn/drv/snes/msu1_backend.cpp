@@ -27,60 +27,79 @@ extern "C" int stb_vorbis_decode_memory(const unsigned char* mem, int len, int* 
 #include "CDSPResampler.h"
 #endif
 
-char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
+// TCHAR-aware dir ops (no _t-prefix macros exist for opendir/readdir/closedir)
+#ifdef _UNICODE
+#define MSU1_DIR		_WDIR
+#define MSU1_dirent		_wdirent
+#define msu1_opendir	_wopendir
+#define msu1_readdir	_wreaddir
+#define msu1_closedir	_wclosedir
+static void msu1_dname(const struct _wdirent* de, char* out, int outSize)
+{
+	int i;
+	for (i = 0; i < outSize - 1 && de->d_name[i]; i++)
+		out[i] = (char)de->d_name[i];
+	out[i] = 0;
+}
+#define _T_NARROW_FMT	_T("%hs")   // narrow string in wide printf (MSVC only)
+#else
+#define MSU1_DIR		DIR
+#define MSU1_dirent		dirent
+#define msu1_opendir	opendir
+#define msu1_readdir	readdir
+#define msu1_closedir	closedir
+#define msu1_dname(de, out, outSize)  snprintf(out, outSize, "%s", (de)->d_name)
+#define _T_NARROW_FMT	_T("%s")
+#endif
 
-//======================
-//  game short name
-//======================
-static char s_gameName[128]   = { 0 };
-static char s_parentName[128] = { 0 };
+// game short name
+static TCHAR s_gameName[128]   = { 0 };
+static TCHAR s_parentName[128] = { 0 };
 
-void snes_msu1_backend_setGame(const char* shortName, const char* parentName)
+void snes_msu1_backend_setGame(const TCHAR* shortName, const TCHAR* parentName)
 {
 	if (shortName == NULL) { s_gameName[0] = 0; }
-	else { strncpy(s_gameName, shortName, sizeof(s_gameName) - 1); s_gameName[sizeof(s_gameName) - 1] = 0; }
+	else {
+		_tcsncpy(s_gameName, shortName, sizeof(s_gameName) / sizeof(TCHAR) - 1);
+		s_gameName[sizeof(s_gameName) / sizeof(TCHAR)     - 1] = 0;
+	}
 
 	if (parentName == NULL) { s_parentName[0] = 0; }
-	else { strncpy(s_parentName, parentName, sizeof(s_parentName) - 1); s_parentName[sizeof(s_parentName) - 1] = 0; }
+	else {
+		_tcsncpy(s_parentName, parentName, sizeof(s_parentName) / sizeof(TCHAR) - 1);
+		s_parentName[sizeof(s_parentName) / sizeof(TCHAR) - 1] = 0;
+	}
 }
 
-static INT32 msu1_dirExists(const char* name)
+static INT32 msu1_dirExists(const TCHAR* name)
 {
 	if (name == NULL || name[0] == 0) return 0;
-	char base[MAX_PATH];
-	char dir[MAX_PATH];
-	snprintf(base, sizeof(base), "%s", TCHARToANSI(szAppSnesMsu1Path, NULL, 0));
-	snprintf(dir, sizeof(dir), "%s%s", base, name);
-	DIR* dp = opendir(dir);
+	TCHAR dir[MAX_PATH];
+	_sntprintf(dir, MAX_PATH, _T("%s%s"), szAppSnesMsu1Path, name);
+	MSU1_DIR* dp = msu1_opendir(dir);
 	if (dp == NULL) return 0;
-	closedir(dp);
+	msu1_closedir(dp);
 	return 1;
 }
 
-static const char* msu1_effectiveName()
+static const TCHAR* msu1_effectiveName()
 {
 	if (msu1_dirExists(s_gameName))   return s_gameName;
 	if (msu1_dirExists(s_parentName)) return s_parentName;
 	return s_gameName;
 }
 
-static void msu1_buildPath(char* dst, INT32 dstLen, const char* leaf)
+static void msu1_buildPath(TCHAR* dst, INT32 dstLen, const TCHAR* leaf)
 {
-	char base[MAX_PATH];
-	snprintf(base, sizeof(base), "%s", TCHARToANSI(szAppSnesMsu1Path, NULL, 0));
-	snprintf(dst, dstLen, "%s%s/%s", base, msu1_effectiveName(), leaf);
+	_sntprintf(dst, dstLen, _T("%s%s/%s"), szAppSnesMsu1Path, msu1_effectiveName(), leaf);
 }
 
-static void msu1_buildDir(char* dst, INT32 dstLen)
+static void msu1_buildDir(TCHAR* dst, INT32 dstLen)
 {
-	char base[MAX_PATH];
-	snprintf(base, sizeof(base), "%s", TCHARToANSI(szAppSnesMsu1Path, NULL, 0));
-	snprintf(dst, dstLen, "%s%s", base, msu1_effectiveName());
+	_sntprintf(dst, dstLen, _T("%s%s"), szAppSnesMsu1Path, msu1_effectiveName());
 }
 
-//======================
-//  filename matching (shared by strict + loose paths)
-//======================
+// filename matching
 
 static const char* const kAudioExts[] = { "pcm", "flac", "mp3", "wav", "ogg" };
 static const INT32       kAudioExtCount = 5;
@@ -107,17 +126,15 @@ static INT32 looseTrackMatch(const char* name, UINT16 track, char* extOut, INT32
 	lowerExt(name, ext, sizeof(ext));
 	if (audioExtIndex(ext) < 0) return 0;
 
-	const char* dot = strrchr(name, '.');			// guaranteed non-NULL: lowerExt found one
-	// walk back over the digit run immediately before the dot
-	const char* p = dot;
+	const char* dot = strrchr(name, '.');
+	const char* p   = dot;
 	if (p == name) return 0;
 	const char* digitsEnd = dot;
 	const char* d = dot;
 	while (d > name && isdigit((unsigned char)d[-1])) d--;
-	if (d == digitsEnd) return 0;					// no digits before the dot
-	if (d == name || d[-1] != '-') return 0;		// digits must be preceded by '-'
+	if (d == digitsEnd) return 0;
+	if (d == name || d[-1] != '-') return 0;
 
-	// parse the decimal number in [d, digitsEnd)
 	unsigned long n = 0;
 	for (const char* q = d; q < digitsEnd; q++) n = n * 10u + (unsigned long)(*q - '0');
 	if (n != (unsigned long)track) return 0;
@@ -126,43 +143,43 @@ static INT32 looseTrackMatch(const char* name, UINT16 track, char* extOut, INT32
 	return 1;
 }
 
-static INT32 resolveDataPath(char* path, INT32 pathLen)
+static INT32 resolveDataPath(TCHAR* path, INT32 pathLen)
 {
 	FILE* fp;
 
-	msu1_buildPath(path, pathLen, "data.rom");
-	if ((fp = fopen(path, "rb")) != NULL) { fclose(fp); return 1; }
+	msu1_buildPath(path, pathLen, _T("data.rom"));
+	if ((fp = _tfopen(path, _T("rb"))) != NULL) { fclose(fp); return 1; }
 
-	msu1_buildPath(path, pathLen, "msu1.data.rom");
-	if ((fp = fopen(path, "rb")) != NULL) { fclose(fp); return 1; }
+	msu1_buildPath(path, pathLen, _T("msu1.data.rom"));
+	if ((fp = _tfopen(path, _T("rb"))) != NULL) { fclose(fp); return 1; }
 
-	char dir[MAX_PATH];
-	msu1_buildDir(dir, sizeof(dir));
-	DIR* dp = opendir(dir);
+	TCHAR dir[MAX_PATH];
+	msu1_buildDir(dir, MAX_PATH);
+	MSU1_DIR* dp = msu1_opendir(dir);
 	if (dp != NULL) {
-		struct dirent* de;
+		struct MSU1_dirent* de;
 		char found[256]; found[0] = 0;
-		while ((de = readdir(dp)) != NULL) {
+		while ((de = msu1_readdir(dp)) != NULL) {
+			char dname[256];
+			msu1_dname(de, dname, sizeof(dname));
 			char ext[16];
-			lowerExt(de->d_name, ext, sizeof(ext));
-			if (strcmp(ext, "msu") == 0) { snprintf(found, sizeof(found), "%s", de->d_name); break; }
+			lowerExt(dname, ext, sizeof(ext));
+			if (strcmp(ext, "msu") == 0) { snprintf(found, sizeof(found), "%s", dname); break; }
 		}
-		closedir(dp);
-		if (found[0]) { snprintf(path, pathLen, "%s/%s", dir, found); return 1; }
+		msu1_closedir(dp);
+		if (found[0]) { _sntprintf(path, pathLen, _T("%s/") _T_NARROW_FMT, dir, found); return 1; }
 	}
 
 	return 0;
 }
 
 
-//======================
-//  streamed FILE* MsuFile  (data.rom + native .pcm)
-//======================
+// streamed MsuFile (data.rom / native .pcm)
 
 typedef struct {
 	FILE*  fp;
 	UINT32 size;
-	UINT32 pos;		// mirror of ftell, so end() is cheap and matches the chip's cursor model
+	UINT32 pos;
 } StreamCtx;
 
 static UINT8 stream_read(void* c)
@@ -198,10 +215,10 @@ static void stream_close(StreamCtx* s)
 	s->pos  = 0;
 }
 
-static INT32 stream_openInto(const char* path, StreamCtx* ctx, MsuFile* out)
+static INT32 stream_openInto(const TCHAR* path, StreamCtx* ctx, MsuFile* out)
 {
 	stream_close(ctx);
-	FILE* fp = fopen(path, "rb");
+	FILE* fp = _tfopen(path, _T("rb"));
 	if (fp == NULL) return 0;
 	fseek(fp, 0, SEEK_END);
 	long sz = ftell(fp);
@@ -219,13 +236,11 @@ static INT32 stream_openInto(const char* path, StreamCtx* ctx, MsuFile* out)
 	return 1;
 }
 
-//======================
-//  in-memory MsuFile  (decoded flac/mp3/wav/ogg)
-//======================
+// in-memory MsuFile (decoded flac/mp3/wav/ogg)
 
 typedef struct {
-	UINT8* buf;		// 8-byte MSU1 header + interleaved S16 stereo PCM
-	UINT32 size;	// total bytes in buf
+	UINT8* buf;
+	UINT32 size;
 	UINT32 pos;
 } MemCtx;
 
@@ -254,23 +269,19 @@ static void mem_close(MemCtx* m)
 	m->pos  = 0;
 }
 
-//======================
-//  decode helpers
-//======================
+// decode helpers
 
 static UINT32 resampleTo44100_linear(INT16** pcm, UINT32 frames, UINT32 srcRate, INT32 freeWithBurnFree)
 {
 	INT16* src = *pcm;
 
-	// out frames = frames * 44100 / srcRate  (round)
 	UINT64 outFrames64 = ((UINT64)frames * 44100u + srcRate / 2) / srcRate;
 	UINT32 outFrames   = (UINT32)outFrames64;
 	if (outFrames == 0) outFrames = 1;
 
 	INT16* dst = (INT16*)BurnMalloc((INT32)outFrames * 2 * (INT32)sizeof(INT16));
-	if (dst == NULL) return frames;   // OOM: leave source untouched
+	if (dst == NULL) return frames;
 
-	// step in 16.16 source-frames per output-frame
 	UINT64 step  = ((UINT64)srcRate << 16) / 44100u;
 	UINT64 phase = 0;
 	for (UINT32 i = 0; i < outFrames; i++) {
@@ -313,7 +324,6 @@ static UINT32 resampleTo44100_r8b(INT16** pcm, UINT32 frames, UINT32 srcRate, IN
 	INT16* dst = (INT16*)BurnMalloc((INT32)outFrames * 2 * (INT32)sizeof(INT16));
 	if (dst == NULL) return 0;
 
-	// TransBand 0.5 = highest quality; this is a one-shot offline conversion.
 	r8b::CDSPResampler16* rsL = ::new(std::nothrow) r8b::CDSPResampler16((double)srcRate, 44100.0, MSU1_MAX_R8B_BLK, 0.5);
 	r8b::CDSPResampler16* rsR = ::new(std::nothrow) r8b::CDSPResampler16((double)srcRate, 44100.0, MSU1_MAX_R8B_BLK, 0.5);
 	double* inL  = ::new(std::nothrow) double[MSU1_MAX_R8B_BLK];
@@ -340,7 +350,7 @@ static UINT32 resampleTo44100_r8b(INT16** pcm, UINT32 frames, UINT32 srcRate, IN
 			p         += (UINT32)blk * 2;
 			remaining -= (UINT32)blk;
 		} else {
-			flushing = 1;					// feed silence to drain filter latency
+			flushing = 1;
 			blk = MSU1_MAX_R8B_BLK;
 			for (INT32 i = 0; i < blk; i++) { inL[i] = 0.0; inR[i] = 0.0; }
 		}
@@ -356,10 +366,10 @@ static UINT32 resampleTo44100_r8b(INT16** pcm, UINT32 frames, UINT32 srcRate, IN
 			dst[outPos * 2 + 1] = r8b_clampS16(opR[i]);
 		}
 
-		if (flushing && got == 0) break;	// dry: don't spin forever
+		if (flushing && got == 0) break;
 	}
 
-	for (; outPos < outFrames; outPos++) {	// pad any (rare) shortfall
+	for (; outPos < outFrames; outPos++) {
 		dst[outPos * 2 + 0] = 0;
 		dst[outPos * 2 + 1] = 0;
 	}
@@ -388,7 +398,6 @@ static UINT32 resampleTo44100(INT16** pcm, UINT32 frames, UINT32 srcRate, INT32 
 #endif
 		return got;
 	}
-	// else fall through, *pcm still the original
 #if MSU1_DEBUG
 	bprintf(PRINT_IMPORTANT, _T("[MSU1] resample: r8brain alloc failed, falling back to linear\n"));
 #endif
@@ -404,14 +413,13 @@ static INT32 mem_buildFromStereoPCM(INT16* pcm, UINT32 frames, INT32 pcmFromBurn
 {
 	mem_close(&s_memCtx);
 
-	UINT32 pcmBytes = frames * 4u;		// 2ch * 2 bytes
+	UINT32 pcmBytes = frames * 4u;
 	UINT32 total    = 8u + pcmBytes;
 	UINT8* buf = (UINT8*)BurnMalloc((INT32)total);
 	if (buf == NULL) {
 		if (pcmFromBurnFree) BurnFree(pcm); else free(pcm);
 		return 0;
 	}
-	// 8-byte MSU1 header: big-endian "MSU1" magic + little-endian loopSample(=0)
 	buf[0] = 'M'; buf[1] = 'S'; buf[2] = 'U'; buf[3] = '1';
 	buf[4] = 0; buf[5] = 0; buf[6] = 0; buf[7] = 0;
 	memcpy(buf + 8, pcm, pcmBytes);
@@ -438,7 +446,6 @@ static INT16* toStereo(const INT16* src, UINT32 frames, UINT32 channels)
 	} else if (channels == 1) {
 		for (UINT32 i = 0; i < frames; i++) { INT16 s = src[i]; dst[i*2+0] = s; dst[i*2+1] = s; }
 	} else {
-		// downmix first two channels of an N-channel interleaved buffer
 		for (UINT32 i = 0; i < frames; i++) {
 			dst[i*2+0] = src[i*channels + 0];
 			dst[i*2+1] = src[i*channels + (channels > 1 ? 1 : 0)];
@@ -447,10 +454,10 @@ static INT16* toStereo(const INT16* src, UINT32 frames, UINT32 channels)
 	return dst;
 }
 
-static UINT8* slurp(const char* path, UINT32* outLen)
+static UINT8* slurp(const TCHAR* path, UINT32* outLen)
 {
 	*outLen = 0;
-	FILE* fp = fopen(path, "rb");
+	FILE* fp = _tfopen(path, _T("rb"));
 	if (fp == NULL) return NULL;
 	fseek(fp, 0, SEEK_END);
 	long sz = ftell(fp);
@@ -465,17 +472,17 @@ static UINT8* slurp(const char* path, UINT32* outLen)
 	return data;
 }
 
-static INT32 decodeCompressed(const char* path, const char* ext, MsuFile* out)
+static INT32 decodeCompressed(const TCHAR* path, const char* ext, MsuFile* out)
 {
 	UINT32 fileLen = 0;
 	UINT8* fileBuf = slurp(path, &fileLen);
 	if (fileBuf == NULL) return 0;
 
-	INT16*  pcm      = NULL;		// interleaved S16 (channels-wide), decoder-owned or Burn-owned
+	INT16*  pcm      = NULL;
 	UINT32  frames   = 0;
 	UINT32  channels = 0;
 	UINT32  srcRate  = 0;
-	INT32   pcmFromBurnFree = 1;	// whether 'stereo' buffer below is BurnMalloc'd
+	INT32   pcmFromBurnFree = 1;
 
 	if (strcmp(ext, "flac") == 0) {
 		drflac* f = drflac_open_memory(fileBuf, fileLen, NULL);
@@ -528,7 +535,7 @@ static INT32 decodeCompressed(const char* path, const char* ext, MsuFile* out)
 		srcRate  = (UINT32)sr;
 		frames   = (UINT32)n;
 		INT16* stereo = toStereo(raw, frames, channels);
-		free(raw);                       // stb uses malloc
+		free(raw);
 		if (stereo == NULL) { BurnFree(fileBuf); return 0; }
 		pcm = stereo;
 	} else {
@@ -539,61 +546,56 @@ static INT32 decodeCompressed(const char* path, const char* ext, MsuFile* out)
 	BurnFree(fileBuf);
 	if (pcm == NULL || frames == 0) return 0;
 
-	// Normalise sample rate to 44100 (linear); MSU-1 streams are 44100 native.
 	frames = resampleTo44100(&pcm, frames, srcRate, pcmFromBurnFree);
 
 	return mem_buildFromStereoPCM(pcm, frames, 1 /*BurnMalloc*/, out);
 }
 
-//======================
-//  backend open callbacks (installed via snes_msu1_setBackend)
-//======================
+// backend callbacks
 
 static INT32 backend_dataOpen(MsuFile* out)
 {
-	char path[MAX_PATH];
-	if (!resolveDataPath(path, sizeof(path))) return 0;
+	TCHAR path[MAX_PATH];
+	if (!resolveDataPath(path, MAX_PATH)) return 0;
 	return stream_openInto(path, &s_dataCtx, out);
 }
 
 static INT32 backend_audioOpen(UINT16 track, MsuFile* out)
 {
-	char dir[MAX_PATH];
-	msu1_buildDir(dir, sizeof(dir));
-	DIR* dp = opendir(dir);
+	TCHAR dir[MAX_PATH];
+	msu1_buildDir(dir, MAX_PATH);
+	MSU1_DIR* dp = msu1_opendir(dir);
 	if (dp == NULL) return 0;
 
 	char foundName[256]; foundName[0] = 0;
 	char foundExt[16];   foundExt[0]  = 0;
-	struct dirent* de;
-	while ((de = readdir(dp)) != NULL) {
+	struct MSU1_dirent* de;
+	while ((de = msu1_readdir(dp)) != NULL) {
+		char dname[256];
+		msu1_dname(de, dname, sizeof(dname));
 		char ext[16];
-		if (looseTrackMatch(de->d_name, track, ext, sizeof(ext))) {
-			snprintf(foundName, sizeof(foundName), "%s", de->d_name);
+		if (looseTrackMatch(dname, track, ext, sizeof(ext))) {
+			snprintf(foundName, sizeof(foundName), "%s", dname);
 			snprintf(foundExt,  sizeof(foundExt),  "%s", ext);
-			break;		// first match wins
+			break;
 		}
 	}
-	closedir(dp);
+	msu1_closedir(dp);
 
 	if (foundName[0]) {
-		char path[MAX_PATH];
-		snprintf(path, sizeof(path), "%s/%s", dir, foundName);
+		TCHAR path[MAX_PATH];
+		_sntprintf(path, MAX_PATH, _T("%s/") _T_NARROW_FMT, dir, foundName);
 		if (strcmp(foundExt, "pcm") == 0) {
-			// native .pcm  -> streamed (self-contained MSU1 header, byte-seekable)
-			if (stream_openInto(path, &s_pcmCtx, out)) { mem_close(&s_memCtx); return 1; }
+			if (stream_openInto(path, &s_pcmCtx, out)) { mem_close(&s_memCtx);    return 1; }
 		} else {
-			// compressed / wav  -> decode whole track into RAM (+ synthesised header)
 			if (decodeCompressed(path, foundExt, out)) { stream_close(&s_pcmCtx); return 1; }
 		}
 	}
 
-	return 0;			// no media for this track -> chip flags audioError
+	return 0;
 }
 
-//======================
-//  install / teardown
-//======================
+// install / teardown
 
 void snes_msu1_backend_install()
 {
@@ -605,47 +607,46 @@ void snes_msu1_backend_free()
 	stream_close(&s_dataCtx);
 	stream_close(&s_pcmCtx);
 	mem_close(&s_memCtx);
-	s_gameName[0] = 0;
+	s_gameName[0]   = 0;
 	s_parentName[0] = 0;
 }
 
-INT32 snes_msu1_backend_detect(const char* shortName)
+INT32 snes_msu1_backend_detect(const TCHAR* shortName)
 {
-	// Probe exactly this name (no parent fallback), then restore prior keys.
-	char savedGame[128], savedParent[128];
-	strncpy(savedGame,   s_gameName,   sizeof(savedGame)   - 1); savedGame[sizeof(savedGame)     - 1] = 0;
-	strncpy(savedParent, s_parentName, sizeof(savedParent) - 1); savedParent[sizeof(savedParent) - 1] = 0;
+#define SHORTMAX 128
+	TCHAR savedGame[SHORTMAX], savedParent[SHORTMAX];
+	_tcsncpy(savedGame,   s_gameName,   SHORTMAX - 1); savedGame[  SHORTMAX - 1] = 0;
+	_tcsncpy(savedParent, s_parentName, SHORTMAX - 1); savedParent[SHORTMAX - 1] = 0;
 	snes_msu1_backend_setGame(shortName, NULL);
+#undef SHORTMAX
 
 	INT32 found = 0;
 
-	// 1) any recognised data ROM name
-	char path[MAX_PATH];
-	if (resolveDataPath(path, sizeof(path))) found = 1;
+	TCHAR path[MAX_PATH];
+	if (resolveDataPath(path, MAX_PATH)) found = 1;
 
-	// 2) any audio track: scan for a filename ending in "-<digits>.<audioExt>"
 	if (!found) {
-		char dir[MAX_PATH];
-		msu1_buildDir(dir, sizeof(dir));
-		DIR* dp = opendir(dir);
+		TCHAR dir[MAX_PATH];
+		msu1_buildDir(dir, MAX_PATH);
+		MSU1_DIR* dp = msu1_opendir(dir);
 		if (dp != NULL) {
-			struct dirent* de;
-			while (!found && (de = readdir(dp)) != NULL) {
+			struct MSU1_dirent* de;
+			while (!found && (de = msu1_readdir(dp)) != NULL) {
+				char dname[256];
+				msu1_dname(de, dname, sizeof(dname));
 				char ext[16];
-				lowerExt(de->d_name, ext, sizeof(ext));
+				lowerExt(dname, ext, sizeof(ext));
 				if (audioExtIndex(ext) < 0) continue;
-				// require a trailing "-<digits>" before the dot
-				const char* dot = strrchr(de->d_name, '.');
+				const char* dot = strrchr(dname, '.');
 				const char* d = dot;
-				while (d > de->d_name && isdigit((unsigned char)d[-1])) d--;
-				if (d != dot && d > de->d_name && d[-1] == '-') found = 1;
+				while (d > dname && isdigit((unsigned char)d[-1])) d--;
+				if (d != dot && d > dname && d[-1] == '-') found = 1;
 			}
-			closedir(dp);
+			msu1_closedir(dp);
 		}
 	}
 
-	// restore prior game keys (detection must be side-effect free)
-	snes_msu1_backend_setGame(savedGame[0] ? savedGame : NULL,
+	snes_msu1_backend_setGame(savedGame[0]   ? savedGame   : NULL,
 	                          savedParent[0] ? savedParent : NULL);
 	return found;
 }

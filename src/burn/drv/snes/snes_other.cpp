@@ -219,20 +219,20 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 	UINT8 msu1_base = 0;
 	bool  msu1Enable = false;
 	// Enable if this romset has MSU-1 media, or (for a clone) its parent does.
-	const char* msu1Game = BurnDrvGetTextA(DRV_NAME);
+	const TCHAR* msu1Game = BurnDrvGetText(DRV_NAME);
 	if (msu1Game != NULL && snes_msu1_backend_detect(msu1Game)) {
 		msu1Enable = true;
 	} else {
-		const char* p = BurnDrvGetTextA(DRV_PARENT);
+		const TCHAR* p = BurnDrvGetText(DRV_PARENT);
 		if (p != NULL && p[0] && snes_msu1_backend_detect(p)) msu1Enable = true;
 	}
 	if (msu1Enable) {
 		msu1_base = (headers[used].cartType == CART_HIROM
 			|| headers[used].cartType == CART_EXHIROM) ? CART_HIROM : CART_LOROM;
 		headers[used].cartType = CART_MSU1;
-		snes_msu1_backend_setGame(msu1Game, BurnDrvGetTextA(DRV_PARENT));
+		snes_msu1_backend_setGame(msu1Game, BurnDrvGetText(DRV_PARENT));
 		snes_msu1_backend_install();
-		bprintf(0, _T("msu1: overlay on %S base (media: support/snesmsu1/%S/)\n"), cart_gettype(msu1_base), msu1Game);
+		bprintf(0, _T("msu1: overlay on %S base (media: support/snesmsu1/%s/)\n"), cart_gettype(msu1_base), msu1Game);
 	}
 
 	switch (bioslength) {

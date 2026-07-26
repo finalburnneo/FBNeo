@@ -41759,10 +41759,29 @@ struct BurnDriver BurnDrvmd_papriumini = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Paprium (Arcade Mode) (World) (HB, Hack)
+// https://www.romhacking.net/hacks/9792/
+static struct BurnRomInfo md_papriumarcRomDesc[] = {
+	{ "Paprium (Arcade Mode)(World)(2026)(adroxe).bin", 8388608, 0x755caf5e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_papriumarc)
+STD_ROM_FN(md_papriumarc)
+
+struct BurnDriver BurnDrvmd_papriumarc = {
+	"md_papriumarc", "md_paprium", NULL, "paprium", "2026",
+	"Paprium (Arcade Mode) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "adroxe", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriumarcRomInfo, md_papriumarcRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
+	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Paprium (Unlocked) (World) (HB, Hack)
 // https://archive.org/details/paprium-custom-ver.-7z
 static struct BurnRomInfo md_papriumunlckRomDesc[] = {
-	{ "Paprium (unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Paprium (Unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_papriumunlck)

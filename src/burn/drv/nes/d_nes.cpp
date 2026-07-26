@@ -54003,6 +54003,24 @@ struct BurnDriver BurnDrvnes_smb2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Mario USA (Japan)
+static struct BurnRomInfo nes_smusaRomDesc[] = {
+	{ "Super Mario USA (Japan)(1992)(Nintendo).nes",          262160, 0x94076bf6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smusa)
+STD_ROM_FN(nes_smusa)
+
+struct BurnDriver BurnDrvnes_smusa = {
+	"nes_smusa", "nes_smb2", NULL, NULL, "1992",
+	"Super Mario USA (Japan)\0", NULL, "Nintendo", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smusaRomInfo, nes_smusaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Mario Bros. 2 (USA, Prototype)
 static struct BurnRomInfo nes_smb2pRomDesc[] = {
 	{ "Super Mario Bros. 2 (USA, Proto)(1988)(Nintendo).nes",          131088, 0x4a8a2e84	, BRF_ESS | BRF_PRG },

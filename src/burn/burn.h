@@ -25,6 +25,7 @@
 #include <time.h>
 
 #ifndef SUPPORT_SPLIT_DRIVER
+ #define BUILD_ASTROHOME
  #define BUILD_ATARI
  #define BUILD_CAPCOM
  #define BUILD_CAVE

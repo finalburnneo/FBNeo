@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _TILES_GENERIC_H_
+#define _TILES_GENERIC_H_
+
 #include "burnint.h"
 #include "burn_bitmap.h"
 #include "tilemap_generic.h"
@@ -263,3 +267,5 @@ INT32 BurnTransferInit();
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight); // Use extreme caution!
 void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY);
 void BurnTransferRealloc();
+
+#endif

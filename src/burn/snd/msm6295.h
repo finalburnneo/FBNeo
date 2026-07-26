@@ -1,4 +1,7 @@
 // MSM6295 module header
+#pragma once
+#ifndef _MSM6295_H
+#define _MSM6295_H
 
 #define MAX_MSM6295 (4)
 #define MSM6295_PIN7_HIGH (132)
@@ -36,3 +39,4 @@ inline static UINT32 MSM6295Read(const INT32 nChip)
 	return nMSM6295Status[nChip];
 }
 
+#endif

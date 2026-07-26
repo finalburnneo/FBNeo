@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _TAITO_H_
+#define _TAITO_H_
+
 extern UINT8 TaitoInputPort0[8];
 extern UINT8 TaitoInputPort1[8];
 extern UINT8 TaitoInputPort2[8];
@@ -253,3 +257,5 @@ void TaitoF2MakeSpriteList();
 void TaitoF2RenderSpriteList(INT32 TaitoF2SpritePriorityLevel);
 void TaitoF2RenderSpriteListPriMasks(INT32 *primasks);
 void TaitoF2HandleSpriteBuffering();
+
+#endif

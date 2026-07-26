@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _CPS_H_
+#define _CPS_H_
+
 // CPS ----------------------------------
 #include "burnint.h"
 #include "m68000_intf.h"
@@ -557,3 +561,5 @@ extern INT32 Cps2DisableDigitalVolume;
 extern UINT8 Cps2VolUp;
 extern UINT8 Cps2VolDwn;
 extern UINT8 AspectDIP;
+
+#endif

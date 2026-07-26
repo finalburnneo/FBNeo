@@ -1,3 +1,7 @@
+#pragma once
+#ifndef MEGADRIVE_H
+#define MEGADRIVE_H
+
 #define SEGA_MD_ROM_LOAD_NORMAL										0x10
 #define SEGA_MD_ROM_LOAD16_WORD_SWAP								0x20
 #define SEGA_MD_ROM_LOAD16_BYTE										0x30
@@ -45,3 +49,5 @@ void md_eeprom_stm95_reset();
 void md_eeprom_stm95_init(UINT8 *rom);
 void md_eeprom_stm95_scan(INT32 nAction);
 UINT16 md_psolar_rw(UINT32 offset);
+
+#endif

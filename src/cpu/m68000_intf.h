@@ -1,4 +1,8 @@
 // 68000 (Sixty Eight K) Interface - header file
+#pragma once
+#ifndef _M68000_INTF_H
+#define _M68000_INTF_H
+
 #include <stdint.h>
 #ifndef FASTCALL
  #undef __fastcall
@@ -271,3 +275,5 @@ extern struct cpu_core_config SekConfig;
 // depreciate this and use BurnTimerAttach directly!
 #define BurnTimerAttachSek(clock)	\
 	BurnTimerAttach(&SekConfig, clock)
+
+#endif

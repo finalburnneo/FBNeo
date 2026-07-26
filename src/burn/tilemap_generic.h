@@ -1,4 +1,7 @@
 // Tilemap defines
+#pragma once
+#ifndef TILEMAP_GENERIC_H
+#define TILEMAP_GENERIC_H
 
 // use in place of "which" to have this applied to all initialized tilemaps
 // works for: GenericTilemapSetEnable(), GenericTilemapSetFlip(), GenericTilemapSetOffsets()
@@ -185,3 +188,5 @@ void GenericTilemapDraw(INT32 which, INT32 bitmap, INT32 priority);
 
 // Dump all tilemaps to bitmap files
 void GenericTilemapDumpToBitmap();
+
+#endif

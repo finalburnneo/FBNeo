@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _SYS16_H_
+#define _SYS16_H_
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -357,3 +361,5 @@ void sega_315_5195_configure_explicit(UINT8 *map_data);
 void sega_315_5195_init();
 void sega_315_5195_exit();
 INT32 sega_315_5195_scan(INT32 nAction);
+
+#endif

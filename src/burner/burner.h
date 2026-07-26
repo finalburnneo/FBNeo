@@ -231,6 +231,7 @@ void ComputeGammaLUT();
 #define DAT_SNES_ONLY			14
 #define DAT_NGP_ONLY			15
 #define DAT_CHANNELF_ONLY		16
+#define DAT_ASTROHOME_ONLY		17
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);
@@ -262,11 +263,13 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount);
 INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry);
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
 
-// romdata.cpp
+// retro_romdata.cpp
+
 extern TCHAR szRomdataName[MAX_PATH];
 TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName);
 
-// ips_manager.cpp 
+// retro_ips.cpp 
+
 void IpsPatchInit();
 void IpsPatchExit();
 

@@ -60,7 +60,6 @@ extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppHDDPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];
 extern TCHAR szAppEEPROMPath[MAX_PATH];
-extern TCHAR szAppSnesMsu1Path[MAX_PATH];	// SNES MSU-1 media root
 
 // Macro to determine the size of a struct up to and including "member"
 #define STRUCT_SIZE_HELPER(type, member) offsetof(type, member) + sizeof(((type*)0)->member)
@@ -599,6 +598,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_PREFIX_CHANNELF                        (0x21000000)
 #define HARDWARE_PREFIX_SNES                            (0x22000000)
 #define HARDWARE_PREFIX_IGS_PGM2						(0x23000000)
+#define HARDWARE_PREFIX_ASTROHOME                       (0x24000000)
 
 #define HARDWARE_SNK_NGP								(HARDWARE_PREFIX_NGP | 0x00000000)
 #define HARDWARE_SNK_NGPC								(HARDWARE_PREFIX_NGP | 0x00000001) // must not be 0x10000
@@ -845,6 +845,8 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SNES_JUSTIFIER                         (HARDWARE_PREFIX_SNES | 0x0000002)
 
 #define HARDWARE_CHANNELF                               (HARDWARE_PREFIX_CHANNELF)
+
+#define HARDWARE_ASTROHOME                              (HARDWARE_PREFIX_ASTROHOME)
 
 // flags for the genre member
 #define GBF_HORSHOOT									(1 << 0)

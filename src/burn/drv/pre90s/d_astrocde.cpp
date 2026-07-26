@@ -24,6 +24,7 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM;
+static UINT8 *DrvCartROM;
 static UINT8 *DrvEPROMS;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
@@ -32,9 +33,12 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
+static UINT8 DrvJoyF[4];
 static UINT8 DrvDips[4];
-static UINT8 DrvInputs[4];
+static UINT8 DrvInputs[8];
 static INT16 Analog[4];
+static UINT8 DrvKbd[4][6];
+
 static UINT8 DrvReset;
 
 static UINT32 *DrvPalette;
@@ -108,8 +112,15 @@ static INT32 has_snd = 0; // astrocde sound synth
 static INT32 has_sam = 0; // samples
 static INT32 is_wow = 0;
 static INT32 is_seawolf2 = 0;
+static INT32 is_home = 0;
 static INT32 has_stars = 0;
 static INT32 has_tball = 0;
+
+enum { CART_STD = 0, CART_256K, CART_512K };
+
+static INT32 cart_size;
+static INT32 cart_bank;
+static INT32 cart_type;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo Seawolf2InputList[] = {
@@ -307,6 +318,53 @@ static struct BurnInputInfo EbasesInputList[] = {
 };
 
 STDINPUTINFO(Ebases)
+
+static struct BurnInputInfo HomeInputList[] = {
+	{"P1 Start",		BIT_DIGITAL,	DrvJoyF + 0,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right", 		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	A("P1 Knob",		BIT_ANALOG_REL,	&Analog[0],		"p1 x-axis"),
+	{"P1 Trigger",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoyF + 1,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right", 		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	A("P2 Knob",		BIT_ANALOG_REL,	&Analog[1],		"p2 x-axis"),
+	{"P2 Trigger",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+
+	{"P3 Start",		BIT_DIGITAL,	DrvJoyF + 2,	"p3 start"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 left"	},
+	{"P3 Right", 		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 right"	},
+	A("P3 Knob",		BIT_ANALOG_REL,	&Analog[2],		"p3 x-axis"),
+	{"P3 Trigger",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
+
+	{"P4 Start",		BIT_DIGITAL,	DrvJoyF + 3,	"p4 start"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy4 + 0,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy4 + 1,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy4 + 2,	"p4 left"	},
+	{"P4 Right", 		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 right"	},
+	A("P4 Knob",		BIT_ANALOG_REL,	&Analog[3],		"p4 x-axis"),
+	{"P4 Trigger",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 fire 1"	},
+
+	{"1",				BIT_DIGITAL,	&DrvKbd[3][4],	"keyb_1"	},
+	{"2",				BIT_DIGITAL,	&DrvKbd[2][4],	"keyb_2"	},
+	{"3",				BIT_DIGITAL,	&DrvKbd[1][4],	"keyb_3"	},
+	{"4",				BIT_DIGITAL,	&DrvKbd[3][3],	"keyb_4"	},
+	{"5",				BIT_DIGITAL,	&DrvKbd[2][3],	"keyb_5"	},
+	{"6",				BIT_DIGITAL,	&DrvKbd[2][3],	"keyb_6"	},
+	{"7",				BIT_DIGITAL,	&DrvKbd[2][3],	"keyb_7"	},
+	{"8",				BIT_DIGITAL,	&DrvKbd[2][3],	"keyb_8"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+};
+
+STDINPUTINFO(Home)
 
 static struct BurnDIPInfo Seawolf2DIPList[]=
 {
@@ -1666,6 +1724,9 @@ static INT32 DrvDoReset()
 	profpac_writemode = 0;
 	profpac_intercept = 0;
 	profpac_vw = 0;
+
+	cart_bank = 0;
+
 	memset(profpac_palram, 0, sizeof(profpac_palram));;
 
 	memset(profpac_color_mapping, 0, sizeof(profpac_color_mapping));
@@ -1686,6 +1747,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM		= Next; Next += 0x030000;
+	if (is_home) { DrvCartROM = Next; Next += 0x080000; }
 	DrvEPROMS		= Next; Next += 0x0a4000; // roms are smaller, but can bank up to a0000
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
@@ -1763,6 +1825,15 @@ static INT32 DrvLoadROMs()
 		if ((ri.nType & BRF_PRG) && (ri.nType & 7) == 2) {
 			if (BurnLoadRom(eLoad, i, 1)) return 1;
 			eLoad += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 7) == 3) {
+			if (BurnLoadRom(DrvCartROM, i, 1)) return 1;
+			cart_size = ri.nLen;
+			cart_type = (cart_size > 0x40000) ? CART_512K
+						: (cart_size > 0x8000)  ? CART_256K
+						: CART_STD;
 			continue;
 		}
 	}
@@ -2098,7 +2169,7 @@ static INT32 DrvExit()
 
 	if (has_snd) astrocde_snd_exit();
 	if (has_sc01) sc01_exit();
-	if (has_tball) BurnTrackballExit();
+	if (has_tball || is_home) BurnTrackballExit();
 	if (has_sam) BurnSampleExit();
 	if (is_seawolf2) BurnGunExit();
 
@@ -2107,6 +2178,7 @@ static INT32 DrvExit()
 	has_sam = 0;
 	is_wow = 0;
 	is_seawolf2 = 0;
+	is_home = 0;
 	has_stars = 0;
 	has_tball = 0;
 
@@ -2256,6 +2328,7 @@ static INT32 DrvFrame()
 	}
 
 	{
+		memset (DrvInputs, 0, 8);
 		memcpy (DrvInputs, DrvDips, 4);
 
 		for (INT32 i = 0; i < 8; i++) {
@@ -2283,6 +2356,21 @@ static INT32 DrvFrame()
 
 			DrvInputs[0] = (DrvInputs[0] & ~0x3f) | (p1 & 0x3f);
 			DrvInputs[1] = (DrvInputs[1] & ~0x3f) | (p2 & 0x3f);
+		}
+		if (is_home) {
+			for (INT32 i = 0; i < 4; i++) {
+				BurnTrackballConfig(i, AXIS_NORMAL, AXIS_NORMAL);
+				BurnTrackballFrame(i, Analog[i], 0, 0, 0xff);
+				BurnTrackballUpdate(i);
+			}
+			for (INT32 i = 0; i < 6; i++) {
+				for (INT32 j = 0; j < 4; j++) {
+					DrvInputs[j+4] ^= (DrvKbd[j][i] & 1) << i;
+				}
+			}
+			// faking start as keypad 1
+			for (INT32 i = 0; i < 4; i++)
+				DrvInputs[7] |= (DrvJoyF[i] << 4);
 		}
 	}
 
@@ -2346,7 +2434,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (has_snd) astrocde_snd_scan(nAction, pnMin);
 		if (has_sc01) sc01_scan(nAction, pnMin);
 		if (is_seawolf2) BurnGunScan();
-		if (has_tball) BurnTrackballScan();
+		if (has_tball || is_home) BurnTrackballScan();
 
 		SCAN_VAR(interrupt_vector);
 		SCAN_VAR(NextScanInt);
@@ -2798,5 +2886,1960 @@ struct BurnDriver BurnDrvDemndrgn = {
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demndrgnRomInfo, demndrgnRomName, NULL, NULL, NULL, NULL, DemndrgnInputInfo, DemndrgnDIPInfo,
 	DemndrgnInit, DrvExit, DrvFrame, ProfpacDraw, DrvScan, &DrvRecalc, 0x10,
+	352, 240, 4, 3
+};
+
+// ------------------------------
+// Bally Astrocade home computer
+// ------------------------------
+
+static INT32 AstroGetZipName(char** pszName, UINT32 i)
+{
+	static char szFilename[MAX_PATH];
+	char* pszGameName = NULL;
+
+	if (pszName == NULL) {
+		return 1;
+	}
+
+	if (i == 0) {
+		pszGameName = BurnDrvGetTextA(DRV_NAME);
+	} else {
+		if (i == 1 && BurnDrvGetTextA(DRV_BOARDROM)) {
+			pszGameName = BurnDrvGetTextA(DRV_BOARDROM);
+		} else {
+			pszGameName = BurnDrvGetTextA(DRV_PARENT);
+		}
+	}
+
+	if (pszGameName == NULL || i > 2) {
+		*pszName = NULL;
+		return 1;
+	}
+
+	// remove astro_
+	memset(szFilename, 0, MAX_PATH);
+	for (UINT32 j = 0; j < (strlen(pszGameName) - 6); j++) {
+		szFilename[j] = pszGameName[j+6];
+	}
+
+	*pszName = szFilename;
+
+	return 0;
+}
+
+static UINT8 home_cart_read(UINT16 offset)
+{
+	switch (cart_type)
+	{
+		case CART_STD:
+			return (offset < cart_size) ? DrvCartROM[offset] : 0xff;
+
+		case CART_256K:
+			if (offset < 0x1000)
+				return DrvCartROM[offset + 0x1000 * 0x3f];
+			else if (offset < 0x1fc0)
+				return DrvCartROM[(offset & 0xfff) + (0x1000 * cart_bank)];
+			else
+				return cart_bank = offset & 0x3f;
+
+		case CART_512K:
+			if (offset < 0x1000)
+				return DrvCartROM[offset + 0x1000 * 0x7f];
+			else if (offset < 0x1f80)
+				return DrvCartROM[(offset & 0xfff) + (0x1000 * cart_bank)];
+			else
+				return cart_bank = offset & 0x7f;
+	}
+	return 0xff;
+}
+
+static UINT8 __fastcall home_read(UINT16 address)
+{
+	if (address < 0x2000) return DrvZ80ROM[address];
+	if (address < 0x4000) return home_cart_read(address - 0x2000);
+	return 0;
+}
+
+static void __fastcall home_write(UINT16 address, UINT8 data)
+{
+	if (address < 0x1000) {
+		astrocade_funcgen_write(address, data);
+		return;
+	}
+}
+
+static UINT8 __fastcall home_read_port(UINT16 port)
+{
+	UINT8 lo = port & 0xff;
+
+	if (lo < 0x10)
+		return common_port_read(port);
+
+	if (lo < 0x20) {
+		UINT8 sub = lo & 0x0f;
+		if (sub < 0x08) return DrvInputs[sub & 0x07];
+		if (sub >= 0x0c) return BurnTrackballRead(sub & 3);
+		return 0xff;
+	}
+
+	return 0xff;
+}
+
+static void __fastcall home_write_port(UINT16 port, UINT8 data)
+{
+	common_port_write(port, data);
+}
+
+static INT32 HomeInit()
+{
+	is_home = 1;
+	BurnAllocMemIndex();
+
+	if (DrvLoadROMs()) return 1;
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvVidRAM,              0x4000, 0x4fff, MAP_RAM);
+	ZetSetWriteHandler(home_write);
+	ZetSetReadHandler(home_read);
+	ZetSetOutHandler(home_write_port);
+	ZetSetInHandler(home_read_port);
+	ZetClose();
+
+	update_line_cb = common_update_line;
+
+	astrocde_snd_init(0, BURN_SND_ROUTE_BOTH);
+	astrocde_snd_set_buffered(ZetTotalCycles, 1789772);
+	has_snd = 1;
+
+	BurnTrackballInit(4);
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+// Bally Professional Arcade
+static struct BurnRomInfo astro_astrocdeRomDesc[] = {
+	{ "astro.bin",			0x2000, 0xebc77f3a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+};
+
+STD_ROM_PICK(astro_astrocde)
+STD_ROM_FN(astro_astrocde)
+
+struct BurnDriver BurnDrvastro_astrocde = {
+	"astro_astrocde", NULL, NULL, NULL, "1978",
+	"Bally Professional Arcade\0", NULL, "Bally Manufacturing", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_BOARDROM, 4, HARDWARE_ASTROHOME, GBF_BIOS, 0,
+	AstroGetZipName, astro_astrocdeRomInfo, astro_astrocdeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// 280 Zzzap / Dodgem
+static struct BurnRomInfo astro_280zzapRomDesc[] = {
+	{ "280zzap.bin",		2048, 0xe4d285e5, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_280zzap, astro_280zzap, astro_astrocde)
+STD_ROM_FN(astro_280zzap)
+
+struct BurnDriver BurnDrvastro_280zzap = {
+	"astro_280zzap", NULL, "astro_astrocde", NULL, "1978",
+	"280 Zzzap / Dodgem\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_280zzapRomInfo, astro_280zzapRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// A Hard Day's Night (prototype)
+static struct BurnRomInfo astro_harddayRomDesc[] = {
+	{ "hardday.bin",		2048, 0x9234ddf6, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_hardday, astro_hardday, astro_astrocde)
+STD_ROM_FN(astro_hardday)
+
+struct BurnDriver BurnDrvastro_hardday = {
+	"astro_hardday", NULL, "astro_astrocde", NULL, "1986",
+	"A Hard Day's Night (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_harddayRomInfo, astro_harddayRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// ADS System Monitor (prototype)
+static struct BurnRomInfo astro_adssmRomDesc[] = {
+	{ "adssm.bin",		2048, 0xb8d4df61, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_adssm, astro_adssm, astro_astrocde)
+STD_ROM_FN(astro_adssm)
+
+struct BurnDriver BurnDrvastro_adssm = {
+	"astro_adssm", NULL, "astro_astrocde", NULL, "19??",
+	"ADS System Monitor (prototype)\0", NULL, "<unknown>", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_adssmRomInfo, astro_adssmRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Amazing Maze / Tic-Tac-Toe
+static struct BurnRomInfo astro_amazmazeRomDesc[] = {
+	{ "amazmaze.bin",		2048, 0xcd57c485, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_amazmaze, astro_amazmaze, astro_astrocde)
+STD_ROM_FN(astro_amazmaze)
+
+struct BurnDriver BurnDrvastro_amazmaze = {
+	"astro_amazmaze", NULL, "astro_astrocde", NULL, "1979",
+	"Amazing Maze / Tic-Tac-Toe\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_amazmazeRomInfo, astro_amazmazeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Artillery Duel
+static struct BurnRomInfo astro_artiduelRomDesc[] = {
+	{ "artiduel.bin",		4096, 0x4f372019, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_artiduel, astro_artiduel, astro_astrocde)
+STD_ROM_FN(astro_artiduel)
+
+struct BurnDriver BurnDrvastro_artiduel = {
+	"astro_artiduel", NULL, "astro_astrocde", NULL, "1982",
+	"Artillery Duel\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_artiduelRomInfo, astro_artiduelRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Artillery Duel (prototype 19820523)
+static struct BurnRomInfo astro_artiduelp1RomDesc[] = {
+	{ "artillery duel (5-23) (1982)(astrocade inc.)(proto).bin",		4096, 0x2227f488, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_artiduelp1, astro_artiduelp1, astro_astrocde)
+STD_ROM_FN(astro_artiduelp1)
+
+struct BurnDriver BurnDrvastro_artiduelp1 = {
+	"astro_artiduelp1", "astro_artiduel", "astro_astrocde", NULL, "1982",
+	"Artillery Duel (prototype 19820523)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_artiduelp1RomInfo, astro_artiduelp1RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Artillery Duel (prototype, alt)
+static struct BurnRomInfo astro_artiduelp2RomDesc[] = {
+	{ "artillery duel (1982)(astrocade inc.)(proto).bin",		4096, 0x53f75720, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_artiduelp2, astro_artiduelp2, astro_astrocde)
+STD_ROM_FN(astro_artiduelp2)
+
+struct BurnDriver BurnDrvastro_artiduelp2 = {
+	"astro_artiduelp2", "astro_artiduel", "astro_astrocde", NULL, "1982",
+	"Artillery Duel (prototype, alt)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_artiduelp2RomInfo, astro_artiduelp2RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Artillery Duel (prototype, alt 2)
+static struct BurnRomInfo astro_artiduelp3RomDesc[] = {
+	{ "artillery duel (1982)(astrocade inc.)(proto)[a].bin",		2048, 0x2521a6ec, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_artiduelp3, astro_artiduelp3, astro_astrocde)
+STD_ROM_FN(astro_artiduelp3)
+
+struct BurnDriver BurnDrvastro_artiduelp3 = {
+	"astro_artiduelp3", "astro_artiduel", "astro_astrocde", NULL, "1982",
+	"Artillery Duel (prototype, alt 2)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_artiduelp3RomInfo, astro_artiduelp3RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Astro Battle
+static struct BurnRomInfo astro_astrobatRomDesc[] = {
+	{ "astrobat.bin",		4096, 0x0b5298bc, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_astrobat, astro_astrobat, astro_astrocde)
+STD_ROM_FN(astro_astrobat)
+
+struct BurnDriver BurnDrvastro_astrobat = {
+	"astro_astrobat", NULL, "astro_astrocde", NULL, "1979",
+	"Astro Battle\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_astrobatRomInfo, astro_astrobatRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Bally Pin
+static struct BurnRomInfo astro_ballypinRomDesc[] = {
+	{ "ballypin.bin",		4096, 0x3f431613, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_ballypin, astro_ballypin, astro_astrocde)
+STD_ROM_FN(astro_ballypin)
+
+struct BurnDriver BurnDrvastro_ballypin = {
+	"astro_ballypin", NULL, "astro_astrocde", NULL, "1979",
+	"Bally Pin\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_ballypinRomInfo, astro_ballypinRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// BioRhythm
+static struct BurnRomInfo astro_biorhyRomDesc[] = {
+	{ "biorhy.bin",		4096, 0xfc4bd27c, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_biorhy, astro_biorhy, astro_astrocde)
+STD_ROM_FN(astro_biorhy)
+
+struct BurnDriver BurnDrvastro_biorhy = {
+	"astro_biorhy", NULL, "astro_astrocde", NULL, "1981",
+	"BioRhythm\0", NULL, "Astrovision", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_biorhyRomInfo, astro_biorhyRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Black Jack / Acey Deucey / Poker
+static struct BurnRomInfo astro_blckjackRomDesc[] = {
+	{ "blckjack.bin",		4096, 0x78d45a11, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_blckjack, astro_blckjack, astro_astrocde)
+STD_ROM_FN(astro_blckjack)
+
+struct BurnDriver BurnDrvastro_blckjack = {
+	"astro_blckjack", NULL, "astro_astrocde", NULL, "1979",
+	"Black Jack / Acey Deucey / Poker\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_blckjackRomInfo, astro_blckjackRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Blast Droids
+static struct BurnRomInfo astro_bstdroidRomDesc[] = {
+	{ "bstdroid.bin",		4096, 0x79fe386b, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_bstdroid, astro_bstdroid, astro_astrocde)
+STD_ROM_FN(astro_bstdroid)
+
+struct BurnDriver BurnDrvastro_bstdroid = {
+	"astro_bstdroid", NULL, "astro_astrocde", NULL, "1983",
+	"Blast Droids\0", NULL, "Esoterica", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_bstdroidRomInfo, astro_bstdroidRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Bowling (prototype)
+static struct BurnRomInfo astro_bowlingRomDesc[] = {
+	{ "bowling.bin",		4096, 0x1f8bc8ba, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_bowling, astro_bowling, astro_astrocde)
+STD_ROM_FN(astro_bowling)
+
+struct BurnDriver BurnDrvastro_bowling = {
+	"astro_bowling", NULL, "astro_astrocde", NULL, "198?",
+	"Bowling (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_bowlingRomInfo, astro_bowlingRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Brickyard / Clowns
+static struct BurnRomInfo astro_brckyardRomDesc[] = {
+	{ "brckyard.bin",		4096, 0x28f9e502, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_brckyard, astro_brckyard, astro_astrocde)
+STD_ROM_FN(astro_brckyard)
+
+struct BurnDriver BurnDrvastro_brckyard = {
+	"astro_brckyard", NULL, "astro_astrocde", NULL, "1978",
+	"Brickyard / Clowns\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_brckyardRomInfo, astro_brckyardRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Can't Buy Me Love (prototype)
+static struct BurnRomInfo astro_buyloveRomDesc[] = {
+	{ "buylove.bin",		8192, 0xfc6f4f7b, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_buylove, astro_buylove, astro_astrocde)
+STD_ROM_FN(astro_buylove)
+
+struct BurnDriver BurnDrvastro_buylove = {
+	"astro_buylove", NULL, "astro_astrocde", NULL, "1986",
+	"Can't Buy Me Love (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_buyloveRomInfo, astro_buyloveRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Candyman
+static struct BurnRomInfo astro_candymanRomDesc[] = {
+	{ "candyman.bin",		8192, 0x0fc97852, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_candyman, astro_candyman, astro_astrocde)
+STD_ROM_FN(astro_candyman)
+
+struct BurnDriver BurnDrvastro_candyman = {
+	"astro_candyman", NULL, "astro_astrocde", NULL, "1986",
+	"Candyman\0", NULL, "L&M Software and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_candymanRomInfo, astro_candymanRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Checkers (prototype)
+static struct BurnRomInfo astro_checkersRomDesc[] = {
+	{ "checkers.bin",		2048, 0x757bab8f, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_checkers, astro_checkers, astro_astrocde)
+STD_ROM_FN(astro_checkers)
+
+struct BurnDriver BurnDrvastro_checkers = {
+	"astro_checkers", NULL, "astro_astrocde", NULL, "19??",
+	"Checkers (prototype)\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_checkersRomInfo, astro_checkersRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Claim Jumper
+static struct BurnRomInfo astro_claimRomDesc[] = {
+	{ "claim.bin",		8192, 0x1edeae0e, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_claim, astro_claim, astro_astrocde)
+STD_ROM_FN(astro_claim)
+
+struct BurnDriver BurnDrvastro_claim = {
+	"astro_claim", NULL, "astro_astrocde", NULL, "1986",
+	"Claim Jumper\0", NULL, "L&M Software and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_claimRomInfo, astro_claimRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Coloring Book (prototype)
+static struct BurnRomInfo astro_colbookRomDesc[] = {
+	{ "colbook.bin",		8192, 0x14f36aba, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_colbook, astro_colbook, astro_astrocde)
+STD_ROM_FN(astro_colbook)
+
+struct BurnDriver BurnDrvastro_colbook = {
+	"astro_colbook", NULL, "astro_astrocde", NULL, "198?",
+	"Coloring Book (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_colbookRomInfo, astro_colbookRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Conan The Barbarian!
+static struct BurnRomInfo astro_conanRomDesc[] = {
+	{ "conan.bin",		8192, 0x8a6adbfe, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_conan, astro_conan, astro_astrocde)
+STD_ROM_FN(astro_conan)
+
+struct BurnDriver BurnDrvastro_conan = {
+	"astro_conan", NULL, "astro_astrocde", NULL, "1985",
+	"Conan The Barbarian!\0", NULL, "Astrocade and Dave Carson Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_conanRomInfo, astro_conanRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Conan The Barbarian! (prototype)
+static struct BurnRomInfo astro_conanpRomDesc[] = {
+	{ "conanp.bin",		8192, 0x15b1afea, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_conanp, astro_conanp, astro_astrocde)
+STD_ROM_FN(astro_conanp)
+
+struct BurnDriver BurnDrvastro_conanp = {
+	"astro_conanp", "astro_conan", "astro_astrocde", NULL, "1982",
+	"Conan The Barbarian! (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_conanpRomInfo, astro_conanpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Cosmic Raiders
+static struct BurnRomInfo astro_cosmicrdRomDesc[] = {
+	{ "cosmicrd.bin",		8192, 0x2a77b3fb, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cosmicrd, astro_cosmicrd, astro_astrocde)
+STD_ROM_FN(astro_cosmicrd)
+
+struct BurnDriver BurnDrvastro_cosmicrd = {
+	"astro_cosmicrd", NULL, "astro_astrocde", NULL, "1983",
+	"Cosmic Raiders\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cosmicrdRomInfo, astro_cosmicrdRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Cosmic Raiders (prototype, alt)
+static struct BurnRomInfo astro_cosmicrdaRomDesc[] = {
+	{ "cosmicra.bin",		8192, 0x869b692e, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cosmicrda, astro_cosmicrda, astro_astrocde)
+STD_ROM_FN(astro_cosmicrda)
+
+struct BurnDriver BurnDrvastro_cosmicrda = {
+	"astro_cosmicrda", "astro_cosmicrd", "astro_astrocde", NULL, "198?",
+	"Cosmic Raiders (prototype, alt)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cosmicrdaRomInfo, astro_cosmicrdaRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Cosmic Raiders (prototype, alt 2)
+static struct BurnRomInfo astro_cosmicrdbRomDesc[] = {
+	{ "cosmica2.bin",		8192, 0x37670f78, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cosmicrdb, astro_cosmicrdb, astro_astrocde)
+STD_ROM_FN(astro_cosmicrdb)
+
+struct BurnDriver BurnDrvastro_cosmicrdb = {
+	"astro_cosmicrdb", "astro_cosmicrd", "astro_astrocde", NULL, "198?",
+	"Cosmic Raiders (prototype, alt 2)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cosmicrdbRomInfo, astro_cosmicrdbRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Cosmic Raiders (prototype v3.5)
+static struct BurnRomInfo astro_cosmicrd35RomDesc[] = {
+	{ "cosmic35.bin",		8192, 0xe3d723a0, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cosmicrd35, astro_cosmicrd35, astro_astrocde)
+STD_ROM_FN(astro_cosmicrd35)
+
+struct BurnDriver BurnDrvastro_cosmicrd35 = {
+	"astro_cosmicrd35", "astro_cosmicrd", "astro_astrocde", NULL, "198?",
+	"Cosmic Raiders (prototype v3.5)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cosmicrd35RomInfo, astro_cosmicrd35RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Cosmic Raiders (prototype v3.6)
+static struct BurnRomInfo astro_cosmicrd36RomDesc[] = {
+	{ "cosmic36.bin",		8192, 0x00b6fe88, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cosmicrd36, astro_cosmicrd36, astro_astrocde)
+STD_ROM_FN(astro_cosmicrd36)
+
+struct BurnDriver BurnDrvastro_cosmicrd36 = {
+	"astro_cosmicrd36", "astro_cosmicrd", "astro_astrocde", NULL, "198?",
+	"Cosmic Raiders (prototype v3.6)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cosmicrd36RomInfo, astro_cosmicrd36RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Crazy Climber
+static struct BurnRomInfo astro_cclimberRomDesc[] = {
+	{ "crazy climber (2011)(riff raff games)[ccv054f].bin",		8187, 0xbf864c44, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_cclimber, astro_cclimber, astro_astrocde)
+STD_ROM_FN(astro_cclimber)
+
+struct BurnDriver BurnDrvastro_cclimber = {
+	"astro_cclimber", NULL, "astro_astrocde", NULL, "2011",
+	"Crazy Climber\0", NULL, "Riff Raff Games", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_cclimberRomInfo, astro_cclimberRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Dealer Demo
+static struct BurnRomInfo astro_dealdemoRomDesc[] = {
+	{ "dealdemo.bin",		4096, 0x16b77b44, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_dealdemo, astro_dealdemo, astro_astrocde)
+STD_ROM_FN(astro_dealdemo)
+
+struct BurnDriver BurnDrvastro_dealdemo = {
+	"astro_dealdemo", NULL, "astro_astrocde", NULL, "1978",
+	"Dealer Demo\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_dealdemoRomInfo, astro_dealdemoRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Dogpatch
+static struct BurnRomInfo astro_dogpatchRomDesc[] = {
+	{ "dogpatch.bin",		2048, 0x77bed6ba, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_dogpatch, astro_dogpatch, astro_astrocde)
+STD_ROM_FN(astro_dogpatch)
+
+struct BurnDriver BurnDrvastro_dogpatch = {
+	"astro_dogpatch", NULL, "astro_astrocde", NULL, "1980",
+	"Dogpatch\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_dogpatchRomInfo, astro_dogpatchRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Eight Days A Week (prototype)
+static struct BurnRomInfo astro_eightdayRomDesc[] = {
+	{ "eightday.bin",		4096, 0x0bac683f, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_eightday, astro_eightday, astro_astrocde)
+STD_ROM_FN(astro_eightday)
+
+struct BurnDriver BurnDrvastro_eightday = {
+	"astro_eightday", NULL, "astro_astrocde", NULL, "1986",
+	"Eight Days A Week (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_eightdayRomInfo, astro_eightdayRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Fawn Dungeon (prototype, first version)
+static struct BurnRomInfo astro_fawnRomDesc[] = {
+	{ "fawn1.bin",		2048, 0x2ff0fbef, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_fawn, astro_fawn, astro_astrocde)
+STD_ROM_FN(astro_fawn)
+
+struct BurnDriver BurnDrvastro_fawn = {
+	"astro_fawn", NULL, "astro_astrocde", NULL, "1981",
+	"Fawn Dungeon (prototype, first version)\0", NULL, "Barry McCleave", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_fawnRomInfo, astro_fawnRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Fawn Dungeon (prototype, second version)
+static struct BurnRomInfo astro_fawnaRomDesc[] = {
+	{ "fawn2.bin",		2048, 0x72dd4512, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_fawna, astro_fawna, astro_astrocde)
+STD_ROM_FN(astro_fawna)
+
+struct BurnDriver BurnDrvastro_fawna = {
+	"astro_fawna", "astro_fawn", "astro_astrocde", NULL, "1981",
+	"Fawn Dungeon (prototype, second version)\0", NULL, "Barry McCleave", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_fawnaRomInfo, astro_fawnaRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Football
+static struct BurnRomInfo astro_footballRomDesc[] = {
+	{ "football.bin",		4096, 0xfc8998a9, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_football, astro_football, astro_astrocde)
+STD_ROM_FN(astro_football)
+
+struct BurnDriver BurnDrvastro_football = {
+	"astro_football", NULL, "astro_astrocde", NULL, "1978",
+	"Football\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_footballRomInfo, astro_footballRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Fun With Vectors - Ziggy (prototype JX label)
+static struct BurnRomInfo astro_ziggyjxRomDesc[] = {
+	{ "ziggyjx.bin",		4096, 0x286d4dd4, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_ziggyjx, astro_ziggyjx, astro_astrocde)
+STD_ROM_FN(astro_ziggyjx)
+
+struct BurnDriver BurnDrvastro_ziggyjx = {
+	"astro_ziggyjx", NULL, "astro_astrocde", NULL, "1985",
+	"Fun With Vectors - Ziggy (prototype JX label)\0", NULL, "Richard Degler", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_ziggyjxRomInfo, astro_ziggyjxRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Fun With Vectors - Ziggy (prototype MO label)
+static struct BurnRomInfo astro_ziggymoRomDesc[] = {
+	{ "ziggymo.bin",		4096, 0x18a2eb1e, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_ziggymo, astro_ziggymo, astro_astrocde)
+STD_ROM_FN(astro_ziggymo)
+
+struct BurnDriver BurnDrvastro_ziggymo = {
+	"astro_ziggymo", NULL, "astro_astrocde", NULL, "1985",
+	"Fun With Vectors - Ziggy (prototype MO label)\0", NULL, "Richard Degler", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_ziggymoRomInfo, astro_ziggymoRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Galactic Invasion
+static struct BurnRomInfo astro_galacticRomDesc[] = {
+	{ "galactic.bin",		4096, 0xba558eb7, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_galactic, astro_galactic, astro_astrocde)
+STD_ROM_FN(astro_galactic)
+
+struct BurnDriver BurnDrvastro_galactic = {
+	"astro_galactic", NULL, "astro_astrocde", NULL, "1981",
+	"Galactic Invasion\0", NULL, "Astrovision", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_galacticRomInfo, astro_galacticRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Galaxian
+static struct BurnRomInfo astro_galaxianRomDesc[] = {
+	{ "galaxian.bin",		4096, 0xd75e9672, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_galaxian, astro_galaxian, astro_astrocde)
+STD_ROM_FN(astro_galaxian)
+
+struct BurnDriver BurnDrvastro_galaxian = {
+	"astro_galaxian", NULL, "astro_astrocde", NULL, "1981",
+	"Galaxian\0", NULL, "Astrovision", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_galaxianRomInfo, astro_galaxianRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Golddigger, Goldrush (prototype, 19840811))
+static struct BurnRomInfo astro_golddigRomDesc[] = {
+	{ "golddigger, goldrush (8-11-84) (1984)(dave carson and ken lill)(proto).bin",		2048, 0x20755476, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_golddig, astro_golddig, astro_astrocde)
+STD_ROM_FN(astro_golddig)
+
+struct BurnDriver BurnDrvastro_golddig = {
+	"astro_golddig", NULL, "astro_astrocde", NULL, "1984",
+	"Golddigger, Goldrush (prototype, 19840811))\0", NULL, "Dave Carson and Ken Lill", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_golddigRomInfo, astro_golddigRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Golddigger, Goldrush (prototype, alt)
+static struct BurnRomInfo astro_golddigaRomDesc[] = {
+	{ "golddigger, goldrush (198x)(dave carson and ken lill)(proto).bin",		2048, 0x994661a1, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_golddiga, astro_golddiga, astro_astrocde)
+STD_ROM_FN(astro_golddiga)
+
+struct BurnDriver BurnDrvastro_golddiga = {
+	"astro_golddiga", "astro_golddig", "astro_astrocde", NULL, "198?",
+	"Golddigger, Goldrush (prototype, alt)\0", NULL, "Dave Carson and Ken Lill", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_golddigaRomInfo, astro_golddigaRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Golddigger, Goldrush (prototype, alt 2)
+static struct BurnRomInfo astro_golddigbRomDesc[] = {
+	{ "golddigger, goldrush (198x)(dave carson and ken lill)(proto)[a].bin",		2048, 0xface3b05, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_golddigb, astro_golddigb, astro_astrocde)
+STD_ROM_FN(astro_golddigb)
+
+struct BurnDriver BurnDrvastro_golddigb = {
+	"astro_golddigb", "astro_golddig", "astro_astrocde", NULL, "198?",
+	"Golddigger, Goldrush (prototype, alt 2)\0", NULL, "Dave Carson and Ken Lill", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_golddigbRomInfo, astro_golddigbRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Grand Prix
+static struct BurnRomInfo astro_grandprxRomDesc[] = {
+	{ "grandprx.bin",		4096, 0x7b3b7b70, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_grandprx, astro_grandprx, astro_astrocde)
+STD_ROM_FN(astro_grandprx)
+
+struct BurnDriver BurnDrvastro_grandprx = {
+	"astro_grandprx", NULL, "astro_astrocde", NULL, "1981",
+	"Grand Prix\0", NULL, "Astrovision", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_grandprxRomInfo, astro_grandprxRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// I Feel Fine (prototype)
+static struct BurnRomInfo astro_feelfineRomDesc[] = {
+	{ "feelfine.bin",		4096, 0x2d9d9eb0, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_feelfine, astro_feelfine, astro_astrocde)
+STD_ROM_FN(astro_feelfine)
+
+struct BurnDriver BurnDrvastro_feelfine = {
+	"astro_feelfine", NULL, "astro_astrocde", NULL, "1986",
+	"I Feel Fine (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_feelfineRomInfo, astro_feelfineRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// ICBM Attack
+static struct BurnRomInfo astro_icbmatkRomDesc[] = {
+	{ "icbmatk.bin",		4096, 0xbc2b6fe3, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_icbmatk, astro_icbmatk, astro_astrocde)
+STD_ROM_FN(astro_icbmatk)
+
+struct BurnDriver BurnDrvastro_icbmatk = {
+	"astro_icbmatk", NULL, "astro_astrocde", NULL, "1982",
+	"ICBM Attack\0", NULL, "Spectre Systems", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_icbmatkRomInfo, astro_icbmatkRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// ICBM Attack (prototype)
+static struct BurnRomInfo astro_icbmatkpRomDesc[] = {
+	{ "icbmatkp.bin",		4096, 0x49ed3563, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_icbmatkp, astro_icbmatkp, astro_astrocde)
+STD_ROM_FN(astro_icbmatkp)
+
+struct BurnDriver BurnDrvastro_icbmatkp = {
+	"astro_icbmatkp", "astro_icbmatk", "astro_astrocde", NULL, "1982",
+	"ICBM Attack (prototype)\0", NULL, "Spectre Systems", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_icbmatkpRomInfo, astro_icbmatkpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Let It Be (prototype)
+static struct BurnRomInfo astro_letitbeRomDesc[] = {
+	{ "letitbe.bin",		4096, 0xbaf0019d, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_letitbe, astro_letitbe, astro_astrocde)
+STD_ROM_FN(astro_letitbe)
+
+struct BurnDriver BurnDrvastro_letitbe = {
+	"astro_letitbe", NULL, "astro_astrocde", NULL, "1986",
+	"Let It Be (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_letitbeRomInfo, astro_letitbeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Letter Match / Spell 'n Score / Crosswords
+static struct BurnRomInfo astro_lttrmtchRomDesc[] = {
+	{ "lttrmtch.bin",		4096, 0x2cf68f93, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_lttrmtch, astro_lttrmtch, astro_astrocde)
+STD_ROM_FN(astro_lttrmtch)
+
+struct BurnDriver BurnDrvastro_lttrmtch = {
+	"astro_lttrmtch", NULL, "astro_astrocde", NULL, "1978",
+	"Letter Match / Spell 'n Score / Crosswords\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_lttrmtchRomInfo, astro_lttrmtchRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Life
+static struct BurnRomInfo astro_lifeRomDesc[] = {
+	{ "life.bin",		2048, 0x752d13fd, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_life, astro_life, astro_astrocde)
+STD_ROM_FN(astro_life)
+
+struct BurnDriver BurnDrvastro_life = {
+	"astro_life", NULL, "astro_astrocde", NULL, "1985",
+	"Life\0", NULL, "Richard Degler", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_lifeRomInfo, astro_lifeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Machine Language Manager
+static struct BurnRomInfo astro_mlangmanRomDesc[] = {
+	{ "mlangman.bin",		2048, 0x5393f920, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_mlangman, astro_mlangman, astro_astrocde)
+STD_ROM_FN(astro_mlangman)
+
+struct BurnDriver BurnDrvastro_mlangman = {
+	"astro_mlangman", NULL, "astro_astrocde", NULL, "1982",
+	"Machine Language Manager\0", NULL, "The Bit Fiddlers", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_mlangmanRomInfo, astro_mlangmanRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Mazeman
+static struct BurnRomInfo astro_mazemanRomDesc[] = {
+	{ "mazeman.bin",		4096, 0x565a644c, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_mazeman, astro_mazeman, astro_astrocde)
+STD_ROM_FN(astro_mazeman)
+
+struct BurnDriver BurnDrvastro_mazeman = {
+	"astro_mazeman", NULL, "astro_astrocde", NULL, "1984",
+	"Mazeman\0", NULL, "Dave Carson Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_mazemanRomInfo, astro_mazemanRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Mazeman (prototype)
+static struct BurnRomInfo astro_mazemanpRomDesc[] = {
+	{ "mazeman (1984)(dave carson software)(proto).bin",		4096, 0xaf649678, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_mazemanp, astro_mazemanp, astro_astrocde)
+STD_ROM_FN(astro_mazemanp)
+
+struct BurnDriver BurnDrvastro_mazemanp = {
+	"astro_mazemanp", "astro_mazeman", "astro_astrocde", NULL, "1984",
+	"Mazeman (prototype)\0", NULL, "Dave Carson Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_mazemanpRomInfo, astro_mazemanpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Missile Attack
+static struct BurnRomInfo astro_matkRomDesc[] = {
+	{ "matk.bin",		4096, 0x88f56c4e, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_matk, astro_matk, astro_astrocde)
+STD_ROM_FN(astro_matk)
+
+struct BurnDriver BurnDrvastro_matk = {
+	"astro_matk", NULL, "astro_astrocde", NULL, "1985",
+	"Missile Attack\0", NULL, "Spectre Systems and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_matkRomInfo, astro_matkRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Ms. Candyman
+static struct BurnRomInfo astro_mscandyRomDesc[] = {
+	{ "mscandy.bin",		4096, 0x14e93a41, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_mscandy, astro_mscandy, astro_astrocde)
+STD_ROM_FN(astro_mscandy)
+
+struct BurnDriver BurnDrvastro_mscandy = {
+	"astro_mscandy", NULL, "astro_astrocde", NULL, "1983",
+	"Ms. Candyman\0", NULL, "L&M Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_mscandyRomInfo, astro_mscandyRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Muncher
+static struct BurnRomInfo astro_muncherRomDesc[] = {
+	{ "muncher.bin",		8192, 0xe4726657, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_muncher, astro_muncher, astro_astrocde)
+STD_ROM_FN(astro_muncher)
+
+struct BurnDriver BurnDrvastro_muncher = {
+	"astro_muncher", NULL, "astro_astrocde", NULL, "1983",
+	"Muncher\0", NULL, "Astrocade, Phillip Harris, and Alternative Engineering", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_muncherRomInfo, astro_muncherRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Music Maker
+static struct BurnRomInfo astro_musicmakRomDesc[] = {
+	{ "musicmak.bin",		8192, 0xb242ef84, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_musicmak, astro_musicmak, astro_astrocde)
+STD_ROM_FN(astro_musicmak)
+
+struct BurnDriver BurnDrvastro_musicmak = {
+	"astro_musicmak", NULL, "astro_astrocde", NULL, "1985",
+	"Music Maker\0", NULL, "Astrocade and Dave Carson Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_musicmakRomInfo, astro_musicmakRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Music Maker (prototype v3.7)
+static struct BurnRomInfo astro_musicmakpRomDesc[] = {
+	{ "musicmap.bin",		8192, 0xa76828d0, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_musicmakp, astro_musicmakp, astro_astrocde)
+STD_ROM_FN(astro_musicmakp)
+
+struct BurnDriver BurnDrvastro_musicmakp = {
+	"astro_musicmakp", "astro_musicmak", "astro_astrocde", NULL, "1982",
+	"Music Maker (prototype v3.7)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_musicmakpRomInfo, astro_musicmakpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Music Maker (prototype, alt)
+static struct BurnRomInfo astro_musicmakp2RomDesc[] = {
+	{ "music maker (1981)(astrocade inc.)(proto).bin",		7376, 0xcc97a150, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_musicmakp2, astro_musicmakp2, astro_astrocde)
+STD_ROM_FN(astro_musicmakp2)
+
+struct BurnDriver BurnDrvastro_musicmakp2 = {
+	"astro_musicmakp2", "astro_musicmak", "astro_astrocde", NULL, "1982",
+	"Music Maker (prototype, alt)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_musicmakp2RomInfo, astro_musicmakp2RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// No-Die!
+static struct BurnRomInfo astro_nodieRomDesc[] = {
+	{ "nodie.bin",		8192, 0x784b256a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_nodie, astro_nodie, astro_astrocde)
+STD_ROM_FN(astro_nodie)
+
+struct BurnDriver BurnDrvastro_nodie = {
+	"astro_nodie", NULL, "astro_astrocde", NULL, "1984",
+	"No-Die!\0", NULL, "Astrocade, Dave Carson, and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_nodieRomInfo, astro_nodieRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Pac-Man (prototype)
+static struct BurnRomInfo astro_pacmanRomDesc[] = {
+	{ "pacman.bin",		8192, 0x17363546, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_pacman, astro_pacman, astro_astrocde)
+STD_ROM_FN(astro_pacman)
+
+struct BurnDriver BurnDrvastro_pacman = {
+	"astro_pacman", NULL, "astro_astrocde", NULL, "198?",
+	"Pac-Man (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_pacmanRomInfo, astro_pacmanRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Pac-Man (prototype, alt)
+static struct BurnRomInfo astro_pacmanaRomDesc[] = {
+	{ "pac-man (198x)(astrocade inc.)(proto)[a].bin",		8192, 0xca3a67dd, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_pacmana, astro_pacmana, astro_astrocde)
+STD_ROM_FN(astro_pacmana)
+
+struct BurnDriver BurnDrvastro_pacmana = {
+	"astro_pacmana", "astro_pacman", "astro_astrocde", NULL, "198?",
+	"Pac-Man (prototype, alt)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_pacmanaRomInfo, astro_pacmanaRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Pacmaze (prototype)
+static struct BurnRomInfo astro_pacmazeRomDesc[] = {
+	{ "pacmaze (198x)(dave carson software)(proto).bin",		4096, 0xcff3a6cc, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_pacmaze, astro_pacmaze, astro_astrocde)
+STD_ROM_FN(astro_pacmaze)
+
+struct BurnDriver BurnDrvastro_pacmaze = {
+	"astro_pacmaze", NULL, "astro_astrocde", NULL, "198?",
+	"Pacmaze (prototype)\0", NULL, "Dave Carson Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_pacmazeRomInfo, astro_pacmazeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Paperback Writer (prototype)
+static struct BurnRomInfo astro_paperbckRomDesc[] = {
+	{ "paperbck.bin",		4096, 0x274766cd, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_paperbck, astro_paperbck, astro_astrocde)
+STD_ROM_FN(astro_paperbck)
+
+struct BurnDriver BurnDrvastro_paperbck = {
+	"astro_paperbck", NULL, "astro_astrocde", NULL, "1986",
+	"Paperback Writer (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_paperbckRomInfo, astro_paperbckRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Pirate's Chase
+static struct BurnRomInfo astro_pirateRomDesc[] = {
+	{ "pirate.bin",		4096, 0x7b1b206a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_pirate, astro_pirate, astro_astrocde)
+STD_ROM_FN(astro_pirate)
+
+struct BurnDriver BurnDrvastro_pirate = {
+	"astro_pirate", NULL, "astro_astrocde", NULL, "1982",
+	"Pirate's Chase\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_pirateRomInfo, astro_pirateRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Rainbow v2 (prototype)
+static struct BurnRomInfo astro_rainbow2RomDesc[] = {
+	{ "rainbow2.bin",		2048, 0x3883484a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_rainbow2, astro_rainbow2, astro_astrocde)
+STD_ROM_FN(astro_rainbow2)
+
+struct BurnDriver BurnDrvastro_rainbow2 = {
+	"astro_rainbow2", NULL, "astro_astrocde", NULL, "19??",
+	"Rainbow v2 (prototype)\0", NULL, "Hanson", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_rainbow2RomInfo, astro_rainbow2RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Red Baron / Panzer Attack
+static struct BurnRomInfo astro_redbaronRomDesc[] = {
+	{ "redbaron.bin",		4096, 0xa1c7e129, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_redbaron, astro_redbaron, astro_astrocde)
+STD_ROM_FN(astro_redbaron)
+
+struct BurnDriver BurnDrvastro_redbaron = {
+	"astro_redbaron", NULL, "astro_astrocde", NULL, "1978",
+	"Red Baron / Panzer Attack\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_redbaronRomInfo, astro_redbaronRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Sea Devil
+static struct BurnRomInfo astro_seadevilRomDesc[] = {
+	{ "seadevil.bin",		4096, 0x960b6f86, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_seadevil, astro_seadevil, astro_astrocde)
+STD_ROM_FN(astro_seadevil)
+
+struct BurnDriver BurnDrvastro_seadevil = {
+	"astro_seadevil", NULL, "astro_astrocde", NULL, "1983",
+	"Sea Devil\0", NULL, "L&M Software", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_seadevilRomInfo, astro_seadevilRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Seawolf / Missile
+static struct BurnRomInfo astro_seawolfRomDesc[] = {
+	{ "seawolf.bin",		2048, 0xa021735e, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_seawolf, astro_seawolf, astro_astrocde)
+STD_ROM_FN(astro_seawolf)
+
+struct BurnDriver BurnDrvastro_seawolf = {
+	"astro_seawolf", NULL, "astro_astrocde", NULL, "1978",
+	"Seawolf / Missile\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_seawolfRomInfo, astro_seawolfRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// She Loves You (prototype)
+static struct BurnRomInfo astro_shelovesRomDesc[] = {
+	{ "sheloves.bin",		4096, 0x7b360d3f, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_sheloves, astro_sheloves, astro_astrocde)
+STD_ROM_FN(astro_sheloves)
+
+struct BurnDriver BurnDrvastro_sheloves = {
+	"astro_sheloves", NULL, "astro_astrocde", NULL, "1986",
+	"She Loves You (prototype)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_shelovesRomInfo, astro_shelovesRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Sloshed!
+static struct BurnRomInfo astro_sloshedRomDesc[] = {
+	{ "sloshed.bin",		8192, 0xa33ced19, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_sloshed, astro_sloshed, astro_astrocde)
+STD_ROM_FN(astro_sloshed)
+
+struct BurnDriver BurnDrvastro_sloshed = {
+	"astro_sloshed", NULL, "astro_astrocde", NULL, "1986",
+	"Sloshed!\0", NULL, "New Image and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_sloshedRomInfo, astro_sloshedRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Sneaky Snake
+static struct BurnRomInfo astro_sneakyRomDesc[] = {
+	{ "sneaky.bin",		4096, 0x3e9f4f0d, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_sneaky, astro_sneaky, astro_astrocde)
+STD_ROM_FN(astro_sneaky)
+
+struct BurnDriver BurnDrvastro_sneaky = {
+	"astro_sneaky", NULL, "astro_astrocde", NULL, "1983",
+	"Sneaky Snake\0", NULL, "New Image", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_sneakyRomInfo, astro_sneakyRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer
+static struct BurnRomInfo astro_soccerRomDesc[] = {
+	{ "soccer.bin",		8192, 0x56d28b62, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccer, astro_soccer, astro_astrocde)
+STD_ROM_FN(astro_soccer)
+
+struct BurnDriver BurnDrvastro_soccer = {
+	"astro_soccer", NULL, "astro_astrocde", NULL, "1985",
+	"Soccer\0", NULL, "<unknown>", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_soccerRomInfo, astro_soccerRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer (prototype)
+static struct BurnRomInfo astro_soccerpRomDesc[] = {
+	{ "soccerp.bin",		8192, 0x7de08d9a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccerp, astro_soccerp, astro_astrocde)
+STD_ROM_FN(astro_soccerp)
+
+struct BurnDriver BurnDrvastro_soccerp = {
+	"astro_soccerp", NULL, "astro_astrocde", NULL, "198?",
+	"Soccer (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_soccerpRomInfo, astro_soccerpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer (prototype, alt)
+static struct BurnRomInfo astro_socceraRomDesc[] = {
+	{ "soccera.bin",		4096, 0xfd633ca9, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccera, astro_soccera, astro_astrocde)
+STD_ROM_FN(astro_soccera)
+
+struct BurnDriver BurnDrvastro_soccera = {
+	"astro_soccera", NULL, "astro_astrocde", NULL, "198?",
+	"Soccer (prototype, alt)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_socceraRomInfo, astro_socceraRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer (prototype, alt 2)
+static struct BurnRomInfo astro_soccera2RomDesc[] = {
+	{ "soccera2.bin",		8192, 0x7c2858dd, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccera2, astro_soccera2, astro_astrocde)
+STD_ROM_FN(astro_soccera2)
+
+struct BurnDriver BurnDrvastro_soccera2 = {
+	"astro_soccera2", NULL, "astro_astrocde", NULL, "198?",
+	"Soccer (prototype, alt 2)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_soccera2RomInfo, astro_soccera2RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer (prototype, alt 3)
+static struct BurnRomInfo astro_soccera3RomDesc[] = {
+	{ "soccera3.bin",		8192, 0x5cb41426, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccera3, astro_soccera3, astro_astrocde)
+STD_ROM_FN(astro_soccera3)
+
+struct BurnDriver BurnDrvastro_soccera3 = {
+	"astro_soccera3", NULL, "astro_astrocde", NULL, "198?",
+	"Soccer (prototype, alt 3)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_soccera3RomInfo, astro_soccera3RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Soccer (prototype, alt 4)
+static struct BurnRomInfo astro_soccera4RomDesc[] = {
+	{ "soccera4.bin",		8192, 0x4f5e93d5, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_soccera4, astro_soccera4, astro_astrocde)
+STD_ROM_FN(astro_soccera4)
+
+struct BurnDriver BurnDrvastro_soccera4 = {
+	"astro_soccera4", NULL, "astro_astrocde", NULL, "198?",
+	"Soccer (prototype, alt 4)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_soccera4RomInfo, astro_soccera4RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Solar Conqueror
+static struct BurnRomInfo astro_solarcnqRomDesc[] = {
+	{ "scnquer.bin",		8192, 0xd15ce025, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_solarcnq, astro_solarcnq, astro_astrocde)
+STD_ROM_FN(astro_solarcnq)
+
+struct BurnDriver BurnDrvastro_solarcnq = {
+	"astro_solarcnq", NULL, "astro_astrocde", NULL, "1983",
+	"Solar Conqueror\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_solarcnqRomInfo, astro_solarcnqRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Solar Conqueror (prototype v2.8)
+static struct BurnRomInfo astro_solarcnqp28RomDesc[] = {
+	{ "scquer28.bin",		8192, 0x0709b022, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_solarcnqp28, astro_solarcnqp28, astro_astrocde)
+STD_ROM_FN(astro_solarcnqp28)
+
+struct BurnDriver BurnDrvastro_solarcnqp28 = {
+	"astro_solarcnqp28", "astro_solarcnq", "astro_astrocde", NULL, "198?",
+	"Solar Conqueror (prototype v2.8)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_solarcnqp28RomInfo, astro_solarcnqp28RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Solar Conqueror (prototype v3.9)
+static struct BurnRomInfo astro_solarcnqp39RomDesc[] = {
+	{ "scquer39.bin",		8192, 0x8612cc7a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_solarcnqp39, astro_solarcnqp39, astro_astrocde)
+STD_ROM_FN(astro_solarcnqp39)
+
+struct BurnDriver BurnDrvastro_solarcnqp39 = {
+	"astro_solarcnqp39", "astro_solarcnq", "astro_astrocde", NULL, "198?",
+	"Solar Conqueror (prototype v3.9)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_solarcnqp39RomInfo, astro_solarcnqp39RomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Solar Conqueror (prototype)
+static struct BurnRomInfo astro_solarcnqpRomDesc[] = {
+	{ "scquerp.bin",		8192, 0x4a229478, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_solarcnqp, astro_solarcnqp, astro_astrocde)
+STD_ROM_FN(astro_solarcnqp)
+
+struct BurnDriver BurnDrvastro_solarcnqp = {
+	"astro_solarcnqp", "astro_solarcnq", "astro_astrocde", NULL, "1982",
+	"Solar Conqueror (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_solarcnqpRomInfo, astro_solarcnqpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Songs (prototype)
+static struct BurnRomInfo astro_songsRomDesc[] = {
+	{ "songs.bin",		4096, 0xfe6182b3, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_songs, astro_songs, astro_astrocde)
+STD_ROM_FN(astro_songs)
+
+struct BurnDriver BurnDrvastro_songs = {
+	"astro_songs", NULL, "astro_astrocde", NULL, "19??",
+	"Songs (prototype)\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_songsRomInfo, astro_songsRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Songs (prototype, alt)
+static struct BurnRomInfo astro_songsaRomDesc[] = {
+	{ "songs (19xx)(bally mfg. corp.)(proto)[a].bin",		8192, 0x36a3d077, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_songsa, astro_songsa, astro_astrocde)
+STD_ROM_FN(astro_songsa)
+
+struct BurnDriver BurnDrvastro_songsa = {
+	"astro_songsa", "astro_songs", "astro_astrocde", NULL, "19??",
+	"Songs (prototype, alt)\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_songsaRomInfo, astro_songsaRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Songs (prototype, unfinished)
+static struct BurnRomInfo astro_songsuRomDesc[] = {
+	{ "songsu.bin",		8192, 0x16326f8c, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_songsu, astro_songsu, astro_astrocde)
+STD_ROM_FN(astro_songsu)
+
+struct BurnDriver BurnDrvastro_songsu = {
+	"astro_songsu", "astro_songs", "astro_astrocde", NULL, "19??",
+	"Songs (prototype, unfinished)\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_songsuRomInfo, astro_songsuRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Space Fortress
+static struct BurnRomInfo astro_spacefrtRomDesc[] = {
+	{ "spacefrt.bin",		4096, 0x519cc707, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_spacefrt, astro_spacefrt, astro_astrocde)
+STD_ROM_FN(astro_spacefrt)
+
+struct BurnDriver BurnDrvastro_spacefrt = {
+	"astro_spacefrt", NULL, "astro_astrocde", NULL, "1981",
+	"Space Fortress\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_spacefrtRomInfo, astro_spacefrtRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Space Fortress (prototype)
+static struct BurnRomInfo astro_spacefrtpRomDesc[] = {
+	{ "space fortress (1981)(astrocade inc.)(proto).bin",		2048, 0xcf5012bd, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_spacefrtp, astro_spacefrtp, astro_astrocde)
+STD_ROM_FN(astro_spacefrtp)
+
+struct BurnDriver BurnDrvastro_spacefrtp = {
+	"astro_spacefrtp", "astro_spacefrt", "astro_astrocde", NULL, "1981",
+	"Space Fortress (prototype)\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_spacefrtpRomInfo, astro_spacefrtpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Space Invaders
+static struct BurnRomInfo astro_spaceinvRomDesc[] = {
+	{ "invaders.bin",		4096, 0x52964c1f, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_spaceinv, astro_spaceinv, astro_astrocde)
+STD_ROM_FN(astro_spaceinv)
+
+struct BurnDriver BurnDrvastro_spaceinv = {
+	"astro_spaceinv", NULL, "astro_astrocde", NULL, "1979",
+	"Space Invaders\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_spaceinvRomInfo, astro_spaceinvRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Space Invaders (prototype)
+static struct BurnRomInfo astro_spaceinvpRomDesc[] = {
+	{ "space invaders (197x)(bally mfg. corp.)(proto).bin",		2048, 0xa542f4b2, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_spaceinvp, astro_spaceinvp, astro_astrocde)
+STD_ROM_FN(astro_spaceinvp)
+
+struct BurnDriver BurnDrvastro_spaceinvp = {
+	"astro_spaceinvp", "astro_spaceinv", "astro_astrocde", NULL, "197?",
+	"Space Invaders (prototype)\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_spaceinvpRomInfo, astro_spaceinvpRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Speed Math / Bingo Math
+static struct BurnRomInfo astro_spedmathRomDesc[] = {
+	{ "spedmath.bin",		2048, 0x7d30312a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_spedmath, astro_spedmath, astro_astrocde)
+STD_ROM_FN(astro_spedmath)
+
+struct BurnDriver BurnDrvastro_spedmath = {
+	"astro_spedmath", NULL, "astro_astrocde", NULL, "1978",
+	"Speed Math / Bingo Math\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_spedmathRomInfo, astro_spedmathRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Star Battle
+static struct BurnRomInfo astro_starbttlRomDesc[] = {
+	{ "starbttl.bin",		2048, 0xd54a74c8, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_starbttl, astro_starbttl, astro_astrocde)
+STD_ROM_FN(astro_starbttl)
+
+struct BurnDriver BurnDrvastro_starbttl = {
+	"astro_starbttl", NULL, "astro_astrocde", NULL, "1979",
+	"Star Battle\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_starbttlRomInfo, astro_starbttlRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Stweek
+static struct BurnRomInfo astro_stweekRomDesc[] = {
+	{ "stweek.bin",		2048, 0xe4f3766a, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_stweek, astro_stweek, astro_astrocde)
+STD_ROM_FN(astro_stweek)
+
+struct BurnDriver BurnDrvastro_stweek = {
+	"astro_stweek", NULL, "astro_astrocde", NULL, "19??",
+	"Stweek\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_stweekRomInfo, astro_stweekRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Super Slope
+static struct BurnRomInfo astro_sslopeRomDesc[] = {
+	{ "sslope.bin",		4096, 0xdf6b2304, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_sslope, astro_sslope, astro_astrocde)
+STD_ROM_FN(astro_sslope)
+
+struct BurnDriver BurnDrvastro_sslope = {
+	"astro_sslope", NULL, "astro_astrocde", NULL, "1986",
+	"Super Slope\0", NULL, "Esoterica and Mike White", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_sslopeRomInfo, astro_sslopeRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Tests
+static struct BurnRomInfo astro_testsRomDesc[] = {
+	{ "tests.bin",		4096, 0x49df19eb, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_tests, astro_tests, astro_astrocde)
+STD_ROM_FN(astro_tests)
+
+struct BurnDriver BurnDrvastro_tests = {
+	"astro_tests", NULL, "astro_astrocde", NULL, "19??",
+	"Tests\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_testsRomInfo, astro_testsRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// The Incredible Wizard
+static struct BurnRomInfo astro_wizardRomDesc[] = {
+	{ "wizard.bin",		8192, 0x1395b130, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_wizard, astro_wizard, astro_astrocde)
+STD_ROM_FN(astro_wizard)
+
+struct BurnDriver BurnDrvastro_wizard = {
+	"astro_wizard", NULL, "astro_astrocde", NULL, "1982",
+	"The Incredible Wizard\0", NULL, "Astrocade", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_wizardRomInfo, astro_wizardRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Tornado Baseball / Handball / Hockey / Tennis
+static struct BurnRomInfo astro_baseballRomDesc[] = {
+	{ "baseball.bin",		4096, 0x5be548cc, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_baseball, astro_baseball, astro_astrocde)
+STD_ROM_FN(astro_baseball)
+
+struct BurnDriver BurnDrvastro_baseball = {
+	"astro_baseball", NULL, "astro_astrocde", NULL, "1978",
+	"Tornado Baseball / Handball / Hockey / Tennis\0", NULL, "Bally", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_baseballRomInfo, astro_baseballRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Treasure Cove
+static struct BurnRomInfo astro_treasureRomDesc[] = {
+	{ "treasure.bin",		8192, 0x1447f854, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_treasure, astro_treasure, astro_astrocde)
+STD_ROM_FN(astro_treasure)
+
+struct BurnDriver BurnDrvastro_treasure = {
+	"astro_treasure", NULL, "astro_astrocde", NULL, "1983",
+	"Treasure Cove\0", NULL, "Esoterica", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_treasureRomInfo, astro_treasureRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Treasure Cove (prototype)
+static struct BurnRomInfo astro_treasurepRomDesc[] = {
+	{ "treasurp.bin",		4096, 0x5379aabf, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_treasurep, astro_treasurep, astro_astrocde)
+STD_ROM_FN(astro_treasurep)
+
+struct BurnDriver BurnDrvastro_treasurep = {
+	"astro_treasurep", "astro_treasure", "astro_astrocde", NULL, "198?",
+	"Treasure Cove (prototype)\0", NULL, "Esoterica", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_treasurepRomInfo, astro_treasurepRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Video Story Book (prototype)
+static struct BurnRomInfo astro_vidstoryRomDesc[] = {
+	{ "vidstory.bin",		8192, 0x2cc8cc3c, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_vidstory, astro_vidstory, astro_astrocde)
+STD_ROM_FN(astro_vidstory)
+
+struct BurnDriver BurnDrvastro_vidstory = {
+	"astro_vidstory", NULL, "astro_astrocde", NULL, "19??",
+	"Video Story Book (prototype)\0", NULL, "<unknown>", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_vidstoryRomInfo, astro_vidstoryRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// War (second printing)
+static struct BurnRomInfo astro_warRomDesc[] = {
+	{ "war (2012)(riff raff games)[second printing].bin",		7931, 0xc1faf1bf, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_war, astro_war, astro_astrocde)
+STD_ROM_FN(astro_war)
+
+struct BurnDriver BurnDrvastro_war = {
+	"astro_war", NULL, "astro_astrocde", NULL, "2012",
+	"War (second printing)\0", NULL, "Riff Raff Games", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_warRomInfo, astro_warRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Yesterday (prototype, no vibrato)
+static struct BurnRomInfo astro_yesternvRomDesc[] = {
+	{ "yesternv.bin",		2048, 0xf400e5d4, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_yesternv, astro_yesternv, astro_astrocde)
+STD_ROM_FN(astro_yesternv)
+
+struct BurnDriver BurnDrvastro_yesternv = {
+	"astro_yesternv", NULL, "astro_astrocde", NULL, "1986",
+	"Yesterday (prototype, no vibrato)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_yesternvRomInfo, astro_yesternvRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	352, 240, 4, 3
+};
+
+// Yesterday (prototype, with vibrato)
+static struct BurnRomInfo astro_yestervRomDesc[] = {
+	{ "yesterv.bin",		2048, 0xa4edba84, 3 | BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(astro_yesterv, astro_yesterv, astro_astrocde)
+STD_ROM_FN(astro_yesterv)
+
+struct BurnDriver BurnDrvastro_yesterv = {
+	"astro_yesterv", NULL, "astro_astrocde", NULL, "1986",
+	"Yesterday (prototype, with vibrato)\0", NULL, "Richard Degler and George Moses", "Bally Astrocade",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_ASTROHOME, GBF_MISC, 0,
+	AstroGetZipName, astro_yestervRomInfo, astro_yestervRomName, NULL, NULL, NULL, NULL, HomeInputInfo, NULL,
+	HomeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	352, 240, 4, 3
 };

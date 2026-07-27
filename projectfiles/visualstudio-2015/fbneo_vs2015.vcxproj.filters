@@ -2536,6 +2536,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tail2nose.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbatt.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbust.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>

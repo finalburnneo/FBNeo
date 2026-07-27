@@ -582,6 +582,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_suna8.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tagteam.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tail2nose.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbatt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbust.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tbowl.cpp" />

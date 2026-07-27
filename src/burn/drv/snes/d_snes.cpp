@@ -21879,7 +21879,7 @@ struct BurnDriver BurnDrvsnes_Livealivete = {
 // https://www.romhacking.net.br/index.php?topic=2286.0
 
 static struct BurnRomInfo snes_LivealivetpRomDesc[] = {
-	{ "Live A Live PT-BR v2.3 (2024)(Jotesc0).sfc", 2621440, 0x3020dbaa, BRF_ESS | BRF_PRG },
+	{ "Live A Live PT-BR v2.3 (2024)(Jotesc0, Aeon Genesis).sfc", 2621440, 0x3020dbaa, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Livealivetp)
@@ -21887,7 +21887,7 @@ STD_ROM_FN(snes_Livealivetp)
 
 struct BurnDriver BurnDrvsnes_Livealivetp = {
 	"snes_livealivetp", "snes_livealivete", NULL, NULL, "2024",
-	"Live A Live (Hack, Portuguese v2.3)\0", NULL, "Jotesc0", "SNES / Super Famicom",
+	"Live A Live (Hack, Portuguese v2.3)\0", NULL, "Jotesc0, Aeon Genesis", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_LivealivetpRomInfo, snes_LivealivetpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

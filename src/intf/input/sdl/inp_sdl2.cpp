@@ -14,6 +14,7 @@ static SDL_Joystick* JoyList[MAX_JOYSTICKS];
 static SDL_GameController *GCList[MAX_JOYSTICKS];
 static int* JoyPrevAxes = NULL;
 /* static */ int nJoystickCount = 0;						// Number of joysticks connected to this machine
+#define JOYSTICK_DETECT_MS 600								// how long to wait for async pad enumeration (see SDLinpInit)
 int buttons [4][8]= { {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1} }; // 4 joysticks buttons 0 -5 and start / select
 
 void setup_kemaps(void)
@@ -386,11 +387,30 @@ int SDLinpInit()
 		SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
 	}
 
-	// Set up the joysticks
+	// Set up the joysticks.  Device discovery is asynchronous on sdl2-compat/SDL3
+	// (macOS enumerates pads through GameController.framework), so SDL_NumJoysticks()
+	// reads 0 for the first few hundred ms after init.  Pump the queue until a device
+	// shows up, capped so a keyboard-only setup isn't held up for long.
 	nJoystickCount = SDL_NumJoysticks();
+
+	for (int nWait = 0; nJoystickCount == 0 && nWait < JOYSTICK_DETECT_MS; nWait += 20) {
+		SDL_PumpEvents();
+		SDL_Delay(20);
+		nJoystickCount = SDL_NumJoysticks();
+	}
+
 	for (int i = 0; i < nJoystickCount; i++) {
 		SDLinpJoystickInit(i);
 	}
+
+	if (nJoystickCount > 0) {
+		printf("Found %d joystick(s):\n", nJoystickCount);
+		for (int i = 0; i < nJoystickCount; i++) {
+			printf("  Joy %d: %s%s\n", i, SDL_JoystickNameForIndex(i),
+				SDL_IsGameController(i) ? " (game controller)" : "");
+		}
+	}
+
 	SDL_GameControllerEventState(SDL_IGNORE);
 	SDL_JoystickEventState(SDL_IGNORE);
 

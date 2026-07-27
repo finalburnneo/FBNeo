@@ -317,6 +317,17 @@ static int SDLinpJoystickInit(int i)
 	return 0;
 }
 
+// Read one d-pad direction off a pad.  Returns 0 when the device isn't a
+// recognised game controller (a bare joystick has no d-pad mapping to read).
+static int SDLinpDPad(int i, SDL_GameControllerButton nButton)
+{
+	if (GCList[i] == NULL) {
+		return 0;
+	}
+
+	return SDL_GameControllerGetButton(GCList[i], nButton) ? 1 : 0;
+}
+
 // Set up the keyboard
 static int SDLinpKeyboardInit()
 {
@@ -546,10 +557,17 @@ static int JoystickState(int i, int nSubCode)
 		}
 
 		switch (nSubCode) {
-		case 0x00: return SDL_JoystickGetAxis(JoyList[i], 0) < -JOYSTICK_DEAD_ZONE;		// Left
-		case 0x01: return SDL_JoystickGetAxis(JoyList[i], 0) > JOYSTICK_DEAD_ZONE;		// Right
-		case 0x02: return SDL_JoystickGetAxis(JoyList[i], 1) < -JOYSTICK_DEAD_ZONE;		// Up
-		case 0x03: return SDL_JoystickGetAxis(JoyList[i], 1) > JOYSTICK_DEAD_ZONE;		// Down
+		// The first stick doubles as the d-pad: on a gamepad the digital direction
+		// an arcade game wants is the pad, not the stick.  Neither is exposed as an
+		// SDL hat here, so ask the game controller layer for it.
+		case 0x00: return (SDL_JoystickGetAxis(JoyList[i], 0) < -JOYSTICK_DEAD_ZONE)
+							|| SDLinpDPad(i, SDL_CONTROLLER_BUTTON_DPAD_LEFT);			// Left
+		case 0x01: return (SDL_JoystickGetAxis(JoyList[i], 0) > JOYSTICK_DEAD_ZONE)
+							|| SDLinpDPad(i, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);			// Right
+		case 0x02: return (SDL_JoystickGetAxis(JoyList[i], 1) < -JOYSTICK_DEAD_ZONE)
+							|| SDLinpDPad(i, SDL_CONTROLLER_BUTTON_DPAD_UP);			// Up
+		case 0x03: return (SDL_JoystickGetAxis(JoyList[i], 1) > JOYSTICK_DEAD_ZONE)
+							|| SDLinpDPad(i, SDL_CONTROLLER_BUTTON_DPAD_DOWN);			// Down
 		case 0x04: return SDL_JoystickGetAxis(JoyList[i], 2) < -JOYSTICK_DEAD_ZONE;
 		case 0x05: return SDL_JoystickGetAxis(JoyList[i], 2) > JOYSTICK_DEAD_ZONE;
 		case 0x06: return SDL_JoystickGetAxis(JoyList[i], 3) < -JOYSTICK_DEAD_ZONE;

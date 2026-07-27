@@ -15407,7 +15407,7 @@ struct BurnDriver BurnDrvnes_batmaretjokde = {
 // Batman Returns - Dark Edition (Hack, Ver. 21-07-26)
 // https://romhackplaza.org/romhacks/batman-returns-super-special-collection-dark-edition-nintendo-entertainment-system-romhack
 static struct BurnRomInfo nes_batmanreturnsdeRomDesc[] = {
-	{ "Batman Returns Dark Edition - Ver. 21-07-26(2026)(DarthVaderX).nes",          393232, 0x8ac8a211, BRF_ESS | BRF_PRG },
+	{ "Batman Returns Dark Edition - Ver. 21-07-26 (2026)(DarthVaderX).nes",          393232, 0x8ac8a211, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_batmanreturnsde)

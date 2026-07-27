@@ -8580,25 +8580,6 @@ struct BurnDriver BurnDrvsnes_Crystalbeanste = {
 	512, 448, 4, 3
 };
 
-// Crystal Beans From Dungeon Explorer (Hack, Portuguese v1.1b)
-// https://www.romhacking.net.br/index.php?topic=2295.0
-static struct BurnRomInfo snes_CrystalbeanstpRomDesc[] = {
-	{ "Crystal Beans From Dungeon Explorer PT-BR v1.1b (2022)(Monkey's Traducoes).sfc", 2097152, 0x43beec67, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Crystalbeanstp)
-STD_ROM_FN(snes_Crystalbeanstp)
-
-struct BurnDriver BurnDrvsnes_Crystalbeanstp = {
-	"snes_crystalbeanstp", "snes_crystalbeanste", NULL, NULL, "2022",
-	"Crystal Beans From Dungeon Explorer (Hack, Portuguese v1.1b)\0", NULL, "Monkey's Traducoes", "SNES / Super Famicom",
-	NULL, NULL, L"Monkey's Tradu\u00e7\u00f5es", NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_ACTION | GBF_ADV, 0,
-	SNESGetZipName, snes_CrystalbeanstpRomInfo, snes_CrystalbeanstpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 // Crystal Beans From Dungeon Explorer (Hack, Spanish)
 
 static struct BurnRomInfo snes_CrystalbeanstsRomDesc[] = {

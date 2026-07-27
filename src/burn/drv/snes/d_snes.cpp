@@ -21875,6 +21875,26 @@ struct BurnDriver BurnDrvsnes_Livealivete = {
 	512, 448, 4, 3
 };
 
+// Live A Live (Hack, Portuguese v2.3)
+// https://www.romhacking.net.br/index.php?topic=2286.0
+
+static struct BurnRomInfo snes_LivealivetpRomDesc[] = {
+	{ "Live A Live PT-BR v2.3 (2024)(Jotesc0, Aeon Genesis).sfc", 2621440, 0x3020dbaa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Livealivetp)
+STD_ROM_FN(snes_Livealivetp)
+
+struct BurnDriver BurnDrvsnes_Livealivetp = {
+	"snes_livealivetp", "snes_livealivete", NULL, NULL, "2024",
+	"Live A Live (Hack, Portuguese v2.3)\0", NULL, "Jotesc0, Aeon Genesis", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_LivealivetpRomInfo, snes_LivealivetpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Live A Live (Hack, Spanish v1.6)
 // https://www.romhacking.net/translations/6058/
 static struct BurnRomInfo snes_LivealivetsRomDesc[] = {
@@ -25394,18 +25414,19 @@ struct BurnDriver BurnDrvsnes_Mystdung2j = {
 	512, 448, 4, 3
 };
 
-// Mysterious Dungeon 2: Shiren the Wanderer (Hack, English)
+// Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.02)
 // https://www.romhacking.net/translations/483/
+// https://www.romhacking.net/translations/7641/
 static struct BurnRomInfo snes_Mystdung2teRomDesc[] = {
-	{ "Mysterious Dungeon 2 - Shiren the Wanderer T-Eng (2006)(Aeon Genesis).sfc", 4194304, 0xf9789079, BRF_ESS | BRF_PRG },
+	{ "Mysterious Dungeon 2 - Shiren the Wanderer T-Eng v1.02 (2006-2026)(Aeon Genesis, iggypoop).sfc", 4194304, 0xab38bde3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Mystdung2te)
 STD_ROM_FN(snes_Mystdung2te)
 
 struct BurnDriver BurnDrvsnes_Mystdung2te = {
-	"snes_mystdung2te", NULL, NULL, NULL, "2006",
-	"Mysterious Dungeon 2: Shiren the Wanderer (Hack, English)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	"snes_mystdung2te", NULL, NULL, NULL, "2006-2026",
+	"Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.02)\0", NULL, "Aeon Genesis, iggypoop", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Mystdung2teRomInfo, snes_Mystdung2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -45170,18 +45191,18 @@ struct BurnDriver BurnDrvsnes_Yuuyuuhak2j = {
 	512, 448, 4, 3
 };
 
-// Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese)
-// https://www.romhacking.net/translations/7223/
+// Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese v1.2)
+// https://www.romhacking.net.br/index.php?topic=2671.0
 static struct BurnRomInfo snes_Yuuyuuhak2tpRomDesc[] = {
-	{ "Yu Yu Hakusho 2 - The Fighting Chapter PT-BR v1.0 (2024)(Hextinkers).sfc", 2097152, 0x52ac1195, BRF_ESS | BRF_PRG },
+	{ "Yu Yu Hakusho 2 - The Fighting Chapter PT-BR v1.2 (2024-26)(Hextinkers).sfc", 2097152, 0x38769d36, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Yuuyuuhak2tp)
 STD_ROM_FN(snes_Yuuyuuhak2tp)
 
 struct BurnDriver BurnDrvsnes_Yuuyuuhak2tp = {
-	"snes_yuuyuuhak2tp", "snes_yuuyuuhak2j", NULL, NULL, "2024",
-	"Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese)\0", NULL, "Hextinkers", "SNES / Super Famicom",
+	"snes_yuuyuuhak2tp", "snes_yuuyuuhak2j", NULL, NULL, "2024-26",
+	"Yu Yu Hakusho 2: The Fighting Chapter (Hack, Portuguese v1.2)\0", NULL, "Hextinkers", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Yuuyuuhak2tpRomInfo, snes_Yuuyuuhak2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -50412,6 +50433,25 @@ struct BurnDriver BurnDrvsnes_Xmascraze = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_XmascrazeRomInfo, snes_XmascrazeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// X-Men - Mutant Apocalypse - Rebalanced (Hack)
+// https://www.romhacking.net/hacks/9838/
+static struct BurnRomInfo snes_XmenmarebRomDesc[] = {
+	{ "X-Men - Mutant Apocalypse - Rebalanced (2026)(BlastoBR).sfc", 2097152, 0x5836480c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Xmenmareb)
+STD_ROM_FN(snes_Xmenmareb)
+
+struct BurnDriver BurnDrvsnes_Xmenmareb = {
+	"snes_xmenmareb", "snes_xmenma", NULL, NULL, "2026",
+	"X-Men - Mutant Apocalypse - Rebalanced (Hack)\0", NULL, "BlastoBR", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_XmenmarebRomInfo, snes_XmenmarebRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

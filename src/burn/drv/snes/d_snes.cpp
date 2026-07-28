@@ -49246,7 +49246,7 @@ STD_ROM_PICK(snes_starfoxex)
 STD_ROM_FN(snes_starfoxex)
 
 struct BurnDriver BurnDrvsnes_starfoxex = {
-	"snes_starfoxex", NULL, NULL, NULL, "2025",
+	"snes_starfoxex", "snes_starfox", NULL, NULL, "2025",
 	"Star Fox EX (Hack, v1.11.02b)\0", NULL, "kandowontu, Sunlitspace542", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,

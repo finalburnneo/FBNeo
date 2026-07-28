@@ -9635,7 +9635,7 @@ struct BurnDriver BurnDrvcv_mrchin = {
 
 // Mr. Do! Arcade (HB)
 static struct BurnRomInfo cv_mrdoarcadeRomDesc[] = {
-	{ "Mr. Do! Arcade (2026)(Scott Moschella).rom",	32768, 0x09f0d2c7, BRF_PRG | BRF_ESS },
+	{ "Mr. Do! Arcade (2026)(Scott Moschella).rom",	32768, 0x51dc96d1, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_mrdoarcade, cv_mrdoarcade, cv_coleco)
@@ -9653,7 +9653,7 @@ struct BurnDriver BurnDrvcv_mrdoarcade = {
 
 // Mr. Do! Arcade - Red Nose (HB)
 static struct BurnRomInfo cv_mrdoarcadernRomDesc[] = {
-	{ "Mr. Do! Arcade - Red Nose (2026)(Scott Moschella).rom",	32768, 0x99324671, BRF_PRG | BRF_ESS },
+	{ "Mr. Do! Arcade - Red Nose (2026)(Scott Moschella).rom",	32768, 0x90f4e6e3, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_mrdoarcadern, cv_mrdoarcadern, cv_coleco)

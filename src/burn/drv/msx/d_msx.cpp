@@ -34812,6 +34812,24 @@ struct BurnDriver BurnDrvMSX_straycat = {
 	272, 228, 4, 3
 };
 
+// Structris (HB)
+static struct BurnRomInfo MSX_structrisRomDesc[] = {
+	{ "Structris (2026)(unhuman).rom",	0x06000, 0xc56d3672, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_structris, MSX_structris, msx_msx)
+STD_ROM_FN(MSX_structris)
+
+struct BurnDriver BurnDrvMSX_structris = {
+	"msx_structris", NULL, "msx_msx", NULL, "2026",
+	"Structris (HB)\0", NULL, "unhuman", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_structrisRomInfo, MSX_structrisRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Stupid Martians (HB, v1.1)
 static struct BurnRomInfo MSX_stupmartRomDesc[] = {
 	{ "Stupid Martians v1.1 (2020)(Visualedu).rom",	65536, 0x31e3f039, BRF_PRG | BRF_ESS },

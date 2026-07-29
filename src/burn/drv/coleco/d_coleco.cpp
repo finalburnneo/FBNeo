@@ -11720,6 +11720,24 @@ struct BurnDriver BurnDrvcv_strippoker = {
 	272, 228, 4, 3
 };
 
+// Structris (HB)
+static struct BurnRomInfo cv_structrisRomDesc[] = {
+	{ "Structris (2026)(unhuman).rom",	24576, 0xdbe7dd23, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_structris, cv_structris, cv_coleco)
+STD_ROM_FN(cv_structris)
+
+struct BurnDriver BurnDrvcv_structris = {
+	"cv_structris", NULL, "cv_coleco", NULL, "2026",
+	"Structris (HB)\0", NULL, "unhuman", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_structrisRomInfo, cv_structrisRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Subroc (SGM) (HB)
 static struct BurnRomInfo cv_subrocsgmRomDesc[] = {
     { "Subroc SGM (2014)(Team Pixelboy).rom",	0x20000, 0xeac71b43, BRF_PRG | BRF_ESS },

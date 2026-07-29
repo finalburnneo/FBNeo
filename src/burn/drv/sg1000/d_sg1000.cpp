@@ -4860,6 +4860,24 @@ struct BurnDriver BurnDrvsg1k_superuwol = {
 	272, 228, 4, 3
 };
 
+// Structris (HB)
+static struct BurnRomInfo sg1k_structrisRomDesc[] = {
+	{ "Structris (2026)(unhuman).sg",	32768, 0x58a27c68, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_structris)
+STD_ROM_FN(sg1k_structris)
+
+struct BurnDriver BurnDrvsg1k_structris = {
+	"sg1k_structris", NULL, NULL, NULL, "2026",
+	"Structris (HB)\0", NULL, "unhuman", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_ACTION, 0,
+	SG1KGetZipName, sg1k_structrisRomInfo, sg1k_structrisRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Svellas (HB)
 static struct BurnRomInfo sg1k_svellasRomDesc[] = {
 	{ "Svellas (2025)(Inufuto).sg",	16384, 0xea0cc388, BRF_PRG | BRF_ESS },

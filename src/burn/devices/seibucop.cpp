@@ -695,6 +695,26 @@ static void execute_f205(INT32 , UINT16 )
 	cpu_write_long(cop_regs[2], cpu_read_long(cop_regs[0]+4));
 }
 
+static void execute_fc84(INT32 offset, UINT16 data)
+{
+	// Destination is not certain but makes sense.  fc84 and f790 are called back-to-back
+	cpu_write_long(cop_regs[4] + 8, cpu_read_long(cop_regs[4] + 0) - cpu_read_long(cop_regs[4] + 4));
+}
+
+static void execute_f790(INT32 offset, UINT16 data)
+{
+	cop_dist = sqrt(cpu_read_long(cop_regs[4] + 8));
+}
+
+static void execute_ede5(INT32 offset, UINT16 data)
+{
+	INT32 v1 = cpu_read_long(cop_regs[4] + 8);
+	INT32 v2 = cpu_read_long(cop_regs[4] + 12);
+	INT32 v3 = cpu_read_long(cop_regs[4] + 16);
+	if(v3 != 0)
+		cop_write_word(cop_regs[4] + 22, (v1 + v2) / v3);
+}
+
 static INT32 find_trigger_match(UINT16 triggerval, UINT16 mask)
 {
 	INT32 matched = 0;
@@ -892,6 +912,7 @@ void cop_cmd_write(INT32 offset, UINT16 data)
 
 	case 0x130e:   // 130e 0005 bf7f 0010 - 0984 0aa4 0d82 0aa2 039b 0b9a 0b9a 0a9a
 	case 0x138e:
+	case 0x330e:
 		execute_130e(offset, data, false); // angle from dx/dy
 		break;
 
@@ -976,12 +997,27 @@ void cop_cmd_write(INT32 offset, UINT16 data)
 		break;
 
 	case 0xb100: {
-		execute_b100(offset, data);// collisions
+		execute_b100(offset, data); // collisions
 		break;
 	}
 
 	case 0xb900: {
 		execute_b900(offset, data); // collisions
+		break;
+	}
+
+	case 0xede5: {
+		execute_ede5(offset, data); // zeroteam bird boss, probable divide
+		break;
+	}
+
+	case 0xf790: {
+		execute_f790(offset, data); // zeroteam bird boss, probable sqrt
+		break;
+	}
+
+	case 0xfc84: {
+		execute_fc84(offset, data); // zeroteam bird boss, probable sub
 		break;
 	}
 	}

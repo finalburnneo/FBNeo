@@ -903,6 +903,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 
 	case 0x130e:   // 130e 0005 bf7f 0010 - 0984 0aa4 0d82 0aa2 039b 0b9a 0b9a 0a9a
 	case 0x138e:
+	case 0x330e:
 	case 0x338e: { // 338e 0005 bf7f 0030 - 0984 0aa4 0d82 0aa2 039c 0b9c 0b9c 0a9a
 		INT32 dx = VezReadLong(cop_regs[1]+4) - VezReadLong(cop_regs[0]+4);
 		INT32 dy = VezReadLong(cop_regs[1]+8) - VezReadLong(cop_regs[0]+8);
@@ -1083,6 +1084,26 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	case 0xb900:
 		cop_collision_update_hitbox(1, cop_regs[3], data);
 		break;
+
+	case 0xede5: {
+		INT32 v1 = VezReadLong(cop_regs[4] + 8);
+		INT32 v2 = VezReadLong(cop_regs[4] + 12);
+		INT32 v3 = VezReadLong(cop_regs[4] + 16);
+		if(v3 != 0) {
+			VezWriteWord(cop_regs[4] + 22, (v1 + v2) / v3);
+		}
+		break;
+	}
+
+	case 0xf790: {
+		cop_dist = sqrt(VezReadLong(cop_regs[4] + 8));
+		break;
+	}
+
+	case 0xfc84: {
+		VezWriteLong(cop_regs[4] + 8, VezReadLong(cop_regs[4] + 0) - VezReadLong(cop_regs[4] + 4));
+		break;
+	}
 
 	//default:
 	//	logerror("pcall %04x (%04x:%04x) [%x %x %x %x]\n", data, rps(), rpc(), cop_regs[0], cop_regs[1], cop_regs[2], cop_regs[3]);

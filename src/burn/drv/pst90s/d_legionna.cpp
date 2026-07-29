@@ -2316,7 +2316,7 @@ static struct BurnRomInfo grainbowkRomDesc[] = {
 	{ "rb-ad.922",					0x020000, 0xa364cb42, 7 | BRF_SND },           // 11 Samples
 
 	{ "copx-d2.313",				0x040000, 0xa6732ff9, 8 | BRF_GRA },           // 12 COP ROM
-	};
+};
 
 STD_ROM_PICK(grainbowk)
 STD_ROM_FN(grainbowk)

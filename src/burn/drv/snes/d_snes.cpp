@@ -2098,6 +2098,25 @@ struct BurnDriver BurnDrvsnes_Aerofight = {
 	512, 448, 4, 3
 };
 
+// Aero Fighters (Hack, Portuguese)
+// https://joao13traducoes.com/2018/04/snes-aero-fighters-vila-oculta-do-romhacking/
+static struct BurnRomInfo snes_AerofighttpRomDesc[] = {
+	{ "Aero Fighters PT-BR (2022)(Vila Oculta do Romhacking).sfc", 1572864, 0x79a01296, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Aerofighttp)
+STD_ROM_FN(snes_Aerofighttp)
+
+struct BurnDriver BurnDrvsnes_Aerofighttp = {
+	"snes_aerofighttp", "snes_aerofight", NULL, NULL, "2022",
+	"Aero Fighters (Hack, Portuguese)\0", NULL, "Vila Oculta do Romhacking", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VERSHOOT, 0,
+	SNESGetZipName, snes_AerofighttpRomInfo, snes_AerofighttpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Air Cavalry (USA)
 
 static struct BurnRomInfo snes_AircavarlyRomDesc[] = {
@@ -29237,6 +29256,25 @@ struct BurnDriver BurnDrvsnes_Princepersia = {
 	512, 448, 4, 3
 };
 
+// Prince of Persia (Hack, Portuguese v1.01)
+// https://romhackers.org/traducoes/console/super-nes/prince-of-persia-mattos/
+static struct BurnRomInfo snes_PrincepersiatpRomDesc[] = {
+	{ "Prince of Persia PT-BR v1.01 (2010)(Mattos).sfc", 1048576, 0x7cef5430, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Princepersiatp)
+STD_ROM_FN(snes_Princepersiatp)
+
+struct BurnDriver BurnDrvsnes_Princepersiatp = {
+	"snes_princepersiatp", "snes_princepersia", NULL, NULL, "2010",
+	"Prince of Persia (Hack, Portuguese v1.01)\0", NULL, "Mattos", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_ADV, 0,
+	SNESGetZipName, snes_PrincepersiatpRomInfo, snes_PrincepersiatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Prince of Persia 2 (USA)
 
 static struct BurnRomInfo snes_Princepersia2RomDesc[] = {
@@ -33780,6 +33818,26 @@ struct BurnDriver BurnDrvsnes_Smallstarsworlde = {
 	SNESGetZipName, snes_SmallstarsworldeRomInfo, snes_SmallstarsworldeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 478, 4, 3
+};
+
+// Super Mario So estrelas + Super Mundo Mario (Hack, Portuguese v1.12)
+// https://www.romhacking.net.br/index.php?topic=2279.0
+
+static struct BurnRomInfo snes_SmallstarswldtpRomDesc[] = {
+	{ "Super Mario So Estrelas + Super Mundo Mario PT-BR v1.12 (2022)(bMatSantos).sfc", 2621440, 0x9ad38083, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Smallstarswldtp)
+STD_ROM_FN(snes_Smallstarswldtp)
+
+struct BurnDriver BurnDrvsnes_Smallstarswldtp = {
+	"snes_smallstarswldtp", "snes_smallstarsworld", NULL, NULL, "2022",
+	"Super Mario So Estrelas + Super Mundo Mario (Hack, Portuguese v1.12)\0", NULL, "bMatSantos", "SNES / Super Famicom",
+	L"Super Mario S\u00f3 Estrelas + Super Mundo Mario (Hack, Portuguese v1.12)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_SmallstarswldtpRomInfo, snes_SmallstarswldtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
 };
 
 // Super Mario All-Stars + Super Mario World (Hack, Traditional Chinese)

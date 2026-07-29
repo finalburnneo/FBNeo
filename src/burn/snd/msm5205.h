@@ -36,6 +36,8 @@ void MSM5205Reset();
 void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len);
 void MSM5205Exit();
 
+void MSM5205SetClock(INT32 chip, INT32 clock);
+
 void MSM5205Scan(INT32 nAction, INT32 *pnMin);
 
 /*

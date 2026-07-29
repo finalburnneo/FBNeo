@@ -540,6 +540,17 @@ INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed)
 	return ret / (nBurnFPS / 100);
 }
 
+void MSM5205SetClock(INT32 chip, INT32 clock)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205SetClock called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205SetClock called with invalid chip %x\n"), chip);
+#endif
+
+	voice = &chips[chip];
+	voice->clock = clock;
+}
+
 void MSM5205Scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBNEO_DEBUG

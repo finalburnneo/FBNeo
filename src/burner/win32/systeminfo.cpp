@@ -459,7 +459,7 @@ int PrintCPUInfo()
 
 	char CPUBrandStringFinal[0x40] = { 0 };
 
-#if defined _MSC_VER
+#if defined _MSC_VER && (defined _M_IX86 || defined _M_X64)
 	int CPUInfo[4] = {-1};
 	__cpuid(CPUInfo, 0x80000000);
 	unsigned int nExIds = CPUInfo[0];

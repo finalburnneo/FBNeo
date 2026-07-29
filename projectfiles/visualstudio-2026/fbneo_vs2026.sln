@@ -1,26 +1,63 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fbneo_vs2026", "fbneo_vs2026.vcxproj", "{86D06C32-A849-4988-A176-A38D014C36C1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fbneo_ctv_make", "fbneo_ctv_make.vcxproj", "{80DDEFA5-655B-4E78-892A-8162905CBA89}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fbneo_pgm_sprite_create", "fbneo_pgm_sprite_create.vcxproj", "{BD643A24-CE52-47E6-A15F-38970A59B539}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fbneo_m68kmake", "fbneo_m68kmake.vcxproj", "{141994D5-A083-4317-9501-54460AF88527}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fbneo_build_details_arm64", "fbneo_build_details_arm64.vcxproj", "{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|ARM64.Build.0 = Debug|ARM64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|x64.ActiveCfg = Debug|x64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|x64.Build.0 = Debug|x64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|x86.ActiveCfg = Debug|Win32
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Debug|x86.Build.0 = Debug|Win32
+		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|ARM64.ActiveCfg = Release|ARM64
+		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|ARM64.Build.0 = Release|ARM64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|x64.ActiveCfg = Release|x64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|x64.Build.0 = Release|x64
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|x86.ActiveCfg = Release|Win32
 		{86D06C32-A849-4988-A176-A38D014C36C1}.Release|x86.Build.0 = Release|Win32
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Debug|ARM64.ActiveCfg = Release|x64
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Debug|x64.ActiveCfg = Release|x64
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Debug|x86.ActiveCfg = Release|x64
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Release|ARM64.ActiveCfg = Release|x64
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Release|x64.ActiveCfg = Release|x64
+		{80DDEFA5-655B-4E78-892A-8162905CBA89}.Release|x86.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Debug|ARM64.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Debug|x64.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Debug|x86.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Release|ARM64.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Release|x64.ActiveCfg = Release|x64
+		{BD643A24-CE52-47E6-A15F-38970A59B539}.Release|x86.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Debug|ARM64.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Debug|x64.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Debug|x86.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Release|ARM64.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Release|x64.ActiveCfg = Release|x64
+		{141994D5-A083-4317-9501-54460AF88527}.Release|x86.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Debug|ARM64.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Debug|x64.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Debug|x86.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Release|ARM64.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Release|x64.ActiveCfg = Release|x64
+		{2A1EC4E2-1CD0-463B-A5FC-A2D68453AE69}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

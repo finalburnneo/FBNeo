@@ -140,7 +140,7 @@ static bool MMXSupport()
 
 	return (nSignatureEDX >> 23) & 1;						// bit 23 of edx ndicates MMX support
 #else
-	#if defined (BUILD_WIN32) && defined (BUILD_X64_EXE)
+	#if defined (BUILD_WIN32) && defined (BUILD_X64_EXE) && !defined (_M_ARM64)
 		return 1;
 	#endif
 	return 0;

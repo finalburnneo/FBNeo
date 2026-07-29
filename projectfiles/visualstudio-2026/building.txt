@@ -1,15 +1,16 @@
-Exclude NASM version, please use visualstudio-2019/2015
+Prerequisites
 
-Pre-Building:
-1) download and run visual studio 2026 IDE community edition installer from https://visualstudio.microsoft.com/ 
-2) select Desktop development with C++
-3) next you will need a perl interpreter for windows. I recommend Compact Portable Perl for Windows (https://www.southsoftware.com/perl.html). select the version compatible with your operating system.
-4) Then you need NASM for the assembly file (https://www.nasm.us/).
-5) Place the downloaded perl.exe & nasm.exe into the root directory of the project.
-6) If you have MSYS2 installed with the corresponding Perl and NASM toolchains, you can skip steps 3 to 5 above and add [installation path]\msys64\usr\bin\ to your system PATH environment variable.
+1) Install Visual Studio 2026 with Desktop development with C++.
+2) Install the v145 x64/x86 and ARM64 C++ build tools and a Windows 10 or newer SDK.
+3) Install a Windows Perl interpreter and add perl.exe to PATH. The pre-build scripts require it.
+4) Win32 builds require nasm.exe in this directory. x64 and ARM64 builds do not compile the NASM sources.
 
 Building
-1) checkout the code using git (Optionally: fork it first!)
-2) in the checked out code, open projectfiles then visualstudio-2026, then open fbneo_vs2026.sln
-3) select the correctly platform and build type. 
-4) hit build!
+
+1) Open projectfiles/visualstudio-2026/fbneo_vs2026.sln.
+2) Select Debug or Release and the target platform.
+3) Build fbneo_vs2026.
+
+ARM64 builds automatically compile the four code generators as Release x64 host tools, run them on the build host, and then compile the generated sources for ARM64. A complete x64 FBNeo build is not required first.
+
+An x64 development machine can cross-compile the ARM64 executable but cannot validate its runtime behavior. Test the resulting executable on Windows 11 ARM64. Kaillera is disabled for native ARM64 because this repository does not provide an ARM64 Kaillera client DLL.

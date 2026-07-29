@@ -24,6 +24,12 @@ env:
     WINDOWS_X86_32_DEBUG_ARTIFACT: windows-x86_32-debug
     WINDOWS_X86_32_DEBUG_ARTIFACT_PATH: windows-x86_32-debug.txt
     WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT: windows-x86_32-debug-archive
+    WINDOWS_ARM64_ARTIFACT: windows-arm64
+    WINDOWS_ARM64_ARTIFACT_PATH: windows-arm64.txt
+    WINDOWS_ARM64_ARCHIVE_ARTIFACT: windows-arm64-archive
+    WINDOWS_ARM64_DEBUG_ARTIFACT: windows-arm64-debug
+    WINDOWS_ARM64_DEBUG_ARTIFACT_PATH: windows-arm64-debug.txt
+    WINDOWS_ARM64_DEBUG_ARCHIVE_ARTIFACT: windows-arm64-debug-archive
     LINUX_SDL2_X86_64_ARTIFACT: linux-sdl2-x86_64
     LINUX_SDL2_X86_64_ARTIFACT_PATH: linux-sdl2-x86_64.txt
     LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT: linux-sdl2-x86_64-archive
@@ -256,6 +262,114 @@ jobs:
           path: ${{ steps.create_windows_x86_32_debug_archive.outputs.archive_file }}
           retention-days: 1
 
+  build_windows_arm64:
+    name: Build (Windows ARM64)
+    runs-on: windows-11-vs2026-arm
+    continue-on-error: true
+    steps:
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Build
+        id: create_windows_arm64_exe
+        shell: cmd
+        run: |
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -version [18.0^,19.0^) -requires Microsoft.VisualStudio.Component.VC.Tools.ARM64 -property installationPath`) do set "VCINSTALLDIR=%%i"
+          if not defined VCINSTALLDIR exit /b 1
+          call "%VCINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat"
+          msbuild projectfiles\visualstudio-2026\fbneo_vs2026.sln /m /property:Configuration=Release /property:Platform=ARM64 /verbosity:minimal
+          set "PROJECT=projectfiles\visualstudio-2026"
+          for %%F in (ctv_make.exe pgm_sprite_create.exe m68kmake.exe build_details_arm64.exe) do dumpbin /headers "%PROJECT%\hosttools\x64\Release\%%F" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" /C:"machine (x64)" >nul || exit /b 1
+          dumpbin /headers "%PROJECT%\ARM64\Release\fbneoarm64.exe" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" >nul || exit /b 1
+          findstr /C:"#define BUILD_CPU  ARM64" "%PROJECT%\generated\build_details.h" >nul || exit /b 1
+          dir /s /b "%PROJECT%\ARM64\Release\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
+          dir /s /b "%PROJECT%\ARM64\Release\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
+
+      - name: Package
+        id: create_windows_arm64_archive
+        shell: pwsh
+        run: |
+          $archive = '${{ env.WINDOWS_ARM64_ARTIFACT }}.zip'
+          Compress-Archive -DestinationPath $archive -Force -Path `
+            projectfiles/visualstudio-2026/ARM64/Release/fbneoarm64.exe, `
+            src/license.txt, `
+            fbahelpfilesrc/fbneo.chm, `
+            whatsnew.html
+          "archive_file=$archive" >> $env:GITHUB_OUTPUT
+
+      - name: Create Archive Path
+        shell: bash
+        run: |
+          echo archive_path= '${{ steps.create_windows_arm64_archive.outputs.archive_file }}' > $WINDOWS_ARM64_ARTIFACT_PATH
+
+      - name: Upload Archive Path
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_ARTIFACT }}
+          path: ${{ env.WINDOWS_ARM64_ARTIFACT_PATH }}
+          retention-days: 1
+
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_arm64_archive.outputs.archive_file }}
+          retention-days: 1
+
+  build_windows_arm64_debug:
+    name: Build (Windows ARM64 Debug)
+    runs-on: windows-11-vs2026-arm
+    continue-on-error: true
+    steps:
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Build
+        id: create_windows_arm64_debug_exe
+        shell: cmd
+        run: |
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -version [18.0^,19.0^) -requires Microsoft.VisualStudio.Component.VC.Tools.ARM64 -property installationPath`) do set "VCINSTALLDIR=%%i"
+          if not defined VCINSTALLDIR exit /b 1
+          call "%VCINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat"
+          msbuild projectfiles\visualstudio-2026\fbneo_vs2026.sln /m /property:Configuration=Debug /property:Platform=ARM64 /verbosity:minimal
+          set "PROJECT=projectfiles\visualstudio-2026"
+          for %%F in (ctv_make.exe pgm_sprite_create.exe m68kmake.exe build_details_arm64.exe) do dumpbin /headers "%PROJECT%\hosttools\x64\Release\%%F" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" /C:"machine (x64)" >nul || exit /b 1
+          dumpbin /headers "%PROJECT%\ARM64\Debug\fbneoarm64d.exe" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" >nul || exit /b 1
+          findstr /C:"#define BUILD_CPU  ARM64" "%PROJECT%\generated\build_details.h" >nul || exit /b 1
+          dir /s /b "%PROJECT%\ARM64\Debug\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
+          dir /s /b "%PROJECT%\ARM64\Debug\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
+
+      - name: Package
+        id: create_windows_arm64_debug_archive
+        shell: pwsh
+        run: |
+          $archive = '${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}.zip'
+          Compress-Archive -DestinationPath $archive -Force -Path `
+            projectfiles/visualstudio-2026/ARM64/Debug/fbneoarm64d.exe, `
+            src/license.txt, `
+            fbahelpfilesrc/fbneo.chm, `
+            whatsnew.html
+          "archive_file=$archive" >> $env:GITHUB_OUTPUT
+
+      - name: Create Archive Path
+        shell: bash
+        run: |
+          echo archive_path= '${{ steps.create_windows_arm64_debug_archive.outputs.archive_file }}' > $WINDOWS_ARM64_DEBUG_ARTIFACT_PATH
+
+      - name: Upload Archive Path
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}
+          path: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT_PATH }}
+          retention-days: 1
+
+      - name: Upload Archive as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_DEBUG_ARCHIVE_ARTIFACT }}
+          path: ${{ steps.create_windows_arm64_debug_archive.outputs.archive_file }}
+          retention-days: 1
+
   build_linux_sdl2_x86_64:
     name: Build (Linux SDL2 x86_64)
     runs-on: ubuntu-latest
@@ -419,7 +533,7 @@ jobs:
 #          retention-days: 1
 
   release:
-    needs: [ create_release_body, build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64 ] # , build_macos_x86_64, build_macos_arm64
+    needs: [ create_release_body, build_windows_x86_64, build_windows_x86_64_debug, build_windows_x86_32, build_windows_x86_32_debug, build_windows_arm64, build_windows_arm64_debug, build_linux_sdl2_x86_64, build_linux_sdl1_x86_64 ] # , build_macos_x86_64, build_macos_arm64
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -515,6 +629,46 @@ jobs:
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT }}
 
+      # Windows ARM64
+      - name: Download Artifact (Windows ARM64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows ARM64) and Store in Step Outputs
+        id: store_windows_arm64
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_ARM64_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Windows ARM64)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_ARCHIVE_ARTIFACT }}
+
+      # Windows ARM64 Debug
+      - name: Download Artifact (Windows ARM64 Debug)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}
+
+      - name: Extract Archive Path (Windows ARM64 Debug) and Store in Step Outputs
+        id: store_windows_arm64_debug
+        continue-on-error: true
+        run: |
+          archive_path=`sed -E -n -e 's/archive_path= //p' $WINDOWS_ARM64_DEBUG_ARTIFACT_PATH`
+          echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
+
+      - name: Download Artifact with Archive (Windows ARM64 Debug)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.WINDOWS_ARM64_DEBUG_ARCHIVE_ARTIFACT }}
+
       # Linux SDL2 x86_64
       - name: Download Artifact (Linux SDL2 x86_64)
         continue-on-error: true
@@ -604,6 +758,8 @@ jobs:
             gh release delete "latest" --cleanup-tag --yes
           fi
           gh release create "latest" --title "nightly release" --latest --target "${{ github.sha }}" --notes-file "${{ steps.store_release_body.outputs.archive_path }}" \
+            ${{ steps.store_windows_arm64.outputs.archive_path }} \
+            ${{ steps.store_windows_arm64_debug.outputs.archive_path }} \
             ${{ steps.store_linux_sdl2_x86_64.outputs.archive_path }} \
             ${{ steps.store_linux_sdl1_x86_64.outputs.archive_path }} \
             ${{ steps.store_windows_x86_64.outputs.archive_path }} \

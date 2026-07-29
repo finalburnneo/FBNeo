@@ -61,6 +61,20 @@ int WINAPI Empty_Kaillera_End_Game()
 
 int Init_Network(void)
 {
+	Kaillera_Get_Version          = Empty_Kaillera_Get_Version;
+	Kaillera_Init                 = Empty_Kaillera_Init;
+	Kaillera_Shutdown             = Empty_Kaillera_Shutdown;
+	Kaillera_Set_Infos            = Empty_Kaillera_Set_Infos;
+	Kaillera_Select_Server_Dialog = Empty_Kaillera_Select_Server_Dialog;
+	Kaillera_Modify_Play_Values   = Empty_Kaillera_Modify_Play_Values;
+	Kaillera_Chat_Send            = Empty_Kaillera_Chat_Send;
+	Kaillera_End_Game             = Empty_Kaillera_End_Game;
+	Kaillera_Initialised          = 0;
+
+#if defined _M_ARM64
+	return 1;
+#endif
+
 #if 0
 #if defined (_UNICODE)
 	Kaillera_HDLL = LoadLibrary(L"kailleraclient.dll");
@@ -118,16 +132,6 @@ int Init_Network(void)
 	} else {
 	}
 
-	Kaillera_Get_Version          = Empty_Kaillera_Get_Version;
-	Kaillera_Init                 = Empty_Kaillera_Init;
-	Kaillera_Shutdown             = Empty_Kaillera_Shutdown;
-	Kaillera_Set_Infos            = Empty_Kaillera_Set_Infos;
-	Kaillera_Select_Server_Dialog = Empty_Kaillera_Select_Server_Dialog;
-	Kaillera_Modify_Play_Values   = Empty_Kaillera_Modify_Play_Values;
-	Kaillera_Chat_Send            = Empty_Kaillera_Chat_Send;
-	Kaillera_End_Game             = Empty_Kaillera_End_Game;
-
-	Kaillera_Initialised = 0;
 	return 1;
 }
 

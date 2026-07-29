@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<FBNeoGeneratedDir>$(MSBuildProjectDirectory)\generated</FBNeoGeneratedDir>
+		<FBNeoHostToolsDir>$(MSBuildProjectDirectory)\hosttools\x64\Release</FBNeoHostToolsDir>
+		<FBNeoHostProperties>Configuration=Release;Platform=x64;PreferredToolArchitecture=x64</FBNeoHostProperties>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FBNeoHostToolProject Include="$(MSBuildProjectDirectory)\fbneo_ctv_make.vcxproj" />
+		<FBNeoHostToolProject Include="$(MSBuildProjectDirectory)\fbneo_pgm_sprite_create.vcxproj" />
+		<FBNeoHostToolProject Include="$(MSBuildProjectDirectory)\fbneo_m68kmake.vcxproj" />
+		<FBNeoHostToolProject Include="$(MSBuildProjectDirectory)\fbneo_build_details_arm64.vcxproj" />
+	</ItemGroup>
+
+	<Target Name="FBNeoBuildARM64HostTools">
+		<MakeDir Directories="$(FBNeoGeneratedDir);$(FBNeoHostToolsDir)" />
+		<MSBuild Projects="@(FBNeoHostToolProject)" Targets="Build" BuildInParallel="true" Properties="$(FBNeoHostProperties)" />
+	</Target>
+
+	<Target Name="FBNeoGenerateCTV" DependsOnTargets="FBNeoBuildARM64HostTools">
+		<Exec Command="&quot;$(FBNeoHostToolsDir)\ctv_make.exe&quot; &gt; &quot;$(FBNeoGeneratedDir)\ctv.h&quot;" />
+	</Target>
+
+	<Target Name="FBNeoGeneratePGMSprite" DependsOnTargets="FBNeoBuildARM64HostTools">
+		<Exec Command="&quot;$(FBNeoHostToolsDir)\pgm_sprite_create.exe&quot; &gt; &quot;$(FBNeoGeneratedDir)\pgm_sprite.h&quot;" />
+	</Target>
+
+	<Target Name="FBNeoGenerateM68K" DependsOnTargets="FBNeoBuildARM64HostTools">
+		<Exec Command="&quot;$(FBNeoHostToolsDir)\m68kmake.exe&quot; &quot;$(FBNeoGeneratedDir)/&quot; &quot;$(MSBuildProjectDirectory)\..\..\src\cpu\m68k\m68k_in.c&quot;" />
+	</Target>
+
+	<Target Name="FBNeoGenerateBuildDetails" DependsOnTargets="FBNeoBuildARM64HostTools">
+		<Exec Command="&quot;$(FBNeoHostToolsDir)\build_details_arm64.exe&quot; &gt; &quot;$(FBNeoGeneratedDir)\build_details.h&quot;" />
+	</Target>
+
+	<Target Name="FBNeoVerifyARM64GeneratedFiles"
+		DependsOnTargets="FBNeoGenerateCTV;FBNeoGeneratePGMSprite;FBNeoGenerateM68K;FBNeoGenerateBuildDetails"
+		BeforeTargets="PrepareForBuild">
+		<Error Condition="!Exists('$(FBNeoGeneratedDir)\ctv.h')" Text="ARM64 code generation did not create ctv.h." />
+		<Error Condition="!Exists('$(FBNeoGeneratedDir)\pgm_sprite.h')" Text="ARM64 code generation did not create pgm_sprite.h." />
+		<Error Condition="!Exists('$(FBNeoGeneratedDir)\m68kops.c')" Text="ARM64 code generation did not create m68kops.c." />
+		<Error Condition="!Exists('$(FBNeoGeneratedDir)\m68kops.h')" Text="ARM64 code generation did not create m68kops.h." />
+		<Error Condition="!Exists('$(FBNeoGeneratedDir)\build_details.h')" Text="ARM64 code generation did not create build_details.h." />
+		<Exec Command="for %%F in (&quot;$(FBNeoGeneratedDir)\ctv.h&quot; &quot;$(FBNeoGeneratedDir)\pgm_sprite.h&quot; &quot;$(FBNeoGeneratedDir)\m68kops.c&quot; &quot;$(FBNeoGeneratedDir)\m68kops.h&quot; &quot;$(FBNeoGeneratedDir)\build_details.h&quot;) do @if %%~zF EQU 0 (echo Generated file is empty: %%F&amp; exit /b 1)" />
+		<Exec Command="findstr /C:&quot;#define BUILD_CPU  ARM64&quot; &quot;$(FBNeoGeneratedDir)\build_details.h&quot; &gt;nul" />
+	</Target>
+</Project>

@@ -1,0 +1,76 @@
+name: Windows MSVC ARM64
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+concurrency:
+  group: windows-msvc-arm64-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (${{ matrix.configuration }} ARM64)
+    runs-on: windows-11-vs2026-arm
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - configuration: Release
+            executable: fbneoarm64.exe
+            artifact: windows-msvc-arm64
+          - configuration: Debug
+            executable: fbneoarm64d.exe
+            artifact: windows-msvc-arm64-debug
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v4
+
+      - name: Build
+        shell: cmd
+        run: |
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -version [18.0^,19.0^) -requires Microsoft.VisualStudio.Component.VC.Tools.ARM64 -property installationPath`) do set "VSINSTALLDIR=%%i"
+          if not defined VSINSTALLDIR exit /b 1
+          if not exist "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat" exit /b 1
+          call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat"
+          msbuild projectfiles\visualstudio-2026\fbneo_vs2026.sln /m /p:Configuration=${{ matrix.configuration }} /p:Platform=ARM64 /verbosity:minimal
+
+      - name: Verify architectures and generated files
+        shell: cmd
+        run: |
+          set "PROJECT=projectfiles\visualstudio-2026"
+          set "HOSTTOOLS=%PROJECT%\hosttools\x64\Release"
+          set "GENERATED=%PROJECT%\generated"
+          set "PRODUCT=%PROJECT%\ARM64\${{ matrix.configuration }}\${{ matrix.executable }}"
+          for %%F in (ctv_make.exe pgm_sprite_create.exe m68kmake.exe build_details_arm64.exe) do (
+            if not exist "%HOSTTOOLS%\%%F" exit /b 1
+            dumpbin /headers "%HOSTTOOLS%\%%F" | findstr /R /C:"machine (ARM64)" /C:"machine (AA64)" /C:"machine (x64)" >nul || exit /b 1
+          )
+          if not exist "%PRODUCT%" exit /b 1
+          dumpbin /headers "%PRODUCT%" | findstr /R /C:"machine (ARM64)" /C:"machine (AA64)" >nul || exit /b 1
+          for %%F in ("%GENERATED%\ctv.h" "%GENERATED%\pgm_sprite.h" "%GENERATED%\m68kops.c" "%GENERATED%\m68kops.h" "%GENERATED%\build_details.h") do (
+            if not exist "%%~fF" exit /b 1
+            if %%~zF EQU 0 exit /b 1
+          )
+          findstr /C:"#define BUILD_CPU  ARM64" "%GENERATED%\build_details.h" >nul || exit /b 1
+          dir /s /b "%PROJECT%\ARM64\${{ matrix.configuration }}\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
+          dir /s /b "%PROJECT%\ARM64\${{ matrix.configuration }}\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $stage = Join-Path $env:RUNNER_TEMP '${{ matrix.artifact }}'
+          New-Item -ItemType Directory -Force $stage | Out-Null
+          Copy-Item 'projectfiles/visualstudio-2026/ARM64/${{ matrix.configuration }}/${{ matrix.executable }}' $stage
+          Copy-Item 'src/license.txt' $stage
+          Copy-Item 'fbahelpfilesrc/fbneo.chm' $stage
+          Copy-Item 'whatsnew.html' $stage
+          Compress-Archive -Path "$stage/*" -DestinationPath '${{ matrix.artifact }}.zip'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}.zip
+          if-no-files-found: error

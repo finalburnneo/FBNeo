@@ -271,6 +271,9 @@
     <ClCompile Include="..\..\src\burn\devices\x2212.cpp">
       <Filter>burn\devices</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\cxd1095.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\atari\d_akkaarrh.cpp">
       <Filter>burn\drv\atari</Filter>
     </ClCompile>
@@ -1634,6 +1637,9 @@
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spacefb.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_spbactn.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp">

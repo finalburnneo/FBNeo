@@ -838,6 +838,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "ngp",		{ HARDWARE_SNK_NGP, 0 } },
 	{ "ngpc",		{ HARDWARE_SNK_NGP | 0x10000, 0 } },
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
+	{ "astrocade",	{ HARDWARE_ASTROHOME, 0 } },
 	{ "cps1",		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, 0 } },
 	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
 	{ "cps3",		{ HARDWARE_CAPCOM_CPS3, 0 } },

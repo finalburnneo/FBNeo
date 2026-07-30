@@ -6,7 +6,7 @@
 extern char videofiltering[3];
 
 // reduce the total number of sets by the number of romsets flagged with BDF_BOARDROM
-#define REDUCE_TOTAL_SETS_BIOS		21
+#define REDUCE_TOTAL_SETS_BIOS		31
 #define MAX_STRING_SIZE 300
 // Limit CPU usage
 #define maxfps 20

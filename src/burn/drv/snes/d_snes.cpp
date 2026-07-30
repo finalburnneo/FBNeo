@@ -45923,7 +45923,7 @@ struct BurnDriver BurnDrvsnes_Squirrel = {
 // Street Fighter EX Plus Alpha (USA) (Unl)
 
 static struct BurnRomInfo snes_SfexpalphaRomDesc[] = {
-	{ "Street Fighter EX Plus Alpha (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0xbf3fa644, BRF_ESS | BRF_PRG },
+	{ "Street Fighter EX Plus Alpha (U)(Unl)(1997)(DVS Electronic).sfc", 2097152, 0xdad59b9f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Sfexpalpha)

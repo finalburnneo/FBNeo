@@ -47,6 +47,20 @@ typedef struct CartHeader {
 
 static void readHeader(const uint8_t* data, int length, int location, CartHeader* header, int position);
 
+static UINT32 CalculateCRC32(const UINT8* data, INT32 length)
+{
+	UINT32 crc = 0xffffffff;
+
+	for (INT32 i = 0; i < length; i++) {
+		crc ^= data[i];
+		for (INT32 j = 0; j < 8; j++) {
+			crc = (crc >> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+		}
+	}
+
+	return ~crc;
+}
+
 bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata, int bioslength) {
 	// if smaller than smallest possible, don't load
 	if (length < 0x8000) {
@@ -83,6 +97,7 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 		data   += 0x200; // move pointer past header
 		length -= 0x200; // and subtract from size
 	}
+	UINT8 isSFEX = length == 0x200000 && CalculateCRC32(data, length) == 0xdad59b9f;
 	// check if we can load it
 	if (headers[used].cartType > 4) {
 		bprintf(0, _T("Failed to load rom: unsupported type (%d)\n"), headers[used].cartType);
@@ -255,6 +270,10 @@ bool snes_loadRom(Snes* snes, const uint8_t* data, int length, uint8_t* biosdata
 			bprintf(0, _T("-we have st018 bios, lets go!\n"));
 			headers[used].cartType = CART_ST018;
 			break;
+	}
+
+	if (isSFEX) {
+		headers[used].cartType = CART_SFEX;
 	}
 
 	// load it

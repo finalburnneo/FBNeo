@@ -50,6 +50,8 @@ static uint8_t cart_readMSU1(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeMSU1(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
 static uint8_t cart_readST018(Cart* cart, uint8_t bank, uint16_t adr);
 static void cart_writeST018(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val);
+static UINT8 CartReadSFEX(Cart* cart, UINT8 bank, UINT16 address);
+static void CartWriteSFEX(Cart* cart, UINT8 bank, UINT16 address, UINT8 value);
 
 uint8_t (*cart_read)(Cart* cart, uint8_t bank, uint16_t adr) = NULL;
 void (*cart_write)(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val) = NULL;
@@ -58,7 +60,7 @@ void cart_run_dummy() { }
 void cart_mapRun(Cart* cart);
 
 const char *cart_gettype(int ctype) {
-  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX", "SPC7110", "MSU1", "ST018"};
+  const char* cartTypeNames[CART_MAXENTRY] = {"(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX", "SPC7110", "MSU1", "ST018", "SFEX"};
   return cartTypeNames[(ctype < CART_MAXENTRY) ? ctype : 0];
 }
 
@@ -81,6 +83,7 @@ static void cart_mapRwHandlers(Cart* cart) {
 	case CART_SPC7110: cart_read = cart_readSPC7110; cart_write = cart_writeSPC7110; break;
 	case CART_MSU1: cart_read = cart_readMSU1; cart_write = cart_writeMSU1; break;
 	case CART_ST018: cart_read = cart_readST018; cart_write = cart_writeST018; break;
+	case CART_SFEX: cart_read = CartReadSFEX; cart_write = CartWriteSFEX; break;
 	default:
 	  bprintf(0, _T("cart_mapRwHandlers(): invalid type specified: %x\n"), cart->type); break;
   }
@@ -105,6 +108,7 @@ Cart* cart_init(Snes* snes) {
   cart->eromSize = 0;
   cart->hasRTC = false;
   cart->msuBase = 0;
+  cart->sfexChallenge = 0;
   return cart;
 }
 
@@ -195,6 +199,9 @@ void cart_reset(Cart* cart) {
 	  snes_st018_reset();
 	  bprintf(0, _T("init/reset st018 (bios %x)\n"), cart->biosSize);
 	  break;
+	case CART_SFEX:
+	  cart->sfexChallenge = 0;
+	  break;
 	case CART_CX4: // capcom cx4
 	  cx4_init(cart->snes);
 	  cx4_reset();
@@ -265,6 +272,7 @@ void cart_handleState(Cart* cart, StateHandler* sh) {
 	  case CART_SPC7110: snes_spc7110_handleState(sh); break;
 	  case CART_MSU1: snes_msu1_handleState(sh); break;
 	  case CART_ST018: snes_st018_handleState(sh); break;
+	  case CART_SFEX: sh_handleBytes(sh, &cart->sfexChallenge, NULL); break;
   }
 }
 
@@ -734,4 +742,35 @@ static void cart_writeST018(Cart* cart, uint8_t bank, uint16_t adr, uint8_t val)
 		return;
 	}
 	cart_writeLorom(cart, bank, adr, val);
+}
+
+static UINT8 CartReadSFEX(Cart* cart, UINT8 bank, UINT16 address)
+{
+	UINT8 value = cart_readLorom(cart, bank, address);
+
+	if (bank != 0x80 || address < 0x8100 || address > 0x81f0) {
+		return value;
+	}
+
+	switch (cart->sfexChallenge) {
+		case 0x36: return (value & 0xf0) | 0x03;
+		case 0x25: return (value & 0xf0) | 0x0a;
+		case 0x38: return (value & 0xf0) | 0x02;
+	}
+
+	return value;
+}
+
+static void CartWriteSFEX(Cart* cart, UINT8 bank, UINT16 address, UINT8 value)
+{
+	if (bank != 0x80 || address < 0x8000 || address > 0x87ff) {
+		cart_writeLorom(cart, bank, address, value);
+		return;
+	}
+
+	if (address < 0x8100) {
+		cart->sfexChallenge = 0;
+	} else if (address >= 0x8200) {
+		cart->sfexChallenge |= 1 << ((address >> 8) - 0x82);
+	}
 }

@@ -2341,6 +2341,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_freekick.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_galgame.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_galivan.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>

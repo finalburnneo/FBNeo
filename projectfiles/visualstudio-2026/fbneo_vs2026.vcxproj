@@ -473,6 +473,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_freekick.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_funkybee.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_galaga.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_galgame.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_galivan.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_gaplus.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ginganin.cpp" />

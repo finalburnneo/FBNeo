@@ -56,13 +56,13 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Service",			BIT_DIGITAL,	DrvJoy3 + 1,    "service"   },
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dips",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
@@ -71,35 +71,36 @@ STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x11, NULL                     },
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0x11, NULL                   },
 
-	{0,    0xfe,    0,    8, "Coinage"	          },
-	{0x0d, 0x01, 0x07, 0x00, "2 Coins 1 Credit"	  },
-	{0x0d, 0x01, 0x07, 0x01, "1 Coin  1 Credit"	  },
-	{0x0d, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	  },
-	{0x0d, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	  },
-	{0x0d, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	  },
-	{0x0d, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	  },
-	{0x0d, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	  },
-	{0x0d, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	  },
+	{0,    0xfe,    0,    8, "Coinage"	          	},
+	{0x00, 0x01, 0x07, 0x00, "2 Coins 1 Credit"	  	},
+	{0x00, 0x01, 0x07, 0x01, "1 Coin  1 Credit"	  	},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
 
-	{0   , 0xfe, 0   , 4   , "Timer Speed"            },
-	{0x0d, 0x01, 0x18, 0x18, "Slow"     		  },
-	{0x0d, 0x01, 0x18, 0x10, "Medium"    		  },
-	{0x0d, 0x01, 0x18, 0x08, "Fast"     		  },
-	{0x0d, 0x01, 0x18, 0x00, "Fastest"    		  },
+	{0   , 0xfe, 0   , 4   , "Timer Speed"          },
+	{0x00, 0x01, 0x18, 0x18, "Slow"     		  	},
+	{0x00, 0x01, 0x18, 0x10, "Medium"    		  	},
+	{0x00, 0x01, 0x18, 0x08, "Fast"     		  	},
+	{0x00, 0x01, 0x18, 0x00, "Fastest"    		  	},
 
-	{0   , 0xfe, 0   , 2   , "Bonus"                  },
-	{0x0d, 0x01, 0x20, 0x00, "200k"       		  },
-	{0x0d, 0x01, 0x20, 0x20, "400k"       		  },
+	{0   , 0xfe, 0   , 2   , "Bonus"                },
+	{0x00, 0x01, 0x20, 0x00, "200k"       		  	},
+	{0x00, 0x01, 0x20, 0x20, "400k"       		  	},
 
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x0d, 0x01, 0x40, 0x00, "Upright"     		  },
-	{0x0d, 0x01, 0x40, 0x40, "Cocktail"    		  },
+	{0   , 0xfe, 0   , 2   , "Cabinet"              },
+	{0x00, 0x01, 0x40, 0x00, "Upright"     		  	},
+	{0x00, 0x01, 0x40, 0x40, "Cocktail"    		  	},
 
-	{0   , 0xfe, 0   , 2   , "Invulnerability?"       },
-	{0x0d, 0x01, 0x80, 0x00, "Off"     		  },
-	{0x0d, 0x01, 0x80, 0x80, "On"    		  },
+	{0   , 0xfe, 0   , 2   , "Invulnerability?"     },
+	{0x00, 0x01, 0x80, 0x00, "Off"     		  		},
+	{0x00, 0x01, 0x80, 0x80, "On"    		  		},
 };
 
 STDDIPINFO(Drv)

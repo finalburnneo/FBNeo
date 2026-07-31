@@ -343,15 +343,15 @@ void K052109Write(UINT32 Offset, UINT8 Data)
 
 			case 0x3d80: // Surprise Attack (rom test)
 			{
-//				K052109CharRomBank2[0];
-//				K052109CharRomBank2[1];
+				K052109CharRomBank2[0] = Data & 0x0f;
+				K052109CharRomBank2[1] = (Data >> 4) & 0x0f;
 				return;
 			}
 
 			case 0x3f00: // Surprise Attack (rom test)
 			{
-//				K052109CharRomBank2[2];
-//				K052109CharRomBank2[3];
+				K052109CharRomBank2[2] = Data & 0x0f;
+				K052109CharRomBank2[3] = (Data >> 4) & 0x0f;
 				return;
 			}
 

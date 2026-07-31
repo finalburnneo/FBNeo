@@ -5,7 +5,7 @@
 #ifndef MSU1_H
 #define MSU1_H
 
-#define MSU1_DEBUG	0
+#define MSU1_DEBUG	1
 
 #include "burnint.h"
 #include "statehandler.h"

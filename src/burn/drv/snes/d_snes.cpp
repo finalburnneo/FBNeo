@@ -10738,6 +10738,26 @@ struct BurnDriver BurnDrvsnes_doomj = {
 	512, 448, 4, 3
 };
 
+// Doom FX3 (USA)
+// GSU-3 / SuperFX 3
+
+static struct BurnRomInfo snes_doomfx3RomDesc[] = {
+	{ "Doom FX3(U)(2025)(Limited Run Games).sfc", 4194304, 0x8698cbac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_doomfx3)
+STD_ROM_FN(snes_doomfx3)
+
+struct BurnDriver BurnDrvsnes_doomfx3 = {
+	"snes_doomfx3", "snes_doom", NULL, NULL, "2025",
+	"Doom FX3 (USA)\0", NULL, "Limited Run Games", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_SHOOT, 0,
+	SNESGetZipName, snes_doomfx3RomInfo, snes_doomfx3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Doomsday Warrior (USA)
 
 static struct BurnRomInfo snes_DoomsdaywRomDesc[] = {

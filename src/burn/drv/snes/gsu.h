@@ -8,8 +8,12 @@
 #include "burnint.h"
 #include "statehandler.h"
 
+#define SNES_GSU_1 1
+#define SNES_GSU_2 2
+#define SNES_GSU_3 3
+
 typedef struct Snes Snes;
-void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT32 hirom, UINT32 oscillator);
+void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, UINT8 gsuType, UINT32 oscillator);
 void snes_gsu_reset();
 void snes_gsu_exit();
 void snes_gsu_run();

@@ -121,7 +121,7 @@ static UINT8* gsu_ram;
 static UINT32 gsu_ram_size;
 static UINT32 gsu_ram_mask;
 
-static INT32  gsu_hirom;	// 0 = GSU-1 window set, 1 = GSU-2 window set
+static UINT8  gsu_type;
 
 // -----------------------------------------------------------------------------
 //  Forward declarations
@@ -147,6 +147,7 @@ static UINT8 snes_gsu_color(UINT8 source);
 static void  snes_gsu_plot(UINT8 x, UINT8 y);
 static UINT8 snes_gsu_rpix(UINT8 x, UINT8 y);
 static void  snes_gsu_pixelcache_flush(SnesGsuPixelCache* pc);
+static void  snes_gsu_fx3_command();
 
 static void  snes_gsu_execute(UINT8 opcode);
 static void  snes_gsu_update_irq_forward();
@@ -174,11 +175,13 @@ static inline void snes_gsu_regs_reset()
 
 static UINT8 snes_gsu_bus_read(UINT32 address)
 {
+	UINT8 bank = address >> 16;
+
 	if ((address & 0xc00000) == 0x000000) {		// $00-3f:0000-7fff, :8000-ffff
 		return gsu_rom[(((address & 0x3f0000) >> 1) | (address & 0x7fff)) & gsu_rom_mask];
 	}
 
-	if ((address & 0xe00000) == 0x400000) {		// $40-5f:0000-ffff
+	if (bank >= 0x40 && bank <= ((gsu_type == SNES_GSU_3) ? 0x6f : 0x5f)) {
 		return gsu_rom[address & gsu_rom_mask];
 	}
 
@@ -213,8 +216,8 @@ static UINT8 snes_gsu_op_read(UINT16 address) {
 		return gsu.cache_buffer[offset];
 	}
 
-	if (gsu.pbr <= 0x5f) {
-		// $00-5f:0000-ffff ROM
+	if (gsu.pbr <= ((gsu_type == SNES_GSU_3) ? 0x6f : 0x5f)) {
+		// $00-6f:0000-ffff ROM
 		snes_gsu_rombuffer_sync();
 		snes_gsu_step(gsu.clsr ? 5 : 6);
 		return snes_gsu_bus_read((gsu.pbr << 16) | address);
@@ -429,6 +432,42 @@ static void snes_gsu_pixelcache_flush(SnesGsuPixelCache* pc)
 	pc->bitpend = 0x00;
 }
 
+static void snes_gsu_fx3_clear(UINT8 start, UINT8 end)
+{
+	static const UINT8 pattern[64] = {
+		0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00,
+		0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff,
+		0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	};
+
+	snes_gsu_rambuffer_sync();
+	snes_gsu_pixelcache_flush(&gsu.pixelcache[1]);
+	snes_gsu_pixelcache_flush(&gsu.pixelcache[0]);
+
+	for (UINT32 row = 0; row < 18; row++) {
+		for (UINT32 column = start; column <= end; column++) {
+			UINT32 address = 0x10000 + row * 64 + column * 20 * 64;
+			if (gsu_ram != NULL && address <= gsu_ram_size && gsu_ram_size - address >= 64) {
+				for (UINT32 i = 0; i < 64; i++) gsu_ram[address + i] = pattern[i];
+			}
+		}
+	}
+}
+
+static void snes_gsu_fx3_command()
+{
+	switch (gsu.r[0]) {
+		case 3: snes_gsu_fx3_clear( 0,  8); break;
+		case 4: snes_gsu_fx3_clear( 9, 17); break;
+		case 5: snes_gsu_fx3_clear(18, 26); break;
+	}
+}
+
 #include "gsu_ops.h"
 #include "gsu_table.h"
 
@@ -464,7 +503,7 @@ static void snes_gsu_power()
 	gsu.por_dither = gsu.por_transparent = 0;								// por = 0x00
 
 	gsu.bramr = 0;
-	gsu.vcr   = 0x04;
+	gsu.vcr   = (gsu_type == SNES_GSU_3) ? 0x52 : 0x04;
 
 	gsu.cfgr_irq = 0; gsu.cfgr_ms0 = 0;										// cfgr = 0x00
 
@@ -642,7 +681,7 @@ static inline UINT32 snes_gsu_scpu_rom_offset(UINT8 bank, UINT16 adr)
 
 static UINT8 snes_gsu_cpurom_read(UINT8 bank, UINT16 adr)
 {
-	if (gsu.sfr_g && gsu.scmr_ron) {
+	if (gsu_type != SNES_GSU_3 && gsu.sfr_g && gsu.scmr_ron) {
 		static const UINT8 vector[16] = {
 		  0x00, 0x01, 0x00, 0x01, 0x04, 0x01, 0x00, 0x01,
 		  0x00, 0x01, 0x08, 0x01, 0x00, 0x01, 0x0c, 0x01,
@@ -654,7 +693,7 @@ static UINT8 snes_gsu_cpurom_read(UINT8 bank, UINT16 adr)
 
 static UINT8 snes_gsu_cpuram_read(UINT32 ram_offset)
 {
-	if (gsu.sfr_g && gsu.scmr_ran) return gsu_snes->openBus;
+	if (gsu_type != SNES_GSU_3 && gsu.sfr_g && gsu.scmr_ran) return gsu_snes->openBus;
 	return gsu_ram[ram_offset & gsu_ram_mask];
 }
 
@@ -668,30 +707,40 @@ UINT8 snes_gsu_cart_read(UINT32 address)
 	UINT8  bank = (address >> 16) & 0xff;
 	UINT16 adr  = address & 0xffff;
 
-	// MMIO: $3000-34ff in banks 00-3f / 80-bf
+	if (gsu_type == SNES_GSU_3) {
+		if ((bank & 0x40) == 0 && adr >= 0x7000 && adr <= 0x7fff) {
+			if ((adr & 0x0300) == 0x0300) return gsu_snes->openBus;
+			return snes_gsu_mmio_read(adr);
+		}
+		if (gsu_ram_size > 0 && bank >= 0x70 && bank <= 0x71) {
+			return snes_gsu_cpuram_read(((bank & 1) << 16) | adr);
+		}
+		if (((bank & 0x40) == 0 && adr >= 0x8000) ||
+			(bank >= 0x40 && bank <= 0x6f) || bank >= 0xc0) {
+			return snes_gsu_cpurom_read(bank, adr);
+		}
+		return gsu_snes->openBus;
+	}
+
 	if (adr >= 0x3000 && adr <= 0x34ff && (bank & 0x40) == 0x00) {
 		return snes_gsu_mmio_read(adr);
 	}
 
-	// Save-RAM window
 	if (gsu_ram_size > 0) {
-		if (gsu_hirom) {
-			// GSU-2
+		if (gsu_type == SNES_GSU_2) {
 			if ((bank & 0x40) == 0x00 && adr >= 0x6000 && adr < 0x8000) {
-				return snes_gsu_cpuram_read(adr & 0x1fff);					// 00-3f,80-bf:6000-7fff 8K page
+				return snes_gsu_cpuram_read(adr & 0x1fff);
 			}
 			if (((bank & 0x7f) == 0x70) || ((bank & 0x7f) == 0x71)) {
-				return snes_gsu_cpuram_read(((bank & 1) << 16) | adr);		// 70-71,f0-f1 64K banks
+				return snes_gsu_cpuram_read(((bank & 1) << 16) | adr);
 			}
 		} else {
-			// GSU-1
 			if ((bank & 0x7f) >= 0x60 && (bank & 0x7f) <= 0x7d) {
-				return snes_gsu_cpuram_read(((bank & 0x1f) << 16) | adr);	// 60-7d,e0-fd 64K banks
+				return snes_gsu_cpuram_read(((bank & 0x1f) << 16) | adr);
 			}
 		}
 	}
 
-	// ROM window
 	if (adr >= 0x8000 || (bank & 0x40)) {
 		return snes_gsu_cpurom_read(bank, adr);
 	}
@@ -704,14 +753,24 @@ void snes_gsu_cart_write(UINT32 address, UINT8 data)
 	UINT8  bank = (address >> 16) & 0xff;
 	UINT16 adr = address & 0xffff;
 
+	if (gsu_type == SNES_GSU_3) {
+		if ((bank & 0x40) == 0 && adr >= 0x7000 && adr <= 0x7fff) {
+			if ((adr & 0x0300) != 0x0300) snes_gsu_mmio_write(adr, data);
+			return;
+		}
+		if (gsu_ram_size > 0 && bank >= 0x70 && bank <= 0x71) {
+			snes_gsu_cpuram_write(((bank & 1) << 16) | adr, data);
+		}
+		return;
+	}
+
 	if ((bank & 0x40) == 0x00 && adr >= 0x3000 && adr <= 0x34ff) {
 		snes_gsu_mmio_write(adr, data);
 		return;
 	}
 
 	if (gsu_ram_size > 0) {
-		if (gsu_hirom) {
-			// GSU-2
+		if (gsu_type == SNES_GSU_2) {
 			if ((bank & 0x40) == 0x00 && adr >= 0x6000 && adr < 0x8000) {
 				snes_gsu_cpuram_write(adr & 0x1fff, data);
 				return;
@@ -721,7 +780,6 @@ void snes_gsu_cart_write(UINT32 address, UINT8 data)
 				return;
 			}
 		} else {
-			// GSU-1
 			if ((bank & 0x7f) >= 0x60 && (bank & 0x7f) <= 0x7d) {
 				snes_gsu_cpuram_write(((bank & 0x1f) << 16) | adr, data);
 				return;
@@ -791,7 +849,7 @@ static UINT32 snes_gsu_rom_size_round(UINT32 size)
 //  Lifecycle
 // =============================================================================
 
-void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, INT32 hirom, UINT32 oscillator)
+void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSize, UINT8 gsuType, UINT32 oscillator)
 {
 	gsu_snes     = (Snes*)mem;
 
@@ -799,7 +857,7 @@ void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSi
 	gsu_rom_size = romSize;
 	gsu_ram      = ram;
 	gsu_ram_size = ramSize;
-	gsu_hirom    = hirom;
+	gsu_type     = gsuType;
 
 	gsu_rom_mask = snes_gsu_rom_size_round(gsu_rom_size) - 1;
 	gsu_ram_mask = (gsu_ram_size > 0) ? (gsu_ram_size - 1) : 0;
@@ -815,8 +873,8 @@ void snes_gsu_init(void* mem, UINT8* rom, INT32 romSize, UINT8* ram, INT32 ramSi
 	gsu.gsu_clock_fp   = 0;
 	gsu.gsu_clock_base = 0;
 
-	bprintf(0, _T("gsu (superfx): init  rom %x  ram %x  (%S)  osc %u Hz  cpu %u Hz\n"),
-		gsu_rom_size, gsu_ram_size, hirom ? "GSU-2" : "GSU-1", gsu.gsu_freq, gsu.cpu_freq);
+	bprintf(0, _T("gsu (superfx): init  rom %x  ram %x  (GSU-%d)  osc %u Hz  cpu %u Hz\n"),
+		gsu_rom_size, gsu_ram_size, gsu_type, gsu.gsu_freq, gsu.cpu_freq);
 }
 
 void snes_gsu_reset()

@@ -15,6 +15,7 @@ static inline void snes_gsu_por_set(UINT8 d)
 //$00 stop
 static void snes_gsu_i_stop()
 {
+	if (gsu_type == SNES_GSU_3) snes_gsu_reg_write(15, 0);
 	if (gsu.cfgr_irq == 0) {
 		gsu.sfr_irq = 1;
 		snes_gsu_stop();
@@ -220,6 +221,11 @@ static void snes_gsu_i_sub_sbc_cmp(UINT32 n)
 //$70 merge
 static void snes_gsu_i_merge()
 {
+	if (gsu_type == SNES_GSU_3) {
+		snes_gsu_fx3_command();
+		return;
+	}
+
 	UINT16 d   = (gsu.r[7] & 0xff00) | (gsu.r[8] >> 8);
 	SNES_GSU_DR_WRITE(d);
 	gsu.sfr_ov = (d & 0xc0c0) != 0;

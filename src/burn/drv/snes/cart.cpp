@@ -60,7 +60,7 @@ void cart_run_dummy() { }
 void cart_mapRun(Cart* cart);
 
 const char* cart_gettype(INT32 ctype) {
-	const char* cartTypeNames[CART_MAXENTRY] = { "(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX", "SPC7110", "MSU1", "ST018", "SFEX" };
+	const char* cartTypeNames[CART_MAXENTRY] = { "(none)", "LoROM", "HiROM", "ExLoROM", "ExHiROM", "CX4", "LoROM-DSP", "HiROM-DSP", "LoROM-SeTa", "LoROM-SA1", "LoROM-OBC1", "LoROM-SDD1", "SuperFX", "SPC7110", "MSU1", "ST018", "SFEX", "SuperFX3" };
 	return cartTypeNames[(ctype < CART_MAXENTRY) ? ctype : 0];
 }
 
@@ -78,7 +78,8 @@ static void cart_mapRwHandlers(Cart* cart) {
 		case CART_LOROMSA1:  cart_read = cart_readLoromSA1;  cart_write = cart_writeLoromSA1;  break;
 		case CART_LOROMOBC1: cart_read = cart_readLoromOBC1; cart_write = cart_writeLoromOBC1; break;
 		case CART_LOROMSDD1: cart_read = cart_readLoromSDD1; cart_write = cart_writeLoromSDD1; break;
-		case CART_SUPERFX:   cart_read = cart_readSuperFX;   cart_write = cart_writeSuperFX;   break;
+		case CART_SUPERFX:
+		case CART_SUPERFX3:  cart_read = cart_readSuperFX;   cart_write = cart_writeSuperFX;   break;
 		case CART_SPC7110:   cart_read = cart_readSPC7110;   cart_write = cart_writeSPC7110;   break;
 		case CART_MSU1:      cart_read = cart_readMSU1;      cart_write = cart_writeMSU1;      break;
 		case CART_ST018:     cart_read = cart_readST018;     cart_write = cart_writeST018;     break;
@@ -90,24 +91,25 @@ static void cart_mapRwHandlers(Cart* cart) {
 
 Cart* cart_init(Snes* snes) {
 	Cart* cart = (Cart*)BurnMalloc(sizeof(Cart));
-	cart->snes = snes;
-	cart->type = CART_NONE;
+	cart->snes        = snes;
+	cart->type        = CART_NONE;
 	cart_mapRwHandlers(cart);
 	cart_mapRun(cart);
-	cart->hasBattery = 0;
-	cart->rom = NULL;
-	cart->romSize = 0;
+	cart->hasBattery  = 0;
+	cart->rom         = NULL;
+	cart->romSize     = 0;
 	cart->romTrueSize = 0;
-	cart->ram = NULL;
-	cart->ramSize = 0;
-	cart->bios = NULL;
-	cart->biosSize = 0;
-	cart->oscillator = 0;
-	cart->promSize   = 0;
-	cart->eromSize   = 0;
-	cart->hasRTC     = false;
-	cart->msuBase      = 0;
-	cart->sfexTag = 0;
+	cart->ram         = NULL;
+	cart->ramSize     = 0;
+	cart->bios        = NULL;
+	cart->biosSize    = 0;
+	cart->oscillator  = 0;
+	cart->promSize    = 0;
+	cart->eromSize    = 0;
+	cart->hasRTC      = false;
+	cart->msuBase     = 0;
+	cart->sfexTag     = 0;
+	cart->gsuType     = SNES_GSU_1;
 	return cart;
 }
 
@@ -117,7 +119,7 @@ Cart* cart_init(Snes* snes) {
 static double upd_CyclesPerMaster;
 static UINT64 upd_cycles;
 static UINT8 *upd_ram = NULL;
-static Snes *upd_snes_ctx;
+static Snes  *upd_snes_ctx;
 
 void upd_run() {
 	const UINT64 upd_sync_to = (UINT64)upd_snes_ctx->cycles * upd_CyclesPerMaster;
@@ -133,7 +135,8 @@ void cart_free(Cart* cart)
 	switch (cart->type) {
 		case CART_LOROMSA1:  snes_sa1_exit();                            break;
 		case CART_LOROMSDD1: snes_sdd1_exit();                           break;
-		case CART_SUPERFX:   snes_gsu_exit();                            break;
+		case CART_SUPERFX:
+		case CART_SUPERFX3:  snes_gsu_exit();                            break;
 		case CART_SPC7110:   snes_spc7110_exit();                        break;
 		case CART_MSU1:      snes_msu1_exit(); snes_msu1_backend_free(); break;
 		case CART_ST018:     snes_st018_exit();                          break;
@@ -151,8 +154,9 @@ void cart_mapRun(Cart* cart)
 {
 	switch (cart->type) {
 	case CART_CX4:       cart_run = cx4_run;                                 break;
-	case CART_LOROMSA1:  cart_run = snes_sa1_run; cart->heavySync = true;    break;
-	case CART_SUPERFX:   cart_run = snes_gsu_run; cart->heavySync = true;    break;
+	case CART_LOROMSA1:  cart_run = snes_sa1_run;   cart->heavySync = true;  break;
+	case CART_SUPERFX:
+	case CART_SUPERFX3:  cart_run = snes_gsu_run;   cart->heavySync = true;  break;
 	case CART_ST018:     cart_run = snes_st018_run; cart->heavySync = true;  break;
 	case CART_LOROMDSP:
 	case CART_HIROMDSP:
@@ -177,9 +181,10 @@ void cart_reset(Cart* cart)
 			bprintf(0, _T("init/reset sdd-1\n"));
 			break;
 		case CART_SUPERFX:
-			snes_gsu_init(cart->snes, cart->rom, cart->romSize, cart->ram, cart->ramSize, (cart->ramSize > 0x10000) ? 1 : 0, cart->oscillator);
+		case CART_SUPERFX3:
+			snes_gsu_init(cart->snes, cart->rom, cart->romSize, cart->ram, cart->ramSize, cart->gsuType, cart->oscillator);
 			snes_gsu_reset();
-			bprintf(0, _T("init/reset superfx (gsu)\n"));
+			bprintf(0, _T("init/reset superfx (gsu-%d)\n"), cart->gsuType);
 			break;
 		case CART_SPC7110:
 			snes_spc7110_init(cart->rom, cart->romTrueSize, cart->ram, cart->ramSize, cart->promSize, cart->eromSize, cart->hasRTC);
@@ -268,7 +273,8 @@ void cart_handleState(Cart* cart, StateHandler* sh)
 		case CART_HIROMDSP:
 		case CART_LOROMSETA: upd_handleState(sh, cart->type);          break;
 		case CART_LOROMSDD1: snes_sdd1_handleState(sh);                break;
-		case CART_SUPERFX:   snes_gsu_handleState(sh);                 break;
+		case CART_SUPERFX:
+		case CART_SUPERFX3:  snes_gsu_handleState(sh);                 break;
 		case CART_SPC7110:   snes_spc7110_handleState(sh);             break;
 		case CART_MSU1:      snes_msu1_handleState(sh);                break;
 		case CART_ST018:     snes_st018_handleState(sh);               break;
@@ -363,16 +369,16 @@ static void cart_writeDummy(Cart* cart, UINT8 bank, UINT16 adr, UINT8 val)
 #if 0
 UINT8 cart_read_switched(Cart* cart, UINT8 bank, UINT16 adr) {
 	switch (cart->type) {
-	case CART_NONE: return cart->snes->openBus;
-	case CART_LOROM: return cart_readLorom(cart, bank, adr);
-	case CART_HIROM: return cart_readHirom(cart, bank, adr);
-	case CART_EXLOROM: return cart_readExLorom(cart, bank, adr);
-	case CART_EXHIROM: return cart_readExHirom(cart, bank, adr);
-	case CART_CX4: return cart_readCX4(cart, bank, adr);
-	case CART_LOROMDSP: return cart_readLoromDSP(cart, bank, adr);
-	case CART_HIROMDSP: return cart_readHiromDSP(cart, bank, adr);
+	case CART_NONE:      return cart->snes->openBus;
+	case CART_LOROM:     return cart_readLorom(    cart, bank, adr);
+	case CART_HIROM:     return cart_readHirom(    cart, bank, adr);
+	case CART_EXLOROM:   return cart_readExLorom(  cart, bank, adr);
+	case CART_EXHIROM:   return cart_readExHirom(  cart, bank, adr);
+	case CART_CX4:       return cart_readCX4(      cart, bank, adr);
+	case CART_LOROMDSP:  return cart_readLoromDSP( cart, bank, adr);
+	case CART_HIROMDSP:  return cart_readHiromDSP( cart, bank, adr);
 	case CART_LOROMSETA: return cart_readLoromSeta(cart, bank, adr);
-	case CART_LOROMSA1: return cart_readLoromSA1(cart, bank, adr);
+	case CART_LOROMSA1:  return cart_readLoromSA1( cart, bank, adr);
 	case CART_LOROMOBC1: return cart_readLoromOBC1(cart, bank, adr);
 	case CART_LOROMSDD1: return cart_readLoromSDD1(cart, bank, adr);
 	}
@@ -381,16 +387,16 @@ UINT8 cart_read_switched(Cart* cart, UINT8 bank, UINT16 adr) {
 
 void cart_write_switched(Cart* cart, UINT8 bank, UINT16 adr, UINT8 val) {
 	switch (cart->type) {
-	case CART_NONE: break;
-	case CART_LOROM: cart_writeLorom(cart, bank, adr, val); break;
-	case CART_HIROM: cart_writeHirom(cart, bank, adr, val); break;
-	case CART_EXLOROM: cart_writeLorom(cart, bank, adr, val); break;
-	case CART_EXHIROM: cart_writeHirom(cart, bank, adr, val); break;
-	case CART_CX4: cart_writeCX4(cart, bank, adr, val); break;
-	case CART_LOROMDSP: cart_writeLoromDSP(cart, bank, adr, val); break;
-	case CART_HIROMDSP: cart_writeHiromDSP(cart, bank, adr, val); break;
+	case CART_NONE:                                                 break;
+	case CART_LOROM:     cart_writeLorom(    cart, bank, adr, val); break;
+	case CART_HIROM:     cart_writeHirom(    cart, bank, adr, val); break;
+	case CART_EXLOROM:   cart_writeLorom(    cart, bank, adr, val); break;
+	case CART_EXHIROM:   cart_writeHirom(    cart, bank, adr, val); break;
+	case CART_CX4:       cart_writeCX4(      cart, bank, adr, val); break;
+	case CART_LOROMDSP:  cart_writeLoromDSP( cart, bank, adr, val); break;
+	case CART_HIROMDSP:  cart_writeHiromDSP( cart, bank, adr, val); break;
 	case CART_LOROMSETA: cart_writeLoromSeta(cart, bank, adr, val); break;
-	case CART_LOROMSA1: cart_writeLoromSA1(cart, bank, adr, val); break;
+	case CART_LOROMSA1:  cart_writeLoromSA1( cart, bank, adr, val); break;
 	case CART_LOROMOBC1: cart_writeLoromOBC1(cart, bank, adr, val); break;
 	case CART_LOROMSDD1: cart_writeLoromSDD1(cart, bank, adr, val); break;
 	}

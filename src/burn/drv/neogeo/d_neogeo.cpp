@@ -17338,10 +17338,10 @@ struct BurnDriver BurnDrvMatrimbh = {
 };
 
 
-// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.09)
+// Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.10)
 
 static struct BurnRomInfo turfmastscRomDesc[] = {
-	{ "200-p1sc.p1",	0x200000, 0xefd0ef14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "200-p1sc.p1",	0x200000, 0xc3d845ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "200-s1.s1",		0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1
 
@@ -17361,7 +17361,7 @@ STD_ROM_FN(turfmastsc)
 
 struct BurnDriver BurnDrvTurfmastsc = {
 	"turfmastsc", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.09)\0", NULL, "dericmiller", "Neo Geo MVS",
+	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.10)\0", NULL, "dericmiller", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastscRomInfo, turfmastscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -17478,19 +17478,19 @@ struct BurnDriver BurnDrvRotddh = {
 };
 
 
-// Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood)
+// Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood v1.14)
 // https://github.com/Raphael-Boichot/Neo-Geo-Sengoku-2-Red-Blood
-// 20260714
+// 20260725
 
 static struct BurnRomInfo sengoku2rbRomDesc[] = {
-	{ "040-p1rb.p1",	0x100000, 0xb26122f7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "040-p1rb.p1",	0x100000, 0x9a8925fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "040-s1.s1",		0x020000, 0xcd9802a3, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "040-c1rb.c1",	0x200000, 0x414b1c85, 3 | BRF_GRA },           //  2 Sprite data
-	{ "040-c2rb.c2",	0x200000, 0x86b929ad, 3 | BRF_GRA },           //  3
-	{ "040-c3rb.c3",	0x080000, 0x327e432f, 3 | BRF_GRA },           //  4
-	{ "040-c4rb.c4",	0x080000, 0x4c6d8667, 3 | BRF_GRA },           //  5
+	{ "040-c1rb.c1",	0x200000, 0x5740194a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "040-c2rb.c2",	0x200000, 0xdc5a1591, 3 | BRF_GRA },           //  3
+	{ "040-c3rb.c3",	0x080000, 0x5c4040e5, 3 | BRF_GRA },           //  4
+	{ "040-c4rb.c4",	0x080000, 0x57ca479b, 3 | BRF_GRA },           //  5
 
 	{ "040-m1.m1",		0x020000, 0xd4de4bca, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
@@ -17504,7 +17504,7 @@ STD_ROM_FN(sengoku2rb)
 
 struct BurnDriver BurnDrvSengoku2rb = {
 	"sengoku2rb", "sengoku2", "neogeo", NULL, "2026",
-	"Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood)\0", NULL, "Raphael-Boichot", "Neo Geo MVS",
+	"Sengoku 2 / Sengoku Denshou 2 (Hack, Red Blood v1.14)\0", NULL, "Raphael-Boichot", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_SCRFIGHT, 0,
 	NULL, sengoku2rbRomInfo, sengoku2rbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

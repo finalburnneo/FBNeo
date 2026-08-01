@@ -121,6 +121,11 @@ INT32 CDEmuGetSoundBuffer(INT16* buffer, INT32 samples)
 	return pCDEmuDo[nCDEmuSelect]->CDEmuGetSoundBuffer(buffer, samples);
 }
 
+INT32 CDEmuSetVolume(double dVolume)
+{
+	return pCDEmuDo[nCDEmuSelect]->CDEmuSetVolume(dVolume);
+}
+
 INT32 CDEmuScan(INT32 nAction, INT32 *pnMin)
 {
 	if (!bCDEmuOkay || nCDEmuSelect >= CDEMU_LEN) {

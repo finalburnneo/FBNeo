@@ -442,6 +442,7 @@ static int cdimgExit()
 	cdimgFileSize = 0;
 	cdimgTrack = 0;
 	cdimgLBA = 0;
+	cd_volume = 100.0;
 
 	if (cdimgTOC)
 		free(cdimgTOC);

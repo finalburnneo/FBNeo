@@ -464,6 +464,7 @@ static INT32 cdimgExit()
 
 	cdimgTrack = 0;
 	cdimgLBA   = 0;
+	cd_volume  = 100.0;
 
 	free_s((void**)&cdimgTOC);
 	free_s((void**)&QChannel);

@@ -10742,7 +10742,7 @@ struct BurnDriver BurnDrvsnes_doomj = {
 // GSU-3 / SuperFX 3
 
 static struct BurnRomInfo snes_doomfx3RomDesc[] = {
-	{ "Doom FX3(U)(2025)(Limited Run Games).sfc", 4194304, 0x8698cbac, BRF_ESS | BRF_PRG },
+	{ "Doom FX3 (U)(2025)(Limited Run Games).sfc", 4194304, 0x8698cbac, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_doomfx3)
@@ -35615,6 +35615,46 @@ struct BurnDriver BurnDrvsnes_starfoxj = {
 	512, 448, 4, 3
 };
 
+// Star Fox FX3 (USA, Rev 2, v1.2.7)
+// GSU‑3
+
+static struct BurnRomInfo snes_starfoxfx3RomDesc[] = {
+	{ "Star Fox FX3 v1.2.7 (U, Rev 2)(2026)(Sunlit).sfc", 4194304, 0x3139726f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfoxfx3)
+STD_ROM_FN(snes_starfoxfx3)
+
+struct BurnDriver BurnDrvsnes_starfoxfx3 = {
+	"snes_starfoxfx3", "snes_starfox", NULL, NULL, "2026",
+	"Star Fox FX3 (USA, Rev 2, v1.2.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfoxfx3RomInfo, snes_starfoxfx3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Star Fox FX3 (Japan, Rev 1, v1.2.7)
+// GSU‑3
+
+static struct BurnRomInfo snes_starfoxfx3jRomDesc[] = {
+	{ "Star Fox FX3 v1.2.7 (J, Rev 1)(2026)(Sunlit).sfc", 4194304, 0x5cd60d02, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfoxfx3j)
+STD_ROM_FN(snes_starfoxfx3j)
+
+struct BurnDriver BurnDrvsnes_starfoxfx3j = {
+	"snes_starfoxfx3j", "snes_starfox", NULL, NULL, "2026",
+	"Star Fox FX3 (Japan, Rev 1, v1.2.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
+	L"Star Fox FX3 (Japan, Rev 1, v1.2.7)\0\u30b9\u30bf\u30fc\u30d5\u30a9\u30c3\u30af\u30b9 FX3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfoxfx3jRomInfo, snes_starfoxfx3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Star Fox 2 (USA, Europe, Classic Mini, Switch Online)
 // GSU‑2
 
@@ -35648,9 +35688,49 @@ STD_ROM_FN(snes_starfox2j)
 struct BurnDriver BurnDrvsnes_starfox2j = {
 	"snes_starfox2j", "snes_starfox2", NULL, NULL, "2017",
 	"Star Fox 2 (Japan, Classic Mini, Switch Online)\0", NULL, "Nintendo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	L"Star Fox 2 (Japan, Classic Mini, Switch Online)\0\u30b9\u30bf\u30fc\u30d5\u30a9\u30c3\u30af\u30b9 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SHOOT, 0,
 	SNESGetZipName, snes_starfox2jRomInfo, snes_starfox2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Star Fox 2 FX3 (USA, Europe, v1.0.7)
+// GSU‑3
+
+static struct BurnRomInfo snes_starfox2fx3RomDesc[] = {
+	{ "Star Fox 2 FX3 v1.0.7 (U, E)(2026)(Sunlit).sfc", 4194304, 0x4d474be0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfox2fx3)
+STD_ROM_FN(snes_starfox2fx3)
+
+struct BurnDriver BurnDrvsnes_starfox2fx3 = {
+	"snes_starfox2fx3", "snes_starfox", NULL, NULL, "2026",
+	"Star Fox 2 FX3 (USA, Europe, v1.0.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfox2fx3RomInfo, snes_starfox2fx3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Star Fox 2 FX3 (Japan, v1.0.7)
+// GSU‑3
+
+static struct BurnRomInfo snes_starfox2fx3jRomDesc[] = {
+	{ "Star Fox 2 FX3 v1.0.7 (J)(2026)(Sunlit).sfc", 4194304, 0xb67c09be, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfox2fx3j)
+STD_ROM_FN(snes_starfox2fx3j)
+
+struct BurnDriver BurnDrvsnes_starfox2fx3j = {
+	"snes_starfox2fx3j", "snes_starfox", NULL, NULL, "2026",
+	"Star Fox 2 FX3 (Japan, v1.0.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
+	L"Star Fox 2 FX3 (Japan, v1.0.7)\0\u30b9\u30bf\u30fc\u30d5\u30a9\u30c3\u30af\u30b9 2 FX3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfox2fx3jRomInfo, snes_starfox2fx3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

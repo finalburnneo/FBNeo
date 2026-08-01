@@ -15,7 +15,7 @@
 #include "statehandler.h"
 #include "gsu.h"
 
-static const INT32 stateVersion = 1;
+static const INT32 stateVersion = 2;
 
 typedef struct CartHeader {
 	// normal header
@@ -240,23 +240,19 @@ bool snes_loadRom(Snes* snes, const UINT8* data, INT32 length, UINT8* biosdata, 
 		bprintf(0, _T("spc7110: prom %x drom %x erom %x ram %x rtc %d\n"), spc7110_promSize, spc7110_trueSize - spc7110_promSize - spc7110_eromSize, spc7110_eromSize, spc7110_ramSize, spc7110_hasRTC);
 	}
 
-	UINT8 msu1_base = 0;
-	bool  msu1Enable = false;
+	UINT8 msu1Enable = 0;
 	// Enable if this romset has MSU-1 media, or (for a clone) its parent does.
 	const TCHAR* msu1Game = BurnDrvGetText(DRV_NAME);
 	if (msu1Game != NULL && snes_msu1_backend_detect(msu1Game)) {
-		msu1Enable = true;
+		msu1Enable = 1;
 	} else {
 		const TCHAR* p = BurnDrvGetText(DRV_PARENT);
-		if (p != NULL && p[0] && snes_msu1_backend_detect(p)) msu1Enable = true;
+		if (p != NULL && p[0] && snes_msu1_backend_detect(p)) msu1Enable = 1;
 	}
 	if (msu1Enable) {
-		msu1_base = (headers[used].cartType == CART_HIROM
-			|| headers[used].cartType == CART_EXHIROM) ? CART_HIROM : CART_LOROM;
-		headers[used].cartType = CART_MSU1;
 		snes_msu1_backend_setGame(msu1Game, BurnDrvGetText(DRV_PARENT));
 		snes_msu1_backend_install();
-		bprintf(0, _T("msu1: overlay on %S base (media: support/snesmsu1/%s/)\n"), cart_gettype(msu1_base), msu1Game);
+		bprintf(0, _T("msu1: overlay on %S (media: support/snesmsu1/%s/)\n"), cart_gettype(headers[used].cartType), msu1Game);
 	}
 
 	switch (bioslength) {
@@ -335,9 +331,7 @@ bool snes_loadRom(Snes* snes, const UINT8* data, INT32 length, UINT8* biosdata, 
 		snes->cart->hasRTC      = spc7110_hasRTC;
 	}
 
-	if (headers[used].cartType == CART_MSU1) {
-		snes->cart->msuBase = msu1_base;			// LoROM/HiROM base the $2000-$2007 overlay sits on
-	}
+	snes->cart->msu1Enable = msu1Enable;
 
 	snes->palTiming = headers[used].pal;			// set region before reset, so co-processors see correct timing
 	snes_reset(snes, true);							// reset after loading
@@ -417,7 +411,7 @@ void snes_setSamples(Snes* snes, INT16* sampleData, INT32 samplesPerFrame)
 	// size is 2 (int16) * 2 (stereo) * samplesPerFrame
 	// sets samples in the sampleData
 	dsp_getSamples(snes->apu->dsp, sampleData, samplesPerFrame);
-	if (snes->cart != NULL && snes->cart->type == CART_MSU1 && bBurnRunAheadFrame == 0) {
+	if (snes->cart != NULL && snes->cart->msu1Enable && bBurnRunAheadFrame == 0) {
 		INT32 outRate = samplesPerFrame * (snes->palTiming ? 50 : 60);
 		snes_msu1_mixSamples(sampleData, samplesPerFrame, outRate, snes->apu->dsp->mute ? 1 : 0);
 	}

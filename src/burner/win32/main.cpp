@@ -1472,7 +1472,7 @@ static void CreateSupportFolders()
 		{_T("roms/snes/")},
 		{_T("roms/ngp/")},
 		{_T("roms/channelf/")},
-		{_T("roms/astrohome/")},
+		{_T("roms/astrocade/")},
 		{_T("roms/romdata/")},
 		{_T("\0")} // END of list
 	};

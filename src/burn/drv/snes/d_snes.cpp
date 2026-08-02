@@ -35706,7 +35706,7 @@ STD_ROM_PICK(snes_starfox2fx3)
 STD_ROM_FN(snes_starfox2fx3)
 
 struct BurnDriver BurnDrvsnes_starfox2fx3 = {
-	"snes_starfox2fx3", "snes_starfox", NULL, NULL, "2026",
+	"snes_starfox2fx3", "snes_starfox2", NULL, NULL, "2026",
 	"Star Fox 2 FX3 (USA, Europe, v1.0.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
@@ -35726,7 +35726,7 @@ STD_ROM_PICK(snes_starfox2fx3j)
 STD_ROM_FN(snes_starfox2fx3j)
 
 struct BurnDriver BurnDrvsnes_starfox2fx3j = {
-	"snes_starfox2fx3j", "snes_starfox", NULL, NULL, "2026",
+	"snes_starfox2fx3j", "snes_starfox2", NULL, NULL, "2026",
 	"Star Fox 2 FX3 (Japan, v1.0.7)\0", NULL, "Sunlit", "SNES / Super Famicom",
 	L"Star Fox 2 FX3 (Japan, v1.0.7)\0\u30b9\u30bf\u30fc\u30d5\u30a9\u30c3\u30af\u30b9 2 FX3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,

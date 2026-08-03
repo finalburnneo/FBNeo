@@ -795,6 +795,10 @@ static int cdimgSetVolume(double dVolume)
 	return 0;
 }
 
+INT32 cdimgGetCurrentLBA() {
+	return cdimgLBA;
+}
+
 static int cdimgGetSoundBuffer(short* buffer, int samples)
 {
 

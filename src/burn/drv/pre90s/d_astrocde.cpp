@@ -1164,15 +1164,18 @@ static void __fastcall common_port_write(UINT16 port, UINT8 data)
 
 		case 0x0d:
 			interrupt_vector = data;
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x0e:
 			InterruptFlag = data;
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x0f:
 			NextScanInt = data;
 			//bprintf(0, _T("next scanINT @ %d   slNOW: %d\n"), data, scanline);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x19:

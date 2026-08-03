@@ -38454,6 +38454,25 @@ struct BurnDriver BurnDrvmd_bcdverifier = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Beach Volley (HB, Alpha)
+// https://z-team.itch.io/ocean-beach-volley-sega-megadrive
+static struct BurnRomInfo md_beachvolleyRomDesc[] = {
+	{ "Beach Volley Alpha (2020)(Z-Team).bin", 786432, 0x06218ee7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_beachvolley)
+STD_ROM_FN(md_beachvolley)
+
+struct BurnDriver BurnDrvmd_beachvolley = {
+	"md_beachvolley", NULL, NULL, NULL, "2020",
+	"Beach Volley (HB, Alpha)\0", NULL, "Z-Team", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_beachvolleyRomInfo, md_beachvolleyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Big's Fishing Derby (HB)
 static struct BurnRomInfo md_bigfdRomDesc[] = {
 	{ "Big's Fishing Derby (2014)(Flamewing).bin", 0x100000, 0xe1448457, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41816,6 +41835,44 @@ struct BurnDriver BurnDrvmd_psolar = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Pitfall 2600 Remastered (HB, v0.0.1)
+// https://sirvh.itch.io/pitfall-2600-genesis
+static struct BurnRomInfo md_pitfall2600rRomDesc[] = {
+	{ "Pitfall 2600 Remastered v0.0.1 (2026)(SirVH).bin", 131072, 0x8d835c62, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pitfall2600r)
+STD_ROM_FN(md_pitfall2600r)
+
+struct BurnDriver BurnDrvmd_pitfall2600r = {
+	"md_pitfall2600r", NULL, NULL, NULL, "2026",
+	"Pitfall 2600 Remastered (HB, v0.0.1)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_pitfall2600rRomInfo, md_pitfall2600rRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Pitfall 2600 (HB, v0.0.1)
+// https://sirvh.itch.io/pitfall-2600-genesis
+static struct BurnRomInfo md_pitfall2600RomDesc[] = {
+	{ "Pitfall 2600 v0.0.1 (2026)(SirVH).bin", 131072, 0x4bc9756e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pitfall2600)
+STD_ROM_FN(md_pitfall2600)
+
+struct BurnDriver BurnDrvmd_pitfall2600 = {
+	"md_pitfall2600", "md_pitfall2600r", NULL, NULL, "2026",
+	"Pitfall 2600 (HB, v0.0.1)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_pitfall2600RomInfo, md_pitfall2600RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pop'n Wizz (HB, v2)
 static struct BurnRomInfo md_popnwizzRomDesc[] = {
 	{ "Pop'n Wizz v2 (2026)(format_c).bin", 393216, 0x17654df8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41924,6 +41981,25 @@ struct BurnDriver BurnDrvmd_puzzulswap = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Queen’s Reversi (HB, v1.01)
+// https://warasibe1192.itch.io/queens-reversimegadrivegenesis
+static struct BurnRomInfo md_queenreversiRomDesc[] = {
+	{ "Queen’s Reversi v1.01 (2026)(NK-Soft).bin", 1703936, 0x00c79e37, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_queenreversi)
+STD_ROM_FN(md_queenreversi)
+
+struct BurnDriver BurnDrvmd_queenreversi = {
+	"md_queenreversi", NULL, NULL, NULL, "2026",
+	"Queen’s Reversi (HB, v1.01)\0", NULL, "NK-Soft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
+	MegadriveGetZipName, md_queenreversiRomInfo, md_queenreversiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Real Bout Fatal Fury Genesis Lite (HB, v1.5.1)
 static struct BurnRomInfo md_rbffgenltRomDesc[] = {
 	{ "Real Bout Fatal Fury Genesis Lite v1.5.1 (2024)(Rheo Gamer).bin", 5242880, 0x45d73398, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42011,6 +42087,25 @@ struct BurnDriver BurnDrvmd_rickdangdx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_rickdangdxRomInfo, md_rickdangdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Robocop MD (HB, v0.1.0 demo.1)
+// https://bocasretrostuff.itch.io/robocop-md
+static struct BurnRomInfo md_robocopmdRomDesc[] = {
+	{ "Robocop MD v0.1.0 demo.1 (2026)(Bocalini).bin", 1179648, 0x373bc851, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_robocopmd)
+STD_ROM_FN(md_robocopmd)
+
+struct BurnDriver BurnDrvmd_robocopmd = {
+	"md_robocopmd", NULL, NULL, NULL, "2026",
+	"Robocop MD (HB, v0.1.0 demo.1)\0", NULL, "Bocalini", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_robocopmdRomInfo, md_robocopmdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46017,6 +46112,24 @@ struct BurnDriver BurnDrvmd_termintruh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_termintruhRomInfo, md_termintruhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tetris Redux (Hack)
+static struct BurnRomInfo md_tetrisreduxRomDesc[] = {
+	{ "Tetris Redux (2026)(BillyTime! Games).bin", 262144, 0xb2d5bdb2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tetrisredux)
+STD_ROM_FN(md_tetrisredux)
+
+struct BurnDriver BurnDrvmd_tetrisredux = {
+	"md_tetrisredux", "md_tetris", NULL, NULL, "2026",
+	"Tetris Redux (Hack)\0", NULL, "BillyTime! Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_tetrisreduxRomInfo, md_tetrisreduxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -17607,6 +17607,24 @@ struct BurnDriver BurnDrvnes_dethcomplex2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Diggy Diggy Mole (HB)
+static struct BurnRomInfo nes_diggymoleRomDesc[] = {
+	{ "Diggy Diggy Mole (2026)(Novasplore Games).nes",          98320, 0xaa4951b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_diggymole)
+STD_ROM_FN(nes_diggymole)
+
+struct BurnDriver BurnDrvnes_diggymole = {
+	"nes_diggymole", NULL, NULL, NULL, "2026",
+	"Diggy Diggy Mole (HB)\0", NULL, "Novasplore Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_diggymoleRomInfo, nes_diggymoleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Dimension Shift (HB)
 static struct BurnRomInfo nes_dimshiftRomDesc[] = {
 	{ "Dimension Shift (2020)(Fix94, Mugi).nes",          524304, 0xcfaf9acd, BRF_ESS | BRF_PRG },

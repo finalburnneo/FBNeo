@@ -18270,7 +18270,7 @@ struct BurnDriver BurnDrvsnes_Illusionofgaia = {
 // Illusion of Gaia (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/super-nes/illusion-of-gaia-hyllian/
 static struct BurnRomInfo snes_IllusionofgaiatpRomDesc[] = {
-	{ "Illusion of Gaia T-Por (2010)(Hyllian).sfc", 2097644, 0xebe705f9, BRF_ESS | BRF_PRG },
+	{ "Illusion of Gaia T-Por (2010)(Hyllian).sfc", 2097664, 0xebe705f9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Illusionofgaiatp)

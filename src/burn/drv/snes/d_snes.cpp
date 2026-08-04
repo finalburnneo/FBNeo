@@ -14768,6 +14768,25 @@ struct BurnDriver BurnDrvsnes_Fmgunhazardte = {
 	512, 448, 4, 3
 };
 
+// Front Mission: Gun Hazard (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3432.0
+static struct BurnRomInfo snes_FmgunhazardtpRomDesc[] = {
+	{ "Front Mission - Gun Hazard PT-BR (2026)(Dindo, aGuGu).sfc", 4194304, 0x26f73dd2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Fmgunhazardtp)
+STD_ROM_FN(snes_Fmgunhazardtp)
+
+struct BurnDriver BurnDrvsnes_Fmgunhazardtp = {
+	"snes_fmgunhazardtp", "snes_fmgunhazardte", NULL, NULL, "1996",
+	"Front Mission: Gun Hazard (Hack, Portuguese)\0", NULL, "Dindo, aGuGu", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_FmgunhazardtpRomInfo, snes_FmgunhazardtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Foreman for Real (USA)
 
 static struct BurnRomInfo snes_ForemanRomDesc[] = {
@@ -22446,6 +22465,25 @@ struct BurnDriver BurnDrvsnes_Lufia2s = {
 	512, 448, 4, 3
 };
 
+// Lufia II: Rise of the Sinistrals (Hack, Portuguese)
+// https://www.romhacking.net.br/index.php?topic=3431.0
+static struct BurnRomInfo snes_Lufia2tpRomDesc[] = {
+	{ "Lufia II - Rise of the Sinistrals PT-BR (2026)(Dindo).sfc", 4194304, 0x401d9b8e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lufia2tp)
+STD_ROM_FN(snes_Lufia2tp)
+
+struct BurnDriver BurnDrvsnes_Lufia2tp = {
+	"snes_lufia2tp", "snes_lufia2", NULL, NULL, "2026",
+	"Lufia II: Rise of the Sinistrals (Hack, Portuguese)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_Lufia2tpRomInfo, snes_Lufia2tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Lufia & The Fortress of Doom 'Restored' (Hack, v3.1)
 // https://www.romhacking.net/hacks/2744/
 static struct BurnRomInfo snes_LufiarestRomDesc[] = {
@@ -25566,11 +25604,11 @@ struct BurnDriver BurnDrvsnes_Mystdung2j = {
 	512, 448, 4, 3
 };
 
-// Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.02)
+// Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.03)
 // https://www.romhacking.net/translations/483/
 // https://www.romhacking.net/translations/7641/
 static struct BurnRomInfo snes_Mystdung2teRomDesc[] = {
-	{ "Mysterious Dungeon 2 - Shiren the Wanderer T-Eng v1.02 (2006-2026)(Aeon Genesis, iggypoop).sfc", 4194304, 0xab38bde3, BRF_ESS | BRF_PRG },
+	{ "Mysterious Dungeon 2 - Shiren the Wanderer T-Eng v1.03 (2006-2026)(Aeon Genesis, iggypoop).sfc", 4194304, 0xf8806790, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Mystdung2te)
@@ -25578,7 +25616,7 @@ STD_ROM_FN(snes_Mystdung2te)
 
 struct BurnDriver BurnDrvsnes_Mystdung2te = {
 	"snes_mystdung2te", NULL, NULL, NULL, "2006-2026",
-	"Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.02)\0", NULL, "Aeon Genesis, iggypoop", "SNES / Super Famicom",
+	"Mysterious Dungeon 2: Shiren the Wanderer (Hack, English v1.03)\0", NULL, "Aeon Genesis, iggypoop", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Mystdung2teRomInfo, snes_Mystdung2teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

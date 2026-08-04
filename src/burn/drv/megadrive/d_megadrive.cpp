@@ -39983,7 +39983,7 @@ struct BurnDriver BurnDrvmd_fixitfelixjr = {
 };
 
 // Fliki's Escape (HB, Spanish)
-// https://yupikaie.itch.io/flikies-escape
+// https://yupikaie.itch.io/flickies-escape
 static struct BurnRomInfo md_flikisescRomDesc[] = {
 	{ "Fliki's Escape (ES)(2026)(Retroplaying BCN).bin", 786432, 0xb3116d82, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };

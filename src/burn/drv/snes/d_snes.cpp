@@ -46348,6 +46348,25 @@ struct BurnDriver BurnDrvsnes_Alishaadv = {
 	512, 448, 4, 3
 };
 
+// Alisha's Adventure (Fireball Sprite Collision Bug Fix) (HB)
+// https://aaendi.itch.io/fireball-sprite-collision-bug-fix
+static struct BurnRomInfo snes_AlishaadvbfRomDesc[] = {
+	{ "Alisha's Adventure - Fireball Sprite Collision Bug Fix (2026)(Andy Koenigs).sfc", 1310720, 0x24dbd16f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Alishaadvbf)
+STD_ROM_FN(snes_Alishaadvbf)
+
+struct BurnDriver BurnDrvsnes_Alishaadvbf = {
+	"snes_alishaadvbf", "snes_alishaadv", NULL, NULL, "2026",
+	"Alisha's Adventure (Fireball Sprite Collision Bug Fix) (HB)\0", NULL, "Andy Koenigs", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_RUNGUN, 0,
+	SNESGetZipName, snes_AlishaadvbfRomInfo, snes_AlishaadvbfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Alpha Sphere Director Cut (GlobalHack, v1.0.2)
 
 static struct BurnRomInfo snes_AlphaspheredcRomDesc[] = {

@@ -40074,6 +40074,25 @@ struct BurnDriver BurnDrvmd_galagapp = {
 	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
 };
 
+// Galaxian (HB, 20260803-1314)
+// https://namalgo.itch.io/galaxian
+static struct BurnRomInfo md_galaxianRomDesc[] = {
+	{ "Galaxian 20260803-1314 (2026)(Nameless Algorithm).bin", 151468, 0x1214a3ca, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_galaxian)
+STD_ROM_FN(md_galaxian)
+
+struct BurnDriver BurnDrvmd_galaxian = {
+	"md_galaxian", NULL, NULL, NULL, "2026",
+	"Galaxian (HB, 20260803-1314)\0", NULL, "Nameless Algorithm", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_galaxianRomInfo, md_galaxianRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Galaxian (Pocket Player Pro)
 static struct BurnRomInfo md_galaxianppRomDesc[] = {
 	{ "Galaxian (Rev 1)(2023)(My Arcade).bin", 65536, 0x1608a3a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42014,6 +42033,25 @@ struct BurnDriver BurnDrvmd_rbffgenlt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_rbffgenltRomInfo, md_rbffgenltRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rescue Dog (HB, v0.2)
+// https://namalgo.itch.io/rescue-dog
+static struct BurnRomInfo md_rescuedogRomDesc[] = {
+	{ "Rescue Dog v0.2 (2026)(Nameless Algorithm).bin", 12896, 0x6d7e3327, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rescuedog)
+STD_ROM_FN(md_rescuedog)
+
+struct BurnDriver BurnDrvmd_rescuedog = {
+	"md_rescuedog", NULL, NULL, NULL, "2026",
+	"Rescue Dog (HB, v0.2)\0", NULL, "Nameless Algorithm", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE, 0,
+	MegadriveGetZipName, md_rescuedogRomInfo, md_rescuedogRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -39982,6 +39982,25 @@ struct BurnDriver BurnDrvmd_fixitfelixjr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Flicki's Escape (HB, Spanish)
+// https://yupikaie.itch.io/flickies-escape
+static struct BurnRomInfo md_flickisescRomDesc[] = {
+	{ "Flicki's Escape (ES)(2026)(Retroplaying BCN).bin", 786432, 0xb3116d82, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_flickisesc)
+STD_ROM_FN(md_flickisesc)
+
+struct BurnDriver BurnDrvmd_flickisesc = {
+	"md_flickisesc", NULL, NULL, NULL, "2026",
+	"Flicki's Escape (HB, Spanish)\0", NULL, "Retroplaying BCN", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE, 0,
+	MegadriveGetZipName, md_flickisescRomInfo, md_flickisescRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Foxy Land (HB)
 static struct BurnRomInfo md_foxylandRomDesc[] = {
 	{ "Foxy Land (2020)(PSCD-Bug Studio).bin", 3014656, 0xba322eee, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43186,6 +43205,25 @@ struct BurnDriver BurnDrvmd_uwol = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_uwolRomInfo, md_uwolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// VARG (HB, Summer '26 Demo)
+// https://schwefelholger.itch.io/varg-sega-genesis-mega-drive
+static struct BurnRomInfo md_vargRomDesc[] = {
+	{ "VARG Summer '26 Demo (2026)(Schwefelholger).bin", 524288, 0x4bca0133, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_varg)
+STD_ROM_FN(md_varg)
+
+struct BurnDriver BurnDrvmd_varg = {
+	"md_varg", NULL, NULL, NULL, "2026",
+	"VARG (HB, Summer '26 Demo)\0", NULL, "Schwefelholger", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_vargRomInfo, md_vargRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

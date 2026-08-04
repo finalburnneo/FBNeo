@@ -3549,11 +3549,15 @@ static void __fastcall CodemastersEEPROMWriteWord(UINT32 sekAddress, UINT16 word
 static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if (sekAddress == 0xa130f1) {
+		UINT32 SRamRegPrev = RamMisc->SRamReg;
 		RamMisc->SRamReg &= ~(SR_MAPPED | SR_READONLY);
 		RamMisc->SRamReg |= byteValue;
 		RamMisc->SRamActive = RamMisc->SRamReg & SR_MAPPED;
 		RamMisc->SRamReadOnly = RamMisc->SRamReg & SR_READONLY;
-		bprintf(0, _T("SRam Status: %S%S\n"), RamMisc->SRamActive ? "Active " : "Disabled ", RamMisc->SRamReadOnly ? "ReadOnly" : "Read/Write");
+
+		if (RamMisc->SRamReg != SRamRegPrev) {
+			bprintf(0, _T("SRam Status: %S%S\n"), RamMisc->SRamActive ? "Active " : "Disabled ", RamMisc->SRamReadOnly ? "ReadOnly" : "Read/Write");
+		}
 	}
 }
 

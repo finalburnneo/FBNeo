@@ -889,6 +889,8 @@ static INT32 cdimgLoadSector(INT32 LBA, char* pBuffer)
 	}
 	// dprintf(_T("    [ %02X %02X %02X %02X  %02X %02X %02X %02X  %02X %02X %02X %02X  %02X %02X %02X %02X ]\n"), pBuffer[0], pBuffer[1], pBuffer[2], pBuffer[3], pBuffer[4], pBuffer[5], pBuffer[6], pBuffer[7], pBuffer[8], pBuffer[9], pBuffer[10], pBuffer[11], pBuffer[12], pBuffer[13], pBuffer[14], pBuffer[15]);
 
+	cdimgLBA++;
+
 	return cdimgLBA;
 }
 

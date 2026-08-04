@@ -39982,21 +39982,21 @@ struct BurnDriver BurnDrvmd_fixitfelixjr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Flicki's Escape (HB, Spanish)
-// https://yupikaie.itch.io/flickies-escape
-static struct BurnRomInfo md_flickisescRomDesc[] = {
-	{ "Flicki's Escape (ES)(2026)(Retroplaying BCN).bin", 786432, 0xb3116d82, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Fliki's Escape (HB, Spanish)
+// https://yupikaie.itch.io/flikies-escape
+static struct BurnRomInfo md_flikisescRomDesc[] = {
+	{ "Fliki's Escape (ES)(2026)(Retroplaying BCN).bin", 786432, 0xb3116d82, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_flickisesc)
-STD_ROM_FN(md_flickisesc)
+STD_ROM_PICK(md_flikisesc)
+STD_ROM_FN(md_flikisesc)
 
-struct BurnDriver BurnDrvmd_flickisesc = {
-	"md_flickisesc", NULL, NULL, NULL, "2026",
-	"Flicki's Escape (HB, Spanish)\0", NULL, "Retroplaying BCN", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_flikisesc = {
+	"md_flikisesc", NULL, NULL, NULL, "2026",
+	"Fliki's Escape (HB, Spanish)\0", NULL, "Retroplaying BCN", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE, 0,
-	MegadriveGetZipName, md_flickisescRomInfo, md_flickisescRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE, 0,
+	MegadriveGetZipName, md_flikisescRomInfo, md_flikisescRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

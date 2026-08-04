@@ -13598,7 +13598,7 @@ struct BurnDriver BurnDrvsnes_Ffmqj = {
 	512, 448, 4, 3
 };
 
-// Final Fantasy: Aventura mística (Hack, Portuguese)
+// Final Fantasy: Aventura mistica (Hack, Portuguese)
 // https://www.romhacking.net.br/index.php?topic=2044.0
 static struct BurnRomInfo snes_FfmqtpRomDesc[] = {
 	{ "Final Fantasy - Aventura mistica T-Por (2022)(ajkmetiuk).sfc", 1048576, 0xe70be3a8, BRF_ESS | BRF_PRG },
@@ -14731,7 +14731,7 @@ STD_ROM_PICK(snes_Fmgunhazardtp)
 STD_ROM_FN(snes_Fmgunhazardtp)
 
 struct BurnDriver BurnDrvsnes_Fmgunhazardtp = {
-	"snes_fmgunhazardtp", "snes_fmgunhazardte", NULL, NULL, "1996",
+	"snes_fmgunhazardtp", "snes_fmgunhazardte", NULL, NULL, "2026",
 	"Front Mission: Gun Hazard (Hack, Portuguese)\0", NULL, "Dindo, aGuGu", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,

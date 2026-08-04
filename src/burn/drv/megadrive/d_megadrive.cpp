@@ -28588,6 +28588,25 @@ struct BurnDriver BurnDrvmd_surging = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Surging Aura (Hack, English / Korean v0.90)
+// https://www.romhacking.net/translations/7660/
+static struct BurnRomInfo md_surgingtekRomDesc[] = {
+	{ "Surging Aura T-Eng,Kor v0.90 (2026)(retrogamelog).bin", 4194304, 0x78b4ac90, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_surgingtek)
+STD_ROM_FN(md_surgingtek)
+
+struct BurnDriver BurnDrvmd_surgingtek = {
+	"md_surgingtek", "md_surging", NULL, NULL, "2026",
+	"Surging Aura (Hack, English / Korean v0.90)\0", NULL, "retrogamelog", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_surgingtekRomInfo, md_surgingtekRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Swamp Thing (USA, Prototype)
 static struct BurnRomInfo md_swampRomDesc[] = {
 	{ "Swamp Thing (USA, Proto)(1991)(NuVision).bin", 0x400000, 0xe6ebe9d5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

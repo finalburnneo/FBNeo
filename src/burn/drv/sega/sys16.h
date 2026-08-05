@@ -168,6 +168,9 @@ extern System16ResetCallback System16ResetCallbackDo;
 UINT8 __fastcall System16PPIZ80PortRead(UINT16 a);
 void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d);
 
+UINT8 __fastcall DfjailZ80PortRead(UINT16 a);
+void __fastcall DfjailZ80PortWrite(UINT16 a, UINT8 d);
+
 INT32 System16LoadRoms(bool bLoad);
 
 INT32 CustomLoadRom20000();

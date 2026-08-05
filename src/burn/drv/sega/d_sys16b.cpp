@@ -644,6 +644,35 @@ static struct BurnInputInfo SnapperInputList[] = {
 
 STDINPUTINFO(Snapper)
 
+static struct BurnInputInfo DfjailInputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , System16InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System16InputPort2 + 4, "p1 start"  },
+	{"P1 Up"             , BIT_DIGITAL  , System16InputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System16InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System16InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System16InputPort0 + 0, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System16InputPort0 + 1, "p1 fire 2" },
+	{"P1 Fire 3"         , BIT_DIGITAL  , System16InputPort0 + 2, "p1 fire 3" },
+
+	{"P2 Coin"           , BIT_DIGITAL  , System16InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System16InputPort2 + 5, "p2 start"  },
+	{"P2 Up"             , BIT_DIGITAL  , System16InputPort1 + 5, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System16InputPort1 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System16InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System16InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System16InputPort1 + 0, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System16InputPort1 + 1, "p2 fire 2" },
+	{"P2 Fire 3"         , BIT_DIGITAL  , System16InputPort1 + 2, "p2 fire 3" },
+
+	{"Service"           , BIT_DIGITAL  , System16InputPort2 + 7, "service"   },
+	{"Reset"             , BIT_DIGITAL  , &System16Reset         , "reset"    },
+	{"Dip 1"             , BIT_DIPSWITCH, System16Dip + 0        , "dip"      },
+	{"Dip 2"             , BIT_DIPSWITCH, System16Dip + 1        , "dip"      },
+};
+
+STDINPUTINFO(Dfjail)
+
 #undef A
 
 /*====================================================
@@ -2217,6 +2246,63 @@ static struct BurnDIPInfo ToryumondxDIPList[]=
 };
 
 STDDIPINFO(Toryumondx)
+
+static struct BurnDIPInfo DfjailDIPList[]=
+{
+	// Default Values
+	{0x14, 0xff, 0xff, 0xdf, NULL                                 },
+	{0x15, 0xff, 0xff, 0x0a, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 16  , "Coinage"                            },
+	{0x14, 0x01, 0x0f, 0x01, "8 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x02, "7 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x03, "6 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x04, "5 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x05, "4 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x06, "3 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x07, "2 Coins 1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"                   },
+	{0x14, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x08, "1 Coin  8 Credits"                  },
+	{0x14, 0x01, 0x0f, 0x00, "Free Play"                          },
+
+	{0   , 0xfe, 0   , 8   , "Lives"                              },
+	{0x14, 0x01, 0x70, 0x70, "1"                                  },
+	{0x14, 0x01, 0x70, 0x60, "2"                                  },
+	{0x14, 0x01, 0x70, 0x50, "3"                                  },
+	{0x14, 0x01, 0x70, 0x40, "4"                                  },
+	{0x14, 0x01, 0x70, 0x30, "5"                                  },
+	{0x14, 0x01, 0x70, 0x20, "6"                                  },
+	{0x14, 0x01, 0x70, 0x10, "7"                                  },
+	{0x14, 0x01, 0x70, 0x00, "8"                                  },
+
+	{0   , 0xfe, 0   , 2   , "Service Mode"                       },
+	{0x14, 0x01, 0x80, 0x80, "Off"                                },
+	{0x14, 0x01, 0x80, 0x00, "On"                                 },
+
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x15, 0x01, 0x03, 0x03, "Easy"                               },
+	{0x15, 0x01, 0x03, 0x02, "Normal"                             },
+	{0x15, 0x01, 0x03, 0x01, "Hard"                               },
+	{0x15, 0x01, 0x03, 0x00, "Hardest"                            },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x15, 0x01, 0x04, 0x04, "Off"                                },
+	{0x15, 0x01, 0x04, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"                        },
+	{0x15, 0x01, 0x08, 0x08, "Off"                                },
+	{0x15, 0x01, 0x08, 0x00, "On"                                 },
+};
+
+STDDIPINFO(Dfjail)
 
 #undef SYSTEM16B_COINAGE
 
@@ -6717,6 +6803,46 @@ static struct BurnRomInfo Wrestwar2dRomDesc[] = {
 STD_ROM_PICK(Wrestwar2d)
 STD_ROM_FN(Wrestwar2d)
 
+static struct BurnRomInfo DfjailRomDesc[] = {
+	{ "3.c15",          0x020000, 0xdc763979, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "1.b15",          0x020000, 0xee235fa5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "4.c16",          0x020000, 0xcdcbf6b1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "2.b16",          0x020000, 0x49ff074d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "9.f16",          0x020000, 0xb2a49d12, SYS16_ROM_TILES | BRF_GRA },
+	{ "10.f17",         0x020000, 0x7d9e8397, SYS16_ROM_TILES | BRF_GRA },
+	{ "7.f14",          0x020000, 0x549af682, SYS16_ROM_TILES | BRF_GRA },
+	{ "8.f15",          0x020000, 0x625c118d, SYS16_ROM_TILES | BRF_GRA },
+	{ "5.f12",          0x020000, 0x9d00656d, SYS16_ROM_TILES | BRF_GRA },
+	{ "6.f13",          0x020000, 0x37b7bf90, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "11.g12",         0x020000, 0x019662e6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "19.h12",         0x020000, 0xf84f472b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "12.g13",         0x020000, 0xd222e52b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "20.h13",         0x020000, 0xf28bdf76, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "13.g14",         0x020000, 0xf125b5b0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "21.h14",         0x020000, 0x0508cb29, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "14.g15",         0x020000, 0xca831a54, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "22.h15",         0x020000, 0x7329f038, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "15.g16",         0x020000, 0xdb426709, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "23.h16",         0x020000, 0x94ca23e8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "16.g17",         0x020000, 0xf7b2aad6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "24.h17",         0x020000, 0x6628becc, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "17.g19",         0x020000, 0x9302cfc3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "25.h19",         0x020000, 0x26ca591f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "18.g20",         0x020000, 0xfc8aced0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "26.h20",         0x020000, 0x5828e0af, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "29.f3",          0x008000, 0x7f3ebb6a, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "27.g1",          0x020000, 0x7a88e1c1, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "28.g3",          0x020000, 0xed96d6b9, SYS16_ROM_UPD7759DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Dfjail)
+STD_ROM_FN(Dfjail)
+
 /*====================================================
 Bootleg Z80 Handling
 ====================================================*/
@@ -8128,6 +8254,56 @@ static void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
+static UINT8 __fastcall DfjailReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0xc41001: return 0xff - System16Input[0];
+		case 0xc41003: return 0xff - System16Input[1];
+		case 0xc41005: return 0xff - System16Input[2];
+		case 0xc42001: return System16Dip[0];
+		case 0xc42003: return System16Dip[1];
+	}
+
+	return 0xff;
+}
+
+static void __fastcall DfjailWriteByte(UINT32 a, UINT8 d)
+{
+	if (a >= 0x400000 && a <= 0x40ffff) {
+		System16BTileByteWrite((a - 0x400000) ^ 1, d);
+		return;
+	}
+
+	switch (a) {
+		case 0x3f0001: {
+			if (System16TileBanks[0] != (d & 0x07)) {
+				System16TileBanks[0] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+
+		case 0x3f0003: {
+			if (System16TileBanks[1] != (d & 0x07)) {
+				System16TileBanks[1] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+
+		case 0xc40001:
+		case 0xc43001:
+			return;
+	}
+
+}
+
 /*====================================================
 Driver Inits
 ====================================================*/
@@ -9453,6 +9629,55 @@ static INT32 Wb3bblInit()
 
 		bSystem16BootlegRender = true;
 	}
+
+	return nRet;
+}
+
+static void DfjailMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x07ffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+
+	SekSetWriteByteHandler(0, DfjailWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekSetReadByteHandler(0, DfjailReadByte);
+
+	SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
+	SekSetWriteByteHandler(1, SdiblSoundWriteByte);
+	SekClose();
+}
+
+static void DfjailMapZ80()
+{
+	ZetMapArea(0x0000, 0x7fff, 0, System16Z80Rom);
+	ZetMapArea(0x0000, 0x7fff, 2, System16Z80Rom);
+	ZetMapArea(0x8000, 0xdfff, 0, System16Z80Rom + 0x10000);
+	ZetMapArea(0x8000, 0xdfff, 2, System16Z80Rom + 0x10000);
+	ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
+
+	ZetSetInHandler(DfjailZ80PortRead);
+	ZetSetOutHandler(DfjailZ80PortWrite);
+}
+
+static INT32 DfjailInit()
+{
+	System16Map68KDo = DfjailMap68K;
+	System16MapZ80Do = DfjailMapZ80;
+
+	INT32 nRet = System16Init();
+
+	System16ClockSpeed = 8000000;
+	System16Z80ClockSpeed = 8000000;
+	System16IgnoreVideoEnable = 1;
 
 	return nRet;
 }
@@ -11625,6 +11850,16 @@ struct BurnDriver BurnDrvTetrbx = {
 	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_ISGSM | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, TetrbxRomInfo, TetrbxRomName, NULL, NULL, NULL, NULL, System16bDip3InputInfo, TetrbxDIPInfo,
 	TetrbxInit, IsgsmExit, System16BFrame, System16BRender, IsgsmScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDfjail = {
+	"dfjail", NULL, NULL, NULL, "1991",
+	"The Destroyer From Jail (Korea)\0", NULL, "Philko", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_DFJAIL, GBF_SCRFIGHT, 0,
+	NULL, DfjailRomInfo, DfjailRomName, NULL, NULL, NULL, NULL, DfjailInputInfo, DfjailDIPInfo,
+	DfjailInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

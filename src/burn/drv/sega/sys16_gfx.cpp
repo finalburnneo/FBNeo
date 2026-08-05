@@ -3697,7 +3697,7 @@ INT32 System16BRender()
 		System16BCreateTileMaps();
 	}
 
-	if (Lockonph) {
+	if (Lockonph || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_DFJAIL))) {
 		PhilkoCalcPalette();
 	} else {
 		System16CalcPalette();

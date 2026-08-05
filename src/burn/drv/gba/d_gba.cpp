@@ -325,7 +325,7 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnRomInfo gba_gbaRomDesc[] = {
-	{ "gba_gba.bin", 0x4000, 0x81977335, BRF_PRG | BRF_BIOS | BRF_OPT },
+	{ "gba_bios.bin", 0x4000, 0x81977335, BRF_PRG | BRF_BIOS | BRF_OPT },
 };
 
 STD_ROM_PICK(gba_gba)
@@ -345,12 +345,13 @@ struct BurnDriver BurnDrvgba_gba = {
 // =========================================================================================
 //  Please use short names from the MAME softwarelist/gba set wherever possible.
 //  Avoid excessively‑long titles that contradict the intent of the short‑name identifiers.
-//  [Example] Fire Emblem : The Sacred Stones(USA, Australia)
+//  [Example] Fire Emblem : The Sacred Stones (USA, Australia)
 //  ShortName: gba_firembssu
 // =========================================================================================
 
 
 // Fire Emblem: The Sacred Stones (USA, Australia)
+// No cartridge‑mounted GPIO peripherals - GbaInputInfo
 
 static struct BurnRomInfo gba_firembssuRomDesc[] = {
 	{ "Fire Emblem - The Sacred Stones (U, A)(2005)(Nintendo).gba",	0x1000000,	0xa47246ae,	BRF_ESS | BRF_PRG },
@@ -370,6 +371,7 @@ struct BurnDriver BurnDrvgba_firembssu = {
 };
 
 // Fire Emblem: Seima no Kouseki (Japan)
+// No cartridge‑mounted GPIO peripherals - GbaInputInfo
 
 static struct BurnRomInfo gba_firembssjRomDesc[] = {
 	{ "Fire Emblem - Seima no Kouseki (J)(2004)(Nintendo).gba",	0x1000000,	0x9d76826f,	BRF_ESS | BRF_PRG },
@@ -389,6 +391,7 @@ struct BurnDriver BurnDrvgba_firembssj = {
 };
 
 // Fire Emblem: Sheng Xie De Yi Zhi (Hack, v1.4)
+// No cartridge‑mounted GPIO peripherals - GbaInputInfo
 
 static struct BurnRomInfo gba_firembssxRomDesc[] = {
 	{ "Fire Emblem - Sheng Xie De Yi Zhi (C)(2006)(ChinaFE & Wolf Group).gba",	0x1000000,	0x9cbb923e,	BRF_ESS | BRF_PRG },
@@ -408,7 +411,7 @@ struct BurnDriver BurnDrvgba_firembssx = {
 };
 
 // WarioWare: Twisted! (USA, Australia)
-// Gyro sensor
+// Gyro sensor - GyroInputInfo
 
 static struct BurnRomInfo gba_wariotwsRomDesc[] = {
 	{ "WarioWare ‑ Twisted! (U, A)(2005)(Nintendo).gba",	0x1000000,	0xcb4e844b,	BRF_ESS | BRF_PRG },
@@ -428,7 +431,7 @@ struct BurnDriver BurnDrvgba_wariotws = {
 };
 
 // Mawaru: Made in Wario (Japan)
-// Gyro sensor
+// Gyro sensor - GyroInputInfo
 
 static struct BurnRomInfo gba_wariotwjRomDesc[] = {
 	{"Mawaru - Made in Wario (J)(2005)(Nintendo).gba", 0x1000000, 0xe69964f1, BRF_ESS | BRF_PRG},
@@ -448,6 +451,7 @@ struct BurnDriver BurnDrvGbaMawaruWario = {
 };
 
 // Yoshi Topsy: Turvy (USA)
+// Tilt sensor - TiltInputInfo
 
 static struct BurnRomInfo gba_yoshittRomDesc[] = {
 	{ "Yoshi Topsy ‑ Turvy (U)(2005)(Nintendo).gba",	0x800000,	0xe64c265c,	BRF_ESS | BRF_PRG },
@@ -467,7 +471,7 @@ struct BurnDriver BurnDrvgba_yoshitt = {
 };
 
 // Yoshi no Banyuuinryoku (Japan)
-// Tilt sensor
+// Tilt sensor - TiltInputInfo
 
 static struct BurnRomInfo gba_yoshibanRomDesc[] = {
 	{ "Yoshi no Banyuuinryoku (J)(2005)(Nintendo).gba",	0x800000,	0x31594b7a,	BRF_ESS | BRF_PRG },
@@ -487,7 +491,7 @@ struct BurnDriver BurnDrvgba_yoshiban = {
 };
 
 // Boktai 2: Solar Boy Django (USA)
-// Solar sensor + RTC clock
+// Solar sensor + RTC clock - SolarInputInfo
 
 static struct BurnRomInfo gba_boktai2uRomDesc[] = {
 	{ "Boktai 2 ‑ Solar Boy Django (U)(2004)(Konami).gba",	0x1000000,	0xe1ffb2d1,	BRF_ESS | BRF_PRG },
@@ -507,7 +511,7 @@ struct BurnDriver BurnDrvgba_boktai2u = {
 };
 
 // Zoku Bokura no Taiyou: Taiyou Shounen Django (Japan, Rev 1)
-// Solar light‑sensor + RTC clock
+// Solar sensor + RTC clock - SolarInputInfo
 
 static struct BurnRomInfo gba_boktai2jRomDesc[] = {
 	{"Zoku Bokura no Taiyou - Taiyou Shounen Django (J, Rev 1)(2004)(Konami).gba", 0x1000000, 0x71e2cd01, BRF_ESS | BRF_PRG},

@@ -1741,8 +1741,20 @@ extern struct MovieExtInfo MovieInfo; // from replay.cpp
 struct MovieExtInfo MovieInfo = { 0, 0, 0, 0, 0, 0, 0 };
 #endif
 
+static INT32 BurnDayOfYear(INT32 year, INT32 month, INT32 day)
+{
+	static const INT32 daysBeforeMonth[12] = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
+	INT32 result = daysBeforeMonth[month] + day - 1;
+	if (month > 1 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) result++;
+	return result;
+}
+
 void BurnGetLocalTime(tm *nTime)
 {
+	if (nTime == NULL) return;
+	memset(nTime, 0, sizeof(*nTime));
+	nTime->tm_isdst = -1;
+
 	if (is_netgame_or_recording()) {
 		if (is_netgame_or_recording() & 2) { // recording/playback
 			nTime->tm_sec = MovieInfo.second;
@@ -1752,19 +1764,27 @@ void BurnGetLocalTime(tm *nTime)
 			nTime->tm_wday = MovieInfo.dayofweek;
 			nTime->tm_mon = MovieInfo.month;
 			nTime->tm_year = MovieInfo.year;
+			if (nTime->tm_mon >= 0 && nTime->tm_mon < 12 && nTime->tm_mday > 0) {
+				nTime->tm_yday = BurnDayOfYear(nTime->tm_year + 1900, nTime->tm_mon, nTime->tm_mday);
+			}
 		} else {
-			nTime->tm_sec = 0; // defaults for netgame
-			nTime->tm_min = 0;
-			nTime->tm_hour = 0;
-			nTime->tm_mday = 1;
-			nTime->tm_wday = 3;
-			nTime->tm_mon = 6 - 1;
-			nTime->tm_year = 2018;
+			nTime->tm_mday = 1; // 2018-06-01 00:00:00 for netgame
+			nTime->tm_wday = 5;
+			nTime->tm_yday = 151;
+			nTime->tm_mon = 5;
+			nTime->tm_year = 2018 - 1900;
 		}
 	} else {
 		time_t nLocalTime = time(NULL); // query current time from this machine
 		tm* tmLocalTime = localtime(&nLocalTime);
-		memcpy(nTime, tmLocalTime, sizeof(tm));
+		if (tmLocalTime) {
+			memcpy(nTime, tmLocalTime, sizeof(*nTime));
+		} else {
+			nTime->tm_mday = 1;
+			nTime->tm_wday = 6;
+			nTime->tm_mon = 0;
+			nTime->tm_year = 2000 - 1900;
+		}
 	}
 }
 

@@ -418,6 +418,12 @@
     <ClCompile Include="..\..\src\burn\drv\galaxian\gal_stars.cpp">
       <Filter>burn\drv\galaxian</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\gba\d_gba.cpp">
+      <Filter>burn\drv\gba</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\gba\gba.cpp">
+      <Filter>burn\drv\gba</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\irem\d_m62.cpp">
       <Filter>burn\drv\irem</Filter>
     </ClCompile>
@@ -3875,6 +3881,9 @@
     </Filter>
     <Filter Include="burn\drv\galaxian">
       <UniqueIdentifier>{c4b93ffc-1f2a-4461-a73b-d7153fd1a1e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="burn\drv\gba">
+      <UniqueIdentifier>{6b17d54b-49ca-4e1f-9f6f-418472209f26}</UniqueIdentifier>
     </Filter>
     <Filter Include="burn\drv\irem">
       <UniqueIdentifier>{0937431a-c5c3-4079-86ff-f553d99ef136}</UniqueIdentifier>

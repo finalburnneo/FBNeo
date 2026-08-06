@@ -2260,6 +2260,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_carjmbre.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_cbasebal.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ccastles.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
@@ -3776,6 +3779,9 @@
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy1.cpp">
+      <Filter>burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy2.cpp">
       <Filter>burn\drv\atari</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\arm9\arm9.cpp">

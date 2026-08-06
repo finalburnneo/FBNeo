@@ -286,6 +286,9 @@
     <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy1.cpp">
       <Filter>burn\drv\atari</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\atari\d_atarisy2.cpp">
+      <Filter>burn\drv\atari</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\atari\d_badlands.cpp">
       <Filter>burn\drv\atari</Filter>
     </ClCompile>
@@ -1184,6 +1187,9 @@
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_carjmbre.cpp">
+      <Filter>burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_cbasebal.cpp">
       <Filter>burn\drv\pre90s</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ccastles.cpp">

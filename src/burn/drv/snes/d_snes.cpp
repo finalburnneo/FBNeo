@@ -49960,7 +49960,27 @@ struct BurnDriver BurnDrvsnes_Supercastlevania4uh = {
 	512, 448, 4, 3
 };
 
+// Super Fanger (HB)
+// https://megacatstudios.itch.io/super-fanger
+static struct BurnRomInfo snes_SuperfangerRomDesc[] = {
+	{ "Super Fanger (2026)(Mega Cat Studios).sfc", 1048576, 0x892a308e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfanger)
+STD_ROM_FN(snes_Superfanger)
+
+struct BurnDriver BurnDrvsnes_Superfanger = {
+	"snes_superfanger", NULL, NULL, NULL, "2026",
+	"Super Fanger (HB)\0", NULL, "Mega Cat Studios", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_SuperfangerRomInfo, snes_SuperfangerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Guitar - Rock the SNES! (HB)
+
 static struct BurnRomInfo snes_SuperguitarRomDesc[] = {
 	{ "Super Guitar - Rock the SNES! (2026)(RheoGamer).sfc", 262144, 0xe4b3c892, BRF_ESS | BRF_PRG },
 };

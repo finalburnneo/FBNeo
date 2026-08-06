@@ -3055,7 +3055,7 @@ INT32 System16BFrame()
 			CPU_RUN_TIMER(1);
 
 			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_DFJAIL) {
-				DfjailNmiAcc += 8000.0 / (nBurnFPS / 100.0000);
+				DfjailNmiAcc += 8000.0 / 60.0; // match refresh rate
 				if (DfjailNmiAcc >= nInterleave) {
 					DfjailNmiAcc -= nInterleave;
 					if (DfjailNmiEnable) ZetNmi();

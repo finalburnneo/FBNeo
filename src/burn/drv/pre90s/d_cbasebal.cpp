@@ -44,8 +44,6 @@ static INT32 nCyclesExtra;
 
 static struct BurnInputInfo CbasebalInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"		},
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"		},
-	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"		},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"		},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"			},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"		},
@@ -55,6 +53,7 @@ static struct BurnInputInfo CbasebalInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"		},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"		},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"		},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"		},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 up"			},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"		},
@@ -64,6 +63,7 @@ static struct BurnInputInfo CbasebalInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"		},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 3"		},
 
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"		},
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"			},
 	{"Dips A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 };
@@ -88,7 +88,7 @@ extern void kabuki_decode(UINT8 *src,UINT8 *dest_op,UINT8 *dest_data,
 
 static void bankswitch(INT32 data)
 {
-	static UINT8 *ram[4] = { DrvScrollRAM, BurnPalRAM, DrvTextRAM, DrvScrollRAM };
+	UINT8 *ram[4] = { DrvScrollRAM, BurnPalRAM, DrvTextRAM, DrvScrollRAM };
 
 	bankdata = data;
 	INT32 bank = 0x10000 + (bankdata & 0x1f) * 0x4000;
@@ -316,10 +316,10 @@ static INT32 DrvInit()
 
 	EEPROMInit(&eeprom_interface_93C46);
 
-	BurnYM2413Init(3579545);
+	BurnYM2413Init(16000000 / 4);
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 1056000 / MSM6295_PIN7_HIGH, 1);
+	MSM6295Init(0, 16000000 / 16 / MSM6295_PIN7_HIGH, 1);
 	MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -411,18 +411,20 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[1] = { 6000000 / 60 };
+	INT32 nCyclesTotal[1] = { 16000000 / 2 / 60 };
 	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	ZetOpen(0);
 
-	vblank = 0;
+//	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Zet);
-
-		if (i == 240-1) {
+		if (i == 16) {
+			vblank = 0;
+		}
+		if (i == nInterleave-1) {
 			vblank = 1;
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}

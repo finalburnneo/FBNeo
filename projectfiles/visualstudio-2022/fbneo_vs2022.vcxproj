@@ -677,6 +677,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\neogeo\neo_upd4990a.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pce\d_pce.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pce\pce.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pce\pce_cd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pgm\d_pgm.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_asic25.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pgm\pgm_asic27a_type1.cpp" />

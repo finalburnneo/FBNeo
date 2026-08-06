@@ -1030,6 +1030,9 @@
     <ClCompile Include="..\..\src\burn\drv\pce\pce.cpp">
       <Filter>burn\drv\pce</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pce\pce_cd.cpp">
+      <Filter>burn\drv\pce</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pgm\d_pgm.cpp">
       <Filter>burn\drv\pgm</Filter>
     </ClCompile>

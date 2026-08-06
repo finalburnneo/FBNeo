@@ -12770,6 +12770,24 @@ struct BurnDriver BurnDrvnes_goldenfive = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Gorodki (Unl)
+static struct BurnRomInfo nes_gorodkiRomDesc[] = {
+	{ "Gorodki (Unl)(2016)(Shiru).nes",          40976, 0x6f3dba49, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gorodki)
+STD_ROM_FN(nes_gorodki)
+
+struct BurnDriver BurnDrvnes_gorodki = {
+	"nes_gorodki", NULL, NULL, NULL, "2016",
+	"Gorodki (Unl)\0", NULL, "Shiru", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_gorodkiRomInfo, nes_gorodkiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Huang Di (Asia) (Unl)
 static struct BurnRomInfo nes_huangdiRomDesc[] = {
 	{ "Huang Di (Asia)(Unl)(1994)(Asder).nes",          393232, 0xdfdec378, BRF_ESS | BRF_PRG },
@@ -13710,6 +13728,60 @@ struct BurnDriver BurnDrvnes_super16in1 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tank (Caltron) (Unl)
+static struct BurnRomInfo nes_tankcaltronRomDesc[] = {
+	{ "Tank (Unl)(1992)(Caltron).nes",          40976, 0xdea0f458, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tankcaltron)
+STD_ROM_FN(nes_tankcaltron)
+
+struct BurnDriver BurnDrvnes_tankcaltron = {
+	"nes_tankcaltron", NULL, NULL, NULL, "1992",
+	"Tank (Caltron) (Unl)\0", NULL, "Caltron", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_tankcaltronRomInfo, nes_tankcaltronRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tank (Asder) (Unl)
+static struct BurnRomInfo nes_tankasderRomDesc[] = {
+	{ "Tank (Unl)(1993)(Asder).nes",          40976, 0x171471e2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tankasder)
+STD_ROM_FN(nes_tankasder)
+
+struct BurnDriver BurnDrvnes_tankasder = {
+	"nes_tankasder", "nes_tankcaltron", NULL, NULL, "1993",
+	"Tank (Asder) (Unl)\0", NULL, "Asder", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_tankasderRomInfo, nes_tankasderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tank (NTDEC) (Unl)
+static struct BurnRomInfo nes_tankntdecRomDesc[] = {
+	{ "Tank (Unl)(1992)(NTDEC).nes",          40976, 0x6096bb0c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tankntdec)
+STD_ROM_FN(nes_tankntdec)
+
+struct BurnDriver BurnDrvnes_tanknetdec = {
+	"nes_tankntdec", "nes_tankcaltron", NULL, NULL, "1992",
+	"Tank (NTDEC) (Unl)\0", NULL, "NTDEC", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_tankntdecRomInfo, nes_tankntdecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Tekken 2 (Taiwan) (Unl)
 static struct BurnRomInfo nes_tekken2RomDesc[] = {
 	{ "Tekken 2 (Taiwan)(Unl)(1996)(J.Y. Company).nes",          655376, 0x9a51e26c, BRF_ESS | BRF_PRG },
@@ -14624,6 +14696,7 @@ struct BurnDriver BurnDrvnes_almika = {
 };
 
 // Almost Hero (HB)
+// https://megacatstudios.itch.io/almost-hero
 static struct BurnRomInfo nes_almostheroRomDesc[] = {
 	{ "Almost Hero (2016)(Mega Cat Studios).nes",          262160, 0x2419f370, BRF_ESS | BRF_PRG },
 };
@@ -15581,6 +15654,25 @@ struct BurnDriver BurnDrvnes_beyopins = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SPORTSMISC | GBF_ADV, 0,
 	NESGetZipName, nes_beyopinsRomInfo, nes_beyopinsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Billionaire Banshee (HB)
+// https://megacatstudios.itch.io/billionaire-banshee
+static struct BurnRomInfo nes_billonbansRomDesc[] = {
+	{ "Billionaire Banshee (2021)(PSC).nes",          262160, 0x694c4860, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_billonbans)
+STD_ROM_FN(nes_billonbans)
+
+struct BurnDriver BurnDrvnes_billonbans = {
+	"nes_billonbans", NULL, NULL, NULL, "2021",
+	"Billionaire Banshee (HB)\0", "Published by Mega Cat Studios", "PSC", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 8, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_billonbansRomInfo, nes_billonbansRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -18062,6 +18154,25 @@ struct BurnDriver BurnDrvnes_ewjimnes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_ewjimnesRomInfo, nes_ewjimnesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Echoes of the Unread (HB)
+// https://megacatstudios.itch.io/echoes-of-the-unread
+static struct BurnRomInfo nes_echoesunreadRomDesc[] = {
+	{ "Echoes of the Unread (2024)(Mega Cat Studios).nes",          131088, 0x6fea1bb3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_echoesunread)
+STD_ROM_FN(nes_echoesunread)
+
+struct BurnDriver BurnDrvnes_echoesunread = {
+	"nes_echoesunread", NULL, NULL, NULL, "2024",
+	"Echoes of the Unread (HB)\0", NULL, "Mega Cat Studios", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_echoesunreadRomInfo, nes_echoesunreadRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23521,6 +23632,24 @@ struct BurnDriver BurnDrvnes_porunamabie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pow 2 (HB)
+static struct BurnRomInfo nes_pow2RomDesc[] = {
+	{ "Pow 2 (2017)(Shiru).nes",          40976, 0x62baff5a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pow2)
+STD_ROM_FN(nes_pow2)
+
+struct BurnDriver BurnDrvnes_pow2 = {
+	"nes_pow2", NULL, NULL, NULL, "2017",
+	"Pow 2 (HB)\0", NULL, "Shiru", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_pow2RomInfo, nes_pow2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Project Blue (HB)
 // Project Blue ROM @ https://toggleswitch.itch.io/projectblue
 static struct BurnRomInfo nes_projectblueRomDesc[] = {
@@ -23846,6 +23975,25 @@ struct BurnDriver BurnDrvnes_reknum2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_reknum2RomInfo, nes_reknum2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Reknum: Souls Adventure (HB, Alt)
+// https://megacatstudios.itch.io/reknum
+static struct BurnRomInfo nes_reknum2aRomDesc[] = {
+	{ "Reknum - Souls Adventure (Alt)(2021)(NAPE Games).nes",          524304, 0x28b07f84, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_reknum2a)
+STD_ROM_FN(nes_reknum2a)
+
+struct BurnDriver BurnDrvnes_reknum2a = {
+	"nes_reknum2a", "nes_reknum2", NULL, NULL, "2021",
+	"Reknum: Souls Adventure (HB, Alt)\0", "Published by Mega Cat Studios", "NAPE Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_reknum2aRomInfo, nes_reknum2aRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -24610,6 +24758,25 @@ struct BurnDriver BurnDrvnes_skatecat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_skatecatRomInfo, nes_skatecatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Slide-o-Snake (HB)
+// https://mikebloke.itch.io/slide-o-snake-nes
+static struct BurnRomInfo nes_slideosnakeRomDesc[] = {
+	{ "Slide-o-Snake (2026)(Mikebloke).nes",          40976, 0x443a11b9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_slideosnake)
+STD_ROM_FN(nes_slideosnake)
+
+struct BurnDriver BurnDrvnes_slideosnake = {
+	"nes_slideosnake", NULL, NULL, NULL, "2026",
+	"Slide-o-Snake (HB)\0", NULL, "Mikebloke", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_slideosnakeRomInfo, nes_slideosnakeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

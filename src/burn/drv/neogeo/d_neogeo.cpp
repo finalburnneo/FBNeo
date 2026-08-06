@@ -28021,6 +28021,36 @@ struct BurnDriver BurnDrvNgcdtdd0 = {
 };
 
 
+// Rick Dangerous DX (HB)
+// https://z-team.itch.io/rick-dangerous-dx-neogeoneogeo-cd
+
+static struct BurnRomInfo rickdangdxRomDesc[] = {
+	{ "rickdx-p1.bin",	0x080000, 0xd3dd7ab5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "rickdx-s1.bin",	0x020000, 0x4ec73f78, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "rickdx-c1.bin",	0x140000, 0x89e09533, 3 | BRF_GRA },           //  2 Sprite data
+	{ "rickdx-c2.bin",	0x140000, 0xc2df94d4, 3 | BRF_GRA },           //  3
+
+	{ "rickdx-m1.bin",	0x040000, 0xad8f34e8, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "rickdx-v1.bin",	0x6c0000, 0x69fb1fdf, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(rickdangdx, rickdangdx, neogeo)
+STD_ROM_FN(rickdangdx)
+
+struct BurnDriver BurnDrvRickdangdx = {
+	"rickdangdx", NULL, "neogeo", NULL, "2026",
+	"Rick Dangerous DX (HB)\0", NULL, "Z-Team", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, rickdangdxRomInfo, rickdangdxRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Robocop (FMV Demo)
 
 static struct BurnRomInfo robocopiRomDesc[] = {

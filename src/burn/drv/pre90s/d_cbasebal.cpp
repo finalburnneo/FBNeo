@@ -201,6 +201,7 @@ static INT32 DrvDoReset()
 	text_on = 0;
 	bg_on = 0;
 	obj_on = 0;
+	vblank = 1;
 
 	nCyclesExtra = 0;
 
@@ -416,8 +417,6 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 
-//	vblank = 0;
-
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Zet);
@@ -466,6 +465,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bg_on);
 		SCAN_VAR(obj_on);
 		SCAN_VAR(bankdata);
+		SCAN_VAR(vblank);
+
 		SCAN_VAR(nCyclesExtra);
 	}
 

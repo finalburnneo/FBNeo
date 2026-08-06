@@ -98,12 +98,11 @@ static struct BurnDIPInfo pceDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Joystick Type Player 5"	},
 	{0x01, 0x01, 0x03, 0x00, "2-buttons"				},
 	{0x01, 0x01, 0x03, 0x02, "6-buttons"				},
-#if 0
-	// not supported yet..
+
 	{0   , 0xfe, 0   ,    2, "Arcade Card"				},
 	{0x02, 0x01, 0x01, 0x00, "Off"						},
 	{0x02, 0x01, 0x01, 0x01, "On"						},
-#endif
+
 	{0   , 0xfe, 0   ,    2, "Sprite Limit"				},
 	{0x02, 0x01, 0x10, 0x10, "Disabled (hack)"			},
 	{0x02, 0x01, 0x10, 0x00, "Enabled"					},
@@ -225,13 +224,13 @@ static struct BurnRomInfo pce_scdsysRomDesc[] = {
 STD_ROM_PICK(pce_scdsys)
 STD_ROM_FN(pce_scdsys)
 
-struct BurnDriverD BurnDrvpce_scdsys = {
+struct BurnDriver BurnDrvpce_scdsys = {
 	"pce_scdsys", NULL, NULL, NULL, "1991",
-	"Super CD-Rom System Card (v3.0)\0", NULL, "NEC - Hudson Soft", "PC Engine",
+	"Super CD-Rom System Card (v3.0)\0", "System - media selected seperately", "NEC - Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	0, 1, HARDWARE_PCENGINE_PCENGINE, GBF_BIOS, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCE_CD, GBF_BIOS, 0,
 	PceGetZipName, pce_scdsysRomInfo, pce_scdsysRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	PCECDInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 

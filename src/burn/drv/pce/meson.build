@@ -7,6 +7,7 @@
 group_desc = 'NEC PC Engine drivers'
 group_srcs = [
     'pce.cpp',
+    'pce_cd.cpp',
 ]
 drivers = {
     'd_pce.cpp': ['c6280', 'h6280', 'vdc'],

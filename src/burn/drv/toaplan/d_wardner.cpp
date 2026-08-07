@@ -765,27 +765,19 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-static INT32 LoadNibbles(UINT8 *dst, INT32 idx, INT32 len)
+static INT32 LoadNibbles(UINT8 *dst, INT32 idx)
 {
-	UINT8 *tmp = (UINT8*)BurnMalloc(len*2);
-
 #ifdef LSB_FIRST
-	if (BurnLoadRom(dst + 0, idx + 1, 2)) return 1;
-	if (BurnLoadRom(dst + 1, idx + 3, 2)) return 1;
-	if (BurnLoadRom(tmp + 0, idx + 0, 2)) return 1;
-	if (BurnLoadRom(tmp + 1, idx + 2, 2)) return 1;
+	if (BurnLoadRomExt(dst + 0, idx + 1, 2, LD_LO_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 1, idx + 3, 2, LD_LO_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 0, idx + 0, 2, LD_HI_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 1, idx + 2, 2, LD_HI_NIBBLE)) return 1;
 #else
-	if (BurnLoadRom(dst + 0, idx + 3, 2)) return 1;
-	if (BurnLoadRom(dst + 1, idx + 1, 2)) return 1;
-	if (BurnLoadRom(tmp + 0, idx + 2, 2)) return 1;
-	if (BurnLoadRom(tmp + 1, idx + 0, 2)) return 1;
+	if (BurnLoadRomExt(dst + 0, idx + 3, 2, LD_LO_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 1, idx + 1, 2, LD_LO_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 0, idx + 2, 2, LD_HI_NIBBLE)) return 1;
+	if (BurnLoadRomExt(dst + 1, idx + 0, 2, LD_HI_NIBBLE)) return 1;
 #endif
-
-	for (INT32 i = 0; i < len * 2; i++) {
-		dst[i] = (dst[i] & 0xf) | (tmp[i] << 4);
-	}
-
-	BurnFree(tmp);
 
 	return 0;
 }
@@ -854,8 +846,8 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  4, 1)) return 1;
 
-		if (LoadNibbles(DrvMCUROM +  0x00000,  5, 0x0400)) return 1;
-		if (LoadNibbles(DrvMCUROM +  0x00800,  9, 0x0400)) return 1;
+		if (LoadNibbles(DrvMCUROM +  0x00000,  5)) return 1;
+		if (LoadNibbles(DrvMCUROM +  0x00800,  9)) return 1;
 
 		if (wardnerjb)
 		{

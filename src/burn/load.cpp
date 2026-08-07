@@ -24,7 +24,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 	if (nLen <= 0) return 1;
 
-	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR))
+	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR) || (LD_HI_NIBBLE | LD_LO_NIBBLE))
 	{
 		// Use temporary memory to load ROM, ips patching is also done here, enough space must be reserved.
 		if (bDoIpsPatch) {
@@ -57,15 +57,27 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 		INT32 nReverse = (nGroup > 1) ? (nFlags & LD_REVERSE) : 0;
 		INT32 nXor = (nFlags & LD_XOR) ? 1 : 0;
 		INT32 nNibbles = (nFlags & LD_NIBBLES) ? 1 : 0;
+		INT32 nNibblesHiLo = (nFlags & (LD_HI_NIBBLE | LD_LO_NIBBLE)) ? 1 : 0;
 		UINT8 *Src = Load;
 
 		if (nNibbles) { nGroup = 1; nGap = 2; }
 
 		for (INT32 n = 0, z = 0; n < nLoadLen; n += nGroup, z += nGap) {
-			if (nNibbles) {
+			if (nNibbles)
+			{
 				Dest[z + 0] = (Src[n ^ nByteswap] ^ nInvert) & 0xf;
 				Dest[z + 1] = (Src[n ^ nByteswap] ^ nInvert) >> 4;
-			} else {
+			}
+			else if (nNibblesHiLo)
+			{
+				if (nFlags & LD_HI_NIBBLE) {
+					Dest[z] = (Dest[z] & 0x0f) | ((Src[n ^ nByteswap] ^ nInvert) << 4);
+				} else {
+					Dest[z] = (Dest[z] & 0xf0) | ((Src[n ^ nByteswap] ^ nInvert) & 0xf);
+				}
+			}
+			else
+			{
 				if (nReverse) {
 					for (INT32 j = 0; j < nGroup; j++) {
 						INT32 nXorData = nInvert;

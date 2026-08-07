@@ -108,15 +108,19 @@ inline static INT32 is_netgame_or_recording()
 	INVERT			Src ^= 0xff
 	BYTESWAP		change order of bytes from 0,1,2,3 to 1,0,3,2
 	NIBBLES			Dest[0] = (byte & & 0xf); Dest[1] = (byte >> 4) & 0xf;
-	XOR			Dest ^= Src
+	XOR				Dest ^= Src
+	HI_NIBBLE		Dest = (byte << 4) | (Dest & 0x0f)
+	LO_NIBBLE		Dest = (byte & 0xf) | (Dest & 0xf0);
 */
 
-#define LD_GROUP(x)	((x) & 0xff) // 256 - plenty
-#define LD_REVERSE	(1<<8)
-#define LD_INVERT	(1<<9)
-#define LD_BYTESWAP	(1<<10)
-#define LD_NIBBLES	(1<<11)
-#define LD_XOR		(1<<12)
+#define LD_GROUP(x)		((x) & 0xff) // 256 - plenty
+#define LD_REVERSE		(1<<8)
+#define LD_INVERT		(1<<9)
+#define LD_BYTESWAP		(1<<10)
+#define LD_NIBBLES		(1<<11)
+#define LD_XOR			(1<<12)
+#define LD_HI_NIBBLE	(1<<13)
+#define LD_LO_NIBBLE	(1<<14)
 
 INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags);
 INT32 BurnLoadRom(UINT8* Dest, INT32 i, INT32 nGap);

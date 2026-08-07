@@ -20,7 +20,7 @@
 #if defined (BUILD_QT)
  #define DIRS_MAX (4)								// Maximum number of directories to search
 #else
- #define DIRS_MAX (20)								// Maximum number of directories to search
+ #define DIRS_MAX (21)								// Maximum number of directories to search
 #endif
 
 #include "title.h"
@@ -232,6 +232,7 @@ void ComputeGammaLUT();
 #define DAT_NGP_ONLY			15
 #define DAT_CHANNELF_ONLY		16
 #define DAT_ASTROHOME_ONLY		17
+#define DAT_GBA_ONLY			18
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

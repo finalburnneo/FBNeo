@@ -23,6 +23,7 @@ TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("roms/ngp/")		},
 	{ _T("roms/channelf/")	},
 	{ _T("roms/astrocade/")	},
+	{ _T("roms/gba/")		},
 	{ _T("roms/romdata/")	},
 	{ _T("")				}
 };

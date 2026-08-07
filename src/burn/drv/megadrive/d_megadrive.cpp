@@ -40462,7 +40462,7 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 
 // Imminence (HB)
 static struct BurnRomInfo md_imminenceRomDesc[] = {
-	{ "Imminence (2026)(Augmented Studios).bin", 4063232, 0xecc52285, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Imminence (2026)(Augmented Studios).bin", 4063232, 0xfbd45c81, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_imminence)

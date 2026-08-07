@@ -1500,6 +1500,7 @@ BEGIN
 			MENUITEM "Generate dat (Neo Geo Pocket Games only)...",	MENU_CLRMAME_PRO_XML_NGP_ONLY
 			MENUITEM "Generate dat (Fairchild Channel F Games only)...",	MENU_CLRMAME_PRO_XML_CHANNELF_ONLY
 			MENUITEM "Generate dat (Bally Astrocade Games Only)...",	MENU_CLRMAME_PRO_XML_ASTROHOME_ONLY
+			MENUITEM "Generate dat (GBA Only)...",        MENU_CLRMAME_PRO_XML_GBA_ONLY
 			MENUITEM SEPARATOR
 			MENUITEM "Generate all dats...",					MENU_CLRMAME_PRO_ALL_DATS
 	END

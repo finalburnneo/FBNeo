@@ -2186,6 +2186,7 @@ tIniStruct gamehw_cfg[] = {
 	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	false,	{ HARDWARE_SPECTRUM, 0 },			"\t\t\t<item list=\"spectrum_cass\" name=\""},
 	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	true,	{ HARDWARE_CHANNELF, 0 },			"\t\t\t<item list=\"channelf\" name=\""		},
 	{_T("Bally Astrocade hardware"),	_T("config/presets/astrohome.ini"),	true,	{ HARDWARE_ASTROHOME, 0 },			"\t\t\t<item list=\"astrohome\" name=\""	},
+	{_T("GBA hardware"),				_T("config/presets/gba.ini"),		true,	{ HARDWARE_GBA, 0 },				"\t\t\t<item list=\"gba\" name=\""	},
 	{_T("\0"), _T("\0"), false, { 0 }, "" } // END of list
 };
 

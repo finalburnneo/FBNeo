@@ -350,6 +350,44 @@ struct BurnDriver BurnDrvgba_gba = {
 // =========================================================================================
 
 
+// Double Dragon Advance (USA)
+
+static struct BurnRomInfo gba_ddragonRomDesc[] = {
+	{ "Double Dragon Advance (U)(2003)(Atlus).gba",	0x0400000,	0x764fafb5,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ddragon, gba_ddragon, gba_gba)
+STD_ROM_FN(gba_ddragon)
+
+struct BurnDriver BurnDrvgba_ddragon = {
+	"gba_ddragon", NULL, "gba_gba", NULL, "2003",
+	"Double Dragon Advance (USA)\0", NULL, "Atlus", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
+	GbaGetZipName, gba_ddragonRomInfo, gba_ddragonRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Double Dragon Advance (Japan)
+
+static struct BurnRomInfo gba_ddragonjRomDesc[] = {
+	{ "Double Dragon Advance (J)(2004)(Atlus).gba",	0x0400000,	0xa3330e8f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ddragonj, gba_ddragonj, gba_gba)
+STD_ROM_FN(gba_ddragonj)
+
+struct BurnDriver BurnDrvgba_ddragonj = {
+	"gba_ddragonj", "gba_ddragon", "gba_gba", NULL, "2004",
+	"Double Dragon Advance (Japan)\0", NULL, "Atlus", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
+	GbaGetZipName, gba_ddragonjRomInfo, gba_ddragonjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Fire Emblem: The Sacred Stones (USA, Australia)
 // No cartridge‑mounted GPIO peripherals - GbaInputInfo
 
@@ -406,6 +444,25 @@ struct BurnDriver BurnDrvgba_firembssx = {
 	L"Fire Emblem: Sheng Xie De Yi Zhi (Hack, v1.4)\0\u706b\u7130\u4e4b\u7eb9\u7ae0: \u5723\u90aa\u7684\u610f\u5fd7\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RPG | GBF_STRATEGY, 0,
 	GbaGetZipName, gba_firembssxRomInfo, gba_firembssxRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Super Ghouls'n Ghosts (Europe, USA)
+
+static struct BurnRomInfo gba_sgngRomDesc[] = {
+	{ "Super Ghouls'n Ghosts (E, U)(2002)(Capcom).gba",	0x0400000,	0x1ef2acf3,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sgng, gba_sgng, gba_gba)
+STD_ROM_FN(gba_sgng)
+
+struct BurnDriver BurnDrvgba_sgng = {
+	"gba_sgng", NULL, "gba_gba", NULL, "2002",
+	"Super Ghouls'n Ghosts (Europe, USA)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_RUNGUN, 0,
+	GbaGetZipName, gba_sgngRomInfo, gba_sgngRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

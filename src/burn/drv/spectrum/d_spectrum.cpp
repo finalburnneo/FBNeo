@@ -52397,6 +52397,25 @@ struct BurnDriver BurnSpecoldtower = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Oil Tanker Simulator (48K) (HB)
+
+static struct BurnRomInfo SpecOiltankerRomDesc[] = {
+	{ "Oil Tanker Simulator 48K (2026)(Dark Humour Games).z80", 10587, 0x2d4ab4dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecOiltanker, SpecOiltanker, Spectrum)
+STD_ROM_FN(SpecOiltanker)
+
+struct BurnDriver BurnSpecOiltanker = {
+	"spec_oiltanker", NULL, "spec_spectrum", NULL, "2026",
+	"Oil Tanker Simulator (48K) (HB)\0", NULL, "Dark Humour Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecOiltankerRomInfo, SpecOiltankerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Omelettes for Breakfast (48K-128K) (HB)
 
 static struct BurnRomInfo SpecOmelettesRomDesc[] = {

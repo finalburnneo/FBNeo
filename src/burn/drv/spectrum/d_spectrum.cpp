@@ -52411,7 +52411,7 @@ struct BurnDriver BurnSpecOiltanker = {
 	"Oil Tanker Simulator (48K) (HB)\0", NULL, "Dark Humour Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
-	SpectrumGetZipName, SpecOiltankerRomInfo, SpecOiltankerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpectrumGetZipName, SpecOiltankerRomInfo, SpecOiltankerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

@@ -1492,31 +1492,32 @@ struct BurnDriver BurnDrvMakaimug = {
 
 
 static struct BurnRomInfo GngenhRomDesc[] = {
-	{ "mm_c_04",          0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_03enh",       0x08000, 0xab30bc6d, 1 | BRF_ESS | BRF_PRG },
-	{ "mm_c_05enh",       0x08000, 0x7a60a968, 1 | BRF_ESS | BRF_PRG },
+	{ "mm_c_04",       0x04000, 0x4f94130f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_03enh",    0x08000, 0xab30bc6d, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_05enh",    0x08000, 0x7a60a968, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17.bin",         0x04000, 0x93e50a8f, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gg14.bin",         0x04000, 0x6aaf12f9, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
+	{ "gg17.bin",      0x04000, 0x93e50a8f, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gg14.bin",      0x04000, 0x6aaf12f9, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
+
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
 STD_ROM_PICK(Gngenh)
@@ -1524,7 +1525,7 @@ STD_ROM_FN(Gngenh)
 
 struct BurnDriver BurnDrvGngenh = {
 	"gngenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins (Enhanced) (World? set 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
+	"Ghosts'n Goblins (Enhanced)\0", NULL, "GoodLuckTrying", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngenhRomInfo, GngenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
@@ -1533,194 +1534,31 @@ struct BurnDriver BurnDrvGngenh = {
 };
 
 
-static struct BurnRomInfo GngaenhRomDesc[] = {
-	{ "mjg_04.10n",       0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mjg_03enh.8n",     0x08000, 0xa157d522, 1 | BRF_ESS | BRF_PRG },
-	{ "mjg_05enh.12n",    0x08000, 0xdd9d540a, 1 | BRF_ESS | BRF_PRG },
-
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "capsom_m5m23256p_p_616105_mjg_01.11e", 0x08000, 0x1ab9038a, 3 | BRF_GRA }, //  4	Characters
-
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e", 0x08000, 0xc09a716f, 4 | BRF_GRA }, //  5	Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c", 0x08000, 0x0b92b129, 4 | BRF_GRA },
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b", 0x08000, 0x830176af, 4 | BRF_GRA },
-
-	{ "capsom_m5m23256p_p_61710g_mjg_12.4n", 0x08000, 0xdbf05081, 5 | BRF_GRA }, //  8	Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11.3n", 0x08000, 0xcf533077, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_62410p_mjg_10.4l", 0x08000, 0x5f36734e, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_61710g_mjg_09.3l", 0x08000, 0x89c71940, 5 | BRF_GRA },
-
-	{ "m-02_63s141.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  12	PROMs
-	{ "m-01_63s141.2e",   0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngaenh)
-STD_ROM_FN(Gngaenh)
-
-struct BurnDriver BurnDrvGngaenh = {
-	"gngaenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins (Enhanced) (World? set 2)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngaenhRomInfo, GngaenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngbenhRomDesc[] = {
-	{ "gg4.bin",          0x04000, 0x66606beb, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3enh.bin",       0x08000, 0xa157d522, 1 | BRF_ESS | BRF_PRG },
-	{ "gg5enh.bin",       0x08000, 0xdd9d540a, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17.bin",         0x04000, 0x93e50a8f, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gg14.bin",         0x04000, 0x6aaf12f9, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngbenh)
-STD_ROM_FN(Gngbenh)
-
-struct BurnDriver BurnDrvGngbenh = {
-	"gngbenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins (Enhanced) (World? set 3)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngbenhRomInfo, GngbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngcenhRomDesc[] = {
-	{ "gng.n10",          0x04000, 0x60343188, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gngenh.n9",        0x04000, 0x3632f7f5, 1 | BRF_ESS | BRF_PRG },
-	{ "gngenh.n8",        0x04000, 0x21ef2189, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n13",          0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG },
-	{ "gngenh.n12",       0x04000, 0xb5847408, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
-
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  6	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  7	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17.bin",         0x04000, 0x93e50a8f, 5 | BRF_GRA }, //  13	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gg14.bin",         0x04000, 0x6aaf12f9, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  19	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngcenh)
-STD_ROM_FN(Gngcenh)
-
-struct BurnDriver BurnDrvGngcenh = {
-	"gngcenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins (Enhanced) (World? set 4)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngcenhRomInfo, GngcenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngtenhRomDesc[] = {
-	{ "mmt04d.10n",       0x04000, 0x652406f6, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03denh.8n",     0x08000, 0xd1823fc9, 1 | BRF_ESS | BRF_PRG },
-	{ "mmt05denh.13n",    0x08000, 0xd11ebe25, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mm01.11e",         0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mm17.4n",          0x04000, 0x93e50a8f, 5 | BRF_GRA }, //  11	Sprites
-	{ "mm16.3n",          0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "mm15.1n",          0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "mm14.4l",          0x04000, 0x6aaf12f9, 5 | BRF_GRA },
-	{ "mm13.3l",          0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "mm12.1l",          0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "m-02.14k",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "m-01.2e",          0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngtenh)
-STD_ROM_FN(Gngtenh)
-
-struct BurnDriver BurnDrvGngtenh = {
-	"gngtenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins (Enhanced) (US)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngtenhRomInfo, GngtenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
 static struct BurnRomInfo MakaimurenhRomDesc[] = {
-	{ "10n.rom",          0x04000, 0x81e567e0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8nenh.rom",        0x08000, 0xdc342bc7, 1 | BRF_ESS | BRF_PRG },
-	{ "12nenh.rom",       0x08000, 0xdb25d78d, 1 | BRF_ESS | BRF_PRG },
+	{ "10n.rom",       0x04000, 0x81e567e0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8nenh.rom",     0x08000, 0xdc342bc7, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12nenh.rom",    0x08000, 0xdb25d78d, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1.bin",       0x04000, 0xecfccf07, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13.n4",         0x04000, 0x4613afdc, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gng16.l4",         0x04000, 0x608d68d5, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
+	{ "gng13.n4",      0x04000, 0x4613afdc, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16.bin",      0x04000, 0x06d7e5ca, 5 | BRF_GRA },	     //  12
+	{ "gg15.bin",      0x04000, 0xbc1fe02d, 5 | BRF_GRA },	     //  13
+	{ "gng16.l4",      0x04000, 0x608d68d5, 5 | BRF_GRA },	     //  14
+	{ "gg13.bin",      0x04000, 0xe80c3fca, 5 | BRF_GRA },	     //  15
+	{ "gg12.bin",      0x04000, 0x7780a925, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makaimurenh)
@@ -1728,7 +1566,7 @@ STD_ROM_FN(Makaimurenh)
 
 struct BurnDriver BurnDrvMakaimurenh = {
 	"makaimurenh", "gng", NULL, NULL, "2026",
-	"Makaimura (Enhanced) (Japan revision A?)\0", NULL, "GoodLuckTrying", "Miscellaneous",
+	"Makaimura (Enhanced)\0", NULL, "GoodLuckTrying", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimurenhRomInfo, MakaimurenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1737,155 +1575,33 @@ struct BurnDriver BurnDrvMakaimurenh = {
 };
 
 
-static struct BurnRomInfo MakaimurbenhRomDesc[] = {
-	{ "mj04b.10n",        0x04000, 0xf8bda78f, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03benh.8n",      0x08000, 0x6de94343, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05benh.12n",     0x08000, 0x07a1397f, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mj01.11e",         0x04000, 0x178366b4, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mj17.4n",          0x04000, 0x4613afdc, 5 | BRF_GRA }, //  11	Sprites
-	{ "mj16.3n",          0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "mj15.1n",          0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "mj14.4l",          0x04000, 0x608d68d5, 5 | BRF_GRA },
-	{ "mj13.3l",          0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "mj12.1l",          0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makaimurbenh)
-STD_ROM_FN(Makaimurbenh)
-
-struct BurnDriver BurnDrvMakaimurbenh = {
-	"makaimurbenh", "gng", NULL, NULL, "2026",
-	"Makaimura (Enhanced) (Japan revision B)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimurbenhRomInfo, MakaimurbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakaimurcenhRomDesc[] = {
-	{ "mj04c.bin",        0x04000, 0x1294edb1, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03cenh.bin",     0x08000, 0xb8b4a7a8, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05cenh.bin",     0x08000, 0x0e5e4f47, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13.n4",         0x04000, 0x4613afdc, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gng16.l4",         0x04000, 0x608d68d5, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makaimurcenh)
-STD_ROM_FN(Makaimurcenh)
-
-struct BurnDriver BurnDrvMakaimurcenh = {
-	"makaimurcenh", "gng", NULL, NULL, "2026",
-	"Makaimura (Enhanced) (Japan revision C)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimurcenhRomInfo, MakaimurcenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakaimurgenhRomDesc[] = {
-	{ "mj04g.bin",        0x04000, 0x757c94d3, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03genh.bin",     0x08000, 0xa7be0dd4, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05genh.bin",     0x08000, 0x737b3848, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1.bin",          0x04000, 0xecfccf07, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13.n4",         0x04000, 0x4613afdc, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16.bin",         0x04000, 0x06d7e5ca, 5 | BRF_GRA },
-	{ "gg15.bin",         0x04000, 0xbc1fe02d, 5 | BRF_GRA },
-	{ "gng16.l4",         0x04000, 0x608d68d5, 5 | BRF_GRA },
-	{ "gg13.bin",         0x04000, 0xe80c3fca, 5 | BRF_GRA },
-	{ "gg12.bin",         0x04000, 0x7780a925, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makaimurgenh)
-STD_ROM_FN(Makaimurgenh)
-
-struct BurnDriver BurnDrvMakaimurgenh = {
-	"makaimurgenh", "gng", NULL, NULL, "2026",
-	"Makaimura (Enhanced) (Japan revision G)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakaimurgenhRomInfo, MakaimurgenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
 static struct BurnRomInfo GngmaidenRomDesc[] = {
-	{ "mm_c_maiden_04",   0x04000, 0x269b5163, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_maiden_03",   0x08000, 0x57f4f653, 1 | BRF_ESS | BRF_PRG },
-	{ "mm_c_maiden_05",   0x08000, 0x4f443f38, 1 | BRF_ESS | BRF_PRG },
+	{ "mm_c_maiden_04",       0x04000, 0x269b5163, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_maiden_03",       0x08000, 0x57f4f653, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_maiden_05",       0x08000, 0x4f443f38, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1maiden.bin",       0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
+	{ "gg17maiden.bin",      0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16maiden.bin",      0x04000, 0xcbf803e7, 5 | BRF_GRA },	     //  12
+	{ "gg15maiden.bin",      0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
+	{ "gg14maiden.bin",      0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
+	{ "gg13maiden.bin",      0x04000, 0xca6622c1, 5 | BRF_GRA },	     //  15
+	{ "gg12maiden.bin",      0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
+
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
 STD_ROM_PICK(Gngmaiden)
@@ -1893,7 +1609,7 @@ STD_ROM_FN(Gngmaiden)
 
 struct BurnDriver BurnDrvGngmaiden = {
 	"gngmaiden", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (World? 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
+	"Ghosts'n Goblins - Maiden Artoria Edition\0", NULL, "GoodLuckTrying", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngmaidenRomInfo, GngmaidenRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
@@ -1902,809 +1618,31 @@ struct BurnDriver BurnDrvGngmaiden = {
 };
 
 
-static struct BurnRomInfo GngmaidenenhRomDesc[] = {
-	{ "mm_c_maiden_04",   0x04000, 0x269b5163, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_maiden_03enh", 0x08000, 0xe12b59b4, 1 | BRF_ESS | BRF_PRG },
-	{ "mm_c_maiden_05enh", 0x08000, 0x204f0a26, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidenenh)
-STD_ROM_FN(Gngmaidenenh)
-
-struct BurnDriver BurnDrvGngmaidenenh = {
-	"gngmaidenenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (Enhanced) (World? 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidenenhRomInfo, GngmaidenenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidenaRomDesc[] = {
-	{ "mjg_04maiden.10n", 0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mjg_03maiden.8n",  0x08000, 0x640d7ece, 1 | BRF_ESS | BRF_PRG },
-	{ "mjg_05maiden.12n", 0x08000, 0xee23a024, 1 | BRF_ESS | BRF_PRG },
-
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "capsom_m5m23256p_p_616105_mjg_01m.11e", 0x08000, 0x25ee616c, 3 | BRF_GRA }, //  4	Characters
-
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e", 0x08000, 0xc09a716f, 4 | BRF_GRA }, //  5	Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c", 0x08000, 0x0b92b129, 4 | BRF_GRA },
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b", 0x08000, 0x830176af, 4 | BRF_GRA },
-
-	{ "capsom_m5m23256p_p_61710g_mjg_12m.4n", 0x08000, 0x8abd05fb, 5 | BRF_GRA }, //  8	Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11m.3n", 0x08000, 0x839fd6c7, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_62410p_mjg_10m.4l", 0x08000, 0x90ec9bb3, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_61710g_mjg_09m.3l", 0x08000, 0xd8339187, 5 | BRF_GRA },
-
-	{ "m-02_63s141.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  12	PROMs
-	{ "m-01_63s141.2e",   0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidena)
-STD_ROM_FN(Gngmaidena)
-
-struct BurnDriver BurnDrvGngmaidena = {
-	"gngmaidena", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (World? 2)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidenaRomInfo, GngmaidenaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidenaenhRomDesc[] = {
-	{ "mjg_04maiden.10n", 0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mjg_03maidenenh.8n", 0x08000, 0x5b5b6db2, 1 | BRF_ESS | BRF_PRG },
-	{ "mjg_05maidenenh.12n", 0x08000, 0xf9a86b65, 1 | BRF_ESS | BRF_PRG },
-
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "capsom_m5m23256p_p_616105_mjg_01m.11e", 0x08000, 0x25ee616c, 3 | BRF_GRA }, //  4	Characters
-
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e", 0x08000, 0xc09a716f, 4 | BRF_GRA }, //  5	Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c", 0x08000, 0x0b92b129, 4 | BRF_GRA },
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b", 0x08000, 0x830176af, 4 | BRF_GRA },
-
-	{ "capsom_m5m23256p_p_61710g_mjg_12m.4n", 0x08000, 0x8abd05fb, 5 | BRF_GRA }, //  8	Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11m.3n", 0x08000, 0x839fd6c7, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_62410p_mjg_10m.4l", 0x08000, 0x90ec9bb3, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_61710g_mjg_09m.3l", 0x08000, 0xd8339187, 5 | BRF_GRA },
-
-	{ "m-02_63s141.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  12	PROMs
-	{ "m-01_63s141.2e",   0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidenaenh)
-STD_ROM_FN(Gngmaidenaenh)
-
-struct BurnDriver BurnDrvGngmaidenaenh = {
-	"gngmaidenaenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (Enhanced) (World? 2)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidenaenhRomInfo, GngmaidenaenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidenbRomDesc[] = {
-	{ "gg4maiden.bin",    0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3maiden.bin",    0x08000, 0x640d7ece, 1 | BRF_ESS | BRF_PRG },
-	{ "gg5maiden.bin",    0x08000, 0xee23a024, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidenb)
-STD_ROM_FN(Gngmaidenb)
-
-struct BurnDriver BurnDrvGngmaidenb = {
-	"gngmaidenb", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (World? 3)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidenbRomInfo, GngmaidenbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidenbenhRomDesc[] = {
-	{ "gg4maiden.bin",    0x04000, 0x0f6f2987, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3maidenenh.bin", 0x08000, 0x5b5b6db2, 1 | BRF_ESS | BRF_PRG },
-	{ "gg5maidenenh.bin", 0x08000, 0xe5450ca5, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidenbenh)
-STD_ROM_FN(Gngmaidenbenh)
-
-struct BurnDriver BurnDrvGngmaidenbenh = {
-	"gngmaidenbenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (Enhanced) (World? 3)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidenbenhRomInfo, GngmaidenbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidencRomDesc[] = {
-	{ "gngmaiden.n10",    0x04000, 0x093b73e4, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gngmaiden.n9",     0x04000, 0x510a7603, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n8",           0x04000, 0xa5cfa928, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n13",          0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG },
-	{ "gngmaiden.n12",    0x04000, 0xf718826f, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  6	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  7	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  13	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  19	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidenc)
-STD_ROM_FN(Gngmaidenc)
-
-struct BurnDriver BurnDrvGngmaidenc = {
-	"gngmaidenc", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (World? 4)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidencRomInfo, GngmaidencRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidencenhRomDesc[] = {
-	{ "gngmaiden.n10",    0x04000, 0x093b73e4, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gngmaidenenh.n9",  0x04000, 0xd1819d0d, 1 | BRF_ESS | BRF_PRG },
-	{ "gngenh.n8",        0x04000, 0x21ef2189, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n13",          0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG },
-	{ "gngmaidenenh.n12", 0x04000, 0x735ab04a, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  6	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  7	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17maiden.bin",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  13	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gg14maiden.bin",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  19	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidencenh)
-STD_ROM_FN(Gngmaidencenh)
-
-struct BurnDriver BurnDrvGngmaidencenh = {
-	"gngmaidencenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (Enhanced) (World? 4)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidencenhRomInfo, GngmaidencenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidentRomDesc[] = {
-	{ "mmt04dmaiden.10n", 0x04000, 0x0c2b449a, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03dmaiden.8n",  0x08000, 0x9d2c4776, 1 | BRF_ESS | BRF_PRG },
-	{ "mmt05dmaiden.13n", 0x08000, 0x72fc7fb1, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mm01maiden.11e",   0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mm17maiden.4n",    0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "mm16maiden.3n",    0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "mm15maiden.1n",    0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "mm14maiden.4l",    0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "mm13maiden.3l",    0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "mm12maiden.1l",    0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "m-02.14k",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "m-01.2e",          0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaident)
-STD_ROM_FN(Gngmaident)
-
-struct BurnDriver BurnDrvGngmaident = {
-	"gngmaident", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (US)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidentRomInfo, GngmaidentRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngmaidentenhRomDesc[] = {
-	{ "mmt04dmaiden.10n", 0x04000, 0x0c2b449a, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03dmaidenenh.8n", 0x08000, 0xb7aa73fd, 1 | BRF_ESS | BRF_PRG },
-	{ "mmt05dmaidenenh.13n", 0x08000, 0x17ecb80a, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mm01maiden.11e",   0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mm17maiden.4n",    0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "mm16maiden.3n",    0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "mm15maiden.1n",    0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "mm14maiden.4l",    0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "mm13maiden.3l",    0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "mm12maiden.1l",    0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "m-02.14k",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "m-01.2e",          0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngmaidentenh)
-STD_ROM_FN(Gngmaidentenh)
-
-struct BurnDriver BurnDrvGngmaidentenh = {
-	"gngmaidentenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Maiden Artoria Edition (Enhanced) (US)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngmaidentenhRomInfo, GngmaidentenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightRomDesc[] = {
-	{ "mm_c_knight_04",   0x04000, 0xb96e18c0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_knight_03",   0x08000, 0x57f4f653, 1 | BRF_ESS | BRF_PRG },
-	{ "mm_c_knight_05",   0x08000, 0xa8a1a2e7, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknight)
-STD_ROM_FN(Gngknight)
-
-struct BurnDriver BurnDrvGngknight = {
-	"gngknight", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (World? 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightRomInfo, GngknightRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightenhRomDesc[] = {
-	{ "mm_c_knight_04",   0x04000, 0xb96e18c0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm_c_knight_03enh", 0x08000, 0xe12b59b4, 1 | BRF_ESS | BRF_PRG },
-	{ "mm_c_knight_05enh", 0x08000, 0x73eba0df, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightenh)
-STD_ROM_FN(Gngknightenh)
-
-struct BurnDriver BurnDrvGngknightenh = {
-	"gngknightenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (Enhanced) (World? 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightenhRomInfo, GngknightenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightaRomDesc[] = {
-	{ "mjg_04knight.10n", 0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mjg_03knight.8n",  0x08000, 0x640d7ece, 1 | BRF_ESS | BRF_PRG },
-	{ "mjg_05knight.12n", 0x08000, 0x3171a979, 1 | BRF_ESS | BRF_PRG },
-
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "capsom_m5m23256p_p_616105_mjg_01k.11e", 0x08000, 0xb1c81db0, 3 | BRF_GRA }, //  4	Characters
-
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e", 0x08000, 0xc09a716f, 4 | BRF_GRA }, //  5	Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c", 0x08000, 0x0b92b129, 4 | BRF_GRA },
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b", 0x08000, 0x830176af, 4 | BRF_GRA },
-
-	{ "capsom_m5m23256p_p_61710g_mjg_12k.4n", 0x08000, 0xb194b07b, 5 | BRF_GRA }, //  8	Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11k.3n", 0x08000, 0x18f3881e, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_62410p_mjg_10k.4l", 0x08000, 0x25063871, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_61710g_mjg_09k.3l", 0x08000, 0x30133354, 5 | BRF_GRA },
-
-	{ "m-02_63s141.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  12	PROMs
-	{ "m-01_63s141.2e",   0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknighta)
-STD_ROM_FN(Gngknighta)
-
-struct BurnDriver BurnDrvGngknighta = {
-	"gngknighta", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (World? 2)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightaRomInfo, GngknightaRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightaenhRomDesc[] = {
-	{ "mjg_04knight.10n", 0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mjg_03knightenh.8n", 0x08000, 0x5b5b6db2, 1 | BRF_ESS | BRF_PRG },
-	{ "mjg_05knightenh.12n", 0x08000, 0x9879287c, 1 | BRF_ESS | BRF_PRG },
-
-	{ "capsom_m5m23256p_p_62410p_mjg_02.14h", 0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "capsom_m5m23256p_p_616105_mjg_01k.11e", 0x08000, 0xb1c81db0, 3 | BRF_GRA }, //  4	Characters
-
-	{ "capsom_m5m23256p_p_616105_mmg_08.3e", 0x08000, 0xc09a716f, 4 | BRF_GRA }, //  5	Tiles
-	{ "capsom_m5m23256p_p_61710z_mmg_07.3c", 0x08000, 0x0b92b129, 4 | BRF_GRA },
-	{ "capsom_m5m23256p_p_616105_mmg_06.3b", 0x08000, 0x830176af, 4 | BRF_GRA },
-
-	{ "capsom_m5m23256p_p_61710g_mjg_12k.4n", 0x08000, 0xb194b07b, 5 | BRF_GRA }, //  8	Sprites
-	{ "capsom_m5m23256p_p_620108_mjg_11k.3n", 0x08000, 0x18f3881e, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_62410p_mjg_10k.4l", 0x08000, 0x25063871, 5 | BRF_GRA },
-	{ "capsom_m5m23256p_p_61710g_mjg_09k.3l", 0x08000, 0x30133354, 5 | BRF_GRA },
-
-	{ "m-02_63s141.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  12	PROMs
-	{ "m-01_63s141.2e",   0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightaenh)
-STD_ROM_FN(Gngknightaenh)
-
-struct BurnDriver BurnDrvGngknightaenh = {
-	"gngknightaenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (Enhanced) (World? 2)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightaenhRomInfo, GngknightaenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightbRomDesc[] = {
-	{ "gg4knight.bin",    0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3knight.bin",    0x08000, 0x640d7ece, 1 | BRF_ESS | BRF_PRG },
-	{ "gg5knight.bin",    0x08000, 0x3171a979, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightb)
-STD_ROM_FN(Gngknightb)
-
-struct BurnDriver BurnDrvGngknightb = {
-	"gngknightb", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (World? 3)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightbRomInfo, GngknightbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightbenhRomDesc[] = {
-	{ "gg4knight.bin",    0x04000, 0x909a6024, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gg3knightenh.bin", 0x08000, 0x5b5b6db2, 1 | BRF_ESS | BRF_PRG },
-	{ "gg5knightenh.bin", 0x08000, 0x676d3bba, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-	{ "gg-pal10l8.bin",   0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightbenh)
-STD_ROM_FN(Gngknightbenh)
-
-struct BurnDriver BurnDrvGngknightbenh = {
-	"gngknightbenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (Enhanced) (World? 3)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightbenhRomInfo, GngknightbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightcRomDesc[] = {
-	{ "gngknight.n10",    0x04000, 0x96ce3a47, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gngknight.n9",     0x04000, 0x510a7603, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n8",           0x04000, 0xa5cfa928, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n13",          0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG },
-	{ "gngknight.n12",    0x04000, 0xe8f3e1a4, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  6	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  7	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  13	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  19	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightc)
-STD_ROM_FN(Gngknightc)
-
-struct BurnDriver BurnDrvGngknightc = {
-	"gngknightc", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (World? 4)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightcRomInfo, GngknightcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknightcenhRomDesc[] = {
-	{ "gngknight.n10",    0x04000, 0x96ce3a47, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "gngknightenh.n9",  0x04000, 0xd1819d0d, 1 | BRF_ESS | BRF_PRG },
-	{ "gngenh.n8",        0x04000, 0x21ef2189, 1 | BRF_ESS | BRF_PRG },
-	{ "gng.n13",          0x04000, 0xfd9a8dda, 1 | BRF_ESS | BRF_PRG },
-	{ "gngknightenh.n12", 0x04000, 0xac08b917, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  5	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  6	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  7	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gg17knight.bin",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  13	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gg14knight.bin",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  19	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightcenh)
-STD_ROM_FN(Gngknightcenh)
-
-struct BurnDriver BurnDrvGngknightcenh = {
-	"gngknightcenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (Enhanced) (World? 4)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknightcenhRomInfo, GngknightcenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknighttRomDesc[] = {
-	{ "mmt04dknight.10n", 0x04000, 0x93de0d39, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03dknight.8n",  0x08000, 0x9d2c4776, 1 | BRF_ESS | BRF_PRG },
-	{ "mmt05dknight.13n", 0x08000, 0x45fa0f5e, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mm01knight.11e",   0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mm17knight.4n",    0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "mm16knight.3n",    0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "mm15knight.1n",    0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "mm14knight.4l",    0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "mm13knight.3l",    0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "mm12knight.1l",    0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "m-02.14k",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "m-01.2e",          0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknightt)
-STD_ROM_FN(Gngknightt)
-
-struct BurnDriver BurnDrvGngknightt = {
-	"gngknightt", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (US)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknighttRomInfo, GngknighttRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo GngknighttenhRomDesc[] = {
-	{ "mmt04dknight.10n", 0x04000, 0x93de0d39, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mmt03dknightenh.8n", 0x08000, 0xb7aa73fd, 1 | BRF_ESS | BRF_PRG },
-	{ "mmt05dknightenh.13n", 0x08000, 0x20eac8e5, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mm01knight.11e",   0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mm17knight.4n",    0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "mm16knight.3n",    0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "mm15knight.1n",    0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "mm14knight.4l",    0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "mm13knight.3l",    0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "mm12knight.1l",    0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "m-02.14k",         0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "m-01.2e",          0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Gngknighttenh)
-STD_ROM_FN(Gngknighttenh)
-
-struct BurnDriver BurnDrvGngknighttenh = {
-	"gngknighttenh", "gng", NULL, NULL, "2026",
-	"Ghosts'n Goblins - Knight Artoria Edition (Enhanced) (US)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, GngknighttenhRomInfo, GngknighttenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
 static struct BurnRomInfo MakmaidenRomDesc[] = {
-	{ "10nmaiden.rom",    0x04000, 0x6f73c922, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8nmaiden.rom",     0x08000, 0x28546c2b, 1 | BRF_ESS | BRF_PRG },
-	{ "12nmaiden.rom",    0x08000, 0x29101f6b, 1 | BRF_ESS | BRF_PRG },
+	{ "10nmaiden.rom", 0x04000, 0x6f73c922, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8nmaiden.rom",        0x08000, 0x28546c2b, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12nmaiden.rom", 0x08000, 0x29101f6b, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1maiden.bin", 0x04000, 0x82e2fa18, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
+	{ "gng13maiden.n4",0x04000, 0x9fb0faaf, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16maiden.bin",0x04000, 0xcbf803e7, 5 | BRF_GRA },	     //  12
+	{ "gg15maiden.bin",0x04000, 0xd6827437, 5 | BRF_GRA },	     //  13
+	{ "gng16maiden.l4",0x04000, 0x2eeb6ef5, 5 | BRF_GRA },	     //  14
+	{ "gg13maiden.bin",0x04000, 0xca6622c1, 5 | BRF_GRA },	     //  15
+	{ "gg12maiden.bin",0x04000, 0x83f8a22c, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makmaiden)
@@ -2721,318 +1659,74 @@ struct BurnDriver BurnDrvMakmaiden = {
 };
 
 
-static struct BurnRomInfo MakmaidenenhRomDesc[] = {
-	{ "10nmaiden.rom",    0x04000, 0x6f73c922, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8nmaidenenh.rom",  0x08000, 0x62729180, 1 | BRF_ESS | BRF_PRG },
-	{ "12nmaidenenh.rom", 0x08000, 0x12d72a16, 1 | BRF_ESS | BRF_PRG },
+static struct BurnRomInfo GngknightRomDesc[] = {
+	{ "mm_c_knight_04",       0x04000, 0xb96e18c0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_knight_03",       0x08000, 0x57f4f653, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "mm_c_knight_05",       0x08000, 0xa8a1a2e7, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1knight.bin",       0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
+	{ "gg17knight.bin",      0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16knight.bin",      0x04000, 0x731dddc3, 5 | BRF_GRA },	     //  12
+	{ "gg15knight.bin",      0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
+	{ "gg14knight.bin",      0x04000, 0x01d9a306, 5 | BRF_GRA },	     //  14
+	{ "gg13knight.bin",      0x04000, 0xd3cfe1f8, 5 | BRF_GRA },	     //  15
+	{ "gg12knight.bin",      0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
+
+	{ "gg-pal10l8.bin",0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 14 PLDs
 };
 
-STD_ROM_PICK(Makmaidenenh)
-STD_ROM_FN(Makmaidenenh)
+STD_ROM_PICK(Gngknight)
+STD_ROM_FN(Gngknight)
 
-struct BurnDriver BurnDrvMakmaidenenh = {
-	"makmaidenenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Enhanced)\0", NULL, "GoodLuckTrying", "Miscellaneous",
+struct BurnDriver BurnDrvGngknight = {
+	"gngknight", "gng", NULL, NULL, "2026",
+	"Ghosts'n Goblins - Knight Artoria Edition\0", NULL, "GoodLuckTrying", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidenenhRomInfo, MakmaidenenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidenbRomDesc[] = {
-	{ "mj04bmaiden.10n",  0x04000, 0x162b094d, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03bmaiden.8n",   0x08000, 0x1b42aeb0, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05bmaiden.12n",  0x08000, 0x0cb218b9, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mj01maiden.11e",   0x04000, 0x799d53ab, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mj17maiden.4n",    0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "mj16maiden.3n",    0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "mj15maiden.1n",    0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "mj14maiden.4l",    0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "mj13maiden.3l",    0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "mj12maiden.1l",    0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaidenb)
-STD_ROM_FN(Makmaidenb)
-
-struct BurnDriver BurnDrvMakmaidenb = {
-	"makmaidenb", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Japan revision B)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidenbRomInfo, MakmaidenbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidenbenhRomDesc[] = {
-	{ "mj04bmaiden.10n",  0x04000, 0x162b094d, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03bmaidenenh.8n", 0x08000, 0x7d0aace7, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05bmaidenenh.12n", 0x08000, 0x19d0854f, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mj01maiden.11e",   0x04000, 0x799d53ab, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mj17maiden.4n",    0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "mj16maiden.3n",    0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "mj15maiden.1n",    0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "mj14maiden.4l",    0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "mj13maiden.3l",    0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "mj12maiden.1l",    0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaidenbenh)
-STD_ROM_FN(Makmaidenbenh)
-
-struct BurnDriver BurnDrvMakmaidenbenh = {
-	"makmaidenbenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Enhanced) (Japan revision B)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidenbenhRomInfo, MakmaidenbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidencRomDesc[] = {
-	{ "mj04cmaiden.bin",  0x04000, 0xfc024373, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03cmaiden.bin",  0x08000, 0x30bebacc, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05cmaiden.bin",  0x08000, 0xf38f3e47, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaidenc)
-STD_ROM_FN(Makmaidenc)
-
-struct BurnDriver BurnDrvMakmaidenc = {
-	"makmaidenc", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Japan revision C)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidencRomInfo, MakmaidencRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidencenhRomDesc[] = {
-	{ "mj04cmaiden.bin",  0x04000, 0xfc024373, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03cmaidenenh.bin", 0x08000, 0x5b492e49, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05cmaidenenh.bin", 0x08000, 0x12909b5c, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaidencenh)
-STD_ROM_FN(Makmaidencenh)
-
-struct BurnDriver BurnDrvMakmaidencenh = {
-	"makmaidencenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Enhanced) (Japan revision C)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidencenhRomInfo, MakmaidencenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidengRomDesc[] = {
-	{ "mj04gmaiden.bin",  0x04000, 0x9bea3a11, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03gmaiden.bin",  0x08000, 0xbe25618e, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05gmaiden.bin",  0x08000, 0xf44b608b, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaideng)
-STD_ROM_FN(Makmaideng)
-
-struct BurnDriver BurnDrvMakmaideng = {
-	"makmaideng", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Japan revision G)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidengRomInfo, MakmaidengRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakmaidengenhRomDesc[] = {
-	{ "mj04gmaiden.bin",  0x04000, 0x9bea3a11, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03gmaidenenh.bin", 0x08000, 0x782b2fe1, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05gmaidenenh.bin", 0x08000, 0x51027e5b, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1maiden.bin",    0x04000, 0x82e2fa18, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13maiden.n4",   0x04000, 0x9fb0faaf, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16maiden.bin",   0x04000, 0xcbf803e7, 5 | BRF_GRA },
-	{ "gg15maiden.bin",   0x04000, 0xd6827437, 5 | BRF_GRA },
-	{ "gng16maiden.l4",   0x04000, 0x2eeb6ef5, 5 | BRF_GRA },
-	{ "gg13maiden.bin",   0x04000, 0xca6622c1, 5 | BRF_GRA },
-	{ "gg12maiden.bin",   0x04000, 0x83f8a22c, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makmaidengenh)
-STD_ROM_FN(Makmaidengenh)
-
-struct BurnDriver BurnDrvMakmaidengenh = {
-	"makmaidengenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Maiden Artoria Edition (Enhanced) (Japan revision G)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakmaidengenhRomInfo, MakmaidengenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	NULL, GngknightRomInfo, GngknightRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
 
 static struct BurnRomInfo MakknightRomDesc[] = {
-	{ "10nknight.rom",    0x04000, 0xf0868081, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8nknight.rom",     0x08000, 0x28546c2b, 1 | BRF_ESS | BRF_PRG },
-	{ "12nknight.rom",    0x08000, 0x56283321, 1 | BRF_ESS | BRF_PRG },
+	{ "10nknight.rom", 0x04000, 0xf0868081, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8nknight.rom",        0x08000, 0x28546c2b, 1 | BRF_ESS | BRF_PRG }, //	 1
+	{ "12nknight.rom", 0x08000, 0x56283321, 1 | BRF_ESS | BRF_PRG }, //	 2
 
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+	{ "gg2.bin",       0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
 
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
+	{ "gg1knight.bin", 0x04000, 0xc12dd3e3, 3 | BRF_GRA },	     //  4	Characters
 
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
+	{ "gg11.bin",      0x04000, 0xddd56fa9, 4 | BRF_GRA },	     //  5	Tiles
+	{ "gg10.bin",      0x04000, 0x7302529d, 4 | BRF_GRA },	     //  6
+	{ "gg9.bin",       0x04000, 0x20035bda, 4 | BRF_GRA },	     //  7
+	{ "gg8.bin",       0x04000, 0xf12ba271, 4 | BRF_GRA },	     //  8
+	{ "gg7.bin",       0x04000, 0xe525207d, 4 | BRF_GRA },	     //  9
+	{ "gg6.bin",       0x04000, 0x2d77e9b2, 4 | BRF_GRA },	     //  10
 
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
+	{ "gng13knight.n4",0x04000, 0xa0713571, 5 | BRF_GRA },	     //  11	Sprites
+	{ "gg16knight.bin",0x04000, 0x731dddc3, 5 | BRF_GRA },	     //  12
+	{ "gg15knight.bin",0x04000, 0x4b9933df, 5 | BRF_GRA },	     //  13
+	{ "gng16knight.l4",0x04000, 0x01d9a306, 5 | BRF_GRA },	     //  14
+	{ "gg13knight.bin",0x04000, 0xd3cfe1f8, 5 | BRF_GRA },	     //  15
+	{ "gg12knight.bin",0x04000, 0x7c6e8878, 5 | BRF_GRA },	     //  16
 
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
+	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT },	     //  17	PROMs
+	{ "63s141.2e",     0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },	     //  18
 };
 
 STD_ROM_PICK(Makknight)
@@ -3047,294 +1741,6 @@ struct BurnDriver BurnDrvMakknight = {
 	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
-
-
-static struct BurnRomInfo MakknightenhRomDesc[] = {
-	{ "10nknight.rom",    0x04000, 0xf0868081, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "8nknightenh.rom",  0x08000, 0x62729180, 1 | BRF_ESS | BRF_PRG },
-	{ "12nknightenh.rom", 0x08000, 0x7306690f, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightenh)
-STD_ROM_FN(Makknightenh)
-
-struct BurnDriver BurnDrvMakknightenh = {
-	"makknightenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Enhanced)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightenhRomInfo, MakknightenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightbRomDesc[] = {
-	{ "mj04bknight.10n",  0x04000, 0x89de40ee, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03bknight.8n",   0x08000, 0x1b42aeb0, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05bknight.12n",  0x08000, 0x6d635ba0, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mj01knight.11e",   0x04000, 0x3a527a50, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mj17knight.4n",    0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "mj16knight.3n",    0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "mj15knight.1n",    0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "mj14knight.4l",    0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "mj13knight.3l",    0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "mj12knight.1l",    0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightb)
-STD_ROM_FN(Makknightb)
-
-struct BurnDriver BurnDrvMakknightb = {
-	"makknightb", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Japan revision B)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightbRomInfo, MakknightbRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightbenhRomDesc[] = {
-	{ "mj04bknight.10n",  0x04000, 0x89de40ee, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03bknightenh.8n", 0x08000, 0x7d0aace7, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05bknightenh.12n", 0x08000, 0x7801c656, 1 | BRF_ESS | BRF_PRG },
-
-	{ "mm02.14h",         0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "mj01knight.11e",   0x04000, 0x3a527a50, 3 | BRF_GRA }, //  4	Characters
-
-	{ "mm11.3e",          0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "mm10.1e",          0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "mm09.3c",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "mm08.1c",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "mm07.3b",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "mm06.1b",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "mj17knight.4n",    0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "mj16knight.3n",    0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "mj15knight.1n",    0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "mj14knight.4l",    0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "mj13knight.3l",    0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "mj12knight.1l",    0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightbenh)
-STD_ROM_FN(Makknightbenh)
-
-struct BurnDriver BurnDrvMakknightbenh = {
-	"makknightbenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Enhanced) (Japan revision B)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightbenhRomInfo, MakknightbenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightcRomDesc[] = {
-	{ "mj04cknight.bin",  0x04000, 0x63f70ad0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03cknight.bin",  0x08000, 0x30bebacc, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05cknight.bin",  0x08000, 0x2cdd371a, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightc)
-STD_ROM_FN(Makknightc)
-
-struct BurnDriver BurnDrvMakknightc = {
-	"makknightc", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Japan revision C)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightcRomInfo, MakknightcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightcenhRomDesc[] = {
-	{ "mj04cknight.bin",  0x04000, 0x63f70ad0, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03cknightenh.bin", 0x08000, 0x5b492e49, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05cknightenh.bin", 0x08000, 0x97c1416c, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightcenh)
-STD_ROM_FN(Makknightcenh)
-
-struct BurnDriver BurnDrvMakknightcenh = {
-	"makknightcenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Enhanced) (Japan revision C)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightcenhRomInfo, MakknightcenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightgRomDesc[] = {
-	{ "mj04gknight.bin",  0x04000, 0x041f73b2, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03gknight.bin",  0x08000, 0xbe25618e, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05gknight.bin",  0x08000, 0x4539fc09, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightg)
-STD_ROM_FN(Makknightg)
-
-struct BurnDriver BurnDrvMakknightg = {
-	"makknightg", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Japan revision G)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightgRomInfo, MakknightgRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
-
-static struct BurnRomInfo MakknightgenhRomDesc[] = {
-	{ "mj04gknight.bin",  0x04000, 0x041f73b2, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mj03gknightenh.bin", 0x08000, 0x782b2fe1, 1 | BRF_ESS | BRF_PRG },
-	{ "mj05gknightenh.bin", 0x08000, 0x20c9884f, 1 | BRF_ESS | BRF_PRG },
-
-	{ "gg2.bin",          0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
-
-	{ "gg1knight.bin",    0x04000, 0xc12dd3e3, 3 | BRF_GRA }, //  4	Characters
-
-	{ "gg11.bin",         0x04000, 0xddd56fa9, 4 | BRF_GRA }, //  5	Tiles
-	{ "gg10.bin",         0x04000, 0x7302529d, 4 | BRF_GRA },
-	{ "gg9.bin",          0x04000, 0x20035bda, 4 | BRF_GRA },
-	{ "gg8.bin",          0x04000, 0xf12ba271, 4 | BRF_GRA },
-	{ "gg7.bin",          0x04000, 0xe525207d, 4 | BRF_GRA },
-	{ "gg6.bin",          0x04000, 0x2d77e9b2, 4 | BRF_GRA },
-
-	{ "gng13knight.n4",   0x04000, 0xa0713571, 5 | BRF_GRA }, //  11	Sprites
-	{ "gg16knight.bin",   0x04000, 0x731dddc3, 5 | BRF_GRA },
-	{ "gg15knight.bin",   0x04000, 0x4b9933df, 5 | BRF_GRA },
-	{ "gng16knight.l4",   0x04000, 0x01d9a306, 5 | BRF_GRA },
-	{ "gg13knight.bin",   0x04000, 0xd3cfe1f8, 5 | BRF_GRA },
-	{ "gg12knight.bin",   0x04000, 0x7c6e8878, 5 | BRF_GRA },
-
-	{ "tbp24s10.14k",     0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, //  17	PROMs
-	{ "63s141.2e",        0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT },
-};
-
-STD_ROM_PICK(Makknightgenh)
-STD_ROM_FN(Makknightgenh)
-
-struct BurnDriver BurnDrvMakknightgenh = {
-	"makknightgenh", "gng", NULL, NULL, "2026",
-	"Makaimura - Knight Artoria Edition (Enhanced) (Japan revision G)\0", NULL, "GoodLuckTrying", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, MakknightgenhRomInfo, MakknightgenhRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
-	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
-};
-
 
 static struct BurnRomInfo DiamrunRomDesc[] = {
 	{ "d3o",           0x04000, 0xba4bf9f1, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code

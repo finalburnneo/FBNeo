@@ -9057,6 +9057,34 @@ struct BurnDriver BurnDrvcv_magtreep = {
     272, 228, 4, 3
 };
 
+// Magical Kid WIZ
+static struct BurnRomInfo cv_MkidwizRomDesc[] = {
+	{ "Magical Kid WIZ (2018)(Opcode Games).rom", 131072, 0xaeefdb96, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Mkidwiz, cv_Mkidwiz, cv_coleco)
+STD_ROM_FN(cv_Mkidwiz)
+
+static INT32 MkidwizInit()
+{
+	INT32 rc = DrvInitSGM();
+
+	if (!rc) { // game is too loud, lower it a bit
+		AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	}
+	return rc;
+}
+
+struct BurnDriver BurnDrvcv_Mkidwiz = {
+	"cv_mkidwiz", NULL, "cv_coleco", NULL, "2018",
+	"Magical Kid WIZ (SGM) (HB)\0", NULL, "Opcode Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_PLATFORM | GBF_ACTION, 0,
+	CVGetZipName, cv_MkidwizRomInfo, cv_MkidwizRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	MkidwizInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Mahjong Solitaire (HB, v1.16)
 static struct BurnRomInfo cv_msolitaireRomDesc[] = {
 	{ "Mahjong Solitaire v1.16 (2023)(Under4Mhz).rom",	32768, 0x119af363, BRF_PRG | BRF_ESS },

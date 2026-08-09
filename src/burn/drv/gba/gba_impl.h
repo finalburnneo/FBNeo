@@ -662,6 +662,14 @@ typedef struct {
 } gba_gpio_t;
 
 typedef struct {
+	INT32  type;		// 0: none, 1: standard, 2: george, 3: alternate
+	INT32  rom_mode;
+	INT32  sram_mode;
+	UINT8  write_sequence[5];
+	bool   accepting_mode_change;
+} gba_vfame_t;
+
+typedef struct {
 	UINT32 rom_size;
 	UINT8  backup_type;
 	bool   backup_is_dirty;
@@ -669,7 +677,8 @@ typedef struct {
 	INT32  flash_state;
 	INT32  flash_bank;
 	UINT32 features;
-	gba_gpio_t gpio;
+	gba_gpio_t  gpio;
+	gba_vfame_t vfame;
 } gba_cartridge_t;
 
 typedef struct {
@@ -943,9 +952,67 @@ static FORCE_INLINE bool gba_gpio_active(const gba_t* gba)
 	return gba->cart.features & (GBA_CART_RTC | GBA_CART_SOLAR | GBA_CART_RUMBLE | GBA_CART_GYRO);
 }
 
+// VFame (FC Mini) cartridge pattern value for out-of-bounds ROM reads
+static FORCE_INLINE UINT32 gba_vfame_pattern_right_shift2(UINT32 addr)
+{
+	UINT32 value = addr & 0xffff;
+	value >>= 2;
+	value += (addr & 3) == 2  ? 0x8000 : 0;
+	value += (addr & 0x10000) ? 0x4000 : 0;
+	return value;
+}
+
+static FORCE_INLINE UINT16 gba_vfame_get_pattern(UINT32 addr)
+{
+	addr &= 0x1fffff;
+	UINT32 value = 0;
+	switch (addr & 0x1f0000) {
+		case 0x000000:
+		case 0x010000: value = (addr >> 1) & 0xffff;							break;
+		case 0x020000: value = addr & 0xffff;									break;
+		case 0x030000: value = (addr & 0xffff) + 1;								break;
+		case 0x040000: value = 0xffff - (addr & 0xffff);						break;
+		case 0x050000: value = (0xffff - (addr & 0xffff)) - 1;					break;
+		case 0x060000: value = (addr & 0xffff) ^ 0xaaaa;						break;
+		case 0x070000: value = ((addr & 0xffff) ^ 0xaaaa) + 1;					break;
+		case 0x080000: value = (addr & 0xffff) ^ 0x5555;						break;
+		case 0x090000: value = ((addr & 0xffff) ^ 0x5555) - 1;					break;
+		case 0x0a0000:
+		case 0x0b0000: value = gba_vfame_pattern_right_shift2(addr);			break;
+		case 0x0c0000:
+		case 0x0d0000: value = 0xffff - gba_vfame_pattern_right_shift2(addr);	break;
+		case 0x0e0000:
+		case 0x0f0000: value = gba_vfame_pattern_right_shift2(addr) ^ 0xaaaa;	break;
+		case 0x100000:
+		case 0x110000: value = gba_vfame_pattern_right_shift2(addr) ^ 0x5555;	break;
+		case 0x120000: value = 0xffff - ((addr & 0xffff) >> 1);					break;
+		case 0x130000: value = 0xffff - ((addr & 0xffff) >> 1) - 0x8000;		break;
+		case 0x140000:
+		case 0x150000: value = ((addr >> 1) & 0xffff) ^ 0xaaaa;					break;
+		case 0x160000:
+		case 0x170000: value = ((addr >> 1) & 0xffff) ^ 0x5555;					break;
+		case 0x180000:
+		case 0x190000: value = ((addr >> 1) & 0xffff) ^ 0xf0f0;					break;
+		case 0x1a0000:
+		case 0x1b0000: value = ((addr >> 1) & 0xffff) ^ 0x0f0f;					break;
+		case 0x1c0000:
+		case 0x1d0000: value = ((addr >> 1) & 0xffff) ^ 0xff00;					break;
+		case 0x1e0000:
+		case 0x1f0000: value = ((addr >> 1) & 0xffff) ^ 0x00ff;					break;
+	}
+	return value & 0xFFFF;
+}
+
 static FORCE_INLINE UINT16 gba_rom_read16(const gba_t* gba, UINT32 address)
 {
 	UINT32 offset = (address & 0x1fffffe);
+	if (offset >= gba->cart.rom_size) {
+		if (gba->cart.vfame.type)
+			return gba_vfame_get_pattern(address);
+		UINT32 mask = gba->cart.rom_size - 1;
+		if ((gba->cart.rom_size & mask) == 0)
+			offset &= mask & ~1;
+	}
 	return gba->mem.cart_rom[offset] | (gba->mem.cart_rom[offset + 1] << 8);
 }
 
@@ -1165,12 +1232,93 @@ static FORCE_INLINE UINT8 gba_process_tilt_read(gba_t* gba, UINT32 baddr)
 	return 0xff;
 }
 
+// VFame SRAM write - address/value scrambling for FC Mini carts
+static FORCE_INLINE UINT32 gba_vfame_reorder_bits(UINT32 value, const UINT8* reordering, INT32 len)
+{
+	UINT32 result = 0;
+	for (INT32 i = 0; i < len; i++)
+		if (SB_BFE(value, i, 1))
+			result |= 1 << reordering[i];
+	return result;
+}
+
+static FORCE_INLINE void gba_vfame_sram_write(gba_t* gba, UINT32 address, UINT8 value)
+{
+	gba_vfame_t* vfame = &gba->cart.vfame;
+	// Mode change sequence detection
+	if (address >= 0xfff8 && address <= 0xfffc) {
+		vfame->write_sequence[address - 0xfff8] = value;
+		if (address == 0xfffc) {
+			static const UINT8 start_seq[5] = { 0x99, 0x02, 0x05, 0x02, 0x03 };
+			static const UINT8 end_seq[5]   = { 0x99, 0x03, 0x62, 0x02, 0x56 };
+			if (memcmp(start_seq, vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = true;
+			if (memcmp(end_seq,   vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = false;
+		}
+	}
+	if (vfame->accepting_mode_change) {
+		if (address == 0xfffe) {
+			vfame->sram_mode = value;
+			return;
+		} else if (address == 0xfffd) {
+			vfame->rom_mode  = value;
+			return;
+		}
+	}
+	if (vfame->sram_mode == -1)
+		return;
+
+	// addr_reorder[type][mode-1][16]
+	static const UINT8 addr_reorder[3][3][16] = {
+		{ // VFAME_STANDARD [0]
+			{ 15, 14,  9,  1,  8, 10,  7,  3,  5, 11,  4,  0, 13, 12,  2,  6 },
+			{ 15,  7, 13,  5, 11,  6,  0,  9, 12,  2, 10, 14,  3,  1,  8,  4 },
+			{ 15,  0,  3, 12,  2,  4, 14, 13,  1, 8,   6,  7,  9,  5, 11, 10 }
+		},
+		{ // VFAME_GEORGE [1]
+			{ 15,  7, 13,  1, 11, 10, 14,  9, 12,  2,  4,  0,  3,  5,  8,  6 },
+			{ 15, 14,  3, 12,  8,  4,  0, 13,  5, 11,  6,  7,  9,  1,  2, 10 },
+			{ 15,  0,  9,  5,  2,  6,  7,  3,  1,  8, 10, 14, 13, 12, 11,  4 }
+		},
+		{ // VFAME_ALTERNATE [2]
+			{ 15,  0, 13,  5,  8,  4,  7,  3,  1,  2, 10, 14,  9, 12, 11,  6 },
+			{ 15,  7,  9,  1,  2,  6, 14, 13, 12, 11,  4,  0,  3,  5,  8, 10 },
+			{ 15, 14,  3, 12, 11, 10,  0,  9,  5,  8,  6,  7, 13,  1,  2,  4 }
+		},
+	};
+	// val_reorder[type][reorder_val-1][8]
+	static const UINT8 val_reorder[3][3][8] = {
+		{ { 5, 4, 3, 2, 1, 0, 7, 6 }, { 3, 2, 1, 0, 7, 6, 5, 4 }, { 1, 0, 7, 6, 5, 4, 3, 2 } },
+		{ { 3, 0, 7, 2, 1, 4, 5, 6 }, { 1, 4, 3, 0, 5, 6, 7, 2 }, { 5, 2, 1, 6, 7, 0, 3, 4 } },
+		{ { 5, 4, 7, 2, 1, 0, 3, 6 }, { 1, 2, 3, 0, 5, 6, 7, 4 }, { 3, 0, 1, 6, 7, 4, 5, 2 } },
+	};
+
+	INT32 mode = vfame->sram_mode & 0x3;
+	INT32 type = vfame->type - 1; // 0: standard, 1: george, 2: alternate
+	if (mode != 0) {
+		address = gba_vfame_reorder_bits(address, addr_reorder[type][mode - 1], 16);
+		INT32 reorder_val = (vfame->sram_mode & 0xf) >> 2;
+		if (reorder_val != 0)
+			value = gba_vfame_reorder_bits(value, val_reorder[type][reorder_val - 1], 8);
+	}
+	if (vfame->sram_mode & 0x80)
+		value ^= 0xaa;
+	address &= 0x7fff;
+	if (gba->mem.cart_backup[address] != value) {
+		gba->mem.cart_backup[address] = value;
+		gba->cart.backup_is_dirty = true;
+	}
+}
+
 static FORCE_INLINE void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (gba->cart.backup_type == GBA_BACKUP_FLASH_64K || gba->cart.backup_type == GBA_BACKUP_FLASH_128K) {
 		gba_process_flash_state_machine(gba, baddr, data);
 	} else if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
-		if (gba->mem.cart_backup[baddr & 0x7fff] != (data & 0xff)) {
+		if (gba->cart.vfame.type) {
+			gba_vfame_sram_write(gba, baddr, data & 0xff);
+		} else if (gba->mem.cart_backup[baddr & 0x7fff] != (data & 0xff)) {
 			gba->mem.cart_backup[baddr & 0x7fff] = data & 0xff;
 			gba->cart.backup_is_dirty = true;
 		}
@@ -1630,9 +1778,17 @@ static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_
 		case 0xD: {
 			INT32 maddr = addr & 0x1fffffc;
 			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
+				if (gba->cart.vfame.type) {
+					gba->mem.openbus_word = gba_vfame_get_pattern(addr) | (gba_vfame_get_pattern(addr + 2) << 16);
+					break;
+				}
+				UINT32 mask = gba->cart.rom_size - 1;
+				if ((gba->cart.rom_size & mask) == 0)
+					maddr &= mask & ~3;
+			}
+			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
 				gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
-				// Return ready when done writting EEPROM (required by Minish Cap)
-				if (gba->cart.backup_type == GBA_BACKUP_EEPROM)
+				if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0x1ffffff) >= 0x01ffff00)
 					gba->mem.openbus_word = 1;
 			} else {
 				gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
@@ -1911,7 +2067,22 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->cart.rom_size    = emu->rom_size;
 	gba->mem.cart_rom     = emu->rom_data;
 
-	gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
+	// VFame (FC Mini) cartridge detection
+	{
+		static const UINT8 vfame_init_seq[16] = {
+			0xb4, 0x00, 0x9f, 0xe5, 0x99, 0x10, 0xa0, 0xe3,
+			0x00, 0x10, 0xc0, 0xe5, 0xac, 0x00, 0x9f, 0xe5
+		};
+		if (emu->rom_size >= 0x16C && memcmp(vfame_init_seq, emu->rom_data + 0x15c, 16) == 0) {
+			gba->cart.vfame.type      =  1;		// VFAME_STANDARD
+			gba->cart.vfame.rom_mode  = -1;
+			gba->cart.vfame.sram_mode = -1;
+			gba->cart.backup_type     = GBA_BACKUP_SRAM;
+		}
+	}
+
+	if (!gba->cart.vfame.type)
+		gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
 
 	size_t bytes = 0;
 	UINT8* data  = sb_load_file_data(emu->save_file_path, &bytes);
@@ -1978,6 +2149,9 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		}
 		gba_store32(gba, GBA_IE,      0x1);
 		gba_store16(gba, GBA_DISPCNT, 0x9140);
+		gba->ppu.dispcnt_pipeline[0] = 0x9140;
+		gba->ppu.dispcnt_pipeline[1] = 0x9140;
+		gba->ppu.dispcnt_pipeline[2] = 0x9140;
 	} else {
 		gba->cpu.registers[PC  ] = 0x00000000;
 		gba->cpu.registers[CPSR] = 0x000000d3;
@@ -2144,6 +2318,7 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 			obj_window_control   = SB_BFE(WINOUT, 8, 6);
 		bool  display_obj        = SB_BFE(dispcnt, 12, 1);
 		if (display_obj) {
+			INT32 sprite_cycles  = SB_BFE(dispcnt, 5, 1) ? 954 : 1210;
 			for (INT32 o = 0; o < 128; ++o) {
 				UINT16 attr0 = *(UINT16*)(gba->mem.oam + o * 8 + 0);
 				//Attr0
@@ -2190,6 +2365,12 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 						x_coord |= 0xfe00;
 
 					INT32 x_size  = xsize_lookup[obj_size * 4 + obj_shape];
+					if (rot_scale)
+						sprite_cycles -= 10 + (x_size << double_size) * 2;
+					else
+						sprite_cycles -= x_size;
+					if (sprite_cycles <= 0)
+						break;
 					INT32 x_start = x_coord >= 0 ? x_coord : 0;
 					INT32 x_end   = x_coord + x_size * (double_size ? 2 : 1);
 					if (x_end >= 240)x_end = 240;
@@ -2335,7 +2516,7 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 				UINT32 col = 0;
 				if ((bg < 2 && bg_mode == 2) || (bg == 3 && bg_mode == 1) || (bg != 2 && bg_mode >= 3))
 					continue;
-				bool bg_en = SB_BFE(dispcnt, 8 + bg, 1) && SB_BFE(gba->ppu.dispcnt_pipeline[0], 8 + bg, 1);
+				bool bg_en = SB_BFE(dispcnt, 8 + bg, 1);
 				if (!bg_en || SB_BFE(window_control, bg, 1) == 0)
 					continue;
 

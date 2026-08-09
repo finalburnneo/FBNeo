@@ -356,7 +356,8 @@ static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 {
 	for (INT32 i = 0; i < pImage->nNumTracks; i++) {
 		if (nLogLba < pImage->Tracks[i + 1].nLogFrameOfs) {
-			INT32 nPhys = pImage->Tracks[i].nPhysFrameOfs + (nLogLba - pImage->Tracks[i].nLogFrameOfs);
+			INT32 nPhys = pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nPregap
+			            + (nLogLba - pImage->Tracks[i].nLogFrameOfs);
 			INT32 nChd  = nPhys - pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nChdFrameOfs;
 			*pnTrack = i;
 			return nChd;

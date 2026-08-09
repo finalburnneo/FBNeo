@@ -1,0 +1,17 @@
+# makefile.burn_rules_dev (remove .template from the filename to use this)
+# NOTE: this is an individual-developer (private) WIP file.
+# During WIP/Development of your driver/device/etc, put it in here.  When it's
+# done or time to release, move it over to makefile.burn_rules
+
+# IMPORTANT: this is NOT for WIP stuff that is to be placed on github!
+# -- that stuff belongs in makefile.burn_rules :)
+
+# include directories, f.ex: cpu/newcore
+alldir += 
+
+#include drivers, f.ex: d_newdriver.o
+drvsrc += 
+
+#include devices, f.ex: newcore77.o superdev88.o
+depobj += 
+

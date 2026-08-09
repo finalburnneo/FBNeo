@@ -81,6 +81,8 @@ objdir	= obj/$(COMPILENAME)/
 srcdir	= src/
 
 include makefile.burn_rules
+#optional: include developer's makefile.burn_rules_dev
+-include makefile.burn_rules_dev
 include makefile.burner_win32_rules
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2

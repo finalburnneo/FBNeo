@@ -98,6 +98,8 @@ endif
 srcdir	= src/
 
 include makefile.burn_rules
+#optional: include developer's makefile.burn_rules_dev
+-include makefile.burn_rules_dev
 include makefile.burner_win32_rules
 
 ifdef GCC345

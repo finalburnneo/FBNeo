@@ -1302,6 +1302,310 @@ struct BurnDriver BurnDrvgba_firembssx = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Sonic Advance (Europe)
+
+static struct BurnRomInfo gba_sonicRomDesc[] = {
+	{ "Sonic Advance (E)(2002)(Infogrames).gba",	0x800000,	0x6232839b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic, gba_sonic, gba_gba)
+STD_ROM_FN(gba_sonic)
+
+struct BurnDriver BurnDrvgba_sonic = {
+	"gba_sonic", NULL, "gba_gba", NULL, "2002",
+	"Sonic Advance (Europe)\0", NULL, "Infogrames", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonicRomInfo, gba_sonicRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance (Japan, Rev 1)
+
+static struct BurnRomInfo gba_sonicjRomDesc[] = {
+	{ "Sonic Advance (J, Rev 1)(2002)(Sega).gba",	0x800000,	0x85957a24,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicj, gba_sonicj, gba_gba)
+STD_ROM_FN(gba_sonicj)
+
+struct BurnDriver BurnDrvgba_sonicj = {
+	"gba_sonicj", "gba_sonic", "gba_gba", NULL, "2002",
+	"Sonic Advance (Japan, Rev 1)\0", NULL, "Sega", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonicjRomInfo, gba_sonicjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance (USA)
+
+static struct BurnRomInfo gba_sonicuRomDesc[] = {
+	{ "Sonic Advance (U)(2002)(THQ).gba",	0x800000,	0x63f70fd8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicu, gba_sonicu, gba_gba)
+STD_ROM_FN(gba_sonicu)
+
+struct BurnDriver BurnDrvgba_sonicu = {
+	"gba_sonicu", "gba_sonic", "gba_gba", NULL, "2002",
+	"Sonic Advance (USA)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonicuRomInfo, gba_sonicuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 2 (Europe)
+
+static struct BurnRomInfo gba_sonic2RomDesc[] = {
+	{ "Sonic Advance 2 (E)(2003)(Infogrames).gba",	0x1000000,	0x89509891,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic2, gba_sonic2, gba_gba)
+STD_ROM_FN(gba_sonic2)
+
+struct BurnDriver BurnDrvgba_sonic2 = {
+	"gba_sonic2", NULL, "gba_gba", NULL, "2003",
+	"Sonic Advance 2 (Europe)\0", NULL, "Infogrames", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic2RomInfo, gba_sonic2RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 2 (Japan)
+
+static struct BurnRomInfo gba_sonic2jRomDesc[] = {
+	{ "Sonic Advance 2 (J)(2003)(Sega).gba",	0x1000000,	0x513804ff,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic2j, gba_sonic2j, gba_gba)
+STD_ROM_FN(gba_sonic2j)
+
+struct BurnDriver BurnDrvgba_sonic2j = {
+	"gba_sonic2j", "gba_sonic2", "gba_gba", NULL, "2003",
+	"Sonic Advance 2 (Japan)\0", NULL, "Sega", "Game Boy Advance",
+	L"Sonic Advance 2 (Japan)\0\u30bd\u30cb\u30c3\u30af\u30a2\u30c9\u30d0\u30f3\u30b92\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic2jRomInfo, gba_sonic2jRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 2 (USA)
+
+static struct BurnRomInfo gba_sonic2uRomDesc[] = {
+	{ "Sonic Advance 2 (U)(2003)(THQ).gba",	0x1000000,	0x7efee7f7,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic2u, gba_sonic2u, gba_gba)
+STD_ROM_FN(gba_sonic2u)
+
+struct BurnDriver BurnDrvgba_sonic2u = {
+	"gba_sonic2u", "gba_sonic2", "gba_gba", NULL, "2003",
+	"Sonic Advance 2 (USA)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic2uRomInfo, gba_sonic2uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 3 (Europe)
+
+static struct BurnRomInfo gba_sonic3RomDesc[] = {
+	{ "Sonic Advance 3 (E)(2004)(THQ).gba",	0x1000000,	0x5bf83456,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic3, gba_sonic3, gba_gba)
+STD_ROM_FN(gba_sonic3)
+
+struct BurnDriver BurnDrvgba_sonic3 = {
+	"gba_sonic3", NULL, "gba_gba", NULL, "2004",
+	"Sonic Advance 3 (Europe)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic3RomInfo, gba_sonic3RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 3 (Japan)
+
+static struct BurnRomInfo gba_sonic3jRomDesc[] = {
+	{ "Sonic Advance 3 (J)(2004)(Sega).gba",	0x1000000,	0x4375f1d6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic3j, gba_sonic3j, gba_gba)
+STD_ROM_FN(gba_sonic3j)
+
+struct BurnDriver BurnDrvgba_sonic3j = {
+	"gba_sonic3j", "gba_sonic3", "gba_gba", NULL, "2004",
+	"Sonic Advance 3 (Japan)\0", NULL, "Sega", "Game Boy Advance",
+	L"Sonic Advance 3 (Japan)\0\u30bd\u30cb\u30c3\u30af\u30a2\u30c9\u30d0\u30f3\u30b93\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic3jRomInfo, gba_sonic3jRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Advance 3 (USA)
+
+static struct BurnRomInfo gba_sonic3uRomDesc[] = {
+	{ "Sonic Advance 3 (U)(2004)(THQ).gba",	0x1000000,	0x49dda5e6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic3u, gba_sonic3u, gba_gba)
+STD_ROM_FN(gba_sonic3u)
+
+struct BurnDriver BurnDrvgba_sonic3u = {
+	"gba_sonic3u", "gba_sonic3", "gba_gba", NULL, "2004",
+	"Sonic Advance 3 (USA)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonic3uRomInfo, gba_sonic3uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Battle (Europe)
+
+static struct BurnRomInfo gba_sonicbtlRomDesc[] = {
+	{ "Sonic Battle (E)(2004)(THQ).gba",	0x1000000,	0xd0f65125,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicbtl, gba_sonicbtl, gba_gba)
+STD_ROM_FN(gba_sonicbtl)
+
+struct BurnDriver BurnDrvgba_sonicbtl = {
+	"gba_sonicbtl", NULL, "gba_gba", NULL, "2004",
+	"Sonic Battle (Europe)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SONIC,
+	GbaGetZipName, gba_sonicbtlRomInfo, gba_sonicbtlRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Battle (Japan)
+
+static struct BurnRomInfo gba_sonicbtljRomDesc[] = {
+	{ "Sonic Battle (J)(2004)(Sega).gba",	0x1000000,	0x7305ac30,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicbtlj, gba_sonicbtlj, gba_gba)
+STD_ROM_FN(gba_sonicbtlj)
+
+struct BurnDriver BurnDrvgba_sonicbtlj = {
+	"gba_sonicbtlj", "gba_sonicbtl", "gba_gba", NULL, "2004",
+	"Sonic Battle (Japan)\0", NULL, "Sega", "Game Boy Advance",
+	L"Sonic Battle (Japan)\0\u30bd\u30cb\u30c3\u30af\u30d0\u30c8\u30eb\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SONIC,
+	GbaGetZipName, gba_sonicbtljRomInfo, gba_sonicbtljRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Battle (USA)
+
+static struct BurnRomInfo gba_sonicbtluRomDesc[] = {
+	{ "Sonic Battle (U)(2004)(THQ).gba",	0x1000000,	0x9ec9d86f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicbtlu, gba_sonicbtlu, gba_gba)
+STD_ROM_FN(gba_sonicbtlu)
+
+struct BurnDriver BurnDrvgba_sonicbtlu = {
+	"gba_sonicbtlu", "gba_sonicbtl", "gba_gba", NULL, "2004",
+	"Sonic Battle (USA)\0", NULL, "THQ", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SONIC,
+	GbaGetZipName, gba_sonicbtluRomInfo, gba_sonicbtluRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Pinball Party (Europe)
+
+static struct BurnRomInfo gba_sonicpinRomDesc[] = {
+	{ "Sonic Pinball Party (E)(2003)(Sega).gba",	0x800000,	0x4435917e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicpin, gba_sonicpin, gba_gba)
+STD_ROM_FN(gba_sonicpin)
+
+struct BurnDriver BurnDrvgba_sonicpin = {
+	"gba_sonicpin", NULL, "gba_gba", NULL, "2003",
+	"Sonic Pinball Party (Europe)\0", NULL, "Sega", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PINBALL, FBF_SONIC,
+	GbaGetZipName, gba_sonicpinRomInfo, gba_sonicpinRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Pinball Party (Japan)
+
+static struct BurnRomInfo gba_sonicpinjRomDesc[] = {
+	{ "Sonic Pinball Party (J)(2003)(Sega).gba",	0x800000,	0x43b5f167,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicpinj, gba_sonicpinj, gba_gba)
+STD_ROM_FN(gba_sonicpinj)
+
+struct BurnDriver BurnDrvgba_sonicpinj = {
+	"gba_sonicpinj", "gba_sonicpin", "gba_gba", NULL, "2003",
+	"Sonic Pinball Party (Japan)\0", NULL, "Sega", "Game Boy Advance",
+	L"Sonic Pinball Party (Japan)\0\u30bd\u30cb\u30c3\u30af\u30d4\u30f3\u30dc\u30fc\u30eb\u30d1\u30fc\u30c6\u30a3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PINBALL, FBF_SONIC,
+	GbaGetZipName, gba_sonicpinjRomInfo, gba_sonicpinjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic Pinball Party (USA)
+
+static struct BurnRomInfo gba_sonicpinuRomDesc[] = {
+	{ "Sonic Pinball Party (U)(2003)(Sega).gba",	0x800000,	0x08794743,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicpinu, gba_sonicpinu, gba_gba)
+STD_ROM_FN(gba_sonicpinu)
+
+struct BurnDriver BurnDrvgba_sonicpinu = {
+	"gba_sonicpinu", "gba_sonicpin", "gba_gba", NULL, "2003",
+	"Sonic Pinball Party (USA)\0", NULL, "Sega", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PINBALL, FBF_SONIC,
+	GbaGetZipName, gba_sonicpinuRomInfo, gba_sonicpinuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Sonic the Hedgehog - Genesis (USA)
+
+static struct BurnRomInfo gba_sonicgenRomDesc[] = {
+	{ "Sonic the Hedgehog - Genesis (U)(2006)(Sega).gba",	0x400000,	0x027bc70d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonicgen, gba_sonicgen, gba_gba)
+STD_ROM_FN(gba_sonicgen)
+
+struct BurnDriver BurnDrvgba_sonicgen = {
+	"gba_sonicgen", NULL, "gba_gba", NULL, "2006",
+	"Sonic the Hedgehog - Genesis (USA)\0", NULL, "Sega", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonicgenRomInfo, gba_sonicgenRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Street Fighter Alpha 3 (Europe)
 
 static struct BurnRomInfo gba_sfa3RomDesc[] = {
@@ -1633,6 +1937,27 @@ struct BurnDriver BurnDrvgba_xenocrisis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
 	GbaGetZipName, gba_xenocrisisRomInfo, gba_xenocrisisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Igor_Arabe
+
+// Sonic Advance (Europe)
+
+static struct BurnRomInfo gba_sonicRomDesc[] = {
+	{ "Sonic Advance (E)(2002)(Infogrames).gba",	0x800000,	0x6232839b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sonic, gba_sonic, gba_gba)
+STD_ROM_FN(gba_sonic)
+
+struct BurnDriver BurnDrvgba_sonic = {
+	"gba_sonic", NULL, "gba_gba", NULL, "2002",
+	"Sonic Advance (Europe)\0", NULL, "Infogrames", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	GbaGetZipName, gba_sonicRomInfo, gba_sonicRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

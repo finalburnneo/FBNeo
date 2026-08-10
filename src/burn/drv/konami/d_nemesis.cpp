@@ -4289,7 +4289,7 @@ struct BurnDriver BurnDrvGwarrior = {
 };
 
 
-// Konami RF2 - Red Fighter
+// Konami RF2: Red Fighter
 
 static struct BurnRomInfo rf2RomDesc[] = {
 	{ "400-a06.15l",	0x08000, 0xb99d8cff, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
@@ -4308,7 +4308,7 @@ STD_ROM_FN(rf2)
 
 struct BurnDriver BurnDrvRf2 = {
 	"rf2", "konamigt", NULL, NULL, "1985",
-	"Konami RF2 - Red Fighter\0", NULL, "Konami", "GX561",
+	"Konami RF2: Red Fighter\0", NULL, "Konami", "GX561",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
 	NULL, rf2RomInfo, rf2RomName, NULL, NULL, NULL, NULL, KonamigtInputInfo, KonamigtDIPInfo,
@@ -4547,7 +4547,7 @@ struct BurnDriver BurnDrvBubsys = {
 
 // Gradius (Bubble System)
 
-static struct BurnRomInfo gradiusbRomDesc[] = {
+static struct BurnRomInfo bs_gradiusRomDesc[] = {
 	{ "boot.bin",				0x001e0, 0xf0774fc2, 1 | BRF_PRG | BRF_ESS },              //  0 m68000 Vectors
 
 	{ "gradius.bin",			0x48360, 0xf83b9607, 2 | BRF_PRG | BRF_ESS },              //  1 Bubble Memory Data
@@ -4558,15 +4558,15 @@ static struct BurnRomInfo gradiusbRomDesc[] = {
 	{ "400a2.1b",				0x00100, 0x2f44f970, 4 | BRF_SND },                        //  4
 };
 
-STDROMPICKEXT(gradiusb, gradiusb, bubsys)
-STD_ROM_FN(gradiusb)
+STDROMPICKEXT(bs_gradius, bs_gradius, bubsys)
+STD_ROM_FN(bs_gradius)
 
-struct BurnDriver BurnDrvGradiusb = {
-	"gradiusb", NULL, "bubsys", NULL, "1985",
+struct BurnDriver BurnDrvbs_gradius = {
+	"bs_gradius", NULL, "bubsys", NULL, "1985",
 	"Gradius (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_HORSHOOT, 0,
-	NULL, gradiusbRomInfo, gradiusbRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	NULL, bs_gradiusRomInfo, bs_gradiusRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -4574,7 +4574,7 @@ struct BurnDriver BurnDrvGradiusb = {
 
 // TwinBee (Bubble System)
 
-static struct BurnRomInfo twinbeebRomDesc[] = {
+static struct BurnRomInfo bs_twinbeeRomDesc[] = {
 	{ "boot.bin",				0x0001e0, 0xee6e93d7, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Vectors
 
 	{ "twinbee.bin",			0x040300, 0x4d396a0a, 2 | BRF_PRG | BRF_ESS }, //  1 Bubble Memory Data
@@ -4585,15 +4585,15 @@ static struct BurnRomInfo twinbeebRomDesc[] = {
 	{ "400-a02.fse",			0x000100, 0x2f44f970, 4 | BRF_SND },           //  5
 };
 
-STDROMPICKEXT(twinbeeb, twinbeeb, bubsys)
-STD_ROM_FN(twinbeeb)
+STDROMPICKEXT(bs_twinbee, bs_twinbee, bubsys)
+STD_ROM_FN(bs_twinbee)
 
-struct BurnDriver BurnDrvTwinbeeb = {
-	"twinbeeb", NULL, "bubsys", NULL, "1985",
+struct BurnDriver BurnDrvbs_twinbee = {
+	"bs_twinbee", NULL, "bubsys", NULL, "1985",
 	"TwinBee (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VERSHOOT, 0,
-	NULL, twinbeebRomInfo, twinbeebRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	NULL, bs_twinbeeRomInfo, bs_twinbeeRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	TwinbeebInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };
@@ -4601,7 +4601,7 @@ struct BurnDriver BurnDrvTwinbeeb = {
 
 // Galactic Warriors (Bubble System)
 
-static struct BurnRomInfo gwarriorbRomDesc[] = {
+static struct BurnRomInfo bs_gwarriorRomDesc[] = {
 	{ "boot.bin",				0x0001e0, 0x728263bd, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Vectors
 
 	{ "gwarriorb.bin",			0x048360, 0xa10e1b62, 2 | BRF_PRG | BRF_ESS }, //  1 Bubble Memory Data
@@ -4612,23 +4612,23 @@ static struct BurnRomInfo gwarriorbRomDesc[] = {
 	{ "400a2.1b",				0x000100, 0x2f44f970, 4 | BRF_SND  },		   //  4 
 };
 
-STDROMPICKEXT(gwarriorb, gwarriorb, bubsys)
-STD_ROM_FN(gwarriorb)
+STDROMPICKEXT(bs_gwarrior, bs_gwarrior, bubsys)
+STD_ROM_FN(bs_gwarrior)
 
-struct BurnDriver BurnDrvGwarriorb = {
-	"gwarriorb", NULL, "bubsys", NULL, "1985",
+struct BurnDriver BurnDrvbs_gwarrior = {
+	"bs_gwarrior", NULL, "bubsys", NULL, "1985",
 	"Galactic Warriors (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_VSFIGHT, 0,
-	NULL, gwarriorbRomInfo, gwarriorbRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	NULL, bs_gwarriorRomInfo, bs_gwarriorRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
 
-// Konami RF2 - Red Fighter (Bubble System)
+// Konami RF2: Red Fighter (Bubble System)
 
-static struct BurnRomInfo rf2bRomDesc[] = {
+static struct BurnRomInfo bs_rf2RomDesc[] = {
 	{ "boot.bin",				0x0001e0, 0xee6e93d7, 1 | BRF_PRG | BRF_ESS },	//  0 m68000 Vectors
 
 	{ "rf2b.bin",				0x048360, 0x7ee7acc5, 2 | BRF_PRG | BRF_ESS },	//  1 Bubble Memory Data
@@ -4639,15 +4639,15 @@ static struct BurnRomInfo rf2bRomDesc[] = {
 	{ "400a2.1b",				0x000100, 0x2f44f970, 4 | BRF_SND },			//  4 
 };
 
-STDROMPICKEXT(rf2b, rf2b, bubsys)
-STD_ROM_FN(rf2b)
+STDROMPICKEXT(bs_rf2, bs_rf2, bubsys)
+STD_ROM_FN(bs_rf2)
 
-struct BurnDriver BurnDrvRf2b = {
-	"rf2b", NULL, "bubsys", NULL, "1985",
-	"Konami RF2 - Red Fighter (Bubble System)\0", NULL, "Konami", "Miscellaneous",
+struct BurnDriver BurnDrvbs_rf2 = {
+	"bs_rf2", NULL, "bubsys", NULL, "1985",
+	"Konami RF2: Red Fighter (Bubble System)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
-	NULL, rf2bRomInfo, rf2bRomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
+	NULL, bs_rf2RomInfo, bs_rf2RomName, NULL, NULL, NULL, NULL, BubsysInputInfo, BubsysDIPInfo,
 	BubsysInit, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

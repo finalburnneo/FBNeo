@@ -1554,3 +1554,86 @@ struct BurnDriver BurnDrvGbaBoktai2j = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
+
+
+// ----------------------------------------
+// Aftermarkets/Homebrews/Improvement Hacks
+// ----------------------------------------
+
+
+// Alice Sisters (HB)
+
+static struct BurnRomInfo gba_alicesistersRomDesc[] = {
+	{ "Alice Sisters (2024)(OrionSoft).gba",	16777216,	0x1ebddded,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_alicesisters, gba_alicesisters, gba_gba)
+STD_ROM_FN(gba_alicesisters)
+
+struct BurnDriver BurnDrvgba_alicesisters = {
+	"gba_alicesisters", NULL, "gba_gba", NULL, "2024",
+	"Alice Sisters (HB)\0", NULL, "OrionSoft", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_alicesistersRomInfo, gba_alicesistersRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Goodboy Galaxy (HB, v1.3)
+
+static struct BurnRomInfo gba_goodboyRomDesc[] = {
+	{ "Goodboy Galaxy v1.3 (2023-24)(Goodboy Galaxy).gba",	33554432,	0x159ff629,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_goodboy, gba_goodboy, gba_gba)
+STD_ROM_FN(gba_goodboy)
+
+struct BurnDriver BurnDrvgba_goodboy = {
+	"gba_goodboy", NULL, "gba_gba", NULL, "2023-24",
+	"Goodboy Galaxy (HB, v1.3)\0", NULL, "Goodboy Galaxy", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_goodboyRomInfo, gba_goodboyRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Inky and the Alien Aquarium (HB)
+
+static struct BurnRomInfo gba_inkyalienRomDesc[] = {
+	{ "Inky and the Alien Aquarium (2023)(Pocket Pulp).gba",	4194304,	0x402d4ce6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_inkyalien, gba_inkyalien, gba_gba)
+STD_ROM_FN(gba_inkyalien)
+
+struct BurnDriver BurnDrvgba_inkyalien = {
+	"gba_inkyalien", NULL, "gba_gba", NULL, "2023",
+	"Inky and the Alien Aquarium (HB)\0", NULL, "Pocket Pulp", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_inkyalienRomInfo, gba_inkyalienRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Xeno Crisis (HB)
+
+static struct BurnRomInfo gba_xenocrisisRomDesc[] = {
+	{ "Xeno Crisis (2024)(Bitmap Bureau).gba",	33554432,	0x9693aabd,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_xenocrisis, gba_xenocrisis, gba_gba)
+STD_ROM_FN(gba_xenocrisis)
+
+struct BurnDriver BurnDrvgba_xenocrisis = {
+	"gba_xenocrisis", NULL, "gba_gba", NULL, "2024",
+	"Xeno Crisis (HB)\0", NULL, "Bitmap Bureau", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
+	GbaGetZipName, gba_xenocrisisRomInfo, gba_xenocrisisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+

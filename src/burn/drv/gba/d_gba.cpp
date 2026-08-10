@@ -350,6 +350,310 @@ struct BurnDriver BurnDrvgba_gba = {
 // =========================================================================================
 
 
+// Classic NES Series: Super Mario Bros. (USA, Europe)
+
+static struct BurnRomInfo gba_n_smbRomDesc[] = {
+	{ "Classic NES Series - Super Mario Bros. (U, E)(2004)(Nintendo).gba",	0x0100000,	0xf7129225,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_smb, gba_n_smb, gba_gba)
+STD_ROM_FN(gba_n_smb)
+
+struct BurnDriver BurnDrvgba_n_smb = {
+	"gba_n_smb", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Super Mario Bros. (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_n_smbRomInfo, gba_n_smbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.01: Super Mario Bros. (Japan, Rev 1)
+
+static struct BurnRomInfo gba_f_smbRomDesc[] = {
+	{ "Famicom Mini Vol.01 - Super Mario Bros. (J, Rev 1)(2004)(Nintendo).gba",	0x0100000,	0xcd2604dd,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_smb, gba_f_smb, gba_gba)
+STD_ROM_FN(gba_f_smb)
+
+struct BurnDriver BurnDrvgba_f_smb = {
+	"gba_f_smb", "gba_n_smb", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.01: Super Mario Bros. (Japan, Rev 1)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_f_smbRomInfo, gba_f_smbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Donkey Kong (USA, Europe)
+
+static struct BurnRomInfo gba_n_dkongRomDesc[] = {
+	{ "Classic NES Series - Donkey Kong (U, E)(2004)(Nintendo).gba",	0x0100000,	0xf53d8b56,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_dkong, gba_n_dkong, gba_gba)
+STD_ROM_FN(gba_n_dkong)
+
+struct BurnDriver BurnDrvgba_n_dkong = {
+	"gba_n_dkong", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Donkey Kong (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_n_dkongRomInfo, gba_n_dkongRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.02: Donkey Kong (Japan)
+
+static struct BurnRomInfo gba_f_dkongRomDesc[] = {
+	{ "Famicom Mini Vol.02 - Donkey Kong (J)(2004)(Nintendo).gba",	0x0100000,	0x071c3f2b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_dkong, gba_f_dkong, gba_gba)
+STD_ROM_FN(gba_f_dkong)
+
+struct BurnDriver BurnDrvgba_f_dkong = {
+	"gba_f_dkong", "gba_n_dkong", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.02: Donkey Kong (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_f_dkongRomInfo, gba_f_dkongRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Ice Climber (USA, Europe)
+
+static struct BurnRomInfo gba_n_iceclmRomDesc[] = {
+	{ "Classic NES Series - Ice Climber (U, E)(2004)(Nintendo).gba",	0x0100000,	0xb265538d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_iceclm, gba_n_iceclm, gba_gba)
+STD_ROM_FN(gba_n_iceclm)
+
+struct BurnDriver BurnDrvgba_n_iceclm = {
+	"gba_n_iceclm", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Ice Climber (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_n_iceclmRomInfo, gba_n_iceclmRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.03: Ice Climber (Japan)
+
+static struct BurnRomInfo gba_f_iceclmRomDesc[] = {
+	{ "Famicom Mini Vol.03 - Ice Climber (Japan)(2004)(Nintendo).gba",	0x0100000,	0xd0aef472,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_iceclm, gba_f_iceclm, gba_gba)
+STD_ROM_FN(gba_f_iceclm)
+
+struct BurnDriver BurnDrvgba_f_iceclm = {
+	"gba_f_iceclm", "gba_n_iceclm", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.03: Ice Climber (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_f_iceclmRomInfo, gba_f_iceclmRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Excitebike (USA, Europe)
+
+static struct BurnRomInfo gba_n_exbikeRomDesc[] = {
+	{ "Classic NES Series - Excitebike (U, E)(2004)(Nintendo).gba",	0x0100000,	0x67d9a2a6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_exbike, gba_n_exbike, gba_gba)
+STD_ROM_FN(gba_n_exbike)
+
+struct BurnDriver BurnDrvgba_n_exbike = {
+	"gba_n_exbike", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Excitebike (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
+	GbaGetZipName, gba_n_exbikeRomInfo, gba_n_exbikeRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.04: Excitebike (Japan)
+
+static struct BurnRomInfo gba_f_exbikeRomDesc[] = {
+	{ "Famicom Mini Vol.04 - Excitebike (J)(2004)(Nintendo).gba",	0x0100000,	0x32604c95,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_exbike, gba_f_exbike, gba_gba)
+STD_ROM_FN(gba_f_exbike)
+
+struct BurnDriver BurnDrvgba_f_exbike = {
+	"gba_f_exbike", "gba_n_exbike", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.04: Excitebike (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
+	GbaGetZipName, gba_f_exbikeRomInfo, gba_f_exbikeRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: The Legend of Zelda (USA, Europe)
+
+static struct BurnRomInfo gba_n_zeldaRomDesc[] = {
+	{ "Classic NES Series - The Legend of Zelda (U, E)(2004)(Nintendo).gba",	0x0100000,	0x6d49cabf,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_zelda, gba_n_zelda, gba_gba)
+STD_ROM_FN(gba_n_zelda)
+
+struct BurnDriver BurnDrvgba_n_zelda = {
+	"gba_n_zelda", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: The Legend of Zelda (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
+	GbaGetZipName, gba_n_zeldaRomInfo, gba_n_zeldaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.05: Zelda no Densetsu 1: The Hyrule Fantasy (Japan)
+
+static struct BurnRomInfo gba_f_zeldaRomDesc[] = {
+	{ "Famicom Mini Vol.05 - Zelda no Densetsu 1 - The Hyrule Fantasy (J)(2004)(Nintendo).gba",	0x0100000,	0x712d76e8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_zelda, gba_f_zelda, gba_gba)
+STD_ROM_FN(gba_f_zelda)
+
+struct BurnDriver BurnDrvgba_f_zelda = {
+	"gba_f_zelda", "gba_n_zelda", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.05: Zelda no Densetsu 1: The Hyrule Fantasy (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	L"Famicom Mini Vol.05: Zelda no Densetsu 1: The Hyrule Fantasy (Japan)\0\u30d5\u30a1\u30df\u30b3\u30f3\u30df\u30cb Vol.05 \u30bc\u30eb\u30c0\u306e\u4f1d\u8aac 1 The Hyrule Fantasy\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
+	GbaGetZipName, gba_f_zeldaRomInfo, gba_f_zeldaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Pac-Man (USA, Europe)
+
+static struct BurnRomInfo gba_n_pacmanRomDesc[] = {
+	{ "Classic NES Series - Pac-Man (U, E)(2004)(Nintendo).gba",	0x0100000,	0xc28df82f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_pacman, gba_n_pacman, gba_gba)
+STD_ROM_FN(gba_n_pacman)
+
+struct BurnDriver BurnDrvgba_n_pacman = {
+	"gba_n_pacman", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Pac-Man (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_MAZE, 0,
+	GbaGetZipName, gba_n_pacmanRomInfo, gba_n_pacmanRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.06: Pac-Man (Japan)
+
+static struct BurnRomInfo gba_f_pacmanRomDesc[] = {
+	{ "Famicom Mini Vol.06 - Pac-Man (J)(2004)(Nintendo).gba",	0x0100000,	0x91acf642,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_pacman, gba_f_pacman, gba_gba)
+STD_ROM_FN(gba_f_pacman)
+
+struct BurnDriver BurnDrvgba_f_pacman = {
+	"gba_f_pacman", "gba_n_pacman", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.06: Pac-Man (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_MAZE, 0,
+	GbaGetZipName, gba_f_pacmanRomInfo, gba_f_pacmanRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Xevious (USA, Europe)
+
+static struct BurnRomInfo gba_n_xeviosRomDesc[] = {
+	{ "Classic NES Series - Xevious (U, E)(2004)(Nintendo).gba",	0x0100000,	0x9cd2d5dd,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_xevios, gba_n_xevios, gba_gba)
+STD_ROM_FN(gba_n_xevios)
+
+struct BurnDriver BurnDrvgba_n_xevios = {
+	"gba_n_xevios", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Xevious (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
+	GbaGetZipName, gba_n_xeviosRomInfo, gba_n_xeviosRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.07: Xevious (Japan)
+
+static struct BurnRomInfo gba_f_xeviosRomDesc[] = {
+	{ "Famicom Mini Vol.07 - Xevious (J)(2004)(Nintendo).gba",	0x0100000,	0xf54eeb0e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_xevios, gba_f_xevios, gba_gba)
+STD_ROM_FN(gba_f_xevios)
+
+struct BurnDriver BurnDrvgba_f_xevios = {
+	"gba_f_xevios", "gba_n_xevios", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.07: Xevious (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
+	GbaGetZipName, gba_f_xeviosRomInfo, gba_f_xeviosRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Dr. Mario (USA, Europe)
+
+static struct BurnRomInfo gba_n_drmrioRomDesc[] = {
+	{ "Classic NES Series - Dr. Mario (U)(2004)(Nintendo).gba",	0x0100000,	0x934e1f1d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_drmrio, gba_n_drmrio, gba_gba)
+STD_ROM_FN(gba_n_drmrio)
+
+struct BurnDriver BurnDrvgba_n_drmrio = {
+	"gba_n_drmrio", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Dr. Mario (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_n_drmrioRomInfo, gba_n_drmrioRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.15: Dr. Mario (Japan)
+
+static struct BurnRomInfo gba_f_drmrioRomDesc[] = {
+	{ "Famicom Mini Vol.15 - Dr. Mario (J)(2004)(Nintendo).gba",	0x0100000,	0xc836f2e2,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_drmrio, gba_f_drmrio, gba_gba)
+STD_ROM_FN(gba_f_drmrio)
+
+struct BurnDriver BurnDrvgba_f_drmrio = {
+	"gba_f_drmrio", "gba_n_drmrio", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.15: Dr. Mario (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	L"Famicom Mini Vol.15: Dr. Mario (Japan)\0\u30d5\u30a1\u30df\u30b3\u30f3\u30df\u30cb Vol.15 \u30c9\u30af\u30bf\u30fc\u30de\u30ea\u30aa\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_f_drmrioRomInfo, gba_f_drmrioRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Famicom Mini Vol.22: Nazo no Murasame Jou (Japan)
 
 static struct BurnRomInfo gba_f_murasaRomDesc[] = {
@@ -365,6 +669,44 @@ struct BurnDriver BurnDrvgba_f_murasa = {
 	L"Famicom Mini Vol.22: Nazo no Murasame Jou (Japan)\0\u30d5\u30a1\u30df\u30b3\u30f3\u30df\u30cb Vol.22 \u8b0e\u306e\u6751\u96e8\u57ce\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
 	GbaGetZipName, gba_f_murasaRomInfo, gba_f_murasaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Classic NES Series: Metroid (USA, Europe)
+
+static struct BurnRomInfo gba_n_metroiRomDesc[] = {
+	{ "Classic NES Series - Metroid (U, E)(2004)(Nintendo).gba",	0x0100000,	0x9a243b9b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_n_metroi, gba_n_metroi, gba_gba)
+STD_ROM_FN(gba_n_metroi)
+
+struct BurnDriver BurnDrvgba_n_metroi = {
+	"gba_n_metroi", NULL, "gba_gba", NULL, "2004",
+	"Classic NES Series: Metroid (USA, Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_n_metroiRomInfo, gba_n_metroiRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Famicom Mini Vol.23: Metroid (Japan)
+
+static struct BurnRomInfo gba_f_metroiRomDesc[] = {
+	{ "Famicom Mini Vol.23 - Metroid (J)(2004)(Nintendo).gba",	0x0400000,	0xabeccdab,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_metroi, gba_f_metroi, gba_gba)
+STD_ROM_FN(gba_f_metroi)
+
+struct BurnDriver BurnDrvgba_f_metroi = {
+	"gba_f_metroi", "gba_n_metroi", "gba_gba", NULL, "2004",
+	"Famicom Mini Vol.23: Metroid (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
+	L"Famicom Mini Vol.23: Metroid (Japan)\0\u30d5\u30a1\u30df\u30b3\u30f3\u30df\u30cb Vol.23 \u30e1\u30c8\u30ed\u30a4\u30c9\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_f_metroiRomInfo, gba_f_metroiRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

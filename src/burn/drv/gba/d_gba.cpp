@@ -847,6 +847,63 @@ struct BurnDriver BurnDrvgba_firembssx = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Street Fighter Alpha 3 (Europe)
+
+static struct BurnRomInfo gba_sfa3RomDesc[] = {
+	{ "Street Fighter Alpha 3 (E)(2002)(Capcom).gba",	0x0800000,	0x93c5cf69,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sfa3, gba_sfa3, gba_gba)
+STD_ROM_FN(gba_sfa3)
+
+struct BurnDriver BurnDrvgba_sfa3 = {
+	"gba_sfa3", NULL, "gba_gba", NULL, "2002",
+	"Street Fighter Alpha 3 (Europe)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_sfa3RomInfo, gba_sfa3RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Street Fighter Alpha 3 (USA)
+
+static struct BurnRomInfo gba_sfa3uRomDesc[] = {
+	{ "Street Fighter Alpha 3 (U)(2002)(Capcom).gba",	0x0800000,	0x80b707c2,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sfa3u, gba_sfa3u, gba_gba)
+STD_ROM_FN(gba_sfa3u)
+
+struct BurnDriver BurnDrvgba_sfa3u = {
+	"gba_sfa3u", "gba_sfa3", "gba_gba", NULL, "2002",
+	"Street Fighter Alpha 3 (USA)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_sfa3uRomInfo, gba_sfa3uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Street Fighter Zero 3 Upper (Japan)
+
+static struct BurnRomInfo gba_sfa3jRomDesc[] = {
+	{ "Street Fighter Zero 3 Upper (J)(2002)(Capcom).gba",	0x0800000,	0x8d5d0eab,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sfa3j, gba_sfa3j, gba_gba)
+STD_ROM_FN(gba_sfa3j)
+
+struct BurnDriver BurnDrvgba_sfa3j = {
+	"gba_sfa3j", "gba_sfa3", "gba_gba", NULL, "2002",
+	"Street Fighter Zero 3 Upper (Japan)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_sfa3jRomInfo, gba_sfa3jRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Super Ghouls'n Ghosts (Europe, USA)
 
 static struct BurnRomInfo gba_sgngRomDesc[] = {
@@ -862,6 +919,63 @@ struct BurnDriver BurnDrvgba_sgng = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_RUNGUN, 0,
 	GbaGetZipName, gba_sgngRomInfo, gba_sgngRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Super Street Fighter II Turbo - Revival (Europe, Rev 1)
+
+static struct BurnRomInfo gba_ssf2tRomDesc[] = {
+	{ "Super Street Fighter II Turbo - Revival (E, Rev 1)(2001)(Capcom).gba",	0x0800000,	0x459600a9,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ssf2t, gba_ssf2t, gba_gba)
+STD_ROM_FN(gba_ssf2t)
+
+struct BurnDriver BurnDrvgba_ssf2t = {
+	"gba_ssf2t", NULL, "gba_gba", NULL, "2001",
+	"Super Street Fighter II Turbo - Revival (Europe, Rev 1)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_ssf2tRomInfo, gba_ssf2tRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Super Street Fighter II Turbo - Revival (USA)
+
+static struct BurnRomInfo gba_ssf2tuRomDesc[] = {
+	{ "Super Street Fighter II Turbo - Revival (U)(2001)(Capcom).gba",	0x0800000,	0x063045aa,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ssf2tu, gba_ssf2tu, gba_gba)
+STD_ROM_FN(gba_ssf2tu)
+
+struct BurnDriver BurnDrvgba_ssf2tu = {
+	"gba_ssf2tu", "gba_ssf2t", "gba_gba", NULL, "2001",
+	"Super Street Fighter II Turbo - Revival (USA)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_ssf2tuRomInfo, gba_ssf2tuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Super Street Fighter II X - Revival (Japan)
+
+static struct BurnRomInfo gba_ssf2tjRomDesc[] = {
+	{ "Super Street Fighter II X - Revival (J)(2001)(Capcom).gba",	0x0800000,	0x7a2c0d61,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ssf2tj, gba_ssf2tj, gba_gba)
+STD_ROM_FN(gba_ssf2tj)
+
+struct BurnDriver BurnDrvgba_ssf2tj = {
+	"gba_ssf2tj", "gba_ssf2t", "gba_gba", NULL, "2001",
+	"Super Street Fighter II X - Revival (Japan)\0", NULL, "Capcom", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
+	GbaGetZipName, gba_ssf2tjRomInfo, gba_ssf2tjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

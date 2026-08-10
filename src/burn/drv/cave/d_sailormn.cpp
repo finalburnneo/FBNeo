@@ -1031,7 +1031,7 @@ OC_INIT(sailormn, 384)
 
 // Rom information
 
-static struct BurnRomInfo sailormnRomDesc[] = {
+static struct BurnRomInfo sailormneRomDesc[] = {
 	{ "bpsm945a.u45", 0x080000, 0x898c9515, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
 
@@ -1060,8 +1060,8 @@ static struct BurnRomInfo sailormnRomDesc[] = {
 };
 
 
-STD_ROM_PICK(sailormn)
-STD_ROM_FN(sailormn)
+STD_ROM_PICK(sailormne)
+STD_ROM_FN(sailormne)
 
 static struct BurnRomInfo sailormnuRomDesc[] = {
 	{ "bpsm945a.u45", 0x080000, 0x898c9515, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -1095,7 +1095,7 @@ static struct BurnRomInfo sailormnuRomDesc[] = {
 STD_ROM_PICK(sailormnu)
 STD_ROM_FN(sailormnu)
 
-static struct BurnRomInfo sailormnjRomDesc[] = {
+static struct BurnRomInfo sailormnRomDesc[] = {
 	{ "bpsm945a.u45", 0x080000, 0x898c9515, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
 
@@ -1124,8 +1124,8 @@ static struct BurnRomInfo sailormnjRomDesc[] = {
 };
 
 
-STD_ROM_PICK(sailormnj)
-STD_ROM_FN(sailormnj)
+STD_ROM_PICK(sailormn)
+STD_ROM_FN(sailormn)
 
 static struct BurnRomInfo sailormnkRomDesc[] = {
 	{ "bpsm945a.u45", 0x080000, 0x898c9515, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -1223,7 +1223,7 @@ static struct BurnRomInfo sailormnhRomDesc[] = {
 STD_ROM_PICK(sailormnh)
 STD_ROM_FN(sailormnh)
 
-static struct BurnRomInfo sailormnnRomDesc[] = {
+static struct BurnRomInfo sailormnneRomDesc[] = {
 	{ "smprg.u45",    0x080000, 0x234f1152, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
 
@@ -1252,8 +1252,8 @@ static struct BurnRomInfo sailormnnRomDesc[] = {
 };
 
 
-STD_ROM_PICK(sailormnn)
-STD_ROM_FN(sailormnn)
+STD_ROM_PICK(sailormnne)
+STD_ROM_FN(sailormnne)
 
 static struct BurnRomInfo sailormnnuRomDesc[] = {
 	{ "smprg.u45",    0x080000, 0x234f1152, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -1415,7 +1415,7 @@ static struct BurnRomInfo sailormnnhRomDesc[] = {
 STD_ROM_PICK(sailormnnh)
 STD_ROM_FN(sailormnnh)
 
-static struct BurnRomInfo sailormnoRomDesc[] = {
+static struct BurnRomInfo sailormnoeRomDesc[] = {
 	{ "smprg.u45",    0x080000, 0x97837ab4, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
 
@@ -1444,8 +1444,8 @@ static struct BurnRomInfo sailormnoRomDesc[] = {
 };
 
 
-STD_ROM_PICK(sailormno)
-STD_ROM_FN(sailormno)
+STD_ROM_PICK(sailormnoe)
+STD_ROM_FN(sailormnoe)
 
 static struct BurnRomInfo sailormnouRomDesc[] = {
 	{ "smprg.u45",    0x080000, 0x97837ab4, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -2103,12 +2103,12 @@ static struct BurnRomInfo agalletahRomDesc[] = {
 STD_ROM_PICK(agalletah)
 STD_ROM_FN(agalletah)
 
-struct BurnDriver BurnDrvSailorMoon = {
-	"sailormn", NULL, NULL,  NULL,"1995",
+struct BurnDriver BurnDrvSailorMoone = {
+	"sailormne", "sailormn", NULL,  NULL,"1995",
 	"Pretty Soldier Sailor Moon (Version 95/03/22B, Europe)\0", NULL, "Gazelle (Banpresto license)", "Cave",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnRomInfo, sailormnRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, sailormneRomInfo, sailormneRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -2123,12 +2123,12 @@ struct BurnDriver BurnDrvSailorMoonu = {
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvSailorMoonj = {
-	"sailormnj", "sailormn", NULL,  NULL,"1995",
+struct BurnDriver BurnDrvSailorMoon = {
+	"sailormn", NULL, NULL,  NULL,"1995",
 	"Bishoujo Senshi Sailor Moon (Version 95/03/22B, Japan)\0", NULL, "Gazelle (Banpresto license)", "Cave",
 	L"Bishoujo Senshi Sailor Moon\0\u7F8E\u5C11\u5973\u6226\u58EB \u30BB\u30FC\u30E9\u30FC\u30E0\u30FC\u30F3 (Version 95/03/22B, Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnjRomInfo, sailormnjRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, sailormnRomInfo, sailormnRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -2164,11 +2164,11 @@ struct BurnDriver BurnDrvSailorMoonh = {
 };
 
 struct BurnDriver BurnDrvSailorMoonN = {
-	"sailormnn", "sailormn", NULL,  NULL,"1995",
+	"sailormnne", "sailormn", NULL,  NULL,"1995",
 	"Pretty Soldier Sailor Moon (Version 95/03/22, Europe)\0", NULL, "Gazelle (Banpresto license)", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnnRomInfo, sailormnnRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	NULL, sailormnneRomInfo, sailormnneRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -2224,11 +2224,11 @@ struct BurnDriver BurnDrvSailorMoonNh = {
 };
 
 struct BurnDriver BurnDrvSailorMoonO = {
-	"sailormno", "sailormn", NULL,  NULL,"1995",
+	"sailormnoe", "sailormn", NULL,  NULL,"1995",
 	"Pretty Soldier Sailor Moon (Version 95/03/21, Europe)\0", NULL, "Gazelle (Banpresto license)", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
-	NULL, sailormnoRomInfo, sailormnoRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	NULL, sailormnoeRomInfo, sailormnoeRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
@@ -2562,4 +2562,3 @@ struct BurnDriver BurnDrvAirGalletah = {
 	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
-

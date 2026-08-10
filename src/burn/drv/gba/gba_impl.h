@@ -2425,28 +2425,31 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 						INT32 tx = sx % 8;
 						INT32 ty = sy % 8;
 
-						INT32 y_tile_stride = obj_vram_map_2d ? 32 : x_size / 8 * (colors_or_palettes ? 2 : 1);
-						INT32 tile          = tile_base + (((sx / 8)) * (colors_or_palettes ? 2 : 1)) + (sy / 8) * y_tile_stride;
-						// Don't allow the column indices to overflow into the row indices in 2D mode. 
-						// See: https://github.com/skylersaleh/SkyEmu/issues/13
+						INT32 tile_step = colors_or_palettes ? 2 : 1;
+						INT32 tile;
 						if (obj_vram_map_2d) {
-							tile  = (tile_base + (((sx / 8)) * (colors_or_palettes ? 2 : 1))) & 31;
-							tile |= (tile_base +   (sy / 8)  * y_tile_stride) & ~31;
+							INT32 base = colors_or_palettes ? tile_base & ~1 : tile_base;
+							tile  = (base + (sx / 8) * tile_step) & 0x1f;
+							tile |= (base + (sy / 8) * 32       ) & 0x3e0;
+						} else {
+							tile  = (tile_base + (sx / 8) * tile_step + (sy / 8) * (x_size / 8) * tile_step) & 0x3ff;
 						}
-						//Tiles >511 are not rendered in bg_mode3-5 since that memory is used to store the bitmap graphics. 
+						//Tiles >511 are not rendered in bg_mode3-5 since that memory is used to store the bitmap graphics.
 						if (tile < 512 && bg_mode >= 3 && bg_mode <= 5)
 							continue;
 						UINT8 palette_id;
 						INT32 obj_tile_base = GBA_OBJ_TILES0_2;
 						bool transparent = false;
 						if (colors_or_palettes == false) {
-							palette_id  = gba->mem.vram[obj_tile_base + tile * 8 * 4 + tx / 2 + ty * 4];
-							palette_id  = (palette_id >> ((tx & 1) * 4)) & 0xf;
-							transparent =  palette_id == 0;
-							palette_id +=  palette * 16;
+							INT32 offset = (tile * 32 + tx / 2 + ty * 4) & 0x7fff;
+							palette_id   = gba->mem.vram[obj_tile_base + offset];
+							palette_id   = (palette_id >> ((tx & 1) * 4)) & 0xf;
+							transparent  =  palette_id == 0;
+							palette_id  +=  palette * 16;
 						} else {
-							palette_id  = gba->mem.vram[obj_tile_base + tile * 8 * 4 + tx + ty * 8];
-							transparent = palette_id == 0;
+							INT32 offset = (tile * 32 + tx + ty * 8) & 0x7fff;
+							palette_id   = gba->mem.vram[obj_tile_base + offset];
+							transparent  = palette_id == 0;
 						}
 
 						UINT32 col = *(UINT16*)(gba->mem.palette + GBA_OBJ_PALETTE + palette_id * 2);

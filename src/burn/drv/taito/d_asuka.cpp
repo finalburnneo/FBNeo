@@ -1609,7 +1609,7 @@ STD_ROM_FN(cchip)
 
 struct BurnDriver BurnDrvCCHIP = {
 	"cchip", NULL, NULL, NULL, "1989",
-	"C-Chip Internal ROM\0", "Internal ROM only", "Taito Corporation Japan", "C-Chip Internal ROM",
+	"C-Chip Internal ROM\0", "Internal ROM only", "Taito", "C-Chip Internal ROM",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_TAITO_MISC, GBF_BIOS, 0,
 	NULL, cchipRomInfo, cchipRomName, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -1650,7 +1650,7 @@ static INT32 CadashInit()
 
 struct BurnDriver BurnDrvCadash = {
 	"cadash", NULL, NULL, NULL, "1989",
-	"Cadash (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (World)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashRomInfo, cadashRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -1686,7 +1686,7 @@ STD_ROM_FN(cadashj)
 
 struct BurnDriver BurnDrvCadashj = {
 	"cadashj", "cadash", NULL, NULL, "1989",
-	"Cadash (Japan, rev 2)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Cadash (Japan, rev 2)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashjRomInfo, cadashjRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
@@ -1722,7 +1722,7 @@ STD_ROM_FN(cadashj1)
 
 struct BurnDriver BurnDrvCadashj1 = {
 	"cadashj1", "cadash", NULL, NULL, "1989",
-	"Cadash (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Cadash (Japan, rev 1)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashj1RomInfo, cadashj1RomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
@@ -1758,7 +1758,7 @@ STD_ROM_FN(cadashjo)
 
 struct BurnDriver BurnDrvCadashjo = {
 	"cadashjo", "cadash", NULL, NULL, "1989",
-	"Cadash (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Cadash (Japan)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashjoRomInfo, cadashjoRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
@@ -1794,7 +1794,7 @@ STD_ROM_FN(cadashu)
 
 struct BurnDriver BurnDrvCadashu = {
 	"cadashu", "cadash", NULL, NULL, "1989",
-	"Cadash (US, rev 2)\0", NULL, "Taito America Corporation", "Taito Misc",
+	"Cadash (US, rev 2)\0", NULL, "Taito America", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashuRomInfo, cadashuRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashuDIPInfo,
@@ -1830,7 +1830,7 @@ STD_ROM_FN(cadashu1)
 
 struct BurnDriver BurnDrvCadashu1 = {
 	"cadashu1", "cadash", NULL, NULL, "1989",
-	"Cadash (US, rev 1?)\0", NULL, "Taito America Corporation", "Taito Misc",
+	"Cadash (US, rev 1?)\0", NULL, "Taito America", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashu1RomInfo, cadashu1RomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashuDIPInfo,
@@ -1866,7 +1866,7 @@ STD_ROM_FN(cadashi)
 
 struct BurnDriver BurnDrvCadashi = {
 	"cadashi", "cadash", NULL, NULL, "1989",
-	"Cadash (Italy)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (Italy)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashiRomInfo, cadashiRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -1902,7 +1902,7 @@ STD_ROM_FN(cadashf)
 
 struct BurnDriver BurnDrvCadashf = {
 	"cadashf", "cadash", NULL, NULL, "1989",
-	"Cadash (France)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (France)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashfRomInfo, cadashfRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -1938,7 +1938,7 @@ STD_ROM_FN(cadashg)
 
 struct BurnDriver BurnDrvCadashg = {
 	"cadashg", "cadash", NULL, NULL, "1989",
-	"Cadash (Germany, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (Germany, rev 1)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashgRomInfo, cadashgRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -1974,7 +1974,7 @@ STD_ROM_FN(cadashgo)
 
 struct BurnDriver BurnDrvCadashgo = {
 	"cadashgo", "cadash", NULL, NULL, "1989",
-	"Cadash (Germany)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (Germany)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashgoRomInfo, cadashgoRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -2010,7 +2010,7 @@ STD_ROM_FN(cadashp)
 
 struct BurnDriver BurnDrvCadashp = {
 	"cadashp", "cadash", NULL, NULL, "1989",
-	"Cadash (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (World, prototype)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashpRomInfo, cadashpRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
@@ -2047,7 +2047,7 @@ STD_ROM_FN(cadashs)
 
 struct BurnDriver BurnDrvCadashs = {
 	"cadashs", "cadash", NULL, NULL, "1989",
-	"Cadash (Spain, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (Spain, rev 1)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashsRomInfo, cadashsRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -2084,7 +2084,7 @@ STD_ROM_FN(cadashso)
 
 struct BurnDriver BurnDrvCadashso = {
 	"cadashso", "cadash", NULL, NULL, "1989",
-	"Cadash (Spain)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Cadash (Spain)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashsoRomInfo, cadashsoRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashDIPInfo,
@@ -2199,7 +2199,7 @@ static INT32 AsukaInit()
 
 struct BurnDriver BurnDrvAsuka = {
 	"asuka", NULL, NULL, NULL, "1988",
-	"Asuka & Asuka (World)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Asuka & Asuka (World)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, asukaRomInfo, asukaRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, AsukaDIPInfo,
@@ -2234,7 +2234,7 @@ STD_ROM_FN(asukaj)
 
 struct BurnDriver BurnDrvAsukaj = {
 	"asukaj", "asuka", NULL, NULL, "1988",
-	"Asuka & Asuka (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Asuka & Asuka (Japan, rev 1)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, asukajRomInfo, asukajRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, AsukaDIPInfo,
@@ -2269,7 +2269,7 @@ STD_ROM_FN(asukaja)
 
 struct BurnDriver BurnDrvAsukaja = {
 	"asukaja", "asuka", NULL, NULL, "1988",
-	"Asuka & Asuka (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Asuka & Asuka (Japan)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, asukajaRomInfo, asukajaRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, AsukaDIPInfo,
@@ -2294,6 +2294,9 @@ static struct BurnRomInfo mofflottRomDesc[] = {
 	{ "c17-04.bin",			0x10000, 0xf4250410, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
 	{ "c17-06.bin",			0x10000, 0x5c332125, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+
+	{ "pal20l8acns-b88-11.ic32",	0x00144, 0x9be618d1, BRF_OPT },						//  9 plds
+	{ "pal16l8acn-b88-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						// 10
 };
 
 STD_ROM_PICK(mofflott)
@@ -2301,7 +2304,7 @@ STD_ROM_FN(mofflott)
 
 struct BurnDriver BurnDrvMofflott = {
 	"mofflott", NULL, NULL, NULL, "1989",
-	"Maze of Flott (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Maze of Flott (Japan)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, mofflottRomInfo, mofflottRomName, NULL, NULL, NULL, NULL, AsukaInputInfo, MofflottDIPInfo,
@@ -2543,7 +2546,7 @@ static INT32 BonzeInit()
 
 struct BurnDriver BurnDrvBonzeadv = {
 	"bonzeadv", NULL, "cchip", NULL, "1988",
-	"Bonze Adventure (World, rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, rev 1)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvRomInfo, bonzeadvRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, BonzeadvDIPInfo,
@@ -2577,7 +2580,7 @@ STD_ROM_FN(bonzeadvo)
 
 struct BurnDriver BurnDrvBonzeadvo = {
 	"bonzeadvo", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvoRomInfo, bonzeadvoRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, BonzeadvDIPInfo,
@@ -2611,7 +2614,7 @@ STD_ROM_FN(bonzeadvu)
 
 struct BurnDriver BurnDrvBonzeadvu = {
 	"bonzeadvu", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (US, rev 1)\0", NULL, "Taito America Corporation", "Taito Misc",
+	"Bonze Adventure (US, rev 1)\0", NULL, "Taito America", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvuRomInfo, bonzeadvuRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
@@ -2657,7 +2660,7 @@ STD_ROM_FN(bonzeadvp)
 
 struct BurnDriver BurnDrvBonzeadvp = {
 	"bonzeadvp", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (World, prototype, newer)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, prototype, newer)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvpRomInfo, bonzeadvpRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
@@ -2716,7 +2719,7 @@ STD_ROM_FN(bonzeadvp2)
 
 struct BurnDriver BurnDrvBonzeadvp2 = {
 	"bonzeadvp2", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (World, prototype, older)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, prototype, older)\0", NULL, "Taito", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvp2RomInfo, bonzeadvp2RomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
@@ -2750,7 +2753,7 @@ STD_ROM_FN(jigkmgri)
 
 struct BurnDriver BurnDrvJigkmgri = {
 	"jigkmgri", "bonzeadv", "cchip", NULL, "1988",
-	"Jigoku Meguri (Japan, rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Jigoku Meguri (Japan, rev 1)\0", NULL, "Taito", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan, rev 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, jigkmgriRomInfo, jigkmgriRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
@@ -2784,7 +2787,7 @@ STD_ROM_FN(jigkmgria)
 
 struct BurnDriver BurnDrvJigkmgria = {
 	"jigkmgria", "bonzeadv", "cchip", NULL, "1988",
-	"Jigoku Meguri (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Jigoku Meguri (Japan)\0", NULL, "Taito", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, jigkmgriaRomInfo, jigkmgriaRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
@@ -2820,7 +2823,7 @@ STD_ROM_FN(jigkmgria)
 
 struct BurnDriver BurnDrvJigkmgria = {
 	"jigkmgria", "bonzeadv", "cchip", NULL, "19??",
-	"Jigoku Meguri (Japan, hack?)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Jigoku Meguri (Japan, hack?)\0", NULL, "Taito", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan, hack?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, jigkmgriaRomInfo, jigkmgriaRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,

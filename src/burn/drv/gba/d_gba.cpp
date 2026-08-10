@@ -350,6 +350,24 @@ struct BurnDriver BurnDrvgba_gba = {
 // =========================================================================================
 
 
+// Chou Makaimura R (Japan)
+static struct BurnRomInfo gba_chomakaiRomDesc[] = {
+	{ "Chou Makaimura R (J)(2002)(Capcom).bin",	0x0400000,	0xa4f8b4b4,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_chomakai, gba_chomakai, gba_gba)
+STD_ROM_FN(gba_chomakai)
+
+struct BurnDriver BurnDrvgba_chomakai = {
+	"gba_chomakai", "gba_sgng", "gba_gba", NULL, "2002",
+	"Chou Makaimura R (Japan)\0", NULL, "Capcom", "Game Boy Advance",
+	L"Chou Makaimura R (Japan)\0\u8d85\u9b54\u754c\u6751R\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_RUNGUN, 0,
+	GbaGetZipName, gba_chomakaiRomInfo, gba_chomakaiRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Classic NES Series: Super Mario Bros. (USA, Europe)
 
 static struct BurnRomInfo gba_n_smbRomDesc[] = {
@@ -780,7 +798,7 @@ STD_ROM_FN(gba_ddragonj)
 struct BurnDriver BurnDrvgba_ddragonj = {
 	"gba_ddragonj", "gba_ddragon", "gba_gba", NULL, "2004",
 	"Double Dragon Advance (Japan)\0", NULL, "Atlus", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
+	L"Double Dragon Advance (Japan)\0\u53cc\u8f09\u9f8d\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
 	GbaGetZipName, gba_ddragonjRomInfo, gba_ddragonjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
@@ -897,7 +915,7 @@ STD_ROM_FN(gba_sfa3j)
 struct BurnDriver BurnDrvgba_sfa3j = {
 	"gba_sfa3j", "gba_sfa3", "gba_gba", NULL, "2002",
 	"Street Fighter Zero 3 Upper (Japan)\0", NULL, "Capcom", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
+	L"Street Fighter Zero 3 Upper (Japan)\0\u30b9\u30c8\u30ea\u30fc\u30c8\u30d5\u30a1\u30a4\u30bf\u30fc\u30bc\u30ed3\u30a2\u30c3\u30d1\u30fc\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
 	GbaGetZipName, gba_sfa3jRomInfo, gba_sfa3jRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
@@ -973,7 +991,7 @@ STD_ROM_FN(gba_ssf2tj)
 struct BurnDriver BurnDrvgba_ssf2tj = {
 	"gba_ssf2tj", "gba_ssf2t", "gba_gba", NULL, "2001",
 	"Super Street Fighter II X - Revival (Japan)\0", NULL, "Capcom", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
+	L"Super Street Fighter II X - Revival (Japan)\0\u30b9\u30fc\u30d1\u30fc\u30b9\u30c8\u30ea\u30fc\u30c8\u30d5\u30a1\u30a4\u30bf\u30fcII X \u30ea\u30d0\u30a4\u30d0\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, 0,
 	GbaGetZipName, gba_ssf2tjRomInfo, gba_ssf2tjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,

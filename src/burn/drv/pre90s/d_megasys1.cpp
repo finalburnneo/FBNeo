@@ -4625,7 +4625,7 @@ static INT32 stdragonInit()
 
 struct BurnDriver BurnDrvStdragon = {
 	"stdragon", NULL, NULL, NULL, "1989",
-	"Saint Dragon (set 1)\0", NULL, "Jaleco", "Mega System 1",
+	"Saint Dragon (set 1)\0", NULL, "Jaleco / NMK", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonRomInfo, stdragonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
@@ -4702,7 +4702,7 @@ static INT32 stdragonaInit()
 
 struct BurnDriver BurnDrvStdragona = {
 	"stdragona", "stdragon", NULL, NULL, "1989",
-	"Saint Dragon (set 2)\0", NULL, "Jaleco", "Mega System 1",
+	"Saint Dragon (set 2)\0", NULL, "Jaleco / NMK", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonaRomInfo, stdragonaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
@@ -5254,7 +5254,7 @@ static struct BurnRomInfo avspiritRomDesc[] = {
 	{ "spirit01.rom",	0x20000, 0xd02ec045, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "spirit02.rom",	0x20000, 0x30213390, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "m50747",			0x01000, 0x00000000, 0 | BRF_NODUMP },        //  4 MCU Code
+	{ "avspirit-mcu.11l",	0x04000, 0xd9b2eb1a, 0 | BRF_OPT },           //  4 MCU Code (TMP91640 Internal Code)
 
 	{ "spirit12.rom",	0x80000, 0x728335d4, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
@@ -5593,7 +5593,7 @@ STD_ROM_FN(edfb)
 
 struct BurnDriver BurnDrvEdfb = {
 	"edfb", "edf", NULL, NULL, "1991",
-	"E.D.F.: Earth Defense Force (set 3\0", NULL, "Jaleco", "Mega System 1",
+	"E.D.F.: Earth Defense Force (set 3)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfbRomInfo, edfbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, EdfDIPInfo,
@@ -5816,28 +5816,28 @@ struct BurnDriver BurnDrvHayaosi1 = {
 // 64th. Street: A Detective Story (World)
 
 static struct BurnRomInfo Street64RomDesc[] = {
-	{ "64th_03.rom",	0x40000, 0xed6c6942, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "64th_02.rom",	0x40000, 0x0621ed1d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rb-91105_3_ver_e1.1.ic53",	0x40000, 0xed6c6942, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "rb-91105_2_ver_e1.1.ic52",	0x40000, 0x0621ed1d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rb-91105_8.ic99",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "rb-91105.7.ic98",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu.ic14",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
-	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
+	{ "rb-91105_1_rev_a.ic17",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
-	{ "64th_06.rom",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
+	{ "rb-91105_6_rev_a.ic67",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
 
-	{ "64th_09.rom",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
+	{ "rb-91105_9_rev_a.ic125",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
 
-	{ "64th_05.rom",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
-	{ "64th_04.rom",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
+	{ "rb-91105_5_rev_a.ic61",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
+	{ "rb-91105_4_rev_a.ic60",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
 
-	{ "64th_11.rom",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "rb-91105_11_rev_a.ic.132",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "rb-91105_10_rev_a.ic131",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "pr91009.ic155",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(Street64)
@@ -5868,28 +5868,28 @@ struct BurnDriver BurnDrvStreet64 = {
 // 64th. Street: A Detective Story (Japan, set 1)
 
 static struct BurnRomInfo Street64jRomDesc[] = {
-	{ "91105-3.bin",	0x40000, 0xa211a83b, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "91105-2.bin",	0x40000, 0x27c1f436, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rb-91105-3.ic53",	0x40000, 0xa211a83b, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "rb-91105-2.ic32",	0x40000, 0x27c1f436, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rb-91105_8.ic99",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "rb-91105.7.ic98",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu.ic14",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
-	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
+	{ "rb-91105_1_rev_a.ic17",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
-	{ "64th_06.rom",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
+	{ "rb-91105_6_rev_a.ic67",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
 
-	{ "64th_09.rom",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
+	{ "rb-91105_9_rev_a.ic125",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
 
-	{ "64th_05.rom",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
-	{ "64th_04.rom",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
+	{ "rb-91105_5_rev_a.ic61",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
+	{ "rb-91105_4_rev_a.ic60",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
 
-	{ "64th_11.rom",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "rb-91105_11_rev_a.ic.132",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "rb-91105_10_rev_a.ic131",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "pr91009.ic155",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(Street64j)
@@ -5909,28 +5909,28 @@ struct BurnDriver BurnDrvStreet64j = {
 // 64th. Street: A Detective Story (Japan, set 2)
 
 static struct BurnRomInfo Street64jaRomDesc[] = {
-	{ "ic53.bin",		0x40000, 0xc978d086, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "ic52.bin",		0x40000, 0xaf475852, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.ic53",		0x40000, 0xc978d086, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "2.ic52",		0x40000, 0xaf475852, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rb-91105_8.ic99",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "rb-91105.7.ic98",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu.ic14",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
-	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
+	{ "rb-91105_1_rev_a.ic17",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
-	{ "64th_06.rom",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
+	{ "rb-91105_6_rev_a.ic67",	0x80000, 0x2bfcdc75, 4 | BRF_GRA },           //  6 Tilemap #1 Tiles
 
-	{ "64th_09.rom",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
+	{ "rb-91105_9_rev_a.ic125",	0x20000, 0xa4a97db4, 5 | BRF_GRA },           //  7 Tilemap #2 Tiles
 
-	{ "64th_05.rom",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
-	{ "64th_04.rom",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
+	{ "rb-91105_5_rev_a.ic61",	0x80000, 0xa89a7020, 6 | BRF_GRA },           //  8 Sprites
+	{ "rb-91105_4_rev_a.ic60",	0x80000, 0x98f83ef6, 6 | BRF_GRA },           //  9
 
-	{ "64th_11.rom",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "rb-91105_11_rev_a.ic.132",	0x20000, 0xb0b8a65c, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "rb-91105_10_rev_a.ic131",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "pr91009.ic155",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(Street64ja)
@@ -6243,7 +6243,7 @@ static struct BurnRomInfo peekabooRomDesc[] = {
 	{ "peek a boo j ver 1.1 - 3.ic29",	0x020000, 0xf5f4cf33, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "peek a boo j ver 1.1 - 2.ic28",	0x020000, 0x7b3d430d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "mo-90233.mcu",					0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
+	{ "mo-92033.mcu.ic120",					0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
 
 	{ "5",								0x080000, 0x34fa07bb, 3 | BRF_GRA },           //  3 Tilemap #0 Tiles
 
@@ -6281,7 +6281,7 @@ static struct BurnRomInfo peekaboouRomDesc[] = {
 	{ "pb92127a_3_ver1.0.ic29",	0x020000, 0x4603176a, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "pb92127a_2_ver1.0.ic28",	0x020000, 0x7bf4716b, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "mo-90233.mcu",			0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
+	{ "mo-92033.mcu.ic120",			0x004000, 0x9dfba11b, 0 | BRF_OPT },           //  2 MCU Code
 
 	{ "5",						0x080000, 0x34fa07bb, 3 | BRF_GRA },           //  3 Tilemap #0 Tiles
 
@@ -6318,31 +6318,29 @@ static struct BurnRomInfo inyourfaRomDesc[] = {
 	{ "05.27c512", 		0x010000, 0x1737ed64, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
 	{ "06.27c512", 		0x010000, 0x9f12bcb9, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "m50747", 		0x001000, 0x00000000, 0 | BRF_NODUMP },        //  6 MCU Code
+	{ "11.27c1001",		0x020000, 0x451a1428, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "12.27c1001",		0x020000, 0x9ead7432, 3 | BRF_GRA },           //  7
+	{ "13.27c1001",		0x020000, 0x7e39842a, 3 | BRF_GRA },           //  8
+	{ "14.27c1001",		0x020000, 0xa91a3569, 3 | BRF_GRA },           //  9
 
-	{ "11.27c1001",		0x020000, 0x451a1428, 3 | BRF_GRA },           //  7 Tilemap #0 Tiles
-	{ "12.27c1001",		0x020000, 0x9ead7432, 3 | BRF_GRA },           //  8
-	{ "13.27c1001",		0x020000, 0x7e39842a, 3 | BRF_GRA },           //  9
-	{ "14.27c1001",		0x020000, 0xa91a3569, 3 | BRF_GRA },           // 10
+	{ "15.27c1001",		0x020000, 0x420081b6, 4 | BRF_GRA },           // 10 Tilemap #1 Tiles
+	{ "16.27c1001",		0x020000, 0x87b1a582, 4 | BRF_GRA },           // 11
+	{ "17.27c1001",		0x020000, 0x00857146, 4 | BRF_GRA },           // 12
 
-	{ "15.27c1001",		0x020000, 0x420081b6, 4 | BRF_GRA },           // 11 Tilemap #1 Tiles
-	{ "16.27c1001",		0x020000, 0x87b1a582, 4 | BRF_GRA },           // 12
-	{ "17.27c1001",		0x020000, 0x00857146, 4 | BRF_GRA },           // 13
+	{ "19.27c1001", 	0x020000, 0xb82c94ec, 5 | BRF_GRA },           // 13 Tilemap #2 Tiles
 
-	{ "19.27c1001", 	0x020000, 0xb82c94ec, 5 | BRF_GRA },           // 14 Tilemap #2 Tiles
+	{ "20.27c1001",		0x020000, 0x4a322d18, 6 | BRF_GRA },           // 14 Sprites
+	{ "21.27c1001",		0x020000, 0x7bb4b35d, 6 | BRF_GRA },           // 15
+	{ "22.27c1001",		0x020000, 0x1dc040d2, 6 | BRF_GRA },           // 16
+	{ "23.27c1001",		0x020000, 0x50478530, 6 | BRF_GRA },           // 17
 
-	{ "20.27c1001",		0x020000, 0x4a322d18, 6 | BRF_GRA },           // 15 Sprites
-	{ "21.27c1001",		0x020000, 0x7bb4b35d, 6 | BRF_GRA },           // 16
-	{ "22.27c1001",		0x020000, 0x1dc040d2, 6 | BRF_GRA },           // 17
-	{ "23.27c1001",		0x020000, 0x50478530, 6 | BRF_GRA },           // 18
+	{ "09.27c1001",		0x020000, 0x27f4bfb4, 7 | BRF_SND },           // 18 OKI #0 Samples
+	{ "10.27c1001",		0x020000, 0xcf5430ff, 7 | BRF_SND },           // 19
 
-	{ "09.27c1001",		0x020000, 0x27f4bfb4, 7 | BRF_SND },           // 19 OKI #0 Samples
-	{ "10.27c1001",		0x020000, 0xcf5430ff, 7 | BRF_SND },           // 20
+	{ "07.27c1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 20 OKI #1 Samples
+	{ "08.27c1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 21
 
-	{ "07.27c1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 21 OKI #1 Samples
-	{ "08.27c1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 22
-
-	{ "prom.14m",    	0x000200, 0x21390e3a, 9 | BRF_GRA },           // 23 Priority PROM
+	{ "prom.14m",    	0x000200, 0x21390e3a, 9 | BRF_GRA },           // 22 Priority PROM
 };
 
 STD_ROM_PICK(inyourfa)

@@ -55250,6 +55250,25 @@ struct BurnDriver BurnDrvgba_feline = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Fire Emblem: Sheng Xie De Yi Zhi (Hack, v1.4)
+
+static struct BurnRomInfo gba_firembssxRomDesc[] = {
+	{ "Fire Emblem - Sheng Xie De Yi Zhi (C)(2006)(ChinaFE & Wolf Group).gba",	0x1000000,	0x9cbb923e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_firembssx, gba_firembssx, gba_gba)
+STD_ROM_FN(gba_firembssx)
+
+struct BurnDriver BurnDrvgba_firembssx = {
+	"gba_firembssx", "gba_firembss", "gba_gba", NULL, "2006",
+	"Fire Emblem: Sheng Xie De Yi Zhi (Hack, v1.4)\0", NULL, "ChinaFE & Wolf Group", "Game Boy Advance",
+	L"Fire Emblem: Sheng Xie De Yi Zhi (Hack, v1.4)\0\u706b\u7130\u4e4b\u7eb9\u7ae0: \u5723\u90aa\u7684\u610f\u5fd7\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RPG | GBF_STRATEGY, 0,
+	GbaGetZipName, gba_firembssxRomInfo, gba_firembssxRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {

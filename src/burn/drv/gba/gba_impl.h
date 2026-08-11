@@ -2050,9 +2050,6 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->tilt_sensor.sample_y       = 0xfff;
 	gba->tilt_sensor.pending_x      = 0x3a0;
 	gba->tilt_sensor.pending_y      = 0x3a0;
-	if (!sb_path_has_file_ext(emu->rom_path, ".gba"))
-		return false;
-
 	if (emu->rom_size > 32 * 1024 * 1024) {
 		printf("ROMs with sizes >32MB (%zu bytes) are too big for the GBA\n", emu->rom_size);
 		return false;

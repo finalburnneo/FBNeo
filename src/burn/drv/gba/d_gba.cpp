@@ -1188,7 +1188,7 @@ struct BurnDriver BurnDrvgba_f_zgundm = {
 
 // Chou Makaimura R (Japan)
 static struct BurnRomInfo gba_chomakaiRomDesc[] = {
-	{ "Chou Makaimura R (J)(2002)(Capcom).bin",	0x0400000,	0xa4f8b4b4,	BRF_ESS | BRF_PRG },
+	{ "Chou Makaimura R (J)(2002)(Capcom).gba",	0x0400000,	0xa4f8b4b4,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_chomakai, gba_chomakai, gba_gba)

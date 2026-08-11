@@ -1495,14 +1495,14 @@ struct BurnDriver BurnDrvgba_sonicbtl = {
 // Sonic Battle (Japan)
 
 static struct BurnRomInfo gba_sonicbtljRomDesc[] = {
-	{ "Sonic Battle (J)(2004)(Sega).gba",	0x1000000,	0x7305ac30,	BRF_ESS | BRF_PRG },
+	{ "Sonic Battle (J)(2003)(Sega).gba",	0x1000000,	0x7305ac30,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_sonicbtlj, gba_sonicbtlj, gba_gba)
 STD_ROM_FN(gba_sonicbtlj)
 
 struct BurnDriver BurnDrvgba_sonicbtlj = {
-	"gba_sonicbtlj", "gba_sonicbtl", "gba_gba", NULL, "2004",
+	"gba_sonicbtlj", "gba_sonicbtl", "gba_gba", NULL, "2003",
 	"Sonic Battle (Japan)\0", NULL, "Sega", "Game Boy Advance",
 	L"Sonic Battle (Japan)\0\u30bd\u30cb\u30c3\u30af\u30d0\u30c8\u30eb\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SONIC,

@@ -8,8 +8,8 @@
 #include "cdrom.h"
 
 #define CHD_MAX_TRACKS      (99)
-#define CHD_FRAME_SIZE      (2352 + 96)   // libchdr stores every frame at this stride
-#define CHD_TRACK_PADDING   (4)           // chdman pads tracks to a 4-frame boundary
+#define CHD_FRAME_SIZE      (2352 + 96)		// libchdr stores every frame at this stride
+#define CHD_TRACK_PADDING   (4)				// chdman pads tracks to a 4-frame boundary
 
 struct ChdImage {
 	chd_file* pChd;
@@ -17,13 +17,14 @@ struct ChdImage {
 	INT32     nContainer;
 	INT32     nNumTracks;
 	INT32     nTotalFrames;
-	INT32     nFlags;                        // CD_FLAG_GDROM / CD_FLAG_GDROMLE
+	INT32     nFlags;						// CD_FLAG_GDROM / CD_FLAG_GDROMLE
 	UINT8*    pHunkBuf;
 	INT32     nHunkBytes;
 	INT32     nFramesPerHunk;
+	UINT32    nTotalHunks;
 	INT32     nVersion;
-	INT32     nCachedHunk;                   // -1 = none
-	ChdTrack  Tracks[CHD_MAX_TRACKS + 1];    // +1 dummy lead-out entry
+	INT32     nCachedHunk;					// -1 = none
+	ChdTrack  Tracks[CHD_MAX_TRACKS + 1];	// +1 dummy lead-out entry
 };
 
 // LBA -> MSF in BCD, matching the address stored in a real CD sync header.
@@ -109,13 +110,18 @@ static UINT32 ChdReadTrackMeta(chd_file* pChd, INT32 nIndex, char* szOut, INT32 
 		CDROM_TRACK_METADATA_TAG, CDROM_TRACK_METADATA2_TAG, GDROM_TRACK_METADATA_TAG
 	};
 
+	if (!pChd || !szOut || nOutLen <= 0) {
+		return 0;
+	}
+
 	for (INT32 i = 0; i < 3; i++) {
 		UINT32 nResultLen = 0;
 		UINT8  nFlags     = 0;
 		chd_error err = chd_get_metadata(pChd, Tags[i], nIndex, szOut, nOutLen - 1,
 			&nResultLen, NULL, &nFlags);
 		if (err == CHDERR_NONE && nResultLen > 0) {
-			szOut[nResultLen] = '\0';
+			UINT32 nTerm = nResultLen < (UINT32)nOutLen ? nResultLen : (UINT32)nOutLen - 1;
+			szOut[nTerm] = '\0';
 			return Tags[i];
 		}
 	}
@@ -204,8 +210,8 @@ static INT32 ChdParseToc(ChdImage* pImage)
 		nLogOfs  += pT->nPostgap;
 		nPhysOfs += pT->nFrames;
 		nChdOfs  += pT->nFrames;
-		nChdOfs  += pT->nExtraFrames;   // 4-frame boundary padding (CD)
-		nChdOfs  += pT->nPadFrames;     // explicit PAD (GD-ROM)
+		nChdOfs  += pT->nExtraFrames;	// 4-frame boundary padding (CD)
+		nChdOfs  += pT->nPadFrames;		// explicit PAD (GD-ROM)
 		nLogOfs  += pT->nFrames;
 	}
 
@@ -270,6 +276,7 @@ ChdImage* ChdOpenFile(const TCHAR* szPath)
 	}
 	pImage->nHunkBytes     = (INT32)pHeader->hunkbytes;
 	pImage->nFramesPerHunk = pImage->nHunkBytes / CHD_FRAME_SIZE;
+	pImage->nTotalHunks    = pHeader->totalhunks;
 	pImage->nVersion       = (INT32)pHeader->version;
 
 	pImage->nContainer = ChdDetectContainer(pImage);
@@ -303,7 +310,7 @@ void ChdClose(ChdImage* pImage)
 		chd_close(pImage->pChd);
 	}
 	if (pImage->pFile) {
-		fclose(pImage->pFile);   // libchdr's core_stdio_nonowner does not close it
+		fclose(pImage->pFile);		// libchdr's core_stdio_nonowner does not close it
 	}
 	free_s((void**)&pImage->pHunkBuf);
 	free(pImage);
@@ -328,12 +335,18 @@ const ChdTrack* ChdGetTrack(ChdImage* pImage, INT32 nTrack)
 // decompressing the covering hunk on cache miss.
 static INT32 ChdReadFrameBytes(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset, INT32 nLength, UINT8* pDest)
 {
-	if (!pImage || !pImage->pHunkBuf || pImage->nFramesPerHunk == 0) {
+	if (!pImage || !pImage->pChd || !pImage->pHunkBuf || !pDest ||
+		nChdFrame < 0 || nOffset < 0 || nLength < 0 ||
+		nOffset > CHD_FRAME_SIZE || nLength > CHD_FRAME_SIZE - nOffset ||
+		pImage->nFramesPerHunk <= 0 || pImage->nTotalHunks == 0) {
 		return 1;
 	}
 
 	INT32 nHunk = nChdFrame / pImage->nFramesPerHunk;
 	INT32 nFrameInHunk = nChdFrame % pImage->nFramesPerHunk;
+	if ((UINT32)nHunk >= pImage->nTotalHunks) {
+		return 1;
+	}
 
 	if (pImage->nCachedHunk != nHunk) {
 		if (chd_read(pImage->pChd, (UINT32)nHunk, pImage->pHunkBuf) != CHDERR_NONE) {
@@ -342,18 +355,26 @@ static INT32 ChdReadFrameBytes(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset,
 		pImage->nCachedHunk = nHunk;
 	}
 
-	memcpy(pDest, pImage->pHunkBuf + nFrameInHunk * CHD_FRAME_SIZE + nOffset, nLength);
+	memcpy(pDest, pImage->pHunkBuf + nFrameInHunk * CHD_FRAME_SIZE + nOffset, (size_t)nLength);
 	return 0;
 }
 
 INT32 ChdReadRaw(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset, INT32 nLength, UINT8* pDest)
 {
+	if (!pImage || !pDest || nChdFrame < 0 || nOffset < 0 || nLength < 0 ||
+		nOffset > CHD_FRAME_SIZE || nLength > CHD_FRAME_SIZE - nOffset) {
+		return 1;
+	}
 	return ChdReadFrameBytes(pImage, nChdFrame, nOffset, nLength, pDest);
 }
 
 // logical LBA -> (track, chd frame), MAME logical_to_chd_lba
 static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 {
+	if (!pImage || !pnTrack || nLogLba < 0 || nLogLba >= pImage->nTotalFrames) {
+		return -1;
+	}
+
 	for (INT32 i = 0; i < pImage->nNumTracks; i++) {
 		if (nLogLba < pImage->Tracks[i + 1].nLogFrameOfs) {
 			INT32 nPhys = pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nPregap
@@ -363,18 +384,20 @@ static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 			return nChd;
 		}
 	}
-	*pnTrack = 0;
-	return nLogLba;
+	return -1;
 }
 
 INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 {
-	if (!pImage || pImage->nNumTracks == 0) {
+	if (!pImage || !pDest || pImage->nNumTracks == 0 || nLba < 0 || nLba >= pImage->nTotalFrames) {
 		return 1;
 	}
 
 	INT32 nTrack = 0;
 	INT32 nChdFrame = ChdLogicalToChd(pImage, nLba, &nTrack);
+	if (nChdFrame < 0) {
+		return 1;
+	}
 	ChdTrack* pT = &pImage->Tracks[nTrack];
 	INT32 nTrackType = pT->nType;
 
@@ -396,9 +419,8 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 	// 2352 mode-1 raw sector out of 2048 mode-1 data (synthesize sync + header)
 	if (nDataType == CHD_TRACK_MODE1_RAW && nTrackType == CHD_TRACK_MODE1) {
 		static const UINT8 SyncBytes[12] = { 0x00,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00 };
-		// Header address is the absolute MSF (BCD), which includes the
-		// standard 150-frame (2 second) lead-in, matching real raw sectors.
 		UINT32 nMsf = ChdLbaToMsf(nLba + 150);
+		memset(pDest, 0, 2352);
 		memcpy(pDest, SyncBytes, 12);
 		pDest[12] = (UINT8)(nMsf >> 16);
 		pDest[13] = (UINT8)(nMsf >> 8);

@@ -21,7 +21,7 @@ frontend_sources = files(
     'stringset.cpp',
     'support_paths.cpp',
     '../../intf/audio/sdl/aud_sdl.cpp',
-    '../../intf/cd/sdl/cd_sdl2.cpp',
+    '../../intf/cd/cd_img.cpp',
     '../../intf/input/sdl/inp_sdl2.cpp',
     '../../intf/video/sdl/vid_sdl2.cpp',
     '../../intf/video/sdl/vid_sdl2opengl.cpp',
@@ -38,7 +38,6 @@ frontend_dep = declare_dependency(
         '../../intf/input/sdl',
         '../../intf/audio/sdl',
         '../../intf/video/sdl',
-        '../../intf/cd/sdl',
     ),
     dependencies: [
         dependency('SDL2_image'),

@@ -16,7 +16,7 @@ frontend_sources = files(
     '../sdl/support_paths.cpp',
     '../../dep/pi/gles/pigl_drm.c',
     '../../intf/audio/sdl/aud_sdl.cpp',
-    '../../intf/cd/sdl/cd_sdl2.cpp',
+    '../../intf/cd/cd_img.cpp',
     '../../intf/input/pi/inp_pi.cpp',
     '../../intf/video/pi/vid_pi.cpp',
 )

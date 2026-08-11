@@ -406,7 +406,7 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 TCHAR* ParseCueGetImageFile(const TCHAR* cueFullPath);
 void  FreeNGCDGame(NGCDGAME** ppGame);
 INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog = false);
-INT32 cdimgCountChdAudioTracks(TCHAR* pszFile);
+#include "cd_img.h"
 
 // romdata.cpp
 extern bool bRDListScanSub;

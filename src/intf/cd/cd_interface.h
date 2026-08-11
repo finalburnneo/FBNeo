@@ -46,7 +46,9 @@ static inline void CDEmuResume()
 {
 	extern CDEmuStatusValue CDEmuStatus;
 
-	CDEmuStatus = playing;
+	if (CDEmuStatus == paused) {
+		CDEmuStatus = playing;
+	}
 }
 
 #endif /*CD_INTERFACE_H_*/

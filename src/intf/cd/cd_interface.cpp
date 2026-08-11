@@ -1,5 +1,6 @@
 // CD/CD-ROM support
 #include "burner.h"
+#include "cd_img.h"
 
 bool bCDEmuOkay = false;
 UINT32 nCDEmuSelect = 0;
@@ -7,14 +8,6 @@ UINT32 nCDEmuSelect = 0;
 CDEmuStatusValue CDEmuStatus;
 
 static InterfaceInfo CDEmuInfo = { NULL, NULL, NULL };
-
-#if defined BUILD_WIN32
-	extern struct CDEmuDo cdimgDo;
-#elif defined BUILD_SDL2 || defined BUILD_SDL
-	extern struct CDEmuDo cdimgDo;
-#elif defined (_XBOX)
-	extern struct CDEmuDo cdimgDo;
-#endif
 
 static struct CDEmuDo* pCDEmuDo[] =
 {
@@ -130,7 +123,8 @@ INT32 CDEmuSetVolume(double dVolume)
 	return pCDEmuDo[nCDEmuSelect]->CDEmuSetVolume(dVolume);
 }
 
-INT32 CDEmuGetCurrentLBA() {
+INT32 CDEmuGetCurrentLBA()
+{
 	if (!bCDEmuOkay || nCDEmuSelect >= CDEMU_LEN) {
 		return 0;
 	}
@@ -166,6 +160,4 @@ InterfaceInfo* CDEmuGetInfo()
 	}
 
 	return &CDEmuInfo;
-
-	return NULL;
 }

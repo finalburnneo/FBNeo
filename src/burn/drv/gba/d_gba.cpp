@@ -1941,24 +1941,3 @@ struct BurnDriver BurnDrvgba_xenocrisis = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Igor_Arabe
-
-// Sonic Advance (Europe)
-
-static struct BurnRomInfo gba_sonicRomDesc[] = {
-	{ "Sonic Advance (E)(2002)(Infogrames).gba",	0x800000,	0x6232839b,	BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(gba_sonic, gba_sonic, gba_gba)
-STD_ROM_FN(gba_sonic)
-
-struct BurnDriver BurnDrvgba_sonic = {
-	"gba_sonic", NULL, "gba_gba", NULL, "2002",
-	"Sonic Advance (Europe)\0", NULL, "Infogrames", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
-	GbaGetZipName, gba_sonicRomInfo, gba_sonicRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
-	GBA_WIDTH, GBA_HEIGHT, 3, 2
-};
-

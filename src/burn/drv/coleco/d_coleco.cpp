@@ -38,10 +38,11 @@ static INT16 Analog0;
 static INT16 Analog1;
 static UINT8 spinner[2] = { 0, 0 };
 
-static UINT32 MegaCart; // MegaCart size
+static UINT32 CartSize; // Cart size (bytes)
 static UINT32 MegaCartBank; // current Bank
 static UINT32 MegaCartBanks; // total banks
 static INT32 OCMBanks[4];
+static UINT32 OCMMask;
 
 // for use_I2C (i2c 2-wire 24c02, +)
 static INT32 d_sda;
@@ -571,7 +572,6 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 
 	if (use_OCM) {
 		if (address >= 0xe000 && address <= 0xfffb) {
-
 			if (data == 0xaa && O_EEPROM_CmdPos == 0) {
 				O_EEPROM_CmdPos++;
 			}
@@ -608,13 +608,16 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		}
 		switch (address) {
 			case 0xfffe:
-				O_EEPROM_ReadTimer = ((data & 0xf) == 0xf) ? 3 : 0;
+				O_EEPROM_ReadTimer = ((data & OCMMask) == OCMMask) ? 3 : 0;
+				if (O_EEPROM_ReadTimer) {
+					//bprintf(0, _T("--> EEPROM Read Latched! <--\n"));
+				}
 				// fallthrough! (no break)
 			case 0xfffc:
 			case 0xfffd:
 			case 0xffff:
 				//bprintf(0, _T("bank %x  %x\t\tfr %d  cyc %d\n"), address, data, nCurrentFrame, ZetTotalCycles());
-				OCMBanks[address & 0x03] = data & 0xf;
+				OCMBanks[address & 0x03] = data & OCMMask;
 				update_map();
 				return;
 		}
@@ -641,11 +644,11 @@ static UINT8 __fastcall main_read(UINT16 address)
 			//bprintf(0, _T("eeprom_ok\n"));
 			return EEP_STATUS_OK;
 		}
-		if (OCMBanks[2] == 0xf && O_EEPROM_ReadTimer > 0 && (address & 0xfff) < 0x100) {
-//			bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
+		if (OCMBanks[2] == OCMMask && O_EEPROM_ReadTimer > 0 && (address & 0xfff) < 0x100) {
+			//bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvEEPROM[address & 0x3ff];
 		} else {
-//			bprintf(0, _T("rom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
+			//bprintf(0, _T("rom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvCartROM[(OCMBanks[2] * 0x2000) + (address & 0x1fff)];
 		}
 	}
@@ -655,15 +658,12 @@ static UINT8 __fastcall main_read(UINT16 address)
 	}
 
 	if (address >= 0xffc0/* && address <= 0xffff*/) {
-		MegaCartBank = (0xffff - address) & (MegaCartBanks - 1);
-
-		MegaCartBank = (MegaCartBanks - MegaCartBank) - 1;
-
+		MegaCartBank = (address & 0x3f) & (MegaCartBanks - 1);
 		return 0;
 	}
 
 	if (address >= 0xc000 && address <= 0xffbf)
-		return DrvCartROM[(MegaCartBank * 0x4000) + (address - 0xc000)];
+		return DrvCartROM[(MegaCartBank * 0x4000) + (address & 0x3fff)];
 
 	//bprintf(0, _T("mr %X,"), address);
 	return 0;
@@ -697,7 +697,7 @@ static INT32 DrvInit()
 
 	BurnAllocMemIndex();
 
-	MegaCart = 0;
+	CartSize = 0;
 
 	{
 		char* pRomName;
@@ -708,15 +708,13 @@ static INT32 DrvInit()
 		for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 			BurnDrvGetRomInfo(&ri, i);
 
-			if ((ri.nType & BRF_PRG) && (ri.nLen == 0x2000 || ri.nLen == 0x1000) && (i<10)) {
-				BurnLoadRom(DrvCartROM+(i * 0x2000), i, 1);
-				bprintf(0, _T("ColecoVision romload #%d\n"), i);
-			} else if ((ri.nType & BRF_PRG) && (i<10)) { // Load rom thats not in 0x2000 (8k) chunks
-				bprintf(0, _T("ColecoVision romload (unsegmented) #%d size: %X\n"), i, ri.nLen);
-				BurnLoadRom(DrvCartROM, i, 1);
-				if (ri.nLen >= 0x10000) MegaCart = ri.nLen;
+			if ((ri.nType & BRF_PRG) && (i<10)) {
+				bprintf(0, _T("ColecoVision romload #%d - %S\n"), i, pRomName);
+				BurnLoadRom(DrvCartROM + CartSize, i, 1);
+				CartSize += ri.nLen;
 			}
 		}
+		bprintf(0, _T("Total Size: $%x (%d)\n"), CartSize, CartSize);
 	}
 
 	ZetInit(0);
@@ -729,15 +727,15 @@ static INT32 DrvInit()
 
     if (use_I2C) {  // similar to MegaCart but with diff. mapper addresses
 		// Boxxle
-		MegaCartBanks = MegaCart / 0x4000;
+		MegaCartBanks = CartSize / 0x4000;
 		bprintf(0, _T("ColecoVision BoxxleCart mapping.\n"));
 		i2c_init((use_I2C == 1) ? I2C_24C02 : I2C_24C256);
 		ZetMapMemory(DrvCartROM, 0x8000, 0xbfff, MAP_ROM);
 		ZetSetReadHandler(main_read);
         ZetSetWriteHandler(main_write);
 	} else if (use_OCM) {
-		MegaCart = 0;
-		bprintf(0, _T("ColecoVision OCM mapper w/EEPROM.\n"));
+		OCMMask = (CartSize / 0x2000) - 1;
+		bprintf(0, _T("ColecoVision OCM mapper w/EEPROM. Size %x  BankMask %x\n"), CartSize, OCMMask);
 		ZetSetReadHandler(main_read);
 		ZetSetWriteHandler(main_write);
 		OCMBanks[0] = 3;
@@ -746,9 +744,9 @@ static INT32 DrvInit()
 		OCMBanks[3] = 0;
 		update_map();
 	}
-    else if (MegaCart) {
+    else if (CartSize >= 0x10000) {
 		// MegaCart
-		MegaCartBanks = MegaCart / 0x4000;
+		MegaCartBanks = CartSize / 0x4000;
 		UINT32 lastbank = (MegaCartBanks - 1) * 0x4000;
 		bprintf(0, _T("ColecoVision MegaCart: mapping cartrom[%X] to 0x8000 - 0xbfff.\n"), lastbank);
 		ZetMapMemory(DrvCartROM + lastbank, 0x8000, 0xbfff, MAP_ROM);
@@ -966,19 +964,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029708;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 
 		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
@@ -10037,6 +10028,24 @@ struct BurnDriver BurnDrvcv_pacmancol = {
 	CVGetZipName, cv_pacmancolRomInfo, cv_pacmancolRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Pacman DX (SGM) (HB)
+static struct BurnRomInfo cv_PacmanDXRomDesc[] = {
+   { "Pacman DX - SGM (2023)(Opcode Games).rom", 262144, 0xde785ee3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_PacmanDX, cv_PacmanDX, cv_coleco)
+STD_ROM_FN(cv_PacmanDX)
+
+struct BurnDriver BurnDrvcv_PacmanDX = {
+   "cv_pacmandx", NULL, "cv_coleco", NULL, "2025",
+   "Pacman DX (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games", "ColecoVision",
+   NULL, NULL, NULL, NULL,
+   BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
+   CVGetZipName, cv_PacmanDXRomInfo, cv_PacmanDXRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+   DrvInitOCM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+   272, 228, 4, 3
 };
 
 // Pang (HB)

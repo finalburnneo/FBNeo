@@ -10030,9 +10030,9 @@ struct BurnDriver BurnDrvcv_pacmancol = {
 	272, 228, 4, 3
 };
 
-// Pacman DX (SGM) (HB)
+// Pac-Man DX (SGM) (HB)
 static struct BurnRomInfo cv_PacmanDXRomDesc[] = {
-   { "Pacman DX - SGM (2023)(Opcode Games).rom", 262144, 0xde785ee3, BRF_ESS | BRF_PRG },
+   { "Pac-Man DX - SGM (2025)(Opcode Games).rom", 262144, 0xde785ee3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(cv_PacmanDX, cv_PacmanDX, cv_coleco)
@@ -10040,7 +10040,7 @@ STD_ROM_FN(cv_PacmanDX)
 
 struct BurnDriver BurnDrvcv_PacmanDX = {
    "cv_pacmandx", NULL, "cv_coleco", NULL, "2025",
-   "Pacman DX (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games", "ColecoVision",
+   "Pac-Man DX (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games", "ColecoVision",
    NULL, NULL, NULL, NULL,
    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
    CVGetZipName, cv_PacmanDXRomInfo, cv_PacmanDXRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

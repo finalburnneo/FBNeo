@@ -1381,14 +1381,14 @@ struct BurnDriver BurnDrvgba_sonic2 = {
 // Sonic Advance 2 (Japan)
 
 static struct BurnRomInfo gba_sonic2jRomDesc[] = {
-	{ "Sonic Advance 2 (J)(2003)(Sega).gba",	0x1000000,	0x513804ff,	BRF_ESS | BRF_PRG },
+	{ "Sonic Advance 2 (J)(2002)(Sega).gba",	0x1000000,	0x513804ff,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_sonic2j, gba_sonic2j, gba_gba)
 STD_ROM_FN(gba_sonic2j)
 
 struct BurnDriver BurnDrvgba_sonic2j = {
-	"gba_sonic2j", "gba_sonic2", "gba_gba", NULL, "2003",
+	"gba_sonic2j", "gba_sonic2", "gba_gba", NULL, "2002",
 	"Sonic Advance 2 (Japan)\0", NULL, "Sega", "Game Boy Advance",
 	L"Sonic Advance 2 (Japan)\0\u30bd\u30cb\u30c3\u30af\u30a2\u30c9\u30d0\u30f3\u30b92\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,

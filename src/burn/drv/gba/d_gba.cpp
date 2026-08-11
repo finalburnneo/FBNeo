@@ -55098,7 +55098,7 @@ struct BurnDriver BurnDrvgba_xmanam = {
 // ----------------------------------------
 
 
-// Alice Sisters (HB)
+// Alice Sisters (M3) (HB)
 
 static struct BurnRomInfo gba_alicesistersRomDesc[] = {
 	{ "Alice Sisters (2024)(OrionSoft).gba",	16777216,	0x1ebddded,	BRF_ESS | BRF_PRG },
@@ -55109,7 +55109,7 @@ STD_ROM_FN(gba_alicesisters)
 
 struct BurnDriver BurnDrvgba_alicesisters = {
 	"gba_alicesisters", NULL, "gba_gba", NULL, "2024",
-	"Alice Sisters (HB)\0", NULL, "OrionSoft", "Game Boy Advance",
+	"Alice Sisters (M3) (HB)\0", NULL, "OrionSoft", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_alicesistersRomInfo, gba_alicesistersRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
@@ -55117,7 +55117,140 @@ struct BurnDriver BurnDrvgba_alicesisters = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Goodboy Galaxy (HB, v1.3)
+// Blood Drive (HB)
+
+static struct BurnRomInfo gba_bloodriveRomDesc[] = {
+	{ "Blood Drive (2024)(PyroPyro, Uri, exelotl).gba",	1523780,	0x3444a7ae,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_bloodrive, gba_bloodrive, gba_gba)
+STD_ROM_FN(gba_bloodrive)
+
+struct BurnDriver BurnDrvgba_bloodrive = {
+	"gba_bloodrive", NULL, "gba_gba", NULL, "2024",
+	"Blood Drive (HB)\0", NULL, "PyroPyro, Uri, exelotl", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_bloodriveRomInfo, gba_bloodriveRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Celeste Classic (HB, v1.2)
+
+static struct BurnRomInfo gba_celesteRomDesc[] = {
+	{ "Celeste Classic v1.2 (2021)(JeffRuLz).gba",	5418424,	0xff0e8ada,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_celeste, gba_celeste, gba_gba)
+STD_ROM_FN(gba_celeste)
+
+struct BurnDriver BurnDrvgba_celeste = {
+	"gba_celeste", NULL, "gba_gba", NULL, "2021",
+	"Celeste Classic (HB, v1.2)\0", NULL, "JeffRuLz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_celesteRomInfo, gba_celesteRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Celeste Classic 2 (HB, v1.1)
+
+static struct BurnRomInfo gba_celeste2RomDesc[] = {
+	{ "Celeste Classic 2 v1.1 (2025)(Skaleee).gba",	4506328,	0x069607d0,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_celeste2, gba_celeste2, gba_gba)
+STD_ROM_FN(gba_celeste2)
+
+struct BurnDriver BurnDrvgba_celeste2 = {
+	"gba_celeste2", NULL, "gba_gba", NULL, "2025",
+	"Celeste Classic 2 (HB, v1.1)\0", NULL, "Skaleee", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_celeste2RomInfo, gba_celeste2RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Don't Die Mr. Robot Advance (HB)
+
+static struct BurnRomInfo gba_ddmrgbaRomDesc[] = {
+	{ "Don't Die Mr. Robot Advance (2026)(Infinite State Games).gba",	4194304,	0x780f5f3e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ddmrgba, gba_ddmrgba, gba_gba)
+STD_ROM_FN(gba_ddmrgba)
+
+struct BurnDriver BurnDrvgba_ddmrgba = {
+	"gba_ddmrgba", NULL, "gba_gba", NULL, "2026",
+	"Don't Die Mr. Robot Advance (HB)\0", NULL, "Infinite State Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_ddmrgbaRomInfo, gba_ddmrgbaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Discrete Orange (HB)
+
+static struct BurnRomInfo gba_disorangeRomDesc[] = {
+	{ "Discrete Orange (2025)(Incube8 Games).gba",	1936132,	0xe3128528,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_disorange, gba_disorange, gba_gba)
+STD_ROM_FN(gba_disorange)
+
+struct BurnDriver BurnDrvgba_disorange = {
+	"gba_disorange", NULL, "gba_gba", NULL, "2025",
+	"Discrete Orange (HB)\0", NULL, "Incube8 Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_PUZZLE, 0,
+	GbaGetZipName, gba_disorangeRomInfo, gba_disorangeRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Escape 2042: The Truth Defenders (M4) (HB)
+
+static struct BurnRomInfo gba_escape2042RomDesc[] = {
+	{ "Escape 2042 - The Truth Defenders (2024)(OrionSoft).gba",	16777216,	0xd8dbb64c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_escape2042, gba_escape2042, gba_gba)
+STD_ROM_FN(gba_escape2042)
+
+struct BurnDriver BurnDrvgba_escape2042 = {
+	"gba_escape2042", NULL, "gba_gba", NULL, "2024",
+	"Escape 2042: The Truth Defenders (M4) (HB)\0", NULL, "OrionSoft", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_PUZZLE, 0,
+	GbaGetZipName, gba_escape2042RomInfo, gba_escape2042RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Feline (HB)
+
+static struct BurnRomInfo gba_felineRomDesc[] = {
+	{ "Feline (2021)(Jono Shields).gba",	1504920,	0x09b777ea,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_feline, gba_feline, gba_gba)
+STD_ROM_FN(gba_feline)
+
+struct BurnDriver BurnDrvgba_feline = {
+	"gba_feline", NULL, "gba_gba", NULL, "2021",
+	"Feline (HB)\0", NULL, "Jono Shields", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_felineRomInfo, gba_felineRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {
 	{ "Goodboy Galaxy v1.3 (2023-24)(Goodboy Galaxy).gba",	33554432,	0x159ff629,	BRF_ESS | BRF_PRG },
@@ -55128,7 +55261,7 @@ STD_ROM_FN(gba_goodboy)
 
 struct BurnDriver BurnDrvgba_goodboy = {
 	"gba_goodboy", NULL, "gba_gba", NULL, "2023-24",
-	"Goodboy Galaxy (HB, v1.3)\0", NULL, "Goodboy Galaxy", "Game Boy Advance",
+	"Goodboy Galaxy (M8) (HB, v1.3)\0", NULL, "Goodboy Galaxy", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
 	GbaGetZipName, gba_goodboyRomInfo, gba_goodboyRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
@@ -55155,7 +55288,64 @@ struct BurnDriver BurnDrvgba_inkyalien = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Xeno Crisis (HB)
+// Mooncat's Trio (HB)
+
+static struct BurnRomInfo gba_mooncatRomDesc[] = {
+	{ "Mooncat's Trio (2026)(Megakode).gba",	1125940,	0x5c15b82f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_mooncat, gba_mooncat, gba_gba)
+STD_ROM_FN(gba_mooncat)
+
+struct BurnDriver BurnDrvgba_mooncat = {
+	"gba_mooncat", NULL, "gba_gba", NULL, "2026",
+	"Mooncat's Trio (HB)\0", "'Level Codes' version", "Megakode", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
+	GbaGetZipName, gba_mooncatRomInfo, gba_mooncatRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Tollrunner - Community Version (HB)
+
+static struct BurnRomInfo gba_tollrunnerRomDesc[] = {
+	{ "Tollrunner - Community Version (2026)(Jenka Lab).gba",	5746808,	0x635efe32,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tollrunner, gba_tollrunner, gba_gba)
+STD_ROM_FN(gba_tollrunner)
+
+struct BurnDriver BurnDrvgba_tollrunner = {
+	"gba_tollrunner", NULL, "gba_gba", NULL, "2026",
+	"Tollrunner - Community Version (HB)\0", NULL, "Jenka Lab", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_tollrunnerRomInfo, gba_tollrunnerRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Waimanu: Grinding Blocks Adventure (HB)
+
+static struct BurnRomInfo gba_waimanuRomDesc[] = {
+	{ "Waimanu - Grinding Blocks Adventure (2013)(Disjointed Studio).gba",	1739504,	0x0fe153c5,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_waimanu, gba_waimanu, gba_gba)
+STD_ROM_FN(gba_waimanu)
+
+struct BurnDriver BurnDrvgba_waimanu = {
+	"gba_waimanu", NULL, "gba_gba", NULL, "2013",
+	"Waimanu: Grinding Blocks Adventure (HB)\0", NULL, "Disjointed Studio", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_MAZE, 0,
+	GbaGetZipName, gba_waimanuRomInfo, gba_waimanuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Xeno Crisis (M8) (HB)
 
 static struct BurnRomInfo gba_xenocrisisRomDesc[] = {
 	{ "Xeno Crisis (2024)(Bitmap Bureau).gba",	33554432,	0x9693aabd,	BRF_ESS | BRF_PRG },
@@ -55166,7 +55356,7 @@ STD_ROM_FN(gba_xenocrisis)
 
 struct BurnDriver BurnDrvgba_xenocrisis = {
 	"gba_xenocrisis", NULL, "gba_gba", NULL, "2024",
-	"Xeno Crisis (HB)\0", NULL, "Bitmap Bureau", "Game Boy Advance",
+	"Xeno Crisis (M8) (HB)\0", NULL, "Bitmap Bureau", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
 	GbaGetZipName, gba_xenocrisisRomInfo, gba_xenocrisisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,

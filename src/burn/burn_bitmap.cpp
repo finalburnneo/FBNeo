@@ -1,4 +1,4 @@
-// FB Alpha Bitmap Management System
+// FB Neo Bitmap Management System
 
 #include "tiles_generic.h"
 
@@ -427,5 +427,50 @@ void BurnBitmapExit() // Call in GenericTilesExit()
 		memset (ptr, 0, sizeof(bitmap_struct));
 
 		ptr++;
+	}
+}
+
+// draw a box shape on the selected bitmap
+void draw_plot_box(INT32 bitmap, INT32 sx, INT32 sy, INT32 width, INT32 height, UINT16 color)
+{
+	INT32 bitmap_width = 0;
+	INT32 bitmap_height = 0;
+	UINT16 *dest = BurnBitmapGetBitmap(bitmap);
+#if defined FBNEO_DEBUG
+	if (dest == NULL) {
+		bprintf (0, _T("draw_plot_box called with unitialized bitmap (%d)\n"), bitmap);
+		return;
+	}
+#endif
+	BurnBitmapGetDimensions(bitmap, &bitmap_width, &bitmap_height);
+	clip_struct *clip = BurnBitmapClipDims(bitmap);
+
+	for (INT32 y = 0; y < height; y++, sy++)
+	{
+		for (INT32 x = 0, xx = sx; x < width; x++, xx++)
+		{
+			if (sy >= clip->nMiny && sy < clip->nMaxy && xx >= clip->nMinx && xx < clip->nMaxx)
+			{
+				dest[sy * bitmap_width + xx] = color;
+			}
+		}
+	}
+}
+
+// draw a pixel on the selected bitmap
+void draw_plot_pixel(INT32 bitmap, INT32 sx, INT32 sy, UINT16 color)
+{
+	clip_struct *clip = BurnBitmapClipDims(bitmap);
+
+#if defined FBNEO_DEBUG
+	if (clip == NULL) {
+		bprintf (0, _T("draw_plot_pixel called with unitialized bitmap (%d)\n"), bitmap);
+		return;
+	}
+#endif
+
+	if (sy >= clip->nMiny && sy < clip->nMaxy && sx >= clip->nMinx && sx < clip->nMaxx)
+	{
+		*BurnBitmapGetPosition(bitmap, sx, sy) = color;
 	}
 }

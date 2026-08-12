@@ -10,6 +10,24 @@ int nActiveGame;
 
 static bool bLoading = 0;
 
+#ifdef BUILD_NEOGEO
+static void SetNeoCDTitle(TCHAR* pszTitle)
+{
+	TCHAR szText[1024] = _T("");
+	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle);
+	szText[_countof(szText) - 1] = _T('\0');
+	SetWindowText(hScrnWnd, szText);
+}
+
+void NeoCDInfo_SetTitle()
+{
+	if (!IsNeoGeoCD()) return;
+	TCHAR* pszTitle = NeoCDInfo_Text(DRV_FULLNAME);
+	SetNeoCDTitle(pszTitle ? pszTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+}
+#endif
+
+
 int OnMenuSelect(HWND, HMENU, int, HMENU, UINT);
 int OnInitMenuPopup(HWND, HMENU, UINT, BOOL);
 int OnUnInitMenuPopup(HWND, HMENU, UINT, BOOL);

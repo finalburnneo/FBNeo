@@ -1465,8 +1465,8 @@
     <ClCompile Include="..\..\src\burner\win32\misc_win32.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burner\win32\neocdlist.cpp">
-      <Filter>burner\win32</Filter>
+    <ClCompile Include="..\..\src\burner\cdlist.cpp">
+      <Filter>burner</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\neocdsel.cpp">
       <Filter>burner\win32</Filter>
@@ -3388,6 +3388,9 @@
     <ClCompile Include="..\..\src\burner\nvram.cpp">
       <Filter>burner</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burner\win32\romdata.cpp">
+      <Filter>burner\win32</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\luaconsole.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>
@@ -3567,9 +3570,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lockon.cpp">
       <Filter>burn\drv\pre90s</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burner\win32\romdata.cpp">
-      <Filter>burner\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp">
       <Filter>burn\drv\taito</Filter>

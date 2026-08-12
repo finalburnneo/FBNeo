@@ -40,17 +40,17 @@ const INT32 nSectorLength			= 2352;
 
 // Stores single NeoGeo CD game metadata
 struct GAMELIST {
-	bool   bFoundCUE;						// True if game loaded from .cue sheet file
-	TCHAR* szPathCUE;						// Full absolute path of cue file
-	TCHAR* szPath;							// Full absolute path of real image file (chd/bin)
-	TCHAR* szISOFile;						// Raw image filename extracted from cue
-	TCHAR* szGameId;						// Game identification number string
-	TCHAR* szShortName;						// Game short name for cover matching
-	TCHAR* szTitle;							// Game title
-	TCHAR* szPublisher;						// Publisher + release year combined string
-	TCHAR* szAudioTracks;					// Audio tracks string
-//	TCHAR szTracks[99][256];				// Unused track storage array, commented out
-	INT32  nIconIdx;						// index inside NeoCD_ImageList
+	INT32  nPlatform;
+	UINT64 nKey;
+	TCHAR* szPath;
+	TCHAR* szISOFile;
+	TCHAR* szGameId;
+	TCHAR* szShortName;
+	TCHAR* szTitle;
+	TCHAR* szPublisher;
+	TCHAR* szAudioTracks;
+	TCHAR* szRequirement;
+	INT32  nIconIdx;
 };
 
 // Central game library container, thread-safe with critical section lock
@@ -389,13 +389,13 @@ static void FreeGameItem(struct GAMELIST* pItem)
 	if (!pItem)
 		return;
 
-	free_s((void**)&pItem->szPathCUE);
 	free_s((void**)&pItem->szPath);
 	free_s((void**)&pItem->szISOFile);
 	free_s((void**)&pItem->szShortName);
 	free_s((void**)&pItem->szPublisher);
 	free_s((void**)&pItem->szTitle);
 	free_s((void**)&pItem->szAudioTracks);
+	free_s((void**)&pItem->szRequirement);
 	free_s((void**)&pItem->szGameId);
 }
 
@@ -435,11 +435,9 @@ static BOOL GameLib_AddGame(struct GAME_LIB* pLib, struct GAMELIST* pSrcTemplate
 	struct GAMELIST* pDst = &pNew[pLib->dataCount];
 
 	// Copy numeric value fields from source template
-	pDst->bFoundCUE     = pSrcTemplate->bFoundCUE;
+	pDst->nPlatform     = pSrcTemplate->nPlatform;
+	pDst->nKey          = pSrcTemplate->nKey;
 	pDst->nIconIdx      = pSrcTemplate->nIconIdx;
-
-	// Transfer string pointer ownership (share original heap memory, no duplication)
-	pDst->szPathCUE     = pSrcTemplate->szPathCUE;
 	pDst->szPath        = pSrcTemplate->szPath;
 	pDst->szISOFile     = pSrcTemplate->szISOFile;
 	pDst->szShortName   = pSrcTemplate->szShortName;
@@ -447,6 +445,7 @@ static BOOL GameLib_AddGame(struct GAME_LIB* pLib, struct GAMELIST* pSrcTemplate
 	pDst->szTitle       = pSrcTemplate->szTitle;
 	pDst->szGameId      = pSrcTemplate->szGameId;
 	pDst->szAudioTracks = pSrcTemplate->szAudioTracks;
+	pDst->szRequirement = pSrcTemplate->szRequirement;
 
 	// Replace old game data array with reallocated buffer and update item counter
 	pLib->pGameData = pNew;
@@ -511,311 +510,55 @@ static void GameLib_Destroy(struct GAME_LIB* pLib)
 		pGameLib = NULL;
 }
 
-// ParseCueGetImageFile
-// Return NULL if file open failed / no valid FILE BINARY segment found
-TCHAR* ParseCueGetImageFile(const TCHAR* cueFullPath)
+static struct GAMELIST* NeoCD_BuildGameEntry(const TCHAR* pszPath, const CDListResult* pResult)
 {
-	if (IsStrEmpty(cueFullPath))
-		return NULL;
+	if (!pszPath || !pResult || pResult->nPlatform != CDLIST_PLATFORM_NEOCD) return NULL;
+	CDImage* pImage = CDImageOpen(pszPath);
+	if (!pImage) return NULL;
 
-	FILE* fp = _tfopen(cueFullPath, _T("r"));
-	if (!fp)
-		return NULL;
-
-	TCHAR szCueDir[2048] = { 0 };
-	size_t nBufSize = ARRAY_SIZE(szCueDir);
-	_tcsncpy(szCueDir, cueFullPath, nBufSize - 1);
-	szCueDir[nBufSize - 1] = _T('\0');
-
-	TCHAR* pSep = _tcsrchr(szCueDir, _T('\\'));
-	if (pSep)
-		*(pSep + 1) = _T('\0');
-
-	bool  bFoundBinary = false;
-	TCHAR szImgName[2048] = { 0 };
-	TCHAR szBuffer[ 2048] = { 0 };
-
-	while (_fgetts(szBuffer, ARRAY_SIZE(szBuffer), fp)) {
-		// Trim trailing whitespace & control characters (\r \n space etc.)
-		INT32 nLen = _tcslen(szBuffer);
-		while (nLen > 0 && szBuffer[nLen - 1] < 32)
-		{
-			szBuffer[nLen - 1] = _T('\0');
-			nLen--;
-		}
-
-		// Match FILE "filename" BINARY line
-		if (!_tcsncmp(szBuffer, _T("FILE"), 4)) {
-			TCHAR* pEndQ = _tcsrchr(szBuffer, _T('"'));
-			if (!pEndQ)
-				continue;
-			*pEndQ = _T('\0');
-
-			TCHAR* pStartQ = _tcschr(szBuffer, _T('"'));
-			if (!pStartQ)
-				continue;
-			// Skip if segment is not BINARY type
-			if (_tcsstr(pEndQ + 1, _T("BINARY")) == NULL)
-				continue;
-
-			// Extract image file name inside quotes
-			nBufSize = ARRAY_SIZE(szImgName);
-			_tcsncpy(szImgName, pStartQ + 1, nBufSize - 1);
-			szImgName[nBufSize - 1] = _T('\0');
-			bFoundBinary = true;
+	const CDImageTrack* pDataTrack = NULL;
+	for (INT32 i = 0; i < CDImageGetTrackCount(pImage); i++) {
+		const CDImageTrack* pTrack = CDImageGetTrack(pImage, i);
+		if (pTrack && pTrack->nType != CDIMAGE_TRACK_AUDIO) {
+			pDataTrack = pTrack;
 			break;
 		}
 	}
-	fclose(fp);
 
-	if (!bFoundBinary)
-		return NULL;
-
-	// Combine cue directory and image filename to full absolute path
-	TCHAR* pFullImagePath = NULL;
-	PathCombine_s(&pFullImagePath, szCueDir, szImgName);
-	return pFullImagePath;
-}
-
-// Parse cue sheet file, fill path info & audio track count
-// Return heap-allocated GAMELIST entry on success, NULL if failed
-static struct GAMELIST* ParseCueCreateGameItem(const TCHAR* cueFullPath)
-{
-	// Params validated upstream; skip duplicate check here
-	// Allocate zero-init struct, all pointers default NULL
 	struct GAMELIST* pItem = (struct GAMELIST*)calloc(1, sizeof(struct GAMELIST));
-	if (!pItem)
-		return NULL;
-
-	pItem->nIconIdx = 0;
-
-	FILE* fp = _tfopen(cueFullPath, _T("r"));
-	if (!fp) {
-		free_s((void**)&pItem);
+	if (!pItem) {
+		CDImageClose(pImage);
 		return NULL;
 	}
 
-	// Extract directory folder from full cue path, use safe _tcsncpy
-	TCHAR szCueDir[2048] = { 0 };
-	size_t nStrLen = ARRAY_SIZE(szCueDir);
-	_tcsncpy(szCueDir, cueFullPath, nStrLen - 1);
-	szCueDir[nStrLen - 1] = _T('\0');
+	pItem->nPlatform = pResult->nPlatform;
+	pItem->nKey = pResult->nNeoID;
+	pItem->nIconIdx = IsFileExt((TCHAR*)pszPath, _T(".chd")) ? 1 : 0;
+	pItem->szPath = _tcsdup_s(CDImageGetPath(pImage));
+	pItem->szISOFile = _tcsdup_s(pDataTrack ? pDataTrack->szPath : CDImageGetPath(pImage));
+	pItem->szShortName = _tcsdup_s(pResult->Metadata.szName);
+	pItem->szTitle = _tcsdup_s(pResult->Metadata.szTitle);
+	pItem->szRequirement = _tcsdup_s(pResult->Metadata.szRequirement);
 
-	TCHAR* pSep = _tcsrchr(szCueDir, _T('\\'));
-	if (pSep)
-		*(pSep + 1) = _T('\0');
+	TCHAR szText[256] = { 0 };
+	_sntprintf(szText, ARRAY_SIZE(szText), _T("%s (%s)"), pResult->Metadata.szCompany, pResult->Metadata.szYear);
+	szText[ARRAY_SIZE(szText) - 1] = _T('\0');
+	pItem->szPublisher = _tcsdup_s(szText);
+	_sntprintf(szText, ARRAY_SIZE(szText), _T("%04X"), pResult->nNeoID);
+	szText[ARRAY_SIZE(szText) - 1] = _T('\0');
+	pItem->szGameId = _tcsdup_s(szText);
+	_sntprintf(szText, ARRAY_SIZE(szText), _T("%d"), CDImageGetAudioTrackCount(pImage));
+	szText[ARRAY_SIZE(szText) - 1] = _T('\0');
+	pItem->szAudioTracks = _tcsdup_s(szText);
+	CDImageClose(pImage);
 
-	bool bHasBinary      = false;
-	TCHAR szBuffer[2048] = { 0 };
-	const size_t nBufSize = ARRAY_SIZE(szBuffer);
-
-	INT32 nAudioTracks = 0;
-	while (_fgetts(szBuffer, (INT32)nBufSize, fp)) {
-		// Trim trailing ASCII control chars (\r \n etc.)
-		INT32 nLen = _tcslen(szBuffer);
-		while (nLen > 0 && szBuffer[nLen - 1] < 32) {
-			szBuffer[nLen - 1] = _T('\0');
-			nLen--;
-		}
-
-		// Parse FILE "filename" BINARY segment
-		if (!_tcsncmp(szBuffer, _T("FILE"), 4)) {
-			TCHAR* pEndQ  = _tcsrchr(szBuffer, _T('"'));
-			if (!pEndQ)
-				continue;
-			*pEndQ = _T('\0');
-
-			TCHAR* pStartQ = _tcschr(szBuffer, _T('"'));
-			if (!pStartQ)
-				continue;
-			if (!_tcsstr(pEndQ + 1, _T("BINARY")))
-				continue;
-
-			pItem->szISOFile = _tcsdup_s(pStartQ + 1);
-			pItem->szPathCUE = _tcsdup_s(cueFullPath);
-
-			TCHAR szFullImg[2048] = { 0 };
-			nStrLen = ARRAY_SIZE(szFullImg);
-			_sntprintf(szFullImg, nStrLen, _T("%s%s"), szCueDir, pStartQ + 1);
-			szFullImg[nStrLen - 1] = _T('\0');
-			pItem->szPath    = _tcsdup_s(szFullImg);
-
-			pItem->bFoundCUE = true;
-			bHasBinary       = true;
-		}
-
-		// Parse TRACK definition, same pointer logic as original source
-		TCHAR* t = LabelCheck(szBuffer, _T("TRACK"));
-		if (t) {
-			TCHAR* s = t;
-			// Parse track numeric id, advance t past digits
-			_tcstol(s, &t, 10);
-			s = t;
-
-			// Skip leading spaces to reach the type field
-			while (*s == _T(' ')) s++;
-
-			// CD-DA audio track, increment counter
-			if (!_tcsncmp(s, _T("AUDIO"), 5)) {
-				nAudioTracks++;
-				continue;
-			}
-			// Any MODE* type (MODE1/2048, MODE1/2352, MODE2/xxxx ...) is a data track
-			if (!_tcsncmp(s, _T("MODE"), 4))
-				continue;
-		}
-	}
-	fclose(fp);
-
-	memset(szBuffer, 0, nBufSize);
-	_sntprintf(szBuffer, nBufSize, _T("%d"), nAudioTracks);
-	szBuffer[nBufSize - 1] = _T('\0');
-	pItem->szAudioTracks = _tcsdup_s(szBuffer);
-
-	// No valid binary found in cue sheet, release resource
-	if (!bHasBinary) {
+	if (!pItem->szPath || !pItem->szISOFile || !pItem->szShortName || !pItem->szTitle ||
+		!pItem->szPublisher || !pItem->szAudioTracks || !pItem->szGameId) {
 		FreeGameItem(pItem);
 		free_s((void**)&pItem);
 		return NULL;
 	}
-
 	return pItem;
-}
-
-// Create base GAMELIST entry for CHD file, fill path & audio track count from CHD header
-// Param chdFullPath: full absolute path of target chd file
-// Return heap-allocated GAMELIST on success, NULL on failure
-static struct GAMELIST* CreateChdBaseGameItem(TCHAR* chdFullPath)
-{
-	struct GAMELIST* pItem = (struct GAMELIST*)calloc(1, sizeof(struct GAMELIST));
-	if (!pItem)
-		return NULL;
-
-	pItem->nIconIdx = 1;
-
-	// Store full CHD absolute path
-	pItem->szPath = _tcsdup_s(chdFullPath);
-	if (!pItem->szPath) {
-		free_s((void**)&pItem);
-		return NULL;
-	}
-
-	// Extract short file name for szISOFile
-	TCHAR szFileName[2048] = { 0 };
-	size_t nLen = ARRAY_SIZE(szFileName) - 1;
-	_tcsncpy(szFileName, chdFullPath, nLen);
-	szFileName[nLen] = _T('\0');
-
-	TCHAR* pNameStart = _tcsrchr(szFileName, _T('\\'));
-	if (pNameStart)
-		pNameStart++;
-	else
-		pNameStart = szFileName;
-
-	pItem->szISOFile = _tcsdup_s(pNameStart);
-	if (!pItem->szISOFile) {
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return NULL;
-	}
-
-	pItem->bFoundCUE = FALSE;
-
-	// Get audio track count from CHD metadata
-	const INT32 nAudioTracks = cdimgCountChdAudioTracks(chdFullPath);
-
-	TCHAR szBuffer[10] = { 0 };
-	size_t nSize = ARRAY_SIZE(szBuffer);
-	_sntprintf(szBuffer, nSize, _T("%d"), nAudioTracks);
-	szBuffer[nSize - 1] = _T('\0');
-	pItem->szAudioTracks = _tcsdup_s(szBuffer);
-
-	return pItem;
-}
-
-// Unified entry: build game item for both .cue and .chd file
-// Return TRUE if entry created successfully, FALSE on any failure / unsupported extension
-static BOOL NeoCD_BuildGameEntry(UINT32 nGameID, TCHAR* filePath, struct GAMELIST** ppOutItem)
-{
-	if (IsStrEmpty(filePath) || !ppOutItem)
-		return FALSE;
-
-	*ppOutItem = NULL;
-	INT32 nImgIdx = -1;
-
-	struct GAMELIST* pItem = NULL;
-	if (       IsFileExt(filePath, _T(".cue"))) {
-		pItem   = ParseCueCreateGameItem(filePath);
-		nImgIdx = 0;
-	} else if (IsFileExt(filePath, _T(".chd"))) {
-		pItem   = CreateChdBaseGameItem( filePath);
-		nImgIdx = 1;
-	} else {
-		// Unsupported format
-		return FALSE;
-	}
-
-	if (!pItem)
-		return FALSE;
-
-	NGCDGAME* pMeta = NULL;
-	if (!GetNGCDGameTitle(nGameID, &pMeta)) {
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return FALSE;
-	}
-
-	// Combine publisher & release year string
-	TCHAR szBuffer[256] = { 0 };
-	const size_t nLen = ARRAY_SIZE(szBuffer);
-	_sntprintf(szBuffer, nLen, _T("%s (%s)"), pMeta->pszCompany, pMeta->pszYear);
-	szBuffer[nLen - 1] = _T('\0');
-	pItem->szPublisher = _tcsdup_s(szBuffer);
-	if (!pItem->szPublisher) {
-		FreeNGCDGame(&pMeta);
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return FALSE;
-	}
-
-	// Fill game identity & display text fields
-	pItem->szShortName = _tcsdup_s(pMeta->pszName);
-	if (!pItem->szShortName) {
-		FreeNGCDGame(&pMeta);
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return FALSE;
-	}
-
-	if (nGameID == 0x0000)
-		pItem->szTitle = _tcsdup_s(pItem->szPath);
-	else
-		pItem->szTitle = _tcsdup_s(pMeta->pszTitle);
-	if (!pItem->szTitle) {
-		FreeNGCDGame(&pMeta);
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return FALSE;
-	}
-
-	memset(szBuffer, 0, sizeof(szBuffer));
-	_sntprintf(szBuffer, nLen, _T("%04X"), nGameID);
-	szBuffer[nLen - 1] = _T('\0');
-	pItem->szGameId    = _tcsdup_s(szBuffer);
-	if (!pItem->szGameId) {
-		FreeNGCDGame(&pMeta);
-		FreeGameItem(pItem);
-		free_s((void**)&pItem);
-		return FALSE;
-	}
-
-	// Assign icon index based on file type
-	pItem->nIconIdx    = nImgIdx;
-
-	FreeNGCDGame(&pMeta);
-
-	*ppOutItem = pItem;
-	return TRUE;
 }
 
 static bool NeoCD_GameLibInit()
@@ -831,57 +574,27 @@ static bool NeoCD_GameLibInit()
 	return true;
 }
 
-// Callback function for directory scan, construct and store game metadata into game library
-static void NeoCD_AddGameLib_Callback(INT32 nGameID, TCHAR* filePath)
+static INT32 NeoCD_AddGameLib(const TCHAR* pszPath)
 {
-	struct GAMELIST* pTempItem = NULL;
-	// Build temporary game metadata entry from cue/chd file
-	if (!NeoCD_BuildGameEntry((UINT32)nGameID, filePath, &pTempItem) || !pTempItem) {
-		bprintf(PRINT_ERROR, _T("NeoCD_AddGameLib_Callback: build entry fail ID=0x%04X %s\n"), nGameID, filePath);
-		return;
-	}
-
-	// Transfer string pointer ownership to global game library array
-	BOOL bOk = GameLib_AddGame(pGameLib, pTempItem);
-	if (!bOk) {
-		bprintf(PRINT_ERROR, _T("NeoCD_AddGameLib_Callback: add to lib memory fail\n"));
-	}
-
-	// Only release temporary GAMELIST struct shell, do NOT free internal string buffers
-	// Strings are now owned by GAME_LIB and will be released in GameLib_Destroy
-	free_s((void**)&pTempItem);
-}
-
-// Add cue/chd game to static global game lib
-static INT32 NeoCD_AddGameLib(const TCHAR* filePath)
-{
-	// Check user cancel signal before processing current file
-	if (pGameLib && pGameLib->hGLEvent) {
-		// Non-blocking wait for abort event
-		if (WaitForSingleObject(pGameLib->hGLEvent, 0) == WAIT_OBJECT_0) {
-			// Return negative value to tell directory traversal to stop scan
-			return -1;
-		}
-	}
-
-	if (IsStrEmpty(filePath)) {
-		bprintf(PRINT_ERROR, _T("NeoCD_AddGameLib: empty or invalid path\n"));
-		return 0;
-	}
-
-	if (!IsFileExt((TCHAR*)filePath, _T(".cue")) && !IsFileExt((TCHAR*)filePath, _T(".chd")))
-		return 0;
+	if (pGameLib && pGameLib->hGLEvent && WaitForSingleObject(pGameLib->hGLEvent, 0) == WAIT_OBJECT_0) return -1;
+	if (!pszPath || (!IsFileExt((TCHAR*)pszPath, _T(".cue")) && !IsFileExt((TCHAR*)pszPath, _T(".ccd")) && !IsFileExt((TCHAR*)pszPath, _T(".chd")))) return 0;
 
 	SendDlgItemMessage(pGameLib->hGLDlg, IDC_WAIT_PROG, PBM_STEPIT, 0, 0);
+	CDListResult Result;
+	if (!CDListIdentify(pszPath, &Result) || Result.nPlatform != CDLIST_PLATFORM_NEOCD) return 1;
 
-	NeoCDList_CheckISO((TCHAR*)filePath, NeoCD_AddGameLib_Callback);
-
+	struct GAMELIST* pItem = NeoCD_BuildGameEntry(pszPath, &Result);
+	if (!pItem) return 1;
+	if (!GameLib_AddGame(pGameLib, pItem)) {
+		FreeGameItem(pItem);
+	}
+	free_s((void**)&pItem);
 	return 1;
 }
 
 static INT32 NeoCD_GetCDImageCount(const TCHAR* filePath)
 {
-	if (!IsFileExt((TCHAR*)filePath, _T(".cue")) && !IsFileExt((TCHAR*)filePath, _T(".chd")))
+	if (!IsFileExt((TCHAR*)filePath, _T(".cue")) && !IsFileExt((TCHAR*)filePath, _T(".ccd")) && !IsFileExt((TCHAR*)filePath, _T(".chd")))
 		return 0;
 
 	pGameLib->progressCount++;
@@ -1442,104 +1155,6 @@ static bool FileExists(TCHAR *tcszFile)
 	DWORD dwAttrib = GetFileAttributes(tcszFile);
 	return (dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
 }
-
-#if 0
-// This will parse the specified CUE file and return the ISO path, if found
-static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
-{
-	//if(!pszFile) return NULL;
-
-	TCHAR* szISO = NULL;
-	szISO = (TCHAR*)malloc(sizeof(TCHAR) * 2048);
-	if(!szISO) return NULL;
-
-	// open file
-	FILE* fp = NULL;
-	fp = _tfopen(pszFile, _T("r"));
-
-	if(!fp) {
-		if (szISO)
-		{
-			free(szISO);
-			return NULL;
-		}
-	}
-
-	while(!feof(fp))
-	{
-		TCHAR szBuffer[2048];
-		TCHAR szOriginal[2048];
-		TCHAR* s;
-		TCHAR* t;
-
-		_fgetts(szBuffer, 2048, fp);
-
-		INT32 nLength = 0;
-		nLength = _tcslen(szBuffer);
-
-		// Remove ASCII control characters from the string (including the 'space' character)
-		while (szBuffer[nLength-1] < 32 && nLength > 0)
-		{
-			szBuffer[nLength-1] = 0;
-			nLength--;
-		}
-
-		_tcscpy(szOriginal, szBuffer);
-
-		if(!_tcsncmp(szBuffer, _T("FILE"), 4))
-		{
-			TCHAR* pEnd = _tcsrchr(szBuffer, '"');
-			if (!pEnd)	{
-				break;	// Invalid CUE format
-			}
-
-			*pEnd = 0;
-
-			TCHAR* pStart = _tcschr(szBuffer, '"');
-
-			if(!pStart)	{
-				break;	// Invalid CUE format
-			}
-
-			if(!_tcsncmp(pEnd + 2, _T("BINARY"), 6))
-			{
-				_tcscpy(szISO,  pStart + 1);
-				ngcd_list[nListItems].bFoundCUE = true;
-				_tcscpy(ngcd_list[nListItems].szPathCUE,  pszFile);
-				_tcscpy(ngcd_list[nListItems].szISOFile,  pStart + 1);
-			}
-		}
-		// track info
-		if ((t = LabelCheck(szBuffer, _T("TRACK"))) != 0) {
-			s = t;
-
-			// track number
-			/*UINT8 track = */ _tcstol(s, &t, 10);
-
-			s = t;
-
-			// type of track
-
-			if ((t = LabelCheck(s, _T("MODE1/2352"))) != 0) {
-				//bprintf(0, _T(".cue: Track #%d, data.\n"), track);
-				continue;
-			}
-			if ((t = LabelCheck(s, _T("AUDIO"))) != 0) {
-				//bprintf(0, _T(".cue: Track #%d, AUDIO.\n"), track);
-				ngcd_list[nListItems].nAudioTracks++;
-				continue;
-			}
-
-			fclose(fp);
-			return szISO;
-		}
-	}
-	if(fp) fclose(fp);
-
-	return szISO;
-}
-#endif // 0
-
 static PNGRESOLUTION GetPNGResolutionBuf(void *pPngBuf, size_t nPngSize)
 {
 	PNGRESOLUTION nResolution = { 0, 0 };
@@ -2028,7 +1643,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		{
 			if(nSelectedItem >= 0) {
 				GAMELIST* pEntry = &pGameLib->pGameData[nSelectedItem];
-				const TCHAR* targetFile = (pEntry->bFoundCUE) ? pEntry->szPathCUE : pEntry->szPath;
+				const TCHAR* targetFile = pEntry->szPath;
 				nCDEmuSelect = 0;
 				_tcsncpy(CDEmuImage, targetFile, MAX_PATH - 1);
 				CDEmuImage[MAX_PATH - 1]= _T('\0');
@@ -2122,7 +1737,7 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				{
 					if(nSelectedItem >= 0) {
 						GAMELIST* pEntry = &pGameLib->pGameData[nSelectedItem];
-						const TCHAR* targetFile = (pEntry->bFoundCUE) ? pEntry->szPathCUE : pEntry->szPath;
+						const TCHAR* targetFile = pEntry->szPath;
 						nCDEmuSelect = 0;
 						_tcsncpy(CDEmuImage, targetFile, MAX_PATH - 1);
 						CDEmuImage[MAX_PATH - 1]= _T('\0');

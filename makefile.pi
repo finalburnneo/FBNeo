@@ -49,7 +49,7 @@ alldir += burner burner/pi burner/sdl dep/libs/libspng dep/libs/lib7z \
 		intf/perfcount intf/perfcount/pi dep/generated \
 		dep/pi/gles
 
-depobj += neocdlist.o \
+depobj += cdlist.o \
 		\
 		conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o \
 		sshot.o state.o statec.o unzip.o zipfn.o \
@@ -269,7 +269,7 @@ else
 endif
 
 # For zlib
-DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=64
+DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=64 -DCHDR_SYSTEM_ZLIB
 
 # For lib7z
 ifdef INCLUDE_7Z_SUPPORT

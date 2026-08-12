@@ -31,41 +31,622 @@ const INT32 CD_TYPE_BINCUE   = 1 << 1;
 const INT32 CD_TYPE_CCD      = 1 << 2;
 const INT32 CD_TYPE_CHD      = 1 << 3;
 
-static INT32 cd_pregap;
-static double cd_volume = 100.0;
+struct CDImageFile {
+	TCHAR szPath[MAX_PATH];
+	FILE* pFile;
+	INT64 nSectors;
+};
 
-struct MSF { UINT8 M; UINT8 S; UINT8 F; };
+struct CDImage {
+	TCHAR szPath[MAX_PATH];
+	INT32 nType;
+	INT32 nTrackCount;
+	INT32 nAudioTrackCount;
+	INT32 nSectorCount;
+	INT32 nFileCount;
+	CDImageFile  Files[MAXIMUM_NUMBER_TRACKS];
+	CDImageTrack Tracks[MAXIMUM_NUMBER_TRACKS];
+	INT32 nFile[MAXIMUM_NUMBER_TRACKS];
+	INT32 nFileLBA[MAXIMUM_NUMBER_TRACKS];
+	INT32 nIndex0FileLBA[MAXIMUM_NUMBER_TRACKS];
+	INT32 nExplicitPregap[MAXIMUM_NUMBER_TRACKS];
+	INT32 nChdType[MAXIMUM_NUMBER_TRACKS];
+	ChdImage* pChd;
+};
 
-struct cdimgTRACK_DATA { UINT8 Control; UINT8 TrackNumber; UINT8 Address[4]; UINT8 EndAddress[4]; };
-struct cdimgCDROM_TOC { UINT8 FirstTrack; UINT8 LastTrack; UINT8 ImageType; TCHAR Image[MAX_PATH]; cdimgTRACK_DATA TrackData[MAXIMUM_NUMBER_TRACKS + 1]; };
+static INT32 cdimgCopyPath(TCHAR* dst, size_t count, const TCHAR* src);
+static INT32 cdimgReplaceExtension(TCHAR* path, size_t count, const TCHAR* extension);
+
+static INT32 CDImageParseMSF(const TCHAR* szText, INT32* pnLba)
+{
+	TCHAR* pEnd;
+	INT32  nMinute = _tcstol(szText, &pEnd, 10);
+	if (pEnd == szText || *pEnd++ != _T(':'))
+		return 1;
+
+	TCHAR* pSecond = pEnd;
+	INT32  nSecond = _tcstol(pSecond, &pEnd, 10);
+	if (pEnd == pSecond || *pEnd++ != _T(':'))
+		return 1;
+
+	TCHAR* pFrame = pEnd;
+	INT32 nFrame  = _tcstol(pFrame, &pEnd, 10);
+	while (*pEnd == _T(' ') || *pEnd == _T('\t'))
+		pEnd++;
+
+	if (pEnd == pFrame || *pEnd || nMinute < 0 || nSecond < 0 || nSecond > 59 || nFrame < 0 || nFrame > 74)
+		return 1;
+
+	*pnLba = nMinute * CD_FRAMES_MINUTE + nSecond * CD_FRAMES_SECOND + nFrame;
+	return 0;
+}
+
+static INT32 CDImageResolvePath(TCHAR* szDest, const TCHAR* szImage, const TCHAR* szFile)
+{
+	if (!szDest || !szImage || !szFile)
+		return 1;
+
+	if (szFile[0] == _T('/') || szFile[0] == _T('\\') || (_tcslen(szFile) > 1 && szFile[1] == _T(':'))) {
+		return cdimgCopyPath(szDest, MAX_PATH, szFile);
+	}
+	const TCHAR* pSlash     = _tcsrchr(szImage, _T('/'));
+	const TCHAR* pBackslash = _tcsrchr(szImage, _T('\\'));
+	if (!pSlash || (pBackslash && pBackslash > pSlash))
+		pSlash = pBackslash;
+
+	size_t nDirectory = pSlash ? (size_t)(pSlash - szImage + 1) : 0;
+	if (nDirectory + _tcslen(szFile) >= MAX_PATH)
+		return 1;
+
+	if (nDirectory)
+		memcpy(szDest, szImage, nDirectory * sizeof(TCHAR));
+
+	_tcscpy(szDest + nDirectory, szFile);
+	return 0;
+}
+
+static void CDImageCloseFiles(CDImage* pImage)
+{
+	if (!pImage)
+		return;
+
+	for (INT32 i = 0; i < pImage->nFileCount; i++) {
+		if (pImage->Files[i].pFile)
+			fclose(pImage->Files[i].pFile);
+		pImage->Files[i].pFile = NULL;
+	}
+}
+
+static INT32 CDImageOpenBinary(CDImageFile* pFile)
+{
+	pFile->pFile = _tfopen(pFile->szPath, _T("rb"));
+	if (!pFile->pFile)
+		return 1;
+
+	if (cdimgFseek(pFile->pFile, 0, SEEK_END)) {
+		fclose(pFile->pFile);
+		pFile->pFile = NULL;
+		return 1;
+	}
+	INT64 nSize = cdimgFtell(pFile->pFile);
+	if (nSize < 0 || cdimgFseek(pFile->pFile, 0, SEEK_SET)) {
+		fclose(pFile->pFile);
+		pFile->pFile = NULL;
+		return 1;
+	}
+	pFile->nSectors = nSize;
+	return 0;
+}
+
+static INT32 CDImageParseCue(CDImage* pImage)
+{
+	FILE* pCue = _tfopen(pImage->szPath, _T("rt"));
+	if (!pCue)
+		return 1;
+
+	TCHAR szLine[1024];
+	INT32 nFile        = -1;
+	INT32 nTrack       = -1;
+	INT32 nDiscBase    = 0;
+	INT32 nCurrentFile = -1;
+	INT32 nFileBase    = 0;
+	INT32 nVirtualGap  = 0;
+	UINT8 Index1Seen[MAXIMUM_NUMBER_TRACKS] = { 0 };
+	while (_fgetts(szLine, ARRAY_SIZE(szLine), pCue)) {
+		INT32 nLength = (INT32)_tcslen(szLine);
+		while (nLength && (szLine[nLength - 1] == _T('\r') || szLine[nLength - 1] == _T('\n')))
+			szLine[--nLength] = 0;
+
+		TCHAR* p = szLine;
+		TCHAR* pLabel;
+		if ((pLabel = LabelCheck(p, _T("FILE"))) != NULL) {
+			TCHAR* pName = NULL;
+			TCHAR* pEnd  = NULL;
+			if (pImage->nFileCount >= MAXIMUM_NUMBER_TRACKS || QuoteRead(&pName, &pEnd, pLabel) || !pName || !pEnd)
+				goto fail;
+
+			while (*pEnd == _T(' ') || *pEnd == _T('\t'))
+				pEnd++;
+			if (_tcsncmp(pEnd, _T("BINARY"), 6))
+				goto fail;
+
+			pEnd += 6;
+			while (*pEnd == _T(' ') || *pEnd == _T('\t'))
+				pEnd++;
+			if (*pEnd)
+				goto fail;
+
+			nFile = pImage->nFileCount++;
+			if (CDImageResolvePath(pImage->Files[nFile].szPath, pImage->szPath, pName) || CDImageOpenBinary(&pImage->Files[nFile]))
+				goto fail;
+
+			continue;
+		}
+		if ((pLabel = LabelCheck(p, _T("TRACK"))) != NULL) {
+			if (nFile < 0 || pImage->nTrackCount >= MAXIMUM_NUMBER_TRACKS)
+				goto fail;
+			TCHAR* pEnd;
+			INT32  nNumber = _tcstol(pLabel, &pEnd, 10);
+			if (nNumber != pImage->nTrackCount + 1)
+				goto fail;
+
+			while (*pEnd == _T(' ') || *pEnd == _T('\t')) pEnd++;
+			nTrack = pImage->nTrackCount++;
+			CDImageTrack* pTrack = &pImage->Tracks[nTrack];
+			pTrack->nNumber    = nNumber;
+			pTrack->nIndex0LBA = -1;
+			pTrack->nControl   = 0x41;
+			if (!_tcscmp(pEnd, _T("AUDIO"))) {
+				pTrack->nType       = CDIMAGE_TRACK_AUDIO;
+				pTrack->nControl    = 0x01;
+				pTrack->nSectorSize = pTrack->nUserSize = 2352;
+				pImage->nAudioTrackCount++;
+			} else if (!_tcscmp(pEnd, _T("MODE1/2048"))) {
+				pTrack->nType       = CDIMAGE_TRACK_MODE1_2048;
+				pTrack->nSectorSize = pTrack->nUserSize = 2048;
+				pTrack->nUserOffset = 16;
+			} else if (!_tcscmp(pEnd, _T("MODE1/2352"))) {
+				pTrack->nType       = CDIMAGE_TRACK_MODE1_2352;
+				pTrack->nSectorSize = 2352;
+				pTrack->nUserOffset = 16;
+				pTrack->nUserSize   = 2048;
+			} else if (!_tcscmp(pEnd, _T("MODE2/2336"))) {
+				pTrack->nType       = CDIMAGE_TRACK_MODE2_2336;
+				pTrack->nSectorSize = pTrack->nUserSize = 2336;
+				pTrack->nUserOffset = 16;
+			} else if (!_tcscmp(pEnd, _T("MODE2/2352")) || !_tcscmp(pEnd, _T("CDI/2352"))) {
+				pTrack->nType       = CDIMAGE_TRACK_MODE2_2352;
+				pTrack->nSectorSize = 2352;
+				pTrack->nUserOffset = 16;
+				pTrack->nUserSize   = 2336;
+			} else
+				goto fail;
+
+			pImage->nFile[nTrack] = nFile;
+			pTrack->szPath = pImage->Files[nFile].szPath;
+			continue;
+		}
+		if ((pLabel = LabelCheck(p, _T("INDEX 00"))) != NULL) {
+			if (nTrack < 0 || CDImageParseMSF(pLabel, &pImage->nIndex0FileLBA[nTrack]))
+				goto fail;
+
+			continue;
+		}
+		if ((pLabel = LabelCheck(p, _T("INDEX 01"))) != NULL) {
+			if (nTrack < 0 || Index1Seen[nTrack] || CDImageParseMSF(pLabel, &pImage->nFileLBA[nTrack]))
+				goto fail;
+
+			Index1Seen[nTrack] = 1;
+			continue;
+		}
+		if ((pLabel = LabelCheck(p, _T("PREGAP"))) != NULL) {
+			if (nTrack < 0 || CDImageParseMSF(pLabel, &pImage->nExplicitPregap[nTrack]))
+				goto fail;
+		}
+	}
+	fclose(pCue);
+	if (!pImage->nTrackCount)
+		return 1;
+
+	for (INT32 i = 0; i < pImage->nTrackCount; i++)
+		if (!Index1Seen[i])
+			return 1;
+
+	for (INT32 i = 0; i < pImage->nFileCount; i++) {
+		INT32 nSectorSize = 0;
+		for (INT32 j = 0; j < pImage->nTrackCount; j++) {
+			if (pImage->nFile[j] != i)
+				continue;
+			if (nSectorSize && nSectorSize != pImage->Tracks[j].nSectorSize)
+				return 1;
+			nSectorSize = pImage->Tracks[j].nSectorSize;
+		}
+
+		if (!nSectorSize || pImage->Files[i].nSectors % nSectorSize)
+			return 1;
+
+		pImage->Files[i].nSectors /= nSectorSize;
+	}
+	for (INT32 i = 0; i < pImage->nTrackCount; i++) {
+		if (pImage->nFile[i] != nCurrentFile) {
+			nCurrentFile = pImage->nFile[i];
+			nFileBase    = nDiscBase;
+			nVirtualGap  = 0;
+		}
+		nVirtualGap += pImage->nExplicitPregap[i];
+		CDImageTrack* pTrack = &pImage->Tracks[i];
+		pTrack->nIndex1LBA = nFileBase + pImage->nFileLBA[i] + nVirtualGap;
+		pTrack->nStartLBA  = pTrack->nIndex1LBA;
+		if (pImage->nIndex0FileLBA[i] >= 0)
+			pTrack->nIndex0LBA = nFileBase + pImage->nIndex0FileLBA[i] + nVirtualGap;
+		else
+			pTrack->nIndex0LBA = pTrack->nIndex1LBA - pImage->nExplicitPregap[i];
+
+		pTrack->nPregap = pTrack->nIndex1LBA - pTrack->nIndex0LBA;
+		nDiscBase = nFileBase + (INT32)pImage->Files[nCurrentFile].nSectors + nVirtualGap;
+	}
+	pImage->nSectorCount = nDiscBase;
+	for (INT32 i = 0; i < pImage->nTrackCount; i++) {
+		INT32 nEnd = i + 1 < pImage->nTrackCount ? pImage->Tracks[i + 1].nIndex0LBA : pImage->nSectorCount;
+		pImage->Tracks[i].nSectors = nEnd - pImage->Tracks[i].nStartLBA;
+	}
+	return 0;
+
+fail:
+	fclose(pCue);
+	return 1;
+}
+
+static inline UINT8 CDImageBcd(UINT8 nValue)
+{
+	return ((nValue >> 4) * 10) + (nValue & 15);
+}
+
+static INT32 CDImageParseCcd(CDImage* pImage)
+{
+	TCHAR szSub[MAX_PATH];
+	if (cdimgCopyPath(szSub, MAX_PATH, pImage->szPath) || cdimgReplaceExtension(szSub, MAX_PATH, _T(".sub")))
+		return 1;
+	if (pImage->nFileCount >= 1 || cdimgCopyPath(pImage->Files[0].szPath, MAX_PATH, pImage->szPath) || cdimgReplaceExtension(pImage->Files[0].szPath, MAX_PATH, _T(".img")) || CDImageOpenBinary(&pImage->Files[0]))
+		return 1;
+
+	pImage->nFileCount = 1;
+	FILE* pSub = _tfopen(szSub, _T("rb"));
+	if (!pSub || cdimgFseek(pSub, 0, SEEK_END)) {
+		if (pSub)
+			fclose(pSub);
+
+		return 1;
+	}
+	INT64 nSize = cdimgFtell(pSub);
+	if (nSize < 96 || nSize % 96 || cdimgFseek(pSub, 0, SEEK_SET)) {
+		fclose(pSub);
+		return 1;
+	}
+	UINT8 Sub[96];
+	INT32 nLastTrack  = 0;
+	INT32 nIndex1Base = -1;
+	while (fread(Sub, 1, sizeof(Sub), pSub) == sizeof(Sub)) {
+		UINT8* pQ = Sub + 12;
+		INT32  nAbsolute = CDImageBcd(pQ[7]) * CD_FRAMES_MINUTE + CDImageBcd(pQ[8]) * CD_FRAMES_SECOND + CDImageBcd(pQ[9]);
+		INT32  nTrack    = CDImageBcd(pQ[1]);
+		INT32  nIndex    = CDImageBcd(pQ[2]);
+		if (nIndex == 1 && nTrack == nLastTrack + 1 && nTrack <= MAXIMUM_NUMBER_TRACKS) {
+			CDImageTrack* pTrack = &pImage->Tracks[nLastTrack];
+			pTrack->nNumber     = nTrack; pTrack->nControl = pQ[0]; pTrack->nType = (pQ[0] & 0x40) ? CDIMAGE_TRACK_MODE1_2352 : CDIMAGE_TRACK_AUDIO;
+			pTrack->nSectorSize = 2352; pTrack->nUserOffset = pTrack->nType == CDIMAGE_TRACK_AUDIO ? 0 : 16; pTrack->nUserSize = pTrack->nType == CDIMAGE_TRACK_AUDIO ? 2352 : 2048;
+			if (nIndex1Base < 0)
+				nIndex1Base = nAbsolute;
+			pTrack->nStartLBA   = pTrack->nIndex1LBA = nAbsolute - nIndex1Base;
+			pTrack->nIndex0LBA  = pTrack->nStartLBA; pTrack->szPath = pImage->Files[0].szPath; pImage->nFile[nLastTrack] = 0; pImage->nFileLBA[nLastTrack] = nAbsolute - nIndex1Base;
+			if (pTrack->nType == CDIMAGE_TRACK_AUDIO)
+				pImage->nAudioTrackCount++;
+
+			nLastTrack++;
+		}
+	}
+	fclose(pSub);
+	pImage->nTrackCount  = nLastTrack;
+	pImage->Files[0].nSectors /= 2352;
+	pImage->nSectorCount = (INT32)pImage->Files[0].nSectors;
+	for (INT32 i = 0; i < nLastTrack; i++)
+		pImage->Tracks[i].nSectors = (i + 1 < nLastTrack ? pImage->Tracks[i + 1].nStartLBA : pImage->nSectorCount) - pImage->Tracks[i].nStartLBA;
+
+	return nLastTrack ? 0 : 1;
+}
+
+static INT32 CDImageParseRaw(CDImage* pImage)
+{
+	pImage->nFileCount = 1;
+	if (cdimgCopyPath(pImage->Files[0].szPath, MAX_PATH, pImage->szPath) || CDImageOpenBinary(&pImage->Files[0]) || pImage->Files[0].nSectors % 2352)
+		return 1;
+
+	pImage->Files[0].nSectors /= 2352;
+	pImage->nTrackCount  = 1;
+	pImage->nSectorCount = (INT32)pImage->Files[0].nSectors;
+
+	CDImageTrack* pTrack = &pImage->Tracks[0];
+	pTrack->nNumber     = 1;
+	pTrack->nType       = CDIMAGE_TRACK_MODE1_2352;
+	pTrack->nControl    = 0x41;
+	pTrack->nIndex0LBA  = pTrack->nIndex1LBA = pTrack->nStartLBA = 0;
+	pTrack->nSectors    = pImage->nSectorCount;
+	pTrack->nSectorSize = 2352;
+	pTrack->nUserOffset = 16;
+	pTrack->nUserSize   = 2048;
+	pTrack->szPath      = pImage->Files[0].szPath;
+	return 0;
+}
+
+static INT32 CDImageParseChd(CDImage* pImage)
+{
+	pImage->pChd = ChdOpenFile(pImage->szPath);
+	if (!pImage->pChd || (ChdGetContainerType(pImage->pChd) != CHD_CONTAINER_CD && ChdGetContainerType(pImage->pChd) != CHD_CONTAINER_GDROM))
+		return 1;
+
+	pImage->nTrackCount  = ChdGetNumTracks(pImage->pChd);
+	pImage->nSectorCount = ChdGetTotalFrames(pImage->pChd);
+	if (pImage->nTrackCount < 1 || pImage->nTrackCount > MAXIMUM_NUMBER_TRACKS)
+		return 1;
+
+	for (INT32 i = 0; i < pImage->nTrackCount; i++) {
+		const ChdTrack* pChdTrack = ChdGetTrack(pImage->pChd, i);
+		CDImageTrack* pTrack = &pImage->Tracks[i];
+		pTrack->nNumber     = i + 1; pTrack->nControl = pChdTrack->nControl; pTrack->nStartLBA = pTrack->nIndex1LBA = pChdTrack->nLogFrameOfs;
+		pTrack->nIndex0LBA  = pTrack->nIndex1LBA - pChdTrack->nPregap; pTrack->nPregap = pChdTrack->nPregap; pTrack->nSectors = pChdTrack->nLogFrames;
+		pTrack->nSectorSize = pChdTrack->nDataSize; pTrack->szPath = pImage->szPath;
+
+		pImage->nChdType[i] = pChdTrack->nType;
+		if (pChdTrack->nType == CHD_TRACK_AUDIO) {
+			pTrack->nType       = CDIMAGE_TRACK_AUDIO;
+			pTrack->nUserSize   = 2352;
+			pImage->nAudioTrackCount++;
+		} else if (pChdTrack->nType == CHD_TRACK_MODE1) {
+			pTrack->nType       = CDIMAGE_TRACK_MODE1_2048;
+			pTrack->nUserSize   = 2048;
+		} else if (pChdTrack->nType == CHD_TRACK_MODE1_RAW) {
+			pTrack->nType = CDIMAGE_TRACK_MODE1_2352;
+			pTrack->nUserOffset = 16;
+			pTrack->nUserSize   = 2048;
+		} else if (pChdTrack->nType == CHD_TRACK_MODE2) {
+			pTrack->nType       = CDIMAGE_TRACK_MODE2_2336;
+			pTrack->nUserSize   = 2336;
+		} else {
+			pTrack->nType       = CDIMAGE_TRACK_MODE2_2352;
+			pTrack->nUserOffset = pChdTrack->nType == CHD_TRACK_MODE2_RAW ? 16 : 0;
+			pTrack->nUserSize   = pChdTrack->nDataSize; }
+	}
+	for (INT32 i = 0; i < pImage->nTrackCount; i++) {
+		pImage->Tracks[i].nSectors = (i + 1 < pImage->nTrackCount ? pImage->Tracks[i + 1].nStartLBA : pImage->nSectorCount) - pImage->Tracks[i].nStartLBA;
+	}
+	return 0;
+}
+
+CDImage* CDImageOpen(const TCHAR* szPath)
+{
+	if (!szPath || !*szPath)
+		return NULL;
+
+	CDImage* pImage = (CDImage*)calloc(1, sizeof(CDImage));
+	if (!pImage || cdimgCopyPath(pImage->szPath, MAX_PATH, szPath)) {
+		free(pImage);
+		return NULL;
+	}
+
+	INT32 nError = 1;
+	if (IsFileExt(pImage->szPath, _T(".cue"))) {
+		pImage->nType = CD_TYPE_BINCUE;
+		nError = CDImageParseCue(pImage);
+	} else if (IsFileExt(pImage->szPath, _T(".ccd"))) {
+		pImage->nType = CD_TYPE_CCD;
+		nError = CDImageParseCcd(pImage);
+	} else if (IsFileExt(pImage->szPath, _T(".chd"))) {
+		pImage->nType = CD_TYPE_CHD;
+		nError = CDImageParseChd(pImage);
+	} else if (IsFileExt(pImage->szPath, _T(".bin")) || IsFileExt(pImage->szPath, _T(".img"))) {
+		pImage->nType = CD_TYPE_BINCUE;
+		nError = CDImageParseRaw(pImage);
+	}
+	if (nError) {
+		CDImageClose(pImage);
+		return NULL;
+	}
+	return pImage;
+}
+
+void CDImageClose(CDImage* pImage)
+{
+	if (!pImage)
+		return;
+
+	CDImageCloseFiles(pImage);
+	if (pImage->pChd)
+		ChdClose(pImage->pChd);
+
+	free(pImage);
+}
+
+INT32 CDImageGetTrackCount(const CDImage* pImage)
+{
+	return pImage ? pImage->nTrackCount : 0;
+}
+
+INT32 CDImageGetAudioTrackCount(const CDImage* pImage)
+{
+	return pImage ? pImage->nAudioTrackCount : 0;
+}
+
+INT32 CDImageGetSectorCount(const CDImage* pImage)
+{
+	return pImage ? pImage->nSectorCount : 0;
+}
+
+const TCHAR* CDImageGetPath(const CDImage* pImage)
+{
+	return pImage ? pImage->szPath : NULL;
+}
+
+const CDImageTrack* CDImageGetTrack(const CDImage* pImage, INT32 nTrack)
+{
+	return pImage && nTrack >= 0 && nTrack < pImage->nTrackCount ? &pImage->Tracks[nTrack] : NULL;
+}
+
+static INT32 CDImageFindTrack(const CDImage* pImage, INT32 nLba)
+{
+	if (!pImage || nLba < 0 || nLba >= pImage->nSectorCount)
+		return -1;
+
+	for (INT32 i = pImage->nTrackCount - 1; i >= 0; i--)
+		if (nLba >= pImage->Tracks[i].nIndex0LBA)
+			return i;
+
+	return -1;
+}
+
+INT32 CDImageReadRawSector(CDImage* pImage, INT32 nLba, UINT8* pDest)
+{
+	if (!pImage || !pDest)
+		return 1;
+
+	INT32 nTrack = CDImageFindTrack(pImage, nLba);
+	if (nTrack < 0)
+		return 1;
+
+	CDImageTrack* pTrack = &pImage->Tracks[nTrack];
+	if (pImage->pChd) {
+		INT32 nType = pImage->nChdType[nTrack];
+		if (nType == CHD_TRACK_AUDIO)
+			return ChdReadSector(pImage->pChd, nLba, CHD_TRACK_RAW_DONTCARE, pDest);
+		if (nType == CHD_TRACK_MODE1 || nType == CHD_TRACK_MODE1_RAW)
+			return ChdReadSector(pImage->pChd, nLba, CHD_TRACK_MODE1_RAW,    pDest);
+		if (nType == CHD_TRACK_MODE2_RAW)
+			return ChdReadSector(pImage->pChd, nLba, CHD_TRACK_RAW_DONTCARE, pDest);
+
+		memset(pDest, 0, 2352);
+		INT32 nOffset = nType == CHD_TRACK_MODE2_FORM1 || nType == CHD_TRACK_MODE2_FORM2 ? 24 : 16;
+		return ChdReadSector(pImage->pChd, nLba, CHD_TRACK_RAW_DONTCARE, pDest + nOffset);
+	}
+	if (nLba < pTrack->nIndex1LBA && pImage->nExplicitPregap[nTrack]) {
+		memset(pDest, 0, 2352);
+		return 0;
+	}
+	INT32 nFileLba = pImage->nFileLBA[nTrack] + nLba - pTrack->nIndex1LBA;
+	if (nFileLba < 0)
+		return 1;
+
+	CDImageFile* pFile = &pImage->Files[pImage->nFile[nTrack]];
+	if (cdimgFseek(pFile->pFile, (INT64)nFileLba * pTrack->nSectorSize, SEEK_SET))
+		return 1;
+
+	if (pTrack->nSectorSize == 2352)
+		return fread(pDest, 1, 2352, pFile->pFile) == 2352 ? 0 : 1;
+
+	memset(pDest, 0, 2352);
+	return fread(pDest + 16, 1, pTrack->nSectorSize, pFile->pFile) == (size_t)pTrack->nSectorSize ? 0 : 1;
+}
+
+INT32 CDImageReadUserSector(CDImage* pImage, INT32 nLba, UINT8* pDest, INT32* pnSize)
+{
+	if (!pImage || !pDest)
+		return 1;
+
+	INT32 nTrack = CDImageFindTrack(pImage, nLba);
+	if (nTrack < 0)
+		return 1;
+
+	CDImageTrack* pTrack = &pImage->Tracks[nTrack];
+	if (pTrack->nType == CDIMAGE_TRACK_AUDIO)
+		return 1;
+
+	UINT8 Raw[2352];
+	if (pImage->pChd) {
+		INT32 nType = pImage->nChdType[nTrack];
+		if (pTrack->nUserSize == 2048 && (nType == CHD_TRACK_MODE1 || nType == CHD_TRACK_MODE1_RAW))
+			nType = CHD_TRACK_MODE1;
+		else if (pTrack->nUserSize == 2336)
+			nType = CHD_TRACK_MODE2;
+		else
+			nType = CHD_TRACK_RAW_DONTCARE;
+
+		if (ChdReadSector(pImage->pChd, nLba, nType, pDest))
+			return 1;
+	} else {
+		if (CDImageReadRawSector(pImage, nLba, Raw))
+			return 1;
+
+		memcpy(pDest, Raw + pTrack->nUserOffset, pTrack->nUserSize);
+	}
+	if (pnSize)
+		*pnSize = pTrack->nUserSize;
+
+	return 0;
+}
+
+INT32 CDImageGetChdSha1(const CDImage* pImage, UINT8* pSha1)
+{
+	return pImage && pImage->pChd ? ChdGetSha1(pImage->pChd, pSha1) : 1;
+}
+
+static CDImage* cdimgImage = NULL;
+static INT32    cd_pregap;
+static double   cd_volume  = 100.0;
+
+struct MSF {
+	UINT8 M;
+	UINT8 S;
+	UINT8 F;
+};
+
+struct cdimgTRACK_DATA {
+	UINT8 Control;
+	UINT8 TrackNumber;
+	UINT8 Address[4];
+	UINT8 EndAddress[4];
+};
+
+struct cdimgCDROM_TOC {
+	UINT8 FirstTrack;
+	UINT8 LastTrack;
+	UINT8 ImageType;
+	TCHAR Image[MAX_PATH];
+	cdimgTRACK_DATA TrackData[MAXIMUM_NUMBER_TRACKS + 1];
+};
 
 static cdimgCDROM_TOC* cdimgTOC;
 
-static FILE*  cdimgFile  = NULL;
-static ChdImage* cdimgChd = NULL;
-static INT32  cdimgChdTrackLBA[MAXIMUM_NUMBER_TRACKS];  // logical LBA of each track start
-static INT32  cdimgTrack = 0;
-static INT32  cdimgLBA   = 0;
+static FILE*     cdimgFile    = NULL;
+static ChdImage* cdimgChd     = NULL;
+static INT32     cdimgChdTrackLBA[MAXIMUM_NUMBER_TRACKS];	// logical LBA of each track start
+static INT32     cdimgTrack   = 0;
+static INT32     cdimgLBA     = 0;
 
-static INT32  cdimgSamples = 0;
+static INT32     cdimgSamples = 0;
 
-static INT32  re_sync = 0;
+static INT32     re_sync      = 0;
 
 // identical to the format used in clonecd .sub files, can use memcpy
-struct QData { UINT8 Control; char track; char index; MSF MSFrel; char unused; MSF MSFabs; UINT16 CRC; };
+struct QData {
+	UINT8  Control;
+	char   track;
+	char   index;
+	MSF    MSFrel;
+	char   unused;
+	MSF    MSFabs;
+	UINT16 CRC;
+};
 
-static QData* QChannel = NULL;
-static INT32 QChannelCount = 0;
+static QData* QChannel      = NULL;
+static INT32  QChannelCount = 0;
 
 // -----------------------------------------------------------------------------
 
-const  INT32 cdimgOUT_SIZE = 2352;
+const  INT32 cdimgOUT_SIZE         = 2352;
 static INT32 cdimgOutputbufferSize = 0;
 
-static INT16* cdimgOutputbuffer = NULL;
+static INT16* cdimgOutputbuffer    = NULL;
 
 static INT32 cdimgOutputPosition;
-static INT32 cdimgAudioFilePos;  // Track audio read position within file (file sector index)
+static INT32 cdimgAudioFilePos;		// Track audio read position within file (file sector index)
 
 // -----------------------------------------------------------------------------
 
@@ -76,6 +657,9 @@ static INT32 cdimgAudioFilePos;  // Track audio read position within file (file 
 #ifdef BUILD_NEOGEO
 TCHAR* GetIsoPath()
 {
+	if (cdimgImage) {
+		return (TCHAR*)CDImageGetPath(cdimgImage);
+	}
 	if (cdimgTOC) {
 		return cdimgTOC->Image;
 	}
@@ -165,9 +749,8 @@ static INT32 cdimgInitStream()
 
 static INT32 cdimgCopyPath(TCHAR* dst, size_t count, const TCHAR* src)
 {
-	if (!dst || !src || count == 0 || _tcslen(src) >= count) {
+	if (!dst || !src || count == 0 || _tcslen(src) >= count)
 		return 1;
-	}
 
 	_tcscpy(dst, src);
 	return 0;
@@ -177,14 +760,12 @@ static INT32 cdimgReplaceExtension(TCHAR* path, size_t count, const TCHAR* exten
 {
 	size_t length;
 
-	if (!path || !extension || count == 0) {
+	if (!path || !extension || count == 0)
 		return 1;
-	}
 
 	length = _tcslen(path);
-	if (length < 4 || _tcslen(extension) != 4) {
+	if (length < 4 || _tcslen(extension) != 4)
 		return 1;
-	}
 
 	_tcscpy(path + length - 4, extension);
 	return 0;
@@ -211,7 +792,7 @@ static void cdimgPrintImageInfo()
 		const UINT8* addressUNBCD = dinkLBAToMSF(cdimgMSFToLBA(cdimgTOC->TrackData[trk].Address));
 
 		if (trk != cdimgTOC->LastTrack) {
-			bprintf(0, _T("Track %02d: %02d:%02d:%02d\n"), trk + 1, addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
+			bprintf(0, _T("Track %02d: %02d:%02d:%02d\n"), trk + 1,   addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
 		} else {
 			bprintf(0, _T("    total running time %02i:%02i:%02i\n"), addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
 		}
@@ -247,10 +828,10 @@ static INT32 cdimgAddLastTrack()
 // parse .sub file and build a TOC based in Q sub channel data
 static INT32 cdimgParseSubFile()
 {
-	TCHAR filenameSub[MAX_PATH];
-	FILE* h = NULL;
+	TCHAR  filenameSub[MAX_PATH];
+	FILE*  h       = NULL;
 	UINT8* subData = NULL;
-	INT32 track = 0;
+	INT32  track   = 0;
 
 	if (cdimgCopyPath(filenameSub, MAX_PATH, CDEmuImage) ||
 		(!IsFileExt(filenameSub, _T(".ccd")) && !IsFileExt(filenameSub, _T(".img")) && !IsFileExt(filenameSub, _T(".sub"))) ||
@@ -268,7 +849,9 @@ static INT32 cdimgParseSubFile()
 
 	h = _tfopen(filenameSub, _T("rb"));
 	if (!h || cdimgFseek(h, 0, SEEK_END) != 0) {
-		if (h) fclose(h);
+		if (h)
+			fclose(h);
+
 		return 1;
 	}
 
@@ -279,18 +862,19 @@ static INT32 cdimgParseSubFile()
 	}
 
 	QChannelCount = (INT32)(size64 / 96);
-	subData = (UINT8*)malloc((size_t)size64);
+	subData  = (UINT8*)malloc((size_t)size64);
 	QChannel = (QData*)calloc(QChannelCount, sizeof(QData));
 	if (!subData || !QChannel || fread(subData, 1, (size_t)size64, h) != (size_t)size64) {
 		fclose(h);
 		free_s((void**)&subData);
-		free_s((void**)&QChannel);
+		free(QChannel);
+		QChannel = NULL;
 		QChannelCount = 0;
 		return 1;
 	}
 	fclose(h);
 
-	cdimgTOC->ImageType = CD_TYPE_CCD;
+	cdimgTOC->ImageType  = CD_TYPE_CCD;
 	cdimgTOC->FirstTrack = 1;
 	for (INT32 i = 0; i < QChannelCount; i++) {
 		memcpy(&QChannel[i], subData + i * 96 + 12, 12);
@@ -298,17 +882,18 @@ static INT32 cdimgParseSubFile()
 		if (QChannel[i].index && (QChannel[i].Control & 1) && current >= 1 && current <= MAXIMUM_NUMBER_TRACKS &&
 			current == track + 1 && cdimgTOC->TrackData[current - 1].TrackNumber == 0) {
 			track = current;
-			cdimgTOC->TrackData[track - 1].Control = QChannel[i].Control;
+			cdimgTOC->TrackData[track - 1].Control     = QChannel[i].Control;
 			cdimgTOC->TrackData[track - 1].TrackNumber = (UINT8)QChannel[i].track;
-			cdimgTOC->TrackData[track - 1].Address[1] = QChannel[i].MSFabs.M;
-			cdimgTOC->TrackData[track - 1].Address[2] = QChannel[i].MSFabs.S;
-			cdimgTOC->TrackData[track - 1].Address[3] = QChannel[i].MSFabs.F;
+			cdimgTOC->TrackData[track - 1].Address[1]  = QChannel[i].MSFabs.M;
+			cdimgTOC->TrackData[track - 1].Address[2]  = QChannel[i].MSFabs.S;
+			cdimgTOC->TrackData[track - 1].Address[3]  = QChannel[i].MSFabs.F;
 		}
 	}
 	free_s((void**)&subData);
 
 	if (track == 0) {
-		free_s((void**)&QChannel);
+		free(QChannel);
+		QChannel = NULL;
 		QChannelCount = 0;
 		return 1;
 	}
@@ -320,15 +905,15 @@ static INT32 cdimgParseSubFile()
 
 static INT32 cdimgParseCueFile()
 {
-	TCHAR szLine[1024];
-	TCHAR szFile[MAX_PATH];
+	TCHAR  szLine[1024];
+	TCHAR  szFile[MAX_PATH];
 	TCHAR* s;
 	TCHAR* t;
-	FILE* h;
-	INT32 track = 0;
-	INT32 length;
-	INT32 fileCount = 0;
-	UINT8 indexSeen[MAXIMUM_NUMBER_TRACKS] = { 0 };
+	FILE*  h;
+	INT32  track = 0;
+	INT32  length;
+	INT32  fileCount = 0;
+	UINT8  indexSeen[MAXIMUM_NUMBER_TRACKS] = { 0 };
 
 	cdimgTOC->ImageType  = CD_TYPE_BINCUE;
 	cdimgTOC->FirstTrack = 1;
@@ -338,7 +923,7 @@ static INT32 cdimgParseCueFile()
 	cdimgTOC->TrackData[0].Address[2] = 2;
 	cdimgTOC->TrackData[0].Address[3] = 0;
 
-	cd_pregap = 150; // default for bin/cue?
+	cd_pregap = 150;	// default for bin/cue?
 
 	if (cdimgCopyPath(cdimgTOC->Image, MAX_PATH, CDEmuImage) || cdimgReplaceExtension(cdimgTOC->Image, MAX_PATH, _T(".bin"))) {
 		return 1;
@@ -368,7 +953,7 @@ static INT32 cdimgParseCueFile()
 			s = t;
 
 			TCHAR* szQuote = NULL;
-			TCHAR* szEnd = NULL;
+			TCHAR* szEnd   = NULL;
 			const TCHAR* separator = _tcsrchr(CDEmuImage, _T('/'));
 			const TCHAR* backslash = _tcsrchr(CDEmuImage, _T('\\'));
 			if (!separator || (backslash && backslash > separator)) separator = backslash;
@@ -390,14 +975,16 @@ static INT32 cdimgParseCueFile()
 				return 1;
 			}
 
-			bool absolute = szQuote[0] == _T('/') || szQuote[0] == _T('\\') ||
-				(_tcslen(szQuote) > 1 && szQuote[1] == _T(':'));
-			if (absolute) directoryLength = 0;
+			bool absolute = szQuote[0] == _T('/') || szQuote[0] == _T('\\') || (_tcslen(szQuote) > 1 && szQuote[1] == _T(':'));
+			if (absolute)
+				directoryLength = 0;
 			if (directoryLength + _tcslen(szQuote) >= MAX_PATH) {
 				fclose(h);
 				return 1;
 			}
-			if (directoryLength) memcpy(szFile, CDEmuImage, directoryLength * sizeof(TCHAR));
+			if (directoryLength)
+				memcpy(szFile, CDEmuImage, directoryLength * sizeof(TCHAR));
+
 			_tcscpy(szFile + directoryLength, szQuote);
 			if (cdimgCopyPath(cdimgTOC->Image, MAX_PATH, szFile)) {
 				fclose(h);
@@ -417,12 +1004,11 @@ static INT32 cdimgParseCueFile()
 				fclose(h);
 				return 1;
 			}
-
 			if (track < cdimgTOC->FirstTrack) {
 				cdimgTOC->FirstTrack = track;
 			}
 			if (track > cdimgTOC->LastTrack) {
-				cdimgTOC->LastTrack = track;
+				cdimgTOC->LastTrack  = track;
 			}
 			cdimgTOC->TrackData[track - 1].TrackNumber = tobcd(track);
 
@@ -476,7 +1062,7 @@ static INT32 cdimgParseCueFile()
 				return 1;
 			}
 
-			const UINT8  address[] = { 0, (UINT8)M, (UINT8)S, (UINT8)F };
+			const UINT8  address[]  = { 0, (UINT8)M, (UINT8)S, (UINT8)F };
 			const UINT8* newaddress = cdimgLBAToMSF(dinkMSFToLBA(address) + cd_pregap);
 			//const UINT8* newaddressUNBCD = dinkLBAToMSF(dinkMSFToLBA(address) + cd_pregap);
 			//bprintf(0, _T("Track MSF: %02d:%02d:%02d "), newaddressUNBCD[1], newaddressUNBCD[2], newaddressUNBCD[3]);
@@ -510,19 +1096,23 @@ static INT32 cdimgExit()
 
 	if (cdimgFile)
 		fclose(cdimgFile);
-	cdimgFile = NULL;
 
+	cdimgFile  = NULL;
 	if (cdimgChd)
 		ChdClose(cdimgChd);
-	cdimgChd = NULL;
+
+	cdimgChd   = NULL;
+	CDImageClose(cdimgImage);
+	cdimgImage = NULL;
 
 	cdimgTrack = 0;
 	cdimgLBA   = 0;
 	cd_volume  = 100.0;
 
-	free_s((void**)&cdimgTOC);
-	free_s((void**)&QChannel);
-	QChannel = NULL;
+	free(cdimgTOC);
+	cdimgTOC   = NULL;
+	free(QChannel);
+	QChannel   = NULL;
 	QChannelCount = 0;
 
 	return 0;
@@ -544,17 +1134,13 @@ static INT32 cdimgReadRawSector(INT32 lba, UINT8* dest, bool bAudio = false)
 {
 	if (!cdimgTOC)
 		return 1;
-
-	if (cdimgTOC->ImageType == CD_TYPE_CHD) {
-		INT32 nType = bAudio ? CHD_TRACK_RAW_DONTCARE : CHD_TRACK_MODE1_RAW;
-		return ChdReadSector(cdimgChd, lba, nType, dest);
-	}
-
-	// Fall-through: standard raw image (.bin/.cue, .ccd/.img).
+	if (cdimgImage)
+		return CDImageReadRawSector(cdimgImage, lba, dest);
 	if (!cdimgFile)
 		return 1;
 	if (cdimgFseek(cdimgFile, (INT64)lba * 2352, SEEK_SET) != 0)
 		return 1;
+
 	size_t n = fread(dest, 1, 2352, cdimgFile);
 	return (n == 2352) ? 0 : 1;
 }
@@ -569,6 +1155,56 @@ INT32 cdimgCountChdAudioTracks(TCHAR* pszFile)
 		return 0;
 	}
 	return ChdCountAudioTracks(pszPath);
+}
+
+static INT32 cdimgParseImage()
+{
+	INT32 nType = IsFileExt(CDEmuImage, _T(".chd")) ? CD_TYPE_CHD : IsFileExt(CDEmuImage, _T(".ccd")) ? CD_TYPE_CCD : CD_TYPE_BINCUE;
+
+	cdimgImage = CDImageOpen(CDEmuImage);
+	if (!cdimgImage)
+		return 1;
+
+	INT32 nTracks = CDImageGetTrackCount(cdimgImage);
+	if (nTracks < 1 || nTracks > MAXIMUM_NUMBER_TRACKS)
+		return 1;
+
+	if (nType == CD_TYPE_CCD) {
+		INT32 nError = cdimgParseSubFile();
+		if (nError)
+			return nError;
+
+		for (INT32 i = 0; i < nTracks; i++) {
+			const CDImageTrack* pTrack = CDImageGetTrack(cdimgImage, i);
+			cdimgTOC->TrackData[i].EndAddress[0] = 0;
+			const UINT8* pAddress = cdimgLBAToMSF((i + 1 < nTracks ? CDImageGetTrack(cdimgImage, i + 1)->nIndex0LBA : CDImageGetSectorCount(cdimgImage)) + cd_pregap);
+			memcpy(cdimgTOC->TrackData[i].EndAddress, pAddress, 4);
+		}
+		return 0;
+	}
+
+	cdimgTOC->ImageType  = nType;
+	cdimgTOC->FirstTrack = 1;
+	cdimgTOC->LastTrack  = nTracks;
+
+	cd_pregap = 150;
+	for (INT32 i = 0; i < nTracks; i++) {
+		const CDImageTrack* pTrack = CDImageGetTrack(cdimgImage, i);
+		cdimgTOC->TrackData[i].Control     = (UINT8)pTrack->nControl;
+		cdimgTOC->TrackData[i].TrackNumber = tobcd(i + 1);
+		const UINT8* pAddress = cdimgLBAToMSF(pTrack->nStartLBA + cd_pregap);
+		memcpy(cdimgTOC->TrackData[i].Address, pAddress, 4);
+		INT32 nEnd = i + 1 < nTracks ? CDImageGetTrack(cdimgImage, i + 1)->nIndex0LBA : CDImageGetSectorCount(cdimgImage);
+		pAddress = cdimgLBAToMSF(nEnd + cd_pregap);
+		memcpy(cdimgTOC->TrackData[i].EndAddress, pAddress, 4);
+	}
+
+	const UINT8* pLeadout = cdimgLBAToMSF(CDImageGetSectorCount(cdimgImage) + cd_pregap);
+	cdimgTOC->TrackData[nTracks].Control     = 0x41;
+	cdimgTOC->TrackData[nTracks].TrackNumber = 0xaa;
+	memcpy(cdimgTOC->TrackData[nTracks].Address, pLeadout, 4);
+	const CDImageTrack* pFirst = CDImageGetTrack(cdimgImage, 0);
+	return cdimgCopyPath(cdimgTOC->Image, MAX_PATH, pFirst->szPath);
 }
 
 static INT32 cdimgParseChdFile()
@@ -636,7 +1272,7 @@ static INT32 cdimgParseChdFile()
 	// Lead-out entry, just past the last valid sector.
 	const UINT8* leadout = cdimgLBAToMSF(nTotal + cd_pregap);
 	cdimgTOC->TrackData[nTracks].Control     = 0x41;
-	cdimgTOC->TrackData[nTracks].TrackNumber = 0xAA;
+	cdimgTOC->TrackData[nTracks].TrackNumber = 0xaa;
 	cdimgTOC->TrackData[nTracks].Address[0]  = 0;
 	cdimgTOC->TrackData[nTracks].Address[1]  = leadout[1];
 	cdimgTOC->TrackData[nTracks].Address[2]  = leadout[2];
@@ -672,32 +1308,12 @@ static INT32 cdimgInit()
 		return 1;
 	}
 
-	if (IsFileExt(filename, _T(".cue"))) {
-		if (cdimgParseCueFile()) {
-			dprintf(_T("*** Couldn't parse .cue file\n"));
+	if (IsFileExt(filename, _T(".cue")) || IsFileExt(filename, _T(".ccd")) || IsFileExt(filename, _T(".chd"))) {
+		if (cdimgParseImage()) {
+			dprintf(_T("*** Couldn't parse CD image\n"));
 			cdimgExit();
-
 			return 1;
 		}
-
-	} else
-	if (IsFileExt(filename, _T(".ccd"))) {
-		if (cdimgParseSubFile()) {
-			dprintf(_T("*** Couldn't parse .sub file\n"));
-			cdimgExit();
-
-			return 1;
-		}
-
-	} else
-	if (IsFileExt(filename, _T(".chd"))) {
-		if (cdimgParseChdFile()) {
-			dprintf(_T("*** Couldn't parse .chd file\n"));
-			cdimgExit();
-
-			return 1;
-		}
-
 	} else {
 		dprintf(_T("*** Couldn't find .img / .bin file\n"));
 		cdimgExit();
@@ -726,7 +1342,7 @@ static INT32 cdimgInit()
 
 	// Validate the CD by scanning the ISO-9660 volume descriptor at sector 16.
 	// Both .bin and .chd images expose sector 16 as the first usable data sector.
-	if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+	if (cdimgImage != NULL) {
 		// Unified sector reader gives us a complete 2352-byte raw sector.
 		// CD001 identifier lives at byte 1 of the 2048-byte user data area,
 		// which is byte 17 (16 + 1) of the full 2352-byte sector.
@@ -738,7 +1354,6 @@ static INT32 cdimgInit()
 		}
 	} else {
 		FILE* h = _tfopen(cdimgTOC->Image, _T("rb"));
-
 		if (h) {
 			if (cdimgFseek(h, 16 * 2352 + 16, SEEK_SET) == 0) {
 				if (fread(buf, 1, 2048, h) == 2048) {
@@ -750,7 +1365,6 @@ static INT32 cdimgInit()
 						dprintf(_T("*** Bad CD!\n"));
 				}
 			}
-
 			fclose(h);
 		}
 	}
@@ -774,7 +1388,6 @@ static INT32 cdimgStop()
 {
 	cdimgCloseFile();
 	CDEmuStatus = idle;
-
 	return 0;
 }
 
@@ -784,22 +1397,23 @@ static INT32 cdimgFindTrack(INT32 LBA)
 	for (trk = cdimgTOC->FirstTrack - 1; trk < cdimgTOC->LastTrack; trk++)
 		if (LBA < cdimgMSFToLBA(cdimgTOC->TrackData[trk + 1].Address))
 			break;
+
 	return trk;
 }
 
-static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
+static INT32 cdimgPlayLBA(INT32 LBA)	// audio play start
 {
 	cdimgStop();
 
-	if (QChannel != NULL) { // .CCD dump w/.SUB
+	if (QChannel != NULL) {		// .CCD dump w/.SUB
 		if (LBA < 0 || LBA >= QChannelCount || (QChannel[LBA].Control & 0x40))
 			return 1;
-	} else { // .BIN/.CUE dump or .CHD
+	} else {					// .BIN/.CUE dump or .CHD
 		if (cdimgTOC->TrackData[cdimgFindTrack(LBA)].Control & 0x40)
 			return 1;
 	}
 
-	cdimgLBA = LBA;
+	cdimgLBA   = LBA;
 
 	cdimgTrack = cdimgFindTrack(cdimgLBA);
 
@@ -816,33 +1430,38 @@ static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
 	INT32 sectors_to_read = (cdimgOUT_SIZE * 4) / 2352;
 	INT32 base;
 	INT32 trackEnd = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack + 1].Address);
-	if (sectors_to_read > trackEnd - cdimgLBA) sectors_to_read = trackEnd - cdimgLBA;
-	if (sectors_to_read <= 0) return 1;
+	if (sectors_to_read > trackEnd - cdimgLBA)
+		sectors_to_read = trackEnd - cdimgLBA;
+	if (sectors_to_read <= 0)
+		return 1;
 
 	// Logical LBA space is shared by CHD and .bin/.cue: subtract the disc
 	// pregap.  For CHD, cd_chd maps the logical LBA to its CHD frame per track.
 	base = cdimgLBA - cd_pregap;
 
-	if (base < 0) base = 0;
+	if (base < 0)
+		base = 0;
 	cdimgAudioFilePos = base;
 
-	if (cdimgTOC->ImageType == CD_TYPE_CHD) {
-
+	if (cdimgImage != NULL) {
 		UINT8 sector_buf[2352];
 		INT32 read_count = 0;
 		for (INT32 i = 0; i < sectors_to_read; i++) {
 			if (cdimgReadRawSector(base + i, sector_buf, true) != 0)
 				break;
 
-			// Convert big-endian CD-DA data to native byte order
-			for (INT32 j = 0; j < 2352; j += 4) {
-				INT32 dst_idx = (i * 2352 + j) / 2;
-				cdimgOutputbuffer[dst_idx] = (sector_buf[j] << 8) | sector_buf[j + 1];
-				cdimgOutputbuffer[dst_idx + 1] = (sector_buf[j + 2] << 8) | sector_buf[j + 3];
+			if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+				for (INT32 j = 0; j < 2352; j += 4) {
+					INT32 dst_idx = (i * 2352 + j) / 2;
+					cdimgOutputbuffer[dst_idx + 0] = (sector_buf[j + 0] << 8) | sector_buf[j + 1];
+					cdimgOutputbuffer[dst_idx + 1] = (sector_buf[j + 2] << 8) | sector_buf[j + 3];
+				}
+			} else {
+				memcpy((UINT8*)cdimgOutputbuffer + i * 2352, sector_buf, 2352);
 			}
 			read_count++;
 		}
-		cdimgAudioFilePos = base + read_count;
+		cdimgAudioFilePos     = base + read_count;
 		cdimgOutputbufferSize = read_count * (2352 / 4);
 		if (read_count == 0) {
 			cdimgStop();
@@ -850,7 +1469,6 @@ static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
 		}
 
 	} else {
-
 		cdimgFile = _tfopen(cdimgTOC->Image, _T("rb"));
 		if (cdimgFile == NULL)
 			return 1;
@@ -863,17 +1481,17 @@ static INT32 cdimgPlayLBA(INT32 LBA) // audio play start
 
 		// fill the input buffer (size returned as count of 4-byte sample units)
 		cdimgOutputbufferSize = (INT32)fread(cdimgOutputbuffer, 4, sectors_to_read * (2352 / 4), cdimgFile);
-		cdimgAudioFilePos = (INT32)(cdimgFtell(cdimgFile) / 2352);
+		cdimgAudioFilePos     = (INT32)(cdimgFtell(cdimgFile) / 2352);
 		if (cdimgOutputbufferSize <= 0) {
 			cdimgStop();
 			return 1;
 		}
 	}
 	cdimgOutputPosition = 0;
-	cdimgSamples = 0;
+	cdimgSamples        = 0;
 	// this breaks states, commenting for now just in-case. -dink
 	//cdimgLBA = cdimgMSFToLBA(cdimgTOC->TrackData[cdimgTrack].Address); // start at the beginning of track
-	CDEmuStatus = playing;
+	CDEmuStatus         = playing;
 
 	return 0;
 }
@@ -890,7 +1508,8 @@ static INT32 cdimgPlay(UINT8 M, UINT8 S, UINT8 F)
 
 static INT32 cdimgLoadSector(INT32 LBA, char* pBuffer)
 {
-	if (CDEmuStatus == playing) return 0; // data loading
+	if (CDEmuStatus == playing)
+		return 0; // data loading
 
 	INT32 originalLBA = LBA;
 	if (CDEmuStatus == seeking) {
@@ -901,7 +1520,7 @@ static INT32 cdimgLoadSector(INT32 LBA, char* pBuffer)
 	// Unified sector reader: cdimgReadRawSector handles both .bin and .chd
 	// transparently. For .bin files we still prefer the sequential-access
 	// optimization below (avoids redundant fseek calls).
-	if (cdimgTOC && cdimgTOC->ImageType == CD_TYPE_CHD) {
+	if (cdimgTOC && cdimgImage != NULL) {
 		if (cdimgReadRawSector(LBA, (UINT8*)pBuffer) != 0) {
 			dprintf(_T("*** couldn't read sector (LBA %08u)\n"), originalLBA);
 			return 0;
@@ -911,7 +1530,7 @@ static INT32 cdimgLoadSector(INT32 LBA, char* pBuffer)
 		// index of the next sector.  cdimgTrack is kept in sync using a
 		// full-disc LBA (with pregap) so cdimgFindTrack returns the correct
 		// track index for the BIOS standby-screen Q-channel query.
-		cdimgLBA = LBA + 1;
+		cdimgLBA   = LBA + 1;
 		cdimgTrack = cdimgFindTrack(LBA + cd_pregap);
 		return cdimgLBA;
 	}
@@ -967,7 +1586,6 @@ static INT32 cdimgLoadSector(INT32 LBA, char* pBuffer)
 static UINT8* cdimgReadTOC(INT32 track)
 {
 	static UINT8 TOCEntry[4];
-
 	memset(&TOCEntry, 0, sizeof(TOCEntry));
 
 	if (track == CDEmuTOC_FIRSTLAST) {
@@ -982,7 +1600,6 @@ static UINT8* cdimgReadTOC(INT32 track)
 		TOCEntry[0] = cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[1];
 		TOCEntry[1] = cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[2];
 		TOCEntry[2] = cdimgTOC->TrackData[cdimgTOC->LastTrack].Address[3];
-
 		TOCEntry[3] = 0;
 
 		return TOCEntry;
@@ -1032,7 +1649,7 @@ static UINT8* cdimgReadQChannel()
 	switch (CDEmuStatus) {
 		case reading:
 		case playing: {
-			if (QChannel != NULL && cdimgLBA >= 0 && cdimgLBA < QChannelCount) { // .CCD/.SUB
+			if (QChannel != NULL && cdimgLBA >= 0 && cdimgLBA < QChannelCount) {	// .CCD/.SUB
 				QChannelData[0] = QChannel[cdimgLBA].track;
 
 				QChannelData[1] = QChannel[cdimgLBA].MSFabs.M;
@@ -1044,7 +1661,7 @@ static UINT8* cdimgReadQChannel()
 				QChannelData[6] = QChannel[cdimgLBA].MSFrel.F;
 
 				QChannelData[7] = QChannel[cdimgLBA].Control;
-			} else { // .BIN/.ISO / .CHD
+			} else {																// .BIN/.ISO / .CHD
 				// cdimgLBA is the file-relative sector index for .cue
 				// (data-track origin). For .chd we additionally keep
 				// cdimgTrack set by cdimgFindTrack to identify which contains
@@ -1084,7 +1701,6 @@ static UINT8* cdimgReadQChannel()
 static int cdimgSetVolume(double dVolume)
 {
 	cd_volume = dVolume;
-
 	return 0;
 }
 
@@ -1112,22 +1728,27 @@ static INT32 cdimgGetSoundBuffer(INT16* buffer, INT32 samples)
 		if (cdimgOutputPosition >= cdimgOutputbufferSize) {
 			cdimgOutputPosition = 0;
 			INT32 remainingSectors = trackEnd - (cdimgAudioFilePos + cd_pregap);
-			INT32 sectorsToRead = (cdimgOUT_SIZE * 4) / 2352;
+			INT32 sectorsToRead    = (cdimgOUT_SIZE * 4) / 2352;
 			if (sectorsToRead > remainingSectors) sectorsToRead = remainingSectors;
 			if (sectorsToRead <= 0) {
 				cdimgStop();
 				break;
 			}
 
-			if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+			if (cdimgImage != NULL) {
 				UINT8 sectorBuffer[2352];
 				INT32 readCount = 0;
 				for (INT32 i = 0; i < sectorsToRead; i++) {
-					if (cdimgReadRawSector(cdimgAudioFilePos + i, sectorBuffer, true) != 0) break;
-					for (INT32 j = 0; j < 2352; j += 4) {
-						INT32 offset = (i * 2352 + j) / 2;
-						cdimgOutputbuffer[offset] = (sectorBuffer[j] << 8) | sectorBuffer[j + 1];
-						cdimgOutputbuffer[offset + 1] = (sectorBuffer[j + 2] << 8) | sectorBuffer[j + 3];
+					if (cdimgReadRawSector(cdimgAudioFilePos + i, sectorBuffer, true) != 0)
+						break;
+					if (cdimgTOC->ImageType == CD_TYPE_CHD) {
+						for (INT32 j = 0; j < 2352; j += 4) {
+							INT32 offset = (i * 2352 + j) / 2;
+							cdimgOutputbuffer[offset + 0] = (sectorBuffer[j + 0] << 8) | sectorBuffer[j + 1];
+							cdimgOutputbuffer[offset + 1] = (sectorBuffer[j + 2] << 8) | sectorBuffer[j + 3];
+						}
+					} else {
+						memcpy((UINT8*)cdimgOutputbuffer + i * 2352, sectorBuffer, 2352);
 					}
 					readCount++;
 				}
@@ -1151,17 +1772,19 @@ static INT32 cdimgGetSoundBuffer(INT16* buffer, INT32 samples)
 		}
 
 		INT32 count = cdimgOutputbufferSize - cdimgOutputPosition;
-		if (count > samples) count = samples;
-		if (count > remainingSamples) count = remainingSamples;
+		if (count > samples)
+			count = samples;
+		if (count > remainingSamples)
+			count = remainingSamples;
 		INT16* src = cdimgOutputbuffer + cdimgOutputPosition * 2;
 		for (INT32 i = count * 2 - 1; i >= 0; i--) {
 			buffer[i] = CLIP((src[i] * (cd_volume / 100.0)) + buffer[i]);
 		}
 
-		buffer += count * 2;
+		buffer              += count * 2;
 		cdimgOutputPosition += count;
-		samples -= count;
-		cdimgSamples += count;
+		samples             -= count;
+		cdimgSamples        += count;
 		while (cdimgSamples >= (44100 / CD_FRAMES_SECOND)) {
 			cdimgSamples -= 44100 / CD_FRAMES_SECOND;
 			cdimgLBA++;

@@ -1036,6 +1036,7 @@
     <ClCompile Include="..\..\src\burner\luasav.cpp" />
     <ClCompile Include="..\..\src\burner\misc.cpp" />
     <ClCompile Include="..\..\src\burner\nvram.cpp" />
+    <ClCompile Include="..\..\src\burner\win32\romdata.cpp" />
     <ClCompile Include="..\..\src\burner\sshot.cpp" />
     <ClCompile Include="..\..\src\burner\state.cpp" />
     <ClCompile Include="..\..\src\burner\statec.cpp" />
@@ -1069,7 +1070,7 @@
     <ClCompile Include="..\..\src\burner\win32\memcard.cpp" />
     <ClCompile Include="..\..\src\burner\win32\menu.cpp" />
     <ClCompile Include="..\..\src\burner\win32\misc_win32.cpp" />
-    <ClCompile Include="..\..\src\burner\win32\neocdlist.cpp" />
+    <ClCompile Include="..\..\src\burner\cdlist.cpp" />
     <ClCompile Include="..\..\src\burner\win32\neocdsel.cpp" />
     <ClCompile Include="..\..\src\burner\win32\numdial.cpp" />
     <ClCompile Include="..\..\src\burner\win32\paletteviewer.cpp" />
@@ -1078,7 +1079,6 @@
     <ClCompile Include="..\..\src\burner\win32\progress.cpp" />
     <ClCompile Include="..\..\src\burner\win32\replay.cpp" />
     <ClCompile Include="..\..\src\burner\win32\res.cpp" />
-    <ClCompile Include="..\..\src\burner\win32\romdata.cpp" />
     <ClCompile Include="..\..\src\burner\win32\roms.cpp" />
     <ClCompile Include="..\..\src\burner\win32\run.cpp" />
     <ClCompile Include="..\..\src\burner\win32\scrn.cpp" />

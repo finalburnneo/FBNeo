@@ -23,6 +23,7 @@ struct ChdImage {
 	INT32     nFramesPerHunk;
 	UINT32    nTotalHunks;
 	INT32     nVersion;
+	UINT8     Sha1[20];
 	INT32     nCachedHunk;					// -1 = none
 	ChdTrack  Tracks[CHD_MAX_TRACKS + 1];	// +1 dummy lead-out entry
 };
@@ -174,16 +175,16 @@ static INT32 ChdParseToc(ChdImage* pImage)
 			return 1;
 		}
 
-		pT->nSubSize  = ChdSubSizeFromString(szSub);
-		pT->nSubType  = (pT->nSubSize != 0) ? 1 : 0;
-		pT->nFrames   = nFrames;
-		pT->nPregap   = nPregap;
-		pT->nPostgap  = nPostgap;
+		pT->nSubSize   = ChdSubSizeFromString(szSub);
+		pT->nSubType   = (pT->nSubSize != 0) ? 1 : 0;
+		pT->nFrames    = nFrames;
+		pT->nPregap    = nPregap;
+		pT->nPostgap   = nPostgap;
 		pT->nPadFrames = nPad;
 		// chdman pads each track up to a 4-frame boundary in the CHD.
 		INT32 nPadded = (nFrames + CHD_TRACK_PADDING - 1) / CHD_TRACK_PADDING;
 		pT->nExtraFrames = nPadded * CHD_TRACK_PADDING - nFrames;
-		pT->nControl  = (pT->nType == CHD_TRACK_AUDIO) ? 0x01 : 0x41;
+		pT->nControl     = (pT->nType == CHD_TRACK_AUDIO) ? 0x01 : 0x41;
 	}
 
 	if (nTrk == 0) {
@@ -278,6 +279,7 @@ ChdImage* ChdOpenFile(const TCHAR* szPath)
 	pImage->nFramesPerHunk = pImage->nHunkBytes / CHD_FRAME_SIZE;
 	pImage->nTotalHunks    = pHeader->totalhunks;
 	pImage->nVersion       = (INT32)pHeader->version;
+	memcpy(pImage->Sha1, pHeader->sha1, sizeof(pImage->Sha1));
 
 	pImage->nContainer = ChdDetectContainer(pImage);
 
@@ -316,12 +318,24 @@ void ChdClose(ChdImage* pImage)
 	free(pImage);
 }
 
-INT32 ChdGetContainerType(ChdImage* pImage) { return pImage ? pImage->nContainer : CHD_CONTAINER_NONE; }
-INT32 ChdGetNumTracks(ChdImage* pImage)     { return pImage ? pImage->nNumTracks : 0; }
-INT32 ChdGetTotalFrames(ChdImage* pImage)   { return pImage ? pImage->nTotalFrames : 0; }
-INT32 ChdGetVersion(ChdImage* pImage)       { return pImage ? pImage->nVersion : 0; }
-INT32 ChdGetHunkBytes(ChdImage* pImage)     { return pImage ? pImage->nHunkBytes : 0; }
+INT32 ChdGetContainerType(ChdImage* pImage) { return pImage ? pImage->nContainer     : CHD_CONTAINER_NONE; }
+INT32 ChdGetNumTracks(ChdImage* pImage)     { return pImage ? pImage->nNumTracks     : 0; }
+INT32 ChdGetTotalFrames(ChdImage* pImage)   { return pImage ? pImage->nTotalFrames   : 0; }
+INT32 ChdGetVersion(ChdImage* pImage)       { return pImage ? pImage->nVersion       : 0; }
+INT32 ChdGetHunkBytes(ChdImage* pImage)     { return pImage ? pImage->nHunkBytes     : 0; }
 INT32 ChdGetFramesPerHunk(ChdImage* pImage) { return pImage ? pImage->nFramesPerHunk : 0; }
+
+INT32 ChdGetSha1(ChdImage* pImage, UINT8* pSha1)
+{
+	if (!pImage || !pSha1 || pImage->nVersion < 3) return 1;
+	for (INT32 i = 0; i < (INT32)sizeof(pImage->Sha1); i++) {
+		if (pImage->Sha1[i]) {
+			memcpy(pSha1, pImage->Sha1, sizeof(pImage->Sha1));
+			return 0;
+		}
+	}
+	return 1;
+}
 
 const ChdTrack* ChdGetTrack(ChdImage* pImage, INT32 nTrack)
 {
@@ -342,7 +356,7 @@ static INT32 ChdReadFrameBytes(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset,
 		return 1;
 	}
 
-	INT32 nHunk = nChdFrame / pImage->nFramesPerHunk;
+	INT32 nHunk        = nChdFrame / pImage->nFramesPerHunk;
 	INT32 nFrameInHunk = nChdFrame % pImage->nFramesPerHunk;
 	if ((UINT32)nHunk >= pImage->nTotalHunks) {
 		return 1;
@@ -393,7 +407,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 		return 1;
 	}
 
-	INT32 nTrack = 0;
+	INT32 nTrack    = 0;
 	INT32 nChdFrame = ChdLogicalToChd(pImage, nLba, &nTrack);
 	if (nChdFrame < 0) {
 		return 1;
@@ -418,7 +432,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 
 	// 2352 mode-1 raw sector out of 2048 mode-1 data (synthesize sync + header)
 	if (nDataType == CHD_TRACK_MODE1_RAW && nTrackType == CHD_TRACK_MODE1) {
-		static const UINT8 SyncBytes[12] = { 0x00,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00 };
+		static const UINT8 SyncBytes[12] = { 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00 };
 		UINT32 nMsf = ChdLbaToMsf(nLba + 150);
 		memset(pDest, 0, 2352);
 		memcpy(pDest, SyncBytes, 12);
@@ -430,8 +444,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 	}
 
 	// 2048 mode-1 data out of a mode-2 form1 or raw sector
-	if (nDataType == CHD_TRACK_MODE1 &&
-		(nTrackType == CHD_TRACK_MODE2_FORM1 || nTrackType == CHD_TRACK_MODE2_RAW)) {
+	if (nDataType == CHD_TRACK_MODE1 && (nTrackType == CHD_TRACK_MODE2_FORM1 || nTrackType == CHD_TRACK_MODE2_RAW)) {
 		return ChdReadFrameBytes(pImage, nChdFrame, 24, 2048, pDest);
 	}
 
@@ -441,8 +454,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 	}
 
 	// 2336 mode-2 data out of a 2352 raw sector (skip the header)
-	if (nDataType == CHD_TRACK_MODE2 &&
-		(nTrackType == CHD_TRACK_MODE1_RAW || nTrackType == CHD_TRACK_MODE2_RAW)) {
+	if (nDataType == CHD_TRACK_MODE2 && (nTrackType == CHD_TRACK_MODE1_RAW || nTrackType == CHD_TRACK_MODE2_RAW)) {
 		return ChdReadFrameBytes(pImage, nChdFrame, 16, 2336, pDest);
 	}
 

@@ -72,13 +72,19 @@ INCLUDEPATH += \
     $$SRC/intf/cd \
     $$SRC/dep/libs/libpng \
     $$SRC/dep/libs/zlib \
+    $$SRC/dep/libs/libchdr \
+    $$SRC/dep/libs/libchdr/include \
+    $$SRC/dep/libs/lzma \
+    $$SRC/dep/libs/lzma/include \
+    $$SRC/dep/libs/zstd \
 
 DEFINES += BUILD_SDL \
     LSB_FIRST \
     "__fastcall=" \
     "_fastcall=" \
     WITH_QTCREATOR \
-    INCLUDE_LIB_PNGH
+    INCLUDE_LIB_PNGH \
+    CHDR_SYSTEM_ZLIB
 
 # no warnings...
 QMAKE_CXXFLAGS += -w
@@ -1071,6 +1077,24 @@ SOURCES += \
     ../../src/intf/audio/lowpass2.cpp \
     ../../src/intf/audio/sdl/aud_sdl.cpp \
     ../../src/intf/cd/cd_interface.cpp \
+    ../../src/intf/cd/cd_img.cpp \
+    ../../src/intf/cd/cd_chd.cpp \
+    ../../src/dep/libs/libchdr/libchdr_bitstream.c \
+    ../../src/dep/libs/libchdr/libchdr_cdrom.c \
+    ../../src/dep/libs/libchdr/libchdr_chd.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdfl.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdlz.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdzl.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdzs.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_flac.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_huff.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_lzma.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_zlib.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_zstd.c \
+    ../../src/dep/libs/libchdr/libchdr_flac.c \
+    ../../src/dep/libs/libchdr/libchdr_huffman.c \
+    ../../src/dep/libs/lzma/libchdr_lzma.c \
+    ../../src/dep/libs/zstd/zstddeclib.c \
     ../../src/intf/input/inp_interface.cpp \
     ../../src/intf/input/sdl/inp_sdl.cpp \
     ../../src/intf/video/vid_interface.cpp \
@@ -1078,7 +1102,7 @@ SOURCES += \
     ../../src/intf/video/sdl/vid_sdlfx.cpp \
     ../../src/intf/video/sdl/vid_sdlopengl.cpp \
     ../../src/cpu/z80_intf.cpp \
-    ../../src/burner/libretro/neocdlist.cpp \
+    ../../src/burner/cdlist.cpp \
     ../../src/intf/video/vid_softfx.cpp \
     ../../src/intf/video/scalers/2xpm.cpp \
     ../../src/intf/video/scalers/2xsai.cpp \

@@ -53,7 +53,7 @@ alldir	+= 	burner burner/sdl burner/sdl dep/libs/libspng dep/libs/lib7z dep/libs
 			intf/video/scalers 	intf/video/sdl intf/audio intf/audio/sdl intf/input intf/input/sdl intf/cd \
 			intf/perfcount intf/perfcount/sdl dep/generated
 
-depobj	+= 	neocdlist.o \
+depobj	+= 	cdlist.o \
 			\
 			conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
 			\

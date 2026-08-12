@@ -41533,7 +41533,7 @@ struct BurnDriver BurnDrvgba_sonicup = {
 	"gba_sonicup", "gba_sonic", "gba_gba", NULL, "2002",
 	"Sonic Advance (USA, prototype)\0", NULL, "Infogrames", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
 	GbaGetZipName, gba_sonicupRomInfo, gba_sonicupRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41623,7 +41623,7 @@ struct BurnDriver BurnDrvgba_sonic3p = {
 	"gba_sonic3p", "gba_sonic3", "gba_gba", NULL, "2004",
 	"Sonic Advance 3 (Japan, Prototype)\0", NULL, "Sega", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, FBF_SONIC,
 	GbaGetZipName, gba_sonic3pRomInfo, gba_sonic3pRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2

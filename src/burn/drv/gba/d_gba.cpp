@@ -13873,7 +13873,7 @@ struct BurnDriver BurnDrvgba_f_zgundm = {
 
 // Famicom Mini Vol.01: Super Mario Bros. (Japan, Rev. 1)
 static struct BurnRomInfo gba_f_smbRomDesc[] = {
-	{ "Famicom Mini vol.01 - Super Mario Bros. (J, Rev 1)(2004)(Nintendo).gba",	0x0400000,	0x5848884c,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.01 - Super Mario Bros. (J, Rev 1)(2004)(Nintendo).gba",	0x0400000,	0x5848884c,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_smb, gba_f_smb, gba_gba)

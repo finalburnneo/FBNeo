@@ -40370,6 +40370,25 @@ struct BurnDriver BurnDrvmd_handyharvy = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Haruna's Big Snow Cleanup (HB)
+// https://warasibe1192.itch.io/harunas-big-snow-cleanup
+static struct BurnRomInfo md_harunasbsRomDesc[] = {
+	{ "Haruna's Big Snow Cleanup (2026)(NK Soft).bin", 2883584, 0xdbe5dc80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_harunasbs)
+STD_ROM_FN(md_harunasbs)
+
+struct BurnDriver BurnDrvmd_harunasbs = {
+	"md_harunasbs", NULL, NULL, NULL, "2026",
+	"Haruna's Big Snow Cleanup (HB)\0", NULL, "NK Soft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	MegadriveGetZipName, md_harunasbsRomInfo, md_harunasbsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Hayato's Journey (HB)
 static struct BurnRomInfo md_hayatosjRomDesc[] = {
 	{ "Hayato's Journey (2024)(Master Linkuei).bin", 4194304, 0x7f54be40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -45388,6 +45407,25 @@ struct BurnDriver BurnDrvmd_ppersia2r = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_ppersia2rRomInfo, md_ppersia2rRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Punisher, The - Gun Version (Hack)
+// https://romhackplaza.org/romhacks/the-punisher-gun-version-sega-genesis-romhack
+static struct BurnRomInfo md_punishergvRomDesc[] = {
+	{ "Punisher, The - Gun Version (2026)(Everything is fun).bin", 2097152, 0xe4f97405, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_punishergv)
+STD_ROM_FN(md_punishergv)
+
+struct BurnDriver BurnDrvmd_punishergv = {
+	"md_punishergv", "md_punisher", NULL, NULL, "2026",
+	"Punisher, The - Gun Version (Hack)\0", NULL, "Everything is fun", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_punishergvRomInfo, md_punishergvRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

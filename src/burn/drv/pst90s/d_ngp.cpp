@@ -4118,6 +4118,24 @@ struct BurnDriver BurnDrvngpc_thieves = {
 	160, 152, 4, 3
 };
 
+// Triple Defence (HB)
+static struct BurnRomInfo ngpc_tripledefRomDesc[] = {
+	{ "Triple Defence (2026)(Zhamul).ngp", 16782, 0xb8769650, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_tripledef, ngpc_tripledef, ngpc_ngp)
+STD_ROM_FN(ngpc_tripledef)
+
+struct BurnDriver BurnDrvngpc_tripledef = {
+	"ngp_tripledef", NULL, "ngp_ngp", NULL, "2026",
+	"Triple Defence (HB)\0", NULL, "Zhamul", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_MULTISHOOT, 0,
+	NgpGetZipName, ngpc_tripledefRomInfo, ngpc_tripledefRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
 // Yewdow Mini (HB)
 static struct BurnRomInfo ngpc_yewdowmRomDesc[] = {
 	{ "Yewdow Mini (2025)(Inufuto).ngp", 524288, 0x2b56cec9, 1 | BRF_PRG | BRF_ESS }, // Cartridge

@@ -1405,7 +1405,7 @@ void CDSubsystemInit()
 		memcpy(PCECDBRAM, bram_default, sizeof(bram_default));
 	}
 
-	MSM5205Init(0, PCECDSynchroniseStream, (PCE_CD_CLOCK / 6) / 16, cd_msm5205_vclk_callback, MSM5205_S48_4B, 1);
+	MSM5205Init(0, PCECDSynchroniseStream, (PCE_CD_CLOCK / 6), cd_msm5205_vclk_callback, MSM5205_S48_4B, 1);
 	MSM5205PlaymodeWrite(0, MSM5205_S48_4B);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 

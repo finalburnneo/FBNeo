@@ -680,7 +680,7 @@ INT32 PCEFrame()
 
 		if (HAS_CD) {
 			CDSubsystemTick();
-			MSM5205Update();
+			MSM5205UpdateScanline(i);
 		}
 
 		// if thinking of changing this, make sure to check for these side effects:

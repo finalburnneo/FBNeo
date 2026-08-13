@@ -196,9 +196,8 @@ int DrvInit(int nDrvNum, bool bRestore)
 				return 0;
 			}
 		}
-	}
-
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) {
+	INT32 nHardware = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	if (nHardware == HARDWARE_SNK_NEOCD || nHardware == HARDWARE_PCENGINE_PCE_CD) {
 		if (CDEmuInit()) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CDEMU_INI_FAIL));
 			FBAPopupDisplay(PUF_TYPE_ERROR);
@@ -207,9 +206,11 @@ int DrvInit(int nDrvNum, bool bRestore)
 			return 0;
 		}
 
-		NeoCDInfo_Init();
+		if (nHardware == HARDWARE_SNK_NEOCD) {
+			NeoCDInfo_Init();
 
-		NeoCDZRateChange();
+			NeoCDZRateChange();
+		}
 	}
 
 	{ // Init input, save audio and blitter init for later. (reduce # of mode changes, nice for emu front-ends)
@@ -253,6 +254,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 		}
 
 		NeoCDZRateChangeback();
+		CDEmuExit();
 
 		POST_INITIALISE_MESSAGE;
 		return 1;

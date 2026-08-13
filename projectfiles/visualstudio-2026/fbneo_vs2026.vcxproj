@@ -1071,6 +1071,7 @@
     <ClCompile Include="..\..\src\burner\win32\menu.cpp" />
     <ClCompile Include="..\..\src\burner\win32\misc_win32.cpp" />
     <ClCompile Include="..\..\src\burner\cdlist.cpp" />
+    <ClCompile Include="..\..\src\burner\win32\cdlistcache.cpp" />
     <ClCompile Include="..\..\src\burner\win32\neocdsel.cpp" />
     <ClCompile Include="..\..\src\burner\win32\numdial.cpp" />
     <ClCompile Include="..\..\src\burner\win32\paletteviewer.cpp" />

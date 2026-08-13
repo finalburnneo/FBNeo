@@ -167,40 +167,11 @@ static void cd_test_unit_ready()
 	cd_reply_status_byte(0x00);
 }
 
-// Read one CD sector, handle success/error status & IRQs
-static INT32 cd_read_sector()
-{
-	// Attempt to read one data sector from CD image
-	if (CDEmuReadDataSector(cd_current_frame, cd_data_buffer)) {
-		// Sector read failed: reset buffers, report SCSI CHECK CONDITION (0x02)
-		cd_data_buffer_size  = 0;
-		cd_data_buffer_index = 0;
-		cd_data_transferred  = 0;
-		cd_set_irq_line(PCE_CD_IRQ_TRANSFER_READY, 0);
-		cd_reply_status_byte(0x02);
-		cd_set_irq_line(PCE_CD_IRQ_TRANSFER_DONE,  1);
-		return 1;	// Return 1 = read error
-	}
-
-	// Sector read succeeded, setup buffer and state
-	cd_data_buffer_size  = 2048;
-	cd_data_buffer_index = 0;
-	cd_current_frame++;
-	scsi_IO = 1;
-	scsi_CD = 0;
-	cd_data_transferred = (cd_current_frame == cd_end_frame);
-	if (cd_data_transferred) {
-		cd_cdda_status = PCE_CD_CDDA_PAUSED;
-	}
-	cd_set_irq_line(PCE_CD_IRQ_TRANSFER_READY, 1);
-	return 0;	// Return 0 = read ok
-}
-
 /* 0x08 - READ (6) */
 static void cd_read_6()
 {
 	UINT32 frame = ((cd_command_buffer[1] & 0x1f) << 16) | (cd_command_buffer[2] << 8) | cd_command_buffer[3];
-	UINT32 frame_count = cd_command_buffer[4] ? cd_command_buffer[4] : 256;
+	UINT32 frame_count = cd_command_buffer[4];
 
 	if (cd_cdda_status != PCE_CD_CDDA_OFF) {
 		cd_cdda_status = PCE_CD_CDDA_OFF;
@@ -210,8 +181,28 @@ static void cd_read_6()
 
 	cd_current_frame = frame;
 	cd_end_frame = frame + frame_count;
-	cd_motor_on = 1;
-	cd_read_sector();
+
+	if (frame_count == 0) {
+		// starbrkr uses this (cannot reproduce)
+		// Should supposedly bump to max size (frame_count = 256)
+		cd_reply_status_byte(0x00);
+	} else {
+		cd_motor_on = 1;
+		INT32 ret = CDEmuLoadSector(cd_current_frame, (char*)cd_data_buffer);
+		memmove(cd_data_buffer, cd_data_buffer + 16, 2048);
+		cd_data_buffer_size = 2048;
+		cd_data_buffer_index = 0;
+		cd_current_frame = (ret > 0) ? ret : (cd_current_frame + 1);
+		scsi_IO = 1;
+		scsi_CD = 0;
+		cd_data_transferred = (cd_current_frame == cd_end_frame) ? 1 : 0;
+		if (cd_current_frame == cd_end_frame) {
+			cd_cdda_status = PCE_CD_CDDA_PAUSED;
+		}
+	}
+
+	// timing likely not exact
+	cd_set_irq_line(PCE_CD_IRQ_TRANSFER_READY, 1);
 }
 
 /* 0xD8 - SET AUDIO PLAYBACK START POSITION (NEC) */
@@ -422,7 +413,7 @@ static void cd_nec_get_dir_info()
 				cd_data_buffer[0] = toc[0];
 				cd_data_buffer[1] = toc[1];
 				cd_data_buffer[2] = toc[2];
-				cd_data_buffer[3] = toc[3];
+				cd_data_buffer[3] = 0x04;   /* correct? */
 				cd_data_buffer_size = 4;
 				break;
 			}
@@ -530,7 +521,19 @@ static void cd_handle_data_input()
 					cd_reply_status_byte(0x00);
 					cd_set_irq_line(PCE_CD_IRQ_TRANSFER_DONE, 1);
 				} else {
-					cd_read_sector();
+					{
+						INT32 ret = CDEmuLoadSector(cd_current_frame, (char*)cd_data_buffer);
+						memmove(cd_data_buffer, cd_data_buffer + 16, 2048);
+						cd_current_frame = (ret > 0) ? ret : (cd_current_frame + 1);
+					}
+					cd_data_buffer_index = 0;
+					cd_data_buffer_size = 2048;
+					scsi_IO = 1;
+					scsi_CD = 0;
+					cd_data_transferred = (cd_current_frame == cd_end_frame) ? 1 : 0;
+					if (cd_current_frame == cd_end_frame) {
+						cd_cdda_status = PCE_CD_CDDA_PAUSED;
+					}
 				}
 			} else {
 				cd_cdc_data = cd_data_buffer[cd_data_buffer_index];

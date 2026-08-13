@@ -528,7 +528,7 @@ INT32 SGXInit()
 
 INT32 PCECDInit()
 {
-	return CommonInit(PCEDips[2] & 1 ? ACARD_HW : CD_HW);
+	return CommonInit(PCEDips[2] & 1 ? CD_HW : ACARD_HW);
 }
 
 INT32 populousInit()

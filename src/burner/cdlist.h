@@ -26,14 +26,6 @@ enum CDListConfidence {
 	CDLIST_CONFIDENCE_EXACT
 };
 
-enum CDListIdentifyFlags {
-	CDLIST_IDENTIFY_NONE = 0,
-	CDLIST_IDENTIFY_FAST = 1 << 0
-};
-
-typedef INT32 (*CDListCancelCallback)(void* pUser);
-typedef void (*CDListSourceCallback)(const TCHAR* pszPath, void* pUser);
-
 struct CDListMetadata {
 	TCHAR szName[CDLIST_TEXT_SIZE];
 	TCHAR szTitle[CDLIST_TEXT_SIZE];
@@ -49,8 +41,6 @@ struct CDListResult {
 	INT32 nSource;
 	INT32 nConfidence;
 	UINT32 nNeoID;
-	INT32 nAudioTrackCount;
-	TCHAR szFirstDataTrackPath[MAX_PATH];
 	CDListMetadata Metadata;
 	INT32 bHasChdSha1;
 	UINT8 ChdSha1[CDLIST_SHA1_SIZE];
@@ -61,7 +51,6 @@ struct CDListResult {
 	UINT8 RawSha1[CDLIST_SHA1_SIZE];
 };
 
-INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlags, CDListCancelCallback pCancelCallback, CDListSourceCallback pSourceCallback, void* pUser);
 INT32 CDListIdentify(const TCHAR* pszPath, CDListResult* pResult);
 
 #endif

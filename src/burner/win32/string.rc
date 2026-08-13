@@ -93,6 +93,7 @@ BEGIN
 	IDS_DISK_ALL_CARD			"All Memory Card Files"
 	IDS_DISK_ALL_DAT			"All Dat Files"
 	IDS_DISK_TEXT				"Text Files"
+	IDS_DISK_FILE_ROMDATA		"%s RomData Type"
 	IDS_DISK_FILE_IPSPATCH		"%s IPS Type"
 	IDS_DISK_FILE_NEOGEOCD		"%s NeoGeo-CD Type"
 	IDS_DISK_FILE_ARCHIVE		"%s Archive Types"
@@ -262,7 +263,7 @@ BEGIN
 	
 	IDS_SUPPORTPATH_TITLE		"%s%sEdit support file paths"
 
-	IDS_NGCD_DIAG_TITLE			"%s%sCD Image Library%sSelect Game"
+	IDS_NGCD_DIAG_TITLE			"%s%sNeo Geo CDZ%sSelect Game"
 	IDS_NGCD_TITLE				"Title"
 	IDS_NGCD_NGCDID				"NGCD-ID"
 

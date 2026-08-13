@@ -103,12 +103,12 @@ const TCHAR* ChdTrackTypeName(INT32 nType)
 	}
 }
 
-// Fetch a track's metadata string (tries CHT2, then CHTR, then CHGD).
+// Fetch a track's metadata string (tries CHTR, then CHT2, then CHGD).
 // Returns the parsed metadata tag on success, or 0 on failure.
 static UINT32 ChdReadTrackMeta(chd_file* pChd, INT32 nIndex, char* szOut, INT32 nOutLen)
 {
 	static const UINT32 Tags[] = {
-		CDROM_TRACK_METADATA2_TAG, CDROM_TRACK_METADATA_TAG, GDROM_TRACK_METADATA_TAG
+		CDROM_TRACK_METADATA_TAG, CDROM_TRACK_METADATA2_TAG, GDROM_TRACK_METADATA_TAG
 	};
 
 	if (!pChd || !szOut || nOutLen <= 0) {
@@ -146,8 +146,6 @@ static INT32 ChdParseToc(ChdImage* pImage)
 		char szType[16] = { 0 }, szSub[16] = { 0 }, szPgType[16] = { 0 }, szPgSub[16] = { 0 };
 
 		if (nTag == CDROM_TRACK_METADATA_TAG) {
-			nPregap = 0;
-			nPostgap = 0;
 			if (sscanf(szMeta, CDROM_TRACK_METADATA_FORMAT,
 				&nTrackNum, szType, szSub, &nFrames) != 4) {
 				return 1;
@@ -177,15 +175,13 @@ static INT32 ChdParseToc(ChdImage* pImage)
 			return 1;
 		}
 
-		pT->nSubSize       = ChdSubSizeFromString(szSub);
-		pT->nSubType       = (pT->nSubSize != 0) ? 1 : 0;
-		pT->nFrames        = nFrames;
-		pT->nPregap        = nPregap;
-		pT->nStoredPregap  = (nPregap > 0 && szPgType[0] == 'V') ? nPregap : 0;
-		pT->nVirtualPregap = nPregap - pT->nStoredPregap;
-		pT->nPostgap       = nPostgap;
-		pT->nPadFrames     = nPad;
-		// chdman pads each track up to a 4-frame boundary.
+		pT->nSubSize   = ChdSubSizeFromString(szSub);
+		pT->nSubType   = (pT->nSubSize != 0) ? 1 : 0;
+		pT->nFrames    = nFrames;
+		pT->nPregap    = nPregap;
+		pT->nPostgap   = nPostgap;
+		pT->nPadFrames = nPad;
+		// chdman pads each track up to a 4-frame boundary in the CHD.
 		INT32 nPadded = (nFrames + CHD_TRACK_PADDING - 1) / CHD_TRACK_PADDING;
 		pT->nExtraFrames = nPadded * CHD_TRACK_PADDING - nFrames;
 		pT->nControl     = (pT->nType == CHD_TRACK_AUDIO) ? 0x01 : 0x41;
@@ -196,37 +192,36 @@ static INT32 ChdParseToc(ChdImage* pImage)
 	}
 	pImage->nNumTracks = nTrk;
 
+	// Compute physical / chd / logical frame offsets (MAME cdrom_file(chd)).
 	INT32 nPhysOfs = 0, nChdOfs = 0, nLogOfs = 0;
 	for (INT32 i = 0; i < nTrk; i++) {
 		ChdTrack* pT = &pImage->Tracks[i];
-		if (pT->nStoredPregap > pT->nFrames) {
-			return 1;
+		pT->nLogFrameOfs = 0;
+
+		if (pT->nDataSize != 0) {
+			// pregap data lives in the CHD, offset this track to index 1
+			pT->nLogFrameOfs = pT->nPregap;
 		}
 
-		pT->nIndex0LBA     = nLogOfs;
-		pT->nIndex1LBA     = nLogOfs + pT->nPregap;
-		pT->nChdTrackStart = nChdOfs;
-		pT->nChdIndex1     = nChdOfs + pT->nStoredPregap;
-		pT->nPhysFrameOfs  = nPhysOfs;
-		pT->nChdFrameOfs   = pT->nChdTrackStart;
-		pT->nLogFrameOfs   = pT->nIndex1LBA;
-		pT->nLogFrames     = pT->nFrames - pT->nStoredPregap;
+		pT->nPhysFrameOfs = nPhysOfs;
+		pT->nChdFrameOfs  = nChdOfs;
+		pT->nLogFrameOfs += nLogOfs;
+		pT->nLogFrames    = pT->nFrames - pT->nPregap;
 
+		nLogOfs  += pT->nPostgap;
 		nPhysOfs += pT->nFrames;
-		nChdOfs  += pT->nFrames + pT->nExtraFrames + pT->nPadFrames;
-		nLogOfs   = pT->nIndex1LBA + pT->nLogFrames + pT->nPostgap;
+		nChdOfs  += pT->nFrames;
+		nChdOfs  += pT->nExtraFrames;	// 4-frame boundary padding (CD)
+		nChdOfs  += pT->nPadFrames;		// explicit PAD (GD-ROM)
+		nLogOfs  += pT->nFrames;
 	}
 
 	// dummy lead-out entry for range searches
 	ChdTrack* pEnd = &pImage->Tracks[nTrk];
-	pEnd->nIndex0LBA     = nLogOfs;
-	pEnd->nIndex1LBA     = nLogOfs;
-	pEnd->nChdTrackStart = nChdOfs;
-	pEnd->nChdIndex1     = nChdOfs;
-	pEnd->nPhysFrameOfs  = nPhysOfs;
-	pEnd->nLogFrameOfs   = nLogOfs;
-	pEnd->nChdFrameOfs   = nChdOfs;
-	pEnd->nLogFrames     = 0;
+	pEnd->nPhysFrameOfs = nPhysOfs;
+	pEnd->nLogFrameOfs  = nLogOfs;
+	pEnd->nChdFrameOfs  = nChdOfs;
+	pEnd->nLogFrames    = 0;
 
 	pImage->nTotalFrames = nLogOfs;
 	return 0;
@@ -387,7 +382,7 @@ INT32 ChdReadRaw(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset, INT32 nLength
 	return ChdReadFrameBytes(pImage, nChdFrame, nOffset, nLength, pDest);
 }
 
-// Returns -2 for a virtual INDEX 0 sector.
+// logical LBA -> (track, chd frame), MAME logical_to_chd_lba
 static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 {
 	if (!pImage || !pnTrack || nLogLba < 0 || nLogLba >= pImage->nTotalFrames) {
@@ -395,36 +390,15 @@ static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 	}
 
 	for (INT32 i = 0; i < pImage->nNumTracks; i++) {
-		ChdTrack* pT = &pImage->Tracks[i];
-		if (nLogLba < pT->nIndex0LBA || nLogLba >= pT->nIndex1LBA + pT->nLogFrames) {
-			continue;
+		if (nLogLba < pImage->Tracks[i + 1].nLogFrameOfs) {
+			INT32 nPhys = pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nPregap
+			            + (nLogLba - pImage->Tracks[i].nLogFrameOfs);
+			INT32 nChd  = nPhys - pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nChdFrameOfs;
+			*pnTrack = i;
+			return nChd;
 		}
-
-		*pnTrack = i;
-		if (nLogLba < pT->nIndex1LBA) {
-			if (pT->nVirtualPregap != 0) {
-				return -2;
-			}
-			return pT->nChdTrackStart + nLogLba - pT->nIndex0LBA;
-		}
-		return pT->nChdIndex1 + nLogLba - pT->nIndex1LBA;
 	}
 	return -1;
-}
-
-static INT32 ChdTypeSize(INT32 nType)
-{
-	switch (nType) {
-		case CHD_TRACK_MODE1:
-		case CHD_TRACK_MODE2_FORM1: return 2048;
-		case CHD_TRACK_MODE2_FORM2: return 2324;
-		case CHD_TRACK_MODE2:
-		case CHD_TRACK_MODE2_FORM_MIX: return 2336;
-		case CHD_TRACK_MODE1_RAW:
-		case CHD_TRACK_MODE2_RAW:
-		case CHD_TRACK_AUDIO: return 2352;
-	}
-	return 0;
 }
 
 INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
@@ -435,19 +409,15 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 
 	INT32 nTrack    = 0;
 	INT32 nChdFrame = ChdLogicalToChd(pImage, nLba, &nTrack);
-	if (nChdFrame == -1) {
+	if (nChdFrame < 0) {
 		return 1;
 	}
 	ChdTrack* pT = &pImage->Tracks[nTrack];
 	INT32 nTrackType = pT->nType;
 
-	if (nChdFrame == -2) {
-		INT32 nSize = (nDataType == CHD_TRACK_RAW_DONTCARE || nDataType == CHD_TRACK_MODE1_RAW ||
-			nDataType == CHD_TRACK_MODE2_RAW) ? 2352 : ChdTypeSize(nDataType);
-		if (nSize == 0) {
-			return 1;
-		}
-		memset(pDest, 0, nSize);
+	// pregap not physically present: hand back zeros
+	if (pT->nDataSize != 0 && nLba < pT->nLogFrameOfs) {
+		memset(pDest, 0, (nDataType == CHD_TRACK_RAW_DONTCARE) ? pT->nDataSize : 2352);
 		return 0;
 	}
 

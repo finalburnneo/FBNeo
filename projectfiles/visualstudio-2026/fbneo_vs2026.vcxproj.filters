@@ -3112,9 +3112,6 @@
     <ClCompile Include="..\..\src\burner\cdlist.cpp">
       <Filter>burner</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burner\win32\cdlistcache.cpp">
-      <Filter>burner\win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\neocdsel.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>

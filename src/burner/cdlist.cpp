@@ -342,7 +342,7 @@ static void Sha1Final(CDListSha1* pSha1, UINT8* pDigest)
 	}
 }
 
-static INT32 HashDataTrack(CDImage* pImage, const CDImageTrack* pTrack, UINT8* pDigest, CDListCancelCallback pCancelCallback, void* pUser, INT32* pbCancelled)
+static INT32 HashDataTrack(CDImage* pImage, const CDImageTrack* pTrack, UINT8* pDigest)
 {
 	if (!pImage || !pTrack || !pDigest || pTrack->nSectors <= 0)
 		return 0;
@@ -351,21 +351,11 @@ static INT32 HashDataTrack(CDImage* pImage, const CDImageTrack* pTrack, UINT8* p
 	Sha1Init(&Sha1);
 	UINT8 sector[2448];
 	for (INT32 i = 0; i < pTrack->nSectors; i++) {
-		if (!(i & 63) && pCancelCallback && pCancelCallback(pUser)) {
-			*pbCancelled = 1;
-			return 0;
-		}
-
 		INT32 nSize = 0;
 		if (!ReadSector(pImage, pTrack->nIndex1LBA + i, sector, &nSize))
 			return 0;
 		Sha1Update(&Sha1, sector, (UINT32)nSize);
 	}
-	if (pCancelCallback && pCancelCallback(pUser)) {
-		*pbCancelled = 1;
-		return 0;
-	}
-
 	Sha1Final(&Sha1, pDigest);
 	return 1;
 }
@@ -495,41 +485,24 @@ static void FillNeoMetadata(CDListResult* pResult)
 	CopyText(pResult->Metadata.szDescriptor, CDLIST_TEXT_SIZE, _T("Neo Geo CD program header"));
 }
 
-INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlags, CDListCancelCallback pCancelCallback, CDListSourceCallback pSourceCallback, void* pUser)
+INT32 CDListIdentify(const TCHAR* pszPath, CDListResult* pResult)
 {
 	if (!pszPath || !pResult)
 		return 0;
 
 	memset(pResult, 0, sizeof(*pResult));
-	if (pCancelCallback && pCancelCallback(pUser))
-		return 0;
-
 	CDImage* pImage = CDImageOpen(pszPath);
 	if (!pImage)
 		return 0;
 
-	pResult->nAudioTrackCount = CDImageGetAudioTrackCount(pImage);
-	const CDImageTrack* pDataTrack = FindDataTrack(pImage);
-	if (pDataTrack)
-		CopyText(pResult->szFirstDataTrackPath, MAX_PATH, pDataTrack->szPath);
-	for (INT32 i = 0; i < CDImageGetSourceFileCount(pImage); i++) {
-		if (pSourceCallback)
-			pSourceCallback(CDImageGetSourceFile(pImage, i), pUser);
-	}
-
-	INT32 bCancelled = 0;
 	if (!CDImageGetChdSha1(pImage, pResult->ChdSha1)) {
 		pResult->bHasChdSha1         = 1;
 		pResult->bRawSha1Unsupported = 1;
 		pResult->bChdMameMatch       = FindPceChdGame(pResult->ChdSha1, &pResult->ChdMetadata);
-	} else if (!(nFlags & CDLIST_IDENTIFY_FAST)) {
-		pResult->bHasRawSha1 = HashDataTrack(pImage, pDataTrack, pResult->RawSha1, pCancelCallback, pUser, &bCancelled);
+	} else {
+		const CDImageTrack* pTrack = FindDataTrack(pImage);
+		pResult->bHasRawSha1       = HashDataTrack(pImage, pTrack, pResult->RawSha1);
 	}
-	if (bCancelled || (pCancelCallback && pCancelCallback(pUser))) {
-		CDImageClose(pImage);
-		return 0;
-	}
-
 	if (IdentifyNeo(pImage, pszPath, pResult)) {
 		pResult->nPlatform   = CDLIST_PLATFORM_NEOCD;
 		pResult->nSource     = CDLIST_SOURCE_NEO_ID;
@@ -546,11 +519,6 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 	}
 	CDImageClose(pImage);
 	return pResult->nPlatform != CDLIST_PLATFORM_UNKNOWN;
-}
-
-INT32 CDListIdentify(const TCHAR* pszPath, CDListResult* pResult)
-{
-	return CDListIdentifyEx(pszPath, pResult, CDLIST_IDENTIFY_NONE, NULL, NULL, NULL);
 }
 
 INT32 NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))

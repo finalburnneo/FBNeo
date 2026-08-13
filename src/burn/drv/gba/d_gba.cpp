@@ -11309,7 +11309,7 @@ struct BurnDriver BurnDrvgba_ddragonj = {
 	"gba_ddragonj", "gba_ddragon", "gba_gba", NULL, "2004",
 	"Double Dragon Advance (Japan)\0", NULL, "Atlus", "Game Boy Advance",
 	L"Double Dragon Advance (Japan)\0\u53cc\u8f09\u9f8d\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
 	GbaGetZipName, gba_ddragonjRomInfo, gba_ddragonjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -11327,7 +11327,7 @@ struct BurnDriver BurnDrvgba_ddragon = {
 	"gba_ddragon", NULL, "gba_gba", NULL, "2003",
 	"Double Dragon Advance (USA)\0", NULL, "Atlus", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
 	GbaGetZipName, gba_ddragonRomInfo, gba_ddragonRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -43549,7 +43549,7 @@ struct BurnDriver BurnDrvgba_sfa3 = {
 	"gba_sfa3", NULL, "gba_gba", NULL, "2002",
 	"Street Fighter Alpha 3 (Europe)\0", NULL, "Capcom", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
 	GbaGetZipName, gba_sfa3RomInfo, gba_sfa3RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -43567,7 +43567,7 @@ struct BurnDriver BurnDrvgba_sfa3u = {
 	"gba_sfa3u", "gba_sfa3", "gba_gba", NULL, "2002",
 	"Street Fighter Alpha 3 (USA)\0", NULL, "Capcom", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
 	GbaGetZipName, gba_sfa3uRomInfo, gba_sfa3uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -43585,7 +43585,7 @@ struct BurnDriver BurnDrvgba_sfa3j = {
 	"gba_sfa3j", "gba_sfa3", "gba_gba", NULL, "2002",
 	"Street Fighter Zero 3 Upper (Japan)\0", NULL, "Capcom", "Game Boy Advance",
 	L"Street Fighter Zero 3 Upper (Japan)\0\u30b9\u30c8\u30ea\u30fc\u30c8\u30d5\u30a1\u30a4\u30bf\u30fc\u30bc\u30ed3\u30a2\u30c3\u30d1\u30fc\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VSFIGHT, FBF_SF,
 	GbaGetZipName, gba_sfa3jRomInfo, gba_sfa3jRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -55453,7 +55453,7 @@ struct BurnDriver BurnDrvgba_nebulus = {
 	"gba_nebulus", NULL, "gba_gba", NULL, "2004",
 	"Nebulus (HB, v1.2)\0", NULL, "Foxy's Softs", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_nebulusRomInfo, gba_nebulusRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2

@@ -36,6 +36,8 @@ typedef char   _TCHAR;
 #define _tcsrchr       strrchr
 #define _tcsstr        strstr
 
+#define _totlower(c)   tolower((unsigned char)(c))
+
 #define _fgetts        fgets
 #define _fputts        fputs
 #define _fputtc        fputc

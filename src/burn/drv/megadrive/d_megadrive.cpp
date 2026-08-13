@@ -40383,7 +40383,7 @@ struct BurnDriver BurnDrvmd_harunasbs = {
 	"md_harunasbs", NULL, NULL, NULL, "2026",
 	"Haruna's Big Snow Cleanup (HB)\0", NULL, "NK Soft", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_harunasbsRomInfo, md_harunasbsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40480,9 +40480,9 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Imminence (HB)
+// Imminence (HB, v1.0.2.260601)
 static struct BurnRomInfo md_imminenceRomDesc[] = {
-	{ "Imminence (2026)(Augmented Studios).bin", 4063232, 0xfbd45c81, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Imminence v1.0.2.260601 (2026)(Augmented Studios).bin", 4063232, 0xfbd45c81, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_imminence)
@@ -40490,7 +40490,7 @@ STD_ROM_FN(md_imminence)
 
 struct BurnDriver BurnDrvmd_imminence = {
 	"md_imminence", NULL, NULL, NULL, "2026",
-	"Imminence (HB)\0", NULL, "Augmented Studios", "Genesis / Mega Drive",
+	"Imminence (HB, v1.0.2.260601)\0", NULL, "Augmented Studios", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_imminenceRomInfo, md_imminenceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -87,6 +87,15 @@ INT32 CDEmuLoadSector(INT32 LBA, char* pBuffer)
 	return pCDEmuDo[nCDEmuSelect]->CDEmuLoadSector(LBA, pBuffer);
 }
 
+INT32 CDEmuReadDataSector(INT32 nLba, UINT8* pBuffer)
+{
+	if (!bCDEmuOkay || nCDEmuSelect >= CDEMU_LEN || !pCDEmuDo[nCDEmuSelect]->CDEmuReadDataSector) {
+		return 1;
+	}
+
+	return pCDEmuDo[nCDEmuSelect]->CDEmuReadDataSector(nLba, pBuffer);
+}
+
 UINT8* CDEmuReadTOC(INT32 track)
 {
 	if (!bCDEmuOkay || nCDEmuSelect >= CDEMU_LEN) {

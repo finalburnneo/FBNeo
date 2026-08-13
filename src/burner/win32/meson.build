@@ -61,6 +61,7 @@ frontend_sources = files(
     'menu.cpp',
     'misc_win32.cpp',
     '../cdlist.cpp',
+    'cdlistcache.cpp',
     'neocdsel.cpp',
     'numdial.cpp',
     'paletteviewer.cpp',

@@ -32,12 +32,18 @@ struct ChdTrack {
 	INT32 nSubType;				// 0 none / 1 normal / 2 raw
 	INT32 nDataSize;			// 2048 / 2324 / 2336 / 2352
 	INT32 nSubSize;				// 0 or 96
-	INT32 nFrames;				// sectors in the track (incl. pregap)
-	INT32 nPregap;				// pregap sectors
-	INT32 nPostgap;				// postgap sectors
+	INT32 nFrames;				// metadata frames, including pregap
+	INT32 nPregap;
+	INT32 nStoredPregap;
+	INT32 nVirtualPregap;
+	INT32 nPostgap;
 	INT32 nPadFrames;			// GD-ROM padding sectors
 	INT32 nExtraFrames;			// chdman 4-frame-boundary padding
 	INT32 nControl;				// Q-channel control nibble << 4 flags (0x41 data / 0x01 audio)
+	INT32 nIndex0LBA;
+	INT32 nIndex1LBA;
+	INT32 nChdTrackStart;
+	INT32 nChdIndex1;
 	INT32 nPhysFrameOfs;
 	INT32 nChdFrameOfs;
 	INT32 nLogFrameOfs;

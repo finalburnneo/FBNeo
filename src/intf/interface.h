@@ -68,6 +68,7 @@ struct CDEmuDo {
 	INT32			   (*CDEmuStop)();
 	INT32			   (*CDEmuPlay)(UINT8 M, UINT8 S, UINT8 F);
 	INT32			   (*CDEmuLoadSector)(INT32 LBA, char* pBuffer);
+	INT32              (*CDEmuReadDataSector)(INT32 nLba, UINT8* pBuffer);
 	UINT8*             (*CDEmuReadTOC)(INT32 track);
 	UINT8*             (*CDEmuReadQChannel)();
 	INT32			   (*CDEmuSetVolume)(double dVolume);

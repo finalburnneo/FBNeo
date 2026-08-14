@@ -248,8 +248,6 @@ void DisplayPopupMenu(int nMenu)
 		nRecursions       = 0;
 		nCurrentItemFlags = 0;
 
-		SetClassLongPtr(hMenubar, GCLP_HBRBACKGROUND, (LONG_PTR)CreateSolidBrush(RGB(255, 0, 0)));
-
 		GetWindowRect(hMenubar, &clientRect);
 		SendMessage(hMenubar, TB_GETITEMRECT, nMenu, (LPARAM)&buttonRect);
 

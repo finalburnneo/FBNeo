@@ -7573,7 +7573,7 @@ struct BurnDriver BurnDrvgba_cinnamn3 = {
 
 // Classic NES Series: Bomberman (Europe, USA)
 static struct BurnRomInfo gba_n_bombmnRomDesc[] = {
-	{ "Classic NES Series - Bomberman (E, U)(2004)(Nintendo).gba",	0x0400000,	0xcd67f2ba,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Bomberman (E, U)(2004)(Nintendo).gba",	0x0100000,	0xc9ebc17d,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_bombmn, gba_n_bombmn, gba_gba)
@@ -7609,7 +7609,7 @@ struct BurnDriver BurnDrvgba_n_cvania = {
 
 // Classic NES Series: Castlevania (USA)
 static struct BurnRomInfo gba_n_cvaniauRomDesc[] = {
-	{ "Classic NES Series - Castlevania (U)(2004)(Nintendo).gba",	0x0400000,	0xcfc1f558,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Castlevania (U)(2004)(Nintendo).gba",	0x0100000,	0x23e4082c,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_cvaniau, gba_n_cvaniau, gba_gba)
@@ -7627,7 +7627,7 @@ struct BurnDriver BurnDrvgba_n_cvaniau = {
 
 // Classic NES Series: Donkey Kong (Europe, USA)
 static struct BurnRomInfo gba_n_dkongRomDesc[] = {
-	{ "Classic NES Series - Donkey Kong (E, U)(2004)(Nintendo).gba",	0x0400000,	0xba82d416,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Donkey Kong (E, U)(2004)(Nintendo).gba",	0x0100000,	0xf53d8b56,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_dkong, gba_n_dkong, gba_gba)
@@ -7645,7 +7645,7 @@ struct BurnDriver BurnDrvgba_n_dkong = {
 
 // Classic NES Series: Dr. Mario (Europe, USA)
 static struct BurnRomInfo gba_n_drmrioRomDesc[] = {
-	{ "Classic NES Series - Dr. Mario (E, U)(2004)(Nintendo).gba",	0x0400000,	0xca9f5d2f,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Dr. Mario (E, U)(2004)(Nintendo).gba",	0x0100000,	0x934e1f1d,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_drmrio, gba_n_drmrio, gba_gba)
@@ -7663,7 +7663,7 @@ struct BurnDriver BurnDrvgba_n_drmrio = {
 
 // Classic NES Series: Excitebike (Europe, USA)
 static struct BurnRomInfo gba_n_exbikeRomDesc[] = {
-	{ "Classic NES Series - Excitebike (E, U)(2004)(Nintendo).gba",	0x0400000,	0x945c292f,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Excitebike (E, U)(2004)(Nintendo).gba",	0x0100000,	0x67d9a2a6,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_exbike, gba_n_exbike, gba_gba)
@@ -7681,7 +7681,7 @@ struct BurnDriver BurnDrvgba_n_exbike = {
 
 // Classic NES Series: Ice Climber (Europe, USA)
 static struct BurnRomInfo gba_n_iceclmRomDesc[] = {
-	{ "Classic NES Series - Ice Climber (E, U)(2004)(Nintendo).gba",	0x0400000,	0x3126d612,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Ice Climber (E, U)(2004)(Nintendo).gba",	0x0100000,	0xb265538d,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_iceclm, gba_n_iceclm, gba_gba)
@@ -7699,7 +7699,7 @@ struct BurnDriver BurnDrvgba_n_iceclm = {
 
 // Classic NES Series: The Legend of Zelda (Europe, USA)
 static struct BurnRomInfo gba_n_zeldaRomDesc[] = {
-	{ "Classic NES Series - The Legend of Zelda (E, U)(2004)(Nintendo).gba",	0x0400000,	0x68b1b7a8,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - The Legend of Zelda (E, U)(2004)(Nintendo).gba",	0x0100000,	0x6d49cabf,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_zelda, gba_n_zelda, gba_gba)
@@ -7717,7 +7717,7 @@ struct BurnDriver BurnDrvgba_n_zelda = {
 
 // Classic NES Series: Metroid (Europe, USA)
 static struct BurnRomInfo gba_n_metroiRomDesc[] = {
-	{ "Classic NES Series - Metroid (E, U)(2004)(Nintendo).gba",	0x0400000,	0xb2a153c3,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Metroid (E, U)(2004)(Nintendo).gba",	0x0100000,	0x9a243b9b,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_metroi, gba_n_metroi, gba_gba)
@@ -7735,7 +7735,7 @@ struct BurnDriver BurnDrvgba_n_metroi = {
 
 // Classic NES Series: Pac-Man (Europe, USA)
 static struct BurnRomInfo gba_n_pacmanRomDesc[] = {
-	{ "Classic NES Series - Pac-Man (E, U)(2004)(Nintendo).gba",	0x0400000,	0x231f80d6,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Pac-Man (E, U)(2004)(Nintendo).gba",	0x0100000,	0xc28df82f,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_pacman, gba_n_pacman, gba_gba)
@@ -7753,7 +7753,7 @@ struct BurnDriver BurnDrvgba_n_pacman = {
 
 // Classic NES Series: Super Mario Bros. (Europe, USA)
 static struct BurnRomInfo gba_n_smbRomDesc[] = {
-	{ "Classic NES Series - Super Mario Bros. (E, U)(2004)(Nintendo).gba",	0x0400000,	0x7eddffad,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Super Mario Bros. (E, U)(2004)(Nintendo).gba",	0x0100000,	0xf7129225,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_smb, gba_n_smb, gba_gba)
@@ -7771,7 +7771,7 @@ struct BurnDriver BurnDrvgba_n_smb = {
 
 // Classic NES Series: Xevious (Europe, USA)
 static struct BurnRomInfo gba_n_xeviosRomDesc[] = {
-	{ "Classic NES Series - Xevious (E, U)(2004)(Nintendo).gba",	0x0400000,	0x9e923716,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Xevious (E, U)(2004)(Nintendo).gba",	0x0100000,	0x9cd2d5dd,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_xevios, gba_n_xevios, gba_gba)
@@ -7789,7 +7789,7 @@ struct BurnDriver BurnDrvgba_n_xevios = {
 
 // Classic NES Series: Zelda II - The Adventure of Link (Europe, USA)
 static struct BurnRomInfo gba_n_zelda2RomDesc[] = {
-	{ "Classic NES Series - Zelda II - The Adventure of Link (E, U)(2004)(Nintendo).gba",	0x0400000,	0xf2dc3b09,	BRF_ESS | BRF_PRG },
+	{ "Classic NES Series - Zelda II - The Adventure of Link (E, U)(2004)(Nintendo).gba",	0x0100000,	0x0b6ca48a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_zelda2, gba_n_zelda2, gba_gba)
@@ -13837,7 +13837,7 @@ struct BurnDriver BurnDrvgba_fopclashu = {
 
 // Famicom Mini: Dai-2-ji Super Robot Taisen (Japan, Promo)
 static struct BurnRomInfo gba_f_srobo2RomDesc[] = {
-	{ "Famicom Mini - Dai-2-ji Super Robot Taisen (J, Promo)(2004)(Banpresto).gba",	0x0400000,	0x423b8fc5,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini - Dai-2-ji Super Robot Taisen (J, Promo)(2004)(Banpresto).gba",	0x0100000,	0x3ebb082a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_srobo2, gba_f_srobo2, gba_gba)
@@ -13855,7 +13855,7 @@ struct BurnDriver BurnDrvgba_f_srobo2 = {
 
 // Famicom Mini: Kidou Senshi Z Gundam: Hot Scramble (Japan, Promo)
 static struct BurnRomInfo gba_f_zgundmRomDesc[] = {
-	{ "Famicom Mini - Kidou Senshi Z Gundam - Hot Scramble (J, Promo)(2004)(Bandai).gba",	0x0400000,	0xfae4fdec,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini - Kidou Senshi Z Gundam - Hot Scramble (J, Promo)(2004)(Bandai).gba",	0x0100000,	0x07a73d0a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_zgundm, gba_f_zgundm, gba_gba)
@@ -13873,7 +13873,7 @@ struct BurnDriver BurnDrvgba_f_zgundm = {
 
 // Famicom Mini Vol.01: Super Mario Bros. (Japan, Rev. 1)
 static struct BurnRomInfo gba_f_smbRomDesc[] = {
-	{ "Famicom Mini Vol.01 - Super Mario Bros. (J, Rev 1)(2004)(Nintendo).gba",	0x0400000,	0x5848884c,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.01 - Super Mario Bros. (J, Rev 1)(2004)(Nintendo).gba",	0x0100000,	0xcd2604dd,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_smb, gba_f_smb, gba_gba)
@@ -13891,7 +13891,7 @@ struct BurnDriver BurnDrvgba_f_smb = {
 
 // Famicom Mini Vol.02: Donkey Kong (Japan)
 static struct BurnRomInfo gba_f_dkongRomDesc[] = {
-	{ "Famicom Mini Vol.02 - Donkey Kong (J)(2004)(Nintendo).gba",	0x0400000,	0x86d346af,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.02 - Donkey Kong (J)(2004)(Nintendo).gba",	0x0100000,	0x071c3f2b,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_dkong, gba_f_dkong, gba_gba)
@@ -13909,7 +13909,7 @@ struct BurnDriver BurnDrvgba_f_dkong = {
 
 // Famicom Mini Vol.03: Ice Climber (Japan)
 static struct BurnRomInfo gba_f_iceclmRomDesc[] = {
-	{ "Famicom Mini Vol.03 - Ice Climber (J)(2004)(Nintendo).gba",	0x0400000,	0x5646f9d1,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.03 - Ice Climber (J)(2004)(Nintendo).gba",	0x0100000,	0xd0aef472,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_iceclm, gba_f_iceclm, gba_gba)
@@ -13927,7 +13927,7 @@ struct BurnDriver BurnDrvgba_f_iceclm = {
 
 // Famicom Mini Vol.04: Excitebike (Japan)
 static struct BurnRomInfo gba_f_exbikeRomDesc[] = {
-	{ "Famicom Mini Vol.04 - Excitebike (J)(2004)(Nintendo).bin",	0x0400000,	0x319cdf36,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.04 - Excitebike (J)(2004)(Nintendo).gba",	0x0100000,	0x32604c95,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_exbike, gba_f_exbike, gba_gba)
@@ -13945,7 +13945,7 @@ struct BurnDriver BurnDrvgba_f_exbike = {
 
 // Famicom Mini Vol.05: Zelda no Densetsu 1: The Hyrule Fantasy (Japan)
 static struct BurnRomInfo gba_f_zeldaRomDesc[] = {
-	{ "Famicom Mini Vol.05 - Zelda no Densetsu 1 - The Hyrule Fantasy (J)(2004)(Nintendo).gba",	0x0400000,	0x114e37a1,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.05 - Zelda no Densetsu 1 - The Hyrule Fantasy (J)(2004)(Nintendo).gba",	0x0100000,	0x712d76e8,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_zelda, gba_f_zelda, gba_gba)
@@ -13963,7 +13963,7 @@ struct BurnDriver BurnDrvgba_f_zelda = {
 
 // Famicom Mini Vol.06: Pac-Man (Japan)
 static struct BurnRomInfo gba_f_pacmanRomDesc[] = {
-	{ "Famicom Mini Vol.06 - Pac-Man (J)(2004)(Nintendo).gba",	0x0400000,	0x3fec1606,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.06 - Pac-Man (J)(2004)(Nintendo).gba",	0x0100000,	0x91acf642,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_pacman, gba_f_pacman, gba_gba)
@@ -13981,7 +13981,7 @@ struct BurnDriver BurnDrvgba_f_pacman = {
 
 // Famicom Mini Vol.07: Xevious (Japan)
 static struct BurnRomInfo gba_f_xeviosRomDesc[] = {
-	{ "Famicom Mini Vol.07 - Xevious (J)(2004)(Nintendo).gba",	0x0400000,	0x1cd1f78c,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.07 - Xevious (J)(2004)(Nintendo).gba",	0x0100000,	0xf54eeb0e,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_xevios, gba_f_xevios, gba_gba)
@@ -13999,7 +13999,7 @@ struct BurnDriver BurnDrvgba_f_xevios = {
 
 // Famicom Mini Vol.08: Mappy (Japan)
 static struct BurnRomInfo gba_f_mappyRomDesc[] = {
-	{ "Famicom Mini Vol.08 - Mappy (J)(2004)(Nintendo).gba",	0x0400000,	0xd4b0779a,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.08 - Mappy (J)(2004)(Nintendo).gba",	0x0100000,	0xc29e4a08,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_mappy, gba_f_mappy, gba_gba)
@@ -14017,7 +14017,7 @@ struct BurnDriver BurnDrvgba_f_mappy = {
 
 // Famicom Mini Vol.09: Bomberman (Japan)
 static struct BurnRomInfo gba_f_bombmnRomDesc[] = {
-	{ "Famicom Mini Vol.09 - Bomberman (J)(2004)(Nintendo).gba",	0x0400000,	0x3b92ee60,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.09 - Bomberman (J)(2004)(Nintendo).gba",	0x0100000,	0xc1116e40,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_bombmn, gba_f_bombmn, gba_gba)
@@ -14035,7 +14035,7 @@ struct BurnDriver BurnDrvgba_f_bombmn = {
 
 // Famicom Mini Vol.10: Star Soldier (Japan)
 static struct BurnRomInfo gba_f_ssoldrRomDesc[] = {
-	{ "Famicom Mini Vol.10 - Star Soldier (J)(2004)(Nintendo).gba",	0x0400000,	0x0958ee09,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.10 - Star Soldier (J)(2004)(Nintendo).gba",	0x0100000,	0x1e23bad4,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_ssoldr, gba_f_ssoldr, gba_gba)
@@ -14053,7 +14053,7 @@ struct BurnDriver BurnDrvgba_f_ssoldr = {
 
 // Famicom Mini Vol.11: Mario Bros. (Japan)
 static struct BurnRomInfo gba_f_marioRomDesc[] = {
-	{ "Famicom Mini Vol.11 - Mario Bros. (J)(2004)(Nintendo).gba",	0x0400000,	0x9cd4d6cf,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.11 - Mario Bros. (J)(2004)(Nintendo).gba",	0x0100000,	0x42a027ab,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_mario, gba_f_mario, gba_gba)
@@ -14071,7 +14071,7 @@ struct BurnDriver BurnDrvgba_f_mario = {
 
 // Famicom Mini Vol.12: Clu Clu Land (Japan)
 static struct BurnRomInfo gba_f_clucluRomDesc[] = {
-	{ "Famicom Mini Vol.12 - Clu Clu Land (J)(2004)(Nintendo).gba",	0x0400000,	0xc4c03aa8,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.12 - Clu Clu Land (J)(2004)(Nintendo).gba",	0x0100000,	0x8b3219fe,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_cluclu, gba_f_cluclu, gba_gba)
@@ -14089,7 +14089,7 @@ struct BurnDriver BurnDrvgba_f_cluclu = {
 
 // Famicom Mini Vol.13: Balloon Fight (Japan)
 static struct BurnRomInfo gba_f_ballnfRomDesc[] = {
-	{ "Famicom Mini Vol.13 - Balloon Fight (J)(2004)(Nintendo).gba",	0x0400000,	0x45d299d7,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.13 - Balloon Fight (J)(2004)(Nintendo).gba",	0x0100000,	0xa01f014a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_ballnf, gba_f_ballnf, gba_gba)
@@ -14107,7 +14107,7 @@ struct BurnDriver BurnDrvgba_f_ballnf = {
 
 // Famicom Mini Vol.14: Wrecking Crew (Japan)
 static struct BurnRomInfo gba_f_wreckRomDesc[] = {
-	{ "Famicom Mini Vol.14 - Wrecking Crew (J)(2004)(Nintendo).gba",	0x0400000,	0x6c0611f0,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.14 - Wrecking Crew (J)(2004)(Nintendo).gba",	0x0100000,	0xadac99bd,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_wreck, gba_f_wreck, gba_gba)
@@ -14125,7 +14125,7 @@ struct BurnDriver BurnDrvgba_f_wreck = {
 
 // Famicom Mini Vol.15: Dr. Mario (Japan)
 static struct BurnRomInfo gba_f_drmrioRomDesc[] = {
-	{ "Famicom Mini Vol.15 - Dr. Mario (J)(2004)(Nintendo).gba",	0x0400000,	0xe23a7ed0,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.15 - Dr. Mario (J)(2004)(Nintendo).gba",	0x0100000,	0xc836f2e2,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_drmrio, gba_f_drmrio, gba_gba)
@@ -14143,7 +14143,7 @@ struct BurnDriver BurnDrvgba_f_drmrio = {
 
 // Famicom Mini Vol.16: Dig Dug (Japan)
 static struct BurnRomInfo gba_f_digdugRomDesc[] = {
-	{ "Famicom Mini Vol.16 - Dig Dug (J)(2004)(Nintendo).gba",	0x0400000,	0x57513b63,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.16 - Dig Dug (J)(2004)(Nintendo).gba",	0x0100000,	0xee4c3504,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_digdug, gba_f_digdug, gba_gba)
@@ -14161,7 +14161,7 @@ struct BurnDriver BurnDrvgba_f_digdug = {
 
 // Famicom Mini Vol.17: Takahashi Meijin no Bouken-jima (Japan)
 static struct BurnRomInfo gba_f_takambRomDesc[] = {
-	{ "Famicom Mini Vol.17 - Takahashi Meijin no Bouken-jima (J)(2004)(Nintendo).gba",	0x0400000,	0x3bef3b74,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.17 - Takahashi Meijin no Bouken-jima (J)(2004)(Nintendo).gba",	0x0100000,	0x53286f51,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_takamb, gba_f_takamb, gba_gba)
@@ -14179,7 +14179,7 @@ struct BurnDriver BurnDrvgba_f_takamb = {
 
 // Famicom Mini Vol.18 - Makai Mura (Japan)
 static struct BurnRomInfo gba_f_makaimRomDesc[] = {
-	{ "Famicom Mini Vol.18 - Makai Mura (J)(2004)(Nintendo).gba",	0x0400000,	0x85261ec6,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.18 - Makai Mura (J)(2004)(Nintendo).gba",	0x0100000,	0x8a7964ca,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_makaim, gba_f_makaim, gba_gba)
@@ -14197,7 +14197,7 @@ struct BurnDriver BurnDrvgba_f_makaim = {
 
 // Famicom Mini Vol.19: Twin Bee (Japan)
 static struct BurnRomInfo gba_f_twinbeRomDesc[] = {
-	{ "Famicom Mini Vol.19 - Twin Bee (J)(2004)(Nintendo).gba",	0x0400000,	0x26a17681,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.19 - Twin Bee (J)(2004)(Nintendo).gba",	0x0100000,	0x2f390212,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_twinbe, gba_f_twinbe, gba_gba)
@@ -14215,7 +14215,7 @@ struct BurnDriver BurnDrvgba_f_twinbe = {
 
 // Famicom Mini Vol.20: Ganbare Goemon!: Karakuri Douchuu (Japan)
 static struct BurnRomInfo gba_f_goemonRomDesc[] = {
-	{ "Famicom Mini Vol.20 - Ganbare Goemon! - Karakuri Douchuu (J)(2004)(Nintendo).gba",	0x0400000,	0x10b48dba,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.20 - Ganbare Goemon! - Karakuri Douchuu (J)(2004)(Nintendo).gba",	0x0100000,	0x33196b58,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_goemon, gba_f_goemon, gba_gba)
@@ -14233,7 +14233,7 @@ struct BurnDriver BurnDrvgba_f_goemon = {
 
 // Famicom Mini Vol.21: Super Mario Bros. 2 (Japan)
 static struct BurnRomInfo gba_f_smb2RomDesc[] = {
-	{ "Famicom Mini Vol.21 - Super Mario Bros. 2 (J)(2004)(Nintendo).gba",	0x0400000,	0xf55674a3,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.21 - Super Mario Bros. 2 (J)(2004)(Nintendo).gba",	0x0100000,	0xef18f7b2,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_smb2, gba_f_smb2, gba_gba)
@@ -14269,7 +14269,7 @@ struct BurnDriver BurnDrvgba_f_nazo = {
 
 // Famicom Mini Vol.23: Metroid (Japan)
 static struct BurnRomInfo gba_f_metroiRomDesc[] = {
-	{ "Famicom Mini Vol.23 - Metroid (J)(Nintendo).gba",	0x0400000,	0xabeccdab,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.23 - Metroid (J)(2004)(Nintendo).gba",	0x0400000,	0xabeccdab,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_metroi, gba_f_metroi, gba_gba)
@@ -14377,7 +14377,7 @@ struct BurnDriver BurnDrvgba_f_tante2 = {
 
 // Famicom Mini Vol.29: Akumajou Dracula (Japan)
 static struct BurnRomInfo gba_f_akumajRomDesc[] = {
-	{ "Famicom Mini Vol.29 - Akumajou Dracula (J)(2004)(Nintendo).gba",	0x0400000,	0x012fa057,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.29 - Akumajou Dracula (J)(2004)(Nintendo).gba",	0x0100000,	0x11419d8b,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_akumaj, gba_f_akumaj, gba_gba)
@@ -14395,7 +14395,7 @@ struct BurnDriver BurnDrvgba_f_akumaj = {
 
 // Famicom Mini Vol.30: SD Gundam World: Gachapon Senshi Scramble Wars (Japan)
 static struct BurnRomInfo gba_f_sdgundRomDesc[] = {
-	{ "Famicom Mini Vol.30 - SD Gundam World - Gachapon Senshi Scramble Wars (J)(2004)(Nintendo).gba",	0x0400000,	0x9ed2daeb,	BRF_ESS | BRF_PRG },
+	{ "Famicom Mini Vol.30 - SD Gundam World - Gachapon Senshi Scramble Wars (J)(2004)(Nintendo).gba",	0x0100000,	0xba78d1ee,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_f_sdgund, gba_f_sdgund, gba_gba)

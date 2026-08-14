@@ -106,6 +106,16 @@ void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32))
 	h6280_irqcallback(callback);
 }
 
+void h6280SetCallback(int (*cb)(int))
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280SetCallback called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetCallback called with no CPU open\n"));
+#endif
+
+	h6280_set_callback(cb);
+}
+
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8))
 {
 #if defined FBNEO_DEBUG

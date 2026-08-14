@@ -187,6 +187,11 @@ void h6280_irqcallback(int (*irqcallback)(int))
 	h6280.irq_callback = irqcallback;
 }
 
+void h6280_set_callback(int (*cb)(int))
+{
+	h6280.insn_callback = cb;
+}
+
 void h6280Reset(void)
 {
 #if defined FBNEO_DEBUG
@@ -260,6 +265,8 @@ int h6280Run(int cycles)
 			CHANGE_PC;
 		h6280.ppc = h6280.pc;
 
+		INT32 pICOUNT = h6280_ICount;
+
 //		debugger_instruction_hook(Machine, PCW);
 
 		/* Execute 1 instruction */
@@ -290,6 +297,10 @@ int h6280Run(int cycles)
 				set_irq_line(2,ASSERT_LINE);
 			}
 		}
+
+		if (h6280.insn_callback)
+			h6280.insn_callback(pICOUNT - h6280_ICount);
+
 	} while (h6280_ICount > 0 && !end_run);
 
 	cycles = cycles - h6280_ICount;

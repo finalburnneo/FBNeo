@@ -12656,7 +12656,7 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1)
+// Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1.0)
 // https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/wjammers
 
 static struct BurnRomInfo wjammebRomDesc[] = {
@@ -12682,12 +12682,12 @@ STD_ROM_FN(wjammeb)
 
 struct BurnDriver BurnDrvWjammeb = {
 	"wjammeb", "wjammers", "neogeo", NULL, "2025-26",
-	"Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1)\0", NULL, "Boomchil", "Neo Geo MVS",
+	"Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, wjammebRomInfo, wjammebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
+	0x1000,	320, 224, 4, 3
 };
 
 

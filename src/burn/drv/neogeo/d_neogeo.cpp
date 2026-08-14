@@ -12656,18 +12656,18 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Windjammers / Flying Power Disc (Let me play longer, Hack)
-// https://github.com/Boomchil/wjammers-lmpl
+// Windjammers / Flying Power Disc (Endless Breeze, Hack)
+// https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/wjammers
 
-static struct BurnRomInfo wjammlmplRomDesc[] = {
-	{ "065-p1lmpl.p1",    0x100000, 0xbd442f8f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
+static struct BurnRomInfo wjammebRomDesc[] = {
+	{ "065-p1eb.p1",  0x100000, 0x042fbcdf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
 
-	{ "065-s1lmpl.s1",    0x020000, 0xd282ba6d, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+	{ "065-s1eb.s1",  0x020000, 0x9827f989, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
 	{ "065-c1.c1",    0x100000, 0xc7650204, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
 	{ "065-c2.c2",    0x100000, 0xd9f3e71d, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
-	{ "065-c3.c3",    0x100000, 0x40986386, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
-	{ "065-c4.c4",    0x100000, 0x715e15ff, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
+	{ "065-c3eb.c3",  0x100000, 0x153363b0, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "065-c4eb.c4",  0x100000, 0xc7b5b02d, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
 	{ "065-m1.m1",    0x020000, 0x52c23cfc, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
@@ -12677,15 +12677,15 @@ static struct BurnRomInfo wjammlmplRomDesc[] = {
 	{ "065-v4.v4",    0x100000, 0x5dee7963, 5 | BRF_SND },           // 10 					/ mask rom TC538200
 };
 
-STDROMPICKEXT(wjammlmpl, wjammlmpl, neogeo)
-STD_ROM_FN(wjammlmpl)
+STDROMPICKEXT(wjammeb, wjammeb, neogeo)
+STD_ROM_FN(wjammeb)
 
-struct BurnDriver BurnDrvWjammlmpl = {
-	"wjammlmpl", "wjammers", "neogeo", NULL, "2025",
-	"Windjammers / Flying Power Disc (Let me play longer, Hack)\0", NULL, "Boomchil", "Neo Geo MVS",
+struct BurnDriver BurnDrvWjammeb = {
+	"wjammeb", "wjammers", "neogeo", NULL, "2025-26",
+	"Windjammers / Flying Power Disc (Endless Breeze, Hack)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
-	NULL, wjammlmplRomInfo, wjammlmplRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, wjammebRomInfo, wjammebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

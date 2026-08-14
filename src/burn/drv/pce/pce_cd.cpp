@@ -642,18 +642,25 @@ static void cd_set_adpcm_ram_byte(UINT8 val)
 	}
 }
 
+static void cd_clear_ack()
+{
+	cd_update();
+	scsi_ACK = 0;
+	// "Ginga Fukei Densetsu Sapphire" hangs if we don't update again
+	cd_update();
+	if (scsi_CD) {
+		cd_adpcm_dma_reg &= 0xfc;
+	}
+}
+
 static UINT8 cd_get_cd_data_byte()
 {
 	UINT8 data = cd_cdc_data;
 	if (scsi_REQ && !scsi_ACK && !scsi_CD) {
 		if (scsi_IO) {
 			scsi_ACK = 1;
-			// MAME uses a timer here to set ACK 15 cycles later
-			cd_update();
-			scsi_ACK = 0;
-			if (scsi_CD) {
-				cd_adpcm_dma_reg &= 0xfc;
-			}
+			// MAME uses a timer here to clear ACK 15 cycles later
+			cd_clear_ack();
 		}
 	}
 	return data;
@@ -1270,7 +1277,7 @@ void CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 UINT8 CDSubsystemRegsRead(UINT32 address)
 {
 	if (HAS_CD) {
-		if ((address & 0xff) >= 0xc0 && (address & 0xff) <= 0xc7) {
+		if (address >= 0x1ff8c0 && address <= 0x1ff8c7) {
 			switch (address & 0x0f) {
 				case 0x1: return 0xaa;
 				case 0x2: return 0x55;

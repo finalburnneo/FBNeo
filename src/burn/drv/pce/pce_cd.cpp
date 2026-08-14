@@ -26,6 +26,9 @@ static UINT8 *PCECDRAM;
 static UINT8 *PCESuperRAM;
 static UINT8 *PCEAcardRAM;
 
+static dtimer cd_ack_clear_timer;
+static dtimer cd_adpcm_dma_timer;
+
 struct acard_port_t {
 	UINT8  ctrl;
 	UINT32 base_addr;
@@ -101,7 +104,6 @@ static double cd_cdda_volume = 100.0, cd_adpcm_volume = 100.0;
 #define PCE_CD_TICKS_PER_SEC (262 * 60)
 static double cd_cdda_fade_step = 0.0, cd_adpcm_fade_step = 0.0;
 static UINT8 cd_cdda_fade_active = 0, cd_adpcm_fade_active = 0;
-static UINT8 adpcm_dma_active;
 
 #define PCE_CD_CLOCK 9216000
 
@@ -121,7 +123,7 @@ static UINT16 adpcm_read_ptr, adpcm_write_ptr;
 static UINT8  adpcm_read_buf, adpcm_write_buf;
 static UINT16 adpcm_length;
 
-static UINT16 msm_start_addr, msm_end_addr, msm_half_addr;
+static UINT32 msm_start_addr, msm_end_addr, msm_half_addr;
 static UINT8  msm_nibble;
 static UINT8  msm_repeat;
 static UINT8  msm_idle;
@@ -574,7 +576,7 @@ static void cd_update()
 			cd_selected = 0;
 			cd_cdda_status = PCE_CD_CDDA_OFF;
 			CDEmuStop();
-			adpcm_dma_active = 0; // stop ADPCM DMA here
+			cd_adpcm_dma_timer.stop_retrig(); // stop ADPCM DMA here
 		}
 		scsi_last_RST = scsi_RST;
 	}
@@ -642,7 +644,7 @@ static void cd_set_adpcm_ram_byte(UINT8 val)
 	}
 }
 
-static void cd_clear_ack()
+static void cd_ack_clear_timer_cb(int param)
 {
 	cd_update();
 	scsi_ACK = 0;
@@ -659,11 +661,19 @@ static UINT8 cd_get_cd_data_byte()
 	if (scsi_REQ && !scsi_ACK && !scsi_CD) {
 		if (scsi_IO) {
 			scsi_ACK = 1;
-			// MAME uses a timer here to clear ACK 15 cycles later
-			cd_clear_ack();
+			cd_ack_clear_timer.start(15, 0, 1, 0);
 		}
 	}
 	return data;
+}
+
+static void cd_adpcm_dma_timer_cb(int param)
+{
+	if (scsi_REQ && !scsi_ACK && !scsi_CD && scsi_IO) {
+		PCEADPCMRAM[adpcm_write_ptr] = cd_get_cd_data_byte();
+		adpcm_write_ptr = (adpcm_write_ptr + 1) & 0xffff;
+		cd_adpcm_status &= ~4;
+	}
 }
 
 /*
@@ -692,7 +702,7 @@ static void cd_reg_cdc_status_w(UINT8 data)
 	scsi_SEL = 1;
 	cd_update();
 	scsi_SEL = 0;
-	adpcm_dma_active = 0; // stop ADPCM DMA here
+	cd_adpcm_dma_timer.stop_retrig(); // stop ADPCM DMA here
 	/* any write here clears CD transfer irqs */
 	cd_set_irq_line(0x70, 0);
 	cd_cdc_status = data;
@@ -841,7 +851,7 @@ static UINT8 cd_reg_adpcm_dma_control_r()
 static void cd_reg_adpcm_dma_control_w(UINT8 data)
 {
 	if (data & 3) {
-		adpcm_dma_active = 1;
+		cd_adpcm_dma_timer.start((INT32)hz_to_cycles(153600.0f, 7159090), 0, 1, 1);
 		cd_adpcm_status |= 4;
 	}
 	cd_adpcm_dma_reg = data;
@@ -934,6 +944,7 @@ static void cd_reg_adpcm_address_control_w(UINT8 data)
 
 	if (data & 0x10) { // ADPCM set length
 		adpcm_length = cd_adpcm_latch_address;
+		bprintf(0, _T("ADPCM set length: latch=%04x -> adpcm_length=%04x\n"), cd_adpcm_latch_address, adpcm_length);
 	}
 	if (data & 0x08) { // ADPCM set read address
 		adpcm_read_ptr = cd_adpcm_latch_address;
@@ -1029,7 +1040,7 @@ static void cd_msm5205_vclk_callback()
 	if (msm_idle) return;
 
 	/* Supply new ADPCM data */
-	UINT8 msm_data = (msm_nibble) ? (PCEADPCMRAM[msm_start_addr] & 0x0f) : ((PCEADPCMRAM[msm_start_addr] & 0xf0) >> 4);
+	UINT8 msm_data = (msm_nibble) ? (PCEADPCMRAM[msm_start_addr & 0xffff] & 0x0f) : ((PCEADPCMRAM[msm_start_addr & 0xffff] & 0xf0) >> 4);
 
 	MSM5205DataWrite(0, msm_data);
 
@@ -1104,14 +1115,6 @@ void CDSubsystemTick()
 		    (cd_adpcm_fade_step > 0.0 && cd_adpcm_volume >= 100.0)) {
 			cd_adpcm_volume = (cd_adpcm_fade_step < 0.0) ? 0.0 : 100.0;
 			cd_adpcm_fade_active = 0;
-		}
-	}
-
-	if (adpcm_dma_active) {
-		if (scsi_REQ && !scsi_ACK && !scsi_CD && scsi_IO) {
-			PCEADPCMRAM[adpcm_write_ptr] = cd_get_cd_data_byte();
-			adpcm_write_ptr = (adpcm_write_ptr + 1) & 0xffff;
-			cd_adpcm_status &= ~4;
 		}
 	}
 }
@@ -1374,7 +1377,6 @@ void CDSubsystemReset()
 		cd_cdda_status = PCE_CD_CDDA_OFF;
 		cd_irq_mask = 0;
 		cd_irq_status = 0;
-		adpcm_dma_active = 0;
 		adpcm_read_ptr = adpcm_write_ptr = 0;
 		msm_idle = 1;
 		msm_start_addr = msm_end_addr = msm_half_addr = 0;
@@ -1382,6 +1384,7 @@ void CDSubsystemReset()
 		msm_repeat = 0;
 		adpcm_rate = 0;
 		MSM5205Reset();
+		timerReset();
 		cd_cdda_fade_active = 0;
 		cd_adpcm_fade_active = 0;
 
@@ -1434,6 +1437,13 @@ void CDSubsystemInit()
 		acard_shift_reg = 0;
 		acard_rotate_reg = 0;
 	}
+
+	timerInit();
+	timerAdd(cd_ack_clear_timer, 0, cd_ack_clear_timer_cb);
+	timerAdd(cd_adpcm_dma_timer, 0, cd_adpcm_dma_timer_cb);
+	h6280Open(0);
+	h6280SetCallback(timerRun);
+	h6280Close();
 }
 
 void CDSubsystemExit()
@@ -1441,6 +1451,7 @@ void CDSubsystemExit()
 	if (HAS_CD) {
 		CDEmuExit();
 		MSM5205Exit();
+		timerExit();
 	}
 }
 
@@ -1513,7 +1524,6 @@ void CDSubsystemScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(cd_cdda_fade_active);
 			SCAN_VAR(cd_adpcm_fade_step);
 			SCAN_VAR(cd_adpcm_fade_active);
-			SCAN_VAR(adpcm_dma_active);
 			SCAN_VAR(msm_start_addr);
 			SCAN_VAR(msm_end_addr);
 			SCAN_VAR(msm_half_addr);
@@ -1523,6 +1533,7 @@ void CDSubsystemScan(INT32 nAction, INT32 *pnMin)
 
 			CDEmuScan(nAction, pnMin);
 			MSM5205Scan(nAction, pnMin);
+			timerScan();
 
 			if (hardware_type == ACARD_HW) {
 				ScanVar(acard_port, sizeof(acard_port), "Arcade Card DRAM Ports");

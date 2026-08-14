@@ -38097,7 +38097,7 @@ struct BurnDriver BurnDrvmd_amshay = {
 // Animal Control: Elite Balloon Squad (HB, v1.2.0)
 // https://safetystoatstudios.itch.io/acebs
 static struct BurnRomInfo md_animalcontrolebsRomDesc[] = {
-	{ "Animal Control: Elite Balloon Squad v1.2.0 (2023)(Safety Stoat Studios).bin", 2490368, 0x501bc79f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Animal Control - Elite Balloon Squad v1.2.0 (2023)(Safety Stoat Studios).bin", 2490368, 0x501bc79f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_animalcontrolebs)

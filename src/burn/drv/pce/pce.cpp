@@ -662,6 +662,7 @@ INT32 PCEFrame()
 	}
 
 	h6280NewFrame(); // needed for c6280
+	if (HAS_CD) timerNewFrame();
 
 	PCECompileInputs();
 
@@ -673,6 +674,7 @@ INT32 PCEFrame()
 
 	h6280Open(0);
 	h6280Idle(nExtraCycles);
+	if (HAS_CD) timerIdle(nExtraCycles);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += h6280Run(1128/3); // 1128 m-cycles brings us to hblank. "/ 3" m-cycles -> cpu cycles

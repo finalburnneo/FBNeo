@@ -1,4 +1,5 @@
 #include "msm5205.h"
+#include "dtimer.h"
 
 extern INT32 hardware_type;
 

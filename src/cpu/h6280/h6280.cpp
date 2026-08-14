@@ -201,8 +201,10 @@ void h6280Reset(void)
 
 	/* wipe out the h6280 structure */
 	int (*save_irqcallback)(int) = h6280.irq_callback;
+	int (*save_insncallback)(int) = h6280.insn_callback;
 	memset(&h6280, 0, sizeof(h6280_Regs));
 	h6280.irq_callback = save_irqcallback;
+	h6280.insn_callback = save_insncallback;
 
 	/* set I and B flags */
 	P = _fI | _fB;

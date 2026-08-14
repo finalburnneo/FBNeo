@@ -31,8 +31,11 @@
 #define CHANGE_PC			change_pc(PCW)
 #define H6280_CYCLES(cyc)											\
 	{																\
-		h6280_ICount -= ((cyc) * h6280.clocks_per_cycle);			\
-		h6280.timer_value -= ((cyc) * h6280.clocks_per_cycle);		\
+		const int cycto = ((cyc) * h6280.clocks_per_cycle);			\
+		h6280_ICount -= cycto;										\
+		h6280.timer_value -= cycto;									\
+		if (h6280.insn_callback)									\
+			h6280.insn_callback(cycto);								\
 	}
 
 #if LAZY_FLAGS

@@ -27724,6 +27724,66 @@ struct BurnDriver BurnDrvCndi = {
 };
 
 
+// DoomGeo (HB, 8643a06)
+// https://github.com/sabino/DoomGeo
+
+static struct BurnRomInfo doomgeoRomDesc[] = {
+	{ "doomgeo-p1.bin",		0x0080000, 0x3fbc2d79, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "doomgeo-s1.bin",		0x0020000, 0x248bc475, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "doomgeo-c1.bin",		0x0400000, 0x70903dec, 3 | BRF_GRA },           //  2 Sprite data
+	{ "doomgeo-c2.bin",		0x0400000, 0x90bc023a, 3 | BRF_GRA },           //  3
+
+	{ "doomgeo-m1.bin",		0x0020000, 0x1c996f5d, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "doomgeo-v1.bin",		0x0080000, 0x75660aac, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(doomgeo, doomgeo, neogeo)
+STD_ROM_FN(doomgeo)
+
+struct BurnDriver BurnDrvdoomgeo = {
+	"doomgeo", NULL, "neogeo", NULL, "2026",
+	"DoomGeo (HB, 8643a06)\0", "No sound and minor graphical glitches", "Sabino", "Neo Geo AES",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	NULL, doomgeoRomInfo, doomgeoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
+// Freedoom (HB, v0.13.0 8643a06)
+// https://github.com/sabino/DoomGeo
+
+static struct BurnRomInfo freedoomRomDesc[] = {
+	{ "freedoom-p1.bin",		0x0080000, 0xf57478f2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "freedoom-s1.bin",		0x0020000, 0x1b4ec91c, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "freedoom-c1.bin",		0x0400000, 0xbb8e2a1b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "freedoom-c2.bin",		0x0400000, 0x51a2ebaa, 3 | BRF_GRA },           //  3
+
+	{ "freedoom-m1.bin",		0x0020000, 0x1c996f5d, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "freedoom-v1.bin",		0x0080000, 0x75660aac, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(freedoom, freedoom, neogeo)
+STD_ROM_FN(freedoom)
+
+struct BurnDriver BurnDrvfreedoom = {
+	"freedoom", "doomgeo", "neogeo", NULL, "2026",
+	"Freedoom (HB, v0.13.0 8643a06)\0", "No sound and minor graphical glitches", "Sabino", "Neo Geo AES",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	NULL, freedoomRomInfo, freedoomRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
 // Double Dragon One (Beta 3.2 Version)
 // https://ozzyouzo.itch.io/double-dragon
 

@@ -27012,9 +27012,9 @@ struct BurnDriver BurnDrvgba_marioglfj = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Mario Kart - Super Circuit (Europe)
+// Mario Kart: Super Circuit (Europe)
 static struct BurnRomInfo gba_mariokrtRomDesc[] = {
-	{ "agb-amkp-0.u1",	0x0400000,	0x20025842,	BRF_ESS | BRF_PRG },
+	{ "Mario Kart - Super Circuit (E)(2001)(Nintendo).gba",	0x0400000,	0x20025842,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mariokrt, gba_mariokrt, gba_gba)
@@ -27022,7 +27022,7 @@ STD_ROM_FN(gba_mariokrt)
 
 struct BurnDriver BurnDrvgba_mariokrt = {
 	"gba_mariokrt", NULL, "gba_gba", NULL, "2001",
-	"Mario Kart - Super Circuit (Europe)\0", NULL, "Nintendo", "Game Boy Advance",
+	"Mario Kart: Super Circuit (Europe)\0", NULL, "Nintendo", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_mariokrtRomInfo, gba_mariokrtRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
@@ -27030,9 +27030,9 @@ struct BurnDriver BurnDrvgba_mariokrt = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Mario Kart - Super Circuit (USA)
+// Mario Kart: Super Circuit (USA)
 static struct BurnRomInfo gba_mariokrtuRomDesc[] = {
-	{ "agb-amke-0.u1",	0x0400000,	0xed316e37,	BRF_ESS | BRF_PRG },
+	{ "Mario Kart - Super Circuit (U)(2001)(Nintendo).gba",	0x0400000,	0xed316e37,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mariokrtu, gba_mariokrtu, gba_gba)
@@ -27040,7 +27040,7 @@ STD_ROM_FN(gba_mariokrtu)
 
 struct BurnDriver BurnDrvgba_mariokrtu = {
 	"gba_mariokrtu", "gba_mariokrt", "gba_gba", NULL, "2001",
-	"Mario Kart - Super Circuit (USA)\0", NULL, "Nintendo", "Game Boy Advance",
+	"Mario Kart: Super Circuit (USA)\0", NULL, "Nintendo", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_mariokrtuRomInfo, gba_mariokrtuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
@@ -27050,7 +27050,7 @@ struct BurnDriver BurnDrvgba_mariokrtu = {
 
 // Mario Kart Advance (Japan)
 static struct BurnRomInfo gba_mariokrtjRomDesc[] = {
-	{ "mario kart advance (japan).bin",	0x0400000,	0x30e99fcd,	BRF_ESS | BRF_PRG },
+	{ "Mario Kart Advance (J)(2001)(Nintendo).gba",	0x0400000,	0x30e99fcd,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mariokrtj, gba_mariokrtj, gba_gba)

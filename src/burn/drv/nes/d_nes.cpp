@@ -19783,6 +19783,25 @@ struct BurnDriver BurnDrvnes_hokutonokenop = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hold the Light (HB)
+// https://tsbf-studio.itch.io/hold-the-light
+static struct BurnRomInfo nes_holdlightRomDesc[] = {
+	{ "Hold the Light (2025)(TSBF Studio).nes",          524304, 0x013aee36, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_holdlight)
+STD_ROM_FN(nes_holdlight)
+
+struct BurnDriver BurnDrvnes_holdlight = {
+	"nes_holdlight", NULL, NULL, NULL, "2025",
+	"Hold the Light (HB)\0", NULL, "TSBF Studio", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_holdlightRomInfo, nes_holdlightRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Hollow Knight Grab Grub (HB)
 static struct BurnRomInfo nes_hollowkggRomDesc[] = {
 	{ "Hollow Knight Grab Grub (2022)(Elvies).nes",          40976, 0x7218e26f, BRF_ESS | BRF_PRG },

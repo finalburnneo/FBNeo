@@ -253,7 +253,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin) {
-		*pnMin = 0x029698;
+		*pnMin = 0x029708;
 	}
 
 	if ((nAction & ACB_VOLATILE) && Gba && DrvState) {
@@ -55120,10 +55120,10 @@ struct BurnDriver BurnDrvgba_apotris = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Battle Airforce (HB, v1.01)
+// Battle Airforce (HB)
 
 static struct BurnRomInfo gba_battleafRomDesc[] = {
-	{ "Battle Airforce v1.01 (2025)(Suzuki Plan).gba",	1459660,	0xc3a57a26,	BRF_ESS | BRF_PRG },
+	{ "Battle Airforce (2025)(Suzuki Plan).gba",	1459660,	0xc3a57a26,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_battleaf, gba_battleaf, gba_gba)
@@ -55131,7 +55131,7 @@ STD_ROM_FN(gba_battleaf)
 
 struct BurnDriver BurnDrvgba_battleaf = {
 	"gba_battleaf", NULL, "gba_gba", NULL, "2025",
-	"Battle Airforce (HB, v1.01)\0", NULL, "Suzuki Plan", "Game Boy Advance",
+	"Battle Airforce (HB)\0", NULL, "Suzuki Plan", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
 	GbaGetZipName, gba_battleafRomInfo, gba_battleafRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,

@@ -150,7 +150,10 @@ static void GbaCoreApplyCartridgeFeatures(GbaCore *core)
 {
 	core->state.cart.features = core->cartridgeFeatures;
 	if (core->cartridgeBackupType != GBA_BACKUP_NONE) {
-		core->state.cart.backup_type = core->cartridgeBackupType;
+		UINT8 backup_type = core->state.cart.backup_type;
+		bool already_detected = backup_type == GBA_BACKUP_EEPROM_512B || backup_type == GBA_BACKUP_EEPROM_8KB;
+		if (!(core->cartridgeBackupType == GBA_BACKUP_EEPROM && already_detected))
+			core->state.cart.backup_type = core->cartridgeBackupType;
 		gba_setup_flash_id(&core->state);
 	}
 	gba_gpio_update_rumble(&core->state);
@@ -268,6 +271,10 @@ INT32 GbaCoreReset(GbaCore *core)
 	INT64 rtcSeconds      = core->state.rtc.rtc_seconds;
 	INT64 rtcHostSeconds  = core->state.rtc.host_seconds;
 	UINT8 rtcStatus       = core->state.rtc.status;
+	UINT8 backupType      = core->state.cart.backup_type;
+	UINT8 eepromSize      = core->state.eeprom.size;
+	bool  eepromDetect    = core->state.eeprom.detect_size;
+	bool  batteryDirty    = core->state.cart.backup_is_dirty;
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = core->romSize;
@@ -279,6 +286,12 @@ INT32 GbaCoreReset(GbaCore *core)
 	if (!loaded)
 		return 1;
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
+	if (backupType == GBA_BACKUP_EEPROM_512B || backupType == GBA_BACKUP_EEPROM_8KB) {
+		core->state.cart.backup_type = backupType;
+		core->state.eeprom.size = eepromSize;
+		core->state.eeprom.detect_size = eepromDetect;
+	}
+	core->state.cart.backup_is_dirty = batteryDirty;
 	core->state.rtc.rtc_seconds  = rtcSeconds;
 	core->state.rtc.host_seconds = rtcHostSeconds;
 	core->state.rtc.status       = rtcStatus;
@@ -421,6 +434,17 @@ INT32 GbaCoreLoadBattery(GbaCore *core, const UINT8 *data, size_t size)
 		return 1;
 	memset(core->state.mem.cart_backup, 0xff, GBA_BATTERY_CAPACITY);
 	memcpy(core->state.mem.cart_backup, data, size);
+	if (core->state.cart.backup_type == GBA_BACKUP_EEPROM && core->state.eeprom.detect_size) {
+		if (size == 512) {
+			core->state.cart.backup_type = GBA_BACKUP_EEPROM_512B;
+			core->state.eeprom.size = GBA_EEPROM_SIZE_512B;
+			core->state.eeprom.detect_size = false;
+		} else if (size == 8 * 1024) {
+			core->state.cart.backup_type = GBA_BACKUP_EEPROM_8KB;
+			core->state.eeprom.size = GBA_EEPROM_SIZE_8KB;
+			core->state.eeprom.detect_size = false;
+		}
+	}
 	core->state.cart.backup_is_dirty = false;
 	return 0;
 }
@@ -460,24 +484,31 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read16_seq);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read32_seq);
+	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, fetch16);
+	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, fetch32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write8);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write16);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_read);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_write);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, trigger_breakpoint);
+	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, idle);
 #undef GBA_CLEAR_STATE_FIELD
 	return 0;
 }
 
 INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
 {
-	if (core == NULL || data == NULL || size < sizeof(gba_t) || core->rom == NULL)
+	if (core == NULL || data == NULL || size != sizeof(gba_t) || core->rom == NULL)
+		return 1;
+	if (((const gba_t *)data)->raw_state_version != GBA_RAW_STATE_VERSION)
 		return 1;
 	UINT8 battery[GBA_BATTERY_CAPACITY];
+	bool  batteryDirty = core->state.cart.backup_is_dirty;
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	memcpy(&core->state, data, sizeof(gba_t));
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
+	core->state.cart.backup_is_dirty |= batteryDirty;
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	if (!preserveAudio)

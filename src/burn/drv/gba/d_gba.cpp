@@ -253,7 +253,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin) {
-		*pnMin = 0x029698;
+		*pnMin = 0x029708;
 	}
 
 	if ((nAction & ACB_VOLATILE) && Gba && DrvState) {

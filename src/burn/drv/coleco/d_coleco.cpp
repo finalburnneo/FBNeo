@@ -5214,6 +5214,24 @@ struct BurnDriver BurnDrvcv_amzsnake = {
 	272, 228, 4, 3
 };
 
+// Amidar (HB)
+static struct BurnRomInfo cv_AmidarRomDesc[] = {
+	{ "Amidar (2025)(Opcode).rom", 131072, 0xe4676d56, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Amidar, cv_Amidar, cv_coleco)
+STD_ROM_FN(cv_Amidar)
+
+struct BurnDriver BurnDrvcv_Amidar = {
+	"cv_amidar", NULL, "cv_coleco", NULL, "2024",
+	"Amidar (HB)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
+	CVGetZipName, cv_AmidarRomInfo, cv_AmidarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitOCM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // AntiAir (HB)
 static struct BurnRomInfo cv_antiairRomDesc[] = {
 	{ "AntiAir (2024)(Inufuto).rom",	7941, 0x8fabe383, BRF_PRG | BRF_ESS },

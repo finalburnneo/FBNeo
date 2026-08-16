@@ -55595,10 +55595,10 @@ struct BurnDriver BurnDrvgba_firembssx = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Fire Emblem: Vision Quest (Hack, v2.3)
-// https://www.romhacking.net/hacks/6248/
+// Fire Emblem: Vision Quest (Hack, v3)
+// https://feuniverse.us/t/fe8-complete-fire-emblem-vision-quest-v3-by-pushwall-1-oct-22/3815
 static struct BurnRomInfo gba_firembvqRomDesc[] = {
-	{ "Fire Emblem - Vision Quest v2.3 (2020)(Pandan & Friends).gba",	27226016,	0xaee1137a,	BRF_ESS | BRF_PRG },
+	{ "Fire Emblem - Vision Quest v3 (2022)(Pushwall).gba",	28947180,	0x2bcfec83,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_firembvq, gba_firembvq, gba_gba)

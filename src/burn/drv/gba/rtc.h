@@ -58,6 +58,7 @@ typedef struct {
 	UINT8 buffer[7];
 	UINT8 last_pins;
 	UINT8 sio_out;
+	bool  force_irq;
 } gba_rtc_t;
 
 // Howard Hinnant's days_from_civil / civil_from_days (public domain). Proleptic
@@ -132,38 +133,10 @@ static FORCE_INLINE INT32 gba_rtc_bcd_decode(UINT8 value, UINT8 maximum, UINT8 *
 	return 0;
 }
 
-static FORCE_INLINE bool gba_rtc_leap_year(UINT16 year)
-{
-	return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
-}
-
-static FORCE_INLINE UINT8 gba_rtc_days_in_month(UINT16 year, UINT8 month)
-{
-	static const UINT8 days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	if (month < 1 || month > 12)
-		return 0;
-	if (month == 2 && gba_rtc_leap_year(year))
-		return 29;
-	return days[month - 1];
-}
-
-static FORCE_INLINE bool gba_rtc_valid_datetime(const gba_rtc_civil_t *c)
-{
-	if (c->year < 2000 || c->year > 2099)
-		return false;
-	if (c->month < 1 || c->month > 12)
-		return false;
-	if (c->day < 1 || c->day > gba_rtc_days_in_month(c->year, c->month))
-		return false;
-	if (c->weekday > 6 || c->hour > 23 || c->minute > 59 || c->second > 59)
-		return false;
-	return true;
-}
-
 static FORCE_INLINE UINT8 gba_rtc_hour_encode(UINT8 hour_24, UINT8 status)
 {
 	if (status & 0x40) return gba_rtc_bcd_encode(hour_24);
-	return gba_rtc_bcd_encode(hour_24 % 12) | (hour_24 >= 12 ? 0x80 : 0);
+	return gba_rtc_bcd_encode(hour_24 % 12) | (hour_24 >= 12 ? 0x40 : 0);
 }
 
 static FORCE_INLINE INT32 gba_rtc_hour_decode(UINT8 status, UINT8 value, UINT8 *hour)
@@ -174,7 +147,7 @@ static FORCE_INLINE INT32 gba_rtc_hour_decode(UINT8 status, UINT8 value, UINT8 *
 	}
 	UINT8 decoded;
 	if (gba_rtc_bcd_decode(value & 0x3f, 11, &decoded)) return 1;
-	*hour = decoded + ((value & 0x80) ? 12 : 0);
+	*hour = decoded + ((value & 0x40) ? 12 : 0);
 	return 0;
 }
 
@@ -195,9 +168,9 @@ static FORCE_INLINE void gba_rtc_cold_init(gba_rtc_t *rtc, const gba_rtc_civil_t
 {
 	memset(rtc, 0, sizeof(*rtc));
 	gba_rtc_civil_t fallback = { 2000, 1, 1, 0, 0, 0, 0 };
-	const gba_rtc_civil_t *s = seed;
-	if (!s || !gba_rtc_valid_datetime(s))
-		s = &fallback;
+	const gba_rtc_civil_t *s = (seed && seed->year >= 2000 && seed->year <= 2099 &&
+		seed->month >= 1 && seed->month <= 12 && seed->day >= 1 &&
+		seed->day <= 31 && seed->hour <= 23 && seed->minute <= 59 && seed->second <= 59) ? seed : &fallback;
 	rtc->rtc_seconds = gba_rtc_civil_to_seconds(s);
 	rtc->host_seconds = GBA_RTC_NOW_SECONDS();
 	rtc->status = 0x40;
@@ -210,7 +183,7 @@ static FORCE_INLINE void gba_rtc_reanchor(gba_rtc_t *rtc, INT64 rtc_seconds)
 	rtc->host_seconds = GBA_RTC_NOW_SECONDS();
 }
 
-static FORCE_INLINE void gba_rtc_latch_read(gba_rtc_t *rtc)
+static void gba_rtc_latch_read(gba_rtc_t *rtc)
 {
 	memset(rtc->buffer, 0xff, sizeof(rtc->buffer));
 	switch (rtc->command_register) {
@@ -259,7 +232,8 @@ static FORCE_INLINE INT32 gba_rtc_commit_datetime(gba_rtc_t *rtc)
 	if (gba_rtc_hour_decode(rtc->status, rtc->buffer[4], &c.hour)) return 1;
 	if (gba_rtc_bcd_decode(rtc->buffer[5], 59, &c.minute)) return 1;
 	if (gba_rtc_bcd_decode(rtc->buffer[6], 59, &c.second)) return 1;
-	if (!gba_rtc_valid_datetime(&c)) return 1;
+	if (c.year < 2000 || c.year > 2099 || c.month < 1 || c.month > 12 ||
+		c.day < 1 || c.day > 31 || c.hour > 23) return 1;
 	gba_rtc_reanchor(rtc, gba_rtc_civil_to_seconds(&c));
 	return 0;
 }
@@ -297,7 +271,7 @@ static FORCE_INLINE UINT8 gba_rtc_reverse8(UINT8 value)
 	return ((value & 0x55) << 1) | ((value & 0xaa) >> 1);
 }
 
-static FORCE_INLINE void gba_rtc_decode_command(gba_rtc_t *rtc, UINT8 *force_irq)
+static void gba_rtc_decode_command(gba_rtc_t *rtc)
 {
 	UINT8 command = rtc->command;
 	if ((command & 0x0f) != 0x06 && (command & 0xf0) == 0x60) command = gba_rtc_reverse8(command);
@@ -318,14 +292,10 @@ static FORCE_INLINE void gba_rtc_decode_command(gba_rtc_t *rtc, UINT8 *force_irq
 		rtc->phase = GBA_RTC_COMPLETE;
 		return;
 	}
-	if (rtc->command_register == GBA_RTC_FORCE_IRQ) {
-		if (!rtc->command_read)
-			*force_irq = 1;
-		rtc->phase = GBA_RTC_COMPLETE;
-		return;
-	}
-	if (rtc->command_register == GBA_RTC_UNUSED || rtc->command_register == GBA_RTC_UNUSED2 ||
-		rtc->command_register == GBA_RTC_UNUSED3) {
+	if (rtc->command_register == GBA_RTC_FORCE_IRQ || rtc->command_register == GBA_RTC_UNUSED ||
+		rtc->command_register == GBA_RTC_UNUSED2 || rtc->command_register == GBA_RTC_UNUSED3) {
+		if (rtc->command_register == GBA_RTC_FORCE_IRQ && !rtc->command_read)
+			rtc->force_irq = true;
 		rtc->phase = GBA_RTC_COMPLETE;
 		return;
 	}
@@ -341,11 +311,11 @@ static FORCE_INLINE void gba_rtc_decode_command(gba_rtc_t *rtc, UINT8 *force_irq
 	}
 }
 
-static FORCE_INLINE void gba_rtc_sample_input(gba_rtc_t *rtc, UINT8 sio, UINT8 *force_irq)
+static FORCE_INLINE void gba_rtc_sample_input(gba_rtc_t *rtc, UINT8 sio)
 {
 	if (rtc->phase == GBA_RTC_COMMAND) {
 		rtc->command |= (sio & 1) << rtc->bit_index;
-		if (++rtc->bit_index == 8) gba_rtc_decode_command(rtc, force_irq);
+		if (++rtc->bit_index == 8) gba_rtc_decode_command(rtc);
 		return;
 	}
 	if (rtc->phase != GBA_RTC_RECEIVE) return;
@@ -371,7 +341,7 @@ static FORCE_INLINE void gba_rtc_shift_output(gba_rtc_t *rtc)
 	rtc->phase = GBA_RTC_COMPLETE;
 }
 
-static FORCE_INLINE UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins, UINT8 *force_irq)
+static FORCE_INLINE UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins)
 {
 	UINT8 old = rtc->last_pins;
 	UINT8 cs = (pins >> 2) & 1;
@@ -379,8 +349,6 @@ static FORCE_INLINE UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins, UINT8 
 	UINT8 sck = pins & 1;
 	UINT8 old_sck = old & 1;
 
-	if (force_irq)
-		*force_irq = 0;
 	if (!cs) {
 		gba_rtc_transport_reset(rtc);
 		rtc->last_pins = pins;
@@ -392,7 +360,7 @@ static FORCE_INLINE UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins, UINT8 
 		rtc->last_pins = pins;
 		return rtc->sio_out;
 	}
-	if (!old_sck && sck) gba_rtc_sample_input(rtc, (old >> 1) & 1, force_irq);
+	if (!old_sck && sck) gba_rtc_sample_input(rtc, (old >> 1) & 1);
 	if (old_sck && !sck) gba_rtc_shift_output(rtc);
 	rtc->last_pins = pins;
 	return rtc->sio_out;

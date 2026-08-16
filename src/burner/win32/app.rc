@@ -1934,6 +1934,7 @@ END
 //
 
 BMP_SPLASH				BITMAP  DISCARDABLE     "resource/splash.bmp"
+BMP_DARK_MODE_SPLASH    BITMAP  DISCARDABLE     "resource/default-splash-dark-mode.bmp"
 BMP_ABOUT               BITMAP  DISCARDABLE     "resource/about.bmp"
 BMP_MISC                BITMAP  DISCARDABLE     "resource/misc.bmp"
 
